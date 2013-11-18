@@ -86,32 +86,10 @@
     var startLoadModName;
     var startLoadModTime;
 
-    var commentRegExp = /(\/\*([\s\S]*?)\*\/|([^:]|^)\/\/(.*)$)/mg,
-        requireRegExp = /[^.'"]\s*module.require\s*\((.+)\);/g;
-
-    function getRequireVal(str) {
-        var m;
-        // simple string
-        if (m = str.match(/^\s*["']([^'"\s]+)["']\s*$/)) {
-            return m[1];
-        } else {
-            // expression
-            return new Function('return (' + str + ')')();
-        }
-    }
-
     function checkKISSYRequire(config, factory) {
         // use module.require primitive statement
         if ((!config || !config.requires) && typeof factory == 'function') {
-            var requires = [];
-            // Remove comments from the callback string,
-            // look for require calls, and pull them into the dependencies,
-            // but only if there are function args.
-            factory.toString()
-                .replace(commentRegExp, '')
-                .replace(requireRegExp, function (match, dep) {
-                    requires.push(getRequireVal(dep));
-                });
+            var requires = Utils.getRequiresFromFn(factory);
             if (requires.length) {
                 config = config || {};
                 config.requires = requires;

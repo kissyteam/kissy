@@ -23,6 +23,7 @@
             Utils = Loader.Utils = {},
         doc = host.document;
 
+
     // http://wiki.commonjs.org/wiki/Packages/Mappings/A
     // 如果模块名以 / 结尾，自动加 index
     function indexMap(s) {
@@ -438,8 +439,35 @@
                 /* hash * 33 + char */
             }
             return hash + '';
+        },
+
+        getRequiresFromFn: function (fn) {
+            var requires = [];
+            // Remove comments from the callback string,
+            // look for require calls, and pull them into the dependencies,
+            // but only if there are function args.
+            fn.toString()
+                .replace(commentRegExp, '')
+                .replace(requireRegExp, function (match, dep) {
+                    requires.push(getRequireVal(dep));
+                });
+            return requires;
         }
     });
+
+    var commentRegExp = /(\/\*([\s\S]*?)\*\/|([^:]|^)\/\/(.*)$)/mg,
+        requireRegExp = /[^.'"]\s*module.require\s*\((.+)\);/g;
+
+    function getRequireVal(str) {
+        var m;
+        // simple string
+        if (m = str.match(/^\s*["']([^'"\s]+)["']\s*$/)) {
+            return m[1];
+        } else {
+            // expression
+            return new Function('return (' + str + ')')();
+        }
+    }
 
     function isStatus(runtime, modNames, status) {
         var mods = runtime.Env.mods,

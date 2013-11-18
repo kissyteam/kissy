@@ -86,8 +86,15 @@
                 loader,
                 error,
                 sync,
+                requireCodeStyle,
                 tryCount = 0,
+                finalSuccess,
                 waitingModules = new WaitingModules(loadReady);
+
+            if (typeof modNames != 'string') {
+                requireCodeStyle = 1;
+                success = modNames;
+            }
 
             if (S.isPlainObject(success)) {
                 //noinspection JSUnresolvedVariable
@@ -97,6 +104,14 @@
                 //noinspection JSUnresolvedVariable
                 success = success.success;
             }
+
+            if (requireCodeStyle) {
+                modNames = Utils.getRequiresFromFn(success);
+            }
+
+            finalSuccess = function () {
+                success.apply(S, requireCodeStyle ? [S] : Utils.getModules(S, modNames))
+            };
 
             modNames = Utils.getModNamesAsArray(modNames);
             modNames = Utils.normalizeModNamesWithAlias(S, modNames);
@@ -113,12 +128,10 @@
                 if (ret) {
                     if (success) {
                         if (sync) {
-                            success.apply(S, Utils.getModules(S, modNames));
+                            finalSuccess();
                         } else {
                             // standalone error trace
-                            processImmediate(function () {
-                                success.apply(S, Utils.getModules(S, modNames));
-                            });
+                            processImmediate(finalSuccess);
                         }
                     }
                 } else if (errorList.length) {

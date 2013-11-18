@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 18 19:00
+build time: Nov 18 19:17
 */
 /**
  * @ignore
@@ -42,11 +42,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20131118190013' will replace with current timestamp when compressing.
+         * NOTICE: '20131118191706' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20131118190013',
+        __BUILD_TIME: '20131118191706',
 
         /**
          * KISSY Environment.
@@ -3534,6 +3534,7 @@ var KISSY = (function (undefined) {
             Utils = Loader.Utils = {},
         doc = host.document;
 
+
     // http://wiki.commonjs.org/wiki/Packages/Mappings/A
     // 如果模块名以 / 结尾，自动加 index
     function indexMap(s) {
@@ -3949,8 +3950,35 @@ var KISSY = (function (undefined) {
                 /* hash * 33 + char */
             }
             return hash + '';
+        },
+
+        getRequiresFromFn: function (fn) {
+            var requires = [];
+            // Remove comments from the callback string,
+            // look for require calls, and pull them into the dependencies,
+            // but only if there are function args.
+            fn.toString()
+                .replace(commentRegExp, '')
+                .replace(requireRegExp, function (match, dep) {
+                    requires.push(getRequireVal(dep));
+                });
+            return requires;
         }
     });
+
+    var commentRegExp = /(\/\*([\s\S]*?)\*\/|([^:]|^)\/\/(.*)$)/mg,
+        requireRegExp = /[^.'"]\s*module.require\s*\((.+)\);/g;
+
+    function getRequireVal(str) {
+        var m;
+        // simple string
+        if (m = str.match(/^\s*["']([^'"\s]+)["']\s*$/)) {
+            return m[1];
+        } else {
+            // expression
+            return new Function('return (' + str + ')')();
+        }
+    }
 
     function isStatus(runtime, modNames, status) {
         var mods = runtime.Env.mods,
@@ -4838,32 +4866,10 @@ var KISSY = (function (undefined) {
     var startLoadModName;
     var startLoadModTime;
 
-    var commentRegExp = /(\/\*([\s\S]*?)\*\/|([^:]|^)\/\/(.*)$)/mg,
-        requireRegExp = /[^.'"]\s*module.require\s*\((.+)\);/g;
-
-    function getRequireVal(str) {
-        var m;
-        // simple string
-        if (m = str.match(/^\s*["']([^'"\s]+)["']\s*$/)) {
-            return m[1];
-        } else {
-            // expression
-            return new Function('return (' + str + ')')();
-        }
-    }
-
     function checkKISSYRequire(config, factory) {
         // use module.require primitive statement
         if ((!config || !config.requires) && typeof factory == 'function') {
-            var requires = [];
-            // Remove comments from the callback string,
-            // look for require calls, and pull them into the dependencies,
-            // but only if there are function args.
-            factory.toString()
-                .replace(commentRegExp, '')
-                .replace(requireRegExp, function (match, dep) {
-                    requires.push(getRequireVal(dep));
-                });
+            var requires = Utils.getRequiresFromFn(factory);
             if (requires.length) {
                 config = config || {};
                 config.requires = requires;
@@ -5342,8 +5348,15 @@ var KISSY = (function (undefined) {
                 loader,
                 error,
                 sync,
+                requireCodeStyle,
                 tryCount = 0,
+                finalSuccess,
                 waitingModules = new WaitingModules(loadReady);
+
+            if (typeof modNames != 'string') {
+                requireCodeStyle = 1;
+                success = modNames;
+            }
 
             if (S.isPlainObject(success)) {
                 //noinspection JSUnresolvedVariable
@@ -5353,6 +5366,14 @@ var KISSY = (function (undefined) {
                 //noinspection JSUnresolvedVariable
                 success = success.success;
             }
+
+            if (requireCodeStyle) {
+                modNames = Utils.getRequiresFromFn(success);
+            }
+
+            finalSuccess = function () {
+                success.apply(S, requireCodeStyle ? [S] : Utils.getModules(S, modNames))
+            };
 
             modNames = Utils.getModNamesAsArray(modNames);
             modNames = Utils.normalizeModNamesWithAlias(S, modNames);
@@ -5369,12 +5390,10 @@ var KISSY = (function (undefined) {
                 if (ret) {
                     if (success) {
                         if (sync) {
-                            success.apply(S, Utils.getModules(S, modNames));
+                            finalSuccess();
                         } else {
                             // standalone error trace
-                            processImmediate(function () {
-                                success.apply(S, Utils.getModules(S, modNames));
-                            });
+                            processImmediate(finalSuccess);
                         }
                     }
                 } else if (errorList.length) {
@@ -5439,7 +5458,7 @@ var KISSY = (function (undefined) {
     var doc = S.Env.host && S.Env.host.document;
     // var logger = S.getLogger('s/loader');
     var Utils = S.Loader.Utils;
-    var TIMESTAMP = '20131118190013';
+    var TIMESTAMP = '20131118191706';
     var defaultComboPrefix = '??';
     var defaultComboSep = ',';
 

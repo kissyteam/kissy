@@ -7,8 +7,9 @@ describe('it support module.require', function () {
             }
         });
         var ret;
-        S.use('cjs/a', function (S, a) {
-            ret = a;
+        S.use(function (S) {
+            var module = this;
+            ret = module.require('cjs/a');
         });
         waitsFor(function () {
             return ret == 3
