@@ -5,6 +5,7 @@
  */
 KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, DomEvent, SingleTouch) {
     var event = 'swipe',
+        undefined = undefined,
         ingEvent = 'swiping',
         MAX_DURATION = 1000,
         MAX_OFFSET = 35,
@@ -26,7 +27,7 @@ KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, DomEvent, Single
             if (self.isVertical && self.isHorizontal) {
                 // allow little deviation
                 if (Math.max(absDeltaX, absDeltaY) < 5) {
-                    return;
+                    return undefined;
                 }
 
                 if (absDeltaY > absDeltaX) {

@@ -9,9 +9,7 @@ KISSY.add('event/dom/touch/tap', function (S, eventHandleMap, DomEvent, SingleTo
     }
 
     var sensitivity = 5;
-
     var event = 'tap';
-
     var DomEventObject = DomEvent.Object;
 
     function Tap() {

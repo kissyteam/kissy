@@ -9,14 +9,20 @@
     <script src="/kissy/build/seed.js" charset="utf-8"></script>
     <script src="/kissy/src/package.js"></script>
     <script src="/kissy/src/log.js"></script>
+    <style>
+        .disable-default-action {
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+        }
+    </style>
 </head>
 <body>
-
 <h1>open in ios safari test tapHold event</h1>
 
-<a href="http://www.g.cn">google</a>
+<a href="http://www.g.cn" class="disable-default-action">google</a>
 
 <div id='t'
+     class="disable-default-action"
      style='border:1px solid green;
      width:200px;height:200px;margin:10px'>
     tttt ttttt ttttt tttttt tttttt
@@ -24,15 +30,11 @@
 <div style="height: 900px;"></div>
 
 <script>
-
     KISSY.use('event', function (S, Event) {
-
         Event.on('#t', "tapHold", function (e) {
             log(e.type + ' : ' + e.duration);
         });
-
     });
-
 </script>
 </body>
 </html>

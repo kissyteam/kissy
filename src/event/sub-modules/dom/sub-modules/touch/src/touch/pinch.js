@@ -79,12 +79,12 @@ KISSY.add('event/dom/touch/pinch', function (S, eventHandleMap, DomEvent, MultiT
 
     eventHandleMap[PINCH] = {
         handle: p,
-        add: function () {
+        setup: function () {
             // need on this
             // if on document, will affect other elements!
             DomEvent.on(this, 'touchmove', prevent);
         },
-        remove: function () {
+        tearDown: function () {
             DomEvent.detach(this, 'touchmove', prevent);
         }
     };

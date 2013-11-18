@@ -15,7 +15,7 @@
 <h1>open in ios safari test rotate event</h1>
 
 <a href="http://www.g.cn">google</a>
-
+<button id="detach">detach</button>
 <div id='t'
      style='border:1px solid green;
      width:200px;height:200px;margin:10px'>
@@ -26,10 +26,12 @@
 
 <div style="height: 900px;"></div>
 <script>
-
     KISSY.use('event,dom', function (S, Event) {
-
         var transform = S.Features.getTransformProperty();
+
+        Event.on('#detach', 'click', function () {
+            Event.detach('#t');
+        });
 
         Event.on('#t', "rotateEnd", function (e) {
             log(e.type + ' : ' +
@@ -45,7 +47,7 @@
         });
         var t = document.getElementById('t');
         var o;
-        Event.on('#t', 'rotateStart', function (e) {
+        Event.on('#t', 'rotateStart', function () {
             o = 0;
             if (t.style[transform]) {
                 o = parseInt(t.style[transform].replace(/rotate\(/, ''));
@@ -55,10 +57,8 @@
             t.style[transform] = 'rotate(' + (o + parseInt(e.rotation)) % 360 + 'deg)';
         });
 
-
         alert('ok');
     });
-
 </script>
 </body>
 </html>

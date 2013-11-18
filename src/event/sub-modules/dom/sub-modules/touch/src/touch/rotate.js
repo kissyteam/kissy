@@ -13,7 +13,6 @@ KISSY.add('event/dom/touch/rotate', function (S, eventHandleMap, MultiTouch, Dom
     }
 
     S.extend(Rotate, MultiTouch, {
-
         onTouchMove: function (e) {
             var self = this;
 
@@ -100,16 +99,15 @@ KISSY.add('event/dom/touch/rotate', function (S, eventHandleMap, MultiTouch, Dom
 
     eventHandleMap[ROTATE] = {
         handle: r,
-        add: function () {
+        setup: function () {
             DomEvent.on(this, 'touchmove', prevent);
         },
-        remove: function () {
+        tearDown: function () {
             DomEvent.detach(this, 'touchmove', prevent);
         }
     };
 
     return Rotate;
-
 }, {
     requires: ['./handle-map', './multi-touch', 'event/dom/base']
 });

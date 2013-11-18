@@ -5,7 +5,6 @@
  */
 KISSY.add('event/dom/touch/tap-hold', function (S, eventHandleMap, SingleTouch, DomEvent) {
     var event = 'tapHold';
-
     var duration = 1000;
 
     function TapHold() {
@@ -27,6 +26,7 @@ KISSY.add('event/dom/touch/tap-hold', function (S, eventHandleMap, SingleTouch, 
                     duration: (S.now() - e.timeStamp) / 1000
                 });
             }, duration);
+            return undefined;
         },
 
         onTouchMove: function () {
@@ -39,25 +39,13 @@ KISSY.add('event/dom/touch/tap-hold', function (S, eventHandleMap, SingleTouch, 
         }
     });
 
-    function prevent(e) {
-        if (e.touches.length == 1) {
-            e.preventDefault();
-        }
-    }
-
+    // http://stackoverflow.com/questions/5995210/disabling-user-selection-in-uiwebview
+    // up to user to disable default action
     eventHandleMap[event] = {
-        setup: function () {
-            // prevent native scroll
-            DomEvent.on(this, 'touchstart', prevent);
-        },
-        tearDown: function () {
-            DomEvent.detach(this, 'touchstart', prevent);
-        },
         handle: new TapHold()
     };
 
     return TapHold;
-
 }, {
     requires: ['./handle-map', './single-touch', 'event/dom/base']
 });
