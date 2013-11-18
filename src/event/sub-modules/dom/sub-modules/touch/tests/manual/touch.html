@@ -19,10 +19,10 @@
     }
 </style>
 <div id="t1">
-
+    monitor touch events
 </div>
 <div id="t2">
-
+    touchstart preventDefault
 </div>
 <div style="height: 900px;"></div>
 <script type="text/javascript">
@@ -65,7 +65,9 @@
     }
 
     monitorT(t1);
-    monitorT(t2);
+    t2.addEventListener('touchstart', function (e) {
+        e.preventDefault();
+    }, false);
     monitorT(document.body);
 </script>
 </body>
