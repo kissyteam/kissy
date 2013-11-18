@@ -34,7 +34,7 @@ KISSY.add('event', function (S, DomEvent, CustomEvent) {
     Event.global = CustomEvent.global;
 
     // compatibility
-    S.EventTarget = Event.Target = CustomEvent.targetObject;
+    S.EventTarget = Event.Target = CustomEvent.Target;
 
     return Event;
 }, {

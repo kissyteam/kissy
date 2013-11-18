@@ -16,6 +16,10 @@ KISSY.add(function (S, undefined) {
         return method;
     }
 
+    function getAttrVals(self) {
+        return self.__attrVals || (self.__attrVals = {});
+    }
+
     function whenAttrChangeEventName(when, name) {
         return when + S.ucfirst(name) + 'Change';
     }
@@ -184,7 +188,7 @@ KISSY.add(function (S, undefined) {
 
         // fire after event
         if (!opts['silent']) {
-            value = self.__attrVals[name];
+            value = getAttrVals(self)[name];
             __fireAttrChange(self, 'after', name, prevVal, value, fullName, null, opts.data);
             if (attrs) {
                 attrs.push({
@@ -206,7 +210,7 @@ KISSY.add(function (S, undefined) {
     }
 
     /**
-     * @class KISSY.Base.Attribute
+     * @class KISSY.Attribute
      * @override KISSY.Base
      */
     return {
@@ -218,7 +222,7 @@ KISSY.add(function (S, undefined) {
          * @private
          */
         getAttrs: function () {
-            return this.__attrs;
+            return this.__attrs || (this.__attrs = {});
         },
 
         /**
@@ -229,7 +233,7 @@ KISSY.add(function (S, undefined) {
             var self = this,
                 o = {},
                 a,
-                attrs = self.__attrs;
+                attrs = self.getAttrs();
             for (a in attrs) {
                 o[a] = self.get(a);
             }
@@ -255,7 +259,7 @@ KISSY.add(function (S, undefined) {
          */
         addAttr: function (name, attrConfig, override) {
             var self = this,
-                attrs = self.__attrs,
+                attrs = self.getAttrs(),
                 attr,
                 cfg = S.clone(attrConfig);
             if (attr = attrs[name]) {
@@ -289,7 +293,7 @@ KISSY.add(function (S, undefined) {
          * @return {Boolean}
          */
         hasAttr: function (name) {
-            return this.__attrs.hasOwnProperty(name);
+            return this.getAttrs().hasOwnProperty(name);
         },
 
         /**
@@ -298,8 +302,8 @@ KISSY.add(function (S, undefined) {
          */
         removeAttr: function (name) {
             var self = this;
-            var __attrVals = self.__attrVals;
-            var __attrs = self.__attrs;
+            var __attrVals = getAttrVals(self);
+            var __attrs = self.getAttrs();
 
             if (self.hasAttr(name)) {
                 delete __attrs[name];
@@ -391,7 +395,7 @@ KISSY.add(function (S, undefined) {
             // then register on demand in order to collect all data meta info
             // 一定要注册属性元数据，否则其他模块通过 _attrs 不能枚举到所有有效属性
             // 因为属性在声明注册前可以直接设置值
-                attrConfig = ensureNonEmpty(self.__attrs, name),
+                attrConfig = ensureNonEmpty(self.getAttrs(), name),
                 setter = attrConfig['setter'];
 
             // if setter has effect
@@ -408,7 +412,7 @@ KISSY.add(function (S, undefined) {
             }
 
             // finally set
-            self.__attrVals[name] = value;
+            getAttrVals(self)[name] = value;
 
             return undefined;
         },
@@ -422,7 +426,7 @@ KISSY.add(function (S, undefined) {
             var self = this,
                 dot = '.',
                 path,
-                attrVals = self.__attrVals,
+                attrVals = getAttrVals(self),
                 attrConfig,
                 getter, ret;
 
@@ -431,7 +435,7 @@ KISSY.add(function (S, undefined) {
                 name = path.shift();
             }
 
-            attrConfig = ensureNonEmpty(self.__attrs, name, 1);
+            attrConfig = ensureNonEmpty(self.getAttrs(), name, 1);
             getter = attrConfig['getter'];
 
             // get user-set value or default value
@@ -480,7 +484,7 @@ KISSY.add(function (S, undefined) {
             opts = /**@type Object
              @ignore*/(name);
 
-            var attrs = self.__attrs,
+            var attrs = self.getAttrs(),
                 values = {};
 
             // reset all
@@ -495,7 +499,7 @@ KISSY.add(function (S, undefined) {
 
     // get default attribute value from valueFn/value
     function getDefAttrVal(self, name) {
-        var attrs = self.__attrs,
+        var attrs = self.getAttrs(),
             attrConfig = ensureNonEmpty(attrs, name, 1),
             valFn = attrConfig.valueFn,
             val;
@@ -527,7 +531,7 @@ KISSY.add(function (S, undefined) {
             prevVal = self.get(name);
             value = getValueBySubValue(prevVal, path, value);
         }
-        var attrConfig = ensureNonEmpty(self.__attrs, name),
+        var attrConfig = ensureNonEmpty(self.getAttrs(), name),
             e,
             validator = attrConfig['validator'];
         if (validator && (validator = normalFn(self, validator))) {

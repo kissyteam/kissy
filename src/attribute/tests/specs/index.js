@@ -1,23 +1,13 @@
 /**
  * @author lifesinger@gmail.com, yiminghe@gmail.com
  */
-KISSY.add(function (S, Base) {
-    describe('base attr', function () {
-        it('拥有 EventTarget 上的方法', function () {
-            var A = Base.extend();
-
-            var a = new A();
-
-            var fired = false;
-            a.on('xxx', function () {
-                fired = true;
-            });
-            a.fire('xxx');
-            expect(fired).toBeTruthy();
-        });
+KISSY.add(function (S, Attribute) {
+    describe('attr', function () {
 
         it('拥有 Attribute 上的方法', function () {
-            var A = Base.extend();
+            var A = function () {
+            };
+            S.augment(A, Attribute);
 
             var a = new A();
 
@@ -55,36 +45,49 @@ KISSY.add(function (S, Base) {
             expect(a.hasAttr('toString')).toBeFalsy();
         });
 
-        it('能解析 ATTRS 和 config', function () {
-            var A = Base.extend({}, {
-                ATTRS: {
-                    attr1: {
-                        value: 0
-                    }
+        it('addAttrs works', function () {
+            var A = function () {
+            };
+            S.augment(A, Attribute);
+
+            var a = new A();
+            a.addAttrs({
+                attr1: {
+                    value: 0
                 }
             });
-
-            var a = new A({ attr1: 1, attr2: 2 });
+            a.set({
+                attr1: 1, attr2: 2
+            });
             expect(a.get('attr1')).toBe(1);
             expect(a.get('attr2')).toBe(2);
 
             // 多重继承
-            var B = A.extend({}, {
-                ATTRS: {
-                    'b-attr': {
-                        value: 'b'
-                    }
+            function B() {
+            }
+
+            S.augment(B, Attribute);
+
+            var b = new B();
+            b.addAttrs({
+                attr1: {
+                    value: 0
+                },
+                'b-attr': {
+                    value: 'b'
                 }
             });
+            b.set({ 'b-attr': 3 });
 
-            var b = new B({ 'b-attr': 3 });
             expect(b.get('b-attr')).toBe(3);
             expect(b.get('attr1')).toBe(0);
             expect(b.hasAttr('attr2')).toBeFalsy();
         });
 
         it('能正确触发 Attribute 的事件', function () {
-            var A = Base.extend();
+            var A = function () {
+            };
+            S.augment(A, Attribute);
 
             var a = new A();
 
@@ -115,7 +118,9 @@ KISSY.add(function (S, Base) {
         });
 
         it('can preventDefault beforeChange to prevent set', function () {
-            var A = Base.extend();
+            var A = function () {
+            };
+            S.augment(A, Attribute);
 
             var a = new A();
 
@@ -129,7 +134,10 @@ KISSY.add(function (S, Base) {
         });
 
         it('can stopImmediatePropagation beforeChange', function () {
-            var A = Base.extend();
+            function A() {
+            }
+
+            S.augment(A, Attribute);
 
             var a = new A();
 
@@ -146,15 +154,17 @@ KISSY.add(function (S, Base) {
         });
 
         it('transfer default value to value', function () {
-            var A = Base.extend({}, {
-                ATTRS: {
-                    a: {
-                        value: 9
-                    }
-                }
-            });
+            function A() {
+            }
+
+            S.augment(A, Attribute);
 
             var a = new A();
+            a.addAttrs({
+                a: {
+                    value: 9
+                }
+            });
 
             a.get('a');
 

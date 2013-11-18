@@ -25,6 +25,10 @@ if (!loc.getQuery().has('build')) {
             "base": "/kissy/src/anim/sub-modules/transition/src/transition",
             "ignorePackageNameInUri": 1
         },
+        "attribute": {
+            "base": "/kissy/src/attribute/src/attribute",
+            "ignorePackageNameInUri": 1
+        },
         "base": {
             "base": "/kissy/src/base/src/base",
             "ignorePackageNameInUri": 1

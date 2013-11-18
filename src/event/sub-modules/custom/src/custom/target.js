@@ -32,14 +32,10 @@ KISSY.add('event/custom/target', function (S, BaseEvent, CustomEventObservable) 
      *
      * @class KISSY.Event.CustomEvent.Target
      */
-    function Target() {
-    }
 
     var KS_CUSTOM_EVENTS = '__~ks_custom_events';
 
-    Target.prototype = {
-        constructor: Target,
-
+    return {
         isTarget: 1,
 
         /**
@@ -185,11 +181,11 @@ KISSY.add('event/custom/target', function (S, BaseEvent, CustomEventObservable) 
          * @return {KISSY.Event.CustomEvent.Target[]}
          */
         getTargets: function () {
-            return this[KS_BUBBLE_TARGETS]||(this[KS_BUBBLE_TARGETS]=[]);
+            return this[KS_BUBBLE_TARGETS] || (this[KS_BUBBLE_TARGETS] = []);
         },
 
-        getCustomEvents:function(){
-            return this[KS_CUSTOM_EVENTS]||(this[KS_CUSTOM_EVENTS]={});
+        getCustomEvents: function () {
+            return this[KS_CUSTOM_EVENTS] || (this[KS_CUSTOM_EVENTS] = {});
         },
 
         /**
@@ -245,8 +241,6 @@ KISSY.add('event/custom/target', function (S, BaseEvent, CustomEventObservable) 
             return self; // chain
         }
     };
-
-    return Target;
 }, {
     requires: ['event/base', './observable']
 });

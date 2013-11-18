@@ -14,6 +14,10 @@ tests.push('/kissy/src/anim/sub-modules/transition/tests/runner/test.jss?build')
 
 tests.push('/kissy/src/anim/sub-modules/transition/tests/runner/test.jss?coverage');
 
+tests.push('/kissy/src/attribute/tests/runner/test.jss');
+
+tests.push('/kissy/src/attribute/tests/runner/test.jss?build');
+
 tests.push('/kissy/src/base/tests/runner/test.jss');
 
 tests.push('/kissy/src/base/tests/runner/test.jss?build');

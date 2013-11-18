@@ -5,7 +5,7 @@
  */
 KISSY.add(function (S) {
     var module = this;
-    var Attribute = module.require('base/attribute');
+    var Attribute = module.require('attribute');
     var CustomEvent = module.require('event/custom');
     module.exports = Base;
 
@@ -49,7 +49,8 @@ KISSY.add(function (S) {
 
     /**
      * @class KISSY.Base
-     * @extend KISSY.Event.CustomEvent.Target
+     * @mixins KISSY.Event.CustomEvent.Target
+     * @mixins KISSY.Attribute
      *
      * A base class which objects requiring attributes, extension, plugin, custom event support can
      * extend.
@@ -60,9 +61,6 @@ KISSY.add(function (S) {
     function Base(config) {
         var self = this,
             c = self.constructor;
-        Base.superclass.constructor.apply(this, arguments);
-        self.__attrs = {};
-        self.__attrVals = {};
         // save user config
         self.userConfig = config;
         // define
@@ -88,9 +86,7 @@ KISSY.add(function (S) {
         self.syncInternal();
     }
 
-    S.augment(Base, Attribute);
-
-    S.extend(Base, CustomEvent.Target, {
+    S.augment(Base, Attribute,CustomEvent.Target, {
         initializer: noop,
 
         '__getHook': __getHook,

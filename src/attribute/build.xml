@@ -1,0 +1,6 @@
+<project name="attribute.build" default="build" basedir=".">
+    <property name="component.name" value="attribute"/>
+
+    <import file="../common.xml"/>
+</project>
+
