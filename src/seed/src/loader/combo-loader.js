@@ -414,13 +414,10 @@
                     res.mods = [];
 
                     function pushComboUrl() {
-                        // map the whole combo path
                         //noinspection JSReferencingMutableVariableFromClosure
                         res.push({
                             combine: 1,
-                            fullpath: Utils.getMappedPath(runtime, prefix +
-                                currentComboUrls.join(comboSep) + suffix,
-                                Config.mappedComboRules),
+                            fullpath: prefix +  currentComboUrls.join(comboSep) + suffix,
                             mods: currentComboMods
                         });
                     }
@@ -428,7 +425,6 @@
                     for (var i = 0; i < mods.length; i++) {
                         var currentMod = mods[i];
                         res.mods.push(currentMod);
-                        // map individual module
                         var fullpath = currentMod.getFullPath();
                         if (!currentMod.canBeCombined) {
                             res.push({

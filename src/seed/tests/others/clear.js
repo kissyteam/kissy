@@ -12,8 +12,6 @@ KISSY.clearLoader = function () {
     };
 
     self.config({
-        map: false,
-        mapCombo: false,
         packages: false
     });
 

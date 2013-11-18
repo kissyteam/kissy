@@ -152,7 +152,6 @@
         module.name = undefined;
         /**
          * factory of this module
-         * @type {null}
          */
         module.factory = undefined;
         S.mix(module, cfg);
@@ -161,6 +160,24 @@
 
     Module.prototype = {
         constructor: Module,
+
+        /**
+         * resolve module by name.
+         * @param {String} relativeName relative module's name
+         * @returns {String} resolved module name
+         */
+        'resolveByName': function (relativeName) {
+            return Utils.normalDepModuleName(this.name, relativeName);
+        },
+
+        /**
+         * resolve path
+         * @param {String} relativePath relative path
+         * @returns {KISSY.Uri} resolve uri
+         */
+        'resolveByPath': function (relativePath) {
+            return this.getFullPathUri().resolve(relativePath);
+        },
 
         /**
          * require other modules from current modules
@@ -225,6 +242,7 @@
                 packageName,
                 path;
             if (!self.fullPathUri) {
+                // fullpath can be specified
                 if (self.fullpath) {
                     fullPathUri = new S.Uri(self.fullpath);
                 } else {
@@ -257,7 +275,7 @@
                 fullPathUri;
             if (!self.fullpath) {
                 fullPathUri = self.getFullPathUri();
-                self.fullpath = Utils.getMappedPath(self.runtime, fullPathUri.toString());
+                self.fullpath = fullPathUri.toString();
             }
             return self.fullpath;
         },
@@ -268,8 +286,7 @@
          */
         getPath: function () {
             var self = this;
-            return self.path ||
-                (self.path = defaultComponentJsName(self))
+            return self.path ||(self.path = defaultComponentJsName(self));
         },
 
         /**

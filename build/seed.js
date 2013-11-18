@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 18 19:17
+build time: Nov 18 22:13
 */
 /**
  * @ignore
@@ -42,11 +42,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20131118191706' will replace with current timestamp when compressing.
+         * NOTICE: '20131118221304' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20131118191706',
+        __BUILD_TIME: '20131118221304',
 
         /**
          * KISSY Environment.
@@ -103,10 +103,6 @@ var KISSY = (function (undefined) {
          * @param {String} configName.packages.combine Whether allow combine for current package modules.
          * @param {String} [configName.packages.ignorePackageNameInUri=false] whether remove packageName from module request uri,
          * can only be used in production mode.
-         * @param {Array[]} configName.map file map      File url map configs.
-         * @param {Array[]} configName.map.0     A single map rule.
-         * @param {RegExp} configName.map.0.0    A regular expression to match url.
-         * @param {String|Function} configName.map.0.1   Replacement for String.replace.
          * @param [configValue] config value.
          *
          * for example:
@@ -2057,7 +2053,6 @@ var KISSY = (function (undefined) {
      * @singleton
      */
     var Path = S.Path = {
-
         /**
          * resolve([from ...], to)
          * @return {String} Resolved path.
@@ -3915,29 +3910,6 @@ var KISSY = (function (undefined) {
         },
 
         /**
-         * Get mapped path.
-         * @param runtime Module container, such as KISSY
-         * @param {String} path module path
-         * @param [rules] map rules
-         * @return {String} mapped path
-         */
-        getMappedPath: function (runtime, path, rules) {
-            var mappedRules = rules ||
-                    runtime.Config.mappedRules ||
-                    [],
-                i,
-                m,
-                rule;
-            for (i = 0; i < mappedRules.length; i++) {
-                rule = mappedRules[i];
-                if (m = path.match(rule[0])) {
-                    return path.replace(rule[0], rule[1]);
-                }
-            }
-            return path;
-        },
-
-        /**
          * Returns hash code of a string djb2 algorithm
          * @param {String} str
          * @returns {String} hash code
@@ -3952,14 +3924,15 @@ var KISSY = (function (undefined) {
             return hash + '';
         },
 
-        getRequiresFromFn: function (fn) {
+        getRequiresFromFn: function (fn, mode) {
+            mode = mode || 0;
             var requires = [];
             // Remove comments from the callback string,
             // look for require calls, and pull them into the dependencies,
             // but only if there are function args.
             fn.toString()
                 .replace(commentRegExp, '')
-                .replace(requireRegExp, function (match, dep) {
+                .replace(requireRegExp[mode], function (match, dep) {
                     requires.push(getRequireVal(dep));
                 });
             return requires;
@@ -3967,7 +3940,9 @@ var KISSY = (function (undefined) {
     });
 
     var commentRegExp = /(\/\*([\s\S]*?)\*\/|([^:]|^)\/\/(.*)$)/mg,
-        requireRegExp = /[^.'"]\s*module.require\s*\((.+)\);/g;
+        requireRegExp = [ /[^.'"]\s*module.require\s*\((.+)\);/g,
+            // avoid compression
+            /[^.'"]\s*KISSY.require\s*\((.+)\);/g];
 
     function getRequireVal(str) {
         var m;
@@ -4147,7 +4122,6 @@ var KISSY = (function (undefined) {
         module.name = undefined;
         /**
          * factory of this module
-         * @type {null}
          */
         module.factory = undefined;
         S.mix(module, cfg);
@@ -4156,6 +4130,24 @@ var KISSY = (function (undefined) {
 
     Module.prototype = {
         constructor: Module,
+
+        /**
+         * resolve module by name.
+         * @param {String} relativeName relative module's name
+         * @returns {String} resolved module name
+         */
+        'resolveByName': function (relativeName) {
+            return Utils.normalDepModuleName(this.name, relativeName);
+        },
+
+        /**
+         * resolve path
+         * @param {String} relativePath relative path
+         * @returns {KISSY.Uri} resolve uri
+         */
+        'resolveByPath': function (relativePath) {
+            return this.getFullPathUri().resolve(relativePath);
+        },
 
         /**
          * require other modules from current modules
@@ -4220,6 +4212,7 @@ var KISSY = (function (undefined) {
                 packageName,
                 path;
             if (!self.fullPathUri) {
+                // fullpath can be specified
                 if (self.fullpath) {
                     fullPathUri = new S.Uri(self.fullpath);
                 } else {
@@ -4252,7 +4245,7 @@ var KISSY = (function (undefined) {
                 fullPathUri;
             if (!self.fullpath) {
                 fullPathUri = self.getFullPathUri();
-                self.fullpath = Utils.getMappedPath(self.runtime, fullPathUri.toString());
+                self.fullpath = fullPathUri.toString();
             }
             return self.fullpath;
         },
@@ -4263,8 +4256,7 @@ var KISSY = (function (undefined) {
          */
         getPath: function () {
             var self = this;
-            return self.path ||
-                (self.path = defaultComponentJsName(self))
+            return self.path ||(self.path = defaultComponentJsName(self));
         },
 
         /**
@@ -4684,22 +4676,6 @@ var KISSY = (function (undefined) {
         S.getScript(rs.fullpath, config);
     };
 
-    configFns.map = function (rules) {
-        var Config = this.Config;
-        if (rules === false) {
-            return Config.mappedRules = [];
-        }
-        return Config.mappedRules = (Config.mappedRules || []).concat(rules || []);
-    };
-
-    configFns.mapCombo = function (rules) {
-        var Config = this.Config;
-        if (rules === false) {
-            return Config.mappedComboRules = [];
-        }
-        return Config.mappedComboRules = (Config.mappedComboRules || []).concat(rules || []);
-    };
-
     configFns.packages = function (config) {
         var name,
             Config = this.Config,
@@ -4708,7 +4684,6 @@ var KISSY = (function (undefined) {
             S.each(config, function (cfg, key) {
                 // 兼容数组方式
                 name = cfg.name || key;
-
                 // 兼容 path
                 var baseUri = normalizeBase(cfg.base || cfg.path);
 
@@ -4725,8 +4700,7 @@ var KISSY = (function (undefined) {
             });
             return undefined;
         } else if (config === false) {
-            Config.packages = {
-            };
+            Config.packages = {};
             return undefined;
         } else {
             return ps;
@@ -5194,13 +5168,10 @@ var KISSY = (function (undefined) {
                     res.mods = [];
 
                     function pushComboUrl() {
-                        // map the whole combo path
                         //noinspection JSReferencingMutableVariableFromClosure
                         res.push({
                             combine: 1,
-                            fullpath: Utils.getMappedPath(runtime, prefix +
-                                currentComboUrls.join(comboSep) + suffix,
-                                Config.mappedComboRules),
+                            fullpath: prefix +  currentComboUrls.join(comboSep) + suffix,
                             mods: currentComboMods
                         });
                     }
@@ -5208,7 +5179,6 @@ var KISSY = (function (undefined) {
                     for (var i = 0; i < mods.length; i++) {
                         var currentMod = mods[i];
                         res.mods.push(currentMod);
-                        // map individual module
                         var fullpath = currentMod.getFullPath();
                         if (!currentMod.canBeCombined) {
                             res.push({
@@ -5368,7 +5338,7 @@ var KISSY = (function (undefined) {
             }
 
             if (requireCodeStyle) {
-                modNames = Utils.getRequiresFromFn(success);
+                modNames = Utils.getRequiresFromFn(success,1);
             }
 
             finalSuccess = function () {
@@ -5458,7 +5428,7 @@ var KISSY = (function (undefined) {
     var doc = S.Env.host && S.Env.host.document;
     // var logger = S.getLogger('s/loader');
     var Utils = S.Loader.Utils;
-    var TIMESTAMP = '20131118191706';
+    var TIMESTAMP = '20131118221304';
     var defaultComboPrefix = '??';
     var defaultComboSep = ',';
 

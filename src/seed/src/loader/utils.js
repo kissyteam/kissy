@@ -404,29 +404,6 @@
         },
 
         /**
-         * Get mapped path.
-         * @param runtime Module container, such as KISSY
-         * @param {String} path module path
-         * @param [rules] map rules
-         * @return {String} mapped path
-         */
-        getMappedPath: function (runtime, path, rules) {
-            var mappedRules = rules ||
-                    runtime.Config.mappedRules ||
-                    [],
-                i,
-                m,
-                rule;
-            for (i = 0; i < mappedRules.length; i++) {
-                rule = mappedRules[i];
-                if (m = path.match(rule[0])) {
-                    return path.replace(rule[0], rule[1]);
-                }
-            }
-            return path;
-        },
-
-        /**
          * Returns hash code of a string djb2 algorithm
          * @param {String} str
          * @returns {String} hash code
@@ -441,14 +418,15 @@
             return hash + '';
         },
 
-        getRequiresFromFn: function (fn) {
+        getRequiresFromFn: function (fn, mode) {
+            mode = mode || 0;
             var requires = [];
             // Remove comments from the callback string,
             // look for require calls, and pull them into the dependencies,
             // but only if there are function args.
             fn.toString()
                 .replace(commentRegExp, '')
-                .replace(requireRegExp, function (match, dep) {
+                .replace(requireRegExp[mode], function (match, dep) {
                     requires.push(getRequireVal(dep));
                 });
             return requires;
@@ -456,7 +434,9 @@
     });
 
     var commentRegExp = /(\/\*([\s\S]*?)\*\/|([^:]|^)\/\/(.*)$)/mg,
-        requireRegExp = /[^.'"]\s*module.require\s*\((.+)\);/g;
+        requireRegExp = [ /[^.'"]\s*module.require\s*\((.+)\);/g,
+            // avoid compression
+            /[^.'"]\s*KISSY.require\s*\((.+)\);/g];
 
     function getRequireVal(str) {
         var m;

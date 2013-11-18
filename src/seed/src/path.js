@@ -49,7 +49,6 @@
      * @singleton
      */
     var Path = S.Path = {
-
         /**
          * resolve([from ...], to)
          * @return {String} Resolved path.

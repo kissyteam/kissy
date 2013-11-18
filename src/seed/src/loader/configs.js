@@ -20,22 +20,6 @@
         S.getScript(rs.fullpath, config);
     };
 
-    configFns.map = function (rules) {
-        var Config = this.Config;
-        if (rules === false) {
-            return Config.mappedRules = [];
-        }
-        return Config.mappedRules = (Config.mappedRules || []).concat(rules || []);
-    };
-
-    configFns.mapCombo = function (rules) {
-        var Config = this.Config;
-        if (rules === false) {
-            return Config.mappedComboRules = [];
-        }
-        return Config.mappedComboRules = (Config.mappedComboRules || []).concat(rules || []);
-    };
-
     configFns.packages = function (config) {
         var name,
             Config = this.Config,
@@ -44,7 +28,6 @@
             S.each(config, function (cfg, key) {
                 // 兼容数组方式
                 name = cfg.name || key;
-
                 // 兼容 path
                 var baseUri = normalizeBase(cfg.base || cfg.path);
 
@@ -61,8 +44,7 @@
             });
             return undefined;
         } else if (config === false) {
-            Config.packages = {
-            };
+            Config.packages = {};
             return undefined;
         } else {
             return ps;

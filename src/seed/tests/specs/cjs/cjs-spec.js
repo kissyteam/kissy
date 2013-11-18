@@ -7,9 +7,8 @@ describe('it support module.require', function () {
             }
         });
         var ret;
-        S.use(function (S) {
-            var module = this;
-            ret = module.require('cjs/a');
+        S.use(function () {
+            ret = KISSY.require('cjs/a');
         });
         waitsFor(function () {
             return ret == 3

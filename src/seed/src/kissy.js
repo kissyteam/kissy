@@ -98,10 +98,6 @@ var KISSY = (function (undefined) {
          * @param {String} configName.packages.combine Whether allow combine for current package modules.
          * @param {String} [configName.packages.ignorePackageNameInUri=false] whether remove packageName from module request uri,
          * can only be used in production mode.
-         * @param {Array[]} configName.map file map      File url map configs.
-         * @param {Array[]} configName.map.0     A single map rule.
-         * @param {RegExp} configName.map.0.0    A regular expression to match url.
-         * @param {String|Function} configName.map.0.1   Replacement for String.replace.
          * @param [configValue] config value.
          *
          * for example:

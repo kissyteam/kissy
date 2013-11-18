@@ -106,7 +106,7 @@
             }
 
             if (requireCodeStyle) {
-                modNames = Utils.getRequiresFromFn(success);
+                modNames = Utils.getRequiresFromFn(success,1);
             }
 
             finalSuccess = function () {

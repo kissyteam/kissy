@@ -233,26 +233,30 @@ if (! _$jscoverage['/kissy.js']) {
   _$jscoverage['/kissy.js'].lineData[25] = 0;
   _$jscoverage['/kissy.js'].lineData[30] = 0;
   _$jscoverage['/kissy.js'].lineData[37] = 0;
-  _$jscoverage['/kissy.js'].lineData[125] = 0;
+  _$jscoverage['/kissy.js'].lineData[121] = 0;
+  _$jscoverage['/kissy.js'].lineData[127] = 0;
+  _$jscoverage['/kissy.js'].lineData[128] = 0;
+  _$jscoverage['/kissy.js'].lineData[129] = 0;
+  _$jscoverage['/kissy.js'].lineData[130] = 0;
   _$jscoverage['/kissy.js'].lineData[131] = 0;
-  _$jscoverage['/kissy.js'].lineData[132] = 0;
   _$jscoverage['/kissy.js'].lineData[133] = 0;
-  _$jscoverage['/kissy.js'].lineData[134] = 0;
-  _$jscoverage['/kissy.js'].lineData[135] = 0;
   _$jscoverage['/kissy.js'].lineData[137] = 0;
-  _$jscoverage['/kissy.js'].lineData[141] = 0;
+  _$jscoverage['/kissy.js'].lineData[138] = 0;
+  _$jscoverage['/kissy.js'].lineData[139] = 0;
+  _$jscoverage['/kissy.js'].lineData[140] = 0;
   _$jscoverage['/kissy.js'].lineData[142] = 0;
-  _$jscoverage['/kissy.js'].lineData[143] = 0;
-  _$jscoverage['/kissy.js'].lineData[144] = 0;
+  _$jscoverage['/kissy.js'].lineData[145] = 0;
   _$jscoverage['/kissy.js'].lineData[146] = 0;
-  _$jscoverage['/kissy.js'].lineData[149] = 0;
-  _$jscoverage['/kissy.js'].lineData[150] = 0;
+  _$jscoverage['/kissy.js'].lineData[148] = 0;
   _$jscoverage['/kissy.js'].lineData[152] = 0;
-  _$jscoverage['/kissy.js'].lineData[156] = 0;
-  _$jscoverage['/kissy.js'].lineData[167] = 0;
+  _$jscoverage['/kissy.js'].lineData[163] = 0;
+  _$jscoverage['/kissy.js'].lineData[164] = 0;
+  _$jscoverage['/kissy.js'].lineData[165] = 0;
+  _$jscoverage['/kissy.js'].lineData[166] = 0;
   _$jscoverage['/kissy.js'].lineData[168] = 0;
   _$jscoverage['/kissy.js'].lineData[169] = 0;
   _$jscoverage['/kissy.js'].lineData[170] = 0;
+  _$jscoverage['/kissy.js'].lineData[171] = 0;
   _$jscoverage['/kissy.js'].lineData[172] = 0;
   _$jscoverage['/kissy.js'].lineData[173] = 0;
   _$jscoverage['/kissy.js'].lineData[174] = 0;
@@ -261,46 +265,42 @@ if (! _$jscoverage['/kissy.js']) {
   _$jscoverage['/kissy.js'].lineData[177] = 0;
   _$jscoverage['/kissy.js'].lineData[178] = 0;
   _$jscoverage['/kissy.js'].lineData[179] = 0;
-  _$jscoverage['/kissy.js'].lineData[180] = 0;
-  _$jscoverage['/kissy.js'].lineData[181] = 0;
   _$jscoverage['/kissy.js'].lineData[182] = 0;
   _$jscoverage['/kissy.js'].lineData[183] = 0;
+  _$jscoverage['/kissy.js'].lineData[184] = 0;
+  _$jscoverage['/kissy.js'].lineData[185] = 0;
   _$jscoverage['/kissy.js'].lineData[186] = 0;
   _$jscoverage['/kissy.js'].lineData[187] = 0;
   _$jscoverage['/kissy.js'].lineData[188] = 0;
   _$jscoverage['/kissy.js'].lineData[189] = 0;
   _$jscoverage['/kissy.js'].lineData[190] = 0;
   _$jscoverage['/kissy.js'].lineData[191] = 0;
-  _$jscoverage['/kissy.js'].lineData[192] = 0;
-  _$jscoverage['/kissy.js'].lineData[193] = 0;
-  _$jscoverage['/kissy.js'].lineData[194] = 0;
   _$jscoverage['/kissy.js'].lineData[195] = 0;
+  _$jscoverage['/kissy.js'].lineData[196] = 0;
   _$jscoverage['/kissy.js'].lineData[199] = 0;
   _$jscoverage['/kissy.js'].lineData[200] = 0;
-  _$jscoverage['/kissy.js'].lineData[203] = 0;
+  _$jscoverage['/kissy.js'].lineData[201] = 0;
   _$jscoverage['/kissy.js'].lineData[204] = 0;
-  _$jscoverage['/kissy.js'].lineData[205] = 0;
-  _$jscoverage['/kissy.js'].lineData[208] = 0;
-  _$jscoverage['/kissy.js'].lineData[217] = 0;
-  _$jscoverage['/kissy.js'].lineData[224] = 0;
-  _$jscoverage['/kissy.js'].lineData[226] = 0;
+  _$jscoverage['/kissy.js'].lineData[213] = 0;
+  _$jscoverage['/kissy.js'].lineData[220] = 0;
+  _$jscoverage['/kissy.js'].lineData[222] = 0;
+  _$jscoverage['/kissy.js'].lineData[232] = 0;
   _$jscoverage['/kissy.js'].lineData[236] = 0;
-  _$jscoverage['/kissy.js'].lineData[240] = 0;
-  _$jscoverage['/kissy.js'].lineData[241] = 0;
-  _$jscoverage['/kissy.js'].lineData[256] = 0;
-  _$jscoverage['/kissy.js'].lineData[265] = 0;
-  _$jscoverage['/kissy.js'].lineData[272] = 0;
-  _$jscoverage['/kissy.js'].lineData[279] = 0;
+  _$jscoverage['/kissy.js'].lineData[237] = 0;
+  _$jscoverage['/kissy.js'].lineData[252] = 0;
+  _$jscoverage['/kissy.js'].lineData[261] = 0;
+  _$jscoverage['/kissy.js'].lineData[268] = 0;
+  _$jscoverage['/kissy.js'].lineData[275] = 0;
+  _$jscoverage['/kissy.js'].lineData[282] = 0;
   _$jscoverage['/kissy.js'].lineData[286] = 0;
+  _$jscoverage['/kissy.js'].lineData[287] = 0;
+  _$jscoverage['/kissy.js'].lineData[288] = 0;
+  _$jscoverage['/kissy.js'].lineData[289] = 0;
   _$jscoverage['/kissy.js'].lineData[290] = 0;
-  _$jscoverage['/kissy.js'].lineData[291] = 0;
-  _$jscoverage['/kissy.js'].lineData[292] = 0;
   _$jscoverage['/kissy.js'].lineData[293] = 0;
-  _$jscoverage['/kissy.js'].lineData[294] = 0;
-  _$jscoverage['/kissy.js'].lineData[297] = 0;
-  _$jscoverage['/kissy.js'].lineData[305] = 0;
-  _$jscoverage['/kissy.js'].lineData[307] = 0;
-  _$jscoverage['/kissy.js'].lineData[326] = 0;
+  _$jscoverage['/kissy.js'].lineData[301] = 0;
+  _$jscoverage['/kissy.js'].lineData[303] = 0;
+  _$jscoverage['/kissy.js'].lineData[322] = 0;
 }
 if (! _$jscoverage['/kissy.js'].functionData) {
   _$jscoverage['/kissy.js'].functionData = [];
@@ -322,202 +322,202 @@ if (! _$jscoverage['/kissy.js'].functionData) {
 }
 if (! _$jscoverage['/kissy.js'].branchData) {
   _$jscoverage['/kissy.js'].branchData = {};
-  _$jscoverage['/kissy.js'].branchData['131'] = [];
-  _$jscoverage['/kissy.js'].branchData['131'][1] = new BranchData();
-  _$jscoverage['/kissy.js'].branchData['134'] = [];
-  _$jscoverage['/kissy.js'].branchData['134'][1] = new BranchData();
-  _$jscoverage['/kissy.js'].branchData['142'] = [];
-  _$jscoverage['/kissy.js'].branchData['142'][1] = new BranchData();
-  _$jscoverage['/kissy.js'].branchData['143'] = [];
-  _$jscoverage['/kissy.js'].branchData['143'][1] = new BranchData();
-  _$jscoverage['/kissy.js'].branchData['149'] = [];
-  _$jscoverage['/kissy.js'].branchData['149'][1] = new BranchData();
-  _$jscoverage['/kissy.js'].branchData['167'] = [];
-  _$jscoverage['/kissy.js'].branchData['167'][1] = new BranchData();
+  _$jscoverage['/kissy.js'].branchData['127'] = [];
+  _$jscoverage['/kissy.js'].branchData['127'][1] = new BranchData();
+  _$jscoverage['/kissy.js'].branchData['130'] = [];
+  _$jscoverage['/kissy.js'].branchData['130'][1] = new BranchData();
+  _$jscoverage['/kissy.js'].branchData['138'] = [];
+  _$jscoverage['/kissy.js'].branchData['138'][1] = new BranchData();
+  _$jscoverage['/kissy.js'].branchData['139'] = [];
+  _$jscoverage['/kissy.js'].branchData['139'][1] = new BranchData();
+  _$jscoverage['/kissy.js'].branchData['145'] = [];
+  _$jscoverage['/kissy.js'].branchData['145'][1] = new BranchData();
+  _$jscoverage['/kissy.js'].branchData['163'] = [];
+  _$jscoverage['/kissy.js'].branchData['163'][1] = new BranchData();
+  _$jscoverage['/kissy.js'].branchData['165'] = [];
+  _$jscoverage['/kissy.js'].branchData['165'][1] = new BranchData();
+  _$jscoverage['/kissy.js'].branchData['166'] = [];
+  _$jscoverage['/kissy.js'].branchData['166'][1] = new BranchData();
+  _$jscoverage['/kissy.js'].branchData['168'] = [];
+  _$jscoverage['/kissy.js'].branchData['168'][1] = new BranchData();
   _$jscoverage['/kissy.js'].branchData['169'] = [];
   _$jscoverage['/kissy.js'].branchData['169'][1] = new BranchData();
   _$jscoverage['/kissy.js'].branchData['170'] = [];
   _$jscoverage['/kissy.js'].branchData['170'][1] = new BranchData();
   _$jscoverage['/kissy.js'].branchData['172'] = [];
   _$jscoverage['/kissy.js'].branchData['172'][1] = new BranchData();
-  _$jscoverage['/kissy.js'].branchData['173'] = [];
-  _$jscoverage['/kissy.js'].branchData['173'][1] = new BranchData();
-  _$jscoverage['/kissy.js'].branchData['174'] = [];
-  _$jscoverage['/kissy.js'].branchData['174'][1] = new BranchData();
+  _$jscoverage['/kissy.js'].branchData['175'] = [];
+  _$jscoverage['/kissy.js'].branchData['175'][1] = new BranchData();
   _$jscoverage['/kissy.js'].branchData['176'] = [];
   _$jscoverage['/kissy.js'].branchData['176'][1] = new BranchData();
-  _$jscoverage['/kissy.js'].branchData['179'] = [];
-  _$jscoverage['/kissy.js'].branchData['179'][1] = new BranchData();
-  _$jscoverage['/kissy.js'].branchData['180'] = [];
-  _$jscoverage['/kissy.js'].branchData['180'][1] = new BranchData();
-  _$jscoverage['/kissy.js'].branchData['181'] = [];
-  _$jscoverage['/kissy.js'].branchData['181'][1] = new BranchData();
-  _$jscoverage['/kissy.js'].branchData['181'][2] = new BranchData();
-  _$jscoverage['/kissy.js'].branchData['181'][3] = new BranchData();
-  _$jscoverage['/kissy.js'].branchData['181'][4] = new BranchData();
-  _$jscoverage['/kissy.js'].branchData['186'] = [];
-  _$jscoverage['/kissy.js'].branchData['186'][1] = new BranchData();
+  _$jscoverage['/kissy.js'].branchData['177'] = [];
+  _$jscoverage['/kissy.js'].branchData['177'][1] = new BranchData();
+  _$jscoverage['/kissy.js'].branchData['177'][2] = new BranchData();
+  _$jscoverage['/kissy.js'].branchData['177'][3] = new BranchData();
+  _$jscoverage['/kissy.js'].branchData['177'][4] = new BranchData();
+  _$jscoverage['/kissy.js'].branchData['182'] = [];
+  _$jscoverage['/kissy.js'].branchData['182'][1] = new BranchData();
+  _$jscoverage['/kissy.js'].branchData['184'] = [];
+  _$jscoverage['/kissy.js'].branchData['184'][1] = new BranchData();
+  _$jscoverage['/kissy.js'].branchData['187'] = [];
+  _$jscoverage['/kissy.js'].branchData['187'][1] = new BranchData();
   _$jscoverage['/kissy.js'].branchData['188'] = [];
   _$jscoverage['/kissy.js'].branchData['188'][1] = new BranchData();
-  _$jscoverage['/kissy.js'].branchData['191'] = [];
-  _$jscoverage['/kissy.js'].branchData['191'][1] = new BranchData();
-  _$jscoverage['/kissy.js'].branchData['192'] = [];
-  _$jscoverage['/kissy.js'].branchData['192'][1] = new BranchData();
-  _$jscoverage['/kissy.js'].branchData['193'] = [];
-  _$jscoverage['/kissy.js'].branchData['193'][1] = new BranchData();
-  _$jscoverage['/kissy.js'].branchData['193'][2] = new BranchData();
-  _$jscoverage['/kissy.js'].branchData['193'][3] = new BranchData();
-  _$jscoverage['/kissy.js'].branchData['193'][4] = new BranchData();
+  _$jscoverage['/kissy.js'].branchData['189'] = [];
+  _$jscoverage['/kissy.js'].branchData['189'][1] = new BranchData();
+  _$jscoverage['/kissy.js'].branchData['189'][2] = new BranchData();
+  _$jscoverage['/kissy.js'].branchData['189'][3] = new BranchData();
+  _$jscoverage['/kissy.js'].branchData['189'][4] = new BranchData();
+  _$jscoverage['/kissy.js'].branchData['195'] = [];
+  _$jscoverage['/kissy.js'].branchData['195'][1] = new BranchData();
   _$jscoverage['/kissy.js'].branchData['199'] = [];
   _$jscoverage['/kissy.js'].branchData['199'][1] = new BranchData();
-  _$jscoverage['/kissy.js'].branchData['203'] = [];
-  _$jscoverage['/kissy.js'].branchData['203'][1] = new BranchData();
-  _$jscoverage['/kissy.js'].branchData['203'][2] = new BranchData();
-  _$jscoverage['/kissy.js'].branchData['203'][3] = new BranchData();
-  _$jscoverage['/kissy.js'].branchData['204'] = [];
-  _$jscoverage['/kissy.js'].branchData['204'][1] = new BranchData();
-  _$jscoverage['/kissy.js'].branchData['224'] = [];
-  _$jscoverage['/kissy.js'].branchData['224'][1] = new BranchData();
+  _$jscoverage['/kissy.js'].branchData['199'][2] = new BranchData();
+  _$jscoverage['/kissy.js'].branchData['199'][3] = new BranchData();
+  _$jscoverage['/kissy.js'].branchData['200'] = [];
+  _$jscoverage['/kissy.js'].branchData['200'][1] = new BranchData();
+  _$jscoverage['/kissy.js'].branchData['220'] = [];
+  _$jscoverage['/kissy.js'].branchData['220'][1] = new BranchData();
+  _$jscoverage['/kissy.js'].branchData['232'] = [];
+  _$jscoverage['/kissy.js'].branchData['232'][1] = new BranchData();
   _$jscoverage['/kissy.js'].branchData['236'] = [];
   _$jscoverage['/kissy.js'].branchData['236'][1] = new BranchData();
-  _$jscoverage['/kissy.js'].branchData['240'] = [];
-  _$jscoverage['/kissy.js'].branchData['240'][1] = new BranchData();
 }
-_$jscoverage['/kissy.js'].branchData['240'][1].init(8438, 9, '\'@DEBUG@\'');
-function visit64_240_1(result) {
-  _$jscoverage['/kissy.js'].branchData['240'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/kissy.js'].branchData['236'][1].init(21, 12, 'pre || EMPTY');
-function visit63_236_1(result) {
+_$jscoverage['/kissy.js'].branchData['236'][1].init(8118, 9, '\'@DEBUG@\'');
+function visit64_236_1(result) {
   _$jscoverage['/kissy.js'].branchData['236'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kissy.js'].branchData['224'][1].init(17, 9, '\'@DEBUG@\'');
-function visit62_224_1(result) {
-  _$jscoverage['/kissy.js'].branchData['224'][1].ranCondition(result);
+}_$jscoverage['/kissy.js'].branchData['232'][1].init(21, 12, 'pre || EMPTY');
+function visit63_232_1(result) {
+  _$jscoverage['/kissy.js'].branchData['232'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kissy.js'].branchData['204'][1].init(29, 19, 'cat && console[cat]');
-function visit61_204_1(result) {
-  _$jscoverage['/kissy.js'].branchData['204'][1].ranCondition(result);
+}_$jscoverage['/kissy.js'].branchData['220'][1].init(17, 9, '\'@DEBUG@\'');
+function visit62_220_1(result) {
+  _$jscoverage['/kissy.js'].branchData['220'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kissy.js'].branchData['203'][3].init(1803, 22, 'console.log && matched');
-function visit60_203_3(result) {
-  _$jscoverage['/kissy.js'].branchData['203'][3].ranCondition(result);
+}_$jscoverage['/kissy.js'].branchData['200'][1].init(29, 19, 'cat && console[cat]');
+function visit61_200_1(result) {
+  _$jscoverage['/kissy.js'].branchData['200'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kissy.js'].branchData['203'][2].init(1770, 29, 'host[\'console\'] !== undefined');
-function visit59_203_2(result) {
-  _$jscoverage['/kissy.js'].branchData['203'][2].ranCondition(result);
+}_$jscoverage['/kissy.js'].branchData['199'][3].init(1803, 22, 'console.log && matched');
+function visit60_199_3(result) {
+  _$jscoverage['/kissy.js'].branchData['199'][3].ranCondition(result);
   return result;
-}_$jscoverage['/kissy.js'].branchData['203'][1].init(1770, 55, 'host[\'console\'] !== undefined && console.log && matched');
-function visit58_203_1(result) {
-  _$jscoverage['/kissy.js'].branchData['203'][1].ranCondition(result);
+}_$jscoverage['/kissy.js'].branchData['199'][2].init(1770, 29, 'host[\'console\'] !== undefined');
+function visit59_199_2(result) {
+  _$jscoverage['/kissy.js'].branchData['199'][2].ranCondition(result);
   return result;
-}_$jscoverage['/kissy.js'].branchData['199'][1].init(1585, 7, 'matched');
-function visit57_199_1(result) {
+}_$jscoverage['/kissy.js'].branchData['199'][1].init(1770, 55, 'host[\'console\'] !== undefined && console.log && matched');
+function visit58_199_1(result) {
   _$jscoverage['/kissy.js'].branchData['199'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kissy.js'].branchData['193'][4].init(315, 17, 'maxLevel >= level');
-function visit56_193_4(result) {
-  _$jscoverage['/kissy.js'].branchData['193'][4].ranCondition(result);
+}_$jscoverage['/kissy.js'].branchData['195'][1].init(1585, 7, 'matched');
+function visit57_195_1(result) {
+  _$jscoverage['/kissy.js'].branchData['195'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kissy.js'].branchData['193'][3].init(315, 38, 'maxLevel >= level && logger.match(reg)');
-function visit55_193_3(result) {
-  _$jscoverage['/kissy.js'].branchData['193'][3].ranCondition(result);
+}_$jscoverage['/kissy.js'].branchData['189'][4].init(315, 17, 'maxLevel >= level');
+function visit56_189_4(result) {
+  _$jscoverage['/kissy.js'].branchData['189'][4].ranCondition(result);
   return result;
-}_$jscoverage['/kissy.js'].branchData['193'][2].init(294, 17, 'minLevel <= level');
-function visit54_193_2(result) {
-  _$jscoverage['/kissy.js'].branchData['193'][2].ranCondition(result);
+}_$jscoverage['/kissy.js'].branchData['189'][3].init(315, 38, 'maxLevel >= level && logger.match(reg)');
+function visit55_189_3(result) {
+  _$jscoverage['/kissy.js'].branchData['189'][3].ranCondition(result);
   return result;
-}_$jscoverage['/kissy.js'].branchData['193'][1].init(294, 59, 'minLevel <= level && maxLevel >= level && logger.match(reg)');
-function visit53_193_1(result) {
-  _$jscoverage['/kissy.js'].branchData['193'][1].ranCondition(result);
+}_$jscoverage['/kissy.js'].branchData['189'][2].init(294, 17, 'minLevel <= level');
+function visit54_189_2(result) {
+  _$jscoverage['/kissy.js'].branchData['189'][2].ranCondition(result);
   return result;
-}_$jscoverage['/kissy.js'].branchData['192'][1].init(213, 47, 'loggerLevel[l.minLevel] || loggerLevel[\'debug\']');
-function visit52_192_1(result) {
-  _$jscoverage['/kissy.js'].branchData['192'][1].ranCondition(result);
+}_$jscoverage['/kissy.js'].branchData['189'][1].init(294, 59, 'minLevel <= level && maxLevel >= level && logger.match(reg)');
+function visit53_189_1(result) {
+  _$jscoverage['/kissy.js'].branchData['189'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kissy.js'].branchData['191'][1].init(125, 47, 'loggerLevel[l.maxLevel] || loggerLevel[\'error\']');
-function visit51_191_1(result) {
-  _$jscoverage['/kissy.js'].branchData['191'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/kissy.js'].branchData['188'][1].init(74, 15, 'i < list.length');
-function visit50_188_1(result) {
+}_$jscoverage['/kissy.js'].branchData['188'][1].init(213, 47, 'loggerLevel[l.minLevel] || loggerLevel[\'debug\']');
+function visit52_188_1(result) {
   _$jscoverage['/kissy.js'].branchData['188'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kissy.js'].branchData['186'][1].init(918, 25, 'list = loggerCfg.excludes');
-function visit49_186_1(result) {
-  _$jscoverage['/kissy.js'].branchData['186'][1].ranCondition(result);
+}_$jscoverage['/kissy.js'].branchData['187'][1].init(125, 47, 'loggerLevel[l.maxLevel] || loggerLevel[\'error\']');
+function visit51_187_1(result) {
+  _$jscoverage['/kissy.js'].branchData['187'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kissy.js'].branchData['181'][4].init(315, 17, 'maxLevel >= level');
-function visit48_181_4(result) {
-  _$jscoverage['/kissy.js'].branchData['181'][4].ranCondition(result);
+}_$jscoverage['/kissy.js'].branchData['184'][1].init(74, 15, 'i < list.length');
+function visit50_184_1(result) {
+  _$jscoverage['/kissy.js'].branchData['184'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kissy.js'].branchData['181'][3].init(315, 38, 'maxLevel >= level && logger.match(reg)');
-function visit47_181_3(result) {
-  _$jscoverage['/kissy.js'].branchData['181'][3].ranCondition(result);
+}_$jscoverage['/kissy.js'].branchData['182'][1].init(918, 25, 'list = loggerCfg.excludes');
+function visit49_182_1(result) {
+  _$jscoverage['/kissy.js'].branchData['182'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kissy.js'].branchData['181'][2].init(294, 17, 'minLevel <= level');
-function visit46_181_2(result) {
-  _$jscoverage['/kissy.js'].branchData['181'][2].ranCondition(result);
+}_$jscoverage['/kissy.js'].branchData['177'][4].init(315, 17, 'maxLevel >= level');
+function visit48_177_4(result) {
+  _$jscoverage['/kissy.js'].branchData['177'][4].ranCondition(result);
   return result;
-}_$jscoverage['/kissy.js'].branchData['181'][1].init(294, 59, 'minLevel <= level && maxLevel >= level && logger.match(reg)');
-function visit45_181_1(result) {
-  _$jscoverage['/kissy.js'].branchData['181'][1].ranCondition(result);
+}_$jscoverage['/kissy.js'].branchData['177'][3].init(315, 38, 'maxLevel >= level && logger.match(reg)');
+function visit47_177_3(result) {
+  _$jscoverage['/kissy.js'].branchData['177'][3].ranCondition(result);
   return result;
-}_$jscoverage['/kissy.js'].branchData['180'][1].init(213, 47, 'loggerLevel[l.minLevel] || loggerLevel[\'debug\']');
-function visit44_180_1(result) {
-  _$jscoverage['/kissy.js'].branchData['180'][1].ranCondition(result);
+}_$jscoverage['/kissy.js'].branchData['177'][2].init(294, 17, 'minLevel <= level');
+function visit46_177_2(result) {
+  _$jscoverage['/kissy.js'].branchData['177'][2].ranCondition(result);
   return result;
-}_$jscoverage['/kissy.js'].branchData['179'][1].init(125, 47, 'loggerLevel[l.maxLevel] || loggerLevel[\'error\']');
-function visit43_179_1(result) {
-  _$jscoverage['/kissy.js'].branchData['179'][1].ranCondition(result);
+}_$jscoverage['/kissy.js'].branchData['177'][1].init(294, 59, 'minLevel <= level && maxLevel >= level && logger.match(reg)');
+function visit45_177_1(result) {
+  _$jscoverage['/kissy.js'].branchData['177'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kissy.js'].branchData['176'][1].init(74, 15, 'i < list.length');
-function visit42_176_1(result) {
+}_$jscoverage['/kissy.js'].branchData['176'][1].init(213, 47, 'loggerLevel[l.minLevel] || loggerLevel[\'debug\']');
+function visit44_176_1(result) {
   _$jscoverage['/kissy.js'].branchData['176'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kissy.js'].branchData['174'][1].init(264, 25, 'list = loggerCfg.includes');
-function visit41_174_1(result) {
-  _$jscoverage['/kissy.js'].branchData['174'][1].ranCondition(result);
+}_$jscoverage['/kissy.js'].branchData['175'][1].init(125, 47, 'loggerLevel[l.maxLevel] || loggerLevel[\'error\']');
+function visit43_175_1(result) {
+  _$jscoverage['/kissy.js'].branchData['175'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kissy.js'].branchData['173'][1].init(198, 40, 'loggerLevel[cat] || loggerLevel[\'debug\']');
-function visit40_173_1(result) {
-  _$jscoverage['/kissy.js'].branchData['173'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/kissy.js'].branchData['172'][1].init(154, 14, 'cat || \'debug\'');
-function visit39_172_1(result) {
+}_$jscoverage['/kissy.js'].branchData['172'][1].init(74, 15, 'i < list.length');
+function visit42_172_1(result) {
   _$jscoverage['/kissy.js'].branchData['172'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kissy.js'].branchData['170'][1].init(37, 21, 'S.Config.logger || {}');
-function visit38_170_1(result) {
+}_$jscoverage['/kissy.js'].branchData['170'][1].init(264, 25, 'list = loggerCfg.includes');
+function visit41_170_1(result) {
   _$jscoverage['/kissy.js'].branchData['170'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kissy.js'].branchData['169'][1].init(54, 6, 'logger');
-function visit37_169_1(result) {
+}_$jscoverage['/kissy.js'].branchData['169'][1].init(198, 40, 'loggerLevel[cat] || loggerLevel[\'debug\']');
+function visit40_169_1(result) {
   _$jscoverage['/kissy.js'].branchData['169'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kissy.js'].branchData['167'][1].init(17, 9, '\'@DEBUG@\'');
-function visit36_167_1(result) {
-  _$jscoverage['/kissy.js'].branchData['167'][1].ranCondition(result);
+}_$jscoverage['/kissy.js'].branchData['168'][1].init(154, 14, 'cat || \'debug\'');
+function visit39_168_1(result) {
+  _$jscoverage['/kissy.js'].branchData['168'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kissy.js'].branchData['149'][1].init(25, 3, 'cfg');
-function visit35_149_1(result) {
-  _$jscoverage['/kissy.js'].branchData['149'][1].ranCondition(result);
+}_$jscoverage['/kissy.js'].branchData['166'][1].init(37, 21, 'S.Config.logger || {}');
+function visit38_166_1(result) {
+  _$jscoverage['/kissy.js'].branchData['166'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kissy.js'].branchData['143'][1].init(25, 3, 'cfg');
-function visit34_143_1(result) {
-  _$jscoverage['/kissy.js'].branchData['143'][1].ranCondition(result);
+}_$jscoverage['/kissy.js'].branchData['165'][1].init(54, 6, 'logger');
+function visit37_165_1(result) {
+  _$jscoverage['/kissy.js'].branchData['165'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kissy.js'].branchData['142'][1].init(66, 25, 'configValue === undefined');
-function visit33_142_1(result) {
-  _$jscoverage['/kissy.js'].branchData['142'][1].ranCondition(result);
+}_$jscoverage['/kissy.js'].branchData['163'][1].init(17, 9, '\'@DEBUG@\'');
+function visit36_163_1(result) {
+  _$jscoverage['/kissy.js'].branchData['163'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kissy.js'].branchData['134'][1].init(64, 2, 'fn');
-function visit32_134_1(result) {
-  _$jscoverage['/kissy.js'].branchData['134'][1].ranCondition(result);
+}_$jscoverage['/kissy.js'].branchData['145'][1].init(25, 3, 'cfg');
+function visit35_145_1(result) {
+  _$jscoverage['/kissy.js'].branchData['145'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kissy.js'].branchData['131'][1].init(181, 22, 'S.isObject(configName)');
-function visit31_131_1(result) {
-  _$jscoverage['/kissy.js'].branchData['131'][1].ranCondition(result);
+}_$jscoverage['/kissy.js'].branchData['139'][1].init(25, 3, 'cfg');
+function visit34_139_1(result) {
+  _$jscoverage['/kissy.js'].branchData['139'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/kissy.js'].branchData['138'][1].init(66, 25, 'configValue === undefined');
+function visit33_138_1(result) {
+  _$jscoverage['/kissy.js'].branchData['138'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/kissy.js'].branchData['130'][1].init(64, 2, 'fn');
+function visit32_130_1(result) {
+  _$jscoverage['/kissy.js'].branchData['130'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/kissy.js'].branchData['127'][1].init(181, 22, 'S.isObject(configName)');
+function visit31_127_1(result) {
+  _$jscoverage['/kissy.js'].branchData['127'][1].ranCondition(result);
   return result;
 }_$jscoverage['/kissy.js'].lineData[24]++;
 var KISSY = (function(undefined) {
@@ -541,201 +541,201 @@ var KISSY = (function(undefined) {
   version: '@VERSION@', 
   config: function(configName, configValue) {
   _$jscoverage['/kissy.js'].functionData[1]++;
-  _$jscoverage['/kissy.js'].lineData[125]++;
+  _$jscoverage['/kissy.js'].lineData[121]++;
   var cfg, r, self = this, fn, Config = S.Config, configFns = Config.fns;
-  _$jscoverage['/kissy.js'].lineData[131]++;
-  if (visit31_131_1(S.isObject(configName))) {
-    _$jscoverage['/kissy.js'].lineData[132]++;
+  _$jscoverage['/kissy.js'].lineData[127]++;
+  if (visit31_127_1(S.isObject(configName))) {
+    _$jscoverage['/kissy.js'].lineData[128]++;
     S.each(configName, function(configValue, p) {
   _$jscoverage['/kissy.js'].functionData[2]++;
-  _$jscoverage['/kissy.js'].lineData[133]++;
+  _$jscoverage['/kissy.js'].lineData[129]++;
   fn = configFns[p];
-  _$jscoverage['/kissy.js'].lineData[134]++;
-  if (visit32_134_1(fn)) {
-    _$jscoverage['/kissy.js'].lineData[135]++;
+  _$jscoverage['/kissy.js'].lineData[130]++;
+  if (visit32_130_1(fn)) {
+    _$jscoverage['/kissy.js'].lineData[131]++;
     fn.call(self, configValue);
   } else {
-    _$jscoverage['/kissy.js'].lineData[137]++;
+    _$jscoverage['/kissy.js'].lineData[133]++;
     Config[p] = configValue;
   }
 });
   } else {
-    _$jscoverage['/kissy.js'].lineData[141]++;
+    _$jscoverage['/kissy.js'].lineData[137]++;
     cfg = configFns[configName];
-    _$jscoverage['/kissy.js'].lineData[142]++;
-    if (visit33_142_1(configValue === undefined)) {
-      _$jscoverage['/kissy.js'].lineData[143]++;
-      if (visit34_143_1(cfg)) {
-        _$jscoverage['/kissy.js'].lineData[144]++;
+    _$jscoverage['/kissy.js'].lineData[138]++;
+    if (visit33_138_1(configValue === undefined)) {
+      _$jscoverage['/kissy.js'].lineData[139]++;
+      if (visit34_139_1(cfg)) {
+        _$jscoverage['/kissy.js'].lineData[140]++;
         r = cfg.call(self);
       } else {
-        _$jscoverage['/kissy.js'].lineData[146]++;
+        _$jscoverage['/kissy.js'].lineData[142]++;
         r = Config[configName];
       }
     } else {
-      _$jscoverage['/kissy.js'].lineData[149]++;
-      if (visit35_149_1(cfg)) {
-        _$jscoverage['/kissy.js'].lineData[150]++;
+      _$jscoverage['/kissy.js'].lineData[145]++;
+      if (visit35_145_1(cfg)) {
+        _$jscoverage['/kissy.js'].lineData[146]++;
         r = cfg.call(self, configValue);
       } else {
-        _$jscoverage['/kissy.js'].lineData[152]++;
+        _$jscoverage['/kissy.js'].lineData[148]++;
         Config[configName] = configValue;
       }
     }
   }
-  _$jscoverage['/kissy.js'].lineData[156]++;
+  _$jscoverage['/kissy.js'].lineData[152]++;
   return r;
 }, 
   log: function(msg, cat, logger) {
   _$jscoverage['/kissy.js'].functionData[3]++;
-  _$jscoverage['/kissy.js'].lineData[167]++;
-  if (visit36_167_1('@DEBUG@')) {
-    _$jscoverage['/kissy.js'].lineData[168]++;
+  _$jscoverage['/kissy.js'].lineData[163]++;
+  if (visit36_163_1('@DEBUG@')) {
+    _$jscoverage['/kissy.js'].lineData[164]++;
     var matched = 1;
-    _$jscoverage['/kissy.js'].lineData[169]++;
-    if (visit37_169_1(logger)) {
+    _$jscoverage['/kissy.js'].lineData[165]++;
+    if (visit37_165_1(logger)) {
+      _$jscoverage['/kissy.js'].lineData[166]++;
+      var loggerCfg = visit38_166_1(S.Config.logger || {}), list, i, l, level, minLevel, maxLevel, reg;
+      _$jscoverage['/kissy.js'].lineData[168]++;
+      cat = visit39_168_1(cat || 'debug');
+      _$jscoverage['/kissy.js'].lineData[169]++;
+      level = visit40_169_1(loggerLevel[cat] || loggerLevel['debug']);
       _$jscoverage['/kissy.js'].lineData[170]++;
-      var loggerCfg = visit38_170_1(S.Config.logger || {}), list, i, l, level, minLevel, maxLevel, reg;
-      _$jscoverage['/kissy.js'].lineData[172]++;
-      cat = visit39_172_1(cat || 'debug');
-      _$jscoverage['/kissy.js'].lineData[173]++;
-      level = visit40_173_1(loggerLevel[cat] || loggerLevel['debug']);
-      _$jscoverage['/kissy.js'].lineData[174]++;
-      if (visit41_174_1(list = loggerCfg.includes)) {
-        _$jscoverage['/kissy.js'].lineData[175]++;
+      if (visit41_170_1(list = loggerCfg.includes)) {
+        _$jscoverage['/kissy.js'].lineData[171]++;
         matched = 0;
-        _$jscoverage['/kissy.js'].lineData[176]++;
-        for (i = 0; visit42_176_1(i < list.length); i++) {
-          _$jscoverage['/kissy.js'].lineData[177]++;
+        _$jscoverage['/kissy.js'].lineData[172]++;
+        for (i = 0; visit42_172_1(i < list.length); i++) {
+          _$jscoverage['/kissy.js'].lineData[173]++;
           l = list[i];
-          _$jscoverage['/kissy.js'].lineData[178]++;
+          _$jscoverage['/kissy.js'].lineData[174]++;
           reg = l.logger;
-          _$jscoverage['/kissy.js'].lineData[179]++;
-          maxLevel = visit43_179_1(loggerLevel[l.maxLevel] || loggerLevel['error']);
-          _$jscoverage['/kissy.js'].lineData[180]++;
-          minLevel = visit44_180_1(loggerLevel[l.minLevel] || loggerLevel['debug']);
-          _$jscoverage['/kissy.js'].lineData[181]++;
-          if (visit45_181_1(visit46_181_2(minLevel <= level) && visit47_181_3(visit48_181_4(maxLevel >= level) && logger.match(reg)))) {
-            _$jscoverage['/kissy.js'].lineData[182]++;
+          _$jscoverage['/kissy.js'].lineData[175]++;
+          maxLevel = visit43_175_1(loggerLevel[l.maxLevel] || loggerLevel['error']);
+          _$jscoverage['/kissy.js'].lineData[176]++;
+          minLevel = visit44_176_1(loggerLevel[l.minLevel] || loggerLevel['debug']);
+          _$jscoverage['/kissy.js'].lineData[177]++;
+          if (visit45_177_1(visit46_177_2(minLevel <= level) && visit47_177_3(visit48_177_4(maxLevel >= level) && logger.match(reg)))) {
+            _$jscoverage['/kissy.js'].lineData[178]++;
             matched = 1;
-            _$jscoverage['/kissy.js'].lineData[183]++;
+            _$jscoverage['/kissy.js'].lineData[179]++;
             break;
           }
         }
       } else {
-        _$jscoverage['/kissy.js'].lineData[186]++;
-        if (visit49_186_1(list = loggerCfg.excludes)) {
-          _$jscoverage['/kissy.js'].lineData[187]++;
+        _$jscoverage['/kissy.js'].lineData[182]++;
+        if (visit49_182_1(list = loggerCfg.excludes)) {
+          _$jscoverage['/kissy.js'].lineData[183]++;
           matched = 1;
-          _$jscoverage['/kissy.js'].lineData[188]++;
-          for (i = 0; visit50_188_1(i < list.length); i++) {
-            _$jscoverage['/kissy.js'].lineData[189]++;
+          _$jscoverage['/kissy.js'].lineData[184]++;
+          for (i = 0; visit50_184_1(i < list.length); i++) {
+            _$jscoverage['/kissy.js'].lineData[185]++;
             l = list[i];
-            _$jscoverage['/kissy.js'].lineData[190]++;
+            _$jscoverage['/kissy.js'].lineData[186]++;
             reg = l.logger;
-            _$jscoverage['/kissy.js'].lineData[191]++;
-            maxLevel = visit51_191_1(loggerLevel[l.maxLevel] || loggerLevel['error']);
-            _$jscoverage['/kissy.js'].lineData[192]++;
-            minLevel = visit52_192_1(loggerLevel[l.minLevel] || loggerLevel['debug']);
-            _$jscoverage['/kissy.js'].lineData[193]++;
-            if (visit53_193_1(visit54_193_2(minLevel <= level) && visit55_193_3(visit56_193_4(maxLevel >= level) && logger.match(reg)))) {
-              _$jscoverage['/kissy.js'].lineData[194]++;
+            _$jscoverage['/kissy.js'].lineData[187]++;
+            maxLevel = visit51_187_1(loggerLevel[l.maxLevel] || loggerLevel['error']);
+            _$jscoverage['/kissy.js'].lineData[188]++;
+            minLevel = visit52_188_1(loggerLevel[l.minLevel] || loggerLevel['debug']);
+            _$jscoverage['/kissy.js'].lineData[189]++;
+            if (visit53_189_1(visit54_189_2(minLevel <= level) && visit55_189_3(visit56_189_4(maxLevel >= level) && logger.match(reg)))) {
+              _$jscoverage['/kissy.js'].lineData[190]++;
               matched = 0;
-              _$jscoverage['/kissy.js'].lineData[195]++;
+              _$jscoverage['/kissy.js'].lineData[191]++;
               break;
             }
           }
         }
       }
-      _$jscoverage['/kissy.js'].lineData[199]++;
-      if (visit57_199_1(matched)) {
-        _$jscoverage['/kissy.js'].lineData[200]++;
+      _$jscoverage['/kissy.js'].lineData[195]++;
+      if (visit57_195_1(matched)) {
+        _$jscoverage['/kissy.js'].lineData[196]++;
         msg = logger + ': ' + msg;
       }
     }
-    _$jscoverage['/kissy.js'].lineData[203]++;
-    if (visit58_203_1(visit59_203_2(host['console'] !== undefined) && visit60_203_3(console.log && matched))) {
-      _$jscoverage['/kissy.js'].lineData[204]++;
-      console[visit61_204_1(cat && console[cat]) ? cat : 'log'](msg);
-      _$jscoverage['/kissy.js'].lineData[205]++;
+    _$jscoverage['/kissy.js'].lineData[199]++;
+    if (visit58_199_1(visit59_199_2(host['console'] !== undefined) && visit60_199_3(console.log && matched))) {
+      _$jscoverage['/kissy.js'].lineData[200]++;
+      console[visit61_200_1(cat && console[cat]) ? cat : 'log'](msg);
+      _$jscoverage['/kissy.js'].lineData[201]++;
       return msg;
     }
   }
-  _$jscoverage['/kissy.js'].lineData[208]++;
+  _$jscoverage['/kissy.js'].lineData[204]++;
   return undefined;
 }, 
   'getLogger': function(logger) {
   _$jscoverage['/kissy.js'].functionData[4]++;
-  _$jscoverage['/kissy.js'].lineData[217]++;
+  _$jscoverage['/kissy.js'].lineData[213]++;
   return getLogger(logger);
 }, 
   error: function(msg) {
   _$jscoverage['/kissy.js'].functionData[5]++;
-  _$jscoverage['/kissy.js'].lineData[224]++;
-  if (visit62_224_1('@DEBUG@')) {
-    _$jscoverage['/kissy.js'].lineData[226]++;
+  _$jscoverage['/kissy.js'].lineData[220]++;
+  if (visit62_220_1('@DEBUG@')) {
+    _$jscoverage['/kissy.js'].lineData[222]++;
     throw msg instanceof Error ? msg : new Error(msg);
   }
 }, 
   guid: function(pre) {
   _$jscoverage['/kissy.js'].functionData[6]++;
-  _$jscoverage['/kissy.js'].lineData[236]++;
-  return (visit63_236_1(pre || EMPTY)) + guid++;
+  _$jscoverage['/kissy.js'].lineData[232]++;
+  return (visit63_232_1(pre || EMPTY)) + guid++;
 }};
-  _$jscoverage['/kissy.js'].lineData[240]++;
-  if (visit64_240_1('@DEBUG@')) {
-    _$jscoverage['/kissy.js'].lineData[241]++;
+  _$jscoverage['/kissy.js'].lineData[236]++;
+  if (visit64_236_1('@DEBUG@')) {
+    _$jscoverage['/kissy.js'].lineData[237]++;
     S.Config.logger = {
   excludes: [{
   logger: /^s\/.*/, 
   maxLevel: 'info', 
   minLevel: 'debug'}]};
-    _$jscoverage['/kissy.js'].lineData[256]++;
+    _$jscoverage['/kissy.js'].lineData[252]++;
     function Logger() {
       _$jscoverage['/kissy.js'].functionData[7]++;
-    }    _$jscoverage['/kissy.js'].lineData[265]++;
+    }    _$jscoverage['/kissy.js'].lineData[261]++;
     Logger.prototype.debug = function(str) {
   _$jscoverage['/kissy.js'].functionData[8]++;
 };
-    _$jscoverage['/kissy.js'].lineData[272]++;
+    _$jscoverage['/kissy.js'].lineData[268]++;
     Logger.prototype.info = function(str) {
   _$jscoverage['/kissy.js'].functionData[9]++;
 };
-    _$jscoverage['/kissy.js'].lineData[279]++;
+    _$jscoverage['/kissy.js'].lineData[275]++;
     Logger.prototype.warn = function(str) {
   _$jscoverage['/kissy.js'].functionData[10]++;
 };
-    _$jscoverage['/kissy.js'].lineData[286]++;
+    _$jscoverage['/kissy.js'].lineData[282]++;
     Logger.prototype.error = function(str) {
   _$jscoverage['/kissy.js'].functionData[11]++;
 };
   }
-  _$jscoverage['/kissy.js'].lineData[290]++;
+  _$jscoverage['/kissy.js'].lineData[286]++;
   function getLogger(logger) {
     _$jscoverage['/kissy.js'].functionData[12]++;
-    _$jscoverage['/kissy.js'].lineData[291]++;
+    _$jscoverage['/kissy.js'].lineData[287]++;
     var obj = {};
-    _$jscoverage['/kissy.js'].lineData[292]++;
+    _$jscoverage['/kissy.js'].lineData[288]++;
     S.each(loggerLevel, function(_, cat) {
   _$jscoverage['/kissy.js'].functionData[13]++;
-  _$jscoverage['/kissy.js'].lineData[293]++;
+  _$jscoverage['/kissy.js'].lineData[289]++;
   obj[cat] = function(msg) {
   _$jscoverage['/kissy.js'].functionData[14]++;
-  _$jscoverage['/kissy.js'].lineData[294]++;
+  _$jscoverage['/kissy.js'].lineData[290]++;
   return S.log(msg, cat, logger);
 };
 });
-    _$jscoverage['/kissy.js'].lineData[297]++;
+    _$jscoverage['/kissy.js'].lineData[293]++;
     return obj;
   }
-  _$jscoverage['/kissy.js'].lineData[305]++;
+  _$jscoverage['/kissy.js'].lineData[301]++;
   S.Logger = {};
-  _$jscoverage['/kissy.js'].lineData[307]++;
+  _$jscoverage['/kissy.js'].lineData[303]++;
   S.Logger.Level = {
   'DEBUG': 'debug', 
   INFO: 'info', 
   WARN: 'warn', 
   ERROR: 'error'};
-  _$jscoverage['/kissy.js'].lineData[326]++;
+  _$jscoverage['/kissy.js'].lineData[322]++;
   return S;
 })();
