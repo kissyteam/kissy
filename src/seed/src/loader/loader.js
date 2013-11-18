@@ -50,9 +50,9 @@
          * Registers a module with the KISSY global.
          * @param {String} name module name.
          * it must be set if combine is true in {@link KISSY#config}
-         * @param {Function} fn module definition function that is used to return
+         * @param {Function} factory module definition function that is used to return
          * exports of this module
-         * @param {KISSY} fn.S KISSY global instance
+         * @param {KISSY} factory.S KISSY global instance
          * @param {Object} [cfg] module optional config data
          * @param {String[]} cfg.requires this module's required module name list
          * @member KISSY
@@ -65,8 +65,8 @@
          *          requires:['xx']
          *      });
          */
-        add: function (name, fn, cfg) {
-            ComboLoader.add(name, fn, cfg, S);
+        add: function (name, factory, cfg) {
+            ComboLoader.add(name, factory, cfg, S);
         },
         /**
          * Attached one or more modules to global KISSY instance.

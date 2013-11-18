@@ -27,7 +27,7 @@
                     if (mod && currentMod) {
                         // standard browser(except ie9) fire load after KISSY.add immediately
                         logger.debug('standard browser get mod name after load : ' + mod.name);
-                        Utils.registerModule(runtime, mod.name, currentMod.fn, currentMod.config);
+                        Utils.registerModule(runtime, mod.name, currentMod.factory, currentMod.config);
                         currentMod = undefined;
                     }
                     complete();
@@ -100,14 +100,14 @@
         }
     }
 
-    function checkKISSYRequire(config, fn) {
+    function checkKISSYRequire(config, factory) {
         // use module.require primitive statement
-        if ((!config || !config.requires) && typeof fn == 'function') {
+        if ((!config || !config.requires) && typeof factory == 'function') {
             var requires = [];
             // Remove comments from the callback string,
             // look for require calls, and pull them into the dependencies,
             // but only if there are function args.
-            fn.toString()
+            factory.toString()
                 .replace(commentRegExp, '')
                 .replace(requireRegExp, function (match, dep) {
                     requires.push(getRequireVal(dep));
@@ -120,24 +120,24 @@
         return config;
     }
 
-    ComboLoader.add = function (name, fn, config, runtime) {
+    ComboLoader.add = function (name, factory, config, runtime) {
         if (typeof name === 'function' ||
             // KISSY.add('xx');
             arguments.length == 1) {
-            config = fn;
-            fn = name;
-            config = checkKISSYRequire(config, fn);
+            config = factory;
+            factory = name;
+            config = checkKISSYRequire(config, factory);
             if (oldIE) {
                 // http://groups.google.com/group/commonjs/browse_thread/thread/5a3358ece35e688e/43145ceccfb1dc02#43145ceccfb1dc02
                 name = findModuleNameByInteractive();
                 // S.log('oldIE get modName by interactive: ' + name);
-                Utils.registerModule(runtime, name, fn, config);
+                Utils.registerModule(runtime, name, factory, config);
                 startLoadModName = null;
                 startLoadModTime = 0;
             } else {
                 // 其他浏览器 onload 时，关联模块名与模块定义
                 currentMod = {
-                    fn: fn,
+                    factory: factory,
                     config: config
                 };
             }
@@ -148,8 +148,8 @@
             } else {
                 currentMod = undefined;
             }
-            config = checkKISSYRequire(config, fn);
-            Utils.registerModule(runtime, name, fn, config);
+            config = checkKISSYRequire(config, factory);
+            Utils.registerModule(runtime, name, factory, config);
         }
     };
 
@@ -267,7 +267,7 @@
                         S.each(one.mods, function (mod) {
                             // fix #111
                             // https://github.com/kissyteam/kissy/issues/111
-                            if (!mod.fn) {
+                            if (!mod.factory) {
                                 var msg = mod.name +
                                     ' is not loaded! can not find module in path : ' +
                                     one.fullpath;
@@ -501,5 +501,5 @@
  - three status
  0: initialized
  LOADED: load into page
- ATTACHED: fn executed
+ ATTACHED: factory executed
  */

@@ -309,7 +309,7 @@ _$jscoverage['/meta/modules.js'].branchData['211'][1].init(-1, 65, 'Features.isT
 function visit521_211_1(result) {
   _$jscoverage['/meta/modules.js'].branchData['211'][1].ranCondition(result);
   return result;
-}_$jscoverage['/meta/modules.js'].branchData['133'][1].init(45, 67, 'Features.isTouchEventSupported() || Features.isMsPointerSupported()');
+}_$jscoverage['/meta/modules.js'].branchData['133'][1].init(43, 67, 'Features.isTouchEventSupported() || Features.isMsPointerSupported()');
 function visit520_133_1(result) {
   _$jscoverage['/meta/modules.js'].branchData['133'][1].ranCondition(result);
   return result;

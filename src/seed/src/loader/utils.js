@@ -263,21 +263,21 @@
                 return;
             }
 
-            var fn = module.fn,
+            var factory = module.factory,
                 exports = undefined;
 
-            if (typeof fn === 'function') {
+            if (typeof factory === 'function') {
                 // 需要解开 index，相对路径
                 // 但是需要保留 alias，防止值不对应
                 //noinspection JSUnresolvedFunction
-                exports = fn.apply(module, Utils.getModules(runtime, module.getRequiresWithAlias()));
+                exports = factory.apply(module, Utils.getModules(runtime, module.getRequiresWithAlias()));
                 if (exports !== undefined) {
                     //noinspection JSUndefinedPropertyAssignment
                     module.exports = exports;
                 }
             } else {
                 //noinspection JSUndefinedPropertyAssignment
-                module.exports = fn;
+                module.exports = factory;
             }
 
             module.status = ATTACHED;
@@ -372,16 +372,16 @@
          * register module with factory
          * @param runtime Module container, such as KISSY
          * @param {String} name module name
-         * @param {Function|*} fn module's factory or exports
+         * @param {Function|*} factory module's factory or exports
          * @param [config] module config, such as dependency
          */
-        registerModule: function (runtime, name, fn, config) {
+        registerModule: function (runtime, name, factory, config) {
             name = indexMapStr(name);
 
             var mods = runtime.Env.mods,
                 module = mods[name];
 
-            if (module && module.fn) {
+            if (module && module.factory) {
                 S.log(name + ' is defined more than once', 'warn');
                 return;
             }
@@ -391,12 +391,12 @@
 
             module = mods[name];
 
-            // 注意：通过 S.add(name[, fn[, config]]) 注册的代码，无论是页面中的代码，
+            // 注意：通过 S.add(name[, factory[, config]]) 注册的代码，无论是页面中的代码，
             // 还是 js 文件里的代码，add 执行时，都意味着该模块已经 LOADED
             S.mix(module, {
                 name: name,
                 status: LOADED,
-                fn: fn
+                factory: factory
             });
 
             S.mix(module, config);

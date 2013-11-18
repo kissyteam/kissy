@@ -269,23 +269,23 @@ if (! _$jscoverage['/loader/get-script-nodejs.js'].branchData) {
   _$jscoverage['/loader/get-script-nodejs.js'].branchData['38'] = [];
   _$jscoverage['/loader/get-script-nodejs.js'].branchData['38'][1] = new BranchData();
 }
-_$jscoverage['/loader/get-script-nodejs.js'].branchData['38'][1].init(98, 17, 'error && error(e)');
+_$jscoverage['/loader/get-script-nodejs.js'].branchData['38'][1].init(95, 17, 'error && error(e)');
 function visit422_38_1(result) {
   _$jscoverage['/loader/get-script-nodejs.js'].branchData['38'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/get-script-nodejs.js'].branchData['34'][1].init(237, 20, 'success && success()');
+}_$jscoverage['/loader/get-script-nodejs.js'].branchData['34'][1].init(242, 20, 'success && success()');
 function visit421_34_1(result) {
   _$jscoverage['/loader/get-script-nodejs.js'].branchData['34'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/get-script-nodejs.js'].branchData['22'][1].init(77, 20, 'success && success()');
+}_$jscoverage['/loader/get-script-nodejs.js'].branchData['22'][1].init(75, 20, 'success && success()');
 function visit420_22_1(result) {
   _$jscoverage['/loader/get-script-nodejs.js'].branchData['22'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/get-script-nodejs.js'].branchData['20'][1].init(206, 55, 'S.startsWith(S.Path.extname(url).toLowerCase(), \'.css\')');
+}_$jscoverage['/loader/get-script-nodejs.js'].branchData['20'][1].init(197, 55, 'S.startsWith(S.Path.extname(url).toLowerCase(), \'.css\')');
 function visit419_20_1(result) {
   _$jscoverage['/loader/get-script-nodejs.js'].branchData['20'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/get-script-nodejs.js'].branchData['14'][1].init(36, 24, 'S.isPlainObject(success)');
+}_$jscoverage['/loader/get-script-nodejs.js'].branchData['14'][1].init(33, 24, 'S.isPlainObject(success)');
 function visit418_14_1(result) {
   _$jscoverage['/loader/get-script-nodejs.js'].branchData['14'][1].ranCondition(result);
   return result;
@@ -324,9 +324,9 @@ function visit418_14_1(result) {
     _$jscoverage['/loader/get-script-nodejs.js'].lineData[30]++;
     var mod = fs.readFileSync(path, charset);
     _$jscoverage['/loader/get-script-nodejs.js'].lineData[32]++;
-    var fn = vm.runInThisContext('(function(KISSY,require){' + mod + '})', url);
+    var factory = vm.runInThisContext('(function(KISSY,require){' + mod + '})', url);
     _$jscoverage['/loader/get-script-nodejs.js'].lineData[33]++;
-    fn(S, require);
+    factory(S, require);
     _$jscoverage['/loader/get-script-nodejs.js'].lineData[34]++;
     visit421_34_1(success && success());
   }  catch (e) {

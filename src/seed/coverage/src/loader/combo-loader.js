@@ -590,227 +590,227 @@ if (! _$jscoverage['/loader/combo-loader.js'].branchData) {
   _$jscoverage['/loader/combo-loader.js'].branchData['478'] = [];
   _$jscoverage['/loader/combo-loader.js'].branchData['478'][1] = new BranchData();
 }
-_$jscoverage['/loader/combo-loader.js'].branchData['478'][1].init(2808, 23, 'currentComboUrls.length');
+_$jscoverage['/loader/combo-loader.js'].branchData['478'][1].init(2750, 23, 'currentComboUrls.length');
 function visit360_478_1(result) {
   _$jscoverage['/loader/combo-loader.js'].branchData['478'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/combo-loader.js'].branchData['469'][1].init(69, 72, 'l + currentComboUrls.join(comboSep).length + suffixLength > maxUrlLength');
+}_$jscoverage['/loader/combo-loader.js'].branchData['469'][1].init(68, 72, 'l + currentComboUrls.join(comboSep).length + suffixLength > maxUrlLength');
 function visit359_469_1(result) {
   _$jscoverage['/loader/combo-loader.js'].branchData['469'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/combo-loader.js'].branchData['468'][2].init(845, 36, 'currentComboUrls.length > maxFileNum');
+}_$jscoverage['/loader/combo-loader.js'].branchData['468'][2].init(827, 36, 'currentComboUrls.length > maxFileNum');
 function visit358_468_2(result) {
   _$jscoverage['/loader/combo-loader.js'].branchData['468'][2].ranCondition(result);
   return result;
-}_$jscoverage['/loader/combo-loader.js'].branchData['468'][1].init(845, 143, 'currentComboUrls.length > maxFileNum || (l + currentComboUrls.join(comboSep).length + suffixLength > maxUrlLength)');
+}_$jscoverage['/loader/combo-loader.js'].branchData['468'][1].init(827, 142, 'currentComboUrls.length > maxFileNum || (l + currentComboUrls.join(comboSep).length + suffixLength > maxUrlLength)');
 function visit357_468_1(result) {
   _$jscoverage['/loader/combo-loader.js'].branchData['468'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/combo-loader.js'].branchData['455'][1].init(249, 25, '!currentMod.canBeCombined');
+}_$jscoverage['/loader/combo-loader.js'].branchData['455'][1].init(244, 25, '!currentMod.canBeCombined');
 function visit356_455_1(result) {
   _$jscoverage['/loader/combo-loader.js'].branchData['455'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/combo-loader.js'].branchData['450'][1].init(1429, 15, 'i < mods.length');
+}_$jscoverage['/loader/combo-loader.js'].branchData['450'][1].init(1399, 15, 'i < mods.length');
 function visit355_450_1(result) {
   _$jscoverage['/loader/combo-loader.js'].branchData['450'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/combo-loader.js'].branchData['425'][1].init(231, 15, 'tags.length > 1');
+}_$jscoverage['/loader/combo-loader.js'].branchData['425'][1].init(226, 15, 'tags.length > 1');
 function visit354_425_1(result) {
   _$jscoverage['/loader/combo-loader.js'].branchData['425'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/combo-loader.js'].branchData['388'][3].init(51, 19, 'mods.tags[0] == tag');
+}_$jscoverage['/loader/combo-loader.js'].branchData['388'][3].init(50, 19, 'mods.tags[0] == tag');
 function visit353_388_3(result) {
   _$jscoverage['/loader/combo-loader.js'].branchData['388'][3].ranCondition(result);
   return result;
-}_$jscoverage['/loader/combo-loader.js'].branchData['388'][2].init(26, 21, 'mods.tags.length == 1');
+}_$jscoverage['/loader/combo-loader.js'].branchData['388'][2].init(25, 21, 'mods.tags.length == 1');
 function visit352_388_2(result) {
   _$jscoverage['/loader/combo-loader.js'].branchData['388'][2].ranCondition(result);
   return result;
-}_$jscoverage['/loader/combo-loader.js'].branchData['388'][1].init(26, 44, 'mods.tags.length == 1 && mods.tags[0] == tag');
+}_$jscoverage['/loader/combo-loader.js'].branchData['388'][1].init(25, 44, 'mods.tags.length == 1 && mods.tags[0] == tag');
 function visit351_388_1(result) {
   _$jscoverage['/loader/combo-loader.js'].branchData['388'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/combo-loader.js'].branchData['383'][1].init(1825, 32, '!(mods = typedCombos[comboName])');
+}_$jscoverage['/loader/combo-loader.js'].branchData['383'][1].init(1788, 32, '!(mods = typedCombos[comboName])');
 function visit350_383_1(result) {
   _$jscoverage['/loader/combo-loader.js'].branchData['383'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/combo-loader.js'].branchData['382'][1].init(1781, 21, 'comboMods[type] || {}');
+}_$jscoverage['/loader/combo-loader.js'].branchData['382'][1].init(1745, 21, 'comboMods[type] || {}');
 function visit349_382_1(result) {
   _$jscoverage['/loader/combo-loader.js'].branchData['382'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/combo-loader.js'].branchData['368'][1].init(30, 41, 'groupPrefixUri.isSameOriginAs(packageUri)');
+}_$jscoverage['/loader/combo-loader.js'].branchData['368'][1].init(29, 41, 'groupPrefixUri.isSameOriginAs(packageUri)');
 function visit348_368_1(result) {
   _$jscoverage['/loader/combo-loader.js'].branchData['368'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/combo-loader.js'].branchData['367'][1].init(188, 41, 'groupPrefixUri = comboPrefixes[comboName]');
+}_$jscoverage['/loader/combo-loader.js'].branchData['367'][1].init(183, 41, 'groupPrefixUri = comboPrefixes[comboName]');
 function visit347_367_1(result) {
   _$jscoverage['/loader/combo-loader.js'].branchData['367'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/combo-loader.js'].branchData['361'][2].init(759, 83, 'packageInfo.isCombine() && S.startsWith(fullpath, packagePath)');
+}_$jscoverage['/loader/combo-loader.js'].branchData['361'][2].init(744, 82, 'packageInfo.isCombine() && S.startsWith(fullpath, packagePath)');
 function visit346_361_2(result) {
   _$jscoverage['/loader/combo-loader.js'].branchData['361'][2].ranCondition(result);
   return result;
-}_$jscoverage['/loader/combo-loader.js'].branchData['361'][1].init(739, 113, '(mod.canBeCombined = packageInfo.isCombine() && S.startsWith(fullpath, packagePath)) && group');
+}_$jscoverage['/loader/combo-loader.js'].branchData['361'][1].init(724, 112, '(mod.canBeCombined = packageInfo.isCombine() && S.startsWith(fullpath, packagePath)) && group');
 function visit345_361_1(result) {
   _$jscoverage['/loader/combo-loader.js'].branchData['361'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/combo-loader.js'].branchData['346'][1].init(348, 5, 'i < l');
+}_$jscoverage['/loader/combo-loader.js'].branchData['346'][1].init(338, 5, 'i < l');
 function visit344_346_1(result) {
   _$jscoverage['/loader/combo-loader.js'].branchData['346'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/combo-loader.js'].branchData['315'][1].init(30, 20, 'modStatus != LOADING');
+}_$jscoverage['/loader/combo-loader.js'].branchData['315'][1].init(29, 20, 'modStatus != LOADING');
 function visit343_315_1(result) {
   _$jscoverage['/loader/combo-loader.js'].branchData['315'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/combo-loader.js'].branchData['314'][1].init(26, 27, '!waitingModules.contains(m)');
+}_$jscoverage['/loader/combo-loader.js'].branchData['314'][1].init(25, 27, '!waitingModules.contains(m)');
 function visit342_314_1(result) {
   _$jscoverage['/loader/combo-loader.js'].branchData['314'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/combo-loader.js'].branchData['313'][1].init(390, 19, 'modStatus != LOADED');
+}_$jscoverage['/loader/combo-loader.js'].branchData['313'][1].init(379, 19, 'modStatus != LOADED');
 function visit341_313_1(result) {
   _$jscoverage['/loader/combo-loader.js'].branchData['313'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/combo-loader.js'].branchData['310'][3].init(293, 22, 'modStatus === ATTACHED');
+}_$jscoverage['/loader/combo-loader.js'].branchData['310'][3].init(285, 22, 'modStatus === ATTACHED');
 function visit340_310_3(result) {
   _$jscoverage['/loader/combo-loader.js'].branchData['310'][3].ranCondition(result);
   return result;
-}_$jscoverage['/loader/combo-loader.js'].branchData['310'][2].init(270, 19, 'modStatus === ERROR');
+}_$jscoverage['/loader/combo-loader.js'].branchData['310'][2].init(262, 19, 'modStatus === ERROR');
 function visit339_310_2(result) {
   _$jscoverage['/loader/combo-loader.js'].branchData['310'][2].ranCondition(result);
   return result;
-}_$jscoverage['/loader/combo-loader.js'].branchData['310'][1].init(270, 45, 'modStatus === ERROR || modStatus === ATTACHED');
+}_$jscoverage['/loader/combo-loader.js'].branchData['310'][1].init(262, 45, 'modStatus === ERROR || modStatus === ATTACHED');
 function visit338_310_1(result) {
   _$jscoverage['/loader/combo-loader.js'].branchData['310'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/combo-loader.js'].branchData['304'][1].init(56, 8, 'cache[m]');
+}_$jscoverage['/loader/combo-loader.js'].branchData['304'][1].init(54, 8, 'cache[m]');
 function visit337_304_1(result) {
   _$jscoverage['/loader/combo-loader.js'].branchData['304'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/combo-loader.js'].branchData['302'][1].init(383, 19, 'i < modNames.length');
+}_$jscoverage['/loader/combo-loader.js'].branchData['302'][1].init(369, 19, 'i < modNames.length');
 function visit336_302_1(result) {
   _$jscoverage['/loader/combo-loader.js'].branchData['302'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/combo-loader.js'].branchData['300'][1].init(343, 11, 'cache || {}');
+}_$jscoverage['/loader/combo-loader.js'].branchData['300'][1].init(331, 11, 'cache || {}');
 function visit335_300_1(result) {
   _$jscoverage['/loader/combo-loader.js'].branchData['300'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/combo-loader.js'].branchData['297'][1].init(238, 9, 'ret || {}');
+}_$jscoverage['/loader/combo-loader.js'].branchData['297'][1].init(229, 9, 'ret || {}');
 function visit334_297_1(result) {
   _$jscoverage['/loader/combo-loader.js'].branchData['297'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/combo-loader.js'].branchData['270'][1].init(153, 7, '!mod.fn');
+}_$jscoverage['/loader/combo-loader.js'].branchData['270'][1].init(150, 12, '!mod.factory');
 function visit333_270_1(result) {
   _$jscoverage['/loader/combo-loader.js'].branchData['270'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/combo-loader.js'].branchData['262'][1].init(26, 9, '\'@DEBUG@\'');
+}_$jscoverage['/loader/combo-loader.js'].branchData['262'][1].init(25, 9, '\'@DEBUG@\'');
 function visit332_262_1(result) {
   _$jscoverage['/loader/combo-loader.js'].branchData['262'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/combo-loader.js'].branchData['233'][1].init(26, 9, '\'@DEBUG@\'');
+}_$jscoverage['/loader/combo-loader.js'].branchData['233'][1].init(25, 9, '\'@DEBUG@\'');
 function visit331_233_1(result) {
   _$jscoverage['/loader/combo-loader.js'].branchData['233'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/combo-loader.js'].branchData['206'][1].init(18, 19, 'str1[i] !== str2[i]');
+}_$jscoverage['/loader/combo-loader.js'].branchData['206'][1].init(17, 19, 'str1[i] !== str2[i]');
 function visit330_206_1(result) {
   _$jscoverage['/loader/combo-loader.js'].branchData['206'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/combo-loader.js'].branchData['205'][1].init(147, 5, 'i < l');
+}_$jscoverage['/loader/combo-loader.js'].branchData['205'][1].init(143, 5, 'i < l');
 function visit329_205_1(result) {
   _$jscoverage['/loader/combo-loader.js'].branchData['205'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/combo-loader.js'].branchData['195'][1].init(205, 9, 'ms.length');
+}_$jscoverage['/loader/combo-loader.js'].branchData['195'][1].init(198, 9, 'ms.length');
 function visit328_195_1(result) {
   _$jscoverage['/loader/combo-loader.js'].branchData['195'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/combo-loader.js'].branchData['191'][1].init(22, 18, 'm.status == LOADED');
+}_$jscoverage['/loader/combo-loader.js'].branchData['191'][1].init(21, 18, 'm.status == LOADED');
 function visit327_191_1(result) {
   _$jscoverage['/loader/combo-loader.js'].branchData['191'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/combo-loader.js'].branchData['172'][1].init(386, 2, 're');
+}_$jscoverage['/loader/combo-loader.js'].branchData['172'][1].init(372, 2, 're');
 function visit326_172_1(result) {
   _$jscoverage['/loader/combo-loader.js'].branchData['172'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/combo-loader.js'].branchData['167'][1].init(52, 34, 'script.readyState == \'interactive\'');
+}_$jscoverage['/loader/combo-loader.js'].branchData['167'][1].init(50, 34, 'script.readyState == \'interactive\'');
 function visit325_167_1(result) {
   _$jscoverage['/loader/combo-loader.js'].branchData['167'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/combo-loader.js'].branchData['165'][1].init(189, 6, 'i >= 0');
+}_$jscoverage['/loader/combo-loader.js'].branchData['165'][1].init(182, 6, 'i >= 0');
 function visit324_165_1(result) {
   _$jscoverage['/loader/combo-loader.js'].branchData['165'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/combo-loader.js'].branchData['145'][1].init(18, 5, 'oldIE');
+}_$jscoverage['/loader/combo-loader.js'].branchData['145'][1].init(17, 5, 'oldIE');
 function visit323_145_1(result) {
   _$jscoverage['/loader/combo-loader.js'].branchData['145'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/combo-loader.js'].branchData['130'][1].init(121, 5, 'oldIE');
+}_$jscoverage['/loader/combo-loader.js'].branchData['130'][1].init(132, 5, 'oldIE');
 function visit322_130_1(result) {
   _$jscoverage['/loader/combo-loader.js'].branchData['130'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/combo-loader.js'].branchData['126'][1].init(75, 21, 'arguments.length == 1');
+}_$jscoverage['/loader/combo-loader.js'].branchData['126'][1].init(73, 21, 'arguments.length == 1');
 function visit321_126_1(result) {
   _$jscoverage['/loader/combo-loader.js'].branchData['126'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/combo-loader.js'].branchData['124'][2].init(14, 26, 'typeof name === \'function\'');
+}_$jscoverage['/loader/combo-loader.js'].branchData['124'][2].init(13, 26, 'typeof name === \'function\'');
 function visit320_124_2(result) {
   _$jscoverage['/loader/combo-loader.js'].branchData['124'][2].ranCondition(result);
   return result;
-}_$jscoverage['/loader/combo-loader.js'].branchData['124'][1].init(14, 97, 'typeof name === \'function\' || arguments.length == 1');
+}_$jscoverage['/loader/combo-loader.js'].branchData['124'][1].init(13, 95, 'typeof name === \'function\' || arguments.length == 1');
 function visit319_124_1(result) {
   _$jscoverage['/loader/combo-loader.js'].branchData['124'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/combo-loader.js'].branchData['116'][1].init(27, 12, 'config || {}');
+}_$jscoverage['/loader/combo-loader.js'].branchData['116'][1].init(26, 12, 'config || {}');
 function visit318_116_1(result) {
   _$jscoverage['/loader/combo-loader.js'].branchData['116'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/combo-loader.js'].branchData['115'][1].init(452, 15, 'requires.length');
+}_$jscoverage['/loader/combo-loader.js'].branchData['115'][1].init(447, 15, 'requires.length');
 function visit317_115_1(result) {
   _$jscoverage['/loader/combo-loader.js'].branchData['115'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/combo-loader.js'].branchData['105'][3].init(98, 23, 'typeof fn == \'function\'');
+}_$jscoverage['/loader/combo-loader.js'].branchData['105'][3].init(96, 28, 'typeof factory == \'function\'');
 function visit316_105_3(result) {
   _$jscoverage['/loader/combo-loader.js'].branchData['105'][3].ranCondition(result);
   return result;
-}_$jscoverage['/loader/combo-loader.js'].branchData['105'][2].init(66, 27, '!config || !config.requires');
+}_$jscoverage['/loader/combo-loader.js'].branchData['105'][2].init(64, 27, '!config || !config.requires');
 function visit315_105_2(result) {
   _$jscoverage['/loader/combo-loader.js'].branchData['105'][2].ranCondition(result);
   return result;
-}_$jscoverage['/loader/combo-loader.js'].branchData['105'][1].init(66, 55, '(!config || !config.requires) && typeof fn == \'function\'');
+}_$jscoverage['/loader/combo-loader.js'].branchData['105'][1].init(64, 60, '(!config || !config.requires) && typeof factory == \'function\'');
 function visit314_105_1(result) {
   _$jscoverage['/loader/combo-loader.js'].branchData['105'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/combo-loader.js'].branchData['95'][1].init(56, 43, 'm = str.match(/^\\s*["\']([^\'"\\s]+)["\']\\s*$/)');
+}_$jscoverage['/loader/combo-loader.js'].branchData['95'][1].init(53, 43, 'm = str.match(/^\\s*["\']([^\'"\\s]+)["\']\\s*$/)');
 function visit313_95_1(result) {
   _$jscoverage['/loader/combo-loader.js'].branchData['95'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/combo-loader.js'].branchData['46'][1].init(167, 5, 'oldIE');
+}_$jscoverage['/loader/combo-loader.js'].branchData['46'][1].init(162, 5, 'oldIE');
 function visit312_46_1(result) {
   _$jscoverage['/loader/combo-loader.js'].branchData['46'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/combo-loader.js'].branchData['43'][1].init(57, 22, 'mod.getType() == \'css\'');
+}_$jscoverage['/loader/combo-loader.js'].branchData['43'][1].init(55, 22, 'mod.getType() == \'css\'');
 function visit311_43_1(result) {
   _$jscoverage['/loader/combo-loader.js'].branchData['43'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/combo-loader.js'].branchData['41'][1].init(831, 11, '!rs.combine');
+}_$jscoverage['/loader/combo-loader.js'].branchData['41'][1].init(816, 11, '!rs.combine');
 function visit310_41_1(result) {
   _$jscoverage['/loader/combo-loader.js'].branchData['41'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/combo-loader.js'].branchData['27'][1].init(69, 17, 'mod && currentMod');
+}_$jscoverage['/loader/combo-loader.js'].branchData['27'][1].init(67, 17, 'mod && currentMod');
 function visit309_27_1(result) {
   _$jscoverage['/loader/combo-loader.js'].branchData['27'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/combo-loader.js'].branchData['16'][1].init(18, 10, '!(--count)');
+}_$jscoverage['/loader/combo-loader.js'].branchData['16'][1].init(17, 10, '!(--count)');
 function visit308_16_1(result) {
   _$jscoverage['/loader/combo-loader.js'].branchData['16'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/combo-loader.js'].branchData['11'][1].init(22, 17, 'rss && rss.length');
+}_$jscoverage['/loader/combo-loader.js'].branchData['11'][1].init(21, 17, 'rss && rss.length');
 function visit307_11_1(result) {
   _$jscoverage['/loader/combo-loader.js'].branchData['11'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/combo-loader.js'].branchData['8'][2].init(56, 12, 'S.UA.ie < 10');
+}_$jscoverage['/loader/combo-loader.js'].branchData['8'][2].init(54, 12, 'S.UA.ie < 10');
 function visit306_8_2(result) {
   _$jscoverage['/loader/combo-loader.js'].branchData['8'][2].ranCondition(result);
   return result;
-}_$jscoverage['/loader/combo-loader.js'].branchData['8'][1].init(45, 23, 'S.UA.ie && S.UA.ie < 10');
+}_$jscoverage['/loader/combo-loader.js'].branchData['8'][1].init(43, 23, 'S.UA.ie && S.UA.ie < 10');
 function visit305_8_1(result) {
   _$jscoverage['/loader/combo-loader.js'].branchData['8'][1].ranCondition(result);
   return result;
@@ -850,7 +850,7 @@ function visit305_8_1(result) {
     _$jscoverage['/loader/combo-loader.js'].lineData[29]++;
     logger.debug('standard browser get mod name after load : ' + mod.name);
     _$jscoverage['/loader/combo-loader.js'].lineData[30]++;
-    Utils.registerModule(runtime, mod.name, currentMod.fn, currentMod.config);
+    Utils.registerModule(runtime, mod.name, currentMod.factory, currentMod.config);
     _$jscoverage['/loader/combo-loader.js'].lineData[31]++;
     currentMod = undefined;
   }
@@ -925,14 +925,14 @@ function visit305_8_1(result) {
     }
   }
   _$jscoverage['/loader/combo-loader.js'].lineData[103]++;
-  function checkKISSYRequire(config, fn) {
+  function checkKISSYRequire(config, factory) {
     _$jscoverage['/loader/combo-loader.js'].functionData[8]++;
     _$jscoverage['/loader/combo-loader.js'].lineData[105]++;
-    if (visit314_105_1((visit315_105_2(!config || !config.requires)) && visit316_105_3(typeof fn == 'function'))) {
+    if (visit314_105_1((visit315_105_2(!config || !config.requires)) && visit316_105_3(typeof factory == 'function'))) {
       _$jscoverage['/loader/combo-loader.js'].lineData[106]++;
       var requires = [];
       _$jscoverage['/loader/combo-loader.js'].lineData[112]++;
-      fn.toString().replace(commentRegExp, '').replace(requireRegExp, function(match, dep) {
+      factory.toString().replace(commentRegExp, '').replace(requireRegExp, function(match, dep) {
   _$jscoverage['/loader/combo-loader.js'].functionData[9]++;
   _$jscoverage['/loader/combo-loader.js'].lineData[113]++;
   requires.push(getRequireVal(dep));
@@ -949,22 +949,22 @@ function visit305_8_1(result) {
     return config;
   }
   _$jscoverage['/loader/combo-loader.js'].lineData[123]++;
-  ComboLoader.add = function(name, fn, config, runtime) {
+  ComboLoader.add = function(name, factory, config, runtime) {
   _$jscoverage['/loader/combo-loader.js'].functionData[10]++;
   _$jscoverage['/loader/combo-loader.js'].lineData[124]++;
   if (visit319_124_1(visit320_124_2(typeof name === 'function') || visit321_126_1(arguments.length == 1))) {
     _$jscoverage['/loader/combo-loader.js'].lineData[127]++;
-    config = fn;
+    config = factory;
     _$jscoverage['/loader/combo-loader.js'].lineData[128]++;
-    fn = name;
+    factory = name;
     _$jscoverage['/loader/combo-loader.js'].lineData[129]++;
-    config = checkKISSYRequire(config, fn);
+    config = checkKISSYRequire(config, factory);
     _$jscoverage['/loader/combo-loader.js'].lineData[130]++;
     if (visit322_130_1(oldIE)) {
       _$jscoverage['/loader/combo-loader.js'].lineData[132]++;
       name = findModuleNameByInteractive();
       _$jscoverage['/loader/combo-loader.js'].lineData[134]++;
-      Utils.registerModule(runtime, name, fn, config);
+      Utils.registerModule(runtime, name, factory, config);
       _$jscoverage['/loader/combo-loader.js'].lineData[135]++;
       startLoadModName = null;
       _$jscoverage['/loader/combo-loader.js'].lineData[136]++;
@@ -972,7 +972,7 @@ function visit305_8_1(result) {
     } else {
       _$jscoverage['/loader/combo-loader.js'].lineData[139]++;
       currentMod = {
-  fn: fn, 
+  factory: factory, 
   config: config};
     }
   } else {
@@ -987,9 +987,9 @@ function visit305_8_1(result) {
       currentMod = undefined;
     }
     _$jscoverage['/loader/combo-loader.js'].lineData[151]++;
-    config = checkKISSYRequire(config, fn);
+    config = checkKISSYRequire(config, factory);
     _$jscoverage['/loader/combo-loader.js'].lineData[152]++;
-    Utils.registerModule(runtime, name, fn, config);
+    Utils.registerModule(runtime, name, factory, config);
   }
 };
   _$jscoverage['/loader/combo-loader.js'].lineData[158]++;
@@ -1139,7 +1139,7 @@ function visit305_8_1(result) {
   S.each(one.mods, function(mod) {
   _$jscoverage['/loader/combo-loader.js'].functionData[26]++;
   _$jscoverage['/loader/combo-loader.js'].lineData[270]++;
-  if (visit333_270_1(!mod.fn)) {
+  if (visit333_270_1(!mod.factory)) {
     _$jscoverage['/loader/combo-loader.js'].lineData[271]++;
     var msg = mod.name + ' is not loaded! can not find module in path : ' + one.fullpath;
     _$jscoverage['/loader/combo-loader.js'].lineData[274]++;

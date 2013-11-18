@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 12 22:43
+build time: Nov 18 19:00
 */
 /**
  * @ignore
@@ -42,11 +42,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20131112224247' will replace with current timestamp when compressing.
+         * NOTICE: '20131118190013' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20131112224247',
+        __BUILD_TIME: '20131118190013',
 
         /**
          * KISSY Environment.
@@ -3774,21 +3774,21 @@ var KISSY = (function (undefined) {
                 return;
             }
 
-            var fn = module.fn,
+            var factory = module.factory,
                 exports = undefined;
 
-            if (typeof fn === 'function') {
+            if (typeof factory === 'function') {
                 // 需要解开 index，相对路径
                 // 但是需要保留 alias，防止值不对应
                 //noinspection JSUnresolvedFunction
-                exports = fn.apply(module, Utils.getModules(runtime, module.getRequiresWithAlias()));
+                exports = factory.apply(module, Utils.getModules(runtime, module.getRequiresWithAlias()));
                 if (exports !== undefined) {
                     //noinspection JSUndefinedPropertyAssignment
                     module.exports = exports;
                 }
             } else {
                 //noinspection JSUndefinedPropertyAssignment
-                module.exports = fn;
+                module.exports = factory;
             }
 
             module.status = ATTACHED;
@@ -3883,16 +3883,16 @@ var KISSY = (function (undefined) {
          * register module with factory
          * @param runtime Module container, such as KISSY
          * @param {String} name module name
-         * @param {Function|*} fn module's factory or exports
+         * @param {Function|*} factory module's factory or exports
          * @param [config] module config, such as dependency
          */
-        registerModule: function (runtime, name, fn, config) {
+        registerModule: function (runtime, name, factory, config) {
             name = indexMapStr(name);
 
             var mods = runtime.Env.mods,
                 module = mods[name];
 
-            if (module && module.fn) {
+            if (module && module.factory) {
                 S.log(name + ' is defined more than once', 'warn');
                 return;
             }
@@ -3902,12 +3902,12 @@ var KISSY = (function (undefined) {
 
             module = mods[name];
 
-            // 注意：通过 S.add(name[, fn[, config]]) 注册的代码，无论是页面中的代码，
+            // 注意：通过 S.add(name[, factory[, config]]) 注册的代码，无论是页面中的代码，
             // 还是 js 文件里的代码，add 执行时，都意味着该模块已经 LOADED
             S.mix(module, {
                 name: name,
                 status: LOADED,
-                fn: fn
+                factory: factory
             });
 
             S.mix(module, config);
@@ -4121,7 +4121,7 @@ var KISSY = (function (undefined) {
          * factory of this module
          * @type {null}
          */
-        module.fn = undefined;
+        module.factory = undefined;
         S.mix(module, cfg);
         module.waitedCallbacks = [];
     }
@@ -4779,7 +4779,7 @@ var KISSY = (function (undefined) {
                     if (mod && currentMod) {
                         // standard browser(except ie9) fire load after KISSY.add immediately
                         logger.debug('standard browser get mod name after load : ' + mod.name);
-                        Utils.registerModule(runtime, mod.name, currentMod.fn, currentMod.config);
+                        Utils.registerModule(runtime, mod.name, currentMod.factory, currentMod.config);
                         currentMod = undefined;
                     }
                     complete();
@@ -4852,14 +4852,14 @@ var KISSY = (function (undefined) {
         }
     }
 
-    function checkKISSYRequire(config, fn) {
+    function checkKISSYRequire(config, factory) {
         // use module.require primitive statement
-        if ((!config || !config.requires) && typeof fn == 'function') {
+        if ((!config || !config.requires) && typeof factory == 'function') {
             var requires = [];
             // Remove comments from the callback string,
             // look for require calls, and pull them into the dependencies,
             // but only if there are function args.
-            fn.toString()
+            factory.toString()
                 .replace(commentRegExp, '')
                 .replace(requireRegExp, function (match, dep) {
                     requires.push(getRequireVal(dep));
@@ -4872,24 +4872,24 @@ var KISSY = (function (undefined) {
         return config;
     }
 
-    ComboLoader.add = function (name, fn, config, runtime) {
+    ComboLoader.add = function (name, factory, config, runtime) {
         if (typeof name === 'function' ||
             // KISSY.add('xx');
             arguments.length == 1) {
-            config = fn;
-            fn = name;
-            config = checkKISSYRequire(config, fn);
+            config = factory;
+            factory = name;
+            config = checkKISSYRequire(config, factory);
             if (oldIE) {
                 // http://groups.google.com/group/commonjs/browse_thread/thread/5a3358ece35e688e/43145ceccfb1dc02#43145ceccfb1dc02
                 name = findModuleNameByInteractive();
                 // S.log('oldIE get modName by interactive: ' + name);
-                Utils.registerModule(runtime, name, fn, config);
+                Utils.registerModule(runtime, name, factory, config);
                 startLoadModName = null;
                 startLoadModTime = 0;
             } else {
                 // 其他浏览器 onload 时，关联模块名与模块定义
                 currentMod = {
-                    fn: fn,
+                    factory: factory,
                     config: config
                 };
             }
@@ -4900,8 +4900,8 @@ var KISSY = (function (undefined) {
             } else {
                 currentMod = undefined;
             }
-            config = checkKISSYRequire(config, fn);
-            Utils.registerModule(runtime, name, fn, config);
+            config = checkKISSYRequire(config, factory);
+            Utils.registerModule(runtime, name, factory, config);
         }
     };
 
@@ -5019,7 +5019,7 @@ var KISSY = (function (undefined) {
                         S.each(one.mods, function (mod) {
                             // fix #111
                             // https://github.com/kissyteam/kissy/issues/111
-                            if (!mod.fn) {
+                            if (!mod.factory) {
                                 var msg = mod.name +
                                     ' is not loaded! can not find module in path : ' +
                                     one.fullpath;
@@ -5253,7 +5253,7 @@ var KISSY = (function (undefined) {
  - three status
  0: initialized
  LOADED: load into page
- ATTACHED: fn executed
+ ATTACHED: factory executed
  *//**
  * @ignore
  * mix loader into KISSY and infer KISSY baseUrl if not set
@@ -5306,9 +5306,9 @@ var KISSY = (function (undefined) {
          * Registers a module with the KISSY global.
          * @param {String} name module name.
          * it must be set if combine is true in {@link KISSY#config}
-         * @param {Function} fn module definition function that is used to return
+         * @param {Function} factory module definition function that is used to return
          * exports of this module
-         * @param {KISSY} fn.S KISSY global instance
+         * @param {KISSY} factory.S KISSY global instance
          * @param {Object} [cfg] module optional config data
          * @param {String[]} cfg.requires this module's required module name list
          * @member KISSY
@@ -5321,8 +5321,8 @@ var KISSY = (function (undefined) {
          *          requires:['xx']
          *      });
          */
-        add: function (name, fn, cfg) {
-            ComboLoader.add(name, fn, cfg, S);
+        add: function (name, factory, cfg) {
+            ComboLoader.add(name, factory, cfg, S);
         },
         /**
          * Attached one or more modules to global KISSY instance.
@@ -5439,7 +5439,7 @@ var KISSY = (function (undefined) {
     var doc = S.Env.host && S.Env.host.document;
     // var logger = S.getLogger('s/loader');
     var Utils = S.Loader.Utils;
-    var TIMESTAMP = '20131112224247';
+    var TIMESTAMP = '20131118190013';
     var defaultComboPrefix = '??';
     var defaultComboSep = ',';
 
@@ -5854,7 +5854,7 @@ config({
 });
 /*Generated By KISSY Module Compiler*/
 config({
-'base': {requires: ['event/custom']}
+'base': {requires: ['attribute','event/custom']}
 });
 /*Generated By KISSY Module Compiler*/
 config({

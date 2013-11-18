@@ -29,8 +29,8 @@
         try {
             var mod = fs.readFileSync(path, charset);
             //noinspection JSUnresolvedFunction
-            var fn = vm.runInThisContext('(function(KISSY,require){' + mod + '})', url);
-            fn(S, require);
+            var factory = vm.runInThisContext('(function(KISSY,require){' + mod + '})', url);
+            factory(S, require);
             success && success();
         } catch (e) {
             S.log('in file: ' + url,'error');

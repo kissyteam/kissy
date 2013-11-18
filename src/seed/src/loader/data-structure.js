@@ -154,7 +154,7 @@
          * factory of this module
          * @type {null}
          */
-        module.fn = undefined;
+        module.factory = undefined;
         S.mix(module, cfg);
         module.waitedCallbacks = [];
     }
