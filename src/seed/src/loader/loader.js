@@ -66,7 +66,7 @@
          *      });
          */
         add: function (name, factory, cfg) {
-            ComboLoader.add(name, factory, cfg, S);
+            ComboLoader.add(name, factory, cfg, S,arguments.length);
         },
         /**
          * Attached one or more modules to global KISSY instance.
@@ -86,12 +86,12 @@
                 loader,
                 error,
                 sync,
-                requireCodeStyle,
+                requireCodeStyle = 0,
                 tryCount = 0,
                 finalSuccess,
                 waitingModules = new WaitingModules(loadReady);
 
-            if (typeof modNames != 'string') {
+            if (typeof modNames != 'string' && !S.isArray(modNames)) {
                 requireCodeStyle = 1;
                 success = modNames;
             }
@@ -106,7 +106,7 @@
             }
 
             if (requireCodeStyle) {
-                modNames = Utils.getRequiresFromFn(success,1);
+                modNames = Utils.getRequiresFromFn(success, 1);
             }
 
             finalSuccess = function () {
@@ -123,9 +123,12 @@
                 var errorList = [],
                     start = S.now(),
                     ret;
-                ret = Utils.attachModsRecursively(normalizedModNames, S, undefined, errorList);
+                ret = Utils.checkModsLoadRecursively(normalizedModNames, S, undefined, errorList);
                 logger.debug(tryCount + ' check duration ' + (S.now() - start));
                 if (ret) {
+                    if (!requireCodeStyle) {
+                        Utils.attachModsRecursively(normalizedModNames, S);
+                    }
                     if (success) {
                         if (sync) {
                             finalSuccess();
@@ -169,15 +172,14 @@
         /**
          * get module exports from KISSY module cache
          * @param {String} moduleName module name
+         * @param {String} refName internal usage
          * @member KISSY
          * @return {*} exports of specified module
          */
-        require: function (moduleName) {
-            var moduleNames = Utils.unalias(S, Utils.normalizeModNamesWithAlias(S, [moduleName]));
-            if (Utils.attachModsRecursively(moduleNames, S)) {
-                return Utils.getModules(S, moduleNames)[1];
-            }
-            return undefined;
+        require: function (moduleName, refName) {
+            var moduleNames = Utils.unalias(S, Utils.normalizeModNamesWithAlias(S, [moduleName], refName));
+            Utils.attachModsRecursively(moduleNames, S);
+            return Utils.getModules(S, moduleNames)[1];
         }
     });
 

@@ -55,11 +55,12 @@ public class AstUtils {
 	}
 
 	public static void main(String[] args) {
-		String kissyCjs = "KISSY.add(function(S){ " +
-                "var t = KISSY.require('my');" +
-                "var t2 = KISSY.require(a+b);" +
-                "KISSY.require('z');" +
-                "KISSY.require('z2');" +
+		String kissyCjs = "KISSY.add(function(S){" +
+                "var module=this; " +
+                "var t = module.require('my');" +
+                "var t2 = module.require(a+b);" +
+                "module.require('z');" +
+                "module.require('z2');" +
                 "t.done();" +
                 "});";
 		Node k = parse(kissyCjs,"kissy");
@@ -67,6 +68,7 @@ public class AstUtils {
         if(true){
            // return;
         }
+
         ModuleUtils.getRequiresFromAst(k,"k");
         System.out.println(k.toStringTree());
         System.out.println(AstUtils.toSource(k));

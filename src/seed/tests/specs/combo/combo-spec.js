@@ -8,11 +8,11 @@ describe("S ComboLoader", function () {
         var ret = 0;
 
         S.config({
-            combine:false,
+            combine: false,
             packages: [
                 {
                     name: 'tests3',
-                    combine:true,
+                    combine: true,
                     path: '/kissy/src/seed/tests/specs/combo/'
                 }
             ]
@@ -28,15 +28,15 @@ describe("S ComboLoader", function () {
         });
 
         S.use("tests3/b", function (S, c) {
-            ret=c;
+            ret = c;
         });
 
         waitsFor(function () {
-            return ret===3;
+            return ret === 3;
         }, 2000);
 
         runs(function () {
-            S.config('combine',true);
+            S.config('combine', true);
         });
     });
 

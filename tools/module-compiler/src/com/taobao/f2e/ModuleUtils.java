@@ -11,9 +11,6 @@ import java.util.ArrayList;
  * @author yiminghe@gmail.com
  */
 public class ModuleUtils {
-
-    static long COUNT = System.currentTimeMillis();
-
     /**
      * @param moduleName      event/ie
      * @param relativeDepName 1. event/../s to s
@@ -57,87 +54,47 @@ public class ModuleUtils {
      * @param astRoot ast root
      * @param name    module name
      * @return String[] required processedModules 's name
+     *
+     *      KISSY.add(function(){
+     *          var module=this;
+     *          var a=module.require('a');
+     *      })
+     *
+     *      KISSY.add('x',['a'],function(){});
      */
     public static String[] getRequiresFromAst(Node astRoot, String name) {
         ArrayList<String> re = new ArrayList<String>();
-        Node func = astRoot.getFirstChild().getFirstChild();
-        Node r = func.getLastChild();
-        if (r.getType() != Token.OBJECTLIT) {
-            //KISSY.add(function(){ KISSY.require('./x')});
+        Node firstParameter = astRoot.getFirstChild().getFirstChild().getFirstChild().getNext();
+        if (firstParameter.getType() == Token.FUNCTION) {
             ArrayList<Node> nodes = new ArrayList<Node>();
-            ArrayList<String> ids = new ArrayList<String>();
-            ArrayList<Node> cleans = new ArrayList<Node>();
-            findModuleRequire(astRoot, nodes, ids, cleans);
-            for (Node clean : cleans) {
-                clean.detachFromParent();
+            findModuleRequire(astRoot, nodes);
+            Node requireVal = new Node(Token.ARRAYLIT);
+            for (Node node : nodes) {
+                requireVal.addChildrenToBack(node.cloneTree());
             }
-            if (nodes.size() > 0) {
-                Node config = new Node(Token.OBJECTLIT);
-                Node require = Node.newString("requires");
-                Node requireVal = new Node(Token.ARRAYLIT);
-                for (Node node : nodes) {
-                    node.detachFromParent();
-                    requireVal.addChildrenToBack(node);
-                }
-                config.addChildrenToBack(require);
-                require.addChildrenToBack(requireVal);
-                func.addChildrenToBack(config);
-                Node fn = func.getChildAtIndex(1);
-                if (fn.getType() != Token.FUNCTION) {
-                    fn = fn.getNext();
-                }
-                if (fn.getType() == Token.FUNCTION) {
-                    Node lp = fn.getChildAtIndex(1);
-                    if (!lp.hasChildren()) {
-                        lp.addChildrenToBack(Node.newString(Token.NAME, "S"));
-                    }
-                    Node before = lp.getFirstChild();
-                    for (String id : ids) {
-                        Node newChild = Node.newString(Token.NAME, id);
-                        lp.addChildAfter(newChild, before);
-                        before = newChild;
-                    }
-                }
-            }
+            firstParameter.getParent().addChildBefore(requireVal,firstParameter);
         }
-        r = func.getLastChild();
-        if (r.getType() == Token.OBJECTLIT) {
-            Node first = r.getFirstChild();
-            while (first != null) {
+        Node list = astRoot.getFirstChild().getFirstChild().getFirstChild().getNext();
+        Node fl = list.getFirstChild();
+        while (fl != null) {
+            if (fl.getType() == Token.STRING) {
                 /**
-                 * KISSY.add("xx",function(){},{
-                 * 	requires:["y1","y2"]
-                 * });
+                 * depName can be relative ./ , ../
                  */
-                if (first.getString().equals("requires")) {
-                    Node list = first.getFirstChild();
-                    if (list.getType() == Token.ARRAYLIT) {
-                        Node fl = list.getFirstChild();
-                        while (fl != null) {
-                            if (fl.getType() == Token.STRING) {
-                                /**
-                                 * depName can be relative ./ , ../
-                                 */
-                                re.add(ModuleUtils.getDepModuleName(name, fl.getString()));
-                            } else {
-                                // conditional loader
-                                // window.localStorage?"localStorage":""
-                                String source = AstUtils.toSource(fl);
-                                source = source.substring(0, source.length() - 1);
-                                re.add("#" + source);
-                            }
-                            fl = fl.getNext();
-                        }
-                    }
-                    break;
-                }
-                first = first.getNext();
+                re.add(ModuleUtils.getDepModuleName(name, fl.getString()));
+            } else {
+                // conditional loader
+                // window.localStorage?"localStorage":""
+                String source = AstUtils.toSource(fl);
+                source = source.substring(0, source.length() - 1);
+                re.add("#" + source);
             }
+            fl = fl.getNext();
         }
         return re.toArray(new String[re.size()]);
     }
 
-    static void findModuleRequire(Node root, ArrayList<Node> nodes, ArrayList<String> ids, ArrayList<Node> cleans) {
+    static void findModuleRequire(Node root, ArrayList<Node> nodes) {
         if (root.getType() == Token.CALL) {
             Node first = root.getFirstChild();
             if (first.getType() == Token.GETPROP) {
@@ -147,20 +104,13 @@ public class ModuleUtils {
                         method.getType() == Token.STRING &&
                         name.getString().equals("module") && method.getString().equals("require")) {
                     nodes.add(first.getNext());
-                    if (root.getParent().getType() == Token.NAME) {
-                        ids.add(root.getParent().getString());
-                        cleans.add(root.getParent().getParent());
-                    } else {
-                        ids.add("module" + (COUNT++));
-                        cleans.add(root.getParent());
-                    }
                     return;
                 }
             }
         }
         Node firstChild = root.getFirstChild();
         while (firstChild != null) {
-            findModuleRequire(firstChild, nodes, ids, cleans);
+            findModuleRequire(firstChild, nodes);
             firstChild = firstChild.getNext();
         }
     }

@@ -14,8 +14,9 @@ KISSY.add(function (S, Base) {
             }, {
                 name: 'TestTT'
             });
-
-            expect(T.toString().indexOf('TestTT')).not.toBe(-1);
+            if (S.Config.debug) {
+                expect(T.toString().indexOf('TestTT')).not.toBe(-1);
+            }
             var t = new T();
 
             expect(initializerCalled).toBe(1);

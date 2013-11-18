@@ -7,7 +7,7 @@ var SERVER_CONFIG = {
 };
 KISSY.config('tag', KISSY.now());
 var loc = new KISSY.Uri(location.href);
-if (!loc.getQuery().has('build')) {
+if (!loc.getQuery().has('build') && !loc.getQuery().has('min')) {
     KISSY.config('packages', {
         "anim": {
             "base": "/kissy/src/anim/src/anim",

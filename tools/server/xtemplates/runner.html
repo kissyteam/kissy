@@ -20,8 +20,11 @@
     <style>
         {{{externalStyle}}}
     </style>
-
-    <script src="/kissy/build/seed.js"></script>
+    {{#if query.min}}
+        <script src="/kissy/build/seed-min.js"></script>
+    {{else}}
+        <script src="/kissy/build/seed.js"></script>
+    {{/if}}
     <script>
         var loc=new KISSY.Uri(location.href);
         var component= '{{{component}}}';
@@ -50,9 +53,11 @@
 
     S.config('packages',{
         specs:{
+            debug:1,
             base:'../'
         },
         src:{
+            debug:1,
             base:'/kissy/'
         }
     });

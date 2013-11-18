@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 18 18:53
+build time: Nov 19 01:54
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -9,8 +9,10 @@ build time: Nov 18 18:53
  base
 */
 
-KISSY.add("base", function(S, Attribute, CustomEvent) {
+KISSY.add("base", ["attribute", "event/custom"], function(S) {
   var module = this;
+  var Attribute = module.require("attribute");
+  var CustomEvent = module.require("event/custom");
   module.exports = Base;
   var ATTRS = "ATTRS", ucfirst = S.ucfirst, ON_SET = "_onSet", noop = S.noop, RE_DASH = /(?:^|-)([a-z])/ig;
   function replaceToUpper() {
@@ -320,5 +322,5 @@ KISSY.add("base", function(S, Attribute, CustomEvent) {
       }
     }
   }
-}, {requires:["attribute", "event/custom"]});
+});
 

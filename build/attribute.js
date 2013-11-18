@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 18 18:52
+build time: Nov 19 01:41
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -9,7 +9,7 @@ build time: Nov 18 18:52
  attribute
 */
 
-KISSY.add("attribute", function(S, undefined) {
+KISSY.add("attribute", [], function(S, undefined) {
   var INVALID = {};
   var FALSE = false;
   function normalFn(host, method) {

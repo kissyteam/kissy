@@ -12,6 +12,7 @@
         startsWith = S.startsWith,
         data = Loader.Status,
         ATTACHED = data.ATTACHED,
+        READY_TO_ATTACH = data.READY_TO_ATTACH,
         LOADED = data.LOADED,
         ERROR = data.ERROR,
         /**
@@ -188,12 +189,16 @@
          * attach modules and their dependency modules recursively
          * @param {String[]} modNames module names
          * @param runtime Module container, such as KISSY
-         * @param {String[]} [stack] stack for detecting circular dependency
-         * @param {Array} [errorList] errors when attach mods
-         * @param {Object} [cache] cached modules to avoid duplicate check
-         * @returns {Boolean} whether success attach all modules
          */
-        attachModsRecursively: function (modNames, runtime, stack, errorList, cache) {
+        attachModsRecursively: function (modNames, runtime) {
+            var i,
+                l = modNames.length;
+            for (i = 0; i < l; i++) {
+                Utils.attachModRecursively(modNames[i], runtime);
+            }
+        },
+
+        checkModsLoadRecursively: function (modNames, runtime, stack, errorList, cache) {
             // for debug. prevent circular dependency
             stack = stack || [];
             // for efficiency. avoid duplicate non-attach check
@@ -203,22 +208,13 @@
                 l = modNames.length,
                 stackDepth = stack.length;
             for (i = 0; i < l; i++) {
-                s = s && Utils.attachModRecursively(modNames[i], runtime, stack, errorList, cache);
+                s = s && Utils.checkModLoadRecursively(modNames[i], runtime, stack, errorList, cache);
                 stack.length = stackDepth;
             }
             return !!s;
         },
 
-        /**
-         * attach module and its dependency modules recursively
-         * @param {String} modName module name
-         * @param runtime Module container, such as KISSY
-         * @param {String[]} [stack] stack for detecting circular dependency
-         * @param {Array} [errorList] errors when attach mods
-         * @param {Object} [cache] cached modules to avoid duplicate check
-         * @returns {Boolean} whether success attach all modules
-         */
-        attachModRecursively: function (modName, runtime, stack, errorList, cache) {
+        checkModLoadRecursively: function (modName, runtime, stack, errorList, cache) {
             var mods = runtime.Env.mods,
                 status,
                 m = mods[modName];
@@ -229,11 +225,12 @@
                 return cache[modName] = FALSE;
             }
             status = m.status;
-            if (status == ATTACHED) {
-                return cache[modName] = TRUE;
-            }
             if (status == ERROR) {
                 errorList.push(m);
+                return cache[modName] = FALSE;
+            }
+            if (status >= READY_TO_ATTACH) {
+                return cache[modName] = TRUE;
             }
             if (status != LOADED) {
                 return cache[modName] = FALSE;
@@ -246,12 +243,36 @@
                 }
                 stack.push(modName);
             }
-            if (Utils.attachModsRecursively(m.getNormalizedRequires(),
+
+            if (Utils.checkModsLoadRecursively(m.getNormalizedRequires(),
                 runtime, stack, errorList, cache)) {
-                Utils.attachMod(runtime, m);
+                m.status = READY_TO_ATTACH;
                 return cache[modName] = TRUE;
             }
+
             return cache[modName] = FALSE;
+        },
+
+        /**
+         * attach module and its dependency modules recursively
+         * @param {String} modName module name
+         * @param runtime Module container, such as KISSY
+         */
+        attachModRecursively: function (modName, runtime) {
+            var mods = runtime.Env.mods,
+                status,
+                m = mods[modName];
+            status = m.status;
+            if (status == ATTACHED) {
+                return;
+            }
+            if (m.cjs) {
+                // commonjs format will call require in module code again
+                Utils.attachMod(runtime, m);
+            } else {
+                Utils.attachModsRecursively(m.getNormalizedRequires(), runtime);
+                Utils.attachMod(runtime, m);
+            }
         },
 
         /**
@@ -260,7 +281,7 @@
          * @param {KISSY.Loader.Module} module module instance
          */
         attachMod: function (runtime, module) {
-            if (module.status != LOADED) {
+            if (module.status != READY_TO_ATTACH) {
                 return;
             }
 
@@ -271,7 +292,9 @@
                 // 需要解开 index，相对路径
                 // 但是需要保留 alias，防止值不对应
                 //noinspection JSUnresolvedFunction
-                exports = factory.apply(module, Utils.getModules(runtime, module.getRequiresWithAlias()));
+                exports = factory.apply(module,
+                    // KISSY.add(function(S){module.require}) lazy initialize
+                    (module.cjs ? [runtime] : Utils.getModules(runtime, module.getRequiresWithAlias())));
                 if (exports !== undefined) {
                     //noinspection JSUndefinedPropertyAssignment
                     module.exports = exports;
@@ -382,7 +405,7 @@
             var mods = runtime.Env.mods,
                 module = mods[name];
 
-            if (module && module.factory) {
+            if (module && module.factory !== undefined) {
                 S.log(name + ' is defined more than once', 'warn');
                 return;
             }

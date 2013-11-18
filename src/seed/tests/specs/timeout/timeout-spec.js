@@ -41,7 +41,7 @@ describe("timeout", function () {
 
     });
 
-    it('works for use', function () {
+    it('works for use2', function () {
         S.config({
             packages: {
                 timeout: {

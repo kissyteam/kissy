@@ -70,7 +70,7 @@ var code = "/**\n" +
     "var SERVER_CONFIG=" + serverConfig + ";\n" +
     "KISSY.config('tag',KISSY.now());" +
     "var loc = new KISSY.Uri(location.href);\n" +
-    "if (!loc.getQuery().has('build')) {\n" +
+    "if (!loc.getQuery().has('build')&&!loc.getQuery().has('min')) {\n" +
     "KISSY.config('packages', \n" +
     JSON.stringify(mod) +
     ');}\n';

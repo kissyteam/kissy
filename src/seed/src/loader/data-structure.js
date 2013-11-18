@@ -154,6 +154,8 @@
          * factory of this module
          */
         module.factory = undefined;
+        // lazy initialize and commonjs module format
+        module.cjs=1;
         S.mix(module, cfg);
         module.waitedCallbacks = [];
     }
@@ -185,8 +187,7 @@
          * @returns {*} required module exports
          */
         require: function (moduleName) {
-            var moduleNames = Utils.normalizeModNamesWithAlias(S, [moduleName], this.name);
-            return Utils.getModules(S, moduleNames)[1];
+            return S.require(moduleName, this.name);
         },
 
         wait: function (callback) {
@@ -286,7 +287,7 @@
          */
         getPath: function () {
             var self = this;
-            return self.path ||(self.path = defaultComponentJsName(self));
+            return self.path || (self.path = defaultComponentJsName(self));
         },
 
         /**

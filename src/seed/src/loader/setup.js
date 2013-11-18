@@ -17,9 +17,11 @@
         'LOADING': 1,
         /** loaded */
         'LOADED': 2,
-        /** error */
-        'ERROR': 3,
+        /**dependencies are loaded or attached*/
+        'READY_TO_ATTACH': 3,
         /** attached */
-        'ATTACHED': 4
+        'ATTACHED': 4,
+        /** error */
+        'ERROR': 1000
     };
 })(KISSY);

@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 18 22:13
+build time: Nov 19 01:53
 */
 /**
  * @ignore
@@ -42,11 +42,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20131118221304' will replace with current timestamp when compressing.
+         * NOTICE: '20131119015322' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20131118221304',
+        __BUILD_TIME: '20131119015322',
 
         /**
          * KISSY Environment.
@@ -3499,10 +3499,12 @@ var KISSY = (function (undefined) {
         'LOADING': 1,
         /** loaded */
         'LOADED': 2,
-        /** error */
-        'ERROR': 3,
+        /**dependencies are loaded or attached*/
+        'READY_TO_ATTACH': 3,
         /** attached */
-        'ATTACHED': 4
+        'ATTACHED': 4,
+        /** error */
+        'ERROR': 1000
     };
 })(KISSY);/**
  * @ignore
@@ -3518,6 +3520,7 @@ var KISSY = (function (undefined) {
         startsWith = S.startsWith,
         data = Loader.Status,
         ATTACHED = data.ATTACHED,
+        READY_TO_ATTACH = data.READY_TO_ATTACH,
         LOADED = data.LOADED,
         ERROR = data.ERROR,
         /**
@@ -3694,12 +3697,16 @@ var KISSY = (function (undefined) {
          * attach modules and their dependency modules recursively
          * @param {String[]} modNames module names
          * @param runtime Module container, such as KISSY
-         * @param {String[]} [stack] stack for detecting circular dependency
-         * @param {Array} [errorList] errors when attach mods
-         * @param {Object} [cache] cached modules to avoid duplicate check
-         * @returns {Boolean} whether success attach all modules
          */
-        attachModsRecursively: function (modNames, runtime, stack, errorList, cache) {
+        attachModsRecursively: function (modNames, runtime) {
+            var i,
+                l = modNames.length;
+            for (i = 0; i < l; i++) {
+                Utils.attachModRecursively(modNames[i], runtime);
+            }
+        },
+
+        checkModsLoadRecursively: function (modNames, runtime, stack, errorList, cache) {
             // for debug. prevent circular dependency
             stack = stack || [];
             // for efficiency. avoid duplicate non-attach check
@@ -3709,22 +3716,13 @@ var KISSY = (function (undefined) {
                 l = modNames.length,
                 stackDepth = stack.length;
             for (i = 0; i < l; i++) {
-                s = s && Utils.attachModRecursively(modNames[i], runtime, stack, errorList, cache);
+                s = s && Utils.checkModLoadRecursively(modNames[i], runtime, stack, errorList, cache);
                 stack.length = stackDepth;
             }
             return !!s;
         },
 
-        /**
-         * attach module and its dependency modules recursively
-         * @param {String} modName module name
-         * @param runtime Module container, such as KISSY
-         * @param {String[]} [stack] stack for detecting circular dependency
-         * @param {Array} [errorList] errors when attach mods
-         * @param {Object} [cache] cached modules to avoid duplicate check
-         * @returns {Boolean} whether success attach all modules
-         */
-        attachModRecursively: function (modName, runtime, stack, errorList, cache) {
+        checkModLoadRecursively: function (modName, runtime, stack, errorList, cache) {
             var mods = runtime.Env.mods,
                 status,
                 m = mods[modName];
@@ -3735,11 +3733,12 @@ var KISSY = (function (undefined) {
                 return cache[modName] = FALSE;
             }
             status = m.status;
-            if (status == ATTACHED) {
-                return cache[modName] = TRUE;
-            }
             if (status == ERROR) {
                 errorList.push(m);
+                return cache[modName] = FALSE;
+            }
+            if (status >= READY_TO_ATTACH) {
+                return cache[modName] = TRUE;
             }
             if (status != LOADED) {
                 return cache[modName] = FALSE;
@@ -3752,12 +3751,36 @@ var KISSY = (function (undefined) {
                 }
                 stack.push(modName);
             }
-            if (Utils.attachModsRecursively(m.getNormalizedRequires(),
+
+            if (Utils.checkModsLoadRecursively(m.getNormalizedRequires(),
                 runtime, stack, errorList, cache)) {
-                Utils.attachMod(runtime, m);
+                m.status = READY_TO_ATTACH;
                 return cache[modName] = TRUE;
             }
+
             return cache[modName] = FALSE;
+        },
+
+        /**
+         * attach module and its dependency modules recursively
+         * @param {String} modName module name
+         * @param runtime Module container, such as KISSY
+         */
+        attachModRecursively: function (modName, runtime) {
+            var mods = runtime.Env.mods,
+                status,
+                m = mods[modName];
+            status = m.status;
+            if (status == ATTACHED) {
+                return;
+            }
+            if (m.cjs) {
+                // commonjs format will call require in module code again
+                Utils.attachMod(runtime, m);
+            } else {
+                Utils.attachModsRecursively(m.getNormalizedRequires(), runtime);
+                Utils.attachMod(runtime, m);
+            }
         },
 
         /**
@@ -3766,7 +3789,7 @@ var KISSY = (function (undefined) {
          * @param {KISSY.Loader.Module} module module instance
          */
         attachMod: function (runtime, module) {
-            if (module.status != LOADED) {
+            if (module.status != READY_TO_ATTACH) {
                 return;
             }
 
@@ -3777,7 +3800,9 @@ var KISSY = (function (undefined) {
                 // 需要解开 index，相对路径
                 // 但是需要保留 alias，防止值不对应
                 //noinspection JSUnresolvedFunction
-                exports = factory.apply(module, Utils.getModules(runtime, module.getRequiresWithAlias()));
+                exports = factory.apply(module,
+                    // KISSY.add(function(S){module.require}) lazy initialize
+                    (module.cjs ? [runtime] : Utils.getModules(runtime, module.getRequiresWithAlias())));
                 if (exports !== undefined) {
                     //noinspection JSUndefinedPropertyAssignment
                     module.exports = exports;
@@ -3888,7 +3913,7 @@ var KISSY = (function (undefined) {
             var mods = runtime.Env.mods,
                 module = mods[name];
 
-            if (module && module.factory) {
+            if (module && module.factory !== undefined) {
                 S.log(name + ' is defined more than once', 'warn');
                 return;
             }
@@ -4124,6 +4149,8 @@ var KISSY = (function (undefined) {
          * factory of this module
          */
         module.factory = undefined;
+        // lazy initialize and commonjs module format
+        module.cjs=1;
         S.mix(module, cfg);
         module.waitedCallbacks = [];
     }
@@ -4155,8 +4182,7 @@ var KISSY = (function (undefined) {
          * @returns {*} required module exports
          */
         require: function (moduleName) {
-            var moduleNames = Utils.normalizeModNamesWithAlias(S, [moduleName], this.name);
-            return Utils.getModules(S, moduleNames)[1];
+            return S.require(moduleName, this.name);
         },
 
         wait: function (callback) {
@@ -4256,7 +4282,7 @@ var KISSY = (function (undefined) {
          */
         getPath: function () {
             var self = this;
-            return self.path ||(self.path = defaultComponentJsName(self));
+            return self.path || (self.path = defaultComponentJsName(self));
         },
 
         /**
@@ -4816,9 +4842,9 @@ var KISSY = (function (undefined) {
         getHash = Utils.getHash,
         LOADING = Status.LOADING,
         LOADED = Status.LOADED,
+        READY_TO_ATTACH = Status.READY_TO_ATTACH,
         ERROR = Status.ERROR,
-        groupTag = S.now(),
-        ATTACHED = Status.ATTACHED;
+        groupTag = S.now();
 
     ComboLoader.groupTag = groupTag;
 
@@ -4842,20 +4868,33 @@ var KISSY = (function (undefined) {
 
     function checkKISSYRequire(config, factory) {
         // use module.require primitive statement
-        if ((!config || !config.requires) && typeof factory == 'function') {
+        if (!config && typeof factory == 'function') {
             var requires = Utils.getRequiresFromFn(factory);
             if (requires.length) {
                 config = config || {};
                 config.requires = requires;
             }
+        } else {
+            // KISSY.add(function(){},{requires:[]})
+            if (config && config.requires && !config.cjs) {
+                config.cjs = 0;
+            }
         }
         return config;
     }
 
-    ComboLoader.add = function (name, factory, config, runtime) {
-        if (typeof name === 'function' ||
-            // KISSY.add('xx');
-            arguments.length == 1) {
+    ComboLoader.add = function (name, factory, config, runtime, argsLen) {
+        // KISSY.add('xx',[],function(){});
+        if (argsLen == 3 && S.isArray(factory)) {
+            var tmp = factory;
+            factory = config;
+            config = {
+                requires: tmp,
+                cjs: 1
+            };
+        }
+        // KISSY.add(function(){}), KISSY.add('a'), KISSY.add(function(){},{requires:[]})
+        if (typeof name === 'function' || argsLen == 1) {
             config = factory;
             factory = name;
             config = checkKISSYRequire(config, factory);
@@ -4874,6 +4913,7 @@ var KISSY = (function (undefined) {
                 };
             }
         } else {
+            // KISSY.add('x',function(){},{requires:[]})
             if (oldIE) {
                 startLoadModName = null;
                 startLoadModTime = 0;
@@ -5039,7 +5079,7 @@ var KISSY = (function (undefined) {
                 cache[m] = 1;
                 mod = Utils.createModuleInfo(runtime, m);
                 modStatus = mod.status;
-                if (modStatus === ERROR || modStatus === ATTACHED) {
+                if (modStatus >= READY_TO_ATTACH) {
                     continue;
                 }
                 if (modStatus != LOADED) {
@@ -5171,7 +5211,7 @@ var KISSY = (function (undefined) {
                         //noinspection JSReferencingMutableVariableFromClosure
                         res.push({
                             combine: 1,
-                            fullpath: prefix +  currentComboUrls.join(comboSep) + suffix,
+                            fullpath: prefix + currentComboUrls.join(comboSep) + suffix,
                             mods: currentComboMods
                         });
                     }
@@ -5298,7 +5338,7 @@ var KISSY = (function (undefined) {
          *      });
          */
         add: function (name, factory, cfg) {
-            ComboLoader.add(name, factory, cfg, S);
+            ComboLoader.add(name, factory, cfg, S,arguments.length);
         },
         /**
          * Attached one or more modules to global KISSY instance.
@@ -5318,12 +5358,12 @@ var KISSY = (function (undefined) {
                 loader,
                 error,
                 sync,
-                requireCodeStyle,
+                requireCodeStyle = 0,
                 tryCount = 0,
                 finalSuccess,
                 waitingModules = new WaitingModules(loadReady);
 
-            if (typeof modNames != 'string') {
+            if (typeof modNames != 'string' && !S.isArray(modNames)) {
                 requireCodeStyle = 1;
                 success = modNames;
             }
@@ -5338,7 +5378,7 @@ var KISSY = (function (undefined) {
             }
 
             if (requireCodeStyle) {
-                modNames = Utils.getRequiresFromFn(success,1);
+                modNames = Utils.getRequiresFromFn(success, 1);
             }
 
             finalSuccess = function () {
@@ -5355,9 +5395,12 @@ var KISSY = (function (undefined) {
                 var errorList = [],
                     start = S.now(),
                     ret;
-                ret = Utils.attachModsRecursively(normalizedModNames, S, undefined, errorList);
+                ret = Utils.checkModsLoadRecursively(normalizedModNames, S, undefined, errorList);
                 logger.debug(tryCount + ' check duration ' + (S.now() - start));
                 if (ret) {
+                    if (!requireCodeStyle) {
+                        Utils.attachModsRecursively(normalizedModNames, S);
+                    }
                     if (success) {
                         if (sync) {
                             finalSuccess();
@@ -5401,15 +5444,14 @@ var KISSY = (function (undefined) {
         /**
          * get module exports from KISSY module cache
          * @param {String} moduleName module name
+         * @param {String} refName internal usage
          * @member KISSY
          * @return {*} exports of specified module
          */
-        require: function (moduleName) {
-            var moduleNames = Utils.unalias(S, Utils.normalizeModNamesWithAlias(S, [moduleName]));
-            if (Utils.attachModsRecursively(moduleNames, S)) {
-                return Utils.getModules(S, moduleNames)[1];
-            }
-            return undefined;
+        require: function (moduleName, refName) {
+            var moduleNames = Utils.unalias(S, Utils.normalizeModNamesWithAlias(S, [moduleName], refName));
+            Utils.attachModsRecursively(moduleNames, S);
+            return Utils.getModules(S, moduleNames)[1];
         }
     });
 
@@ -5428,7 +5470,7 @@ var KISSY = (function (undefined) {
     var doc = S.Env.host && S.Env.host.document;
     // var logger = S.getLogger('s/loader');
     var Utils = S.Loader.Utils;
-    var TIMESTAMP = '20131118221304';
+    var TIMESTAMP = '20131119015322';
     var defaultComboPrefix = '??';
     var defaultComboSep = ',';
 

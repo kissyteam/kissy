@@ -1,5 +1,5 @@
 describe('loader should report error', function () {
-
+    var S = KISSY;
     it('should works', function () {
 
         KISSY.clearLoader();
@@ -63,9 +63,8 @@ describe('loader should report error', function () {
             expect(success2).toBeUndefined();
             expect(error2.length).toBe(1);
             expect(error2[0].name).toBe(combine ? 'report/s3' : 'report/s4');
-            expect(error2[0].status).toBe(3);
+            expect(error2[0].status).toBe(S.Loader.Status.ERROR);
         });
 
     });
-
 });

@@ -62,9 +62,9 @@
         getHash = Utils.getHash,
         LOADING = Status.LOADING,
         LOADED = Status.LOADED,
+        READY_TO_ATTACH = Status.READY_TO_ATTACH,
         ERROR = Status.ERROR,
-        groupTag = S.now(),
-        ATTACHED = Status.ATTACHED;
+        groupTag = S.now();
 
     ComboLoader.groupTag = groupTag;
 
@@ -88,20 +88,33 @@
 
     function checkKISSYRequire(config, factory) {
         // use module.require primitive statement
-        if ((!config || !config.requires) && typeof factory == 'function') {
+        if (!config && typeof factory == 'function') {
             var requires = Utils.getRequiresFromFn(factory);
             if (requires.length) {
                 config = config || {};
                 config.requires = requires;
             }
+        } else {
+            // KISSY.add(function(){},{requires:[]})
+            if (config && config.requires && !config.cjs) {
+                config.cjs = 0;
+            }
         }
         return config;
     }
 
-    ComboLoader.add = function (name, factory, config, runtime) {
-        if (typeof name === 'function' ||
-            // KISSY.add('xx');
-            arguments.length == 1) {
+    ComboLoader.add = function (name, factory, config, runtime, argsLen) {
+        // KISSY.add('xx',[],function(){});
+        if (argsLen == 3 && S.isArray(factory)) {
+            var tmp = factory;
+            factory = config;
+            config = {
+                requires: tmp,
+                cjs: 1
+            };
+        }
+        // KISSY.add(function(){}), KISSY.add('a'), KISSY.add(function(){},{requires:[]})
+        if (typeof name === 'function' || argsLen == 1) {
             config = factory;
             factory = name;
             config = checkKISSYRequire(config, factory);
@@ -120,6 +133,7 @@
                 };
             }
         } else {
+            // KISSY.add('x',function(){},{requires:[]})
             if (oldIE) {
                 startLoadModName = null;
                 startLoadModTime = 0;
@@ -285,7 +299,7 @@
                 cache[m] = 1;
                 mod = Utils.createModuleInfo(runtime, m);
                 modStatus = mod.status;
-                if (modStatus === ERROR || modStatus === ATTACHED) {
+                if (modStatus >= READY_TO_ATTACH) {
                     continue;
                 }
                 if (modStatus != LOADED) {
@@ -417,7 +431,7 @@
                         //noinspection JSReferencingMutableVariableFromClosure
                         res.push({
                             combine: 1,
-                            fullpath: prefix +  currentComboUrls.join(comboSep) + suffix,
+                            fullpath: prefix + currentComboUrls.join(comboSep) + suffix,
                             mods: currentComboMods
                         });
                     }

@@ -1,7 +1,7 @@
 /*
-Copyright 2013, KISSY v1.40
+Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Sep 18 00:20
+build time: Nov 19 01:46
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -14,7 +14,7 @@ build time: Sep 18 00:20
  * event facade for event module.contains custom dom and touch event
  * @author yiminghe@gmail.com
  */
-KISSY.add('event', function (S, DomEvent, CustomEvent, undefined) {
+KISSY.add('event', function (S, DomEvent, CustomEvent) {
     /**
      * KISSY event utils. Provides event management.
      * @class KISSY.Event
@@ -45,7 +45,7 @@ KISSY.add('event', function (S, DomEvent, CustomEvent, undefined) {
     Event.global = CustomEvent.global;
 
     // compatibility
-    S.EventTarget = Event.Target = CustomEvent.targetObject;
+    S.EventTarget = Event.Target = CustomEvent.Target;
 
     return Event;
 }, {
