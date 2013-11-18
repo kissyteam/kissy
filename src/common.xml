@@ -257,8 +257,12 @@
     </target>
 
     <target name="fix-cr-lf">
+        <!--npm publish needs lf-->
         <fixcrlf srcdir="${component.build.dir}"
                  tablength="4"
+                 eol="lf"
+                 tab="remove"
+                 eof="remove"
                  includes="${js-css.files}"
                  encoding="${charset}"/>
     </target>

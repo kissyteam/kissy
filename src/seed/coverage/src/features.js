@@ -314,79 +314,79 @@ if (! _$jscoverage['/features.js'].branchData) {
   _$jscoverage['/features.js'].branchData['144'][1] = new BranchData();
   _$jscoverage['/features.js'].branchData['144'][2] = new BranchData();
 }
-_$jscoverage['/features.js'].branchData['144'][2].init(30, 6, 'ie < v');
+_$jscoverage['/features.js'].branchData['144'][2].init(29, 6, 'ie < v');
 function visit30_144_2(result) {
   _$jscoverage['/features.js'].branchData['144'][2].ranCondition(result);
   return result;
-}_$jscoverage['/features.js'].branchData['144'][1].init(24, 12, 'ie && ie < v');
+}_$jscoverage['/features.js'].branchData['144'][1].init(23, 12, 'ie && ie < v');
 function visit29_144_1(result) {
   _$jscoverage['/features.js'].branchData['144'][1].ranCondition(result);
   return result;
-}_$jscoverage['/features.js'].branchData['134'][1].init(69, 75, '!S.config(\'dom/selector\') && isQuerySelectorSupportedState');
+}_$jscoverage['/features.js'].branchData['134'][1].init(67, 74, '!S.config(\'dom/selector\') && isQuerySelectorSupportedState');
 function visit28_134_1(result) {
   _$jscoverage['/features.js'].branchData['134'][1].ranCondition(result);
   return result;
-}_$jscoverage['/features.js'].branchData['117'][1].init(21, 29, 'transformPrefix !== undefined');
+}_$jscoverage['/features.js'].branchData['117'][1].init(20, 29, 'transformPrefix !== undefined');
 function visit27_117_1(result) {
   _$jscoverage['/features.js'].branchData['117'][1].ranCondition(result);
   return result;
-}_$jscoverage['/features.js'].branchData['109'][1].init(21, 30, 'transitionPrefix !== undefined');
+}_$jscoverage['/features.js'].branchData['109'][1].init(20, 30, 'transitionPrefix !== undefined');
 function visit26_109_1(result) {
   _$jscoverage['/features.js'].branchData['109'][1].ranCondition(result);
   return result;
-}_$jscoverage['/features.js'].branchData['101'][3].init(197, 6, 'ie > 7');
+}_$jscoverage['/features.js'].branchData['101'][3].init(193, 6, 'ie > 7');
 function visit25_101_3(result) {
   _$jscoverage['/features.js'].branchData['101'][3].ranCondition(result);
   return result;
-}_$jscoverage['/features.js'].branchData['101'][2].init(190, 13, '!ie || ie > 7');
+}_$jscoverage['/features.js'].branchData['101'][2].init(186, 13, '!ie || ie > 7');
 function visit24_101_2(result) {
   _$jscoverage['/features.js'].branchData['101'][2].ranCondition(result);
   return result;
-}_$jscoverage['/features.js'].branchData['101'][1].init(163, 41, '(\'onhashchange\' in win) && (!ie || ie > 7)');
+}_$jscoverage['/features.js'].branchData['101'][1].init(159, 41, '(\'onhashchange\' in win) && (!ie || ie > 7)');
 function visit23_101_1(result) {
   _$jscoverage['/features.js'].branchData['101'][1].ranCondition(result);
   return result;
-}_$jscoverage['/features.js'].branchData['58'][1].init(956, 19, 'win.navigator || {}');
+}_$jscoverage['/features.js'].branchData['58'][1].init(932, 19, 'win.navigator || {}');
 function visit22_58_1(result) {
   _$jscoverage['/features.js'].branchData['58'][1].ranCondition(result);
   return result;
-}_$jscoverage['/features.js'].branchData['50'][2].init(369, 29, 'transformPrefix === undefined');
+}_$jscoverage['/features.js'].branchData['50'][2].init(361, 29, 'transformPrefix === undefined');
 function visit21_50_2(result) {
   _$jscoverage['/features.js'].branchData['50'][2].ranCondition(result);
   return result;
-}_$jscoverage['/features.js'].branchData['50'][1].init(369, 83, 'transformPrefix === undefined && transform in documentElementStyle');
+}_$jscoverage['/features.js'].branchData['50'][1].init(361, 82, 'transformPrefix === undefined && transform in documentElementStyle');
 function visit20_50_1(result) {
   _$jscoverage['/features.js'].branchData['50'][1].ranCondition(result);
   return result;
-}_$jscoverage['/features.js'].branchData['45'][2].init(157, 30, 'transitionPrefix === undefined');
+}_$jscoverage['/features.js'].branchData['45'][2].init(154, 30, 'transitionPrefix === undefined');
 function visit19_45_2(result) {
   _$jscoverage['/features.js'].branchData['45'][2].ranCondition(result);
   return result;
-}_$jscoverage['/features.js'].branchData['45'][1].init(157, 85, 'transitionPrefix === undefined && transition in documentElementStyle');
+}_$jscoverage['/features.js'].branchData['45'][1].init(154, 84, 'transitionPrefix === undefined && transition in documentElementStyle');
 function visit18_45_1(result) {
   _$jscoverage['/features.js'].branchData['45'][1].ranCondition(result);
   return result;
-}_$jscoverage['/features.js'].branchData['37'][1].init(72, 7, 'ie != 8');
+}_$jscoverage['/features.js'].branchData['37'][1].init(70, 7, 'ie != 8');
 function visit17_37_1(result) {
   _$jscoverage['/features.js'].branchData['37'][1].ranCondition(result);
   return result;
-}_$jscoverage['/features.js'].branchData['35'][1].init(14, 80, 'documentElement.querySelector && ie != 8');
+}_$jscoverage['/features.js'].branchData['35'][1].init(13, 78, 'documentElement.querySelector && ie != 8');
 function visit16_35_1(result) {
   _$jscoverage['/features.js'].branchData['35'][1].ranCondition(result);
   return result;
-}_$jscoverage['/features.js'].branchData['34'][1].init(848, 15, 'documentElement');
+}_$jscoverage['/features.js'].branchData['34'][1].init(820, 15, 'documentElement');
 function visit15_34_1(result) {
   _$jscoverage['/features.js'].branchData['34'][1].ranCondition(result);
   return result;
-}_$jscoverage['/features.js'].branchData['32'][1].init(807, 21, 'documentMode || UA.ie');
+}_$jscoverage['/features.js'].branchData['32'][1].init(782, 21, 'documentMode || UA.ie');
 function visit14_32_1(result) {
   _$jscoverage['/features.js'].branchData['32'][1].ranCondition(result);
   return result;
-}_$jscoverage['/features.js'].branchData['31'][1].init(750, 41, '(\'ontouchstart\' in doc) && !(UA.phantomjs)');
+}_$jscoverage['/features.js'].branchData['31'][1].init(726, 41, '(\'ontouchstart\' in doc) && !(UA.phantomjs)');
 function visit13_31_1(result) {
   _$jscoverage['/features.js'].branchData['31'][1].ranCondition(result);
   return result;
-}_$jscoverage['/features.js'].branchData['19'][1].init(257, 18, 'win.document || {}');
+}_$jscoverage['/features.js'].branchData['19'][1].init(245, 18, 'win.document || {}');
 function visit12_19_1(result) {
   _$jscoverage['/features.js'].branchData['19'][1].ranCondition(result);
   return result;

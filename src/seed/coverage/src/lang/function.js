@@ -324,59 +324,59 @@ if (! _$jscoverage['/lang/function.js'].branchData) {
   _$jscoverage['/lang/function.js'].branchData['170'] = [];
   _$jscoverage['/lang/function.js'].branchData['170'][1] = new BranchData();
 }
-_$jscoverage['/lang/function.js'].branchData['170'][1].init(22, 11, 'bufferTimer');
+_$jscoverage['/lang/function.js'].branchData['170'][1].init(21, 11, 'bufferTimer');
 function visit163_170_1(result) {
   _$jscoverage['/lang/function.js'].branchData['170'][1].ranCondition(result);
   return result;
-}_$jscoverage['/lang/function.js'].branchData['166'][1].init(78, 15, 'context || this');
+}_$jscoverage['/lang/function.js'].branchData['166'][1].init(76, 15, 'context || this');
 function visit162_166_1(result) {
   _$jscoverage['/lang/function.js'].branchData['166'][1].ranCondition(result);
   return result;
-}_$jscoverage['/lang/function.js'].branchData['159'][1].init(31, 15, 'context || this');
+}_$jscoverage['/lang/function.js'].branchData['159'][1].init(30, 15, 'context || this');
 function visit161_159_1(result) {
   _$jscoverage['/lang/function.js'].branchData['159'][1].ranCondition(result);
   return result;
-}_$jscoverage['/lang/function.js'].branchData['157'][1].init(49, 9, 'ms === -1');
+}_$jscoverage['/lang/function.js'].branchData['157'][1].init(46, 9, 'ms === -1');
 function visit160_157_1(result) {
   _$jscoverage['/lang/function.js'].branchData['157'][1].ranCondition(result);
   return result;
-}_$jscoverage['/lang/function.js'].branchData['155'][1].init(19, 9, 'ms || 150');
+}_$jscoverage['/lang/function.js'].branchData['155'][1].init(18, 9, 'ms || 150');
 function visit159_155_1(result) {
   _$jscoverage['/lang/function.js'].branchData['155'][1].ranCondition(result);
   return result;
-}_$jscoverage['/lang/function.js'].branchData['141'][1].init(64, 15, 'context || this');
+}_$jscoverage['/lang/function.js'].branchData['141'][1].init(62, 15, 'context || this');
 function visit158_141_1(result) {
   _$jscoverage['/lang/function.js'].branchData['141'][1].ranCondition(result);
   return result;
-}_$jscoverage['/lang/function.js'].branchData['139'][1].init(58, 15, 'now - last > ms');
+}_$jscoverage['/lang/function.js'].branchData['139'][1].init(56, 15, 'now - last > ms');
 function visit157_139_1(result) {
   _$jscoverage['/lang/function.js'].branchData['139'][1].ranCondition(result);
   return result;
-}_$jscoverage['/lang/function.js'].branchData['131'][1].init(31, 15, 'context || this');
+}_$jscoverage['/lang/function.js'].branchData['131'][1].init(30, 15, 'context || this');
 function visit156_131_1(result) {
   _$jscoverage['/lang/function.js'].branchData['131'][1].ranCondition(result);
   return result;
-}_$jscoverage['/lang/function.js'].branchData['129'][1].init(49, 9, 'ms === -1');
+}_$jscoverage['/lang/function.js'].branchData['129'][1].init(46, 9, 'ms === -1');
 function visit155_129_1(result) {
   _$jscoverage['/lang/function.js'].branchData['129'][1].ranCondition(result);
   return result;
-}_$jscoverage['/lang/function.js'].branchData['127'][1].init(19, 9, 'ms || 150');
+}_$jscoverage['/lang/function.js'].branchData['127'][1].init(18, 9, 'ms || 150');
 function visit154_127_1(result) {
   _$jscoverage['/lang/function.js'].branchData['127'][1].ranCondition(result);
   return result;
-}_$jscoverage['/lang/function.js'].branchData['107'][1].init(26, 13, 'this.interval');
+}_$jscoverage['/lang/function.js'].branchData['107'][1].init(25, 13, 'this.interval');
 function visit153_107_1(result) {
   _$jscoverage['/lang/function.js'].branchData['107'][1].ranCondition(result);
   return result;
-}_$jscoverage['/lang/function.js'].branchData['93'][1].init(249, 2, '!m');
+}_$jscoverage['/lang/function.js'].branchData['93'][1].init(238, 2, '!m');
 function visit152_93_1(result) {
   _$jscoverage['/lang/function.js'].branchData['93'][1].ranCondition(result);
   return result;
-}_$jscoverage['/lang/function.js'].branchData['89'][1].init(156, 21, 'typeof fn == \'string\'');
+}_$jscoverage['/lang/function.js'].branchData['89'][1].init(149, 21, 'typeof fn == \'string\'');
 function visit151_89_1(result) {
   _$jscoverage['/lang/function.js'].branchData['89'][1].ranCondition(result);
   return result;
-}_$jscoverage['/lang/function.js'].branchData['83'][1].init(21, 9, 'when || 0');
+}_$jscoverage['/lang/function.js'].branchData['83'][1].init(20, 9, 'when || 0');
 function visit150_83_1(result) {
   _$jscoverage['/lang/function.js'].branchData['83'][1].ranCondition(result);
   return result;
