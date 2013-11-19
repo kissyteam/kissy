@@ -7,16 +7,18 @@
  Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.html or http://ckeditor.com/license
  */
-KISSY.add("editor/domIterator", function (S, Editor) {
+KISSY.add(function (S) {
+    var module = this;
+    var Node = module.require('node');
+    var Walker = module.require('./walker');
+    var KERange = module.require('./range');
+    var Editor = module.require('./base');
+    var ElementPath = module.require('./elementPath');
     var TRUE = true,
         FALSE = false,
         NULL = null,
         UA = S.UA,
-        Walker = Editor.Walker,
-        KERange = Editor.Range,
         KER = Editor.RangeType,
-        ElementPath = Editor.ElementPath,
-        Node = S.Node,
         Dom = S.DOM;
 
     /**
@@ -332,6 +334,4 @@ KISSY.add("editor/domIterator", function (S, Editor) {
     };
 
     return Iterator;
-}, {
-    requires: ['./base', './range', './elementPath', './walker', 'node']
 });

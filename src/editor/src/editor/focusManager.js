@@ -3,7 +3,9 @@
  * @ignore
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/focusManager", function (S, Editor) {
+KISSY.add(function () {
+    var module = this;
+    var Editor = module.require('./base');
 
     var INSTANCES = {},
         timer,
@@ -92,6 +94,4 @@ KISSY.add("editor/focusManager", function (S, Editor) {
     };
 
     return focusManager;
-}, {
-    requires: ['./base', './dom']
 });

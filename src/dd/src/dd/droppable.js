@@ -3,7 +3,12 @@
  * droppable for kissy
  * @author yiminghe@gmail.com
  */
-KISSY.add('dd/droppable', function (S, Node, Base, DDM) {
+KISSY.add('dd/droppable', function (S) {
+    var module = this;
+    var Node = module.require('node'),
+        DDM = module.require('./ddm'),
+        Base = module.require('base');
+
     var PREFIX_CLS = DDM.PREFIX_CLS;
 
     function validDrop(dropGroups, dragGroups) {
@@ -249,6 +254,4 @@ KISSY.add('dd/droppable', function (S, Node, Base, DDM) {
             }
         }
     });
-}, {
-    requires: ['node', 'base', './ddm']
 });

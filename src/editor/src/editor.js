@@ -3,7 +3,22 @@
  * Editor For KISSY Based on CKEditor Core.
  * @author yiminghe@gmail.com
  */
-KISSY.add('editor', function (S, Node, iframeContentTpl, Editor, Utils, focusManager, Styles, zIndexManger, clipboard, enterKey, htmlDataProcessor, selectionFix) {
+KISSY.add(function (S) {
+    var module = this;
+    var Node = module.require('node');
+    var iframeContentTpl = module.require('editor/iframe-content-tpl');
+    var Editor = module.require('editor/base');
+    var Utils = module.require('editor/utils');
+    var focusManager = module.require('editor/focusManager');
+    var clipboard = module.require('editor/clipboard');
+    var enterKey = module.require('editor/enterKey');
+    var htmlDataProcessor = module.require('editor/htmlDataProcessor');
+    var selectionFix = module.require('editor/selectionFix');
+    module.require('editor/plugin-meta');
+    module.require('editor/styles');
+    module.require('editor/z-index-manager');
+    module.exports=Editor;
+
     var TRUE = true,
         undefined = undefined,
         FALSE = false,
@@ -1164,23 +1179,6 @@ KISSY.add('editor', function (S, Node, iframeContentTpl, Editor, Utils, focusMan
     }
 
     // ------------------------------------------------------------------- end private
-
-    return Editor;
-}, {
-    requires: [
-        'node',
-        'editor/iframe-content-tpl',
-        'editor/base',
-        'editor/utils',
-        'editor/focusManager',
-        'editor/styles',
-        'editor/z-index-manager',
-        'editor/clipboard',
-        'editor/enterKey',
-        'editor/htmlDataProcessor',
-        'editor/selectionFix',
-        'editor/plugin-meta'
-    ]
 });
 /**
  * @ignore

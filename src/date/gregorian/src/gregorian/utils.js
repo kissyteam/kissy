@@ -3,7 +3,9 @@
  * @ignore
  * @author yiminghe@gmail.com
  */
-KISSY.add('date/gregorian/utils', function (S, Const) {
+KISSY.add(function (S) {
+    var module=this;
+    var Const=module.require('./const');
     var ACCUMULATED_DAYS_IN_MONTH
             //   1/1 2/1 3/1 4/1 5/1 6/1 7/1 8/1 9/1 10/1 11/1 12/1
             = [ 0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334],
@@ -116,6 +118,4 @@ KISSY.add('date/gregorian/utils', function (S, Const) {
         mod = Utils.mod;
 
     return Utils;
-}, {
-    requires: ['./const']
 });

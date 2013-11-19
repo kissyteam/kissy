@@ -3,7 +3,9 @@
  * @ignore
  * @author lifesinger@gmail.com, yiminghe@gmail.com
  */
-KISSY.add('dom/class-list', function (S, Dom) {
+KISSY.add(function (S) {
+    var module = this;
+    var Dom = module.require('dom/base');
     var SPACE = ' ',
         RE_CLASS = /[\n\t\r]/g;
 
@@ -12,7 +14,6 @@ KISSY.add('dom/class-list', function (S, Dom) {
     }
 
     return S.mix(Dom, {
-
         _hasClass: function (elem, classNames) {
             var elemClass = elem.className,
                 className,
@@ -96,9 +97,5 @@ KISSY.add('dom/class-list', function (S, Dom) {
             if (removed.length)
                 self._removeClass(elem, removed);
         }
-
     });
-
-}, {
-    requires: ['dom/base']
 });

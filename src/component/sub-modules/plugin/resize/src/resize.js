@@ -3,8 +3,9 @@
  * resize plugin for kissy component
  * @author yiminghe@gmail.com
  */
-KISSY.add('component/plugin/resize', function (S, Resize) {
-
+KISSY.add('component/plugin/resize', function () {
+    var module = this,
+        Resizable = module.require('resizable');
     /**
      * resize plugin for kissy component
      *
@@ -25,12 +26,12 @@ KISSY.add('component/plugin/resize', function (S, Resize) {
      * @class KISSY.Component.Plugin.Resize
      * @extends KISSY.Resizable
      */
-    return Resize.extend({
+    return Resizable.extend({
         pluginBindUI: function (component) {
             var $el = component.$el,
                 self = this;
             self.set('node', $el);
-            self.set('prefixCls',component.get('prefixCls'));
+            self.set('prefixCls', component.get('prefixCls'));
             // sync
             self.on('resizeEnd', function () {
                 var offset = $el.offset();
@@ -44,6 +45,4 @@ KISSY.add('component/plugin/resize', function (S, Resize) {
         }
     });
 
-}, {
-    requires: ['resizable']
 });

@@ -3,8 +3,11 @@
  * auto scroll for drag object's container
  * @author yiminghe@gmail.com
  */
-KISSY.add('dd/plugin/scroll', function (S, DD, Base, Node) {
-
+KISSY.add(function (S) {
+    var module = this;
+    var Node = module.require('node'),
+        DD = module.require('dd'),
+        Base = module.require('base');
     var DDM = DD.DDM,
         win = S.Env.host,
         SCROLL_EVENT = '.-ks-dd-scroll' + S.now(),
@@ -260,6 +263,4 @@ KISSY.add('dd/plugin/scroll', function (S, DD, Base, Node) {
             }
         }
     });
-}, {
-    requires: ['dd', 'base', 'node']
 });

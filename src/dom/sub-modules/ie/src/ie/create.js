@@ -3,8 +3,9 @@
  * ie create hack
  * @author yiminghe@gmail.com
  */
-KISSY.add('dom/ie/create', function (S, Dom) {
-
+KISSY.add(function (S) {
+    var module = this;
+    var Dom = module.require('dom/base');
     // wierd ie cloneNode fix from jq
     Dom._fixCloneAttributes = function (src, dest) {
 
@@ -87,6 +88,4 @@ KISSY.add('dom/ie/create', function (S, Dom) {
             return frag;
         };
     }
-}, {
-    requires: ['dom/base']
 });

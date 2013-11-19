@@ -3,7 +3,7 @@
  * create iframe shim for flash/select/office plugin
  * @author yiminghe@gmail.com
  */
-KISSY.add("component/extension/shim", function (S) {
+KISSY.add(function (S) {
     var ie6 = S.UA.ie === 6;
 
     var shimTpl = "<" + "iframe style='position: absolute;" +

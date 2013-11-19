@@ -3,9 +3,11 @@
  * dom-attr
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
-KISSY.add('dom/base/attr', function (S, Dom, undefined) {
-
+KISSY.add(function (S) {
+    var module = this;
+    var Dom = module.require('./api');
     var doc = S.Env.host.document,
+        undefined=undefined,
         NodeType = Dom.NodeType,
         docElement = doc && doc.documentElement,
         EMPTY = '',
@@ -584,8 +586,6 @@ KISSY.add('dom/base/attr', function (S, Dom, undefined) {
         });
 
     return Dom;
-}, {
-    requires: ['./api']
 });
 /*
  NOTES:

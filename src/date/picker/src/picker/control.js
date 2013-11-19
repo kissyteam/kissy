@@ -3,7 +3,14 @@
  * year panel for date picker
  * @author yiminghe@gmail.com
  */
-KISSY.add('date/picker/control', function (S, Node, GregorianCalendar, locale, Control, PickerRender, MonthPanel) {
+KISSY.add(function (S) {
+    var module=this;
+    var Node=module.require( 'node'),
+        GregorianCalendar=module.require( 'date/gregorian'),
+        locale=module.require( 'i18n!date/picker'),
+        Control=module.require( 'component/control'),
+        PickerRender=module.require( './render'),
+        MonthPanel=module.require( './month-panel/control');
     var tap = Node.Gesture.tap;
     var $ = Node.all;
     var undefined = undefined;
@@ -341,15 +348,6 @@ KISSY.add('date/picker/control', function (S, Node, GregorianCalendar, locale, C
             }
         }
     });
-}, {
-    requires: [
-        'node',
-        'date/gregorian',
-        'i18n!date/picker',
-        'component/control',
-        './render',
-        './month-panel/control'
-    ]
 });
 /*
  keyboard

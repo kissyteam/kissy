@@ -230,20 +230,20 @@ if (! _$jscoverage['/picker/month-panel/control.js']) {
   _$jscoverage['/picker/month-panel/control.js'] = {};
   _$jscoverage['/picker/month-panel/control.js'].lineData = [];
   _$jscoverage['/picker/month-panel/control.js'].lineData[6] = 0;
-  _$jscoverage['/picker/month-panel/control.js'].lineData[11] = 0;
-  _$jscoverage['/picker/month-panel/control.js'].lineData[12] = 0;
+  _$jscoverage['/picker/month-panel/control.js'].lineData[7] = 0;
+  _$jscoverage['/picker/month-panel/control.js'].lineData[8] = 0;
+  _$jscoverage['/picker/month-panel/control.js'].lineData[13] = 0;
   _$jscoverage['/picker/month-panel/control.js'].lineData[14] = 0;
-  _$jscoverage['/picker/month-panel/control.js'].lineData[15] = 0;
   _$jscoverage['/picker/month-panel/control.js'].lineData[16] = 0;
   _$jscoverage['/picker/month-panel/control.js'].lineData[17] = 0;
-  _$jscoverage['/picker/month-panel/control.js'].lineData[20] = 0;
-  _$jscoverage['/picker/month-panel/control.js'].lineData[21] = 0;
+  _$jscoverage['/picker/month-panel/control.js'].lineData[18] = 0;
+  _$jscoverage['/picker/month-panel/control.js'].lineData[19] = 0;
   _$jscoverage['/picker/month-panel/control.js'].lineData[22] = 0;
-  _$jscoverage['/picker/month-panel/control.js'].lineData[25] = 0;
-  _$jscoverage['/picker/month-panel/control.js'].lineData[26] = 0;
+  _$jscoverage['/picker/month-panel/control.js'].lineData[23] = 0;
+  _$jscoverage['/picker/month-panel/control.js'].lineData[24] = 0;
   _$jscoverage['/picker/month-panel/control.js'].lineData[27] = 0;
-  _$jscoverage['/picker/month-panel/control.js'].lineData[30] = 0;
-  _$jscoverage['/picker/month-panel/control.js'].lineData[31] = 0;
+  _$jscoverage['/picker/month-panel/control.js'].lineData[28] = 0;
+  _$jscoverage['/picker/month-panel/control.js'].lineData[29] = 0;
   _$jscoverage['/picker/month-panel/control.js'].lineData[32] = 0;
   _$jscoverage['/picker/month-panel/control.js'].lineData[33] = 0;
   _$jscoverage['/picker/month-panel/control.js'].lineData[34] = 0;
@@ -251,25 +251,27 @@ if (! _$jscoverage['/picker/month-panel/control.js']) {
   _$jscoverage['/picker/month-panel/control.js'].lineData[36] = 0;
   _$jscoverage['/picker/month-panel/control.js'].lineData[37] = 0;
   _$jscoverage['/picker/month-panel/control.js'].lineData[38] = 0;
-  _$jscoverage['/picker/month-panel/control.js'].lineData[43] = 0;
-  _$jscoverage['/picker/month-panel/control.js'].lineData[44] = 0;
+  _$jscoverage['/picker/month-panel/control.js'].lineData[39] = 0;
+  _$jscoverage['/picker/month-panel/control.js'].lineData[40] = 0;
   _$jscoverage['/picker/month-panel/control.js'].lineData[45] = 0;
   _$jscoverage['/picker/month-panel/control.js'].lineData[46] = 0;
   _$jscoverage['/picker/month-panel/control.js'].lineData[47] = 0;
-  _$jscoverage['/picker/month-panel/control.js'].lineData[50] = 0;
-  _$jscoverage['/picker/month-panel/control.js'].lineData[51] = 0;
+  _$jscoverage['/picker/month-panel/control.js'].lineData[48] = 0;
+  _$jscoverage['/picker/month-panel/control.js'].lineData[49] = 0;
   _$jscoverage['/picker/month-panel/control.js'].lineData[52] = 0;
-  _$jscoverage['/picker/month-panel/control.js'].lineData[56] = 0;
-  _$jscoverage['/picker/month-panel/control.js'].lineData[57] = 0;
-  _$jscoverage['/picker/month-panel/control.js'].lineData[60] = 0;
-  _$jscoverage['/picker/month-panel/control.js'].lineData[61] = 0;
+  _$jscoverage['/picker/month-panel/control.js'].lineData[53] = 0;
+  _$jscoverage['/picker/month-panel/control.js'].lineData[54] = 0;
+  _$jscoverage['/picker/month-panel/control.js'].lineData[58] = 0;
+  _$jscoverage['/picker/month-panel/control.js'].lineData[59] = 0;
   _$jscoverage['/picker/month-panel/control.js'].lineData[62] = 0;
-  _$jscoverage['/picker/month-panel/control.js'].lineData[65] = 0;
+  _$jscoverage['/picker/month-panel/control.js'].lineData[63] = 0;
+  _$jscoverage['/picker/month-panel/control.js'].lineData[64] = 0;
   _$jscoverage['/picker/month-panel/control.js'].lineData[67] = 0;
-  _$jscoverage['/picker/month-panel/control.js'].lineData[68] = 0;
   _$jscoverage['/picker/month-panel/control.js'].lineData[69] = 0;
   _$jscoverage['/picker/month-panel/control.js'].lineData[70] = 0;
-  _$jscoverage['/picker/month-panel/control.js'].lineData[76] = 0;
+  _$jscoverage['/picker/month-panel/control.js'].lineData[71] = 0;
+  _$jscoverage['/picker/month-panel/control.js'].lineData[72] = 0;
+  _$jscoverage['/picker/month-panel/control.js'].lineData[78] = 0;
 }
 if (! _$jscoverage['/picker/month-panel/control.js'].functionData) {
   _$jscoverage['/picker/month-panel/control.js'].functionData = [];
@@ -287,106 +289,110 @@ if (! _$jscoverage['/picker/month-panel/control.js'].branchData) {
   _$jscoverage['/picker/month-panel/control.js'].branchData = {};
 }
 _$jscoverage['/picker/month-panel/control.js'].lineData[6]++;
-KISSY.add('date/picker/month-panel/control', function(S, Node, Control, MonthPanelRender, YearPanel) {
+KISSY.add(function() {
   _$jscoverage['/picker/month-panel/control.js'].functionData[0]++;
-  _$jscoverage['/picker/month-panel/control.js'].lineData[11]++;
+  _$jscoverage['/picker/month-panel/control.js'].lineData[7]++;
+  var module = this;
+  _$jscoverage['/picker/month-panel/control.js'].lineData[8]++;
+  var Node = module.require('node'), Control = module.require('component/control'), YearPanel = module.require('../year-panel/control'), MonthPanelRender = module.require('./render');
+  _$jscoverage['/picker/month-panel/control.js'].lineData[13]++;
   var tap = Node.Gesture.tap;
-  _$jscoverage['/picker/month-panel/control.js'].lineData[12]++;
-  var $ = Node.all;
   _$jscoverage['/picker/month-panel/control.js'].lineData[14]++;
+  var $ = Node.all;
+  _$jscoverage['/picker/month-panel/control.js'].lineData[16]++;
   function goYear(self, direction) {
     _$jscoverage['/picker/month-panel/control.js'].functionData[1]++;
-    _$jscoverage['/picker/month-panel/control.js'].lineData[15]++;
-    var next = self.get('value').clone();
-    _$jscoverage['/picker/month-panel/control.js'].lineData[16]++;
-    next.addYear(direction);
     _$jscoverage['/picker/month-panel/control.js'].lineData[17]++;
+    var next = self.get('value').clone();
+    _$jscoverage['/picker/month-panel/control.js'].lineData[18]++;
+    next.addYear(direction);
+    _$jscoverage['/picker/month-panel/control.js'].lineData[19]++;
     self.set('value', next);
   }
-  _$jscoverage['/picker/month-panel/control.js'].lineData[20]++;
+  _$jscoverage['/picker/month-panel/control.js'].lineData[22]++;
   function nextYear(e) {
     _$jscoverage['/picker/month-panel/control.js'].functionData[2]++;
-    _$jscoverage['/picker/month-panel/control.js'].lineData[21]++;
+    _$jscoverage['/picker/month-panel/control.js'].lineData[23]++;
     e.preventDefault();
-    _$jscoverage['/picker/month-panel/control.js'].lineData[22]++;
+    _$jscoverage['/picker/month-panel/control.js'].lineData[24]++;
     goYear(this, 1);
   }
-  _$jscoverage['/picker/month-panel/control.js'].lineData[25]++;
+  _$jscoverage['/picker/month-panel/control.js'].lineData[27]++;
   function prevYear(e) {
     _$jscoverage['/picker/month-panel/control.js'].functionData[3]++;
-    _$jscoverage['/picker/month-panel/control.js'].lineData[26]++;
+    _$jscoverage['/picker/month-panel/control.js'].lineData[28]++;
     e.preventDefault();
-    _$jscoverage['/picker/month-panel/control.js'].lineData[27]++;
+    _$jscoverage['/picker/month-panel/control.js'].lineData[29]++;
     goYear(this, -1);
   }
-  _$jscoverage['/picker/month-panel/control.js'].lineData[30]++;
+  _$jscoverage['/picker/month-panel/control.js'].lineData[32]++;
   function chooseCell(e) {
     _$jscoverage['/picker/month-panel/control.js'].functionData[4]++;
-    _$jscoverage['/picker/month-panel/control.js'].lineData[31]++;
-    e.preventDefault();
-    _$jscoverage['/picker/month-panel/control.js'].lineData[32]++;
-    var td = $(e.currentTarget);
     _$jscoverage['/picker/month-panel/control.js'].lineData[33]++;
-    var tr = td.parent();
+    e.preventDefault();
     _$jscoverage['/picker/month-panel/control.js'].lineData[34]++;
-    var tdIndex = td.index();
+    var td = $(e.currentTarget);
     _$jscoverage['/picker/month-panel/control.js'].lineData[35]++;
-    var trIndex = tr.index();
+    var tr = td.parent();
     _$jscoverage['/picker/month-panel/control.js'].lineData[36]++;
-    var value = this.get('value').clone();
+    var tdIndex = td.index();
     _$jscoverage['/picker/month-panel/control.js'].lineData[37]++;
-    value.setMonth(trIndex * 4 + tdIndex);
+    var trIndex = tr.index();
     _$jscoverage['/picker/month-panel/control.js'].lineData[38]++;
+    var value = this.get('value').clone();
+    _$jscoverage['/picker/month-panel/control.js'].lineData[39]++;
+    value.setMonth(trIndex * 4 + tdIndex);
+    _$jscoverage['/picker/month-panel/control.js'].lineData[40]++;
     this.fire('select', {
   value: value});
   }
-  _$jscoverage['/picker/month-panel/control.js'].lineData[43]++;
+  _$jscoverage['/picker/month-panel/control.js'].lineData[45]++;
   function showYearPanel(e) {
     _$jscoverage['/picker/month-panel/control.js'].functionData[5]++;
-    _$jscoverage['/picker/month-panel/control.js'].lineData[44]++;
-    e.preventDefault();
-    _$jscoverage['/picker/month-panel/control.js'].lineData[45]++;
-    var yearPanel = this.get('yearPanel');
     _$jscoverage['/picker/month-panel/control.js'].lineData[46]++;
-    yearPanel.set('value', this.get('value'));
+    e.preventDefault();
     _$jscoverage['/picker/month-panel/control.js'].lineData[47]++;
+    var yearPanel = this.get('yearPanel');
+    _$jscoverage['/picker/month-panel/control.js'].lineData[48]++;
+    yearPanel.set('value', this.get('value'));
+    _$jscoverage['/picker/month-panel/control.js'].lineData[49]++;
     yearPanel.show();
   }
-  _$jscoverage['/picker/month-panel/control.js'].lineData[50]++;
+  _$jscoverage['/picker/month-panel/control.js'].lineData[52]++;
   function setUpYearPanel() {
     _$jscoverage['/picker/month-panel/control.js'].functionData[6]++;
-    _$jscoverage['/picker/month-panel/control.js'].lineData[51]++;
+    _$jscoverage['/picker/month-panel/control.js'].lineData[53]++;
     var self = this;
-    _$jscoverage['/picker/month-panel/control.js'].lineData[52]++;
+    _$jscoverage['/picker/month-panel/control.js'].lineData[54]++;
     var yearPanel = new YearPanel({
   locale: this.get('locale'), 
   render: self.get('el')});
-    _$jscoverage['/picker/month-panel/control.js'].lineData[56]++;
+    _$jscoverage['/picker/month-panel/control.js'].lineData[58]++;
     yearPanel.on('select', onYearPanelSelect, self);
-    _$jscoverage['/picker/month-panel/control.js'].lineData[57]++;
+    _$jscoverage['/picker/month-panel/control.js'].lineData[59]++;
     return yearPanel;
   }
-  _$jscoverage['/picker/month-panel/control.js'].lineData[60]++;
+  _$jscoverage['/picker/month-panel/control.js'].lineData[62]++;
   function onYearPanelSelect(e) {
     _$jscoverage['/picker/month-panel/control.js'].functionData[7]++;
-    _$jscoverage['/picker/month-panel/control.js'].lineData[61]++;
+    _$jscoverage['/picker/month-panel/control.js'].lineData[63]++;
     this.set('value', e.value);
-    _$jscoverage['/picker/month-panel/control.js'].lineData[62]++;
+    _$jscoverage['/picker/month-panel/control.js'].lineData[64]++;
     this.get('yearPanel').hide();
   }
-  _$jscoverage['/picker/month-panel/control.js'].lineData[65]++;
+  _$jscoverage['/picker/month-panel/control.js'].lineData[67]++;
   return Control.extend({
   bindUI: function() {
   _$jscoverage['/picker/month-panel/control.js'].functionData[8]++;
-  _$jscoverage['/picker/month-panel/control.js'].lineData[67]++;
-  var self = this;
-  _$jscoverage['/picker/month-panel/control.js'].lineData[68]++;
-  self.get('nextYearBtn').on(tap, nextYear, self);
   _$jscoverage['/picker/month-panel/control.js'].lineData[69]++;
-  self.get('previousYearBtn').on(tap, prevYear, self);
+  var self = this;
   _$jscoverage['/picker/month-panel/control.js'].lineData[70]++;
+  self.get('nextYearBtn').on(tap, nextYear, self);
+  _$jscoverage['/picker/month-panel/control.js'].lineData[71]++;
+  self.get('previousYearBtn').on(tap, prevYear, self);
+  _$jscoverage['/picker/month-panel/control.js'].lineData[72]++;
   self.get('tbodyEl').delegate(tap, '.' + self.view.getBaseCssClass('cell'), chooseCell, self);
-  _$jscoverage['/picker/month-panel/control.js'].lineData[76]++;
+  _$jscoverage['/picker/month-panel/control.js'].lineData[78]++;
   self.get('yearSelectEl').on(tap, showYearPanel, self);
 }}, {
   xclass: 'date-picker-month-panel', 
@@ -399,5 +405,4 @@ KISSY.add('date/picker/month-panel/control', function(S, Node, Control, MonthPan
   valueFn: setUpYearPanel}, 
   xrender: {
   value: MonthPanelRender}}});
-}, {
-  requires: ['node', 'component/control', './render', '../year-panel/control']});
+});

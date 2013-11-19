@@ -3,11 +3,13 @@
  * common utils for kissy editor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/utils", function (S, Editor) {
+KISSY.add(function (S) {
+    var module = this;
+    var Node = module.require('node');
+    var Editor = module.require('./base');
     var TRUE = true,
         FALSE = false,
         NULL = null,
-        Node = S.Node,
         Dom = S.DOM,
         UA = S.UA,
 
@@ -243,6 +245,4 @@ KISSY.add("editor/utils", function (S, Editor) {
     Editor.Utils = Utils;
 
     return Utils;
-}, {
-    requires: ['./base', 'node']
 });

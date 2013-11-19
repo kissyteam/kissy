@@ -3,7 +3,7 @@
  * storage for component
  * @author yiminghe@gmail.com
  */
-KISSY.add("component/manager", function (S) {
+KISSY.add(function (S) {
 
     var basePriority = 0,
         Manager,

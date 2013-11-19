@@ -3,13 +3,18 @@
  * month select for date picker
  * @author yiminghe@gmail.com
  */
-KISSY.add('date/picker/year-panel/control', function (S, Node, Control, DecadePanelRender, DecadePanel) {
+KISSY.add(function () {
+    var module = this;
+    var Node = module.require('node'),
+        Control = module.require('component/control'),
+        DecadePanelRender = module.require('./render'),
+        DecadePanel = module.require('../decade-panel/control');
     var tap = Node.Gesture.tap;
     var $ = Node.all;
 
     function goYear(self, direction) {
         var next = self.get('value').clone();
-        next.addYear( direction);
+        next.addYear(direction);
         self.set('value', next);
     }
 
@@ -75,8 +80,8 @@ KISSY.add('date/picker/year-panel/control', function (S, Node, Control, DecadePa
     }, {
         xclass: 'date-picker-year-panel',
         ATTRS: {
-            focusable:{
-                value:false
+            focusable: {
+                value: false
             },
             value: {
                 view: 1
@@ -89,10 +94,4 @@ KISSY.add('date/picker/year-panel/control', function (S, Node, Control, DecadePa
             }
         }
     });
-}, {
-    requires: [
-        'node',
-        'component/control',
-        './render',
-        '../decade-panel/control']
 });

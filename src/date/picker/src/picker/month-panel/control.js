@@ -3,11 +3,13 @@
  * month panel for date picker
  * @author yiminghe@gmail.com
  */
-KISSY.add('date/picker/month-panel/control',function(S,
-                                                     Node,
-                                                     Control,
-                                                     MonthPanelRender,
-    YearPanel){
+KISSY.add(function(){
+    var module = this;
+    var Node = module.require('node'),
+        Control = module.require('component/control'),
+        YearPanel = module.require('../year-panel/control'),
+        MonthPanelRender = module.require('./render');
+
     var tap = Node.Gesture.tap;
     var $ = Node.all;
 
@@ -92,11 +94,4 @@ KISSY.add('date/picker/month-panel/control',function(S,
             }
         }
     })
-},{
-    requires:[
-        'node',
-        'component/control',
-        './render',
-        '../year-panel/control'
-    ]
 });

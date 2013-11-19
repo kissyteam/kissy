@@ -7,11 +7,17 @@
  Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.html or http://ckeditor.com/license
  */
-KISSY.add("editor/enterKey", function (S,Editor,Walker,ElementPath,Node,Event) {
+KISSY.add(function (S) {
+    // './base','./walker','./elementPath','node','event'
+    var module = this;
+    var Node = module.require('node');
+    var Walker = module.require('./walker');
+    var Editor = module.require('./base');
+    var ElementPath = module.require('./elementPath');
+
     var UA = S.UA,
         headerTagRegex = /^h[1-6]$/,
         dtd = Editor.XHTML_DTD;
-
 
     function getRange(editor) {
         // Get the selection ranges.
@@ -186,8 +192,8 @@ KISSY.add("editor/enterKey", function (S,Editor,Walker,ElementPath,Node,Event) {
     }
 
     function EnterKey(editor) {
-        var doc = editor.get("document")[0];
-        Event.on(doc, "keydown", function (ev) {
+        var doc = editor.get("document");
+        doc.on("keydown", function (ev) {
             var keyCode = ev.keyCode;
             if (keyCode === 13) {
                 if (ev.shiftKey || ev.ctrlKey || ev.metaKey) {
@@ -213,6 +219,4 @@ KISSY.add("editor/enterKey", function (S,Editor,Walker,ElementPath,Node,Event) {
             });
         }
     };
-}, {
-    requires:['./base','./walker','./elementPath','node','event']
 });

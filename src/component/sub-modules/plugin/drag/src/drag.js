@@ -3,8 +3,9 @@
  * drag plugin for kissy component
  * @author yiminghe@gmail.com
  */
-KISSY.add('component/plugin/drag', function (S, Base, DD) {
-
+KISSY.add('component/plugin/drag', function () {
+    var module = this,
+        DD = module.require('dd');
     /**
      * drag plugin for kissy component
      *
@@ -59,6 +60,4 @@ KISSY.add('component/plugin/drag', function (S, Base, DD) {
         }
     });
 
-}, {
-    requires: ['base', 'dd']
 });

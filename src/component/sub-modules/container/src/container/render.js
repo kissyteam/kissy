@@ -3,7 +3,11 @@
  * render for container
  * @author yiminghe@gmail.com
  */
-KISSY.add('component/container/render', function (S, Control, Manager) {
+KISSY.add(function (S) {
+    var module = this;
+    var Control = module.require('component/control');
+    var Manager = module.require('component/manager');
+
     return Control.getDefaultRender().extend([], {
         // decorate child element from parent component's root element.
         decorateDom: function () {
@@ -35,6 +39,4 @@ KISSY.add('component/container/render', function (S, Control, Manager) {
     }, {
         name: 'ContainerRender'
     });
-}, {
-    requires: ['component/control', 'component/manager']
 });

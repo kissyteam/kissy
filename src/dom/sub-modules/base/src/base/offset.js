@@ -3,8 +3,9 @@
  * @author  lifesinger@gmail.com
  *          yiminghe@gmail.com
  */
-KISSY.add('dom/base/offset', function (S, Dom, undefined) {
-
+KISSY.add(function (S) {
+    var module = this;
+    var Dom = module.require('./api');
     var win = S.Env.host,
         UA = S.UA,
         doc = win.document,
@@ -459,8 +460,6 @@ KISSY.add('dom/base/offset', function (S, Dom, undefined) {
     }
 
     return Dom;
-}, {
-    requires: ['./api']
 });
 
 /*

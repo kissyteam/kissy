@@ -3,7 +3,12 @@
  * render for decade panel
  * @author yiminghe@gmail.com
  */
-KISSY.add('date/picker/decade-panel/render', function (S, Control, DateFormat, MonthsTpl, DecadePanelTpl) {
+KISSY.add(function (S) {
+    var module = this;
+    var Control = module.require('component/control'),
+        DecadePanelTpl = module.require('./decade-panel-xtpl'),
+        MonthsTpl = module.require('./decades-xtpl');
+
     function prepareYears(control, view) {
         var value = control.get('value');
         var currentYear = value.getYear();
@@ -65,9 +70,4 @@ KISSY.add('date/picker/decade-panel/render', function (S, Control, DateFormat, M
             }
         }
     });
-}, {
-    requires: ['component/control',
-        'date/format',
-        './decades-xtpl',
-        './decade-panel-xtpl']
 });

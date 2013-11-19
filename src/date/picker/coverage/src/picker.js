@@ -231,6 +231,7 @@ if (! _$jscoverage['/picker.js']) {
   _$jscoverage['/picker.js'].lineData = [];
   _$jscoverage['/picker.js'].lineData[6] = 0;
   _$jscoverage['/picker.js'].lineData[7] = 0;
+  _$jscoverage['/picker.js'].lineData[8] = 0;
 }
 if (! _$jscoverage['/picker.js'].functionData) {
   _$jscoverage['/picker.js'].functionData = [];
@@ -240,9 +241,10 @@ if (! _$jscoverage['/picker.js'].branchData) {
   _$jscoverage['/picker.js'].branchData = {};
 }
 _$jscoverage['/picker.js'].lineData[6]++;
-KISSY.add('date/picker', function(S, DatePicker) {
+KISSY.add(function() {
   _$jscoverage['/picker.js'].functionData[0]++;
   _$jscoverage['/picker.js'].lineData[7]++;
-  return DatePicker;
-}, {
-  requires: ['./picker/control']});
+  var module = this;
+  _$jscoverage['/picker.js'].lineData[8]++;
+  return module.require('./picker/control');
+});

@@ -3,8 +3,9 @@
  * dom-insertion
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
-KISSY.add('dom/base/insertion', function (S, Dom) {
-
+KISSY.add(function (S) {
+    var module = this;
+    var Dom = module.require('./api');
     var PARENT_NODE = 'parentNode',
         NodeType = Dom.NodeType,
         RE_FORM_EL = /^(?:button|input|object|select|textarea)$/i,
@@ -270,8 +271,6 @@ KISSY.add('dom/base/insertion', function (S, Dom) {
         Dom[key] = Dom[value];
     });
     return Dom;
-}, {
-    requires: ['./api']
 });
 
 /*

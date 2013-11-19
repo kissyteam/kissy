@@ -3,7 +3,9 @@
  * attr ie hack
  * @author yiminghe@gmail.com
  */
-KISSY.add('dom/ie/attr', function (S, Dom) {
+KISSY.add(function (S) {
+    var module = this;
+    var Dom = module.require('dom/base');
     var attrHooks = Dom._attrHooks,
         attrNodeHook = Dom._attrNodeHook,
         NodeType = Dom.NodeType,
@@ -137,8 +139,6 @@ KISSY.add('dom/ie/attr', function (S, Dom) {
     Dom._getText = getText;
 
     return Dom;
-}, {
-    requires: ['dom/base']
 });
 /**
  * @ignore

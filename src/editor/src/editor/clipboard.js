@@ -3,10 +3,15 @@
  * monitor user's paste behavior.
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/clipboard", function (S, Editor, KERange, KES) {
-    var $ = S.all,
+KISSY.add(function (S) {
+    var module = this;
+    var Node = module.require('node');
+    var Editor = module.require('./base');
+    var KERange = module.require('./range');
+    var KES = module.require('./selection');
+    var $ = Node.all,
         UA = S.UA,
-        logger= S.getLogger('s/editor'),
+        logger = S.getLogger('s/editor'),
         pasteEvent = UA.ie ? 'beforepaste' : 'paste',
         KER = Editor.RangeType;
 
@@ -514,8 +519,6 @@ KISSY.add("editor/clipboard", function (S, Editor, KERange, KES) {
             });
         }
     };
-}, {
-    requires: ['./base', './range', './selection', 'node']
 });
 /**
  * @ignore

@@ -7,13 +7,18 @@
  Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.html or http://ckeditor.com/license
  */
-KISSY.add("editor/selectionFix", function (S, Editor, Event) {
+KISSY.add(function (S) {
+    var module=this;
+    // './base',  './selection', 'node'
+    var Editor=module.require('./base');
+    module.require('./selection');
+    var Node=module.require('node');
+
     var TRUE = true,
         FALSE = false,
         NULL = null,
         UA = S.UA,
         Dom = S.DOM,
-        Node = S.Node,
         KES = Editor.SelectionType;
 
     /*
@@ -23,7 +28,8 @@ KISSY.add("editor/selectionFix", function (S, Editor, Event) {
     function fixCursorForIE(editor) {
         var started,
             win = editor.get("window")[0],
-            doc = editor.get("document")[0],
+            $doc=editor.get("document"),
+            doc=$doc[0],
             startRng;
 
         // Return range from point or NULL if it failed
@@ -48,8 +54,8 @@ KISSY.add("editor/selectionFix", function (S, Editor, Event) {
             if (startRng && !rng.item && rng.compareEndPoints('StartToEnd', rng) === 0) {
                 startRng.select();
             }
-            Event.remove(doc, 'mouseup', endSelection);
-            Event.remove(doc, 'mousemove', selectionChange);
+            $doc.detach('mouseup', endSelection);
+            $doc.detach('mousemove', selectionChange);
             startRng = started = 0;
         }
 
@@ -78,7 +84,7 @@ KISSY.add("editor/selectionFix", function (S, Editor, Event) {
 
         // ie 点击空白处光标不能定位到末尾
         // IE has an issue where you can't select/move the caret by clicking outside the body if the document is in standards mode
-        Event.on(doc, "mousedown contextmenu", function (e) {
+        $doc.on("mousedown contextmenu", function (e) {
             var html = doc.documentElement;
             if (e.target === html) {
                 if (started) {
@@ -94,8 +100,8 @@ KISSY.add("editor/selectionFix", function (S, Editor, Event) {
                 startRng = rngFromPoint(e.pageX, e.pageY);
                 if (startRng) {
                     // Listen for selection change events
-                    Event.on(doc, 'mouseup', endSelection);
-                    Event.on(doc, 'mousemove', selectionChange);
+                    $doc.on('mouseup', endSelection);
+                    $doc.on('mousemove', selectionChange);
 
                     win.focus();
                     startRng.select();
@@ -306,7 +312,6 @@ KISSY.add("editor/selectionFix", function (S, Editor, Event) {
     }
 
     function fireSelectionChangeForNonIE(editor) {
-        var doc = editor.get("document")[0];
         // In other browsers, we make the selection change
         // check based on other events, like clicks or keys
         // press.
@@ -315,7 +320,7 @@ KISSY.add("editor/selectionFix", function (S, Editor, Event) {
             editor.checkSelectionChange();
         }
 
-        Event.on(doc, 'mouseup keyup ' +
+        editor.get("document").on('mouseup keyup ' +
             // ios does not fire mouseup/keyup ....
             // http://stackoverflow.com/questions/8442158/selection-change-event-in-contenteditable
             // https://www.w3.org/Bugs/Public/show_bug.cgi?id=13952
@@ -461,6 +466,4 @@ KISSY.add("editor/selectionFix", function (S, Editor, Event) {
             monitorSelectionChange(editor);
         }
     };
-}, {
-    requires: ['./base', 'event', './selection', 'node']
 });

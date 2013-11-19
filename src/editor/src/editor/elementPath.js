@@ -7,43 +7,48 @@
  Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.html or http://ckeditor.com/license
  */
-KISSY.add("editor/elementPath", function (S,Editor) {
+KISSY.add(function (S) {
+    var module = this;
+    module.require('node');
+    var Editor = module.require('./base');
+    module.require('./dom');
+
     var Dom = S.DOM,
         dtd = Editor.XHTML_DTD,
         TRUE = true,
         FALSE = false,
         NULL = null,
-        // Elements that may be considered the "Block boundary" in an element path.
+    // Elements that may be considered the "Block boundary" in an element path.
         pathBlockElements = {
-            "address":1,
-            "blockquote":1,
-            "dl":1,
-            "h1":1,
-            "h2":1,
-            "h3":1,
-            "h4":1,
-            "h5":1,
-            "h6":1,
-            "p":1,
-            "pre":1,
-            "li":1,
-            "dt":1,
-            "dd":1
+            "address": 1,
+            "blockquote": 1,
+            "dl": 1,
+            "h1": 1,
+            "h2": 1,
+            "h3": 1,
+            "h4": 1,
+            "h5": 1,
+            "h6": 1,
+            "p": 1,
+            "pre": 1,
+            "li": 1,
+            "dt": 1,
+            "dd": 1
         },
-        // Elements that may be considered the "Block limit" in an element path.
-        // 特别注意：不带 p 元素
+    // Elements that may be considered the "Block limit" in an element path.
+    // 特别注意：不带 p 元素
         pathBlockLimitElements = {
-            "body":1,
-            "div":1,
-            "table":1,
-            "tbody":1,
-            "tr":1,
-            "td":1,
-            "th":1,
-            "caption":1,
-            "form":1
+            "body": 1,
+            "div": 1,
+            "table": 1,
+            "tbody": 1,
+            "tr": 1,
+            "td": 1,
+            "th": 1,
+            "caption": 1,
+            "form": 1
         },
-        // Check if an element contains any block element.
+    // Check if an element contains any block element.
         checkHasBlock = function (element) {
             var childNodes = element[0].childNodes;
             for (var i = 0, count = childNodes.length; i < count; i++) {
@@ -101,7 +106,7 @@ KISSY.add("editor/elementPath", function (S,Editor) {
     }
 
     ElementPath.prototype = {
-        constructor:ElementPath,
+        constructor: ElementPath,
         /**
          * Compares this element path with another one.
          * @param otherPath ElementPath The elementPath object to be
@@ -109,7 +114,7 @@ KISSY.add("editor/elementPath", function (S,Editor) {
          * @return {Boolean} "TRUE" if the paths are equal, containing the same
          * number of elements and the same elements in the same order.
          */
-        compare:function (otherPath) {
+        compare: function (otherPath) {
             var thisElements = this.elements;
             var otherElements = otherPath && otherPath.elements;
 
@@ -124,7 +129,7 @@ KISSY.add("editor/elementPath", function (S,Editor) {
             return TRUE;
         },
 
-        contains:function (tagNames) {
+        contains: function (tagNames) {
             var elements = this.elements;
             for (var i = 0; i < elements.length; i++) {
                 if (elements[ i ].nodeName() in tagNames)
@@ -132,7 +137,7 @@ KISSY.add("editor/elementPath", function (S,Editor) {
             }
             return NULL;
         },
-        toString:function () {
+        toString: function () {
             var elements = this.elements, i, elNames = [];
             for (i = 0; i < elements.length; i++) {
                 elNames.push(elements[i].nodeName());
@@ -143,6 +148,4 @@ KISSY.add("editor/elementPath", function (S,Editor) {
     Editor.ElementPath = ElementPath;
 
     return ElementPath;
-}, {
-    requires:['./base', './dom','node']
 });

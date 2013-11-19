@@ -3,7 +3,7 @@
  * const for gregorian date
  * @author yiminghe@gmail.com
  */
-KISSY.add('date/gregorian/const', function () {
+KISSY.add(function () {
     return {
         /**
          * Enum indicating sunday

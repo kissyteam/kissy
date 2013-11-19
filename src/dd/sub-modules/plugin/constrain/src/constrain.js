@@ -3,8 +3,10 @@
  * plugin constrain region for drag and drop
  * @author yiminghe@gmail.com
  */
-KISSY.add('dd/plugin/constrain', function (S, Base, Node) {
-
+KISSY.add(function (S) {
+    var module = this;
+    var Node = module.require('node'),
+        Base = module.require('base');
     var $ = Node.all,
         CONSTRAIN_EVENT = '.-ks-constrain' + S.now(),
         WIN = S.Env.host;
@@ -124,6 +126,4 @@ KISSY.add('dd/plugin/constrain', function (S, Base, Node) {
             }
         }
     });
-}, {
-    requires: ['base', 'node']
 });

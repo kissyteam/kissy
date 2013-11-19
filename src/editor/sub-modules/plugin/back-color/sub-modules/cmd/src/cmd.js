@@ -3,8 +3,9 @@
  * backColor command.
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/back-color/cmd", function (S, cmd) {
-
+KISSY.add(function () {
+    var module=this;
+    var cmd=module.require('../color/cmd');
     var BACK_COLOR_STYLE = {
         element:'span',
         styles:{
@@ -45,6 +46,4 @@ KISSY.add("editor/plugin/back-color/cmd", function (S, cmd) {
         }
     };
 
-}, {
-    requires:['../color/cmd']
 });

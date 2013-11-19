@@ -3,8 +3,9 @@
  * ie create hack
  * @author yiminghe@gmail.com
  */
-KISSY.add('dom/ie/insertion', function (S, Dom) {
-
+KISSY.add(function (S) {
+    var module = this;
+    var Dom = module.require('dom/base');
     var UA = S.UA;
 
     if (UA.ie < 8) {
@@ -43,6 +44,4 @@ KISSY.add('dom/ie/insertion', function (S, Dom) {
     }
 
 
-}, {
-    requires: ['dom/base']
 });

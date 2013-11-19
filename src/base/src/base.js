@@ -8,8 +8,7 @@ KISSY.add(function (S) {
     var Attribute = module.require('attribute');
     module.exports = Base;
 
-    var ATTRS = 'ATTRS',
-        ucfirst = S.ucfirst,
+    var ucfirst = S.ucfirst,
         ON_SET = '_onSet',
         noop = S.noop,
         RE_DASH = /(?:^|-)([a-z])/ig;
@@ -58,7 +57,7 @@ KISSY.add(function (S) {
      */
     function Base(config) {
         var self = this;
-        Base.superclass.constructor.apply(self,arguments);
+        Base.superclass.constructor.apply(self, arguments);
         // setup listeners
         var listeners = self.get("listeners");
         for (var n in listeners) {
@@ -151,7 +150,7 @@ KISSY.add(function (S) {
 
             // from super class to sub class
             for (i = 0; i < cs.length; i++) {
-                var ATTRS = cs[i][ATTRS] || {};
+                var ATTRS = cs[i].ATTRS || {};
                 for (var attributeName in ATTRS) {
                     if (attributeName in attrs) {
                         var attributeValue,
@@ -394,7 +393,7 @@ KISSY.add(function (S) {
                         // b is a extension of a
                         // =>
                         // a {y:{value:2,getter:fn}}
-                        S.each(ext[ATTRS], function (v, name) {
+                        S.each(ext.ATTRS, function (v, name) {
                             var av = attrs[name] = attrs[name] || {};
                             S.mix(av, v);
                         });
@@ -409,7 +408,7 @@ KISSY.add(function (S) {
                         }
                     }
                 });
-                SubClass[ATTRS] = attrs;
+                SubClass.ATTRS = attrs;
                 prototype.constructor = SubClass;
                 S.augment(SubClass, prototype);
             }

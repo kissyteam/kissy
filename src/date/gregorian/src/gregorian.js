@@ -3,8 +3,14 @@
  * @ignore
  * @author yiminghe@gmail.com
  */
-KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined) {
+KISSY.add(function (S) {
     var toInt = parseInt;
+    var module=this;
+    var Utils=module.require('./gregorian/utils');
+    var defaultLocale=module.require('i18n!date');
+    var Const=module.require('./gregorian/const');
+    var undefined=undefined;
+
 
     /**
      * GregorianCalendar class.
@@ -1422,8 +1428,6 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
     // ------------------- private end
 
     return GregorianCalendar;
-}, {
-    requires: ['i18n!date', './gregorian/utils', './gregorian/const']
 });
 
 /*

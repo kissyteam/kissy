@@ -3,7 +3,9 @@
  * dom/style
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
-KISSY.add('dom/base/style', function (S, Dom, undefined) {
+KISSY.add(function (S) {
+    var module = this;
+    var Dom = module.require('./api');
     var WINDOW = /**
          @ignore
          @type window
@@ -658,8 +660,6 @@ KISSY.add('dom/base/style', function (S, Dom, undefined) {
     }
 
     return Dom;
-}, {
-    requires: ['./api']
 });
 
 /*

@@ -3,7 +3,11 @@
  * component hierarchy management
  * @author yiminghe@gmail.com
  */
-KISSY.add('component/container', function (S, Control, ContainerRender) {
+KISSY.add(function (S) {
+    var module = this;
+    var Control = module.require('component/control');
+    var ContainerRender = module.require('./container/render');
+
     function defAddChild(e) {
         var self = this;
         if (e.target !== self) {
@@ -305,6 +309,4 @@ KISSY.add('component/container', function (S, Control, ContainerRender) {
         },
         name: 'container'
     });
-}, {
-    requires: ['component/control', './container/render']
 });

@@ -3,7 +3,9 @@
  * dom-create
  * @author lifesinger@gmail.com, yiminghe@gmail.com
  */
-KISSY.add('dom/base/create', function (S, Dom, undefined) {
+KISSY.add(function (S) {
+    var module = this;
+    var Dom = module.require('./api');
     var doc = S.Env.host.document,
         NodeType = Dom.NodeType,
         UA = S.UA,
@@ -530,8 +532,6 @@ KISSY.add('dom/base/create', function (S, Dom, undefined) {
     };
 
     return Dom;
-}, {
-    requires: ['./api']
 });
 
 /*

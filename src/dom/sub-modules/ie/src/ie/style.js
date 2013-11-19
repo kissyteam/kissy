@@ -3,7 +3,9 @@
  * style hack for ie
  * @author yiminghe@gmail.com
  */
-KISSY.add('dom/ie/style', function (S, Dom) {
+KISSY.add(function (S) {
+    var module = this;
+    var Dom = module.require('dom/base');
     var cssProps = Dom._cssProps,
         UA = S.UA,
         logger = S.getLogger('s/dom'),
@@ -167,8 +169,6 @@ KISSY.add('dom/ie/style', function (S, Dom) {
         }
         return ret === '' ? 'auto' : ret;
     };
-}, {
-    requires: ['dom/base']
 });
 
 /*

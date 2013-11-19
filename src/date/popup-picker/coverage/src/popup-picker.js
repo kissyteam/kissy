@@ -231,7 +231,9 @@ if (! _$jscoverage['/popup-picker.js']) {
   _$jscoverage['/popup-picker.js'].lineData = [];
   _$jscoverage['/popup-picker.js'].lineData[6] = 0;
   _$jscoverage['/popup-picker.js'].lineData[7] = 0;
-  _$jscoverage['/popup-picker.js'].lineData[14] = 0;
+  _$jscoverage['/popup-picker.js'].lineData[8] = 0;
+  _$jscoverage['/popup-picker.js'].lineData[13] = 0;
+  _$jscoverage['/popup-picker.js'].lineData[28] = 0;
 }
 if (! _$jscoverage['/popup-picker.js'].functionData) {
   _$jscoverage['/popup-picker.js'].functionData = [];
@@ -241,18 +243,21 @@ if (! _$jscoverage['/popup-picker.js'].branchData) {
   _$jscoverage['/popup-picker.js'].branchData = {};
 }
 _$jscoverage['/popup-picker.js'].lineData[6]++;
-KISSY.add('date/popup-picker', function(S, PopupPickerTpl, DatePicker, AlignExtension, Shim) {
+KISSY.add(function() {
   _$jscoverage['/popup-picker.js'].functionData[0]++;
   _$jscoverage['/popup-picker.js'].lineData[7]++;
+  var module = this;
+  _$jscoverage['/popup-picker.js'].lineData[8]++;
+  var PopupPickerTpl = module.require('./popup-picker/render-xtpl'), DatePicker = module.require('date/picker'), Shim = module.require('component/extension/shim'), AlignExtension = module.require('component/extension/align');
+  _$jscoverage['/popup-picker.js'].lineData[13]++;
   var PopupDatePickerRender = DatePicker.getDefaultRender().extend({}, {
   ATTRS: {
   contentTpl: {
   value: PopupPickerTpl}}});
-  _$jscoverage['/popup-picker.js'].lineData[14]++;
+  _$jscoverage['/popup-picker.js'].lineData[28]++;
   return DatePicker.extend([Shim, AlignExtension], {}, {
   xclass: 'popup-date-picker', 
   ATTRS: {
   xrender: {
   value: PopupDatePickerRender}}});
-}, {
-  requires: ['./popup-picker/render-xtpl', 'date/picker', 'component/extension/align', 'component/extension/shim']});
+});

@@ -3,7 +3,10 @@
  * render for editor
  * @author yiminghe@gmail.com
  */
-KISSY.add('editor/render',function(S,Control,RenderTpl){
+KISSY.add(function(S){
+    var module=this;
+    var Control=module.require('component/control');
+    var RenderTpl=module.require('./render-xtpl');
     return Control.getDefaultRender().extend({
         beforeCreateDom:function(renderData,childrenElSelectors){
             S.mix(renderData,{
@@ -23,6 +26,4 @@ KISSY.add('editor/render',function(S,Control,RenderTpl){
             }
         }
     });
-},{
-    requires:['component/control','./render-xtpl']
 });

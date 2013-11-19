@@ -8,7 +8,7 @@
         <concat destfile="${component.src.dir}/editor/plugin-meta.js"
                 encoding="${charset}" outputencoding="${charset}">
             <header filtering="no" trimleading="yes">
-                KISSY.add('editor/plugin-meta',function(){
+                KISSY.add(function(){
                 (function(config,Features,UA){
             </header>
             <fileset dir="${kissy.src.dir}/editor/sub-modules/plugin/"

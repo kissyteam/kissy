@@ -3,7 +3,12 @@
  * generate proxy drag object,
  * @author yiminghe@gmail.com
  */
-KISSY.add('dd/plugin/proxy', function (S, Node, Base, DD) {
+KISSY.add(function (S) {
+    var module = this;
+    var Node = module.require('node'),
+        DD = module.require('dd'),
+        Base = module.require('base');
+
     var DDM = DD.DDM,
         PROXY_EVENT = '.-ks-proxy' + S.now();
 
@@ -143,6 +148,4 @@ KISSY.add('dd/plugin/proxy', function (S, Node, Base, DD) {
             }
         }
     });
-}, {
-    requires: ['node', 'base', 'dd']
 });

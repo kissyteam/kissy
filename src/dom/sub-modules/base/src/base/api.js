@@ -3,7 +3,7 @@
  * dom
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
-KISSY.add('dom/base/api', function (S) {
+KISSY.add(function (S) {
     var WINDOW = S.Env.host || {},
         DOCUMENT = WINDOW.document,
         UA = S.UA,

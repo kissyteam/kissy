@@ -3,7 +3,9 @@
  * transform hack for ie
  * @author yiminghe@gmail.com
  */
-KISSY.add('dom/ie/transform', function (S, Dom) {
+KISSY.add(function (S) {
+    var module = this;
+    var Dom = module.require('dom/base');
     var cssHooks = Dom._cssHooks;
     var rMatrix = /progid:DXImageTransform.Microsoft.Matrix\(([^)]*)\)/;
 
@@ -270,8 +272,6 @@ KISSY.add('dom/ie/transform', function (S, Dom) {
             parseInt(value, 10) * (Math.PI * 2 / 360) :
             parseFloat(value);
     }
-}, {
-    requires: ['dom/base']
 });
 
 /**

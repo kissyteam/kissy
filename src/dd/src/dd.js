@@ -3,8 +3,13 @@
  * dd support for kissy
  * @author yiminghe@gmail.com
  */
-KISSY.add('dd', function (S, DDM, Draggable, DraggableDelegate, Droppable, DroppableDelegate) {
-
+KISSY.add(function () {
+    var module = this;
+    var DDM = module.require('dd/ddm'),
+        Draggable = module.require('dd/draggable'),
+        DraggableDelegate = module.require('dd/draggable-delegate'),
+        DroppableDelegate = module.require('dd/droppable-delegate'),
+        Droppable = module.require('dd/droppable');
     var DD = {
         Draggable: Draggable,
         DDM: DDM,
@@ -16,12 +21,4 @@ KISSY.add('dd', function (S, DDM, Draggable, DraggableDelegate, Droppable, Dropp
     KISSY.DD = DD;
 
     return DD;
-}, {
-    requires: [
-        'dd/ddm',
-        'dd/draggable',
-        'dd/draggable-delegate',
-        'dd/droppable',
-        'dd/droppable-delegate'
-    ]
 });

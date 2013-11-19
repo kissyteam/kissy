@@ -3,7 +3,11 @@
  * render for year panel
  * @author yiminghe@gmail.com
  */
-KISSY.add('date/picker/render', function (S, Node, Control, DateTimeFormat, PickerTpl) {
+KISSY.add(function (S) {
+    var module = this;
+    var DateTimeFormat = module.require('date/format'),
+        PickerTpl = module.require('./picker-xtpl'),
+        Control = module.require('component/control');
     var dateRowTplStart = '<tr role="row">';
     var dateRowTplEnd = '</tr>';
     var dateCellTpl = '<td role="gridcell" data-index="{index}" title="{title}" class="{cls}">{content}</td>';
@@ -150,7 +154,7 @@ KISSY.add('date/picker/render', function (S, Node, Control, DateTimeFormat, Pick
             var lastMonthDiffDay = (day + 7 - value.getFirstDayOfWeek()) % 7;
             // calculate last month
             var lastMonth1 = month1.clone();
-            lastMonth1.addDayOfMonth (-lastMonthDiffDay);
+            lastMonth1.addDayOfMonth(-lastMonthDiffDay);
             var passed = 0;
             for (i = 0; i < DATE_ROW_COUNT; i++) {
                 for (j = 0; j < DATE_COL_COUNT; j++) {
@@ -278,10 +282,4 @@ KISSY.add('date/picker/render', function (S, Node, Control, DateTimeFormat, Pick
             }
         }
     });
-}, {
-    requires: [
-        'node',
-        'component/control',
-        'date/format',
-        './picker-xtpl']
 });

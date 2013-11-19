@@ -3,7 +3,9 @@
  * simple selector for dom
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
-KISSY.add('dom/base/selector', function (S, Dom, undefined) {
+KISSY.add(function (S) {
+    var module = this;
+    var Dom = module.require('./api');
     var doc = S.Env.host.document,
         docElem = doc.documentElement,
         matches = docElem.matches ||
@@ -426,8 +428,6 @@ KISSY.add('dom/base/selector', function (S, Dom, undefined) {
         });
 
     return Dom;
-}, {
-    requires: ['./api']
 });
 /**
  * @ignore

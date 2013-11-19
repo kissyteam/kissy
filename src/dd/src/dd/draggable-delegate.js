@@ -3,8 +3,11 @@
  * delegate all draggable nodes to one draggable object
  * @author yiminghe@gmail.com
  */
-KISSY.add('dd/draggable-delegate', function (S, DDM, Draggable, Node) {
-
+KISSY.add(function (S) {
+    var module = this;
+    var Node = module.require('node'),
+        DDM = module.require('./ddm'),
+        Draggable = module.require('./draggable');
     var PREFIX_CLS = DDM.PREFIX_CLS,
         $ = Node.all;
 
@@ -159,6 +162,4 @@ KISSY.add('dd/draggable-delegate', function (S, DDM, Draggable, Node) {
                 }
             }
         });
-}, {
-    requires: ['./ddm', './draggable', 'node']
 });

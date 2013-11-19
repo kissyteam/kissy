@@ -7,7 +7,10 @@
  Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.html or http://ckeditor.com/license
  */
-KISSY.add("editor/htmlDataProcessor", function (S, Editor, HtmlParser) {
+KISSY.add(function (S) {
+    var module = this;
+    var Editor = module.require('./base');
+    var HtmlParser = module.require('html-parser');
     return {
         init: function (editor) {
             var Node = S.Node,
@@ -406,6 +409,4 @@ KISSY.add("editor/htmlDataProcessor", function (S, Editor, HtmlParser) {
             };
         }
     };
-}, {
-    requires: ['./base', 'html-parser']
 });

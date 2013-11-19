@@ -240,7 +240,7 @@ if (! _$jscoverage['/gregorian/const.js'].branchData) {
   _$jscoverage['/gregorian/const.js'].branchData = {};
 }
 _$jscoverage['/gregorian/const.js'].lineData[6]++;
-KISSY.add('date/gregorian/const', function() {
+KISSY.add(function() {
   _$jscoverage['/gregorian/const.js'].functionData[0]++;
   _$jscoverage['/gregorian/const.js'].lineData[7]++;
   return {

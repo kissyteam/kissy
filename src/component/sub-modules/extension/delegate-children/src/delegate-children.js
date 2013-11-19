@@ -3,8 +3,10 @@
  * delegate events for children
  * @author yiminghe@gmail.com
  */
-KISSY.add("component/extension/delegate-children", function (S, Node, Manager) {
-
+KISSY.add(function (S) {
+    var module=this,
+        Node=module.require('node'),
+        Manager=module.require('component/manager');
     var UA = S.UA,
         ie = S.Env.host.document.documentMode || UA.ie,
         Features = S.Features,
@@ -107,6 +109,4 @@ KISSY.add("component/extension/delegate-children", function (S, Node, Manager) {
     });
 
     return DelegateChildren;
-}, {
-    requires: ['node', 'component/manager']
 });

@@ -3,7 +3,9 @@
  * traversal ie hack
  * @author yiminghe@gmail.com
  */
-KISSY.add('dom/ie/traversal', function (S, Dom) {
+KISSY.add(function (S) {
+    var module = this;
+    var Dom = module.require('dom/base');
     Dom._contains = function (a, b) {
         if (a.nodeType == Dom.NodeType.DOCUMENT_NODE) {
             a = a.documentElement;
@@ -69,6 +71,4 @@ KISSY.add('dom/ie/traversal', function (S, Dom) {
         }
         return el;
     };
-}, {
-    requires: ['dom/base']
 });

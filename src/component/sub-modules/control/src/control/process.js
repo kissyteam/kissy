@@ -3,7 +3,10 @@
  * render process for control and render
  * @author yiminghe@gmail.com
  */
-KISSY.add('component/control/process', function (S, Base, Promise) {
+KISSY.add(function (S) {
+    var module = this;
+    var Base = module.require('base');
+    var Promise = module.require('promise');
     var Defer = Promise.Defer,
         __getHook = Base.prototype.__getHook,
         noop = S.noop;
@@ -203,8 +206,6 @@ KISSY.add('component/control/process', function (S, Base, Promise) {
     }
 
     return ComponentProcess;
-}, {
-    requires: ['base', 'promise']
 });
 /**
  * @ignore

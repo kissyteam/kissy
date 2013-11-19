@@ -3,7 +3,13 @@
  * popup date picker
  * @author yiminghe@gmail.com
  */
-KISSY.add('date/popup-picker', function (S, PopupPickerTpl, DatePicker, AlignExtension, Shim) {
+KISSY.add(function () {
+    var module = this;
+    var PopupPickerTpl = module.require('./popup-picker/render-xtpl'),
+        DatePicker = module.require('date/picker'),
+        Shim = module.require('component/extension/shim'),
+        AlignExtension = module.require('component/extension/align');
+
     var PopupDatePickerRender = DatePicker.getDefaultRender().extend({}, {
         ATTRS: {
             contentTpl: {
@@ -28,11 +34,4 @@ KISSY.add('date/popup-picker', function (S, PopupPickerTpl, DatePicker, AlignExt
             }
         }
     });
-}, {
-    requires: [
-        './popup-picker/render-xtpl',
-        'date/picker',
-        'component/extension/align',
-        'component/extension/shim'
-    ]
 });

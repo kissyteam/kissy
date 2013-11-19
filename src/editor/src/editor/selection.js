@@ -7,7 +7,12 @@
  Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.html or http://ckeditor.com/license
  */
-KISSY.add("editor/selection", function (S,Editor) {
+KISSY.add(function (S) {
+    var module = this;
+    var Node = module.require('node');
+    var Walker = module.require('./walker');
+    var KERange = module.require('./range');
+    var Editor = module.require('./base');
     /**
      * selection type enum
      * @enum {number} KISSY.Editor.SelectionType
@@ -23,14 +28,11 @@ KISSY.add("editor/selection", function (S,Editor) {
         UA = S.UA,
         Dom = S.DOM,
     //tryThese = Editor.Utils.tryThese,
-        Node = S.Node,
         KES = Editor.SelectionType,
         KER = Editor.RangeType,
     // ie9 仍然采用老的 range api，发现新的不稳定
-        OLD_IE = UA['ie'], //!window.getSelection,
-        Walker = Editor.Walker,
-    //ElementPath = Editor.ElementPath,
-        KERange = Editor.Range;
+        OLD_IE = UA['ie']; //!window.getSelection,
+    //ElementPath = Editor.ElementPath;
 
     /**
      * selection normalizer class
@@ -803,6 +805,4 @@ KISSY.add("editor/selection", function (S,Editor) {
     Editor.Selection = KESelection;
 
     return KESelection;
-}, {
-    requires: ['./base', './walker', './range', './dom','node']
 });

@@ -3,7 +3,7 @@
  * cookie
  * @author lifesinger@gmail.com
  */
-KISSY.add('cookie', function (S) {
+KISSY.add(function (S) {
 
     var doc = S.Env.host.document,
         MILLISECONDS_OF_DAY = 24 * 60 * 60 * 1000,

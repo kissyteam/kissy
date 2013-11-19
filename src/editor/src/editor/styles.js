@@ -7,21 +7,23 @@
  Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.html or http://ckeditor.com/license
  */
-KISSY.add("editor/styles", function (S, Editor) {
+KISSY.add(function (S) {
+    var module = this;
+    var Node = module.require('node');
+    var KESelection = module.require('./selection');
+    var KERange = module.require('./range');
+    var Editor = module.require('./base');
+    var ElementPath = module.require('./elementPath');
+
     var TRUE = true,
         FALSE = false,
         NULL = null,
         $ = S.all,
         Dom = S.DOM,
         KER = Editor.RangeType,
-        KESelection = Editor.Selection,
         KEP = Editor.PositionType,
-        KERange = Editor.Range,
         KEST,
-    //Walker = Editor.Walker,
-        Node = S.Node,
         UA = S.UA,
-        ElementPath = Editor.ElementPath,
         blockElements = {
             "address": 1,
             "div": 1,
@@ -1336,8 +1338,6 @@ KISSY.add("editor/styles", function (S, Editor) {
     Editor.Style = KEStyle;
 
     return KEStyle;
-}, {
-    requires: ['./base', './range', './selection', './domIterator', './elementPath', 'node']
 });
 /**
  * @ignore

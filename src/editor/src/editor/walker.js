@@ -8,15 +8,17 @@
  Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.html or http://ckeditor.com/license
  */
-KISSY.add("editor/walker", function (S, Editor) {
+KISSY.add(function (S) {
+    var module=this;
+    var Editor=module.require('./base');
+
     var TRUE = true,
         FALSE = false,
         NULL = null,
         UA = S.UA,
         Dom = S.DOM,
         dtd = Editor.XHTML_DTD,
-        Node = S.Node;
-
+        Node = module.require('node');
 
     function iterate(rtl, breakOnFalseRetFalse) {
         var self = this;
@@ -377,6 +379,4 @@ KISSY.add("editor/walker", function (S, Editor) {
     Editor.Walker = Walker;
 
     return Walker;
-}, {
-    requires:['./base', './utils', './dom','node']
 });

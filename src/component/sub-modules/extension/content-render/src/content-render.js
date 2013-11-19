@@ -3,7 +3,10 @@
  * common content box render
  * @author yiminghe@gmail.com
  */
-KISSY.add('component/extension/content-render', function (S, ContentTpl) {
+KISSY.add(function (S) {
+    var module=this,
+        ContentTpl=module.require('./content-render/content-xtpl');
+
     function shortcut(self) {
         var control = self.control;
         var contentEl = control.get('contentEl');
@@ -66,6 +69,4 @@ KISSY.add('component/extension/content-render', function (S, ContentTpl) {
     });
 
     return ContentRender;
-}, {
-    requires: ['./content-render/content-xtpl']
 });

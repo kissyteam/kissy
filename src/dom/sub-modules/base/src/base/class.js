@@ -3,8 +3,9 @@
  * @ignore
  * @author yiminghe@gmail.com
  */
-KISSY.add('dom/base/class', function (S, Dom) {
-
+KISSY.add(function (S) {
+    var module = this;
+    var Dom = module.require('./api');
     var slice = [].slice,
         NodeType = Dom.NodeType,
         RE_SPLIT = /[\.\s]\s*\.?/;
@@ -139,8 +140,6 @@ KISSY.add('dom/base/class', function (S, Dom) {
 
     return Dom;
 
-}, {
-    requires: ['./api']
 });
 
 /*

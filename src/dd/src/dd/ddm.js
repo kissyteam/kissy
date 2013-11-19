@@ -3,8 +3,12 @@
  * dd support for kissy, dd objects central management module
  * @author yiminghe@gmail.com
  */
-KISSY.add('dd/ddm', function (S, Node, Base, undefined) {
+KISSY.add(function (S) {
+    var module = this;
+    var Node = module.require('node'),
+        Base = module.require('base');
     var UA = S.UA,
+        undefined=undefined,
         $ = Node.all,
         logger= S.getLogger('dd/ddm'),
         win = S.Env.host,
@@ -535,6 +539,4 @@ KISSY.add('dd/ddm', function (S, Node, Base, undefined) {
     ddm.PREFIX_CLS = 'ks-dd-';
 
     return ddm;
-}, {
-    requires: ['node', 'base']
 });

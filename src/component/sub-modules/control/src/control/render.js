@@ -4,7 +4,15 @@
  * @author yiminghe@gmail.com
  * refer: http://martinfowler.com/eaaDev/uiArchs.html
  */
-KISSY.add("component/control/render", function (S, Node, XTemplateRuntime, ComponentProcess, RenderTpl, Manager) {
+KISSY.add(function (S) {
+    var module = this;
+    var Node = module.require('node');
+    var XTemplateRuntime = module.require('xtemplate/runtime');
+    var ComponentProcess = module.require('./process');
+    var RenderTpl = module.require('./render-xtpl');
+    var Manager = module.require('component/manager');
+
+
     var ON_SET = '_onSet',
         trim = S.trim,
         $ = Node.all,
@@ -515,12 +523,4 @@ KISSY.add("component/control/render", function (S, Node, XTemplateRuntime, Compo
      *          }
      *      };
      */
-}, {
-    requires: [
-        'node',
-        'xtemplate/runtime',
-        './process',
-        './render-xtpl',
-        'component/manager'
-    ]
 });

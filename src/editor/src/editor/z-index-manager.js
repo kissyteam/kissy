@@ -3,7 +3,9 @@
  * z-index management
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/z-index-manager", function (S, Editor) {
+KISSY.add(function () {
+    var module=this;
+    var Editor=module.require('./base');
     /**
      * z-index manager
      * @enum {number} KISSY.Editor.ZIndexManager
@@ -48,6 +50,4 @@ KISSY.add("editor/z-index-manager", function (S, Editor) {
     };
 
     return ZIndexManager;
-}, {
-    requires: ['./base']
 });

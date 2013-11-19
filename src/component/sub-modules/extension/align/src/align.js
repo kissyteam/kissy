@@ -3,8 +3,9 @@
  * Component.Extension.Align
  * @author yiminghe@gmail.com, qiaohua@taobao.com
  */
-KISSY.add('component/extension/align', function (S, Node) {
-
+KISSY.add(function (S) {
+    var module = this;
+    var Node = module.require('node');
     var win = S.Env.host,
         $ = Node.all,
         UA = S.UA;
@@ -468,8 +469,6 @@ KISSY.add('component/extension/align', function (S, Node) {
     };
 
     return Align;
-}, {
-    requires: ["node"]
 });
 /**
  * @ignore

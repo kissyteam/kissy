@@ -4,8 +4,12 @@
  * Inspired by DateTimeFormat from JDK.
  * @author yiminghe@gmail.com
  */
-KISSY.add('date/format', function (S, GregorianCalendar, defaultLocale, undefined) {
+KISSY.add(function (S) {
+    var module=this;
+    var GregorianCalendar=module.require('date/gregorian');
+    var defaultLocale=module.require('i18n!date');
     var MAX_VALUE = Number.MAX_VALUE,
+        undefined=undefined,
         /**
          * date or time style enum
          * @enum {Number} KISSY.Date.Formatter.Style
@@ -782,9 +786,4 @@ KISSY.add('date/format', function (S, GregorianCalendar, defaultLocale, undefine
     });
 
     return DateTimeFormat;
-}, {
-    requires: [
-        'date/gregorian',
-        'i18n!date'
-    ]
 });

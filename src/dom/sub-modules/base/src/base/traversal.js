@@ -3,8 +3,9 @@
  * dom-traversal
  * @author lifesinger@gmail.com, yiminghe@gmail.com
  */
-KISSY.add('dom/base/traversal', function (S, Dom, undefined) {
-
+KISSY.add(function (S) {
+    var module = this;
+    var Dom = module.require('./api');
     var NodeType = Dom.NodeType,
         CONTAIN_MASK = 16;
 
@@ -313,8 +314,6 @@ KISSY.add('dom/base/traversal', function (S, Dom, undefined) {
     }
 
     return Dom;
-}, {
-    requires: ['./api']
 });
 
 /*

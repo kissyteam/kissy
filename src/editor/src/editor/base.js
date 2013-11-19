@@ -3,7 +3,11 @@
  * Set up editor constructor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/base", function (S, HtmlParser, Control, EditorRender) {
+KISSY.add(function () {
+    var module = this;
+    var HtmlParser = module.require('html-parser');
+    var Control = module.require('component/control');
+    var EditorRender = module.require('./render');
     /**
      * editor component for KISSY. xclass: 'editor'.
      * @class KISSY.Editor
@@ -110,6 +114,4 @@ KISSY.add("editor/base", function (S, HtmlParser, Control, EditorRender) {
 
         xclass: 'editor'
     });
-}, {
-    requires: ['html-parser', 'component/control', './render']
 });

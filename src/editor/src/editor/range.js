@@ -7,7 +7,14 @@
  Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.html or http://ckeditor.com/license
  */
-KISSY.add("editor/range", function (S, Editor, Utils, Walker, ElementPath) {
+KISSY.add(function (S) {
+    var module = this;
+    module.require('./dom');
+    var Node = module.require('node');
+    var Utils = module.require('./utils');
+    var Walker = module.require('./walker');
+    var Editor = module.require('./base');
+    var ElementPath = module.require('./elementPath');
     /**
      * Enum for range
      * @enum {number} KISSY.Editor.RangeType
@@ -34,7 +41,6 @@ KISSY.add("editor/range", function (S, Editor, Utils, Walker, ElementPath) {
         Dom = S.DOM,
         UA = S.UA,
         dtd = Editor.XHTML_DTD,
-        Node = S.Node,
         $ = Node.all,
         UN_REMOVABLE = {
             'td': 1
@@ -1774,6 +1780,4 @@ KISSY.add("editor/range", function (S, Editor, Utils, Walker, ElementPath) {
     Editor.Range = KERange;
 
     return KERange;
-}, {
-    requires: ['./base', './utils', './walker', './elementPath', './dom', 'node']
 });

@@ -3,7 +3,13 @@
  * render for year-panel
  * @author yiminghe@gmail.com
  */
-KISSY.add('date/picker/year-panel/render', function (S, Control, DateFormat, YearsTpl, YearPanelTpl) {
+KISSY.add(function (S) {
+    var module = this;
+    var DateFormat = module.require('date/format'),
+        Control = module.require('component/control'),
+        YearsTpl = module.require('./years-xtpl'),
+        YearPanelTpl = module.require('./year-panel-xtpl');
+
     function prepareYears(control) {
         var value = control.get('value');
         var currentYear = value.getYear();
@@ -19,7 +25,7 @@ KISSY.add('date/picker/year-panel/render', function (S, Control, DateFormat, Yea
         for (var i = 0; i < 3; i++) {
             years[i] = [];
             for (var j = 0; j < 4; j++) {
-                current.setYear( preYear + index);
+                current.setYear(preYear + index);
                 years[i][j] = {
                     content: preYear + index,
                     title: dateFormatter.format(current)
@@ -63,13 +69,13 @@ KISSY.add('date/picker/year-panel/render', function (S, Control, DateFormat, Yea
             var startYear = parseInt(currentYear / 10) * 10;
             var endYear = startYear + 9;
             S.mix(this.renderData, {
-                startYear:startYear,
-                endYear:endYear,
+                startYear: startYear,
+                endYear: endYear,
                 years: prepareYears(control),
                 year: value.getYear()
             });
             control.get('tbodyEl').html(this.renderTpl(YearsTpl));
-            control.get('decadeSelectContentEl').html(startYear+'-'+endYear);
+            control.get('decadeSelectContentEl').html(startYear + '-' + endYear);
         }
     }, {
         ATTRS: {
@@ -78,9 +84,4 @@ KISSY.add('date/picker/year-panel/render', function (S, Control, DateFormat, Yea
             }
         }
     });
-}, {
-    requires: ['component/control',
-        'date/format',
-        './years-xtpl',
-        './year-panel-xtpl']
 });

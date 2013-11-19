@@ -7,7 +7,11 @@
  Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.html or http://ckeditor.com/license
  */
-KISSY.add("editor/dom", function (S, Editor, Utils) {
+KISSY.add(function (S) {
+    var module = this;
+    var Node = module.require('node');
+    var Editor = module.require('./base');
+    var Utils = module.require('./utils');
     var TRUE = true,
         undefined = undefined,
         FALSE = false,
@@ -16,7 +20,6 @@ KISSY.add("editor/dom", function (S, Editor, Utils) {
         Dom = S.DOM,
         NodeType = Dom.NodeType,
         UA = S.UA,
-        Node = S.Node,
         REMOVE_EMPTY = {
             "a": 1,
             "abbr": 1,
@@ -773,6 +776,4 @@ KISSY.add("editor/dom", function (S, Editor, Utils) {
     }
 
     Utils.injectDom(editorDom);
-}, {
-    requires: ['./base', './utils','node']
 });
