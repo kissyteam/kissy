@@ -24,7 +24,6 @@
             Utils = Loader.Utils = {},
         doc = host.document;
 
-
     // http://wiki.commonjs.org/wiki/Packages/Mappings/A
     // 如果模块名以 / 结尾，自动加 index
     function indexMap(s) {
@@ -281,10 +280,6 @@
          * @param {KISSY.Loader.Module} module module instance
          */
         attachMod: function (runtime, module) {
-            if (module.status != READY_TO_ATTACH) {
-                return;
-            }
-
             var factory = module.factory,
                 exports = undefined;
 
@@ -457,9 +452,9 @@
     });
 
     var commentRegExp = /(\/\*([\s\S]*?)\*\/|([^:]|^)\/\/(.*)$)/mg,
-        requireRegExp = [ /[^.'"]\s*module.require\s*\((.+)\);/g,
+        requireRegExp = [ /[^.'"]\s*module.require\s*\((.+?)\)\s*[;,]/g,
             // avoid compression
-            /[^.'"]\s*KISSY.require\s*\((.+)\);/g];
+            /[^.'"]\s*KISSY.require\s*\((.+?)\)\s*[;,]/g];
 
     function getRequireVal(str) {
         var m;

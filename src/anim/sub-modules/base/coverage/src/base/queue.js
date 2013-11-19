@@ -230,18 +230,19 @@ if (! _$jscoverage['/base/queue.js']) {
   _$jscoverage['/base/queue.js'] = {};
   _$jscoverage['/base/queue.js'].lineData = [];
   _$jscoverage['/base/queue.js'].lineData[5] = 0;
-  _$jscoverage['/base/queue.js'].lineData[7] = 0;
-  _$jscoverage['/base/queue.js'].lineData[13] = 0;
+  _$jscoverage['/base/queue.js'].lineData[6] = 0;
+  _$jscoverage['/base/queue.js'].lineData[8] = 0;
   _$jscoverage['/base/queue.js'].lineData[14] = 0;
-  _$jscoverage['/base/queue.js'].lineData[16] = 0;
-  _$jscoverage['/base/queue.js'].lineData[19] = 0;
+  _$jscoverage['/base/queue.js'].lineData[15] = 0;
+  _$jscoverage['/base/queue.js'].lineData[17] = 0;
   _$jscoverage['/base/queue.js'].lineData[20] = 0;
-  _$jscoverage['/base/queue.js'].lineData[23] = 0;
+  _$jscoverage['/base/queue.js'].lineData[21] = 0;
   _$jscoverage['/base/queue.js'].lineData[24] = 0;
   _$jscoverage['/base/queue.js'].lineData[25] = 0;
   _$jscoverage['/base/queue.js'].lineData[26] = 0;
-  _$jscoverage['/base/queue.js'].lineData[30] = 0;
-  _$jscoverage['/base/queue.js'].lineData[33] = 0;
+  _$jscoverage['/base/queue.js'].lineData[27] = 0;
+  _$jscoverage['/base/queue.js'].lineData[31] = 0;
+  _$jscoverage['/base/queue.js'].lineData[34] = 0;
   _$jscoverage['/base/queue.js'].lineData[38] = 0;
   _$jscoverage['/base/queue.js'].lineData[39] = 0;
   _$jscoverage['/base/queue.js'].lineData[40] = 0;
@@ -279,14 +280,14 @@ if (! _$jscoverage['/base/queue.js'].functionData) {
 }
 if (! _$jscoverage['/base/queue.js'].branchData) {
   _$jscoverage['/base/queue.js'].branchData = {};
-  _$jscoverage['/base/queue.js'].branchData['14'] = [];
-  _$jscoverage['/base/queue.js'].branchData['14'][1] = new BranchData();
-  _$jscoverage['/base/queue.js'].branchData['19'] = [];
-  _$jscoverage['/base/queue.js'].branchData['19'][1] = new BranchData();
-  _$jscoverage['/base/queue.js'].branchData['23'] = [];
-  _$jscoverage['/base/queue.js'].branchData['23'][1] = new BranchData();
-  _$jscoverage['/base/queue.js'].branchData['25'] = [];
-  _$jscoverage['/base/queue.js'].branchData['25'][1] = new BranchData();
+  _$jscoverage['/base/queue.js'].branchData['15'] = [];
+  _$jscoverage['/base/queue.js'].branchData['15'][1] = new BranchData();
+  _$jscoverage['/base/queue.js'].branchData['20'] = [];
+  _$jscoverage['/base/queue.js'].branchData['20'][1] = new BranchData();
+  _$jscoverage['/base/queue.js'].branchData['24'] = [];
+  _$jscoverage['/base/queue.js'].branchData['24'][1] = new BranchData();
+  _$jscoverage['/base/queue.js'].branchData['26'] = [];
+  _$jscoverage['/base/queue.js'].branchData['26'][1] = new BranchData();
   _$jscoverage['/base/queue.js'].branchData['46'] = [];
   _$jscoverage['/base/queue.js'].branchData['46'][1] = new BranchData();
   _$jscoverage['/base/queue.js'].branchData['48'] = [];
@@ -304,85 +305,87 @@ if (! _$jscoverage['/base/queue.js'].branchData) {
   _$jscoverage['/base/queue.js'].branchData['78'] = [];
   _$jscoverage['/base/queue.js'].branchData['78'][1] = new BranchData();
 }
-_$jscoverage['/base/queue.js'].branchData['78'][1].init(51, 10, '!qu.length');
+_$jscoverage['/base/queue.js'].branchData['78'][1].init(49, 10, '!qu.length');
 function visit12_78_1(result) {
   _$jscoverage['/base/queue.js'].branchData['78'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/queue.js'].branchData['76'][1].init(66, 2, 'qu');
+}_$jscoverage['/base/queue.js'].branchData['76'][1].init(64, 2, 'qu');
 function visit11_76_1(result) {
   _$jscoverage['/base/queue.js'].branchData['76'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/queue.js'].branchData['69'][1].init(219, 29, 'S.isEmptyObject(quCollection)');
+}_$jscoverage['/base/queue.js'].branchData['69'][1].init(213, 29, 'S.isEmptyObject(quCollection)');
 function visit10_69_1(result) {
   _$jscoverage['/base/queue.js'].branchData['69'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/queue.js'].branchData['66'][1].init(126, 12, 'quCollection');
+}_$jscoverage['/base/queue.js'].branchData['66'][1].init(123, 12, 'quCollection');
 function visit9_66_1(result) {
   _$jscoverage['/base/queue.js'].branchData['66'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/queue.js'].branchData['64'][1].init(22, 17, 'queue || queueKey');
+}_$jscoverage['/base/queue.js'].branchData['64'][1].init(21, 17, 'queue || queueKey');
 function visit8_64_1(result) {
   _$jscoverage['/base/queue.js'].branchData['64'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/queue.js'].branchData['52'][1].init(270, 16, 'qu && !qu.length');
+}_$jscoverage['/base/queue.js'].branchData['52'][1].init(261, 16, 'qu && !qu.length');
 function visit7_52_1(result) {
   _$jscoverage['/base/queue.js'].branchData['52'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/queue.js'].branchData['48'][1].init(68, 10, 'index > -1');
+}_$jscoverage['/base/queue.js'].branchData['48'][1].init(66, 10, 'index > -1');
 function visit6_48_1(result) {
   _$jscoverage['/base/queue.js'].branchData['48'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/queue.js'].branchData['46'][1].init(90, 2, 'qu');
+}_$jscoverage['/base/queue.js'].branchData['46'][1].init(87, 2, 'qu');
 function visit5_46_1(result) {
   _$jscoverage['/base/queue.js'].branchData['46'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/queue.js'].branchData['25'][1].init(56, 16, '!qu && !readOnly');
-function visit4_25_1(result) {
-  _$jscoverage['/base/queue.js'].branchData['25'][1].ranCondition(result);
+}_$jscoverage['/base/queue.js'].branchData['26'][1].init(54, 16, '!qu && !readOnly');
+function visit4_26_1(result) {
+  _$jscoverage['/base/queue.js'].branchData['26'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/queue.js'].branchData['23'][1].init(257, 12, 'quCollection');
-function visit3_23_1(result) {
-  _$jscoverage['/base/queue.js'].branchData['23'][1].ranCondition(result);
+}_$jscoverage['/base/queue.js'].branchData['24'][1].init(247, 12, 'quCollection');
+function visit3_24_1(result) {
+  _$jscoverage['/base/queue.js'].branchData['24'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/queue.js'].branchData['19'][1].init(133, 26, '!quCollection && !readOnly');
-function visit2_19_1(result) {
-  _$jscoverage['/base/queue.js'].branchData['19'][1].ranCondition(result);
+}_$jscoverage['/base/queue.js'].branchData['20'][1].init(127, 26, '!quCollection && !readOnly');
+function visit2_20_1(result) {
+  _$jscoverage['/base/queue.js'].branchData['20'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/queue.js'].branchData['14'][1].init(17, 16, 'name || queueKey');
-function visit1_14_1(result) {
-  _$jscoverage['/base/queue.js'].branchData['14'][1].ranCondition(result);
+}_$jscoverage['/base/queue.js'].branchData['15'][1].init(16, 16, 'name || queueKey');
+function visit1_15_1(result) {
+  _$jscoverage['/base/queue.js'].branchData['15'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/queue.js'].lineData[5]++;
-KISSY.add('anim/base/queue', function(S, Dom) {
+KISSY.add(function(S) {
   _$jscoverage['/base/queue.js'].functionData[0]++;
-  _$jscoverage['/base/queue.js'].lineData[7]++;
+  _$jscoverage['/base/queue.js'].lineData[6]++;
+  var module = this, Dom = module.require('dom');
+  _$jscoverage['/base/queue.js'].lineData[8]++;
   var queueCollectionKey = S.guid('ks-queue-' + S.now() + '-'), queueKey = S.guid('ks-queue-' + S.now() + '-'), Q;
-  _$jscoverage['/base/queue.js'].lineData[13]++;
+  _$jscoverage['/base/queue.js'].lineData[14]++;
   function getQueue(node, name, readOnly) {
     _$jscoverage['/base/queue.js'].functionData[1]++;
-    _$jscoverage['/base/queue.js'].lineData[14]++;
-    name = visit1_14_1(name || queueKey);
-    _$jscoverage['/base/queue.js'].lineData[16]++;
+    _$jscoverage['/base/queue.js'].lineData[15]++;
+    name = visit1_15_1(name || queueKey);
+    _$jscoverage['/base/queue.js'].lineData[17]++;
     var qu, quCollection = Dom.data(node, queueCollectionKey);
-    _$jscoverage['/base/queue.js'].lineData[19]++;
-    if (visit2_19_1(!quCollection && !readOnly)) {
-      _$jscoverage['/base/queue.js'].lineData[20]++;
+    _$jscoverage['/base/queue.js'].lineData[20]++;
+    if (visit2_20_1(!quCollection && !readOnly)) {
+      _$jscoverage['/base/queue.js'].lineData[21]++;
       Dom.data(node, queueCollectionKey, quCollection = {});
     }
-    _$jscoverage['/base/queue.js'].lineData[23]++;
-    if (visit3_23_1(quCollection)) {
-      _$jscoverage['/base/queue.js'].lineData[24]++;
-      qu = quCollection[name];
+    _$jscoverage['/base/queue.js'].lineData[24]++;
+    if (visit3_24_1(quCollection)) {
       _$jscoverage['/base/queue.js'].lineData[25]++;
-      if (visit4_25_1(!qu && !readOnly)) {
-        _$jscoverage['/base/queue.js'].lineData[26]++;
+      qu = quCollection[name];
+      _$jscoverage['/base/queue.js'].lineData[26]++;
+      if (visit4_26_1(!qu && !readOnly)) {
+        _$jscoverage['/base/queue.js'].lineData[27]++;
         qu = quCollection[name] = [];
       }
     }
-    _$jscoverage['/base/queue.js'].lineData[30]++;
+    _$jscoverage['/base/queue.js'].lineData[31]++;
     return qu;
   }
-  _$jscoverage['/base/queue.js'].lineData[33]++;
+  _$jscoverage['/base/queue.js'].lineData[34]++;
   return Q = {
   queueCollectionKey: queueCollectionKey, 
   queue: function(node, queue, item) {
@@ -455,5 +458,4 @@ KISSY.add('anim/base/queue', function(S, Dom) {
   _$jscoverage['/base/queue.js'].lineData[83]++;
   return qu;
 }};
-}, {
-  requires: ['dom']});
+});

@@ -319,7 +319,7 @@ function visit519_133_1(result) {
   _$jscoverage['/meta/modules.js'].lineData[4]++;
   config({
   'anim': {
-  requires: ['dom', 'anim/base', 'anim/timer', KISSY.Features.isTransitionSupported() ? "anim/transition" : ""]}});
+  requires: ['anim/base', 'anim/timer', KISSY.Features.isTransitionSupported() ? "anim/transition" : ""]}});
   _$jscoverage['/meta/modules.js'].lineData[8]++;
   config({
   'anim/base': {
@@ -347,7 +347,7 @@ function visit519_133_1(result) {
   _$jscoverage['/meta/modules.js'].lineData[32]++;
   config({
   'combobox': {
-  requires: ['node', 'component/control', 'menu', 'base', 'io']}});
+  requires: ['node', 'component/control', 'attribute', 'io']}});
   _$jscoverage['/meta/modules.js'].lineData[36]++;
   config({
   'component/container': {
@@ -469,7 +469,7 @@ function visit519_133_1(result) {
   _$jscoverage['/meta/modules.js'].lineData[173]++;
   config({
   'io': {
-  requires: ['dom', 'event/custom', 'promise', 'event']}});
+  requires: ['dom', 'event/custom', 'promise', 'event/dom']}});
   _$jscoverage['/meta/modules.js'].lineData[177]++;
   config({
   'kison': {

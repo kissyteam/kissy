@@ -230,19 +230,20 @@ if (! _$jscoverage['/combobox/local-data-source.js']) {
   _$jscoverage['/combobox/local-data-source.js'] = {};
   _$jscoverage['/combobox/local-data-source.js'].lineData = [];
   _$jscoverage['/combobox/local-data-source.js'].lineData[6] = 0;
-  _$jscoverage['/combobox/local-data-source.js'].lineData[14] = 0;
-  _$jscoverage['/combobox/local-data-source.js'].lineData[22] = 0;
+  _$jscoverage['/combobox/local-data-source.js'].lineData[7] = 0;
+  _$jscoverage['/combobox/local-data-source.js'].lineData[16] = 0;
   _$jscoverage['/combobox/local-data-source.js'].lineData[24] = 0;
-  _$jscoverage['/combobox/local-data-source.js'].lineData[25] = 0;
-  _$jscoverage['/combobox/local-data-source.js'].lineData[50] = 0;
-  _$jscoverage['/combobox/local-data-source.js'].lineData[51] = 0;
+  _$jscoverage['/combobox/local-data-source.js'].lineData[26] = 0;
+  _$jscoverage['/combobox/local-data-source.js'].lineData[27] = 0;
+  _$jscoverage['/combobox/local-data-source.js'].lineData[52] = 0;
   _$jscoverage['/combobox/local-data-source.js'].lineData[53] = 0;
-  _$jscoverage['/combobox/local-data-source.js'].lineData[54] = 0;
+  _$jscoverage['/combobox/local-data-source.js'].lineData[55] = 0;
   _$jscoverage['/combobox/local-data-source.js'].lineData[56] = 0;
-  _$jscoverage['/combobox/local-data-source.js'].lineData[57] = 0;
   _$jscoverage['/combobox/local-data-source.js'].lineData[58] = 0;
+  _$jscoverage['/combobox/local-data-source.js'].lineData[59] = 0;
   _$jscoverage['/combobox/local-data-source.js'].lineData[60] = 0;
-  _$jscoverage['/combobox/local-data-source.js'].lineData[63] = 0;
+  _$jscoverage['/combobox/local-data-source.js'].lineData[62] = 0;
+  _$jscoverage['/combobox/local-data-source.js'].lineData[65] = 0;
 }
 if (! _$jscoverage['/combobox/local-data-source.js'].functionData) {
   _$jscoverage['/combobox/local-data-source.js'].functionData = [];
@@ -253,31 +254,33 @@ if (! _$jscoverage['/combobox/local-data-source.js'].functionData) {
 }
 if (! _$jscoverage['/combobox/local-data-source.js'].branchData) {
   _$jscoverage['/combobox/local-data-source.js'].branchData = {};
-  _$jscoverage['/combobox/local-data-source.js'].branchData['53'] = [];
-  _$jscoverage['/combobox/local-data-source.js'].branchData['53'][1] = new BranchData();
-  _$jscoverage['/combobox/local-data-source.js'].branchData['57'] = [];
-  _$jscoverage['/combobox/local-data-source.js'].branchData['57'][1] = new BranchData();
+  _$jscoverage['/combobox/local-data-source.js'].branchData['55'] = [];
+  _$jscoverage['/combobox/local-data-source.js'].branchData['55'][1] = new BranchData();
+  _$jscoverage['/combobox/local-data-source.js'].branchData['59'] = [];
+  _$jscoverage['/combobox/local-data-source.js'].branchData['59'][1] = new BranchData();
 }
-_$jscoverage['/combobox/local-data-source.js'].branchData['57'][1].init(18, 25, 'd.indexOf(inputVal) != -1');
-function visit74_57_1(result) {
-  _$jscoverage['/combobox/local-data-source.js'].branchData['57'][1].ranCondition(result);
+_$jscoverage['/combobox/local-data-source.js'].branchData['59'][1].init(17, 25, 'd.indexOf(inputVal) != -1');
+function visit74_59_1(result) {
+  _$jscoverage['/combobox/local-data-source.js'].branchData['59'][1].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/local-data-source.js'].branchData['53'][1].init(61, 9, '!inputVal');
-function visit73_53_1(result) {
-  _$jscoverage['/combobox/local-data-source.js'].branchData['53'][1].ranCondition(result);
+}_$jscoverage['/combobox/local-data-source.js'].branchData['55'][1].init(58, 9, '!inputVal');
+function visit73_55_1(result) {
+  _$jscoverage['/combobox/local-data-source.js'].branchData['55'][1].ranCondition(result);
   return result;
 }_$jscoverage['/combobox/local-data-source.js'].lineData[6]++;
-KISSY.add("combobox/local-data-source", function(S, Base) {
+KISSY.add(function(S) {
   _$jscoverage['/combobox/local-data-source.js'].functionData[0]++;
-  _$jscoverage['/combobox/local-data-source.js'].lineData[14]++;
-  return Base.extend({
+  _$jscoverage['/combobox/local-data-source.js'].lineData[7]++;
+  var module = this, Attribute = module.require('attribute');
+  _$jscoverage['/combobox/local-data-source.js'].lineData[16]++;
+  return Attribute.extend({
   fetchData: function(inputVal, callback, context) {
   _$jscoverage['/combobox/local-data-source.js'].functionData[1]++;
-  _$jscoverage['/combobox/local-data-source.js'].lineData[22]++;
-  var parse = this.get("parse"), data = this.get("data");
   _$jscoverage['/combobox/local-data-source.js'].lineData[24]++;
+  var parse = this.get("parse"), data = this.get("data");
+  _$jscoverage['/combobox/local-data-source.js'].lineData[26]++;
   data = parse(inputVal, data);
-  _$jscoverage['/combobox/local-data-source.js'].lineData[25]++;
+  _$jscoverage['/combobox/local-data-source.js'].lineData[27]++;
   callback.call(context, data);
 }}, {
   ATTRS: {
@@ -285,29 +288,28 @@ KISSY.add("combobox/local-data-source", function(S, Base) {
   value: []}, 
   parse: {
   value: parser}}});
-  _$jscoverage['/combobox/local-data-source.js'].lineData[50]++;
+  _$jscoverage['/combobox/local-data-source.js'].lineData[52]++;
   function parser(inputVal, data) {
     _$jscoverage['/combobox/local-data-source.js'].functionData[2]++;
-    _$jscoverage['/combobox/local-data-source.js'].lineData[51]++;
-    var ret = [], count = 0;
     _$jscoverage['/combobox/local-data-source.js'].lineData[53]++;
-    if (visit73_53_1(!inputVal)) {
-      _$jscoverage['/combobox/local-data-source.js'].lineData[54]++;
+    var ret = [], count = 0;
+    _$jscoverage['/combobox/local-data-source.js'].lineData[55]++;
+    if (visit73_55_1(!inputVal)) {
+      _$jscoverage['/combobox/local-data-source.js'].lineData[56]++;
       return data;
     }
-    _$jscoverage['/combobox/local-data-source.js'].lineData[56]++;
+    _$jscoverage['/combobox/local-data-source.js'].lineData[58]++;
     S.each(data, function(d) {
   _$jscoverage['/combobox/local-data-source.js'].functionData[3]++;
-  _$jscoverage['/combobox/local-data-source.js'].lineData[57]++;
-  if (visit74_57_1(d.indexOf(inputVal) != -1)) {
-    _$jscoverage['/combobox/local-data-source.js'].lineData[58]++;
+  _$jscoverage['/combobox/local-data-source.js'].lineData[59]++;
+  if (visit74_59_1(d.indexOf(inputVal) != -1)) {
+    _$jscoverage['/combobox/local-data-source.js'].lineData[60]++;
     ret.push(d);
   }
-  _$jscoverage['/combobox/local-data-source.js'].lineData[60]++;
+  _$jscoverage['/combobox/local-data-source.js'].lineData[62]++;
   count++;
 });
-    _$jscoverage['/combobox/local-data-source.js'].lineData[63]++;
+    _$jscoverage['/combobox/local-data-source.js'].lineData[65]++;
     return ret;
   }
-}, {
-  requires: ['base']});
+});

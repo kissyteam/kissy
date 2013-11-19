@@ -3,10 +3,13 @@
  * Input wrapper for ComboBox component.
  * @author yiminghe@gmail.com
  */
-KISSY.add("combobox/multi-value-combobox", function (S, getCursor, ComboBox) {
-
+KISSY.add(function () {
     var SUFFIX = 'suffix',
         rWhitespace = /\s|\xa0/;
+
+    var module=this;
+    var getCursor=module.require('./cursor');
+    var ComboBox=module.require('./control');
 
     function strContainsChar(str, c) {
         return c && str.indexOf(c) != -1;
@@ -254,11 +257,6 @@ KISSY.add("combobox/multi-value-combobox", function (S, getCursor, ComboBox) {
     }
 
     // #------------------------private end
-}, {
-    requires: [
-        './cursor',
-        './control'
-    ]
 });
 
 /**

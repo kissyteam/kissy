@@ -3,8 +3,16 @@
  * Input wrapper for ComboBox component.
  * @author yiminghe@gmail.com
  */
-KISSY.add("combobox/control", function (S, Node, Control, ComboBoxRender, Menu, undefined) {
+KISSY.add(function (S) {
+    var module=this;
+    var Node=module.require('node');
+    var Control=module.require('component/control');
+    var ComboBoxRender=module.require('./render');
+    // provide popupmenu xclass
+    module.require('menu');
+
     var ComboBox,
+        undefined=undefined,
         KeyCode = Node.KeyCode;
 
     /**
@@ -698,13 +706,6 @@ KISSY.add("combobox/control", function (S, Node, Control, ComboBoxRender, Menu, 
     // #------------------------private end
 
     return ComboBox;
-}, {
-    requires: [
-        'node',
-        'component/control',
-        './render',
-        'menu'
-    ]
 });
 
 /**

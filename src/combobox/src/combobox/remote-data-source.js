@@ -3,13 +3,17 @@
  * Remote datasource for ComboBox
  * @author yiminghe@gmail.com
  */
-KISSY.add("combobox/remote-data-source", function (S, IO, Base, undefined) {
+KISSY.add(function () {
+    var module=this,
+        undefined=undefined;
+    var IO=module.require('io');
+    var Attribute=module.require('attribute');
     /**
      * dataSource which wrap {@link KISSY.IO} utility.
      * @class KISSY.ComboBox.RemoteDataSource
      * @extends KISSY.Base
      */
-    return Base.extend({
+    return Attribute.extend({
         /**
          * Data source interface. How to get data for comboBox
          * @param {String} inputVal current active input's value
@@ -106,6 +110,4 @@ KISSY.add("combobox/remote-data-source", function (S, IO, Base, undefined) {
             }
         }
     });
-}, {
-    requires: ['io', 'base']
 });

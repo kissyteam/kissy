@@ -3,7 +3,9 @@
  * abstract view for button
  * @author yiminghe@gmail.com
  */
-KISSY.add("button/render", function (S, Control) {
+KISSY.add(function (S) {
+    var module=this;
+    var Control=module.require('component/control');
     // http://www.w3.org/TR/wai-aria-practices/
     return Control.getDefaultRender().extend({
         beforeCreateDom: function (renderData) {
@@ -31,6 +33,4 @@ KISSY.add("button/render", function (S, Control) {
     }, {
         name: 'ButtonRender'
     });
-}, {
-    requires: ['component/control']
 });

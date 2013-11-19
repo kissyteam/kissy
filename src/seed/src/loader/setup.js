@@ -11,6 +11,8 @@
      * @enum {Number} KISSY.Loader.Status
      */
     Loader.Status = {
+        /** error */
+        'ERROR': -1,
         /** init */
         'INIT': 0,
         /** loading */
@@ -20,8 +22,6 @@
         /**dependencies are loaded or attached*/
         'READY_TO_ATTACH': 3,
         /** attached */
-        'ATTACHED': 4,
-        /** error */
-        'ERROR': 1000
+        'ATTACHED': 4
     };
 })(KISSY);

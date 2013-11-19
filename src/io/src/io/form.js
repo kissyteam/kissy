@@ -3,7 +3,11 @@
  * process form config
  * @author yiminghe@gmail.com
  */
-KISSY.add('io/form', function (S, IO, Dom, FormSerializer) {
+KISSY.add(function (S) {
+    var module = this;
+    var IO = module.require('./base');
+    var Dom = module.require('dom');
+    var FormSerializer = module.require('./form-serializer');
     var win = S.Env.host,
         slice = Array.prototype.slice,
         FormData = win['FormData'];
@@ -34,7 +38,7 @@ KISSY.add('io/form', function (S, IO, Dom, FormSerializer) {
                         break;
                     }
                     var selected = slice.call(input.files, 0);
-                    files[Dom.attr(input, 'name')] = selected.length > 1 ? selected : (selected[0]||null);
+                    files[Dom.attr(input, 'name')] = selected.length > 1 ? selected : (selected[0] || null);
                 }
             }
 
@@ -77,6 +81,4 @@ KISSY.add('io/form', function (S, IO, Dom, FormSerializer) {
 
     return IO;
 
-}, {
-    requires: ['./base', 'dom', './form-serializer']
 });

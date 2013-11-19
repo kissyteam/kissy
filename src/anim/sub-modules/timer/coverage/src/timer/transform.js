@@ -349,43 +349,43 @@ if (! _$jscoverage['/timer/transform.js'].branchData) {
   _$jscoverage['/timer/transform.js'].branchData['152'] = [];
   _$jscoverage['/timer/transform.js'].branchData['152'][1] = new BranchData();
 }
-_$jscoverage['/timer/transform.js'].branchData['152'][1].init(448, 7, 'self.to');
+_$jscoverage['/timer/transform.js'].branchData['152'][1].init(438, 7, 'self.to');
 function visit89_152_1(result) {
   _$jscoverage['/timer/transform.js'].branchData['152'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer/transform.js'].branchData['147'][2].init(264, 19, 'self.from != \'none\'');
+}_$jscoverage['/timer/transform.js'].branchData['147'][2].init(259, 19, 'self.from != \'none\'');
 function visit88_147_2(result) {
   _$jscoverage['/timer/transform.js'].branchData['147'][2].ranCondition(result);
   return result;
-}_$jscoverage['/timer/transform.js'].branchData['147'][1].init(251, 32, 'self.from && self.from != \'none\'');
+}_$jscoverage['/timer/transform.js'].branchData['147'][1].init(246, 32, 'self.from && self.from != \'none\'');
 function visit87_147_1(result) {
   _$jscoverage['/timer/transform.js'].branchData['147'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer/transform.js'].branchData['146'][1].init(181, 51, 'Dom.style(self.anim.node, \'transform\') || self.from');
+}_$jscoverage['/timer/transform.js'].branchData['146'][1].init(177, 51, 'Dom.style(self.anim.node, \'transform\') || self.from');
 function visit86_146_1(result) {
   _$jscoverage['/timer/transform.js'].branchData['146'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer/transform.js'].branchData['125'][1].init(149, 16, 'val[1] || val[0]');
+}_$jscoverage['/timer/transform.js'].branchData['125'][1].init(146, 16, 'val[1] || val[0]');
 function visit85_125_1(result) {
   _$jscoverage['/timer/transform.js'].branchData['125'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer/transform.js'].branchData['119'][1].init(163, 11, 'val[1] || 0');
+}_$jscoverage['/timer/transform.js'].branchData['119'][1].init(160, 11, 'val[1] || 0');
 function visit84_119_1(result) {
   _$jscoverage['/timer/transform.js'].branchData['119'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer/transform.js'].branchData['109'][1].init(81, 23, '!S.endsWith(val, \'deg\')');
+}_$jscoverage['/timer/transform.js'].branchData['109'][1].init(79, 23, '!S.endsWith(val, \'deg\')');
 function visit83_109_1(result) {
   _$jscoverage['/timer/transform.js'].branchData['109'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer/transform.js'].branchData['93'][1].init(295, 7, '++i < l');
+}_$jscoverage['/timer/transform.js'].branchData['93'][1].init(286, 7, '++i < l');
 function visit82_93_1(result) {
   _$jscoverage['/timer/transform.js'].branchData['93'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer/transform.js'].branchData['43'][1].init(438, 13, 'A * D < B * C');
+}_$jscoverage['/timer/transform.js'].branchData['43'][1].init(423, 13, 'A * D < B * C');
 function visit81_43_1(result) {
   _$jscoverage['/timer/transform.js'].branchData['43'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer/transform.js'].branchData['28'][1].init(252, 13, 'A * D - B * C');
+}_$jscoverage['/timer/transform.js'].branchData['28'][1].init(243, 13, 'A * D - B * C');
 function visit80_28_1(result) {
   _$jscoverage['/timer/transform.js'].branchData['28'][1].ranCondition(result);
   return result;

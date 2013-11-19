@@ -3,18 +3,17 @@
  * Export ComboBox.
  * @author yiminghe@gmail.com
  */
-KISSY.add("combobox", function (S, ComboBox, MultiValueComboBox, FilterSelect, LocalDataSource, RemoteDataSource) {
+KISSY.add(function () {
+    var module=this;
+    var ComboBox=module.require('combobox/control');
+    var MultiValueComboBox=module.require('combobox/multi-value-combobox');
+    var FilterSelect=module.require('combobox/filter-select');
+    var LocalDataSource=module.require('combobox/local-data-source');
+    var RemoteDataSource=module.require('combobox/remote-data-source');
+
     ComboBox.LocalDataSource = LocalDataSource;
     ComboBox.RemoteDataSource = RemoteDataSource;
     ComboBox.FilterSelect = FilterSelect;
     ComboBox.MultiValueComboBox = MultiValueComboBox;
     return ComboBox;
-}, {
-    requires: [
-        'combobox/control',
-        'combobox/multi-value-combobox',
-        'combobox/filter-select',
-        'combobox/local-data-source',
-        'combobox/remote-data-source'
-    ]
 });

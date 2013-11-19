@@ -4,6 +4,20 @@
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add(function (S, undefined) {
+    var module = this;
+    var ATTRS = 'ATTRS';
+    var RE_DASH = /(?:^|-)([a-z])/ig;
+    var CustomEvent = module.require('event/custom');
+    module.exports = Attribute;
+
+    function replaceToUpper() {
+        return arguments[1].toUpperCase();
+    }
+
+    function CamelCase(name) {
+        return name.replace(RE_DASH, replaceToUpper);
+    }
+
     // atomic flag
     var INVALID = {};
 
@@ -209,11 +223,62 @@ KISSY.add(function (S, undefined) {
         return undefined;
     }
 
-    /**
-     * @class KISSY.Attribute
-     * @override KISSY.Base
-     */
-    return {
+    function Attribute(config) {
+        var self = this,
+            c = self.constructor;
+        // save user config
+        self.userConfig = config;
+        // define
+        while (c) {
+            addAttrs(self, c[ATTRS]);
+            c = c.superclass ? c.superclass.constructor : null;
+        }
+        // initial attr
+        initAttrs(self, config);
+    }
+
+    Attribute.extend = function (px, sx) {
+        var SubClass;
+        sx = sx || {};
+        var name = sx.name || 'AttributeDerived';
+        if ('@DEBUG@') {
+            eval("SubClass = function " + CamelCase(name) + "(){ " +
+                "SubClass.superclass.constructor.apply(this,arguments);}");
+        } else {
+            SubClass = function () {
+                SubClass.superclass.constructor.apply(this, arguments);
+            };
+        }
+        SubClass.extend = this.extend;
+        S.extend(SubClass, this, px, sx);
+        return SubClass;
+    };
+
+    function addAttrs(host, attrs) {
+        if (attrs) {
+            for (var attr in attrs) {
+                // 子类上的 ATTRS 配置优先
+                // 父类后加，父类不覆盖子类的相同设置
+                // 属性对象会 merge
+                // a: {y: {getter: fn}}, b: {y: {value: 3}}
+                // b extends a
+                // =>
+                // b {y: {value: 3, getter: fn}}
+                host.addAttr(attr, attrs[attr], false);
+            }
+        }
+    }
+
+    function initAttrs(host, config) {
+        if (config) {
+            for (var attr in config) {
+                // 用户设置会调用 setter/validator 的，但不会触发属性变化事件
+                host.setInternal(attr, config[attr]);
+            }
+        }
+    }
+
+    S.augment(Attribute, CustomEvent.Target, {
         INVALID: INVALID,
 
         /**
@@ -495,7 +560,7 @@ KISSY.add(function (S, undefined) {
             self.set(values, opts);
             return self;
         }
-    };
+    });
 
     // get default attribute value from valueFn/value
     function getDefAttrVal(self, name) {

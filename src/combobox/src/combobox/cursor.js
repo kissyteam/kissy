@@ -3,8 +3,9 @@
  * get cursor position of input
  * @author yiminghe@gmail.com
  */
-KISSY.add('combobox/cursor', function (S, Node) {
-
+KISSY.add(function (S) {
+    var module=this;
+    var Node=module.require('node');
     var $ = Node.all,
         FAKE_DIV_HTML = "<div style='" +
             "z-index:-9999;" +
@@ -157,7 +158,4 @@ KISSY.add('combobox/cursor', function (S, Node) {
         // offset.left -= 500;
         return offset;
     };
-
-}, {
-    requires: ['node']
 });

@@ -390,107 +390,107 @@ if (! _$jscoverage['/timer/easing.js'].branchData) {
   _$jscoverage['/timer/easing.js'].branchData['290'] = [];
   _$jscoverage['/timer/easing.js'].branchData['290'][1] = new BranchData();
 }
-_$jscoverage['/timer/easing.js'].branchData['290'][1].init(162, 6, 'x2 > 0');
+_$jscoverage['/timer/easing.js'].branchData['290'][1].init(157, 6, 'x2 > 0');
 function visit42_290_1(result) {
   _$jscoverage['/timer/easing.js'].branchData['290'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer/easing.js'].branchData['287'][1].init(66, 20, 'abs(x2) < ZERO_LIMIT');
+}_$jscoverage['/timer/easing.js'].branchData['287'][1].init(64, 20, 'abs(x2) < ZERO_LIMIT');
 function visit41_287_1(result) {
   _$jscoverage['/timer/easing.js'].branchData['287'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer/easing.js'].branchData['285'][1].init(1019, 7, 't1 > t0');
+}_$jscoverage['/timer/easing.js'].branchData['285'][1].init(991, 7, 't1 > t0');
 function visit40_285_1(result) {
   _$jscoverage['/timer/easing.js'].branchData['285'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer/easing.js'].branchData['273'][1].init(283, 28, 'abs(derivative) < ZERO_LIMIT');
+}_$jscoverage['/timer/easing.js'].branchData['273'][1].init(275, 28, 'abs(derivative) < ZERO_LIMIT');
 function visit39_273_1(result) {
   _$jscoverage['/timer/easing.js'].branchData['273'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer/easing.js'].branchData['268'][1].init(95, 20, 'abs(x2) < ZERO_LIMIT');
+}_$jscoverage['/timer/easing.js'].branchData['268'][1].init(92, 20, 'abs(x2) < ZERO_LIMIT');
 function visit38_268_1(result) {
   _$jscoverage['/timer/easing.js'].branchData['268'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer/easing.js'].branchData['265'][1].init(341, 5, 'i < 8');
+}_$jscoverage['/timer/easing.js'].branchData['265'][1].init(333, 5, 'i < 8');
 function visit37_265_1(result) {
   _$jscoverage['/timer/easing.js'].branchData['265'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer/easing.js'].branchData['214'][1].init(18, 6, 't < .5');
+}_$jscoverage['/timer/easing.js'].branchData['214'][1].init(17, 6, 't < .5');
 function visit36_214_1(result) {
   _$jscoverage['/timer/easing.js'].branchData['214'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer/easing.js'].branchData['200'][1].init(252, 16, 't < (2.5 / 2.75)');
+}_$jscoverage['/timer/easing.js'].branchData['200'][1].init(243, 16, 't < (2.5 / 2.75)');
 function visit35_200_1(result) {
   _$jscoverage['/timer/easing.js'].branchData['200'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer/easing.js'].branchData['197'][1].init(140, 14, 't < (2 / 2.75)');
+}_$jscoverage['/timer/easing.js'].branchData['197'][1].init(134, 14, 't < (2 / 2.75)');
 function visit34_197_1(result) {
   _$jscoverage['/timer/easing.js'].branchData['197'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer/easing.js'].branchData['194'][1].init(52, 14, 't < (1 / 2.75)');
+}_$jscoverage['/timer/easing.js'].branchData['194'][1].init(49, 14, 't < (1 / 2.75)');
 function visit33_194_1(result) {
   _$jscoverage['/timer/easing.js'].branchData['194'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer/easing.js'].branchData['174'][1].init(93, 12, '(t *= 2) < 1');
+}_$jscoverage['/timer/easing.js'].branchData['174'][1].init(89, 12, '(t *= 2) < 1');
 function visit32_174_1(result) {
   _$jscoverage['/timer/easing.js'].branchData['174'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer/easing.js'].branchData['155'][1].init(18, 7, 't === 1');
+}_$jscoverage['/timer/easing.js'].branchData['155'][1].init(17, 7, 't === 1');
 function visit31_155_1(result) {
   _$jscoverage['/timer/easing.js'].branchData['155'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer/easing.js'].branchData['143'][1].init(111, 5, 't < 1');
+}_$jscoverage['/timer/easing.js'].branchData['143'][1].init(107, 5, 't < 1');
 function visit30_143_1(result) {
   _$jscoverage['/timer/easing.js'].branchData['143'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer/easing.js'].branchData['141'][3].init(67, 13, '(t *= 2) === 2');
+}_$jscoverage['/timer/easing.js'].branchData['141'][3].init(65, 13, '(t *= 2) === 2');
 function visit29_141_3(result) {
   _$jscoverage['/timer/easing.js'].branchData['141'][3].ranCondition(result);
   return result;
-}_$jscoverage['/timer/easing.js'].branchData['141'][2].init(55, 7, 't === 0');
+}_$jscoverage['/timer/easing.js'].branchData['141'][2].init(53, 7, 't === 0');
 function visit28_141_2(result) {
   _$jscoverage['/timer/easing.js'].branchData['141'][2].ranCondition(result);
   return result;
-}_$jscoverage['/timer/easing.js'].branchData['141'][1].init(55, 25, 't === 0 || (t *= 2) === 2');
+}_$jscoverage['/timer/easing.js'].branchData['141'][1].init(53, 25, 't === 0 || (t *= 2) === 2');
 function visit27_141_1(result) {
   _$jscoverage['/timer/easing.js'].branchData['141'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer/easing.js'].branchData['132'][3].init(65, 7, 't === 1');
+}_$jscoverage['/timer/easing.js'].branchData['132'][3].init(63, 7, 't === 1');
 function visit26_132_3(result) {
   _$jscoverage['/timer/easing.js'].branchData['132'][3].ranCondition(result);
   return result;
-}_$jscoverage['/timer/easing.js'].branchData['132'][2].init(54, 7, 't === 0');
+}_$jscoverage['/timer/easing.js'].branchData['132'][2].init(52, 7, 't === 0');
 function visit25_132_2(result) {
   _$jscoverage['/timer/easing.js'].branchData['132'][2].ranCondition(result);
   return result;
-}_$jscoverage['/timer/easing.js'].branchData['132'][1].init(54, 18, 't === 0 || t === 1');
+}_$jscoverage['/timer/easing.js'].branchData['132'][1].init(52, 18, 't === 0 || t === 1');
 function visit24_132_1(result) {
   _$jscoverage['/timer/easing.js'].branchData['132'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer/easing.js'].branchData['123'][3].init(65, 7, 't === 1');
+}_$jscoverage['/timer/easing.js'].branchData['123'][3].init(63, 7, 't === 1');
 function visit23_123_3(result) {
   _$jscoverage['/timer/easing.js'].branchData['123'][3].ranCondition(result);
   return result;
-}_$jscoverage['/timer/easing.js'].branchData['123'][2].init(54, 7, 't === 0');
+}_$jscoverage['/timer/easing.js'].branchData['123'][2].init(52, 7, 't === 0');
 function visit22_123_2(result) {
   _$jscoverage['/timer/easing.js'].branchData['123'][2].ranCondition(result);
   return result;
-}_$jscoverage['/timer/easing.js'].branchData['123'][1].init(54, 18, 't === 0 || t === 1');
+}_$jscoverage['/timer/easing.js'].branchData['123'][1].init(52, 18, 't === 0 || t === 1');
 function visit21_123_1(result) {
   _$jscoverage['/timer/easing.js'].branchData['123'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer/easing.js'].branchData['112'][1].init(22, 11, '(t *= 2) < 1');
+}_$jscoverage['/timer/easing.js'].branchData['112'][1].init(21, 11, '(t *= 2) < 1');
 function visit20_112_1(result) {
   _$jscoverage['/timer/easing.js'].branchData['112'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer/easing.js'].branchData['89'][1].init(22, 11, '(t *= 2) < 1');
+}_$jscoverage['/timer/easing.js'].branchData['89'][1].init(21, 11, '(t *= 2) < 1');
 function visit19_89_1(result) {
   _$jscoverage['/timer/easing.js'].branchData['89'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer/easing.js'].branchData['75'][1].init(338, 29, 'Easing[easingStr] || easeNone');
+}_$jscoverage['/timer/easing.js'].branchData['75'][1].init(328, 29, 'Easing[easingStr] || easeNone');
 function visit18_75_1(result) {
   _$jscoverage['/timer/easing.js'].branchData['75'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer/easing.js'].branchData['67'][1].init(38, 37, 'm = easingStr.match(CUBIC_BEZIER_REG)');
+}_$jscoverage['/timer/easing.js'].branchData['67'][1].init(36, 37, 'm = easingStr.match(CUBIC_BEZIER_REG)');
 function visit17_67_1(result) {
   _$jscoverage['/timer/easing.js'].branchData['67'][1].ranCondition(result);
   return result;

@@ -722,11 +722,11 @@ KISSY.add(function (S, XTemplate, XTemplateNodeJs) {
                     expect(render).toBe('1');
                 });
 
-                it('support sub template compile',function(){
-                    var tpl='{{include "./x"}}';
-                    var code=XTemplate.compiler.compileToModule(tpl);
+                it('support sub template compile', function () {
+                    var tpl = '{{include "./x"}}';
+                    var code = XTemplate.compiler.compileToModule(tpl);
                     expect(code.indexOf('requires:')).toBe(-1);
-                    code=XTemplate.compiler.compileToModule(tpl,[]);
+                    code = XTemplate.compiler.compileToModule(tpl, []);
                     expect(code.indexOf('requires:["./x"]')).not.toBe(-1);
                 });
 
@@ -815,7 +815,7 @@ KISSY.add(function (S, XTemplate, XTemplateNodeJs) {
             });
 
             describe('expression', function () {
-                it('support escapeHtml',function(){
+                it('support escapeHtml', function () {
                     var tpl = '{{{"2<\\\\"+1}}} {{{"2<\\\\"+1}}}';
                     expect(new XTemplate(tpl).render()).toBe('2<\\1 2<\\1');
                 });

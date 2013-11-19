@@ -310,43 +310,43 @@ if (! _$jscoverage['/timer/manager.js'].branchData) {
   _$jscoverage['/timer/manager.js'].branchData['108'] = [];
   _$jscoverage['/timer/manager.js'].branchData['108'][1] = new BranchData();
 }
-_$jscoverage['/timer/manager.js'].branchData['108'][1].init(426, 18, 'flag === undefined');
+_$jscoverage['/timer/manager.js'].branchData['108'][1].init(412, 18, 'flag === undefined');
 function visit79_108_1(result) {
   _$jscoverage['/timer/manager.js'].branchData['108'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer/manager.js'].branchData['88'][1].init(81, 1, 't');
+}_$jscoverage['/timer/manager.js'].branchData['88'][1].init(78, 1, 't');
 function visit78_88_1(result) {
   _$jscoverage['/timer/manager.js'].branchData['88'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer/manager.js'].branchData['76'][1].init(26, 16, 'self.runFrames()');
+}_$jscoverage['/timer/manager.js'].branchData['76'][1].init(25, 16, 'self.runFrames()');
 function visit77_76_1(result) {
   _$jscoverage['/timer/manager.js'].branchData['76'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer/manager.js'].branchData['74'][1].init(48, 11, '!self.timer');
+}_$jscoverage['/timer/manager.js'].branchData['74'][1].init(46, 11, '!self.timer');
 function visit76_74_1(result) {
   _$jscoverage['/timer/manager.js'].branchData['74'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer/manager.js'].branchData['59'][1].init(122, 30, 'S.isEmptyObject(self.runnings)');
+}_$jscoverage['/timer/manager.js'].branchData['59'][1].init(118, 30, 'S.isEmptyObject(self.runnings)');
 function visit75_59_1(result) {
   _$jscoverage['/timer/manager.js'].branchData['59'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer/manager.js'].branchData['44'][1].init(83, 17, 'self.runnings[kv]');
+}_$jscoverage['/timer/manager.js'].branchData['44'][1].init(80, 17, 'self.runnings[kv]');
 function visit74_44_1(result) {
   _$jscoverage['/timer/manager.js'].branchData['44'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer/manager.js'].branchData['24'][1].init(121, 108, 'win[vendors[x] + \'CancelAnimationFrame\'] || win[vendors[x] + \'CancelRequestAnimationFrame\']');
+}_$jscoverage['/timer/manager.js'].branchData['24'][1].init(119, 107, 'win[vendors[x] + \'CancelAnimationFrame\'] || win[vendors[x] + \'CancelRequestAnimationFrame\']');
 function visit73_24_1(result) {
   _$jscoverage['/timer/manager.js'].branchData['24'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer/manager.js'].branchData['22'][2].init(207, 18, 'x < vendors.length');
+}_$jscoverage['/timer/manager.js'].branchData['22'][2].init(203, 18, 'x < vendors.length');
 function visit72_22_2(result) {
   _$jscoverage['/timer/manager.js'].branchData['22'][2].ranCondition(result);
   return result;
-}_$jscoverage['/timer/manager.js'].branchData['22'][1].init(207, 46, 'x < vendors.length && !requestAnimationFrameFn');
+}_$jscoverage['/timer/manager.js'].branchData['22'][1].init(203, 46, 'x < vendors.length && !requestAnimationFrameFn');
 function visit71_22_1(result) {
   _$jscoverage['/timer/manager.js'].branchData['22'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer/manager.js'].branchData['18'][1].init(447, 1, '0');
+}_$jscoverage['/timer/manager.js'].branchData['18'][1].init(435, 1, '0');
 function visit70_18_1(result) {
   _$jscoverage['/timer/manager.js'].branchData['18'][1].ranCondition(result);
   return result;

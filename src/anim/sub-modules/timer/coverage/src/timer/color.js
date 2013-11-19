@@ -317,67 +317,67 @@ if (! _$jscoverage['/timer/color.js'].branchData) {
   _$jscoverage['/timer/color.js'].branchData['147'][1] = new BranchData();
   _$jscoverage['/timer/color.js'].branchData['147'][2] = new BranchData();
 }
-_$jscoverage['/timer/color.js'].branchData['147'][2].init(272, 10, 'to[3] || 1');
+_$jscoverage['/timer/color.js'].branchData['147'][2].init(267, 10, 'to[3] || 1');
 function visit16_147_2(result) {
   _$jscoverage['/timer/color.js'].branchData['147'][2].ranCondition(result);
   return result;
-}_$jscoverage['/timer/color.js'].branchData['147'][1].init(258, 12, 'from[3] || 1');
+}_$jscoverage['/timer/color.js'].branchData['147'][1].init(253, 12, 'from[3] || 1');
 function visit15_147_1(result) {
   _$jscoverage['/timer/color.js'].branchData['147'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer/color.js'].branchData['141'][3].init(421, 14, 'to.length == 4');
+}_$jscoverage['/timer/color.js'].branchData['141'][3].init(413, 14, 'to.length == 4');
 function visit14_141_3(result) {
   _$jscoverage['/timer/color.js'].branchData['141'][3].ranCondition(result);
   return result;
-}_$jscoverage['/timer/color.js'].branchData['141'][2].init(401, 16, 'from.length == 4');
+}_$jscoverage['/timer/color.js'].branchData['141'][2].init(393, 16, 'from.length == 4');
 function visit13_141_2(result) {
   _$jscoverage['/timer/color.js'].branchData['141'][2].ranCondition(result);
   return result;
-}_$jscoverage['/timer/color.js'].branchData['141'][1].init(401, 34, 'from.length == 4 || to.length == 4');
+}_$jscoverage['/timer/color.js'].branchData['141'][1].init(393, 34, 'from.length == 4 || to.length == 4');
 function visit12_141_1(result) {
   _$jscoverage['/timer/color.js'].branchData['141'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer/color.js'].branchData['135'][3].init(101, 14, 'to.length == 3');
+}_$jscoverage['/timer/color.js'].branchData['135'][3].init(99, 14, 'to.length == 3');
 function visit11_135_3(result) {
   _$jscoverage['/timer/color.js'].branchData['135'][3].ranCondition(result);
   return result;
-}_$jscoverage['/timer/color.js'].branchData['135'][2].init(81, 16, 'from.length == 3');
+}_$jscoverage['/timer/color.js'].branchData['135'][2].init(79, 16, 'from.length == 3');
 function visit10_135_2(result) {
   _$jscoverage['/timer/color.js'].branchData['135'][2].ranCondition(result);
   return result;
-}_$jscoverage['/timer/color.js'].branchData['135'][1].init(81, 34, 'from.length == 3 && to.length == 3');
+}_$jscoverage['/timer/color.js'].branchData['135'][1].init(79, 34, 'from.length == 3 && to.length == 3');
 function visit9_135_1(result) {
   _$jscoverage['/timer/color.js'].branchData['135'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer/color.js'].branchData['128'][1].init(208, 7, 'self.to');
+}_$jscoverage['/timer/color.js'].branchData['128'][1].init(202, 7, 'self.to');
 function visit8_128_1(result) {
   _$jscoverage['/timer/color.js'].branchData['128'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer/color.js'].branchData['125'][1].init(109, 9, 'self.from');
+}_$jscoverage['/timer/color.js'].branchData['125'][1].init(106, 9, 'self.from');
 function visit7_125_1(result) {
   _$jscoverage['/timer/color.js'].branchData['125'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer/color.js'].branchData['108'][1].init(917, 33, 'KEYWORDS[val = val.toLowerCase()]');
+}_$jscoverage['/timer/color.js'].branchData['108'][1].init(887, 33, 'KEYWORDS[val = val.toLowerCase()]');
 function visit6_108_1(result) {
   _$jscoverage['/timer/color.js'].branchData['108'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer/color.js'].branchData['98'][1].init(22, 19, 'match[i].length < 2');
+}_$jscoverage['/timer/color.js'].branchData['98'][1].init(21, 19, 'match[i].length < 2');
 function visit5_98_1(result) {
   _$jscoverage['/timer/color.js'].branchData['98'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer/color.js'].branchData['97'][1].init(30, 16, 'i < match.length');
+}_$jscoverage['/timer/color.js'].branchData['97'][1].init(29, 16, 'i < match.length');
 function visit4_97_1(result) {
   _$jscoverage['/timer/color.js'].branchData['97'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer/color.js'].branchData['96'][1].init(513, 25, 'match = val.match(re_hex)');
+}_$jscoverage['/timer/color.js'].branchData['96'][1].init(495, 25, 'match = val.match(re_hex)');
 function visit3_96_1(result) {
   _$jscoverage['/timer/color.js'].branchData['96'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer/color.js'].branchData['88'][1].init(268, 26, 'match = val.match(re_RGBA)');
+}_$jscoverage['/timer/color.js'].branchData['88'][1].init(258, 26, 'match = val.match(re_RGBA)');
 function visit2_88_1(result) {
   _$jscoverage['/timer/color.js'].branchData['88'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer/color.js'].branchData['81'][1].init(61, 25, 'match = val.match(re_RGB)');
+}_$jscoverage['/timer/color.js'].branchData['81'][1].init(58, 25, 'match = val.match(re_RGB)');
 function visit1_81_1(result) {
   _$jscoverage['/timer/color.js'].branchData['81'][1].ranCondition(result);
   return result;

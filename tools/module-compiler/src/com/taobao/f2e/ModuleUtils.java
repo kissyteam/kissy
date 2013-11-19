@@ -54,26 +54,26 @@ public class ModuleUtils {
      * @param astRoot ast root
      * @param name    module name
      * @return String[] required processedModules 's name
-     *
-     *      KISSY.add(function(){
-     *          var module=this;
-     *          var a=module.require('a');
-     *      })
-     *
-     *      KISSY.add('x',['a'],function(){});
+     *         <p/>
+     *         KISSY.add(function(){
+     *         var module=this;
+     *         var a=module.require('a');
+     *         })
+     *         <p/>
+     *         KISSY.add('x',['a'],function(){});
      */
     public static String[] getRequiresFromAst(Node astRoot, String name) {
         ArrayList<String> re = new ArrayList<String>();
         Node firstParameter = astRoot.getFirstChild().getFirstChild().getFirstChild().getNext();
+        Node requireVal = new Node(Token.ARRAYLIT);
         if (firstParameter.getType() == Token.FUNCTION) {
             ArrayList<Node> nodes = new ArrayList<Node>();
             findModuleRequire(astRoot, nodes);
-            Node requireVal = new Node(Token.ARRAYLIT);
             for (Node node : nodes) {
                 requireVal.addChildrenToBack(node.cloneTree());
             }
-            firstParameter.getParent().addChildBefore(requireVal,firstParameter);
         }
+        firstParameter.getParent().addChildBefore(requireVal, firstParameter);
         Node list = astRoot.getFirstChild().getFirstChild().getFirstChild().getNext();
         Node fl = list.getFirstChild();
         while (fl != null) {

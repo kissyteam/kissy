@@ -3,10 +3,14 @@
  * non-refresh upload file with form by iframe
  * @author yiminghe@gmail.com
  */
-KISSY.add('io/iframe-transport', function (S, Dom, Event, IO) {
+KISSY.add(function (S) {
+    var module = this;
+    var Dom = module.require('dom'),
+        IO = module.require('./base'),
+        Event = module.require('event/dom');
     var doc = S.Env.host.document,
         OK_CODE = 200,
-        logger= S.getLogger('s/io'),
+        logger = S.getLogger('s/io'),
         ERROR_CODE = 500,
         BREATH_INTERVAL = 30,
         iframeConverter = S.clone(IO.getConfig().converters.text);
@@ -107,8 +111,8 @@ KISSY.add('io/iframe-transport', function (S, Dom, Event, IO) {
                 target: Dom.attr(form, 'target') || '',
                 action: Dom.attr(form, 'action') || '',
                 // enctype 区分 iframe 与 serialize
-                encoding:Dom.attr(form, 'encoding'),
-                enctype:Dom.attr(form, 'enctype'),
+                encoding: Dom.attr(form, 'encoding'),
+                enctype: Dom.attr(form, 'enctype'),
                 method: Dom.attr(form, 'method')
             };
             self.form = form;
@@ -120,8 +124,8 @@ KISSY.add('io/iframe-transport', function (S, Dom, Event, IO) {
                 target: iframe.id,
                 action: io._getUrlForSend(),
                 method: 'post',
-                enctype:'multipart/form-data',
-                encoding:'multipart/form-data'
+                enctype: 'multipart/form-data',
+                encoding: 'multipart/form-data'
             });
 
             // unparam to kv map
@@ -243,6 +247,4 @@ KISSY.add('io/iframe-transport', function (S, Dom, Event, IO) {
     IO['setupTransport']('iframe', IframeTransport);
 
     return IO;
-}, {
-    requires: ['dom', 'event', './base']
 });

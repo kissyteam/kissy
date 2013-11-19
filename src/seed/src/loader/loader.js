@@ -66,7 +66,7 @@
          *      });
          */
         add: function (name, factory, cfg) {
-            ComboLoader.add(name, factory, cfg, S,arguments.length);
+            ComboLoader.add(name, factory, cfg, S, arguments.length);
         },
         /**
          * Attached one or more modules to global KISSY instance.
@@ -177,9 +177,11 @@
          * @return {*} exports of specified module
          */
         require: function (moduleName, refName) {
-            var moduleNames = Utils.unalias(S, Utils.normalizeModNamesWithAlias(S, [moduleName], refName));
-            Utils.attachModsRecursively(moduleNames, S);
-            return Utils.getModules(S, moduleNames)[1];
+            if (moduleName) {
+                var moduleNames = Utils.unalias(S, Utils.normalizeModNamesWithAlias(S, [moduleName], refName));
+                Utils.attachModsRecursively(moduleNames, S);
+                return Utils.getModules(S, moduleNames)[1];
+            }
         }
     });
 

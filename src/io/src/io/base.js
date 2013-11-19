@@ -3,10 +3,14 @@
  * a scalable client io framework
  * @author yiminghe@gmail.com
  */
-KISSY.add('io/base', function (S, CustomEvent, Promise, undefined) {
+KISSY.add(function (S) {
+    var module = this,
+        undefined = undefined,
+        CustomEvent = module.require('event/custom'),
+        Promise = module.require('promise');
     var rlocalProtocol = /^(?:about|app|app\-storage|.+\-extension|file|widget)$/,
         rspace = /\s+/,
-        logger = S.getLogger('s/io'),
+        // logger = S.getLogger('s/io'),
         mirror = function (s) {
             return s;
         },
@@ -435,7 +439,7 @@ KISSY.add('io/base', function (S, CustomEvent, Promise, undefined) {
         return self;
     }
 
-    S.mix(IO, CustomEvent.targetObject);
+    S.mix(IO, CustomEvent.Target);
 
     S.mix(IO, {
         /**
@@ -485,8 +489,6 @@ KISSY.add('io/base', function (S, CustomEvent, Promise, undefined) {
     });
 
     return IO;
-}, {
-    requires: ['event/custom', 'promise']
 });
 
 /*

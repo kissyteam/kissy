@@ -3,7 +3,12 @@
  * @author yiminghe@gmail.com
  * @ignore
  */
-KISSY.add('anim/base', function (S, Dom, Utils, Promise, Q) {
+KISSY.add(function (S) {
+    var module=this,
+        Dom=module.require('dom'),
+        Utils=module.require('./base/utils'),
+        Q=module.require('./base/queue'),
+        Promise=module.require('promise');
     var NodeType = Dom.NodeType,
         noop = S.noop,
         logger = S.getLogger('s/anim'),
@@ -339,6 +344,4 @@ KISSY.add('anim/base', function (S, Dom, Utils, Promise, Q) {
     AnimBase.Q = Q;
 
     return AnimBase;
-}, {
-    requires: ['dom', './base/utils', 'promise', './base/queue']
 });

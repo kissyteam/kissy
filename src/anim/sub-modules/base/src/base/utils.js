@@ -3,8 +3,11 @@
  * @author yiminghe@gmail.com
  * @ignore
  */
-KISSY.add('anim/base/utils', function (S, Dom, Q,undefined) {
-
+KISSY.add(function (S) {
+    var module = this,
+        undefined = undefined,
+        Q = module.require('./queue'),
+        Dom = module.require('dom');
     var runningKey = S.guid('ks-anim-unqueued-' + S.now() + '-');
 
     function saveRunningAnim(anim) {
@@ -116,6 +119,4 @@ KISSY.add('anim/base/utils', function (S, Dom, Q,undefined) {
             });
         }
     }
-}, {
-    requires: ['dom', './queue']
 });

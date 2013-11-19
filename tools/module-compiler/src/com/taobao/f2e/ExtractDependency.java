@@ -13,11 +13,6 @@ import java.util.regex.Pattern;
  */
 public class ExtractDependency {
     /**
-     * whether overwrite module's file with module name added.
-     */
-    private boolean fixModuleName = false;
-
-    /**
      * packages.
      */
     private Packages packages = new Packages();
@@ -52,10 +47,6 @@ public class ExtractDependency {
 
     static String CODE_SUFFIX = "\n});";
 
-    public void setFixModuleName(boolean fixModuleName) {
-        this.fixModuleName = fixModuleName;
-    }
-
     public Packages getPackages() {
         return packages;
     }
@@ -80,7 +71,7 @@ public class ExtractDependency {
             return false;
         }
 
-        m.completeModuleName(this.fixModuleName);
+        m.completeModuleName();
 
         String name = m.getName();
 
@@ -134,7 +125,6 @@ public class ExtractDependency {
         options.addOption("output", true, "output");
         options.addOption("v", "version", false, "version");
         options.addOption("compact", true, "compact mode");
-        options.addOption("fixModuleName", true, "fixModuleName");
 
         // create the command line parser
         CommandLineParser parser = new GnuParser();
@@ -166,11 +156,6 @@ public class ExtractDependency {
         String compact = line.getOptionValue("compact");
         if (compact != null) {
             extractDependency.compact = true;
-        }
-
-        String fixModuleName = line.getOptionValue("fixModuleName");
-        if (fixModuleName != null && fixModuleName.equals("true")) {
-            extractDependency.setFixModuleName(true);
         }
 
         String excludeReg = line.getOptionValue("excludeReg");

@@ -6,7 +6,6 @@
 KISSY.add(function (S) {
     var module = this;
     var Attribute = module.require('attribute');
-    var CustomEvent = module.require('event/custom');
     module.exports = Base;
 
     var ATTRS = 'ATTRS',
@@ -49,7 +48,6 @@ KISSY.add(function (S) {
 
     /**
      * @class KISSY.Base
-     * @mixins KISSY.Event.CustomEvent.Target
      * @mixins KISSY.Attribute
      *
      * A base class which objects requiring attributes, extension, plugin, custom event support can
@@ -59,17 +57,8 @@ KISSY.add(function (S) {
      * in the hierarchy will be initialized by Base.
      */
     function Base(config) {
-        var self = this,
-            c = self.constructor;
-        // save user config
-        self.userConfig = config;
-        // define
-        while (c) {
-            addAttrs(self, c[ATTRS]);
-            c = c.superclass ? c.superclass.constructor : null;
-        }
-        // initial attr
-        initAttrs(self, config);
+        var self = this;
+        Base.superclass.constructor.apply(self,arguments);
         // setup listeners
         var listeners = self.get("listeners");
         for (var n in listeners) {
@@ -86,7 +75,7 @@ KISSY.add(function (S) {
         self.syncInternal();
     }
 
-    S.augment(Base, Attribute,CustomEvent.Target, {
+    S.extend(Base, Attribute, {
         initializer: noop,
 
         '__getHook': __getHook,
@@ -162,7 +151,7 @@ KISSY.add(function (S) {
 
             // from super class to sub class
             for (i = 0; i < cs.length; i++) {
-                var ATTRS = cs[i].ATTRS || {};
+                var ATTRS = cs[i][ATTRS] || {};
                 for (var attributeName in ATTRS) {
                     if (attributeName in attrs) {
                         var attributeValue,
@@ -467,30 +456,6 @@ KISSY.add(function (S) {
         if (e.target == self) {
             method = self[ON_SET + e.type.slice(5).slice(0, -6)];
             method.call(self, e.newVal, e);
-        }
-    }
-
-    function addAttrs(host, attrs) {
-        if (attrs) {
-            for (var attr in attrs) {
-                // 子类上的 ATTRS 配置优先
-                // 父类后加，父类不覆盖子类的相同设置
-                // 属性对象会 merge
-                // a: {y: {getter: fn}}, b: {y: {value: 3}}
-                // b extends a
-                // =>
-                // b {y: {value: 3, getter: fn}}
-                host.addAttr(attr, attrs[attr], false);
-            }
-        }
-    }
-
-    function initAttrs(host, config) {
-        if (config) {
-            for (var attr in config) {
-                // 用户设置会调用 setter/validator 的，但不会触发属性变化事件
-                host.setInternal(attr, config[attr]);
-            }
         }
     }
 

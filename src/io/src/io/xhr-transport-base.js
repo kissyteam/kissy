@@ -3,7 +3,9 @@
  * base for xhr and subdomain
  * @author yiminghe@gmail.com
  */
-KISSY.add('io/xhr-transport-base', function (S, IO) {
+KISSY.add(function (S) {
+    var module = this,
+        IO = module.require('./base');
     var OK_CODE = 200,
         win = S.Env.host,
         logger = S.getLogger('s/io'),
@@ -312,6 +314,4 @@ KISSY.add('io/xhr-transport-base', function (S, IO) {
     ;
 
     return XhrTransportBase;
-}, {
-    requires: ['./base']
 });

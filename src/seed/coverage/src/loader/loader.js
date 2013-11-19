@@ -289,7 +289,8 @@ if (! _$jscoverage['/loader/loader.js']) {
   _$jscoverage['/loader/loader.js'].lineData[180] = 0;
   _$jscoverage['/loader/loader.js'].lineData[181] = 0;
   _$jscoverage['/loader/loader.js'].lineData[182] = 0;
-  _$jscoverage['/loader/loader.js'].lineData[186] = 0;
+  _$jscoverage['/loader/loader.js'].lineData[183] = 0;
+  _$jscoverage['/loader/loader.js'].lineData[188] = 0;
 }
 if (! _$jscoverage['/loader/loader.js'].functionData) {
   _$jscoverage['/loader/loader.js'].functionData = [];
@@ -334,8 +335,14 @@ if (! _$jscoverage['/loader/loader.js'].branchData) {
   _$jscoverage['/loader/loader.js'].branchData['142'][1] = new BranchData();
   _$jscoverage['/loader/loader.js'].branchData['162'] = [];
   _$jscoverage['/loader/loader.js'].branchData['162'][1] = new BranchData();
+  _$jscoverage['/loader/loader.js'].branchData['180'] = [];
+  _$jscoverage['/loader/loader.js'].branchData['180'][1] = new BranchData();
 }
-_$jscoverage['/loader/loader.js'].branchData['162'][1].init(2870, 4, 'sync');
+_$jscoverage['/loader/loader.js'].branchData['180'][1].init(17, 10, 'moduleName');
+function visit466_180_1(result) {
+  _$jscoverage['/loader/loader.js'].branchData['180'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/loader/loader.js'].branchData['162'][1].init(2870, 4, 'sync');
 function visit465_162_1(result) {
   _$jscoverage['/loader/loader.js'].branchData['162'][1].ranCondition(result);
   return result;
@@ -553,12 +560,15 @@ function visit453_27_1(result) {
   require: function(moduleName, refName) {
   _$jscoverage['/loader/loader.js'].functionData[12]++;
   _$jscoverage['/loader/loader.js'].lineData[180]++;
-  var moduleNames = Utils.unalias(S, Utils.normalizeModNamesWithAlias(S, [moduleName], refName));
-  _$jscoverage['/loader/loader.js'].lineData[181]++;
-  Utils.attachModsRecursively(moduleNames, S);
-  _$jscoverage['/loader/loader.js'].lineData[182]++;
-  return Utils.getModules(S, moduleNames)[1];
+  if (visit466_180_1(moduleName)) {
+    _$jscoverage['/loader/loader.js'].lineData[181]++;
+    var moduleNames = Utils.unalias(S, Utils.normalizeModNamesWithAlias(S, [moduleName], refName));
+    _$jscoverage['/loader/loader.js'].lineData[182]++;
+    Utils.attachModsRecursively(moduleNames, S);
+    _$jscoverage['/loader/loader.js'].lineData[183]++;
+    return Utils.getModules(S, moduleNames)[1];
+  }
 }});
-  _$jscoverage['/loader/loader.js'].lineData[186]++;
+  _$jscoverage['/loader/loader.js'].lineData[188]++;
   Env.mods = {};
 })(KISSY);

@@ -3,7 +3,13 @@
  * io xhr transport class, route subdomain, xdr
  * @author yiminghe@gmail.com
  */
-KISSY.add('io/xhr-transport', function (S, IO, XhrTransportBase, SubDomainTransport, XdrFlashTransport) {
+KISSY.add(function (S) {
+    var module = this,
+        IO = module.require('./base'),
+        XhrTransportBase = module.require('./xhr-transport-base'),
+        XdrFlashTransport=module.require('./xdr-flash-transport'),
+        SubDomainTransport = module.require('./sub-domain-transport');
+
     var win = S.Env.host,
         doc = win.document,
         logger = S.getLogger('s/io'),

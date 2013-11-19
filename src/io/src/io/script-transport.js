@@ -5,7 +5,10 @@
  * add abort ability
  * @author yiminghe@gmail.com
  */
-KISSY.add('io/script-transport', function (S, IO, _, undefined) {
+KISSY.add(function (S) {
+    var module=this,
+        undefined=undefined,
+        IO=module.require('./base');
     var win = S.Env.host,
         doc = win.document,
         logger= S.getLogger('s/io'),
@@ -129,6 +132,4 @@ KISSY.add('io/script-transport', function (S, IO, _, undefined) {
     IO['setupTransport']('script', ScriptTransport);
 
     return IO;
-}, {
-    requires: ['./base', './xhr-transport']
 });

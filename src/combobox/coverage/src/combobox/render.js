@@ -230,18 +230,21 @@ if (! _$jscoverage['/combobox/render.js']) {
   _$jscoverage['/combobox/render.js'] = {};
   _$jscoverage['/combobox/render.js'].lineData = [];
   _$jscoverage['/combobox/render.js'].lineData[6] = 0;
+  _$jscoverage['/combobox/render.js'].lineData[7] = 0;
   _$jscoverage['/combobox/render.js'].lineData[8] = 0;
+  _$jscoverage['/combobox/render.js'].lineData[9] = 0;
   _$jscoverage['/combobox/render.js'].lineData[11] = 0;
-  _$jscoverage['/combobox/render.js'].lineData[20] = 0;
-  _$jscoverage['/combobox/render.js'].lineData[24] = 0;
-  _$jscoverage['/combobox/render.js'].lineData[28] = 0;
-  _$jscoverage['/combobox/render.js'].lineData[29] = 0;
-  _$jscoverage['/combobox/render.js'].lineData[40] = 0;
+  _$jscoverage['/combobox/render.js'].lineData[14] = 0;
+  _$jscoverage['/combobox/render.js'].lineData[23] = 0;
+  _$jscoverage['/combobox/render.js'].lineData[27] = 0;
+  _$jscoverage['/combobox/render.js'].lineData[31] = 0;
+  _$jscoverage['/combobox/render.js'].lineData[32] = 0;
   _$jscoverage['/combobox/render.js'].lineData[43] = 0;
   _$jscoverage['/combobox/render.js'].lineData[46] = 0;
   _$jscoverage['/combobox/render.js'].lineData[49] = 0;
   _$jscoverage['/combobox/render.js'].lineData[52] = 0;
-  _$jscoverage['/combobox/render.js'].lineData[57] = 0;
+  _$jscoverage['/combobox/render.js'].lineData[55] = 0;
+  _$jscoverage['/combobox/render.js'].lineData[60] = 0;
 }
 if (! _$jscoverage['/combobox/render.js'].functionData) {
   _$jscoverage['/combobox/render.js'].functionData = [];
@@ -260,13 +263,19 @@ if (! _$jscoverage['/combobox/render.js'].branchData) {
   _$jscoverage['/combobox/render.js'].branchData = {};
 }
 _$jscoverage['/combobox/render.js'].lineData[6]++;
-KISSY.add("combobox/render", function(S, Control, ComboboxTpl) {
+KISSY.add(function(S) {
   _$jscoverage['/combobox/render.js'].functionData[0]++;
+  _$jscoverage['/combobox/render.js'].lineData[7]++;
+  var module = this;
   _$jscoverage['/combobox/render.js'].lineData[8]++;
-  var ComboboxRender = Control.getDefaultRender().extend({
+  var Control = module.require('component/control');
+  _$jscoverage['/combobox/render.js'].lineData[9]++;
+  var ComboboxTpl = module.require('./combobox-xtpl');
+  _$jscoverage['/combobox/render.js'].lineData[11]++;
+  module.exports = Control.getDefaultRender().extend({
   beforeCreateDom: function(renderData, childrenElSelectors) {
   _$jscoverage['/combobox/render.js'].functionData[1]++;
-  _$jscoverage['/combobox/render.js'].lineData[11]++;
+  _$jscoverage['/combobox/render.js'].lineData[14]++;
   S.mix(childrenElSelectors, {
   input: '#ks-combobox-input-{id}', 
   trigger: '#ks-combobox-trigger-{id}', 
@@ -275,19 +284,19 @@ KISSY.add("combobox/render", function(S, Control, ComboboxTpl) {
 }, 
   getKeyEventTarget: function() {
   _$jscoverage['/combobox/render.js'].functionData[2]++;
-  _$jscoverage['/combobox/render.js'].lineData[20]++;
+  _$jscoverage['/combobox/render.js'].lineData[23]++;
   return this.control.get("input");
 }, 
   _onSetCollapsed: function(v) {
   _$jscoverage['/combobox/render.js'].functionData[3]++;
-  _$jscoverage['/combobox/render.js'].lineData[24]++;
+  _$jscoverage['/combobox/render.js'].lineData[27]++;
   this.control.get("input").attr("aria-expanded", !v);
 }, 
   _onSetDisabled: function(v, e) {
   _$jscoverage['/combobox/render.js'].functionData[4]++;
-  _$jscoverage['/combobox/render.js'].lineData[28]++;
+  _$jscoverage['/combobox/render.js'].lineData[31]++;
   this.callSuper(v, e);
-  _$jscoverage['/combobox/render.js'].lineData[29]++;
+  _$jscoverage['/combobox/render.js'].lineData[32]++;
   this.control.get("input").attr("disabled", v);
 }}, {
   ATTRS: {
@@ -296,30 +305,29 @@ KISSY.add("combobox/render", function(S, Control, ComboboxTpl) {
   HTML_PARSER: {
   value: function(el) {
   _$jscoverage['/combobox/render.js'].functionData[5]++;
-  _$jscoverage['/combobox/render.js'].lineData[40]++;
+  _$jscoverage['/combobox/render.js'].lineData[43]++;
   return el.one("." + this.getBaseCssClass('input')).val();
 }, 
   input: function(el) {
   _$jscoverage['/combobox/render.js'].functionData[6]++;
-  _$jscoverage['/combobox/render.js'].lineData[43]++;
+  _$jscoverage['/combobox/render.js'].lineData[46]++;
   return el.one("." + this.getBaseCssClass('input'));
 }, 
   trigger: function(el) {
   _$jscoverage['/combobox/render.js'].functionData[7]++;
-  _$jscoverage['/combobox/render.js'].lineData[46]++;
+  _$jscoverage['/combobox/render.js'].lineData[49]++;
   return el.one("." + this.getBaseCssClass('trigger'));
 }, 
   invalidEl: function(el) {
   _$jscoverage['/combobox/render.js'].functionData[8]++;
-  _$jscoverage['/combobox/render.js'].lineData[49]++;
+  _$jscoverage['/combobox/render.js'].lineData[52]++;
   return el.one("." + this.getBaseCssClass('invalid-el'));
 }, 
   placeholderEl: function(el) {
   _$jscoverage['/combobox/render.js'].functionData[9]++;
-  _$jscoverage['/combobox/render.js'].lineData[52]++;
+  _$jscoverage['/combobox/render.js'].lineData[55]++;
   return el.one("." + this.getBaseCssClass('placeholder'));
 }}});
-  _$jscoverage['/combobox/render.js'].lineData[57]++;
+  _$jscoverage['/combobox/render.js'].lineData[60]++;
   return ComboboxRender;
-}, {
-  requires: ['component/control', './combobox-xtpl']});
+});

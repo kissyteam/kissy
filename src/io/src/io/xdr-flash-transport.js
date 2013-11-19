@@ -3,7 +3,10 @@
  * use flash to accomplish cross domain request, usage scenario ? why not jsonp ?
  * @author yiminghe@gmail.com
  */
-KISSY.add('io/xdr-flash-transport', function (S, IO, Dom) {
+KISSY.add(function (S) {
+    var module = this,
+        IO = module.require('./base'),
+        Dom = module.require('dom');
     var // current running request instances
         maps = {},
         logger= S.getLogger('s/io'),
@@ -136,6 +139,4 @@ KISSY.add('io/xdr-flash-transport', function (S, IO, Dom) {
     };
 
     return XdrFlashTransport;
-}, {
-    requires: ['./base', 'dom']
 });

@@ -57,11 +57,6 @@ public class Main {
     private ArrayList<Module> processedModules = new ArrayList<Module>();
 
     /**
-     * whether overwrite module's file with module name added.
-     */
-    private boolean fixModuleName = false;
-
-    /**
      * whether output dependency file path.
      */
     private String outputDependency = null;
@@ -77,10 +72,6 @@ public class Main {
 
     public void setOutputDependency(String outputDependency) {
         this.outputDependency = outputDependency;
-    }
-
-    public void setFixModuleName(boolean fixModuleName) {
-        this.fixModuleName = fixModuleName;
     }
 
     public void setOutput(String output) {
@@ -212,7 +203,7 @@ public class Main {
 
         // normalize structure
         String[] requires = requiredModule.getRequires();
-        requiredModule.completeModuleName(fixModuleName);
+        requiredModule.completeModuleName();
 
 
         for (String require : requires) {
@@ -236,7 +227,6 @@ public class Main {
         options.addOption("output", true, "output");
         options.addOption("v", "version", false, "version");
         options.addOption("outputDependency", true, "outputDependency");
-        options.addOption("fixModuleName", true, "fixModuleName");
         options.addOption("compact", true, "compact mode");
 
         // create the command line parser
@@ -274,12 +264,6 @@ public class Main {
         String packageUrlStr = line.getOptionValue("packageUrls");
         if (packageUrlStr != null) {
             packages.initByPackageUrls(packageUrlStr);
-        }
-
-        String fixModuleName = line.getOptionValue("fixModuleName");
-
-        if (fixModuleName != null) {
-            builder.setFixModuleName(true);
         }
 
         builder.setRequire(line.getOptionValue("require"));

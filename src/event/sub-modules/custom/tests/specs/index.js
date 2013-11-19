@@ -3,7 +3,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, Event) {
-    var EventTarget = Event.targetObject;
+    var EventTarget = Event.Target;
 
     var FIRST = '1', SECOND = '2', SEP = '=';
 

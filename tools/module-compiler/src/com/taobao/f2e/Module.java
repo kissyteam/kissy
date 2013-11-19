@@ -69,19 +69,13 @@ public class Module {
     /**
      * S.add(func); -> S.add("moduleName",func);
      */
-    public void completeModuleName(boolean saveToFile) {
+    public void completeModuleName() {
         Module module = this;
         Node moduleNameNode = module.getModuleNameNode();
-        if (moduleNameNode.getType() != Token.STRING) {
-            moduleNameNode.addChildAfter(Node.newString(module.getName()),
-                    moduleNameNode.getParent().getChildBefore(moduleNameNode));
-            module.setCode(AstUtils.toSource(module.getAstRoot()));
-            if (saveToFile) {
-                FileUtils.outputContent(code, this.getFullpath(), encoding);
-            }
-        } else {
-            module.setCode(module.getContent());
-        }
+        moduleNameNode.addChildAfter(Node.newString(module.getName()),
+                moduleNameNode.getParent().getChildBefore(moduleNameNode));
+        module.setCode(AstUtils.toSource(module.getAstRoot()));
+            FileUtils.outputContent(code, this.getFullpath(), encoding);
     }
 
     public String[] getRequires() {

@@ -3,7 +3,12 @@
  * @author yiminghe@gmail.com
  * @ignore
  */
-KISSY.add('anim/transition', function (S, Dom, Event, AnimBase) {
+KISSY.add(function (S) {
+    var module=this;
+    var Dom = module.require('dom');
+    var Event = module.require('event/dom');
+    var AnimBase = module.require('./base');
+
     var Features = S.Features;
     var vendorPrefix = Features.getTransitionPrefix();
     var R_UPPER = /([A-Z]|^ms)/g;
@@ -154,8 +159,6 @@ KISSY.add('anim/transition', function (S, Dom, Event, AnimBase) {
     });
 
     return TransitionAnim;
-}, {
-    requires: ['dom', 'event/dom', './base']
 });
 /*
  refer:

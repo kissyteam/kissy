@@ -3,15 +3,18 @@
  * @ignore
  * @author yiminghe@gmail.com
  */
-KISSY.add("color", function (S, Base) {
+KISSY.add("color", function (S) {
     var rgbaRe = /\s*rgba?\s*\(\s*([0-9]+)\s*,\s*([0-9]+)\s*,\s*([0-9]+)\s*(?:,\s*([\d\.]+))?\)\s*/,
         hexRe = /\s*#([0-9a-fA-F][0-9a-fA-F]?)([0-9a-fA-F][0-9a-fA-F]?)([0-9a-fA-F][0-9a-fA-F]?)\s*/;
+
+    var module = this,
+        Attribute = module.require('attribute');
 
     /**
      * Color for KISSY to normalize HSL, HSV, RGB and HEX.
      * @class KISSY.Color
      */
-    var Color = Base.extend({
+    module.exports = Attribute.extend({
         /**
          * To hsl string format
          * @return {String}
@@ -159,7 +162,9 @@ KISSY.add("color", function (S, Base) {
 
             self.set(hsl2rgb(cfg));
         }
-    }, {
+    });
+
+    S.mix(Color, {
         ATTRS: {
             /**
              * Red.
@@ -242,7 +247,6 @@ KISSY.add("color", function (S, Base) {
             }
         },
 
-
         /**
          * Construct color object from String.
          * @static
@@ -320,7 +324,6 @@ KISSY.add("color", function (S, Base) {
     function to255(v) {
         return v * 255;
     }
-
 
     function hsv2rgb(cfg) {
         var h = Math.min(Math.round(cfg.h), 359),
@@ -489,8 +492,6 @@ KISSY.add("color", function (S, Base) {
     }
 
     // #---------------------------- private end
-
-    return Color;
 }, {
     requires: ['base']
 });

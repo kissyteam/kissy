@@ -3,7 +3,9 @@
  * Local dataSource for ComboBox
  * @author yiminghe@gmail.com
  */
-KISSY.add("combobox/local-data-source", function (S, Base) {
+KISSY.add(function (S) {
+    var module=this,
+        Attribute=module.require('attribute');
 
     /**
      * Local dataSource for comboBox.
@@ -11,7 +13,7 @@ KISSY.add("combobox/local-data-source", function (S, Base) {
      * @class KISSY.ComboBox.LocalDataSource
      */
 
-    return Base.extend({
+    return Attribute.extend({
         /**
          * Data source interface. How to get data for comboBox.
          * @param {String} inputVal current active input's value
@@ -62,6 +64,4 @@ KISSY.add("combobox/local-data-source", function (S, Base) {
 
         return ret;
     }
-}, {
-    requires: ['base']
 });

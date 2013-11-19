@@ -3,7 +3,9 @@
  * filter select from combobox
  * @author yiminghe@gmail.com
  */
-KISSY.add("combobox/filter-select", function (S, Combobox) {
+KISSY.add(function () {
+    var module = this;
+    var Combobox = module.require('./control');
 
     function valInAutoCompleteList(inputVal, _saveData) {
         var valid = false;
@@ -22,7 +24,7 @@ KISSY.add("combobox/filter-select", function (S, Combobox) {
      * @class KISSY.ComboBox.FilterSelect
      * @extends KISSY.ComboBox
      */
-    var FilterSelect = Combobox.extend({
+    module.exports = Combobox.extend({
         validate: function (callback) {
             var self = this;
             self.callSuper(function (error, val) {
@@ -50,9 +52,4 @@ KISSY.add("combobox/filter-select", function (S, Combobox) {
             }
         }
     });
-
-    return FilterSelect;
-
-}, {
-    requires: ['./control']
 });

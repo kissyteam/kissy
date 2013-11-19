@@ -235,6 +235,12 @@ if (! _$jscoverage['/combobox.js']) {
   _$jscoverage['/combobox.js'].lineData[9] = 0;
   _$jscoverage['/combobox.js'].lineData[10] = 0;
   _$jscoverage['/combobox.js'].lineData[11] = 0;
+  _$jscoverage['/combobox.js'].lineData[12] = 0;
+  _$jscoverage['/combobox.js'].lineData[14] = 0;
+  _$jscoverage['/combobox.js'].lineData[15] = 0;
+  _$jscoverage['/combobox.js'].lineData[16] = 0;
+  _$jscoverage['/combobox.js'].lineData[17] = 0;
+  _$jscoverage['/combobox.js'].lineData[18] = 0;
 }
 if (! _$jscoverage['/combobox.js'].functionData) {
   _$jscoverage['/combobox.js'].functionData = [];
@@ -244,17 +250,28 @@ if (! _$jscoverage['/combobox.js'].branchData) {
   _$jscoverage['/combobox.js'].branchData = {};
 }
 _$jscoverage['/combobox.js'].lineData[6]++;
-KISSY.add("combobox", function(S, ComboBox, MultiValueComboBox, FilterSelect, LocalDataSource, RemoteDataSource) {
+KISSY.add(function() {
   _$jscoverage['/combobox.js'].functionData[0]++;
   _$jscoverage['/combobox.js'].lineData[7]++;
-  ComboBox.LocalDataSource = LocalDataSource;
+  var module = this;
   _$jscoverage['/combobox.js'].lineData[8]++;
-  ComboBox.RemoteDataSource = RemoteDataSource;
+  var ComboBox = module.require('combobox/control');
   _$jscoverage['/combobox.js'].lineData[9]++;
-  ComboBox.FilterSelect = FilterSelect;
+  var MultiValueComboBox = module.require('combobox/multi-value-combobox');
   _$jscoverage['/combobox.js'].lineData[10]++;
-  ComboBox.MultiValueComboBox = MultiValueComboBox;
+  var FilterSelect = module.require('combobox/filter-select');
   _$jscoverage['/combobox.js'].lineData[11]++;
+  var LocalDataSource = module.require('combobox/local-data-source');
+  _$jscoverage['/combobox.js'].lineData[12]++;
+  var RemoteDataSource = module.require('combobox/remote-data-source');
+  _$jscoverage['/combobox.js'].lineData[14]++;
+  ComboBox.LocalDataSource = LocalDataSource;
+  _$jscoverage['/combobox.js'].lineData[15]++;
+  ComboBox.RemoteDataSource = RemoteDataSource;
+  _$jscoverage['/combobox.js'].lineData[16]++;
+  ComboBox.FilterSelect = FilterSelect;
+  _$jscoverage['/combobox.js'].lineData[17]++;
+  ComboBox.MultiValueComboBox = MultiValueComboBox;
+  _$jscoverage['/combobox.js'].lineData[18]++;
   return ComboBox;
-}, {
-  requires: ['combobox/control', 'combobox/multi-value-combobox', 'combobox/filter-select', 'combobox/local-data-source', 'combobox/remote-data-source']});
+});

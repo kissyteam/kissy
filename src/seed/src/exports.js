@@ -4,9 +4,6 @@
  * 2. export light-weighted json parse
  */
 (function (S) {
-    // empty mod for conditional loading
-    S.add('empty', S.noop);
-
     S.add('ua', function () {
         return S.UA;
     });

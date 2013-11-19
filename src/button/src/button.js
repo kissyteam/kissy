@@ -3,7 +3,11 @@
  * Button control for KISSY.
  * @author yiminghe@gmail.com
  */
-KISSY.add("button", function (S, Node, Control, ButtonRender) {
+KISSY.add(function () {
+    var module=this;
+    var Node=module.require('node'),
+        Control=module.require('component/control'),
+        ButtonRender=module.require('button/render');
 
     var KeyCode = Node.KeyCode;
     /**
@@ -122,7 +126,4 @@ KISSY.add("button", function (S, Node, Control, ButtonRender) {
         },
         xclass: 'button'
     });
-
-}, {
-    requires: ['node', 'component/control', 'button/render']
 });

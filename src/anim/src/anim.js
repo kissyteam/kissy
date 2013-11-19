@@ -3,7 +3,11 @@
  * @author yiminghe@gmail.com
  * @ignore
  */
-KISSY.add('anim', function (S, Dom, AnimBase, TimerAnim, TransitionAnim) {
+KISSY.add(function (S) {
+    var module=this,
+        AnimBase=module.require('anim/base'),
+        TimerAnim=module.require('anim/timer'),
+        TransitionAnim=module.require(KISSY.Features.isTransitionSupported() ? 'anim/transition' : '');
     var Utils = AnimBase.Utils,
         logger= S.getLogger('s/anim'),
         defaultConfig = {
@@ -204,8 +208,4 @@ KISSY.add('anim', function (S, Dom, AnimBase, TimerAnim, TransitionAnim) {
     Anim.Q = AnimBase.Q;
 
     return Anim;
-}, {
-    requires: ['dom', 'anim/base', 'anim/timer',
-        KISSY.Features.isTransitionSupported() ? 'anim/transition' : '']
-
 });

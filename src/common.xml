@@ -39,8 +39,6 @@
             <ac:then>
                 <exec executable="node">
                     <arg value="${bin.dir}/kissy-xtemplate"/>
-                    <arg value="-n"/>
-                    <arg value="${component.name}"/>
                     <arg value="-p"/>
                     <arg value="${component.src.dir}"/>
                     <arg value="-k"/>

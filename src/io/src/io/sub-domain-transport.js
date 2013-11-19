@@ -3,9 +3,13 @@
  * solve io between sub domains using proxy page
  * @author yiminghe@gmail.com
  */
-KISSY.add('io/sub-domain-transport', function (S, XhrTransportBase, Event, Dom) {
+KISSY.add(function (S) {
+    var module = this,
+        Event = module.require('event/dom'),
+        Dom = module.require('dom'),
+        XhrTransportBase = module.require('./xhr-transport-base');
     var PROXY_PAGE = '/sub_domain_proxy.html',
-        logger= S.getLogger('s/io'),
+        logger = S.getLogger('s/io'),
         doc = S.Env.host.document,
         iframeMap = {
             // hostname:{iframe: , ready:}
