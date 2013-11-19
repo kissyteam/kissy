@@ -280,15 +280,15 @@ if (! _$jscoverage['/touch/pinch.js'].branchData) {
   _$jscoverage['/touch/pinch.js'].branchData['70'] = [];
   _$jscoverage['/touch/pinch.js'].branchData['70'][1] = new BranchData();
 }
-_$jscoverage['/touch/pinch.js'].branchData['70'][1].init(14, 21, 'e.touches.length == 2');
+_$jscoverage['/touch/pinch.js'].branchData['70'][1].init(13, 21, 'e.touches.length == 2');
 function visit66_70_1(result) {
   _$jscoverage['/touch/pinch.js'].branchData['70'][1].ranCondition(result);
   return result;
-}_$jscoverage['/touch/pinch.js'].branchData['35'][1].init(277, 15, '!self.isStarted');
+}_$jscoverage['/touch/pinch.js'].branchData['35'][1].init(265, 15, '!self.isStarted');
 function visit65_35_1(result) {
   _$jscoverage['/touch/pinch.js'].branchData['35'][1].ranCondition(result);
   return result;
-}_$jscoverage['/touch/pinch.js'].branchData['26'][1].init(50, 16, '!self.isTracking');
+}_$jscoverage['/touch/pinch.js'].branchData['26'][1].init(47, 16, '!self.isTracking');
 function visit64_26_1(result) {
   _$jscoverage['/touch/pinch.js'].branchData['26'][1].ranCondition(result);
   return result;

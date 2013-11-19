@@ -251,7 +251,7 @@ if (! _$jscoverage['/touch/single-touch.js'].branchData) {
   _$jscoverage['/touch/single-touch.js'].branchData['16'] = [];
   _$jscoverage['/touch/single-touch.js'].branchData['16'][1] = new BranchData();
 }
-_$jscoverage['/touch/single-touch.js'].branchData['16'][1].init(74, 43, 'e.touches.length != self.requiredTouchCount');
+_$jscoverage['/touch/single-touch.js'].branchData['16'][1].init(71, 43, 'e.touches.length != self.requiredTouchCount');
 function visit73_16_1(result) {
   _$jscoverage['/touch/single-touch.js'].branchData['16'][1].ranCondition(result);
   return result;

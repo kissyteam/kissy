@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40
 MIT Licensed
-build time: Oct 31 11:06
+build time: Nov 19 23:58
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -627,20 +627,7 @@ KISSY.add('event/dom/touch/tap-hold', function (S, eventHandleMap, SingleTouch, 
         }
     });
 
-    function prevent(e) {
-        if (e.touches.length == 1) {
-            e.preventDefault();
-        }
-    }
-
     eventHandleMap[event] = {
-        setup: function () {
-            // prevent native scroll
-            DomEvent.on(this, 'touchstart', prevent);
-        },
-        tearDown: function () {
-            DomEvent.detach(this, 'touchstart', prevent);
-        },
         handle: new TapHold()
     };
 
@@ -794,15 +781,16 @@ KISSY.add('event/dom/touch/handle', function (S, Dom, eventHandleMap, DomEvent) 
     var DUP_DIST = 25;
 
     if (Features.isTouchEventSupported()) {
-        gestureEndEvent = 'touchend touchcancel mouseup';
-        // allow touch and mouse both!
-        gestureStartEvent = 'touchstart mousedown';
-        gestureMoveEvent = 'touchmove mousemove';
         if (S.UA.ios) {
             // ios mousedown is buggy
             gestureEndEvent = 'touchend touchcancel';
             gestureStartEvent = 'touchstart';
             gestureMoveEvent = 'touchmove';
+        } else {
+            gestureEndEvent = 'touchend touchcancel mouseup';
+            // allow touch and mouse both!
+            gestureStartEvent = 'touchstart mousedown';
+            gestureMoveEvent = 'touchmove mousemove';
         }
     } else if (Features.isMsPointerSupported()) {
         gestureStartEvent = 'MSPointerDown';

@@ -39,20 +39,7 @@ KISSY.add('event/dom/touch/tap-hold', function (S, eventHandleMap, SingleTouch, 
         }
     });
 
-    function prevent(e) {
-        if (e.touches.length == 1) {
-            e.preventDefault();
-        }
-    }
-
     eventHandleMap[event] = {
-        setup: function () {
-            // prevent native scroll
-            DomEvent.on(this, 'touchstart', prevent);
-        },
-        tearDown: function () {
-            DomEvent.detach(this, 'touchstart', prevent);
-        },
         handle: new TapHold()
     };
 

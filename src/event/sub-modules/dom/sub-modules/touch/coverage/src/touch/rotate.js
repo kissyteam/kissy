@@ -294,27 +294,27 @@ if (! _$jscoverage['/touch/rotate.js'].branchData) {
   _$jscoverage['/touch/rotate.js'].branchData['89'] = [];
   _$jscoverage['/touch/rotate.js'].branchData['89'][1] = new BranchData();
 }
-_$jscoverage['/touch/rotate.js'].branchData['89'][1].init(90, 21, 'e.touches.length == 2');
+_$jscoverage['/touch/rotate.js'].branchData['89'][1].init(87, 21, 'e.touches.length == 2');
 function visit72_89_1(result) {
   _$jscoverage['/touch/rotate.js'].branchData['89'][1].ranCondition(result);
   return result;
-}_$jscoverage['/touch/rotate.js'].branchData['52'][1].init(1203, 15, '!self.isStarted');
+}_$jscoverage['/touch/rotate.js'].branchData['52'][1].init(1168, 15, '!self.isStarted');
 function visit71_52_1(result) {
   _$jscoverage['/touch/rotate.js'].branchData['52'][1].ranCondition(result);
   return result;
-}_$jscoverage['/touch/rotate.js'].branchData['44'][1].init(555, 42, 'Math.abs(negativeAngle - lastAngle) < diff');
+}_$jscoverage['/touch/rotate.js'].branchData['44'][1].init(542, 42, 'Math.abs(negativeAngle - lastAngle) < diff');
 function visit70_44_1(result) {
   _$jscoverage['/touch/rotate.js'].branchData['44'][1].ranCondition(result);
   return result;
-}_$jscoverage['/touch/rotate.js'].branchData['40'][1].init(363, 42, 'Math.abs(positiveAngle - lastAngle) < diff');
+}_$jscoverage['/touch/rotate.js'].branchData['40'][1].init(354, 42, 'Math.abs(positiveAngle - lastAngle) < diff');
 function visit69_40_1(result) {
   _$jscoverage['/touch/rotate.js'].branchData['40'][1].ranCondition(result);
   return result;
-}_$jscoverage['/touch/rotate.js'].branchData['31'][1].init(400, 23, 'lastAngle !== undefined');
+}_$jscoverage['/touch/rotate.js'].branchData['31'][1].init(386, 23, 'lastAngle !== undefined');
 function visit68_31_1(result) {
   _$jscoverage['/touch/rotate.js'].branchData['31'][1].ranCondition(result);
   return result;
-}_$jscoverage['/touch/rotate.js'].branchData['20'][1].init(50, 16, '!self.isTracking');
+}_$jscoverage['/touch/rotate.js'].branchData['20'][1].init(47, 16, '!self.isTracking');
 function visit67_20_1(result) {
   _$jscoverage['/touch/rotate.js'].branchData['20'][1].ranCondition(result);
   return result;
