@@ -13,8 +13,7 @@ KISSY.add("tabs/body", function (S, Container, Extension, undefined) {
         bindUI: function () {
             var self = this;
             self.on("afterSelectedPanelIndexChange", function (e) {
-                var showPanel,
-                    children = self.get('children'),
+                var children = self.get('children'),
                     newIndex = e.newVal,
                     hidePanel;
                 if (children[newIndex]) {

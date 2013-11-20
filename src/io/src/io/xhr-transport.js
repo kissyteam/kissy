@@ -15,6 +15,7 @@ KISSY.add(function (S) {
         logger = S.getLogger('s/io'),
         _XDomainRequest = XhrTransportBase._XDomainRequest;
 
+    // express: subdomain offset
     function isSubDomain(hostname) {
         // phonegap does not have doc.domain
         return doc.domain && S.endsWith(hostname, doc.domain);
