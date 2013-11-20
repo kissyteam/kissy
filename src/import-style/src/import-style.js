@@ -13,9 +13,11 @@
      * @member KISSY
      */
     function importStyle(modNames) {
-        if (typeof modNames == 'string') {
-            modNames = modNames.split(',');
-        }
+        var Utils = S.Loader.Utils;
+
+        modNames = Utils.getModNamesAsArray(modNames);
+        modNames = Utils.normalizeModNames(S, modNames);
+
         var cssList = [],
             doc = S.Env.host.document,
             Config = S.Config,

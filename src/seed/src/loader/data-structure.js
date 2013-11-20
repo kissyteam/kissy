@@ -345,6 +345,18 @@
         },
 
         /**
+         * Get module objects required by this module
+         * @return {KISSY.Loader.Module[]}
+         */
+        getRequiredMods: function () {
+            var self = this,
+                runtime = self.runtime;
+            return S.map(self.getNormalizedRequires(), function (r) {
+                return Utils.createModuleInfo(runtime, r);
+            });
+        },
+
+        /**
          * Get module names required by this module
          * @return {String[]}
          */

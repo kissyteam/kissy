@@ -387,7 +387,7 @@ function visit520_133_1(result) {
   _$jscoverage['/meta/modules.js'].lineData[72]++;
   config({
   'date/popup-picker': {
-  requires: ['date/picker', 'component/extension/align', 'component/extension/shim']}});
+  requires: ['date/picker', 'component/extension/shim', 'component/extension/align']}});
   _$jscoverage['/meta/modules.js'].lineData[76]++;
   config({
   'dd': {
