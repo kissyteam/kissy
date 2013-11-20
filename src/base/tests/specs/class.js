@@ -1,5 +1,5 @@
 KISSY.add(function (S, Base) {
-    describe('rich-base', function () {
+    describe('class', function () {
         it('support initializer and destructor', function () {
             var initializerCalled = 0,
                 destructorCalled = 0;
@@ -27,7 +27,6 @@ KISSY.add(function (S, Base) {
         });
 
         it('support extension', function () {
-
             var initializer = [],
                 destructor = [];
 
@@ -71,7 +70,6 @@ KISSY.add(function (S, Base) {
             t.destroy();
 
             expect(destructor).toEqual([3, 2, 1]);
-
         });
 
         it('support plugin config', function () {
@@ -138,7 +136,6 @@ KISSY.add(function (S, Base) {
             expect(destructor).toEqual([1, 2, 3]);
 
         });
-
 
         it('support plug unplug', function () {
 
@@ -327,96 +324,6 @@ KISSY.add(function (S, Base) {
 
         });
 
-        it('support callSuper', function () {
-            var A = Base.extend({
-                m: function (value) {
-                    return 'a' + value;
-                },
-                m2: function (value) {
-                    return 'a' + value;
-                }
-            });
-
-            var B = A.extend({
-                m2: function (value) {
-                    return 'b' + this.callSuper(value);
-                },
-                m: function (value) {
-                    var superFn = S.bind(this.callSuper, arguments.callee, this);
-
-                    // 普通的
-                    var t0 = this.callSuper(value);
-
-                    // 闭包情况下通过 caller 获取 callSuper
-                    var t1 = '';
-                    (function () {
-                        (function () {
-                            (function () {
-                                t1 = superFn(1);
-                            })();
-                        })();
-                    })();
-
-                    // 递归情况下通过提前绑定 arguments.callee 获取 callSuper
-                    var times = 0;
-                    var t2 = '';
-                    (function t() {
-                        if (times++ >= 2) return;
-                        t2 += superFn(2);
-                        t();
-                    })();
-
-                    return t0 + t1 + t2 + 'b' + value;
-                }
-            });
-
-            var C = B.extend({
-                m2: function () {
-                    return 'c' + this.callSuper.apply(this, arguments);
-                }
-            });
-
-            var c = new C();
-            expect(c.m(0)).toEqual('a0a1a2a2b0');
-            expect(c.m2(0)).toBe('cba0');
-        });
-
-        it('support shared proto', function () {
-            var x = {
-                x: function () {
-                    return this.callSuper();
-                }
-            };
-
-            var X = Base.extend({
-                x: function () {
-                    return 'x'
-                }
-            }, {
-                name: 'X'
-            });
-
-            var Y = X.extend(x, {
-                name: 'Y'
-            });
-
-            var Z = Base.extend({
-                x: function () {
-                    return 'z'
-                }
-            }, {
-                name: 'Z'
-            });
-
-            var Y2 = Z.extend(x, {
-                name: 'Y2'
-            });
-
-            expect(new Y().x()).toBe('x');
-            expect(new Y2().x()).toBe('z');
-        });
-
-
         it('_onSet will run by order', function () {
             var order = [];
             var X = Base.extend({
@@ -456,20 +363,7 @@ KISSY.add(function (S, Base) {
 
             expect(order).toEqual([11, 2, 33]);
         });
-
-        it('support inheritedStatics', function () {
-            var t = {};
-            var X = Base.extend({}, {
-                inheritedStatics: {
-                    z: t
-                }
-            });
-            var Z = X.extend();
-            expect(X.z).toBe(t);
-            expect(Z.z).toBe(t);
-        });
     });
-
 }, {
     requires: ['base']
 });

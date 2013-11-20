@@ -24,13 +24,11 @@ KISSY.add(function (S) {
             this._renderedDefer = new Defer();
         },
 
-        createDom: noop,
+        renderUI:noop,
 
-        renderUI: noop,
+        syncUI:noop,
 
-        bindUI: noop,
-
-        syncUI: noop,
+        bindUI:noop,
 
         onRendered: function (fn) {
             return this._renderedDefer.promise.then(fn);

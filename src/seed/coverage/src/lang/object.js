@@ -452,183 +452,183 @@ if (! _$jscoverage['/lang/object.js'].branchData) {
   _$jscoverage['/lang/object.js'].branchData['349'][3] = new BranchData();
 }
 _$jscoverage['/lang/object.js'].branchData['349'][3].init(1062, 15, 'ov || !(p in r)');
-function visit268_349_3(result) {
+function visit269_349_3(result) {
   _$jscoverage['/lang/object.js'].branchData['349'][3].ranCondition(result);
   return result;
 }_$jscoverage['/lang/object.js'].branchData['349'][2].init(1040, 17, 'src !== undefined');
-function visit267_349_2(result) {
+function visit268_349_2(result) {
   _$jscoverage['/lang/object.js'].branchData['349'][2].ranCondition(result);
   return result;
 }_$jscoverage['/lang/object.js'].branchData['349'][1].init(1040, 38, 'src !== undefined && (ov || !(p in r))');
-function visit266_349_1(result) {
+function visit267_349_1(result) {
   _$jscoverage['/lang/object.js'].branchData['349'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/object.js'].branchData['343'][2].init(136, 44, 'S.isArray(target) || S.isPlainObject(target)');
-function visit265_343_2(result) {
+function visit266_343_2(result) {
   _$jscoverage['/lang/object.js'].branchData['343'][2].ranCondition(result);
   return result;
 }_$jscoverage['/lang/object.js'].branchData['343'][1].init(125, 56, 'target && (S.isArray(target) || S.isPlainObject(target))');
-function visit264_343_1(result) {
+function visit265_343_1(result) {
   _$jscoverage['/lang/object.js'].branchData['343'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/object.js'].branchData['338'][1].init(21, 27, 'src[MIX_CIRCULAR_DETECTION]');
-function visit263_338_1(result) {
+function visit264_338_1(result) {
   _$jscoverage['/lang/object.js'].branchData['338'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/object.js'].branchData['337'][3].init(455, 38, 'S.isArray(src) || S.isPlainObject(src)');
-function visit262_337_3(result) {
+function visit263_337_3(result) {
   _$jscoverage['/lang/object.js'].branchData['337'][3].ranCondition(result);
   return result;
 }_$jscoverage['/lang/object.js'].branchData['337'][2].init(447, 47, 'src && (S.isArray(src) || S.isPlainObject(src))');
-function visit261_337_2(result) {
+function visit262_337_2(result) {
   _$jscoverage['/lang/object.js'].branchData['337'][2].ranCondition(result);
   return result;
 }_$jscoverage['/lang/object.js'].branchData['337'][1].init(439, 55, 'deep && src && (S.isArray(src) || S.isPlainObject(src))');
-function visit260_337_1(result) {
+function visit261_337_1(result) {
   _$jscoverage['/lang/object.js'].branchData['337'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/object.js'].branchData['333'][1].init(326, 2, 'wl');
-function visit259_333_1(result) {
+function visit260_333_1(result) {
   _$jscoverage['/lang/object.js'].branchData['333'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/object.js'].branchData['328'][1].init(64, 20, 'target === undefined');
-function visit258_328_1(result) {
+function visit259_328_1(result) {
   _$jscoverage['/lang/object.js'].branchData['328'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/object.js'].branchData['326'][1].init(114, 14, 'target === src');
-function visit257_326_1(result) {
+function visit258_326_1(result) {
   _$jscoverage['/lang/object.js'].branchData['326'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/object.js'].branchData['322'][2].init(73, 17, '!(p in r) || deep');
-function visit256_322_2(result) {
+function visit257_322_2(result) {
   _$jscoverage['/lang/object.js'].branchData['322'][2].ranCondition(result);
   return result;
 }_$jscoverage['/lang/object.js'].branchData['322'][1].init(67, 23, 'ov || !(p in r) || deep');
-function visit255_322_1(result) {
+function visit256_322_1(result) {
   _$jscoverage['/lang/object.js'].branchData['322'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/object.js'].branchData['315'][1].init(16, 18, 'k == \'constructor\'');
-function visit254_315_1(result) {
+function visit255_315_1(result) {
   _$jscoverage['/lang/object.js'].branchData['315'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/object.js'].branchData['305'][1].init(42, 27, 'p != MIX_CIRCULAR_DETECTION');
-function visit253_305_1(result) {
+function visit254_305_1(result) {
   _$jscoverage['/lang/object.js'].branchData['305'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/object.js'].branchData['303'][1].init(297, 7, 'i < len');
-function visit252_303_1(result) {
+function visit253_303_1(result) {
   _$jscoverage['/lang/object.js'].branchData['303'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/object.js'].branchData['289'][1].init(13, 8, '!s || !r');
-function visit251_289_1(result) {
+function visit252_289_1(result) {
   _$jscoverage['/lang/object.js'].branchData['289'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/object.js'].branchData['272'][1].init(35, 12, 'ObjectCreate');
-function visit250_272_1(result) {
+function visit251_272_1(result) {
   _$jscoverage['/lang/object.js'].branchData['272'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/object.js'].branchData['259'][1].init(35, 14, 'o[p[j]] || {}');
-function visit249_259_1(result) {
+function visit250_259_1(result) {
   _$jscoverage['/lang/object.js'].branchData['259'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/object.js'].branchData['258'][2].init(146, 12, 'j < p.length');
-function visit248_258_2(result) {
+function visit249_258_2(result) {
   _$jscoverage['/lang/object.js'].branchData['258'][2].ranCondition(result);
   return result;
 }_$jscoverage['/lang/object.js'].branchData['258'][1].init(119, 16, 'host[p[0]] === o');
-function visit247_258_1(result) {
+function visit248_258_1(result) {
   _$jscoverage['/lang/object.js'].branchData['258'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/object.js'].branchData['255'][1].init(197, 5, 'i < l');
-function visit246_255_1(result) {
+function visit247_255_1(result) {
   _$jscoverage['/lang/object.js'].branchData['255'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/object.js'].branchData['253'][2].init(128, 20, 'args[l - 1] === TRUE');
-function visit245_253_2(result) {
+function visit246_253_2(result) {
   _$jscoverage['/lang/object.js'].branchData['253'][2].ranCondition(result);
   return result;
 }_$jscoverage['/lang/object.js'].branchData['253'][1].init(128, 27, 'args[l - 1] === TRUE && l--');
-function visit244_253_1(result) {
+function visit245_253_1(result) {
   _$jscoverage['/lang/object.js'].branchData['253'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/object.js'].branchData['228'][1].init(567, 2, 'sx');
-function visit243_228_1(result) {
+function visit244_228_1(result) {
   _$jscoverage['/lang/object.js'].branchData['228'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/object.js'].branchData['223'][1].init(463, 2, 'px');
-function visit242_223_1(result) {
+function visit243_223_1(result) {
   _$jscoverage['/lang/object.js'].branchData['223'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/object.js'].branchData['206'][1].init(17, 8, '!s || !r');
-function visit241_206_1(result) {
+function visit242_206_1(result) {
   _$jscoverage['/lang/object.js'].branchData['206'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/object.js'].branchData['185'][1].init(52, 21, 'proto = arg.prototype');
-function visit240_185_1(result) {
+function visit241_185_1(result) {
   _$jscoverage['/lang/object.js'].branchData['185'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/object.js'].branchData['183'][1].init(483, 7, 'i < len');
-function visit239_183_1(result) {
+function visit240_183_1(result) {
   _$jscoverage['/lang/object.js'].branchData['183'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/object.js'].branchData['178'][1].init(367, 23, 'typeof ov !== \'boolean\'');
-function visit238_178_1(result) {
+function visit239_178_1(result) {
   _$jscoverage['/lang/object.js'].branchData['178'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/object.js'].branchData['173'][1].init(239, 14, '!S.isArray(wl)');
-function visit237_173_1(result) {
+function visit238_173_1(result) {
   _$jscoverage['/lang/object.js'].branchData['173'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/object.js'].branchData['149'][1].init(152, 5, 'i < l');
-function visit236_149_1(result) {
+function visit237_149_1(result) {
   _$jscoverage['/lang/object.js'].branchData['149'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/object.js'].branchData['121'][1].init(517, 16, 'ov === undefined');
-function visit235_121_1(result) {
+function visit236_121_1(result) {
   _$jscoverage['/lang/object.js'].branchData['121'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/object.js'].branchData['114'][2].init(283, 24, 'typeof wl !== \'function\'');
-function visit234_114_2(result) {
+function visit235_114_2(result) {
   _$jscoverage['/lang/object.js'].branchData['114'][2].ranCondition(result);
   return result;
 }_$jscoverage['/lang/object.js'].branchData['114'][1].init(276, 32, 'wl && (typeof wl !== \'function\')');
-function visit233_114_1(result) {
+function visit234_114_1(result) {
   _$jscoverage['/lang/object.js'].branchData['114'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/object.js'].branchData['105'][1].init(17, 22, 'typeof ov === \'object\'');
-function visit232_105_1(result) {
+function visit233_105_1(result) {
   _$jscoverage['/lang/object.js'].branchData['105'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/object.js'].branchData['73'][1].init(68, 19, 'o.hasOwnProperty(p)');
-function visit231_73_1(result) {
+function visit232_73_1(result) {
   _$jscoverage['/lang/object.js'].branchData['73'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/object.js'].branchData['71'][1].init(53, 6, 'i >= 0');
-function visit230_71_1(result) {
+function visit231_71_1(result) {
   _$jscoverage['/lang/object.js'].branchData['71'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/object.js'].branchData['70'][1].init(228, 10, 'hasEnumBug');
-function visit229_70_1(result) {
+function visit230_70_1(result) {
   _$jscoverage['/lang/object.js'].branchData['70'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/object.js'].branchData['65'][1].init(57, 19, 'o.hasOwnProperty(p)');
-function visit228_65_1(result) {
+function visit229_65_1(result) {
   _$jscoverage['/lang/object.js'].branchData['65'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/object.js'].branchData['60'][1].init(975, 556, 'Obj.keys || function(o) {\n  var result = [], p, i;\n  for (p in o) {\n    if (o.hasOwnProperty(p)) {\n      result.push(p);\n    }\n  }\n  if (hasEnumBug) {\n    for (i = enumProperties.length - 1; i >= 0; i--) {\n      p = enumProperties[i];\n      if (o.hasOwnProperty(p)) {\n        result.push(p);\n      }\n    }\n  }\n  return result;\n}');
-function visit227_60_1(result) {
+function visit228_60_1(result) {
   _$jscoverage['/lang/object.js'].branchData['60'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/object.js'].branchData['42'][1].init(157, 9, '!readOnly');
-function visit226_42_1(result) {
+function visit227_42_1(result) {
   _$jscoverage['/lang/object.js'].branchData['42'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/object.js'].branchData['40'][1].init(96, 4, 'guid');
-function visit225_40_1(result) {
+function visit226_40_1(result) {
   _$jscoverage['/lang/object.js'].branchData['40'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/object.js'].branchData['38'][1].init(22, 22, 'marker || STAMP_MARKER');
-function visit224_38_1(result) {
+function visit225_38_1(result) {
   _$jscoverage['/lang/object.js'].branchData['38'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/object.js'].lineData[7]++;
@@ -642,16 +642,16 @@ function visit224_38_1(result) {
   stamp: function(o, readOnly, marker) {
   _$jscoverage['/lang/object.js'].functionData[1]++;
   _$jscoverage['/lang/object.js'].lineData[38]++;
-  marker = visit224_38_1(marker || STAMP_MARKER);
+  marker = visit225_38_1(marker || STAMP_MARKER);
   _$jscoverage['/lang/object.js'].lineData[39]++;
   var guid = o[marker];
   _$jscoverage['/lang/object.js'].lineData[40]++;
-  if (visit225_40_1(guid)) {
+  if (visit226_40_1(guid)) {
     _$jscoverage['/lang/object.js'].lineData[41]++;
     return guid;
   } else {
     _$jscoverage['/lang/object.js'].lineData[42]++;
-    if (visit226_42_1(!readOnly)) {
+    if (visit227_42_1(!readOnly)) {
       _$jscoverage['/lang/object.js'].lineData[43]++;
       try {
         _$jscoverage['/lang/object.js'].lineData[44]++;
@@ -665,26 +665,26 @@ function visit224_38_1(result) {
   _$jscoverage['/lang/object.js'].lineData[50]++;
   return guid;
 }, 
-  keys: visit227_60_1(Obj.keys || function(o) {
+  keys: visit228_60_1(Obj.keys || function(o) {
   _$jscoverage['/lang/object.js'].functionData[2]++;
   _$jscoverage['/lang/object.js'].lineData[61]++;
   var result = [], p, i;
   _$jscoverage['/lang/object.js'].lineData[63]++;
   for (p in o) {
     _$jscoverage['/lang/object.js'].lineData[65]++;
-    if (visit228_65_1(o.hasOwnProperty(p))) {
+    if (visit229_65_1(o.hasOwnProperty(p))) {
       _$jscoverage['/lang/object.js'].lineData[66]++;
       result.push(p);
     }
   }
   _$jscoverage['/lang/object.js'].lineData[70]++;
-  if (visit229_70_1(hasEnumBug)) {
+  if (visit230_70_1(hasEnumBug)) {
     _$jscoverage['/lang/object.js'].lineData[71]++;
-    for (i = enumProperties.length - 1; visit230_71_1(i >= 0); i--) {
+    for (i = enumProperties.length - 1; visit231_71_1(i >= 0); i--) {
       _$jscoverage['/lang/object.js'].lineData[72]++;
       p = enumProperties[i];
       _$jscoverage['/lang/object.js'].lineData[73]++;
-      if (visit231_73_1(o.hasOwnProperty(p))) {
+      if (visit232_73_1(o.hasOwnProperty(p))) {
         _$jscoverage['/lang/object.js'].lineData[74]++;
         result.push(p);
       }
@@ -696,7 +696,7 @@ function visit224_38_1(result) {
   mix: function(r, s, ov, wl, deep) {
   _$jscoverage['/lang/object.js'].functionData[3]++;
   _$jscoverage['/lang/object.js'].lineData[105]++;
-  if (visit232_105_1(typeof ov === 'object')) {
+  if (visit233_105_1(typeof ov === 'object')) {
     _$jscoverage['/lang/object.js'].lineData[106]++;
     wl = ov['whitelist'];
     _$jscoverage['/lang/object.js'].lineData[110]++;
@@ -705,7 +705,7 @@ function visit224_38_1(result) {
     ov = ov['overwrite'];
   }
   _$jscoverage['/lang/object.js'].lineData[114]++;
-  if (visit233_114_1(wl && (visit234_114_2(typeof wl !== 'function')))) {
+  if (visit234_114_1(wl && (visit235_114_2(typeof wl !== 'function')))) {
     _$jscoverage['/lang/object.js'].lineData[115]++;
     var originalWl = wl;
     _$jscoverage['/lang/object.js'].lineData[116]++;
@@ -716,7 +716,7 @@ function visit224_38_1(result) {
 };
   }
   _$jscoverage['/lang/object.js'].lineData[121]++;
-  if (visit235_121_1(ov === undefined)) {
+  if (visit236_121_1(ov === undefined)) {
     _$jscoverage['/lang/object.js'].lineData[122]++;
     ov = TRUE;
   }
@@ -739,7 +739,7 @@ function visit224_38_1(result) {
   _$jscoverage['/lang/object.js'].lineData[146]++;
   var o = {}, i, l = var_args.length;
   _$jscoverage['/lang/object.js'].lineData[149]++;
-  for (i = 0; visit236_149_1(i < l); i++) {
+  for (i = 0; visit237_149_1(i < l); i++) {
     _$jscoverage['/lang/object.js'].lineData[150]++;
     S.mix(o, var_args[i]);
   }
@@ -751,7 +751,7 @@ function visit224_38_1(result) {
   _$jscoverage['/lang/object.js'].lineData[165]++;
   var args = S.makeArray(arguments), len = args.length - 2, i = 1, proto, arg, ov = args[len], wl = args[len + 1];
   _$jscoverage['/lang/object.js'].lineData[173]++;
-  if (visit237_173_1(!S.isArray(wl))) {
+  if (visit238_173_1(!S.isArray(wl))) {
     _$jscoverage['/lang/object.js'].lineData[174]++;
     ov = wl;
     _$jscoverage['/lang/object.js'].lineData[175]++;
@@ -760,18 +760,18 @@ function visit224_38_1(result) {
     len++;
   }
   _$jscoverage['/lang/object.js'].lineData[178]++;
-  if (visit238_178_1(typeof ov !== 'boolean')) {
+  if (visit239_178_1(typeof ov !== 'boolean')) {
     _$jscoverage['/lang/object.js'].lineData[179]++;
     ov = undefined;
     _$jscoverage['/lang/object.js'].lineData[180]++;
     len++;
   }
   _$jscoverage['/lang/object.js'].lineData[183]++;
-  for (; visit239_183_1(i < len); i++) {
+  for (; visit240_183_1(i < len); i++) {
     _$jscoverage['/lang/object.js'].lineData[184]++;
     arg = args[i];
     _$jscoverage['/lang/object.js'].lineData[185]++;
-    if (visit240_185_1(proto = arg.prototype)) {
+    if (visit241_185_1(proto = arg.prototype)) {
       _$jscoverage['/lang/object.js'].lineData[186]++;
       arg = S.mix({}, proto, true, removeConstructor);
     }
@@ -784,7 +784,7 @@ function visit224_38_1(result) {
   extend: function(r, s, px, sx) {
   _$jscoverage['/lang/object.js'].functionData[7]++;
   _$jscoverage['/lang/object.js'].lineData[206]++;
-  if (visit241_206_1(!s || !r)) {
+  if (visit242_206_1(!s || !r)) {
     _$jscoverage['/lang/object.js'].lineData[207]++;
     return r;
   }
@@ -799,12 +799,12 @@ function visit224_38_1(result) {
   _$jscoverage['/lang/object.js'].lineData[220]++;
   r.superclass = sp;
   _$jscoverage['/lang/object.js'].lineData[223]++;
-  if (visit242_223_1(px)) {
+  if (visit243_223_1(px)) {
     _$jscoverage['/lang/object.js'].lineData[224]++;
     S.mix(rp, px);
   }
   _$jscoverage['/lang/object.js'].lineData[228]++;
-  if (visit243_228_1(sx)) {
+  if (visit244_228_1(sx)) {
     _$jscoverage['/lang/object.js'].lineData[229]++;
     S.mix(r, sx);
   }
@@ -814,17 +814,17 @@ function visit224_38_1(result) {
   namespace: function() {
   _$jscoverage['/lang/object.js'].functionData[8]++;
   _$jscoverage['/lang/object.js'].lineData[250]++;
-  var args = S.makeArray(arguments), l = args.length, o = null, i, j, p, global = (visit244_253_1(visit245_253_2(args[l - 1] === TRUE) && l--));
+  var args = S.makeArray(arguments), l = args.length, o = null, i, j, p, global = (visit245_253_1(visit246_253_2(args[l - 1] === TRUE) && l--));
   _$jscoverage['/lang/object.js'].lineData[255]++;
-  for (i = 0; visit246_255_1(i < l); i++) {
+  for (i = 0; visit247_255_1(i < l); i++) {
     _$jscoverage['/lang/object.js'].lineData[256]++;
     p = (EMPTY + args[i]).split('.');
     _$jscoverage['/lang/object.js'].lineData[257]++;
     o = global ? host : this;
     _$jscoverage['/lang/object.js'].lineData[258]++;
-    for (j = (visit247_258_1(host[p[0]] === o)) ? 1 : 0; visit248_258_2(j < p.length); ++j) {
+    for (j = (visit248_258_1(host[p[0]] === o)) ? 1 : 0; visit249_258_2(j < p.length); ++j) {
       _$jscoverage['/lang/object.js'].lineData[259]++;
-      o = o[p[j]] = visit249_259_1(o[p[j]] || {});
+      o = o[p[j]] = visit250_259_1(o[p[j]] || {});
     }
   }
   _$jscoverage['/lang/object.js'].lineData[262]++;
@@ -840,7 +840,7 @@ function visit224_38_1(result) {
     _$jscoverage['/lang/object.js'].lineData[271]++;
     var newProto;
     _$jscoverage['/lang/object.js'].lineData[272]++;
-    if (visit250_272_1(ObjectCreate)) {
+    if (visit251_272_1(ObjectCreate)) {
       _$jscoverage['/lang/object.js'].lineData[273]++;
       newProto = ObjectCreate(proto);
     } else {
@@ -867,7 +867,7 @@ function visit224_38_1(result) {
   function mixInternal(r, s, ov, wl, deep, cache) {
     _$jscoverage['/lang/object.js'].functionData[12]++;
     _$jscoverage['/lang/object.js'].lineData[289]++;
-    if (visit251_289_1(!s || !r)) {
+    if (visit252_289_1(!s || !r)) {
       _$jscoverage['/lang/object.js'].lineData[290]++;
       return r;
     }
@@ -882,11 +882,11 @@ function visit224_38_1(result) {
     _$jscoverage['/lang/object.js'].lineData[302]++;
     len = keys.length;
     _$jscoverage['/lang/object.js'].lineData[303]++;
-    for (i = 0; visit252_303_1(i < len); i++) {
+    for (i = 0; visit253_303_1(i < len); i++) {
       _$jscoverage['/lang/object.js'].lineData[304]++;
       p = keys[i];
       _$jscoverage['/lang/object.js'].lineData[305]++;
-      if (visit253_305_1(p != MIX_CIRCULAR_DETECTION)) {
+      if (visit254_305_1(p != MIX_CIRCULAR_DETECTION)) {
         _$jscoverage['/lang/object.js'].lineData[307]++;
         _mix(p, r, s, ov, wl, deep, cache);
       }
@@ -898,19 +898,19 @@ function visit224_38_1(result) {
   function removeConstructor(k, v) {
     _$jscoverage['/lang/object.js'].functionData[13]++;
     _$jscoverage['/lang/object.js'].lineData[315]++;
-    return visit254_315_1(k == 'constructor') ? undefined : v;
+    return visit255_315_1(k == 'constructor') ? undefined : v;
   }
   _$jscoverage['/lang/object.js'].lineData[318]++;
   function _mix(p, r, s, ov, wl, deep, cache) {
     _$jscoverage['/lang/object.js'].functionData[14]++;
     _$jscoverage['/lang/object.js'].lineData[322]++;
-    if (visit255_322_1(ov || visit256_322_2(!(p in r) || deep))) {
+    if (visit256_322_1(ov || visit257_322_2(!(p in r) || deep))) {
       _$jscoverage['/lang/object.js'].lineData[323]++;
       var target = r[p], src = s[p];
       _$jscoverage['/lang/object.js'].lineData[326]++;
-      if (visit257_326_1(target === src)) {
+      if (visit258_326_1(target === src)) {
         _$jscoverage['/lang/object.js'].lineData[328]++;
-        if (visit258_328_1(target === undefined)) {
+        if (visit259_328_1(target === undefined)) {
           _$jscoverage['/lang/object.js'].lineData[329]++;
           r[p] = target;
         }
@@ -918,19 +918,19 @@ function visit224_38_1(result) {
         return;
       }
       _$jscoverage['/lang/object.js'].lineData[333]++;
-      if (visit259_333_1(wl)) {
+      if (visit260_333_1(wl)) {
         _$jscoverage['/lang/object.js'].lineData[334]++;
         src = wl.call(s, p, src);
       }
       _$jscoverage['/lang/object.js'].lineData[337]++;
-      if (visit260_337_1(deep && visit261_337_2(src && (visit262_337_3(S.isArray(src) || S.isPlainObject(src)))))) {
+      if (visit261_337_1(deep && visit262_337_2(src && (visit263_337_3(S.isArray(src) || S.isPlainObject(src)))))) {
         _$jscoverage['/lang/object.js'].lineData[338]++;
-        if (visit263_338_1(src[MIX_CIRCULAR_DETECTION])) {
+        if (visit264_338_1(src[MIX_CIRCULAR_DETECTION])) {
           _$jscoverage['/lang/object.js'].lineData[339]++;
           r[p] = src[MIX_CIRCULAR_DETECTION];
         } else {
           _$jscoverage['/lang/object.js'].lineData[343]++;
-          var clone = visit264_343_1(target && (visit265_343_2(S.isArray(target) || S.isPlainObject(target)))) ? target : (S.isArray(src) ? [] : {});
+          var clone = visit265_343_1(target && (visit266_343_2(S.isArray(target) || S.isPlainObject(target)))) ? target : (S.isArray(src) ? [] : {});
           _$jscoverage['/lang/object.js'].lineData[346]++;
           r[p] = clone;
           _$jscoverage['/lang/object.js'].lineData[347]++;
@@ -938,7 +938,7 @@ function visit224_38_1(result) {
         }
       } else {
         _$jscoverage['/lang/object.js'].lineData[349]++;
-        if (visit266_349_1(visit267_349_2(src !== undefined) && (visit268_349_3(ov || !(p in r))))) {
+        if (visit267_349_1(visit268_349_2(src !== undefined) && (visit269_349_3(ov || !(p in r))))) {
           _$jscoverage['/lang/object.js'].lineData[350]++;
           r[p] = src;
         }

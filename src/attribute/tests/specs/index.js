@@ -1,13 +1,10 @@
 /**
- * @author lifesinger@gmail.com, yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, Attribute) {
     describe('attr', function () {
-
         it('拥有 Attribute 上的方法', function () {
-            var A = function () {
-            };
-            S.augment(A, Attribute);
+            var A = Attribute.extend();
 
             var a = new A();
 
@@ -46,9 +43,7 @@ KISSY.add(function (S, Attribute) {
         });
 
         it('addAttrs works', function () {
-            var A = function () {
-            };
-            S.augment(A, Attribute);
+            var A = Attribute.extend();
 
             var a = new A();
             a.addAttrs({
@@ -62,11 +57,7 @@ KISSY.add(function (S, Attribute) {
             expect(a.get('attr1')).toBe(1);
             expect(a.get('attr2')).toBe(2);
 
-            // 多重继承
-            function B() {
-            }
-
-            S.augment(B, Attribute);
+            var B = Attribute.extend();
 
             var b = new B();
             b.addAttrs({
@@ -85,9 +76,7 @@ KISSY.add(function (S, Attribute) {
         });
 
         it('能正确触发 Attribute 的事件', function () {
-            var A = function () {
-            };
-            S.augment(A, Attribute);
+            var A = Attribute.extend();
 
             var a = new A();
 
@@ -118,9 +107,7 @@ KISSY.add(function (S, Attribute) {
         });
 
         it('can preventDefault beforeChange to prevent set', function () {
-            var A = function () {
-            };
-            S.augment(A, Attribute);
+            var A = Attribute.extend();
 
             var a = new A();
 
@@ -134,10 +121,7 @@ KISSY.add(function (S, Attribute) {
         });
 
         it('can stopImmediatePropagation beforeChange', function () {
-            function A() {
-            }
-
-            S.augment(A, Attribute);
+            var A = Attribute.extend();
 
             var a = new A();
 
@@ -154,10 +138,7 @@ KISSY.add(function (S, Attribute) {
         });
 
         it('transfer default value to value', function () {
-            function A() {
-            }
-
-            S.augment(A, Attribute);
+            var A = Attribute.extend();
 
             var a = new A();
             a.addAttrs({
@@ -178,7 +159,81 @@ KISSY.add(function (S, Attribute) {
 
             expect(a['__attrs']['a'].value).toBe(9);
         });
+
+        it('support callSuper', function () {
+            var A = Attribute.extend({
+                m: function (value) {
+                    return 'a' + value;
+                },
+                m2: function (value) {
+                    return 'a' + value;
+                }
+            });
+
+            var B = A.extend({
+                m2: function (value) {
+                    return 'b' + this.callSuper(value);
+                },
+                m: function (value) {
+                    var superFn = S.bind(this.callSuper, arguments.callee, this);
+
+                    // 普通的
+                    var t0 = this.callSuper(value);
+
+                    // 闭包情况下通过 caller 获取 callSuper
+                    var t1 = '';
+                    (function () {
+                        (function () {
+                            (function () {
+                                t1 = superFn(1);
+                            })();
+                        })();
+                    })();
+
+                    // 递归情况下通过提前绑定 arguments.callee 获取 callSuper
+                    var times = 0;
+                    var t2 = '';
+                    (function t() {
+                        if (times++ >= 2) return;
+                        t2 += superFn(2);
+                        t();
+                    })();
+
+                    return t0 + t1 + t2 + 'b' + value;
+                }
+            });
+
+            var C = B.extend({
+                m2: function () {
+                    return 'c' + this.callSuper.apply(this, arguments);
+                }
+            });
+
+            var c = new C();
+            expect(c.m(0)).toEqual('a0a1a2a2b0');
+            expect(c.m2(0)).toBe('cba0');
+        });
+
+        it('support inheritedStatics', function () {
+            var t = {};
+            var t2 = {};
+            var X = Attribute.extend({}, {
+                inheritedStatics: {
+                    t: t
+                }
+            });
+            var Z = X.extend({}, {
+                inheritedStatics: {
+                    t2: t2
+                }
+            });
+            var Y = Z.extend();
+            expect(X.t).toBe(t);
+            expect(Z.t).toBe(t);
+            expect(Y.t2).toBe(t2);
+            expect(Y.t).toBe(t);
+        });
     });
 }, {
-    requires: ['base']
+    requires: ['attribute']
 });

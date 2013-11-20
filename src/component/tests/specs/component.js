@@ -289,7 +289,9 @@ KISSY.add(function (S,
         });
 
         describe("delegate children works", function () {
-            var MyContainer=Container.extend([DelegateChildrenExtension]);
+            var MyContainer=Container.extend([DelegateChildrenExtension],{},{
+                name:'MyContainer'
+            });
 
             it("should attach its methods", function () {
                 var c = new MyContainer({

@@ -14,7 +14,9 @@
             bound = function () {
                 var inArgs = slice.call(arguments);
                 return fn.apply(
-                    this instanceof fNOP ? this : obj,
+                    this instanceof fNOP ? this :
+                        // fix: y.x=S.bind(fn);
+                        obj||this,
                     (r ? inArgs.concat(args) : args.concat(inArgs))
                 );
             };

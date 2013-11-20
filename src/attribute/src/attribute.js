@@ -5,10 +5,11 @@
  */
 KISSY.add(function (S, undefined) {
     var module = this;
-    var ATTRS = 'ATTRS';
     var RE_DASH = /(?:^|-)([a-z])/ig;
     var CustomEvent = module.require('event/custom');
     module.exports = Attribute;
+
+    var bind = S.bind;
 
     function replaceToUpper() {
         return arguments[1].toUpperCase();
@@ -230,27 +231,92 @@ KISSY.add(function (S, undefined) {
         self.userConfig = config;
         // define
         while (c) {
-            addAttrs(self, c[ATTRS]);
+            addAttrs(self, c.ATTRS);
             c = c.superclass ? c.superclass.constructor : null;
         }
         // initial attr
         initAttrs(self, config);
     }
 
-    Attribute.extend = function (px, sx) {
-        var SubClass;
-        sx = sx || {};
-        var name = sx.name || 'AttributeDerived';
-        if ('@DEBUG@') {
-            eval("SubClass = function " + CamelCase(name) + "(){ " +
-                "SubClass.superclass.constructor.apply(this,arguments);}");
-        } else {
-            SubClass = function () {
-                SubClass.superclass.constructor.apply(this, arguments);
-            };
+    function wrapProtoForSuper(px, SubClass) {
+        var hooks = SubClass.__hooks__ || {};
+        // in case px contains toString
+        for (var p in hooks) {
+            if (p in px) {
+                px[p] = hooks[p](px[p]);
+            }
         }
-        SubClass.extend = this.extend;
-        S.extend(SubClass, this, px, sx);
+        S.each(px, function (v, p) {
+            if (typeof v == 'function') {
+                var wrapped = 0;
+                if (v.__owner__) {
+                    var originalOwner = v.__owner__;
+                    delete v.__owner__;
+                    delete v.__name__;
+                    wrapped = v.__wrapped__ = 1;
+                    var newV = bind(v);
+                    newV.__owner__ = originalOwner;
+                    newV.__name__ = p;
+                    originalOwner.prototype[p] = newV;
+                } else if (v.__wrapped__) {
+                    wrapped = 1;
+                }
+                if (wrapped) {
+                    px[p] = v = bind(v);
+                }
+                v.__owner__ = SubClass;
+                v.__name__ = p;
+            }
+        });
+    }
+
+    function addMembers(px) {
+        var SubClass = this;
+        wrapProtoForSuper(px, SubClass);
+        S.mix(SubClass.prototype, px);
+    }
+
+    Attribute.extend = function extend(px, sx) {
+        var SubClass,
+            SuperClass = this;
+        sx = sx || {};
+        px = px || {};
+        var hooks ,
+            sxHooks = sx.__hooks__;
+        if (hooks = SuperClass.__hooks__) {
+            sxHooks = sx.__hooks__ = sx.__hooks__ || {};
+            S.mix(sxHooks, hooks, false);
+        }
+        var name = sx.name || 'AttributeDerived';
+        if (px.hasOwnProperty('constructor')) {
+            SubClass = px.constructor;
+        } else {
+            // debug mode, give the right name for constructor
+            // refer : http://limu.iteye.com/blog/1136712
+            if ('@DEBUG@') {
+                eval("SubClass = function " + CamelCase(name) + "(){ " +
+                    "this.callSuper.apply(this, arguments);}");
+            } else {
+                SubClass = function () {
+                    this.callSuper.apply(this, arguments);
+                };
+            }
+        }
+        px.constructor = SubClass;
+        SubClass.__hooks__ = sxHooks;
+        wrapProtoForSuper(px, SubClass);
+        var inheritedStatics,
+            sxInheritedStatics = sx.inheritedStatics;
+        if (inheritedStatics = SuperClass.inheritedStatics) {
+            sxInheritedStatics = sx.inheritedStatics = sx.inheritedStatics || {};
+            S.mix(sxInheritedStatics, inheritedStatics, false);
+        }
+        S.extend(SubClass, SuperClass, px, sx);
+        if (sxInheritedStatics) {
+            S.mix(SubClass, sxInheritedStatics);
+        }
+        SubClass.extend = sx.extend || extend;
+        SubClass.addMembers = addMembers;
         return SubClass;
     };
 
@@ -280,6 +346,37 @@ KISSY.add(function (S, undefined) {
 
     S.augment(Attribute, CustomEvent.Target, {
         INVALID: INVALID,
+
+        'callSuper': function () {
+            var method, obj,
+                self = this,
+                args = arguments;
+
+            if (typeof self == 'function' && self.__name__) {
+                method = self;
+                obj = args[0];
+                args = Array.prototype.slice.call(args, 1);
+            } else {
+                method = arguments.callee.caller;
+                if (method.__wrapped__) {
+                    method = method.caller;
+                }
+                obj = self;
+            }
+
+            var name = method.__name__;
+            if (!name) {
+                //S.log('can not find method name for callSuper [' + self.constructor.name + ']: ' + method.toString());
+                return undefined;
+            }
+            var member = method.__owner__.superclass[name];
+            if (!member) {
+                //S.log('can not find method [' + name + '] for callSuper: ' + method.__owner__.name);
+                return undefined;
+            }
+
+            return member.apply(obj, args || []);
+        },
 
         /**
          * get un-cloned attr config collections

@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 19 01:54
+build time: Nov 20 14:34
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -9,18 +9,10 @@ build time: Nov 19 01:54
  base
 */
 
-KISSY.add("base", ["attribute", "event/custom"], function(S) {
+KISSY.add("base", ["attribute"], function(S) {
   var module = this;
   var Attribute = module.require("attribute");
-  var CustomEvent = module.require("event/custom");
-  module.exports = Base;
-  var ATTRS = "ATTRS", ucfirst = S.ucfirst, ON_SET = "_onSet", noop = S.noop, RE_DASH = /(?:^|-)([a-z])/ig;
-  function replaceToUpper() {
-    return arguments[1].toUpperCase()
-  }
-  function CamelCase(name) {
-    return name.replace(RE_DASH, replaceToUpper)
-  }
+  var ucfirst = S.ucfirst, ON_SET = "_onSet", noop = S.noop;
   function __getHook(method, reverse) {
     return function(origFn) {
       return function wrap() {
@@ -43,14 +35,9 @@ KISSY.add("base", ["attribute", "event/custom"], function(S) {
       }
     }
   }
-  function Base(config) {
-    var self = this, c = self.constructor;
-    self.userConfig = config;
-    while(c) {
-      addAttrs(self, c[ATTRS]);
-      c = c.superclass ? c.superclass.constructor : null
-    }
-    initAttrs(self, config);
+  var Base = Attribute.extend({constructor:function() {
+    var self = this;
+    self.callSuper.apply(self, arguments);
     var listeners = self.get("listeners");
     for(var n in listeners) {
       self.on(n, listeners[n])
@@ -60,30 +47,7 @@ KISSY.add("base", ["attribute", "event/custom"], function(S) {
     callPluginsMethod.call(self, "pluginInitializer");
     self.bindInternal();
     self.syncInternal()
-  }
-  S.augment(Base, Attribute, CustomEvent.Target, {initializer:noop, __getHook:__getHook, __callPluginsMethod:callPluginsMethod, callSuper:function() {
-    var method, obj, self = this, args = arguments;
-    if(typeof self == "function" && self.__name__) {
-      method = self;
-      obj = args[0];
-      args = Array.prototype.slice.call(args, 1)
-    }else {
-      method = arguments.callee.caller;
-      if(method.__wrapped__) {
-        method = method.caller
-      }
-      obj = self
-    }
-    var name = method.__name__;
-    if(!name) {
-      return undefined
-    }
-    var member = method.__owner__.superclass[name];
-    if(!member) {
-      return undefined
-    }
-    return member.apply(obj, args || [])
-  }, bindInternal:function() {
+  }, initializer:noop, __getHook:__getHook, __callPluginsMethod:callPluginsMethod, bindInternal:function() {
     var self = this, attrs = self["getAttrs"](), attr, m;
     for(attr in attrs) {
       m = ON_SET + ucfirst(attr);
@@ -166,48 +130,21 @@ KISSY.add("base", ["attribute", "event/custom"], function(S) {
     }
   }});
   S.mix(Base, {__hooks__:{initializer:__getHook(), destructor:__getHook("__destructor", true)}, ATTRS:{plugins:{value:[]}, destroyed:{value:false}, listeners:{value:[]}}, extend:function extend(extensions, px, sx) {
-    var SuperClass = this, name, SubClass;
     if(!S.isArray(extensions)) {
       sx = px;
       px = extensions;
       extensions = []
     }
     sx = sx || {};
-    name = sx.name || "BaseDerived";
-    px = S.merge(px);
-    if(px.hasOwnProperty("constructor")) {
-      SubClass = px.constructor
-    }else {
-      if("@DEBUG@") {
-        eval("SubClass = function " + CamelCase(name) + "(){ " + "this.callSuper.apply(this, arguments);}")
-      }else {
-        SubClass = function() {
-          this.callSuper.apply(this, arguments)
-        }
-      }
-    }
-    px.constructor = SubClass;
-    var hooks = SuperClass.__hooks__;
-    if(hooks) {
-      sx.__hooks__ = S.merge(hooks, sx.__hooks__)
-    }
+    px = px || {};
+    var SubClass = Attribute.extend.call(this, px, sx);
     SubClass.__extensions__ = extensions;
-    wrapProtoForSuper(px, SubClass, sx.__hooks__ || {});
-    var sp = SuperClass.prototype;
-    var inheritedStatics = sp["__inheritedStatics__"] = sp["__inheritedStatics__"] || sx["inheritedStatics"];
-    if(sx["inheritedStatics"] && inheritedStatics !== sx["inheritedStatics"]) {
-      S.mix(inheritedStatics, sx["inheritedStatics"])
-    }
-    if(inheritedStatics) {
-      S.mix(SubClass, inheritedStatics)
-    }
-    delete sx["inheritedStatics"];
-    S.extend(SubClass, SuperClass, px, sx);
+    baseAddMembers.call(SubClass, {});
     if(extensions.length) {
       var attrs = {}, prototype = {};
       S.each(extensions["concat"](SubClass), function(ext) {
         if(ext) {
-          S.each(ext[ATTRS], function(v, name) {
+          S.each(ext.ATTRS, function(v, name) {
             var av = attrs[name] = attrs[name] || {};
             S.mix(av, v)
           });
@@ -219,18 +156,27 @@ KISSY.add("base", ["attribute", "event/custom"], function(S) {
           }
         }
       });
-      SubClass[ATTRS] = attrs;
+      SubClass.ATTRS = attrs;
       prototype.constructor = SubClass;
       S.augment(SubClass, prototype)
     }
-    SubClass.extend = SubClass.extend || extend;
-    SubClass.addMembers = addMembers;
+    SubClass.extend = sx.extend || extend;
+    SubClass.addMembers = baseAddMembers;
     return SubClass
   }});
-  function addMembers(px) {
+  var addMembers = Base.addMembers;
+  function baseAddMembers(px) {
     var SubClass = this;
-    wrapProtoForSuper(px, SubClass, SubClass.__hooks__ || {});
-    S.mix(SubClass.prototype, px)
+    var extensions = SubClass.__extensions__, hooks = SubClass.__hooks__, proto = SubClass.prototype;
+    if(extensions.length && hooks) {
+      for(var h in hooks) {
+        if(proto.hasOwnProperty(h) && !px.hasOwnProperty(h)) {
+          continue
+        }
+        px[h] = px[h] || noop
+      }
+    }
+    return addMembers.call(SubClass, px)
   }
   function onSetAttrChange(e) {
     var self = this, method;
@@ -239,67 +185,11 @@ KISSY.add("base", ["attribute", "event/custom"], function(S) {
       method.call(self, e.newVal, e)
     }
   }
-  function addAttrs(host, attrs) {
-    if(attrs) {
-      for(var attr in attrs) {
-        host.addAttr(attr, attrs[attr], false)
-      }
-    }
-  }
-  function initAttrs(host, config) {
-    if(config) {
-      for(var attr in config) {
-        host.setInternal(attr, config[attr])
-      }
-    }
-  }
   function constructPlugins(self) {
     var plugins = self.get("plugins");
     S.each(plugins, function(plugin, i) {
       if(typeof plugin === "function") {
         plugins[i] = new plugin
-      }
-    })
-  }
-  function wrapper(fn) {
-    return function() {
-      return fn.apply(this, arguments)
-    }
-  }
-  function wrapProtoForSuper(px, SubClass, hooks) {
-    var extensions = SubClass.__extensions__;
-    if(extensions.length) {
-      for(p in hooks) {
-        px[p] = px[p] || noop
-      }
-    }
-    for(var p in hooks) {
-      if(p in px) {
-        px[p] = hooks[p](px[p])
-      }
-    }
-    S.each(px, function(v, p) {
-      if(typeof v == "function") {
-        var wrapped = 0;
-        if(v.__owner__) {
-          var originalOwner = v.__owner__;
-          delete v.__owner__;
-          delete v.__name__;
-          wrapped = v.__wrapped__ = 1;
-          var newV = wrapper(v);
-          newV.__owner__ = originalOwner;
-          newV.__name__ = p;
-          originalOwner.prototype[p] = newV
-        }else {
-          if(v.__wrapped__) {
-            wrapped = 1
-          }
-        }
-        if(wrapped) {
-          px[p] = v = wrapper(v)
-        }
-        v.__owner__ = SubClass;
-        v.__name__ = p
       }
     })
   }
@@ -322,5 +212,6 @@ KISSY.add("base", ["attribute", "event/custom"], function(S) {
       }
     }
   }
+  return Base
 });
 

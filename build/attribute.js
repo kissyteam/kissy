@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 19 01:41
+build time: Nov 20 14:34
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -9,7 +9,18 @@ build time: Nov 19 01:41
  attribute
 */
 
-KISSY.add("attribute", [], function(S, undefined) {
+KISSY.add("attribute", ["event/custom"], function(S, undefined) {
+  var module = this;
+  var RE_DASH = /(?:^|-)([a-z])/ig;
+  var CustomEvent = module.require("event/custom");
+  module.exports = Attribute;
+  var bind = S.bind;
+  function replaceToUpper() {
+    return arguments[1].toUpperCase()
+  }
+  function CamelCase(name) {
+    return name.replace(RE_DASH, replaceToUpper)
+  }
   var INVALID = {};
   var FALSE = false;
   function normalFn(host, method) {
@@ -135,7 +146,126 @@ KISSY.add("attribute", [], function(S, undefined) {
     }
     return undefined
   }
-  return{INVALID:INVALID, getAttrs:function() {
+  function Attribute(config) {
+    var self = this, c = self.constructor;
+    self.userConfig = config;
+    while(c) {
+      addAttrs(self, c.ATTRS);
+      c = c.superclass ? c.superclass.constructor : null
+    }
+    initAttrs(self, config)
+  }
+  function wrapProtoForSuper(px, SubClass) {
+    var hooks = SubClass.__hooks__ || {};
+    for(var p in hooks) {
+      if(p in px) {
+        px[p] = hooks[p](px[p])
+      }
+    }
+    S.each(px, function(v, p) {
+      if(typeof v == "function") {
+        var wrapped = 0;
+        if(v.__owner__) {
+          var originalOwner = v.__owner__;
+          delete v.__owner__;
+          delete v.__name__;
+          wrapped = v.__wrapped__ = 1;
+          var newV = bind(v);
+          newV.__owner__ = originalOwner;
+          newV.__name__ = p;
+          originalOwner.prototype[p] = newV
+        }else {
+          if(v.__wrapped__) {
+            wrapped = 1
+          }
+        }
+        if(wrapped) {
+          px[p] = v = bind(v)
+        }
+        v.__owner__ = SubClass;
+        v.__name__ = p
+      }
+    })
+  }
+  function addMembers(px) {
+    var SubClass = this;
+    wrapProtoForSuper(px, SubClass);
+    S.mix(SubClass.prototype, px)
+  }
+  Attribute.extend = function extend(px, sx) {
+    var SubClass, SuperClass = this;
+    sx = sx || {};
+    px = px || {};
+    var hooks, sxHooks = sx.__hooks__;
+    if(hooks = SuperClass.__hooks__) {
+      sxHooks = sx.__hooks__ = sx.__hooks__ || {};
+      S.mix(sxHooks, hooks, false)
+    }
+    var name = sx.name || "AttributeDerived";
+    if(px.hasOwnProperty("constructor")) {
+      SubClass = px.constructor
+    }else {
+      if("@DEBUG@") {
+        eval("SubClass = function " + CamelCase(name) + "(){ " + "this.callSuper.apply(this, arguments);}")
+      }else {
+        SubClass = function() {
+          this.callSuper.apply(this, arguments)
+        }
+      }
+    }
+    px.constructor = SubClass;
+    SubClass.__hooks__ = sxHooks;
+    wrapProtoForSuper(px, SubClass);
+    var inheritedStatics, sxInheritedStatics = sx.inheritedStatics;
+    if(inheritedStatics = SuperClass.inheritedStatics) {
+      sxInheritedStatics = sx.inheritedStatics = sx.inheritedStatics || {};
+      S.mix(sxInheritedStatics, inheritedStatics, false)
+    }
+    S.extend(SubClass, SuperClass, px, sx);
+    if(sxInheritedStatics) {
+      S.mix(SubClass, sxInheritedStatics)
+    }
+    SubClass.extend = sx.extend || extend;
+    SubClass.addMembers = addMembers;
+    return SubClass
+  };
+  function addAttrs(host, attrs) {
+    if(attrs) {
+      for(var attr in attrs) {
+        host.addAttr(attr, attrs[attr], false)
+      }
+    }
+  }
+  function initAttrs(host, config) {
+    if(config) {
+      for(var attr in config) {
+        host.setInternal(attr, config[attr])
+      }
+    }
+  }
+  S.augment(Attribute, CustomEvent.Target, {INVALID:INVALID, callSuper:function() {
+    var method, obj, self = this, args = arguments;
+    if(typeof self == "function" && self.__name__) {
+      method = self;
+      obj = args[0];
+      args = Array.prototype.slice.call(args, 1)
+    }else {
+      method = arguments.callee.caller;
+      if(method.__wrapped__) {
+        method = method.caller
+      }
+      obj = self
+    }
+    var name = method.__name__;
+    if(!name) {
+      return undefined
+    }
+    var member = method.__owner__.superclass[name];
+    if(!member) {
+      return undefined
+    }
+    return member.apply(obj, args || [])
+  }, getAttrs:function() {
     return this.__attrs || (this.__attrs = {})
   }, getAttrVals:function() {
     var self = this, o = {}, a, attrs = self.getAttrs();
@@ -260,7 +390,7 @@ KISSY.add("attribute", [], function(S, undefined) {
     }
     self.set(values, opts);
     return self
-  }};
+  }});
   function getDefAttrVal(self, name) {
     var attrs = self.getAttrs(), attrConfig = ensureNonEmpty(attrs, name, 1), valFn = attrConfig.valueFn, val;
     if(valFn && (valFn = normalFn(self, valFn))) {

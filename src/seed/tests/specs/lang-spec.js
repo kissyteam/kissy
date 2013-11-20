@@ -562,8 +562,6 @@ describe('lang.js', function () {
     });
 
     it("S.bind", function () {
-
-
         function x() {
             expect(this).toBe(window);
         }
@@ -603,6 +601,15 @@ describe('lang.js', function () {
         if (z.bind) {
             z.bind(context, 1, 2)(3);
         }
+    });
+
+    it('S.bind can be assigned to instance',function(){
+        var y={};
+       var x= S.bind(function(){
+           expect(this).toBe(y);
+       });
+        y.x=x;
+        y.x();
     });
 
     it("S.rbind", function () {
