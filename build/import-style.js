@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40
 MIT Licensed
-build time: Sep 17 23:08
+build time: Nov 20 15:49
 */
 /**
  * use document.write to load external css files in block loading ways.
@@ -18,9 +18,11 @@ build time: Sep 17 23:08
      * @member KISSY
      */
     function importStyle(modNames) {
-        if (typeof modNames == 'string') {
-            modNames = modNames.split(',');
-        }
+        var Utils = S.Loader.Utils;
+
+        modNames = Utils.getModNamesAsArray(modNames);
+        modNames = Utils.normalizeModNames(S, modNames);
+
         var cssList = [],
             doc = S.Env.host.document,
             Config = S.Config,

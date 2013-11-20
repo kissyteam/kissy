@@ -233,68 +233,69 @@ if (! _$jscoverage['/import-style.js']) {
   _$jscoverage['/import-style.js'].lineData[8] = 0;
   _$jscoverage['/import-style.js'].lineData[15] = 0;
   _$jscoverage['/import-style.js'].lineData[16] = 0;
-  _$jscoverage['/import-style.js'].lineData[17] = 0;
+  _$jscoverage['/import-style.js'].lineData[18] = 0;
   _$jscoverage['/import-style.js'].lineData[19] = 0;
-  _$jscoverage['/import-style.js'].lineData[26] = 0;
-  _$jscoverage['/import-style.js'].lineData[27] = 0;
+  _$jscoverage['/import-style.js'].lineData[21] = 0;
   _$jscoverage['/import-style.js'].lineData[28] = 0;
   _$jscoverage['/import-style.js'].lineData[29] = 0;
+  _$jscoverage['/import-style.js'].lineData[30] = 0;
   _$jscoverage['/import-style.js'].lineData[31] = 0;
-  _$jscoverage['/import-style.js'].lineData[32] = 0;
   _$jscoverage['/import-style.js'].lineData[33] = 0;
-  _$jscoverage['/import-style.js'].lineData[37] = 0;
-  _$jscoverage['/import-style.js'].lineData[38] = 0;
+  _$jscoverage['/import-style.js'].lineData[34] = 0;
+  _$jscoverage['/import-style.js'].lineData[35] = 0;
   _$jscoverage['/import-style.js'].lineData[39] = 0;
   _$jscoverage['/import-style.js'].lineData[40] = 0;
   _$jscoverage['/import-style.js'].lineData[41] = 0;
   _$jscoverage['/import-style.js'].lineData[42] = 0;
   _$jscoverage['/import-style.js'].lineData[43] = 0;
   _$jscoverage['/import-style.js'].lineData[44] = 0;
+  _$jscoverage['/import-style.js'].lineData[45] = 0;
   _$jscoverage['/import-style.js'].lineData[46] = 0;
-  _$jscoverage['/import-style.js'].lineData[47] = 0;
   _$jscoverage['/import-style.js'].lineData[48] = 0;
   _$jscoverage['/import-style.js'].lineData[49] = 0;
+  _$jscoverage['/import-style.js'].lineData[50] = 0;
   _$jscoverage['/import-style.js'].lineData[51] = 0;
-  _$jscoverage['/import-style.js'].lineData[52] = 0;
   _$jscoverage['/import-style.js'].lineData[53] = 0;
   _$jscoverage['/import-style.js'].lineData[54] = 0;
   _$jscoverage['/import-style.js'].lineData[55] = 0;
   _$jscoverage['/import-style.js'].lineData[56] = 0;
+  _$jscoverage['/import-style.js'].lineData[57] = 0;
   _$jscoverage['/import-style.js'].lineData[58] = 0;
-  _$jscoverage['/import-style.js'].lineData[62] = 0;
-  _$jscoverage['/import-style.js'].lineData[63] = 0;
+  _$jscoverage['/import-style.js'].lineData[60] = 0;
   _$jscoverage['/import-style.js'].lineData[64] = 0;
-  _$jscoverage['/import-style.js'].lineData[67] = 0;
-  _$jscoverage['/import-style.js'].lineData[68] = 0;
+  _$jscoverage['/import-style.js'].lineData[65] = 0;
+  _$jscoverage['/import-style.js'].lineData[66] = 0;
   _$jscoverage['/import-style.js'].lineData[69] = 0;
-  _$jscoverage['/import-style.js'].lineData[73] = 0;
-  _$jscoverage['/import-style.js'].lineData[74] = 0;
-  _$jscoverage['/import-style.js'].lineData[79] = 0;
-  _$jscoverage['/import-style.js'].lineData[80] = 0;
-  _$jscoverage['/import-style.js'].lineData[86] = 0;
-  _$jscoverage['/import-style.js'].lineData[87] = 0;
+  _$jscoverage['/import-style.js'].lineData[70] = 0;
+  _$jscoverage['/import-style.js'].lineData[71] = 0;
+  _$jscoverage['/import-style.js'].lineData[75] = 0;
+  _$jscoverage['/import-style.js'].lineData[76] = 0;
+  _$jscoverage['/import-style.js'].lineData[81] = 0;
+  _$jscoverage['/import-style.js'].lineData[82] = 0;
   _$jscoverage['/import-style.js'].lineData[88] = 0;
   _$jscoverage['/import-style.js'].lineData[89] = 0;
   _$jscoverage['/import-style.js'].lineData[90] = 0;
+  _$jscoverage['/import-style.js'].lineData[91] = 0;
   _$jscoverage['/import-style.js'].lineData[92] = 0;
-  _$jscoverage['/import-style.js'].lineData[93] = 0;
+  _$jscoverage['/import-style.js'].lineData[94] = 0;
   _$jscoverage['/import-style.js'].lineData[95] = 0;
-  _$jscoverage['/import-style.js'].lineData[96] = 0;
   _$jscoverage['/import-style.js'].lineData[97] = 0;
   _$jscoverage['/import-style.js'].lineData[98] = 0;
   _$jscoverage['/import-style.js'].lineData[99] = 0;
   _$jscoverage['/import-style.js'].lineData[100] = 0;
+  _$jscoverage['/import-style.js'].lineData[101] = 0;
   _$jscoverage['/import-style.js'].lineData[102] = 0;
   _$jscoverage['/import-style.js'].lineData[104] = 0;
-  _$jscoverage['/import-style.js'].lineData[105] = 0;
   _$jscoverage['/import-style.js'].lineData[106] = 0;
   _$jscoverage['/import-style.js'].lineData[107] = 0;
+  _$jscoverage['/import-style.js'].lineData[108] = 0;
   _$jscoverage['/import-style.js'].lineData[109] = 0;
-  _$jscoverage['/import-style.js'].lineData[110] = 0;
+  _$jscoverage['/import-style.js'].lineData[111] = 0;
   _$jscoverage['/import-style.js'].lineData[112] = 0;
-  _$jscoverage['/import-style.js'].lineData[113] = 0;
   _$jscoverage['/import-style.js'].lineData[114] = 0;
-  _$jscoverage['/import-style.js'].lineData[118] = 0;
+  _$jscoverage['/import-style.js'].lineData[115] = 0;
+  _$jscoverage['/import-style.js'].lineData[116] = 0;
+  _$jscoverage['/import-style.js'].lineData[120] = 0;
 }
 if (! _$jscoverage['/import-style.js'].functionData) {
   _$jscoverage['/import-style.js'].functionData = [];
@@ -307,112 +308,106 @@ if (! _$jscoverage['/import-style.js'].functionData) {
 }
 if (! _$jscoverage['/import-style.js'].branchData) {
   _$jscoverage['/import-style.js'].branchData = {};
-  _$jscoverage['/import-style.js'].branchData['16'] = [];
-  _$jscoverage['/import-style.js'].branchData['16'][1] = new BranchData();
-  _$jscoverage['/import-style.js'].branchData['31'] = [];
-  _$jscoverage['/import-style.js'].branchData['31'][1] = new BranchData();
-  _$jscoverage['/import-style.js'].branchData['32'] = [];
-  _$jscoverage['/import-style.js'].branchData['32'][1] = new BranchData();
-  _$jscoverage['/import-style.js'].branchData['41'] = [];
-  _$jscoverage['/import-style.js'].branchData['41'][1] = new BranchData();
-  _$jscoverage['/import-style.js'].branchData['47'] = [];
-  _$jscoverage['/import-style.js'].branchData['47'][1] = new BranchData();
-  _$jscoverage['/import-style.js'].branchData['54'] = [];
-  _$jscoverage['/import-style.js'].branchData['54'][1] = new BranchData();
-  _$jscoverage['/import-style.js'].branchData['58'] = [];
-  _$jscoverage['/import-style.js'].branchData['58'][1] = new BranchData();
-  _$jscoverage['/import-style.js'].branchData['58'][2] = new BranchData();
-  _$jscoverage['/import-style.js'].branchData['59'] = [];
-  _$jscoverage['/import-style.js'].branchData['59'][1] = new BranchData();
-  _$jscoverage['/import-style.js'].branchData['59'][2] = new BranchData();
+  _$jscoverage['/import-style.js'].branchData['33'] = [];
+  _$jscoverage['/import-style.js'].branchData['33'][1] = new BranchData();
+  _$jscoverage['/import-style.js'].branchData['34'] = [];
+  _$jscoverage['/import-style.js'].branchData['34'][1] = new BranchData();
+  _$jscoverage['/import-style.js'].branchData['43'] = [];
+  _$jscoverage['/import-style.js'].branchData['43'][1] = new BranchData();
+  _$jscoverage['/import-style.js'].branchData['49'] = [];
+  _$jscoverage['/import-style.js'].branchData['49'][1] = new BranchData();
+  _$jscoverage['/import-style.js'].branchData['56'] = [];
+  _$jscoverage['/import-style.js'].branchData['56'][1] = new BranchData();
+  _$jscoverage['/import-style.js'].branchData['60'] = [];
+  _$jscoverage['/import-style.js'].branchData['60'][1] = new BranchData();
+  _$jscoverage['/import-style.js'].branchData['60'][2] = new BranchData();
   _$jscoverage['/import-style.js'].branchData['61'] = [];
   _$jscoverage['/import-style.js'].branchData['61'][1] = new BranchData();
-  _$jscoverage['/import-style.js'].branchData['73'] = [];
-  _$jscoverage['/import-style.js'].branchData['73'][1] = new BranchData();
-  _$jscoverage['/import-style.js'].branchData['88'] = [];
-  _$jscoverage['/import-style.js'].branchData['88'][1] = new BranchData();
-  _$jscoverage['/import-style.js'].branchData['92'] = [];
-  _$jscoverage['/import-style.js'].branchData['92'][1] = new BranchData();
-  _$jscoverage['/import-style.js'].branchData['96'] = [];
-  _$jscoverage['/import-style.js'].branchData['96'][1] = new BranchData();
-  _$jscoverage['/import-style.js'].branchData['97'] = [];
-  _$jscoverage['/import-style.js'].branchData['97'][1] = new BranchData();
-  _$jscoverage['/import-style.js'].branchData['105'] = [];
-  _$jscoverage['/import-style.js'].branchData['105'][1] = new BranchData();
-  _$jscoverage['/import-style.js'].branchData['112'] = [];
-  _$jscoverage['/import-style.js'].branchData['112'][1] = new BranchData();
+  _$jscoverage['/import-style.js'].branchData['61'][2] = new BranchData();
+  _$jscoverage['/import-style.js'].branchData['63'] = [];
+  _$jscoverage['/import-style.js'].branchData['63'][1] = new BranchData();
+  _$jscoverage['/import-style.js'].branchData['75'] = [];
+  _$jscoverage['/import-style.js'].branchData['75'][1] = new BranchData();
+  _$jscoverage['/import-style.js'].branchData['90'] = [];
+  _$jscoverage['/import-style.js'].branchData['90'][1] = new BranchData();
+  _$jscoverage['/import-style.js'].branchData['94'] = [];
+  _$jscoverage['/import-style.js'].branchData['94'][1] = new BranchData();
+  _$jscoverage['/import-style.js'].branchData['98'] = [];
+  _$jscoverage['/import-style.js'].branchData['98'][1] = new BranchData();
+  _$jscoverage['/import-style.js'].branchData['99'] = [];
+  _$jscoverage['/import-style.js'].branchData['99'][1] = new BranchData();
+  _$jscoverage['/import-style.js'].branchData['107'] = [];
+  _$jscoverage['/import-style.js'].branchData['107'][1] = new BranchData();
+  _$jscoverage['/import-style.js'].branchData['114'] = [];
+  _$jscoverage['/import-style.js'].branchData['114'][1] = new BranchData();
 }
-_$jscoverage['/import-style.js'].branchData['112'][1].init(789, 7, 'isDebug');
-function visit18_112_1(result) {
-  _$jscoverage['/import-style.js'].branchData['112'][1].ranCondition(result);
+_$jscoverage['/import-style.js'].branchData['114'][1].init(763, 7, 'isDebug');
+function visit17_114_1(result) {
+  _$jscoverage['/import-style.js'].branchData['114'][1].ranCondition(result);
   return result;
-}_$jscoverage['/import-style.js'].branchData['105'][1].init(557, 7, 'isDebug');
-function visit17_105_1(result) {
-  _$jscoverage['/import-style.js'].branchData['105'][1].ranCondition(result);
+}_$jscoverage['/import-style.js'].branchData['107'][1].init(538, 7, 'isDebug');
+function visit16_107_1(result) {
+  _$jscoverage['/import-style.js'].branchData['107'][1].ranCondition(result);
   return result;
-}_$jscoverage['/import-style.js'].branchData['97'][1].init(18, 15, '!cssCache[name]');
-function visit16_97_1(result) {
-  _$jscoverage['/import-style.js'].branchData['97'][1].ranCondition(result);
+}_$jscoverage['/import-style.js'].branchData['99'][1].init(17, 15, '!cssCache[name]');
+function visit15_99_1(result) {
+  _$jscoverage['/import-style.js'].branchData['99'][1].ranCondition(result);
   return result;
-}_$jscoverage['/import-style.js'].branchData['96'][1].init(282, 22, 'mod.getType() == \'css\'');
-function visit15_96_1(result) {
-  _$jscoverage['/import-style.js'].branchData['96'][1].ranCondition(result);
+}_$jscoverage['/import-style.js'].branchData['98'][1].init(272, 22, 'mod.getType() == \'css\'');
+function visit14_98_1(result) {
+  _$jscoverage['/import-style.js'].branchData['98'][1].ranCondition(result);
   return result;
-}_$jscoverage['/import-style.js'].branchData['92'][1].init(188, 15, 'processed[name]');
-function visit14_92_1(result) {
-  _$jscoverage['/import-style.js'].branchData['92'][1].ranCondition(result);
+}_$jscoverage['/import-style.js'].branchData['94'][1].init(182, 15, 'processed[name]');
+function visit13_94_1(result) {
+  _$jscoverage['/import-style.js'].branchData['94'][1].ranCondition(result);
   return result;
-}_$jscoverage['/import-style.js'].branchData['88'][1].init(49, 27, 'isDebug && stackCache[name]');
-function visit13_88_1(result) {
-  _$jscoverage['/import-style.js'].branchData['88'][1].ranCondition(result);
+}_$jscoverage['/import-style.js'].branchData['90'][1].init(47, 27, 'isDebug && stackCache[name]');
+function visit12_90_1(result) {
+  _$jscoverage['/import-style.js'].branchData['90'][1].ranCondition(result);
   return result;
-}_$jscoverage['/import-style.js'].branchData['73'][1].init(2201, 18, 'combinedUrl.length');
-function visit12_73_1(result) {
-  _$jscoverage['/import-style.js'].branchData['73'][1].ranCondition(result);
+}_$jscoverage['/import-style.js'].branchData['75'][1].init(2160, 18, 'combinedUrl.length');
+function visit11_75_1(result) {
+  _$jscoverage['/import-style.js'].branchData['75'][1].ranCondition(result);
   return result;
-}_$jscoverage['/import-style.js'].branchData['61'][1].init(146, 42, 'combined[0].getPackage() != currentPackage');
-function visit11_61_1(result) {
+}_$jscoverage['/import-style.js'].branchData['63'][1].init(144, 42, 'combined[0].getPackage() != currentPackage');
+function visit10_63_1(result) {
+  _$jscoverage['/import-style.js'].branchData['63'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/import-style.js'].branchData['61'][2].init(97, 112, 'prefix.length + combinedUrl.join(comboSep).length + suffix.length > maxUrlLength');
+function visit9_61_2(result) {
+  _$jscoverage['/import-style.js'].branchData['61'][2].ranCondition(result);
+  return result;
+}_$jscoverage['/import-style.js'].branchData['61'][1].init(64, 187, '(prefix.length + combinedUrl.join(comboSep).length + suffix.length > maxUrlLength) || combined[0].getPackage() != currentPackage');
+function visit8_61_1(result) {
   _$jscoverage['/import-style.js'].branchData['61'][1].ranCondition(result);
   return result;
-}_$jscoverage['/import-style.js'].branchData['59'][2].init(99, 113, 'prefix.length + combinedUrl.join(comboSep).length + suffix.length > maxUrlLength');
-function visit10_59_2(result) {
-  _$jscoverage['/import-style.js'].branchData['59'][2].ranCondition(result);
+}_$jscoverage['/import-style.js'].branchData['60'][2].init(30, 31, 'combinedUrl.length > maxFileNum');
+function visit7_60_2(result) {
+  _$jscoverage['/import-style.js'].branchData['60'][2].ranCondition(result);
   return result;
-}_$jscoverage['/import-style.js'].branchData['59'][1].init(65, 189, '(prefix.length + combinedUrl.join(comboSep).length + suffix.length > maxUrlLength) || combined[0].getPackage() != currentPackage');
-function visit9_59_1(result) {
-  _$jscoverage['/import-style.js'].branchData['59'][1].ranCondition(result);
+}_$jscoverage['/import-style.js'].branchData['60'][1].init(30, 252, '(combinedUrl.length > maxFileNum) || (prefix.length + combinedUrl.join(comboSep).length + suffix.length > maxUrlLength) || combined[0].getPackage() != currentPackage');
+function visit6_60_1(result) {
+  _$jscoverage['/import-style.js'].branchData['60'][1].ranCondition(result);
   return result;
-}_$jscoverage['/import-style.js'].branchData['58'][2].init(31, 31, 'combinedUrl.length > maxFileNum');
-function visit8_58_2(result) {
-  _$jscoverage['/import-style.js'].branchData['58'][2].ranCondition(result);
+}_$jscoverage['/import-style.js'].branchData['56'][1].init(748, 21, 'combined.length === 1');
+function visit5_56_1(result) {
+  _$jscoverage['/import-style.js'].branchData['56'][1].ranCondition(result);
   return result;
-}_$jscoverage['/import-style.js'].branchData['58'][1].init(31, 255, '(combinedUrl.length > maxFileNum) || (prefix.length + combinedUrl.join(comboSep).length + suffix.length > maxUrlLength) || combined[0].getPackage() != currentPackage');
-function visit7_58_1(result) {
-  _$jscoverage['/import-style.js'].branchData['58'][1].ranCondition(result);
+}_$jscoverage['/import-style.js'].branchData['49'][1].init(323, 67, '!currentPackage.isCombine() || !S.startsWith(fullpath, packagePath)');
+function visit4_49_1(result) {
+  _$jscoverage['/import-style.js'].branchData['49'][1].ranCondition(result);
   return result;
-}_$jscoverage['/import-style.js'].branchData['54'][1].init(761, 21, 'combined.length === 1');
-function visit6_54_1(result) {
-  _$jscoverage['/import-style.js'].branchData['54'][1].ranCondition(result);
+}_$jscoverage['/import-style.js'].branchData['43'][1].init(392, 18, 'i < cssList.length');
+function visit3_43_1(result) {
+  _$jscoverage['/import-style.js'].branchData['43'][1].ranCondition(result);
   return result;
-}_$jscoverage['/import-style.js'].branchData['47'][1].init(329, 67, '!currentPackage.isCombine() || !S.startsWith(fullpath, packagePath)');
-function visit5_47_1(result) {
-  _$jscoverage['/import-style.js'].branchData['47'][1].ranCondition(result);
+}_$jscoverage['/import-style.js'].branchData['34'][1].init(17, 14, 'Config.combine');
+function visit2_34_1(result) {
+  _$jscoverage['/import-style.js'].branchData['34'][1].ranCondition(result);
   return result;
-}_$jscoverage['/import-style.js'].branchData['41'][1].init(401, 18, 'i < cssList.length');
-function visit4_41_1(result) {
-  _$jscoverage['/import-style.js'].branchData['41'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/import-style.js'].branchData['32'][1].init(18, 14, 'Config.combine');
-function visit3_32_1(result) {
-  _$jscoverage['/import-style.js'].branchData['32'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/import-style.js'].branchData['31'][1].init(565, 14, 'cssList.length');
-function visit2_31_1(result) {
-  _$jscoverage['/import-style.js'].branchData['31'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/import-style.js'].branchData['16'][1].init(14, 27, 'typeof modNames == \'string\'');
-function visit1_16_1(result) {
-  _$jscoverage['/import-style.js'].branchData['16'][1].ranCondition(result);
+}_$jscoverage['/import-style.js'].branchData['33'][1].init(602, 14, 'cssList.length');
+function visit1_33_1(result) {
+  _$jscoverage['/import-style.js'].branchData['33'][1].ranCondition(result);
   return result;
 }_$jscoverage['/import-style.js'].lineData[7]++;
 (function(S) {
@@ -423,154 +418,155 @@ function visit1_16_1(result) {
   function importStyle(modNames) {
     _$jscoverage['/import-style.js'].functionData[1]++;
     _$jscoverage['/import-style.js'].lineData[16]++;
-    if (visit1_16_1(typeof modNames == 'string')) {
-      _$jscoverage['/import-style.js'].lineData[17]++;
-      modNames = modNames.split(',');
-    }
+    var Utils = S.Loader.Utils;
+    _$jscoverage['/import-style.js'].lineData[18]++;
+    modNames = Utils.getModNamesAsArray(modNames);
     _$jscoverage['/import-style.js'].lineData[19]++;
+    modNames = Utils.normalizeModNames(S, modNames);
+    _$jscoverage['/import-style.js'].lineData[21]++;
     var cssList = [], doc = S.Env.host.document, Config = S.Config, cssCache = {}, stack = [], stackCache = {}, processed = {};
-    _$jscoverage['/import-style.js'].lineData[26]++;
+    _$jscoverage['/import-style.js'].lineData[28]++;
     isDebug = Config.debug;
-    _$jscoverage['/import-style.js'].lineData[27]++;
+    _$jscoverage['/import-style.js'].lineData[29]++;
     S.each(modNames, function(modName) {
   _$jscoverage['/import-style.js'].functionData[2]++;
-  _$jscoverage['/import-style.js'].lineData[28]++;
+  _$jscoverage['/import-style.js'].lineData[30]++;
   var mod = S.Loader.Utils.createModuleInfo(S, modName);
-  _$jscoverage['/import-style.js'].lineData[29]++;
+  _$jscoverage['/import-style.js'].lineData[31]++;
   collectCss(mod, cssList, stack, cssCache, stackCache, processed);
 });
-    _$jscoverage['/import-style.js'].lineData[31]++;
-    if (visit2_31_1(cssList.length)) {
-      _$jscoverage['/import-style.js'].lineData[32]++;
-      if (visit3_32_1(Config.combine)) {
-        _$jscoverage['/import-style.js'].lineData[33]++;
+    _$jscoverage['/import-style.js'].lineData[33]++;
+    if (visit1_33_1(cssList.length)) {
+      _$jscoverage['/import-style.js'].lineData[34]++;
+      if (visit2_34_1(Config.combine)) {
+        _$jscoverage['/import-style.js'].lineData[35]++;
         var comboPrefix = Config.comboPrefix, comboSep = Config.comboSep, maxFileNum = Config.comboMaxFileNum, maxUrlLength = Config.comboMaxUrlLength;
-        _$jscoverage['/import-style.js'].lineData[37]++;
-        var prefix = '';
-        _$jscoverage['/import-style.js'].lineData[38]++;
-        var suffix = '';
         _$jscoverage['/import-style.js'].lineData[39]++;
-        var combined = [];
+        var prefix = '';
         _$jscoverage['/import-style.js'].lineData[40]++;
-        var combinedUrl = [];
+        var suffix = '';
         _$jscoverage['/import-style.js'].lineData[41]++;
-        for (var i = 0; visit4_41_1(i < cssList.length); i++) {
-          _$jscoverage['/import-style.js'].lineData[42]++;
-          var currentCss = cssList[i];
-          _$jscoverage['/import-style.js'].lineData[43]++;
-          var currentPackage = currentCss.getPackage();
+        var combined = [];
+        _$jscoverage['/import-style.js'].lineData[42]++;
+        var combinedUrl = [];
+        _$jscoverage['/import-style.js'].lineData[43]++;
+        for (var i = 0; visit3_43_1(i < cssList.length); i++) {
           _$jscoverage['/import-style.js'].lineData[44]++;
-          var packagePath = currentPackage.getPrefixUriForCombo();
+          var currentCss = cssList[i];
+          _$jscoverage['/import-style.js'].lineData[45]++;
+          var currentPackage = currentCss.getPackage();
           _$jscoverage['/import-style.js'].lineData[46]++;
+          var packagePath = currentPackage.getPrefixUriForCombo();
+          _$jscoverage['/import-style.js'].lineData[48]++;
           var fullpath = currentCss.getFullPath();
-          _$jscoverage['/import-style.js'].lineData[47]++;
-          if (visit5_47_1(!currentPackage.isCombine() || !S.startsWith(fullpath, packagePath))) {
-            _$jscoverage['/import-style.js'].lineData[48]++;
+          _$jscoverage['/import-style.js'].lineData[49]++;
+          if (visit4_49_1(!currentPackage.isCombine() || !S.startsWith(fullpath, packagePath))) {
+            _$jscoverage['/import-style.js'].lineData[50]++;
             document.writeln('<link href="' + fullpath + '"  rel="stylesheet"/>');
-            _$jscoverage['/import-style.js'].lineData[49]++;
+            _$jscoverage['/import-style.js'].lineData[51]++;
             continue;
           }
-          _$jscoverage['/import-style.js'].lineData[51]++;
-          var path = fullpath.slice(packagePath.length).replace(/\?.*$/, '');
-          _$jscoverage['/import-style.js'].lineData[52]++;
-          combined.push(currentCss);
           _$jscoverage['/import-style.js'].lineData[53]++;
-          combinedUrl.push(path);
+          var path = fullpath.slice(packagePath.length).replace(/\?.*$/, '');
           _$jscoverage['/import-style.js'].lineData[54]++;
-          if (visit6_54_1(combined.length === 1)) {
-            _$jscoverage['/import-style.js'].lineData[55]++;
+          combined.push(currentCss);
+          _$jscoverage['/import-style.js'].lineData[55]++;
+          combinedUrl.push(path);
+          _$jscoverage['/import-style.js'].lineData[56]++;
+          if (visit5_56_1(combined.length === 1)) {
+            _$jscoverage['/import-style.js'].lineData[57]++;
             prefix = packagePath + comboPrefix;
-            _$jscoverage['/import-style.js'].lineData[56]++;
+            _$jscoverage['/import-style.js'].lineData[58]++;
             suffix = '?t=' + encodeURIComponent(currentPackage.getTag()) + '.css';
           } else {
-            _$jscoverage['/import-style.js'].lineData[58]++;
-            if (visit7_58_1((visit8_58_2(combinedUrl.length > maxFileNum)) || visit9_59_1((visit10_59_2(prefix.length + combinedUrl.join(comboSep).length + suffix.length > maxUrlLength)) || visit11_61_1(combined[0].getPackage() != currentPackage)))) {
-              _$jscoverage['/import-style.js'].lineData[62]++;
-              combined.pop();
-              _$jscoverage['/import-style.js'].lineData[63]++;
-              combinedUrl.pop();
+            _$jscoverage['/import-style.js'].lineData[60]++;
+            if (visit6_60_1((visit7_60_2(combinedUrl.length > maxFileNum)) || visit8_61_1((visit9_61_2(prefix.length + combinedUrl.join(comboSep).length + suffix.length > maxUrlLength)) || visit10_63_1(combined[0].getPackage() != currentPackage)))) {
               _$jscoverage['/import-style.js'].lineData[64]++;
+              combined.pop();
+              _$jscoverage['/import-style.js'].lineData[65]++;
+              combinedUrl.pop();
+              _$jscoverage['/import-style.js'].lineData[66]++;
               document.writeln('<link href="' + (prefix + combinedUrl.join(comboSep) + suffix) + '"  rel="stylesheet"/>');
-              _$jscoverage['/import-style.js'].lineData[67]++;
-              combined = [];
-              _$jscoverage['/import-style.js'].lineData[68]++;
-              combinedUrl = [];
               _$jscoverage['/import-style.js'].lineData[69]++;
+              combined = [];
+              _$jscoverage['/import-style.js'].lineData[70]++;
+              combinedUrl = [];
+              _$jscoverage['/import-style.js'].lineData[71]++;
               i--;
             }
           }
         }
-        _$jscoverage['/import-style.js'].lineData[73]++;
-        if (visit12_73_1(combinedUrl.length)) {
-          _$jscoverage['/import-style.js'].lineData[74]++;
+        _$jscoverage['/import-style.js'].lineData[75]++;
+        if (visit11_75_1(combinedUrl.length)) {
+          _$jscoverage['/import-style.js'].lineData[76]++;
           doc.writeln('<link href="' + (prefix + combinedUrl.join(comboSep) + suffix) + '"  rel="stylesheet"/>');
         }
       } else {
-        _$jscoverage['/import-style.js'].lineData[79]++;
+        _$jscoverage['/import-style.js'].lineData[81]++;
         S.each(cssList, function(css) {
   _$jscoverage['/import-style.js'].functionData[3]++;
-  _$jscoverage['/import-style.js'].lineData[80]++;
+  _$jscoverage['/import-style.js'].lineData[82]++;
   doc.writeln('<link href="' + css.getFullPath() + '"  rel="stylesheet"/>');
 });
       }
     }
   }
-  _$jscoverage['/import-style.js'].lineData[86]++;
+  _$jscoverage['/import-style.js'].lineData[88]++;
   function collectCss(mod, cssList, stack, cssCache, stackCache, processed) {
     _$jscoverage['/import-style.js'].functionData[4]++;
-    _$jscoverage['/import-style.js'].lineData[87]++;
+    _$jscoverage['/import-style.js'].lineData[89]++;
     var name = mod.getName();
-    _$jscoverage['/import-style.js'].lineData[88]++;
-    if (visit13_88_1(isDebug && stackCache[name])) {
-      _$jscoverage['/import-style.js'].lineData[89]++;
+    _$jscoverage['/import-style.js'].lineData[90]++;
+    if (visit12_90_1(isDebug && stackCache[name])) {
+      _$jscoverage['/import-style.js'].lineData[91]++;
       S.error('circular dependencies found: ' + stack);
-      _$jscoverage['/import-style.js'].lineData[90]++;
+      _$jscoverage['/import-style.js'].lineData[92]++;
       return;
     }
-    _$jscoverage['/import-style.js'].lineData[92]++;
-    if (visit14_92_1(processed[name])) {
-      _$jscoverage['/import-style.js'].lineData[93]++;
+    _$jscoverage['/import-style.js'].lineData[94]++;
+    if (visit13_94_1(processed[name])) {
+      _$jscoverage['/import-style.js'].lineData[95]++;
       return;
     }
-    _$jscoverage['/import-style.js'].lineData[95]++;
+    _$jscoverage['/import-style.js'].lineData[97]++;
     processed[name] = 1;
-    _$jscoverage['/import-style.js'].lineData[96]++;
-    if (visit15_96_1(mod.getType() == 'css')) {
-      _$jscoverage['/import-style.js'].lineData[97]++;
-      if (visit16_97_1(!cssCache[name])) {
-        _$jscoverage['/import-style.js'].lineData[98]++;
-        mod.status = 4;
-        _$jscoverage['/import-style.js'].lineData[99]++;
-        cssList.push(mod);
+    _$jscoverage['/import-style.js'].lineData[98]++;
+    if (visit14_98_1(mod.getType() == 'css')) {
+      _$jscoverage['/import-style.js'].lineData[99]++;
+      if (visit15_99_1(!cssCache[name])) {
         _$jscoverage['/import-style.js'].lineData[100]++;
+        mod.status = 4;
+        _$jscoverage['/import-style.js'].lineData[101]++;
+        cssList.push(mod);
+        _$jscoverage['/import-style.js'].lineData[102]++;
         cssCache[name] = 1;
       }
-      _$jscoverage['/import-style.js'].lineData[102]++;
+      _$jscoverage['/import-style.js'].lineData[104]++;
       return;
     }
-    _$jscoverage['/import-style.js'].lineData[104]++;
+    _$jscoverage['/import-style.js'].lineData[106]++;
     var requires = mod.getRequiredMods();
-    _$jscoverage['/import-style.js'].lineData[105]++;
-    if (visit17_105_1(isDebug)) {
-      _$jscoverage['/import-style.js'].lineData[106]++;
+    _$jscoverage['/import-style.js'].lineData[107]++;
+    if (visit16_107_1(isDebug)) {
+      _$jscoverage['/import-style.js'].lineData[108]++;
       stackCache[name] = 1;
-      _$jscoverage['/import-style.js'].lineData[107]++;
+      _$jscoverage['/import-style.js'].lineData[109]++;
       stack.push(name);
     }
-    _$jscoverage['/import-style.js'].lineData[109]++;
+    _$jscoverage['/import-style.js'].lineData[111]++;
     S.each(requires, function(r) {
   _$jscoverage['/import-style.js'].functionData[5]++;
-  _$jscoverage['/import-style.js'].lineData[110]++;
+  _$jscoverage['/import-style.js'].lineData[112]++;
   collectCss(r, cssList, stack, cssCache, stackCache, processed);
 });
-    _$jscoverage['/import-style.js'].lineData[112]++;
-    if (visit18_112_1(isDebug)) {
-      _$jscoverage['/import-style.js'].lineData[113]++;
+    _$jscoverage['/import-style.js'].lineData[114]++;
+    if (visit17_114_1(isDebug)) {
+      _$jscoverage['/import-style.js'].lineData[115]++;
       stack.pop();
-      _$jscoverage['/import-style.js'].lineData[114]++;
+      _$jscoverage['/import-style.js'].lineData[116]++;
       delete stackCache[name];
     }
   }
-  _$jscoverage['/import-style.js'].lineData[118]++;
+  _$jscoverage['/import-style.js'].lineData[120]++;
   S.importStyle = importStyle;
 })(KISSY);
