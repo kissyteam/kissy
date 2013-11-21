@@ -19,6 +19,8 @@
         doc = win.document || {},
         documentMode = doc.documentMode,
         isMsPointerSupported,
+    // ie11
+        isPointerSupported,
         transitionProperty,
         transformProperty,
         transitionPrefix,
@@ -55,7 +57,9 @@
         });
 
         isClassListSupportedState = 'classList' in documentElement;
-        isMsPointerSupported = "msPointerEnabled" in (win.navigator || {});
+        var navigator = (win.navigator || {});
+        isMsPointerSupported = "msPointerEnabled" in navigator;
+        isPointerSupported = "pointerEnabled" in navigator;
     }
 
     /**
@@ -71,7 +75,17 @@
          * @type {Boolean}
          */
         isMsPointerSupported: function () {
+            // ie11 onMSPointerDown but e.type==pointerdown
             return isMsPointerSupported;
+        },
+
+        /**
+         * whether support microsoft pointer event (ie11).
+         * @type {Boolean}
+         */
+        isPointerSupported: function () {
+            // ie
+            return isPointerSupported;
         },
 
         /**

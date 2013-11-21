@@ -3,7 +3,11 @@
  * foreColor button.
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/fore-color", function (S, Editor, Button, cmd) {
+KISSY.add(function (S, require) {
+    var Button = require('./color/btn');
+    var cmd = require('./fore-color/cmd');
+
+
     function ForeColorPlugin(config) {
         this.config = config || {};
     }
@@ -20,6 +24,4 @@ KISSY.add("editor/plugin/fore-color", function (S, Editor, Button, cmd) {
     });
 
     return ForeColorPlugin;
-}, {
-    requires: ['editor', './color/btn', './fore-color/cmd']
 });

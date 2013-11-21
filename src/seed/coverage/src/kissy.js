@@ -297,10 +297,11 @@ if (! _$jscoverage['/kissy.js']) {
   _$jscoverage['/kissy.js'].lineData[288] = 0;
   _$jscoverage['/kissy.js'].lineData[289] = 0;
   _$jscoverage['/kissy.js'].lineData[290] = 0;
-  _$jscoverage['/kissy.js'].lineData[293] = 0;
-  _$jscoverage['/kissy.js'].lineData[301] = 0;
-  _$jscoverage['/kissy.js'].lineData[303] = 0;
-  _$jscoverage['/kissy.js'].lineData[322] = 0;
+  _$jscoverage['/kissy.js'].lineData[291] = 0;
+  _$jscoverage['/kissy.js'].lineData[295] = 0;
+  _$jscoverage['/kissy.js'].lineData[302] = 0;
+  _$jscoverage['/kissy.js'].lineData[304] = 0;
+  _$jscoverage['/kissy.js'].lineData[323] = 0;
 }
 if (! _$jscoverage['/kissy.js'].functionData) {
   _$jscoverage['/kissy.js'].functionData = [];
@@ -716,26 +717,29 @@ var KISSY = (function(undefined) {
     _$jscoverage['/kissy.js'].lineData[287]++;
     var obj = {};
     _$jscoverage['/kissy.js'].lineData[288]++;
-    S.each(loggerLevel, function(_, cat) {
+    for (var cat in loggerLevel) {
+      _$jscoverage['/kissy.js'].lineData[289]++;
+      (function(obj, cat) {
   _$jscoverage['/kissy.js'].functionData[13]++;
-  _$jscoverage['/kissy.js'].lineData[289]++;
+  _$jscoverage['/kissy.js'].lineData[290]++;
   obj[cat] = function(msg) {
   _$jscoverage['/kissy.js'].functionData[14]++;
-  _$jscoverage['/kissy.js'].lineData[290]++;
+  _$jscoverage['/kissy.js'].lineData[291]++;
   return S.log(msg, cat, logger);
 };
-});
-    _$jscoverage['/kissy.js'].lineData[293]++;
+})(obj, cat);
+    }
+    _$jscoverage['/kissy.js'].lineData[295]++;
     return obj;
   }
-  _$jscoverage['/kissy.js'].lineData[301]++;
+  _$jscoverage['/kissy.js'].lineData[302]++;
   S.Logger = {};
-  _$jscoverage['/kissy.js'].lineData[303]++;
+  _$jscoverage['/kissy.js'].lineData[304]++;
   S.Logger.Level = {
   'DEBUG': 'debug', 
   INFO: 'info', 
   WARN: 'warn', 
   ERROR: 'error'};
-  _$jscoverage['/kissy.js'].lineData[322]++;
+  _$jscoverage['/kissy.js'].lineData[323]++;
   return S;
 })();

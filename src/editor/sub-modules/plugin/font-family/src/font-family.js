@@ -3,13 +3,18 @@
  * font formatting for kissy editor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/font-family", function (S, Editor, ui, cmd) {
+KISSY.add(function (S, require) {
+    var Editor = require('editor');
+    var ui = require('./font/ui');
+    var cmd = require('./font-family/cmd');
+    require('./menubutton');
+
     function FontFamilyPlugin(config) {
         this.config = config || {};
     }
 
     S.augment(FontFamilyPlugin, {
-        pluginRenderUI:function (editor) {
+        pluginRenderUI: function (editor) {
 
             cmd.init(editor);
 
@@ -19,58 +24,58 @@ KISSY.add("editor/plugin/font-family", function (S, Editor, ui, cmd) {
 
 
             S.mix(menu, {
-                children:[
+                children: [
                     //ie 不认识中文？？？
                     {
-                        content:"宋体",
-                        value:"SimSun"
+                        content: "宋体",
+                        value: "SimSun"
                     },
                     {
-                        content:"黑体",
-                        value:"SimHei"
+                        content: "黑体",
+                        value: "SimHei"
                     },
                     {
-                        content:"隶书",
-                        value:"LiSu"
+                        content: "隶书",
+                        value: "LiSu"
                     },
                     {
-                        content:"楷体",
-                        value:"KaiTi_GB2312"
+                        content: "楷体",
+                        value: "KaiTi_GB2312"
                     },
                     {
-                        content:"微软雅黑",
-                        value:"'Microsoft YaHei'"
+                        content: "微软雅黑",
+                        value: "'Microsoft YaHei'"
                     },
                     {
-                        content:"Georgia",
-                        value:"Georgia"
+                        content: "Georgia",
+                        value: "Georgia"
                     },
                     {
-                        content:"Times New Roman",
-                        value:"'Times New Roman'"
+                        content: "Times New Roman",
+                        value: "'Times New Roman'"
                     },
                     {
-                        content:"Impact",
-                        value:"Impact"
+                        content: "Impact",
+                        value: "Impact"
                     },
                     {
-                        content:"Courier New",
-                        value:"'Courier New'"
+                        content: "Courier New",
+                        value: "'Courier New'"
                     },
                     {
-                        content:"Arial",
-                        value:"Arial"
+                        content: "Arial",
+                        value: "Arial"
                     },
                     {
-                        content:"Verdana",
-                        value:"Verdana"
+                        content: "Verdana",
+                        value: "Verdana"
                     },
                     {
-                        content:"Tahoma",
-                        value:"Tahoma"
+                        content: "Tahoma",
+                        value: "Tahoma"
                     }
                 ],
-                width:"130px"
+                width: "130px"
             });
 
             S.each(menu.children, function (item) {
@@ -84,15 +89,13 @@ KISSY.add("editor/plugin/font-family", function (S, Editor, ui, cmd) {
             fontFamilies.menu = S.mix(menu, fontFamilies.menu);
 
             editor.addSelect("fontFamily", S.mix({
-                cmdType:"fontFamily",
-                defaultCaption:"字体",
-                width:130,
-                mode:Editor.Mode.WYSIWYG_MODE
+                cmdType: "fontFamily",
+                defaultCaption: "字体",
+                width: 130,
+                mode: Editor.Mode.WYSIWYG_MODE
             }, fontFamilies), ui.Select);
         }
     });
 
     return FontFamilyPlugin;
-}, {
-    requires:['editor', './font/ui', './font-family/cmd']
 });

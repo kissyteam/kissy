@@ -3,7 +3,7 @@
  * list Utils
  * @author yiminghe@gmail.com
  */
-KISSY.add('editor/plugin/list-utils', function (S, Editor) {
+KISSY.add(function (S) {
     var listNodeNames = {ol: 1, ul: 1},
         Node = S.Node,
         Dom = S.DOM,
@@ -187,6 +187,4 @@ KISSY.add('editor/plugin/list-utils', function (S, Editor) {
         };
 
     return list;
-}, {
-    requires: ['editor']
 });

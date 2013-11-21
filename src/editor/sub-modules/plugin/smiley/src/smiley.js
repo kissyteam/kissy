@@ -3,7 +3,10 @@
  * smiley button
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/smiley", function (S, Editor, Overlay4E) {
+KISSY.add(function (S, require) {
+        var Editor = require('editor');
+        var Overlay4E = require('./overlay');
+    require('./button');
     var smiley_markup = "<div class='{prefixCls}editor-smiley-sprite'>";
     for (var i = 0; i <= 98; i++) {
         smiley_markup += "<a href='javascript:void(0)' " +
@@ -90,6 +93,4 @@ KISSY.add("editor/plugin/smiley", function (S, Editor, Overlay4E) {
     });
 
     return Smiley;
-}, {
-    requires: ['editor', './overlay']
 });

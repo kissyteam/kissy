@@ -3,7 +3,8 @@
  * Add justify command identifier for Editor.
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/justify-cmd", function (S, Editor) {
+KISSY.add(function (S, require) {
+    var Editor = require('editor');
     var alignRemoveRegex = /(-moz-|-webkit-|start|auto)/gi,
         default_align = "left";
 
@@ -41,17 +42,17 @@ KISSY.add("editor/plugin/justify-cmd", function (S, Editor) {
     }
 
     return {
-        addCommand:function (editor, command, textAlign) {
+        addCommand: function (editor, command, textAlign) {
             if (!editor.hasCommand(command)) {
 
                 editor.addCommand(command, {
-                    exec:function (editor) {
+                    exec: function (editor) {
                         exec(editor, textAlign);
                     }
                 });
 
                 editor.addCommand(Editor.Utils.getQueryCmd(command), {
-                    exec:function (editor) {
+                    exec: function (editor) {
                         var selection = editor.getSelection();
                         if (selection && !selection.isInvalid) {
                             var startElement = selection.getStartElement();
@@ -68,6 +69,4 @@ KISSY.add("editor/plugin/justify-cmd", function (S, Editor) {
             }
         }
     };
-}, {
-    requires:['editor']
 });

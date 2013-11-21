@@ -3,7 +3,10 @@
  * checkbox source editor for kissy editor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/checkbox-source-area", function (S, Editor) {
+KISSY.add(function (S, require) {
+    // 'editor', '../font/cmd'
+    var Editor = require('editor');
+
     var Node = S.Node;
 
     var SOURCE_MODE = Editor.Mode.SOURCE_MODE ,
@@ -67,6 +70,4 @@ KISSY.add("editor/plugin/checkbox-source-area", function (S, Editor) {
     });
 
     return CheckboxSourceAreaPlugin;
-}, {
-    requires: ["editor"]
 });

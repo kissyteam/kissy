@@ -3,10 +3,14 @@
  * custom dialog for kissy editor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/dialog", function (S, Editor, Overlay,
-                                            focusFix, ConstrainPlugin, DragPlugin) {
+KISSY.add(function (S, require) {
+    var Editor = require('editor');
+    var Overlay = require('overlay');
+    var focusFix = require('./focus-fix');
+    var ConstrainPlugin = require('dd/plugin/constrain');
+    var DragPlugin = require('component/plugin/drag');
 
-   return Overlay.Dialog.extend({
+    return Overlay.Dialog.extend({
 
         initializer: function () {
             this.plug(new DragPlugin({
@@ -46,6 +50,4 @@ KISSY.add("editor/plugin/dialog", function (S, Editor, Overlay,
             }
         }
     });
-}, {
-    requires: ["editor", 'overlay', './focus-fix', 'dd/plugin/constrain', 'component/plugin/drag']
 });

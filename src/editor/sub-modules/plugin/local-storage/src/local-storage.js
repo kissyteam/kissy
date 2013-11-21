@@ -3,7 +3,11 @@
  * localStorage support for ie<8
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/local-storage", function (S, Editor, Overlay, FlashBridge) {
+KISSY.add(function (S, require) {
+    var Editor = require('editor');
+    var Overlay = require('overlay');
+    var FlashBridge = require('./flash-bridge');
+
     var ie = document.documentMode || S.UA.ie;
 
     // 原生或者已经定义过立即返回
@@ -105,9 +109,4 @@ KISSY.add("editor/plugin/local-storage", function (S, Editor, Overlay, FlashBrid
      */
 
     return store;
-}, {
-    //important
-    //不能立即运行，ie6 可能会没有 domReady 添加 flash 节点
-    //导致：operation aborted
-    "requires": ["editor", "overlay", "./flash-bridge"]
 });

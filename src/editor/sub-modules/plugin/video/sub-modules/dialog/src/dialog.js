@@ -3,7 +3,11 @@
  * video dialog
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/video/dialog", function (S, Editor, FlashDialog, MenuButton) {
+KISSY.add(function (S, require) {
+        var Editor = require('editor');
+        var FlashDialog = require('../flash/dialog');
+        var MenuButton = require('../menubutton');
+
     var CLS_VIDEO = "ke_video",
         TYPE_VIDEO = "video",
         DTIP = "自动",
@@ -208,6 +212,4 @@ KISSY.add("editor/plugin/video/dialog", function (S, Editor, FlashDialog, MenuBu
     });
 
     return VideoDialog;
-}, {
-    requires: ['editor', '../flash/dialog', '../menubutton']
 });

@@ -4,12 +4,14 @@
  * Requires the tag-name string to be passed in as a value argument (i.e. "H1", "H6")
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/heading/cmd", function (S, Editor) {
+KISSY.add(function (S, require) {
+    var Editor = require('editor');
+
     return {
-        init:function (editor) {
+        init: function (editor) {
             if (!editor.hasCommand("heading")) {
                 editor.addCommand("heading", {
-                    exec:function (editor, tag) {
+                    exec: function (editor, tag) {
                         editor.execCommand("save");
                         if (tag != "p") {
                             var currentValue = editor.queryCommandValue("heading");
@@ -18,7 +20,7 @@ KISSY.add("editor/plugin/heading/cmd", function (S, Editor) {
                             tag = "p";
                         }
                         new Editor.Style({
-                            element:tag
+                            element: tag
                         }).apply(editor.get("document")[0]);
                         editor.execCommand("save");
                     }
@@ -27,7 +29,7 @@ KISSY.add("editor/plugin/heading/cmd", function (S, Editor) {
                 var queryCmd = Editor.Utils.getQueryCmd("heading");
 
                 editor.addCommand(queryCmd, {
-                    exec:function (editor) {
+                    exec: function (editor) {
                         var selection = editor.getSelection();
                         if (selection && !selection.isInvalid) {
                             var startElement = selection.getStartElement();
@@ -45,6 +47,4 @@ KISSY.add("editor/plugin/heading/cmd", function (S, Editor) {
 
         }
     };
-}, {
-    requires:['editor']
 });

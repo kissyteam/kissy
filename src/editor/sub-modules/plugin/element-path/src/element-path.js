@@ -3,7 +3,8 @@
  * ElementPath for debug.
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/element-path", function (S, Editor) {
+KISSY.add(function (S, require) {
+    var Editor = require('editor');
     var Node = S.Node;
     var CLASS = "editor-element-path";
 
@@ -15,7 +16,7 @@ KISSY.add("editor/plugin/element-path", function (S, Editor) {
     }
 
     S.augment(ElementPaths, {
-        _init:function () {
+        _init: function () {
             var self = this,
                 cfg = self.cfg,
                 editor = cfg.editor;
@@ -24,17 +25,17 @@ KISSY.add("editor/plugin/element-path", function (S, Editor) {
             editor.on("selectionChange", self._selectionChange, self);
             Editor.Utils.sourceDisable(editor, self);
         },
-        disable:function () {
+        disable: function () {
             this.holder.css("visibility", "hidden");
         },
-        enable:function () {
+        enable: function () {
             this.holder.css("visibility", "");
         },
-        _selectionChange:function (ev) {
+        _selectionChange: function (ev) {
             var self = this,
                 cfg = self.cfg,
                 editor = cfg.editor,
-                prefixCls=editor.get('prefixCls'),
+                prefixCls = editor.get('prefixCls'),
                 statusDom = self.holder,
                 elementPath = ev.path,
                 elements = elementPath.elements,
@@ -53,7 +54,7 @@ KISSY.add("editor/plugin/element-path", function (S, Editor) {
                         "href='javascript(\"" +
                         type + "\")' " +
                         "class='" +
-                        prefixCls+CLASS + "'>" +
+                        prefixCls + CLASS + "'>" +
                         type +
                         "</a>");
                 self._cache.push(a);
@@ -69,7 +70,7 @@ KISSY.add("editor/plugin/element-path", function (S, Editor) {
                 statusDom.prepend(a);
             }
         },
-        destroy:function () {
+        destroy: function () {
             this.holder.remove();
         }
     });
@@ -79,9 +80,9 @@ KISSY.add("editor/plugin/element-path", function (S, Editor) {
     }
 
     S.augment(ElementPathPlugin, {
-        pluginRenderUI:function (editor) {
+        pluginRenderUI: function (editor) {
             var elemPath = new ElementPaths({
-                editor:editor
+                editor: editor
             });
             editor.on("destroy", function () {
                 elemPath.destroy();
@@ -90,6 +91,4 @@ KISSY.add("editor/plugin/element-path", function (S, Editor) {
     });
 
     return ElementPathPlugin;
-}, {
-    requires:['editor']
 });

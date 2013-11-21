@@ -3,7 +3,9 @@
  * drag file support for html5 file&dd
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/drag-upload", function (S,Event, Editor) {
+KISSY.add(function (S, require) {
+    var Editor = require('editor');
+    var Event = require('event');
     var Node = S.Node,
         Utils = Editor.Utils,
         Dom = S.DOM;
@@ -166,8 +168,6 @@ KISSY.add("editor/plugin/drag-upload", function (S,Event, Editor) {
     });
 
     return dragUpload;
-}, {
-    requires: ['event','editor']
 });
 /**
  * @ignore

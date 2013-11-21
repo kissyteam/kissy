@@ -3,23 +3,23 @@
  * underline command
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/underline/cmd", function (S, Editor, Cmd) {
+KISSY.add(function (S, require) {
+    var Editor = require('editor');
+    var Cmd = require('../font/cmd');
 
     var UNDERLINE_STYLE = new Editor.Style({
-        element:'u',
-        overrides:[
+        element: 'u',
+        overrides: [
             {
-                element:'span',
-                attributes:{
-                    style:'text-decoration: underline;'
+                element: 'span',
+                attributes: {
+                    style: 'text-decoration: underline;'
                 }
             }
         ]
     });
     return {
-        init:function (editor) {
+        init: function (editor) {
             Cmd.addButtonCmd(editor, "underline", UNDERLINE_STYLE);
         }};
-}, {
-    requires:['editor', '../font/cmd']
 });

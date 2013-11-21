@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 21 17:08
+build time: Nov 21 23:13
 */
 /**
  * @ignore
@@ -42,11 +42,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20131121170756' will replace with current timestamp when compressing.
+         * NOTICE: '20131121231329' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20131121170756',
+        __BUILD_TIME: '20131121231329',
 
         /**
          * KISSY Environment.
@@ -290,14 +290,15 @@ var KISSY = (function (undefined) {
 
     function getLogger(logger) {
         var obj = {};
-        S.each(loggerLevel, function (_, cat) {
-            obj[cat] = function (msg) {
-                return S.log(msg, cat, logger);
-            };
-        });
+        for (var cat in loggerLevel) {
+            (function (obj, cat) {
+                obj[cat] = function (msg) {
+                    return S.log(msg, cat, logger);
+                };
+            })(obj, cat);
+        }
         return obj;
     }
-
 
     /**
      * Logger level enum
@@ -339,6 +340,7 @@ var KISSY = (function (undefined) {
         TRUE = true,
         EMPTY = '',
         Obj = Object,
+        logger = S.getLogger('s/lang'),
         ObjectCreate = Obj.create,
     // error in native ie678, not in simulated ie9
         hasEnumBug = !({toString: 1}['propertyIsEnumerable']('toString')),
@@ -530,8 +532,16 @@ var KISSY = (function (undefined) {
          * @member KISSY
          */
         extend: function (r, s, px, sx) {
-            if (!s || !r) {
-                return r;
+            if ('@DEBUG@') {
+                if (!r) {
+                    logger.error('extend r is null');
+                }
+                if (!s) {
+                    logger.error('extend s is null');
+                }
+                if (!s || !r) {
+                    return r;
+                }
             }
 
             var sp = s.prototype,
@@ -3325,6 +3335,8 @@ var KISSY = (function (undefined) {
         doc = win.document || {},
         documentMode = doc.documentMode,
         isMsPointerSupported,
+    // ie11
+        isPointerSupported,
         transitionProperty,
         transformProperty,
         transitionPrefix,
@@ -3361,7 +3373,9 @@ var KISSY = (function (undefined) {
         });
 
         isClassListSupportedState = 'classList' in documentElement;
-        isMsPointerSupported = "msPointerEnabled" in (win.navigator || {});
+        var navigator = (win.navigator || {});
+        isMsPointerSupported = "msPointerEnabled" in navigator;
+        isPointerSupported = "pointerEnabled" in navigator;
     }
 
     /**
@@ -3377,7 +3391,17 @@ var KISSY = (function (undefined) {
          * @type {Boolean}
          */
         isMsPointerSupported: function () {
+            // ie11 onMSPointerDown but e.type==pointerdown
             return isMsPointerSupported;
+        },
+
+        /**
+         * whether support microsoft pointer event (ie11).
+         * @type {Boolean}
+         */
+        isPointerSupported: function () {
+            // ie
+            return isPointerSupported;
         },
 
         /**
@@ -5455,7 +5479,7 @@ var KISSY = (function (undefined) {
     var doc = S.Env.host && S.Env.host.document;
     // var logger = S.getLogger('s/loader');
     var Utils = S.Loader.Utils;
-    var TIMESTAMP = '20131121170756';
+    var TIMESTAMP = '20131121231329';
     var defaultComboPrefix = '??';
     var defaultComboSep = ',';
 

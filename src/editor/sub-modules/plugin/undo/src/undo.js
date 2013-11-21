@@ -3,7 +3,11 @@
  * undo button
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/undo", function (S, Editor, Btn, cmd) {
+KISSY.add(function (S, require) {
+        var Editor = require('editor');
+        var Btn = require('./undo/btn');
+        var cmd = require('./undo/cmd');
+    require('./button');
     function undo() {
     }
 
@@ -26,6 +30,4 @@ KISSY.add("editor/plugin/undo", function (S, Editor, Btn, cmd) {
     });
 
     return undo;
-}, {
-    requires: ['editor', './undo/btn', './undo/cmd']
 });

@@ -3,7 +3,12 @@
  * video button.
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/video", function (S, Editor, flashUtils, FlashBaseClass, fakeObjects) {
+KISSY.add(function (S, require) {
+    var Editor = require('editor');
+    var flashUtils = require('./flash-common/utils');
+    var FlashBaseClass = require('./flash-common/base-class');
+    var fakeObjects = require('./fake-objects');
+    require('./button');
     var CLS_VIDEO = "ke_video",
         TYPE_VIDEO = "video";
 
@@ -120,7 +125,4 @@ KISSY.add("editor/plugin/video", function (S, Editor, flashUtils, FlashBaseClass
     });
 
     return video;
-}, {
-    requires: ['editor', './flash-common/utils',
-        './flash-common/base-class', './fake-objects']
 });

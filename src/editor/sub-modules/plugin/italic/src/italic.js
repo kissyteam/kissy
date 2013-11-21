@@ -3,18 +3,21 @@
  * italic button.
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/italic", function (S, Editor, ui, cmd) {
+KISSY.add(function (S, require) {
+    var ui = require('./font/ui');
+    var cmd = require('./italic/cmd');
+    require('./button');
     function italic() {
 
     }
 
     S.augment(italic, {
-        pluginRenderUI:function (editor) {
+        pluginRenderUI: function (editor) {
             cmd.init(editor);
 
             editor.addButton("italic", {
-                cmdType:'italic',
-                tooltip:"斜体 "
+                cmdType: 'italic',
+                tooltip: "斜体 "
             }, ui.Button);
 
             editor.docReady(function () {
@@ -29,6 +32,4 @@ KISSY.add("editor/plugin/italic", function (S, Editor, ui, cmd) {
     });
 
     return italic;
-}, {
-    requires:['editor', './font/ui', './italic/cmd']
 });

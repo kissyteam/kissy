@@ -3,7 +3,13 @@
  * Add flash plugin.
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/flash", function (S, Editor, FlashBaseClass, flashUtils, fakeObjects) {
+KISSY.add(function (S, require) {
+    var Editor = require('editor');
+    var FlashBaseClass = require('./flash-common/base-class');
+    var flashUtils = require('./flash-common/utils');
+    var fakeObjects = require('./fake-objects');
+    require('./button');
+
     var CLS_FLASH = 'ke_flash',
         TYPE_FLASH = 'flash';
 
@@ -86,6 +92,4 @@ KISSY.add("editor/plugin/flash", function (S, Editor, FlashBaseClass, flashUtils
     });
 
     return FlashPlugin;
-}, {
-    requires: ['editor', './flash-common/base-class', './flash-common/utils', './fake-objects']
 });

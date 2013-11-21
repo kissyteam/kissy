@@ -3,7 +3,11 @@
  * link editor support for kissy editor ,innovation from google doc and ckeditor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/link", function (S, Editor, Bubble, Utils, DialogLoader) {
+KISSY.add(function (S,require) {
+    require('./button');
+    require('./bubble');
+    var Editor=require('editor');
+    var DialogLoader = require('./dialog-loader');
     var $ = S.all,
         tipHTML = '<a ' +
             'href="" '
@@ -97,7 +101,4 @@ KISSY.add("editor/plugin/link", function (S, Editor, Bubble, Utils, DialogLoader
     });
 
     return LinkPlugin;
-}, {
-    requires: ['editor', './bubble',
-        './link/utils', './dialog-loader', './button']
 });

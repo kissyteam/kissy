@@ -3,7 +3,11 @@
  * insert program code
  * @author yiminghe@gmail.com
  */
-KISSY.add('editor/plugin/code', function (S, Editor,DialogLoader) {
+KISSY.add(function (S, require) {
+    var Editor = require('editor');
+    require('./button');
+    var DialogLoader = require('./dialog-loader');
+
     function CodePlugin() {
 
     }
@@ -23,6 +27,4 @@ KISSY.add('editor/plugin/code', function (S, Editor,DialogLoader) {
     });
 
     return CodePlugin;
-}, {
-    requires: ['editor','./dialog-loader']
 });

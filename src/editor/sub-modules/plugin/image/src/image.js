@@ -3,7 +3,12 @@
  * insert image for kissy editor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/image", function (S,Event, Editor, Button, Bubble, ContextMenu, DialogLoader) {
+KISSY.add(function (S,require) {
+    require('./button');
+    var Editor=require('editor');
+    require('./bubble');
+    var DialogLoader = require('./dialog-loader');
+
     var UA = S.UA,
         Node = KISSY.NodeList,
         $ = S.all,
@@ -108,7 +113,7 @@ KISSY.add("editor/plugin/image", function (S,Event, Editor, Button, Bubble, Cont
             });
 
             editor.docReady(function () {
-                Event.on(editor.get("document")[0], "dblclick", function (ev) {
+                editor.get("document").on("dblclick", function (ev) {
                     ev.halt();
                     var t = $(ev.target);
                     if (checkImg(t)) {
@@ -160,12 +165,4 @@ KISSY.add("editor/plugin/image", function (S,Event, Editor, Button, Bubble, Cont
     });
 
     return ImagePlugin;
-}, {
-    requires: [
-        'event',
-        'editor',
-        './button',
-        './bubble',
-        './contextmenu',
-        './dialog-loader']
 });

@@ -3,7 +3,10 @@
  * fakeObjects for music ,video,flash
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/fake-objects", function (S, Editor, HtmlParser) {
+KISSY.add(function (S, require) {
+    var Editor = require('editor');
+    var HtmlParser = require('html-parser');
+
     var Node = S.Node,
         Dom = S.DOM,
         Utils = Editor.Utils,
@@ -60,7 +63,7 @@ KISSY.add("editor/plugin/fake-objects", function (S, Editor, HtmlParser) {
 
     var htmlFilterRules = {
         tags: {
-           // 生成最终html时，从编辑器html转化把fake替换为真实，并将style的width,height搞到属性上去
+            // 生成最终html时，从编辑器html转化把fake替换为真实，并将style的width,height搞到属性上去
             $: function (element) {
                 var realHTML = element.getAttribute("_ke_realelement");
 
@@ -128,7 +131,7 @@ KISSY.add("editor/plugin/fake-objects", function (S, Editor, HtmlParser) {
                 },
 
 
-               // 从外边真实的html，转为为编辑器代码支持的替换元素
+                // 从外边真实的html，转为为编辑器代码支持的替换元素
                 createFakeParserElement: function (realElement, className, realElementType, isResizable, attrs) {
                     var html = HtmlParser.serialize(realElement);
                     var style = realElement.getAttribute("style") || '';
@@ -166,6 +169,4 @@ KISSY.add("editor/plugin/fake-objects", function (S, Editor, HtmlParser) {
             });
         }
     };
-}, {
-    requires: ["editor", 'html-parser']
 });

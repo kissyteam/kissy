@@ -3,9 +3,9 @@
  * preview for kissy editor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/preview", function (S) {
+KISSY.add(function (S,require) {
     var win = window;
-
+    require('./button');
     function Preview() {
     }
 

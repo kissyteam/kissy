@@ -3,8 +3,11 @@
  * BaseClass for Flash Based plugin.
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/flash-common/base-class", function (S, Editor, Base, ContextMenu, Bubble, DialogLoader, flashUtils) {
+KISSY.add(function (S, require) {
+    var flashUtils = require('./utils');
+    var Base = require('base');
     var Node = S.Node;
+    require('../bubble');
 
     var tipHTML = ' <a ' +
         'class="{prefixCls}editor-bubble-url" ' +
@@ -149,9 +152,4 @@ KISSY.add("editor/plugin/flash-common/base-class", function (S, Editor, Base, Co
             contextMenuHandlers: {}
         }
     });
-}, {
-    requires: ['editor',
-        'base' ,
-        '../contextmenu',
-        '../bubble', '../dialog-loader', './utils']
 });

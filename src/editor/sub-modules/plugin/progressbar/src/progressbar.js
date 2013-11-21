@@ -3,8 +3,8 @@
  * progressbar ui
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/progressbar", function(S,Base) {
-    var Node = S.Node;
+KISSY.add(function (S, require) {
+    var Base = require('base');
 
     return Base.extend({
         destroy:function() {
@@ -70,6 +70,4 @@ KISSY.add("editor/plugin/progressbar", function(S,Base) {
             }
         }
     });
-},{
-    requires:['base']
 });

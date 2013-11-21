@@ -3,7 +3,9 @@
  * bold command.
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/bold/cmd", function (S, Editor, Cmd) {
+KISSY.add(function (S, require) {
+    var Editor=require('editor');
+    var Cmd=require('../font/cmd');
     var BOLD_STYLE = new Editor.Style({
         element:'strong',
         overrides:[
@@ -23,6 +25,4 @@ KISSY.add("editor/plugin/bold/cmd", function (S, Editor, Cmd) {
             Cmd.addButtonCmd(editor, "bold", BOLD_STYLE);
         }
     }
-}, {
-    requires:['editor', '../font/cmd']
 });

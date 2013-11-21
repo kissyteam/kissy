@@ -3,7 +3,10 @@
  * Add maximizeWindow/restoreWindow to Editor.
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/maximize/cmd", function (S, Event, Editor) {
+KISSY.add(function (S, require) {
+        var Editor=require('editor');
+        var Event=require('event');
+
     var UA = S.UA,
         ie = UA['ie'],
         doc = document,
@@ -317,6 +320,4 @@ KISSY.add("editor/plugin/maximize/cmd", function (S, Event, Editor) {
             }
         }
     };
-}, {
-    requires: ['event', 'editor']
 });

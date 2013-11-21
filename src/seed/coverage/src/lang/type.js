@@ -302,71 +302,71 @@ if (! _$jscoverage['/lang/type.js'].branchData) {
   _$jscoverage['/lang/type.js'].branchData['175'][1] = new BranchData();
 }
 _$jscoverage['/lang/type.js'].branchData['175'][1].init(4631, 26, 'Array.isArray || S.isArray');
-function visit305_175_1(result) {
+function visit308_175_1(result) {
   _$jscoverage['/lang/type.js'].branchData['175'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/type.js'].branchData['172'][1].init(20, 15, 'S.type(o) == lc');
-function visit304_172_1(result) {
+function visit307_172_1(result) {
   _$jscoverage['/lang/type.js'].branchData['172'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/type.js'].branchData['97'][1].init(2537, 9, '\'@DEBUG@\'');
-function visit303_97_1(result) {
+function visit306_97_1(result) {
   _$jscoverage['/lang/type.js'].branchData['97'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/type.js'].branchData['93'][2].init(1023, 17, 'key === undefined');
-function visit302_93_2(result) {
+function visit305_93_2(result) {
   _$jscoverage['/lang/type.js'].branchData['93'][2].ranCondition(result);
   return result;
 }_$jscoverage['/lang/type.js'].branchData['93'][1].init(1023, 45, 'key === undefined || hasOwnProperty(obj, key)');
-function visit301_93_1(result) {
+function visit304_93_1(result) {
   _$jscoverage['/lang/type.js'].branchData['93'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/type.js'].branchData['78'][2].init(122, 97, '!hasOwnProperty(obj, "constructor") && !hasOwnProperty(objConstructor.prototype, "isPrototypeOf")');
-function visit300_78_2(result) {
+function visit303_78_2(result) {
   _$jscoverage['/lang/type.js'].branchData['78'][2].ranCondition(result);
   return result;
 }_$jscoverage['/lang/type.js'].branchData['78'][1].init(85, 134, '(objConstructor = obj.constructor) && !hasOwnProperty(obj, "constructor") && !hasOwnProperty(objConstructor.prototype, "isPrototypeOf")');
-function visit299_78_1(result) {
+function visit302_78_1(result) {
   _$jscoverage['/lang/type.js'].branchData['78'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/type.js'].branchData['70'][5].init(284, 17, 'obj.window == obj');
-function visit298_70_5(result) {
+function visit301_70_5(result) {
   _$jscoverage['/lang/type.js'].branchData['70'][5].ranCondition(result);
   return result;
 }_$jscoverage['/lang/type.js'].branchData['70'][4].init(268, 33, 'obj.nodeType || obj.window == obj');
-function visit297_70_4(result) {
+function visit300_70_4(result) {
   _$jscoverage['/lang/type.js'].branchData['70'][4].ranCondition(result);
   return result;
 }_$jscoverage['/lang/type.js'].branchData['70'][3].init(240, 24, 'S.type(obj) !== "object"');
-function visit296_70_3(result) {
+function visit299_70_3(result) {
   _$jscoverage['/lang/type.js'].branchData['70'][3].ranCondition(result);
   return result;
 }_$jscoverage['/lang/type.js'].branchData['70'][2].init(240, 61, 'S.type(obj) !== "object" || obj.nodeType || obj.window == obj');
-function visit295_70_2(result) {
+function visit298_70_2(result) {
   _$jscoverage['/lang/type.js'].branchData['70'][2].ranCondition(result);
   return result;
 }_$jscoverage['/lang/type.js'].branchData['70'][1].init(232, 69, '!obj || S.type(obj) !== "object" || obj.nodeType || obj.window == obj');
-function visit294_70_1(result) {
+function visit297_70_1(result) {
   _$jscoverage['/lang/type.js'].branchData['70'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/type.js'].branchData['54'][1].init(21, 15, 'p !== undefined');
-function visit293_54_1(result) {
+function visit296_54_1(result) {
   _$jscoverage['/lang/type.js'].branchData['54'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/type.js'].branchData['45'][1].init(20, 15, 'o === undefined');
-function visit292_45_1(result) {
+function visit295_45_1(result) {
   _$jscoverage['/lang/type.js'].branchData['45'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/type.js'].branchData['36'][1].init(20, 10, 'o === null');
-function visit291_36_1(result) {
+function visit294_36_1(result) {
   _$jscoverage['/lang/type.js'].branchData['36'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/type.js'].branchData['27'][1].init(55, 40, 'class2type[toString.call(o)] || \'object\'');
-function visit290_27_1(result) {
+function visit293_27_1(result) {
   _$jscoverage['/lang/type.js'].branchData['27'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/type.js'].branchData['25'][1].init(20, 9, 'o == null');
-function visit289_25_1(result) {
+function visit292_25_1(result) {
   _$jscoverage['/lang/type.js'].branchData['25'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/type.js'].lineData[7]++;
@@ -385,24 +385,24 @@ function visit289_25_1(result) {
   type: function(o) {
   _$jscoverage['/lang/type.js'].functionData[2]++;
   _$jscoverage['/lang/type.js'].lineData[25]++;
-  return visit289_25_1(o == null) ? String(o) : visit290_27_1(class2type[toString.call(o)] || 'object');
+  return visit292_25_1(o == null) ? String(o) : visit293_27_1(class2type[toString.call(o)] || 'object');
 }, 
   isNull: function(o) {
   _$jscoverage['/lang/type.js'].functionData[3]++;
   _$jscoverage['/lang/type.js'].lineData[36]++;
-  return visit291_36_1(o === null);
+  return visit294_36_1(o === null);
 }, 
   isUndefined: function(o) {
   _$jscoverage['/lang/type.js'].functionData[4]++;
   _$jscoverage['/lang/type.js'].lineData[45]++;
-  return visit292_45_1(o === undefined);
+  return visit295_45_1(o === undefined);
 }, 
   isEmptyObject: function(o) {
   _$jscoverage['/lang/type.js'].functionData[5]++;
   _$jscoverage['/lang/type.js'].lineData[53]++;
   for (var p in o) {
     _$jscoverage['/lang/type.js'].lineData[54]++;
-    if (visit293_54_1(p !== undefined)) {
+    if (visit296_54_1(p !== undefined)) {
       _$jscoverage['/lang/type.js'].lineData[55]++;
       return FALSE;
     }
@@ -413,7 +413,7 @@ function visit289_25_1(result) {
   isPlainObject: function(obj) {
   _$jscoverage['/lang/type.js'].functionData[6]++;
   _$jscoverage['/lang/type.js'].lineData[70]++;
-  if (visit294_70_1(!obj || visit295_70_2(visit296_70_3(S.type(obj) !== "object") || visit297_70_4(obj.nodeType || visit298_70_5(obj.window == obj))))) {
+  if (visit297_70_1(!obj || visit298_70_2(visit299_70_3(S.type(obj) !== "object") || visit300_70_4(obj.nodeType || visit301_70_5(obj.window == obj))))) {
     _$jscoverage['/lang/type.js'].lineData[71]++;
     return FALSE;
   }
@@ -422,7 +422,7 @@ function visit289_25_1(result) {
   _$jscoverage['/lang/type.js'].lineData[76]++;
   try {
     _$jscoverage['/lang/type.js'].lineData[78]++;
-    if (visit299_78_1((objConstructor = obj.constructor) && visit300_78_2(!hasOwnProperty(obj, "constructor") && !hasOwnProperty(objConstructor.prototype, "isPrototypeOf")))) {
+    if (visit302_78_1((objConstructor = obj.constructor) && visit303_78_2(!hasOwnProperty(obj, "constructor") && !hasOwnProperty(objConstructor.prototype, "isPrototypeOf")))) {
       _$jscoverage['/lang/type.js'].lineData[79]++;
       return FALSE;
     }
@@ -434,10 +434,10 @@ function visit289_25_1(result) {
   for (key in obj) {
   }
   _$jscoverage['/lang/type.js'].lineData[93]++;
-  return visit301_93_1(visit302_93_2(key === undefined) || hasOwnProperty(obj, key));
+  return visit304_93_1(visit305_93_2(key === undefined) || hasOwnProperty(obj, key));
 }});
   _$jscoverage['/lang/type.js'].lineData[97]++;
-  if (visit303_97_1('@DEBUG@')) {
+  if (visit306_97_1('@DEBUG@')) {
     _$jscoverage['/lang/type.js'].lineData[98]++;
     S.mix(S, {
   isBoolean: noop, 
@@ -458,9 +458,9 @@ function visit289_25_1(result) {
   S['is' + name] = function(o) {
   _$jscoverage['/lang/type.js'].functionData[8]++;
   _$jscoverage['/lang/type.js'].lineData[172]++;
-  return visit304_172_1(S.type(o) == lc);
+  return visit307_172_1(S.type(o) == lc);
 };
 });
   _$jscoverage['/lang/type.js'].lineData[175]++;
-  S.isArray = visit305_175_1(Array.isArray || S.isArray);
+  S.isArray = visit308_175_1(Array.isArray || S.isArray);
 })(KISSY);

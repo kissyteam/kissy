@@ -3,7 +3,10 @@
  * Add ul/ol button.
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/unordered-list", function (S, Editor, ListButton, ListCmd) {
+KISSY.add(function (S, require) {
+    var ListButton = require('./list-utils/btn');
+    var ListCmd = require('./unordered-list/cmd');
+
     function unorderedList() {
     }
 
@@ -15,7 +18,7 @@ KISSY.add("editor/plugin/unordered-list", function (S, Editor, ListButton, ListC
                 cmdType: "insertUnorderedList",
                 buttonId: 'unorderedList',
                 menu: {
-                    width:75,
+                    width: 75,
                     children: [
                         {
                             content: '● 圆点',
@@ -37,6 +40,4 @@ KISSY.add("editor/plugin/unordered-list", function (S, Editor, ListButton, ListC
     });
 
     return unorderedList;
-}, {
-    requires: ['editor', './list-utils/btn', './unordered-list/cmd']
 });

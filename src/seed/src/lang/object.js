@@ -12,6 +12,7 @@
         TRUE = true,
         EMPTY = '',
         Obj = Object,
+        logger = S.getLogger('s/lang'),
         ObjectCreate = Obj.create,
     // error in native ie678, not in simulated ie9
         hasEnumBug = !({toString: 1}['propertyIsEnumerable']('toString')),
@@ -203,8 +204,16 @@
          * @member KISSY
          */
         extend: function (r, s, px, sx) {
-            if (!s || !r) {
-                return r;
+            if ('@DEBUG@') {
+                if (!r) {
+                    logger.error('extend r is null');
+                }
+                if (!s) {
+                    logger.error('extend s is null');
+                }
+                if (!s || !r) {
+                    return r;
+                }
             }
 
             var sp = s.prototype,

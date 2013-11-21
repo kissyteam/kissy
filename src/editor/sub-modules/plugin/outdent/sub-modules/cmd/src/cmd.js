@@ -3,16 +3,19 @@
  * Add indent and outdent command identifier for KISSY Editor.
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/outdent/cmd", function (S, Editor, dentUtils) {
+KISSY.add(function (S, require) {
+    var Editor = require('editor');
+    var dentUtils = require('../dent-cmd');
+
     var addCommand = dentUtils.addCommand;
     var checkOutdentActive = dentUtils.checkOutdentActive;
     return {
-        init:function (editor) {
+        init: function (editor) {
             addCommand(editor, "outdent");
             var queryCmd = Editor.Utils.getQueryCmd("outdent");
             if (!editor.hasCommand(queryCmd)) {
                 editor.addCommand(queryCmd, {
-                    exec:function (editor) {
+                    exec: function (editor) {
                         var selection = editor.getSelection();
                         if (selection && !selection.isInvalid) {
                             var startElement = selection.getStartElement();
@@ -24,7 +27,4 @@ KISSY.add("editor/plugin/outdent/cmd", function (S, Editor, dentUtils) {
             }
         }
     };
-
-}, {
-    requires:['editor', '../dent-cmd']
 });

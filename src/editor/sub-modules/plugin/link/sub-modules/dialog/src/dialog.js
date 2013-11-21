@@ -3,7 +3,12 @@
  * link dialog
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/link/dialog", function (S, Editor, Dialog4E, Utils) {
+KISSY.add(function (S, require) {
+        var Editor = require('editor');
+        var Dialog4E = require('../dialog');
+        var Utils = require('./utils');
+
+
     var _ke_saved_href = Utils._ke_saved_href,
         bodyHTML = "<div style='padding:20px 20px 0 20px'>" +
             "<p>" +
@@ -130,6 +135,4 @@ KISSY.add("editor/plugin/link/dialog", function (S, Editor, Dialog4E, Utils) {
         }
     });
     return LinkDialog;
-}, {
-    requires:['editor', '../dialog', './utils']
 });

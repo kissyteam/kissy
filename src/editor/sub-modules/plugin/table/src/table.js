@@ -3,7 +3,11 @@
  * Add table plugin for KISSY.
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/table", function (S, Editor, DialogLoader) {
+KISSY.add(function (S, require) {
+        var Editor = require('editor');
+        var DialogLoader = require('./dialog-loader');
+        require('./contextmenu');
+    require('./button');
     var UA = S.UA,
         Dom = S.DOM,
         Node = S.Node,
@@ -559,6 +563,4 @@ KISSY.add("editor/plugin/table", function (S, Editor, DialogLoader) {
     });
 
     return TablePlugin;
-}, {
-    requires:['editor', './dialog-loader', './contextmenu']
 });

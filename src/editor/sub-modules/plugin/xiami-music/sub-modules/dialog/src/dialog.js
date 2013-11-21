@@ -3,7 +3,12 @@
  * xiami-music dialog
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/xiami-music/dialog", function (S, Editor, FlashDialog, MenuButton) {
+KISSY.add(function (S, require) {
+        var Editor = require('editor');
+        var FlashDialog = require('../flash/dialog');
+        var MenuButton = require('../menubutton');
+
+
     var Dom = S.DOM,
         Node = S.Node,
         Utils = Editor.Utils,
@@ -359,10 +364,4 @@ KISSY.add("editor/plugin/xiami-music/dialog", function (S, Editor, FlashDialog, 
     }
 
     return XiamiMusicDialog;
-
-}, {
-    requires: [
-        'editor',
-        '../flash/dialog',
-        '../menubutton']
 });

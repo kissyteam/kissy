@@ -7,7 +7,7 @@
  Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.html or http://ckeditor.com/license
  */
-KISSY.add(function (S,require) {
+KISSY.add(function (S, require) {
     var Node = require('node');
     var Walker = require('./walker');
     var KERange = require('./range');
@@ -30,9 +30,8 @@ KISSY.add(function (S,require) {
         KES = Editor.SelectionType,
         KER = Editor.RangeType,
     // ie9 仍然采用老的 range api，发现新的不稳定
-        OLD_IE = UA['ie']; //!window.getSelection,
+        OLD_IE = UA['ie'] && UA.ie < 11; //!window.getSelection,
     //ElementPath = Editor.ElementPath;
-
     /**
      * selection normalizer class
      * @class KISSY.Editor.Selection

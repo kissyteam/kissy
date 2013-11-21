@@ -3,23 +3,23 @@
  * link utils
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/link/utils", function (S, Editor) {
-
+KISSY.add(function (S, require) {
+    var Editor = require('editor');
     var Node = S.Node,
         KEStyle = Editor.Style,
         _ke_saved_href = "_ke_saved_href",
         link_Style = {
-            element:'a',
-            attributes:{
-                "href":"#(href)",
-                "title":"#(title)",
+            element: 'a',
+            attributes: {
+                "href": "#(href)",
+                "title": "#(title)",
                 // ie < 8 会把锚点地址修改，以及相对地址改为绝对地址
                 // 1. 编辑器位于 http://x.com/edit.htm
                 // 2. 用户输入 ./a.htm
                 // 3. 生成为 <a href='http://x.com/a.htm'>
                 // 另一个问题 refer: http://stackoverflow.com/questions/687552/prevent-tinymce-internet-explorer-from-converting-urls-to-links
-                "_ke_saved_href":"#(_ke_saved_href)",
-                target:"#(target)"
+                "_ke_saved_href": "#(_ke_saved_href)",
+                target: "#(target)"
             }
         };
 
@@ -83,10 +83,8 @@ KISSY.add("editor/plugin/link/utils", function (S, Editor) {
 
 
     return {
-        removeLink:removeLink,
-        applyLink:applyLink,
-        _ke_saved_href:_ke_saved_href
+        removeLink: removeLink,
+        applyLink: applyLink,
+        _ke_saved_href: _ke_saved_href
     }
-}, {
-    requires:['editor']
 });

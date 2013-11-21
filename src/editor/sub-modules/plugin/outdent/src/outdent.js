@@ -3,7 +3,10 @@
  * Add indent button.
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/outdent", function (S, Editor, indexCmd) {
+KISSY.add(function (S, require) {
+        var Editor = require('editor');
+    require('./button');
+        var indexCmd = require('./outdent/cmd');
     function outdent() {
 
     }
@@ -42,6 +45,4 @@ KISSY.add("editor/plugin/outdent", function (S, Editor, indexCmd) {
     });
 
     return outdent;
-}, {
-    requires:['editor', './outdent/cmd']
 });

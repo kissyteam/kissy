@@ -3,7 +3,10 @@
  * justifyCenter button.
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/justify-center", function (S, Editor, justifyCenterCmd) {
+KISSY.add(function (S, require) {
+    var Editor = require('editor');
+    var justifyCenterCmd = require('./justify-center/cmd');
+    require('./button');
     function exec() {
         var editor = this.get("editor");
         editor.execCommand("justifyCenter");
@@ -14,14 +17,14 @@ KISSY.add("editor/plugin/justify-center", function (S, Editor, justifyCenterCmd)
     }
 
     S.augment(justifyCenter, {
-        pluginRenderUI:function (editor) {
+        pluginRenderUI: function (editor) {
             justifyCenterCmd.init(editor);
             editor.addButton("justifyCenter", {
-                tooltip:"居中对齐",
-                checkable:true,
-                listeners:{
-                    click:exec,
-                    afterSyncUI:function () {
+                tooltip: "居中对齐",
+                checkable: true,
+                listeners: {
+                    click: exec,
+                    afterSyncUI: function () {
                         var self = this;
                         editor.on("selectionChange", function () {
                             if (editor.get("mode") == Editor.Mode.SOURCE_MODE) {
@@ -35,7 +38,7 @@ KISSY.add("editor/plugin/justify-center", function (S, Editor, justifyCenterCmd)
                         });
                     }
                 },
-                mode:Editor.Mode.WYSIWYG_MODE
+                mode: Editor.Mode.WYSIWYG_MODE
             });
 
 
@@ -51,6 +54,4 @@ KISSY.add("editor/plugin/justify-center", function (S, Editor, justifyCenterCmd)
     });
 
     return justifyCenter;
-}, {
-    requires:['editor', './justify-center/cmd']
 });

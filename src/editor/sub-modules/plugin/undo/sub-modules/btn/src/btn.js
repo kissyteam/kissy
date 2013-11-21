@@ -3,8 +3,9 @@
  * undo button
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/undo/btn", function (S, Editor, Button) {
-
+KISSY.add(function (S, require) {
+    var Button = require('../button');
+    var Editor = require('editor');
     var UndoBtn = Button.extend({
 
         __lock: true,
@@ -92,7 +93,4 @@ KISSY.add("editor/plugin/undo/btn", function (S, Editor, Button) {
         RedoBtn: RedoBtn,
         UndoBtn: UndoBtn
     };
-
-}, {
-    requires: ['editor', '../button']
 });

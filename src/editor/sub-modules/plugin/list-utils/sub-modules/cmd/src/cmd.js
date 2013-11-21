@@ -3,7 +3,9 @@
  * Add ul and ol command identifier for KISSY Editor.
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/list-utils/cmd", function (S, Editor, ListUtils, undefined) {
+KISSY.add(function (S, require) {
+    var Editor = require('editor');
+    var ListUtils = require('../list-utils');
 
     var insertUnorderedList = "insertUnorderedList",
         insertOrderedList = "insertOrderedList",
@@ -22,7 +24,7 @@ KISSY.add("editor/plugin/list-utils/cmd", function (S, Editor, ListUtils, undefi
 
     ListCommand.prototype = {
 
-        constructor:ListCommand,
+        constructor: ListCommand,
 
         changeListType: function (editor, groupObj, database, listsCreated, listStyleType) {
             // This case is easy...
@@ -382,12 +384,8 @@ KISSY.add("editor/plugin/list-utils/cmd", function (S, Editor, ListUtils, undefi
         return false;
     }
 
-
     return {
         ListCommand: ListCommand,
         queryActive: queryActive
     };
-
-}, {
-    requires: ['editor', '../list-utils']
 });

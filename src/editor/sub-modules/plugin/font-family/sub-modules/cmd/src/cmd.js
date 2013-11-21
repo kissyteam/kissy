@@ -3,28 +3,27 @@
  * fontFamily command.
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/font-family/cmd", function (S, Editor, Cmd) {
+KISSY.add(function (S, require) {
+    var Cmd = require('../font/cmd');
+
     var fontFamilyStyle = {
-        element:'span',
-        styles:{
-            'font-family':'#(value)'
+        element: 'span',
+        styles: {
+            'font-family': '#(value)'
         },
-        overrides:[
+        overrides: [
             {
-                element:'font',
-                attributes:{
-                    'face':null
+                element: 'font',
+                attributes: {
+                    'face': null
                 }
             }
         ]
     };
 
     return {
-        init:function (editor) {
+        init: function (editor) {
             Cmd.addSelectCmd(editor, "fontFamily", fontFamilyStyle);
         }
     };
-
-}, {
-    requires:['editor', '../font/cmd']
 });

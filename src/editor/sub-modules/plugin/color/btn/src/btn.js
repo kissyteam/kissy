@@ -3,7 +3,12 @@
  * color button.
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/color/btn", function (S, Editor, Button, Overlay4E, DialogLoader) {
+KISSY.add(function (S, require) {
+    var Editor = require('editor');
+    var Button = require('../button');
+    var Overlay4E = require('../overlay');
+    var DialogLoader = require('../dialog-loader');
+
     var Node = S.Node;
 
     var COLORS = [
@@ -204,6 +209,4 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, Button, Overlay4E, Dia
     };
 
     return ColorButton;
-}, {
-    requires: ['editor', '../button', '../overlay', '../dialog-loader']
 });

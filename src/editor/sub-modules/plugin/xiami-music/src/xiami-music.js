@@ -3,7 +3,13 @@
  * xiami-music button
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/xiami-music", function (S, Editor, FlashBaseClass, flashUtils, fakeObjects) {
+KISSY.add(function (S, require) {
+    var Editor = require('editor');
+    var FlashBaseClass = require('./flash-common/base-class');
+    var flashUtils = require('./flash-common/utils');
+    var fakeObjects = require('./fake-objects');
+    require('./button');
+
     var CLS_XIAMI = "ke_xiami",
         TYPE_XIAMI = "xiami-music";
 
@@ -127,7 +133,4 @@ KISSY.add("editor/plugin/xiami-music", function (S, Editor, FlashBaseClass, flas
     });
 
     return XiamiMusicPlugin;
-}, {
-    requires: ['editor', './flash-common/base-class',
-        './flash-common/utils', './fake-objects']
 });

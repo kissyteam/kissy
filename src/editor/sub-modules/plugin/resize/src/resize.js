@@ -3,15 +3,16 @@
  * resize functionality
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/resize", function (S, Editor, DD) {
+KISSY.add(function (S, require) {
+    var DD = require('dd');
     var Node = S.Node;
 
     function Resize(config) {
-this.config=config||{};
+        this.config = config || {};
     }
 
     S.augment(Resize, {
-        pluginRenderUI:function (editor) {
+        pluginRenderUI: function (editor) {
             var Draggable = DD['Draggable'],
                 statusBarEl = editor.get("statusBarEl"),
                 textarea = editor.get("textarea"),
@@ -28,7 +29,7 @@ this.config=config||{};
                 }
             }
 
-            var resizer = new Node("<div class='"+editor.get('prefixCls')+
+            var resizer = new Node("<div class='" + editor.get('prefixCls') +
                 "editor-resizer' style='cursor: "
                 + cursor +
                 "'></div>").appendTo(statusBarEl);
@@ -43,8 +44,8 @@ this.config=config||{};
             });
 
             var d = new Draggable({
-                    node:resizer,
-                    groups:false
+                    node: resizer,
+                    groups: false
                 }),
                 height = 0,
                 width = 0,
@@ -56,7 +57,7 @@ this.config=config||{};
                 height = heightEl.height();
                 width = widthEl.width();
                 editor.fire("resizeStart");
-                dragStartMousePos= d.get('dragStartMousePos');
+                dragStartMousePos = d.get('dragStartMousePos');
             });
 
             d.on("drag", function (ev) {
@@ -79,6 +80,4 @@ this.config=config||{};
     });
 
     return Resize;
-}, {
-    requires:['editor', 'dd']
 });

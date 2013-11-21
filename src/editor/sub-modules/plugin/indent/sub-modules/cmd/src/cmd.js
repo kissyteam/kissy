@@ -3,14 +3,13 @@
  * Add indent and outdent command identifier for KISSY Editor.
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/indent/cmd", function (S, Editor, dentUtils) {
+KISSY.add(function (S, require) {
+    var dentUtils = require('../dent-cmd');
+
     var addCommand = dentUtils.addCommand;
     return {
-        init:function (editor) {
+        init: function (editor) {
             addCommand(editor, "indent");
         }
     };
-
-}, {
-    requires:['editor', '../dent-cmd']
 });

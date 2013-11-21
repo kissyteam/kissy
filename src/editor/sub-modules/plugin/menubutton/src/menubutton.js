@@ -3,7 +3,9 @@
  * select component for kissy editor.
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/menubutton", function (S, Editor, MenuButton) {
+KISSY.add(function (S, require) {
+        var Editor=require('editor');
+        var MenuButton=require('menubutton');
     /**
      * add select to editor toolbar
      * @param {String} id control id
@@ -46,6 +48,4 @@ KISSY.add("editor/plugin/menubutton", function (S, Editor, MenuButton) {
     };
 
     return MenuButton;
-}, {
-    requires: ['editor', 'menubutton']
 });

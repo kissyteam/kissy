@@ -3,8 +3,9 @@
  * load tpl from file in nodejs
  * @author yiminghe@gmail.com
  */
-KISSY.add('xtemplate/nodejs', function (S, XTemplate) {
+KISSY.add(function (S, require) {
     var fs = requireNode('fs');
+    var XTemplate = require('xtemplate');
     var cached = {};
 
     /**
@@ -55,6 +56,4 @@ KISSY.add('xtemplate/nodejs', function (S, XTemplate) {
             return tpl;
         }
     }
-}, {
-    requires: ['xtemplate']
 });

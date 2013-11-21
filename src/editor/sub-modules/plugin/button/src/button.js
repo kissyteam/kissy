@@ -3,7 +3,10 @@
  * Encapsulate KISSY toggle button for kissy editor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/button", function (S, Editor, Button) {
+KISSY.add(function (S, require) {
+    // 'editor', '../font/cmd'
+    var Editor=require('editor');
+    var Button=require('button');
     /**
      * add button to editor
      * @param {String} id control id
@@ -59,6 +62,4 @@ KISSY.add("editor/plugin/button", function (S, Editor, Button) {
     };
 
     return Button;
-}, {
-    requires: ['editor', 'button']
 });

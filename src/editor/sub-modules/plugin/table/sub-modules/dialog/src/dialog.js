@@ -3,7 +3,11 @@
  * table dialog
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/table/dialog", function (S, Editor, Dialog4E, MenuButton) {
+KISSY.add(function (S, require) {
+        var Editor = require('editor');
+        var Dialog4E = require('../dialog');
+        var MenuButton = require('../menubutton');
+
     var Node = S.Node,
         Dom = S.DOM,
         trim = S.trim,
@@ -476,6 +480,4 @@ KISSY.add("editor/plugin/table/dialog", function (S, Editor, Dialog4E, MenuButto
     });
 
     return TableDialog;
-}, {
-    requires: ['editor', '../dialog', '../menubutton']
 });

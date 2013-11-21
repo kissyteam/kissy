@@ -3,7 +3,8 @@
  * save and restore focus when overlay shows or hides
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/focus-fix", function (S, Editor) {
+KISSY.add(function (S, require) {
+    var Editor = require('editor');
     var UA = S.UA,
         focusManager = Editor.focusManager;
 
@@ -58,7 +59,7 @@ KISSY.add("editor/plugin/focus-fix", function (S, Editor) {
     }
 
     return {
-        init:function (self) {
+        init: function (self) {
             self.on("beforeVisibleChange", function (e) {
                 if (e.newVal) {
                     _show4FocusExt.call(self);
@@ -69,7 +70,4 @@ KISSY.add("editor/plugin/focus-fix", function (S, Editor) {
             });
         }
     };
-
-}, {
-    requires:['editor']
 });

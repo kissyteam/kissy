@@ -285,14 +285,15 @@ var KISSY = (function (undefined) {
 
     function getLogger(logger) {
         var obj = {};
-        S.each(loggerLevel, function (_, cat) {
-            obj[cat] = function (msg) {
-                return S.log(msg, cat, logger);
-            };
-        });
+        for (var cat in loggerLevel) {
+            (function (obj, cat) {
+                obj[cat] = function (msg) {
+                    return S.log(msg, cat, logger);
+                };
+            })(obj, cat);
+        }
         return obj;
     }
-
 
     /**
      * Logger level enum

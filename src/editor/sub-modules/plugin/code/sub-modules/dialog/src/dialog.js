@@ -3,10 +3,13 @@
  * insert program code dialog
  * @author yiminghe@gmail.com
  */
-KISSY.add('editor/plugin/code/dialog', function (S, Editor, Dialog4E, MenuButton) {
+KISSY.add(function (S, require) {
+    var Editor = require('editor');
+    var MenuButton = require('menubutton');
     var xhtml_dtd = Editor.XHTML_DTD;
     var NodeType = S.DOM.NodeType;
     var notWhitespaceEval = Editor.Walker.whitespaces(true);
+    var Dialog4E = require('../dialog');
 
     var codeTypes = [
             ['ActionScript3', 'as3'],
@@ -169,6 +172,4 @@ KISSY.add('editor/plugin/code/dialog', function (S, Editor, Dialog4E, MenuButton
     });
 
     return CodeDialog;
-}, {
-    requires: ['editor', '../dialog', 'menubutton']
 });

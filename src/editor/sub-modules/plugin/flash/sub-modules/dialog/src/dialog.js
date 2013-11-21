@@ -3,7 +3,13 @@
  * flash dialog
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/flash/dialog", function (S, Editor, flashUtils, Dialog4E, MenuButton) {
+KISSY.add(function (S, require) {
+    var Editor = require('editor');
+    var flashUtils = require('../flash-common/utils');
+    var Dialog4E = require('../dialog');
+    var MenuButton = require('../menubutton');
+
+
     var CLS_FLASH = 'ke_flash',
         TYPE_FLASH = 'flash',
         TIP = "请输入如 http://www.xxx.com/xxx.swf",
@@ -237,6 +243,4 @@ KISSY.add("editor/plugin/flash/dialog", function (S, Editor, flashUtils, Dialog4
     });
 
     return FlashDialog;
-}, {
-    requires: ['editor', '../flash-common/utils', '../dialog', '../menubutton']
 });

@@ -3,7 +3,8 @@
  * Add remove-format command for KISSY Editor.
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/remove-format/cmd", function (S, Editor) {
+KISSY.add(function (S, require) {
+    var Editor = require('editor');
     var KER = Editor.RangeType,
         ElementPath = Editor.ElementPath,
         Dom = S.DOM,
@@ -131,6 +132,4 @@ KISSY.add("editor/plugin/remove-format/cmd", function (S, Editor) {
         }
     }
 
-}, {
-    requires:['editor']
 });

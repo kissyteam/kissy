@@ -3,7 +3,10 @@
  * Add ul/ol button.
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/ordered-list", function (S, Editor, ListButton, ListCmd) {
+KISSY.add(function (S, require) {
+    var ListButton = require('./list-utils/btn');
+    var ListCmd = require('./ordered-list/cmd');
+
     function orderedList() {
     }
 
@@ -57,6 +60,4 @@ KISSY.add("editor/plugin/ordered-list", function (S, Editor, ListButton, ListCmd
     });
 
     return orderedList;
-}, {
-    requires: ['editor', './list-utils/btn', './ordered-list/cmd']
 });

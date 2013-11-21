@@ -3,7 +3,12 @@
  * font formatting for kissy editor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/font-size", function (S, Editor, ui, cmd) {
+KISSY.add(function (S, require) {
+        var Editor = require('editor');
+        var ui = require('./font/ui');
+        var cmd = require('./font-size/cmd');
+    require('./menubutton');
+
     function FontSizePlugin(config) {
         this.config = config || {};
     }
@@ -45,6 +50,4 @@ KISSY.add("editor/plugin/font-size", function (S, Editor, ui, cmd) {
     });
 
     return FontSizePlugin;
-}, {
-    requires:['editor', './font/ui', './font-size/cmd']
 });

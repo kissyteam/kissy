@@ -3,11 +3,14 @@
  * font formatting for kissy editor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/font/ui", function (S, Editor, Button, MenuButton) {
+KISSY.add(function (S, require) {
+    var Editor = require('editor');
+    var Button = require('../button');
+    var MenuButton = require('../menubutton');
 
     var FontSelect = MenuButton.Select.extend({
 
-        initializer:function () {
+        initializer: function () {
             var self = this,
                 editor = self.get("editor");
             self.on("click", function (ev) {
@@ -49,7 +52,7 @@ KISSY.add("editor/plugin/font/ui", function (S, Editor, Button, MenuButton) {
 
     var FontButton = Button.extend({
 
-        initializer:function () {
+        initializer: function () {
             var self = this,
                 editor = self.get("editor"),
                 cmdType = self.get("cmdType");
@@ -77,20 +80,18 @@ KISSY.add("editor/plugin/font/ui", function (S, Editor, Button, MenuButton) {
             });
         }
     }, {
-        ATTRS:{
-            checkable:{
-                value:true
+        ATTRS: {
+            checkable: {
+                value: true
             },
-            mode:{
-                value:Editor.Mode.WYSIWYG_MODE
+            mode: {
+                value: Editor.Mode.WYSIWYG_MODE
             }
         }
     });
 
     return {
-        Button:FontButton,
-        Select:FontSelect
+        Button: FontButton,
+        Select: FontSelect
     };
-}, {
-    requires:['editor', '../button', '../menubutton']
 });

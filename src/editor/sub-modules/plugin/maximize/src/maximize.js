@@ -3,7 +3,11 @@
  * Maximize plugin
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/maximize", function (S, Editor, maximizeCmd) {
+
+KISSY.add(function (S, require) {
+    var maximizeCmd = require('./maximize/cmd');
+    require('./button');
+
     var MAXIMIZE_CLASS = "maximize",
         RESTORE_CLASS = "restore",
         MAXIMIZE_TIP = "全屏",
@@ -14,12 +18,12 @@ KISSY.add("editor/plugin/maximize", function (S, Editor, maximizeCmd) {
     }
 
     S.augment(maximizePlugin, {
-        pluginRenderUI:function (editor) {
+        pluginRenderUI: function (editor) {
             maximizeCmd.init(editor);
             editor.addButton("maximize", {
-                tooltip:MAXIMIZE_TIP,
-                listeners:{
-                    click:function () {
+                tooltip: MAXIMIZE_TIP,
+                listeners: {
+                    click: function () {
                         var self = this;
                         var checked = self.get("checked");
                         if (checked) {
@@ -36,12 +40,10 @@ KISSY.add("editor/plugin/maximize", function (S, Editor, maximizeCmd) {
                     }
 
                 },
-                checkable:true
+                checkable: true
             });
         }
     });
 
     return maximizePlugin;
-}, {
-    requires:['editor', './maximize/cmd']
 });

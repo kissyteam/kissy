@@ -3,7 +3,15 @@
  * draft for kissy editor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/draft", function (S, Event,Json, Editor, localStorage, Overlay, MenuButton) {
+KISSY.add(function (S, require) {
+    var Editor = require('editor');
+    var Json = require('json');
+    var Event = require('event');
+    var localStorage = require('./local-storage');
+    var Overlay = require('overlay');
+    var MenuButton = require('./menubutton');
+
+
     var Node = S.Node,
         LIMIT = 5,
         INTERVAL = 5,
@@ -66,7 +74,7 @@ KISSY.add("editor/plugin/draft", function (S, Event,Json, Editor, localStorage, 
                 var str = localStorage.getItem(self._getSaveKey()),
                     drafts = [];
                 if (str) {
-                   // 原生 localStorage 必须串行化
+                    // 原生 localStorage 必须串行化
                     drafts = (localStorage == window.localStorage) ?
                         Json.parse(S.urlDecode(str)) : str;
                 }
@@ -375,6 +383,4 @@ KISSY.add("editor/plugin/draft", function (S, Event,Json, Editor, localStorage, 
     });
 
     return DraftPlugin;
-}, {
-    "requires": ['event','json', "editor", "./local-storage", "overlay", './menubutton']
 });

@@ -3,7 +3,10 @@
  * pagebreak functionality
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/page-break", function (S, Editor, fakeObjects) {
+KISSY.add(function (S, require) {
+    var Editor = require('editor');
+    var fakeObjects = require('./fake-objects');
+    require('./button');
     var Node = S.Node,
         CLS = "ke_pagebreak",
         TYPE = "div",
@@ -12,18 +15,19 @@ KISSY.add("editor/plugin/page-break", function (S, Editor, fakeObjects) {
             '<span style="DISPLAY:none">&nbsp;</span>' +
             '</div>';
 
-    function pageBreak() {}
+    function pageBreak() {
+    }
 
     S.augment(pageBreak, {
-        pluginRenderUI:function (editor) {
+        pluginRenderUI: function (editor) {
             fakeObjects.init(editor);
 
             var dataProcessor = editor.htmlDataProcessor,
                 dataFilter = dataProcessor && dataProcessor.dataFilter;
 
             dataFilter.addRules({
-                tags:{
-                    div:function (element) {
+                tags: {
+                    div: function (element) {
                         var style = element.getAttribute("style"),
                             child;
 
@@ -51,9 +55,9 @@ KISSY.add("editor/plugin/page-break", function (S, Editor, fakeObjects) {
             });
 
             editor.addButton("pageBreak", {
-                tooltip:"分页",
-                listeners:{
-                    click:function () {
+                tooltip: "分页",
+                listeners: {
+                    click: function () {
                         var real = new Node(PAGE_BREAK_MARKUP, null,
                                 editor.get("document")[0]),
                             substitute = editor.createFakeElement(real, CLS,
@@ -91,12 +95,10 @@ KISSY.add("editor/plugin/page-break", function (S, Editor, fakeObjects) {
                     }
 
                 },
-                mode:Editor.Mode.WYSIWYG_MODE
+                mode: Editor.Mode.WYSIWYG_MODE
             });
         }
     });
 
     return pageBreak;
-}, {
-    "requires":["editor", "./fake-objects"]
 });

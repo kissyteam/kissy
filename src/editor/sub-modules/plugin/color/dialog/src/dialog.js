@@ -3,7 +3,9 @@
  * color picker
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/color/dialog", function (S, Editor, Dialog4E) {
+KISSY.add(function (S, require) {
+    var Editor = require('editor');
+    var Dialog4E = require('../dialog');
     var map = S.map, Dom = S.DOM;
 
     //获取颜色数组
@@ -255,6 +257,4 @@ KISSY.add("editor/plugin/color/dialog", function (S, Editor, Dialog4E) {
     });
 
     return ColorPicker;
-}, {
-    requires: ['editor', '../dialog']
 });

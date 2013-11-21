@@ -3,7 +3,11 @@
  * simplified flash bridge for yui swf
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/flash-bridge", function (S, SWF, Editor,Event) {
+KISSY.add(function (S, require) {
+    var Editor = require('editor');
+    var SWF = require('swf');
+    var Event = require('event');
+
     var instances = {};
     var logger = S.getLogger('s/editor/plugin/flash-bridge');
 
@@ -107,6 +111,4 @@ KISSY.add("editor/plugin/flash-bridge", function (S, SWF, Editor,Event) {
     Editor.FlashBridge = FlashBridge;
 
     return FlashBridge;
-}, {
-    requires: ['swf', 'editor','event']
 });

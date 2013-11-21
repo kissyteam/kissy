@@ -3,7 +3,9 @@
  * bubble or tip view for kissy editor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/bubble", function (S, Overlay, Editor) {
+KISSY.add(function (S, require) {
+    var Overlay=require('overlay');
+    var Editor=require('editor');
     var undefined = {}['a'],
         logger= S.getLogger('s/editor'),
         BUBBLE_CFG = {
@@ -212,6 +214,4 @@ KISSY.add("editor/plugin/bubble", function (S, Overlay, Editor) {
             showImmediately();
         }
     };
-}, {
-    requires: ['overlay', 'editor']
 });

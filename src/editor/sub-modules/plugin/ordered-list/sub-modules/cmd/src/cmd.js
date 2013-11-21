@@ -3,7 +3,9 @@
  * orderedList command
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/ordered-list/cmd", function (S, Editor, listCmd) {
+KISSY.add(function (S, require) {
+        var Editor = require('editor');
+        var listCmd = require('../list-utils/cmd');
 
     var insertOrderedList = "insertOrderedList",
         ListCommand = listCmd.ListCommand,
@@ -37,7 +39,4 @@ KISSY.add("editor/plugin/ordered-list/cmd", function (S, Editor, listCmd) {
             }
         }
     };
-
-}, {
-    requires:['editor', '../list-utils/cmd']
 });

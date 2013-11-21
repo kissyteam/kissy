@@ -3,7 +3,7 @@
  * separator for button
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/separator", function (S) {
+KISSY.add(function (S) {
     function Separator() {
     }
 
@@ -17,6 +17,4 @@ KISSY.add("editor/plugin/separator", function (S) {
     });
 
     return Separator;
-}, {
-    requires:['editor']
 });

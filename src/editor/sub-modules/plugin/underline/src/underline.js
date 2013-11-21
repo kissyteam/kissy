@@ -3,17 +3,20 @@
  * underline button
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/underline", function (S, Editor, ui, cmd) {
+KISSY.add(function (S, require) {
+    var ui = require('./font/ui');
+    var cmd = require('./underline/cmd');
+    require('./button');
     function Underline() {
     }
 
     S.augment(Underline, {
-        pluginRenderUI:function (editor) {
+        pluginRenderUI: function (editor) {
             cmd.init(editor);
 
             editor.addButton("underline", {
-                cmdType:"underline",
-                tooltip:"下划线 "
+                cmdType: "underline",
+                tooltip: "下划线 "
             }, ui.Button);
 
             editor.docReady(function () {
@@ -28,6 +31,4 @@ KISSY.add("editor/plugin/underline", function (S, Editor, ui, cmd) {
     });
 
     return Underline;
-}, {
-    requires:['editor', './font/ui', './underline/cmd']
 });

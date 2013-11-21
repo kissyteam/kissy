@@ -294,7 +294,8 @@ KISSY.add(function (S, require,exports,module) {
             // refer : http://limu.iteye.com/blog/1136712
             if ('@DEBUG@') {
                 eval("SubClass = function " + CamelCase(name) + "(){ " +
-                    "this.callSuper.apply(this, arguments);}");
+                    "this.callSuper.apply(this, arguments);" +
+                    "}");
             } else {
                 SubClass = function () {
                     this.callSuper.apply(this, arguments);

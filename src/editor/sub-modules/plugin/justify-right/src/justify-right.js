@@ -3,7 +3,10 @@
  * justifyRight button.
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/justify-right", function (S, Editor, justifyCenterCmd) {
+KISSY.add(function (S, require) {
+    var Editor = require('editor');
+    var justifyCenterCmd = require('./justify-right/cmd');
+    require('./button');
     function exec() {
         var editor = this.get("editor");
         editor.execCommand("justifyRight");
@@ -15,16 +18,16 @@ KISSY.add("editor/plugin/justify-right", function (S, Editor, justifyCenterCmd) 
     }
 
     S.augment(justifyRight, {
-        pluginRenderUI:function (editor) {
+        pluginRenderUI: function (editor) {
 
             justifyCenterCmd.init(editor);
 
             editor.addButton("justifyRight", {
-                tooltip:"右对齐",
-                checkable:true,
-                listeners:{
-                    click:exec,
-                    afterSyncUI:function () {
+                tooltip: "右对齐",
+                checkable: true,
+                listeners: {
+                    click: exec,
+                    afterSyncUI: function () {
                         var self = this;
                         editor.on("selectionChange", function () {
                             if (editor.get("mode") == Editor.Mode.SOURCE_MODE) {
@@ -39,7 +42,7 @@ KISSY.add("editor/plugin/justify-right", function (S, Editor, justifyCenterCmd) 
                     }
 
                 },
-                mode:Editor.Mode.WYSIWYG_MODE
+                mode: Editor.Mode.WYSIWYG_MODE
             });
 
             editor.docReady(function () {
@@ -54,6 +57,4 @@ KISSY.add("editor/plugin/justify-right", function (S, Editor, justifyCenterCmd) 
     });
 
     return justifyRight;
-}, {
-    requires:['editor', './justify-right/cmd']
 });

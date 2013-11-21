@@ -3,15 +3,15 @@
  * foreColor command.
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/fore-color/cmd", function (S, cmd) {
-
+KISSY.add(function (S, require) {
+    var cmd = require('../color/cmd');
     var COLOR_STYLES = {
-        element:'span',
-        styles:{ 'color':'#(color)' },
-        overrides:[
-            { element:'font', attributes:{ 'color':null } }
+        element: 'span',
+        styles: { 'color': '#(color)' },
+        overrides: [
+            { element: 'font', attributes: { 'color': null } }
         ],
-        childRule:function (el) {
+        childRule: function (el) {
             // <span style='color:red'><a href='g.cn'>abcdefg</a></span>
             // 不起作用
             return !(el.nodeName() == "a" || el.all("a").length);
@@ -19,10 +19,10 @@ KISSY.add("editor/plugin/fore-color/cmd", function (S, cmd) {
     };
 
     return {
-        init:function (editor) {
+        init: function (editor) {
             if (!editor.hasCommand("foreColor")) {
                 editor.addCommand("foreColor", {
-                    exec:function (editor, c) {
+                    exec: function (editor, c) {
                         editor.execCommand("save");
                         cmd.applyColor(editor, c, COLOR_STYLES);
                         editor.execCommand("save");
@@ -31,7 +31,4 @@ KISSY.add("editor/plugin/fore-color/cmd", function (S, cmd) {
             }
         }
     };
-
-}, {
-    requires:['../color/cmd']
 });

@@ -3,7 +3,8 @@
  * undo,redo manager for kissy editor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/undo/cmd", function (S, Editor) {
+KISSY.add(function (S, require) {
+    var Editor = require('editor');
     var UA = S.UA,
         LIMIT = 30;
 
@@ -233,6 +234,4 @@ KISSY.add("editor/plugin/undo/cmd", function (S, Editor) {
             }
         }
     };
-}, {
-    requires: ['editor']
 });

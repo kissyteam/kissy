@@ -3,28 +3,27 @@
  * fontSize command.
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/font-size/cmd", function (S, Editor, Cmd) {
+KISSY.add(function (S, require) {
+    var Cmd = require('../font/cmd');
+
     var fontSizeStyle = {
-        element:'span',
-        styles:{
-            'font-size':'#(value)'
+        element: 'span',
+        styles: {
+            'font-size': '#(value)'
         },
-        overrides:[
+        overrides: [
             {
-                element:'font',
-                attributes:{
-                    'size':null
+                element: 'font',
+                attributes: {
+                    'size': null
                 }
             }
         ]
     };
 
     return {
-        init:function (editor) {
+        init: function (editor) {
             Cmd.addSelectCmd(editor, "fontSize", fontSizeStyle);
         }
     };
-
-}, {
-    requires:['editor', '../font/cmd']
 });

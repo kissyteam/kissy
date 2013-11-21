@@ -3,7 +3,10 @@
  * bold command.
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/bold", function (S, Editor, ui, cmd) {
+KISSY.add(function (S, require) {
+    var ui=require('./font/ui');
+    var cmd=require('./bold/cmd');
+    require('./button');
     function bold() {
     }
 
@@ -27,6 +30,4 @@ KISSY.add("editor/plugin/bold", function (S, Editor, ui, cmd) {
     });
 
     return bold;
-}, {
-    requires:['editor', './font/ui', './bold/cmd']
 });

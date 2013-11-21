@@ -3,7 +3,8 @@
  * flash utilities
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/flash-common/utils", function (S, SWF) {
+KISSY.add(function (S, require) {
+    var SWF = require('swf');
     var Dom = S.DOM,
 
         flashUtils = {
@@ -53,6 +54,4 @@ KISSY.add("editor/plugin/flash-common/utils", function (S, SWF) {
         };
 
     return flashUtils;
-}, {
-    requires: ['swf']
 });

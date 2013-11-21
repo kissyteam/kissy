@@ -300,35 +300,35 @@ if (! _$jscoverage['/lang/set-immediate.js'].branchData) {
   _$jscoverage['/lang/set-immediate.js'].branchData['50'][1] = new BranchData();
 }
 _$jscoverage['/lang/set-immediate.js'].branchData['50'][1].init(1066, 37, 'typeof MessageChannel !== "undefined"');
-function visit277_50_1(result) {
+function visit280_50_1(result) {
   _$jscoverage['/lang/set-immediate.js'].branchData['50'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/set-immediate.js'].branchData['46'][3].init(923, 38, 'typeof process.nextTick == \'function\'');
-function visit276_46_3(result) {
+function visit279_46_3(result) {
   _$jscoverage['/lang/set-immediate.js'].branchData['46'][3].ranCondition(result);
   return result;
 }_$jscoverage['/lang/set-immediate.js'].branchData['46'][2].init(889, 30, 'typeof process !== \'undefined\'');
-function visit275_46_2(result) {
+function visit278_46_2(result) {
   _$jscoverage['/lang/set-immediate.js'].branchData['46'][2].ranCondition(result);
   return result;
 }_$jscoverage['/lang/set-immediate.js'].branchData['46'][1].init(889, 72, 'typeof process !== \'undefined\' && typeof process.nextTick == \'function\'');
-function visit274_46_1(result) {
+function visit277_46_1(result) {
   _$jscoverage['/lang/set-immediate.js'].branchData['46'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/set-immediate.js'].branchData['42'][1].init(754, 34, 'typeof setImmediate === "function"');
-function visit273_42_1(result) {
+function visit276_42_1(result) {
   _$jscoverage['/lang/set-immediate.js'].branchData['42'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/set-immediate.js'].branchData['35'][1].init(37, 9, '!flushing');
-function visit272_35_1(result) {
+function visit275_35_1(result) {
   _$jscoverage['/lang/set-immediate.js'].branchData['35'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/set-immediate.js'].branchData['22'][1].init(305, 5, 'i > 1');
-function visit271_22_1(result) {
+function visit274_22_1(result) {
   _$jscoverage['/lang/set-immediate.js'].branchData['22'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/set-immediate.js'].branchData['16'][1].init(23, 12, 'e.stack || e');
-function visit270_16_1(result) {
+function visit273_16_1(result) {
   _$jscoverage['/lang/set-immediate.js'].branchData['16'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/set-immediate.js'].lineData[5]++;
@@ -351,7 +351,7 @@ function visit270_16_1(result) {
         item();
       }      catch (e) {
   _$jscoverage['/lang/set-immediate.js'].lineData[16]++;
-  S.log(visit270_16_1(e.stack || e), 'error');
+  S.log(visit273_16_1(e.stack || e), 'error');
   _$jscoverage['/lang/set-immediate.js'].lineData[17]++;
   setTimeout(function() {
   _$jscoverage['/lang/set-immediate.js'].functionData[2]++;
@@ -361,7 +361,7 @@ function visit270_16_1(result) {
 }
     }
     _$jscoverage['/lang/set-immediate.js'].lineData[22]++;
-    if (visit271_22_1(i > 1)) {
+    if (visit274_22_1(i > 1)) {
       _$jscoverage['/lang/set-immediate.js'].lineData[23]++;
       queue = [];
     }
@@ -374,7 +374,7 @@ function visit270_16_1(result) {
   _$jscoverage['/lang/set-immediate.js'].lineData[34]++;
   queue.push(fn);
   _$jscoverage['/lang/set-immediate.js'].lineData[35]++;
-  if (visit272_35_1(!flushing)) {
+  if (visit275_35_1(!flushing)) {
     _$jscoverage['/lang/set-immediate.js'].lineData[36]++;
     flushing = 1;
     _$jscoverage['/lang/set-immediate.js'].lineData[37]++;
@@ -384,7 +384,7 @@ function visit270_16_1(result) {
   _$jscoverage['/lang/set-immediate.js'].lineData[41]++;
   var requestFlush;
   _$jscoverage['/lang/set-immediate.js'].lineData[42]++;
-  if (visit273_42_1(typeof setImmediate === "function")) {
+  if (visit276_42_1(typeof setImmediate === "function")) {
     _$jscoverage['/lang/set-immediate.js'].lineData[43]++;
     requestFlush = function() {
   _$jscoverage['/lang/set-immediate.js'].functionData[4]++;
@@ -393,7 +393,7 @@ function visit270_16_1(result) {
 };
   } else {
     _$jscoverage['/lang/set-immediate.js'].lineData[46]++;
-    if (visit274_46_1(visit275_46_2(typeof process !== 'undefined') && visit276_46_3(typeof process.nextTick == 'function'))) {
+    if (visit277_46_1(visit278_46_2(typeof process !== 'undefined') && visit279_46_3(typeof process.nextTick == 'function'))) {
       _$jscoverage['/lang/set-immediate.js'].lineData[47]++;
       requestFlush = function() {
   _$jscoverage['/lang/set-immediate.js'].functionData[5]++;
@@ -402,7 +402,7 @@ function visit270_16_1(result) {
 };
     } else {
       _$jscoverage['/lang/set-immediate.js'].lineData[50]++;
-      if (visit277_50_1(typeof MessageChannel !== "undefined")) {
+      if (visit280_50_1(typeof MessageChannel !== "undefined")) {
         _$jscoverage['/lang/set-immediate.js'].lineData[53]++;
         var channel = new MessageChannel();
         _$jscoverage['/lang/set-immediate.js'].lineData[56]++;

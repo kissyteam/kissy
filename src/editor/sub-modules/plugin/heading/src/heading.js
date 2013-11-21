@@ -3,7 +3,11 @@
  * Heading plugin for KISSY.
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/heading", function (S, Editor, headingCmd) {
+KISSY.add(function (S, require) {
+    require('./menubutton');
+    var Editor=require('editor');
+    var headingCmd = require('./heading/cmd');
+
     function HeadingPlugin() {
 
     }
@@ -82,6 +86,4 @@ KISSY.add("editor/plugin/heading", function (S, Editor, headingCmd) {
     });
 
     return HeadingPlugin;
-}, {
-    requires: ['editor', './heading/cmd']
 });

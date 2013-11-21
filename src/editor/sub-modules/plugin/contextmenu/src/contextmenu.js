@@ -3,7 +3,11 @@
  * contextmenu for kissy editor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/contextmenu", function (S, Editor, Menu, focusFix,Event) {
+KISSY.add(function (S, require) {
+    var Editor = require('editor');
+    var Menu = require('menu');
+    var focusFix = require('./focus-fix');
+    var Event = require('event');
 
     Editor.prototype.addContextMenu = function (id, filter, cfg) {
 
@@ -90,6 +94,4 @@ KISSY.add("editor/plugin/contextmenu", function (S, Editor, Menu, focusFix,Event
 
         return menu;
     };
-}, {
-    requires: ['editor', 'menu', './focus-fix','event']
 });

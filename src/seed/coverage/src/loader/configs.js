@@ -323,59 +323,59 @@ if (! _$jscoverage['/loader/configs.js'].branchData) {
   _$jscoverage['/loader/configs.js'].branchData['91'][1] = new BranchData();
 }
 _$jscoverage['/loader/configs.js'].branchData['91'][1].init(94, 28, '!S.startsWith(base, \'file:\')');
-function visit375_91_1(result) {
+function visit378_91_1(result) {
   _$jscoverage['/loader/configs.js'].branchData['91'][1].ranCondition(result);
   return result;
 }_$jscoverage['/loader/configs.js'].branchData['86'][1].init(161, 17, 'simulatedLocation');
-function visit374_86_1(result) {
+function visit377_86_1(result) {
   _$jscoverage['/loader/configs.js'].branchData['86'][1].ranCondition(result);
   return result;
 }_$jscoverage['/loader/configs.js'].branchData['83'][1].init(75, 35, 'base.charAt(base.length - 1) != \'/\'');
-function visit373_83_1(result) {
+function visit376_83_1(result) {
   _$jscoverage['/loader/configs.js'].branchData['83'][1].ranCondition(result);
   return result;
 }_$jscoverage['/loader/configs.js'].branchData['71'][1].init(93, 5, '!base');
-function visit372_71_1(result) {
+function visit375_71_1(result) {
   _$jscoverage['/loader/configs.js'].branchData['71'][1].ranCondition(result);
   return result;
 }_$jscoverage['/loader/configs.js'].branchData['60'][1].init(137, 32, 'mod.status == Loader.Status.INIT');
-function visit371_60_1(result) {
+function visit374_60_1(result) {
   _$jscoverage['/loader/configs.js'].branchData['60'][1].ranCondition(result);
   return result;
 }_$jscoverage['/loader/configs.js'].branchData['56'][1].init(38, 7, 'modules');
-function visit370_56_1(result) {
+function visit373_56_1(result) {
   _$jscoverage['/loader/configs.js'].branchData['56'][1].ranCondition(result);
   return result;
 }_$jscoverage['/loader/configs.js'].branchData['46'][1].init(766, 16, 'config === false');
-function visit369_46_1(result) {
+function visit372_46_1(result) {
   _$jscoverage['/loader/configs.js'].branchData['46'][1].ranCondition(result);
   return result;
 }_$jscoverage['/loader/configs.js'].branchData['39'][1].init(367, 8, 'ps[name]');
-function visit368_39_1(result) {
+function visit371_39_1(result) {
   _$jscoverage['/loader/configs.js'].branchData['39'][1].ranCondition(result);
   return result;
 }_$jscoverage['/loader/configs.js'].branchData['32'][1].init(138, 20, 'cfg.base || cfg.path');
-function visit367_32_1(result) {
+function visit370_32_1(result) {
   _$jscoverage['/loader/configs.js'].branchData['32'][1].ranCondition(result);
   return result;
 }_$jscoverage['/loader/configs.js'].branchData['30'][1].init(50, 15, 'cfg.name || key');
-function visit366_30_1(result) {
+function visit369_30_1(result) {
   _$jscoverage['/loader/configs.js'].branchData['30'][1].ranCondition(result);
   return result;
 }_$jscoverage['/loader/configs.js'].branchData['27'][1].init(123, 6, 'config');
-function visit365_27_1(result) {
+function visit368_27_1(result) {
   _$jscoverage['/loader/configs.js'].branchData['27'][1].ranCondition(result);
   return result;
 }_$jscoverage['/loader/configs.js'].branchData['26'][1].init(78, 21, 'Config.packages || {}');
-function visit364_26_1(result) {
+function visit367_26_1(result) {
   _$jscoverage['/loader/configs.js'].branchData['26'][1].ranCondition(result);
   return result;
 }_$jscoverage['/loader/configs.js'].branchData['15'][2].init(227, 42, 'location && (locationHref = location.href)');
-function visit363_15_2(result) {
+function visit366_15_2(result) {
   _$jscoverage['/loader/configs.js'].branchData['15'][2].ranCondition(result);
   return result;
 }_$jscoverage['/loader/configs.js'].branchData['15'][1].init(211, 58, '!S.UA.nodejs && location && (locationHref = location.href)');
-function visit362_15_1(result) {
+function visit365_15_1(result) {
   _$jscoverage['/loader/configs.js'].branchData['15'][1].ranCondition(result);
   return result;
 }_$jscoverage['/loader/configs.js'].lineData[6]++;
@@ -384,7 +384,7 @@ function visit362_15_1(result) {
   _$jscoverage['/loader/configs.js'].lineData[7]++;
   var Loader = S.Loader, Utils = Loader.Utils, host = S.Env.host, location = host.location, simulatedLocation, locationHref, configFns = S.Config.fns;
   _$jscoverage['/loader/configs.js'].lineData[15]++;
-  if (visit362_15_1(!S.UA.nodejs && visit363_15_2(location && (locationHref = location.href)))) {
+  if (visit365_15_1(!S.UA.nodejs && visit366_15_2(location && (locationHref = location.href)))) {
     _$jscoverage['/loader/configs.js'].lineData[16]++;
     simulatedLocation = new S.Uri(locationHref);
   }
@@ -398,16 +398,16 @@ function visit362_15_1(result) {
   configFns.packages = function(config) {
   _$jscoverage['/loader/configs.js'].functionData[2]++;
   _$jscoverage['/loader/configs.js'].lineData[24]++;
-  var name, Config = this.Config, ps = Config.packages = visit364_26_1(Config.packages || {});
+  var name, Config = this.Config, ps = Config.packages = visit367_26_1(Config.packages || {});
   _$jscoverage['/loader/configs.js'].lineData[27]++;
-  if (visit365_27_1(config)) {
+  if (visit368_27_1(config)) {
     _$jscoverage['/loader/configs.js'].lineData[28]++;
     S.each(config, function(cfg, key) {
   _$jscoverage['/loader/configs.js'].functionData[3]++;
   _$jscoverage['/loader/configs.js'].lineData[30]++;
-  name = visit366_30_1(cfg.name || key);
+  name = visit369_30_1(cfg.name || key);
   _$jscoverage['/loader/configs.js'].lineData[32]++;
-  var baseUri = normalizeBase(visit367_32_1(cfg.base || cfg.path));
+  var baseUri = normalizeBase(visit370_32_1(cfg.base || cfg.path));
   _$jscoverage['/loader/configs.js'].lineData[34]++;
   cfg.name = name;
   _$jscoverage['/loader/configs.js'].lineData[35]++;
@@ -419,7 +419,7 @@ function visit362_15_1(result) {
   _$jscoverage['/loader/configs.js'].lineData[38]++;
   delete cfg.path;
   _$jscoverage['/loader/configs.js'].lineData[39]++;
-  if (visit368_39_1(ps[name])) {
+  if (visit371_39_1(ps[name])) {
     _$jscoverage['/loader/configs.js'].lineData[40]++;
     ps[name].reset(cfg);
   } else {
@@ -431,7 +431,7 @@ function visit362_15_1(result) {
     return undefined;
   } else {
     _$jscoverage['/loader/configs.js'].lineData[46]++;
-    if (visit369_46_1(config === false)) {
+    if (visit372_46_1(config === false)) {
       _$jscoverage['/loader/configs.js'].lineData[47]++;
       Config.packages = {};
       _$jscoverage['/loader/configs.js'].lineData[48]++;
@@ -448,14 +448,14 @@ function visit362_15_1(result) {
   _$jscoverage['/loader/configs.js'].lineData[55]++;
   var self = this;
   _$jscoverage['/loader/configs.js'].lineData[56]++;
-  if (visit370_56_1(modules)) {
+  if (visit373_56_1(modules)) {
     _$jscoverage['/loader/configs.js'].lineData[57]++;
     S.each(modules, function(modCfg, modName) {
   _$jscoverage['/loader/configs.js'].functionData[5]++;
   _$jscoverage['/loader/configs.js'].lineData[58]++;
   var mod = Utils.createModuleInfo(self, modName, modCfg);
   _$jscoverage['/loader/configs.js'].lineData[60]++;
-  if (visit371_60_1(mod.status == Loader.Status.INIT)) {
+  if (visit374_60_1(mod.status == Loader.Status.INIT)) {
     _$jscoverage['/loader/configs.js'].lineData[61]++;
     S.mix(mod, modCfg);
   }
@@ -468,7 +468,7 @@ function visit362_15_1(result) {
   _$jscoverage['/loader/configs.js'].lineData[68]++;
   var self = this, Config = self.Config, baseUri;
   _$jscoverage['/loader/configs.js'].lineData[71]++;
-  if (visit372_71_1(!base)) {
+  if (visit375_71_1(!base)) {
     _$jscoverage['/loader/configs.js'].lineData[72]++;
     return Config.base;
   }
@@ -489,17 +489,17 @@ function visit362_15_1(result) {
     _$jscoverage['/loader/configs.js'].lineData[82]++;
     base = base.replace(/\\/g, '/');
     _$jscoverage['/loader/configs.js'].lineData[83]++;
-    if (visit373_83_1(base.charAt(base.length - 1) != '/')) {
+    if (visit376_83_1(base.charAt(base.length - 1) != '/')) {
       _$jscoverage['/loader/configs.js'].lineData[84]++;
       base += '/';
     }
     _$jscoverage['/loader/configs.js'].lineData[86]++;
-    if (visit374_86_1(simulatedLocation)) {
+    if (visit377_86_1(simulatedLocation)) {
       _$jscoverage['/loader/configs.js'].lineData[87]++;
       baseUri = simulatedLocation.resolve(base);
     } else {
       _$jscoverage['/loader/configs.js'].lineData[91]++;
-      if (visit375_91_1(!S.startsWith(base, 'file:'))) {
+      if (visit378_91_1(!S.startsWith(base, 'file:'))) {
         _$jscoverage['/loader/configs.js'].lineData[92]++;
         base = 'file:' + base;
       }

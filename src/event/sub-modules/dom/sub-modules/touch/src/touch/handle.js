@@ -18,8 +18,8 @@ KISSY.add('event/dom/touch/handle', function (S, Dom, eventHandleMap, DomEvent) 
         return S.startsWith(type, 'mouse');
     }
 
-    function isMSPointerEvent(type) {
-        return S.startsWith(type, 'MSPointer');
+    function isPointerEvent(type) {
+        return S.startsWith(type, 'MSPointer') || S.startsWith(type, 'pointer');
     }
 
     // This should be long enough to ignore compatible mouse events made by touch
@@ -39,6 +39,10 @@ KISSY.add('event/dom/touch/handle', function (S, Dom, eventHandleMap, DomEvent) 
             gestureStartEvent = 'touchstart mousedown';
             gestureMoveEvent = 'touchmove mousemove';
         }
+    } else if (Features.isPointerSupported()) {
+        gestureStartEvent = 'pointerdown';
+        gestureMoveEvent = 'pointermove';
+        gestureEndEvent = 'pointerup pointercancel';
     } else if (Features.isMsPointerSupported()) {
         gestureStartEvent = 'MSPointerDown';
         gestureMoveEvent = 'MSPointerMove';
@@ -71,7 +75,7 @@ KISSY.add('event/dom/touch/handle', function (S, Dom, eventHandleMap, DomEvent) 
             var self = this,
                 doc = self.doc;
             DomEvent.on(doc, gestureStartEvent, self.onTouchStart, self);
-            if (!isMSPointerEvent(gestureMoveEvent)) {
+            if (!isPointerEvent(gestureMoveEvent)) {
                 DomEvent.on(doc, gestureMoveEvent, self.onTouchMove, self);
             }
             DomEvent.on(doc, gestureEndEvent, self.onTouchEnd, self);
@@ -198,7 +202,7 @@ KISSY.add('event/dom/touch/handle', function (S, Dom, eventHandleMap, DomEvent) 
                     return;
                 }
                 self.touches = [event.originalEvent];
-            } else if (isMSPointerEvent(type)) {
+            } else if (isPointerEvent(type)) {
                 self.addTouch(event.originalEvent);
                 if (self.touches.length == 1) {
                     DomEvent.on(self.doc, gestureMoveEvent, self.onTouchMove, self);
@@ -224,7 +228,7 @@ KISSY.add('event/dom/touch/handle', function (S, Dom, eventHandleMap, DomEvent) 
                     return;
                 }
                 self.touches = [event.originalEvent];
-            } else if (isMSPointerEvent(type)) {
+            } else if (isPointerEvent(type)) {
                 self.updateTouch(event.originalEvent);
             } else {
                 throw new Error('unrecognized touch event: ' + event.type);
@@ -250,7 +254,7 @@ KISSY.add('event/dom/touch/handle', function (S, Dom, eventHandleMap, DomEvent) 
                 });
             } else if (isMouseEvent(type)) {
                 self.touches = [];
-            } else if (isMSPointerEvent(type)) {
+            } else if (isPointerEvent(type)) {
                 self.removeTouch(event.originalEvent);
                 if (!self.touches.length) {
                     DomEvent.detach(self.doc, gestureMoveEvent, self.onTouchMove, self);
@@ -264,6 +268,10 @@ KISSY.add('event/dom/touch/handle', function (S, Dom, eventHandleMap, DomEvent) 
                 e,
                 h;
             event = self.normalize(event);
+            // ie touchstart on iframe then touchend on parent
+            if (!event.changedTouches.length) {
+                return;
+            }
             for (e in eventHandle) {
                 // event processor shared by multiple events
                 h = eventHandle[e].handle;

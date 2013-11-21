@@ -7,9 +7,11 @@
  Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.html or http://ckeditor.com/license
  */
-KISSY.add("editor/plugin/dent-cmd", function (S, Editor, ListUtils) {
+KISSY.add(function (S, require) {
+    var Editor = require('editor');
+    var ListUtils = require('./list-utils');
 
-    var listNodeNames = {ol:1, ul:1},
+    var listNodeNames = {ol: 1, ul: 1},
         Walker = Editor.Walker,
         Dom = S.DOM,
         Node = S.Node,
@@ -30,11 +32,9 @@ KISSY.add("editor/plugin/dent-cmd", function (S, Editor, ListUtils) {
 
         var startContainer = range.startContainer,
             endContainer = range.endContainer;
-        while (startContainer &&
-            !startContainer.parent().equals(listNode))
+        while (startContainer && !startContainer.parent().equals(listNode))
             startContainer = startContainer.parent();
-        while (endContainer &&
-            !endContainer.parent().equals(listNode))
+        while (endContainer && !endContainer.parent().equals(listNode))
             endContainer = endContainer.parent();
 
         if (!startContainer || !endContainer)
@@ -147,7 +147,7 @@ KISSY.add("editor/plugin/dent-cmd", function (S, Editor, ListUtils) {
                     // otherwise the list item will be inaccessiable. (#4476)
                     if (UA['ie'] && !li.first(function (node) {
                         return isNotWhitespaces(node) && isNotBookmark(node);
-                    },1)) {
+                    }, 1)) {
                         li[0].appendChild(range.document.createTextNode('\u00a0'));
                     }
                     li[0].appendChild(followingList[0]);
@@ -202,9 +202,8 @@ KISSY.add("editor/plugin/dent-cmd", function (S, Editor, ListUtils) {
             rangeRoot = range.getCommonAncestor(),
             nearestListBlock = rangeRoot;
 
-        while (nearestListBlock &&
-            !( nearestListBlock[0].nodeType == Dom.NodeType.ELEMENT_NODE &&
-                listNodeNames[ nearestListBlock.nodeName() ] )) {
+        while (nearestListBlock && !( nearestListBlock[0].nodeType == Dom.NodeType.ELEMENT_NODE &&
+            listNodeNames[ nearestListBlock.nodeName() ] )) {
             nearestListBlock = nearestListBlock.parent();
         }
 
@@ -253,7 +252,7 @@ KISSY.add("editor/plugin/dent-cmd", function (S, Editor, ListUtils) {
     function addCommand(editor, cmdType) {
         if (!editor.hasCommand(cmdType)) {
             editor.addCommand(cmdType, {
-                exec:function (editor) {
+                exec: function (editor) {
                     editor.execCommand("save");
                     indentEditor(editor, cmdType);
                     editor.execCommand("save");
@@ -264,7 +263,7 @@ KISSY.add("editor/plugin/dent-cmd", function (S, Editor, ListUtils) {
     }
 
     return {
-        checkOutdentActive:function (elementPath) {
+        checkOutdentActive: function (elementPath) {
             var blockLimit = elementPath.blockLimit;
             if (elementPath.contains(listNodeNames)) {
                 return true;
@@ -273,9 +272,7 @@ KISSY.add("editor/plugin/dent-cmd", function (S, Editor, ListUtils) {
                 return block && block.style(INDENT_CSS_PROPERTY);
             }
         },
-        addCommand:addCommand
+        addCommand: addCommand
     };
 
-}, {
-    requires:['editor', './list-utils']
 });

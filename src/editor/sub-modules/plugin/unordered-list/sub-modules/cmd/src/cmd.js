@@ -3,7 +3,9 @@
  * ol command
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/unordered-list/cmd", function (S, Editor, listCmd) {
+KISSY.add(function (S, require) {
+    var Editor = require('editor');
+    var listCmd = require('../list-utils/cmd');
 
     var insertUnorderedList = "insertUnorderedList",
         ListCommand = listCmd.ListCommand,
@@ -11,12 +13,12 @@ KISSY.add("editor/plugin/unordered-list/cmd", function (S, Editor, listCmd) {
         ulCmd = new ListCommand("ul");
 
     return {
-        init:function (editor) {
+        init: function (editor) {
             if (!editor.hasCommand(insertUnorderedList)) {
                 editor.addCommand(insertUnorderedList, {
-                    exec:function (editor,type) {
+                    exec: function (editor, type) {
                         editor.focus();
-                        ulCmd.exec(editor,type);
+                        ulCmd.exec(editor, type);
                     }
                 });
             }
@@ -25,7 +27,7 @@ KISSY.add("editor/plugin/unordered-list/cmd", function (S, Editor, listCmd) {
 
             if (!editor.hasCommand(queryUl)) {
                 editor.addCommand(queryUl, {
-                    exec:function (editor) {
+                    exec: function (editor) {
                         var selection = editor.getSelection();
                         if (selection && !selection.isInvalid) {
                             var startElement = selection.getStartElement();
@@ -37,7 +39,4 @@ KISSY.add("editor/plugin/unordered-list/cmd", function (S, Editor, listCmd) {
             }
         }
     };
-
-}, {
-    requires:['editor', '../list-utils/cmd']
 });

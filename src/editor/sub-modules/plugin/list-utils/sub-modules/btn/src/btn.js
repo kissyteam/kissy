@@ -3,8 +3,10 @@
  * Common btn for list.
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/list-utils/btn", function (S, Editor) {
-
+KISSY.add(function (S, require) {
+    var Editor = require('editor');
+    require('../button');
+    require('../menubutton');
     return {
 
         init: function (editor, cfg) {
@@ -55,8 +57,4 @@ KISSY.add("editor/plugin/list-utils/btn", function (S, Editor) {
         }
 
     };
-
-
-}, {
-    requires: ['editor', '../button', '../menubutton']
 });

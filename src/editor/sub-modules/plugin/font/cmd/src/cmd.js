@@ -3,8 +3,8 @@
  * font command.
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/font/cmd", function (S, Editor) {
-
+KISSY.add(function (S, require) {
+        var Editor = require('editor');
     var getQueryCmd = Editor.Utils.getQueryCmd;
 
     function getValueFromSingle(element, styleObj) {
@@ -118,6 +118,4 @@ KISSY.add("editor/plugin/font/cmd", function (S, Editor) {
             }
         }
     };
-}, {
-    requires: ['editor']
 });

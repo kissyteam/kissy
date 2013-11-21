@@ -3,30 +3,30 @@
  * strike-through command
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/strike-through/cmd", function (S, Editor, Cmd) {
+KISSY.add(function (S, require) {
+    var Editor = require('editor');
+    var Cmd = require('../font/cmd');
 
     var STRIKE_STYLE = new Editor.Style({
-        element:'del',
-        overrides:[
+        element: 'del',
+        overrides: [
             {
-                element:'span',
-                attributes:{
-                    style:'text-decoration: line-through;'
+                element: 'span',
+                attributes: {
+                    style: 'text-decoration: line-through;'
                 }
             },
             {
-                element:'s'
+                element: 's'
             },
             {
-                element:'strike'
+                element: 'strike'
             }
         ]
     });
     return {
-        init:function (editor) {
+        init: function (editor) {
             Cmd.addButtonCmd(editor, "strikeThrough", STRIKE_STYLE);
         }
     }
-}, {
-    requires:['editor', '../font/cmd']
 });

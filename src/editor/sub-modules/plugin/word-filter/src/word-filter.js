@@ -3,7 +3,9 @@
  * clean html pasted from word. modified from ckeditor.
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/word-filter", function (S, HtmlParser) {
+KISSY.add(function (S, require) {
+    var HtmlParser = require('html-parser');
+
     var $ = S.all,
         UA = S.UA,
         dtd = HtmlParser.DTD,
@@ -251,8 +253,7 @@ KISSY.add("editor/plugin/word-filter", function (S, HtmlParser) {
                     child.setTagName('ke:li');
 
                     // Inherit numbering from list root on the first list item.
-                    element.getAttribute("start") &&
-                        !i &&
+                    element.getAttribute("start") && !i &&
                     ( element.setAttribute("value", element.getAttribute("start")));
 
                     filters.stylesFilter(
@@ -296,8 +297,8 @@ KISSY.add("editor/plugin/word-filter", function (S, HtmlParser) {
         },
 
         /*
-          Try to collect all list items among the children and establish one
-          or more HTML list structures for them.
+         Try to collect all list items among the children and establish one
+         or more HTML list structures for them.
          */
         assembleList: function (element) {
             var children = element.childNodes || [],
@@ -458,7 +459,7 @@ KISSY.add("editor/plugin/word-filter", function (S, HtmlParser) {
         },
 
         /*
-          A simple filter which always rejecting.
+         A simple filter which always rejecting.
          */
         falsyFilter: function () {
             return false;
@@ -533,8 +534,8 @@ KISSY.add("editor/plugin/word-filter", function (S, HtmlParser) {
         },
 
         /*
-          A filter which will be used to apply inline css style according the stylesheet
-          definition rules, is generated lazily when filtering.
+         A filter which will be used to apply inline css style according the stylesheet
+         definition rules, is generated lazily when filtering.
          */
         applyStyleFilter: null
 
@@ -1173,8 +1174,4 @@ KISSY.add("editor/plugin/word-filter", function (S, HtmlParser) {
         }
 
     };
-
-
-}, {
-    requires: ['html-parser']
 });
