@@ -30,7 +30,7 @@
 
     function getIEVersion(ua) {
         var m, v;
-        if ((m = ua.match(/MSIE ([^;]*)|Trident.*; rv ([0-9.]+)/)) &&
+        if ((m = ua.match(/MSIE ([^;]*)|Trident.*; rv(?:\s|:)?([0-9.]+)/)) &&
             (v = (m[1] || m[2]))) {
             return numberify(v);
         }
@@ -52,7 +52,6 @@
             s = [];
         /**
          * KISSY UA
-         * @member KISSY
          * @class KISSY.UA
          * @singleton
          */
@@ -184,7 +183,8 @@
             nodejs: undefined
         };
 
-        if (div) {
+        // ejecta
+        if (div && div.getElementsByTagName) {
             // try to use IE-Conditional-Comment detect IE more accurately
             // IE10 doesn't support this method, @ref: http://blogs.msdn.com/b/ie/archive/2011/07/06/html5-parsing-in-ie10.aspx
             div.innerHTML = IE_DETECT_TPL.replace(VERSION_PLACEHOLDER, '');
@@ -245,7 +245,7 @@
                     if (m && m[0]) {
                         UA[m[0].toLowerCase()] = UA.ios;
                     }
-                } else if (/ Android/.test(ua)) {
+                } else if (/ Android/i.test(ua)) {
                     if (/Mobile/.test(ua)) {
                         os = UA.mobile = 'android';
                     }
@@ -306,7 +306,7 @@
                             if ((m = ua.match(/rv:([\d.]*)/)) && m[1]) {
                                 UA[core] = numberify(m[1]);
                                 if (/Mobile|Tablet/.test(ua)) {
-                                    o.mobile = "firefox";
+                                    UA.mobile = "firefox";
                                 }
                             }
                             // Firefox
@@ -339,6 +339,7 @@
     }
 
     var UA = KISSY.UA = getDescriptorFromUserAgent(ua);
+
     // nodejs
     if (typeof process === 'object') {
         var versions, nodeVersion;
@@ -351,7 +352,7 @@
     // use by analysis tools in nodejs
     UA.getDescriptorFromUserAgent = getDescriptorFromUserAgent;
 
-    var o = [
+    var browsers = [
             // browser core type
             'webkit',
             'trident',
@@ -367,7 +368,7 @@
         documentElement = doc && doc.documentElement,
         className = '';
     if (documentElement) {
-        S.each(o, function (key) {
+        S.each(browsers, function (key) {
             var v = UA[key];
             if (v) {
                 className += ' ks-' + key + (parseInt(v) + '');

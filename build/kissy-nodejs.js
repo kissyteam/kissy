@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.32
 MIT Licensed
-build time: Sep 25 14:54
+build time: Nov 21 11:59
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20130925145439' will replace with current timestamp when compressing.
+         * NOTICE: '20131121115937' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130925145439',
+        __BUILD_TIME: '20131121115937',
         /**
          * KISSY Environment.
          * @private
@@ -3110,7 +3110,7 @@ var KISSY = (function (undefined) {
 
     function getIEVersion(ua) {
         var m, v;
-        if ((m = ua.match(/MSIE ([^;]*)|Trident.*; rv ([0-9.]+)/)) &&
+        if ((m = ua.match(/MSIE ([^;]*)|Trident.*; rv(?:\s|:)?([0-9.]+)/)) &&
             (v = (m[1] || m[2]))) {
             return numberify(v);
         }
@@ -3132,7 +3132,6 @@ var KISSY = (function (undefined) {
             s = [];
         /**
          * KISSY UA
-         * @member KISSY
          * @class KISSY.UA
          * @singleton
          */
@@ -3264,7 +3263,8 @@ var KISSY = (function (undefined) {
             nodejs: undefined
         };
 
-        if (div) {
+        // ejecta
+        if (div && div.getElementsByTagName) {
             // try to use IE-Conditional-Comment detect IE more accurately
             // IE10 doesn't support this method, @ref: http://blogs.msdn.com/b/ie/archive/2011/07/06/html5-parsing-in-ie10.aspx
             div.innerHTML = IE_DETECT_TPL.replace(VERSION_PLACEHOLDER, '');
@@ -3325,7 +3325,7 @@ var KISSY = (function (undefined) {
                     if (m && m[0]) {
                         UA[m[0].toLowerCase()] = UA.ios;
                     }
-                } else if (/ Android/.test(ua)) {
+                } else if (/ Android/i.test(ua)) {
                     if (/Mobile/.test(ua)) {
                         os = UA.mobile = 'android';
                     }
@@ -3386,7 +3386,7 @@ var KISSY = (function (undefined) {
                             if ((m = ua.match(/rv:([\d.]*)/)) && m[1]) {
                                 UA[core] = numberify(m[1]);
                                 if (/Mobile|Tablet/.test(ua)) {
-                                    o.mobile = "firefox";
+                                    UA.mobile = "firefox";
                                 }
                             }
                             // Firefox
@@ -3419,6 +3419,7 @@ var KISSY = (function (undefined) {
     }
 
     var UA = KISSY.UA = getDescriptorFromUserAgent(ua);
+
     // nodejs
     if (typeof process === 'object') {
         var versions, nodeVersion;
@@ -3431,7 +3432,7 @@ var KISSY = (function (undefined) {
     // use by analysis tools in nodejs
     UA.getDescriptorFromUserAgent = getDescriptorFromUserAgent;
 
-    var o = [
+    var browsers = [
             // browser core type
             'webkit',
             'trident',
@@ -3447,7 +3448,7 @@ var KISSY = (function (undefined) {
         documentElement = doc && doc.documentElement,
         className = '';
     if (documentElement) {
-        S.each(o, function (key) {
+        S.each(browsers, function (key) {
             var v = UA[key];
             if (v) {
                 className += ' ks-' + key + (parseInt(v) + '');
@@ -3484,8 +3485,7 @@ var KISSY = (function (undefined) {
  同时并非是某个特性探测可以解决时，用浏览器嗅探反而能带来代码的简洁，同时也也不会有什么后患。总之，一切
  皆权衡。
  - UA.ie && UA.ie < 8 并不意味着浏览器就不是 IE8, 有可能是 IE8 的兼容模式。进一步的判断需要使用 documentMode.
- */
-/**
+ *//**
  * @ignore
  * detect if current browser supports various features.
  * @author yiminghe@gmail.com
@@ -5551,7 +5551,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20130925145439'
+            tag: '20131121115937'
         }, getBaseInfo()));
     }
 
