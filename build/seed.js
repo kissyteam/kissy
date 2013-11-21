@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 21 23:13
+build time: Nov 21 23:38
 */
 /**
  * @ignore
@@ -42,11 +42,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20131121231329' will replace with current timestamp when compressing.
+         * NOTICE: '20131121233830' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20131121231329',
+        __BUILD_TIME: '20131121233830',
 
         /**
          * KISSY Environment.
@@ -1491,87 +1491,87 @@ var KISSY = (function (undefined) {
         COMPARE_MARKER = '__~ks_compared';
 
     S.mix(S, {
-            /**
-             * Checks to see whether two object are equals.
-             * @param a 比较目标1
-             * @param b 比较目标2
-             * @param [mismatchKeys] internal usage
-             * @param [mismatchValues] internal usage
-             * @return {Boolean} a.equals(b)
-             * @member KISSY
-             */
-            equals: function (a, b, /*internal use*/mismatchKeys, /*internal use*/mismatchValues) {
-                // inspired by jasmine
-                mismatchKeys = mismatchKeys || [];
-                mismatchValues = mismatchValues || [];
+        /**
+         * Checks to see whether two object are equals.
+         * @param a 比较目标1
+         * @param b 比较目标2
+         * @param [mismatchKeys] internal usage
+         * @param [mismatchValues] internal usage
+         * @return {Boolean} a.equals(b)
+         * @member KISSY
+         */
+        equals: function (a, b, /*internal use*/mismatchKeys, /*internal use*/mismatchValues) {
+            // inspired by jasmine
+            mismatchKeys = mismatchKeys || [];
+            mismatchValues = mismatchValues || [];
 
-                if (a === b) {
-                    return TRUE;
-                }
-                if (a === undefined || a === null || b === undefined || b === null) {
-                    // need type coercion
-                    return a == null && b == null;
-                }
-                if (a instanceof Date && b instanceof Date) {
-                    return a.getTime() == b.getTime();
-                }
-                if (typeof a == 'string' && typeof b == 'string') {
-                    return (a == b);
-                }
-                if (typeof a==='number' && typeof b==='number') {
-                    return (a == b);
-                }
-                if (typeof a === 'object' && typeof b === 'object') {
-                    return compareObjects(a, b, mismatchKeys, mismatchValues);
-                }
-                // Straight check
-                return (a === b);
-            },
-
-            /**
-             * Creates a deep copy of a plain object or array. Others are returned untouched.
-             * @param input
-             * @member KISSY
-             * @param {Function} [filter] filter function
-             * @return {Object} the new cloned object
-             * refer: http://www.w3.org/TR/html5/common-dom-interfaces.html#safe-passing-of-structured-data
-             */
-            clone: function (input, filter) {
-                // 稍微改改就和规范一样了 :)
-                // Let memory be an association list of pairs of objects,
-                // initially empty. This is used to handle duplicate references.
-                // In each pair of objects, one is called the source object
-                // and the other the destination object.
-                var memory = {},
-                    ret = cloneInternal(input, filter, memory);
-                S.each(memory, function (v) {
-                    // 清理在源对象上做的标记
-                    v = v.input;
-                    if (v[CLONE_MARKER]) {
-                        try {
-                            delete v[CLONE_MARKER];
-                        } catch (e) {
-                            v[CLONE_MARKER] = undefined;
-                        }
-                    }
-                });
-                memory = null;
-                return ret;
-            },
-
-            /**
-             * Gets current date in milliseconds.
-             * @method
-             * refer:  https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Date/now
-             * http://j-query.blogspot.com/2011/02/timing-ecmascript-5-datenow-function.html
-             * http://kangax.github.com/es5-compat-table/
-             * @member KISSY
-             * @return {Number} current time
-             */
-            now: Date.now || function () {
-                return +new Date();
+            if (a === b) {
+                return TRUE;
             }
-        });
+            if (a === undefined || a === null || b === undefined || b === null) {
+                // need type coercion
+                return a == null && b == null;
+            }
+            if (a instanceof Date && b instanceof Date) {
+                return a.getTime() == b.getTime();
+            }
+            if (typeof a == 'string' && typeof b == 'string') {
+                return (a == b);
+            }
+            if (typeof a === 'number' && typeof b === 'number') {
+                return (a == b);
+            }
+            if (typeof a === 'object' && typeof b === 'object') {
+                return compareObjects(a, b, mismatchKeys, mismatchValues);
+            }
+            // Straight check
+            return (a === b);
+        },
+
+        /**
+         * Creates a deep copy of a plain object or array. Others are returned untouched.
+         * @param input
+         * @member KISSY
+         * @param {Function} [filter] filter function
+         * @return {Object} the new cloned object
+         * refer: http://www.w3.org/TR/html5/common-dom-interfaces.html#safe-passing-of-structured-data
+         */
+        clone: function (input, filter) {
+            // 稍微改改就和规范一样了 :)
+            // Let memory be an association list of pairs of objects,
+            // initially empty. This is used to handle duplicate references.
+            // In each pair of objects, one is called the source object
+            // and the other the destination object.
+            var memory = {},
+                ret = cloneInternal(input, filter, memory);
+            S.each(memory, function (v) {
+                // 清理在源对象上做的标记
+                v = v.input;
+                if (v[CLONE_MARKER]) {
+                    try {
+                        delete v[CLONE_MARKER];
+                    } catch (e) {
+                        v[CLONE_MARKER] = undefined;
+                    }
+                }
+            });
+            memory = null;
+            return ret;
+        },
+
+        /**
+         * Gets current date in milliseconds.
+         * @method
+         * refer:  https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Date/now
+         * http://j-query.blogspot.com/2011/02/timing-ecmascript-5-datenow-function.html
+         * http://kangax.github.com/es5-compat-table/
+         * @member KISSY
+         * @return {Number} current time
+         */
+        now: Date.now || function () {
+            return +new Date();
+        }
+    });
 
     function cloneInternal(input, f, memory) {
         var destination = input,
@@ -1604,7 +1604,8 @@ var KISSY = (function (undefined) {
             // Add a mapping from input (the source object)
             // to output (the destination object) to memory.
             // 做标记
-            input[CLONE_MARKER] = (stamp = S.guid());
+            // stamp can not be
+            input[CLONE_MARKER] = (stamp = S.guid('c'));
             // 存储源对象以及克隆后的对象
             memory[stamp] = {destination: destination, input: input};
         }
@@ -5479,7 +5480,7 @@ var KISSY = (function (undefined) {
     var doc = S.Env.host && S.Env.host.document;
     // var logger = S.getLogger('s/loader');
     var Utils = S.Loader.Utils;
-    var TIMESTAMP = '20131121231329';
+    var TIMESTAMP = '20131121233830';
     var defaultComboPrefix = '??';
     var defaultComboSep = ',';
 

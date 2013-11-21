@@ -7,10 +7,10 @@
  Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.html or http://ckeditor.com/license
  */
-KISSY.add(function (S,require) {
-    var Editor=require('./base');
+KISSY.add(function (S, require) {
+    var Editor = require('./base');
     require('./selection');
-    var Node=require('node');
+    var Node = require('node');
 
     var TRUE = true,
         FALSE = false,
@@ -26,8 +26,8 @@ KISSY.add(function (S,require) {
     function fixCursorForIE(editor) {
         var started,
             win = editor.get("window")[0],
-            $doc=editor.get("document"),
-            doc=$doc[0],
+            $doc = editor.get("document"),
+            doc = $doc[0],
             startRng;
 
         // Return range from point or NULL if it failed
@@ -452,7 +452,7 @@ KISSY.add(function (S,require) {
         init: function (editor) {
             editor.docReady(function () {
                 // S.log("editor docReady for fix selection");
-                if (UA.ie) {
+                if (UA.ie && UA.ie < 11) {
                     fixCursorForIE(editor);
                     fixSelectionForIEWhenDocReady(editor);
                 } else {

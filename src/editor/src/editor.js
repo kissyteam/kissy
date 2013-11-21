@@ -3,8 +3,8 @@
  * Editor For KISSY Based on CKEditor Core.
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S,require,exports,module) {
-    var Node =require('node');
+KISSY.add(function (S, require, exports, module) {
+    var Node = require('node');
     var iframeContentTpl = require('editor/iframe-content-tpl');
     var Editor = require('editor/base');
     var Utils = require('editor/utils');
@@ -15,8 +15,9 @@ KISSY.add(function (S,require,exports,module) {
     var selectionFix = require('editor/selectionFix');
     require('editor/plugin-meta');
     require('editor/styles');
+    require('editor/domIterator');
     require('editor/z-index-manager');
-    module.exports=Editor;
+    module.exports = Editor;
 
     var TRUE = true,
         undefined = undefined,
