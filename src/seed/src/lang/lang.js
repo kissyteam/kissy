@@ -126,7 +126,7 @@
             // Add a mapping from input (the source object)
             // to output (the destination object) to memory.
             // 做标记
-            input[CLONE_MARKER] = (stamp = S.guid());
+            input[CLONE_MARKER] = (stamp = S.guid('c'));
             // 存储源对象以及克隆后的对象
             memory[stamp] = {destination: destination, input: input};
         }
