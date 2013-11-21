@@ -75,7 +75,6 @@ public class Module {
         moduleNameNode.addChildAfter(Node.newString(module.getName()),
                 moduleNameNode.getParent().getChildBefore(moduleNameNode));
         module.setCode(AstUtils.toSource(module.getAstRoot()));
-            FileUtils.outputContent(code, this.getFullpath(), encoding);
     }
 
     public String[] getRequires() {

@@ -40,6 +40,7 @@ KISSY.add('event/dom/touch/handle', function (S, Dom, eventHandleMap, DomEvent) 
             gestureMoveEvent = 'touchmove mousemove';
         }
     } else if (Features.isPointerSupported()) {
+        // ie11 requires lowercase
         gestureStartEvent = 'pointerdown';
         gestureMoveEvent = 'pointermove';
         gestureEndEvent = 'pointerup pointercancel';
