@@ -27,7 +27,7 @@ KISSY.add(function (S, require, exports, module) {
         window = S.Env.host,
         document = window.document,
         UA = S.UA,
-        IS_IE = UA['ie'],
+        IS_IE = UA['ie'] && UA.ie < 11,
         NodeType = Node.NodeType,
         $ = Node.all,
         HEIGHT = 'height',

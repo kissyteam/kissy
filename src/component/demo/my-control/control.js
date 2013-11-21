@@ -1,6 +1,7 @@
 KISSY.add(function (S, Control, MyRender) {
     return Control.extend({
         handleClickInternal: function () {
+            this.callSuper();
             this.set('checked', !this.get('checked'));
         }
     }, {

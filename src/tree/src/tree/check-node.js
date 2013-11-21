@@ -25,7 +25,7 @@ KISSY.add("tree/check-node", function (S, Node, TreeNode) {
 
             // 需要通知 tree 获得焦点
             tree.focus();
-
+            self.callSuper();
             // 点击在 +- 号，切换状态
             if (target.equals(expandIconEl)) {
                 self.set("expanded", !expanded);
@@ -44,7 +44,7 @@ KISSY.add("tree/check-node", function (S, Node, TreeNode) {
 
             self.set("checkState", checkState);
 
-           self.fire("click");
+            self.fire("click");
             return true;
         },
 
@@ -95,7 +95,7 @@ KISSY.add("tree/check-node", function (S, Node, TreeNode) {
             }
         }
     }, {
-        ATTRS:{
+        ATTRS: {
             checkIconEl: {
             },
 
@@ -134,7 +134,7 @@ KISSY.add("tree/check-node", function (S, Node, TreeNode) {
      * check node's check state enum
      * @enum {Number} KISSY.Tree.CheckNode.CheckState
      */
-    CheckNode.CheckState={
+    CheckNode.CheckState = {
         /**
          * checked partly.
          */

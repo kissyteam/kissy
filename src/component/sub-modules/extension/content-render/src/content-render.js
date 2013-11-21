@@ -46,7 +46,7 @@ KISSY.add(function (S,require) {
                 contentEl = control.$contentEl;
             contentEl.html(v);
             // ie needs to set unselectable attribute recursively
-            if (S.UA.ie < 9 && !control.get('allowTextSelection')) {
+            if (!control.get('allowTextSelection')) {
                 contentEl.unselectable();
             }
         }

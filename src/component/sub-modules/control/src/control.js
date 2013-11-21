@@ -3,13 +3,13 @@
  * Base Control class for KISSY Component.
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S,require) {
-    var Node=require('node');
-    var ComponentProcess=require('./control/process');
-    var Manager=require('component/manager');
-    var Render=require('./control/render');
+KISSY.add(function (S, require) {
+    var Node = require('node');
+    var ComponentProcess = require('./control/process');
+    var Manager = require('component/manager');
+    var Render = require('./control/render');
     var ie = S.Env.host.document.documentMode || S.UA.ie,
-        undefined=undefined,
+        undefined = undefined,
         Features = S.Features,
         Gesture = Node.Gesture,
         isTouchEventSupported = Features.isTouchEventSupported();
@@ -56,7 +56,13 @@ KISSY.add(function (S,require) {
                 view.create();
                 el = view.getKeyEventTarget();
                 if (!self.get("allowTextSelection")) {
+                    // for older ie
                     el.unselectable();
+                    if (S.UA.ie == 11) {
+                        // prevent ie11 get focus
+                        el.attr('unselectable', 'on');
+                        el.all('*').attr('unselectable', 'on');
+                    }
                 }
                 // after retrieve id from srcNode
                 Manager.addComponent(id, self);
@@ -242,7 +248,6 @@ KISSY.add(function (S,require) {
 
             handleMouseDown: function (ev) {
                 if (!this.get('disabled')) {
-
                     this.handleMouseDownInternal(ev);
                 }
             },
@@ -267,7 +272,8 @@ KISSY.add(function (S,require) {
                         self.focus();
                     }
                     if (!self.get("allowTextSelection")) {
-                        // firefox /chrome 不会引起焦点转移
+                        // firefox /chrome/ie9/i10 不会引起焦点转移
+                        // invalid for ie10 buggy?
                         n = ev.target.nodeName;
                         n = n && n.toLowerCase();
                         // do not prevent focus when click on editable element
@@ -376,6 +382,11 @@ KISSY.add(function (S,require) {
              * @param {KISSY.Event.DomEvent.Object} ev Dom event to handle.
              */
             handleClickInternal: function (ev) {
+                // ie11 does not focus right
+                var self = this;
+                if (self.get('focusable')) {
+                    self.focus();
+                }
             },
 
             /**

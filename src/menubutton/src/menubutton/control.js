@@ -4,7 +4,6 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add("menubutton/control", function (S, Node, Button, MenuButtonRender, Menu, undefined) {
-
     var KeyCode = Node.KeyCode;
     /**
      * A menu button component, consist of a button and a drop down popup menu.
@@ -13,7 +12,6 @@ KISSY.add("menubutton/control", function (S, Node, Button, MenuButtonRender, Men
      * @extends KISSY.Button
      */
     return Button.extend({
-
         isMenuButton: 1,
 
         _onSetCollapsed: function (v) {
@@ -111,6 +109,7 @@ KISSY.add("menubutton/control", function (S, Node, Button, MenuButtonRender, Men
          */
         handleClickInternal: function () {
             var self = this;
+            self.callSuper();
             self.set("collapsed", !self.get("collapsed"));
         },
 

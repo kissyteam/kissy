@@ -10,6 +10,7 @@ KISSY.add('menu/check-menuitem', function (S, MenuItem, CheckMenuItemRender) {
     return MenuItem.extend({
         handleClickInternal: function () {
             var self = this;
+            self.callSuper();
             self.set("checked", !self.get("checked"));
             self.fire('click');
             return true;

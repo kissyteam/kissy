@@ -4,7 +4,7 @@
  * @author yiminghe@gmail.com
  * refer: http://martinfowler.com/eaaDev/uiArchs.html
  */
-KISSY.add(function (S,require) {
+KISSY.add(function (S, require) {
     var Node = require('node');
     var XTemplateRuntime = require('xtemplate/runtime');
     var ComponentProcess = require('./process');
@@ -167,7 +167,8 @@ KISSY.add(function (S,require) {
                 cls.push(self.getBaseCssClasses('hover'));
             }
             if (control.get('focusable')) {
-                if (UA.ie) {
+                // ie9 support outline
+                if (UA.ie && UA.ie < 9) {
                     elAttrs['hideFocus'] = 'true';
                 }
                 elAttrs['tabindex'] = disabled ? '-1' : '0';
@@ -371,8 +372,13 @@ KISSY.add(function (S,require) {
             var el = this.$el;
             el.html(c);
             // ie needs to set unselectable attribute recursively
-            if (UA.ie < 9 && !this.get('allowTextSelection')) {
-                el['unselectable']();
+            if (!this.get('allowTextSelection')) {
+                el.unselectable();
+                if (S.UA.ie == 11) {
+                    // prevent ie11 get focus
+                    el.attr('unselectable', 'on');
+                    el.all('*').attr('unselectable', 'on');
+                }
             }
         },
 

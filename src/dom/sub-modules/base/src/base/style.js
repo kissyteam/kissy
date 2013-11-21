@@ -3,18 +3,20 @@
  * dom/style
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
-KISSY.add(function (S,require) {
+KISSY.add(function (S, require) {
     var Dom = require('./api');
     var WINDOW = /**
          @ignore
          @type window
          */S.Env.host,
         UA = S.UA,
-        logger= S.getLogger('s/dom'),
+        undefined = undefined,
+        logger = S.getLogger('s/dom'),
         Features = S.Features,
         getNodeName = Dom.nodeName,
         doc = WINDOW.document,
-        RE_MARGIN = /^margin/,
+        documentElementStyle = doc && doc.documentElement.style || {};
+    RE_MARGIN = /^margin/,
         WIDTH = 'width',
         HEIGHT = 'height',
         DISPLAY = 'display',
@@ -40,6 +42,24 @@ KISSY.add(function (S,require) {
         },
         defaultDisplay = {},
         RE_DASH = /-([a-z])/ig;
+
+    var VENDORS = [
+        '',
+        'Webkit',
+        'Moz',
+        'O',
+        // ms is special .... !
+        'ms'
+    ];
+
+    var userSelectProperty;
+    S.each(VENDORS, function (val) {
+        var userSelect = val ? val + 'UserSelect' : 'userSelect';
+        if (userSelectProperty === undefined &&
+            userSelect in documentElementStyle) {
+            userSelectProperty = userSelect;
+        }
+    });
 
     if (Features.isTransformSupported()) {
         var transform;
@@ -331,12 +351,9 @@ KISSY.add(function (S,require) {
                 for (j = _els.length - 1; j >= 0; j--) {
                     elem = _els[j];
                     style = elem.style;
-                    style['UserSelect'] = 'none';
-                    if (UA['gecko']) {
-                        style['MozUserSelect'] = 'none';
-                    } else if (UA['webkit']) {
-                        style['WebkitUserSelect'] = 'none';
-                    } else if (UA['ie'] || UA['opera']) {
+                    if (userSelectProperty !== undefined) {
+                        style[userSelectProperty] = 'none';
+                    } else if (UA.ie) {
                         els = elem.getElementsByTagName('*');
                         elem.setAttribute('unselectable', 'on');
                         excludes = ['iframe', 'textarea', 'input', 'select'];

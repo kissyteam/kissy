@@ -146,6 +146,7 @@ KISSY.add("tree/node", function (S, Node, Container, TreeNodeRender) {
                 expanded = self.get("expanded"),
                 tree = self.get("tree");
             tree.focus();
+            self.callSuper();
             if (target.equals(self.get("expandIconEl"))) {
                 self.set("expanded", !expanded);
             } else {

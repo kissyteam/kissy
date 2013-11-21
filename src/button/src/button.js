@@ -37,6 +37,7 @@ KISSY.add(function (S,require,exports,module) {
 
         handleClickInternal: function () {
             var self = this;
+            self.callSuper();
             if (self.get("checkable")) {
                 self.set("checked", !self.get("checked"));
             }

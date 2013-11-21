@@ -116,7 +116,7 @@ KISSY.add("menu/submenu", function (S, Node, MenuItem, SubMenuRender) {
                 var self = this;
                 showMenu.call(self);
                 //  trigger click event from menuitem
-                self.callSuper(e);
+                self.callSuper();
             },
 
             /**

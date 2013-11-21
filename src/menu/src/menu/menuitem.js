@@ -14,7 +14,6 @@ KISSY.add("menu/menuitem", function (S, Control, MenuItemRender) {
      * @extends KISSY.Component.Control
      */
    return Control.extend({
-
         isMenuItem: 1,
 
         // for ios, ios only has touchdown
@@ -32,6 +31,7 @@ KISSY.add("menu/menuitem", function (S, Control, MenuItemRender) {
          */
         handleClickInternal: function () {
             var self = this;
+            self.callSuper();
             // 可选
             if (self.get("selectable")) {
                 self.set("selected", true);
