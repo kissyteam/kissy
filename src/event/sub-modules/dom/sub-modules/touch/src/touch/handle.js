@@ -41,6 +41,7 @@ KISSY.add('event/dom/touch/handle', function (S, Dom, eventHandleMap, DomEvent) 
         }
     } else if (Features.isPointerSupported()) {
         // ie11 requires lowercase
+        // https://github.com/kissyteam/kissy/issues/509
         gestureStartEvent = 'pointerdown';
         gestureMoveEvent = 'pointermove';
         gestureEndEvent = 'pointerup pointercancel';
