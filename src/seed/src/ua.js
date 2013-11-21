@@ -306,7 +306,7 @@
                             if ((m = ua.match(/rv:([\d.]*)/)) && m[1]) {
                                 UA[core] = numberify(m[1]);
                                 if (/Mobile|Tablet/.test(ua)) {
-                                    o.mobile = "firefox";
+                                    UA.mobile = "firefox";
                                 }
                             }
                             // Firefox
@@ -352,7 +352,7 @@
     // use by analysis tools in nodejs
     UA.getDescriptorFromUserAgent = getDescriptorFromUserAgent;
 
-    var o = [
+    var browsers = [
             // browser core type
             'webkit',
             'trident',
@@ -368,7 +368,7 @@
         documentElement = doc && doc.documentElement,
         className = '';
     if (documentElement) {
-        S.each(o, function (key) {
+        S.each(browsers, function (key) {
             var v = UA[key];
             if (v) {
                 className += ' ks-' + key + (parseInt(v) + '');

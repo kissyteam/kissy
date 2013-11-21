@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 20 16:29
+build time: Nov 21 11:59
 */
 /**
  * @ignore
@@ -42,11 +42,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20131120162924' will replace with current timestamp when compressing.
+         * NOTICE: '20131121115910' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20131120162924',
+        __BUILD_TIME: '20131121115910',
 
         /**
          * KISSY Environment.
@@ -3204,7 +3204,7 @@ var KISSY = (function (undefined) {
                             if ((m = ua.match(/rv:([\d.]*)/)) && m[1]) {
                                 UA[core] = numberify(m[1]);
                                 if (/Mobile|Tablet/.test(ua)) {
-                                    o.mobile = "firefox";
+                                    UA.mobile = "firefox";
                                 }
                             }
                             // Firefox
@@ -3250,7 +3250,7 @@ var KISSY = (function (undefined) {
     // use by analysis tools in nodejs
     UA.getDescriptorFromUserAgent = getDescriptorFromUserAgent;
 
-    var o = [
+    var browsers = [
             // browser core type
             'webkit',
             'trident',
@@ -3266,7 +3266,7 @@ var KISSY = (function (undefined) {
         documentElement = doc && doc.documentElement,
         className = '';
     if (documentElement) {
-        S.each(o, function (key) {
+        S.each(browsers, function (key) {
             var v = UA[key];
             if (v) {
                 className += ' ks-' + key + (parseInt(v) + '');
@@ -5342,7 +5342,7 @@ var KISSY = (function (undefined) {
     var doc = S.Env.host && S.Env.host.document;
     // var logger = S.getLogger('s/loader');
     var Utils = S.Loader.Utils;
-    var TIMESTAMP = '20131120162924';
+    var TIMESTAMP = '20131121115910';
     var defaultComboPrefix = '??';
     var defaultComboSep = ',';
 
