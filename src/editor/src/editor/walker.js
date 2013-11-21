@@ -8,9 +8,8 @@
  Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.html or http://ckeditor.com/license
  */
-KISSY.add(function (S) {
-    var module=this;
-    var Editor=module.require('./base');
+KISSY.add(function (S,require) {
+    var Editor=require('./base');
 
     var TRUE = true,
         FALSE = false,
@@ -18,7 +17,7 @@ KISSY.add(function (S) {
         UA = S.UA,
         Dom = S.DOM,
         dtd = Editor.XHTML_DTD,
-        Node = module.require('node');
+        Node = require('node');
 
     function iterate(rtl, breakOnFalseRetFalse) {
         var self = this;

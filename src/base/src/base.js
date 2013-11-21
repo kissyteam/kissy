@@ -3,9 +3,8 @@
  * KISSY Class System
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S) {
-    var module = this;
-    var Attribute = module.require('attribute');
+KISSY.add(function (S,require) {
+    var Attribute = require('attribute');
 
     var ucfirst = S.ucfirst,
         ON_SET = '_onSet',

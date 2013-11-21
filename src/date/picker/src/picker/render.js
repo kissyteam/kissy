@@ -3,11 +3,11 @@
  * render for year panel
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S) {
+KISSY.add(function (S,require) {
     var module = this;
-    var DateTimeFormat = module.require('date/format'),
-        PickerTpl = module.require('./picker-xtpl'),
-        Control = module.require('component/control');
+    var DateTimeFormat =require('date/format'),
+        PickerTpl = require('./picker-xtpl'),
+        Control = require('component/control');
     var dateRowTplStart = '<tr role="row">';
     var dateRowTplEnd = '</tr>';
     var dateCellTpl = '<td role="gridcell" data-index="{index}" title="{title}" class="{cls}">{content}</td>';

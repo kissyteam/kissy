@@ -3,10 +3,9 @@
  * dd support for kissy, dd objects central management module
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S) {
-    var module = this;
-    var Node = module.require('node'),
-        Base = module.require('base');
+KISSY.add(function (S,require) {
+    var Node = require('node'),
+        Base = require('base');
     var UA = S.UA,
         undefined=undefined,
         $ = Node.all,

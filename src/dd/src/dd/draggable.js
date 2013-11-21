@@ -3,11 +3,10 @@
  * dd support for kissy, drag for dd
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S) {
-    var module = this;
-    var Node = module.require('node'),
-        DDM = module.require('./ddm'),
-        Base = module.require('base');
+KISSY.add(function (S,require) {
+    var Node = require('node'),
+        DDM = require('./ddm'),
+        Base = require('base');
     var UA = S.UA,
         $ = Node.all,
         each = S.each,

@@ -3,9 +3,8 @@
  * base for xhr and subdomain
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S) {
-    var module = this,
-        IO = module.require('./base');
+KISSY.add(function (S,require) {
+    var IO = require('./base');
     var OK_CODE = 200,
         win = S.Env.host,
         logger = S.getLogger('s/io'),
@@ -294,7 +293,6 @@ KISSY.add(function (S) {
                         } else if (status === NO_CONTENT_CODE2) {
                             status = NO_CONTENT_CODE;
                         }
-
                         io._ioReady(status, statusText);
                     }
                 }
@@ -310,8 +308,7 @@ KISSY.add(function (S) {
                 }
             }
         }
-    })
-    ;
+    });
 
     return XhrTransportBase;
 });

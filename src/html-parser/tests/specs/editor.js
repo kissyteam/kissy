@@ -7,7 +7,7 @@ KISSY.add(function (S, HtmlParser, UA) {
         if (S.UA.nodejs) {
             path = S.config('packages').src.baseUri
                 .resolve('src/html-parser/tests/runner/' + path).getPath();
-            var fs = require('fs');
+            var fs = requireNode('fs');
             callback(fs.readFileSync(path, 'utf-8'));
         } else {
             S.io({

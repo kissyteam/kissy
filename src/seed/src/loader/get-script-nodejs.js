@@ -29,7 +29,7 @@
         try {
             var mod = fs.readFileSync(path, charset);
             //noinspection JSUnresolvedFunction
-            var factory = vm.runInThisContext('(function(KISSY,require){' + mod + '})', url);
+            var factory = vm.runInThisContext('(function(KISSY,requireNode){' + mod + '})', url);
             factory(S, require);
             success && success();
         } catch (e) {

@@ -3,9 +3,8 @@
  * ie create hack
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S) {
-    var module = this;
-    var Dom = module.require('dom/base');
+KISSY.add(function (S,require) {
+    var Dom = require('dom/base');
     var UA = S.UA;
 
     if (UA.ie < 8) {

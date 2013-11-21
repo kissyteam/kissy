@@ -1,11 +1,10 @@
 /**
  * implement class-list for ie<10
  * @ignore
- * @author lifesinger@gmail.com, yiminghe@gmail.com
+ * @author yiminghe@gmail.com,lifesinger@gmail.com
  */
-KISSY.add(function (S) {
-    var module = this;
-    var Dom = module.require('dom/base');
+KISSY.add(function (S,require) {
+    var Dom = require('dom/base');
     var SPACE = ' ',
         RE_CLASS = /[\n\t\r]/g;
 

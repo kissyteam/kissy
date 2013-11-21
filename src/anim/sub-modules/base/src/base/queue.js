@@ -2,9 +2,8 @@
  * @ignore queue data structure
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S) {
-    var module=this,
-        Dom=module.require('dom');
+KISSY.add(function (S,require) {
+    var Dom=require('dom');
     var // 队列集合容器
         queueCollectionKey = S.guid('ks-queue-' + S.now() + '-'),
     // 默认队列

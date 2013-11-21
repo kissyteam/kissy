@@ -3,10 +3,9 @@
  * render for container
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S) {
-    var module = this;
-    var Control = module.require('component/control');
-    var Manager = module.require('component/manager');
+KISSY.add(function (S,require) {
+    var Control = require('component/control');
+    var Manager = require('component/manager');
 
     return Control.getDefaultRender().extend([], {
         // decorate child element from parent component's root element.

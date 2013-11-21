@@ -3,10 +3,10 @@
  * special patch for making color gradual change
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S) {
+KISSY.add(function (S,require) {
     var module=this;
-    var Fx = module.require('./fx');
-    var SHORT_HANDS = module.require('./short-hand');
+    var Fx = require('./fx');
+    var SHORT_HANDS = require('./short-hand');
     var HEX_BASE = 16,
         logger = S.getLogger('s/anim/timer/color'),
         floor = Math.floor,

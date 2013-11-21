@@ -3,10 +3,9 @@
  * backColor button.
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S) {
-    var module=this;
-    var Button=module.require('./color/btn');
-    var cmd=module.require('./back-color/cmd');
+KISSY.add(function (S,require) {
+    var Button=require('./color/btn');
+    var cmd=require('./back-color/cmd');
     function backColor(config) {
         this.config = config || {};
     }

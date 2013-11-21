@@ -5,10 +5,9 @@
  * add abort ability
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S) {
-    var module=this,
-        undefined=undefined,
-        IO=module.require('./base');
+KISSY.add(function (S,require) {
+    var undefined=undefined,
+        IO=require('./base');
     var win = S.Env.host,
         doc = win.document,
         logger= S.getLogger('s/io'),

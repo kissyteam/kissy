@@ -3,9 +3,8 @@
  * traversal ie hack
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S) {
-    var module = this;
-    var Dom = module.require('dom/base');
+KISSY.add(function (S,require) {
+    var Dom = require('dom/base');
     Dom._contains = function (a, b) {
         if (a.nodeType == Dom.NodeType.DOCUMENT_NODE) {
             a = a.documentElement;

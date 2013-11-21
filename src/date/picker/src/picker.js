@@ -3,7 +3,6 @@
  * date picker ui
  * @author yiminghe@gmail.com
  */
-KISSY.add(function(){
-    var module=this;
-    return module.require('./picker/control');
+KISSY.add(function(S,require){
+    return require('./picker/control');
 });

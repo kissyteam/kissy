@@ -3,11 +3,10 @@
  * a scalable client io framework
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S) {
-    var module = this,
-        undefined = undefined,
-        CustomEvent = module.require('event/custom'),
-        Promise = module.require('promise');
+KISSY.add(function (S,require) {
+    var undefined = undefined,
+        CustomEvent = require('event/custom'),
+        Promise = require('promise');
     var rlocalProtocol = /^(?:about|app|app\-storage|.+\-extension|file|widget)$/,
         rspace = /\s+/,
         // logger = S.getLogger('s/io'),
@@ -277,7 +276,6 @@ KISSY.add(function (S) {
      *
      */
     function IO(c) {
-
         var self = this;
 
         if (!(self instanceof IO)) {

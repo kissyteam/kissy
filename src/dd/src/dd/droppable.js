@@ -3,11 +3,10 @@
  * droppable for kissy
  * @author yiminghe@gmail.com
  */
-KISSY.add('dd/droppable', function (S) {
-    var module = this;
-    var Node = module.require('node'),
-        DDM = module.require('./ddm'),
-        Base = module.require('base');
+KISSY.add('dd/droppable', function (S,require) {
+    var Node = require('node'),
+        DDM = require('./ddm'),
+        Base = require('base');
 
     var PREFIX_CLS = DDM.PREFIX_CLS;
 

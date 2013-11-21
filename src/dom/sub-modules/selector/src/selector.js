@@ -3,10 +3,9 @@
  * css3 selector engine for ie6-8
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S) {
-    var module = this;
-    var Dom = module.require('dom/basic');
-    var parser = module.require('./selector/parser');
+KISSY.add(function (S,require) {
+    var Dom = require('dom/basic');
+    var parser = require('./selector/parser');
 
     var logger= S.getLogger('s/dom');
 

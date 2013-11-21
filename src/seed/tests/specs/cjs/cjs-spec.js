@@ -1,4 +1,4 @@
-describe('it support module.require', function () {
+describe('it support commonjs require', function () {
     window.cjs_test = [];
     it('support cjs module and lazy initialization', function () {
         var S = KISSY;
@@ -8,16 +8,14 @@ describe('it support module.require', function () {
             }
         });
         var ret;
-        S.use(function () {
-            cjs_test.push(1);
-            ret = KISSY.require('cjs/a');
-            cjs_test.push(7);
+        S.use('cjs/a',function (S,a) {
+            ret = a
         });
         waitsFor(function () {
             return ret == 3
         });
         runs(function () {
-            expect(cjs_test).toEqual([1, 2, 3, 4, 6, 7]);
+            expect(cjs_test).toEqual([ 2, 3, 4, 6]);
             window.cjs_test = [];
         });
     });
@@ -30,16 +28,14 @@ describe('it support module.require', function () {
             }
         });
         var ret;
-        S.use(function () {
-            cjs_test.push(1);
-            ret = KISSY.require('amd/a');
-            cjs_test.push(7);
+        S.use('amd/a',function (S,a) {
+            ret = a;
         });
         waitsFor(function () {
             return ret == 3
         });
         runs(function () {
-            expect(cjs_test).toEqual([1, 3, 2, 4, 6, 7]);
+            expect(cjs_test).toEqual([3, 2, 4, 6]);
             window.cjs_test = [];
         });
     });

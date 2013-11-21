@@ -7,13 +7,11 @@
  Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.html or http://ckeditor.com/license
  */
-KISSY.add(function (S) {
-    // './base','./walker','./elementPath','node','event'
-    var module = this;
-    var Node = module.require('node');
-    var Walker = module.require('./walker');
-    var Editor = module.require('./base');
-    var ElementPath = module.require('./elementPath');
+KISSY.add(function (S,require) {
+    var Node =require('node');
+    var Walker =require('./walker');
+    var Editor = require('./base');
+    var ElementPath = require('./elementPath');
 
     var UA = S.UA,
         headerTagRegex = /^h[1-6]$/,

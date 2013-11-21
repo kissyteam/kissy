@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 21 11:59
+build time: Nov 21 17:08
 */
 /**
  * @ignore
@@ -42,11 +42,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20131121115910' will replace with current timestamp when compressing.
+         * NOTICE: '20131121170756' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20131121115910',
+        __BUILD_TIME: '20131121170756',
 
         /**
          * KISSY Environment.
@@ -3505,8 +3505,10 @@ var KISSY = (function (undefined) {
         'LOADED': 2,
         /**dependencies are loaded or attached*/
         'READY_TO_ATTACH': 3,
+        /** attaching */
+        'ATTACHING': 4,
         /** attached */
-        'ATTACHED': 4
+        'ATTACHED': 5
     };
 })(KISSY);/**
  * @ignore
@@ -3524,6 +3526,7 @@ var KISSY = (function (undefined) {
         ATTACHED = data.ATTACHED,
         READY_TO_ATTACH = data.READY_TO_ATTACH,
         LOADED = data.LOADED,
+        ATTACHING = data.ATTACHING,
         ERROR = data.ERROR,
         /**
          * @class KISSY.Loader.Utils
@@ -3651,16 +3654,6 @@ var KISSY = (function (undefined) {
         },
 
         /**
-         * Whether modNames is attached.
-         * @param runtime Module container, such as KISSY
-         * @param modNames
-         * @return {Boolean}
-         */
-        'isAttached': function (runtime, modNames) {
-            return isStatus(runtime, modNames, ATTACHED);
-        },
-
-        /**
          * Get modules exports
          * @param runtime Module container, such as KISSY
          * @param {String[]} modNames module names
@@ -3679,7 +3672,8 @@ var KISSY = (function (undefined) {
                     unalias = Utils.unalias(runtime, modName);
                     allOk = S.reduce(unalias, function (a, n) {
                         m = runtimeMods[n];
-                        return a && m && m.status == ATTACHED;
+                        // allow partial module (circular dependency)
+                        return a && m && m.status >= ATTACHING;
                     }, true);
                     if (allOk) {
                         mods.push(runtimeMods[unalias[0]].exports);
@@ -3746,9 +3740,8 @@ var KISSY = (function (undefined) {
             }
             if ('@DEBUG@') {
                 if (S.inArray(modName, stack)) {
-                    stack.push(modName);
-                    S.error('find cyclic dependency between mods: ' + stack);
-                    return cache[modName] = FALSE;
+                    S.log('find cyclic dependency between mods: ' + stack, 'warn');
+                    return cache[modName] = TRUE;
                 }
                 stack.push(modName);
             }
@@ -3772,9 +3765,11 @@ var KISSY = (function (undefined) {
                 status,
                 m = mods[modName];
             status = m.status;
-            if (status == ATTACHED) {
+            // attached or circular dependency
+            if (status >= ATTACHING) {
                 return;
             }
+            m.status = ATTACHING;
             if (m.cjs) {
                 // commonjs format will call require in module code again
                 Utils.attachMod(runtime, m);
@@ -3794,12 +3789,18 @@ var KISSY = (function (undefined) {
                 exports = undefined;
 
             if (typeof factory === 'function') {
+                // compatible and efficiency
+                // KISSY.add(function(S,undefined){})
+                var require;
+                if (module.requires && module.requires.length) {
+                    require = S.bind(module.require, module);
+                }
                 // 需要解开 index，相对路径
                 // 但是需要保留 alias，防止值不对应
                 //noinspection JSUnresolvedFunction
                 exports = factory.apply(module,
                     // KISSY.add(function(S){module.require}) lazy initialize
-                    (module.cjs ? [runtime] : Utils.getModules(runtime, module.getRequiresWithAlias())));
+                    (module.cjs ? [runtime, require, module.exports, module] : Utils.getModules(runtime, module.getRequiresWithAlias())));
                 if (exports !== undefined) {
                     //noinspection JSUndefinedPropertyAssignment
                     module.exports = exports;
@@ -3946,15 +3947,14 @@ var KISSY = (function (undefined) {
             return hash + '';
         },
 
-        getRequiresFromFn: function (fn, mode) {
-            mode = mode || 0;
+        getRequiresFromFn: function (fn) {
             var requires = [];
             // Remove comments from the callback string,
             // look for require calls, and pull them into the dependencies,
             // but only if there are function args.
             fn.toString()
                 .replace(commentRegExp, '')
-                .replace(requireRegExp[mode], function (match, dep) {
+                .replace(requireRegExp, function (match, dep) {
                     requires.push(getRequireVal(dep));
                 });
             return requires;
@@ -3962,9 +3962,7 @@ var KISSY = (function (undefined) {
     });
 
     var commentRegExp = /(\/\*([\s\S]*?)\*\/|([^:]|^)\/\/(.*)$)/mg,
-        requireRegExp = [ /[^.'"]\s*module.require\s*\((.+?)\)\s*[;,]/g,
-            // avoid compression
-            /[^.'"]\s*KISSY.require\s*\((.+?)\)\s*[;,]/g];
+        requireRegExp = /[^.'"]\s*require\s*\((.+?)\)\s*[;,]/g;
 
     function getRequireVal(str) {
         var m;
@@ -3975,20 +3973,6 @@ var KISSY = (function (undefined) {
             // expression
             return new Function('return (' + str + ')')();
         }
-    }
-
-    function isStatus(runtime, modNames, status) {
-        var mods = runtime.Env.mods,
-            module,
-            i;
-        modNames = S.makeArray(modNames);
-        for (i = 0; i < modNames.length; i++) {
-            module = mods[modNames[i]];
-            if (!module || module.status !== status) {
-                return 0;
-            }
-        }
-        return 1;
     }
 })(KISSY);/**
  * @ignore
@@ -4147,7 +4131,7 @@ var KISSY = (function (undefined) {
          */
         module.factory = undefined;
         // lazy initialize and commonjs module format
-        module.cjs=1;
+        module.cjs = 1;
         S.mix(module, cfg);
         module.waitedCallbacks = [];
     }
@@ -4157,11 +4141,13 @@ var KISSY = (function (undefined) {
 
         /**
          * resolve module by name.
-         * @param {String} relativeName relative module's name
+         * @param {String|String[]} relativeName relative module's name
+         * @param {Function|Object} fn KISSY.use callback
          * @returns {String} resolved module name
          */
-        'resolveByName': function (relativeName) {
-            return Utils.normalDepModuleName(this.name, relativeName);
+        'use': function (relativeName, fn) {
+            relativeName = Utils.getModNamesAsArray(relativeName);
+            return KISSY.use(Utils.normalDepModuleName(this.name, relativeName), fn);
         },
 
         /**
@@ -4169,7 +4155,7 @@ var KISSY = (function (undefined) {
          * @param {String} relativePath relative path
          * @returns {KISSY.Uri} resolve uri
          */
-        'resolveByPath': function (relativePath) {
+        'resolve': function (relativePath) {
             return this.getFullPathUri().resolve(relativePath);
         },
 
@@ -4541,7 +4527,7 @@ var KISSY = (function (undefined) {
         try {
             var mod = fs.readFileSync(path, charset);
             //noinspection JSUnresolvedFunction
-            var factory = vm.runInThisContext('(function(KISSY,require){' + mod + '})', url);
+            var factory = vm.runInThisContext('(function(KISSY,requireNode){' + mod + '})', url);
             factory(S, require);
             success && success();
         } catch (e) {
@@ -4737,7 +4723,7 @@ var KISSY = (function (undefined) {
     var startLoadModTime;
 
     function checkKISSYRequire(config, factory) {
-        // use module.require primitive statement
+        // use require primitive statement
         if (!config && typeof factory == 'function') {
             var requires = Utils.getRequiresFromFn(factory);
             if (requires.length) {
@@ -5228,15 +5214,9 @@ var KISSY = (function (undefined) {
                 loader,
                 error,
                 sync,
-                requireCodeStyle = 0,
                 tryCount = 0,
                 finalSuccess,
                 waitingModules = new WaitingModules(loadReady);
-
-            if (typeof modNames != 'string' && !S.isArray(modNames)) {
-                requireCodeStyle = 1;
-                success = modNames;
-            }
 
             if (S.isPlainObject(success)) {
                 //noinspection JSUnresolvedVariable
@@ -5247,12 +5227,8 @@ var KISSY = (function (undefined) {
                 success = success.success;
             }
 
-            if (requireCodeStyle) {
-                modNames = Utils.getRequiresFromFn(success, 1);
-            }
-
             finalSuccess = function () {
-                success.apply(S, requireCodeStyle ? [S] : Utils.getModules(S, modNames))
+                success.apply(S, Utils.getModules(S, modNames));
             };
 
             modNames = Utils.getModNamesAsArray(modNames);
@@ -5268,9 +5244,7 @@ var KISSY = (function (undefined) {
                 ret = Utils.checkModsLoadRecursively(normalizedModNames, S, undefined, errorList);
                 logger.debug(tryCount + ' check duration ' + (S.now() - start));
                 if (ret) {
-                    if (!requireCodeStyle) {
-                        Utils.attachModsRecursively(normalizedModNames, S);
-                    }
+                    Utils.attachModsRecursively(normalizedModNames, S);
                     if (success) {
                         if (sync) {
                             finalSuccess();
@@ -5342,7 +5316,7 @@ var KISSY = (function (undefined) {
     var doc = S.Env.host && S.Env.host.document;
     // var logger = S.getLogger('s/loader');
     var Utils = S.Loader.Utils;
-    var TIMESTAMP = '20131121115910';
+    var TIMESTAMP = '20131121170756';
     var defaultComboPrefix = '??';
     var defaultComboSep = ',';
 

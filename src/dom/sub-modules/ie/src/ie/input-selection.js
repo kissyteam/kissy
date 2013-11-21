@@ -3,9 +3,8 @@
  * handle input selection and cursor position ie hack
  * @author yiminghe@gmail.com
  */
-KISSY.add(function () {
-    var module = this;
-    var Dom = module.require('dom/base');
+KISSY.add(function (S,require) {
+    var Dom = require('dom/base');
     var propHooks = Dom._propHooks;
     // note :
     // in ie textarea can not set selectionStart or selectionEnd between '\r' and '\n'

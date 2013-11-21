@@ -3,10 +3,9 @@
  * component hierarchy management
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S) {
-    var module = this;
-    var Control = module.require('component/control');
-    var ContainerRender = module.require('./container/render');
+KISSY.add(function (S,require) {
+    var Control = require('component/control');
+    var ContainerRender = require('./container/render');
 
     function defAddChild(e) {
         var self = this;

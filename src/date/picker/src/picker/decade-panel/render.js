@@ -3,11 +3,10 @@
  * render for decade panel
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S) {
-    var module = this;
-    var Control = module.require('component/control'),
-        DecadePanelTpl = module.require('./decade-panel-xtpl'),
-        MonthsTpl = module.require('./decades-xtpl');
+KISSY.add(function (S,require) {
+    var Control = require('component/control'),
+        DecadePanelTpl = require('./decade-panel-xtpl'),
+        MonthsTpl = require('./decades-xtpl');
 
     function prepareYears(control, view) {
         var value = control.get('value');

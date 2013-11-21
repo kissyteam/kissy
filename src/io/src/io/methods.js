@@ -3,10 +3,9 @@
  * encapsulation of io object. as transaction object in yui3
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S) {
-    var module=this,
-        Promise=module.require('promise'),
-        IO=module.require('./base');
+KISSY.add(function (S,require) {
+    var Promise=require('promise'),
+        IO=require('./base');
     var OK_CODE = 200,
         logger = S.getLogger('s/logger'),
         MULTIPLE_CHOICES = 300,
@@ -15,7 +14,6 @@ KISSY.add(function (S) {
         rheaders = /^(.*?):[ \t]*([^\r\n]*)\r?$/mg;
 
     function handleResponseData(io) {
-
         // text xml 是否原生转化支持
         var text = io.responseText,
             xml = io.responseXML,
@@ -209,7 +207,6 @@ KISSY.add(function (S) {
                             statusText = 'parser error';
                         }
                     }
-
                 } else {
                     if (status < 0) {
                         status = 0;

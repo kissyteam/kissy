@@ -3,9 +3,8 @@
  * ie create hack
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S) {
-    var module = this;
-    var Dom = module.require('dom/base');
+KISSY.add(function (S,require) {
+    var Dom = require('dom/base');
     // wierd ie cloneNode fix from jq
     Dom._fixCloneAttributes = function (src, dest) {
 

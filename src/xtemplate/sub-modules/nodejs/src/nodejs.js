@@ -4,7 +4,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add('xtemplate/nodejs', function (S, XTemplate) {
-    var fs = require('fs');
+    var fs = requireNode('fs');
     var cached = {};
 
     /**

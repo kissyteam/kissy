@@ -3,11 +3,10 @@
  * @author yiminghe@gmail.com
  * @ignore
  */
-KISSY.add(function (S) {
-    var module = this,
-        undefined = undefined,
-        Q = module.require('./queue'),
-        Dom = module.require('dom');
+KISSY.add(function (S,require) {
+    var undefined = undefined,
+        Q = require('./queue'),
+        Dom = require('dom');
     var runningKey = S.guid('ks-anim-unqueued-' + S.now() + '-');
 
     function saveRunningAnim(anim) {

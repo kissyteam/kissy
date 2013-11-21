@@ -3,12 +3,11 @@
  * @ignore
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S) {
+KISSY.add(function (S,require) {
     var toInt = parseInt;
-    var module=this;
-    var Utils=module.require('./gregorian/utils');
-    var defaultLocale=module.require('i18n!date');
-    var Const=module.require('./gregorian/const');
+    var Utils=require('./gregorian/utils');
+    var defaultLocale=require('i18n!date');
+    var Const=require('./gregorian/const');
     var undefined=undefined;
 
 

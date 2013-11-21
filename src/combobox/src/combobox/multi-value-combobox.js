@@ -3,13 +3,12 @@
  * Input wrapper for ComboBox component.
  * @author yiminghe@gmail.com
  */
-KISSY.add(function () {
+KISSY.add(function (S,require) {
     var SUFFIX = 'suffix',
         rWhitespace = /\s|\xa0/;
 
-    var module=this;
-    var getCursor=module.require('./cursor');
-    var ComboBox=module.require('./control');
+    var getCursor=require('./cursor');
+    var ComboBox=require('./control');
 
     function strContainsChar(str, c) {
         return c && str.indexOf(c) != -1;

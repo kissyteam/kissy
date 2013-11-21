@@ -3,12 +3,11 @@
  * render for year-panel
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S) {
-    var module = this;
-    var DateFormat = module.require('date/format'),
-        Control = module.require('component/control'),
-        YearsTpl = module.require('./years-xtpl'),
-        YearPanelTpl = module.require('./year-panel-xtpl');
+KISSY.add(function (S,require) {
+    var DateFormat = require('date/format'),
+        Control = require('component/control'),
+        YearsTpl = require('./years-xtpl'),
+        YearPanelTpl = require('./year-panel-xtpl');
 
     function prepareYears(control) {
         var value = control.get('value');

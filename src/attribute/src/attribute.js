@@ -3,10 +3,9 @@
  * attribute management
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
-KISSY.add(function (S, undefined) {
-    var module = this;
+KISSY.add(function (S, require,exports,module) {
     var RE_DASH = /(?:^|-)([a-z])/ig;
-    var CustomEvent = module.require('event/custom');
+    var CustomEvent = require('event/custom');
     module.exports = Attribute;
 
     var bind = S.bind;

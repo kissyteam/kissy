@@ -3,9 +3,8 @@
  * filter select from combobox
  * @author yiminghe@gmail.com
  */
-KISSY.add(function () {
-    var module = this;
-    var Combobox = module.require('./control');
+KISSY.add(function (S,require,exports,module) {
+    var Combobox =require('./control');
 
     function valInAutoCompleteList(inputVal, _saveData) {
         var valid = false;

@@ -3,9 +3,8 @@
  * @ignore
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S) {
-    var module = this;
-    var Dom = module.require('./api');
+KISSY.add(function (S,require) {
+    var Dom = require('./api');
     var slice = [].slice,
         NodeType = Dom.NodeType,
         RE_SPLIT = /[\.\s]\s*\.?/;

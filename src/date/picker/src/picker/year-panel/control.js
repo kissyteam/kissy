@@ -3,12 +3,11 @@
  * month select for date picker
  * @author yiminghe@gmail.com
  */
-KISSY.add(function () {
-    var module = this;
-    var Node = module.require('node'),
-        Control = module.require('component/control'),
-        DecadePanelRender = module.require('./render'),
-        DecadePanel = module.require('../decade-panel/control');
+KISSY.add(function (S,require) {
+    var Node = require('node'),
+        Control = require('component/control'),
+        DecadePanelRender = require('./render'),
+        DecadePanel = require('../decade-panel/control');
     var tap = Node.Gesture.tap;
     var $ = Node.all;
 

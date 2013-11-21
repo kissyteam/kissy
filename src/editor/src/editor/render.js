@@ -3,10 +3,9 @@
  * render for editor
  * @author yiminghe@gmail.com
  */
-KISSY.add(function(S){
-    var module=this;
-    var Control=module.require('component/control');
-    var RenderTpl=module.require('./render-xtpl');
+KISSY.add(function(S,require){
+    var Control=require('component/control');
+    var RenderTpl=require('./render-xtpl');
     return Control.getDefaultRender().extend({
         beforeCreateDom:function(renderData,childrenElSelectors){
             S.mix(renderData,{

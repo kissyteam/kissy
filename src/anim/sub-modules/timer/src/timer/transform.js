@@ -3,10 +3,9 @@
  * animation for transform property
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S) {
-    var module=this;
-    var Dom = module.require('dom');
-    var Fx = module.require('./fx');
+KISSY.add(function (S,require) {
+    var Dom = require('dom');
+    var Fx = require('./fx');
 
     function toMatrixArray(matrix) {
         matrix = matrix.split(/,/);

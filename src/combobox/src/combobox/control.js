@@ -3,13 +3,12 @@
  * Input wrapper for ComboBox component.
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S) {
-    var module=this;
-    var Node=module.require('node');
-    var Control=module.require('component/control');
-    var ComboBoxRender=module.require('./render');
+KISSY.add(function (S,require) {
+    var Node=require('node');
+    var Control=require('component/control');
+    var ComboBoxRender=require('./render');
     // provide popupmenu xclass
-    module.require('menu');
+    require('menu');
 
     var ComboBox,
         undefined=undefined,

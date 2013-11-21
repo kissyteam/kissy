@@ -3,12 +3,11 @@
  * Render aria properties to input element.
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S) {
-    var module = this;
-    var Control = module.require('component/control');
-    var ComboboxTpl = module.require('./combobox-xtpl');
+KISSY.add(function (S,require) {
+    var Control = require('component/control');
+    var ComboboxTpl = require('./combobox-xtpl');
 
-    module.exports = Control.getDefaultRender().extend({
+    return Control.getDefaultRender().extend({
 
         beforeCreateDom: function (renderData, childrenElSelectors) {
             S.mix(childrenElSelectors, {

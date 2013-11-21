@@ -3,11 +3,10 @@
  * Set up editor constructor
  * @author yiminghe@gmail.com
  */
-KISSY.add(function () {
-    var module = this;
-    var HtmlParser = module.require('html-parser');
-    var Control = module.require('component/control');
-    var EditorRender = module.require('./render');
+KISSY.add(function (S,require) {
+    var HtmlParser = require('html-parser');
+    var Control = require('component/control');
+    var EditorRender = require('./render');
     /**
      * editor component for KISSY. xclass: 'editor'.
      * @class KISSY.Editor

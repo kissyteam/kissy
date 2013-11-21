@@ -3,11 +3,10 @@
  * auto scroll for drag object's container
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S) {
-    var module = this;
-    var Node = module.require('node'),
-        DD = module.require('dd'),
-        Base = module.require('base');
+KISSY.add(function (S,require) {
+    var Node = require('node'),
+        DD = require('dd'),
+        Base = require('base');
     var DDM = DD.DDM,
         win = S.Env.host,
         SCROLL_EVENT = '.-ks-dd-scroll' + S.now(),

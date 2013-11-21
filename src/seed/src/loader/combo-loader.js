@@ -87,7 +87,7 @@
     var startLoadModTime;
 
     function checkKISSYRequire(config, factory) {
-        // use module.require primitive statement
+        // use require primitive statement
         if (!config && typeof factory == 'function') {
             var requires = Utils.getRequiresFromFn(factory);
             if (requires.length) {

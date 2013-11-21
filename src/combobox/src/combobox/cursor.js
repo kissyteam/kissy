@@ -3,9 +3,8 @@
  * get cursor position of input
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S) {
-    var module=this;
-    var Node=module.require('node');
+KISSY.add(function (S,require) {
+    var Node=require('node');
     var $ = Node.all,
         FAKE_DIV_HTML = "<div style='" +
             "z-index:-9999;" +

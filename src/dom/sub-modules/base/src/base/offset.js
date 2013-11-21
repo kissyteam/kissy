@@ -3,9 +3,8 @@
  * @author  lifesinger@gmail.com
  *          yiminghe@gmail.com
  */
-KISSY.add(function (S) {
-    var module = this;
-    var Dom = module.require('./api');
+KISSY.add(function (S,require) {
+    var Dom = require('./api');
     var win = S.Env.host,
         UA = S.UA,
         doc = win.document,

@@ -96,17 +96,12 @@ public class ModuleUtils {
 
     static void findModuleRequire(Node root, ArrayList<Node> nodes) {
         if (root.getType() == Token.CALL) {
-            Node first = root.getFirstChild();
-            if (first.getType() == Token.GETPROP) {
-                Node name = first.getFirstChild();
-                Node method = name.getNext();
-                if (name.getType() == Token.NAME &&
-                        method.getType() == Token.STRING &&
-                        name.getString().equals("module") && method.getString().equals("require")) {
-                    nodes.add(first.getNext());
-                    return;
-                }
+            Node name = root.getFirstChild();
+            if (name.getType() == Token.NAME && name.getString().equals("require")) {
+                nodes.add(name.getNext());
+                return;
             }
+
         }
         Node firstChild = root.getFirstChild();
         while (firstChild != null) {

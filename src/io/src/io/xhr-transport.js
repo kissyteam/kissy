@@ -3,12 +3,11 @@
  * io xhr transport class, route subdomain, xdr
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S) {
-    var module = this,
-        IO = module.require('./base'),
-        XhrTransportBase = module.require('./xhr-transport-base'),
-        XdrFlashTransport=module.require('./xdr-flash-transport'),
-        SubDomainTransport = module.require('./sub-domain-transport');
+KISSY.add(function (S,require) {
+    var IO = require('./base'),
+        XhrTransportBase = require('./xhr-transport-base'),
+        XdrFlashTransport=require('./xdr-flash-transport'),
+        SubDomainTransport = require('./sub-domain-transport');
 
     var win = S.Env.host,
         doc = win.document,
@@ -74,8 +73,6 @@ KISSY.add(function (S) {
     IO['setupTransport']('*', XhrTransport);
 
     return IO;
-}, {
-    requires: ['./base', './xhr-transport-base', './sub-domain-transport', './xdr-flash-transport']
 });
 
 /*

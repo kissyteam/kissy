@@ -4,10 +4,10 @@
  * Inspired by DateTimeFormat from JDK.
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S) {
+KISSY.add(function (S,require) {
     var module=this;
-    var GregorianCalendar=module.require('date/gregorian');
-    var defaultLocale=module.require('i18n!date');
+    var GregorianCalendar=require('date/gregorian');
+    var defaultLocale=require('i18n!date');
     var MAX_VALUE = Number.MAX_VALUE,
         undefined=undefined,
         /**

@@ -3,11 +3,10 @@
  * non-refresh upload file with form by iframe
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S) {
-    var module = this;
-    var Dom = module.require('dom'),
-        IO = module.require('./base'),
-        Event = module.require('event/dom');
+KISSY.add(function (S,require) {
+    var Dom = require('dom'),
+        IO = require('./base'),
+        Event = require('event/dom');
     var doc = S.Env.host.document,
         OK_CODE = 200,
         logger = S.getLogger('s/io'),

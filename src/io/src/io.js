@@ -3,18 +3,17 @@
  * io shortcut
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S) {
+KISSY.add(function (S, require) {
     var undefined = undefined;
-    var module = this,
-        serializer = module.require('io/form-serializer'),
-        IO = module.require('io/base');
+    var serializer = require('io/form-serializer'),
+        IO = require('io/base');
 
-    module.require('io/xhr-transport');
-    module.require('io/script-transport');
-    module.require('io/jsonp');
-    module.require('io/form');
-    module.require('io/iframe-transport');
-    module.require('io/methods');
+    require('io/xhr-transport');
+    require('io/script-transport');
+    require('io/jsonp');
+    require('io/form');
+    require('io/iframe-transport');
+    require('io/methods');
 
     function get(url, data, callback, dataType, type) {
         // data 参数可省略

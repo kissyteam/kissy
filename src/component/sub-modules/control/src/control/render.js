@@ -4,14 +4,12 @@
  * @author yiminghe@gmail.com
  * refer: http://martinfowler.com/eaaDev/uiArchs.html
  */
-KISSY.add(function (S) {
-    var module = this;
-    var Node = module.require('node');
-    var XTemplateRuntime = module.require('xtemplate/runtime');
-    var ComponentProcess = module.require('./process');
-    var RenderTpl = module.require('./render-xtpl');
-    var Manager = module.require('component/manager');
-
+KISSY.add(function (S,require) {
+    var Node = require('node');
+    var XTemplateRuntime = require('xtemplate/runtime');
+    var ComponentProcess = require('./process');
+    var RenderTpl = require('./render-xtpl');
+    var Manager = require('component/manager');
 
     var ON_SET = '_onSet',
         trim = S.trim,

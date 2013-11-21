@@ -3,9 +3,8 @@
  * dom/style
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
-KISSY.add(function (S) {
-    var module = this;
-    var Dom = module.require('./api');
+KISSY.add(function (S,require) {
+    var Dom = require('./api');
     var WINDOW = /**
          @ignore
          @type window

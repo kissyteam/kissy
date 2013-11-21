@@ -770,11 +770,11 @@ function visit317_94_1(result) {
 function visit316_93_1(result) {
   _$jscoverage['/loader/combo-loader.js'].branchData['93'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/combo-loader.js'].branchData['91'][2].init(74, 28, 'typeof factory == \'function\'');
+}_$jscoverage['/loader/combo-loader.js'].branchData['91'][2].init(67, 28, 'typeof factory == \'function\'');
 function visit315_91_2(result) {
   _$jscoverage['/loader/combo-loader.js'].branchData['91'][2].ranCondition(result);
   return result;
-}_$jscoverage['/loader/combo-loader.js'].branchData['91'][1].init(63, 39, '!config && typeof factory == \'function\'');
+}_$jscoverage['/loader/combo-loader.js'].branchData['91'][1].init(56, 39, '!config && typeof factory == \'function\'');
 function visit314_91_1(result) {
   _$jscoverage['/loader/combo-loader.js'].branchData['91'][1].ranCondition(result);
   return result;

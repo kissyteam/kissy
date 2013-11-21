@@ -252,5 +252,6 @@ _$jscoverage['/loader/setup.js'].lineData[6]++;
   'LOADING': 1, 
   'LOADED': 2, 
   'READY_TO_ATTACH': 3, 
-  'ATTACHED': 4};
+  'ATTACHING': 4, 
+  'ATTACHED': 5};
 })(KISSY);

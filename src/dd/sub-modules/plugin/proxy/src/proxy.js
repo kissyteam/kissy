@@ -3,11 +3,10 @@
  * generate proxy drag object,
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S) {
-    var module = this;
-    var Node = module.require('node'),
-        DD = module.require('dd'),
-        Base = module.require('base');
+KISSY.add(function (S,require) {
+    var Node = require('node'),
+        DD = require('dd'),
+        Base = require('base');
 
     var DDM = DD.DDM,
         PROXY_EVENT = '.-ks-proxy' + S.now();

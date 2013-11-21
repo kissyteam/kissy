@@ -3,12 +3,11 @@
  * render for month panel
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S) {
-    var module = this;
-    var DateFormat = module.require('date/format'),
-        Control = module.require('component/control'),
-        MonthsTpl = module.require('./months-xtpl'),
-        MonthPanelTpl = module.require('./month-panel-xtpl');
+KISSY.add(function (S,require) {
+    var DateFormat = require('date/format'),
+        Control = require('component/control'),
+        MonthsTpl = require('./months-xtpl'),
+        MonthPanelTpl = require('./month-panel-xtpl');
 
     function prepareMonths(control) {
         var value = control.get('value');

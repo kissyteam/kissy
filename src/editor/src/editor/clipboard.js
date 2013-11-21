@@ -3,12 +3,11 @@
  * monitor user's paste behavior.
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S) {
-    var module = this;
-    var Node = module.require('node');
-    var Editor = module.require('./base');
-    var KERange = module.require('./range');
-    var KES = module.require('./selection');
+KISSY.add(function (S,require) {
+    var Node = require('node');
+    var Editor = require('./base');
+    var KERange = require('./range');
+    var KES = require('./selection');
     var $ = Node.all,
         UA = S.UA,
         logger = S.getLogger('s/editor'),

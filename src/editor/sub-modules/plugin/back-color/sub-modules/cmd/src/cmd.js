@@ -3,9 +3,8 @@
  * backColor command.
  * @author yiminghe@gmail.com
  */
-KISSY.add(function () {
-    var module=this;
-    var cmd=module.require('../color/cmd');
+KISSY.add(function (S,require) {
+    var cmd=require('../color/cmd');
     var BACK_COLOR_STYLE = {
         element:'span',
         styles:{

@@ -307,11 +307,11 @@ if (! _$jscoverage['/meta/modules.js'].branchData) {
   _$jscoverage['/meta/modules.js'].branchData['215'][1] = new BranchData();
 }
 _$jscoverage['/meta/modules.js'].branchData['215'][1].init(-1, 65, 'Features.isTouchEventSupported() || Features.isMsPointerSupported()');
-function visit521_215_1(result) {
+function visit514_215_1(result) {
   _$jscoverage['/meta/modules.js'].branchData['215'][1].ranCondition(result);
   return result;
 }_$jscoverage['/meta/modules.js'].branchData['137'][1].init(43, 67, 'Features.isTouchEventSupported() || Features.isMsPointerSupported()');
-function visit520_137_1(result) {
+function visit513_137_1(result) {
   _$jscoverage['/meta/modules.js'].branchData['137'][1].ranCondition(result);
   return result;
 }_$jscoverage['/meta/modules.js'].lineData[2]++;
@@ -442,7 +442,7 @@ function visit520_137_1(result) {
   _$jscoverage['/meta/modules.js'].lineData[133]++;
   config({
   "event/dom": {
-  "alias": ["event/dom/base", visit520_137_1(Features.isTouchEventSupported() || Features.isMsPointerSupported()) ? 'event/dom/touch' : '', Features.isDeviceMotionSupported() ? 'event/dom/shake' : '', Features.isHashChangeSupported() ? '' : 'event/dom/hashchange', Features.isIELessThan(9) ? 'event/dom/ie' : '', UA.ie ? '' : 'event/dom/focusin']}});
+  "alias": ["event/dom/base", visit513_137_1(Features.isTouchEventSupported() || Features.isMsPointerSupported()) ? 'event/dom/touch' : '', Features.isDeviceMotionSupported() ? 'event/dom/shake' : '', Features.isHashChangeSupported() ? '' : 'event/dom/hashchange', Features.isIELessThan(9) ? 'event/dom/ie' : '', UA.ie ? '' : 'event/dom/focusin']}});
   _$jscoverage['/meta/modules.js'].lineData[149]++;
   config({
   'event/dom/base': {
@@ -510,7 +510,7 @@ function visit520_137_1(result) {
   _$jscoverage['/meta/modules.js'].lineData[212]++;
   config({
   "scroll-view": {
-  "alias": [visit521_215_1(Features.isTouchEventSupported() || Features.isMsPointerSupported()) ? 'scroll-view/drag' : 'scroll-view/base']}});
+  "alias": [visit514_215_1(Features.isTouchEventSupported() || Features.isMsPointerSupported()) ? 'scroll-view/drag' : 'scroll-view/base']}});
   _$jscoverage['/meta/modules.js'].lineData[220]++;
   config({
   'scroll-view/base': {

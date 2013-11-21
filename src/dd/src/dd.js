@@ -3,13 +3,12 @@
  * dd support for kissy
  * @author yiminghe@gmail.com
  */
-KISSY.add(function () {
-    var module = this;
-    var DDM = module.require('dd/ddm'),
-        Draggable = module.require('dd/draggable'),
-        DraggableDelegate = module.require('dd/draggable-delegate'),
-        DroppableDelegate = module.require('dd/droppable-delegate'),
-        Droppable = module.require('dd/droppable');
+KISSY.add(function (S,require) {
+    var DDM = require('dd/ddm'),
+        Draggable = require('dd/draggable'),
+        DraggableDelegate = require('dd/draggable-delegate'),
+        DroppableDelegate = require('dd/droppable-delegate'),
+        Droppable = require('dd/droppable');
     var DD = {
         Draggable: Draggable,
         DDM: DDM,

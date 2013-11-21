@@ -3,8 +3,9 @@
  * implement Promise specification by KISSY
  * @author yiminghe@gmail.com
  */
-KISSY.add('promise',function (S, undefined) {
+KISSY.add('promise', function (S) {
     var PROMISE_VALUE = '__promise_value',
+        undefined = undefined,
         processImmediate = S.setImmediate,
         logger = S.getLogger('s/promise'),
         PROMISE_PROGRESS_LISTENERS = '__promise_progress_listeners',

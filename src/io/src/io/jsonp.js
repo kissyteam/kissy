@@ -3,9 +3,8 @@
  * jsonp transport based on script transport
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S) {
-    var module=this,
-        IO=module.require('./base');
+KISSY.add(function (S,require) {
+    var IO=require('./base');
     var win = S.Env.host;
     IO.setupConfig({
         jsonp: 'callback',
@@ -80,6 +79,5 @@ KISSY.add(function (S) {
             dataType[1] = 'json';
         }
     });
-
     return IO;
 });

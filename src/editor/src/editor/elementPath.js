@@ -7,11 +7,10 @@
  Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.html or http://ckeditor.com/license
  */
-KISSY.add(function (S) {
-    var module = this;
-    module.require('node');
-    var Editor = module.require('./base');
-    module.require('./dom');
+KISSY.add(function (S,require) {
+    require('node');
+    var Editor = require('./base');
+    require('./dom');
 
     var Dom = S.DOM,
         dtd = Editor.XHTML_DTD,

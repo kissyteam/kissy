@@ -7,12 +7,11 @@
  Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.html or http://ckeditor.com/license
  */
-KISSY.add(function (S) {
-    var module = this;
-    var Node = module.require('node');
-    var Walker = module.require('./walker');
-    var KERange = module.require('./range');
-    var Editor = module.require('./base');
+KISSY.add(function (S,require) {
+    var Node = require('node');
+    var Walker = require('./walker');
+    var KERange = require('./range');
+    var Editor = require('./base');
     /**
      * selection type enum
      * @enum {number} KISSY.Editor.SelectionType

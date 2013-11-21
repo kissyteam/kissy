@@ -3,12 +3,11 @@
  * @ignore
  * @author yiminghe@gmail.com
  */
-KISSY.add("color", function (S) {
+KISSY.add("color", function (S,require,exports,module) {
     var rgbaRe = /\s*rgba?\s*\(\s*([0-9]+)\s*,\s*([0-9]+)\s*,\s*([0-9]+)\s*(?:,\s*([\d\.]+))?\)\s*/,
         hexRe = /\s*#([0-9a-fA-F][0-9a-fA-F]?)([0-9a-fA-F][0-9a-fA-F]?)([0-9a-fA-F][0-9a-fA-F]?)\s*/;
 
-    var module = this,
-        Attribute = module.require('attribute');
+    var Attribute =require('attribute');
 
     /**
      * Color for KISSY to normalize HSL, HSV, RGB and HEX.

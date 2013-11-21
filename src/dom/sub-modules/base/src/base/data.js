@@ -3,9 +3,8 @@
  * dom-data
  * @author lifesinger@gmail.com, yiminghe@gmail.com
  */
-KISSY.add(function (S) {
-    var module = this;
-    var Dom = module.require('./api');
+KISSY.add(function (S,require) {
+    var Dom = require('./api');
     var win = S.Env.host,
         EXPANDO = '_ks_data_' + S.now(), // 让每一份 kissy 的 expando 都不同
         dataCache = { }, // 存储 node 节点的 data

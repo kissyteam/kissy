@@ -3,11 +3,10 @@
  * delegate all draggable nodes to one draggable object
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S) {
-    var module = this;
-    var Node = module.require('node'),
-        DDM = module.require('./ddm'),
-        Draggable = module.require('./draggable');
+KISSY.add(function (S,require) {
+    var Node = require('node'),
+        DDM = require('./ddm'),
+        Draggable = require('./draggable');
     var PREFIX_CLS = DDM.PREFIX_CLS,
         $ = Node.all;
 

@@ -3,10 +3,9 @@
  * plugin constrain region for drag and drop
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S) {
-    var module = this;
-    var Node = module.require('node'),
-        Base = module.require('base');
+KISSY.add(function (S,require) {
+    var Node = require('node'),
+        Base = require('base');
     var $ = Node.all,
         CONSTRAIN_EVENT = '.-ks-constrain' + S.now(),
         WIN = S.Env.host;

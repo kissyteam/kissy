@@ -3,9 +3,9 @@
  * Component.Extension.Align
  * @author yiminghe@gmail.com, qiaohua@taobao.com
  */
-KISSY.add(function (S) {
+KISSY.add(function (S,require) {
     var module = this;
-    var Node = module.require('node');
+    var Node = require('node');
     var win = S.Env.host,
         $ = Node.all,
         UA = S.UA;

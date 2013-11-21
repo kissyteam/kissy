@@ -3,11 +3,10 @@
  * solve io between sub domains using proxy page
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S) {
-    var module = this,
-        Event = module.require('event/dom'),
-        Dom = module.require('dom'),
-        XhrTransportBase = module.require('./xhr-transport-base');
+KISSY.add(function (S,require) {
+    var  Event =require('event/dom'),
+        Dom = require('dom'),
+        XhrTransportBase = require('./xhr-transport-base');
     var PROXY_PAGE = '/sub_domain_proxy.html',
         logger = S.getLogger('s/io'),
         doc = S.Env.host.document,
@@ -87,6 +86,4 @@ KISSY.add(function (S) {
     }
 
     return SubDomainTransport;
-}, {
-    requires: ['./xhr-transport-base', 'event', 'dom']
 });

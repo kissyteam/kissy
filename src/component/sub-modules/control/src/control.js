@@ -3,12 +3,11 @@
  * Base Control class for KISSY Component.
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S) {
-    var module=this;
-    var Node=module.require('node');
-    var ComponentProcess=module.require('./control/process');
-    var Manager=module.require('component/manager');
-    var Render=module.require('./control/render');
+KISSY.add(function (S,require) {
+    var Node=require('node');
+    var ComponentProcess=require('./control/process');
+    var Manager=require('component/manager');
+    var Render=require('./control/render');
     var ie = S.Env.host.document.documentMode || S.UA.ie,
         undefined=undefined,
         Features = S.Features,

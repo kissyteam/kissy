@@ -3,13 +3,12 @@
  * Export ComboBox.
  * @author yiminghe@gmail.com
  */
-KISSY.add(function () {
-    var module=this;
-    var ComboBox=module.require('combobox/control');
-    var MultiValueComboBox=module.require('combobox/multi-value-combobox');
-    var FilterSelect=module.require('combobox/filter-select');
-    var LocalDataSource=module.require('combobox/local-data-source');
-    var RemoteDataSource=module.require('combobox/remote-data-source');
+KISSY.add(function (S, require) {
+    var ComboBox = require('combobox/control');
+    var MultiValueComboBox = require('combobox/multi-value-combobox');
+    var FilterSelect = require('combobox/filter-select');
+    var LocalDataSource = require('combobox/local-data-source');
+    var RemoteDataSource = require('combobox/remote-data-source');
 
     ComboBox.LocalDataSource = LocalDataSource;
     ComboBox.RemoteDataSource = RemoteDataSource;

@@ -3,11 +3,11 @@
  * @author yiminghe@gmail.com
  * @ignore
  */
-KISSY.add(function (S) {
+KISSY.add(function (S,require) {
     var module=this;
-    var Dom = module.require('dom');
-    var Event = module.require('event/dom');
-    var AnimBase = module.require('./base');
+    var Dom = require('dom');
+    var Event = require('event/dom');
+    var AnimBase = require('./base');
 
     var Features = S.Features;
     var vendorPrefix = Features.getTransitionPrefix();

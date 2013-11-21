@@ -3,10 +3,9 @@
  * render process for control and render
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S) {
-    var module = this;
-    var Base = module.require('base');
-    var Promise = module.require('promise');
+KISSY.add(function (S,require) {
+    var Base = require('base');
+    var Promise = require('promise');
     var Defer = Promise.Defer,
         __getHook = Base.prototype.__getHook,
         noop = S.noop;

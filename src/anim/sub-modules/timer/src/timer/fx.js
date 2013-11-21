@@ -3,10 +3,9 @@
  * animate on single property
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S) {
-    var module=this;
+KISSY.add(function (S,require) {
     var logger = S.getLogger('s/aim/timer/fx');
-    var Dom = module.require('dom');
+    var Dom = require('dom');
 
     function load(self, cfg) {
         S.mix(self, cfg);

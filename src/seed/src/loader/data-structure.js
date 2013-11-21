@@ -155,7 +155,7 @@
          */
         module.factory = undefined;
         // lazy initialize and commonjs module format
-        module.cjs=1;
+        module.cjs = 1;
         S.mix(module, cfg);
         module.waitedCallbacks = [];
     }
@@ -165,11 +165,13 @@
 
         /**
          * resolve module by name.
-         * @param {String} relativeName relative module's name
+         * @param {String|String[]} relativeName relative module's name
+         * @param {Function|Object} fn KISSY.use callback
          * @returns {String} resolved module name
          */
-        'resolveByName': function (relativeName) {
-            return Utils.normalDepModuleName(this.name, relativeName);
+        'use': function (relativeName, fn) {
+            relativeName = Utils.getModNamesAsArray(relativeName);
+            return KISSY.use(Utils.normalDepModuleName(this.name, relativeName), fn);
         },
 
         /**
@@ -177,7 +179,7 @@
          * @param {String} relativePath relative path
          * @returns {KISSY.Uri} resolve uri
          */
-        'resolveByPath': function (relativePath) {
+        'resolve': function (relativePath) {
             return this.getFullPathUri().resolve(relativePath);
         },
 

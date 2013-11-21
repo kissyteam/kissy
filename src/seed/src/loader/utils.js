@@ -14,6 +14,7 @@
         ATTACHED = data.ATTACHED,
         READY_TO_ATTACH = data.READY_TO_ATTACH,
         LOADED = data.LOADED,
+        ATTACHING = data.ATTACHING,
         ERROR = data.ERROR,
         /**
          * @class KISSY.Loader.Utils
@@ -141,16 +142,6 @@
         },
 
         /**
-         * Whether modNames is attached.
-         * @param runtime Module container, such as KISSY
-         * @param modNames
-         * @return {Boolean}
-         */
-        'isAttached': function (runtime, modNames) {
-            return isStatus(runtime, modNames, ATTACHED);
-        },
-
-        /**
          * Get modules exports
          * @param runtime Module container, such as KISSY
          * @param {String[]} modNames module names
@@ -169,7 +160,8 @@
                     unalias = Utils.unalias(runtime, modName);
                     allOk = S.reduce(unalias, function (a, n) {
                         m = runtimeMods[n];
-                        return a && m && m.status == ATTACHED;
+                        // allow partial module (circular dependency)
+                        return a && m && m.status >= ATTACHING;
                     }, true);
                     if (allOk) {
                         mods.push(runtimeMods[unalias[0]].exports);
@@ -236,9 +228,8 @@
             }
             if ('@DEBUG@') {
                 if (S.inArray(modName, stack)) {
-                    stack.push(modName);
-                    S.error('find cyclic dependency between mods: ' + stack);
-                    return cache[modName] = FALSE;
+                    S.log('find cyclic dependency between mods: ' + stack, 'warn');
+                    return cache[modName] = TRUE;
                 }
                 stack.push(modName);
             }
@@ -262,9 +253,11 @@
                 status,
                 m = mods[modName];
             status = m.status;
-            if (status == ATTACHED) {
+            // attached or circular dependency
+            if (status >= ATTACHING) {
                 return;
             }
+            m.status = ATTACHING;
             if (m.cjs) {
                 // commonjs format will call require in module code again
                 Utils.attachMod(runtime, m);
@@ -284,12 +277,18 @@
                 exports = undefined;
 
             if (typeof factory === 'function') {
+                // compatible and efficiency
+                // KISSY.add(function(S,undefined){})
+                var require;
+                if (module.requires && module.requires.length) {
+                    require = S.bind(module.require, module);
+                }
                 // 需要解开 index，相对路径
                 // 但是需要保留 alias，防止值不对应
                 //noinspection JSUnresolvedFunction
                 exports = factory.apply(module,
                     // KISSY.add(function(S){module.require}) lazy initialize
-                    (module.cjs ? [runtime] : Utils.getModules(runtime, module.getRequiresWithAlias())));
+                    (module.cjs ? [runtime, require, module.exports, module] : Utils.getModules(runtime, module.getRequiresWithAlias())));
                 if (exports !== undefined) {
                     //noinspection JSUndefinedPropertyAssignment
                     module.exports = exports;
@@ -436,15 +435,14 @@
             return hash + '';
         },
 
-        getRequiresFromFn: function (fn, mode) {
-            mode = mode || 0;
+        getRequiresFromFn: function (fn) {
             var requires = [];
             // Remove comments from the callback string,
             // look for require calls, and pull them into the dependencies,
             // but only if there are function args.
             fn.toString()
                 .replace(commentRegExp, '')
-                .replace(requireRegExp[mode], function (match, dep) {
+                .replace(requireRegExp, function (match, dep) {
                     requires.push(getRequireVal(dep));
                 });
             return requires;
@@ -452,9 +450,7 @@
     });
 
     var commentRegExp = /(\/\*([\s\S]*?)\*\/|([^:]|^)\/\/(.*)$)/mg,
-        requireRegExp = [ /[^.'"]\s*module.require\s*\((.+?)\)\s*[;,]/g,
-            // avoid compression
-            /[^.'"]\s*KISSY.require\s*\((.+?)\)\s*[;,]/g];
+        requireRegExp = /[^.'"]\s*require\s*\((.+?)\)\s*[;,]/g;
 
     function getRequireVal(str) {
         var m;
@@ -465,19 +461,5 @@
             // expression
             return new Function('return (' + str + ')')();
         }
-    }
-
-    function isStatus(runtime, modNames, status) {
-        var mods = runtime.Env.mods,
-            module,
-            i;
-        modNames = S.makeArray(modNames);
-        for (i = 0; i < modNames.length; i++) {
-            module = mods[modNames[i]];
-            if (!module || module.status !== status) {
-                return 0;
-            }
-        }
-        return 1;
     }
 })(KISSY);

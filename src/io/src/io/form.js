@@ -3,11 +3,10 @@
  * process form config
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S) {
-    var module = this;
-    var IO = module.require('./base');
-    var Dom = module.require('dom');
-    var FormSerializer = module.require('./form-serializer');
+KISSY.add(function (S,require) {
+    var IO = require('./base');
+    var Dom = require('dom');
+    var FormSerializer = require('./form-serializer');
     var win = S.Env.host,
         slice = Array.prototype.slice,
         FormData = win['FormData'];
@@ -80,5 +79,4 @@ KISSY.add(function (S) {
     });
 
     return IO;
-
 });

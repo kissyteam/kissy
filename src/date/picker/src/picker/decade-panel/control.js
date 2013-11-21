@@ -3,11 +3,10 @@
  * decade panel for date picker
  * @author yiminghe@gmail.com
  */
-KISSY.add(function () {
-    var module = this;
-    var Node = module.require('node'),
-        Control = module.require('component/control'),
-        CenturyPanelRender = module.require('./render');
+KISSY.add(function (S,require) {
+    var Node = require('node'),
+        Control = require('component/control'),
+        CenturyPanelRender = require('./render');
 
     var tap = Node.Gesture.tap;
     var $ = Node.all;

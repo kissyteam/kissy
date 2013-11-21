@@ -3,9 +3,9 @@
  * common content box render
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S) {
+KISSY.add(function (S,require) {
     var module=this,
-        ContentTpl=module.require('./content-render/content-xtpl');
+        ContentTpl=require('./content-render/content-xtpl');
 
     function shortcut(self) {
         var control = self.control;

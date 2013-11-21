@@ -86,15 +86,9 @@
                 loader,
                 error,
                 sync,
-                requireCodeStyle = 0,
                 tryCount = 0,
                 finalSuccess,
                 waitingModules = new WaitingModules(loadReady);
-
-            if (typeof modNames != 'string' && !S.isArray(modNames)) {
-                requireCodeStyle = 1;
-                success = modNames;
-            }
 
             if (S.isPlainObject(success)) {
                 //noinspection JSUnresolvedVariable
@@ -105,12 +99,8 @@
                 success = success.success;
             }
 
-            if (requireCodeStyle) {
-                modNames = Utils.getRequiresFromFn(success, 1);
-            }
-
             finalSuccess = function () {
-                success.apply(S, requireCodeStyle ? [S] : Utils.getModules(S, modNames))
+                success.apply(S, Utils.getModules(S, modNames));
             };
 
             modNames = Utils.getModNamesAsArray(modNames);
@@ -126,9 +116,7 @@
                 ret = Utils.checkModsLoadRecursively(normalizedModNames, S, undefined, errorList);
                 logger.debug(tryCount + ' check duration ' + (S.now() - start));
                 if (ret) {
-                    if (!requireCodeStyle) {
-                        Utils.attachModsRecursively(normalizedModNames, S);
-                    }
+                    Utils.attachModsRecursively(normalizedModNames, S);
                     if (success) {
                         if (sync) {
                             finalSuccess();

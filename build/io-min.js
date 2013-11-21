@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 19 11:46
+build time: Nov 21 14:56
 */
 KISSY.add("io/form-serializer",["dom"],function(e){function h(a){return a.replace(d,"\r\n")}var l=this.require("dom"),f=/^(?:select|textarea)/i,d=/\r?\n/g,c,a=/^(?:color|date|datetime|email|hidden|month|number|password|range|search|tel|text|time|url|week)$/i;return c={serialize:function(a,g){return e.param(c.getFormData(a),void 0,void 0,g||!1)},getFormData:function(b){var c=[],d={};e.each(l.query(b),function(a){a=a.elements?e.makeArray(a.elements):[a];c.push.apply(c,a)});c=e.filter(c,function(b){return b.name&&
 !b.disabled&&(b.checked||f.test(b.nodeName)||a.test(b.type))});e.each(c,function(a){var b=l.val(a),c;null!==b&&(b=e.isArray(b)?e.map(b,h):h(b),(c=d[a.name])?(c&&!e.isArray(c)&&(c=d[a.name]=[c]),c.push.apply(c,e.makeArray(b))):d[a.name]=b)});return d}}});

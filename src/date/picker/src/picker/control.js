@@ -3,14 +3,13 @@
  * year panel for date picker
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S) {
-    var module=this;
-    var Node=module.require( 'node'),
-        GregorianCalendar=module.require( 'date/gregorian'),
-        locale=module.require( 'i18n!date/picker'),
-        Control=module.require( 'component/control'),
-        PickerRender=module.require( './render'),
-        MonthPanel=module.require( './month-panel/control');
+KISSY.add(function (S,require) {
+    var Node=require( 'node'),
+        GregorianCalendar=require( 'date/gregorian'),
+        locale=require( 'i18n!date/picker'),
+        Control=require( 'component/control'),
+        PickerRender=require( './render'),
+        MonthPanel=require( './month-panel/control');
     var tap = Node.Gesture.tap;
     var $ = Node.all;
     var undefined = undefined;

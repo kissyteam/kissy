@@ -3,9 +3,8 @@
  * @ignore
  * @author yiminghe@gmail.com
  */
-KISSY.add(function () {
-    var module = this;
-    var Editor = module.require('./base');
+KISSY.add(function (S,require) {
+    var Editor = require('./base');
 
     var INSTANCES = {},
         timer,

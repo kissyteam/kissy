@@ -3,10 +3,9 @@
  * common utils for kissy editor
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S) {
-    var module = this;
-    var Node = module.require('node');
-    var Editor = module.require('./base');
+KISSY.add(function (S,require) {
+    var Node = require('node');
+    var Editor = require('./base');
     var TRUE = true,
         FALSE = false,
         NULL = null,

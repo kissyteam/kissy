@@ -7,14 +7,13 @@
  Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.html or http://ckeditor.com/license
  */
-KISSY.add(function (S) {
-    var module = this;
-    module.require('./dom');
-    var Node = module.require('node');
-    var Utils = module.require('./utils');
-    var Walker = module.require('./walker');
-    var Editor = module.require('./base');
-    var ElementPath = module.require('./elementPath');
+KISSY.add(function (S,require) {
+    require('./dom');
+    var Node = require('node');
+    var Utils = require('./utils');
+    var Walker = require('./walker');
+    var Editor = require('./base');
+    var ElementPath = require('./elementPath');
     /**
      * Enum for range
      * @enum {number} KISSY.Editor.RangeType

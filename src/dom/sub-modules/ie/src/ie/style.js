@@ -3,9 +3,8 @@
  * style hack for ie
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S) {
-    var module = this;
-    var Dom = module.require('dom/base');
+KISSY.add(function (S,require) {
+    var Dom = require('dom/base');
     var cssProps = Dom._cssProps,
         UA = S.UA,
         logger = S.getLogger('s/dom'),

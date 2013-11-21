@@ -3,12 +3,11 @@
  * popup date picker
  * @author yiminghe@gmail.com
  */
-KISSY.add(function () {
-    var module = this;
-    var PopupPickerTpl = module.require('./popup-picker/render-xtpl'),
-        DatePicker = module.require('date/picker'),
-        Shim = module.require('component/extension/shim'),
-        AlignExtension = module.require('component/extension/align');
+KISSY.add(function (S,require) {
+    var PopupPickerTpl = require('./popup-picker/render-xtpl'),
+        DatePicker = require('date/picker'),
+        Shim = require('component/extension/shim'),
+        AlignExtension = require('component/extension/align');
 
     var PopupDatePickerRender = DatePicker.getDefaultRender().extend({}, {
         ATTRS: {

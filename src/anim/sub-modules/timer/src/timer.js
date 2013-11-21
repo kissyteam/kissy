@@ -3,16 +3,15 @@
  * @author yiminghe@gmail.com
  * @ignore
  */
-KISSY.add(function (S) {
-    var module=this;
-    var Dom = module.require('dom');
-    var AnimBase = module.require('./base');
-    var Easing = module.require('./timer/easing');
-    var AM = module.require('./timer/manager');
-    var Fx = module.require('./timer/fx');
-    var SHORT_HANDS = module.require('./timer/short-hand');
-    module.require('./timer/color');
-    module.require('./timer/transform');
+KISSY.add(function (S,require) {
+    var Dom = require('dom');
+    var AnimBase = require('./base');
+    var Easing = require('./timer/easing');
+    var AM = require('./timer/manager');
+    var Fx = require('./timer/fx');
+    var SHORT_HANDS = require('./timer/short-hand');
+    require('./timer/color');
+    require('./timer/transform');
 
     var camelCase = Dom._camelCase,
         NUMBER_REG = /^([+\-]=)?([\d+.\-]+)([a-z%]*)$/i;

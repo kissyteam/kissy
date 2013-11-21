@@ -273,7 +273,7 @@ _$jscoverage['/loader/get-script-nodejs.js'].branchData['38'][1].init(95, 17, 'e
 function visit417_38_1(result) {
   _$jscoverage['/loader/get-script-nodejs.js'].branchData['38'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/get-script-nodejs.js'].branchData['34'][1].init(242, 20, 'success && success()');
+}_$jscoverage['/loader/get-script-nodejs.js'].branchData['34'][1].init(246, 20, 'success && success()');
 function visit416_34_1(result) {
   _$jscoverage['/loader/get-script-nodejs.js'].branchData['34'][1].ranCondition(result);
   return result;
@@ -324,7 +324,7 @@ function visit413_14_1(result) {
     _$jscoverage['/loader/get-script-nodejs.js'].lineData[30]++;
     var mod = fs.readFileSync(path, charset);
     _$jscoverage['/loader/get-script-nodejs.js'].lineData[32]++;
-    var factory = vm.runInThisContext('(function(KISSY,require){' + mod + '})', url);
+    var factory = vm.runInThisContext('(function(KISSY,requireNode){' + mod + '})', url);
     _$jscoverage['/loader/get-script-nodejs.js'].lineData[33]++;
     factory(S, require);
     _$jscoverage['/loader/get-script-nodejs.js'].lineData[34]++;
