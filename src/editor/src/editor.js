@@ -185,6 +185,14 @@ KISSY.add(function (S, require, exports, module) {
         },
 
         /**
+         * Synchronize textarea value with editor data.
+         */
+        sync: function () {
+            var self = this;
+            self.get("textarea").val(self.getData());
+        },
+
+        /**
          * Retrieve control by id.
          * @member KISSY.Editor
          */
