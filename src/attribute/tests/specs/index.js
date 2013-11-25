@@ -235,5 +235,5 @@ KISSY.add(function (S, Attribute) {
         });
     });
 }, {
-    requires: ['attribute']
+    requires: ['attribute','./complex-attr']
 });

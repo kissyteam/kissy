@@ -5,9 +5,10 @@
 KISSY.add(function (S, Attribute) {
     describe("complex attr", function () {
         it("support validator", function () {
-            function A(){
+            function A() {
             }
-            S.augment(A,Attribute);
+
+            S.augment(A, Attribute);
 
             var t = new A();
             t.addAttrs({
@@ -30,9 +31,10 @@ KISSY.add(function (S, Attribute) {
         it("support validators", function () {
             var validatorCalled = 0;
 
-            function A(){
+            function A() {
             }
-            S.augment(A,Attribute);
+
+            S.augment(A, Attribute);
 
             var t = new A(),
                 e1;
@@ -97,9 +99,10 @@ KISSY.add(function (S, Attribute) {
         });
 
         it("support sub attribute name", function () {
-            function A(){
+            function A() {
             }
-            S.augment(A,Attribute);
+
+            S.augment(A, Attribute);
 
             var t = new A();
             t.addAttrs({
@@ -151,9 +154,10 @@ KISSY.add(function (S, Attribute) {
         });
 
         it("set sub attr even if not exist attr", function () {
-            function A(){
+            function A() {
             }
-            S.augment(A,Attribute);
+
+            S.augment(A, Attribute);
 
             var a = new A();
 
@@ -166,9 +170,10 @@ KISSY.add(function (S, Attribute) {
 
         it("validator works for subAttrs", function () {
             (function () {
-                function A(){
+                function A() {
                 }
-                S.augment(A,Attribute);
+
+                S.augment(A, Attribute);
 
                 var a = new A();
                 a.addAttrs({
@@ -206,9 +211,10 @@ KISSY.add(function (S, Attribute) {
             })();
 
             (function () {
-                function A(){
+                function A() {
                 }
-                S.augment(A,Attribute);
+
+                S.augment(A, Attribute);
 
                 var a = new A();
                 a.addAttrs({
@@ -245,9 +251,10 @@ KISSY.add(function (S, Attribute) {
         });
 
         it("should fire *Change once for set({})", function () {
-            function A(){
+            function A() {
             }
-            S.augment(A,Attribute);
+
+            S.augment(A, Attribute);
 
             var aa = new A(),
                 ok = 0,
@@ -288,6 +295,21 @@ KISSY.add(function (S, Attribute) {
 
             expect(afterAttrChange.x).toBe(1);
             expect(afterAttrChange.y).toBe(1);
+        });
+
+        it('support data config', function () {
+            var A = Attribute.extend();
+            var a = new A();
+            var x=0;
+            a.on('afterDChange', function (e) {
+                x = e.x;
+            });
+            a.set('d', 1, {
+                data: {
+                    x: 2
+                }
+            });
+            expect(x).toBe(2);
         });
     });
 }, {

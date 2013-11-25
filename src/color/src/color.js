@@ -491,8 +491,6 @@ KISSY.add("color", function (S,require,exports,module) {
     }
 
     // #---------------------------- private end
-}, {
-    requires: ['base']
 });
 
 /**
