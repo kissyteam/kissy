@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 20 14:34
+build time: Nov 25 12:01
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -9,9 +9,8 @@ build time: Nov 20 14:34
  base
 */
 
-KISSY.add("base", ["attribute"], function(S) {
-  var module = this;
-  var Attribute = module.require("attribute");
+KISSY.add("base", ["attribute"], function(S, require) {
+  var Attribute = require("attribute");
   var ucfirst = S.ucfirst, ON_SET = "_onSet", noop = S.noop;
   function __getHook(method, reverse) {
     return function(origFn) {
