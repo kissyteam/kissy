@@ -339,7 +339,9 @@ KISSY.add('ajax/base', function (S, JSON, Event, undefined) {
             responseXML: null,
             responseHeadersString: '',
             responseHeaders: null,
-            requestHeaders: {},
+            requestHeaders: {
+                'X-Requested-With': 'XMLHttpRequest'
+            },
             /**
              * readyState of current request
              * 0: initialized

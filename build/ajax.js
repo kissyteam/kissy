@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.32
 MIT Licensed
-build time: Aug 15 00:00
+build time: Nov 25 18:37
 */
 /**
  * @ignore
@@ -519,7 +519,9 @@ KISSY.add('ajax/base', function (S, JSON, Event, undefined) {
             responseXML: null,
             responseHeadersString: '',
             responseHeaders: null,
-            requestHeaders: {},
+            requestHeaders: {
+                'X-Requested-With': 'XMLHttpRequest'
+            },
             /**
              * readyState of current request
              * 0: initialized
@@ -1917,8 +1919,8 @@ KISSY.add('ajax/xhr-transport-base', function (S, IO) {
                 }
 
                 // set header event cross domain, eg: phonegap
-                if (!requestHeaders['X-Requested-With']) {
-                    requestHeaders[ 'X-Requested-With' ] = 'XMLHttpRequest';
+                if (requestHeaders['X-Requested-With']===false) {
+                    delete requestHeaders[ 'X-Requested-With' ];
                 }
 
 

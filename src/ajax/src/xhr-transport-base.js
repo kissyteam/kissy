@@ -119,8 +119,8 @@ KISSY.add('ajax/xhr-transport-base', function (S, IO) {
                 }
 
                 // set header event cross domain, eg: phonegap
-                if (!requestHeaders['X-Requested-With']) {
-                    requestHeaders[ 'X-Requested-With' ] = 'XMLHttpRequest';
+                if (requestHeaders['X-Requested-With']===false) {
+                    delete requestHeaders[ 'X-Requested-With' ];
                 }
 
 
