@@ -3,7 +3,9 @@
  * represent html source
  * @author yiminghe@gmail.com
  */
-KISSY.add("html-parser/lexer/page", function (S, Index) {
+KISSY.add(function (S, require) {
+    var Index = require('./index');
+
     function Page(source) {
         this.source = source;
         this.lineIndex = new Index();
@@ -73,6 +75,4 @@ KISSY.add("html-parser/lexer/page", function (S, Index) {
     };
 
     return Page;
-}, {
-    requires: ['./index']
 });

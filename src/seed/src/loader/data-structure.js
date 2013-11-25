@@ -161,6 +161,8 @@
     }
 
     Module.prototype = {
+        kissy: 1,
+
         constructor: Module,
 
         /**
@@ -181,6 +183,11 @@
          */
         'resolve': function (relativePath) {
             return this.getFullPathUri().resolve(relativePath);
+        },
+
+        // use by xtemplate include
+        'resolveByName': function (relativeName) {
+            return Utils.normalDepModuleName(this.name, relativeName);
         },
 
         /**

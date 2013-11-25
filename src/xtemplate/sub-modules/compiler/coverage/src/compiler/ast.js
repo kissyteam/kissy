@@ -368,16 +368,16 @@ if (! _$jscoverage['/compiler/ast.js'].branchData) {
   _$jscoverage['/compiler/ast.js'].branchData['182'] = [];
   _$jscoverage['/compiler/ast.js'].branchData['182'][1] = new BranchData();
 }
-_$jscoverage['/compiler/ast.js'].branchData['182'][1].init(18, 9, 'p == ".."');
+_$jscoverage['/compiler/ast.js'].branchData['182'][1].init(17, 9, 'p == ".."');
 function visit2_182_1(result) {
   _$jscoverage['/compiler/ast.js'].branchData['182'][1].ranCondition(result);
   return result;
-}_$jscoverage['/compiler/ast.js'].branchData['29'][1].init(97, 40, '!S.equals(tpl.path[\'parts\'], closeParts)');
+}_$jscoverage['/compiler/ast.js'].branchData['29'][1].init(94, 40, '!S.equals(tpl.path[\'parts\'], closeParts)');
 function visit1_29_1(result) {
   _$jscoverage['/compiler/ast.js'].branchData['29'][1].ranCondition(result);
   return result;
 }_$jscoverage['/compiler/ast.js'].lineData[6]++;
-KISSY.add("xtemplate/compiler/ast", function(S) {
+KISSY.add(function(S) {
   _$jscoverage['/compiler/ast.js'].functionData[0]++;
   _$jscoverage['/compiler/ast.js'].lineData[8]++;
   var ast = {};

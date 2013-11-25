@@ -231,23 +231,25 @@ if (! _$jscoverage['/xtemplate.js']) {
   _$jscoverage['/xtemplate.js'].lineData = [];
   _$jscoverage['/xtemplate.js'].lineData[6] = 0;
   _$jscoverage['/xtemplate.js'].lineData[7] = 0;
-  _$jscoverage['/xtemplate.js'].lineData[9] = 0;
+  _$jscoverage['/xtemplate.js'].lineData[8] = 0;
   _$jscoverage['/xtemplate.js'].lineData[10] = 0;
   _$jscoverage['/xtemplate.js'].lineData[12] = 0;
   _$jscoverage['/xtemplate.js'].lineData[13] = 0;
+  _$jscoverage['/xtemplate.js'].lineData[15] = 0;
   _$jscoverage['/xtemplate.js'].lineData[16] = 0;
-  _$jscoverage['/xtemplate.js'].lineData[18] = 0;
   _$jscoverage['/xtemplate.js'].lineData[19] = 0;
+  _$jscoverage['/xtemplate.js'].lineData[21] = 0;
   _$jscoverage['/xtemplate.js'].lineData[22] = 0;
   _$jscoverage['/xtemplate.js'].lineData[25] = 0;
-  _$jscoverage['/xtemplate.js'].lineData[47] = 0;
-  _$jscoverage['/xtemplate.js'].lineData[48] = 0;
-  _$jscoverage['/xtemplate.js'].lineData[49] = 0;
+  _$jscoverage['/xtemplate.js'].lineData[28] = 0;
+  _$jscoverage['/xtemplate.js'].lineData[50] = 0;
   _$jscoverage['/xtemplate.js'].lineData[51] = 0;
   _$jscoverage['/xtemplate.js'].lineData[52] = 0;
+  _$jscoverage['/xtemplate.js'].lineData[54] = 0;
   _$jscoverage['/xtemplate.js'].lineData[55] = 0;
   _$jscoverage['/xtemplate.js'].lineData[58] = 0;
-  _$jscoverage['/xtemplate.js'].lineData[81] = 0;
+  _$jscoverage['/xtemplate.js'].lineData[61] = 0;
+  _$jscoverage['/xtemplate.js'].lineData[84] = 0;
 }
 if (! _$jscoverage['/xtemplate.js'].functionData) {
   _$jscoverage['/xtemplate.js'].functionData = [];
@@ -257,75 +259,78 @@ if (! _$jscoverage['/xtemplate.js'].functionData) {
 }
 if (! _$jscoverage['/xtemplate.js'].branchData) {
   _$jscoverage['/xtemplate.js'].branchData = {};
-  _$jscoverage['/xtemplate.js'].branchData['12'] = [];
-  _$jscoverage['/xtemplate.js'].branchData['12'][1] = new BranchData();
-  _$jscoverage['/xtemplate.js'].branchData['18'] = [];
-  _$jscoverage['/xtemplate.js'].branchData['18'][1] = new BranchData();
-  _$jscoverage['/xtemplate.js'].branchData['51'] = [];
-  _$jscoverage['/xtemplate.js'].branchData['51'][1] = new BranchData();
+  _$jscoverage['/xtemplate.js'].branchData['15'] = [];
+  _$jscoverage['/xtemplate.js'].branchData['15'][1] = new BranchData();
+  _$jscoverage['/xtemplate.js'].branchData['21'] = [];
+  _$jscoverage['/xtemplate.js'].branchData['21'][1] = new BranchData();
+  _$jscoverage['/xtemplate.js'].branchData['54'] = [];
+  _$jscoverage['/xtemplate.js'].branchData['54'][1] = new BranchData();
 }
-_$jscoverage['/xtemplate.js'].branchData['51'][1].init(89, 22, 'typeof tpl == \'string\'');
-function visit3_51_1(result) {
-  _$jscoverage['/xtemplate.js'].branchData['51'][1].ranCondition(result);
+_$jscoverage['/xtemplate.js'].branchData['54'][1].init(85, 22, 'typeof tpl == \'string\'');
+function visit3_54_1(result) {
+  _$jscoverage['/xtemplate.js'].branchData['54'][1].ranCondition(result);
   return result;
-}_$jscoverage['/xtemplate.js'].branchData['18'][1].init(171, 12, 'config.cache');
-function visit2_18_1(result) {
-  _$jscoverage['/xtemplate.js'].branchData['18'][1].ranCondition(result);
+}_$jscoverage['/xtemplate.js'].branchData['21'][1].init(162, 12, 'config.cache');
+function visit2_21_1(result) {
+  _$jscoverage['/xtemplate.js'].branchData['21'][1].ranCondition(result);
   return result;
-}_$jscoverage['/xtemplate.js'].branchData['12'][1].init(33, 33, 'config.cache && (fn = cache[tpl])');
-function visit1_12_1(result) {
-  _$jscoverage['/xtemplate.js'].branchData['12'][1].ranCondition(result);
+}_$jscoverage['/xtemplate.js'].branchData['15'][1].init(30, 33, 'config.cache && (fn = cache[tpl])');
+function visit1_15_1(result) {
+  _$jscoverage['/xtemplate.js'].branchData['15'][1].ranCondition(result);
   return result;
 }_$jscoverage['/xtemplate.js'].lineData[6]++;
-KISSY.add('xtemplate', function(S, XTemplateRuntime, compiler) {
+KISSY.add(function(S, require) {
   _$jscoverage['/xtemplate.js'].functionData[0]++;
   _$jscoverage['/xtemplate.js'].lineData[7]++;
+  var XTemplateRuntime = require('xtemplate/runtime');
+  _$jscoverage['/xtemplate.js'].lineData[8]++;
+  var compiler = require('xtemplate/compiler');
+  _$jscoverage['/xtemplate.js'].lineData[10]++;
   var cache = XTemplate.cache = {};
-  _$jscoverage['/xtemplate.js'].lineData[9]++;
+  _$jscoverage['/xtemplate.js'].lineData[12]++;
   function compile(tpl, config) {
     _$jscoverage['/xtemplate.js'].functionData[1]++;
-    _$jscoverage['/xtemplate.js'].lineData[10]++;
+    _$jscoverage['/xtemplate.js'].lineData[13]++;
     var fn;
-    _$jscoverage['/xtemplate.js'].lineData[12]++;
-    if (visit1_12_1(config.cache && (fn = cache[tpl]))) {
-      _$jscoverage['/xtemplate.js'].lineData[13]++;
+    _$jscoverage['/xtemplate.js'].lineData[15]++;
+    if (visit1_15_1(config.cache && (fn = cache[tpl]))) {
+      _$jscoverage['/xtemplate.js'].lineData[16]++;
       return fn;
     }
-    _$jscoverage['/xtemplate.js'].lineData[16]++;
+    _$jscoverage['/xtemplate.js'].lineData[19]++;
     fn = compiler.compileToFn(tpl, config);
-    _$jscoverage['/xtemplate.js'].lineData[18]++;
-    if (visit2_18_1(config.cache)) {
-      _$jscoverage['/xtemplate.js'].lineData[19]++;
+    _$jscoverage['/xtemplate.js'].lineData[21]++;
+    if (visit2_21_1(config.cache)) {
+      _$jscoverage['/xtemplate.js'].lineData[22]++;
       cache[tpl] = fn;
     }
-    _$jscoverage['/xtemplate.js'].lineData[22]++;
+    _$jscoverage['/xtemplate.js'].lineData[25]++;
     return fn;
   }
-  _$jscoverage['/xtemplate.js'].lineData[25]++;
+  _$jscoverage['/xtemplate.js'].lineData[28]++;
   var defaultCfg = {
   cache: true};
-  _$jscoverage['/xtemplate.js'].lineData[47]++;
+  _$jscoverage['/xtemplate.js'].lineData[50]++;
   function XTemplate(tpl, config) {
     _$jscoverage['/xtemplate.js'].functionData[2]++;
-    _$jscoverage['/xtemplate.js'].lineData[48]++;
-    var self = this;
-    _$jscoverage['/xtemplate.js'].lineData[49]++;
-    config = S.merge(defaultCfg, config);
     _$jscoverage['/xtemplate.js'].lineData[51]++;
-    if (visit3_51_1(typeof tpl == 'string')) {
-      _$jscoverage['/xtemplate.js'].lineData[52]++;
+    var self = this;
+    _$jscoverage['/xtemplate.js'].lineData[52]++;
+    config = S.merge(defaultCfg, config);
+    _$jscoverage['/xtemplate.js'].lineData[54]++;
+    if (visit3_54_1(typeof tpl == 'string')) {
+      _$jscoverage['/xtemplate.js'].lineData[55]++;
       tpl = compile(tpl, config);
     }
-    _$jscoverage['/xtemplate.js'].lineData[55]++;
+    _$jscoverage['/xtemplate.js'].lineData[58]++;
     XTemplate.superclass.constructor.call(self, tpl, config);
   }
-  _$jscoverage['/xtemplate.js'].lineData[58]++;
+  _$jscoverage['/xtemplate.js'].lineData[61]++;
   S.extend(XTemplate, XTemplateRuntime, {}, {
   compiler: compiler, 
   RunTime: XTemplateRuntime, 
   addCommand: XTemplateRuntime.addCommand, 
   removeCommand: XTemplateRuntime.removeCommand});
-  _$jscoverage['/xtemplate.js'].lineData[81]++;
+  _$jscoverage['/xtemplate.js'].lineData[84]++;
   return XTemplate;
-}, {
-  requires: ['xtemplate/runtime', 'xtemplate/compiler']});
+});

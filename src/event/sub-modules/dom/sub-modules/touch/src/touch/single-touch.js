@@ -3,7 +3,7 @@
  * touch count guard
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/touch/single-touch', function (S) {
+KISSY.add(function (S) {
     function SingleTouch() {
     }
 

@@ -3,7 +3,9 @@
  * Json.parse for KISSY
  * @author yiminghe@gmail.com
  */
-KISSY.add('json/parse', function (S, parser, Quote) {
+KISSY.add(function (S, require) {
+    var parser = require('./parser'),
+        Quote = require('./quote');
     parser.yy = {
         unQuote: Quote.unQuote
     };
@@ -52,8 +54,6 @@ KISSY.add('json/parse', function (S, parser, Quote) {
         }
     };
 
-}, {
-    requires: ['./parser', './quote']
 });
 /**
  * @ignore

@@ -3,8 +3,8 @@
  * event-focusin
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/focusin', function (S, DomEvent) {
-
+KISSY.add(function (S, require) {
+    var DomEvent = require('event/dom/base');
     var Special = DomEvent.Special;
 
     // 让非 IE 浏览器支持 focusin/focusout
@@ -46,16 +46,14 @@ KISSY.add('event/dom/focusin', function (S, DomEvent) {
     });
 
     return DomEvent;
-}, {
-    requires: ['event/dom/base']
 });
 
 /*
  yiminghe@gmail.com: 2013-06-06
-  - focusin blur 顺序注意 <input1 /><div2><input2 /></div2>, focus from input1 to input2
-  - ie: div2 focusin input1 blur
-  - others: input1 blur div2 focusin
+ - focusin blur 顺序注意 <input1 /><div2><input2 /></div2>, focus from input1 to input2
+ - ie: div2 focusin input1 blur
+ - others: input1 blur div2 focusin
 
  yiminghe@gmail.com: 2011-06-07
-  - 更加合理的模拟冒泡顺序，子元素先出触发，父元素后触发
+ - 更加合理的模拟冒泡顺序，子元素先出触发，父元素后触发
  */

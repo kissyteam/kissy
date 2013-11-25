@@ -3,7 +3,9 @@
  * @author yiminghe@gmail.com
  * @ignore
  */
-KISSY.add('xtemplate/runtime', function (S, commands, undefined) {
+KISSY.add(function (S, require) {
+    var commands = require('./runtime/commands');
+
     var escapeHtml = S.escapeHtml;
     var logger = S.getLogger('s/xtemplate');
 
@@ -282,8 +284,6 @@ KISSY.add('xtemplate/runtime', function (S, commands, undefined) {
     };
 
     return XTemplateRuntime;
-}, {
-    requires: [ './runtime/commands']
 });
 
 /**

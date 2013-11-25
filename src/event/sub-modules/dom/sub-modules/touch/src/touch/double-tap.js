@@ -3,7 +3,11 @@
  * gesture single tap double tap
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/touch/double-tap', function (S, eventHandleMap, DomEvent, SingleTouch) {
+KISSY.add(function (S, require) {
+    var eventHandleMap = require('./handle-map');
+    var DomEvent = require('event/dom/base');
+    var SingleTouch = require('./single-touch');
+
     var SINGLE_TAP = 'singleTap',
         DOUBLE_TAP = 'doubleTap',
     // same with native click delay
@@ -87,6 +91,4 @@ KISSY.add('event/dom/touch/double-tap', function (S, eventHandleMap, DomEvent, S
     };
 
     return DoubleTap;
-}, {
-    requires: ['./handle-map', 'event/dom/base', './single-touch']
 });

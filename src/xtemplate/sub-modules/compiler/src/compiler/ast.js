@@ -3,7 +3,7 @@
  * @author yiminghe@gmail.com
  * @ignore
  */
-KISSY.add("xtemplate/compiler/ast", function (S) {
+KISSY.add(function (S) {
 
     var ast = {};
 

@@ -3,8 +3,11 @@
  * @author yiminghe@gmail.com
  * @ignore
  */
-KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime, undefined) {
-    parser.yy = ast;
+KISSY.add(function (S, require) {
+    var XTemplateRuntime = require('xtemplate/runtime');
+    var parser = require('./compiler/parser');
+
+    parser.yy = require('./compiler/ast');
 
     var doubleReg = /\\*"/g,
         singleReg = /\\*'/g,
@@ -47,7 +50,7 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime, unde
 
     var gen = {
         // ------------ helper generation function start
-        genFunction: function (statements, global, includes) {
+        genFunction: function (statements, global) {
             var source = [];
             if (!global) {
                 source.push('function(scopes) {');
@@ -56,8 +59,11 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime, unde
             if (global) {
                 source.push('config = this.config,' +
                     // current xtemplate engine
-                    'engine = this, ' +
+                    'engine = this,' +
+                    'moduleWrap, ' +
                     'utils = config.utils;');
+
+                source.push('if (typeof module!="undefined" && module.kissy) {moduleWrap = module;}');
 
                 var natives = '',
                     c,
@@ -73,7 +79,7 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime, unde
             }
             if (statements) {
                 for (var i = 0, len = statements.length; i < len; i++) {
-                    pushToArray(source, this[statements[i].type](statements[i], includes));
+                    pushToArray(source, this[statements[i].type](statements[i]));
                 }
             }
             source.push('return buffer;');
@@ -83,13 +89,12 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime, unde
             } else {
                 return {
                     params: ['scopes', 'S', 'undefined'],
-                    source: source,
-                    includes: includes
+                    source: source
                 };
             }
         },
 
-        genId: function (idNode, tplNode, preserveUndefined, includes) {
+        genId: function (idNode, tplNode, preserveUndefined) {
             var source = [],
                 depth = idNode.depth,
                 idParts = idNode.parts,
@@ -110,9 +115,12 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime, unde
             // variable {{variable.subVariable}}
             var idString = self.getIdStringFromIdParts(source, idParts);
 
-            // collect includes modules
-            if (includes && idString == 'include') {
-                includes.push(tplNode.params[0].value);
+            // require include modules
+            if (idString == 'include') {
+                // prevent require parse...
+                source.push('if(moduleWrap) {re' + 'quire("' + tplNode.params[0].value + '");' +
+                    configName + '.params[0]=moduleWrap.resolveByName(' + configName + '.params[0])' +
+                    '}');
             }
 
             source.push('var ' + idName +
@@ -342,9 +350,9 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime, unde
             return ['buffer += \'' + escapeString(contentNode.value, false) + '\';'];
         },
 
-        'tpl': function (tplNode, includes) {
+        'tpl': function (tplNode) {
             var source = [],
-                genIdCode = this.genId(tplNode.path, tplNode, undefined, includes);
+                genIdCode = this.genId(tplNode.path, tplNode);
             pushToArray(source, genIdCode[1]);
             source.push('buffer += ' + genIdCode[0] + ';');
             return source;
@@ -425,28 +433,15 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime, unde
                 func.source.join('\n') +
                 '}';
         },
-        compileToModule: function (tpl, includes) {
-            var func = this.compile(tpl, includes);
-            var requires = '';
-            if (includes && includes.length) {
-                requires += includes.join('","');
-                requires = ', {requires:["' + requires + '"]}';
-            }
-            return '/** Compiled By kissy-xtemplate */\n' +
-                'KISSY.add(function(){ return function(' + func.params.join(',') + '){\n' +
-                func.source.join('\n') +
-                '};}' + requires + ');';
-        },
         /**
          * get template function json format
          * @param {String} tpl
-         * @param {String[]} [includes] included modules
          * @return {Object}
          */
-        compile: function (tpl, includes) {
+        compile: function (tpl) {
             var root = this.parse(tpl);
             variableId = 0;
-            return gen.genFunction(root.statements, true, includes);
+            return gen.genFunction(root.statements, true);
         },
         /**
          * get template function
@@ -472,8 +467,6 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime, unde
                     '\n//# ' + sourceURL));
         }
     };
-}, {
-    requires: ['./compiler/parser', './compiler/ast', 'xtemplate/runtime']
 });
 
 /*

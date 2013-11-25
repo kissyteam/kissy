@@ -3,7 +3,10 @@
  * simple facade for runtime and compiler
  * @author yiminghe@gmail.com
  */
-KISSY.add('xtemplate', function (S, XTemplateRuntime, compiler) {
+KISSY.add(function (S, require) {
+    var XTemplateRuntime = require('xtemplate/runtime');
+    var compiler = require('xtemplate/compiler');
+
     var cache = XTemplate.cache = {};
 
     function compile(tpl, config) {
@@ -79,9 +82,6 @@ KISSY.add('xtemplate', function (S, XTemplateRuntime, compiler) {
     });
 
     return XTemplate;
-
-}, {
-    requires: ['xtemplate/runtime', 'xtemplate/compiler']
 });
 
 /*

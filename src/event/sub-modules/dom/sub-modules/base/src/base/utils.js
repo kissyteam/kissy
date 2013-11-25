@@ -3,8 +3,10 @@
  * utils for event
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/base/utils', function (S, Dom) {
-    var EVENT_GUID = 'ksEventTargetId_'+ S.now(),
+
+KISSY.add(function (S, require) {
+    var Dom = require('dom');
+    var EVENT_GUID = 'ksEventTargetId_' + S.now(),
         doc = S.Env.host.document,
         simpleAdd = doc && doc.addEventListener ?
             function (el, type, fn, capture) {
@@ -43,6 +45,4 @@ KISSY.add('event/dom/base/utils', function (S, Dom) {
         }
     };
 
-}, {
-    requires: ['dom']
 });

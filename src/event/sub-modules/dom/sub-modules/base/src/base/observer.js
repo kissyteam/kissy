@@ -3,7 +3,10 @@
  * observer for dom event.
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/base/observer', function (S, Special, BaseEvent) {
+KISSY.add(function (S, require) {
+    var BaseEvent = require('event/base');
+    var Special = require('./special');
+
     /**
      * observer for dom event
      * @class KISSY.Event.DomEvent.Observer
@@ -60,6 +63,4 @@ KISSY.add('event/dom/base/observer', function (S, Special, BaseEvent) {
     });
 
     return DomEventObserver;
-}, {
-    requires: ['./special', 'event/base']
 });

@@ -3,7 +3,7 @@
  * represent a cursor of page , it can advance and retreat
  * @author yiminghe@gmail.com
  */
-KISSY.add("html-parser/lexer/cursor", function () {
+KISSY.add(function () {
     function Cursor(offset) {
         this.position = offset || 0;
     }

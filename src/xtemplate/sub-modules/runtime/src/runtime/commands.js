@@ -3,8 +3,9 @@
  * @author yiminghe@gmail.com
  * @ignore
  */
-KISSY.add("xtemplate/runtime/commands", function (S, Path) {
+KISSY.add(function (S, require) {
     var commands;
+    var Path = require('path');
 
     return commands = {
         'each': function (scopes, config) {
@@ -97,7 +98,6 @@ KISSY.add("xtemplate/runtime/commands", function (S, Path) {
             var myName = this.config.name;
             var subTplName = params[0];
 
-
             if (subTplName.charAt(0) == '.') {
                 if (myName == 'unspecified') {
                     S.error('parent template does not have name' + ' for relative sub tpl name: ' + subTplName);
@@ -156,6 +156,4 @@ KISSY.add("xtemplate/runtime/commands", function (S, Path) {
             return commands.include.call(this, [], config);
         }
     };
-}, {
-    requires: ['path']
 });

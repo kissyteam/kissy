@@ -3,7 +3,8 @@
  * multi-touch base
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/touch/multi-touch', function (S, Dom) {
+KISSY.add(function (S, require) {
+        var Dom = require('dom');
     function MultiTouch() {}
 
     MultiTouch.prototype = {
@@ -77,6 +78,4 @@ KISSY.add('event/dom/touch/multi-touch', function (S, Dom) {
     };
 
     return MultiTouch;
-}, {
-    requires: ['dom']
 });

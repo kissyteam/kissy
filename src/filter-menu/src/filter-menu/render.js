@@ -5,11 +5,14 @@
  * 2.change menu content element
  * @author yiminghe@gmail.com
  */
-KISSY.add("filter-menu/render", function (S, Node, Menu, FilterMenuTpl, ContentRenderExtension) {
+KISSY.add(function (S, require) {
+    var Menu = require('menu');
+    var FilterMenuTpl = require('./render-xtpl');
+    var ContentRenderExtension = require('component/extension/content-render');
 
     return Menu.getDefaultRender().extend([ContentRenderExtension], {
 
-        beforeCreateDom:function(renderData,childrenElSelectors){
+        beforeCreateDom: function (renderData, childrenElSelectors) {
             S.mix(childrenElSelectors, {
                 placeholderEl: '#ks-filter-menu-placeholder-{id}',
                 filterInputWrap: '#ks-filter-menu-input-wrap-{id}',
@@ -43,7 +46,4 @@ KISSY.add("filter-menu/render", function (S, Node, Menu, FilterMenuTpl, ContentR
             }
         }
     });
-
-}, {
-    requires: ['node', 'menu', './render-xtpl', 'component/extension/content-render']
 });

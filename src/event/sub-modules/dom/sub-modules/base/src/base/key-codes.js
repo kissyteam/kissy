@@ -3,7 +3,7 @@
  * some key-codes definition and utils from closure-library
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/base/key-codes', function (S) {
+KISSY.add(function (S) {
     var UA = S.UA,
         /**
          * @enum {Number} KISSY.Event.DomEvent.KeyCode

@@ -3,7 +3,11 @@
  * gesture pinch
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/touch/pinch', function (S, eventHandleMap, DomEvent, MultiTouch) {
+KISSY.add(function (S, require) {
+    var eventHandleMap = require('./handle-map');
+    var DomEvent = require('event/dom/base');
+    var MultiTouch = require('./multi-touch');
+
     var PINCH = 'pinch',
         PINCH_START = 'pinchStart',
         PINCH_END = 'pinchEnd';
@@ -90,6 +94,4 @@ KISSY.add('event/dom/touch/pinch', function (S, eventHandleMap, DomEvent, MultiT
     };
 
     return Pinch;
-}, {
-    requires: ['./handle-map', 'event/dom/base', './multi-touch']
 });

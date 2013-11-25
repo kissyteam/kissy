@@ -3,7 +3,8 @@
  * comment node (<!-- content -->)
  * @author yiminghe@gmail.com
  */
-KISSY.add("html-parser/nodes/comment", function (S, Text) {
+KISSY.add(function (S, require) {
+    var Text = require('./text');
 
     function Comment() {
         Comment.superclass.constructor.apply(this, arguments);
@@ -12,7 +13,7 @@ KISSY.add("html-parser/nodes/comment", function (S, Text) {
     }
 
     S.extend(Comment, Text, {
-        writeHtml:function (writer, filter) {
+        writeHtml: function (writer, filter) {
             var ret;
             if (!filter || (ret = filter.onComment(this)) !== false) {
                 if (ret) {
@@ -24,7 +25,7 @@ KISSY.add("html-parser/nodes/comment", function (S, Text) {
                 writer.comment(this.toHtml());
             }
         },
-        toHtml:function () {
+        toHtml: function () {
             if (this.nodeValue) {
                 return this.nodeValue;
             } else {
@@ -36,6 +37,4 @@ KISSY.add("html-parser/nodes/comment", function (S, Text) {
     });
 
     return Comment;
-}, {
-    requires:['./text']
 });

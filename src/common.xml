@@ -41,7 +41,6 @@
                     <arg value="${bin.dir}/kissy-xtemplate"/>
                     <arg value="-p"/>
                     <arg value="${component.src.dir}"/>
-                    <arg value="-k"/>
                 </exec>
             </ac:then>
         </ac:if>

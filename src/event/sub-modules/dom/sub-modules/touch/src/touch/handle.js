@@ -3,7 +3,17 @@
  * base handle for touch gesture, mouse and touch normalization
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/touch/handle', function (S, Dom, eventHandleMap, DomEvent) {
+KISSY.add(function (S, require) {
+    var Dom = require('dom');
+    var eventHandleMap = require('./handle-map');
+    var DomEvent = require('event/dom/base');
+    require('./tap');
+    require('./swipe');
+    require('./double-tap');
+    require('./pinch');
+    require('./tap-hold');
+    require('./rotate');
+
     var key = S.guid('touch-handle'),
         Features = S.Features,
         gestureStartEvent,
@@ -352,18 +362,6 @@ KISSY.add('event/dom/touch/handle', function (S, Dom, eventHandleMap, DomEvent) 
             }
         }
     };
-}, {
-    requires: [
-        'dom',
-        './handle-map',
-        'event/dom/base',
-        './tap',
-        './swipe',
-        './double-tap',
-        './pinch',
-        './tap-hold',
-        './rotate'
-    ]
 });
 /*
  2013-08-29 yiminghe@gmail.com

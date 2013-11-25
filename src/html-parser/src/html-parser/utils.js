@@ -3,7 +3,7 @@
  * utils about language for html parser
  * @author yiminghe@gmail.com
  */
-KISSY.add("html-parser/utils", function () {
+KISSY.add(function () {
     return {
         isBooleanAttribute: function (attrName) {
             return (/^(?:checked|disabled|selected|readonly|defer|multiple|nohref|noshape|nowrap|noresize|compact|ismap)$/i).test(attrName);

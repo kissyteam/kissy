@@ -12,7 +12,11 @@
  *
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/base/valuechange', function (S, DomEvent, Dom, Special) {
+KISSY.add(function (S, require) {
+    var Dom = require('dom');
+    var DomEvent = require('./dom-event');
+    var Special = require('./special');
+
     var VALUE_CHANGE = 'valuechange',
         getNodeName = Dom.nodeName,
         KEY = 'event/valuechange',
@@ -102,8 +106,6 @@ KISSY.add('event/dom/base/valuechange', function (S, DomEvent, Dom, Special) {
         }
     };
     return DomEvent;
-}, {
-    requires: ['./dom-event', 'dom', './special']
 });
 
 /*

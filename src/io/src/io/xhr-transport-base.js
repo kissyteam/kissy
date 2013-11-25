@@ -3,7 +3,7 @@
  * base for xhr and subdomain
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S,require) {
+KISSY.add(function (S, require) {
     var IO = require('./base');
     var OK_CODE = 200,
         win = S.Env.host,
@@ -105,19 +105,18 @@ KISSY.add(function (S,require) {
                 }
             }
 
-            xhrFields = c['xhrFields'] || {};
-
-            // must set after open in mobile!
-            if ('withCredentials' in xhrFields) {
-                if (!supportCORS) {
-                    delete xhrFields.withCredentials;
-                }
-            }
-
             if (username = c['username']) {
                 nativeXhr.open(type, url, async, username, c.password)
             } else {
                 nativeXhr.open(type, url, async);
+            }
+
+            xhrFields = c['xhrFields'] || {};
+
+            if ('withCredentials' in xhrFields) {
+                if (!supportCORS) {
+                    delete xhrFields.withCredentials;
+                }
             }
 
             for (i in xhrFields) {
@@ -134,6 +133,7 @@ KISSY.add(function (S,require) {
 
             var xRequestHeader = requestHeaders['X-Requested-With'];
 
+            //
             if (xRequestHeader === false) {
                 delete requestHeaders['X-Requested-With'];
             }

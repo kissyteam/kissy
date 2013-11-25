@@ -3,7 +3,10 @@
  * represent tag, it can nest other tag
  * @author yiminghe@gmail.com
  */
-KISSY.add("html-parser/nodes/tag", function (S, Node, Attribute, Dtd) {
+KISSY.add(function (S, require) {
+    var Node = require('./node');
+    var Attribute = require('./attribute');
+    var Dtd = require('../dtd');
 
     function createTag(self, tagName, attrs) {
         self.nodeName = self.tagName = tagName.toLowerCase();
@@ -353,7 +356,4 @@ KISSY.add("html-parser/nodes/tag", function (S, Node, Attribute, Dtd) {
     }
 
     return Tag;
-
-}, {
-    requires: ['./node', './attribute', '../dtd']
 });

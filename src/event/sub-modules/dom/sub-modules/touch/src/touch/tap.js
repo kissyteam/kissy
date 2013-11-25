@@ -3,7 +3,11 @@
  * gesture tap
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/touch/tap', function (S, eventHandleMap, DomEvent, SingleTouch) {
+KISSY.add(function (S, require) {
+    var eventHandleMap = require('./handle-map');
+    var DomEvent = require('event/dom/base');
+    var SingleTouch = require('./single-touch');
+
     function preventDefault(e) {
         e.preventDefault();
     }
@@ -60,8 +64,6 @@ KISSY.add('event/dom/touch/tap', function (S, eventHandleMap, DomEvent, SingleTo
     };
 
     return Tap;
-}, {
-    requires: ['./handle-map', 'event/dom/base', './single-touch']
 });
 /**
  * @ignore

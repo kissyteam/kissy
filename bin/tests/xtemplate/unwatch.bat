@@ -1,2 +1,1 @@
-call kissy xtemplate -p ./
-pause
+kissy xtemplate -p ./

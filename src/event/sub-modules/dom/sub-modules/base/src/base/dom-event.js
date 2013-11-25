@@ -3,7 +3,14 @@
  * setup event/dom api module
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/base/dom-event', function (S, BaseEvent, DomEventUtils, Dom, Special, DomEventObservable, DomEventObject) {
+KISSY.add(function (S, require) {
+    var BaseEvent = require('event/base');
+    var DomEventUtils = require('./utils');
+    var Dom = require('dom');
+    var Special = require('./special');
+    var DomEventObservable = require('./observable');
+    var DomEventObject = require('./object');
+
     var BaseUtils = BaseEvent.Utils;
 
     var undefined = undefined;
@@ -115,7 +122,7 @@ KISSY.add('event/dom/base/dom-event', function (S, BaseEvent, DomEventUtils, Dom
      * @private
      * @class KISSY.Event.DomEvent
      */
-    var DomEvent={
+    var DomEvent = {
         /**
          * Adds an event listener.similar to addEventListener in Dom3 Events
          * @param targets KISSY selector
@@ -199,7 +206,7 @@ KISSY.add('event/dom/base/dom-event', function (S, BaseEvent, DomEventUtils, Dom
          * use space to separate multiple event types.
          * @param {Function} [fn] The event listener.
          * @param {Object} [context] The context (this reference) in which the handler function is executed.
-         * 
+         *
          */
         delegate: function (targets, eventType, filter, fn, context) {
             return DomEvent.on(targets, eventType, {
@@ -216,7 +223,7 @@ KISSY.add('event/dom/base/dom-event', function (S, BaseEvent, DomEventUtils, Dom
          * @param {String|Function} [filter] filter selector string or function to find right element
          * @param {Function} [fn] The event listener.
          * @param {Object} [context] The context (this reference) in which the handler function is executed.
-         * 
+         *
          */
         undelegate: function (targets, eventType, filter, fn, context) {
             return DomEvent.detach(targets, eventType, {
@@ -229,7 +236,7 @@ KISSY.add('event/dom/base/dom-event', function (S, BaseEvent, DomEventUtils, Dom
         /**
          * fire event,simulate bubble in browser. similar to dispatchEvent in Dom3 Events
          * @param targets html nodes
-         * 
+         *
          * @param {String} eventType event type
          * @param [eventData] additional event data
          * @param {Boolean} [onlyHandlers] for internal usage
@@ -299,7 +306,7 @@ KISSY.add('event/dom/base/dom-event', function (S, BaseEvent, DomEventUtils, Dom
          * - does not cause default behavior to occur.
          * - does not bubble up the Dom hierarchy.
          * @param targets html nodes
-         * 
+         *
          * @param {String} eventType event type
          * @param [eventData] additional event data
          * @return {*} return false if one of custom event 's observers (include bubbled) else
@@ -312,7 +319,7 @@ KISSY.add('event/dom/base/dom-event', function (S, BaseEvent, DomEventUtils, Dom
 
         /**
          * copy event from src to dest
-         * 
+         *
          * @param {HTMLElement} src srcElement
          * @param {HTMLElement} dest destElement
          * @private
@@ -342,10 +349,6 @@ KISSY.add('event/dom/base/dom-event', function (S, BaseEvent, DomEventUtils, Dom
     };
 
     return DomEvent;
-}, {
-    requires: ['event/base',
-        './utils',
-        'dom', './special', './observable', './object']
 });
 /*
  2012-02-12 yiminghe@gmail.com note:

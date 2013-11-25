@@ -3,7 +3,11 @@
  * gesture swipe
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, DomEvent, SingleTouch) {
+KISSY.add(function (S, require) {
+        var eventHandleMap = require('./handle-map');
+        var DomEvent = require('event/dom/base');
+        var SingleTouch = require('./single-touch');
+
     var event = 'swipe',
         undefined = undefined,
         ingEvent = 'swiping',
@@ -167,6 +171,4 @@ KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, DomEvent, Single
     };
 
     return Swipe;
-}, {
-    requires: ['./handle-map', 'event/dom/base', './single-touch']
 });

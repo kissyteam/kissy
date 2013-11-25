@@ -724,10 +724,8 @@ KISSY.add(function (S, XTemplate, XTemplateNodeJs) {
 
                 it('support sub template compile', function () {
                     var tpl = '{{include "./x"}}';
-                    var code = XTemplate.compiler.compileToModule(tpl);
-                    expect(code.indexOf('requires:')).toBe(-1);
-                    code = XTemplate.compiler.compileToModule(tpl, []);
-                    expect(code.indexOf('requires:["./x"]')).not.toBe(-1);
+                    var code = XTemplate.compiler.compileToStr(tpl);
+                    expect(code.indexOf('require("./x")')).not.toBe(-1);
                 });
 
                 it('support relative sub template name', function () {
@@ -811,6 +809,25 @@ KISSY.add(function (S, XTemplate, XTemplateNodeJs) {
                     }).toThrow("parent template does not have name " +
                             "for relative sub tpl name:" +
                             " ./sub-tpl-6: 'include' at line 1");
+                });
+
+                it('support compiled xtemplate module', function () {
+                    KISSY.config('packages', {'xtpls': {
+                        base: '../specs'
+                    }});
+                    var ret;
+                    KISSY.use('xtpls/a-xtpl', function (S, A) {
+                        ret = new XTemplate(A).render({
+                            a: 1,
+                            b: 2
+                        });
+                    });
+                    waitsFor(function () {
+                        return !!ret;
+                    });
+                    runs(function () {
+                        expect(ret).toBe('12');
+                    });
                 });
             });
 

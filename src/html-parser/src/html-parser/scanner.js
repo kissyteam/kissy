@@ -3,17 +3,15 @@
  * declare and initiate sub scanners
  * @author yiminghe@gmail.com
  */
-KISSY.add('html-parser/scanner', function(S, TagScanner, SpecialScanners) {
+KISSY.add(function (S, require) {
+    var TagScanner = require('./scanners/tag-scanner');
+    var SpecialScanners = require('./scanners/special-scanners');
+    require('./scanners/quote-cdata-scanner');
+    require('./scanners/textarea-scanner');
+
     return {
-        getScanner:function(nodeName) {
+        getScanner: function (nodeName) {
             return SpecialScanners[nodeName] || TagScanner;
         }
     };
-}, {
-    requires:[
-        './scanners/tag-scanner',
-        './scanners/special-scanners',
-        './scanners/quote-cdata-scanner',
-        './scanners/textarea-scanner'
-    ]
 });

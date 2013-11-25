@@ -3,8 +3,7 @@
  * base event object for custom and dom event.
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/base/object', function (S, undefined) {
-
+KISSY.add(function (S, undefined) {
     var FALSE_FN = function f_f() {
         return false;
     }, TRUE_FN = function t_f() {
@@ -110,5 +109,4 @@ KISSY.add('event/base/object', function (S, undefined) {
     };
 
     return EventObject;
-
 });

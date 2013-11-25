@@ -3,7 +3,7 @@
  * special house for special events
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/base/special', function () {
+KISSY.add(function () {
     return {
     };
 });

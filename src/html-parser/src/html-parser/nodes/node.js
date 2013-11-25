@@ -3,7 +3,7 @@
  * abstract class for tag and text, comment .. etc
  * @author yiminghe@gmail.com
  */
-KISSY.add("html-parser/nodes/node", function (S) {
+KISSY.add(function (S) {
     function lineCount(str) {
         var i = 0;
         // cpu!

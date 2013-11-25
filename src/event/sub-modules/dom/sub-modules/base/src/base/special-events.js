@@ -3,13 +3,15 @@
  * special house for special events
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/base/special-events', function (S, DomEvent,Special) {
+KISSY.add(function (S, require) {
+    var DomEvent = require('./dom-event');
+    var Special = require('./special');
+
     var undefined = undefined,
         UA = S.UA,
         MOUSE_WHEEL = UA.gecko ? 'DOMMouseScroll' : 'mousewheel';
 
     return S.mix(Special, {
-
         mousewheel: {
             typeFix: MOUSE_WHEEL
         },
@@ -71,6 +73,4 @@ KISSY.add('event/dom/base/special-events', function (S, DomEvent,Special) {
             }
         }
     });
-}, {
-    requires: ['./dom-event','./special']
 });

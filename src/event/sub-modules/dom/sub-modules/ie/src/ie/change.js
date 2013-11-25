@@ -3,7 +3,9 @@
  *  change bubble and checkbox/radio fix patch for ie<9
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/ie/change', function (S, DomEvent, Dom) {
+KISSY.add(function (S, require) {
+    var DomEvent = require('event/dom/base');
+    var Dom = require('dom');
     var Special = DomEvent.Special,
         R_FORM_EL = /^(?:textarea|input|select)$/i;
 
@@ -104,6 +106,4 @@ KISSY.add('event/dom/ie/change', function (S, DomEvent, Dom) {
             DomEvent.fire(p, 'change', e);
         }
     }
-}, {
-    requires: ['event/dom/base', 'dom']
 });

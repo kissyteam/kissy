@@ -3,8 +3,8 @@
  * simple custom event object for custom event mechanism.
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/custom/object', function (S, BaseEvent) {
-
+KISSY.add(function (S, require) {
+    var BaseEvent = require('event/base');
     /**
      * Do not new by yourself.
      *
@@ -32,7 +32,4 @@ KISSY.add('event/custom/object', function (S, BaseEvent) {
     S.extend(CustomEventObject, BaseEvent.Object);
 
     return CustomEventObject;
-
-}, {
-    requires: ['event/base']
 });

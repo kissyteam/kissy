@@ -3,7 +3,9 @@
  * fake document fragment
  * @author yiminghe@gmail.com
  */
-KISSY.add("html-parser/nodes/fragment", function (S, Tag) {
+KISSY.add(function (S, require) {
+    var Tag = require('./tag');
+
     function Fragment() {
         this.childNodes = [];
         this.nodeType = 9;
@@ -11,7 +13,7 @@ KISSY.add("html-parser/nodes/fragment", function (S, Tag) {
     }
 
     S.extend(Fragment, Tag, {
-        writeHtml:function (writer, filter) {
+        writeHtml: function (writer, filter) {
             this.__filter = filter;
             this.isChildrenFiltered = 0;
             if (filter) {
@@ -22,6 +24,4 @@ KISSY.add("html-parser/nodes/fragment", function (S, Tag) {
     });
 
     return Fragment;
-}, {
-    requires:['./tag']
 });

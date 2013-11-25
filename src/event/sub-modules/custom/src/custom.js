@@ -3,7 +3,8 @@
  * custom facade
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/custom', function (S, Target) {
+KISSY.add(function (S, require) {
+    var Target = require('./custom/target');
     return {
         Target: Target,
 
@@ -14,6 +15,4 @@ KISSY.add('event/custom', function (S, Target) {
          */
         global: S.mix({}, Target)
     };
-}, {
-    requires: ['./custom/target']
 });

@@ -3,7 +3,9 @@
  * event object for dom
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/base/object', function (S, BaseEvent, undefined) {
+KISSY.add(function (S, require) {
+    var BaseEvent = require('event/base');
+
     var DOCUMENT = S.Env.host.document,
         TRUE = true,
         FALSE = false,
@@ -482,9 +484,6 @@ KISSY.add('event/dom/base/object', function (S, BaseEvent, undefined) {
     });
 
     return DomEventObject;
-
-}, {
-    requires: ['event/base']
 });
 
 /*

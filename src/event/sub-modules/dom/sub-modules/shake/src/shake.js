@@ -3,7 +3,9 @@
  * simulate shake gesture by listening devicemotion event
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/shake', function (S, DomEvent, undefined) {
+KISSY.add(function (S, require) {
+    var DomEvent = require('event/dom/base');
+
     var Special = DomEvent.Special,
         start = 5,
         enough = 20,
@@ -71,8 +73,6 @@ KISSY.add('event/dom/shake', function (S, DomEvent, undefined) {
         lastY = y;
         lastZ = z;
     }
-}, {
-    requires: ['event/dom/base']
 });
 /**
  * @ignore

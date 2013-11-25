@@ -3,7 +3,8 @@
  * Observer for custom event
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/custom/observer', function (S, BaseEvent) {
+KISSY.add(function (S, require) {
+    var BaseEvent = require('event/base');
 
     /**
      * Observer for custom event
@@ -16,11 +17,8 @@ KISSY.add('event/custom/observer', function (S, BaseEvent) {
     }
 
     S.extend(CustomEventObserver, BaseEvent.Observer, {
-        keys:['fn','context','groups']
+        keys: ['fn', 'context', 'groups']
     });
 
     return CustomEventObserver;
-
-}, {
-    requires: ['event/base']
 });

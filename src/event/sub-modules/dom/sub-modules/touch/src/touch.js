@@ -3,7 +3,11 @@
  * touch event logic module
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/touch', function (S, DomEvent, eventHandleMap, eventHandle) {
+KISSY.add(function (S, require) {
+    var DomEvent = require('event/dom/base');
+    var eventHandleMap = require('./touch/handle-map');
+    var eventHandle = require('./touch/handle');
+
     var Gesture = DomEvent.Gesture;
     var startEvent = Gesture.start = 'KSPointerDown';
     var moveEvent = Gesture.move = 'KSPointerMove';
@@ -99,6 +103,4 @@ KISSY.add('event/dom/touch', function (S, DomEvent, eventHandleMap, eventHandle)
         }
         Special[e] = specialEvent;
     }
-}, {
-    requires: ['event/dom/base', './touch/handle-map', './touch/handle']
 });

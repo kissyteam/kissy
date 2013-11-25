@@ -3,7 +3,7 @@
  * quote and unQuote for json
  * @author yiminghe@gmail.com
  */
-KISSY.add('json/quote', function (S) {
+KISSY.add(function (S) {
 
     var CONTROL_MAP = {
             '\b': '\\b',

@@ -3,7 +3,10 @@
  * custom event target for publish and subscribe
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/custom/target', function (S, BaseEvent, CustomEventObservable) {
+KISSY.add(function (S, require) {
+    var BaseEvent = require('event/base');
+    var CustomEventObservable = require('./observable');
+
     var Utils = BaseEvent.Utils,
         splitAndRun = Utils.splitAndRun,
         undefined = undefined,
@@ -241,8 +244,6 @@ KISSY.add('event/custom/target', function (S, BaseEvent, CustomEventObservable) 
             return self; // chain
         }
     };
-}, {
-    requires: ['event/base', './observable']
 });
 /*
  yiminghe: 2012-10-24

@@ -3,7 +3,7 @@
  * base custom event mechanism for kissy
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/base/observable', function (S) {
+KISSY.add(function (S) {
 
     /**
      * base custom event for registering and un-registering observer for specified event.

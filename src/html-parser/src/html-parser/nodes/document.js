@@ -3,7 +3,9 @@
  * fake document node
  * @author yiminghe@gmail.com
  */
-KISSY.add("html-parser/nodes/document", function (S, Tag) {
+KISSY.add(function (S, require) {
+    var Tag = require('./tag');
+
     function Document() {
         this.childNodes = [];
         this.nodeType = 9;
@@ -11,13 +13,11 @@ KISSY.add("html-parser/nodes/document", function (S, Tag) {
     }
 
     S.extend(Document, Tag, {
-        writeHtml:function (writer, filter) {
+        writeHtml: function (writer, filter) {
             this.__filter = filter;
             this._writeChildrenHTML(writer);
         }
     });
 
     return Document;
-}, {
-    requires:['./tag']
 });

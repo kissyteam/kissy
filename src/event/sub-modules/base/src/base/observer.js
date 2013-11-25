@@ -3,7 +3,7 @@
  * observer for event.
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/base/observer', function (S, undefined) {
+KISSY.add(function (S, undefined) {
 
     /**
      * KISSY 's base observer for handle user-specified function

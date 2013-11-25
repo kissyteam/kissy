@@ -3,7 +3,16 @@
  * parse html string into Nodes
  * @author yiminghe@gmail.com
  */
-KISSY.add("html-parser/lexer/lexer", function (S, Cursor, Page, TextNode, CData, Utils, Attribute, TagNode, CommentNode) {
+KISSY.add(function (S, require) {
+    var Cursor = require('./cursor');
+    var Page = require('./page');
+    var TextNode = require('../nodes/text');
+    var CData = require('../nodes/cdata');
+    var Utils = require('../utils');
+    var Attribute = require('../nodes/attribute');
+    var TagNode = require('../nodes/tag');
+    var CommentNode = require('../nodes/comment');
+
     /**
      * Lexer for html parser
      * @param {String} text html content
@@ -114,7 +123,7 @@ KISSY.add("html-parser/lexer/lexer", function (S, Cursor, Page, TextNode, CData,
             return ret;
         },
 
-       // different from text node : space does matter
+        // different from text node : space does matter
         makeCData: function (start, end) {
             var ret = null, l;
             l = end - start;
@@ -158,14 +167,14 @@ KISSY.add("html-parser/lexer/lexer", function (S, Cursor, Page, TextNode, CData,
         },
 
         /*
-          parse tag node according to fsm
-          state 0 - outside of any attribute
-          state 1 - within attribute name
-          state 2 - equals hit
-          state 3 - within naked attribute value.
-          state 4 - within single quoted attribute value
-          state 5 - within double quoted attribute value
-          state 6 - whitespaces after attribute name could lead to state 2 (=)or state 0
+         parse tag node according to fsm
+         state 0 - outside of any attribute
+         state 1 - within attribute name
+         state 2 - equals hit
+         state 3 - within naked attribute value.
+         state 4 - within single quoted attribute value
+         state 5 - within double quoted attribute value
+         state 6 - whitespaces after attribute name could lead to state 2 (=)or state 0
          */
         parseTag: function (start) {
             var done,
@@ -187,10 +196,10 @@ KISSY.add("html-parser/lexer/lexer", function (S, Cursor, Page, TextNode, CData,
                 };
             }
             /*
-              record state position
+             record state position
 
-              states 0 -> bookmarks[1]
-              states 1 -> bookmarks[2]
+             states 0 -> bookmarks[1]
+             states 1 -> bookmarks[2]
              */
             bookmarks[0] = cursor.position;
             while (!done) {
@@ -342,12 +351,12 @@ KISSY.add("html-parser/lexer/lexer", function (S, Cursor, Page, TextNode, CData,
         },
 
         /*
-          Parse a comment.
-          state 0 - prior to the first open delimiter (first dash)
-          state 1 - prior to the second open delimiter (second dash)
-          state 2 - prior to the first closing delimiter (first dash)
-          state 3 - prior to the second closing delimiter (second dash)
-          state 4 - prior to the terminating
+         Parse a comment.
+         state 0 - prior to the first open delimiter (first dash)
+         state 1 - prior to the second open delimiter (second dash)
+         state 2 - prior to the first closing delimiter (first dash)
+         state 3 - prior to the second closing delimiter (second dash)
+         state 4 - prior to the terminating
          */
         parseComment: function (start, quoteSmart) {
             var done,
@@ -637,14 +646,14 @@ KISSY.add("html-parser/lexer/lexer", function (S, Cursor, Page, TextNode, CData,
                                 // tagName = "textarea"
                                 // <textarea><div></div></textarea>
                                 /*
-                                  8.1.2.6 Restrictions on the contents of raw text and RCDATA elements
+                                 8.1.2.6 Restrictions on the contents of raw text and RCDATA elements
 
-                                    The text in raw text and RCDATA elements must not contain any occurrences
-                                    of the string "</" (U+003C LESS-THAN SIGN, U+002F SOLIDUS)
-                                    followed by characters that case-insensitively match the tag name of the element
-                                    followed by one of U+0009 CHARACTER TABULATION (tab),
-                                    U+000A LINE FEED (LF), U+000C FORM FEED (FF), U+000D CARRIAGE RETURN (CR),
-                                    U+0020 SPACE, U+003E GREATER-THAN SIGN (>), or U+002F SOLIDUS (/).
+                                 The text in raw text and RCDATA elements must not contain any occurrences
+                                 of the string "</" (U+003C LESS-THAN SIGN, U+002F SOLIDUS)
+                                 followed by characters that case-insensitively match the tag name of the element
+                                 followed by one of U+0009 CHARACTER TABULATION (tab),
+                                 U+000A LINE FEED (LF), U+000C FORM FEED (FF), U+000D CARRIAGE RETURN (CR),
+                                 U+0020 SPACE, U+003E GREATER-THAN SIGN (>), or U+002F SOLIDUS (/).
                                  */
                                 if (!tagName || (mPage.getText(mCursor.position,
                                     mCursor.position + tagName.length) === tagName && !(mPage.getText(mCursor.position + tagName.length,
@@ -778,14 +787,4 @@ KISSY.add("html-parser/lexer/lexer", function (S, Cursor, Page, TextNode, CData,
     };
 
     return Lexer;
-}, {
-    requires: [
-        './cursor',
-        './page',
-        '../nodes/text',
-        '../nodes/cdata',
-        '../utils',
-        '../nodes/attribute',
-        '../nodes/tag',
-        '../nodes/comment'
-    ]});
+});

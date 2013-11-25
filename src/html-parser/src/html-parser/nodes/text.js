@@ -3,7 +3,8 @@
  * dom text node
  * @author yiminghe@gmail.com
  */
-KISSY.add("html-parser/nodes/text", function (S, Node) {
+KISSY.add(function (S, require) {
+    var Node = require('./node');
 
     function Text(v) {
         if (typeof v == 'string') {
@@ -40,6 +41,4 @@ KISSY.add("html-parser/nodes/text", function (S, Node) {
     });
 
     return Text;
-}, {
-    requires:['./node']
 });

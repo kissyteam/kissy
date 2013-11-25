@@ -3,7 +3,10 @@
  * fired when rotate using two fingers
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/touch/rotate', function (S, eventHandleMap, MultiTouch, DomEvent, undefined) {
+KISSY.add(function (S, require) {
+    var eventHandleMap = require('./handle-map');
+    var DomEvent = require('event/dom/base');
+    var MultiTouch = require('./multi-touch');
     var ROTATE_START = 'rotateStart',
         ROTATE = 'rotate',
         RAD_2_DEG = 180 / Math.PI,
@@ -108,6 +111,4 @@ KISSY.add('event/dom/touch/rotate', function (S, eventHandleMap, MultiTouch, Dom
     };
 
     return Rotate;
-}, {
-    requires: ['./handle-map', './multi-touch', 'event/dom/base']
 });

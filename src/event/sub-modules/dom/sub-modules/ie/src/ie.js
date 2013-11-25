@@ -3,8 +3,7 @@
  * patch collection for ie<9
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/ie', function () {
-
-}, {
-    requires: ['./ie/change', './ie/submit']
+KISSY.add(function (S, require) {
+    require('./ie/change');
+    require('./ie/submit');
 });

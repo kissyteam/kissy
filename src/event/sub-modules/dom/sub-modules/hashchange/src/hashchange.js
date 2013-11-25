@@ -3,7 +3,9 @@
  * hashchange event for non-standard browser
  * @author yiminghe@gmail.com, xiaomacji@gmail.com
  */
-KISSY.add('event/dom/hashchange', function (S, DomEvent, Dom) {
+KISSY.add(function (S, require) {
+    var DomEvent = require('event/dom/base');
+    var Dom = require('dom');
 
     var UA = S.UA,
         Special = DomEvent.Special,
@@ -222,8 +224,6 @@ KISSY.add('event/dom/hashchange', function (S, DomEvent, Dom) {
             tearDown();
         }
     };
-}, {
-    requires: ['event/dom/base', 'dom']
 });
 
 /*

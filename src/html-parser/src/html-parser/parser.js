@@ -3,7 +3,13 @@
  * parse html to a hierarchy dom tree
  * @author yiminghe@gmail.com
  */
-KISSY.add("html-parser/parser", function (S, dtd, Tag, Fragment, Cursor, Lexer, Document, Scanner) {
+KISSY.add(function (S, require) {
+    var dtd = require('./dtd');
+    var Tag = require('./nodes/tag');
+    var Fragment = require('./nodes/fragment');
+    var Lexer = require('./lexer/lexer');
+    var Document = require('./nodes/document');
+    var Scanner = require('./scanner');
 
     /**
      * Html Parse Class
@@ -31,9 +37,9 @@ KISSY.add("html-parser/parser", function (S, dtd, Tag, Fragment, Cursor, Lexer, 
     }
 
     Parser.prototype = {
-        constructor:Parser,
+        constructor: Parser,
 
-        elements:function () {
+        elements: function () {
             var root ,
                 doc,
                 lexer = this.lexer,
@@ -72,7 +78,7 @@ KISSY.add("html-parser/parser", function (S, dtd, Tag, Fragment, Cursor, Lexer, 
             return fragment;
         },
 
-        parse:function () {
+        parse: function () {
             return this.elements();
         }
     };
@@ -157,7 +163,7 @@ KISSY.add("html-parser/parser", function (S, dtd, Tag, Fragment, Cursor, Lexer, 
 
     function findTagWithName(root, tagName, level) {
         if (level === 0) return 0;
-        if (typeof level==='number') {
+        if (typeof level === 'number') {
             level--;
         }
         var r, childNodes = root.childNodes;
@@ -188,8 +194,7 @@ KISSY.add("html-parser/parser", function (S, dtd, Tag, Fragment, Cursor, Lexer, 
                     }
                 }
                 while (html.firstChild &&
-                    html.firstChild.nodeType == 3 &&
-                    !S.trim(html.firstChild.toHtml())) {
+                    html.firstChild.nodeType == 3 && !S.trim(html.firstChild.toHtml())) {
                     html.removeChild(html.firstChild);
                 }
                 break;
@@ -198,14 +203,4 @@ KISSY.add("html-parser/parser", function (S, dtd, Tag, Fragment, Cursor, Lexer, 
     }
 
     return Parser;
-}, {
-    requires:[
-        './dtd',
-        './nodes/tag',
-        './nodes/fragment',
-        './lexer/cursor',
-        './lexer/lexer',
-        './nodes/document',
-        './scanner'
-    ]
 });

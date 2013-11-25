@@ -4,7 +4,13 @@
  * refer: http://www.w3.org/TR/domcore/#interface-customevent
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/custom/observable', function (S, CustomEventObserver, CustomEventObject, BaseEvent) {
+KISSY.add(function (S, require) {
+    var BaseEvent = require('event/base');
+    var CustomEventObserver = require('./observer');
+    var CustomEventObject = require('./object');
+
+
+
     var Utils = BaseEvent.Utils;
     var undefined = undefined;
 
@@ -108,7 +114,7 @@ KISSY.add('event/custom/observable', function (S, CustomEventObserver, CustomEve
             // parent defaultFn first
             // child defaultFn last
             if (defaultFn && !customEventObject.isDefaultPrevented()) {
-                var target=customEventObject.target,
+                var target = customEventObject.target,
                     lowestCustomEventObservable = target.getCustomEventObservable(customEventObject.type);
                 if ((!self.defaultTargetOnly && !lowestCustomEventObservable.defaultTargetOnly) ||
                     currentTarget == target) {
@@ -199,8 +205,6 @@ KISSY.add('event/custom/observable', function (S, CustomEventObserver, CustomEve
     });
 
     return CustomEventObservable;
-}, {
-    requires: [ './observer', './object', 'event/base']
 });
 /**
  * @ignore

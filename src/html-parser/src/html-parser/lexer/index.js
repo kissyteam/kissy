@@ -3,7 +3,7 @@
  * represent line index of each line
  * @author yiminghe@gmail.com
  */
-KISSY.add("html-parser/lexer/index", function () {
+KISSY.add(function () {
     /**
      * Page index class.
      * @private

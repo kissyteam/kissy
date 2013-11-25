@@ -7,7 +7,7 @@
  Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.html or http://ckeditor.com/license
  */
-KISSY.add("html-parser/dtd", function(S) {
+KISSY.add(function(S) {
     var merge = S.merge,
         A = {"isindex":1,"fieldset":1},
         B = {"input":1,"button":1,"select":1,"textarea":1,"label":1},

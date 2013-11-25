@@ -3,7 +3,9 @@
  * menu where items can be filtered based on user keyboard input
  * @author yiminghe@gmail.com
  */
-KISSY.add("filter-menu", function (S, Menu, FilterMenuRender) {
+KISSY.add(function (S, require) {
+    var Menu = require('menu');
+    var FilterMenuRender = require('filter-menu/render');
 
     var HIT_CLS = "menuitem-hit";
 
@@ -218,6 +220,4 @@ KISSY.add("filter-menu", function (S, Menu, FilterMenuRender) {
             },
             xclass: 'filter-menu'
         });
-}, {
-    requires: ['menu', 'filter-menu/render']
 });

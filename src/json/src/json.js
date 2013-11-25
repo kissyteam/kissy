@@ -3,8 +3,9 @@
  * Json emulator for KISSY
  * @author yiminghe@gmail.com
  */
-KISSY.add('json', function (S, stringify, parse) {
-
+KISSY.add(function (S, require) {
+    var stringify = require('./json/stringify'),
+        parse = require('./json/parse');
     /**
      * The Json object contains methods for converting values to JavaScript Object Notation (Json)
      * and for converting Json to values.
@@ -43,7 +44,4 @@ KISSY.add('json', function (S, stringify, parse) {
          */
         parse: parse
     };
-
-}, {
-    requires: ['./json/stringify', './json/parse']
 });

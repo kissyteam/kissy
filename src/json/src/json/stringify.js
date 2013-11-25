@@ -3,7 +3,8 @@
  * Json.stringify for KISSY
  * @author yiminghe@gmail.com
  */
-KISSY.add('json/stringify', function (S, Quote) {
+KISSY.add(function (S, require) {
+    var Quote = require('./quote');
 
     function padding2(n) {
         return n < 10 ? '0' + n : n;
@@ -163,9 +164,6 @@ KISSY.add('json/stringify', function (S, Quote) {
     }
 
     return stringify;
-
-}, {
-    requires: ['./quote']
 });
 /**
  * @ignore

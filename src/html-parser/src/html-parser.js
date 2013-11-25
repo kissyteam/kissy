@@ -3,44 +3,42 @@
  * @ignore
  * @author yiminghe@gmail.com
  */
-KISSY.add("html-parser", function (S, DTD, Lexer, Parser, BasicWriter, BeautifyWriter, MinifyWriter, Filter, CData, Comment, Node, Tag, Text) {
+KISSY.add(function (S, require) {
+    var DTD = require('html-parser/dtd');
+    var Lexer = require('html-parser/lexer/lexer');
+    var Parser = require('html-parser/parser');
+    var BasicWriter = require('html-parser/writer/basic');
+    var BeautifyWriter = require('html-parser/writer/beautify');
+    var MinifyWriter = require('html-parser/writer/minify');
+    var Filter = require('html-parser/writer/filter');
+    var CData = require('html-parser/nodes/cdata');
+    var Comment = require('html-parser/nodes/comment');
+    var Node = require('html-parser/nodes/node');
+    var Tag = require('html-parser/nodes/tag');
+    var Text = require('html-parser/nodes/text');
+
     return {
-        CData:CData,
-        Comment:Comment,
-        Node:Node,
-        Tag:Tag,
-        Text:Text,
-        Lexer:Lexer,
-        Parser:Parser,
-        BasicWriter:BasicWriter,
-        BeautifyWriter:BeautifyWriter,
-        MinifyWriter:MinifyWriter,
-        Filter:Filter,
-        DTD:DTD,
-        serialize:function (n, filter) {
+        CData: CData,
+        Comment: Comment,
+        Node: Node,
+        Tag: Tag,
+        Text: Text,
+        Lexer: Lexer,
+        Parser: Parser,
+        BasicWriter: BasicWriter,
+        BeautifyWriter: BeautifyWriter,
+        MinifyWriter: MinifyWriter,
+        Filter: Filter,
+        DTD: DTD,
+        serialize: function (n, filter) {
             var basicWriter = new BasicWriter();
             n.writeHtml(basicWriter, filter);
             return basicWriter.getHtml();
         },
-        parse:function (html) {
+        parse: function (html) {
             return new Parser(html).parse();
         }
     };
-}, {
-    requires:[
-        'html-parser/dtd',
-        'html-parser/lexer/lexer',
-        'html-parser/parser',
-        'html-parser/writer/basic',
-        'html-parser/writer/beautify',
-        'html-parser/writer/minify',
-        'html-parser/writer/filter',
-        'html-parser/nodes/cdata',
-        'html-parser/nodes/comment',
-        'html-parser/nodes/node',
-        'html-parser/nodes/tag',
-        'html-parser/nodes/text'
-    ]
 });
 
 /**

@@ -3,7 +3,11 @@
  * fired when tap and hold for more than 1s
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/touch/tap-hold', function (S, eventHandleMap, SingleTouch, DomEvent) {
+KISSY.add(function (S, require) {
+    var eventHandleMap = require('./handle-map');
+    var DomEvent = require('event/dom/base');
+    var SingleTouch = require('./single-touch');
+
     var event = 'tapHold';
     var duration = 1000;
 
@@ -46,6 +50,4 @@ KISSY.add('event/dom/touch/tap-hold', function (S, eventHandleMap, SingleTouch, 
     };
 
     return TapHold;
-}, {
-    requires: ['./handle-map', './single-touch', 'event/dom/base']
 });

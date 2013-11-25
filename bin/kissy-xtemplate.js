@@ -9,7 +9,6 @@ program
     .option('-p, --package-path <packagePath>', 'Set kissy package path')
     .option('-e, --encoding [encoding]', 'Set xtemplate file encoding', 'utf-8')
     .option('-w, --watch', 'Watch xtemplate file change')
-    .option('-k, --kissy', 'kissy module format')
     .parse(process.argv);
 
 var S = require('../build/kissy-nodejs'),
@@ -43,7 +42,11 @@ function my_js_beautify(str) {
 S.use('xtemplate/compiler', function (S, XTemplateCompiler) {
     function compile(tpl, modulePath) {
         var tplContent = fs.readFileSync(tpl, encoding);
-        var moduleCode = my_js_beautify(XTemplateCompiler.compileToModule(tplContent, program.kissy ? false : []));
+        var moduleCode = my_js_beautify(
+            '/** Compiled By kissy-xtemplate */\n' +
+                'KISSY.add(function(S,require,exports,module){ return ' +
+                XTemplateCompiler.compileToStr(tplContent))
+            + '\n});';
         fs.writeFileSync(modulePath, moduleCode, encoding);
         console.info('generate xtpl module: ' + modulePath + ' at ' + (new Date().toLocaleString()));
     }

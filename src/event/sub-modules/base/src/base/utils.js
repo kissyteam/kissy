@@ -3,8 +3,7 @@
  * utils for event
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/base/utils', function (S) {
-
+KISSY.add(function (S) {
     var splitAndRun, getGroupsRe;
 
     function getTypedGroups(type) {
@@ -25,7 +24,6 @@ KISSY.add('event/base/utils', function (S) {
     }
 
     return {
-
         splitAndRun: splitAndRun = function (type, fn) {
             if (S.isArray(type)) {
                 S.each(type, fn);
@@ -100,7 +98,5 @@ KISSY.add('event/base/utils', function (S) {
         getGroupsRe: getGroupsRe = function (groups) {
             return new RegExp(groups.split('.').join('.*\\.') + '(?:\\.|$)');
         }
-
     };
-
 });

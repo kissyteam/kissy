@@ -3,8 +3,9 @@
  * patch for ie<9 submit: does not bubble !
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/ie/submit', function (S, DomEvent, Dom) {
-
+KISSY.add(function (S, require) {
+    var DomEvent = require('event/dom/base');
+    var Dom = require('dom');
     var Special = DomEvent.Special,
         getNodeName = Dom.nodeName;
 
@@ -39,7 +40,6 @@ KISSY.add('event/dom/ie/submit', function (S, DomEvent, Dom) {
         }
     };
 
-
     function detector(e) {
         var t = e.target,
             nodeName = getNodeName(t),
@@ -66,9 +66,6 @@ KISSY.add('event/dom/ie/submit', function (S, DomEvent, Dom) {
             DomEvent.fire(form.parentNode, 'submit', e);
         }
     }
-
-}, {
-    requires: ['event/dom/base', 'dom']
 });
 /*
  modified from jq, fix submit in ie<9
