@@ -9,7 +9,7 @@ KISSY.add(function (S, require) {
         win = S.Env.host,
         logger = S.getLogger('s/io'),
     // http://msdn.microsoft.com/en-us/library/cc288060(v=vs.85).aspx
-        _XDomainRequest = S.UA.ie > 7 && win['XDomainRequest'],
+        _XDomainRequest = S.UA.ieMode > 7 && win['XDomainRequest'],
         NO_CONTENT_CODE = 204,
         NOT_FOUND_CODE = 404,
         NO_CONTENT_CODE2 = 1223,

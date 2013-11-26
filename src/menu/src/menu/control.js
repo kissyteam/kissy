@@ -3,7 +3,11 @@
  * menu control for kissy,accommodate menu items
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/control", function (S, Node, Container, DelegateChildrenExtension, MenuRender, undefined) {
+KISSY.add(function (S, require) {
+    var Node = require('node');
+    var Container = require('component/container');
+    var DelegateChildrenExtension = require('component/extension/delegate-children');
+    var MenuRender = require('./menu-render');
 
     var KeyCode = Node.KeyCode;
 
@@ -239,9 +243,6 @@ KISSY.add("menu/control", function (S, Node, Container, DelegateChildrenExtensio
             el.setAttribute("aria-activedescendant", menuItem && menuItem.el.id || '');
         }
     }
-}, {
-    requires: ['node', 'component/container',
-        'component/extension/delegate-children', './menu-render']
 });
 
 /**

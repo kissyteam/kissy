@@ -3,9 +3,12 @@
  * tree management utils
  * @author yiminghe@gmail.com
  */
-KISSY.add("tree/tree-manager", function (S, Node, DelegateChildrenExtension) {
+KISSY.add(function (S, require) {
+    var Node = require('node');
+    var DelegateChildrenExtension = require('component/extension/delegate-children');
+
     var UA = S.UA,
-        ie = S.Env.host.document.documentMode || UA.ie,
+        ie = UA.ieMode,
         Features = S.Features,
         Gesture = Node.Gesture,
         isTouchEventSupported = Features.isTouchEventSupported();
@@ -87,9 +90,4 @@ KISSY.add("tree/tree-manager", function (S, Node, DelegateChildrenExtension) {
     });
 
     return TreeManager;
-}, {
-    requires: [
-        'node',
-        'component/extension/delegate-children'
-    ]
 });

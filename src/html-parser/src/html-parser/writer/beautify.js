@@ -3,7 +3,10 @@
  * format html prettily
  * @author yiminghe@gmail.com
  */
-KISSY.add("html-parser/writer/beautify", function (S, BasicWriter, dtd, Utils) {
+KISSY.add(function (S, require) {
+    var BasicWriter = require('./basic');
+    var dtd = require('../dtd');
+    var Utils = require('../utils');
 
     function BeautifyWriter() {
         var self = this;
@@ -200,6 +203,4 @@ KISSY.add("html-parser/writer/beautify", function (S, BasicWriter, dtd, Utils) {
 
     return BeautifyWriter;
 
-}, {
-    requires: ['./basic', '../dtd', '../utils']
 });

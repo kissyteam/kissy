@@ -3,7 +3,10 @@
  * definition for node and nodelist
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
-KISSY.add('node/base', function (S, Dom, Event, undefined) {
+KISSY.add(function (S, require) {
+    var Dom = require('dom');
+    var Event = require('event/dom');
+
     var AP = Array.prototype,
         slice = AP.slice,
         NodeType = Dom.NodeType,
@@ -78,7 +81,7 @@ KISSY.add('node/base', function (S, Dom, Event, undefined) {
          */
         item: function (index) {
             var self = this;
-            if (typeof index==='number') {
+            if (typeof index === 'number') {
                 if (index >= self.length) {
                     return null;
                 } else {
@@ -97,7 +100,7 @@ KISSY.add('node/base', function (S, Dom, Event, undefined) {
          * @return {KISSY.NodeList} a new nodelist
          */
         add: function (selector, context, index) {
-            if (typeof context==='number') {
+            if (typeof context === 'number') {
                 index = context;
                 context = undefined;
             }
@@ -270,8 +273,6 @@ KISSY.add('node/base', function (S, Dom, Event, undefined) {
     NodeList.REPLACE_HISTORY = Event.REPLACE_HISTORY;
 
     return NodeList;
-}, {
-    requires: ['dom', 'event/dom']
 });
 
 

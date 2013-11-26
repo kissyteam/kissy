@@ -254,12 +254,12 @@ if (! _$jscoverage['/overlay/extension/loading.js'].branchData) {
   _$jscoverage['/overlay/extension/loading.js'].branchData['45'] = [];
   _$jscoverage['/overlay/extension/loading.js'].branchData['45'][1] = new BranchData();
 }
-_$jscoverage['/overlay/extension/loading.js'].branchData['45'][1].init(57, 17, 'lel && lel.hide()');
-function visit15_45_1(result) {
+_$jscoverage['/overlay/extension/loading.js'].branchData['45'][1].init(55, 17, 'lel && lel.hide()');
+function visit20_45_1(result) {
   _$jscoverage['/overlay/extension/loading.js'].branchData['45'][1].ranCondition(result);
   return result;
-}_$jscoverage['/overlay/extension/loading.js'].branchData['22'][1].init(48, 19, '!self._loadingExtEl');
-function visit14_22_1(result) {
+}_$jscoverage['/overlay/extension/loading.js'].branchData['22'][1].init(46, 19, '!self._loadingExtEl');
+function visit19_22_1(result) {
   _$jscoverage['/overlay/extension/loading.js'].branchData['22'][1].ranCondition(result);
   return result;
 }_$jscoverage['/overlay/extension/loading.js'].lineData[6]++;
@@ -276,7 +276,7 @@ KISSY.add("overlay/extension/loading", function(S, Node) {
   _$jscoverage['/overlay/extension/loading.js'].lineData[21]++;
   var self = this;
   _$jscoverage['/overlay/extension/loading.js'].lineData[22]++;
-  if (visit14_22_1(!self._loadingExtEl)) {
+  if (visit19_22_1(!self._loadingExtEl)) {
     _$jscoverage['/overlay/extension/loading.js'].lineData[23]++;
     self._loadingExtEl = new Node("<div " + "class='" + self.get('prefixCls') + "ext-loading'" + " style='position: absolute;" + "border: none;" + "width: 100%;" + "top: 0;" + "left: 0;" + "z-index: 99999;" + "height:100%;" + "*height: expression(this.parentNode.offsetHeight);" + "'/>").appendTo(self.$el);
   }
@@ -288,7 +288,7 @@ KISSY.add("overlay/extension/loading", function(S, Node) {
   _$jscoverage['/overlay/extension/loading.js'].lineData[44]++;
   var lel = this._loadingExtEl;
   _$jscoverage['/overlay/extension/loading.js'].lineData[45]++;
-  visit15_45_1(lel && lel.hide());
+  visit20_45_1(lel && lel.hide());
 }};
   _$jscoverage['/overlay/extension/loading.js'].lineData[49]++;
   return Loading;

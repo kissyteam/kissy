@@ -8,7 +8,7 @@ KISSY.add(function (S, require) {
     var ComponentProcess = require('./control/process');
     var Manager = require('component/manager');
     var Render = require('./control/render');
-    var ie = S.Env.host.document.documentMode || S.UA.ie,
+    var ie = S.UA.ieMode,
         undefined = undefined,
         Features = S.Features,
         Gesture = Node.Gesture,
@@ -58,7 +58,7 @@ KISSY.add(function (S, require) {
                 if (!self.get("allowTextSelection")) {
                     // for older ie
                     el.unselectable();
-                    if (S.UA.ie == 11) {
+                    if (ie == 11) {
                         // prevent ie11 get focus
                         el.attr('unselectable', 'on');
                         el.all('*').attr('unselectable', 'on');

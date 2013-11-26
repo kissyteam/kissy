@@ -229,12 +229,12 @@ if (! this._$jscoverage) {
 if (! _$jscoverage['/overlay/overlay-xtpl.js']) {
   _$jscoverage['/overlay/overlay-xtpl.js'] = {};
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData = [];
+  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[2] = 0;
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[3] = 0;
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[4] = 0;
-  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[5] = 0;
+  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[8] = 0;
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[9] = 0;
-  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[12] = 0;
-  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[13] = 0;
+  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[11] = 0;
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[14] = 0;
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[15] = 0;
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[16] = 0;
@@ -243,11 +243,19 @@ if (! _$jscoverage['/overlay/overlay-xtpl.js']) {
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[19] = 0;
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[20] = 0;
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[21] = 0;
-  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[22] = 0;
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[23] = 0;
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[24] = 0;
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[25] = 0;
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[26] = 0;
+  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[27] = 0;
+  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[28] = 0;
+  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[29] = 0;
+  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[30] = 0;
+  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[31] = 0;
+  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[32] = 0;
+  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[34] = 0;
+  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[35] = 0;
+  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[36] = 0;
 }
 if (! _$jscoverage['/overlay/overlay-xtpl.js'].functionData) {
   _$jscoverage['/overlay/overlay-xtpl.js'].functionData = [];
@@ -256,46 +264,88 @@ if (! _$jscoverage['/overlay/overlay-xtpl.js'].functionData) {
 }
 if (! _$jscoverage['/overlay/overlay-xtpl.js'].branchData) {
   _$jscoverage['/overlay/overlay-xtpl.js'].branchData = {};
+  _$jscoverage['/overlay/overlay-xtpl.js'].branchData['8'] = [];
+  _$jscoverage['/overlay/overlay-xtpl.js'].branchData['8'][1] = new BranchData();
+  _$jscoverage['/overlay/overlay-xtpl.js'].branchData['8'][2] = new BranchData();
+  _$jscoverage['/overlay/overlay-xtpl.js'].branchData['19'] = [];
+  _$jscoverage['/overlay/overlay-xtpl.js'].branchData['19'][1] = new BranchData();
+  _$jscoverage['/overlay/overlay-xtpl.js'].branchData['30'] = [];
+  _$jscoverage['/overlay/overlay-xtpl.js'].branchData['30'][1] = new BranchData();
 }
-_$jscoverage['/overlay/overlay-xtpl.js'].lineData[3]++;
-KISSY.add('overlay/overlay-xtpl', function() {
+_$jscoverage['/overlay/overlay-xtpl.js'].branchData['30'][1].init(1153, 10, 'moduleWrap');
+function visit42_30_1(result) {
+  _$jscoverage['/overlay/overlay-xtpl.js'].branchData['30'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/overlay/overlay-xtpl.js'].branchData['19'][1].init(656, 10, 'moduleWrap');
+function visit41_19_1(result) {
+  _$jscoverage['/overlay/overlay-xtpl.js'].branchData['19'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/overlay/overlay-xtpl.js'].branchData['8'][2].init(165, 28, 'typeof module != "undefined"');
+function visit40_8_2(result) {
+  _$jscoverage['/overlay/overlay-xtpl.js'].branchData['8'][2].ranCondition(result);
+  return result;
+}_$jscoverage['/overlay/overlay-xtpl.js'].branchData['8'][1].init(165, 44, 'typeof module != "undefined" && module.kissy');
+function visit39_8_1(result) {
+  _$jscoverage['/overlay/overlay-xtpl.js'].branchData['8'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/overlay/overlay-xtpl.js'].lineData[2]++;
+KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/overlay/overlay-xtpl.js'].functionData[0]++;
-  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[4]++;
+  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[3]++;
   return function(scopes, S, undefined) {
   _$jscoverage['/overlay/overlay-xtpl.js'].functionData[1]++;
-  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[5]++;
-  var buffer = "", config = this.config, engine = this, utils = config.utils;
-  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[9]++;
+  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[4]++;
+  var buffer = "", config = this.config, engine = this, moduleWrap, utils = config.utils;
+  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[8]++;
+  if (visit39_8_1(visit40_8_2(typeof module != "undefined") && module.kissy)) {
+    _$jscoverage['/overlay/overlay-xtpl.js'].lineData[9]++;
+    moduleWrap = module;
+  }
+  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[11]++;
   var runBlockCommandUtil = utils["runBlockCommand"], getExpressionUtil = utils["getExpression"], getPropertyOrRunCommandUtil = utils["getPropertyOrRunCommand"];
-  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[12]++;
-  buffer += '';
-  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[13]++;
-  var config1 = {};
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[14]++;
-  var params2 = [];
+  buffer += '';
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[15]++;
-  params2.push('overlay/close-xtpl');
+  var config1 = {};
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[16]++;
-  config1.params = params2;
+  var params2 = [];
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[17]++;
-  var id0 = getPropertyOrRunCommandUtil(engine, scopes, config1, "include", 0, 1, false, undefined);
+  params2.push('overlay/close-xtpl');
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[18]++;
-  buffer += id0;
+  config1.params = params2;
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[19]++;
-  buffer += '\r\n';
-  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[20]++;
-  var config4 = {};
-  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[21]++;
-  var params5 = [];
-  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[22]++;
-  params5.push('component/extension/content-render/content-xtpl');
+  if (visit41_19_1(moduleWrap)) {
+    _$jscoverage['/overlay/overlay-xtpl.js'].lineData[20]++;
+    require("overlay/close-xtpl");
+    _$jscoverage['/overlay/overlay-xtpl.js'].lineData[21]++;
+    config1.params[0] = moduleWrap.resolveByName(config1.params[0]);
+  }
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[23]++;
-  config4.params = params5;
+  var id0 = getPropertyOrRunCommandUtil(engine, scopes, config1, "include", 0, 1, false, undefined);
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[24]++;
-  var id3 = getPropertyOrRunCommandUtil(engine, scopes, config4, "include", 0, 2, false, undefined);
+  buffer += id0;
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[25]++;
-  buffer += id3;
+  buffer += '\n';
   _$jscoverage['/overlay/overlay-xtpl.js'].lineData[26]++;
+  var config4 = {};
+  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[27]++;
+  var params5 = [];
+  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[28]++;
+  params5.push('component/extension/content-xtpl');
+  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[29]++;
+  config4.params = params5;
+  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[30]++;
+  if (visit42_30_1(moduleWrap)) {
+    _$jscoverage['/overlay/overlay-xtpl.js'].lineData[31]++;
+    require("component/extension/content-xtpl");
+    _$jscoverage['/overlay/overlay-xtpl.js'].lineData[32]++;
+    config4.params[0] = moduleWrap.resolveByName(config4.params[0]);
+  }
+  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[34]++;
+  var id3 = getPropertyOrRunCommandUtil(engine, scopes, config4, "include", 0, 2, false, undefined);
+  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[35]++;
+  buffer += id3;
+  _$jscoverage['/overlay/overlay-xtpl.js'].lineData[36]++;
   return buffer;
 };
 });

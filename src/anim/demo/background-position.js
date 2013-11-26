@@ -3,7 +3,9 @@
  * special patch for anim backgroundPosition
  * @author yiminghe@gmail.com
  */
-KISSY.add('anim/background-position', function (S, Dom, Anim, Fx) {
+KISSY.add(function (S, require) {
+    var Dom = require('dom');
+    var Fx = require('./fx');
 
     function numeric(bp) {
         bp = bp.replace(/left|top/g, '0px')
@@ -19,7 +21,7 @@ KISSY.add('anim/background-position', function (S, Dom, Anim, Fx) {
 
     S.extend(BackgroundPositionFx, Fx, {
 
-        load:function () {
+        load: function () {
             var self = this, fromUnit;
             BackgroundPositionFx.superclass.load.apply(self, arguments);
             fromUnit = self.unit = ['px', 'px'];
@@ -46,17 +48,17 @@ KISSY.add('anim/background-position', function (S, Dom, Anim, Fx) {
             }
         },
 
-        interpolate:function (from, to, pos) {
+        interpolate: function (from, to, pos) {
             var unit = this.unit, interpolate = BackgroundPositionFx.superclass.interpolate;
             return interpolate(from[0], to[0], pos) + unit[0] + ' ' +
                 interpolate(from[1], to[1], pos) + unit[1];
         },
 
-        cur:function () {
+        cur: function () {
             return Dom.css(this.anim.config.node, 'backgroundPosition');
         },
 
-        update:function () {
+        update: function () {
             var self = this,
                 prop = self.prop,
                 node = self.anim.config.node,
@@ -72,6 +74,4 @@ KISSY.add('anim/background-position', function (S, Dom, Anim, Fx) {
 
     return BackgroundPositionFx;
 
-}, {
-    requires:['dom', './base', './fx']
 });

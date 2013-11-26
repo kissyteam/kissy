@@ -1,5 +1,4 @@
-KISSY.add(function(){
-    var module=this;
-   module.exports= '3';
+KISSY.add(function () {
     cjs_test.push(5);
+    return '3';
 });

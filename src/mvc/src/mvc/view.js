@@ -3,7 +3,9 @@
  * view for kissy mvc : event delegation,el generator
  * @author yiminghe@gmail.com
  */
-KISSY.add("mvc/view", function (S, Node, Base) {
+KISSY.add(function (S, require) {
+    var Node = require('node');
+    var Attribute = require('attribute');
 
     var $ = Node.all;
 
@@ -17,9 +19,9 @@ KISSY.add("mvc/view", function (S, Node, Base) {
     /**
      * View for delegating event on root element.
      * @class KISSY.MVC.View
-     * @extends KISSY.Base
+     * @extends KISSY.Attribute
      */
-    return Base.extend({
+    return Attribute.extend({
         initializer: function () {
             var events;
             if (events = this.get("events")) {
@@ -110,6 +112,4 @@ KISSY.add("mvc/view", function (S, Node, Base) {
             }
         }
     });
-}, {
-    requires: ['node', 'base']
 });

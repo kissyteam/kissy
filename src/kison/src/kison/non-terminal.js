@@ -3,7 +3,8 @@
  * NonTerminal Set for KISON
  * @author yiminghe@gmail.com
  */
-KISSY.add("kison/non-terminal", function (S, Base) {
+KISSY.add(function (S, require) {
+    var Base = require('base');
     /**
      * non-terminal symbol for grammar
      * @class KISSY.Kison.NonTerminal
@@ -24,6 +25,4 @@ KISSY.add("kison/non-terminal", function (S, Base) {
             }
         }
     });
-}, {
-    requires:['base']
 });

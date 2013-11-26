@@ -4,7 +4,6 @@
  * @ignore
  */
 KISSY.add(function (S,require) {
-    var module=this;
     var Dom = require('dom');
     var Event = require('event/dom');
     var AnimBase = require('./base');

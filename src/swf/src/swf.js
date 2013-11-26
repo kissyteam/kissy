@@ -3,7 +3,11 @@
  * insert swf into document in an easy way
  * @author yiminghe@gmail.com, oicuicu@gmail.com
  */
-KISSY.add('swf', function (S, Dom, Json, Base, FlashUA, undefined) {
+KISSY.add(function (S, require) {
+    var Dom = require('dom');
+    var Json = require('json');
+    var Base = require('base');
+    var FlashUA = require('swf/ua');
 
     var UA = S.UA,
         TYPE = 'application/x-shockwave-flash',
@@ -557,6 +561,4 @@ KISSY.add('swf', function (S, Dom, Json, Base, FlashUA, undefined) {
     function stringAttr(key, value) {
         return SPACE + key + EQUAL + DOUBLE_QUOTE + value + DOUBLE_QUOTE;
     }
-}, {
-    requires: ['dom', 'json', 'base', 'swf/ua']
 });

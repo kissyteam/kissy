@@ -8,7 +8,7 @@ KISSY.add(function (S, Event, Node, DD, Dom, Proxy, IO) {
         DraggableDelegate = DD.DraggableDelegate,
         DroppableDelegate = DD.DroppableDelegate;
 
-    var ie = document['documentMode'] || UA['ie'];
+    var ie = S.UA.ieMode;
 
     describe("delegate", function () {
         var html = '';

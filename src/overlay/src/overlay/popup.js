@@ -3,7 +3,9 @@
  * KISSY.Popup
  * @author qiaohua@taobao.com, yiminghe@gmail.com
  */
-KISSY.add('overlay/popup', function (S, Overlay, undefined) {
+KISSY.add(function (S, require) {
+    var Overlay = require('./control');
+
     /**
      * @class KISSY.Overlay.Popup
      * KISSY Popup Component.
@@ -180,8 +182,6 @@ KISSY.add('overlay/popup', function (S, Overlay, undefined) {
         },
         xclass: 'popup'
     });
-}, {
-    requires: ["./control"]
 });
 
 /**

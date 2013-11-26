@@ -3,7 +3,10 @@
  * default sync for model
  * @author yiminghe@gmail.com
  */
-KISSY.add("mvc/sync", function (S, io, Json) {
+KISSY.add(function (S, require) {
+    var io = require('io');
+    var Json = require('json');
+
     var methodMap = {
         'create': 'POST',
         'update': 'POST', //'PUT'
@@ -46,6 +49,4 @@ KISSY.add("mvc/sync", function (S, io, Json) {
     }
 
     return sync;
-}, {
-    requires: ['io', 'json']
 });

@@ -3,7 +3,10 @@
  * root node represent a simple tree
  * @author yiminghe@gmail.com
  */
-KISSY.add("tree/control", function (S, TreeNode, TreeManager) {
+KISSY.add(function (S, require) {
+    var TreeNode = require('./node');
+    var TreeManager = require('./tree-manager');
+
     /*多继承
      1. 继承基节点（包括可装饰儿子节点功能）
      2. 继承 mixin 树管理功能
@@ -26,7 +29,7 @@ KISSY.add("tree/control", function (S, TreeNode, TreeManager) {
 
         _onSetFocused: function (v) {
             var self = this;
-           self.callSuper(v);
+            self.callSuper(v);
             // 得到焦点时没有选择节点
             // 默认选择自己
             if (v && !self.get("selectedItem")) {
@@ -43,8 +46,6 @@ KISSY.add("tree/control", function (S, TreeNode, TreeManager) {
         },
         xclass: 'tree'
     });
-}, {
-    requires: ['./node', './tree-manager']
 });
 
 /*

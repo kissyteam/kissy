@@ -39,7 +39,7 @@ KISSY.add(function (S, Dom) {
                 // external should not run when clone
                 o22 = o2 = scriptTest2;
                 // ie9 bug
-                if (S.UA.ie != 9) {
+                if (S.UA.ieMode != 9) {
                     expect(o2).toBe(1);
                 }
             });

@@ -3,7 +3,8 @@
  * @ignore
  * @author yiminghe@gmail.com
  */
-KISSY.add("menubutton/option", function (S, Menu) {
+KISSY.add(function (S, require) {
+    var Menu = require('menu');
     var MenuItem = Menu.Item;
     /**
      * Option for Select component.
@@ -12,7 +13,7 @@ KISSY.add("menubutton/option", function (S, Menu) {
      * @extends KISSY.Menu.Item
      */
     return MenuItem.extend({}, {
-        ATTRS:{
+        ATTRS: {
             /**
              * Whether this option can be selected.
              * Defaults to: true.
@@ -31,6 +32,4 @@ KISSY.add("menubutton/option", function (S, Menu) {
         },
         xclass: 'option'
     });
-}, {
-    requires: ['menu']
 });

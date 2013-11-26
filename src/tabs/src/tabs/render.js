@@ -3,7 +3,8 @@
  * Tabs render.
  * @author yiminghe@gmail.com
  */
-KISSY.add("tabs/render", function (S, Container) {
+KISSY.add(function (S, require) {
+    var Container = require('component/container');
 
     var CLS = "top bottom left right";
 
@@ -35,6 +36,4 @@ KISSY.add("tabs/render", function (S, Container) {
             }
         }
     });
-}, {
-    requires: ['component/container']
 });

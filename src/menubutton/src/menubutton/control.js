@@ -3,7 +3,11 @@
  * @ignore
  * @author yiminghe@gmail.com
  */
-KISSY.add("menubutton/control", function (S, Node, Button, MenuButtonRender, Menu, undefined) {
+KISSY.add(function (S, require) {
+    var Node = require('node');
+    var Button = require('button');
+    var MenuButtonRender = require('./render');
+
     var KeyCode = Node.KeyCode;
     /**
      * A menu button component, consist of a button and a drop down popup menu.
@@ -273,6 +277,4 @@ KISSY.add("menubutton/control", function (S, Node, Button, MenuButtonRender, Men
             el.setAttribute("aria-activedescendant", menuItem && menuItem.el.id || '');
         }
     }
-}, {
-    requires: [ "node", "button", "./render", "menu"]
 });

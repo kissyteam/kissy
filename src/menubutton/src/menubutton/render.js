@@ -3,12 +3,12 @@
  * @ignore
  * @author yiminghe@gmail.com
  */
-KISSY.add("menubutton/render", function (S, Button,
-                                         MenuButtonTpl,
-                                         ContentRenderExtension) {
+KISSY.add(function (S, require) {
+    var Button = require('button');
+    var MenuButtonTpl = require('./menubutton-xtpl');
+    var ContentRenderExtension = require('component/extension/content-render');
 
     return Button.getDefaultRender().extend([ContentRenderExtension], {
-
         decorateDom: function (el) {
             var control = this.control,
                 prefixCls = control.get('prefixCls');
@@ -43,8 +43,4 @@ KISSY.add("menubutton/render", function (S, Button,
             }
         }
     });
-}, {
-    requires: ['button',
-        './menubutton-xtpl',
-        'component/extension/content-render']
 });

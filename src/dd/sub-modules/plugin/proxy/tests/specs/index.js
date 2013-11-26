@@ -7,7 +7,7 @@ KISSY.add(function (S, Node,Event, DD, Proxy) {
     var Draggable = DD.Draggable,
         Gesture = Event.Gesture,
         Dom = S.DOM;
-    var ie = document['documentMode'] || UA['ie'];
+    var ie = S.UA.ieMode;
 
     describe("proxy", function () {
         var drag, dragXy, dragNode;

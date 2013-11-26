@@ -3,7 +3,10 @@
  * @ignore
  * @author yiminghe@gmail.com
  */
-KISSY.add('menu/check-menuitem', function (S, MenuItem, CheckMenuItemRender) {
+KISSY.add(function (S, require) {
+    var MenuItem = require('./menuitem');
+    var CheckMenuItemRender = require('./check-menuitem-render');
+
     /**
      * @class KISSY.Menu.CheckItem
      */
@@ -33,6 +36,4 @@ KISSY.add('menu/check-menuitem', function (S, MenuItem, CheckMenuItemRender) {
         },
         xclass: "check-menuitem"
     })
-}, {
-    requires: ['./menuitem', './check-menuitem-render']
 });

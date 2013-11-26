@@ -12,9 +12,9 @@ KISSY.add(function (S, Dom) {
             // \n will be "\r\n" in ie<9
             // alert(textarea.value.length);
 
-            var docMode = document.documentMode;
+            var docMode = S.UA.ieMode;
 
-            if (docMode && docMode < 9) {
+            if (docMode < 9) {
 
                 waits(100);
                 runs(function () {

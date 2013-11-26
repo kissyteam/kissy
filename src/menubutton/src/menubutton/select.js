@@ -3,7 +3,10 @@
  * manage a list of single-select options
  * @author yiminghe@gmail.com
  */
-KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, undefined) {
+KISSY.add(function (S, require) {
+    var Node = require('node');
+    var MenuButton = require('./control');
+
     function getSelectedItem(self) {
         var menu = self.get("menu"),
             cs = menu.children || menu.get && menu.get("children") || [],
@@ -118,7 +121,7 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
              */
             removeItems: function () {
                 var self = this;
-                self.callSuper.apply(self,arguments);
+                self.callSuper.apply(self, arguments);
                 self.set("value", null);
             },
 
@@ -128,9 +131,9 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
              * @param c {KISSY.MenuButton.Option} Existing menu item.
              * @param [destroy=true] {Boolean} Whether destroy removed menu item.
              */
-            removeItem: function (c,destroy) {
+            removeItem: function (c, destroy) {
                 var self = this;
-                self.callSuper(c,destroy);
+                self.callSuper(c, destroy);
                 if (c.get("value") == self.get("value")) {
                     self.set("value", null);
                 }
@@ -232,12 +235,9 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
         });
 
     return Select;
-
-}, {
-    requires: ['node', './control', 'menu', './option']
 });
 
 /*
-  TODO
-   how to emulate multiple ?
+ TODO
+ how to emulate multiple ?
  */

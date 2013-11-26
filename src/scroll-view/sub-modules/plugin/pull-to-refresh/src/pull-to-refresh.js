@@ -3,7 +3,9 @@
  * pull-to-refresh plugin for KISSY scroll-view
  * @author yiminghe@gmail.com
  */
-KISSY.add('scroll-view/plugin/pull-to-refresh', function (S, Base) {
+KISSY.add(function (S, require) {
+    var Base = require('base');
+
     var substitute = S.substitute;
 
     var transformProperty = S.Features.getTransformProperty();
@@ -159,6 +161,4 @@ KISSY.add('scroll-view/plugin/pull-to-refresh', function (S, Base) {
             }
         }
     });
-}, {
-    requires: ['base']
 });

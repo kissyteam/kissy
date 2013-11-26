@@ -3,7 +3,14 @@
  * KISSY Tabs Component.
  * @author yiminghe@gmail.com
  */
-KISSY.add("tabs", function (S, Container, Bar, Body, Tab, Panel, Render) {
+KISSY.add(function (S, require) {
+    var Container = require('component/container');
+    var Bar = require('tabs/bar');
+    var Body = require('tabs/body');
+    require('tabs/tab');
+    var Panel = require('tabs/panel');
+    var Render = require('tabs/render');
+
 
     function setBar(children, barOrientation, bar) {
         children[BarIndexMap[barOrientation]] = bar;
@@ -402,6 +409,4 @@ KISSY.add("tabs", function (S, Container, Bar, Body, Tab, Panel, Render) {
     Tabs.Panel = Panel;
 
     return Tabs;
-}, {
-    requires: ['component/container', 'tabs/bar', 'tabs/body', 'tabs/tab', 'tabs/panel', 'tabs/render']
 });

@@ -3,7 +3,7 @@
  * scanner cdata (script/textarea/style)
  * @author yiminghe@gmail.com
  */
-KISSY.add("html-parser/scanners/cdata-scanner", function () {
+KISSY.add(function () {
     return {
         scan:function (tag, lexer, opts) {
             // only terminate when encounter </tag>

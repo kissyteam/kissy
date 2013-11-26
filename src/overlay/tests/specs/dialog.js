@@ -101,7 +101,7 @@ KISSY.add(
                     expect(d.get("footer").html()).toBe("尾");
                 });
 
-                if (UA.ie !== 9) {
+                if (UA.ieMode !== 9) {
                     it("应该可以拖动", function () {
                         var xy = [d.get('x'), d.get('y')];
 
@@ -153,9 +153,9 @@ KISSY.add(
                 }
 
 
-                if ((UA.ie == 7 || UA.ie == 8) &&
+                if ((UA.ieMode == 7 || UA.ieMode == 8) &&
                     window.frameElement ||
-                    UA.ie == 9) {
+                    UA.ieMode == 9) {
                     return;
                 }
 

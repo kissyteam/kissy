@@ -3,7 +3,9 @@
  * simple router to get path parameter and query parameter from hash(old ie) or url(html5)
  * @author yiminghe@gmail.com
  */
-KISSY.add('mvc/router', function (S, Node, Base, undefined) {
+KISSY.add(function (S, require) {
+    var Attribute = require('attribute');
+    var Node = require('attribute');
     var each = S.each,
     // take a breath to avoid duplicate hashchange
         BREATH_INTERVAL = 100,
@@ -13,7 +15,7 @@ KISSY.add('mvc/router', function (S, Node, Base, undefined) {
         win = S.Env.host,
         $ = Node.all,
         $win = $(win),
-        ie = win.document.documentMode || S.UA.ie,
+        ie = S.UA.ieMode,
         history = win.history ,
         supportNativeHistory = !!(history && history['pushState']),
         ROUTER_MAP = "__routerMap";
@@ -46,7 +48,7 @@ KISSY.add('mvc/router', function (S, Node, Base, undefined) {
     }
 
 
-   // get url fragment and dispatch
+    // get url fragment and dispatch
     function getFragment(url) {
         url = url || location.href;
         if (Router.nativeHistory && supportNativeHistory) {
@@ -99,14 +101,14 @@ KISSY.add('mvc/router', function (S, Node, Base, undefined) {
     }
 
 
-   // get full path from fragment for html history
+    // get full path from fragment for html history
     function getFullPath(fragment) {
         return location.protocol + "//" + location.host +
             removeEndSlash(Router.urlRoot) + addStartSlash(fragment)
     }
 
 
-   // match url with route intelligently (always get optimal result)
+    // match url with route intelligently (always get optimal result)
     function dispatch() {
         var query,
             path,
@@ -281,7 +283,7 @@ KISSY.add('mvc/router', function (S, Node, Base, undefined) {
     }
 
 
-   // normalize function by self
+    // normalize function by self
     function normFn(self, callback) {
         if (typeof callback === 'function') {
             return callback;
@@ -302,9 +304,9 @@ KISSY.add('mvc/router', function (S, Node, Base, undefined) {
     /**
      * Router used to route url to responding action callbacks.
      * @class KISSY.MVC.Router
-     * @extends KISSY.Base
+     * @extends KISSY.Attribute
      */
-    return Router = Base.extend({
+    return Router = Attribute.extend({
         initializer: function () {
             var self = this;
             self.on("afterRoutesChange", _afterRoutesChange, self);
@@ -525,8 +527,6 @@ KISSY.add('mvc/router', function (S, Node, Base, undefined) {
             allRoutes = [];
         }
     });
-}, {
-    requires: ['node', 'base']
 });
 
 /**

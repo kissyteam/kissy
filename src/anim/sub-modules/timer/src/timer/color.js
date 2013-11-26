@@ -4,7 +4,6 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S,require) {
-    var module=this;
     var Fx = require('./fx');
     var SHORT_HANDS = require('./short-hand');
     var HEX_BASE = 16,

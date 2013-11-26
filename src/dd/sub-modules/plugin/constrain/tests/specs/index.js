@@ -9,7 +9,7 @@ KISSY.add(function (S, Event, DD, Constrain) {
 
     window.scrollTo(0, 0);
 
-    var ie = document['documentMode'] || S.UA['ie'];
+    var ie = S.UA.ieMode;
 
     describe("constrain", function () {
         var node = $("<div style='width:100px;height:200px;" +

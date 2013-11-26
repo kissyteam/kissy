@@ -4,7 +4,10 @@
  * @ignore
  * @author yiminghe@gmail.com
  */
-KISSY.add('resizable/plugin/proxy', function (S, Base, Node) {
+KISSY.add(function (S, require) {
+    var Node = require('node');
+    var Base = require('base');
+
     var $ = Node.all,
         PROXY_EVENT = '.-ks-proxy' + S.now();
 
@@ -78,7 +81,7 @@ KISSY.add('resizable/plugin/proxy', function (S, Base, Node) {
         pluginDestructor: function (resizable) {
             resizable['detach'](PROXY_EVENT);
         }
-    },{
+    }, {
         ATTRS: {
             /**
              * pluginId.
@@ -139,6 +142,4 @@ KISSY.add('resizable/plugin/proxy', function (S, Base, Node) {
             }
         }
     });
-}, {
-    requires: ['base', 'node']
 });

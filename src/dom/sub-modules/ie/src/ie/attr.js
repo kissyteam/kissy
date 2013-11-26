@@ -12,11 +12,9 @@ KISSY.add(function (S,require) {
         propFix = Dom._propFix,
         HREF = 'href',
         hrefFix,
-        IE_VERSION = S.UA.ie;
-
+        IE_VERSION = S.UA.ieMode;
 
     if (IE_VERSION < 8) {
-
         attrHooks['style'].set = function (el, val) {
             el.style.cssText = val;
         };

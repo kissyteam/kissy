@@ -176,7 +176,7 @@ KISSY.add(function (S,require) {
                 // For IE, we have to for both elements, because it's difficult to
                 // know how the atttibutes collection is organized in its Dom.
                 // ie 使用版本 < 8
-                if (Utils.ieEngine < 8) {
+                if (UA.ieMode < 8) {
                     for (i = 0; i < otherLength; i++) {
                         attribute = otherAttributes[ i ];
                         name = attribute.name;
@@ -416,7 +416,7 @@ KISSY.add(function (S,require) {
             },
 
             // 判断当前元素是否有设置过属性
-            _4e_hasAttributes: Utils.ieEngine < 9 ?
+            _4e_hasAttributes: UA.ieMode < 9 ?
                 function (el) {
                     var attributes = el.attributes;
                     for (var i = 0; i < attributes.length; i++) {

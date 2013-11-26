@@ -3,7 +3,13 @@
  * scroll-view control
  * @author yiminghe@gmail.com
  */
-KISSY.add('scroll-view/base', function (S, Node, Anim, Container, Render, undefined) {
+KISSY.add(function (S, require) {
+    var Node = require('node');
+    var Anim = require('anim');
+    var Container = require('component/container');
+    var Render = require('./base/render');
+
+
     var $ = S.all,
         isTouchEventSupported = S.Features.isTouchEventSupported(),
         KeyCode = Node.KeyCode;
@@ -321,9 +327,4 @@ KISSY.add('scroll-view/base', function (S, Node, Anim, Container, Render, undefi
         },
         xclass: 'scroll-view'
     });
-}, {
-    requires: ['node',
-        'anim',
-        'component/container',
-        './base/render']
 });

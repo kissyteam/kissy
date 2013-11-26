@@ -3,7 +3,9 @@
  * collection of models
  * @author yiminghe@gmail.com
  */
-KISSY.add("mvc/collection", function (S, Model, Base) {
+KISSY.add(function (S, require) {
+    var Model = require('./model');
+    var Attribute = require('attribute');
 
     function findModelIndex(mods, mod, comparator) {
         var i = mods.length;
@@ -22,9 +24,9 @@ KISSY.add("mvc/collection", function (S, Model, Base) {
     /**
      * Collection. A list of model.
      * @class KISSY.MVC.Collection
-     * @extends KISSY.Base
+     * @extends KISSY.Attribute
      */
-    return Base.extend({
+    return Attribute.extend({
         /**
          * Sort model list according {@link KISSY.MVC.Collection#comparator}.
          */
@@ -289,6 +291,4 @@ KISSY.add("mvc/collection", function (S, Model, Base) {
             }
         }
     });
-}, {
-    requires: ['./model', 'base']
 });

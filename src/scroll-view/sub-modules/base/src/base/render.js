@@ -3,7 +3,10 @@
  * scroll-view render
  * @author yiminghe@gmail.com
  */
-KISSY.add('scroll-view/base/render', function (S, Node, Container, ContentRenderExtension) {
+KISSY.add(function (S, require) {
+    var Container = require('component/container');
+    var ContentRenderExtension = require('component/extension/content-render');
+
 
     // http://www.html5rocks.com/en/tutorials/speed/html5/
     var Features = S.Features,
@@ -137,9 +140,4 @@ KISSY.add('scroll-view/base/render', function (S, Node, Container, ContentRender
         methods, {
             name: 'ScrollViewRender'
         });
-
-}, {
-    requires: ['node',
-        'component/container',
-        'component/extension/content-render']
 });

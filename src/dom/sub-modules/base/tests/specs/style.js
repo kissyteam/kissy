@@ -108,7 +108,7 @@ KISSY.add(function (S, Dom) {
             // test filter  #issue5
 
             Dom.css(test_filter, 'opacity', .5);
-            if (UA.ie < 9) {
+            if (UA.ieMode < 9) {
                 // 不加入 dom 节点取不到 class 定义的样式
                 expect(test_filter.currentStyle.filter).toBe("progid:DXImageTransform.Microsoft.Shadow(direction = 155, Color = #dadada, Strength = 3), progid:DXImageTransform.Microsoft.DropShadow(Color = #22aaaaaa, OffX = -2, OffY = -2), alpha(opacity=50)");
             }

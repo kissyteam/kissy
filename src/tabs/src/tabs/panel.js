@@ -3,7 +3,9 @@
  * single tab panel.
  * @author yiminghe@gmail.com
  */
-KISSY.add("tabs/panel", function (S, Container, PanelRender) {
+KISSY.add(function (S, require) {
+        var Container = require('component/container');
+        var PanelRender = require('./panel-render');
     /**
      * KISSY.Tabs.Panel.xclass: 'tabs-panel'.
      * @class  KISSY.Tabs.Panel
@@ -35,6 +37,4 @@ KISSY.add("tabs/panel", function (S, Container, PanelRender) {
         },
         xclass: 'tabs-panel'
     })
-}, {
-    requires: ['component/container', './panel-render']
 });

@@ -3,9 +3,10 @@
  * menu item ,child component for menu
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/menuitem", function (S, Control, MenuItemRender) {
-
-    var $ = S.all;
+KISSY.add(function (S, require) {
+    var Control = require('component/control');
+    var MenuItemRender = require('./menuitem-render');
+    var $ = require('node').all;
 
     /**
      * @class KISSY.Menu.Item
@@ -13,7 +14,7 @@ KISSY.add("menu/menuitem", function (S, Control, MenuItemRender) {
      * xclass: 'menuitem'.
      * @extends KISSY.Component.Control
      */
-   return Control.extend({
+    return Control.extend({
         isMenuItem: 1,
 
         // for ios, ios only has touchdown
@@ -152,6 +153,4 @@ KISSY.add("menu/menuitem", function (S, Control, MenuItemRender) {
         },
         xclass: "menuitem"
     });
-}, {
-    requires: ['component/control', './menuitem-render']
 });

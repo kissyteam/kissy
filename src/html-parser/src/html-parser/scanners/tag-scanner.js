@@ -3,40 +3,43 @@
  * nest tag scanner recursively
  * @author yiminghe@gmail.com
  */
-KISSY.add("html-parser/scanners/tag-scanner", function (S, dtd, Tag, SpecialScanners) {
+KISSY.add(function (S, require) {
+    var dtd = require('../dtd');
+    var Tag = require('../nodes/tag');
+    var SpecialScanners = require('./special-scanners');
 
     var /*
-      will create ul when encounter li and li's parent is not ul
+     will create ul when encounter li and li's parent is not ul
      */
         wrapper = {
-        li:'ul',
-        dt:'dl',
-        dd:'dl'
-    };
+            li: 'ul',
+            dt: 'dl',
+            dd: 'dl'
+        };
 
     /*
-      refer: http://www.w3.org/TR/html5/tree-construction.html#tree-construction
-      When the steps below require the UA to generate implied end tags,
-      then, while the current node is a dd element,
-      a dt element, an li element, an option element,
-      an optgroup element, a p element, an rp element, or an rt element,
-      the UA must pop the current node off the stack of open elements.
+     refer: http://www.w3.org/TR/html5/tree-construction.html#tree-construction
+     When the steps below require the UA to generate implied end tags,
+     then, while the current node is a dd element,
+     a dt element, an li element, an option element,
+     an optgroup element, a p element, an rp element, or an rt element,
+     the UA must pop the current node off the stack of open elements.
      */
     var impliedEndTag = {
         // if dd encounter another dd before encounter dl ,then close last dd
-        'dd':{'dl':1},
-        'dt':{'dl':1},
+        'dd': {'dl': 1},
+        'dt': {'dl': 1},
         // 2012.06.27 Note: li may has two kinds of parent!
-        'li':{'ul':1, 'ol':1},
-        'option':{'select':1},
-        'optgroup':{'select':1}
+        'li': {'ul': 1, 'ol': 1},
+        'option': {'select': 1},
+        'optgroup': {'select': 1}
         // p? rp? rt?
     };
 
     /*
-      close tag and check nest by xhtml dtd rules
-      <span> 1 <span>2</span> <p>3</p> </span> => <span> 1 <span>2</span> </span> <p><span>3</span></p>
-      @param tag
+     close tag and check nest by xhtml dtd rules
+     <span> 1 <span>2</span> <p>3</p> </span> => <span> 1 <span>2</span> </span> <p><span>3</span></p>
+     @param tag
      */
     function fixCloseTagByDtd(tag, opts) {
         tag['closed'] = 1;
@@ -105,8 +108,7 @@ KISSY.add("html-parser/scanners/tag-scanner", function (S, dtd, Tag, SpecialScan
                     while (i < childNodes.length) {
                         if (childNodes[i].tagName == currentChildName) {
                             pTag.appendChild(childNodes[i]);
-                        } else if (childNodes[i].nodeType == 3 &&
-                            !S.trim(childNodes[i].toHtml())) {
+                        } else if (childNodes[i].nodeType == 3 && !S.trim(childNodes[i].toHtml())) {
                         }
                         // non-empty text leave it to outer loop
                         else if (childNodes[i].nodeType == 3) {
@@ -174,7 +176,7 @@ KISSY.add("html-parser/scanners/tag-scanner", function (S, dtd, Tag, SpecialScan
 
 
     /*
-      checked whether tag can include node as its child according to DTD
+     checked whether tag can include node as its child according to DTD
      */
     function canHasNodeAsChild(tag, node) {
         // document can nest any tag
@@ -191,9 +193,8 @@ KISSY.add("html-parser/scanners/tag-scanner", function (S, dtd, Tag, SpecialScan
         return !!dtd[tag.tagName][nodeName];
     }
 
-
     return {
-        scan:function (tag, lexer, opts) {
+        scan: function (tag, lexer, opts) {
 
             function closeStackOpenTag(end, from) {
                 for (i = end; i > from; i--) {
@@ -338,6 +339,4 @@ KISSY.add("html-parser/scanners/tag-scanner", function (S, dtd, Tag, SpecialScan
             fixCloseTagByDtd(tag, opts);
         }
     };
-}, {
-    requires:["../dtd", "../nodes/tag", "./special-scanners"]
 });

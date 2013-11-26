@@ -7,7 +7,7 @@ KISSY.add(function (S,require) {
     var Node=require('node'),
         Manager=require('component/manager');
     var UA = S.UA,
-        ie = S.Env.host.document.documentMode || UA.ie,
+        ie = UA.ieMode,
         Features = S.Features,
         Gesture = Node.Gesture,
         isTouchEventSupported = Features.isTouchEventSupported();

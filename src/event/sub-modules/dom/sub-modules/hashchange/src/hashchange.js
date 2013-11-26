@@ -11,7 +11,7 @@ KISSY.add(function (S, require) {
         Special = DomEvent.Special,
         win = S.Env.host,
         doc = win.document,
-        docMode = doc && doc['documentMode'],
+        docMode = UA.ieMode,
         REPLACE_HISTORY = '__replace_history_' + S.now(),
         ie = docMode || UA['ie'],
         HASH_CHANGE = 'hashchange';

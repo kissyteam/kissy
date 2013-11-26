@@ -3,7 +3,10 @@
  * render for scrollbar
  * @author yiminghe@gmail.com
  */
-KISSY.add('scroll-view/plugin/scrollbar/render', function (S, Control, ScrollBarTpl) {
+KISSY.add(function (S, require) {
+    var Control = require('component/control');
+    var ScrollBarTpl = require('./scrollbar-xtpl');
+
     // http://www.html5rocks.com/en/tutorials/speed/html5/
     var supportCss3 = S.Features.isTransformSupported();
 
@@ -129,6 +132,4 @@ KISSY.add('scroll-view/plugin/scrollbar/render', function (S, Control, ScrollBar
             }
         }
     });
-}, {
-    requires: ['component/control', './scrollbar-xtpl']
 });

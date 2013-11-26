@@ -3,7 +3,8 @@
  * Normalize operation about stylesheet
  * @author yiminghe@gmail.com
  */
-KISSY.add("stylesheet", function (S, Dom) {
+KISSY.add(function (S, require) {
+    var Dom = require('dom');
 
     /**
      * Normalize operation about stylesheet
@@ -200,8 +201,6 @@ KISSY.add("stylesheet", function (S, Dom) {
 
     return StyleSheet;
 
-}, {
-    requires: ['dom']
 });
 /**
  * @ignore

@@ -3,8 +3,16 @@
  * control for overlay
  * @author yiminghe@gmail.com
  */
-KISSY.add("overlay/control", function (S, Container,Shim, AlignExtension,
-                                    Loading, Mask, OverlayRender, OverlayEffect) {
+KISSY.add(function (S, require) {
+    var Container = require('component/container');
+    var Shim = require('component/extension/shim');
+    var AlignExtension = require('component/extension/align');
+    var Loading = require('./extension/loading');
+    var Mask = require('./extension/mask');
+    var OverlayRender = require('./overlay-render');
+    var OverlayEffect = require('./extension/overlay-effect');
+
+
     var HIDE = "hide",
         actions = {
             hide: HIDE,
@@ -155,14 +163,4 @@ KISSY.add("overlay/control", function (S, Container,Shim, AlignExtension,
         },
         xclass: 'overlay'
     });
-}, {
-    requires: [
-        'component/container',
-        'component/extension/shim',
-        'component/extension/align',
-        "./extension/loading",
-        "./extension/mask",
-        './overlay-render',
-        './extension/overlay-effect'
-    ]
 });

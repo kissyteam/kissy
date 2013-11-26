@@ -3,7 +3,9 @@
  * scrollbar plugin for KISSY scroll-view
  * @author yiminghe@gmail.com
  */
-KISSY.add('scroll-view/plugin/scrollbar', function (S, Base, ScrollBar) {
+KISSY.add(function (S, require) {
+    var Base = require('base');
+    var ScrollBar = require('./scrollbar/control');
     /**
      * ScrollBar plugin for ScrollView.
      * @class KISSY.ScrollView.Plugin.ScrollBar
@@ -98,6 +100,4 @@ KISSY.add('scroll-view/plugin/scrollbar', function (S, Base, ScrollBar) {
             }
         }
     });
-}, {
-    requires: ['base', './scrollbar/control']
 });

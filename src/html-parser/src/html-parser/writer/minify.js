@@ -3,7 +3,10 @@
  * write html into its minified form,thanks to kangax where minify algorithm comes from
  * @author yiminghe@gmail.com
  */
-KISSY.add("html-parser/writer/minify", function (S, BasicWriter, Utils) {
+KISSY.add(function (S, require) {
+    var BasicWriter = require('./basic');
+    var Utils = require('../utils');
+
     var trim = S.trim,
         isBooleanAttribute = Utils.isBooleanAttribute,
         collapseWhitespace = Utils.collapseWhitespace,
@@ -233,8 +236,6 @@ KISSY.add("html-parser/writer/minify", function (S, BasicWriter, Utils) {
     });
 
     return MinifyWriter;
-}, {
-    requires: ['./basic', '../utils']
 });
 
 /*

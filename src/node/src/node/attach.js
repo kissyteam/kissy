@@ -3,7 +3,11 @@
  * import methods from Dom to NodeList.prototype
  * @author yiminghe@gmail.com
  */
-KISSY.add('node/attach', function (S, Dom, Event, NodeList, undefined) {
+KISSY.add(function (S, require) {
+    var Dom = require('dom');
+    var Event = require('event/dom');
+    var NodeList = require('./base');
+
     var NLP = NodeList.prototype,
         makeArray = S.makeArray,
     // Dom 添加到 NP 上的方法
@@ -174,8 +178,6 @@ KISSY.add('node/attach', function (S, Dom, Event, NodeList, undefined) {
             return Event[k].apply(Event, args);
         }
     });
-}, {
-    requires: ['dom', 'event/dom', './base']
 });
 
 /*

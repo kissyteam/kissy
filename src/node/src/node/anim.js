@@ -6,7 +6,11 @@
  *         qiaohua@taobao.com,
  *
  */
-KISSY.add('node/anim', function (S, Dom, Anim, Node, undefined) {
+KISSY.add(function (S, require) {
+    var Node = require('./base');
+    var Dom = require('dom');
+    var Anim = require('anim');
+
     var FX = [
         // height animations
         [ 'height', 'margin-top', 'margin-bottom', 'padding-top', 'padding-bottom' ],
@@ -248,8 +252,6 @@ KISSY.add('node/anim', function (S, Dom, Anim, Node, undefined) {
                 return self;
             };
         });
-}, {
-    requires: ['dom', 'anim', './base']
 });
 /*
  2011-11-10

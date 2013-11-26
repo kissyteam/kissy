@@ -1,11 +1,11 @@
-KISSY.add('tabs/bar-render', function (S, Toolbar) {
+KISSY.add(function (S, require) {
+    var Toolbar = require('toolbar');
+
     return Toolbar.getDefaultRender().extend({
         beforeCreateDom: function (renderData) {
             renderData.elAttrs.role = 'tablist';
         }
-    },{
-        name:'TabsBarRender'
+    }, {
+        name: 'TabsBarRender'
     });
-},{
-    requires:['toolbar']
 });

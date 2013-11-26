@@ -231,8 +231,11 @@ if (! _$jscoverage['/overlay/overlay-render.js']) {
   _$jscoverage['/overlay/overlay-render.js'].lineData = [];
   _$jscoverage['/overlay/overlay-render.js'].lineData[6] = 0;
   _$jscoverage['/overlay/overlay-render.js'].lineData[7] = 0;
+  _$jscoverage['/overlay/overlay-render.js'].lineData[8] = 0;
+  _$jscoverage['/overlay/overlay-render.js'].lineData[9] = 0;
   _$jscoverage['/overlay/overlay-render.js'].lineData[11] = 0;
-  _$jscoverage['/overlay/overlay-render.js'].lineData[23] = 0;
+  _$jscoverage['/overlay/overlay-render.js'].lineData[15] = 0;
+  _$jscoverage['/overlay/overlay-render.js'].lineData[27] = 0;
 }
 if (! _$jscoverage['/overlay/overlay-render.js'].functionData) {
   _$jscoverage['/overlay/overlay-render.js'].functionData = [];
@@ -244,13 +247,19 @@ if (! _$jscoverage['/overlay/overlay-render.js'].branchData) {
   _$jscoverage['/overlay/overlay-render.js'].branchData = {};
 }
 _$jscoverage['/overlay/overlay-render.js'].lineData[6]++;
-KISSY.add('overlay/overlay-render', function(S, Container, OverlayTpl, ContentRenderExtension) {
+KISSY.add(function(S, require) {
   _$jscoverage['/overlay/overlay-render.js'].functionData[0]++;
   _$jscoverage['/overlay/overlay-render.js'].lineData[7]++;
+  var Container = require('component/container');
+  _$jscoverage['/overlay/overlay-render.js'].lineData[8]++;
+  var OverlayTpl = require('./overlay-xtpl');
+  _$jscoverage['/overlay/overlay-render.js'].lineData[9]++;
+  var ContentRenderExtension = require('component/extension/content-render');
+  _$jscoverage['/overlay/overlay-render.js'].lineData[11]++;
   return Container.getDefaultRender().extend([ContentRenderExtension], {
   createDom: function() {
   _$jscoverage['/overlay/overlay-render.js'].functionData[1]++;
-  _$jscoverage['/overlay/overlay-render.js'].lineData[11]++;
+  _$jscoverage['/overlay/overlay-render.js'].lineData[15]++;
   this.fillChildrenElsBySelectors({
   closeBtn: '#ks-overlay-close-{id}'});
 }}, {
@@ -260,8 +269,7 @@ KISSY.add('overlay/overlay-render', function(S, Container, OverlayTpl, ContentRe
   HTML_PARSER: {
   closeBtn: function(el) {
   _$jscoverage['/overlay/overlay-render.js'].functionData[2]++;
-  _$jscoverage['/overlay/overlay-render.js'].lineData[23]++;
+  _$jscoverage['/overlay/overlay-render.js'].lineData[27]++;
   return el.one("." + this.getBaseCssClass('close'));
 }}});
-}, {
-  requires: ['component/container', './overlay-xtpl', 'component/extension/content-render', './close-xtpl']});
+});

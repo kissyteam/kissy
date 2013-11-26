@@ -1,0 +1,6 @@
+<project name="component/extension/content-xtpl.build" default="build" basedir=".">
+    <property name="component.name" value="component/extension/content-xtpl"/>
+
+    <import file="../../../../common.xml"/>
+</project>
+

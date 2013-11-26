@@ -5,7 +5,7 @@
 KISSY.add(function (S, Event, UA, Dom) {
 
     return {run: function () {
-        var ie = document.documentMode || UA.ie;
+        var ie = S.UA.ieMode;
         describe("set domain in event", function () {
             it("hashchange does not work for ie<8 " +
                 "if change domain after bind hashchange event", function () {

@@ -3,7 +3,11 @@
  * positionable and not focusable menu
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/popupmenu", function (S, AlignExtension,Shim, Menu, PopupMenuRender) {
+KISSY.add(function (S, require) {
+    var AlignExtension = require('component/extension/align');
+    var Shim = require('component/extension/shim');
+    var Menu = require('./control');
+    var PopupMenuRender = require('./popupmenu-render');
 
     /**
      * Popup Menu.
@@ -98,8 +102,4 @@ KISSY.add("menu/popupmenu", function (S, AlignExtension,Shim, Menu, PopupMenuRen
         },
         xclass: 'popupmenu'
     });
-}, {
-    requires: ['component/extension/align',
-        'component/extension/shim',
-        './control', './popupmenu-render']
 });

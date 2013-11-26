@@ -3,7 +3,8 @@
  * Single tab render in tab bar.
  * @author yiminghe@gmail.com
  */
-KISSY.add("tabs/tab-render", function (S, Button) {
+KISSY.add(function (S, require) {
+    var Button = require('button');
 
     return Button.getDefaultRender().extend({
         beforeCreateDom: function (renderData) {
@@ -29,6 +30,4 @@ KISSY.add("tabs/tab-render", function (S, Button) {
         }
     });
 
-}, {
-    requires: ['button']
 });

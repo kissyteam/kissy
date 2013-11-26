@@ -54,7 +54,7 @@ KISSY.add(function (S, Dom, Event) {
         });
 
         // ie
-        if (window.ActiveXObject && UA.ie < 9) {
+        if (window.ActiveXObject && UA.ieMode < 9) {
             it("works for classid", function () {
                 var flash = '<object ' +
                     'classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" ' +

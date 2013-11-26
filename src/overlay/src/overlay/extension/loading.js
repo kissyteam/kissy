@@ -3,7 +3,8 @@
  * loading mask support for overlay
  * @author yiminghe@gmail.com
  */
-KISSY.add("overlay/extension/loading", function (S, Node) {
+KISSY.add(function (S, require) {
+    var Node = require('node');
 
     /**
      * @class KISSY.Overlay.Extension.Loading
@@ -47,7 +48,4 @@ KISSY.add("overlay/extension/loading", function (S, Node) {
     };
 
     return Loading;
-
-}, {
-    requires: ['node']
 });

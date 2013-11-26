@@ -3,7 +3,11 @@
  * KISSY Overlay
  * @author yiminghe@gmail.com
  */
-KISSY.add('overlay/overlay-render', function (S, Container,OverlayTpl, ContentRenderExtension) {
+KISSY.add(function (S, require) {
+    var Container = require('component/container');
+    var OverlayTpl = require('./overlay-xtpl');
+    var ContentRenderExtension = require('component/extension/content-render');
+
     return Container.getDefaultRender().extend([
         ContentRenderExtension
     ], {
@@ -13,10 +17,10 @@ KISSY.add('overlay/overlay-render', function (S, Container,OverlayTpl, ContentRe
             });
         }
     }, {
-        ATTRS:{
-          contentTpl:{
-              value:OverlayTpl
-          }
+        ATTRS: {
+            contentTpl: {
+                value: OverlayTpl
+            }
         },
         HTML_PARSER: {
             closeBtn: function (el) {
@@ -24,13 +28,6 @@ KISSY.add('overlay/overlay-render', function (S, Container,OverlayTpl, ContentRe
             }
         }
     });
-}, {
-    requires: [
-        'component/container',
-        './overlay-xtpl',
-        'component/extension/content-render',
-        './close-xtpl'
-    ]
 });
 
 /**

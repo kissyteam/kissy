@@ -3,7 +3,11 @@
  * scrollbar for KISSY scroll-view
  * @author yiminghe@gmail.com
  */
-KISSY.add('scroll-view/plugin/scrollbar/control', function (S, Node, Control, ScrollBarRender) {
+KISSY.add(function (S, require) {
+    var Node = require('node');
+    var Control = require('component/control');
+    var ScrollBarRender = require('./render');
+
     var MIN_BAR_LENGTH = 20;
 
     var SCROLLBAR_EVENT_NS = '.ks-scrollbar';
@@ -294,7 +298,4 @@ KISSY.add('scroll-view/plugin/scrollbar/control', function (S, Node, Control, Sc
         },
         xclass: 'scrollbar'
     });
-
-}, {
-    requires: ['node', 'component/control', './render']
 });

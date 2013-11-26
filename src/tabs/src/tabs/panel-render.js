@@ -3,8 +3,8 @@
  * single tab panel render.
  * @author yiminghe@gmail.com
  */
-KISSY.add("tabs/panel-render", function (S, Container) {
-
+KISSY.add(function (S, require) {
+    var Container = require('component/container');
     return Container.getDefaultRender().extend({
 
         beforeCreateDom: function (renderData) {
@@ -32,7 +32,4 @@ KISSY.add("tabs/panel-render", function (S, Container) {
             }
         }
     });
-
-}, {
-    requires: ['component/container']
 });

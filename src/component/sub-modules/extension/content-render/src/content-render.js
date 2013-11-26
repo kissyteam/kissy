@@ -4,8 +4,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S,require) {
-    var module=this,
-        ContentTpl=require('./content-render/content-xtpl');
+    var ContentTpl=require('component/extension/content-xtpl');
 
     function shortcut(self) {
         var control = self.control;

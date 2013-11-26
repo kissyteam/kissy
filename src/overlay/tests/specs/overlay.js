@@ -184,7 +184,7 @@ KISSY.add(function (S, Event, UA, Node, Overlay, ResizePlugin) {
 
             it("应该能够调节大小", function () {
                 // ie9 测试不了
-                if (UA.ie == 9) {
+                if (UA.ieMode == 9) {
                     return;
                 }
 

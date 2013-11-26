@@ -3,8 +3,9 @@
  * mask extension for kissy
  * @author yiminghe@gmail.com
  */
-KISSY.add("overlay/extension/mask", function (S, Node) {
+KISSY.add(function (S, require) {
     var UA = S.UA,
+        Node=require('node'),
         ie6 = (UA['ie'] === 6),
         $ = Node.all;
 
@@ -173,6 +174,4 @@ KISSY.add("overlay/extension/mask", function (S, Node) {
     };
 
     return Mask;
-}, {
-    requires: ["node"]
 });

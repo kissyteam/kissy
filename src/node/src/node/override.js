@@ -3,7 +3,11 @@
  * overrides methods in NodeList.prototype
  * @author yiminghe@gmail.com
  */
-KISSY.add('node/override', function (S, Dom, NodeList) {
+KISSY.add(function (S, require) {
+    var Dom = require('dom');
+    var NodeList = require('./base');
+    require('./attach');
+
     var NLP = NodeList.prototype;
 
     /**
@@ -50,8 +54,6 @@ KISSY.add('node/override', function (S, Dom, NodeList) {
             return orig.call(self, others);
         };
     })
-}, {
-    requires: ['dom', './base', './attach']
 });
 
 /*

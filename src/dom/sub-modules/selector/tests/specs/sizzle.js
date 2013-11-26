@@ -3,10 +3,9 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, engine) {
-
     var select = engine.select;
     var matches = engine.matches;
-    var ieVersion = S.UA.ie;
+    var ieVersion = S.UA.ieMode;
 
     var it = function (name, fn) {
         var self;

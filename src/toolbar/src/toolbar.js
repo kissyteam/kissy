@@ -3,7 +3,12 @@
  * Toolbar for KISSY.
  * @author yiminghe@gmail.com
  */
-KISSY.add("toolbar", function (S, Container, DelegateChildrenExtension, ToolbarRender, Node, undefined) {
+KISSY.add(function (S, require) {
+    var Container = require('component/container');
+    var DelegateChildrenExtension = require('component/extension/delegate-children');
+    var ToolbarRender = require('toolbar/render');
+    var Node = require('node');
+
     var KeyCode = Node.KeyCode;
 
     function getNextEnabledItem(index, direction, self) {
@@ -103,7 +108,7 @@ KISSY.add("toolbar", function (S, Container, DelegateChildrenExtension, ToolbarR
                 itemEl = item.el;
                 id = itemEl.id;
                 if (!id) {
-                    itemEl.id=id = S.guid("ks-toolbar-item");
+                    itemEl.id = id = S.guid("ks-toolbar-item");
                 }
                 el.setAttribute("aria-activedescendant", id);
             } else {
@@ -230,9 +235,4 @@ KISSY.add("toolbar", function (S, Container, DelegateChildrenExtension, ToolbarR
             }
         }
     });
-}, {
-    requires: ['component/container',
-        'component/extension/delegate-children',
-        'toolbar/render',
-        'node']
 });

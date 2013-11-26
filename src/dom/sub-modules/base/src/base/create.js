@@ -9,7 +9,7 @@ KISSY.add(function (S,require) {
         NodeType = Dom.NodeType,
         UA = S.UA,
         logger = S.getLogger('s/dom'),
-        ie = document.documentMode || UA['ie'],
+        ie = UA.ieMode,
         DIV = 'div',
         PARENT_NODE = 'parentNode',
         DEFAULT_DIV = doc && doc.createElement(DIV),

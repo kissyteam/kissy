@@ -3,10 +3,8 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, MVC, Event, UA) {
-
-
     var Model = MVC.Model,
-        ie = document.documentMode || UA.ie,
+        ie = UA.ieMode,
         Collection = MVC.Collection,
         View = MVC.View,
         Router = MVC.Router;

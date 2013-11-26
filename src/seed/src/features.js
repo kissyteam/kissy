@@ -17,7 +17,6 @@
         ],
     // nodejs
         doc = win.document || {},
-        documentMode = doc.documentMode,
         isMsPointerSupported,
     // ie11
         isPointerSupported,
@@ -31,7 +30,7 @@
         isQuerySelectorSupportedState = false,
     // phantomjs issue: http://code.google.com/p/phantomjs/issues/detail?id=375
         isTouchEventSupportedState = ('ontouchstart' in doc) && !(UA.phantomjs),
-        ie = documentMode || UA.ie;
+        ie = UA.ieMode;
 
     if (documentElement) {
         if (documentElement.querySelector &&

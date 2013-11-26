@@ -3,7 +3,11 @@
  * abstraction of tree node ,root and other node will extend it
  * @author yiminghe@gmail.com
  */
-KISSY.add("tree/node", function (S, Node, Container, TreeNodeRender) {
+KISSY.add(function (S, require) {
+    var Node = require('node');
+    var Container = require('component/container');
+    var TreeNodeRender = require('./node-render');
+
     var $ = Node.all,
         KeyCode = Node.KeyCode;
 
@@ -12,7 +16,7 @@ KISSY.add("tree/node", function (S, Node, Container, TreeNodeRender) {
      * @class KISSY.Tree.Node
      * @extends KISSY.Component.Container
      */
-   return Container.extend({
+    return Container.extend({
         bindUI: function () {
             this.on('afterAddChild', onAddChild);
             this.on('afterRemoveChild', onRemoveChild);
@@ -161,7 +165,7 @@ KISSY.add("tree/node", function (S, Node, Container, TreeNodeRender) {
          */
         createChildren: function () {
             var self = this;
-           self.renderChildren.apply(self, arguments);
+            self.renderChildren.apply(self, arguments);
             // only sync child sub tree at root node
             if (self === self.get('tree')) {
                 updateSubTreeStatus(self, self, -1, 0);
@@ -431,8 +435,6 @@ KISSY.add("tree/node", function (S, Node, Container, TreeNodeRender) {
     }
 
     // # ------------------- private end
-}, {
-    requires: ['node', 'component/container', './node-render']
 });
 
 /**

@@ -168,7 +168,7 @@ KISSY.add(function (S, require) {
             }
             if (control.get('focusable')) {
                 // ie9 support outline
-                if (UA.ie && UA.ie < 9) {
+                if (UA.ieMode < 9) {
                     elAttrs['hideFocus'] = 'true';
                 }
                 elAttrs['tabindex'] = disabled ? '-1' : '0';
@@ -374,7 +374,7 @@ KISSY.add(function (S, require) {
             // ie needs to set unselectable attribute recursively
             if (!this.get('allowTextSelection')) {
                 el.unselectable();
-                if (S.UA.ie == 11) {
+                if (UA.ieMode == 11) {
                     // prevent ie11 get focus
                     el.attr('unselectable', 'on');
                     el.all('*').attr('unselectable', 'on');

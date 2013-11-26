@@ -3,7 +3,15 @@
  * LALR grammar parser
  * @author yiminghe@gmail.com
  */
-KISSY.add("kison/grammar", function (S, Base, Utils, Item, ItemSet, NonTerminal, Lexer, Production) {
+KISSY.add(function (S, require) {
+        var Base = require('base');
+        var Utils = require('./utils');
+        var Item = require('./item');
+        var ItemSet = require('./item-set');
+        var NonTerminal = require('./non-terminal');
+        var Lexer = require('./lexer');
+        var Production = require('./production');
+
     var GrammarConst = {
             SHIFT_TYPE: 1,
             REDUCE_TYPE: 2,
@@ -829,16 +837,6 @@ KISSY.add("kison/grammar", function (S, Base, Utils, Item, ItemSet, NonTerminal,
     }
 
     // #-------------------- for generation end
-}, {
-    requires: [
-        'base',
-        './utils',
-        './item',
-        './item-set',
-        './non-terminal',
-        './lexer',
-        './production'
-    ]
 });
 
 /**

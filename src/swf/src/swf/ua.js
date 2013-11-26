@@ -3,7 +3,7 @@
  * Flash UA 探测
  * @author oicuicu@gmail.com
  */
-KISSY.add('swf/ua', function (S, undefined) {
+KISSY.add(function (S) {
 
     var fpvCached,
         firstRun = true,

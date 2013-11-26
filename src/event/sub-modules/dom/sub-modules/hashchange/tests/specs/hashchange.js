@@ -74,7 +74,7 @@ KISSY.add(
 
             waits(100);
 
-            if (document.documentMode || S.UA.ie == 8) {
+            if (S.UA.ieMode == 8) {
                 // ie8 iframe 内的历史和外层一样了
                 return;
             }

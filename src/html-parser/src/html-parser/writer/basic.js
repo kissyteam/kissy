@@ -3,7 +3,9 @@
  * basic writer for inheritance
  * @author yiminghe@gmail.com
  */
-KISSY.add("html-parser/writer/basic", function (S, Utils) {
+KISSY.add(function (S, require) {
+    var Utils = require('../utils');
+
     var isBooleanAttribute = Utils.isBooleanAttribute;
 
     function escapeAttrValue(str) {
@@ -54,7 +56,7 @@ KISSY.add("html-parser/writer/basic", function (S, Utils) {
         },
 
         attribute: function (attr) {
-            var value = attr.value||'',
+            var value = attr.value || '',
                 name = attr.name;
             if (isBooleanAttribute(name) && !value) {
                 value = name;
@@ -88,6 +90,4 @@ KISSY.add("html-parser/writer/basic", function (S, Utils) {
     };
 
     return BasicWriter;
-}, {
-    requires: ['../utils']
 });

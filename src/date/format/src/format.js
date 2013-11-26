@@ -5,7 +5,6 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S,require) {
-    var module=this;
     var GregorianCalendar=require('date/gregorian');
     var defaultLocale=require('i18n!date');
     var MAX_VALUE = Number.MAX_VALUE,

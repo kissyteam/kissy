@@ -171,9 +171,6 @@ KISSY.add(function (S,require) {
                 return params;
             },
 
-            //直接判断引擎，防止兼容性模式影响
-            ieEngine: document['documentMode'] || UA['ie'],
-
             /**
              * 点击 el 或者 el 内的元素，不会使得焦点转移
              * @param el

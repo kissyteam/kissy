@@ -3,7 +3,11 @@
  * resizable support for kissy
  * @author yiminghe@gmail.com
  */
-KISSY.add("resizable", function (S, Node, Base, DD, undefined) {
+KISSY.add(function (S, require) {
+    var Node = require('node');
+    var Base = require('base');
+    var DD = require('dd');
+
     var $ = Node.all,
         i,
         j,
@@ -363,6 +367,4 @@ KISSY.add("resizable", function (S, Node, Base, DD, undefined) {
     };
 
     return Resizable;
-}, {
-    requires: ["node", 'base', "dd"]
 });

@@ -3,7 +3,10 @@
  * KISSY.Dialog
  * @author yiminghe@gmail.com
  */
-KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node) {
+KISSY.add(function (S, require) {
+    var Overlay = require('./control');
+    var DialogRender = require('./dialog-render');
+    var Node = require('node');
 
     /**
      * @class KISSY.Overlay.Dialog
@@ -30,8 +33,7 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node) {
             handleKeyDownInternal: function (e) {
                 if (this.get('escapeToClose') &&
                     e.keyCode === Node.KeyCode.ESC) {
-                    if (e.target.nodeName.toLowerCase() == 'select' &&
-                        !e.target.disabled) {
+                    if (e.target.nodeName.toLowerCase() == 'select' && !e.target.disabled) {
                         // escape at select
                     } else {
                         this.close();
@@ -42,7 +44,7 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node) {
                 trapFocus.call(this, e);
             },
 
-            _onSetVisible: function (v,e) {
+            _onSetVisible: function (v, e) {
                 var self = this,
                     el = self.el;
                 if (v) {
@@ -62,7 +64,7 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node) {
                     }
                 }
                 // prevent display none for effect
-                self.callSuper(v,e);
+                self.callSuper(v, e);
             }
         },
 
@@ -78,8 +80,8 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node) {
                 /**
                  * @ignore
                  */
-                header:{
-                    view:1
+                header: {
+                    view: 1
                 },
                 /**
                  * Body element of dialog.
@@ -90,8 +92,8 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node) {
                 /**
                  * @ignore
                  */
-                body:{
-                    view:1
+                body: {
+                    view: 1
                 },
                 /**
                  * Footer element of dialog.
@@ -102,8 +104,8 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node) {
                 /**
                  * @ignore
                  */
-                footer:{
-                    view:1
+                footer: {
+                    view: 1
                 },
                 /**
                  * Key-value map of body element's style.
@@ -112,9 +114,9 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node) {
                 /**
                  * @ignore
                  */
-                bodyStyle:{
-                    value:{},
-                    view:1
+                bodyStyle: {
+                    value: {},
+                    view: 1
                 },
                 /**
                  * Key-value map of footer element's style.
@@ -123,9 +125,9 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node) {
                 /**
                  * @ignore
                  */
-                footerStyle:{
-                    value:{},
-                    view:1
+                footerStyle: {
+                    value: {},
+                    view: 1
                 },
                 /**
                  * Key-value map of header element's style.
@@ -134,9 +136,9 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node) {
                 /**
                  * @ignore
                  */
-                headerStyle:{
-                    value:{},
-                    view:1
+                headerStyle: {
+                    value: {},
+                    view: 1
                 },
                 /**
                  * html content of header element.
@@ -145,9 +147,9 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node) {
                 /**
                  * @ignore
                  */
-                headerContent:{
-                    value:'',
-                    view:1
+                headerContent: {
+                    value: '',
+                    view: 1
                 },
                 /**
                  * html content of body element.
@@ -156,9 +158,9 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node) {
                 /**
                  * @ignore
                  */
-                bodyContent:{
-                    value:'',
-                    view:1
+                bodyContent: {
+                    value: '',
+                    view: 1
                 },
                 /**
                  * html content of footer element.
@@ -167,9 +169,9 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node) {
                 /**
                  * @ignore
                  */
-                footerContent:{
-                    value:'',
-                    view:1
+                footerContent: {
+                    value: '',
+                    view: 1
                 },
 
                 /**
@@ -271,13 +273,6 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node) {
         e.halt();//stop the event if not a tab keypress
     } // end of function
     return Dialog;
-
-}, {
-    requires: [
-        "./control",
-        './dialog-render',
-        'node'
-    ]
 });
 
 /**

@@ -30,7 +30,7 @@ KISSY.add(function (S, require) {
         KES = Editor.SelectionType,
         KER = Editor.RangeType,
     // ie9 仍然采用老的 range api，发现新的不稳定
-        OLD_IE = UA['ie'] && UA.ie < 11; //!window.getSelection,
+        OLD_IE = UA.ieMode < 11; //!window.getSelection,
     //ElementPath = Editor.ElementPath;
     /**
      * selection normalizer class

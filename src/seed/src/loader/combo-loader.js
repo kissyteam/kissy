@@ -5,7 +5,7 @@
  */
 (function (S, undefined) {
     // ie11 is a new one!
-    var oldIE = S.UA.ie && S.UA.ie < 10;
+    var oldIE = S.UA.ieMode < 10;
 
     function loadScripts(runtime, rss, callback, charset, timeout) {
         var count = rss && rss.length,

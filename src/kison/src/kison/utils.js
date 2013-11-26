@@ -3,7 +3,7 @@
  * utils for kison.
  * @author yiminghe@gmail.com
  */
-KISSY.add("kison/utils", function (S) {
+KISSY.add(function (S) {
     var doubleReg = /"/g, single = /'/g, escapeString;
 
     /**

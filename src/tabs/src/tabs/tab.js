@@ -3,7 +3,9 @@
  * Single tab in tab bar.
  * @author yiminghe@gmail.com
  */
-KISSY.add("tabs/tab", function (S, Button, TabRender) {
+KISSY.add(function (S, require) {
+    var Button = require('button');
+    var TabRender = require('./tab-render');
     /**
      * KISSY.Tabs.Tab. xclass:'tabs-tab'
      * @class KISSY.Tabs.Tab
@@ -41,6 +43,4 @@ KISSY.add("tabs/tab", function (S, Button, TabRender) {
         },
         xclass: 'tabs-tab'
     });
-}, {
-    requires: ['button', './tab-render']
 });

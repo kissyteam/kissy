@@ -230,16 +230,23 @@ if (! _$jscoverage['/overlay/control.js']) {
   _$jscoverage['/overlay/control.js'] = {};
   _$jscoverage['/overlay/control.js'].lineData = [];
   _$jscoverage['/overlay/control.js'].lineData[6] = 0;
+  _$jscoverage['/overlay/control.js'].lineData[7] = 0;
   _$jscoverage['/overlay/control.js'].lineData[8] = 0;
-  _$jscoverage['/overlay/control.js'].lineData[24] = 0;
+  _$jscoverage['/overlay/control.js'].lineData[9] = 0;
+  _$jscoverage['/overlay/control.js'].lineData[10] = 0;
+  _$jscoverage['/overlay/control.js'].lineData[11] = 0;
+  _$jscoverage['/overlay/control.js'].lineData[12] = 0;
+  _$jscoverage['/overlay/control.js'].lineData[13] = 0;
+  _$jscoverage['/overlay/control.js'].lineData[16] = 0;
   _$jscoverage['/overlay/control.js'].lineData[32] = 0;
-  _$jscoverage['/overlay/control.js'].lineData[34] = 0;
-  _$jscoverage['/overlay/control.js'].lineData[35] = 0;
-  _$jscoverage['/overlay/control.js'].lineData[36] = 0;
-  _$jscoverage['/overlay/control.js'].lineData[37] = 0;
-  _$jscoverage['/overlay/control.js'].lineData[46] = 0;
-  _$jscoverage['/overlay/control.js'].lineData[47] = 0;
-  _$jscoverage['/overlay/control.js'].lineData[48] = 0;
+  _$jscoverage['/overlay/control.js'].lineData[40] = 0;
+  _$jscoverage['/overlay/control.js'].lineData[42] = 0;
+  _$jscoverage['/overlay/control.js'].lineData[43] = 0;
+  _$jscoverage['/overlay/control.js'].lineData[44] = 0;
+  _$jscoverage['/overlay/control.js'].lineData[45] = 0;
+  _$jscoverage['/overlay/control.js'].lineData[54] = 0;
+  _$jscoverage['/overlay/control.js'].lineData[55] = 0;
+  _$jscoverage['/overlay/control.js'].lineData[56] = 0;
 }
 if (! _$jscoverage['/overlay/control.js'].functionData) {
   _$jscoverage['/overlay/control.js'].functionData = [];
@@ -250,51 +257,65 @@ if (! _$jscoverage['/overlay/control.js'].functionData) {
 }
 if (! _$jscoverage['/overlay/control.js'].branchData) {
   _$jscoverage['/overlay/control.js'].branchData = {};
-  _$jscoverage['/overlay/control.js'].branchData['34'] = [];
-  _$jscoverage['/overlay/control.js'].branchData['34'][1] = new BranchData();
-  _$jscoverage['/overlay/control.js'].branchData['47'] = [];
-  _$jscoverage['/overlay/control.js'].branchData['47'][1] = new BranchData();
+  _$jscoverage['/overlay/control.js'].branchData['42'] = [];
+  _$jscoverage['/overlay/control.js'].branchData['42'][1] = new BranchData();
+  _$jscoverage['/overlay/control.js'].branchData['55'] = [];
+  _$jscoverage['/overlay/control.js'].branchData['55'][1] = new BranchData();
 }
-_$jscoverage['/overlay/control.js'].branchData['47'][1].init(49, 40, 'actions[self.get("closeAction")] || HIDE');
-function visit2_47_1(result) {
-  _$jscoverage['/overlay/control.js'].branchData['47'][1].ranCondition(result);
+_$jscoverage['/overlay/control.js'].branchData['55'][1].init(47, 40, 'actions[self.get("closeAction")] || HIDE');
+function visit4_55_1(result) {
+  _$jscoverage['/overlay/control.js'].branchData['55'][1].ranCondition(result);
   return result;
-}_$jscoverage['/overlay/control.js'].branchData['34'][1].init(98, 8, 'closeBtn');
-function visit1_34_1(result) {
-  _$jscoverage['/overlay/control.js'].branchData['34'][1].ranCondition(result);
+}_$jscoverage['/overlay/control.js'].branchData['42'][1].init(95, 8, 'closeBtn');
+function visit3_42_1(result) {
+  _$jscoverage['/overlay/control.js'].branchData['42'][1].ranCondition(result);
   return result;
 }_$jscoverage['/overlay/control.js'].lineData[6]++;
-KISSY.add("overlay/control", function(S, Container, Shim, AlignExtension, Loading, Mask, OverlayRender, OverlayEffect) {
+KISSY.add(function(S, require) {
   _$jscoverage['/overlay/control.js'].functionData[0]++;
+  _$jscoverage['/overlay/control.js'].lineData[7]++;
+  var Container = require('component/container');
   _$jscoverage['/overlay/control.js'].lineData[8]++;
+  var Shim = require('component/extension/shim');
+  _$jscoverage['/overlay/control.js'].lineData[9]++;
+  var AlignExtension = require('component/extension/align');
+  _$jscoverage['/overlay/control.js'].lineData[10]++;
+  var Loading = require('./extension/loading');
+  _$jscoverage['/overlay/control.js'].lineData[11]++;
+  var Mask = require('./extension/mask');
+  _$jscoverage['/overlay/control.js'].lineData[12]++;
+  var OverlayRender = require('./overlay-render');
+  _$jscoverage['/overlay/control.js'].lineData[13]++;
+  var OverlayEffect = require('./extension/overlay-effect');
+  _$jscoverage['/overlay/control.js'].lineData[16]++;
   var HIDE = "hide", actions = {
   hide: HIDE, 
   destroy: "destroy"};
-  _$jscoverage['/overlay/control.js'].lineData[24]++;
+  _$jscoverage['/overlay/control.js'].lineData[32]++;
   return Container.extend([Shim, Loading, AlignExtension, Mask, OverlayEffect], {
   bindUI: function() {
   _$jscoverage['/overlay/control.js'].functionData[1]++;
-  _$jscoverage['/overlay/control.js'].lineData[32]++;
+  _$jscoverage['/overlay/control.js'].lineData[40]++;
   var self = this, closeBtn = self.get("closeBtn");
-  _$jscoverage['/overlay/control.js'].lineData[34]++;
-  if (visit1_34_1(closeBtn)) {
-    _$jscoverage['/overlay/control.js'].lineData[35]++;
+  _$jscoverage['/overlay/control.js'].lineData[42]++;
+  if (visit3_42_1(closeBtn)) {
+    _$jscoverage['/overlay/control.js'].lineData[43]++;
     closeBtn.on("click", function(ev) {
   _$jscoverage['/overlay/control.js'].functionData[2]++;
-  _$jscoverage['/overlay/control.js'].lineData[36]++;
+  _$jscoverage['/overlay/control.js'].lineData[44]++;
   self.close();
-  _$jscoverage['/overlay/control.js'].lineData[37]++;
+  _$jscoverage['/overlay/control.js'].lineData[45]++;
   ev.preventDefault();
 });
   }
 }, 
   close: function() {
   _$jscoverage['/overlay/control.js'].functionData[3]++;
-  _$jscoverage['/overlay/control.js'].lineData[46]++;
+  _$jscoverage['/overlay/control.js'].lineData[54]++;
   var self = this;
-  _$jscoverage['/overlay/control.js'].lineData[47]++;
-  self[visit2_47_1(actions[self.get("closeAction")] || HIDE)]();
-  _$jscoverage['/overlay/control.js'].lineData[48]++;
+  _$jscoverage['/overlay/control.js'].lineData[55]++;
+  self[visit4_55_1(actions[self.get("closeAction")] || HIDE)]();
+  _$jscoverage['/overlay/control.js'].lineData[56]++;
   return self;
 }}, {
   ATTRS: {
@@ -317,5 +338,4 @@ KISSY.add("overlay/control", function(S, Container, Shim, AlignExtension, Loadin
   xrender: {
   value: OverlayRender}}, 
   xclass: 'overlay'});
-}, {
-  requires: ['component/container', 'component/extension/shim', 'component/extension/align', "./extension/loading", "./extension/mask", './overlay-render', './extension/overlay-effect']});
+});

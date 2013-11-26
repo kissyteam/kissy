@@ -19,12 +19,10 @@
     var UA = S.UA,
         Env = S.Env,
         win = Env.host,
-        doc = win.document || {},
-        documentMode = doc.documentMode,
         nativeJson = ((UA.nodejs && typeof global === 'object') ? global : win).JSON;
 
     // ie 8.0.7600.16315@win7 json bug!
-    if (documentMode && documentMode < 9) {
+    if (UA.ieMode < 9) {
         nativeJson = null;
     }
 

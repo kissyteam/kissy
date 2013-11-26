@@ -3,7 +3,8 @@
  * enhanced base for model with sync
  * @author yiminghe@gmail.com
  */
-KISSY.add("mvc/model", function (S, Base) {
+KISSY.add(function (S, require) {
+    var Attribute = require('attribute');
     var blacklist = [
         "idAttribute",
         "destroyed",
@@ -19,9 +20,9 @@ KISSY.add("mvc/model", function (S, Base) {
     /**
      * Model represent a data record.
      * @class KISSY.MVC.Model
-     * @extends KISSY.Base
+     * @extends KISSY.Attribute
      */
-   return Base.extend({
+   return Attribute.extend({
        initializer:function(){
            /*
             *Change should bubble to its collections
@@ -283,6 +284,4 @@ KISSY.add("mvc/model", function (S, Base) {
         base = base + (base.charAt(base.length - 1) == '/' ? '' : '/');
         return base + encodeURIComponent(this.getId()) + "/";
     }
-}, {
-    requires:['base']
 });

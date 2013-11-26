@@ -3,7 +3,10 @@
  * SplitButton for KISSY. Combination of button and menubutton.
  * @author yiminghe@gmail.com
  */
-KISSY.add("split-button", function (S, Container) {
+KISSY.add(function (S, require) {
+    var Container = require('component/container');
+    require('button');
+    require('menubutton');
     /**
      * split button container for menubutton and button
      * @class KISSY.SplitButton
@@ -94,8 +97,4 @@ KISSY.add("split-button", function (S, Container) {
         },
         xclass: 'split-button'
     });
-}, {
-    requires: ['component/container',
-        // implicit requirement
-        'button', 'menubutton']
 });

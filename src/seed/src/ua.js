@@ -105,6 +105,12 @@
              */
             ie: undefined,
             /**
+             * ie document mode
+             * @type undefined|Number
+             * @member KISSY.UA
+             */
+            ieMode: undefined,
+            /**
              * opera version
              * @type undefined|Number
              * @member KISSY.UA
@@ -334,6 +340,7 @@
         UA.os = os;
         UA.core = UA.core || core;
         UA.shell = shell;
+        UA.ieMode = UA.ie && doc.documentMode || UA.ie;
 
         return UA;
     }

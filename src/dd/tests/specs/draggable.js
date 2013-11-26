@@ -7,7 +7,7 @@ KISSY.add(function (S, Node, DD, IO) {
     var $=Node.all;
     var Draggable = DD.Draggable, Dom = S.DOM;
     var UA = S.UA;
-    var ie = document['documentMode'] || UA['ie'];
+    var ie = S.UA.ieMode;
 
     describe('draggable', function () {
 

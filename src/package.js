@@ -61,6 +61,10 @@ if (!loc.getQuery().has('build') && !loc.getQuery().has('min')) {
             "base": "/kissy/src/component/sub-modules/extension/content-render/src/content-render",
             "ignorePackageNameInUri": 1
         },
+        "component/extension/content-xtpl": {
+            "base": "/kissy/src/component/sub-modules/extension/content-xtpl/src/content-xtpl",
+            "ignorePackageNameInUri": 1
+        },
         "component/extension/delegate-children": {
             "base": "/kissy/src/component/sub-modules/extension/delegate-children/src/delegate-children",
             "ignorePackageNameInUri": 1

@@ -3,7 +3,12 @@
  * Parser generator for kissy.
  * @author yiminghe@gmail.com
  */
-KISSY.add("kison", function (S, Grammar, Production, Lexer, Utils) {
+KISSY.add(function (S, require) {
+    var Grammar = require('kison/grammar');
+    var Production = require('kison/production');
+    var Lexer = require('kison/lexer');
+    var Utils = require('kison/utils');
+
     var Kison = {};
     Kison.Grammar = Grammar;
     Kison.Production = Production;
@@ -15,6 +20,4 @@ KISSY.add("kison", function (S, Grammar, Production, Lexer, Utils) {
         alert('kison can only use uncompressed version!');
         return null;
     }
-}, {
-    requires: ['kison/grammar', 'kison/production', 'kison/lexer', 'kison/utils']
 });

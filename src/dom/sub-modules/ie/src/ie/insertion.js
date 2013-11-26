@@ -7,8 +7,7 @@ KISSY.add(function (S,require) {
     var Dom = require('dom/base');
     var UA = S.UA;
 
-    if (UA.ie < 8) {
-
+    if (UA.ieMode < 8) {
         /*
          ie 6,7 lose checked status when append to dom
          var c=S.all('<input />');

@@ -3,7 +3,7 @@
  * filter dom tree to html string form,api designed by ckeditor
  * @author yiminghe@gmail.com
  */
-KISSY.add("html-parser/writer/filter", function (S) {
+KISSY.add(function (S) {
 
     /**
      * Filter for Html Parse Writer

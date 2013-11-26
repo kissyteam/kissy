@@ -3,8 +3,8 @@
  * render aria from menu according to current menuitem
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/menu-render", function (S, Container) {
-
+KISSY.add(function (S, require) {
+    var Container = require('component/container');
     return Container.getDefaultRender().extend({
 
         beforeCreateDom: function (renderData) {
@@ -16,6 +16,4 @@ KISSY.add("menu/menu-render", function (S, Container) {
             return $el && ($el[0] === element || $el.contains(element));
         }
     });
-}, {
-    requires: ['component/container']
 });

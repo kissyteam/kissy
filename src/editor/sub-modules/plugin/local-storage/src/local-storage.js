@@ -8,7 +8,7 @@ KISSY.add(function (S, require) {
     var Overlay = require('overlay');
     var FlashBridge = require('./flash-bridge');
 
-    var ie = document.documentMode || S.UA.ie;
+    var ie = S.UA.ieMode;
 
     // 原生或者已经定义过立即返回
     // ie 使用 flash 模拟的 localStorage，序列化性能不行

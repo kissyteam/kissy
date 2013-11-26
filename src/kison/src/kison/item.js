@@ -3,7 +3,8 @@
  * Item for KISON
  * @author yiminghe@gmail.com
  */
-KISSY.add("kison/item", function (S, Base) {
+KISSY.add(function (S, require) {
+        var Base = require('base');
     /**
      * grammar item
      * @class KISSY.Kison.Item
@@ -59,6 +60,4 @@ KISSY.add("kison/item", function (S, Base) {
             }
         }
     });
-}, {
-    requires: ['base']
 });

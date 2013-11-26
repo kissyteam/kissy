@@ -3,7 +3,11 @@
  * @ignore
  * @author yiminghe@gmail.com
  */
-KISSY.add('menu/check-menuitem-render', function (S, MenuItemRender, ContentRenderExtension, CheckMenuItemTpl) {
+KISSY.add(function (S, require) {
+    var MenuItemRender = require('./menuitem-render');
+    var ContentRenderExtension = require('component/extension/content-render');
+    var CheckMenuItemTpl = require('./check-menuitem-xtpl');
+
     return MenuItemRender.extend([ContentRenderExtension], {
         beforeCreateDom: function (renderData) {
             if (renderData.checked) {
@@ -23,10 +27,4 @@ KISSY.add('menu/check-menuitem-render', function (S, MenuItemRender, ContentRend
             }
         }
     })
-}, {
-    requires: [
-        './menuitem-render',
-        'component/extension/content-render',
-        './check-menuitem-xtpl'
-    ]
 });

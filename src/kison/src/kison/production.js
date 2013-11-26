@@ -3,7 +3,8 @@
  * Production for KISON
  * @author yiminghe@gmail.com
  */
-KISSY.add("kison/production", function (S, Base) {
+KISSY.add(function (S, require) {
+    var Base = require('base');
     /**
      * production for grammar
      * @class KISSY.Kison.Production
@@ -52,6 +53,4 @@ KISSY.add("kison/production", function (S, Base) {
             }
         }
     });
-}, {
-    requires: ['base']
 });

@@ -3,11 +3,14 @@
  * tree component for kissy
  * @author yiminghe@gmail.com
  */
-KISSY.add('tree', function (S, Tree, TreeNode, CheckNode, CheckTree) {
-    Tree.Node =TreeNode;
+KISSY.add(function (S, require) {
+    var Tree = require('tree/control');
+    var TreeNode = require('tree/node');
+    var CheckNode = require('tree/check-node');
+    var CheckTree = require('tree/check-tree');
+
+    Tree.Node = TreeNode;
     Tree.CheckNode = CheckNode;
     Tree.CheckTree = CheckTree;
     return Tree;
-}, {
-    requires: ['tree/control', 'tree/node', 'tree/check-node', 'tree/check-tree']
 });

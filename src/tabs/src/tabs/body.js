@@ -3,7 +3,8 @@
  * Body for tab panels.
  * @author yiminghe@gmail.com
  */
-KISSY.add("tabs/body", function (S, Container, Extension, undefined) {
+KISSY.add(function (S, require) {
+    var Container = require('component/container');
     /**
      * tab body container for tab panels.xclass: 'tabs-body'.
      * @class  KISSY.Tabs.Body
@@ -87,6 +88,4 @@ KISSY.add("tabs/body", function (S, Container, Extension, undefined) {
     }
 
     return TabBody;
-}, {
-    requires: ['component/container']
 });

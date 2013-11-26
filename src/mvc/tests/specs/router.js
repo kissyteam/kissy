@@ -118,7 +118,7 @@ KISSY.add(function (S, MVC) {
             });
         });
 
-        var ie = document.documentMode || S.UA.ie;
+        var ie = S.UA.ieMode;
 
         if (ie && ie < 8) {
             // return;

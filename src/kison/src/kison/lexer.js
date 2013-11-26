@@ -3,13 +3,14 @@
  * Lexer to scan token.
  * @author yiminghe@gmail.com
  */
-KISSY.add("kison/lexer", function (S, Utils) {
+KISSY.add(function (S, require) {
+    var Utils = require('./utils');
     var serializeObject = Utils.serializeObject,
         /**
          * Lexer generator
          * @class KISSY.Kison.Lexer
          */
-        Lexer = function (cfg) {
+            Lexer = function (cfg) {
 
             var self = this;
 
@@ -280,6 +281,4 @@ KISSY.add("kison/lexer", function (S, Utils) {
     };
 
     return Lexer;
-}, {
-    requires: ['./utils']
 });

@@ -2,9 +2,11 @@
  * test case for anim frame config
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, Dom, Anim, Node) {
+KISSY.add(function (S, require) {
+    var Dom = require('dom');
+    var Anim = require('anim');
+    var Node = require('node');
     var $ = Node.all;
-
     describe('anim-frame config', function () {
         it("accept custom animation property", function () {
             //非标准的css属性渐变
@@ -265,6 +267,4 @@ KISSY.add(function (S, Dom, Anim, Node) {
             });
         });
     });
-}, {
-    requires: ['dom', 'anim', 'node']
 });

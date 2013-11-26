@@ -3,12 +3,11 @@
  * simple menuitem render
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/menuitem-render", function (S, Node, Control) {
-
+KISSY.add(function (S, require) {
+    var Control = require('component/control');
     return Control.getDefaultRender().extend({
-
         beforeCreateDom: function (renderData) {
-            renderData.elAttrs.role= renderData.selectable ?
+            renderData.elAttrs.role = renderData.selectable ?
                 'menuitemradio' : 'menuitem';
             if (renderData.selected) {
                 renderData.elCls.push(this.getBaseCssClasses('selected'));
@@ -32,6 +31,4 @@ KISSY.add("menu/menuitem-render", function (S, Node, Control) {
             }
         }
     });
-}, {
-    requires: ['node', 'component/control']
 });

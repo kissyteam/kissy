@@ -3,7 +3,10 @@
  * submenu control for kissy, transfer item's keyCode to menu
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/submenu", function (S, Node, MenuItem, SubMenuRender) {
+KISSY.add(function (S, require) {
+    var Node = require('node');
+    var MenuItem = require('./menuitem');
+    var SubMenuRender = require('./submenu-render');
 
     var KeyCode = Node.KeyCode,
         MENU_DELAY = 0.15;
@@ -263,6 +266,4 @@ KISSY.add("menu/submenu", function (S, Node, MenuItem, SubMenuRender) {
     }
 
     // # ------------------------------------ private end
-}, {
-    requires: ['node', './menuitem', './submenu-render']
 });

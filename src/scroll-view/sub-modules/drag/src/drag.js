@@ -3,7 +3,11 @@
  * allow body to drag
  * @author yiminghe@gmail.com
  */
-KISSY.add('scroll-view/drag', function (S, ScrollViewBase, Node, Anim) {
+KISSY.add(function (S, require) {
+    var ScrollViewBase = require('./base');
+    var Node = require('node');
+    var Anim = require('anim');
+
     var OUT_OF_BOUND_FACTOR = 0.5;
 
     var PIXEL_THRESH = 3;
@@ -609,8 +613,6 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, Node, Anim) {
             xclass: 'scroll-view'
         }
     );
-}, {
-    requires: ['./base', 'node', 'anim']
 });
 /**
  * @ignore

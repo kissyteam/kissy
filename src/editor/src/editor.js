@@ -27,7 +27,7 @@ KISSY.add(function (S, require, exports, module) {
         window = S.Env.host,
         document = window.document,
         UA = S.UA,
-        IS_IE = UA['ie'] && UA.ie < 11,
+        IS_IE = UA.ieMode < 11,
         NodeType = Node.NodeType,
         $ = Node.all,
         HEIGHT = 'height',
@@ -1071,7 +1071,7 @@ KISSY.add(function (S, require, exports, module) {
             // kissy-editor #12
             // IE8 doesn't support carets behind images(empty content after image's block)
             // setting ie7 compatible mode would force IE8+ to run in IE7 compat mode.
-            doctype: document.documentMode === 8 ?
+            doctype: S.UA.ieMode === 8 ?
                 '<meta http-equiv="X-UA-Compatible" content="IE=7" />' :
                 '',
             title: '{title}',

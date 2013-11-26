@@ -3,7 +3,10 @@
  * checkable tree node
  * @author yiminghe@gmail.com
  */
-KISSY.add("tree/check-node", function (S, Node, TreeNode) {
+KISSY.add(function (S, require) {
+    var Node = require('node');
+    var TreeNode = require('./node');
+
     var $ = Node.all,
         PARTIAL_CHECK = 2,
         CHECK = 1,
@@ -150,6 +153,4 @@ KISSY.add("tree/check-node", function (S, Node, TreeNode) {
     };
 
     return CheckNode;
-}, {
-    requires: ['node', './node']
 });

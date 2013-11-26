@@ -3,7 +3,7 @@
  * implement Promise specification by KISSY
  * @author yiminghe@gmail.com
  */
-KISSY.add('promise', function (S) {
+KISSY.add(function (S) {
     var PROMISE_VALUE = '__promise_value',
         undefined = undefined,
         processImmediate = S.setImmediate,

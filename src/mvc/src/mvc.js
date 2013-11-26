@@ -3,14 +3,12 @@
  * KISSY 's MVC Framework for Page Application (Backbone Style)
  * @author yiminghe@gmail.com
  */
-KISSY.add("mvc", function (S, Model, Collection, View, Router, sync) {
+KISSY.add(function (S, require) {
     return {
-        sync:sync,
-        Model:Model,
-        View:View,
-        Collection:Collection,
-        Router:Router
+        sync: require('mvc/sync'),
+        Model: require('mvc/model'),
+        View: require('mvc/view'),
+        Collection: require('mvc/collection'),
+        Router: require('mvc/router')
     };
-}, {
-    requires:["mvc/model", "mvc/collection", "mvc/view", "mvc/router", "mvc/sync"]
 });

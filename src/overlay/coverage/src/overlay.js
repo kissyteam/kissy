@@ -233,8 +233,11 @@ if (! _$jscoverage['/overlay.js']) {
   _$jscoverage['/overlay.js'].lineData[7] = 0;
   _$jscoverage['/overlay.js'].lineData[8] = 0;
   _$jscoverage['/overlay.js'].lineData[9] = 0;
-  _$jscoverage['/overlay.js'].lineData[10] = 0;
   _$jscoverage['/overlay.js'].lineData[11] = 0;
+  _$jscoverage['/overlay.js'].lineData[12] = 0;
+  _$jscoverage['/overlay.js'].lineData[13] = 0;
+  _$jscoverage['/overlay.js'].lineData[14] = 0;
+  _$jscoverage['/overlay.js'].lineData[15] = 0;
 }
 if (! _$jscoverage['/overlay.js'].functionData) {
   _$jscoverage['/overlay.js'].functionData = [];
@@ -244,17 +247,22 @@ if (! _$jscoverage['/overlay.js'].branchData) {
   _$jscoverage['/overlay.js'].branchData = {};
 }
 _$jscoverage['/overlay.js'].lineData[6]++;
-KISSY.add("overlay", function(S, O, D, P) {
+KISSY.add(function(S, require) {
   _$jscoverage['/overlay.js'].functionData[0]++;
   _$jscoverage['/overlay.js'].lineData[7]++;
-  O.Dialog = D;
+  var O = require('overlay/control');
   _$jscoverage['/overlay.js'].lineData[8]++;
-  S.Dialog = D;
+  var D = require('overlay/dialog');
   _$jscoverage['/overlay.js'].lineData[9]++;
-  O.Popup = P;
-  _$jscoverage['/overlay.js'].lineData[10]++;
-  S.Overlay = O;
+  var P = require('overlay/popup');
   _$jscoverage['/overlay.js'].lineData[11]++;
+  O.Dialog = D;
+  _$jscoverage['/overlay.js'].lineData[12]++;
+  S.Dialog = D;
+  _$jscoverage['/overlay.js'].lineData[13]++;
+  O.Popup = P;
+  _$jscoverage['/overlay.js'].lineData[14]++;
+  S.Overlay = O;
+  _$jscoverage['/overlay.js'].lineData[15]++;
   return O;
-}, {
-  requires: ["overlay/control", "overlay/dialog", "overlay/popup"]});
+});

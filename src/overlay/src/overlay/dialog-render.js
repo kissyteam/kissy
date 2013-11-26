@@ -3,7 +3,10 @@
  * render for dialog
  * @author yiminghe@gmail.com
  */
-KISSY.add("overlay/dialog-render", function (S, OverlayRender, DialogTpl) {
+KISSY.add(function (S, require) {
+    var OverlayRender = require('./overlay-render');
+    var DialogTpl = require('./dialog-xtpl');
+
     function _setStdModRenderContent(self, part, v) {
         part = self.control.get(part);
         part.html(v);
@@ -79,6 +82,4 @@ KISSY.add("overlay/dialog-render", function (S, OverlayRender, DialogTpl) {
             }
         }
     });
-}, {
-    requires: ['./overlay-render', './dialog-xtpl']
 });
