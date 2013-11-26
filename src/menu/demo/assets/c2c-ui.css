@@ -181,7 +181,7 @@
 }
 
 /* State: hover. */
-.c2c-menuitem-highlight,
+.c2c-menuitem-active,
 .c2c-menuitem-hover {
     background-color: #ffefd6;
     /* Use an explicit top and bottom border so that the selection is visible

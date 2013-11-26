@@ -32,7 +32,7 @@
     color: #ccc !important;
 }
 
-.ks-menuitem-highlight,
+.ks-menuitem-active,
 .ks-menuitem-hover {
     background-color: #39F;
     color: white;
