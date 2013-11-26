@@ -98,10 +98,7 @@ KISSY.add(function (S, Dom, Button, Node) {
             });
 
         });
-
-
     });
-
 },{
     requires:['dom','button','node']
 });

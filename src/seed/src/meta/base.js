@@ -11,10 +11,10 @@
                 alias: ['dom', 'event', 'io', 'anim', 'base', 'node', 'json', 'ua', 'cookie']
             },
             ajax: {
-                alias: ['io']
+                alias: 'io'
             },
             'rich-base': {
-                alias: ['base']
+                alias: 'base'
             }
         }
     });

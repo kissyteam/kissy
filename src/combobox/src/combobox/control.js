@@ -237,7 +237,7 @@ KISSY.add(function (S,require) {
                     // if menu is open and an menuitem is highlighted, see as click/enter
                     if (keyCode == KeyCode.TAB && highlightedItem) {
                         // click highlightedItem
-                        highlightedItem.handleClickInternal();
+                        highlightedItem.handleClickInternal(e);
                         // only prevent focus change in multiple mode
                         if (self.get("multiple")) {
                             return true;

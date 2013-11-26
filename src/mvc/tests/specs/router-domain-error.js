@@ -3,14 +3,10 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, MVC, Event, UA) {
-    var Model = MVC.Model,
-        ie = UA.ieMode,
-        Collection = MVC.Collection,
-        View = MVC.View,
+    var ie = UA.ieMode,
         Router = MVC.Router;
 
     describe("domain in router error", function () {
-
         beforeEach(function () {
             location.hash = '';
             waits(900);
@@ -21,7 +17,6 @@ KISSY.add(function (S, MVC, Event, UA) {
         });
 
         it("change domain in middle of code does not work for ie<8", function () {
-
             if (ie == 6) {
                 return;
             }
@@ -56,12 +51,8 @@ KISSY.add(function (S, MVC, Event, UA) {
                     expect(ok).toBe(1);
                 }
             });
-
         });
-
     });
-
-
 }, {
     requires: ['mvc', 'event', 'ua']
 });

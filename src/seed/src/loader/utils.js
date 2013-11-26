@@ -346,8 +346,12 @@
             while (!ok) {
                 ok = 1;
                 for (i = ret.length - 1; i >= 0; i--) {
-                    if ((m = mods[ret[i]]) && (alias = m.alias)) {
+                    if ((m = mods[ret[i]]) && ('alias' in m)) {
                         ok = 0;
+                        alias = m.alias;
+                        if (typeof alias == 'string') {
+                            alias = [alias];
+                        }
                         for (j = alias.length - 1; j >= 0; j--) {
                             if (!alias[j]) {
                                 alias.splice(j, 1);
@@ -450,16 +454,15 @@
     });
 
     var commentRegExp = /(\/\*([\s\S]*?)\*\/|([^:]|^)\/\/(.*)$)/mg,
-        requireRegExp = /[^.'"]\s*require\s*\((.+?)\)\s*[;,]/g;
+        requireRegExp = /[^.'"]\s*require\s*\(([^)]+)\)/g;
 
     function getRequireVal(str) {
         var m;
         // simple string
         if (m = str.match(/^\s*["']([^'"\s]+)["']\s*$/)) {
-            return m[1];
         } else {
-            // expression
-            return new Function('return (' + str + ')')();
+            S.error('can not find required mod in require call: ' + str);
         }
+        return  m[1];
     }
 })(KISSY);

@@ -2,18 +2,12 @@
  * component tc
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S,
-    Control,
-    Container,
-    DelegateChildrenExtension
-    ) {
-
+KISSY.add(function (S, Control, Container, DelegateChildrenExtension) {
     function invalidNode(n) {
         return n == null || n.nodeType == 11;
     }
 
     describe("component", function () {
-
         describe('addChild/removeChild event', function () {
 
             it('can listen and preventDefault', function () {
@@ -289,8 +283,8 @@ KISSY.add(function (S,
         });
 
         describe("delegate children works", function () {
-            var MyContainer=Container.extend([DelegateChildrenExtension],{},{
-                name:'MyContainer'
+            var MyContainer = Container.extend([DelegateChildrenExtension], {}, {
+                xclass: 'MyContainer'
             });
 
             it("should attach its methods", function () {
@@ -305,7 +299,7 @@ KISSY.add(function (S,
                 expect(invalidNode(c.get("el")[0].parentNode)).toBe(true);
             });
 
-            if (S.UA.ios || S.UA.android) {
+            if (S.Features.isTouchEventSupported()) {
 
             } else {
                 it("should delegate events", function () {
@@ -330,26 +324,31 @@ KISSY.add(function (S,
                     c.addChild(child2);
                     c.render();
 
+                    // ie11 bug
+                    if(S.UA.ieMode===11){
+                        return;
+                    }
+
+                    waits(100);
                     runs(function () {
                         jasmine.simulate(c.get("el")[0], "mousedown");
                     });
-                    waits(10);
+                    waits(100);
                     runs(function () {
                         expect(c.get('active')).toBe(true);
                     });
                     runs(function () {
                         jasmine.simulate(c.get("el")[0], "mouseup");
                     });
-                    waits(10);
+                    waits(100);
                     runs(function () {
                         expect(c.get('active')).toBe(false);
                     });
 
-
                     runs(function () {
                         jasmine.simulate(child1.get("el")[0], "mousedown");
                     });
-                    waits(10);
+                    waits(100);
                     runs(function () {
                         // stop bubble
                         expect(c.get('active')).toBe(false);
@@ -360,7 +359,7 @@ KISSY.add(function (S,
                         jasmine.simulate(child1.get("el")[0], "mouseup");
                     });
 
-                    waits(10);
+                    waits(100);
 
                     runs(function () {
                         expect(c.get('active')).toBeFalsy();
@@ -374,7 +373,6 @@ KISSY.add(function (S,
                     });
                 });
             }
-
         });
     });
 
@@ -455,8 +453,7 @@ KISSY.add(function (S,
             expect(children[0] instanceof D).toBe(true);
         });
     });
-
-},{
-    requires:['component/control','component/container',
-    'component/extension/delegate-children']
+}, {
+    requires: ['component/control', 'component/container',
+        'component/extension/delegate-children']
 });

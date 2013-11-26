@@ -6,10 +6,11 @@
 KISSY.add(function (S, require) {
     var Dom = require('dom');
     var Json = require('json');
-    var Base = require('base');
+    var Attribute = require('attribute');
     var FlashUA = require('swf/ua');
 
     var UA = S.UA,
+        OLD_IE = UA.ieMode < 11,
         TYPE = 'application/x-shockwave-flash',
         CID = 'clsid:d27cdb6e-ae6d-11cf-96b8-444553540000',
         FLASHVARS = 'flashvars',
@@ -57,9 +58,10 @@ KISSY.add(function (S, require) {
      * @class KISSY.SWF
      * @extends KISSY.Base
      */
-    return SWF = Base.extend({
-        initializer: function () {
+    return SWF = Attribute.extend({
+        constructor: function () {
             var self = this;
+            self.callSuper.apply(self, arguments);
             var expressInstall = self.get('expressInstall'),
                 swf,
                 html,
@@ -105,7 +107,7 @@ KISSY.add(function (S, require) {
                     // location.toString() crash ie6
                     S.mix(flashVars, {
                         MMredirectURL: location.href,
-                        MMplayerType: UA.ie ? "ActiveX" : "PlugIn",
+                        MMplayerType: OLD_IE ? "ActiveX" : "PlugIn",
                         MMdoctitle: doc.title.slice(0, 47) + " - Flash Player Installation"
                     });
                 }
@@ -137,7 +139,7 @@ KISSY.add(function (S, require) {
             self.set('swfObject', swf);
 
             if (htmlMode == 'full') {
-                if (UA.ie) {
+                if (OLD_IE) {
                     self.set('swfObject', swf);
                 } else {
                     self.set('swfObject', swf.parentNode);
@@ -187,7 +189,7 @@ KISSY.add(function (S, require) {
             /* Cross-browser SWF removal
              - Especially needed to safely and completely remove a SWF in Internet Explorer
              */
-            if (UA.ie) {
+            if (OLD_IE) {
                 swfObject.style.display = 'none';
                 // from swfobject
                 (function () {
@@ -483,17 +485,13 @@ KISSY.add(function (S, require) {
 
 
     function _stringSWFDefault(src, attrs, params) {
-        return _stringSWF(src, attrs, params, UA.ie) + LT + '/' + OBJECT_TAG + GT;
+        return _stringSWF(src, attrs, params, OLD_IE) + LT + '/' + OBJECT_TAG + GT;
     }
 
     function _stringSWF(src, attrs, params, ie) {
         var res,
             attr = EMPTY,
             par = EMPTY;
-
-        if (ie == undefined) {
-            ie = UA.ie;
-        }
 
         // 普通属性
         S.each(attrs, function (v, k) {
@@ -520,7 +518,7 @@ KISSY.add(function (S, require) {
     // full oo 结构
     function _stringSWFFull(src, attrs, params) {
         var outside, inside;
-        if (UA.ie) {
+        if (OLD_IE) {
             outside = _stringSWF(src, attrs, params, 1);
             delete attrs.id;
             delete attrs.style;

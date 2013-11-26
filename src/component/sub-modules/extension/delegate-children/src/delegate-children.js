@@ -3,9 +3,9 @@
  * delegate events for children
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S,require) {
-    var Node=require('node'),
-        Manager=require('component/manager');
+KISSY.add(function (S, require) {
+    var Node = require('node'),
+        Manager = require('component/manager');
     var UA = S.UA,
         ie = UA.ieMode,
         Features = S.Features,

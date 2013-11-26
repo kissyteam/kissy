@@ -37,6 +37,12 @@
             MSPointerDown: 1,
             MSPointerUp: 1,
             MSPointerMove: 1,
+            // must lower case
+            pointerover: 1,
+            pointerout: 1,
+            pointerdown: 1,
+            pointerup: 1,
+            pointermove: 1,
             click: 1,
             dblclick: 1,
             mouseover: 1,
@@ -942,7 +948,15 @@
             jasmine.simulate(target, 'mousedown', options);
             jasmine.simulate(target, 'mouseup', options);
         }
-        if (KISSY.Features.isMsPointerSupported()) {
+        if (KISSY.Features.isPointerSupported()) {
+            if (type == 'mousedown') {
+                jasmine.simulate(target, 'pointerdown', options);
+            } else if (type == 'mouseup') {
+                jasmine.simulate(target, 'pointerup', options);
+            } else if (type == 'mousemove') {
+                jasmine.simulate(target, 'pointermove', options);
+            }
+        } else if (KISSY.Features.isMsPointerSupported()) {
             if (type == 'mousedown') {
                 jasmine.simulate(target, 'MSPointerDown', options);
             } else if (type == 'mouseup') {

@@ -5,7 +5,7 @@
  */
 KISSY.add(function (S, require) {
     var Attribute = require('attribute');
-    var Node = require('attribute');
+    var Node = require('node');
     var each = S.each,
     // take a breath to avoid duplicate hashchange
         BREATH_INTERVAL = 100,
@@ -307,8 +307,9 @@ KISSY.add(function (S, require) {
      * @extends KISSY.Attribute
      */
     return Router = Attribute.extend({
-        initializer: function () {
+        constructor: function () {
             var self = this;
+            self.callSuper.apply(self, arguments);
             self.on("afterRoutesChange", _afterRoutesChange, self);
             _afterRoutesChange.call(self, {newVal: self.get("routes")});
             allRoutes.push(self);

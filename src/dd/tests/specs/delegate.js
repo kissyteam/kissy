@@ -8,7 +8,12 @@ KISSY.add(function (S, Event, Node, DD, Dom, Proxy, IO) {
         DraggableDelegate = DD.DraggableDelegate,
         DroppableDelegate = DD.DroppableDelegate;
 
+
+
     var ie = S.UA.ieMode;
+    if (ie == 9 || ie == 11) {
+        return;
+    }
 
     describe("delegate", function () {
         var html = '';

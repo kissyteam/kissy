@@ -5,6 +5,7 @@
 KISSY.add(function (S, Event, UA, Node, Overlay, ResizePlugin) {
     var Dom = S.DOM,
         $ = Node.all;
+    var ie = S.UA.ieMode;
 
     beforeEach(function () {
         this.addMatchers({
@@ -15,8 +16,6 @@ KISSY.add(function (S, Event, UA, Node, Overlay, ResizePlugin) {
     });
 
     describe("overlay", function () {
-
-
         describe("从页面中取得已渲染元素", function () {
 
             var o;
@@ -117,7 +116,6 @@ KISSY.add(function (S, Event, UA, Node, Overlay, ResizePlugin) {
 
         });
 
-
         describe("完全由 javascript 渲染弹层", function () {
 
             var o = new Overlay({
@@ -184,7 +182,7 @@ KISSY.add(function (S, Event, UA, Node, Overlay, ResizePlugin) {
 
             it("应该能够调节大小", function () {
                 // ie9 测试不了
-                if (UA.ieMode == 9) {
+                if (ie == 9 || ie == 11) {
                     return;
                 }
 
@@ -389,8 +387,6 @@ KISSY.add(function (S, Event, UA, Node, Overlay, ResizePlugin) {
             });
 
         });
-
-
     });
 }, {
     requires: "event,ua,node,overlay,component/plugin/resize".split(',')

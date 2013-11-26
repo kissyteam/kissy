@@ -385,107 +385,107 @@ if (! _$jscoverage['/lang/escape.js'].branchData) {
   _$jscoverage['/lang/escape.js'].branchData['252'][1] = new BranchData();
 }
 _$jscoverage['/lang/escape.js'].branchData['252'][1].init(25, 19, 'S.isArray(ret[key])');
-function visit149_252_1(result) {
+function visit148_252_1(result) {
   _$jscoverage['/lang/escape.js'].branchData['252'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/escape.js'].branchData['251'][1].init(778, 10, 'key in ret');
-function visit148_251_1(result) {
+function visit147_251_1(result) {
   _$jscoverage['/lang/escape.js'].branchData['251'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/escape.js'].branchData['247'][1].init(438, 21, 'S.endsWith(key, \'[]\')');
-function visit147_247_1(result) {
+function visit146_247_1(result) {
   _$jscoverage['/lang/escape.js'].branchData['247'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/escape.js'].branchData['234'][1].init(69, 13, 'eqIndex == -1');
-function visit146_234_1(result) {
+function visit145_234_1(result) {
   _$jscoverage['/lang/escape.js'].branchData['234'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/escape.js'].branchData['232'][1].init(383, 7, 'i < len');
-function visit145_232_1(result) {
+function visit144_232_1(result) {
   _$jscoverage['/lang/escape.js'].branchData['232'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/escape.js'].branchData['224'][1].init(155, 8, 'eq || EQ');
-function visit144_224_1(result) {
+function visit143_224_1(result) {
   _$jscoverage['/lang/escape.js'].branchData['224'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/escape.js'].branchData['223'][1].init(126, 10, 'sep || SEP');
-function visit143_223_1(result) {
+function visit142_223_1(result) {
   _$jscoverage['/lang/escape.js'].branchData['223'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/escape.js'].branchData['220'][2].init(17, 22, 'typeof str != \'string\'');
-function visit142_220_2(result) {
+function visit141_220_2(result) {
   _$jscoverage['/lang/escape.js'].branchData['220'][2].ranCondition(result);
   return result;
 }_$jscoverage['/lang/escape.js'].branchData['220'][1].init(17, 46, 'typeof str != \'string\' || !(str = S.trim(str))');
-function visit141_220_1(result) {
+function visit140_220_1(result) {
   _$jscoverage['/lang/escape.js'].branchData['220'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/escape.js'].branchData['190'][1].init(117, 15, 'v !== undefined');
-function visit140_190_1(result) {
+function visit139_190_1(result) {
   _$jscoverage['/lang/escape.js'].branchData['190'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/escape.js'].branchData['188'][1].init(65, 20, 'isValidParamValue(v)');
-function visit139_188_1(result) {
+function visit138_188_1(result) {
   _$jscoverage['/lang/escape.js'].branchData['188'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/escape.js'].branchData['186'][1].init(51, 7, 'i < len');
-function visit138_186_1(result) {
+function visit137_186_1(result) {
   _$jscoverage['/lang/escape.js'].branchData['186'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/escape.js'].branchData['185'][1].init(444, 28, 'S.isArray(val) && val.length');
-function visit137_185_1(result) {
+function visit136_185_1(result) {
   _$jscoverage['/lang/escape.js'].branchData['185'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/escape.js'].branchData['179'][1].init(60, 17, 'val !== undefined');
-function visit136_179_1(result) {
+function visit135_179_1(result) {
   _$jscoverage['/lang/escape.js'].branchData['179'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/escape.js'].branchData['177'][1].init(136, 22, 'isValidParamValue(val)');
-function visit135_177_1(result) {
+function visit134_177_1(result) {
   _$jscoverage['/lang/escape.js'].branchData['177'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/escape.js'].branchData['166'][1].init(74, 28, 'serializeArray === undefined');
-function visit134_166_1(result) {
+function visit133_166_1(result) {
   _$jscoverage['/lang/escape.js'].branchData['166'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/escape.js'].branchData['165'][1].init(48, 8, 'eq || EQ');
-function visit133_165_1(result) {
+function visit132_165_1(result) {
   _$jscoverage['/lang/escape.js'].branchData['165'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/escape.js'].branchData['164'][1].init(19, 10, 'sep || SEP');
-function visit132_164_1(result) {
+function visit131_164_1(result) {
   _$jscoverage['/lang/escape.js'].branchData['164'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/escape.js'].branchData['142'][1].init(24, 42, 'htmlEntities[m] || String.fromCharCode(+n)');
-function visit131_142_1(result) {
+function visit130_142_1(result) {
   _$jscoverage['/lang/escape.js'].branchData['142'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/escape.js'].branchData['59'][1].init(13, 11, 'unEscapeReg');
-function visit130_59_1(result) {
+function visit129_59_1(result) {
   _$jscoverage['/lang/escape.js'].branchData['59'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/escape.js'].branchData['47'][1].init(13, 9, 'escapeReg');
-function visit129_47_1(result) {
+function visit128_47_1(result) {
   _$jscoverage['/lang/escape.js'].branchData['47'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/escape.js'].branchData['43'][5].init(166, 16, 't !== \'function\'');
-function visit128_43_5(result) {
+function visit127_43_5(result) {
   _$jscoverage['/lang/escape.js'].branchData['43'][5].ranCondition(result);
   return result;
 }_$jscoverage['/lang/escape.js'].branchData['43'][4].init(148, 14, 't !== \'object\'');
-function visit127_43_4(result) {
+function visit126_43_4(result) {
   _$jscoverage['/lang/escape.js'].branchData['43'][4].ranCondition(result);
   return result;
 }_$jscoverage['/lang/escape.js'].branchData['43'][3].init(148, 34, 't !== \'object\' && t !== \'function\'');
-function visit126_43_3(result) {
+function visit125_43_3(result) {
   _$jscoverage['/lang/escape.js'].branchData['43'][3].ranCondition(result);
   return result;
 }_$jscoverage['/lang/escape.js'].branchData['43'][2].init(132, 11, 'val == null');
-function visit125_43_2(result) {
+function visit124_43_2(result) {
   _$jscoverage['/lang/escape.js'].branchData['43'][2].ranCondition(result);
   return result;
 }_$jscoverage['/lang/escape.js'].branchData['43'][1].init(132, 51, 'val == null || (t !== \'object\' && t !== \'function\')');
-function visit124_43_1(result) {
+function visit123_43_1(result) {
   _$jscoverage['/lang/escape.js'].branchData['43'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/escape.js'].lineData[7]++;
@@ -515,13 +515,13 @@ function visit124_43_1(result) {
     _$jscoverage['/lang/escape.js'].lineData[41]++;
     var t = typeof val;
     _$jscoverage['/lang/escape.js'].lineData[43]++;
-    return visit124_43_1(visit125_43_2(val == null) || (visit126_43_3(visit127_43_4(t !== 'object') && visit128_43_5(t !== 'function'))));
+    return visit123_43_1(visit124_43_2(val == null) || (visit125_43_3(visit126_43_4(t !== 'object') && visit127_43_5(t !== 'function'))));
   }
   _$jscoverage['/lang/escape.js'].lineData[46]++;
   function getEscapeReg() {
     _$jscoverage['/lang/escape.js'].functionData[3]++;
     _$jscoverage['/lang/escape.js'].lineData[47]++;
-    if (visit129_47_1(escapeReg)) {
+    if (visit128_47_1(escapeReg)) {
       _$jscoverage['/lang/escape.js'].lineData[48]++;
       return escapeReg;
     }
@@ -542,7 +542,7 @@ function visit124_43_1(result) {
   function getUnEscapeReg() {
     _$jscoverage['/lang/escape.js'].functionData[5]++;
     _$jscoverage['/lang/escape.js'].lineData[59]++;
-    if (visit130_59_1(unEscapeReg)) {
+    if (visit129_59_1(unEscapeReg)) {
       _$jscoverage['/lang/escape.js'].lineData[60]++;
       return unEscapeReg;
     }
@@ -600,17 +600,17 @@ function visit124_43_1(result) {
   return str.replace(getUnEscapeReg(), function(m, n) {
   _$jscoverage['/lang/escape.js'].functionData[15]++;
   _$jscoverage['/lang/escape.js'].lineData[142]++;
-  return visit131_142_1(htmlEntities[m] || String.fromCharCode(+n));
+  return visit130_142_1(htmlEntities[m] || String.fromCharCode(+n));
 });
 }, 
   param: function(o, sep, eq, serializeArray) {
   _$jscoverage['/lang/escape.js'].functionData[16]++;
   _$jscoverage['/lang/escape.js'].lineData[164]++;
-  sep = visit132_164_1(sep || SEP);
+  sep = visit131_164_1(sep || SEP);
   _$jscoverage['/lang/escape.js'].lineData[165]++;
-  eq = visit133_165_1(eq || EQ);
+  eq = visit132_165_1(eq || EQ);
   _$jscoverage['/lang/escape.js'].lineData[166]++;
-  if (visit134_166_1(serializeArray === undefined)) {
+  if (visit133_166_1(serializeArray === undefined)) {
     _$jscoverage['/lang/escape.js'].lineData[167]++;
     serializeArray = TRUE;
   }
@@ -623,11 +623,11 @@ function visit124_43_1(result) {
     _$jscoverage['/lang/escape.js'].lineData[174]++;
     key = encode(key);
     _$jscoverage['/lang/escape.js'].lineData[177]++;
-    if (visit135_177_1(isValidParamValue(val))) {
+    if (visit134_177_1(isValidParamValue(val))) {
       _$jscoverage['/lang/escape.js'].lineData[178]++;
       buf.push(key);
       _$jscoverage['/lang/escape.js'].lineData[179]++;
-      if (visit136_179_1(val !== undefined)) {
+      if (visit135_179_1(val !== undefined)) {
         _$jscoverage['/lang/escape.js'].lineData[180]++;
         buf.push(eq, encode(val + EMPTY));
       }
@@ -635,17 +635,17 @@ function visit124_43_1(result) {
       buf.push(sep);
     } else {
       _$jscoverage['/lang/escape.js'].lineData[185]++;
-      if (visit137_185_1(S.isArray(val) && val.length)) {
+      if (visit136_185_1(S.isArray(val) && val.length)) {
         _$jscoverage['/lang/escape.js'].lineData[186]++;
-        for (i = 0 , len = val.length; visit138_186_1(i < len); ++i) {
+        for (i = 0 , len = val.length; visit137_186_1(i < len); ++i) {
           _$jscoverage['/lang/escape.js'].lineData[187]++;
           v = val[i];
           _$jscoverage['/lang/escape.js'].lineData[188]++;
-          if (visit139_188_1(isValidParamValue(v))) {
+          if (visit138_188_1(isValidParamValue(v))) {
             _$jscoverage['/lang/escape.js'].lineData[189]++;
             buf.push(key, (serializeArray ? encode('[]') : EMPTY));
             _$jscoverage['/lang/escape.js'].lineData[190]++;
-            if (visit140_190_1(v !== undefined)) {
+            if (visit139_190_1(v !== undefined)) {
               _$jscoverage['/lang/escape.js'].lineData[191]++;
               buf.push(eq, encode(v + EMPTY));
             }
@@ -664,22 +664,22 @@ function visit124_43_1(result) {
   unparam: function(str, sep, eq) {
   _$jscoverage['/lang/escape.js'].functionData[17]++;
   _$jscoverage['/lang/escape.js'].lineData[220]++;
-  if (visit141_220_1(visit142_220_2(typeof str != 'string') || !(str = S.trim(str)))) {
+  if (visit140_220_1(visit141_220_2(typeof str != 'string') || !(str = S.trim(str)))) {
     _$jscoverage['/lang/escape.js'].lineData[221]++;
     return {};
   }
   _$jscoverage['/lang/escape.js'].lineData[223]++;
-  sep = visit143_223_1(sep || SEP);
+  sep = visit142_223_1(sep || SEP);
   _$jscoverage['/lang/escape.js'].lineData[224]++;
-  eq = visit144_224_1(eq || EQ);
+  eq = visit143_224_1(eq || EQ);
   _$jscoverage['/lang/escape.js'].lineData[225]++;
   var ret = {}, eqIndex, decode = S.urlDecode, pairs = str.split(sep), key, val, i = 0, len = pairs.length;
   _$jscoverage['/lang/escape.js'].lineData[232]++;
-  for (; visit145_232_1(i < len); ++i) {
+  for (; visit144_232_1(i < len); ++i) {
     _$jscoverage['/lang/escape.js'].lineData[233]++;
     eqIndex = pairs[i].indexOf(eq);
     _$jscoverage['/lang/escape.js'].lineData[234]++;
-    if (visit146_234_1(eqIndex == -1)) {
+    if (visit145_234_1(eqIndex == -1)) {
       _$jscoverage['/lang/escape.js'].lineData[235]++;
       key = decode(pairs[i]);
       _$jscoverage['/lang/escape.js'].lineData[236]++;
@@ -700,15 +700,15 @@ function visit124_43_1(result) {
   logger.error(e);
 }
       _$jscoverage['/lang/escape.js'].lineData[247]++;
-      if (visit147_247_1(S.endsWith(key, '[]'))) {
+      if (visit146_247_1(S.endsWith(key, '[]'))) {
         _$jscoverage['/lang/escape.js'].lineData[248]++;
         key = key.substring(0, key.length - 2);
       }
     }
     _$jscoverage['/lang/escape.js'].lineData[251]++;
-    if (visit148_251_1(key in ret)) {
+    if (visit147_251_1(key in ret)) {
       _$jscoverage['/lang/escape.js'].lineData[252]++;
-      if (visit149_252_1(S.isArray(ret[key]))) {
+      if (visit148_252_1(S.isArray(ret[key]))) {
         _$jscoverage['/lang/escape.js'].lineData[253]++;
         ret[key].push(val);
       } else {

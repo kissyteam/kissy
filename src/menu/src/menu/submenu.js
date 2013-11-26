@@ -33,7 +33,6 @@ KISSY.add(function (S, require) {
      * @class KISSY.Menu.SubMenu
      */
     return MenuItem.extend({
-
             isSubMenu: 1,
 
             clearShowPopupMenuTimers: function () {

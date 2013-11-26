@@ -231,37 +231,38 @@ if (! _$jscoverage['/features.js']) {
   _$jscoverage['/features.js'].lineData = [];
   _$jscoverage['/features.js'].lineData[6] = 0;
   _$jscoverage['/features.js'].lineData[7] = 0;
+  _$jscoverage['/features.js'].lineData[35] = 0;
   _$jscoverage['/features.js'].lineData[36] = 0;
-  _$jscoverage['/features.js'].lineData[37] = 0;
-  _$jscoverage['/features.js'].lineData[40] = 0;
-  _$jscoverage['/features.js'].lineData[42] = 0;
+  _$jscoverage['/features.js'].lineData[39] = 0;
+  _$jscoverage['/features.js'].lineData[41] = 0;
+  _$jscoverage['/features.js'].lineData[43] = 0;
   _$jscoverage['/features.js'].lineData[44] = 0;
-  _$jscoverage['/features.js'].lineData[45] = 0;
-  _$jscoverage['/features.js'].lineData[47] = 0;
+  _$jscoverage['/features.js'].lineData[46] = 0;
+  _$jscoverage['/features.js'].lineData[48] = 0;
   _$jscoverage['/features.js'].lineData[49] = 0;
-  _$jscoverage['/features.js'].lineData[50] = 0;
-  _$jscoverage['/features.js'].lineData[52] = 0;
+  _$jscoverage['/features.js'].lineData[51] = 0;
+  _$jscoverage['/features.js'].lineData[53] = 0;
   _$jscoverage['/features.js'].lineData[54] = 0;
-  _$jscoverage['/features.js'].lineData[55] = 0;
+  _$jscoverage['/features.js'].lineData[58] = 0;
   _$jscoverage['/features.js'].lineData[59] = 0;
   _$jscoverage['/features.js'].lineData[60] = 0;
   _$jscoverage['/features.js'].lineData[61] = 0;
-  _$jscoverage['/features.js'].lineData[62] = 0;
-  _$jscoverage['/features.js'].lineData[71] = 0;
-  _$jscoverage['/features.js'].lineData[79] = 0;
-  _$jscoverage['/features.js'].lineData[88] = 0;
-  _$jscoverage['/features.js'].lineData[96] = 0;
-  _$jscoverage['/features.js'].lineData[104] = 0;
-  _$jscoverage['/features.js'].lineData[115] = 0;
-  _$jscoverage['/features.js'].lineData[123] = 0;
-  _$jscoverage['/features.js'].lineData[131] = 0;
-  _$jscoverage['/features.js'].lineData[139] = 0;
-  _$jscoverage['/features.js'].lineData[148] = 0;
-  _$jscoverage['/features.js'].lineData[158] = 0;
-  _$jscoverage['/features.js'].lineData[166] = 0;
-  _$jscoverage['/features.js'].lineData[174] = 0;
-  _$jscoverage['/features.js'].lineData[182] = 0;
-  _$jscoverage['/features.js'].lineData[190] = 0;
+  _$jscoverage['/features.js'].lineData[70] = 0;
+  _$jscoverage['/features.js'].lineData[78] = 0;
+  _$jscoverage['/features.js'].lineData[87] = 0;
+  _$jscoverage['/features.js'].lineData[95] = 0;
+  _$jscoverage['/features.js'].lineData[99] = 0;
+  _$jscoverage['/features.js'].lineData[107] = 0;
+  _$jscoverage['/features.js'].lineData[118] = 0;
+  _$jscoverage['/features.js'].lineData[126] = 0;
+  _$jscoverage['/features.js'].lineData[134] = 0;
+  _$jscoverage['/features.js'].lineData[142] = 0;
+  _$jscoverage['/features.js'].lineData[151] = 0;
+  _$jscoverage['/features.js'].lineData[161] = 0;
+  _$jscoverage['/features.js'].lineData[169] = 0;
+  _$jscoverage['/features.js'].lineData[177] = 0;
+  _$jscoverage['/features.js'].lineData[185] = 0;
+  _$jscoverage['/features.js'].lineData[193] = 0;
 }
 if (! _$jscoverage['/features.js'].functionData) {
   _$jscoverage['/features.js'].functionData = [];
@@ -281,232 +282,243 @@ if (! _$jscoverage['/features.js'].functionData) {
   _$jscoverage['/features.js'].functionData[13] = 0;
   _$jscoverage['/features.js'].functionData[14] = 0;
   _$jscoverage['/features.js'].functionData[15] = 0;
+  _$jscoverage['/features.js'].functionData[16] = 0;
 }
 if (! _$jscoverage['/features.js'].branchData) {
   _$jscoverage['/features.js'].branchData = {};
   _$jscoverage['/features.js'].branchData['19'] = [];
   _$jscoverage['/features.js'].branchData['19'][1] = new BranchData();
-  _$jscoverage['/features.js'].branchData['33'] = [];
-  _$jscoverage['/features.js'].branchData['33'][1] = new BranchData();
-  _$jscoverage['/features.js'].branchData['34'] = [];
-  _$jscoverage['/features.js'].branchData['34'][1] = new BranchData();
+  _$jscoverage['/features.js'].branchData['32'] = [];
+  _$jscoverage['/features.js'].branchData['32'][1] = new BranchData();
+  _$jscoverage['/features.js'].branchData['35'] = [];
+  _$jscoverage['/features.js'].branchData['35'][1] = new BranchData();
   _$jscoverage['/features.js'].branchData['36'] = [];
   _$jscoverage['/features.js'].branchData['36'][1] = new BranchData();
-  _$jscoverage['/features.js'].branchData['37'] = [];
-  _$jscoverage['/features.js'].branchData['37'][1] = new BranchData();
-  _$jscoverage['/features.js'].branchData['39'] = [];
-  _$jscoverage['/features.js'].branchData['39'][1] = new BranchData();
-  _$jscoverage['/features.js'].branchData['47'] = [];
-  _$jscoverage['/features.js'].branchData['47'][1] = new BranchData();
-  _$jscoverage['/features.js'].branchData['47'][2] = new BranchData();
-  _$jscoverage['/features.js'].branchData['52'] = [];
-  _$jscoverage['/features.js'].branchData['52'][1] = new BranchData();
-  _$jscoverage['/features.js'].branchData['52'][2] = new BranchData();
-  _$jscoverage['/features.js'].branchData['60'] = [];
-  _$jscoverage['/features.js'].branchData['60'][1] = new BranchData();
-  _$jscoverage['/features.js'].branchData['115'] = [];
-  _$jscoverage['/features.js'].branchData['115'][1] = new BranchData();
-  _$jscoverage['/features.js'].branchData['115'][2] = new BranchData();
-  _$jscoverage['/features.js'].branchData['115'][3] = new BranchData();
-  _$jscoverage['/features.js'].branchData['123'] = [];
-  _$jscoverage['/features.js'].branchData['123'][1] = new BranchData();
-  _$jscoverage['/features.js'].branchData['131'] = [];
-  _$jscoverage['/features.js'].branchData['131'][1] = new BranchData();
-  _$jscoverage['/features.js'].branchData['148'] = [];
-  _$jscoverage['/features.js'].branchData['148'][1] = new BranchData();
-  _$jscoverage['/features.js'].branchData['158'] = [];
-  _$jscoverage['/features.js'].branchData['158'][1] = new BranchData();
-  _$jscoverage['/features.js'].branchData['158'][2] = new BranchData();
+  _$jscoverage['/features.js'].branchData['38'] = [];
+  _$jscoverage['/features.js'].branchData['38'][1] = new BranchData();
+  _$jscoverage['/features.js'].branchData['46'] = [];
+  _$jscoverage['/features.js'].branchData['46'][1] = new BranchData();
+  _$jscoverage['/features.js'].branchData['46'][2] = new BranchData();
+  _$jscoverage['/features.js'].branchData['51'] = [];
+  _$jscoverage['/features.js'].branchData['51'][1] = new BranchData();
+  _$jscoverage['/features.js'].branchData['51'][2] = new BranchData();
+  _$jscoverage['/features.js'].branchData['59'] = [];
+  _$jscoverage['/features.js'].branchData['59'][1] = new BranchData();
+  _$jscoverage['/features.js'].branchData['99'] = [];
+  _$jscoverage['/features.js'].branchData['99'][1] = new BranchData();
+  _$jscoverage['/features.js'].branchData['99'][2] = new BranchData();
+  _$jscoverage['/features.js'].branchData['118'] = [];
+  _$jscoverage['/features.js'].branchData['118'][1] = new BranchData();
+  _$jscoverage['/features.js'].branchData['118'][2] = new BranchData();
+  _$jscoverage['/features.js'].branchData['118'][3] = new BranchData();
+  _$jscoverage['/features.js'].branchData['126'] = [];
+  _$jscoverage['/features.js'].branchData['126'][1] = new BranchData();
+  _$jscoverage['/features.js'].branchData['134'] = [];
+  _$jscoverage['/features.js'].branchData['134'][1] = new BranchData();
+  _$jscoverage['/features.js'].branchData['151'] = [];
+  _$jscoverage['/features.js'].branchData['151'][1] = new BranchData();
+  _$jscoverage['/features.js'].branchData['161'] = [];
+  _$jscoverage['/features.js'].branchData['161'][1] = new BranchData();
+  _$jscoverage['/features.js'].branchData['161'][2] = new BranchData();
 }
-_$jscoverage['/features.js'].branchData['158'][2].init(29, 6, 'ie < v');
-function visit30_158_2(result) {
-  _$jscoverage['/features.js'].branchData['158'][2].ranCondition(result);
+_$jscoverage['/features.js'].branchData['161'][2].init(29, 6, 'ie < v');
+function visit29_161_2(result) {
+  _$jscoverage['/features.js'].branchData['161'][2].ranCondition(result);
   return result;
-}_$jscoverage['/features.js'].branchData['158'][1].init(23, 12, 'ie && ie < v');
-function visit29_158_1(result) {
-  _$jscoverage['/features.js'].branchData['158'][1].ranCondition(result);
+}_$jscoverage['/features.js'].branchData['161'][1].init(23, 12, 'ie && ie < v');
+function visit28_161_1(result) {
+  _$jscoverage['/features.js'].branchData['161'][1].ranCondition(result);
   return result;
-}_$jscoverage['/features.js'].branchData['148'][1].init(67, 74, '!S.config(\'dom/selector\') && isQuerySelectorSupportedState');
-function visit28_148_1(result) {
-  _$jscoverage['/features.js'].branchData['148'][1].ranCondition(result);
+}_$jscoverage['/features.js'].branchData['151'][1].init(67, 74, '!S.config(\'dom/selector\') && isQuerySelectorSupportedState');
+function visit27_151_1(result) {
+  _$jscoverage['/features.js'].branchData['151'][1].ranCondition(result);
   return result;
-}_$jscoverage['/features.js'].branchData['131'][1].init(20, 29, 'transformPrefix !== undefined');
-function visit27_131_1(result) {
-  _$jscoverage['/features.js'].branchData['131'][1].ranCondition(result);
+}_$jscoverage['/features.js'].branchData['134'][1].init(20, 29, 'transformPrefix !== undefined');
+function visit26_134_1(result) {
+  _$jscoverage['/features.js'].branchData['134'][1].ranCondition(result);
   return result;
-}_$jscoverage['/features.js'].branchData['123'][1].init(20, 30, 'transitionPrefix !== undefined');
-function visit26_123_1(result) {
-  _$jscoverage['/features.js'].branchData['123'][1].ranCondition(result);
+}_$jscoverage['/features.js'].branchData['126'][1].init(20, 30, 'transitionPrefix !== undefined');
+function visit25_126_1(result) {
+  _$jscoverage['/features.js'].branchData['126'][1].ranCondition(result);
   return result;
-}_$jscoverage['/features.js'].branchData['115'][3].init(193, 6, 'ie > 7');
-function visit25_115_3(result) {
-  _$jscoverage['/features.js'].branchData['115'][3].ranCondition(result);
+}_$jscoverage['/features.js'].branchData['118'][3].init(193, 6, 'ie > 7');
+function visit24_118_3(result) {
+  _$jscoverage['/features.js'].branchData['118'][3].ranCondition(result);
   return result;
-}_$jscoverage['/features.js'].branchData['115'][2].init(186, 13, '!ie || ie > 7');
-function visit24_115_2(result) {
-  _$jscoverage['/features.js'].branchData['115'][2].ranCondition(result);
+}_$jscoverage['/features.js'].branchData['118'][2].init(186, 13, '!ie || ie > 7');
+function visit23_118_2(result) {
+  _$jscoverage['/features.js'].branchData['118'][2].ranCondition(result);
   return result;
-}_$jscoverage['/features.js'].branchData['115'][1].init(159, 41, '(\'onhashchange\' in win) && (!ie || ie > 7)');
-function visit23_115_1(result) {
-  _$jscoverage['/features.js'].branchData['115'][1].ranCondition(result);
+}_$jscoverage['/features.js'].branchData['118'][1].init(159, 41, '(\'onhashchange\' in win) && (!ie || ie > 7)');
+function visit22_118_1(result) {
+  _$jscoverage['/features.js'].branchData['118'][1].ranCondition(result);
   return result;
-}_$jscoverage['/features.js'].branchData['60'][1].init(903, 19, 'win.navigator || {}');
-function visit22_60_1(result) {
-  _$jscoverage['/features.js'].branchData['60'][1].ranCondition(result);
+}_$jscoverage['/features.js'].branchData['99'][2].init(50, 42, 'isPointerSupported || isMsPointerSupported');
+function visit21_99_2(result) {
+  _$jscoverage['/features.js'].branchData['99'][2].ranCondition(result);
   return result;
-}_$jscoverage['/features.js'].branchData['52'][2].init(361, 29, 'transformPrefix === undefined');
-function visit21_52_2(result) {
-  _$jscoverage['/features.js'].branchData['52'][2].ranCondition(result);
+}_$jscoverage['/features.js'].branchData['99'][1].init(20, 72, 'isTouchEventSupportedState || isPointerSupported || isMsPointerSupported');
+function visit20_99_1(result) {
+  _$jscoverage['/features.js'].branchData['99'][1].ranCondition(result);
   return result;
-}_$jscoverage['/features.js'].branchData['52'][1].init(361, 82, 'transformPrefix === undefined && transform in documentElementStyle');
-function visit20_52_1(result) {
-  _$jscoverage['/features.js'].branchData['52'][1].ranCondition(result);
+}_$jscoverage['/features.js'].branchData['59'][1].init(903, 19, 'win.navigator || {}');
+function visit19_59_1(result) {
+  _$jscoverage['/features.js'].branchData['59'][1].ranCondition(result);
   return result;
-}_$jscoverage['/features.js'].branchData['47'][2].init(154, 30, 'transitionPrefix === undefined');
-function visit19_47_2(result) {
-  _$jscoverage['/features.js'].branchData['47'][2].ranCondition(result);
+}_$jscoverage['/features.js'].branchData['51'][2].init(361, 29, 'transformPrefix === undefined');
+function visit18_51_2(result) {
+  _$jscoverage['/features.js'].branchData['51'][2].ranCondition(result);
   return result;
-}_$jscoverage['/features.js'].branchData['47'][1].init(154, 84, 'transitionPrefix === undefined && transition in documentElementStyle');
-function visit18_47_1(result) {
-  _$jscoverage['/features.js'].branchData['47'][1].ranCondition(result);
+}_$jscoverage['/features.js'].branchData['51'][1].init(361, 82, 'transformPrefix === undefined && transform in documentElementStyle');
+function visit17_51_1(result) {
+  _$jscoverage['/features.js'].branchData['51'][1].ranCondition(result);
   return result;
-}_$jscoverage['/features.js'].branchData['39'][1].init(70, 7, 'ie != 8');
-function visit17_39_1(result) {
-  _$jscoverage['/features.js'].branchData['39'][1].ranCondition(result);
+}_$jscoverage['/features.js'].branchData['46'][2].init(154, 30, 'transitionPrefix === undefined');
+function visit16_46_2(result) {
+  _$jscoverage['/features.js'].branchData['46'][2].ranCondition(result);
   return result;
-}_$jscoverage['/features.js'].branchData['37'][1].init(13, 78, 'documentElement.querySelector && ie != 8');
-function visit16_37_1(result) {
-  _$jscoverage['/features.js'].branchData['37'][1].ranCondition(result);
+}_$jscoverage['/features.js'].branchData['46'][1].init(154, 84, 'transitionPrefix === undefined && transition in documentElementStyle');
+function visit15_46_1(result) {
+  _$jscoverage['/features.js'].branchData['46'][1].ranCondition(result);
   return result;
-}_$jscoverage['/features.js'].branchData['36'][1].init(860, 15, 'documentElement');
-function visit15_36_1(result) {
+}_$jscoverage['/features.js'].branchData['38'][1].init(70, 7, 'ie != 8');
+function visit14_38_1(result) {
+  _$jscoverage['/features.js'].branchData['38'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/features.js'].branchData['36'][1].init(13, 78, 'documentElement.querySelector && ie != 8');
+function visit13_36_1(result) {
   _$jscoverage['/features.js'].branchData['36'][1].ranCondition(result);
   return result;
-}_$jscoverage['/features.js'].branchData['34'][1].init(822, 21, 'documentMode || UA.ie');
-function visit14_34_1(result) {
-  _$jscoverage['/features.js'].branchData['34'][1].ranCondition(result);
+}_$jscoverage['/features.js'].branchData['35'][1].init(807, 15, 'documentElement');
+function visit12_35_1(result) {
+  _$jscoverage['/features.js'].branchData['35'][1].ranCondition(result);
   return result;
-}_$jscoverage['/features.js'].branchData['33'][1].init(766, 41, '(\'ontouchstart\' in doc) && !(UA.phantomjs)');
-function visit13_33_1(result) {
-  _$jscoverage['/features.js'].branchData['33'][1].ranCondition(result);
+}_$jscoverage['/features.js'].branchData['32'][1].init(725, 41, '(\'ontouchstart\' in doc) && !(UA.phantomjs)');
+function visit11_32_1(result) {
+  _$jscoverage['/features.js'].branchData['32'][1].ranCondition(result);
   return result;
 }_$jscoverage['/features.js'].branchData['19'][1].init(245, 18, 'win.document || {}');
-function visit12_19_1(result) {
+function visit10_19_1(result) {
   _$jscoverage['/features.js'].branchData['19'][1].ranCondition(result);
   return result;
 }_$jscoverage['/features.js'].lineData[6]++;
 (function(S, undefined) {
   _$jscoverage['/features.js'].functionData[0]++;
   _$jscoverage['/features.js'].lineData[7]++;
-  var Env = S.Env, win = Env.host, UA = S.UA, VENDORS = ['', 'Webkit', 'Moz', 'O', 'ms'], doc = visit12_19_1(win.document || {}), documentMode = doc.documentMode, isMsPointerSupported, isPointerSupported, transitionProperty, transformProperty, transitionPrefix, transformPrefix, documentElement = doc.documentElement, documentElementStyle, isClassListSupportedState = true, isQuerySelectorSupportedState = false, isTouchEventSupportedState = visit13_33_1(('ontouchstart' in doc) && !(UA.phantomjs)), ie = visit14_34_1(documentMode || UA.ie);
-  _$jscoverage['/features.js'].lineData[36]++;
-  if (visit15_36_1(documentElement)) {
-    _$jscoverage['/features.js'].lineData[37]++;
-    if (visit16_37_1(documentElement.querySelector && visit17_39_1(ie != 8))) {
-      _$jscoverage['/features.js'].lineData[40]++;
+  var Env = S.Env, win = Env.host, UA = S.UA, VENDORS = ['', 'Webkit', 'Moz', 'O', 'ms'], doc = visit10_19_1(win.document || {}), isMsPointerSupported, isPointerSupported, transitionProperty, transformProperty, transitionPrefix, transformPrefix, documentElement = doc.documentElement, documentElementStyle, isClassListSupportedState = true, isQuerySelectorSupportedState = false, isTouchEventSupportedState = visit11_32_1(('ontouchstart' in doc) && !(UA.phantomjs)), ie = UA.ieMode;
+  _$jscoverage['/features.js'].lineData[35]++;
+  if (visit12_35_1(documentElement)) {
+    _$jscoverage['/features.js'].lineData[36]++;
+    if (visit13_36_1(documentElement.querySelector && visit14_38_1(ie != 8))) {
+      _$jscoverage['/features.js'].lineData[39]++;
       isQuerySelectorSupportedState = true;
     }
-    _$jscoverage['/features.js'].lineData[42]++;
+    _$jscoverage['/features.js'].lineData[41]++;
     documentElementStyle = documentElement.style;
-    _$jscoverage['/features.js'].lineData[44]++;
+    _$jscoverage['/features.js'].lineData[43]++;
     S.each(VENDORS, function(val) {
   _$jscoverage['/features.js'].functionData[1]++;
-  _$jscoverage['/features.js'].lineData[45]++;
+  _$jscoverage['/features.js'].lineData[44]++;
   var transition = val ? val + 'Transition' : 'transition', transform = val ? val + 'Transform' : 'transform';
-  _$jscoverage['/features.js'].lineData[47]++;
-  if (visit18_47_1(visit19_47_2(transitionPrefix === undefined) && transition in documentElementStyle)) {
-    _$jscoverage['/features.js'].lineData[49]++;
+  _$jscoverage['/features.js'].lineData[46]++;
+  if (visit15_46_1(visit16_46_2(transitionPrefix === undefined) && transition in documentElementStyle)) {
+    _$jscoverage['/features.js'].lineData[48]++;
     transitionPrefix = val;
-    _$jscoverage['/features.js'].lineData[50]++;
+    _$jscoverage['/features.js'].lineData[49]++;
     transitionProperty = transition;
   }
-  _$jscoverage['/features.js'].lineData[52]++;
-  if (visit20_52_1(visit21_52_2(transformPrefix === undefined) && transform in documentElementStyle)) {
-    _$jscoverage['/features.js'].lineData[54]++;
+  _$jscoverage['/features.js'].lineData[51]++;
+  if (visit17_51_1(visit18_51_2(transformPrefix === undefined) && transform in documentElementStyle)) {
+    _$jscoverage['/features.js'].lineData[53]++;
     transformPrefix = val;
-    _$jscoverage['/features.js'].lineData[55]++;
+    _$jscoverage['/features.js'].lineData[54]++;
     transformProperty = transform;
   }
 });
-    _$jscoverage['/features.js'].lineData[59]++;
+    _$jscoverage['/features.js'].lineData[58]++;
     isClassListSupportedState = 'classList' in documentElement;
+    _$jscoverage['/features.js'].lineData[59]++;
+    var navigator = (visit19_59_1(win.navigator || {}));
     _$jscoverage['/features.js'].lineData[60]++;
-    var navigator = (visit22_60_1(win.navigator || {}));
-    _$jscoverage['/features.js'].lineData[61]++;
     isMsPointerSupported = "msPointerEnabled" in navigator;
-    _$jscoverage['/features.js'].lineData[62]++;
+    _$jscoverage['/features.js'].lineData[61]++;
     isPointerSupported = "pointerEnabled" in navigator;
   }
-  _$jscoverage['/features.js'].lineData[71]++;
+  _$jscoverage['/features.js'].lineData[70]++;
   S.Features = {
   isMsPointerSupported: function() {
   _$jscoverage['/features.js'].functionData[2]++;
-  _$jscoverage['/features.js'].lineData[79]++;
+  _$jscoverage['/features.js'].lineData[78]++;
   return isMsPointerSupported;
 }, 
   isPointerSupported: function() {
   _$jscoverage['/features.js'].functionData[3]++;
-  _$jscoverage['/features.js'].lineData[88]++;
+  _$jscoverage['/features.js'].lineData[87]++;
   return isPointerSupported;
 }, 
   isTouchEventSupported: function() {
   _$jscoverage['/features.js'].functionData[4]++;
-  _$jscoverage['/features.js'].lineData[96]++;
+  _$jscoverage['/features.js'].lineData[95]++;
   return isTouchEventSupportedState;
 }, 
-  isDeviceMotionSupported: function() {
+  isTouchGestureSupported: function() {
   _$jscoverage['/features.js'].functionData[5]++;
-  _$jscoverage['/features.js'].lineData[104]++;
+  _$jscoverage['/features.js'].lineData[99]++;
+  return visit20_99_1(isTouchEventSupportedState || visit21_99_2(isPointerSupported || isMsPointerSupported));
+}, 
+  isDeviceMotionSupported: function() {
+  _$jscoverage['/features.js'].functionData[6]++;
+  _$jscoverage['/features.js'].lineData[107]++;
   return !!win['DeviceMotionEvent'];
 }, 
   'isHashChangeSupported': function() {
-  _$jscoverage['/features.js'].functionData[6]++;
-  _$jscoverage['/features.js'].lineData[115]++;
-  return visit23_115_1(('onhashchange' in win) && (visit24_115_2(!ie || visit25_115_3(ie > 7))));
+  _$jscoverage['/features.js'].functionData[7]++;
+  _$jscoverage['/features.js'].lineData[118]++;
+  return visit22_118_1(('onhashchange' in win) && (visit23_118_2(!ie || visit24_118_3(ie > 7))));
 }, 
   'isTransitionSupported': function() {
-  _$jscoverage['/features.js'].functionData[7]++;
-  _$jscoverage['/features.js'].lineData[123]++;
-  return visit26_123_1(transitionPrefix !== undefined);
+  _$jscoverage['/features.js'].functionData[8]++;
+  _$jscoverage['/features.js'].lineData[126]++;
+  return visit25_126_1(transitionPrefix !== undefined);
 }, 
   'isTransformSupported': function() {
-  _$jscoverage['/features.js'].functionData[8]++;
-  _$jscoverage['/features.js'].lineData[131]++;
-  return visit27_131_1(transformPrefix !== undefined);
+  _$jscoverage['/features.js'].functionData[9]++;
+  _$jscoverage['/features.js'].lineData[134]++;
+  return visit26_134_1(transformPrefix !== undefined);
 }, 
   'isClassListSupported': function() {
-  _$jscoverage['/features.js'].functionData[9]++;
-  _$jscoverage['/features.js'].lineData[139]++;
+  _$jscoverage['/features.js'].functionData[10]++;
+  _$jscoverage['/features.js'].lineData[142]++;
   return isClassListSupportedState;
 }, 
   'isQuerySelectorSupported': function() {
-  _$jscoverage['/features.js'].functionData[10]++;
-  _$jscoverage['/features.js'].lineData[148]++;
-  return visit28_148_1(!S.config('dom/selector') && isQuerySelectorSupportedState);
+  _$jscoverage['/features.js'].functionData[11]++;
+  _$jscoverage['/features.js'].lineData[151]++;
+  return visit27_151_1(!S.config('dom/selector') && isQuerySelectorSupportedState);
 }, 
   'isIELessThan': function(v) {
-  _$jscoverage['/features.js'].functionData[11]++;
-  _$jscoverage['/features.js'].lineData[158]++;
-  return !!(visit29_158_1(ie && visit30_158_2(ie < v)));
+  _$jscoverage['/features.js'].functionData[12]++;
+  _$jscoverage['/features.js'].lineData[161]++;
+  return !!(visit28_161_1(ie && visit29_161_2(ie < v)));
 }, 
   'getTransitionPrefix': function() {
-  _$jscoverage['/features.js'].functionData[12]++;
-  _$jscoverage['/features.js'].lineData[166]++;
+  _$jscoverage['/features.js'].functionData[13]++;
+  _$jscoverage['/features.js'].lineData[169]++;
   return transitionPrefix;
 }, 
   'getTransformPrefix': function() {
-  _$jscoverage['/features.js'].functionData[13]++;
-  _$jscoverage['/features.js'].lineData[174]++;
+  _$jscoverage['/features.js'].functionData[14]++;
+  _$jscoverage['/features.js'].lineData[177]++;
   return transformPrefix;
 }, 
   'getTransitionProperty': function() {
-  _$jscoverage['/features.js'].functionData[14]++;
-  _$jscoverage['/features.js'].lineData[182]++;
+  _$jscoverage['/features.js'].functionData[15]++;
+  _$jscoverage['/features.js'].lineData[185]++;
   return transitionProperty;
 }, 
   'getTransformProperty': function() {
-  _$jscoverage['/features.js'].functionData[15]++;
-  _$jscoverage['/features.js'].lineData[190]++;
+  _$jscoverage['/features.js'].functionData[16]++;
+  _$jscoverage['/features.js'].lineData[193]++;
   return transformProperty;
 }};
 })(KISSY);

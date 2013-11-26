@@ -3,12 +3,10 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, Event) {
-    // TODO firefox??
-    if (!window.DeviceMotionEvent || S.UA.firefox) {
+    // TODO firefox, ie11 ??
+    if (!window.DeviceMotionEvent || S.UA.firefox || S.UA.ie) {
         return;
     }
-
-    var $ = S.all;
 
     describe('shake', function () {
         it('fires', function () {
@@ -71,7 +69,7 @@ KISSY.add(function (S, Event) {
         it('does not fire if x is too small', function () {
             var called = 0, fn;
 
-            $(window).on('shake', function () {
+            Event.on(window,'shake', function () {
                 called = 1;
             });
 
@@ -124,11 +122,10 @@ KISSY.add(function (S, Event) {
             });
         });
 
-
         it('does not fire if x is not big enough', function () {
             var called = 0, fn;
 
-            $(window).on('shake', function () {
+            Event.on(window,'shake', function () {
                 called = 1;
             });
 
@@ -181,9 +178,7 @@ KISSY.add(function (S, Event) {
                 window.removeEventListener('devicemotion', fn, false);
             });
         });
-
     });
-
 }, {
     requires: ['event']
 });

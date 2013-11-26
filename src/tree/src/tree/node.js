@@ -150,7 +150,7 @@ KISSY.add(function (S, require) {
                 expanded = self.get("expanded"),
                 tree = self.get("tree");
             tree.focus();
-            self.callSuper();
+            self.callSuper(e);
             if (target.equals(self.get("expandIconEl"))) {
                 self.set("expanded", !expanded);
             } else {

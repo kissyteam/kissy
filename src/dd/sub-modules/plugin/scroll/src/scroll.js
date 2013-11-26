@@ -3,7 +3,7 @@
  * auto scroll for drag object's container
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S,require) {
+KISSY.add(function (S, require) {
     var Node = require('node'),
         DD = require('dd'),
         Base = require('base');

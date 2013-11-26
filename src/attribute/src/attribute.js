@@ -3,7 +3,7 @@
  * attribute management
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
-KISSY.add(function (S, require,exports,module) {
+KISSY.add(function (S, require, exports, module) {
     var RE_DASH = /(?:^|-)([a-z])/ig;
     var CustomEvent = require('event/custom');
     module.exports = Attribute;
@@ -223,6 +223,10 @@ KISSY.add(function (S, require,exports,module) {
         return undefined;
     }
 
+    /**
+     * attribute management
+     * @class KISSY.Attribute
+     */
     function Attribute(config) {
         var self = this,
             c = self.constructor;

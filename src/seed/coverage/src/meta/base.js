@@ -245,8 +245,8 @@ if (! _$jscoverage['/meta/base.js'].branchData) {
   _$jscoverage['/meta/base.js'].branchData['21'] = [];
   _$jscoverage['/meta/base.js'].branchData['21'][1] = new BranchData();
 }
-_$jscoverage['/meta/base.js'].branchData['21'][1].init(349, 30, 'typeof location != \'undefined\'');
-function visit515_21_1(result) {
+_$jscoverage['/meta/base.js'].branchData['21'][1].init(345, 30, 'typeof location != \'undefined\'');
+function visit514_21_1(result) {
   _$jscoverage['/meta/base.js'].branchData['21'][1].ranCondition(result);
   return result;
 }_$jscoverage['/meta/base.js'].lineData[6]++;
@@ -258,11 +258,11 @@ function visit515_21_1(result) {
   core: {
   alias: ['dom', 'event', 'io', 'anim', 'base', 'node', 'json', 'ua', 'cookie']}, 
   ajax: {
-  alias: ['io']}, 
+  alias: 'io'}, 
   'rich-base': {
-  alias: ['base']}}});
+  alias: 'base'}}});
   _$jscoverage['/meta/base.js'].lineData[21]++;
-  if (visit515_21_1(typeof location != 'undefined')) {
+  if (visit514_21_1(typeof location != 'undefined')) {
     _$jscoverage['/meta/base.js'].lineData[22]++;
     var https = S.startsWith(location.href, 'https');
     _$jscoverage['/meta/base.js'].lineData[23]++;

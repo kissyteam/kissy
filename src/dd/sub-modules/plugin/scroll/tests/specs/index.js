@@ -6,7 +6,12 @@ KISSY.add(function (S, Dom, Event, Node, DD, Scroll, IO) {
     var Draggable = DD.Draggable,
         UA = S.UA,
         $ = Node.all;
+
+
     var ie = S.UA.ieMode;
+    if (ie == 9 || ie == 11) {
+        return;
+    }
 
     describe("scroll", function () {
         var drag, dragNode, dragContainer, dragOffset, containerOffset, scrollTop = 0;

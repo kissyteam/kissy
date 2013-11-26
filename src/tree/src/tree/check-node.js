@@ -28,7 +28,7 @@ KISSY.add(function (S, require) {
 
             // 需要通知 tree 获得焦点
             tree.focus();
-            self.callSuper();
+            self.callSuper(e);
             // 点击在 +- 号，切换状态
             if (target.equals(expandIconEl)) {
                 self.set("expanded", !expanded);
@@ -43,7 +43,6 @@ KISSY.add(function (S, require) {
             } else {
                 checkState = CHECK;
             }
-
 
             self.set("checkState", checkState);
 

@@ -4,7 +4,8 @@
  */
 KISSY.add(function (S, Event, Resizable) {
     // ie9 mousemove does not fire
-    if (S.UA.ieMode == 9) {
+    var ie = S.UA.ieMode;
+    if (ie == 9 || ie == 11) {
         return;
     }
 

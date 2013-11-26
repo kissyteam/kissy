@@ -9,6 +9,11 @@ KISSY.add(function (S, Node,Event, DD, Proxy) {
         Dom = S.DOM;
     var ie = S.UA.ieMode;
 
+    // ie9 ie11 buggy in simulating mousemove
+    if (ie == 9 || ie == 11) {
+        return;
+    }
+
     describe("proxy", function () {
         var drag, dragXy, dragNode;
 

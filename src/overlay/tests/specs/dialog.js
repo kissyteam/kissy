@@ -3,10 +3,11 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(
-    function (S, Event,UA, Node, Overlay, ConstrainPlugin, DragPlugin) {
+    function (S, Event, UA, Node, Overlay, ConstrainPlugin, DragPlugin) {
         var Dom = S.DOM, $ = Node.all;
         var Gesture = Event.Gesture;
         var Dialog = Overlay.Dialog;
+        var ie = S.UA.ieMode;
 
         describe("dialog", function () {
 
@@ -18,7 +19,7 @@ KISSY.add(
                 });
             });
 
-            describe('srcNode',function(){
+            describe('srcNode', function () {
 
             });
 
@@ -58,7 +59,6 @@ KISSY.add(
 
 
             describe("完全由 javascript 创建", function () {
-
                 var d;
 
                 it("create works", function () {
@@ -101,61 +101,63 @@ KISSY.add(
                     expect(d.get("footer").html()).toBe("尾");
                 });
 
-                if (UA.ieMode !== 9) {
-                    it("应该可以拖动", function () {
-                        var xy = [d.get('x'), d.get('y')];
+                it("应该可以拖动", function () {
+                    if (ie == 9 || ie == 11) {
+                        return;
+                    }
+                    var xy = [d.get('x'), d.get('y')];
 
-                        waits(100);
+                    waits(100);
 
-                        runs(function () {
-                            jasmine.simulate(d.get("header")[0], 'mousedown', {
+                    runs(function () {
+                        jasmine.simulate(d.get("header")[0], 'mousedown', {
 
-                                clientX: xy[0] + 10,
-                                clientY: xy[1] + 10
-                            });
+                            clientX: xy[0] + 10,
+                            clientY: xy[1] + 10
                         });
+                    });
 
-                        waits(100);
-                        runs(function () {
-                            jasmine.simulate(document, 'mousemove', {
+                    waits(100);
+                    runs(function () {
+                        jasmine.simulate(document, 'mousemove', {
 
-                                clientX: xy[0] + 150,
-                                clientY: xy[1] + 150
-                            });
+                            clientX: xy[0] + 150,
+                            clientY: xy[1] + 150
                         });
-                        waits(100);
-                        runs(function () {
+                    });
+                    waits(100);
+                    runs(function () {
 
-                            jasmine.simulate(document, 'mousemove', {
+                        jasmine.simulate(document, 'mousemove', {
 
-                                clientX: xy[0] + 100,
-                                clientY: xy[1] + 100
-                            });
-
-                        });
-
-                        waits(100);
-
-                        runs(function () {
-                            jasmine.simulate(document, 'mouseup', {
-                                clientX: xy[0] + 100,
-                                clientY: xy[1] + 100
-                            });
-                        });
-
-                        runs(function () {
-                            var dxy = [d.get('x'), d.get('y')];
-                            expect(dxy[0] - xy[0]).toBeEqual(90);
-                            expect(dxy[1] - xy[1]).toBeEqual(90);
+                            clientX: xy[0] + 100,
+                            clientY: xy[1] + 100
                         });
 
                     });
+
+                    waits(100);
+
+                    runs(function () {
+                        jasmine.simulate(document, 'mouseup', {
+                            clientX: xy[0] + 100,
+                            clientY: xy[1] + 100
+                        });
+                    });
+
+                    runs(function () {
+                        var dxy = [d.get('x'), d.get('y')];
+                        expect(dxy[0] - xy[0]).toBeEqual(90);
+                        expect(dxy[1] - xy[1]).toBeEqual(90);
+                    });
+
+                });
+
+                if ((UA.ieMode == 7 || UA.ieMode == 8) && window.frameElement) {
+                    return;
                 }
 
-
-                if ((UA.ieMode == 7 || UA.ieMode == 8) &&
-                    window.frameElement ||
-                    UA.ieMode == 9) {
+                if (ie == 9 || ie == 11) {
                     return;
                 }
 
@@ -212,10 +214,8 @@ KISSY.add(
                         d.destroy();
                     });
                 });
-
             });
-
         });
-    },{
-        requires:"event,ua,node,overlay,dd/plugin/constrain,component/plugin/drag".split(',')
+    }, {
+        requires: "event,ua,node,overlay,dd/plugin/constrain,component/plugin/drag".split(',')
     });

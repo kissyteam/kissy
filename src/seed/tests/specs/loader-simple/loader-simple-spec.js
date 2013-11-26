@@ -4,18 +4,14 @@
  */
 (function (S) {
     var d = window.location.href.replace(/[^/]*$/, "") + "../specs/loader-simple";
-
     describe("loader-simple", function () {
-
         it("should load and attach custom mods correctly", function () {
-
             KISSY.config({
                 packages: [
                     {
                         name: "1.2", //包名
-                        tag: "20110323",
+                        tag: S.now(),
                         path: d //包对应路径，相对路径指相对于当前页面路径
-
                     }
                 ]
             });
@@ -48,12 +44,7 @@
             waitsFor(function () {
                 return ok;
             }, "1.2/mod never loaded");
-
-
         });
-
     });
-
-
 })(KISSY);
 

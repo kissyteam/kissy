@@ -16,7 +16,7 @@ KISSY.add(function (S, require) {
 
     var Features = S.Features;
 
-    var allowDrag = !Features.isTouchEventSupported() && !Features.isMsPointerSupported();
+    var allowDrag = !Features.isTouchGestureSupported();
 
     /**
      * @class KISSY.ScrollView.ScrollBar

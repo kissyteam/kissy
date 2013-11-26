@@ -62,10 +62,8 @@ KISSY.add(function (S, require) {
                 delegateCls = prefixCls + 'tree-node',
                 events = Gesture.tap;
 
-            events += ' ';
-
             if (!isTouchEventSupported) {
-                events += (ie && ie < 9 ? "dblclick " : "");
+                events += (ie && ie < 9 ? " dblclick " : "");
             }
 
             self.$el.delegate(events, '.' + delegateCls,

@@ -3,9 +3,9 @@
  * encapsulation of io object. as transaction object in yui3
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S,require) {
-    var Promise=require('promise'),
-        IO=require('./base');
+KISSY.add(function (S, require) {
+    var Promise = require('promise'),
+        IO = require('./base');
     var OK_CODE = 200,
         logger = S.getLogger('s/logger'),
         MULTIPLE_CHOICES = 300,
@@ -124,11 +124,13 @@ KISSY.add(function (S,require) {
              */
             getResponseHeader: function (name) {
                 var match, self = this, responseHeaders;
+                // ie8 will be lowercase for content-type
+                name = name.toLowerCase();
                 if (self.state === 2) {
                     if (!(responseHeaders = self.responseHeaders)) {
                         responseHeaders = self.responseHeaders = {};
                         while (( match = rheaders.exec(self.responseHeadersString) )) {
-                            responseHeaders[ match[1] ] = match[ 2 ];
+                            responseHeaders[ match[1].toLowerCase() ] = match[ 2 ];
                         }
                     }
                     match = responseHeaders[ name ];
@@ -201,9 +203,9 @@ KISSY.add(function (S,require) {
                             isSuccess = true;
                         } catch (e) {
                             S.log(e.stack || e, 'error');
-                            setTimeout(function(){
+                            setTimeout(function () {
                                 throw e;
-                            },0);
+                            }, 0);
                             statusText = 'parser error';
                         }
                     }

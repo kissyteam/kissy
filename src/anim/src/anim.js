@@ -3,12 +3,12 @@
  * @author yiminghe@gmail.com
  * @ignore
  */
-KISSY.add(function (S,require) {
-    var AnimBase=require('anim/base'),
-        TimerAnim=require('anim/timer'),
-        TransitionAnim=require(KISSY.Features.isTransitionSupported() ? 'anim/transition' : '');
+KISSY.add(function (S, require) {
+    var AnimBase = require('anim/base'),
+        TimerAnim = require('anim/timer');
+    var TransitionAnim = require('anim/transition?');
     var Utils = AnimBase.Utils,
-        logger= S.getLogger('s/anim'),
+        logger = S.getLogger('s/anim'),
         defaultConfig = {
             duration: 1,
             easing: 'linear'

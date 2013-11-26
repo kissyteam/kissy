@@ -22,7 +22,8 @@ KISSY.add(function (S, require) {
      * @extends KISSY.Attribute
      */
     return Attribute.extend({
-        initializer: function () {
+        constructor: function () {
+            this.callSuper.apply(this, arguments);
             var events;
             if (events = this.get("events")) {
                 this._afterEventsChange({

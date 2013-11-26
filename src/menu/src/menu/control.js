@@ -108,7 +108,6 @@ KISSY.add(function (S, require) {
          *
          */
         handleKeyDownInternal: function (e) {
-
             var self = this;
 
             // Give the highlighted control the chance to handle the key event.

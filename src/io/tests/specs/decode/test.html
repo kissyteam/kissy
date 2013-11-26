@@ -1,6 +1,7 @@
 <html>
 <head>
     <script type="text/javascript" src="/kissy/build/seed.js"></script>
+    <script type="text/javascript" src="/kissy/src/package.js"></script>
     <link rel="stylesheet" href="/kissy/tools/jasmine/jasmine.css">
     <script src="/kissy/tools/jasmine/jasmine.js"></script>
     <script src="/kissy/tools/jasmine/jasmine-html.js"></script>
@@ -23,10 +24,12 @@
 <script src="../../../src/io/xdr-flash-transport.js"></script>
 <script src="../../../src/io/sub-domain-transport.js"></script>
 <script src="../../../src/io.js"></script>
-<script src="decode-spec.js"></script>
-<script>
 
-    KISSY.use('core', function (S) {
+<script>
+    KISSY.config('packages',{
+        index:{base:'./'}
+    });
+    KISSY.use('index', function (S) {
         setTimeout(function () {
             S.ready(function () {
                 jasmine.getEnv().addReporter(new jasmine.TrivialReporter());

@@ -1,13 +1,13 @@
 describe("timeout", function () {
     var S = KISSY;
 
-    beforeEach(function(){
+    beforeEach(function () {
         S.config({
             timeout: 1
         });
     });
 
-    afterEach(function(){
+    afterEach(function () {
         S.config({
             timeout: 0
         });
@@ -17,7 +17,7 @@ describe("timeout", function () {
         S.config({
             modules: {
                 'timeout/use': {
-                    fullpath: 'http://localhost:8888/kissy/src/seed/tests/specs/timeout/use.jss'
+                    fullpath: 'http://' + location.host + '/kissy/src/seed/tests/specs/timeout/use.jss'
                 }
             }
         });
@@ -27,7 +27,7 @@ describe("timeout", function () {
                 ok = 1;
             },
             error: function () {
-                var args= S.makeArray(arguments);
+                var args = S.makeArray(arguments);
                 ok = 1;
                 error = 1;
             }
@@ -35,7 +35,7 @@ describe("timeout", function () {
         waitsFor(function () {
             return ok;
         });
-        runs(function(){
+        runs(function () {
             expect(error).toBe(1);
         });
 
@@ -50,7 +50,7 @@ describe("timeout", function () {
             },
             modules: {
                 'timeout/r2': {
-                    fullpath: 'http://localhost:8888/kissy/src/seed/tests/specs/timeout/r2.jss'
+                    fullpath: 'http://' + location.host + '/kissy/src/seed/tests/specs/timeout/r2.jss'
                 }
             }
         });
@@ -60,7 +60,7 @@ describe("timeout", function () {
                 ok = 1;
             },
             error: function () {
-                var args= S.makeArray(arguments);
+                var args = S.makeArray(arguments);
                 ok = 1;
                 error = 1;
             }
@@ -68,7 +68,7 @@ describe("timeout", function () {
         waitsFor(function () {
             return ok;
         });
-        runs(function(){
+        runs(function () {
             expect(error).toBe(1);
         });
 

@@ -17,11 +17,8 @@ KISSY.add(function (S, require) {
     return Control.extend({
         isMenuItem: 1,
 
-        // for ios, ios only has touchdown
-        handleMouseDownInternal: function (e) {
-            this.callSuper(e);
-            this.set("highlighted", true);
-        },
+        // do not set highlighted on mousedown for touch device!
+        // only set active in component/control
 
         /**
          * Perform default action when click on enter on this menuitem.
@@ -86,7 +83,6 @@ KISSY.add(function (S, require) {
         containsElement: function (element) {
             return this.view.containsElement(element);
         }
-
     }, {
         ATTRS: {
 

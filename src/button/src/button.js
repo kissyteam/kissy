@@ -3,7 +3,7 @@
  * Button control for KISSY.
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S,require,exports,module) {
+KISSY.add(function (S,require) {
     var Node=require('node'),
         Control=require('component/control'),
         ButtonRender=require('button/render');
@@ -15,7 +15,6 @@ KISSY.add(function (S,require,exports,module) {
      * @class KISSY.Button
      */
     return Control.extend({
-
         isButton: 1,
 
         bindUI: function () {

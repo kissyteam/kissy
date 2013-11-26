@@ -10,7 +10,12 @@ KISSY.add(function (S, Event, Node, DD, Droppable, IO) {
         Draggable = DD.Draggable,
         $ = Node.all;
 
+
+
     var ie = S.UA.ieMode;
+    if (ie == 9 || ie == 11) {
+        return;
+    }
 
     describe("droppable", function () {
 

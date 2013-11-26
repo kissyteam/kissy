@@ -83,7 +83,7 @@
          * @type {Boolean}
          */
         isPointerSupported: function () {
-            // ie
+            // ie11
             return isPointerSupported;
         },
 
@@ -93,6 +93,10 @@
          */
         isTouchEventSupported: function () {
             return isTouchEventSupportedState;
+        },
+
+        isTouchGestureSupported: function () {
+            return isTouchEventSupportedState || isPointerSupported || isMsPointerSupported;
         },
 
         /**

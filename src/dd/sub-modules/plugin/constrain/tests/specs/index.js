@@ -11,8 +11,13 @@ KISSY.add(function (S, Event, DD, Constrain) {
 
     var ie = S.UA.ieMode;
 
+    if (ie == 9 || ie == 11) {
+        return;
+    }
+
     describe("constrain", function () {
         var node = $("<div style='width:100px;height:200px;" +
+            "background:red;" +
             "position: absolute;left:0;top:0;'>" +
             "</div>")
             .appendTo("body");

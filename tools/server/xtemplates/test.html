@@ -19,14 +19,19 @@
 <script src="/kissy/tools/test/test.js"></script>
 
 <script>
-    var t='';
+(function(){
+    var S=KISSY,onlySrc=location.href.indexOf('onlySrc')!=-1;
+    var t;
     {{#each tests}}
-        t='{{{.}}}';
-        if(!KISSY.endsWith(t,'?coverage') && t!='/send-to-coveralls'){
+    t='{{{.}}}';
+    if(!S.endsWith(t,'?coverage') && t!='/send-to-coveralls'){
+        if(onlySrc && S.endsWith(t,'?build')){}else{
             tests.push(t);
         }
+    }
     {{/each}}
     document.write(tests.join("<br>"));
+})();
 </script>
 {{{include './footer'}}}
 </body>
