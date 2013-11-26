@@ -6,10 +6,11 @@
 KISSY.add(function (S,require) {
     var Node = require('node'),
         Base = require('base');
+    var   logger= S.getLogger('dd/ddm');
     var UA = S.UA,
         undefined=undefined,
         $ = Node.all,
-        logger= S.getLogger('dd/ddm'),
+
         win = S.Env.host,
         doc = win.document,
         $doc = $(doc),

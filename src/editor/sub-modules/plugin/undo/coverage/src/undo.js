@@ -231,11 +231,15 @@ if (! _$jscoverage['/undo.js']) {
   _$jscoverage['/undo.js'].lineData = [];
   _$jscoverage['/undo.js'].lineData[6] = 0;
   _$jscoverage['/undo.js'].lineData[7] = 0;
+  _$jscoverage['/undo.js'].lineData[8] = 0;
+  _$jscoverage['/undo.js'].lineData[9] = 0;
   _$jscoverage['/undo.js'].lineData[10] = 0;
-  _$jscoverage['/undo.js'].lineData[13] = 0;
-  _$jscoverage['/undo.js'].lineData[19] = 0;
-  _$jscoverage['/undo.js'].lineData[24] = 0;
+  _$jscoverage['/undo.js'].lineData[11] = 0;
+  _$jscoverage['/undo.js'].lineData[14] = 0;
+  _$jscoverage['/undo.js'].lineData[17] = 0;
+  _$jscoverage['/undo.js'].lineData[23] = 0;
   _$jscoverage['/undo.js'].lineData[28] = 0;
+  _$jscoverage['/undo.js'].lineData[32] = 0;
 }
 if (! _$jscoverage['/undo.js'].functionData) {
   _$jscoverage['/undo.js'].functionData = [];
@@ -247,30 +251,37 @@ if (! _$jscoverage['/undo.js'].branchData) {
   _$jscoverage['/undo.js'].branchData = {};
 }
 _$jscoverage['/undo.js'].lineData[6]++;
-KISSY.add("editor/plugin/undo", function(S, Editor, Btn, cmd) {
+KISSY.add(function(S, require) {
   _$jscoverage['/undo.js'].functionData[0]++;
   _$jscoverage['/undo.js'].lineData[7]++;
+  var Editor = require('editor');
+  _$jscoverage['/undo.js'].lineData[8]++;
+  var Btn = require('./undo/btn');
+  _$jscoverage['/undo.js'].lineData[9]++;
+  var cmd = require('./undo/cmd');
+  _$jscoverage['/undo.js'].lineData[10]++;
+  require('./button');
+  _$jscoverage['/undo.js'].lineData[11]++;
   function undo() {
     _$jscoverage['/undo.js'].functionData[1]++;
   }
-  _$jscoverage['/undo.js'].lineData[10]++;
+  _$jscoverage['/undo.js'].lineData[14]++;
   S.augment(undo, {
   pluginRenderUI: function(editor) {
   _$jscoverage['/undo.js'].functionData[2]++;
-  _$jscoverage['/undo.js'].lineData[13]++;
+  _$jscoverage['/undo.js'].lineData[17]++;
   editor.addButton("undo", {
   mode: Editor.Mode.WYSIWYG_MODE, 
   tooltip: "\u64a4\u9500", 
   editor: editor}, Btn.UndoBtn);
-  _$jscoverage['/undo.js'].lineData[19]++;
+  _$jscoverage['/undo.js'].lineData[23]++;
   editor.addButton("redo", {
   mode: Editor.Mode.WYSIWYG_MODE, 
   tooltip: "\u91cd\u505a", 
   editor: editor}, Btn.RedoBtn);
-  _$jscoverage['/undo.js'].lineData[24]++;
+  _$jscoverage['/undo.js'].lineData[28]++;
   cmd.init(editor);
 }});
-  _$jscoverage['/undo.js'].lineData[28]++;
+  _$jscoverage['/undo.js'].lineData[32]++;
   return undo;
-}, {
-  requires: ['editor', './undo/btn', './undo/cmd']});
+});

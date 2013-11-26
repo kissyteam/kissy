@@ -230,7 +230,10 @@ if (! _$jscoverage['/editor/base.js']) {
   _$jscoverage['/editor/base.js'] = {};
   _$jscoverage['/editor/base.js'].lineData = [];
   _$jscoverage['/editor/base.js'].lineData[6] = 0;
-  _$jscoverage['/editor/base.js'].lineData[12] = 0;
+  _$jscoverage['/editor/base.js'].lineData[7] = 0;
+  _$jscoverage['/editor/base.js'].lineData[8] = 0;
+  _$jscoverage['/editor/base.js'].lineData[9] = 0;
+  _$jscoverage['/editor/base.js'].lineData[15] = 0;
 }
 if (! _$jscoverage['/editor/base.js'].functionData) {
   _$jscoverage['/editor/base.js'].functionData = [];
@@ -240,9 +243,15 @@ if (! _$jscoverage['/editor/base.js'].branchData) {
   _$jscoverage['/editor/base.js'].branchData = {};
 }
 _$jscoverage['/editor/base.js'].lineData[6]++;
-KISSY.add("editor/base", function(S, HtmlParser, Control, EditorRender) {
+KISSY.add(function(S, require) {
   _$jscoverage['/editor/base.js'].functionData[0]++;
-  _$jscoverage['/editor/base.js'].lineData[12]++;
+  _$jscoverage['/editor/base.js'].lineData[7]++;
+  var HtmlParser = require('html-parser');
+  _$jscoverage['/editor/base.js'].lineData[8]++;
+  var Control = require('component/control');
+  _$jscoverage['/editor/base.js'].lineData[9]++;
+  var EditorRender = require('./render');
+  _$jscoverage['/editor/base.js'].lineData[15]++;
   return Control.extend({}, {
   Config: {}, 
   XHTML_DTD: HtmlParser['DTD'], 
@@ -271,5 +280,4 @@ KISSY.add("editor/base", function(S, HtmlParser, Control, EditorRender) {
   xrender: {
   value: EditorRender}}, 
   xclass: 'editor'});
-}, {
-  requires: ['html-parser', 'component/control', './render']});
+});

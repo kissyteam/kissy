@@ -382,16 +382,16 @@ function visit1_81_1(result) {
   _$jscoverage['/timer/color.js'].branchData['81'][1].ranCondition(result);
   return result;
 }_$jscoverage['/timer/color.js'].lineData[6]++;
-KISSY.add(function(S) {
+KISSY.add(function(S, require) {
   _$jscoverage['/timer/color.js'].functionData[0]++;
   _$jscoverage['/timer/color.js'].lineData[7]++;
-  var module = this;
+  var Fx = require('./fx');
   _$jscoverage['/timer/color.js'].lineData[8]++;
-  var Fx = module.require('./fx');
+  var SHORT_HANDS = require('./short-hand');
   _$jscoverage['/timer/color.js'].lineData[9]++;
-  var SHORT_HANDS = module.require('./short-hand');
+  var logger = S.getLogger('s/anim/timer/color');
   _$jscoverage['/timer/color.js'].lineData[10]++;
-  var HEX_BASE = 16, logger = S.getLogger('s/anim/timer/color'), floor = Math.floor, KEYWORDS = {
+  var HEX_BASE = 16, floor = Math.floor, KEYWORDS = {
   'black': [0, 0, 0], 
   'silver': [192, 192, 192], 
   'gray': [128, 128, 128], 

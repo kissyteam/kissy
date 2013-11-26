@@ -1,6 +1,6 @@
 /*
-Copyright 2013, KISSY v1.40dev
+Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Oct 25 16:47
+build time: Nov 27 00:01
 */
-KISSY.add("editor/plugin/strike-through",function(b,e,c,d){function a(){}b.augment(a,{pluginRenderUI:function(a){d.init(a);a.addButton("strikeThrough",{cmdType:"strikeThrough",tooltip:"\u5220\u9664\u7ebf "},c.Button)}});return a},{requires:["editor","./font/ui","./strike-through/cmd"]});
+KISSY.add("editor/plugin/strike-through",["./font/ui","./strike-through/cmd","./button"],function(c,a){function b(){}var d=a("./font/ui"),e=a("./strike-through/cmd");a("./button");c.augment(b,{pluginRenderUI:function(a){e.init(a);a.addButton("strikeThrough",{cmdType:"strikeThrough",tooltip:"\u5220\u9664\u7ebf "},d.Button)}});return b});

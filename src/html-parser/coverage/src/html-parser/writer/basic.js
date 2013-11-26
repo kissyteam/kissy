@@ -232,32 +232,33 @@ if (! _$jscoverage['/html-parser/writer/basic.js']) {
   _$jscoverage['/html-parser/writer/basic.js'].lineData[6] = 0;
   _$jscoverage['/html-parser/writer/basic.js'].lineData[7] = 0;
   _$jscoverage['/html-parser/writer/basic.js'].lineData[9] = 0;
-  _$jscoverage['/html-parser/writer/basic.js'].lineData[10] = 0;
-  _$jscoverage['/html-parser/writer/basic.js'].lineData[17] = 0;
-  _$jscoverage['/html-parser/writer/basic.js'].lineData[18] = 0;
-  _$jscoverage['/html-parser/writer/basic.js'].lineData[21] = 0;
-  _$jscoverage['/html-parser/writer/basic.js'].lineData[25] = 0;
-  _$jscoverage['/html-parser/writer/basic.js'].lineData[28] = 0;
-  _$jscoverage['/html-parser/writer/basic.js'].lineData[29] = 0;
+  _$jscoverage['/html-parser/writer/basic.js'].lineData[11] = 0;
+  _$jscoverage['/html-parser/writer/basic.js'].lineData[12] = 0;
+  _$jscoverage['/html-parser/writer/basic.js'].lineData[19] = 0;
+  _$jscoverage['/html-parser/writer/basic.js'].lineData[20] = 0;
+  _$jscoverage['/html-parser/writer/basic.js'].lineData[23] = 0;
+  _$jscoverage['/html-parser/writer/basic.js'].lineData[27] = 0;
   _$jscoverage['/html-parser/writer/basic.js'].lineData[30] = 0;
   _$jscoverage['/html-parser/writer/basic.js'].lineData[31] = 0;
   _$jscoverage['/html-parser/writer/basic.js'].lineData[32] = 0;
-  _$jscoverage['/html-parser/writer/basic.js'].lineData[35] = 0;
-  _$jscoverage['/html-parser/writer/basic.js'].lineData[38] = 0;
-  _$jscoverage['/html-parser/writer/basic.js'].lineData[42] = 0;
-  _$jscoverage['/html-parser/writer/basic.js'].lineData[46] = 0;
-  _$jscoverage['/html-parser/writer/basic.js'].lineData[47] = 0;
+  _$jscoverage['/html-parser/writer/basic.js'].lineData[33] = 0;
+  _$jscoverage['/html-parser/writer/basic.js'].lineData[34] = 0;
+  _$jscoverage['/html-parser/writer/basic.js'].lineData[37] = 0;
+  _$jscoverage['/html-parser/writer/basic.js'].lineData[40] = 0;
+  _$jscoverage['/html-parser/writer/basic.js'].lineData[44] = 0;
+  _$jscoverage['/html-parser/writer/basic.js'].lineData[48] = 0;
   _$jscoverage['/html-parser/writer/basic.js'].lineData[49] = 0;
-  _$jscoverage['/html-parser/writer/basic.js'].lineData[53] = 0;
-  _$jscoverage['/html-parser/writer/basic.js'].lineData[57] = 0;
+  _$jscoverage['/html-parser/writer/basic.js'].lineData[51] = 0;
+  _$jscoverage['/html-parser/writer/basic.js'].lineData[55] = 0;
   _$jscoverage['/html-parser/writer/basic.js'].lineData[59] = 0;
-  _$jscoverage['/html-parser/writer/basic.js'].lineData[60] = 0;
+  _$jscoverage['/html-parser/writer/basic.js'].lineData[61] = 0;
   _$jscoverage['/html-parser/writer/basic.js'].lineData[62] = 0;
-  _$jscoverage['/html-parser/writer/basic.js'].lineData[70] = 0;
-  _$jscoverage['/html-parser/writer/basic.js'].lineData[74] = 0;
-  _$jscoverage['/html-parser/writer/basic.js'].lineData[78] = 0;
-  _$jscoverage['/html-parser/writer/basic.js'].lineData[86] = 0;
-  _$jscoverage['/html-parser/writer/basic.js'].lineData[90] = 0;
+  _$jscoverage['/html-parser/writer/basic.js'].lineData[64] = 0;
+  _$jscoverage['/html-parser/writer/basic.js'].lineData[72] = 0;
+  _$jscoverage['/html-parser/writer/basic.js'].lineData[76] = 0;
+  _$jscoverage['/html-parser/writer/basic.js'].lineData[80] = 0;
+  _$jscoverage['/html-parser/writer/basic.js'].lineData[88] = 0;
+  _$jscoverage['/html-parser/writer/basic.js'].lineData[92] = 0;
 }
 if (! _$jscoverage['/html-parser/writer/basic.js'].functionData) {
   _$jscoverage['/html-parser/writer/basic.js'].functionData = [];
@@ -276,139 +277,140 @@ if (! _$jscoverage['/html-parser/writer/basic.js'].functionData) {
 }
 if (! _$jscoverage['/html-parser/writer/basic.js'].branchData) {
   _$jscoverage['/html-parser/writer/basic.js'].branchData = {};
-  _$jscoverage['/html-parser/writer/basic.js'].branchData['28'] = [];
-  _$jscoverage['/html-parser/writer/basic.js'].branchData['28'][1] = new BranchData();
   _$jscoverage['/html-parser/writer/basic.js'].branchData['30'] = [];
   _$jscoverage['/html-parser/writer/basic.js'].branchData['30'][1] = new BranchData();
-  _$jscoverage['/html-parser/writer/basic.js'].branchData['31'] = [];
-  _$jscoverage['/html-parser/writer/basic.js'].branchData['31'][1] = new BranchData();
-  _$jscoverage['/html-parser/writer/basic.js'].branchData['46'] = [];
-  _$jscoverage['/html-parser/writer/basic.js'].branchData['46'][1] = new BranchData();
-  _$jscoverage['/html-parser/writer/basic.js'].branchData['57'] = [];
-  _$jscoverage['/html-parser/writer/basic.js'].branchData['57'][1] = new BranchData();
+  _$jscoverage['/html-parser/writer/basic.js'].branchData['32'] = [];
+  _$jscoverage['/html-parser/writer/basic.js'].branchData['32'][1] = new BranchData();
+  _$jscoverage['/html-parser/writer/basic.js'].branchData['33'] = [];
+  _$jscoverage['/html-parser/writer/basic.js'].branchData['33'][1] = new BranchData();
+  _$jscoverage['/html-parser/writer/basic.js'].branchData['48'] = [];
+  _$jscoverage['/html-parser/writer/basic.js'].branchData['48'][1] = new BranchData();
   _$jscoverage['/html-parser/writer/basic.js'].branchData['59'] = [];
   _$jscoverage['/html-parser/writer/basic.js'].branchData['59'][1] = new BranchData();
+  _$jscoverage['/html-parser/writer/basic.js'].branchData['61'] = [];
+  _$jscoverage['/html-parser/writer/basic.js'].branchData['61'][1] = new BranchData();
 }
-_$jscoverage['/html-parser/writer/basic.js'].branchData['59'][1].init(94, 34, 'isBooleanAttribute(name) && !value');
-function visit351_59_1(result) {
+_$jscoverage['/html-parser/writer/basic.js'].branchData['61'][1].init(93, 34, 'isBooleanAttribute(name) && !value');
+function visit351_61_1(result) {
+  _$jscoverage['/html-parser/writer/basic.js'].branchData['61'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/html-parser/writer/basic.js'].branchData['59'][1].init(25, 16, 'attr.value || \'\'');
+function visit350_59_1(result) {
   _$jscoverage['/html-parser/writer/basic.js'].branchData['59'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/basic.js'].branchData['57'][1].init(26, 14, 'attr.value || \'\'');
-function visit350_57_1(result) {
-  _$jscoverage['/html-parser/writer/basic.js'].branchData['57'][1].ranCondition(result);
+}_$jscoverage['/html-parser/writer/basic.js'].branchData['48'][1].init(17, 15, 'el.isSelfClosed');
+function visit349_48_1(result) {
+  _$jscoverage['/html-parser/writer/basic.js'].branchData['48'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/basic.js'].branchData['46'][1].init(18, 15, 'el.isSelfClosed');
-function visit349_46_1(result) {
-  _$jscoverage['/html-parser/writer/basic.js'].branchData['46'][1].ranCondition(result);
+}_$jscoverage['/html-parser/writer/basic.js'].branchData['33'][1].init(37, 14, 'j < arg.length');
+function visit348_33_1(result) {
+  _$jscoverage['/html-parser/writer/basic.js'].branchData['33'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/basic.js'].branchData['31'][1].init(38, 14, 'j < arg.length');
-function visit348_31_1(result) {
-  _$jscoverage['/html-parser/writer/basic.js'].branchData['31'][1].ranCondition(result);
+}_$jscoverage['/html-parser/writer/basic.js'].branchData['32'][1].init(52, 14, 'arg.length > 1');
+function visit347_32_1(result) {
+  _$jscoverage['/html-parser/writer/basic.js'].branchData['32'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/basic.js'].branchData['30'][1].init(54, 14, 'arg.length > 1');
-function visit347_30_1(result) {
+}_$jscoverage['/html-parser/writer/basic.js'].branchData['30'][1].init(119, 15, 'i < args.length');
+function visit346_30_1(result) {
   _$jscoverage['/html-parser/writer/basic.js'].branchData['30'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/basic.js'].branchData['28'][1].init(123, 15, 'i < args.length');
-function visit346_28_1(result) {
-  _$jscoverage['/html-parser/writer/basic.js'].branchData['28'][1].ranCondition(result);
-  return result;
 }_$jscoverage['/html-parser/writer/basic.js'].lineData[6]++;
-KISSY.add("html-parser/writer/basic", function(S, Utils) {
+KISSY.add(function(S, require) {
   _$jscoverage['/html-parser/writer/basic.js'].functionData[0]++;
   _$jscoverage['/html-parser/writer/basic.js'].lineData[7]++;
-  var isBooleanAttribute = Utils.isBooleanAttribute;
+  var Utils = require('../utils');
   _$jscoverage['/html-parser/writer/basic.js'].lineData[9]++;
+  var isBooleanAttribute = Utils.isBooleanAttribute;
+  _$jscoverage['/html-parser/writer/basic.js'].lineData[11]++;
   function escapeAttrValue(str) {
     _$jscoverage['/html-parser/writer/basic.js'].functionData[1]++;
-    _$jscoverage['/html-parser/writer/basic.js'].lineData[10]++;
+    _$jscoverage['/html-parser/writer/basic.js'].lineData[12]++;
     return String(str).replace(/"/g, "&quote;");
   }
-  _$jscoverage['/html-parser/writer/basic.js'].lineData[17]++;
+  _$jscoverage['/html-parser/writer/basic.js'].lineData[19]++;
   function BasicWriter() {
     _$jscoverage['/html-parser/writer/basic.js'].functionData[2]++;
-    _$jscoverage['/html-parser/writer/basic.js'].lineData[18]++;
+    _$jscoverage['/html-parser/writer/basic.js'].lineData[20]++;
     this.output = [];
   }
-  _$jscoverage['/html-parser/writer/basic.js'].lineData[21]++;
+  _$jscoverage['/html-parser/writer/basic.js'].lineData[23]++;
   BasicWriter.prototype = {
   constructor: BasicWriter, 
   append: function() {
   _$jscoverage['/html-parser/writer/basic.js'].functionData[3]++;
-  _$jscoverage['/html-parser/writer/basic.js'].lineData[25]++;
+  _$jscoverage['/html-parser/writer/basic.js'].lineData[27]++;
   var o = this.output, args = (arguments), arg;
-  _$jscoverage['/html-parser/writer/basic.js'].lineData[28]++;
-  for (var i = 0; visit346_28_1(i < args.length); i++) {
-    _$jscoverage['/html-parser/writer/basic.js'].lineData[29]++;
+  _$jscoverage['/html-parser/writer/basic.js'].lineData[30]++;
+  for (var i = 0; visit346_30_1(i < args.length); i++) {
+    _$jscoverage['/html-parser/writer/basic.js'].lineData[31]++;
     arg = args[i];
-    _$jscoverage['/html-parser/writer/basic.js'].lineData[30]++;
-    if (visit347_30_1(arg.length > 1)) {
-      _$jscoverage['/html-parser/writer/basic.js'].lineData[31]++;
-      for (var j = 0; visit348_31_1(j < arg.length); j++) {
-        _$jscoverage['/html-parser/writer/basic.js'].lineData[32]++;
+    _$jscoverage['/html-parser/writer/basic.js'].lineData[32]++;
+    if (visit347_32_1(arg.length > 1)) {
+      _$jscoverage['/html-parser/writer/basic.js'].lineData[33]++;
+      for (var j = 0; visit348_33_1(j < arg.length); j++) {
+        _$jscoverage['/html-parser/writer/basic.js'].lineData[34]++;
         o.push(arg.charAt(j));
       }
     } else {
-      _$jscoverage['/html-parser/writer/basic.js'].lineData[35]++;
+      _$jscoverage['/html-parser/writer/basic.js'].lineData[37]++;
       o.push(arg);
     }
   }
-  _$jscoverage['/html-parser/writer/basic.js'].lineData[38]++;
+  _$jscoverage['/html-parser/writer/basic.js'].lineData[40]++;
   return this;
 }, 
   openTag: function(el) {
   _$jscoverage['/html-parser/writer/basic.js'].functionData[4]++;
-  _$jscoverage['/html-parser/writer/basic.js'].lineData[42]++;
+  _$jscoverage['/html-parser/writer/basic.js'].lineData[44]++;
   this.append("<", el.tagName);
 }, 
   openTagClose: function(el) {
   _$jscoverage['/html-parser/writer/basic.js'].functionData[5]++;
-  _$jscoverage['/html-parser/writer/basic.js'].lineData[46]++;
-  if (visit349_46_1(el.isSelfClosed)) {
-    _$jscoverage['/html-parser/writer/basic.js'].lineData[47]++;
+  _$jscoverage['/html-parser/writer/basic.js'].lineData[48]++;
+  if (visit349_48_1(el.isSelfClosed)) {
+    _$jscoverage['/html-parser/writer/basic.js'].lineData[49]++;
     this.append(" ", "/");
   }
-  _$jscoverage['/html-parser/writer/basic.js'].lineData[49]++;
+  _$jscoverage['/html-parser/writer/basic.js'].lineData[51]++;
   this.append(">");
 }, 
   closeTag: function(el) {
   _$jscoverage['/html-parser/writer/basic.js'].functionData[6]++;
-  _$jscoverage['/html-parser/writer/basic.js'].lineData[53]++;
+  _$jscoverage['/html-parser/writer/basic.js'].lineData[55]++;
   this.append("</", el.tagName, ">");
 }, 
   attribute: function(attr) {
   _$jscoverage['/html-parser/writer/basic.js'].functionData[7]++;
-  _$jscoverage['/html-parser/writer/basic.js'].lineData[57]++;
-  var value = visit350_57_1(attr.value || ''), name = attr.name;
   _$jscoverage['/html-parser/writer/basic.js'].lineData[59]++;
-  if (visit351_59_1(isBooleanAttribute(name) && !value)) {
-    _$jscoverage['/html-parser/writer/basic.js'].lineData[60]++;
+  var value = visit350_59_1(attr.value || ''), name = attr.name;
+  _$jscoverage['/html-parser/writer/basic.js'].lineData[61]++;
+  if (visit351_61_1(isBooleanAttribute(name) && !value)) {
+    _$jscoverage['/html-parser/writer/basic.js'].lineData[62]++;
     value = name;
   }
-  _$jscoverage['/html-parser/writer/basic.js'].lineData[62]++;
+  _$jscoverage['/html-parser/writer/basic.js'].lineData[64]++;
   this.append(" ", name, "=\"", escapeAttrValue(value), "\"");
 }, 
   text: function(text) {
   _$jscoverage['/html-parser/writer/basic.js'].functionData[8]++;
-  _$jscoverage['/html-parser/writer/basic.js'].lineData[70]++;
+  _$jscoverage['/html-parser/writer/basic.js'].lineData[72]++;
   this.append(text);
 }, 
   cdata: function(cdata) {
   _$jscoverage['/html-parser/writer/basic.js'].functionData[9]++;
-  _$jscoverage['/html-parser/writer/basic.js'].lineData[74]++;
+  _$jscoverage['/html-parser/writer/basic.js'].lineData[76]++;
   this.append(cdata);
 }, 
   comment: function(comment) {
   _$jscoverage['/html-parser/writer/basic.js'].functionData[10]++;
-  _$jscoverage['/html-parser/writer/basic.js'].lineData[78]++;
+  _$jscoverage['/html-parser/writer/basic.js'].lineData[80]++;
   this.append("<!--" + comment + "-->");
 }, 
   getHtml: function() {
   _$jscoverage['/html-parser/writer/basic.js'].functionData[11]++;
-  _$jscoverage['/html-parser/writer/basic.js'].lineData[86]++;
+  _$jscoverage['/html-parser/writer/basic.js'].lineData[88]++;
   return this.output.join("");
 }};
-  _$jscoverage['/html-parser/writer/basic.js'].lineData[90]++;
+  _$jscoverage['/html-parser/writer/basic.js'].lineData[92]++;
   return BasicWriter;
-}, {
-  requires: ['../utils']});
+});

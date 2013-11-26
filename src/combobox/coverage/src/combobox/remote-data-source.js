@@ -231,31 +231,31 @@ if (! _$jscoverage['/combobox/remote-data-source.js']) {
   _$jscoverage['/combobox/remote-data-source.js'].lineData = [];
   _$jscoverage['/combobox/remote-data-source.js'].lineData[6] = 0;
   _$jscoverage['/combobox/remote-data-source.js'].lineData[7] = 0;
+  _$jscoverage['/combobox/remote-data-source.js'].lineData[8] = 0;
   _$jscoverage['/combobox/remote-data-source.js'].lineData[9] = 0;
-  _$jscoverage['/combobox/remote-data-source.js'].lineData[10] = 0;
-  _$jscoverage['/combobox/remote-data-source.js'].lineData[16] = 0;
-  _$jscoverage['/combobox/remote-data-source.js'].lineData[24] = 0;
+  _$jscoverage['/combobox/remote-data-source.js'].lineData[15] = 0;
+  _$jscoverage['/combobox/remote-data-source.js'].lineData[23] = 0;
+  _$jscoverage['/combobox/remote-data-source.js'].lineData[29] = 0;
   _$jscoverage['/combobox/remote-data-source.js'].lineData[30] = 0;
-  _$jscoverage['/combobox/remote-data-source.js'].lineData[31] = 0;
+  _$jscoverage['/combobox/remote-data-source.js'].lineData[32] = 0;
   _$jscoverage['/combobox/remote-data-source.js'].lineData[33] = 0;
-  _$jscoverage['/combobox/remote-data-source.js'].lineData[34] = 0;
+  _$jscoverage['/combobox/remote-data-source.js'].lineData[35] = 0;
   _$jscoverage['/combobox/remote-data-source.js'].lineData[36] = 0;
-  _$jscoverage['/combobox/remote-data-source.js'].lineData[37] = 0;
+  _$jscoverage['/combobox/remote-data-source.js'].lineData[38] = 0;
   _$jscoverage['/combobox/remote-data-source.js'].lineData[39] = 0;
   _$jscoverage['/combobox/remote-data-source.js'].lineData[40] = 0;
-  _$jscoverage['/combobox/remote-data-source.js'].lineData[41] = 0;
+  _$jscoverage['/combobox/remote-data-source.js'].lineData[43] = 0;
   _$jscoverage['/combobox/remote-data-source.js'].lineData[44] = 0;
   _$jscoverage['/combobox/remote-data-source.js'].lineData[45] = 0;
   _$jscoverage['/combobox/remote-data-source.js'].lineData[46] = 0;
   _$jscoverage['/combobox/remote-data-source.js'].lineData[47] = 0;
   _$jscoverage['/combobox/remote-data-source.js'].lineData[48] = 0;
-  _$jscoverage['/combobox/remote-data-source.js'].lineData[49] = 0;
+  _$jscoverage['/combobox/remote-data-source.js'].lineData[50] = 0;
   _$jscoverage['/combobox/remote-data-source.js'].lineData[51] = 0;
   _$jscoverage['/combobox/remote-data-source.js'].lineData[52] = 0;
-  _$jscoverage['/combobox/remote-data-source.js'].lineData[53] = 0;
-  _$jscoverage['/combobox/remote-data-source.js'].lineData[55] = 0;
+  _$jscoverage['/combobox/remote-data-source.js'].lineData[54] = 0;
+  _$jscoverage['/combobox/remote-data-source.js'].lineData[56] = 0;
   _$jscoverage['/combobox/remote-data-source.js'].lineData[57] = 0;
-  _$jscoverage['/combobox/remote-data-source.js'].lineData[58] = 0;
 }
 if (! _$jscoverage['/combobox/remote-data-source.js'].functionData) {
   _$jscoverage['/combobox/remote-data-source.js'].functionData = [];
@@ -265,124 +265,124 @@ if (! _$jscoverage['/combobox/remote-data-source.js'].functionData) {
 }
 if (! _$jscoverage['/combobox/remote-data-source.js'].branchData) {
   _$jscoverage['/combobox/remote-data-source.js'].branchData = {};
+  _$jscoverage['/combobox/remote-data-source.js'].branchData['29'] = [];
+  _$jscoverage['/combobox/remote-data-source.js'].branchData['29'][1] = new BranchData();
   _$jscoverage['/combobox/remote-data-source.js'].branchData['30'] = [];
   _$jscoverage['/combobox/remote-data-source.js'].branchData['30'][1] = new BranchData();
-  _$jscoverage['/combobox/remote-data-source.js'].branchData['31'] = [];
-  _$jscoverage['/combobox/remote-data-source.js'].branchData['31'][1] = new BranchData();
-  _$jscoverage['/combobox/remote-data-source.js'].branchData['36'] = [];
-  _$jscoverage['/combobox/remote-data-source.js'].branchData['36'][1] = new BranchData();
-  _$jscoverage['/combobox/remote-data-source.js'].branchData['36'][2] = new BranchData();
+  _$jscoverage['/combobox/remote-data-source.js'].branchData['35'] = [];
+  _$jscoverage['/combobox/remote-data-source.js'].branchData['35'][1] = new BranchData();
+  _$jscoverage['/combobox/remote-data-source.js'].branchData['35'][2] = new BranchData();
+  _$jscoverage['/combobox/remote-data-source.js'].branchData['38'] = [];
+  _$jscoverage['/combobox/remote-data-source.js'].branchData['38'][1] = new BranchData();
   _$jscoverage['/combobox/remote-data-source.js'].branchData['39'] = [];
   _$jscoverage['/combobox/remote-data-source.js'].branchData['39'][1] = new BranchData();
-  _$jscoverage['/combobox/remote-data-source.js'].branchData['40'] = [];
-  _$jscoverage['/combobox/remote-data-source.js'].branchData['40'][1] = new BranchData();
-  _$jscoverage['/combobox/remote-data-source.js'].branchData['45'] = [];
-  _$jscoverage['/combobox/remote-data-source.js'].branchData['45'][1] = new BranchData();
-  _$jscoverage['/combobox/remote-data-source.js'].branchData['48'] = [];
-  _$jscoverage['/combobox/remote-data-source.js'].branchData['48'][1] = new BranchData();
-  _$jscoverage['/combobox/remote-data-source.js'].branchData['52'] = [];
-  _$jscoverage['/combobox/remote-data-source.js'].branchData['52'][1] = new BranchData();
+  _$jscoverage['/combobox/remote-data-source.js'].branchData['44'] = [];
+  _$jscoverage['/combobox/remote-data-source.js'].branchData['44'][1] = new BranchData();
+  _$jscoverage['/combobox/remote-data-source.js'].branchData['47'] = [];
+  _$jscoverage['/combobox/remote-data-source.js'].branchData['47'][1] = new BranchData();
+  _$jscoverage['/combobox/remote-data-source.js'].branchData['51'] = [];
+  _$jscoverage['/combobox/remote-data-source.js'].branchData['51'][1] = new BranchData();
 }
-_$jscoverage['/combobox/remote-data-source.js'].branchData['52'][1].init(166, 5, 'cache');
-function visit115_52_1(result) {
-  _$jscoverage['/combobox/remote-data-source.js'].branchData['52'][1].ranCondition(result);
+_$jscoverage['/combobox/remote-data-source.js'].branchData['51'][1].init(166, 5, 'cache');
+function visit117_51_1(result) {
+  _$jscoverage['/combobox/remote-data-source.js'].branchData['51'][1].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/remote-data-source.js'].branchData['48'][1].init(21, 5, 'parse');
-function visit114_48_1(result) {
-  _$jscoverage['/combobox/remote-data-source.js'].branchData['48'][1].ranCondition(result);
+}_$jscoverage['/combobox/remote-data-source.js'].branchData['47'][1].init(21, 5, 'parse');
+function visit116_47_1(result) {
+  _$jscoverage['/combobox/remote-data-source.js'].branchData['47'][1].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/remote-data-source.js'].branchData['45'][1].init(780, 17, 'xhrCfg.data || {}');
-function visit113_45_1(result) {
-  _$jscoverage['/combobox/remote-data-source.js'].branchData['45'][1].ranCondition(result);
+}_$jscoverage['/combobox/remote-data-source.js'].branchData['44'][1].init(780, 17, 'xhrCfg.data || {}');
+function visit115_44_1(result) {
+  _$jscoverage['/combobox/remote-data-source.js'].branchData['44'][1].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/remote-data-source.js'].branchData['40'][1].init(21, 25, 'v = self.caches[inputVal]');
-function visit112_40_1(result) {
-  _$jscoverage['/combobox/remote-data-source.js'].branchData['40'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/combobox/remote-data-source.js'].branchData['39'][1].init(565, 5, 'cache');
-function visit111_39_1(result) {
+}_$jscoverage['/combobox/remote-data-source.js'].branchData['39'][1].init(21, 25, 'v = self.caches[inputVal]');
+function visit114_39_1(result) {
   _$jscoverage['/combobox/remote-data-source.js'].branchData['39'][1].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/remote-data-source.js'].branchData['36'][2].init(461, 19, 'allowEmpty !== true');
-function visit110_36_2(result) {
-  _$jscoverage['/combobox/remote-data-source.js'].branchData['36'][2].ranCondition(result);
+}_$jscoverage['/combobox/remote-data-source.js'].branchData['38'][1].init(565, 5, 'cache');
+function visit113_38_1(result) {
+  _$jscoverage['/combobox/remote-data-source.js'].branchData['38'][1].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/remote-data-source.js'].branchData['36'][1].init(448, 32, '!inputVal && allowEmpty !== true');
-function visit109_36_1(result) {
-  _$jscoverage['/combobox/remote-data-source.js'].branchData['36'][1].ranCondition(result);
+}_$jscoverage['/combobox/remote-data-source.js'].branchData['35'][2].init(461, 19, 'allowEmpty !== true');
+function visit112_35_2(result) {
+  _$jscoverage['/combobox/remote-data-source.js'].branchData['35'][2].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/remote-data-source.js'].branchData['31'][1].init(300, 7, 'self.io');
-function visit108_31_1(result) {
-  _$jscoverage['/combobox/remote-data-source.js'].branchData['31'][1].ranCondition(result);
+}_$jscoverage['/combobox/remote-data-source.js'].branchData['35'][1].init(448, 32, '!inputVal && allowEmpty !== true');
+function visit111_35_1(result) {
+  _$jscoverage['/combobox/remote-data-source.js'].branchData['35'][1].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/remote-data-source.js'].branchData['30'][1].init(265, 17, 'self.caches || {}');
-function visit107_30_1(result) {
+}_$jscoverage['/combobox/remote-data-source.js'].branchData['30'][1].init(300, 7, 'self.io');
+function visit110_30_1(result) {
   _$jscoverage['/combobox/remote-data-source.js'].branchData['30'][1].ranCondition(result);
   return result;
+}_$jscoverage['/combobox/remote-data-source.js'].branchData['29'][1].init(265, 17, 'self.caches || {}');
+function visit109_29_1(result) {
+  _$jscoverage['/combobox/remote-data-source.js'].branchData['29'][1].ranCondition(result);
+  return result;
 }_$jscoverage['/combobox/remote-data-source.js'].lineData[6]++;
-KISSY.add(function() {
+KISSY.add(function(S, require) {
   _$jscoverage['/combobox/remote-data-source.js'].functionData[0]++;
   _$jscoverage['/combobox/remote-data-source.js'].lineData[7]++;
-  var module = this, undefined = undefined;
+  var undefined = undefined;
+  _$jscoverage['/combobox/remote-data-source.js'].lineData[8]++;
+  var IO = require('io');
   _$jscoverage['/combobox/remote-data-source.js'].lineData[9]++;
-  var IO = module.require('io');
-  _$jscoverage['/combobox/remote-data-source.js'].lineData[10]++;
-  var Attribute = module.require('attribute');
-  _$jscoverage['/combobox/remote-data-source.js'].lineData[16]++;
+  var Attribute = require('attribute');
+  _$jscoverage['/combobox/remote-data-source.js'].lineData[15]++;
   return Attribute.extend({
   fetchData: function(inputVal, callback, context) {
   _$jscoverage['/combobox/remote-data-source.js'].functionData[1]++;
-  _$jscoverage['/combobox/remote-data-source.js'].lineData[24]++;
+  _$jscoverage['/combobox/remote-data-source.js'].lineData[23]++;
   var self = this, v, paramName = self.get("paramName"), parse = self.get("parse"), cache = self.get("cache"), allowEmpty = self.get("allowEmpty");
+  _$jscoverage['/combobox/remote-data-source.js'].lineData[29]++;
+  self.caches = visit109_29_1(self.caches || {});
   _$jscoverage['/combobox/remote-data-source.js'].lineData[30]++;
-  self.caches = visit107_30_1(self.caches || {});
-  _$jscoverage['/combobox/remote-data-source.js'].lineData[31]++;
-  if (visit108_31_1(self.io)) {
-    _$jscoverage['/combobox/remote-data-source.js'].lineData[33]++;
+  if (visit110_30_1(self.io)) {
+    _$jscoverage['/combobox/remote-data-source.js'].lineData[32]++;
     self.io.abort();
-    _$jscoverage['/combobox/remote-data-source.js'].lineData[34]++;
+    _$jscoverage['/combobox/remote-data-source.js'].lineData[33]++;
     self.io = null;
   }
-  _$jscoverage['/combobox/remote-data-source.js'].lineData[36]++;
-  if (visit109_36_1(!inputVal && visit110_36_2(allowEmpty !== true))) {
-    _$jscoverage['/combobox/remote-data-source.js'].lineData[37]++;
+  _$jscoverage['/combobox/remote-data-source.js'].lineData[35]++;
+  if (visit111_35_1(!inputVal && visit112_35_2(allowEmpty !== true))) {
+    _$jscoverage['/combobox/remote-data-source.js'].lineData[36]++;
     return callback.call(context, []);
   }
-  _$jscoverage['/combobox/remote-data-source.js'].lineData[39]++;
-  if (visit111_39_1(cache)) {
-    _$jscoverage['/combobox/remote-data-source.js'].lineData[40]++;
-    if (visit112_40_1(v = self.caches[inputVal])) {
-      _$jscoverage['/combobox/remote-data-source.js'].lineData[41]++;
+  _$jscoverage['/combobox/remote-data-source.js'].lineData[38]++;
+  if (visit113_38_1(cache)) {
+    _$jscoverage['/combobox/remote-data-source.js'].lineData[39]++;
+    if (visit114_39_1(v = self.caches[inputVal])) {
+      _$jscoverage['/combobox/remote-data-source.js'].lineData[40]++;
       return callback.call(context, v);
     }
   }
-  _$jscoverage['/combobox/remote-data-source.js'].lineData[44]++;
+  _$jscoverage['/combobox/remote-data-source.js'].lineData[43]++;
   var xhrCfg = self.get("xhrCfg");
+  _$jscoverage['/combobox/remote-data-source.js'].lineData[44]++;
+  xhrCfg.data = visit115_44_1(xhrCfg.data || {});
   _$jscoverage['/combobox/remote-data-source.js'].lineData[45]++;
-  xhrCfg.data = visit113_45_1(xhrCfg.data || {});
-  _$jscoverage['/combobox/remote-data-source.js'].lineData[46]++;
   xhrCfg.data[paramName] = inputVal;
-  _$jscoverage['/combobox/remote-data-source.js'].lineData[47]++;
+  _$jscoverage['/combobox/remote-data-source.js'].lineData[46]++;
   xhrCfg.success = function(data) {
   _$jscoverage['/combobox/remote-data-source.js'].functionData[2]++;
-  _$jscoverage['/combobox/remote-data-source.js'].lineData[48]++;
-  if (visit114_48_1(parse)) {
-    _$jscoverage['/combobox/remote-data-source.js'].lineData[49]++;
+  _$jscoverage['/combobox/remote-data-source.js'].lineData[47]++;
+  if (visit116_47_1(parse)) {
+    _$jscoverage['/combobox/remote-data-source.js'].lineData[48]++;
     data = parse(inputVal, data);
   }
-  _$jscoverage['/combobox/remote-data-source.js'].lineData[51]++;
+  _$jscoverage['/combobox/remote-data-source.js'].lineData[50]++;
   self.setInternal("data", data);
-  _$jscoverage['/combobox/remote-data-source.js'].lineData[52]++;
-  if (visit115_52_1(cache)) {
-    _$jscoverage['/combobox/remote-data-source.js'].lineData[53]++;
+  _$jscoverage['/combobox/remote-data-source.js'].lineData[51]++;
+  if (visit117_51_1(cache)) {
+    _$jscoverage['/combobox/remote-data-source.js'].lineData[52]++;
     self.caches[inputVal] = data;
   }
-  _$jscoverage['/combobox/remote-data-source.js'].lineData[55]++;
+  _$jscoverage['/combobox/remote-data-source.js'].lineData[54]++;
   callback.call(context, data);
 };
-  _$jscoverage['/combobox/remote-data-source.js'].lineData[57]++;
+  _$jscoverage['/combobox/remote-data-source.js'].lineData[56]++;
   self.io = IO(xhrCfg);
-  _$jscoverage['/combobox/remote-data-source.js'].lineData[58]++;
+  _$jscoverage['/combobox/remote-data-source.js'].lineData[57]++;
   return undefined;
 }}, {
   ATTRS: {

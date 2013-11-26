@@ -230,10 +230,11 @@ if (! _$jscoverage['/tabs/body.js']) {
   _$jscoverage['/tabs/body.js'] = {};
   _$jscoverage['/tabs/body.js'].lineData = [];
   _$jscoverage['/tabs/body.js'].lineData[6] = 0;
-  _$jscoverage['/tabs/body.js'].lineData[12] = 0;
-  _$jscoverage['/tabs/body.js'].lineData[14] = 0;
+  _$jscoverage['/tabs/body.js'].lineData[7] = 0;
+  _$jscoverage['/tabs/body.js'].lineData[13] = 0;
   _$jscoverage['/tabs/body.js'].lineData[15] = 0;
   _$jscoverage['/tabs/body.js'].lineData[16] = 0;
+  _$jscoverage['/tabs/body.js'].lineData[17] = 0;
   _$jscoverage['/tabs/body.js'].lineData[20] = 0;
   _$jscoverage['/tabs/body.js'].lineData[21] = 0;
   _$jscoverage['/tabs/body.js'].lineData[22] = 0;
@@ -284,44 +285,46 @@ if (! _$jscoverage['/tabs/body.js'].branchData) {
   _$jscoverage['/tabs/body.js'].branchData['83'] = [];
   _$jscoverage['/tabs/body.js'].branchData['83'][1] = new BranchData();
 }
-_$jscoverage['/tabs/body.js'].branchData['83'][1].init(68, 18, '!c.get(\'selected\')');
+_$jscoverage['/tabs/body.js'].branchData['83'][1].init(66, 18, '!c.get(\'selected\')');
 function visit12_83_1(result) {
   _$jscoverage['/tabs/body.js'].branchData['83'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tabs/body.js'].branchData['81'][1].init(14, 22, 'self.get(\'lazyRender\')');
+}_$jscoverage['/tabs/body.js'].branchData['81'][1].init(13, 22, 'self.get(\'lazyRender\')');
 function visit11_81_1(result) {
   _$jscoverage['/tabs/body.js'].branchData['81'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tabs/body.js'].branchData['51'][1].init(85, 22, 'this.get(\'lazyRender\')');
+}_$jscoverage['/tabs/body.js'].branchData['51'][1].init(83, 22, 'this.get(\'lazyRender\')');
 function visit10_51_1(result) {
   _$jscoverage['/tabs/body.js'].branchData['51'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tabs/body.js'].branchData['33'][1].init(22, 17, 'c.get("selected")');
+}_$jscoverage['/tabs/body.js'].branchData['33'][1].init(21, 17, 'c.get("selected")');
 function visit9_33_1(result) {
   _$jscoverage['/tabs/body.js'].branchData['33'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tabs/body.js'].branchData['21'][1].init(26, 31, 'hidePanel = children[e.prevVal]');
+}_$jscoverage['/tabs/body.js'].branchData['21'][1].init(25, 31, 'hidePanel = children[e.prevVal]');
 function visit8_21_1(result) {
   _$jscoverage['/tabs/body.js'].branchData['21'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tabs/body.js'].branchData['20'][1].init(182, 18, 'children[newIndex]');
+}_$jscoverage['/tabs/body.js'].branchData['20'][1].init(146, 18, 'children[newIndex]');
 function visit7_20_1(result) {
   _$jscoverage['/tabs/body.js'].branchData['20'][1].ranCondition(result);
   return result;
 }_$jscoverage['/tabs/body.js'].lineData[6]++;
-KISSY.add("tabs/body", function(S, Container, Extension, undefined) {
+KISSY.add(function(S, require) {
   _$jscoverage['/tabs/body.js'].functionData[0]++;
-  _$jscoverage['/tabs/body.js'].lineData[12]++;
+  _$jscoverage['/tabs/body.js'].lineData[7]++;
+  var Container = require('component/container');
+  _$jscoverage['/tabs/body.js'].lineData[13]++;
   var TabBody = Container.extend({
   bindUI: function() {
   _$jscoverage['/tabs/body.js'].functionData[1]++;
-  _$jscoverage['/tabs/body.js'].lineData[14]++;
-  var self = this;
   _$jscoverage['/tabs/body.js'].lineData[15]++;
+  var self = this;
+  _$jscoverage['/tabs/body.js'].lineData[16]++;
   self.on("afterSelectedPanelIndexChange", function(e) {
   _$jscoverage['/tabs/body.js'].functionData[2]++;
-  _$jscoverage['/tabs/body.js'].lineData[16]++;
-  var showPanel, children = self.get('children'), newIndex = e.newVal, hidePanel;
+  _$jscoverage['/tabs/body.js'].lineData[17]++;
+  var children = self.get('children'), newIndex = e.newVal, hidePanel;
   _$jscoverage['/tabs/body.js'].lineData[20]++;
   if (visit7_20_1(children[newIndex])) {
     _$jscoverage['/tabs/body.js'].lineData[21]++;
@@ -403,5 +406,4 @@ KISSY.add("tabs/body", function(S, Container, Extension, undefined) {
   }
   _$jscoverage['/tabs/body.js'].lineData[90]++;
   return TabBody;
-}, {
-  requires: ['component/container']});
+});

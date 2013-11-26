@@ -230,10 +230,11 @@ if (! _$jscoverage['/custom/observer.js']) {
   _$jscoverage['/custom/observer.js'] = {};
   _$jscoverage['/custom/observer.js'].lineData = [];
   _$jscoverage['/custom/observer.js'].lineData[6] = 0;
-  _$jscoverage['/custom/observer.js'].lineData[14] = 0;
+  _$jscoverage['/custom/observer.js'].lineData[7] = 0;
   _$jscoverage['/custom/observer.js'].lineData[15] = 0;
-  _$jscoverage['/custom/observer.js'].lineData[18] = 0;
-  _$jscoverage['/custom/observer.js'].lineData[22] = 0;
+  _$jscoverage['/custom/observer.js'].lineData[16] = 0;
+  _$jscoverage['/custom/observer.js'].lineData[19] = 0;
+  _$jscoverage['/custom/observer.js'].lineData[23] = 0;
 }
 if (! _$jscoverage['/custom/observer.js'].functionData) {
   _$jscoverage['/custom/observer.js'].functionData = [];
@@ -244,18 +245,19 @@ if (! _$jscoverage['/custom/observer.js'].branchData) {
   _$jscoverage['/custom/observer.js'].branchData = {};
 }
 _$jscoverage['/custom/observer.js'].lineData[6]++;
-KISSY.add('event/custom/observer', function(S, BaseEvent) {
+KISSY.add(function(S, require) {
   _$jscoverage['/custom/observer.js'].functionData[0]++;
-  _$jscoverage['/custom/observer.js'].lineData[14]++;
+  _$jscoverage['/custom/observer.js'].lineData[7]++;
+  var BaseEvent = require('event/base');
+  _$jscoverage['/custom/observer.js'].lineData[15]++;
   function CustomEventObserver() {
     _$jscoverage['/custom/observer.js'].functionData[1]++;
-    _$jscoverage['/custom/observer.js'].lineData[15]++;
+    _$jscoverage['/custom/observer.js'].lineData[16]++;
     CustomEventObserver.superclass.constructor.apply(this, arguments);
   }
-  _$jscoverage['/custom/observer.js'].lineData[18]++;
+  _$jscoverage['/custom/observer.js'].lineData[19]++;
   S.extend(CustomEventObserver, BaseEvent.Observer, {
   keys: ['fn', 'context', 'groups']});
-  _$jscoverage['/custom/observer.js'].lineData[22]++;
+  _$jscoverage['/custom/observer.js'].lineData[23]++;
   return CustomEventObserver;
-}, {
-  requires: ['event/base']});
+});

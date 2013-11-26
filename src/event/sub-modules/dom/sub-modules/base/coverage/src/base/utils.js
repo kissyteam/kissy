@@ -229,19 +229,20 @@ if (! this._$jscoverage) {
 if (! _$jscoverage['/base/utils.js']) {
   _$jscoverage['/base/utils.js'] = {};
   _$jscoverage['/base/utils.js'].lineData = [];
-  _$jscoverage['/base/utils.js'].lineData[6] = 0;
   _$jscoverage['/base/utils.js'].lineData[7] = 0;
-  _$jscoverage['/base/utils.js'].lineData[11] = 0;
-  _$jscoverage['/base/utils.js'].lineData[12] = 0;
-  _$jscoverage['/base/utils.js'].lineData[16] = 0;
-  _$jscoverage['/base/utils.js'].lineData[17] = 0;
-  _$jscoverage['/base/utils.js'].lineData[22] = 0;
-  _$jscoverage['/base/utils.js'].lineData[23] = 0;
-  _$jscoverage['/base/utils.js'].lineData[27] = 0;
-  _$jscoverage['/base/utils.js'].lineData[28] = 0;
-  _$jscoverage['/base/utils.js'].lineData[32] = 0;
-  _$jscoverage['/base/utils.js'].lineData[38] = 0;
-  _$jscoverage['/base/utils.js'].lineData[42] = 0;
+  _$jscoverage['/base/utils.js'].lineData[8] = 0;
+  _$jscoverage['/base/utils.js'].lineData[9] = 0;
+  _$jscoverage['/base/utils.js'].lineData[13] = 0;
+  _$jscoverage['/base/utils.js'].lineData[14] = 0;
+  _$jscoverage['/base/utils.js'].lineData[18] = 0;
+  _$jscoverage['/base/utils.js'].lineData[19] = 0;
+  _$jscoverage['/base/utils.js'].lineData[24] = 0;
+  _$jscoverage['/base/utils.js'].lineData[25] = 0;
+  _$jscoverage['/base/utils.js'].lineData[29] = 0;
+  _$jscoverage['/base/utils.js'].lineData[30] = 0;
+  _$jscoverage['/base/utils.js'].lineData[34] = 0;
+  _$jscoverage['/base/utils.js'].lineData[40] = 0;
+  _$jscoverage['/base/utils.js'].lineData[44] = 0;
 }
 if (! _$jscoverage['/base/utils.js'].functionData) {
   _$jscoverage['/base/utils.js'].functionData = [];
@@ -255,89 +256,90 @@ if (! _$jscoverage['/base/utils.js'].functionData) {
 }
 if (! _$jscoverage['/base/utils.js'].branchData) {
   _$jscoverage['/base/utils.js'].branchData = {};
-  _$jscoverage['/base/utils.js'].branchData['9'] = [];
-  _$jscoverage['/base/utils.js'].branchData['9'][1] = new BranchData();
   _$jscoverage['/base/utils.js'].branchData['11'] = [];
   _$jscoverage['/base/utils.js'].branchData['11'][1] = new BranchData();
-  _$jscoverage['/base/utils.js'].branchData['16'] = [];
-  _$jscoverage['/base/utils.js'].branchData['16'][1] = new BranchData();
-  _$jscoverage['/base/utils.js'].branchData['20'] = [];
-  _$jscoverage['/base/utils.js'].branchData['20'][1] = new BranchData();
+  _$jscoverage['/base/utils.js'].branchData['13'] = [];
+  _$jscoverage['/base/utils.js'].branchData['13'][1] = new BranchData();
+  _$jscoverage['/base/utils.js'].branchData['18'] = [];
+  _$jscoverage['/base/utils.js'].branchData['18'][1] = new BranchData();
   _$jscoverage['/base/utils.js'].branchData['22'] = [];
   _$jscoverage['/base/utils.js'].branchData['22'][1] = new BranchData();
-  _$jscoverage['/base/utils.js'].branchData['27'] = [];
-  _$jscoverage['/base/utils.js'].branchData['27'][1] = new BranchData();
+  _$jscoverage['/base/utils.js'].branchData['24'] = [];
+  _$jscoverage['/base/utils.js'].branchData['24'][1] = new BranchData();
+  _$jscoverage['/base/utils.js'].branchData['29'] = [];
+  _$jscoverage['/base/utils.js'].branchData['29'][1] = new BranchData();
 }
-_$jscoverage['/base/utils.js'].branchData['27'][1].init(22, 14, 'el.detachEvent');
-function visit207_27_1(result) {
-  _$jscoverage['/base/utils.js'].branchData['27'][1].ranCondition(result);
+_$jscoverage['/base/utils.js'].branchData['29'][1].init(21, 14, 'el.detachEvent');
+function visit207_29_1(result) {
+  _$jscoverage['/base/utils.js'].branchData['29'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/utils.js'].branchData['22'][1].init(22, 22, 'el.removeEventListener');
-function visit206_22_1(result) {
+}_$jscoverage['/base/utils.js'].branchData['24'][1].init(21, 22, 'el.removeEventListener');
+function visit206_24_1(result) {
+  _$jscoverage['/base/utils.js'].branchData['24'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/base/utils.js'].branchData['22'][1].init(502, 30, 'doc && doc.removeEventListener');
+function visit205_22_1(result) {
   _$jscoverage['/base/utils.js'].branchData['22'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/utils.js'].branchData['20'][1].init(514, 30, 'doc && doc.removeEventListener');
-function visit205_20_1(result) {
-  _$jscoverage['/base/utils.js'].branchData['20'][1].ranCondition(result);
+}_$jscoverage['/base/utils.js'].branchData['18'][1].init(21, 14, 'el.attachEvent');
+function visit204_18_1(result) {
+  _$jscoverage['/base/utils.js'].branchData['18'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/utils.js'].branchData['16'][1].init(22, 14, 'el.attachEvent');
-function visit204_16_1(result) {
-  _$jscoverage['/base/utils.js'].branchData['16'][1].ranCondition(result);
+}_$jscoverage['/base/utils.js'].branchData['13'][1].init(21, 19, 'el.addEventListener');
+function visit203_13_1(result) {
+  _$jscoverage['/base/utils.js'].branchData['13'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/utils.js'].branchData['11'][1].init(22, 19, 'el.addEventListener');
-function visit203_11_1(result) {
+}_$jscoverage['/base/utils.js'].branchData['11'][1].init(101, 27, 'doc && doc.addEventListener');
+function visit202_11_1(result) {
   _$jscoverage['/base/utils.js'].branchData['11'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/utils.js'].branchData['9'][1].init(102, 27, 'doc && doc.addEventListener');
-function visit202_9_1(result) {
-  _$jscoverage['/base/utils.js'].branchData['9'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/base/utils.js'].lineData[6]++;
-KISSY.add('event/dom/base/utils', function(S, Dom) {
+}_$jscoverage['/base/utils.js'].lineData[7]++;
+KISSY.add(function(S, require) {
   _$jscoverage['/base/utils.js'].functionData[0]++;
-  _$jscoverage['/base/utils.js'].lineData[7]++;
-  var EVENT_GUID = 'ksEventTargetId_' + S.now(), doc = S.Env.host.document, simpleAdd = visit202_9_1(doc && doc.addEventListener) ? function(el, type, fn, capture) {
+  _$jscoverage['/base/utils.js'].lineData[8]++;
+  var Dom = require('dom');
+  _$jscoverage['/base/utils.js'].lineData[9]++;
+  var EVENT_GUID = 'ksEventTargetId_' + S.now(), doc = S.Env.host.document, simpleAdd = visit202_11_1(doc && doc.addEventListener) ? function(el, type, fn, capture) {
   _$jscoverage['/base/utils.js'].functionData[1]++;
-  _$jscoverage['/base/utils.js'].lineData[11]++;
-  if (visit203_11_1(el.addEventListener)) {
-    _$jscoverage['/base/utils.js'].lineData[12]++;
+  _$jscoverage['/base/utils.js'].lineData[13]++;
+  if (visit203_13_1(el.addEventListener)) {
+    _$jscoverage['/base/utils.js'].lineData[14]++;
     el.addEventListener(type, fn, !!capture);
   }
 } : function(el, type, fn) {
   _$jscoverage['/base/utils.js'].functionData[2]++;
-  _$jscoverage['/base/utils.js'].lineData[16]++;
-  if (visit204_16_1(el.attachEvent)) {
-    _$jscoverage['/base/utils.js'].lineData[17]++;
+  _$jscoverage['/base/utils.js'].lineData[18]++;
+  if (visit204_18_1(el.attachEvent)) {
+    _$jscoverage['/base/utils.js'].lineData[19]++;
     el.attachEvent('on' + type, fn);
   }
-}, simpleRemove = visit205_20_1(doc && doc.removeEventListener) ? function(el, type, fn, capture) {
+}, simpleRemove = visit205_22_1(doc && doc.removeEventListener) ? function(el, type, fn, capture) {
   _$jscoverage['/base/utils.js'].functionData[3]++;
-  _$jscoverage['/base/utils.js'].lineData[22]++;
-  if (visit206_22_1(el.removeEventListener)) {
-    _$jscoverage['/base/utils.js'].lineData[23]++;
+  _$jscoverage['/base/utils.js'].lineData[24]++;
+  if (visit206_24_1(el.removeEventListener)) {
+    _$jscoverage['/base/utils.js'].lineData[25]++;
     el.removeEventListener(type, fn, !!capture);
   }
 } : function(el, type, fn) {
   _$jscoverage['/base/utils.js'].functionData[4]++;
-  _$jscoverage['/base/utils.js'].lineData[27]++;
-  if (visit207_27_1(el.detachEvent)) {
-    _$jscoverage['/base/utils.js'].lineData[28]++;
+  _$jscoverage['/base/utils.js'].lineData[29]++;
+  if (visit207_29_1(el.detachEvent)) {
+    _$jscoverage['/base/utils.js'].lineData[30]++;
     el.detachEvent('on' + type, fn);
   }
 };
-  _$jscoverage['/base/utils.js'].lineData[32]++;
+  _$jscoverage['/base/utils.js'].lineData[34]++;
   return {
   simpleAdd: simpleAdd, 
   simpleRemove: simpleRemove, 
   data: function(elem, v) {
   _$jscoverage['/base/utils.js'].functionData[5]++;
-  _$jscoverage['/base/utils.js'].lineData[38]++;
+  _$jscoverage['/base/utils.js'].lineData[40]++;
   return Dom.data(elem, EVENT_GUID, v);
 }, 
   removeData: function(elem) {
   _$jscoverage['/base/utils.js'].functionData[6]++;
-  _$jscoverage['/base/utils.js'].lineData[42]++;
+  _$jscoverage['/base/utils.js'].lineData[44]++;
   return Dom.removeData(elem, EVENT_GUID);
 }};
-}, {
-  requires: ['dom']});
+});

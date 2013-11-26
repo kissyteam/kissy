@@ -1,7 +1,7 @@
 /*
-Copyright 2013, KISSY v1.40dev
+Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Oct 25 16:46
+build time: Nov 27 00:01
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -9,27 +9,12 @@ build time: Oct 25 16:46
  editor/plugin/overlay
 */
 
-/**
- * @ignore
- * custom overlay  for kissy editor
- * @author yiminghe@gmail.com
- */
-KISSY.add("editor/plugin/overlay", function (S, Editor, Overlay, focusFix) {
-    return Overlay.extend({
-        bindUI: function () {
-            focusFix.init(this);
-        }
-    }, {
-        ATTRS: {
-            prefixCls: {
-                value: "ks-editor-"
-            },
-            "zIndex": {
-                value: Editor.baseZIndex(Editor.ZIndexManager.OVERLAY)
-            }
-        }
-    });
-}, {
-    requires: ["editor", 'overlay', './focus-fix']
+KISSY.add("editor/plugin/overlay", ["editor", "overlay", "./focus-fix"], function(S, require) {
+  var Editor = require("editor");
+  var Overlay = require("overlay");
+  var focusFix = require("./focus-fix");
+  return Overlay.extend({bindUI:function() {
+    focusFix.init(this)
+  }}, {ATTRS:{prefixCls:{value:"ks-editor-"}, zIndex:{value:Editor.baseZIndex(Editor.ZIndexManager.OVERLAY)}}})
 });
 

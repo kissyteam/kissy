@@ -231,46 +231,51 @@ if (! _$jscoverage['/xiami-music.js']) {
   _$jscoverage['/xiami-music.js'].lineData = [];
   _$jscoverage['/xiami-music.js'].lineData[6] = 0;
   _$jscoverage['/xiami-music.js'].lineData[7] = 0;
+  _$jscoverage['/xiami-music.js'].lineData[8] = 0;
+  _$jscoverage['/xiami-music.js'].lineData[9] = 0;
   _$jscoverage['/xiami-music.js'].lineData[10] = 0;
   _$jscoverage['/xiami-music.js'].lineData[11] = 0;
-  _$jscoverage['/xiami-music.js'].lineData[14] = 0;
+  _$jscoverage['/xiami-music.js'].lineData[13] = 0;
   _$jscoverage['/xiami-music.js'].lineData[16] = 0;
-  _$jscoverage['/xiami-music.js'].lineData[19] = 0;
+  _$jscoverage['/xiami-music.js'].lineData[17] = 0;
   _$jscoverage['/xiami-music.js'].lineData[20] = 0;
-  _$jscoverage['/xiami-music.js'].lineData[21] = 0;
+  _$jscoverage['/xiami-music.js'].lineData[22] = 0;
+  _$jscoverage['/xiami-music.js'].lineData[25] = 0;
   _$jscoverage['/xiami-music.js'].lineData[26] = 0;
   _$jscoverage['/xiami-music.js'].lineData[27] = 0;
-  _$jscoverage['/xiami-music.js'].lineData[30] = 0;
+  _$jscoverage['/xiami-music.js'].lineData[32] = 0;
   _$jscoverage['/xiami-music.js'].lineData[33] = 0;
-  _$jscoverage['/xiami-music.js'].lineData[35] = 0;
-  _$jscoverage['/xiami-music.js'].lineData[38] = 0;
+  _$jscoverage['/xiami-music.js'].lineData[36] = 0;
   _$jscoverage['/xiami-music.js'].lineData[39] = 0;
-  _$jscoverage['/xiami-music.js'].lineData[42] = 0;
+  _$jscoverage['/xiami-music.js'].lineData[41] = 0;
+  _$jscoverage['/xiami-music.js'].lineData[44] = 0;
   _$jscoverage['/xiami-music.js'].lineData[45] = 0;
-  _$jscoverage['/xiami-music.js'].lineData[50] = 0;
+  _$jscoverage['/xiami-music.js'].lineData[48] = 0;
   _$jscoverage['/xiami-music.js'].lineData[51] = 0;
-  _$jscoverage['/xiami-music.js'].lineData[53] = 0;
-  _$jscoverage['/xiami-music.js'].lineData[54] = 0;
-  _$jscoverage['/xiami-music.js'].lineData[55] = 0;
   _$jscoverage['/xiami-music.js'].lineData[56] = 0;
   _$jscoverage['/xiami-music.js'].lineData[57] = 0;
   _$jscoverage['/xiami-music.js'].lineData[59] = 0;
   _$jscoverage['/xiami-music.js'].lineData[60] = 0;
+  _$jscoverage['/xiami-music.js'].lineData[61] = 0;
+  _$jscoverage['/xiami-music.js'].lineData[62] = 0;
+  _$jscoverage['/xiami-music.js'].lineData[63] = 0;
+  _$jscoverage['/xiami-music.js'].lineData[65] = 0;
   _$jscoverage['/xiami-music.js'].lineData[66] = 0;
-  _$jscoverage['/xiami-music.js'].lineData[68] = 0;
-  _$jscoverage['/xiami-music.js'].lineData[69] = 0;
   _$jscoverage['/xiami-music.js'].lineData[72] = 0;
-  _$jscoverage['/xiami-music.js'].lineData[76] = 0;
+  _$jscoverage['/xiami-music.js'].lineData[74] = 0;
+  _$jscoverage['/xiami-music.js'].lineData[75] = 0;
   _$jscoverage['/xiami-music.js'].lineData[78] = 0;
-  _$jscoverage['/xiami-music.js'].lineData[88] = 0;
-  _$jscoverage['/xiami-music.js'].lineData[90] = 0;
-  _$jscoverage['/xiami-music.js'].lineData[99] = 0;
-  _$jscoverage['/xiami-music.js'].lineData[108] = 0;
-  _$jscoverage['/xiami-music.js'].lineData[109] = 0;
-  _$jscoverage['/xiami-music.js'].lineData[110] = 0;
+  _$jscoverage['/xiami-music.js'].lineData[82] = 0;
+  _$jscoverage['/xiami-music.js'].lineData[84] = 0;
+  _$jscoverage['/xiami-music.js'].lineData[94] = 0;
+  _$jscoverage['/xiami-music.js'].lineData[96] = 0;
+  _$jscoverage['/xiami-music.js'].lineData[105] = 0;
+  _$jscoverage['/xiami-music.js'].lineData[114] = 0;
+  _$jscoverage['/xiami-music.js'].lineData[115] = 0;
   _$jscoverage['/xiami-music.js'].lineData[116] = 0;
-  _$jscoverage['/xiami-music.js'].lineData[120] = 0;
-  _$jscoverage['/xiami-music.js'].lineData[129] = 0;
+  _$jscoverage['/xiami-music.js'].lineData[122] = 0;
+  _$jscoverage['/xiami-music.js'].lineData[126] = 0;
+  _$jscoverage['/xiami-music.js'].lineData[135] = 0;
 }
 if (! _$jscoverage['/xiami-music.js'].functionData) {
   _$jscoverage['/xiami-music.js'].functionData = [];
@@ -287,194 +292,204 @@ if (! _$jscoverage['/xiami-music.js'].functionData) {
 }
 if (! _$jscoverage['/xiami-music.js'].branchData) {
   _$jscoverage['/xiami-music.js'].branchData = {};
-  _$jscoverage['/xiami-music.js'].branchData['19'] = [];
-  _$jscoverage['/xiami-music.js'].branchData['19'][1] = new BranchData();
-  _$jscoverage['/xiami-music.js'].branchData['27'] = [];
-  _$jscoverage['/xiami-music.js'].branchData['27'][1] = new BranchData();
-  _$jscoverage['/xiami-music.js'].branchData['36'] = [];
-  _$jscoverage['/xiami-music.js'].branchData['36'][1] = new BranchData();
+  _$jscoverage['/xiami-music.js'].branchData['25'] = [];
+  _$jscoverage['/xiami-music.js'].branchData['25'][1] = new BranchData();
+  _$jscoverage['/xiami-music.js'].branchData['33'] = [];
+  _$jscoverage['/xiami-music.js'].branchData['33'][1] = new BranchData();
   _$jscoverage['/xiami-music.js'].branchData['42'] = [];
   _$jscoverage['/xiami-music.js'].branchData['42'][1] = new BranchData();
-  _$jscoverage['/xiami-music.js'].branchData['51'] = [];
-  _$jscoverage['/xiami-music.js'].branchData['51'][1] = new BranchData();
-  _$jscoverage['/xiami-music.js'].branchData['53'] = [];
-  _$jscoverage['/xiami-music.js'].branchData['53'][1] = new BranchData();
-  _$jscoverage['/xiami-music.js'].branchData['55'] = [];
-  _$jscoverage['/xiami-music.js'].branchData['55'][1] = new BranchData();
-  _$jscoverage['/xiami-music.js'].branchData['56'] = [];
-  _$jscoverage['/xiami-music.js'].branchData['56'][1] = new BranchData();
+  _$jscoverage['/xiami-music.js'].branchData['48'] = [];
+  _$jscoverage['/xiami-music.js'].branchData['48'][1] = new BranchData();
+  _$jscoverage['/xiami-music.js'].branchData['57'] = [];
+  _$jscoverage['/xiami-music.js'].branchData['57'][1] = new BranchData();
   _$jscoverage['/xiami-music.js'].branchData['59'] = [];
   _$jscoverage['/xiami-music.js'].branchData['59'][1] = new BranchData();
-  _$jscoverage['/xiami-music.js'].branchData['68'] = [];
-  _$jscoverage['/xiami-music.js'].branchData['68'][1] = new BranchData();
-  _$jscoverage['/xiami-music.js'].branchData['72'] = [];
-  _$jscoverage['/xiami-music.js'].branchData['72'][1] = new BranchData();
-  _$jscoverage['/xiami-music.js'].branchData['72'][2] = new BranchData();
+  _$jscoverage['/xiami-music.js'].branchData['61'] = [];
+  _$jscoverage['/xiami-music.js'].branchData['61'][1] = new BranchData();
+  _$jscoverage['/xiami-music.js'].branchData['62'] = [];
+  _$jscoverage['/xiami-music.js'].branchData['62'][1] = new BranchData();
+  _$jscoverage['/xiami-music.js'].branchData['65'] = [];
+  _$jscoverage['/xiami-music.js'].branchData['65'][1] = new BranchData();
   _$jscoverage['/xiami-music.js'].branchData['74'] = [];
   _$jscoverage['/xiami-music.js'].branchData['74'][1] = new BranchData();
-  _$jscoverage['/xiami-music.js'].branchData['76'] = [];
-  _$jscoverage['/xiami-music.js'].branchData['76'][1] = new BranchData();
-  _$jscoverage['/xiami-music.js'].branchData['76'][2] = new BranchData();
-  _$jscoverage['/xiami-music.js'].branchData['88'] = [];
-  _$jscoverage['/xiami-music.js'].branchData['88'][1] = new BranchData();
-  _$jscoverage['/xiami-music.js'].branchData['109'] = [];
-  _$jscoverage['/xiami-music.js'].branchData['109'][1] = new BranchData();
+  _$jscoverage['/xiami-music.js'].branchData['78'] = [];
+  _$jscoverage['/xiami-music.js'].branchData['78'][1] = new BranchData();
+  _$jscoverage['/xiami-music.js'].branchData['78'][2] = new BranchData();
+  _$jscoverage['/xiami-music.js'].branchData['80'] = [];
+  _$jscoverage['/xiami-music.js'].branchData['80'][1] = new BranchData();
+  _$jscoverage['/xiami-music.js'].branchData['82'] = [];
+  _$jscoverage['/xiami-music.js'].branchData['82'][1] = new BranchData();
+  _$jscoverage['/xiami-music.js'].branchData['82'][2] = new BranchData();
+  _$jscoverage['/xiami-music.js'].branchData['94'] = [];
+  _$jscoverage['/xiami-music.js'].branchData['94'][1] = new BranchData();
+  _$jscoverage['/xiami-music.js'].branchData['115'] = [];
+  _$jscoverage['/xiami-music.js'].branchData['115'][1] = new BranchData();
 }
-_$jscoverage['/xiami-music.js'].branchData['109'][1].init(102, 10, 'selectedEl');
-function visit17_109_1(result) {
-  _$jscoverage['/xiami-music.js'].branchData['109'][1].ranCondition(result);
+_$jscoverage['/xiami-music.js'].branchData['115'][1].init(100, 10, 'selectedEl');
+function visit17_115_1(result) {
+  _$jscoverage['/xiami-music.js'].branchData['115'][1].ranCondition(result);
   return result;
-}_$jscoverage['/xiami-music.js'].branchData['88'][1].init(30, 104, 'flashUtils.isFlashEmbed(element) && checkXiami(element.getAttribute("src"))');
-function visit16_88_1(result) {
-  _$jscoverage['/xiami-music.js'].branchData['88'][1].ranCondition(result);
+}_$jscoverage['/xiami-music.js'].branchData['94'][1].init(29, 103, 'flashUtils.isFlashEmbed(element) && checkXiami(element.getAttribute("src"))');
+function visit16_94_1(result) {
+  _$jscoverage['/xiami-music.js'].branchData['94'][1].ranCondition(result);
   return result;
-}_$jscoverage['/xiami-music.js'].branchData['76'][2].init(51, 87, 'c.getAttribute("value") || c.getAttribute("VALUE")');
-function visit15_76_2(result) {
-  _$jscoverage['/xiami-music.js'].branchData['76'][2].ranCondition(result);
+}_$jscoverage['/xiami-music.js'].branchData['82'][2].init(49, 86, 'c.getAttribute("value") || c.getAttribute("VALUE")');
+function visit15_82_2(result) {
+  _$jscoverage['/xiami-music.js'].branchData['82'][2].ranCondition(result);
   return result;
-}_$jscoverage['/xiami-music.js'].branchData['76'][1].init(40, 99, 'checkXiami(c.getAttribute("value") || c.getAttribute("VALUE"))');
-function visit14_76_1(result) {
-  _$jscoverage['/xiami-music.js'].branchData['76'][1].ranCondition(result);
+}_$jscoverage['/xiami-music.js'].branchData['82'][1].init(38, 98, 'checkXiami(c.getAttribute("value") || c.getAttribute("VALUE"))');
+function visit14_82_1(result) {
+  _$jscoverage['/xiami-music.js'].branchData['82'][1].ranCondition(result);
   return result;
-}_$jscoverage['/xiami-music.js'].branchData['74'][1].init(104, 47, 'c.getAttribute("name").toLowerCase() == "movie"');
-function visit13_74_1(result) {
+}_$jscoverage['/xiami-music.js'].branchData['80'][1].init(102, 47, 'c.getAttribute("name").toLowerCase() == "movie"');
+function visit13_80_1(result) {
+  _$jscoverage['/xiami-music.js'].branchData['80'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/xiami-music.js'].branchData['78'][2].init(176, 21, 'c.nodeName == \'param\'');
+function visit12_78_2(result) {
+  _$jscoverage['/xiami-music.js'].branchData['78'][2].ranCondition(result);
+  return result;
+}_$jscoverage['/xiami-music.js'].branchData['78'][1].init(176, 150, 'c.nodeName == \'param\' && c.getAttribute("name").toLowerCase() == "movie"');
+function visit11_78_1(result) {
+  _$jscoverage['/xiami-music.js'].branchData['78'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/xiami-music.js'].branchData['74'][1].init(1248, 21, 'i < childNodes.length');
+function visit10_74_1(result) {
   _$jscoverage['/xiami-music.js'].branchData['74'][1].ranCondition(result);
   return result;
-}_$jscoverage['/xiami-music.js'].branchData['72'][2].init(180, 21, 'c.nodeName == \'param\'');
-function visit12_72_2(result) {
-  _$jscoverage['/xiami-music.js'].branchData['72'][2].ranCondition(result);
+}_$jscoverage['/xiami-music.js'].branchData['65'][1].init(203, 28, 'checkXiami(c.attributes.src)');
+function visit9_65_1(result) {
+  _$jscoverage['/xiami-music.js'].branchData['65'][1].ranCondition(result);
   return result;
-}_$jscoverage['/xiami-music.js'].branchData['72'][1].init(180, 152, 'c.nodeName == \'param\' && c.getAttribute("name").toLowerCase() == "movie"');
-function visit11_72_1(result) {
-  _$jscoverage['/xiami-music.js'].branchData['72'][1].ranCondition(result);
+}_$jscoverage['/xiami-music.js'].branchData['62'][1].init(41, 27, '!flashUtils.isFlashEmbed(c)');
+function visit8_62_1(result) {
+  _$jscoverage['/xiami-music.js'].branchData['62'][1].ranCondition(result);
   return result;
-}_$jscoverage['/xiami-music.js'].branchData['68'][1].init(1272, 21, 'i < childNodes.length');
-function visit10_68_1(result) {
-  _$jscoverage['/xiami-music.js'].branchData['68'][1].ranCondition(result);
+}_$jscoverage['/xiami-music.js'].branchData['61'][1].init(90, 21, 'c.nodeName == \'embed\'');
+function visit7_61_1(result) {
+  _$jscoverage['/xiami-music.js'].branchData['61'][1].ranCondition(result);
   return result;
-}_$jscoverage['/xiami-music.js'].branchData['59'][1].init(207, 28, 'checkXiami(c.attributes.src)');
-function visit9_59_1(result) {
+}_$jscoverage['/xiami-music.js'].branchData['59'][1].init(99, 21, 'i < childNodes.length');
+function visit6_59_1(result) {
   _$jscoverage['/xiami-music.js'].branchData['59'][1].ranCondition(result);
   return result;
-}_$jscoverage['/xiami-music.js'].branchData['56'][1].init(42, 27, '!flashUtils.isFlashEmbed(c)');
-function visit8_56_1(result) {
-  _$jscoverage['/xiami-music.js'].branchData['56'][1].ranCondition(result);
+}_$jscoverage['/xiami-music.js'].branchData['57'][1].init(329, 8, '!classId');
+function visit5_57_1(result) {
+  _$jscoverage['/xiami-music.js'].branchData['57'][1].ranCondition(result);
   return result;
-}_$jscoverage['/xiami-music.js'].branchData['55'][1].init(92, 21, 'c.nodeName == \'embed\'');
-function visit7_55_1(result) {
-  _$jscoverage['/xiami-music.js'].branchData['55'][1].ranCondition(result);
+}_$jscoverage['/xiami-music.js'].branchData['48'][1].init(286, 2783, 'dataFilter && dataFilter.addRules({\n  tags: {\n  \'object\': function(element) {\n  var title = element.getAttribute("title"), i, c, classId = element.getAttribute("classid");\n  var childNodes = element.childNodes;\n  if (!classId) {\n    for (i = 0; i < childNodes.length; i++) {\n      c = childNodes[i];\n      if (c.nodeName == \'embed\') {\n        if (!flashUtils.isFlashEmbed(c)) {\n          return null;\n        }\n        if (checkXiami(c.attributes.src)) {\n          return dataProcessor.createFakeParserElement(element, CLS_XIAMI, TYPE_XIAMI, true, {\n  title: title});\n        }\n      }\n    }\n    return null;\n  }\n  for (i = 0; i < childNodes.length; i++) {\n    c = childNodes[i];\n    if (c.nodeName == \'param\' && c.getAttribute("name").toLowerCase() == "movie") {\n      if (checkXiami(c.getAttribute("value") || c.getAttribute("VALUE"))) {\n        return dataProcessor.createFakeParserElement(element, CLS_XIAMI, TYPE_XIAMI, true, {\n  title: title});\n      }\n    }\n  }\n}, \n  \'embed\': function(element) {\n  if (flashUtils.isFlashEmbed(element) && checkXiami(element.getAttribute("src"))) {\n    return dataProcessor.createFakeParserElement(element, CLS_XIAMI, TYPE_XIAMI, true, {\n  title: element.getAttribute("title")});\n  }\n}}}, 4)');
+function visit4_48_1(result) {
+  _$jscoverage['/xiami-music.js'].branchData['48'][1].ranCondition(result);
   return result;
-}_$jscoverage['/xiami-music.js'].branchData['53'][1].init(101, 21, 'i < childNodes.length');
-function visit6_53_1(result) {
-  _$jscoverage['/xiami-music.js'].branchData['53'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/xiami-music.js'].branchData['51'][1].init(336, 8, '!classId');
-function visit5_51_1(result) {
-  _$jscoverage['/xiami-music.js'].branchData['51'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/xiami-music.js'].branchData['42'][1].init(297, 2838, 'dataFilter && dataFilter.addRules({\n  tags: {\n  \'object\': function(element) {\n  var title = element.getAttribute("title"), i, c, classId = element.getAttribute("classid");\n  var childNodes = element.childNodes;\n  if (!classId) {\n    for (i = 0; i < childNodes.length; i++) {\n      c = childNodes[i];\n      if (c.nodeName == \'embed\') {\n        if (!flashUtils.isFlashEmbed(c)) {\n          return null;\n        }\n        if (checkXiami(c.attributes.src)) {\n          return dataProcessor.createFakeParserElement(element, CLS_XIAMI, TYPE_XIAMI, true, {\n  title: title});\n        }\n      }\n    }\n    return null;\n  }\n  for (i = 0; i < childNodes.length; i++) {\n    c = childNodes[i];\n    if (c.nodeName == \'param\' && c.getAttribute("name").toLowerCase() == "movie") {\n      if (checkXiami(c.getAttribute("value") || c.getAttribute("VALUE"))) {\n        return dataProcessor.createFakeParserElement(element, CLS_XIAMI, TYPE_XIAMI, true, {\n  title: title});\n      }\n    }\n  }\n}, \n  \'embed\': function(element) {\n  if (flashUtils.isFlashEmbed(element) && checkXiami(element.getAttribute("src"))) {\n    return dataProcessor.createFakeParserElement(element, CLS_XIAMI, TYPE_XIAMI, true, {\n  title: element.getAttribute("title")});\n  }\n}}}, 4)');
-function visit4_42_1(result) {
+}_$jscoverage['/xiami-music.js'].branchData['42'][1].init(74, 41, 'dataProcessor && dataProcessor.dataFilter');
+function visit3_42_1(result) {
   _$jscoverage['/xiami-music.js'].branchData['42'][1].ranCondition(result);
   return result;
-}_$jscoverage['/xiami-music.js'].branchData['36'][1].init(75, 41, 'dataProcessor && dataProcessor.dataFilter');
-function visit3_36_1(result) {
-  _$jscoverage['/xiami-music.js'].branchData['36'][1].ranCondition(result);
+}_$jscoverage['/xiami-music.js'].branchData['33'][1].init(23, 12, 'config || {}');
+function visit2_33_1(result) {
+  _$jscoverage['/xiami-music.js'].branchData['33'][1].ranCondition(result);
   return result;
-}_$jscoverage['/xiami-music.js'].branchData['27'][1].init(24, 12, 'config || {}');
-function visit2_27_1(result) {
-  _$jscoverage['/xiami-music.js'].branchData['27'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/xiami-music.js'].branchData['19'][1].init(157, 1, 'r');
-function visit1_19_1(result) {
-  _$jscoverage['/xiami-music.js'].branchData['19'][1].ranCondition(result);
+}_$jscoverage['/xiami-music.js'].branchData['25'][1].init(153, 1, 'r');
+function visit1_25_1(result) {
+  _$jscoverage['/xiami-music.js'].branchData['25'][1].ranCondition(result);
   return result;
 }_$jscoverage['/xiami-music.js'].lineData[6]++;
-KISSY.add("editor/plugin/xiami-music", function(S, Editor, FlashBaseClass, flashUtils, fakeObjects) {
+KISSY.add(function(S, require) {
   _$jscoverage['/xiami-music.js'].functionData[0]++;
   _$jscoverage['/xiami-music.js'].lineData[7]++;
-  var CLS_XIAMI = "ke_xiami", TYPE_XIAMI = "xiami-music";
+  var Editor = require('editor');
+  _$jscoverage['/xiami-music.js'].lineData[8]++;
+  var FlashBaseClass = require('./flash-common/base-class');
+  _$jscoverage['/xiami-music.js'].lineData[9]++;
+  var flashUtils = require('./flash-common/utils');
   _$jscoverage['/xiami-music.js'].lineData[10]++;
+  var fakeObjects = require('./fake-objects');
+  _$jscoverage['/xiami-music.js'].lineData[11]++;
+  require('./button');
+  _$jscoverage['/xiami-music.js'].lineData[13]++;
+  var CLS_XIAMI = "ke_xiami", TYPE_XIAMI = "xiami-music";
+  _$jscoverage['/xiami-music.js'].lineData[16]++;
   function XiamiMusic() {
     _$jscoverage['/xiami-music.js'].functionData[1]++;
-    _$jscoverage['/xiami-music.js'].lineData[11]++;
+    _$jscoverage['/xiami-music.js'].lineData[17]++;
     XiamiMusic.superclass.constructor.apply(this, arguments);
   }
-  _$jscoverage['/xiami-music.js'].lineData[14]++;
+  _$jscoverage['/xiami-music.js'].lineData[20]++;
   S.extend(XiamiMusic, FlashBaseClass, {
   _updateTip: function(tipUrlEl, selectedFlash) {
   _$jscoverage['/xiami-music.js'].functionData[2]++;
-  _$jscoverage['/xiami-music.js'].lineData[16]++;
+  _$jscoverage['/xiami-music.js'].lineData[22]++;
   var self = this, editor = self.get("editor"), r = editor.restoreRealElement(selectedFlash);
-  _$jscoverage['/xiami-music.js'].lineData[19]++;
-  if (visit1_19_1(r)) {
-    _$jscoverage['/xiami-music.js'].lineData[20]++;
+  _$jscoverage['/xiami-music.js'].lineData[25]++;
+  if (visit1_25_1(r)) {
+    _$jscoverage['/xiami-music.js'].lineData[26]++;
     tipUrlEl.html(selectedFlash.attr("title"));
-    _$jscoverage['/xiami-music.js'].lineData[21]++;
+    _$jscoverage['/xiami-music.js'].lineData[27]++;
     tipUrlEl.attr("href", self._getFlashUrl(r));
   }
 }});
-  _$jscoverage['/xiami-music.js'].lineData[26]++;
+  _$jscoverage['/xiami-music.js'].lineData[32]++;
   function XiamiMusicPlugin(config) {
     _$jscoverage['/xiami-music.js'].functionData[3]++;
-    _$jscoverage['/xiami-music.js'].lineData[27]++;
-    this.config = visit2_27_1(config || {});
+    _$jscoverage['/xiami-music.js'].lineData[33]++;
+    this.config = visit2_33_1(config || {});
   }
-  _$jscoverage['/xiami-music.js'].lineData[30]++;
+  _$jscoverage['/xiami-music.js'].lineData[36]++;
   S.augment(XiamiMusicPlugin, {
   pluginRenderUI: function(editor) {
   _$jscoverage['/xiami-music.js'].functionData[4]++;
-  _$jscoverage['/xiami-music.js'].lineData[33]++;
+  _$jscoverage['/xiami-music.js'].lineData[39]++;
   fakeObjects.init(editor);
-  _$jscoverage['/xiami-music.js'].lineData[35]++;
-  var dataProcessor = editor.htmlDataProcessor, dataFilter = visit3_36_1(dataProcessor && dataProcessor.dataFilter);
-  _$jscoverage['/xiami-music.js'].lineData[38]++;
+  _$jscoverage['/xiami-music.js'].lineData[41]++;
+  var dataProcessor = editor.htmlDataProcessor, dataFilter = visit3_42_1(dataProcessor && dataProcessor.dataFilter);
+  _$jscoverage['/xiami-music.js'].lineData[44]++;
   function checkXiami(url) {
     _$jscoverage['/xiami-music.js'].functionData[5]++;
-    _$jscoverage['/xiami-music.js'].lineData[39]++;
+    _$jscoverage['/xiami-music.js'].lineData[45]++;
     return /xiami\.com/i.test(url);
   }
-  _$jscoverage['/xiami-music.js'].lineData[42]++;
-  visit4_42_1(dataFilter && dataFilter.addRules({
+  _$jscoverage['/xiami-music.js'].lineData[48]++;
+  visit4_48_1(dataFilter && dataFilter.addRules({
   tags: {
   'object': function(element) {
   _$jscoverage['/xiami-music.js'].functionData[6]++;
-  _$jscoverage['/xiami-music.js'].lineData[45]++;
-  var title = element.getAttribute("title"), i, c, classId = element.getAttribute("classid");
-  _$jscoverage['/xiami-music.js'].lineData[50]++;
-  var childNodes = element.childNodes;
   _$jscoverage['/xiami-music.js'].lineData[51]++;
-  if (visit5_51_1(!classId)) {
-    _$jscoverage['/xiami-music.js'].lineData[53]++;
-    for (i = 0; visit6_53_1(i < childNodes.length); i++) {
-      _$jscoverage['/xiami-music.js'].lineData[54]++;
+  var title = element.getAttribute("title"), i, c, classId = element.getAttribute("classid");
+  _$jscoverage['/xiami-music.js'].lineData[56]++;
+  var childNodes = element.childNodes;
+  _$jscoverage['/xiami-music.js'].lineData[57]++;
+  if (visit5_57_1(!classId)) {
+    _$jscoverage['/xiami-music.js'].lineData[59]++;
+    for (i = 0; visit6_59_1(i < childNodes.length); i++) {
+      _$jscoverage['/xiami-music.js'].lineData[60]++;
       c = childNodes[i];
-      _$jscoverage['/xiami-music.js'].lineData[55]++;
-      if (visit7_55_1(c.nodeName == 'embed')) {
-        _$jscoverage['/xiami-music.js'].lineData[56]++;
-        if (visit8_56_1(!flashUtils.isFlashEmbed(c))) {
-          _$jscoverage['/xiami-music.js'].lineData[57]++;
+      _$jscoverage['/xiami-music.js'].lineData[61]++;
+      if (visit7_61_1(c.nodeName == 'embed')) {
+        _$jscoverage['/xiami-music.js'].lineData[62]++;
+        if (visit8_62_1(!flashUtils.isFlashEmbed(c))) {
+          _$jscoverage['/xiami-music.js'].lineData[63]++;
           return null;
         }
-        _$jscoverage['/xiami-music.js'].lineData[59]++;
-        if (visit9_59_1(checkXiami(c.attributes.src))) {
-          _$jscoverage['/xiami-music.js'].lineData[60]++;
+        _$jscoverage['/xiami-music.js'].lineData[65]++;
+        if (visit9_65_1(checkXiami(c.attributes.src))) {
+          _$jscoverage['/xiami-music.js'].lineData[66]++;
           return dataProcessor.createFakeParserElement(element, CLS_XIAMI, TYPE_XIAMI, true, {
   title: title});
         }
       }
     }
-    _$jscoverage['/xiami-music.js'].lineData[66]++;
+    _$jscoverage['/xiami-music.js'].lineData[72]++;
     return null;
   }
-  _$jscoverage['/xiami-music.js'].lineData[68]++;
-  for (i = 0; visit10_68_1(i < childNodes.length); i++) {
-    _$jscoverage['/xiami-music.js'].lineData[69]++;
+  _$jscoverage['/xiami-music.js'].lineData[74]++;
+  for (i = 0; visit10_74_1(i < childNodes.length); i++) {
+    _$jscoverage['/xiami-music.js'].lineData[75]++;
     c = childNodes[i];
-    _$jscoverage['/xiami-music.js'].lineData[72]++;
-    if (visit11_72_1(visit12_72_2(c.nodeName == 'param') && visit13_74_1(c.getAttribute("name").toLowerCase() == "movie"))) {
-      _$jscoverage['/xiami-music.js'].lineData[76]++;
-      if (visit14_76_1(checkXiami(visit15_76_2(c.getAttribute("value") || c.getAttribute("VALUE"))))) {
-        _$jscoverage['/xiami-music.js'].lineData[78]++;
+    _$jscoverage['/xiami-music.js'].lineData[78]++;
+    if (visit11_78_1(visit12_78_2(c.nodeName == 'param') && visit13_80_1(c.getAttribute("name").toLowerCase() == "movie"))) {
+      _$jscoverage['/xiami-music.js'].lineData[82]++;
+      if (visit14_82_1(checkXiami(visit15_82_2(c.getAttribute("value") || c.getAttribute("VALUE"))))) {
+        _$jscoverage['/xiami-music.js'].lineData[84]++;
         return dataProcessor.createFakeParserElement(element, CLS_XIAMI, TYPE_XIAMI, true, {
   title: title});
       }
@@ -483,14 +498,14 @@ KISSY.add("editor/plugin/xiami-music", function(S, Editor, FlashBaseClass, flash
 }, 
   'embed': function(element) {
   _$jscoverage['/xiami-music.js'].functionData[7]++;
-  _$jscoverage['/xiami-music.js'].lineData[88]++;
-  if (visit16_88_1(flashUtils.isFlashEmbed(element) && checkXiami(element.getAttribute("src")))) {
-    _$jscoverage['/xiami-music.js'].lineData[90]++;
+  _$jscoverage['/xiami-music.js'].lineData[94]++;
+  if (visit16_94_1(flashUtils.isFlashEmbed(element) && checkXiami(element.getAttribute("src")))) {
+    _$jscoverage['/xiami-music.js'].lineData[96]++;
     return dataProcessor.createFakeParserElement(element, CLS_XIAMI, TYPE_XIAMI, true, {
   title: element.getAttribute("title")});
   }
 }}}, 4));
-  _$jscoverage['/xiami-music.js'].lineData[99]++;
+  _$jscoverage['/xiami-music.js'].lineData[105]++;
   var xiamiMusic = new XiamiMusic({
   editor: editor, 
   cls: CLS_XIAMI, 
@@ -501,26 +516,25 @@ KISSY.add("editor/plugin/xiami-music", function(S, Editor, FlashBaseClass, flash
   contextMenuHandlers: {
   "\u867e\u7c73\u5c5e\u6027": function() {
   _$jscoverage['/xiami-music.js'].functionData[8]++;
-  _$jscoverage['/xiami-music.js'].lineData[108]++;
+  _$jscoverage['/xiami-music.js'].lineData[114]++;
   var selectedEl = this.get("editorSelectedEl");
-  _$jscoverage['/xiami-music.js'].lineData[109]++;
-  if (visit17_109_1(selectedEl)) {
-    _$jscoverage['/xiami-music.js'].lineData[110]++;
+  _$jscoverage['/xiami-music.js'].lineData[115]++;
+  if (visit17_115_1(selectedEl)) {
+    _$jscoverage['/xiami-music.js'].lineData[116]++;
     xiamiMusic.show(selectedEl);
   }
 }}});
-  _$jscoverage['/xiami-music.js'].lineData[116]++;
+  _$jscoverage['/xiami-music.js'].lineData[122]++;
   editor.addButton("xiamiMusic", {
   tooltip: "\u63d2\u5165\u867e\u7c73\u97f3\u4e50", 
   listeners: {
   click: function() {
   _$jscoverage['/xiami-music.js'].functionData[9]++;
-  _$jscoverage['/xiami-music.js'].lineData[120]++;
+  _$jscoverage['/xiami-music.js'].lineData[126]++;
   xiamiMusic.show();
 }}, 
   mode: Editor.Mode.WYSIWYG_MODE});
 }});
-  _$jscoverage['/xiami-music.js'].lineData[129]++;
+  _$jscoverage['/xiami-music.js'].lineData[135]++;
   return XiamiMusicPlugin;
-}, {
-  requires: ['editor', './flash-common/base-class', './flash-common/utils', './fake-objects']});
+});

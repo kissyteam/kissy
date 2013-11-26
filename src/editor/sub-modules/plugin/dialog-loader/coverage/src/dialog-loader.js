@@ -231,24 +231,26 @@ if (! _$jscoverage['/dialog-loader.js']) {
   _$jscoverage['/dialog-loader.js'].lineData = [];
   _$jscoverage['/dialog-loader.js'].lineData[6] = 0;
   _$jscoverage['/dialog-loader.js'].lineData[7] = 0;
-  _$jscoverage['/dialog-loader.js'].lineData[10] = 0;
-  _$jscoverage['/dialog-loader.js'].lineData[11] = 0;
-  _$jscoverage['/dialog-loader.js'].lineData[21] = 0;
-  _$jscoverage['/dialog-loader.js'].lineData[22] = 0;
+  _$jscoverage['/dialog-loader.js'].lineData[8] = 0;
+  _$jscoverage['/dialog-loader.js'].lineData[9] = 0;
+  _$jscoverage['/dialog-loader.js'].lineData[12] = 0;
+  _$jscoverage['/dialog-loader.js'].lineData[13] = 0;
   _$jscoverage['/dialog-loader.js'].lineData[23] = 0;
-  _$jscoverage['/dialog-loader.js'].lineData[26] = 0;
-  _$jscoverage['/dialog-loader.js'].lineData[30] = 0;
-  _$jscoverage['/dialog-loader.js'].lineData[34] = 0;
-  _$jscoverage['/dialog-loader.js'].lineData[35] = 0;
+  _$jscoverage['/dialog-loader.js'].lineData[24] = 0;
+  _$jscoverage['/dialog-loader.js'].lineData[25] = 0;
+  _$jscoverage['/dialog-loader.js'].lineData[28] = 0;
+  _$jscoverage['/dialog-loader.js'].lineData[32] = 0;
   _$jscoverage['/dialog-loader.js'].lineData[36] = 0;
   _$jscoverage['/dialog-loader.js'].lineData[37] = 0;
   _$jscoverage['/dialog-loader.js'].lineData[38] = 0;
+  _$jscoverage['/dialog-loader.js'].lineData[39] = 0;
   _$jscoverage['/dialog-loader.js'].lineData[40] = 0;
   _$jscoverage['/dialog-loader.js'].lineData[42] = 0;
-  _$jscoverage['/dialog-loader.js'].lineData[43] = 0;
   _$jscoverage['/dialog-loader.js'].lineData[44] = 0;
   _$jscoverage['/dialog-loader.js'].lineData[45] = 0;
   _$jscoverage['/dialog-loader.js'].lineData[46] = 0;
+  _$jscoverage['/dialog-loader.js'].lineData[47] = 0;
+  _$jscoverage['/dialog-loader.js'].lineData[48] = 0;
 }
 if (! _$jscoverage['/dialog-loader.js'].functionData) {
   _$jscoverage['/dialog-loader.js'].functionData = [];
@@ -261,86 +263,89 @@ if (! _$jscoverage['/dialog-loader.js'].functionData) {
 }
 if (! _$jscoverage['/dialog-loader.js'].branchData) {
   _$jscoverage['/dialog-loader.js'].branchData = {};
-  _$jscoverage['/dialog-loader.js'].branchData['10'] = [];
-  _$jscoverage['/dialog-loader.js'].branchData['10'][1] = new BranchData();
-  _$jscoverage['/dialog-loader.js'].branchData['13'] = [];
-  _$jscoverage['/dialog-loader.js'].branchData['13'][1] = new BranchData();
-  _$jscoverage['/dialog-loader.js'].branchData['36'] = [];
-  _$jscoverage['/dialog-loader.js'].branchData['36'][1] = new BranchData();
+  _$jscoverage['/dialog-loader.js'].branchData['12'] = [];
+  _$jscoverage['/dialog-loader.js'].branchData['12'][1] = new BranchData();
+  _$jscoverage['/dialog-loader.js'].branchData['15'] = [];
+  _$jscoverage['/dialog-loader.js'].branchData['15'][1] = new BranchData();
+  _$jscoverage['/dialog-loader.js'].branchData['38'] = [];
+  _$jscoverage['/dialog-loader.js'].branchData['38'][1] = new BranchData();
 }
-_$jscoverage['/dialog-loader.js'].branchData['36'][1].init(176, 35, 'editor.getControl(name + "/dialog")');
-function visit3_36_1(result) {
-  _$jscoverage['/dialog-loader.js'].branchData['36'][1].ranCondition(result);
+_$jscoverage['/dialog-loader.js'].branchData['38'][1].init(173, 35, 'editor.getControl(name + "/dialog")');
+function visit3_38_1(result) {
+  _$jscoverage['/dialog-loader.js'].branchData['38'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog-loader.js'].branchData['13'][1].init(62, 15, 'S.UA[\'ie\'] == 6');
-function visit2_13_1(result) {
-  _$jscoverage['/dialog-loader.js'].branchData['13'][1].ranCondition(result);
+}_$jscoverage['/dialog-loader.js'].branchData['15'][1].init(62, 15, 'S.UA[\'ie\'] == 6');
+function visit2_15_1(result) {
+  _$jscoverage['/dialog-loader.js'].branchData['15'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog-loader.js'].branchData['10'][1].init(22, 11, '!globalMask');
-function visit1_10_1(result) {
-  _$jscoverage['/dialog-loader.js'].branchData['10'][1].ranCondition(result);
+}_$jscoverage['/dialog-loader.js'].branchData['12'][1].init(21, 11, '!globalMask');
+function visit1_12_1(result) {
+  _$jscoverage['/dialog-loader.js'].branchData['12'][1].ranCondition(result);
   return result;
 }_$jscoverage['/dialog-loader.js'].lineData[6]++;
-KISSY.add("editor/plugin/dialog-loader", function(S, Overlay, Editor) {
+KISSY.add(function(S, require) {
   _$jscoverage['/dialog-loader.js'].functionData[0]++;
   _$jscoverage['/dialog-loader.js'].lineData[7]++;
+  var Editor = require('editor');
+  _$jscoverage['/dialog-loader.js'].lineData[8]++;
+  var Overlay = require('overlay');
+  _$jscoverage['/dialog-loader.js'].lineData[9]++;
   var globalMask, loadMask = {
   loading: function(prefixCls) {
   _$jscoverage['/dialog-loader.js'].functionData[1]++;
-  _$jscoverage['/dialog-loader.js'].lineData[10]++;
-  if (visit1_10_1(!globalMask)) {
-    _$jscoverage['/dialog-loader.js'].lineData[11]++;
+  _$jscoverage['/dialog-loader.js'].lineData[12]++;
+  if (visit1_12_1(!globalMask)) {
+    _$jscoverage['/dialog-loader.js'].lineData[13]++;
     globalMask = new Overlay({
   x: 0, 
-  width: visit2_13_1(S.UA['ie'] == 6) ? S.DOM.docWidth() : "100%", 
+  width: visit2_15_1(S.UA['ie'] == 6) ? S.DOM.docWidth() : "100%", 
   y: 0, 
   "zIndex": Editor.baseZIndex(Editor.ZIndexManager.LOADING), 
   prefixCls: prefixCls + 'editor-', 
   elCls: prefixCls + "editor-global-loading"});
   }
-  _$jscoverage['/dialog-loader.js'].lineData[21]++;
-  globalMask.set("height", S.DOM.docHeight());
-  _$jscoverage['/dialog-loader.js'].lineData[22]++;
-  globalMask.show();
   _$jscoverage['/dialog-loader.js'].lineData[23]++;
+  globalMask.set("height", S.DOM.docHeight());
+  _$jscoverage['/dialog-loader.js'].lineData[24]++;
+  globalMask.show();
+  _$jscoverage['/dialog-loader.js'].lineData[25]++;
   globalMask.loading();
 }, 
   unloading: function() {
   _$jscoverage['/dialog-loader.js'].functionData[2]++;
-  _$jscoverage['/dialog-loader.js'].lineData[26]++;
+  _$jscoverage['/dialog-loader.js'].lineData[28]++;
   globalMask.hide();
 }};
-  _$jscoverage['/dialog-loader.js'].lineData[30]++;
+  _$jscoverage['/dialog-loader.js'].lineData[32]++;
   return {
   useDialog: function(editor, name, config, args) {
   _$jscoverage['/dialog-loader.js'].functionData[3]++;
-  _$jscoverage['/dialog-loader.js'].lineData[34]++;
-  editor.focus();
-  _$jscoverage['/dialog-loader.js'].lineData[35]++;
-  var prefixCls = editor.get('prefixCls');
   _$jscoverage['/dialog-loader.js'].lineData[36]++;
-  if (visit3_36_1(editor.getControl(name + "/dialog"))) {
-    _$jscoverage['/dialog-loader.js'].lineData[37]++;
+  editor.focus();
+  _$jscoverage['/dialog-loader.js'].lineData[37]++;
+  var prefixCls = editor.get('prefixCls');
+  _$jscoverage['/dialog-loader.js'].lineData[38]++;
+  if (visit3_38_1(editor.getControl(name + "/dialog"))) {
+    _$jscoverage['/dialog-loader.js'].lineData[39]++;
     setTimeout(function() {
   _$jscoverage['/dialog-loader.js'].functionData[4]++;
-  _$jscoverage['/dialog-loader.js'].lineData[38]++;
+  _$jscoverage['/dialog-loader.js'].lineData[40]++;
   editor.showDialog(name, args);
 }, 0);
-    _$jscoverage['/dialog-loader.js'].lineData[40]++;
+    _$jscoverage['/dialog-loader.js'].lineData[42]++;
     return;
   }
-  _$jscoverage['/dialog-loader.js'].lineData[42]++;
+  _$jscoverage['/dialog-loader.js'].lineData[44]++;
   loadMask.loading(prefixCls);
-  _$jscoverage['/dialog-loader.js'].lineData[43]++;
+  _$jscoverage['/dialog-loader.js'].lineData[45]++;
   S.use("editor/plugin/" + name + "/dialog", function(S, Dialog) {
   _$jscoverage['/dialog-loader.js'].functionData[5]++;
-  _$jscoverage['/dialog-loader.js'].lineData[44]++;
-  loadMask.unloading();
-  _$jscoverage['/dialog-loader.js'].lineData[45]++;
-  editor.addControl(name + "/dialog", new Dialog(editor, config));
   _$jscoverage['/dialog-loader.js'].lineData[46]++;
+  loadMask.unloading();
+  _$jscoverage['/dialog-loader.js'].lineData[47]++;
+  editor.addControl(name + "/dialog", new Dialog(editor, config));
+  _$jscoverage['/dialog-loader.js'].lineData[48]++;
   editor.showDialog(name, args);
 });
 }};
-}, {
-  requires: ['overlay', 'editor']});
+});

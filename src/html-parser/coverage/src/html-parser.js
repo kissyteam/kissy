@@ -231,10 +231,22 @@ if (! _$jscoverage['/html-parser.js']) {
   _$jscoverage['/html-parser.js'].lineData = [];
   _$jscoverage['/html-parser.js'].lineData[6] = 0;
   _$jscoverage['/html-parser.js'].lineData[7] = 0;
-  _$jscoverage['/html-parser.js'].lineData[21] = 0;
-  _$jscoverage['/html-parser.js'].lineData[22] = 0;
-  _$jscoverage['/html-parser.js'].lineData[23] = 0;
-  _$jscoverage['/html-parser.js'].lineData[26] = 0;
+  _$jscoverage['/html-parser.js'].lineData[8] = 0;
+  _$jscoverage['/html-parser.js'].lineData[9] = 0;
+  _$jscoverage['/html-parser.js'].lineData[10] = 0;
+  _$jscoverage['/html-parser.js'].lineData[11] = 0;
+  _$jscoverage['/html-parser.js'].lineData[12] = 0;
+  _$jscoverage['/html-parser.js'].lineData[13] = 0;
+  _$jscoverage['/html-parser.js'].lineData[14] = 0;
+  _$jscoverage['/html-parser.js'].lineData[15] = 0;
+  _$jscoverage['/html-parser.js'].lineData[16] = 0;
+  _$jscoverage['/html-parser.js'].lineData[17] = 0;
+  _$jscoverage['/html-parser.js'].lineData[18] = 0;
+  _$jscoverage['/html-parser.js'].lineData[20] = 0;
+  _$jscoverage['/html-parser.js'].lineData[34] = 0;
+  _$jscoverage['/html-parser.js'].lineData[35] = 0;
+  _$jscoverage['/html-parser.js'].lineData[36] = 0;
+  _$jscoverage['/html-parser.js'].lineData[39] = 0;
 }
 if (! _$jscoverage['/html-parser.js'].functionData) {
   _$jscoverage['/html-parser.js'].functionData = [];
@@ -246,9 +258,33 @@ if (! _$jscoverage['/html-parser.js'].branchData) {
   _$jscoverage['/html-parser.js'].branchData = {};
 }
 _$jscoverage['/html-parser.js'].lineData[6]++;
-KISSY.add("html-parser", function(S, DTD, Lexer, Parser, BasicWriter, BeautifyWriter, MinifyWriter, Filter, CData, Comment, Node, Tag, Text) {
+KISSY.add(function(S, require) {
   _$jscoverage['/html-parser.js'].functionData[0]++;
   _$jscoverage['/html-parser.js'].lineData[7]++;
+  var DTD = require('html-parser/dtd');
+  _$jscoverage['/html-parser.js'].lineData[8]++;
+  var Lexer = require('html-parser/lexer/lexer');
+  _$jscoverage['/html-parser.js'].lineData[9]++;
+  var Parser = require('html-parser/parser');
+  _$jscoverage['/html-parser.js'].lineData[10]++;
+  var BasicWriter = require('html-parser/writer/basic');
+  _$jscoverage['/html-parser.js'].lineData[11]++;
+  var BeautifyWriter = require('html-parser/writer/beautify');
+  _$jscoverage['/html-parser.js'].lineData[12]++;
+  var MinifyWriter = require('html-parser/writer/minify');
+  _$jscoverage['/html-parser.js'].lineData[13]++;
+  var Filter = require('html-parser/writer/filter');
+  _$jscoverage['/html-parser.js'].lineData[14]++;
+  var CData = require('html-parser/nodes/cdata');
+  _$jscoverage['/html-parser.js'].lineData[15]++;
+  var Comment = require('html-parser/nodes/comment');
+  _$jscoverage['/html-parser.js'].lineData[16]++;
+  var Node = require('html-parser/nodes/node');
+  _$jscoverage['/html-parser.js'].lineData[17]++;
+  var Tag = require('html-parser/nodes/tag');
+  _$jscoverage['/html-parser.js'].lineData[18]++;
+  var Text = require('html-parser/nodes/text');
+  _$jscoverage['/html-parser.js'].lineData[20]++;
   return {
   CData: CData, 
   Comment: Comment, 
@@ -264,17 +300,16 @@ KISSY.add("html-parser", function(S, DTD, Lexer, Parser, BasicWriter, BeautifyWr
   DTD: DTD, 
   serialize: function(n, filter) {
   _$jscoverage['/html-parser.js'].functionData[1]++;
-  _$jscoverage['/html-parser.js'].lineData[21]++;
+  _$jscoverage['/html-parser.js'].lineData[34]++;
   var basicWriter = new BasicWriter();
-  _$jscoverage['/html-parser.js'].lineData[22]++;
+  _$jscoverage['/html-parser.js'].lineData[35]++;
   n.writeHtml(basicWriter, filter);
-  _$jscoverage['/html-parser.js'].lineData[23]++;
+  _$jscoverage['/html-parser.js'].lineData[36]++;
   return basicWriter.getHtml();
 }, 
   parse: function(html) {
   _$jscoverage['/html-parser.js'].functionData[2]++;
-  _$jscoverage['/html-parser.js'].lineData[26]++;
+  _$jscoverage['/html-parser.js'].lineData[39]++;
   return new Parser(html).parse();
 }};
-}, {
-  requires: ['html-parser/dtd', 'html-parser/lexer/lexer', 'html-parser/parser', 'html-parser/writer/basic', 'html-parser/writer/beautify', 'html-parser/writer/minify', 'html-parser/writer/filter', 'html-parser/nodes/cdata', 'html-parser/nodes/comment', 'html-parser/nodes/node', 'html-parser/nodes/tag', 'html-parser/nodes/text']});
+});

@@ -231,7 +231,7 @@ if (! _$jscoverage['/picker/month-panel/render.js']) {
   _$jscoverage['/picker/month-panel/render.js'].lineData = [];
   _$jscoverage['/picker/month-panel/render.js'].lineData[6] = 0;
   _$jscoverage['/picker/month-panel/render.js'].lineData[7] = 0;
-  _$jscoverage['/picker/month-panel/render.js'].lineData[8] = 0;
+  _$jscoverage['/picker/month-panel/render.js'].lineData[12] = 0;
   _$jscoverage['/picker/month-panel/render.js'].lineData[13] = 0;
   _$jscoverage['/picker/month-panel/render.js'].lineData[14] = 0;
   _$jscoverage['/picker/month-panel/render.js'].lineData[15] = 0;
@@ -247,21 +247,20 @@ if (! _$jscoverage['/picker/month-panel/render.js']) {
   _$jscoverage['/picker/month-panel/render.js'].lineData[25] = 0;
   _$jscoverage['/picker/month-panel/render.js'].lineData[26] = 0;
   _$jscoverage['/picker/month-panel/render.js'].lineData[27] = 0;
-  _$jscoverage['/picker/month-panel/render.js'].lineData[28] = 0;
-  _$jscoverage['/picker/month-panel/render.js'].lineData[33] = 0;
-  _$jscoverage['/picker/month-panel/render.js'].lineData[36] = 0;
+  _$jscoverage['/picker/month-panel/render.js'].lineData[32] = 0;
+  _$jscoverage['/picker/month-panel/render.js'].lineData[35] = 0;
+  _$jscoverage['/picker/month-panel/render.js'].lineData[40] = 0;
   _$jscoverage['/picker/month-panel/render.js'].lineData[41] = 0;
-  _$jscoverage['/picker/month-panel/render.js'].lineData[42] = 0;
-  _$jscoverage['/picker/month-panel/render.js'].lineData[45] = 0;
+  _$jscoverage['/picker/month-panel/render.js'].lineData[44] = 0;
+  _$jscoverage['/picker/month-panel/render.js'].lineData[46] = 0;
   _$jscoverage['/picker/month-panel/render.js'].lineData[47] = 0;
   _$jscoverage['/picker/month-panel/render.js'].lineData[48] = 0;
-  _$jscoverage['/picker/month-panel/render.js'].lineData[49] = 0;
-  _$jscoverage['/picker/month-panel/render.js'].lineData[54] = 0;
-  _$jscoverage['/picker/month-panel/render.js'].lineData[62] = 0;
+  _$jscoverage['/picker/month-panel/render.js'].lineData[53] = 0;
+  _$jscoverage['/picker/month-panel/render.js'].lineData[61] = 0;
+  _$jscoverage['/picker/month-panel/render.js'].lineData[65] = 0;
   _$jscoverage['/picker/month-panel/render.js'].lineData[66] = 0;
   _$jscoverage['/picker/month-panel/render.js'].lineData[67] = 0;
   _$jscoverage['/picker/month-panel/render.js'].lineData[68] = 0;
-  _$jscoverage['/picker/month-panel/render.js'].lineData[69] = 0;
 }
 if (! _$jscoverage['/picker/month-panel/render.js'].functionData) {
   _$jscoverage['/picker/month-panel/render.js'].functionData = [];
@@ -272,108 +271,106 @@ if (! _$jscoverage['/picker/month-panel/render.js'].functionData) {
 }
 if (! _$jscoverage['/picker/month-panel/render.js'].branchData) {
   _$jscoverage['/picker/month-panel/render.js'].branchData = {};
-  _$jscoverage['/picker/month-panel/render.js'].branchData['24'] = [];
-  _$jscoverage['/picker/month-panel/render.js'].branchData['24'][1] = new BranchData();
-  _$jscoverage['/picker/month-panel/render.js'].branchData['26'] = [];
-  _$jscoverage['/picker/month-panel/render.js'].branchData['26'][1] = new BranchData();
+  _$jscoverage['/picker/month-panel/render.js'].branchData['23'] = [];
+  _$jscoverage['/picker/month-panel/render.js'].branchData['23'][1] = new BranchData();
+  _$jscoverage['/picker/month-panel/render.js'].branchData['25'] = [];
+  _$jscoverage['/picker/month-panel/render.js'].branchData['25'][1] = new BranchData();
 }
-_$jscoverage['/picker/month-panel/render.js'].branchData['26'][1].init(57, 5, 'j < 4');
-function visit17_26_1(result) {
-  _$jscoverage['/picker/month-panel/render.js'].branchData['26'][1].ranCondition(result);
+_$jscoverage['/picker/month-panel/render.js'].branchData['25'][1].init(57, 5, 'j < 4');
+function visit27_25_1(result) {
+  _$jscoverage['/picker/month-panel/render.js'].branchData['25'][1].ranCondition(result);
   return result;
-}_$jscoverage['/picker/month-panel/render.js'].branchData['24'][1].init(462, 5, 'i < 3');
-function visit16_24_1(result) {
-  _$jscoverage['/picker/month-panel/render.js'].branchData['24'][1].ranCondition(result);
+}_$jscoverage['/picker/month-panel/render.js'].branchData['23'][1].init(462, 5, 'i < 3');
+function visit26_23_1(result) {
+  _$jscoverage['/picker/month-panel/render.js'].branchData['23'][1].ranCondition(result);
   return result;
 }_$jscoverage['/picker/month-panel/render.js'].lineData[6]++;
-KISSY.add(function(S) {
+KISSY.add(function(S, require) {
   _$jscoverage['/picker/month-panel/render.js'].functionData[0]++;
   _$jscoverage['/picker/month-panel/render.js'].lineData[7]++;
-  var module = this;
-  _$jscoverage['/picker/month-panel/render.js'].lineData[8]++;
-  var DateFormat = module.require('date/format'), Control = module.require('component/control'), MonthsTpl = module.require('./months-xtpl'), MonthPanelTpl = module.require('./month-panel-xtpl');
-  _$jscoverage['/picker/month-panel/render.js'].lineData[13]++;
+  var DateFormat = require('date/format'), Control = require('component/control'), MonthsTpl = require('./months-xtpl'), MonthPanelTpl = require('./month-panel-xtpl');
+  _$jscoverage['/picker/month-panel/render.js'].lineData[12]++;
   function prepareMonths(control) {
     _$jscoverage['/picker/month-panel/render.js'].functionData[1]++;
-    _$jscoverage['/picker/month-panel/render.js'].lineData[14]++;
+    _$jscoverage['/picker/month-panel/render.js'].lineData[13]++;
     var value = control.get('value');
-    _$jscoverage['/picker/month-panel/render.js'].lineData[15]++;
+    _$jscoverage['/picker/month-panel/render.js'].lineData[14]++;
     var currentMonth = value.getMonth();
-    _$jscoverage['/picker/month-panel/render.js'].lineData[16]++;
+    _$jscoverage['/picker/month-panel/render.js'].lineData[15]++;
     var current = value.clone();
-    _$jscoverage['/picker/month-panel/render.js'].lineData[17]++;
+    _$jscoverage['/picker/month-panel/render.js'].lineData[16]++;
     var locale = control.get('locale');
-    _$jscoverage['/picker/month-panel/render.js'].lineData[18]++;
+    _$jscoverage['/picker/month-panel/render.js'].lineData[17]++;
     var monthYearFormat = locale.monthYearFormat;
-    _$jscoverage['/picker/month-panel/render.js'].lineData[19]++;
+    _$jscoverage['/picker/month-panel/render.js'].lineData[18]++;
     var dateLocale = value.getLocale();
-    _$jscoverage['/picker/month-panel/render.js'].lineData[20]++;
+    _$jscoverage['/picker/month-panel/render.js'].lineData[19]++;
     var dateFormatter = new DateFormat(monthYearFormat, dateLocale);
-    _$jscoverage['/picker/month-panel/render.js'].lineData[21]++;
+    _$jscoverage['/picker/month-panel/render.js'].lineData[20]++;
     var months = [];
-    _$jscoverage['/picker/month-panel/render.js'].lineData[22]++;
+    _$jscoverage['/picker/month-panel/render.js'].lineData[21]++;
     var shortMonths = dateLocale.shortMonths;
-    _$jscoverage['/picker/month-panel/render.js'].lineData[23]++;
+    _$jscoverage['/picker/month-panel/render.js'].lineData[22]++;
     var index = 0;
-    _$jscoverage['/picker/month-panel/render.js'].lineData[24]++;
-    for (var i = 0; visit16_24_1(i < 3); i++) {
-      _$jscoverage['/picker/month-panel/render.js'].lineData[25]++;
+    _$jscoverage['/picker/month-panel/render.js'].lineData[23]++;
+    for (var i = 0; visit26_23_1(i < 3); i++) {
+      _$jscoverage['/picker/month-panel/render.js'].lineData[24]++;
       months[i] = [];
-      _$jscoverage['/picker/month-panel/render.js'].lineData[26]++;
-      for (var j = 0; visit17_26_1(j < 4); j++) {
-        _$jscoverage['/picker/month-panel/render.js'].lineData[27]++;
+      _$jscoverage['/picker/month-panel/render.js'].lineData[25]++;
+      for (var j = 0; visit27_25_1(j < 4); j++) {
+        _$jscoverage['/picker/month-panel/render.js'].lineData[26]++;
         current.setMonth(index);
-        _$jscoverage['/picker/month-panel/render.js'].lineData[28]++;
+        _$jscoverage['/picker/month-panel/render.js'].lineData[27]++;
         months[i][j] = {
   value: index, 
   content: shortMonths[index], 
   title: dateFormatter.format(current)};
-        _$jscoverage['/picker/month-panel/render.js'].lineData[33]++;
+        _$jscoverage['/picker/month-panel/render.js'].lineData[32]++;
         index++;
       }
     }
-    _$jscoverage['/picker/month-panel/render.js'].lineData[36]++;
+    _$jscoverage['/picker/month-panel/render.js'].lineData[35]++;
     S.mix(control.view.renderData, {
   months: months, 
   year: value.getYear(), 
   month: currentMonth});
-    _$jscoverage['/picker/month-panel/render.js'].lineData[41]++;
+    _$jscoverage['/picker/month-panel/render.js'].lineData[40]++;
     control.months = months;
-    _$jscoverage['/picker/month-panel/render.js'].lineData[42]++;
+    _$jscoverage['/picker/month-panel/render.js'].lineData[41]++;
     return months;
   }
-  _$jscoverage['/picker/month-panel/render.js'].lineData[45]++;
+  _$jscoverage['/picker/month-panel/render.js'].lineData[44]++;
   return Control.getDefaultRender().extend({
   beforeCreateDom: function(renderData, childrenSelectors) {
   _$jscoverage['/picker/month-panel/render.js'].functionData[2]++;
-  _$jscoverage['/picker/month-panel/render.js'].lineData[47]++;
+  _$jscoverage['/picker/month-panel/render.js'].lineData[46]++;
   var control = this.control;
-  _$jscoverage['/picker/month-panel/render.js'].lineData[48]++;
+  _$jscoverage['/picker/month-panel/render.js'].lineData[47]++;
   var locale = control.get('locale');
-  _$jscoverage['/picker/month-panel/render.js'].lineData[49]++;
+  _$jscoverage['/picker/month-panel/render.js'].lineData[48]++;
   S.mix(renderData, {
   yearSelectLabel: locale.yearSelect, 
   previousYearLabel: locale.previousYear, 
   nextYearLabel: locale.nextYear});
-  _$jscoverage['/picker/month-panel/render.js'].lineData[54]++;
+  _$jscoverage['/picker/month-panel/render.js'].lineData[53]++;
   S.mix(childrenSelectors, {
   tbodyEl: '#ks-date-picker-month-panel-tbody-{id}', 
   previousYearBtn: '#ks-date-picker-month-panel-previous-year-btn-{id}', 
   yearSelectEl: '#ks-date-picker-month-panel-year-select-{id}', 
   yearSelectContentEl: '#ks-date-picker-month-panel-year-select-content-{id}', 
   nextYearBtn: '#ks-date-picker-month-panel-next-year-btn-{id}'});
-  _$jscoverage['/picker/month-panel/render.js'].lineData[62]++;
+  _$jscoverage['/picker/month-panel/render.js'].lineData[61]++;
   prepareMonths(control);
 }, 
   _onSetValue: function(value) {
   _$jscoverage['/picker/month-panel/render.js'].functionData[3]++;
-  _$jscoverage['/picker/month-panel/render.js'].lineData[66]++;
+  _$jscoverage['/picker/month-panel/render.js'].lineData[65]++;
   var control = this.control;
-  _$jscoverage['/picker/month-panel/render.js'].lineData[67]++;
+  _$jscoverage['/picker/month-panel/render.js'].lineData[66]++;
   prepareMonths(control);
-  _$jscoverage['/picker/month-panel/render.js'].lineData[68]++;
+  _$jscoverage['/picker/month-panel/render.js'].lineData[67]++;
   control.get('tbodyEl').html(this.renderTpl(MonthsTpl));
-  _$jscoverage['/picker/month-panel/render.js'].lineData[69]++;
+  _$jscoverage['/picker/month-panel/render.js'].lineData[68]++;
   control.get('yearSelectContentEl').html(value.getYear());
 }}, {
   ATTRS: {

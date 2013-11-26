@@ -230,6 +230,7 @@ if (! _$jscoverage['/cmd.js']) {
   _$jscoverage['/cmd.js'] = {};
   _$jscoverage['/cmd.js'].lineData = [];
   _$jscoverage['/cmd.js'].lineData[6] = 0;
+  _$jscoverage['/cmd.js'].lineData[7] = 0;
   _$jscoverage['/cmd.js'].lineData[8] = 0;
   _$jscoverage['/cmd.js'].lineData[10] = 0;
   _$jscoverage['/cmd.js'].lineData[11] = 0;
@@ -344,85 +345,87 @@ if (! _$jscoverage['/cmd.js'].branchData) {
   _$jscoverage['/cmd.js'].branchData['111'] = [];
   _$jscoverage['/cmd.js'].branchData['111'][1] = new BranchData();
 }
-_$jscoverage['/cmd.js'].branchData['111'][1].init(94, 33, 'selection && !selection.isInvalid');
+_$jscoverage['/cmd.js'].branchData['111'][1].init(92, 33, 'selection && !selection.isInvalid');
 function visit19_111_1(result) {
   _$jscoverage['/cmd.js'].branchData['111'][1].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['100'][1].init(416, 49, 'value.toLowerCase() == currentValue.toLowerCase()');
+}_$jscoverage['/cmd.js'].branchData['100'][1].init(408, 49, 'value.toLowerCase() == currentValue.toLowerCase()');
 function visit18_100_1(result) {
   _$jscoverage['/cmd.js'].branchData['100'][1].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['94'][1].init(86, 39, 'editor.queryCommandValue(cmdType) || ""');
+}_$jscoverage['/cmd.js'].branchData['94'][1].init(84, 39, 'editor.queryCommandValue(cmdType) || ""');
 function visit17_94_1(result) {
   _$jscoverage['/cmd.js'].branchData['94'][1].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['90'][1].init(68, 27, '!editor.hasCommand(cmdType)');
+}_$jscoverage['/cmd.js'].branchData['90'][1].init(66, 27, '!editor.hasCommand(cmdType)');
 function visit16_90_1(result) {
   _$jscoverage['/cmd.js'].branchData['90'][1].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['78'][1].init(94, 33, 'selection && !selection.isInvalid');
+}_$jscoverage['/cmd.js'].branchData['78'][1].init(92, 33, 'selection && !selection.isInvalid');
 function visit15_78_1(result) {
   _$jscoverage['/cmd.js'].branchData['78'][1].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['65'][1].init(219, 7, 'checked');
+}_$jscoverage['/cmd.js'].branchData['65'][1].init(215, 7, 'checked');
 function visit14_65_1(result) {
   _$jscoverage['/cmd.js'].branchData['65'][1].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['59'][1].init(68, 27, '!editor.hasCommand(cmdType)');
+}_$jscoverage['/cmd.js'].branchData['59'][1].init(66, 27, '!editor.hasCommand(cmdType)');
 function visit13_59_1(result) {
   _$jscoverage['/cmd.js'].branchData['59'][1].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['49'][1].init(316, 11, 'v !== false');
+}_$jscoverage['/cmd.js'].branchData['49'][1].init(309, 11, 'v !== false');
 function visit12_49_1(result) {
   _$jscoverage['/cmd.js'].branchData['49'][1].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['45'][2].init(160, 39, 'element[0] == elementPath.blockLimit[0]');
+}_$jscoverage['/cmd.js'].branchData['45'][2].init(157, 39, 'element[0] == elementPath.blockLimit[0]');
 function visit11_45_2(result) {
   _$jscoverage['/cmd.js'].branchData['45'][2].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['45'][1].init(75, 65, 'elementPath.blockLimit && element[0] == elementPath.blockLimit[0]');
+}_$jscoverage['/cmd.js'].branchData['45'][1].init(74, 65, 'elementPath.blockLimit && element[0] == elementPath.blockLimit[0]');
 function visit10_45_1(result) {
   _$jscoverage['/cmd.js'].branchData['45'][1].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['44'][3].init(77, 34, 'element[0] == elementPath.block[0]');
+}_$jscoverage['/cmd.js'].branchData['44'][3].init(75, 34, 'element[0] == elementPath.block[0]');
 function visit9_44_3(result) {
   _$jscoverage['/cmd.js'].branchData['44'][3].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['44'][2].init(56, 55, 'elementPath.block && element[0] == elementPath.block[0]');
+}_$jscoverage['/cmd.js'].branchData['44'][2].init(54, 55, 'elementPath.block && element[0] == elementPath.block[0]');
 function visit8_44_2(result) {
   _$jscoverage['/cmd.js'].branchData['44'][2].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['44'][1].init(56, 141, 'elementPath.block && element[0] == elementPath.block[0] || elementPath.blockLimit && element[0] == elementPath.blockLimit[0]');
+}_$jscoverage['/cmd.js'].branchData['44'][1].init(54, 140, 'elementPath.block && element[0] == elementPath.block[0] || elementPath.blockLimit && element[0] == elementPath.blockLimit[0]');
 function visit7_44_1(result) {
   _$jscoverage['/cmd.js'].branchData['44'][1].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['42'][1].init(122, 19, 'i < elements.length');
+}_$jscoverage['/cmd.js'].branchData['42'][1].init(117, 19, 'i < elements.length');
 function visit6_42_1(result) {
   _$jscoverage['/cmd.js'].branchData['42'][1].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['29'][1].init(22, 19, 'v = element.attr(a)');
+}_$jscoverage['/cmd.js'].branchData['29'][1].init(21, 19, 'v = element.attr(a)');
 function visit5_29_1(result) {
   _$jscoverage['/cmd.js'].branchData['29'][1].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['24'][1].init(60, 28, 'override.element != nodeName');
+}_$jscoverage['/cmd.js'].branchData['24'][1].init(58, 28, 'override.element != nodeName');
 function visit4_24_1(result) {
   _$jscoverage['/cmd.js'].branchData['24'][1].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['22'][1].init(367, 20, 'i < overrides.length');
+}_$jscoverage['/cmd.js'].branchData['22'][1].init(355, 20, 'i < overrides.length');
 function visit3_22_1(result) {
   _$jscoverage['/cmd.js'].branchData['22'][1].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['17'][1].init(18, 20, 'v = element.style(s)');
+}_$jscoverage['/cmd.js'].branchData['17'][1].init(17, 20, 'v = element.style(s)');
 function visit2_17_1(result) {
   _$jscoverage['/cmd.js'].branchData['17'][1].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['12'][1].init(58, 28, 'styleObj.element != nodeName');
+}_$jscoverage['/cmd.js'].branchData['12'][1].init(56, 28, 'styleObj.element != nodeName');
 function visit1_12_1(result) {
   _$jscoverage['/cmd.js'].branchData['12'][1].ranCondition(result);
   return result;
 }_$jscoverage['/cmd.js'].lineData[6]++;
-KISSY.add("editor/plugin/font/cmd", function(S, Editor) {
+KISSY.add(function(S, require) {
   _$jscoverage['/cmd.js'].functionData[0]++;
+  _$jscoverage['/cmd.js'].lineData[7]++;
+  var Editor = require('editor');
   _$jscoverage['/cmd.js'].lineData[8]++;
   var getQueryCmd = Editor.Utils.getQueryCmd;
   _$jscoverage['/cmd.js'].lineData[10]++;
@@ -590,5 +593,4 @@ KISSY.add("editor/plugin/font/cmd", function(S, Editor) {
 }});
   }
 }};
-}, {
-  requires: ['editor']});
+});

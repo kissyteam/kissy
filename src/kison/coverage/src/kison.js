@@ -234,11 +234,15 @@ if (! _$jscoverage['/kison.js']) {
   _$jscoverage['/kison.js'].lineData[8] = 0;
   _$jscoverage['/kison.js'].lineData[9] = 0;
   _$jscoverage['/kison.js'].lineData[10] = 0;
-  _$jscoverage['/kison.js'].lineData[11] = 0;
   _$jscoverage['/kison.js'].lineData[12] = 0;
   _$jscoverage['/kison.js'].lineData[13] = 0;
+  _$jscoverage['/kison.js'].lineData[14] = 0;
   _$jscoverage['/kison.js'].lineData[15] = 0;
   _$jscoverage['/kison.js'].lineData[16] = 0;
+  _$jscoverage['/kison.js'].lineData[17] = 0;
+  _$jscoverage['/kison.js'].lineData[18] = 0;
+  _$jscoverage['/kison.js'].lineData[20] = 0;
+  _$jscoverage['/kison.js'].lineData[21] = 0;
 }
 if (! _$jscoverage['/kison.js'].functionData) {
   _$jscoverage['/kison.js'].functionData = [];
@@ -246,35 +250,42 @@ if (! _$jscoverage['/kison.js'].functionData) {
 }
 if (! _$jscoverage['/kison.js'].branchData) {
   _$jscoverage['/kison.js'].branchData = {};
-  _$jscoverage['/kison.js'].branchData['12'] = [];
-  _$jscoverage['/kison.js'].branchData['12'][1] = new BranchData();
+  _$jscoverage['/kison.js'].branchData['17'] = [];
+  _$jscoverage['/kison.js'].branchData['17'][1] = new BranchData();
 }
-_$jscoverage['/kison.js'].branchData['12'][1].init(149, 9, '\'@DEBUG@\'');
-function visit142_12_1(result) {
-  _$jscoverage['/kison.js'].branchData['12'][1].ranCondition(result);
+_$jscoverage['/kison.js'].branchData['17'][1].init(318, 9, '\'@DEBUG@\'');
+function visit142_17_1(result) {
+  _$jscoverage['/kison.js'].branchData['17'][1].ranCondition(result);
   return result;
 }_$jscoverage['/kison.js'].lineData[6]++;
-KISSY.add("kison", function(S, Grammar, Production, Lexer, Utils) {
+KISSY.add(function(S, require) {
   _$jscoverage['/kison.js'].functionData[0]++;
   _$jscoverage['/kison.js'].lineData[7]++;
-  var Kison = {};
+  var Grammar = require('kison/grammar');
   _$jscoverage['/kison.js'].lineData[8]++;
-  Kison.Grammar = Grammar;
+  var Production = require('kison/production');
   _$jscoverage['/kison.js'].lineData[9]++;
-  Kison.Production = Production;
+  var Lexer = require('kison/lexer');
   _$jscoverage['/kison.js'].lineData[10]++;
-  Kison.Lexer = Lexer;
-  _$jscoverage['/kison.js'].lineData[11]++;
-  Kison.Utils = Utils;
+  var Utils = require('kison/utils');
   _$jscoverage['/kison.js'].lineData[12]++;
-  if (visit142_12_1('@DEBUG@')) {
-    _$jscoverage['/kison.js'].lineData[13]++;
+  var Kison = {};
+  _$jscoverage['/kison.js'].lineData[13]++;
+  Kison.Grammar = Grammar;
+  _$jscoverage['/kison.js'].lineData[14]++;
+  Kison.Production = Production;
+  _$jscoverage['/kison.js'].lineData[15]++;
+  Kison.Lexer = Lexer;
+  _$jscoverage['/kison.js'].lineData[16]++;
+  Kison.Utils = Utils;
+  _$jscoverage['/kison.js'].lineData[17]++;
+  if (visit142_17_1('@DEBUG@')) {
+    _$jscoverage['/kison.js'].lineData[18]++;
     return Kison;
   } else {
-    _$jscoverage['/kison.js'].lineData[15]++;
+    _$jscoverage['/kison.js'].lineData[20]++;
     alert('kison can only use uncompressed version!');
-    _$jscoverage['/kison.js'].lineData[16]++;
+    _$jscoverage['/kison.js'].lineData[21]++;
     return null;
   }
-}, {
-  requires: ['kison/grammar', 'kison/production', 'kison/lexer', 'kison/utils']});
+});

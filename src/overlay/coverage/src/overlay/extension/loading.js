@@ -230,15 +230,16 @@ if (! _$jscoverage['/overlay/extension/loading.js']) {
   _$jscoverage['/overlay/extension/loading.js'] = {};
   _$jscoverage['/overlay/extension/loading.js'].lineData = [];
   _$jscoverage['/overlay/extension/loading.js'].lineData[6] = 0;
-  _$jscoverage['/overlay/extension/loading.js'].lineData[12] = 0;
-  _$jscoverage['/overlay/extension/loading.js'].lineData[15] = 0;
-  _$jscoverage['/overlay/extension/loading.js'].lineData[21] = 0;
+  _$jscoverage['/overlay/extension/loading.js'].lineData[7] = 0;
+  _$jscoverage['/overlay/extension/loading.js'].lineData[13] = 0;
+  _$jscoverage['/overlay/extension/loading.js'].lineData[16] = 0;
   _$jscoverage['/overlay/extension/loading.js'].lineData[22] = 0;
   _$jscoverage['/overlay/extension/loading.js'].lineData[23] = 0;
-  _$jscoverage['/overlay/extension/loading.js'].lineData[36] = 0;
-  _$jscoverage['/overlay/extension/loading.js'].lineData[44] = 0;
+  _$jscoverage['/overlay/extension/loading.js'].lineData[24] = 0;
+  _$jscoverage['/overlay/extension/loading.js'].lineData[37] = 0;
   _$jscoverage['/overlay/extension/loading.js'].lineData[45] = 0;
-  _$jscoverage['/overlay/extension/loading.js'].lineData[49] = 0;
+  _$jscoverage['/overlay/extension/loading.js'].lineData[46] = 0;
+  _$jscoverage['/overlay/extension/loading.js'].lineData[50] = 0;
 }
 if (! _$jscoverage['/overlay/extension/loading.js'].functionData) {
   _$jscoverage['/overlay/extension/loading.js'].functionData = [];
@@ -249,48 +250,49 @@ if (! _$jscoverage['/overlay/extension/loading.js'].functionData) {
 }
 if (! _$jscoverage['/overlay/extension/loading.js'].branchData) {
   _$jscoverage['/overlay/extension/loading.js'].branchData = {};
-  _$jscoverage['/overlay/extension/loading.js'].branchData['22'] = [];
-  _$jscoverage['/overlay/extension/loading.js'].branchData['22'][1] = new BranchData();
-  _$jscoverage['/overlay/extension/loading.js'].branchData['45'] = [];
-  _$jscoverage['/overlay/extension/loading.js'].branchData['45'][1] = new BranchData();
+  _$jscoverage['/overlay/extension/loading.js'].branchData['23'] = [];
+  _$jscoverage['/overlay/extension/loading.js'].branchData['23'][1] = new BranchData();
+  _$jscoverage['/overlay/extension/loading.js'].branchData['46'] = [];
+  _$jscoverage['/overlay/extension/loading.js'].branchData['46'][1] = new BranchData();
 }
-_$jscoverage['/overlay/extension/loading.js'].branchData['45'][1].init(55, 17, 'lel && lel.hide()');
-function visit20_45_1(result) {
-  _$jscoverage['/overlay/extension/loading.js'].branchData['45'][1].ranCondition(result);
+_$jscoverage['/overlay/extension/loading.js'].branchData['46'][1].init(55, 17, 'lel && lel.hide()');
+function visit20_46_1(result) {
+  _$jscoverage['/overlay/extension/loading.js'].branchData['46'][1].ranCondition(result);
   return result;
-}_$jscoverage['/overlay/extension/loading.js'].branchData['22'][1].init(46, 19, '!self._loadingExtEl');
-function visit19_22_1(result) {
-  _$jscoverage['/overlay/extension/loading.js'].branchData['22'][1].ranCondition(result);
+}_$jscoverage['/overlay/extension/loading.js'].branchData['23'][1].init(46, 19, '!self._loadingExtEl');
+function visit19_23_1(result) {
+  _$jscoverage['/overlay/extension/loading.js'].branchData['23'][1].ranCondition(result);
   return result;
 }_$jscoverage['/overlay/extension/loading.js'].lineData[6]++;
-KISSY.add("overlay/extension/loading", function(S, Node) {
+KISSY.add(function(S, require) {
   _$jscoverage['/overlay/extension/loading.js'].functionData[0]++;
-  _$jscoverage['/overlay/extension/loading.js'].lineData[12]++;
+  _$jscoverage['/overlay/extension/loading.js'].lineData[7]++;
+  var Node = require('node');
+  _$jscoverage['/overlay/extension/loading.js'].lineData[13]++;
   function Loading() {
     _$jscoverage['/overlay/extension/loading.js'].functionData[1]++;
   }
-  _$jscoverage['/overlay/extension/loading.js'].lineData[15]++;
+  _$jscoverage['/overlay/extension/loading.js'].lineData[16]++;
   Loading.prototype = {
   loading: function() {
   _$jscoverage['/overlay/extension/loading.js'].functionData[2]++;
-  _$jscoverage['/overlay/extension/loading.js'].lineData[21]++;
-  var self = this;
   _$jscoverage['/overlay/extension/loading.js'].lineData[22]++;
-  if (visit19_22_1(!self._loadingExtEl)) {
-    _$jscoverage['/overlay/extension/loading.js'].lineData[23]++;
+  var self = this;
+  _$jscoverage['/overlay/extension/loading.js'].lineData[23]++;
+  if (visit19_23_1(!self._loadingExtEl)) {
+    _$jscoverage['/overlay/extension/loading.js'].lineData[24]++;
     self._loadingExtEl = new Node("<div " + "class='" + self.get('prefixCls') + "ext-loading'" + " style='position: absolute;" + "border: none;" + "width: 100%;" + "top: 0;" + "left: 0;" + "z-index: 99999;" + "height:100%;" + "*height: expression(this.parentNode.offsetHeight);" + "'/>").appendTo(self.$el);
   }
-  _$jscoverage['/overlay/extension/loading.js'].lineData[36]++;
+  _$jscoverage['/overlay/extension/loading.js'].lineData[37]++;
   self._loadingExtEl.show();
 }, 
   unloading: function() {
   _$jscoverage['/overlay/extension/loading.js'].functionData[3]++;
-  _$jscoverage['/overlay/extension/loading.js'].lineData[44]++;
-  var lel = this._loadingExtEl;
   _$jscoverage['/overlay/extension/loading.js'].lineData[45]++;
-  visit20_45_1(lel && lel.hide());
+  var lel = this._loadingExtEl;
+  _$jscoverage['/overlay/extension/loading.js'].lineData[46]++;
+  visit20_46_1(lel && lel.hide());
 }};
-  _$jscoverage['/overlay/extension/loading.js'].lineData[49]++;
+  _$jscoverage['/overlay/extension/loading.js'].lineData[50]++;
   return Loading;
-}, {
-  requires: ['node']});
+});

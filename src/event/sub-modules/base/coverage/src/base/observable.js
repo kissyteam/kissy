@@ -273,24 +273,24 @@ if (! _$jscoverage['/base/observable.js'].branchData) {
   _$jscoverage['/base/observable.js'].branchData['87'] = [];
   _$jscoverage['/base/observable.js'].branchData['87'][1] = new BranchData();
 }
-_$jscoverage['/base/observable.js'].branchData['87'][1].init(445, 29, 'observer.equals(observers[i])');
+_$jscoverage['/base/observable.js'].branchData['87'][1].init(437, 29, 'observer.equals(observers[i])');
 function visit5_87_1(result) {
   _$jscoverage['/base/observable.js'].branchData['87'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/observable.js'].branchData['79'][1].init(95, 6, 'i >= 0');
+}_$jscoverage['/base/observable.js'].branchData['79'][1].init(92, 6, 'i >= 0');
 function visit4_79_1(result) {
   _$jscoverage['/base/observable.js'].branchData['79'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/observable.js'].branchData['55'][1].init(22, 24, 'observers[i] == observer');
+}_$jscoverage['/base/observable.js'].branchData['55'][1].init(21, 24, 'observers[i] == observer');
 function visit3_55_1(result) {
   _$jscoverage['/base/observable.js'].branchData['55'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/observable.js'].branchData['54'][1].init(162, 7, 'i < len');
+}_$jscoverage['/base/observable.js'].branchData['54'][1].init(157, 7, 'i < len');
 function visit2_54_1(result) {
   _$jscoverage['/base/observable.js'].branchData['54'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/observable.js'].lineData[6]++;
-KISSY.add('event/base/observable', function(S) {
+KISSY.add(function(S) {
   _$jscoverage['/base/observable.js'].functionData[0]++;
   _$jscoverage['/base/observable.js'].lineData[14]++;
   function Observable(cfg) {

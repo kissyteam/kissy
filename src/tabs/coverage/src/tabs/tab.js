@@ -230,9 +230,11 @@ if (! _$jscoverage['/tabs/tab.js']) {
   _$jscoverage['/tabs/tab.js'] = {};
   _$jscoverage['/tabs/tab.js'].lineData = [];
   _$jscoverage['/tabs/tab.js'].lineData[6] = 0;
-  _$jscoverage['/tabs/tab.js'].lineData[12] = 0;
-  _$jscoverage['/tabs/tab.js'].lineData[16] = 0;
-  _$jscoverage['/tabs/tab.js'].lineData[17] = 0;
+  _$jscoverage['/tabs/tab.js'].lineData[7] = 0;
+  _$jscoverage['/tabs/tab.js'].lineData[8] = 0;
+  _$jscoverage['/tabs/tab.js'].lineData[14] = 0;
+  _$jscoverage['/tabs/tab.js'].lineData[18] = 0;
+  _$jscoverage['/tabs/tab.js'].lineData[19] = 0;
 }
 if (! _$jscoverage['/tabs/tab.js'].functionData) {
   _$jscoverage['/tabs/tab.js'].functionData = [];
@@ -244,17 +246,21 @@ if (! _$jscoverage['/tabs/tab.js'].branchData) {
   _$jscoverage['/tabs/tab.js'].branchData = {};
 }
 _$jscoverage['/tabs/tab.js'].lineData[6]++;
-KISSY.add("tabs/tab", function(S, Button, TabRender) {
+KISSY.add(function(S, require) {
   _$jscoverage['/tabs/tab.js'].functionData[0]++;
-  _$jscoverage['/tabs/tab.js'].lineData[12]++;
+  _$jscoverage['/tabs/tab.js'].lineData[7]++;
+  var Button = require('button');
+  _$jscoverage['/tabs/tab.js'].lineData[8]++;
+  var TabRender = require('./tab-render');
+  _$jscoverage['/tabs/tab.js'].lineData[14]++;
   return Button.extend({
   isTabsTab: true, 
   bindUI: function() {
   _$jscoverage['/tabs/tab.js'].functionData[1]++;
-  _$jscoverage['/tabs/tab.js'].lineData[16]++;
+  _$jscoverage['/tabs/tab.js'].lineData[18]++;
   this.on("click", function() {
   _$jscoverage['/tabs/tab.js'].functionData[2]++;
-  _$jscoverage['/tabs/tab.js'].lineData[17]++;
+  _$jscoverage['/tabs/tab.js'].lineData[19]++;
   this.set("selected", true);
 });
 }}, {
@@ -268,5 +274,4 @@ KISSY.add("tabs/tab", function(S, Button, TabRender) {
   xrender: {
   value: TabRender}}, 
   xclass: 'tabs-tab'});
-}, {
-  requires: ['button', './tab-render']});
+});

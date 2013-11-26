@@ -231,6 +231,8 @@ if (! _$jscoverage['/anim.js']) {
   _$jscoverage['/anim.js'].lineData = [];
   _$jscoverage['/anim.js'].lineData[6] = 0;
   _$jscoverage['/anim.js'].lineData[7] = 0;
+  _$jscoverage['/anim.js'].lineData[9] = 0;
+  _$jscoverage['/anim.js'].lineData[10] = 0;
   _$jscoverage['/anim.js'].lineData[11] = 0;
   _$jscoverage['/anim.js'].lineData[43] = 0;
   _$jscoverage['/anim.js'].lineData[44] = 0;
@@ -366,12 +368,16 @@ function visit1_45_1(result) {
   _$jscoverage['/anim.js'].branchData['45'][1].ranCondition(result);
   return result;
 }_$jscoverage['/anim.js'].lineData[6]++;
-KISSY.add(function(S) {
+KISSY.add(function(S, require) {
   _$jscoverage['/anim.js'].functionData[0]++;
   _$jscoverage['/anim.js'].lineData[7]++;
-  var module = this, AnimBase = module.require('anim/base'), TimerAnim = module.require('anim/timer'), TransitionAnim = module.require(KISSY.Features.isTransitionSupported() ? 'anim/transition' : '');
+  var AnimBase = require('anim/base'), TimerAnim = require('anim/timer');
+  _$jscoverage['/anim.js'].lineData[9]++;
+  var TransitionAnim = require('anim/transition?');
+  _$jscoverage['/anim.js'].lineData[10]++;
+  var logger = S.getLogger('s/anim');
   _$jscoverage['/anim.js'].lineData[11]++;
-  var Utils = AnimBase.Utils, logger = S.getLogger('s/anim'), defaultConfig = {
+  var Utils = AnimBase.Utils, defaultConfig = {
   duration: 1, 
   easing: 'linear'};
   _$jscoverage['/anim.js'].lineData[43]++;

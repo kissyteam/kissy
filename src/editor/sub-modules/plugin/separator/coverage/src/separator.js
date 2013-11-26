@@ -245,7 +245,7 @@ if (! _$jscoverage['/separator.js'].branchData) {
   _$jscoverage['/separator.js'].branchData = {};
 }
 _$jscoverage['/separator.js'].lineData[6]++;
-KISSY.add("editor/plugin/separator", function(S) {
+KISSY.add(function(S) {
   _$jscoverage['/separator.js'].functionData[0]++;
   _$jscoverage['/separator.js'].lineData[7]++;
   function Separator() {
@@ -260,5 +260,4 @@ KISSY.add("editor/plugin/separator", function(S) {
 }});
   _$jscoverage['/separator.js'].lineData[19]++;
   return Separator;
-}, {
-  requires: ['editor']});
+});

@@ -231,13 +231,15 @@ if (! _$jscoverage['/container/render.js']) {
   _$jscoverage['/container/render.js'].lineData = [];
   _$jscoverage['/container/render.js'].lineData[6] = 0;
   _$jscoverage['/container/render.js'].lineData[7] = 0;
+  _$jscoverage['/container/render.js'].lineData[8] = 0;
   _$jscoverage['/container/render.js'].lineData[10] = 0;
-  _$jscoverage['/container/render.js'].lineData[18] = 0;
-  _$jscoverage['/container/render.js'].lineData[19] = 0;
+  _$jscoverage['/container/render.js'].lineData[13] = 0;
+  _$jscoverage['/container/render.js'].lineData[21] = 0;
   _$jscoverage['/container/render.js'].lineData[22] = 0;
-  _$jscoverage['/container/render.js'].lineData[23] = 0;
-  _$jscoverage['/container/render.js'].lineData[28] = 0;
-  _$jscoverage['/container/render.js'].lineData[33] = 0;
+  _$jscoverage['/container/render.js'].lineData[25] = 0;
+  _$jscoverage['/container/render.js'].lineData[26] = 0;
+  _$jscoverage['/container/render.js'].lineData[31] = 0;
+  _$jscoverage['/container/render.js'].lineData[36] = 0;
 }
 if (! _$jscoverage['/container/render.js'].functionData) {
   _$jscoverage['/container/render.js'].functionData = [];
@@ -248,54 +250,57 @@ if (! _$jscoverage['/container/render.js'].functionData) {
 }
 if (! _$jscoverage['/container/render.js'].branchData) {
   _$jscoverage['/container/render.js'].branchData = {};
-  _$jscoverage['/container/render.js'].branchData['19'] = [];
-  _$jscoverage['/container/render.js'].branchData['19'][1] = new BranchData();
-  _$jscoverage['/container/render.js'].branchData['20'] = [];
-  _$jscoverage['/container/render.js'].branchData['20'][1] = new BranchData();
   _$jscoverage['/container/render.js'].branchData['22'] = [];
   _$jscoverage['/container/render.js'].branchData['22'][1] = new BranchData();
+  _$jscoverage['/container/render.js'].branchData['23'] = [];
+  _$jscoverage['/container/render.js'].branchData['23'][1] = new BranchData();
+  _$jscoverage['/container/render.js'].branchData['25'] = [];
+  _$jscoverage['/container/render.js'].branchData['25'][1] = new BranchData();
 }
-_$jscoverage['/container/render.js'].branchData['22'][1].init(225, 7, 'ChildUI');
-function visit3_22_1(result) {
+_$jscoverage['/container/render.js'].branchData['25'][1].init(221, 7, 'ChildUI');
+function visit3_25_1(result) {
+  _$jscoverage['/container/render.js'].branchData['25'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/container/render.js'].branchData['23'][1].init(71, 96, 'defaultChildXClass && Manager.getConstructorByXClass(defaultChildXClass)');
+function visit2_23_1(result) {
+  _$jscoverage['/container/render.js'].branchData['23'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/container/render.js'].branchData['22'][1].init(31, 168, 'self.getComponentConstructorByNode(prefixCls, c) || defaultChildXClass && Manager.getConstructorByXClass(defaultChildXClass)');
+function visit1_22_1(result) {
   _$jscoverage['/container/render.js'].branchData['22'][1].ranCondition(result);
   return result;
-}_$jscoverage['/container/render.js'].branchData['20'][1].init(72, 97, 'defaultChildXClass && Manager.getConstructorByXClass(defaultChildXClass)');
-function visit2_20_1(result) {
-  _$jscoverage['/container/render.js'].branchData['20'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/container/render.js'].branchData['19'][1].init(32, 170, 'self.getComponentConstructorByNode(prefixCls, c) || defaultChildXClass && Manager.getConstructorByXClass(defaultChildXClass)');
-function visit1_19_1(result) {
-  _$jscoverage['/container/render.js'].branchData['19'][1].ranCondition(result);
-  return result;
 }_$jscoverage['/container/render.js'].lineData[6]++;
-KISSY.add('component/container/render', function(S, Control, Manager) {
+KISSY.add(function(S, require) {
   _$jscoverage['/container/render.js'].functionData[0]++;
   _$jscoverage['/container/render.js'].lineData[7]++;
+  var Control = require('component/control');
+  _$jscoverage['/container/render.js'].lineData[8]++;
+  var Manager = require('component/manager');
+  _$jscoverage['/container/render.js'].lineData[10]++;
   return Control.getDefaultRender().extend([], {
   decorateDom: function() {
   _$jscoverage['/container/render.js'].functionData[1]++;
-  _$jscoverage['/container/render.js'].lineData[10]++;
+  _$jscoverage['/container/render.js'].lineData[13]++;
   var self = this, childrenContainerEl = self.getChildrenContainerEl(), control = self.control, defaultChildCfg = control.get('defaultChildCfg'), prefixCls = defaultChildCfg.prefixCls, defaultChildXClass = defaultChildCfg.xclass, childrenComponents = [], children = childrenContainerEl.children();
-  _$jscoverage['/container/render.js'].lineData[18]++;
+  _$jscoverage['/container/render.js'].lineData[21]++;
   children.each(function(c) {
   _$jscoverage['/container/render.js'].functionData[2]++;
-  _$jscoverage['/container/render.js'].lineData[19]++;
-  var ChildUI = visit1_19_1(self.getComponentConstructorByNode(prefixCls, c) || visit2_20_1(defaultChildXClass && Manager.getConstructorByXClass(defaultChildXClass)));
   _$jscoverage['/container/render.js'].lineData[22]++;
-  if (visit3_22_1(ChildUI)) {
-    _$jscoverage['/container/render.js'].lineData[23]++;
+  var ChildUI = visit1_22_1(self.getComponentConstructorByNode(prefixCls, c) || visit2_23_1(defaultChildXClass && Manager.getConstructorByXClass(defaultChildXClass)));
+  _$jscoverage['/container/render.js'].lineData[25]++;
+  if (visit3_25_1(ChildUI)) {
+    _$jscoverage['/container/render.js'].lineData[26]++;
     childrenComponents.push(new ChildUI(S.merge(defaultChildCfg, {
   srcNode: c})));
   }
 });
-  _$jscoverage['/container/render.js'].lineData[28]++;
+  _$jscoverage['/container/render.js'].lineData[31]++;
   control.set('children', childrenComponents);
 }, 
   getChildrenContainerEl: function() {
   _$jscoverage['/container/render.js'].functionData[3]++;
-  _$jscoverage['/container/render.js'].lineData[33]++;
+  _$jscoverage['/container/render.js'].lineData[36]++;
   return this.$el;
 }}, {
   name: 'ContainerRender'});
-}, {
-  requires: ['component/control', 'component/manager']});
+});

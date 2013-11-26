@@ -1,6 +1,6 @@
 /*
-Copyright 2013, KISSY v1.40dev
+Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Oct 25 16:46
+build time: Nov 27 00:01
 */
-KISSY.add("editor/plugin/overlay",function(d,a,b,c){return b.extend({bindUI:function(){c.init(this)}},{ATTRS:{prefixCls:{value:"ks-editor-"},zIndex:{value:a.baseZIndex(a.ZIndexManager.OVERLAY)}}})},{requires:["editor","overlay","./focus-fix"]});
+KISSY.add("editor/plugin/overlay",["editor","overlay","./focus-fix"],function(e,a){var b=a("editor"),c=a("overlay"),d=a("./focus-fix");return c.extend({bindUI:function(){d.init(this)}},{ATTRS:{prefixCls:{value:"ks-editor-"},zIndex:{value:b.baseZIndex(b.ZIndexManager.OVERLAY)}}})});

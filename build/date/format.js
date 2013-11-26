@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 19 15:38
+build time: Nov 27 00:39
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -9,11 +9,11 @@ build time: Nov 19 15:38
  date/format
 */
 
-KISSY.add("date/format", ["date/gregorian", "i18n!date"], function(S) {
-  var module = this;
-  var GregorianCalendar = module.require("date/gregorian");
-  var defaultLocale = module.require("i18n!date");
-  var MAX_VALUE = Number.MAX_VALUE, undefined = undefined, DateTimeStyle = {FULL:0, LONG:1, MEDIUM:2, SHORT:3}, logger = S.getLogger("s/date/format");
+KISSY.add("date/format", ["date/gregorian", "i18n!date"], function(S, require) {
+  var GregorianCalendar = require("date/gregorian");
+  var defaultLocale = require("i18n!date");
+  var MAX_VALUE = Number.MAX_VALUE, undefined = undefined, DateTimeStyle = {FULL:0, LONG:1, MEDIUM:2, SHORT:3};
+  var logger = S.getLogger("s/date/format");
   var patternChars = (new Array(GregorianCalendar.DAY_OF_WEEK_IN_MONTH + 2)).join("1");
   var ERA = 0;
   var calendarIndexMap = {};

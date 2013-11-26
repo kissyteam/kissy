@@ -18,16 +18,17 @@ KISSY.add(function (S, require, exports, module) {
     require('editor/domIterator');
     require('editor/z-index-manager');
     module.exports = Editor;
-
+var  logger = S.getLogger('s/editor');
     var TRUE = true,
         undefined = undefined,
         FALSE = false,
         NULL = null,
-        logger = S.getLogger('s/editor'),
+
         window = S.Env.host,
         document = window.document,
         UA = S.UA,
         IS_IE = UA.ieMode < 11,
+        // ie11 = UA.ieMode == 11,
         NodeType = Node.NodeType,
         $ = Node.all,
         HEIGHT = 'height',
@@ -939,7 +940,7 @@ KISSY.add(function (S, require, exports, module) {
         }
 
         // Create an invisible element to grab focus.
-        if (UA['gecko'] || IS_IE || UA['opera']) {
+        if (UA['gecko'] || UA.ie || UA['opera']) {
             var focusGrabber;
             focusGrabber = new Node(
                 // Use 'span' instead of anything else to fly under the screen-reader radar. (#5049)
@@ -952,7 +953,7 @@ KISSY.add(function (S, require, exports, module) {
                 self.focus();
             });
             self.activateGecko = function () {
-                if (UA['gecko'] && self.__iframeFocus)
+                if ((UA['gecko']) && self.__iframeFocus)
                     focusGrabber[0].focus();
             };
             self.on('destroy', function () {
@@ -1081,6 +1082,7 @@ KISSY.add(function (S, require, exports, module) {
             data: data || '',
             script: id ?
                 // The script that launches the bootstrap logic on 'domReady', so the document
+                // is fully editable even before the editing iframe is fully loaded (#4455).
                 // is fully editable even before the editing iframe is fully loaded (#4455).
                 // 确保iframe确实载入成功,过早的话 document.domain 会出现无法访问
                 ('<script id="ke_active_script">' +

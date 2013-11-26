@@ -12,6 +12,7 @@ KISSY.add(function (S, require) {
         undefined = undefined,
         Features = S.Features,
         Gesture = Node.Gesture,
+        isTouchGestureSupported=Features.isTouchGestureSupported(),
         isTouchEventSupported = Features.isTouchEventSupported();
 
     /**
@@ -56,13 +57,7 @@ KISSY.add(function (S, require) {
                 view.create();
                 el = view.getKeyEventTarget();
                 if (!self.get("allowTextSelection")) {
-                    // for older ie
                     el.unselectable();
-                    if (ie == 11) {
-                        // prevent ie11 get focus
-                        el.attr('unselectable', 'on');
-                        el.all('*').attr('unselectable', 'on');
-                    }
                 }
                 // after retrieve id from srcNode
                 Manager.addComponent(id, self);
@@ -108,7 +103,7 @@ KISSY.add(function (S, require) {
 
                     // click quickly only trigger click and dblclick in ie<9
                     // others click click dblclick
-                    if (ie && ie < 9) {
+                    if (ie < 9) {
                         el.on("dblclick", self.handleDblClick, self);
                     }
                 }
@@ -264,7 +259,7 @@ KISSY.add(function (S, require) {
                 var self = this,
                     n,
                     isMouseActionButton = ev['which'] == 1;
-                if (isMouseActionButton || isTouchEventSupported) {
+                if (isMouseActionButton || isTouchGestureSupported) {
                     if (self.get("activeable")) {
                         self.set("active", true);
                     }
@@ -300,7 +295,7 @@ KISSY.add(function (S, require) {
             handleMouseUpInternal: function (ev) {
                 var self = this;
                 // 左键
-                if (self.get("active") && (ev['which'] == 1 || isTouchEventSupported)) {
+                if (self.get("active") && (ev['which'] == 1 || isTouchGestureSupported)) {
                     self.set("active", false);
                 }
             },

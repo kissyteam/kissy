@@ -231,35 +231,36 @@ if (! _$jscoverage['/touch/multi-touch.js']) {
   _$jscoverage['/touch/multi-touch.js'].lineData = [];
   _$jscoverage['/touch/multi-touch.js'].lineData[6] = 0;
   _$jscoverage['/touch/multi-touch.js'].lineData[7] = 0;
-  _$jscoverage['/touch/multi-touch.js'].lineData[9] = 0;
-  _$jscoverage['/touch/multi-touch.js'].lineData[15] = 0;
-  _$jscoverage['/touch/multi-touch.js'].lineData[19] = 0;
+  _$jscoverage['/touch/multi-touch.js'].lineData[8] = 0;
+  _$jscoverage['/touch/multi-touch.js'].lineData[10] = 0;
+  _$jscoverage['/touch/multi-touch.js'].lineData[16] = 0;
   _$jscoverage['/touch/multi-touch.js'].lineData[20] = 0;
-  _$jscoverage['/touch/multi-touch.js'].lineData[22] = 0;
+  _$jscoverage['/touch/multi-touch.js'].lineData[21] = 0;
   _$jscoverage['/touch/multi-touch.js'].lineData[23] = 0;
-  _$jscoverage['/touch/multi-touch.js'].lineData[28] = 0;
-  _$jscoverage['/touch/multi-touch.js'].lineData[32] = 0;
+  _$jscoverage['/touch/multi-touch.js'].lineData[24] = 0;
+  _$jscoverage['/touch/multi-touch.js'].lineData[29] = 0;
   _$jscoverage['/touch/multi-touch.js'].lineData[33] = 0;
   _$jscoverage['/touch/multi-touch.js'].lineData[34] = 0;
   _$jscoverage['/touch/multi-touch.js'].lineData[35] = 0;
-  _$jscoverage['/touch/multi-touch.js'].lineData[42] = 0;
-  _$jscoverage['/touch/multi-touch.js'].lineData[45] = 0;
+  _$jscoverage['/touch/multi-touch.js'].lineData[36] = 0;
+  _$jscoverage['/touch/multi-touch.js'].lineData[43] = 0;
   _$jscoverage['/touch/multi-touch.js'].lineData[46] = 0;
-  _$jscoverage['/touch/multi-touch.js'].lineData[48] = 0;
+  _$jscoverage['/touch/multi-touch.js'].lineData[47] = 0;
   _$jscoverage['/touch/multi-touch.js'].lineData[49] = 0;
-  _$jscoverage['/touch/multi-touch.js'].lineData[52] = 0;
+  _$jscoverage['/touch/multi-touch.js'].lineData[50] = 0;
   _$jscoverage['/touch/multi-touch.js'].lineData[53] = 0;
   _$jscoverage['/touch/multi-touch.js'].lineData[54] = 0;
-  _$jscoverage['/touch/multi-touch.js'].lineData[56] = 0;
-  _$jscoverage['/touch/multi-touch.js'].lineData[58] = 0;
+  _$jscoverage['/touch/multi-touch.js'].lineData[55] = 0;
+  _$jscoverage['/touch/multi-touch.js'].lineData[57] = 0;
   _$jscoverage['/touch/multi-touch.js'].lineData[59] = 0;
-  _$jscoverage['/touch/multi-touch.js'].lineData[63] = 0;
-  _$jscoverage['/touch/multi-touch.js'].lineData[68] = 0;
+  _$jscoverage['/touch/multi-touch.js'].lineData[60] = 0;
+  _$jscoverage['/touch/multi-touch.js'].lineData[64] = 0;
   _$jscoverage['/touch/multi-touch.js'].lineData[69] = 0;
-  _$jscoverage['/touch/multi-touch.js'].lineData[71] = 0;
+  _$jscoverage['/touch/multi-touch.js'].lineData[70] = 0;
   _$jscoverage['/touch/multi-touch.js'].lineData[72] = 0;
   _$jscoverage['/touch/multi-touch.js'].lineData[73] = 0;
-  _$jscoverage['/touch/multi-touch.js'].lineData[79] = 0;
+  _$jscoverage['/touch/multi-touch.js'].lineData[74] = 0;
+  _$jscoverage['/touch/multi-touch.js'].lineData[80] = 0;
 }
 if (! _$jscoverage['/touch/multi-touch.js'].functionData) {
   _$jscoverage['/touch/multi-touch.js'].functionData = [];
@@ -273,147 +274,148 @@ if (! _$jscoverage['/touch/multi-touch.js'].functionData) {
 }
 if (! _$jscoverage['/touch/multi-touch.js'].branchData) {
   _$jscoverage['/touch/multi-touch.js'].branchData = {};
-  _$jscoverage['/touch/multi-touch.js'].branchData['19'] = [];
-  _$jscoverage['/touch/multi-touch.js'].branchData['19'][1] = new BranchData();
-  _$jscoverage['/touch/multi-touch.js'].branchData['22'] = [];
-  _$jscoverage['/touch/multi-touch.js'].branchData['22'][1] = new BranchData();
-  _$jscoverage['/touch/multi-touch.js'].branchData['33'] = [];
-  _$jscoverage['/touch/multi-touch.js'].branchData['33'][1] = new BranchData();
-  _$jscoverage['/touch/multi-touch.js'].branchData['45'] = [];
-  _$jscoverage['/touch/multi-touch.js'].branchData['45'][1] = new BranchData();
-  _$jscoverage['/touch/multi-touch.js'].branchData['48'] = [];
-  _$jscoverage['/touch/multi-touch.js'].branchData['48'][1] = new BranchData();
-  _$jscoverage['/touch/multi-touch.js'].branchData['53'] = [];
-  _$jscoverage['/touch/multi-touch.js'].branchData['53'][1] = new BranchData();
-  _$jscoverage['/touch/multi-touch.js'].branchData['68'] = [];
-  _$jscoverage['/touch/multi-touch.js'].branchData['68'][1] = new BranchData();
-  _$jscoverage['/touch/multi-touch.js'].branchData['71'] = [];
-  _$jscoverage['/touch/multi-touch.js'].branchData['71'][1] = new BranchData();
+  _$jscoverage['/touch/multi-touch.js'].branchData['20'] = [];
+  _$jscoverage['/touch/multi-touch.js'].branchData['20'][1] = new BranchData();
+  _$jscoverage['/touch/multi-touch.js'].branchData['23'] = [];
+  _$jscoverage['/touch/multi-touch.js'].branchData['23'][1] = new BranchData();
+  _$jscoverage['/touch/multi-touch.js'].branchData['34'] = [];
+  _$jscoverage['/touch/multi-touch.js'].branchData['34'][1] = new BranchData();
+  _$jscoverage['/touch/multi-touch.js'].branchData['46'] = [];
+  _$jscoverage['/touch/multi-touch.js'].branchData['46'][1] = new BranchData();
+  _$jscoverage['/touch/multi-touch.js'].branchData['49'] = [];
+  _$jscoverage['/touch/multi-touch.js'].branchData['49'][1] = new BranchData();
+  _$jscoverage['/touch/multi-touch.js'].branchData['54'] = [];
+  _$jscoverage['/touch/multi-touch.js'].branchData['54'][1] = new BranchData();
+  _$jscoverage['/touch/multi-touch.js'].branchData['69'] = [];
+  _$jscoverage['/touch/multi-touch.js'].branchData['69'][1] = new BranchData();
+  _$jscoverage['/touch/multi-touch.js'].branchData['72'] = [];
+  _$jscoverage['/touch/multi-touch.js'].branchData['72'][1] = new BranchData();
 }
-_$jscoverage['/touch/multi-touch.js'].branchData['71'][1].init(66, 14, 'self.isStarted');
-function visit63_71_1(result) {
-  _$jscoverage['/touch/multi-touch.js'].branchData['71'][1].ranCondition(result);
+_$jscoverage['/touch/multi-touch.js'].branchData['72'][1].init(63, 14, 'self.isStarted');
+function visit66_72_1(result) {
+  _$jscoverage['/touch/multi-touch.js'].branchData['72'][1].ranCondition(result);
   return result;
-}_$jscoverage['/touch/multi-touch.js'].branchData['68'][1].init(257, 15, 'self.isTracking');
-function visit62_68_1(result) {
-  _$jscoverage['/touch/multi-touch.js'].branchData['68'][1].ranCondition(result);
+}_$jscoverage['/touch/multi-touch.js'].branchData['69'][1].init(251, 15, 'self.isTracking');
+function visit65_69_1(result) {
+  _$jscoverage['/touch/multi-touch.js'].branchData['69'][1].ranCondition(result);
   return result;
-}_$jscoverage['/touch/multi-touch.js'].branchData['53'][1].init(22, 20, 'Dom.contains(t2, t1)');
-function visit61_53_1(result) {
-  _$jscoverage['/touch/multi-touch.js'].branchData['53'][1].ranCondition(result);
+}_$jscoverage['/touch/multi-touch.js'].branchData['54'][1].init(21, 20, 'Dom.contains(t2, t1)');
+function visit64_54_1(result) {
+  _$jscoverage['/touch/multi-touch.js'].branchData['54'][1].ranCondition(result);
   return result;
-}_$jscoverage['/touch/multi-touch.js'].branchData['48'][1].init(210, 20, 'Dom.contains(t1, t2)');
-function visit60_48_1(result) {
-  _$jscoverage['/touch/multi-touch.js'].branchData['48'][1].ranCondition(result);
+}_$jscoverage['/touch/multi-touch.js'].branchData['49'][1].init(203, 20, 'Dom.contains(t1, t2)');
+function visit63_49_1(result) {
+  _$jscoverage['/touch/multi-touch.js'].branchData['49'][1].ranCondition(result);
   return result;
-}_$jscoverage['/touch/multi-touch.js'].branchData['45'][1].init(138, 8, 't1 == t2');
-function visit59_45_1(result) {
-  _$jscoverage['/touch/multi-touch.js'].branchData['45'][1].ranCondition(result);
+}_$jscoverage['/touch/multi-touch.js'].branchData['46'][1].init(134, 8, 't1 == t2');
+function visit62_46_1(result) {
+  _$jscoverage['/touch/multi-touch.js'].branchData['46'][1].ranCondition(result);
   return result;
-}_$jscoverage['/touch/multi-touch.js'].branchData['33'][1].init(48, 16, '!self.isTracking');
-function visit58_33_1(result) {
-  _$jscoverage['/touch/multi-touch.js'].branchData['33'][1].ranCondition(result);
+}_$jscoverage['/touch/multi-touch.js'].branchData['34'][1].init(46, 16, '!self.isTracking');
+function visit61_34_1(result) {
+  _$jscoverage['/touch/multi-touch.js'].branchData['34'][1].ranCondition(result);
   return result;
-}_$jscoverage['/touch/multi-touch.js'].branchData['22'][1].init(309, 35, 'touchesCount > requiredTouchesCount');
-function visit57_22_1(result) {
-  _$jscoverage['/touch/multi-touch.js'].branchData['22'][1].ranCondition(result);
+}_$jscoverage['/touch/multi-touch.js'].branchData['23'][1].init(301, 35, 'touchesCount > requiredTouchesCount');
+function visit60_23_1(result) {
+  _$jscoverage['/touch/multi-touch.js'].branchData['23'][1].ranCondition(result);
   return result;
-}_$jscoverage['/touch/multi-touch.js'].branchData['19'][1].init(199, 37, 'touchesCount === requiredTouchesCount');
-function visit56_19_1(result) {
-  _$jscoverage['/touch/multi-touch.js'].branchData['19'][1].ranCondition(result);
+}_$jscoverage['/touch/multi-touch.js'].branchData['20'][1].init(194, 37, 'touchesCount === requiredTouchesCount');
+function visit59_20_1(result) {
+  _$jscoverage['/touch/multi-touch.js'].branchData['20'][1].ranCondition(result);
   return result;
 }_$jscoverage['/touch/multi-touch.js'].lineData[6]++;
-KISSY.add('event/dom/touch/multi-touch', function(S, Dom) {
+KISSY.add(function(S, require) {
   _$jscoverage['/touch/multi-touch.js'].functionData[0]++;
   _$jscoverage['/touch/multi-touch.js'].lineData[7]++;
+  var Dom = require('dom');
+  _$jscoverage['/touch/multi-touch.js'].lineData[8]++;
   function MultiTouch() {
     _$jscoverage['/touch/multi-touch.js'].functionData[1]++;
   }
-  _$jscoverage['/touch/multi-touch.js'].lineData[9]++;
+  _$jscoverage['/touch/multi-touch.js'].lineData[10]++;
   MultiTouch.prototype = {
   constructor: MultiTouch, 
   requiredTouchCount: 2, 
   onTouchStart: function(e) {
   _$jscoverage['/touch/multi-touch.js'].functionData[2]++;
-  _$jscoverage['/touch/multi-touch.js'].lineData[15]++;
+  _$jscoverage['/touch/multi-touch.js'].lineData[16]++;
   var self = this, requiredTouchesCount = self.requiredTouchCount, touches = e.touches, touchesCount = touches.length;
-  _$jscoverage['/touch/multi-touch.js'].lineData[19]++;
-  if (visit56_19_1(touchesCount === requiredTouchesCount)) {
-    _$jscoverage['/touch/multi-touch.js'].lineData[20]++;
+  _$jscoverage['/touch/multi-touch.js'].lineData[20]++;
+  if (visit59_20_1(touchesCount === requiredTouchesCount)) {
+    _$jscoverage['/touch/multi-touch.js'].lineData[21]++;
     self.start();
   } else {
-    _$jscoverage['/touch/multi-touch.js'].lineData[22]++;
-    if (visit57_22_1(touchesCount > requiredTouchesCount)) {
-      _$jscoverage['/touch/multi-touch.js'].lineData[23]++;
+    _$jscoverage['/touch/multi-touch.js'].lineData[23]++;
+    if (visit60_23_1(touchesCount > requiredTouchesCount)) {
+      _$jscoverage['/touch/multi-touch.js'].lineData[24]++;
       self.end(e);
     }
   }
 }, 
   onTouchEnd: function(e) {
   _$jscoverage['/touch/multi-touch.js'].functionData[3]++;
-  _$jscoverage['/touch/multi-touch.js'].lineData[28]++;
+  _$jscoverage['/touch/multi-touch.js'].lineData[29]++;
   this.end(e);
 }, 
   start: function() {
   _$jscoverage['/touch/multi-touch.js'].functionData[4]++;
-  _$jscoverage['/touch/multi-touch.js'].lineData[32]++;
-  var self = this;
   _$jscoverage['/touch/multi-touch.js'].lineData[33]++;
-  if (visit58_33_1(!self.isTracking)) {
-    _$jscoverage['/touch/multi-touch.js'].lineData[34]++;
-    self.isTracking = true;
+  var self = this;
+  _$jscoverage['/touch/multi-touch.js'].lineData[34]++;
+  if (visit61_34_1(!self.isTracking)) {
     _$jscoverage['/touch/multi-touch.js'].lineData[35]++;
+    self.isTracking = true;
+    _$jscoverage['/touch/multi-touch.js'].lineData[36]++;
     self.isStarted = false;
   }
 }, 
   fireEnd: S.noop, 
   getCommonTarget: function(e) {
   _$jscoverage['/touch/multi-touch.js'].functionData[5]++;
-  _$jscoverage['/touch/multi-touch.js'].lineData[42]++;
+  _$jscoverage['/touch/multi-touch.js'].lineData[43]++;
   var touches = e.touches, t1 = touches[0].target, t2 = touches[1].target;
-  _$jscoverage['/touch/multi-touch.js'].lineData[45]++;
-  if (visit59_45_1(t1 == t2)) {
-    _$jscoverage['/touch/multi-touch.js'].lineData[46]++;
+  _$jscoverage['/touch/multi-touch.js'].lineData[46]++;
+  if (visit62_46_1(t1 == t2)) {
+    _$jscoverage['/touch/multi-touch.js'].lineData[47]++;
     return t1;
   }
-  _$jscoverage['/touch/multi-touch.js'].lineData[48]++;
-  if (visit60_48_1(Dom.contains(t1, t2))) {
-    _$jscoverage['/touch/multi-touch.js'].lineData[49]++;
+  _$jscoverage['/touch/multi-touch.js'].lineData[49]++;
+  if (visit63_49_1(Dom.contains(t1, t2))) {
+    _$jscoverage['/touch/multi-touch.js'].lineData[50]++;
     return t1;
   }
-  _$jscoverage['/touch/multi-touch.js'].lineData[52]++;
+  _$jscoverage['/touch/multi-touch.js'].lineData[53]++;
   while (1) {
-    _$jscoverage['/touch/multi-touch.js'].lineData[53]++;
-    if (visit61_53_1(Dom.contains(t2, t1))) {
-      _$jscoverage['/touch/multi-touch.js'].lineData[54]++;
+    _$jscoverage['/touch/multi-touch.js'].lineData[54]++;
+    if (visit64_54_1(Dom.contains(t2, t1))) {
+      _$jscoverage['/touch/multi-touch.js'].lineData[55]++;
       return t2;
     }
-    _$jscoverage['/touch/multi-touch.js'].lineData[56]++;
+    _$jscoverage['/touch/multi-touch.js'].lineData[57]++;
     t2 = t2.parentNode;
   }
-  _$jscoverage['/touch/multi-touch.js'].lineData[58]++;
-  S.error('getCommonTarget error!');
   _$jscoverage['/touch/multi-touch.js'].lineData[59]++;
+  S.error('getCommonTarget error!');
+  _$jscoverage['/touch/multi-touch.js'].lineData[60]++;
   return undefined;
 }, 
   end: function(e) {
   _$jscoverage['/touch/multi-touch.js'].functionData[6]++;
-  _$jscoverage['/touch/multi-touch.js'].lineData[63]++;
+  _$jscoverage['/touch/multi-touch.js'].lineData[64]++;
   var self = this;
-  _$jscoverage['/touch/multi-touch.js'].lineData[68]++;
-  if (visit62_68_1(self.isTracking)) {
-    _$jscoverage['/touch/multi-touch.js'].lineData[69]++;
+  _$jscoverage['/touch/multi-touch.js'].lineData[69]++;
+  if (visit65_69_1(self.isTracking)) {
+    _$jscoverage['/touch/multi-touch.js'].lineData[70]++;
     self.isTracking = false;
-    _$jscoverage['/touch/multi-touch.js'].lineData[71]++;
-    if (visit63_71_1(self.isStarted)) {
-      _$jscoverage['/touch/multi-touch.js'].lineData[72]++;
-      self.isStarted = false;
+    _$jscoverage['/touch/multi-touch.js'].lineData[72]++;
+    if (visit66_72_1(self.isStarted)) {
       _$jscoverage['/touch/multi-touch.js'].lineData[73]++;
+      self.isStarted = false;
+      _$jscoverage['/touch/multi-touch.js'].lineData[74]++;
       self.fireEnd(e);
     }
   }
 }};
-  _$jscoverage['/touch/multi-touch.js'].lineData[79]++;
+  _$jscoverage['/touch/multi-touch.js'].lineData[80]++;
   return MultiTouch;
-}, {
-  requires: ['dom']});
+});

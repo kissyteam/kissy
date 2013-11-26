@@ -240,7 +240,7 @@ if (! _$jscoverage['/base/special.js'].branchData) {
   _$jscoverage['/base/special.js'].branchData = {};
 }
 _$jscoverage['/base/special.js'].lineData[6]++;
-KISSY.add('event/dom/base/special', function() {
+KISSY.add(function() {
   _$jscoverage['/base/special.js'].functionData[0]++;
   _$jscoverage['/base/special.js'].lineData[7]++;
   return {};

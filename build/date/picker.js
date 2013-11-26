@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 19 15:38
+build time: Nov 27 00:39
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -11,8 +11,8 @@ build time: Nov 19 15:38
  date/picker/year-panel/years-xtpl
  date/picker/year-panel/year-panel-xtpl
  date/picker/year-panel/render
- date/picker/decade-panel/decade-panel-xtpl
  date/picker/decade-panel/decades-xtpl
+ date/picker/decade-panel/decade-panel-xtpl
  date/picker/decade-panel/render
  date/picker/decade-panel/control
  date/picker/year-panel/control
@@ -24,9 +24,12 @@ build time: Nov 19 15:38
  date/picker
 */
 
-KISSY.add("date/picker/picker-xtpl", [], function() {
+KISSY.add("date/picker/picker-xtpl", [], function(S, require, exports, module) {
   return function(scopes, S, undefined) {
-    var buffer = "", config = this.config, engine = this, utils = config.utils;
+    var buffer = "", config = this.config, engine = this, moduleWrap, utils = config.utils;
+    if(typeof module != "undefined" && module.kissy) {
+      moduleWrap = module
+    }
     var runBlockCommandUtil = utils["runBlockCommand"], getExpressionUtil = utils["getExpression"], getPropertyOrRunCommandUtil = utils["getPropertyOrRunCommand"];
     buffer += '<div class="';
     var config1 = {};
@@ -251,9 +254,9 @@ KISSY.add("date/picker/picker-xtpl", [], function() {
     return buffer
   }
 });
-KISSY.add("date/picker/render", ["date/format", "./picker-xtpl", "component/control"], function(S) {
+KISSY.add("date/picker/render", ["date/format", "./picker-xtpl", "component/control"], function(S, require) {
   var module = this;
-  var DateTimeFormat = module.require("date/format"), PickerTpl = module.require("./picker-xtpl"), Control = module.require("component/control");
+  var DateTimeFormat = require("date/format"), PickerTpl = require("./picker-xtpl"), Control = require("component/control");
   var dateRowTplStart = '<tr role="row">';
   var dateRowTplEnd = "</tr>";
   var dateCellTpl = '<td role="gridcell" data-index="{index}" title="{title}" class="{cls}">{content}</td>';
@@ -424,9 +427,12 @@ KISSY.add("date/picker/render", ["date/format", "./picker-xtpl", "component/cont
     this.$el.attr("aria-activedescendant", getIdFromDate(value))
   }}, {name:"date-picker-render", ATTRS:{contentTpl:{value:PickerTpl}}})
 });
-KISSY.add("date/picker/year-panel/years-xtpl", [], function() {
+KISSY.add("date/picker/year-panel/years-xtpl", [], function(S, require, exports, module) {
   return function(scopes, S, undefined) {
-    var buffer = "", config = this.config, engine = this, utils = config.utils;
+    var buffer = "", config = this.config, engine = this, moduleWrap, utils = config.utils;
+    if(typeof module != "undefined" && module.kissy) {
+      moduleWrap = module
+    }
     var runBlockCommandUtil = utils["runBlockCommand"], getExpressionUtil = utils["getExpression"], getPropertyOrRunCommandUtil = utils["getPropertyOrRunCommand"];
     buffer += "";
     var config0 = {};
@@ -536,9 +542,12 @@ KISSY.add("date/picker/year-panel/years-xtpl", [], function() {
     return buffer
   }
 });
-KISSY.add("date/picker/year-panel/year-panel-xtpl", [], function() {
+KISSY.add("date/picker/year-panel/year-panel-xtpl", ["date/picker/year-panel/years-xtpl"], function(S, require, exports, module) {
   return function(scopes, S, undefined) {
-    var buffer = "", config = this.config, engine = this, utils = config.utils;
+    var buffer = "", config = this.config, engine = this, moduleWrap, utils = config.utils;
+    if(typeof module != "undefined" && module.kissy) {
+      moduleWrap = module
+    }
     var runBlockCommandUtil = utils["runBlockCommand"], getExpressionUtil = utils["getExpression"], getPropertyOrRunCommandUtil = utils["getPropertyOrRunCommand"];
     buffer += '<div class="';
     var config1 = {};
@@ -624,15 +633,18 @@ KISSY.add("date/picker/year-panel/year-panel-xtpl", [], function() {
     var params33 = [];
     params33.push("date/picker/year-panel/years-xtpl");
     config32.params = params33;
+    if(moduleWrap) {
+      require("date/picker/year-panel/years-xtpl");
+      config32.params[0] = moduleWrap.resolveByName(config32.params[0])
+    }
     var id31 = getPropertyOrRunCommandUtil(engine, scopes, config32, "include", 0, 33, false, undefined);
     buffer += id31;
     buffer += "\n        </tbody>\n    </table>\n</div>";
     return buffer
   }
 });
-KISSY.add("date/picker/year-panel/render", ["date/format", "component/control", "./years-xtpl", "./year-panel-xtpl"], function(S) {
-  var module = this;
-  var DateFormat = module.require("date/format"), Control = module.require("component/control"), YearsTpl = module.require("./years-xtpl"), YearPanelTpl = module.require("./year-panel-xtpl");
+KISSY.add("date/picker/year-panel/render", ["date/format", "component/control", "./years-xtpl", "./year-panel-xtpl"], function(S, require) {
+  var DateFormat = require("date/format"), Control = require("component/control"), YearsTpl = require("./years-xtpl"), YearPanelTpl = require("./year-panel-xtpl");
   function prepareYears(control) {
     var value = control.get("value");
     var currentYear = value.getYear();
@@ -675,90 +687,12 @@ KISSY.add("date/picker/year-panel/render", ["date/format", "component/control", 
     control.get("decadeSelectContentEl").html(startYear + "-" + endYear)
   }}, {ATTRS:{contentTpl:{value:YearPanelTpl}}})
 });
-KISSY.add("date/picker/decade-panel/decade-panel-xtpl", [], function() {
+KISSY.add("date/picker/decade-panel/decades-xtpl", [], function(S, require, exports, module) {
   return function(scopes, S, undefined) {
-    var buffer = "", config = this.config, engine = this, utils = config.utils;
-    var runBlockCommandUtil = utils["runBlockCommand"], getExpressionUtil = utils["getExpression"], getPropertyOrRunCommandUtil = utils["getPropertyOrRunCommand"];
-    buffer += '<div class="';
-    var config1 = {};
-    var params2 = [];
-    params2.push("header");
-    config1.params = params2;
-    var id0 = getPropertyOrRunCommandUtil(engine, scopes, config1, "getBaseCssClasses", 0, 1, true, undefined);
-    buffer += id0;
-    buffer += '">\n    <a id="ks-date-picker-decade-panel-previous-century-btn-';
-    var id3 = getPropertyOrRunCommandUtil(engine, scopes, {}, "id", 0, 2, undefined, false);
-    buffer += getExpressionUtil(id3, true);
-    buffer += '"\n       class="';
-    var config5 = {};
-    var params6 = [];
-    params6.push("prev-century-btn");
-    config5.params = params6;
-    var id4 = getPropertyOrRunCommandUtil(engine, scopes, config5, "getBaseCssClasses", 0, 3, true, undefined);
-    buffer += id4;
-    buffer += '"\n       href="#"\n       role="button"\n       title="';
-    var id7 = getPropertyOrRunCommandUtil(engine, scopes, {}, "previousCenturyLabel", 0, 6, undefined, false);
-    buffer += getExpressionUtil(id7, true);
-    buffer += '"\n       hidefocus="on">\n    </a>\n    <div class="';
-    var config9 = {};
-    var params10 = [];
-    params10.push("century");
-    config9.params = params10;
-    var id8 = getPropertyOrRunCommandUtil(engine, scopes, config9, "getBaseCssClasses", 0, 9, true, undefined);
-    buffer += id8;
-    buffer += '"\n         id="ks-date-picker-decade-panel-century-';
-    var id11 = getPropertyOrRunCommandUtil(engine, scopes, {}, "id", 0, 10, undefined, false);
-    buffer += getExpressionUtil(id11, true);
-    buffer += '">\n                ';
-    var id12 = getPropertyOrRunCommandUtil(engine, scopes, {}, "startYear", 0, 11, undefined, false);
-    buffer += getExpressionUtil(id12, true);
-    buffer += "-";
-    var id13 = getPropertyOrRunCommandUtil(engine, scopes, {}, "endYear", 0, 11, undefined, false);
-    buffer += getExpressionUtil(id13, true);
-    buffer += '\n    </div>\n    <a id="ks-date-picker-decade-panel-next-century-btn-';
-    var id14 = getPropertyOrRunCommandUtil(engine, scopes, {}, "id", 0, 13, undefined, false);
-    buffer += getExpressionUtil(id14, true);
-    buffer += '"\n       class="';
-    var config16 = {};
-    var params17 = [];
-    params17.push("next-century-btn");
-    config16.params = params17;
-    var id15 = getPropertyOrRunCommandUtil(engine, scopes, config16, "getBaseCssClasses", 0, 14, true, undefined);
-    buffer += id15;
-    buffer += '"\n       href="#"\n       role="button"\n       title="';
-    var id18 = getPropertyOrRunCommandUtil(engine, scopes, {}, "nextCenturyLabel", 0, 17, undefined, false);
-    buffer += getExpressionUtil(id18, true);
-    buffer += '"\n       hidefocus="on">\n    </a>\n</div>\n<div class="';
-    var config20 = {};
-    var params21 = [];
-    params21.push("body");
-    config20.params = params21;
-    var id19 = getPropertyOrRunCommandUtil(engine, scopes, config20, "getBaseCssClasses", 0, 21, true, undefined);
-    buffer += id19;
-    buffer += '">\n    <table class="';
-    var config23 = {};
-    var params24 = [];
-    params24.push("table");
-    config23.params = params24;
-    var id22 = getPropertyOrRunCommandUtil(engine, scopes, config23, "getBaseCssClasses", 0, 22, true, undefined);
-    buffer += id22;
-    buffer += '" cellspacing="0" role="grid">\n        <tbody id="ks-date-picker-decade-panel-tbody-';
-    var id25 = getPropertyOrRunCommandUtil(engine, scopes, {}, "id", 0, 23, undefined, false);
-    buffer += getExpressionUtil(id25, true);
-    buffer += '">\n        ';
-    var config27 = {};
-    var params28 = [];
-    params28.push("date/picker/decade-panel/decades-xtpl");
-    config27.params = params28;
-    var id26 = getPropertyOrRunCommandUtil(engine, scopes, config27, "include", 0, 24, false, undefined);
-    buffer += id26;
-    buffer += "\n        </tbody>\n    </table>\n</div>";
-    return buffer
-  }
-});
-KISSY.add("date/picker/decade-panel/decades-xtpl", [], function() {
-  return function(scopes, S, undefined) {
-    var buffer = "", config = this.config, engine = this, utils = config.utils;
+    var buffer = "", config = this.config, engine = this, moduleWrap, utils = config.utils;
+    if(typeof module != "undefined" && module.kissy) {
+      moduleWrap = module
+    }
     var runBlockCommandUtil = utils["runBlockCommand"], getExpressionUtil = utils["getExpression"], getPropertyOrRunCommandUtil = utils["getPropertyOrRunCommand"];
     buffer += "";
     var config0 = {};
@@ -870,9 +804,96 @@ KISSY.add("date/picker/decade-panel/decades-xtpl", [], function() {
     return buffer
   }
 });
-KISSY.add("date/picker/decade-panel/render", ["component/control", "./decade-panel-xtpl", "./decades-xtpl"], function(S) {
-  var module = this;
-  var Control = module.require("component/control"), DecadePanelTpl = module.require("./decade-panel-xtpl"), MonthsTpl = module.require("./decades-xtpl");
+KISSY.add("date/picker/decade-panel/decade-panel-xtpl", ["date/picker/decade-panel/decades-xtpl"], function(S, require, exports, module) {
+  return function(scopes, S, undefined) {
+    var buffer = "", config = this.config, engine = this, moduleWrap, utils = config.utils;
+    if(typeof module != "undefined" && module.kissy) {
+      moduleWrap = module
+    }
+    var runBlockCommandUtil = utils["runBlockCommand"], getExpressionUtil = utils["getExpression"], getPropertyOrRunCommandUtil = utils["getPropertyOrRunCommand"];
+    buffer += '<div class="';
+    var config1 = {};
+    var params2 = [];
+    params2.push("header");
+    config1.params = params2;
+    var id0 = getPropertyOrRunCommandUtil(engine, scopes, config1, "getBaseCssClasses", 0, 1, true, undefined);
+    buffer += id0;
+    buffer += '">\n    <a id="ks-date-picker-decade-panel-previous-century-btn-';
+    var id3 = getPropertyOrRunCommandUtil(engine, scopes, {}, "id", 0, 2, undefined, false);
+    buffer += getExpressionUtil(id3, true);
+    buffer += '"\n       class="';
+    var config5 = {};
+    var params6 = [];
+    params6.push("prev-century-btn");
+    config5.params = params6;
+    var id4 = getPropertyOrRunCommandUtil(engine, scopes, config5, "getBaseCssClasses", 0, 3, true, undefined);
+    buffer += id4;
+    buffer += '"\n       href="#"\n       role="button"\n       title="';
+    var id7 = getPropertyOrRunCommandUtil(engine, scopes, {}, "previousCenturyLabel", 0, 6, undefined, false);
+    buffer += getExpressionUtil(id7, true);
+    buffer += '"\n       hidefocus="on">\n    </a>\n    <div class="';
+    var config9 = {};
+    var params10 = [];
+    params10.push("century");
+    config9.params = params10;
+    var id8 = getPropertyOrRunCommandUtil(engine, scopes, config9, "getBaseCssClasses", 0, 9, true, undefined);
+    buffer += id8;
+    buffer += '"\n         id="ks-date-picker-decade-panel-century-';
+    var id11 = getPropertyOrRunCommandUtil(engine, scopes, {}, "id", 0, 10, undefined, false);
+    buffer += getExpressionUtil(id11, true);
+    buffer += '">\n                ';
+    var id12 = getPropertyOrRunCommandUtil(engine, scopes, {}, "startYear", 0, 11, undefined, false);
+    buffer += getExpressionUtil(id12, true);
+    buffer += "-";
+    var id13 = getPropertyOrRunCommandUtil(engine, scopes, {}, "endYear", 0, 11, undefined, false);
+    buffer += getExpressionUtil(id13, true);
+    buffer += '\n    </div>\n    <a id="ks-date-picker-decade-panel-next-century-btn-';
+    var id14 = getPropertyOrRunCommandUtil(engine, scopes, {}, "id", 0, 13, undefined, false);
+    buffer += getExpressionUtil(id14, true);
+    buffer += '"\n       class="';
+    var config16 = {};
+    var params17 = [];
+    params17.push("next-century-btn");
+    config16.params = params17;
+    var id15 = getPropertyOrRunCommandUtil(engine, scopes, config16, "getBaseCssClasses", 0, 14, true, undefined);
+    buffer += id15;
+    buffer += '"\n       href="#"\n       role="button"\n       title="';
+    var id18 = getPropertyOrRunCommandUtil(engine, scopes, {}, "nextCenturyLabel", 0, 17, undefined, false);
+    buffer += getExpressionUtil(id18, true);
+    buffer += '"\n       hidefocus="on">\n    </a>\n</div>\n<div class="';
+    var config20 = {};
+    var params21 = [];
+    params21.push("body");
+    config20.params = params21;
+    var id19 = getPropertyOrRunCommandUtil(engine, scopes, config20, "getBaseCssClasses", 0, 21, true, undefined);
+    buffer += id19;
+    buffer += '">\n    <table class="';
+    var config23 = {};
+    var params24 = [];
+    params24.push("table");
+    config23.params = params24;
+    var id22 = getPropertyOrRunCommandUtil(engine, scopes, config23, "getBaseCssClasses", 0, 22, true, undefined);
+    buffer += id22;
+    buffer += '" cellspacing="0" role="grid">\n        <tbody id="ks-date-picker-decade-panel-tbody-';
+    var id25 = getPropertyOrRunCommandUtil(engine, scopes, {}, "id", 0, 23, undefined, false);
+    buffer += getExpressionUtil(id25, true);
+    buffer += '">\n        ';
+    var config27 = {};
+    var params28 = [];
+    params28.push("date/picker/decade-panel/decades-xtpl");
+    config27.params = params28;
+    if(moduleWrap) {
+      require("date/picker/decade-panel/decades-xtpl");
+      config27.params[0] = moduleWrap.resolveByName(config27.params[0])
+    }
+    var id26 = getPropertyOrRunCommandUtil(engine, scopes, config27, "include", 0, 24, false, undefined);
+    buffer += id26;
+    buffer += "\n        </tbody>\n    </table>\n</div>";
+    return buffer
+  }
+});
+KISSY.add("date/picker/decade-panel/render", ["component/control", "./decade-panel-xtpl", "./decades-xtpl"], function(S, require) {
+  var Control = require("component/control"), DecadePanelTpl = require("./decade-panel-xtpl"), MonthsTpl = require("./decades-xtpl");
   function prepareYears(control, view) {
     var value = control.get("value");
     var currentYear = value.getYear();
@@ -908,9 +929,8 @@ KISSY.add("date/picker/decade-panel/render", ["component/control", "./decade-pan
     control.get("centuryEl").html(startYear + "-" + endYear)
   }}, {ATTRS:{contentTpl:{value:DecadePanelTpl}}})
 });
-KISSY.add("date/picker/decade-panel/control", ["node", "component/control", "./render"], function() {
-  var module = this;
-  var Node = module.require("node"), Control = module.require("component/control"), CenturyPanelRender = module.require("./render");
+KISSY.add("date/picker/decade-panel/control", ["node", "component/control", "./render"], function(S, require) {
+  var Node = require("node"), Control = require("component/control"), CenturyPanelRender = require("./render");
   var tap = Node.Gesture.tap;
   var $ = Node.all;
   function goYear(self, direction) {
@@ -945,9 +965,8 @@ KISSY.add("date/picker/decade-panel/control", ["node", "component/control", "./r
     self.get("tbodyEl").delegate(tap, "." + self.view.getBaseCssClass("cell"), chooseCell, self)
   }}, {xclass:"date-picker-decade-panel", ATTRS:{focusable:{value:false}, value:{view:1}, xrender:{value:CenturyPanelRender}}})
 });
-KISSY.add("date/picker/year-panel/control", ["node", "component/control", "./render", "../decade-panel/control"], function() {
-  var module = this;
-  var Node = module.require("node"), Control = module.require("component/control"), DecadePanelRender = module.require("./render"), DecadePanel = module.require("../decade-panel/control");
+KISSY.add("date/picker/year-panel/control", ["node", "component/control", "./render", "../decade-panel/control"], function(S, require) {
+  var Node = require("node"), Control = require("component/control"), DecadePanelRender = require("./render"), DecadePanel = require("../decade-panel/control");
   var tap = Node.Gesture.tap;
   var $ = Node.all;
   function goYear(self, direction) {
@@ -998,9 +1017,12 @@ KISSY.add("date/picker/year-panel/control", ["node", "component/control", "./ren
     self.get("decadeSelectEl").on(tap, showDecadePanel, self)
   }}, {xclass:"date-picker-year-panel", ATTRS:{focusable:{value:false}, value:{view:1}, decadePanel:{valueFn:setUpDecadePanel}, xrender:{value:DecadePanelRender}}})
 });
-KISSY.add("date/picker/month-panel/months-xtpl", [], function() {
+KISSY.add("date/picker/month-panel/months-xtpl", [], function(S, require, exports, module) {
   return function(scopes, S, undefined) {
-    var buffer = "", config = this.config, engine = this, utils = config.utils;
+    var buffer = "", config = this.config, engine = this, moduleWrap, utils = config.utils;
+    if(typeof module != "undefined" && module.kissy) {
+      moduleWrap = module
+    }
     var runBlockCommandUtil = utils["runBlockCommand"], getExpressionUtil = utils["getExpression"], getPropertyOrRunCommandUtil = utils["getPropertyOrRunCommand"];
     buffer += "";
     var config0 = {};
@@ -1070,9 +1092,12 @@ KISSY.add("date/picker/month-panel/months-xtpl", [], function() {
     return buffer
   }
 });
-KISSY.add("date/picker/month-panel/month-panel-xtpl", [], function() {
+KISSY.add("date/picker/month-panel/month-panel-xtpl", ["date/picker/month-panel/months-xtpl"], function(S, require, exports, module) {
   return function(scopes, S, undefined) {
-    var buffer = "", config = this.config, engine = this, utils = config.utils;
+    var buffer = "", config = this.config, engine = this, moduleWrap, utils = config.utils;
+    if(typeof module != "undefined" && module.kissy) {
+      moduleWrap = module
+    }
     var runBlockCommandUtil = utils["runBlockCommand"], getExpressionUtil = utils["getExpression"], getPropertyOrRunCommandUtil = utils["getPropertyOrRunCommand"];
     buffer += '<div class="';
     var config1 = {};
@@ -1155,15 +1180,18 @@ KISSY.add("date/picker/month-panel/month-panel-xtpl", [], function() {
     var params32 = [];
     params32.push("date/picker/month-panel/months-xtpl");
     config31.params = params32;
+    if(moduleWrap) {
+      require("date/picker/month-panel/months-xtpl");
+      config31.params[0] = moduleWrap.resolveByName(config31.params[0])
+    }
     var id30 = getPropertyOrRunCommandUtil(engine, scopes, config31, "include", 0, 32, false, undefined);
     buffer += id30;
     buffer += "\n        </tbody>\n    </table>\n</div>";
     return buffer
   }
 });
-KISSY.add("date/picker/month-panel/render", ["date/format", "component/control", "./months-xtpl", "./month-panel-xtpl"], function(S) {
-  var module = this;
-  var DateFormat = module.require("date/format"), Control = module.require("component/control"), MonthsTpl = module.require("./months-xtpl"), MonthPanelTpl = module.require("./month-panel-xtpl");
+KISSY.add("date/picker/month-panel/render", ["date/format", "component/control", "./months-xtpl", "./month-panel-xtpl"], function(S, require) {
+  var DateFormat = require("date/format"), Control = require("component/control"), MonthsTpl = require("./months-xtpl"), MonthPanelTpl = require("./month-panel-xtpl");
   function prepareMonths(control) {
     var value = control.get("value");
     var currentMonth = value.getMonth();
@@ -1200,9 +1228,8 @@ KISSY.add("date/picker/month-panel/render", ["date/format", "component/control",
     control.get("yearSelectContentEl").html(value.getYear())
   }}, {ATTRS:{contentTpl:{value:MonthPanelTpl}}})
 });
-KISSY.add("date/picker/month-panel/control", ["node", "component/control", "../year-panel/control", "./render"], function() {
-  var module = this;
-  var Node = module.require("node"), Control = module.require("component/control"), YearPanel = module.require("../year-panel/control"), MonthPanelRender = module.require("./render");
+KISSY.add("date/picker/month-panel/control", ["node", "component/control", "../year-panel/control", "./render"], function(S, require) {
+  var Node = require("node"), Control = require("component/control"), YearPanel = require("../year-panel/control"), MonthPanelRender = require("./render");
   var tap = Node.Gesture.tap;
   var $ = Node.all;
   function goYear(self, direction) {
@@ -1252,9 +1279,8 @@ KISSY.add("date/picker/month-panel/control", ["node", "component/control", "../y
     self.get("yearSelectEl").on(tap, showYearPanel, self)
   }}, {xclass:"date-picker-month-panel", ATTRS:{focusable:{value:false}, value:{view:1}, yearPanel:{valueFn:setUpYearPanel}, xrender:{value:MonthPanelRender}}})
 });
-KISSY.add("date/picker/control", ["node", "date/gregorian", "i18n!date/picker", "component/control", "./render", "./month-panel/control"], function(S) {
-  var module = this;
-  var Node = module.require("node"), GregorianCalendar = module.require("date/gregorian"), locale = module.require("i18n!date/picker"), Control = module.require("component/control"), PickerRender = module.require("./render"), MonthPanel = module.require("./month-panel/control");
+KISSY.add("date/picker/control", ["node", "date/gregorian", "i18n!date/picker", "component/control", "./render", "./month-panel/control"], function(S, require) {
+  var Node = require("node"), GregorianCalendar = require("date/gregorian"), locale = require("i18n!date/picker"), Control = require("component/control"), PickerRender = require("./render"), MonthPanel = require("./month-panel/control");
   var tap = Node.Gesture.tap;
   var $ = Node.all;
   var undefined = undefined;
@@ -1447,8 +1473,7 @@ KISSY.add("date/picker/control", ["node", "date/gregorian", "i18n!date/picker", 
     return date
   }}, previousMonthBtn:{}, monthSelectEl:{}, monthPanel:{valueFn:setUpMonthPanel}, nextMonthBtn:{}, tbodyEl:{}, todayBtnEl:{}, dateRender:{}, disabledDate:{}, locale:{value:locale}, showToday:{view:1, value:true}, showClear:{view:1, value:true}, clear:{view:1, value:false}, showWeekNumber:{view:1, value:true}, xrender:{value:PickerRender}}})
 });
-KISSY.add("date/picker", ["./picker/control"], function() {
-  var module = this;
-  return module.require("./picker/control")
+KISSY.add("date/picker", ["./picker/control"], function(S, require) {
+  return require("./picker/control")
 });
 

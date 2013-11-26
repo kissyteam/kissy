@@ -253,12 +253,12 @@ if (! _$jscoverage['/html-parser/lexer/cursor.js'].branchData) {
   _$jscoverage['/html-parser/lexer/cursor.js'].branchData['8'] = [];
   _$jscoverage['/html-parser/lexer/cursor.js'].branchData['8'][1] = new BranchData();
 }
-_$jscoverage['/html-parser/lexer/cursor.js'].branchData['8'][1].init(26, 11, 'offset || 0');
+_$jscoverage['/html-parser/lexer/cursor.js'].branchData['8'][1].init(25, 11, 'offset || 0');
 function visit4_8_1(result) {
   _$jscoverage['/html-parser/lexer/cursor.js'].branchData['8'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/cursor.js'].lineData[6]++;
-KISSY.add("html-parser/lexer/cursor", function() {
+KISSY.add(function() {
   _$jscoverage['/html-parser/lexer/cursor.js'].functionData[0]++;
   _$jscoverage['/html-parser/lexer/cursor.js'].lineData[7]++;
   function Cursor(offset) {

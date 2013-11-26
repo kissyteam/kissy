@@ -4,9 +4,10 @@
  * @author yiminghe@gmail.com
  */
 (function (S) {
+    var   logger = S.getLogger('s/loader/getScript');
     var CSS_POLL_INTERVAL = 30,
         UA = S.UA,
-        logger = S.getLogger('s/loader/getScript'),
+
         Utils = S.Loader.Utils,
     // central poll for link node
         timer = 0,

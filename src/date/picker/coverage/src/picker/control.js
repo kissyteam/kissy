@@ -231,47 +231,47 @@ if (! _$jscoverage['/picker/control.js']) {
   _$jscoverage['/picker/control.js'].lineData = [];
   _$jscoverage['/picker/control.js'].lineData[6] = 0;
   _$jscoverage['/picker/control.js'].lineData[7] = 0;
-  _$jscoverage['/picker/control.js'].lineData[8] = 0;
+  _$jscoverage['/picker/control.js'].lineData[13] = 0;
   _$jscoverage['/picker/control.js'].lineData[14] = 0;
   _$jscoverage['/picker/control.js'].lineData[15] = 0;
   _$jscoverage['/picker/control.js'].lineData[16] = 0;
-  _$jscoverage['/picker/control.js'].lineData[17] = 0;
+  _$jscoverage['/picker/control.js'].lineData[18] = 0;
   _$jscoverage['/picker/control.js'].lineData[19] = 0;
   _$jscoverage['/picker/control.js'].lineData[20] = 0;
   _$jscoverage['/picker/control.js'].lineData[21] = 0;
-  _$jscoverage['/picker/control.js'].lineData[22] = 0;
+  _$jscoverage['/picker/control.js'].lineData[24] = 0;
   _$jscoverage['/picker/control.js'].lineData[25] = 0;
   _$jscoverage['/picker/control.js'].lineData[26] = 0;
   _$jscoverage['/picker/control.js'].lineData[27] = 0;
-  _$jscoverage['/picker/control.js'].lineData[28] = 0;
+  _$jscoverage['/picker/control.js'].lineData[30] = 0;
   _$jscoverage['/picker/control.js'].lineData[31] = 0;
   _$jscoverage['/picker/control.js'].lineData[32] = 0;
   _$jscoverage['/picker/control.js'].lineData[33] = 0;
-  _$jscoverage['/picker/control.js'].lineData[34] = 0;
+  _$jscoverage['/picker/control.js'].lineData[36] = 0;
   _$jscoverage['/picker/control.js'].lineData[37] = 0;
   _$jscoverage['/picker/control.js'].lineData[38] = 0;
   _$jscoverage['/picker/control.js'].lineData[39] = 0;
-  _$jscoverage['/picker/control.js'].lineData[40] = 0;
+  _$jscoverage['/picker/control.js'].lineData[42] = 0;
   _$jscoverage['/picker/control.js'].lineData[43] = 0;
   _$jscoverage['/picker/control.js'].lineData[44] = 0;
   _$jscoverage['/picker/control.js'].lineData[45] = 0;
-  _$jscoverage['/picker/control.js'].lineData[46] = 0;
+  _$jscoverage['/picker/control.js'].lineData[48] = 0;
   _$jscoverage['/picker/control.js'].lineData[49] = 0;
   _$jscoverage['/picker/control.js'].lineData[50] = 0;
   _$jscoverage['/picker/control.js'].lineData[51] = 0;
-  _$jscoverage['/picker/control.js'].lineData[52] = 0;
+  _$jscoverage['/picker/control.js'].lineData[54] = 0;
   _$jscoverage['/picker/control.js'].lineData[55] = 0;
   _$jscoverage['/picker/control.js'].lineData[56] = 0;
-  _$jscoverage['/picker/control.js'].lineData[57] = 0;
+  _$jscoverage['/picker/control.js'].lineData[59] = 0;
   _$jscoverage['/picker/control.js'].lineData[60] = 0;
   _$jscoverage['/picker/control.js'].lineData[61] = 0;
-  _$jscoverage['/picker/control.js'].lineData[62] = 0;
+  _$jscoverage['/picker/control.js'].lineData[64] = 0;
   _$jscoverage['/picker/control.js'].lineData[65] = 0;
   _$jscoverage['/picker/control.js'].lineData[66] = 0;
-  _$jscoverage['/picker/control.js'].lineData[67] = 0;
+  _$jscoverage['/picker/control.js'].lineData[69] = 0;
   _$jscoverage['/picker/control.js'].lineData[70] = 0;
   _$jscoverage['/picker/control.js'].lineData[71] = 0;
-  _$jscoverage['/picker/control.js'].lineData[72] = 0;
+  _$jscoverage['/picker/control.js'].lineData[74] = 0;
   _$jscoverage['/picker/control.js'].lineData[75] = 0;
   _$jscoverage['/picker/control.js'].lineData[76] = 0;
   _$jscoverage['/picker/control.js'].lineData[77] = 0;
@@ -280,96 +280,95 @@ if (! _$jscoverage['/picker/control.js']) {
   _$jscoverage['/picker/control.js'].lineData[80] = 0;
   _$jscoverage['/picker/control.js'].lineData[81] = 0;
   _$jscoverage['/picker/control.js'].lineData[82] = 0;
-  _$jscoverage['/picker/control.js'].lineData[83] = 0;
+  _$jscoverage['/picker/control.js'].lineData[84] = 0;
   _$jscoverage['/picker/control.js'].lineData[85] = 0;
-  _$jscoverage['/picker/control.js'].lineData[86] = 0;
+  _$jscoverage['/picker/control.js'].lineData[90] = 0;
   _$jscoverage['/picker/control.js'].lineData[91] = 0;
   _$jscoverage['/picker/control.js'].lineData[92] = 0;
   _$jscoverage['/picker/control.js'].lineData[93] = 0;
   _$jscoverage['/picker/control.js'].lineData[94] = 0;
-  _$jscoverage['/picker/control.js'].lineData[95] = 0;
+  _$jscoverage['/picker/control.js'].lineData[97] = 0;
   _$jscoverage['/picker/control.js'].lineData[98] = 0;
   _$jscoverage['/picker/control.js'].lineData[99] = 0;
-  _$jscoverage['/picker/control.js'].lineData[100] = 0;
+  _$jscoverage['/picker/control.js'].lineData[103] = 0;
   _$jscoverage['/picker/control.js'].lineData[104] = 0;
-  _$jscoverage['/picker/control.js'].lineData[105] = 0;
+  _$jscoverage['/picker/control.js'].lineData[107] = 0;
   _$jscoverage['/picker/control.js'].lineData[108] = 0;
   _$jscoverage['/picker/control.js'].lineData[109] = 0;
-  _$jscoverage['/picker/control.js'].lineData[110] = 0;
+  _$jscoverage['/picker/control.js'].lineData[112] = 0;
   _$jscoverage['/picker/control.js'].lineData[113] = 0;
   _$jscoverage['/picker/control.js'].lineData[114] = 0;
   _$jscoverage['/picker/control.js'].lineData[115] = 0;
   _$jscoverage['/picker/control.js'].lineData[116] = 0;
   _$jscoverage['/picker/control.js'].lineData[117] = 0;
-  _$jscoverage['/picker/control.js'].lineData[118] = 0;
+  _$jscoverage['/picker/control.js'].lineData[120] = 0;
   _$jscoverage['/picker/control.js'].lineData[121] = 0;
-  _$jscoverage['/picker/control.js'].lineData[122] = 0;
+  _$jscoverage['/picker/control.js'].lineData[123] = 0;
   _$jscoverage['/picker/control.js'].lineData[124] = 0;
   _$jscoverage['/picker/control.js'].lineData[125] = 0;
   _$jscoverage['/picker/control.js'].lineData[126] = 0;
-  _$jscoverage['/picker/control.js'].lineData[127] = 0;
-  _$jscoverage['/picker/control.js'].lineData[129] = 0;
+  _$jscoverage['/picker/control.js'].lineData[128] = 0;
+  _$jscoverage['/picker/control.js'].lineData[132] = 0;
   _$jscoverage['/picker/control.js'].lineData[133] = 0;
   _$jscoverage['/picker/control.js'].lineData[134] = 0;
   _$jscoverage['/picker/control.js'].lineData[135] = 0;
-  _$jscoverage['/picker/control.js'].lineData[136] = 0;
-  _$jscoverage['/picker/control.js'].lineData[138] = 0;
-  _$jscoverage['/picker/control.js'].lineData[148] = 0;
+  _$jscoverage['/picker/control.js'].lineData[137] = 0;
+  _$jscoverage['/picker/control.js'].lineData[147] = 0;
+  _$jscoverage['/picker/control.js'].lineData[149] = 0;
   _$jscoverage['/picker/control.js'].lineData[150] = 0;
   _$jscoverage['/picker/control.js'].lineData[151] = 0;
   _$jscoverage['/picker/control.js'].lineData[152] = 0;
   _$jscoverage['/picker/control.js'].lineData[153] = 0;
   _$jscoverage['/picker/control.js'].lineData[154] = 0;
-  _$jscoverage['/picker/control.js'].lineData[155] = 0;
+  _$jscoverage['/picker/control.js'].lineData[160] = 0;
   _$jscoverage['/picker/control.js'].lineData[161] = 0;
   _$jscoverage['/picker/control.js'].lineData[162] = 0;
-  _$jscoverage['/picker/control.js'].lineData[163] = 0;
+  _$jscoverage['/picker/control.js'].lineData[165] = 0;
   _$jscoverage['/picker/control.js'].lineData[166] = 0;
   _$jscoverage['/picker/control.js'].lineData[167] = 0;
   _$jscoverage['/picker/control.js'].lineData[168] = 0;
-  _$jscoverage['/picker/control.js'].lineData[169] = 0;
+  _$jscoverage['/picker/control.js'].lineData[170] = 0;
   _$jscoverage['/picker/control.js'].lineData[171] = 0;
-  _$jscoverage['/picker/control.js'].lineData[172] = 0;
+  _$jscoverage['/picker/control.js'].lineData[173] = 0;
   _$jscoverage['/picker/control.js'].lineData[174] = 0;
-  _$jscoverage['/picker/control.js'].lineData[175] = 0;
+  _$jscoverage['/picker/control.js'].lineData[179] = 0;
   _$jscoverage['/picker/control.js'].lineData[180] = 0;
-  _$jscoverage['/picker/control.js'].lineData[181] = 0;
-  _$jscoverage['/picker/control.js'].lineData[183] = 0;
+  _$jscoverage['/picker/control.js'].lineData[182] = 0;
+  _$jscoverage['/picker/control.js'].lineData[184] = 0;
   _$jscoverage['/picker/control.js'].lineData[185] = 0;
   _$jscoverage['/picker/control.js'].lineData[186] = 0;
-  _$jscoverage['/picker/control.js'].lineData[187] = 0;
+  _$jscoverage['/picker/control.js'].lineData[188] = 0;
   _$jscoverage['/picker/control.js'].lineData[189] = 0;
   _$jscoverage['/picker/control.js'].lineData[190] = 0;
-  _$jscoverage['/picker/control.js'].lineData[191] = 0;
-  _$jscoverage['/picker/control.js'].lineData[193] = 0;
-  _$jscoverage['/picker/control.js'].lineData[196] = 0;
-  _$jscoverage['/picker/control.js'].lineData[199] = 0;
+  _$jscoverage['/picker/control.js'].lineData[192] = 0;
+  _$jscoverage['/picker/control.js'].lineData[195] = 0;
+  _$jscoverage['/picker/control.js'].lineData[198] = 0;
+  _$jscoverage['/picker/control.js'].lineData[200] = 0;
   _$jscoverage['/picker/control.js'].lineData[201] = 0;
-  _$jscoverage['/picker/control.js'].lineData[202] = 0;
+  _$jscoverage['/picker/control.js'].lineData[203] = 0;
   _$jscoverage['/picker/control.js'].lineData[204] = 0;
-  _$jscoverage['/picker/control.js'].lineData[205] = 0;
+  _$jscoverage['/picker/control.js'].lineData[206] = 0;
   _$jscoverage['/picker/control.js'].lineData[207] = 0;
-  _$jscoverage['/picker/control.js'].lineData[208] = 0;
-  _$jscoverage['/picker/control.js'].lineData[210] = 0;
-  _$jscoverage['/picker/control.js'].lineData[212] = 0;
+  _$jscoverage['/picker/control.js'].lineData[209] = 0;
+  _$jscoverage['/picker/control.js'].lineData[211] = 0;
+  _$jscoverage['/picker/control.js'].lineData[213] = 0;
   _$jscoverage['/picker/control.js'].lineData[214] = 0;
-  _$jscoverage['/picker/control.js'].lineData[215] = 0;
-  _$jscoverage['/picker/control.js'].lineData[217] = 0;
-  _$jscoverage['/picker/control.js'].lineData[219] = 0;
+  _$jscoverage['/picker/control.js'].lineData[216] = 0;
+  _$jscoverage['/picker/control.js'].lineData[218] = 0;
+  _$jscoverage['/picker/control.js'].lineData[220] = 0;
   _$jscoverage['/picker/control.js'].lineData[221] = 0;
-  _$jscoverage['/picker/control.js'].lineData[222] = 0;
+  _$jscoverage['/picker/control.js'].lineData[223] = 0;
   _$jscoverage['/picker/control.js'].lineData[224] = 0;
-  _$jscoverage['/picker/control.js'].lineData[225] = 0;
+  _$jscoverage['/picker/control.js'].lineData[226] = 0;
   _$jscoverage['/picker/control.js'].lineData[227] = 0;
-  _$jscoverage['/picker/control.js'].lineData[228] = 0;
+  _$jscoverage['/picker/control.js'].lineData[229] = 0;
   _$jscoverage['/picker/control.js'].lineData[230] = 0;
-  _$jscoverage['/picker/control.js'].lineData[231] = 0;
-  _$jscoverage['/picker/control.js'].lineData[233] = 0;
-  _$jscoverage['/picker/control.js'].lineData[236] = 0;
-  _$jscoverage['/picker/control.js'].lineData[238] = 0;
+  _$jscoverage['/picker/control.js'].lineData[232] = 0;
+  _$jscoverage['/picker/control.js'].lineData[235] = 0;
+  _$jscoverage['/picker/control.js'].lineData[237] = 0;
+  _$jscoverage['/picker/control.js'].lineData[255] = 0;
   _$jscoverage['/picker/control.js'].lineData[256] = 0;
   _$jscoverage['/picker/control.js'].lineData[257] = 0;
-  _$jscoverage['/picker/control.js'].lineData[258] = 0;
 }
 if (! _$jscoverage['/picker/control.js'].functionData) {
   _$jscoverage['/picker/control.js'].functionData = [];
@@ -397,400 +396,398 @@ if (! _$jscoverage['/picker/control.js'].functionData) {
 }
 if (! _$jscoverage['/picker/control.js'].branchData) {
   _$jscoverage['/picker/control.js'].branchData = {};
-  _$jscoverage['/picker/control.js'].branchData['82'] = [];
-  _$jscoverage['/picker/control.js'].branchData['82'][1] = new BranchData();
-  _$jscoverage['/picker/control.js'].branchData['124'] = [];
-  _$jscoverage['/picker/control.js'].branchData['124'][1] = new BranchData();
-  _$jscoverage['/picker/control.js'].branchData['135'] = [];
-  _$jscoverage['/picker/control.js'].branchData['135'][1] = new BranchData();
-  _$jscoverage['/picker/control.js'].branchData['174'] = [];
-  _$jscoverage['/picker/control.js'].branchData['174'][1] = new BranchData();
-  _$jscoverage['/picker/control.js'].branchData['180'] = [];
-  _$jscoverage['/picker/control.js'].branchData['180'][1] = new BranchData();
-  _$jscoverage['/picker/control.js'].branchData['207'] = [];
-  _$jscoverage['/picker/control.js'].branchData['207'][1] = new BranchData();
-  _$jscoverage['/picker/control.js'].branchData['214'] = [];
-  _$jscoverage['/picker/control.js'].branchData['214'][1] = new BranchData();
+  _$jscoverage['/picker/control.js'].branchData['81'] = [];
+  _$jscoverage['/picker/control.js'].branchData['81'][1] = new BranchData();
+  _$jscoverage['/picker/control.js'].branchData['123'] = [];
+  _$jscoverage['/picker/control.js'].branchData['123'][1] = new BranchData();
+  _$jscoverage['/picker/control.js'].branchData['134'] = [];
+  _$jscoverage['/picker/control.js'].branchData['134'][1] = new BranchData();
+  _$jscoverage['/picker/control.js'].branchData['173'] = [];
+  _$jscoverage['/picker/control.js'].branchData['173'][1] = new BranchData();
+  _$jscoverage['/picker/control.js'].branchData['179'] = [];
+  _$jscoverage['/picker/control.js'].branchData['179'][1] = new BranchData();
+  _$jscoverage['/picker/control.js'].branchData['206'] = [];
+  _$jscoverage['/picker/control.js'].branchData['206'][1] = new BranchData();
+  _$jscoverage['/picker/control.js'].branchData['213'] = [];
+  _$jscoverage['/picker/control.js'].branchData['213'][1] = new BranchData();
 }
-_$jscoverage['/picker/control.js'].branchData['214'][1].init(43, 7, 'ctrlKey');
-function visit7_214_1(result) {
-  _$jscoverage['/picker/control.js'].branchData['214'][1].ranCondition(result);
+_$jscoverage['/picker/control.js'].branchData['213'][1].init(43, 7, 'ctrlKey');
+function visit7_213_1(result) {
+  _$jscoverage['/picker/control.js'].branchData['213'][1].ranCondition(result);
   return result;
-}_$jscoverage['/picker/control.js'].branchData['207'][1].init(42, 7, 'ctrlKey');
-function visit6_207_1(result) {
-  _$jscoverage['/picker/control.js'].branchData['207'][1].ranCondition(result);
+}_$jscoverage['/picker/control.js'].branchData['206'][1].init(42, 7, 'ctrlKey');
+function visit6_206_1(result) {
+  _$jscoverage['/picker/control.js'].branchData['206'][1].ranCondition(result);
   return result;
-}_$jscoverage['/picker/control.js'].branchData['180'][1].init(47, 8, '!ctrlKey');
-function visit5_180_1(result) {
-  _$jscoverage['/picker/control.js'].branchData['180'][1].ranCondition(result);
+}_$jscoverage['/picker/control.js'].branchData['179'][1].init(47, 8, '!ctrlKey');
+function visit5_179_1(result) {
+  _$jscoverage['/picker/control.js'].branchData['179'][1].ranCondition(result);
   return result;
-}_$jscoverage['/picker/control.js'].branchData['174'][1].init(293, 17, 'this.get(\'clear\')');
-function visit4_174_1(result) {
-  _$jscoverage['/picker/control.js'].branchData['174'][1].ranCondition(result);
+}_$jscoverage['/picker/control.js'].branchData['173'][1].init(293, 17, 'this.get(\'clear\')');
+function visit4_173_1(result) {
+  _$jscoverage['/picker/control.js'].branchData['173'][1].ranCondition(result);
   return result;
-}_$jscoverage['/picker/control.js'].branchData['135'][1].init(41, 18, '!this.get(\'clear\')');
-function visit3_135_1(result) {
-  _$jscoverage['/picker/control.js'].branchData['135'][1].ranCondition(result);
+}_$jscoverage['/picker/control.js'].branchData['134'][1].init(41, 18, '!this.get(\'clear\')');
+function visit3_134_1(result) {
+  _$jscoverage['/picker/control.js'].branchData['134'][1].ranCondition(result);
   return result;
-}_$jscoverage['/picker/control.js'].branchData['124'][1].init(74, 2, '!v');
-function visit2_124_1(result) {
-  _$jscoverage['/picker/control.js'].branchData['124'][1].ranCondition(result);
+}_$jscoverage['/picker/control.js'].branchData['123'][1].init(74, 2, '!v');
+function visit2_123_1(result) {
+  _$jscoverage['/picker/control.js'].branchData['123'][1].ranCondition(result);
   return result;
-}_$jscoverage['/picker/control.js'].branchData['82'][1].init(259, 54, 'disabledDate && disabledDate(value, self.get(\'value\'))');
-function visit1_82_1(result) {
-  _$jscoverage['/picker/control.js'].branchData['82'][1].ranCondition(result);
+}_$jscoverage['/picker/control.js'].branchData['81'][1].init(259, 54, 'disabledDate && disabledDate(value, self.get(\'value\'))');
+function visit1_81_1(result) {
+  _$jscoverage['/picker/control.js'].branchData['81'][1].ranCondition(result);
   return result;
 }_$jscoverage['/picker/control.js'].lineData[6]++;
-KISSY.add(function(S) {
+KISSY.add(function(S, require) {
   _$jscoverage['/picker/control.js'].functionData[0]++;
   _$jscoverage['/picker/control.js'].lineData[7]++;
-  var module = this;
-  _$jscoverage['/picker/control.js'].lineData[8]++;
-  var Node = module.require('node'), GregorianCalendar = module.require('date/gregorian'), locale = module.require('i18n!date/picker'), Control = module.require('component/control'), PickerRender = module.require('./render'), MonthPanel = module.require('./month-panel/control');
-  _$jscoverage['/picker/control.js'].lineData[14]++;
+  var Node = require('node'), GregorianCalendar = require('date/gregorian'), locale = require('i18n!date/picker'), Control = require('component/control'), PickerRender = require('./render'), MonthPanel = require('./month-panel/control');
+  _$jscoverage['/picker/control.js'].lineData[13]++;
   var tap = Node.Gesture.tap;
-  _$jscoverage['/picker/control.js'].lineData[15]++;
+  _$jscoverage['/picker/control.js'].lineData[14]++;
   var $ = Node.all;
-  _$jscoverage['/picker/control.js'].lineData[16]++;
+  _$jscoverage['/picker/control.js'].lineData[15]++;
   var undefined = undefined;
-  _$jscoverage['/picker/control.js'].lineData[17]++;
+  _$jscoverage['/picker/control.js'].lineData[16]++;
   var KeyCode = Node.KeyCode;
-  _$jscoverage['/picker/control.js'].lineData[19]++;
+  _$jscoverage['/picker/control.js'].lineData[18]++;
   function goStartMonth(self) {
     _$jscoverage['/picker/control.js'].functionData[1]++;
-    _$jscoverage['/picker/control.js'].lineData[20]++;
+    _$jscoverage['/picker/control.js'].lineData[19]++;
     var next = self.get('value').clone();
-    _$jscoverage['/picker/control.js'].lineData[21]++;
+    _$jscoverage['/picker/control.js'].lineData[20]++;
     next.setDayOfMonth(1);
-    _$jscoverage['/picker/control.js'].lineData[22]++;
+    _$jscoverage['/picker/control.js'].lineData[21]++;
     self.set('value', next);
   }
-  _$jscoverage['/picker/control.js'].lineData[25]++;
+  _$jscoverage['/picker/control.js'].lineData[24]++;
   function goEndMonth(self) {
     _$jscoverage['/picker/control.js'].functionData[2]++;
-    _$jscoverage['/picker/control.js'].lineData[26]++;
+    _$jscoverage['/picker/control.js'].lineData[25]++;
     var next = self.get('value').clone();
-    _$jscoverage['/picker/control.js'].lineData[27]++;
+    _$jscoverage['/picker/control.js'].lineData[26]++;
     next.setDayOfMonth(next.getActualMaximum(GregorianCalendar.MONTH));
-    _$jscoverage['/picker/control.js'].lineData[28]++;
+    _$jscoverage['/picker/control.js'].lineData[27]++;
     self.set('value', next);
   }
-  _$jscoverage['/picker/control.js'].lineData[31]++;
+  _$jscoverage['/picker/control.js'].lineData[30]++;
   function goMonth(self, direction) {
     _$jscoverage['/picker/control.js'].functionData[3]++;
-    _$jscoverage['/picker/control.js'].lineData[32]++;
+    _$jscoverage['/picker/control.js'].lineData[31]++;
     var next = self.get('value').clone();
-    _$jscoverage['/picker/control.js'].lineData[33]++;
+    _$jscoverage['/picker/control.js'].lineData[32]++;
     next.addMonth(direction);
-    _$jscoverage['/picker/control.js'].lineData[34]++;
+    _$jscoverage['/picker/control.js'].lineData[33]++;
     self.set('value', next);
   }
-  _$jscoverage['/picker/control.js'].lineData[37]++;
+  _$jscoverage['/picker/control.js'].lineData[36]++;
   function goYear(self, direction) {
     _$jscoverage['/picker/control.js'].functionData[4]++;
-    _$jscoverage['/picker/control.js'].lineData[38]++;
+    _$jscoverage['/picker/control.js'].lineData[37]++;
     var next = self.get('value').clone();
-    _$jscoverage['/picker/control.js'].lineData[39]++;
+    _$jscoverage['/picker/control.js'].lineData[38]++;
     next.addYear(direction);
-    _$jscoverage['/picker/control.js'].lineData[40]++;
+    _$jscoverage['/picker/control.js'].lineData[39]++;
     self.set('value', next);
   }
-  _$jscoverage['/picker/control.js'].lineData[43]++;
+  _$jscoverage['/picker/control.js'].lineData[42]++;
   function goWeek(self, direction) {
     _$jscoverage['/picker/control.js'].functionData[5]++;
-    _$jscoverage['/picker/control.js'].lineData[44]++;
+    _$jscoverage['/picker/control.js'].lineData[43]++;
     var next = self.get('value').clone();
-    _$jscoverage['/picker/control.js'].lineData[45]++;
+    _$jscoverage['/picker/control.js'].lineData[44]++;
     next.addWeekOfYear(direction);
-    _$jscoverage['/picker/control.js'].lineData[46]++;
+    _$jscoverage['/picker/control.js'].lineData[45]++;
     self.set('value', next);
   }
-  _$jscoverage['/picker/control.js'].lineData[49]++;
+  _$jscoverage['/picker/control.js'].lineData[48]++;
   function goDay(self, direction) {
     _$jscoverage['/picker/control.js'].functionData[6]++;
-    _$jscoverage['/picker/control.js'].lineData[50]++;
+    _$jscoverage['/picker/control.js'].lineData[49]++;
     var next = self.get('value').clone();
-    _$jscoverage['/picker/control.js'].lineData[51]++;
+    _$jscoverage['/picker/control.js'].lineData[50]++;
     next.addDayOfMonth(direction);
-    _$jscoverage['/picker/control.js'].lineData[52]++;
+    _$jscoverage['/picker/control.js'].lineData[51]++;
     self.set('value', next);
   }
-  _$jscoverage['/picker/control.js'].lineData[55]++;
+  _$jscoverage['/picker/control.js'].lineData[54]++;
   function nextMonth(e) {
     _$jscoverage['/picker/control.js'].functionData[7]++;
-    _$jscoverage['/picker/control.js'].lineData[56]++;
+    _$jscoverage['/picker/control.js'].lineData[55]++;
     e.preventDefault();
-    _$jscoverage['/picker/control.js'].lineData[57]++;
+    _$jscoverage['/picker/control.js'].lineData[56]++;
     goMonth(this, 1);
   }
-  _$jscoverage['/picker/control.js'].lineData[60]++;
+  _$jscoverage['/picker/control.js'].lineData[59]++;
   function prevMonth(e) {
     _$jscoverage['/picker/control.js'].functionData[8]++;
-    _$jscoverage['/picker/control.js'].lineData[61]++;
+    _$jscoverage['/picker/control.js'].lineData[60]++;
     e.preventDefault();
-    _$jscoverage['/picker/control.js'].lineData[62]++;
+    _$jscoverage['/picker/control.js'].lineData[61]++;
     goMonth(this, -1);
   }
-  _$jscoverage['/picker/control.js'].lineData[65]++;
+  _$jscoverage['/picker/control.js'].lineData[64]++;
   function nextYear(e) {
     _$jscoverage['/picker/control.js'].functionData[9]++;
-    _$jscoverage['/picker/control.js'].lineData[66]++;
+    _$jscoverage['/picker/control.js'].lineData[65]++;
     e.preventDefault();
-    _$jscoverage['/picker/control.js'].lineData[67]++;
+    _$jscoverage['/picker/control.js'].lineData[66]++;
     goYear(this, 1);
   }
-  _$jscoverage['/picker/control.js'].lineData[70]++;
+  _$jscoverage['/picker/control.js'].lineData[69]++;
   function prevYear(e) {
     _$jscoverage['/picker/control.js'].functionData[10]++;
-    _$jscoverage['/picker/control.js'].lineData[71]++;
+    _$jscoverage['/picker/control.js'].lineData[70]++;
     e.preventDefault();
-    _$jscoverage['/picker/control.js'].lineData[72]++;
+    _$jscoverage['/picker/control.js'].lineData[71]++;
     goYear(this, -1);
   }
-  _$jscoverage['/picker/control.js'].lineData[75]++;
+  _$jscoverage['/picker/control.js'].lineData[74]++;
   function chooseCell(e) {
     _$jscoverage['/picker/control.js'].functionData[11]++;
-    _$jscoverage['/picker/control.js'].lineData[76]++;
+    _$jscoverage['/picker/control.js'].lineData[75]++;
     var self = this;
-    _$jscoverage['/picker/control.js'].lineData[77]++;
+    _$jscoverage['/picker/control.js'].lineData[76]++;
     self.set('clear', false);
-    _$jscoverage['/picker/control.js'].lineData[78]++;
+    _$jscoverage['/picker/control.js'].lineData[77]++;
     var disabledDate = self.get('disabledDate');
-    _$jscoverage['/picker/control.js'].lineData[79]++;
+    _$jscoverage['/picker/control.js'].lineData[78]++;
     e.preventDefault();
-    _$jscoverage['/picker/control.js'].lineData[80]++;
+    _$jscoverage['/picker/control.js'].lineData[79]++;
     var td = $(e.currentTarget);
-    _$jscoverage['/picker/control.js'].lineData[81]++;
+    _$jscoverage['/picker/control.js'].lineData[80]++;
     var value = self.dateTable[parseInt(td.attr('data-index'))];
-    _$jscoverage['/picker/control.js'].lineData[82]++;
-    if (visit1_82_1(disabledDate && disabledDate(value, self.get('value')))) {
-      _$jscoverage['/picker/control.js'].lineData[83]++;
+    _$jscoverage['/picker/control.js'].lineData[81]++;
+    if (visit1_81_1(disabledDate && disabledDate(value, self.get('value')))) {
+      _$jscoverage['/picker/control.js'].lineData[82]++;
       return;
     }
-    _$jscoverage['/picker/control.js'].lineData[85]++;
+    _$jscoverage['/picker/control.js'].lineData[84]++;
     self.set('value', value);
-    _$jscoverage['/picker/control.js'].lineData[86]++;
+    _$jscoverage['/picker/control.js'].lineData[85]++;
     self.fire('select', {
   value: value});
   }
-  _$jscoverage['/picker/control.js'].lineData[91]++;
+  _$jscoverage['/picker/control.js'].lineData[90]++;
   function showMonthPanel(e) {
     _$jscoverage['/picker/control.js'].functionData[12]++;
-    _$jscoverage['/picker/control.js'].lineData[92]++;
+    _$jscoverage['/picker/control.js'].lineData[91]++;
     e.preventDefault();
-    _$jscoverage['/picker/control.js'].lineData[93]++;
+    _$jscoverage['/picker/control.js'].lineData[92]++;
     var monthPanel = this.get('monthPanel');
-    _$jscoverage['/picker/control.js'].lineData[94]++;
+    _$jscoverage['/picker/control.js'].lineData[93]++;
     monthPanel.set('value', this.get('value'));
-    _$jscoverage['/picker/control.js'].lineData[95]++;
+    _$jscoverage['/picker/control.js'].lineData[94]++;
     monthPanel.show();
   }
-  _$jscoverage['/picker/control.js'].lineData[98]++;
+  _$jscoverage['/picker/control.js'].lineData[97]++;
   function setUpMonthPanel() {
     _$jscoverage['/picker/control.js'].functionData[13]++;
-    _$jscoverage['/picker/control.js'].lineData[99]++;
+    _$jscoverage['/picker/control.js'].lineData[98]++;
     var self = this;
-    _$jscoverage['/picker/control.js'].lineData[100]++;
+    _$jscoverage['/picker/control.js'].lineData[99]++;
     var monthPanel = new MonthPanel({
   locale: this.get('locale'), 
   render: self.get('el')});
-    _$jscoverage['/picker/control.js'].lineData[104]++;
+    _$jscoverage['/picker/control.js'].lineData[103]++;
     monthPanel.on('select', onMonthPanelSelect, self);
-    _$jscoverage['/picker/control.js'].lineData[105]++;
+    _$jscoverage['/picker/control.js'].lineData[104]++;
     return monthPanel;
   }
-  _$jscoverage['/picker/control.js'].lineData[108]++;
+  _$jscoverage['/picker/control.js'].lineData[107]++;
   function onMonthPanelSelect(e) {
     _$jscoverage['/picker/control.js'].functionData[14]++;
-    _$jscoverage['/picker/control.js'].lineData[109]++;
+    _$jscoverage['/picker/control.js'].lineData[108]++;
     this.set('value', e.value);
-    _$jscoverage['/picker/control.js'].lineData[110]++;
+    _$jscoverage['/picker/control.js'].lineData[109]++;
     this.get('monthPanel').hide();
   }
-  _$jscoverage['/picker/control.js'].lineData[113]++;
+  _$jscoverage['/picker/control.js'].lineData[112]++;
   function chooseToday(e) {
     _$jscoverage['/picker/control.js'].functionData[15]++;
-    _$jscoverage['/picker/control.js'].lineData[114]++;
+    _$jscoverage['/picker/control.js'].lineData[113]++;
     e.preventDefault();
-    _$jscoverage['/picker/control.js'].lineData[115]++;
+    _$jscoverage['/picker/control.js'].lineData[114]++;
     this.set('clear', false);
-    _$jscoverage['/picker/control.js'].lineData[116]++;
+    _$jscoverage['/picker/control.js'].lineData[115]++;
     var today = this.get('value').clone();
-    _$jscoverage['/picker/control.js'].lineData[117]++;
+    _$jscoverage['/picker/control.js'].lineData[116]++;
     today.setTime(S.now());
-    _$jscoverage['/picker/control.js'].lineData[118]++;
+    _$jscoverage['/picker/control.js'].lineData[117]++;
     this.set('value', today);
   }
-  _$jscoverage['/picker/control.js'].lineData[121]++;
+  _$jscoverage['/picker/control.js'].lineData[120]++;
   function toggleClear() {
     _$jscoverage['/picker/control.js'].functionData[16]++;
-    _$jscoverage['/picker/control.js'].lineData[122]++;
+    _$jscoverage['/picker/control.js'].lineData[121]++;
     var self = this, v = !self.get('clear');
-    _$jscoverage['/picker/control.js'].lineData[124]++;
-    if (visit2_124_1(!v)) {
-      _$jscoverage['/picker/control.js'].lineData[125]++;
+    _$jscoverage['/picker/control.js'].lineData[123]++;
+    if (visit2_123_1(!v)) {
+      _$jscoverage['/picker/control.js'].lineData[124]++;
       var value = self.get('value');
-      _$jscoverage['/picker/control.js'].lineData[126]++;
+      _$jscoverage['/picker/control.js'].lineData[125]++;
       value.setDayOfMonth(1);
-      _$jscoverage['/picker/control.js'].lineData[127]++;
+      _$jscoverage['/picker/control.js'].lineData[126]++;
       self.set('clear', false);
     } else {
-      _$jscoverage['/picker/control.js'].lineData[129]++;
+      _$jscoverage['/picker/control.js'].lineData[128]++;
       self.set('clear', true);
     }
   }
-  _$jscoverage['/picker/control.js'].lineData[133]++;
+  _$jscoverage['/picker/control.js'].lineData[132]++;
   function onClearClick(e) {
     _$jscoverage['/picker/control.js'].functionData[17]++;
-    _$jscoverage['/picker/control.js'].lineData[134]++;
+    _$jscoverage['/picker/control.js'].lineData[133]++;
     e.preventDefault();
-    _$jscoverage['/picker/control.js'].lineData[135]++;
-    if (visit3_135_1(!this.get('clear'))) {
-      _$jscoverage['/picker/control.js'].lineData[136]++;
+    _$jscoverage['/picker/control.js'].lineData[134]++;
+    if (visit3_134_1(!this.get('clear'))) {
+      _$jscoverage['/picker/control.js'].lineData[135]++;
       toggleClear.call(this);
     }
-    _$jscoverage['/picker/control.js'].lineData[138]++;
+    _$jscoverage['/picker/control.js'].lineData[137]++;
     this.fire('select', {
   value: null});
   }
-  _$jscoverage['/picker/control.js'].lineData[148]++;
+  _$jscoverage['/picker/control.js'].lineData[147]++;
   return Control.extend({
   bindUI: function() {
   _$jscoverage['/picker/control.js'].functionData[18]++;
-  _$jscoverage['/picker/control.js'].lineData[150]++;
+  _$jscoverage['/picker/control.js'].lineData[149]++;
   var self = this;
-  _$jscoverage['/picker/control.js'].lineData[151]++;
+  _$jscoverage['/picker/control.js'].lineData[150]++;
   self.get('nextMonthBtn').on(tap, nextMonth, self);
-  _$jscoverage['/picker/control.js'].lineData[152]++;
+  _$jscoverage['/picker/control.js'].lineData[151]++;
   self.get('previousMonthBtn').on(tap, prevMonth, self);
-  _$jscoverage['/picker/control.js'].lineData[153]++;
+  _$jscoverage['/picker/control.js'].lineData[152]++;
   self.get('nextYearBtn').on(tap, nextYear, self);
-  _$jscoverage['/picker/control.js'].lineData[154]++;
+  _$jscoverage['/picker/control.js'].lineData[153]++;
   self.get('previousYearBtn').on(tap, prevYear, self);
-  _$jscoverage['/picker/control.js'].lineData[155]++;
+  _$jscoverage['/picker/control.js'].lineData[154]++;
   self.get('tbodyEl').delegate(tap, '.' + self.view.getBaseCssClass('cell'), chooseCell, self);
-  _$jscoverage['/picker/control.js'].lineData[161]++;
+  _$jscoverage['/picker/control.js'].lineData[160]++;
   self.get('monthSelectEl').on(tap, showMonthPanel, self);
-  _$jscoverage['/picker/control.js'].lineData[162]++;
+  _$jscoverage['/picker/control.js'].lineData[161]++;
   self.get('todayBtnEl').on(tap, chooseToday, self);
-  _$jscoverage['/picker/control.js'].lineData[163]++;
+  _$jscoverage['/picker/control.js'].lineData[162]++;
   self.get('clearBtnEl').on(tap, onClearClick, self);
 }, 
   handleKeyDownInternal: function(e) {
   _$jscoverage['/picker/control.js'].functionData[19]++;
-  _$jscoverage['/picker/control.js'].lineData[166]++;
+  _$jscoverage['/picker/control.js'].lineData[165]++;
   var self = this;
-  _$jscoverage['/picker/control.js'].lineData[167]++;
+  _$jscoverage['/picker/control.js'].lineData[166]++;
   var keyCode = e.keyCode;
-  _$jscoverage['/picker/control.js'].lineData[168]++;
+  _$jscoverage['/picker/control.js'].lineData[167]++;
   var ctrlKey = e.ctrlKey;
-  _$jscoverage['/picker/control.js'].lineData[169]++;
+  _$jscoverage['/picker/control.js'].lineData[168]++;
   switch (keyCode) {
     case KeyCode.SPACE:
-      _$jscoverage['/picker/control.js'].lineData[171]++;
+      _$jscoverage['/picker/control.js'].lineData[170]++;
       self.set('clear', !self.get('clear'));
-      _$jscoverage['/picker/control.js'].lineData[172]++;
+      _$jscoverage['/picker/control.js'].lineData[171]++;
       return true;
   }
-  _$jscoverage['/picker/control.js'].lineData[174]++;
-  if (visit4_174_1(this.get('clear'))) {
-    _$jscoverage['/picker/control.js'].lineData[175]++;
+  _$jscoverage['/picker/control.js'].lineData[173]++;
+  if (visit4_173_1(this.get('clear'))) {
+    _$jscoverage['/picker/control.js'].lineData[174]++;
     switch (keyCode) {
       case KeyCode.DOWN:
       case KeyCode.UP:
       case KeyCode.LEFT:
       case KeyCode.RIGHT:
-        _$jscoverage['/picker/control.js'].lineData[180]++;
-        if (visit5_180_1(!ctrlKey)) {
-          _$jscoverage['/picker/control.js'].lineData[181]++;
+        _$jscoverage['/picker/control.js'].lineData[179]++;
+        if (visit5_179_1(!ctrlKey)) {
+          _$jscoverage['/picker/control.js'].lineData[180]++;
           toggleClear.call(self);
         }
-        _$jscoverage['/picker/control.js'].lineData[183]++;
+        _$jscoverage['/picker/control.js'].lineData[182]++;
         return true;
       case KeyCode.HOME:
-        _$jscoverage['/picker/control.js'].lineData[185]++;
+        _$jscoverage['/picker/control.js'].lineData[184]++;
         toggleClear.call(self);
-        _$jscoverage['/picker/control.js'].lineData[186]++;
+        _$jscoverage['/picker/control.js'].lineData[185]++;
         goStartMonth(self);
-        _$jscoverage['/picker/control.js'].lineData[187]++;
+        _$jscoverage['/picker/control.js'].lineData[186]++;
         return true;
       case KeyCode.END:
-        _$jscoverage['/picker/control.js'].lineData[189]++;
+        _$jscoverage['/picker/control.js'].lineData[188]++;
         toggleClear.call(self);
-        _$jscoverage['/picker/control.js'].lineData[190]++;
+        _$jscoverage['/picker/control.js'].lineData[189]++;
         goEndMonth(self);
-        _$jscoverage['/picker/control.js'].lineData[191]++;
+        _$jscoverage['/picker/control.js'].lineData[190]++;
         return true;
       case KeyCode.ENTER:
-        _$jscoverage['/picker/control.js'].lineData[193]++;
+        _$jscoverage['/picker/control.js'].lineData[192]++;
         self.fire('select', {
   value: null});
-        _$jscoverage['/picker/control.js'].lineData[196]++;
+        _$jscoverage['/picker/control.js'].lineData[195]++;
         return true;
     }
   }
-  _$jscoverage['/picker/control.js'].lineData[199]++;
+  _$jscoverage['/picker/control.js'].lineData[198]++;
   switch (keyCode) {
     case KeyCode.DOWN:
-      _$jscoverage['/picker/control.js'].lineData[201]++;
+      _$jscoverage['/picker/control.js'].lineData[200]++;
       goWeek(self, 1);
-      _$jscoverage['/picker/control.js'].lineData[202]++;
+      _$jscoverage['/picker/control.js'].lineData[201]++;
       return true;
     case KeyCode.UP:
-      _$jscoverage['/picker/control.js'].lineData[204]++;
+      _$jscoverage['/picker/control.js'].lineData[203]++;
       goWeek(self, -1);
-      _$jscoverage['/picker/control.js'].lineData[205]++;
+      _$jscoverage['/picker/control.js'].lineData[204]++;
       return true;
     case KeyCode.LEFT:
-      _$jscoverage['/picker/control.js'].lineData[207]++;
-      if (visit6_207_1(ctrlKey)) {
-        _$jscoverage['/picker/control.js'].lineData[208]++;
+      _$jscoverage['/picker/control.js'].lineData[206]++;
+      if (visit6_206_1(ctrlKey)) {
+        _$jscoverage['/picker/control.js'].lineData[207]++;
         goYear(self, -1);
       } else {
-        _$jscoverage['/picker/control.js'].lineData[210]++;
+        _$jscoverage['/picker/control.js'].lineData[209]++;
         goDay(self, -1);
       }
-      _$jscoverage['/picker/control.js'].lineData[212]++;
+      _$jscoverage['/picker/control.js'].lineData[211]++;
       return true;
     case KeyCode.RIGHT:
-      _$jscoverage['/picker/control.js'].lineData[214]++;
-      if (visit7_214_1(ctrlKey)) {
-        _$jscoverage['/picker/control.js'].lineData[215]++;
+      _$jscoverage['/picker/control.js'].lineData[213]++;
+      if (visit7_213_1(ctrlKey)) {
+        _$jscoverage['/picker/control.js'].lineData[214]++;
         goYear(self, 1);
       } else {
-        _$jscoverage['/picker/control.js'].lineData[217]++;
+        _$jscoverage['/picker/control.js'].lineData[216]++;
         goDay(self, 1);
       }
-      _$jscoverage['/picker/control.js'].lineData[219]++;
+      _$jscoverage['/picker/control.js'].lineData[218]++;
       return true;
     case KeyCode.HOME:
-      _$jscoverage['/picker/control.js'].lineData[221]++;
+      _$jscoverage['/picker/control.js'].lineData[220]++;
       goStartMonth(self);
-      _$jscoverage['/picker/control.js'].lineData[222]++;
+      _$jscoverage['/picker/control.js'].lineData[221]++;
       return true;
     case KeyCode.END:
-      _$jscoverage['/picker/control.js'].lineData[224]++;
+      _$jscoverage['/picker/control.js'].lineData[223]++;
       goEndMonth(self);
-      _$jscoverage['/picker/control.js'].lineData[225]++;
+      _$jscoverage['/picker/control.js'].lineData[224]++;
       return true;
     case KeyCode.PAGE_DOWN:
-      _$jscoverage['/picker/control.js'].lineData[227]++;
+      _$jscoverage['/picker/control.js'].lineData[226]++;
       goMonth(self, 1);
-      _$jscoverage['/picker/control.js'].lineData[228]++;
+      _$jscoverage['/picker/control.js'].lineData[227]++;
       return true;
     case KeyCode.PAGE_UP:
-      _$jscoverage['/picker/control.js'].lineData[230]++;
+      _$jscoverage['/picker/control.js'].lineData[229]++;
       goMonth(self, -1);
-      _$jscoverage['/picker/control.js'].lineData[231]++;
+      _$jscoverage['/picker/control.js'].lineData[230]++;
       return true;
     case KeyCode.ENTER:
-      _$jscoverage['/picker/control.js'].lineData[233]++;
+      _$jscoverage['/picker/control.js'].lineData[232]++;
       self.fire('select', {
   value: self.get('value')});
-      _$jscoverage['/picker/control.js'].lineData[236]++;
+      _$jscoverage['/picker/control.js'].lineData[235]++;
       return true;
   }
-  _$jscoverage['/picker/control.js'].lineData[238]++;
+  _$jscoverage['/picker/control.js'].lineData[237]++;
   return undefined;
 }}, {
   xclass: 'date-picker', 
@@ -801,11 +798,11 @@ KISSY.add(function(S) {
   view: 1, 
   valueFn: function() {
   _$jscoverage['/picker/control.js'].functionData[20]++;
-  _$jscoverage['/picker/control.js'].lineData[256]++;
+  _$jscoverage['/picker/control.js'].lineData[255]++;
   var date = new GregorianCalendar();
-  _$jscoverage['/picker/control.js'].lineData[257]++;
+  _$jscoverage['/picker/control.js'].lineData[256]++;
   date.setTime(S.now());
-  _$jscoverage['/picker/control.js'].lineData[258]++;
+  _$jscoverage['/picker/control.js'].lineData[257]++;
   return date;
 }}, 
   previousMonthBtn: {}, 

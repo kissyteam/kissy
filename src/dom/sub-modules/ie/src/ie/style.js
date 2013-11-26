@@ -5,9 +5,10 @@
  */
 KISSY.add(function (S,require) {
     var Dom = require('dom/base');
+    var   logger = S.getLogger('s/dom');
     var cssProps = Dom._cssProps,
         UA = S.UA,
-        logger = S.getLogger('s/dom'),
+
         HUNDRED = 100,
         doc = S.Env.host.document,
         docElem = doc && doc.documentElement,

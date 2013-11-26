@@ -232,41 +232,42 @@ if (! _$jscoverage['/element-path.js']) {
   _$jscoverage['/element-path.js'].lineData[6] = 0;
   _$jscoverage['/element-path.js'].lineData[7] = 0;
   _$jscoverage['/element-path.js'].lineData[8] = 0;
-  _$jscoverage['/element-path.js'].lineData[10] = 0;
+  _$jscoverage['/element-path.js'].lineData[9] = 0;
   _$jscoverage['/element-path.js'].lineData[11] = 0;
   _$jscoverage['/element-path.js'].lineData[12] = 0;
   _$jscoverage['/element-path.js'].lineData[13] = 0;
   _$jscoverage['/element-path.js'].lineData[14] = 0;
-  _$jscoverage['/element-path.js'].lineData[17] = 0;
-  _$jscoverage['/element-path.js'].lineData[19] = 0;
-  _$jscoverage['/element-path.js'].lineData[22] = 0;
+  _$jscoverage['/element-path.js'].lineData[15] = 0;
+  _$jscoverage['/element-path.js'].lineData[18] = 0;
+  _$jscoverage['/element-path.js'].lineData[20] = 0;
   _$jscoverage['/element-path.js'].lineData[23] = 0;
   _$jscoverage['/element-path.js'].lineData[24] = 0;
   _$jscoverage['/element-path.js'].lineData[25] = 0;
-  _$jscoverage['/element-path.js'].lineData[28] = 0;
-  _$jscoverage['/element-path.js'].lineData[31] = 0;
-  _$jscoverage['/element-path.js'].lineData[34] = 0;
-  _$jscoverage['/element-path.js'].lineData[43] = 0;
+  _$jscoverage['/element-path.js'].lineData[26] = 0;
+  _$jscoverage['/element-path.js'].lineData[29] = 0;
+  _$jscoverage['/element-path.js'].lineData[32] = 0;
+  _$jscoverage['/element-path.js'].lineData[35] = 0;
   _$jscoverage['/element-path.js'].lineData[44] = 0;
-  _$jscoverage['/element-path.js'].lineData[46] = 0;
-  _$jscoverage['/element-path.js'].lineData[48] = 0;
+  _$jscoverage['/element-path.js'].lineData[45] = 0;
+  _$jscoverage['/element-path.js'].lineData[47] = 0;
   _$jscoverage['/element-path.js'].lineData[49] = 0;
-  _$jscoverage['/element-path.js'].lineData[51] = 0;
-  _$jscoverage['/element-path.js'].lineData[59] = 0;
+  _$jscoverage['/element-path.js'].lineData[50] = 0;
+  _$jscoverage['/element-path.js'].lineData[52] = 0;
   _$jscoverage['/element-path.js'].lineData[60] = 0;
   _$jscoverage['/element-path.js'].lineData[61] = 0;
   _$jscoverage['/element-path.js'].lineData[62] = 0;
   _$jscoverage['/element-path.js'].lineData[63] = 0;
   _$jscoverage['/element-path.js'].lineData[64] = 0;
   _$jscoverage['/element-path.js'].lineData[65] = 0;
-  _$jscoverage['/element-path.js'].lineData[69] = 0;
-  _$jscoverage['/element-path.js'].lineData[73] = 0;
-  _$jscoverage['/element-path.js'].lineData[77] = 0;
-  _$jscoverage['/element-path.js'].lineData[81] = 0;
-  _$jscoverage['/element-path.js'].lineData[83] = 0;
-  _$jscoverage['/element-path.js'].lineData[86] = 0;
+  _$jscoverage['/element-path.js'].lineData[66] = 0;
+  _$jscoverage['/element-path.js'].lineData[70] = 0;
+  _$jscoverage['/element-path.js'].lineData[74] = 0;
+  _$jscoverage['/element-path.js'].lineData[78] = 0;
+  _$jscoverage['/element-path.js'].lineData[82] = 0;
+  _$jscoverage['/element-path.js'].lineData[84] = 0;
   _$jscoverage['/element-path.js'].lineData[87] = 0;
-  _$jscoverage['/element-path.js'].lineData[92] = 0;
+  _$jscoverage['/element-path.js'].lineData[88] = 0;
+  _$jscoverage['/element-path.js'].lineData[93] = 0;
 }
 if (! _$jscoverage['/element-path.js'].functionData) {
   _$jscoverage['/element-path.js'].functionData = [];
@@ -286,134 +287,135 @@ if (! _$jscoverage['/element-path.js'].functionData) {
 }
 if (! _$jscoverage['/element-path.js'].branchData) {
   _$jscoverage['/element-path.js'].branchData = {};
-  _$jscoverage['/element-path.js'].branchData['43'] = [];
-  _$jscoverage['/element-path.js'].branchData['43'][1] = new BranchData();
-  _$jscoverage['/element-path.js'].branchData['48'] = [];
-  _$jscoverage['/element-path.js'].branchData['48'][1] = new BranchData();
-  _$jscoverage['/element-path.js'].branchData['51'] = [];
-  _$jscoverage['/element-path.js'].branchData['51'][1] = new BranchData();
+  _$jscoverage['/element-path.js'].branchData['44'] = [];
+  _$jscoverage['/element-path.js'].branchData['44'][1] = new BranchData();
+  _$jscoverage['/element-path.js'].branchData['49'] = [];
+  _$jscoverage['/element-path.js'].branchData['49'][1] = new BranchData();
+  _$jscoverage['/element-path.js'].branchData['52'] = [];
+  _$jscoverage['/element-path.js'].branchData['52'][1] = new BranchData();
 }
-_$jscoverage['/element-path.js'].branchData['51'][1].init(105, 59, 'element.attr("_ke_real_element_type") || element.nodeName()');
-function visit3_51_1(result) {
-  _$jscoverage['/element-path.js'].branchData['51'][1].ranCondition(result);
+_$jscoverage['/element-path.js'].branchData['52'][1].init(102, 59, 'element.attr("_ke_real_element_type") || element.nodeName()');
+function visit3_52_1(result) {
+  _$jscoverage['/element-path.js'].branchData['52'][1].ranCondition(result);
   return result;
-}_$jscoverage['/element-path.js'].branchData['48'][1].init(567, 19, 'i < elements.length');
-function visit2_48_1(result) {
-  _$jscoverage['/element-path.js'].branchData['48'][1].ranCondition(result);
+}_$jscoverage['/element-path.js'].branchData['49'][1].init(554, 19, 'i < elements.length');
+function visit2_49_1(result) {
+  _$jscoverage['/element-path.js'].branchData['49'][1].ranCondition(result);
   return result;
-}_$jscoverage['/element-path.js'].branchData['43'][1].init(378, 16, 'i < cache.length');
-function visit1_43_1(result) {
-  _$jscoverage['/element-path.js'].branchData['43'][1].ranCondition(result);
+}_$jscoverage['/element-path.js'].branchData['44'][1].init(370, 16, 'i < cache.length');
+function visit1_44_1(result) {
+  _$jscoverage['/element-path.js'].branchData['44'][1].ranCondition(result);
   return result;
 }_$jscoverage['/element-path.js'].lineData[6]++;
-KISSY.add("editor/plugin/element-path", function(S, Editor) {
+KISSY.add(function(S, require) {
   _$jscoverage['/element-path.js'].functionData[0]++;
   _$jscoverage['/element-path.js'].lineData[7]++;
-  var Node = S.Node;
+  var Editor = require('editor');
   _$jscoverage['/element-path.js'].lineData[8]++;
+  var Node = S.Node;
+  _$jscoverage['/element-path.js'].lineData[9]++;
   var CLASS = "editor-element-path";
-  _$jscoverage['/element-path.js'].lineData[10]++;
+  _$jscoverage['/element-path.js'].lineData[11]++;
   function ElementPaths(cfg) {
     _$jscoverage['/element-path.js'].functionData[1]++;
-    _$jscoverage['/element-path.js'].lineData[11]++;
-    var self = this;
     _$jscoverage['/element-path.js'].lineData[12]++;
-    self.cfg = cfg;
+    var self = this;
     _$jscoverage['/element-path.js'].lineData[13]++;
-    self._cache = [];
+    self.cfg = cfg;
     _$jscoverage['/element-path.js'].lineData[14]++;
+    self._cache = [];
+    _$jscoverage['/element-path.js'].lineData[15]++;
     self._init();
   }
-  _$jscoverage['/element-path.js'].lineData[17]++;
+  _$jscoverage['/element-path.js'].lineData[18]++;
   S.augment(ElementPaths, {
   _init: function() {
   _$jscoverage['/element-path.js'].functionData[2]++;
-  _$jscoverage['/element-path.js'].lineData[19]++;
+  _$jscoverage['/element-path.js'].lineData[20]++;
   var self = this, cfg = self.cfg, editor = cfg.editor;
-  _$jscoverage['/element-path.js'].lineData[22]++;
-  self.holder = new Node("<span>");
   _$jscoverage['/element-path.js'].lineData[23]++;
-  self.holder.appendTo(editor.get("statusBarEl"), undefined);
+  self.holder = new Node("<span>");
   _$jscoverage['/element-path.js'].lineData[24]++;
-  editor.on("selectionChange", self._selectionChange, self);
+  self.holder.appendTo(editor.get("statusBarEl"), undefined);
   _$jscoverage['/element-path.js'].lineData[25]++;
+  editor.on("selectionChange", self._selectionChange, self);
+  _$jscoverage['/element-path.js'].lineData[26]++;
   Editor.Utils.sourceDisable(editor, self);
 }, 
   disable: function() {
   _$jscoverage['/element-path.js'].functionData[3]++;
-  _$jscoverage['/element-path.js'].lineData[28]++;
+  _$jscoverage['/element-path.js'].lineData[29]++;
   this.holder.css("visibility", "hidden");
 }, 
   enable: function() {
   _$jscoverage['/element-path.js'].functionData[4]++;
-  _$jscoverage['/element-path.js'].lineData[31]++;
+  _$jscoverage['/element-path.js'].lineData[32]++;
   this.holder.css("visibility", "");
 }, 
   _selectionChange: function(ev) {
   _$jscoverage['/element-path.js'].functionData[5]++;
-  _$jscoverage['/element-path.js'].lineData[34]++;
+  _$jscoverage['/element-path.js'].lineData[35]++;
   var self = this, cfg = self.cfg, editor = cfg.editor, prefixCls = editor.get('prefixCls'), statusDom = self.holder, elementPath = ev.path, elements = elementPath.elements, element, i, cache = self._cache;
-  _$jscoverage['/element-path.js'].lineData[43]++;
-  for (i = 0; visit1_43_1(i < cache.length); i++) {
-    _$jscoverage['/element-path.js'].lineData[44]++;
+  _$jscoverage['/element-path.js'].lineData[44]++;
+  for (i = 0; visit1_44_1(i < cache.length); i++) {
+    _$jscoverage['/element-path.js'].lineData[45]++;
     cache[i].remove();
   }
-  _$jscoverage['/element-path.js'].lineData[46]++;
+  _$jscoverage['/element-path.js'].lineData[47]++;
   self._cache = [];
-  _$jscoverage['/element-path.js'].lineData[48]++;
-  for (i = 0; visit2_48_1(i < elements.length); i++) {
-    _$jscoverage['/element-path.js'].lineData[49]++;
+  _$jscoverage['/element-path.js'].lineData[49]++;
+  for (i = 0; visit2_49_1(i < elements.length); i++) {
+    _$jscoverage['/element-path.js'].lineData[50]++;
     element = elements[i];
-    _$jscoverage['/element-path.js'].lineData[51]++;
-    var type = visit3_51_1(element.attr("_ke_real_element_type") || element.nodeName()), a = new Node("<a " + "href='javascript(\"" + type + "\")' " + "class='" + prefixCls + CLASS + "'>" + type + "</a>");
-    _$jscoverage['/element-path.js'].lineData[59]++;
-    self._cache.push(a);
+    _$jscoverage['/element-path.js'].lineData[52]++;
+    var type = visit3_52_1(element.attr("_ke_real_element_type") || element.nodeName()), a = new Node("<a " + "href='javascript(\"" + type + "\")' " + "class='" + prefixCls + CLASS + "'>" + type + "</a>");
     _$jscoverage['/element-path.js'].lineData[60]++;
+    self._cache.push(a);
+    _$jscoverage['/element-path.js'].lineData[61]++;
     (function(element) {
   _$jscoverage['/element-path.js'].functionData[6]++;
-  _$jscoverage['/element-path.js'].lineData[61]++;
+  _$jscoverage['/element-path.js'].lineData[62]++;
   a.on("click", function(ev2) {
   _$jscoverage['/element-path.js'].functionData[7]++;
-  _$jscoverage['/element-path.js'].lineData[62]++;
-  ev2.halt();
   _$jscoverage['/element-path.js'].lineData[63]++;
-  editor.focus();
+  ev2.halt();
   _$jscoverage['/element-path.js'].lineData[64]++;
+  editor.focus();
+  _$jscoverage['/element-path.js'].lineData[65]++;
   setTimeout(function() {
   _$jscoverage['/element-path.js'].functionData[8]++;
-  _$jscoverage['/element-path.js'].lineData[65]++;
+  _$jscoverage['/element-path.js'].lineData[66]++;
   editor.getSelection().selectElement(element);
 }, 50);
 });
 })(element);
-    _$jscoverage['/element-path.js'].lineData[69]++;
+    _$jscoverage['/element-path.js'].lineData[70]++;
     statusDom.prepend(a);
   }
 }, 
   destroy: function() {
   _$jscoverage['/element-path.js'].functionData[9]++;
-  _$jscoverage['/element-path.js'].lineData[73]++;
+  _$jscoverage['/element-path.js'].lineData[74]++;
   this.holder.remove();
 }});
-  _$jscoverage['/element-path.js'].lineData[77]++;
+  _$jscoverage['/element-path.js'].lineData[78]++;
   function ElementPathPlugin() {
     _$jscoverage['/element-path.js'].functionData[10]++;
   }
-  _$jscoverage['/element-path.js'].lineData[81]++;
+  _$jscoverage['/element-path.js'].lineData[82]++;
   S.augment(ElementPathPlugin, {
   pluginRenderUI: function(editor) {
   _$jscoverage['/element-path.js'].functionData[11]++;
-  _$jscoverage['/element-path.js'].lineData[83]++;
+  _$jscoverage['/element-path.js'].lineData[84]++;
   var elemPath = new ElementPaths({
   editor: editor});
-  _$jscoverage['/element-path.js'].lineData[86]++;
+  _$jscoverage['/element-path.js'].lineData[87]++;
   editor.on("destroy", function() {
   _$jscoverage['/element-path.js'].functionData[12]++;
-  _$jscoverage['/element-path.js'].lineData[87]++;
+  _$jscoverage['/element-path.js'].lineData[88]++;
   elemPath.destroy();
 });
 }});
-  _$jscoverage['/element-path.js'].lineData[92]++;
+  _$jscoverage['/element-path.js'].lineData[93]++;
   return ElementPathPlugin;
-}, {
-  requires: ['editor']});
+});

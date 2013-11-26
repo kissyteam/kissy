@@ -230,6 +230,8 @@ if (! _$jscoverage['/ie.js']) {
   _$jscoverage['/ie.js'] = {};
   _$jscoverage['/ie.js'].lineData = [];
   _$jscoverage['/ie.js'].lineData[6] = 0;
+  _$jscoverage['/ie.js'].lineData[7] = 0;
+  _$jscoverage['/ie.js'].lineData[8] = 0;
 }
 if (! _$jscoverage['/ie.js'].functionData) {
   _$jscoverage['/ie.js'].functionData = [];
@@ -239,7 +241,10 @@ if (! _$jscoverage['/ie.js'].branchData) {
   _$jscoverage['/ie.js'].branchData = {};
 }
 _$jscoverage['/ie.js'].lineData[6]++;
-KISSY.add('event/dom/ie', function() {
+KISSY.add(function(S, require) {
   _$jscoverage['/ie.js'].functionData[0]++;
-}, {
-  requires: ['./ie/change', './ie/submit']});
+  _$jscoverage['/ie.js'].lineData[7]++;
+  require('./ie/change');
+  _$jscoverage['/ie.js'].lineData[8]++;
+  require('./ie/submit');
+});

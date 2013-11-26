@@ -7,9 +7,10 @@ KISSY.add(function (S,require) {
     var Dom = require('dom'),
         IO = require('./base'),
         Event = require('event/dom');
+    var   logger = S.getLogger('s/io');
     var doc = S.Env.host.document,
         OK_CODE = 200,
-        logger = S.getLogger('s/io'),
+
         ERROR_CODE = 500,
         BREATH_INTERVAL = 30,
         iframeConverter = S.clone(IO.getConfig().converters.text);

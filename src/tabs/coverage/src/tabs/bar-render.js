@@ -232,6 +232,7 @@ if (! _$jscoverage['/tabs/bar-render.js']) {
   _$jscoverage['/tabs/bar-render.js'].lineData[1] = 0;
   _$jscoverage['/tabs/bar-render.js'].lineData[2] = 0;
   _$jscoverage['/tabs/bar-render.js'].lineData[4] = 0;
+  _$jscoverage['/tabs/bar-render.js'].lineData[6] = 0;
 }
 if (! _$jscoverage['/tabs/bar-render.js'].functionData) {
   _$jscoverage['/tabs/bar-render.js'].functionData = [];
@@ -242,15 +243,16 @@ if (! _$jscoverage['/tabs/bar-render.js'].branchData) {
   _$jscoverage['/tabs/bar-render.js'].branchData = {};
 }
 _$jscoverage['/tabs/bar-render.js'].lineData[1]++;
-KISSY.add('tabs/bar-render', function(S, Toolbar) {
+KISSY.add(function(S, require) {
   _$jscoverage['/tabs/bar-render.js'].functionData[0]++;
   _$jscoverage['/tabs/bar-render.js'].lineData[2]++;
+  var Toolbar = require('toolbar');
+  _$jscoverage['/tabs/bar-render.js'].lineData[4]++;
   return Toolbar.getDefaultRender().extend({
   beforeCreateDom: function(renderData) {
   _$jscoverage['/tabs/bar-render.js'].functionData[1]++;
-  _$jscoverage['/tabs/bar-render.js'].lineData[4]++;
+  _$jscoverage['/tabs/bar-render.js'].lineData[6]++;
   renderData.elAttrs.role = 'tablist';
 }}, {
   name: 'TabsBarRender'});
-}, {
-  requires: ['toolbar']});
+});

@@ -230,11 +230,16 @@ if (! _$jscoverage['/menu.js']) {
   _$jscoverage['/menu.js'] = {};
   _$jscoverage['/menu.js'].lineData = [];
   _$jscoverage['/menu.js'].lineData[6] = 0;
+  _$jscoverage['/menu.js'].lineData[7] = 0;
+  _$jscoverage['/menu.js'].lineData[8] = 0;
+  _$jscoverage['/menu.js'].lineData[9] = 0;
+  _$jscoverage['/menu.js'].lineData[10] = 0;
   _$jscoverage['/menu.js'].lineData[11] = 0;
-  _$jscoverage['/menu.js'].lineData[12] = 0;
   _$jscoverage['/menu.js'].lineData[13] = 0;
   _$jscoverage['/menu.js'].lineData[14] = 0;
   _$jscoverage['/menu.js'].lineData[15] = 0;
+  _$jscoverage['/menu.js'].lineData[16] = 0;
+  _$jscoverage['/menu.js'].lineData[17] = 0;
 }
 if (! _$jscoverage['/menu.js'].functionData) {
   _$jscoverage['/menu.js'].functionData = [];
@@ -244,17 +249,26 @@ if (! _$jscoverage['/menu.js'].branchData) {
   _$jscoverage['/menu.js'].branchData = {};
 }
 _$jscoverage['/menu.js'].lineData[6]++;
-KISSY.add("menu", function(S, Menu, Item, CheckItem, SubMenu, PopupMenu) {
+KISSY.add(function(S, require) {
   _$jscoverage['/menu.js'].functionData[0]++;
+  _$jscoverage['/menu.js'].lineData[7]++;
+  var Menu = require('menu/control');
+  _$jscoverage['/menu.js'].lineData[8]++;
+  var Item = require('menu/menuitem');
+  _$jscoverage['/menu.js'].lineData[9]++;
+  var CheckItem = require('menu/check-menuitem');
+  _$jscoverage['/menu.js'].lineData[10]++;
+  var SubMenu = require('menu/submenu');
   _$jscoverage['/menu.js'].lineData[11]++;
-  Menu.Item = Item;
-  _$jscoverage['/menu.js'].lineData[12]++;
-  Menu.CheckItem = CheckItem;
+  var PopupMenu = require('menu/popupmenu');
   _$jscoverage['/menu.js'].lineData[13]++;
-  Menu.SubMenu = SubMenu;
+  Menu.Item = Item;
   _$jscoverage['/menu.js'].lineData[14]++;
-  Menu.PopupMenu = PopupMenu;
+  Menu.CheckItem = CheckItem;
   _$jscoverage['/menu.js'].lineData[15]++;
+  Menu.SubMenu = SubMenu;
+  _$jscoverage['/menu.js'].lineData[16]++;
+  Menu.PopupMenu = PopupMenu;
+  _$jscoverage['/menu.js'].lineData[17]++;
   return Menu;
-}, {
-  requires: ['menu/control', 'menu/menuitem', 'menu/check-menuitem', 'menu/submenu', 'menu/popupmenu']});
+});

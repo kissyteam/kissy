@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 19 12:02
+build time: Nov 27 00:37
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -214,10 +214,9 @@ KISSY.add("anim/timer/manager", [], function(S) {
     return flag === undefined
   }}
 });
-KISSY.add("anim/timer/fx", ["dom"], function(S) {
-  var module = this;
+KISSY.add("anim/timer/fx", ["dom"], function(S, require) {
   var logger = S.getLogger("s/aim/timer/fx");
-  var Dom = module.require("dom");
+  var Dom = require("dom");
   function load(self, cfg) {
     S.mix(self, cfg);
     self.pos = 0;
@@ -319,11 +318,11 @@ KISSY.add("anim/timer/fx", ["dom"], function(S) {
 KISSY.add("anim/timer/short-hand", [], function() {
   return{background:[], border:["borderBottomWidth", "borderLeftWidth", "borderRightWidth", "borderTopWidth"], borderBottom:["borderBottomWidth"], borderLeft:["borderLeftWidth"], borderTop:["borderTopWidth"], borderRight:["borderRightWidth"], font:["fontSize", "fontWeight"], margin:["marginBottom", "marginLeft", "marginRight", "marginTop"], padding:["paddingBottom", "paddingLeft", "paddingRight", "paddingTop"]}
 });
-KISSY.add("anim/timer/color", ["./fx", "./short-hand"], function(S) {
-  var module = this;
-  var Fx = module.require("./fx");
-  var SHORT_HANDS = module.require("./short-hand");
-  var HEX_BASE = 16, logger = S.getLogger("s/anim/timer/color"), floor = Math.floor, KEYWORDS = {black:[0, 0, 0], silver:[192, 192, 192], gray:[128, 128, 128], white:[255, 255, 255], maroon:[128, 0, 0], red:[255, 0, 0], purple:[128, 0, 128], fuchsia:[255, 0, 255], green:[0, 128, 0], lime:[0, 255, 0], olive:[128, 128, 0], yellow:[255, 255, 0], navy:[0, 0, 128], blue:[0, 0, 255], teal:[0, 128, 128], aqua:[0, 255, 255]}, re_RGB = /^rgb\(([0-9]+)\s*,\s*([0-9]+)\s*,\s*([0-9]+)\)$/i, re_RGBA = /^rgba\(([0-9]+)\s*,\s*([0-9]+)\s*,\s*([0-9]+),\s*([0-9]+)\)$/i, 
+KISSY.add("anim/timer/color", ["./fx", "./short-hand"], function(S, require) {
+  var Fx = require("./fx");
+  var SHORT_HANDS = require("./short-hand");
+  var logger = S.getLogger("s/anim/timer/color");
+  var HEX_BASE = 16, floor = Math.floor, KEYWORDS = {black:[0, 0, 0], silver:[192, 192, 192], gray:[128, 128, 128], white:[255, 255, 255], maroon:[128, 0, 0], red:[255, 0, 0], purple:[128, 0, 128], fuchsia:[255, 0, 255], green:[0, 128, 0], lime:[0, 255, 0], olive:[128, 128, 0], yellow:[255, 255, 0], navy:[0, 0, 128], blue:[0, 0, 255], teal:[0, 128, 128], aqua:[0, 255, 255]}, re_RGB = /^rgb\(([0-9]+)\s*,\s*([0-9]+)\s*,\s*([0-9]+)\)$/i, re_RGBA = /^rgba\(([0-9]+)\s*,\s*([0-9]+)\s*,\s*([0-9]+),\s*([0-9]+)\)$/i, 
   re_hex = /^#?([0-9A-F]{1,2})([0-9A-F]{1,2})([0-9A-F]{1,2})$/i, COLORS = ["backgroundColor", "borderBottomColor", "borderLeftColor", "borderRightColor", "borderTopColor", "color", "outlineColor"];
   SHORT_HANDS["background"].push("backgroundColor");
   SHORT_HANDS["borderColor"] = ["borderBottomColor", "borderLeftColor", "borderRightColor", "borderTopColor"];
@@ -388,10 +387,9 @@ KISSY.add("anim/timer/color", ["./fx", "./short-hand"], function(S) {
   Fx.FxTypes.color = ColorFx;
   return ColorFx
 });
-KISSY.add("anim/timer/transform", ["dom", "./fx"], function(S) {
-  var module = this;
-  var Dom = module.require("dom");
-  var Fx = module.require("./fx");
+KISSY.add("anim/timer/transform", ["dom", "./fx"], function(S, require) {
+  var Dom = require("dom");
+  var Fx = require("./fx");
   function toMatrixArray(matrix) {
     matrix = matrix.split(/,/);
     matrix = S.map(matrix, function(v) {
@@ -509,16 +507,15 @@ KISSY.add("anim/timer/transform", ["dom", "./fx"], function(S) {
   Fx.Factories.transform = TransformFx;
   return TransformFx
 });
-KISSY.add("anim/timer", ["dom", "./base", "./timer/easing", "./timer/manager", "./timer/fx", "./timer/short-hand", "./timer/color", "./timer/transform"], function(S) {
-  var module = this;
-  var Dom = module.require("dom");
-  var AnimBase = module.require("./base");
-  var Easing = module.require("./timer/easing");
-  var AM = module.require("./timer/manager");
-  var Fx = module.require("./timer/fx");
-  var SHORT_HANDS = module.require("./timer/short-hand");
-  module.require("./timer/color");
-  module.require("./timer/transform");
+KISSY.add("anim/timer", ["dom", "./base", "./timer/easing", "./timer/manager", "./timer/fx", "./timer/short-hand", "./timer/color", "./timer/transform"], function(S, require) {
+  var Dom = require("dom");
+  var AnimBase = require("./base");
+  var Easing = require("./timer/easing");
+  var AM = require("./timer/manager");
+  var Fx = require("./timer/fx");
+  var SHORT_HANDS = require("./timer/short-hand");
+  require("./timer/color");
+  require("./timer/transform");
   var camelCase = Dom._camelCase, NUMBER_REG = /^([+\-]=)?([\d+.\-]+)([a-z%]*)$/i;
   function Anim() {
     var self = this, to;

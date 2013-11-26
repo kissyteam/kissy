@@ -240,7 +240,7 @@ if (! _$jscoverage['/base/gesture.js'].branchData) {
   _$jscoverage['/base/gesture.js'].branchData = {};
 }
 _$jscoverage['/base/gesture.js'].lineData[6]++;
-KISSY.add('event/dom/base/gesture', function() {
+KISSY.add(function() {
   _$jscoverage['/base/gesture.js'].functionData[0]++;
   _$jscoverage['/base/gesture.js'].lineData[13]++;
   return {

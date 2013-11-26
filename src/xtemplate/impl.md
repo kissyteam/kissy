@@ -143,7 +143,7 @@ kison 支持在每个语法规则项中添加动作函数，通过工具在识�
 
 就可以生成模板解析函数模块，大致为：
 
-    KISSY.add('xtemplate/parser', function(){
+    KISSY.add(function(){
         function parse(code){
             // ...
         }
@@ -211,7 +211,7 @@ xtemplate 通过 **kissy-xtemplate** 命令支持将模板代码离线编译为�
 
 可得到 t.js
 
-    KISSY.add('tests/t',function(){
+    KISSY.add(function(){
         function render(data){
         }
         return render;

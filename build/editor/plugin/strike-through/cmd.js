@@ -1,7 +1,7 @@
 /*
-Copyright 2013, KISSY v1.40dev
+Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Oct 25 16:47
+build time: Nov 27 00:01
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -9,36 +9,12 @@ build time: Oct 25 16:47
  editor/plugin/strike-through/cmd
 */
 
-/**
- * @ignore
- * strike-through command
- * @author yiminghe@gmail.com
- */
-KISSY.add("editor/plugin/strike-through/cmd", function (S, Editor, Cmd) {
-
-    var STRIKE_STYLE = new Editor.Style({
-        element:'del',
-        overrides:[
-            {
-                element:'span',
-                attributes:{
-                    style:'text-decoration: line-through;'
-                }
-            },
-            {
-                element:'s'
-            },
-            {
-                element:'strike'
-            }
-        ]
-    });
-    return {
-        init:function (editor) {
-            Cmd.addButtonCmd(editor, "strikeThrough", STRIKE_STYLE);
-        }
-    }
-}, {
-    requires:['editor', '../font/cmd']
+KISSY.add("editor/plugin/strike-through/cmd", ["editor", "../font/cmd"], function(S, require) {
+  var Editor = require("editor");
+  var Cmd = require("../font/cmd");
+  var STRIKE_STYLE = new Editor.Style({element:"del", overrides:[{element:"span", attributes:{style:"text-decoration: line-through;"}}, {element:"s"}, {element:"strike"}]});
+  return{init:function(editor) {
+    Cmd.addButtonCmd(editor, "strikeThrough", STRIKE_STYLE)
+  }}
 });
 

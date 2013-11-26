@@ -8,9 +8,10 @@ KISSY.add(function (S,require) {
         Utils=require('./base/utils'),
         Q=require('./base/queue'),
         Promise=require('promise');
+    var   logger = S.getLogger('s/anim');
     var NodeType = Dom.NodeType,
         noop = S.noop,
-        logger = S.getLogger('s/anim'),
+
         specialVals = {
             toggle: 1,
             hide: 1,

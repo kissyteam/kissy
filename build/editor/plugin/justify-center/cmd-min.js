@@ -1,6 +1,6 @@
 /*
-Copyright 2013, KISSY v1.40dev
+Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Oct 25 16:44
+build time: Nov 27 00:43
 */
-KISSY.add("editor/plugin/justify-center/cmd",function(c,a){return{init:function(b){a.addCommand(b,"justifyCenter","center")}}},{requires:["../justify-cmd"]});
+KISSY.add("editor/plugin/justify-center/cmd",["../justify-cmd"],function(c,a){var b=a("../justify-cmd");return{init:function(a){b.addCommand(a,"justifyCenter","center")}}});

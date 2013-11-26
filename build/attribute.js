@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 20 14:34
+build time: Nov 27 00:37
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -9,10 +9,9 @@ build time: Nov 20 14:34
  attribute
 */
 
-KISSY.add("attribute", ["event/custom"], function(S, undefined) {
-  var module = this;
+KISSY.add("attribute", ["event/custom"], function(S, require, exports, module) {
   var RE_DASH = /(?:^|-)([a-z])/ig;
-  var CustomEvent = module.require("event/custom");
+  var CustomEvent = require("event/custom");
   module.exports = Attribute;
   var bind = S.bind;
   function replaceToUpper() {
@@ -206,7 +205,7 @@ KISSY.add("attribute", ["event/custom"], function(S, undefined) {
       SubClass = px.constructor
     }else {
       if("@DEBUG@") {
-        eval("SubClass = function " + CamelCase(name) + "(){ " + "this.callSuper.apply(this, arguments);}")
+        eval("SubClass = function " + CamelCase(name) + "(){ " + "this.callSuper.apply(this, arguments);" + "}")
       }else {
         SubClass = function() {
           this.callSuper.apply(this, arguments)

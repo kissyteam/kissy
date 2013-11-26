@@ -113,7 +113,8 @@ KISSY.add(function (S, require) {
          */
         handleClickInternal: function () {
             var self = this;
-            self.callSuper();
+            // does not fire click from menubutton
+            // self.callSuper(e);
             self.set("collapsed", !self.get("collapsed"));
         },
 

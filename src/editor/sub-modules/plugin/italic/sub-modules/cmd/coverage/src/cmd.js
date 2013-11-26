@@ -230,9 +230,11 @@ if (! _$jscoverage['/cmd.js']) {
   _$jscoverage['/cmd.js'] = {};
   _$jscoverage['/cmd.js'].lineData = [];
   _$jscoverage['/cmd.js'].lineData[6] = 0;
+  _$jscoverage['/cmd.js'].lineData[7] = 0;
   _$jscoverage['/cmd.js'].lineData[8] = 0;
-  _$jscoverage['/cmd.js'].lineData[22] = 0;
+  _$jscoverage['/cmd.js'].lineData[10] = 0;
   _$jscoverage['/cmd.js'].lineData[24] = 0;
+  _$jscoverage['/cmd.js'].lineData[26] = 0;
 }
 if (! _$jscoverage['/cmd.js'].functionData) {
   _$jscoverage['/cmd.js'].functionData = [];
@@ -243,9 +245,13 @@ if (! _$jscoverage['/cmd.js'].branchData) {
   _$jscoverage['/cmd.js'].branchData = {};
 }
 _$jscoverage['/cmd.js'].lineData[6]++;
-KISSY.add("editor/plugin/italic/cmd", function(S, Editor, Cmd) {
+KISSY.add(function(S, require) {
   _$jscoverage['/cmd.js'].functionData[0]++;
+  _$jscoverage['/cmd.js'].lineData[7]++;
+  var Editor = require('editor');
   _$jscoverage['/cmd.js'].lineData[8]++;
+  var Cmd = require('../font/cmd');
+  _$jscoverage['/cmd.js'].lineData[10]++;
   var ITALIC_STYLE = new Editor.Style({
   element: 'em', 
   overrides: [{
@@ -253,12 +259,11 @@ KISSY.add("editor/plugin/italic/cmd", function(S, Editor, Cmd) {
   element: 'span', 
   attributes: {
   style: 'font-style: italic;'}}]});
-  _$jscoverage['/cmd.js'].lineData[22]++;
+  _$jscoverage['/cmd.js'].lineData[24]++;
   return {
   init: function(editor) {
   _$jscoverage['/cmd.js'].functionData[1]++;
-  _$jscoverage['/cmd.js'].lineData[24]++;
+  _$jscoverage['/cmd.js'].lineData[26]++;
   Cmd.addButtonCmd(editor, "italic", ITALIC_STYLE);
 }};
-}, {
-  requires: ['editor', '../font/cmd']});
+});

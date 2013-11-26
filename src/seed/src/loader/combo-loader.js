@@ -54,9 +54,9 @@
             S.Config.loadModsFn(rs, config);
         });
     }
-
+var  logger = S.getLogger('s/loader');
     var Loader = S.Loader,
-        logger = S.getLogger('s/loader'),
+
         Status = Loader.Status,
         Utils = Loader.Utils,
         getHash = Utils.getHash,

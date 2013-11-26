@@ -8,10 +8,11 @@
     // IE doesn't include non-breaking-space (0xa0) in their \s character
     // class (as required by section 7.2 of the ECMAScript spec), we explicitly
     // include it in the regexp to enforce consistent cross-browser behavior.
+   var   logger= S.getLogger('s/lang');
     var SEP = '&',
         EMPTY = '',
         EQ = '=',
-        logger= S.getLogger('s/lang'),
+
         TRUE = true,
     // FALSE = false,
         HEX_BASE = 16,

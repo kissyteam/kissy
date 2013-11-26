@@ -122,14 +122,6 @@ public class Module {
         return getProp.getNext();
     }
 
-    public String getModuleNameFromNode() {
-        Node moduleNameNode = this.getModuleNameNode();
-        if (moduleNameNode != null && moduleNameNode.getType() == Token.STRING) {
-            return moduleNameNode.getString();
-        }
-        return null;
-    }
-
     public boolean isValidFormat() {
         Node t,
                 root = this.getAstRoot();

@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 21 14:56
+build time: Nov 26 20:53
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -20,9 +20,8 @@ build time: Nov 21 14:56
  io
 */
 
-KISSY.add("io/form-serializer", ["dom"], function(S) {
-  var module = this;
-  var Dom = module.require("dom");
+KISSY.add("io/form-serializer", ["dom"], function(S, require) {
+  var Dom = require("dom");
   var rselectTextarea = /^(?:select|textarea)/i, rCRLF = /\r?\n/g, FormSerializer, rinput = /^(?:color|date|datetime|email|hidden|month|number|password|range|search|tel|text|time|url|week)$/i;
   function normalizeCRLF(v) {
     return v.replace(rCRLF, "\r\n")
@@ -61,8 +60,8 @@ KISSY.add("io/form-serializer", ["dom"], function(S) {
     return data
   }}
 });
-KISSY.add("io/base", ["event/custom", "promise"], function(S) {
-  var module = this, undefined = undefined, CustomEvent = module.require("event/custom"), Promise = module.require("promise");
+KISSY.add("io/base", ["event/custom", "promise"], function(S, require) {
+  var undefined = undefined, CustomEvent = require("event/custom"), Promise = require("promise");
   var rlocalProtocol = /^(?:about|app|app\-storage|.+\-extension|file|widget)$/, rspace = /\s+/, mirror = function(s) {
     return s
   }, rnoContent = /^(?:GET|HEAD)$/, win = S.Env.host, location = win.location || {}, simulatedLocation = new S.Uri(location.href), isLocal = simulatedLocation && rlocalProtocol.test(simulatedLocation.getScheme()), transports = {}, defaultConfig = {type:"GET", contentType:"application/x-www-form-urlencoded; charset=UTF-8", async:true, serializeArray:true, processData:true, accepts:{xml:"application/xml, text/xml", html:"text/html", text:"text/plain", json:"application/json, text/javascript", "*":"*/*"}, 
@@ -158,9 +157,9 @@ KISSY.add("io/base", ["event/custom", "promise"], function(S) {
   }});
   return IO
 });
-KISSY.add("io/xhr-transport-base", ["./base"], function(S) {
-  var module = this, IO = module.require("./base");
-  var OK_CODE = 200, win = S.Env.host, logger = S.getLogger("s/io"), _XDomainRequest = S.UA.ie > 7 && win["XDomainRequest"], NO_CONTENT_CODE = 204, NOT_FOUND_CODE = 404, NO_CONTENT_CODE2 = 1223, XhrTransportBase = {proto:{}}, lastModifiedCached = {}, eTagCached = {};
+KISSY.add("io/xhr-transport-base", ["./base"], function(S, require) {
+  var IO = require("./base");
+  var OK_CODE = 200, win = S.Env.host, logger = S.getLogger("s/io"), _XDomainRequest = S.UA.ieMode > 7 && win["XDomainRequest"], NO_CONTENT_CODE = 204, NOT_FOUND_CODE = 404, NO_CONTENT_CODE2 = 1223, XhrTransportBase = {proto:{}}, lastModifiedCached = {}, eTagCached = {};
   IO.__lastModifiedCached = lastModifiedCached;
   IO.__eTagCached = eTagCached;
   function createStandardXHR(_, refWin) {
@@ -210,16 +209,16 @@ KISSY.add("io/xhr-transport-base", ["./base"], function(S) {
         requestHeaders["If-None-Match"] = cacheValue
       }
     }
+    if(username = c["username"]) {
+      nativeXhr.open(type, url, async, username, c.password)
+    }else {
+      nativeXhr.open(type, url, async)
+    }
     xhrFields = c["xhrFields"] || {};
     if("withCredentials" in xhrFields) {
       if(!supportCORS) {
         delete xhrFields.withCredentials
       }
-    }
-    if(username = c["username"]) {
-      nativeXhr.open(type, url, async, username, c.password)
-    }else {
-      nativeXhr.open(type, url, async)
     }
     for(i in xhrFields) {
       try {
@@ -357,8 +356,8 @@ KISSY.add("io/xhr-transport-base", ["./base"], function(S) {
   }});
   return XhrTransportBase
 });
-KISSY.add("io/xdr-flash-transport", ["./base", "dom"], function(S) {
-  var module = this, IO = module.require("./base"), Dom = module.require("dom");
+KISSY.add("io/xdr-flash-transport", ["./base", "dom"], function(S, require) {
+  var IO = require("./base"), Dom = require("dom");
   var maps = {}, logger = S.getLogger("s/io"), ID = "io_swf", flash, doc = S.Env.host.document, init = false;
   function _swf(uri, _, uid) {
     if(init) {
@@ -429,8 +428,8 @@ KISSY.add("io/xdr-flash-transport", ["./base", "dom"], function(S) {
   };
   return XdrFlashTransport
 });
-KISSY.add("io/sub-domain-transport", ["event/dom", "dom", "./xhr-transport-base"], function(S) {
-  var module = this, Event = module.require("event/dom"), Dom = module.require("dom"), XhrTransportBase = module.require("./xhr-transport-base");
+KISSY.add("io/sub-domain-transport", ["event/dom", "dom", "./xhr-transport-base"], function(S, require) {
+  var Event = require("event/dom"), Dom = require("dom"), XhrTransportBase = require("./xhr-transport-base");
   var PROXY_PAGE = "/sub_domain_proxy.html", logger = S.getLogger("s/io"), doc = S.Env.host.document, iframeMap = {};
   function SubDomainTransport(io) {
     var self = this, c = io.config;
@@ -476,9 +475,9 @@ KISSY.add("io/sub-domain-transport", ["event/dom", "dom", "./xhr-transport-base"
     self.send()
   }
   return SubDomainTransport
-}, {requires:["./xhr-transport-base", "event", "dom"]});
-KISSY.add("io/xhr-transport", ["./base", "./xhr-transport-base", "./xdr-flash-transport", "./sub-domain-transport"], function(S) {
-  var module = this, IO = module.require("./base"), XhrTransportBase = module.require("./xhr-transport-base"), XdrFlashTransport = module.require("./xdr-flash-transport"), SubDomainTransport = module.require("./sub-domain-transport");
+});
+KISSY.add("io/xhr-transport", ["./base", "./xhr-transport-base", "./xdr-flash-transport", "./sub-domain-transport"], function(S, require) {
+  var IO = require("./base"), XhrTransportBase = require("./xhr-transport-base"), XdrFlashTransport = require("./xdr-flash-transport"), SubDomainTransport = require("./sub-domain-transport");
   var win = S.Env.host, doc = win.document, logger = S.getLogger("s/io"), _XDomainRequest = XhrTransportBase._XDomainRequest;
   function isSubDomain(hostname) {
     return doc.domain && S.endsWith(hostname, doc.domain)
@@ -506,9 +505,9 @@ KISSY.add("io/xhr-transport", ["./base", "./xhr-transport-base", "./xdr-flash-tr
   }});
   IO["setupTransport"]("*", XhrTransport);
   return IO
-}, {requires:["./base", "./xhr-transport-base", "./sub-domain-transport", "./xdr-flash-transport"]});
-KISSY.add("io/script-transport", ["./base"], function(S) {
-  var module = this, undefined = undefined, IO = module.require("./base");
+});
+KISSY.add("io/script-transport", ["./base"], function(S, require) {
+  var undefined = undefined, IO = require("./base");
   var win = S.Env.host, doc = win.document, logger = S.getLogger("s/io"), OK_CODE = 200, ERROR_CODE = 500;
   IO.setupConfig({accepts:{script:"text/javascript, " + "application/javascript, " + "application/ecmascript, " + "application/x-ecmascript"}, contents:{script:/javascript|ecmascript/}, converters:{text:{script:function(text) {
     S.globalEval(text);
@@ -564,8 +563,8 @@ KISSY.add("io/script-transport", ["./base"], function(S) {
   IO["setupTransport"]("script", ScriptTransport);
   return IO
 });
-KISSY.add("io/jsonp", ["./base"], function(S) {
-  var module = this, IO = module.require("./base");
+KISSY.add("io/jsonp", ["./base"], function(S, require) {
+  var IO = require("./base");
   var win = S.Env.host;
   IO.setupConfig({jsonp:"callback", jsonpCallback:function() {
     return S.guid("jsonp")
@@ -610,11 +609,10 @@ KISSY.add("io/jsonp", ["./base"], function(S) {
   });
   return IO
 });
-KISSY.add("io/form", ["./base", "dom", "./form-serializer"], function(S) {
-  var module = this;
-  var IO = module.require("./base");
-  var Dom = module.require("dom");
-  var FormSerializer = module.require("./form-serializer");
+KISSY.add("io/form", ["./base", "dom", "./form-serializer"], function(S, require) {
+  var IO = require("./base");
+  var Dom = require("dom");
+  var FormSerializer = require("./form-serializer");
   var win = S.Env.host, slice = Array.prototype.slice, FormData = win["FormData"];
   IO.on("start", function(e) {
     var io = e.io, form, d, dataType, formParam, data, tmpForm, c = io.config;
@@ -666,9 +664,8 @@ KISSY.add("io/form", ["./base", "dom", "./form-serializer"], function(S) {
   });
   return IO
 });
-KISSY.add("io/iframe-transport", ["dom", "./base", "event/dom"], function(S) {
-  var module = this;
-  var Dom = module.require("dom"), IO = module.require("./base"), Event = module.require("event/dom");
+KISSY.add("io/iframe-transport", ["dom", "./base", "event/dom"], function(S, require) {
+  var Dom = require("dom"), IO = require("./base"), Event = require("event/dom");
   var doc = S.Env.host.document, OK_CODE = 200, logger = S.getLogger("s/io"), ERROR_CODE = 500, BREATH_INTERVAL = 30, iframeConverter = S.clone(IO.getConfig().converters.text);
   iframeConverter.json = function(str) {
     return S.parseJson(S.unEscapeHtml(str))
@@ -780,8 +777,8 @@ KISSY.add("io/iframe-transport", ["dom", "./base", "event/dom"], function(S) {
   IO["setupTransport"]("iframe", IframeTransport);
   return IO
 });
-KISSY.add("io/methods", ["promise", "./base"], function(S) {
-  var module = this, Promise = module.require("promise"), IO = module.require("./base");
+KISSY.add("io/methods", ["promise", "./base"], function(S, require) {
+  var Promise = require("promise"), IO = require("./base");
   var OK_CODE = 200, logger = S.getLogger("s/logger"), MULTIPLE_CHOICES = 300, NOT_MODIFIED = 304, rheaders = /^(.*?):[ \t]*([^\r\n]*)\r?$/mg;
   function handleResponseData(io) {
     var text = io.responseText, xml = io.responseXML, c = io.config, converts = c.converters, type, contentType, responseData, contents = c.contents, dataType = c.dataType;
@@ -846,11 +843,12 @@ KISSY.add("io/methods", ["promise", "./base"], function(S) {
     return self.state === 2 ? self.responseHeadersString : null
   }, getResponseHeader:function(name) {
     var match, self = this, responseHeaders;
+    name = name.toLowerCase();
     if(self.state === 2) {
       if(!(responseHeaders = self.responseHeaders)) {
         responseHeaders = self.responseHeaders = {};
         while(match = rheaders.exec(self.responseHeadersString)) {
-          responseHeaders[match[1]] = match[2]
+          responseHeaders[match[1].toLowerCase()] = match[2]
         }
       }
       match = responseHeaders[name]
@@ -928,15 +926,15 @@ KISSY.add("io/methods", ["promise", "./base"], function(S) {
     return url + (originalQuery ? (uri.query.has() ? "&" : "?") + originalQuery : originalQuery)
   }})
 });
-KISSY.add("io", ["io/form-serializer", "io/base", "io/xhr-transport", "io/script-transport", "io/jsonp", "io/form", "io/iframe-transport", "io/methods"], function(S) {
+KISSY.add("io", ["io/form-serializer", "io/base", "io/xhr-transport", "io/script-transport", "io/jsonp", "io/form", "io/iframe-transport", "io/methods"], function(S, require) {
   var undefined = undefined;
-  var module = this, serializer = module.require("io/form-serializer"), IO = module.require("io/base");
-  module.require("io/xhr-transport");
-  module.require("io/script-transport");
-  module.require("io/jsonp");
-  module.require("io/form");
-  module.require("io/iframe-transport");
-  module.require("io/methods");
+  var serializer = require("io/form-serializer"), IO = require("io/base");
+  require("io/xhr-transport");
+  require("io/script-transport");
+  require("io/jsonp");
+  require("io/form");
+  require("io/iframe-transport");
+  require("io/methods");
   function get(url, data, callback, dataType, type) {
     if(typeof data === "function") {
       dataType = callback;

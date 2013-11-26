@@ -240,14 +240,13 @@ if (! _$jscoverage['/mvc.js'].branchData) {
   _$jscoverage['/mvc.js'].branchData = {};
 }
 _$jscoverage['/mvc.js'].lineData[6]++;
-KISSY.add("mvc", function(S, Model, Collection, View, Router, sync) {
+KISSY.add(function(S, require) {
   _$jscoverage['/mvc.js'].functionData[0]++;
   _$jscoverage['/mvc.js'].lineData[7]++;
   return {
-  sync: sync, 
-  Model: Model, 
-  View: View, 
-  Collection: Collection, 
-  Router: Router};
-}, {
-  requires: ["mvc/model", "mvc/collection", "mvc/view", "mvc/router", "mvc/sync"]});
+  sync: require('mvc/sync'), 
+  Model: require('mvc/model'), 
+  View: require('mvc/view'), 
+  Collection: require('mvc/collection'), 
+  Router: require('mvc/router')};
+});

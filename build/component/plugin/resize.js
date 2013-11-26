@@ -1,7 +1,7 @@
 /*
-Copyright 2013, KISSY v1.40dev
+Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Sep 17 22:58
+build time: Nov 27 00:38
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -9,53 +9,20 @@ build time: Sep 17 22:58
  component/plugin/resize
 */
 
-/**
- * @ignore
- * resize plugin for kissy component
- * @author yiminghe@gmail.com
- */
-KISSY.add('component/plugin/resize', function (S, Resize) {
-
-    /**
-     * resize plugin for kissy component
-     *
-     *      @example
-     *      var o =new Overlay.Dialog({
-     *          plugins:[
-     *              new ResizePlugin({
-     *                  handles: ['t','tr']
-     *              })
-     *          ]
-     *      })
-     *      // or
-     *      o.plug(new ResizePlugin({
-     *          handles: ['t','tr']
-     *      });
-     *
-     *
-     * @class KISSY.Component.Plugin.Resize
-     * @extends KISSY.Resizable
-     */
-    return Resize.extend({
-        pluginBindUI: function (component) {
-            var $el = component.$el,
-                self = this;
-            self.set('node', $el);
-            self.set('prefixCls',component.get('prefixCls'));
-            // sync
-            self.on('resizeEnd', function () {
-                var offset = $el.offset();
-                component.setInternal('xy', [offset.left, offset.top]);
-                component.setInternal('width', $el.width());
-                component.setInternal('height', $el.height());
-            });
-        },
-        pluginDestructor: function () {
-            this.destroy();
-        }
-    });
-
-}, {
-    requires: ['resizable']
+KISSY.add("component/plugin/resize", ["resizable"], function(S, require) {
+  var Resizable = require("resizable");
+  return Resizable.extend({pluginBindUI:function(component) {
+    var $el = component.$el, self = this;
+    self.set("node", $el);
+    self.set("prefixCls", component.get("prefixCls"));
+    self.on("resizeEnd", function() {
+      var offset = $el.offset();
+      component.setInternal("xy", [offset.left, offset.top]);
+      component.setInternal("width", $el.width());
+      component.setInternal("height", $el.height())
+    })
+  }, pluginDestructor:function() {
+    this.destroy()
+  }})
 });
 

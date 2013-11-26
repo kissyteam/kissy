@@ -231,6 +231,7 @@ if (! _$jscoverage['/preview.js']) {
   _$jscoverage['/preview.js'].lineData = [];
   _$jscoverage['/preview.js'].lineData[6] = 0;
   _$jscoverage['/preview.js'].lineData[7] = 0;
+  _$jscoverage['/preview.js'].lineData[8] = 0;
   _$jscoverage['/preview.js'].lineData[9] = 0;
   _$jscoverage['/preview.js'].lineData[12] = 0;
   _$jscoverage['/preview.js'].lineData[14] = 0;
@@ -257,10 +258,12 @@ if (! _$jscoverage['/preview.js'].branchData) {
   _$jscoverage['/preview.js'].branchData = {};
 }
 _$jscoverage['/preview.js'].lineData[6]++;
-KISSY.add("editor/plugin/preview", function(S) {
+KISSY.add(function(S, require) {
   _$jscoverage['/preview.js'].functionData[0]++;
   _$jscoverage['/preview.js'].lineData[7]++;
   var win = window;
+  _$jscoverage['/preview.js'].lineData[8]++;
+  require('./button');
   _$jscoverage['/preview.js'].lineData[9]++;
   function Preview() {
     _$jscoverage['/preview.js'].functionData[1]++;

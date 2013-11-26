@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 19 12:02
+build time: Nov 27 00:37
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -11,8 +11,8 @@ build time: Nov 19 12:02
  anim/base
 */
 
-KISSY.add("anim/base/queue", ["dom"], function(S) {
-  var module = this, Dom = module.require("dom");
+KISSY.add("anim/base/queue", ["dom"], function(S, require) {
+  var Dom = require("dom");
   var queueCollectionKey = S.guid("ks-queue-" + S.now() + "-"), queueKey = S.guid("ks-queue-" + S.now() + "-"), Q;
   function getQueue(node, name, readOnly) {
     name = name || queueKey;
@@ -66,8 +66,8 @@ KISSY.add("anim/base/queue", ["dom"], function(S) {
     return qu
   }}
 });
-KISSY.add("anim/base/utils", ["./queue", "dom"], function(S) {
-  var module = this, undefined = undefined, Q = module.require("./queue"), Dom = module.require("dom");
+KISSY.add("anim/base/utils", ["./queue", "dom"], function(S, require) {
+  var undefined = undefined, Q = require("./queue"), Dom = require("dom");
   var runningKey = S.guid("ks-anim-unqueued-" + S.now() + "-");
   function saveRunningAnim(anim) {
     var node = anim.node, allRunning = Dom.data(node, runningKey);
@@ -148,9 +148,10 @@ KISSY.add("anim/base/utils", ["./queue", "dom"], function(S) {
     })
   }}
 });
-KISSY.add("anim/base", ["dom", "./base/utils", "./base/queue", "promise"], function(S) {
-  var module = this, Dom = module.require("dom"), Utils = module.require("./base/utils"), Q = module.require("./base/queue"), Promise = module.require("promise");
-  var NodeType = Dom.NodeType, noop = S.noop, logger = S.getLogger("s/anim"), specialVals = {toggle:1, hide:1, show:1};
+KISSY.add("anim/base", ["dom", "./base/utils", "./base/queue", "promise"], function(S, require) {
+  var Dom = require("dom"), Utils = require("./base/utils"), Q = require("./base/queue"), Promise = require("promise");
+  var logger = S.getLogger("s/anim");
+  var NodeType = Dom.NodeType, noop = S.noop, specialVals = {toggle:1, hide:1, show:1};
   function AnimBase(config) {
     var self = this;
     AnimBase.superclass.constructor.call(self);

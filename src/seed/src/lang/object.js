@@ -5,14 +5,14 @@
  *
  */
 (function (S, undefined) {
-
+var  logger = S.getLogger('s/lang');
     var MIX_CIRCULAR_DETECTION = '__MIX_CIRCULAR',
         STAMP_MARKER = '__~ks_stamped',
         host = this,
         TRUE = true,
         EMPTY = '',
         Obj = Object,
-        logger = S.getLogger('s/lang'),
+
         ObjectCreate = Obj.create,
     // error in native ie678, not in simulated ie9
         hasEnumBug = !({toString: 1}['propertyIsEnumerable']('toString')),

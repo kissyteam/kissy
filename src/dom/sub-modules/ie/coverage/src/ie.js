@@ -231,6 +231,12 @@ if (! _$jscoverage['/ie.js']) {
   _$jscoverage['/ie.js'].lineData = [];
   _$jscoverage['/ie.js'].lineData[6] = 0;
   _$jscoverage['/ie.js'].lineData[7] = 0;
+  _$jscoverage['/ie.js'].lineData[8] = 0;
+  _$jscoverage['/ie.js'].lineData[9] = 0;
+  _$jscoverage['/ie.js'].lineData[10] = 0;
+  _$jscoverage['/ie.js'].lineData[11] = 0;
+  _$jscoverage['/ie.js'].lineData[12] = 0;
+  _$jscoverage['/ie.js'].lineData[13] = 0;
 }
 if (! _$jscoverage['/ie.js'].functionData) {
   _$jscoverage['/ie.js'].functionData = [];
@@ -240,9 +246,20 @@ if (! _$jscoverage['/ie.js'].branchData) {
   _$jscoverage['/ie.js'].branchData = {};
 }
 _$jscoverage['/ie.js'].lineData[6]++;
-KISSY.add('dom/ie', function(S, Dom) {
+KISSY.add(function(S, require) {
   _$jscoverage['/ie.js'].functionData[0]++;
   _$jscoverage['/ie.js'].lineData[7]++;
-  return Dom;
-}, {
-  requires: ['./ie/attr', './ie/create', './ie/insertion', './ie/style', './ie/traversal', './ie/transform', './ie/input-selection']});
+  require('./ie/create');
+  _$jscoverage['/ie.js'].lineData[8]++;
+  require('./ie/insertion');
+  _$jscoverage['/ie.js'].lineData[9]++;
+  require('./ie/style');
+  _$jscoverage['/ie.js'].lineData[10]++;
+  require('./ie/traversal');
+  _$jscoverage['/ie.js'].lineData[11]++;
+  require('./ie/transform');
+  _$jscoverage['/ie.js'].lineData[12]++;
+  require('./ie/input-selection');
+  _$jscoverage['/ie.js'].lineData[13]++;
+  return require('./ie/attr');
+});

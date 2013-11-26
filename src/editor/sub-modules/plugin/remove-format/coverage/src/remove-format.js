@@ -231,11 +231,14 @@ if (! _$jscoverage['/remove-format.js']) {
   _$jscoverage['/remove-format.js'].lineData = [];
   _$jscoverage['/remove-format.js'].lineData[6] = 0;
   _$jscoverage['/remove-format.js'].lineData[7] = 0;
-  _$jscoverage['/remove-format.js'].lineData[10] = 0;
-  _$jscoverage['/remove-format.js'].lineData[12] = 0;
-  _$jscoverage['/remove-format.js'].lineData[13] = 0;
+  _$jscoverage['/remove-format.js'].lineData[8] = 0;
+  _$jscoverage['/remove-format.js'].lineData[9] = 0;
+  _$jscoverage['/remove-format.js'].lineData[11] = 0;
+  _$jscoverage['/remove-format.js'].lineData[14] = 0;
+  _$jscoverage['/remove-format.js'].lineData[16] = 0;
   _$jscoverage['/remove-format.js'].lineData[17] = 0;
-  _$jscoverage['/remove-format.js'].lineData[25] = 0;
+  _$jscoverage['/remove-format.js'].lineData[21] = 0;
+  _$jscoverage['/remove-format.js'].lineData[29] = 0;
 }
 if (! _$jscoverage['/remove-format.js'].functionData) {
   _$jscoverage['/remove-format.js'].functionData = [];
@@ -248,30 +251,35 @@ if (! _$jscoverage['/remove-format.js'].branchData) {
   _$jscoverage['/remove-format.js'].branchData = {};
 }
 _$jscoverage['/remove-format.js'].lineData[6]++;
-KISSY.add("editor/plugin/remove-format", function(S, Editor, formatCmd) {
+KISSY.add(function(S, require) {
   _$jscoverage['/remove-format.js'].functionData[0]++;
   _$jscoverage['/remove-format.js'].lineData[7]++;
+  var Editor = require('editor');
+  _$jscoverage['/remove-format.js'].lineData[8]++;
+  require('./button');
+  _$jscoverage['/remove-format.js'].lineData[9]++;
+  var formatCmd = require('./remove-format/cmd');
+  _$jscoverage['/remove-format.js'].lineData[11]++;
   function removeFormat() {
     _$jscoverage['/remove-format.js'].functionData[1]++;
   }
-  _$jscoverage['/remove-format.js'].lineData[10]++;
+  _$jscoverage['/remove-format.js'].lineData[14]++;
   S.augment(removeFormat, {
   pluginRenderUI: function(editor) {
   _$jscoverage['/remove-format.js'].functionData[2]++;
-  _$jscoverage['/remove-format.js'].lineData[12]++;
+  _$jscoverage['/remove-format.js'].lineData[16]++;
   formatCmd.init(editor);
-  _$jscoverage['/remove-format.js'].lineData[13]++;
+  _$jscoverage['/remove-format.js'].lineData[17]++;
   editor.addButton("removeFormat", {
   tooltip: "\u6e05\u9664\u683c\u5f0f", 
   listeners: {
   click: function() {
   _$jscoverage['/remove-format.js'].functionData[3]++;
-  _$jscoverage['/remove-format.js'].lineData[17]++;
+  _$jscoverage['/remove-format.js'].lineData[21]++;
   editor.execCommand("removeFormat");
 }}, 
   mode: Editor.Mode.WYSIWYG_MODE});
 }});
-  _$jscoverage['/remove-format.js'].lineData[25]++;
+  _$jscoverage['/remove-format.js'].lineData[29]++;
   return removeFormat;
-}, {
-  requires: ['editor', './remove-format/cmd', './button']});
+});

@@ -230,6 +230,7 @@ if (! _$jscoverage['/cmd.js']) {
   _$jscoverage['/cmd.js'] = {};
   _$jscoverage['/cmd.js'].lineData = [];
   _$jscoverage['/cmd.js'].lineData[6] = 0;
+  _$jscoverage['/cmd.js'].lineData[7] = 0;
   _$jscoverage['/cmd.js'].lineData[8] = 0;
   _$jscoverage['/cmd.js'].lineData[17] = 0;
   _$jscoverage['/cmd.js'].lineData[21] = 0;
@@ -254,21 +255,23 @@ if (! _$jscoverage['/cmd.js'].branchData) {
   _$jscoverage['/cmd.js'].branchData['23'] = [];
   _$jscoverage['/cmd.js'].branchData['23'][1] = new BranchData();
 }
-_$jscoverage['/cmd.js'].branchData['23'][1].init(18, 31, '!editor.hasCommand("foreColor")');
+_$jscoverage['/cmd.js'].branchData['23'][1].init(17, 31, '!editor.hasCommand("foreColor")');
 function visit3_23_1(result) {
   _$jscoverage['/cmd.js'].branchData['23'][1].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['17'][2].init(118, 20, 'el.nodeName() == "a"');
+}_$jscoverage['/cmd.js'].branchData['17'][2].init(115, 20, 'el.nodeName() == "a"');
 function visit2_17_2(result) {
   _$jscoverage['/cmd.js'].branchData['17'][2].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['17'][1].init(118, 42, 'el.nodeName() == "a" || el.all("a").length');
+}_$jscoverage['/cmd.js'].branchData['17'][1].init(115, 42, 'el.nodeName() == "a" || el.all("a").length');
 function visit1_17_1(result) {
   _$jscoverage['/cmd.js'].branchData['17'][1].ranCondition(result);
   return result;
 }_$jscoverage['/cmd.js'].lineData[6]++;
-KISSY.add("editor/plugin/fore-color/cmd", function(S, cmd) {
+KISSY.add(function(S, require) {
   _$jscoverage['/cmd.js'].functionData[0]++;
+  _$jscoverage['/cmd.js'].lineData[7]++;
+  var cmd = require('../color/cmd');
   _$jscoverage['/cmd.js'].lineData[8]++;
   var COLOR_STYLES = {
   element: 'span', 
@@ -302,5 +305,4 @@ KISSY.add("editor/plugin/fore-color/cmd", function(S, cmd) {
 }});
   }
 }};
-}, {
-  requires: ['../color/cmd']});
+});

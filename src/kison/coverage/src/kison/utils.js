@@ -314,68 +314,68 @@ if (! _$jscoverage['/kison/utils.js'].branchData) {
   _$jscoverage['/kison/utils.js'].branchData['75'] = [];
   _$jscoverage['/kison/utils.js'].branchData['75'][1] = new BranchData();
 }
-_$jscoverage['/kison/utils.js'].branchData['75'][1].init(270, 11, 't === false');
+_$jscoverage['/kison/utils.js'].branchData['75'][1].init(264, 11, 't === false');
 function visit141_75_1(result) {
   _$jscoverage['/kison/utils.js'].branchData['75'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kison/utils.js'].branchData['71'][2].init(77, 45, 'S.isRegExp(excludeReg) && i.match(excludeReg)');
+}_$jscoverage['/kison/utils.js'].branchData['71'][2].init(75, 45, 'S.isRegExp(excludeReg) && i.match(excludeReg)');
 function visit140_71_2(result) {
   _$jscoverage['/kison/utils.js'].branchData['71'][2].ranCondition(result);
   return result;
-}_$jscoverage['/kison/utils.js'].branchData['71'][1].init(63, 59, 'excludeReg && S.isRegExp(excludeReg) && i.match(excludeReg)');
+}_$jscoverage['/kison/utils.js'].branchData['71'][1].init(61, 59, 'excludeReg && S.isRegExp(excludeReg) && i.match(excludeReg)');
 function visit139_71_1(result) {
   _$jscoverage['/kison/utils.js'].branchData['71'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kison/utils.js'].branchData['66'][1].init(1231, 15, 'S.isObject(obj)');
+}_$jscoverage['/kison/utils.js'].branchData['66'][1].init(1194, 15, 'S.isObject(obj)');
 function visit138_66_1(result) {
   _$jscoverage['/kison/utils.js'].branchData['66'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kison/utils.js'].branchData['59'][1].init(87, 11, 't !== false');
+}_$jscoverage['/kison/utils.js'].branchData['59'][1].init(85, 11, 't !== false');
 function visit137_59_1(result) {
   _$jscoverage['/kison/utils.js'].branchData['59'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kison/utils.js'].branchData['54'][1].init(785, 14, 'S.isArray(obj)');
+}_$jscoverage['/kison/utils.js'].branchData['54'][1].init(760, 14, 'S.isArray(obj)');
 function visit136_54_1(result) {
   _$jscoverage['/kison/utils.js'].branchData['54'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kison/utils.js'].branchData['48'][1].init(524, 15, 'S.isRegExp(obj)');
+}_$jscoverage['/kison/utils.js'].branchData['48'][1].init(505, 15, 'S.isRegExp(obj)');
 function visit135_48_1(result) {
   _$jscoverage['/kison/utils.js'].branchData['48'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kison/utils.js'].branchData['46'][1].init(440, 21, 'typeof obj === \'number\'');
+}_$jscoverage['/kison/utils.js'].branchData['46'][1].init(423, 21, 'typeof obj === \'number\'');
 function visit134_46_1(result) {
   _$jscoverage['/kison/utils.js'].branchData['46'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kison/utils.js'].branchData['44'][1].init(334, 22, 'typeof obj == \'string\'');
+}_$jscoverage['/kison/utils.js'].branchData['44'][1].init(319, 22, 'typeof obj == \'string\'');
 function visit133_44_1(result) {
   _$jscoverage['/kison/utils.js'].branchData['44'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kison/utils.js'].branchData['38'][1].init(226, 15, 'r !== undefined');
+}_$jscoverage['/kison/utils.js'].branchData['38'][1].init(217, 15, 'r !== undefined');
 function visit132_38_1(result) {
   _$jscoverage['/kison/utils.js'].branchData['38'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kison/utils.js'].branchData['34'][1].init(54, 30, '(r = excludeReg(obj)) === false');
+}_$jscoverage['/kison/utils.js'].branchData['34'][1].init(53, 30, '(r = excludeReg(obj)) === false');
 function visit131_34_1(result) {
   _$jscoverage['/kison/utils.js'].branchData['34'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kison/utils.js'].branchData['33'][2].init(74, 32, 'typeof excludeReg === \'function\'');
+}_$jscoverage['/kison/utils.js'].branchData['33'][2].init(70, 32, 'typeof excludeReg === \'function\'');
 function visit130_33_2(result) {
   _$jscoverage['/kison/utils.js'].branchData['33'][2].ranCondition(result);
   return result;
-}_$jscoverage['/kison/utils.js'].branchData['33'][1].init(31, 85, '(typeof excludeReg === \'function\') && (r = excludeReg(obj)) === false');
+}_$jscoverage['/kison/utils.js'].branchData['33'][1].init(30, 84, '(typeof excludeReg === \'function\') && (r = excludeReg(obj)) === false');
 function visit129_33_1(result) {
   _$jscoverage['/kison/utils.js'].branchData['33'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kison/utils.js'].branchData['32'][1].init(40, 117, 'excludeReg && (typeof excludeReg === \'function\') && (r = excludeReg(obj)) === false');
+}_$jscoverage['/kison/utils.js'].branchData['32'][1].init(37, 115, 'excludeReg && (typeof excludeReg === \'function\') && (r = excludeReg(obj)) === false');
 function visit128_32_1(result) {
   _$jscoverage['/kison/utils.js'].branchData['32'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kison/utils.js'].branchData['17'][1].init(52, 12, 'quote == \'"\'');
+}_$jscoverage['/kison/utils.js'].branchData['17'][1].init(50, 12, 'quote == \'"\'');
 function visit127_17_1(result) {
   _$jscoverage['/kison/utils.js'].branchData['17'][1].ranCondition(result);
   return result;
 }_$jscoverage['/kison/utils.js'].lineData[6]++;
-KISSY.add("kison/utils", function(S) {
+KISSY.add(function(S) {
   _$jscoverage['/kison/utils.js'].functionData[0]++;
   _$jscoverage['/kison/utils.js'].lineData[7]++;
   var doubleReg = /"/g, single = /'/g, escapeString;

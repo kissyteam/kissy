@@ -7,12 +7,12 @@
  Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.html or http://ckeditor.com/license
  */
-KISSY.add(function (S,require) {
-    var Node =require('node');
-    var Walker =require('./walker');
+KISSY.add(function (S, require) {
+    var Node = require('node');
+    var Walker = require('./walker');
     var Editor = require('./base');
     var ElementPath = require('./elementPath');
-
+    var OLD_IE = S.UA.ieMode < 11;
     var UA = S.UA,
         headerTagRegex = /^h[1-6]$/,
         dtd = Editor.XHTML_DTD;
@@ -94,7 +94,7 @@ KISSY.add(function (S,require) {
             if (nextBlock.nodeName() == 'li' &&
                 ( node = nextBlock.first(Walker.invisible(true)) ) &&
                 S.inArray(node.nodeName(), ['ul', 'ol']))
-                (UA['ie'] ? new Node(doc.createTextNode('\xa0')) :
+                (OLD_IE ? new Node(doc.createTextNode('\xa0')) :
                     new Node(doc.createElement('br'))).insertBefore(node);
 
             // Move the selection to the end block.
@@ -138,7 +138,7 @@ KISSY.add(function (S,require) {
                 }
             }
 
-            if (!UA['ie'])
+            if (!OLD_IE)
                 newBlock._4e_appendBogus();
 
             range.insertNode(newBlock);
@@ -148,7 +148,7 @@ KISSY.add(function (S,require) {
             // The previousBlock check has been included because it may be
             // empty if we have fixed a block-less space (like ENTER into an
             // empty table cell).
-            if (UA['ie'] && isStartOfBlock && ( !isEndOfBlock || !previousBlock[0].childNodes.length )) {
+            if (OLD_IE && isStartOfBlock && ( !isEndOfBlock || !previousBlock[0].childNodes.length )) {
                 // Move the selection to the new block.
                 range.moveToElementEditablePosition(isEndOfBlock ? previousBlock : newBlock);
                 range.select();
@@ -158,7 +158,7 @@ KISSY.add(function (S,require) {
             range.moveToElementEditablePosition(isStartOfBlock && !isEndOfBlock ? nextBlock : newBlock);
         }
 
-        if (!UA['ie']) {
+        if (!OLD_IE) {
             if (nextBlock) {
                 // If we have split the block, adds a temporary span at the
                 // range position and scroll relatively to it.
@@ -168,20 +168,20 @@ KISSY.add(function (S,require) {
                 tmpNode.html('&nbsp;');
 
                 range.insertNode(tmpNode);
-                tmpNode.scrollIntoView(undefined,{
-                    alignWithTop:false,
-                    allowHorizontalScroll:true,
-                    onlyScrollIfNeeded:true
+                tmpNode.scrollIntoView(undefined, {
+                    alignWithTop: false,
+                    allowHorizontalScroll: true,
+                    onlyScrollIfNeeded: true
                 });
                 range.deleteContents();
             }
             else {
                 // We may use the above scroll logic for the new block case
                 // too, but it gives some weird result with Opera.
-                newBlock.scrollIntoView(undefined,{
-                    alignWithTop:false,
-                    allowHorizontalScroll:true,
-                    onlyScrollIfNeeded:true
+                newBlock.scrollIntoView(undefined, {
+                    alignWithTop: false,
+                    allowHorizontalScroll: true,
+                    onlyScrollIfNeeded: true
                 });
             }
         }
@@ -208,9 +208,9 @@ KISSY.add(function (S,require) {
     }
 
     return {
-        init:function (editor) {
+        init: function (editor) {
             editor.addCommand("enterBlock", {
-                exec:enterBlock
+                exec: enterBlock
             });
             editor.docReady(function () {
                 EnterKey(editor);

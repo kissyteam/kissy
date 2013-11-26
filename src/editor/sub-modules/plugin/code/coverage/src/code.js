@@ -231,10 +231,13 @@ if (! _$jscoverage['/code.js']) {
   _$jscoverage['/code.js'].lineData = [];
   _$jscoverage['/code.js'].lineData[6] = 0;
   _$jscoverage['/code.js'].lineData[7] = 0;
+  _$jscoverage['/code.js'].lineData[8] = 0;
+  _$jscoverage['/code.js'].lineData[9] = 0;
   _$jscoverage['/code.js'].lineData[11] = 0;
-  _$jscoverage['/code.js'].lineData[13] = 0;
+  _$jscoverage['/code.js'].lineData[15] = 0;
   _$jscoverage['/code.js'].lineData[17] = 0;
-  _$jscoverage['/code.js'].lineData[25] = 0;
+  _$jscoverage['/code.js'].lineData[21] = 0;
+  _$jscoverage['/code.js'].lineData[29] = 0;
 }
 if (! _$jscoverage['/code.js'].functionData) {
   _$jscoverage['/code.js'].functionData = [];
@@ -247,28 +250,33 @@ if (! _$jscoverage['/code.js'].branchData) {
   _$jscoverage['/code.js'].branchData = {};
 }
 _$jscoverage['/code.js'].lineData[6]++;
-KISSY.add('editor/plugin/code', function(S, Editor, DialogLoader) {
+KISSY.add(function(S, require) {
   _$jscoverage['/code.js'].functionData[0]++;
   _$jscoverage['/code.js'].lineData[7]++;
+  var Editor = require('editor');
+  _$jscoverage['/code.js'].lineData[8]++;
+  require('./button');
+  _$jscoverage['/code.js'].lineData[9]++;
+  var DialogLoader = require('./dialog-loader');
+  _$jscoverage['/code.js'].lineData[11]++;
   function CodePlugin() {
     _$jscoverage['/code.js'].functionData[1]++;
   }
-  _$jscoverage['/code.js'].lineData[11]++;
+  _$jscoverage['/code.js'].lineData[15]++;
   S.augment(CodePlugin, {
   pluginRenderUI: function(editor) {
   _$jscoverage['/code.js'].functionData[2]++;
-  _$jscoverage['/code.js'].lineData[13]++;
+  _$jscoverage['/code.js'].lineData[17]++;
   editor.addButton('code', {
   tooltip: "\u63d2\u5165\u4ee3\u7801", 
   listeners: {
   click: function() {
   _$jscoverage['/code.js'].functionData[3]++;
-  _$jscoverage['/code.js'].lineData[17]++;
+  _$jscoverage['/code.js'].lineData[21]++;
   DialogLoader.useDialog(editor, "code");
 }}, 
   mode: Editor.Mode.WYSIWYG_MODE});
 }});
-  _$jscoverage['/code.js'].lineData[25]++;
+  _$jscoverage['/code.js'].lineData[29]++;
   return CodePlugin;
-}, {
-  requires: ['editor', './dialog-loader']});
+});

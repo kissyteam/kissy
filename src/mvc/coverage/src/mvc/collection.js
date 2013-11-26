@@ -230,59 +230,59 @@ if (! _$jscoverage['/mvc/collection.js']) {
   _$jscoverage['/mvc/collection.js'] = {};
   _$jscoverage['/mvc/collection.js'].lineData = [];
   _$jscoverage['/mvc/collection.js'].lineData[6] = 0;
+  _$jscoverage['/mvc/collection.js'].lineData[7] = 0;
   _$jscoverage['/mvc/collection.js'].lineData[8] = 0;
-  _$jscoverage['/mvc/collection.js'].lineData[9] = 0;
   _$jscoverage['/mvc/collection.js'].lineData[10] = 0;
   _$jscoverage['/mvc/collection.js'].lineData[11] = 0;
   _$jscoverage['/mvc/collection.js'].lineData[12] = 0;
   _$jscoverage['/mvc/collection.js'].lineData[13] = 0;
   _$jscoverage['/mvc/collection.js'].lineData[14] = 0;
   _$jscoverage['/mvc/collection.js'].lineData[15] = 0;
-  _$jscoverage['/mvc/collection.js'].lineData[19] = 0;
-  _$jscoverage['/mvc/collection.js'].lineData[27] = 0;
-  _$jscoverage['/mvc/collection.js'].lineData[32] = 0;
-  _$jscoverage['/mvc/collection.js'].lineData[33] = 0;
+  _$jscoverage['/mvc/collection.js'].lineData[16] = 0;
+  _$jscoverage['/mvc/collection.js'].lineData[17] = 0;
+  _$jscoverage['/mvc/collection.js'].lineData[21] = 0;
+  _$jscoverage['/mvc/collection.js'].lineData[29] = 0;
   _$jscoverage['/mvc/collection.js'].lineData[34] = 0;
   _$jscoverage['/mvc/collection.js'].lineData[35] = 0;
-  _$jscoverage['/mvc/collection.js'].lineData[45] = 0;
-  _$jscoverage['/mvc/collection.js'].lineData[46] = 0;
-  _$jscoverage['/mvc/collection.js'].lineData[57] = 0;
+  _$jscoverage['/mvc/collection.js'].lineData[36] = 0;
+  _$jscoverage['/mvc/collection.js'].lineData[37] = 0;
+  _$jscoverage['/mvc/collection.js'].lineData[47] = 0;
+  _$jscoverage['/mvc/collection.js'].lineData[48] = 0;
   _$jscoverage['/mvc/collection.js'].lineData[59] = 0;
-  _$jscoverage['/mvc/collection.js'].lineData[60] = 0;
   _$jscoverage['/mvc/collection.js'].lineData[61] = 0;
   _$jscoverage['/mvc/collection.js'].lineData[62] = 0;
   _$jscoverage['/mvc/collection.js'].lineData[63] = 0;
-  _$jscoverage['/mvc/collection.js'].lineData[66] = 0;
+  _$jscoverage['/mvc/collection.js'].lineData[64] = 0;
+  _$jscoverage['/mvc/collection.js'].lineData[65] = 0;
   _$jscoverage['/mvc/collection.js'].lineData[68] = 0;
-  _$jscoverage['/mvc/collection.js'].lineData[78] = 0;
-  _$jscoverage['/mvc/collection.js'].lineData[79] = 0;
+  _$jscoverage['/mvc/collection.js'].lineData[70] = 0;
   _$jscoverage['/mvc/collection.js'].lineData[80] = 0;
   _$jscoverage['/mvc/collection.js'].lineData[81] = 0;
   _$jscoverage['/mvc/collection.js'].lineData[82] = 0;
+  _$jscoverage['/mvc/collection.js'].lineData[83] = 0;
   _$jscoverage['/mvc/collection.js'].lineData[84] = 0;
-  _$jscoverage['/mvc/collection.js'].lineData[85] = 0;
-  _$jscoverage['/mvc/collection.js'].lineData[94] = 0;
-  _$jscoverage['/mvc/collection.js'].lineData[98] = 0;
-  _$jscoverage['/mvc/collection.js'].lineData[99] = 0;
+  _$jscoverage['/mvc/collection.js'].lineData[86] = 0;
+  _$jscoverage['/mvc/collection.js'].lineData[87] = 0;
+  _$jscoverage['/mvc/collection.js'].lineData[96] = 0;
   _$jscoverage['/mvc/collection.js'].lineData[100] = 0;
+  _$jscoverage['/mvc/collection.js'].lineData[101] = 0;
   _$jscoverage['/mvc/collection.js'].lineData[102] = 0;
-  _$jscoverage['/mvc/collection.js'].lineData[103] = 0;
-  _$jscoverage['/mvc/collection.js'].lineData[107] = 0;
-  _$jscoverage['/mvc/collection.js'].lineData[119] = 0;
-  _$jscoverage['/mvc/collection.js'].lineData[120] = 0;
+  _$jscoverage['/mvc/collection.js'].lineData[104] = 0;
+  _$jscoverage['/mvc/collection.js'].lineData[105] = 0;
+  _$jscoverage['/mvc/collection.js'].lineData[109] = 0;
   _$jscoverage['/mvc/collection.js'].lineData[121] = 0;
-  _$jscoverage['/mvc/collection.js'].lineData[125] = 0;
-  _$jscoverage['/mvc/collection.js'].lineData[126] = 0;
+  _$jscoverage['/mvc/collection.js'].lineData[122] = 0;
+  _$jscoverage['/mvc/collection.js'].lineData[123] = 0;
   _$jscoverage['/mvc/collection.js'].lineData[127] = 0;
   _$jscoverage['/mvc/collection.js'].lineData[128] = 0;
   _$jscoverage['/mvc/collection.js'].lineData[129] = 0;
-  _$jscoverage['/mvc/collection.js'].lineData[133] = 0;
-  _$jscoverage['/mvc/collection.js'].lineData[134] = 0;
+  _$jscoverage['/mvc/collection.js'].lineData[130] = 0;
+  _$jscoverage['/mvc/collection.js'].lineData[131] = 0;
+  _$jscoverage['/mvc/collection.js'].lineData[135] = 0;
   _$jscoverage['/mvc/collection.js'].lineData[136] = 0;
   _$jscoverage['/mvc/collection.js'].lineData[138] = 0;
-  _$jscoverage['/mvc/collection.js'].lineData[139] = 0;
-  _$jscoverage['/mvc/collection.js'].lineData[152] = 0;
-  _$jscoverage['/mvc/collection.js'].lineData[153] = 0;
+  _$jscoverage['/mvc/collection.js'].lineData[140] = 0;
+  _$jscoverage['/mvc/collection.js'].lineData[141] = 0;
   _$jscoverage['/mvc/collection.js'].lineData[154] = 0;
   _$jscoverage['/mvc/collection.js'].lineData[155] = 0;
   _$jscoverage['/mvc/collection.js'].lineData[156] = 0;
@@ -290,42 +290,44 @@ if (! _$jscoverage['/mvc/collection.js']) {
   _$jscoverage['/mvc/collection.js'].lineData[158] = 0;
   _$jscoverage['/mvc/collection.js'].lineData[159] = 0;
   _$jscoverage['/mvc/collection.js'].lineData[160] = 0;
+  _$jscoverage['/mvc/collection.js'].lineData[161] = 0;
   _$jscoverage['/mvc/collection.js'].lineData[162] = 0;
   _$jscoverage['/mvc/collection.js'].lineData[164] = 0;
-  _$jscoverage['/mvc/collection.js'].lineData[168] = 0;
-  _$jscoverage['/mvc/collection.js'].lineData[169] = 0;
+  _$jscoverage['/mvc/collection.js'].lineData[166] = 0;
   _$jscoverage['/mvc/collection.js'].lineData[170] = 0;
   _$jscoverage['/mvc/collection.js'].lineData[171] = 0;
   _$jscoverage['/mvc/collection.js'].lineData[172] = 0;
   _$jscoverage['/mvc/collection.js'].lineData[173] = 0;
   _$jscoverage['/mvc/collection.js'].lineData[174] = 0;
   _$jscoverage['/mvc/collection.js'].lineData[175] = 0;
-  _$jscoverage['/mvc/collection.js'].lineData[180] = 0;
-  _$jscoverage['/mvc/collection.js'].lineData[188] = 0;
-  _$jscoverage['/mvc/collection.js'].lineData[189] = 0;
+  _$jscoverage['/mvc/collection.js'].lineData[176] = 0;
+  _$jscoverage['/mvc/collection.js'].lineData[177] = 0;
+  _$jscoverage['/mvc/collection.js'].lineData[182] = 0;
   _$jscoverage['/mvc/collection.js'].lineData[190] = 0;
   _$jscoverage['/mvc/collection.js'].lineData[191] = 0;
   _$jscoverage['/mvc/collection.js'].lineData[192] = 0;
+  _$jscoverage['/mvc/collection.js'].lineData[193] = 0;
   _$jscoverage['/mvc/collection.js'].lineData[194] = 0;
-  _$jscoverage['/mvc/collection.js'].lineData[195] = 0;
-  _$jscoverage['/mvc/collection.js'].lineData[206] = 0;
-  _$jscoverage['/mvc/collection.js'].lineData[207] = 0;
+  _$jscoverage['/mvc/collection.js'].lineData[196] = 0;
+  _$jscoverage['/mvc/collection.js'].lineData[197] = 0;
   _$jscoverage['/mvc/collection.js'].lineData[208] = 0;
   _$jscoverage['/mvc/collection.js'].lineData[209] = 0;
   _$jscoverage['/mvc/collection.js'].lineData[210] = 0;
-  _$jscoverage['/mvc/collection.js'].lineData[213] = 0;
-  _$jscoverage['/mvc/collection.js'].lineData[221] = 0;
-  _$jscoverage['/mvc/collection.js'].lineData[222] = 0;
+  _$jscoverage['/mvc/collection.js'].lineData[211] = 0;
+  _$jscoverage['/mvc/collection.js'].lineData[212] = 0;
+  _$jscoverage['/mvc/collection.js'].lineData[215] = 0;
   _$jscoverage['/mvc/collection.js'].lineData[223] = 0;
   _$jscoverage['/mvc/collection.js'].lineData[224] = 0;
   _$jscoverage['/mvc/collection.js'].lineData[225] = 0;
-  _$jscoverage['/mvc/collection.js'].lineData[228] = 0;
-  _$jscoverage['/mvc/collection.js'].lineData[250] = 0;
-  _$jscoverage['/mvc/collection.js'].lineData[251] = 0;
+  _$jscoverage['/mvc/collection.js'].lineData[226] = 0;
+  _$jscoverage['/mvc/collection.js'].lineData[227] = 0;
+  _$jscoverage['/mvc/collection.js'].lineData[230] = 0;
   _$jscoverage['/mvc/collection.js'].lineData[252] = 0;
   _$jscoverage['/mvc/collection.js'].lineData[253] = 0;
-  _$jscoverage['/mvc/collection.js'].lineData[277] = 0;
-  _$jscoverage['/mvc/collection.js'].lineData[287] = 0;
+  _$jscoverage['/mvc/collection.js'].lineData[254] = 0;
+  _$jscoverage['/mvc/collection.js'].lineData[255] = 0;
+  _$jscoverage['/mvc/collection.js'].lineData[279] = 0;
+  _$jscoverage['/mvc/collection.js'].lineData[289] = 0;
 }
 if (! _$jscoverage['/mvc/collection.js'].functionData) {
   _$jscoverage['/mvc/collection.js'].functionData = [];
@@ -356,426 +358,430 @@ if (! _$jscoverage['/mvc/collection.js'].functionData) {
 }
 if (! _$jscoverage['/mvc/collection.js'].branchData) {
   _$jscoverage['/mvc/collection.js'].branchData = {};
-  _$jscoverage['/mvc/collection.js'].branchData['10'] = [];
-  _$jscoverage['/mvc/collection.js'].branchData['10'][1] = new BranchData();
   _$jscoverage['/mvc/collection.js'].branchData['12'] = [];
   _$jscoverage['/mvc/collection.js'].branchData['12'][1] = new BranchData();
   _$jscoverage['/mvc/collection.js'].branchData['14'] = [];
   _$jscoverage['/mvc/collection.js'].branchData['14'][1] = new BranchData();
-  _$jscoverage['/mvc/collection.js'].branchData['33'] = [];
-  _$jscoverage['/mvc/collection.js'].branchData['33'][1] = new BranchData();
-  _$jscoverage['/mvc/collection.js'].branchData['59'] = [];
-  _$jscoverage['/mvc/collection.js'].branchData['59'][1] = new BranchData();
-  _$jscoverage['/mvc/collection.js'].branchData['63'] = [];
-  _$jscoverage['/mvc/collection.js'].branchData['63'][1] = new BranchData();
-  _$jscoverage['/mvc/collection.js'].branchData['79'] = [];
-  _$jscoverage['/mvc/collection.js'].branchData['79'][1] = new BranchData();
-  _$jscoverage['/mvc/collection.js'].branchData['84'] = [];
-  _$jscoverage['/mvc/collection.js'].branchData['84'][1] = new BranchData();
-  _$jscoverage['/mvc/collection.js'].branchData['99'] = [];
-  _$jscoverage['/mvc/collection.js'].branchData['99'][1] = new BranchData();
-  _$jscoverage['/mvc/collection.js'].branchData['107'] = [];
-  _$jscoverage['/mvc/collection.js'].branchData['107'][1] = new BranchData();
-  _$jscoverage['/mvc/collection.js'].branchData['120'] = [];
-  _$jscoverage['/mvc/collection.js'].branchData['120'][1] = new BranchData();
-  _$jscoverage['/mvc/collection.js'].branchData['126'] = [];
-  _$jscoverage['/mvc/collection.js'].branchData['126'][1] = new BranchData();
+  _$jscoverage['/mvc/collection.js'].branchData['16'] = [];
+  _$jscoverage['/mvc/collection.js'].branchData['16'][1] = new BranchData();
+  _$jscoverage['/mvc/collection.js'].branchData['35'] = [];
+  _$jscoverage['/mvc/collection.js'].branchData['35'][1] = new BranchData();
+  _$jscoverage['/mvc/collection.js'].branchData['61'] = [];
+  _$jscoverage['/mvc/collection.js'].branchData['61'][1] = new BranchData();
+  _$jscoverage['/mvc/collection.js'].branchData['65'] = [];
+  _$jscoverage['/mvc/collection.js'].branchData['65'][1] = new BranchData();
+  _$jscoverage['/mvc/collection.js'].branchData['81'] = [];
+  _$jscoverage['/mvc/collection.js'].branchData['81'][1] = new BranchData();
+  _$jscoverage['/mvc/collection.js'].branchData['86'] = [];
+  _$jscoverage['/mvc/collection.js'].branchData['86'][1] = new BranchData();
+  _$jscoverage['/mvc/collection.js'].branchData['101'] = [];
+  _$jscoverage['/mvc/collection.js'].branchData['101'][1] = new BranchData();
+  _$jscoverage['/mvc/collection.js'].branchData['109'] = [];
+  _$jscoverage['/mvc/collection.js'].branchData['109'][1] = new BranchData();
+  _$jscoverage['/mvc/collection.js'].branchData['122'] = [];
+  _$jscoverage['/mvc/collection.js'].branchData['122'][1] = new BranchData();
   _$jscoverage['/mvc/collection.js'].branchData['128'] = [];
   _$jscoverage['/mvc/collection.js'].branchData['128'][1] = new BranchData();
-  _$jscoverage['/mvc/collection.js'].branchData['136'] = [];
-  _$jscoverage['/mvc/collection.js'].branchData['136'][1] = new BranchData();
-  _$jscoverage['/mvc/collection.js'].branchData['153'] = [];
-  _$jscoverage['/mvc/collection.js'].branchData['153'][1] = new BranchData();
+  _$jscoverage['/mvc/collection.js'].branchData['130'] = [];
+  _$jscoverage['/mvc/collection.js'].branchData['130'][1] = new BranchData();
+  _$jscoverage['/mvc/collection.js'].branchData['138'] = [];
+  _$jscoverage['/mvc/collection.js'].branchData['138'][1] = new BranchData();
   _$jscoverage['/mvc/collection.js'].branchData['155'] = [];
   _$jscoverage['/mvc/collection.js'].branchData['155'][1] = new BranchData();
-  _$jscoverage['/mvc/collection.js'].branchData['160'] = [];
-  _$jscoverage['/mvc/collection.js'].branchData['160'][1] = new BranchData();
-  _$jscoverage['/mvc/collection.js'].branchData['169'] = [];
-  _$jscoverage['/mvc/collection.js'].branchData['169'][1] = new BranchData();
-  _$jscoverage['/mvc/collection.js'].branchData['170'] = [];
-  _$jscoverage['/mvc/collection.js'].branchData['170'][1] = new BranchData();
-  _$jscoverage['/mvc/collection.js'].branchData['174'] = [];
-  _$jscoverage['/mvc/collection.js'].branchData['174'][1] = new BranchData();
-  _$jscoverage['/mvc/collection.js'].branchData['188'] = [];
-  _$jscoverage['/mvc/collection.js'].branchData['188'][1] = new BranchData();
+  _$jscoverage['/mvc/collection.js'].branchData['157'] = [];
+  _$jscoverage['/mvc/collection.js'].branchData['157'][1] = new BranchData();
+  _$jscoverage['/mvc/collection.js'].branchData['162'] = [];
+  _$jscoverage['/mvc/collection.js'].branchData['162'][1] = new BranchData();
+  _$jscoverage['/mvc/collection.js'].branchData['171'] = [];
+  _$jscoverage['/mvc/collection.js'].branchData['171'][1] = new BranchData();
+  _$jscoverage['/mvc/collection.js'].branchData['172'] = [];
+  _$jscoverage['/mvc/collection.js'].branchData['172'][1] = new BranchData();
+  _$jscoverage['/mvc/collection.js'].branchData['176'] = [];
+  _$jscoverage['/mvc/collection.js'].branchData['176'][1] = new BranchData();
   _$jscoverage['/mvc/collection.js'].branchData['190'] = [];
   _$jscoverage['/mvc/collection.js'].branchData['190'][1] = new BranchData();
-  _$jscoverage['/mvc/collection.js'].branchData['194'] = [];
-  _$jscoverage['/mvc/collection.js'].branchData['194'][1] = new BranchData();
-  _$jscoverage['/mvc/collection.js'].branchData['207'] = [];
-  _$jscoverage['/mvc/collection.js'].branchData['207'][1] = new BranchData();
+  _$jscoverage['/mvc/collection.js'].branchData['192'] = [];
+  _$jscoverage['/mvc/collection.js'].branchData['192'][1] = new BranchData();
+  _$jscoverage['/mvc/collection.js'].branchData['196'] = [];
+  _$jscoverage['/mvc/collection.js'].branchData['196'][1] = new BranchData();
   _$jscoverage['/mvc/collection.js'].branchData['209'] = [];
   _$jscoverage['/mvc/collection.js'].branchData['209'][1] = new BranchData();
-  _$jscoverage['/mvc/collection.js'].branchData['222'] = [];
-  _$jscoverage['/mvc/collection.js'].branchData['222'][1] = new BranchData();
+  _$jscoverage['/mvc/collection.js'].branchData['211'] = [];
+  _$jscoverage['/mvc/collection.js'].branchData['211'][1] = new BranchData();
   _$jscoverage['/mvc/collection.js'].branchData['224'] = [];
   _$jscoverage['/mvc/collection.js'].branchData['224'][1] = new BranchData();
+  _$jscoverage['/mvc/collection.js'].branchData['226'] = [];
+  _$jscoverage['/mvc/collection.js'].branchData['226'][1] = new BranchData();
 }
-_$jscoverage['/mvc/collection.js'].branchData['224'][1].init(62, 29, 'model.get("clientId") === cid');
-function visit27_224_1(result) {
+_$jscoverage['/mvc/collection.js'].branchData['226'][1].init(60, 29, 'model.get("clientId") === cid');
+function visit27_226_1(result) {
+  _$jscoverage['/mvc/collection.js'].branchData['226'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/mvc/collection.js'].branchData['224'][1].init(74, 17, 'i < models.length');
+function visit26_224_1(result) {
   _$jscoverage['/mvc/collection.js'].branchData['224'][1].ranCondition(result);
   return result;
-}_$jscoverage['/mvc/collection.js'].branchData['222'][1].init(76, 17, 'i < models.length');
-function visit26_222_1(result) {
-  _$jscoverage['/mvc/collection.js'].branchData['222'][1].ranCondition(result);
+}_$jscoverage['/mvc/collection.js'].branchData['211'][1].init(60, 20, 'model.getId() === id');
+function visit25_211_1(result) {
+  _$jscoverage['/mvc/collection.js'].branchData['211'][1].ranCondition(result);
   return result;
-}_$jscoverage['/mvc/collection.js'].branchData['209'][1].init(62, 20, 'model.getId() === id');
-function visit25_209_1(result) {
+}_$jscoverage['/mvc/collection.js'].branchData['209'][1].init(74, 17, 'i < models.length');
+function visit24_209_1(result) {
   _$jscoverage['/mvc/collection.js'].branchData['209'][1].ranCondition(result);
   return result;
-}_$jscoverage['/mvc/collection.js'].branchData['207'][1].init(76, 17, 'i < models.length');
-function visit24_207_1(result) {
-  _$jscoverage['/mvc/collection.js'].branchData['207'][1].ranCondition(result);
+}_$jscoverage['/mvc/collection.js'].branchData['196'][1].init(258, 15, '!opts[\'silent\']');
+function visit23_196_1(result) {
+  _$jscoverage['/mvc/collection.js'].branchData['196'][1].ranCondition(result);
   return result;
-}_$jscoverage['/mvc/collection.js'].branchData['194'][1].init(265, 15, '!opts[\'silent\']');
-function visit23_194_1(result) {
-  _$jscoverage['/mvc/collection.js'].branchData['194'][1].ranCondition(result);
+}_$jscoverage['/mvc/collection.js'].branchData['192'][1].init(110, 11, 'index != -1');
+function visit22_192_1(result) {
+  _$jscoverage['/mvc/collection.js'].branchData['192'][1].ranCondition(result);
   return result;
-}_$jscoverage['/mvc/collection.js'].branchData['190'][1].init(113, 11, 'index != -1');
-function visit22_190_1(result) {
+}_$jscoverage['/mvc/collection.js'].branchData['190'][1].init(20, 10, 'opts || {}');
+function visit21_190_1(result) {
   _$jscoverage['/mvc/collection.js'].branchData['190'][1].ranCondition(result);
   return result;
-}_$jscoverage['/mvc/collection.js'].branchData['188'][1].init(21, 10, 'opts || {}');
-function visit21_188_1(result) {
-  _$jscoverage['/mvc/collection.js'].branchData['188'][1].ranCondition(result);
+}_$jscoverage['/mvc/collection.js'].branchData['176'][1].init(256, 15, '!opts[\'silent\']');
+function visit20_176_1(result) {
+  _$jscoverage['/mvc/collection.js'].branchData['176'][1].ranCondition(result);
   return result;
-}_$jscoverage['/mvc/collection.js'].branchData['174'][1].init(261, 15, '!opts[\'silent\']');
-function visit20_174_1(result) {
-  _$jscoverage['/mvc/collection.js'].branchData['174'][1].ranCondition(result);
+}_$jscoverage['/mvc/collection.js'].branchData['172'][1].init(24, 10, 'opts || {}');
+function visit19_172_1(result) {
+  _$jscoverage['/mvc/collection.js'].branchData['172'][1].ranCondition(result);
   return result;
-}_$jscoverage['/mvc/collection.js'].branchData['170'][1].init(25, 10, 'opts || {}');
-function visit19_170_1(result) {
-  _$jscoverage['/mvc/collection.js'].branchData['170'][1].ranCondition(result);
+}_$jscoverage['/mvc/collection.js'].branchData['171'][1].init(61, 5, 'model');
+function visit18_171_1(result) {
+  _$jscoverage['/mvc/collection.js'].branchData['171'][1].ranCondition(result);
   return result;
-}_$jscoverage['/mvc/collection.js'].branchData['169'][1].init(63, 5, 'model');
-function visit18_169_1(result) {
-  _$jscoverage['/mvc/collection.js'].branchData['169'][1].ranCondition(result);
+}_$jscoverage['/mvc/collection.js'].branchData['162'][1].init(64, 20, 'success && success()');
+function visit17_162_1(result) {
+  _$jscoverage['/mvc/collection.js'].branchData['162'][1].ranCondition(result);
   return result;
-}_$jscoverage['/mvc/collection.js'].branchData['160'][1].init(66, 20, 'success && success()');
-function visit17_160_1(result) {
-  _$jscoverage['/mvc/collection.js'].branchData['160'][1].ranCondition(result);
+}_$jscoverage['/mvc/collection.js'].branchData['157'][1].init(121, 5, 'model');
+function visit16_157_1(result) {
+  _$jscoverage['/mvc/collection.js'].branchData['157'][1].ranCondition(result);
   return result;
-}_$jscoverage['/mvc/collection.js'].branchData['155'][1].init(125, 5, 'model');
-function visit16_155_1(result) {
+}_$jscoverage['/mvc/collection.js'].branchData['155'][1].init(49, 10, 'opts || {}');
+function visit15_155_1(result) {
   _$jscoverage['/mvc/collection.js'].branchData['155'][1].ranCondition(result);
   return result;
-}_$jscoverage['/mvc/collection.js'].branchData['153'][1].init(51, 10, 'opts || {}');
-function visit15_153_1(result) {
-  _$jscoverage['/mvc/collection.js'].branchData['153'][1].ranCondition(result);
+}_$jscoverage['/mvc/collection.js'].branchData['138'][1].init(414, 41, 'success && success.apply(this, arguments)');
+function visit14_138_1(result) {
+  _$jscoverage['/mvc/collection.js'].branchData['138'][1].ranCondition(result);
   return result;
-}_$jscoverage['/mvc/collection.js'].branchData['136'][1].init(425, 41, 'success && success.apply(this, arguments)');
-function visit14_136_1(result) {
-  _$jscoverage['/mvc/collection.js'].branchData['136'][1].ranCondition(result);
+}_$jscoverage['/mvc/collection.js'].branchData['130'][1].init(89, 1, 'v');
+function visit13_130_1(result) {
+  _$jscoverage['/mvc/collection.js'].branchData['130'][1].ranCondition(result);
   return result;
-}_$jscoverage['/mvc/collection.js'].branchData['128'][1].init(91, 1, 'v');
-function visit13_128_1(result) {
+}_$jscoverage['/mvc/collection.js'].branchData['128'][1].init(21, 4, 'resp');
+function visit12_128_1(result) {
   _$jscoverage['/mvc/collection.js'].branchData['128'][1].ranCondition(result);
   return result;
-}_$jscoverage['/mvc/collection.js'].branchData['126'][1].init(22, 4, 'resp');
-function visit12_126_1(result) {
-  _$jscoverage['/mvc/collection.js'].branchData['126'][1].ranCondition(result);
+}_$jscoverage['/mvc/collection.js'].branchData['122'][1].init(49, 10, 'opts || {}');
+function visit11_122_1(result) {
+  _$jscoverage['/mvc/collection.js'].branchData['122'][1].ranCondition(result);
   return result;
-}_$jscoverage['/mvc/collection.js'].branchData['120'][1].init(51, 10, 'opts || {}');
-function visit11_120_1(result) {
-  _$jscoverage['/mvc/collection.js'].branchData['120'][1].ranCondition(result);
+}_$jscoverage['/mvc/collection.js'].branchData['109'][1].init(337, 12, 'ret && model');
+function visit10_109_1(result) {
+  _$jscoverage['/mvc/collection.js'].branchData['109'][1].ranCondition(result);
   return result;
-}_$jscoverage['/mvc/collection.js'].branchData['107'][1].init(347, 12, 'ret && model');
-function visit10_107_1(result) {
-  _$jscoverage['/mvc/collection.js'].branchData['107'][1].ranCondition(result);
+}_$jscoverage['/mvc/collection.js'].branchData['101'][1].init(45, 25, '!(model instanceof Model)');
+function visit9_101_1(result) {
+  _$jscoverage['/mvc/collection.js'].branchData['101'][1].ranCondition(result);
   return result;
-}_$jscoverage['/mvc/collection.js'].branchData['99'][1].init(47, 25, '!(model instanceof Model)');
-function visit9_99_1(result) {
-  _$jscoverage['/mvc/collection.js'].branchData['99'][1].ranCondition(result);
+}_$jscoverage['/mvc/collection.js'].branchData['86'][1].init(242, 5, 'model');
+function visit8_86_1(result) {
+  _$jscoverage['/mvc/collection.js'].branchData['86'][1].ranCondition(result);
   return result;
-}_$jscoverage['/mvc/collection.js'].branchData['84'][1].init(249, 5, 'model');
-function visit8_84_1(result) {
-  _$jscoverage['/mvc/collection.js'].branchData['84'][1].ranCondition(result);
+}_$jscoverage['/mvc/collection.js'].branchData['81'][1].init(46, 16, 'S.isArray(model)');
+function visit7_81_1(result) {
+  _$jscoverage['/mvc/collection.js'].branchData['81'][1].ranCondition(result);
   return result;
-}_$jscoverage['/mvc/collection.js'].branchData['79'][1].init(48, 16, 'S.isArray(model)');
-function visit7_79_1(result) {
-  _$jscoverage['/mvc/collection.js'].branchData['79'][1].ranCondition(result);
+}_$jscoverage['/mvc/collection.js'].branchData['65'][1].init(75, 8, 'ret && t');
+function visit6_65_1(result) {
+  _$jscoverage['/mvc/collection.js'].branchData['65'][1].ranCondition(result);
   return result;
-}_$jscoverage['/mvc/collection.js'].branchData['63'][1].init(77, 8, 'ret && t');
-function visit6_63_1(result) {
-  _$jscoverage['/mvc/collection.js'].branchData['63'][1].ranCondition(result);
+}_$jscoverage['/mvc/collection.js'].branchData['61'][1].init(74, 16, 'S.isArray(model)');
+function visit5_61_1(result) {
+  _$jscoverage['/mvc/collection.js'].branchData['61'][1].ranCondition(result);
   return result;
-}_$jscoverage['/mvc/collection.js'].branchData['59'][1].init(77, 16, 'S.isArray(model)');
-function visit5_59_1(result) {
-  _$jscoverage['/mvc/collection.js'].branchData['59'][1].ranCondition(result);
+}_$jscoverage['/mvc/collection.js'].branchData['35'][1].init(70, 10, 'comparator');
+function visit4_35_1(result) {
+  _$jscoverage['/mvc/collection.js'].branchData['35'][1].ranCondition(result);
   return result;
-}_$jscoverage['/mvc/collection.js'].branchData['33'][1].init(72, 10, 'comparator');
-function visit4_33_1(result) {
-  _$jscoverage['/mvc/collection.js'].branchData['33'][1].ranCondition(result);
+}_$jscoverage['/mvc/collection.js'].branchData['16'][1].init(67, 6, 'k < k2');
+function visit3_16_1(result) {
+  _$jscoverage['/mvc/collection.js'].branchData['16'][1].ranCondition(result);
   return result;
-}_$jscoverage['/mvc/collection.js'].branchData['14'][1].init(69, 6, 'k < k2');
-function visit3_14_1(result) {
+}_$jscoverage['/mvc/collection.js'].branchData['14'][1].init(62, 15, 'i < mods.length');
+function visit2_14_1(result) {
   _$jscoverage['/mvc/collection.js'].branchData['14'][1].ranCondition(result);
   return result;
-}_$jscoverage['/mvc/collection.js'].branchData['12'][1].init(64, 15, 'i < mods.length');
-function visit2_12_1(result) {
+}_$jscoverage['/mvc/collection.js'].branchData['12'][1].init(42, 10, 'comparator');
+function visit1_12_1(result) {
   _$jscoverage['/mvc/collection.js'].branchData['12'][1].ranCondition(result);
   return result;
-}_$jscoverage['/mvc/collection.js'].branchData['10'][1].init(44, 10, 'comparator');
-function visit1_10_1(result) {
-  _$jscoverage['/mvc/collection.js'].branchData['10'][1].ranCondition(result);
-  return result;
 }_$jscoverage['/mvc/collection.js'].lineData[6]++;
-KISSY.add("mvc/collection", function(S, Model, Base) {
+KISSY.add(function(S, require) {
   _$jscoverage['/mvc/collection.js'].functionData[0]++;
+  _$jscoverage['/mvc/collection.js'].lineData[7]++;
+  var Model = require('./model');
   _$jscoverage['/mvc/collection.js'].lineData[8]++;
+  var Attribute = require('attribute');
+  _$jscoverage['/mvc/collection.js'].lineData[10]++;
   function findModelIndex(mods, mod, comparator) {
     _$jscoverage['/mvc/collection.js'].functionData[1]++;
-    _$jscoverage['/mvc/collection.js'].lineData[9]++;
+    _$jscoverage['/mvc/collection.js'].lineData[11]++;
     var i = mods.length;
-    _$jscoverage['/mvc/collection.js'].lineData[10]++;
-    if (visit1_10_1(comparator)) {
-      _$jscoverage['/mvc/collection.js'].lineData[11]++;
+    _$jscoverage['/mvc/collection.js'].lineData[12]++;
+    if (visit1_12_1(comparator)) {
+      _$jscoverage['/mvc/collection.js'].lineData[13]++;
       var k = comparator(mod);
-      _$jscoverage['/mvc/collection.js'].lineData[12]++;
-      for (i = 0; visit2_12_1(i < mods.length); i++) {
-        _$jscoverage['/mvc/collection.js'].lineData[13]++;
+      _$jscoverage['/mvc/collection.js'].lineData[14]++;
+      for (i = 0; visit2_14_1(i < mods.length); i++) {
+        _$jscoverage['/mvc/collection.js'].lineData[15]++;
         var k2 = comparator(mods[i]);
-        _$jscoverage['/mvc/collection.js'].lineData[14]++;
-        if (visit3_14_1(k < k2)) {
-          _$jscoverage['/mvc/collection.js'].lineData[15]++;
+        _$jscoverage['/mvc/collection.js'].lineData[16]++;
+        if (visit3_16_1(k < k2)) {
+          _$jscoverage['/mvc/collection.js'].lineData[17]++;
           break;
         }
       }
     }
-    _$jscoverage['/mvc/collection.js'].lineData[19]++;
+    _$jscoverage['/mvc/collection.js'].lineData[21]++;
     return i;
   }
-  _$jscoverage['/mvc/collection.js'].lineData[27]++;
-  return Base.extend({
+  _$jscoverage['/mvc/collection.js'].lineData[29]++;
+  return Attribute.extend({
   sort: function() {
   _$jscoverage['/mvc/collection.js'].functionData[2]++;
-  _$jscoverage['/mvc/collection.js'].lineData[32]++;
+  _$jscoverage['/mvc/collection.js'].lineData[34]++;
   var comparator = this.get("comparator");
-  _$jscoverage['/mvc/collection.js'].lineData[33]++;
-  if (visit4_33_1(comparator)) {
-    _$jscoverage['/mvc/collection.js'].lineData[34]++;
+  _$jscoverage['/mvc/collection.js'].lineData[35]++;
+  if (visit4_35_1(comparator)) {
+    _$jscoverage['/mvc/collection.js'].lineData[36]++;
     this.get("models").sort(function(a, b) {
   _$jscoverage['/mvc/collection.js'].functionData[3]++;
-  _$jscoverage['/mvc/collection.js'].lineData[35]++;
+  _$jscoverage['/mvc/collection.js'].lineData[37]++;
   return comparator(a) - comparator(b);
 });
   }
 }, 
   toJSON: function() {
   _$jscoverage['/mvc/collection.js'].functionData[4]++;
-  _$jscoverage['/mvc/collection.js'].lineData[45]++;
+  _$jscoverage['/mvc/collection.js'].lineData[47]++;
   return S.map(this.get("models"), function(m) {
   _$jscoverage['/mvc/collection.js'].functionData[5]++;
-  _$jscoverage['/mvc/collection.js'].lineData[46]++;
+  _$jscoverage['/mvc/collection.js'].lineData[48]++;
   return m.toJSON();
 });
 }, 
   add: function(model, opts) {
   _$jscoverage['/mvc/collection.js'].functionData[6]++;
-  _$jscoverage['/mvc/collection.js'].lineData[57]++;
-  var self = this, ret = true;
   _$jscoverage['/mvc/collection.js'].lineData[59]++;
-  if (visit5_59_1(S.isArray(model))) {
-    _$jscoverage['/mvc/collection.js'].lineData[60]++;
+  var self = this, ret = true;
+  _$jscoverage['/mvc/collection.js'].lineData[61]++;
+  if (visit5_61_1(S.isArray(model))) {
+    _$jscoverage['/mvc/collection.js'].lineData[62]++;
     var orig = [].concat(model);
-    _$jscoverage['/mvc/collection.js'].lineData[61]++;
+    _$jscoverage['/mvc/collection.js'].lineData[63]++;
     S.each(orig, function(m) {
   _$jscoverage['/mvc/collection.js'].functionData[7]++;
-  _$jscoverage['/mvc/collection.js'].lineData[62]++;
+  _$jscoverage['/mvc/collection.js'].lineData[64]++;
   var t = self._add(m, opts);
-  _$jscoverage['/mvc/collection.js'].lineData[63]++;
-  ret = visit6_63_1(ret && t);
+  _$jscoverage['/mvc/collection.js'].lineData[65]++;
+  ret = visit6_65_1(ret && t);
 });
   } else {
-    _$jscoverage['/mvc/collection.js'].lineData[66]++;
+    _$jscoverage['/mvc/collection.js'].lineData[68]++;
     ret = self._add(model, opts);
   }
-  _$jscoverage['/mvc/collection.js'].lineData[68]++;
+  _$jscoverage['/mvc/collection.js'].lineData[70]++;
   return ret;
 }, 
   remove: function(model, opts) {
   _$jscoverage['/mvc/collection.js'].functionData[8]++;
-  _$jscoverage['/mvc/collection.js'].lineData[78]++;
+  _$jscoverage['/mvc/collection.js'].lineData[80]++;
   var self = this;
-  _$jscoverage['/mvc/collection.js'].lineData[79]++;
-  if (visit7_79_1(S.isArray(model))) {
-    _$jscoverage['/mvc/collection.js'].lineData[80]++;
+  _$jscoverage['/mvc/collection.js'].lineData[81]++;
+  if (visit7_81_1(S.isArray(model))) {
+    _$jscoverage['/mvc/collection.js'].lineData[82]++;
     var orig = [].concat(model);
-    _$jscoverage['/mvc/collection.js'].lineData[81]++;
+    _$jscoverage['/mvc/collection.js'].lineData[83]++;
     S.each(orig, function(m) {
   _$jscoverage['/mvc/collection.js'].functionData[9]++;
-  _$jscoverage['/mvc/collection.js'].lineData[82]++;
+  _$jscoverage['/mvc/collection.js'].lineData[84]++;
   self._remove(m, opts);
 });
   } else {
-    _$jscoverage['/mvc/collection.js'].lineData[84]++;
-    if (visit8_84_1(model)) {
-      _$jscoverage['/mvc/collection.js'].lineData[85]++;
+    _$jscoverage['/mvc/collection.js'].lineData[86]++;
+    if (visit8_86_1(model)) {
+      _$jscoverage['/mvc/collection.js'].lineData[87]++;
       self._remove(model, opts);
     }
   }
 }, 
   at: function(i) {
   _$jscoverage['/mvc/collection.js'].functionData[10]++;
-  _$jscoverage['/mvc/collection.js'].lineData[94]++;
+  _$jscoverage['/mvc/collection.js'].lineData[96]++;
   return this.get("models")[i];
 }, 
   _normModel: function(model) {
   _$jscoverage['/mvc/collection.js'].functionData[11]++;
-  _$jscoverage['/mvc/collection.js'].lineData[98]++;
+  _$jscoverage['/mvc/collection.js'].lineData[100]++;
   var ret = true;
-  _$jscoverage['/mvc/collection.js'].lineData[99]++;
-  if (visit9_99_1(!(model instanceof Model))) {
-    _$jscoverage['/mvc/collection.js'].lineData[100]++;
-    var data = model, modelConstructor = this.get("model");
+  _$jscoverage['/mvc/collection.js'].lineData[101]++;
+  if (visit9_101_1(!(model instanceof Model))) {
     _$jscoverage['/mvc/collection.js'].lineData[102]++;
+    var data = model, modelConstructor = this.get("model");
+    _$jscoverage['/mvc/collection.js'].lineData[104]++;
     model = new modelConstructor();
-    _$jscoverage['/mvc/collection.js'].lineData[103]++;
+    _$jscoverage['/mvc/collection.js'].lineData[105]++;
     ret = model.set(data, {
   silent: 1});
   }
-  _$jscoverage['/mvc/collection.js'].lineData[107]++;
-  return visit10_107_1(ret && model);
+  _$jscoverage['/mvc/collection.js'].lineData[109]++;
+  return visit10_109_1(ret && model);
 }, 
   load: function(opts) {
   _$jscoverage['/mvc/collection.js'].functionData[12]++;
-  _$jscoverage['/mvc/collection.js'].lineData[119]++;
-  var self = this;
-  _$jscoverage['/mvc/collection.js'].lineData[120]++;
-  opts = visit11_120_1(opts || {});
   _$jscoverage['/mvc/collection.js'].lineData[121]++;
+  var self = this;
+  _$jscoverage['/mvc/collection.js'].lineData[122]++;
+  opts = visit11_122_1(opts || {});
+  _$jscoverage['/mvc/collection.js'].lineData[123]++;
   var success = opts.success;
-  _$jscoverage['/mvc/collection.js'].lineData[125]++;
+  _$jscoverage['/mvc/collection.js'].lineData[127]++;
   opts.success = function(resp) {
   _$jscoverage['/mvc/collection.js'].functionData[13]++;
-  _$jscoverage['/mvc/collection.js'].lineData[126]++;
-  if (visit12_126_1(resp)) {
-    _$jscoverage['/mvc/collection.js'].lineData[127]++;
+  _$jscoverage['/mvc/collection.js'].lineData[128]++;
+  if (visit12_128_1(resp)) {
+    _$jscoverage['/mvc/collection.js'].lineData[129]++;
     var v = self.get("parse").call(self, resp);
-    _$jscoverage['/mvc/collection.js'].lineData[128]++;
-    if (visit13_128_1(v)) {
-      _$jscoverage['/mvc/collection.js'].lineData[129]++;
+    _$jscoverage['/mvc/collection.js'].lineData[130]++;
+    if (visit13_130_1(v)) {
+      _$jscoverage['/mvc/collection.js'].lineData[131]++;
       self.set("models", v, opts);
     }
   }
-  _$jscoverage['/mvc/collection.js'].lineData[133]++;
+  _$jscoverage['/mvc/collection.js'].lineData[135]++;
   S.each(self.get("models"), function(m) {
   _$jscoverage['/mvc/collection.js'].functionData[14]++;
-  _$jscoverage['/mvc/collection.js'].lineData[134]++;
+  _$jscoverage['/mvc/collection.js'].lineData[136]++;
   m.__isModified = 0;
 });
-  _$jscoverage['/mvc/collection.js'].lineData[136]++;
-  visit14_136_1(success && success.apply(this, arguments));
-};
   _$jscoverage['/mvc/collection.js'].lineData[138]++;
+  visit14_138_1(success && success.apply(this, arguments));
+};
+  _$jscoverage['/mvc/collection.js'].lineData[140]++;
   self.get("sync").call(self, self, 'read', opts);
-  _$jscoverage['/mvc/collection.js'].lineData[139]++;
+  _$jscoverage['/mvc/collection.js'].lineData[141]++;
   return self;
 }, 
   create: function(model, opts) {
   _$jscoverage['/mvc/collection.js'].functionData[15]++;
-  _$jscoverage['/mvc/collection.js'].lineData[152]++;
-  var self = this;
-  _$jscoverage['/mvc/collection.js'].lineData[153]++;
-  opts = visit15_153_1(opts || {});
   _$jscoverage['/mvc/collection.js'].lineData[154]++;
-  model = this._normModel(model);
+  var self = this;
   _$jscoverage['/mvc/collection.js'].lineData[155]++;
-  if (visit16_155_1(model)) {
-    _$jscoverage['/mvc/collection.js'].lineData[156]++;
-    model.addToCollection(self);
-    _$jscoverage['/mvc/collection.js'].lineData[157]++;
-    var success = opts.success;
+  opts = visit15_155_1(opts || {});
+  _$jscoverage['/mvc/collection.js'].lineData[156]++;
+  model = this._normModel(model);
+  _$jscoverage['/mvc/collection.js'].lineData[157]++;
+  if (visit16_157_1(model)) {
     _$jscoverage['/mvc/collection.js'].lineData[158]++;
+    model.addToCollection(self);
+    _$jscoverage['/mvc/collection.js'].lineData[159]++;
+    var success = opts.success;
+    _$jscoverage['/mvc/collection.js'].lineData[160]++;
     opts.success = function() {
   _$jscoverage['/mvc/collection.js'].functionData[16]++;
-  _$jscoverage['/mvc/collection.js'].lineData[159]++;
+  _$jscoverage['/mvc/collection.js'].lineData[161]++;
   self.add(model, opts);
-  _$jscoverage['/mvc/collection.js'].lineData[160]++;
-  visit17_160_1(success && success());
+  _$jscoverage['/mvc/collection.js'].lineData[162]++;
+  visit17_162_1(success && success());
 };
-    _$jscoverage['/mvc/collection.js'].lineData[162]++;
+    _$jscoverage['/mvc/collection.js'].lineData[164]++;
     model.save(opts);
   }
-  _$jscoverage['/mvc/collection.js'].lineData[164]++;
+  _$jscoverage['/mvc/collection.js'].lineData[166]++;
   return model;
 }, 
   _add: function(model, opts) {
   _$jscoverage['/mvc/collection.js'].functionData[17]++;
-  _$jscoverage['/mvc/collection.js'].lineData[168]++;
+  _$jscoverage['/mvc/collection.js'].lineData[170]++;
   model = this._normModel(model);
-  _$jscoverage['/mvc/collection.js'].lineData[169]++;
-  if (visit18_169_1(model)) {
-    _$jscoverage['/mvc/collection.js'].lineData[170]++;
-    opts = visit19_170_1(opts || {});
-    _$jscoverage['/mvc/collection.js'].lineData[171]++;
-    var index = findModelIndex(this.get("models"), model, this.get("comparator"));
+  _$jscoverage['/mvc/collection.js'].lineData[171]++;
+  if (visit18_171_1(model)) {
     _$jscoverage['/mvc/collection.js'].lineData[172]++;
-    this.get("models").splice(index, 0, model);
+    opts = visit19_172_1(opts || {});
     _$jscoverage['/mvc/collection.js'].lineData[173]++;
-    model.addToCollection(this);
+    var index = findModelIndex(this.get("models"), model, this.get("comparator"));
     _$jscoverage['/mvc/collection.js'].lineData[174]++;
-    if (visit20_174_1(!opts['silent'])) {
-      _$jscoverage['/mvc/collection.js'].lineData[175]++;
+    this.get("models").splice(index, 0, model);
+    _$jscoverage['/mvc/collection.js'].lineData[175]++;
+    model.addToCollection(this);
+    _$jscoverage['/mvc/collection.js'].lineData[176]++;
+    if (visit20_176_1(!opts['silent'])) {
+      _$jscoverage['/mvc/collection.js'].lineData[177]++;
       this.fire("add", {
   model: model});
     }
   }
-  _$jscoverage['/mvc/collection.js'].lineData[180]++;
+  _$jscoverage['/mvc/collection.js'].lineData[182]++;
   return model;
 }, 
   _remove: function(model, opts) {
   _$jscoverage['/mvc/collection.js'].functionData[18]++;
-  _$jscoverage['/mvc/collection.js'].lineData[188]++;
-  opts = visit21_188_1(opts || {});
-  _$jscoverage['/mvc/collection.js'].lineData[189]++;
-  var index = S.indexOf(model, this.get("models"));
   _$jscoverage['/mvc/collection.js'].lineData[190]++;
-  if (visit22_190_1(index != -1)) {
-    _$jscoverage['/mvc/collection.js'].lineData[191]++;
+  opts = visit21_190_1(opts || {});
+  _$jscoverage['/mvc/collection.js'].lineData[191]++;
+  var index = S.indexOf(model, this.get("models"));
+  _$jscoverage['/mvc/collection.js'].lineData[192]++;
+  if (visit22_192_1(index != -1)) {
+    _$jscoverage['/mvc/collection.js'].lineData[193]++;
     this.get("models").splice(index, 1);
-    _$jscoverage['/mvc/collection.js'].lineData[192]++;
+    _$jscoverage['/mvc/collection.js'].lineData[194]++;
     model.removeFromCollection(this);
   }
-  _$jscoverage['/mvc/collection.js'].lineData[194]++;
-  if (visit23_194_1(!opts['silent'])) {
-    _$jscoverage['/mvc/collection.js'].lineData[195]++;
+  _$jscoverage['/mvc/collection.js'].lineData[196]++;
+  if (visit23_196_1(!opts['silent'])) {
+    _$jscoverage['/mvc/collection.js'].lineData[197]++;
     this.fire("remove", {
   model: model});
   }
 }, 
   getById: function(id) {
   _$jscoverage['/mvc/collection.js'].functionData[19]++;
-  _$jscoverage['/mvc/collection.js'].lineData[206]++;
+  _$jscoverage['/mvc/collection.js'].lineData[208]++;
   var models = this.get("models");
-  _$jscoverage['/mvc/collection.js'].lineData[207]++;
-  for (var i = 0; visit24_207_1(i < models.length); i++) {
-    _$jscoverage['/mvc/collection.js'].lineData[208]++;
+  _$jscoverage['/mvc/collection.js'].lineData[209]++;
+  for (var i = 0; visit24_209_1(i < models.length); i++) {
+    _$jscoverage['/mvc/collection.js'].lineData[210]++;
     var model = models[i];
-    _$jscoverage['/mvc/collection.js'].lineData[209]++;
-    if (visit25_209_1(model.getId() === id)) {
-      _$jscoverage['/mvc/collection.js'].lineData[210]++;
+    _$jscoverage['/mvc/collection.js'].lineData[211]++;
+    if (visit25_211_1(model.getId() === id)) {
+      _$jscoverage['/mvc/collection.js'].lineData[212]++;
       return model;
     }
   }
-  _$jscoverage['/mvc/collection.js'].lineData[213]++;
+  _$jscoverage['/mvc/collection.js'].lineData[215]++;
   return null;
 }, 
   getByCid: function(cid) {
   _$jscoverage['/mvc/collection.js'].functionData[20]++;
-  _$jscoverage['/mvc/collection.js'].lineData[221]++;
+  _$jscoverage['/mvc/collection.js'].lineData[223]++;
   var models = this.get("models");
-  _$jscoverage['/mvc/collection.js'].lineData[222]++;
-  for (var i = 0; visit26_222_1(i < models.length); i++) {
-    _$jscoverage['/mvc/collection.js'].lineData[223]++;
+  _$jscoverage['/mvc/collection.js'].lineData[224]++;
+  for (var i = 0; visit26_224_1(i < models.length); i++) {
+    _$jscoverage['/mvc/collection.js'].lineData[225]++;
     var model = models[i];
-    _$jscoverage['/mvc/collection.js'].lineData[224]++;
-    if (visit27_224_1(model.get("clientId") === cid)) {
-      _$jscoverage['/mvc/collection.js'].lineData[225]++;
+    _$jscoverage['/mvc/collection.js'].lineData[226]++;
+    if (visit27_226_1(model.get("clientId") === cid)) {
+      _$jscoverage['/mvc/collection.js'].lineData[227]++;
       return model;
     }
   }
-  _$jscoverage['/mvc/collection.js'].lineData[228]++;
+  _$jscoverage['/mvc/collection.js'].lineData[230]++;
   return null;
 }}, {
   ATTRS: {
@@ -784,15 +790,15 @@ KISSY.add("mvc/collection", function(S, Model, Base) {
   models: {
   setter: function(models) {
   _$jscoverage['/mvc/collection.js'].functionData[21]++;
-  _$jscoverage['/mvc/collection.js'].lineData[250]++;
+  _$jscoverage['/mvc/collection.js'].lineData[252]++;
   var prev = this.get("models");
-  _$jscoverage['/mvc/collection.js'].lineData[251]++;
+  _$jscoverage['/mvc/collection.js'].lineData[253]++;
   this.remove(prev, {
   silent: 1});
-  _$jscoverage['/mvc/collection.js'].lineData[252]++;
+  _$jscoverage['/mvc/collection.js'].lineData[254]++;
   this.add(models, {
   silent: 1});
-  _$jscoverage['/mvc/collection.js'].lineData[253]++;
+  _$jscoverage['/mvc/collection.js'].lineData[255]++;
   return this.get("models");
 }, 
   value: []}, 
@@ -802,14 +808,13 @@ KISSY.add("mvc/collection", function(S, Model, Base) {
   sync: {
   value: function() {
   _$jscoverage['/mvc/collection.js'].functionData[22]++;
-  _$jscoverage['/mvc/collection.js'].lineData[277]++;
+  _$jscoverage['/mvc/collection.js'].lineData[279]++;
   S.require("mvc").sync.apply(this, arguments);
 }}, 
   parse: {
   value: function(resp) {
   _$jscoverage['/mvc/collection.js'].functionData[23]++;
-  _$jscoverage['/mvc/collection.js'].lineData[287]++;
+  _$jscoverage['/mvc/collection.js'].lineData[289]++;
   return resp;
 }}}});
-}, {
-  requires: ['./model', 'base']});
+});

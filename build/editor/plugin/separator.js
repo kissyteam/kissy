@@ -1,7 +1,7 @@
 /*
-Copyright 2013, KISSY v1.40dev
+Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Oct 25 16:47
+build time: Nov 27 00:01
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -9,26 +9,12 @@ build time: Oct 25 16:47
  editor/plugin/separator
 */
 
-/**
- * @ignore
- * separator for button
- * @author yiminghe@gmail.com
- */
-KISSY.add("editor/plugin/separator", function (S) {
-    function Separator() {
-    }
-
-    S.augment(Separator, {
-        pluginRenderUI:function (editor) {
-            S.all('<span ' +
-                'class="'+editor.get('prefixCls')+'editor-toolbar-separator">&nbsp;' +
-                '</span>')
-                .appendTo(editor.get("toolBarEl"));
-        }
-    });
-
-    return Separator;
-}, {
-    requires:['editor']
+KISSY.add("editor/plugin/separator", [], function(S) {
+  function Separator() {
+  }
+  S.augment(Separator, {pluginRenderUI:function(editor) {
+    S.all("<span " + 'class="' + editor.get("prefixCls") + 'editor-toolbar-separator">&nbsp;' + "</span>").appendTo(editor.get("toolBarEl"))
+  }});
+  return Separator
 });
 

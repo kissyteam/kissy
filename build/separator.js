@@ -1,7 +1,7 @@
 /*
-Copyright 2013, KISSY v1.40
+Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Sep 17 23:10
+build time: Nov 26 20:54
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -10,61 +10,15 @@ build time: Sep 17 23:10
  separator
 */
 
-/**
- * @ignore
- * separator render def
- * @author yiminghe@gmail.com
- */
-KISSY.add("separator/render", function (S, Control) {
-
-    return Control.getDefaultRender().extend({
-        beforeCreateDom: function (renderData) {
-            renderData.elAttrs.role = 'separator';
-        }
-    });
-
-}, {
-    requires: ['component/control']
+KISSY.add("separator/render", ["component/control"], function(S, require) {
+  var Control = require("component/control");
+  return Control.getDefaultRender().extend({beforeCreateDom:function(renderData) {
+    renderData.elAttrs.role = "separator"
+  }})
 });
-/**
- * @ignore
- * separator def
- * @author yiminghe@gmail.com
- */
-KISSY.add("separator", function (S, Control, SeparatorRender) {
-    /**
-     * separator component for KISSY. xclass: 'separator'.
-     * @extends KISSY.Component.Control
-     * @class KISSY.Separator
-     */
-    return Control.extend({
-    }, {
-        ATTRS: {
-
-            /**
-             * Un-focusable.
-             * readonly.
-             * Defaults to: false.
-             */
-            focusable: {
-                value: false
-            },
-
-            disabled: {
-                value: true
-            },
-
-            handleMouseEvents: {
-                value: false
-            },
-
-            xrender: {
-                value: SeparatorRender
-            }
-        },
-        xclass: 'separator'
-    });
-}, {
-    requires: ['component/control', 'separator/render']
+KISSY.add("separator", ["component/control", "separator/render"], function(S, require) {
+  var Control = require("component/control");
+  var SeparatorRender = require("separator/render");
+  return Control.extend({}, {ATTRS:{focusable:{value:false}, disabled:{value:true}, handleMouseEvents:{value:false}, xrender:{value:SeparatorRender}}, xclass:"separator"})
 });
 

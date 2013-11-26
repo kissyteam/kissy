@@ -4,8 +4,9 @@
  * @author lifesinger@gmail.com, yiminghe@gmail.com
  */
 (function (S, undefined) {
+    var  logger = S.getLogger('s/web');
     var win = S.Env.host,
-        logger = S.getLogger('s/web'),
+
         UA = S.UA,
         doc = win['document'],
         docElem = doc && doc.documentElement,

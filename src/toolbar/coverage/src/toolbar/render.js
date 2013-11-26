@@ -232,6 +232,7 @@ if (! _$jscoverage['/toolbar/render.js']) {
   _$jscoverage['/toolbar/render.js'].lineData[6] = 0;
   _$jscoverage['/toolbar/render.js'].lineData[7] = 0;
   _$jscoverage['/toolbar/render.js'].lineData[9] = 0;
+  _$jscoverage['/toolbar/render.js'].lineData[11] = 0;
 }
 if (! _$jscoverage['/toolbar/render.js'].functionData) {
   _$jscoverage['/toolbar/render.js'].functionData = [];
@@ -242,14 +243,15 @@ if (! _$jscoverage['/toolbar/render.js'].branchData) {
   _$jscoverage['/toolbar/render.js'].branchData = {};
 }
 _$jscoverage['/toolbar/render.js'].lineData[6]++;
-KISSY.add('toolbar/render', function(S, Container) {
+KISSY.add(function(S, require) {
   _$jscoverage['/toolbar/render.js'].functionData[0]++;
   _$jscoverage['/toolbar/render.js'].lineData[7]++;
+  var Container = require('component/container');
+  _$jscoverage['/toolbar/render.js'].lineData[9]++;
   return Container.getDefaultRender().extend({
   beforeCreateDom: function(renderData) {
   _$jscoverage['/toolbar/render.js'].functionData[1]++;
-  _$jscoverage['/toolbar/render.js'].lineData[9]++;
+  _$jscoverage['/toolbar/render.js'].lineData[11]++;
   renderData.elAttrs.role = 'toolbar';
 }});
-}, {
-  requires: ['component/container']});
+});

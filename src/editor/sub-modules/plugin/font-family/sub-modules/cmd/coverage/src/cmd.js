@@ -231,8 +231,9 @@ if (! _$jscoverage['/cmd.js']) {
   _$jscoverage['/cmd.js'].lineData = [];
   _$jscoverage['/cmd.js'].lineData[6] = 0;
   _$jscoverage['/cmd.js'].lineData[7] = 0;
-  _$jscoverage['/cmd.js'].lineData[22] = 0;
+  _$jscoverage['/cmd.js'].lineData[9] = 0;
   _$jscoverage['/cmd.js'].lineData[24] = 0;
+  _$jscoverage['/cmd.js'].lineData[26] = 0;
 }
 if (! _$jscoverage['/cmd.js'].functionData) {
   _$jscoverage['/cmd.js'].functionData = [];
@@ -243,9 +244,11 @@ if (! _$jscoverage['/cmd.js'].branchData) {
   _$jscoverage['/cmd.js'].branchData = {};
 }
 _$jscoverage['/cmd.js'].lineData[6]++;
-KISSY.add("editor/plugin/font-family/cmd", function(S, Editor, Cmd) {
+KISSY.add(function(S, require) {
   _$jscoverage['/cmd.js'].functionData[0]++;
   _$jscoverage['/cmd.js'].lineData[7]++;
+  var Cmd = require('../font/cmd');
+  _$jscoverage['/cmd.js'].lineData[9]++;
   var fontFamilyStyle = {
   element: 'span', 
   styles: {
@@ -254,12 +257,11 @@ KISSY.add("editor/plugin/font-family/cmd", function(S, Editor, Cmd) {
   element: 'font', 
   attributes: {
   'face': null}}]};
-  _$jscoverage['/cmd.js'].lineData[22]++;
+  _$jscoverage['/cmd.js'].lineData[24]++;
   return {
   init: function(editor) {
   _$jscoverage['/cmd.js'].functionData[1]++;
-  _$jscoverage['/cmd.js'].lineData[24]++;
+  _$jscoverage['/cmd.js'].lineData[26]++;
   Cmd.addSelectCmd(editor, "fontFamily", fontFamilyStyle);
 }};
-}, {
-  requires: ['editor', '../font/cmd']});
+});

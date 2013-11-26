@@ -231,7 +231,11 @@ if (! _$jscoverage['/node.js']) {
   _$jscoverage['/node.js'].lineData = [];
   _$jscoverage['/node.js'].lineData[6] = 0;
   _$jscoverage['/node.js'].lineData[7] = 0;
-  _$jscoverage['/node.js'].lineData[13] = 0;
+  _$jscoverage['/node.js'].lineData[8] = 0;
+  _$jscoverage['/node.js'].lineData[9] = 0;
+  _$jscoverage['/node.js'].lineData[10] = 0;
+  _$jscoverage['/node.js'].lineData[12] = 0;
+  _$jscoverage['/node.js'].lineData[18] = 0;
 }
 if (! _$jscoverage['/node.js'].functionData) {
   _$jscoverage['/node.js'].functionData = [];
@@ -241,15 +245,22 @@ if (! _$jscoverage['/node.js'].branchData) {
   _$jscoverage['/node.js'].branchData = {};
 }
 _$jscoverage['/node.js'].lineData[6]++;
-KISSY.add('node', function(S, Node) {
+KISSY.add(function(S, require) {
   _$jscoverage['/node.js'].functionData[0]++;
   _$jscoverage['/node.js'].lineData[7]++;
+  var Node = require('node/base');
+  _$jscoverage['/node.js'].lineData[8]++;
+  require('node/attach');
+  _$jscoverage['/node.js'].lineData[9]++;
+  require('node/override');
+  _$jscoverage['/node.js'].lineData[10]++;
+  require('node/anim');
+  _$jscoverage['/node.js'].lineData[12]++;
   S.mix(S, {
   Node: Node, 
   NodeList: Node, 
   one: Node.one, 
   all: Node.all});
-  _$jscoverage['/node.js'].lineData[13]++;
+  _$jscoverage['/node.js'].lineData[18]++;
   return Node;
-}, {
-  requires: ['node/base', 'node/attach', 'node/override', 'node/anim']});
+});

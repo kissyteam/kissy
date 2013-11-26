@@ -7,8 +7,9 @@ KISSY.add(function (S, require) {
     var AnimBase = require('anim/base'),
         TimerAnim = require('anim/timer');
     var TransitionAnim = require('anim/transition?');
+    var  logger = S.getLogger('s/anim');
     var Utils = AnimBase.Utils,
-        logger = S.getLogger('s/anim'),
+
         defaultConfig = {
             duration: 1,
             easing: 'linear'

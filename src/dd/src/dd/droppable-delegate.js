@@ -3,7 +3,7 @@
  * only one droppable instance for multiple droppable nodes
  * @author yiminghe@gmail.com
  */
-KISSY.add('dd/droppable-delegate', function (S,require) {
+KISSY.add(function (S,require) {
     var Node = require('node'),
         DDM = require('./ddm'),
         Droppable = require('./droppable');

@@ -230,7 +230,11 @@ if (! _$jscoverage['/base.js']) {
   _$jscoverage['/base.js'] = {};
   _$jscoverage['/base.js'].lineData = [];
   _$jscoverage['/base.js'].lineData[6] = 0;
-  _$jscoverage['/base.js'].lineData[12] = 0;
+  _$jscoverage['/base.js'].lineData[7] = 0;
+  _$jscoverage['/base.js'].lineData[8] = 0;
+  _$jscoverage['/base.js'].lineData[9] = 0;
+  _$jscoverage['/base.js'].lineData[10] = 0;
+  _$jscoverage['/base.js'].lineData[17] = 0;
 }
 if (! _$jscoverage['/base.js'].functionData) {
   _$jscoverage['/base.js'].functionData = [];
@@ -240,13 +244,20 @@ if (! _$jscoverage['/base.js'].branchData) {
   _$jscoverage['/base.js'].branchData = {};
 }
 _$jscoverage['/base.js'].lineData[6]++;
-KISSY.add('event/base', function(S, Utils, Object, Observer, Observable) {
+KISSY.add(function(S, require) {
   _$jscoverage['/base.js'].functionData[0]++;
-  _$jscoverage['/base.js'].lineData[12]++;
+  _$jscoverage['/base.js'].lineData[7]++;
+  var Utils = require('./base/utils');
+  _$jscoverage['/base.js'].lineData[8]++;
+  var Object = require('./base/object');
+  _$jscoverage['/base.js'].lineData[9]++;
+  var Observer = require('./base/observer');
+  _$jscoverage['/base.js'].lineData[10]++;
+  var Observable = require('./base/observable');
+  _$jscoverage['/base.js'].lineData[17]++;
   return {
   Utils: Utils, 
   Object: Object, 
   Observer: Observer, 
   Observable: Observable};
-}, {
-  requires: ['./base/utils', './base/object', './base/observer', './base/observable']});
+});

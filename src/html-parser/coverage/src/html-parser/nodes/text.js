@@ -230,26 +230,27 @@ if (! _$jscoverage['/html-parser/nodes/text.js']) {
   _$jscoverage['/html-parser/nodes/text.js'] = {};
   _$jscoverage['/html-parser/nodes/text.js'].lineData = [];
   _$jscoverage['/html-parser/nodes/text.js'].lineData[6] = 0;
-  _$jscoverage['/html-parser/nodes/text.js'].lineData[8] = 0;
+  _$jscoverage['/html-parser/nodes/text.js'].lineData[7] = 0;
   _$jscoverage['/html-parser/nodes/text.js'].lineData[9] = 0;
   _$jscoverage['/html-parser/nodes/text.js'].lineData[10] = 0;
   _$jscoverage['/html-parser/nodes/text.js'].lineData[11] = 0;
-  _$jscoverage['/html-parser/nodes/text.js'].lineData[13] = 0;
+  _$jscoverage['/html-parser/nodes/text.js'].lineData[12] = 0;
   _$jscoverage['/html-parser/nodes/text.js'].lineData[14] = 0;
-  _$jscoverage['/html-parser/nodes/text.js'].lineData[16] = 0;
+  _$jscoverage['/html-parser/nodes/text.js'].lineData[15] = 0;
   _$jscoverage['/html-parser/nodes/text.js'].lineData[17] = 0;
-  _$jscoverage['/html-parser/nodes/text.js'].lineData[20] = 0;
-  _$jscoverage['/html-parser/nodes/text.js'].lineData[22] = 0;
+  _$jscoverage['/html-parser/nodes/text.js'].lineData[18] = 0;
+  _$jscoverage['/html-parser/nodes/text.js'].lineData[21] = 0;
   _$jscoverage['/html-parser/nodes/text.js'].lineData[23] = 0;
   _$jscoverage['/html-parser/nodes/text.js'].lineData[24] = 0;
   _$jscoverage['/html-parser/nodes/text.js'].lineData[25] = 0;
   _$jscoverage['/html-parser/nodes/text.js'].lineData[26] = 0;
   _$jscoverage['/html-parser/nodes/text.js'].lineData[27] = 0;
-  _$jscoverage['/html-parser/nodes/text.js'].lineData[30] = 0;
-  _$jscoverage['/html-parser/nodes/text.js'].lineData[34] = 0;
+  _$jscoverage['/html-parser/nodes/text.js'].lineData[28] = 0;
+  _$jscoverage['/html-parser/nodes/text.js'].lineData[31] = 0;
   _$jscoverage['/html-parser/nodes/text.js'].lineData[35] = 0;
-  _$jscoverage['/html-parser/nodes/text.js'].lineData[37] = 0;
-  _$jscoverage['/html-parser/nodes/text.js'].lineData[42] = 0;
+  _$jscoverage['/html-parser/nodes/text.js'].lineData[36] = 0;
+  _$jscoverage['/html-parser/nodes/text.js'].lineData[38] = 0;
+  _$jscoverage['/html-parser/nodes/text.js'].lineData[43] = 0;
 }
 if (! _$jscoverage['/html-parser/nodes/text.js'].functionData) {
   _$jscoverage['/html-parser/nodes/text.js'].functionData = [];
@@ -260,99 +261,100 @@ if (! _$jscoverage['/html-parser/nodes/text.js'].functionData) {
 }
 if (! _$jscoverage['/html-parser/nodes/text.js'].branchData) {
   _$jscoverage['/html-parser/nodes/text.js'].branchData = {};
-  _$jscoverage['/html-parser/nodes/text.js'].branchData['9'] = [];
-  _$jscoverage['/html-parser/nodes/text.js'].branchData['9'][1] = new BranchData();
-  _$jscoverage['/html-parser/nodes/text.js'].branchData['23'] = [];
-  _$jscoverage['/html-parser/nodes/text.js'].branchData['23'][1] = new BranchData();
-  _$jscoverage['/html-parser/nodes/text.js'].branchData['23'][2] = new BranchData();
+  _$jscoverage['/html-parser/nodes/text.js'].branchData['10'] = [];
+  _$jscoverage['/html-parser/nodes/text.js'].branchData['10'][1] = new BranchData();
   _$jscoverage['/html-parser/nodes/text.js'].branchData['24'] = [];
   _$jscoverage['/html-parser/nodes/text.js'].branchData['24'][1] = new BranchData();
+  _$jscoverage['/html-parser/nodes/text.js'].branchData['24'][2] = new BranchData();
   _$jscoverage['/html-parser/nodes/text.js'].branchData['25'] = [];
   _$jscoverage['/html-parser/nodes/text.js'].branchData['25'][1] = new BranchData();
-  _$jscoverage['/html-parser/nodes/text.js'].branchData['34'] = [];
-  _$jscoverage['/html-parser/nodes/text.js'].branchData['34'][1] = new BranchData();
+  _$jscoverage['/html-parser/nodes/text.js'].branchData['26'] = [];
+  _$jscoverage['/html-parser/nodes/text.js'].branchData['26'][1] = new BranchData();
+  _$jscoverage['/html-parser/nodes/text.js'].branchData['35'] = [];
+  _$jscoverage['/html-parser/nodes/text.js'].branchData['35'][1] = new BranchData();
 }
-_$jscoverage['/html-parser/nodes/text.js'].branchData['34'][1].init(18, 14, 'this.nodeValue');
-function visit239_34_1(result) {
-  _$jscoverage['/html-parser/nodes/text.js'].branchData['34'][1].ranCondition(result);
+_$jscoverage['/html-parser/nodes/text.js'].branchData['35'][1].init(17, 14, 'this.nodeValue');
+function visit239_35_1(result) {
+  _$jscoverage['/html-parser/nodes/text.js'].branchData['35'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/nodes/text.js'].branchData['25'][1].init(26, 12, 'this !== ret');
-function visit238_25_1(result) {
+}_$jscoverage['/html-parser/nodes/text.js'].branchData['26'][1].init(25, 12, 'this !== ret');
+function visit238_26_1(result) {
+  _$jscoverage['/html-parser/nodes/text.js'].branchData['26'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/html-parser/nodes/text.js'].branchData['25'][1].init(21, 3, 'ret');
+function visit237_25_1(result) {
   _$jscoverage['/html-parser/nodes/text.js'].branchData['25'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/nodes/text.js'].branchData['24'][1].init(22, 3, 'ret');
-function visit237_24_1(result) {
+}_$jscoverage['/html-parser/nodes/text.js'].branchData['24'][2].init(50, 36, '(ret = filter.onText(this)) !== false');
+function visit236_24_2(result) {
+  _$jscoverage['/html-parser/nodes/text.js'].branchData['24'][2].ranCondition(result);
+  return result;
+}_$jscoverage['/html-parser/nodes/text.js'].branchData['24'][1].init(38, 48, '!filter || (ret = filter.onText(this)) !== false');
+function visit235_24_1(result) {
   _$jscoverage['/html-parser/nodes/text.js'].branchData['24'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/nodes/text.js'].branchData['23'][2].init(52, 36, '(ret = filter.onText(this)) !== false');
-function visit236_23_2(result) {
-  _$jscoverage['/html-parser/nodes/text.js'].branchData['23'][2].ranCondition(result);
-  return result;
-}_$jscoverage['/html-parser/nodes/text.js'].branchData['23'][1].init(40, 48, '!filter || (ret = filter.onText(this)) !== false');
-function visit235_23_1(result) {
-  _$jscoverage['/html-parser/nodes/text.js'].branchData['23'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/html-parser/nodes/text.js'].branchData['9'][1].init(14, 20, 'typeof v == \'string\'');
-function visit234_9_1(result) {
-  _$jscoverage['/html-parser/nodes/text.js'].branchData['9'][1].ranCondition(result);
+}_$jscoverage['/html-parser/nodes/text.js'].branchData['10'][1].init(13, 20, 'typeof v == \'string\'');
+function visit234_10_1(result) {
+  _$jscoverage['/html-parser/nodes/text.js'].branchData['10'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/nodes/text.js'].lineData[6]++;
-KISSY.add("html-parser/nodes/text", function(S, Node) {
+KISSY.add(function(S, require) {
   _$jscoverage['/html-parser/nodes/text.js'].functionData[0]++;
-  _$jscoverage['/html-parser/nodes/text.js'].lineData[8]++;
+  _$jscoverage['/html-parser/nodes/text.js'].lineData[7]++;
+  var Node = require('./node');
+  _$jscoverage['/html-parser/nodes/text.js'].lineData[9]++;
   function Text(v) {
     _$jscoverage['/html-parser/nodes/text.js'].functionData[1]++;
-    _$jscoverage['/html-parser/nodes/text.js'].lineData[9]++;
-    if (visit234_9_1(typeof v == 'string')) {
-      _$jscoverage['/html-parser/nodes/text.js'].lineData[10]++;
-      this.nodeValue = v;
+    _$jscoverage['/html-parser/nodes/text.js'].lineData[10]++;
+    if (visit234_10_1(typeof v == 'string')) {
       _$jscoverage['/html-parser/nodes/text.js'].lineData[11]++;
+      this.nodeValue = v;
+      _$jscoverage['/html-parser/nodes/text.js'].lineData[12]++;
       Text.superclass.constructor.apply(this, [null, -1, -1]);
     } else {
-      _$jscoverage['/html-parser/nodes/text.js'].lineData[13]++;
-      Text.superclass.constructor.apply(this, arguments);
       _$jscoverage['/html-parser/nodes/text.js'].lineData[14]++;
+      Text.superclass.constructor.apply(this, arguments);
+      _$jscoverage['/html-parser/nodes/text.js'].lineData[15]++;
       this.nodeValue = this.toHtml();
     }
-    _$jscoverage['/html-parser/nodes/text.js'].lineData[16]++;
-    this.nodeType = 3;
     _$jscoverage['/html-parser/nodes/text.js'].lineData[17]++;
+    this.nodeType = 3;
+    _$jscoverage['/html-parser/nodes/text.js'].lineData[18]++;
     this.nodeName = "#text";
   }
-  _$jscoverage['/html-parser/nodes/text.js'].lineData[20]++;
+  _$jscoverage['/html-parser/nodes/text.js'].lineData[21]++;
   S.extend(Text, Node, {
   writeHtml: function(writer, filter) {
   _$jscoverage['/html-parser/nodes/text.js'].functionData[2]++;
-  _$jscoverage['/html-parser/nodes/text.js'].lineData[22]++;
-  var ret;
   _$jscoverage['/html-parser/nodes/text.js'].lineData[23]++;
-  if (visit235_23_1(!filter || visit236_23_2((ret = filter.onText(this)) !== false))) {
-    _$jscoverage['/html-parser/nodes/text.js'].lineData[24]++;
-    if (visit237_24_1(ret)) {
-      _$jscoverage['/html-parser/nodes/text.js'].lineData[25]++;
-      if (visit238_25_1(this !== ret)) {
-        _$jscoverage['/html-parser/nodes/text.js'].lineData[26]++;
-        ret.writeHtml(writer, filter);
+  var ret;
+  _$jscoverage['/html-parser/nodes/text.js'].lineData[24]++;
+  if (visit235_24_1(!filter || visit236_24_2((ret = filter.onText(this)) !== false))) {
+    _$jscoverage['/html-parser/nodes/text.js'].lineData[25]++;
+    if (visit237_25_1(ret)) {
+      _$jscoverage['/html-parser/nodes/text.js'].lineData[26]++;
+      if (visit238_26_1(this !== ret)) {
         _$jscoverage['/html-parser/nodes/text.js'].lineData[27]++;
+        ret.writeHtml(writer, filter);
+        _$jscoverage['/html-parser/nodes/text.js'].lineData[28]++;
         return;
       }
     }
-    _$jscoverage['/html-parser/nodes/text.js'].lineData[30]++;
+    _$jscoverage['/html-parser/nodes/text.js'].lineData[31]++;
     writer.text(this.toHtml());
   }
 }, 
   toHtml: function() {
   _$jscoverage['/html-parser/nodes/text.js'].functionData[3]++;
-  _$jscoverage['/html-parser/nodes/text.js'].lineData[34]++;
-  if (visit239_34_1(this.nodeValue)) {
-    _$jscoverage['/html-parser/nodes/text.js'].lineData[35]++;
+  _$jscoverage['/html-parser/nodes/text.js'].lineData[35]++;
+  if (visit239_35_1(this.nodeValue)) {
+    _$jscoverage['/html-parser/nodes/text.js'].lineData[36]++;
     return this.nodeValue;
   } else {
-    _$jscoverage['/html-parser/nodes/text.js'].lineData[37]++;
+    _$jscoverage['/html-parser/nodes/text.js'].lineData[38]++;
     return Text.superclass.toHtml.apply(this, arguments);
   }
 }});
-  _$jscoverage['/html-parser/nodes/text.js'].lineData[42]++;
+  _$jscoverage['/html-parser/nodes/text.js'].lineData[43]++;
   return Text;
-}, {
-  requires: ['./node']});
+});

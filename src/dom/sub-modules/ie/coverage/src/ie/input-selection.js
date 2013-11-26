@@ -231,63 +231,64 @@ if (! _$jscoverage['/ie/input-selection.js']) {
   _$jscoverage['/ie/input-selection.js'].lineData = [];
   _$jscoverage['/ie/input-selection.js'].lineData[6] = 0;
   _$jscoverage['/ie/input-selection.js'].lineData[7] = 0;
-  _$jscoverage['/ie/input-selection.js'].lineData[14] = 0;
-  _$jscoverage['/ie/input-selection.js'].lineData[16] = 0;
-  _$jscoverage['/ie/input-selection.js'].lineData[18] = 0;
+  _$jscoverage['/ie/input-selection.js'].lineData[8] = 0;
+  _$jscoverage['/ie/input-selection.js'].lineData[15] = 0;
+  _$jscoverage['/ie/input-selection.js'].lineData[17] = 0;
   _$jscoverage['/ie/input-selection.js'].lineData[19] = 0;
-  _$jscoverage['/ie/input-selection.js'].lineData[21] = 0;
+  _$jscoverage['/ie/input-selection.js'].lineData[20] = 0;
   _$jscoverage['/ie/input-selection.js'].lineData[22] = 0;
   _$jscoverage['/ie/input-selection.js'].lineData[23] = 0;
   _$jscoverage['/ie/input-selection.js'].lineData[24] = 0;
-  _$jscoverage['/ie/input-selection.js'].lineData[26] = 0;
-  _$jscoverage['/ie/input-selection.js'].lineData[30] = 0;
-  _$jscoverage['/ie/input-selection.js'].lineData[34] = 0;
-  _$jscoverage['/ie/input-selection.js'].lineData[36] = 0;
-  _$jscoverage['/ie/input-selection.js'].lineData[38] = 0;
+  _$jscoverage['/ie/input-selection.js'].lineData[25] = 0;
+  _$jscoverage['/ie/input-selection.js'].lineData[27] = 0;
+  _$jscoverage['/ie/input-selection.js'].lineData[31] = 0;
+  _$jscoverage['/ie/input-selection.js'].lineData[35] = 0;
+  _$jscoverage['/ie/input-selection.js'].lineData[37] = 0;
   _$jscoverage['/ie/input-selection.js'].lineData[39] = 0;
-  _$jscoverage['/ie/input-selection.js'].lineData[41] = 0;
+  _$jscoverage['/ie/input-selection.js'].lineData[40] = 0;
   _$jscoverage['/ie/input-selection.js'].lineData[42] = 0;
   _$jscoverage['/ie/input-selection.js'].lineData[43] = 0;
   _$jscoverage['/ie/input-selection.js'].lineData[44] = 0;
-  _$jscoverage['/ie/input-selection.js'].lineData[46] = 0;
-  _$jscoverage['/ie/input-selection.js'].lineData[51] = 0;
-  _$jscoverage['/ie/input-selection.js'].lineData[55] = 0;
+  _$jscoverage['/ie/input-selection.js'].lineData[45] = 0;
+  _$jscoverage['/ie/input-selection.js'].lineData[47] = 0;
+  _$jscoverage['/ie/input-selection.js'].lineData[52] = 0;
   _$jscoverage['/ie/input-selection.js'].lineData[56] = 0;
-  _$jscoverage['/ie/input-selection.js'].lineData[60] = 0;
+  _$jscoverage['/ie/input-selection.js'].lineData[57] = 0;
   _$jscoverage['/ie/input-selection.js'].lineData[61] = 0;
   _$jscoverage['/ie/input-selection.js'].lineData[62] = 0;
   _$jscoverage['/ie/input-selection.js'].lineData[63] = 0;
   _$jscoverage['/ie/input-selection.js'].lineData[64] = 0;
-  _$jscoverage['/ie/input-selection.js'].lineData[67] = 0;
-  _$jscoverage['/ie/input-selection.js'].lineData[70] = 0;
+  _$jscoverage['/ie/input-selection.js'].lineData[65] = 0;
+  _$jscoverage['/ie/input-selection.js'].lineData[68] = 0;
   _$jscoverage['/ie/input-selection.js'].lineData[71] = 0;
-  _$jscoverage['/ie/input-selection.js'].lineData[74] = 0;
-  _$jscoverage['/ie/input-selection.js'].lineData[76] = 0;
+  _$jscoverage['/ie/input-selection.js'].lineData[72] = 0;
+  _$jscoverage['/ie/input-selection.js'].lineData[75] = 0;
   _$jscoverage['/ie/input-selection.js'].lineData[77] = 0;
   _$jscoverage['/ie/input-selection.js'].lineData[78] = 0;
   _$jscoverage['/ie/input-selection.js'].lineData[79] = 0;
-  _$jscoverage['/ie/input-selection.js'].lineData[81] = 0;
-  _$jscoverage['/ie/input-selection.js'].lineData[86] = 0;
+  _$jscoverage['/ie/input-selection.js'].lineData[80] = 0;
+  _$jscoverage['/ie/input-selection.js'].lineData[82] = 0;
   _$jscoverage['/ie/input-selection.js'].lineData[87] = 0;
   _$jscoverage['/ie/input-selection.js'].lineData[88] = 0;
   _$jscoverage['/ie/input-selection.js'].lineData[89] = 0;
   _$jscoverage['/ie/input-selection.js'].lineData[90] = 0;
-  _$jscoverage['/ie/input-selection.js'].lineData[92] = 0;
+  _$jscoverage['/ie/input-selection.js'].lineData[91] = 0;
   _$jscoverage['/ie/input-selection.js'].lineData[93] = 0;
   _$jscoverage['/ie/input-selection.js'].lineData[94] = 0;
   _$jscoverage['/ie/input-selection.js'].lineData[95] = 0;
-  _$jscoverage['/ie/input-selection.js'].lineData[97] = 0;
-  _$jscoverage['/ie/input-selection.js'].lineData[99] = 0;
-  _$jscoverage['/ie/input-selection.js'].lineData[104] = 0;
+  _$jscoverage['/ie/input-selection.js'].lineData[96] = 0;
+  _$jscoverage['/ie/input-selection.js'].lineData[98] = 0;
+  _$jscoverage['/ie/input-selection.js'].lineData[100] = 0;
   _$jscoverage['/ie/input-selection.js'].lineData[105] = 0;
   _$jscoverage['/ie/input-selection.js'].lineData[106] = 0;
-  _$jscoverage['/ie/input-selection.js'].lineData[110] = 0;
+  _$jscoverage['/ie/input-selection.js'].lineData[107] = 0;
   _$jscoverage['/ie/input-selection.js'].lineData[111] = 0;
-  _$jscoverage['/ie/input-selection.js'].lineData[114] = 0;
-  _$jscoverage['/ie/input-selection.js'].lineData[117] = 0;
+  _$jscoverage['/ie/input-selection.js'].lineData[112] = 0;
+  _$jscoverage['/ie/input-selection.js'].lineData[115] = 0;
   _$jscoverage['/ie/input-selection.js'].lineData[118] = 0;
-  _$jscoverage['/ie/input-selection.js'].lineData[121] = 0;
-  _$jscoverage['/ie/input-selection.js'].lineData[123] = 0;
+  _$jscoverage['/ie/input-selection.js'].lineData[119] = 0;
+  _$jscoverage['/ie/input-selection.js'].lineData[122] = 0;
+  _$jscoverage['/ie/input-selection.js'].lineData[124] = 0;
 }
 if (! _$jscoverage['/ie/input-selection.js'].functionData) {
   _$jscoverage['/ie/input-selection.js'].functionData = [];
@@ -304,241 +305,242 @@ if (! _$jscoverage['/ie/input-selection.js'].functionData) {
 }
 if (! _$jscoverage['/ie/input-selection.js'].branchData) {
   _$jscoverage['/ie/input-selection.js'].branchData = {};
-  _$jscoverage['/ie/input-selection.js'].branchData['18'] = [];
-  _$jscoverage['/ie/input-selection.js'].branchData['18'][1] = new BranchData();
-  _$jscoverage['/ie/input-selection.js'].branchData['23'] = [];
-  _$jscoverage['/ie/input-selection.js'].branchData['23'][1] = new BranchData();
-  _$jscoverage['/ie/input-selection.js'].branchData['38'] = [];
-  _$jscoverage['/ie/input-selection.js'].branchData['38'][1] = new BranchData();
-  _$jscoverage['/ie/input-selection.js'].branchData['43'] = [];
-  _$jscoverage['/ie/input-selection.js'].branchData['43'][1] = new BranchData();
-  _$jscoverage['/ie/input-selection.js'].branchData['60'] = [];
-  _$jscoverage['/ie/input-selection.js'].branchData['60'][1] = new BranchData();
-  _$jscoverage['/ie/input-selection.js'].branchData['63'] = [];
-  _$jscoverage['/ie/input-selection.js'].branchData['63'][1] = new BranchData();
-  _$jscoverage['/ie/input-selection.js'].branchData['76'] = [];
-  _$jscoverage['/ie/input-selection.js'].branchData['76'][1] = new BranchData();
-  _$jscoverage['/ie/input-selection.js'].branchData['89'] = [];
-  _$jscoverage['/ie/input-selection.js'].branchData['89'][1] = new BranchData();
-  _$jscoverage['/ie/input-selection.js'].branchData['92'] = [];
-  _$jscoverage['/ie/input-selection.js'].branchData['92'][1] = new BranchData();
-  _$jscoverage['/ie/input-selection.js'].branchData['94'] = [];
-  _$jscoverage['/ie/input-selection.js'].branchData['94'][1] = new BranchData();
-  _$jscoverage['/ie/input-selection.js'].branchData['105'] = [];
-  _$jscoverage['/ie/input-selection.js'].branchData['105'][1] = new BranchData();
-  _$jscoverage['/ie/input-selection.js'].branchData['110'] = [];
-  _$jscoverage['/ie/input-selection.js'].branchData['110'][1] = new BranchData();
-  _$jscoverage['/ie/input-selection.js'].branchData['117'] = [];
-  _$jscoverage['/ie/input-selection.js'].branchData['117'][1] = new BranchData();
+  _$jscoverage['/ie/input-selection.js'].branchData['19'] = [];
+  _$jscoverage['/ie/input-selection.js'].branchData['19'][1] = new BranchData();
+  _$jscoverage['/ie/input-selection.js'].branchData['24'] = [];
+  _$jscoverage['/ie/input-selection.js'].branchData['24'][1] = new BranchData();
+  _$jscoverage['/ie/input-selection.js'].branchData['39'] = [];
+  _$jscoverage['/ie/input-selection.js'].branchData['39'][1] = new BranchData();
+  _$jscoverage['/ie/input-selection.js'].branchData['44'] = [];
+  _$jscoverage['/ie/input-selection.js'].branchData['44'][1] = new BranchData();
+  _$jscoverage['/ie/input-selection.js'].branchData['61'] = [];
+  _$jscoverage['/ie/input-selection.js'].branchData['61'][1] = new BranchData();
+  _$jscoverage['/ie/input-selection.js'].branchData['64'] = [];
+  _$jscoverage['/ie/input-selection.js'].branchData['64'][1] = new BranchData();
+  _$jscoverage['/ie/input-selection.js'].branchData['77'] = [];
+  _$jscoverage['/ie/input-selection.js'].branchData['77'][1] = new BranchData();
+  _$jscoverage['/ie/input-selection.js'].branchData['90'] = [];
+  _$jscoverage['/ie/input-selection.js'].branchData['90'][1] = new BranchData();
+  _$jscoverage['/ie/input-selection.js'].branchData['93'] = [];
+  _$jscoverage['/ie/input-selection.js'].branchData['93'][1] = new BranchData();
+  _$jscoverage['/ie/input-selection.js'].branchData['95'] = [];
+  _$jscoverage['/ie/input-selection.js'].branchData['95'][1] = new BranchData();
+  _$jscoverage['/ie/input-selection.js'].branchData['106'] = [];
+  _$jscoverage['/ie/input-selection.js'].branchData['106'][1] = new BranchData();
+  _$jscoverage['/ie/input-selection.js'].branchData['111'] = [];
+  _$jscoverage['/ie/input-selection.js'].branchData['111'][1] = new BranchData();
+  _$jscoverage['/ie/input-selection.js'].branchData['118'] = [];
+  _$jscoverage['/ie/input-selection.js'].branchData['118'][1] = new BranchData();
 }
-_$jscoverage['/ie/input-selection.js'].branchData['117'][1].init(337, 21, 'testRange.text == ret');
-function visit50_117_1(result) {
-  _$jscoverage['/ie/input-selection.js'].branchData['117'][1].ranCondition(result);
+_$jscoverage['/ie/input-selection.js'].branchData['118'][1].init(325, 21, 'testRange.text == ret');
+function visit50_118_1(result) {
+  _$jscoverage['/ie/input-selection.js'].branchData['118'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/input-selection.js'].branchData['110'][1].init(129, 56, 'testRange.compareEndPoints(\'StartToEnd\', testRange) == 0');
-function visit49_110_1(result) {
-  _$jscoverage['/ie/input-selection.js'].branchData['110'][1].ranCondition(result);
+}_$jscoverage['/ie/input-selection.js'].branchData['111'][1].init(124, 56, 'testRange.compareEndPoints(\'StartToEnd\', testRange) == 0');
+function visit49_111_1(result) {
+  _$jscoverage['/ie/input-selection.js'].branchData['111'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/input-selection.js'].branchData['105'][1].init(14, 23, 'elem.type == "textarea"');
-function visit48_105_1(result) {
-  _$jscoverage['/ie/input-selection.js'].branchData['105'][1].ranCondition(result);
+}_$jscoverage['/ie/input-selection.js'].branchData['106'][1].init(13, 23, 'elem.type == "textarea"');
+function visit48_106_1(result) {
+  _$jscoverage['/ie/input-selection.js'].branchData['106'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/input-selection.js'].branchData['94'][1].init(103, 5, 's > e');
-function visit47_94_1(result) {
-  _$jscoverage['/ie/input-selection.js'].branchData['94'][1].ranCondition(result);
+}_$jscoverage['/ie/input-selection.js'].branchData['95'][1].init(101, 5, 's > e');
+function visit47_95_1(result) {
+  _$jscoverage['/ie/input-selection.js'].branchData['95'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/input-selection.js'].branchData['92'][1].init(149, 23, 'elem.type == "textarea"');
-function visit46_92_1(result) {
-  _$jscoverage['/ie/input-selection.js'].branchData['92'][1].ranCondition(result);
+}_$jscoverage['/ie/input-selection.js'].branchData['93'][1].init(143, 23, 'elem.type == "textarea"');
+function visit46_93_1(result) {
+  _$jscoverage['/ie/input-selection.js'].branchData['93'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/input-selection.js'].branchData['89'][1].init(86, 12, 'start == end');
-function visit45_89_1(result) {
-  _$jscoverage['/ie/input-selection.js'].branchData['89'][1].ranCondition(result);
+}_$jscoverage['/ie/input-selection.js'].branchData['90'][1].init(83, 12, 'start == end');
+function visit45_90_1(result) {
+  _$jscoverage['/ie/input-selection.js'].branchData['90'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/input-selection.js'].branchData['76'][1].init(69, 23, 'elem.type == \'textarea\'');
-function visit44_76_1(result) {
-  _$jscoverage['/ie/input-selection.js'].branchData['76'][1].ranCondition(result);
+}_$jscoverage['/ie/input-selection.js'].branchData['77'][1].init(67, 23, 'elem.type == \'textarea\'');
+function visit44_77_1(result) {
+  _$jscoverage['/ie/input-selection.js'].branchData['77'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/input-selection.js'].branchData['63'][1].init(145, 10, 'includeEnd');
-function visit43_63_1(result) {
-  _$jscoverage['/ie/input-selection.js'].branchData['63'][1].ranCondition(result);
+}_$jscoverage['/ie/input-selection.js'].branchData['64'][1].init(142, 10, 'includeEnd');
+function visit43_64_1(result) {
+  _$jscoverage['/ie/input-selection.js'].branchData['64'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/input-selection.js'].branchData['60'][1].init(162, 34, 'inputRange.inRange(selectionRange)');
-function visit42_60_1(result) {
-  _$jscoverage['/ie/input-selection.js'].branchData['60'][1].ranCondition(result);
+}_$jscoverage['/ie/input-selection.js'].branchData['61'][1].init(157, 34, 'inputRange.inRange(selectionRange)');
+function visit42_61_1(result) {
+  _$jscoverage['/ie/input-selection.js'].branchData['61'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/input-selection.js'].branchData['43'][1].init(245, 11, 'start > end');
-function visit41_43_1(result) {
-  _$jscoverage['/ie/input-selection.js'].branchData['43'][1].ranCondition(result);
+}_$jscoverage['/ie/input-selection.js'].branchData['44'][1].init(240, 11, 'start > end');
+function visit41_44_1(result) {
+  _$jscoverage['/ie/input-selection.js'].branchData['44'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/input-selection.js'].branchData['38'][1].init(128, 34, 'inputRange.inRange(selectionRange)');
-function visit40_38_1(result) {
-  _$jscoverage['/ie/input-selection.js'].branchData['38'][1].ranCondition(result);
+}_$jscoverage['/ie/input-selection.js'].branchData['39'][1].init(125, 34, 'inputRange.inRange(selectionRange)');
+function visit40_39_1(result) {
+  _$jscoverage['/ie/input-selection.js'].branchData['39'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/input-selection.js'].branchData['23'][1].init(250, 11, 'start > end');
-function visit39_23_1(result) {
-  _$jscoverage['/ie/input-selection.js'].branchData['23'][1].ranCondition(result);
+}_$jscoverage['/ie/input-selection.js'].branchData['24'][1].init(245, 11, 'start > end');
+function visit39_24_1(result) {
+  _$jscoverage['/ie/input-selection.js'].branchData['24'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/input-selection.js'].branchData['18'][1].init(128, 34, 'inputRange.inRange(selectionRange)');
-function visit38_18_1(result) {
-  _$jscoverage['/ie/input-selection.js'].branchData['18'][1].ranCondition(result);
+}_$jscoverage['/ie/input-selection.js'].branchData['19'][1].init(125, 34, 'inputRange.inRange(selectionRange)');
+function visit38_19_1(result) {
+  _$jscoverage['/ie/input-selection.js'].branchData['19'][1].ranCondition(result);
   return result;
 }_$jscoverage['/ie/input-selection.js'].lineData[6]++;
-KISSY.add('dom/ie/input-selection', function(S, Dom) {
+KISSY.add(function(S, require) {
   _$jscoverage['/ie/input-selection.js'].functionData[0]++;
   _$jscoverage['/ie/input-selection.js'].lineData[7]++;
+  var Dom = require('dom/base');
+  _$jscoverage['/ie/input-selection.js'].lineData[8]++;
   var propHooks = Dom._propHooks;
-  _$jscoverage['/ie/input-selection.js'].lineData[14]++;
+  _$jscoverage['/ie/input-selection.js'].lineData[15]++;
   propHooks.selectionStart = {
   set: function(elem, start) {
   _$jscoverage['/ie/input-selection.js'].functionData[1]++;
-  _$jscoverage['/ie/input-selection.js'].lineData[16]++;
+  _$jscoverage['/ie/input-selection.js'].lineData[17]++;
   var selectionRange = getSelectionRange(elem), inputRange = getInputRange(elem);
-  _$jscoverage['/ie/input-selection.js'].lineData[18]++;
-  if (visit38_18_1(inputRange.inRange(selectionRange))) {
-    _$jscoverage['/ie/input-selection.js'].lineData[19]++;
+  _$jscoverage['/ie/input-selection.js'].lineData[19]++;
+  if (visit38_19_1(inputRange.inRange(selectionRange))) {
+    _$jscoverage['/ie/input-selection.js'].lineData[20]++;
     var end = getStartEnd(elem, 1)[1], diff = getMovedDistance(elem, start, end);
-    _$jscoverage['/ie/input-selection.js'].lineData[21]++;
-    selectionRange.collapse(false);
     _$jscoverage['/ie/input-selection.js'].lineData[22]++;
-    selectionRange.moveStart('character', -diff);
+    selectionRange.collapse(false);
     _$jscoverage['/ie/input-selection.js'].lineData[23]++;
-    if (visit39_23_1(start > end)) {
-      _$jscoverage['/ie/input-selection.js'].lineData[24]++;
+    selectionRange.moveStart('character', -diff);
+    _$jscoverage['/ie/input-selection.js'].lineData[24]++;
+    if (visit39_24_1(start > end)) {
+      _$jscoverage['/ie/input-selection.js'].lineData[25]++;
       selectionRange.collapse(true);
     }
-    _$jscoverage['/ie/input-selection.js'].lineData[26]++;
+    _$jscoverage['/ie/input-selection.js'].lineData[27]++;
     selectionRange.select();
   }
 }, 
   get: function(elem) {
   _$jscoverage['/ie/input-selection.js'].functionData[2]++;
-  _$jscoverage['/ie/input-selection.js'].lineData[30]++;
+  _$jscoverage['/ie/input-selection.js'].lineData[31]++;
   return getStartEnd(elem)[0];
 }};
-  _$jscoverage['/ie/input-selection.js'].lineData[34]++;
+  _$jscoverage['/ie/input-selection.js'].lineData[35]++;
   propHooks.selectionEnd = {
   set: function(elem, end) {
   _$jscoverage['/ie/input-selection.js'].functionData[3]++;
-  _$jscoverage['/ie/input-selection.js'].lineData[36]++;
+  _$jscoverage['/ie/input-selection.js'].lineData[37]++;
   var selectionRange = getSelectionRange(elem), inputRange = getInputRange(elem);
-  _$jscoverage['/ie/input-selection.js'].lineData[38]++;
-  if (visit40_38_1(inputRange.inRange(selectionRange))) {
-    _$jscoverage['/ie/input-selection.js'].lineData[39]++;
+  _$jscoverage['/ie/input-selection.js'].lineData[39]++;
+  if (visit40_39_1(inputRange.inRange(selectionRange))) {
+    _$jscoverage['/ie/input-selection.js'].lineData[40]++;
     var start = getStartEnd(elem)[0], diff = getMovedDistance(elem, start, end);
-    _$jscoverage['/ie/input-selection.js'].lineData[41]++;
-    selectionRange.collapse(true);
     _$jscoverage['/ie/input-selection.js'].lineData[42]++;
-    selectionRange.moveEnd('character', diff);
+    selectionRange.collapse(true);
     _$jscoverage['/ie/input-selection.js'].lineData[43]++;
-    if (visit41_43_1(start > end)) {
-      _$jscoverage['/ie/input-selection.js'].lineData[44]++;
+    selectionRange.moveEnd('character', diff);
+    _$jscoverage['/ie/input-selection.js'].lineData[44]++;
+    if (visit41_44_1(start > end)) {
+      _$jscoverage['/ie/input-selection.js'].lineData[45]++;
       selectionRange.collapse(false);
     }
-    _$jscoverage['/ie/input-selection.js'].lineData[46]++;
+    _$jscoverage['/ie/input-selection.js'].lineData[47]++;
     selectionRange.select();
   }
 }, 
   get: function(elem) {
   _$jscoverage['/ie/input-selection.js'].functionData[4]++;
-  _$jscoverage['/ie/input-selection.js'].lineData[51]++;
+  _$jscoverage['/ie/input-selection.js'].lineData[52]++;
   return getStartEnd(elem, 1)[1];
 }};
-  _$jscoverage['/ie/input-selection.js'].lineData[55]++;
+  _$jscoverage['/ie/input-selection.js'].lineData[56]++;
   function getStartEnd(elem, includeEnd) {
     _$jscoverage['/ie/input-selection.js'].functionData[5]++;
-    _$jscoverage['/ie/input-selection.js'].lineData[56]++;
+    _$jscoverage['/ie/input-selection.js'].lineData[57]++;
     var start = 0, end = 0, selectionRange = getSelectionRange(elem), inputRange = getInputRange(elem);
-    _$jscoverage['/ie/input-selection.js'].lineData[60]++;
-    if (visit42_60_1(inputRange.inRange(selectionRange))) {
-      _$jscoverage['/ie/input-selection.js'].lineData[61]++;
-      inputRange.setEndPoint('EndToStart', selectionRange);
+    _$jscoverage['/ie/input-selection.js'].lineData[61]++;
+    if (visit42_61_1(inputRange.inRange(selectionRange))) {
       _$jscoverage['/ie/input-selection.js'].lineData[62]++;
-      start = getRangeText(elem, inputRange).length;
+      inputRange.setEndPoint('EndToStart', selectionRange);
       _$jscoverage['/ie/input-selection.js'].lineData[63]++;
-      if (visit43_63_1(includeEnd)) {
-        _$jscoverage['/ie/input-selection.js'].lineData[64]++;
+      start = getRangeText(elem, inputRange).length;
+      _$jscoverage['/ie/input-selection.js'].lineData[64]++;
+      if (visit43_64_1(includeEnd)) {
+        _$jscoverage['/ie/input-selection.js'].lineData[65]++;
         end = start + getRangeText(elem, selectionRange).length;
       }
     }
-    _$jscoverage['/ie/input-selection.js'].lineData[67]++;
+    _$jscoverage['/ie/input-selection.js'].lineData[68]++;
     return [start, end];
   }
-  _$jscoverage['/ie/input-selection.js'].lineData[70]++;
+  _$jscoverage['/ie/input-selection.js'].lineData[71]++;
   function getSelectionRange(elem) {
     _$jscoverage['/ie/input-selection.js'].functionData[6]++;
-    _$jscoverage['/ie/input-selection.js'].lineData[71]++;
+    _$jscoverage['/ie/input-selection.js'].lineData[72]++;
     return elem.ownerDocument.selection.createRange();
   }
-  _$jscoverage['/ie/input-selection.js'].lineData[74]++;
+  _$jscoverage['/ie/input-selection.js'].lineData[75]++;
   function getInputRange(elem) {
     _$jscoverage['/ie/input-selection.js'].functionData[7]++;
-    _$jscoverage['/ie/input-selection.js'].lineData[76]++;
-    if (visit44_76_1(elem.type == 'textarea')) {
-      _$jscoverage['/ie/input-selection.js'].lineData[77]++;
-      var range = elem.document.body.createTextRange();
+    _$jscoverage['/ie/input-selection.js'].lineData[77]++;
+    if (visit44_77_1(elem.type == 'textarea')) {
       _$jscoverage['/ie/input-selection.js'].lineData[78]++;
-      range.moveToElementText(elem);
+      var range = elem.document.body.createTextRange();
       _$jscoverage['/ie/input-selection.js'].lineData[79]++;
+      range.moveToElementText(elem);
+      _$jscoverage['/ie/input-selection.js'].lineData[80]++;
       return range;
     } else {
-      _$jscoverage['/ie/input-selection.js'].lineData[81]++;
+      _$jscoverage['/ie/input-selection.js'].lineData[82]++;
       return elem.createTextRange();
     }
   }
-  _$jscoverage['/ie/input-selection.js'].lineData[86]++;
+  _$jscoverage['/ie/input-selection.js'].lineData[87]++;
   function getMovedDistance(elem, s, e) {
     _$jscoverage['/ie/input-selection.js'].functionData[8]++;
-    _$jscoverage['/ie/input-selection.js'].lineData[87]++;
-    var start = Math.min(s, e);
     _$jscoverage['/ie/input-selection.js'].lineData[88]++;
-    var end = Math.max(s, e);
+    var start = Math.min(s, e);
     _$jscoverage['/ie/input-selection.js'].lineData[89]++;
-    if (visit45_89_1(start == end)) {
-      _$jscoverage['/ie/input-selection.js'].lineData[90]++;
+    var end = Math.max(s, e);
+    _$jscoverage['/ie/input-selection.js'].lineData[90]++;
+    if (visit45_90_1(start == end)) {
+      _$jscoverage['/ie/input-selection.js'].lineData[91]++;
       return 0;
     }
-    _$jscoverage['/ie/input-selection.js'].lineData[92]++;
-    if (visit46_92_1(elem.type == "textarea")) {
-      _$jscoverage['/ie/input-selection.js'].lineData[93]++;
-      var l = elem.value.substring(start, end).replace(/\r\n/g, '\n').length;
+    _$jscoverage['/ie/input-selection.js'].lineData[93]++;
+    if (visit46_93_1(elem.type == "textarea")) {
       _$jscoverage['/ie/input-selection.js'].lineData[94]++;
-      if (visit47_94_1(s > e)) {
-        _$jscoverage['/ie/input-selection.js'].lineData[95]++;
+      var l = elem.value.substring(start, end).replace(/\r\n/g, '\n').length;
+      _$jscoverage['/ie/input-selection.js'].lineData[95]++;
+      if (visit47_95_1(s > e)) {
+        _$jscoverage['/ie/input-selection.js'].lineData[96]++;
         l = -l;
       }
-      _$jscoverage['/ie/input-selection.js'].lineData[97]++;
+      _$jscoverage['/ie/input-selection.js'].lineData[98]++;
       return l;
     } else {
-      _$jscoverage['/ie/input-selection.js'].lineData[99]++;
+      _$jscoverage['/ie/input-selection.js'].lineData[100]++;
       return e - s;
     }
   }
-  _$jscoverage['/ie/input-selection.js'].lineData[104]++;
+  _$jscoverage['/ie/input-selection.js'].lineData[105]++;
   function getRangeText(elem, range) {
     _$jscoverage['/ie/input-selection.js'].functionData[9]++;
-    _$jscoverage['/ie/input-selection.js'].lineData[105]++;
-    if (visit48_105_1(elem.type == "textarea")) {
-      _$jscoverage['/ie/input-selection.js'].lineData[106]++;
+    _$jscoverage['/ie/input-selection.js'].lineData[106]++;
+    if (visit48_106_1(elem.type == "textarea")) {
+      _$jscoverage['/ie/input-selection.js'].lineData[107]++;
       var ret = range.text, testRange = range.duplicate();
-      _$jscoverage['/ie/input-selection.js'].lineData[110]++;
-      if (visit49_110_1(testRange.compareEndPoints('StartToEnd', testRange) == 0)) {
-        _$jscoverage['/ie/input-selection.js'].lineData[111]++;
+      _$jscoverage['/ie/input-selection.js'].lineData[111]++;
+      if (visit49_111_1(testRange.compareEndPoints('StartToEnd', testRange) == 0)) {
+        _$jscoverage['/ie/input-selection.js'].lineData[112]++;
         return ret;
       }
-      _$jscoverage['/ie/input-selection.js'].lineData[114]++;
+      _$jscoverage['/ie/input-selection.js'].lineData[115]++;
       testRange.moveEnd('character', -1);
-      _$jscoverage['/ie/input-selection.js'].lineData[117]++;
-      if (visit50_117_1(testRange.text == ret)) {
-        _$jscoverage['/ie/input-selection.js'].lineData[118]++;
+      _$jscoverage['/ie/input-selection.js'].lineData[118]++;
+      if (visit50_118_1(testRange.text == ret)) {
+        _$jscoverage['/ie/input-selection.js'].lineData[119]++;
         ret += '\r\n';
       }
-      _$jscoverage['/ie/input-selection.js'].lineData[121]++;
+      _$jscoverage['/ie/input-selection.js'].lineData[122]++;
       return ret;
     } else {
-      _$jscoverage['/ie/input-selection.js'].lineData[123]++;
+      _$jscoverage['/ie/input-selection.js'].lineData[124]++;
       return range.text;
     }
   }
-}, {
-  requires: ['dom/base']});
+});

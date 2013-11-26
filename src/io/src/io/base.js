@@ -9,7 +9,6 @@ KISSY.add(function (S,require) {
         Promise = require('promise');
     var rlocalProtocol = /^(?:about|app|app\-storage|.+\-extension|file|widget)$/,
         rspace = /\s+/,
-        // logger = S.getLogger('s/io'),
         mirror = function (s) {
             return s;
         },

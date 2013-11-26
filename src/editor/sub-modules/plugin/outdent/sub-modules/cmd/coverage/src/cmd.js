@@ -232,16 +232,18 @@ if (! _$jscoverage['/cmd.js']) {
   _$jscoverage['/cmd.js'].lineData[6] = 0;
   _$jscoverage['/cmd.js'].lineData[7] = 0;
   _$jscoverage['/cmd.js'].lineData[8] = 0;
-  _$jscoverage['/cmd.js'].lineData[9] = 0;
+  _$jscoverage['/cmd.js'].lineData[10] = 0;
   _$jscoverage['/cmd.js'].lineData[11] = 0;
   _$jscoverage['/cmd.js'].lineData[12] = 0;
-  _$jscoverage['/cmd.js'].lineData[13] = 0;
   _$jscoverage['/cmd.js'].lineData[14] = 0;
+  _$jscoverage['/cmd.js'].lineData[15] = 0;
   _$jscoverage['/cmd.js'].lineData[16] = 0;
   _$jscoverage['/cmd.js'].lineData[17] = 0;
-  _$jscoverage['/cmd.js'].lineData[18] = 0;
   _$jscoverage['/cmd.js'].lineData[19] = 0;
   _$jscoverage['/cmd.js'].lineData[20] = 0;
+  _$jscoverage['/cmd.js'].lineData[21] = 0;
+  _$jscoverage['/cmd.js'].lineData[22] = 0;
+  _$jscoverage['/cmd.js'].lineData[23] = 0;
 }
 if (! _$jscoverage['/cmd.js'].functionData) {
   _$jscoverage['/cmd.js'].functionData = [];
@@ -251,53 +253,56 @@ if (! _$jscoverage['/cmd.js'].functionData) {
 }
 if (! _$jscoverage['/cmd.js'].branchData) {
   _$jscoverage['/cmd.js'].branchData = {};
-  _$jscoverage['/cmd.js'].branchData['13'] = [];
-  _$jscoverage['/cmd.js'].branchData['13'][1] = new BranchData();
-  _$jscoverage['/cmd.js'].branchData['17'] = [];
-  _$jscoverage['/cmd.js'].branchData['17'][1] = new BranchData();
+  _$jscoverage['/cmd.js'].branchData['16'] = [];
+  _$jscoverage['/cmd.js'].branchData['16'][1] = new BranchData();
+  _$jscoverage['/cmd.js'].branchData['20'] = [];
+  _$jscoverage['/cmd.js'].branchData['20'][1] = new BranchData();
 }
-_$jscoverage['/cmd.js'].branchData['17'][1].init(94, 33, 'selection && !selection.isInvalid');
-function visit2_17_1(result) {
-  _$jscoverage['/cmd.js'].branchData['17'][1].ranCondition(result);
+_$jscoverage['/cmd.js'].branchData['20'][1].init(92, 33, 'selection && !selection.isInvalid');
+function visit2_20_1(result) {
+  _$jscoverage['/cmd.js'].branchData['20'][1].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['13'][1].init(127, 28, '!editor.hasCommand(queryCmd)');
-function visit1_13_1(result) {
-  _$jscoverage['/cmd.js'].branchData['13'][1].ranCondition(result);
+}_$jscoverage['/cmd.js'].branchData['16'][1].init(124, 28, '!editor.hasCommand(queryCmd)');
+function visit1_16_1(result) {
+  _$jscoverage['/cmd.js'].branchData['16'][1].ranCondition(result);
   return result;
 }_$jscoverage['/cmd.js'].lineData[6]++;
-KISSY.add("editor/plugin/outdent/cmd", function(S, Editor, dentUtils) {
+KISSY.add(function(S, require) {
   _$jscoverage['/cmd.js'].functionData[0]++;
   _$jscoverage['/cmd.js'].lineData[7]++;
-  var addCommand = dentUtils.addCommand;
+  var Editor = require('editor');
   _$jscoverage['/cmd.js'].lineData[8]++;
+  var dentUtils = require('../dent-cmd');
+  _$jscoverage['/cmd.js'].lineData[10]++;
+  var addCommand = dentUtils.addCommand;
+  _$jscoverage['/cmd.js'].lineData[11]++;
   var checkOutdentActive = dentUtils.checkOutdentActive;
-  _$jscoverage['/cmd.js'].lineData[9]++;
+  _$jscoverage['/cmd.js'].lineData[12]++;
   return {
   init: function(editor) {
   _$jscoverage['/cmd.js'].functionData[1]++;
-  _$jscoverage['/cmd.js'].lineData[11]++;
+  _$jscoverage['/cmd.js'].lineData[14]++;
   addCommand(editor, "outdent");
-  _$jscoverage['/cmd.js'].lineData[12]++;
+  _$jscoverage['/cmd.js'].lineData[15]++;
   var queryCmd = Editor.Utils.getQueryCmd("outdent");
-  _$jscoverage['/cmd.js'].lineData[13]++;
-  if (visit1_13_1(!editor.hasCommand(queryCmd))) {
-    _$jscoverage['/cmd.js'].lineData[14]++;
+  _$jscoverage['/cmd.js'].lineData[16]++;
+  if (visit1_16_1(!editor.hasCommand(queryCmd))) {
+    _$jscoverage['/cmd.js'].lineData[17]++;
     editor.addCommand(queryCmd, {
   exec: function(editor) {
   _$jscoverage['/cmd.js'].functionData[2]++;
-  _$jscoverage['/cmd.js'].lineData[16]++;
+  _$jscoverage['/cmd.js'].lineData[19]++;
   var selection = editor.getSelection();
-  _$jscoverage['/cmd.js'].lineData[17]++;
-  if (visit2_17_1(selection && !selection.isInvalid)) {
-    _$jscoverage['/cmd.js'].lineData[18]++;
+  _$jscoverage['/cmd.js'].lineData[20]++;
+  if (visit2_20_1(selection && !selection.isInvalid)) {
+    _$jscoverage['/cmd.js'].lineData[21]++;
     var startElement = selection.getStartElement();
-    _$jscoverage['/cmd.js'].lineData[19]++;
+    _$jscoverage['/cmd.js'].lineData[22]++;
     var elementPath = new Editor.ElementPath(startElement);
-    _$jscoverage['/cmd.js'].lineData[20]++;
+    _$jscoverage['/cmd.js'].lineData[23]++;
     return checkOutdentActive(elementPath);
   }
 }});
   }
 }};
-}, {
-  requires: ['editor', '../dent-cmd']});
+});

@@ -240,7 +240,7 @@ if (! _$jscoverage['/touch/handle-map.js'].branchData) {
   _$jscoverage['/touch/handle-map.js'].branchData = {};
 }
 _$jscoverage['/touch/handle-map.js'].lineData[6]++;
-KISSY.add('event/dom/touch/handle-map', function() {
+KISSY.add(function() {
   _$jscoverage['/touch/handle-map.js'].functionData[0]++;
   _$jscoverage['/touch/handle-map.js'].lineData[7]++;
   return {};

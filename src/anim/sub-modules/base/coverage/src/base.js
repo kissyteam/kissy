@@ -231,6 +231,7 @@ if (! _$jscoverage['/base.js']) {
   _$jscoverage['/base.js'].lineData = [];
   _$jscoverage['/base.js'].lineData[6] = 0;
   _$jscoverage['/base.js'].lineData[7] = 0;
+  _$jscoverage['/base.js'].lineData[11] = 0;
   _$jscoverage['/base.js'].lineData[12] = 0;
   _$jscoverage['/base.js'].lineData[27] = 0;
   _$jscoverage['/base.js'].lineData[28] = 0;
@@ -604,12 +605,14 @@ function visit33_37_1(result) {
   _$jscoverage['/base.js'].branchData['37'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base.js'].lineData[6]++;
-KISSY.add(function(S) {
+KISSY.add(function(S, require) {
   _$jscoverage['/base.js'].functionData[0]++;
   _$jscoverage['/base.js'].lineData[7]++;
-  var module = this, Dom = module.require('dom'), Utils = module.require('./base/utils'), Q = module.require('./base/queue'), Promise = module.require('promise');
+  var Dom = require('dom'), Utils = require('./base/utils'), Q = require('./base/queue'), Promise = require('promise');
+  _$jscoverage['/base.js'].lineData[11]++;
+  var logger = S.getLogger('s/anim');
   _$jscoverage['/base.js'].lineData[12]++;
-  var NodeType = Dom.NodeType, noop = S.noop, logger = S.getLogger('s/anim'), specialVals = {
+  var NodeType = Dom.NodeType, noop = S.noop, specialVals = {
   toggle: 1, 
   hide: 1, 
   show: 1};

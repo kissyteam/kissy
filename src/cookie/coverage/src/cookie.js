@@ -281,44 +281,44 @@ if (! _$jscoverage['/cookie.js'].branchData) {
   _$jscoverage['/cookie.js'].branchData['74'] = [];
   _$jscoverage['/cookie.js'].branchData['74'][1] = new BranchData();
 }
-_$jscoverage['/cookie.js'].branchData['74'][1].init(716, 6, 'secure');
+_$jscoverage['/cookie.js'].branchData['74'][1].init(692, 6, 'secure');
 function visit9_74_1(result) {
   _$jscoverage['/cookie.js'].branchData['74'][1].ranCondition(result);
   return result;
-}_$jscoverage['/cookie.js'].branchData['69'][1].init(590, 22, 'isNotEmptyString(path)');
+}_$jscoverage['/cookie.js'].branchData['69'][1].init(571, 22, 'isNotEmptyString(path)');
 function visit8_69_1(result) {
   _$jscoverage['/cookie.js'].branchData['69'][1].ranCondition(result);
   return result;
-}_$jscoverage['/cookie.js'].branchData['64'][1].init(460, 24, 'isNotEmptyString(domain)');
+}_$jscoverage['/cookie.js'].branchData['64'][1].init(446, 24, 'isNotEmptyString(domain)');
 function visit7_64_1(result) {
   _$jscoverage['/cookie.js'].branchData['64'][1].ranCondition(result);
   return result;
-}_$jscoverage['/cookie.js'].branchData['59'][1].init(319, 20, 'date instanceof Date');
+}_$jscoverage['/cookie.js'].branchData['59'][1].init(310, 20, 'date instanceof Date');
 function visit6_59_1(result) {
   _$jscoverage['/cookie.js'].branchData['59'][1].ranCondition(result);
   return result;
-}_$jscoverage['/cookie.js'].branchData['54'][1].init(112, 24, 'typeof date === \'number\'');
+}_$jscoverage['/cookie.js'].branchData['54'][1].init(108, 24, 'typeof date === \'number\'');
 function visit5_54_1(result) {
   _$jscoverage['/cookie.js'].branchData['54'][1].ranCondition(result);
   return result;
-}_$jscoverage['/cookie.js'].branchData['31'][1].init(45, 22, 'isNotEmptyString(name)');
+}_$jscoverage['/cookie.js'].branchData['31'][1].init(42, 22, 'isNotEmptyString(name)');
 function visit4_31_1(result) {
   _$jscoverage['/cookie.js'].branchData['31'][1].ranCondition(result);
   return result;
-}_$jscoverage['/cookie.js'].branchData['14'][3].init(45, 10, 'val !== \'\'');
+}_$jscoverage['/cookie.js'].branchData['14'][3].init(44, 10, 'val !== \'\'');
 function visit3_14_3(result) {
   _$jscoverage['/cookie.js'].branchData['14'][3].ranCondition(result);
   return result;
-}_$jscoverage['/cookie.js'].branchData['14'][2].init(18, 22, 'typeof val == \'string\'');
+}_$jscoverage['/cookie.js'].branchData['14'][2].init(17, 22, 'typeof val == \'string\'');
 function visit2_14_2(result) {
   _$jscoverage['/cookie.js'].branchData['14'][2].ranCondition(result);
   return result;
-}_$jscoverage['/cookie.js'].branchData['14'][1].init(18, 37, '(typeof val == \'string\') && val !== \'\'');
+}_$jscoverage['/cookie.js'].branchData['14'][1].init(17, 37, '(typeof val == \'string\') && val !== \'\'');
 function visit1_14_1(result) {
   _$jscoverage['/cookie.js'].branchData['14'][1].ranCondition(result);
   return result;
 }_$jscoverage['/cookie.js'].lineData[6]++;
-KISSY.add('cookie', function(S) {
+KISSY.add(function(S) {
   _$jscoverage['/cookie.js'].functionData[0]++;
   _$jscoverage['/cookie.js'].lineData[8]++;
   var doc = S.Env.host.document, MILLISECONDS_OF_DAY = 24 * 60 * 60 * 1000, encode = encodeURIComponent, decode = S.urlDecode;

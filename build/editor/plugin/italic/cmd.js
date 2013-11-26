@@ -1,7 +1,7 @@
 /*
-Copyright 2013, KISSY v1.40dev
+Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Oct 25 16:44
+build time: Nov 27 00:43
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -9,33 +9,12 @@ build time: Oct 25 16:44
  editor/plugin/italic/cmd
 */
 
-/**
- * @ignore
- * italic command.
- * @author yiminghe@gmail.com
- */
-KISSY.add("editor/plugin/italic/cmd", function (S, Editor, Cmd) {
-
-    var ITALIC_STYLE = new Editor.Style({
-        element:'em',
-        overrides:[
-            {
-                element:'i'
-            },
-            {
-                element:'span',
-                attributes:{
-                    style:'font-style: italic;'
-                }
-            }
-        ]
-    });
-    return {
-        init:function (editor) {
-            Cmd.addButtonCmd(editor, "italic", ITALIC_STYLE);
-        }
-    }
-}, {
-    requires:['editor', '../font/cmd']
+KISSY.add("editor/plugin/italic/cmd", ["editor", "../font/cmd"], function(S, require) {
+  var Editor = require("editor");
+  var Cmd = require("../font/cmd");
+  var ITALIC_STYLE = new Editor.Style({element:"em", overrides:[{element:"i"}, {element:"span", attributes:{style:"font-style: italic;"}}]});
+  return{init:function(editor) {
+    Cmd.addButtonCmd(editor, "italic", ITALIC_STYLE)
+  }}
 });
 

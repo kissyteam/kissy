@@ -230,7 +230,8 @@ if (! _$jscoverage['/json.js']) {
   _$jscoverage['/json.js'] = {};
   _$jscoverage['/json.js'].lineData = [];
   _$jscoverage['/json.js'].lineData[6] = 0;
-  _$jscoverage['/json.js'].lineData[14] = 0;
+  _$jscoverage['/json.js'].lineData[7] = 0;
+  _$jscoverage['/json.js'].lineData[15] = 0;
 }
 if (! _$jscoverage['/json.js'].functionData) {
   _$jscoverage['/json.js'].functionData = [];
@@ -240,11 +241,12 @@ if (! _$jscoverage['/json.js'].branchData) {
   _$jscoverage['/json.js'].branchData = {};
 }
 _$jscoverage['/json.js'].lineData[6]++;
-KISSY.add('json', function(S, stringify, parse) {
+KISSY.add(function(S, require) {
   _$jscoverage['/json.js'].functionData[0]++;
-  _$jscoverage['/json.js'].lineData[14]++;
+  _$jscoverage['/json.js'].lineData[7]++;
+  var stringify = require('./json/stringify'), parse = require('./json/parse');
+  _$jscoverage['/json.js'].lineData[15]++;
   return S.JSON = {
   stringify: stringify, 
   parse: parse};
-}, {
-  requires: ['./json/stringify', './json/parse']});
+});

@@ -230,11 +230,14 @@ if (! _$jscoverage['/menu/check-menuitem.js']) {
   _$jscoverage['/menu/check-menuitem.js'] = {};
   _$jscoverage['/menu/check-menuitem.js'].lineData = [];
   _$jscoverage['/menu/check-menuitem.js'].lineData[6] = 0;
-  _$jscoverage['/menu/check-menuitem.js'].lineData[10] = 0;
-  _$jscoverage['/menu/check-menuitem.js'].lineData[12] = 0;
+  _$jscoverage['/menu/check-menuitem.js'].lineData[7] = 0;
+  _$jscoverage['/menu/check-menuitem.js'].lineData[8] = 0;
   _$jscoverage['/menu/check-menuitem.js'].lineData[13] = 0;
-  _$jscoverage['/menu/check-menuitem.js'].lineData[14] = 0;
   _$jscoverage['/menu/check-menuitem.js'].lineData[15] = 0;
+  _$jscoverage['/menu/check-menuitem.js'].lineData[16] = 0;
+  _$jscoverage['/menu/check-menuitem.js'].lineData[17] = 0;
+  _$jscoverage['/menu/check-menuitem.js'].lineData[18] = 0;
+  _$jscoverage['/menu/check-menuitem.js'].lineData[19] = 0;
 }
 if (! _$jscoverage['/menu/check-menuitem.js'].functionData) {
   _$jscoverage['/menu/check-menuitem.js'].functionData = [];
@@ -245,19 +248,25 @@ if (! _$jscoverage['/menu/check-menuitem.js'].branchData) {
   _$jscoverage['/menu/check-menuitem.js'].branchData = {};
 }
 _$jscoverage['/menu/check-menuitem.js'].lineData[6]++;
-KISSY.add('menu/check-menuitem', function(S, MenuItem, CheckMenuItemRender) {
+KISSY.add(function(S, require) {
   _$jscoverage['/menu/check-menuitem.js'].functionData[0]++;
-  _$jscoverage['/menu/check-menuitem.js'].lineData[10]++;
+  _$jscoverage['/menu/check-menuitem.js'].lineData[7]++;
+  var MenuItem = require('./menuitem');
+  _$jscoverage['/menu/check-menuitem.js'].lineData[8]++;
+  var CheckMenuItemRender = require('./check-menuitem-render');
+  _$jscoverage['/menu/check-menuitem.js'].lineData[13]++;
   return MenuItem.extend({
   handleClickInternal: function() {
   _$jscoverage['/menu/check-menuitem.js'].functionData[1]++;
-  _$jscoverage['/menu/check-menuitem.js'].lineData[12]++;
-  var self = this;
-  _$jscoverage['/menu/check-menuitem.js'].lineData[13]++;
-  self.set("checked", !self.get("checked"));
-  _$jscoverage['/menu/check-menuitem.js'].lineData[14]++;
-  self.fire('click');
   _$jscoverage['/menu/check-menuitem.js'].lineData[15]++;
+  var self = this;
+  _$jscoverage['/menu/check-menuitem.js'].lineData[16]++;
+  self.callSuper();
+  _$jscoverage['/menu/check-menuitem.js'].lineData[17]++;
+  self.set("checked", !self.get("checked"));
+  _$jscoverage['/menu/check-menuitem.js'].lineData[18]++;
+  self.fire('click');
+  _$jscoverage['/menu/check-menuitem.js'].lineData[19]++;
   return true;
 }}, {
   ATTRS: {
@@ -266,5 +275,4 @@ KISSY.add('menu/check-menuitem', function(S, MenuItem, CheckMenuItemRender) {
   xrender: {
   value: CheckMenuItemRender}}, 
   xclass: "check-menuitem"});
-}, {
-  requires: ['./menuitem', './check-menuitem-render']});
+});

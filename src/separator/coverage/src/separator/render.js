@@ -230,6 +230,7 @@ if (! _$jscoverage['/separator/render.js']) {
   _$jscoverage['/separator/render.js'] = {};
   _$jscoverage['/separator/render.js'].lineData = [];
   _$jscoverage['/separator/render.js'].lineData[6] = 0;
+  _$jscoverage['/separator/render.js'].lineData[7] = 0;
   _$jscoverage['/separator/render.js'].lineData[8] = 0;
   _$jscoverage['/separator/render.js'].lineData[10] = 0;
 }
@@ -242,8 +243,10 @@ if (! _$jscoverage['/separator/render.js'].branchData) {
   _$jscoverage['/separator/render.js'].branchData = {};
 }
 _$jscoverage['/separator/render.js'].lineData[6]++;
-KISSY.add("separator/render", function(S, Control) {
+KISSY.add(function(S, require) {
   _$jscoverage['/separator/render.js'].functionData[0]++;
+  _$jscoverage['/separator/render.js'].lineData[7]++;
+  var Control = require('component/control');
   _$jscoverage['/separator/render.js'].lineData[8]++;
   return Control.getDefaultRender().extend({
   beforeCreateDom: function(renderData) {
@@ -251,5 +254,4 @@ KISSY.add("separator/render", function(S, Control) {
   _$jscoverage['/separator/render.js'].lineData[10]++;
   renderData.elAttrs.role = 'separator';
 }});
-}, {
-  requires: ['component/control']});
+});

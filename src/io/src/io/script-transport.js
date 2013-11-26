@@ -8,9 +8,10 @@
 KISSY.add(function (S,require) {
     var undefined=undefined,
         IO=require('./base');
+    var  logger= S.getLogger('s/io');
     var win = S.Env.host,
         doc = win.document,
-        logger= S.getLogger('s/io'),
+
         OK_CODE = 200,
         ERROR_CODE = 500;
 

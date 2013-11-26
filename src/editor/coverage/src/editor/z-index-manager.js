@@ -230,10 +230,11 @@ if (! _$jscoverage['/editor/z-index-manager.js']) {
   _$jscoverage['/editor/z-index-manager.js'] = {};
   _$jscoverage['/editor/z-index-manager.js'].lineData = [];
   _$jscoverage['/editor/z-index-manager.js'].lineData[6] = 0;
-  _$jscoverage['/editor/z-index-manager.js'].lineData[11] = 0;
-  _$jscoverage['/editor/z-index-manager.js'].lineData[46] = 0;
+  _$jscoverage['/editor/z-index-manager.js'].lineData[7] = 0;
+  _$jscoverage['/editor/z-index-manager.js'].lineData[12] = 0;
   _$jscoverage['/editor/z-index-manager.js'].lineData[47] = 0;
-  _$jscoverage['/editor/z-index-manager.js'].lineData[50] = 0;
+  _$jscoverage['/editor/z-index-manager.js'].lineData[48] = 0;
+  _$jscoverage['/editor/z-index-manager.js'].lineData[51] = 0;
 }
 if (! _$jscoverage['/editor/z-index-manager.js'].functionData) {
   _$jscoverage['/editor/z-index-manager.js'].functionData = [];
@@ -242,17 +243,19 @@ if (! _$jscoverage['/editor/z-index-manager.js'].functionData) {
 }
 if (! _$jscoverage['/editor/z-index-manager.js'].branchData) {
   _$jscoverage['/editor/z-index-manager.js'].branchData = {};
-  _$jscoverage['/editor/z-index-manager.js'].branchData['47'] = [];
-  _$jscoverage['/editor/z-index-manager.js'].branchData['47'][1] = new BranchData();
+  _$jscoverage['/editor/z-index-manager.js'].branchData['48'] = [];
+  _$jscoverage['/editor/z-index-manager.js'].branchData['48'][1] = new BranchData();
 }
-_$jscoverage['/editor/z-index-manager.js'].branchData['47'][1].init(18, 36, 'Editor[\'Config\'].baseZIndex || 10000');
-function visit1130_47_1(result) {
-  _$jscoverage['/editor/z-index-manager.js'].branchData['47'][1].ranCondition(result);
+_$jscoverage['/editor/z-index-manager.js'].branchData['48'][1].init(17, 36, 'Editor[\'Config\'].baseZIndex || 10000');
+function visit1141_48_1(result) {
+  _$jscoverage['/editor/z-index-manager.js'].branchData['48'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/z-index-manager.js'].lineData[6]++;
-KISSY.add("editor/z-index-manager", function(S, Editor) {
+KISSY.add(function(S, require) {
   _$jscoverage['/editor/z-index-manager.js'].functionData[0]++;
-  _$jscoverage['/editor/z-index-manager.js'].lineData[11]++;
+  _$jscoverage['/editor/z-index-manager.js'].lineData[7]++;
+  var Editor = require('./base');
+  _$jscoverage['/editor/z-index-manager.js'].lineData[12]++;
   var ZIndexManager = Editor.ZIndexManager = {
   BUBBLE_VIEW: (1100), 
   POPUP_MENU: (1200), 
@@ -262,13 +265,12 @@ KISSY.add("editor/z-index-manager", function(S, Editor) {
   LOADING: (11000), 
   LOADING_CANCEL: 12000, 
   SELECT: (1200)};
-  _$jscoverage['/editor/z-index-manager.js'].lineData[46]++;
+  _$jscoverage['/editor/z-index-manager.js'].lineData[47]++;
   Editor.baseZIndex = function(z) {
   _$jscoverage['/editor/z-index-manager.js'].functionData[1]++;
-  _$jscoverage['/editor/z-index-manager.js'].lineData[47]++;
-  return (visit1130_47_1(Editor['Config'].baseZIndex || 10000)) + z;
+  _$jscoverage['/editor/z-index-manager.js'].lineData[48]++;
+  return (visit1141_48_1(Editor['Config'].baseZIndex || 10000)) + z;
 };
-  _$jscoverage['/editor/z-index-manager.js'].lineData[50]++;
+  _$jscoverage['/editor/z-index-manager.js'].lineData[51]++;
   return ZIndexManager;
-}, {
-  requires: ['./base']});
+});

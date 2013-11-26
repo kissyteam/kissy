@@ -230,6 +230,7 @@ if (! _$jscoverage['/cmd.js']) {
   _$jscoverage['/cmd.js'] = {};
   _$jscoverage['/cmd.js'].lineData = [];
   _$jscoverage['/cmd.js'].lineData[6] = 0;
+  _$jscoverage['/cmd.js'].lineData[7] = 0;
   _$jscoverage['/cmd.js'].lineData[8] = 0;
   _$jscoverage['/cmd.js'].lineData[24] = 0;
   _$jscoverage['/cmd.js'].lineData[34] = 0;
@@ -251,13 +252,15 @@ if (! _$jscoverage['/cmd.js'].branchData) {
   _$jscoverage['/cmd.js'].branchData['36'] = [];
   _$jscoverage['/cmd.js'].branchData['36'][1] = new BranchData();
 }
-_$jscoverage['/cmd.js'].branchData['36'][1].init(18, 31, '!editor.hasCommand("backColor")');
+_$jscoverage['/cmd.js'].branchData['36'][1].init(17, 31, '!editor.hasCommand("backColor")');
 function visit1_36_1(result) {
   _$jscoverage['/cmd.js'].branchData['36'][1].ranCondition(result);
   return result;
 }_$jscoverage['/cmd.js'].lineData[6]++;
-KISSY.add("editor/plugin/back-color/cmd", function(S, cmd) {
+KISSY.add(function(S, require) {
   _$jscoverage['/cmd.js'].functionData[0]++;
+  _$jscoverage['/cmd.js'].lineData[7]++;
+  var cmd = require('../color/cmd');
   _$jscoverage['/cmd.js'].lineData[8]++;
   var BACK_COLOR_STYLE = {
   element: 'span', 
@@ -291,5 +294,4 @@ KISSY.add("editor/plugin/back-color/cmd", function(S, cmd) {
 }});
   }
 }};
-}, {
-  requires: ['../color/cmd']});
+});

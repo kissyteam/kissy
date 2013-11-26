@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 19 12:42
+build time: Nov 27 00:37
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -17,9 +17,12 @@ build time: Nov 19 12:42
  combobox
 */
 
-KISSY.add("combobox/combobox-xtpl", [], function() {
+KISSY.add("combobox/combobox-xtpl", [], function(S, require, exports, module) {
   return function(scopes, S, undefined) {
-    var buffer = "", config = this.config, engine = this, utils = config.utils;
+    var buffer = "", config = this.config, engine = this, moduleWrap, utils = config.utils;
+    if(typeof module != "undefined" && module.kissy) {
+      moduleWrap = module
+    }
     var runBlockCommandUtil = utils["runBlockCommand"], getExpressionUtil = utils["getExpression"], getPropertyOrRunCommandUtil = utils["getPropertyOrRunCommand"];
     buffer += '<div id="ks-combobox-invalid-el-';
     var id0 = getPropertyOrRunCommandUtil(engine, scopes, {}, "id", 0, 1, undefined, false);
@@ -136,11 +139,10 @@ KISSY.add("combobox/combobox-xtpl", [], function() {
     return buffer
   }
 });
-KISSY.add("combobox/render", ["component/control", "./combobox-xtpl"], function(S) {
-  var module = this;
-  var Control = module.require("component/control");
-  var ComboboxTpl = module.require("./combobox-xtpl");
-  module.exports = Control.getDefaultRender().extend({beforeCreateDom:function(renderData, childrenElSelectors) {
+KISSY.add("combobox/render", ["component/control", "./combobox-xtpl"], function(S, require) {
+  var Control = require("component/control");
+  var ComboboxTpl = require("./combobox-xtpl");
+  return Control.getDefaultRender().extend({beforeCreateDom:function(renderData, childrenElSelectors) {
     S.mix(childrenElSelectors, {input:"#ks-combobox-input-{id}", trigger:"#ks-combobox-trigger-{id}", invalidEl:"#ks-combobox-invalid-el-{id}", placeholderEl:"#ks-combobox-placeholder-{id}"})
   }, getKeyEventTarget:function() {
     return this.control.get("input")
@@ -159,14 +161,13 @@ KISSY.add("combobox/render", ["component/control", "./combobox-xtpl"], function(
     return el.one("." + this.getBaseCssClass("invalid-el"))
   }, placeholderEl:function(el) {
     return el.one("." + this.getBaseCssClass("placeholder"))
-  }}});
-  return ComboboxRender
+  }}})
 });
-KISSY.add("combobox/control", ["node", "component/control", "./render"], function(S) {
-  var module = this;
-  var Node = module.require("node");
-  var Control = module.require("component/control");
-  var ComboBoxRender = module.require("./render");
+KISSY.add("combobox/control", ["node", "component/control", "./render", "menu"], function(S, require) {
+  var Node = require("node");
+  var Control = require("component/control");
+  var ComboBoxRender = require("./render");
+  require("menu");
   var ComboBox, undefined = undefined, KeyCode = Node.KeyCode;
   ComboBox = Control.extend([], {initializer:function() {
     this.publish("afterRenderData", {bubbles:false})
@@ -279,7 +280,7 @@ KISSY.add("combobox/control", ["node", "component/control", "./render"], functio
         self.setValueFromAutocomplete(highlightedItem.get("textContent"))
       }
       if(keyCode == KeyCode.TAB && highlightedItem) {
-        highlightedItem.handleClickInternal();
+        highlightedItem.handleClickInternal(e);
         if(self.get("multiple")) {
           return true
         }
@@ -454,9 +455,8 @@ KISSY.add("combobox/control", ["node", "component/control", "./render"], functio
   }
   return ComboBox
 });
-KISSY.add("combobox/cursor", ["node"], function(S) {
-  var module = this;
-  var Node = module.require("node");
+KISSY.add("combobox/cursor", ["node"], function(S, require) {
+  var Node = require("node");
   var $ = Node.all, FAKE_DIV_HTML = "<div style='" + "z-index:-9999;" + "overflow:hidden;" + "position: fixed;" + "left:-9999px;" + "top:-9999px;" + "opacity:0;" + "white-space:pre-wrap;" + "word-wrap:break-word;" + "'></div>", FAKE_DIV, MARKER = "<span>" + "x" + "</span>", STYLES = ["paddingLeft", "paddingTop", "paddingBottom", "paddingRight", "marginLeft", "marginTop", "marginBottom", "marginRight", "borderLeftStyle", "borderTopStyle", "borderBottomStyle", "borderRightStyle", "borderLeftWidth", 
   "borderTopWidth", "borderBottomWidth", "borderRightWidth", "line-height", "outline", "height", "fontFamily", "fontSize", "fontWeight", "fontVariant", "fontStyle"], supportInputScrollLeft, findSupportInputScrollLeft;
   function getFakeDiv(elem) {
@@ -518,11 +518,10 @@ KISSY.add("combobox/cursor", ["node"], function(S) {
     return offset
   }
 });
-KISSY.add("combobox/multi-value-combobox", ["./cursor", "./control"], function() {
+KISSY.add("combobox/multi-value-combobox", ["./cursor", "./control"], function(S, require) {
   var SUFFIX = "suffix", rWhitespace = /\s|\xa0/;
-  var module = this;
-  var getCursor = module.require("./cursor");
-  var ComboBox = module.require("./control");
+  var getCursor = require("./cursor");
+  var ComboBox = require("./control");
   function strContainsChar(str, c) {
     return c && str.indexOf(c) != -1
   }
@@ -640,9 +639,8 @@ KISSY.add("combobox/multi-value-combobox", ["./cursor", "./control"], function()
     return{tokens:tokens, cursorPosition:cursorPosition, tokenIndex:tokenIndex}
   }
 });
-KISSY.add("combobox/filter-select", ["./control"], function() {
-  var module = this;
-  var Combobox = module.require("./control");
+KISSY.add("combobox/filter-select", ["./control"], function(S, require, exports, module) {
+  var Combobox = require("./control");
   function valInAutoCompleteList(inputVal, _saveData) {
     var valid = false;
     if(_saveData) {
@@ -668,8 +666,8 @@ KISSY.add("combobox/filter-select", ["./control"], function() {
     })
   }}, {ATTRS:{invalidMessage:{value:"invalid input"}}})
 });
-KISSY.add("combobox/local-data-source", ["attribute"], function(S) {
-  var module = this, Attribute = module.require("attribute");
+KISSY.add("combobox/local-data-source", ["attribute"], function(S, require) {
+  var Attribute = require("attribute");
   return Attribute.extend({fetchData:function(inputVal, callback, context) {
     var parse = this.get("parse"), data = this.get("data");
     data = parse(inputVal, data);
@@ -689,10 +687,10 @@ KISSY.add("combobox/local-data-source", ["attribute"], function(S) {
     return ret
   }
 });
-KISSY.add("combobox/remote-data-source", ["io", "attribute"], function() {
-  var module = this, undefined = undefined;
-  var IO = module.require("io");
-  var Attribute = module.require("attribute");
+KISSY.add("combobox/remote-data-source", ["io", "attribute"], function(S, require) {
+  var undefined = undefined;
+  var IO = require("io");
+  var Attribute = require("attribute");
   return Attribute.extend({fetchData:function(inputVal, callback, context) {
     var self = this, v, paramName = self.get("paramName"), parse = self.get("parse"), cache = self.get("cache"), allowEmpty = self.get("allowEmpty");
     self.caches = self.caches || {};
@@ -725,13 +723,12 @@ KISSY.add("combobox/remote-data-source", ["io", "attribute"], function() {
     return undefined
   }}, {ATTRS:{paramName:{value:"q"}, allowEmpty:{}, cache:{}, parse:{}, xhrCfg:{value:{}}}})
 });
-KISSY.add("combobox", ["combobox/control", "combobox/multi-value-combobox", "combobox/filter-select", "combobox/local-data-source", "combobox/remote-data-source"], function() {
-  var module = this;
-  var ComboBox = module.require("combobox/control");
-  var MultiValueComboBox = module.require("combobox/multi-value-combobox");
-  var FilterSelect = module.require("combobox/filter-select");
-  var LocalDataSource = module.require("combobox/local-data-source");
-  var RemoteDataSource = module.require("combobox/remote-data-source");
+KISSY.add("combobox", ["combobox/control", "combobox/multi-value-combobox", "combobox/filter-select", "combobox/local-data-source", "combobox/remote-data-source"], function(S, require) {
+  var ComboBox = require("combobox/control");
+  var MultiValueComboBox = require("combobox/multi-value-combobox");
+  var FilterSelect = require("combobox/filter-select");
+  var LocalDataSource = require("combobox/local-data-source");
+  var RemoteDataSource = require("combobox/remote-data-source");
   ComboBox.LocalDataSource = LocalDataSource;
   ComboBox.RemoteDataSource = RemoteDataSource;
   ComboBox.FilterSelect = FilterSelect;

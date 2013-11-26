@@ -49,8 +49,6 @@ public class ModuleUtils {
 
 
     /**
-     * startWith '#' has special meaning
-     *
      * @param astRoot ast root
      * @param name    module name
      * @return String[] required processedModules 's name
@@ -77,18 +75,10 @@ public class ModuleUtils {
         Node list = astRoot.getFirstChild().getFirstChild().getFirstChild().getNext();
         Node fl = list.getFirstChild();
         while (fl != null) {
-            if (fl.getType() == Token.STRING) {
-                /**
-                 * depName can be relative ./ , ../
-                 */
-                re.add(ModuleUtils.getDepModuleName(name, fl.getString()));
-            } else {
-                // conditional loader
-                // window.localStorage?"localStorage":""
-                String source = AstUtils.toSource(fl);
-                source = source.substring(0, source.length() - 1);
-                re.add("#" + source);
-            }
+            /**
+             * depName can be relative ./ , ../
+             */
+            re.add(ModuleUtils.getDepModuleName(name, fl.getString()));
             fl = fl.getNext();
         }
         return re.toArray(new String[re.size()]);

@@ -6,8 +6,9 @@
 KISSY.add(function (S,require) {
     var Fx = require('./fx');
     var SHORT_HANDS = require('./short-hand');
+    var   logger = S.getLogger('s/anim/timer/color');
     var HEX_BASE = 16,
-        logger = S.getLogger('s/anim/timer/color'),
+
         floor = Math.floor,
         KEYWORDS = {
             'black': [0, 0, 0],

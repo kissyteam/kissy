@@ -1,6 +1,6 @@
 /*
-Copyright 2013, KISSY v1.40dev
+Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Oct 25 16:47
+build time: Nov 27 00:02
 */
-KISSY.add("editor/plugin/underline",function(c,g,e,f){function d(){}c.augment(d,{pluginRenderUI:function(a){f.init(a);a.addButton("underline",{cmdType:"underline",tooltip:"\u4e0b\u5212\u7ebf "},e.Button);a.docReady(function(){a.get("document").on("keydown",function(b){b.ctrlKey&&b.keyCode==c.Node.KeyCode.U&&(a.execCommand("underline"),b.preventDefault())})})}});return d},{requires:["editor","./font/ui","./underline/cmd"]});
+KISSY.add("editor/plugin/underline",["./font/ui","./underline/cmd","./button"],function(c,a){function d(){}var e=a("./font/ui"),f=a("./underline/cmd");a("./button");c.augment(d,{pluginRenderUI:function(b){f.init(b);b.addButton("underline",{cmdType:"underline",tooltip:"\u4e0b\u5212\u7ebf "},e.Button);b.docReady(function(){b.get("document").on("keydown",function(a){a.ctrlKey&&a.keyCode==c.Node.KeyCode.U&&(b.execCommand("underline"),a.preventDefault())})})}});return d});

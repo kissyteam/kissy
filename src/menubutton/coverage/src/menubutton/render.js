@@ -230,7 +230,10 @@ if (! _$jscoverage['/menubutton/render.js']) {
   _$jscoverage['/menubutton/render.js'] = {};
   _$jscoverage['/menubutton/render.js'].lineData = [];
   _$jscoverage['/menubutton/render.js'].lineData[6] = 0;
-  _$jscoverage['/menubutton/render.js'].lineData[10] = 0;
+  _$jscoverage['/menubutton/render.js'].lineData[7] = 0;
+  _$jscoverage['/menubutton/render.js'].lineData[8] = 0;
+  _$jscoverage['/menubutton/render.js'].lineData[9] = 0;
+  _$jscoverage['/menubutton/render.js'].lineData[11] = 0;
   _$jscoverage['/menubutton/render.js'].lineData[13] = 0;
   _$jscoverage['/menubutton/render.js'].lineData[15] = 0;
   _$jscoverage['/menubutton/render.js'].lineData[16] = 0;
@@ -252,9 +255,15 @@ if (! _$jscoverage['/menubutton/render.js'].branchData) {
   _$jscoverage['/menubutton/render.js'].branchData = {};
 }
 _$jscoverage['/menubutton/render.js'].lineData[6]++;
-KISSY.add("menubutton/render", function(S, Button, MenuButtonTpl, ContentRenderExtension) {
+KISSY.add(function(S, require) {
   _$jscoverage['/menubutton/render.js'].functionData[0]++;
-  _$jscoverage['/menubutton/render.js'].lineData[10]++;
+  _$jscoverage['/menubutton/render.js'].lineData[7]++;
+  var Button = require('button');
+  _$jscoverage['/menubutton/render.js'].lineData[8]++;
+  var MenuButtonTpl = require('./menubutton-xtpl');
+  _$jscoverage['/menubutton/render.js'].lineData[9]++;
+  var ContentRenderExtension = require('component/extension/content-render');
+  _$jscoverage['/menubutton/render.js'].lineData[11]++;
   return Button.getDefaultRender().extend([ContentRenderExtension], {
   decorateDom: function(el) {
   _$jscoverage['/menubutton/render.js'].functionData[1]++;
@@ -290,5 +299,4 @@ KISSY.add("menubutton/render", function(S, Button, MenuButtonTpl, ContentRenderE
   ATTRS: {
   contentTpl: {
   value: MenuButtonTpl}}});
-}, {
-  requires: ['button', './menubutton-xtpl', 'component/extension/content-render']});
+});

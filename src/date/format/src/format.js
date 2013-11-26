@@ -30,8 +30,8 @@ KISSY.add(function (S,require) {
              * short style
              */
             SHORT: 3
-        },
-        logger = S.getLogger('s/date/format');
+        };
+        var logger = S.getLogger('s/date/format');
 
     /*
      Letter    Date or Time Component    Presentation    Examples

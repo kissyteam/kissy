@@ -231,37 +231,38 @@ if (! _$jscoverage['/justify-cmd.js']) {
   _$jscoverage['/justify-cmd.js'].lineData = [];
   _$jscoverage['/justify-cmd.js'].lineData[6] = 0;
   _$jscoverage['/justify-cmd.js'].lineData[7] = 0;
-  _$jscoverage['/justify-cmd.js'].lineData[10] = 0;
+  _$jscoverage['/justify-cmd.js'].lineData[8] = 0;
   _$jscoverage['/justify-cmd.js'].lineData[11] = 0;
   _$jscoverage['/justify-cmd.js'].lineData[12] = 0;
   _$jscoverage['/justify-cmd.js'].lineData[13] = 0;
-  _$jscoverage['/justify-cmd.js'].lineData[18] = 0;
+  _$jscoverage['/justify-cmd.js'].lineData[14] = 0;
   _$jscoverage['/justify-cmd.js'].lineData[19] = 0;
   _$jscoverage['/justify-cmd.js'].lineData[20] = 0;
   _$jscoverage['/justify-cmd.js'].lineData[21] = 0;
   _$jscoverage['/justify-cmd.js'].lineData[22] = 0;
   _$jscoverage['/justify-cmd.js'].lineData[23] = 0;
   _$jscoverage['/justify-cmd.js'].lineData[24] = 0;
-  _$jscoverage['/justify-cmd.js'].lineData[26] = 0;
-  _$jscoverage['/justify-cmd.js'].lineData[30] = 0;
+  _$jscoverage['/justify-cmd.js'].lineData[25] = 0;
+  _$jscoverage['/justify-cmd.js'].lineData[27] = 0;
   _$jscoverage['/justify-cmd.js'].lineData[31] = 0;
   _$jscoverage['/justify-cmd.js'].lineData[32] = 0;
-  _$jscoverage['/justify-cmd.js'].lineData[35] = 0;
+  _$jscoverage['/justify-cmd.js'].lineData[33] = 0;
   _$jscoverage['/justify-cmd.js'].lineData[36] = 0;
-  _$jscoverage['/justify-cmd.js'].lineData[40] = 0;
-  _$jscoverage['/justify-cmd.js'].lineData[43] = 0;
-  _$jscoverage['/justify-cmd.js'].lineData[45] = 0;
-  _$jscoverage['/justify-cmd.js'].lineData[47] = 0;
-  _$jscoverage['/justify-cmd.js'].lineData[49] = 0;
-  _$jscoverage['/justify-cmd.js'].lineData[53] = 0;
-  _$jscoverage['/justify-cmd.js'].lineData[55] = 0;
+  _$jscoverage['/justify-cmd.js'].lineData[37] = 0;
+  _$jscoverage['/justify-cmd.js'].lineData[41] = 0;
+  _$jscoverage['/justify-cmd.js'].lineData[44] = 0;
+  _$jscoverage['/justify-cmd.js'].lineData[46] = 0;
+  _$jscoverage['/justify-cmd.js'].lineData[48] = 0;
+  _$jscoverage['/justify-cmd.js'].lineData[50] = 0;
+  _$jscoverage['/justify-cmd.js'].lineData[54] = 0;
   _$jscoverage['/justify-cmd.js'].lineData[56] = 0;
   _$jscoverage['/justify-cmd.js'].lineData[57] = 0;
   _$jscoverage['/justify-cmd.js'].lineData[58] = 0;
   _$jscoverage['/justify-cmd.js'].lineData[59] = 0;
   _$jscoverage['/justify-cmd.js'].lineData[60] = 0;
   _$jscoverage['/justify-cmd.js'].lineData[61] = 0;
-  _$jscoverage['/justify-cmd.js'].lineData[63] = 0;
+  _$jscoverage['/justify-cmd.js'].lineData[62] = 0;
+  _$jscoverage['/justify-cmd.js'].lineData[64] = 0;
 }
 if (! _$jscoverage['/justify-cmd.js'].functionData) {
   _$jscoverage['/justify-cmd.js'].functionData = [];
@@ -274,146 +275,147 @@ if (! _$jscoverage['/justify-cmd.js'].functionData) {
 }
 if (! _$jscoverage['/justify-cmd.js'].branchData) {
   _$jscoverage['/justify-cmd.js'].branchData = {};
-  _$jscoverage['/justify-cmd.js'].branchData['18'] = [];
-  _$jscoverage['/justify-cmd.js'].branchData['18'][1] = new BranchData();
-  _$jscoverage['/justify-cmd.js'].branchData['23'] = [];
-  _$jscoverage['/justify-cmd.js'].branchData['23'][1] = new BranchData();
-  _$jscoverage['/justify-cmd.js'].branchData['37'] = [];
-  _$jscoverage['/justify-cmd.js'].branchData['37'][1] = new BranchData();
-  _$jscoverage['/justify-cmd.js'].branchData['40'] = [];
-  _$jscoverage['/justify-cmd.js'].branchData['40'][1] = new BranchData();
-  _$jscoverage['/justify-cmd.js'].branchData['45'] = [];
-  _$jscoverage['/justify-cmd.js'].branchData['45'][1] = new BranchData();
-  _$jscoverage['/justify-cmd.js'].branchData['56'] = [];
-  _$jscoverage['/justify-cmd.js'].branchData['56'][1] = new BranchData();
-  _$jscoverage['/justify-cmd.js'].branchData['59'] = [];
-  _$jscoverage['/justify-cmd.js'].branchData['59'][1] = new BranchData();
+  _$jscoverage['/justify-cmd.js'].branchData['19'] = [];
+  _$jscoverage['/justify-cmd.js'].branchData['19'][1] = new BranchData();
+  _$jscoverage['/justify-cmd.js'].branchData['24'] = [];
+  _$jscoverage['/justify-cmd.js'].branchData['24'][1] = new BranchData();
+  _$jscoverage['/justify-cmd.js'].branchData['38'] = [];
+  _$jscoverage['/justify-cmd.js'].branchData['38'][1] = new BranchData();
+  _$jscoverage['/justify-cmd.js'].branchData['41'] = [];
+  _$jscoverage['/justify-cmd.js'].branchData['41'][1] = new BranchData();
+  _$jscoverage['/justify-cmd.js'].branchData['46'] = [];
+  _$jscoverage['/justify-cmd.js'].branchData['46'][1] = new BranchData();
+  _$jscoverage['/justify-cmd.js'].branchData['57'] = [];
+  _$jscoverage['/justify-cmd.js'].branchData['57'][1] = new BranchData();
   _$jscoverage['/justify-cmd.js'].branchData['60'] = [];
   _$jscoverage['/justify-cmd.js'].branchData['60'][1] = new BranchData();
-  _$jscoverage['/justify-cmd.js'].branchData['60'][2] = new BranchData();
+  _$jscoverage['/justify-cmd.js'].branchData['61'] = [];
+  _$jscoverage['/justify-cmd.js'].branchData['61'][1] = new BranchData();
+  _$jscoverage['/justify-cmd.js'].branchData['61'][2] = new BranchData();
 }
-_$jscoverage['/justify-cmd.js'].branchData['60'][2].init(271, 27, 'block.nodeName() === "body"');
-function visit9_60_2(result) {
-  _$jscoverage['/justify-cmd.js'].branchData['60'][2].ranCondition(result);
+_$jscoverage['/justify-cmd.js'].branchData['61'][2].init(267, 27, 'block.nodeName() === "body"');
+function visit9_61_2(result) {
+  _$jscoverage['/justify-cmd.js'].branchData['61'][2].ranCondition(result);
   return result;
-}_$jscoverage['/justify-cmd.js'].branchData['60'][1].init(261, 37, '!block || block.nodeName() === "body"');
-function visit8_60_1(result) {
+}_$jscoverage['/justify-cmd.js'].branchData['61'][1].init(257, 37, '!block || block.nodeName() === "body"');
+function visit8_61_1(result) {
+  _$jscoverage['/justify-cmd.js'].branchData['61'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/justify-cmd.js'].branchData['60'][1].init(194, 29, 'path.block || path.blockLimit');
+function visit7_60_1(result) {
   _$jscoverage['/justify-cmd.js'].branchData['60'][1].ranCondition(result);
   return result;
-}_$jscoverage['/justify-cmd.js'].branchData['59'][1].init(197, 29, 'path.block || path.blockLimit');
-function visit7_59_1(result) {
-  _$jscoverage['/justify-cmd.js'].branchData['59'][1].ranCondition(result);
+}_$jscoverage['/justify-cmd.js'].branchData['57'][1].init(92, 33, 'selection && !selection.isInvalid');
+function visit6_57_1(result) {
+  _$jscoverage['/justify-cmd.js'].branchData['57'][1].ranCondition(result);
   return result;
-}_$jscoverage['/justify-cmd.js'].branchData['56'][1].init(94, 33, 'selection && !selection.isInvalid');
-function visit6_56_1(result) {
-  _$jscoverage['/justify-cmd.js'].branchData['56'][1].ranCondition(result);
+}_$jscoverage['/justify-cmd.js'].branchData['46'][1].init(17, 27, '!editor.hasCommand(command)');
+function visit5_46_1(result) {
+  _$jscoverage['/justify-cmd.js'].branchData['46'][1].ranCondition(result);
   return result;
-}_$jscoverage['/justify-cmd.js'].branchData['45'][1].init(18, 27, '!editor.hasCommand(command)');
-function visit5_45_1(result) {
-  _$jscoverage['/justify-cmd.js'].branchData['45'][1].ranCondition(result);
+}_$jscoverage['/justify-cmd.js'].branchData['41'][1].init(156, 18, 'align == textAlign');
+function visit4_41_1(result) {
+  _$jscoverage['/justify-cmd.js'].branchData['41'][1].ranCondition(result);
   return result;
-}_$jscoverage['/justify-cmd.js'].branchData['40'][1].init(161, 18, 'align == textAlign');
-function visit4_40_1(result) {
-  _$jscoverage['/justify-cmd.js'].branchData['40'][1].ranCondition(result);
+}_$jscoverage['/justify-cmd.js'].branchData['38'][1].init(7, 118, 'block.css("text-align").replace(alignRemoveRegex, "") || default_align');
+function visit3_38_1(result) {
+  _$jscoverage['/justify-cmd.js'].branchData['38'][1].ranCondition(result);
   return result;
-}_$jscoverage['/justify-cmd.js'].branchData['37'][1].init(7, 121, 'block.css("text-align").replace(alignRemoveRegex, "") || default_align');
-function visit3_37_1(result) {
-  _$jscoverage['/justify-cmd.js'].branchData['37'][1].ranCondition(result);
+}_$jscoverage['/justify-cmd.js'].branchData['24'][1].init(64, 25, 'isAlign(block, textAlign)');
+function visit2_24_1(result) {
+  _$jscoverage['/justify-cmd.js'].branchData['24'][1].ranCondition(result);
   return result;
-}_$jscoverage['/justify-cmd.js'].branchData['23'][1].init(66, 25, 'isAlign(block, textAlign)');
-function visit2_23_1(result) {
-  _$jscoverage['/justify-cmd.js'].branchData['23'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/justify-cmd.js'].branchData['18'][1].init(294, 6, 'i >= 0');
-function visit1_18_1(result) {
-  _$jscoverage['/justify-cmd.js'].branchData['18'][1].ranCondition(result);
+}_$jscoverage['/justify-cmd.js'].branchData['19'][1].init(286, 6, 'i >= 0');
+function visit1_19_1(result) {
+  _$jscoverage['/justify-cmd.js'].branchData['19'][1].ranCondition(result);
   return result;
 }_$jscoverage['/justify-cmd.js'].lineData[6]++;
-KISSY.add("editor/plugin/justify-cmd", function(S, Editor) {
+KISSY.add(function(S, require) {
   _$jscoverage['/justify-cmd.js'].functionData[0]++;
   _$jscoverage['/justify-cmd.js'].lineData[7]++;
+  var Editor = require('editor');
+  _$jscoverage['/justify-cmd.js'].lineData[8]++;
   var alignRemoveRegex = /(-moz-|-webkit-|start|auto)/gi, default_align = "left";
-  _$jscoverage['/justify-cmd.js'].lineData[10]++;
+  _$jscoverage['/justify-cmd.js'].lineData[11]++;
   function exec(editor, textAlign) {
     _$jscoverage['/justify-cmd.js'].functionData[1]++;
-    _$jscoverage['/justify-cmd.js'].lineData[11]++;
-    editor.focus();
     _$jscoverage['/justify-cmd.js'].lineData[12]++;
-    editor.execCommand("save");
+    editor.focus();
     _$jscoverage['/justify-cmd.js'].lineData[13]++;
+    editor.execCommand("save");
+    _$jscoverage['/justify-cmd.js'].lineData[14]++;
     var selection = editor.getSelection(), bookmarks = selection.createBookmarks(), ranges = selection.getRanges(), iterator, block;
-    _$jscoverage['/justify-cmd.js'].lineData[18]++;
-    for (var i = ranges.length - 1; visit1_18_1(i >= 0); i--) {
-      _$jscoverage['/justify-cmd.js'].lineData[19]++;
-      iterator = ranges[i].createIterator();
+    _$jscoverage['/justify-cmd.js'].lineData[19]++;
+    for (var i = ranges.length - 1; visit1_19_1(i >= 0); i--) {
       _$jscoverage['/justify-cmd.js'].lineData[20]++;
-      iterator.enlargeBr = true;
+      iterator = ranges[i].createIterator();
       _$jscoverage['/justify-cmd.js'].lineData[21]++;
+      iterator.enlargeBr = true;
+      _$jscoverage['/justify-cmd.js'].lineData[22]++;
       while ((block = iterator.getNextParagraph())) {
-        _$jscoverage['/justify-cmd.js'].lineData[22]++;
-        block.removeAttr('align');
         _$jscoverage['/justify-cmd.js'].lineData[23]++;
-        if (visit2_23_1(isAlign(block, textAlign))) {
-          _$jscoverage['/justify-cmd.js'].lineData[24]++;
+        block.removeAttr('align');
+        _$jscoverage['/justify-cmd.js'].lineData[24]++;
+        if (visit2_24_1(isAlign(block, textAlign))) {
+          _$jscoverage['/justify-cmd.js'].lineData[25]++;
           block.css('text-align', '');
         } else {
-          _$jscoverage['/justify-cmd.js'].lineData[26]++;
+          _$jscoverage['/justify-cmd.js'].lineData[27]++;
           block.css('text-align', textAlign);
         }
       }
     }
-    _$jscoverage['/justify-cmd.js'].lineData[30]++;
-    selection.selectBookmarks(bookmarks);
     _$jscoverage['/justify-cmd.js'].lineData[31]++;
-    editor.execCommand("save");
+    selection.selectBookmarks(bookmarks);
     _$jscoverage['/justify-cmd.js'].lineData[32]++;
+    editor.execCommand("save");
+    _$jscoverage['/justify-cmd.js'].lineData[33]++;
     editor.notifySelectionChange();
   }
-  _$jscoverage['/justify-cmd.js'].lineData[35]++;
+  _$jscoverage['/justify-cmd.js'].lineData[36]++;
   function isAlign(block, textAlign) {
     _$jscoverage['/justify-cmd.js'].functionData[2]++;
-    _$jscoverage['/justify-cmd.js'].lineData[36]++;
-    var align = visit3_37_1(block.css("text-align").replace(alignRemoveRegex, "") || default_align);
-    _$jscoverage['/justify-cmd.js'].lineData[40]++;
-    return visit4_40_1(align == textAlign);
+    _$jscoverage['/justify-cmd.js'].lineData[37]++;
+    var align = visit3_38_1(block.css("text-align").replace(alignRemoveRegex, "") || default_align);
+    _$jscoverage['/justify-cmd.js'].lineData[41]++;
+    return visit4_41_1(align == textAlign);
   }
-  _$jscoverage['/justify-cmd.js'].lineData[43]++;
+  _$jscoverage['/justify-cmd.js'].lineData[44]++;
   return {
   addCommand: function(editor, command, textAlign) {
   _$jscoverage['/justify-cmd.js'].functionData[3]++;
-  _$jscoverage['/justify-cmd.js'].lineData[45]++;
-  if (visit5_45_1(!editor.hasCommand(command))) {
-    _$jscoverage['/justify-cmd.js'].lineData[47]++;
+  _$jscoverage['/justify-cmd.js'].lineData[46]++;
+  if (visit5_46_1(!editor.hasCommand(command))) {
+    _$jscoverage['/justify-cmd.js'].lineData[48]++;
     editor.addCommand(command, {
   exec: function(editor) {
   _$jscoverage['/justify-cmd.js'].functionData[4]++;
-  _$jscoverage['/justify-cmd.js'].lineData[49]++;
+  _$jscoverage['/justify-cmd.js'].lineData[50]++;
   exec(editor, textAlign);
 }});
-    _$jscoverage['/justify-cmd.js'].lineData[53]++;
+    _$jscoverage['/justify-cmd.js'].lineData[54]++;
     editor.addCommand(Editor.Utils.getQueryCmd(command), {
   exec: function(editor) {
   _$jscoverage['/justify-cmd.js'].functionData[5]++;
-  _$jscoverage['/justify-cmd.js'].lineData[55]++;
-  var selection = editor.getSelection();
   _$jscoverage['/justify-cmd.js'].lineData[56]++;
-  if (visit6_56_1(selection && !selection.isInvalid)) {
-    _$jscoverage['/justify-cmd.js'].lineData[57]++;
-    var startElement = selection.getStartElement();
+  var selection = editor.getSelection();
+  _$jscoverage['/justify-cmd.js'].lineData[57]++;
+  if (visit6_57_1(selection && !selection.isInvalid)) {
     _$jscoverage['/justify-cmd.js'].lineData[58]++;
-    var path = new Editor.ElementPath(startElement);
+    var startElement = selection.getStartElement();
     _$jscoverage['/justify-cmd.js'].lineData[59]++;
-    var block = visit7_59_1(path.block || path.blockLimit);
+    var path = new Editor.ElementPath(startElement);
     _$jscoverage['/justify-cmd.js'].lineData[60]++;
-    if (visit8_60_1(!block || visit9_60_2(block.nodeName() === "body"))) {
-      _$jscoverage['/justify-cmd.js'].lineData[61]++;
+    var block = visit7_60_1(path.block || path.blockLimit);
+    _$jscoverage['/justify-cmd.js'].lineData[61]++;
+    if (visit8_61_1(!block || visit9_61_2(block.nodeName() === "body"))) {
+      _$jscoverage['/justify-cmd.js'].lineData[62]++;
       return false;
     }
-    _$jscoverage['/justify-cmd.js'].lineData[63]++;
+    _$jscoverage['/justify-cmd.js'].lineData[64]++;
     return isAlign(block, textAlign);
   }
 }});
   }
 }};
-}, {
-  requires: ['editor']});
+});

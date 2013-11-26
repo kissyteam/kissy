@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 19 12:02
+build time: Nov 27 00:37
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -9,11 +9,10 @@ build time: Nov 19 12:02
  anim/transition
 */
 
-KISSY.add("anim/transition", ["dom", "event/dom", "./base"], function(S) {
-  var module = this;
-  var Dom = module.require("dom");
-  var Event = module.require("event/dom");
-  var AnimBase = module.require("./base");
+KISSY.add("anim/transition", ["dom", "event/dom", "./base"], function(S, require) {
+  var Dom = require("dom");
+  var Event = require("event/dom");
+  var AnimBase = require("./base");
   var Features = S.Features;
   var vendorPrefix = Features.getTransitionPrefix();
   var R_UPPER = /([A-Z]|^ms)/g;

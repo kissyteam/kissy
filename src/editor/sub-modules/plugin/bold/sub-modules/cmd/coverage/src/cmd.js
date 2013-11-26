@@ -231,8 +231,10 @@ if (! _$jscoverage['/cmd.js']) {
   _$jscoverage['/cmd.js'].lineData = [];
   _$jscoverage['/cmd.js'].lineData[6] = 0;
   _$jscoverage['/cmd.js'].lineData[7] = 0;
-  _$jscoverage['/cmd.js'].lineData[21] = 0;
+  _$jscoverage['/cmd.js'].lineData[8] = 0;
+  _$jscoverage['/cmd.js'].lineData[9] = 0;
   _$jscoverage['/cmd.js'].lineData[23] = 0;
+  _$jscoverage['/cmd.js'].lineData[25] = 0;
 }
 if (! _$jscoverage['/cmd.js'].functionData) {
   _$jscoverage['/cmd.js'].functionData = [];
@@ -243,9 +245,13 @@ if (! _$jscoverage['/cmd.js'].branchData) {
   _$jscoverage['/cmd.js'].branchData = {};
 }
 _$jscoverage['/cmd.js'].lineData[6]++;
-KISSY.add("editor/plugin/bold/cmd", function(S, Editor, Cmd) {
+KISSY.add(function(S, require) {
   _$jscoverage['/cmd.js'].functionData[0]++;
   _$jscoverage['/cmd.js'].lineData[7]++;
+  var Editor = require('editor');
+  _$jscoverage['/cmd.js'].lineData[8]++;
+  var Cmd = require('../font/cmd');
+  _$jscoverage['/cmd.js'].lineData[9]++;
   var BOLD_STYLE = new Editor.Style({
   element: 'strong', 
   overrides: [{
@@ -253,12 +259,11 @@ KISSY.add("editor/plugin/bold/cmd", function(S, Editor, Cmd) {
   element: 'span', 
   attributes: {
   style: 'font-weight: bold;'}}]});
-  _$jscoverage['/cmd.js'].lineData[21]++;
+  _$jscoverage['/cmd.js'].lineData[23]++;
   return {
   init: function(editor) {
   _$jscoverage['/cmd.js'].functionData[1]++;
-  _$jscoverage['/cmd.js'].lineData[23]++;
+  _$jscoverage['/cmd.js'].lineData[25]++;
   Cmd.addButtonCmd(editor, "bold", BOLD_STYLE);
 }};
-}, {
-  requires: ['editor', '../font/cmd']});
+});

@@ -230,6 +230,7 @@ if (! _$jscoverage['/tabs/panel-render.js']) {
   _$jscoverage['/tabs/panel-render.js'] = {};
   _$jscoverage['/tabs/panel-render.js'].lineData = [];
   _$jscoverage['/tabs/panel-render.js'].lineData[6] = 0;
+  _$jscoverage['/tabs/panel-render.js'].lineData[7] = 0;
   _$jscoverage['/tabs/panel-render.js'].lineData[8] = 0;
   _$jscoverage['/tabs/panel-render.js'].lineData[11] = 0;
   _$jscoverage['/tabs/panel-render.js'].lineData[12] = 0;
@@ -253,13 +254,15 @@ if (! _$jscoverage['/tabs/panel-render.js'].branchData) {
   _$jscoverage['/tabs/panel-render.js'].branchData['13'] = [];
   _$jscoverage['/tabs/panel-render.js'].branchData['13'][1] = new BranchData();
 }
-_$jscoverage['/tabs/panel-render.js'].branchData['13'][1].init(99, 19, 'renderData.selected');
+_$jscoverage['/tabs/panel-render.js'].branchData['13'][1].init(96, 19, 'renderData.selected');
 function visit13_13_1(result) {
   _$jscoverage['/tabs/panel-render.js'].branchData['13'][1].ranCondition(result);
   return result;
 }_$jscoverage['/tabs/panel-render.js'].lineData[6]++;
-KISSY.add("tabs/panel-render", function(S, Container) {
+KISSY.add(function(S, require) {
   _$jscoverage['/tabs/panel-render.js'].functionData[0]++;
+  _$jscoverage['/tabs/panel-render.js'].lineData[7]++;
+  var Container = require('component/container');
   _$jscoverage['/tabs/panel-render.js'].lineData[8]++;
   return Container.getDefaultRender().extend({
   beforeCreateDom: function(renderData) {
@@ -293,5 +296,4 @@ KISSY.add("tabs/panel-render", function(S, Container) {
   _$jscoverage['/tabs/panel-render.js'].lineData[31]++;
   return el.hasClass(this.getBaseCssClass('selected'));
 }}});
-}, {
-  requires: ['component/container']});
+});

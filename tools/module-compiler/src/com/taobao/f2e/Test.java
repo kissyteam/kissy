@@ -41,8 +41,6 @@ public class Test {
         main.run();
     }
 
-
-
     public static void testKISSY1_4_Packager2() {
         Main main = new Main();
         String path;

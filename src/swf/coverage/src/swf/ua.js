@@ -297,52 +297,52 @@ if (! _$jscoverage['/swf/ua.js'].branchData) {
   _$jscoverage['/swf/ua.js'].branchData['103'] = [];
   _$jscoverage['/swf/ua.js'].branchData['103'][1] = new BranchData();
 }
-_$jscoverage['/swf/ua.js'].branchData['103'][1].init(17, 53, 'getNumberVersion(fpv(force)) >= getNumberVersion(ver)');
+_$jscoverage['/swf/ua.js'].branchData['103'][1].init(16, 53, 'getNumberVersion(fpv(force)) >= getNumberVersion(ver)');
 function visit11_103_1(result) {
   _$jscoverage['/swf/ua.js'].branchData['103'][1].ranCondition(result);
   return result;
-}_$jscoverage['/swf/ua.js'].branchData['87'][1].init(73, 17, 'force || firstRun');
+}_$jscoverage['/swf/ua.js'].branchData['87'][1].init(71, 17, 'force || firstRun');
 function visit10_87_1(result) {
   _$jscoverage['/swf/ua.js'].branchData['87'][1].ranCondition(result);
   return result;
-}_$jscoverage['/swf/ua.js'].branchData['75'][1].init(115, 11, 'padding > 0');
+}_$jscoverage['/swf/ua.js'].branchData['75'][1].init(111, 11, 'padding > 0');
 function visit9_75_1(result) {
   _$jscoverage['/swf/ua.js'].branchData['75'][1].ranCondition(result);
   return result;
-}_$jscoverage['/swf/ua.js'].branchData['72'][1].init(16, 8, 'num || 0');
+}_$jscoverage['/swf/ua.js'].branchData['72'][1].init(15, 8, 'num || 0');
 function visit8_72_1(result) {
   _$jscoverage['/swf/ua.js'].branchData['72'][1].ranCondition(result);
   return result;
-}_$jscoverage['/swf/ua.js'].branchData['65'][1].init(268, 8, 'ret || 0');
+}_$jscoverage['/swf/ua.js'].branchData['65'][1].init(260, 8, 'ret || 0');
 function visit7_65_1(result) {
   _$jscoverage['/swf/ua.js'].branchData['65'][1].ranCondition(result);
   return result;
-}_$jscoverage['/swf/ua.js'].branchData['62'][1].init(144, 14, 'S.isArray(arr)');
+}_$jscoverage['/swf/ua.js'].branchData['62'][1].init(139, 14, 'S.isArray(arr)');
 function visit6_62_1(result) {
   _$jscoverage['/swf/ua.js'].branchData['62'][1].ranCondition(result);
   return result;
-}_$jscoverage['/swf/ua.js'].branchData['58'][1].init(20, 22, 'typeof ver == \'string\'');
+}_$jscoverage['/swf/ua.js'].branchData['58'][1].init(19, 22, 'typeof ver == \'string\'');
 function visit5_58_1(result) {
   _$jscoverage['/swf/ua.js'].branchData['58'][1].ranCondition(result);
   return result;
-}_$jscoverage['/swf/ua.js'].branchData['35'][1].init(717, 4, '!ver');
+}_$jscoverage['/swf/ua.js'].branchData['35'][1].init(698, 4, '!ver');
 function visit4_35_1(result) {
   _$jscoverage['/swf/ua.js'].branchData['35'][1].ranCondition(result);
   return result;
-}_$jscoverage['/swf/ua.js'].branchData['25'][1].init(355, 20, 'win[\'ActiveXObject\']');
+}_$jscoverage['/swf/ua.js'].branchData['25'][1].init(346, 20, 'win[\'ActiveXObject\']');
 function visit3_25_1(result) {
   _$jscoverage['/swf/ua.js'].branchData['25'][1].ranCondition(result);
   return result;
-}_$jscoverage['/swf/ua.js'].branchData['22'][1].init(21, 41, 'navigator.plugins[\'Shockwave Flash\'] || 0');
+}_$jscoverage['/swf/ua.js'].branchData['22'][1].init(20, 41, 'navigator.plugins[\'Shockwave Flash\'] || 0');
 function visit2_22_1(result) {
   _$jscoverage['/swf/ua.js'].branchData['22'][1].ranCondition(result);
   return result;
-}_$jscoverage['/swf/ua.js'].branchData['21'][1].init(132, 47, 'navigator.plugins && navigator.mimeTypes.length');
+}_$jscoverage['/swf/ua.js'].branchData['21'][1].init(127, 47, 'navigator.plugins && navigator.mimeTypes.length');
 function visit1_21_1(result) {
   _$jscoverage['/swf/ua.js'].branchData['21'][1].ranCondition(result);
   return result;
 }_$jscoverage['/swf/ua.js'].lineData[6]++;
-KISSY.add('swf/ua', function(S, undefined) {
+KISSY.add(function(S) {
   _$jscoverage['/swf/ua.js'].functionData[0]++;
   _$jscoverage['/swf/ua.js'].lineData[8]++;
   var fpvCached, firstRun = true, win = S.Env.host;

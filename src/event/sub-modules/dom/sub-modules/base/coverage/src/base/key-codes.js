@@ -287,47 +287,47 @@ if (! _$jscoverage['/base/key-codes.js'].branchData) {
   _$jscoverage['/base/key-codes.js'].branchData['499'][1] = new BranchData();
   _$jscoverage['/base/key-codes.js'].branchData['499'][2] = new BranchData();
 }
-_$jscoverage['/base/key-codes.js'].branchData['499'][2].init(455, 12, 'keyCode == 0');
+_$jscoverage['/base/key-codes.js'].branchData['499'][2].init(438, 12, 'keyCode == 0');
 function visit45_499_2(result) {
   _$jscoverage['/base/key-codes.js'].branchData['499'][2].ranCondition(result);
   return result;
-}_$jscoverage['/base/key-codes.js'].branchData['499'][1].init(442, 25, 'UA.webkit && keyCode == 0');
+}_$jscoverage['/base/key-codes.js'].branchData['499'][1].init(425, 25, 'UA.webkit && keyCode == 0');
 function visit44_499_1(result) {
   _$jscoverage['/base/key-codes.js'].branchData['499'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/key-codes.js'].branchData['494'][1].init(36, 20, 'keyCode <= KeyCode.Z');
+}_$jscoverage['/base/key-codes.js'].branchData['494'][1].init(35, 20, 'keyCode <= KeyCode.Z');
 function visit43_494_1(result) {
   _$jscoverage['/base/key-codes.js'].branchData['494'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/key-codes.js'].branchData['493'][2].init(264, 20, 'keyCode >= KeyCode.A');
+}_$jscoverage['/base/key-codes.js'].branchData['493'][2].init(253, 20, 'keyCode >= KeyCode.A');
 function visit42_493_2(result) {
   _$jscoverage['/base/key-codes.js'].branchData['493'][2].ranCondition(result);
   return result;
-}_$jscoverage['/base/key-codes.js'].branchData['493'][1].init(264, 57, 'keyCode >= KeyCode.A && keyCode <= KeyCode.Z');
+}_$jscoverage['/base/key-codes.js'].branchData['493'][1].init(253, 56, 'keyCode >= KeyCode.A && keyCode <= KeyCode.Z');
 function visit41_493_1(result) {
   _$jscoverage['/base/key-codes.js'].branchData['493'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/key-codes.js'].branchData['489'][1].init(43, 31, 'keyCode <= KeyCode.NUM_MULTIPLY');
+}_$jscoverage['/base/key-codes.js'].branchData['489'][1].init(42, 31, 'keyCode <= KeyCode.NUM_MULTIPLY');
 function visit40_489_1(result) {
   _$jscoverage['/base/key-codes.js'].branchData['489'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/key-codes.js'].branchData['488'][2].init(133, 27, 'keyCode >= KeyCode.NUM_ZERO');
+}_$jscoverage['/base/key-codes.js'].branchData['488'][2].init(127, 27, 'keyCode >= KeyCode.NUM_ZERO');
 function visit39_488_2(result) {
   _$jscoverage['/base/key-codes.js'].branchData['488'][2].ranCondition(result);
   return result;
-}_$jscoverage['/base/key-codes.js'].branchData['488'][1].init(133, 75, 'keyCode >= KeyCode.NUM_ZERO && keyCode <= KeyCode.NUM_MULTIPLY');
+}_$jscoverage['/base/key-codes.js'].branchData['488'][1].init(127, 74, 'keyCode >= KeyCode.NUM_ZERO && keyCode <= KeyCode.NUM_MULTIPLY');
 function visit38_488_1(result) {
   _$jscoverage['/base/key-codes.js'].branchData['488'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/key-codes.js'].branchData['484'][1].init(39, 23, 'keyCode <= KeyCode.NINE');
+}_$jscoverage['/base/key-codes.js'].branchData['484'][1].init(38, 23, 'keyCode <= KeyCode.NINE');
 function visit37_484_1(result) {
   _$jscoverage['/base/key-codes.js'].branchData['484'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/key-codes.js'].branchData['483'][2].init(14, 23, 'keyCode >= KeyCode.ZERO');
+}_$jscoverage['/base/key-codes.js'].branchData['483'][2].init(13, 23, 'keyCode >= KeyCode.ZERO');
 function visit36_483_2(result) {
   _$jscoverage['/base/key-codes.js'].branchData['483'][2].ranCondition(result);
   return result;
-}_$jscoverage['/base/key-codes.js'].branchData['483'][1].init(14, 63, 'keyCode >= KeyCode.ZERO && keyCode <= KeyCode.NINE');
+}_$jscoverage['/base/key-codes.js'].branchData['483'][1].init(13, 62, 'keyCode >= KeyCode.ZERO && keyCode <= KeyCode.NINE');
 function visit35_483_1(result) {
   _$jscoverage['/base/key-codes.js'].branchData['483'][1].ranCondition(result);
   return result;
@@ -335,28 +335,28 @@ function visit35_483_1(result) {
 function visit34_443_3(result) {
   _$jscoverage['/base/key-codes.js'].branchData['443'][3].ranCondition(result);
   return result;
-}_$jscoverage['/base/key-codes.js'].branchData['443'][2].init(153, 21, 'keyCode >= KeyCode.F1');
+}_$jscoverage['/base/key-codes.js'].branchData['443'][2].init(149, 21, 'keyCode >= KeyCode.F1');
 function visit33_443_2(result) {
   _$jscoverage['/base/key-codes.js'].branchData['443'][2].ranCondition(result);
   return result;
-}_$jscoverage['/base/key-codes.js'].branchData['443'][1].init(75, 47, 'keyCode >= KeyCode.F1 && keyCode <= KeyCode.F12');
+}_$jscoverage['/base/key-codes.js'].branchData['443'][1].init(73, 47, 'keyCode >= KeyCode.F1 && keyCode <= KeyCode.F12');
 function visit32_443_1(result) {
   _$jscoverage['/base/key-codes.js'].branchData['443'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/key-codes.js'].branchData['441'][3].init(74, 123, 'e.metaKey || keyCode >= KeyCode.F1 && keyCode <= KeyCode.F12');
+}_$jscoverage['/base/key-codes.js'].branchData['441'][3].init(72, 121, 'e.metaKey || keyCode >= KeyCode.F1 && keyCode <= KeyCode.F12');
 function visit31_441_3(result) {
   _$jscoverage['/base/key-codes.js'].branchData['441'][3].ranCondition(result);
   return result;
-}_$jscoverage['/base/key-codes.js'].branchData['441'][2].init(48, 22, 'e.altKey && !e.ctrlKey');
+}_$jscoverage['/base/key-codes.js'].branchData['441'][2].init(46, 22, 'e.altKey && !e.ctrlKey');
 function visit30_441_2(result) {
   _$jscoverage['/base/key-codes.js'].branchData['441'][2].ranCondition(result);
   return result;
-}_$jscoverage['/base/key-codes.js'].branchData['441'][1].init(48, 149, 'e.altKey && !e.ctrlKey || e.metaKey || keyCode >= KeyCode.F1 && keyCode <= KeyCode.F12');
+}_$jscoverage['/base/key-codes.js'].branchData['441'][1].init(46, 147, 'e.altKey && !e.ctrlKey || e.metaKey || keyCode >= KeyCode.F1 && keyCode <= KeyCode.F12');
 function visit29_441_1(result) {
   _$jscoverage['/base/key-codes.js'].branchData['441'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/key-codes.js'].lineData[6]++;
-KISSY.add('event/dom/base/key-codes', function(S) {
+KISSY.add(function(S) {
   _$jscoverage['/base/key-codes.js'].functionData[0]++;
   _$jscoverage['/base/key-codes.js'].lineData[7]++;
   var UA = S.UA, KeyCode = {

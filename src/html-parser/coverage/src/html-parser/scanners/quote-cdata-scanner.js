@@ -231,13 +231,16 @@ if (! _$jscoverage['/html-parser/scanners/quote-cdata-scanner.js']) {
   _$jscoverage['/html-parser/scanners/quote-cdata-scanner.js'].lineData = [];
   _$jscoverage['/html-parser/scanners/quote-cdata-scanner.js'].lineData[6] = 0;
   _$jscoverage['/html-parser/scanners/quote-cdata-scanner.js'].lineData[7] = 0;
+  _$jscoverage['/html-parser/scanners/quote-cdata-scanner.js'].lineData[8] = 0;
   _$jscoverage['/html-parser/scanners/quote-cdata-scanner.js'].lineData[9] = 0;
-  _$jscoverage['/html-parser/scanners/quote-cdata-scanner.js'].lineData[10] = 0;
   _$jscoverage['/html-parser/scanners/quote-cdata-scanner.js'].lineData[11] = 0;
-  _$jscoverage['/html-parser/scanners/quote-cdata-scanner.js'].lineData[12] = 0;
+  _$jscoverage['/html-parser/scanners/quote-cdata-scanner.js'].lineData[13] = 0;
+  _$jscoverage['/html-parser/scanners/quote-cdata-scanner.js'].lineData[14] = 0;
+  _$jscoverage['/html-parser/scanners/quote-cdata-scanner.js'].lineData[15] = 0;
   _$jscoverage['/html-parser/scanners/quote-cdata-scanner.js'].lineData[16] = 0;
-  _$jscoverage['/html-parser/scanners/quote-cdata-scanner.js'].lineData[17] = 0;
-  _$jscoverage['/html-parser/scanners/quote-cdata-scanner.js'].lineData[19] = 0;
+  _$jscoverage['/html-parser/scanners/quote-cdata-scanner.js'].lineData[20] = 0;
+  _$jscoverage['/html-parser/scanners/quote-cdata-scanner.js'].lineData[21] = 0;
+  _$jscoverage['/html-parser/scanners/quote-cdata-scanner.js'].lineData[23] = 0;
 }
 if (! _$jscoverage['/html-parser/scanners/quote-cdata-scanner.js'].functionData) {
   _$jscoverage['/html-parser/scanners/quote-cdata-scanner.js'].functionData = [];
@@ -246,35 +249,40 @@ if (! _$jscoverage['/html-parser/scanners/quote-cdata-scanner.js'].functionData)
 }
 if (! _$jscoverage['/html-parser/scanners/quote-cdata-scanner.js'].branchData) {
   _$jscoverage['/html-parser/scanners/quote-cdata-scanner.js'].branchData = {};
-  _$jscoverage['/html-parser/scanners/quote-cdata-scanner.js'].branchData['9'] = [];
-  _$jscoverage['/html-parser/scanners/quote-cdata-scanner.js'].branchData['9'][1] = new BranchData();
+  _$jscoverage['/html-parser/scanners/quote-cdata-scanner.js'].branchData['13'] = [];
+  _$jscoverage['/html-parser/scanners/quote-cdata-scanner.js'].branchData['13'][1] = new BranchData();
 }
-_$jscoverage['/html-parser/scanners/quote-cdata-scanner.js'].branchData['9'][1].init(21, 10, 'opts || {}');
-function visit284_9_1(result) {
-  _$jscoverage['/html-parser/scanners/quote-cdata-scanner.js'].branchData['9'][1].ranCondition(result);
+_$jscoverage['/html-parser/scanners/quote-cdata-scanner.js'].branchData['13'][1].init(20, 10, 'opts || {}');
+function visit284_13_1(result) {
+  _$jscoverage['/html-parser/scanners/quote-cdata-scanner.js'].branchData['13'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/scanners/quote-cdata-scanner.js'].lineData[6]++;
-KISSY.add("html-parser/scanners/quote-cdata-scanner", function(S, CDataScanner, Dtd, SpecialScanners) {
+KISSY.add(function(S, require) {
   _$jscoverage['/html-parser/scanners/quote-cdata-scanner.js'].functionData[0]++;
   _$jscoverage['/html-parser/scanners/quote-cdata-scanner.js'].lineData[7]++;
+  var CDataScanner = require('./cdata-scanner');
+  _$jscoverage['/html-parser/scanners/quote-cdata-scanner.js'].lineData[8]++;
+  var Dtd = require('../dtd');
+  _$jscoverage['/html-parser/scanners/quote-cdata-scanner.js'].lineData[9]++;
+  var SpecialScanners = require('./special-scanners');
+  _$jscoverage['/html-parser/scanners/quote-cdata-scanner.js'].lineData[11]++;
   var ret = {
   scan: function(tag, lexer, opts) {
   _$jscoverage['/html-parser/scanners/quote-cdata-scanner.js'].functionData[1]++;
-  _$jscoverage['/html-parser/scanners/quote-cdata-scanner.js'].lineData[9]++;
-  opts = visit284_9_1(opts || {});
-  _$jscoverage['/html-parser/scanners/quote-cdata-scanner.js'].lineData[10]++;
+  _$jscoverage['/html-parser/scanners/quote-cdata-scanner.js'].lineData[13]++;
+  opts = visit284_13_1(opts || {});
+  _$jscoverage['/html-parser/scanners/quote-cdata-scanner.js'].lineData[14]++;
   opts.quoteSmart = 1;
-  _$jscoverage['/html-parser/scanners/quote-cdata-scanner.js'].lineData[11]++;
+  _$jscoverage['/html-parser/scanners/quote-cdata-scanner.js'].lineData[15]++;
   CDataScanner.scan(tag, lexer, opts);
-  _$jscoverage['/html-parser/scanners/quote-cdata-scanner.js'].lineData[12]++;
+  _$jscoverage['/html-parser/scanners/quote-cdata-scanner.js'].lineData[16]++;
   opts.quoteSmart = 0;
 }};
-  _$jscoverage['/html-parser/scanners/quote-cdata-scanner.js'].lineData[16]++;
+  _$jscoverage['/html-parser/scanners/quote-cdata-scanner.js'].lineData[20]++;
   for (var t in Dtd.$cdata) {
-    _$jscoverage['/html-parser/scanners/quote-cdata-scanner.js'].lineData[17]++;
+    _$jscoverage['/html-parser/scanners/quote-cdata-scanner.js'].lineData[21]++;
     SpecialScanners[t] = ret;
   }
-  _$jscoverage['/html-parser/scanners/quote-cdata-scanner.js'].lineData[19]++;
+  _$jscoverage['/html-parser/scanners/quote-cdata-scanner.js'].lineData[23]++;
   return ret;
-}, {
-  requires: ["./cdata-scanner", '../dtd', './special-scanners']});
+});

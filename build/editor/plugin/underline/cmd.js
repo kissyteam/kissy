@@ -1,7 +1,7 @@
 /*
-Copyright 2013, KISSY v1.40dev
+Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Oct 25 16:47
+build time: Nov 27 00:02
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -9,29 +9,12 @@ build time: Oct 25 16:47
  editor/plugin/underline/cmd
 */
 
-/**
- * @ignore
- * underline command
- * @author yiminghe@gmail.com
- */
-KISSY.add("editor/plugin/underline/cmd", function (S, Editor, Cmd) {
-
-    var UNDERLINE_STYLE = new Editor.Style({
-        element:'u',
-        overrides:[
-            {
-                element:'span',
-                attributes:{
-                    style:'text-decoration: underline;'
-                }
-            }
-        ]
-    });
-    return {
-        init:function (editor) {
-            Cmd.addButtonCmd(editor, "underline", UNDERLINE_STYLE);
-        }};
-}, {
-    requires:['editor', '../font/cmd']
+KISSY.add("editor/plugin/underline/cmd", ["editor", "../font/cmd"], function(S, require) {
+  var Editor = require("editor");
+  var Cmd = require("../font/cmd");
+  var UNDERLINE_STYLE = new Editor.Style({element:"u", overrides:[{element:"span", attributes:{style:"text-decoration: underline;"}}]});
+  return{init:function(editor) {
+    Cmd.addButtonCmd(editor, "underline", UNDERLINE_STYLE)
+  }}
 });
 

@@ -1,7 +1,7 @@
 /*
-Copyright 2013, KISSY v1.40dev
+Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Oct 25 16:46
+build time: Nov 27 00:00
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -9,51 +9,31 @@ build time: Oct 25 16:46
  editor/plugin/outdent
 */
 
-/**
- * @ignore
- * Add indent button.
- * @author yiminghe@gmail.com
- */
-KISSY.add("editor/plugin/outdent", function (S, Editor, indexCmd) {
-    function outdent() {
-
-    }
-
-    S.augment(outdent, {
-        pluginRenderUI:function (editor) {
-
-            indexCmd.init(editor);
-
-            editor.addButton("outdent", {
-                tooltip:"减少缩进量 ",
-                listeners:{
-                    click:function () {
-                        editor.execCommand("outdent");
-                        editor.focus();
-
-                    },
-                    afterSyncUI:function () {
-                        var self = this;
-                        editor.on("selectionChange", function () {
-                            if (editor.get("mode") == Editor.Mode.SOURCE_MODE) {
-                                return;
-                            }
-                            if (editor.queryCommandValue("outdent")) {
-                                self.set("disabled", false);
-                            } else {
-                                self.set("disabled", true);
-                            }
-                        });
-
-                    }
-                },
-                mode:Editor.Mode.WYSIWYG_MODE
-            });
+KISSY.add("editor/plugin/outdent", ["editor", "./button", "./outdent/cmd"], function(S, require) {
+  var Editor = require("editor");
+  require("./button");
+  var indexCmd = require("./outdent/cmd");
+  function outdent() {
+  }
+  S.augment(outdent, {pluginRenderUI:function(editor) {
+    indexCmd.init(editor);
+    editor.addButton("outdent", {tooltip:"\u51cf\u5c11\u7f29\u8fdb\u91cf ", listeners:{click:function() {
+      editor.execCommand("outdent");
+      editor.focus()
+    }, afterSyncUI:function() {
+      var self = this;
+      editor.on("selectionChange", function() {
+        if(editor.get("mode") == Editor.Mode.SOURCE_MODE) {
+          return
         }
-    });
-
-    return outdent;
-}, {
-    requires:['editor', './outdent/cmd']
+        if(editor.queryCommandValue("outdent")) {
+          self.set("disabled", false)
+        }else {
+          self.set("disabled", true)
+        }
+      })
+    }}, mode:Editor.Mode.WYSIWYG_MODE})
+  }});
+  return outdent
 });
 

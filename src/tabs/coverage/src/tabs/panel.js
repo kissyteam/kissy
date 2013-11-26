@@ -230,7 +230,9 @@ if (! _$jscoverage['/tabs/panel.js']) {
   _$jscoverage['/tabs/panel.js'] = {};
   _$jscoverage['/tabs/panel.js'].lineData = [];
   _$jscoverage['/tabs/panel.js'].lineData[6] = 0;
-  _$jscoverage['/tabs/panel.js'].lineData[12] = 0;
+  _$jscoverage['/tabs/panel.js'].lineData[7] = 0;
+  _$jscoverage['/tabs/panel.js'].lineData[8] = 0;
+  _$jscoverage['/tabs/panel.js'].lineData[14] = 0;
 }
 if (! _$jscoverage['/tabs/panel.js'].functionData) {
   _$jscoverage['/tabs/panel.js'].functionData = [];
@@ -240,9 +242,13 @@ if (! _$jscoverage['/tabs/panel.js'].branchData) {
   _$jscoverage['/tabs/panel.js'].branchData = {};
 }
 _$jscoverage['/tabs/panel.js'].lineData[6]++;
-KISSY.add("tabs/panel", function(S, Container, PanelRender) {
+KISSY.add(function(S, require) {
   _$jscoverage['/tabs/panel.js'].functionData[0]++;
-  _$jscoverage['/tabs/panel.js'].lineData[12]++;
+  _$jscoverage['/tabs/panel.js'].lineData[7]++;
+  var Container = require('component/container');
+  _$jscoverage['/tabs/panel.js'].lineData[8]++;
+  var PanelRender = require('./panel-render');
+  _$jscoverage['/tabs/panel.js'].lineData[14]++;
   return Container.extend({
   isTabsPanel: 1}, {
   ATTRS: {
@@ -255,5 +261,4 @@ KISSY.add("tabs/panel", function(S, Container, PanelRender) {
   xrender: {
   value: PanelRender}}, 
   xclass: 'tabs-panel'});
-}, {
-  requires: ['component/container', './panel-render']});
+});

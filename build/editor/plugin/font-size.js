@@ -1,7 +1,7 @@
 /*
-Copyright 2013, KISSY v1.40dev
+Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Oct 25 16:43
+build time: Nov 27 00:42
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -9,54 +9,27 @@ build time: Oct 25 16:43
  editor/plugin/font-size
 */
 
-/**
- * @ignore
- * font formatting for kissy editor
- * @author yiminghe@gmail.com
- */
-KISSY.add("editor/plugin/font-size", function (S, Editor, ui, cmd) {
-    function FontSizePlugin(config) {
-        this.config = config || {};
+KISSY.add("editor/plugin/font-size", ["editor", "./font/ui", "./font-size/cmd", "./menubutton"], function(S, require) {
+  var Editor = require("editor");
+  var ui = require("./font/ui");
+  var cmd = require("./font-size/cmd");
+  require("./menubutton");
+  function FontSizePlugin(config) {
+    this.config = config || {}
+  }
+  S.augment(FontSizePlugin, {pluginRenderUI:function(editor) {
+    cmd.init(editor);
+    function wrapFont(vs) {
+      var v = [];
+      S.each(vs, function(n) {
+        v.push({content:n, value:n})
+      });
+      return v
     }
-
-    S.augment(FontSizePlugin, {
-        pluginRenderUI:function (editor) {
-
-            cmd.init(editor);
-
-            function wrapFont(vs) {
-                var v = [];
-                S.each(vs, function (n) {
-                    v.push({
-                        content:n,
-                        value:n
-                    });
-                });
-                return v;
-            }
-
-            var fontSizeConfig = this.config;
-
-            fontSizeConfig.menu = S.mix({
-                children:wrapFont([
-                    "8px", "10px", "12px",
-                    "14px", "18px", "24px",
-                    "36px", "48px", "60px",
-                    "72px", "84px", "96px"
-                ])
-            }, fontSizeConfig.menu);
-
-            editor.addSelect("fontSize", S.mix({
-                cmdType:"fontSize",
-                defaultCaption:"大小",
-                width:"70px",
-                mode:Editor.Mode.WYSIWYG_MODE
-            }, fontSizeConfig), ui.Select);
-        }
-    });
-
-    return FontSizePlugin;
-}, {
-    requires:['editor', './font/ui', './font-size/cmd']
+    var fontSizeConfig = this.config;
+    fontSizeConfig.menu = S.mix({children:wrapFont(["8px", "10px", "12px", "14px", "18px", "24px", "36px", "48px", "60px", "72px", "84px", "96px"])}, fontSizeConfig.menu);
+    editor.addSelect("fontSize", S.mix({cmdType:"fontSize", defaultCaption:"\u5927\u5c0f", width:"70px", mode:Editor.Mode.WYSIWYG_MODE}, fontSizeConfig), ui.Select)
+  }});
+  return FontSizePlugin
 });
 

@@ -230,15 +230,16 @@ if (! _$jscoverage['/menu/menuitem-render.js']) {
   _$jscoverage['/menu/menuitem-render.js'] = {};
   _$jscoverage['/menu/menuitem-render.js'].lineData = [];
   _$jscoverage['/menu/menuitem-render.js'].lineData[6] = 0;
+  _$jscoverage['/menu/menuitem-render.js'].lineData[7] = 0;
   _$jscoverage['/menu/menuitem-render.js'].lineData[8] = 0;
-  _$jscoverage['/menu/menuitem-render.js'].lineData[11] = 0;
+  _$jscoverage['/menu/menuitem-render.js'].lineData[10] = 0;
+  _$jscoverage['/menu/menuitem-render.js'].lineData[12] = 0;
   _$jscoverage['/menu/menuitem-render.js'].lineData[13] = 0;
-  _$jscoverage['/menu/menuitem-render.js'].lineData[14] = 0;
-  _$jscoverage['/menu/menuitem-render.js'].lineData[19] = 0;
-  _$jscoverage['/menu/menuitem-render.js'].lineData[21] = 0;
+  _$jscoverage['/menu/menuitem-render.js'].lineData[18] = 0;
+  _$jscoverage['/menu/menuitem-render.js'].lineData[20] = 0;
+  _$jscoverage['/menu/menuitem-render.js'].lineData[24] = 0;
   _$jscoverage['/menu/menuitem-render.js'].lineData[25] = 0;
-  _$jscoverage['/menu/menuitem-render.js'].lineData[26] = 0;
-  _$jscoverage['/menu/menuitem-render.js'].lineData[31] = 0;
+  _$jscoverage['/menu/menuitem-render.js'].lineData[30] = 0;
 }
 if (! _$jscoverage['/menu/menuitem-render.js'].functionData) {
   _$jscoverage['/menu/menuitem-render.js'].functionData = [];
@@ -250,63 +251,64 @@ if (! _$jscoverage['/menu/menuitem-render.js'].functionData) {
 }
 if (! _$jscoverage['/menu/menuitem-render.js'].branchData) {
   _$jscoverage['/menu/menuitem-render.js'].branchData = {};
-  _$jscoverage['/menu/menuitem-render.js'].branchData['13'] = [];
-  _$jscoverage['/menu/menuitem-render.js'].branchData['13'][1] = new BranchData();
-  _$jscoverage['/menu/menuitem-render.js'].branchData['26'] = [];
-  _$jscoverage['/menu/menuitem-render.js'].branchData['26'][1] = new BranchData();
-  _$jscoverage['/menu/menuitem-render.js'].branchData['26'][2] = new BranchData();
-  _$jscoverage['/menu/menuitem-render.js'].branchData['26'][3] = new BranchData();
+  _$jscoverage['/menu/menuitem-render.js'].branchData['12'] = [];
+  _$jscoverage['/menu/menuitem-render.js'].branchData['12'][1] = new BranchData();
+  _$jscoverage['/menu/menuitem-render.js'].branchData['25'] = [];
+  _$jscoverage['/menu/menuitem-render.js'].branchData['25'][1] = new BranchData();
+  _$jscoverage['/menu/menuitem-render.js'].branchData['25'][2] = new BranchData();
+  _$jscoverage['/menu/menuitem-render.js'].branchData['25'][3] = new BranchData();
 }
-_$jscoverage['/menu/menuitem-render.js'].branchData['26'][3].init(63, 17, '$el[0] == element');
-function visit29_26_3(result) {
-  _$jscoverage['/menu/menuitem-render.js'].branchData['26'][3].ranCondition(result);
+_$jscoverage['/menu/menuitem-render.js'].branchData['25'][3].init(61, 17, '$el[0] == element');
+function visit32_25_3(result) {
+  _$jscoverage['/menu/menuitem-render.js'].branchData['25'][3].ranCondition(result);
   return result;
-}_$jscoverage['/menu/menuitem-render.js'].branchData['26'][2].init(63, 42, '$el[0] == element || $el.contains(element)');
-function visit28_26_2(result) {
-  _$jscoverage['/menu/menuitem-render.js'].branchData['26'][2].ranCondition(result);
+}_$jscoverage['/menu/menuitem-render.js'].branchData['25'][2].init(61, 42, '$el[0] == element || $el.contains(element)');
+function visit31_25_2(result) {
+  _$jscoverage['/menu/menuitem-render.js'].branchData['25'][2].ranCondition(result);
   return result;
-}_$jscoverage['/menu/menuitem-render.js'].branchData['26'][1].init(54, 52, '$el && ($el[0] == element || $el.contains(element))');
-function visit27_26_1(result) {
-  _$jscoverage['/menu/menuitem-render.js'].branchData['26'][1].ranCondition(result);
+}_$jscoverage['/menu/menuitem-render.js'].branchData['25'][1].init(52, 52, '$el && ($el[0] == element || $el.contains(element))');
+function visit30_25_1(result) {
+  _$jscoverage['/menu/menuitem-render.js'].branchData['25'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menu/menuitem-render.js'].branchData['13'][1].init(127, 19, 'renderData.selected');
-function visit26_13_1(result) {
-  _$jscoverage['/menu/menuitem-render.js'].branchData['13'][1].ranCondition(result);
+}_$jscoverage['/menu/menuitem-render.js'].branchData['12'][1].init(125, 19, 'renderData.selected');
+function visit29_12_1(result) {
+  _$jscoverage['/menu/menuitem-render.js'].branchData['12'][1].ranCondition(result);
   return result;
 }_$jscoverage['/menu/menuitem-render.js'].lineData[6]++;
-KISSY.add("menu/menuitem-render", function(S, Node, Control) {
+KISSY.add(function(S, require) {
   _$jscoverage['/menu/menuitem-render.js'].functionData[0]++;
+  _$jscoverage['/menu/menuitem-render.js'].lineData[7]++;
+  var Control = require('component/control');
   _$jscoverage['/menu/menuitem-render.js'].lineData[8]++;
   return Control.getDefaultRender().extend({
   beforeCreateDom: function(renderData) {
   _$jscoverage['/menu/menuitem-render.js'].functionData[1]++;
-  _$jscoverage['/menu/menuitem-render.js'].lineData[11]++;
+  _$jscoverage['/menu/menuitem-render.js'].lineData[10]++;
   renderData.elAttrs.role = renderData.selectable ? 'menuitemradio' : 'menuitem';
-  _$jscoverage['/menu/menuitem-render.js'].lineData[13]++;
-  if (visit26_13_1(renderData.selected)) {
-    _$jscoverage['/menu/menuitem-render.js'].lineData[14]++;
+  _$jscoverage['/menu/menuitem-render.js'].lineData[12]++;
+  if (visit29_12_1(renderData.selected)) {
+    _$jscoverage['/menu/menuitem-render.js'].lineData[13]++;
     renderData.elCls.push(this.getBaseCssClasses('selected'));
   }
 }, 
   _onSetSelected: function(v) {
   _$jscoverage['/menu/menuitem-render.js'].functionData[2]++;
-  _$jscoverage['/menu/menuitem-render.js'].lineData[19]++;
+  _$jscoverage['/menu/menuitem-render.js'].lineData[18]++;
   var self = this, cls = self.getBaseCssClasses("selected");
-  _$jscoverage['/menu/menuitem-render.js'].lineData[21]++;
+  _$jscoverage['/menu/menuitem-render.js'].lineData[20]++;
   self.$el[v ? 'addClass' : 'removeClass'](cls);
 }, 
   containsElement: function(element) {
   _$jscoverage['/menu/menuitem-render.js'].functionData[3]++;
-  _$jscoverage['/menu/menuitem-render.js'].lineData[25]++;
+  _$jscoverage['/menu/menuitem-render.js'].lineData[24]++;
   var $el = this.$el;
-  _$jscoverage['/menu/menuitem-render.js'].lineData[26]++;
-  return visit27_26_1($el && (visit28_26_2(visit29_26_3($el[0] == element) || $el.contains(element))));
+  _$jscoverage['/menu/menuitem-render.js'].lineData[25]++;
+  return visit30_25_1($el && (visit31_25_2(visit32_25_3($el[0] == element) || $el.contains(element))));
 }}, {
   HTML_PARSER: {
   selectable: function(el) {
   _$jscoverage['/menu/menuitem-render.js'].functionData[4]++;
-  _$jscoverage['/menu/menuitem-render.js'].lineData[31]++;
+  _$jscoverage['/menu/menuitem-render.js'].lineData[30]++;
   return el.hasClass(this.getBaseCssClass("selectable"));
 }}});
-}, {
-  requires: ['node', 'component/control']});
+});

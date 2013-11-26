@@ -230,20 +230,22 @@ if (! _$jscoverage['/cmd.js']) {
   _$jscoverage['/cmd.js'] = {};
   _$jscoverage['/cmd.js'].lineData = [];
   _$jscoverage['/cmd.js'].lineData[6] = 0;
+  _$jscoverage['/cmd.js'].lineData[7] = 0;
   _$jscoverage['/cmd.js'].lineData[8] = 0;
-  _$jscoverage['/cmd.js'].lineData[13] = 0;
+  _$jscoverage['/cmd.js'].lineData[10] = 0;
   _$jscoverage['/cmd.js'].lineData[15] = 0;
-  _$jscoverage['/cmd.js'].lineData[16] = 0;
+  _$jscoverage['/cmd.js'].lineData[17] = 0;
   _$jscoverage['/cmd.js'].lineData[18] = 0;
-  _$jscoverage['/cmd.js'].lineData[19] = 0;
-  _$jscoverage['/cmd.js'].lineData[24] = 0;
+  _$jscoverage['/cmd.js'].lineData[20] = 0;
+  _$jscoverage['/cmd.js'].lineData[21] = 0;
   _$jscoverage['/cmd.js'].lineData[26] = 0;
-  _$jscoverage['/cmd.js'].lineData[27] = 0;
+  _$jscoverage['/cmd.js'].lineData[28] = 0;
   _$jscoverage['/cmd.js'].lineData[29] = 0;
-  _$jscoverage['/cmd.js'].lineData[30] = 0;
   _$jscoverage['/cmd.js'].lineData[31] = 0;
   _$jscoverage['/cmd.js'].lineData[32] = 0;
   _$jscoverage['/cmd.js'].lineData[33] = 0;
+  _$jscoverage['/cmd.js'].lineData[34] = 0;
+  _$jscoverage['/cmd.js'].lineData[35] = 0;
 }
 if (! _$jscoverage['/cmd.js'].functionData) {
   _$jscoverage['/cmd.js'].functionData = [];
@@ -254,67 +256,70 @@ if (! _$jscoverage['/cmd.js'].functionData) {
 }
 if (! _$jscoverage['/cmd.js'].branchData) {
   _$jscoverage['/cmd.js'].branchData = {};
-  _$jscoverage['/cmd.js'].branchData['15'] = [];
-  _$jscoverage['/cmd.js'].branchData['15'][1] = new BranchData();
-  _$jscoverage['/cmd.js'].branchData['26'] = [];
-  _$jscoverage['/cmd.js'].branchData['26'][1] = new BranchData();
-  _$jscoverage['/cmd.js'].branchData['30'] = [];
-  _$jscoverage['/cmd.js'].branchData['30'][1] = new BranchData();
+  _$jscoverage['/cmd.js'].branchData['17'] = [];
+  _$jscoverage['/cmd.js'].branchData['17'][1] = new BranchData();
+  _$jscoverage['/cmd.js'].branchData['28'] = [];
+  _$jscoverage['/cmd.js'].branchData['28'][1] = new BranchData();
+  _$jscoverage['/cmd.js'].branchData['32'] = [];
+  _$jscoverage['/cmd.js'].branchData['32'][1] = new BranchData();
 }
-_$jscoverage['/cmd.js'].branchData['30'][1].init(94, 33, 'selection && !selection.isInvalid');
-function visit3_30_1(result) {
-  _$jscoverage['/cmd.js'].branchData['30'][1].ranCondition(result);
+_$jscoverage['/cmd.js'].branchData['32'][1].init(92, 33, 'selection && !selection.isInvalid');
+function visit3_32_1(result) {
+  _$jscoverage['/cmd.js'].branchData['32'][1].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['26'][1].init(427, 27, '!editor.hasCommand(queryOl)');
-function visit2_26_1(result) {
-  _$jscoverage['/cmd.js'].branchData['26'][1].ranCondition(result);
+}_$jscoverage['/cmd.js'].branchData['28'][1].init(415, 27, '!editor.hasCommand(queryOl)');
+function visit2_28_1(result) {
+  _$jscoverage['/cmd.js'].branchData['28'][1].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['15'][1].init(18, 37, '!editor.hasCommand(insertOrderedList)');
-function visit1_15_1(result) {
-  _$jscoverage['/cmd.js'].branchData['15'][1].ranCondition(result);
+}_$jscoverage['/cmd.js'].branchData['17'][1].init(17, 37, '!editor.hasCommand(insertOrderedList)');
+function visit1_17_1(result) {
+  _$jscoverage['/cmd.js'].branchData['17'][1].ranCondition(result);
   return result;
 }_$jscoverage['/cmd.js'].lineData[6]++;
-KISSY.add("editor/plugin/ordered-list/cmd", function(S, Editor, listCmd) {
+KISSY.add(function(S, require) {
   _$jscoverage['/cmd.js'].functionData[0]++;
+  _$jscoverage['/cmd.js'].lineData[7]++;
+  var Editor = require('editor');
   _$jscoverage['/cmd.js'].lineData[8]++;
+  var listCmd = require('../list-utils/cmd');
+  _$jscoverage['/cmd.js'].lineData[10]++;
   var insertOrderedList = "insertOrderedList", ListCommand = listCmd.ListCommand, queryActive = listCmd.queryActive, olCmd = new ListCommand("ol");
-  _$jscoverage['/cmd.js'].lineData[13]++;
+  _$jscoverage['/cmd.js'].lineData[15]++;
   return {
   init: function(editor) {
   _$jscoverage['/cmd.js'].functionData[1]++;
-  _$jscoverage['/cmd.js'].lineData[15]++;
-  if (visit1_15_1(!editor.hasCommand(insertOrderedList))) {
-    _$jscoverage['/cmd.js'].lineData[16]++;
+  _$jscoverage['/cmd.js'].lineData[17]++;
+  if (visit1_17_1(!editor.hasCommand(insertOrderedList))) {
+    _$jscoverage['/cmd.js'].lineData[18]++;
     editor.addCommand(insertOrderedList, {
   exec: function(editor, listStyleType) {
   _$jscoverage['/cmd.js'].functionData[2]++;
-  _$jscoverage['/cmd.js'].lineData[18]++;
+  _$jscoverage['/cmd.js'].lineData[20]++;
   editor.focus();
-  _$jscoverage['/cmd.js'].lineData[19]++;
+  _$jscoverage['/cmd.js'].lineData[21]++;
   olCmd.exec(editor, listStyleType);
 }});
   }
-  _$jscoverage['/cmd.js'].lineData[24]++;
-  var queryOl = Editor.Utils.getQueryCmd(insertOrderedList);
   _$jscoverage['/cmd.js'].lineData[26]++;
-  if (visit2_26_1(!editor.hasCommand(queryOl))) {
-    _$jscoverage['/cmd.js'].lineData[27]++;
+  var queryOl = Editor.Utils.getQueryCmd(insertOrderedList);
+  _$jscoverage['/cmd.js'].lineData[28]++;
+  if (visit2_28_1(!editor.hasCommand(queryOl))) {
+    _$jscoverage['/cmd.js'].lineData[29]++;
     editor.addCommand(queryOl, {
   exec: function(editor) {
   _$jscoverage['/cmd.js'].functionData[3]++;
-  _$jscoverage['/cmd.js'].lineData[29]++;
+  _$jscoverage['/cmd.js'].lineData[31]++;
   var selection = editor.getSelection();
-  _$jscoverage['/cmd.js'].lineData[30]++;
-  if (visit3_30_1(selection && !selection.isInvalid)) {
-    _$jscoverage['/cmd.js'].lineData[31]++;
-    var startElement = selection.getStartElement();
-    _$jscoverage['/cmd.js'].lineData[32]++;
-    var elementPath = new Editor.ElementPath(startElement);
+  _$jscoverage['/cmd.js'].lineData[32]++;
+  if (visit3_32_1(selection && !selection.isInvalid)) {
     _$jscoverage['/cmd.js'].lineData[33]++;
+    var startElement = selection.getStartElement();
+    _$jscoverage['/cmd.js'].lineData[34]++;
+    var elementPath = new Editor.ElementPath(startElement);
+    _$jscoverage['/cmd.js'].lineData[35]++;
     return queryActive("ol", elementPath);
   }
 }});
   }
 }};
-}, {
-  requires: ['editor', '../list-utils/cmd']});
+});

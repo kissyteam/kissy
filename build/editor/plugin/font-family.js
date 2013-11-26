@@ -1,7 +1,7 @@
 /*
-Copyright 2013, KISSY v1.40dev
+Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Oct 25 16:43
+build time: Nov 27 00:42
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -9,102 +9,29 @@ build time: Oct 25 16:43
  editor/plugin/font-family
 */
 
-/**
- * @ignore
- * font formatting for kissy editor
- * @author yiminghe@gmail.com
- */
-KISSY.add("editor/plugin/font-family", function (S, Editor, ui, cmd) {
-    function FontFamilyPlugin(config) {
-        this.config = config || {};
-    }
-
-    S.augment(FontFamilyPlugin, {
-        pluginRenderUI:function (editor) {
-
-            cmd.init(editor);
-
-            var fontFamilies = this.config;
-
-            var menu = {};
-
-
-            S.mix(menu, {
-                children:[
-                    //ie 不认识中文？？？
-                    {
-                        content:"宋体",
-                        value:"SimSun"
-                    },
-                    {
-                        content:"黑体",
-                        value:"SimHei"
-                    },
-                    {
-                        content:"隶书",
-                        value:"LiSu"
-                    },
-                    {
-                        content:"楷体",
-                        value:"KaiTi_GB2312"
-                    },
-                    {
-                        content:"微软雅黑",
-                        value:"'Microsoft YaHei'"
-                    },
-                    {
-                        content:"Georgia",
-                        value:"Georgia"
-                    },
-                    {
-                        content:"Times New Roman",
-                        value:"'Times New Roman'"
-                    },
-                    {
-                        content:"Impact",
-                        value:"Impact"
-                    },
-                    {
-                        content:"Courier New",
-                        value:"'Courier New'"
-                    },
-                    {
-                        content:"Arial",
-                        value:"Arial"
-                    },
-                    {
-                        content:"Verdana",
-                        value:"Verdana"
-                    },
-                    {
-                        content:"Tahoma",
-                        value:"Tahoma"
-                    }
-                ],
-                width:"130px"
-            });
-
-            S.each(menu.children, function (item) {
-                var attrs = item.elAttrs || {},
-                    value = item.value;
-                attrs.style = attrs.style || "";
-                attrs.style += ";font-family:" + value;
-                item.elAttrs = attrs;
-            });
-
-            fontFamilies.menu = S.mix(menu, fontFamilies.menu);
-
-            editor.addSelect("fontFamily", S.mix({
-                cmdType:"fontFamily",
-                defaultCaption:"字体",
-                width:130,
-                mode:Editor.Mode.WYSIWYG_MODE
-            }, fontFamilies), ui.Select);
-        }
+KISSY.add("editor/plugin/font-family", ["editor", "./font/ui", "./font-family/cmd", "./menubutton"], function(S, require) {
+  var Editor = require("editor");
+  var ui = require("./font/ui");
+  var cmd = require("./font-family/cmd");
+  require("./menubutton");
+  function FontFamilyPlugin(config) {
+    this.config = config || {}
+  }
+  S.augment(FontFamilyPlugin, {pluginRenderUI:function(editor) {
+    cmd.init(editor);
+    var fontFamilies = this.config;
+    var menu = {};
+    S.mix(menu, {children:[{content:"\u5b8b\u4f53", value:"SimSun"}, {content:"\u9ed1\u4f53", value:"SimHei"}, {content:"\u96b6\u4e66", value:"LiSu"}, {content:"\u6977\u4f53", value:"KaiTi_GB2312"}, {content:"\u5fae\u8f6f\u96c5\u9ed1", value:"'Microsoft YaHei'"}, {content:"Georgia", value:"Georgia"}, {content:"Times New Roman", value:"'Times New Roman'"}, {content:"Impact", value:"Impact"}, {content:"Courier New", value:"'Courier New'"}, {content:"Arial", value:"Arial"}, {content:"Verdana", value:"Verdana"}, 
+    {content:"Tahoma", value:"Tahoma"}], width:"130px"});
+    S.each(menu.children, function(item) {
+      var attrs = item.elAttrs || {}, value = item.value;
+      attrs.style = attrs.style || "";
+      attrs.style += ";font-family:" + value;
+      item.elAttrs = attrs
     });
-
-    return FontFamilyPlugin;
-}, {
-    requires:['editor', './font/ui', './font-family/cmd']
+    fontFamilies.menu = S.mix(menu, fontFamilies.menu);
+    editor.addSelect("fontFamily", S.mix({cmdType:"fontFamily", defaultCaption:"\u5b57\u4f53", width:130, mode:Editor.Mode.WYSIWYG_MODE}, fontFamilies), ui.Select)
+  }});
+  return FontFamilyPlugin
 });
 

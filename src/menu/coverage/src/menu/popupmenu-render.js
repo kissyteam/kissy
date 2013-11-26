@@ -230,7 +230,9 @@ if (! _$jscoverage['/menu/popupmenu-render.js']) {
   _$jscoverage['/menu/popupmenu-render.js'] = {};
   _$jscoverage['/menu/popupmenu-render.js'].lineData = [];
   _$jscoverage['/menu/popupmenu-render.js'].lineData[6] = 0;
+  _$jscoverage['/menu/popupmenu-render.js'].lineData[7] = 0;
   _$jscoverage['/menu/popupmenu-render.js'].lineData[8] = 0;
+  _$jscoverage['/menu/popupmenu-render.js'].lineData[9] = 0;
 }
 if (! _$jscoverage['/menu/popupmenu-render.js'].functionData) {
   _$jscoverage['/menu/popupmenu-render.js'].functionData = [];
@@ -240,9 +242,12 @@ if (! _$jscoverage['/menu/popupmenu-render.js'].branchData) {
   _$jscoverage['/menu/popupmenu-render.js'].branchData = {};
 }
 _$jscoverage['/menu/popupmenu-render.js'].lineData[6]++;
-KISSY.add("menu/popupmenu-render", function(S, ContentRenderExtension, MenuRender) {
+KISSY.add(function(S, require) {
   _$jscoverage['/menu/popupmenu-render.js'].functionData[0]++;
+  _$jscoverage['/menu/popupmenu-render.js'].lineData[7]++;
+  var ContentRenderExtension = require('component/extension/content-render');
   _$jscoverage['/menu/popupmenu-render.js'].lineData[8]++;
+  var MenuRender = require('./menu-render');
+  _$jscoverage['/menu/popupmenu-render.js'].lineData[9]++;
   return MenuRender.extend([ContentRenderExtension]);
-}, {
-  requires: ['component/extension/content-render', './menu-render']});
+});

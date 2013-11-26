@@ -232,17 +232,21 @@ if (! _$jscoverage['/font-size.js']) {
   _$jscoverage['/font-size.js'].lineData[6] = 0;
   _$jscoverage['/font-size.js'].lineData[7] = 0;
   _$jscoverage['/font-size.js'].lineData[8] = 0;
-  _$jscoverage['/font-size.js'].lineData[11] = 0;
-  _$jscoverage['/font-size.js'].lineData[14] = 0;
+  _$jscoverage['/font-size.js'].lineData[9] = 0;
+  _$jscoverage['/font-size.js'].lineData[10] = 0;
+  _$jscoverage['/font-size.js'].lineData[12] = 0;
+  _$jscoverage['/font-size.js'].lineData[13] = 0;
   _$jscoverage['/font-size.js'].lineData[16] = 0;
-  _$jscoverage['/font-size.js'].lineData[17] = 0;
-  _$jscoverage['/font-size.js'].lineData[18] = 0;
   _$jscoverage['/font-size.js'].lineData[19] = 0;
+  _$jscoverage['/font-size.js'].lineData[21] = 0;
+  _$jscoverage['/font-size.js'].lineData[22] = 0;
+  _$jscoverage['/font-size.js'].lineData[23] = 0;
   _$jscoverage['/font-size.js'].lineData[24] = 0;
-  _$jscoverage['/font-size.js'].lineData[27] = 0;
   _$jscoverage['/font-size.js'].lineData[29] = 0;
-  _$jscoverage['/font-size.js'].lineData[38] = 0;
-  _$jscoverage['/font-size.js'].lineData[47] = 0;
+  _$jscoverage['/font-size.js'].lineData[32] = 0;
+  _$jscoverage['/font-size.js'].lineData[34] = 0;
+  _$jscoverage['/font-size.js'].lineData[43] = 0;
+  _$jscoverage['/font-size.js'].lineData[52] = 0;
 }
 if (! _$jscoverage['/font-size.js'].functionData) {
   _$jscoverage['/font-size.js'].functionData = [];
@@ -254,57 +258,64 @@ if (! _$jscoverage['/font-size.js'].functionData) {
 }
 if (! _$jscoverage['/font-size.js'].branchData) {
   _$jscoverage['/font-size.js'].branchData = {};
-  _$jscoverage['/font-size.js'].branchData['8'] = [];
-  _$jscoverage['/font-size.js'].branchData['8'][1] = new BranchData();
+  _$jscoverage['/font-size.js'].branchData['13'] = [];
+  _$jscoverage['/font-size.js'].branchData['13'][1] = new BranchData();
 }
-_$jscoverage['/font-size.js'].branchData['8'][1].init(24, 12, 'config || {}');
-function visit1_8_1(result) {
-  _$jscoverage['/font-size.js'].branchData['8'][1].ranCondition(result);
+_$jscoverage['/font-size.js'].branchData['13'][1].init(23, 12, 'config || {}');
+function visit1_13_1(result) {
+  _$jscoverage['/font-size.js'].branchData['13'][1].ranCondition(result);
   return result;
 }_$jscoverage['/font-size.js'].lineData[6]++;
-KISSY.add("editor/plugin/font-size", function(S, Editor, ui, cmd) {
+KISSY.add(function(S, require) {
   _$jscoverage['/font-size.js'].functionData[0]++;
   _$jscoverage['/font-size.js'].lineData[7]++;
+  var Editor = require('editor');
+  _$jscoverage['/font-size.js'].lineData[8]++;
+  var ui = require('./font/ui');
+  _$jscoverage['/font-size.js'].lineData[9]++;
+  var cmd = require('./font-size/cmd');
+  _$jscoverage['/font-size.js'].lineData[10]++;
+  require('./menubutton');
+  _$jscoverage['/font-size.js'].lineData[12]++;
   function FontSizePlugin(config) {
     _$jscoverage['/font-size.js'].functionData[1]++;
-    _$jscoverage['/font-size.js'].lineData[8]++;
-    this.config = visit1_8_1(config || {});
+    _$jscoverage['/font-size.js'].lineData[13]++;
+    this.config = visit1_13_1(config || {});
   }
-  _$jscoverage['/font-size.js'].lineData[11]++;
+  _$jscoverage['/font-size.js'].lineData[16]++;
   S.augment(FontSizePlugin, {
   pluginRenderUI: function(editor) {
   _$jscoverage['/font-size.js'].functionData[2]++;
-  _$jscoverage['/font-size.js'].lineData[14]++;
+  _$jscoverage['/font-size.js'].lineData[19]++;
   cmd.init(editor);
-  _$jscoverage['/font-size.js'].lineData[16]++;
+  _$jscoverage['/font-size.js'].lineData[21]++;
   function wrapFont(vs) {
     _$jscoverage['/font-size.js'].functionData[3]++;
-    _$jscoverage['/font-size.js'].lineData[17]++;
+    _$jscoverage['/font-size.js'].lineData[22]++;
     var v = [];
-    _$jscoverage['/font-size.js'].lineData[18]++;
+    _$jscoverage['/font-size.js'].lineData[23]++;
     S.each(vs, function(n) {
   _$jscoverage['/font-size.js'].functionData[4]++;
-  _$jscoverage['/font-size.js'].lineData[19]++;
+  _$jscoverage['/font-size.js'].lineData[24]++;
   v.push({
   content: n, 
   value: n});
 });
-    _$jscoverage['/font-size.js'].lineData[24]++;
+    _$jscoverage['/font-size.js'].lineData[29]++;
     return v;
   }
-  _$jscoverage['/font-size.js'].lineData[27]++;
+  _$jscoverage['/font-size.js'].lineData[32]++;
   var fontSizeConfig = this.config;
-  _$jscoverage['/font-size.js'].lineData[29]++;
+  _$jscoverage['/font-size.js'].lineData[34]++;
   fontSizeConfig.menu = S.mix({
   children: wrapFont(["8px", "10px", "12px", "14px", "18px", "24px", "36px", "48px", "60px", "72px", "84px", "96px"])}, fontSizeConfig.menu);
-  _$jscoverage['/font-size.js'].lineData[38]++;
+  _$jscoverage['/font-size.js'].lineData[43]++;
   editor.addSelect("fontSize", S.mix({
   cmdType: "fontSize", 
   defaultCaption: "\u5927\u5c0f", 
   width: "70px", 
   mode: Editor.Mode.WYSIWYG_MODE}, fontSizeConfig), ui.Select);
 }});
-  _$jscoverage['/font-size.js'].lineData[47]++;
+  _$jscoverage['/font-size.js'].lineData[52]++;
   return FontSizePlugin;
-}, {
-  requires: ['editor', './font/ui', './font-size/cmd']});
+});

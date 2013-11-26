@@ -1,7 +1,7 @@
 /*
-Copyright 2013, KISSY v1.40dev
+Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Oct 25 16:47
+build time: Nov 27 00:01
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -9,50 +9,31 @@ build time: Oct 25 16:47
  editor/plugin/source-area
 */
 
-/**
- * @ignore
- * source editor for kissy editor
- * @author yiminghe@gmail.com
- */
-KISSY.add("editor/plugin/source-area", function (S, Editor) {
-    var SOURCE_MODE = Editor.Mode.SOURCE_MODE ,
-        WYSIWYG_MODE = Editor.Mode.WYSIWYG_MODE;
-
-    function sourceArea() {
-    }
-
-    S.augment(sourceArea, {
-        pluginRenderUI:function (editor) {
-            editor.addButton("sourceArea", {
-                tooltip:"源码",
-                listeners:{
-                    afterSyncUI:function () {
-                        var self = this;
-                        editor.on("wysiwygMode", function () {
-                            self.set("checked", false);
-                        });
-                        editor.on("sourceMode", function () {
-                            self.set("checked", true);
-                        });
-
-                    },
-                    click:function () {
-                        var self = this;
-                        var checked = self.get("checked");
-                        if (checked) {
-                            editor.set("mode", SOURCE_MODE);
-                        } else {
-                            editor.set("mode", WYSIWYG_MODE);
-                        }
-                    }
-                },
-                checkable:true
-            });
-        }
-    });
-
-    return sourceArea;
-}, {
-    requires:['editor', './button']
+KISSY.add("editor/plugin/source-area", ["editor", "./button"], function(S, require) {
+  var Editor = require("editor");
+  require("./button");
+  var SOURCE_MODE = Editor.Mode.SOURCE_MODE, WYSIWYG_MODE = Editor.Mode.WYSIWYG_MODE;
+  function sourceArea() {
+  }
+  S.augment(sourceArea, {pluginRenderUI:function(editor) {
+    editor.addButton("sourceArea", {tooltip:"\u6e90\u7801", listeners:{afterSyncUI:function() {
+      var self = this;
+      editor.on("wysiwygMode", function() {
+        self.set("checked", false)
+      });
+      editor.on("sourceMode", function() {
+        self.set("checked", true)
+      })
+    }, click:function() {
+      var self = this;
+      var checked = self.get("checked");
+      if(checked) {
+        editor.set("mode", SOURCE_MODE)
+      }else {
+        editor.set("mode", WYSIWYG_MODE)
+      }
+    }}, checkable:true})
+  }});
+  return sourceArea
 });
 

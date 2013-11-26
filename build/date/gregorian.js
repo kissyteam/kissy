@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 19 15:38
+build time: Nov 27 00:39
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -14,9 +14,8 @@ build time: Nov 19 15:38
 KISSY.add("date/gregorian/const", [], function() {
   return{SUNDAY:0, MONDAY:1, TUESDAY:2, WEDNESDAY:3, THURSDAY:4, FRIDAY:5, SATURDAY:6, JANUARY:0, FEBRUARY:1, MARCH:2, APRIL:3, MAY:4, JUNE:5, JULY:6, AUGUST:7, SEPTEMBER:8, OCTOBER:9, NOVEMBER:10, DECEMBER:11}
 });
-KISSY.add("date/gregorian/utils", ["./const"], function(S) {
-  var module = this;
-  var Const = module.require("./const");
+KISSY.add("date/gregorian/utils", ["./const"], function(S, require) {
+  var Const = require("./const");
   var ACCUMULATED_DAYS_IN_MONTH = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334], ACCUMULATED_DAYS_IN_MONTH_LEAP = [0, 31, 59 + 1, 90 + 1, 120 + 1, 151 + 1, 181 + 1, 212 + 1, 243 + 1, 273 + 1, 304 + 1, 334 + 1], DAYS_OF_YEAR = 365, DAYS_OF_4YEAR = 365 * 4 + 1, DAYS_OF_100YEAR = DAYS_OF_4YEAR * 25 - 1, DAYS_OF_400YEAR = DAYS_OF_100YEAR * 4 + 1, Utils = {};
   function getDayOfYear(year, month, dayOfMonth) {
     return dayOfMonth + (isLeapYear(year) ? ACCUMULATED_DAYS_IN_MONTH_LEAP[month] : ACCUMULATED_DAYS_IN_MONTH[month])
@@ -77,12 +76,11 @@ KISSY.add("date/gregorian/utils", ["./const"], function(S) {
   var floorDivide = Math.floor, isLeapYear = Utils.isLeapYear, mod = Utils.mod;
   return Utils
 });
-KISSY.add("date/gregorian", ["./gregorian/utils", "i18n!date", "./gregorian/const"], function(S) {
+KISSY.add("date/gregorian", ["./gregorian/utils", "i18n!date", "./gregorian/const"], function(S, require) {
   var toInt = parseInt;
-  var module = this;
-  var Utils = module.require("./gregorian/utils");
-  var defaultLocale = module.require("i18n!date");
-  var Const = module.require("./gregorian/const");
+  var Utils = require("./gregorian/utils");
+  var defaultLocale = require("i18n!date");
+  var Const = require("./gregorian/const");
   var undefined = undefined;
   function GregorianCalendar(timezoneOffset, locale) {
     var args = S.makeArray(arguments);

@@ -264,28 +264,28 @@ if (! _$jscoverage['/html-parser/nodes/attribute.js'].branchData) {
   _$jscoverage['/html-parser/nodes/attribute.js'].branchData['21'][4] = new BranchData();
   _$jscoverage['/html-parser/nodes/attribute.js'].branchData['21'][5] = new BranchData();
 }
-_$jscoverage['/html-parser/nodes/attribute.js'].branchData['21'][5].init(77, 31, 'this.nodeType == other.nodeType');
+_$jscoverage['/html-parser/nodes/attribute.js'].branchData['21'][5].init(76, 31, 'this.nodeType == other.nodeType');
 function visit181_21_5(result) {
   _$jscoverage['/html-parser/nodes/attribute.js'].branchData['21'][5].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/nodes/attribute.js'].branchData['21'][4].init(48, 25, 'this.value == other.value');
+}_$jscoverage['/html-parser/nodes/attribute.js'].branchData['21'][4].init(47, 25, 'this.value == other.value');
 function visit180_21_4(result) {
   _$jscoverage['/html-parser/nodes/attribute.js'].branchData['21'][4].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/nodes/attribute.js'].branchData['21'][3].init(48, 60, 'this.value == other.value && this.nodeType == other.nodeType');
+}_$jscoverage['/html-parser/nodes/attribute.js'].branchData['21'][3].init(47, 60, 'this.value == other.value && this.nodeType == other.nodeType');
 function visit179_21_3(result) {
   _$jscoverage['/html-parser/nodes/attribute.js'].branchData['21'][3].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/nodes/attribute.js'].branchData['21'][2].init(21, 23, 'this.name == other.name');
+}_$jscoverage['/html-parser/nodes/attribute.js'].branchData['21'][2].init(20, 23, 'this.name == other.name');
 function visit178_21_2(result) {
   _$jscoverage['/html-parser/nodes/attribute.js'].branchData['21'][2].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/nodes/attribute.js'].branchData['21'][1].init(21, 87, 'this.name == other.name && this.value == other.value && this.nodeType == other.nodeType');
+}_$jscoverage['/html-parser/nodes/attribute.js'].branchData['21'][1].init(20, 87, 'this.name == other.name && this.value == other.value && this.nodeType == other.nodeType');
 function visit177_21_1(result) {
   _$jscoverage['/html-parser/nodes/attribute.js'].branchData['21'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/nodes/attribute.js'].lineData[6]++;
-KISSY.add("html-parser/nodes/attribute", function(S) {
+KISSY.add(function(S) {
   _$jscoverage['/html-parser/nodes/attribute.js'].functionData[0]++;
   _$jscoverage['/html-parser/nodes/attribute.js'].lineData[7]++;
   function Attribute(name, assignMent, value, quote) {

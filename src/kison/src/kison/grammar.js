@@ -11,7 +11,7 @@ KISSY.add(function (S, require) {
         var NonTerminal = require('./non-terminal');
         var Lexer = require('./lexer');
         var Production = require('./production');
-
+var  logger = S.getLogger('s/kison');
     var GrammarConst = {
             SHIFT_TYPE: 1,
             REDUCE_TYPE: 2,
@@ -20,7 +20,7 @@ KISSY.add(function (S, require) {
             PRODUCTION_INDEX: 1,
             TO_INDEX: 2
         },
-        logger = S.getLogger('s/kison'),
+
         serializeObject = Utils.serializeObject,
         mix = S.mix,
         END_TAG = Lexer.STATIC.END_TAG,

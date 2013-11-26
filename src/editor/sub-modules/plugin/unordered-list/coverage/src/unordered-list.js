@@ -231,10 +231,12 @@ if (! _$jscoverage['/unordered-list.js']) {
   _$jscoverage['/unordered-list.js'].lineData = [];
   _$jscoverage['/unordered-list.js'].lineData[6] = 0;
   _$jscoverage['/unordered-list.js'].lineData[7] = 0;
+  _$jscoverage['/unordered-list.js'].lineData[8] = 0;
   _$jscoverage['/unordered-list.js'].lineData[10] = 0;
-  _$jscoverage['/unordered-list.js'].lineData[12] = 0;
-  _$jscoverage['/unordered-list.js'].lineData[14] = 0;
-  _$jscoverage['/unordered-list.js'].lineData[39] = 0;
+  _$jscoverage['/unordered-list.js'].lineData[13] = 0;
+  _$jscoverage['/unordered-list.js'].lineData[15] = 0;
+  _$jscoverage['/unordered-list.js'].lineData[17] = 0;
+  _$jscoverage['/unordered-list.js'].lineData[42] = 0;
 }
 if (! _$jscoverage['/unordered-list.js'].functionData) {
   _$jscoverage['/unordered-list.js'].functionData = [];
@@ -246,19 +248,23 @@ if (! _$jscoverage['/unordered-list.js'].branchData) {
   _$jscoverage['/unordered-list.js'].branchData = {};
 }
 _$jscoverage['/unordered-list.js'].lineData[6]++;
-KISSY.add("editor/plugin/unordered-list", function(S, Editor, ListButton, ListCmd) {
+KISSY.add(function(S, require) {
   _$jscoverage['/unordered-list.js'].functionData[0]++;
   _$jscoverage['/unordered-list.js'].lineData[7]++;
+  var ListButton = require('./list-utils/btn');
+  _$jscoverage['/unordered-list.js'].lineData[8]++;
+  var ListCmd = require('./unordered-list/cmd');
+  _$jscoverage['/unordered-list.js'].lineData[10]++;
   function unorderedList() {
     _$jscoverage['/unordered-list.js'].functionData[1]++;
   }
-  _$jscoverage['/unordered-list.js'].lineData[10]++;
+  _$jscoverage['/unordered-list.js'].lineData[13]++;
   S.augment(unorderedList, {
   pluginRenderUI: function(editor) {
   _$jscoverage['/unordered-list.js'].functionData[2]++;
-  _$jscoverage['/unordered-list.js'].lineData[12]++;
+  _$jscoverage['/unordered-list.js'].lineData[15]++;
   ListCmd.init(editor);
-  _$jscoverage['/unordered-list.js'].lineData[14]++;
+  _$jscoverage['/unordered-list.js'].lineData[17]++;
   ListButton.init(editor, {
   cmdType: "insertUnorderedList", 
   buttonId: 'unorderedList', 
@@ -273,7 +279,6 @@ KISSY.add("editor/plugin/unordered-list", function(S, Editor, ListButton, ListCm
   value: 'square'}]}, 
   tooltip: '\u65e0\u5e8f\u5217\u8868'});
 }});
-  _$jscoverage['/unordered-list.js'].lineData[39]++;
+  _$jscoverage['/unordered-list.js'].lineData[42]++;
   return unorderedList;
-}, {
-  requires: ['editor', './list-utils/btn', './unordered-list/cmd']});
+});

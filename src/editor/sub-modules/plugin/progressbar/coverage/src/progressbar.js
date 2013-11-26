@@ -259,15 +259,15 @@ if (! _$jscoverage['/progressbar.js'].branchData) {
   _$jscoverage['/progressbar.js'].branchData['44'] = [];
   _$jscoverage['/progressbar.js'].branchData['44'][1] = new BranchData();
 }
-_$jscoverage['/progressbar.js'].branchData['44'][1].init(1248, 9, 'container');
+_$jscoverage['/progressbar.js'].branchData['44'][1].init(1219, 9, 'container');
 function visit1_44_1(result) {
   _$jscoverage['/progressbar.js'].branchData['44'][1].ranCondition(result);
   return result;
 }_$jscoverage['/progressbar.js'].lineData[6]++;
-KISSY.add("editor/plugin/progressbar", function(S, Base) {
+KISSY.add(function(S, require) {
   _$jscoverage['/progressbar.js'].functionData[0]++;
   _$jscoverage['/progressbar.js'].lineData[7]++;
-  var Node = S.Node;
+  var Base = require('base');
   _$jscoverage['/progressbar.js'].lineData[9]++;
   return Base.extend({
   destroy: function() {
@@ -319,5 +319,4 @@ KISSY.add("editor/plugin/progressbar", function(S, Base) {
   value: 0}, 
   prefixCls: {
   value: 'ks-'}}});
-}, {
-  requires: ['base']});
+});

@@ -230,14 +230,16 @@ if (! _$jscoverage['/dent-cmd.js']) {
   _$jscoverage['/dent-cmd.js'] = {};
   _$jscoverage['/dent-cmd.js'].lineData = [];
   _$jscoverage['/dent-cmd.js'].lineData[10] = 0;
+  _$jscoverage['/dent-cmd.js'].lineData[11] = 0;
   _$jscoverage['/dent-cmd.js'].lineData[12] = 0;
-  _$jscoverage['/dent-cmd.js'].lineData[23] = 0;
-  _$jscoverage['/dent-cmd.js'].lineData[24] = 0;
-  _$jscoverage['/dent-cmd.js'].lineData[27] = 0;
-  _$jscoverage['/dent-cmd.js'].lineData[31] = 0;
+  _$jscoverage['/dent-cmd.js'].lineData[14] = 0;
+  _$jscoverage['/dent-cmd.js'].lineData[25] = 0;
+  _$jscoverage['/dent-cmd.js'].lineData[26] = 0;
+  _$jscoverage['/dent-cmd.js'].lineData[29] = 0;
   _$jscoverage['/dent-cmd.js'].lineData[33] = 0;
   _$jscoverage['/dent-cmd.js'].lineData[35] = 0;
   _$jscoverage['/dent-cmd.js'].lineData[36] = 0;
+  _$jscoverage['/dent-cmd.js'].lineData[37] = 0;
   _$jscoverage['/dent-cmd.js'].lineData[38] = 0;
   _$jscoverage['/dent-cmd.js'].lineData[40] = 0;
   _$jscoverage['/dent-cmd.js'].lineData[41] = 0;
@@ -312,38 +314,38 @@ if (! _$jscoverage['/dent-cmd.js']) {
   _$jscoverage['/dent-cmd.js'].lineData[198] = 0;
   _$jscoverage['/dent-cmd.js'].lineData[200] = 0;
   _$jscoverage['/dent-cmd.js'].lineData[205] = 0;
-  _$jscoverage['/dent-cmd.js'].lineData[208] = 0;
-  _$jscoverage['/dent-cmd.js'].lineData[215] = 0;
+  _$jscoverage['/dent-cmd.js'].lineData[207] = 0;
+  _$jscoverage['/dent-cmd.js'].lineData[214] = 0;
+  _$jscoverage['/dent-cmd.js'].lineData[217] = 0;
   _$jscoverage['/dent-cmd.js'].lineData[218] = 0;
   _$jscoverage['/dent-cmd.js'].lineData[219] = 0;
-  _$jscoverage['/dent-cmd.js'].lineData[220] = 0;
-  _$jscoverage['/dent-cmd.js'].lineData[223] = 0;
+  _$jscoverage['/dent-cmd.js'].lineData[222] = 0;
+  _$jscoverage['/dent-cmd.js'].lineData[225] = 0;
   _$jscoverage['/dent-cmd.js'].lineData[226] = 0;
   _$jscoverage['/dent-cmd.js'].lineData[227] = 0;
-  _$jscoverage['/dent-cmd.js'].lineData[228] = 0;
-  _$jscoverage['/dent-cmd.js'].lineData[231] = 0;
+  _$jscoverage['/dent-cmd.js'].lineData[230] = 0;
+  _$jscoverage['/dent-cmd.js'].lineData[232] = 0;
   _$jscoverage['/dent-cmd.js'].lineData[233] = 0;
   _$jscoverage['/dent-cmd.js'].lineData[234] = 0;
   _$jscoverage['/dent-cmd.js'].lineData[235] = 0;
-  _$jscoverage['/dent-cmd.js'].lineData[236] = 0;
-  _$jscoverage['/dent-cmd.js'].lineData[238] = 0;
-  _$jscoverage['/dent-cmd.js'].lineData[242] = 0;
-  _$jscoverage['/dent-cmd.js'].lineData[244] = 0;
-  _$jscoverage['/dent-cmd.js'].lineData[248] = 0;
-  _$jscoverage['/dent-cmd.js'].lineData[250] = 0;
+  _$jscoverage['/dent-cmd.js'].lineData[237] = 0;
+  _$jscoverage['/dent-cmd.js'].lineData[241] = 0;
+  _$jscoverage['/dent-cmd.js'].lineData[243] = 0;
+  _$jscoverage['/dent-cmd.js'].lineData[247] = 0;
+  _$jscoverage['/dent-cmd.js'].lineData[249] = 0;
+  _$jscoverage['/dent-cmd.js'].lineData[252] = 0;
   _$jscoverage['/dent-cmd.js'].lineData[253] = 0;
   _$jscoverage['/dent-cmd.js'].lineData[254] = 0;
-  _$jscoverage['/dent-cmd.js'].lineData[255] = 0;
+  _$jscoverage['/dent-cmd.js'].lineData[256] = 0;
   _$jscoverage['/dent-cmd.js'].lineData[257] = 0;
   _$jscoverage['/dent-cmd.js'].lineData[258] = 0;
   _$jscoverage['/dent-cmd.js'].lineData[259] = 0;
-  _$jscoverage['/dent-cmd.js'].lineData[260] = 0;
-  _$jscoverage['/dent-cmd.js'].lineData[266] = 0;
+  _$jscoverage['/dent-cmd.js'].lineData[265] = 0;
+  _$jscoverage['/dent-cmd.js'].lineData[267] = 0;
   _$jscoverage['/dent-cmd.js'].lineData[268] = 0;
   _$jscoverage['/dent-cmd.js'].lineData[269] = 0;
-  _$jscoverage['/dent-cmd.js'].lineData[270] = 0;
+  _$jscoverage['/dent-cmd.js'].lineData[271] = 0;
   _$jscoverage['/dent-cmd.js'].lineData[272] = 0;
-  _$jscoverage['/dent-cmd.js'].lineData[273] = 0;
 }
 if (! _$jscoverage['/dent-cmd.js'].functionData) {
   _$jscoverage['/dent-cmd.js'].functionData = [];
@@ -361,14 +363,14 @@ if (! _$jscoverage['/dent-cmd.js'].functionData) {
 }
 if (! _$jscoverage['/dent-cmd.js'].branchData) {
   _$jscoverage['/dent-cmd.js'].branchData = {};
-  _$jscoverage['/dent-cmd.js'].branchData['24'] = [];
-  _$jscoverage['/dent-cmd.js'].branchData['24'][1] = new BranchData();
-  _$jscoverage['/dent-cmd.js'].branchData['24'][2] = new BranchData();
-  _$jscoverage['/dent-cmd.js'].branchData['24'][3] = new BranchData();
-  _$jscoverage['/dent-cmd.js'].branchData['33'] = [];
-  _$jscoverage['/dent-cmd.js'].branchData['33'][1] = new BranchData();
-  _$jscoverage['/dent-cmd.js'].branchData['36'] = [];
-  _$jscoverage['/dent-cmd.js'].branchData['36'][1] = new BranchData();
+  _$jscoverage['/dent-cmd.js'].branchData['26'] = [];
+  _$jscoverage['/dent-cmd.js'].branchData['26'][1] = new BranchData();
+  _$jscoverage['/dent-cmd.js'].branchData['26'][2] = new BranchData();
+  _$jscoverage['/dent-cmd.js'].branchData['26'][3] = new BranchData();
+  _$jscoverage['/dent-cmd.js'].branchData['35'] = [];
+  _$jscoverage['/dent-cmd.js'].branchData['35'][1] = new BranchData();
+  _$jscoverage['/dent-cmd.js'].branchData['37'] = [];
+  _$jscoverage['/dent-cmd.js'].branchData['37'][1] = new BranchData();
   _$jscoverage['/dent-cmd.js'].branchData['40'] = [];
   _$jscoverage['/dent-cmd.js'].branchData['40'][1] = new BranchData();
   _$jscoverage['/dent-cmd.js'].branchData['48'] = [];
@@ -429,196 +431,195 @@ if (! _$jscoverage['/dent-cmd.js'].branchData) {
   _$jscoverage['/dent-cmd.js'].branchData['197'][1] = new BranchData();
   _$jscoverage['/dent-cmd.js'].branchData['205'] = [];
   _$jscoverage['/dent-cmd.js'].branchData['205'][1] = new BranchData();
-  _$jscoverage['/dent-cmd.js'].branchData['206'] = [];
-  _$jscoverage['/dent-cmd.js'].branchData['206'][1] = new BranchData();
-  _$jscoverage['/dent-cmd.js'].branchData['206'][2] = new BranchData();
+  _$jscoverage['/dent-cmd.js'].branchData['205'][2] = new BranchData();
+  _$jscoverage['/dent-cmd.js'].branchData['205'][3] = new BranchData();
+  _$jscoverage['/dent-cmd.js'].branchData['214'] = [];
+  _$jscoverage['/dent-cmd.js'].branchData['214'][1] = new BranchData();
   _$jscoverage['/dent-cmd.js'].branchData['215'] = [];
   _$jscoverage['/dent-cmd.js'].branchData['215'][1] = new BranchData();
-  _$jscoverage['/dent-cmd.js'].branchData['216'] = [];
-  _$jscoverage['/dent-cmd.js'].branchData['216'][1] = new BranchData();
-  _$jscoverage['/dent-cmd.js'].branchData['216'][2] = new BranchData();
+  _$jscoverage['/dent-cmd.js'].branchData['215'][2] = new BranchData();
+  _$jscoverage['/dent-cmd.js'].branchData['222'] = [];
+  _$jscoverage['/dent-cmd.js'].branchData['222'][1] = new BranchData();
   _$jscoverage['/dent-cmd.js'].branchData['223'] = [];
   _$jscoverage['/dent-cmd.js'].branchData['223'][1] = new BranchData();
-  _$jscoverage['/dent-cmd.js'].branchData['224'] = [];
-  _$jscoverage['/dent-cmd.js'].branchData['224'][1] = new BranchData();
-  _$jscoverage['/dent-cmd.js'].branchData['224'][2] = new BranchData();
-  _$jscoverage['/dent-cmd.js'].branchData['233'] = [];
-  _$jscoverage['/dent-cmd.js'].branchData['233'][1] = new BranchData();
-  _$jscoverage['/dent-cmd.js'].branchData['235'] = [];
-  _$jscoverage['/dent-cmd.js'].branchData['235'][1] = new BranchData();
-  _$jscoverage['/dent-cmd.js'].branchData['235'][2] = new BranchData();
-  _$jscoverage['/dent-cmd.js'].branchData['239'] = [];
-  _$jscoverage['/dent-cmd.js'].branchData['239'][1] = new BranchData();
-  _$jscoverage['/dent-cmd.js'].branchData['239'][2] = new BranchData();
-  _$jscoverage['/dent-cmd.js'].branchData['242'] = [];
-  _$jscoverage['/dent-cmd.js'].branchData['242'][1] = new BranchData();
-  _$jscoverage['/dent-cmd.js'].branchData['242'][2] = new BranchData();
-  _$jscoverage['/dent-cmd.js'].branchData['254'] = [];
-  _$jscoverage['/dent-cmd.js'].branchData['254'][1] = new BranchData();
-  _$jscoverage['/dent-cmd.js'].branchData['269'] = [];
-  _$jscoverage['/dent-cmd.js'].branchData['269'][1] = new BranchData();
+  _$jscoverage['/dent-cmd.js'].branchData['223'][2] = new BranchData();
+  _$jscoverage['/dent-cmd.js'].branchData['232'] = [];
+  _$jscoverage['/dent-cmd.js'].branchData['232'][1] = new BranchData();
+  _$jscoverage['/dent-cmd.js'].branchData['234'] = [];
+  _$jscoverage['/dent-cmd.js'].branchData['234'][1] = new BranchData();
+  _$jscoverage['/dent-cmd.js'].branchData['234'][2] = new BranchData();
+  _$jscoverage['/dent-cmd.js'].branchData['238'] = [];
+  _$jscoverage['/dent-cmd.js'].branchData['238'][1] = new BranchData();
+  _$jscoverage['/dent-cmd.js'].branchData['238'][2] = new BranchData();
+  _$jscoverage['/dent-cmd.js'].branchData['241'] = [];
+  _$jscoverage['/dent-cmd.js'].branchData['241'][1] = new BranchData();
+  _$jscoverage['/dent-cmd.js'].branchData['241'][2] = new BranchData();
+  _$jscoverage['/dent-cmd.js'].branchData['253'] = [];
+  _$jscoverage['/dent-cmd.js'].branchData['253'][1] = new BranchData();
+  _$jscoverage['/dent-cmd.js'].branchData['268'] = [];
+  _$jscoverage['/dent-cmd.js'].branchData['268'][1] = new BranchData();
+  _$jscoverage['/dent-cmd.js'].branchData['271'] = [];
+  _$jscoverage['/dent-cmd.js'].branchData['271'][1] = new BranchData();
   _$jscoverage['/dent-cmd.js'].branchData['272'] = [];
   _$jscoverage['/dent-cmd.js'].branchData['272'][1] = new BranchData();
-  _$jscoverage['/dent-cmd.js'].branchData['273'] = [];
-  _$jscoverage['/dent-cmd.js'].branchData['273'][1] = new BranchData();
 }
-_$jscoverage['/dent-cmd.js'].branchData['273'][1].init(87, 41, 'block && block.style(INDENT_CSS_PROPERTY)');
-function visit55_273_1(result) {
-  _$jscoverage['/dent-cmd.js'].branchData['273'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/dent-cmd.js'].branchData['272'][1].init(30, 31, 'elementPath.block || blockLimit');
-function visit54_272_1(result) {
+_$jscoverage['/dent-cmd.js'].branchData['272'][1].init(85, 41, 'block && block.style(INDENT_CSS_PROPERTY)');
+function visit55_272_1(result) {
   _$jscoverage['/dent-cmd.js'].branchData['272'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dent-cmd.js'].branchData['269'][1].init(72, 35, 'elementPath.contains(listNodeNames)');
-function visit53_269_1(result) {
-  _$jscoverage['/dent-cmd.js'].branchData['269'][1].ranCondition(result);
+}_$jscoverage['/dent-cmd.js'].branchData['271'][1].init(29, 31, 'elementPath.block || blockLimit');
+function visit54_271_1(result) {
+  _$jscoverage['/dent-cmd.js'].branchData['271'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dent-cmd.js'].branchData['254'][1].init(14, 27, '!editor.hasCommand(cmdType)');
-function visit52_254_1(result) {
-  _$jscoverage['/dent-cmd.js'].branchData['254'][1].ranCondition(result);
+}_$jscoverage['/dent-cmd.js'].branchData['268'][1].init(70, 35, 'elementPath.contains(listNodeNames)');
+function visit53_268_1(result) {
+  _$jscoverage['/dent-cmd.js'].branchData['268'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dent-cmd.js'].branchData['242'][2].init(474, 73, 'indentWholeList && indentElement(nearestListBlock, type)');
-function visit51_242_2(result) {
-  _$jscoverage['/dent-cmd.js'].branchData['242'][2].ranCondition(result);
+}_$jscoverage['/dent-cmd.js'].branchData['253'][1].init(13, 27, '!editor.hasCommand(cmdType)');
+function visit52_253_1(result) {
+  _$jscoverage['/dent-cmd.js'].branchData['253'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dent-cmd.js'].branchData['242'][1].init(471, 78, '!(indentWholeList && indentElement(nearestListBlock, type))');
-function visit50_242_1(result) {
-  _$jscoverage['/dent-cmd.js'].branchData['242'][1].ranCondition(result);
+}_$jscoverage['/dent-cmd.js'].branchData['241'][2].init(465, 72, 'indentWholeList && indentElement(nearestListBlock, type)');
+function visit51_241_2(result) {
+  _$jscoverage['/dent-cmd.js'].branchData['241'][2].ranCondition(result);
   return result;
-}_$jscoverage['/dent-cmd.js'].branchData['239'][2].init(73, 33, 'firstListItem[0] == rangeStart[0]');
-function visit49_239_2(result) {
-  _$jscoverage['/dent-cmd.js'].branchData['239'][2].ranCondition(result);
+}_$jscoverage['/dent-cmd.js'].branchData['241'][1].init(462, 77, '!(indentWholeList && indentElement(nearestListBlock, type))');
+function visit50_241_1(result) {
+  _$jscoverage['/dent-cmd.js'].branchData['241'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dent-cmd.js'].branchData['239'][1].init(73, 71, 'firstListItem[0] == rangeStart[0] || firstListItem.contains(rangeStart)');
-function visit48_239_1(result) {
-  _$jscoverage['/dent-cmd.js'].branchData['239'][1].ranCondition(result);
+}_$jscoverage['/dent-cmd.js'].branchData['238'][2].init(72, 33, 'firstListItem[0] == rangeStart[0]');
+function visit49_238_2(result) {
+  _$jscoverage['/dent-cmd.js'].branchData['238'][2].ranCondition(result);
   return result;
-}_$jscoverage['/dent-cmd.js'].branchData['235'][2].init(97, 32, 'firstListItem.nodeName() != "li"');
-function visit47_235_2(result) {
-  _$jscoverage['/dent-cmd.js'].branchData['235'][2].ranCondition(result);
+}_$jscoverage['/dent-cmd.js'].branchData['238'][1].init(72, 71, 'firstListItem[0] == rangeStart[0] || firstListItem.contains(rangeStart)');
+function visit48_238_1(result) {
+  _$jscoverage['/dent-cmd.js'].branchData['238'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dent-cmd.js'].branchData['235'][1].init(80, 49, 'firstListItem && firstListItem.nodeName() != "li"');
-function visit46_235_1(result) {
-  _$jscoverage['/dent-cmd.js'].branchData['235'][1].ranCondition(result);
+}_$jscoverage['/dent-cmd.js'].branchData['234'][2].init(95, 32, 'firstListItem.nodeName() != "li"');
+function visit47_234_2(result) {
+  _$jscoverage['/dent-cmd.js'].branchData['234'][2].ranCondition(result);
   return result;
-}_$jscoverage['/dent-cmd.js'].branchData['233'][1].init(1481, 16, 'nearestListBlock');
-function visit45_233_1(result) {
-  _$jscoverage['/dent-cmd.js'].branchData['233'][1].ranCondition(result);
+}_$jscoverage['/dent-cmd.js'].branchData['234'][1].init(78, 49, 'firstListItem && firstListItem.nodeName() != "li"');
+function visit46_234_1(result) {
+  _$jscoverage['/dent-cmd.js'].branchData['234'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dent-cmd.js'].branchData['224'][2].init(1145, 53, 'endContainer[0].nodeType == Dom.NodeType.ELEMENT_NODE');
-function visit44_224_2(result) {
-  _$jscoverage['/dent-cmd.js'].branchData['224'][2].ranCondition(result);
+}_$jscoverage['/dent-cmd.js'].branchData['232'][1].init(1426, 16, 'nearestListBlock');
+function visit45_232_1(result) {
+  _$jscoverage['/dent-cmd.js'].branchData['232'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dent-cmd.js'].branchData['224'][1].init(32, 110, 'endContainer[0].nodeType == Dom.NodeType.ELEMENT_NODE && endContainer.nodeName() in listNodeNames');
-function visit43_224_1(result) {
-  _$jscoverage['/dent-cmd.js'].branchData['224'][1].ranCondition(result);
+}_$jscoverage['/dent-cmd.js'].branchData['223'][2].init(1099, 53, 'endContainer[0].nodeType == Dom.NodeType.ELEMENT_NODE');
+function visit44_223_2(result) {
+  _$jscoverage['/dent-cmd.js'].branchData['223'][2].ranCondition(result);
   return result;
-}_$jscoverage['/dent-cmd.js'].branchData['223'][1].init(1110, 143, 'nearestListBlock && endContainer[0].nodeType == Dom.NodeType.ELEMENT_NODE && endContainer.nodeName() in listNodeNames');
-function visit42_223_1(result) {
+}_$jscoverage['/dent-cmd.js'].branchData['223'][1].init(31, 109, 'endContainer[0].nodeType == Dom.NodeType.ELEMENT_NODE && endContainer.nodeName() in listNodeNames');
+function visit43_223_1(result) {
   _$jscoverage['/dent-cmd.js'].branchData['223'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dent-cmd.js'].branchData['216'][2].init(828, 55, 'startContainer[0].nodeType == Dom.NodeType.ELEMENT_NODE');
-function visit41_216_2(result) {
-  _$jscoverage['/dent-cmd.js'].branchData['216'][2].ranCondition(result);
+}_$jscoverage['/dent-cmd.js'].branchData['222'][1].init(1065, 141, 'nearestListBlock && endContainer[0].nodeType == Dom.NodeType.ELEMENT_NODE && endContainer.nodeName() in listNodeNames');
+function visit42_222_1(result) {
+  _$jscoverage['/dent-cmd.js'].branchData['222'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dent-cmd.js'].branchData['216'][1].init(32, 114, 'startContainer[0].nodeType == Dom.NodeType.ELEMENT_NODE && startContainer.nodeName() in listNodeNames');
-function visit40_216_1(result) {
-  _$jscoverage['/dent-cmd.js'].branchData['216'][1].ranCondition(result);
+}_$jscoverage['/dent-cmd.js'].branchData['215'][2].init(790, 55, 'startContainer[0].nodeType == Dom.NodeType.ELEMENT_NODE');
+function visit41_215_2(result) {
+  _$jscoverage['/dent-cmd.js'].branchData['215'][2].ranCondition(result);
   return result;
-}_$jscoverage['/dent-cmd.js'].branchData['215'][1].init(793, 147, 'nearestListBlock && startContainer[0].nodeType == Dom.NodeType.ELEMENT_NODE && startContainer.nodeName() in listNodeNames');
-function visit39_215_1(result) {
+}_$jscoverage['/dent-cmd.js'].branchData['215'][1].init(31, 113, 'startContainer[0].nodeType == Dom.NodeType.ELEMENT_NODE && startContainer.nodeName() in listNodeNames');
+function visit40_215_1(result) {
   _$jscoverage['/dent-cmd.js'].branchData['215'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dent-cmd.js'].branchData['206'][2].init(35, 57, 'nearestListBlock[0].nodeType == Dom.NodeType.ELEMENT_NODE');
-function visit38_206_2(result) {
-  _$jscoverage['/dent-cmd.js'].branchData['206'][2].ranCondition(result);
+}_$jscoverage['/dent-cmd.js'].branchData['214'][1].init(756, 145, 'nearestListBlock && startContainer[0].nodeType == Dom.NodeType.ELEMENT_NODE && startContainer.nodeName() in listNodeNames');
+function visit39_214_1(result) {
+  _$jscoverage['/dent-cmd.js'].branchData['214'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dent-cmd.js'].branchData['206'][1].init(35, 122, 'nearestListBlock[0].nodeType == Dom.NodeType.ELEMENT_NODE && listNodeNames[nearestListBlock.nodeName()]');
-function visit37_206_1(result) {
-  _$jscoverage['/dent-cmd.js'].branchData['206'][1].ranCondition(result);
+}_$jscoverage['/dent-cmd.js'].branchData['205'][3].init(389, 57, 'nearestListBlock[0].nodeType == Dom.NodeType.ELEMENT_NODE');
+function visit38_205_3(result) {
+  _$jscoverage['/dent-cmd.js'].branchData['205'][3].ranCondition(result);
   return result;
-}_$jscoverage['/dent-cmd.js'].branchData['205'][1].init(377, 160, 'nearestListBlock && !(nearestListBlock[0].nodeType == Dom.NodeType.ELEMENT_NODE && listNodeNames[nearestListBlock.nodeName()])');
+}_$jscoverage['/dent-cmd.js'].branchData['205'][2].init(389, 117, 'nearestListBlock[0].nodeType == Dom.NodeType.ELEMENT_NODE && listNodeNames[nearestListBlock.nodeName()]');
+function visit37_205_2(result) {
+  _$jscoverage['/dent-cmd.js'].branchData['205'][2].ranCondition(result);
+  return result;
+}_$jscoverage['/dent-cmd.js'].branchData['205'][1].init(366, 142, 'nearestListBlock && !(nearestListBlock[0].nodeType == Dom.NodeType.ELEMENT_NODE && listNodeNames[nearestListBlock.nodeName()])');
 function visit36_205_1(result) {
   _$jscoverage['/dent-cmd.js'].branchData['205'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dent-cmd.js'].branchData['197'][1].init(122, 6, '!range');
+}_$jscoverage['/dent-cmd.js'].branchData['197'][1].init(119, 6, '!range');
 function visit35_197_1(result) {
   _$jscoverage['/dent-cmd.js'].branchData['197'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dent-cmd.js'].branchData['196'][1].init(59, 37, 'selection && selection.getRanges()[0]');
+}_$jscoverage['/dent-cmd.js'].branchData['196'][1].init(58, 37, 'selection && selection.getRanges()[0]');
 function visit34_196_1(result) {
   _$jscoverage['/dent-cmd.js'].branchData['196'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dent-cmd.js'].branchData['186'][1].init(547, 31, 'element[0].style.cssText === \'\'');
+}_$jscoverage['/dent-cmd.js'].branchData['186'][1].init(535, 31, 'element[0].style.cssText === \'\'');
 function visit33_186_1(result) {
   _$jscoverage['/dent-cmd.js'].branchData['186'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dent-cmd.js'].branchData['180'][1].init(246, 17, 'currentOffset < 0');
+}_$jscoverage['/dent-cmd.js'].branchData['180'][1].init(240, 17, 'currentOffset < 0');
 function visit32_180_1(result) {
   _$jscoverage['/dent-cmd.js'].branchData['180'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dent-cmd.js'].branchData['179'][1].init(188, 16, 'type == \'indent\'');
+}_$jscoverage['/dent-cmd.js'].branchData['179'][1].init(183, 16, 'type == \'indent\'');
 function visit31_179_1(result) {
   _$jscoverage['/dent-cmd.js'].branchData['179'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dent-cmd.js'].branchData['176'][1].init(93, 20, 'isNaN(currentOffset)');
+}_$jscoverage['/dent-cmd.js'].branchData['176'][1].init(91, 20, 'isNaN(currentOffset)');
 function visit30_176_1(result) {
   _$jscoverage['/dent-cmd.js'].branchData['176'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dent-cmd.js'].branchData['149'][1].init(33, 45, 'isNotWhitespaces(node) && isNotBookmark(node)');
+}_$jscoverage['/dent-cmd.js'].branchData['149'][1].init(32, 45, 'isNotWhitespaces(node) && isNotBookmark(node)');
 function visit29_149_1(result) {
   _$jscoverage['/dent-cmd.js'].branchData['149'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dent-cmd.js'].branchData['148'][1].init(195, 144, 'UA[\'ie\'] && !li.first(function(node) {\n  return isNotWhitespaces(node) && isNotBookmark(node);\n}, 1)');
+}_$jscoverage['/dent-cmd.js'].branchData['148'][1].init(192, 143, 'UA[\'ie\'] && !li.first(function(node) {\n  return isNotWhitespaces(node) && isNotBookmark(node);\n}, 1)');
 function visit28_148_1(result) {
   _$jscoverage['/dent-cmd.js'].branchData['148'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dent-cmd.js'].branchData['143'][1].init(187, 106, '(followingList = followingList.next()) && followingList.nodeName() in listNodeNames');
+}_$jscoverage['/dent-cmd.js'].branchData['143'][1].init(182, 104, '(followingList = followingList.next()) && followingList.nodeName() in listNodeNames');
 function visit27_143_1(result) {
   _$jscoverage['/dent-cmd.js'].branchData['143'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dent-cmd.js'].branchData['138'][1].init(26, 22, 'i < pendingList.length');
+}_$jscoverage['/dent-cmd.js'].branchData['138'][1].init(25, 22, 'i < pendingList.length');
 function visit26_138_1(result) {
   _$jscoverage['/dent-cmd.js'].branchData['138'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dent-cmd.js'].branchData['137'][1].init(4446, 33, 'pendingList && pendingList.length');
+}_$jscoverage['/dent-cmd.js'].branchData['137'][1].init(4312, 33, 'pendingList && pendingList.length');
 function visit25_137_1(result) {
   _$jscoverage['/dent-cmd.js'].branchData['137'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dent-cmd.js'].branchData['133'][1].init(74, 23, 'listNode[0] || listNode');
+}_$jscoverage['/dent-cmd.js'].branchData['133'][1].init(73, 23, 'listNode[0] || listNode');
 function visit24_133_1(result) {
   _$jscoverage['/dent-cmd.js'].branchData['133'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dent-cmd.js'].branchData['132'][1].init(31, 39, 'newList.listNode[0] || newList.listNode');
+}_$jscoverage['/dent-cmd.js'].branchData['132'][1].init(30, 39, 'newList.listNode[0] || newList.listNode');
 function visit23_132_1(result) {
   _$jscoverage['/dent-cmd.js'].branchData['132'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dent-cmd.js'].branchData['131'][1].init(4199, 7, 'newList');
+}_$jscoverage['/dent-cmd.js'].branchData['131'][1].init(4071, 7, 'newList');
 function visit22_131_1(result) {
   _$jscoverage['/dent-cmd.js'].branchData['131'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dent-cmd.js'].branchData['125'][1].init(59, 24, 'child.nodeName() == \'li\'');
+}_$jscoverage['/dent-cmd.js'].branchData['125'][1].init(58, 24, 'child.nodeName() == \'li\'');
 function visit21_125_1(result) {
   _$jscoverage['/dent-cmd.js'].branchData['125'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dent-cmd.js'].branchData['124'][1].init(28, 84, '(child = new Node(children[i])) && child.nodeName() == \'li\'');
+}_$jscoverage['/dent-cmd.js'].branchData['124'][1].init(27, 83, '(child = new Node(children[i])) && child.nodeName() == \'li\'');
 function visit20_124_1(result) {
   _$jscoverage['/dent-cmd.js'].branchData['124'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dent-cmd.js'].branchData['123'][1].init(176, 6, 'i >= 0');
+}_$jscoverage['/dent-cmd.js'].branchData['123'][1].init(171, 6, 'i >= 0');
 function visit19_123_1(result) {
   _$jscoverage['/dent-cmd.js'].branchData['123'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dent-cmd.js'].branchData['118'][1].init(57, 34, 'parentLiElement.nodeName() == \'li\'');
+}_$jscoverage['/dent-cmd.js'].branchData['118'][1].init(56, 34, 'parentLiElement.nodeName() == \'li\'');
 function visit18_118_1(result) {
   _$jscoverage['/dent-cmd.js'].branchData['118'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dent-cmd.js'].branchData['117'][1].init(54, 92, '(parentLiElement = listNode.parent()) && parentLiElement.nodeName() == \'li\'');
+}_$jscoverage['/dent-cmd.js'].branchData['117'][1].init(52, 91, '(parentLiElement = listNode.parent()) && parentLiElement.nodeName() == \'li\'');
 function visit17_117_1(result) {
   _$jscoverage['/dent-cmd.js'].branchData['117'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dent-cmd.js'].branchData['115'][1].init(3616, 17, 'type == \'outdent\'');
+}_$jscoverage['/dent-cmd.js'].branchData['115'][1].init(3504, 17, 'type == \'outdent\'');
 function visit16_115_1(result) {
   _$jscoverage['/dent-cmd.js'].branchData['115'][1].ranCondition(result);
   return result;
@@ -626,87 +627,91 @@ function visit16_115_1(result) {
 function visit15_105_3(result) {
   _$jscoverage['/dent-cmd.js'].branchData['105'][3].ranCondition(result);
   return result;
-}_$jscoverage['/dent-cmd.js'].branchData['105'][2].init(3100, 20, 'i < listArray.length');
+}_$jscoverage['/dent-cmd.js'].branchData['105'][2].init(2998, 20, 'i < listArray.length');
 function visit14_105_2(result) {
   _$jscoverage['/dent-cmd.js'].branchData['105'][2].ranCondition(result);
   return result;
-}_$jscoverage['/dent-cmd.js'].branchData['105'][1].init(60, 56, 'i < listArray.length && listArray[i].indent > baseIndent');
+}_$jscoverage['/dent-cmd.js'].branchData['105'][1].init(59, 56, 'i < listArray.length && listArray[i].indent > baseIndent');
 function visit13_105_1(result) {
   _$jscoverage['/dent-cmd.js'].branchData['105'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dent-cmd.js'].branchData['84'][1].init(57, 37, 'i <= lastItem.data(\'listarray_index\')');
+}_$jscoverage['/dent-cmd.js'].branchData['84'][1].init(56, 37, 'i <= lastItem.data(\'listarray_index\')');
 function visit12_84_1(result) {
   _$jscoverage['/dent-cmd.js'].branchData['84'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dent-cmd.js'].branchData['72'][1].init(1797, 16, 'type == \'indent\'');
+}_$jscoverage['/dent-cmd.js'].branchData['72'][1].init(1728, 16, 'type == \'indent\'');
 function visit11_72_1(result) {
   _$jscoverage['/dent-cmd.js'].branchData['72'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dent-cmd.js'].branchData['67'][1].init(18, 42, 'listNodeNames[listParents[i].nodeName()]');
+}_$jscoverage['/dent-cmd.js'].branchData['67'][1].init(17, 42, 'listNodeNames[listParents[i].nodeName()]');
 function visit10_67_1(result) {
   _$jscoverage['/dent-cmd.js'].branchData['67'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dent-cmd.js'].branchData['66'][1].init(1581, 22, 'i < listParents.length');
+}_$jscoverage['/dent-cmd.js'].branchData['66'][1].init(1518, 22, 'i < listParents.length');
 function visit9_66_1(result) {
   _$jscoverage['/dent-cmd.js'].branchData['66'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dent-cmd.js'].branchData['53'][1].init(1051, 22, 'itemsToMove.length < 1');
+}_$jscoverage['/dent-cmd.js'].branchData['53'][1].init(1001, 22, 'itemsToMove.length < 1');
 function visit8_53_1(result) {
   _$jscoverage['/dent-cmd.js'].branchData['53'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dent-cmd.js'].branchData['48'][1].init(18, 26, 'block.equals(endContainer)');
+}_$jscoverage['/dent-cmd.js'].branchData['48'][1].init(17, 26, 'block.equals(endContainer)');
 function visit7_48_1(result) {
   _$jscoverage['/dent-cmd.js'].branchData['48'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dent-cmd.js'].branchData['40'][1].init(609, 32, '!startContainer || !endContainer');
+}_$jscoverage['/dent-cmd.js'].branchData['40'][1].init(572, 32, '!startContainer || !endContainer');
 function visit6_40_1(result) {
   _$jscoverage['/dent-cmd.js'].branchData['40'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dent-cmd.js'].branchData['36'][1].init(473, 68, 'endContainer && !endContainer.parent().equals(listNode)');
-function visit5_36_1(result) {
-  _$jscoverage['/dent-cmd.js'].branchData['36'][1].ranCondition(result);
+}_$jscoverage['/dent-cmd.js'].branchData['37'][1].init(452, 55, 'endContainer && !endContainer.parent().equals(listNode)');
+function visit5_37_1(result) {
+  _$jscoverage['/dent-cmd.js'].branchData['37'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dent-cmd.js'].branchData['33'][1].init(328, 72, 'startContainer && !startContainer.parent().equals(listNode)');
-function visit4_33_1(result) {
-  _$jscoverage['/dent-cmd.js'].branchData['33'][1].ranCondition(result);
+}_$jscoverage['/dent-cmd.js'].branchData['35'][1].init(322, 59, 'startContainer && !startContainer.parent().equals(listNode)');
+function visit4_35_1(result) {
+  _$jscoverage['/dent-cmd.js'].branchData['35'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dent-cmd.js'].branchData['24'][3].init(63, 26, 'Dom.nodeName(node) == \'li\'');
-function visit3_24_3(result) {
-  _$jscoverage['/dent-cmd.js'].branchData['24'][3].ranCondition(result);
+}_$jscoverage['/dent-cmd.js'].branchData['26'][3].init(62, 26, 'Dom.nodeName(node) == \'li\'');
+function visit3_26_3(result) {
+  _$jscoverage['/dent-cmd.js'].branchData['26'][3].ranCondition(result);
   return result;
-}_$jscoverage['/dent-cmd.js'].branchData['24'][2].init(17, 42, 'node.nodeType == Dom.NodeType.ELEMENT_NODE');
-function visit2_24_2(result) {
-  _$jscoverage['/dent-cmd.js'].branchData['24'][2].ranCondition(result);
+}_$jscoverage['/dent-cmd.js'].branchData['26'][2].init(16, 42, 'node.nodeType == Dom.NodeType.ELEMENT_NODE');
+function visit2_26_2(result) {
+  _$jscoverage['/dent-cmd.js'].branchData['26'][2].ranCondition(result);
   return result;
-}_$jscoverage['/dent-cmd.js'].branchData['24'][1].init(17, 72, 'node.nodeType == Dom.NodeType.ELEMENT_NODE && Dom.nodeName(node) == \'li\'');
-function visit1_24_1(result) {
-  _$jscoverage['/dent-cmd.js'].branchData['24'][1].ranCondition(result);
+}_$jscoverage['/dent-cmd.js'].branchData['26'][1].init(16, 72, 'node.nodeType == Dom.NodeType.ELEMENT_NODE && Dom.nodeName(node) == \'li\'');
+function visit1_26_1(result) {
+  _$jscoverage['/dent-cmd.js'].branchData['26'][1].ranCondition(result);
   return result;
 }_$jscoverage['/dent-cmd.js'].lineData[10]++;
-KISSY.add("editor/plugin/dent-cmd", function(S, Editor, ListUtils) {
+KISSY.add(function(S, require) {
   _$jscoverage['/dent-cmd.js'].functionData[0]++;
+  _$jscoverage['/dent-cmd.js'].lineData[11]++;
+  var Editor = require('editor');
   _$jscoverage['/dent-cmd.js'].lineData[12]++;
+  var ListUtils = require('./list-utils');
+  _$jscoverage['/dent-cmd.js'].lineData[14]++;
   var listNodeNames = {
   ol: 1, 
   ul: 1}, Walker = Editor.Walker, Dom = S.DOM, Node = S.Node, UA = S.UA, isNotWhitespaces = Walker.whitespaces(true), INDENT_CSS_PROPERTY = "margin-left", INDENT_OFFSET = 40, INDENT_UNIT = "px", isNotBookmark = Walker.bookmark(false, true);
-  _$jscoverage['/dent-cmd.js'].lineData[23]++;
+  _$jscoverage['/dent-cmd.js'].lineData[25]++;
   function isListItem(node) {
     _$jscoverage['/dent-cmd.js'].functionData[1]++;
-    _$jscoverage['/dent-cmd.js'].lineData[24]++;
-    return visit1_24_1(visit2_24_2(node.nodeType == Dom.NodeType.ELEMENT_NODE) && visit3_24_3(Dom.nodeName(node) == 'li'));
+    _$jscoverage['/dent-cmd.js'].lineData[26]++;
+    return visit1_26_1(visit2_26_2(node.nodeType == Dom.NodeType.ELEMENT_NODE) && visit3_26_3(Dom.nodeName(node) == 'li'));
   }
-  _$jscoverage['/dent-cmd.js'].lineData[27]++;
+  _$jscoverage['/dent-cmd.js'].lineData[29]++;
   function indentList(range, listNode, type) {
     _$jscoverage['/dent-cmd.js'].functionData[2]++;
-    _$jscoverage['/dent-cmd.js'].lineData[31]++;
-    var startContainer = range.startContainer, endContainer = range.endContainer;
     _$jscoverage['/dent-cmd.js'].lineData[33]++;
-    while (visit4_33_1(startContainer && !startContainer.parent().equals(listNode))) {
-      _$jscoverage['/dent-cmd.js'].lineData[35]++;
+    var startContainer = range.startContainer, endContainer = range.endContainer;
+    _$jscoverage['/dent-cmd.js'].lineData[35]++;
+    while (visit4_35_1(startContainer && !startContainer.parent().equals(listNode))) {
+      _$jscoverage['/dent-cmd.js'].lineData[36]++;
       startContainer = startContainer.parent();
     }
-    _$jscoverage['/dent-cmd.js'].lineData[36]++;
-    while (visit5_36_1(endContainer && !endContainer.parent().equals(listNode))) {
+    _$jscoverage['/dent-cmd.js'].lineData[37]++;
+    while (visit5_37_1(endContainer && !endContainer.parent().equals(listNode))) {
       _$jscoverage['/dent-cmd.js'].lineData[38]++;
       endContainer = endContainer.parent();
     }
@@ -887,90 +892,89 @@ KISSY.add("editor/plugin/dent-cmd", function(S, Editor, ListUtils) {
     _$jscoverage['/dent-cmd.js'].lineData[200]++;
     var startContainer = range.startContainer, endContainer = range.endContainer, rangeRoot = range.getCommonAncestor(), nearestListBlock = rangeRoot;
     _$jscoverage['/dent-cmd.js'].lineData[205]++;
-    while (visit36_205_1(nearestListBlock && !(visit37_206_1(visit38_206_2(nearestListBlock[0].nodeType == Dom.NodeType.ELEMENT_NODE) && listNodeNames[nearestListBlock.nodeName()])))) {
-      _$jscoverage['/dent-cmd.js'].lineData[208]++;
+    while (visit36_205_1(nearestListBlock && !(visit37_205_2(visit38_205_3(nearestListBlock[0].nodeType == Dom.NodeType.ELEMENT_NODE) && listNodeNames[nearestListBlock.nodeName()])))) {
+      _$jscoverage['/dent-cmd.js'].lineData[207]++;
       nearestListBlock = nearestListBlock.parent();
     }
-    _$jscoverage['/dent-cmd.js'].lineData[215]++;
-    if (visit39_215_1(nearestListBlock && visit40_216_1(visit41_216_2(startContainer[0].nodeType == Dom.NodeType.ELEMENT_NODE) && startContainer.nodeName() in listNodeNames))) {
-      _$jscoverage['/dent-cmd.js'].lineData[218]++;
+    _$jscoverage['/dent-cmd.js'].lineData[214]++;
+    if (visit39_214_1(nearestListBlock && visit40_215_1(visit41_215_2(startContainer[0].nodeType == Dom.NodeType.ELEMENT_NODE) && startContainer.nodeName() in listNodeNames))) {
+      _$jscoverage['/dent-cmd.js'].lineData[217]++;
       var walker = new Walker(range);
-      _$jscoverage['/dent-cmd.js'].lineData[219]++;
+      _$jscoverage['/dent-cmd.js'].lineData[218]++;
       walker.evaluator = isListItem;
-      _$jscoverage['/dent-cmd.js'].lineData[220]++;
+      _$jscoverage['/dent-cmd.js'].lineData[219]++;
       range.startContainer = walker.next();
     }
-    _$jscoverage['/dent-cmd.js'].lineData[223]++;
-    if (visit42_223_1(nearestListBlock && visit43_224_1(visit44_224_2(endContainer[0].nodeType == Dom.NodeType.ELEMENT_NODE) && endContainer.nodeName() in listNodeNames))) {
-      _$jscoverage['/dent-cmd.js'].lineData[226]++;
+    _$jscoverage['/dent-cmd.js'].lineData[222]++;
+    if (visit42_222_1(nearestListBlock && visit43_223_1(visit44_223_2(endContainer[0].nodeType == Dom.NodeType.ELEMENT_NODE) && endContainer.nodeName() in listNodeNames))) {
+      _$jscoverage['/dent-cmd.js'].lineData[225]++;
       walker = new Walker(range);
-      _$jscoverage['/dent-cmd.js'].lineData[227]++;
+      _$jscoverage['/dent-cmd.js'].lineData[226]++;
       walker.evaluator = isListItem;
-      _$jscoverage['/dent-cmd.js'].lineData[228]++;
+      _$jscoverage['/dent-cmd.js'].lineData[227]++;
       range.endContainer = walker.previous();
     }
-    _$jscoverage['/dent-cmd.js'].lineData[231]++;
+    _$jscoverage['/dent-cmd.js'].lineData[230]++;
     var bookmarks = selection.createBookmarks(true);
-    _$jscoverage['/dent-cmd.js'].lineData[233]++;
-    if (visit45_233_1(nearestListBlock)) {
-      _$jscoverage['/dent-cmd.js'].lineData[234]++;
+    _$jscoverage['/dent-cmd.js'].lineData[232]++;
+    if (visit45_232_1(nearestListBlock)) {
+      _$jscoverage['/dent-cmd.js'].lineData[233]++;
       var firstListItem = nearestListBlock.first();
-      _$jscoverage['/dent-cmd.js'].lineData[235]++;
-      while (visit46_235_1(firstListItem && visit47_235_2(firstListItem.nodeName() != "li"))) {
-        _$jscoverage['/dent-cmd.js'].lineData[236]++;
+      _$jscoverage['/dent-cmd.js'].lineData[234]++;
+      while (visit46_234_1(firstListItem && visit47_234_2(firstListItem.nodeName() != "li"))) {
+        _$jscoverage['/dent-cmd.js'].lineData[235]++;
         firstListItem = firstListItem.next();
       }
-      _$jscoverage['/dent-cmd.js'].lineData[238]++;
-      var rangeStart = range.startContainer, indentWholeList = visit48_239_1(visit49_239_2(firstListItem[0] == rangeStart[0]) || firstListItem.contains(rangeStart));
-      _$jscoverage['/dent-cmd.js'].lineData[242]++;
-      if (visit50_242_1(!(visit51_242_2(indentWholeList && indentElement(nearestListBlock, type))))) {
-        _$jscoverage['/dent-cmd.js'].lineData[244]++;
+      _$jscoverage['/dent-cmd.js'].lineData[237]++;
+      var rangeStart = range.startContainer, indentWholeList = visit48_238_1(visit49_238_2(firstListItem[0] == rangeStart[0]) || firstListItem.contains(rangeStart));
+      _$jscoverage['/dent-cmd.js'].lineData[241]++;
+      if (visit50_241_1(!(visit51_241_2(indentWholeList && indentElement(nearestListBlock, type))))) {
+        _$jscoverage['/dent-cmd.js'].lineData[243]++;
         indentList(range, nearestListBlock, type);
       }
     } else {
-      _$jscoverage['/dent-cmd.js'].lineData[248]++;
+      _$jscoverage['/dent-cmd.js'].lineData[247]++;
       indentBlock(range, type);
     }
-    _$jscoverage['/dent-cmd.js'].lineData[250]++;
+    _$jscoverage['/dent-cmd.js'].lineData[249]++;
     selection.selectBookmarks(bookmarks);
   }
-  _$jscoverage['/dent-cmd.js'].lineData[253]++;
+  _$jscoverage['/dent-cmd.js'].lineData[252]++;
   function addCommand(editor, cmdType) {
     _$jscoverage['/dent-cmd.js'].functionData[8]++;
-    _$jscoverage['/dent-cmd.js'].lineData[254]++;
-    if (visit52_254_1(!editor.hasCommand(cmdType))) {
-      _$jscoverage['/dent-cmd.js'].lineData[255]++;
+    _$jscoverage['/dent-cmd.js'].lineData[253]++;
+    if (visit52_253_1(!editor.hasCommand(cmdType))) {
+      _$jscoverage['/dent-cmd.js'].lineData[254]++;
       editor.addCommand(cmdType, {
   exec: function(editor) {
   _$jscoverage['/dent-cmd.js'].functionData[9]++;
+  _$jscoverage['/dent-cmd.js'].lineData[256]++;
+  editor.execCommand("save");
   _$jscoverage['/dent-cmd.js'].lineData[257]++;
-  editor.execCommand("save");
-  _$jscoverage['/dent-cmd.js'].lineData[258]++;
   indentEditor(editor, cmdType);
-  _$jscoverage['/dent-cmd.js'].lineData[259]++;
+  _$jscoverage['/dent-cmd.js'].lineData[258]++;
   editor.execCommand("save");
-  _$jscoverage['/dent-cmd.js'].lineData[260]++;
+  _$jscoverage['/dent-cmd.js'].lineData[259]++;
   editor.notifySelectionChange();
 }});
     }
   }
-  _$jscoverage['/dent-cmd.js'].lineData[266]++;
+  _$jscoverage['/dent-cmd.js'].lineData[265]++;
   return {
   checkOutdentActive: function(elementPath) {
   _$jscoverage['/dent-cmd.js'].functionData[10]++;
-  _$jscoverage['/dent-cmd.js'].lineData[268]++;
+  _$jscoverage['/dent-cmd.js'].lineData[267]++;
   var blockLimit = elementPath.blockLimit;
-  _$jscoverage['/dent-cmd.js'].lineData[269]++;
-  if (visit53_269_1(elementPath.contains(listNodeNames))) {
-    _$jscoverage['/dent-cmd.js'].lineData[270]++;
+  _$jscoverage['/dent-cmd.js'].lineData[268]++;
+  if (visit53_268_1(elementPath.contains(listNodeNames))) {
+    _$jscoverage['/dent-cmd.js'].lineData[269]++;
     return true;
   } else {
+    _$jscoverage['/dent-cmd.js'].lineData[271]++;
+    var block = visit54_271_1(elementPath.block || blockLimit);
     _$jscoverage['/dent-cmd.js'].lineData[272]++;
-    var block = visit54_272_1(elementPath.block || blockLimit);
-    _$jscoverage['/dent-cmd.js'].lineData[273]++;
-    return visit55_273_1(block && block.style(INDENT_CSS_PROPERTY));
+    return visit55_272_1(block && block.style(INDENT_CSS_PROPERTY));
   }
 }, 
   addCommand: addCommand};
-}, {
-  requires: ['editor', './list-utils']});
+});

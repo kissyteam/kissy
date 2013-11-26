@@ -4,9 +4,10 @@
  * @author yiminghe@gmail.com
  */
 (function (S, undefined) {
+    var  logger= S.getLogger('s/uri');
     var reDisallowedInSchemeOrUserInfo = /[#\/\?@]/g,
         reDisallowedInPathName = /[#\?]/g,
-        logger= S.getLogger('s/uri'),
+
     // ?? combo of taobao
         reDisallowedInQuery = /[#@]/g,
         reDisallowedInFragment = /#/g,

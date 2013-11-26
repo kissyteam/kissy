@@ -231,13 +231,14 @@ if (! _$jscoverage['/html-parser/nodes/document.js']) {
   _$jscoverage['/html-parser/nodes/document.js'].lineData = [];
   _$jscoverage['/html-parser/nodes/document.js'].lineData[6] = 0;
   _$jscoverage['/html-parser/nodes/document.js'].lineData[7] = 0;
-  _$jscoverage['/html-parser/nodes/document.js'].lineData[8] = 0;
   _$jscoverage['/html-parser/nodes/document.js'].lineData[9] = 0;
   _$jscoverage['/html-parser/nodes/document.js'].lineData[10] = 0;
-  _$jscoverage['/html-parser/nodes/document.js'].lineData[13] = 0;
+  _$jscoverage['/html-parser/nodes/document.js'].lineData[11] = 0;
+  _$jscoverage['/html-parser/nodes/document.js'].lineData[12] = 0;
   _$jscoverage['/html-parser/nodes/document.js'].lineData[15] = 0;
-  _$jscoverage['/html-parser/nodes/document.js'].lineData[16] = 0;
-  _$jscoverage['/html-parser/nodes/document.js'].lineData[20] = 0;
+  _$jscoverage['/html-parser/nodes/document.js'].lineData[17] = 0;
+  _$jscoverage['/html-parser/nodes/document.js'].lineData[18] = 0;
+  _$jscoverage['/html-parser/nodes/document.js'].lineData[22] = 0;
 }
 if (! _$jscoverage['/html-parser/nodes/document.js'].functionData) {
   _$jscoverage['/html-parser/nodes/document.js'].functionData = [];
@@ -249,28 +250,29 @@ if (! _$jscoverage['/html-parser/nodes/document.js'].branchData) {
   _$jscoverage['/html-parser/nodes/document.js'].branchData = {};
 }
 _$jscoverage['/html-parser/nodes/document.js'].lineData[6]++;
-KISSY.add("html-parser/nodes/document", function(S, Tag) {
+KISSY.add(function(S, require) {
   _$jscoverage['/html-parser/nodes/document.js'].functionData[0]++;
   _$jscoverage['/html-parser/nodes/document.js'].lineData[7]++;
+  var Tag = require('./tag');
+  _$jscoverage['/html-parser/nodes/document.js'].lineData[9]++;
   function Document() {
     _$jscoverage['/html-parser/nodes/document.js'].functionData[1]++;
-    _$jscoverage['/html-parser/nodes/document.js'].lineData[8]++;
-    this.childNodes = [];
-    _$jscoverage['/html-parser/nodes/document.js'].lineData[9]++;
-    this.nodeType = 9;
     _$jscoverage['/html-parser/nodes/document.js'].lineData[10]++;
+    this.childNodes = [];
+    _$jscoverage['/html-parser/nodes/document.js'].lineData[11]++;
+    this.nodeType = 9;
+    _$jscoverage['/html-parser/nodes/document.js'].lineData[12]++;
     this.nodeName = '#document';
   }
-  _$jscoverage['/html-parser/nodes/document.js'].lineData[13]++;
+  _$jscoverage['/html-parser/nodes/document.js'].lineData[15]++;
   S.extend(Document, Tag, {
   writeHtml: function(writer, filter) {
   _$jscoverage['/html-parser/nodes/document.js'].functionData[2]++;
-  _$jscoverage['/html-parser/nodes/document.js'].lineData[15]++;
+  _$jscoverage['/html-parser/nodes/document.js'].lineData[17]++;
   this.__filter = filter;
-  _$jscoverage['/html-parser/nodes/document.js'].lineData[16]++;
+  _$jscoverage['/html-parser/nodes/document.js'].lineData[18]++;
   this._writeChildrenHTML(writer);
 }});
-  _$jscoverage['/html-parser/nodes/document.js'].lineData[20]++;
+  _$jscoverage['/html-parser/nodes/document.js'].lineData[22]++;
   return Document;
-}, {
-  requires: ['./tag']});
+});

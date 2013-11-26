@@ -1,7 +1,7 @@
 /*
-Copyright 2013, KISSY v1.40dev
+Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Oct 25 16:41
+build time: Nov 27 00:40
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -9,29 +9,16 @@ build time: Oct 25 16:41
  editor/plugin/back-color
 */
 
-/**
- * @ignore
- * backColor button.
- * @author yiminghe@gmail.com
- */
-KISSY.add("editor/plugin/back-color", function (S, Editor, Button, cmd) {
-    function backColor(config) {
-        this.config = config || {};
-    }
-
-    S.augment(backColor, {
-        pluginRenderUI: function (editor) {
-            cmd.init(editor);
-            Button.init(editor, {
-                defaultColor: 'rgb(255, 217, 102)',
-                cmdType: "backColor",
-                tooltip: "背景颜色"
-            });
-        }
-    });
-
-    return backColor;
-}, {
-    requires: ['editor', './color/btn', './back-color/cmd']
+KISSY.add("editor/plugin/back-color", ["./color/btn", "./back-color/cmd"], function(S, require) {
+  var Button = require("./color/btn");
+  var cmd = require("./back-color/cmd");
+  function backColor(config) {
+    this.config = config || {}
+  }
+  S.augment(backColor, {pluginRenderUI:function(editor) {
+    cmd.init(editor);
+    Button.init(editor, {defaultColor:"rgb(255, 217, 102)", cmdType:"backColor", tooltip:"\u80cc\u666f\u989c\u8272"})
+  }});
+  return backColor
 });
 

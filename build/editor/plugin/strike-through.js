@@ -1,7 +1,7 @@
 /*
-Copyright 2013, KISSY v1.40dev
+Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Oct 25 16:47
+build time: Nov 27 00:01
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -9,27 +9,16 @@ build time: Oct 25 16:47
  editor/plugin/strike-through
 */
 
-/**
- * @ignore
- * strikeThrough button
- * @author yiminghe@gmail.com
- */
-KISSY.add("editor/plugin/strike-through", function (S, Editor, ui, cmd) {
-    function StrikeThrough() {
-    }
-
-    S.augment(StrikeThrough, {
-        pluginRenderUI:function (editor) {
-            cmd.init(editor);
-            editor.addButton("strikeThrough", {
-                cmdType:"strikeThrough",
-                tooltip:"删除线 "
-            }, ui.Button);
-        }
-    });
-
-    return StrikeThrough;
-}, {
-    requires:['editor', './font/ui', './strike-through/cmd']
+KISSY.add("editor/plugin/strike-through", ["./font/ui", "./strike-through/cmd", "./button"], function(S, require) {
+  var ui = require("./font/ui");
+  var cmd = require("./strike-through/cmd");
+  require("./button");
+  function StrikeThrough() {
+  }
+  S.augment(StrikeThrough, {pluginRenderUI:function(editor) {
+    cmd.init(editor);
+    editor.addButton("strikeThrough", {cmdType:"strikeThrough", tooltip:"\u5220\u9664\u7ebf "}, ui.Button)
+  }});
+  return StrikeThrough
 });
 

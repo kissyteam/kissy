@@ -305,52 +305,52 @@ if (! _$jscoverage['/html-parser/lexer/index.js'].branchData) {
   _$jscoverage['/html-parser/lexer/index.js'].branchData['79'] = [];
   _$jscoverage['/html-parser/lexer/index.js'].branchData['79'][1] = new BranchData();
 }
-_$jscoverage['/html-parser/lexer/index.js'].branchData['79'][1].init(156, 21, 'iPosition > cPosition');
+_$jscoverage['/html-parser/lexer/index.js'].branchData['79'][1].init(151, 21, 'iPosition > cPosition');
 function visit15_79_1(result) {
   _$jscoverage['/html-parser/lexer/index.js'].branchData['79'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/index.js'].branchData['76'][1].init(63, 23, 'iPosition === cPosition');
+}_$jscoverage['/html-parser/lexer/index.js'].branchData['76'][1].init(61, 23, 'iPosition === cPosition');
 function visit14_76_1(result) {
   _$jscoverage['/html-parser/lexer/index.js'].branchData['76'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/index.js'].branchData['74'][1].init(63, 13, 'i < cs.length');
+}_$jscoverage['/html-parser/lexer/index.js'].branchData['74'][1].init(61, 13, 'i < cs.length');
 function visit13_74_1(result) {
   _$jscoverage['/html-parser/lexer/index.js'].branchData['74'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/index.js'].branchData['65'][1].init(155, 21, 'iPosition < cPosition');
+}_$jscoverage['/html-parser/lexer/index.js'].branchData['65'][1].init(150, 21, 'iPosition < cPosition');
 function visit12_65_1(result) {
   _$jscoverage['/html-parser/lexer/index.js'].branchData['65'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/index.js'].branchData['62'][1].init(63, 23, 'iPosition === cPosition');
+}_$jscoverage['/html-parser/lexer/index.js'].branchData['62'][1].init(61, 23, 'iPosition === cPosition');
 function visit11_62_1(result) {
   _$jscoverage['/html-parser/lexer/index.js'].branchData['62'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/index.js'].branchData['60'][1].init(63, 13, 'i < cs.length');
+}_$jscoverage['/html-parser/lexer/index.js'].branchData['60'][1].init(61, 13, 'i < cs.length');
 function visit10_60_1(result) {
   _$jscoverage['/html-parser/lexer/index.js'].branchData['60'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/index.js'].branchData['51'][1].init(82, 51, 'lineCursor = this.lineCursors[this.row(cursor) - 1]');
+}_$jscoverage['/html-parser/lexer/index.js'].branchData['51'][1].init(79, 51, 'lineCursor = this.lineCursors[this.row(cursor) - 1]');
 function visit9_51_1(result) {
   _$jscoverage['/html-parser/lexer/index.js'].branchData['51'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/index.js'].branchData['41'][1].init(22, 32, 'cs[i].position > cursor.position');
+}_$jscoverage['/html-parser/lexer/index.js'].branchData['41'][1].init(21, 32, 'cs[i].position > cursor.position');
 function visit8_41_1(result) {
   _$jscoverage['/html-parser/lexer/index.js'].branchData['41'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/index.js'].branchData['40'][1].init(70, 13, 'i < cs.length');
+}_$jscoverage['/html-parser/lexer/index.js'].branchData['40'][1].init(68, 13, 'i < cs.length');
 function visit7_40_1(result) {
   _$jscoverage['/html-parser/lexer/index.js'].branchData['40'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/index.js'].branchData['29'][1].init(124, 12, 'index !== -1');
+}_$jscoverage['/html-parser/lexer/index.js'].branchData['29'][1].init(121, 12, 'index !== -1');
 function visit6_29_1(result) {
   _$jscoverage['/html-parser/lexer/index.js'].branchData['29'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/index.js'].branchData['21'][1].init(93, 11, 'index != -1');
+}_$jscoverage['/html-parser/lexer/index.js'].branchData['21'][1].init(91, 11, 'index != -1');
 function visit5_21_1(result) {
   _$jscoverage['/html-parser/lexer/index.js'].branchData['21'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/index.js'].lineData[6]++;
-KISSY.add("html-parser/lexer/index", function() {
+KISSY.add(function() {
   _$jscoverage['/html-parser/lexer/index.js'].functionData[0]++;
   _$jscoverage['/html-parser/lexer/index.js'].lineData[12]++;
   function Index() {

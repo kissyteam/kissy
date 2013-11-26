@@ -231,16 +231,17 @@ if (! _$jscoverage['/html-parser/nodes/fragment.js']) {
   _$jscoverage['/html-parser/nodes/fragment.js'].lineData = [];
   _$jscoverage['/html-parser/nodes/fragment.js'].lineData[6] = 0;
   _$jscoverage['/html-parser/nodes/fragment.js'].lineData[7] = 0;
-  _$jscoverage['/html-parser/nodes/fragment.js'].lineData[8] = 0;
   _$jscoverage['/html-parser/nodes/fragment.js'].lineData[9] = 0;
   _$jscoverage['/html-parser/nodes/fragment.js'].lineData[10] = 0;
-  _$jscoverage['/html-parser/nodes/fragment.js'].lineData[13] = 0;
+  _$jscoverage['/html-parser/nodes/fragment.js'].lineData[11] = 0;
+  _$jscoverage['/html-parser/nodes/fragment.js'].lineData[12] = 0;
   _$jscoverage['/html-parser/nodes/fragment.js'].lineData[15] = 0;
-  _$jscoverage['/html-parser/nodes/fragment.js'].lineData[16] = 0;
   _$jscoverage['/html-parser/nodes/fragment.js'].lineData[17] = 0;
   _$jscoverage['/html-parser/nodes/fragment.js'].lineData[18] = 0;
+  _$jscoverage['/html-parser/nodes/fragment.js'].lineData[19] = 0;
   _$jscoverage['/html-parser/nodes/fragment.js'].lineData[20] = 0;
-  _$jscoverage['/html-parser/nodes/fragment.js'].lineData[24] = 0;
+  _$jscoverage['/html-parser/nodes/fragment.js'].lineData[22] = 0;
+  _$jscoverage['/html-parser/nodes/fragment.js'].lineData[26] = 0;
 }
 if (! _$jscoverage['/html-parser/nodes/fragment.js'].functionData) {
   _$jscoverage['/html-parser/nodes/fragment.js'].functionData = [];
@@ -250,43 +251,44 @@ if (! _$jscoverage['/html-parser/nodes/fragment.js'].functionData) {
 }
 if (! _$jscoverage['/html-parser/nodes/fragment.js'].branchData) {
   _$jscoverage['/html-parser/nodes/fragment.js'].branchData = {};
-  _$jscoverage['/html-parser/nodes/fragment.js'].branchData['17'] = [];
-  _$jscoverage['/html-parser/nodes/fragment.js'].branchData['17'][1] = new BranchData();
+  _$jscoverage['/html-parser/nodes/fragment.js'].branchData['19'] = [];
+  _$jscoverage['/html-parser/nodes/fragment.js'].branchData['19'][1] = new BranchData();
 }
-_$jscoverage['/html-parser/nodes/fragment.js'].branchData['17'][1].init(97, 6, 'filter');
-function visit191_17_1(result) {
-  _$jscoverage['/html-parser/nodes/fragment.js'].branchData['17'][1].ranCondition(result);
+_$jscoverage['/html-parser/nodes/fragment.js'].branchData['19'][1].init(94, 6, 'filter');
+function visit191_19_1(result) {
+  _$jscoverage['/html-parser/nodes/fragment.js'].branchData['19'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/nodes/fragment.js'].lineData[6]++;
-KISSY.add("html-parser/nodes/fragment", function(S, Tag) {
+KISSY.add(function(S, require) {
   _$jscoverage['/html-parser/nodes/fragment.js'].functionData[0]++;
   _$jscoverage['/html-parser/nodes/fragment.js'].lineData[7]++;
+  var Tag = require('./tag');
+  _$jscoverage['/html-parser/nodes/fragment.js'].lineData[9]++;
   function Fragment() {
     _$jscoverage['/html-parser/nodes/fragment.js'].functionData[1]++;
-    _$jscoverage['/html-parser/nodes/fragment.js'].lineData[8]++;
-    this.childNodes = [];
-    _$jscoverage['/html-parser/nodes/fragment.js'].lineData[9]++;
-    this.nodeType = 9;
     _$jscoverage['/html-parser/nodes/fragment.js'].lineData[10]++;
+    this.childNodes = [];
+    _$jscoverage['/html-parser/nodes/fragment.js'].lineData[11]++;
+    this.nodeType = 9;
+    _$jscoverage['/html-parser/nodes/fragment.js'].lineData[12]++;
     this.nodeName = '#fragment';
   }
-  _$jscoverage['/html-parser/nodes/fragment.js'].lineData[13]++;
+  _$jscoverage['/html-parser/nodes/fragment.js'].lineData[15]++;
   S.extend(Fragment, Tag, {
   writeHtml: function(writer, filter) {
   _$jscoverage['/html-parser/nodes/fragment.js'].functionData[2]++;
-  _$jscoverage['/html-parser/nodes/fragment.js'].lineData[15]++;
-  this.__filter = filter;
-  _$jscoverage['/html-parser/nodes/fragment.js'].lineData[16]++;
-  this.isChildrenFiltered = 0;
   _$jscoverage['/html-parser/nodes/fragment.js'].lineData[17]++;
-  if (visit191_17_1(filter)) {
-    _$jscoverage['/html-parser/nodes/fragment.js'].lineData[18]++;
+  this.__filter = filter;
+  _$jscoverage['/html-parser/nodes/fragment.js'].lineData[18]++;
+  this.isChildrenFiltered = 0;
+  _$jscoverage['/html-parser/nodes/fragment.js'].lineData[19]++;
+  if (visit191_19_1(filter)) {
+    _$jscoverage['/html-parser/nodes/fragment.js'].lineData[20]++;
     filter.onFragment(this);
   }
-  _$jscoverage['/html-parser/nodes/fragment.js'].lineData[20]++;
+  _$jscoverage['/html-parser/nodes/fragment.js'].lineData[22]++;
   this._writeChildrenHTML(writer);
 }});
-  _$jscoverage['/html-parser/nodes/fragment.js'].lineData[24]++;
+  _$jscoverage['/html-parser/nodes/fragment.js'].lineData[26]++;
   return Fragment;
-}, {
-  requires: ['./tag']});
+});

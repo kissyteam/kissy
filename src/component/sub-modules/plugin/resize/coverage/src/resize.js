@@ -230,6 +230,7 @@ if (! _$jscoverage['/resize.js']) {
   _$jscoverage['/resize.js'] = {};
   _$jscoverage['/resize.js'].lineData = [];
   _$jscoverage['/resize.js'].lineData[6] = 0;
+  _$jscoverage['/resize.js'].lineData[7] = 0;
   _$jscoverage['/resize.js'].lineData[28] = 0;
   _$jscoverage['/resize.js'].lineData[30] = 0;
   _$jscoverage['/resize.js'].lineData[32] = 0;
@@ -252,10 +253,12 @@ if (! _$jscoverage['/resize.js'].branchData) {
   _$jscoverage['/resize.js'].branchData = {};
 }
 _$jscoverage['/resize.js'].lineData[6]++;
-KISSY.add('component/plugin/resize', function(S, Resize) {
+KISSY.add(function(S, require) {
   _$jscoverage['/resize.js'].functionData[0]++;
+  _$jscoverage['/resize.js'].lineData[7]++;
+  var Resizable = require('resizable');
   _$jscoverage['/resize.js'].lineData[28]++;
-  return Resize.extend({
+  return Resizable.extend({
   pluginBindUI: function(component) {
   _$jscoverage['/resize.js'].functionData[1]++;
   _$jscoverage['/resize.js'].lineData[30]++;
@@ -282,5 +285,4 @@ KISSY.add('component/plugin/resize', function(S, Resize) {
   _$jscoverage['/resize.js'].lineData[43]++;
   this.destroy();
 }});
-}, {
-  requires: ['resizable']});
+});

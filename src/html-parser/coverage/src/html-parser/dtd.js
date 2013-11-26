@@ -259,20 +259,20 @@ if (! _$jscoverage['/html-parser/dtd.js'].branchData) {
   _$jscoverage['/html-parser/dtd.js'].branchData['696'] = [];
   _$jscoverage['/html-parser/dtd.js'].branchData['696'][1] = new BranchData();
 }
-_$jscoverage['/html-parser/dtd.js'].branchData['696'][1].init(467, 20, 'i < html_tags.length');
+_$jscoverage['/html-parser/dtd.js'].branchData['696'][1].init(450, 20, 'i < html_tags.length');
 function visit3_696_1(result) {
   _$jscoverage['/html-parser/dtd.js'].branchData['696'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/dtd.js'].branchData['689'][1].init(34, 20, 'i < html_tags.length');
+}_$jscoverage['/html-parser/dtd.js'].branchData['689'][1].init(33, 20, 'i < html_tags.length');
 function visit2_689_1(result) {
   _$jscoverage['/html-parser/dtd.js'].branchData['689'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/dtd.js'].branchData['688'][1].init(22, 12, 'p2 === "div"');
+}_$jscoverage['/html-parser/dtd.js'].branchData['688'][1].init(21, 12, 'p2 === "div"');
 function visit1_688_1(result) {
   _$jscoverage['/html-parser/dtd.js'].branchData['688'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/dtd.js'].lineData[10]++;
-KISSY.add("html-parser/dtd", function(S) {
+KISSY.add(function(S) {
   _$jscoverage['/html-parser/dtd.js'].functionData[0]++;
   _$jscoverage['/html-parser/dtd.js'].lineData[11]++;
   var merge = S.merge, A = {

@@ -1,7 +1,7 @@
 /*
-Copyright 2013, KISSY v1.40dev
+Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Oct 25 16:43
+build time: Nov 27 00:42
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -9,29 +9,16 @@ build time: Oct 25 16:43
  editor/plugin/fore-color
 */
 
-/**
- * @ignore
- * foreColor button.
- * @author yiminghe@gmail.com
- */
-KISSY.add("editor/plugin/fore-color", function (S, Editor, Button, cmd) {
-    function ForeColorPlugin(config) {
-        this.config = config || {};
-    }
-
-    S.augment(ForeColorPlugin, {
-        pluginRenderUI: function (editor) {
-            cmd.init(editor);
-            Button.init(editor, {
-                cmdType: 'foreColor',
-                defaultColor: 'rgb(204, 0, 0)',
-                tooltip: "文本颜色"
-            });
-        }
-    });
-
-    return ForeColorPlugin;
-}, {
-    requires: ['editor', './color/btn', './fore-color/cmd']
+KISSY.add("editor/plugin/fore-color", ["./color/btn", "./fore-color/cmd"], function(S, require) {
+  var Button = require("./color/btn");
+  var cmd = require("./fore-color/cmd");
+  function ForeColorPlugin(config) {
+    this.config = config || {}
+  }
+  S.augment(ForeColorPlugin, {pluginRenderUI:function(editor) {
+    cmd.init(editor);
+    Button.init(editor, {cmdType:"foreColor", defaultColor:"rgb(204, 0, 0)", tooltip:"\u6587\u672c\u989c\u8272"})
+  }});
+  return ForeColorPlugin
 });
 

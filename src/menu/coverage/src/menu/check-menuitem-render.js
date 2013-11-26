@@ -231,10 +231,13 @@ if (! _$jscoverage['/menu/check-menuitem-render.js']) {
   _$jscoverage['/menu/check-menuitem-render.js'].lineData = [];
   _$jscoverage['/menu/check-menuitem-render.js'].lineData[6] = 0;
   _$jscoverage['/menu/check-menuitem-render.js'].lineData[7] = 0;
+  _$jscoverage['/menu/check-menuitem-render.js'].lineData[8] = 0;
   _$jscoverage['/menu/check-menuitem-render.js'].lineData[9] = 0;
-  _$jscoverage['/menu/check-menuitem-render.js'].lineData[10] = 0;
-  _$jscoverage['/menu/check-menuitem-render.js'].lineData[15] = 0;
-  _$jscoverage['/menu/check-menuitem-render.js'].lineData[17] = 0;
+  _$jscoverage['/menu/check-menuitem-render.js'].lineData[11] = 0;
+  _$jscoverage['/menu/check-menuitem-render.js'].lineData[13] = 0;
+  _$jscoverage['/menu/check-menuitem-render.js'].lineData[14] = 0;
+  _$jscoverage['/menu/check-menuitem-render.js'].lineData[19] = 0;
+  _$jscoverage['/menu/check-menuitem-render.js'].lineData[21] = 0;
 }
 if (! _$jscoverage['/menu/check-menuitem-render.js'].functionData) {
   _$jscoverage['/menu/check-menuitem-render.js'].functionData = [];
@@ -244,35 +247,40 @@ if (! _$jscoverage['/menu/check-menuitem-render.js'].functionData) {
 }
 if (! _$jscoverage['/menu/check-menuitem-render.js'].branchData) {
   _$jscoverage['/menu/check-menuitem-render.js'].branchData = {};
-  _$jscoverage['/menu/check-menuitem-render.js'].branchData['9'] = [];
-  _$jscoverage['/menu/check-menuitem-render.js'].branchData['9'][1] = new BranchData();
+  _$jscoverage['/menu/check-menuitem-render.js'].branchData['13'] = [];
+  _$jscoverage['/menu/check-menuitem-render.js'].branchData['13'][1] = new BranchData();
 }
-_$jscoverage['/menu/check-menuitem-render.js'].branchData['9'][1].init(18, 18, 'renderData.checked');
-function visit1_9_1(result) {
-  _$jscoverage['/menu/check-menuitem-render.js'].branchData['9'][1].ranCondition(result);
+_$jscoverage['/menu/check-menuitem-render.js'].branchData['13'][1].init(17, 18, 'renderData.checked');
+function visit1_13_1(result) {
+  _$jscoverage['/menu/check-menuitem-render.js'].branchData['13'][1].ranCondition(result);
   return result;
 }_$jscoverage['/menu/check-menuitem-render.js'].lineData[6]++;
-KISSY.add('menu/check-menuitem-render', function(S, MenuItemRender, ContentRenderExtension, CheckMenuItemTpl) {
+KISSY.add(function(S, require) {
   _$jscoverage['/menu/check-menuitem-render.js'].functionData[0]++;
   _$jscoverage['/menu/check-menuitem-render.js'].lineData[7]++;
+  var MenuItemRender = require('./menuitem-render');
+  _$jscoverage['/menu/check-menuitem-render.js'].lineData[8]++;
+  var ContentRenderExtension = require('component/extension/content-render');
+  _$jscoverage['/menu/check-menuitem-render.js'].lineData[9]++;
+  var CheckMenuItemTpl = require('./check-menuitem-xtpl');
+  _$jscoverage['/menu/check-menuitem-render.js'].lineData[11]++;
   return MenuItemRender.extend([ContentRenderExtension], {
   beforeCreateDom: function(renderData) {
   _$jscoverage['/menu/check-menuitem-render.js'].functionData[1]++;
-  _$jscoverage['/menu/check-menuitem-render.js'].lineData[9]++;
-  if (visit1_9_1(renderData.checked)) {
-    _$jscoverage['/menu/check-menuitem-render.js'].lineData[10]++;
+  _$jscoverage['/menu/check-menuitem-render.js'].lineData[13]++;
+  if (visit1_13_1(renderData.checked)) {
+    _$jscoverage['/menu/check-menuitem-render.js'].lineData[14]++;
     renderData.elCls.push(self.getBaseCssClasses("checked"));
   }
 }, 
   _onSetChecked: function(v) {
   _$jscoverage['/menu/check-menuitem-render.js'].functionData[2]++;
-  _$jscoverage['/menu/check-menuitem-render.js'].lineData[15]++;
+  _$jscoverage['/menu/check-menuitem-render.js'].lineData[19]++;
   var self = this, cls = self.getBaseCssClasses("checked");
-  _$jscoverage['/menu/check-menuitem-render.js'].lineData[17]++;
+  _$jscoverage['/menu/check-menuitem-render.js'].lineData[21]++;
   self.$el[v ? 'addClass' : 'removeClass'](cls);
 }}, {
   ATTRS: {
   contentTpl: {
   value: CheckMenuItemTpl}}});
-}, {
-  requires: ['./menuitem-render', 'component/extension/content-render', './check-menuitem-xtpl']});
+});

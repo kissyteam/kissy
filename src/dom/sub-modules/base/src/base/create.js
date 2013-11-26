@@ -5,10 +5,11 @@
  */
 KISSY.add(function (S,require) {
     var Dom = require('./api');
+    var  logger = S.getLogger('s/dom');
     var doc = S.Env.host.document,
         NodeType = Dom.NodeType,
         UA = S.UA,
-        logger = S.getLogger('s/dom'),
+
         ie = UA.ieMode,
         DIV = 'div',
         PARENT_NODE = 'parentNode',

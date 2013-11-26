@@ -230,7 +230,9 @@ if (! _$jscoverage['/separator.js']) {
   _$jscoverage['/separator.js'] = {};
   _$jscoverage['/separator.js'].lineData = [];
   _$jscoverage['/separator.js'].lineData[6] = 0;
-  _$jscoverage['/separator.js'].lineData[12] = 0;
+  _$jscoverage['/separator.js'].lineData[7] = 0;
+  _$jscoverage['/separator.js'].lineData[8] = 0;
+  _$jscoverage['/separator.js'].lineData[15] = 0;
 }
 if (! _$jscoverage['/separator.js'].functionData) {
   _$jscoverage['/separator.js'].functionData = [];
@@ -240,9 +242,13 @@ if (! _$jscoverage['/separator.js'].branchData) {
   _$jscoverage['/separator.js'].branchData = {};
 }
 _$jscoverage['/separator.js'].lineData[6]++;
-KISSY.add("separator", function(S, Control, SeparatorRender) {
+KISSY.add(function(S, require) {
   _$jscoverage['/separator.js'].functionData[0]++;
-  _$jscoverage['/separator.js'].lineData[12]++;
+  _$jscoverage['/separator.js'].lineData[7]++;
+  var Control = require('component/control');
+  _$jscoverage['/separator.js'].lineData[8]++;
+  var SeparatorRender = require('separator/render');
+  _$jscoverage['/separator.js'].lineData[15]++;
   return Control.extend({}, {
   ATTRS: {
   focusable: {
@@ -254,5 +260,4 @@ KISSY.add("separator", function(S, Control, SeparatorRender) {
   xrender: {
   value: SeparatorRender}}, 
   xclass: 'separator'});
-}, {
-  requires: ['component/control', 'separator/render']});
+});

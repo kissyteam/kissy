@@ -231,35 +231,37 @@ if (! _$jscoverage['/proxy.js']) {
   _$jscoverage['/proxy.js'].lineData = [];
   _$jscoverage['/proxy.js'].lineData[7] = 0;
   _$jscoverage['/proxy.js'].lineData[8] = 0;
-  _$jscoverage['/proxy.js'].lineData[15] = 0;
-  _$jscoverage['/proxy.js'].lineData[19] = 0;
+  _$jscoverage['/proxy.js'].lineData[9] = 0;
+  _$jscoverage['/proxy.js'].lineData[11] = 0;
+  _$jscoverage['/proxy.js'].lineData[18] = 0;
   _$jscoverage['/proxy.js'].lineData[22] = 0;
-  _$jscoverage['/proxy.js'].lineData[23] = 0;
+  _$jscoverage['/proxy.js'].lineData[25] = 0;
   _$jscoverage['/proxy.js'].lineData[26] = 0;
-  _$jscoverage['/proxy.js'].lineData[27] = 0;
-  _$jscoverage['/proxy.js'].lineData[28] = 0;
   _$jscoverage['/proxy.js'].lineData[29] = 0;
+  _$jscoverage['/proxy.js'].lineData[30] = 0;
+  _$jscoverage['/proxy.js'].lineData[31] = 0;
   _$jscoverage['/proxy.js'].lineData[32] = 0;
-  _$jscoverage['/proxy.js'].lineData[34] = 0;
   _$jscoverage['/proxy.js'].lineData[35] = 0;
-  _$jscoverage['/proxy.js'].lineData[36] = 0;
-  _$jscoverage['/proxy.js'].lineData[42] = 0;
-  _$jscoverage['/proxy.js'].lineData[43] = 0;
-  _$jscoverage['/proxy.js'].lineData[47] = 0;
-  _$jscoverage['/proxy.js'].lineData[49] = 0;
+  _$jscoverage['/proxy.js'].lineData[37] = 0;
+  _$jscoverage['/proxy.js'].lineData[38] = 0;
+  _$jscoverage['/proxy.js'].lineData[39] = 0;
+  _$jscoverage['/proxy.js'].lineData[45] = 0;
+  _$jscoverage['/proxy.js'].lineData[46] = 0;
   _$jscoverage['/proxy.js'].lineData[50] = 0;
+  _$jscoverage['/proxy.js'].lineData[52] = 0;
   _$jscoverage['/proxy.js'].lineData[53] = 0;
-  _$jscoverage['/proxy.js'].lineData[54] = 0;
   _$jscoverage['/proxy.js'].lineData[56] = 0;
-  _$jscoverage['/proxy.js'].lineData[62] = 0;
-  _$jscoverage['/proxy.js'].lineData[63] = 0;
-  _$jscoverage['/proxy.js'].lineData[64] = 0;
+  _$jscoverage['/proxy.js'].lineData[57] = 0;
+  _$jscoverage['/proxy.js'].lineData[59] = 0;
+  _$jscoverage['/proxy.js'].lineData[65] = 0;
   _$jscoverage['/proxy.js'].lineData[66] = 0;
-  _$jscoverage['/proxy.js'].lineData[68] = 0;
+  _$jscoverage['/proxy.js'].lineData[67] = 0;
   _$jscoverage['/proxy.js'].lineData[69] = 0;
-  _$jscoverage['/proxy.js'].lineData[75] = 0;
-  _$jscoverage['/proxy.js'].lineData[79] = 0;
-  _$jscoverage['/proxy.js'].lineData[100] = 0;
+  _$jscoverage['/proxy.js'].lineData[71] = 0;
+  _$jscoverage['/proxy.js'].lineData[72] = 0;
+  _$jscoverage['/proxy.js'].lineData[78] = 0;
+  _$jscoverage['/proxy.js'].lineData[82] = 0;
+  _$jscoverage['/proxy.js'].lineData[103] = 0;
 }
 if (! _$jscoverage['/proxy.js'].functionData) {
   _$jscoverage['/proxy.js'].functionData = [];
@@ -273,131 +275,135 @@ if (! _$jscoverage['/proxy.js'].functionData) {
 }
 if (! _$jscoverage['/proxy.js'].branchData) {
   _$jscoverage['/proxy.js'].branchData = {};
-  _$jscoverage['/proxy.js'].branchData['26'] = [];
-  _$jscoverage['/proxy.js'].branchData['26'][1] = new BranchData();
-  _$jscoverage['/proxy.js'].branchData['27'] = [];
-  _$jscoverage['/proxy.js'].branchData['27'][1] = new BranchData();
-  _$jscoverage['/proxy.js'].branchData['42'] = [];
-  _$jscoverage['/proxy.js'].branchData['42'][1] = new BranchData();
-  _$jscoverage['/proxy.js'].branchData['62'] = [];
-  _$jscoverage['/proxy.js'].branchData['62'][1] = new BranchData();
-  _$jscoverage['/proxy.js'].branchData['68'] = [];
-  _$jscoverage['/proxy.js'].branchData['68'][1] = new BranchData();
+  _$jscoverage['/proxy.js'].branchData['29'] = [];
+  _$jscoverage['/proxy.js'].branchData['29'][1] = new BranchData();
+  _$jscoverage['/proxy.js'].branchData['30'] = [];
+  _$jscoverage['/proxy.js'].branchData['30'][1] = new BranchData();
+  _$jscoverage['/proxy.js'].branchData['45'] = [];
+  _$jscoverage['/proxy.js'].branchData['45'][1] = new BranchData();
+  _$jscoverage['/proxy.js'].branchData['65'] = [];
+  _$jscoverage['/proxy.js'].branchData['65'][1] = new BranchData();
+  _$jscoverage['/proxy.js'].branchData['71'] = [];
+  _$jscoverage['/proxy.js'].branchData['71'][1] = new BranchData();
 }
-_$jscoverage['/proxy.js'].branchData['68'][1].init(565, 16, 'hideNodeOnResize');
-function visit5_68_1(result) {
-  _$jscoverage['/proxy.js'].branchData['68'][1].ranCondition(result);
+_$jscoverage['/proxy.js'].branchData['71'][1].init(550, 16, 'hideNodeOnResize');
+function visit5_71_1(result) {
+  _$jscoverage['/proxy.js'].branchData['71'][1].ranCondition(result);
   return result;
-}_$jscoverage['/proxy.js'].branchData['62'][1].init(354, 24, 'self.get(\'destroyOnEnd\')');
-function visit4_62_1(result) {
-  _$jscoverage['/proxy.js'].branchData['62'][1].ranCondition(result);
+}_$jscoverage['/proxy.js'].branchData['65'][1].init(345, 24, 'self.get(\'destroyOnEnd\')');
+function visit4_65_1(result) {
+  _$jscoverage['/proxy.js'].branchData['65'][1].ranCondition(result);
   return result;
-}_$jscoverage['/proxy.js'].branchData['42'][1].init(801, 16, 'hideNodeOnResize');
-function visit3_42_1(result) {
-  _$jscoverage['/proxy.js'].branchData['42'][1].ranCondition(result);
+}_$jscoverage['/proxy.js'].branchData['45'][1].init(781, 16, 'hideNodeOnResize');
+function visit3_45_1(result) {
+  _$jscoverage['/proxy.js'].branchData['45'][1].ranCondition(result);
   return result;
-}_$jscoverage['/proxy.js'].branchData['27'][1].init(26, 26, 'typeof node === \'function\'');
-function visit2_27_1(result) {
-  _$jscoverage['/proxy.js'].branchData['27'][1].ranCondition(result);
+}_$jscoverage['/proxy.js'].branchData['30'][1].init(25, 26, 'typeof node === \'function\'');
+function visit2_30_1(result) {
+  _$jscoverage['/proxy.js'].branchData['30'][1].ranCondition(result);
   return result;
-}_$jscoverage['/proxy.js'].branchData['26'][1].init(160, 22, '!self.get(\'proxyNode\')');
-function visit1_26_1(result) {
-  _$jscoverage['/proxy.js'].branchData['26'][1].ranCondition(result);
+}_$jscoverage['/proxy.js'].branchData['29'][1].init(156, 22, '!self.get(\'proxyNode\')');
+function visit1_29_1(result) {
+  _$jscoverage['/proxy.js'].branchData['29'][1].ranCondition(result);
   return result;
 }_$jscoverage['/proxy.js'].lineData[7]++;
-KISSY.add('resizable/plugin/proxy', function(S, Base, Node) {
+KISSY.add(function(S, require) {
   _$jscoverage['/proxy.js'].functionData[0]++;
   _$jscoverage['/proxy.js'].lineData[8]++;
+  var Node = require('node');
+  _$jscoverage['/proxy.js'].lineData[9]++;
+  var Base = require('base');
+  _$jscoverage['/proxy.js'].lineData[11]++;
   var $ = Node.all, PROXY_EVENT = '.-ks-proxy' + S.now();
-  _$jscoverage['/proxy.js'].lineData[15]++;
+  _$jscoverage['/proxy.js'].lineData[18]++;
   return Base.extend({
   pluginId: 'resizable/plugin/proxy', 
   pluginInitializer: function(resizable) {
   _$jscoverage['/proxy.js'].functionData[1]++;
-  _$jscoverage['/proxy.js'].lineData[19]++;
-  var self = this, hideNodeOnResize = self.get('hideNodeOnResize');
   _$jscoverage['/proxy.js'].lineData[22]++;
+  var self = this, hideNodeOnResize = self.get('hideNodeOnResize');
+  _$jscoverage['/proxy.js'].lineData[25]++;
   function start() {
     _$jscoverage['/proxy.js'].functionData[2]++;
-    _$jscoverage['/proxy.js'].lineData[23]++;
-    var node = self.get('node'), dragNode = resizable.get('node');
     _$jscoverage['/proxy.js'].lineData[26]++;
-    if (visit1_26_1(!self.get('proxyNode'))) {
-      _$jscoverage['/proxy.js'].lineData[27]++;
-      if (visit2_27_1(typeof node === 'function')) {
-        _$jscoverage['/proxy.js'].lineData[28]++;
+    var node = self.get('node'), dragNode = resizable.get('node');
+    _$jscoverage['/proxy.js'].lineData[29]++;
+    if (visit1_29_1(!self.get('proxyNode'))) {
+      _$jscoverage['/proxy.js'].lineData[30]++;
+      if (visit2_30_1(typeof node === 'function')) {
+        _$jscoverage['/proxy.js'].lineData[31]++;
         node = node(resizable);
-        _$jscoverage['/proxy.js'].lineData[29]++;
+        _$jscoverage['/proxy.js'].lineData[32]++;
         self.set('proxyNode', node);
       }
     } else {
-      _$jscoverage['/proxy.js'].lineData[32]++;
+      _$jscoverage['/proxy.js'].lineData[35]++;
       node = self.get('proxyNode');
     }
-    _$jscoverage['/proxy.js'].lineData[34]++;
+    _$jscoverage['/proxy.js'].lineData[37]++;
     node.show();
-    _$jscoverage['/proxy.js'].lineData[35]++;
+    _$jscoverage['/proxy.js'].lineData[38]++;
     dragNode.parent().append(node);
-    _$jscoverage['/proxy.js'].lineData[36]++;
+    _$jscoverage['/proxy.js'].lineData[39]++;
     node.css({
   left: dragNode.css('left'), 
   top: dragNode.css('top'), 
   width: dragNode.width(), 
   height: dragNode.height()});
-    _$jscoverage['/proxy.js'].lineData[42]++;
-    if (visit3_42_1(hideNodeOnResize)) {
-      _$jscoverage['/proxy.js'].lineData[43]++;
+    _$jscoverage['/proxy.js'].lineData[45]++;
+    if (visit3_45_1(hideNodeOnResize)) {
+      _$jscoverage['/proxy.js'].lineData[46]++;
       dragNode.css('visibility', 'hidden');
     }
   }
-  _$jscoverage['/proxy.js'].lineData[47]++;
+  _$jscoverage['/proxy.js'].lineData[50]++;
   function beforeResize(e) {
     _$jscoverage['/proxy.js'].functionData[3]++;
-    _$jscoverage['/proxy.js'].lineData[49]++;
+    _$jscoverage['/proxy.js'].lineData[52]++;
     e.preventDefault();
-    _$jscoverage['/proxy.js'].lineData[50]++;
+    _$jscoverage['/proxy.js'].lineData[53]++;
     self.get('proxyNode').css(e.region);
   }
-  _$jscoverage['/proxy.js'].lineData[53]++;
+  _$jscoverage['/proxy.js'].lineData[56]++;
   function end() {
     _$jscoverage['/proxy.js'].functionData[4]++;
-    _$jscoverage['/proxy.js'].lineData[54]++;
+    _$jscoverage['/proxy.js'].lineData[57]++;
     var node = self.get('proxyNode'), dragNode = resizable.get('node');
-    _$jscoverage['/proxy.js'].lineData[56]++;
+    _$jscoverage['/proxy.js'].lineData[59]++;
     dragNode.css({
   left: node.css('left'), 
   top: node.css('top'), 
   width: node.width(), 
   height: node.height()});
-    _$jscoverage['/proxy.js'].lineData[62]++;
-    if (visit4_62_1(self.get('destroyOnEnd'))) {
-      _$jscoverage['/proxy.js'].lineData[63]++;
+    _$jscoverage['/proxy.js'].lineData[65]++;
+    if (visit4_65_1(self.get('destroyOnEnd'))) {
+      _$jscoverage['/proxy.js'].lineData[66]++;
       node.remove();
-      _$jscoverage['/proxy.js'].lineData[64]++;
+      _$jscoverage['/proxy.js'].lineData[67]++;
       self.set('proxyNode', 0);
     } else {
-      _$jscoverage['/proxy.js'].lineData[66]++;
+      _$jscoverage['/proxy.js'].lineData[69]++;
       node.hide();
     }
-    _$jscoverage['/proxy.js'].lineData[68]++;
-    if (visit5_68_1(hideNodeOnResize)) {
-      _$jscoverage['/proxy.js'].lineData[69]++;
+    _$jscoverage['/proxy.js'].lineData[71]++;
+    if (visit5_71_1(hideNodeOnResize)) {
+      _$jscoverage['/proxy.js'].lineData[72]++;
       dragNode.css('visibility', '');
     }
   }
-  _$jscoverage['/proxy.js'].lineData[75]++;
+  _$jscoverage['/proxy.js'].lineData[78]++;
   resizable['on']('resizeStart' + PROXY_EVENT, start)['on']('beforeResize' + PROXY_EVENT, beforeResize)['on']('resizeEnd' + PROXY_EVENT, end);
 }, 
   pluginDestructor: function(resizable) {
   _$jscoverage['/proxy.js'].functionData[5]++;
-  _$jscoverage['/proxy.js'].lineData[79]++;
+  _$jscoverage['/proxy.js'].lineData[82]++;
   resizable['detach'](PROXY_EVENT);
 }}, {
   ATTRS: {
   node: {
   value: function(resizable) {
   _$jscoverage['/proxy.js'].functionData[6]++;
-  _$jscoverage['/proxy.js'].lineData[100]++;
+  _$jscoverage['/proxy.js'].lineData[103]++;
   return $('<div class="' + resizable.get('prefixCls') + 'resizable-proxy"></div>');
 }}, 
   proxyNode: {}, 
@@ -405,5 +411,4 @@ KISSY.add('resizable/plugin/proxy', function(S, Base, Node) {
   value: false}, 
   destroyOnEnd: {
   value: false}}});
-}, {
-  requires: ['base', 'node']});
+});

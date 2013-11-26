@@ -26,27 +26,12 @@ KISSY.add(function (S, require) {
     };
 
     eventHandleMap[moveEvent] = {
-        setup: function () {
-            var doc = this.ownerDocument || this;
-            doc.__ks__pointer_events_count = doc.__ks__pointer_events_count || 0;
-            doc.__ks__pointer_events_count++;
-        },
-        tearDown: function () {
-            var doc = this.ownerDocument || this;
-            if (doc.__ks__pointer_events_count) {
-                doc.__ks__pointer_events_count--;
-            }
-        },
+
         handle: {
             // always fire
             isActive: 1,
             onTouchMove: function (e) {
-                // if no register then do not fire
-                var t = e.target,
-                    doc = t.ownerDocument || t;
-                if (doc.__ks__pointer_events_count) {
-                    DomEvent.fire(t, moveEvent, e);
-                }
+                DomEvent.fire(e.target, moveEvent, e);
             }
         }
     };

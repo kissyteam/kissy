@@ -230,19 +230,20 @@ if (! _$jscoverage['/html-parser/nodes/cdata.js']) {
   _$jscoverage['/html-parser/nodes/cdata.js'] = {};
   _$jscoverage['/html-parser/nodes/cdata.js'].lineData = [];
   _$jscoverage['/html-parser/nodes/cdata.js'].lineData[6] = 0;
-  _$jscoverage['/html-parser/nodes/cdata.js'].lineData[8] = 0;
+  _$jscoverage['/html-parser/nodes/cdata.js'].lineData[7] = 0;
   _$jscoverage['/html-parser/nodes/cdata.js'].lineData[9] = 0;
   _$jscoverage['/html-parser/nodes/cdata.js'].lineData[10] = 0;
   _$jscoverage['/html-parser/nodes/cdata.js'].lineData[11] = 0;
-  _$jscoverage['/html-parser/nodes/cdata.js'].lineData[14] = 0;
-  _$jscoverage['/html-parser/nodes/cdata.js'].lineData[16] = 0;
+  _$jscoverage['/html-parser/nodes/cdata.js'].lineData[12] = 0;
+  _$jscoverage['/html-parser/nodes/cdata.js'].lineData[15] = 0;
   _$jscoverage['/html-parser/nodes/cdata.js'].lineData[17] = 0;
   _$jscoverage['/html-parser/nodes/cdata.js'].lineData[18] = 0;
   _$jscoverage['/html-parser/nodes/cdata.js'].lineData[19] = 0;
   _$jscoverage['/html-parser/nodes/cdata.js'].lineData[20] = 0;
   _$jscoverage['/html-parser/nodes/cdata.js'].lineData[21] = 0;
-  _$jscoverage['/html-parser/nodes/cdata.js'].lineData[24] = 0;
-  _$jscoverage['/html-parser/nodes/cdata.js'].lineData[29] = 0;
+  _$jscoverage['/html-parser/nodes/cdata.js'].lineData[22] = 0;
+  _$jscoverage['/html-parser/nodes/cdata.js'].lineData[25] = 0;
+  _$jscoverage['/html-parser/nodes/cdata.js'].lineData[30] = 0;
 }
 if (! _$jscoverage['/html-parser/nodes/cdata.js'].functionData) {
   _$jscoverage['/html-parser/nodes/cdata.js'].functionData = [];
@@ -252,66 +253,67 @@ if (! _$jscoverage['/html-parser/nodes/cdata.js'].functionData) {
 }
 if (! _$jscoverage['/html-parser/nodes/cdata.js'].branchData) {
   _$jscoverage['/html-parser/nodes/cdata.js'].branchData = {};
-  _$jscoverage['/html-parser/nodes/cdata.js'].branchData['17'] = [];
-  _$jscoverage['/html-parser/nodes/cdata.js'].branchData['17'][1] = new BranchData();
-  _$jscoverage['/html-parser/nodes/cdata.js'].branchData['17'][2] = new BranchData();
   _$jscoverage['/html-parser/nodes/cdata.js'].branchData['18'] = [];
   _$jscoverage['/html-parser/nodes/cdata.js'].branchData['18'][1] = new BranchData();
+  _$jscoverage['/html-parser/nodes/cdata.js'].branchData['18'][2] = new BranchData();
   _$jscoverage['/html-parser/nodes/cdata.js'].branchData['19'] = [];
   _$jscoverage['/html-parser/nodes/cdata.js'].branchData['19'][1] = new BranchData();
+  _$jscoverage['/html-parser/nodes/cdata.js'].branchData['20'] = [];
+  _$jscoverage['/html-parser/nodes/cdata.js'].branchData['20'][1] = new BranchData();
 }
-_$jscoverage['/html-parser/nodes/cdata.js'].branchData['19'][1].init(26, 12, 'this !== ret');
-function visit185_19_1(result) {
+_$jscoverage['/html-parser/nodes/cdata.js'].branchData['20'][1].init(25, 12, 'this !== ret');
+function visit185_20_1(result) {
+  _$jscoverage['/html-parser/nodes/cdata.js'].branchData['20'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/html-parser/nodes/cdata.js'].branchData['19'][1].init(21, 3, 'ret');
+function visit184_19_1(result) {
   _$jscoverage['/html-parser/nodes/cdata.js'].branchData['19'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/nodes/cdata.js'].branchData['18'][1].init(22, 3, 'ret');
-function visit184_18_1(result) {
+}_$jscoverage['/html-parser/nodes/cdata.js'].branchData['18'][2].init(50, 37, '(ret = filter.onCData(this)) !== false');
+function visit183_18_2(result) {
+  _$jscoverage['/html-parser/nodes/cdata.js'].branchData['18'][2].ranCondition(result);
+  return result;
+}_$jscoverage['/html-parser/nodes/cdata.js'].branchData['18'][1].init(38, 49, '!filter || (ret = filter.onCData(this)) !== false');
+function visit182_18_1(result) {
   _$jscoverage['/html-parser/nodes/cdata.js'].branchData['18'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/nodes/cdata.js'].branchData['17'][2].init(52, 37, '(ret = filter.onCData(this)) !== false');
-function visit183_17_2(result) {
-  _$jscoverage['/html-parser/nodes/cdata.js'].branchData['17'][2].ranCondition(result);
-  return result;
-}_$jscoverage['/html-parser/nodes/cdata.js'].branchData['17'][1].init(40, 49, '!filter || (ret = filter.onCData(this)) !== false');
-function visit182_17_1(result) {
-  _$jscoverage['/html-parser/nodes/cdata.js'].branchData['17'][1].ranCondition(result);
-  return result;
 }_$jscoverage['/html-parser/nodes/cdata.js'].lineData[6]++;
-KISSY.add("html-parser/nodes/cdata", function(S, Text) {
+KISSY.add(function(S, require) {
   _$jscoverage['/html-parser/nodes/cdata.js'].functionData[0]++;
-  _$jscoverage['/html-parser/nodes/cdata.js'].lineData[8]++;
+  _$jscoverage['/html-parser/nodes/cdata.js'].lineData[7]++;
+  var Text = require('./text');
+  _$jscoverage['/html-parser/nodes/cdata.js'].lineData[9]++;
   function CData() {
     _$jscoverage['/html-parser/nodes/cdata.js'].functionData[1]++;
-    _$jscoverage['/html-parser/nodes/cdata.js'].lineData[9]++;
-    CData.superclass.constructor.apply(this, arguments);
     _$jscoverage['/html-parser/nodes/cdata.js'].lineData[10]++;
-    this.nodeType = 4;
+    CData.superclass.constructor.apply(this, arguments);
     _$jscoverage['/html-parser/nodes/cdata.js'].lineData[11]++;
+    this.nodeType = 4;
+    _$jscoverage['/html-parser/nodes/cdata.js'].lineData[12]++;
     this.nodeName = "#cdata";
   }
-  _$jscoverage['/html-parser/nodes/cdata.js'].lineData[14]++;
+  _$jscoverage['/html-parser/nodes/cdata.js'].lineData[15]++;
   S.extend(CData, Text, {
   writeHtml: function(writer, filter) {
   _$jscoverage['/html-parser/nodes/cdata.js'].functionData[2]++;
-  _$jscoverage['/html-parser/nodes/cdata.js'].lineData[16]++;
-  var ret;
   _$jscoverage['/html-parser/nodes/cdata.js'].lineData[17]++;
-  if (visit182_17_1(!filter || visit183_17_2((ret = filter.onCData(this)) !== false))) {
-    _$jscoverage['/html-parser/nodes/cdata.js'].lineData[18]++;
-    if (visit184_18_1(ret)) {
-      _$jscoverage['/html-parser/nodes/cdata.js'].lineData[19]++;
-      if (visit185_19_1(this !== ret)) {
-        _$jscoverage['/html-parser/nodes/cdata.js'].lineData[20]++;
-        ret.writeHtml(writer, filter);
+  var ret;
+  _$jscoverage['/html-parser/nodes/cdata.js'].lineData[18]++;
+  if (visit182_18_1(!filter || visit183_18_2((ret = filter.onCData(this)) !== false))) {
+    _$jscoverage['/html-parser/nodes/cdata.js'].lineData[19]++;
+    if (visit184_19_1(ret)) {
+      _$jscoverage['/html-parser/nodes/cdata.js'].lineData[20]++;
+      if (visit185_20_1(this !== ret)) {
         _$jscoverage['/html-parser/nodes/cdata.js'].lineData[21]++;
+        ret.writeHtml(writer, filter);
+        _$jscoverage['/html-parser/nodes/cdata.js'].lineData[22]++;
         return;
       }
     }
-    _$jscoverage['/html-parser/nodes/cdata.js'].lineData[24]++;
+    _$jscoverage['/html-parser/nodes/cdata.js'].lineData[25]++;
     writer.cdata(this.toHtml());
   }
 }});
-  _$jscoverage['/html-parser/nodes/cdata.js'].lineData[29]++;
+  _$jscoverage['/html-parser/nodes/cdata.js'].lineData[30]++;
   return CData;
-}, {
-  requires: ['./text']});
+});

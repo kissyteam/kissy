@@ -230,13 +230,16 @@ if (! _$jscoverage['/filter-menu/render.js']) {
   _$jscoverage['/filter-menu/render.js'] = {};
   _$jscoverage['/filter-menu/render.js'].lineData = [];
   _$jscoverage['/filter-menu/render.js'].lineData[8] = 0;
+  _$jscoverage['/filter-menu/render.js'].lineData[9] = 0;
   _$jscoverage['/filter-menu/render.js'].lineData[10] = 0;
+  _$jscoverage['/filter-menu/render.js'].lineData[11] = 0;
   _$jscoverage['/filter-menu/render.js'].lineData[13] = 0;
-  _$jscoverage['/filter-menu/render.js'].lineData[21] = 0;
-  _$jscoverage['/filter-menu/render.js'].lineData[25] = 0;
-  _$jscoverage['/filter-menu/render.js'].lineData[36] = 0;
+  _$jscoverage['/filter-menu/render.js'].lineData[16] = 0;
+  _$jscoverage['/filter-menu/render.js'].lineData[24] = 0;
+  _$jscoverage['/filter-menu/render.js'].lineData[28] = 0;
   _$jscoverage['/filter-menu/render.js'].lineData[39] = 0;
   _$jscoverage['/filter-menu/render.js'].lineData[42] = 0;
+  _$jscoverage['/filter-menu/render.js'].lineData[45] = 0;
 }
 if (! _$jscoverage['/filter-menu/render.js'].functionData) {
   _$jscoverage['/filter-menu/render.js'].functionData = [];
@@ -252,13 +255,19 @@ if (! _$jscoverage['/filter-menu/render.js'].branchData) {
   _$jscoverage['/filter-menu/render.js'].branchData = {};
 }
 _$jscoverage['/filter-menu/render.js'].lineData[8]++;
-KISSY.add("filter-menu/render", function(S, Node, Menu, FilterMenuTpl, ContentRenderExtension) {
+KISSY.add(function(S, require) {
   _$jscoverage['/filter-menu/render.js'].functionData[0]++;
+  _$jscoverage['/filter-menu/render.js'].lineData[9]++;
+  var Menu = require('menu');
   _$jscoverage['/filter-menu/render.js'].lineData[10]++;
+  var FilterMenuTpl = require('./render-xtpl');
+  _$jscoverage['/filter-menu/render.js'].lineData[11]++;
+  var ContentRenderExtension = require('component/extension/content-render');
+  _$jscoverage['/filter-menu/render.js'].lineData[13]++;
   return Menu.getDefaultRender().extend([ContentRenderExtension], {
   beforeCreateDom: function(renderData, childrenElSelectors) {
   _$jscoverage['/filter-menu/render.js'].functionData[1]++;
-  _$jscoverage['/filter-menu/render.js'].lineData[13]++;
+  _$jscoverage['/filter-menu/render.js'].lineData[16]++;
   S.mix(childrenElSelectors, {
   placeholderEl: '#ks-filter-menu-placeholder-{id}', 
   filterInputWrap: '#ks-filter-menu-input-wrap-{id}', 
@@ -266,12 +275,12 @@ KISSY.add("filter-menu/render", function(S, Node, Menu, FilterMenuTpl, ContentRe
 }, 
   getKeyEventTarget: function() {
   _$jscoverage['/filter-menu/render.js'].functionData[2]++;
-  _$jscoverage['/filter-menu/render.js'].lineData[21]++;
+  _$jscoverage['/filter-menu/render.js'].lineData[24]++;
   return this.control.get("filterInput");
 }, 
   '_onSetPlaceholder': function(v) {
   _$jscoverage['/filter-menu/render.js'].functionData[3]++;
-  _$jscoverage['/filter-menu/render.js'].lineData[25]++;
+  _$jscoverage['/filter-menu/render.js'].lineData[28]++;
   this.control.get("placeholderEl").html(v);
 }}, {
   ATTRS: {
@@ -280,18 +289,17 @@ KISSY.add("filter-menu/render", function(S, Node, Menu, FilterMenuTpl, ContentRe
   HTML_PARSER: {
   placeholderEl: function(el) {
   _$jscoverage['/filter-menu/render.js'].functionData[4]++;
-  _$jscoverage['/filter-menu/render.js'].lineData[36]++;
+  _$jscoverage['/filter-menu/render.js'].lineData[39]++;
   return el.one("." + this.getBaseCssClass('placeholder'));
 }, 
   'filterInputWrap': function(el) {
   _$jscoverage['/filter-menu/render.js'].functionData[5]++;
-  _$jscoverage['/filter-menu/render.js'].lineData[39]++;
+  _$jscoverage['/filter-menu/render.js'].lineData[42]++;
   return el.one("." + this.getBaseCssClass('input-wrap'));
 }, 
   filterInput: function(el) {
   _$jscoverage['/filter-menu/render.js'].functionData[6]++;
-  _$jscoverage['/filter-menu/render.js'].lineData[42]++;
+  _$jscoverage['/filter-menu/render.js'].lineData[45]++;
   return el.one("." + this.getBaseCssClass('input'));
 }}});
-}, {
-  requires: ['node', 'menu', './render-xtpl', 'component/extension/content-render']});
+});

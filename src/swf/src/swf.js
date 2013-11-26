@@ -9,8 +9,7 @@ KISSY.add(function (S, require) {
     var Attribute = require('attribute');
     var FlashUA = require('swf/ua');
 
-    var UA = S.UA,
-        OLD_IE = UA.ieMode < 11,
+    var OLD_IE = !!S.Env.host['ActiveXObject'],
         TYPE = 'application/x-shockwave-flash',
         CID = 'clsid:d27cdb6e-ae6d-11cf-96b8-444553540000',
         FLASHVARS = 'flashvars',

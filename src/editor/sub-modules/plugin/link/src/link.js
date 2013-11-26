@@ -3,10 +3,11 @@
  * link editor support for kissy editor ,innovation from google doc and ckeditor
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S,require) {
+KISSY.add(function (S, require) {
     require('./button');
     require('./bubble');
-    var Editor=require('editor');
+    var Editor = require('editor');
+    var Utils = require('./link/utils');
     var DialogLoader = require('./dialog-loader');
     var $ = S.all,
         tipHTML = '<a ' +

@@ -1,7 +1,7 @@
 /*
-Copyright 2013, KISSY v1.40dev
+Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Oct 25 16:44
+build time: Nov 27 00:43
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -9,34 +9,19 @@ build time: Oct 25 16:44
  editor/plugin/indent
 */
 
-/**
- * @ignore
- * Add indent button.
- * @author yiminghe@gmail.com
- */
-KISSY.add("editor/plugin/indent", function (S, Editor, indexCmd) {
-    function Indent() {
-
-    }
-
-    S.augment(Indent, {
-        pluginRenderUI:function (editor) {
-            indexCmd.init(editor);
-            editor.addButton("indent", {
-                tooltip:"增加缩进量 ",
-                listeners:{
-                    click:function () {
-                        editor.execCommand("indent");
-                        editor.focus();
-                    }
-                },
-                mode:Editor.Mode.WYSIWYG_MODE
-            });
-        }
-    });
-
-    return Indent;
-}, {
-    requires:['editor', './indent/cmd']
+KISSY.add("editor/plugin/indent", ["editor", "./indent/cmd", "./button"], function(S, require) {
+  var Editor = require("editor");
+  var indexCmd = require("./indent/cmd");
+  require("./button");
+  function Indent() {
+  }
+  S.augment(Indent, {pluginRenderUI:function(editor) {
+    indexCmd.init(editor);
+    editor.addButton("indent", {tooltip:"\u589e\u52a0\u7f29\u8fdb\u91cf ", listeners:{click:function() {
+      editor.execCommand("indent");
+      editor.focus()
+    }}, mode:Editor.Mode.WYSIWYG_MODE})
+  }});
+  return Indent
 });
 

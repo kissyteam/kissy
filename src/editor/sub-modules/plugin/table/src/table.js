@@ -4,9 +4,10 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
-        var Editor = require('editor');
-        var DialogLoader = require('./dialog-loader');
-        require('./contextmenu');
+    var Editor = require('editor');
+    var OLD_IE = S.UA.ieMode < 11;
+    var DialogLoader = require('./dialog-loader');
+    require('./contextmenu');
     require('./button');
     var UA = S.UA,
         Dom = S.DOM,
@@ -30,8 +31,7 @@ KISSY.add(function (S, require) {
             // If we are exiting from the first </td>, then the td should definitely be
             // included.
             if (node[0].nodeType == Dom.NodeType.ELEMENT_NODE &&
-                cellNodeRegex.test(node.nodeName()) &&
-                !node.data('selected_cell')) {
+                cellNodeRegex.test(node.nodeName()) && !node.data('selected_cell')) {
                 node._4e_setMarker(database, 'selected_cell', true, undefined);
                 retval.push(node);
             }
@@ -61,8 +61,7 @@ KISSY.add(function (S, require) {
                     // walked into its children.
 
                     var parent = node.parent();
-                    if (parent && cellNodeRegex.test(parent.nodeName()) &&
-                        !parent.data('selected_cell')) {
+                    if (parent && cellNodeRegex.test(parent.nodeName()) && !parent.data('selected_cell')) {
                         parent._4e_setMarker(database, 'selected_cell', true, undefined);
                         retval.push(parent);
                     }
@@ -83,7 +82,7 @@ KISSY.add(function (S, require) {
         // Empty all cells.
         for (var i = 0; i < $cells.length; i++) {
             $cells[ i ].innerHTML = '';
-            if (!UA['ie'])
+            if (!OLD_IE)
                 ( new Node($cells[ i ]) )._4e_appendBogus(undefined);
         }
     }
@@ -177,7 +176,7 @@ KISSY.add(function (S, require) {
                 continue;
             cell = new Node($row.cells[ cellIndex ].cloneNode(undefined));
 
-            if (!UA['ie'])
+            if (!OLD_IE)
                 cell._4e_appendBogus(undefined);
             // Get back the currently selected cell.
             var baseCell = new Node($row.cells[ cellIndex ]);
@@ -301,9 +300,9 @@ KISSY.add(function (S, require) {
             return table.contains(n) && name == "tr";
         }, undefined);
         return {
-            table:table,
-            td:td,
-            tr:tr
+            table: table,
+            td: td,
+            tr: tr
         };
     }
 
@@ -319,17 +318,17 @@ KISSY.add(function (S, require) {
     }
 
     var statusChecker = {
-        "表格属性":getSel,
-        "删除表格":ensureTd,
-        "删除列":ensureTd,
-        "删除行":ensureTr,
-        '在上方插入行':ensureTr,
-        '在下方插入行':ensureTr,
-        '在左侧插入列':ensureTd,
-        '在右侧插入列':ensureTd
+        "表格属性": getSel,
+        "删除表格": ensureTd,
+        "删除列": ensureTd,
+        "删除行": ensureTr,
+        '在上方插入行': ensureTr,
+        '在下方插入行': ensureTr,
+        '在左侧插入列': ensureTd,
+        '在右侧插入列': ensureTd
     };
 
-   // table 编辑模式下显示虚线边框便于编辑
+    // table 编辑模式下显示虚线边框便于编辑
     var showBorderClassName = 'ke_show_border',
         cssTemplate =
             // IE6 don't have child selector support,
@@ -356,8 +355,8 @@ KISSY.add(function (S, require) {
         cssStyleText = cssTemplate.replace(/%2/g, showBorderClassName),
 
         extraDataFilter = {
-            tags:{
-                'table':function (element) {
+            tags: {
+                'table': function (element) {
                     var cssClass = element.getAttribute("class"),
                         border = parseInt(element.getAttribute("border"), 10);
 
@@ -370,8 +369,8 @@ KISSY.add(function (S, require) {
         },
 
         extraHTMLFilter = {
-            tags:{
-                'table':function (table) {
+            tags: {
+                'table': function (table) {
                     var cssClass = table.getAttribute("class"), v;
 
                     if (cssClass) {
@@ -394,7 +393,7 @@ KISSY.add(function (S, require) {
     }
 
     S.augment(TablePlugin, {
-        pluginRenderUI:function (editor) {
+        pluginRenderUI: function (editor) {
             // 动态加入显表格 border css，便于编辑
             editor.addCustomStyle(cssStyleText);
 
@@ -408,20 +407,20 @@ KISSY.add(function (S, require) {
             var self = this,
                 handlers = {
 
-                    "表格属性":function () {
+                    "表格属性": function () {
                         this.hide();
                         var info = getSel(editor);
                         if (info) {
                             DialogLoader.useDialog(editor, "table",
                                 self.config,
                                 {
-                                    selectedTable:info.table,
-                                    selectedTd:info.td
+                                    selectedTable: info.table,
+                                    selectedTd: info.td
                                 });
                         }
                     },
 
-                    "删除表格":function () {
+                    "删除表格": function () {
                         this.hide();
                         var selection = editor.getSelection(),
                             startElement = selection && selection.getStartElement(),
@@ -452,7 +451,7 @@ KISSY.add(function (S, require) {
                         editor.execCommand("save");
                     },
 
-                    '删除行 ':function () {
+                    '删除行 ': function () {
                         this.hide();
                         editor.execCommand("save");
                         var selection = editor.getSelection();
@@ -460,7 +459,7 @@ KISSY.add(function (S, require) {
                         editor.execCommand("save");
                     },
 
-                    '删除列 ':function () {
+                    '删除列 ': function () {
                         this.hide();
                         editor.execCommand("save");
                         var selection = editor.getSelection(),
@@ -469,7 +468,7 @@ KISSY.add(function (S, require) {
                         editor.execCommand("save");
                     },
 
-                    '在上方插入行':function () {
+                    '在上方插入行': function () {
                         this.hide();
                         editor.execCommand("save");
                         var selection = editor.getSelection();
@@ -477,7 +476,7 @@ KISSY.add(function (S, require) {
                         editor.execCommand("save");
                     },
 
-                    '在下方插入行':function () {
+                    '在下方插入行': function () {
                         this.hide();
                         editor.execCommand("save");
                         var selection = editor.getSelection();
@@ -485,7 +484,7 @@ KISSY.add(function (S, require) {
                         editor.execCommand("save");
                     },
 
-                    '在左侧插入列':function () {
+                    '在左侧插入列': function () {
                         this.hide();
                         editor.execCommand("save");
                         var selection = editor.getSelection();
@@ -493,7 +492,7 @@ KISSY.add(function (S, require) {
                         editor.execCommand("save");
                     },
 
-                    '在右侧插入列':function () {
+                    '在右侧插入列': function () {
                         this.hide();
                         editor.execCommand("save");
                         var selection = editor.getSelection();
@@ -505,7 +504,7 @@ KISSY.add(function (S, require) {
             var children = [];
             S.each(handlers, function (h, name) {
                 children.push({
-                    content:name
+                    content: name
                 });
             });
 
@@ -514,17 +513,17 @@ KISSY.add(function (S, require) {
                     return true;
                 }
             }, {
-                width:"120px",
-                children:children,
-                listeners:{
-                    click:function (e) {
+                width: "120px",
+                children: children,
+                listeners: {
+                    click: function (e) {
                         var content = e.target.get("content");
                         if (handlers[content]) {
                             handlers[content].apply(this);
                         }
 
                     },
-                    beforeVisibleChange:function (e) {
+                    beforeVisibleChange: function (e) {
                         if (e.newVal) {
                             var self = this, children = self.get("children");
                             var editor = self.get("editor");
@@ -544,19 +543,19 @@ KISSY.add(function (S, require) {
             });
 
             editor.addButton("table", {
-                mode:Editor.Mode.WYSIWYG_MODE,
-                listeners:{
-                    click:function () {
+                mode: Editor.Mode.WYSIWYG_MODE,
+                listeners: {
+                    click: function () {
                         DialogLoader.useDialog(editor, "table",
                             self.config,
                             {
-                                selectedTable:0,
-                                selectedTd:0
+                                selectedTable: 0,
+                                selectedTd: 0
                             });
 
                     }
                 },
-                tooltip:"插入表格"
+                tooltip: "插入表格"
             });
 
         }

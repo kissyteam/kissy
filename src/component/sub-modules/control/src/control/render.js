@@ -374,11 +374,6 @@ KISSY.add(function (S, require) {
             // ie needs to set unselectable attribute recursively
             if (!this.get('allowTextSelection')) {
                 el.unselectable();
-                if (UA.ieMode == 11) {
-                    // prevent ie11 get focus
-                    el.attr('unselectable', 'on');
-                    el.all('*').attr('unselectable', 'on');
-                }
             }
         },
 

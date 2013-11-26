@@ -32,14 +32,7 @@ public class Packages {
         Module module = new Module();
         module.setPck(p);
         module.setName(moduleName);
-        if (module.isValidFormat()) {
-            moduleName = module.getModuleNameFromNode();
-            if (moduleName != null) {
-                module.setName(moduleName);
-            }
-            return module;
-        }
-        return null;
+        return module.isValidFormat()?module:null;
     }
 
     public void initByBaseUrls(String baseUrlStr) {

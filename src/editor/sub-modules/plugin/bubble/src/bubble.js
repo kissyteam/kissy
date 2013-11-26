@@ -6,8 +6,9 @@
 KISSY.add(function (S, require) {
     var Overlay=require('overlay');
     var Editor=require('editor');
+    var  logger= S.getLogger('s/editor');
     var undefined = {}['a'],
-        logger= S.getLogger('s/editor'),
+
         BUBBLE_CFG = {
             zIndex: Editor.baseZIndex(Editor.ZIndexManager.BUBBLE_VIEW),
             elCls: "{prefixCls}editor-bubble",

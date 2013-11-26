@@ -1,6 +1,6 @@
 /*
-Copyright 2013, KISSY v1.40
+Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Sep 17 23:10
+build time: Nov 26 20:54
 */
-KISSY.add("separator/render",function(b,a){return a.getDefaultRender().extend({beforeCreateDom:function(a){a.elAttrs.role="separator"}})},{requires:["component/control"]});KISSY.add("separator",function(b,a,c){return a.extend({},{ATTRS:{focusable:{value:!1},disabled:{value:!0},handleMouseEvents:{value:!1},xrender:{value:c}},xclass:"separator"})},{requires:["component/control","separator/render"]});
+KISSY.add("separator/render",["component/control"],function(b,a){return a("component/control").getDefaultRender().extend({beforeCreateDom:function(a){a.elAttrs.role="separator"}})});KISSY.add("separator",["component/control","separator/render"],function(b,a){var c=a("component/control"),d=a("separator/render");return c.extend({},{ATTRS:{focusable:{value:!1},disabled:{value:!0},handleMouseEvents:{value:!1},xrender:{value:d}},xclass:"separator"})});

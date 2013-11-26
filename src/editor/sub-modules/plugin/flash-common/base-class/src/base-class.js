@@ -6,7 +6,9 @@
 KISSY.add(function (S, require) {
     var flashUtils = require('./utils');
     var Base = require('base');
+    var Editor = require('editor');
     var Node = S.Node;
+    var DialogLoader = require('../dialog-loader');
     require('../bubble');
 
     var tipHTML = ' <a ' +

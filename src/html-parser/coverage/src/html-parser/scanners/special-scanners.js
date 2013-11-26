@@ -240,7 +240,7 @@ if (! _$jscoverage['/html-parser/scanners/special-scanners.js'].branchData) {
   _$jscoverage['/html-parser/scanners/special-scanners.js'].branchData = {};
 }
 _$jscoverage['/html-parser/scanners/special-scanners.js'].lineData[6]++;
-KISSY.add('html-parser/scanners/special-scanners', function() {
+KISSY.add(function() {
   _$jscoverage['/html-parser/scanners/special-scanners.js'].functionData[0]++;
   _$jscoverage['/html-parser/scanners/special-scanners.js'].lineData[7]++;
   return {};

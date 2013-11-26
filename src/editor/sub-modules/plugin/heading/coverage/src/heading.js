@@ -231,25 +231,28 @@ if (! _$jscoverage['/heading.js']) {
   _$jscoverage['/heading.js'].lineData = [];
   _$jscoverage['/heading.js'].lineData[6] = 0;
   _$jscoverage['/heading.js'].lineData[7] = 0;
+  _$jscoverage['/heading.js'].lineData[8] = 0;
+  _$jscoverage['/heading.js'].lineData[9] = 0;
   _$jscoverage['/heading.js'].lineData[11] = 0;
-  _$jscoverage['/heading.js'].lineData[13] = 0;
   _$jscoverage['/heading.js'].lineData[15] = 0;
-  _$jscoverage['/heading.js'].lineData[35] = 0;
-  _$jscoverage['/heading.js'].lineData[37] = 0;
-  _$jscoverage['/heading.js'].lineData[47] = 0;
-  _$jscoverage['/heading.js'].lineData[56] = 0;
-  _$jscoverage['/heading.js'].lineData[57] = 0;
+  _$jscoverage['/heading.js'].lineData[17] = 0;
+  _$jscoverage['/heading.js'].lineData[19] = 0;
+  _$jscoverage['/heading.js'].lineData[39] = 0;
+  _$jscoverage['/heading.js'].lineData[41] = 0;
+  _$jscoverage['/heading.js'].lineData[51] = 0;
   _$jscoverage['/heading.js'].lineData[60] = 0;
   _$jscoverage['/heading.js'].lineData[61] = 0;
-  _$jscoverage['/heading.js'].lineData[62] = 0;
-  _$jscoverage['/heading.js'].lineData[63] = 0;
-  _$jscoverage['/heading.js'].lineData[68] = 0;
-  _$jscoverage['/heading.js'].lineData[69] = 0;
-  _$jscoverage['/heading.js'].lineData[70] = 0;
-  _$jscoverage['/heading.js'].lineData[71] = 0;
+  _$jscoverage['/heading.js'].lineData[64] = 0;
+  _$jscoverage['/heading.js'].lineData[65] = 0;
+  _$jscoverage['/heading.js'].lineData[66] = 0;
+  _$jscoverage['/heading.js'].lineData[67] = 0;
   _$jscoverage['/heading.js'].lineData[72] = 0;
+  _$jscoverage['/heading.js'].lineData[73] = 0;
+  _$jscoverage['/heading.js'].lineData[74] = 0;
   _$jscoverage['/heading.js'].lineData[75] = 0;
-  _$jscoverage['/heading.js'].lineData[84] = 0;
+  _$jscoverage['/heading.js'].lineData[76] = 0;
+  _$jscoverage['/heading.js'].lineData[79] = 0;
+  _$jscoverage['/heading.js'].lineData[88] = 0;
 }
 if (! _$jscoverage['/heading.js'].functionData) {
   _$jscoverage['/heading.js'].functionData = [];
@@ -262,33 +265,39 @@ if (! _$jscoverage['/heading.js'].functionData) {
 }
 if (! _$jscoverage['/heading.js'].branchData) {
   _$jscoverage['/heading.js'].branchData = {};
-  _$jscoverage['/heading.js'].branchData['62'] = [];
-  _$jscoverage['/heading.js'].branchData['62'][1] = new BranchData();
-  _$jscoverage['/heading.js'].branchData['70'] = [];
-  _$jscoverage['/heading.js'].branchData['70'][1] = new BranchData();
+  _$jscoverage['/heading.js'].branchData['66'] = [];
+  _$jscoverage['/heading.js'].branchData['66'][1] = new BranchData();
+  _$jscoverage['/heading.js'].branchData['74'] = [];
+  _$jscoverage['/heading.js'].branchData['74'][1] = new BranchData();
 }
-_$jscoverage['/heading.js'].branchData['70'][1].init(38, 21, 'value == headingValue');
-function visit2_70_1(result) {
-  _$jscoverage['/heading.js'].branchData['70'][1].ranCondition(result);
+_$jscoverage['/heading.js'].branchData['74'][1].init(37, 21, 'value == headingValue');
+function visit2_74_1(result) {
+  _$jscoverage['/heading.js'].branchData['74'][1].ranCondition(result);
   return result;
-}_$jscoverage['/heading.js'].branchData['62'][1].init(34, 45, 'editor.get("mode") == Editor.Mode.SOURCE_MODE');
-function visit1_62_1(result) {
-  _$jscoverage['/heading.js'].branchData['62'][1].ranCondition(result);
+}_$jscoverage['/heading.js'].branchData['66'][1].init(33, 45, 'editor.get("mode") == Editor.Mode.SOURCE_MODE');
+function visit1_66_1(result) {
+  _$jscoverage['/heading.js'].branchData['66'][1].ranCondition(result);
   return result;
 }_$jscoverage['/heading.js'].lineData[6]++;
-KISSY.add("editor/plugin/heading", function(S, Editor, headingCmd) {
+KISSY.add(function(S, require) {
   _$jscoverage['/heading.js'].functionData[0]++;
   _$jscoverage['/heading.js'].lineData[7]++;
+  require('./menubutton');
+  _$jscoverage['/heading.js'].lineData[8]++;
+  var Editor = require('editor');
+  _$jscoverage['/heading.js'].lineData[9]++;
+  var headingCmd = require('./heading/cmd');
+  _$jscoverage['/heading.js'].lineData[11]++;
   function HeadingPlugin() {
     _$jscoverage['/heading.js'].functionData[1]++;
   }
-  _$jscoverage['/heading.js'].lineData[11]++;
+  _$jscoverage['/heading.js'].lineData[15]++;
   S.augment(HeadingPlugin, {
   pluginRenderUI: function(editor) {
   _$jscoverage['/heading.js'].functionData[2]++;
-  _$jscoverage['/heading.js'].lineData[13]++;
+  _$jscoverage['/heading.js'].lineData[17]++;
   headingCmd.init(editor);
-  _$jscoverage['/heading.js'].lineData[15]++;
+  _$jscoverage['/heading.js'].lineData[19]++;
   var FORMAT_SELECTION_ITEMS = [], FORMATS = {
   "\u666e\u901a\u6587\u672c": "p", 
   "\u6807\u98981": "h1", 
@@ -304,16 +313,16 @@ KISSY.add("editor/plugin/heading", function(S, Editor, headingCmd) {
   h4: "1em", 
   h5: "0.83em", 
   h6: "0.67em"};
-  _$jscoverage['/heading.js'].lineData[35]++;
+  _$jscoverage['/heading.js'].lineData[39]++;
   for (var p in FORMATS) {
-    _$jscoverage['/heading.js'].lineData[37]++;
+    _$jscoverage['/heading.js'].lineData[41]++;
     FORMAT_SELECTION_ITEMS.push({
   content: p, 
   value: FORMATS[p], 
   elAttrs: {
   style: "font-size:" + FORMAT_SIZES[FORMATS[p]]}});
   }
-  _$jscoverage['/heading.js'].lineData[47]++;
+  _$jscoverage['/heading.js'].lineData[51]++;
   editor.addSelect("heading", {
   defaultCaption: "\u6807\u9898", 
   width: "120px", 
@@ -323,41 +332,40 @@ KISSY.add("editor/plugin/heading", function(S, Editor, headingCmd) {
   listeners: {
   click: function(ev) {
   _$jscoverage['/heading.js'].functionData[3]++;
-  _$jscoverage['/heading.js'].lineData[56]++;
+  _$jscoverage['/heading.js'].lineData[60]++;
   var v = ev.target.get("value");
-  _$jscoverage['/heading.js'].lineData[57]++;
+  _$jscoverage['/heading.js'].lineData[61]++;
   editor.execCommand("heading", v);
 }, 
   afterSyncUI: function() {
   _$jscoverage['/heading.js'].functionData[4]++;
-  _$jscoverage['/heading.js'].lineData[60]++;
+  _$jscoverage['/heading.js'].lineData[64]++;
   var self = this;
-  _$jscoverage['/heading.js'].lineData[61]++;
+  _$jscoverage['/heading.js'].lineData[65]++;
   editor.on("selectionChange", function() {
   _$jscoverage['/heading.js'].functionData[5]++;
-  _$jscoverage['/heading.js'].lineData[62]++;
-  if (visit1_62_1(editor.get("mode") == Editor.Mode.SOURCE_MODE)) {
-    _$jscoverage['/heading.js'].lineData[63]++;
+  _$jscoverage['/heading.js'].lineData[66]++;
+  if (visit1_66_1(editor.get("mode") == Editor.Mode.SOURCE_MODE)) {
+    _$jscoverage['/heading.js'].lineData[67]++;
     return;
   }
-  _$jscoverage['/heading.js'].lineData[68]++;
+  _$jscoverage['/heading.js'].lineData[72]++;
   var headingValue = editor.queryCommandValue("heading"), value;
-  _$jscoverage['/heading.js'].lineData[69]++;
+  _$jscoverage['/heading.js'].lineData[73]++;
   for (value in FORMAT_SIZES) {
-    _$jscoverage['/heading.js'].lineData[70]++;
-    if (visit2_70_1(value == headingValue)) {
-      _$jscoverage['/heading.js'].lineData[71]++;
+    _$jscoverage['/heading.js'].lineData[74]++;
+    if (visit2_74_1(value == headingValue)) {
+      _$jscoverage['/heading.js'].lineData[75]++;
       self.set("value", value);
-      _$jscoverage['/heading.js'].lineData[72]++;
+      _$jscoverage['/heading.js'].lineData[76]++;
       return;
     }
   }
-  _$jscoverage['/heading.js'].lineData[75]++;
+  _$jscoverage['/heading.js'].lineData[79]++;
   self.set("value", null);
 });
 }}});
 }});
-  _$jscoverage['/heading.js'].lineData[84]++;
+  _$jscoverage['/heading.js'].lineData[88]++;
   return HeadingPlugin;
-}, {
-  requires: ['editor', './heading/cmd']});
+});

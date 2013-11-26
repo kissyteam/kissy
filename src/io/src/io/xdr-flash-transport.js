@@ -6,9 +6,10 @@
 KISSY.add(function (S,require) {
     var IO = require('./base'),
         Dom = require('dom');
+    var  logger= S.getLogger('s/io');
     var // current running request instances
         maps = {},
-        logger= S.getLogger('s/io'),
+
         ID = 'io_swf',
     // flash transporter
         flash,

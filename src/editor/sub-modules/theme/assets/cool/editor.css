@@ -18,6 +18,9 @@ textarea,iframe包装
 */
 .ks-editor-textarea-wrap {
     overflow: hidden;
+    /** ie11 will make iframe content unselectable...*/
+    -ms-user-select:text;
+    user-select:text;
 }
 
 .ks-editor-textarea {

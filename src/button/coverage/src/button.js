@@ -230,16 +230,18 @@ if (! _$jscoverage['/button.js']) {
   _$jscoverage['/button.js'] = {};
   _$jscoverage['/button.js'].lineData = [];
   _$jscoverage['/button.js'].lineData[6] = 0;
-  _$jscoverage['/button.js'].lineData[8] = 0;
-  _$jscoverage['/button.js'].lineData[14] = 0;
-  _$jscoverage['/button.js'].lineData[19] = 0;
-  _$jscoverage['/button.js'].lineData[23] = 0;
-  _$jscoverage['/button.js'].lineData[27] = 0;
-  _$jscoverage['/button.js'].lineData[32] = 0;
-  _$jscoverage['/button.js'].lineData[36] = 0;
-  _$jscoverage['/button.js'].lineData[37] = 0;
+  _$jscoverage['/button.js'].lineData[7] = 0;
+  _$jscoverage['/button.js'].lineData[11] = 0;
+  _$jscoverage['/button.js'].lineData[17] = 0;
+  _$jscoverage['/button.js'].lineData[21] = 0;
+  _$jscoverage['/button.js'].lineData[25] = 0;
+  _$jscoverage['/button.js'].lineData[29] = 0;
+  _$jscoverage['/button.js'].lineData[34] = 0;
   _$jscoverage['/button.js'].lineData[38] = 0;
+  _$jscoverage['/button.js'].lineData[39] = 0;
+  _$jscoverage['/button.js'].lineData[40] = 0;
   _$jscoverage['/button.js'].lineData[41] = 0;
+  _$jscoverage['/button.js'].lineData[44] = 0;
 }
 if (! _$jscoverage['/button.js'].functionData) {
   _$jscoverage['/button.js'].functionData = [];
@@ -250,91 +252,95 @@ if (! _$jscoverage['/button.js'].functionData) {
 }
 if (! _$jscoverage['/button.js'].branchData) {
   _$jscoverage['/button.js'].branchData = {};
-  _$jscoverage['/button.js'].branchData['23'] = [];
-  _$jscoverage['/button.js'].branchData['23'][1] = new BranchData();
-  _$jscoverage['/button.js'].branchData['23'][2] = new BranchData();
-  _$jscoverage['/button.js'].branchData['23'][3] = new BranchData();
-  _$jscoverage['/button.js'].branchData['24'] = [];
-  _$jscoverage['/button.js'].branchData['24'][1] = new BranchData();
   _$jscoverage['/button.js'].branchData['25'] = [];
   _$jscoverage['/button.js'].branchData['25'][1] = new BranchData();
   _$jscoverage['/button.js'].branchData['25'][2] = new BranchData();
+  _$jscoverage['/button.js'].branchData['25'][3] = new BranchData();
   _$jscoverage['/button.js'].branchData['26'] = [];
   _$jscoverage['/button.js'].branchData['26'][1] = new BranchData();
-  _$jscoverage['/button.js'].branchData['32'] = [];
-  _$jscoverage['/button.js'].branchData['32'][1] = new BranchData();
-  _$jscoverage['/button.js'].branchData['37'] = [];
-  _$jscoverage['/button.js'].branchData['37'][1] = new BranchData();
+  _$jscoverage['/button.js'].branchData['27'] = [];
+  _$jscoverage['/button.js'].branchData['27'][1] = new BranchData();
+  _$jscoverage['/button.js'].branchData['27'][2] = new BranchData();
+  _$jscoverage['/button.js'].branchData['28'] = [];
+  _$jscoverage['/button.js'].branchData['28'][1] = new BranchData();
+  _$jscoverage['/button.js'].branchData['34'] = [];
+  _$jscoverage['/button.js'].branchData['34'][1] = new BranchData();
+  _$jscoverage['/button.js'].branchData['40'] = [];
+  _$jscoverage['/button.js'].branchData['40'][1] = new BranchData();
 }
-_$jscoverage['/button.js'].branchData['37'][1].init(48, 21, 'self.get("checkable")');
-function visit10_37_1(result) {
-  _$jscoverage['/button.js'].branchData['37'][1].ranCondition(result);
+_$jscoverage['/button.js'].branchData['40'][1].init(76, 21, 'self.get("checkable")');
+function visit10_40_1(result) {
+  _$jscoverage['/button.js'].branchData['40'][1].ranCondition(result);
   return result;
-}_$jscoverage['/button.js'].branchData['32'][1].init(470, 26, 'e.keyCode == KeyCode.SPACE');
-function visit9_32_1(result) {
-  _$jscoverage['/button.js'].branchData['32'][1].ranCondition(result);
+}_$jscoverage['/button.js'].branchData['34'][1].init(460, 26, 'e.keyCode == KeyCode.SPACE');
+function visit9_34_1(result) {
+  _$jscoverage['/button.js'].branchData['34'][1].ranCondition(result);
   return result;
-}_$jscoverage['/button.js'].branchData['26'][1].init(50, 17, 'e.type == "keyup"');
-function visit8_26_1(result) {
+}_$jscoverage['/button.js'].branchData['28'][1].init(49, 17, 'e.type == "keyup"');
+function visit8_28_1(result) {
+  _$jscoverage['/button.js'].branchData['28'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/button.js'].branchData['27'][2].init(104, 26, 'e.keyCode == KeyCode.SPACE');
+function visit7_27_2(result) {
+  _$jscoverage['/button.js'].branchData['27'][2].ranCondition(result);
+  return result;
+}_$jscoverage['/button.js'].branchData['27'][1].init(84, 67, 'e.keyCode == KeyCode.SPACE && e.type == "keyup"');
+function visit6_27_1(result) {
+  _$jscoverage['/button.js'].branchData['27'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/button.js'].branchData['26'][1].init(45, 19, 'e.type == "keydown"');
+function visit5_26_1(result) {
   _$jscoverage['/button.js'].branchData['26'][1].ranCondition(result);
   return result;
-}_$jscoverage['/button.js'].branchData['25'][2].init(107, 26, 'e.keyCode == KeyCode.SPACE');
-function visit7_25_2(result) {
+}_$jscoverage['/button.js'].branchData['25'][3].init(17, 26, 'e.keyCode == KeyCode.ENTER');
+function visit4_25_3(result) {
+  _$jscoverage['/button.js'].branchData['25'][3].ranCondition(result);
+  return result;
+}_$jscoverage['/button.js'].branchData['25'][2].init(17, 65, 'e.keyCode == KeyCode.ENTER && e.type == "keydown"');
+function visit3_25_2(result) {
   _$jscoverage['/button.js'].branchData['25'][2].ranCondition(result);
   return result;
-}_$jscoverage['/button.js'].branchData['25'][1].init(86, 68, 'e.keyCode == KeyCode.SPACE && e.type == "keyup"');
-function visit6_25_1(result) {
+}_$jscoverage['/button.js'].branchData['25'][1].init(17, 152, 'e.keyCode == KeyCode.ENTER && e.type == "keydown" || e.keyCode == KeyCode.SPACE && e.type == "keyup"');
+function visit2_25_1(result) {
   _$jscoverage['/button.js'].branchData['25'][1].ranCondition(result);
   return result;
-}_$jscoverage['/button.js'].branchData['24'][1].init(46, 19, 'e.type == "keydown"');
-function visit5_24_1(result) {
-  _$jscoverage['/button.js'].branchData['24'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/button.js'].branchData['23'][3].init(18, 26, 'e.keyCode == KeyCode.ENTER');
-function visit4_23_3(result) {
-  _$jscoverage['/button.js'].branchData['23'][3].ranCondition(result);
-  return result;
-}_$jscoverage['/button.js'].branchData['23'][2].init(18, 66, 'e.keyCode == KeyCode.ENTER && e.type == "keydown"');
-function visit3_23_2(result) {
-  _$jscoverage['/button.js'].branchData['23'][2].ranCondition(result);
-  return result;
-}_$jscoverage['/button.js'].branchData['23'][1].init(18, 155, 'e.keyCode == KeyCode.ENTER && e.type == "keydown" || e.keyCode == KeyCode.SPACE && e.type == "keyup"');
-function visit2_23_1(result) {
-  _$jscoverage['/button.js'].branchData['23'][1].ranCondition(result);
-  return result;
 }_$jscoverage['/button.js'].lineData[6]++;
-KISSY.add("button", function(S, Node, Control, ButtonRender) {
+KISSY.add(function(S, require) {
   _$jscoverage['/button.js'].functionData[0]++;
-  _$jscoverage['/button.js'].lineData[8]++;
+  _$jscoverage['/button.js'].lineData[7]++;
+  var Node = require('node'), Control = require('component/control'), ButtonRender = require('button/render');
+  _$jscoverage['/button.js'].lineData[11]++;
   var KeyCode = Node.KeyCode;
-  _$jscoverage['/button.js'].lineData[14]++;
+  _$jscoverage['/button.js'].lineData[17]++;
   return Control.extend({
   isButton: 1, 
   bindUI: function() {
   _$jscoverage['/button.js'].functionData[1]++;
-  _$jscoverage['/button.js'].lineData[19]++;
+  _$jscoverage['/button.js'].lineData[21]++;
   this.$el.on("keyup", this.handleKeyDownInternal, this);
 }, 
   handleKeyDownInternal: function(e) {
   _$jscoverage['/button.js'].functionData[2]++;
-  _$jscoverage['/button.js'].lineData[23]++;
-  if (visit2_23_1(visit3_23_2(visit4_23_3(e.keyCode == KeyCode.ENTER) && visit5_24_1(e.type == "keydown")) || visit6_25_1(visit7_25_2(e.keyCode == KeyCode.SPACE) && visit8_26_1(e.type == "keyup")))) {
-    _$jscoverage['/button.js'].lineData[27]++;
+  _$jscoverage['/button.js'].lineData[25]++;
+  if (visit2_25_1(visit3_25_2(visit4_25_3(e.keyCode == KeyCode.ENTER) && visit5_26_1(e.type == "keydown")) || visit6_27_1(visit7_27_2(e.keyCode == KeyCode.SPACE) && visit8_28_1(e.type == "keyup")))) {
+    _$jscoverage['/button.js'].lineData[29]++;
     return this.handleClickInternal(e);
   }
-  _$jscoverage['/button.js'].lineData[32]++;
-  return visit9_32_1(e.keyCode == KeyCode.SPACE);
+  _$jscoverage['/button.js'].lineData[34]++;
+  return visit9_34_1(e.keyCode == KeyCode.SPACE);
 }, 
   handleClickInternal: function() {
   _$jscoverage['/button.js'].functionData[3]++;
-  _$jscoverage['/button.js'].lineData[36]++;
+  _$jscoverage['/button.js'].lineData[38]++;
   var self = this;
-  _$jscoverage['/button.js'].lineData[37]++;
-  if (visit10_37_1(self.get("checkable"))) {
-    _$jscoverage['/button.js'].lineData[38]++;
+  _$jscoverage['/button.js'].lineData[39]++;
+  self.callSuper();
+  _$jscoverage['/button.js'].lineData[40]++;
+  if (visit10_40_1(self.get("checkable"))) {
+    _$jscoverage['/button.js'].lineData[41]++;
     self.set("checked", !self.get("checked"));
   }
-  _$jscoverage['/button.js'].lineData[41]++;
+  _$jscoverage['/button.js'].lineData[44]++;
   self.fire("click");
 }}, {
   ATTRS: {
@@ -352,5 +358,4 @@ KISSY.add("button", function(S, Node, Control, ButtonRender) {
   xrender: {
   value: ButtonRender}}, 
   xclass: 'button'});
-}, {
-  requires: ['node', 'component/control', 'button/render']});
+});

@@ -5,18 +5,14 @@
  */
 KISSY.add(function (S, require) {
     var Dom = require('./api');
-    var WINDOW = /**
-         @ignore
-         @type window
-         */S.Env.host,
+    var logger = S.getLogger('s/dom');
+    var globalWindow = S.Env.host,
         UA = S.UA,
         undefined = undefined,
-        logger = S.getLogger('s/dom'),
         Features = S.Features,
         getNodeName = Dom.nodeName,
-        doc = WINDOW.document,
-        documentElementStyle = doc && doc.documentElement.style || {};
-    RE_MARGIN = /^margin/,
+        doc = globalWindow.document,
+        RE_MARGIN = /^margin/,
         WIDTH = 'width',
         HEIGHT = 'height',
         DISPLAY = 'display',
@@ -51,6 +47,7 @@ KISSY.add(function (S, require) {
         // ms is special .... !
         'ms'
     ];
+    var documentElementStyle = doc && doc.documentElement.style || {};
 
     var userSelectProperty;
     S.each(VENDORS, function (val) {
@@ -308,7 +305,7 @@ KISSY.add(function (S, require) {
                     id = cssText;
                     cssText = /**@type String
                      @ignore*/refWin;
-                    refWin = WINDOW;
+                    refWin = globalWindow;
                 }
 
                 var doc = Dom.getDocument(refWin),

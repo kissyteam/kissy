@@ -1,6 +1,6 @@
 /*
-Copyright 2013, KISSY v1.40dev
+Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Oct 25 16:47
+build time: Nov 27 00:02
 */
-KISSY.add("editor/plugin/undo",function(e,b,c,f){function d(){}e.augment(d,{pluginRenderUI:function(a){a.addButton("undo",{mode:b.Mode.WYSIWYG_MODE,tooltip:"\u64a4\u9500",editor:a},c.UndoBtn);a.addButton("redo",{mode:b.Mode.WYSIWYG_MODE,tooltip:"\u91cd\u505a",editor:a},c.RedoBtn);f.init(a)}});return d},{requires:["editor","./undo/btn","./undo/cmd"]});
+KISSY.add("editor/plugin/undo",["editor","./undo/btn","./undo/cmd","./button"],function(f,b){function c(){}var d=b("editor"),e=b("./undo/btn"),g=b("./undo/cmd");b("./button");f.augment(c,{pluginRenderUI:function(a){a.addButton("undo",{mode:d.Mode.WYSIWYG_MODE,tooltip:"\u64a4\u9500",editor:a},e.UndoBtn);a.addButton("redo",{mode:d.Mode.WYSIWYG_MODE,tooltip:"\u91cd\u505a",editor:a},e.RedoBtn);g.init(a)}});return c});

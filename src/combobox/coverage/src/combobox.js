@@ -235,12 +235,11 @@ if (! _$jscoverage['/combobox.js']) {
   _$jscoverage['/combobox.js'].lineData[9] = 0;
   _$jscoverage['/combobox.js'].lineData[10] = 0;
   _$jscoverage['/combobox.js'].lineData[11] = 0;
-  _$jscoverage['/combobox.js'].lineData[12] = 0;
+  _$jscoverage['/combobox.js'].lineData[13] = 0;
   _$jscoverage['/combobox.js'].lineData[14] = 0;
   _$jscoverage['/combobox.js'].lineData[15] = 0;
   _$jscoverage['/combobox.js'].lineData[16] = 0;
   _$jscoverage['/combobox.js'].lineData[17] = 0;
-  _$jscoverage['/combobox.js'].lineData[18] = 0;
 }
 if (! _$jscoverage['/combobox.js'].functionData) {
   _$jscoverage['/combobox.js'].functionData = [];
@@ -250,28 +249,26 @@ if (! _$jscoverage['/combobox.js'].branchData) {
   _$jscoverage['/combobox.js'].branchData = {};
 }
 _$jscoverage['/combobox.js'].lineData[6]++;
-KISSY.add(function() {
+KISSY.add(function(S, require) {
   _$jscoverage['/combobox.js'].functionData[0]++;
   _$jscoverage['/combobox.js'].lineData[7]++;
-  var module = this;
+  var ComboBox = require('combobox/control');
   _$jscoverage['/combobox.js'].lineData[8]++;
-  var ComboBox = module.require('combobox/control');
+  var MultiValueComboBox = require('combobox/multi-value-combobox');
   _$jscoverage['/combobox.js'].lineData[9]++;
-  var MultiValueComboBox = module.require('combobox/multi-value-combobox');
+  var FilterSelect = require('combobox/filter-select');
   _$jscoverage['/combobox.js'].lineData[10]++;
-  var FilterSelect = module.require('combobox/filter-select');
+  var LocalDataSource = require('combobox/local-data-source');
   _$jscoverage['/combobox.js'].lineData[11]++;
-  var LocalDataSource = module.require('combobox/local-data-source');
-  _$jscoverage['/combobox.js'].lineData[12]++;
-  var RemoteDataSource = module.require('combobox/remote-data-source');
-  _$jscoverage['/combobox.js'].lineData[14]++;
+  var RemoteDataSource = require('combobox/remote-data-source');
+  _$jscoverage['/combobox.js'].lineData[13]++;
   ComboBox.LocalDataSource = LocalDataSource;
-  _$jscoverage['/combobox.js'].lineData[15]++;
+  _$jscoverage['/combobox.js'].lineData[14]++;
   ComboBox.RemoteDataSource = RemoteDataSource;
-  _$jscoverage['/combobox.js'].lineData[16]++;
+  _$jscoverage['/combobox.js'].lineData[15]++;
   ComboBox.FilterSelect = FilterSelect;
-  _$jscoverage['/combobox.js'].lineData[17]++;
+  _$jscoverage['/combobox.js'].lineData[16]++;
   ComboBox.MultiValueComboBox = MultiValueComboBox;
-  _$jscoverage['/combobox.js'].lineData[18]++;
+  _$jscoverage['/combobox.js'].lineData[17]++;
   return ComboBox;
 });

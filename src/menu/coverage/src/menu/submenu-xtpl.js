@@ -229,12 +229,12 @@ if (! this._$jscoverage) {
 if (! _$jscoverage['/menu/submenu-xtpl.js']) {
   _$jscoverage['/menu/submenu-xtpl.js'] = {};
   _$jscoverage['/menu/submenu-xtpl.js'].lineData = [];
+  _$jscoverage['/menu/submenu-xtpl.js'].lineData[2] = 0;
   _$jscoverage['/menu/submenu-xtpl.js'].lineData[3] = 0;
   _$jscoverage['/menu/submenu-xtpl.js'].lineData[4] = 0;
-  _$jscoverage['/menu/submenu-xtpl.js'].lineData[5] = 0;
+  _$jscoverage['/menu/submenu-xtpl.js'].lineData[8] = 0;
   _$jscoverage['/menu/submenu-xtpl.js'].lineData[9] = 0;
-  _$jscoverage['/menu/submenu-xtpl.js'].lineData[12] = 0;
-  _$jscoverage['/menu/submenu-xtpl.js'].lineData[13] = 0;
+  _$jscoverage['/menu/submenu-xtpl.js'].lineData[11] = 0;
   _$jscoverage['/menu/submenu-xtpl.js'].lineData[14] = 0;
   _$jscoverage['/menu/submenu-xtpl.js'].lineData[15] = 0;
   _$jscoverage['/menu/submenu-xtpl.js'].lineData[16] = 0;
@@ -245,6 +245,14 @@ if (! _$jscoverage['/menu/submenu-xtpl.js']) {
   _$jscoverage['/menu/submenu-xtpl.js'].lineData[21] = 0;
   _$jscoverage['/menu/submenu-xtpl.js'].lineData[22] = 0;
   _$jscoverage['/menu/submenu-xtpl.js'].lineData[23] = 0;
+  _$jscoverage['/menu/submenu-xtpl.js'].lineData[24] = 0;
+  _$jscoverage['/menu/submenu-xtpl.js'].lineData[25] = 0;
+  _$jscoverage['/menu/submenu-xtpl.js'].lineData[26] = 0;
+  _$jscoverage['/menu/submenu-xtpl.js'].lineData[27] = 0;
+  _$jscoverage['/menu/submenu-xtpl.js'].lineData[28] = 0;
+  _$jscoverage['/menu/submenu-xtpl.js'].lineData[29] = 0;
+  _$jscoverage['/menu/submenu-xtpl.js'].lineData[30] = 0;
+  _$jscoverage['/menu/submenu-xtpl.js'].lineData[31] = 0;
 }
 if (! _$jscoverage['/menu/submenu-xtpl.js'].functionData) {
   _$jscoverage['/menu/submenu-xtpl.js'].functionData = [];
@@ -253,40 +261,68 @@ if (! _$jscoverage['/menu/submenu-xtpl.js'].functionData) {
 }
 if (! _$jscoverage['/menu/submenu-xtpl.js'].branchData) {
   _$jscoverage['/menu/submenu-xtpl.js'].branchData = {};
+  _$jscoverage['/menu/submenu-xtpl.js'].branchData['8'] = [];
+  _$jscoverage['/menu/submenu-xtpl.js'].branchData['8'][1] = new BranchData();
+  _$jscoverage['/menu/submenu-xtpl.js'].branchData['8'][2] = new BranchData();
 }
-_$jscoverage['/menu/submenu-xtpl.js'].lineData[3]++;
-KISSY.add('menu/submenu-xtpl', function() {
+_$jscoverage['/menu/submenu-xtpl.js'].branchData['8'][2].init(165, 28, 'typeof module != "undefined"');
+function visit47_8_2(result) {
+  _$jscoverage['/menu/submenu-xtpl.js'].branchData['8'][2].ranCondition(result);
+  return result;
+}_$jscoverage['/menu/submenu-xtpl.js'].branchData['8'][1].init(165, 44, 'typeof module != "undefined" && module.kissy');
+function visit46_8_1(result) {
+  _$jscoverage['/menu/submenu-xtpl.js'].branchData['8'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/menu/submenu-xtpl.js'].lineData[2]++;
+KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/menu/submenu-xtpl.js'].functionData[0]++;
-  _$jscoverage['/menu/submenu-xtpl.js'].lineData[4]++;
+  _$jscoverage['/menu/submenu-xtpl.js'].lineData[3]++;
   return function(scopes, S, undefined) {
   _$jscoverage['/menu/submenu-xtpl.js'].functionData[1]++;
-  _$jscoverage['/menu/submenu-xtpl.js'].lineData[5]++;
-  var buffer = "", config = this.config, engine = this, utils = config.utils;
-  _$jscoverage['/menu/submenu-xtpl.js'].lineData[9]++;
+  _$jscoverage['/menu/submenu-xtpl.js'].lineData[4]++;
+  var buffer = "", config = this.config, engine = this, moduleWrap, utils = config.utils;
+  _$jscoverage['/menu/submenu-xtpl.js'].lineData[8]++;
+  if (visit46_8_1(visit47_8_2(typeof module != "undefined") && module.kissy)) {
+    _$jscoverage['/menu/submenu-xtpl.js'].lineData[9]++;
+    moduleWrap = module;
+  }
+  _$jscoverage['/menu/submenu-xtpl.js'].lineData[11]++;
   var runBlockCommandUtil = utils["runBlockCommand"], getExpressionUtil = utils["getExpression"], getPropertyOrRunCommandUtil = utils["getPropertyOrRunCommand"];
-  _$jscoverage['/menu/submenu-xtpl.js'].lineData[12]++;
-  buffer += '';
-  _$jscoverage['/menu/submenu-xtpl.js'].lineData[13]++;
-  var config1 = {};
   _$jscoverage['/menu/submenu-xtpl.js'].lineData[14]++;
-  var params2 = [];
+  buffer += '<div id="ks-content-';
   _$jscoverage['/menu/submenu-xtpl.js'].lineData[15]++;
-  params2.push('component/extension/content-render/content-xtpl');
+  var id0 = getPropertyOrRunCommandUtil(engine, scopes, {}, "id", 0, 1, undefined, false);
   _$jscoverage['/menu/submenu-xtpl.js'].lineData[16]++;
-  config1.params = params2;
+  buffer += getExpressionUtil(id0, true);
   _$jscoverage['/menu/submenu-xtpl.js'].lineData[17]++;
-  var id0 = getPropertyOrRunCommandUtil(engine, scopes, config1, "include", 0, 1, false, undefined);
+  buffer += '"\n     class="';
   _$jscoverage['/menu/submenu-xtpl.js'].lineData[18]++;
-  buffer += id0;
+  var config2 = {};
   _$jscoverage['/menu/submenu-xtpl.js'].lineData[19]++;
-  buffer += '\r\n<span class="';
+  var params3 = [];
   _$jscoverage['/menu/submenu-xtpl.js'].lineData[20]++;
-  var id3 = getPropertyOrRunCommandUtil(engine, scopes, {}, "prefixCls", 0, 2, undefined, false);
+  params3.push('content');
   _$jscoverage['/menu/submenu-xtpl.js'].lineData[21]++;
-  buffer += getExpressionUtil(id3, true);
+  config2.params = params3;
   _$jscoverage['/menu/submenu-xtpl.js'].lineData[22]++;
-  buffer += 'submenu-arrow">\u25ba</span>';
+  var id1 = getPropertyOrRunCommandUtil(engine, scopes, config2, "getBaseCssClasses", 0, 2, true, undefined);
   _$jscoverage['/menu/submenu-xtpl.js'].lineData[23]++;
+  buffer += id1;
+  _$jscoverage['/menu/submenu-xtpl.js'].lineData[24]++;
+  buffer += '">';
+  _$jscoverage['/menu/submenu-xtpl.js'].lineData[25]++;
+  var id4 = getPropertyOrRunCommandUtil(engine, scopes, {}, "content", 0, 2, undefined, false);
+  _$jscoverage['/menu/submenu-xtpl.js'].lineData[26]++;
+  buffer += getExpressionUtil(id4, false);
+  _$jscoverage['/menu/submenu-xtpl.js'].lineData[27]++;
+  buffer += '</div>\n<span class="';
+  _$jscoverage['/menu/submenu-xtpl.js'].lineData[28]++;
+  var id5 = getPropertyOrRunCommandUtil(engine, scopes, {}, "prefixCls", 0, 3, undefined, false);
+  _$jscoverage['/menu/submenu-xtpl.js'].lineData[29]++;
+  buffer += getExpressionUtil(id5, true);
+  _$jscoverage['/menu/submenu-xtpl.js'].lineData[30]++;
+  buffer += 'submenu-arrow">\u25ba</span>';
+  _$jscoverage['/menu/submenu-xtpl.js'].lineData[31]++;
   return buffer;
 };
 });

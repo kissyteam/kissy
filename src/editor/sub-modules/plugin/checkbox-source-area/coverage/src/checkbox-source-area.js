@@ -230,32 +230,33 @@ if (! _$jscoverage['/checkbox-source-area.js']) {
   _$jscoverage['/checkbox-source-area.js'] = {};
   _$jscoverage['/checkbox-source-area.js'].lineData = [];
   _$jscoverage['/checkbox-source-area.js'].lineData[6] = 0;
-  _$jscoverage['/checkbox-source-area.js'].lineData[7] = 0;
-  _$jscoverage['/checkbox-source-area.js'].lineData[9] = 0;
+  _$jscoverage['/checkbox-source-area.js'].lineData[8] = 0;
+  _$jscoverage['/checkbox-source-area.js'].lineData[10] = 0;
   _$jscoverage['/checkbox-source-area.js'].lineData[12] = 0;
-  _$jscoverage['/checkbox-source-area.js'].lineData[13] = 0;
-  _$jscoverage['/checkbox-source-area.js'].lineData[14] = 0;
   _$jscoverage['/checkbox-source-area.js'].lineData[15] = 0;
+  _$jscoverage['/checkbox-source-area.js'].lineData[16] = 0;
+  _$jscoverage['/checkbox-source-area.js'].lineData[17] = 0;
   _$jscoverage['/checkbox-source-area.js'].lineData[18] = 0;
-  _$jscoverage['/checkbox-source-area.js'].lineData[20] = 0;
+  _$jscoverage['/checkbox-source-area.js'].lineData[21] = 0;
   _$jscoverage['/checkbox-source-area.js'].lineData[23] = 0;
-  _$jscoverage['/checkbox-source-area.js'].lineData[30] = 0;
-  _$jscoverage['/checkbox-source-area.js'].lineData[31] = 0;
-  _$jscoverage['/checkbox-source-area.js'].lineData[32] = 0;
+  _$jscoverage['/checkbox-source-area.js'].lineData[26] = 0;
   _$jscoverage['/checkbox-source-area.js'].lineData[33] = 0;
+  _$jscoverage['/checkbox-source-area.js'].lineData[34] = 0;
+  _$jscoverage['/checkbox-source-area.js'].lineData[35] = 0;
   _$jscoverage['/checkbox-source-area.js'].lineData[36] = 0;
   _$jscoverage['/checkbox-source-area.js'].lineData[39] = 0;
   _$jscoverage['/checkbox-source-area.js'].lineData[42] = 0;
   _$jscoverage['/checkbox-source-area.js'].lineData[45] = 0;
-  _$jscoverage['/checkbox-source-area.js'].lineData[46] = 0;
   _$jscoverage['/checkbox-source-area.js'].lineData[48] = 0;
-  _$jscoverage['/checkbox-source-area.js'].lineData[52] = 0;
-  _$jscoverage['/checkbox-source-area.js'].lineData[56] = 0;
-  _$jscoverage['/checkbox-source-area.js'].lineData[60] = 0;
-  _$jscoverage['/checkbox-source-area.js'].lineData[62] = 0;
+  _$jscoverage['/checkbox-source-area.js'].lineData[49] = 0;
+  _$jscoverage['/checkbox-source-area.js'].lineData[51] = 0;
+  _$jscoverage['/checkbox-source-area.js'].lineData[55] = 0;
+  _$jscoverage['/checkbox-source-area.js'].lineData[59] = 0;
   _$jscoverage['/checkbox-source-area.js'].lineData[63] = 0;
-  _$jscoverage['/checkbox-source-area.js'].lineData[64] = 0;
-  _$jscoverage['/checkbox-source-area.js'].lineData[69] = 0;
+  _$jscoverage['/checkbox-source-area.js'].lineData[65] = 0;
+  _$jscoverage['/checkbox-source-area.js'].lineData[66] = 0;
+  _$jscoverage['/checkbox-source-area.js'].lineData[67] = 0;
+  _$jscoverage['/checkbox-source-area.js'].lineData[72] = 0;
 }
 if (! _$jscoverage['/checkbox-source-area.js'].functionData) {
   _$jscoverage['/checkbox-source-area.js'].functionData = [];
@@ -272,93 +273,94 @@ if (! _$jscoverage['/checkbox-source-area.js'].functionData) {
 }
 if (! _$jscoverage['/checkbox-source-area.js'].branchData) {
   _$jscoverage['/checkbox-source-area.js'].branchData = {};
-  _$jscoverage['/checkbox-source-area.js'].branchData['45'] = [];
-  _$jscoverage['/checkbox-source-area.js'].branchData['45'][1] = new BranchData();
+  _$jscoverage['/checkbox-source-area.js'].branchData['48'] = [];
+  _$jscoverage['/checkbox-source-area.js'].branchData['48'][1] = new BranchData();
 }
-_$jscoverage['/checkbox-source-area.js'].branchData['45'][1].init(118, 18, 'el.attr("checked")');
-function visit1_45_1(result) {
-  _$jscoverage['/checkbox-source-area.js'].branchData['45'][1].ranCondition(result);
+_$jscoverage['/checkbox-source-area.js'].branchData['48'][1].init(114, 18, 'el.attr("checked")');
+function visit1_48_1(result) {
+  _$jscoverage['/checkbox-source-area.js'].branchData['48'][1].ranCondition(result);
   return result;
 }_$jscoverage['/checkbox-source-area.js'].lineData[6]++;
-KISSY.add("editor/plugin/checkbox-source-area", function(S, Editor) {
+KISSY.add(function(S, require) {
   _$jscoverage['/checkbox-source-area.js'].functionData[0]++;
-  _$jscoverage['/checkbox-source-area.js'].lineData[7]++;
+  _$jscoverage['/checkbox-source-area.js'].lineData[8]++;
+  var Editor = require('editor');
+  _$jscoverage['/checkbox-source-area.js'].lineData[10]++;
   var Node = S.Node;
-  _$jscoverage['/checkbox-source-area.js'].lineData[9]++;
-  var SOURCE_MODE = Editor.Mode.SOURCE_MODE, WYSIWYG_MODE = Editor.Mode.WYSIWYG_MODE;
   _$jscoverage['/checkbox-source-area.js'].lineData[12]++;
+  var SOURCE_MODE = Editor.Mode.SOURCE_MODE, WYSIWYG_MODE = Editor.Mode.WYSIWYG_MODE;
+  _$jscoverage['/checkbox-source-area.js'].lineData[15]++;
   function CheckboxSourceArea(editor) {
     _$jscoverage['/checkbox-source-area.js'].functionData[1]++;
-    _$jscoverage['/checkbox-source-area.js'].lineData[13]++;
+    _$jscoverage['/checkbox-source-area.js'].lineData[16]++;
     var self = this;
-    _$jscoverage['/checkbox-source-area.js'].lineData[14]++;
+    _$jscoverage['/checkbox-source-area.js'].lineData[17]++;
     self.editor = editor;
-    _$jscoverage['/checkbox-source-area.js'].lineData[15]++;
+    _$jscoverage['/checkbox-source-area.js'].lineData[18]++;
     self._init();
   }
-  _$jscoverage['/checkbox-source-area.js'].lineData[18]++;
+  _$jscoverage['/checkbox-source-area.js'].lineData[21]++;
   S.augment(CheckboxSourceArea, {
   _init: function() {
   _$jscoverage['/checkbox-source-area.js'].functionData[2]++;
-  _$jscoverage['/checkbox-source-area.js'].lineData[20]++;
-  var self = this, editor = self.editor, statusBarEl = editor.get("statusBarEl");
   _$jscoverage['/checkbox-source-area.js'].lineData[23]++;
+  var self = this, editor = self.editor, statusBarEl = editor.get("statusBarEl");
+  _$jscoverage['/checkbox-source-area.js'].lineData[26]++;
   self.holder = new Node("<span " + "style='zoom:1;display:inline-block;height:22px;line-height:22px;'>" + "<label style='vertical-align:middle;'>" + "<input style='margin:0 5px;' type='checkbox' />" + "\u7f16\u8f91\u6e90\u4ee3\u7801</label>" + "</span>").appendTo(statusBarEl);
-  _$jscoverage['/checkbox-source-area.js'].lineData[30]++;
-  var el = self.el = self.holder.one("input");
-  _$jscoverage['/checkbox-source-area.js'].lineData[31]++;
-  el.on("click", self._check, self);
-  _$jscoverage['/checkbox-source-area.js'].lineData[32]++;
-  editor.on("wysiwygMode", self._wysiwygmode, self);
   _$jscoverage['/checkbox-source-area.js'].lineData[33]++;
+  var el = self.el = self.holder.one("input");
+  _$jscoverage['/checkbox-source-area.js'].lineData[34]++;
+  el.on("click", self._check, self);
+  _$jscoverage['/checkbox-source-area.js'].lineData[35]++;
+  editor.on("wysiwygMode", self._wysiwygmode, self);
+  _$jscoverage['/checkbox-source-area.js'].lineData[36]++;
   editor.on("sourceMode", self._sourcemode, self);
 }, 
   _sourcemode: function() {
   _$jscoverage['/checkbox-source-area.js'].functionData[3]++;
-  _$jscoverage['/checkbox-source-area.js'].lineData[36]++;
+  _$jscoverage['/checkbox-source-area.js'].lineData[39]++;
   this.el.attr("checked", true);
 }, 
   _wysiwygmode: function() {
   _$jscoverage['/checkbox-source-area.js'].functionData[4]++;
-  _$jscoverage['/checkbox-source-area.js'].lineData[39]++;
+  _$jscoverage['/checkbox-source-area.js'].lineData[42]++;
   this.el.attr("checked", false);
 }, 
   _check: function() {
   _$jscoverage['/checkbox-source-area.js'].functionData[5]++;
-  _$jscoverage['/checkbox-source-area.js'].lineData[42]++;
-  var self = this, editor = self.editor, el = self.el;
   _$jscoverage['/checkbox-source-area.js'].lineData[45]++;
-  if (visit1_45_1(el.attr("checked"))) {
-    _$jscoverage['/checkbox-source-area.js'].lineData[46]++;
+  var self = this, editor = self.editor, el = self.el;
+  _$jscoverage['/checkbox-source-area.js'].lineData[48]++;
+  if (visit1_48_1(el.attr("checked"))) {
+    _$jscoverage['/checkbox-source-area.js'].lineData[49]++;
     editor.set("mode", SOURCE_MODE);
   } else {
-    _$jscoverage['/checkbox-source-area.js'].lineData[48]++;
+    _$jscoverage['/checkbox-source-area.js'].lineData[51]++;
     editor.set("mode", WYSIWYG_MODE);
   }
 }, 
   destroy: function() {
   _$jscoverage['/checkbox-source-area.js'].functionData[6]++;
-  _$jscoverage['/checkbox-source-area.js'].lineData[52]++;
+  _$jscoverage['/checkbox-source-area.js'].lineData[55]++;
   this.holder.remove();
 }});
-  _$jscoverage['/checkbox-source-area.js'].lineData[56]++;
+  _$jscoverage['/checkbox-source-area.js'].lineData[59]++;
   function CheckboxSourceAreaPlugin() {
     _$jscoverage['/checkbox-source-area.js'].functionData[7]++;
   }
-  _$jscoverage['/checkbox-source-area.js'].lineData[60]++;
+  _$jscoverage['/checkbox-source-area.js'].lineData[63]++;
   S.augment(CheckboxSourceAreaPlugin, {
   pluginRenderUI: function(editor) {
   _$jscoverage['/checkbox-source-area.js'].functionData[8]++;
-  _$jscoverage['/checkbox-source-area.js'].lineData[62]++;
+  _$jscoverage['/checkbox-source-area.js'].lineData[65]++;
   var c = new CheckboxSourceArea(editor);
-  _$jscoverage['/checkbox-source-area.js'].lineData[63]++;
+  _$jscoverage['/checkbox-source-area.js'].lineData[66]++;
   editor.on("destroy", function() {
   _$jscoverage['/checkbox-source-area.js'].functionData[9]++;
-  _$jscoverage['/checkbox-source-area.js'].lineData[64]++;
+  _$jscoverage['/checkbox-source-area.js'].lineData[67]++;
   c.destroy();
 });
 }});
-  _$jscoverage['/checkbox-source-area.js'].lineData[69]++;
+  _$jscoverage['/checkbox-source-area.js'].lineData[72]++;
   return CheckboxSourceAreaPlugin;
-}, {
-  requires: ["editor"]});
+});

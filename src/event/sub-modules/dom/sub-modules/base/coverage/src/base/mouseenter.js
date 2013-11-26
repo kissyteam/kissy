@@ -230,11 +230,13 @@ if (! _$jscoverage['/base/mouseenter.js']) {
   _$jscoverage['/base/mouseenter.js'] = {};
   _$jscoverage['/base/mouseenter.js'].lineData = [];
   _$jscoverage['/base/mouseenter.js'].lineData[6] = 0;
+  _$jscoverage['/base/mouseenter.js'].lineData[7] = 0;
   _$jscoverage['/base/mouseenter.js'].lineData[8] = 0;
-  _$jscoverage['/base/mouseenter.js'].lineData[12] = 0;
-  _$jscoverage['/base/mouseenter.js'].lineData[16] = 0;
-  _$jscoverage['/base/mouseenter.js'].lineData[21] = 0;
-  _$jscoverage['/base/mouseenter.js'].lineData[33] = 0;
+  _$jscoverage['/base/mouseenter.js'].lineData[10] = 0;
+  _$jscoverage['/base/mouseenter.js'].lineData[14] = 0;
+  _$jscoverage['/base/mouseenter.js'].lineData[18] = 0;
+  _$jscoverage['/base/mouseenter.js'].lineData[23] = 0;
+  _$jscoverage['/base/mouseenter.js'].lineData[34] = 0;
 }
 if (! _$jscoverage['/base/mouseenter.js'].functionData) {
   _$jscoverage['/base/mouseenter.js'].functionData = [];
@@ -244,47 +246,50 @@ if (! _$jscoverage['/base/mouseenter.js'].functionData) {
 }
 if (! _$jscoverage['/base/mouseenter.js'].branchData) {
   _$jscoverage['/base/mouseenter.js'].branchData = {};
-  _$jscoverage['/base/mouseenter.js'].branchData['21'] = [];
-  _$jscoverage['/base/mouseenter.js'].branchData['21'][1] = new BranchData();
-  _$jscoverage['/base/mouseenter.js'].branchData['22'] = [];
-  _$jscoverage['/base/mouseenter.js'].branchData['22'][1] = new BranchData();
-  _$jscoverage['/base/mouseenter.js'].branchData['22'][2] = new BranchData();
+  _$jscoverage['/base/mouseenter.js'].branchData['23'] = [];
+  _$jscoverage['/base/mouseenter.js'].branchData['23'][1] = new BranchData();
+  _$jscoverage['/base/mouseenter.js'].branchData['24'] = [];
+  _$jscoverage['/base/mouseenter.js'].branchData['24'][1] = new BranchData();
+  _$jscoverage['/base/mouseenter.js'].branchData['24'][2] = new BranchData();
 }
-_$jscoverage['/base/mouseenter.js'].branchData['22'][2].init(39, 31, 'relatedTarget !== currentTarget');
-function visit48_22_2(result) {
-  _$jscoverage['/base/mouseenter.js'].branchData['22'][2].ranCondition(result);
+_$jscoverage['/base/mouseenter.js'].branchData['24'][2].init(38, 31, 'relatedTarget !== currentTarget');
+function visit48_24_2(result) {
+  _$jscoverage['/base/mouseenter.js'].branchData['24'][2].ranCondition(result);
   return result;
-}_$jscoverage['/base/mouseenter.js'].branchData['22'][1].init(39, 103, 'relatedTarget !== currentTarget && !Dom.contains(currentTarget, relatedTarget)');
-function visit47_22_1(result) {
-  _$jscoverage['/base/mouseenter.js'].branchData['22'][1].ranCondition(result);
+}_$jscoverage['/base/mouseenter.js'].branchData['24'][1].init(38, 78, 'relatedTarget !== currentTarget && !Dom.contains(currentTarget, relatedTarget)');
+function visit47_24_1(result) {
+  _$jscoverage['/base/mouseenter.js'].branchData['24'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/mouseenter.js'].branchData['21'][1].init(293, 144, '!relatedTarget || (relatedTarget !== currentTarget && !Dom.contains(currentTarget, relatedTarget))');
-function visit46_21_1(result) {
-  _$jscoverage['/base/mouseenter.js'].branchData['21'][1].ranCondition(result);
+}_$jscoverage['/base/mouseenter.js'].branchData['23'][1].init(287, 118, '!relatedTarget || (relatedTarget !== currentTarget && !Dom.contains(currentTarget, relatedTarget))');
+function visit46_23_1(result) {
+  _$jscoverage['/base/mouseenter.js'].branchData['23'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/mouseenter.js'].lineData[6]++;
-KISSY.add('event/dom/base/mouseenter', function(S, Dom, Special) {
+KISSY.add(function(S, require) {
   _$jscoverage['/base/mouseenter.js'].functionData[0]++;
+  _$jscoverage['/base/mouseenter.js'].lineData[7]++;
+  var Dom = require('dom');
   _$jscoverage['/base/mouseenter.js'].lineData[8]++;
+  var Special = require('./special');
+  _$jscoverage['/base/mouseenter.js'].lineData[10]++;
   S.each([{
   name: 'mouseenter', 
   fix: 'mouseover'}, {
   name: 'mouseleave', 
   fix: 'mouseout'}], function(o) {
   _$jscoverage['/base/mouseenter.js'].functionData[1]++;
-  _$jscoverage['/base/mouseenter.js'].lineData[12]++;
+  _$jscoverage['/base/mouseenter.js'].lineData[14]++;
   Special[o.name] = {
   typeFix: o.fix, 
   handle: function(event, observer, ce) {
   _$jscoverage['/base/mouseenter.js'].functionData[2]++;
-  _$jscoverage['/base/mouseenter.js'].lineData[16]++;
+  _$jscoverage['/base/mouseenter.js'].lineData[18]++;
   var currentTarget = event.currentTarget, relatedTarget = event.relatedTarget;
-  _$jscoverage['/base/mouseenter.js'].lineData[21]++;
-  if (visit46_21_1(!relatedTarget || (visit47_22_1(visit48_22_2(relatedTarget !== currentTarget) && !Dom.contains(currentTarget, relatedTarget))))) {
-    _$jscoverage['/base/mouseenter.js'].lineData[33]++;
+  _$jscoverage['/base/mouseenter.js'].lineData[23]++;
+  if (visit46_23_1(!relatedTarget || (visit47_24_1(visit48_24_2(relatedTarget !== currentTarget) && !Dom.contains(currentTarget, relatedTarget))))) {
+    _$jscoverage['/base/mouseenter.js'].lineData[34]++;
     return [observer.simpleNotify(event, ce)];
   }
 }};
 });
-}, {
-  requires: ['dom', './special']});
+});

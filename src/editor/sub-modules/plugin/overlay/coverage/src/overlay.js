@@ -231,7 +231,10 @@ if (! _$jscoverage['/overlay.js']) {
   _$jscoverage['/overlay.js'].lineData = [];
   _$jscoverage['/overlay.js'].lineData[6] = 0;
   _$jscoverage['/overlay.js'].lineData[7] = 0;
+  _$jscoverage['/overlay.js'].lineData[8] = 0;
   _$jscoverage['/overlay.js'].lineData[9] = 0;
+  _$jscoverage['/overlay.js'].lineData[11] = 0;
+  _$jscoverage['/overlay.js'].lineData[13] = 0;
 }
 if (! _$jscoverage['/overlay.js'].functionData) {
   _$jscoverage['/overlay.js'].functionData = [];
@@ -242,13 +245,19 @@ if (! _$jscoverage['/overlay.js'].branchData) {
   _$jscoverage['/overlay.js'].branchData = {};
 }
 _$jscoverage['/overlay.js'].lineData[6]++;
-KISSY.add("editor/plugin/overlay", function(S, Editor, Overlay, focusFix) {
+KISSY.add(function(S, require) {
   _$jscoverage['/overlay.js'].functionData[0]++;
   _$jscoverage['/overlay.js'].lineData[7]++;
+  var Editor = require('editor');
+  _$jscoverage['/overlay.js'].lineData[8]++;
+  var Overlay = require('overlay');
+  _$jscoverage['/overlay.js'].lineData[9]++;
+  var focusFix = require('./focus-fix');
+  _$jscoverage['/overlay.js'].lineData[11]++;
   return Overlay.extend({
   bindUI: function() {
   _$jscoverage['/overlay.js'].functionData[1]++;
-  _$jscoverage['/overlay.js'].lineData[9]++;
+  _$jscoverage['/overlay.js'].lineData[13]++;
   focusFix.init(this);
 }}, {
   ATTRS: {
@@ -256,5 +265,4 @@ KISSY.add("editor/plugin/overlay", function(S, Editor, Overlay, focusFix) {
   value: "ks-editor-"}, 
   "zIndex": {
   value: Editor.baseZIndex(Editor.ZIndexManager.OVERLAY)}}});
-}, {
-  requires: ["editor", 'overlay', './focus-fix']});
+});

@@ -238,4 +238,4 @@ if (! _$jscoverage['/editor/iframe-content-tpl.js'].branchData) {
   _$jscoverage['/editor/iframe-content-tpl.js'].branchData = {};
 }
 _$jscoverage['/editor/iframe-content-tpl.js'].lineData[3]++;
-KISSY.add('editor/iframe-content-tpl', '<!doctype html>\n<html>\n<head>{doctype}\n    <title>{title}</title>\n    {style}\n    {links}\n    </head> \n<body class="ks-editor">\n{data}\n{script}\n</body> \n</html>');
+KISSY.add('<!doctype html>\n<html>\n<head>{doctype}\n    <title>{title}</title>\n    {style}\n    {links}\n    </head> \n<body class="ks-editor">\n{data}\n{script}\n</body> \n</html>');

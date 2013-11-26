@@ -231,8 +231,10 @@ if (! _$jscoverage['/control/process.js']) {
   _$jscoverage['/control/process.js'].lineData = [];
   _$jscoverage['/control/process.js'].lineData[6] = 0;
   _$jscoverage['/control/process.js'].lineData[7] = 0;
-  _$jscoverage['/control/process.js'].lineData[15] = 0;
-  _$jscoverage['/control/process.js'].lineData[21] = 0;
+  _$jscoverage['/control/process.js'].lineData[8] = 0;
+  _$jscoverage['/control/process.js'].lineData[9] = 0;
+  _$jscoverage['/control/process.js'].lineData[17] = 0;
+  _$jscoverage['/control/process.js'].lineData[23] = 0;
   _$jscoverage['/control/process.js'].lineData[33] = 0;
   _$jscoverage['/control/process.js'].lineData[42] = 0;
   _$jscoverage['/control/process.js'].lineData[43] = 0;
@@ -316,64 +318,67 @@ if (! _$jscoverage['/control/process.js'].branchData) {
   _$jscoverage['/control/process.js'].branchData['168'] = [];
   _$jscoverage['/control/process.js'].branchData['168'][1] = new BranchData();
 }
-_$jscoverage['/control/process.js'].branchData['168'][1].init(26, 1, 'v');
+_$jscoverage['/control/process.js'].branchData['168'][1].init(25, 1, 'v');
 function visit10_168_1(result) {
   _$jscoverage['/control/process.js'].branchData['168'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control/process.js'].branchData['140'][1].init(18, 50, 'p[\'pluginCreateDom\'] && p[\'pluginCreateDom\'](self)');
+}_$jscoverage['/control/process.js'].branchData['140'][1].init(17, 50, 'p[\'pluginCreateDom\'] && p[\'pluginCreateDom\'](self)');
 function visit9_140_1(result) {
   _$jscoverage['/control/process.js'].branchData['140'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control/process.js'].branchData['139'][1].init(545, 19, 'self.get(\'created\')');
+}_$jscoverage['/control/process.js'].branchData['139'][1].init(533, 19, 'self.get(\'created\')');
 function visit8_139_1(result) {
   _$jscoverage['/control/process.js'].branchData['139'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control/process.js'].branchData['138'][1].init(258, 38, 'p.pluginSyncUI && p.pluginSyncUI(self)');
+}_$jscoverage['/control/process.js'].branchData['138'][1].init(253, 38, 'p.pluginSyncUI && p.pluginSyncUI(self)');
 function visit7_138_1(result) {
   _$jscoverage['/control/process.js'].branchData['138'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control/process.js'].branchData['137'][1].init(201, 38, 'p.pluginBindUI && p.pluginBindUI(self)');
+}_$jscoverage['/control/process.js'].branchData['137'][1].init(197, 38, 'p.pluginBindUI && p.pluginBindUI(self)');
 function visit6_137_1(result) {
   _$jscoverage['/control/process.js'].branchData['137'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control/process.js'].branchData['136'][1].init(140, 42, 'p.pluginRenderUI && p.pluginRenderUI(self)');
+}_$jscoverage['/control/process.js'].branchData['136'][1].init(137, 42, 'p.pluginRenderUI && p.pluginRenderUI(self)');
 function visit5_136_1(result) {
   _$jscoverage['/control/process.js'].branchData['136'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control/process.js'].branchData['135'][1].init(71, 50, 'p[\'pluginCreateDom\'] && p[\'pluginCreateDom\'](self)');
+}_$jscoverage['/control/process.js'].branchData['135'][1].init(69, 50, 'p[\'pluginCreateDom\'] && p[\'pluginCreateDom\'](self)');
 function visit4_135_1(result) {
   _$jscoverage['/control/process.js'].branchData['135'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control/process.js'].branchData['133'][1].init(199, 20, 'self.get(\'rendered\')');
+}_$jscoverage['/control/process.js'].branchData['133'][1].init(193, 20, 'self.get(\'rendered\')');
 function visit3_133_1(result) {
   _$jscoverage['/control/process.js'].branchData['133'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control/process.js'].branchData['75'][1].init(72, 21, '!self.get("rendered")');
+}_$jscoverage['/control/process.js'].branchData['75'][1].init(69, 21, '!self.get("rendered")');
 function visit2_75_1(result) {
   _$jscoverage['/control/process.js'].branchData['75'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control/process.js'].branchData['43'][1].init(48, 20, '!self.get("created")');
+}_$jscoverage['/control/process.js'].branchData['43'][1].init(46, 20, '!self.get("created")');
 function visit1_43_1(result) {
   _$jscoverage['/control/process.js'].branchData['43'][1].ranCondition(result);
   return result;
 }_$jscoverage['/control/process.js'].lineData[6]++;
-KISSY.add('component/control/process', function(S, Base, Promise) {
+KISSY.add(function(S, require) {
   _$jscoverage['/control/process.js'].functionData[0]++;
   _$jscoverage['/control/process.js'].lineData[7]++;
+  var Base = require('base');
+  _$jscoverage['/control/process.js'].lineData[8]++;
+  var Promise = require('promise');
+  _$jscoverage['/control/process.js'].lineData[9]++;
   var Defer = Promise.Defer, __getHook = Base.prototype.__getHook, noop = S.noop;
-  _$jscoverage['/control/process.js'].lineData[15]++;
+  _$jscoverage['/control/process.js'].lineData[17]++;
   var ComponentProcess = Base.extend({
   bindInternal: noop, 
   syncInternal: noop, 
   initializer: function() {
   _$jscoverage['/control/process.js'].functionData[1]++;
-  _$jscoverage['/control/process.js'].lineData[21]++;
+  _$jscoverage['/control/process.js'].lineData[23]++;
   this._renderedDefer = new Defer();
 }, 
-  createDom: noop, 
   renderUI: noop, 
-  bindUI: noop, 
   syncUI: noop, 
+  bindUI: noop, 
   onRendered: function(fn) {
   _$jscoverage['/control/process.js'].functionData[2]++;
   _$jscoverage['/control/process.js'].lineData[33]++;
@@ -506,5 +511,4 @@ KISSY.add('component/control/process', function(S, Base, Promise) {
   }
   _$jscoverage['/control/process.js'].lineData[205]++;
   return ComponentProcess;
-}, {
-  requires: ['base', 'promise']});
+});

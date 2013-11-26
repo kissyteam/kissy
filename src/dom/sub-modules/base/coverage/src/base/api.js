@@ -310,84 +310,84 @@ if (! _$jscoverage['/base/api.js'].branchData) {
   _$jscoverage['/base/api.js'].branchData['175'][1] = new BranchData();
   _$jscoverage['/base/api.js'].branchData['175'][2] = new BranchData();
 }
-_$jscoverage['/base/api.js'].branchData['175'][2].init(93, 19, 'scopeName != \'HTML\'');
+_$jscoverage['/base/api.js'].branchData['175'][2].init(91, 19, 'scopeName != \'HTML\'');
 function visit19_175_2(result) {
   _$jscoverage['/base/api.js'].branchData['175'][2].ranCondition(result);
   return result;
-}_$jscoverage['/base/api.js'].branchData['175'][1].init(80, 32, 'scopeName && scopeName != \'HTML\'');
+}_$jscoverage['/base/api.js'].branchData['175'][1].init(78, 32, 'scopeName && scopeName != \'HTML\'');
 function visit18_175_1(result) {
   _$jscoverage['/base/api.js'].branchData['175'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/api.js'].branchData['173'][1].init(207, 8, 'UA[\'ie\']');
+}_$jscoverage['/base/api.js'].branchData['173'][1].init(203, 8, 'UA[\'ie\']');
 function visit17_173_1(result) {
   _$jscoverage['/base/api.js'].branchData['173'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/api.js'].branchData['161'][3].init(348, 23, 'o.item && !o.setTimeout');
+}_$jscoverage['/base/api.js'].branchData['161'][3].init(342, 23, 'o.item && !o.setTimeout');
 function visit16_161_3(result) {
   _$jscoverage['/base/api.js'].branchData['161'][3].ranCondition(result);
   return result;
-}_$jscoverage['/base/api.js'].branchData['161'][2].init(333, 38, '!o.nodeType && o.item && !o.setTimeout');
+}_$jscoverage['/base/api.js'].branchData['161'][2].init(327, 38, '!o.nodeType && o.item && !o.setTimeout');
 function visit15_161_2(result) {
   _$jscoverage['/base/api.js'].branchData['161'][2].ranCondition(result);
   return result;
-}_$jscoverage['/base/api.js'].branchData['161'][1].init(328, 43, 'o && !o.nodeType && o.item && !o.setTimeout');
+}_$jscoverage['/base/api.js'].branchData['161'][1].init(322, 43, 'o && !o.nodeType && o.item && !o.setTimeout');
 function visit14_161_1(result) {
   _$jscoverage['/base/api.js'].branchData['161'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/api.js'].branchData['150'][1].init(80, 39, 'elem.nodeType == NodeType.DOCUMENT_NODE');
+}_$jscoverage['/base/api.js'].branchData['150'][1].init(78, 39, 'elem.nodeType == NodeType.DOCUMENT_NODE');
 function visit13_150_1(result) {
   _$jscoverage['/base/api.js'].branchData['150'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/api.js'].branchData['144'][1].init(22, 5, '!elem');
+}_$jscoverage['/base/api.js'].branchData['144'][1].init(21, 5, '!elem');
 function visit12_144_1(result) {
   _$jscoverage['/base/api.js'].branchData['144'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/api.js'].branchData['134'][1].init(416, 35, 'doc.defaultView || doc.parentWindow');
+}_$jscoverage['/base/api.js'].branchData['134'][1].init(399, 35, 'doc.defaultView || doc.parentWindow');
 function visit11_134_1(result) {
   _$jscoverage['/base/api.js'].branchData['134'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/api.js'].branchData['130'][1].init(281, 39, 'doc.nodeType !== NodeType.DOCUMENT_NODE');
+}_$jscoverage['/base/api.js'].branchData['130'][1].init(268, 39, 'doc.nodeType !== NodeType.DOCUMENT_NODE');
 function visit10_130_1(result) {
   _$jscoverage['/base/api.js'].branchData['130'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/api.js'].branchData['124'][1].init(150, 16, 'S.isWindow(elem)');
+}_$jscoverage['/base/api.js'].branchData['124'][1].init(143, 16, 'S.isWindow(elem)');
 function visit9_124_1(result) {
   _$jscoverage['/base/api.js'].branchData['124'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/api.js'].branchData['118'][1].init(22, 5, '!elem');
+}_$jscoverage['/base/api.js'].branchData['118'][1].init(21, 5, '!elem');
 function visit8_118_1(result) {
   _$jscoverage['/base/api.js'].branchData['118'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/api.js'].branchData['97'][1].init(97, 35, 'UA[\'ie\'] && Dom.isCustomDomain(win)');
+}_$jscoverage['/base/api.js'].branchData['97'][1].init(94, 35, 'UA[\'ie\'] && Dom.isCustomDomain(win)');
 function visit7_97_1(result) {
   _$jscoverage['/base/api.js'].branchData['97'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/api.js'].branchData['95'][1].init(24, 13, 'win || WINDOW');
+}_$jscoverage['/base/api.js'].branchData['95'][1].init(23, 13, 'win || WINDOW');
 function visit6_95_1(result) {
   _$jscoverage['/base/api.js'].branchData['95'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/api.js'].branchData['85'][1].init(42, 34, 'domain != (\'[\' + hostname + \']\')');
+}_$jscoverage['/base/api.js'].branchData['85'][1].init(41, 34, 'domain != (\'[\' + hostname + \']\')');
 function visit5_85_1(result) {
   _$jscoverage['/base/api.js'].branchData['85'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/api.js'].branchData['84'][2].init(206, 18, 'domain != hostname');
+}_$jscoverage['/base/api.js'].branchData['84'][2].init(201, 18, 'domain != hostname');
 function visit4_84_2(result) {
   _$jscoverage['/base/api.js'].branchData['84'][2].ranCondition(result);
   return result;
-}_$jscoverage['/base/api.js'].branchData['84'][1].init(206, 77, 'domain != hostname && domain != (\'[\' + hostname + \']\')');
+}_$jscoverage['/base/api.js'].branchData['84'][1].init(201, 76, 'domain != hostname && domain != (\'[\' + hostname + \']\')');
 function visit3_84_1(result) {
   _$jscoverage['/base/api.js'].branchData['84'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/api.js'].branchData['80'][1].init(24, 13, 'win || WINDOW');
+}_$jscoverage['/base/api.js'].branchData['80'][1].init(23, 13, 'win || WINDOW');
 function visit2_80_1(result) {
   _$jscoverage['/base/api.js'].branchData['80'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/api.js'].branchData['7'][1].init(19, 16, 'S.Env.host || {}');
+}_$jscoverage['/base/api.js'].branchData['7'][1].init(18, 16, 'S.Env.host || {}');
 function visit1_7_1(result) {
   _$jscoverage['/base/api.js'].branchData['7'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/api.js'].lineData[6]++;
-KISSY.add('dom/base/api', function(S) {
+KISSY.add(function(S) {
   _$jscoverage['/base/api.js'].functionData[0]++;
   _$jscoverage['/base/api.js'].lineData[7]++;
   var WINDOW = visit1_7_1(S.Env.host || {}), DOCUMENT = WINDOW.document, UA = S.UA, RE_NUM = /[\-+]?(?:\d*\.|)\d+(?:[eE][\-+]?\d+|)/.source, NodeType = {

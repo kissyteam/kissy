@@ -230,15 +230,16 @@ if (! _$jscoverage['/button/render.js']) {
   _$jscoverage['/button/render.js'] = {};
   _$jscoverage['/button/render.js'].lineData = [];
   _$jscoverage['/button/render.js'].lineData[6] = 0;
-  _$jscoverage['/button/render.js'].lineData[8] = 0;
-  _$jscoverage['/button/render.js'].lineData[10] = 0;
+  _$jscoverage['/button/render.js'].lineData[7] = 0;
+  _$jscoverage['/button/render.js'].lineData[9] = 0;
   _$jscoverage['/button/render.js'].lineData[11] = 0;
-  _$jscoverage['/button/render.js'].lineData[16] = 0;
+  _$jscoverage['/button/render.js'].lineData[12] = 0;
   _$jscoverage['/button/render.js'].lineData[17] = 0;
-  _$jscoverage['/button/render.js'].lineData[21] = 0;
-  _$jscoverage['/button/render.js'].lineData[23] = 0;
-  _$jscoverage['/button/render.js'].lineData[26] = 0;
-  _$jscoverage['/button/render.js'].lineData[29] = 0;
+  _$jscoverage['/button/render.js'].lineData[18] = 0;
+  _$jscoverage['/button/render.js'].lineData[22] = 0;
+  _$jscoverage['/button/render.js'].lineData[24] = 0;
+  _$jscoverage['/button/render.js'].lineData[27] = 0;
+  _$jscoverage['/button/render.js'].lineData[30] = 0;
 }
 if (! _$jscoverage['/button/render.js'].functionData) {
   _$jscoverage['/button/render.js'].functionData = [];
@@ -250,50 +251,51 @@ if (! _$jscoverage['/button/render.js'].functionData) {
 }
 if (! _$jscoverage['/button/render.js'].branchData) {
   _$jscoverage['/button/render.js'].branchData = {};
-  _$jscoverage['/button/render.js'].branchData['16'] = [];
-  _$jscoverage['/button/render.js'].branchData['16'][1] = new BranchData();
+  _$jscoverage['/button/render.js'].branchData['17'] = [];
+  _$jscoverage['/button/render.js'].branchData['17'][1] = new BranchData();
 }
-_$jscoverage['/button/render.js'].branchData['16'][1].init(243, 18, 'renderData.checked');
-function visit1_16_1(result) {
-  _$jscoverage['/button/render.js'].branchData['16'][1].ranCondition(result);
+_$jscoverage['/button/render.js'].branchData['17'][1].init(236, 18, 'renderData.checked');
+function visit1_17_1(result) {
+  _$jscoverage['/button/render.js'].branchData['17'][1].ranCondition(result);
   return result;
 }_$jscoverage['/button/render.js'].lineData[6]++;
-KISSY.add("button/render", function(S, Control) {
+KISSY.add(function(S, require) {
   _$jscoverage['/button/render.js'].functionData[0]++;
-  _$jscoverage['/button/render.js'].lineData[8]++;
+  _$jscoverage['/button/render.js'].lineData[7]++;
+  var Control = require('component/control');
+  _$jscoverage['/button/render.js'].lineData[9]++;
   return Control.getDefaultRender().extend({
   beforeCreateDom: function(renderData) {
   _$jscoverage['/button/render.js'].functionData[1]++;
-  _$jscoverage['/button/render.js'].lineData[10]++;
-  var self = this;
   _$jscoverage['/button/render.js'].lineData[11]++;
+  var self = this;
+  _$jscoverage['/button/render.js'].lineData[12]++;
   S.mix(renderData.elAttrs, {
   role: 'button', 
   title: renderData.tooltip, 
   'aria-describedby': renderData.describedby});
-  _$jscoverage['/button/render.js'].lineData[16]++;
-  if (visit1_16_1(renderData.checked)) {
-    _$jscoverage['/button/render.js'].lineData[17]++;
+  _$jscoverage['/button/render.js'].lineData[17]++;
+  if (visit1_17_1(renderData.checked)) {
+    _$jscoverage['/button/render.js'].lineData[18]++;
     renderData.elCls.push(self.getBaseCssClasses("checked"));
   }
 }, 
   _onSetChecked: function(v) {
   _$jscoverage['/button/render.js'].functionData[2]++;
-  _$jscoverage['/button/render.js'].lineData[21]++;
+  _$jscoverage['/button/render.js'].lineData[22]++;
   var self = this, cls = self.getBaseCssClasses("checked");
-  _$jscoverage['/button/render.js'].lineData[23]++;
+  _$jscoverage['/button/render.js'].lineData[24]++;
   self.$el[v ? 'addClass' : 'removeClass'](cls);
 }, 
   '_onSetTooltip': function(title) {
   _$jscoverage['/button/render.js'].functionData[3]++;
-  _$jscoverage['/button/render.js'].lineData[26]++;
+  _$jscoverage['/button/render.js'].lineData[27]++;
   this.el.setAttribute("title", title);
 }, 
   '_onSetDescribedby': function(describedby) {
   _$jscoverage['/button/render.js'].functionData[4]++;
-  _$jscoverage['/button/render.js'].lineData[29]++;
+  _$jscoverage['/button/render.js'].lineData[30]++;
   this.el.setAttribute("aria-describedby", describedby);
 }}, {
   name: 'ButtonRender'});
-}, {
-  requires: ['component/control']});
+});

@@ -10,6 +10,7 @@
 KISSY.add(function (S, require) {
     var Editor = require('./base');
     require('./selection');
+    var KERange = require('./range');
     var Node = require('node');
 
     var TRUE = true,
@@ -309,12 +310,12 @@ KISSY.add(function (S, require) {
         });
     }
 
-    function fireSelectionChangeForNonIE(editor) {
+    function fireSelectionChangeForStandard(editor) {
         // In other browsers, we make the selection change
         // check based on other events, like clicks or keys
         // press.
         function monitor() {
-            // S.log("fireSelectionChangeForNonIE in selection/index");
+            // S.log("fireSelectionChangeForStandard in selection/index");
             editor.checkSelectionChange();
         }
 
@@ -364,10 +365,25 @@ KISSY.add(function (S, require) {
         editor.on("selectionChange", function (ev) {
             // S.log("monitor selectionChange in selection/index.js");
             var path = ev.path,
-                body = new Node(editor.get("document")[0].body),
+                editorDoc = editor.get("document")[0],
+                body = new Node(editorDoc.body),
                 selection = ev.selection,
                 range = selection && selection.getRanges()[0],
+            // ie11 will null, htmlElement
                 blockLimit = path.blockLimit;
+
+            if (!body[0]) {
+                // ie11 can remove body
+                editorDoc.documentElement.appendChild(editorDoc.createElement('body'));
+                body = new Node(editorDoc.body);
+                if (range) {
+                    range.setStart(body, 0);
+                    range.collapse(1);
+                }
+            }
+
+            blockLimit = blockLimit || body;
+
 
             // Fix gecko link bug, when a link is placed at the end of block elements there is
             // no way to move the caret behind the link. This fix adds a bogus br element after the link
@@ -394,6 +410,9 @@ KISSY.add(function (S, require) {
 
             // 裸的光标出现在 body 里面
             if (blockLimit.nodeName() == "body") {
+                if (range.startContainer.nodeName() == 'html') {
+                    range.setStart(body, 0);
+                }
                 var fixedBlock = range.fixBlock(TRUE, "p");
                 if (fixedBlock &&
                     // https://dev.ckeditor.com/ticket/8550
@@ -456,7 +475,20 @@ KISSY.add(function (S, require) {
                     fixCursorForIE(editor);
                     fixSelectionForIEWhenDocReady(editor);
                 } else {
-                    fireSelectionChangeForNonIE(editor);
+                    fireSelectionChangeForStandard(editor);
+                    // ie buggy, will not show cursor sometimes
+                    if (UA.ieMode == 11) {
+                        editor.get('document').on('focusin', function (e) {
+                            var selection = editor.getSelection();
+                            var range = selection && selection.getRanges()[0];
+                            if (!range) {
+                                range = new KERange(this);
+                                range.setStart(Node.all(e.target), 0);
+                                range.collapse(1);
+                                range.select();
+                            }
+                        });
+                    }
                 }
             });
             // 1. 选择区域变化时各个浏览器的奇怪修复

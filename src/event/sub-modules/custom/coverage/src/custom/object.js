@@ -230,6 +230,7 @@ if (! _$jscoverage['/custom/object.js']) {
   _$jscoverage['/custom/object.js'] = {};
   _$jscoverage['/custom/object.js'].lineData = [];
   _$jscoverage['/custom/object.js'].lineData[6] = 0;
+  _$jscoverage['/custom/object.js'].lineData[7] = 0;
   _$jscoverage['/custom/object.js'].lineData[17] = 0;
   _$jscoverage['/custom/object.js'].lineData[18] = 0;
   _$jscoverage['/custom/object.js'].lineData[19] = 0;
@@ -245,8 +246,10 @@ if (! _$jscoverage['/custom/object.js'].branchData) {
   _$jscoverage['/custom/object.js'].branchData = {};
 }
 _$jscoverage['/custom/object.js'].lineData[6]++;
-KISSY.add('event/custom/object', function(S, BaseEvent) {
+KISSY.add(function(S, require) {
   _$jscoverage['/custom/object.js'].functionData[0]++;
+  _$jscoverage['/custom/object.js'].lineData[7]++;
+  var BaseEvent = require('event/base');
   _$jscoverage['/custom/object.js'].lineData[17]++;
   function CustomEventObject(data) {
     _$jscoverage['/custom/object.js'].functionData[1]++;
@@ -259,5 +262,4 @@ KISSY.add('event/custom/object', function(S, BaseEvent) {
   S.extend(CustomEventObject, BaseEvent.Object);
   _$jscoverage['/custom/object.js'].lineData[34]++;
   return CustomEventObject;
-}, {
-  requires: ['event/base']});
+});

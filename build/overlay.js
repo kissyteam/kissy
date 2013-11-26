@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 26 12:15
+build time: Nov 26 22:03
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -20,7 +20,8 @@ build time: Nov 26 12:15
  overlay
 */
 
-KISSY.add("overlay/extension/loading", [], "overlay/extension/loading", function(S, Node) {
+KISSY.add("overlay/extension/loading", ["node"], function(S, require) {
+  var Node = require("node");
   function Loading() {
   }
   Loading.prototype = {loading:function() {
@@ -34,9 +35,9 @@ KISSY.add("overlay/extension/loading", [], "overlay/extension/loading", function
     lel && lel.hide()
   }};
   return Loading
-}, {requires:["node"]});
-KISSY.add("overlay/extension/mask", [], "overlay/extension/mask", function(S, Node) {
-  var UA = S.UA, ie6 = UA["ie"] === 6, $ = Node.all;
+});
+KISSY.add("overlay/extension/mask", ["node"], function(S, require) {
+  var UA = S.UA, Node = require("node"), ie6 = UA["ie"] === 6, $ = Node.all;
   function docWidth() {
     return ie6 ? "expression(KISSY.DOM.docWidth())" : "100%"
   }
@@ -109,7 +110,7 @@ KISSY.add("overlay/extension/mask", [], "overlay/extension/mask", function(S, No
     }
   }};
   return Mask
-}, {requires:["node"]});
+});
 KISSY.add("overlay/close-xtpl", [], function(S, require, exports, module) {
   return function(scopes, S, undefined) {
     var buffer = "", config = this.config, engine = this, moduleWrap, utils = config.utils;
@@ -192,7 +193,7 @@ KISSY.add("overlay/overlay-render", ["component/container", "./overlay-xtpl", "c
     return el.one("." + this.getBaseCssClass("close"))
   }}})
 });
-KISSY.add("overlay/extension/overlay-effect", [], "overlay/extension/overlay-effect", function(S) {
+KISSY.add("overlay/extension/overlay-effect", [], function(S) {
   var effects = {fade:["Out", "In"], slide:["Up", "Down"]};
   function getGhost(self) {
     var el = self.$el, ghost = el.clone(true);

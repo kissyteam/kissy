@@ -3,7 +3,7 @@
  * effect for overlay
  * @author yiminghe@gmail.com
  */
-KISSY.add('overlay/extension/overlay-effect', function (S) {
+KISSY.add(function (S) {
     var effects = {fade: ["Out", "In"], slide: ["Up", "Down"]};
 
     function getGhost(self) {

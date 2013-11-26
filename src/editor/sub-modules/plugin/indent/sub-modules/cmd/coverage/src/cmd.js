@@ -231,8 +231,9 @@ if (! _$jscoverage['/cmd.js']) {
   _$jscoverage['/cmd.js'].lineData = [];
   _$jscoverage['/cmd.js'].lineData[6] = 0;
   _$jscoverage['/cmd.js'].lineData[7] = 0;
-  _$jscoverage['/cmd.js'].lineData[8] = 0;
+  _$jscoverage['/cmd.js'].lineData[9] = 0;
   _$jscoverage['/cmd.js'].lineData[10] = 0;
+  _$jscoverage['/cmd.js'].lineData[12] = 0;
 }
 if (! _$jscoverage['/cmd.js'].functionData) {
   _$jscoverage['/cmd.js'].functionData = [];
@@ -243,16 +244,17 @@ if (! _$jscoverage['/cmd.js'].branchData) {
   _$jscoverage['/cmd.js'].branchData = {};
 }
 _$jscoverage['/cmd.js'].lineData[6]++;
-KISSY.add("editor/plugin/indent/cmd", function(S, Editor, dentUtils) {
+KISSY.add(function(S, require) {
   _$jscoverage['/cmd.js'].functionData[0]++;
   _$jscoverage['/cmd.js'].lineData[7]++;
+  var dentUtils = require('../dent-cmd');
+  _$jscoverage['/cmd.js'].lineData[9]++;
   var addCommand = dentUtils.addCommand;
-  _$jscoverage['/cmd.js'].lineData[8]++;
+  _$jscoverage['/cmd.js'].lineData[10]++;
   return {
   init: function(editor) {
   _$jscoverage['/cmd.js'].functionData[1]++;
-  _$jscoverage['/cmd.js'].lineData[10]++;
+  _$jscoverage['/cmd.js'].lineData[12]++;
   addCommand(editor, "indent");
 }};
-}, {
-  requires: ['editor', '../dent-cmd']});
+});

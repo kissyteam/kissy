@@ -6,8 +6,9 @@
 KISSY.add(function (S, require) {
     var Promise = require('promise'),
         IO = require('./base');
+    var   logger = S.getLogger('s/logger');
     var OK_CODE = 200,
-        logger = S.getLogger('s/logger'),
+
         MULTIPLE_CHOICES = 300,
         NOT_MODIFIED = 304,
     // get individual response header from response header str

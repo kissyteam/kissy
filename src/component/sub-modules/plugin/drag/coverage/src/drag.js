@@ -230,6 +230,7 @@ if (! _$jscoverage['/drag.js']) {
   _$jscoverage['/drag.js'] = {};
   _$jscoverage['/drag.js'].lineData = [];
   _$jscoverage['/drag.js'].lineData[6] = 0;
+  _$jscoverage['/drag.js'].lineData[7] = 0;
   _$jscoverage['/drag.js'].lineData[32] = 0;
   _$jscoverage['/drag.js'].lineData[37] = 0;
   _$jscoverage['/drag.js'].lineData[39] = 0;
@@ -249,8 +250,10 @@ if (! _$jscoverage['/drag.js'].branchData) {
   _$jscoverage['/drag.js'].branchData = {};
 }
 _$jscoverage['/drag.js'].lineData[6]++;
-KISSY.add('component/plugin/drag', function(S, Base, DD) {
+KISSY.add(function(S, require) {
   _$jscoverage['/drag.js'].functionData[0]++;
+  _$jscoverage['/drag.js'].lineData[7]++;
+  var DD = require('dd');
   _$jscoverage['/drag.js'].lineData[32]++;
   return DD.Draggable.extend({
   pluginId: 'component/plugin/drag', 
@@ -279,5 +282,4 @@ KISSY.add('component/plugin/drag', function(S, Base, DD) {
   value: 1}, 
   groups: {
   value: false}}});
-}, {
-  requires: ['base', 'dd']});
+});

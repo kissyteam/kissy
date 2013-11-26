@@ -1,7 +1,7 @@
 /*
-Copyright 2013, KISSY v1.40dev
+Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Oct 25 16:48
+build time: Nov 27 00:02
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -9,47 +9,28 @@ build time: Oct 25 16:48
  editor/plugin/unordered-list/cmd
 */
 
-/**
- * @ignore
- * ol command
- * @author yiminghe@gmail.com
- */
-KISSY.add("editor/plugin/unordered-list/cmd", function (S, Editor, listCmd) {
-
-    var insertUnorderedList = "insertUnorderedList",
-        ListCommand = listCmd.ListCommand,
-        queryActive = listCmd.queryActive,
-        ulCmd = new ListCommand("ul");
-
-    return {
-        init:function (editor) {
-            if (!editor.hasCommand(insertUnorderedList)) {
-                editor.addCommand(insertUnorderedList, {
-                    exec:function (editor,type) {
-                        editor.focus();
-                        ulCmd.exec(editor,type);
-                    }
-                });
-            }
-
-            var queryUl = Editor.Utils.getQueryCmd(insertUnorderedList);
-
-            if (!editor.hasCommand(queryUl)) {
-                editor.addCommand(queryUl, {
-                    exec:function (editor) {
-                        var selection = editor.getSelection();
-                        if (selection && !selection.isInvalid) {
-                            var startElement = selection.getStartElement();
-                            var elementPath = new Editor.ElementPath(startElement);
-                            return queryActive("ul", elementPath);
-                        }
-                    }
-                });
-            }
+KISSY.add("editor/plugin/unordered-list/cmd", ["editor", "../list-utils/cmd"], function(S, require) {
+  var Editor = require("editor");
+  var listCmd = require("../list-utils/cmd");
+  var insertUnorderedList = "insertUnorderedList", ListCommand = listCmd.ListCommand, queryActive = listCmd.queryActive, ulCmd = new ListCommand("ul");
+  return{init:function(editor) {
+    if(!editor.hasCommand(insertUnorderedList)) {
+      editor.addCommand(insertUnorderedList, {exec:function(editor, type) {
+        editor.focus();
+        ulCmd.exec(editor, type)
+      }})
+    }
+    var queryUl = Editor.Utils.getQueryCmd(insertUnorderedList);
+    if(!editor.hasCommand(queryUl)) {
+      editor.addCommand(queryUl, {exec:function(editor) {
+        var selection = editor.getSelection();
+        if(selection && !selection.isInvalid) {
+          var startElement = selection.getStartElement();
+          var elementPath = new Editor.ElementPath(startElement);
+          return queryActive("ul", elementPath)
         }
-    };
-
-}, {
-    requires:['editor', '../list-utils/cmd']
+      }})
+    }
+  }}
 });
 

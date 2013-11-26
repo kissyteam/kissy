@@ -231,7 +231,17 @@ if (! _$jscoverage['/base.js']) {
   _$jscoverage['/base.js'].lineData = [];
   _$jscoverage['/base.js'].lineData[6] = 0;
   _$jscoverage['/base.js'].lineData[7] = 0;
+  _$jscoverage['/base.js'].lineData[9] = 0;
+  _$jscoverage['/base.js'].lineData[10] = 0;
+  _$jscoverage['/base.js'].lineData[11] = 0;
+  _$jscoverage['/base.js'].lineData[12] = 0;
+  _$jscoverage['/base.js'].lineData[13] = 0;
   _$jscoverage['/base.js'].lineData[14] = 0;
+  _$jscoverage['/base.js'].lineData[15] = 0;
+  _$jscoverage['/base.js'].lineData[16] = 0;
+  _$jscoverage['/base.js'].lineData[17] = 0;
+  _$jscoverage['/base.js'].lineData[19] = 0;
+  _$jscoverage['/base.js'].lineData[26] = 0;
 }
 if (! _$jscoverage['/base.js'].functionData) {
   _$jscoverage['/base.js'].functionData = [];
@@ -241,14 +251,33 @@ if (! _$jscoverage['/base.js'].branchData) {
   _$jscoverage['/base.js'].branchData = {};
 }
 _$jscoverage['/base.js'].lineData[6]++;
-KISSY.add('dom/base', function(S, Dom) {
+KISSY.add(function(S, require) {
   _$jscoverage['/base.js'].functionData[0]++;
   _$jscoverage['/base.js'].lineData[7]++;
+  var Dom = require('./base/api');
+  _$jscoverage['/base.js'].lineData[9]++;
+  require('./base/attr');
+  _$jscoverage['/base.js'].lineData[10]++;
+  require('./base/class');
+  _$jscoverage['/base.js'].lineData[11]++;
+  require('./base/create');
+  _$jscoverage['/base.js'].lineData[12]++;
+  require('./base/data');
+  _$jscoverage['/base.js'].lineData[13]++;
+  require('./base/insertion');
+  _$jscoverage['/base.js'].lineData[14]++;
+  require('./base/offset');
+  _$jscoverage['/base.js'].lineData[15]++;
+  require('./base/style');
+  _$jscoverage['/base.js'].lineData[16]++;
+  require('./base/selector');
+  _$jscoverage['/base.js'].lineData[17]++;
+  require('./base/traversal');
+  _$jscoverage['/base.js'].lineData[19]++;
   S.mix(S, {
   DOM: Dom, 
   get: Dom.get, 
   query: Dom.query});
-  _$jscoverage['/base.js'].lineData[14]++;
+  _$jscoverage['/base.js'].lineData[26]++;
   return Dom;
-}, {
-  requires: ['./base/api', './base/attr', './base/class', './base/create', './base/data', './base/insertion', './base/offset', './base/style', './base/selector', './base/traversal']});
+});

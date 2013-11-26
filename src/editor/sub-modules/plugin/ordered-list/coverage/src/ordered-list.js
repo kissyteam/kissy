@@ -231,10 +231,12 @@ if (! _$jscoverage['/ordered-list.js']) {
   _$jscoverage['/ordered-list.js'].lineData = [];
   _$jscoverage['/ordered-list.js'].lineData[6] = 0;
   _$jscoverage['/ordered-list.js'].lineData[7] = 0;
+  _$jscoverage['/ordered-list.js'].lineData[8] = 0;
   _$jscoverage['/ordered-list.js'].lineData[10] = 0;
-  _$jscoverage['/ordered-list.js'].lineData[12] = 0;
-  _$jscoverage['/ordered-list.js'].lineData[14] = 0;
-  _$jscoverage['/ordered-list.js'].lineData[59] = 0;
+  _$jscoverage['/ordered-list.js'].lineData[13] = 0;
+  _$jscoverage['/ordered-list.js'].lineData[15] = 0;
+  _$jscoverage['/ordered-list.js'].lineData[17] = 0;
+  _$jscoverage['/ordered-list.js'].lineData[62] = 0;
 }
 if (! _$jscoverage['/ordered-list.js'].functionData) {
   _$jscoverage['/ordered-list.js'].functionData = [];
@@ -246,19 +248,23 @@ if (! _$jscoverage['/ordered-list.js'].branchData) {
   _$jscoverage['/ordered-list.js'].branchData = {};
 }
 _$jscoverage['/ordered-list.js'].lineData[6]++;
-KISSY.add("editor/plugin/ordered-list", function(S, Editor, ListButton, ListCmd) {
+KISSY.add(function(S, require) {
   _$jscoverage['/ordered-list.js'].functionData[0]++;
   _$jscoverage['/ordered-list.js'].lineData[7]++;
+  var ListButton = require('./list-utils/btn');
+  _$jscoverage['/ordered-list.js'].lineData[8]++;
+  var ListCmd = require('./ordered-list/cmd');
+  _$jscoverage['/ordered-list.js'].lineData[10]++;
   function orderedList() {
     _$jscoverage['/ordered-list.js'].functionData[1]++;
   }
-  _$jscoverage['/ordered-list.js'].lineData[10]++;
+  _$jscoverage['/ordered-list.js'].lineData[13]++;
   S.augment(orderedList, {
   pluginRenderUI: function(editor) {
   _$jscoverage['/ordered-list.js'].functionData[2]++;
-  _$jscoverage['/ordered-list.js'].lineData[12]++;
+  _$jscoverage['/ordered-list.js'].lineData[15]++;
   ListCmd.init(editor);
-  _$jscoverage['/ordered-list.js'].lineData[14]++;
+  _$jscoverage['/ordered-list.js'].lineData[17]++;
   ListButton.init(editor, {
   cmdType: "insertOrderedList", 
   buttonId: 'orderedList', 
@@ -277,7 +283,6 @@ KISSY.add("editor/plugin/ordered-list", function(S, Editor, ListButton, ListCmd)
   value: 'upper-roman'}]}, 
   tooltip: '\u6709\u5e8f\u5217\u8868'});
 }});
-  _$jscoverage['/ordered-list.js'].lineData[59]++;
+  _$jscoverage['/ordered-list.js'].lineData[62]++;
   return orderedList;
-}, {
-  requires: ['editor', './list-utils/btn', './ordered-list/cmd']});
+});

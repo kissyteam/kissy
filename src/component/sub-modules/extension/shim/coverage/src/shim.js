@@ -252,16 +252,16 @@ if (! _$jscoverage['/shim.js'].branchData) {
   _$jscoverage['/shim.js'].branchData['44'] = [];
   _$jscoverage['/shim.js'].branchData['44'][1] = new BranchData();
 }
-_$jscoverage['/shim.js'].branchData['44'][1].init(14, 16, 'this.get(\'shim\')');
+_$jscoverage['/shim.js'].branchData['44'][1].init(13, 16, 'this.get(\'shim\')');
 function visit2_44_1(result) {
   _$jscoverage['/shim.js'].branchData['44'][1].ranCondition(result);
   return result;
-}_$jscoverage['/shim.js'].branchData['7'][1].init(16, 13, 'S.UA.ie === 6');
+}_$jscoverage['/shim.js'].branchData['7'][1].init(15, 13, 'S.UA.ie === 6');
 function visit1_7_1(result) {
   _$jscoverage['/shim.js'].branchData['7'][1].ranCondition(result);
   return result;
 }_$jscoverage['/shim.js'].lineData[6]++;
-KISSY.add("component/extension/shim", function(S) {
+KISSY.add(function(S) {
   _$jscoverage['/shim.js'].functionData[0]++;
   _$jscoverage['/shim.js'].lineData[7]++;
   var ie6 = visit1_7_1(S.UA.ie === 6);

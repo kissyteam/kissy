@@ -4,10 +4,11 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S) {
+    var   logger = S.getLogger('s/promise');
     var PROMISE_VALUE = '__promise_value',
         undefined = undefined,
         processImmediate = S.setImmediate,
-        logger = S.getLogger('s/promise'),
+
         PROMISE_PROGRESS_LISTENERS = '__promise_progress_listeners',
         PROMISE_PENDINGS = '__promise_pendings';
 

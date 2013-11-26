@@ -231,51 +231,54 @@ if (! _$jscoverage['/base/valuechange.js']) {
   _$jscoverage['/base/valuechange.js'].lineData = [];
   _$jscoverage['/base/valuechange.js'].lineData[15] = 0;
   _$jscoverage['/base/valuechange.js'].lineData[16] = 0;
-  _$jscoverage['/base/valuechange.js'].lineData[23] = 0;
-  _$jscoverage['/base/valuechange.js'].lineData[24] = 0;
-  _$jscoverage['/base/valuechange.js'].lineData[25] = 0;
-  _$jscoverage['/base/valuechange.js'].lineData[26] = 0;
+  _$jscoverage['/base/valuechange.js'].lineData[17] = 0;
+  _$jscoverage['/base/valuechange.js'].lineData[18] = 0;
+  _$jscoverage['/base/valuechange.js'].lineData[20] = 0;
   _$jscoverage['/base/valuechange.js'].lineData[27] = 0;
+  _$jscoverage['/base/valuechange.js'].lineData[28] = 0;
+  _$jscoverage['/base/valuechange.js'].lineData[29] = 0;
+  _$jscoverage['/base/valuechange.js'].lineData[30] = 0;
   _$jscoverage['/base/valuechange.js'].lineData[31] = 0;
-  _$jscoverage['/base/valuechange.js'].lineData[32] = 0;
-  _$jscoverage['/base/valuechange.js'].lineData[33] = 0;
+  _$jscoverage['/base/valuechange.js'].lineData[35] = 0;
   _$jscoverage['/base/valuechange.js'].lineData[36] = 0;
   _$jscoverage['/base/valuechange.js'].lineData[37] = 0;
   _$jscoverage['/base/valuechange.js'].lineData[40] = 0;
   _$jscoverage['/base/valuechange.js'].lineData[41] = 0;
-  _$jscoverage['/base/valuechange.js'].lineData[43] = 0;
+  _$jscoverage['/base/valuechange.js'].lineData[44] = 0;
   _$jscoverage['/base/valuechange.js'].lineData[45] = 0;
+  _$jscoverage['/base/valuechange.js'].lineData[47] = 0;
   _$jscoverage['/base/valuechange.js'].lineData[49] = 0;
   _$jscoverage['/base/valuechange.js'].lineData[53] = 0;
-  _$jscoverage['/base/valuechange.js'].lineData[54] = 0;
-  _$jscoverage['/base/valuechange.js'].lineData[55] = 0;
   _$jscoverage['/base/valuechange.js'].lineData[57] = 0;
   _$jscoverage['/base/valuechange.js'].lineData[58] = 0;
   _$jscoverage['/base/valuechange.js'].lineData[59] = 0;
+  _$jscoverage['/base/valuechange.js'].lineData[61] = 0;
+  _$jscoverage['/base/valuechange.js'].lineData[62] = 0;
   _$jscoverage['/base/valuechange.js'].lineData[63] = 0;
-  _$jscoverage['/base/valuechange.js'].lineData[64] = 0;
-  _$jscoverage['/base/valuechange.js'].lineData[66] = 0;
   _$jscoverage['/base/valuechange.js'].lineData[67] = 0;
-  _$jscoverage['/base/valuechange.js'].lineData[69] = 0;
-  _$jscoverage['/base/valuechange.js'].lineData[72] = 0;
+  _$jscoverage['/base/valuechange.js'].lineData[68] = 0;
+  _$jscoverage['/base/valuechange.js'].lineData[70] = 0;
+  _$jscoverage['/base/valuechange.js'].lineData[71] = 0;
   _$jscoverage['/base/valuechange.js'].lineData[73] = 0;
   _$jscoverage['/base/valuechange.js'].lineData[76] = 0;
   _$jscoverage['/base/valuechange.js'].lineData[77] = 0;
-  _$jscoverage['/base/valuechange.js'].lineData[78] = 0;
+  _$jscoverage['/base/valuechange.js'].lineData[80] = 0;
   _$jscoverage['/base/valuechange.js'].lineData[81] = 0;
   _$jscoverage['/base/valuechange.js'].lineData[82] = 0;
   _$jscoverage['/base/valuechange.js'].lineData[85] = 0;
   _$jscoverage['/base/valuechange.js'].lineData[86] = 0;
-  _$jscoverage['/base/valuechange.js'].lineData[87] = 0;
-  _$jscoverage['/base/valuechange.js'].lineData[88] = 0;
   _$jscoverage['/base/valuechange.js'].lineData[89] = 0;
+  _$jscoverage['/base/valuechange.js'].lineData[90] = 0;
+  _$jscoverage['/base/valuechange.js'].lineData[91] = 0;
   _$jscoverage['/base/valuechange.js'].lineData[92] = 0;
-  _$jscoverage['/base/valuechange.js'].lineData[94] = 0;
-  _$jscoverage['/base/valuechange.js'].lineData[95] = 0;
+  _$jscoverage['/base/valuechange.js'].lineData[93] = 0;
   _$jscoverage['/base/valuechange.js'].lineData[96] = 0;
+  _$jscoverage['/base/valuechange.js'].lineData[98] = 0;
+  _$jscoverage['/base/valuechange.js'].lineData[99] = 0;
   _$jscoverage['/base/valuechange.js'].lineData[100] = 0;
-  _$jscoverage['/base/valuechange.js'].lineData[101] = 0;
   _$jscoverage['/base/valuechange.js'].lineData[104] = 0;
+  _$jscoverage['/base/valuechange.js'].lineData[105] = 0;
+  _$jscoverage['/base/valuechange.js'].lineData[108] = 0;
 }
 if (! _$jscoverage['/base/valuechange.js'].functionData) {
   _$jscoverage['/base/valuechange.js'].functionData = [];
@@ -295,174 +298,179 @@ if (! _$jscoverage['/base/valuechange.js'].functionData) {
 }
 if (! _$jscoverage['/base/valuechange.js'].branchData) {
   _$jscoverage['/base/valuechange.js'].branchData = {};
-  _$jscoverage['/base/valuechange.js'].branchData['24'] = [];
-  _$jscoverage['/base/valuechange.js'].branchData['24'][1] = new BranchData();
-  _$jscoverage['/base/valuechange.js'].branchData['43'] = [];
-  _$jscoverage['/base/valuechange.js'].branchData['43'][1] = new BranchData();
-  _$jscoverage['/base/valuechange.js'].branchData['54'] = [];
-  _$jscoverage['/base/valuechange.js'].branchData['54'][1] = new BranchData();
-  _$jscoverage['/base/valuechange.js'].branchData['66'] = [];
-  _$jscoverage['/base/valuechange.js'].branchData['66'][1] = new BranchData();
-  _$jscoverage['/base/valuechange.js'].branchData['95'] = [];
-  _$jscoverage['/base/valuechange.js'].branchData['95'][1] = new BranchData();
-  _$jscoverage['/base/valuechange.js'].branchData['95'][2] = new BranchData();
-  _$jscoverage['/base/valuechange.js'].branchData['95'][3] = new BranchData();
+  _$jscoverage['/base/valuechange.js'].branchData['28'] = [];
+  _$jscoverage['/base/valuechange.js'].branchData['28'][1] = new BranchData();
+  _$jscoverage['/base/valuechange.js'].branchData['47'] = [];
+  _$jscoverage['/base/valuechange.js'].branchData['47'][1] = new BranchData();
+  _$jscoverage['/base/valuechange.js'].branchData['58'] = [];
+  _$jscoverage['/base/valuechange.js'].branchData['58'][1] = new BranchData();
+  _$jscoverage['/base/valuechange.js'].branchData['70'] = [];
+  _$jscoverage['/base/valuechange.js'].branchData['70'][1] = new BranchData();
+  _$jscoverage['/base/valuechange.js'].branchData['99'] = [];
+  _$jscoverage['/base/valuechange.js'].branchData['99'][1] = new BranchData();
+  _$jscoverage['/base/valuechange.js'].branchData['99'][2] = new BranchData();
+  _$jscoverage['/base/valuechange.js'].branchData['99'][3] = new BranchData();
 }
-_$jscoverage['/base/valuechange.js'].branchData['95'][3].init(105, 22, 'nodeName == \'textarea\'');
-function visit214_95_3(result) {
-  _$jscoverage['/base/valuechange.js'].branchData['95'][3].ranCondition(result);
+_$jscoverage['/base/valuechange.js'].branchData['99'][3].init(103, 22, 'nodeName == \'textarea\'');
+function visit214_99_3(result) {
+  _$jscoverage['/base/valuechange.js'].branchData['99'][3].ranCondition(result);
   return result;
-}_$jscoverage['/base/valuechange.js'].branchData['95'][2].init(82, 19, 'nodeName == \'input\'');
-function visit213_95_2(result) {
-  _$jscoverage['/base/valuechange.js'].branchData['95'][2].ranCondition(result);
+}_$jscoverage['/base/valuechange.js'].branchData['99'][2].init(80, 19, 'nodeName == \'input\'');
+function visit213_99_2(result) {
+  _$jscoverage['/base/valuechange.js'].branchData['99'][2].ranCondition(result);
   return result;
-}_$jscoverage['/base/valuechange.js'].branchData['95'][1].init(82, 45, 'nodeName == \'input\' || nodeName == \'textarea\'');
-function visit212_95_1(result) {
-  _$jscoverage['/base/valuechange.js'].branchData['95'][1].ranCondition(result);
+}_$jscoverage['/base/valuechange.js'].branchData['99'][1].init(80, 45, 'nodeName == \'input\' || nodeName == \'textarea\'');
+function visit212_99_1(result) {
+  _$jscoverage['/base/valuechange.js'].branchData['99'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/valuechange.js'].branchData['66'][1].init(108, 18, 'ev.type == \'focus\'');
-function visit211_66_1(result) {
-  _$jscoverage['/base/valuechange.js'].branchData['66'][1].ranCondition(result);
+}_$jscoverage['/base/valuechange.js'].branchData['70'][1].init(105, 18, 'ev.type == \'focus\'');
+function visit211_70_1(result) {
+  _$jscoverage['/base/valuechange.js'].branchData['70'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/valuechange.js'].branchData['54'][1].init(14, 29, 'Dom.hasData(target, POLL_KEY)');
-function visit210_54_1(result) {
-  _$jscoverage['/base/valuechange.js'].branchData['54'][1].ranCondition(result);
+}_$jscoverage['/base/valuechange.js'].branchData['58'][1].init(13, 29, 'Dom.hasData(target, POLL_KEY)');
+function visit210_58_1(result) {
+  _$jscoverage['/base/valuechange.js'].branchData['58'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/valuechange.js'].branchData['43'][1].init(93, 7, 'v !== h');
-function visit209_43_1(result) {
-  _$jscoverage['/base/valuechange.js'].branchData['43'][1].ranCondition(result);
+}_$jscoverage['/base/valuechange.js'].branchData['47'][1].init(90, 7, 'v !== h');
+function visit209_47_1(result) {
+  _$jscoverage['/base/valuechange.js'].branchData['47'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/valuechange.js'].branchData['24'][1].init(14, 29, 'Dom.hasData(target, POLL_KEY)');
-function visit208_24_1(result) {
-  _$jscoverage['/base/valuechange.js'].branchData['24'][1].ranCondition(result);
+}_$jscoverage['/base/valuechange.js'].branchData['28'][1].init(13, 29, 'Dom.hasData(target, POLL_KEY)');
+function visit208_28_1(result) {
+  _$jscoverage['/base/valuechange.js'].branchData['28'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/valuechange.js'].lineData[15]++;
-KISSY.add('event/dom/base/valuechange', function(S, DomEvent, Dom, Special) {
+KISSY.add(function(S, require) {
   _$jscoverage['/base/valuechange.js'].functionData[0]++;
   _$jscoverage['/base/valuechange.js'].lineData[16]++;
+  var Dom = require('dom');
+  _$jscoverage['/base/valuechange.js'].lineData[17]++;
+  var DomEvent = require('./dom-event');
+  _$jscoverage['/base/valuechange.js'].lineData[18]++;
+  var Special = require('./special');
+  _$jscoverage['/base/valuechange.js'].lineData[20]++;
   var VALUE_CHANGE = 'valuechange', getNodeName = Dom.nodeName, KEY = 'event/valuechange', HISTORY_KEY = KEY + '/history', POLL_KEY = KEY + '/poll', interval = 50;
-  _$jscoverage['/base/valuechange.js'].lineData[23]++;
+  _$jscoverage['/base/valuechange.js'].lineData[27]++;
   function clearPollTimer(target) {
     _$jscoverage['/base/valuechange.js'].functionData[1]++;
-    _$jscoverage['/base/valuechange.js'].lineData[24]++;
-    if (visit208_24_1(Dom.hasData(target, POLL_KEY))) {
-      _$jscoverage['/base/valuechange.js'].lineData[25]++;
+    _$jscoverage['/base/valuechange.js'].lineData[28]++;
+    if (visit208_28_1(Dom.hasData(target, POLL_KEY))) {
+      _$jscoverage['/base/valuechange.js'].lineData[29]++;
       var poll = Dom.data(target, POLL_KEY);
-      _$jscoverage['/base/valuechange.js'].lineData[26]++;
+      _$jscoverage['/base/valuechange.js'].lineData[30]++;
       clearTimeout(poll);
-      _$jscoverage['/base/valuechange.js'].lineData[27]++;
+      _$jscoverage['/base/valuechange.js'].lineData[31]++;
       Dom.removeData(target, POLL_KEY);
     }
   }
-  _$jscoverage['/base/valuechange.js'].lineData[31]++;
+  _$jscoverage['/base/valuechange.js'].lineData[35]++;
   function stopPoll(target) {
     _$jscoverage['/base/valuechange.js'].functionData[2]++;
-    _$jscoverage['/base/valuechange.js'].lineData[32]++;
+    _$jscoverage['/base/valuechange.js'].lineData[36]++;
     Dom.removeData(target, HISTORY_KEY);
-    _$jscoverage['/base/valuechange.js'].lineData[33]++;
+    _$jscoverage['/base/valuechange.js'].lineData[37]++;
     clearPollTimer(target);
   }
-  _$jscoverage['/base/valuechange.js'].lineData[36]++;
+  _$jscoverage['/base/valuechange.js'].lineData[40]++;
   function stopPollHandler(ev) {
     _$jscoverage['/base/valuechange.js'].functionData[3]++;
-    _$jscoverage['/base/valuechange.js'].lineData[37]++;
+    _$jscoverage['/base/valuechange.js'].lineData[41]++;
     clearPollTimer(ev.target);
   }
-  _$jscoverage['/base/valuechange.js'].lineData[40]++;
+  _$jscoverage['/base/valuechange.js'].lineData[44]++;
   function checkChange(target) {
     _$jscoverage['/base/valuechange.js'].functionData[4]++;
-    _$jscoverage['/base/valuechange.js'].lineData[41]++;
+    _$jscoverage['/base/valuechange.js'].lineData[45]++;
     var v = target.value, h = Dom.data(target, HISTORY_KEY);
-    _$jscoverage['/base/valuechange.js'].lineData[43]++;
-    if (visit209_43_1(v !== h)) {
-      _$jscoverage['/base/valuechange.js'].lineData[45]++;
+    _$jscoverage['/base/valuechange.js'].lineData[47]++;
+    if (visit209_47_1(v !== h)) {
+      _$jscoverage['/base/valuechange.js'].lineData[49]++;
       DomEvent.fireHandler(target, VALUE_CHANGE, {
   prevVal: h, 
   newVal: v});
-      _$jscoverage['/base/valuechange.js'].lineData[49]++;
+      _$jscoverage['/base/valuechange.js'].lineData[53]++;
       Dom.data(target, HISTORY_KEY, v);
     }
   }
-  _$jscoverage['/base/valuechange.js'].lineData[53]++;
+  _$jscoverage['/base/valuechange.js'].lineData[57]++;
   function startPoll(target) {
     _$jscoverage['/base/valuechange.js'].functionData[5]++;
-    _$jscoverage['/base/valuechange.js'].lineData[54]++;
-    if (visit210_54_1(Dom.hasData(target, POLL_KEY))) {
-      _$jscoverage['/base/valuechange.js'].lineData[55]++;
+    _$jscoverage['/base/valuechange.js'].lineData[58]++;
+    if (visit210_58_1(Dom.hasData(target, POLL_KEY))) {
+      _$jscoverage['/base/valuechange.js'].lineData[59]++;
       return;
     }
-    _$jscoverage['/base/valuechange.js'].lineData[57]++;
+    _$jscoverage['/base/valuechange.js'].lineData[61]++;
     Dom.data(target, POLL_KEY, setTimeout(function() {
   _$jscoverage['/base/valuechange.js'].functionData[6]++;
-  _$jscoverage['/base/valuechange.js'].lineData[58]++;
+  _$jscoverage['/base/valuechange.js'].lineData[62]++;
   checkChange(target);
-  _$jscoverage['/base/valuechange.js'].lineData[59]++;
+  _$jscoverage['/base/valuechange.js'].lineData[63]++;
   Dom.data(target, POLL_KEY, setTimeout(arguments.callee, interval));
 }, interval));
   }
-  _$jscoverage['/base/valuechange.js'].lineData[63]++;
+  _$jscoverage['/base/valuechange.js'].lineData[67]++;
   function startPollHandler(ev) {
     _$jscoverage['/base/valuechange.js'].functionData[7]++;
-    _$jscoverage['/base/valuechange.js'].lineData[64]++;
+    _$jscoverage['/base/valuechange.js'].lineData[68]++;
     var target = ev.target;
-    _$jscoverage['/base/valuechange.js'].lineData[66]++;
-    if (visit211_66_1(ev.type == 'focus')) {
-      _$jscoverage['/base/valuechange.js'].lineData[67]++;
+    _$jscoverage['/base/valuechange.js'].lineData[70]++;
+    if (visit211_70_1(ev.type == 'focus')) {
+      _$jscoverage['/base/valuechange.js'].lineData[71]++;
       Dom.data(target, HISTORY_KEY, target.value);
     }
-    _$jscoverage['/base/valuechange.js'].lineData[69]++;
+    _$jscoverage['/base/valuechange.js'].lineData[73]++;
     startPoll(target);
   }
-  _$jscoverage['/base/valuechange.js'].lineData[72]++;
+  _$jscoverage['/base/valuechange.js'].lineData[76]++;
   function webkitSpeechChangeHandler(e) {
     _$jscoverage['/base/valuechange.js'].functionData[8]++;
-    _$jscoverage['/base/valuechange.js'].lineData[73]++;
+    _$jscoverage['/base/valuechange.js'].lineData[77]++;
     checkChange(e.target);
   }
-  _$jscoverage['/base/valuechange.js'].lineData[76]++;
+  _$jscoverage['/base/valuechange.js'].lineData[80]++;
   function monitor(target) {
     _$jscoverage['/base/valuechange.js'].functionData[9]++;
-    _$jscoverage['/base/valuechange.js'].lineData[77]++;
-    unmonitored(target);
-    _$jscoverage['/base/valuechange.js'].lineData[78]++;
-    DomEvent.on(target, 'blur', stopPollHandler);
     _$jscoverage['/base/valuechange.js'].lineData[81]++;
-    DomEvent.on(target, 'webkitspeechchange', webkitSpeechChangeHandler);
+    unmonitored(target);
     _$jscoverage['/base/valuechange.js'].lineData[82]++;
+    DomEvent.on(target, 'blur', stopPollHandler);
+    _$jscoverage['/base/valuechange.js'].lineData[85]++;
+    DomEvent.on(target, 'webkitspeechchange', webkitSpeechChangeHandler);
+    _$jscoverage['/base/valuechange.js'].lineData[86]++;
     DomEvent.on(target, 'mousedown keyup keydown focus', startPollHandler);
   }
-  _$jscoverage['/base/valuechange.js'].lineData[85]++;
+  _$jscoverage['/base/valuechange.js'].lineData[89]++;
   function unmonitored(target) {
     _$jscoverage['/base/valuechange.js'].functionData[10]++;
-    _$jscoverage['/base/valuechange.js'].lineData[86]++;
+    _$jscoverage['/base/valuechange.js'].lineData[90]++;
     stopPoll(target);
-    _$jscoverage['/base/valuechange.js'].lineData[87]++;
+    _$jscoverage['/base/valuechange.js'].lineData[91]++;
     DomEvent.detach(target, 'blur', stopPollHandler);
-    _$jscoverage['/base/valuechange.js'].lineData[88]++;
+    _$jscoverage['/base/valuechange.js'].lineData[92]++;
     DomEvent.detach(target, 'webkitspeechchange', webkitSpeechChangeHandler);
-    _$jscoverage['/base/valuechange.js'].lineData[89]++;
+    _$jscoverage['/base/valuechange.js'].lineData[93]++;
     DomEvent.detach(target, 'mousedown keyup keydown focus', startPollHandler);
   }
-  _$jscoverage['/base/valuechange.js'].lineData[92]++;
+  _$jscoverage['/base/valuechange.js'].lineData[96]++;
   Special[VALUE_CHANGE] = {
   setup: function() {
   _$jscoverage['/base/valuechange.js'].functionData[11]++;
-  _$jscoverage['/base/valuechange.js'].lineData[94]++;
+  _$jscoverage['/base/valuechange.js'].lineData[98]++;
   var target = this, nodeName = getNodeName(target);
-  _$jscoverage['/base/valuechange.js'].lineData[95]++;
-  if (visit212_95_1(visit213_95_2(nodeName == 'input') || visit214_95_3(nodeName == 'textarea'))) {
-    _$jscoverage['/base/valuechange.js'].lineData[96]++;
+  _$jscoverage['/base/valuechange.js'].lineData[99]++;
+  if (visit212_99_1(visit213_99_2(nodeName == 'input') || visit214_99_3(nodeName == 'textarea'))) {
+    _$jscoverage['/base/valuechange.js'].lineData[100]++;
     monitor(target);
   }
 }, 
   tearDown: function() {
   _$jscoverage['/base/valuechange.js'].functionData[12]++;
-  _$jscoverage['/base/valuechange.js'].lineData[100]++;
+  _$jscoverage['/base/valuechange.js'].lineData[104]++;
   var target = this;
-  _$jscoverage['/base/valuechange.js'].lineData[101]++;
+  _$jscoverage['/base/valuechange.js'].lineData[105]++;
   unmonitored(target);
 }};
-  _$jscoverage['/base/valuechange.js'].lineData[104]++;
+  _$jscoverage['/base/valuechange.js'].lineData[108]++;
   return DomEvent;
-}, {
-  requires: ['./dom-event', 'dom', './special']});
+});

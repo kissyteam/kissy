@@ -121,11 +121,7 @@ public class Main {
         if (outputDependency != null && dependencies.size() != 0) {
             String allRs = "";
             for (String r : dependencies) {
-                if (r.startsWith("#")) {
-                    allRs += "," + r.substring(1);
-                } else {
-                    allRs += ",'" + r + "'";
-                }
+                allRs += ",'" + r + "'";
             }
             re = (compact ? COMPACT_DEP_PREFIX : DEP_PREFIX) + "'" + require + "': {requires: [" +
                     allRs.substring(1) + "]}" + DEP_SUFFIX;
@@ -151,9 +147,7 @@ public class Main {
     private void combineRequire(String requiredModuleName) {
 
         // if css file, do not combine with js files
-        if (requiredModuleName.endsWith(".css") ||
-                // conditional loader
-                requiredModuleName.startsWith("#")) {
+        if (requiredModuleName.endsWith(".css")) {
             this.addDependency(requiredModuleName);
             return;
         }
@@ -204,7 +198,6 @@ public class Main {
         // normalize structure
         String[] requires = requiredModule.getRequires();
         requiredModule.completeModuleName();
-
 
         for (String require : requires) {
             combineRequire(require);

@@ -1,6 +1,6 @@
 /*
-Copyright 2013, KISSY v1.40dev
+Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Oct 25 16:44
+build time: Nov 27 00:43
 */
-KISSY.add("editor/plugin/indent/cmd",function(c,d,a){var b=a.addCommand;return{init:function(a){b(a,"indent")}}},{requires:["editor","../dent-cmd"]});
+KISSY.add("editor/plugin/indent/cmd",["../dent-cmd"],function(c,a){var b=a("../dent-cmd").addCommand;return{init:function(a){b(a,"indent")}}});

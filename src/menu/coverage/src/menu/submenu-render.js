@@ -230,13 +230,16 @@ if (! _$jscoverage['/menu/submenu-render.js']) {
   _$jscoverage['/menu/submenu-render.js'] = {};
   _$jscoverage['/menu/submenu-render.js'].lineData = [];
   _$jscoverage['/menu/submenu-render.js'].lineData[6] = 0;
+  _$jscoverage['/menu/submenu-render.js'].lineData[7] = 0;
   _$jscoverage['/menu/submenu-render.js'].lineData[8] = 0;
-  _$jscoverage['/menu/submenu-render.js'].lineData[10] = 0;
-  _$jscoverage['/menu/submenu-render.js'].lineData[12] = 0;
+  _$jscoverage['/menu/submenu-render.js'].lineData[9] = 0;
+  _$jscoverage['/menu/submenu-render.js'].lineData[11] = 0;
   _$jscoverage['/menu/submenu-render.js'].lineData[13] = 0;
-  _$jscoverage['/menu/submenu-render.js'].lineData[14] = 0;
   _$jscoverage['/menu/submenu-render.js'].lineData[15] = 0;
+  _$jscoverage['/menu/submenu-render.js'].lineData[16] = 0;
   _$jscoverage['/menu/submenu-render.js'].lineData[17] = 0;
+  _$jscoverage['/menu/submenu-render.js'].lineData[18] = 0;
+  _$jscoverage['/menu/submenu-render.js'].lineData[20] = 0;
 }
 if (! _$jscoverage['/menu/submenu-render.js'].functionData) {
   _$jscoverage['/menu/submenu-render.js'].functionData = [];
@@ -247,23 +250,29 @@ if (! _$jscoverage['/menu/submenu-render.js'].branchData) {
   _$jscoverage['/menu/submenu-render.js'].branchData = {};
 }
 _$jscoverage['/menu/submenu-render.js'].lineData[6]++;
-KISSY.add("menu/submenu-render", function(S, SubMenuTpl, MenuItemRender, ContentRenderExtension) {
+KISSY.add(function(S, require) {
   _$jscoverage['/menu/submenu-render.js'].functionData[0]++;
+  _$jscoverage['/menu/submenu-render.js'].lineData[7]++;
+  var SubMenuTpl = require('./submenu-xtpl');
   _$jscoverage['/menu/submenu-render.js'].lineData[8]++;
+  var MenuItemRender = require('./menuitem-render');
+  _$jscoverage['/menu/submenu-render.js'].lineData[9]++;
+  var ContentRenderExtension = require('component/extension/content-render');
+  _$jscoverage['/menu/submenu-render.js'].lineData[11]++;
   return MenuItemRender.extend([ContentRenderExtension], {
   decorateDom: function(el) {
   _$jscoverage['/menu/submenu-render.js'].functionData[1]++;
-  _$jscoverage['/menu/submenu-render.js'].lineData[10]++;
-  var control = this.control, prefixCls = control.get('prefixCls');
-  _$jscoverage['/menu/submenu-render.js'].lineData[12]++;
-  var popupMenuEl = el.one('.' + prefixCls + 'popupmenu');
   _$jscoverage['/menu/submenu-render.js'].lineData[13]++;
-  var docBody = popupMenuEl[0].ownerDocument.body;
-  _$jscoverage['/menu/submenu-render.js'].lineData[14]++;
-  docBody.insertBefore(popupMenuEl[0], docBody.firstChild);
+  var control = this.control, prefixCls = control.get('prefixCls');
   _$jscoverage['/menu/submenu-render.js'].lineData[15]++;
-  var PopupMenuClass = this.getComponentConstructorByNode(prefixCls, popupMenuEl);
+  var popupMenuEl = el.one('.' + prefixCls + 'popupmenu');
+  _$jscoverage['/menu/submenu-render.js'].lineData[16]++;
+  var docBody = popupMenuEl[0].ownerDocument.body;
   _$jscoverage['/menu/submenu-render.js'].lineData[17]++;
+  docBody.insertBefore(popupMenuEl[0], docBody.firstChild);
+  _$jscoverage['/menu/submenu-render.js'].lineData[18]++;
+  var PopupMenuClass = this.getComponentConstructorByNode(prefixCls, popupMenuEl);
+  _$jscoverage['/menu/submenu-render.js'].lineData[20]++;
   control.setInternal('menu', new PopupMenuClass({
   srcNode: popupMenuEl, 
   prefixCls: prefixCls}));
@@ -271,5 +280,4 @@ KISSY.add("menu/submenu-render", function(S, SubMenuTpl, MenuItemRender, Content
   ATTRS: {
   contentTpl: {
   value: SubMenuTpl}}});
-}, {
-  requires: ['./submenu-xtpl', './menuitem-render', 'component/extension/content-render']});
+});

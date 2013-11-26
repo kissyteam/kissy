@@ -1,7 +1,7 @@
 /*
-Copyright 2013, KISSY v1.40dev
+Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Oct 25 16:41
+build time: Nov 27 00:40
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -9,32 +9,17 @@ build time: Oct 25 16:41
  editor/plugin/code
 */
 
-/**
- * @ignore
- * insert program code
- * @author yiminghe@gmail.com
- */
-KISSY.add('editor/plugin/code', function (S, Editor,DialogLoader) {
-    function CodePlugin() {
-
-    }
-
-    S.augment(CodePlugin, {
-        pluginRenderUI: function (editor) {
-            editor.addButton('code', {
-                tooltip: "插入代码",
-                listeners: {
-                    click: function () {
-                        DialogLoader.useDialog(editor, "code");
-                    }
-                },
-                mode: Editor.Mode.WYSIWYG_MODE
-            });
-        }
-    });
-
-    return CodePlugin;
-}, {
-    requires: ['editor','./dialog-loader']
+KISSY.add("editor/plugin/code", ["editor", "./button", "./dialog-loader"], function(S, require) {
+  var Editor = require("editor");
+  require("./button");
+  var DialogLoader = require("./dialog-loader");
+  function CodePlugin() {
+  }
+  S.augment(CodePlugin, {pluginRenderUI:function(editor) {
+    editor.addButton("code", {tooltip:"\u63d2\u5165\u4ee3\u7801", listeners:{click:function() {
+      DialogLoader.useDialog(editor, "code")
+    }}, mode:Editor.Mode.WYSIWYG_MODE})
+  }});
+  return CodePlugin
 });
 

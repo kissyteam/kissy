@@ -1,6 +1,6 @@
 /*
-Copyright 2013, KISSY v1.40dev
+Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Oct 25 16:44
+build time: Nov 27 00:43
 */
-KISSY.add("editor/plugin/italic",function(c,g,e,f){function d(){}c.augment(d,{pluginRenderUI:function(a){f.init(a);a.addButton("italic",{cmdType:"italic",tooltip:"\u659c\u4f53 "},e.Button);a.docReady(function(){a.get("document").on("keydown",function(b){b.ctrlKey&&b.keyCode==c.Node.KeyCode.I&&(a.execCommand("italic"),b.preventDefault())})})}});return d},{requires:["editor","./font/ui","./italic/cmd"]});
+KISSY.add("editor/plugin/italic",["./font/ui","./italic/cmd","./button"],function(c,a){function d(){}var e=a("./font/ui"),f=a("./italic/cmd");a("./button");c.augment(d,{pluginRenderUI:function(b){f.init(b);b.addButton("italic",{cmdType:"italic",tooltip:"\u659c\u4f53 "},e.Button);b.docReady(function(){b.get("document").on("keydown",function(a){a.ctrlKey&&a.keyCode==c.Node.KeyCode.I&&(b.execCommand("italic"),a.preventDefault())})})}});return d});

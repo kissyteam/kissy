@@ -412,208 +412,208 @@ if (! _$jscoverage['/list-utils.js'].branchData) {
   _$jscoverage['/list-utils.js'].branchData['178'] = [];
   _$jscoverage['/list-utils.js'].branchData['178'][1] = new BranchData();
 }
-_$jscoverage['/list-utils.js'].branchData['178'][1].init(30, 52, 'currentNode[0].nodeType == Dom.NodeType.ELEMENT_NODE');
+_$jscoverage['/list-utils.js'].branchData['178'][1].init(29, 52, 'currentNode[0].nodeType == Dom.NodeType.ELEMENT_NODE');
 function visit50_178_1(result) {
   _$jscoverage['/list-utils.js'].branchData['178'][1].ranCondition(result);
   return result;
-}_$jscoverage['/list-utils.js'].branchData['177'][1].init(97, 29, 'currentNode && currentNode[0]');
+}_$jscoverage['/list-utils.js'].branchData['177'][1].init(95, 29, 'currentNode && currentNode[0]');
 function visit49_177_1(result) {
   _$jscoverage['/list-utils.js'].branchData['177'][1].ranCondition(result);
   return result;
-}_$jscoverage['/list-utils.js'].branchData['175'][1].init(5543, 8, 'database');
+}_$jscoverage['/list-utils.js'].branchData['175'][1].init(5441, 8, 'database');
 function visit48_175_1(result) {
   _$jscoverage['/list-utils.js'].branchData['175'][1].ranCondition(result);
   return result;
-}_$jscoverage['/list-utils.js'].branchData['170'][1].init(60, 59, 'Math.max(listArray[currentIndex].indent, 0) < indentLevel');
+}_$jscoverage['/list-utils.js'].branchData['170'][1].init(59, 59, 'Math.max(listArray[currentIndex].indent, 0) < indentLevel');
 function visit47_170_1(result) {
   _$jscoverage['/list-utils.js'].branchData['170'][1].ranCondition(result);
   return result;
-}_$jscoverage['/list-utils.js'].branchData['169'][2].init(4608, 32, 'listArray.length <= currentIndex');
+}_$jscoverage['/list-utils.js'].branchData['169'][2].init(4527, 32, 'listArray.length <= currentIndex');
 function visit46_169_2(result) {
   _$jscoverage['/list-utils.js'].branchData['169'][2].ranCondition(result);
   return result;
-}_$jscoverage['/list-utils.js'].branchData['169'][1].init(4608, 120, 'listArray.length <= currentIndex || Math.max(listArray[currentIndex].indent, 0) < indentLevel');
+}_$jscoverage['/list-utils.js'].branchData['169'][1].init(4527, 119, 'listArray.length <= currentIndex || Math.max(listArray[currentIndex].indent, 0) < indentLevel');
 function visit45_169_1(result) {
   _$jscoverage['/list-utils.js'].branchData['169'][1].ranCondition(result);
   return result;
-}_$jscoverage['/list-utils.js'].branchData['159'][1].init(60, 26, 'currentListItemName == \'p\'');
+}_$jscoverage['/list-utils.js'].branchData['159'][1].init(59, 26, 'currentListItemName == \'p\'');
 function visit44_159_1(result) {
   _$jscoverage['/list-utils.js'].branchData['159'][1].ranCondition(result);
   return result;
-}_$jscoverage['/list-utils.js'].branchData['158'][3].init(2783, 28, 'currentListItemName == \'div\'');
+}_$jscoverage['/list-utils.js'].branchData['158'][3].init(2735, 28, 'currentListItemName == \'div\'');
 function visit43_158_3(result) {
   _$jscoverage['/list-utils.js'].branchData['158'][3].ranCondition(result);
   return result;
-}_$jscoverage['/list-utils.js'].branchData['158'][2].init(2783, 87, 'currentListItemName == \'div\' || currentListItemName == \'p\'');
+}_$jscoverage['/list-utils.js'].branchData['158'][2].init(2735, 86, 'currentListItemName == \'div\' || currentListItemName == \'p\'');
 function visit42_158_2(result) {
   _$jscoverage['/list-utils.js'].branchData['158'][2].ranCondition(result);
   return result;
-}_$jscoverage['/list-utils.js'].branchData['158'][1].init(2768, 104, '!UA[\'ie\'] && (currentListItemName == \'div\' || currentListItemName == \'p\')');
+}_$jscoverage['/list-utils.js'].branchData['158'][1].init(2720, 103, '!UA[\'ie\'] && (currentListItemName == \'div\' || currentListItemName == \'p\')');
 function visit41_158_1(result) {
   _$jscoverage['/list-utils.js'].branchData['158'][1].ranCondition(result);
   return result;
-}_$jscoverage['/list-utils.js'].branchData['149'][2].init(168, 48, 'firstChild.nodeType == Dom.NodeType.ELEMENT_NODE');
+}_$jscoverage['/list-utils.js'].branchData['149'][2].init(165, 48, 'firstChild.nodeType == Dom.NodeType.ELEMENT_NODE');
 function visit40_149_2(result) {
   _$jscoverage['/list-utils.js'].branchData['149'][2].ranCondition(result);
   return result;
-}_$jscoverage['/list-utils.js'].branchData['149'][1].init(168, 120, 'firstChild.nodeType == Dom.NodeType.ELEMENT_NODE && Dom._4e_isBlockBoundary(firstChild)');
+}_$jscoverage['/list-utils.js'].branchData['149'][1].init(165, 119, 'firstChild.nodeType == Dom.NodeType.ELEMENT_NODE && Dom._4e_isBlockBoundary(firstChild)');
 function visit39_149_1(result) {
   _$jscoverage['/list-utils.js'].branchData['149'][1].ranCondition(result);
   return result;
-}_$jscoverage['/list-utils.js'].branchData['145'][2].init(1993, 46, 'Dom.nodeName(currentListItem) == paragraphMode');
+}_$jscoverage['/list-utils.js'].branchData['145'][2].init(1958, 46, 'Dom.nodeName(currentListItem) == paragraphMode');
 function visit38_145_2(result) {
   _$jscoverage['/list-utils.js'].branchData['145'][2].ranCondition(result);
   return result;
-}_$jscoverage['/list-utils.js'].branchData['145'][1].init(85, 105, 'Dom.nodeName(currentListItem) == paragraphMode && currentListItem.firstChild');
+}_$jscoverage['/list-utils.js'].branchData['145'][1].init(84, 104, 'Dom.nodeName(currentListItem) == paragraphMode && currentListItem.firstChild');
 function visit37_145_1(result) {
   _$jscoverage['/list-utils.js'].branchData['145'][1].ranCondition(result);
   return result;
-}_$jscoverage['/list-utils.js'].branchData['144'][2].init(1905, 53, 'currentListItem.nodeType == Dom.NodeType.ELEMENT_NODE');
+}_$jscoverage['/list-utils.js'].branchData['144'][2].init(1871, 53, 'currentListItem.nodeType == Dom.NodeType.ELEMENT_NODE');
 function visit36_144_2(result) {
   _$jscoverage['/list-utils.js'].branchData['144'][2].ranCondition(result);
   return result;
-}_$jscoverage['/list-utils.js'].branchData['144'][1].init(1905, 191, 'currentListItem.nodeType == Dom.NodeType.ELEMENT_NODE && Dom.nodeName(currentListItem) == paragraphMode && currentListItem.firstChild');
+}_$jscoverage['/list-utils.js'].branchData['144'][1].init(1871, 189, 'currentListItem.nodeType == Dom.NodeType.ELEMENT_NODE && Dom.nodeName(currentListItem) == paragraphMode && currentListItem.firstChild');
 function visit35_144_1(result) {
   _$jscoverage['/list-utils.js'].branchData['144'][1].ranCondition(result);
   return result;
-}_$jscoverage['/list-utils.js'].branchData['138'][1].init(99, 56, 'currentListItem.lastChild.getAttribute(\'type\') == \'_moz\'');
+}_$jscoverage['/list-utils.js'].branchData['138'][1].init(98, 56, 'currentListItem.lastChild.getAttribute(\'type\') == \'_moz\'');
 function visit34_138_1(result) {
   _$jscoverage['/list-utils.js'].branchData['138'][1].ranCondition(result);
   return result;
-}_$jscoverage['/list-utils.js'].branchData['137'][2].init(98, 63, 'currentListItem.lastChild.nodeType == Dom.NodeType.ELEMENT_NODE');
+}_$jscoverage['/list-utils.js'].branchData['137'][2].init(96, 63, 'currentListItem.lastChild.nodeType == Dom.NodeType.ELEMENT_NODE');
 function visit33_137_2(result) {
   _$jscoverage['/list-utils.js'].branchData['137'][2].ranCondition(result);
   return result;
-}_$jscoverage['/list-utils.js'].branchData['137'][1].init(61, 156, 'currentListItem.lastChild.nodeType == Dom.NodeType.ELEMENT_NODE && currentListItem.lastChild.getAttribute(\'type\') == \'_moz\'');
+}_$jscoverage['/list-utils.js'].branchData['137'][1].init(60, 155, 'currentListItem.lastChild.nodeType == Dom.NodeType.ELEMENT_NODE && currentListItem.lastChild.getAttribute(\'type\') == \'_moz\'');
 function visit32_137_1(result) {
   _$jscoverage['/list-utils.js'].branchData['137'][1].ranCondition(result);
   return result;
-}_$jscoverage['/list-utils.js'].branchData['136'][1].init(34, 218, 'currentListItem.lastChild && currentListItem.lastChild.nodeType == Dom.NodeType.ELEMENT_NODE && currentListItem.lastChild.getAttribute(\'type\') == \'_moz\'');
+}_$jscoverage['/list-utils.js'].branchData['136'][1].init(33, 216, 'currentListItem.lastChild && currentListItem.lastChild.nodeType == Dom.NodeType.ELEMENT_NODE && currentListItem.lastChild.getAttribute(\'type\') == \'_moz\'');
 function visit31_136_1(result) {
   _$jscoverage['/list-utils.js'].branchData['136'][1].ranCondition(result);
   return result;
-}_$jscoverage['/list-utils.js'].branchData['135'][1].init(91, 36, 'currentIndex != listArray.length - 1');
+}_$jscoverage['/list-utils.js'].branchData['135'][1].init(90, 36, 'currentIndex != listArray.length - 1');
 function visit30_135_1(result) {
   _$jscoverage['/list-utils.js'].branchData['135'][1].ranCondition(result);
   return result;
-}_$jscoverage['/list-utils.js'].branchData['134'][2].init(1286, 59, 'currentListItem.nodeType == NodeType.DOCUMENT_FRAGMENT_NODE');
+}_$jscoverage['/list-utils.js'].branchData['134'][2].init(1262, 59, 'currentListItem.nodeType == NodeType.DOCUMENT_FRAGMENT_NODE');
 function visit29_134_2(result) {
   _$jscoverage['/list-utils.js'].branchData['134'][2].ranCondition(result);
   return result;
-}_$jscoverage['/list-utils.js'].branchData['134'][1].init(1286, 128, 'currentListItem.nodeType == NodeType.DOCUMENT_FRAGMENT_NODE && currentIndex != listArray.length - 1');
+}_$jscoverage['/list-utils.js'].branchData['134'][1].init(1262, 127, 'currentListItem.nodeType == NodeType.DOCUMENT_FRAGMENT_NODE && currentIndex != listArray.length - 1');
 function visit28_134_1(result) {
   _$jscoverage['/list-utils.js'].branchData['134'][1].ranCondition(result);
   return result;
-}_$jscoverage['/list-utils.js'].branchData['128'][1].init(164, 59, 'currentListItem.nodeType == NodeType.DOCUMENT_FRAGMENT_NODE');
+}_$jscoverage['/list-utils.js'].branchData['128'][1].init(161, 59, 'currentListItem.nodeType == NodeType.DOCUMENT_FRAGMENT_NODE');
 function visit27_128_1(result) {
   _$jscoverage['/list-utils.js'].branchData['128'][1].ranCondition(result);
   return result;
-}_$jscoverage['/list-utils.js'].branchData['125'][1].init(793, 24, 'i < item.contents.length');
+}_$jscoverage['/list-utils.js'].branchData['125'][1].init(778, 24, 'i < item.contents.length');
 function visit26_125_1(result) {
   _$jscoverage['/list-utils.js'].branchData['125'][1].ranCondition(result);
   return result;
-}_$jscoverage['/list-utils.js'].branchData['117'][1].init(174, 35, 'item.grandparent.nodeName() != \'td\'');
+}_$jscoverage['/list-utils.js'].branchData['117'][1].init(171, 35, 'item.grandparent.nodeName() != \'td\'');
 function visit25_117_1(result) {
   _$jscoverage['/list-utils.js'].branchData['117'][1].ranCondition(result);
   return result;
-}_$jscoverage['/list-utils.js'].branchData['112'][1].init(32, 44, 'listNodeNames[item.grandparent.nodeName()]');
+}_$jscoverage['/list-utils.js'].branchData['112'][1].init(30, 44, 'listNodeNames[item.grandparent.nodeName()]');
 function visit24_112_1(result) {
   _$jscoverage['/list-utils.js'].branchData['112'][1].ranCondition(result);
   return result;
-}_$jscoverage['/list-utils.js'].branchData['109'][3].init(1300, 55, '!baseIndex && item.grandparent');
+}_$jscoverage['/list-utils.js'].branchData['109'][3].init(1279, 54, '!baseIndex && item.grandparent');
 function visit23_109_3(result) {
   _$jscoverage['/list-utils.js'].branchData['109'][3].ranCondition(result);
   return result;
-}_$jscoverage['/list-utils.js'].branchData['109'][2].init(1279, 17, 'item.indent == -1');
+}_$jscoverage['/list-utils.js'].branchData['109'][2].init(1258, 17, 'item.indent == -1');
 function visit22_109_2(result) {
   _$jscoverage['/list-utils.js'].branchData['109'][2].ranCondition(result);
   return result;
-}_$jscoverage['/list-utils.js'].branchData['109'][1].init(1279, 76, 'item.indent == -1 && !baseIndex && item.grandparent');
+}_$jscoverage['/list-utils.js'].branchData['109'][1].init(1258, 75, 'item.indent == -1 && !baseIndex && item.grandparent');
 function visit21_109_1(result) {
   _$jscoverage['/list-utils.js'].branchData['109'][1].ranCondition(result);
   return result;
-}_$jscoverage['/list-utils.js'].branchData['103'][1].init(878, 43, 'item.indent == Math.max(indentLevel, 0) + 1');
+}_$jscoverage['/list-utils.js'].branchData['103'][1].init(863, 43, 'item.indent == Math.max(indentLevel, 0) + 1');
 function visit20_103_1(result) {
   _$jscoverage['/list-utils.js'].branchData['103'][1].ranCondition(result);
   return result;
-}_$jscoverage['/list-utils.js'].branchData['99'][1].init(539, 24, 'i < item.contents.length');
+}_$jscoverage['/list-utils.js'].branchData['99'][1].init(530, 24, 'i < item.contents.length');
 function visit19_99_1(result) {
   _$jscoverage['/list-utils.js'].branchData['99'][1].ranCondition(result);
   return result;
-}_$jscoverage['/list-utils.js'].branchData['94'][1].init(123, 66, 'listArray[currentIndex].parent.nodeName() != rootNode.nodeName()');
+}_$jscoverage['/list-utils.js'].branchData['94'][1].init(120, 66, 'listArray[currentIndex].parent.nodeName() != rootNode.nodeName()');
 function visit18_94_1(result) {
   _$jscoverage['/list-utils.js'].branchData['94'][1].ranCondition(result);
   return result;
-}_$jscoverage['/list-utils.js'].branchData['91'][1].init(30, 190, '!rootNode || listArray[currentIndex].parent.nodeName() != rootNode.nodeName()');
+}_$jscoverage['/list-utils.js'].branchData['91'][1].init(29, 187, '!rootNode || listArray[currentIndex].parent.nodeName() != rootNode.nodeName()');
 function visit17_91_1(result) {
   _$jscoverage['/list-utils.js'].branchData['91'][1].ranCondition(result);
   return result;
-}_$jscoverage['/list-utils.js'].branchData['90'][1].init(85, 26, 'item.indent == indentLevel');
+}_$jscoverage['/list-utils.js'].branchData['90'][1].init(83, 26, 'item.indent == indentLevel');
 function visit16_90_1(result) {
   _$jscoverage['/list-utils.js'].branchData['90'][1].ranCondition(result);
   return result;
-}_$jscoverage['/list-utils.js'].branchData['77'][2].init(126, 32, 'listArray.length < baseIndex + 1');
+}_$jscoverage['/list-utils.js'].branchData['77'][2].init(122, 32, 'listArray.length < baseIndex + 1');
 function visit15_77_2(result) {
   _$jscoverage['/list-utils.js'].branchData['77'][2].ranCondition(result);
   return result;
-}_$jscoverage['/list-utils.js'].branchData['77'][1].init(112, 46, '!listArray || listArray.length < baseIndex + 1');
+}_$jscoverage['/list-utils.js'].branchData['77'][1].init(108, 46, '!listArray || listArray.length < baseIndex + 1');
 function visit14_77_1(result) {
   _$jscoverage['/list-utils.js'].branchData['77'][1].ranCondition(result);
   return result;
-}_$jscoverage['/list-utils.js'].branchData['74'][1].init(22, 10, '!baseIndex');
+}_$jscoverage['/list-utils.js'].branchData['74'][1].init(21, 10, '!baseIndex');
 function visit13_74_1(result) {
   _$jscoverage['/list-utils.js'].branchData['74'][1].ranCondition(result);
   return result;
-}_$jscoverage['/list-utils.js'].branchData['57'][2].init(100, 46, 'child[0].nodeType == Dom.NodeType.ELEMENT_NODE');
+}_$jscoverage['/list-utils.js'].branchData['57'][2].init(98, 46, 'child[0].nodeType == Dom.NodeType.ELEMENT_NODE');
 function visit12_57_2(result) {
   _$jscoverage['/list-utils.js'].branchData['57'][2].ranCondition(result);
   return result;
-}_$jscoverage['/list-utils.js'].branchData['57'][1].init(100, 112, 'child[0].nodeType == Dom.NodeType.ELEMENT_NODE && listNodeNames[child.nodeName()]');
+}_$jscoverage['/list-utils.js'].branchData['57'][1].init(98, 111, 'child[0].nodeType == Dom.NodeType.ELEMENT_NODE && listNodeNames[child.nodeName()]');
 function visit11_57_1(result) {
   _$jscoverage['/list-utils.js'].branchData['57'][1].ranCondition(result);
   return result;
-}_$jscoverage['/list-utils.js'].branchData['55'][1].init(96, 18, 'j < itemChildCount');
+}_$jscoverage['/list-utils.js'].branchData['55'][1].init(95, 18, 'j < itemChildCount');
 function visit10_55_1(result) {
   _$jscoverage['/list-utils.js'].branchData['55'][1].ranCondition(result);
   return result;
-}_$jscoverage['/list-utils.js'].branchData['49'][1].init(871, 8, 'database');
+}_$jscoverage['/list-utils.js'].branchData['49'][1].init(853, 8, 'database');
 function visit9_49_1(result) {
   _$jscoverage['/list-utils.js'].branchData['49'][1].ranCondition(result);
   return result;
-}_$jscoverage['/list-utils.js'].branchData['43'][2].init(119, 38, 'itemObj.grandparent.nodeName() == \'li\'');
+}_$jscoverage['/list-utils.js'].branchData['43'][2].init(117, 38, 'itemObj.grandparent.nodeName() == \'li\'');
 function visit8_43_2(result) {
   _$jscoverage['/list-utils.js'].branchData['43'][2].ranCondition(result);
   return result;
-}_$jscoverage['/list-utils.js'].branchData['43'][1].init(96, 61, 'itemObj.grandparent && itemObj.grandparent.nodeName() == \'li\'');
+}_$jscoverage['/list-utils.js'].branchData['43'][1].init(94, 61, 'itemObj.grandparent && itemObj.grandparent.nodeName() == \'li\'');
 function visit7_43_1(result) {
   _$jscoverage['/list-utils.js'].branchData['43'][1].ranCondition(result);
   return result;
-}_$jscoverage['/list-utils.js'].branchData['41'][1].init(449, 16, '!grandparentNode');
+}_$jscoverage['/list-utils.js'].branchData['41'][1].init(439, 16, '!grandparentNode');
 function visit6_41_1(result) {
   _$jscoverage['/list-utils.js'].branchData['41'][1].ranCondition(result);
   return result;
-}_$jscoverage['/list-utils.js'].branchData['35'][1].init(168, 27, 'listItem.nodeName() != \'li\'');
+}_$jscoverage['/list-utils.js'].branchData['35'][1].init(164, 27, 'listItem.nodeName() != \'li\'');
 function visit5_35_1(result) {
   _$jscoverage['/list-utils.js'].branchData['35'][1].ranCondition(result);
   return result;
-}_$jscoverage['/list-utils.js'].branchData['31'][1].init(76, 9, 'i < count');
+}_$jscoverage['/list-utils.js'].branchData['31'][1].init(75, 9, 'i < count');
 function visit4_31_1(result) {
   _$jscoverage['/list-utils.js'].branchData['31'][1].ranCondition(result);
   return result;
-}_$jscoverage['/list-utils.js'].branchData['26'][1].init(216, 10, '!baseArray');
+}_$jscoverage['/list-utils.js'].branchData['26'][1].init(210, 10, '!baseArray');
 function visit3_26_1(result) {
   _$jscoverage['/list-utils.js'].branchData['26'][1].ranCondition(result);
   return result;
-}_$jscoverage['/list-utils.js'].branchData['24'][1].init(135, 16, '!baseIndentLevel');
+}_$jscoverage['/list-utils.js'].branchData['24'][1].init(131, 16, '!baseIndentLevel');
 function visit2_24_1(result) {
   _$jscoverage['/list-utils.js'].branchData['24'][1].ranCondition(result);
   return result;
-}_$jscoverage['/list-utils.js'].branchData['21'][1].init(22, 37, '!listNodeNames[listNode.nodeName()]');
+}_$jscoverage['/list-utils.js'].branchData['21'][1].init(21, 37, '!listNodeNames[listNode.nodeName()]');
 function visit1_21_1(result) {
   _$jscoverage['/list-utils.js'].branchData['21'][1].ranCondition(result);
   return result;
 }_$jscoverage['/list-utils.js'].lineData[6]++;
-KISSY.add('editor/plugin/list-utils', function(S, Editor) {
+KISSY.add(function(S) {
   _$jscoverage['/list-utils.js'].functionData[0]++;
   _$jscoverage['/list-utils.js'].lineData[7]++;
   var listNodeNames = {
@@ -837,5 +837,4 @@ KISSY.add('editor/plugin/list-utils', function(S, Editor) {
 }};
   _$jscoverage['/list-utils.js'].lineData[189]++;
   return list;
-}, {
-  requires: ['editor']});
+});

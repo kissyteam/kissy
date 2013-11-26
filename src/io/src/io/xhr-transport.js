@@ -3,15 +3,15 @@
  * io xhr transport class, route subdomain, xdr
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S,require) {
+KISSY.add(function (S, require) {
     var IO = require('./base'),
         XhrTransportBase = require('./xhr-transport-base'),
-        XdrFlashTransport=require('./xdr-flash-transport'),
+        XdrFlashTransport = require('./xdr-flash-transport'),
         SubDomainTransport = require('./sub-domain-transport');
-
+    var logger = S.getLogger('s/io');
     var win = S.Env.host,
         doc = win.document,
-        logger = S.getLogger('s/io'),
+
         _XDomainRequest = XhrTransportBase._XDomainRequest;
 
     // express: subdomain offset
@@ -55,7 +55,7 @@ KISSY.add(function (S,require) {
 
         xhr = self.nativeXhr = XhrTransportBase.nativeXhr(crossDomain);
 
-        var msg='crossDomain: ' + crossDomain + ', use ' +
+        var msg = 'crossDomain: ' + crossDomain + ', use ' +
             (_XDomainRequest && (xhr instanceof _XDomainRequest) ?
                 'XDomainRequest' :
                 'XhrTransport') + ' for: ' + c.url;

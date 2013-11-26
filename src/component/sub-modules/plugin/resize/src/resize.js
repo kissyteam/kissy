@@ -3,7 +3,7 @@
  * resize plugin for kissy component
  * @author yiminghe@gmail.com
  */
-KISSY.add('component/plugin/resize', function (S,require) {
+KISSY.add(function (S,require) {
     var Resizable = require('resizable');
     /**
      * resize plugin for kissy component

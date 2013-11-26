@@ -231,22 +231,21 @@ if (! _$jscoverage['/combobox/filter-select.js']) {
   _$jscoverage['/combobox/filter-select.js'].lineData = [];
   _$jscoverage['/combobox/filter-select.js'].lineData[6] = 0;
   _$jscoverage['/combobox/filter-select.js'].lineData[7] = 0;
-  _$jscoverage['/combobox/filter-select.js'].lineData[8] = 0;
+  _$jscoverage['/combobox/filter-select.js'].lineData[9] = 0;
   _$jscoverage['/combobox/filter-select.js'].lineData[10] = 0;
   _$jscoverage['/combobox/filter-select.js'].lineData[11] = 0;
   _$jscoverage['/combobox/filter-select.js'].lineData[12] = 0;
   _$jscoverage['/combobox/filter-select.js'].lineData[13] = 0;
   _$jscoverage['/combobox/filter-select.js'].lineData[14] = 0;
-  _$jscoverage['/combobox/filter-select.js'].lineData[15] = 0;
-  _$jscoverage['/combobox/filter-select.js'].lineData[19] = 0;
-  _$jscoverage['/combobox/filter-select.js'].lineData[27] = 0;
+  _$jscoverage['/combobox/filter-select.js'].lineData[18] = 0;
+  _$jscoverage['/combobox/filter-select.js'].lineData[26] = 0;
+  _$jscoverage['/combobox/filter-select.js'].lineData[28] = 0;
   _$jscoverage['/combobox/filter-select.js'].lineData[29] = 0;
   _$jscoverage['/combobox/filter-select.js'].lineData[30] = 0;
   _$jscoverage['/combobox/filter-select.js'].lineData[31] = 0;
   _$jscoverage['/combobox/filter-select.js'].lineData[32] = 0;
   _$jscoverage['/combobox/filter-select.js'].lineData[33] = 0;
-  _$jscoverage['/combobox/filter-select.js'].lineData[34] = 0;
-  _$jscoverage['/combobox/filter-select.js'].lineData[37] = 0;
+  _$jscoverage['/combobox/filter-select.js'].lineData[36] = 0;
 }
 if (! _$jscoverage['/combobox/filter-select.js'].functionData) {
   _$jscoverage['/combobox/filter-select.js'].functionData = [];
@@ -258,78 +257,76 @@ if (! _$jscoverage['/combobox/filter-select.js'].functionData) {
 }
 if (! _$jscoverage['/combobox/filter-select.js'].branchData) {
   _$jscoverage['/combobox/filter-select.js'].branchData = {};
+  _$jscoverage['/combobox/filter-select.js'].branchData['11'] = [];
+  _$jscoverage['/combobox/filter-select.js'].branchData['11'][1] = new BranchData();
   _$jscoverage['/combobox/filter-select.js'].branchData['12'] = [];
   _$jscoverage['/combobox/filter-select.js'].branchData['12'][1] = new BranchData();
   _$jscoverage['/combobox/filter-select.js'].branchData['13'] = [];
   _$jscoverage['/combobox/filter-select.js'].branchData['13'][1] = new BranchData();
-  _$jscoverage['/combobox/filter-select.js'].branchData['14'] = [];
-  _$jscoverage['/combobox/filter-select.js'].branchData['14'][1] = new BranchData();
-  _$jscoverage['/combobox/filter-select.js'].branchData['31'] = [];
-  _$jscoverage['/combobox/filter-select.js'].branchData['31'][1] = new BranchData();
+  _$jscoverage['/combobox/filter-select.js'].branchData['30'] = [];
+  _$jscoverage['/combobox/filter-select.js'].branchData['30'][1] = new BranchData();
 }
-_$jscoverage['/combobox/filter-select.js'].branchData['31'][1].init(21, 6, '!error');
-function visit72_31_1(result) {
-  _$jscoverage['/combobox/filter-select.js'].branchData['31'][1].ranCondition(result);
+_$jscoverage['/combobox/filter-select.js'].branchData['30'][1].init(21, 6, '!error');
+function visit74_30_1(result) {
+  _$jscoverage['/combobox/filter-select.js'].branchData['30'][1].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/filter-select.js'].branchData['14'][1].init(21, 36, '_saveData[i].textContent == inputVal');
-function visit71_14_1(result) {
-  _$jscoverage['/combobox/filter-select.js'].branchData['14'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/combobox/filter-select.js'].branchData['13'][1].init(29, 20, 'i < _saveData.length');
-function visit70_13_1(result) {
+}_$jscoverage['/combobox/filter-select.js'].branchData['13'][1].init(21, 36, '_saveData[i].textContent == inputVal');
+function visit73_13_1(result) {
   _$jscoverage['/combobox/filter-select.js'].branchData['13'][1].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/filter-select.js'].branchData['12'][1].init(40, 9, '_saveData');
-function visit69_12_1(result) {
+}_$jscoverage['/combobox/filter-select.js'].branchData['12'][1].init(29, 20, 'i < _saveData.length');
+function visit72_12_1(result) {
   _$jscoverage['/combobox/filter-select.js'].branchData['12'][1].ranCondition(result);
   return result;
+}_$jscoverage['/combobox/filter-select.js'].branchData['11'][1].init(40, 9, '_saveData');
+function visit71_11_1(result) {
+  _$jscoverage['/combobox/filter-select.js'].branchData['11'][1].ranCondition(result);
+  return result;
 }_$jscoverage['/combobox/filter-select.js'].lineData[6]++;
-KISSY.add(function() {
+KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/combobox/filter-select.js'].functionData[0]++;
   _$jscoverage['/combobox/filter-select.js'].lineData[7]++;
-  var module = this;
-  _$jscoverage['/combobox/filter-select.js'].lineData[8]++;
-  var Combobox = module.require('./control');
-  _$jscoverage['/combobox/filter-select.js'].lineData[10]++;
+  var Combobox = require('./control');
+  _$jscoverage['/combobox/filter-select.js'].lineData[9]++;
   function valInAutoCompleteList(inputVal, _saveData) {
     _$jscoverage['/combobox/filter-select.js'].functionData[1]++;
-    _$jscoverage['/combobox/filter-select.js'].lineData[11]++;
+    _$jscoverage['/combobox/filter-select.js'].lineData[10]++;
     var valid = false;
-    _$jscoverage['/combobox/filter-select.js'].lineData[12]++;
-    if (visit69_12_1(_saveData)) {
-      _$jscoverage['/combobox/filter-select.js'].lineData[13]++;
-      for (var i = 0; visit70_13_1(i < _saveData.length); i++) {
-        _$jscoverage['/combobox/filter-select.js'].lineData[14]++;
-        if (visit71_14_1(_saveData[i].textContent == inputVal)) {
-          _$jscoverage['/combobox/filter-select.js'].lineData[15]++;
+    _$jscoverage['/combobox/filter-select.js'].lineData[11]++;
+    if (visit71_11_1(_saveData)) {
+      _$jscoverage['/combobox/filter-select.js'].lineData[12]++;
+      for (var i = 0; visit72_12_1(i < _saveData.length); i++) {
+        _$jscoverage['/combobox/filter-select.js'].lineData[13]++;
+        if (visit73_13_1(_saveData[i].textContent == inputVal)) {
+          _$jscoverage['/combobox/filter-select.js'].lineData[14]++;
           return _saveData[i];
         }
       }
     }
-    _$jscoverage['/combobox/filter-select.js'].lineData[19]++;
+    _$jscoverage['/combobox/filter-select.js'].lineData[18]++;
     return valid;
   }
-  _$jscoverage['/combobox/filter-select.js'].lineData[27]++;
+  _$jscoverage['/combobox/filter-select.js'].lineData[26]++;
   module.exports = Combobox.extend({
   validate: function(callback) {
   _$jscoverage['/combobox/filter-select.js'].functionData[2]++;
-  _$jscoverage['/combobox/filter-select.js'].lineData[29]++;
+  _$jscoverage['/combobox/filter-select.js'].lineData[28]++;
   var self = this;
-  _$jscoverage['/combobox/filter-select.js'].lineData[30]++;
+  _$jscoverage['/combobox/filter-select.js'].lineData[29]++;
   self.callSuper(function(error, val) {
   _$jscoverage['/combobox/filter-select.js'].functionData[3]++;
-  _$jscoverage['/combobox/filter-select.js'].lineData[31]++;
-  if (visit72_31_1(!error)) {
-    _$jscoverage['/combobox/filter-select.js'].lineData[32]++;
+  _$jscoverage['/combobox/filter-select.js'].lineData[30]++;
+  if (visit74_30_1(!error)) {
+    _$jscoverage['/combobox/filter-select.js'].lineData[31]++;
     self.get("dataSource").fetchData(val, function(data) {
   _$jscoverage['/combobox/filter-select.js'].functionData[4]++;
-  _$jscoverage['/combobox/filter-select.js'].lineData[33]++;
+  _$jscoverage['/combobox/filter-select.js'].lineData[32]++;
   var d = valInAutoCompleteList(val, self.normalizeData(data));
-  _$jscoverage['/combobox/filter-select.js'].lineData[34]++;
+  _$jscoverage['/combobox/filter-select.js'].lineData[33]++;
   callback(d ? "" : self.get("invalidMessage"), val, d);
 });
   } else {
-    _$jscoverage['/combobox/filter-select.js'].lineData[37]++;
+    _$jscoverage['/combobox/filter-select.js'].lineData[36]++;
     callback(error, val);
   }
 });

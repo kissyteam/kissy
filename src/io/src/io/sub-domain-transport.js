@@ -7,8 +7,9 @@ KISSY.add(function (S,require) {
     var  Event =require('event/dom'),
         Dom = require('dom'),
         XhrTransportBase = require('./xhr-transport-base');
+    var  logger = S.getLogger('s/io');
     var PROXY_PAGE = '/sub_domain_proxy.html',
-        logger = S.getLogger('s/io'),
+
         doc = S.Env.host.document,
         iframeMap = {
             // hostname:{iframe: , ready:}

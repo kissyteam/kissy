@@ -232,19 +232,23 @@ if (! _$jscoverage['/font-family.js']) {
   _$jscoverage['/font-family.js'].lineData[6] = 0;
   _$jscoverage['/font-family.js'].lineData[7] = 0;
   _$jscoverage['/font-family.js'].lineData[8] = 0;
-  _$jscoverage['/font-family.js'].lineData[11] = 0;
-  _$jscoverage['/font-family.js'].lineData[14] = 0;
+  _$jscoverage['/font-family.js'].lineData[9] = 0;
+  _$jscoverage['/font-family.js'].lineData[10] = 0;
+  _$jscoverage['/font-family.js'].lineData[12] = 0;
+  _$jscoverage['/font-family.js'].lineData[13] = 0;
   _$jscoverage['/font-family.js'].lineData[16] = 0;
-  _$jscoverage['/font-family.js'].lineData[18] = 0;
+  _$jscoverage['/font-family.js'].lineData[19] = 0;
   _$jscoverage['/font-family.js'].lineData[21] = 0;
-  _$jscoverage['/font-family.js'].lineData[76] = 0;
-  _$jscoverage['/font-family.js'].lineData[77] = 0;
-  _$jscoverage['/font-family.js'].lineData[79] = 0;
-  _$jscoverage['/font-family.js'].lineData[80] = 0;
+  _$jscoverage['/font-family.js'].lineData[23] = 0;
+  _$jscoverage['/font-family.js'].lineData[26] = 0;
   _$jscoverage['/font-family.js'].lineData[81] = 0;
+  _$jscoverage['/font-family.js'].lineData[82] = 0;
   _$jscoverage['/font-family.js'].lineData[84] = 0;
+  _$jscoverage['/font-family.js'].lineData[85] = 0;
   _$jscoverage['/font-family.js'].lineData[86] = 0;
-  _$jscoverage['/font-family.js'].lineData[95] = 0;
+  _$jscoverage['/font-family.js'].lineData[89] = 0;
+  _$jscoverage['/font-family.js'].lineData[91] = 0;
+  _$jscoverage['/font-family.js'].lineData[100] = 0;
 }
 if (! _$jscoverage['/font-family.js'].functionData) {
   _$jscoverage['/font-family.js'].functionData = [];
@@ -255,45 +259,53 @@ if (! _$jscoverage['/font-family.js'].functionData) {
 }
 if (! _$jscoverage['/font-family.js'].branchData) {
   _$jscoverage['/font-family.js'].branchData = {};
-  _$jscoverage['/font-family.js'].branchData['8'] = [];
-  _$jscoverage['/font-family.js'].branchData['8'][1] = new BranchData();
-  _$jscoverage['/font-family.js'].branchData['77'] = [];
-  _$jscoverage['/font-family.js'].branchData['77'][1] = new BranchData();
-  _$jscoverage['/font-family.js'].branchData['79'] = [];
-  _$jscoverage['/font-family.js'].branchData['79'][1] = new BranchData();
+  _$jscoverage['/font-family.js'].branchData['13'] = [];
+  _$jscoverage['/font-family.js'].branchData['13'][1] = new BranchData();
+  _$jscoverage['/font-family.js'].branchData['82'] = [];
+  _$jscoverage['/font-family.js'].branchData['82'][1] = new BranchData();
+  _$jscoverage['/font-family.js'].branchData['84'] = [];
+  _$jscoverage['/font-family.js'].branchData['84'][1] = new BranchData();
 }
-_$jscoverage['/font-family.js'].branchData['79'][1].init(122, 17, 'attrs.style || ""');
-function visit3_79_1(result) {
-  _$jscoverage['/font-family.js'].branchData['79'][1].ranCondition(result);
+_$jscoverage['/font-family.js'].branchData['84'][1].init(119, 17, 'attrs.style || ""');
+function visit3_84_1(result) {
+  _$jscoverage['/font-family.js'].branchData['84'][1].ranCondition(result);
   return result;
-}_$jscoverage['/font-family.js'].branchData['77'][1].init(30, 18, 'item.elAttrs || {}');
-function visit2_77_1(result) {
-  _$jscoverage['/font-family.js'].branchData['77'][1].ranCondition(result);
+}_$jscoverage['/font-family.js'].branchData['82'][1].init(29, 18, 'item.elAttrs || {}');
+function visit2_82_1(result) {
+  _$jscoverage['/font-family.js'].branchData['82'][1].ranCondition(result);
   return result;
-}_$jscoverage['/font-family.js'].branchData['8'][1].init(24, 12, 'config || {}');
-function visit1_8_1(result) {
-  _$jscoverage['/font-family.js'].branchData['8'][1].ranCondition(result);
+}_$jscoverage['/font-family.js'].branchData['13'][1].init(23, 12, 'config || {}');
+function visit1_13_1(result) {
+  _$jscoverage['/font-family.js'].branchData['13'][1].ranCondition(result);
   return result;
 }_$jscoverage['/font-family.js'].lineData[6]++;
-KISSY.add("editor/plugin/font-family", function(S, Editor, ui, cmd) {
+KISSY.add(function(S, require) {
   _$jscoverage['/font-family.js'].functionData[0]++;
   _$jscoverage['/font-family.js'].lineData[7]++;
+  var Editor = require('editor');
+  _$jscoverage['/font-family.js'].lineData[8]++;
+  var ui = require('./font/ui');
+  _$jscoverage['/font-family.js'].lineData[9]++;
+  var cmd = require('./font-family/cmd');
+  _$jscoverage['/font-family.js'].lineData[10]++;
+  require('./menubutton');
+  _$jscoverage['/font-family.js'].lineData[12]++;
   function FontFamilyPlugin(config) {
     _$jscoverage['/font-family.js'].functionData[1]++;
-    _$jscoverage['/font-family.js'].lineData[8]++;
-    this.config = visit1_8_1(config || {});
+    _$jscoverage['/font-family.js'].lineData[13]++;
+    this.config = visit1_13_1(config || {});
   }
-  _$jscoverage['/font-family.js'].lineData[11]++;
+  _$jscoverage['/font-family.js'].lineData[16]++;
   S.augment(FontFamilyPlugin, {
   pluginRenderUI: function(editor) {
   _$jscoverage['/font-family.js'].functionData[2]++;
-  _$jscoverage['/font-family.js'].lineData[14]++;
+  _$jscoverage['/font-family.js'].lineData[19]++;
   cmd.init(editor);
-  _$jscoverage['/font-family.js'].lineData[16]++;
-  var fontFamilies = this.config;
-  _$jscoverage['/font-family.js'].lineData[18]++;
-  var menu = {};
   _$jscoverage['/font-family.js'].lineData[21]++;
+  var fontFamilies = this.config;
+  _$jscoverage['/font-family.js'].lineData[23]++;
+  var menu = {};
+  _$jscoverage['/font-family.js'].lineData[26]++;
   S.mix(menu, {
   children: [{
   content: "\u5b8b\u4f53", 
@@ -321,28 +333,27 @@ KISSY.add("editor/plugin/font-family", function(S, Editor, ui, cmd) {
   content: "Tahoma", 
   value: "Tahoma"}], 
   width: "130px"});
-  _$jscoverage['/font-family.js'].lineData[76]++;
+  _$jscoverage['/font-family.js'].lineData[81]++;
   S.each(menu.children, function(item) {
   _$jscoverage['/font-family.js'].functionData[3]++;
-  _$jscoverage['/font-family.js'].lineData[77]++;
-  var attrs = visit2_77_1(item.elAttrs || {}), value = item.value;
-  _$jscoverage['/font-family.js'].lineData[79]++;
-  attrs.style = visit3_79_1(attrs.style || "");
-  _$jscoverage['/font-family.js'].lineData[80]++;
+  _$jscoverage['/font-family.js'].lineData[82]++;
+  var attrs = visit2_82_1(item.elAttrs || {}), value = item.value;
+  _$jscoverage['/font-family.js'].lineData[84]++;
+  attrs.style = visit3_84_1(attrs.style || "");
+  _$jscoverage['/font-family.js'].lineData[85]++;
   attrs.style += ";font-family:" + value;
-  _$jscoverage['/font-family.js'].lineData[81]++;
+  _$jscoverage['/font-family.js'].lineData[86]++;
   item.elAttrs = attrs;
 });
-  _$jscoverage['/font-family.js'].lineData[84]++;
+  _$jscoverage['/font-family.js'].lineData[89]++;
   fontFamilies.menu = S.mix(menu, fontFamilies.menu);
-  _$jscoverage['/font-family.js'].lineData[86]++;
+  _$jscoverage['/font-family.js'].lineData[91]++;
   editor.addSelect("fontFamily", S.mix({
   cmdType: "fontFamily", 
   defaultCaption: "\u5b57\u4f53", 
   width: 130, 
   mode: Editor.Mode.WYSIWYG_MODE}, fontFamilies), ui.Select);
 }});
-  _$jscoverage['/font-family.js'].lineData[95]++;
+  _$jscoverage['/font-family.js'].lineData[100]++;
   return FontFamilyPlugin;
-}, {
-  requires: ['editor', './font/ui', './font-family/cmd']});
+});

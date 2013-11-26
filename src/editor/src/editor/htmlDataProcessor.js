@@ -7,9 +7,10 @@
  Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.html or http://ckeditor.com/license
  */
-KISSY.add(function (S,require) {
+KISSY.add(function (S, require) {
     var Editor = require('./base');
     var HtmlParser = require('html-parser');
+    var OLD_IE = S.UA.ieMode < 11;
     return {
         init: function (editor) {
             var Node = S.Node,
@@ -153,7 +154,7 @@ KISSY.add(function (S,require) {
                         return undefined;
                     }
                 };
-                if (UA['ie']) {
+                if (OLD_IE) {
                     // IE outputs style attribute in capital letters. We should convert
                     // them back to lower case.
                     // bug: style='background:url(www.G.cn)' =>  style='background:url(www.g.cn)'
@@ -221,7 +222,7 @@ KISSY.add(function (S,require) {
                     if (blockNeedsExtension(block)) {
                         // non-ie need br for cursor and height
                         // ie does not need!
-                        if (!UA['ie']) {
+                        if (!OLD_IE) {
                             block.appendChild(new HtmlParser.Tag('br'));
                         }
                     }

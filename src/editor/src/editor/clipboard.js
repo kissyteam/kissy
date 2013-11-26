@@ -8,9 +8,10 @@ KISSY.add(function (S,require) {
     var Editor = require('./base');
     var KERange = require('./range');
     var KES = require('./selection');
+    var  logger = S.getLogger('s/editor');
     var $ = Node.all,
         UA = S.UA,
-        logger = S.getLogger('s/editor'),
+
         pasteEvent = UA.ie ? 'beforepaste' : 'paste',
         KER = Editor.RangeType;
 

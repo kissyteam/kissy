@@ -344,7 +344,7 @@ function visit31_22_1(result) {
   _$jscoverage['/overlay/extension/overlay-effect.js'].branchData['22'][1].ranCondition(result);
   return result;
 }_$jscoverage['/overlay/extension/overlay-effect.js'].lineData[6]++;
-KISSY.add('overlay/extension/overlay-effect', function(S) {
+KISSY.add(function(S) {
   _$jscoverage['/overlay/extension/overlay-effect.js'].functionData[0]++;
   _$jscoverage['/overlay/extension/overlay-effect.js'].lineData[7]++;
   var effects = {

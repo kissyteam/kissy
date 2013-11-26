@@ -230,16 +230,17 @@ if (! _$jscoverage['/tabs/tab-render.js']) {
   _$jscoverage['/tabs/tab-render.js'] = {};
   _$jscoverage['/tabs/tab-render.js'].lineData = [];
   _$jscoverage['/tabs/tab-render.js'].lineData[6] = 0;
-  _$jscoverage['/tabs/tab-render.js'].lineData[8] = 0;
-  _$jscoverage['/tabs/tab-render.js'].lineData[10] = 0;
+  _$jscoverage['/tabs/tab-render.js'].lineData[7] = 0;
+  _$jscoverage['/tabs/tab-render.js'].lineData[9] = 0;
   _$jscoverage['/tabs/tab-render.js'].lineData[11] = 0;
   _$jscoverage['/tabs/tab-render.js'].lineData[12] = 0;
   _$jscoverage['/tabs/tab-render.js'].lineData[13] = 0;
   _$jscoverage['/tabs/tab-render.js'].lineData[14] = 0;
-  _$jscoverage['/tabs/tab-render.js'].lineData[18] = 0;
+  _$jscoverage['/tabs/tab-render.js'].lineData[15] = 0;
   _$jscoverage['/tabs/tab-render.js'].lineData[19] = 0;
-  _$jscoverage['/tabs/tab-render.js'].lineData[21] = 0;
-  _$jscoverage['/tabs/tab-render.js'].lineData[27] = 0;
+  _$jscoverage['/tabs/tab-render.js'].lineData[20] = 0;
+  _$jscoverage['/tabs/tab-render.js'].lineData[22] = 0;
+  _$jscoverage['/tabs/tab-render.js'].lineData[28] = 0;
 }
 if (! _$jscoverage['/tabs/tab-render.js'].functionData) {
   _$jscoverage['/tabs/tab-render.js'].functionData = [];
@@ -250,47 +251,48 @@ if (! _$jscoverage['/tabs/tab-render.js'].functionData) {
 }
 if (! _$jscoverage['/tabs/tab-render.js'].branchData) {
   _$jscoverage['/tabs/tab-render.js'].branchData = {};
-  _$jscoverage['/tabs/tab-render.js'].branchData['12'] = [];
-  _$jscoverage['/tabs/tab-render.js'].branchData['12'][1] = new BranchData();
+  _$jscoverage['/tabs/tab-render.js'].branchData['13'] = [];
+  _$jscoverage['/tabs/tab-render.js'].branchData['13'][1] = new BranchData();
 }
-_$jscoverage['/tabs/tab-render.js'].branchData['12'][1].init(96, 19, 'renderData.selected');
-function visit16_12_1(result) {
-  _$jscoverage['/tabs/tab-render.js'].branchData['12'][1].ranCondition(result);
+_$jscoverage['/tabs/tab-render.js'].branchData['13'][1].init(93, 19, 'renderData.selected');
+function visit16_13_1(result) {
+  _$jscoverage['/tabs/tab-render.js'].branchData['13'][1].ranCondition(result);
   return result;
 }_$jscoverage['/tabs/tab-render.js'].lineData[6]++;
-KISSY.add("tabs/tab-render", function(S, Button) {
+KISSY.add(function(S, require) {
   _$jscoverage['/tabs/tab-render.js'].functionData[0]++;
-  _$jscoverage['/tabs/tab-render.js'].lineData[8]++;
+  _$jscoverage['/tabs/tab-render.js'].lineData[7]++;
+  var Button = require('button');
+  _$jscoverage['/tabs/tab-render.js'].lineData[9]++;
   return Button.getDefaultRender().extend({
   beforeCreateDom: function(renderData) {
   _$jscoverage['/tabs/tab-render.js'].functionData[1]++;
-  _$jscoverage['/tabs/tab-render.js'].lineData[10]++;
-  var attrs = renderData.elAttrs;
   _$jscoverage['/tabs/tab-render.js'].lineData[11]++;
-  attrs.role = 'tab';
+  var attrs = renderData.elAttrs;
   _$jscoverage['/tabs/tab-render.js'].lineData[12]++;
-  if (visit16_12_1(renderData.selected)) {
-    _$jscoverage['/tabs/tab-render.js'].lineData[13]++;
-    attrs['aria-selected'] = true;
+  attrs.role = 'tab';
+  _$jscoverage['/tabs/tab-render.js'].lineData[13]++;
+  if (visit16_13_1(renderData.selected)) {
     _$jscoverage['/tabs/tab-render.js'].lineData[14]++;
+    attrs['aria-selected'] = true;
+    _$jscoverage['/tabs/tab-render.js'].lineData[15]++;
     renderData.elCls.push(this.getBaseCssClasses('selected'));
   }
 }, 
   _onSetSelected: function(v) {
   _$jscoverage['/tabs/tab-render.js'].functionData[2]++;
-  _$jscoverage['/tabs/tab-render.js'].lineData[18]++;
-  var el = this.$el;
   _$jscoverage['/tabs/tab-render.js'].lineData[19]++;
+  var el = this.$el;
+  _$jscoverage['/tabs/tab-render.js'].lineData[20]++;
   var selectedCls = this.getBaseCssClasses('selected');
-  _$jscoverage['/tabs/tab-render.js'].lineData[21]++;
+  _$jscoverage['/tabs/tab-render.js'].lineData[22]++;
   el[v ? 'addClass' : 'removeClass'](selectedCls).attr('aria-selected', !!v);
 }}, {
   name: 'TabsTabRender', 
   HTML_PARSER: {
   selected: function(el) {
   _$jscoverage['/tabs/tab-render.js'].functionData[3]++;
-  _$jscoverage['/tabs/tab-render.js'].lineData[27]++;
+  _$jscoverage['/tabs/tab-render.js'].lineData[28]++;
   return el.hasClass(this.getBaseCssClass('selected'));
 }}});
-}, {
-  requires: ['button']});
+});

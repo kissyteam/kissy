@@ -231,20 +231,22 @@ if (! _$jscoverage['/source-area.js']) {
   _$jscoverage['/source-area.js'].lineData = [];
   _$jscoverage['/source-area.js'].lineData[6] = 0;
   _$jscoverage['/source-area.js'].lineData[7] = 0;
-  _$jscoverage['/source-area.js'].lineData[10] = 0;
-  _$jscoverage['/source-area.js'].lineData[13] = 0;
+  _$jscoverage['/source-area.js'].lineData[8] = 0;
+  _$jscoverage['/source-area.js'].lineData[9] = 0;
+  _$jscoverage['/source-area.js'].lineData[12] = 0;
   _$jscoverage['/source-area.js'].lineData[15] = 0;
-  _$jscoverage['/source-area.js'].lineData[19] = 0;
-  _$jscoverage['/source-area.js'].lineData[20] = 0;
+  _$jscoverage['/source-area.js'].lineData[17] = 0;
   _$jscoverage['/source-area.js'].lineData[21] = 0;
+  _$jscoverage['/source-area.js'].lineData[22] = 0;
   _$jscoverage['/source-area.js'].lineData[23] = 0;
-  _$jscoverage['/source-area.js'].lineData[24] = 0;
-  _$jscoverage['/source-area.js'].lineData[29] = 0;
-  _$jscoverage['/source-area.js'].lineData[30] = 0;
+  _$jscoverage['/source-area.js'].lineData[25] = 0;
+  _$jscoverage['/source-area.js'].lineData[26] = 0;
   _$jscoverage['/source-area.js'].lineData[31] = 0;
   _$jscoverage['/source-area.js'].lineData[32] = 0;
+  _$jscoverage['/source-area.js'].lineData[33] = 0;
   _$jscoverage['/source-area.js'].lineData[34] = 0;
-  _$jscoverage['/source-area.js'].lineData[43] = 0;
+  _$jscoverage['/source-area.js'].lineData[36] = 0;
+  _$jscoverage['/source-area.js'].lineData[45] = 0;
 }
 if (! _$jscoverage['/source-area.js'].functionData) {
   _$jscoverage['/source-area.js'].functionData = [];
@@ -258,65 +260,68 @@ if (! _$jscoverage['/source-area.js'].functionData) {
 }
 if (! _$jscoverage['/source-area.js'].branchData) {
   _$jscoverage['/source-area.js'].branchData = {};
-  _$jscoverage['/source-area.js'].branchData['31'] = [];
-  _$jscoverage['/source-area.js'].branchData['31'][1] = new BranchData();
+  _$jscoverage['/source-area.js'].branchData['33'] = [];
+  _$jscoverage['/source-area.js'].branchData['33'][1] = new BranchData();
 }
-_$jscoverage['/source-area.js'].branchData['31'][1].init(132, 7, 'checked');
-function visit1_31_1(result) {
-  _$jscoverage['/source-area.js'].branchData['31'][1].ranCondition(result);
+_$jscoverage['/source-area.js'].branchData['33'][1].init(129, 7, 'checked');
+function visit1_33_1(result) {
+  _$jscoverage['/source-area.js'].branchData['33'][1].ranCondition(result);
   return result;
 }_$jscoverage['/source-area.js'].lineData[6]++;
-KISSY.add("editor/plugin/source-area", function(S, Editor) {
+KISSY.add(function(S, require) {
   _$jscoverage['/source-area.js'].functionData[0]++;
   _$jscoverage['/source-area.js'].lineData[7]++;
+  var Editor = require('editor');
+  _$jscoverage['/source-area.js'].lineData[8]++;
+  require('./button');
+  _$jscoverage['/source-area.js'].lineData[9]++;
   var SOURCE_MODE = Editor.Mode.SOURCE_MODE, WYSIWYG_MODE = Editor.Mode.WYSIWYG_MODE;
-  _$jscoverage['/source-area.js'].lineData[10]++;
+  _$jscoverage['/source-area.js'].lineData[12]++;
   function sourceArea() {
     _$jscoverage['/source-area.js'].functionData[1]++;
   }
-  _$jscoverage['/source-area.js'].lineData[13]++;
+  _$jscoverage['/source-area.js'].lineData[15]++;
   S.augment(sourceArea, {
   pluginRenderUI: function(editor) {
   _$jscoverage['/source-area.js'].functionData[2]++;
-  _$jscoverage['/source-area.js'].lineData[15]++;
+  _$jscoverage['/source-area.js'].lineData[17]++;
   editor.addButton("sourceArea", {
   tooltip: "\u6e90\u7801", 
   listeners: {
   afterSyncUI: function() {
   _$jscoverage['/source-area.js'].functionData[3]++;
-  _$jscoverage['/source-area.js'].lineData[19]++;
+  _$jscoverage['/source-area.js'].lineData[21]++;
   var self = this;
-  _$jscoverage['/source-area.js'].lineData[20]++;
+  _$jscoverage['/source-area.js'].lineData[22]++;
   editor.on("wysiwygMode", function() {
   _$jscoverage['/source-area.js'].functionData[4]++;
-  _$jscoverage['/source-area.js'].lineData[21]++;
+  _$jscoverage['/source-area.js'].lineData[23]++;
   self.set("checked", false);
 });
-  _$jscoverage['/source-area.js'].lineData[23]++;
+  _$jscoverage['/source-area.js'].lineData[25]++;
   editor.on("sourceMode", function() {
   _$jscoverage['/source-area.js'].functionData[5]++;
-  _$jscoverage['/source-area.js'].lineData[24]++;
+  _$jscoverage['/source-area.js'].lineData[26]++;
   self.set("checked", true);
 });
 }, 
   click: function() {
   _$jscoverage['/source-area.js'].functionData[6]++;
-  _$jscoverage['/source-area.js'].lineData[29]++;
-  var self = this;
-  _$jscoverage['/source-area.js'].lineData[30]++;
-  var checked = self.get("checked");
   _$jscoverage['/source-area.js'].lineData[31]++;
-  if (visit1_31_1(checked)) {
-    _$jscoverage['/source-area.js'].lineData[32]++;
+  var self = this;
+  _$jscoverage['/source-area.js'].lineData[32]++;
+  var checked = self.get("checked");
+  _$jscoverage['/source-area.js'].lineData[33]++;
+  if (visit1_33_1(checked)) {
+    _$jscoverage['/source-area.js'].lineData[34]++;
     editor.set("mode", SOURCE_MODE);
   } else {
-    _$jscoverage['/source-area.js'].lineData[34]++;
+    _$jscoverage['/source-area.js'].lineData[36]++;
     editor.set("mode", WYSIWYG_MODE);
   }
 }}, 
   checkable: true});
 }});
-  _$jscoverage['/source-area.js'].lineData[43]++;
+  _$jscoverage['/source-area.js'].lineData[45]++;
   return sourceArea;
-}, {
-  requires: ['editor', './button']});
+});

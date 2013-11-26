@@ -231,49 +231,52 @@ if (! _$jscoverage['/node/attach.js']) {
   _$jscoverage['/node/attach.js'].lineData = [];
   _$jscoverage['/node/attach.js'].lineData[6] = 0;
   _$jscoverage['/node/attach.js'].lineData[7] = 0;
-  _$jscoverage['/node/attach.js'].lineData[103] = 0;
-  _$jscoverage['/node/attach.js'].lineData[105] = 0;
-  _$jscoverage['/node/attach.js'].lineData[106] = 0;
+  _$jscoverage['/node/attach.js'].lineData[8] = 0;
+  _$jscoverage['/node/attach.js'].lineData[9] = 0;
+  _$jscoverage['/node/attach.js'].lineData[11] = 0;
   _$jscoverage['/node/attach.js'].lineData[107] = 0;
-  _$jscoverage['/node/attach.js'].lineData[108] = 0;
   _$jscoverage['/node/attach.js'].lineData[109] = 0;
+  _$jscoverage['/node/attach.js'].lineData[110] = 0;
   _$jscoverage['/node/attach.js'].lineData[111] = 0;
-  _$jscoverage['/node/attach.js'].lineData[114] = 0;
+  _$jscoverage['/node/attach.js'].lineData[112] = 0;
+  _$jscoverage['/node/attach.js'].lineData[113] = 0;
   _$jscoverage['/node/attach.js'].lineData[115] = 0;
-  _$jscoverage['/node/attach.js'].lineData[116] = 0;
-  _$jscoverage['/node/attach.js'].lineData[117] = 0;
   _$jscoverage['/node/attach.js'].lineData[118] = 0;
+  _$jscoverage['/node/attach.js'].lineData[119] = 0;
   _$jscoverage['/node/attach.js'].lineData[120] = 0;
   _$jscoverage['/node/attach.js'].lineData[121] = 0;
-  _$jscoverage['/node/attach.js'].lineData[123] = 0;
-  _$jscoverage['/node/attach.js'].lineData[126] = 0;
-  _$jscoverage['/node/attach.js'].lineData[128] = 0;
-  _$jscoverage['/node/attach.js'].lineData[131] = 0;
+  _$jscoverage['/node/attach.js'].lineData[122] = 0;
+  _$jscoverage['/node/attach.js'].lineData[124] = 0;
+  _$jscoverage['/node/attach.js'].lineData[125] = 0;
+  _$jscoverage['/node/attach.js'].lineData[127] = 0;
+  _$jscoverage['/node/attach.js'].lineData[130] = 0;
   _$jscoverage['/node/attach.js'].lineData[132] = 0;
   _$jscoverage['/node/attach.js'].lineData[135] = 0;
-  _$jscoverage['/node/attach.js'].lineData[138] = 0;
+  _$jscoverage['/node/attach.js'].lineData[136] = 0;
   _$jscoverage['/node/attach.js'].lineData[139] = 0;
-  _$jscoverage['/node/attach.js'].lineData[140] = 0;
-  _$jscoverage['/node/attach.js'].lineData[141] = 0;
+  _$jscoverage['/node/attach.js'].lineData[142] = 0;
+  _$jscoverage['/node/attach.js'].lineData[143] = 0;
+  _$jscoverage['/node/attach.js'].lineData[144] = 0;
   _$jscoverage['/node/attach.js'].lineData[145] = 0;
-  _$jscoverage['/node/attach.js'].lineData[146] = 0;
-  _$jscoverage['/node/attach.js'].lineData[147] = 0;
-  _$jscoverage['/node/attach.js'].lineData[148] = 0;
+  _$jscoverage['/node/attach.js'].lineData[149] = 0;
+  _$jscoverage['/node/attach.js'].lineData[150] = 0;
+  _$jscoverage['/node/attach.js'].lineData[151] = 0;
   _$jscoverage['/node/attach.js'].lineData[152] = 0;
-  _$jscoverage['/node/attach.js'].lineData[153] = 0;
-  _$jscoverage['/node/attach.js'].lineData[154] = 0;
-  _$jscoverage['/node/attach.js'].lineData[155] = 0;
+  _$jscoverage['/node/attach.js'].lineData[156] = 0;
+  _$jscoverage['/node/attach.js'].lineData[157] = 0;
+  _$jscoverage['/node/attach.js'].lineData[158] = 0;
   _$jscoverage['/node/attach.js'].lineData[159] = 0;
-  _$jscoverage['/node/attach.js'].lineData[160] = 0;
-  _$jscoverage['/node/attach.js'].lineData[161] = 0;
   _$jscoverage['/node/attach.js'].lineData[163] = 0;
   _$jscoverage['/node/attach.js'].lineData[164] = 0;
   _$jscoverage['/node/attach.js'].lineData[165] = 0;
+  _$jscoverage['/node/attach.js'].lineData[167] = 0;
+  _$jscoverage['/node/attach.js'].lineData[168] = 0;
   _$jscoverage['/node/attach.js'].lineData[169] = 0;
-  _$jscoverage['/node/attach.js'].lineData[170] = 0;
-  _$jscoverage['/node/attach.js'].lineData[171] = 0;
   _$jscoverage['/node/attach.js'].lineData[173] = 0;
   _$jscoverage['/node/attach.js'].lineData[174] = 0;
+  _$jscoverage['/node/attach.js'].lineData[175] = 0;
+  _$jscoverage['/node/attach.js'].lineData[177] = 0;
+  _$jscoverage['/node/attach.js'].lineData[178] = 0;
 }
 if (! _$jscoverage['/node/attach.js'].functionData) {
   _$jscoverage['/node/attach.js'].functionData = [];
@@ -294,40 +297,46 @@ if (! _$jscoverage['/node/attach.js'].functionData) {
 }
 if (! _$jscoverage['/node/attach.js'].branchData) {
   _$jscoverage['/node/attach.js'].branchData = {};
-  _$jscoverage['/node/attach.js'].branchData['108'] = [];
-  _$jscoverage['/node/attach.js'].branchData['108'][1] = new BranchData();
-  _$jscoverage['/node/attach.js'].branchData['117'] = [];
-  _$jscoverage['/node/attach.js'].branchData['117'][1] = new BranchData();
-  _$jscoverage['/node/attach.js'].branchData['120'] = [];
-  _$jscoverage['/node/attach.js'].branchData['120'][1] = new BranchData();
-  _$jscoverage['/node/attach.js'].branchData['128'] = [];
-  _$jscoverage['/node/attach.js'].branchData['128'][1] = new BranchData();
-  _$jscoverage['/node/attach.js'].branchData['128'][2] = new BranchData();
+  _$jscoverage['/node/attach.js'].branchData['112'] = [];
+  _$jscoverage['/node/attach.js'].branchData['112'][1] = new BranchData();
+  _$jscoverage['/node/attach.js'].branchData['121'] = [];
+  _$jscoverage['/node/attach.js'].branchData['121'][1] = new BranchData();
+  _$jscoverage['/node/attach.js'].branchData['124'] = [];
+  _$jscoverage['/node/attach.js'].branchData['124'][1] = new BranchData();
+  _$jscoverage['/node/attach.js'].branchData['132'] = [];
+  _$jscoverage['/node/attach.js'].branchData['132'][1] = new BranchData();
+  _$jscoverage['/node/attach.js'].branchData['132'][2] = new BranchData();
 }
-_$jscoverage['/node/attach.js'].branchData['128'][2].init(30, 25, 'args[index] === undefined');
-function visit14_128_2(result) {
-  _$jscoverage['/node/attach.js'].branchData['128'][2].ranCondition(result);
+_$jscoverage['/node/attach.js'].branchData['132'][2].init(28, 25, 'args[index] === undefined');
+function visit14_132_2(result) {
+  _$jscoverage['/node/attach.js'].branchData['132'][2].ranCondition(result);
   return result;
-}_$jscoverage['/node/attach.js'].branchData['128'][1].init(30, 101, 'args[index] === undefined && !S.isObject(args[0])');
-function visit13_128_1(result) {
-  _$jscoverage['/node/attach.js'].branchData['128'][1].ranCondition(result);
+}_$jscoverage['/node/attach.js'].branchData['132'][1].init(28, 99, 'args[index] === undefined && !S.isObject(args[0])');
+function visit13_132_1(result) {
+  _$jscoverage['/node/attach.js'].branchData['132'][1].ranCondition(result);
   return result;
-}_$jscoverage['/node/attach.js'].branchData['120'][1].init(165, 12, 'ret === null');
-function visit12_120_1(result) {
-  _$jscoverage['/node/attach.js'].branchData['120'][1].ranCondition(result);
+}_$jscoverage['/node/attach.js'].branchData['124'][1].init(159, 12, 'ret === null');
+function visit12_124_1(result) {
+  _$jscoverage['/node/attach.js'].branchData['124'][1].ranCondition(result);
   return result;
-}_$jscoverage['/node/attach.js'].branchData['117'][1].init(88, 17, 'ret === undefined');
-function visit11_117_1(result) {
-  _$jscoverage['/node/attach.js'].branchData['117'][1].ranCondition(result);
+}_$jscoverage['/node/attach.js'].branchData['121'][1].init(85, 17, 'ret === undefined');
+function visit11_121_1(result) {
+  _$jscoverage['/node/attach.js'].branchData['121'][1].ranCondition(result);
   return result;
-}_$jscoverage['/node/attach.js'].branchData['108'][1].init(88, 17, 'ret === undefined');
-function visit10_108_1(result) {
-  _$jscoverage['/node/attach.js'].branchData['108'][1].ranCondition(result);
+}_$jscoverage['/node/attach.js'].branchData['112'][1].init(85, 17, 'ret === undefined');
+function visit10_112_1(result) {
+  _$jscoverage['/node/attach.js'].branchData['112'][1].ranCondition(result);
   return result;
 }_$jscoverage['/node/attach.js'].lineData[6]++;
-KISSY.add('node/attach', function(S, Dom, Event, NodeList, undefined) {
+KISSY.add(function(S, require) {
   _$jscoverage['/node/attach.js'].functionData[0]++;
   _$jscoverage['/node/attach.js'].lineData[7]++;
+  var Dom = require('dom');
+  _$jscoverage['/node/attach.js'].lineData[8]++;
+  var Event = require('event/dom');
+  _$jscoverage['/node/attach.js'].lineData[9]++;
+  var NodeList = require('./base');
+  _$jscoverage['/node/attach.js'].lineData[11]++;
   var NLP = NodeList.prototype, makeArray = S.makeArray, DOM_INCLUDES_NORM = ['nodeName', 'isCustomDomain', 'getEmptyIframeSrc', 'equals', 'contains', 'index', 'scrollTop', 'scrollLeft', 'height', 'width', 'innerHeight', 'innerWidth', 'outerHeight', 'outerWidth', 'addStyleSheet', 'appendTo', 'prependTo', 'insertBefore', 'before', 'after', 'insertAfter', 'test', 'hasClass', 'addClass', 'removeClass', 'replaceClass', 'toggleClass', 'removeAttr', 'hasAttr', 'hasProp', 'scrollIntoView', 'remove', 'empty', 'removeData', 'hasData', 'unselectable', 'wrap', 'wrapAll', 'replaceWith', 'wrapInner', 'unwrap'], DOM_INCLUDES_NORM_NODE_LIST = ['getWindow', 'getDocument', 'filter', 'first', 'last', 'parent', 'closest', 'next', 'prev', 'clone', 'siblings', 'contents', 'children'], DOM_INCLUDES_NORM_IF = {
   'attr': 1, 
   'text': 0, 
@@ -340,122 +349,121 @@ KISSY.add('node/attach', function(S, Dom, Event, NodeList, undefined) {
   'outerHTML': 0, 
   'outerHtml': 0, 
   'data': 1}, EVENT_INCLUDES_SELF = ['on', 'detach', 'delegate', 'undelegate'], EVENT_INCLUDES_RET = ['fire', 'fireHandler'];
-  _$jscoverage['/node/attach.js'].lineData[103]++;
+  _$jscoverage['/node/attach.js'].lineData[107]++;
   NodeList.KeyCode = Event.KeyCode;
-  _$jscoverage['/node/attach.js'].lineData[105]++;
+  _$jscoverage['/node/attach.js'].lineData[109]++;
   function accessNorm(fn, self, args) {
     _$jscoverage['/node/attach.js'].functionData[1]++;
-    _$jscoverage['/node/attach.js'].lineData[106]++;
+    _$jscoverage['/node/attach.js'].lineData[110]++;
     args.unshift(self);
-    _$jscoverage['/node/attach.js'].lineData[107]++;
+    _$jscoverage['/node/attach.js'].lineData[111]++;
     var ret = Dom[fn].apply(Dom, args);
-    _$jscoverage['/node/attach.js'].lineData[108]++;
-    if (visit10_108_1(ret === undefined)) {
-      _$jscoverage['/node/attach.js'].lineData[109]++;
+    _$jscoverage['/node/attach.js'].lineData[112]++;
+    if (visit10_112_1(ret === undefined)) {
+      _$jscoverage['/node/attach.js'].lineData[113]++;
       return self;
     }
-    _$jscoverage['/node/attach.js'].lineData[111]++;
+    _$jscoverage['/node/attach.js'].lineData[115]++;
     return ret;
   }
-  _$jscoverage['/node/attach.js'].lineData[114]++;
+  _$jscoverage['/node/attach.js'].lineData[118]++;
   function accessNormList(fn, self, args) {
     _$jscoverage['/node/attach.js'].functionData[2]++;
-    _$jscoverage['/node/attach.js'].lineData[115]++;
+    _$jscoverage['/node/attach.js'].lineData[119]++;
     args.unshift(self);
-    _$jscoverage['/node/attach.js'].lineData[116]++;
+    _$jscoverage['/node/attach.js'].lineData[120]++;
     var ret = Dom[fn].apply(Dom, args);
-    _$jscoverage['/node/attach.js'].lineData[117]++;
-    if (visit11_117_1(ret === undefined)) {
-      _$jscoverage['/node/attach.js'].lineData[118]++;
+    _$jscoverage['/node/attach.js'].lineData[121]++;
+    if (visit11_121_1(ret === undefined)) {
+      _$jscoverage['/node/attach.js'].lineData[122]++;
       return self;
     } else {
-      _$jscoverage['/node/attach.js'].lineData[120]++;
-      if (visit12_120_1(ret === null)) {
-        _$jscoverage['/node/attach.js'].lineData[121]++;
+      _$jscoverage['/node/attach.js'].lineData[124]++;
+      if (visit12_124_1(ret === null)) {
+        _$jscoverage['/node/attach.js'].lineData[125]++;
         return null;
       }
     }
-    _$jscoverage['/node/attach.js'].lineData[123]++;
+    _$jscoverage['/node/attach.js'].lineData[127]++;
     return new NodeList(ret);
   }
-  _$jscoverage['/node/attach.js'].lineData[126]++;
+  _$jscoverage['/node/attach.js'].lineData[130]++;
   function accessNormIf(fn, self, index, args) {
     _$jscoverage['/node/attach.js'].functionData[3]++;
-    _$jscoverage['/node/attach.js'].lineData[128]++;
-    if (visit13_128_1(visit14_128_2(args[index] === undefined) && !S.isObject(args[0]))) {
-      _$jscoverage['/node/attach.js'].lineData[131]++;
+    _$jscoverage['/node/attach.js'].lineData[132]++;
+    if (visit13_132_1(visit14_132_2(args[index] === undefined) && !S.isObject(args[0]))) {
+      _$jscoverage['/node/attach.js'].lineData[135]++;
       args.unshift(self);
-      _$jscoverage['/node/attach.js'].lineData[132]++;
+      _$jscoverage['/node/attach.js'].lineData[136]++;
       return Dom[fn].apply(Dom, args);
     }
-    _$jscoverage['/node/attach.js'].lineData[135]++;
+    _$jscoverage['/node/attach.js'].lineData[139]++;
     return accessNorm(fn, self, args);
   }
-  _$jscoverage['/node/attach.js'].lineData[138]++;
+  _$jscoverage['/node/attach.js'].lineData[142]++;
   S.each(DOM_INCLUDES_NORM, function(k) {
   _$jscoverage['/node/attach.js'].functionData[4]++;
-  _$jscoverage['/node/attach.js'].lineData[139]++;
+  _$jscoverage['/node/attach.js'].lineData[143]++;
   NLP[k] = function() {
   _$jscoverage['/node/attach.js'].functionData[5]++;
-  _$jscoverage['/node/attach.js'].lineData[140]++;
+  _$jscoverage['/node/attach.js'].lineData[144]++;
   var args = makeArray(arguments);
-  _$jscoverage['/node/attach.js'].lineData[141]++;
+  _$jscoverage['/node/attach.js'].lineData[145]++;
   return accessNorm(k, this, args);
 };
 });
-  _$jscoverage['/node/attach.js'].lineData[145]++;
+  _$jscoverage['/node/attach.js'].lineData[149]++;
   S.each(DOM_INCLUDES_NORM_NODE_LIST, function(k) {
   _$jscoverage['/node/attach.js'].functionData[6]++;
-  _$jscoverage['/node/attach.js'].lineData[146]++;
+  _$jscoverage['/node/attach.js'].lineData[150]++;
   NLP[k] = function() {
   _$jscoverage['/node/attach.js'].functionData[7]++;
-  _$jscoverage['/node/attach.js'].lineData[147]++;
+  _$jscoverage['/node/attach.js'].lineData[151]++;
   var args = makeArray(arguments);
-  _$jscoverage['/node/attach.js'].lineData[148]++;
+  _$jscoverage['/node/attach.js'].lineData[152]++;
   return accessNormList(k, this, args);
 };
 });
-  _$jscoverage['/node/attach.js'].lineData[152]++;
+  _$jscoverage['/node/attach.js'].lineData[156]++;
   S.each(DOM_INCLUDES_NORM_IF, function(index, k) {
   _$jscoverage['/node/attach.js'].functionData[8]++;
-  _$jscoverage['/node/attach.js'].lineData[153]++;
+  _$jscoverage['/node/attach.js'].lineData[157]++;
   NLP[k] = function() {
   _$jscoverage['/node/attach.js'].functionData[9]++;
-  _$jscoverage['/node/attach.js'].lineData[154]++;
+  _$jscoverage['/node/attach.js'].lineData[158]++;
   var args = makeArray(arguments);
-  _$jscoverage['/node/attach.js'].lineData[155]++;
+  _$jscoverage['/node/attach.js'].lineData[159]++;
   return accessNormIf(k, this, index, args);
 };
 });
-  _$jscoverage['/node/attach.js'].lineData[159]++;
+  _$jscoverage['/node/attach.js'].lineData[163]++;
   S.each(EVENT_INCLUDES_SELF, function(k) {
   _$jscoverage['/node/attach.js'].functionData[10]++;
-  _$jscoverage['/node/attach.js'].lineData[160]++;
+  _$jscoverage['/node/attach.js'].lineData[164]++;
   NLP[k] = function() {
   _$jscoverage['/node/attach.js'].functionData[11]++;
-  _$jscoverage['/node/attach.js'].lineData[161]++;
-  var self = this, args = makeArray(arguments);
-  _$jscoverage['/node/attach.js'].lineData[163]++;
-  args.unshift(self);
-  _$jscoverage['/node/attach.js'].lineData[164]++;
-  Event[k].apply(Event, args);
   _$jscoverage['/node/attach.js'].lineData[165]++;
+  var self = this, args = makeArray(arguments);
+  _$jscoverage['/node/attach.js'].lineData[167]++;
+  args.unshift(self);
+  _$jscoverage['/node/attach.js'].lineData[168]++;
+  Event[k].apply(Event, args);
+  _$jscoverage['/node/attach.js'].lineData[169]++;
   return self;
 };
 });
-  _$jscoverage['/node/attach.js'].lineData[169]++;
+  _$jscoverage['/node/attach.js'].lineData[173]++;
   S.each(EVENT_INCLUDES_RET, function(k) {
   _$jscoverage['/node/attach.js'].functionData[12]++;
-  _$jscoverage['/node/attach.js'].lineData[170]++;
+  _$jscoverage['/node/attach.js'].lineData[174]++;
   NLP[k] = function() {
   _$jscoverage['/node/attach.js'].functionData[13]++;
-  _$jscoverage['/node/attach.js'].lineData[171]++;
+  _$jscoverage['/node/attach.js'].lineData[175]++;
   var self = this, args = makeArray(arguments);
-  _$jscoverage['/node/attach.js'].lineData[173]++;
+  _$jscoverage['/node/attach.js'].lineData[177]++;
   args.unshift(self);
-  _$jscoverage['/node/attach.js'].lineData[174]++;
+  _$jscoverage['/node/attach.js'].lineData[178]++;
   return Event[k].apply(Event, args);
 };
 });
-}, {
-  requires: ['dom', 'event/dom', './base']});
+});

@@ -230,6 +230,7 @@ if (! _$jscoverage['/ie/create.js']) {
   _$jscoverage['/ie/create.js'] = {};
   _$jscoverage['/ie/create.js'].lineData = [];
   _$jscoverage['/ie/create.js'].lineData[6] = 0;
+  _$jscoverage['/ie/create.js'].lineData[7] = 0;
   _$jscoverage['/ie/create.js'].lineData[9] = 0;
   _$jscoverage['/ie/create.js'].lineData[13] = 0;
   _$jscoverage['/ie/create.js'].lineData[14] = 0;
@@ -304,89 +305,91 @@ if (! _$jscoverage['/ie/create.js'].branchData) {
   _$jscoverage['/ie/create.js'].branchData['83'][1] = new BranchData();
   _$jscoverage['/ie/create.js'].branchData['83'][2] = new BranchData();
 }
-_$jscoverage['/ie/create.js'].branchData['83'][2].init(22, 26, 'Dom.nodeName(c) == \'tbody\'');
+_$jscoverage['/ie/create.js'].branchData['83'][2].init(21, 26, 'Dom.nodeName(c) == \'tbody\'');
 function visit37_83_2(result) {
   _$jscoverage['/ie/create.js'].branchData['83'][2].ranCondition(result);
   return result;
-}_$jscoverage['/ie/create.js'].branchData['83'][1].init(22, 50, 'Dom.nodeName(c) == \'tbody\' && !c.childNodes.length');
+}_$jscoverage['/ie/create.js'].branchData['83'][1].init(21, 50, 'Dom.nodeName(c) == \'tbody\' && !c.childNodes.length');
 function visit36_83_1(result) {
   _$jscoverage['/ie/create.js'].branchData['83'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/create.js'].branchData['77'][1].init(122, 8, 'hasTBody');
+}_$jscoverage['/ie/create.js'].branchData['77'][1].init(119, 8, 'hasTBody');
 function visit35_77_1(result) {
   _$jscoverage['/ie/create.js'].branchData['77'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/create.js'].branchData['71'][1].init(2797, 11, 'S.UA.ie < 8');
+}_$jscoverage['/ie/create.js'].branchData['71'][1].init(2766, 15, 'S.UA.ieMode < 8');
 function visit34_71_1(result) {
   _$jscoverage['/ie/create.js'].branchData['71'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/create.js'].branchData['54'][3].init(2106, 23, 'nodeName === \'textarea\'');
+}_$jscoverage['/ie/create.js'].branchData['54'][3].init(2061, 23, 'nodeName === \'textarea\'');
 function visit33_54_3(result) {
   _$jscoverage['/ie/create.js'].branchData['54'][3].ranCondition(result);
   return result;
-}_$jscoverage['/ie/create.js'].branchData['54'][2].init(2082, 20, 'nodeName === \'input\'');
+}_$jscoverage['/ie/create.js'].branchData['54'][2].init(2037, 20, 'nodeName === \'input\'');
 function visit32_54_2(result) {
   _$jscoverage['/ie/create.js'].branchData['54'][2].ranCondition(result);
   return result;
-}_$jscoverage['/ie/create.js'].branchData['54'][1].init(2082, 47, 'nodeName === \'input\' || nodeName === \'textarea\'');
+}_$jscoverage['/ie/create.js'].branchData['54'][1].init(2037, 47, 'nodeName === \'input\' || nodeName === \'textarea\'');
 function visit31_54_1(result) {
   _$jscoverage['/ie/create.js'].branchData['54'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/create.js'].branchData['50'][1].init(1856, 21, 'nodeName === \'option\'');
+}_$jscoverage['/ie/create.js'].branchData['50'][1].init(1815, 21, 'nodeName === \'option\'');
 function visit30_50_1(result) {
   _$jscoverage['/ie/create.js'].branchData['50'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/create.js'].branchData['44'][1].init(522, 24, 'dest.value !== src.value');
+}_$jscoverage['/ie/create.js'].branchData['44'][1].init(512, 24, 'dest.value !== src.value');
 function visit29_44_1(result) {
   _$jscoverage['/ie/create.js'].branchData['44'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/create.js'].branchData['38'][1].init(254, 11, 'src.checked');
+}_$jscoverage['/ie/create.js'].branchData['38'][1].init(250, 11, 'src.checked');
 function visit28_38_1(result) {
   _$jscoverage['/ie/create.js'].branchData['38'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/create.js'].branchData['34'][5].init(1078, 20, 'src.type === \'radio\'');
+}_$jscoverage['/ie/create.js'].branchData['34'][5].init(1053, 20, 'src.type === \'radio\'');
 function visit27_34_5(result) {
   _$jscoverage['/ie/create.js'].branchData['34'][5].ranCondition(result);
   return result;
-}_$jscoverage['/ie/create.js'].branchData['34'][4].init(1051, 23, 'src.type === \'checkbox\'');
+}_$jscoverage['/ie/create.js'].branchData['34'][4].init(1026, 23, 'src.type === \'checkbox\'');
 function visit26_34_4(result) {
   _$jscoverage['/ie/create.js'].branchData['34'][4].ranCondition(result);
   return result;
-}_$jscoverage['/ie/create.js'].branchData['34'][3].init(1051, 47, 'src.type === \'checkbox\' || src.type === \'radio\'');
+}_$jscoverage['/ie/create.js'].branchData['34'][3].init(1026, 47, 'src.type === \'checkbox\' || src.type === \'radio\'');
 function visit25_34_3(result) {
   _$jscoverage['/ie/create.js'].branchData['34'][3].ranCondition(result);
   return result;
-}_$jscoverage['/ie/create.js'].branchData['34'][2].init(1026, 20, 'nodeName === \'input\'');
+}_$jscoverage['/ie/create.js'].branchData['34'][2].init(1001, 20, 'nodeName === \'input\'');
 function visit24_34_2(result) {
   _$jscoverage['/ie/create.js'].branchData['34'][2].ranCondition(result);
   return result;
-}_$jscoverage['/ie/create.js'].branchData['34'][1].init(1026, 73, 'nodeName === \'input\' && (src.type === \'checkbox\' || src.type === \'radio\')');
+}_$jscoverage['/ie/create.js'].branchData['34'][1].init(1001, 73, 'nodeName === \'input\' && (src.type === \'checkbox\' || src.type === \'radio\')');
 function visit23_34_1(result) {
   _$jscoverage['/ie/create.js'].branchData['34'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/create.js'].branchData['30'][1].init(30, 22, 'i < srcChildren.length');
+}_$jscoverage['/ie/create.js'].branchData['30'][1].init(29, 22, 'i < srcChildren.length');
 function visit22_30_1(result) {
   _$jscoverage['/ie/create.js'].branchData['30'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/create.js'].branchData['29'][2].init(763, 21, 'nodeName === \'object\'');
+}_$jscoverage['/ie/create.js'].branchData['29'][2].init(743, 21, 'nodeName === \'object\'');
 function visit21_29_2(result) {
   _$jscoverage['/ie/create.js'].branchData['29'][2].ranCondition(result);
   return result;
-}_$jscoverage['/ie/create.js'].branchData['29'][1].init(763, 48, 'nodeName === \'object\' && !dest.childNodes.length');
+}_$jscoverage['/ie/create.js'].branchData['29'][1].init(743, 48, 'nodeName === \'object\' && !dest.childNodes.length');
 function visit20_29_1(result) {
   _$jscoverage['/ie/create.js'].branchData['29'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/create.js'].branchData['19'][1].init(362, 20, 'dest.mergeAttributes');
+}_$jscoverage['/ie/create.js'].branchData['19'][1].init(352, 20, 'dest.mergeAttributes');
 function visit19_19_1(result) {
   _$jscoverage['/ie/create.js'].branchData['19'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/create.js'].branchData['13'][1].init(161, 20, 'dest.clearAttributes');
+}_$jscoverage['/ie/create.js'].branchData['13'][1].init(157, 20, 'dest.clearAttributes');
 function visit18_13_1(result) {
   _$jscoverage['/ie/create.js'].branchData['13'][1].ranCondition(result);
   return result;
 }_$jscoverage['/ie/create.js'].lineData[6]++;
-KISSY.add('dom/ie/create', function(S, Dom) {
+KISSY.add(function(S, require) {
   _$jscoverage['/ie/create.js'].functionData[0]++;
+  _$jscoverage['/ie/create.js'].lineData[7]++;
+  var Dom = require('dom/base');
   _$jscoverage['/ie/create.js'].lineData[9]++;
   Dom._fixCloneAttributes = function(src, dest) {
   _$jscoverage['/ie/create.js'].functionData[1]++;
@@ -444,7 +447,7 @@ KISSY.add('dom/ie/create', function(S, Dom) {
   _$jscoverage['/ie/create.js'].lineData[66]++;
   var creators = Dom._creators, defaultCreator = Dom._defaultCreator, R_TBODY = /<tbody/i;
   _$jscoverage['/ie/create.js'].lineData[71]++;
-  if (visit34_71_1(S.UA.ie < 8)) {
+  if (visit34_71_1(S.UA.ieMode < 8)) {
     _$jscoverage['/ie/create.js'].lineData[74]++;
     creators.table = function(html, ownerDoc) {
   _$jscoverage['/ie/create.js'].functionData[2]++;
@@ -470,5 +473,4 @@ KISSY.add('dom/ie/create', function(S, Dom) {
   return frag;
 };
   }
-}, {
-  requires: ['dom/base']});
+});

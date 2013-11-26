@@ -230,9 +230,11 @@ if (! _$jscoverage['/cmd.js']) {
   _$jscoverage['/cmd.js'] = {};
   _$jscoverage['/cmd.js'].lineData = [];
   _$jscoverage['/cmd.js'].lineData[6] = 0;
+  _$jscoverage['/cmd.js'].lineData[7] = 0;
   _$jscoverage['/cmd.js'].lineData[8] = 0;
-  _$jscoverage['/cmd.js'].lineData[25] = 0;
+  _$jscoverage['/cmd.js'].lineData[10] = 0;
   _$jscoverage['/cmd.js'].lineData[27] = 0;
+  _$jscoverage['/cmd.js'].lineData[29] = 0;
 }
 if (! _$jscoverage['/cmd.js'].functionData) {
   _$jscoverage['/cmd.js'].functionData = [];
@@ -243,9 +245,13 @@ if (! _$jscoverage['/cmd.js'].branchData) {
   _$jscoverage['/cmd.js'].branchData = {};
 }
 _$jscoverage['/cmd.js'].lineData[6]++;
-KISSY.add("editor/plugin/strike-through/cmd", function(S, Editor, Cmd) {
+KISSY.add(function(S, require) {
   _$jscoverage['/cmd.js'].functionData[0]++;
+  _$jscoverage['/cmd.js'].lineData[7]++;
+  var Editor = require('editor');
   _$jscoverage['/cmd.js'].lineData[8]++;
+  var Cmd = require('../font/cmd');
+  _$jscoverage['/cmd.js'].lineData[10]++;
   var STRIKE_STYLE = new Editor.Style({
   element: 'del', 
   overrides: [{
@@ -254,12 +260,11 @@ KISSY.add("editor/plugin/strike-through/cmd", function(S, Editor, Cmd) {
   style: 'text-decoration: line-through;'}}, {
   element: 's'}, {
   element: 'strike'}]});
-  _$jscoverage['/cmd.js'].lineData[25]++;
+  _$jscoverage['/cmd.js'].lineData[27]++;
   return {
   init: function(editor) {
   _$jscoverage['/cmd.js'].functionData[1]++;
-  _$jscoverage['/cmd.js'].lineData[27]++;
+  _$jscoverage['/cmd.js'].lineData[29]++;
   Cmd.addButtonCmd(editor, "strikeThrough", STRIKE_STYLE);
 }};
-}, {
-  requires: ['editor', '../font/cmd']});
+});

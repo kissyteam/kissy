@@ -4,10 +4,10 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
-        var Editor = require('editor');
-        var Dialog4E = require('../dialog');
-        var MenuButton = require('../menubutton');
-
+    var Editor = require('editor');
+    var Dialog4E = require('../dialog');
+    var MenuButton = require('../menubutton');
+    var OLD_IE = S.UA.ieMode < 11;
     var Node = S.Node,
         Dom = S.DOM,
         trim = S.trim,
@@ -327,7 +327,7 @@ KISSY.add(function (S, require) {
                 rows = parseInt(d.trows.val()) || 1,
             //firefox 需要 br 才能得以放置焦点
             //cellPad = UA['ie'] ? "&nbsp;" : "&nbsp;<br/>",
-                cellPad = S.UA.ie ? '' : '<br/>',
+                cellPad = OLD_IE ? '' : '<br/>',
                 editor = self.editor;
 
             if (valid(d.talign.get("value")))

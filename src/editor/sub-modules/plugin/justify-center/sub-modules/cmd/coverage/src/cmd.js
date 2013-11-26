@@ -230,6 +230,7 @@ if (! _$jscoverage['/cmd.js']) {
   _$jscoverage['/cmd.js'] = {};
   _$jscoverage['/cmd.js'].lineData = [];
   _$jscoverage['/cmd.js'].lineData[6] = 0;
+  _$jscoverage['/cmd.js'].lineData[7] = 0;
   _$jscoverage['/cmd.js'].lineData[8] = 0;
   _$jscoverage['/cmd.js'].lineData[10] = 0;
 }
@@ -242,8 +243,10 @@ if (! _$jscoverage['/cmd.js'].branchData) {
   _$jscoverage['/cmd.js'].branchData = {};
 }
 _$jscoverage['/cmd.js'].lineData[6]++;
-KISSY.add("editor/plugin/justify-center/cmd", function(S, justifyUtils) {
+KISSY.add(function(S, require) {
   _$jscoverage['/cmd.js'].functionData[0]++;
+  _$jscoverage['/cmd.js'].lineData[7]++;
+  var justifyUtils = require('../justify-cmd');
   _$jscoverage['/cmd.js'].lineData[8]++;
   return {
   init: function(editor) {
@@ -251,5 +254,4 @@ KISSY.add("editor/plugin/justify-center/cmd", function(S, justifyUtils) {
   _$jscoverage['/cmd.js'].lineData[10]++;
   justifyUtils.addCommand(editor, "justifyCenter", "center");
 }};
-}, {
-  requires: ['../justify-cmd']});
+});
