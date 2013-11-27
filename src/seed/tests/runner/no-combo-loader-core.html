@@ -26,11 +26,11 @@
 
             var ok = 0;
 
-            S.use("dom,io", function (S, Node) {
+            S.use("dom,io", function () {
                 ok++;
             });
 
-            S.use("dom,io", function (S, Node) {
+            S.use("dom,io", function () {
                 ok++;
             });
 
@@ -40,7 +40,6 @@
         });
 
         it("load core when use dom", function () {
-
             S.clearLoader();
 
             KISSY.config({
@@ -49,15 +48,14 @@
 
             var ok = 0;
 
-            S.use("dom", function () {
+            S.use("dom", function (S,Dom) {
                 ok = 1;
-                expect(S.Event).not.toBeUndefined();
+                expect(Dom).not.toBeUndefined();
             });
 
             waitsFor(function () {
                 return ok;
             }, "dom never loaded");
-
         });
 
         it("core is an alias", function () {
@@ -81,11 +79,8 @@
                 expect(S.DOM).not.toBeFalsy();
                 expect(S.Event).not.toBeFalsy();
             });
-
-
         });
     });
-
 
     setTimeout(function () {
         jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
@@ -94,7 +89,6 @@
             jasmine.kissyNext(this.results().failedCount);
         });
     }, 200);
-
 </script>
 </body>
 </html>
