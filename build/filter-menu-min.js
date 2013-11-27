@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 26 20:53
+build time: Nov 27 00:48
 */
 KISSY.add("filter-menu/render-xtpl",["component/extension/content-xtpl"],function(i,g,k,h){return function(b,a,e){var l,a=this.config.utils;"undefined"!=typeof h&&h.kissy&&(l=h);var c=a.getExpression,f=a.getPropertyOrRunCommand,a='<div id="ks-filter-menu-input-wrap-',d=f(this,b,{},"id",0,1,e,!1),a=a+c(d,!0),a=a+'"\n     class="',d={},j=[];j.push("input-wrap");d.params=j;d=f(this,b,d,"getBaseCssClasses",0,2,!0,e);a=a+d+'">\n    <div id="ks-filter-menu-placeholder-';d=f(this,b,{},"id",0,3,e,!1);a+=
 c(d,!0);a+='"\n         class="';d={};j=[];j.push("placeholder");d.params=j;d=f(this,b,d,"getBaseCssClasses",0,4,!0,e);a=a+d+'">\n        ';d=f(this,b,{},"placeholder",0,5,e,!1);a+=c(d,!0);a+='\n    </div>\n    <input id="ks-filter-menu-input-';d=f(this,b,{},"id",0,7,e,!1);a+=c(d,!0);a+='"\n           class="';c={};d=[];d.push("input");c.params=d;c=f(this,b,c,"getBaseCssClasses",0,8,!0,e);a=a+c+'"\n            autocomplete="off"/>\n</div>\n';c={};d=[];d.push("component/extension/content-xtpl");c.params=

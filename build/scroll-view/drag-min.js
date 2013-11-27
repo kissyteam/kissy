@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 26 20:54
+build time: Nov 27 00:49
 */
 KISSY.add("scroll-view/drag",["./base","node","anim"],function(l,w){function y(b,c,a){var c=c.timeStamp,d=b.get("scroll"+l.ucfirst(a));b.startScroll[a]=d;b.swipe[a].startTime=c;b.swipe[a].scroll=d}function z(b,c,a,d){if(!A(b,a)){var f={pageX:c.touches[0].pageX,pageY:c.touches[0].pageY},e="left"==a?"pageX":"pageY",j=b.lastPageXY,g,k=b.startScroll[a]-(f[e]-d[e]),d=c.timeStamp,n=b.minScroll,p=b.maxScroll,h=b.lastDirection,i=b.swipe,m;j[e]&&(g=f[e]==j[e],m=0<f[e]-j[e]);b.get("bounce")||(k=Math.min(Math.max(k,
 n[a]),p[a]));k<n[a]?(f=n[a]-k,f*=B,k=n[a]-f):k>p[a]&&(f=k-p[a],f*=B,k=p[a]+f);f=d-i[a].startTime;if(!g&&void 0!==h[a]&&h[a]!==m||f>I)i[a].startTime=d,i[a].scroll=k;b.set("scroll"+l.ucfirst(a),k);h[a]=m;j[e]=c[e]}}function A(b,c){return!b.allowScroll[c]&&b.get("left"==c?"lockX":"lockY")?1:0}function C(b,c,a,d){if(A(b,a))d();else{var f="scroll"+l.ucfirst(a),e=b.get(f),j=b.minScroll,g=b.maxScroll,k=c.timeStamp,c=b.swipe,n;e<j[a]?n=j[a]:e>g[a]&&(n=g[a]);void 0!==n?(e={},e[a]=n,b.scrollTo(e,{duration:b.get("bounceDuration"),

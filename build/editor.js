@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:07
+build time: Nov 27 00:47
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -2284,7 +2284,8 @@ KISSY.add("editor/clipboard", ["node", "./base", "./range", "./selection"], func
   var Editor = require("./base");
   var KERange = require("./range");
   var KES = require("./selection");
-  var $ = Node.all, UA = S.UA, logger = S.getLogger("s/editor"), pasteEvent = UA.ie ? "beforepaste" : "paste", KER = Editor.RangeType;
+  var logger = S.getLogger("s/editor");
+  var $ = Node.all, UA = S.UA, pasteEvent = UA.ie ? "beforepaste" : "paste", KER = Editor.RangeType;
   function Paste(editor) {
     var self = this;
     self.editor = editor;
@@ -4153,7 +4154,8 @@ KISSY.add("editor", ["node", "editor/iframe-content-tpl", "editor/base", "editor
   require("editor/domIterator");
   require("editor/z-index-manager");
   module.exports = Editor;
-  var TRUE = true, undefined = undefined, FALSE = false, NULL = null, logger = S.getLogger("s/editor"), window = S.Env.host, document = window.document, UA = S.UA, IS_IE = UA.ieMode < 11, NodeType = Node.NodeType, $ = Node.all, HEIGHT = "height", tryThese = Utils.tryThese, IFRAME_TPL = "<iframe" + ' class="{prefixCls}editor-iframe"' + ' frameborder="0" ' + ' title="kissy-editor" ' + ' allowTransparency="true" ' + " {iframeSrc} " + ">" + "</iframe>", EMPTY_CONTENT_REG = /^(?:<(p)>)?(?:(?:&nbsp;)|\s|<br[^>]*>)*(?:<\/\1>)?$/i;
+  var logger = S.getLogger("s/editor");
+  var TRUE = true, undefined = undefined, FALSE = false, NULL = null, window = S.Env.host, document = window.document, UA = S.UA, IS_IE = UA.ieMode < 11, NodeType = Node.NodeType, $ = Node.all, HEIGHT = "height", tryThese = Utils.tryThese, IFRAME_TPL = "<iframe" + ' class="{prefixCls}editor-iframe"' + ' frameborder="0" ' + ' title="kissy-editor" ' + ' allowTransparency="true" ' + " {iframeSrc} " + ">" + "</iframe>", EMPTY_CONTENT_REG = /^(?:<(p)>)?(?:(?:&nbsp;)|\s|<br[^>]*>)*(?:<\/\1>)?$/i;
   Editor.Mode = {SOURCE_MODE:0, WYSIWYG_MODE:1};
   var WYSIWYG_MODE = 1;
   Editor.addMembers({initializer:function() {

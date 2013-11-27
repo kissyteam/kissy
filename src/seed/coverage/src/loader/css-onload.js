@@ -231,46 +231,47 @@ if (! _$jscoverage['/loader/css-onload.js']) {
   _$jscoverage['/loader/css-onload.js'].lineData = [];
   _$jscoverage['/loader/css-onload.js'].lineData[6] = 0;
   _$jscoverage['/loader/css-onload.js'].lineData[7] = 0;
-  _$jscoverage['/loader/css-onload.js'].lineData[17] = 0;
+  _$jscoverage['/loader/css-onload.js'].lineData[8] = 0;
   _$jscoverage['/loader/css-onload.js'].lineData[18] = 0;
   _$jscoverage['/loader/css-onload.js'].lineData[19] = 0;
   _$jscoverage['/loader/css-onload.js'].lineData[20] = 0;
-  _$jscoverage['/loader/css-onload.js'].lineData[24] = 0;
+  _$jscoverage['/loader/css-onload.js'].lineData[21] = 0;
   _$jscoverage['/loader/css-onload.js'].lineData[25] = 0;
   _$jscoverage['/loader/css-onload.js'].lineData[26] = 0;
-  _$jscoverage['/loader/css-onload.js'].lineData[28] = 0;
+  _$jscoverage['/loader/css-onload.js'].lineData[27] = 0;
   _$jscoverage['/loader/css-onload.js'].lineData[29] = 0;
   _$jscoverage['/loader/css-onload.js'].lineData[30] = 0;
-  _$jscoverage['/loader/css-onload.js'].lineData[32] = 0;
+  _$jscoverage['/loader/css-onload.js'].lineData[31] = 0;
   _$jscoverage['/loader/css-onload.js'].lineData[33] = 0;
   _$jscoverage['/loader/css-onload.js'].lineData[34] = 0;
   _$jscoverage['/loader/css-onload.js'].lineData[35] = 0;
   _$jscoverage['/loader/css-onload.js'].lineData[36] = 0;
   _$jscoverage['/loader/css-onload.js'].lineData[37] = 0;
-  _$jscoverage['/loader/css-onload.js'].lineData[40] = 0;
+  _$jscoverage['/loader/css-onload.js'].lineData[38] = 0;
   _$jscoverage['/loader/css-onload.js'].lineData[41] = 0;
-  _$jscoverage['/loader/css-onload.js'].lineData[43] = 0;
-  _$jscoverage['/loader/css-onload.js'].lineData[46] = 0;
+  _$jscoverage['/loader/css-onload.js'].lineData[42] = 0;
+  _$jscoverage['/loader/css-onload.js'].lineData[44] = 0;
   _$jscoverage['/loader/css-onload.js'].lineData[47] = 0;
-  _$jscoverage['/loader/css-onload.js'].lineData[51] = 0;
-  _$jscoverage['/loader/css-onload.js'].lineData[55] = 0;
+  _$jscoverage['/loader/css-onload.js'].lineData[48] = 0;
+  _$jscoverage['/loader/css-onload.js'].lineData[52] = 0;
   _$jscoverage['/loader/css-onload.js'].lineData[56] = 0;
   _$jscoverage['/loader/css-onload.js'].lineData[57] = 0;
-  _$jscoverage['/loader/css-onload.js'].lineData[59] = 0;
+  _$jscoverage['/loader/css-onload.js'].lineData[58] = 0;
   _$jscoverage['/loader/css-onload.js'].lineData[60] = 0;
   _$jscoverage['/loader/css-onload.js'].lineData[61] = 0;
-  _$jscoverage['/loader/css-onload.js'].lineData[63] = 0;
-  _$jscoverage['/loader/css-onload.js'].lineData[67] = 0;
+  _$jscoverage['/loader/css-onload.js'].lineData[62] = 0;
+  _$jscoverage['/loader/css-onload.js'].lineData[64] = 0;
   _$jscoverage['/loader/css-onload.js'].lineData[68] = 0;
   _$jscoverage['/loader/css-onload.js'].lineData[69] = 0;
-  _$jscoverage['/loader/css-onload.js'].lineData[71] = 0;
-  _$jscoverage['/loader/css-onload.js'].lineData[77] = 0;
+  _$jscoverage['/loader/css-onload.js'].lineData[70] = 0;
+  _$jscoverage['/loader/css-onload.js'].lineData[72] = 0;
   _$jscoverage['/loader/css-onload.js'].lineData[78] = 0;
-  _$jscoverage['/loader/css-onload.js'].lineData[80] = 0;
+  _$jscoverage['/loader/css-onload.js'].lineData[79] = 0;
   _$jscoverage['/loader/css-onload.js'].lineData[81] = 0;
   _$jscoverage['/loader/css-onload.js'].lineData[82] = 0;
   _$jscoverage['/loader/css-onload.js'].lineData[83] = 0;
-  _$jscoverage['/loader/css-onload.js'].lineData[86] = 0;
+  _$jscoverage['/loader/css-onload.js'].lineData[84] = 0;
+  _$jscoverage['/loader/css-onload.js'].lineData[87] = 0;
 }
 if (! _$jscoverage['/loader/css-onload.js'].functionData) {
   _$jscoverage['/loader/css-onload.js'].functionData = [];
@@ -282,166 +283,168 @@ if (! _$jscoverage['/loader/css-onload.js'].functionData) {
 }
 if (! _$jscoverage['/loader/css-onload.js'].branchData) {
   _$jscoverage['/loader/css-onload.js'].branchData = {};
-  _$jscoverage['/loader/css-onload.js'].branchData['18'] = [];
-  _$jscoverage['/loader/css-onload.js'].branchData['18'][1] = new BranchData();
-  _$jscoverage['/loader/css-onload.js'].branchData['26'] = [];
-  _$jscoverage['/loader/css-onload.js'].branchData['26'][1] = new BranchData();
-  _$jscoverage['/loader/css-onload.js'].branchData['28'] = [];
-  _$jscoverage['/loader/css-onload.js'].branchData['28'][1] = new BranchData();
-  _$jscoverage['/loader/css-onload.js'].branchData['32'] = [];
-  _$jscoverage['/loader/css-onload.js'].branchData['32'][1] = new BranchData();
-  _$jscoverage['/loader/css-onload.js'].branchData['35'] = [];
-  _$jscoverage['/loader/css-onload.js'].branchData['35'][1] = new BranchData();
-  _$jscoverage['/loader/css-onload.js'].branchData['45'] = [];
-  _$jscoverage['/loader/css-onload.js'].branchData['45'][1] = new BranchData();
-  _$jscoverage['/loader/css-onload.js'].branchData['59'] = [];
-  _$jscoverage['/loader/css-onload.js'].branchData['59'][1] = new BranchData();
+  _$jscoverage['/loader/css-onload.js'].branchData['19'] = [];
+  _$jscoverage['/loader/css-onload.js'].branchData['19'][1] = new BranchData();
+  _$jscoverage['/loader/css-onload.js'].branchData['27'] = [];
+  _$jscoverage['/loader/css-onload.js'].branchData['27'][1] = new BranchData();
+  _$jscoverage['/loader/css-onload.js'].branchData['29'] = [];
+  _$jscoverage['/loader/css-onload.js'].branchData['29'][1] = new BranchData();
+  _$jscoverage['/loader/css-onload.js'].branchData['33'] = [];
+  _$jscoverage['/loader/css-onload.js'].branchData['33'][1] = new BranchData();
+  _$jscoverage['/loader/css-onload.js'].branchData['36'] = [];
+  _$jscoverage['/loader/css-onload.js'].branchData['36'][1] = new BranchData();
+  _$jscoverage['/loader/css-onload.js'].branchData['46'] = [];
+  _$jscoverage['/loader/css-onload.js'].branchData['46'][1] = new BranchData();
   _$jscoverage['/loader/css-onload.js'].branchData['60'] = [];
   _$jscoverage['/loader/css-onload.js'].branchData['60'][1] = new BranchData();
-  _$jscoverage['/loader/css-onload.js'].branchData['67'] = [];
-  _$jscoverage['/loader/css-onload.js'].branchData['67'][1] = new BranchData();
+  _$jscoverage['/loader/css-onload.js'].branchData['61'] = [];
+  _$jscoverage['/loader/css-onload.js'].branchData['61'][1] = new BranchData();
+  _$jscoverage['/loader/css-onload.js'].branchData['68'] = [];
+  _$jscoverage['/loader/css-onload.js'].branchData['68'][1] = new BranchData();
 }
-_$jscoverage['/loader/css-onload.js'].branchData['67'][1].init(355, 25, 'S.isEmptyObject(monitors)');
-function visit385_67_1(result) {
-  _$jscoverage['/loader/css-onload.js'].branchData['67'][1].ranCondition(result);
+_$jscoverage['/loader/css-onload.js'].branchData['68'][1].init(355, 25, 'S.isEmptyObject(monitors)');
+function visit385_68_1(result) {
+  _$jscoverage['/loader/css-onload.js'].branchData['68'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/css-onload.js'].branchData['60'][1].init(21, 20, 'callbackObj.callback');
-function visit384_60_1(result) {
+}_$jscoverage['/loader/css-onload.js'].branchData['61'][1].init(21, 20, 'callbackObj.callback');
+function visit384_61_1(result) {
+  _$jscoverage['/loader/css-onload.js'].branchData['61'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/loader/css-onload.js'].branchData['60'][1].init(103, 22, 'isCssLoaded(node, url)');
+function visit383_60_1(result) {
   _$jscoverage['/loader/css-onload.js'].branchData['60'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/css-onload.js'].branchData['59'][1].init(103, 22, 'isCssLoaded(node, url)');
-function visit383_59_1(result) {
-  _$jscoverage['/loader/css-onload.js'].branchData['59'][1].ranCondition(result);
+}_$jscoverage['/loader/css-onload.js'].branchData['46'][1].init(90, 37, 'exName == \'NS_ERROR_DOM_SECURITY_ERR\'');
+function visit382_46_1(result) {
+  _$jscoverage['/loader/css-onload.js'].branchData['46'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/css-onload.js'].branchData['45'][1].init(90, 37, 'exName == \'NS_ERROR_DOM_SECURITY_ERR\'');
-function visit382_45_1(result) {
-  _$jscoverage['/loader/css-onload.js'].branchData['45'][1].ranCondition(result);
+}_$jscoverage['/loader/css-onload.js'].branchData['36'][1].init(76, 8, 'cssRules');
+function visit381_36_1(result) {
+  _$jscoverage['/loader/css-onload.js'].branchData['36'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/css-onload.js'].branchData['35'][1].init(76, 8, 'cssRules');
-function visit381_35_1(result) {
-  _$jscoverage['/loader/css-onload.js'].branchData['35'][1].ranCondition(result);
+}_$jscoverage['/loader/css-onload.js'].branchData['33'][1].init(280, 13, 'node[\'sheet\']');
+function visit380_33_1(result) {
+  _$jscoverage['/loader/css-onload.js'].branchData['33'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/css-onload.js'].branchData['32'][1].init(280, 13, 'node[\'sheet\']');
-function visit380_32_1(result) {
-  _$jscoverage['/loader/css-onload.js'].branchData['32'][1].ranCondition(result);
+}_$jscoverage['/loader/css-onload.js'].branchData['29'][1].init(88, 13, 'node[\'sheet\']');
+function visit379_29_1(result) {
+  _$jscoverage['/loader/css-onload.js'].branchData['29'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/css-onload.js'].branchData['28'][1].init(88, 13, 'node[\'sheet\']');
-function visit379_28_1(result) {
-  _$jscoverage['/loader/css-onload.js'].branchData['28'][1].ranCondition(result);
+}_$jscoverage['/loader/css-onload.js'].branchData['27'][1].init(37, 9, 'UA.webkit');
+function visit378_27_1(result) {
+  _$jscoverage['/loader/css-onload.js'].branchData['27'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/css-onload.js'].branchData['26'][1].init(37, 9, 'UA.webkit');
-function visit378_26_1(result) {
-  _$jscoverage['/loader/css-onload.js'].branchData['26'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/loader/css-onload.js'].branchData['18'][1].init(13, 6, '!timer');
-function visit377_18_1(result) {
-  _$jscoverage['/loader/css-onload.js'].branchData['18'][1].ranCondition(result);
+}_$jscoverage['/loader/css-onload.js'].branchData['19'][1].init(13, 6, '!timer');
+function visit377_19_1(result) {
+  _$jscoverage['/loader/css-onload.js'].branchData['19'][1].ranCondition(result);
   return result;
 }_$jscoverage['/loader/css-onload.js'].lineData[6]++;
 (function(S) {
   _$jscoverage['/loader/css-onload.js'].functionData[0]++;
   _$jscoverage['/loader/css-onload.js'].lineData[7]++;
-  var CSS_POLL_INTERVAL = 30, UA = S.UA, logger = S.getLogger('s/loader/getScript'), Utils = S.Loader.Utils, timer = 0, monitors = {};
-  _$jscoverage['/loader/css-onload.js'].lineData[17]++;
+  var logger = S.getLogger('s/loader/getScript');
+  _$jscoverage['/loader/css-onload.js'].lineData[8]++;
+  var CSS_POLL_INTERVAL = 30, UA = S.UA, Utils = S.Loader.Utils, timer = 0, monitors = {};
+  _$jscoverage['/loader/css-onload.js'].lineData[18]++;
   function startCssTimer() {
     _$jscoverage['/loader/css-onload.js'].functionData[1]++;
-    _$jscoverage['/loader/css-onload.js'].lineData[18]++;
-    if (visit377_18_1(!timer)) {
-      _$jscoverage['/loader/css-onload.js'].lineData[19]++;
-      logger.debug('start css poll timer');
+    _$jscoverage['/loader/css-onload.js'].lineData[19]++;
+    if (visit377_19_1(!timer)) {
       _$jscoverage['/loader/css-onload.js'].lineData[20]++;
+      logger.debug('start css poll timer');
+      _$jscoverage['/loader/css-onload.js'].lineData[21]++;
       cssPoll();
     }
   }
-  _$jscoverage['/loader/css-onload.js'].lineData[24]++;
+  _$jscoverage['/loader/css-onload.js'].lineData[25]++;
   function isCssLoaded(node, url) {
     _$jscoverage['/loader/css-onload.js'].functionData[2]++;
-    _$jscoverage['/loader/css-onload.js'].lineData[25]++;
-    var loaded = 0;
     _$jscoverage['/loader/css-onload.js'].lineData[26]++;
-    if (visit378_26_1(UA.webkit)) {
-      _$jscoverage['/loader/css-onload.js'].lineData[28]++;
-      if (visit379_28_1(node['sheet'])) {
-        _$jscoverage['/loader/css-onload.js'].lineData[29]++;
-        logger.debug('webkit css poll loaded: ' + url);
+    var loaded = 0;
+    _$jscoverage['/loader/css-onload.js'].lineData[27]++;
+    if (visit378_27_1(UA.webkit)) {
+      _$jscoverage['/loader/css-onload.js'].lineData[29]++;
+      if (visit379_29_1(node['sheet'])) {
         _$jscoverage['/loader/css-onload.js'].lineData[30]++;
+        logger.debug('webkit css poll loaded: ' + url);
+        _$jscoverage['/loader/css-onload.js'].lineData[31]++;
         loaded = 1;
       }
     } else {
-      _$jscoverage['/loader/css-onload.js'].lineData[32]++;
-      if (visit380_32_1(node['sheet'])) {
-        _$jscoverage['/loader/css-onload.js'].lineData[33]++;
+      _$jscoverage['/loader/css-onload.js'].lineData[33]++;
+      if (visit380_33_1(node['sheet'])) {
+        _$jscoverage['/loader/css-onload.js'].lineData[34]++;
         try {
-          _$jscoverage['/loader/css-onload.js'].lineData[34]++;
-          var cssRules = node['sheet'].cssRules;
           _$jscoverage['/loader/css-onload.js'].lineData[35]++;
-          if (visit381_35_1(cssRules)) {
-            _$jscoverage['/loader/css-onload.js'].lineData[36]++;
-            logger.debug('same domain css poll loaded: ' + url);
+          var cssRules = node['sheet'].cssRules;
+          _$jscoverage['/loader/css-onload.js'].lineData[36]++;
+          if (visit381_36_1(cssRules)) {
             _$jscoverage['/loader/css-onload.js'].lineData[37]++;
+            logger.debug('same domain css poll loaded: ' + url);
+            _$jscoverage['/loader/css-onload.js'].lineData[38]++;
             loaded = 1;
           }
         }        catch (ex) {
-  _$jscoverage['/loader/css-onload.js'].lineData[40]++;
-  var exName = ex.name;
   _$jscoverage['/loader/css-onload.js'].lineData[41]++;
+  var exName = ex.name;
+  _$jscoverage['/loader/css-onload.js'].lineData[42]++;
   logger.debug('css poll exception: ' + exName + ' ' + ex.code + ' ' + url);
-  _$jscoverage['/loader/css-onload.js'].lineData[43]++;
-  if (visit382_45_1(exName == 'NS_ERROR_DOM_SECURITY_ERR')) {
-    _$jscoverage['/loader/css-onload.js'].lineData[46]++;
-    logger.debug('css poll exception: ' + exName + 'loaded : ' + url);
+  _$jscoverage['/loader/css-onload.js'].lineData[44]++;
+  if (visit382_46_1(exName == 'NS_ERROR_DOM_SECURITY_ERR')) {
     _$jscoverage['/loader/css-onload.js'].lineData[47]++;
+    logger.debug('css poll exception: ' + exName + 'loaded : ' + url);
+    _$jscoverage['/loader/css-onload.js'].lineData[48]++;
     loaded = 1;
   }
 }
       }
     }
-    _$jscoverage['/loader/css-onload.js'].lineData[51]++;
+    _$jscoverage['/loader/css-onload.js'].lineData[52]++;
     return loaded;
   }
-  _$jscoverage['/loader/css-onload.js'].lineData[55]++;
+  _$jscoverage['/loader/css-onload.js'].lineData[56]++;
   function cssPoll() {
     _$jscoverage['/loader/css-onload.js'].functionData[3]++;
-    _$jscoverage['/loader/css-onload.js'].lineData[56]++;
+    _$jscoverage['/loader/css-onload.js'].lineData[57]++;
     for (var url in monitors) {
-      _$jscoverage['/loader/css-onload.js'].lineData[57]++;
+      _$jscoverage['/loader/css-onload.js'].lineData[58]++;
       var callbackObj = monitors[url], node = callbackObj.node;
-      _$jscoverage['/loader/css-onload.js'].lineData[59]++;
-      if (visit383_59_1(isCssLoaded(node, url))) {
-        _$jscoverage['/loader/css-onload.js'].lineData[60]++;
-        if (visit384_60_1(callbackObj.callback)) {
-          _$jscoverage['/loader/css-onload.js'].lineData[61]++;
+      _$jscoverage['/loader/css-onload.js'].lineData[60]++;
+      if (visit383_60_1(isCssLoaded(node, url))) {
+        _$jscoverage['/loader/css-onload.js'].lineData[61]++;
+        if (visit384_61_1(callbackObj.callback)) {
+          _$jscoverage['/loader/css-onload.js'].lineData[62]++;
           callbackObj.callback.call(node);
         }
-        _$jscoverage['/loader/css-onload.js'].lineData[63]++;
+        _$jscoverage['/loader/css-onload.js'].lineData[64]++;
         delete monitors[url];
       }
     }
-    _$jscoverage['/loader/css-onload.js'].lineData[67]++;
-    if (visit385_67_1(S.isEmptyObject(monitors))) {
-      _$jscoverage['/loader/css-onload.js'].lineData[68]++;
-      logger.debug('clear css poll timer');
+    _$jscoverage['/loader/css-onload.js'].lineData[68]++;
+    if (visit385_68_1(S.isEmptyObject(monitors))) {
       _$jscoverage['/loader/css-onload.js'].lineData[69]++;
+      logger.debug('clear css poll timer');
+      _$jscoverage['/loader/css-onload.js'].lineData[70]++;
       timer = 0;
     } else {
-      _$jscoverage['/loader/css-onload.js'].lineData[71]++;
+      _$jscoverage['/loader/css-onload.js'].lineData[72]++;
       timer = setTimeout(cssPoll, CSS_POLL_INTERVAL);
     }
   }
-  _$jscoverage['/loader/css-onload.js'].lineData[77]++;
+  _$jscoverage['/loader/css-onload.js'].lineData[78]++;
   Utils.pollCss = function(node, callback) {
   _$jscoverage['/loader/css-onload.js'].functionData[4]++;
-  _$jscoverage['/loader/css-onload.js'].lineData[78]++;
+  _$jscoverage['/loader/css-onload.js'].lineData[79]++;
   var href = node.href, arr;
-  _$jscoverage['/loader/css-onload.js'].lineData[80]++;
-  arr = monitors[href] = {};
   _$jscoverage['/loader/css-onload.js'].lineData[81]++;
-  arr.node = node;
+  arr = monitors[href] = {};
   _$jscoverage['/loader/css-onload.js'].lineData[82]++;
-  arr.callback = callback;
+  arr.node = node;
   _$jscoverage['/loader/css-onload.js'].lineData[83]++;
+  arr.callback = callback;
+  _$jscoverage['/loader/css-onload.js'].lineData[84]++;
   startCssTimer();
 };
-  _$jscoverage['/loader/css-onload.js'].lineData[86]++;
+  _$jscoverage['/loader/css-onload.js'].lineData[87]++;
   Utils.isCssLoaded = isCssLoaded;
 })(KISSY);

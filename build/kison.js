@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 26 20:53
+build time: Nov 27 00:48
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -345,7 +345,8 @@ KISSY.add("kison/grammar", ["base", "./utils", "./item", "./item-set", "./non-te
   var NonTerminal = require("./non-terminal");
   var Lexer = require("./lexer");
   var Production = require("./production");
-  var GrammarConst = {SHIFT_TYPE:1, REDUCE_TYPE:2, ACCEPT_TYPE:0, TYPE_INDEX:0, PRODUCTION_INDEX:1, TO_INDEX:2}, logger = S.getLogger("s/kison"), serializeObject = Utils.serializeObject, mix = S.mix, END_TAG = Lexer.STATIC.END_TAG, START_TAG = "$START";
+  var logger = S.getLogger("s/kison");
+  var GrammarConst = {SHIFT_TYPE:1, REDUCE_TYPE:2, ACCEPT_TYPE:0, TYPE_INDEX:0, PRODUCTION_INDEX:1, TO_INDEX:2}, serializeObject = Utils.serializeObject, mix = S.mix, END_TAG = Lexer.STATIC.END_TAG, START_TAG = "$START";
   function setSize(set3) {
     var count = 0, i;
     for(i in set3) {

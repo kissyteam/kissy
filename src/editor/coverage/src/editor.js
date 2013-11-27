@@ -244,6 +244,7 @@ if (! _$jscoverage['/editor.js']) {
   _$jscoverage['/editor.js'].lineData[18] = 0;
   _$jscoverage['/editor.js'].lineData[19] = 0;
   _$jscoverage['/editor.js'].lineData[20] = 0;
+  _$jscoverage['/editor.js'].lineData[21] = 0;
   _$jscoverage['/editor.js'].lineData[22] = 0;
   _$jscoverage['/editor.js'].lineData[46] = 0;
   _$jscoverage['/editor.js'].lineData[51] = 0;
@@ -1404,7 +1405,7 @@ function visit1144_78_1(result) {
 function visit1143_77_1(result) {
   _$jscoverage['/editor.js'].branchData['77'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor.js'].branchData['30'][1].init(233, 14, 'UA.ieMode < 11');
+}_$jscoverage['/editor.js'].branchData['30'][1].init(192, 14, 'UA.ieMode < 11');
 function visit1142_30_1(result) {
   _$jscoverage['/editor.js'].branchData['30'][1].ranCondition(result);
   return result;
@@ -1439,8 +1440,10 @@ KISSY.add(function(S, require, exports, module) {
   require('editor/z-index-manager');
   _$jscoverage['/editor.js'].lineData[20]++;
   module.exports = Editor;
+  _$jscoverage['/editor.js'].lineData[21]++;
+  var logger = S.getLogger('s/editor');
   _$jscoverage['/editor.js'].lineData[22]++;
-  var TRUE = true, undefined = undefined, FALSE = false, NULL = null, logger = S.getLogger('s/editor'), window = S.Env.host, document = window.document, UA = S.UA, IS_IE = visit1142_30_1(UA.ieMode < 11), NodeType = Node.NodeType, $ = Node.all, HEIGHT = 'height', tryThese = Utils.tryThese, IFRAME_TPL = '<iframe' + ' class="{prefixCls}editor-iframe"' + ' frameborder="0" ' + ' title="kissy-editor" ' + ' allowTransparency="true" ' + ' {iframeSrc} ' + '>' + '</iframe>', EMPTY_CONTENT_REG = /^(?:<(p)>)?(?:(?:&nbsp;)|\s|<br[^>]*>)*(?:<\/\1>)?$/i;
+  var TRUE = true, undefined = undefined, FALSE = false, NULL = null, window = S.Env.host, document = window.document, UA = S.UA, IS_IE = visit1142_30_1(UA.ieMode < 11), NodeType = Node.NodeType, $ = Node.all, HEIGHT = 'height', tryThese = Utils.tryThese, IFRAME_TPL = '<iframe' + ' class="{prefixCls}editor-iframe"' + ' frameborder="0" ' + ' title="kissy-editor" ' + ' allowTransparency="true" ' + ' {iframeSrc} ' + '>' + '</iframe>', EMPTY_CONTENT_REG = /^(?:<(p)>)?(?:(?:&nbsp;)|\s|<br[^>]*>)*(?:<\/\1>)?$/i;
   _$jscoverage['/editor.js'].lineData[46]++;
   Editor.Mode = {
   SOURCE_MODE: 0, 

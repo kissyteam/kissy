@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 26 20:53
+build time: Nov 27 00:49
 */
 KISSY.add("menu/menu-render",["component/container"],function(e,a){return a("component/container").getDefaultRender().extend({beforeCreateDom:function(a){a.elAttrs.role="menu"},containsElement:function(a){var b=this.$el;return b&&(b[0]===a||b.contains(a))}})});
 KISSY.add("menu/control",["node","component/container","component/extension/delegate-children","./menu-render"],function(e,a){function c(a){a.target.isMenu&&(a=a.newVal,this.el.setAttribute("aria-activedescendant",a&&a.el.id||""))}var b=a("node"),g=a("component/container"),d=a("component/extension/delegate-children"),h=a("./menu-render"),i=b.KeyCode;return g.extend([d],{isMenu:1,_onSetHighlightedItem:function(a,f){var b;a&&f&&(b=f.prevVal)&&b.set("highlighted",!1,{data:{byPassSetHighlightedItem:1}})},

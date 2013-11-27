@@ -343,11 +343,11 @@ _$jscoverage['/meta/modules.js'].lineData[2]++;
   _$jscoverage['/meta/modules.js'].lineData[36]++;
   config({
   'color': {
-  requires: ['base']}});
+  requires: ['attribute']}});
   _$jscoverage['/meta/modules.js'].lineData[40]++;
   config({
   'combobox': {
-  requires: ['node', 'component/control', 'attribute', 'io']}});
+  requires: ['node', 'component/control', 'menu', 'attribute', 'io']}});
   _$jscoverage['/meta/modules.js'].lineData[44]++;
   config({
   'component/container': {
@@ -391,7 +391,7 @@ _$jscoverage['/meta/modules.js'].lineData[2]++;
   _$jscoverage['/meta/modules.js'].lineData[84]++;
   config({
   'date/popup-picker': {
-  requires: ['date/picker', 'component/extension/shim', 'component/extension/align']}});
+  requires: ['date/picker/picker-xtpl', 'date/picker', 'component/extension/shim', 'component/extension/align']}});
   _$jscoverage['/meta/modules.js'].lineData[88]++;
   config({
   'dd': {
@@ -399,15 +399,15 @@ _$jscoverage['/meta/modules.js'].lineData[2]++;
   _$jscoverage['/meta/modules.js'].lineData[92]++;
   config({
   'dd/plugin/constrain': {
-  requires: ['base', 'node']}});
+  requires: ['node', 'base']}});
   _$jscoverage['/meta/modules.js'].lineData[96]++;
   config({
   'dd/plugin/proxy': {
-  requires: ['node', 'base', 'dd']}});
+  requires: ['node', 'dd', 'base']}});
   _$jscoverage['/meta/modules.js'].lineData[100]++;
   config({
   'dd/plugin/scroll': {
-  requires: ['dd', 'base', 'node']}});
+  requires: ['node', 'dd', 'base']}});
   _$jscoverage['/meta/modules.js'].lineData[103]++;
   config({
   "dom/basic": {
@@ -429,7 +429,7 @@ _$jscoverage['/meta/modules.js'].lineData[2]++;
   _$jscoverage['/meta/modules.js'].lineData[130]++;
   config({
   'editor': {
-  requires: ['node', 'html-parser', 'component/control', 'event']}});
+  requires: ['node', 'html-parser', 'component/control']}});
   _$jscoverage['/meta/modules.js'].lineData[134]++;
   config({
   'event': {
@@ -469,7 +469,7 @@ _$jscoverage['/meta/modules.js'].lineData[2]++;
   _$jscoverage['/meta/modules.js'].lineData[181]++;
   config({
   'filter-menu': {
-  requires: ['menu', 'node', 'component/extension/content-render']}});
+  requires: ['menu', 'component/extension/content-xtpl', 'component/extension/content-render']}});
   _$jscoverage['/meta/modules.js'].lineData[185]++;
   config({
   'io': {
@@ -481,15 +481,15 @@ _$jscoverage['/meta/modules.js'].lineData[2]++;
   _$jscoverage['/meta/modules.js'].lineData[193]++;
   config({
   'menu': {
-  requires: ['node', 'component/container', 'component/extension/delegate-children', 'component/control', 'component/extension/content-render', 'component/extension/align', 'component/extension/shim']}});
+  requires: ['node', 'component/container', 'component/extension/delegate-children', 'component/control', 'component/extension/content-render', 'component/extension/content-xtpl', 'component/extension/align', 'component/extension/shim']}});
   _$jscoverage['/meta/modules.js'].lineData[197]++;
   config({
   'menubutton': {
-  requires: ['node', 'button', 'component/extension/content-render', 'menu']}});
+  requires: ['node', 'button', 'component/extension/content-xtpl', 'component/extension/content-render', 'menu']}});
   _$jscoverage['/meta/modules.js'].lineData[201]++;
   config({
   'mvc': {
-  requires: ['base', 'node', 'io', 'json']}});
+  requires: ['io', 'json', 'attribute', 'node']}});
   _$jscoverage['/meta/modules.js'].lineData[205]++;
   config({
   'node': {
@@ -497,7 +497,7 @@ _$jscoverage['/meta/modules.js'].lineData[2]++;
   _$jscoverage['/meta/modules.js'].lineData[209]++;
   config({
   'overlay': {
-  requires: ['component/container', 'component/extension/shim', 'component/extension/align', 'component/extension/content-xtpl', 'component/extension/content-render', 'node']}});
+  requires: ['component/container', 'component/extension/shim', 'component/extension/align', 'node', 'component/extension/content-xtpl', 'component/extension/content-render']}});
   _$jscoverage['/meta/modules.js'].lineData[213]++;
   config({
   'resizable': {
@@ -505,7 +505,7 @@ _$jscoverage['/meta/modules.js'].lineData[2]++;
   _$jscoverage['/meta/modules.js'].lineData[217]++;
   config({
   'resizable/plugin/proxy': {
-  requires: ['base', 'node']}});
+  requires: ['node', 'base']}});
   _$jscoverage['/meta/modules.js'].lineData[220]++;
   config({
   "scroll-view": {

@@ -237,6 +237,7 @@ if (! _$jscoverage['/kison/grammar.js']) {
   _$jscoverage['/kison/grammar.js'].lineData[11] = 0;
   _$jscoverage['/kison/grammar.js'].lineData[12] = 0;
   _$jscoverage['/kison/grammar.js'].lineData[13] = 0;
+  _$jscoverage['/kison/grammar.js'].lineData[14] = 0;
   _$jscoverage['/kison/grammar.js'].lineData[15] = 0;
   _$jscoverage['/kison/grammar.js'].lineData[29] = 0;
   _$jscoverage['/kison/grammar.js'].lineData[30] = 0;
@@ -1113,6 +1114,8 @@ KISSY.add(function(S, require) {
   var Lexer = require('./lexer');
   _$jscoverage['/kison/grammar.js'].lineData[13]++;
   var Production = require('./production');
+  _$jscoverage['/kison/grammar.js'].lineData[14]++;
+  var logger = S.getLogger('s/kison');
   _$jscoverage['/kison/grammar.js'].lineData[15]++;
   var GrammarConst = {
   SHIFT_TYPE: 1, 
@@ -1120,7 +1123,7 @@ KISSY.add(function(S, require) {
   ACCEPT_TYPE: 0, 
   TYPE_INDEX: 0, 
   PRODUCTION_INDEX: 1, 
-  TO_INDEX: 2}, logger = S.getLogger('s/kison'), serializeObject = Utils.serializeObject, mix = S.mix, END_TAG = Lexer.STATIC.END_TAG, START_TAG = '$START';
+  TO_INDEX: 2}, serializeObject = Utils.serializeObject, mix = S.mix, END_TAG = Lexer.STATIC.END_TAG, START_TAG = '$START';
   _$jscoverage['/kison/grammar.js'].lineData[29]++;
   function setSize(set3) {
     _$jscoverage['/kison/grammar.js'].functionData[1]++;

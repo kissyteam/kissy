@@ -230,6 +230,7 @@ if (! _$jscoverage['/lang/object.js']) {
   _$jscoverage['/lang/object.js'] = {};
   _$jscoverage['/lang/object.js'].lineData = [];
   _$jscoverage['/lang/object.js'].lineData[7] = 0;
+  _$jscoverage['/lang/object.js'].lineData[8] = 0;
   _$jscoverage['/lang/object.js'].lineData[9] = 0;
   _$jscoverage['/lang/object.js'].lineData[29] = 0;
   _$jscoverage['/lang/object.js'].lineData[39] = 0;
@@ -657,8 +658,10 @@ function visit224_39_1(result) {
 }_$jscoverage['/lang/object.js'].lineData[7]++;
 (function(S, undefined) {
   _$jscoverage['/lang/object.js'].functionData[0]++;
+  _$jscoverage['/lang/object.js'].lineData[8]++;
+  var logger = S.getLogger('s/lang');
   _$jscoverage['/lang/object.js'].lineData[9]++;
-  var MIX_CIRCULAR_DETECTION = '__MIX_CIRCULAR', STAMP_MARKER = '__~ks_stamped', host = this, TRUE = true, EMPTY = '', Obj = Object, logger = S.getLogger('s/lang'), ObjectCreate = Obj.create, hasEnumBug = !({
+  var MIX_CIRCULAR_DETECTION = '__MIX_CIRCULAR', STAMP_MARKER = '__~ks_stamped', host = this, TRUE = true, EMPTY = '', Obj = Object, ObjectCreate = Obj.create, hasEnumBug = !({
   toString: 1}['propertyIsEnumerable']('toString')), enumProperties = ['constructor', 'hasOwnProperty', 'isPrototypeOf', 'propertyIsEnumerable', 'toString', 'toLocaleString', 'valueOf'];
   _$jscoverage['/lang/object.js'].lineData[29]++;
   mix(S, {

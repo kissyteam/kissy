@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 26 22:39
+build time: Nov 27 00:48
 */
 KISSY.add("event/dom/touch/handle-map",[],function(){return{}});KISSY.add("event/dom/touch/single-touch",[],function(f){function a(){}a.prototype={constructor:a,requiredTouchCount:1,onTouchStart:function(a){if(a.touches.length!=this.requiredTouchCount)return!1;a=this.lastTouches=a.touches;this.lastXY={pageX:a[0].pageX,pageY:a[0].pageY}},onTouchMove:f.noop,onTouchEnd:f.noop};return a});
 KISSY.add("event/dom/touch/tap",["./handle-map","event/dom/base","./single-touch"],function(f,a){function d(c){c.preventDefault()}function g(){g.superclass.constructor.apply(this,arguments)}var i=a("./handle-map"),e=a("event/dom/base"),b=a("./single-touch"),l=e.Object;f.extend(g,b,{onTouchMove:function(c){var a=this.lastXY,c=c.changedTouches[0];if(!c||5<Math.abs(c.pageX-a.pageX)||5<Math.abs(c.pageY-a.pageY))return!1},onTouchEnd:function(c){var a=c.changedTouches[0],c=c.target,j=new l({type:"tap",

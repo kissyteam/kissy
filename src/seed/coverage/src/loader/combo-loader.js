@@ -256,6 +256,7 @@ if (! _$jscoverage['/loader/combo-loader.js']) {
   _$jscoverage['/loader/combo-loader.js'].lineData[48] = 0;
   _$jscoverage['/loader/combo-loader.js'].lineData[49] = 0;
   _$jscoverage['/loader/combo-loader.js'].lineData[54] = 0;
+  _$jscoverage['/loader/combo-loader.js'].lineData[57] = 0;
   _$jscoverage['/loader/combo-loader.js'].lineData[58] = 0;
   _$jscoverage['/loader/combo-loader.js'].lineData[69] = 0;
   _$jscoverage['/loader/combo-loader.js'].lineData[78] = 0;
@@ -881,8 +882,10 @@ function visit308_8_1(result) {
   S.Config.loadModsFn(rs, config);
 });
   }
+  _$jscoverage['/loader/combo-loader.js'].lineData[57]++;
+  var logger = S.getLogger('s/loader');
   _$jscoverage['/loader/combo-loader.js'].lineData[58]++;
-  var Loader = S.Loader, logger = S.getLogger('s/loader'), Status = Loader.Status, Utils = Loader.Utils, getHash = Utils.getHash, LOADING = Status.LOADING, LOADED = Status.LOADED, READY_TO_ATTACH = Status.READY_TO_ATTACH, ERROR = Status.ERROR, groupTag = S.now();
+  var Loader = S.Loader, Status = Loader.Status, Utils = Loader.Utils, getHash = Utils.getHash, LOADING = Status.LOADING, LOADED = Status.LOADED, READY_TO_ATTACH = Status.READY_TO_ATTACH, ERROR = Status.ERROR, groupTag = S.now();
   _$jscoverage['/loader/combo-loader.js'].lineData[69]++;
   ComboLoader.groupTag = groupTag;
   _$jscoverage['/loader/combo-loader.js'].lineData[78]++;

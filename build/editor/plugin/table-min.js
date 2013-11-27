@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:02
+build time: Nov 27 00:46
 */
 KISSY.add("editor/plugin/table",["editor","./dialog-loader","./contextmenu","./button"],function(i,m){function s(a){function d(a){!(0<g.length)&&a[0].nodeType==n.NodeType.ELEMENT_NODE&&t.test(a.nodeName())&&!a.data("selected_cell")&&(a._4e_setMarker(e,"selected_cell",!0,void 0),g.push(a))}for(var b=a.createBookmarks(),f=a.getRanges(),g=[],e={},c=0;c<f.length;c++){var h=f[c];if(h.collapsed)h=h.getCommonAncestor(),(h=h.closest("td",void 0)||h.closest("th",void 0))&&g.push(h);else{var h=new Walker(h),
 k;for(h.guard=d;k=h.next();)if((k=k.parent())&&t.test(k.nodeName())&&!k.data("selected_cell"))k._4e_setMarker(e,"selected_cell",!0,void 0),g.push(k)}}l.Utils.clearAllMarkers(e);a.selectBookmarks(b);return g}function u(a,d){var b=a.getStartElement().parent("tr");if(b){var f=b.clone(!0);f.insertBefore(b);b=(d?f[0]:b[0]).cells;for(f=0;f<b.length;f++)b[f].innerHTML="",v||(new j(b[f]))._4e_appendBogus(void 0)}}function q(a){if(a instanceof l.Selection){for(var d=s(a),b=d.length,a=[],f,g,e=0;e<b;e++){var c=

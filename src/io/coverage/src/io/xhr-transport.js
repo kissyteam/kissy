@@ -231,6 +231,7 @@ if (! _$jscoverage['/io/xhr-transport.js']) {
   _$jscoverage['/io/xhr-transport.js'].lineData = [];
   _$jscoverage['/io/xhr-transport.js'].lineData[6] = 0;
   _$jscoverage['/io/xhr-transport.js'].lineData[7] = 0;
+  _$jscoverage['/io/xhr-transport.js'].lineData[11] = 0;
   _$jscoverage['/io/xhr-transport.js'].lineData[12] = 0;
   _$jscoverage['/io/xhr-transport.js'].lineData[18] = 0;
   _$jscoverage['/io/xhr-transport.js'].lineData[20] = 0;
@@ -320,8 +321,10 @@ KISSY.add(function(S, require) {
   _$jscoverage['/io/xhr-transport.js'].functionData[0]++;
   _$jscoverage['/io/xhr-transport.js'].lineData[7]++;
   var IO = require('./base'), XhrTransportBase = require('./xhr-transport-base'), XdrFlashTransport = require('./xdr-flash-transport'), SubDomainTransport = require('./sub-domain-transport');
+  _$jscoverage['/io/xhr-transport.js'].lineData[11]++;
+  var logger = S.getLogger('s/io');
   _$jscoverage['/io/xhr-transport.js'].lineData[12]++;
-  var win = S.Env.host, doc = win.document, logger = S.getLogger('s/io'), _XDomainRequest = XhrTransportBase._XDomainRequest;
+  var win = S.Env.host, doc = win.document, _XDomainRequest = XhrTransportBase._XDomainRequest;
   _$jscoverage['/io/xhr-transport.js'].lineData[18]++;
   function isSubDomain(hostname) {
     _$jscoverage['/io/xhr-transport.js'].functionData[1]++;

@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 26 20:53
+build time: Nov 27 00:48
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -159,7 +159,8 @@ KISSY.add("io/base", ["event/custom", "promise"], function(S, require) {
 });
 KISSY.add("io/xhr-transport-base", ["./base"], function(S, require) {
   var IO = require("./base");
-  var OK_CODE = 200, win = S.Env.host, logger = S.getLogger("s/io"), _XDomainRequest = S.UA.ieMode > 7 && win["XDomainRequest"], NO_CONTENT_CODE = 204, NOT_FOUND_CODE = 404, NO_CONTENT_CODE2 = 1223, XhrTransportBase = {proto:{}}, lastModifiedCached = {}, eTagCached = {};
+  var logger = S.getLogger("s/io");
+  var OK_CODE = 200, win = S.Env.host, _XDomainRequest = S.UA.ieMode > 7 && win["XDomainRequest"], NO_CONTENT_CODE = 204, NOT_FOUND_CODE = 404, NO_CONTENT_CODE2 = 1223, XhrTransportBase = {proto:{}}, lastModifiedCached = {}, eTagCached = {};
   IO.__lastModifiedCached = lastModifiedCached;
   IO.__eTagCached = eTagCached;
   function createStandardXHR(_, refWin) {
@@ -358,7 +359,8 @@ KISSY.add("io/xhr-transport-base", ["./base"], function(S, require) {
 });
 KISSY.add("io/xdr-flash-transport", ["./base", "dom"], function(S, require) {
   var IO = require("./base"), Dom = require("dom");
-  var maps = {}, logger = S.getLogger("s/io"), ID = "io_swf", flash, doc = S.Env.host.document, init = false;
+  var logger = S.getLogger("s/io");
+  var maps = {}, ID = "io_swf", flash, doc = S.Env.host.document, init = false;
   function _swf(uri, _, uid) {
     if(init) {
       return
@@ -430,7 +432,8 @@ KISSY.add("io/xdr-flash-transport", ["./base", "dom"], function(S, require) {
 });
 KISSY.add("io/sub-domain-transport", ["event/dom", "dom", "./xhr-transport-base"], function(S, require) {
   var Event = require("event/dom"), Dom = require("dom"), XhrTransportBase = require("./xhr-transport-base");
-  var PROXY_PAGE = "/sub_domain_proxy.html", logger = S.getLogger("s/io"), doc = S.Env.host.document, iframeMap = {};
+  var logger = S.getLogger("s/io");
+  var PROXY_PAGE = "/sub_domain_proxy.html", doc = S.Env.host.document, iframeMap = {};
   function SubDomainTransport(io) {
     var self = this, c = io.config;
     self.io = io;
@@ -478,7 +481,8 @@ KISSY.add("io/sub-domain-transport", ["event/dom", "dom", "./xhr-transport-base"
 });
 KISSY.add("io/xhr-transport", ["./base", "./xhr-transport-base", "./xdr-flash-transport", "./sub-domain-transport"], function(S, require) {
   var IO = require("./base"), XhrTransportBase = require("./xhr-transport-base"), XdrFlashTransport = require("./xdr-flash-transport"), SubDomainTransport = require("./sub-domain-transport");
-  var win = S.Env.host, doc = win.document, logger = S.getLogger("s/io"), _XDomainRequest = XhrTransportBase._XDomainRequest;
+  var logger = S.getLogger("s/io");
+  var win = S.Env.host, doc = win.document, _XDomainRequest = XhrTransportBase._XDomainRequest;
   function isSubDomain(hostname) {
     return doc.domain && S.endsWith(hostname, doc.domain)
   }
@@ -508,7 +512,8 @@ KISSY.add("io/xhr-transport", ["./base", "./xhr-transport-base", "./xdr-flash-tr
 });
 KISSY.add("io/script-transport", ["./base"], function(S, require) {
   var undefined = undefined, IO = require("./base");
-  var win = S.Env.host, doc = win.document, logger = S.getLogger("s/io"), OK_CODE = 200, ERROR_CODE = 500;
+  var logger = S.getLogger("s/io");
+  var win = S.Env.host, doc = win.document, OK_CODE = 200, ERROR_CODE = 500;
   IO.setupConfig({accepts:{script:"text/javascript, " + "application/javascript, " + "application/ecmascript, " + "application/x-ecmascript"}, contents:{script:/javascript|ecmascript/}, converters:{text:{script:function(text) {
     S.globalEval(text);
     return text
@@ -666,7 +671,8 @@ KISSY.add("io/form", ["./base", "dom", "./form-serializer"], function(S, require
 });
 KISSY.add("io/iframe-transport", ["dom", "./base", "event/dom"], function(S, require) {
   var Dom = require("dom"), IO = require("./base"), Event = require("event/dom");
-  var doc = S.Env.host.document, OK_CODE = 200, logger = S.getLogger("s/io"), ERROR_CODE = 500, BREATH_INTERVAL = 30, iframeConverter = S.clone(IO.getConfig().converters.text);
+  var logger = S.getLogger("s/io");
+  var doc = S.Env.host.document, OK_CODE = 200, ERROR_CODE = 500, BREATH_INTERVAL = 30, iframeConverter = S.clone(IO.getConfig().converters.text);
   iframeConverter.json = function(str) {
     return S.parseJson(S.unEscapeHtml(str))
   };
@@ -779,7 +785,8 @@ KISSY.add("io/iframe-transport", ["dom", "./base", "event/dom"], function(S, req
 });
 KISSY.add("io/methods", ["promise", "./base"], function(S, require) {
   var Promise = require("promise"), IO = require("./base");
-  var OK_CODE = 200, logger = S.getLogger("s/logger"), MULTIPLE_CHOICES = 300, NOT_MODIFIED = 304, rheaders = /^(.*?):[ \t]*([^\r\n]*)\r?$/mg;
+  var logger = S.getLogger("s/logger");
+  var OK_CODE = 200, MULTIPLE_CHOICES = 300, NOT_MODIFIED = 304, rheaders = /^(.*?):[ \t]*([^\r\n]*)\r?$/mg;
   function handleResponseData(io) {
     var text = io.responseText, xml = io.responseXML, c = io.config, converts = c.converters, type, contentType, responseData, contents = c.contents, dataType = c.dataType;
     if(text || xml) {
