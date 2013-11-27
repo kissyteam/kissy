@@ -18,6 +18,11 @@
     "browser": true,
     "globals": {
         "KISSY": false,
+        "describe": false,
+        "expect": false,
+        "runs": false,
+        "waitsFor": false,
+        "it": false,
         "requireNode": false
     }
 }

@@ -28,7 +28,7 @@ KISSY.add(function (S, XTemplate, XTemplateNodeJs) {
                         name: 'tpl-empty-content'
                     }).render(data);
                 } catch (e) {
-                    expect(e.message.indexOf('Syntax error') != -1).toBeTruthy();
+                    expect(e.message.indexOf('Syntax error') !== -1).toBeTruthy();
                 }
             });
 
@@ -46,9 +46,9 @@ KISSY.add(function (S, XTemplate, XTemplateNodeJs) {
                 expect(render).toBe('this is class="t" o!');
             });
 
-            describe("property", function () {
+            describe('property', function () {
                 it('support sub property', function () {
-                    var tpl = "{{data.x}}";
+                    var tpl = '{{data.x}}';
 
                     var data = {
                         data: {
@@ -62,7 +62,7 @@ KISSY.add(function (S, XTemplate, XTemplateNodeJs) {
                 });
 
                 it('support array index', function () {
-                    var tpl = "{{data.1.1}}";
+                    var tpl = '{{data.1.1}}';
 
                     var data = {
                         data: [1, [3, 2]]
@@ -75,7 +75,7 @@ KISSY.add(function (S, XTemplate, XTemplateNodeJs) {
             });
 
             it('support variable as index', function () {
-                var tpl = "{{data[d]}}";
+                var tpl = '{{data[d]}}';
 
                 var data = {
                     data: {
@@ -162,7 +162,7 @@ KISSY.add(function (S, XTemplate, XTemplateNodeJs) {
                     expect(render).toBe('121,2');
                 });
 
-                it("support each object", function () {
+                it('support each object', function () {
                     var tpl = '{{#each data}}{{xindex}}:{{.}}{{/each}}';
                     var data = {
                         data: {
@@ -208,7 +208,7 @@ KISSY.add(function (S, XTemplate, XTemplateNodeJs) {
                 });
 
                 it('support variable as index', function () {
-                    var tpl = "{{#each data[d]}}{{.}}{{/each}}";
+                    var tpl = '{{#each data[d]}}{{.}}{{/each}}';
 
                     var data = {
                         data: {
@@ -530,11 +530,11 @@ KISSY.add(function (S, XTemplate, XTemplateNodeJs) {
 
                 it('support global command for variable', function () {
 
-                    XTemplate.addCommand('global_xcmd', function (scopes, config) {
+                    XTemplate.addCommand('globalXcmd', function (scopes, config) {
                         return 'global-' + config.params[0];
                     });
 
-                    var tpl = 'my {{global_xcmd title}}';
+                    var tpl = 'my {{globalXcmd title}}';
 
                     var data = {
                         title: '1'
@@ -550,12 +550,12 @@ KISSY.add(function (S, XTemplate, XTemplateNodeJs) {
                 it('support namespace global command for variable', function () {
 
                     XTemplate.addCommand('cmd', {
-                        global_xcmd: function (scopes, config) {
+                        globalXcmd: function (scopes, config) {
                             return 'global-' + config.params[0];
                         }
                     });
 
-                    var tpl = '{{cmd.global_xcmd title}}';
+                    var tpl = '{{cmd.globalXcmd title}}';
 
                     var data = {
                         title: '1'
@@ -680,9 +680,9 @@ KISSY.add(function (S, XTemplate, XTemplateNodeJs) {
                 });
 
                 it('support template extend', function () {
-                    KISSY.add('xtemplate/parent', '{{#macro 'x'}}{{title}} parent{{/macro}}' +
-                        '{{macro 'x'}}');
-                    var render = new XTemplate('{{#macro 'x'}}{{content}} child{{/macro}}' +
+                    KISSY.add('xtemplate/parent', '{{#macro "x"}}{{title}} parent{{/macro}}' +
+                        '{{macro "x"}}');
+                    var render = new XTemplate('{{#macro "x"}}{{content}} child{{/macro}}' +
                         '{{include "xtemplate/parent"}}').render({
                             title: 'title',
                             content: 'content'
@@ -806,9 +806,9 @@ KISSY.add(function (S, XTemplate, XTemplateNodeJs) {
 
                     expect(function () {
                         new XTemplate(tpl).render(data);
-                    }).toThrow("parent template does not have name " +
-                            "for relative sub tpl name:" +
-                            " ./sub-tpl-6: 'include' at line 1");
+                    }).toThrow('parent template does not have name ' +
+                            'for relative sub tpl name:' +
+                            ' ./sub-tpl-6: \'include\' at line 1');
                 });
 
                 it('support compiled xtemplate module', function () {
@@ -904,6 +904,7 @@ KISSY.add(function (S, XTemplate, XTemplateNodeJs) {
 
                     var content = new XTemplate(tpl).render(data);
 
+                    /*jshint quotmark: false*/
                     expect(content).toBe("\n ' \\' | \n \\' \\\\\\'");
 
                 });
@@ -1054,7 +1055,7 @@ KISSY.add(function (S, XTemplate, XTemplateNodeJs) {
 
                 it('support variable as index', function () {
 
-                    var tpl = "{{#data[d]}}{{.}}{{/data[d]}}";
+                    var tpl = '{{#data[d]}}{{.}}{{/data[d]}}';
 
                     var data = {
                         data: {
@@ -1140,7 +1141,7 @@ KISSY.add(function (S, XTemplate, XTemplateNodeJs) {
                         r = e.message;
                     }
                     if (KISSY.Config.debug) {
-                        expect(r).toBe("can not find property: 'data' at line 1");
+                        expect(r).toBe('can not find property: \'data\' at line 1');
                     }
                 });
 
@@ -1192,7 +1193,7 @@ KISSY.add(function (S, XTemplate, XTemplateNodeJs) {
                     var data = {
                         list: [1, 2, 3],
                         'fun': function () {
-                            return this
+                            return this;
                         }
                     };
 
@@ -1302,7 +1303,7 @@ KISSY.add(function (S, XTemplate, XTemplateNodeJs) {
                 };
 
                 S.log = function (msg, type) {
-                    if (type == 'info') {
+                    if (type === 'info') {
                         msg2 = msg;
                     }
                 };
@@ -1311,14 +1312,14 @@ KISSY.add(function (S, XTemplate, XTemplateNodeJs) {
 
                 expect(render).toBe('this is \n');
 
-                expect(msg2).toBe("can not find property: 'title' at line 2");
+                expect(msg2).toBe('can not find property: \'title\' at line 2');
 
                 S.log = log;
             });
 
             it('throw error if missing property', function () {
                 if (!KISSY.config('debug')) {
-                    return
+                    return;
                 }
 
                 var tpl = 'this is \n' +
@@ -1338,12 +1339,12 @@ KISSY.add(function (S, XTemplate, XTemplateNodeJs) {
                     msg = e.message;
                 }
 
-                expect(msg).toBe("can not find property: 'title' at line 2");
+                expect(msg).toBe('can not find property: \'title\' at line 2');
             });
 
             it('detect unmatched', function () {
                 if (!KISSY.config('debug')) {
-                    return
+                    return;
                 }
                 var tpl = '{{#if n === n1}}\n' +
                     'n eq n1\n' +
@@ -1377,13 +1378,13 @@ KISSY.add(function (S, XTemplate, XTemplateNodeJs) {
                     .getPath();
 
                 S.config('packages', {
-                    nodejs_xtemplate: {
+                    nodejsXtemplate: {
                         ignorePackageNameInUri: 1,
                         base: path
                     }
                 });
 
-                var xtemplate = XTemplateNodeJs.loadFromModuleName('nodejs_xtemplate/a');
+                var xtemplate = XTemplateNodeJs.loadFromModuleName('nodejsXtemplate/a');
 
                 expect(xtemplate.render({
                     n: 3
