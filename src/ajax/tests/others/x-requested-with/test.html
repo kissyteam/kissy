@@ -1,0 +1,16 @@
+<script src="/kissy/build/seed.js"></script>
+<script>
+    KISSY.use('ajax', function (S, io) {
+        io.setupConfig({
+            headers: {
+                'X-Requested-With': false
+            }
+        });
+        io({
+            crossDomain:false,
+            url: 'http://localhost:9999/' +
+                    'kissy/src/ajax/tests/others/' +
+                    'xdr/xdr.jss'
+        });
+    });
+</script>
