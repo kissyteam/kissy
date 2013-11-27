@@ -141,7 +141,7 @@ KISSY.add(function (S, require) {
                 self._dinfo = {
                     url: self._getFlashUrl(r),
                     attrs: {
-                        title: f.attr("title"),
+                        title: f.attr('title'),
                         //align:self.dAlign.val(),
                         style: "margin:" +
                             (parseInt(self.dMargin.val()) || 0)
@@ -214,7 +214,7 @@ KISSY.add(function (S, require) {
                             add.attr("data-value")
                             + "/singlePlayer.swf"),
                         attrs: {
-                            title: add.attr("title"),
+                            title: add.attr('title'),
                             //align:self.dAlign.val(),
                             style: "margin:" +
                                 (parseInt(self.dMargin.val()) || 0)
@@ -319,8 +319,8 @@ KISSY.add(function (S, require) {
                 prefixCls = editor.get('prefixCls'),
                 f = self.selectedFlash;
             if (f) {
-                self._xiami_input.val(f.attr("title"));
-                self._xiamia_title.html(f.attr("title"));
+                self._xiami_input.val(f.attr('title'));
+                self._xiamia_title.html(f.attr('title'));
                 self.dAlign.set("value", f.css("float"));
                 self.dMargin.val(parseInt(f.style("margin")) || 0);
                 self._xiami_url_wrap.hide();

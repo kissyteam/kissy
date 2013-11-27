@@ -63,7 +63,7 @@ KISSY.add(function (S, Anim, Node) {
                     waits(100);
 
                     runs(function () {
-                        expect(test1.css("width")).toBe("100px");
+                        expect(test1.css('width')).toBe("100px");
                         expect(test1.css("display")).toBe("block");
                         expect(test1.css("height")).not.toBe("100px");
                         expect(normalizeColor(test1.css("background-color")))
@@ -73,7 +73,7 @@ KISSY.add(function (S, Anim, Node) {
                     waits(800);
 
                     runs(function () {
-                        expect(test1.css("width")).toBe("100px");
+                        expect(test1.css('width')).toBe("100px");
                         expect(test1.css("display")).toBe("none");
                         expect(test1.css("height")).toBe("100px");
                         expect(normalizeColor(test1.css("background-color")))
@@ -87,7 +87,7 @@ KISSY.add(function (S, Anim, Node) {
                     waits(100);
 
                     runs(function () {
-                        expect(test1.css("width")).toBe("100px");
+                        expect(test1.css('width')).toBe("100px");
                         expect(test1.css("display")).toBe("block");
                         expect(test1.css("height")).not.toBe("100px");
                         expect(normalizeColor(test1.css("background-color")))
@@ -97,7 +97,7 @@ KISSY.add(function (S, Anim, Node) {
                     waits(800);
 
                     runs(function () {
-                        expect(test1.css("width")).toBe("100px");
+                        expect(test1.css('width')).toBe("100px");
                         expect(test1.css("display")).toBe("block");
                         expect(test1.css("height")).toBe("100px");
                         expect(normalizeColor(test1.css("background-color")))
@@ -118,7 +118,7 @@ KISSY.add(function (S, Anim, Node) {
                     waits(100);
 
                     runs(function () {
-                        expect(test2.css("width")).not.toBe("100px");
+                        expect(test2.css('width')).not.toBe("100px");
                         expect(test2.css("display")).toBe("block");
                         expect(test2.css("height")).not.toBe("100px");
                         expect(test2.css("opacity") + "").not.toBe('1');
@@ -127,7 +127,7 @@ KISSY.add(function (S, Anim, Node) {
                     waits(200);
 
                     runs(function () {
-                        expect(test2.css("width")).toBe("100px");
+                        expect(test2.css('width')).toBe("100px");
                         expect(test2.css("display")).toBe("none");
                         expect(test2.css("height")).toBe("100px");
                         expect(test2.css("opacity") + "").toBe('1');
@@ -140,7 +140,7 @@ KISSY.add(function (S, Anim, Node) {
                     waits(100);
 
                     runs(function () {
-                        expect(test2.css("width")).not.toBe("100px");
+                        expect(test2.css('width')).not.toBe("100px");
                         expect(test2.css("display")).toBe("block");
                         expect(test2.css("height")).not.toBe("100px");
                         expect(test2.css("opacity") + "").not.toBe('1');
@@ -150,7 +150,7 @@ KISSY.add(function (S, Anim, Node) {
                     waits(200);
 
                     runs(function () {
-                        expect(test2.css("width")).toBe("100px");
+                        expect(test2.css('width')).toBe("100px");
                         expect(test2.css("display")).toBe("block");
                         expect(test2.css("height")).toBe("100px");
                         expect(test2.css("opacity") + "").toBe('1');

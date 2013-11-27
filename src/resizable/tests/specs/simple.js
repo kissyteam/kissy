@@ -54,7 +54,7 @@ KISSY.add(function (S, Event, Resizable) {
 
         var resizable = new Resizable({
             node: dom,
-            handlers: ["b", "t", "r", "l", "tr", "tl", "br", "bl"]
+            handlers: ["b", "t", "r", "l", "tr", 'tl', "br", 'bl']
         });
 
         var lNode = dom.one('.ks-resizable-handler-l');

@@ -25,7 +25,7 @@ KISSY.add(function (S, require) {
                 }
 
                 var cmdType = self.get("cmdType"),
-                    menu = self.get("menu"),
+                    menu = self.get('menu'),
                     children = menu.get && menu.get("children");
 
                 if (children) {

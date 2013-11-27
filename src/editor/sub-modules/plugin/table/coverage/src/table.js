@@ -1592,10 +1592,10 @@ KISSY.add(function(S, require) {
   _$jscoverage['/table.js'].lineData[532]++;
   if (visit87_532_1(!statusChecker[content] || statusChecker[content].call(self, editor))) {
     _$jscoverage['/table.js'].lineData[534]++;
-    c.set("disabled", false);
+    c.set('disabled', false);
   } else {
     _$jscoverage['/table.js'].lineData[536]++;
-    c.set("disabled", true);
+    c.set('disabled', true);
   }
 });
   }

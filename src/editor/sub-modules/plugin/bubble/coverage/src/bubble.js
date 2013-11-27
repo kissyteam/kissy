@@ -407,7 +407,7 @@ _$jscoverage['/bubble.js'].branchData['204'][1].init(17, 31, '!bubble.get("edito
 function visit39_204_1(result) {
   _$jscoverage['/bubble.js'].branchData['204'][1].ranCondition(result);
   return result;
-}_$jscoverage['/bubble.js'].branchData['193'][1].init(288, 22, '!bubble.get("visible")');
+}_$jscoverage['/bubble.js'].branchData['193'][1].init(288, 22, '!bubble.get('visible')');
 function visit38_193_1(result) {
   _$jscoverage['/bubble.js'].branchData['193'][1].ranCondition(result);
   return result;
@@ -527,7 +527,7 @@ function visit10_51_1(result) {
 function visit9_49_1(result) {
   _$jscoverage['/bubble.js'].branchData['49'][1].ranCondition(result);
   return result;
-}_$jscoverage['/bubble.js'].branchData['47'][1].init(34, 62, 'bubble.get("visible") && overlap(self, bubble)');
+}_$jscoverage['/bubble.js'].branchData['47'][1].init(34, 62, 'bubble.get('visible') && overlap(self, bubble)');
 function visit8_47_1(result) {
   _$jscoverage['/bubble.js'].branchData['47'][1].ranCondition(result);
   return result;
@@ -535,11 +535,11 @@ function visit8_47_1(result) {
 function visit7_46_2(result) {
   _$jscoverage['/bubble.js'].branchData['46'][2].ranCondition(result);
   return result;
-}_$jscoverage['/bubble.js'].branchData['46'][1].init(36, 97, 'bubble !== self && bubble.get("visible") && overlap(self, bubble)');
+}_$jscoverage['/bubble.js'].branchData['46'][1].init(36, 97, 'bubble !== self && bubble.get('visible') && overlap(self, bubble)');
 function visit6_46_1(result) {
   _$jscoverage['/bubble.js'].branchData['46'][1].ranCondition(result);
   return result;
-}_$jscoverage['/bubble.js'].branchData['45'][1].init(17, 134, 'bubble.isKeBubble && bubble !== self && bubble.get("visible") && overlap(self, bubble)');
+}_$jscoverage['/bubble.js'].branchData['45'][1].init(17, 134, 'bubble.isKeBubble && bubble !== self && bubble.get('visible') && overlap(self, bubble)');
 function visit5_45_1(result) {
   _$jscoverage['/bubble.js'].branchData['45'][1].ranCondition(result);
   return result;
@@ -599,7 +599,7 @@ KISSY.add(function(S, require) {
     S.each(myBubbles, function(bubble) {
   _$jscoverage['/bubble.js'].functionData[4]++;
   _$jscoverage['/bubble.js'].lineData[45]++;
-  if (visit5_45_1(bubble.isKeBubble && visit6_46_1(visit7_46_2(bubble !== self) && visit8_47_1(bubble.get("visible") && overlap(self, bubble))))) {
+  if (visit5_45_1(bubble.isKeBubble && visit6_46_1(visit7_46_2(bubble !== self) && visit8_47_1(bubble.get('visible') && overlap(self, bubble))))) {
     _$jscoverage['/bubble.js'].lineData[49]++;
     if (visit9_49_1(!archor)) {
       _$jscoverage['/bubble.js'].lineData[50]++;
@@ -758,7 +758,7 @@ KISSY.add(function(S, require) {
         bubble.move(xy[0], xy[1]);
       }
       _$jscoverage['/bubble.js'].lineData[193]++;
-      if (visit38_193_1(!bubble.get("visible"))) {
+      if (visit38_193_1(!bubble.get('visible'))) {
         _$jscoverage['/bubble.js'].lineData[194]++;
         bubble.show();
       } else {

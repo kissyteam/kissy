@@ -785,7 +785,7 @@ function visit30_249_1(result) {
 function visit29_248_1(result) {
   _$jscoverage['/dialog.js'].branchData['248'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['242'][1].init(25, 35, '!verifyInputs(content.all("input"))');
+}_$jscoverage['/dialog.js'].branchData['242'][1].init(25, 35, '!verifyInputs(content.all('input'))');
 function visit28_242_1(result) {
   _$jscoverage['/dialog.js'].branchData['242'][1].ranCondition(result);
   return result;
@@ -821,7 +821,7 @@ function visit21_173_1(result) {
 function visit20_168_1(result) {
   _$jscoverage['/dialog.js'].branchData['168'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['164'][1].init(26, 46, '!verifyInputs(commonSettingTable.all("input"))');
+}_$jscoverage['/dialog.js'].branchData['164'][1].init(26, 46, '!verifyInputs(commonSettingTable.all('input'))');
 function visit19_164_1(result) {
   _$jscoverage['/dialog.js'].branchData['164'][1].ranCondition(result);
   return result;
@@ -913,7 +913,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/dialog.js'].lineData[12]++;
   var bodyTpl = require('./dialog/dialog-tpl');
   _$jscoverage['/dialog.js'].lineData[13]++;
-  var dtd = Editor.XHTML_DTD, UA = S.UA, Node = KISSY.NodeList, HTTP_TIP = "http://", AUTOMATIC_TIP = "\u81ea\u52a8", MARGIN_DEFAULT = 10, IMAGE_DIALOG_BODY_HTML = bodyTpl, IMAGE_DIALOG_FOOT_HTML = "<div style='padding:5px 20px 20px;'>" + "<a " + "href='javascript:void('\u786e\u5b9a')' " + "class='{prefixCls}img-insert {prefixCls}button ks-inline-block' " + "style='margin-right:30px;'>\u786e\u5b9a</a> " + "<a  " + "href='javascript:void('\u53d6\u6d88')' " + "class='{prefixCls}img-cancel {prefixCls}button ks-inline-block'>\u53d6\u6d88</a></div>", warning = "\u8bf7\u70b9\u51fb\u6d4f\u89c8\u4e0a\u4f20\u56fe\u7247", valInput = Editor.Utils.valInput;
+  var dtd = Editor.XHTML_DTD, UA = S.UA, Node = KISSY.NodeList, HTTP_TIP = 'http://', AUTOMATIC_TIP = '\u81ea\u52a8', MARGIN_DEFAULT = 10, IMAGE_DIALOG_BODY_HTML = bodyTpl, IMAGE_DIALOG_FOOT_HTML = "<div style='padding:5px 20px 20px;'>" + "<a " + "href='javascript:void('\u786e\u5b9a')' " + "class='{prefixCls}img-insert {prefixCls}button ks-inline-block' " + "style='margin-right:30px;'>\u786e\u5b9a</a> " + "<a  " + "href='javascript:void('\u53d6\u6d88')' " + "class='{prefixCls}img-cancel {prefixCls}button ks-inline-block'>\u53d6\u6d88</a></div>", warning = "\u8bf7\u70b9\u51fb\u6d4f\u89c8\u4e0a\u4f20\u56fe\u7247", valInput = Editor.Utils.valInput;
   _$jscoverage['/dialog.js'].lineData[34]++;
   function findAWithImg(img) {
     _$jscoverage['/dialog.js'].functionData[1]++;
@@ -1086,7 +1086,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/dialog.js'].lineData[160]++;
   if (visit15_160_1((visit16_160_2(visit17_160_3(self.imageCfg['remote'] === false) || visit18_161_1(S.indexOf(self.tab.getSelectedTab(), self.tab.getTabs()) == 1))) && self.cfg)) {
     _$jscoverage['/dialog.js'].lineData[164]++;
-    if (visit19_164_1(!verifyInputs(commonSettingTable.all("input")))) {
+    if (visit19_164_1(!verifyInputs(commonSettingTable.all('input')))) {
       _$jscoverage['/dialog.js'].lineData[165]++;
       return;
     }
@@ -1179,7 +1179,7 @@ KISSY.add(function(S, require) {
   top: (offset.top + height / 1.5)});
   } else {
     _$jscoverage['/dialog.js'].lineData[242]++;
-    if (visit28_242_1(!verifyInputs(content.all("input")))) {
+    if (visit28_242_1(!verifyInputs(content.all('input')))) {
       _$jscoverage['/dialog.js'].lineData[243]++;
       return;
     }
@@ -1357,7 +1357,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/dialog.js'].lineData[411]++;
     valInput(self.imgUrl, selectedEl.attr("src"));
     _$jscoverage['/dialog.js'].lineData[412]++;
-    var w = parseInt(selectedEl.style("width")), h = parseInt(selectedEl.style("height"));
+    var w = parseInt(selectedEl.style('width')), h = parseInt(selectedEl.style("height"));
     _$jscoverage['/dialog.js'].lineData[414]++;
     if (visit59_414_1(h)) {
       _$jscoverage['/dialog.js'].lineData[415]++;

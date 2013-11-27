@@ -19,16 +19,16 @@ KISSY.add(function (S,require) {
         },
 
         getKeyEventTarget: function () {
-            return this.control.get("input");
+            return this.control.get('input');
         },
 
         _onSetCollapsed: function (v) {
-            this.control.get("input").attr("aria-expanded", !v);
+            this.control.get('input').attr('aria-expanded', !v);
         },
 
         _onSetDisabled: function (v, e) {
             this.callSuper(v, e);
-            this.control.get("input").attr("disabled", v);
+            this.control.get('input').attr('disabled', v);
         }
 
     }, {
@@ -39,19 +39,19 @@ KISSY.add(function (S,require) {
         },
         HTML_PARSER: {
             value: function (el) {
-                return el.one("." + this.getBaseCssClass('input')).val();
+                return el.one('.' + this.getBaseCssClass('input')).val();
             },
             input: function (el) {
-                return el.one("." + this.getBaseCssClass('input'));
+                return el.one('.' + this.getBaseCssClass('input'));
             },
             trigger: function (el) {
-                return el.one("." + this.getBaseCssClass('trigger'));
+                return el.one('.' + this.getBaseCssClass('trigger'));
             },
             invalidEl: function (el) {
-                return el.one("." + this.getBaseCssClass('invalid-el'));
+                return el.one('.' + this.getBaseCssClass('invalid-el'));
             },
             placeholderEl: function (el) {
-                return el.one("." + this.getBaseCssClass('placeholder'));
+                return el.one('.' + this.getBaseCssClass('placeholder'));
             }
         }
     });

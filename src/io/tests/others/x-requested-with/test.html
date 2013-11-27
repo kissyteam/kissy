@@ -1,0 +1,16 @@
+<script src="/kissy/build/seed.js"></script>
+<script src="/kissy/src/package.js"></script>
+<script>
+    KISSY.use('io', function (S, io) {
+        io.setupConfig({
+            headers: {
+                'X-Requested-With': false
+            }
+        });
+        io({
+            url: 'http://localhost:9999/' +
+                    'kissy/src/io/tests/others/' +
+                    'xdr/xdr.jss'
+        });
+    });
+</script>

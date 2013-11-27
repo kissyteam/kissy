@@ -8,7 +8,7 @@ KISSY.add(function (S, require) {
     var MenuButton = require('./control');
 
     function getSelectedItem(self) {
-        var menu = self.get("menu"),
+        var menu = self.get('menu'),
             cs = menu.children || menu.get && menu.get("children") || [],
             value = self.get("value"),
             c,
@@ -31,7 +31,7 @@ KISSY.add(function (S, require) {
         if (c) {
             if (c.get) {
                 if ((v = c.get("value")) === undefined) {
-                    v = c.get("textContent") || c.get("content");
+                    v = c.get('textContent') || c.get("content");
                 }
             } else {
                 if ((v = c.value) === undefined) {
@@ -43,7 +43,7 @@ KISSY.add(function (S, require) {
     }
 
     function deSelectAllExcept(self) {
-        var menu = self.get("menu"),
+        var menu = self.get('menu'),
             value = self.get("value"),
             cs = menu && menu.get && menu.get("children");
         S.each(cs, function (c) {
@@ -58,7 +58,7 @@ KISSY.add(function (S, require) {
     function _handleMenuShow(e) {
         var self = this,
             selectedItem = getSelectedItem(self),
-            m = self.get("menu");
+            m = self.get('menu');
         if (e.target === m) {
             var item = selectedItem || m.getChildAt(0);
             if (item) {
@@ -73,7 +73,7 @@ KISSY.add(function (S, require) {
 
     function _updateCaption(self) {
         var item = getSelectedItem(self),
-            textContent = item && ( item.textContent || item.get && item.get("textContent")),
+            textContent = item && ( item.textContent || item.get && item.get('textContent')),
             content = item && (item.content || item.get && item.get('content'));
         // 可能设置到 select content 的内容并不和 menuitem 的内容完全一致
         self.set("content", textContent || content || self.get("defaultCaption"));

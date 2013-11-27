@@ -10,7 +10,7 @@ KISSY.add(function (S) {
         uis = {
             // 不带前缀 prefixCls
             /*
-             "menu" :{
+             'menu' :{
              priority:0,
              constructor:Menu
              }

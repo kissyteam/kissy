@@ -20,30 +20,30 @@ KISSY.add(function (S, require) {
 
         _onSetCollapsed: function (v) {
             var self = this,
-                menu = self.get("menu");
+                menu = self.get('menu');
             if (v) {
                 menu.hide();
             } else {
                 var el = self.$el;
-                if (!menu.get("visible")) {
+                if (!menu.get('visible')) {
                     // same as submenu
                     // in case menu is changed after menubutton is rendered
                     var align = {
                         node: el,
-                        points: ["bl", "tl"],
+                        points: ['bl', 'tl'],
                         overflow: {
                             adjustX: 1,
                             adjustY: 1
                         }
                     };
                     S.mix(menu.get('align'), align, false);
-                    if (self.get("matchElWidth")) {
+                    if (self.get('matchElWidth')) {
                         menu.render();
                         var menuEl = menu.get('el');
                         var borderWidth =
                             (parseInt(menuEl.css('borderLeftWidth')) || 0) +
                                 (parseInt(menuEl.css('borderRightWidth')) || 0);
-                        menu.set("width", menu.get("align").node[0].offsetWidth - borderWidth);
+                        menu.set('width', menu.get("align").node[0].offsetWidth - borderWidth);
                     }
                     menu.show();
                     el.attr("aria-haspopup", menu.get('el').attr("id"));
@@ -71,7 +71,7 @@ KISSY.add(function (S, require) {
             var self = this,
                 keyCode = e.keyCode,
                 type = String(e.type),
-                menu = self.get("menu");
+                menu = self.get('menu');
 
             // space 只在 keyup 时处理
             if (keyCode == KeyCode.SPACE) {
@@ -84,7 +84,7 @@ KISSY.add(function (S, require) {
                 return undefined;
             }
             //转发给 menu 处理
-            if (menu.get('rendered') && menu.get("visible")) {
+            if (menu.get('rendered') && menu.get('visible')) {
                 var handledByMenu = menu.handleKeyDownInternal(e);
                 // esc
                 if (keyCode == KeyCode.ESC) {
@@ -140,7 +140,7 @@ KISSY.add(function (S, require) {
          * @param {Number} index position to insert
          */
         addItem: function (item, index) {
-            var menu = this.get("menu");
+            var menu = this.get('menu');
             menu.addChild(item, index);
         },
 
@@ -150,7 +150,7 @@ KISSY.add(function (S, require) {
          * @param [destroy=true] {Boolean} Whether destroy removed menu item.
          */
         removeItem: function (c, destroy) {
-            var menu = this.get("menu");
+            var menu = this.get('menu');
             menu.removeChild(c, destroy);
         },
 
@@ -159,7 +159,7 @@ KISSY.add(function (S, require) {
          * @param [destroy] {Boolean} Whether destroy removed menu items.
          */
         removeItems: function (destroy) {
-            var menu = this.get("menu");
+            var menu = this.get('menu');
             if (menu) {
                 if (menu.removeChildren) {
                     menu.removeChildren(destroy);
@@ -174,7 +174,7 @@ KISSY.add(function (S, require) {
          * @param {Number} index 0-based index.
          */
         getItemAt: function (index) {
-            var menu = self.get("menu");
+            var menu = self.get('menu');
             return menu.get('rendered') && menu.getChildAt(index);
         },
 

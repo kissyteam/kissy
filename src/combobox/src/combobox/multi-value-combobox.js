@@ -3,19 +3,19 @@
  * Input wrapper for ComboBox component.
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S,require) {
+KISSY.add(function (S, require) {
     var SUFFIX = 'suffix',
         rWhitespace = /\s|\xa0/;
 
-    var getCursor=require('./cursor');
-    var ComboBox=require('./control');
+    var getCursor = require('./cursor');
+    var ComboBox = require('./control');
 
     function strContainsChar(str, c) {
-        return c && str.indexOf(c) != -1;
+        return c && str.indexOf(c) !== -1;
     }
 
     function beforeVisibleChange(e) {
-        if (e.newVal && e.target == this.get('menu')) {
+        if (e.newVal && e.target === this.get('menu')) {
             this.alignWithCursor();
         }
     }
@@ -32,7 +32,7 @@ KISSY.add(function (S,require) {
                     menu;
                 if (self.get('alignWithCursor')) {
                     menu = self.get('menu');
-                    menu.setInternal('align',null);
+                    menu.setInternal('align', null);
                     menu.on('beforeVisibleChange', beforeVisibleChange, this);
                 }
             },
@@ -43,12 +43,12 @@ KISSY.add(function (S,require) {
                     inputDesc = getInputDesc(self),
                     tokens = inputDesc.tokens,
                     tokenIndex = inputDesc.tokenIndex,
-                    separator = self.get("separator"),
-                    separatorType = self.get("separatorType"),
+                    separator = self.get('separator'),
+                    separatorType = self.get('separatorType'),
                     token = tokens[tokenIndex],
                     l = token.length - 1;
 
-                if (separatorType != SUFFIX) {
+                if (separatorType !== SUFFIX) {
                     if (strContainsChar(separator, token.charAt(0))) {
                         token = token.slice(1);
                     } else {
@@ -57,7 +57,7 @@ KISSY.add(function (S,require) {
                     }
                 }
 
-                else if (separatorType == SUFFIX && strContainsChar(separator, token.charAt(l))) {
+                else if (separatorType === SUFFIX && strContainsChar(separator, token.charAt(l))) {
                     token = token.slice(0, l);
                 }
 
@@ -67,21 +67,20 @@ KISSY.add(function (S,require) {
 
             setValueFromAutocomplete: function (value, setCfg) {
                 var self = this,
-                    input = self.get("input"),
+                    input = self.get('input'),
                     inputDesc = getInputDesc(self),
                     tokens = inputDesc.tokens,
                     tokenIndex = Math.max(0, inputDesc.tokenIndex),
-                    separator = self.get("separator"),
+                    separator = self.get('separator'),
                     cursorPosition,
                     l,
-                    separatorType = self.get("separatorType"),
-                    nextToken = tokens[tokenIndex + 1] || "",
+                    separatorType = self.get('separatorType'),
+                    nextToken = tokens[tokenIndex + 1] || '',
                     token = tokens[tokenIndex];
 
-                if (separatorType != SUFFIX) {
+                if (separatorType !== SUFFIX) {
                     tokens[tokenIndex] = token.charAt(0) + value;
-                    if (nextToken && rWhitespace.test(nextToken.charAt(0))) {
-                    } else if (value) {
+                    if (value && !(nextToken && rWhitespace.test(nextToken.charAt(0)))) {
                         // 自动加空白间隔
                         tokens[tokenIndex] += ' ';
                     }
@@ -91,27 +90,27 @@ KISSY.add(function (S,require) {
                     // 尽量补上后缀
                     if (strContainsChar(separator, token.charAt(l))) {
                         tokens[tokenIndex] += token.charAt(l);
-                    } else if (separator.length == 1) {
+                    } else if (separator.length === 1) {
                         // 自动加后缀
                         tokens[tokenIndex] += separator;
                     }
                 }
 
-                cursorPosition = tokens.slice(0, tokenIndex + 1).join("").length;
+                cursorPosition = tokens.slice(0, tokenIndex + 1).join('').length;
 
-                self.set('value', tokens.join(""), setCfg);
+                self.set('value', tokens.join(''), setCfg);
 
-                input.prop("selectionStart", cursorPosition);
-                input.prop("selectionEnd", cursorPosition);
+                input.prop('selectionStart', cursorPosition);
+                input.prop('selectionEnd', cursorPosition);
             },
 
             'alignWithCursor': function () {
                 var self = this;
                 // does not support align with separator
                 // will cause ime error
-                var menu = self.get("menu"),
+                var menu = self.get('menu'),
                     cursorOffset,
-                    input = self.get("input");
+                    input = self.get('input');
                 cursorOffset = getCursor(input);
                 menu.move(cursorOffset.left, cursorOffset.top);
             }
@@ -128,7 +127,7 @@ KISSY.add(function (S,require) {
                  * @ignore
                  */
                 separator: {
-                    value: ",;"
+                    value: ',;'
                 },
 
                 /**
@@ -153,7 +152,7 @@ KISSY.add(function (S,require) {
                  * @ignore
                  */
                 literal: {
-                    value: "\""
+                    value: '"'
                 },
 
                 /**
@@ -173,16 +172,16 @@ KISSY.add(function (S,require) {
     // #----------------------- private start
 
     function getInputDesc(self) {
-        var input = self.get("input"),
+        var input = self.get('input'),
             inputVal = self.get('value'),
             tokens = [],
             cache = [],
-            literal = self.get("literal"),
-            separator = self.get("separator"),
-            separatorType = self.get("separatorType"),
+            literal = self.get('literal'),
+            separator = self.get('separator'),
+            separatorType = self.get('separatorType'),
             inLiteral = false,
         // 每个空格算作独立 token
-            allowWhitespaceAsStandaloneToken = separatorType != SUFFIX,
+            allowWhitespaceAsStandaloneToken = separatorType !== SUFFIX,
             cursorPosition = input.prop('selectionStart'),
             i,
             c,
@@ -191,7 +190,7 @@ KISSY.add(function (S,require) {
         for (i = 0; i < inputVal.length; i++) {
             c = inputVal.charAt(i);
             if (literal) {
-                if (c == literal) {
+                if (c === literal) {
                     inLiteral = !inLiteral;
                 }
             }
@@ -199,7 +198,7 @@ KISSY.add(function (S,require) {
                 cache.push(c);
                 continue;
             }
-            if (i == cursorPosition) {
+            if (i === cursorPosition) {
                 // current token index
                 tokenIndex = tokens.length;
             }
@@ -208,20 +207,20 @@ KISSY.add(function (S,require) {
             // then separate
             if (allowWhitespaceAsStandaloneToken && rWhitespace.test(c)) {
                 if (cache.length) {
-                    tokens.push(cache.join(""));
+                    tokens.push(cache.join(''));
                 }
                 cache = [];
                 cache.push(c);
             } else if (strContainsChar(separator, c)) {
-                if (separatorType == SUFFIX) {
+                if (separatorType === SUFFIX) {
                     cache.push(c);
                     if (cache.length) {
-                        tokens.push(cache.join(""));
+                        tokens.push(cache.join(''));
                     }
                     cache = [];
                 } else {
                     if (cache.length) {
-                        tokens.push(cache.join(""));
+                        tokens.push(cache.join(''));
                     }
                     cache = [];
                     cache.push(c);
@@ -232,7 +231,7 @@ KISSY.add(function (S,require) {
         }
 
         if (cache.length) {
-            tokens.push(cache.join(""));
+            tokens.push(cache.join(''));
         }
 
         // 至少有一个
@@ -240,10 +239,10 @@ KISSY.add(function (S,require) {
             tokens.push('');
         }
 
-        if (tokenIndex == -1) {
+        if (tokenIndex === -1) {
             // 后缀末尾
             // ,^
-            if (separatorType == SUFFIX && strContainsChar(separator, c)) {
+            if (separatorType === SUFFIX && strContainsChar(separator, c)) {
                 tokens.push('');
             }
             tokenIndex = tokens.length - 1;

@@ -408,7 +408,7 @@ function visit7_149_1(result) {
 function visit6_144_1(result) {
   _$jscoverage['/dialog.js'].branchData['144'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['141'][1].init(147, 14, 'f.css("width")');
+}_$jscoverage['/dialog.js'].branchData['141'][1].init(147, 14, 'f.css('width')');
 function visit5_141_1(result) {
   _$jscoverage['/dialog.js'].branchData['141'][1].ranCondition(result);
   return result;
@@ -522,9 +522,9 @@ KISSY.add(function(S, require) {
       return;
     }
     _$jscoverage['/dialog.js'].lineData[141]++;
-    if (visit5_141_1(f.css("width"))) {
+    if (visit5_141_1(f.css('width'))) {
       _$jscoverage['/dialog.js'].lineData[142]++;
-      self.dWidth.val(parseInt(f.css("width")));
+      self.dWidth.val(parseInt(f.css('width')));
     }
     _$jscoverage['/dialog.js'].lineData[144]++;
     if (visit6_144_1(f.css("height"))) {
@@ -619,7 +619,7 @@ KISSY.add(function(S, require) {
     return;
   }
   _$jscoverage['/dialog.js'].lineData[226]++;
-  var re = Editor.Utils.verifyInputs(self.dialog.get("el").all("input"));
+  var re = Editor.Utils.verifyInputs(self.dialog.get("el").all('input'));
   _$jscoverage['/dialog.js'].lineData[227]++;
   if (visit16_227_1(!re)) {
     _$jscoverage['/dialog.js'].lineData[228]++;

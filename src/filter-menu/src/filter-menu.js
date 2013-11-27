@@ -35,7 +35,7 @@ KISSY.add(function (S, require) {
                 var self = this,
                     str,
                     filterInput = self.get("filterInput"),
-                    highlightedItem = self.get("highlightedItem");
+                    highlightedItem = self.get('highlightedItem');
                 /* 根据用户输入过滤 */
                 self.set("filterStr", filterInput.val());
                 str = filterInput.val();
@@ -49,7 +49,7 @@ KISSY.add(function (S, require) {
                 // 尽量保持原始高亮
                 // 如果没有高亮项或者高亮项因为过滤被隐藏了
                 // 默认选择符合条件的第一项
-                else if (str && (!highlightedItem || !highlightedItem.get("visible"))) {
+                else if (str && (!highlightedItem || !highlightedItem.get('visible'))) {
                     highlightedItem = self._getNextEnabledHighlighted(0, 1);
                     if (highlightedItem) {
                         highlightedItem.set('highlighted', true);
@@ -97,7 +97,7 @@ KISSY.add(function (S, require) {
                             enteredItems = items;
                             //待补全的项
                             lastWord = items[items.length - 1];
-                            var item = self.get("highlightedItem"),
+                            var item = self.get('highlightedItem'),
                                 content = item && item.get("content");
                             // 有高亮而且最后一项不为空补全
                             if (content && content.indexOf(lastWord) > -1 && lastWord) {
@@ -137,12 +137,12 @@ KISSY.add(function (S, require) {
                         // 恢复原有内容
                         // 显示出来
                         c.get('el').html(content);
-                        c.set("visible", true);
+                        c.set('visible', true);
                     } else {
                         if (content.indexOf(str) > -1) {
                             // 如果符合过滤项
                             // 显示
-                            c.set("visible", true);
+                            c.set('visible', true);
                             // 匹配子串着重 input-wrap
                             c.get('el').html(content.replace(strExp, function (m) {
                                 return "<span class='" + prefixCls + HIT_CLS + "'>" + m + "<" + "/span>";
@@ -150,7 +150,7 @@ KISSY.add(function (S, require) {
                         } else {
                             // 不符合
                             // 隐藏
-                            c.set("visible", false);
+                            c.set('visible', false);
                         }
                     }
                 });

@@ -64,7 +64,7 @@ KISSY.add(function () {
 
         toFn: function (easingStr) {
             var m;
-            if (m = easingStr.match(CUBIC_BEZIER_REG)) {
+            if ((m = easingStr.match(CUBIC_BEZIER_REG))) {
                 return cubicBezierFunction(
                     parseNumber(m[1]),
                     parseNumber(m[2]),
@@ -87,8 +87,8 @@ KISSY.add(function () {
          */
         easeBoth: function (t) {
             return (t *= 2) < 1 ?
-                .5 * t * t :
-                .5 * (1 - (--t) * (t - 2));
+                0.5 * t * t :
+                0.5 * (1 - (--t) * (t - 2));
         },
 
         /**
@@ -110,8 +110,8 @@ KISSY.add(function () {
          */
         'easeBothStrong': function (t) {
             return (t *= 2) < 1 ?
-                .5 * t * t * t * t :
-                .5 * (2 - (t -= 2) * t * t * t);
+                0.5 * t * t * t * t :
+                0.5 * (2 - (t -= 2) * t * t * t);
         },
 
         /**
@@ -119,8 +119,10 @@ KISSY.add(function () {
          */
 
         'elasticIn': function (t) {
-            var p = .3, s = p / 4;
-            if (t === 0 || t === 1) return t;
+            var p = 0.3, s = p / 4;
+            if (t === 0 || t === 1) {
+                return t;
+            }
             return -(pow(2, 10 * (t -= 1)) * sin((t - s) * (2 * PI) / p));
         },
 
@@ -128,8 +130,10 @@ KISSY.add(function () {
          * Snap out elastic effect.
          */
         elasticOut: function (t) {
-            var p = .3, s = p / 4;
-            if (t === 0 || t === 1) return t;
+            var p = 0.3, s = p / 4;
+            if (t === 0 || t === 1) {
+                return t;
+            }
             return pow(2, -10 * t) * sin((t - s) * (2 * PI) / p) + 1;
         },
 
@@ -137,22 +141,26 @@ KISSY.add(function () {
          * Snap both elastic effect.
          */
         'elasticBoth': function (t) {
-            var p = .45, s = p / 4;
-            if (t === 0 || (t *= 2) === 2) return t;
+            var p = 0.45, s = p / 4;
+            if (t === 0 || (t *= 2) === 2) {
+                return t;
+            }
 
             if (t < 1) {
-                return -.5 * (pow(2, 10 * (t -= 1)) *
+                return -0.5 * (pow(2, 10 * (t -= 1)) *
                     sin((t - s) * (2 * PI) / p));
             }
             return pow(2, -10 * (t -= 1)) *
-                sin((t - s) * (2 * PI) / p) * .5 + 1;
+                sin((t - s) * (2 * PI) / p) * 0.5 + 1;
         },
 
         /**
          * Backtracks slightly, then reverses direction and moves to end.
          */
         'backIn': function (t) {
-            if (t === 1) t -= .001;
+            if (t === 1) {
+                t -= 0.001;
+            }
             return t * t * ((BACK_CONST + 1) * t - BACK_CONST);
         },
 
@@ -172,9 +180,9 @@ KISSY.add(function () {
             var m = (s *= 1.525) + 1;
 
             if ((t *= 2 ) < 1) {
-                return .5 * (t * t * (m * t - s));
+                return 0.5 * (t * t * (m * t - s));
             }
-            return .5 * ((t -= 2) * t * (m * t + s) + 2);
+            return 0.5 * ((t -= 2) * t * (m * t + s) + 2);
 
         },
 
@@ -195,13 +203,13 @@ KISSY.add(function () {
                 r = s * t * t;
             }
             else if (t < (2 / 2.75)) {
-                r = s * (t -= (1.5 / 2.75)) * t + .75;
+                r = s * (t -= (1.5 / 2.75)) * t + 0.75;
             }
             else if (t < (2.5 / 2.75)) {
-                r = s * (t -= (2.25 / 2.75)) * t + .9375;
+                r = s * (t -= (2.25 / 2.75)) * t + 0.9375;
             }
             else {
-                r = s * (t -= (2.625 / 2.75)) * t + .984375;
+                r = s * (t -= (2.625 / 2.75)) * t + 0.984375;
             }
 
             return r;
@@ -211,10 +219,10 @@ KISSY.add(function () {
          * Bounces off start and end.
          */
         'bounceBoth': function (t) {
-            if (t < .5) {
-                return Easing.bounceIn(t * 2) * .5;
+            if (t < 0.5) {
+                return Easing.bounceIn(t * 2) * 0.5;
             }
-            return Easing.bounceOut(t * 2 - 1) * .5 + .5;
+            return Easing.bounceOut(t * 2 - 1) * 0.5 + 0.5;
         }
     };
 

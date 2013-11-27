@@ -50,7 +50,7 @@ KISSY.add(function (S, Event, UA, Node, Overlay, ResizePlugin) {
                 o.render();
                 expect(o.get("el").css("left")).toBe("-9999px");
                 expect(o.get("el").css("top")).toBe("-9999px");
-                expect(o.get("el").css("width")).toBe("400px");
+                expect(o.get("el").css('width')).toBe("400px");
             });
 
             it("对齐居中有效", function () {
@@ -138,13 +138,13 @@ KISSY.add(function (S, Event, UA, Node, Overlay, ResizePlugin) {
             });
 
             it("渲染后可以取到元素", function () {
-                expect(o.get("contentEl").html()).toBe("render by javascript");
+                expect(o.get('contentEl').html()).toBe("render by javascript");
             });
 
             it("渲染后元素会正确配置", function () {
                 expect(o.get("el").css("left")).toBe("-9999px");
                 expect(o.get("el").css("top")).toBe("-9999px");
-                expect(o.get("el").css("width")).toBe("400px");
+                expect(o.get("el").css('width')).toBe("400px");
             });
 
             it("show/hide 事件顺利触发", function () {

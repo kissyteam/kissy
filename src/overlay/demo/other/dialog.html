@@ -312,7 +312,7 @@
                                 }))).plug(new ResizePlugin({
                             minWidth: 150,
                             minHeight: 70,
-                            handlers: ["b", "t", "r", "l", "tr", "tl", "br", "bl"]
+                            handlers: ["b", "t", "r", "l", "tr", 'tl', "br", 'bl']
                         }));
 
                 dialog.on('beforeVisibleChange', function (e) {
@@ -419,7 +419,7 @@
 
                 function center() {
                     S.log("ie center");
-                    if (dialog.get("visible")) {
+                    if (dialog.get('visible')) {
                         dialog.center();
                     }
                 }

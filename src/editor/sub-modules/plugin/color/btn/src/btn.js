@@ -99,7 +99,7 @@ KISSY.add(function (S, require) {
             }).render();
 
             var colorWin = self.colorWin;
-            colorPanel = colorWin.get("contentEl");
+            colorPanel = colorWin.get('contentEl');
             colorPanel.on("click", self._selectColor, self);
             colorWin.on("hide", function () {
                 self.set("checked", false);
@@ -120,7 +120,7 @@ KISSY.add(function (S, require) {
                 colorWin = self.colorWin;
             colorWin.set("align", {
                 node: el,
-                points: ["bl", "tl"],
+                points: ['bl', 'tl'],
                 offset: [0, 2],
                 overflow: {
                     adjustX: 1,

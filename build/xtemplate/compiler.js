@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:50
+build time: Nov 27 19:18
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -520,10 +520,10 @@ KISSY.add("xtemplate/compiler", ["xtemplate/runtime", "./compiler/parser", "./co
     source.push('var buffer = ""' + (global ? "," : ";"));
     if(global) {
       source.push("config = this.config," + "engine = this," + "moduleWrap, " + "utils = config.utils;");
-      source.push('if (typeof module!="undefined" && module.kissy) {moduleWrap = module;}');
+      source.push('if (typeof module !== "undefined" && module.kissy) {' + "moduleWrap = module;" + "}");
       var natives = "", c, utils = XTemplateRuntime.utils;
       for(c in utils) {
-        natives += c + 'Util = utils["' + c + '"],'
+        natives += c + "Util = utils." + c + ","
       }
       if(natives) {
         source.push("var " + natives.slice(0, natives.length - 1) + ";")

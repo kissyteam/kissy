@@ -21,7 +21,7 @@ KISSY.add(function (S, require) {
                     S.substitute("<div" +
                     " class='{prefixCls}editor-progressbar' " +
                     " style='width:" +
-                    self.get("width") +
+                    self.get('width') +
                     ";" +
                     "height:" +
                     h +
@@ -53,7 +53,7 @@ KISSY.add(function (S, require) {
         _progressChange:function(ev) {
             var self = this,
                 v = ev.newVal;
-            self._p.css("width", v + "%");
+            self._p.css('width', v + "%");
             self._title.html(v + "%");
         }
     },{

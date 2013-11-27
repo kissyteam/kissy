@@ -282,7 +282,7 @@ KISSY.add(function(S, require) {
   initializer: function() {
   _$jscoverage['/progressbar.js'].functionData[2]++;
   _$jscoverage['/progressbar.js'].lineData[16]++;
-  var self = this, h = self.get("height"), prefixCls = self.get('prefixCls'), el = new Node(S.substitute("<div" + " class='{prefixCls}editor-progressbar' " + " style='width:" + self.get("width") + ";" + "height:" + h + ";'" + "></div>", {
+  var self = this, h = self.get("height"), prefixCls = self.get('prefixCls'), el = new Node(S.substitute("<div" + " class='{prefixCls}editor-progressbar' " + " style='width:" + self.get('width') + ";" + "height:" + h + ";'" + "></div>", {
   prefixCls: prefixCls})), container = self.get("container"), p = new Node(S.substitute("<div style='overflow:hidden;'>" + "<div class='{prefixCls}editor-progressbar-inner' style='height:" + (parseInt(h) - 4) + "px'>" + "<div class='{prefixCls}editor-progressbar-inner-bg'></div>" + "</div>" + "</div>", {
   prefixCls: prefixCls})).appendTo(el), title = new Node("<span class='" + prefixCls + "editor-progressbar-title'></span>").appendTo(el);
   _$jscoverage['/progressbar.js'].lineData[44]++;
@@ -307,7 +307,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/progressbar.js'].lineData[54]++;
   var self = this, v = ev.newVal;
   _$jscoverage['/progressbar.js'].lineData[56]++;
-  self._p.css("width", v + "%");
+  self._p.css('width', v + "%");
   _$jscoverage['/progressbar.js'].lineData[57]++;
   self._title.html(v + "%");
 }}, {

@@ -3,10 +3,9 @@
  * Remote datasource for ComboBox
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S,require) {
-    var undefined=undefined;
-    var IO=require('io');
-    var Attribute=require('attribute');
+KISSY.add(function (S, require) {
+    var IO = require('io');
+    var Attribute = require('attribute');
     /**
      * dataSource which wrap {@link KISSY.IO} utility.
      * @class KISSY.ComboBox.RemoteDataSource
@@ -22,10 +21,10 @@ KISSY.add(function (S,require) {
         fetchData: function (inputVal, callback, context) {
             var self = this,
                 v,
-                paramName = self.get("paramName"),
-                parse = self.get("parse"),
-                cache = self.get("cache"),
-                allowEmpty = self.get("allowEmpty");
+                paramName = self.get('paramName'),
+                parse = self.get('parse'),
+                cache = self.get('cache'),
+                allowEmpty = self.get('allowEmpty');
             self.caches = self.caches || {};
             if (self.io) {
                 // abort previous request
@@ -36,18 +35,18 @@ KISSY.add(function (S,require) {
                 return callback.call(context, []);
             }
             if (cache) {
-                if (v = self.caches[inputVal]) {
+                if ((v = self.caches[inputVal])) {
                     return callback.call(context, v);
                 }
             }
-            var xhrCfg = self.get("xhrCfg");
+            var xhrCfg = self.get('xhrCfg');
             xhrCfg.data = xhrCfg.data || {};
             xhrCfg.data[paramName] = inputVal;
             xhrCfg.success = function (data) {
                 if (parse) {
                     data = parse(inputVal, data);
                 }
-                self.setInternal("data", data);
+                self.setInternal('data', data);
                 if (cache) {
                     self.caches[inputVal] = data;
                 }

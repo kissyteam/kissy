@@ -62,7 +62,7 @@ KISSY.add(function (S, require) {
                 // 找到向上路径上第一个可以滚动的容器，直到父组件节点（包括）
                 // 找不到就放弃，为效率考虑不考虑 parent 的嵌套可滚动 div
                     p = el.parent(function (e) {
-                        return $(e).css("overflow") != "visible";
+                        return $(e).css("overflow") != 'visible';
                     }, parent.get('el').parent());
                 if (!p) {
                     return;

@@ -23,7 +23,7 @@ KISSY.add(function (S,require) {
         // camel case uniformity
         S.each(to = self.to, function (v, prop) {
             var camelProp = camelCase(prop);
-            if (prop != camelProp) {
+            if (prop !== camelProp) {
                 to[camelProp] = to[prop];
                 delete to[prop];
             }
@@ -40,7 +40,7 @@ KISSY.add(function (S,require) {
                 // ms
                 _propData.duration *= 1000;
                 _propData.delay *= 1000;
-                if (typeof _propData.easing == 'string') {
+                if (typeof _propData.easing === 'string') {
                     _propData.easing = Easing.toFn(_propData.easing);
                 }
             });
@@ -123,7 +123,7 @@ KISSY.add(function (S,require) {
                             Dom.css(node, prop, to2 + unit);
                             // in case tmpCur==0
                             tmpCur = fx.cur();
-                        } while (tmpCur == 0);
+                        } while (tmpCur === 0);
                         from = (to2 / tmpCur) * from;
                         Dom.css(node, prop, from + unit);
                     }
@@ -158,7 +158,7 @@ KISSY.add(function (S,require) {
                 if (self.isRejected() || self.isResolved()) {
                     return;
                 }
-                end &= fx.pos == 1;
+                end &= fx.pos === 1;
             }
             var currentTime = S.now(),
                 duration = self.config.duration * 1000,
@@ -169,7 +169,7 @@ KISSY.add(function (S,require) {
             self.defer.notify([self, percent, remaining]);
             if (end) {
                 // complete 事件只在动画到达最后一帧时才触发
-                self['stop'](end);
+                self.stop(end);
             }
         },
 

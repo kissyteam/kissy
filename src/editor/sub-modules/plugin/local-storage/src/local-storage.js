@@ -44,7 +44,7 @@ KISSY.add(function (S, require) {
 
     var store = new FlashBridge({
         src: swfSrc,
-        render: o.get("contentEl").one('.storage-container'),
+        render: o.get('contentEl').one('.storage-container'),
         params: {
             flashVars: {
                 useCompression: true

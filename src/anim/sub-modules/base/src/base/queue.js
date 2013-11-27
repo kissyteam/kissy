@@ -2,8 +2,8 @@
  * @ignore queue data structure
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S,require) {
-    var Dom=require('dom');
+KISSY.add(function (S, require) {
+    var Dom = require('dom');
     var // 队列集合容器
         queueCollectionKey = S.guid('ks-queue-' + S.now() + '-'),
     // 默认队列
@@ -30,7 +30,7 @@ KISSY.add(function (S,require) {
         return qu;
     }
 
-    return Q = {
+    Q = {
         queueCollectionKey: queueCollectionKey,
 
         queue: function (node, queue, item) {
@@ -82,4 +82,6 @@ KISSY.add(function (S,require) {
             return qu;
         }
     };
+
+    return Q;
 });

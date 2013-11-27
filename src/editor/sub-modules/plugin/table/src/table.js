@@ -531,9 +531,9 @@ KISSY.add(function (S, require) {
                                 var content = c.get("content");
                                 if (!statusChecker[content] ||
                                     statusChecker[content].call(self, editor)) {
-                                    c.set("disabled", false);
+                                    c.set('disabled', false);
                                 } else {
-                                    c.set("disabled", true);
+                                    c.set('disabled', true);
                                 }
                             });
 

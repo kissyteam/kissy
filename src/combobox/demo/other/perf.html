@@ -33,7 +33,7 @@
 
             var basicComboBox = new ComboBox({
                 render: "#newNew",
-                // width:S.one("#inp").css("width"),
+                // width:S.one("#inp").css('width'),
                 dataSource: new ComboBox.LocalDataSource({
                     data: data
                 }),
@@ -64,7 +64,7 @@
             basicComboBox.on("click", function (e) {
                 var item = e.target;
                 S.log(item.get("value") + "\n" + item.get("content") +
-                        "\n" + item.get("textContent"));
+                        "\n" + item.get('textContent'));
             });
         })();
     });

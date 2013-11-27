@@ -12,7 +12,7 @@ KISSY.add(function (S, require) {
             element: 'a',
             attributes: {
                 "href": "#(href)",
-                "title": "#(title)",
+                'title': "#(title)",
                 // ie < 8 会把锚点地址修改，以及相对地址改为绝对地址
                 // 1. 编辑器位于 http://x.com/edit.htm
                 // 2. 用户输入 ./a.htm

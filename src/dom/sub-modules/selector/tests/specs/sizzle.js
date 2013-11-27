@@ -468,7 +468,7 @@ KISSY.add(function (S, engine) {
 
         it("Make sure that rooted queries on forms (with possible expandos) work.", function () {
             var form = jQuery("<form><input name='id'/></form>").appendTo("body");
-            expect(select("input", form[0]).length).toEqual(1);
+            expect(select('input', form[0]).length).toEqual(1);
         });
 
         describe('name nested', function () {
@@ -821,7 +821,7 @@ KISSY.add(function (S, engine) {
 
 
         it('input focus', function () {
-            var tmp = document.createElement("input");
+            var tmp = document.createElement('input');
             tmp.type = "text";
             tmp.id = "tmp_input";
 

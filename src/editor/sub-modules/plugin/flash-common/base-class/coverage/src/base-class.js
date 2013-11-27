@@ -411,7 +411,7 @@ KISSY.add(function(S, require) {
   afterRenderUI: function() {
   _$jscoverage['/base-class.js'].functionData[5]++;
   _$jscoverage['/base-class.js'].lineData[57]++;
-  var bubble = this, el = bubble.get("contentEl");
+  var bubble = this, el = bubble.get('contentEl');
   _$jscoverage['/base-class.js'].lineData[59]++;
   el.html(S.substitute(tipHTML, {
   label: self.get("label"), 

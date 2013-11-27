@@ -98,7 +98,7 @@ KISSY.add(function (S, Tabs) {
 
                     var tabB = $(".ks-tabs-tab").item(1);
 
-                    jasmine.simulate(tabB[0], "mouseover");
+                    jasmine.simulate(tabB[0], 'mouseover');
 
                     waits(10);
                     runs(function () {

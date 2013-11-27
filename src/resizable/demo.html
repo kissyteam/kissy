@@ -55,7 +55,7 @@
     KISSY.use("node,resizable,resizable/plugin/proxy", function (S, Node, Resizable, ResizableProxyPlugin) {
         var r = new Resizable({
             node: "#t",
-            handlers: ["b", "t", "r", "l", "tr", "tl", "br", "bl"],
+            handlers: ["b", "t", "r", "l", "tr", 'tl', "br", 'bl'],
 
             // optional configs
             minHeight: 50,
@@ -87,7 +87,7 @@
                 destroyOnEnd:true,
                 hideNodeOnResize:true
             })],
-            handlers: ["b", "t", "r", "l", "tr", "tl", "br", "bl"],
+            handlers: ["b", "t", "r", "l", "tr", 'tl', "br", 'bl'],
             // optional configs
             minHeight: 50,
             minWidth: 50,

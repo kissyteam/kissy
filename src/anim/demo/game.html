@@ -76,15 +76,15 @@
             }, Event.Target);
         }
 
-        $("#start").attr("disabled", false);
-        $("#stop").attr("disabled", false);
+        $("#start").attr('disabled', false);
+        $("#stop").attr('disabled', false);
 
         var s2 = Slot("#t", multiple, num, duration);
 
         $("#start").on("click", function () {
             t.css("backgroundPosition", "0px " + (-(num - 1) * height + "px"));
             s2.start();
-            $("#start").attr("disabled", true);
+            $("#start").attr('disabled', true);
         });
 
         $("#stop").on("click", function () {
@@ -92,7 +92,7 @@
             // 最后一个重复
             var next = Math.floor(Math.random() * (num - 1));
             s2.stop(next);
-            $("#stop").attr("disabled", true);
+            $("#stop").attr('disabled', true);
         });
 
     });

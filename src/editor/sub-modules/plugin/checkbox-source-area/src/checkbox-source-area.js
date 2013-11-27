@@ -30,7 +30,7 @@ KISSY.add(function (S, require) {
                 "编辑源代码</label>" +
                 "</span>")
                 .appendTo(statusBarEl);
-            var el = self.el = self.holder.one("input");
+            var el = self.el = self.holder.one('input');
             el.on("click", self._check, self);
             editor.on("wysiwygMode", self._wysiwygmode, self);
             editor.on("sourceMode", self._sourcemode, self);

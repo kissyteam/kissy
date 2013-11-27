@@ -685,7 +685,7 @@ KISSY.add(function(S, require) {
   self._dinfo = {
   url: self._getFlashUrl(r), 
   attrs: {
-  title: f.attr("title"), 
+  title: f.attr('title'),
   style: "margin:" + (visit4_147_1(parseInt(self.dMargin.val()) || 0)) + "px;" + "float:" + self.dAlign.get("value") + ";"}};
   _$jscoverage['/dialog.js'].lineData[152]++;
   self._gen();
@@ -771,7 +771,7 @@ KISSY.add(function(S, require) {
     self._dinfo = {
   url: ("http://www.xiami.com/widget/" + add.attr("data-value") + "/singlePlayer.swf"), 
   attrs: {
-  title: add.attr("title"), 
+  title: add.attr('title'),
   style: "margin:" + (visit11_220_1(parseInt(self.dMargin.val()) || 0)) + "px;" + "float:" + self.dAlign.get("value") + ";"}};
     _$jscoverage['/dialog.js'].lineData[225]++;
     self._gen();
@@ -880,9 +880,9 @@ KISSY.add(function(S, require) {
   _$jscoverage['/dialog.js'].lineData[321]++;
   if (visit25_321_1(f)) {
     _$jscoverage['/dialog.js'].lineData[322]++;
-    self._xiami_input.val(f.attr("title"));
+    self._xiami_input.val(f.attr('title'));
     _$jscoverage['/dialog.js'].lineData[323]++;
-    self._xiamia_title.html(f.attr("title"));
+    self._xiamia_title.html(f.attr('title'));
     _$jscoverage['/dialog.js'].lineData[324]++;
     self.dAlign.set("value", f.css("float"));
     _$jscoverage['/dialog.js'].lineData[325]++;

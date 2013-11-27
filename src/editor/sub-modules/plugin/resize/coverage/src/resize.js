@@ -389,7 +389,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/resize.js'].lineData[69]++;
   if (visit6_69_1(S.inArray("x", direction))) {
     _$jscoverage['/resize.js'].lineData[70]++;
-    editor.set("width", width + diffX);
+    editor.set('width', width + diffX);
   }
   _$jscoverage['/resize.js'].lineData[72]++;
   editor.fire("resize");

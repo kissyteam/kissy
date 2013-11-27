@@ -414,7 +414,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/smiley.js'].lineData[70]++;
     smiley.set("align", {
   node: this.get("el"), 
-  points: ["bl", "tl"], 
+  points: ['bl', 'tl'],
   overflow: {
   adjustX: 1, 
   adjustY: 1}});

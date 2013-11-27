@@ -31,9 +31,9 @@ KISSY.add(function (S, require) {
                                 return;
                             }
                             if (editor.queryCommandValue("outdent")) {
-                                self.set("disabled", false);
+                                self.set('disabled', false);
                             } else {
-                                self.set("disabled", true);
+                                self.set('disabled', true);
                             }
                         });
 

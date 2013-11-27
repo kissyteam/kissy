@@ -22,7 +22,7 @@ KISSY.add(function (S, require) {
             } else {
                 index = childrenLength - 1;
             }
-            if (!children[index].get("disabled")) {
+            if (!children[index].get('disabled')) {
                 return children[index];
             }
         }
@@ -30,7 +30,7 @@ KISSY.add(function (S, require) {
         do {
             count++;
             index = (index + childrenLength + direction) % childrenLength;
-        } while (count < childrenLength && children[index].get("disabled"));
+        } while (count < childrenLength && children[index].get('disabled'));
 
         if (count != childrenLength) {
             return children[index];
@@ -61,7 +61,7 @@ KISSY.add(function (S, require) {
                     // in case collapse false modify highlightedItem
                     self.set('expandedItem', target.isMenuButton ? target : null);
                 }
-                self.set("highlightedItem", target);
+                self.set('highlightedItem', target);
             } else {
                 if (!e.byPassSetToolbarHighlightedItem) {
                     self.set('highlightedItem', null);
@@ -141,7 +141,7 @@ KISSY.add(function (S, require) {
             self.callSuper(e);
             self.set("expandedItem", null);
             // clear for afterHighlightedChange
-            if (highlightedItem = self.get("highlightedItem")) {
+            if (highlightedItem = self.get('highlightedItem')) {
                 highlightedItem.set('highlighted', false);
             }
         },

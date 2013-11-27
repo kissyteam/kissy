@@ -308,7 +308,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/checkbox-source-area.js'].lineData[26]++;
   self.holder = new Node("<span " + "style='zoom:1;display:inline-block;height:22px;line-height:22px;'>" + "<label style='vertical-align:middle;'>" + "<input style='margin:0 5px;' type='checkbox' />" + "\u7f16\u8f91\u6e90\u4ee3\u7801</label>" + "</span>").appendTo(statusBarEl);
   _$jscoverage['/checkbox-source-area.js'].lineData[33]++;
-  var el = self.el = self.holder.one("input");
+  var el = self.el = self.holder.one('input');
   _$jscoverage['/checkbox-source-area.js'].lineData[34]++;
   el.on("click", self._check, self);
   _$jscoverage['/checkbox-source-area.js'].lineData[35]++;

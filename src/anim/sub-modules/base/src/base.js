@@ -3,12 +3,12 @@
  * @author yiminghe@gmail.com
  * @ignore
  */
-KISSY.add(function (S,require) {
-    var Dom=require('dom'),
-        Utils=require('./base/utils'),
-        Q=require('./base/queue'),
-        Promise=require('promise');
-    var   logger = S.getLogger('s/anim');
+KISSY.add(function (S, require) {
+    var Dom = require('dom'),
+        Utils = require('./base/utils'),
+        Q = require('./base/queue'),
+        Promise = require('promise');
+    var logger = S.getLogger('s/anim');
     var NodeType = Dom.NodeType,
         noop = S.noop,
 
@@ -44,12 +44,12 @@ KISSY.add(function (S,require) {
 
     // stop(true) will run complete function synchronously
     function syncComplete(self) {
-        var _backupProps, complete;
+        var _backupProps, complete = self.config.complete;
         // only recover after complete anim
         if (!S.isEmptyObject(_backupProps = self._backupProps)) {
             Dom.css(self.node, _backupProps);
         }
-        if (complete = self.config.complete) {
+        if (complete) {
             complete.call(self);
         }
     }
@@ -62,11 +62,11 @@ KISSY.add(function (S,require) {
         on: function (name, fn) {
             var self = this;
             logger.warn('please use promise api of anim instead');
-            if (name == 'complete') {
+            if (name === 'complete') {
                 self.then(fn);
-            } else if (name == 'end') {
+            } else if (name === 'end') {
                 self.fin(fn);
-            } else if (name == 'step') {
+            } else if (name === 'step') {
                 self.progress(fn);
             } else {
                 logger.error('not supported event for anim: ' + name);
@@ -112,7 +112,7 @@ KISSY.add(function (S,require) {
                 }, val);
             });
 
-            if (node.nodeType == NodeType.ELEMENT_NODE) {
+            if (node.nodeType === NodeType.ELEMENT_NODE) {
                 // 放在前面，设置 overflow hidden，否则后面 ie6  取 width/height 初值导致错误
                 // <div style='width:0'><div style='width:100px'></div></div>
                 if (to.width || to.height) {
@@ -130,7 +130,7 @@ KISSY.add(function (S,require) {
                     // inline element should has layout/inline-block
                     if (Dom.css(node, 'display') === 'inline' &&
                         Dom.css(node, 'float') === 'none') {
-                        if (S.UA['ie']) {
+                        if (S.UA.ieMode < 10) {
                             elStyle.zoom = 1;
                         } else {
                             elStyle.display = 'inline-block';
@@ -144,17 +144,18 @@ KISSY.add(function (S,require) {
                     val = _propData.value;
                     // 直接结束
                     if (specialVals[val]) {
-                        if (val == 'hide' && hidden || val == 'show' && !hidden) {
+                        if (val === 'hide' && hidden || val === 'show' && !hidden) {
                             // need to invoke complete
                             self.stop(true);
-                            return exit = false;
+                            exit = false;
+                            return exit;
                         }
                         // backup original inline css value
                         _backupProps[prop] = Dom.style(node, prop);
-                        if (val == 'toggle') {
+                        if (val === 'toggle') {
                             val = hidden ? 'show' : 'hide';
                         }
-                        else if (val == 'hide') {
+                        else if (val === 'hide') {
                             _propData.value = 0;
                             // 执行完后隐藏
                             _backupProps.display = 'none';
@@ -253,7 +254,7 @@ KISSY.add(function (S,require) {
                         self.stop(true);
                     }, self.__totalTime);
                 } else {
-                    self['beforeResume']();
+                    self.beforeResume();
                     self.doStart();
                 }
             }
@@ -281,7 +282,7 @@ KISSY.add(function (S,require) {
             } else {
                 // 当前动画对象加入队列
                 q = Q.queue(self.node, queue, self);
-                if (q.length == 1) {
+                if (q.length === 1) {
                     self.runInternal();
                 }
             }

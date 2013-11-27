@@ -85,7 +85,7 @@ KISSY.add(function (S, require) {
                 o = index;
             do {
                 var c = children[index];
-                if (!c.get("disabled") && (c.get("visible") !== false)) {
+                if (!c.get('disabled') && (c.get('visible') !== false)) {
                     return children[index];
                 }
                 index = (index + dir + len) % len;
@@ -111,7 +111,7 @@ KISSY.add(function (S, require) {
             var self = this;
 
             // Give the highlighted control the chance to handle the key event.
-            var highlightedItem = self.get("highlightedItem");
+            var highlightedItem = self.get('highlightedItem');
 
             // 先看当前活跃 menuitem 是否要处理
             if (highlightedItem && highlightedItem.handleKeyDownInternal(e)) {
@@ -188,7 +188,7 @@ KISSY.add(function (S, require) {
             var self = this;
 
             // 隐藏当然不包含了
-            if (!self.get("visible") || !self.$el) {
+            if (!self.get('visible') || !self.$el) {
                 return false;
             }
 

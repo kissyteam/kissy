@@ -3,15 +3,14 @@
  * Input wrapper for ComboBox component.
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S,require) {
-    var Node=require('node');
-    var Control=require('component/control');
-    var ComboBoxRender=require('./render');
+KISSY.add(function (S, require) {
+    var Node = require('node');
+    var Control = require('component/control');
+    var ComboBoxRender = require('./render');
     // provide popupmenu xclass
     require('menu');
 
     var ComboBox,
-        undefined=undefined,
         KeyCode = Node.KeyCode;
 
     /**
@@ -45,9 +44,9 @@ KISSY.add(function (S,require) {
                 var self = this,
                     contents, v, i, c;
                 if (data && data.length) {
-                    data = data.slice(0, self.get("maxItemCount"));
-                    if (self.get("format")) {
-                        contents = self.get("format").call(self,
+                    data = data.slice(0, self.get('maxItemCount'));
+                    if (self.get('format')) {
+                        contents = self.get('format').call(self,
                             self.getValueForAutocomplete(), data);
                     } else {
                         contents = [];
@@ -67,9 +66,9 @@ KISSY.add(function (S,require) {
 
             bindUI: function () {
                 var self = this,
-                    input = self.get("input");
+                    input = self.get('input');
 
-                input.on("valuechange", onValueChange, self);
+                input.on('valuechange', onValueChange, self);
 
                 /**
                  * fired after combobox 's collapsed attribute is changed.
@@ -114,10 +113,10 @@ KISSY.add(function (S,require) {
                     value;
                 // only trigger menu when timer cause change
                 if (e.causedByTimer) {
-                    value = self['getValueForAutocomplete']();
+                    value = self.getValueForAutocomplete();
                     // undefined means invalid input value
                     if (value === undefined) {
-                        self.set("collapsed", true);
+                        self.set('collapsed', true);
                         return;
                     }
                     self._savedValue = value;
@@ -133,20 +132,20 @@ KISSY.add(function (S,require) {
                 if (self.get('invalidEl')) {
                     setInvalid(self, false);
                 }
-                if (placeholderEl = self.get("placeholderEl")) {
+                if ((placeholderEl = self.get('placeholderEl'))) {
                     placeholderEl.hide();
                 }
             },
 
             handleBlurInternal: function (e) {
                 var self = this,
-                    placeholderEl = self.get("placeholderEl");
+                    placeholderEl = self.get('placeholderEl');
                 self.callSuper(e);
                 delayHide(self);
                 if (self.get('invalidEl')) {
                     self.validate(function (error, val) {
                         if (error) {
-                            if (!self.get("focused") && val == self.get('value')) {
+                            if (!self.get('focused') && (val === self.get('value'))) {
                                 setInvalid(self, error);
                             }
                         } else {
@@ -165,8 +164,8 @@ KISSY.add(function (S,require) {
                     trigger;
                 self.callSuper(e);
                 target = e.target;
-                trigger = self.get("trigger");
-                if (trigger && (trigger[0] == target || trigger.contains(target))) {
+                trigger = self.get('trigger');
+                if (trigger && (trigger[0] === target || trigger.contains(target))) {
                     if (self.get('collapsed')) {
                         // fetch data
                         self.focus();
@@ -186,24 +185,23 @@ KISSY.add(function (S,require) {
                     keyCode = e.keyCode,
                     highlightedItem,
                     handledByMenu,
-                    menu = self.get("menu");
+                    menu = self.get('menu');
 
-                input = self.get("input");
-                updateInputOnDownUp = self.get("updateInputOnDownUp");
+                input = self.get('input');
+                updateInputOnDownUp = self.get('updateInputOnDownUp');
 
-                if (menu.get("visible")) {
+                if (menu.get('visible')) {
 
-                    highlightedItem = menu.get("highlightedItem");
+                    highlightedItem = menu.get('highlightedItem');
 
                     // https://github.com/kissyteam/kissy/issues/371
                     // combobox: input should be involved in key press sequence
                     if (updateInputOnDownUp && highlightedItem) {
                         var menuChildren = menu.get('children');
-                        if (keyCode == KeyCode.DOWN &&
-                            highlightedItem == getFirstEnabledItem(menuChildren.concat().reverse())
-                            ||
-                            keyCode == KeyCode.UP &&
-                                highlightedItem == getFirstEnabledItem(menuChildren)
+                        if (keyCode === KeyCode.DOWN &&
+                            highlightedItem === getFirstEnabledItem(menuChildren.concat().reverse())||
+                            keyCode === KeyCode.UP &&
+                                highlightedItem === getFirstEnabledItem(menuChildren)
                             ) {
                             self.setValueFromAutocomplete(self._savedValue);
                             highlightedItem.set('highlighted', false);
@@ -213,11 +211,11 @@ KISSY.add(function (S,require) {
 
                     handledByMenu = menu.handleKeyDownInternal(e);
 
-                    highlightedItem = menu.get("highlightedItem");
+                    highlightedItem = menu.get('highlightedItem');
 
                     // esc
-                    if (keyCode == KeyCode.ESC) {
-                        self.set("collapsed", true);
+                    if (keyCode === KeyCode.ESC) {
+                        self.set('collapsed', true);
                         if (updateInputOnDownUp) {
                             // combobox will change input value
                             // but it does not need to reload data
@@ -230,22 +228,22 @@ KISSY.add(function (S,require) {
                     if (updateInputOnDownUp &&
                         S.inArray(keyCode, [KeyCode.DOWN, KeyCode.UP])) {
                         // update menu's active value to input just for show
-                        self.setValueFromAutocomplete(highlightedItem.get("textContent"));
+                        self.setValueFromAutocomplete(highlightedItem.get('textContent'));
                     }
 
                     // tab
                     // if menu is open and an menuitem is highlighted, see as click/enter
-                    if (keyCode == KeyCode.TAB && highlightedItem) {
+                    if (keyCode === KeyCode.TAB && highlightedItem) {
                         // click highlightedItem
                         highlightedItem.handleClickInternal(e);
                         // only prevent focus change in multiple mode
-                        if (self.get("multiple")) {
+                        if (self.get('multiple')) {
                             return true;
                         }
                     }
 
                     return handledByMenu;
-                } else if (keyCode == KeyCode.DOWN || keyCode == KeyCode.UP) {
+                } else if (keyCode === KeyCode.DOWN || keyCode === KeyCode.UP) {
                     // re-fetch, consider multiple input
                     var v = self.getValueForAutocomplete();
                     if (v !== undefined) {
@@ -276,7 +274,7 @@ KISSY.add(function (S,require) {
              */
             sendRequest: function (value) {
                 var self = this,
-                    dataSource = self.get("dataSource");
+                    dataSource = self.get('dataSource');
                 dataSource.fetchData(value, renderData, self);
             },
 
@@ -289,14 +287,14 @@ KISSY.add(function (S,require) {
                 } else {
                     // 保证显示前已经 bind 好 menu 事件
                     clearDismissTimer(self);
-                    if (!menu.get("visible")) {
-                        if (self.get("matchElWidth")) {
+                    if (!menu.get('visible')) {
+                        if (self.get('matchElWidth')) {
                             menu.render();
                             var menuEl = menu.get('el');
                             var borderWidth =
                                 (parseInt(menuEl.css('borderLeftWidth')) || 0) +
                                     (parseInt(menuEl.css('borderRightWidth')) || 0);
-                            menu.set("width", el[0].offsetWidth - borderWidth);
+                            menu.set('width', el[0].offsetWidth - borderWidth);
                         }
                         menu.show();
                     }
@@ -419,7 +417,7 @@ KISSY.add(function (S,require) {
                             m.setInternal('parent', this);
                             var align = {
                                 node: this.$el,
-                                points: ["bl", "tl"],
+                                points: ['bl', 'tl'],
                                 overflow: {
                                     adjustX: 1,
                                     adjustY: 1
@@ -579,12 +577,12 @@ KISSY.add(function (S,require) {
         var contentEl;
         var input = self.get('input');
         var el = menu.get('el');
-        contentEl = menu.get("contentEl");
-        input.attr("aria-owns", el.attr('id'));
+        contentEl = menu.get('contentEl');
+        input.attr('aria-owns', el.attr('id'));
         // menu has input!
-        el.on("focusout", onMenuFocusout, self);
-        el.on("focusin", onMenuFocusin, self);
-        contentEl.on("mouseover", onMenuMouseOver, self);
+        el.on('focusout', onMenuFocusout, self);
+        el.on('focusin', onMenuFocusin, self);
+        contentEl.on('mouseover', onMenuMouseOver, self);
         // cause valuechange
         // if click menuitem while chinese input is open(xu -> '')
         contentEl.on('mousedown', onMenuMouseDown, self);
@@ -598,17 +596,17 @@ KISSY.add(function (S,require) {
             textContent = item.get('textContent');
             self.setValueFromAutocomplete(textContent);
             self._savedValue = textContent;
-            self.set("collapsed", true);
+            self.set('collapsed', true);
         }
     }
 
     function setInvalid(self, error) {
         var $el = self.$el,
             cls = self.view.getBaseCssClasses('invalid'),
-            invalidEl = self.get("invalidEl");
+            invalidEl = self.get('invalidEl');
         if (error) {
             $el.addClass(cls);
-            invalidEl.attr("title", error);
+            invalidEl.attr('title', error);
             invalidEl.show();
         } else {
             $el.removeClass(cls);
@@ -623,7 +621,7 @@ KISSY.add(function (S,require) {
         self._focusoutDismissTimer = setTimeout(function () {
                 // ie6 bug
                 if (self._focusoutDismissTimer) {
-                    self.set("collapsed", true);
+                    self.set('collapsed', true);
                 }
             },
             // ie6 needs longer timeout
@@ -631,8 +629,8 @@ KISSY.add(function (S,require) {
     }
 
     function clearDismissTimer(self) {
-        var t;
-        if (t = self._focusoutDismissTimer) {
+        var t= self._focusoutDismissTimer;
+        if (t) {
             clearTimeout(t);
             self._focusoutDismissTimer = null;
         }
@@ -654,13 +652,13 @@ KISSY.add(function (S,require) {
             matchVal,
             highlightedItem,
             i,
-            menu = self.get("menu");
+            menu = self.get('menu');
 
-        data = self['normalizeData'](data);
+        data = self.normalizeData(data);
 
         menu.removeChildren(true);
 
-        if (highlightedItem = menu.get('highlightedItem')) {
+        if ((highlightedItem = menu.get('highlightedItem'))) {
             highlightedItem.set('highlighted', false);
         }
 
@@ -673,11 +671,11 @@ KISSY.add(function (S,require) {
             children = menu.get('children');
 
             // make menu item (which textContent is same as input) active
-            val = self['getValueForAutocomplete']();
+            val = self.getValueForAutocomplete();
 
             if (self.get('highlightMatchItem')) {
                 for (i = 0; i < children.length; i++) {
-                    if (children[i].get("textContent") == val) {
+                    if (children[i].get('textContent') === val) {
                         children[i].set('highlighted', true);
                         matchVal = true;
                         break;
@@ -686,19 +684,19 @@ KISSY.add(function (S,require) {
             }
 
             // Whether or not the first row should be highlighted by default.
-            if (!matchVal && self.get("autoHighlightFirst")) {
+            if (!matchVal &&( self.get('autoHighlightFirst'))) {
                 for (i = 0; i < children.length; i++) {
-                    if (!children[i].get("disabled")) {
+                    if (!children[i].get('disabled')) {
                         children[i].set('highlighted', true);
                         break;
                     }
                 }
             }
-            self.set("collapsed", false);
+            self.set('collapsed', false);
             // after menu is rendered
             self.fire('afterRenderData');
         } else {
-            self.set("collapsed", true);
+            self.set('collapsed', true);
         }
     }
 

@@ -119,7 +119,7 @@ KISSY.add(function (S, require) {
                 _savedParents = [],
                 editorEl = editor.get("el");
             self.iframeHeight = editor.get("textarea").parent().style("height");
-            self.editorElWidth = editorEl.style("width");
+            self.editorElWidth = editorEl.style('width');
             //主窗口滚动条也要保存哦
             self.scrollLeft = Dom.scrollLeft();
             self.scrollTop = Dom.scrollTop();

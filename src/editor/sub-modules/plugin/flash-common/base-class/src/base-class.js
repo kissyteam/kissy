@@ -55,7 +55,7 @@ KISSY.add(function (S, require) {
                     afterRenderUI:// 注册泡泡，selectionChange时检测
                         function () {
                             var bubble = this,
-                                el = bubble.get("contentEl");
+                                el = bubble.get('contentEl');
                             el.html(S.substitute(tipHTML, {
                                 label: self.get("label"),
                                 prefixCls: prefixCls

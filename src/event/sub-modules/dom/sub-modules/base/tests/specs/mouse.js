@@ -188,7 +188,7 @@ KISSY.add(function (S, Dom, Event) {
 
                 // 2012-03-31 bug : clone does not clone originalType
                 // lose check
-                simulate(n, "mouseover",v);
+                simulate(n, 'mouseover',v);
 
                 waits(100);
 
@@ -222,7 +222,7 @@ KISSY.add(function (S, Dom, Event) {
                     t = e.target.id;
                 });
 
-                simulate(d1, "mouseover", document);
+                simulate(d1, 'mouseover', document);
 
                 waits(100);
 
@@ -231,7 +231,7 @@ KISSY.add(function (S, Dom, Event) {
                     expect(type).toBe("");
                     t = "";
                     type = "";
-                    simulate(d2, "mouseover", d1);
+                    simulate(d2, 'mouseover', d1);
                 });
 
 
@@ -242,7 +242,7 @@ KISSY.add(function (S, Dom, Event) {
                     expect(type).toBe("mouseenter");
                     t = "";
                     type = "";
-                    simulate(d3, "mouseover", d2);
+                    simulate(d3, 'mouseover', d2);
                 });
 
                 waits(100);

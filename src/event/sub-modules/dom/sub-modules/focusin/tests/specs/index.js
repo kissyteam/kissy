@@ -119,12 +119,12 @@ KISSY.add(function (S, Event, Dom) {
             // In non-IE, the simulation of focusin/focusout behavior do not correspond with IE exactly,
             // so we should ignore the orders of the event
             Event.delegate(container, 'focusin', 'input', function (e) {
-                expect(e.type).toBe("focusin");
+                expect(e.type).toBe('focusin');
                 result.push(1);
             });
 
             Event.delegate(container, 'focusout', 'input', function (e) {
-                expect(e.type).toBe("focusout");
+                expect(e.type).toBe('focusout');
                 result.push(2);
             });
 

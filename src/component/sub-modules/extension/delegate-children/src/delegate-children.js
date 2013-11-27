@@ -43,9 +43,9 @@ KISSY.add(function (S, require) {
 
     S.augment(DelegateChildren, {
         handleChildrenEvents: function (e) {
-            if (!this.get("disabled")) {
+            if (!this.get('disabled')) {
                 var control = this.getOwnerControl(e);
-                if (control && !control.get("disabled")) {
+                if (control && !control.get('disabled')) {
                     e.stopPropagation();
                     // Child control identified; forward the event.
                     switch (e.type) {

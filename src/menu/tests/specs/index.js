@@ -23,7 +23,7 @@ KISSY.add(function (S, Menu) {
             if (!S.UA.mobile) {
                 it("highlighted works", function () {
 
-                    jasmine.simulate(firstEl, "mouseover");
+                    jasmine.simulate(firstEl, 'mouseover');
 
                     waits(10);
 
@@ -43,7 +43,7 @@ KISSY.add(function (S, Menu) {
                     waits(10);
 
                     runs(function () {
-                        jasmine.simulate(secondEl, "mouseover");
+                        jasmine.simulate(secondEl, 'mouseover');
                     });
 
                     waits(10);
@@ -135,7 +135,7 @@ KISSY.add(function (S, Menu) {
                     waits(10);
 
                     runs(function () {
-                        jasmine.simulate(secondEl, "mouseover");
+                        jasmine.simulate(secondEl, 'mouseover');
                     });
 
                     waits(10);
@@ -207,7 +207,7 @@ KISSY.add(function (S, Menu) {
                     waits(100);
 
                     runs(function () {
-                        jasmine.simulate(secondEl, "mouseover");
+                        jasmine.simulate(secondEl, 'mouseover');
                     });
 
                     waits(100);

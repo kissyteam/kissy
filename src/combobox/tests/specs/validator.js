@@ -48,7 +48,7 @@ KISSY.add(function (S, ComboBox) {
             });
             comboBox.render();
 
-            var t = comboBox.get("input")[0];
+            var t = comboBox.get('input')[0];
 
             t.value = "";
 
@@ -83,8 +83,8 @@ KISSY.add(function (S, ComboBox) {
                 });
                 expect(error).toBe(ERROR);
                 expect(comboBox.get("el").hasClass("ks-combobox-invalid")).toBe(true);
-                expect(comboBox.get("invalidEl").css("display")).toBe("block");
-                expect(comboBox.get("invalidEl").attr("title")).toBe(ERROR);
+                expect(comboBox.get('invalidEl').css("display")).toBe("block");
+                expect(comboBox.get('invalidEl').attr('title')).toBe(ERROR);
             });
 
 
@@ -125,7 +125,7 @@ KISSY.add(function (S, ComboBox) {
                 });
                 expect(error).toBe("");
                 expect(comboBox.get("el").hasClass("ks-combobox-invalid")).toBe(false);
-                expect(comboBox.get("invalidEl").css("display")).toBe("none");
+                expect(comboBox.get('invalidEl').css("display")).toBe("none");
             });
 
             runs(function(){
@@ -161,7 +161,7 @@ KISSY.add(function (S, ComboBox) {
             });
             comboBox.render();
 
-            var t = comboBox.get("input")[0];
+            var t = comboBox.get('input')[0];
 
             t.value = "";
 
@@ -197,8 +197,8 @@ KISSY.add(function (S, ComboBox) {
                 });
                 expect(error).toBe(ERROR);
                 expect(comboBox.get("el").hasClass("ks-combobox-invalid")).toBe(true);
-                expect(comboBox.get("invalidEl").css("display")).toBe("block");
-                expect(comboBox.get("invalidEl").attr("title")).toBe(ERROR);
+                expect(comboBox.get('invalidEl').css("display")).toBe("block");
+                expect(comboBox.get('invalidEl').attr('title')).toBe(ERROR);
             });
 
 
@@ -239,7 +239,7 @@ KISSY.add(function (S, ComboBox) {
                 });
                 expect(error).toBe("");
                 expect(comboBox.get("el").hasClass("ks-combobox-invalid")).toBe(false);
-                expect(comboBox.get("invalidEl").css("display")).toBe("none");
+                expect(comboBox.get('invalidEl').css("display")).toBe("none");
             });
 
             runs(function(){

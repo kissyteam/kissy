@@ -3,26 +3,26 @@
  * get cursor position of input
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S,require) {
-    var Node=require('node');
+KISSY.add(function (S, require) {
+    var Node = require('node');
     var $ = Node.all,
-        FAKE_DIV_HTML = "<div style='" +
-            "z-index:-9999;" +
-            "overflow:hidden;" +
-            "position: fixed;" +
-            "left:-9999px;" +
-            "top:-9999px;" +
-            "opacity:0;" +
+        FAKE_DIV_HTML = '<div style="' +
+            'z-index:-9999;' +
+            'overflow:hidden;' +
+            'position: fixed;' +
+            'left:-9999px;' +
+            'top:-9999px;' +
+            'opacity:0;' +
             // firefox default normal,need to force to use pre-wrap
-            "white-space:pre-wrap;" +
-            "word-wrap:break-word;" +
-            "'></div>",
+            'white-space:pre-wrap;' +
+            'word-wrap:break-word;' +
+            '"></div>',
         FAKE_DIV,
-        MARKER = "<span>" +
+        MARKER = '<span>' +
             // must has content
             // or else <br/><span></span> can not get right coordinates
-            "x" +
-            "</span>",
+            'x' +
+            '</span>',
         STYLES = [
             'paddingLeft',
             'paddingTop', 'paddingBottom',
@@ -56,11 +56,11 @@ KISSY.add(function (S,require) {
         if (!fake) {
             fake = $(FAKE_DIV_HTML);
         }
-        if (String(elem[0].type.toLowerCase()) == 'textarea') {
-            fake.css("width", elem.css("width"));
+        if (String(elem[0].type.toLowerCase()) === 'textarea') {
+            fake.css('width', elem.css('width'));
         } else {
             // input does not wrap at all
-            fake.css("width", 9999);
+            fake.css('width', 9999);
         }
         S.each(STYLES, function (s) {
             fake.css(s, elem.css(s));
@@ -74,17 +74,17 @@ KISSY.add(function (S,require) {
 
     findSupportInputScrollLeft = function () {
         var doc = document,
-            input = $("<input>");
+            input = $('<input>');
         input.css({
             width: 1,
-            position: "absolute",
+            position: 'absolute',
             left: -9999,
             top: -9999
         });
-        input.val("123456789");
+        input.val('123456789');
         input.appendTo(doc.body);
         input[0].focus();
-        supportInputScrollLeft = !!(input[0].scrollLeft > 0);
+        supportInputScrollLeft = (input[0].scrollLeft > 0);
         input.remove();
         findSupportInputScrollLeft = S.noop;
     };
@@ -121,7 +121,7 @@ KISSY.add(function (S,require) {
 
         // input does not has scrollLeft
         // so just get the position of the beginning of input
-        if (!supportInputScrollLeft && elem.type != 'textarea') {
+        if (!supportInputScrollLeft && elem.type !== 'textarea') {
             elemOffset.top += elem.offsetHeight;
             return elemOffset;
         }

@@ -15,19 +15,19 @@ KISSY.add(function (S,require) {
                 'aria-describedby': renderData.describedby
             });
             if (renderData.checked) {
-                renderData.elCls.push(self.getBaseCssClasses("checked"));
+                renderData.elCls.push(self.getBaseCssClasses('checked'));
             }
         },
         _onSetChecked: function (v) {
             var self = this,
-                cls = self.getBaseCssClasses("checked");
+                cls = self.getBaseCssClasses('checked');
             self.$el[v ? 'addClass' : 'removeClass'](cls);
         },
         '_onSetTooltip': function (title) {
-            this.el.setAttribute("title", title);
+            this.el.setAttribute('title', title);
         },
         '_onSetDescribedby': function (describedby) {
-            this.el.setAttribute("aria-describedby", describedby);
+            this.el.setAttribute('aria-describedby', describedby);
         }
     }, {
         name: 'ButtonRender'

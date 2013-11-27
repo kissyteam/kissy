@@ -1,4 +1,4 @@
-KISSY.use("menu", function (S, Menu) {
+KISSY.use('menu', function (S, Menu) {
 
 
     var $ = S.all;

@@ -13,7 +13,8 @@ program
 
 var S = require('../build/kissy-nodejs'),
     chokidar = require('chokidar'),
-    js_beautify = require('js-beautify').js_beautify,
+/*jshint camelcase: false*/
+    jsBeautify = require('js-beautify').js_beautify,
     fs = require('fs'),
     path = require('path'),
     packagePath = program.packagePath,
@@ -32,40 +33,48 @@ function normalizeSlash(str) {
     return str.replace(/\\/g, '/');
 }
 
-function my_js_beautify(str) {
-    var opts = {"indent_size": "4", "indent_char": " ",
-        "preserve_newlines": true, "brace_style": "collapse",
-        "keep_array_indentation": false, "space_after_anon_function": true};
-    return js_beautify(str, opts);
+function myJsBeautify(str) {
+    var opts = {
+        'indent_size': '4',
+        'indent_char': ' ',
+        'preserve_newlines': true,
+        'brace_style': 'collapse',
+        'keep_array_indentation': false,
+        'space_after_anon_function': true
+    };
+    return jsBeautify(str, opts);
 }
 
 S.use('xtemplate/compiler', function (S, XTemplateCompiler) {
     function compile(tpl, modulePath) {
         var tplContent = fs.readFileSync(tpl, encoding);
-        var moduleCode = my_js_beautify(
+        var moduleCode = myJsBeautify(
             '/** Compiled By kissy-xtemplate */\n' +
-                'KISSY.add(function(S,require,exports,module){ return ' +
-                XTemplateCompiler.compileToStr(tplContent))
-            + '\n});';
+                'KISSY.add(function(S,require,exports,module){\n' +
+                '/*jshint quotmark: false*/\n' +
+                'return ' + XTemplateCompiler.compileToStr(tplContent)) + ';\n' +
+            '});';
         fs.writeFileSync(modulePath, moduleCode, encoding);
         console.info('generate xtpl module: ' + modulePath + ' at ' + (new Date().toLocaleString()));
     }
 
     function process(filePath) {
+        var modulePath;
         if (S.endsWith(filePath, '.xtpl.html')) {
-            var modulePath = filePath.replace(/\.xtpl\.html$/, '-xtpl.js');
+            modulePath = filePath.replace(/\.xtpl\.html$/, '-xtpl.js');
             compile(filePath, modulePath);
         } else if (S.endsWith(filePath, '.tpl.html')) {
             modulePath = filePath.replace(/\.tpl\.html$/, '-tpl.js');
             var tplContent = fs.readFileSync(filePath, encoding);
-            tplContent = tplContent.replace(/\\/g, "\\")
-                .replace(/\r?\n/g, "\\n")
-                .replace(/'/g, "\\'");
-            var moduleCode = my_js_beautify(S.substitute(tplTemplate, {
+            tplContent = tplContent.replace(/\\/g, '\\')
+                .replace(/\r?\n/g, '\\n')
+                .replace(/'/g, '\\\'');
+            var moduleCode = myJsBeautify(S.substitute(tplTemplate, {
                 code: tplContent
             }));
             fs.writeFileSync(modulePath, moduleCode, encoding);
-            console.info('generate tpl module: ' + modulePath + ' at ' + (new Date().toLocaleString()));
+            console.info('generate tpl module: ' + modulePath +
+                ' at ' + (new Date().toLocaleString()));
         }
     }
 
@@ -77,7 +86,7 @@ S.use('xtemplate/compiler', function (S, XTemplateCompiler) {
         var walk = require('walk');
         //noinspection JSUnresolvedFunction
         var walker = walk.walk(packagePath);
-        walker.on("file", function (root, fileStats, next) {
+        walker.on('file', function (root, fileStats, next) {
             var filePath = normalizeSlash(root + '/' + fileStats.name);
             process(filePath);
             next();

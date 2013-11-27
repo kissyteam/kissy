@@ -218,7 +218,7 @@ KISSY.add(
 
                         var containerOffset = node.offset();
 
-                        obj.align(lower, ["tl", "bl"], undefined, {});
+                        obj.align(lower, ['tl', 'bl'], undefined, {});
 
                         //    _____________
                         //   |             |
@@ -235,7 +235,7 @@ KISSY.add(
                             containerOffset.top + 30
                         );
 
-                        obj.align(lower, ["bl", "tl"], undefined, {
+                        obj.align(lower, ['bl', 'tl'], undefined, {
                             adjustX: 1,
                             adjustY: 1
                         });
@@ -280,7 +280,7 @@ KISSY.add(
                         obj.render();
 
                         var containerOffset = node.offset();
-                        obj.align(lower, ["tl", "bl"], undefined, {
+                        obj.align(lower, ['tl', 'bl'], undefined, {
 
                         });
                         //   |------|
@@ -299,7 +299,7 @@ KISSY.add(
                             containerOffset.top - 10
                         );
 
-                        obj.align(lower, ["tl", "bl"], undefined, {
+                        obj.align(lower, ['tl', 'bl'], undefined, {
                             adjustX: 1,
                             adjustY: 1
                         });

@@ -186,7 +186,7 @@
         basicComboBox.on("click", function (e) {
             var item = e.target;
             S.log(item.get("value") + "\n" + item.get("content") +
-                    "\n" + item.get("textContent"));
+                    "\n" + item.get('textContent'));
         });
     });
 
@@ -265,12 +265,12 @@
 
         $("#check").on("click", function () {
             basicComboBox.validate(function (v, val, d) {
-                alert((v ? "没通过" : d.value) + " : " + basicComboBox.get("input").val());
+                alert((v ? "没通过" : d.value) + " : " + basicComboBox.get('input').val());
             });
         });
 
         $("#disable").on("click", function () {
-            basicComboBox.set("disabled", this.checked);
+            basicComboBox.set('disabled', this.checked);
         });
     });
 

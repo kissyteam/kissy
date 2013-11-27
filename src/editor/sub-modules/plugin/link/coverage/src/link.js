@@ -361,7 +361,7 @@ KISSY.add(function(S, require) {
   afterRenderUI: function() {
   _$jscoverage['/link.js'].functionData[6]++;
   _$jscoverage['/link.js'].lineData[63]++;
-  var bubble = this, el = bubble.get("contentEl");
+  var bubble = this, el = bubble.get('contentEl');
   _$jscoverage['/link.js'].lineData[66]++;
   el.html(S.substitute(tipHTML, {
   prefixCls: prefixCls}));

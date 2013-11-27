@@ -14,7 +14,7 @@ KISSY.add(function (S, require, exports, module) {
         return arguments[1].toUpperCase();
     }
 
-    function CamelCase(name) {
+    function camelCase(name) {
         return name.replace(RE_DASH, replaceToUpper);
     }
 
@@ -24,7 +24,7 @@ KISSY.add(function (S, require, exports, module) {
     var FALSE = false;
 
     function normalFn(host, method) {
-        if (typeof method == 'string') {
+        if (typeof method === 'string') {
             return host[method];
         }
         return method;
@@ -62,7 +62,7 @@ KISSY.add(function (S, require, exports, module) {
      */
     function getValueByPath(o, path) {
         for (var i = 0, len = path.length;
-             o != undefined && i < len;
+             o !== undefined && i < len;
              i++) {
             o = o[path[i]];
         }
@@ -79,7 +79,7 @@ KISSY.add(function (S, require, exports, module) {
             for (var i = 0; i < len; i++) {
                 o = o[path[i]];
             }
-            if (o != undefined) {
+            if (o !== undefined) {
                 o[path[i]] = val;
             } else {
                 s = undefined;
@@ -167,7 +167,7 @@ KISSY.add(function (S, require, exports, module) {
         }, opts.data);
 
         // check before event
-        if (opts['silent']) {
+        if (opts.silent) {
             if (FALSE === defaultSetFn.call(self, beforeEventObject)) {
                 return FALSE;
             }
@@ -201,7 +201,7 @@ KISSY.add(function (S, require, exports, module) {
         }
 
         // fire after event
-        if (!opts['silent']) {
+        if (!opts.silent) {
             value = getAttrVals(self)[name];
             __fireAttrChange(self, 'after', name, prevVal, value, fullName, null, opts.data);
             if (attrs) {
@@ -250,7 +250,7 @@ KISSY.add(function (S, require, exports, module) {
             }
         }
         S.each(px, function (v, p) {
-            if (typeof v == 'function') {
+            if (typeof v === 'function') {
                 var wrapped = 0;
                 if (v.__owner__) {
                     var originalOwner = v.__owner__;
@@ -286,7 +286,7 @@ KISSY.add(function (S, require, exports, module) {
         px = px || {};
         var hooks ,
             sxHooks = sx.__hooks__;
-        if (hooks = SuperClass.__hooks__) {
+        if ((hooks = SuperClass.__hooks__)) {
             sxHooks = sx.__hooks__ = sx.__hooks__ || {};
             S.mix(sxHooks, hooks, false);
         }
@@ -297,9 +297,10 @@ KISSY.add(function (S, require, exports, module) {
             // debug mode, give the right name for constructor
             // refer : http://limu.iteye.com/blog/1136712
             if ('@DEBUG@') {
-                eval("SubClass = function " + CamelCase(name) + "(){ " +
-                    "this.callSuper.apply(this, arguments);" +
-                    "}");
+                /*jshint evil: true*/
+                SubClass = new Function('return function ' + camelCase(name) + '(){ ' +
+                    'this.callSuper.apply(this, arguments);' +
+                    '}')();
             } else {
                 SubClass = function () {
                     this.callSuper.apply(this, arguments);
@@ -311,7 +312,7 @@ KISSY.add(function (S, require, exports, module) {
         wrapProtoForSuper(px, SubClass);
         var inheritedStatics,
             sxInheritedStatics = sx.inheritedStatics;
-        if (inheritedStatics = SuperClass.inheritedStatics) {
+        if ((inheritedStatics = SuperClass.inheritedStatics)) {
             sxInheritedStatics = sx.inheritedStatics = sx.inheritedStatics || {};
             S.mix(sxInheritedStatics, inheritedStatics, false);
         }
@@ -356,11 +357,12 @@ KISSY.add(function (S, require, exports, module) {
                 self = this,
                 args = arguments;
 
-            if (typeof self == 'function' && self.__name__) {
+            if (typeof self === 'function' && self.__name__) {
                 method = self;
                 obj = args[0];
                 args = Array.prototype.slice.call(args, 1);
             } else {
+                /*jshint noarg: false*/
                 method = arguments.callee.caller;
                 if (method.__wrapped__) {
                     method = method.caller;
@@ -428,7 +430,7 @@ KISSY.add(function (S, require, exports, module) {
                 attrs = self.getAttrs(),
                 attr,
                 cfg = S.clone(attrConfig);
-            if (attr = attrs[name]) {
+            if ((attr = attrs[name])) {
                 S.mix(attr, cfg, override);
             } else {
                 attrs[name] = cfg;
@@ -490,13 +492,12 @@ KISSY.add(function (S, require, exports, module) {
          * @return {Boolean} whether pass validator
          */
         set: function (name, value, opts) {
-            var self = this;
+            var self = this, e;
             if (S.isPlainObject(name)) {
                 opts = value;
                 opts = opts || {};
                 var all = Object(name),
                     attrs = [],
-                    e,
                     errors = [];
                 for (name in all) {
                     // bulk validation
@@ -506,8 +507,8 @@ KISSY.add(function (S, require, exports, module) {
                     }
                 }
                 if (errors.length) {
-                    if (opts['error']) {
-                        opts['error'](errors);
+                    if (opts.error) {
+                        opts.error(errors);
                     }
                     return FALSE;
                 }
@@ -541,8 +542,8 @@ KISSY.add(function (S, require, exports, module) {
             e = validate(self, name, value);
 
             if (e !== undefined) {
-                if (opts['error']) {
-                    opts['error'](e);
+                if (opts.error) {
+                    opts.error(e);
                 }
                 return FALSE;
             }
@@ -555,14 +556,13 @@ KISSY.add(function (S, require, exports, module) {
          * @protected
          */
         setInternal: function (name, value) {
-            var self = this,
-                setValue = undefined,
+            var self = this, setValue,
             // if host does not have meta info corresponding to (name,value)
             // then register on demand in order to collect all data meta info
             // 一定要注册属性元数据，否则其他模块通过 _attrs 不能枚举到所有有效属性
             // 因为属性在声明注册前可以直接设置值
                 attrConfig = ensureNonEmpty(self.getAttrs(), name),
-                setter = attrConfig['setter'];
+                setter = attrConfig.setter;
 
             // if setter has effect
             if (setter && (setter = normalFn(self, setter))) {
@@ -602,7 +602,7 @@ KISSY.add(function (S, require, exports, module) {
             }
 
             attrConfig = ensureNonEmpty(self.getAttrs(), name, 1);
-            getter = attrConfig['getter'];
+            getter = attrConfig.getter;
 
             // get user-set value or default value
             //user-set value takes privilege
@@ -637,7 +637,7 @@ KISSY.add(function (S, require, exports, module) {
         reset: function (name, opts) {
             var self = this;
 
-            if (typeof name == 'string') {
+            if (typeof name === 'string') {
                 if (self.hasAttr(name)) {
                     // if attribute does not have default value, then set to undefined
                     return self.set(name, getDefAttrVal(self, name), opts);
@@ -699,7 +699,7 @@ KISSY.add(function (S, require, exports, module) {
         }
         var attrConfig = ensureNonEmpty(self.getAttrs(), name),
             e,
-            validator = attrConfig['validator'];
+            validator = attrConfig.validator;
         if (validator && (validator = normalFn(self, validator))) {
             e = validator.call(self, value, name, all);
             // undefined and true validate successfully

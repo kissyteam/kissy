@@ -159,7 +159,7 @@ KISSY.add(function (S, require) {
             show: function () {
                 var self = this;
                 self.render();
-                self.set("visible", true);
+                self.set('visible', true);
                 return self;
             },
 
@@ -169,7 +169,7 @@ KISSY.add(function (S, require) {
              */
             hide: function () {
                 var self = this;
-                self.set("visible", false);
+                self.set('visible', false);
                 return self;
             },
 
@@ -272,7 +272,7 @@ KISSY.add(function (S, require) {
                         n = ev.target.nodeName;
                         n = n && n.toLowerCase();
                         // do not prevent focus when click on editable element
-                        if (n != "input" && n != "textarea") {
+                        if (n != 'input' && n != "textarea") {
                             ev['preventDefault']();
                         }
                     }

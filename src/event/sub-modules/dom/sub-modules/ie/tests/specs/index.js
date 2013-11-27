@@ -7,7 +7,7 @@ KISSY.add(function (S, Dom, Event) {
 
         var div,
             form,
-            inp = Dom.get("input", div);
+            inp = Dom.get('input', div);
 
         beforeEach(function(){
              div = Dom.create("<div>" +
@@ -19,7 +19,7 @@ KISSY.add(function (S, Dom, Event) {
             Dom.append(div, document.body);
 
              form = Dom.get("form", div);
-             inp = Dom.get("input", div);
+             inp = Dom.get('input', div);
         });
 
         afterEach(function () {

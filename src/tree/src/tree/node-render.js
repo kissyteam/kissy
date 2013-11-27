@@ -92,7 +92,7 @@ KISSY.add(function (S, require) {
             var self = this,
                 childrenEl = self.control.get("childrenEl");
             childrenEl[v ? "show" : "hide"]();
-            self.el.setAttribute("aria-expanded", v);
+            self.el.setAttribute('aria-expanded', v);
         },
 
         _onSetSelected: function (v) {

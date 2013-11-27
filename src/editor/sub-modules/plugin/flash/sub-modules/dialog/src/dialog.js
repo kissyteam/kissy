@@ -138,8 +138,8 @@ KISSY.add(function (S, require) {
                 if (!r) {
                     return;
                 }
-                if (f.css("width")) {
-                    self.dWidth.val(parseInt(f.css("width")));
+                if (f.css('width')) {
+                    self.dWidth.val(parseInt(f.css('width')));
                 }
                 if (f.css("height")) {
                     self.dHeight.val(parseInt(f.css("height")));
@@ -223,7 +223,7 @@ KISSY.add(function (S, require) {
             if (!dinfo) {
                 return;
             }
-            var re = Editor.Utils.verifyInputs(self.dialog.get("el").all("input"));
+            var re = Editor.Utils.verifyInputs(self.dialog.get("el").all('input'));
             if (!re) {
                 return;
             }

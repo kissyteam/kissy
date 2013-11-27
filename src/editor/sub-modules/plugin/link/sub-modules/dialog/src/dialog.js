@@ -93,7 +93,7 @@ KISSY.add(function (S, require) {
             var self = this,
                 d = self.dialog,
                 url = d.urlEl.val();
-            if (!Editor.Utils.verifyInputs(d.get("el").all("input"))) {
+            if (!Editor.Utils.verifyInputs(d.get("el").all('input'))) {
                 return;
             }
             d.hide();
@@ -117,7 +117,7 @@ KISSY.add(function (S, require) {
             if (_selectedEl) {
                 var url = _selectedEl.attr(_ke_saved_href) || _selectedEl.attr("href");
                 Editor.Utils.valInput(d.urlEl, url);
-                d.urlTitle.val(_selectedEl.attr("title") || "");
+                d.urlTitle.val(_selectedEl.attr('title') || "");
                 d.targetEl[0].checked = (_selectedEl.attr("target") == "_blank");
             } else {
                 Editor.Utils.resetInput(d.urlEl);

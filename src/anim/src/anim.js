@@ -46,14 +46,14 @@ KISSY.add(function (S, require) {
             config = node;
         } else {
             // the transition properties
-            if (typeof to == 'string') {
+            if (typeof to === 'string') {
                 to = S.unparam(String(to), ';', ':');
                 S.each(to, function (value, prop) {
                     var trimProp = S.trim(prop);
                     if (trimProp) {
                         to[trimProp] = S.trim(value);
                     }
-                    if (!trimProp || trimProp != prop) {
+                    if (!trimProp || trimProp !== prop) {
                         delete to[prop];
                     }
                 });
@@ -82,7 +82,7 @@ KISSY.add(function (S, require) {
             // default anim mode for whole kissy application
             useTransition: S.config('anim/useTransition')
         });
-        if (config['useTransition'] && TransitionAnim) {
+        if (config.useTransition && TransitionAnim) {
             logger.info('use transition anim');
             return new TransitionAnim(config);
         } else {
@@ -161,7 +161,7 @@ KISSY.add(function (S, require) {
             // default queue
                 queue === null ||
                     // name of specified queue
-                    typeof queue == 'string' ||
+                    typeof queue === 'string' ||
                     // anims not belong to any queue
                     queue === false
                 ) {

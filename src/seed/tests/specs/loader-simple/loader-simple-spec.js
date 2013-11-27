@@ -37,7 +37,7 @@
                 }
                 expect(mod12.async).toBe(true);
                 expect(mod12.charset).toBe("utf-8");
-                expect($("#k12").css("width")).toBe('111px');
+                expect($("#k12").css('width')).toBe('111px');
 
             });
 

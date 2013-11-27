@@ -231,7 +231,7 @@ KISSY.add(function (S, require) {
             ev && ev.halt();
             var self = this,
                 tableDialog = self.dialog,
-                inputs = tableDialog.get("el").all("input");
+                inputs = tableDialog.get("el").all('input');
 
             if (tableDialog.twidthunit.get("value") == "%") {
                 var tw = parseInt(tableDialog.twidth.val());
@@ -281,10 +281,10 @@ KISSY.add(function (S, require) {
             }
 
             if (valid(d.twidth.val()))
-                selectedTable.css("width",
+                selectedTable.css('width',
                     trim(d.twidth.val()) + d.twidthunit.get("value"));
             else
-                selectedTable.css("width", "");
+                selectedTable.css('width', "");
             if (valid(d.theight.val()))
                 selectedTable.css("height",
                     trim(d.theight.val()));
@@ -413,7 +413,7 @@ KISSY.add(function (S, require) {
 
             d.tborder.val(selectedTable.attr("border") ||
                 "0");
-            var w = selectedTable.style("width") ||
+            var w = selectedTable.style('width') ||
                 ("" + selectedTable.width());
 
             d.tcollapse[0].checked = selectedTable.hasClass(collapseTableClass, undefined);
@@ -451,11 +451,11 @@ KISSY.add(function (S, require) {
                 self._fillTableDialog();
                 d.get("el")
                     .all(replacePrefix(".{prefixCls}editor-table-create-only", prefixCls))
-                    .attr("disabled", "disabled");
+                    .attr('disabled', 'disabled');
                 d.thead.set('disabled', true);
             } else {
                 d.get("el").all(replacePrefix(".{prefixCls}editor-table-create-only", prefixCls))
-                    .removeAttr("disabled");
+                    .removeAttr('disabled');
                 d.thead.set('disabled', false);
             }
             if (self.selectedTd) {

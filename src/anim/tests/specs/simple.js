@@ -233,7 +233,7 @@ KISSY.add(function (S, Dom, Anim, Node) {
                     runs(function () {
                         expect(normalizeColor(Dom.css(test1, "borderTopColor")))
                             .not.toBe(initColor);
-                        expect(Dom.css(test1, "width")).not.toBe("10px");
+                        expect(Dom.css(test1, 'width')).not.toBe("10px");
                         expect(Dom.css(test1, "height")).not.toBe("20px");
                         expect(Dom.css(test1, "left")).not.toBe("120px");
                         expect(Dom.css(test1, "top")).not.toBe("20px");
@@ -243,7 +243,7 @@ KISSY.add(function (S, Dom, Anim, Node) {
                     runs(function () {
                         expect(normalizeColor(Dom.style(test1, "border-color")))
                             .toBe("#999999");
-                        expect(parseInt(Dom.css(test1, "width"))).toBeEqual(100);
+                        expect(parseInt(Dom.css(test1, 'width'))).toBeEqual(100);
                         expect(parseInt(Dom.css(test1, "height"))).toBeEqual(50);
                         expect(Dom.css(test1, "left")).toBe("900px");
                         expect(Dom.css(test1, "top")).toBe("285px");

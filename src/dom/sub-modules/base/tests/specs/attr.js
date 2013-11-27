@@ -240,12 +240,12 @@ KISSY.add(function (S, Dom) {
             });
 
             it("should handle disabled correctly", function () {
-                expect(Dom.attr(disabledTest, "disabled")).not.toBe(true);
-                Dom.attr(disabledTest, "disabled", true);
-                expect(Dom.attr(disabledTest, "disabled")).toBe("disabled");
-                expect(Dom.prop(disabledTest, "disabled")).toBe(true);
-                Dom.attr(disabledTest, "disabled", false);
-                expect(Dom.attr(disabledTest, "disabled")).not.toBe(true);
+                expect(Dom.attr(disabledTest, 'disabled')).not.toBe(true);
+                Dom.attr(disabledTest, 'disabled', true);
+                expect(Dom.attr(disabledTest, 'disabled')).toBe('disabled');
+                expect(Dom.prop(disabledTest, 'disabled')).toBe(true);
+                Dom.attr(disabledTest, 'disabled', false);
+                expect(Dom.attr(disabledTest, 'disabled')).not.toBe(true);
             });
 
             it("should set/get correctly even encounter same input name", function () {
@@ -290,7 +290,7 @@ KISSY.add(function (S, Dom) {
                 expect(Dom.attr(form, "action")).toBe("http://www.taobao.com");
                 expect(Dom.attr(form, "onsubmit")).toBe("return false;");
                 expect(Dom.attr(form, "name")).toBe("form_name");
-                expect(Dom.attr(form, "title")).toBe("form_title");
+                expect(Dom.attr(form, 'title')).toBe("form_title");
                 // prevent input shadow
                 expect(Dom.attr(form, "xx")).toBe("zz");
                 Dom.attr(form, "xx", "qq");

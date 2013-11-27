@@ -49,10 +49,10 @@ KISSY.add(function (S, require) {
 
         if (b.get("mode") == Editor.Mode.WYSIWYG_MODE) {
             self.on("wysiwygMode", function () {
-                b.set("disabled", false);
+                b.set('disabled', false);
             });
             self.on("sourceMode", function () {
-                b.set("disabled", true);
+                b.set('disabled', true);
             });
         }
 

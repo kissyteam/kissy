@@ -337,7 +337,7 @@ KISSY.add(function(S, require) {
   element: 'a', 
   attributes: {
   "href": "#(href)", 
-  "title": "#(title)", 
+  'title': "#(title)",
   "_ke_saved_href": "#(_ke_saved_href)", 
   target: "#(target)"}};
   _$jscoverage['/utils.js'].lineData[26]++;

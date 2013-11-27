@@ -66,7 +66,7 @@ KISSY.add(function (S, HtmlParser, UA) {
                                 }
                                 var title = el.getAttribute('o:title');
                                 if (title) {
-                                    el.setAttribute("title", title);
+                                    el.setAttribute('title', title);
                                     el.removeAttribute("o:title");
                                 }
                                 el.setTagName("img");

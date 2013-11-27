@@ -75,7 +75,7 @@
         });
 
         new Button({
-            content: "disabled",
+            content: 'disabled',
             disabled:true,
             describedby: "describe",
             render: "#button_container2"
@@ -85,16 +85,16 @@
 
         dis.on("click", function () {
             if (dis[0].checked) {
-                b.set("disabled", true);
+                b.set('disabled', true);
             } else {
-                b.set("disabled", false);
+                b.set('disabled', false);
             }
         });
 
         if (dis[0].checked) {
-            b.set("disabled", true);
+            b.set('disabled', true);
         } else {
-            b.set("disabled", false);
+            b.set('disabled', false);
         }
 
         var exist = new Button({

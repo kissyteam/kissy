@@ -18,30 +18,30 @@ KISSY.add(function (S,require) {
         isButton: 1,
 
         bindUI: function () {
-            this.$el.on("keyup", this.handleKeyDownInternal, this);
+            this.$el.on('keyup', this.handleKeyDownInternal, this);
         },
 
         handleKeyDownInternal: function (e) {
-            if (e.keyCode == KeyCode.ENTER &&
-                e.type == "keydown" ||
-                e.keyCode == KeyCode.SPACE &&
-                    e.type == "keyup") {
+            if (e.keyCode === KeyCode.ENTER &&
+                e.type === 'keydown' ||
+                e.keyCode === KeyCode.SPACE &&
+                    e.type === 'keyup') {
                 return this.handleClickInternal(e);
             }
             // Return true for space keypress (even though the event is handled on keyup)
             // as preventDefault needs to be called up keypress to take effect in IE and
             // WebKit.
-            return e.keyCode == KeyCode.SPACE;
+            return e.keyCode === KeyCode.SPACE;
         },
 
         handleClickInternal: function () {
             var self = this;
             self.callSuper();
-            if (self.get("checkable")) {
-                self.set("checked", !self.get("checked"));
+            if (self.get('checkable')) {
+                self.set('checked', !self.get('checked'));
             }
             // button 的默认行为就是触发 click
-            self.fire("click");
+            self.fire('click');
         }
     }, {
         ATTRS: {

@@ -36,12 +36,12 @@ KISSY.add(function (S,require) {
 
             overlay.render();
 
-            overlay.get("contentEl").delegate(Gesture.tap, ".J_Start", function () {
+            overlay.get('contentEl').delegate(Gesture.tap, ".J_Start", function () {
                 overlay.hide();
                 self.reset();
             });
 
-            overlay.get("contentEl").delegate(Gesture.tap, ".J_Cancel", function () {
+            overlay.get('contentEl').delegate(Gesture.tap, ".J_Cancel", function () {
                 overlay.hide();
                 self.fire("quit");
             });
@@ -145,7 +145,7 @@ KISSY.add(function (S,require) {
         start: function () {
             var self = this,
                 overlay = self.get("overlay"),
-                el = overlay.get("contentEl");
+                el = overlay.get('contentEl');
 
             el.html('<div class="bd">刮一刮图层，可以刮出红包</div><div class="ft"><button class="ok J_Start">开始刮奖</button></div>');
             overlay.show();
@@ -154,7 +154,7 @@ KISSY.add(function (S,require) {
         getPuzzle: function () {
             var self = this,
                 overlay = self.get("overlay"),
-                el = overlay.get("contentEl");
+                el = overlay.get('contentEl');
 
             el.html('<div class="bd"><p>很遗憾，没有刮到红包 :(</p><p>' + self.failTxt() + '</p><p class="fail"></p></div><div class="ft"><button class="cancel J_Cancel">不玩了</button><button class="ok J_Start">刮下一张</button></div>');
             overlay.show();

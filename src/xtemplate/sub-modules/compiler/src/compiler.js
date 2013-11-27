@@ -63,14 +63,16 @@ KISSY.add(function (S, require) {
                     'moduleWrap, ' +
                     'utils = config.utils;');
 
-                source.push('if (typeof module!="undefined" && module.kissy) {moduleWrap = module;}');
+                source.push('if (typeof module !== "undefined" && module.kissy) {' +
+                    'moduleWrap = module;' +
+                    '}');
 
                 var natives = '',
                     c,
                     utils = XTemplateRuntime.utils;
 
                 for (c in utils) {
-                    natives += c + 'Util = utils["' + c + '"],';
+                    natives += c + 'Util = utils.' + c + ',';
                 }
 
                 if (natives) {

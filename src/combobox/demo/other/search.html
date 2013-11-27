@@ -673,7 +673,7 @@ li {
             basicComboBox.on("afterCollapsedChange", function (e) {
                 var self = this;
                 if (!e.newVal) {
-                    var menu = self.get("menu");
+                    var menu = self.get('menu');
                     var menuEl = menu.get("el"), footer;
                     if (!(footer = menuEl.one(".search-combobox-menu-footer"))) {
                         footer = new S.Node("<div class='search-combobox-menu-footer'></div>").appendTo(menuEl);
@@ -682,7 +682,7 @@ li {
                         footer.append(html);
                     }
                     footer.one(".tdg-input")
-                            .val(basicComboBox.get("input").val())
+                            .val(basicComboBox.get('input').val())
                 }
             });
 

@@ -80,7 +80,7 @@
 
         basicComboBox.render();
 
-        var basicComboBoxEl = basicComboBox.get("input");
+        var basicComboBoxEl = basicComboBox.get('input');
 
         basicComboBoxEl.on("keyup", function () {
             // scrollHeight will always grow in chrome
@@ -91,7 +91,7 @@
         basicComboBox.on("click", function (e) {
             var item = e.target;
             S.log(item.get("value") + "\n" + item.get("content") +
-                    "\n" + item.get("textContent"));
+                    "\n" + item.get('textContent'));
         });
 
     });

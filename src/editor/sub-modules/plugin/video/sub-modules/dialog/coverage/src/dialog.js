@@ -571,7 +571,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/dialog.js'].lineData[201]++;
     self.dMargin.val(visit13_201_1(parseInt(r.style("margin")) || 0));
     _$jscoverage['/dialog.js'].lineData[202]++;
-    Editor.Utils.valInput(self.dWidth, parseInt(f.css("width")));
+    Editor.Utils.valInput(self.dWidth, parseInt(f.css('width')));
     _$jscoverage['/dialog.js'].lineData[203]++;
     Editor.Utils.valInput(self.dHeight, parseInt(f.css("height")));
   } else {

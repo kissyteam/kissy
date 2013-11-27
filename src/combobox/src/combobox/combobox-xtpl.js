@@ -1,16 +1,17 @@
 /** Compiled By kissy-xtemplate */
 KISSY.add(function (S, require, exports, module) {
+        /*jshint quotmark: false*/
         return function (scopes, S, undefined) {
             var buffer = "",
                 config = this.config,
                 engine = this,
                 moduleWrap, utils = config.utils;
-            if (typeof module != "undefined" && module.kissy) {
+            if (typeof module !== "undefined" && module.kissy) {
                 moduleWrap = module;
             }
-            var runBlockCommandUtil = utils["runBlockCommand"],
-                getExpressionUtil = utils["getExpression"],
-                getPropertyOrRunCommandUtil = utils["getPropertyOrRunCommand"];
+            var runBlockCommandUtil = utils.runBlockCommand,
+                getExpressionUtil = utils.getExpression,
+                getPropertyOrRunCommandUtil = utils.getPropertyOrRunCommand;
             buffer += '<div id="ks-combobox-invalid-el-';
             var id0 = getPropertyOrRunCommandUtil(engine, scopes, {}, "id", 0, 1, undefined, false);
             buffer += getExpressionUtil(id0, true);
@@ -70,7 +71,7 @@ KISSY.add(function (S, require, exports, module) {
             buffer += '"\n           aria-haspopup="true"\n           aria-autocomplete="list"\n           aria-haspopup="true"\n           role="autocomplete"\n           aria-expanded="false"\n\n    ';
             var config21 = {};
             var params22 = [];
-            var id23 = getPropertyOrRunCommandUtil(engine, scopes, {}, "disabled", 0, 22, undefined, true);
+            var id23 = getPropertyOrRunCommandUtil(engine, scopes, {}, 'disabled', 0, 22, undefined, true);
             params22.push(id23);
             config21.params = params22;
             config21.fn = function (scopes) {
@@ -124,5 +125,5 @@ KISSY.add(function (S, require, exports, module) {
             buffer += getExpressionUtil(id36, true);
             buffer += '\n    </label>\n</div>\n';
             return buffer;
-        }
+        };
 });

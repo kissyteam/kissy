@@ -13,7 +13,7 @@ KISSY.add(function (S, require) {
         "clientId",
         "urlRoot",
         "url",
-        "parse",
+        'parse',
         "sync"
     ];
 
@@ -98,7 +98,7 @@ KISSY.add(function (S, require) {
             opts.success = function (resp) {
                 var lists = self.getCollections();
                 if (resp) {
-                    var v = self.get("parse").call(self, resp);
+                    var v = self.get('parse').call(self, resp);
                     if (v) {
                         self.set(v, opts);
                     }
@@ -138,7 +138,7 @@ KISSY.add(function (S, require) {
              */
             opts.success = function (resp) {
                 if (resp) {
-                    var v = self.get("parse").call(self, resp);
+                    var v = self.get('parse').call(self, resp);
                     if (v) {
                         self.set(v, opts);
                     }
@@ -167,7 +167,7 @@ KISSY.add(function (S, require) {
              */
             opts.success = function (resp) {
                 if (resp) {
-                    var v = self.get("parse").call(self, resp);
+                    var v = self.get('parse').call(self, resp);
                     if (v) {
                         self.set(v, opts);
                     }

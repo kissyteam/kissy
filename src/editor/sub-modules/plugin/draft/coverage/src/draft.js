@@ -498,7 +498,7 @@ function visit17_218_1(result) {
 function visit16_204_1(result) {
   _$jscoverage['/draft.js'].branchData['204'][1].ranCondition(result);
   return result;
-}_$jscoverage['/draft.js'].branchData['197'][1].init(62, 47, 'self.helpPopup && self.helpPopup.get("visible")');
+}_$jscoverage['/draft.js'].branchData['197'][1].init(62, 47, 'self.helpPopup && self.helpPopup.get('visible')');
 function visit15_197_1(result) {
   _$jscoverage['/draft.js'].branchData['197'][1].ranCondition(result);
   return result;
@@ -746,7 +746,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/draft.js'].lineData[196]++;
   help[0].focus();
   _$jscoverage['/draft.js'].lineData[197]++;
-  if (visit15_197_1(self.helpPopup && self.helpPopup.get("visible"))) {
+  if (visit15_197_1(self.helpPopup && self.helpPopup.get('visible'))) {
     _$jscoverage['/draft.js'].lineData[198]++;
     self.helpPopup.hide();
   } else {

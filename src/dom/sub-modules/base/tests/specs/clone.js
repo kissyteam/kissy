@@ -84,11 +84,11 @@ KISSY.add(function (S, Dom, Event) {
                 var el = Dom.create(flash);
                 Dom.append(el, "body");
                 expect(Dom.attr(el.firstChild, "value")).toBe("transparent");
-                expect(Dom.attr(el, "data"))
+                expect(Dom.attr(el, 'data'))
                     .toBe("http://img01.taobaocdn.com/tps/i1/T12MVIXfVNXXXXXXXX.swf");
                 var cloned = Dom.clone(el, true);
                 expect(Dom.attr(cloned.firstChild, "value")).toBe("transparent");
-                expect(Dom.attr(cloned, "data"))
+                expect(Dom.attr(cloned, 'data'))
                     .toBe("http://img01.taobaocdn.com/tps/i1/T12MVIXfVNXXXXXXXX.swf");
                 Dom.remove(el);
             });

@@ -3,7 +3,7 @@
  * @author yiminghe@gmail.com
  * @ignore
  */
-KISSY.add(function (S,require) {
+KISSY.add(function (S, require) {
     var Dom = require('dom');
     var Event = require('event/dom');
     var AnimBase = require('./base');
@@ -31,7 +31,7 @@ KISSY.add(function (S,require) {
         return str;
     }
 
-    function TransitionAnim(config) {
+    function TransitionAnim() {
         TransitionAnim.superclass.constructor.apply(this, arguments);
     }
 
@@ -44,7 +44,7 @@ KISSY.add(function (S,require) {
                 original = elStyle[TRANSITION],
                 transform,
                 propsCss = {};
-            if (transform = _propsData.transform) {
+            if ((transform = _propsData.transform)) {
                 delete _propsData.transform;
                 _propsData[Features.getTransformProperty()
                     .replace(R_UPPER, '-$1').toLowerCase()] = transform;
@@ -52,10 +52,10 @@ KISSY.add(function (S,require) {
             S.each(_propsData, function (propData, prop) {
                 var v = propData.value,
                     currentValue = Dom.css(node, prop);
-                if (typeof v == 'number') {
+                if (typeof v === 'number') {
                     currentValue = parseFloat(currentValue);
                 }
-                if (currentValue == v) {
+                if (currentValue === v) {
                     // browser does not trigger _onTransitionEnd if from is same with to
                     setTimeout(function () {
                         self._onTransitionEnd({
@@ -69,7 +69,7 @@ KISSY.add(function (S,require) {
             });
             // chrome none
             // firefox none 0s ease 0s
-            if (original.indexOf('none') != -1) {
+            if (original.indexOf('none') !== -1) {
                 original = '';
             } else if (original) {
                 original += ',';

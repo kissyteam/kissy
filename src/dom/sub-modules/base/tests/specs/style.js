@@ -194,7 +194,7 @@ KISSY.add(function (S, Dom) {
             var elem = Dom.create("<div class='addStyleSheet'>12</div>");
             document.body.appendChild(elem);
             Dom.addStyleSheet(".addStyleSheet {width:100px}");
-            expect(Dom.css(elem, "width")).toBe("100px");
+            expect(Dom.css(elem, 'width')).toBe("100px");
             Dom.remove(elem);
         });
 

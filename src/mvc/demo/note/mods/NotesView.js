@@ -28,11 +28,11 @@ KISSY.add(function(S, Node, mvc, Template, NoteView) {
              */
             notes.on("*Change", function(e) {
                 if (e.target != self) {
-                    statistic.html(e.target.get("title"));
+                    statistic.html(e.target.get('title'));
                 }
             });
             notes.on("add remove", function(e) {
-                statistic.html(e.model.get("title"));
+                statistic.html(e.model.get('title'));
             });
 
             /**

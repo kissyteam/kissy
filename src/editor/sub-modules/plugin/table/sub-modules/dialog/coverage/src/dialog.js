@@ -523,7 +523,7 @@ function visit46_429_1(result) {
 function visit45_423_1(result) {
   _$jscoverage['/dialog.js'].branchData['423'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['416'][1].init(538, 76, 'selectedTable.style("width") || ("" + selectedTable.width())');
+}_$jscoverage['/dialog.js'].branchData['416'][1].init(538, 76, 'selectedTable.style('width') || ("" + selectedTable.width())');
 function visit44_416_1(result) {
   _$jscoverage['/dialog.js'].branchData['416'][1].ranCondition(result);
   return result;
@@ -807,7 +807,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/dialog.js'].lineData[231]++;
   visit4_231_1(ev && ev.halt());
   _$jscoverage['/dialog.js'].lineData[232]++;
-  var self = this, tableDialog = self.dialog, inputs = tableDialog.get("el").all("input");
+  var self = this, tableDialog = self.dialog, inputs = tableDialog.get("el").all('input');
   _$jscoverage['/dialog.js'].lineData[236]++;
   if (visit5_236_1(tableDialog.twidthunit.get("value") == "%")) {
     _$jscoverage['/dialog.js'].lineData[237]++;
@@ -871,10 +871,10 @@ KISSY.add(function(S, require) {
   _$jscoverage['/dialog.js'].lineData[283]++;
   if (visit16_283_1(valid(d.twidth.val()))) {
     _$jscoverage['/dialog.js'].lineData[284]++;
-    selectedTable.css("width", trim(d.twidth.val()) + d.twidthunit.get("value"));
+    selectedTable.css('width', trim(d.twidth.val()) + d.twidthunit.get("value"));
   } else {
     _$jscoverage['/dialog.js'].lineData[287]++;
-    selectedTable.css("width", "");
+    selectedTable.css('width', "");
   }
   _$jscoverage['/dialog.js'].lineData[288]++;
   if (visit17_288_1(valid(d.theight.val()))) {
@@ -1029,7 +1029,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/dialog.js'].lineData[414]++;
   d.tborder.val(visit43_414_1(selectedTable.attr("border") || "0"));
   _$jscoverage['/dialog.js'].lineData[416]++;
-  var w = visit44_416_1(selectedTable.style("width") || ("" + selectedTable.width()));
+  var w = visit44_416_1(selectedTable.style('width') || ("" + selectedTable.width()));
   _$jscoverage['/dialog.js'].lineData[419]++;
   d.tcollapse[0].checked = selectedTable.hasClass(collapseTableClass, undefined);
   _$jscoverage['/dialog.js'].lineData[422]++;
@@ -1071,12 +1071,12 @@ KISSY.add(function(S, require) {
     _$jscoverage['/dialog.js'].lineData[451]++;
     self._fillTableDialog();
     _$jscoverage['/dialog.js'].lineData[454]++;
-    d.get("el").all(replacePrefix(".{prefixCls}editor-table-create-only", prefixCls)).attr("disabled", "disabled");
+    d.get("el").all(replacePrefix(".{prefixCls}editor-table-create-only", prefixCls)).attr('disabled', 'disabled');
     _$jscoverage['/dialog.js'].lineData[455]++;
     d.thead.set('disabled', true);
   } else {
     _$jscoverage['/dialog.js'].lineData[458]++;
-    d.get("el").all(replacePrefix(".{prefixCls}editor-table-create-only", prefixCls)).removeAttr("disabled");
+    d.get("el").all(replacePrefix(".{prefixCls}editor-table-create-only", prefixCls)).removeAttr('disabled');
     _$jscoverage['/dialog.js'].lineData[459]++;
     d.thead.set('disabled', false);
   }

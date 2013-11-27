@@ -4,8 +4,7 @@
  * @ignore
  */
 KISSY.add(function (S,require) {
-    var undefined = undefined,
-        Q = require('./queue'),
+    var Q = require('./queue'),
         Dom = require('dom');
     var runningKey = S.guid('ks-anim-unqueued-' + S.now() + '-');
 
@@ -70,13 +69,13 @@ KISSY.add(function (S,require) {
     }
 
     function pauseOrResumeQueue(node, queue, action) {
-        var allAnims = Dom.data(node, action == 'resume' ? pausedKey : runningKey),
+        var allAnims = Dom.data(node, action === 'resume' ? pausedKey : runningKey),
         // can not stop in for/in , stop will modified allRunning too
             anims = S.merge(allAnims);
 
         S.each(anims, function (anim) {
             if (queue === undefined ||
-                anim.config.queue == queue) {
+                anim.config.queue === queue) {
                 anim[action]();
             }
         });
@@ -112,10 +111,10 @@ KISSY.add(function (S,require) {
             // can not stop in for/in , stop will modified allRunning too
                 anims = S.merge(allRunning);
             S.each(anims, function (anim) {
-                if (queue === undefined || anim.config.queue == queue) {
+                if (queue === undefined || anim.config.queue === queue) {
                     anim.stop(end);
                 }
             });
         }
-    }
+    };
 });

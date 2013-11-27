@@ -3,7 +3,7 @@
  * KISSY Class System
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S,require) {
+KISSY.add(function (S, require) {
     var Attribute = require('attribute');
 
     var ucfirst = S.ucfirst,
@@ -20,6 +20,7 @@ KISSY.add(function (S,require) {
                     self.callSuper.apply(self, arguments);
                 }
                 // can not use wrap in old ie
+                /*jshint noarg: false*/
                 var extensions = arguments.callee.__owner__.__extensions__ || [];
                 if (reverse) {
                     extensions.reverse();
@@ -31,9 +32,10 @@ KISSY.add(function (S,require) {
                     origFn.apply(self, arguments);
                 }
             };
-        }
+        };
     }
 
+    //noinspection JSValidateJSDoc
     /**
      * @class KISSY.Base
      * @mixins KISSY.Attribute
@@ -49,7 +51,7 @@ KISSY.add(function (S,require) {
             var self = this;
             self.callSuper.apply(self, arguments);
             // setup listeners
-            var listeners = self.get("listeners");
+            var listeners = self.get('listeners');
             for (var n in listeners) {
                 self.on(n, listeners[n]);
             }
@@ -77,7 +79,7 @@ KISSY.add(function (S,require) {
          */
         bindInternal: function () {
             var self = this,
-                attrs = self['getAttrs'](),
+                attrs = self.getAttrs(),
                 attr, m;
 
             for (attr in attrs) {
@@ -136,11 +138,14 @@ KISSY.add(function (S,require) {
         'plug': function (plugin) {
             var self = this;
             if (typeof plugin === 'function') {
-                plugin = new plugin();
+                var Plugin = plugin;
+                plugin = new Plugin();
             }
             // initialize plugin
-            if (plugin['pluginInitializer']) {
-                plugin['pluginInitializer'](self);
+            //noinspection JSUnresolvedVariable
+            if (plugin.pluginInitializer) {
+                // noinspection JSUnresolvedFunction
+                plugin.pluginInitializer(self);
             }
             self.get('plugins').push(plugin);
             return self;
@@ -155,7 +160,7 @@ KISSY.add(function (S,require) {
         'unplug': function (plugin) {
             var plugins = [],
                 self = this,
-                isString = typeof plugin == 'string';
+                isString = typeof plugin === 'string';
 
             S.each(self.get('plugins'), function (p) {
                 var keep = 0, pluginId;
@@ -163,12 +168,12 @@ KISSY.add(function (S,require) {
                     if (isString) {
                         // user defined takes priority
                         pluginId = p.get && p.get('pluginId') || p.pluginId;
-                        if (pluginId != plugin) {
+                        if (pluginId !== plugin) {
                             plugins.push(p);
                             keep = 1;
                         }
                     } else {
-                        if (p != plugin) {
+                        if (p !== plugin) {
                             plugins.push(p);
                             keep = 1;
                         }
@@ -194,7 +199,7 @@ KISSY.add(function (S,require) {
             S.each(this.get('plugins'), function (p) {
                 // user defined takes priority
                 var pluginId = p.get && p.get('pluginId') || p.pluginId;
-                if (pluginId == id) {
+                if (pluginId === id) {
                     plugin = p;
                     return false;
                 }
@@ -306,7 +311,7 @@ KISSY.add(function (S,require) {
                     prototype = {};
                 // [ex1,ex2]，扩展类后面的优先，ex2 定义的覆盖 ex1 定义的
                 // 主类最优先
-                S.each(extensions['concat'](SubClass), function (ext) {
+                S.each(extensions.concat(SubClass), function (ext) {
                     if (ext) {
                         // 合并 ATTRS 到主类
                         // 不覆盖主类上的定义(主类位于 constructors 最后)
@@ -390,17 +395,18 @@ KISSY.add(function (S,require) {
         var self = this,
             method;
         // ignore bubbling
-        if (e.target == self) {
+        if (e.target === self) {
             method = self[ON_SET + e.type.slice(5).slice(0, -6)];
             method.call(self, e.newVal, e);
         }
     }
 
     function constructPlugins(self) {
-        var plugins = self.get('plugins');
+        var plugins = self.get('plugins'), Plugin;
         S.each(plugins, function (plugin, i) {
             if (typeof plugin === 'function') {
-                plugins[i] = new plugin();
+                Plugin = plugin;
+                plugins[i] = new Plugin();
             }
         });
     }
@@ -409,16 +415,18 @@ KISSY.add(function (S,require) {
         var len,
             self = this,
             plugins = self.get('plugins');
-        if (len = plugins.length) {
+        if ((len = plugins.length)) {
             for (var i = 0; i < len; i++) {
-                plugins[i][method] && plugins[i][method](self);
+                if (plugins[i][method]) {
+                    plugins[i][method](self);
+                }
             }
         }
     }
 
     function callExtensionsMethod(self, extensions, method, args) {
         var len;
-        if (len = extensions && extensions.length) {
+        if ((len = extensions && extensions.length)) {
             for (var i = 0; i < len; i++) {
                 var fn = extensions[i] && (
                     !method ?

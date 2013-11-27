@@ -16,8 +16,8 @@ KISSY.add(function (S, require) {
         //ie6 ,object outHTML error
         createFakeElement: function (realElement, className, realElementType, isResizable, outerHTML, attrs) {
             var style = realElement.attr("style") || '';
-            if (realElement.attr("width")) {
-                style = "width:" + realElement.attr("width") + "px;" + style;
+            if (realElement.attr('width')) {
+                style = "width:" + realElement.attr('width') + "px;" + style;
             }
             if (realElement.attr("height")) {
                 style = "height:" + realElement.attr("height") + "px;" + style;
@@ -90,7 +90,7 @@ KISSY.add(function (S, require) {
                         var height = match && match[1];
 
                         if (width) {
-                            realElement.setAttribute("width", width);
+                            realElement.setAttribute('width', width);
                         }
                         if (height) {
                             realElement.setAttribute("height", height);
@@ -135,8 +135,8 @@ KISSY.add(function (S, require) {
                 createFakeParserElement: function (realElement, className, realElementType, isResizable, attrs) {
                     var html = HtmlParser.serialize(realElement);
                     var style = realElement.getAttribute("style") || '';
-                    if (realElement.getAttribute("width")) {
-                        style = "width:" + realElement.getAttribute("width") + "px;" + style;
+                    if (realElement.getAttribute('width')) {
+                        style = "width:" + realElement.getAttribute('width') + "px;" + style;
                     }
                     if (realElement.getAttribute("height")) {
                         style = "height:" + realElement.getAttribute("height") + "px;" + style;

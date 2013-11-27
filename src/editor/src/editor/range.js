@@ -47,7 +47,7 @@ KISSY.add(function (S,require) {
         EMPTY = {
             "area": 1, "base": 1, "br": 1,
             "col": 1, "hr": 1, "img": 1,
-            "input": 1, "link": 1, "meta": 1,
+            'input': 1, "link": 1, "meta": 1,
             "param": 1
         };
 

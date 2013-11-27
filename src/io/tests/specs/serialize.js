@@ -38,9 +38,9 @@ KISSY.add(function (S, Node, io) {
 
             expect(ret).toBe("a=1&b=2&c=3&d=4&e=5");
 
-            expect(io.serialize(form.all("input"))).toBe("a=1&b=2&c=3");
+            expect(io.serialize(form.all('input'))).toBe("a=1&b=2&c=3");
 
-            expect(io.serialize(form.all("input"), true)).toBe("a=1&b=2&c=3");
+            expect(io.serialize(form.all('input'), true)).toBe("a=1&b=2&c=3");
 
             form.remove();
         });

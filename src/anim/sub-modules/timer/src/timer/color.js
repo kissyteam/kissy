@@ -28,9 +28,9 @@ KISSY.add(function (S,require) {
             'teal': [0, 128, 128],
             'aqua': [0, 255, 255]
         },
-        re_RGB = /^rgb\(([0-9]+)\s*,\s*([0-9]+)\s*,\s*([0-9]+)\)$/i,
-        re_RGBA = /^rgba\(([0-9]+)\s*,\s*([0-9]+)\s*,\s*([0-9]+),\s*([0-9]+)\)$/i,
-        re_hex = /^#?([0-9A-F]{1,2})([0-9A-F]{1,2})([0-9A-F]{1,2})$/i,
+        RE_RGB = /^rgb\(([0-9]+)\s*,\s*([0-9]+)\s*,\s*([0-9]+)\)$/i,
+        RE_RGBA = /^rgba\(([0-9]+)\s*,\s*([0-9]+)\s*,\s*([0-9]+),\s*([0-9]+)\)$/i,
+        RE_HEX = /^#?([0-9A-F]{1,2})([0-9A-F]{1,2})([0-9A-F]{1,2})$/i,
 
         COLORS = [
             'backgroundColor' ,
@@ -42,35 +42,35 @@ KISSY.add(function (S,require) {
             'outlineColor'
         ];
 
-    SHORT_HANDS['background'].push('backgroundColor');
+    SHORT_HANDS.background.push('backgroundColor');
 
-    SHORT_HANDS['borderColor'] = [
+    SHORT_HANDS.borderColor = [
         'borderBottomColor',
         'borderLeftColor',
         'borderRightColor',
         'borderTopColor'
     ];
 
-    SHORT_HANDS['border'].push(
+    SHORT_HANDS.border.push(
         'borderBottomColor',
         'borderLeftColor',
         'borderRightColor',
         'borderTopColor'
     );
 
-    SHORT_HANDS['borderBottom'].push(
+    SHORT_HANDS.borderBottom.push(
         'borderBottomColor'
     );
 
-    SHORT_HANDS['borderLeft'].push(
+    SHORT_HANDS.borderLeft.push(
         'borderLeftColor'
     );
 
-    SHORT_HANDS['borderRight'].push(
+    SHORT_HANDS.borderRight.push(
         'borderRightColor'
     );
 
-    SHORT_HANDS['borderTop'].push(
+    SHORT_HANDS.borderTop.push(
         'borderTopColor'
     );
 
@@ -78,14 +78,14 @@ KISSY.add(function (S,require) {
     function numericColor(val) {
         val = (val + '');
         var match;
-        if (match = val.match(re_RGB)) {
+        if ((match = val.match(RE_RGB))) {
             return [
                 parseInt(match[1]),
                 parseInt(match[2]),
                 parseInt(match[3])
             ];
         }
-        else if (match = val.match(re_RGBA)) {
+        else if ((match = val.match(RE_RGBA))) {
             return [
                 parseInt(match[1]),
                 parseInt(match[2]),
@@ -93,7 +93,7 @@ KISSY.add(function (S,require) {
                 parseInt(match[4])
             ];
         }
-        else if (match = val.match(re_hex)) {
+        else if ((match = val.match(RE_HEX))) {
             for (var i = 1; i < match.length; i++) {
                 if (match[i].length < 2) {
                     match[i] += match[i];
@@ -132,13 +132,13 @@ KISSY.add(function (S,require) {
 
         interpolate: function (from, to, pos) {
             var interpolate = ColorFx.superclass.interpolate;
-            if (from.length == 3 && to.length == 3) {
+            if (from.length === 3 && to.length === 3) {
                 return 'rgb(' + [
                     floor(interpolate(from[0], to[0], pos)),
                     floor(interpolate(from[1], to[1], pos)),
                     floor(interpolate(from[2], to[2], pos))
                 ].join(', ') + ')';
-            } else if (from.length == 4 || to.length == 4) {
+            } else if (from.length === 4 || to.length === 4) {
                 return 'rgba(' + [
                     floor(interpolate(from[0], to[0], pos)),
                     floor(interpolate(from[1], to[1], pos)),

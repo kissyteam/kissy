@@ -5,9 +5,9 @@ KISSY.add(function (S, UA, Node, Overlay) {
                 content:"haha"
             });
             overlay.create();
-            overlay.set("visible", false);
+            overlay.set('visible', false);
             overlay.render();
-            expect(overlay.get("visible")).toBe(false);
+            expect(overlay.get('visible')).toBe(false);
             expect(overlay.get("el").css('visibility')).toBe("hidden");
             overlay.destroy();
         });
@@ -19,7 +19,7 @@ KISSY.add(function (S, UA, Node, Overlay) {
             overlay.create();
             overlay.hide();
             overlay.show();
-            expect(overlay.get("visible")).toBe(true);
+            expect(overlay.get('visible')).toBe(true);
             expect(overlay.get("el").css('visibility')).not.toBe('hidden');
             overlay.destroy();
         });

@@ -27,6 +27,18 @@
         <format property="timestamp.isoformat" pattern="yyyyMMddHHmmss" locale="en"/>
     </tstamp>
 
+    <target name="jshint" depends="check-src">
+        <ac:if>
+            <ac:isset property="component.src.dir.exists"/>
+            <ac:then>
+                <exec executable="node" failonerror="true">
+                    <arg value="${kissy.dir}/node_modules/jshint/bin/jshint"/>
+                    <arg value="${component.src.dir}"/>
+                </exec>
+            </ac:then>
+        </ac:if>
+    </target>
+
     <target name="check-src">
         <condition property="component.src.dir.exists">
             <available file="${component.src.dir}" type="dir"/>
@@ -312,12 +324,19 @@
     </target>
 
     <target name="build" depends="
-    create-build.dir, tpl2mod,
+    create-build.dir,
+    tpl2mod,
+    jshint,
     js-cover-gen,
-    before-concat,concat,concat-css,
+    before-concat,
+    concat,concat-css,
     prepare,
-    compress-js,compress-css,native2ascii,
-    copyright,fill-var,fix-cr-lf,
+    compress-js,
+    compress-css,
+    native2ascii,
+    copyright,
+    fill-var,
+    fix-cr-lf,
     clear">
     </target>
 

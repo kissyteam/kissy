@@ -21,9 +21,9 @@ KISSY.add(function (S, require) {
                 var index = ev.index;
                 //有状态可后退
                 if (index > 0) {
-                    self.set("disabled", self.__lock = false);
+                    self.set('disabled', self.__lock = false);
                 } else {
-                    self.set("disabled", self.__lock = true);
+                    self.set('disabled', self.__lock = true);
                 }
             });
         }
@@ -62,9 +62,9 @@ KISSY.add(function (S, require) {
                     index = ev.index;
                 //有状态可前进
                 if (index < history.length - 1) {
-                    self.set("disabled", self.__lock = false);
+                    self.set('disabled', self.__lock = false);
                 } else {
-                    self.set("disabled", self.__lock = true);
+                    self.set('disabled', self.__lock = true);
                 }
             });
         }

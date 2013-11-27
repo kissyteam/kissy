@@ -16,8 +16,8 @@ KISSY.add(function (S) {
 
     // http://bugs.jquery.com/ticket/9381
     if (0) {
-        requestAnimationFrameFn = win['requestAnimationFrame'];
-        cancelAnimationFrameFn = win['cancelAnimationFrame'];
+        requestAnimationFrameFn = win.requestAnimationFrame;
+        cancelAnimationFrameFn = win.cancelAnimationFrame;
         var vendors = ['ms', 'moz', 'webkit', 'o'];
         for (var x = 0; x < vendors.length && !requestAnimationFrameFn; ++x) {
             requestAnimationFrameFn = win[vendors[x] + 'RequestAnimationFrame'];

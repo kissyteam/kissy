@@ -3,7 +3,7 @@
  * animate on single property
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S,require) {
+KISSY.add(function (S, require) {
     var logger = S.getLogger('s/aim/timer/fx');
     var Dom = require('dom');
 
@@ -81,7 +81,7 @@ KISSY.add(function (S,require) {
                     val += self.unit;
                 }
                 self.val = val;
-                if (self.type == 'attr') {
+                if (self.type === 'attr') {
                     Dom.attr(node, prop, val, 1);
                 } else {
                     Dom.css(node, prop, val);
@@ -125,7 +125,7 @@ KISSY.add(function (S,require) {
             if (!(type = self.type)) {
                 type = self.type = isAttr(node, prop) ? 'attr' : 'css';
             }
-            if (type == 'attr') {
+            if (type === 'attr') {
                 r = Dom.attr(node, prop, undefined, 1);
             } else {
                 r = Dom.css(node, prop);
@@ -171,11 +171,11 @@ KISSY.add(function (S,require) {
         var Constructor = Fx,
             fxType,
             SubClass;
-        if (fxType = cfg.fxType) {
+        if ((fxType = cfg.fxType)) {
             Constructor = Fx.FxTypes[fxType];
         }
         else if (!cfg.isCustomFx && (SubClass = Fx.Factories[cfg.prop])) {
-            Constructor = SubClass
+            Constructor = SubClass;
         }
         return new Constructor(cfg);
     };

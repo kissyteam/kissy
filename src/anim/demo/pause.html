@@ -32,14 +32,14 @@
         check();
         $("#start").on("click", function () {
             startTime = S.now();
-            $("#start").prop("disabled", true);
+            $("#start").prop('disabled', true);
             t.animate({
                 width:10,
                 height:10
             }, {
                 duration:5,
                 complete:function () {
-                    $("#start").prop("disabled", false);
+                    $("#start").prop('disabled', false);
                     alert(S.now() - startTime - pauseTime);
                     t.css({
                         width:100,
@@ -52,7 +52,7 @@
         });
 
         $("#stop").on("click", function () {
-            $("#start").prop("disabled", false);
+            $("#start").prop('disabled', false);
             t.stop();
             check();
         });
@@ -70,8 +70,8 @@
         });
 
         function check() {
-            $("#resume").prop("disabled", !t.isPaused());
-            $("#pause").prop("disabled", !t.isRunning());
+            $("#resume").prop('disabled', !t.isPaused());
+            $("#pause").prop('disabled', !t.isRunning());
         }
     });
 </script>

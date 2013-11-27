@@ -194,7 +194,7 @@ KISSY.add(function (S, require) {
 
                 help.on("click", function () {
                     help[0].focus();
-                    if (self.helpPopup && self.helpPopup.get("visible")) {
+                    if (self.helpPopup && self.helpPopup.get('visible')) {
                         self.helpPopup.hide();
                     } else {
                         self._prepareHelp();

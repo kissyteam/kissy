@@ -81,7 +81,7 @@ KISSY.add(function (S,require) {
     }
 
     function getTransformInfo(transform) {
-        transform = transform.split(")");
+        transform = transform.split(')');
         var trim = S.trim,
             i = -1,
             l = transform.length - 1,
@@ -90,12 +90,12 @@ KISSY.add(function (S,require) {
 
         // Loop through the transform properties, parse and multiply them
         while (++i < l) {
-            split = transform[i].split("(");
+            split = transform[i].split('(');
             prop = trim(split[0]);
             val = split[1];
             switch (prop) {
-                case "translateX":
-                case "translateY":
+                case 'translateX':
+                case 'translateY':
                 case 'scaleX':
                 case 'scaleY':
                     ret[prop] = myParse(val);
@@ -113,20 +113,19 @@ KISSY.add(function (S,require) {
 
                 case 'translate':
                 case 'translate3d':
-                    val = val.split(",");
+                    val = val.split(',');
                     ret.translateX = myParse(val[0]);
                     ret.translateY = myParse(val[1] || 0);
                     break;
 
                 case 'scale':
-                    val = val.split(",");
+                    val = val.split(',');
                     ret.scaleX = myParse(val[0]);
                     ret.scaleY = myParse(val[1] || val[0]);
                     break;
 
                 case 'matrix':
                     return decomposeMatrix(val);
-                    break;
             }
         }
 
@@ -143,7 +142,7 @@ KISSY.add(function (S,require) {
             TransformFx.superclass.load.apply(self, arguments);
             // user value has priority over computed value
             self.from = Dom.style(self.anim.node, 'transform') || self.from;
-            if (self.from && self.from != 'none') {
+            if (self.from && self.from !== 'none') {
                 self.from = getTransformInfo(self.from);
             } else {
                 self.from = defaultDecompose();

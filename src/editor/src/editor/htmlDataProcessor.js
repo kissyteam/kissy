@@ -101,13 +101,13 @@ KISSY.add(function (S, require) {
                             // If the <embed> is child of a <object>, copy the width
                             // and height attributes from it.
                             if (parent && parent.nodeName == 'object') {
-                                var parentWidth = parent.getAttribute("width"),
+                                var parentWidth = parent.getAttribute('width'),
                                     parentHeight = parent.getAttribute("height");
                                 if (parentWidth) {
-                                    element.setAttribute("width", parentWidth);
+                                    element.setAttribute('width', parentWidth);
                                 }
                                 if (parentHeight) {
-                                    element.setAttribute("width", parentHeight);
+                                    element.setAttribute('width', parentHeight);
                                 }
                             }
                         },

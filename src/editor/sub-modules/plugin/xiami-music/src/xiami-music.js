@@ -23,7 +23,7 @@ KISSY.add(function (S, require) {
                 editor = self.get("editor"),
                 r = editor.restoreRealElement(selectedFlash);
             if (r) {
-                tipUrlEl.html(selectedFlash.attr("title"));
+                tipUrlEl.html(selectedFlash.attr('title'));
                 tipUrlEl.attr("href", self._getFlashUrl(r));
             }
         }
@@ -49,7 +49,7 @@ KISSY.add(function (S, require) {
                 tags: {
                     'object': function (element) {
                         var //增加音乐名字提示
-                            title = element.getAttribute("title"),
+                            title = element.getAttribute('title'),
                             i,
                             c,
                             classId = element.getAttribute("classid");
@@ -95,7 +95,7 @@ KISSY.add(function (S, require) {
                             checkXiami(element.getAttribute("src"))) {
                             return dataProcessor.createFakeParserElement(element,
                                 CLS_XIAMI, TYPE_XIAMI, true, {
-                                    title: element.getAttribute("title")
+                                    title: element.getAttribute('title')
                                 });
                         }
                     }

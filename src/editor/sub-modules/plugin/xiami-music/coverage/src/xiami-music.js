@@ -377,7 +377,7 @@ function visit6_59_1(result) {
 function visit5_57_1(result) {
   _$jscoverage['/xiami-music.js'].branchData['57'][1].ranCondition(result);
   return result;
-}_$jscoverage['/xiami-music.js'].branchData['48'][1].init(286, 2783, 'dataFilter && dataFilter.addRules({\n  tags: {\n  \'object\': function(element) {\n  var title = element.getAttribute("title"), i, c, classId = element.getAttribute("classid");\n  var childNodes = element.childNodes;\n  if (!classId) {\n    for (i = 0; i < childNodes.length; i++) {\n      c = childNodes[i];\n      if (c.nodeName == \'embed\') {\n        if (!flashUtils.isFlashEmbed(c)) {\n          return null;\n        }\n        if (checkXiami(c.attributes.src)) {\n          return dataProcessor.createFakeParserElement(element, CLS_XIAMI, TYPE_XIAMI, true, {\n  title: title});\n        }\n      }\n    }\n    return null;\n  }\n  for (i = 0; i < childNodes.length; i++) {\n    c = childNodes[i];\n    if (c.nodeName == \'param\' && c.getAttribute("name").toLowerCase() == "movie") {\n      if (checkXiami(c.getAttribute("value") || c.getAttribute("VALUE"))) {\n        return dataProcessor.createFakeParserElement(element, CLS_XIAMI, TYPE_XIAMI, true, {\n  title: title});\n      }\n    }\n  }\n}, \n  \'embed\': function(element) {\n  if (flashUtils.isFlashEmbed(element) && checkXiami(element.getAttribute("src"))) {\n    return dataProcessor.createFakeParserElement(element, CLS_XIAMI, TYPE_XIAMI, true, {\n  title: element.getAttribute("title")});\n  }\n}}}, 4)');
+}_$jscoverage['/xiami-music.js'].branchData['48'][1].init(286, 2783, 'dataFilter && dataFilter.addRules({\n  tags: {\n  \'object\': function(element) {\n  var title = element.getAttribute('title'), i, c, classId = element.getAttribute("classid");\n  var childNodes = element.childNodes;\n  if (!classId) {\n    for (i = 0; i < childNodes.length; i++) {\n      c = childNodes[i];\n      if (c.nodeName == \'embed\') {\n        if (!flashUtils.isFlashEmbed(c)) {\n          return null;\n        }\n        if (checkXiami(c.attributes.src)) {\n          return dataProcessor.createFakeParserElement(element, CLS_XIAMI, TYPE_XIAMI, true, {\n  title: title});\n        }\n      }\n    }\n    return null;\n  }\n  for (i = 0; i < childNodes.length; i++) {\n    c = childNodes[i];\n    if (c.nodeName == \'param\' && c.getAttribute("name").toLowerCase() == "movie") {\n      if (checkXiami(c.getAttribute("value") || c.getAttribute("VALUE"))) {\n        return dataProcessor.createFakeParserElement(element, CLS_XIAMI, TYPE_XIAMI, true, {\n  title: title});\n      }\n    }\n  }\n}, \n  \'embed\': function(element) {\n  if (flashUtils.isFlashEmbed(element) && checkXiami(element.getAttribute("src"))) {\n    return dataProcessor.createFakeParserElement(element, CLS_XIAMI, TYPE_XIAMI, true, {\n  title: element.getAttribute('title')});\n  }\n}}}, 4)');
 function visit4_48_1(result) {
   _$jscoverage['/xiami-music.js'].branchData['48'][1].ranCondition(result);
   return result;
@@ -423,7 +423,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/xiami-music.js'].lineData[25]++;
   if (visit1_25_1(r)) {
     _$jscoverage['/xiami-music.js'].lineData[26]++;
-    tipUrlEl.html(selectedFlash.attr("title"));
+    tipUrlEl.html(selectedFlash.attr('title'));
     _$jscoverage['/xiami-music.js'].lineData[27]++;
     tipUrlEl.attr("href", self._getFlashUrl(r));
   }
@@ -454,7 +454,7 @@ KISSY.add(function(S, require) {
   'object': function(element) {
   _$jscoverage['/xiami-music.js'].functionData[6]++;
   _$jscoverage['/xiami-music.js'].lineData[51]++;
-  var title = element.getAttribute("title"), i, c, classId = element.getAttribute("classid");
+  var title = element.getAttribute('title'), i, c, classId = element.getAttribute("classid");
   _$jscoverage['/xiami-music.js'].lineData[56]++;
   var childNodes = element.childNodes;
   _$jscoverage['/xiami-music.js'].lineData[57]++;
@@ -502,7 +502,7 @@ KISSY.add(function(S, require) {
   if (visit16_94_1(flashUtils.isFlashEmbed(element) && checkXiami(element.getAttribute("src")))) {
     _$jscoverage['/xiami-music.js'].lineData[96]++;
     return dataProcessor.createFakeParserElement(element, CLS_XIAMI, TYPE_XIAMI, true, {
-  title: element.getAttribute("title")});
+  title: element.getAttribute('title')});
   }
 }}}, 4));
   _$jscoverage['/xiami-music.js'].lineData[105]++;

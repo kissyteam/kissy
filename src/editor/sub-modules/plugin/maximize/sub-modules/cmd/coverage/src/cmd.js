@@ -609,7 +609,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/cmd.js'].lineData[121]++;
   self.iframeHeight = editor.get("textarea").parent().style("height");
   _$jscoverage['/cmd.js'].lineData[122]++;
-  self.editorElWidth = editorEl.style("width");
+  self.editorElWidth = editorEl.style('width');
   _$jscoverage['/cmd.js'].lineData[124]++;
   self.scrollLeft = Dom.scrollLeft();
   _$jscoverage['/cmd.js'].lineData[125]++;

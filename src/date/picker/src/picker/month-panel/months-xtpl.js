@@ -29,7 +29,7 @@ KISSY.add(function (S, require, exports, module) {
                 config3.fn = function (scopes) {
                     var buffer = "";
                     buffer += '\n    <td role="gridcell"\n        title="';
-                    var id7 = getPropertyOrRunCommandUtil(engine, scopes, {}, "title", 0, 5, undefined, false);
+                    var id7 = getPropertyOrRunCommandUtil(engine, scopes, {}, 'title', 0, 5, undefined, false);
                     buffer += getExpressionUtil(id7, true);
                     buffer += '"\n        class="';
                     var config9 = {};

@@ -10,11 +10,11 @@
 KISSY.add(function(S) {
     var merge = S.merge,
         A = {"isindex":1,"fieldset":1},
-        B = {"input":1,"button":1,"select":1,"textarea":1,"label":1},
+        B = {'input':1,"button":1,"select":1,"textarea":1,"label":1},
         C = merge({"a":1}, B),
         D = merge({"iframe":1}, C),
         E = {
-            "hr":1,"ul":1,"menu":1,"div":1,
+            "hr":1,"ul":1,'menu':1,"div":1,
             "blockquote":1,"noscript":1,"table":1,
             "center":1,"address":1,"dir":1,"pre":1,"h5":1,
             "dl":1,"h4":1,"noframes":1,"h6":1,
@@ -60,13 +60,13 @@ KISSY.add(function(S) {
             "font":1,
             '#text':1,
             "select":1,
-            "menu":1,
+            'menu':1,
             "ins":1,
             "abbr":1,
             "label":1,
             "code":1,
             "table":1,
-            "script":1,"cite":1,"input":1,"iframe":1,
+            "script":1,"cite":1,'input':1,"iframe":1,
             "strong":1,"textarea":1,"noframes":1,"big":1,
             "small":1,"span":1,"hr":1,"sub":1,"bdo":1,
             'var':1,"div":1,"object":1,"sup":1,"strike":1,
@@ -82,7 +82,7 @@ KISSY.add(function(S) {
         P = merge({"form":1}, A, D, E, I),
         Q = {"li":1},
         R = {"style":1,"script":1},
-        headTags = {"base":1,"link":1,"meta":1,"title":1},
+        headTags = {"base":1,"link":1,"meta":1,'title':1},
         T = merge(headTags, R),
         U = {"head":1,"body":1},
         V = {"html":1};
@@ -92,7 +92,7 @@ KISSY.add(function(S) {
         "dir":1,"div":1,"dl":1,"fieldset":1,
         "form":1,"h1":1,"h2":1,"h3":1,"h4":1,
         "h5":1,"h6":1,"hr":1,"isindex":1,
-        "menu":1,"noframes":1,"ol":1,"p":1,
+        'menu':1,"noframes":1,"ol":1,"p":1,
         "pre":1,"table":1,"ul":1
     };
 
@@ -159,7 +159,7 @@ KISSY.add(function(S) {
          * List of empty (self-closing) elements, like "br" or "img".
          * @type {Object}
          */
-        $empty : {"area":1,"base":1,"br":1,"col":1,"hr":1,"img":1,"input":1,"link":1,"meta":1,"param":1},
+        $empty : {"area":1,"base":1,"br":1,"col":1,"hr":1,"img":1,'input':1,"link":1,"meta":1,"param":1},
 
         /**
          * List of list item elements, like "li" or "dd".
@@ -200,7 +200,7 @@ KISSY.add(function(S) {
          */
         $tabIndex : {
             "a":1,"area":1,"button":1,
-            "input":1,"object":1,"select":1,
+            'input':1,"object":1,"select":1,
             "textarea":1
         },
 
@@ -249,10 +249,10 @@ KISSY.add(function(S) {
          */
         "meta": {},
         /**
-         * List of elements used inside the "title" element
+         * List of elements used inside the 'title' element
          * @type {Object}
          */
-        "title": N,
+        'title': N,
         /**
          * List of elements used inside the "col" element
          * @type {Object}
@@ -385,10 +385,10 @@ KISSY.add(function(S) {
          */
         "ins": L,
         /**
-         * List of elements used inside the "menu" element
+         * List of elements used inside the 'menu' element
          * @type {Object}
          */
-        "menu" : Q,
+        'menu' : Q,
         /**
          * List of elements used inside the "abbr" element
          * @type {Object}
@@ -438,10 +438,10 @@ KISSY.add(function(S) {
          */
         "li": P,
         /**
-         * List of elements used inside the "input" element
+         * List of elements used inside the 'input' element
          * @type {Object}
          */
-        "input": {},
+        'input': {},
         /**
          * List of elements used inside the "iframe" element
          * @type {Object}

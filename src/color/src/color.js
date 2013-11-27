@@ -20,7 +20,7 @@ KISSY.add(function (S, require, exports, module) {
          */
         toHSL: function () {
             var hsl = this.getHSL();
-            return "hsl(" + (Math.round(hsl.h || 0)) + ", " + percentage(hsl.s) + ", " + percentage(hsl.l) + ")";
+            return 'hsl(' + (Math.round(hsl.h || 0)) + ', ' + percentage(hsl.s) + ', ' + percentage(hsl.l) + ')';
         },
         /**
          * To hsla string format
@@ -28,8 +28,8 @@ KISSY.add(function (S, require, exports, module) {
          */
         'toHSLA': function () {
             var hsl = this.getHSL();
-            return "hsla(" + (Math.round(hsl.h || 0)) + ", " + percentage(hsl.s) + ", " +
-                percentage(hsl.l) + ", " + this.get('a') + ")";
+            return 'hsla(' + (Math.round(hsl.h || 0)) + ', ' + percentage(hsl.s) + ', ' +
+                percentage(hsl.l) + ', ' + this.get('a') + ')';
         },
 
         /**
@@ -38,7 +38,7 @@ KISSY.add(function (S, require, exports, module) {
          */
         toRGB: function () {
             var self = this;
-            return "rgb(" + self.get("r") + ", " + self.get("g") + ", " + self.get("b") + ")";
+            return 'rgb(' + self.get('r') + ', ' + self.get('g') + ', ' + self.get('b') + ')';
         },
         /**
          * To rgba string format
@@ -46,8 +46,8 @@ KISSY.add(function (S, require, exports, module) {
          */
         toRGBA: function () {
             var self = this;
-            return "rgba(" + self.get("r") + ", " + self.get("g") +
-                ", " + self.get("b") + ", " + self.get("a") + ")";
+            return 'rgba(' + self.get('r') + ', ' + self.get('g') +
+                ', ' + self.get('b') + ', ' + self.get('a') + ')';
         },
         /**
          * To hex string format
@@ -55,8 +55,8 @@ KISSY.add(function (S, require, exports, module) {
          */
         toHex: function () {
             var self = this;
-            return "#" + padding2(Number(self.get("r")).toString(16)) +
-                padding2(Number(self.get("g")).toString(16)) + padding2(Number(self.get("b")).toString(16));
+            return '#' + padding2(Number(self.get('r')).toString(16)) +
+                padding2(Number(self.get('g')).toString(16)) + padding2(Number(self.get('b')).toString(16));
         },
         /**
          * Return the color in the rgba format.
@@ -71,9 +71,9 @@ KISSY.add(function (S, require, exports, module) {
          */
         getHSL: function () {
             var self = this,
-                r = self.get("r") / 255,
-                g = self.get("g") / 255,
-                b = self.get("b") / 255,
+                r = self.get('r') / 255,
+                g = self.get('g') / 255,
+                b = self.get('b') / 255,
                 max = Math.max(r, g, b),
                 min = Math.min(r, g, b),
                 delta = max - min,
@@ -82,11 +82,11 @@ KISSY.add(function (S, require, exports, module) {
                 l = 0.5 * (max + min);
 
             // min==max means achromatic (hue is undefined)
-            if (min != max) {
+            if (min !== max) {
                 s = (l < 0.5) ? delta / (max + min) : delta / (2 - max - min);
-                if (r == max) {
+                if (r === max) {
                     h = 60 * (g - b) / delta;
-                } else if (g == max) {
+                } else if (g === max) {
                     h = 120 + 60 * (b - r) / delta;
                 } else {
                     h = 240 + 60 * (r - g) / delta;
@@ -107,9 +107,9 @@ KISSY.add(function (S, require, exports, module) {
          */
         getHSV: function () {
             return rgb2hsv({
-                r: this.get("r"),
-                g: this.get("g"),
-                b: this.get("b")
+                r: this.get('r'),
+                g: this.get('g'),
+                b: this.get('b')
             });
         },
 
@@ -123,10 +123,9 @@ KISSY.add(function (S, require, exports, module) {
         setHSV: function (cfg) {
             var self = this,
                 current;
-            if ("h" in cfg && "s" in cfg && "v" in cfg) {
-            } else {
+            if (!('h' in cfg && 's' in cfg && 'v' in cfg)) {
                 current = self.getHSV();
-                S.each(["h", "s", "v"], function (x) {
+                S.each(['h', 's', 'v'], function (x) {
                     if (x in cfg) {
                         current[x] = cfg[x];
                     }
@@ -147,18 +146,15 @@ KISSY.add(function (S, require, exports, module) {
         'setHSL': function (cfg) {
             var self = this,
                 current;
-            if ("h" in cfg && "s" in cfg && "l" in cfg) {
-            } else {
+            if (!('h' in cfg && 's' in cfg && 'l' in cfg)) {
                 current = self.getHSL();
-                S.each(["h", "s", "l"], function (x) {
+                S.each(['h', 's', 'l'], function (x) {
                     if (x in cfg) {
                         current[x] = cfg[x];
                     }
                 });
                 cfg = current;
-                // S.mix({x:1},{x:undefined})
             }
-
             self.set(hsl2rgb(cfg));
         }
     });
@@ -257,13 +253,13 @@ KISSY.add(function (S, require, exports, module) {
                 b,
                 a = 1;
 
-            if ((str.length == 4 || str.length == 7) && str.substr(0, 1) === '#') {
+            if ((str.length === 4 || str.length === 7) && str.substr(0, 1) === '#') {
                 values = str.match(hexRe);
                 if (values) {
                     r = parseHex(values[1]);
                     g = parseHex(values[2]);
                     b = parseHex(values[3]);
-                    if (str.length == 4) {
+                    if (str.length === 4) {
                         r = paddingHex(r);
                         g = paddingHex(g);
                         b = paddingHex(b);
@@ -280,7 +276,7 @@ KISSY.add(function (S, require, exports, module) {
                 }
             }
 
-            return (typeof r == 'undefined') ? undefined : new Color({
+            return (typeof r === 'undefined') ? undefined : new Color({
                 r: r,
                 g: g,
                 b: b,
@@ -419,7 +415,7 @@ KISSY.add(function (S, require, exports, module) {
             abs = Math.abs,
             floor = Math.floor;
 
-        if (s == 0 || h == null) {
+        if (s === 0 || h == null) {
             // achromatic
             rgb = [l, l, l];
         } else {
@@ -472,14 +468,14 @@ KISSY.add(function (S, require, exports, module) {
     }
 
     function padding2(v) {
-        if (v.length != 2) {
-            v = "0" + v;
+        if (v.length !== 2) {
+            v = '0' + v;
         }
         return v;
     }
 
     function percentage(v) {
-        return Math.round(v * 100) + "%";
+        return Math.round(v * 100) + '%';
     }
 
     function constrain255(v) {

@@ -72,7 +72,7 @@ KISSY.add(function (S, require, exports, module) {
             };
             buffer += runBlockCommandUtil(engine, scopes, config14, "if", 28);
             buffer += '\n\n>';
-            var id17 = getPropertyOrRunCommandUtil(engine, scopes, {}, "data", 0, 32, undefined, false);
+            var id17 = getPropertyOrRunCommandUtil(engine, scopes, {}, 'data', 0, 32, undefined, false);
             buffer += getExpressionUtil(id17, true);
             buffer += '</textarea>\n\n</div>\n\n<div class="';
             var id18 = getPropertyOrRunCommandUtil(engine, scopes, {}, "prefixCls", 0, 36, undefined, false);

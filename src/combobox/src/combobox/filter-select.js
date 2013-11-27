@@ -10,7 +10,7 @@ KISSY.add(function (S,require,exports,module) {
         var valid = false;
         if (_saveData) {
             for (var i = 0; i < _saveData.length; i++) {
-                if (_saveData[i].textContent == inputVal) {
+                if (_saveData[i].textContent === inputVal) {
                     return _saveData[i];
                 }
             }
@@ -28,9 +28,9 @@ KISSY.add(function (S,require,exports,module) {
             var self = this;
             self.callSuper(function (error, val) {
                 if (!error) {
-                    self.get("dataSource").fetchData(val, function (data) {
+                    self.get('dataSource').fetchData(val, function (data) {
                         var d = valInAutoCompleteList(val, self.normalizeData(data));
-                        callback(d ? "" : self.get("invalidMessage"), val, d);
+                        callback(d ? '' : self.get('invalidMessage'), val, d);
                     });
                 } else {
                     callback(error, val);

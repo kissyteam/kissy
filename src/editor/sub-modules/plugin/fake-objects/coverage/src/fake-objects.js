@@ -389,7 +389,7 @@ function visit24_152_1(result) {
 function visit23_141_1(result) {
   _$jscoverage['/fake-objects.js'].branchData['141'][1].ranCondition(result);
   return result;
-}_$jscoverage['/fake-objects.js'].branchData['138'][1].init(164, 33, 'realElement.getAttribute("width")');
+}_$jscoverage['/fake-objects.js'].branchData['138'][1].init(164, 33, 'realElement.getAttribute('width')');
 function visit22_138_1(result) {
   _$jscoverage['/fake-objects.js'].branchData['138'][1].ranCondition(result);
   return result;
@@ -469,7 +469,7 @@ function visit4_31_1(result) {
 function visit3_22_1(result) {
   _$jscoverage['/fake-objects.js'].branchData['22'][1].ranCondition(result);
   return result;
-}_$jscoverage['/fake-objects.js'].branchData['19'][1].init(74, 25, 'realElement.attr("width")');
+}_$jscoverage['/fake-objects.js'].branchData['19'][1].init(74, 25, 'realElement.attr('width')');
 function visit2_19_1(result) {
   _$jscoverage['/fake-objects.js'].branchData['19'][1].ranCondition(result);
   return result;
@@ -493,9 +493,9 @@ KISSY.add(function(S, require) {
   _$jscoverage['/fake-objects.js'].lineData[18]++;
   var style = visit1_18_1(realElement.attr("style") || '');
   _$jscoverage['/fake-objects.js'].lineData[19]++;
-  if (visit2_19_1(realElement.attr("width"))) {
+  if (visit2_19_1(realElement.attr('width'))) {
     _$jscoverage['/fake-objects.js'].lineData[20]++;
-    style = "width:" + realElement.attr("width") + "px;" + style;
+    style = "width:" + realElement.attr('width') + "px;" + style;
   }
   _$jscoverage['/fake-objects.js'].lineData[22]++;
   if (visit3_22_1(realElement.attr("height"))) {
@@ -578,7 +578,7 @@ KISSY.add(function(S, require) {
       _$jscoverage['/fake-objects.js'].lineData[92]++;
       if (visit15_92_1(width)) {
         _$jscoverage['/fake-objects.js'].lineData[93]++;
-        realElement.setAttribute("width", width);
+        realElement.setAttribute('width', width);
       }
       _$jscoverage['/fake-objects.js'].lineData[95]++;
       if (visit16_95_1(height)) {
@@ -631,9 +631,9 @@ KISSY.add(function(S, require) {
   _$jscoverage['/fake-objects.js'].lineData[137]++;
   var style = visit21_137_1(realElement.getAttribute("style") || '');
   _$jscoverage['/fake-objects.js'].lineData[138]++;
-  if (visit22_138_1(realElement.getAttribute("width"))) {
+  if (visit22_138_1(realElement.getAttribute('width'))) {
     _$jscoverage['/fake-objects.js'].lineData[139]++;
-    style = "width:" + realElement.getAttribute("width") + "px;" + style;
+    style = "width:" + realElement.getAttribute('width') + "px;" + style;
   }
   _$jscoverage['/fake-objects.js'].lineData[141]++;
   if (visit23_141_1(realElement.getAttribute("height"))) {

@@ -341,13 +341,13 @@ KISSY.add(function(S, require) {
     self.on("wysiwygMode", function() {
   _$jscoverage['/button.js'].functionData[3]++;
   _$jscoverage['/button.js'].lineData[52]++;
-  b.set("disabled", false);
+  b.set('disabled', false);
 });
     _$jscoverage['/button.js'].lineData[54]++;
     self.on("sourceMode", function() {
   _$jscoverage['/button.js'].functionData[4]++;
   _$jscoverage['/button.js'].lineData[55]++;
-  b.set("disabled", true);
+  b.set('disabled', true);
 });
   }
   _$jscoverage['/button.js'].lineData[59]++;

@@ -25,14 +25,14 @@ KISSY.use("anim,node,button",function(S,Anim,Node,Button){
             obj.removeClass(cls[clsIdx]);
             obj.addClass(cls[++clsIdx]);
             if (clsIdx % 4 === 0) {
-                start.set("disabled", false);
+                start.set('disabled', false);
                 clsIdx = 0;
                 obj.addClass(cls[clsIdx]);
             }
         },
         commonCfg = {
             duration: 3,
-            queue: "my",
+            queue: 'my',
             complete: adjustCls
         },
         cls = ['right', 'down', 'left', 'up'],
@@ -46,7 +46,7 @@ KISSY.use("anim,node,button",function(S,Anim,Node,Button){
 
     // 事件绑定
     start.on("click", function() {
-        start.set("disabled", true);
+        start.set('disabled', true);
         // 向右
         obj.animate({
             left: containerOffset.left + containerWidth - objWidth/2

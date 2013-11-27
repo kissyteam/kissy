@@ -336,7 +336,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/local-storage.js'].lineData[45]++;
   var store = new FlashBridge({
   src: swfSrc, 
-  render: o.get("contentEl").one('.storage-container'), 
+  render: o.get('contentEl').one('.storage-container'),
   params: {
   flashVars: {
   useCompression: true}}, 

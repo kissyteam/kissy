@@ -312,7 +312,7 @@ KISSY.add(function (S,require) {
         },
         'checked': function (el) {
             var nodeName = el.nodeName.toLowerCase();
-            return (nodeName === "input" && el.checked) ||
+            return (nodeName === 'input' && el.checked) ||
                 (nodeName === "option" && el.selected);
         }
     };

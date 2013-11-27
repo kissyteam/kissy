@@ -61,7 +61,7 @@ KISSY.add(function (S, require) {
                 listeners: {
                     afterRenderUI: function () {
                         var bubble = this,
-                            el = bubble.get("contentEl");
+                            el = bubble.get('contentEl');
 
                         el.html(S.substitute(tipHTML, {
                             prefixCls: prefixCls

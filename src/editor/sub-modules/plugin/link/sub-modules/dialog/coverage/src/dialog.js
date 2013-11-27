@@ -314,7 +314,7 @@ function visit8_125_1(result) {
 function visit7_121_1(result) {
   _$jscoverage['/dialog.js'].branchData['121'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['120'][1].init(173, 31, '_selectedEl.attr("title") || ""');
+}_$jscoverage['/dialog.js'].branchData['120'][1].init(173, 31, '_selectedEl.attr('title') || ""');
 function visit6_120_1(result) {
   _$jscoverage['/dialog.js'].branchData['120'][1].ranCondition(result);
   return result;
@@ -326,7 +326,7 @@ function visit5_118_1(result) {
 function visit4_117_1(result) {
   _$jscoverage['/dialog.js'].branchData['117'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['96'][1].init(139, 52, '!Editor.Utils.verifyInputs(d.get("el").all("input"))');
+}_$jscoverage['/dialog.js'].branchData['96'][1].init(139, 52, '!Editor.Utils.verifyInputs(d.get("el").all('input'))');
 function visit3_96_1(result) {
   _$jscoverage['/dialog.js'].branchData['96'][1].ranCondition(result);
   return result;
@@ -406,7 +406,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/dialog.js'].lineData[93]++;
   var self = this, d = self.dialog, url = d.urlEl.val();
   _$jscoverage['/dialog.js'].lineData[96]++;
-  if (visit3_96_1(!Editor.Utils.verifyInputs(d.get("el").all("input")))) {
+  if (visit3_96_1(!Editor.Utils.verifyInputs(d.get("el").all('input')))) {
     _$jscoverage['/dialog.js'].lineData[97]++;
     return;
   }
@@ -435,7 +435,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/dialog.js'].lineData[119]++;
     Editor.Utils.valInput(d.urlEl, url);
     _$jscoverage['/dialog.js'].lineData[120]++;
-    d.urlTitle.val(visit6_120_1(_selectedEl.attr("title") || ""));
+    d.urlTitle.val(visit6_120_1(_selectedEl.attr('title') || ""));
     _$jscoverage['/dialog.js'].lineData[121]++;
     d.targetEl[0].checked = (visit7_121_1(_selectedEl.attr("target") == "_blank"));
   } else {

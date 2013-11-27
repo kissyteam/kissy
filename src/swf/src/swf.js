@@ -442,7 +442,7 @@ KISSY.add(function (S, require) {
             elements = [],
             nodeName = Dom.nodeName(swf);
         if (nodeName == "object") {
-            url = Dom.attr(swf, "data");
+            url = Dom.attr(swf, 'data');
             if (url) {
                 elements.push(swf);
             }

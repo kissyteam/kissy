@@ -89,14 +89,14 @@ KISSY.add(function (S, require) {
             anim.run();
             waits(100);
             runs(function () {
-                expect(t.css("width")).not.toBe("100px");
+                expect(t.css('width')).not.toBe("100px");
                 expect(t.css("height")).not.toBe("100px");
                 anim.stop(1);
             });
             waits(100);
             runs(function () {
                 expect(stoppedCalled).toBe(1);
-                expect(t.css("width")).toBe("10px");
+                expect(t.css('width')).toBe("10px");
                 expect(t.css("height")).toBe("10px");
                 t.remove();
             });
@@ -128,13 +128,13 @@ KISSY.add(function (S, require) {
             anim.run();
             waits(300);
             runs(function () {
-                expect(t.css("width")).toBe("10px");
+                expect(t.css('width')).toBe("10px");
                 t.remove();
             });
             waits(100);
             runs(function () {
                 expect(called).toBe(1);
-                expect(t.css("width")).toBe("10px");
+                expect(t.css('width')).toBe("10px");
                 t.remove();
             });
         });
@@ -164,12 +164,12 @@ KISSY.add(function (S, require) {
             waits(600);
             runs(function () {
                 expect(called).toBe(1);
-                expect(t.css("width")).not.toBe("10px");
+                expect(t.css('width')).not.toBe("10px");
             });
             waits(100);
             runs(function () {
                 expect(calledComplete).toBe(0);
-                expect(t.css("width")).not.toBe("10px");
+                expect(t.css('width')).not.toBe("10px");
             });
             waits(500);
             runs(function () {
@@ -192,12 +192,12 @@ KISSY.add(function (S, require) {
             anim.run();
             waits(100);
             runs(function () {
-                expect(t.css("width")).toBe("100px");
+                expect(t.css('width')).toBe("100px");
                 anim.stop(1);
             });
             waits(100);
             runs(function () {
-                expect(t.css("width")).toBe("100px");
+                expect(t.css('width')).toBe("100px");
                 t.remove();
             });
         });
@@ -224,12 +224,12 @@ KISSY.add(function (S, require) {
             waits(500);
             runs(function () {
                 expect(called).toBe(1);
-                expect(t.css("width")).toBe("100px");
+                expect(t.css('width')).toBe("100px");
                 anim.stop(1);
             });
             waits(500);
             runs(function () {
-                expect(t.css("width")).toBe("100px");
+                expect(t.css('width')).toBe("100px");
                 t.remove();
             });
         });
@@ -257,12 +257,12 @@ KISSY.add(function (S, require) {
             waits(500);
             runs(function () {
                 expect(called).toBe(1);
-                expect(t.css("width")).toBe("10px");
+                expect(t.css('width')).toBe("10px");
                 anim.stop(1);
             });
             waits(500);
             runs(function () {
-                expect(t.css("width")).toBe("10px");
+                expect(t.css('width')).toBe("10px");
                 t.remove();
             });
         });

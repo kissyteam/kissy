@@ -486,7 +486,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/btn.js'].lineData[101]++;
   var colorWin = self.colorWin;
   _$jscoverage['/btn.js'].lineData[102]++;
-  colorPanel = colorWin.get("contentEl");
+  colorPanel = colorWin.get('contentEl');
   _$jscoverage['/btn.js'].lineData[103]++;
   colorPanel.on("click", self._selectColor, self);
   _$jscoverage['/btn.js'].lineData[104]++;
@@ -519,7 +519,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/btn.js'].lineData[121]++;
   colorWin.set("align", {
   node: el, 
-  points: ["bl", "tl"], 
+  points: ['bl', 'tl'],
   offset: [0, 2], 
   overflow: {
   adjustX: 1, 

@@ -325,10 +325,10 @@ KISSY.add(function(S, require) {
   _$jscoverage['/btn.js'].lineData[23]++;
   if (visit1_23_1(index > 0)) {
     _$jscoverage['/btn.js'].lineData[24]++;
-    self.set("disabled", self.__lock = false);
+    self.set('disabled', self.__lock = false);
   } else {
     _$jscoverage['/btn.js'].lineData[26]++;
-    self.set("disabled", self.__lock = true);
+    self.set('disabled', self.__lock = true);
   }
 });
 }}, {
@@ -368,10 +368,10 @@ KISSY.add(function(S, require) {
   _$jscoverage['/btn.js'].lineData[64]++;
   if (visit3_64_1(index < history.length - 1)) {
     _$jscoverage['/btn.js'].lineData[65]++;
-    self.set("disabled", self.__lock = false);
+    self.set('disabled', self.__lock = false);
   } else {
     _$jscoverage['/btn.js'].lineData[67]++;
-    self.set("disabled", self.__lock = true);
+    self.set('disabled', self.__lock = true);
   }
 });
 }}, {

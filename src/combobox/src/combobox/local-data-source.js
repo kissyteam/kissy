@@ -20,8 +20,8 @@ KISSY.add(function (S,require) {
          * @param {Object} context callback 's execution context
          */
         fetchData: function (inputVal, callback, context) {
-            var parse = this.get("parse"),
-                data = this.get("data");
+            var parse = this.get('parse'),
+                data = this.get('data');
             data = parse(inputVal, data);
             callback.call(context, data);
         }
@@ -55,7 +55,7 @@ KISSY.add(function (S,require) {
             return data;
         }
         S.each(data, function (d) {
-            if (d.indexOf(inputVal) != -1) {
+            if (d.indexOf(inputVal) !== -1) {
                 ret.push(d);
             }
             count++;

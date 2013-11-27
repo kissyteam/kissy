@@ -404,7 +404,7 @@ KISSY.add(function (S, require) {
         _onSetDisabled: function (v) {
             var self = this,
                 control = self.control,
-                componentCls = self.getBaseCssClasses("disabled"),
+                componentCls = self.getBaseCssClasses('disabled'),
                 el = self.$el;
             el[v ? 'addClass' : 'removeClass'](componentCls)
                 .attr("aria-disabled", v);
@@ -428,7 +428,7 @@ KISSY.add(function (S, require) {
         _onSetFocused: function (v) {
             var self = this,
                 el = self.$el,
-                componentCls = self.getBaseCssClasses("focused");
+                componentCls = self.getBaseCssClasses('focused');
             el[v ? 'addClass' : 'removeClass'](componentCls);
         },
 
@@ -499,7 +499,7 @@ KISSY.add(function (S, require) {
                 return el.html();
             },
             disabled: function (el) {
-                return el.hasClass(this.getBaseCssClass("disabled"));
+                return el.hasClass(this.getBaseCssClass('disabled'));
             }
         },
 

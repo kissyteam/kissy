@@ -13,8 +13,8 @@ KISSY.add(function (S, require) {
     var dtd = Editor.XHTML_DTD,
         UA = S.UA,
         Node = KISSY.NodeList,
-        HTTP_TIP = "http://",
-        AUTOMATIC_TIP = "自动",
+        HTTP_TIP = 'http://',
+        AUTOMATIC_TIP = '自动',
         MARGIN_DEFAULT = 10,
         IMAGE_DIALOG_BODY_HTML = bodyTpl,
 
@@ -161,7 +161,7 @@ KISSY.add(function (S, require) {
                     S.indexOf(self.tab.getSelectedTab(), self.tab.getTabs()) == 1) &&
                     self.cfg) {
 
-                    if (!verifyInputs(commonSettingTable.all("input"))) {
+                    if (!verifyInputs(commonSettingTable.all('input'))) {
                         return;
                     }
 
@@ -239,7 +239,7 @@ KISSY.add(function (S, require) {
                     });
 
                 } else {
-                    if (!verifyInputs(content.all("input")))
+                    if (!verifyInputs(content.all('input')))
                         return;
                     self._insert();
                 }
@@ -409,7 +409,7 @@ KISSY.add(function (S, require) {
             self.selectedEl = selectedEl;
             if (selectedEl && self.imageCfg['remote'] !== false) {
                 valInput(self.imgUrl, selectedEl.attr("src"));
-                var w = parseInt(selectedEl.style("width")),
+                var w = parseInt(selectedEl.style('width')),
                     h = parseInt(selectedEl.style("height"));
                 if (h) {
                     valInput(self.imgHeight, h);

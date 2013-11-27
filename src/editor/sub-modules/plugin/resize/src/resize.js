@@ -67,7 +67,7 @@ KISSY.add(function (S, require) {
                     editor.set("height", height + diffY);
                 }
                 if (S.inArray("x", direction)) {
-                    editor.set("width", width + diffX);
+                    editor.set('width', width + diffX);
                 }
                 editor.fire("resize");
             });

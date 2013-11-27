@@ -317,10 +317,10 @@ KISSY.add(function(S, require) {
   _$jscoverage['/outdent.js'].lineData[33]++;
   if (visit2_33_1(editor.queryCommandValue("outdent"))) {
     _$jscoverage['/outdent.js'].lineData[34]++;
-    self.set("disabled", false);
+    self.set('disabled', false);
   } else {
     _$jscoverage['/outdent.js'].lineData[36]++;
-    self.set("disabled", true);
+    self.set('disabled', true);
   }
 });
 }}, 

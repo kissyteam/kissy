@@ -44,7 +44,7 @@ KISSY.add(function (S, require) {
         S.each(myBubbles, function (bubble) {
             if (bubble.isKeBubble &&
                 bubble !== self &&
-                bubble.get("visible") &&
+                bubble.get('visible') &&
                 overlap(self, bubble)) {
                 if (!archor) {
                     archor = bubble;
@@ -190,7 +190,7 @@ KISSY.add(function (S, require) {
                     xy[1] = archor.get("y") + archor.get("el").outerHeight();
                     bubble.move(xy[0],xy[1]);
                 }
-                if (!bubble.get("visible")) {
+                if (!bubble.get('visible')) {
                     bubble.show();
                 } else {
                     logger.debug("already show by selectionChange");

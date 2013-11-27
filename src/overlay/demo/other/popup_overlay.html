@@ -386,7 +386,7 @@
                     popup.set("content", '<img src="' + t.attr('bigpicurl') + '"/>');
                     popup.set('align', {
                         node: t,
-                        points: ["tr", "tl"]
+                        points: ["tr", 'tl']
                     });
                     popup.show();
                 });
@@ -478,7 +478,7 @@
                         height: 120,
                         align: {
                             node: t,
-                            points: ["tr", "tl"]
+                            points: ["tr", 'tl']
                         }
                     });
                 });
@@ -529,7 +529,7 @@
                 });
                 if (UA.ie == 6) {
                     Event.on(window, "scroll", function () {
-                        if (popup.get("visible"))
+                        if (popup.get('visible'))
                             popup.center();
                     });
                 }

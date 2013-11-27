@@ -1,5 +1,5 @@
 KISSY.add(function (S, UA, Node, Overlay) {
-    describe("visible", function () {
+    describe('visible', function () {
         it("should not fire hide on show", function () {
             var overlay = new Overlay({
                 content:"haha"

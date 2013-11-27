@@ -136,7 +136,7 @@ KISSY.add(function (S, require) {
                     menu = self.get('menu'),
                     menuChildren,
                     menuChild,
-                    hasKeyboardControl_ = menu.get("visible"),
+                    hasKeyboardControl_ = menu.get('visible'),
                     keyCode = e.keyCode;
 
                 if (!hasKeyboardControl_) {

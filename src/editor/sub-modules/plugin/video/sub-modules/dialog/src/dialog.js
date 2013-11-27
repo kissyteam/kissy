@@ -199,7 +199,7 @@ KISSY.add(function (S, require) {
                 Editor.Utils.valInput(self.dUrl, self._getFlashUrl(r));
                 self.dAlign.set("value", f.css("float"));
                 self.dMargin.val(parseInt(r.style("margin")) || 0);
-                Editor.Utils.valInput(self.dWidth, parseInt(f.css("width")));
+                Editor.Utils.valInput(self.dWidth, parseInt(f.css('width')));
                 Editor.Utils.valInput(self.dHeight, parseInt(f.css("height")));
             } else {
                 Editor.Utils.resetInput(self.dUrl);
