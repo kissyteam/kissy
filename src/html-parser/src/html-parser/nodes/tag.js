@@ -257,7 +257,7 @@ KISSY.add(function (S, require) {
 
             // special treat for doctype
             if (tagName == "!doctype") {
-                writer.append(this.toHtml() + "\n");
+                writer.append(this.toHtml() + '\n');
                 return;
             }
 

@@ -3,18 +3,17 @@
  * css3 selector engine for ie6-8
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S,require) {
+KISSY.add(function (S, require) {
     var Dom = require('dom/basic');
     var parser = require('./selector/parser');
 
-    var logger= S.getLogger('s/dom');
+    var logger = S.getLogger('s/dom');
 
     logger.info('use KISSY css3 selector');
 
     // ident === identifier
 
     var document = S.Env.host.document,
-        undefined = undefined,
         EXPANDO_SELECTOR_KEY = '_ks_data_selector_id_',
         caches = {},
         isContextXML,
@@ -34,7 +33,7 @@ KISSY.add(function (S,require) {
     // CSS escapes http://www.w3.org/TR/CSS21/syndata.html#escaped-characters
     var unescape = /\\([\da-fA-F]{1,6}[\x20\t\r\n\f]?|.)/g,
         unescapeFn = function (_, escaped) {
-            var high = "0x" + escaped - 0x10000;
+            var high = '0x' + escaped - 0x10000;
             // NaN means non-codepoint
             return isNaN(high) ?
                 escaped :
@@ -60,10 +59,10 @@ KISSY.add(function (S,require) {
         subMatchesCache = {};
     }
 
-    function dir(el, dir) {
+    function dir(el, direction) {
         do {
-            el = el[dir];
-        } while (el && el.nodeType != 1);
+            el = el[direction];
+        } while (el && el.nodeType !== 1);
         return el;
     }
 
@@ -71,20 +70,20 @@ KISSY.add(function (S,require) {
         var a = 0,
             match,
             b = 0;
-        if (typeof param == 'number') {
+        if (typeof param === 'number') {
             b = param;
         }
-        else if (param == 'odd') {
+        else if (param === 'odd') {
             a = 2;
             b = 1;
-        } else if (param == 'even') {
+        } else if (param === 'even') {
             a = 2;
             b = 0;
-        } else if (match = param.replace(/\s/g, '').match(aNPlusB)) {
+        } else if ((match = param.replace(/\s/g, '').match(aNPlusB))) {
             if (match[1]) {
                 a = parseInt(match[2]);
                 if (isNaN(a)) {
-                    if (match[2] == '-') {
+                    if (match[2] === '-') {
                         a = -1;
                     } else {
                         a = 1;
@@ -102,12 +101,12 @@ KISSY.add(function (S,require) {
     }
 
     function matchIndexByAb(index, a, b, eq) {
-        if (a == 0) {
-            if (index == b) {
+        if (a === 0) {
+            if (index === b) {
                 return eq;
             }
         } else {
-            if ((index - b) / a >= 0 && (index - b) % a == 0 && eq) {
+            if ((index - b) / a >= 0 && (index - b) % a === 0 && eq) {
                 return 1;
             }
         }
@@ -116,7 +115,7 @@ KISSY.add(function (S,require) {
 
     function isXML(elem) {
         var documentElement = elem && (elem.ownerDocument || elem).documentElement;
-        return documentElement ? documentElement.nodeName.toLowerCase() !== "html" : false;
+        return documentElement ? documentElement.nodeName.toLowerCase() !== 'html' : false;
     }
 
     var pseudoFnExpr = {
@@ -124,7 +123,7 @@ KISSY.add(function (S,require) {
             var ab = getAb(param),
                 a = ab.a,
                 b = ab.b;
-            if (a == 0 && b == 0) {
+            if (a === 0 && b === 0) {
                 return 0;
             }
             var index = 0,
@@ -137,7 +136,7 @@ KISSY.add(function (S,require) {
                     len = childNodes.length;
                 for (; count < len; count++) {
                     child = childNodes[count];
-                    if (child.nodeType == 1) {
+                    if (child.nodeType === 1) {
                         index++;
                         ret = matchIndexByAb(index, a, b, child === el);
                         if (ret !== undefined) {
@@ -152,7 +151,7 @@ KISSY.add(function (S,require) {
             var ab = getAb(param),
                 a = ab.a,
                 b = ab.b;
-            if (a == 0 && b == 0) {
+            if (a === 0 && b === 0) {
                 return 0;
             }
             var index = 0,
@@ -165,7 +164,7 @@ KISSY.add(function (S,require) {
                     ret;
                 for (; count >= 0; count--) {
                     child = childNodes[count];
-                    if (child.nodeType == 1) {
+                    if (child.nodeType === 1) {
                         index++;
                         ret = matchIndexByAb(index, a, b, child === el);
                         if (ret !== undefined) {
@@ -180,7 +179,7 @@ KISSY.add(function (S,require) {
             var ab = getAb(param),
                 a = ab.a,
                 b = ab.b;
-            if (a == 0 && b == 0) {
+            if (a === 0 && b === 0) {
                 return 0;
             }
             var index = 0,
@@ -194,7 +193,7 @@ KISSY.add(function (S,require) {
                     len = childNodes.length;
                 for (; count < len; count++) {
                     child = childNodes[count];
-                    if (child.tagName == elType) {
+                    if (child.tagName === elType) {
                         index++;
                         ret = matchIndexByAb(index, a, b, child === el);
                         if (ret !== undefined) {
@@ -209,7 +208,7 @@ KISSY.add(function (S,require) {
             var ab = getAb(param),
                 a = ab.a,
                 b = ab.b;
-            if (a == 0 && b == 0) {
+            if (a === 0 && b === 0) {
                 return 0;
             }
             var index = 0,
@@ -223,7 +222,7 @@ KISSY.add(function (S,require) {
                     ret;
                 for (; count >= 0; count--) {
                     child = childNodes[count];
-                    if (child.tagName == elType) {
+                    if (child.tagName === elType) {
                         index++;
                         ret = matchIndexByAb(index, a, b, child === el);
                         if (ret !== undefined) {
@@ -238,17 +237,17 @@ KISSY.add(function (S,require) {
             var elLang;
             lang = unEscape(lang.toLowerCase());
             do {
-                if (elLang = (isContextXML ?
-                    el.getAttribute("xml:lang") || el.getAttribute("lang") :
-                    el.lang)) {
+                if ((elLang = (isContextXML ?
+                    el.getAttribute('xml:lang') || el.getAttribute('lang') :
+                    el.lang))) {
                     elLang = elLang.toLowerCase();
-                    return elLang === lang || elLang.indexOf(lang + "-") === 0;
+                    return elLang === lang || elLang.indexOf(lang + '-') === 0;
                 }
             } while ((el = el.parentNode) && el.nodeType === 1);
             return false;
         },
-        'not': function (el, negation_arg) {
-            return !matchExpr[negation_arg.t](el, negation_arg.value);
+        'not': function (el, negationArg) {
+            return !matchExpr[negationArg.t](el, negationArg.value);
         }
     };
 
@@ -265,7 +264,7 @@ KISSY.add(function (S,require) {
                 // only element nodes and content nodes
                 // (such as Dom [Dom-LEVEL-3-CORE] text nodes,
                 // CDATA nodes, and entity references
-                if (nodeType == 1 || nodeType == 3 || nodeType == 4 || nodeType == 5) {
+                if (nodeType === 1 || nodeType === 3 || nodeType === 4 || nodeType === 5) {
                     return 0;
                 }
             }
@@ -298,7 +297,7 @@ KISSY.add(function (S,require) {
         'focus': function (el) {
             var doc = el.ownerDocument;
             return doc && el === doc.activeElement &&
-                (!doc['hasFocus'] || doc['hasFocus']()) && !!(el.type || el.href || el.tabIndex >= 0);
+                (!doc.hasFocus || doc.hasFocus()) && !!(el.type || el.href || el.tabIndex >= 0);
         },
         'target': function (el) {
             var hash = location.hash;
@@ -313,7 +312,7 @@ KISSY.add(function (S,require) {
         'checked': function (el) {
             var nodeName = el.nodeName.toLowerCase();
             return (nodeName === 'input' && el.checked) ||
-                (nodeName === "option" && el.selected);
+                (nodeName === 'option' && el.selected);
         }
     };
 
@@ -322,10 +321,10 @@ KISSY.add(function (S,require) {
             if (!value || value.indexOf(' ') > -1) {
                 return 0;
             }
-            return (' ' + elValue + ' ').indexOf(' ' + value + ' ') != -1;
+            return (' ' + elValue + ' ').indexOf(' ' + value + ' ') !== -1;
         },
         '|=': function (elValue, value) {
-            return (' ' + elValue).indexOf(' ' + value + '-') != -1;
+            return (' ' + elValue).indexOf(' ' + value + '-') !== -1;
         },
         '^=': function (elValue, value) {
             return value && S.startsWith(elValue, value);
@@ -334,7 +333,7 @@ KISSY.add(function (S,require) {
             return value && S.endsWith(elValue, value);
         },
         '*=': function (elValue, value) {
-            return value && elValue.indexOf(value) != -1;
+            return value && elValue.indexOf(value) !== -1;
         },
         '=': function (elValue, value) {
             return elValue === value;
@@ -369,13 +368,13 @@ KISSY.add(function (S,require) {
         },
         'pseudo': function (el, value) {
             var fn, fnStr, ident;
-            if (fnStr = value.fn) {
+            if ((fnStr = value.fn)) {
                 if (!(fn = pseudoFnExpr[fnStr])) {
                     throw new SyntaxError('Syntax error: not support pseudo: ' + fnStr);
                 }
-                return fn(el, value.param)
+                return fn(el, value.param);
             }
-            if (ident = value.ident) {
+            if ((ident = value.ident)) {
                 if (!pseudoIdentExpr[ident]) {
                     throw new SyntaxError('Syntax error: not support pseudo: ' + ident);
                 }
@@ -431,8 +430,8 @@ KISSY.add(function (S,require) {
             matchSuffixLen,
             matchSuffixIndex;
 
-        if (match.t == 'tag') {
-            matched &= matchExpr['tag'](el, match.value);
+        if (match.t === 'tag') {
+            matched &= matchExpr.tag(el, match.value);
         }
 
         if (matched && matchSuffix) {
@@ -472,7 +471,7 @@ KISSY.add(function (S,require) {
                         // advance for non-immediate
                         el: el,
                         match: match
-                    }
+                    };
                 }
             } else {
                 relativeOp = relativeExpr[match.nextCombinator];
@@ -487,7 +486,7 @@ KISSY.add(function (S,require) {
                     return {
                         el: el && dir(el, relativeOp.dir),
                         match: match
-                    }
+                    };
                 }
             }
         } while (el);
@@ -544,10 +543,10 @@ KISSY.add(function (S,require) {
         var selectorId = genId(el),
             matchKey;
         matchKey = selectorId + '_' + (match.order || 0);
-        if (matchKey in subMatchesCache) {
-            return subMatchesCache[matchKey];
+        if (!(matchKey in subMatchesCache)) {
+            subMatchesCache[matchKey] = matchSubInternal(el, match);
         }
-        return subMatchesCache[matchKey] = matchSubInternal(el, match);
+        return subMatchesCache[matchKey];
     }
 
     // recursive match by sub selector string from right to left
@@ -610,7 +609,7 @@ KISSY.add(function (S,require) {
                     suffixLen = suffix.length;
                     for (; suffixIndex < suffixLen; suffixIndex++) {
                         var singleSuffix = suffix[suffixIndex];
-                        if (singleSuffix.t == 'id') {
+                        if (singleSuffix.t === 'id') {
                             id = singleSuffix.value;
                             break;
                         }
@@ -628,13 +627,13 @@ KISSY.add(function (S,require) {
                             ) : context.getElementById(id);
                     // id bug
                     // https://github.com/kissyteam/kissy/issues/67
-                    if (!tmp && doesNotHasById || tmp && getAttr(tmp, 'id') != id) {
+                    if (!tmp && doesNotHasById || tmp && getAttr(tmp, 'id') !== id) {
                         var tmps = Dom._getElementsByTagName('*', context),
                             tmpLen = tmps.length,
                             tmpI = 0;
                         for (; tmpI < tmpLen; tmpI++) {
                             tmp = tmps[tmpI];
-                            if (getAttr(tmp, 'id') == id) {
+                            if (getAttr(tmp, 'id') === id) {
                                 mySeeds = [tmp];
                                 break;
                             }

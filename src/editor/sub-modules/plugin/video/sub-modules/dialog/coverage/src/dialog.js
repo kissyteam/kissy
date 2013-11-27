@@ -439,7 +439,7 @@ KISSY.add(function(S, require) {
   _initD: function() {
   _$jscoverage['/dialog.js'].functionData[3]++;
   _$jscoverage['/dialog.js'].lineData[99]++;
-  var self = this, d = self.dialog, editor = self.editor, prefixCls = editor.get('prefixCls'), el = d.get("el");
+  var self = this, d = self.dialog, editor = self.editor, prefixCls = editor.get('prefixCls'), el = d.get('el');
   _$jscoverage['/dialog.js'].lineData[104]++;
   self.dUrl = el.one("." + prefixCls + "editor-video-url");
   _$jscoverage['/dialog.js'].lineData[105]++;

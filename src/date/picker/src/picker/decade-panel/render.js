@@ -14,7 +14,6 @@ KISSY.add(function (S,require) {
         var startYear = parseInt(currentYear / 100) * 100;
         var preYear = startYear - 10;
         var endYear = startYear + 99;
-        var locale = control.get('locale');
         var decades = [];
         var index = 0;
         for (var i = 0; i < 3; i++) {
@@ -39,7 +38,6 @@ KISSY.add(function (S,require) {
     return Control.getDefaultRender().extend({
         beforeCreateDom: function (renderData, childrenSelectors) {
             var control = this.control;
-            var value = control.get('value');
             var locale = control.get('locale');
             prepareYears(control, this);
             S.mix(renderData, {

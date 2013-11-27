@@ -29,7 +29,7 @@ KISSY.add(function (S, require) {
             "collapsed-folder-icon"
         ].join(" "),
         ROW_EL_CLS = 'row',
-        CHILDREN_CLS = "children",
+        CHILDREN_CLS = 'children',
         CHILDREN_CLS_L = "lchildren",
         CHECK_CLS = "checked",
         ALL_STATES_CLS = "checked0 checked1 checked2";
@@ -91,7 +91,7 @@ KISSY.add(function (S, require) {
         _onSetExpanded: function (v) {
             var self = this,
                 childrenEl = self.control.get("childrenEl");
-            childrenEl[v ? "show" : "hide"]();
+            childrenEl[v ? 'show' : 'hide']();
             self.el.setAttribute('aria-expanded', v);
         },
 

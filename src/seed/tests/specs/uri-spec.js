@@ -70,7 +70,7 @@ describe("uri", function () {
 
             expect(S.unparam(query.toString())).toEqual(S.unparam("x=1&y=2"));
 
-            query.set("x", "3");
+            query.set('x', "3");
 
             expect(S.unparam(query.toString())).toEqual(S.unparam("x=3&y=2"));
 
@@ -78,7 +78,7 @@ describe("uri", function () {
 
             expect(S.unparam(query.toString())).toEqual(S.unparam("x=3&y=2&z=5"));
 
-            query.remove("x");
+            query.remove('x');
 
             expect(S.unparam(query.toString())).toEqual(S.unparam("y=2&z=5"));
 

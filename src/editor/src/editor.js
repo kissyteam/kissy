@@ -18,9 +18,8 @@ KISSY.add(function (S, require, exports, module) {
     require('editor/domIterator');
     require('editor/z-index-manager');
     module.exports = Editor;
-var  logger = S.getLogger('s/editor');
+    var logger = S.getLogger('s/editor');
     var TRUE = true,
-        undefined = undefined,
         FALSE = false,
         NULL = null,
 
@@ -28,7 +27,7 @@ var  logger = S.getLogger('s/editor');
         document = window.document,
         UA = S.UA,
         IS_IE = UA.ieMode < 11,
-        // ie11 = UA.ieMode == 11,
+    // ie11 = UA.ieMode === 11,
         NodeType = Node.NodeType,
         $ = Node.all,
         HEIGHT = 'height',
@@ -89,7 +88,9 @@ var  logger = S.getLogger('s/editor');
                 //否则清空选择区域
                 else {
                     var sel = self.getSelection();
-                    sel && sel.removeAllRanges();
+                    if (sel) {
+                        sel.removeAllRanges();
+                    }
                 }
             }
 
@@ -109,8 +110,8 @@ var  logger = S.getLogger('s/editor');
         _onSetHeight: function (v) {
             var self = this,
                 textareaEl = self.get('textarea'),
-                toolBarEl = self.get("toolBarEl"),
-                statusBarEl = self.get("statusBarEl");
+                toolBarEl = self.get('toolBarEl'),
+                statusBarEl = self.get('statusBarEl');
             v = parseInt(v, 10);
             // 减去顶部和底部工具条高度
             v -= (toolBarEl && toolBarEl.outerHeight() || 0) +
@@ -123,10 +124,10 @@ var  logger = S.getLogger('s/editor');
             var self = this,
                 iframe = self.get('iframe'),
                 textarea = self.get('textarea');
-            if (v == WYSIWYG_MODE) {
+            if (v === WYSIWYG_MODE) {
                 self.setData(textarea.val());
                 textarea.hide();
-                self.fire("wysiwygMode");
+                self.fire('wysiwygMode');
             } else {
                 // 刚开始就配置 mode 为 sourcecode
                 if (iframe) {
@@ -134,7 +135,7 @@ var  logger = S.getLogger('s/editor');
                     iframe.hide();
                 }
                 textarea.show();
-                self.fire("sourceMode");
+                self.fire('sourceMode');
             }
         },
 
@@ -156,7 +157,7 @@ var  logger = S.getLogger('s/editor');
             if (self.get('attachForm') &&
                 (form = textarea[0].form) &&
                 (form = $(form))) {
-                form.detach("submit", self.sync, self);
+                form.detach('submit', self.sync, self);
             }
 
             if (doc) {
@@ -190,7 +191,7 @@ var  logger = S.getLogger('s/editor');
          */
         sync: function () {
             var self = this;
-            self.get("textarea").val(self.getData());
+            self.get('textarea').val(self.getData());
         },
 
         /**
@@ -231,8 +232,8 @@ var  logger = S.getLogger('s/editor');
             d.show(args);
             self.fire('dialogShow', {
                 dialog: d.dialog,
-                "pluginDialog": d,
-                "dialogName": name
+                'pluginDialog': d,
+                'dialogName': name
             });
         },
 
@@ -288,12 +289,12 @@ var  logger = S.getLogger('s/editor');
             var self = this,
                 htmlDataProcessor,
                 afterData = data;
-            if (self.get('mode') != WYSIWYG_MODE) {
+            if (self.get('mode') !== WYSIWYG_MODE) {
                 // 代码模式下不需过滤
                 self.get('textarea').val(data);
                 return;
             }
-            if (htmlDataProcessor = self.htmlDataProcessor) {
+            if ((htmlDataProcessor = self.htmlDataProcessor)) {
                 afterData = htmlDataProcessor.toDataFormat(data);
             }
             // https://github.com/kissyteam/kissy-editor/issues/17, 重建最保险
@@ -312,10 +313,10 @@ var  logger = S.getLogger('s/editor');
             var self = this,
                 htmlDataProcessor = self.htmlDataProcessor,
                 html;
-            if (mode == undefined) {
+            if (mode === undefined) {
                 mode = self.get('mode');
             }
-            if (mode == WYSIWYG_MODE && self.isDocReady()) {
+            if (mode === WYSIWYG_MODE && self.isDocReady()) {
                 html = self.get('document')[0].body.innerHTML;
             } else {
                 html = htmlDataProcessor.toDataFormat(self.get('textarea').val());
@@ -397,14 +398,18 @@ var  logger = S.getLogger('s/editor');
             var doc = self.get('document')[0];
             win = win[0];
             // firefox7 need this
-            if (!UA['ie']) {
+            if (!UA.ie) {
                 // note : 2011-11-17 report by 石霸
                 // ie 的 parent 不能 focus ，否则会使得 iframe 内的编辑器光标回到开头
-                win && win.parent && win.parent.focus();
+                if (win && win.parent) {
+                    win.parent.focus();
+                }
             }
             // yiminghe note:webkit need win.focus
             // firefox 7 needs also?
-            win && win.focus();
+            if (win) {
+                win.focus();
+            }
             // ie and firefox need body focus
             try {
                 doc.body.focus();
@@ -435,10 +440,10 @@ var  logger = S.getLogger('s/editor');
             var self = this,
                 win = self.get('window'),
                 customStyle = self.get('customStyle') || '';
-            customStyle += "\n" + cssText;
+            customStyle += '\n' + cssText;
             self.set('customStyle', customStyle);
             if (win) {
-                win['addStyleSheet'](cssText, id);
+                win.addStyleSheet(cssText, id);
             }
         },
 
@@ -478,13 +483,13 @@ var  logger = S.getLogger('s/editor');
                 doc = self.get('document'),
                 links = doc.all('link');
             links.each(function (l) {
-                if (l.attr('href') == link) {
+                if (l.attr('href') === link) {
                     l.remove();
                 }
             });
             var cls = self.get('customLink'),
                 ind = S.indexOf(link, cls);
-            if (ind != -1) {
+            if (ind !== -1) {
                 cls.splice(ind, 1);
             }
         },
@@ -566,9 +571,9 @@ var  logger = S.getLogger('s/editor');
             self.focus();
 
             var clone,
-                elementName = element['nodeName'](),
-                xhtml_dtd = Editor.XHTML_DTD,
-                isBlock = xhtml_dtd['$block'][ elementName ],
+                elementName = element.nodeName(),
+                xhtmlDtd = Editor.XHTML_DTD,
+                isBlock = xhtmlDtd.$block[ elementName ],
                 KER = Editor.RangeType,
                 selection = self.getSelection(),
                 ranges = selection && selection.getRanges(),
@@ -579,7 +584,7 @@ var  logger = S.getLogger('s/editor');
                 nextName,
                 lastElement;
 
-            if (!ranges || ranges.length == 0) {
+            if (!ranges || ranges.length === 0) {
                 return undefined;
             }
 
@@ -589,7 +594,7 @@ var  logger = S.getLogger('s/editor');
                 range = ranges[ i ];
                 // Remove the original contents.
 
-                clone = !i && element || element['clone'](TRUE);
+                clone = !i && element || element.clone(TRUE);
                 range.insertNodeByDtd(clone);
                 // Save the last element reference so we can make the
                 // selection later.
@@ -608,12 +613,12 @@ var  logger = S.getLogger('s/editor');
             if (isBlock) {
                 notWhitespaceEval = Editor.Walker.whitespaces(true);
                 next = lastElement.next(notWhitespaceEval, 1);
-                nextName = next && next[0].nodeType == NodeType.ELEMENT_NODE
-                    && next.nodeName();
+                nextName = next && next[0].nodeType === NodeType.ELEMENT_NODE &&
+                    next.nodeName();
                 // Check if it's a block element that accepts text.
                 if (nextName &&
-                    xhtml_dtd.$block[ nextName ] &&
-                    xhtml_dtd[ nextName ]['#text']) {
+                    xhtmlDtd.$block[ nextName ] &&
+                    xhtmlDtd[ nextName ]['#text']) {
                     range.moveToElementEditablePosition(next);
                 }
             }
@@ -621,7 +626,7 @@ var  logger = S.getLogger('s/editor');
             self.focus();
             // http://code.google.com/p/kissy/issues/detail?can=1&start=100&id=121
             // only tag can scroll
-            if (clone && clone[0].nodeType == 1) {
+            if (clone && clone[0].nodeType === 1) {
                 clone.scrollIntoView(undefined, {
                     alignWithTop: false,
                     allowHorizontalScroll: true,
@@ -647,7 +652,7 @@ var  logger = S.getLogger('s/editor');
                 return;
             }
 
-            if (htmlDataProcessor = self.htmlDataProcessor) {
+            if ((htmlDataProcessor = self.htmlDataProcessor)) {
                 data = htmlDataProcessor.toDataFormat(data, dataFilter);
             }
 
@@ -658,7 +663,7 @@ var  logger = S.getLogger('s/editor');
             // ie9 标准 selection 有问题，连续插入不能定位光标到插入内容后面
             if (IS_IE) {
                 var $sel = editorDoc.selection;
-                if ($sel.type == 'Control') {
+                if ($sel.type === 'Control') {
                     $sel.clear();
                 }
                 try {
@@ -677,14 +682,14 @@ var  logger = S.getLogger('s/editor');
                     setTimeout(function () {
                         // still not ok in ff!
                         // 手动选择 body 的第一个节点
-                        if (self.getSelection().getRanges().length == 0) {
+                        if (self.getSelection().getRanges().length === 0) {
                             var r = new Editor.Range(editorDoc),
                                 node = $(editorDoc.body).first(function (el) {
-                                    return el.nodeType == 1 && el.nodeName.toLowerCase() != 'br';
+                                    return el.nodeType === 1 && el.nodeName.toLowerCase() !== 'br';
                                 });
                             if (!node) {
                                 node = $(editorDoc.createElement('p'));
-                                node._4e_appendBogus().appendTo(editorDoc.body);
+                                node._4eAppendBogus().appendTo(editorDoc.body);
                             }
                             r.setStartAt(node, Editor.RangeType.POSITION_AFTER_START);
                             r.select();
@@ -737,7 +742,7 @@ var  logger = S.getLogger('s/editor');
      初始化iframe内容以及浏览器间兼容性处理，
      必须等待iframe内的脚本向父窗口通知
      */
-    Editor["_initIframe"] = function (id) {
+    Editor._initIframe = function (id) {
         var self = focusManager.getInstance(id),
             $doc = self.get('document'),
             doc = $doc[0],
@@ -774,24 +779,26 @@ var  logger = S.getLogger('s/editor');
         // 2.0 body.contentEditable=true body外不是编辑模式
         if (IS_IE) {
             // Don't display the focus border.
-            body['hideFocus'] = TRUE;
+            body.hideFocus = TRUE;
             // Disable and re-enable the body to avoid IE from
             // taking the editing focus at startup. (#141 / #523)
             body.disabled = TRUE;
-            body['contentEditable'] = TRUE;
+            body.contentEditable = TRUE;
             body.removeAttribute('disabled');
         } else {
             // Avoid opening design mode in a frame window thread,
             // which will cause host page scrolling.(#4397)
             setTimeout(function () {
                 // Prefer 'contentEditable' instead of 'designMode'. (#3593)
-                if (UA['gecko'] || UA['opera']) {
-                    body['contentEditable'] = TRUE;
+                if (UA.gecko || UA.opera) {
+                    body.contentEditable = TRUE;
                 }
-                else if (UA['webkit'])
-                    body.parentNode['contentEditable'] = TRUE;
-                else
-                    doc['designMode'] = 'on';
+                else if (UA.webkit) {
+                    body.parentNode.contentEditable = TRUE;
+                }
+                else {
+                    doc.designMode = 'on';
+                }
             }, 0);
         }
 
@@ -801,13 +808,13 @@ var  logger = S.getLogger('s/editor');
         if (
         // ie6,7 点击滚动条失效
         // IS_IE
-        // && doc.compatMode == 'CSS1Compat'
+        // && doc.compatMode === 'CSS1Compat'
         // wierd ,sometimes ie9 break
         // ||
         // 2012-01-11 ie 处理装移到 selection.js :
         // IE has an issue where you can't select/move the caret by clicking outside the body if the document is in standards mode
         // doc['documentMode']
-            UA['gecko'] || UA['opera']
+            UA.gecko || UA.opera
             ) {
             var htmlElement = doc.documentElement;
             $(htmlElement).on('mousedown', function (evt) {
@@ -818,8 +825,8 @@ var  logger = S.getLogger('s/editor');
                 // return;
                 // 左键激活
                 var t = evt.target;
-                if (t == htmlElement) {
-                    if (UA['gecko']) {
+                if (t === htmlElement) {
+                    if (UA.gecko) {
                         blinkCursor(doc, FALSE);
                     }
                     //setTimeout(function() {
@@ -845,8 +852,8 @@ var  logger = S.getLogger('s/editor');
             if (IS_IE) {
                 setTimeout(function () {
                     if (doc) {
-                        body.runtimeStyle['marginBottom'] = '0px';
-                        body.runtimeStyle['marginBottom'] = '';
+                        body.runtimeStyle.marginBottom = '0px';
+                        body.runtimeStyle.marginBottom = '';
                     }
                 }, 1000);
             }
@@ -890,31 +897,32 @@ var  logger = S.getLogger('s/editor');
         var body = doc.body;
         tryThese(
             function () {
-                doc['designMode'] = 'on';
+                doc.designMode = 'on';
                 //异步引起时序问题，尽可能小间隔
-                setTimeout(function () {
-                    doc['designMode'] = 'off';
+                setTimeout(function go() {
+                    doc.designMode = 'off';
                     body.focus();
                     // Try it again once..
-                    if (!arguments.callee.retry) {
-                        arguments.callee.retry = TRUE;
+                    if (!go.retry) {
+                        go.retry = TRUE;
                         //arguments.callee();
                     }
                 }, 50);
             },
             function () {
-                doc['designMode'] = 'off';
+                doc.designMode = 'off';
                 body.setAttribute('contentEditable', false);
                 body.setAttribute('contentEditable', true);
                 // Try it again once..
-                !retry && blinkCursor(doc, 1);
+                if (!retry) {
+                    blinkCursor(doc, 1);
+                }
             }
         );
     }
 
     function fixByBindIframeDoc(self) {
-        var iframe = self.get('iframe'),
-            textarea = self.get('textarea')[0],
+        var textarea = self.get('textarea')[0],
             $win = self.get('window'),
             $doc = self.get('document'),
             doc = $doc[0];
@@ -923,7 +931,7 @@ var  logger = S.getLogger('s/editor');
         // ability when document is empty.(#3864)
         // activateEditing 删掉，初始引起屏幕滚动了
         // Webkit: avoid from editing form control elements content.
-        if (UA['webkit']) {
+        if (UA.webkit) {
             $doc.on('click', function (ev) {
                 var control = new Node(ev.target);
                 if (S.inArray(control.nodeName(), ['input', 'select'])) {
@@ -940,7 +948,7 @@ var  logger = S.getLogger('s/editor');
         }
 
         // Create an invisible element to grab focus.
-        if (UA['gecko'] || UA.ie || UA['opera']) {
+        if (UA.gecko || UA.ie || UA.opera) {
             var focusGrabber;
             focusGrabber = new Node(
                 // Use 'span' instead of anything else to fly under the screen-reader radar. (#5049)
@@ -953,8 +961,9 @@ var  logger = S.getLogger('s/editor');
                 self.focus();
             });
             self.activateGecko = function () {
-                if ((UA['gecko']) && self.__iframeFocus)
+                if ((UA.gecko) && self.__iframeFocus) {
                     focusGrabber[0].focus();
+                }
             };
             self.on('destroy', function () {
                 focusGrabber.detach();
@@ -968,17 +977,17 @@ var  logger = S.getLogger('s/editor');
              blink后光标出现在最后，这就需要实现保存range
              focus后再恢复range
              */
-            if (UA['gecko']) {
+            if (UA.gecko) {
                 blinkCursor(doc, FALSE);
             }
-            else if (UA['opera']) {
+            else if (UA.opera) {
                 doc.body.focus();
             }
             // focus 后强制刷新自己状态
             self.notifySelectionChange();
         });
 
-        if (UA['gecko']) {
+        if (UA.gecko) {
             /*
              firefox 焦点丢失后，再点编辑器区域焦点会移不过来，要点两下
              */
@@ -1019,7 +1028,7 @@ var  logger = S.getLogger('s/editor');
             // PageUp/PageDown scrolling is broken in document
             // with standard doctype, manually fix it. (#4736)
             // ie8 主窗口滚动？？
-            if (doc.compatMode == 'CSS1Compat') {
+            if (doc.compatMode === 'CSS1Compat') {
                 var pageUpDownKeys = { 33: 1, 34: 1 };
                 $doc.on('keydown', function (evt) {
                     if (evt.keyCode in pageUpDownKeys) {
@@ -1032,7 +1041,7 @@ var  logger = S.getLogger('s/editor');
         }
 
         // Gecko/Webkit need some help when selecting control type elements. (#3448)
-        if (UA['webkit']) {
+        if (UA.webkit) {
             $doc.on('mousedown', function (ev) {
                 var control = new Node(ev.target);
                 if (S.inArray(control.nodeName(), ['img', 'hr', 'input', 'textarea', 'select'])) {
@@ -1042,7 +1051,7 @@ var  logger = S.getLogger('s/editor');
         }
 
 
-        if (UA['gecko']) {
+        if (UA.gecko) {
             $doc.on('dragstart', function (ev) {
                 var control = new Node(ev.target);
                 if (control.nodeName() === 'img' && /ke_/.test(control[0].className)) {
@@ -1136,7 +1145,7 @@ var  logger = S.getLogger('s/editor');
             self.setInternal('window', new Node(win));
             iframe.detach();
             // Don't leave any history log in IE. (#5657)
-            doc['open']('text/html', 'replace');
+            doc.open('text/html', 'replace');
             doc.write(html);
             doc.close();
         }
@@ -1156,13 +1165,13 @@ var  logger = S.getLogger('s/editor');
             })),
             textarea = self.get('textarea');
         if (textarea.hasAttr('tabindex')) {
-            iframe.attr('tabindex', UA['webkit'] ? -1 : textarea.attr('tabindex'));
+            iframe.attr('tabindex', UA.webkit ? -1 : textarea.attr('tabindex'));
         }
         textarea.parent().prepend(iframe);
         self.set('iframe', iframe);
         self.__docReady = 0;
         // With FF, it's better to load the data on iframe.load. (#3894,#4058)
-        if (UA['gecko'] && !iframe.__loaded) {
+        if (UA.gecko && !iframe.__loaded) {
             iframe.on('load', function () {
                 setUpIFrame(self, afterData);
             }, self);

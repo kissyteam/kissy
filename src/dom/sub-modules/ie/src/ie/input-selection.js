@@ -74,7 +74,7 @@ KISSY.add(function (S,require) {
 
     function getInputRange(elem) {
         // buggy textarea , can not pass inRange test
-        if (elem.type == 'textarea') {
+        if (elem.type === 'textarea') {
             var range = elem.document.body.createTextRange();
             range.moveToElementText(elem);
             return range;
@@ -87,10 +87,10 @@ KISSY.add(function (S,require) {
     function getMovedDistance(elem, s, e) {
         var start = Math.min(s, e);
         var end = Math.max(s, e);
-        if (start == end) {
+        if (start === end) {
             return 0;
         }
-        if (elem.type == "textarea") {
+        if (elem.type === 'textarea') {
             var l = elem.value.substring(start, end).replace(/\r\n/g, '\n').length;
             if (s > e) {
                 l = -l;
@@ -103,19 +103,19 @@ KISSY.add(function (S,require) {
 
     // range.text will not contain "\r\n" if "\r\n" is at end of this range
     function getRangeText(elem, range) {
-        if (elem.type == "textarea") {
+        if (elem.type === 'textarea') {
             var ret = range.text,
                 testRange = range.duplicate();
 
             // collapsed
-            if (testRange.compareEndPoints('StartToEnd', testRange) == 0) {
+            if (testRange.compareEndPoints('StartToEnd', testRange) === 0) {
                 return ret;
             }
 
             testRange.moveEnd('character', -1);
 
             // consider end \r\n
-            if (testRange.text == ret) {
+            if (testRange.text === ret) {
                 ret += '\r\n';
             }
 

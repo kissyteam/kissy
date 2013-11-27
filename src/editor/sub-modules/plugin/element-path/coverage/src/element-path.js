@@ -336,7 +336,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/element-path.js'].lineData[23]++;
   self.holder = new Node("<span>");
   _$jscoverage['/element-path.js'].lineData[24]++;
-  self.holder.appendTo(editor.get("statusBarEl"), undefined);
+  self.holder.appendTo(editor.get('statusBarEl'), undefined);
   _$jscoverage['/element-path.js'].lineData[25]++;
   editor.on("selectionChange", self._selectionChange, self);
   _$jscoverage['/element-path.js'].lineData[26]++;

@@ -193,9 +193,9 @@ describe("S ComboLoader", function () {
             for (var i = 0; i < 100; i++) {
                 var r2 = [];
                 for (var j = 0; j < 5; j++) {
-                    r2.push("y" + (k++))
+                    r2.push('y' + (k++))
                 }
-                x["y" + i] = {
+                x['y' + i] = {
                     requires: r2
                 }
             }
@@ -208,7 +208,7 @@ describe("S ComboLoader", function () {
 
             var ret = [];
             for (i = 0; i < 100; i++) {
-                ret.push("y" + i);
+                ret.push('y' + i);
             }
             var r;
             r = S.keys(l.calculate(ret));

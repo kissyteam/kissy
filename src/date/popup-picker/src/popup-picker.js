@@ -3,7 +3,7 @@
  * popup date picker
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S,require) {
+KISSY.add(function (S, require) {
     var PopupPickerTpl = require('./popup-picker/render-xtpl'),
         DatePicker = require('date/picker'),
         Shim = require('component/extension/shim'),

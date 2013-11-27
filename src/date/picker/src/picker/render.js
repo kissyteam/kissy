@@ -3,9 +3,8 @@
  * render for year panel
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S,require) {
-    var module = this;
-    var DateTimeFormat =require('date/format'),
+KISSY.add(function (S, require) {
+    var DateTimeFormat = require('date/format'),
         PickerTpl = require('./picker-xtpl'),
         Control = require('component/control');
     var dateRowTplStart = '<tr role="row">';
@@ -31,21 +30,21 @@ KISSY.add(function (S,require) {
     }
 
     function isSameDay(one, two) {
-        return one.getYear() == two.getYear() &&
-            one.getMonth() == two.getMonth() &&
-            one.getDayOfMonth() == two.getDayOfMonth();
+        return one.getYear() === two.getYear() &&
+            one.getMonth() === two.getMonth() &&
+            one.getDayOfMonth() === two.getDayOfMonth();
     }
 
     function isSameMonth(one, two) {
-        return one.getYear() == two.getYear() &&
-            one.getMonth() == two.getMonth();
+        return one.getYear() === two.getYear() &&
+            one.getMonth() === two.getMonth();
     }
 
     function beforeCurrentMonthYear(current, today) {
         if (current.getYear() < today.getYear()) {
             return 1;
         }
-        return current.getYear() == today.getYear() &&
+        return current.getYear() === today.getYear() &&
             current.getMonth() < today.getMonth();
     }
 
@@ -53,7 +52,7 @@ KISSY.add(function (S,require) {
         if (current.getYear() > today.getYear()) {
             return 1;
         }
-        return current.getYear() == today.getYear() &&
+        return current.getYear() === today.getYear() &&
             current.getMonth() > today.getMonth();
     }
 
@@ -202,8 +201,7 @@ KISSY.add(function (S,require) {
                     }
 
                     var dateHtml = '';
-                    if (dateRender && (dateHtml = dateRender(current, value))) {
-                    } else {
+                    if (!(dateRender && (dateHtml = dateRender(current, value)))) {
                         dateHtml = S.substitute(dateTpl, {
                             cls: dateClass,
                             id: getIdFromDate(current),
@@ -257,8 +255,7 @@ KISSY.add(function (S,require) {
                 var prevA = this.$('#' + getIdFromDate(preValue));
                 prevA.parent().removeClass(selectedCls);
                 prevA.attr('aria-selected', false);
-                if (disabledDate && disabledDate(value, value)) {
-                } else {
+                if (!(disabledDate && disabledDate(value, value))) {
                     var currentA = this.$('#' + getIdFromDate(value));
                     currentA.parent().addClass(selectedCls);
                     currentA.attr('aria-selected', true);

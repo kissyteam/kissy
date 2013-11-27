@@ -80,7 +80,7 @@ KISSY.add(function (S, require) {
         //dir : -1 ,+1
         //skip disabled items
         _getNextEnabledHighlighted: function (index, dir) {
-            var children = this.get("children"),
+            var children = this.get('children'),
                 len = children.length,
                 o = index;
             do {
@@ -118,7 +118,7 @@ KISSY.add(function (S, require) {
                 return true;
             }
 
-            var children = self.get("children"),
+            var children = self.get('children'),
                 len = children.length;
 
             if (len === 0) {

@@ -83,7 +83,7 @@ KISSY.add(function (S, require) {
          * @private
          */
         pluginDestructor: function (drag) {
-            drag['detach'](SCROLL_EVENT);
+            drag.detach(SCROLL_EVENT);
         },
 
         /**

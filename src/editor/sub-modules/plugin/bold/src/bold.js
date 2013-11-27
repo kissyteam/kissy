@@ -19,7 +19,7 @@ KISSY.add(function (S, require) {
             }, ui.Button);
 
             editor.docReady(function () {
-                editor.get("document").on("keydown", function (e) {
+                editor.get("document").on('keydown', function (e) {
                     if (e.ctrlKey && e.keyCode == S.Node.KeyCode.B) {
                         editor.execCommand("bold");
                         e.preventDefault();

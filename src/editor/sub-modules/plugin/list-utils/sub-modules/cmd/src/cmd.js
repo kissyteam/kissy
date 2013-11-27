@@ -127,8 +127,8 @@ KISSY.add(function (S, require) {
                 listNode[0].appendChild(listItem[0]);
 
                 // Append a bogus BR to force the LI to render at full height
-                if (!UA['ie'])
-                    listItem._4e_appendBogus(undefined);
+                if (!UA.ie)
+                    listItem._4eAppendBogus(undefined);
             }
             if (insertAnchor[0]) {
                 listNode.insertBefore(insertAnchor, undefined);

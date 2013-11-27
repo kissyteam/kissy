@@ -29,7 +29,7 @@ KISSY.add(function (S, require) {
                 listeners: {
                     afterSyncUI: function () {
                         var self = this;
-                        self.on("blur", function () {
+                        self.on('blur', function () {
                             // make click event fire
                             setTimeout(function () {
                                 self.smiley && self.smiley.hide();
@@ -51,7 +51,7 @@ KISSY.add(function (S, require) {
                                     zIndex: Editor.baseZIndex(Editor.ZIndexManager.POPUP_MENU),
                                     mask: false
                                 }).render();
-                                smiley.get("el").on("click", function (ev) {
+                                smiley.get('el').on("click", function (ev) {
                                     var t = new S.Node(ev.target),
                                         icon;
                                     if (t.nodeName() == "a" &&
@@ -63,12 +63,12 @@ KISSY.add(function (S, require) {
                                         editor.insertElement(img);
                                     }
                                 });
-                                smiley.on("hide", function () {
+                                smiley.on('hide', function () {
                                     self.set("checked", false);
                                 });
                             }
                             smiley.set("align", {
-                                node: this.get("el"),
+                                node: this.get('el'),
                                 points: ['bl', 'tl'],
                                 overflow: {
                                     adjustX: 1,

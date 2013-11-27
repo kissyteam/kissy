@@ -301,7 +301,7 @@ KISSY.add(function (S, Dom) {
             });
         });
 
-        describe("remove", function () {
+        describe('remove', function () {
             it("should remove attribute correctly", function () {
                 // normal
                 Dom.attr(label, 'test-remove', 'xx');
@@ -377,29 +377,29 @@ KISSY.add(function (S, Dom) {
             });
         });
 
-        describe("tabindex", function () {
+        describe('tabindex', function () {
             it("should handle tabindex correctly", function () {
-                Dom.removeAttr(select, "tabindex");
-                expect(Dom.hasAttr(select, "tabindex")).toBe(false);
+                Dom.removeAttr(select, 'tabindex');
+                expect(Dom.hasAttr(select, 'tabindex')).toBe(false);
                 Dom.attr(select, 'tabindex', 1);
-                expect(Dom.attr(select, "tabindex")).toBe(1);
-                expect(Dom.hasAttr(select, "tabindex")).toBe(true);
-                Dom.removeAttr(select, "tabindex");
-                expect(Dom.hasAttr(select, "tabindex")).toBe(false);
+                expect(Dom.attr(select, 'tabindex')).toBe(1);
+                expect(Dom.hasAttr(select, 'tabindex')).toBe(true);
+                Dom.removeAttr(select, 'tabindex');
+                expect(Dom.hasAttr(select, 'tabindex')).toBe(false);
 
                 var a = Dom.create("<a></a>");
-                expect(Dom.hasAttr(a, "tabindex")).toBe(false);
+                expect(Dom.hasAttr(a, 'tabindex')).toBe(false);
 
-                expect(Dom.attr(a, "tabindex")).toBe(undefined);
-                expect($(a).attr("tabindex")).toBe(undefined);
+                expect(Dom.attr(a, 'tabindex')).toBe(undefined);
+                expect($(a).attr('tabindex')).toBe(undefined);
 
                 a = Dom.create("<a href='#'></a>");
-                expect(Dom.hasAttr(a, "tabindex")).toBe(false);
-                expect(Dom.attr(a, "tabindex")).toBe(0);
+                expect(Dom.hasAttr(a, 'tabindex')).toBe(false);
+                expect(Dom.attr(a, 'tabindex')).toBe(0);
 
                 a = Dom.create("<a href='#' tabindex='2'></a>");
-                expect(Dom.hasAttr(a, "tabindex")).toBe(true);
-                expect(Dom.attr(a, "tabindex")).toBe(2);
+                expect(Dom.hasAttr(a, 'tabindex')).toBe(true);
+                expect(Dom.attr(a, 'tabindex')).toBe(2);
             });
         });
         describe("prop", function () {

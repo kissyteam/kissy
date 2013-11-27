@@ -304,7 +304,7 @@ KISSY.add(function (S,require) {
                 var lastChild = new Node(block[0].lastChild);
                 if (lastChild[0] && lastChild[0].nodeType == Dom.NodeType.ELEMENT_NODE && lastChild.nodeName() == 'br') {
                     // Take care not to remove the block expanding <br> in non-IE browsers.
-                    if (UA['ie']
+                    if (UA.ie
                         || lastChild.prev(bookmarkGuard, 1)
                         || lastChild.next(bookmarkGuard, 1))
                         lastChild.remove();

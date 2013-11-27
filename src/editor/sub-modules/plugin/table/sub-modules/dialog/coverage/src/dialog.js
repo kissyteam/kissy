@@ -807,7 +807,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/dialog.js'].lineData[231]++;
   visit4_231_1(ev && ev.halt());
   _$jscoverage['/dialog.js'].lineData[232]++;
-  var self = this, tableDialog = self.dialog, inputs = tableDialog.get("el").all('input');
+  var self = this, tableDialog = self.dialog, inputs = tableDialog.get('el').all('input');
   _$jscoverage['/dialog.js'].lineData[236]++;
   if (visit5_236_1(tableDialog.twidthunit.get("value") == "%")) {
     _$jscoverage['/dialog.js'].lineData[237]++;
@@ -1071,12 +1071,12 @@ KISSY.add(function(S, require) {
     _$jscoverage['/dialog.js'].lineData[451]++;
     self._fillTableDialog();
     _$jscoverage['/dialog.js'].lineData[454]++;
-    d.get("el").all(replacePrefix(".{prefixCls}editor-table-create-only", prefixCls)).attr('disabled', 'disabled');
+    d.get('el').all(replacePrefix(".{prefixCls}editor-table-create-only", prefixCls)).attr('disabled', 'disabled');
     _$jscoverage['/dialog.js'].lineData[455]++;
     d.thead.set('disabled', true);
   } else {
     _$jscoverage['/dialog.js'].lineData[458]++;
-    d.get("el").all(replacePrefix(".{prefixCls}editor-table-create-only", prefixCls)).removeAttr('disabled');
+    d.get('el').all(replacePrefix(".{prefixCls}editor-table-create-only", prefixCls)).removeAttr('disabled');
     _$jscoverage['/dialog.js'].lineData[459]++;
     d.thead.set('disabled', false);
   }

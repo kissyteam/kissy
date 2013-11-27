@@ -227,7 +227,7 @@ KISSY.add(function (S, require) {
 //            editor.on('blur', function () {
 //                // 把选择区域与光标清除
 //                // Try/Catch to avoid errors if the editor is hidden. (#6375)
-//                // S.log("blur");
+//                // S.log('blur');
 //                try {
 //                    var el = document.documentElement || document.body;
 //                    var top = el.scrollTop, left = el.scrollLeft;
@@ -388,7 +388,7 @@ KISSY.add(function (S, require) {
             // Fix gecko link bug, when a link is placed at the end of block elements there is
             // no way to move the caret behind the link. This fix adds a bogus br element after the link
             // kissy-editor #12
-            if (UA['gecko']) {
+            if (UA.gecko) {
                 var pathBlock = path.block || path.blockLimit,
                     lastNode = pathBlock && pathBlock.last(isNotEmpty);
                 if (pathBlock
@@ -400,7 +400,7 @@ KISSY.add(function (S, require) {
                     && pathBlock.nodeName() != 'pre'
                     // does not have bogus
                     && !pathBlock._4e_getBogus()) {
-                    pathBlock._4e_appendBogus();
+                    pathBlock._4eAppendBogus();
                 }
             }
 
@@ -460,8 +460,8 @@ KISSY.add(function (S, require) {
             // 不位于 <body><p>^</p></body>
             if (lastPath.blockLimit.nodeName() !== 'body') {
                 editBlock = new Node(doc.createElement('p')).appendTo(body);
-                if (!UA['ie']) {
-                    editBlock._4e_appendBogus();
+                if (!UA.ie) {
+                    editBlock._4eAppendBogus();
                 }
             }
         });

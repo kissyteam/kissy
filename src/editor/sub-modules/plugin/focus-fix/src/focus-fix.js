@@ -19,7 +19,7 @@ KISSY.add(function (S, require) {
          * then IE would still leave the caret inside the editing area.
          */
         // ie9 图片resize框，仍然会突出
-        if (UA['ie'] && editor) {
+        if (UA.ie && editor) {
             // 聚焦到当前窗口
             // 使得编辑器失去焦点，促使ie保存当前选择区域（位置）
             // chrome 需要下面两句
@@ -45,7 +45,7 @@ KISSY.add(function (S, require) {
                     $range.item
                         && $range.item(0).ownerDocument == editor.get("document")[0]) {
                     var $myRange = document.body.createTextRange();
-                    $myRange.moveToElementText(self.get("el").first()[0]);
+                    $myRange.moveToElementText(self.get('el').first()[0]);
                     $myRange.collapse(true);
                     $myRange.select();
                 }
@@ -65,7 +65,7 @@ KISSY.add(function (S, require) {
                     _show4FocusExt.call(self);
                 }
             });
-            self.on("hide", function () {
+            self.on('hide', function () {
                 _hide4FocusExt.call(self);
             });
         }

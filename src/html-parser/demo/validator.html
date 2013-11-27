@@ -45,8 +45,8 @@
                     }
                 }
 
-                if (node.nodeName == "textarea") {
-                    lexer.parseCDATA(false, "textarea");
+                if (node.nodeName == 'textarea') {
+                    lexer.parseCDATA(false, 'textarea');
                 }
                 if (node.nodeName == "style" || node.nodeName == "script") {
                     lexer.parseCDATA(true, node.nodeName);

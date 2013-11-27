@@ -556,7 +556,7 @@ KISSY.add(function (S, Dom, Event) {
             Event.on(domNode, "click", noop);
             Event.on(domNode, "click", noop2);
             Event.on(domNode, "click", noop3);
-            Event.on(domNode, "keydown", noop);
+            Event.on(domNode, 'keydown', noop);
 
             (function () {
                 var eventDesc = DomEventUtils.data(domNode);
@@ -573,7 +573,7 @@ KISSY.add(function (S, Dom, Event) {
                 num = 0;
                 for (i in domEventObservables) {
 
-                    expect(S.inArray(i, ["click", "keydown"]))
+                    expect(S.inArray(i, ["click", 'keydown']))
                         .toBe(true);
                     num++;
 
@@ -601,7 +601,7 @@ KISSY.add(function (S, Dom, Event) {
                 num = 0;
                 for (i in domEventObservables) {
 
-                    expect(S.inArray(i, ["click", "keydown"]))
+                    expect(S.inArray(i, ["click", 'keydown']))
                         .toBe(true);
                     num++;
 
@@ -629,7 +629,7 @@ KISSY.add(function (S, Dom, Event) {
                 num = 0;
                 for (i in domEventObservables) {
 
-                    expect(S.inArray(i, ["keydown"]))
+                    expect(S.inArray(i, ['keydown']))
                         .toBe(true);
                     num++;
 

@@ -15,7 +15,7 @@ KISSY.add(function(S,require){
     function goYear(self, direction) {
         var next = self.get('value').clone();
         next.addYear( direction);
-        self.set('value',next)
+        self.set('value',next);
     }
 
     function nextYear(e) {
@@ -92,5 +92,5 @@ KISSY.add(function(S,require){
                 value:MonthPanelRender
             }
         }
-    })
+    });
 });

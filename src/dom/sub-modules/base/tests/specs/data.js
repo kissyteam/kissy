@@ -97,17 +97,17 @@ KISSY.add(function (S, Dom) {
         it("hasData should works", function () {
             var p = Dom.create("<p>");
             // 给所有的段落节点设置扩展属性 ``x`` ，值为 ``y``
-            Dom.data(p, "x", "y");
+            Dom.data(p, 'x', 'y');
 
             expect(Dom.hasData(p)).toBe(true); // => true , 设置过扩展属性
 
-            expect(Dom.hasData(p, "x")).toBe(true); // => true , 设置过扩展属性 ``x`` 的值
+            expect(Dom.hasData(p, 'x')).toBe(true); // => true , 设置过扩展属性 ``x`` 的值
 
             expect(Dom.hasData(p, "z")).toBe(false); // => false , 没有设置过扩展属性 ``z`` 的值
 
-            Dom.removeData(p, "x"); // => 删除扩展属性 ``x`` 的值
+            Dom.removeData(p, 'x'); // => 删除扩展属性 ``x`` 的值
 
-            expect(Dom.hasData(p, "x")).toBe(false); //=> false
+            expect(Dom.hasData(p, 'x')).toBe(false); //=> false
 
             expect(Dom.hasData(p)).toBe(false); //=> false
 

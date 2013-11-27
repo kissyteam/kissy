@@ -54,7 +54,7 @@ KISSY.add(function (S, ComboBox) {
 
             t.focus();
 
-            jasmine.simulate(t, "keydown");
+            jasmine.simulate(t, 'keydown');
 
             waits(100);
 
@@ -70,7 +70,7 @@ KISSY.add(function (S, ComboBox) {
 
             runs(function () {
                 // firefox will not trigger blur event??
-                // $(t).fire("blur");
+                // $(t).fire('blur');
                 t.blur();
             });
 
@@ -82,7 +82,7 @@ KISSY.add(function (S, ComboBox) {
                     error = err;
                 });
                 expect(error).toBe(ERROR);
-                expect(comboBox.get("el").hasClass("ks-combobox-invalid")).toBe(true);
+                expect(comboBox.get('el').hasClass("ks-combobox-invalid")).toBe(true);
                 expect(comboBox.get('invalidEl').css("display")).toBe("block");
                 expect(comboBox.get('invalidEl').attr('title')).toBe(ERROR);
             });
@@ -94,7 +94,7 @@ KISSY.add(function (S, ComboBox) {
 
             runs(function () {
                 t.focus();
-                jasmine.simulate(t, "keydown");
+                jasmine.simulate(t, 'keydown');
             });
 
             waits(100);
@@ -112,7 +112,7 @@ KISSY.add(function (S, ComboBox) {
 
             runs(function () {
                 // firefox will not trigger blur event??
-                // $(t).fire("blur");
+                // $(t).fire('blur');
                 t.blur();
             });
 
@@ -124,7 +124,7 @@ KISSY.add(function (S, ComboBox) {
                     error = err;
                 });
                 expect(error).toBe("");
-                expect(comboBox.get("el").hasClass("ks-combobox-invalid")).toBe(false);
+                expect(comboBox.get('el').hasClass("ks-combobox-invalid")).toBe(false);
                 expect(comboBox.get('invalidEl').css("display")).toBe("none");
             });
 
@@ -167,7 +167,7 @@ KISSY.add(function (S, ComboBox) {
 
             t.focus();
 
-            jasmine.simulate(t, "keydown");
+            jasmine.simulate(t, 'keydown');
 
             waits(100);
 
@@ -184,7 +184,7 @@ KISSY.add(function (S, ComboBox) {
 
             runs(function () {
                 // firefox will not trigger blur event??
-                // $(t).fire("blur");
+                // $(t).fire('blur');
                 t.blur();
             });
 
@@ -196,7 +196,7 @@ KISSY.add(function (S, ComboBox) {
                     error = err;
                 });
                 expect(error).toBe(ERROR);
-                expect(comboBox.get("el").hasClass("ks-combobox-invalid")).toBe(true);
+                expect(comboBox.get('el').hasClass("ks-combobox-invalid")).toBe(true);
                 expect(comboBox.get('invalidEl').css("display")).toBe("block");
                 expect(comboBox.get('invalidEl').attr('title')).toBe(ERROR);
             });
@@ -208,7 +208,7 @@ KISSY.add(function (S, ComboBox) {
 
             runs(function () {
                 t.focus();
-                jasmine.simulate(t, "keydown");
+                jasmine.simulate(t, 'keydown');
             });
 
             waits(100);
@@ -226,7 +226,7 @@ KISSY.add(function (S, ComboBox) {
 
             runs(function () {
                 // firefox will not trigger blur event??
-                // $(t).fire("blur");
+                // $(t).fire('blur');
                 t.blur();
             });
 
@@ -238,7 +238,7 @@ KISSY.add(function (S, ComboBox) {
                     error = err;
                 });
                 expect(error).toBe("");
-                expect(comboBox.get("el").hasClass("ks-combobox-invalid")).toBe(false);
+                expect(comboBox.get('el').hasClass("ks-combobox-invalid")).toBe(false);
                 expect(comboBox.get('invalidEl').css("display")).toBe("none");
             });
 

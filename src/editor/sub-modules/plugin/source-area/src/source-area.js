@@ -19,10 +19,10 @@ KISSY.add(function (S, require) {
                 listeners: {
                     afterSyncUI: function () {
                         var self = this;
-                        editor.on("wysiwygMode", function () {
+                        editor.on('wysiwygMode', function () {
                             self.set("checked", false);
                         });
-                        editor.on("sourceMode", function () {
+                        editor.on('sourceMode', function () {
                             self.set("checked", true);
                         });
 

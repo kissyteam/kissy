@@ -21,7 +21,7 @@ KISSY.add(function (S, require) {
                 cfg = self.cfg,
                 editor = cfg.editor;
             self.holder = new Node("<span>");
-            self.holder.appendTo(editor.get("statusBarEl"), undefined);
+            self.holder.appendTo(editor.get('statusBarEl'), undefined);
             editor.on("selectionChange", self._selectionChange, self);
             Editor.Utils.sourceDisable(editor, self);
         },

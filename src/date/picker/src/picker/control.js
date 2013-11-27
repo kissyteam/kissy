@@ -12,7 +12,6 @@ KISSY.add(function (S, require) {
         MonthPanel = require('./month-panel/control');
     var tap = Node.Gesture.tap;
     var $ = Node.all;
-    var undefined = undefined;
     var KeyCode = Node.KeyCode;
 
     function goStartMonth(self) {
@@ -79,7 +78,7 @@ KISSY.add(function (S, require) {
         var td = $(e.currentTarget);
         var value = self.dateTable[parseInt(td.attr('data-index'))];
         if (disabledDate && disabledDate(value, self.get('value'))) {
-            return
+            return;
         }
         self.set('value', value);
         self.fire('select', {

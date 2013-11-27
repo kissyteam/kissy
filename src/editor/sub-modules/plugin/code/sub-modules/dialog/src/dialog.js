@@ -6,7 +6,7 @@
 KISSY.add(function (S, require) {
     var Editor = require('editor');
     var MenuButton = require('menubutton');
-    var xhtml_dtd = Editor.XHTML_DTD;
+    var xhtmlDtd = Editor.XHTML_DTD;
     var NodeType = S.DOM.NodeType;
     var notWhitespaceEval = Editor.Walker.whitespaces(true);
     var Dialog4E = require('../dialog');
@@ -151,12 +151,12 @@ KISSY.add(function (S, require) {
                 && next.nodeName();
             // Check if it's a block element that accepts text.
             if (nextName &&
-                xhtml_dtd.$block[ nextName ] &&
-                xhtml_dtd[ nextName ]['#text']) {
+                xhtmlDtd.$block[ nextName ] &&
+                xhtmlDtd[ nextName ]['#text']) {
             } else {
                 next = S.all("<p></p>", editor.get('document')[0]);
                 if (!S.UA.ie) {
-                    next._4e_appendBogus();
+                    next._4eAppendBogus();
                 }
                 codeEl.after(next);
             }

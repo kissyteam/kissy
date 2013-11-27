@@ -44,7 +44,7 @@
             if (data === null) {
                 return data;
             }
-            if (typeof data === "string") {
+            if (typeof data === 'string') {
                 // for ie
                 data = S.trim(data);
                 if (data) {

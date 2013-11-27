@@ -12,7 +12,7 @@ KISSY.add(function (S, require, exports, module) {
                 getExpressionUtil = utils["getExpression"],
                 getPropertyOrRunCommandUtil = utils["getPropertyOrRunCommand"];
             buffer += '<div id="ks-tree-node-row-';
-            var id0 = getPropertyOrRunCommandUtil(engine, scopes, {}, "id", 0, 1, undefined, false);
+            var id0 = getPropertyOrRunCommandUtil(engine, scopes, {}, 'id', 0, 1, undefined, false);
             buffer += getExpressionUtil(id0, true);
             buffer += '"\n     class="';
             var config2 = {};
@@ -41,7 +41,7 @@ KISSY.add(function (S, require, exports, module) {
             };
             buffer += runBlockCommandUtil(engine, scopes, config4, "if", 3);
             buffer += '\n     ">\n    <div id="ks-tree-node-expand-icon-';
-            var id10 = getPropertyOrRunCommandUtil(engine, scopes, {}, "id", 0, 7, undefined, false);
+            var id10 = getPropertyOrRunCommandUtil(engine, scopes, {}, 'id', 0, 7, undefined, false);
             buffer += getExpressionUtil(id10, true);
             buffer += '"\n         class="';
             var config12 = {};
@@ -59,7 +59,7 @@ KISSY.add(function (S, require, exports, module) {
             config14.fn = function (scopes) {
                 var buffer = "";
                 buffer += '\n    <div id="ks-tree-node-checked-';
-                var id17 = getPropertyOrRunCommandUtil(engine, scopes, {}, "id", 0, 11, undefined, false);
+                var id17 = getPropertyOrRunCommandUtil(engine, scopes, {}, 'id', 0, 11, undefined, false);
                 buffer += getExpressionUtil(id17, true);
                 buffer += '"\n         class="';
                 var config19 = {};
@@ -74,7 +74,7 @@ KISSY.add(function (S, require, exports, module) {
             };
             buffer += runBlockCommandUtil(engine, scopes, config14, "if", 10);
             buffer += '\n    <div id="ks-tree-node-icon-';
-            var id22 = getPropertyOrRunCommandUtil(engine, scopes, {}, "id", 0, 14, undefined, false);
+            var id22 = getPropertyOrRunCommandUtil(engine, scopes, {}, 'id', 0, 14, undefined, false);
             buffer += getExpressionUtil(id22, true);
             buffer += '"\n         class="';
             var config24 = {};
@@ -95,7 +95,7 @@ KISSY.add(function (S, require, exports, module) {
             var id26 = getPropertyOrRunCommandUtil(engine, scopes, config27, "include", 0, 18, false, undefined);
             buffer += id26;
             buffer += '\n</div>\n<div id="ks-tree-node-children-';
-            var id29 = getPropertyOrRunCommandUtil(engine, scopes, {}, "id", 0, 20, undefined, false);
+            var id29 = getPropertyOrRunCommandUtil(engine, scopes, {}, 'id', 0, 20, undefined, false);
             buffer += getExpressionUtil(id29, true);
             buffer += '"\n     class="';
             var config31 = {};

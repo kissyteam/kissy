@@ -293,13 +293,13 @@ KISSY.add(function(S, require) {
   _$jscoverage['/source-area.js'].lineData[21]++;
   var self = this;
   _$jscoverage['/source-area.js'].lineData[22]++;
-  editor.on("wysiwygMode", function() {
+  editor.on('wysiwygMode', function() {
   _$jscoverage['/source-area.js'].functionData[4]++;
   _$jscoverage['/source-area.js'].lineData[23]++;
   self.set("checked", false);
 });
   _$jscoverage['/source-area.js'].lineData[25]++;
-  editor.on("sourceMode", function() {
+  editor.on('sourceMode', function() {
   _$jscoverage['/source-area.js'].functionData[5]++;
   _$jscoverage['/source-area.js'].lineData[26]++;
   self.set("checked", true);

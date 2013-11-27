@@ -36,7 +36,7 @@ KISSY.add(function (S,require) {
             // or radio button. Worse, IE6-7 fail to give the cloned element
             // a checked appearance if the defaultChecked value isn't also set
             if (src.checked) {
-                dest['defaultChecked'] = dest.checked = src.checked;
+                dest.defaultChecked = dest.checked = src.checked;
             }
 
             // IE6-7 get confused and end up setting the value of a cloned
@@ -80,7 +80,7 @@ KISSY.add(function (S,require) {
             var table = frag.firstChild,
                 tableChildren = S.makeArray(table.childNodes);
             S.each(tableChildren, function (c) {
-                if (Dom.nodeName(c) == 'tbody' && !c.childNodes.length) {
+                if (Dom.nodeName(c) === 'tbody' && !c.childNodes.length) {
                     table.removeChild(c);
                 }
             });

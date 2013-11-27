@@ -6,17 +6,17 @@
 KISSY.add(function (S) {
     var ie6 = S.UA.ie === 6;
 
-    var shimTpl = "<" + "iframe style='position: absolute;" +
-        "border: none;" +
+    var shimTpl = '<' + 'iframe style="position: absolute;' +
+        'border: none;' +
         // consider border
         // bug fix: 2012-11-07
-        "width: " + (ie6 ? "expression(this.parentNode.clientWidth)" : "100%") + ";" +
-        "top: 0;" +
-        "opacity: 0;" +
-        "filter: alpha(opacity=0);" +
-        "left: 0;" +
-        "z-index: -1;" +
-        "height: " + (ie6 ? "expression(this.parentNode.clientHeight)" : "100%") + ";" + "'/>";
+        'width: ' + (ie6 ? 'expression(this.parentNode.clientWidth)' : '100%') + ';' +
+        'top: 0;' +
+        'opacity: 0;' +
+        'filter: alpha(opacity=0);' +
+        'left: 0;' +
+        'z-index: -1;' +
+        'height: ' + (ie6 ? 'expression(this.parentNode.clientHeight)' : '100%') + ';' + '"/>';
 
     /**
      * create iframe shim for mixin.

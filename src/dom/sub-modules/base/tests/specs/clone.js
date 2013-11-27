@@ -17,8 +17,8 @@ KISSY.add(function (S, Dom, Event) {
         it('works for single textarea', function () {
             var input = Dom.create("<textarea></textarea>");
             Dom.append(input, "#test_cases");
-            input.defaultValue = "y";
-            input.value = "x";
+            input.defaultValue = 'y';
+            input.value = 'x';
             var cloned = Dom.clone(input);
             expect(cloned.defaultValue).toBe('y');
             expect(cloned.value).toBe('x');
@@ -31,8 +31,8 @@ KISSY.add(function (S, Dom, Event) {
             var input = Dom.create("<div><textarea></textarea></div>");
             Dom.append(input, "#test_cases");
             input=Dom.get('textarea',input);
-            input.defaultValue = "y";
-            input.value = "x";
+            input.defaultValue = 'y';
+            input.value = 'x';
             var cloned = Dom.clone(input,true);
             expect(cloned.defaultValue).toBe('y');
             expect(cloned.value).toBe('x');
@@ -44,8 +44,8 @@ KISSY.add(function (S, Dom, Event) {
         //http://msdn.microsoft.com/en-us/library/ms533718%28v=vs.85%29.aspx
         it("works for defaultValue", function () {
             var input = Dom.create("<input type='text' value='x' />");
-            input.defaultValue = "y";
-            input.value = "x";
+            input.defaultValue = 'y';
+            input.value = 'x';
             Dom.append(input, "#test_cases");
             var cloned = Dom.clone(input);
             expect(cloned.defaultValue).toBe('y');

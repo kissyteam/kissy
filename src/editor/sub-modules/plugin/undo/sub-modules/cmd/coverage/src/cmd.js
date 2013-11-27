@@ -575,7 +575,7 @@ KISSY.add(function(S, require) {
   editor.docReady(function() {
   _$jscoverage['/cmd.js'].functionData[5]++;
   _$jscoverage['/cmd.js'].lineData[75]++;
-  editor.get("document").on("keydown", function(ev) {
+  editor.get("document").on('keydown', function(ev) {
   _$jscoverage['/cmd.js'].functionData[6]++;
   _$jscoverage['/cmd.js'].lineData[76]++;
   var keyCode = ev.keyCode;
@@ -712,7 +712,7 @@ KISSY.add(function(S, require) {
       editor.getSelection().selectBookmarks(snapshot.bookmarks);
     } else {
       _$jscoverage['/cmd.js'].lineData[187]++;
-      if (visit24_187_1(UA['ie'])) {
+      if (visit24_187_1(UA.ie)) {
         _$jscoverage['/cmd.js'].lineData[191]++;
         var $range = editorDomBody.createTextRange();
         _$jscoverage['/cmd.js'].lineData[192]++;

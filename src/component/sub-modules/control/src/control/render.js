@@ -21,7 +21,7 @@ KISSY.add(function (S, require) {
         HTML_PARSER = 'HTML_PARSER';
 
     function pxSetter(v) {
-        if (typeof v == 'number') {
+        if (typeof v === 'number') {
             v += 'px';
         }
         return v;
@@ -44,12 +44,12 @@ KISSY.add(function (S, require) {
                 }
             }
             // 单选选择器
-            else if (typeof v == 'string') {
+            else if (typeof v === 'string') {
                 control.setInternal(p, srcNode.one(v));
             }
             // 多选选择器
             else if (S.isArray(v) && v[0]) {
-                control.setInternal(p, srcNode.all(v[0]))
+                control.setInternal(p, srcNode.all(v[0]));
             }
         }
     }
@@ -58,7 +58,7 @@ KISSY.add(function (S, require) {
         if (!extras) {
             extras = [''];
         }
-        if (typeof extras == "string") {
+        if (typeof extras === 'string') {
             extras = extras.split(/\s+/);
         }
         return extras;
@@ -82,7 +82,7 @@ KISSY.add(function (S, require) {
         var self = this,
             method;
         // ignore bubbling
-        if (e.target == self.control) {
+        if (e.target === self.control) {
             method = self[ON_SET + e.type.slice(5).slice(0, -6)];
             method.call(self, e.newVal, e);
         }
@@ -126,7 +126,7 @@ KISSY.add(function (S, require) {
                 elAttrs = control.get('elAttrs'),
                 cls = control.get('elCls'),
                 disabled,
-                attrs = control['getAttrs'](),
+                attrs = control.getAttrs(),
                 a,
                 attr,
                 elStyle = control.get('elStyle'),
@@ -159,7 +159,7 @@ KISSY.add(function (S, require) {
                 elCls.push(self.getBaseCssClasses('hidden'));
             }
 
-            if (disabled = control.get('disabled')) {
+            if ((disabled = control.get('disabled'))) {
                 cls.push(self.getBaseCssClasses('disabled'));
                 elAttrs['aria-disabled'] = 'true';
             }
@@ -169,15 +169,15 @@ KISSY.add(function (S, require) {
             if (control.get('focusable')) {
                 // ie9 support outline
                 if (UA.ieMode < 9) {
-                    elAttrs['hideFocus'] = 'true';
+                    elAttrs.hideFocus = 'true';
                 }
-                elAttrs['tabindex'] = disabled ? '-1' : '0';
+                elAttrs.tabindex = disabled ? '-1' : '0';
             }
         },
 
         createDom: function () {
             var self = this;
-            self['beforeCreateDom'](
+            self.beforeCreateDom(
                 self.renderData = {},
                 self.childrenElSelectors = {},
                 self.renderCommands = {
@@ -189,7 +189,7 @@ KISSY.add(function (S, require) {
             var control = self.control,
                 html;
             html = self.renderTpl(startTpl) + self.renderTpl(self.get('contentTpl')) + endTpl;
-            control.setInternal("el", self.$el = $(html));
+            control.setInternal('el', self.$el = $(html));
             self.el = self.$el[0];
             self.fillChildrenElsBySelectors();
         },
@@ -201,7 +201,7 @@ KISSY.add(function (S, require) {
                 srcNode.attr('id', control.get('id'));
             }
             applyParser.call(self, srcNode, self.constructor.HTML_PARSER, control);
-            control.setInternal("el", self.$el = srcNode);
+            control.setInternal('el', self.$el = srcNode);
             self.el = srcNode[0];
         },
 
@@ -215,7 +215,7 @@ KISSY.add(function (S, require) {
                 var render = control.get('render'),
                     renderBefore = control.get('elBefore');
                 if (renderBefore) {
-                    el['insertBefore'](renderBefore, undefined);
+                    el.insertBefore(renderBefore, undefined);
                 } else if (render) {
                     el.appendTo(render, undefined);
                 } else {
@@ -227,7 +227,7 @@ KISSY.add(function (S, require) {
         bindUI: function () {
             var self = this;
             var control = self.control;
-            var attrs = control['getAttrs']();
+            var attrs = control.getAttrs();
             var attrName, attrCfg;
             for (attrName in attrs) {
                 attrCfg = attrs[attrName];
@@ -235,7 +235,7 @@ KISSY.add(function (S, require) {
                 var attrChangeFn = self[ON_SET + ucName];
                 if (attrCfg.view && attrChangeFn) {
                     // 通知 render 处理
-                    control.on("after" + ucName + "Change", onSetAttrChange, self);
+                    control.on('after' + ucName + 'Change', onSetAttrChange, self);
                 }
             }
         },
@@ -261,7 +261,7 @@ KISSY.add(function (S, require) {
 
             for (childName in childrenElSelectors) {
                 selector = childrenElSelectors[childName];
-                if (typeof selector === "function") {
+                if (typeof selector === 'function') {
                     control.setInternal(childName, selector(el));
                 } else {
                     control.setInternal(childName,
@@ -292,7 +292,7 @@ KISSY.add(function (S, require) {
             var cls = childNode[0].className;
             // 过滤掉特定前缀
             if (cls) {
-                cls = cls.replace(new RegExp("\\b" + prefixCls, "ig"), "");
+                cls = cls.replace(new RegExp('\\b' + prefixCls, 'ig'), '');
                 return Manager.getConstructorByXClass(cls);
             }
             return null;
@@ -315,7 +315,8 @@ KISSY.add(function (S, require) {
                 constructor = constructor.superclass &&
                     constructor.superclass.constructor;
             }
-            return self.componentCssClasses = re;
+            self.componentCssClasses = re;
+            return re;
         },
 
         /**
@@ -393,7 +394,7 @@ KISSY.add(function (S, require) {
          */
         _onSetHighlighted: function (v) {
             var self = this,
-                componentCls = self.getBaseCssClasses("hover"),
+                componentCls = self.getBaseCssClasses('hover'),
                 el = self.$el;
             el[v ? 'addClass' : 'removeClass'](componentCls);
         },
@@ -407,10 +408,10 @@ KISSY.add(function (S, require) {
                 componentCls = self.getBaseCssClasses('disabled'),
                 el = self.$el;
             el[v ? 'addClass' : 'removeClass'](componentCls)
-                .attr("aria-disabled", v);
-            if (control.get("focusable")) {
+                .attr('aria-disabled', v);
+            if (control.get('focusable')) {
                 //不能被 tab focus 到
-                self.getKeyEventTarget().attr("tabindex", v ? -1 : 0);
+                self.getKeyEventTarget().attr('tabindex', v ? -1 : 0);
             }
         },
         /**
@@ -418,9 +419,9 @@ KISSY.add(function (S, require) {
          */
         '_onSetActive': function (v) {
             var self = this,
-                componentCls = self.getBaseCssClasses("active");
+                componentCls = self.getBaseCssClasses('active');
             self.$el[v ? 'addClass' : 'removeClass'](componentCls)
-                .attr("aria-pressed", !!v);
+                .attr('aria-pressed', !!v);
         },
         /**
          * @ignore
@@ -433,7 +434,7 @@ KISSY.add(function (S, require) {
         },
 
         '_onSetZIndex': function (x) {
-            this.$el.css("z-index", x);
+            this.$el.css('z-index', x);
         }
     }, {
         __hooks__: {
@@ -450,6 +451,7 @@ KISSY.add(function (S, require) {
          * @return {KISSY.Component.Process} A new class which extends ComponentProcess .
          */
         extend: function extend(extensions, px, sx) {
+            /*jshint unused: false*/
             var SuperClass = this,
                 NewClass,
                 parsers = {};
@@ -458,7 +460,7 @@ KISSY.add(function (S, require) {
             if (S.isArray(extensions)) {
                 // [ex1,ex2]，扩展类后面的优先，ex2 定义的覆盖 ex1 定义的
                 // 主类最优先
-                S.each(extensions['concat'](NewClass), function (ext) {
+                S.each(extensions.concat(NewClass), function (ext) {
                     if (ext) {
                         // 合并 HTML_PARSER 到主类
                         S.each(ext.HTML_PARSER, function (v, name) {

@@ -22,11 +22,11 @@ KISSY.add(function (S, MVC) {
                 success:function () {
                     expect(model.isNew()).toBe(false);
                     expect(model.isModified()).toBe(false);
-                    expect(model.get("x")).toBe(1);
-                    expect(model.get("y")).toBe(2);
+                    expect(model.get('x')).toBe(1);
+                    expect(model.get('y')).toBe(2);
                     expect(model.getId()).toBe(9);
 
-                    model.set("x", 5);
+                    model.set('x', 5);
                     expect(model.isNew()).toBe(false);
                     expect(model.isModified()).toBe(true);
                     ok = 1;
@@ -51,8 +51,8 @@ KISSY.add(function (S, MVC) {
                 success:function () {
                     expect(model.isNew()).toBe(false);
                     expect(model.isModified()).toBe(false);
-                    expect(model.get("x")).toBe(1);
-                    expect(model.get("y")).toBe(2);
+                    expect(model.get('x')).toBe(1);
+                    expect(model.get('y')).toBe(2);
                     ok = 1;
                 }
             });
@@ -62,15 +62,15 @@ KISSY.add(function (S, MVC) {
             });
 
             runs(function () {
-                model.set("x", 5);
-                expect(model.get("x")).toBe(5);
+                model.set('x', 5);
+                expect(model.get('x')).toBe(5);
             });
 
 
             runs(function () {
                 model.save({
                     success:function () {
-                        expect(model.get("x")).toBe(5);
+                        expect(model.get('x')).toBe(5);
                         ok2 = 1;
                     }
                 });
@@ -96,8 +96,8 @@ KISSY.add(function (S, MVC) {
                 success:function () {
                     expect(model.isNew()).toBe(false);
                     expect(model.isModified()).toBe(false);
-                    expect(model.get("x")).toBe(1);
-                    expect(model.get("y")).toBe(2);
+                    expect(model.get('x')).toBe(1);
+                    expect(model.get('y')).toBe(2);
                     expect(model.getId()).toBe(9);
                     ok = 1;
                 }
@@ -135,9 +135,9 @@ KISSY.add(function (S, MVC) {
                 });
                 expect(model.isNew()).toBe(true);
                 expect(model.isModified()).toBe(true);
-                model.set("x", 1);
-                model.set("y", 1);
-                expect(afterChange).toEqual(["x", "y"]);
+                model.set('x', 1);
+                model.set('y', 1);
+                expect(afterChange).toEqual(['x', 'y']);
             });
 
         });

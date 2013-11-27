@@ -11,7 +11,7 @@ KISSY.add(function (S,require) {
         $ = Node.all,
         each = S.each,
         Features = S.Features,
-        ie = UA['ie'],
+        ie = UA.ie,
         NULL = null,
         PREFIX_CLS = DDM.PREFIX_CLS,
         doc = S.Env.host.document;
@@ -235,7 +235,7 @@ KISSY.add(function (S,require) {
                 ret = 0;
             each(handlers, function (handler) {
                 //子区域内点击也可以启动
-                if (handler[0] == t || handler.contains(t)) {
+                if (handler[0] === t || handler.contains(t)) {
                     ret = 1;
                     self.setInternal('activeHandler', handler);
                     return false;
@@ -247,7 +247,7 @@ KISSY.add(function (S,require) {
 
         _checkDragStartValid: function (ev) {
             var self = this;
-            if (self.get('primaryButtonOnly') && ev.which != 1 ||
+            if (self.get('primaryButtonOnly') && ev.which !== 1 ||
                 self.get('disabled')) {
                 return 0;
             }
@@ -410,7 +410,7 @@ KISSY.add(function (S,require) {
             if (self.get('dragging')) {
                 self.get('node')
                     .removeClass(PREFIX_CLS + 'drag-over');
-                if (activeDrop = DDM.get('activeDrop')) {
+                if ((activeDrop = DDM.get('activeDrop'))) {
                     self.fire('dragdrophit', {
                         drag: self,
                         drop: activeDrop
@@ -585,7 +585,7 @@ KISSY.add(function (S,require) {
                             v = v.call(self);
                         }
                         // search inside node
-                        if (typeof v == 'string') {
+                        if (typeof v === 'string') {
                             v = self.get('node').one(v);
                         }
                         if (v.nodeType) {

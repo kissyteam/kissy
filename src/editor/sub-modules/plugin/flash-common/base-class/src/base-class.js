@@ -75,7 +75,7 @@ KISSY.add(function (S, require) {
 
                             tipRemoveEl.on("click", function (ev) {
                                 // chrome remove 后会没有焦点
-                                if (S.UA['webkit']) {
+                                if (S.UA.webkit) {
                                     var r = editor.getSelection().getRanges(),
                                         r0 = r && r[0];
                                     if (r0) {
@@ -92,7 +92,7 @@ KISSY.add(function (S, require) {
                             /*
                              位置变化，在显示前就设置内容，防止ie6 iframe遮罩不能正确大小
                              */
-                            bubble.on("show", function () {
+                            bubble.on('show', function () {
                                 var a = bubble.get("editorSelectedEl");
                                 if (a) {
                                     self._updateTip(tipUrlEl, a);
@@ -105,7 +105,7 @@ KISSY.add(function (S, require) {
 
             editor.docReady(function () {
                 //注册双击，双击时检测
-                editor.get("document").on("dblclick", self._dbClick, self);
+                editor.get("document").on('dblclick', self._dbClick, self);
             });
         },
 

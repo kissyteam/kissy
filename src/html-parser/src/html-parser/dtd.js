@@ -10,11 +10,11 @@
 KISSY.add(function(S) {
     var merge = S.merge,
         A = {"isindex":1,"fieldset":1},
-        B = {'input':1,"button":1,"select":1,"textarea":1,"label":1},
+        B = {'input':1,"button":1,"select":1,'textarea':1,"label":1},
         C = merge({"a":1}, B),
         D = merge({"iframe":1}, C),
         E = {
-            "hr":1,"ul":1,'menu':1,"div":1,
+            "hr":1,"ul":1,'menu':1,'div':1,
             "blockquote":1,"noscript":1,"table":1,
             "center":1,"address":1,"dir":1,"pre":1,"h5":1,
             "dl":1,"h4":1,"noframes":1,"h6":1,
@@ -67,9 +67,9 @@ KISSY.add(function(S) {
             "code":1,
             "table":1,
             "script":1,"cite":1,'input':1,"iframe":1,
-            "strong":1,"textarea":1,"noframes":1,"big":1,
+            "strong":1,'textarea':1,"noframes":1,"big":1,
             "small":1,"span":1,"hr":1,"sub":1,"bdo":1,
-            'var':1,"div":1,"object":1,"sup":1,"strike":1,
+            'var':1,'div':1,"object":1,"sup":1,"strike":1,
             "dir":1,"map":1,"dl":1,"applet":1,"del":1,"isindex":1,
             "fieldset":1,"ul":1,"b":1,"acronym":1,"a":1,"blockquote":1,
             "i":1,"u":1,"s":1,"tt":1,"address":1,"q":1,
@@ -89,7 +89,7 @@ KISSY.add(function(S) {
 
     var block = {
         "address":1,"blockquote":1,"center":1,
-        "dir":1,"div":1,"dl":1,"fieldset":1,
+        "dir":1,'div':1,"dl":1,"fieldset":1,
         "form":1,"h1":1,"h2":1,"h3":1,"h4":1,
         "h5":1,"h6":1,"hr":1,"isindex":1,
         'menu':1,"noframes":1,"ol":1,"p":1,
@@ -111,9 +111,9 @@ KISSY.add(function(S) {
      * @singleton
      *
      *
-     *      // Check if "div" can be contained in a "p" element.
+     *      // Check if 'div' can be contained in a "p" element.
      *      alert( !!dtd[ 'p' ][ 'div' ] );  "false"
-     *      // Check if "p" can be contained in a "div" element.
+     *      // Check if "p" can be contained in a 'div' element.
      *      alert( !!dtd[ 'div' ][ 'p' ] );  "true"
      *      // Check if "p" is a block element.
      *      alert( !!dtd.$block[ 'p' ] );  "true"
@@ -126,7 +126,7 @@ KISSY.add(function(S) {
         $nonBodyContent: merge(V, U, headTags),
 
         /**
-         * List of block elements, like "p" or "div".
+         * List of block elements, like "p" or 'div'.
          * @type {Object}
          */
         $block : block,
@@ -135,7 +135,7 @@ KISSY.add(function(S) {
          * List of block limit elements.
          * @type {Object}
          */
-        $blockLimit : {"body":1,"div":1,"td":1,"th":1,"caption":1,"form":1 },
+        $blockLimit : {"body":1,'div':1,"td":1,"th":1,"caption":1,"form":1 },
 
         /**
          * List of inline elements
@@ -180,7 +180,7 @@ KISSY.add(function(S) {
          */
         $nonEditable : {
             "applet":1,"button":1,"embed":1,"iframe":1,"map":1,
-            "object":1,"option":1,"script":1,"textarea":1,"param":1
+            "object":1,"option":1,"script":1,'textarea':1,"param":1
         },
 
         /**
@@ -201,7 +201,7 @@ KISSY.add(function(S) {
         $tabIndex : {
             "a":1,"area":1,"button":1,
             'input':1,"object":1,"select":1,
-            "textarea":1
+            'textarea':1
         },
 
         /**
@@ -453,10 +453,10 @@ KISSY.add(function(S) {
          */
         "strong": L,
         /**
-         * List of elements used inside the "textarea" element
+         * List of elements used inside the 'textarea' element
          * @type {Object}
          */
-        "textarea": N,
+        'textarea': N,
         /**
          * List of elements used inside the "noframes" element
          * @type {Object}
@@ -513,10 +513,10 @@ KISSY.add(function(S) {
          */
         'var' : L,
         /**
-         * List of elements used inside the "div" element
+         * List of elements used inside the 'div' element
          * @type {Object}
          */
-        "div": P,
+        'div': P,
         /**
          * List of elements used inside the "object" element
          * @type {Object}
@@ -685,7 +685,7 @@ KISSY.add(function(S) {
 
         for (var p in dtd) {
             for (var p2 in dtd[p]) {
-                if (p2 === "div") {
+                if (p2 === 'div') {
                     for (i = 0; i < html_tags.length; i++) {
                         dtd[p][html_tags[i]] = dtd[p][p2];
                     }
@@ -694,7 +694,7 @@ KISSY.add(function(S) {
         }
 
         for (i = 0; i < html_tags.length; i++) {
-            dtd[html_tags[i]] = dtd["div"];
+            dtd[html_tags[i]] = dtd['div'];
         }
 
         dtd.$empty['!doctype'] = 1;

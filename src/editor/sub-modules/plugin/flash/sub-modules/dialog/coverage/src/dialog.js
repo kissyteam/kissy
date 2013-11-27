@@ -562,7 +562,7 @@ KISSY.add(function(S, require) {
   _initD: function() {
   _$jscoverage['/dialog.js'].functionData[8]++;
   _$jscoverage['/dialog.js'].lineData[167]++;
-  var self = this, d = self.dialog, editor = self.editor, prefixCls = editor.get('prefixCls'), el = d.get("el");
+  var self = this, d = self.dialog, editor = self.editor, prefixCls = editor.get('prefixCls'), el = d.get('el');
   _$jscoverage['/dialog.js'].lineData[172]++;
   self.dHeight = el.one("." + prefixCls + "editor-flash-height");
   _$jscoverage['/dialog.js'].lineData[173]++;
@@ -619,7 +619,7 @@ KISSY.add(function(S, require) {
     return;
   }
   _$jscoverage['/dialog.js'].lineData[226]++;
-  var re = Editor.Utils.verifyInputs(self.dialog.get("el").all('input'));
+  var re = Editor.Utils.verifyInputs(self.dialog.get('el').all('input'));
   _$jscoverage['/dialog.js'].lineData[227]++;
   if (visit16_227_1(!re)) {
     _$jscoverage['/dialog.js'].lineData[228]++;

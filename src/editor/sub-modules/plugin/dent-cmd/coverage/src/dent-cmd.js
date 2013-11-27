@@ -815,7 +815,7 @@ KISSY.add(function(S, require) {
         _$jscoverage['/dent-cmd.js'].lineData[143]++;
         while (visit27_143_1((followingList = followingList.next()) && followingList.nodeName() in listNodeNames)) {
           _$jscoverage['/dent-cmd.js'].lineData[148]++;
-          if (visit28_148_1(UA['ie'] && !li.first(function(node) {
+          if (visit28_148_1(UA.ie && !li.first(function(node) {
   _$jscoverage['/dent-cmd.js'].functionData[4]++;
   _$jscoverage['/dent-cmd.js'].lineData[149]++;
   return visit29_149_1(isNotWhitespaces(node) && isNotBookmark(node));

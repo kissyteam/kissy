@@ -3,7 +3,7 @@
  * render process for control and render
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S,require) {
+KISSY.add(function (S, require) {
     var Base = require('base');
     var Promise = require('promise');
     var Defer = Promise.Defer,
@@ -23,11 +23,11 @@ KISSY.add(function (S,require) {
             this._renderedDefer = new Defer();
         },
 
-        renderUI:noop,
+        renderUI: noop,
 
-        syncUI:noop,
+        syncUI: noop,
 
-        bindUI:noop,
+        bindUI: noop,
 
         onRendered: function (fn) {
             return this._renderedDefer.promise.then(fn);
@@ -40,7 +40,7 @@ KISSY.add(function (S,require) {
          */
         create: function () {
             var self = this;
-            if (!self.get("created")) {
+            if (!self.get('created')) {
                 /**
                  * @event beforeCreateDom
                  * fired before root node is created
@@ -56,7 +56,7 @@ KISSY.add(function (S,require) {
                  */
                 self.fire('afterCreateDom');
 
-                self.setInternal("created", true);
+                self.setInternal('created', true);
             }
             return self;
         },
@@ -72,7 +72,7 @@ KISSY.add(function (S,require) {
         render: function () {
             var self = this;
             // 是否已经渲染过
-            if (!self.get("rendered")) {
+            if (!self.get('rendered')) {
                 self.create();
 
                 /**
@@ -112,7 +112,7 @@ KISSY.add(function (S,require) {
                 ComponentProcess.superclass.syncInternal.call(self);
                 syncUIs(self);
 
-                self.setInternal("rendered", true);
+                self.setInternal('rendered', true);
             }
             return self;
         },
@@ -132,12 +132,22 @@ KISSY.add(function (S,require) {
             p = plugins[plugins.length - 1];
             if (self.get('rendered')) {
                 // plugin does not support decorate
-                p['pluginCreateDom'] && p['pluginCreateDom'](self);
-                p.pluginRenderUI && p.pluginRenderUI(self);
-                p.pluginBindUI && p.pluginBindUI(self);
-                p.pluginSyncUI && p.pluginSyncUI(self);
+                if (p.pluginCreateDom) {
+                    p.pluginCreateDom(self);
+                }
+                if (p.pluginRenderUI) {
+                    p.pluginCreateDom(self);
+                }
+                if (p.pluginBindUI) {
+                    p.pluginBindUI(self);
+                }
+                if (p.pluginSyncUI) {
+                    p.pluginSyncUI(self);
+                }
             } else if (self.get('created')) {
-                p['pluginCreateDom'] && p['pluginCreateDom'](self);
+                if (p.pluginCreateDom) {
+                    p.pluginCreateDom(self);
+                }
             }
             return self;
         }

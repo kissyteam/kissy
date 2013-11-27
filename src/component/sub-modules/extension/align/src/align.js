@@ -4,7 +4,6 @@
  * @author yiminghe@gmail.com, qiaohua@taobao.com
  */
 KISSY.add(function (S,require) {
-    var module = this;
     var Node = require('node');
     var win = S.Env.host,
         $ = Node.all,
@@ -37,15 +36,15 @@ KISSY.add(function (S,require) {
             body = doc.body,
             parent,
             positionStyle = $(element).css('position'),
-            skipStatic = positionStyle == 'fixed' || positionStyle == 'absolute';
+            skipStatic = positionStyle === 'fixed' || positionStyle === 'absolute';
 
         if (!skipStatic) {
-            return element.nodeName.toLowerCase() == 'html' ? null : element.parentNode;
+            return element.nodeName.toLowerCase() === 'html' ? null : element.parentNode;
         }
 
-        for (parent = element.parentNode; parent && parent != body; parent = parent.parentNode) {
+        for (parent = element.parentNode; parent && parent !== body; parent = parent.parentNode) {
             positionStyle = $(parent).css('position');
-            if (positionStyle != "static") {
+            if (positionStyle !== 'static') {
                 return parent;
             }
         }
@@ -74,15 +73,15 @@ KISSY.add(function (S,require) {
 
         // Determine the size of the visible rect by climbing the dom accounting for
         // all scrollable containers.
-        for (el = element; el = getOffsetParent(el);) {
+        for (el = element; (el = getOffsetParent(el));) {
             // clientWidth is zero for inline block elements in ie.
-            if ((!UA.ie || el.clientWidth != 0) &&
+            if ((!UA.ie || el.clientWidth !== 0) &&
                 // body may have overflow set on it, yet we still get the entire
                 // viewport. In some browsers, el.offsetParent may be
                 // document.documentElement, so check for that too.
-                (el != body &&
-                    el != documentElement &&
-                    $(el).css('overflow') != 'visible')) {
+                (el !== body &&
+                    el !== documentElement &&
+                    $(el).css('overflow') !== 'visible')) {
                 var pos = $(el).offset();
                 // add border
                 pos.left += el.clientLeft;
@@ -159,7 +158,7 @@ KISSY.add(function (S,require) {
         }
 
         // Left edge inside and right edge outside viewport, try to resize it.
-        if (overflow['resizeWidth'] &&
+        if (overflow.resizeWidth &&
             pos.left >= visibleRect.left &&
             pos.left + size.width > visibleRect.right) {
             size.width -= (pos.left + size.width) - visibleRect.right;
@@ -177,7 +176,7 @@ KISSY.add(function (S,require) {
         }
 
         // Top edge inside and bottom edge outside viewport, try to resize it.
-        if (overflow['resizeHeight'] &&
+        if (overflow.resizeHeight &&
             pos.top >= visibleRect.top &&
             pos.top + size.height > visibleRect.bottom) {
             size.height -= (pos.top + size.height) - visibleRect.bottom;
@@ -314,7 +313,7 @@ KISSY.add(function (S,require) {
     }
 
     function beforeVisibleChange(e) {
-        if (e.target == this && e.newVal) {
+        if (e.target === this && e.newVal) {
             realign.call(this);
         }
     }
@@ -380,8 +379,8 @@ KISSY.add(function (S,require) {
                     fail = 1;
                     // 对齐位置反下
                     points = flip(points, /[lr]/ig, {
-                        l: "r",
-                        r: "l"
+                        l: 'r',
+                        r: 'l'
                     });
                     // 偏移量也反下
                     offset = flipOffset(offset, 0);
@@ -392,8 +391,8 @@ KISSY.add(function (S,require) {
                     fail = 1;
                     // 对齐位置反下
                     points = flip(points, /[tb]/ig, {
-                        t: "b",
-                        b: "t"
+                        t: 'b',
+                        b: 't'
                     });
                     // 偏移量也反下
                     offset = flipOffset(offset, 1);
@@ -427,18 +426,18 @@ KISSY.add(function (S,require) {
             // 相对于屏幕位置没变，而 left/top 变了
             // 例如 <div 'relative'><el absolute></div>
             self.set({
-                "x": newElRegion.left,
-                "y": newElRegion.top
+                'x': newElRegion.left,
+                'y': newElRegion.top
             }, {
                 force: 1
             });
 
             // need judge to in case set fixed with in css on height auto element
-            if (newElRegion.width != elRegion.width) {
+            if (newElRegion.width !== elRegion.width) {
                 self.set('width', el.width() + newElRegion.width - elRegion.width);
             }
 
-            if (newElRegion.height != elRegion.height) {
+            if (newElRegion.height !== elRegion.height) {
                 self.set('height', el.height() + newElRegion.height - elRegion.height);
             }
 
@@ -455,7 +454,7 @@ KISSY.add(function (S,require) {
             var self = this;
             self.set('align', {
                 node: node,
-                points: ["cc", "cc"],
+                points: ['cc', 'cc'],
                 offset: [0, 0]
             });
             return self;

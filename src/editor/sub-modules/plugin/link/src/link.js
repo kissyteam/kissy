@@ -84,7 +84,7 @@ KISSY.add(function (S, require) {
                             ev.halt();
                         });
 
-                        bubble.on("show", function () {
+                        bubble.on('show', function () {
                             var a = bubble.get("editorSelectedEl");
                             if (!a) {
                                 return;

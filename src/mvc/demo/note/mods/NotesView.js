@@ -14,7 +14,7 @@ KISSY.add(function(S, Node, mvc, Template, NoteView) {
             var self = this,
                 statistic,
                 dataList,
-                el = self.get("el");
+                el = self.get('el');
 
 
             self.searchInput = el.one(".searchInput");
@@ -41,7 +41,7 @@ KISSY.add(function(S, Node, mvc, Template, NoteView) {
             notes.on("add", function(e) {
                 dataList.append(new NoteView({
                     note:e.model
-                }).render().get("el"))
+                }).render().get('el'))
             });
 
             /**
@@ -77,7 +77,7 @@ KISSY.add(function(S, Node, mvc, Template, NoteView) {
          * 编辑笔记，更改url，由router处理
          */
         editNote:function(e) {
-            mvc.Router.navigate("/edit/" + $(e.currentTarget).parent("div").attr("id"));
+            mvc.Router.navigate("/edit/" + $(e.currentTarget).parent('div').attr('id'));
         },
 
         /**
@@ -88,8 +88,8 @@ KISSY.add(function(S, Node, mvc, Template, NoteView) {
             // 找到对应的模型销毁->触发 view 的销毁
             notes.getById(
                 $(e.currentTarget)
-                    .parent("div")
-                    .attr("id")
+                    .parent('div')
+                    .attr('id')
             ).destroy({
                     "delete":1
                 });

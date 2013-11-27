@@ -69,7 +69,7 @@ KISSY.add(function (S, Dom) {
             var t = Dom.create("<div></div>");
             document.body.appendChild(t);
             Dom.html(t, '<div>');
-            expect(t.firstChild.nodeName.toLowerCase()).toBe("div");
+            expect(t.firstChild.nodeName.toLowerCase()).toBe('div');
 
             Dom.html(t, '<p class="test-html">test p</p>');
             expect(Dom.hasClass(t.firstChild, 'test-html')).toBe(true);
@@ -156,16 +156,16 @@ KISSY.add(function (S, Dom) {
             document.body.appendChild(n = Dom.create("<div class='test-empty'><div></div>x</div>"));
             expect(n.childNodes.length).toBe(2);
             var c = n.firstChild;
-            Dom.data(c, "x", "y");
-            expect(Dom.data(c, "x")).toBe("y");
+            Dom.data(c, 'x', 'y');
+            expect(Dom.data(c, 'x')).toBe('y');
             Dom.empty(n);
             expect(n.childNodes.length).toBe(0);
-            expect(Dom.data(c, "x")).toBe(undefined);
+            expect(Dom.data(c, 'x')).toBe(undefined);
         });
 
         it("fix leadingWhiteSpaces in ie<9", function () {
             var n = Dom.create(" <div></div>");
-            expect(n.nodeName.toLowerCase()).toBe("div");
+            expect(n.nodeName.toLowerCase()).toBe('div');
             Dom.html(n, " <span></span>");
             expect(n.firstChild.nodeType).toBe(Dom.NodeType.TEXT_NODE);
             Dom.remove(n);

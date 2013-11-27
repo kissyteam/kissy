@@ -7,15 +7,13 @@ KISSY.add(function (S) {
 
     var basePriority = 0,
         Manager,
-        uis = {
-            // 不带前缀 prefixCls
-            /*
-             'menu' :{
-             priority:0,
-             constructor:Menu
-             }
-             */
-        },
+    // 不带前缀 prefixCls
+    /*
+     'menu' :{
+     constructor:Menu
+     }
+     */
+        uis = {},
         componentInstances = {};
 
     /**
@@ -24,7 +22,7 @@ KISSY.add(function (S) {
      * @singleton
      * Manage component metadata.
      */
-    return Manager = {
+    Manager = {
 
         __instances: componentInstances,
 
@@ -91,7 +89,7 @@ KISSY.add(function (S) {
                 if (!component.isControl && (xclass = component.xclass)) {
                     ChildConstructor = Manager.getConstructorByXClass(xclass);
                     if (!ChildConstructor) {
-                        S.error("can not find class by xclass desc : " + xclass);
+                        S.error('can not find class by xclass desc : ' + xclass);
                     }
                     component = new ChildConstructor(component);
                 }
@@ -136,4 +134,6 @@ KISSY.add(function (S) {
             };
         }
     };
+
+    return Manager;
 });

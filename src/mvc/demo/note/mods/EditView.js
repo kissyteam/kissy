@@ -16,7 +16,7 @@ KISSY.add(function(S, Node, mvc, Template) {
         submit:function() {
             var self = this,
                 note = self.get("note"),
-                el = self.get("el");
+                el = self.get('el');
             note.set({
                 title:el.one(".title").val(),
                 content:el.one(".content").val()
@@ -24,7 +24,7 @@ KISSY.add(function(S, Node, mvc, Template) {
             /**
              * 通知外部模块
              */
-            self.fire("submit", {
+            self.fire('submit', {
                 note:note
             });
         },
@@ -33,7 +33,7 @@ KISSY.add(function(S, Node, mvc, Template) {
          */
         render:function() {
             var self = this;
-            self.get("el").html(detailTpl.render({
+            self.get('el').html(detailTpl.render({
                 note:self.get("note").toJSON()
             }));
             return self;
@@ -49,7 +49,7 @@ KISSY.add(function(S, Node, mvc, Template) {
             events:{
                 value:{
                     ".submit":{
-                        "click":"submit"
+                        "click":'submit'
                     }
                 }
             }

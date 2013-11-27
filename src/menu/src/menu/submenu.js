@@ -143,7 +143,7 @@ KISSY.add(function (S, require) {
                     // right
                     if (keyCode == KeyCode.RIGHT) {
                         showMenu.call(self);
-                        menuChildren = menu.get("children");
+                        menuChildren = menu.get('children');
                         if (menuChild = menuChildren[0]) {
                             menuChild.set('highlighted', true, {
                                 data: {
@@ -257,7 +257,7 @@ KISSY.add(function (S, require) {
         };
         S.mix(menu.get('align'), align, false);
         menu.show();
-        self.el.setAttribute("aria-haspopup", menu.get('el').attr("id"));
+        self.el.setAttribute("aria-haspopup", menu.get('el').attr('id'));
     }
 
     function hideMenu() {

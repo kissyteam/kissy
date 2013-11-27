@@ -3,10 +3,9 @@
  * dom-attr
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
-KISSY.add(function (S,require) {
+KISSY.add(function (S, require) {
     var Dom = require('./api');
     var doc = S.Env.host.document,
-        undefined=undefined,
         NodeType = Dom.NodeType,
         docElement = doc && doc.documentElement,
         EMPTY = '',
@@ -17,8 +16,7 @@ KISSY.add(function (S,require) {
         R_INVALID_CHAR = /:|^on/,
         R_RETURN = /\r/g,
 
-        attrFix = {
-        },
+        attrFix = {},
 
         attrFn = {
             val: 1,
@@ -161,7 +159,8 @@ KISSY.add(function (S,require) {
             },
             set: function (elem, value) {
                 if (S.isArray(value)) {
-                    return elem.checked = S.inArray(Dom.val(elem), value);
+                    elem.checked = S.inArray(Dom.val(elem), value);
+                    return 1;
                 }
                 return undefined;
             }
@@ -170,11 +169,16 @@ KISSY.add(function (S,require) {
 
     // IE7- 下，需要用 cssText 来获取
     // 所有浏览器统一下, attr('style') 标准浏览器也不是 undefined
-    attrHooks['style'] = {
+    attrHooks.style = {
         get: function (el) {
             return el.style.cssText;
         }
     };
+
+    function toStr(value) {
+        return value == null ? '' : value + '';
+
+    }
 
     function getProp(elem, name) {
         name = propFix[name] || name;
@@ -377,7 +381,7 @@ KISSY.add(function (S,require) {
                 if (val === undefined) {
                     if (el && el.nodeType === NodeType.ELEMENT_NODE) {
                         // browsers index elements by id/name on forms, give priority to attributes.
-                        if (nodeName(el) == 'form') {
+                        if (nodeName(el) === 'form') {
                             attrNormalizer = attrNodeHook;
                         }
                         if (attrNormalizer && attrNormalizer.get) {
@@ -386,7 +390,7 @@ KISSY.add(function (S,require) {
 
                         ret = el.getAttribute(name);
 
-                        if (ret === "") {
+                        if (ret === '') {
                             var attrNode = el.getAttributeNode(name);
                             if (!attrNode || !attrNode.specified) {
                                 return undefined;
@@ -402,7 +406,7 @@ KISSY.add(function (S,require) {
                     for (i = els.length - 1; i >= 0; i--) {
                         el = els[i];
                         if (el && el.nodeType === NodeType.ELEMENT_NODE) {
-                            if (nodeName(el) == 'form') {
+                            if (nodeName(el) === 'form') {
                                 attrNormalizer = attrNodeHook;
                             }
                             if (attrNormalizer && attrNormalizer.set) {
@@ -430,7 +434,7 @@ KISSY.add(function (S,require) {
                     el, i;
                 for (i = els.length - 1; i >= 0; i--) {
                     el = els[i];
-                    if (el.nodeType == NodeType.ELEMENT_NODE) {
+                    if (el.nodeType === NodeType.ELEMENT_NODE) {
                         el.removeAttribute(name);
                         // Set corresponding property to false for boolean attributes
                         if (R_BOOLEAN.test(name) && (propName = propFix[ name ] || name) in el) {
@@ -528,9 +532,7 @@ KISSY.add(function (S,require) {
                     } else if (typeof val === 'number') {
                         val += '';
                     } else if (S.isArray(val)) {
-                        val = S.map(val, function (value) {
-                            return value == null ? '' : value + '';
-                        });
+                        val = S.map(val, toStr);
                     }
 
                     hook = valHooks[ nodeName(elem)] || valHooks[ elem.type ];
@@ -563,7 +565,7 @@ KISSY.add(function (S,require) {
                     for (i = els.length - 1; i >= 0; i--) {
                         el = els[i];
                         nodeType = el.nodeType;
-                        if (nodeType == NodeType.ELEMENT_NODE) {
+                        if (nodeType === NodeType.ELEMENT_NODE) {
                             Dom.cleanData(el.getElementsByTagName('*'));
                             if ('textContent' in el) {
                                 el.textContent = val;
@@ -571,7 +573,7 @@ KISSY.add(function (S,require) {
                                 el.innerText = val;
                             }
                         }
-                        else if (nodeType == NodeType.TEXT_NODE || nodeType == NodeType.CDATA_SECTION_NODE) {
+                        else if (nodeType === NodeType.TEXT_NODE || nodeType === NodeType.CDATA_SECTION_NODE) {
                             el.nodeValue = val;
                         }
                     }

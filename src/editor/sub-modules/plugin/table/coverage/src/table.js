@@ -1090,7 +1090,7 @@ KISSY.add(function(S, require) {
       _$jscoverage['/table.js'].lineData[85]++;
       if (visit13_85_1(!OLD_IE)) {
         _$jscoverage['/table.js'].lineData[86]++;
-        (new Node($cells[i]))._4e_appendBogus(undefined);
+        (new Node($cells[i]))._4eAppendBogus(undefined);
       }
     }
   }
@@ -1187,7 +1187,7 @@ KISSY.add(function(S, require) {
       _$jscoverage['/table.js'].lineData[179]++;
       if (visit34_179_1(!OLD_IE)) {
         _$jscoverage['/table.js'].lineData[180]++;
-        cell._4e_appendBogus(undefined);
+        cell._4eAppendBogus(undefined);
       }
       _$jscoverage['/table.js'].lineData[182]++;
       var baseCell = new Node($row.cells[cellIndex]);
@@ -1368,7 +1368,7 @@ KISSY.add(function(S, require) {
   '\u5728\u5de6\u4fa7\u63d2\u5165\u5217': ensureTd, 
   '\u5728\u53f3\u4fa7\u63d2\u5165\u5217': ensureTd};
   _$jscoverage['/table.js'].lineData[332]++;
-  var showBorderClassName = 'ke_show_border', cssTemplate = (visit65_336_1(UA['ie'] === 6) ? ['table.%2,', 'table.%2 td, table.%2 th,', '{', 'border : #d3d3d3 1px dotted', '}'] : [' table.%2,', ' table.%2 > tr > td,  table.%2 > tr > th,', ' table.%2 > tbody > tr > td,  table.%2 > tbody > tr > th,', ' table.%2 > thead > tr > td,  table.%2 > thead > tr > th,', ' table.%2 > tfoot > tr > td,  table.%2 > tfoot > tr > th', '{', 'border : #d3d3d3 1px dotted', '}']).join(''), cssStyleText = cssTemplate.replace(/%2/g, showBorderClassName), extraDataFilter = {
+  var showBorderClassName = 'ke_show_border', cssTemplate = (visit65_336_1(UA.ie === 6) ? ['table.%2,', 'table.%2 td, table.%2 th,', '{', 'border : #d3d3d3 1px dotted', '}'] : [' table.%2,', ' table.%2 > tr > td,  table.%2 > tr > th,', ' table.%2 > tbody > tr > td,  table.%2 > tbody > tr > th,', ' table.%2 > thead > tr > td,  table.%2 > thead > tr > th,', ' table.%2 > tfoot > tr > td,  table.%2 > tfoot > tr > th', '{', 'border : #d3d3d3 1px dotted', '}']).join(''), cssStyleText = cssTemplate.replace(/%2/g, showBorderClassName), extraDataFilter = {
   tags: {
   'table': function(element) {
   _$jscoverage['/table.js'].functionData[15]++;
@@ -1581,7 +1581,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/table.js'].lineData[527]++;
   if (visit86_527_1(e.newVal)) {
     _$jscoverage['/table.js'].lineData[528]++;
-    var self = this, children = self.get("children");
+    var self = this, children = self.get('children');
     _$jscoverage['/table.js'].lineData[529]++;
     var editor = self.get("editor");
     _$jscoverage['/table.js'].lineData[530]++;

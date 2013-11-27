@@ -73,7 +73,7 @@ KISSY.add(function (S, require) {
                     filterInput = self.get("filterInput");
 
                 // 有过滤条件提示隐藏,否则提示显示
-                _placeholderEl[str ? "hide" : "show"]();
+                _placeholderEl[str ? 'hide' : 'show']();
 
                 if (self.get("allowMultiple")) {
                     var enteredItems = [],
@@ -126,7 +126,7 @@ KISSY.add(function (S, require) {
                     }
                 }
 
-                var children = self.get("children"),
+                var children = self.get('children'),
                     strExp = str && new RegExp(S.escapeRegExp(str), "ig");
 
                 // 过滤所有子组件

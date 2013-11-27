@@ -92,7 +92,7 @@ margin:50px auto;">
             context.html(e.target.get("content") + " clicked");
         });
 
-        context.on("contextmenu", function (e) {
+        context.on('contextmenu', function (e) {
             e.halt();
             menu.render();
             menu.move(e.pageX, e.pageY);

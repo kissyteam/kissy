@@ -13,7 +13,7 @@ KISSY.add(function (S, require) {
         doc = win.document,
         docMode = UA.ieMode,
         REPLACE_HISTORY = '__replace_history_' + S.now(),
-        ie = docMode || UA['ie'],
+        ie = docMode || UA.ie,
         HASH_CHANGE = 'hashchange';
 
     DomEvent.REPLACE_HISTORY = REPLACE_HISTORY;

@@ -65,14 +65,14 @@ KISSY.add(function (S,require) {
                 } else {
                     node.hide();
                 }
-                drag['setInternal']('node', dragNode);
+                drag.setInternal('node', dragNode);
                 if (hideNodeOnDrag) {
                     dragNode.css('visibility', '');
                 }
             }
 
-            drag['on']('dragstart' + PROXY_EVENT, start)
-                ['on']('dragend' + PROXY_EVENT, end);
+            drag.on('dragstart' + PROXY_EVENT, start)
+                .on('dragend' + PROXY_EVENT, end);
         },
         /**
          * make this draggable object unproxied
@@ -80,7 +80,7 @@ KISSY.add(function (S,require) {
          * @private
          */
         pluginDestructor: function (drag) {
-            drag['detach'](PROXY_EVENT);
+            drag.detach(PROXY_EVENT);
         }
     }, {
         ATTRS: {

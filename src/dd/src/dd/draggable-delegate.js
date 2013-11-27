@@ -3,7 +3,7 @@
  * delegate all draggable nodes to one draggable object
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S,require) {
+KISSY.add(function (S, require) {
     var Node = require('node'),
         DDM = require('./ddm'),
         Draggable = require('./draggable');
@@ -92,23 +92,18 @@ KISSY.add(function (S,require) {
              */
             _getHandler: function (target) {
                 var self = this,
-                    ret = undefined,
                     node = self.get('container'),
                     handlers = self.get('handlers');
                 while (target && target[0] !== node[0]) {
-                    S.each(handlers, function (h) {
+                    for (var i = 0; i < handlers.length; i++) {
+                        var h = handlers[i];
                         if (target.test(h)) {
-                            ret = target;
-                            return false;
+                            return target;
                         }
-                        return undefined;
-                    });
-                    if (ret) {
-                        break;
                     }
                     target = target.parent();
                 }
-                return ret;
+                return null;
             },
 
             /*

@@ -6,7 +6,7 @@ KISSY.add(function (S, Dom) {
     describe("insertion", function () {
         var body = document.body;
         it("insertBefore should works", function () {
-            var foo = body.appendChild(Dom.create("div"));
+            var foo = body.appendChild(Dom.create('div'));
             var t = Dom.create('<p>insertBefore node</p>');
             Dom.insertBefore(t, foo);
             expect(foo.previousSibling).toBe(t);
@@ -61,7 +61,7 @@ KISSY.add(function (S, Dom) {
         it("wrapAll should works", function () {
             var time = S.now();
             var wrappedCls = "f" + time;
-            var wrapperCls = "x" + time;
+            var wrapperCls = 'x' + time;
             var foo = body.appendChild(Dom.create("<div class='" + wrappedCls + "'></div>"));
             var foo2 = body.appendChild(Dom.create("<div class='" + wrappedCls + "'></div>"));
             Dom.wrapAll("." + wrappedCls,
@@ -70,7 +70,7 @@ KISSY.add(function (S, Dom) {
                     "</div>"));
             expect(foo.nextSibling).toBe(foo2);
             expect(foo.parentNode.childNodes.length).toBe(2);
-            expect(foo.parentNode.className).toBe("x" + wrapperCls);
+            expect(foo.parentNode.className).toBe('x' + wrapperCls);
             expect(foo.parentNode.parentNode.className).toBe(wrapperCls);
             Dom.remove([foo, foo2]);
             Dom.remove("." + wrapperCls);
@@ -79,7 +79,7 @@ KISSY.add(function (S, Dom) {
         it("wrap should works", function () {
             var time = S.now();
             var wrappedCls = "f" + time;
-            var wrapperCls = "x" + time;
+            var wrapperCls = 'x' + time;
             var foo = body.appendChild(Dom.create("<div class='" + wrappedCls + "'></div>"));
             var foo2 = body.appendChild(Dom.create("<div class='" + wrappedCls + "'></div>"));
             Dom.wrap("." + wrappedCls,
@@ -88,12 +88,12 @@ KISSY.add(function (S, Dom) {
                     "</div>"));
             expect(foo.nextSibling).toBe(null);
             expect(foo.parentNode.childNodes.length).toBe(1);
-            expect(foo.parentNode.className).toBe("x" + wrapperCls);
+            expect(foo.parentNode.className).toBe('x' + wrapperCls);
             expect(foo.parentNode.parentNode.className).toBe(wrapperCls);
 
             expect(foo2.nextSibling).toBe(null);
             expect(foo2.parentNode.childNodes.length).toBe(1);
-            expect(foo2.parentNode.className).toBe("x" + wrapperCls);
+            expect(foo2.parentNode.className).toBe('x' + wrapperCls);
             expect(foo.parentNode.parentNode.className).toBe(wrapperCls);
 
             expect(foo.parentNode.parentNode.nextSibling).toBe(foo2.parentNode.parentNode);
@@ -104,7 +104,7 @@ KISSY.add(function (S, Dom) {
         it("wrapInner should works", function () {
             var time = S.now();
             var wrappedCls = "f" + time;
-            var wrapperCls = "x" + time;
+            var wrapperCls = 'x' + time;
             var childCls = "c" + time;
             var foo = body.appendChild(Dom.create("<div class='" + wrappedCls + "'>" +
                 "<div class='" + childCls + "'></div>" +

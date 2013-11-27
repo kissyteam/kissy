@@ -38,7 +38,7 @@ KISSY.add(function (S,require) {
     // 特别注意：不带 p 元素
         pathBlockLimitElements = {
             "body": 1,
-            "div": 1,
+            'div': 1,
             "table": 1,
             "tbody": 1,
             "tr": 1,

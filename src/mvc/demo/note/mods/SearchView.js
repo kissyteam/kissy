@@ -6,8 +6,8 @@ KISSY.add(function (S, Node, mvc, Template) {
     return mvc.View.extend({
         initializer: function () {
             var self = this;
-            this.searchInput = this.get("el").one(".searchInput");
-            this.searchList = this.get("el").one(".searchList");
+            this.searchInput = this.get('el').one(".searchInput");
+            this.searchList = this.get('el').one(".searchList");
             this.get("notes").on("afterModelsChange", function () {
                 self.searchList.html(tmpl.render({list: self.get("notes").toJSON()}));
             });

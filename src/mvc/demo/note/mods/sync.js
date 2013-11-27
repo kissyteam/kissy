@@ -46,7 +46,7 @@ KISSY.add(function (S, mvc, Json) {
                         }
                     } else {
                         if (isModel(self)) {
-                            ret = store[findById(store, self.get("id"))];
+                            ret = store[findById(store, self.get('id'))];
                             if (!ret) {
                                 error = 'not found';
                             }
@@ -65,14 +65,14 @@ KISSY.add(function (S, mvc, Json) {
                     store.push(ret);
                     break;
                 case 'delete':
-                    id = self.get("id");
+                    id = self.get('id');
                     index = findById(store, id);
                     if (index > -1) {
                         store.splice(index, 1);
                     }
                     break;
                 case 'update':
-                    id = self.get("id");
+                    id = self.get('id');
                     index = findById(store, id);
                     if (index > -1) {
                         store[index] = self.toJSON();

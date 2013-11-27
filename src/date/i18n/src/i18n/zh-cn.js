@@ -20,6 +20,7 @@ KISSY.add('date/i18n/zh-cn', {
     shortWeekdays: ['周日', '周一', '周二', '周三', '周四', '周五',
         '周六'],
     ampms: ['上午', '下午'],
+    /*jshint quotmark: false*/
     datePatterns: ["yyyy'年'M'月'd'日' EEEE", "yyyy'年'M'月'd'日'", "yyyy-M-d", "yy-M-d"],
     timePatterns: ["ahh'时'mm'分'ss'秒' 'GMT'Z", "ahh'时'mm'分'ss'秒'", "H:mm:ss", "ah:mm"],
     dateTimePattern: '{date} {time}'

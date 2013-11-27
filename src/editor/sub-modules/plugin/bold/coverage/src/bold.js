@@ -293,7 +293,7 @@ KISSY.add(function(S, require) {
   editor.docReady(function() {
   _$jscoverage['/bold.js'].functionData[3]++;
   _$jscoverage['/bold.js'].lineData[22]++;
-  editor.get("document").on("keydown", function(e) {
+  editor.get("document").on('keydown', function(e) {
   _$jscoverage['/bold.js'].functionData[4]++;
   _$jscoverage['/bold.js'].lineData[23]++;
   if (visit1_23_1(e.ctrlKey && visit2_23_2(e.keyCode == S.Node.KeyCode.B))) {

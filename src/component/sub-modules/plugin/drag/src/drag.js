@@ -38,7 +38,7 @@ KISSY.add(function (S,require) {
                 self = this;
             self.set('node', $el);
             // sync
-            self.on("dragend", function () {
+            self.on('dragend', function () {
                 var offset = $el.offset();
                 component.setInternal('xy', [offset.left, offset.top]);
             });

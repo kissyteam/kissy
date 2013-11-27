@@ -138,7 +138,7 @@ KISSY.add(function (S) {
                                 && currentListItem.lastChild.getAttribute('type') == '_moz') {
                                 Dom._4e_remove(currentListItem.lastChild);
                             }
-                            Dom._4e_appendBogus(currentListItem);
+                            Dom._4eAppendBogus(currentListItem);
                         }
 
                         if (currentListItem.nodeType == Dom.NodeType.ELEMENT_NODE &&
@@ -155,9 +155,9 @@ KISSY.add(function (S) {
                         }
 
                         var currentListItemName = Dom.nodeName(currentListItem);
-                        if (!UA['ie'] && ( currentListItemName == 'div' ||
+                        if (!UA.ie && ( currentListItemName == 'div' ||
                             currentListItemName == 'p' )) {
-                            Dom._4e_appendBogus(currentListItem);
+                            Dom._4eAppendBogus(currentListItem);
                         }
                         retval.appendChild(currentListItem);
                         rootNode = null;

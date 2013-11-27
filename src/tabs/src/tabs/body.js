@@ -28,7 +28,7 @@ KISSY.add(function (S, require) {
 
         syncUI: function () {
             var self = this,
-                children = self.get("children");
+                children = self.get('children');
             S.each(children, function (c, i) {
                 if (c.get("selected")) {
                     self.set("selectedPanelIndex", i);

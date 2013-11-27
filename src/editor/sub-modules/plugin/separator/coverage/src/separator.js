@@ -256,7 +256,7 @@ KISSY.add(function(S) {
   pluginRenderUI: function(editor) {
   _$jscoverage['/separator.js'].functionData[2]++;
   _$jscoverage['/separator.js'].lineData[15]++;
-  S.all('<span ' + 'class="' + editor.get('prefixCls') + 'editor-toolbar-separator">&nbsp;' + '</span>').appendTo(editor.get("toolBarEl"));
+  S.all('<span ' + 'class="' + editor.get('prefixCls') + 'editor-toolbar-separator">&nbsp;' + '</span>').appendTo(editor.get('toolBarEl'));
 }});
   _$jscoverage['/separator.js'].lineData[19]++;
   return Separator;

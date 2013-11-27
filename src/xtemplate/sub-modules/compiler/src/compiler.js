@@ -121,7 +121,7 @@ KISSY.add(function (S, require) {
             if (idString == 'include') {
                 // prevent require parse...
                 source.push('if(moduleWrap) {re' + 'quire("' + tplNode.params[0].value + '");' +
-                    configName + '.params[0]=moduleWrap.resolveByName(' + configName + '.params[0])' +
+                    configName + '.params[0]=moduleWrap.resolveByName(' + configName + '.params[0]);' +
                     '}');
             }
 

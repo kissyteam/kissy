@@ -217,7 +217,7 @@
                     "请选择恢复编辑历史</div></div>"
             },
             "resize": {
-                //direction:["y"]
+                //direction:['y']
             },
 
             "drag-upload": {
@@ -253,10 +253,10 @@
                 editor = new Editor(cfg);
                 editor.render();
             }
-            editor.on("blur", function () {
+            editor.on('blur', function () {
                 S.log("editor blur");
             });
-            editor.on("focus", function () {
+            editor.on('focus', function () {
                 S.log("editor focus");
             });
             editor.on("selectionChange", function (e) {

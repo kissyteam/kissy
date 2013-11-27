@@ -1,16 +1,17 @@
 /** Compiled By kissy-xtemplate */
 KISSY.add(function (S, require, exports, module) {
+        /*jshint quotmark: false, unused:false, indent:false*/
         return function (scopes, S, undefined) {
             var buffer = "",
                 config = this.config,
                 engine = this,
                 moduleWrap, utils = config.utils;
-            if (typeof module != "undefined" && module.kissy) {
+            if (typeof module !== "undefined" && module.kissy) {
                 moduleWrap = module;
             }
-            var runBlockCommandUtil = utils["runBlockCommand"],
-                getExpressionUtil = utils["getExpression"],
-                getPropertyOrRunCommandUtil = utils["getPropertyOrRunCommand"];
+            var runBlockCommandUtil = utils.runBlockCommand,
+                getExpressionUtil = utils.getExpression,
+                getPropertyOrRunCommandUtil = utils.getPropertyOrRunCommand;
             buffer += '<div class="';
             var config1 = {};
             var params2 = [];
@@ -97,11 +98,11 @@ KISSY.add(function (S, require, exports, module) {
             config32.params = params33;
             if (moduleWrap) {
                 require("date/picker/year-panel/years-xtpl");
-                config32.params[0] = moduleWrap.resolveByName(config32.params[0])
+                config32.params[0] = moduleWrap.resolveByName(config32.params[0]);
             }
             var id31 = getPropertyOrRunCommandUtil(engine, scopes, config32, "include", 0, 33, false, undefined);
             buffer += id31;
             buffer += '\n        </tbody>\n    </table>\n</div>';
             return buffer;
-        }
+        };
 });

@@ -8,7 +8,6 @@ KISSY.add(function (S, require) {
     var logger = S.getLogger('s/dom');
     var globalWindow = S.Env.host,
         UA = S.UA,
-        undefined = undefined,
         Features = S.Features,
         getNodeName = Dom.nodeName,
         doc = globalWindow.document,
@@ -119,7 +118,7 @@ KISSY.add(function (S, require) {
                 name = cssProps[name] || name;
 
                 // https://github.com/kissyteam/kissy/issues/61
-                if (computedStyle = d.defaultView.getComputedStyle(elem, null)) {
+                if ((computedStyle = d.defaultView.getComputedStyle(elem, null))) {
                     val = computedStyle.getPropertyValue(name) || computedStyle[name];
                 }
 
@@ -217,12 +216,13 @@ KISSY.add(function (S, require) {
                     ret = '';
                     if (elem) {
                         // If a hook was provided get the computed value from there
-                        if (hook && 'get' in hook && (ret = hook.get(elem, true)) !== undefined) {
-                        } else {
+                        if (!(hook && 'get' in hook &&
+                            (ret = hook.get(elem, true)) !== undefined)) {
+
                             ret = Dom._getComputedStyle(elem, name);
                         }
                     }
-                    return (typeof ret == 'undefined') ? '' : ret;
+                    return (typeof ret === 'undefined') ? '' : ret;
                 }
                 // setter
                 else {
@@ -301,7 +301,7 @@ KISSY.add(function (S, require) {
              * @param {String} [id] An id to add to the stylesheet for later removal
              */
             addStyleSheet: function (refWin, cssText, id) {
-                if (typeof refWin == 'string') {
+                if (typeof refWin === 'string') {
                     id = cssText;
                     cssText = /**@type String
                      @ignore*/refWin;
@@ -354,7 +354,7 @@ KISSY.add(function (S, require) {
                         els = elem.getElementsByTagName('*');
                         elem.setAttribute('unselectable', 'on');
                         excludes = ['iframe', 'textarea', 'input', 'select'];
-                        while (e = els[i++]) {
+                        while ((e = els[i++])) {
                             if (!S.inArray(getNodeName(e), excludes)) {
                                 e.setAttribute('unselectable', 'on');
                             }
@@ -463,13 +463,13 @@ KISSY.add(function (S, require) {
                     position;
                 if (computed) {
                     position = Dom.css(el, 'position');
-                    if (position === "static") {
-                        return "auto";
+                    if (position === 'static') {
+                        return 'auto';
                     }
                     val = Dom._getComputedStyle(el, name);
-                    isAutoPosition = val === "auto";
-                    if (isAutoPosition && position === "relative") {
-                        return "0px";
+                    isAutoPosition = val === 'auto';
+                    if (isAutoPosition && position === 'relative') {
+                        return '0px';
                     }
                     // https://github.com/kissyteam/kissy/issues/493
                     if (isAutoPosition || NO_PX_REG.test(val)) {
@@ -501,11 +501,11 @@ KISSY.add(function (S, require) {
     }
 
     function style(elem, name, val) {
-        var style,
+        var elStyle,
             ret,
             hook;
         if (elem.nodeType === 3 ||
-            elem.nodeType === 8 || !(style = elem.style)) {
+            elem.nodeType === 8 || !(elStyle = elem.style)) {
             return undefined;
         }
         name = camelCase(name);
@@ -528,19 +528,21 @@ KISSY.add(function (S, require) {
                 // ie 无效值报错
                 try {
                     // EMPTY will unset style!
-                    style[name] = val;
+                    elStyle[name] = val;
                 } catch (e) {
                     logger.warn('css set error:' + e);
                 }
                 // #80 fix,font-family
-                if (val === EMPTY && style.removeAttribute) {
-                    style.removeAttribute(name);
+                if (val === EMPTY && elStyle.removeAttribute) {
+                    elStyle.removeAttribute(name);
                 }
             }
-            if (!style.cssText) {
+            if (!elStyle.cssText) {
                 // weird for chrome, safari is ok?
                 // https://github.com/kissyteam/kissy/issues/231
-                UA.webkit && (style = elem.outerHTML);
+                if(UA.webkit) {
+                    elStyle = elem.outerHTML;
+                }
                 elem.removeAttribute('style');
             }
             return undefined;
@@ -548,11 +550,10 @@ KISSY.add(function (S, require) {
         //getter
         else {
             // If a hook was provided get the non-computed value from there
-            if (hook && 'get' in hook && (ret = hook.get(elem, false)) !== undefined) {
-
-            } else {
+            if (!(hook && 'get' in hook &&
+                (ret = hook.get(elem, false)) !== undefined)) {
                 // Otherwise just get the value from the style object
-                ret = style[ name ];
+                ret = elStyle[ name ];
             }
             return ret === undefined ? '' : ret;
         }
@@ -584,9 +585,9 @@ KISSY.add(function (S, require) {
      */
     function getWH(elem, name, extra) {
         if (S.isWindow(elem)) {
-            return name == WIDTH ? Dom.viewportWidth(elem) : Dom.viewportHeight(elem);
-        } else if (elem.nodeType == 9) {
-            return name == WIDTH ? Dom.docWidth(elem) : Dom.docHeight(elem);
+            return name === WIDTH ? Dom.viewportWidth(elem) : Dom.viewportHeight(elem);
+        } else if (elem.nodeType === 9) {
+            return name === WIDTH ? Dom.docWidth(elem) : Dom.docHeight(elem);
         }
         var which = name === WIDTH ? ['Left', 'Right'] : ['Top', 'Bottom'],
             val = name === WIDTH ? elem.offsetWidth : elem.offsetHeight;
@@ -610,7 +611,7 @@ KISSY.add(function (S, require) {
 
         // Fall back to computed then un computed css if necessary
         val = Dom._getComputedStyle(elem, name);
-        if (val == null || (Number(val)) < 0) {
+        if (val === null || (Number(val)) < 0) {
             val = elem.style[ name ] || 0;
         }
         // Normalize '', auto, and prepare for extra
@@ -639,7 +640,7 @@ KISSY.add(function (S, require) {
             offset ,
             parentOffset = {top: 0, left: 0};
 
-        if (Dom.css(el, 'position') == 'fixed') {
+        if (Dom.css(el, 'position') === 'fixed') {
             offset = el.getBoundingClientRect();
         } else {
             // if offsetParent is body and body has margin
@@ -666,7 +667,7 @@ KISSY.add(function (S, require) {
     function getOffsetParent(el) {
         var offsetParent = el.offsetParent || ( el.ownerDocument || doc).body;
         while (offsetParent && !ROOT_REG.test(offsetParent.nodeName) &&
-            Dom.css(offsetParent, "position") === "static") {
+            Dom.css(offsetParent, "position") === 'static') {
             offsetParent = offsetParent.offsetParent;
         }
         return offsetParent;
@@ -683,7 +684,7 @@ KISSY.add(function (S, require) {
 
  2011-08-19
  - 调整结构，减少耦合
- - fix css('height') == auto
+ - fix css('height') === auto
 
  NOTES:
  - Opera 下，color 默认返回 #XXYYZZ, 非 rgb(). 目前 jQuery 等类库均忽略此差异，KISSY 也忽略。

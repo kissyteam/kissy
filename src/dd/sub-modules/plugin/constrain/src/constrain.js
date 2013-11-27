@@ -3,7 +3,7 @@
  * plugin constrain region for drag and drop
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S,require) {
+KISSY.add(function (S, require, exports, module) {
     var Node = require('node'),
         Base = require('base');
     var $ = Node.all,
@@ -65,7 +65,7 @@ KISSY.add(function (S,require) {
      * @extends KISSY.Base
      * Constrain plugin to provide ability to constrain draggable to specified region
      */
-   return Base.extend({
+    module.exports = Base.extend({
 
         pluginId: 'dd/plugin/constrain',
 
@@ -78,7 +78,7 @@ KISSY.add(function (S,require) {
          */
         pluginInitializer: function (drag) {
             var self = this;
-            drag['on']('dragstart' + CONSTRAIN_EVENT, onDragStart, self)
+            drag.on('dragstart' + CONSTRAIN_EVENT, onDragStart, self)
                 .on('dragend' + CONSTRAIN_EVENT, onDragEnd, self)
                 .on('dragalign' + CONSTRAIN_EVENT, onDragAlign, self);
         },
@@ -89,7 +89,7 @@ KISSY.add(function (S,require) {
          * @private
          */
         pluginDestructor: function (drag) {
-            drag['detach'](CONSTRAIN_EVENT, {
+            drag.detach(CONSTRAIN_EVENT, {
                 context: this
             });
         }
@@ -116,7 +116,8 @@ KISSY.add(function (S,require) {
                     if (v) {
                         if (v === true) {
                             return $(WIN);
-                        } else if (v.nodeType || S.isWindow(v) || typeof v == 'string') {
+                        } else if (v.nodeType || S.isWindow(v) ||
+                            typeof v === 'string') {
                             return $(v);
                         }
                     }

@@ -13,7 +13,7 @@ KISSY.add(function (S, require, exports, module) {
                 getExpressionUtil = utils.getExpression,
                 getPropertyOrRunCommandUtil = utils.getPropertyOrRunCommand;
             buffer += '<div id="ks-combobox-invalid-el-';
-            var id0 = getPropertyOrRunCommandUtil(engine, scopes, {}, "id", 0, 1, undefined, false);
+            var id0 = getPropertyOrRunCommandUtil(engine, scopes, {}, 'id', 0, 1, undefined, false);
             buffer += getExpressionUtil(id0, true);
             buffer += '"\n     class="';
             var config2 = {};
@@ -38,7 +38,7 @@ KISSY.add(function (S, require, exports, module) {
             config7.fn = function (scopes) {
                 var buffer = "";
                 buffer += '\n<div id="ks-combobox-trigger-';
-                var id10 = getPropertyOrRunCommandUtil(engine, scopes, {}, "id", 0, 7, undefined, false);
+                var id10 = getPropertyOrRunCommandUtil(engine, scopes, {}, 'id', 0, 7, undefined, false);
                 buffer += getExpressionUtil(id10, true);
                 buffer += '"\n     class="';
                 var config12 = {};
@@ -66,7 +66,7 @@ KISSY.add(function (S, require, exports, module) {
             var id17 = getPropertyOrRunCommandUtil(engine, scopes, config18, "getBaseCssClasses", 0, 13, true, undefined);
             buffer += id17;
             buffer += '">\n\n    <input id="ks-combobox-input-';
-            var id20 = getPropertyOrRunCommandUtil(engine, scopes, {}, "id", 0, 15, undefined, false);
+            var id20 = getPropertyOrRunCommandUtil(engine, scopes, {}, 'id', 0, 15, undefined, false);
             buffer += getExpressionUtil(id20, true);
             buffer += '"\n           aria-haspopup="true"\n           aria-autocomplete="list"\n           aria-haspopup="true"\n           role="autocomplete"\n           aria-expanded="false"\n\n    ';
             var config21 = {};
@@ -91,10 +91,10 @@ KISSY.add(function (S, require, exports, module) {
             var id27 = getPropertyOrRunCommandUtil(engine, scopes, {}, "value", 0, 29, undefined, false);
             buffer += getExpressionUtil(id27, true);
             buffer += '"\n    />\n\n\n    <label id="ks-combobox-placeholder-';
-            var id28 = getPropertyOrRunCommandUtil(engine, scopes, {}, "id", 0, 33, undefined, false);
+            var id28 = getPropertyOrRunCommandUtil(engine, scopes, {}, 'id', 0, 33, undefined, false);
             buffer += getExpressionUtil(id28, true);
             buffer += '"\n           for="ks-combobox-input-';
-            var id29 = getPropertyOrRunCommandUtil(engine, scopes, {}, "id", 0, 34, undefined, false);
+            var id29 = getPropertyOrRunCommandUtil(engine, scopes, {}, 'id', 0, 34, undefined, false);
             buffer += getExpressionUtil(id29, true);
             buffer += '"\n            style=\'display:';
             var config30 = {};

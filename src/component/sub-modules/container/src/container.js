@@ -3,7 +3,7 @@
  * component hierarchy management
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S,require) {
+KISSY.add(function (S, require) {
     var Control = require('component/control');
     var ContainerRender = require('./container/render');
 
@@ -48,7 +48,7 @@ KISSY.add(function (S,require) {
             children = self.get('children'),
             index = e.index;
 
-        if (index != -1) {
+        if (index !== -1) {
             children.splice(index, 1);
         }
 
@@ -56,11 +56,12 @@ KISSY.add(function (S,require) {
 
         if (destroy) {
             // c is still json
-            if (c.destroy)
+            if (c.destroy) {
                 c.destroy();
+            }
         } else {
             if (c.get && (cDOMEl = c.el)) {
-                if (cDOMParentEl = cDOMEl.parentNode) {
+                if ((cDOMParentEl = cDOMEl.parentNode)) {
                     cDOMParentEl.removeChild(cDOMEl);
                 }
             }
@@ -107,7 +108,7 @@ KISSY.add(function (S,require) {
         renderChildren: function () {
             var i,
                 self = this,
-                children = self.get("children");
+                children = self.get('children');
             for (i = 0; i < children.length; i++) {
                 self.renderChild(i);
             }
@@ -116,7 +117,7 @@ KISSY.add(function (S,require) {
         createChildren: function () {
             var i,
                 self = this,
-                children = self.get("children");
+                children = self.get('children');
             for (i = 0; i < children.length; i++) {
                 self.createChild(i);
             }
@@ -136,7 +137,7 @@ KISSY.add(function (S,require) {
          */
         addChild: function (c, index) {
             var self = this,
-                children = self.get("children");
+                children = self.get('children');
             if (index === undefined) {
                 index = children.length;
             }
@@ -172,14 +173,14 @@ KISSY.add(function (S,require) {
             elBefore = domContentEl.children[childIndex] || null;
             if (c.get('rendered')) {
                 cEl = c.el;
-                if (cEl.parentNode != domContentEl) {
+                if (cEl.parentNode !== domContentEl) {
                     domContentEl.insertBefore(cEl, elBefore);
                 }
             } else {
                 if (elBefore) {
-                    c.set("elBefore", elBefore);
+                    c.set('elBefore', elBefore);
                 } else {
-                    c.set("render", contentEl);
+                    c.set('render', contentEl);
                 }
                 c.create();
             }
@@ -224,7 +225,7 @@ KISSY.add(function (S,require) {
         removeChildren: function (destroy) {
             var self = this,
                 i,
-                t = [].concat(self.get("children"));
+                t = [].concat(self.get('children'));
             for (i = 0; i < t.length; i++) {
                 self.removeChild(t[i], destroy);
             }
@@ -237,7 +238,7 @@ KISSY.add(function (S,require) {
          * @return {KISSY.Component.Control} The child at the given index; null if none.
          */
         getChildAt: function (index) {
-            var children = this.get("children");
+            var children = this.get('children');
             return children[index] || null;
         },
 
@@ -247,9 +248,11 @@ KISSY.add(function (S,require) {
          */
         destructor: function () {
             var i,
-                children = this.get("children");
+                children = this.get('children');
             for (i = 0; i < children.length; i++) {
-                children[i].destroy && children[i].destroy();
+                if (children[i].destroy) {
+                    children[i].destroy();
+                }
             }
         }
     }, {

@@ -8,10 +8,10 @@ KISSY.add(function (S,require) {
     var doc = S.Env.host.document,
         docElem = doc.documentElement,
         matches = docElem.matches ||
-            docElem['webkitMatchesSelector'] ||
-            docElem['mozMatchesSelector'] ||
-            docElem['oMatchesSelector'] ||
-            docElem['msMatchesSelector'],
+            docElem.webkitMatchesSelector ||
+            docElem.mozMatchesSelector ||
+            docElem.oMatchesSelector ||
+            docElem.msMatchesSelector,
         supportGetElementsByClassName = 'getElementsByClassName' in doc,
         isArray = S.isArray,
         makeArray = S.makeArray,
@@ -25,7 +25,7 @@ KISSY.add(function (S,require) {
         rSimpleSelector = /^(?:#([\w-]+))?\s*([\w-]+|\*)?\.?([\w-]+)?$/,
         trim = S.trim;
 
-    function query_each(f) {
+    function queryEach(f) {
         var els = this,
             l = els.length,
             i;
@@ -39,16 +39,16 @@ KISSY.add(function (S,require) {
     function checkSelectorAndReturn(selector) {
         var name = selector.substr(1);
         if (!name) {
-            throw new Error('An invalid or illegal string was specified for selector.')
+            throw new Error('An invalid or illegal string was specified for selector.');
         }
         return name;
     }
 
     function makeMatch(selector) {
         var s = selector.charAt(0);
-        if (s == '#') {
+        if (s === '#') {
             return makeIdMatch(checkSelectorAndReturn(selector));
-        } else if (s == '.') {
+        } else if (s === '.') {
             return makeClassMatch(checkSelectorAndReturn(selector));
         } else {
             return makeTagMatch(selector);
@@ -85,7 +85,7 @@ KISSY.add(function (S,require) {
             i,
             el,
             simpleContext,
-            isSelectorString = typeof selector == 'string',
+            isSelectorString = typeof selector === 'string',
             contexts = context !== undefined ? query(context) : (simpleContext = 1) && [doc],
             contextsLen = contexts.length;
 
@@ -97,7 +97,7 @@ KISSY.add(function (S,require) {
 
             if (simpleContext) {
                 // shortcut
-                if (selector == 'body') {
+                if (selector === 'body') {
                     ret = [ doc.body ];
                 }
                 // .cls
@@ -107,7 +107,7 @@ KISSY.add(function (S,require) {
                 // tag#id
                 else if (rTagIdSelector.test(selector)) {
                     el = Dom._getElementById(RegExp.$2, doc);
-                    ret = el && el.nodeName.toLowerCase() == RegExp.$1 ? [el] : [];
+                    ret = el && el.nodeName.toLowerCase() === RegExp.$1 ? [el] : [];
                 }
                 // #id
                 else if (rIdSelector.test(selector)) {
@@ -166,12 +166,12 @@ KISSY.add(function (S,require) {
         else {
             // 1.常见的单个元素
             // Dom.query(document.getElementById('xx'))
-            if (selector['nodeType'] || selector['setTimeout']) {
+            if (selector.nodeType || selector.setTimeout) {
                 ret = [selector];
             }
             // 2.KISSY NodeList 特殊点直接返回，提高性能
-            else if (selector['getDOMNodes']) {
-                ret = selector['getDOMNodes']();
+            else if (selector.getDOMNodes) {
+                ret = selector.getDOMNodes();
             }
             // 3.常见的数组
             // var x=Dom.query('.l');
@@ -207,7 +207,7 @@ KISSY.add(function (S,require) {
         }
 
         // attach each method
-        ret.each = query_each;
+        ret.each = queryEach;
 
         return ret;
     }
@@ -229,7 +229,7 @@ KISSY.add(function (S,require) {
     }
 
     function isTag(el, value) {
-        return value == '*' || el.nodeName.toLowerCase() === value.toLowerCase();
+        return value === '*' || el.nodeName.toLowerCase() === value.toLowerCase();
     }
 
     S.mix(Dom,
@@ -327,7 +327,7 @@ KISSY.add(function (S,require) {
                 });
 
                 function sortOrder(a, b) {
-                    if (a == b) {
+                    if (a === b) {
                         hasDuplicate = true;
                         return 0;
                     }
@@ -373,7 +373,7 @@ KISSY.add(function (S,require) {
                     cls,
                     ret = [];
 
-                if (typeof filter == 'string' &&
+                if (typeof filter === 'string' &&
                     (filter = trim(filter)) &&
                     (match = rSimpleSelector.exec(filter))) {
                     id = match[1];
@@ -395,10 +395,10 @@ KISSY.add(function (S,require) {
                             }
 
                             return clsRe && tagRe;
-                        }
+                        };
                     } else if (id && !tag && !cls) {
                         filter = function (elem) {
-                            return getAttr(elem, 'id') == id;
+                            return getAttr(elem, 'id') === id;
                         };
                     }
                 }

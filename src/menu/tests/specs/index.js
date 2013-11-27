@@ -28,10 +28,10 @@ KISSY.add(function (S, Menu) {
                     waits(10);
 
                     runs(function () {
-                        expect(menuChildren[0].get("highlighted")).toBe(true);
+                        expect(menuChildren[0].get('highlighted')).toBe(true);
                         expect(menuChildren[0].get('el')
                             .hasClass('ks-menuitem-hover')).toBeTruthy();
-                        expect(menuChildren[1].get("highlighted")).toBeFalsy();
+                        expect(menuChildren[1].get('highlighted')).toBeFalsy();
                         expect(menuChildren[1].get('el')
                             .hasClass('ks-menuitem-hover')).toBeFalsy();
                     });
@@ -49,10 +49,10 @@ KISSY.add(function (S, Menu) {
                     waits(10);
 
                     runs(function () {
-                        expect(menuChildren[0].get("highlighted")).toBe(false);
+                        expect(menuChildren[0].get('highlighted')).toBe(false);
                         expect(menuChildren[0].get('el')
                             .hasClass('ks-menuitem-hover')).toBeFalsy();
-                        expect(menuChildren[1].get("highlighted")).toBe(true);
+                        expect(menuChildren[1].get('highlighted')).toBe(true);
                         expect(menuChildren[1].get('el')
                             .hasClass('ks-menuitem-hover')).toBeTruthy();
                     });
@@ -74,7 +74,7 @@ KISSY.add(function (S, Menu) {
                     waits(10);
 
                     runs(function () {
-                        jasmine.simulate(menuEl[0], "keydown", {
+                        jasmine.simulate(menuEl[0], 'keydown', {
                             keyCode: KeyCode.UP
                         });
                         jasmine.simulate(menuEl[0], "keyup", {
@@ -85,16 +85,16 @@ KISSY.add(function (S, Menu) {
                     waits(10);
 
                     runs(function () {
-                        expect(menuChildren[0].get("highlighted")).toBe(false);
+                        expect(menuChildren[0].get('highlighted')).toBe(false);
                         expect(menuChildren[0].get('el')
                             .hasClass('ks-menuitem-hover')).toBeFalsy();
-                        expect(menuChildren[1].get("highlighted")).toBe(true);
+                        expect(menuChildren[1].get('highlighted')).toBe(true);
                         expect(menuChildren[1].get('el')
                             .hasClass('ks-menuitem-hover')).toBeTruthy();
                     });
 
                     runs(function () {
-                        jasmine.simulate(menuEl[0], "keydown", {
+                        jasmine.simulate(menuEl[0], 'keydown', {
                             keyCode: KeyCode.UP
                         });
                         jasmine.simulate(menuEl[0], "keyup", {
@@ -105,10 +105,10 @@ KISSY.add(function (S, Menu) {
                     waits(10);
 
                     runs(function () {
-                        expect(menuChildren[0].get("highlighted")).toBe(true);
+                        expect(menuChildren[0].get('highlighted')).toBe(true);
                         expect(menuChildren[0].get('el')
                             .hasClass('ks-menuitem-hover')).toBeTruthy();
-                        expect(menuChildren[1].get("highlighted")).toBeFalsy();
+                        expect(menuChildren[1].get('highlighted')).toBeFalsy();
                         expect(menuChildren[1].get('el')
                             .hasClass('ks-menuitem-hover')).toBeFalsy();
                     });
@@ -141,16 +141,16 @@ KISSY.add(function (S, Menu) {
                     waits(10);
 
                     runs(function () {
-                        expect(menuChildren[0].get("highlighted")).toBe(false);
+                        expect(menuChildren[0].get('highlighted')).toBe(false);
                         expect(menuChildren[0].get('el')
                             .hasClass('ks-menuitem-hover')).toBeFalsy();
-                        expect(menuChildren[1].get("highlighted")).toBe(true);
+                        expect(menuChildren[1].get('highlighted')).toBe(true);
                         expect(menuChildren[1].get('el')
                             .hasClass('ks-menuitem-hover')).toBeTruthy();
                     });
 
                     runs(function () {
-                        jasmine.simulate(menuEl[0], "keydown", {
+                        jasmine.simulate(menuEl[0], 'keydown', {
                             keyCode: KeyCode.ENTER
                         });
                         jasmine.simulate(menuEl[0], "keyup", {
@@ -170,7 +170,7 @@ KISSY.add(function (S, Menu) {
                     });
 
                     runs(function () {
-                        jasmine.simulate(menuEl[0], "keydown", {
+                        jasmine.simulate(menuEl[0], 'keydown', {
                             keyCode: KeyCode.ENTER
                         });
                         jasmine.simulate(menuEl[0], "keyup", {
@@ -213,10 +213,10 @@ KISSY.add(function (S, Menu) {
                     waits(100);
 
                     runs(function () {
-                        expect(menuChildren[0].get("highlighted")).toBe(false);
+                        expect(menuChildren[0].get('highlighted')).toBe(false);
                         expect(menuChildren[0].get('el')
                             .hasClass('ks-menuitem-hover')).toBeFalsy();
-                        expect(menuChildren[1].get("highlighted")).toBe(true);
+                        expect(menuChildren[1].get('highlighted')).toBe(true);
                         expect(menuChildren[1].get('el')
                             .hasClass('ks-menuitem-hover')).toBeTruthy();
                     });
@@ -269,8 +269,8 @@ KISSY.add(function (S, Menu) {
 
                 }).render();
 
-                menuEl = menu.get("el");
-                menuChildren = menu.get("children");
+                menuEl = menu.get('el');
+                menuChildren = menu.get('children');
 
                 firstEl = menuEl.children()[0];
 
@@ -298,8 +298,8 @@ KISSY.add(function (S, Menu) {
                     srcNode:render
                 }).render();
 
-                menuEl = menu.get("el");
-                menuChildren = menu.get("children");
+                menuEl = menu.get('el');
+                menuChildren = menu.get('children');
 
                 firstEl = menuEl.children()[0];
 

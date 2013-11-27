@@ -33,7 +33,7 @@ KISSY.add(function (S, Dom) {
             var o2 = Dom.offset(test_offset);
             expect(o2.top).toBe(o.top);
             expect(o2.left).toBe(o.left);
-            expect(test_offset.style.position).toBe("relative");
+            expect(test_offset.style.position).toBe('relative');
         });
 
         it("should consider html border", function () {

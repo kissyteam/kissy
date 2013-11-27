@@ -161,9 +161,9 @@
                             filterInput = self.get("filterInput");
 
                     // 有过滤条件提示隐藏，否则提示显示
-                    _labelEl[str ? "hide" : "show"]();
+                    _labelEl[str ? 'hide' : 'show']();
 
-                    var children = self.get("children");
+                    var children = self.get('children');
 
                     // 拼音
                     if (/^[a-z\s]+$/i.test(str)) {
@@ -186,7 +186,7 @@
                                         + content.substring(index + str.length, content.length);
 
                                 // 匹配子串着重 wrap
-                                c.get("el").html(content);
+                                c.get('el').html(content);
                             } else {
                                 c.hide();
                             }

@@ -32,7 +32,7 @@ KISSY.add(function (S,require) {
              */
             closest: function (selector, filter, context, allowTextNode) {
                 return nth(selector, filter, 'parentNode', function (elem) {
-                    return elem.nodeType != NodeType.DOCUMENT_FRAGMENT_NODE;
+                    return elem.nodeType !== NodeType.DOCUMENT_FRAGMENT_NODE;
                 }, context, true, allowTextNode);
             },
 
@@ -47,7 +47,7 @@ KISSY.add(function (S,require) {
              */
             parent: function (selector, filter, context) {
                 return nth(selector, filter, 'parentNode', function (elem) {
-                    return elem.nodeType != NodeType.DOCUMENT_FRAGMENT_NODE;
+                    return elem.nodeType !== NodeType.DOCUMENT_FRAGMENT_NODE;
                 }, context, undefined);
             },
 
@@ -165,8 +165,8 @@ KISSY.add(function (S,require) {
                         return -1;
                     }
                     c = el;
-                    while (c = c.previousSibling) {
-                        if (c.nodeType == NodeType.ELEMENT_NODE) {
+                    while ((c = c.previousSibling)) {
+                        if (c.nodeType === NodeType.ELEMENT_NODE) {
                             n++;
                         }
                     }
@@ -192,11 +192,11 @@ KISSY.add(function (S,require) {
             equals: function (n1, n2) {
                 n1 = Dom.query(n1);
                 n2 = Dom.query(n2);
-                if (n1.length != n2.length) {
+                if (n1.length !== n2.length) {
                     return false;
                 }
                 for (var i = n1.length; i >= 0; i--) {
-                    if (n1[i] != n2[i]) {
+                    if (n1[i] !== n2[i]) {
                         return false;
                     }
                 }
@@ -241,10 +241,10 @@ KISSY.add(function (S,require) {
         }
 
         // 概念统一，都是 context 上下文，只过滤子孙节点，自己不管
-        while (elem && elem != context) {
+        while (elem && elem !== context) {
             if ((
-                elem.nodeType == NodeType.ELEMENT_NODE ||
-                    elem.nodeType == NodeType.TEXT_NODE && allowTextNode
+                elem.nodeType === NodeType.ELEMENT_NODE ||
+                    elem.nodeType === NodeType.TEXT_NODE && allowTextNode
                 ) &&
                 testFilter(elem, filter) &&
                 (!extraFilter || extraFilter(elem))) {
@@ -296,10 +296,10 @@ KISSY.add(function (S,require) {
             tmp = S.makeArray(parentNode.childNodes);
             for (i = 0; i < tmp.length; i++) {
                 el = tmp[i];
-                if (!allowText && el.nodeType != NodeType.ELEMENT_NODE) {
+                if (!allowText && el.nodeType !== NodeType.ELEMENT_NODE) {
                     continue;
                 }
-                if (el == elem) {
+                if (el === elem) {
                     continue;
                 }
                 ret.push(el);

@@ -14,15 +14,15 @@ KISSY.add(function (S, require) {
     S.augment(Resize, {
         pluginRenderUI: function (editor) {
             var Draggable = DD['Draggable'],
-                statusBarEl = editor.get("statusBarEl"),
-                textarea = editor.get("textarea"),
+                statusBarEl = editor.get('statusBarEl'),
+                textarea = editor.get('textarea'),
                 cfg = this.config,
-                direction = cfg["direction"] || ["x", "y"];
+                direction = cfg["direction"] || ['x', 'y'];
 
             var cursor = 'se-resize';
 
             if (direction.length == 1) {
-                if (direction[0] == "x") {
+                if (direction[0] == 'x') {
                     cursor = "e-resize"
                 } else {
                     cursor = "s-resize"
@@ -50,8 +50,8 @@ KISSY.add(function (S, require) {
                 height = 0,
                 width = 0,
                 dragStartMousePos,
-                heightEl = editor.get("el"),
-                widthEl = editor.get("el");
+                heightEl = editor.get('el'),
+                widthEl = editor.get('el');
 
             d.on("dragstart", function () {
                 height = heightEl.height();
@@ -63,10 +63,10 @@ KISSY.add(function (S, require) {
             d.on("drag", function (ev) {
                 var diffX = ev.pageX - dragStartMousePos.left,
                     diffY = ev.pageY - dragStartMousePos.top;
-                if (S.inArray("y", direction)) {
+                if (S.inArray('y', direction)) {
                     editor.set("height", height + diffY);
                 }
-                if (S.inArray("x", direction)) {
+                if (S.inArray('x', direction)) {
                     editor.set('width', width + diffX);
                 }
                 editor.fire("resize");

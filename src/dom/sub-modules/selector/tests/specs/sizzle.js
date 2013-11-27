@@ -315,7 +315,7 @@ KISSY.add(function (S, engine) {
         });
     });
 
-    describe("id", function () {
+    describe('id', function () {
 
         t("ID Selector", "#body", ["body"]);
         t("ID Selector w/ Element", "body#body", ["body"]);
@@ -405,20 +405,20 @@ KISSY.add(function (S, engine) {
 
 
         it("Finding a second class.", function () {
-            var div = document.createElement("div");
+            var div = document.createElement('div');
             div.innerHTML = "<div class='test e'></div><div class='test'></div>";
             expect(select(".e", div)).toEqual([ div.firstChild ]);
 
         });
 
         it("Finding a modified class.", function () {
-            var div = document.createElement("div");
+            var div = document.createElement('div');
             div.innerHTML = "<div class='test e'></div><div class='test'></div>";
             div.lastChild.className = "e";
             expect(select(".e", div)).toEqual([ div.firstChild, div.lastChild ]);
         });
         it('".null does not match an element with no class"', function () {
-            var div = document.createElement("div");
+            var div = document.createElement('div');
             div.innerHTML = "<div class='test e'></div><div class='test'></div>";
             expect(matches('.null', [div]).length).toBe(0);
             div.className = "null";
@@ -426,7 +426,7 @@ KISSY.add(function (S, engine) {
         });
 
         it('".null does not match an element with no class"', function () {
-            var div = document.createElement("div");
+            var div = document.createElement('div');
             div.innerHTML = "<div class='test e'></div><div class='test'></div>";
             expect(matches('.null div', [div.firstChild]).length).toBe(0);
             div.className = "null";
@@ -435,7 +435,7 @@ KISSY.add(function (S, engine) {
 
 
         it("Classes match Object.prototype properties", function () {
-            var div = document.createElement("div");
+            var div = document.createElement('div');
             div.innerHTML = "<div class='test e'></div><div class='test'></div>";
 
             div.lastChild.className += " hasOwnProperty toString";
@@ -694,7 +694,7 @@ KISSY.add(function (S, engine) {
         }
 
         // #3279
-        div = document.createElement("div");
+        div = document.createElement('div');
         div.innerHTML = "<div id='foo' xml:test='something'></div>";
 
         equal(select("[xml\\:test]", div), [ div.firstChild ], "Finding by attribute with escaped characters.");
@@ -797,7 +797,7 @@ KISSY.add(function (S, engine) {
         // Recreate tmp
 
         it('div focus', function () {
-            var tmp = document.createElement("div");
+            var tmp = document.createElement('div');
             tmp.id = "tmp_input";
             tmp.innerHTML = "<span>Hello I am focusable.</span>";
             // Setting tabIndex should make the element focusable

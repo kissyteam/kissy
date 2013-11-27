@@ -26,10 +26,10 @@ KISSY.add(function (S, require) {
 
     // 是否两个bubble上下重叠？
     function overlap(b1, b2) {
-        var b1_top = b1.get("y"),
-            b1_bottom = b1_top + b1.get("el").outerHeight(),
-            b2_top = b2.get("y"),
-            b2_bottom = b2_top + b2.get("el").outerHeight();
+        var b1_top = b1.get('y'),
+            b1_bottom = b1_top + b1.get('el').outerHeight(),
+            b2_top = b2.get('y'),
+            b2_bottom = b2_top + b2.get('el').outerHeight();
 
         return inRange(b1_top, b1_bottom, b2_bottom) ||
             inRange(b1_top, b1_bottom, b2_top);
@@ -48,7 +48,7 @@ KISSY.add(function (S, require) {
                 overlap(self, bubble)) {
                 if (!archor) {
                     archor = bubble;
-                } else if (archor.get("y") < bubble.get("y")) {
+                } else if (archor.get('y') < bubble.get('y')) {
                     archor = bubble;
                 }
             }
@@ -179,7 +179,7 @@ KISSY.add(function (S, require) {
             }
         }
 
-        editor.on("sourceMode", onHide);
+        editor.on('sourceMode', onHide);
 
         function showImmediately() {
             var xy = getXy(bubble);
@@ -187,7 +187,7 @@ KISSY.add(function (S, require) {
                 bubble.move(xy[0],xy[1]);
                 var archor = getTopPosition(bubble);
                 if (archor) {
-                    xy[1] = archor.get("y") + archor.get("el").outerHeight();
+                    xy[1] = archor.get('y') + archor.get('el').outerHeight();
                     bubble.move(xy[0],xy[1]);
                 }
                 if (!bubble.get('visible')) {
@@ -204,7 +204,7 @@ KISSY.add(function (S, require) {
             if (!bubble.get("editorSelectedEl")) {
                 return;
             }
-            var el = bubble.get("el");
+            var el = bubble.get('el');
             bubble.hide();
             bufferScroll();
         }

@@ -18,7 +18,7 @@ KISSY.add(function (S, Node, MVC) {
                 el:"<span />"
             });
 
-            expect(v.get("el")[0].nodeName.toLowerCase()).toBe("span");
+            expect(v.get('el')[0].nodeName.toLowerCase()).toBe("span");
 
         });
 
@@ -41,7 +41,7 @@ KISSY.add(function (S, Node, MVC) {
                 });
 
 
-            var c = v.get("el");
+            var c = v.get('el');
 
             c.html("<span class='x'>1</span><span class='y'>2</span>").appendTo("body");
 

@@ -308,11 +308,11 @@ function visit8_167_1(result) {
 function visit7_158_1(result) {
   _$jscoverage['/dialog.js'].branchData['158'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['154'][1].init(27, 78, 'xhtml_dtd.$block[nextName] && xhtml_dtd[nextName][\'#text\']');
+}_$jscoverage['/dialog.js'].branchData['154'][1].init(27, 78, 'xhtmlDtd.$block[nextName] && xhtmlDtd[nextName][\'#text\']');
 function visit6_154_1(result) {
   _$jscoverage['/dialog.js'].branchData['154'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['153'][1].init(987, 106, 'nextName && xhtml_dtd.$block[nextName] && xhtml_dtd[nextName][\'#text\']');
+}_$jscoverage['/dialog.js'].branchData['153'][1].init(987, 106, 'nextName && xhtmlDtd.$block[nextName] && xhtmlDtd[nextName][\'#text\']');
 function visit5_153_1(result) {
   _$jscoverage['/dialog.js'].branchData['153'][1].ranCondition(result);
   return result;
@@ -340,7 +340,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/dialog.js'].lineData[8]++;
   var MenuButton = require('menubutton');
   _$jscoverage['/dialog.js'].lineData[9]++;
-  var xhtml_dtd = Editor.XHTML_DTD;
+  var xhtmlDtd = Editor.XHTML_DTD;
   _$jscoverage['/dialog.js'].lineData[10]++;
   var NodeType = S.DOM.NodeType;
   _$jscoverage['/dialog.js'].lineData[11]++;
@@ -426,14 +426,14 @@ KISSY.add(function(S, require) {
   _$jscoverage['/dialog.js'].lineData[150]++;
   var nextName = visit2_150_1(next && visit3_150_2(visit4_150_3(next[0].nodeType == NodeType.ELEMENT_NODE) && next.nodeName()));
   _$jscoverage['/dialog.js'].lineData[153]++;
-  if (visit5_153_1(nextName && visit6_154_1(xhtml_dtd.$block[nextName] && xhtml_dtd[nextName]['#text']))) {
+  if (visit5_153_1(nextName && visit6_154_1(xhtmlDtd.$block[nextName] && xhtmlDtd[nextName]['#text']))) {
   } else {
     _$jscoverage['/dialog.js'].lineData[157]++;
     next = S.all("<p></p>", editor.get('document')[0]);
     _$jscoverage['/dialog.js'].lineData[158]++;
     if (visit7_158_1(!S.UA.ie)) {
       _$jscoverage['/dialog.js'].lineData[159]++;
-      next._4e_appendBogus();
+      next._4eAppendBogus();
     }
     _$jscoverage['/dialog.js'].lineData[161]++;
     codeEl.after(next);

@@ -169,7 +169,7 @@ KISSY.add(function (S, Dom, Event) {
 
                 var ret = [];
 
-                Event.on("#t89561", "mouseenter", function (e) {
+                Event.on("#t89561", 'mouseenter', function (e) {
                     expect(e.type).toBe('mouseenter');
                     ret.push(1);
                 });
@@ -239,7 +239,7 @@ KISSY.add(function (S, Dom, Event) {
 
                 runs(function () {
                     expect(t).toBe(d2.id);
-                    expect(type).toBe("mouseenter");
+                    expect(type).toBe('mouseenter');
                     t = "";
                     type = "";
                     simulate(d3, 'mouseover', d2);
@@ -259,11 +259,11 @@ KISSY.add(function (S, Dom, Event) {
             it("works for mouseenter/leave", function () {
 
                 var n = Dom.create("<div/>"), ret=0;
-                Event.on(n, "mouseenter", function (e) {
+                Event.on(n, 'mouseenter', function (e) {
                     expect(e.type).toBe('mouseenter');
                     ret = 1
                 });
-                Event.fire(n, "mouseenter", {
+                Event.fire(n, 'mouseenter', {
                     relatedTarget: document
                 });
 

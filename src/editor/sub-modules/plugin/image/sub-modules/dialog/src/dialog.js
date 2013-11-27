@@ -74,7 +74,7 @@ KISSY.add(function (S, require) {
                 mask: true
             }).render();
 
-            var content = self.d.get("el"),
+            var content = self.d.get('el'),
                 cancel = content.one("." + prefixCls + "img-cancel"),
                 ok = content.one("." + prefixCls + "img-insert"),
                 verifyInputs = Editor.Utils.verifyInputs,
@@ -228,7 +228,7 @@ KISSY.add(function (S, require) {
                         }
                     });
 
-                    var loadingMaskEl = self.d.get("el"),
+                    var loadingMaskEl = self.d.get('el'),
                         offset = loadingMaskEl.offset(),
                         width = loadingMaskEl[0].offsetWidth,
                         height = loadingMaskEl[0].offsetHeight;
@@ -258,7 +258,7 @@ KISSY.add(function (S, require) {
                     "style='position:absolute;" +
                     "cursor:pointer;" +
                     "left:" +
-                    (UA['ie'] ? "360" : (UA["chrome"] ? "319" : "369")) +
+                    (UA.ie ? "360" : (UA["chrome"] ? "319" : "369")) +
                     "px;" +
                     "z-index:2;" +
                     "top:0px;" +
@@ -270,10 +270,10 @@ KISSY.add(function (S, require) {
                     warning = "单张图片容量不超过 " + (sizeLimit / 1000) + " M";
                 self.imgLocalUrl.val(warning);
                 self.fileInput.css("opacity", 0);
-                self.fileInput.on("mouseenter", function () {
+                self.fileInput.on('mouseenter', function () {
                     ke_image_up.addClass("" + prefixCls + "button-hover");
                 });
-                self.fileInput.on("mouseleave", function () {
+                self.fileInput.on('mouseleave', function () {
                     ke_image_up.removeClass("" + prefixCls + "button-hover");
                 });
                 self.fileInput.on("change", function () {

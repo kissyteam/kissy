@@ -31,11 +31,11 @@ KISSY.add(function (S, require) {
             var self = this;
             //在 show 之前调用
             self.center();
-            var y = self.get("y");
+            var y = self.get('y');
             //居中有点偏下
             if (y - S.DOM.scrollTop() > 200) {
                 y = S.DOM.scrollTop() + 200;
-                self.set("y", y);
+                self.set('y', y);
             }
             self.callSuper();
         }

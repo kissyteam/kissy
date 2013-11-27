@@ -95,7 +95,7 @@ KISSY.add(function (S,require) {
                     oldY = curY;
 
                     // force update for some android browsers
-                    canvas.css('padding-right', canvas.css('padding-right') == "0px" ? "1px" : "0px");
+                    canvas.css('padding-right', canvas.css('padding-right') == '0px' ? "1px" : '0px');
                 },
 
                 touchEnd = function (ev) {

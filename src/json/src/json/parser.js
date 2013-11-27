@@ -122,7 +122,7 @@ KISSY.add(function () {
             var past = (matched.length > DEBUG_CONTEXT_LIMIT ? "..." : "") + matched.slice(-DEBUG_CONTEXT_LIMIT).replace(/\n/, " "),
                 next = match + input;
             next = next.slice(0, DEBUG_CONTEXT_LIMIT) + (next.length > DEBUG_CONTEXT_LIMIT ? "..." : "");
-            return past + next + "\n" + new Array(past.length + 1).join("-") + "^";
+            return past + next + '\n' + new Array(past.length + 1).join("-") + "^";
         },
         'mapSymbol': function (t) {
             var self = this,
@@ -535,7 +535,7 @@ KISSY.add(function () {
                         expected.push(self.lexer.mapReverseSymbol(symbol));
                     });
                 }
-                error = "Syntax error at line " + lexer.lineNumber + ":\n" + lexer.showDebugInfo() + "\n" + "expect " + expected.join(", ");
+                error = "Syntax error at line " + lexer.lineNumber + ":\n" + lexer.showDebugInfo() + '\n' + "expect " + expected.join(", ");
                 S.error(error);
                 return false;
             }

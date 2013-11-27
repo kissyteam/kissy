@@ -3,7 +3,7 @@
  * render for year-panel
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S,require) {
+KISSY.add(function (S, require) {
     var DateFormat = require('date/format'),
         Control = require('component/control'),
         YearsTpl = require('./years-xtpl'),

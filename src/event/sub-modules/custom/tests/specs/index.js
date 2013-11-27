@@ -296,13 +296,13 @@ KISSY.add(function (S, Event) {
             eventTarget.on("click", noop);
             eventTarget.on("click", noop2);
             eventTarget.on("click", noop3);
-            eventTarget.on("keydown", noop);
+            eventTarget.on('keydown', noop);
             (function () {
                 var customEventObservables = eventTarget.getCustomEvents();
 
                 var num = 0;
                 for (i in customEventObservables) {
-                    expect(S.inArray(i, ["click", "keydown"]))
+                    expect(S.inArray(i, ["click", 'keydown']))
                         .toBe(true);
                     num++;
                 }
@@ -319,7 +319,7 @@ KISSY.add(function (S, Event) {
 
                 for (i in customEventObservables) {
 
-                    expect(S.inArray(i, ["click", "keydown"]))
+                    expect(S.inArray(i, ["click", 'keydown']))
                         .toBe(true);
                     num++;
 

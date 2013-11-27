@@ -15,7 +15,7 @@ KISSY.add(function (S,require) {
         undefined = undefined,
         FALSE = false,
         NULL = null,
-        xhtml_dtd = Editor.XHTML_DTD,
+        xhtmlDtd = Editor.XHTML_DTD,
         Dom = S.DOM,
         NodeType = Dom.NodeType,
         UA = S.UA,
@@ -192,7 +192,7 @@ KISSY.add(function (S,require) {
 
            // inline 元素是否没有包含有效文字内容
             _4e_isEmptyInlineRemovable: function (thisElement) {
-                if (!xhtml_dtd.$removeEmpty[Dom.nodeName(thisElement)]) {
+                if (!xhtmlDtd.$removeEmpty[Dom.nodeName(thisElement)]) {
                     return false;
                 }
                 var children = thisElement.childNodes;
@@ -261,7 +261,7 @@ KISSY.add(function (S,require) {
                 // If the offset is after the last char, IE creates the text node
                 // on split, but don't include it into the Dom. So, we have to do
                 // that manually here.
-                if (UA['ie'] && offset == el.nodeValue.length) {
+                if (UA.ie && offset == el.nodeValue.length) {
                     var next = doc.createTextNode("");
                     Dom.insertAfter(next, el);
                     return next;
@@ -271,9 +271,9 @@ KISSY.add(function (S,require) {
 
                 // IE BUG: IE8 does not update the childNodes array in Dom after splitText(),
                 // we need to make some Dom changes to make it update. (#3436)
-                // UA['ie']==8 不对，
-                // 判断不出来:UA['ie']==7 && doc.documentMode==7
-                // 浏览器模式：当ie8处于兼容视图以及ie7时，UA['ie']==7
+                // UA.ie==8 不对，
+                // 判断不出来:UA.ie==7 && doc.documentMode==7
+                // 浏览器模式：当ie8处于兼容视图以及ie7时，UA.ie==7
                 // 文本模式: mode=5 ,mode=7, mode=8
                 // ie8 浏览器有问题，而不在于是否哪个模式
                 if (!!(doc.documentMode)) {
@@ -587,7 +587,7 @@ KISSY.add(function (S,require) {
                     break;
                 }
 
-                if (!UA['ie'] && !UA.opera) {
+                if (!UA.ie && !UA.opera) {
                     child = el.lastChild;
                     if (child &&
                         child.nodeType == 1 &&
@@ -599,7 +599,7 @@ KISSY.add(function (S,require) {
 
 
             // 将一个 bogus 元素添加到元素末尾
-            _4e_appendBogus: function (el) {
+            _4eAppendBogus: function (el) {
                 var lastChild = el.lastChild, bogus;
 
                 // Ignore empty/spaces text.
@@ -674,7 +674,7 @@ KISSY.add(function (S,require) {
                     }
                     // IE BUG: value attribute is never specified even if it exists.
                     else if (attribute.specified ||
-                        ( UA['ie'] && attribute.value && attrName == 'value' )) {
+                        ( UA.ie && attribute.value && attrName == 'value' )) {
                         attrValue = Dom.attr(el, attrName);
                         if (attrValue === NULL) {
                             attrValue = attribute.nodeValue;
@@ -693,8 +693,8 @@ KISSY.add(function (S,require) {
             _4e_isEditable: function (el) {
                 // Get the element DTD (defaults to span for unknown elements).
                 var name = Dom.nodeName(el),
-                    dtd = !xhtml_dtd.$nonEditable[ name ] &&
-                        ( xhtml_dtd[ name ] || xhtml_dtd["span"] );
+                    dtd = !xhtmlDtd.$nonEditable[ name ] &&
+                        ( xhtmlDtd[ name ] || xhtmlDtd["span"] );
                 // In the DTD # == text node.
                 return dtd && dtd['#text'];
             },

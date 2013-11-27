@@ -75,8 +75,8 @@ KISSY.add(function (S,require) {
                         this.hide();
                         var doc = editor.get("document")[0],
                             p = new Node(doc.createElement("p"));
-                        if (!UA['ie']) {
-                            p._4e_appendBogus(undefined);
+                        if (!UA.ie) {
+                            p._4eAppendBogus(undefined);
                         }
                         var r = new Editor.Range(doc);
                         r.setStartAfter(this.get("editorSelectedEl"));
@@ -113,7 +113,7 @@ KISSY.add(function (S,require) {
             });
 
             editor.docReady(function () {
-                editor.get("document").on("dblclick", function (ev) {
+                editor.get("document").on('dblclick', function (ev) {
                     ev.halt();
                     var t = $(ev.target);
                     if (checkImg(t)) {
@@ -139,7 +139,7 @@ KISSY.add(function (S,require) {
                             ev.halt();
                         });
                         tipRemoveEl.on("click", function (ev) {
-                            if (UA['webkit']) {
+                            if (UA.webkit) {
                                 var r = editor.getSelection().getRanges();
                                 if (r && r[0]) {
                                     r[0].collapse();
@@ -151,7 +151,7 @@ KISSY.add(function (S,require) {
                             editor.notifySelectionChange();
                             ev.halt();
                         });
-                        bubble.on("show", function () {
+                        bubble.on('show', function () {
                             var a = bubble.get("editorSelectedEl");
                             if (a) {
                                 var src = a.attr("_ke_saved_src") || a.attr("src");

@@ -39,7 +39,7 @@
     };
 
     var requestFlush;
-    if (typeof setImmediate === "function") {
+    if (typeof setImmediate === 'function') {
         requestFlush = function () {
             setImmediate(flush);
         };

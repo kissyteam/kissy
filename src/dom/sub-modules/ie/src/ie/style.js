@@ -25,7 +25,7 @@ KISSY.add(function (S,require) {
         R_OPACITY = /opacity\s*=\s*([^)]*)/,
         R_ALPHA = /alpha\([^)]*\)/i;
 
-    cssProps['float'] = 'styleFloat';
+    cssProps.float = 'styleFloat';
 
     // odd backgroundPosition
     cssHooks[backgroundPosition] = {
@@ -101,13 +101,12 @@ KISSY.add(function (S,require) {
      ie 不设置数值，则 computed style 不返回数值，只返回 thick? medium ...
      (default is 'medium')
      */
-    var IE8 = UA['ie'] == 8,
-        BORDER_MAP = {
-        },
+    var IE8 = UA.ie === 8,
+        BORDER_MAP = {},
         BORDERS = ['', 'Top', 'Left', 'Right', 'Bottom'];
-    BORDER_MAP['thin'] = IE8 ? '1px' : '2px';
-    BORDER_MAP['medium'] = IE8 ? '3px' : '4px';
-    BORDER_MAP['thick'] = IE8 ? '5px' : '6px';
+    BORDER_MAP.thin = IE8 ? '1px' : '2px';
+    BORDER_MAP.medium = IE8 ? '3px' : '4px';
+    BORDER_MAP.thick = IE8 ? '5px' : '6px';
 
     S.each(BORDERS, function (b) {
         var name = 'border' + b + 'Width',
@@ -140,7 +139,7 @@ KISSY.add(function (S,require) {
         var ret = elem[CURRENT_STYLE] && elem[CURRENT_STYLE][name];
 
         // 当 width/height 设置为百分比时，通过 pixelLeft 方式转换的 width/height 值
-        // 一开始就处理了! CUSTOM_STYLE['height'],CUSTOM_STYLE['width'] ,cssHook 解决@2011-08-19
+        // 一开始就处理了! CUSTOM_STYLE.height,CUSTOM_STYLE.width ,cssHook 解决@2011-08-19
         // 在 ie 下不对，需要直接用 offset 方式
         // borderWidth 等值也有问题，但考虑到 borderWidth 设为百分比的概率很小，这里就不考虑了
 
@@ -160,7 +159,7 @@ KISSY.add(function (S,require) {
 
             // Put in the new values to get a computed value out
             style[LEFT] = name === 'fontSize' ? '1em' : (ret || 0);
-            ret = style['pixelLeft'] + PX;
+            ret = style.pixelLeft + PX;
 
             // Revert the changed values
             style[LEFT] = left;
@@ -178,9 +177,9 @@ KISSY.add(function (S,require) {
  - 单独抽取出 ie 动态加载
 
  yiminghe@gmail.com: 2011.12.21 backgroundPosition in ie
- - currentStyle['backgroundPosition'] undefined
- - currentStyle['backgroundPositionX'] ok
- - currentStyle['backgroundPositionY'] ok
+ - currentStyle.backgroundPosition undefined
+ - currentStyle.backgroundPositionX ok
+ - currentStyle.backgroundPositionY ok
 
 
  yiminghe@gmail.com： 2011.05.19 opacity in ie

@@ -41,7 +41,7 @@ KISSY.add(function (S, Event, Node, DD, Dom, Proxy, IO) {
                  */
                 node: function (drag) {
                     var n = $(drag.get("dragNode").clone(true));
-                    n.attr("id", S.guid("ks-dd-proxy"));
+                    n.attr('id', S.guid("ks-dd-proxy"));
                     n.css("opacity", 0.2);
                     return n;
                 },
@@ -152,7 +152,7 @@ KISSY.add(function (S, Event, Node, DD, Dom, Proxy, IO) {
                  */
                 node: function (drag) {
                     var n = $(drag.get("dragNode").clone(true));
-                    n.attr("id", S.guid("ks-dd-proxy"));
+                    n.attr('id', S.guid("ks-dd-proxy"));
                     n.css("opacity", 0.2);
                     return n;
                 },

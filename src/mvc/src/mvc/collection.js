@@ -194,7 +194,7 @@ KISSY.add(function (S, require) {
                 model.removeFromCollection(this);
             }
             if (!opts['silent']) {
-                this.fire("remove", {
+                this.fire('remove', {
                     model: model
                 });
             }

@@ -6,7 +6,7 @@
 KISSY.add(function (S, require) {
     var UA = S.UA,
         Node=require('node'),
-        ie6 = (UA['ie'] === 6),
+        ie6 = (UA.ie === 6),
         $ = Node.all;
 
     function docWidth() {

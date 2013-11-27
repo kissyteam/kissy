@@ -371,7 +371,7 @@ KISSY.add(function(S, require) {
   menu.on("afterRenderUI", function() {
   _$jscoverage['/contextmenu.js'].functionData[2]++;
   _$jscoverage['/contextmenu.js'].lineData[33]++;
-  menu.get("el").on("keydown", function(e) {
+  menu.get('el').on('keydown', function(e) {
   _$jscoverage['/contextmenu.js'].functionData[3]++;
   _$jscoverage['/contextmenu.js'].lineData[34]++;
   if (visit3_34_1(e.keyCode == Event.KeyCode.ESC)) {
@@ -395,7 +395,7 @@ KISSY.add(function(S, require) {
   }
 });
   _$jscoverage['/contextmenu.js'].lineData[48]++;
-  doc.delegate("contextmenu", filter, function(ev) {
+  doc.delegate('contextmenu', filter, function(ev) {
   _$jscoverage['/contextmenu.js'].functionData[6]++;
   _$jscoverage['/contextmenu.js'].lineData[49]++;
   ev.halt();
@@ -433,7 +433,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/contextmenu.js'].lineData[77]++;
   menu.move(x, y);
   _$jscoverage['/contextmenu.js'].lineData[78]++;
-  self.fire("contextmenu", {
+  self.fire('contextmenu', {
   contextmenu: menu});
   _$jscoverage['/contextmenu.js'].lineData[81]++;
   menu.show();

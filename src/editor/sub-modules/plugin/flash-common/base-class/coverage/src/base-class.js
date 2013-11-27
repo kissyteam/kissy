@@ -432,7 +432,7 @@ KISSY.add(function(S, require) {
   tipRemoveEl.on("click", function(ev) {
   _$jscoverage['/base-class.js'].functionData[7]++;
   _$jscoverage['/base-class.js'].lineData[78]++;
-  if (visit3_78_1(S.UA['webkit'])) {
+  if (visit3_78_1(S.UA.webkit)) {
     _$jscoverage['/base-class.js'].lineData[79]++;
     var r = editor.getSelection().getRanges(), r0 = visit4_80_1(r && r[0]);
     _$jscoverage['/base-class.js'].lineData[81]++;
@@ -453,7 +453,7 @@ KISSY.add(function(S, require) {
   ev.halt();
 });
   _$jscoverage['/base-class.js'].lineData[95]++;
-  bubble.on("show", function() {
+  bubble.on('show', function() {
   _$jscoverage['/base-class.js'].functionData[8]++;
   _$jscoverage['/base-class.js'].lineData[96]++;
   var a = bubble.get("editorSelectedEl");
@@ -468,7 +468,7 @@ KISSY.add(function(S, require) {
   editor.docReady(function() {
   _$jscoverage['/base-class.js'].functionData[9]++;
   _$jscoverage['/base-class.js'].lineData[108]++;
-  editor.get("document").on("dblclick", self._dbClick, self);
+  editor.get("document").on('dblclick', self._dbClick, self);
 });
 }, 
   _getFlashUrl: function(r) {

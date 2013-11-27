@@ -195,7 +195,7 @@ KISSY.add(function (S, require) {
         ATTRS: {
             /**
              * Attribute name used to store id from server.
-             * Defaults to: "id".
+             * Defaults to: 'id'.
              * @type {String}
              */
             idAttribute: {

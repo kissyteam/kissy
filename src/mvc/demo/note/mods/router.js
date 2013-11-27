@@ -18,7 +18,7 @@ KISSY.add(function (S, Node, mvc, NotesView, EditView, NotesCollection, NoteMode
            self.editView = new EditView();
            // 初始载入全部笔记
            self.notesView.get("notes").load();
-           self.editView.on("submit", self._onEditSubmit, self);
+           self.editView.on('submit', self._onEditSubmit, self);
            self.searchView = new SearchView({
                notes:new NotesCollection()
            });
@@ -53,7 +53,7 @@ KISSY.add(function (S, Node, mvc, NotesView, EditView, NotesCollection, NoteMode
         index:function () {
             var self = this;
             $(".page").hide();
-            self.notesView.get("el").show();
+            self.notesView.get('el').show();
         },
 
         /**
@@ -74,7 +74,7 @@ KISSY.add(function (S, Node, mvc, NotesView, EditView, NotesCollection, NoteMode
                     editView.set("note", note);
                     /*根据note模型，重新渲染编辑界面*/
                     editView.render();
-                    editView.get("el").show();
+                    editView.get('el').show();
                 }
             });
 
@@ -89,7 +89,7 @@ KISSY.add(function (S, Node, mvc, NotesView, EditView, NotesCollection, NoteMode
             $(".page").hide();
             editView.set("note", new NoteModel());
             /*根据note模型，重新渲染编辑界面*/
-            editView.render().get("el").show();
+            editView.render().get('el').show();
         },
 
         search:function (path, query) {
@@ -101,7 +101,7 @@ KISSY.add(function (S, Node, mvc, NotesView, EditView, NotesCollection, NoteMode
                 },
                 success:function () {
                     $(".page").hide();
-                    self.searchView.get("el").show();
+                    self.searchView.get('el').show();
                 }
             });
         }

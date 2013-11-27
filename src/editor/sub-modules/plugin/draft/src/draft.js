@@ -87,7 +87,7 @@ KISSY.add(function (S, require) {
             var self = this,
                 editor = self.editor,
                 prefixCls = editor.get('prefixCls'),
-                statusbar = editor.get("statusBarEl"),
+                statusbar = editor.get('statusBarEl'),
                 cfg = this.config;
             cfg.draft = cfg.draft || {};
             self.draftInterval = cfg.draft.interval
@@ -153,18 +153,18 @@ KISSY.add(function (S, require) {
             /*
              监控form提交，每次提交前保存一次，防止出错
              */
-            if (editor.get("textarea")[0].form) {
+            if (editor.get('textarea')[0].form) {
                 (function () {
-                    var textarea = editor.get("textarea"),
+                    var textarea = editor.get('textarea'),
                         form = textarea[0].form;
 
                     function saveF() {
                         self.save(true);
                     }
 
-                    Event.on(form, "submit", saveF);
+                    Event.on(form, 'submit', saveF);
                     addRes.call(self, function () {
-                        Event.remove(form, "submit", saveF);
+                        Event.remove(form, 'submit', saveF);
                     });
 
                 })();
@@ -200,7 +200,7 @@ KISSY.add(function (S, require) {
                         self._prepareHelp();
                     }
                 });
-                help.on("blur", function () {
+                help.on('blur', function () {
                     self.helpPopup && self.helpPopup.hide();
                 });
                 self.helpBtn = help;
@@ -247,7 +247,7 @@ KISSY.add(function (S, require) {
                 zIndex: Editor.baseZIndex(Editor.ZIndexManager.OVERLAY),
                 mask: false
             }).render();
-            self.helpPopup.get("el")
+            self.helpPopup.get('el')
                 .css("border", "none");
             self.helpPopup.arrow = arrow;
         },
@@ -257,9 +257,9 @@ KISSY.add(function (S, require) {
                 arrow = win.arrow;
             win.show();
             var off = helpBtn.offset();
-            win.get("el").offset({
-                left: (off.left - win.get("el").width()) + 17,
-                top: (off.top - win.get("el").height()) - 7
+            win.get('el').offset({
+                left: (off.left - win.get('el').width()) + 17,
+                top: (off.top - win.get('el').height()) - 7
             });
             arrow.offset({
                 left: off.left - 2,

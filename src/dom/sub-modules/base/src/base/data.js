@@ -3,22 +3,19 @@
  * dom-data
  * @author lifesinger@gmail.com, yiminghe@gmail.com
  */
-KISSY.add(function (S,require) {
+KISSY.add(function (S, require) {
     var Dom = require('./api');
     var win = S.Env.host,
         EXPANDO = '_ks_data_' + S.now(), // 让每一份 kissy 的 expando 都不同
         dataCache = { }, // 存储 node 节点的 data
         winDataCache = { }, // 避免污染全局
-
-
     // The following elements throw uncatchable exceptions if you
     // attempt to add expando properties to them.
         noData = {
+            applet: 1,
+            object: 1,
+            embed: 1
         };
-    noData['applet'] = 1;
-    noData['object'] = 1;
-    noData['embed'] = 1;
-
     var commonOps = {
         hasData: function (cache, name) {
             if (cache) {
@@ -37,7 +34,7 @@ KISSY.add(function (S,require) {
     var objectOps = {
         hasData: function (ob, name) {
             // 只判断当前窗口，iframe 窗口内数据直接放入全局变量
-            if (ob == win) {
+            if (ob === win) {
                 return objectOps.hasData(winDataCache, name);
             }
             // 直接建立在对象内
@@ -46,7 +43,7 @@ KISSY.add(function (S,require) {
         },
 
         data: function (ob, name, value) {
-            if (ob == win) {
+            if (ob === win) {
                 return objectOps.data(winDataCache, name, value);
             }
             var cache = ob[EXPANDO];
@@ -63,7 +60,7 @@ KISSY.add(function (S,require) {
             }
         },
         removeData: function (ob, name) {
-            if (ob == win) {
+            if (ob === win) {
                 return objectOps.removeData(winDataCache, name);
             }
             var cache = ob[EXPANDO];

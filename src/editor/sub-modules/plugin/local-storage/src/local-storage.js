@@ -34,7 +34,7 @@ KISSY.add(function (S, require) {
         elStyle: {
             background: 'white'
         },
-        width: "0px",
+        width: '0px',
         content: "<h1 style='" + "text-align:center;'>请点击允许</h1>" +
             "<div class='storage-container'></div>",
         zIndex: Editor.baseZIndex(Editor.ZIndexManager.STORE_FLASH_SHOW)

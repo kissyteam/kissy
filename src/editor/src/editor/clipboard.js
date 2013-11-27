@@ -169,14 +169,14 @@ KISSY.add(function (S,require) {
                 range = new KERange(doc);
 
             // Create container to paste into
-            var pasteBin = $(UA['webkit'] ?
+            var pasteBin = $(UA.webkit ?
                 '<body></body>' :
                 // ie6 must use create ...
                 '<div></div>', doc);
 
             pasteBin.attr('id', 'ke-paste-bin');
             // Safari requires a filler node inside the div to have the content pasted into it. (#4882)
-            if (UA['webkit']) {
+            if (UA.webkit) {
                 pasteBin[0].appendChild(doc.createTextNode('\u200b'));
             }
 
@@ -212,7 +212,7 @@ KISSY.add(function (S,require) {
                 var bogusSpan;
                 var oldPasteBin = pasteBin;
 
-                pasteBin = ( UA['webkit']
+                pasteBin = ( UA.webkit
                     && ( bogusSpan = pasteBin.first() )
                     && (bogusSpan.hasClass('Apple-style-span') ) ?
                     bogusSpan : pasteBin );
@@ -275,7 +275,7 @@ KISSY.add(function (S,require) {
         body.on(command, onExec);
 
         // IE6/7: document.execCommand has problem to paste into positioned element.
-        ( UA['ie'] > 7 ? doc : doc.selection.createRange() ) [ 'execCommand' ](command);
+        ( UA.ie > 7 ? doc : doc.selection.createRange() ) [ 'execCommand' ](command);
 
         body.detach(command, onExec);
 
@@ -283,7 +283,7 @@ KISSY.add(function (S,require) {
     };
 
     // Attempts to execute the Cut and Copy operations.
-    var tryToCutCopyPaste = UA['ie'] ?
+    var tryToCutCopyPaste = UA.ie ?
         function (editor, type) {
             return execIECommand(editor, type);
         }
@@ -463,7 +463,7 @@ KISSY.add(function (S,require) {
 
 
             // 给所有右键都加入复制粘贴
-            editor.on("contextmenu", function (ev) {
+            editor.on('contextmenu', function (ev) {
                 var contextmenu = ev.contextmenu;
 
                 if (!contextmenu.__copy_fix) {

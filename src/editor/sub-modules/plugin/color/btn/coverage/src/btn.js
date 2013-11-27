@@ -446,7 +446,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/btn.js'].lineData[65]++;
   var self = this;
   _$jscoverage['/btn.js'].lineData[66]++;
-  self.on("blur", function() {
+  self.on('blur', function() {
   _$jscoverage['/btn.js'].functionData[3]++;
   _$jscoverage['/btn.js'].lineData[68]++;
   setTimeout(function() {
@@ -490,7 +490,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/btn.js'].lineData[103]++;
   colorPanel.on("click", self._selectColor, self);
   _$jscoverage['/btn.js'].lineData[104]++;
-  colorWin.on("hide", function() {
+  colorWin.on('hide', function() {
   _$jscoverage['/btn.js'].functionData[7]++;
   _$jscoverage['/btn.js'].lineData[105]++;
   self.set("checked", false);
@@ -515,7 +515,7 @@ KISSY.add(function(S, require) {
   _show: function() {
   _$jscoverage['/btn.js'].functionData[9]++;
   _$jscoverage['/btn.js'].lineData[118]++;
-  var self = this, el = self.get("el"), colorWin = self.colorWin;
+  var self = this, el = self.get('el'), colorWin = self.colorWin;
   _$jscoverage['/btn.js'].lineData[121]++;
   colorWin.set("align", {
   node: el, 

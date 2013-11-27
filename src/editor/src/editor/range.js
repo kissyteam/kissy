@@ -104,7 +104,7 @@ KISSY.add(function (S,require) {
                 if (!inlineChildReqElements[ nodeName ]) {
                     // If we're working at the end-of-block, forgive the first <br /> in non-IE
                     // browsers.
-                    if (!isStart && !UA['ie'] && nodeName == 'br' && !hadBr) {
+                    if (!isStart && !UA.ie && nodeName == 'br' && !hadBr) {
                         hadBr = TRUE;
                     } else {
                         return FALSE;
@@ -1549,8 +1549,8 @@ KISSY.add(function (S,require) {
             self.enlarge(KER.ENLARGE_BLOCK_CONTENTS);
             fixedBlock[0].appendChild(self.extractContents());
             fixedBlock._4e_trim();
-            if (!UA['ie']) {
-                fixedBlock._4e_appendBogus();
+            if (!UA.ie) {
+                fixedBlock._4eAppendBogus();
             }
             self.insertNode(fixedBlock);
             self.moveToBookmark(bookmark);
@@ -1612,8 +1612,8 @@ KISSY.add(function (S,require) {
                     // In Gecko, the last child node must be a bogus <br>.
                     // Note: bogus <br> added under <ul> or <ol> would cause
                     // lists to be incorrectly rendered.
-                    if (!UA['ie'] && !S.inArray(startBlock.nodeName(), ['ul', 'ol'])) {
-                        startBlock._4e_appendBogus();
+                    if (!UA.ie && !S.inArray(startBlock.nodeName(), ['ul', 'ol'])) {
+                        startBlock._4eAppendBogus();
                     }
                 }
             }
@@ -1723,8 +1723,8 @@ KISSY.add(function (S,require) {
                 self = this,
                 tmpDtd,
                 last,
-                elementName = element['nodeName'](),
-                isBlock = dtd['$block'][ elementName ];
+                elementName = element.nodeName(),
+                isBlock = dtd.$block[ elementName ];
             self.deleteContents();
             if (isBlock) {
                 current = self.getCommonAncestor(FALSE, TRUE);

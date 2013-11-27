@@ -62,7 +62,7 @@ KISSY.add(function (S, Kison) {
 
             grammar.build();
 
-            var itemSets = grammar.get("itemSets");
+            var itemSets = grammar.get('itemSets');
 
             S.each(itemSets, function (itemSet, i) {
                 S.log("************************* " + i);
@@ -71,16 +71,16 @@ KISSY.add(function (S, Kison) {
 
             expect(itemSets.length).toBe(8);
 
-            var i1gotos = itemSets[1].get("gotos");
+            var i1gotos = itemSets[1].get('gotos');
 
-            var cItem = itemSets[0].get("gotos")['c'];
+            var cItem = itemSets[0].get('gotos')['c'];
             expect(cItem === itemSets[1]).toBe(true);
 
             // S.log("!!!!!!!!!!!!!!!");
-            // // S.log(itemSets[4].get("gotos")['c'].toString());
+            // // S.log(itemSets[4].get('gotos')['c'].toString());
             // S.log("!!!!!!!!!!!!!!!");
 
-            // expect(itemSets[4].get("gotos")['c']).toBe(itemSets[1]);
+            // expect(itemSets[4].get('gotos')['c']).toBe(itemSets[1]);
 
             var num = 0;
 
@@ -144,7 +144,7 @@ KISSY.add(function (S, Kison) {
 
             var table = grammar.visualizeTable();
 
-            // S.log(table.join("\n"));
+            // S.log(table.join('\n'));
         });
 
         it("parse ok", function () {
@@ -546,7 +546,7 @@ KISSY.add(function (S, Kison) {
                 new Function(grammar.genCode())().parse("ccdd")
             }).not.toThrow(undefined);
 
-            // S.log(global.TEST_RET.join("\n"));
+            // S.log(global.TEST_RET.join('\n'));
         });
 
 

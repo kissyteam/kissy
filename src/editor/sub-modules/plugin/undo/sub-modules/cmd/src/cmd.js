@@ -72,7 +72,7 @@ KISSY.add(function (S, require) {
                 editor = self.editor;
 
             editor.docReady(function () {
-                editor.get("document").on("keydown", function (ev) {
+                editor.get("document").on('keydown', function (ev) {
                     var keyCode = ev.keyCode;
                     if (keyCode in navigationKeyCodes
                         || keyCode in modifierKeyCodes) {
@@ -184,7 +184,7 @@ KISSY.add(function (S, require) {
                 editorDomBody.innerHTML = snapshot.contents;
                 if (snapshot.bookmarks) {
                     editor.getSelection().selectBookmarks(snapshot.bookmarks);
-                } else if (UA['ie']) {
+                } else if (UA.ie) {
                     // IE BUG: If I don't set the selection to *somewhere* after setting
                     // document contents, then IE would create an empty paragraph at the bottom
                     // the next time the document is modified.

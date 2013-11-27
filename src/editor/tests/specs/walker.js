@@ -142,25 +142,25 @@ KISSY.add(function (S, Editor) {
 
             expect(node).toBe(false);
 
-            expect(walker.current.attr("id")).toBe("start");
+            expect(walker.current.attr('id')).toBe("start");
 
             node = walker._iterator(false, true);
 
             expect(node).toBe(false);
 
-            expect(walker.current.attr("id")).toBe("startInner")
+            expect(walker.current.attr('id')).toBe("startInner")
 
             node = walker._iterator(false, true);
 
             expect(node).toBe(false);
 
-            expect(walker.current.attr("id")).toBe("end")
+            expect(walker.current.attr('id')).toBe("end")
 
             node = walker._iterator(false, true);
 
             expect(node).toBe(false);
 
-            expect(walker.current.attr("id")).toBe("endInner");
+            expect(walker.current.attr('id')).toBe("endInner");
 
             expect(walker._iterator(false, true)).toBe(null);
 
@@ -193,7 +193,7 @@ KISSY.add(function (S, Editor) {
             var walker = new Walker(range);
 
             walker.evaluator = function (node) {
-                return  node.nodeName.toLowerCase() !== "div"
+                return  node.nodeName.toLowerCase() !== 'div'
             };
 
             expect(walker.checkForward()).toBe(false);

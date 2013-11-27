@@ -386,7 +386,7 @@ KISSY.add(function(S, require) {
   ev.halt();
 });
   _$jscoverage['/link.js'].lineData[87]++;
-  bubble.on("show", function() {
+  bubble.on('show', function() {
   _$jscoverage['/link.js'].functionData[9]++;
   _$jscoverage['/link.js'].lineData[88]++;
   var a = bubble.get("editorSelectedEl");

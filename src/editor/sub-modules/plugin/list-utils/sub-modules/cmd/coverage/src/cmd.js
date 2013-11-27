@@ -953,9 +953,9 @@ KISSY.add(function(S, require) {
     _$jscoverage['/cmd.js'].lineData[127]++;
     listNode[0].appendChild(listItem[0]);
     _$jscoverage['/cmd.js'].lineData[130]++;
-    if (visit18_130_1(!UA['ie'])) {
+    if (visit18_130_1(!UA.ie)) {
       _$jscoverage['/cmd.js'].lineData[131]++;
-      listItem._4e_appendBogus(undefined);
+      listItem._4eAppendBogus(undefined);
     }
   }
   _$jscoverage['/cmd.js'].lineData[133]++;

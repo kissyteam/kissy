@@ -13,7 +13,7 @@ KISSY.add(function (S, require) {
     var OverlayEffect = require('./extension/overlay-effect');
 
 
-    var HIDE = "hide",
+    var HIDE = 'hide',
         actions = {
             hide: HIDE,
             destroy: "destroy"
@@ -97,7 +97,7 @@ KISSY.add(function (S, require) {
              * Whether to destroy or hide current element when click close button.
              * Can set "destroy" to destroy it when click close button.
              *
-             * Defaults to: "hide".
+             * Defaults to: 'hide'.
              *
              * @cfg {String} closeAction
              */

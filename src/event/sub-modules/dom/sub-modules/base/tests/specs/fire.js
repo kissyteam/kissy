@@ -9,7 +9,7 @@ KISSY.add(function (S, Dom, Event) {
         it('support once', function () {
             var n = Dom.create("<div/>"), ret;
 
-            Event.on(n, "mouseenter", {
+            Event.on(n, 'mouseenter', {
                 fn: function (e) {
                     expect(e.type).toBe('mouseenter');
                     ret = 1
@@ -17,7 +17,7 @@ KISSY.add(function (S, Dom, Event) {
                 once: 1
             });
 
-            Event.fire(n, "mouseenter", {
+            Event.fire(n, 'mouseenter', {
                 relatedTarget: document
             });
 

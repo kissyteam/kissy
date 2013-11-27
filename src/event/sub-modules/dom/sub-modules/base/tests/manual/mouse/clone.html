@@ -27,7 +27,7 @@
 <script>
     KISSY.use("dom,event/dom", function (S, Dom, Event) {
         S.ready(function () {
-            Event.on(".t", "mouseenter", function (e) {
+            Event.on(".t", 'mouseenter', function (e) {
                 S.log("**********************");
                 S.log("mousenter : " + e.target.className + " - " + e.relatedTarget.className);
             });

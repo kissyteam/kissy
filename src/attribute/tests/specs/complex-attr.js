@@ -163,7 +163,7 @@ KISSY.add(function (S, Attribute) {
 
             a.set("x.y", 1);
 
-            expect(a.get("x")).toEqual({y: 1});
+            expect(a.get('x')).toEqual({y: 1});
 
             expect(a.get("x.y")).toBe(1);
         });
@@ -177,37 +177,37 @@ KISSY.add(function (S, Attribute) {
 
                 var a = new A();
                 a.addAttrs({
-                    "x": {
+                    'x': {
                         validator: function (v) {
                             return v > 1;
                         }
                     }
                 });
 
-                a.set("x", 2);
+                a.set('x', 2);
 
-                expect(a.get("x")).toBe(2);
+                expect(a.get('x')).toBe(2);
 
-                a.set("x", -1);
+                a.set('x', -1);
 
-                expect(a.get("x")).toBe(2);
+                expect(a.get('x')).toBe(2);
 
                 a = new A();
                 a.addAttrs({
-                    "x": {
+                    'x': {
                         validator: function (v) {
                             return v > 1;
                         }
                     }
                 });
 
-                a.set({"x": 2});
+                a.set({'x': 2});
 
-                expect(a.get("x")).toBe(2);
+                expect(a.get('x')).toBe(2);
 
-                a.set({"x": -1});
+                a.set({'x': -1});
 
-                expect(a.get("x")).toBe(2);
+                expect(a.get('x')).toBe(2);
             })();
 
             (function () {
@@ -218,7 +218,7 @@ KISSY.add(function (S, Attribute) {
 
                 var a = new A();
                 a.addAttrs({
-                    "x": {
+                    'x': {
                         validator: function (v) {
                             return v.y > 10;
                         }
@@ -231,7 +231,7 @@ KISSY.add(function (S, Attribute) {
 
                 a = new A();
                 a.addAttrs({
-                    "x": {
+                    'x': {
                         validator: function (v) {
                             return v.y > 10;
                         }
@@ -265,19 +265,19 @@ KISSY.add(function (S, Attribute) {
             aa.on("*Change", function (e) {
                 expect(e.newVal).toEqual([11, {z: 22}]);
                 expect(e.prevVal).toEqual([1, {z: 1}]);
-                expect(e.attrName).toEqual(["x", "y"]);
-                expect(e.subAttrName).toEqual(["x", "y.z"]);
+                expect(e.attrName).toEqual(['x', 'y']);
+                expect(e.subAttrName).toEqual(['x', "y.z"]);
                 ok++;
             });
             aa.on("afterXChange", function (e) {
-                expect(e.attrName).toBe("x");
+                expect(e.attrName).toBe('x');
                 expect(e.newVal).toBe(11);
                 expect(e.prevVal).toBe(1);
-                expect(e.subAttrName).toBe("x");
+                expect(e.subAttrName).toBe('x');
                 afterAttrChange.x = 1;
             });
             aa.on("afterYChange", function (e) {
-                expect(e.attrName).toBe("y");
+                expect(e.attrName).toBe('y');
                 expect(e.newVal).toEqual({z: 22});
                 expect(e.prevVal).toEqual({z: 1});
                 expect(e.subAttrName).toBe("y.z");
@@ -289,7 +289,7 @@ KISSY.add(function (S, Attribute) {
                 "y.z": 22
             });
 
-            expect(aa.get("x")).toBe(11);
+            expect(aa.get('x')).toBe(11);
             expect(aa.get("y.z")).toBe(22);
             expect(ok).toBe(1);
 

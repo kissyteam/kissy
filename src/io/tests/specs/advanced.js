@@ -393,7 +393,7 @@ KISSY.add(function (S, UA, Json, io, Node) {
 
             io({
                 url: '../others/form/upload.jss',
-                form: "#" + f.prop("id"),
+                form: "#" + f.prop('id'),
                 type: 'post',
                 dataType: 'json',
                 data: {
@@ -440,7 +440,7 @@ KISSY.add(function (S, UA, Json, io, Node) {
             var ok, d;
             io({
                 url: '../others/form/upload.jss',
-                form: "#" + f.prop("id"),
+                form: "#" + f.prop('id'),
                 type: 'post',
                 dataType: 'json',
                 data: {

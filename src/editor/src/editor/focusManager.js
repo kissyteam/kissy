@@ -42,8 +42,8 @@ KISSY.add(function (S,require) {
              */
             add: function (editor) {
                 this.register(editor);
-                editor.get("window").on("focus", focus, editor)
-                    .on("blur", blur, editor);
+                editor.get("window").on('focus', focus, editor)
+                    .on('blur', blur, editor);
             },
             /**
              * remove editor from focus manager
@@ -51,8 +51,8 @@ KISSY.add(function (S,require) {
              */
             remove: function (editor) {
                 delete INSTANCES[editor.get('id')];
-                editor.get("window").detach("focus", focus, editor)
-                    .detach("blur", blur, editor);
+                editor.get("window").detach('focus', focus, editor)
+                    .detach('blur', blur, editor);
             }
         },
         TRUE = true,
@@ -67,7 +67,7 @@ KISSY.add(function (S,require) {
             clearTimeout(timer);
         }
         timer = setTimeout(function () {
-            editor.fire("focus");
+            editor.fire('focus');
         }, 30);
     }
 
@@ -83,7 +83,7 @@ KISSY.add(function (S,require) {
          avoid subsequent blur/focus effects.
          */
         timer = setTimeout(function () {
-            editor.fire("blur");
+            editor.fire('blur');
         }, 30);
     }
 

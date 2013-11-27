@@ -231,7 +231,7 @@ KISSY.add(function (S, require) {
             ev && ev.halt();
             var self = this,
                 tableDialog = self.dialog,
-                inputs = tableDialog.get("el").all('input');
+                inputs = tableDialog.get('el').all('input');
 
             if (tableDialog.twidthunit.get("value") == "%") {
                 var tw = parseInt(tableDialog.twidth.val());
@@ -326,7 +326,7 @@ KISSY.add(function (S, require) {
                 cols = parseInt(d.tcols.val()) || 1,
                 rows = parseInt(d.trows.val()) || 1,
             //firefox 需要 br 才能得以放置焦点
-            //cellPad = UA['ie'] ? "&nbsp;" : "&nbsp;<br/>",
+            //cellPad = UA.ie ? "&nbsp;" : "&nbsp;<br/>",
                 cellPad = OLD_IE ? '' : '<br/>',
                 editor = self.editor;
 
@@ -449,12 +449,12 @@ KISSY.add(function (S, require) {
 
             if (self.selectedTable) {
                 self._fillTableDialog();
-                d.get("el")
+                d.get('el')
                     .all(replacePrefix(".{prefixCls}editor-table-create-only", prefixCls))
                     .attr('disabled', 'disabled');
                 d.thead.set('disabled', true);
             } else {
-                d.get("el").all(replacePrefix(".{prefixCls}editor-table-create-only", prefixCls))
+                d.get('el').all(replacePrefix(".{prefixCls}editor-table-create-only", prefixCls))
                     .removeAttr('disabled');
                 d.thead.set('disabled', false);
             }

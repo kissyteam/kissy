@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 19:18
+build time: Nov 27 22:45
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -553,7 +553,7 @@ KISSY.add("xtemplate/compiler", ["xtemplate/runtime", "./compiler/parser", "./co
     }
     var idString = self.getIdStringFromIdParts(source, idParts);
     if(idString == "include") {
-      source.push("if(moduleWrap) {re" + 'quire("' + tplNode.params[0].value + '");' + configName + ".params[0]=moduleWrap.resolveByName(" + configName + ".params[0])" + "}")
+      source.push("if(moduleWrap) {re" + 'quire("' + tplNode.params[0].value + '");' + configName + ".params[0]=moduleWrap.resolveByName(" + configName + ".params[0]);" + "}")
     }
     source.push("var " + idName + " = getPropertyOrRunCommandUtil(engine,scopes," + (configName || "{}") + ',"' + idString + '",' + depth + "," + idNode.lineNumber + "," + (tplNode && tplNode.escaped) + "," + preserveUndefined + ");");
     return[idName, source]

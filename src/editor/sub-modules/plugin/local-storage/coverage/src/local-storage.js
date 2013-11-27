@@ -326,7 +326,7 @@ KISSY.add(function(S, require) {
   prefixCls: 'ks-editor-', 
   elStyle: {
   background: 'white'}, 
-  width: "0px", 
+  width: '0px',
   content: "<h1 style='" + "text-align:center;'>\u8bf7\u70b9\u51fb\u5141\u8bb8</h1>" + "<div class='storage-container'></div>", 
   zIndex: Editor.baseZIndex(Editor.ZIndexManager.STORE_FLASH_SHOW)});
   _$jscoverage['/local-storage.js'].lineData[42]++;

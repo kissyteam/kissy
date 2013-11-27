@@ -96,7 +96,7 @@ KISSY.add(function (S, Dom) {
         });
 
         it("support #id .cls", function () {
-            expect(S.get("#test-selector-1 .test-selector").tagName.toLowerCase()).toBe("div");
+            expect(S.get("#test-selector-1 .test-selector").tagName.toLowerCase()).toBe('div');
             expect(S.get("#test-selector-2 .test-selector").tagName.toLowerCase()).toBe("p");
             expect(S.query("#test-selector-1 .test-selector").length).toBe(1);
             expect(S.query("#test-selector .test-selector").length).toBe(4);
@@ -116,12 +116,12 @@ KISSY.add(function (S, Dom) {
         });
 
         it("does not confuse name with id", function () {
-            var id = "id" + S.now();
+            var id = 'id' + S.now();
             var input = Dom.create("<input name='" + id + "'/>");
             var div = Dom.create("<div id='" + id + "'></div>");
             Dom.append(input, document.body);
             Dom.append(div, document.body);
-            expect(Dom.get("#" + id).nodeName.toLowerCase()).toBe("div");
+            expect(Dom.get("#" + id).nodeName.toLowerCase()).toBe('div');
             Dom.remove([input, div]);
         });
     });
@@ -169,7 +169,7 @@ KISSY.add(function (S, Dom) {
 
             expect(S.get(".context-test-3", "#context-test-1").id).toBe("context-test-2");
 
-            expect($(".context-test-3", "#context-test-1").attr("id")).toBe("context-test-2");
+            expect($(".context-test-3", "#context-test-1").attr('id')).toBe("context-test-2");
         });
 
         it("should support other string form selector and unique works", function () {
@@ -226,7 +226,7 @@ KISSY.add(function (S, Dom) {
             expect(Dom.query(o)).toBe(o);
 
             // NodeList
-            o = document.getElementsByTagName("div");
+            o = document.getElementsByTagName('div');
             var ret = Dom.query(o);
             expect(ret.length).toBe(o.length);
             expect(ret[0]).toBe(o[0]);

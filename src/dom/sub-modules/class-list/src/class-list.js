@@ -3,7 +3,7 @@
  * @ignore
  * @author yiminghe@gmail.com,lifesinger@gmail.com
  */
-KISSY.add(function (S,require) {
+KISSY.add(function (S, require) {
     var Dom = require('dom/base');
     var SPACE = ' ',
         RE_CLASS = /[\n\t\r]/g;
@@ -22,7 +22,7 @@ KISSY.add(function (S,require) {
                 className = norm(elemClass);
                 for (j = 0, cl = classNames.length; j < cl; j++) {
                     if (className.indexOf(SPACE + classNames[j] + SPACE) < 0) {
-                        return false
+                        return false;
                     }
                 }
                 return true;
@@ -83,18 +83,20 @@ KISSY.add(function (S,require) {
             for (j = 0; j < cl; j++) {
                 className = classNames[j];
                 result = self._hasClass(elem, [className]);
-                method = result ? force !== true && "remove" :
-                    force !== false && "add";
-                if (method == 'remove') {
-                    removed.push(className)
-                } else if (method == 'add') {
+                method = result ? force !== true && 'remove' :
+                    force !== false && 'add';
+                if (method === 'remove') {
+                    removed.push(className);
+                } else if (method === 'add') {
                     added.push(className);
                 }
             }
-            if (added.length)
+            if (added.length) {
                 self._addClass(elem, added);
-            if (removed.length)
+            }
+            if (removed.length) {
                 self._removeClass(elem, removed);
+            }
         }
     });
 });

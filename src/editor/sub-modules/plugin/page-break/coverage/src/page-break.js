@@ -358,7 +358,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/page-break.js'].lineData[9]++;
   require('./button');
   _$jscoverage['/page-break.js'].lineData[10]++;
-  var Node = S.Node, CLS = "ke_pagebreak", TYPE = "div", PAGE_BREAK_MARKUP = '<div' + ' style="page-break-after: always; ">' + '<span style="DISPLAY:none">&nbsp;</span>' + '</div>';
+  var Node = S.Node, CLS = "ke_pagebreak", TYPE = 'div', PAGE_BREAK_MARKUP = '<div' + ' style="page-break-after: always; ">' + '<span style="DISPLAY:none">&nbsp;</span>' + '</div>';
   _$jscoverage['/page-break.js'].lineData[18]++;
   function pageBreak() {
     _$jscoverage['/page-break.js'].functionData[1]++;

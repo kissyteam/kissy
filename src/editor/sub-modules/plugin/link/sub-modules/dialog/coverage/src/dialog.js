@@ -326,7 +326,7 @@ function visit5_118_1(result) {
 function visit4_117_1(result) {
   _$jscoverage['/dialog.js'].branchData['117'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['96'][1].init(139, 52, '!Editor.Utils.verifyInputs(d.get("el").all('input'))');
+}_$jscoverage['/dialog.js'].branchData['96'][1].init(139, 52, '!Editor.Utils.verifyInputs(d.get('el').all('input'))');
 function visit3_96_1(result) {
   _$jscoverage['/dialog.js'].branchData['96'][1].ranCondition(result);
   return result;
@@ -406,7 +406,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/dialog.js'].lineData[93]++;
   var self = this, d = self.dialog, url = d.urlEl.val();
   _$jscoverage['/dialog.js'].lineData[96]++;
-  if (visit3_96_1(!Editor.Utils.verifyInputs(d.get("el").all('input')))) {
+  if (visit3_96_1(!Editor.Utils.verifyInputs(d.get('el').all('input')))) {
     _$jscoverage['/dialog.js'].lineData[97]++;
     return;
   }

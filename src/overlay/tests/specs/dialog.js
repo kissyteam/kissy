@@ -71,9 +71,9 @@ KISSY.add(
                     d.create();
                     expect(d.get("header")).not.toBe(undefined);
                     if (d.get("header")) {
-                        expect(d.get("header").nodeName()).toBe("div");
+                        expect(d.get("header").nodeName()).toBe('div');
                     }
-                    expect(d.get("el").one(".ks-overlay-close")).not.toBe(undefined);
+                    expect(d.get('el').one(".ks-overlay-close")).not.toBe(undefined);
                     d.destroy();
                 });
 
@@ -203,8 +203,8 @@ KISSY.add(
 
                     runs(function () {
                         var dxy = [d.get('x'), d.get('y')],
-                            width = d.get("el").outerWidth(),
-                            height = d.get("el").outerHeight();
+                            width = d.get('el').outerWidth(),
+                            height = d.get('el').outerHeight();
 
                         expect(Dom.viewportWidth() - width).toBeEqual(dxy[0]);
                         expect(Dom.viewportHeight() - height).toBeEqual(dxy[1]);

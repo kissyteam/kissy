@@ -122,9 +122,8 @@ KISSY.add(function (S,require) {
             var node = this.get('node'),
                 domNode = node[0];
             // 排除当前拖放和代理节点
-            return domNode == dragNode ||
-                domNode == proxyNode
-                ? null : node;
+            return domNode === dragNode ||
+                domNode === proxyNode ? null : node;
         },
 
         _active: function () {

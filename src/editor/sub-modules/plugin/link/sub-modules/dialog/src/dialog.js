@@ -93,7 +93,7 @@ KISSY.add(function (S, require) {
             var self = this,
                 d = self.dialog,
                 url = d.urlEl.val();
-            if (!Editor.Utils.verifyInputs(d.get("el").all('input'))) {
+            if (!Editor.Utils.verifyInputs(d.get('el').all('input'))) {
                 return;
             }
             d.hide();

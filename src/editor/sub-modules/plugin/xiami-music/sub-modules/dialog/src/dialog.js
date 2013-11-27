@@ -97,7 +97,7 @@ KISSY.add(function (S, require) {
                 editor = self.editor,
                 prefixCls = editor.get('prefixCls'),
                 d = self.dialog,
-                del = d.get("el"),
+                del = d.get('el'),
                 dfoot = d.get("footer"),
                 input = del.one("." + prefixCls + "editor-xiami-url");
             self.dAlign = MenuButton.Select.decorate(del.one("." + prefixCls + "editor-xiami-align"), {
@@ -120,7 +120,7 @@ KISSY.add(function (S, require) {
                 ev.halt();
             });
             self.addRes(self._xiami_submit);
-            input.on("keydown", function (ev) {
+            input.on('keydown', function (ev) {
                 if (ev.keyCode === 13) {
                     loadRecordsByPage(1);
                 }

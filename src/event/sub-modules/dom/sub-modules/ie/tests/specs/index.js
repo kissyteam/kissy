@@ -29,7 +29,7 @@ KISSY.add(function (S, Dom, Event) {
 
         it("should works and target is right", function () {
             var t = 0;
-            Event.on(div, "submit", function (e) {
+            Event.on(div, 'submit', function (e) {
                 t = e.target;
                 e.preventDefault();
             });
@@ -39,7 +39,7 @@ KISSY.add(function (S, Dom, Event) {
                 expect(t).toBe(form);
                 t = 0;
                 Event.remove(div);
-                Event.on(div, "submit", function (e) {
+                Event.on(div, 'submit', function (e) {
                     e.preventDefault();
                 });
                 inp.click();
@@ -52,16 +52,16 @@ KISSY.add(function (S, Dom, Event) {
 
         it("should stop propagation well", function () {
             var ret = [];
-            Event.on(div, "submit", function (e) {
+            Event.on(div, 'submit', function (e) {
                 e.preventDefault();
             });
             inp.click();
             waits(100);
             runs(function () {
-                Event.on(form, "submit", function (e) {
+                Event.on(form, 'submit', function (e) {
                     e.halt();
                 });
-                Event.on(div, "submit", function (e) {
+                Event.on(div, 'submit', function (e) {
                     ret.push(1);
                 });
             });
@@ -77,7 +77,7 @@ KISSY.add(function (S, Dom, Event) {
 
         it("should fire correctly", function () {
             var ret = [];
-            Event.on(div, "submit", function (e) {
+            Event.on(div, 'submit', function (e) {
                 ret.push(1);
                 e.preventDefault();
             });
@@ -86,14 +86,14 @@ KISSY.add(function (S, Dom, Event) {
             waits(100);
             runs(function () {
                 ret = [];
-                Event.fire(form, "submit");
+                Event.fire(form, 'submit');
                 expect(ret).toEqual([1]);
             });
         });
 
 
         it("should delegate well", function () {
-            Event.delegate(div, "submit", "form", function (e) {
+            Event.delegate(div, 'submit', "form", function (e) {
                 expect(e.target).toBe(form);
                 expect(e.currentTarget).toBe(form);
                 e.preventDefault();

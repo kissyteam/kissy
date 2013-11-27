@@ -616,7 +616,7 @@ KISSY.add(function(S, require) {
   _initD: function() {
   _$jscoverage['/dialog.js'].functionData[4]++;
   _$jscoverage['/dialog.js'].lineData[96]++;
-  var self = this, editor = self.editor, prefixCls = editor.get('prefixCls'), d = self.dialog, del = d.get("el"), dfoot = d.get("footer"), input = del.one("." + prefixCls + "editor-xiami-url");
+  var self = this, editor = self.editor, prefixCls = editor.get('prefixCls'), d = self.dialog, del = d.get('el'), dfoot = d.get("footer"), input = del.one("." + prefixCls + "editor-xiami-url");
   _$jscoverage['/dialog.js'].lineData[103]++;
   self.dAlign = MenuButton.Select.decorate(del.one("." + prefixCls + "editor-xiami-align"), {
   prefixCls: 'ks-editor-big-', 
@@ -650,7 +650,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/dialog.js'].lineData[122]++;
   self.addRes(self._xiami_submit);
   _$jscoverage['/dialog.js'].lineData[123]++;
-  input.on("keydown", function(ev) {
+  input.on('keydown', function(ev) {
   _$jscoverage['/dialog.js'].functionData[6]++;
   _$jscoverage['/dialog.js'].lineData[124]++;
   if (visit3_124_1(ev.keyCode === 13)) {

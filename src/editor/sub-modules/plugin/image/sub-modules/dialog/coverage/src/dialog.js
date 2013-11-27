@@ -975,7 +975,7 @@ KISSY.add(function(S, require) {
   prefixCls: prefixCls}), 
   mask: true}).render();
   _$jscoverage['/dialog.js'].lineData[77]++;
-  var content = self.d.get("el"), cancel = content.one("." + prefixCls + "img-cancel"), ok = content.one("." + prefixCls + "img-insert"), verifyInputs = Editor.Utils.verifyInputs, commonSettingTable = content.one("." + prefixCls + "img-setting");
+  var content = self.d.get('el'), cancel = content.one("." + prefixCls + "img-cancel"), ok = content.one("." + prefixCls + "img-insert"), verifyInputs = Editor.Utils.verifyInputs, commonSettingTable = content.one("." + prefixCls + "img-setting");
   _$jscoverage['/dialog.js'].lineData[82]++;
   self.uploadForm = content.one("." + prefixCls + "img-upload-form");
   _$jscoverage['/dialog.js'].lineData[83]++;
@@ -1172,7 +1172,7 @@ KISSY.add(function(S, require) {
   self._insert();
 }});
     _$jscoverage['/dialog.js'].lineData[231]++;
-    var loadingMaskEl = self.d.get("el"), offset = loadingMaskEl.offset(), width = loadingMaskEl[0].offsetWidth, height = loadingMaskEl[0].offsetHeight;
+    var loadingMaskEl = self.d.get('el'), offset = loadingMaskEl.offset(), width = loadingMaskEl[0].offsetWidth, height = loadingMaskEl[0].offsetHeight;
     _$jscoverage['/dialog.js'].lineData[236]++;
     loadingCancel.css({
   left: (offset.left + width / 2.5), 
@@ -1197,7 +1197,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/dialog.js'].lineData[253]++;
     var ke_image_up = content.one("." + prefixCls + "image-up"), sizeLimit = visit31_254_1(self.cfg && self.cfg['sizeLimit']);
     _$jscoverage['/dialog.js'].lineData[256]++;
-    self.fileInput = new Node("<input " + "type='file' " + "style='position:absolute;" + "cursor:pointer;" + "left:" + (UA['ie'] ? "360" : (UA["chrome"] ? "319" : "369")) + "px;" + "z-index:2;" + "top:0px;" + "height:26px;' " + "size='1' " + "name='" + (visit32_267_1(self.cfg['fileInput'] || "Filedata")) + "'/>").insertAfter(self.imgLocalUrl);
+    self.fileInput = new Node("<input " + "type='file' " + "style='position:absolute;" + "cursor:pointer;" + "left:" + (UA.ie ? "360" : (UA["chrome"] ? "319" : "369")) + "px;" + "z-index:2;" + "top:0px;" + "height:26px;' " + "size='1' " + "name='" + (visit32_267_1(self.cfg['fileInput'] || "Filedata")) + "'/>").insertAfter(self.imgLocalUrl);
     _$jscoverage['/dialog.js'].lineData[269]++;
     if (visit33_269_1(sizeLimit)) {
       _$jscoverage['/dialog.js'].lineData[270]++;
@@ -1208,13 +1208,13 @@ KISSY.add(function(S, require) {
     _$jscoverage['/dialog.js'].lineData[272]++;
     self.fileInput.css("opacity", 0);
     _$jscoverage['/dialog.js'].lineData[273]++;
-    self.fileInput.on("mouseenter", function() {
+    self.fileInput.on('mouseenter', function() {
   _$jscoverage['/dialog.js'].functionData[11]++;
   _$jscoverage['/dialog.js'].lineData[274]++;
   ke_image_up.addClass("" + prefixCls + "button-hover");
 });
     _$jscoverage['/dialog.js'].lineData[276]++;
-    self.fileInput.on("mouseleave", function() {
+    self.fileInput.on('mouseleave', function() {
   _$jscoverage['/dialog.js'].functionData[12]++;
   _$jscoverage['/dialog.js'].lineData[277]++;
   ke_image_up.removeClass("" + prefixCls + "button-hover");

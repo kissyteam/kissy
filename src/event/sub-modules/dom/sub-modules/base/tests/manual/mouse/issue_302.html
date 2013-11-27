@@ -29,12 +29,12 @@
 <script>
     KISSY.use("dom,event/dom", function (S, Dom, Event) {
         S.ready(function () {
-            Event.on(".t", "mouseenter", function (e) {
+            Event.on(".t", 'mouseenter', function (e) {
                 setTimeout(function () {
                     S.log('kissy: '+e.type);
                 }, 10);
             });
-            $('.t').on("mouseenter", function (e) {
+            $('.t').on('mouseenter', function (e) {
                 setTimeout(function () {
                     S.log('jq: '+e.type);
                 }, 10);

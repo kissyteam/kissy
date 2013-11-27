@@ -81,8 +81,8 @@ KISSY.add(function (S) {
                 win = Dom.get(win);
                 var domain = win.document.domain,
                     hostname = win.location.hostname;
-                return domain != hostname &&
-                    domain != ( '[' + hostname + ']' );	// IPv6 IP support
+                return domain !== hostname &&
+                    domain !== ( '[' + hostname + ']' );	// IPv6 IP support
             },
 
             /**
@@ -94,12 +94,12 @@ KISSY.add(function (S) {
             getEmptyIframeSrc: function (win) {
                 win = win || WINDOW;
                 win = Dom.get(win);
-                if (UA['ie'] && Dom.isCustomDomain(win)) {
+                if (UA.ie && Dom.isCustomDomain(win)) {
+                    /*jshint scripturl: true*/
                     return  'javascript:void(function(){' + encodeURIComponent(
                         'document.open();' +
-                            "document.domain='" +
-                            win.document.domain
-                            + "';" +
+                            'document.domain="' +
+                            win.document.domain + '";' +
                             'document.close();') + '}())';
                 }
                 return '';
@@ -146,8 +146,8 @@ KISSY.add(function (S) {
                 }
                 elem = Dom.get(elem);
                 return S.isWindow(elem) ?
-                    elem['document'] :
-                    (elem.nodeType == NodeType.DOCUMENT_NODE ?
+                    elem.document :
+                    (elem.nodeType === NodeType.DOCUMENT_NODE ?
                         elem :
                         elem.ownerDocument);
             },
@@ -170,16 +170,16 @@ KISSY.add(function (S) {
                 var el = Dom.get(selector),
                     nodeName = el.nodeName.toLowerCase();
                 // http://msdn.microsoft.com/en-us/library/ms534388(VS.85).aspx
-                if (UA['ie']) {
-                    var scopeName = el['scopeName'];
-                    if (scopeName && scopeName != 'HTML') {
+                if (UA.ie) {
+                    var scopeName = el.scopeName;
+                    if (scopeName && scopeName !== 'HTML') {
                         nodeName = scopeName.toLowerCase() + ':' + nodeName;
                     }
                 }
                 return nodeName;
             },
 
-            _RE_NUM_NO_PX: new RegExp("^(" + RE_NUM + ")(?!px)[a-z%]+$", "i")
+            _RE_NUM_NO_PX: new RegExp('^(' + RE_NUM + ')(?!px)[a-z%]+$', 'i')
         };
 
     S.mix(Dom, NodeType);

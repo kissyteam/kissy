@@ -30,7 +30,7 @@ KISSY.add(function (S, Node, io) {
                     '<input type="checkbox" name="f" value="8" id="f" />' +
                     '</div>' +
                     '<div>' +
-                    '<input type="submit" name="g" value="Submit" id="g" />' +
+                    '<input type='submit' name="g" value="Submit" id="g" />' +
                     '</div>' +
                     '</form>',
                 form = $(html).appendTo("body"),

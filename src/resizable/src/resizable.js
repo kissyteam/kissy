@@ -136,7 +136,7 @@ KISSY.add(function (S, require) {
                         dd: dd
                     });
                 });
-                dd.on("dragend", function () {
+                dd.on('dragend', function () {
                     self.fire('resizeEnd', {
                         handler: hc,
                         dd: dd

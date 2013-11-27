@@ -13,7 +13,7 @@ KISSY.add(function (S, require) {
         isTouchEventSupported = Features.isTouchEventSupported();
 
     function onRenderChild(e) {
-        if (e.target == this) {
+        if (e.target === this) {
             var child = e.component,
                 el = child.$el;
             el.addClass(this.__childClsTag);
@@ -21,7 +21,7 @@ KISSY.add(function (S, require) {
     }
 
     function onRemoveChild(e) {
-        if (e.target == this) {
+        if (e.target === this) {
             var child = e.component,
                 el = child.$el;
             if (el) {
@@ -58,20 +58,20 @@ KISSY.add(function (S, require) {
                         case Gesture.tap:
                             control.handleClick(e);
                             break;
-                        case "mouseenter":
+                        case 'mouseenter':
                             control.handleMouseEnter(e);
                             break;
-                        case "mouseleave":
+                        case 'mouseleave':
                             control.handleMouseLeave(e);
                             break;
-                        case "contextmenu":
+                        case 'contextmenu':
                             control.handleContextMenu(e);
                             break;
-                        case "dblclick":
+                        case 'dblclick':
                             control.handleDblClick(e);
                             break;
                         default:
-                            S.error(e.type + " unhandled!");
+                            S.error(e.type + ' unhandled!');
                     }
                 }
             }
@@ -80,16 +80,16 @@ KISSY.add(function (S, require) {
         __bindUI: function () {
             var self = this,
                 events = Gesture.start +
-                    " " + Gesture.end +
-                    " " + Gesture.tap;
+                    ' '+ Gesture.end +
+                    ' ' + Gesture.tap;
 
             if (Gesture.cancel) {
                 events += ' ' + Gesture.cancel;
             }
 
             if (!isTouchEventSupported) {
-                events += " mouseenter mouseleave contextmenu " +
-                    (ie && ie < 9 ? "dblclick " : "");
+                events += ' mouseenter mouseleave contextmenu ' +
+                    (ie && ie < 9 ? 'dblclick ' : '');
             }
 
             self.$el.delegate(events, '.' + self.__childClsTag,

@@ -13,8 +13,8 @@ KISSY.add(function (S, Dom, Node) {
             describe("node", function () {
 
                 it('support filter', function () {
-                    var nodes = new Node('<div class="x" id="x"></div>' +
-                        '<div class="y" id="y"></div>' +
+                    var nodes = new Node('<div class='x' id='x'></div>' +
+                        '<div class='y' id='y'></div>' +
                         '<div class="z" id="z"></div>');
 
                     var ret = nodes.filter(function (n, i) {
@@ -64,14 +64,14 @@ KISSY.add(function (S, Dom, Node) {
 
 
                     //data chained
-                    expect(n.data("x")).toBe(undefined);
-                    expect(jq(n).data("x")).toBe(undefined);
-                    n.data("x", null);
-                    jq(n).data("x", null);
-                    expect(jq(n).data("x")).toBe(null);
-                    expect(n.data("x")).toBe(null);
-                    expect(n.data("x", "y")).toBe(n);
-                    expect(n.data("x")).toBe("y");
+                    expect(n.data('x')).toBe(undefined);
+                    expect(jq(n).data('x')).toBe(undefined);
+                    n.data('x', null);
+                    jq(n).data('x', null);
+                    expect(jq(n).data('x')).toBe(null);
+                    expect(n.data('x')).toBe(null);
+                    expect(n.data('x', 'y')).toBe(n);
+                    expect(n.data('x')).toBe('y');
 
                     //attr chained
                     expect(n.attr("test")).toBe(undefined);
@@ -201,7 +201,7 @@ KISSY.add(function (S, Dom, Node) {
                 it("wrapAll works", function () {
                     var time = S.now();
                     var wrappedCls = "f" + time;
-                    var wrapperCls = "x" + time;
+                    var wrapperCls = 'x' + time;
                     var body = document.body;
                     var foo = body.appendChild(Dom.create("<div class='" + wrappedCls + "'></div>"));
                     var foo2 = body.appendChild(Dom.create("<div class='" + wrappedCls + "'></div>"));
@@ -210,7 +210,7 @@ KISSY.add(function (S, Dom, Node) {
                         "</div>");
                     expect(foo.nextSibling).toBe(foo2);
                     expect(foo.parentNode.childNodes.length).toBe(2);
-                    expect(foo.parentNode.className).toBe("x" + wrapperCls);
+                    expect(foo.parentNode.className).toBe('x' + wrapperCls);
                     expect(foo.parentNode.parentNode.className).toBe(wrapperCls);
                     Dom.remove([foo, foo2]);
                     $("." + wrapperCls).remove();
@@ -243,8 +243,8 @@ KISSY.add(function (S, Dom, Node) {
 
                 it("children should return nodelist", function () {
                     var body = S.one(document.body);
-                    var dbivs = Dom.children(body[0], "div");
-                    var bdivnodes = body.children("div");
+                    var dbivs = Dom.children(body[0], 'div');
+                    var bdivnodes = body.children('div');
                     expect(bdivnodes instanceof NodeList).toBe(true);
                     expect(dbivs.length).toBe(bdivnodes.length);
                 });
@@ -362,7 +362,7 @@ KISSY.add(function (S, Dom, Node) {
                 it("should support #id", function () {
                     expect($(".context-test-3", "#context-test-1").length).toBe(1);
                     expect($(".context-test-3").length).toBe(3);
-                    expect($(".context-test-3", "#context-test-1").attr("id")).toBe("context-test-2");
+                    expect($(".context-test-3", "#context-test-1").attr('id')).toBe("context-test-2");
                 });
 
                 it("should support other string form selector and unique works", function () {

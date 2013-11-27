@@ -3,7 +3,7 @@
  * @author  lifesinger@gmail.com
  *          yiminghe@gmail.com
  */
-KISSY.add(function (S,require) {
+KISSY.add(function (S, require) {
     var Dom = require('./api');
     var win = S.Env.host,
         UA = S.UA,
@@ -50,10 +50,11 @@ KISSY.add(function (S,require) {
              * @return {Object|undefined} if Get, the format of returned value is same with coordinates.
              */
             offset: function (selector, coordinates, relativeWin) {
+                var elem;
                 // getter
                 if (coordinates === undefined) {
-                    var elem = Dom.get(selector),
-                        ret;
+                    elem = Dom.get(selector);
+                    var ret;
                     if (elem) {
                         ret = getOffset(elem, relativeWin);
                     }
@@ -99,7 +100,7 @@ KISSY.add(function (S,require) {
                 }
 
                 // document 归一化到 window
-                if (container.nodeType == NodeType.DOCUMENT_NODE) {
+                if (container.nodeType === NodeType.DOCUMENT_NODE) {
                     container = getWindow(container);
                 }
 
@@ -276,6 +277,7 @@ KISSY.add(function (S,require) {
 
         Dom[method] = function (elem, v) {
             if (typeof elem === 'number') {
+                /*jshint noarg: false*/
                 return arguments.callee(win, elem);
             }
             elem = Dom.get(elem);
@@ -284,9 +286,9 @@ KISSY.add(function (S,require) {
                 top,
                 w,
                 d;
-            if (elem && elem.nodeType == NodeType.ELEMENT_NODE) {
+            if (elem && elem.nodeType === NodeType.ELEMENT_NODE) {
                 if (v !== undefined) {
-                    elem[method] = parseFloat(v)
+                    elem[method] = parseFloat(v);
                 } else {
                     ret = elem[method];
                 }
@@ -295,13 +297,13 @@ KISSY.add(function (S,require) {
                 if (v !== undefined) {
                     v = parseFloat(v);
                     // 注意多 window 情况，不能简单取 win
-                    left = name == 'Left' ? v : Dom.scrollLeft(w);
-                    top = name == 'Top' ? v : Dom.scrollTop(w);
-                    w['scrollTo'](left, top);
+                    left = name === 'Left' ? v : Dom.scrollLeft(w);
+                    top = name === 'Top' ? v : Dom.scrollTop(w);
+                    w.scrollTo(left, top);
                 } else {
                     //标准
-                    //chrome == body.scrollTop
-                    //firefox/ie9 == documentElement.scrollTop
+                    //chrome === body.scrollTop
+                    //firefox/ie9 === documentElement.scrollTop
                     ret = w[ 'page' + (i ? 'Y' : 'X') + 'Offset'];
                     if (typeof ret !== 'number') {
                         d = w[DOCUMENT];
@@ -315,7 +317,7 @@ KISSY.add(function (S,require) {
                 }
             }
             return ret;
-        }
+        };
     });
 
 // add docWidth/Height, viewportWidth/Height getter methods
@@ -348,8 +350,7 @@ KISSY.add(function (S,require) {
                 documentElementProp = documentElement[prop];
             // 标准模式取 documentElement
             // backcompat 取 body
-            return doc[compatMode] === CSS1Compat
-                && documentElementProp ||
+            return doc[compatMode] === CSS1Compat && documentElementProp ||
                 body && body[ prop ] || documentElementProp;
         };
     });
@@ -427,14 +428,14 @@ KISSY.add(function (S,require) {
             // if we're at an inner frame, we only want to get the window position
             // so that we can determine the actual page offset in the context of
             // the outer window.
-            offset = currentWin == relativeWin ?
+            offset = currentWin === relativeWin ?
                 getPageOffset(currentEl) :
                 getClientPosition(currentEl);
             position.left += offset.left;
             position.top += offset.top;
         } while (currentWin &&
-            currentWin != relativeWin &&
-            (currentEl = currentWin['frameElement']) &&
+            currentWin !== relativeWin &&
+            (currentEl = currentWin.frameElement) &&
             (currentWin = currentWin.parent));
 
         return position;

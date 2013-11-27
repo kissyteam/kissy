@@ -381,7 +381,7 @@
                     }
                 });
 
-                $("#multi").delegate("mouseenter", "img", function (e) {
+                $("#multi").delegate('mouseenter', "img", function (e) {
                     var t = $(e.target);
                     popup.set("content", '<img src="' + t.attr('bigpicurl') + '"/>');
                     popup.set('align', {
@@ -391,7 +391,7 @@
                     popup.show();
                 });
 
-                $("#multi").delegate("mouseleave", "img", function (e) {
+                $("#multi").delegate('mouseleave', "img", function (e) {
                     popup.hide();
                 });
             });

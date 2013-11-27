@@ -24,18 +24,18 @@ KISSY.add(function (S,require) {
         for (i = 0; nodes[i]; i++) {
             el = nodes[i];
             nodeName = getNodeName(el);
-            if (el.nodeType == NodeType.DOCUMENT_FRAGMENT_NODE) {
+            if (el.nodeType === NodeType.DOCUMENT_FRAGMENT_NODE) {
                 ret.push.apply(ret, filterScripts(makeArray(el.childNodes), scripts));
             } else if (nodeName === 'script' && isJs(el)) {
                 // remove script to make sure ie9 does not invoke when append
                 if (el.parentNode) {
-                    el.parentNode.removeChild(el)
+                    el.parentNode.removeChild(el);
                 }
                 if (scripts) {
                     scripts.push(el);
                 }
             } else {
-                if (el.nodeType == NodeType.ELEMENT_NODE &&
+                if (el.nodeType === NodeType.ELEMENT_NODE &&
                     // ie checkbox getElementsByTagName 后造成 checked 丢失
                     !RE_FORM_EL.test(nodeName)) {
                     var tmp = [],
@@ -106,7 +106,7 @@ KISSY.add(function (S,require) {
         //fragment 一旦插入里面就空了，先复制下
         if (refNodesLength > 1) {
             clonedNode = Dom.clone(newNode, true);
-            refNodes = S.makeArray(refNodes)
+            refNodes = S.makeArray(refNodes);
         }
 
         for (i = 0; i < refNodesLength; i++) {
@@ -198,7 +198,7 @@ KISSY.add(function (S,require) {
                     Dom.insertBefore(wrapperNode, wrappedNodes[0]);
                 }
                 var c;
-                while ((c = wrapperNode.firstChild) && c.nodeType == 1) {
+                while ((c = wrapperNode.firstChild) && c.nodeType === 1) {
                     wrapperNode = c;
                 }
                 Dom.appendTo(wrappedNodes, wrapperNode);

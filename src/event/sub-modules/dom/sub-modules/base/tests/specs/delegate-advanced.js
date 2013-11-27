@@ -110,7 +110,7 @@ KISSY.add(function (S, Dom, Event) {
             Event.delegate("#delegateAdvanced", "click", ".c", function () {
                 ret.push(2);
             });
-            Event.delegate("#delegateAdvanced", "focus", ".c", function () {
+            Event.delegate("#delegateAdvanced", 'focus', ".c", function () {
                 ret.push(4);
             });
             Event.on("#delegateAdvanced", "click", function () {
@@ -168,7 +168,7 @@ KISSY.add(function (S, Dom, Event) {
             Event.on("#delegateAdvanced", "click", function () {
                 ret.push(3);
             });
-            Event.delegate("#delegateAdvanced", "focus", 'input', function () {
+            Event.delegate("#delegateAdvanced", 'focus', 'input', function () {
                 ret.push(5);
             });
 

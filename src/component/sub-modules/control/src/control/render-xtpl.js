@@ -12,7 +12,7 @@ KISSY.add(function (S, require, exports, module) {
                 getExpressionUtil = utils["getExpression"],
                 getPropertyOrRunCommandUtil = utils["getPropertyOrRunCommand"];
             buffer += '<div id="';
-            var id0 = getPropertyOrRunCommandUtil(engine, scopes, {}, "id", 0, 1, undefined, false);
+            var id0 = getPropertyOrRunCommandUtil(engine, scopes, {}, 'id', 0, 1, undefined, false);
             buffer += getExpressionUtil(id0, true);
             buffer += '"\n class="';
             var config2 = {};

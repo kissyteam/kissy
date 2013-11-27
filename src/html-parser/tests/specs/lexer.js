@@ -13,9 +13,9 @@ KISSY.add(function (S, HtmlParser) {
                 nodes.push(node);
             }
             expect(nodes[0].nodeType).toBe(1);
-            expect(nodes[0].nodeName).toBe("div");
+            expect(nodes[0].nodeName).toBe('div');
             expect(nodes[0].attributes.length).toBe(1);
-            expect(nodes[0].attributes[0].name).toBe("id");
+            expect(nodes[0].attributes[0].name).toBe('id');
             expect(nodes[0].attributes[0].value).toBe("z");
             expect(nodes[0].toHtml()).toBe("<div id='z'>");
             expect(nodes[1].nodeType).toBe(3);

@@ -12,9 +12,9 @@ KISSY.add(function (S, require) {
     return Base.extend({
         // Insert item by order
         addItem: function (item) {
-            var items = this.get("items");
+            var items = this.get('items');
             for (var i = 0; i < items.length; i++) {
-                if (items[i].get("production").toString() > item.get("production").toString()) {
+                if (items[i].get('production').toString() > item.get('production').toString()) {
                     break;
                 }
             }
@@ -22,11 +22,11 @@ KISSY.add(function (S, require) {
         },
 
         size: function () {
-            return this.get("items").length;
+            return this.get('items').length;
         },
 
         findItemIndex: function (item, ignoreLookAhead) {
-            var oneItems = this.get("items");
+            var oneItems = this.get('items');
             for (var i = 0; i < oneItems.length; i++) {
                 if (oneItems[i].equals(item, ignoreLookAhead)) {
                     return i;
@@ -36,13 +36,13 @@ KISSY.add(function (S, require) {
         },
 
         getItemAt: function (index) {
-            return this.get("items")[index];
+            return this.get('items')[index];
         },
 
         equals: function (other, ignoreLookAhead) {
-            var oneItems = this.get("items"),
+            var oneItems = this.get('items'),
                 i,
-                otherItems = other.get("items");
+                otherItems = other.get('items');
             if (oneItems.length != otherItems.length) {
                 return false;
             }
@@ -56,7 +56,7 @@ KISSY.add(function (S, require) {
         toString: function (withGoto) {
             var ret = [],
                 gotos = this.get('gotos');
-            S.each(this.get("items"), function (item) {
+            S.each(this.get('items'), function (item) {
                 ret.push(item.toString());
             });
             if (withGoto) {
@@ -67,7 +67,7 @@ KISSY.add(function (S, require) {
                 });
                 ret.push('end gotos:');
             }
-            return ret.join("\n");
+            return ret.join('\n');
         },
 
         addReverseGoto: function (symbol, item) {

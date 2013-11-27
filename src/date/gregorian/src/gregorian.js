@@ -3,13 +3,11 @@
  * @ignore
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S,require) {
+KISSY.add(function (S, require) {
     var toInt = parseInt;
-    var Utils=require('./gregorian/utils');
-    var defaultLocale=require('i18n!date');
-    var Const=require('./gregorian/const');
-    var undefined=undefined;
-
+    var Utils = require('./gregorian/utils');
+    var defaultLocale = require('i18n!date');
+    var Const = require('./gregorian/const');
 
     /**
      * GregorianCalendar class.
@@ -95,7 +93,7 @@ KISSY.add(function (S,require) {
     S.mix(GregorianCalendar, Const);
 
     S.mix(GregorianCalendar, {
-        Utils:Utils,
+        Utils: Utils,
 
         /**
          * Determines if the given year is a leap year.
@@ -326,7 +324,7 @@ KISSY.add(function (S,require) {
                 case WEEK_OF_YEAR:
                     var endOfYear = new GregorianCalendar(fields[YEAR], GregorianCalendar.DECEMBER, 31);
                     value = endOfYear.get(WEEK_OF_YEAR);
-                    if (value == 1) {
+                    if (value === 1) {
                         value = 52;
                     }
                     break;
@@ -395,7 +393,7 @@ KISSY.add(function (S,require) {
             fields[DAY_OF_MONTH] = date.dayOfMonth;
             fields[DAY_OF_WEEK] = date.dayOfWeek;
 
-            if (timeOfDay != 0) {
+            if (timeOfDay !== 0) {
                 fields[HOUR_OF_DAY] = toInt(timeOfDay / ONE_HOUR);
                 var r = timeOfDay % ONE_HOUR;
                 fields[MINUTE] = toInt(r / ONE_MINUTE);
@@ -420,7 +418,7 @@ KISSY.add(function (S,require) {
             var weekOfYear = getWeekNumber(this, fixedDateJan1, fixedDate);
 
             // 本周没有足够的时间在当前年
-            if (weekOfYear == 0) {
+            if (weekOfYear === 0) {
                 // If the date belongs to the last week of the
                 // previous year, use the week number of "12/31" of
                 // the "previous" year.
@@ -435,7 +433,7 @@ KISSY.add(function (S,require) {
                 var nDays = nextJan1st - nextJan1;
                 // 本周有足够天数在新的一年
                 if (nDays >= this.minimalDaysInFirstWeek &&
-                    // 当天确实在本周，weekOfYear == 53 时是不需要这个判断
+                    // 当天确实在本周，weekOfYear === 53 时是不需要这个判断
                     fixedDate >= (nextJan1st - 7)
                     ) {
                     weekOfYear = 1;
@@ -530,7 +528,7 @@ KISSY.add(function (S,require) {
             // Get the fixed date since Jan 1, 1 (Gregorian). We are on
             // the first day of either `month' or January in 'year'.
             var fixedDate = Utils.getFixedDate(year, month, 1);
-
+            var firstDayOfWeek;
             var dayOfWeek = self.firstDayOfWeek;
 
             if (self.isSet(DAY_OF_WEEK)) {
@@ -542,7 +540,7 @@ KISSY.add(function (S,require) {
                     fixedDate += fields[DAY_OF_MONTH] - 1;
                 } else {
                     if (self.isSet(WEEK_OF_MONTH)) {
-                        var firstDayOfWeek = getDayOfWeekDateOnOrBefore(fixedDate + 6, firstDayOfWeekCfg);
+                        firstDayOfWeek = getDayOfWeekDateOnOrBefore(fixedDate + 6, firstDayOfWeekCfg);
 
                         // If we have enough days in the first week, then
                         // move to the previous week.
@@ -550,7 +548,7 @@ KISSY.add(function (S,require) {
                             firstDayOfWeek -= 7;
                         }
 
-                        if (dayOfWeek != firstDayOfWeekCfg) {
+                        if (dayOfWeek !== firstDayOfWeekCfg) {
                             firstDayOfWeek = getDayOfWeekDateOnOrBefore(firstDayOfWeek + 6, dayOfWeek);
                         }
 
@@ -580,7 +578,7 @@ KISSY.add(function (S,require) {
                     if ((firstDayOfWeek - fixedDate) >= self.minimalDaysInFirstWeek) {
                         firstDayOfWeek -= 7;
                     }
-                    if (dayOfWeek != firstDayOfWeekCfg) {
+                    if (dayOfWeek !== firstDayOfWeekCfg) {
                         firstDayOfWeek = getDayOfWeekDateOnOrBefore(firstDayOfWeek + 6, dayOfWeek);
                     }
                     fixedDate = firstDayOfWeek + 7 * (fields[WEEK_OF_YEAR] - 1);
@@ -629,7 +627,7 @@ KISSY.add(function (S,require) {
          */
 
 
-         /**
+        /**
          * Returns the month of the given calendar field.
          * @method getMonth
          * @returns {Number} the month for the given calendar field.
@@ -709,7 +707,7 @@ KISSY.add(function (S,require) {
          */
         set: function (field, v) {
             var len = arguments.length;
-            if (len == 2) {
+            if (len === 2) {
                 this.fields[field] = v;
             } else if (len < MILLISECONDS + 1) {
                 for (var i = 0; i < len; i++) {
@@ -875,7 +873,6 @@ KISSY.add(function (S,require) {
                         break;
                     default:
                         throw new Error('illegal field for add');
-                        break;
                 }
                 self.setTime(self.time + amount);
             }
@@ -981,7 +978,7 @@ KISSY.add(function (S,require) {
          *      // 1999-4-30
          *      // Tuesday June 1, 1999
          *      d.set(1999, GregorianCalendar.JUNE, 1);
-         *      d.add(Gregorian.WEEK_OF_MONTH,-1); // == d.add(Gregorian.WEEK_OF_MONTH,
+         *      d.add(Gregorian.WEEK_OF_MONTH,-1); // === d.add(Gregorian.WEEK_OF_MONTH,
          *      d.get(Gregorian.WEEK_OF_MONTH));
          *      // 1999-06-29
          *
@@ -1125,7 +1122,7 @@ KISSY.add(function (S,require) {
          * set current date instance's timezone offset
          */
         'setTimezoneOffset': function (timezoneOffset) {
-            if (this.timezoneOffset != timezoneOffset) {
+            if (this.timezoneOffset !== timezoneOffset) {
                 this.fieldsComputed = undefined;
                 this.timezoneOffset = timezoneOffset;
             }
@@ -1135,7 +1132,7 @@ KISSY.add(function (S,require) {
          * set first day of week for current date instance
          */
         'setFirstDayOfWeek': function (firstDayOfWeek) {
-            if (this.firstDayOfWeek != firstDayOfWeek) {
+            if (this.firstDayOfWeek !== firstDayOfWeek) {
                 this.firstDayOfWeek = firstDayOfWeek;
                 this.fieldsComputed = false;
             }
@@ -1157,7 +1154,7 @@ KISSY.add(function (S,require) {
          * @param minimalDaysInFirstWeek the given minimal days required in the first week of the year.
          */
         'setMinimalDaysInFirstWeek': function (minimalDaysInFirstWeek) {
-            if (this.minimalDaysInFirstWeek != minimalDaysInFirstWeek) {
+            if (this.minimalDaysInFirstWeek !== minimalDaysInFirstWeek) {
                 this.minimalDaysInFirstWeek = minimalDaysInFirstWeek;
                 this.fieldsComputed = false;
             }
@@ -1189,7 +1186,7 @@ KISSY.add(function (S,require) {
          */
         'getWeeksInWeekYear': function () {
             var weekYear = this.getWeekYear();
-            if (weekYear == this.get(YEAR)) {
+            if (weekYear === this.get(YEAR)) {
                 return this.getActualMaximum(WEEK_OF_YEAR);
             }
             // Use the 2nd week for calculating the max of WEEK_OF_YEAR
@@ -1210,12 +1207,12 @@ KISSY.add(function (S,require) {
             var year = this.get(YEAR); // implicitly  complete
             var weekOfYear = this.get(WEEK_OF_YEAR);
             var month = this.get(MONTH);
-            if (month == GregorianCalendar.JANUARY) {
+            if (month === GregorianCalendar.JANUARY) {
                 if (weekOfYear >= 52) {
                     --year;
                 }
-            } else if (month == GregorianCalendar.DECEMBER) {
-                if (weekOfYear == 1) {
+            } else if (month === GregorianCalendar.DECEMBER) {
+                if (weekOfYear === 1) {
                     ++year;
                 }
             }
@@ -1232,7 +1229,7 @@ KISSY.add(function (S,require) {
          */
         'setWeekDate': function (weekYear, weekOfYear, dayOfWeek) {
             if (dayOfWeek < GregorianCalendar.SUNDAY || dayOfWeek > GregorianCalendar.SATURDAY) {
-                throw new Error("invalid dayOfWeek: " + dayOfWeek);
+                throw new Error('invalid dayOfWeek: ' + dayOfWeek);
             }
             var fields = this.fields;
             // To avoid changing the time of day fields by date
@@ -1248,7 +1245,7 @@ KISSY.add(function (S,require) {
                 days += 7;
             }
             days += 7 * (weekOfYear - 1);
-            if (days != 0) {
+            if (days !== 0) {
                 gc.add(DAY_OF_YEAR, days);
             } else {
                 gc.complete();
@@ -1280,10 +1277,10 @@ KISSY.add(function (S,require) {
          * @returns {boolean} true if this object is equal to obj; false otherwise.
          */
         equals: function (obj) {
-            return this.getTime() == obj.getTime() &&
-                this.firstDayOfWeek == obj.firstDayOfWeek &&
-                this.timezoneOffset == obj.timezoneOffset &&
-                this.minimalDaysInFirstWeek == obj.minimalDaysInFirstWeek;
+            return this.getTime() === obj.getTime() &&
+                this.firstDayOfWeek === obj.firstDayOfWeek &&
+                this.timezoneOffset === obj.timezoneOffset &&
+                this.minimalDaysInFirstWeek === obj.minimalDaysInFirstWeek;
         },
 
         /**

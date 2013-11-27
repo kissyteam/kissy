@@ -324,7 +324,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/focus-fix.js'].lineData[16]++;
     var editor = self._focusEditor;
     _$jscoverage['/focus-fix.js'].lineData[22]++;
-    if (visit1_22_1(UA['ie'] && editor)) {
+    if (visit1_22_1(UA.ie && editor)) {
       _$jscoverage['/focus-fix.js'].lineData[26]++;
       window['focus']();
       _$jscoverage['/focus-fix.js'].lineData[27]++;
@@ -346,7 +346,7 @@ KISSY.add(function(S, require) {
           _$jscoverage['/focus-fix.js'].lineData[47]++;
           var $myRange = document.body.createTextRange();
           _$jscoverage['/focus-fix.js'].lineData[48]++;
-          $myRange.moveToElementText(self.get("el").first()[0]);
+          $myRange.moveToElementText(self.get('el').first()[0]);
           _$jscoverage['/focus-fix.js'].lineData[49]++;
           $myRange.collapse(true);
           _$jscoverage['/focus-fix.js'].lineData[50]++;
@@ -377,7 +377,7 @@ KISSY.add(function(S, require) {
   }
 });
   _$jscoverage['/focus-fix.js'].lineData[68]++;
-  self.on("hide", function() {
+  self.on('hide', function() {
   _$jscoverage['/focus-fix.js'].functionData[5]++;
   _$jscoverage['/focus-fix.js'].lineData[69]++;
   _hide4FocusExt.call(self);

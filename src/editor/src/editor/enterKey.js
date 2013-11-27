@@ -139,7 +139,7 @@ KISSY.add(function (S, require) {
             }
 
             if (!OLD_IE)
-                newBlock._4e_appendBogus();
+                newBlock._4eAppendBogus();
 
             range.insertNode(newBlock);
 
@@ -191,7 +191,7 @@ KISSY.add(function (S, require) {
 
     function EnterKey(editor) {
         var doc = editor.get("document");
-        doc.on("keydown", function (ev) {
+        doc.on('keydown', function (ev) {
             var keyCode = ev.keyCode;
             if (keyCode === 13) {
                 if (ev.shiftKey || ev.ctrlKey || ev.metaKey) {

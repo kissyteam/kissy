@@ -38,7 +38,7 @@ KISSY.add(function (S, require) {
                 expanded = self.get("expanded"),
                 nodeToBeSelected,
                 isLeaf = self.get("isLeaf"),
-                children = self.get("children"),
+                children = self.get('children'),
                 keyCode = e.keyCode;
 
             // 顺序统统为前序遍历顺序
@@ -192,7 +192,7 @@ KISSY.add(function (S, require) {
         expandAll: function () {
             var self = this;
             self.set("expanded", true);
-            S.each(self.get("children"), function (c) {
+            S.each(self.get('children'), function (c) {
                 c.expandAll();
             });
         },
@@ -203,7 +203,7 @@ KISSY.add(function (S, require) {
         collapseAll: function () {
             var self = this;
             self.set("expanded", false);
-            S.each(self.get("children"), function (c) {
+            S.each(self.get('children'), function (c) {
                 c.collapseAll();
             });
         }
@@ -337,7 +337,7 @@ KISSY.add(function (S, require) {
 
     function isNodeSingleOrLast(self) {
         var parent = self.get('parent'),
-            children = parent && parent.get("children"),
+            children = parent && parent.get('children'),
             lastChild = children && children[children.length - 1];
         // 根节点
         // or
@@ -348,11 +348,11 @@ KISSY.add(function (S, require) {
     function isNodeLeaf(self) {
         var isLeaf = self.get("isLeaf");
         // 强制指定了 isLeaf，否则根据儿子节点集合自动判断
-        return !(isLeaf === false || (isLeaf === undefined && self.get("children").length));
+        return !(isLeaf === false || (isLeaf === undefined && self.get('children').length));
     }
 
     function getLastVisibleDescendant(self) {
-        var children = self.get("children");
+        var children = self.get('children');
         // 没有展开或者根本没有儿子节点，可视的只有自己
         if (!self.get("expanded") || !children.length) {
             return self;
@@ -374,7 +374,7 @@ KISSY.add(function (S, require) {
 
     // similar to _4e_nextSourceNode in editor
     function getNextVisibleNode(self) {
-        var children = self.get("children"),
+        var children = self.get('children'),
             n,
             parent;
         if (self.get("expanded") && children.length) {
@@ -412,7 +412,7 @@ KISSY.add(function (S, require) {
         if (setDepth !== undefined) {
             c.set("depth", setDepth);
         }
-        S.each(c.get("children"), function (child) {
+        S.each(c.get('children'), function (child) {
             if (typeof setDepth == 'number') {
                 recursiveSetDepth(tree, child, setDepth + 1);
             } else {

@@ -23,7 +23,7 @@ KISSY.add(function (S, require, exports, module) {
             var id0 = getPropertyOrRunCommandUtil(engine, scopes, config1, "include", 0, 1, false, undefined);
             buffer += id0;
             buffer += '\n<div id="ks-content-';
-            var id3 = getPropertyOrRunCommandUtil(engine, scopes, {}, "id", 0, 2, undefined, false);
+            var id3 = getPropertyOrRunCommandUtil(engine, scopes, {}, 'id', 0, 2, undefined, false);
             buffer += getExpressionUtil(id3, true);
             buffer += '"\n     class="';
             var config5 = {};
@@ -58,7 +58,7 @@ KISSY.add(function (S, require, exports, module) {
             };
             buffer += runBlockCommandUtil(engine, scopes, config10, "each", 6);
             buffer += '\n"\n         id="ks-stdmod-header-';
-            var id15 = getPropertyOrRunCommandUtil(engine, scopes, {}, "id", 0, 10, undefined, false);
+            var id15 = getPropertyOrRunCommandUtil(engine, scopes, {}, 'id', 0, 10, undefined, false);
             buffer += getExpressionUtil(id15, true);
             buffer += '">';
             var id16 = getPropertyOrRunCommandUtil(engine, scopes, {}, "headerContent", 0, 10, undefined, false);
@@ -89,7 +89,7 @@ KISSY.add(function (S, require, exports, module) {
             };
             buffer += runBlockCommandUtil(engine, scopes, config20, "each", 14);
             buffer += '\n"\n         id="ks-stdmod-body-';
-            var id25 = getPropertyOrRunCommandUtil(engine, scopes, {}, "id", 0, 18, undefined, false);
+            var id25 = getPropertyOrRunCommandUtil(engine, scopes, {}, 'id', 0, 18, undefined, false);
             buffer += getExpressionUtil(id25, true);
             buffer += '">';
             var id26 = getPropertyOrRunCommandUtil(engine, scopes, {}, "bodyContent", 0, 18, undefined, false);
@@ -120,7 +120,7 @@ KISSY.add(function (S, require, exports, module) {
             };
             buffer += runBlockCommandUtil(engine, scopes, config30, "each", 22);
             buffer += '\n"\n         id="ks-stdmod-footer-';
-            var id35 = getPropertyOrRunCommandUtil(engine, scopes, {}, "id", 0, 26, undefined, false);
+            var id35 = getPropertyOrRunCommandUtil(engine, scopes, {}, 'id', 0, 26, undefined, false);
             buffer += getExpressionUtil(id35, true);
             buffer += '">';
             var id36 = getPropertyOrRunCommandUtil(engine, scopes, {}, "footerContent", 0, 26, undefined, false);

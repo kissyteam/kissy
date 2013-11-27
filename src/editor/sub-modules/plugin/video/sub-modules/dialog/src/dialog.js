@@ -100,7 +100,7 @@ KISSY.add(function (S, require) {
                 d = self.dialog,
                 editor = self.editor,
                 prefixCls = editor.get('prefixCls'),
-                el = d.get("el");
+                el = d.get('el');
             self.dUrl = el.one("." + prefixCls + "editor-video-url");
             self.dAlign = MenuButton.Select.decorate(el.one("." + prefixCls + "editor-video-align"), {
                 prefixCls: prefixCls + 'editor-big-',

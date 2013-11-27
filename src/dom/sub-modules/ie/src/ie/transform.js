@@ -3,7 +3,7 @@
  * transform hack for ie
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S,require) {
+KISSY.add(function (S, require) {
     var Dom = require('dom/base');
     var cssHooks = Dom._cssHooks;
     var rMatrix = /progid:DXImageTransform.Microsoft.Matrix\(([^)]*)\)/;
@@ -13,22 +13,22 @@ KISSY.add(function (S,require) {
             var elemStyle = elem[computed ? 'currentStyle' : 'style'],
                 matrix;
             if (elemStyle && rMatrix.test(elemStyle.filter)) {
-                matrix = RegExp.$1.split(",");
+                matrix = RegExp.$1.split(',');
                 var dx = 0 ,
                     dy = 0;
-                var dxs = matrix[4] && matrix[4].split("=");
-                var dys = matrix[5] && matrix[5].split("=");
-                if (dxs && dxs[0].toLowerCase() == 'dx') {
+                var dxs = matrix[4] && matrix[4].split('=');
+                var dys = matrix[5] && matrix[5].split('=');
+                if (dxs && dxs[0].toLowerCase() === 'dx') {
                     dx = parseFloat(dxs[1]);
                 }
-                if (dys && dys[0].toLowerCase() == 'dy') {
+                if (dys && dys[0].toLowerCase() === 'dy') {
                     dy = parseFloat(dys[1]);
                 }
                 matrix = [
-                    matrix[0].split("=")[1],
-                    matrix[2].split("=")[1],
-                    matrix[1].split("=")[1],
-                    matrix[3].split("=")[1],
+                    matrix[0].split('=')[1],
+                    matrix[2].split('=')[1],
+                    matrix[1].split('=')[1],
+                    matrix[3].split('=')[1],
                     dx,
                     dy
                 ];
@@ -40,6 +40,7 @@ KISSY.add(function (S,require) {
 
         set: function (elem, value) {
             var elemStyle = elem.style,
+                afterCenter,
                 currentStyle = elem.currentStyle,
                 matrixVal,
                 region = {
@@ -51,31 +52,31 @@ KISSY.add(function (S,require) {
                     y: region.height / 2
                 },
             // ie must be set inline
-                origin = parseOrigin(elem.style['transformOrigin'], region),
+                origin = parseOrigin(elem.style.transformOrigin, region),
                 filter;
             elemStyle.zoom = 1;
             if (value) {
                 value = matrix(value);
-                var afterCenter = getCenterByOrigin(value, origin, center);
+                afterCenter = getCenterByOrigin(value, origin, center);
                 afterCenter.x = afterCenter[0][0];
                 afterCenter.y = afterCenter[1][0];
                 matrixVal = [
-                    "progid:DXImageTransform.Microsoft.Matrix(" +
-                        "M11=" + value[0][0],
-                    "M12=" + value[0][1],
-                    "M21=" + value[1][0],
-                    "M22=" + value[1][1],
+                    'progid:DXImageTransform.Microsoft.Matrix(' +
+                        'M11=' + value[0][0],
+                    'M12=' + value[0][1],
+                    'M21=' + value[1][0],
+                    'M22=' + value[1][1],
                     // no effect in this filter set
                     // but used for get to keep status
                     // Dom.css(t,'transform',Dom.css(t,'transform'))
-                    "Dx=" + value[0][2],
-                    "Dy=" + value[1][2],
+                    'Dx=' + value[0][2],
+                    'Dy=' + value[1][2],
                     'SizingMethod="auto expand"'
                 ].join(',') + ')';
             } else {
                 matrixVal = '';
             }
-            filter = currentStyle && currentStyle.filter || elemStyle.filter || "";
+            filter = currentStyle && currentStyle.filter || elemStyle.filter || '';
 
             if (!matrixVal && !S.trim(filter.replace(rMatrix, ''))) {
                 // Setting style.filter to null, '' & ' ' still leave 'filter:' in the cssText
@@ -131,7 +132,7 @@ KISSY.add(function (S,require) {
     function parseOrigin(origin, region) {
         origin = origin || '50% 50%';
         origin = origin.split(/\s+/);
-        if (origin.length == 1) {
+        if (origin.length === 1) {
             origin[1] = origin[0];
         }
         for (var i = 0; i < origin.length; i++) {
@@ -147,7 +148,7 @@ KISSY.add(function (S,require) {
 
     // turn transform string into standard matrix form
     function matrix(transform) {
-        transform = transform.split(")");
+        transform = transform.split(')');
         var trim = S.trim,
             i = -1,
             l = transform.length - 1,
@@ -157,21 +158,21 @@ KISSY.add(function (S,require) {
 
         // Loop through the transform properties, parse and multiply them
         while (++i < l) {
-            split = transform[i].split("(");
+            split = transform[i].split('(');
             prop = trim(split[0]);
             val = split[1];
             curr = [1, 0, 0, 1, 0, 0];
             switch (prop) {
-                case "translateX":
+                case 'translateX':
                     curr[4] = parseInt(val, 10);
                     break;
 
-                case "translateY":
+                case 'translateY':
                     curr[5] = parseInt(val, 10);
                     break;
 
                 case 'translate':
-                    val = val.split(",");
+                    val = val.split(',');
                     curr[4] = parseInt(val[0], 10);
                     curr[5] = parseInt(val[1] || 0, 10);
                     break;
@@ -193,21 +194,21 @@ KISSY.add(function (S,require) {
                     break;
 
                 case 'scale':
-                    val = val.split(",");
+                    val = val.split(',');
                     curr[0] = +val[0];
                     curr[3] = val.length > 1 ? +val[1] : +val[0];
                     break;
 
-                case "skewX":
+                case 'skewX':
                     curr[2] = Math.tan(toRadian(val));
                     break;
 
-                case "skewY":
+                case 'skewY':
                     curr[1] = Math.tan(toRadian(val));
                     break;
 
                 case 'matrix':
-                    val = val.split(",");
+                    val = val.split(',');
                     curr[0] = +val[0];
                     curr[1] = +val[1];
                     curr[2] = +val[2];
@@ -238,10 +239,10 @@ KISSY.add(function (S,require) {
     }
 
     function multipleMatrix(m1, m2) {
-
+        var i;
         if (arguments.length > 2) {
             var ret = m1;
-            for (var i = 1; i < arguments.length; i++) {
+            for (i = 1; i < arguments.length; i++) {
                 ret = multipleMatrix(ret, arguments[i]);
             }
             return ret;
@@ -267,7 +268,7 @@ KISSY.add(function (S,require) {
 
     // converts an angle string in any unit to a radian Float
     function toRadian(value) {
-        return value.indexOf("deg") > -1 ?
+        return value.indexOf('deg') > -1 ?
             parseInt(value, 10) * (Math.PI * 2 / 360) :
             parseFloat(value);
     }

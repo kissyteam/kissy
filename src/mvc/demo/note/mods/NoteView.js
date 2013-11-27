@@ -22,8 +22,8 @@ KISSY.add(function(S, Node,mvc, Template) {
         render:function() {
             var self = this;
             // dom 节点添加标志 , dom 代理事件需要
-            self.get("el").addClass("note").attr("id", self.get("note").getId());
-            self.get("el").html(noteTpl.render({
+            self.get('el').addClass("note").attr('id', self.get("note").getId());
+            self.get('el').html(noteTpl.render({
                 note:self.get("note").toJSON()}));
             return self;
         },
@@ -32,7 +32,7 @@ KISSY.add(function(S, Node,mvc, Template) {
          * 销毁单个笔记view
          */
         destroy:function() {
-            this.get("el").remove();
+            this.get('el').remove();
         }
     });
 }, {

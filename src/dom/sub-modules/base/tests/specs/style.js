@@ -277,9 +277,9 @@ KISSY.add(function (S, Dom) {
             var el = $("<div style='position: relative;padding: 20px;'>" +
                 "<div style='position: absolute'></div><span></span>" +
                 "<s style='position: fixed'></s></div>").appendTo('body')[0];
-            expect(Dom.css(el, "left")).toBe("0px");
+            expect(Dom.css(el, "left")).toBe('0px');
             expect(Math.round(parseFloat(Dom.css(Dom.get('div', el), "top")))).toBe(20);
-            expect(Dom.css(Dom.get('span', el), "top")).toBe("auto");
+            expect(Dom.css(Dom.get('span', el), "top")).toBe('auto');
             expect(parseInt(Dom.css(Dom.get('s', el), "top")) || 1)
                 .toBe(parseInt(Dom.get('s', el).getBoundingClientRect().top) || 0);
         });

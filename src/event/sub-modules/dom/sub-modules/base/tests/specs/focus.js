@@ -3,7 +3,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add( function (S, Dom, Event) {
-    describe("focus", function () {
+    describe('focus', function () {
         it('fire is special', function () {
             var n = Dom.create('<input />');
             Dom.append(n, 'body');

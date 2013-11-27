@@ -9,7 +9,7 @@ KISSY.add(function (S, require) {
     require('./button');
     var Node = S.Node,
         CLS = "ke_pagebreak",
-        TYPE = "div",
+        TYPE = 'div',
         PAGE_BREAK_MARKUP = '<div' +
             ' style="page-break-after: always; ">' +
             '<span style="DISPLAY:none">&nbsp;</span>' +

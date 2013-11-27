@@ -26,7 +26,7 @@ KISSY.add(function (S, require) {
 
                 var cmdType = self.get("cmdType"),
                     menu = self.get('menu'),
-                    children = menu.get && menu.get("children");
+                    children = menu.get && menu.get('children');
 
                 if (children) {
                     // Check if the element is removable by any of

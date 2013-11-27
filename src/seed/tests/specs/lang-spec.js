@@ -726,12 +726,12 @@ describe('lang.js', function () {
             toString: function () {
                 return "ha";
             },
-            "x": 2
+            'x': 2
         };
 
         var ret = S.keys(x);
 
-        expect(S.equals(ret, ["x", "toString"]) || S.equals(ret, ["toString", "x"])).toBe(true);
+        expect(S.equals(ret, ['x', "toString"]) || S.equals(ret, ["toString", 'x'])).toBe(true);
 
     });
 });

@@ -54,7 +54,7 @@ KISSY.add(function (S,require) {
         year = 400 * n400 + 100 * n100 + 4 * n4 + n1;
 
         // ?
-        if (!(n100 == 4 || n1 == 4)) {
+        if (!(n100 === 4 || n1 === 4)) {
             ++year;
         }
 
@@ -63,10 +63,10 @@ KISSY.add(function (S,require) {
 
     S.mix(Utils, {
         'isLeapYear': function (year) {
-            if ((year & 3) != 0) {
+            if ((year & 3) !== 0) {
                 return false;
             }
-            return (year % 100 != 0) || (year % 400 == 0);
+            return (year % 100 !== 0) || (year % 400 === 0);
         },
 
         mod: function (x, y) {

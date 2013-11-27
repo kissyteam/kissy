@@ -4,14 +4,15 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
-        var Base = require('base');
-        var Utils = require('./utils');
-        var Item = require('./item');
-        var ItemSet = require('./item-set');
-        var NonTerminal = require('./non-terminal');
-        var Lexer = require('./lexer');
-        var Production = require('./production');
-var  logger = S.getLogger('s/kison');
+    /*jshint loopfunc: true*/
+    var Base = require('base');
+    var Utils = require('./utils');
+    var Item = require('./item');
+    var ItemSet = require('./item-set');
+    var NonTerminal = require('./non-terminal');
+    var Lexer = require('./lexer');
+    var Production = require('./production');
+    var logger = S.getLogger('s/kison');
     var GrammarConst = {
             SHIFT_TYPE: 1,
             REDUCE_TYPE: 2,
@@ -56,13 +57,13 @@ var  logger = S.getLogger('s/kison');
                 break;
         }
         logger.debug('from production:');
-        if (action[GrammarConst.PRODUCTION_INDEX] != undefined) {
+        if (action[GrammarConst.PRODUCTION_INDEX] !== undefined) {
             logger.debug(productions[action[GrammarConst.PRODUCTION_INDEX]] + '');
         } else {
             logger.debug('undefined');
         }
         logger.debug('to itemSet:');
-        if (action[GrammarConst.TO_INDEX] != undefined) {
+        if (action[GrammarConst.TO_INDEX] !== undefined) {
             logger.debug(itemSets[action[GrammarConst.TO_INDEX]].toString(1));
         } else {
             logger.debug('undefined');
@@ -104,9 +105,9 @@ var  logger = S.getLogger('s/kison');
 
         buildTerminals: function () {
             var self = this,
-                lexer = self.get("lexer"),
+                lexer = self.get('lexer'),
                 rules = lexer && lexer.rules,
-                terminals = self.get("terminals");
+                terminals = self.get('terminals');
             terminals[lexer.mapSymbol(END_TAG)] = 1;
             S.each(rules, function (rule) {
                 var token = rule.token || rule[0];
@@ -118,12 +119,12 @@ var  logger = S.getLogger('s/kison');
 
         buildNonTerminals: function () {
             var self = this,
-                terminals = self.get("terminals"),
-                nonTerminals = self.get("nonTerminals"),
-                productions = self.get("productions");
+                terminals = self.get('terminals'),
+                nonTerminals = self.get('nonTerminals'),
+                productions = self.get('productions');
 
             S.each(productions, function (production) {
-                var symbol = production.get("symbol"),
+                var symbol = production.get('symbol'),
                     nonTerminal = nonTerminals[symbol];
 
                 if (!nonTerminal) {
@@ -132,9 +133,9 @@ var  logger = S.getLogger('s/kison');
                     });
                 }
 
-                nonTerminal.get("productions").push(production);
+                nonTerminal.get('productions').push(production);
 
-                S.each(production.get("handles"), function (handle) {
+                S.each(production.get('handles'), function (handle) {
                     if (!terminals[handle] && !nonTerminals[handle]) {
                         nonTerminals[handle] = new NonTerminal({
                             symbol: handle
@@ -153,7 +154,7 @@ var  logger = S.getLogger('s/kison');
                 t,
                 production,
                 productions,
-                nonTerminals = self.get("nonTerminals"),
+                nonTerminals = self.get('nonTerminals'),
                 cont = true;
 
             // loop until no further changes have been made
@@ -163,16 +164,16 @@ var  logger = S.getLogger('s/kison');
                 // S -> T
                 // T -> t
                 // check if each production is null able
-                S.each(self.get("productions"), function (production) {
-                    if (!production.get("nullable")) {
-                        rhs = production.get("rhs");
-                        for (i = 0, n = 0; t = rhs[i]; ++i) {
+                S.each(self.get('productions'), function (production) {
+                    if (!production.get('nullable')) {
+                        rhs = production.get('rhs');
+                        for (i = 0, n = 0; (t = rhs[i]); ++i) {
                             if (self.isNullable(t)) {
                                 n++;
                             }
                         }
                         if (n === i) { // production is null able if all tokens are null able
-                            production.set("nullable", cont = true);
+                            production.set('nullable', cont = true);
                         }
                     }
                 });
@@ -180,11 +181,11 @@ var  logger = S.getLogger('s/kison');
                 //check if each symbol is null able
                 for (symbol in nonTerminals) {
 
-                    if (!nonTerminals[symbol].get("nullable")) {
-                        productions = nonTerminals[symbol].get("productions");
-                        for (i = 0; production = productions[i]; i++) {
-                            if (production.get("nullable")) {
-                                nonTerminals[symbol].set("nullable", cont = true);
+                    if (!nonTerminals[symbol].get('nullable')) {
+                        productions = nonTerminals[symbol].get('productions');
+                        for (i = 0; (production = productions[i]); i++) {
+                            if (production.get('nullable')) {
+                                nonTerminals[symbol].set('nullable', cont = true);
                                 break;
                             }
                         }
@@ -196,10 +197,10 @@ var  logger = S.getLogger('s/kison');
 
         isNullable: function (symbol) {
             var self = this,
-                nonTerminals = self.get("nonTerminals");
+                nonTerminals = self.get('nonTerminals');
             // rhs
             if (symbol instanceof Array) {
-                for (var i = 0, t; t = symbol[i]; ++i) {
+                for (var i = 0, t; (t = symbol[i]); ++i) {
                     if (!self.isNullable(t)) {
                         return false;
                     }
@@ -210,7 +211,7 @@ var  logger = S.getLogger('s/kison');
                 return false;
                 // non terminal
             } else {
-                return nonTerminals[symbol].get("nullable");
+                return nonTerminals[symbol].get('nullable');
             }
         },
 
@@ -219,17 +220,18 @@ var  logger = S.getLogger('s/kison');
                 firsts = {},
                 t,
                 i,
-                nonTerminals = self.get("nonTerminals");
+                nonTerminals = self.get('nonTerminals');
             // rhs
             if (symbol instanceof Array) {
-                for (i = 0; t = symbol[i]; ++i) {
+                for (i = 0; (t = symbol[i]); ++i) {
                     if (!nonTerminals[t]) {
                         firsts[t] = 1;
                     } else {
-                        mix(firsts, nonTerminals[t].get("firsts"));
+                        mix(firsts, nonTerminals[t].get('firsts'));
                     }
-                    if (!self.isNullable(t))
+                    if (!self.isNullable(t)) {
                         break;
+                    }
                 }
                 return firsts;
                 // terminal
@@ -237,15 +239,14 @@ var  logger = S.getLogger('s/kison');
                 return [symbol];
                 // non terminal
             } else {
-                return nonTerminals[symbol].get("firsts");
+                return nonTerminals[symbol].get('firsts');
             }
         },
 
         buildFirsts: function () {
             var self = this,
                 nonTerminal,
-                productions = self.get("productions"),
-                nonTerminals = self.get("nonTerminals"),
+                nonTerminals = self.get('nonTerminals'),
                 cont = true,
                 symbol, firsts;
 
@@ -259,10 +260,10 @@ var  logger = S.getLogger('s/kison');
 
                 // S -> S y
                 // S -> t
-                S.each(self.get("productions"), function (production) {
-                    var firsts = self.findFirst(production.get("rhs"));
-                    if (setSize(firsts) !== setSize(production.get("firsts"))) {
-                        production.set("firsts", firsts);
+                S.each(self.get('productions'), function (production) {
+                    var firsts = self.findFirst(production.get('rhs'));
+                    if (setSize(firsts) !== setSize(production.get('firsts'))) {
+                        production.set('firsts', firsts);
                         cont = true;
                     }
                 });
@@ -271,11 +272,11 @@ var  logger = S.getLogger('s/kison');
 
                     nonTerminal = nonTerminals[symbol];
                     firsts = {};
-                    S.each(nonTerminal.get("productions"), function (production) {
-                        mix(firsts, production.get("firsts"));
+                    S.each(nonTerminal.get('productions'), function (production) {
+                        mix(firsts, production.get('firsts'));
                     });
-                    if (setSize(firsts) !== setSize(nonTerminal.get("firsts"))) {
-                        nonTerminal.set("firsts", firsts);
+                    if (setSize(firsts) !== setSize(nonTerminal.get('firsts'))) {
+                        nonTerminal.set('firsts', firsts);
                         cont = true;
                     }
 
@@ -285,19 +286,20 @@ var  logger = S.getLogger('s/kison');
 
         closure: function (itemSet) {
             var self = this,
-                items = itemSet.get("items"),
-                productions = self.get("productions"),
+                items = itemSet.get('items'),
+                productions = self.get('productions'),
                 cont = 1;
 
             while (cont) {
                 cont = false;
+
                 S.each(items, function (item) {
 
-                    var dotPosition = item.get("dotPosition"),
-                        production = item.get("production"),
-                        rhs = production.get("rhs"),
+                    var dotPosition = item.get('dotPosition'),
+                        production = item.get('production'),
+                        rhs = production.get('rhs'),
                         dotSymbol = rhs[dotPosition],
-                        lookAhead = item.get("lookAhead"),
+                        lookAhead = item.get('lookAhead'),
                         finalFirsts = {};
 
                     S.each(lookAhead, function (_, ahead) {
@@ -307,7 +309,7 @@ var  logger = S.getLogger('s/kison');
                     });
 
                     S.each(productions, function (p2) {
-                        if (p2.get("symbol") == dotSymbol) {
+                        if (p2.get('symbol') === dotSymbol) {
 
                             var newItem = new Item({
                                     production: p2
@@ -323,7 +325,7 @@ var  logger = S.getLogger('s/kison');
                                 itemIndex = itemSet.findItemIndex(newItem, true),
                                 findItem;
 
-                            if (itemIndex != -1) {
+                            if (itemIndex !== -1) {
                                 findItem = itemSet.getItemAt(itemIndex);
                                 cont = cont || (!!findItem.addLookAhead(finalFirsts));
                             } else {
@@ -343,23 +345,23 @@ var  logger = S.getLogger('s/kison');
 
         gotos: function (i, x) {
             var j = new ItemSet(),
-                iItems = i.get("items");
+                iItems = i.get('items');
             S.each(iItems, function (item) {
-                var production = item.get("production"),
-                    dotPosition = item.get("dotPosition"),
-                    markSymbol = production.get("rhs")[dotPosition];
-                if (markSymbol == x) {
+                var production = item.get('production'),
+                    dotPosition = item.get('dotPosition'),
+                    markSymbol = production.get('rhs')[dotPosition];
+                if (markSymbol === x) {
                     var newItem = new Item({
                             production: production,
                             dotPosition: dotPosition + 1
                         }),
                         itemIndex = j.findItemIndex(newItem, true), findItem;
 
-                    if (itemIndex != -1) {
+                    if (itemIndex !== -1) {
                         findItem = j.getItemAt(itemIndex);
-                        findItem.addLookAhead(item.get("lookAhead"));
+                        findItem.addLookAhead(item.get('lookAhead'));
                     } else {
-                        newItem.addLookAhead(item.get("lookAhead"));
+                        newItem.addLookAhead(item.get('lookAhead'));
                         j.addItem(newItem);
                     }
                 }
@@ -368,7 +370,7 @@ var  logger = S.getLogger('s/kison');
         },
 
         findItemSetIndex: function (itemSet) {
-            var itemSets = this.get("itemSets"), i;
+            var itemSets = this.get('itemSets'), i;
             for (i = 0; i < itemSets.length; i++) {
                 if (itemSets[i].equals(itemSet)) {
                     return i;
@@ -382,9 +384,9 @@ var  logger = S.getLogger('s/kison');
         buildItemSet: function () {
             var self = this,
                 lexer = self.lexer,
-                itemSets = self.get("itemSets"),
+                itemSets = self.get('itemSets'),
                 lookAheadTmp = {},
-                productions = self.get("productions");
+                productions = self.get('productions');
 
             lookAheadTmp[lexer.mapSymbol(END_TAG)] = 1;
 
@@ -401,7 +403,7 @@ var  logger = S.getLogger('s/kison');
             itemSets.push(initItemSet);
 
             var condition = true,
-                symbols = S.merge(self.get("terminals"), self.get("nonTerminals"));
+                symbols = S.merge(self.get('terminals'), self.get('nonTerminals'));
 
             delete  symbols[lexer.mapSymbol(END_TAG)];
 
@@ -424,7 +426,7 @@ var  logger = S.getLogger('s/kison');
 
                         itemSet.__cache[symbol] = 1;
 
-                        if (itemSetNew.size() == 0) {
+                        if (itemSetNew.size() === 0) {
                             return;
                         }
 
@@ -437,16 +439,16 @@ var  logger = S.getLogger('s/kison');
                             condition = true;
                         }
 
-                        itemSet.get("gotos")[symbol] = itemSetNew;
+                        itemSet.get('gotos')[symbol] = itemSetNew;
                         itemSetNew.addReverseGoto(symbol, itemSet);
-                    })
+                    });
                 });
 
             }
         },
 
         buildLalrItemSets: function () {
-            var itemSets = this.get("itemSets"),
+            var itemSets = this.get('itemSets'),
                 i, j, one, two;
 
             for (i = 0; i < itemSets.length; i++) {
@@ -455,22 +457,22 @@ var  logger = S.getLogger('s/kison');
                     two = itemSets[j];
                     if (one.equals(two, true)) {
 
-                        for (var k = 0; k < one.get("items").length; k++) {
-                            one.get("items")[k]
-                                .addLookAhead(two.get("items")[k]
-                                    .get("lookAhead"));
+                        for (var k = 0; k < one.get('items').length; k++) {
+                            one.get('items')[k]
+                                .addLookAhead(two.get('items')[k]
+                                    .get('lookAhead'));
                         }
 
-                        var oneGotos = one.get("gotos");
+                        var oneGotos = one.get('gotos');
 
-                        S.each(two.get("gotos"), function (item, symbol) {
+                        S.each(two.get('gotos'), function (item, symbol) {
                             oneGotos[symbol] = item;
                             item.addReverseGoto(symbol, one);
                         });
 
-                        S.each(two.get("reverseGotos"), function (items, symbol) {
+                        S.each(two.get('reverseGotos'), function (items, symbol) {
                             S.each(items, function (item) {
-                                item.get("gotos")[symbol] = one;
+                                item.get('gotos')[symbol] = one;
                                 one.addReverseGoto(symbol, item);
                             });
                         });
@@ -484,9 +486,9 @@ var  logger = S.getLogger('s/kison');
         buildTable: function () {
             var self = this,
                 lexer = self.lexer,
-                table = self.get("table"),
-                itemSets = self.get("itemSets"),
-                productions = self.get("productions"),
+                table = self.get('table'),
+                itemSets = self.get('itemSets'),
+                productions = self.get('productions'),
                 mappedStartTag = lexer.mapSymbol(START_TAG),
                 mappedEndTag = lexer.mapSymbol(END_TAG),
                 gotos = {},
@@ -498,23 +500,23 @@ var  logger = S.getLogger('s/kison');
 
             table.gotos = gotos;
             table.action = action;
-            nonTerminals = self.get("nonTerminals");
+            nonTerminals = self.get('nonTerminals');
 
             for (i = 0; i < itemSets.length; i++) {
 
                 itemSet = itemSets[i];
 
-                S.each(itemSet.get("items"), function (item) {
-                    var production = item.get("production");
+                S.each(itemSet.get('items'), function (item) {
+                    var production = item.get('production');
                     var val;
-                    if (item.get("dotPosition") == production.get("rhs").length) {
-                        if (production.get("symbol") == mappedStartTag) {
-                            if (item.get("lookAhead")[mappedEndTag]) {
+                    if (item.get('dotPosition') === production.get('rhs').length) {
+                        if (production.get('symbol') === mappedStartTag) {
+                            if (item.get('lookAhead')[mappedEndTag]) {
                                 action[i] = action[i] || {};
                                 t = action[i][mappedEndTag];
                                 val = [];
                                 val[GrammarConst.TYPE_INDEX] = GrammarConst.ACCEPT_TYPE;
-                                if (t && t.toString() != val.toString()) {
+                                if (t && t.toString() !== val.toString()) {
                                     logger.debug(new Array(29).join('*'));
                                     logger.debug('***** conflict in reduce: action already defined ->',
                                         'warn');
@@ -533,12 +535,12 @@ var  logger = S.getLogger('s/kison');
                             // 1+ 2*3
                             // 2 -> f, f 's lookahead contains *
                             // f !-> e, e 's lookahead does not contain *
-                            S.each(item.get("lookAhead"), function (_, l) {
+                            S.each(item.get('lookAhead'), function (_, l) {
                                 t = action[i][l];
                                 val = [];
                                 val[GrammarConst.TYPE_INDEX] = GrammarConst.REDUCE_TYPE;
                                 val[GrammarConst.PRODUCTION_INDEX] = S.indexOf(production, productions);
-                                if (t && t.toString() != val.toString()) {
+                                if (t && t.toString() !== val.toString()) {
                                     logger.debug(new Array(29).join('*'));
                                     logger.debug('conflict in reduce: action already defined ->',
                                         'warn');
@@ -556,7 +558,7 @@ var  logger = S.getLogger('s/kison');
                 });
 
                 // shift over reduce
-                S.each(itemSet.get("gotos"), function (anotherItemSet, symbol) {
+                S.each(itemSet.get('gotos'), function (anotherItemSet, symbol) {
                     var val;
                     if (!nonTerminals[symbol]) {
                         action[i] = action[i] || {};
@@ -564,7 +566,7 @@ var  logger = S.getLogger('s/kison');
                         val[GrammarConst.TYPE_INDEX] = GrammarConst.SHIFT_TYPE;
                         val[GrammarConst.TO_INDEX] = indexOf(anotherItemSet, itemSets);
                         t = action[i][symbol];
-                        if (t && t.toString() != val.toString()) {
+                        if (t && t.toString() !== val.toString()) {
                             logger.debug(new Array(29).join('*'));
                             logger.debug('conflict in shift: action already defined ->',
                                 'warn');
@@ -584,7 +586,7 @@ var  logger = S.getLogger('s/kison');
                         gotos[i] = gotos[i] || {};
                         t = gotos[i][symbol];
                         val = indexOf(anotherItemSet, itemSets);
-                        if (t && val != t) {
+                        if (t && val !== t) {
                             logger.debug(new Array(29).join('*'));
                             logger.debug('conflict in shift: goto already defined ->',
                                 'warn');
@@ -608,43 +610,43 @@ var  logger = S.getLogger('s/kison');
 
         visualizeTable: function () {
             var self = this,
-                table = self.get("table"),
+                table = self.get('table'),
                 gotos = table.gotos,
                 action = table.action,
-                productions = self.get("productions"),
+                productions = self.get('productions'),
                 ret = [];
 
-            S.each(self.get("itemSets"), function (itemSet, i) {
-                ret.push(new Array(70).join("*") + " itemSet : " + i);
+            S.each(self.get('itemSets'), function (itemSet, i) {
+                ret.push(new Array(70).join('*') + ' itemSet : ' + i);
                 ret.push(itemSet.toString());
-                ret.push("");
+                ret.push('');
             });
 
-            ret.push("");
+            ret.push('');
 
-            ret.push(new Array(70).join("*") + " table : ");
+            ret.push(new Array(70).join('*') + ' table : ');
 
             S.each(action, function (av, index) {
                 S.each(av, function (v, s) {
                     var str, type = v[GrammarConst.TYPE_INDEX];
-                    if (type == GrammarConst.ACCEPT_TYPE) {
-                        str = "acc"
-                    } else if (type == GrammarConst.REDUCE_TYPE) {
+                    if (type === GrammarConst.ACCEPT_TYPE) {
+                        str = 'acc';
+                    } else if (type === GrammarConst.REDUCE_TYPE) {
                         var production = productions[v[GrammarConst.PRODUCTION_INDEX]];
-                        str = "r, " + production.get("symbol") + "=" +
-                            production.get("rhs").join(" ");
-                    } else if (type == GrammarConst.SHIFT_TYPE) {
-                        str = "s, " + v[GrammarConst.TO_INDEX];
+                        str = 'r, ' + production.get('symbol') + '=' +
+                            production.get('rhs').join(' ');
+                    } else if (type === GrammarConst.SHIFT_TYPE) {
+                        str = 's, ' + v[GrammarConst.TO_INDEX];
                     }
-                    ret.push("action[" + index + "]" + "[" + s + "] = " + str);
+                    ret.push('action[' + index + ']' + '[' + s + '] = ' + str);
                 });
             });
 
-            ret.push("");
+            ret.push('');
 
             S.each(gotos, function (sv, index) {
                 S.each(sv, function (v, s) {
-                    ret.push("goto[" + index + "]" + "[" + s + "] = " + v);
+                    ret.push('goto[' + index + ']' + '[' + s + '] = ' + v);
                 });
             });
 
@@ -655,16 +657,16 @@ var  logger = S.getLogger('s/kison');
             cfg = cfg || {};
 
             var self = this,
-                table = self.get("table"),
-                lexer = self.get("lexer"),
+                table = self.get('table'),
+                lexer = self.get('lexer'),
                 lexerCode = lexer.genCode(cfg);
 
             self.build();
 
             var productions = [];
 
-            S.each(self.get("productions"), function (p) {
-                var action = p.get("action"),
+            S.each(self.get('productions'), function (p) {
+                var action = p.get('action'),
                     ret = [p.get('symbol'), p.get('rhs')];
                 if (action) {
                     ret.push(action);
@@ -674,26 +676,26 @@ var  logger = S.getLogger('s/kison');
 
             var code = [];
 
-            code.push("/* Generated by kison from KISSY */");
+            code.push('/* Generated by kison from KISSY */');
 
-            code.push("var parser = {}," +
-                "S = KISSY," +
-                "GrammarConst = " + serializeObject(GrammarConst) +
-                ";");
+            code.push('var parser = {},' +
+                'S = KISSY,' +
+                'GrammarConst = ' + serializeObject(GrammarConst) +
+                ';');
 
             code.push(lexerCode);
 
-            code.push("parser.lexer = lexer;");
+            code.push('parser.lexer = lexer;');
 
             if (cfg.compressSymbol) {
-                code.push("lexer.symbolMap = " + serializeObject(lexer.symbolMap) + ";");
+                code.push('lexer.symbolMap = ' + serializeObject(lexer.symbolMap) + ';');
             }
 
-            code.push('parser.productions = ' + serializeObject(productions) + ";");
-            code.push("parser.table = " + serializeObject(table) + ";");
-            code.push("parser.parse = " + parse.toString() + ";");
-            code.push("return parser;");
-            return code.join("\n");
+            code.push('parser.productions = ' + serializeObject(productions) + ';');
+            code.push('parser.table = ' + serializeObject(table) + ';');
+            code.push('parser.parse = ' + parse.toString() + ';');
+            code.push('return parser;');
+            return code.join('\n');
         }
 
     }, {
@@ -751,7 +753,7 @@ var  logger = S.getLogger('s/kison');
             }
 
             if (!symbol) {
-                S.log("it is not a valid input: " + input, 'error');
+                S.log('it is not a valid input: ' + input, 'error');
                 return false;
             }
 
@@ -765,9 +767,9 @@ var  logger = S.getLogger('s/kison');
                         expected.push(self.lexer.mapReverseSymbol(symbol));
                     });
                 }
-                error = "Syntax error at line " + lexer.lineNumber +
-                    ":\n" + lexer.showDebugInfo() +
-                    "\n" + "expect " + expected.join(", ");
+                error = 'Syntax error at line ' + lexer.lineNumber +
+                    ':\n' + lexer.showDebugInfo() +
+                    '\n' + 'expect ' + expected.join(', ');
                 S.error(error);
                 return false;
             }
@@ -793,13 +795,13 @@ var  logger = S.getLogger('s/kison');
                         reducedRhs = production.rhs || production[1],
                         len = reducedRhs.length,
                         i = 0,
-                        ret = undefined,
+                        ret,
                         $$ = valueStack[valueStack.length - len]; // default to $$ = $1
 
                     self.$$ = $$;
 
                     for (; i < len; i++) {
-                        self["$" + (len - i)] = valueStack[valueStack.length - 1 - i];
+                        self['$' + (len - i)] = valueStack[valueStack.length - 1 - i];
                     }
 
                     if (reducedAction) {

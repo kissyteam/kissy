@@ -47,7 +47,7 @@ KISSY.add(function (S, Editor) {
 
 
         it("nodeName works", function () {
-            expect(Dom.nodeName(Dom.create("<div>"))).toBe("div");
+            expect(Dom.nodeName(Dom.create("<div>"))).toBe('div');
         });
 
         it("_4e_isIdentical works", function () {

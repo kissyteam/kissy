@@ -66,7 +66,7 @@ KISSY.add(function (S, require) {
             var ret = getData(color);
             if (ret === undefined) {
                 if (!frag) {
-                    frag = document.createElement("textarea");
+                    frag = document.createElement('textarea');
                     frag.style.display = "none";
                     Dom.prepend(frag, document.body);
                 }

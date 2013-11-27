@@ -364,7 +364,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/smiley.js'].lineData[31]++;
   var self = this;
   _$jscoverage['/smiley.js'].lineData[32]++;
-  self.on("blur", function() {
+  self.on('blur', function() {
   _$jscoverage['/smiley.js'].functionData[4]++;
   _$jscoverage['/smiley.js'].lineData[34]++;
   setTimeout(function() {
@@ -392,7 +392,7 @@ KISSY.add(function(S, require) {
   zIndex: Editor.baseZIndex(Editor.ZIndexManager.POPUP_MENU), 
   mask: false}).render();
       _$jscoverage['/smiley.js'].lineData[54]++;
-      smiley.get("el").on("click", function(ev) {
+      smiley.get('el').on("click", function(ev) {
   _$jscoverage['/smiley.js'].functionData[7]++;
   _$jscoverage['/smiley.js'].lineData[55]++;
   var t = new S.Node(ev.target), icon;
@@ -405,7 +405,7 @@ KISSY.add(function(S, require) {
   }
 });
       _$jscoverage['/smiley.js'].lineData[66]++;
-      smiley.on("hide", function() {
+      smiley.on('hide', function() {
   _$jscoverage['/smiley.js'].functionData[8]++;
   _$jscoverage['/smiley.js'].lineData[67]++;
   self.set("checked", false);
@@ -413,7 +413,7 @@ KISSY.add(function(S, require) {
     }
     _$jscoverage['/smiley.js'].lineData[70]++;
     smiley.set("align", {
-  node: this.get("el"), 
+  node: this.get('el'),
   points: ['bl', 'tl'],
   overflow: {
   adjustX: 1, 

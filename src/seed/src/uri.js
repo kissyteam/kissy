@@ -290,7 +290,7 @@
     function Uri(uriStr) {
 
         if (uriStr instanceof  Uri) {
-            return uriStr['clone']();
+            return uriStr.clone();
         }
 
         var components, self = this;

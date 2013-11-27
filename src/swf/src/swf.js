@@ -429,7 +429,7 @@ KISSY.add(function (S, require) {
 
     function removeObjectInIE(obj) {
         for (var i in obj) {
-            if (typeof obj[i] == "function") {
+            if (typeof obj[i] == 'function') {
                 obj[i] = null;
             }
         }
@@ -533,7 +533,7 @@ KISSY.add(function (S, require) {
 
     /*
      将普通对象转换为 flashvars
-     eg: {a: 1, b: { x: 2, z: 's=1&c=2' }} => a=1&b=encode({"x":2,"z":"s%3D1%26c%3D2"})
+     eg: {a: 1, b: { x: 2, z: 's=1&c=2' }} => a=1&b=encode({'x':2,"z":"s%3D1%26c%3D2"})
      */
     function toFlashVars(obj) {
         var arr = [],

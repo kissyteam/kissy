@@ -9,10 +9,9 @@ KISSY.add(function (S, require) {
     var Manager = require('component/manager');
     var Render = require('./control/render');
     var ie = S.UA.ieMode,
-        undefined = undefined,
         Features = S.Features,
         Gesture = Node.Gesture,
-        isTouchGestureSupported=Features.isTouchGestureSupported(),
+        isTouchGestureSupported = Features.isTouchGestureSupported(),
         isTouchEventSupported = Features.isTouchEventSupported();
 
     /**
@@ -43,7 +42,7 @@ KISSY.add(function (S, require) {
                 var self = this,
                     Render = self.get('xrender'),
                     view = self.get('view'),
-                    id = self.get("id"),
+                    id = self.get('id'),
                     el;
                 // initialize view
                 // allow custom view instance
@@ -56,7 +55,7 @@ KISSY.add(function (S, require) {
                 }
                 view.create();
                 el = view.getKeyEventTarget();
-                if (!self.get("allowTextSelection")) {
+                if (!self.get('allowTextSelection')) {
                     el.unselectable();
                 }
                 // after retrieve id from srcNode
@@ -79,18 +78,18 @@ KISSY.add(function (S, require) {
                 if (self.get('focusable')) {
                     // remove smart outline in ie
                     // set outline in style for other standard browser
-                    el.on("focus", self.handleFocus, self)
-                        .on("blur", self.handleBlur, self)
-                        .on("keydown", self.handleKeydown, self);
+                    el.on('focus', self.handleFocus, self)
+                        .on('blur', self.handleBlur, self)
+                        .on('keydown', self.handleKeydown, self);
                 }
 
                 if (self.get('handleMouseEvents')) {
                     el = self.$el;
 
                     if (!isTouchEventSupported) {
-                        el.on("mouseenter", self.handleMouseEnter, self)
-                            .on("mouseleave", self.handleMouseLeave, self)
-                            .on("contextmenu", self.handleContextMenu, self)
+                        el.on('mouseenter', self.handleMouseEnter, self)
+                            .on('mouseleave', self.handleMouseLeave, self)
+                            .on('contextmenu', self.handleContextMenu, self);
                     }
 
                     el.on(Gesture.start, self.handleMouseDown, self)
@@ -104,7 +103,7 @@ KISSY.add(function (S, require) {
                     // click quickly only trigger click and dblclick in ie<9
                     // others click click dblclick
                     if (ie < 9) {
-                        el.on("dblclick", self.handleDblClick, self);
+                        el.on('dblclick', self.handleDblClick, self);
                     }
                 }
             },
@@ -114,7 +113,7 @@ KISSY.add(function (S, require) {
                 self.fire('beforeSyncUI');
                 self.syncUI();
                 self.view.sync();
-                self.__callPluginsMethod("pluginSyncUI");
+                self.__callPluginsMethod('pluginSyncUI');
                 self.fire('afterSyncUI');
             },
 
@@ -129,7 +128,7 @@ KISSY.add(function (S, require) {
                 } else {
                     // force to move focus if just this.set('focused',false);
                     // do not changed focus if changed by other component focus
-                    if (target.ownerDocument.activeElement == target) {
+                    if (target.ownerDocument.activeElement === target) {
                         target.ownerDocument.body.focus();
                     }
                 }
@@ -149,7 +148,7 @@ KISSY.add(function (S, require) {
 
             _onSetVisible: function (v) {
                 // do not fire event at render phrase
-                this.fire(v ? "show" : "hide");
+                this.fire(v ? 'show' : 'hide');
             },
 
             /**
@@ -221,7 +220,7 @@ KISSY.add(function (S, require) {
              * @param {KISSY.Event.DomEvent.Object} ev Dom event to handle.
              */
             handleMouseEnterInternal: function (ev) {
-                this.set("highlighted", !!ev);
+                this.set('highlighted', !!ev);
             },
 
             handleMouseLeave: function (ev) {
@@ -237,8 +236,8 @@ KISSY.add(function (S, require) {
              */
             handleMouseLeaveInternal: function (ev) {
                 var self = this;
-                self.set("active", false);
-                self.set("highlighted", !ev);
+                self.set('active', false);
+                self.set('highlighted', !ev);
             },
 
             handleMouseDown: function (ev) {
@@ -258,22 +257,22 @@ KISSY.add(function (S, require) {
             handleMouseDownInternal: function (ev) {
                 var self = this,
                     n,
-                    isMouseActionButton = ev['which'] == 1;
+                    isMouseActionButton = ev.which === 1;
                 if (isMouseActionButton || isTouchGestureSupported) {
-                    if (self.get("activeable")) {
-                        self.set("active", true);
+                    if (self.get('activeable')) {
+                        self.set('active', true);
                     }
-                    if (self.get("focusable")) {
+                    if (self.get('focusable')) {
                         self.focus();
                     }
-                    if (!self.get("allowTextSelection")) {
+                    if (!self.get('allowTextSelection')) {
                         // firefox /chrome/ie9/i10 不会引起焦点转移
                         // invalid for ie10 buggy?
                         n = ev.target.nodeName;
                         n = n && n.toLowerCase();
                         // do not prevent focus when click on editable element
-                        if (n != 'input' && n != "textarea") {
-                            ev['preventDefault']();
+                        if (n !== 'input' && n !== 'textarea') {
+                            ev.preventDefault();
                         }
                     }
                 }
@@ -295,8 +294,8 @@ KISSY.add(function (S, require) {
             handleMouseUpInternal: function (ev) {
                 var self = this;
                 // 左键
-                if (self.get("active") && (ev['which'] == 1 || isTouchGestureSupported)) {
-                    self.set("active", false);
+                if (self.get('active') && (ev.which === 1 || isTouchGestureSupported)) {
+                    self.set('active', false);
                 }
             },
 
@@ -309,9 +308,8 @@ KISSY.add(function (S, require) {
             /**
              * Handles context menu.
              * @protected
-             * @param {KISSY.Event.DomEvent.Object} ev Dom event to handle.
              */
-            handleContextMenuInternal: function (ev) {
+            handleContextMenuInternal: function () {
             },
 
             handleFocus: function () {
@@ -326,7 +324,7 @@ KISSY.add(function (S, require) {
              */
             handleFocusInternal: function () {
                 this.focus();
-                this.fire("focus");
+                this.fire('focus');
             },
 
             handleBlur: function () {
@@ -341,13 +339,13 @@ KISSY.add(function (S, require) {
              */
             handleBlurInternal: function () {
                 this.blur();
-                this.fire("blur");
+                this.fire('blur');
             },
 
             handleKeydown: function (ev) {
                 var self = this;
                 if (!this.get('disabled') && self.handleKeyDownInternal(ev)) {
-                    ev['halt']();
+                    ev.halt();
                     return true;
                 }
                 return undefined;
@@ -359,7 +357,7 @@ KISSY.add(function (S, require) {
              * @param {KISSY.Event.DomEvent.Object} ev Dom event to handle.
              */
             handleKeyDownInternal: function (ev) {
-                if (ev['keyCode'] == Node.KeyCode.ENTER) {
+                if (ev.keyCode === Node.KeyCode.ENTER) {
                     return this.handleClickInternal(ev);
                 }
                 return undefined;
@@ -374,9 +372,8 @@ KISSY.add(function (S, require) {
             /**
              * Performs the appropriate action when this component is activated by the user.
              * @protected
-             * @param {KISSY.Event.DomEvent.Object} ev Dom event to handle.
              */
-            handleClickInternal: function (ev) {
+            handleClickInternal: function () {
                 // ie11 does not focus right
                 var self = this;
                 if (self.get('focusable')) {
@@ -466,7 +463,7 @@ KISSY.add(function (S, require) {
                     view: 1,
                     value: [],
                     setter: function (v) {
-                        if (typeof v == 'string') {
+                        if (typeof v === 'string') {
                             v = v.split(/\s+/);
                         }
                         return v || [];
@@ -568,13 +565,17 @@ KISSY.add(function (S, require) {
                         var self = this,
                             xy = S.makeArray(v);
                         if (xy.length) {
-                            xy[0] && self.set("x", xy[0]);
-                            xy[1] && self.set("y", xy[1]);
+                            if (xy[0] !== undefined) {
+                                self.set('x', xy[0]);
+                            }
+                            if (xy[1] !== undefined) {
+                                self.set('y', xy[1]);
+                            }
                         }
                         return v;
                     },
                     getter: function () {
-                        return [this.get("x"), this.get("y")];
+                        return [this.get('x'), this.get('y')];
                     }
                 },
 
@@ -790,7 +791,7 @@ KISSY.add(function (S, require) {
                  */
                 parent: {
                     setter: function (p, prev) {
-                        if (prev = this.get('parent')) {
+                        if ((prev = this.get('parent'))) {
                             this.removeTarget(prev);
                         }
                         if (p) {
@@ -868,6 +869,7 @@ KISSY.add(function (S, require) {
      *      })
      */
     Control.extend = function extend(extensions, px, sx) {
+        /*jshint unused: false*/
         var args = S.makeArray(arguments),
             baseClass = this,
             xclass,
@@ -875,7 +877,7 @@ KISSY.add(function (S, require) {
             argsLen = args.length,
             last = args[argsLen - 1];
 
-        if (xclass = last.xclass) {
+        if ((xclass = last.xclass)) {
             last.name = xclass;
         }
 

@@ -99,7 +99,7 @@
                  */
                 node: function (drag) {
                     var n = $(drag.get("dragNode").clone(true));
-                    n.attr("id", S.guid("ks-dd-proxy"));
+                    n.attr('id', S.guid("ks-dd-proxy"));
                     n.css("opacity", 0.2);
                     n.isProxy = 1;
                     return n;
@@ -141,18 +141,18 @@
 
             c1.on("dragenter", function (ev) {
 
-                S.log(ev.drag.get("node").attr("id") + " dragenter "
-                        + ev.drop.get("node").attr("id"));
+                S.log(ev.drag.get("node").attr('id') + " dragenter "
+                        + ev.drop.get("node").attr('id'));
             });
 
             c1.on("dragover", function (ev) {
-                S.log(ev.drag.get("node").attr("id") + " dragover "
-                        + ev.drop.get("node").attr("id"));
+                S.log(ev.drag.get("node").attr('id') + " dragover "
+                        + ev.drop.get("node").attr('id'));
             });
 
             c1.on("dragexit", function (ev) {
-                S.log(ev.drag.get("node").attr("id") + " dragexit "
-                        + ev.drop.get("node").attr("id"));
+                S.log(ev.drag.get("node").attr('id') + " dragexit "
+                        + ev.drop.get("node").attr('id'));
             });
 
             function onhit(ev) {
@@ -170,7 +170,7 @@
 
             DDM.on("dragdropmiss", function (ev) {
                 var node = ev.drag.get("node");
-                S.log(node.attr("id") + " dragdropmiss ");
+                S.log(node.attr('id') + " dragdropmiss ");
                 if (node.isProxy) {
                     var dragNode = ev.drag.get("dragNode");
                     node = node.clone(true).insertBefore(node);
@@ -206,18 +206,18 @@
 
 
             drop.on("dropenter", function (ev) {
-                S.log(ev.drag.get("node").attr("id") + " dropenter "
-                        + ev.drop.get("node").attr("id"));
+                S.log(ev.drag.get("node").attr('id') + " dropenter "
+                        + ev.drop.get("node").attr('id'));
             });
 
             drop.on("dropover", function (ev) {
-                S.log(ev.drag.get("node").attr("id") + " dropover "
-                        + ev.drop.get("node").attr("id"));
+                S.log(ev.drag.get("node").attr('id') + " dropover "
+                        + ev.drop.get("node").attr('id'));
             });
 
             drop.on("dropexit", function (ev) {
-                S.log(ev.drag.get("node").attr("id") + " dropexit "
-                        + ev.drop.get("node").attr("id"));
+                S.log(ev.drag.get("node").attr('id') + " dropexit "
+                        + ev.drop.get("node").attr('id'));
             });
 
             drop.on("drophit", onhit);

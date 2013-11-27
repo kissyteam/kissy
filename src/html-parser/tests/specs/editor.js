@@ -227,7 +227,7 @@ KISSY.add(function (S, HtmlParser, UA) {
                 // (#2886)
                 var lastChild = lastNoneSpaceChild(block);
                 if (lastChild) {
-                    if (( fromSource || !UA['ie'] ) &&
+                    if (( fromSource || !UA.ie ) &&
                         lastChild.nodeType == 1 &&
                         lastChild.nodeName == 'br') {
                         block.removeChild(lastChild);
@@ -257,7 +257,7 @@ KISSY.add(function (S, HtmlParser, UA) {
 
                 if (blockNeedsExtension(block)) {
                     //任何浏览器都要加空格！，否则空表格可能间隙太小，不能容下光标
-                    if (UA['ie']) {
+                    if (UA.ie) {
                         block.appendChild(new HtmlParser.Text('\xa0'));
                     } else {
                         //其他浏览器需要加空格??
@@ -286,7 +286,7 @@ KISSY.add(function (S, HtmlParser, UA) {
             var n = new HtmlParser.Parser(before).parse();
 
             n.writeHtml(writer, filter);
-            if (UA['ie']) {
+            if (UA.ie) {
                 expect(writer.getHtml()).toBe("<p>\xa0</p><p>1</p>");
             } else {
                 expect(writer.getHtml()).toBe("<p>&nbsp;<br /></p><p>1</p>");

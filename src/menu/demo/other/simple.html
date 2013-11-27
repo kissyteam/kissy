@@ -147,7 +147,7 @@
 
                     dis.on("click", function () {
                         menu.set('disabled', !!dis[0].checked);
-                        var children = menu.get("children");
+                        var children = menu.get('children');
                         S.each(children, function (child) {
                             child.set('disabled', !!dis[0].checked);
                         });

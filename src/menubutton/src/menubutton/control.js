@@ -46,7 +46,7 @@ KISSY.add(function (S, require) {
                         menu.set('width', menu.get("align").node[0].offsetWidth - borderWidth);
                     }
                     menu.show();
-                    el.attr("aria-haspopup", menu.get('el').attr("id"));
+                    el.attr("aria-haspopup", menu.get('el').attr('id'));
                 }
             }
         },
@@ -80,7 +80,7 @@ KISSY.add(function (S, require) {
                 if (type != "keyup") {
                     return undefined;
                 }
-            } else if (type != "keydown") {
+            } else if (type != 'keydown') {
                 return undefined;
             }
             //转发给 menu 处理

@@ -16,7 +16,7 @@ KISSY.add(function (S, require) {
         renderUI: function () {
             var self = this,
                 alignWithEl = self.get("alignWithEl"),
-                menuButton = self.get("children")[1],
+                menuButton = self.get('children')[1],
                 menu = menuButton.get('menu');
             if (alignWithEl) {
                 menu.get("align").node = self.$el;

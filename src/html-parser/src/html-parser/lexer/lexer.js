@@ -643,7 +643,7 @@ KISSY.add(function (S, require) {
                                 done = true;
                                 break;
                             case '/':
-                                // tagName = "textarea"
+                                // tagName = 'textarea'
                                 // <textarea><div></div></textarea>
                                 /*
                                  8.1.2.6 Restrictions on the contents of raw text and RCDATA elements

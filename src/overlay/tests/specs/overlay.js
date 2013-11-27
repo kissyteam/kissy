@@ -36,21 +36,21 @@ KISSY.add(function (S, Event, UA, Node, Overlay, ResizePlugin) {
 
 //           srcNode 情况下可以了，恰好只能 el
             it("渲染前取不到 el 元素", function () {
-                expect(o.get("el")).toBeUndefined();
+                expect(o.get('el')).toBeUndefined();
                 expect(o.get('content')).toBeFalsy();
             });
 
             it("渲染后可以取到元素", function () {
                 o.render();
-                expect(o.get("el")[0].nodeType).toBe(1);
+                expect(o.get('el')[0].nodeType).toBe(1);
                 expect(o.get('content')).toBe('pre-render');
             });
 
             it("渲染后元素会正确配置", function () {
                 o.render();
-                expect(o.get("el").css("left")).toBe("-9999px");
-                expect(o.get("el").css("top")).toBe("-9999px");
-                expect(o.get("el").css('width')).toBe("400px");
+                expect(o.get('el').css("left")).toBe("-9999px");
+                expect(o.get('el').css("top")).toBe("-9999px");
+                expect(o.get('el').css('width')).toBe("400px");
             });
 
             it("对齐居中有效", function () {
@@ -61,13 +61,13 @@ KISSY.add(function (S, Event, UA, Node, Overlay, ResizePlugin) {
 
                 o.show();
 
-                expect(parseInt(o.get("el").css("left")))
+                expect(parseInt(o.get('el').css("left")))
                     .toBeEqual(Math.ceil((Dom.viewportWidth()
-                        - o.get("el").outerWidth()) / 2));
+                        - o.get('el').outerWidth()) / 2));
 
-                expect(parseInt(o.get("el").css("top")))
+                expect(parseInt(o.get('el').css("top")))
                     .toBeEqual(Math.ceil((Dom.viewportHeight()
-                        - o.get("el").outerHeight()) / 2));
+                        - o.get('el').outerHeight()) / 2));
 
             });
 
@@ -76,10 +76,10 @@ KISSY.add(function (S, Event, UA, Node, Overlay, ResizePlugin) {
                 var hideCall = 0,
                     showCall = 0;
 
-                o.on("hide", function () {
+                o.on('hide', function () {
                     hideCall = 1;
                 });
-                o.on("show", function () {
+                o.on('show', function () {
                     showCall = 1;
                 });
 
@@ -109,8 +109,8 @@ KISSY.add(function (S, Event, UA, Node, Overlay, ResizePlugin) {
 
                 o.show();
 
-                expect(o.get("el").css("left")).toBeEqual("100px");
-                expect(Math.ceil(parseFloat(o.get("el").css("top")))).toBeEqual(150);
+                expect(o.get('el').css("left")).toBeEqual("100px");
+                expect(Math.ceil(parseFloat(o.get('el').css("top")))).toBeEqual(150);
 
             });
 
@@ -130,7 +130,7 @@ KISSY.add(function (S, Event, UA, Node, Overlay, ResizePlugin) {
             });
 
             it("渲染前取不到 el 元素", function () {
-                expect(o.get("el")).toBeUndefined();
+                expect(o.get('el')).toBeUndefined();
             });
 
             runs(function () {
@@ -142,9 +142,9 @@ KISSY.add(function (S, Event, UA, Node, Overlay, ResizePlugin) {
             });
 
             it("渲染后元素会正确配置", function () {
-                expect(o.get("el").css("left")).toBe("-9999px");
-                expect(o.get("el").css("top")).toBe("-9999px");
-                expect(o.get("el").css('width')).toBe("400px");
+                expect(o.get('el').css("left")).toBe("-9999px");
+                expect(o.get('el').css("top")).toBe("-9999px");
+                expect(o.get('el').css('width')).toBe("400px");
             });
 
             it("show/hide 事件顺利触发", function () {
@@ -154,10 +154,10 @@ KISSY.add(function (S, Event, UA, Node, Overlay, ResizePlugin) {
 
                 o.show();
 
-                o.on("hide", function () {
+                o.on('hide', function () {
                     hideCall();
                 });
-                o.on("show", function () {
+                o.on('show', function () {
                     showCall();
                 });
 
@@ -174,8 +174,8 @@ KISSY.add(function (S, Event, UA, Node, Overlay, ResizePlugin) {
 
                 o.move(300, 350);
 
-                expect(o.get("el").css("left")).toBeEqual("300px");
-                expect(Math.ceil(parseFloat(o.get("el").css("top")))).toBeEqual(350);
+                expect(o.get('el').css("left")).toBeEqual("300px");
+                expect(Math.ceil(parseFloat(o.get('el').css("top")))).toBeEqual(350);
 
             });
 
@@ -186,8 +186,8 @@ KISSY.add(function (S, Event, UA, Node, Overlay, ResizePlugin) {
                     return;
                 }
 
-                var h = o.get("el").one(".ks-resizable-handler-t"),
-                    height = o.get("el").outerHeight(),
+                var h = o.get('el').one(".ks-resizable-handler-t"),
+                    height = o.get('el').outerHeight(),
                     hxy = h.offset();
 
                 jasmine.simulate(h[0], 'mousedown', {
@@ -225,7 +225,7 @@ KISSY.add(function (S, Event, UA, Node, Overlay, ResizePlugin) {
                 waits(300);
 
                 runs(function () {
-                    var elHeight = o.get("el").outerHeight();
+                    var elHeight = o.get('el').outerHeight();
                     // phantomjs emulation not accurate！
                     if (!S.UA.phantomjs) {
                         expect(elHeight - height).toBeEqual(98);
@@ -255,7 +255,7 @@ KISSY.add(function (S, Event, UA, Node, Overlay, ResizePlugin) {
                     content: "render by javascript"
                 });
                 o.render();
-                expect(div.first().equals(o.get("el"))).toBe(true);
+                expect(div.first().equals(o.get('el'))).toBe(true);
                 o.destroy();
                 expect(div.children().length).toBe(0);
                 div.remove();
@@ -273,7 +273,7 @@ KISSY.add(function (S, Event, UA, Node, Overlay, ResizePlugin) {
                     content: "render by javascript"
                 });
                 o.render();
-                expect(o.get("el").parent().equals($("body"))).toBe(true);
+                expect(o.get('el').parent().equals($("body"))).toBe(true);
                 o.destroy();
                 div.remove();
             });
@@ -293,9 +293,9 @@ KISSY.add(function (S, Event, UA, Node, Overlay, ResizePlugin) {
                     content: "render by javascript"
                 });
                 o.render();
-                expect(o.get("el").next().equals(div)).toBe(true);
+                expect(o.get('el').next().equals(div)).toBe(true);
                 o.destroy();
-                expect(div.prev().equals(o.get("el").next())).toBe(false);
+                expect(div.prev().equals(o.get('el').next())).toBe(false);
                 div.remove();
             });
         });
@@ -318,14 +318,14 @@ KISSY.add(function (S, Event, UA, Node, Overlay, ResizePlugin) {
                 });
                 o.show();
 
-                expect(parseInt(o.get("el").css("left")))
+                expect(parseInt(o.get('el').css("left")))
                     .toBeEqual(Math.ceil((Dom.viewportWidth()
-                        - o.get("el").outerWidth()) / 2));
+                        - o.get('el').outerWidth()) / 2));
 
 
-                expect(parseInt(o.get("el").css("top")))
+                expect(parseInt(o.get('el').css("top")))
                     .toBeEqual(Math.ceil((Dom.viewportHeight()
-                        - o.get("el").outerHeight()) / 2));
+                        - o.get('el').outerHeight()) / 2));
 
                 o.destroy();
 
@@ -354,9 +354,9 @@ KISSY.add(function (S, Event, UA, Node, Overlay, ResizePlugin) {
                 o.center(node);
                 o.show();
 
-                var oel = o.get("el");
+                var oel = o.get('el');
 
-                expect(o.get("y")).toBeEqual(90);
+                expect(o.get('y')).toBeEqual(90);
 
                 expect(parseInt(oel.css("top"))).toBeEqual(90);
 
@@ -364,7 +364,7 @@ KISSY.add(function (S, Event, UA, Node, Overlay, ResizePlugin) {
 
                 o.center(node);
 
-                expect(o.get("y")).toBe(90);
+                expect(o.get('y')).toBe(90);
 
                 expect(parseInt(oel.css("top"))).toBeEqual(110);
 
@@ -382,7 +382,7 @@ KISSY.add(function (S, Event, UA, Node, Overlay, ResizePlugin) {
                     elCls: 'overlay1522'
                 });
                 o.render();
-                expect(o.get("el").css('position')).toBe('absolute');
+                expect(o.get('el').css('position')).toBe('absolute');
                 o.destroy();
             });
 

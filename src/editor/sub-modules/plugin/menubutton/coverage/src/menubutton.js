@@ -322,18 +322,18 @@ KISSY.add(function(S, require) {
   }
   _$jscoverage['/menubutton.js'].lineData[32]++;
   var s = new SelectType(S.mix({
-  render: self.get("toolBarEl"), 
+  render: self.get('toolBarEl'),
   prefixCls: prefixCls}, cfg)).render();
   _$jscoverage['/menubutton.js'].lineData[37]++;
   if (visit5_37_1(cfg.mode == Editor.Mode.WYSIWYG_MODE)) {
     _$jscoverage['/menubutton.js'].lineData[38]++;
-    self.on("wysiwygMode", function() {
+    self.on('wysiwygMode', function() {
   _$jscoverage['/menubutton.js'].functionData[2]++;
   _$jscoverage['/menubutton.js'].lineData[39]++;
   s.set('disabled', false);
 });
     _$jscoverage['/menubutton.js'].lineData[41]++;
-    self.on("sourceMode", function() {
+    self.on('sourceMode', function() {
   _$jscoverage['/menubutton.js'].functionData[3]++;
   _$jscoverage['/menubutton.js'].lineData[42]++;
   s.set('disabled', true);

@@ -330,7 +330,7 @@ function visit4_35_1(result) {
 function visit3_31_1(result) {
   _$jscoverage['/ui.js'].branchData['31'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ui.js'].branchData['29'][1].init(110, 32, 'menu.get && menu.get("children")');
+}_$jscoverage['/ui.js'].branchData['29'][1].init(110, 32, 'menu.get && menu.get('children')');
 function visit2_29_1(result) {
   _$jscoverage['/ui.js'].branchData['29'][1].ranCondition(result);
   return result;
@@ -370,7 +370,7 @@ KISSY.add(function(S, require) {
     return;
   }
   _$jscoverage['/ui.js'].lineData[27]++;
-  var cmdType = self.get("cmdType"), menu = self.get('menu'), children = visit2_29_1(menu.get && menu.get("children"));
+  var cmdType = self.get("cmdType"), menu = self.get('menu'), children = visit2_29_1(menu.get && menu.get('children'));
   _$jscoverage['/ui.js'].lineData[31]++;
   if (visit3_31_1(children)) {
     _$jscoverage['/ui.js'].lineData[34]++;

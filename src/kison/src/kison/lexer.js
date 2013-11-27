@@ -53,10 +53,10 @@ KISSY.add(function (S, require) {
         resetInput: function (input) {
             S.mix(this, {
                 input: input,
-                matched: "",
+                matched: '',
                 stateStack: [Lexer.STATIC.INITIAL],
-                match: "",
-                text: "",
+                match: '',
+                text: '',
                 firstLine: 1,
                 lineNumber: 1,
                 lastLine: 1,
@@ -71,7 +71,7 @@ KISSY.add(function (S, require) {
                 self = this,
                 compressSymbol = cfg.compressSymbol,
                 compressState = cfg.compressLexerState,
-                code = [],
+                code = ['/*jslint quotmark: false*/'],
                 stateMap;
 
             self.symbolId = self.stateId = 0;
@@ -85,11 +85,11 @@ KISSY.add(function (S, require) {
                 stateMap = self.stateMap = {};
             }
 
-            code.push("var Lexer = " + Lexer.toString() + ';');
+            code.push('var Lexer = ' + Lexer.toString() + ';');
 
-            code.push("Lexer.prototype= " + serializeObject(Lexer.prototype, /genCode/) + ";");
+            code.push('Lexer.prototype= ' + serializeObject(Lexer.prototype, /genCode/) + ';');
 
-            code.push("Lexer.STATIC= " + serializeObject(STATIC) + ";");
+            code.push('Lexer.STATIC= ' + serializeObject(STATIC) + ';');
 
             var newCfg = serializeObject({rules: self.rules},
                 (compressState || compressSymbol) ? function (v) {
@@ -119,17 +119,18 @@ KISSY.add(function (S, require) {
                     return undefined;
                 } : 0);
 
-            code.push("var lexer = new Lexer(" + newCfg + ");");
+            code.push('var lexer = new Lexer(' + newCfg + ');');
 
             if (compressState || compressSymbol) {
                 // for grammar
+                /*jslint evil: true*/
                 self.rules = eval('(' + newCfg + ')').rules;
                 if (compressState) {
                     code.push('lexer.stateMap = ' + serializeObject(stateMap) + ';');
                 }
             }
 
-            return code.join("\n");
+            return code.join('\n');
         },
 
         getCurrentRules: function () {
@@ -140,7 +141,7 @@ KISSY.add(function (S, require) {
             S.each(self.rules, function (r) {
                 var state = r.state || r[3];
                 if (!state) {
-                    if (currentState == Lexer.STATIC.INITIAL) {
+                    if (currentState === Lexer.STATIC.INITIAL) {
                         rules.push(r);
                     }
                 } else if (S.inArray(currentState, state)) {
@@ -169,12 +170,12 @@ KISSY.add(function (S, require) {
                 match = self.match,
                 input = self.input;
             matched = matched.slice(0, matched.length - match.length);
-            var past = (matched.length > DEBUG_CONTEXT_LIMIT ? "..." : "") +
-                    matched.slice(-DEBUG_CONTEXT_LIMIT).replace(/\n/, " "),
+            var past = (matched.length > DEBUG_CONTEXT_LIMIT ? '...' : '') +
+                    matched.slice(-DEBUG_CONTEXT_LIMIT).replace(/\n/, ' '),
                 next = match + input;
             next = next.slice(0, DEBUG_CONTEXT_LIMIT) +
-                (next.length > DEBUG_CONTEXT_LIMIT ? "..." : "");
-            return past + next + "\n" + new Array(past.length + 1).join("-") + "^";
+                (next.length > DEBUG_CONTEXT_LIMIT ? '...' : '');
+            return past + next + '\n' + new Array(past.length + 1).join('-') + '^';
         },
 
         mapSymbol: function (t) {
@@ -223,7 +224,7 @@ KISSY.add(function (S, require) {
                 lines,
                 rules = self.getCurrentRules();
 
-            self.match = self.text = "";
+            self.match = self.text = '';
 
             if (!input) {
                 return self.mapSymbol(Lexer.STATIC.END_TAG);
@@ -234,7 +235,7 @@ KISSY.add(function (S, require) {
                 var regexp = rule.regexp || rule[1],
                     token = rule.token || rule[0],
                     action = rule.action || rule[2] || undefined;
-                if (m = input.match(regexp)) {
+                if ((m = input.match(regexp))) {
                     lines = m[0].match(/\n.*/g);
                     if (lines) {
                         self.lineNumber += lines.length;
@@ -258,7 +259,7 @@ KISSY.add(function (S, require) {
                     // matched content utils now
                     self.matched += match;
                     ret = action && action.call(self);
-                    if (ret == undefined) {
+                    if (ret === undefined) {
                         ret = token;
                     } else {
                         ret = self.mapSymbol(ret);
@@ -275,7 +276,7 @@ KISSY.add(function (S, require) {
                 }
             }
 
-            S.error("lex error at line " + self.lineNumber + ":\n" + self.showDebugInfo());
+            S.error('lex error at line ' + self.lineNumber + ':\n' + self.showDebugInfo());
             return undefined;
         }
     };

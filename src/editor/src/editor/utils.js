@@ -106,16 +106,16 @@ KISSY.add(function (S,require) {
             },
 
             sourceDisable: function (editor, plugin) {
-                editor.on("sourceMode", plugin.disable, plugin);
-                editor.on("wysiwygMode", plugin.enable, plugin);
+                editor.on('sourceMode', plugin.disable, plugin);
+                editor.on('wysiwygMode', plugin.enable, plugin);
             },
 
             resetInput: function (inp) {
                 var placeholder = inp.attr("placeholder");
-                if (placeholder && UA['ie']) {
+                if (placeholder && UA.ie) {
                     inp.addClass("ks-editor-input-tip");
                     inp.val(placeholder);
-                } else if (!UA['ie']) {
+                } else if (!UA.ie) {
                     inp.val("");
                 }
             },
@@ -136,16 +136,16 @@ KISSY.add(function (S,require) {
 
             placeholder: function (inp, tip) {
                 inp.attr("placeholder", tip);
-                if (!UA['ie']) {
+                if (!UA.ie) {
                     return;
                 }
-                inp.on("blur", function () {
+                inp.on('blur', function () {
                     if (!S.trim(inp.val())) {
                         inp.addClass("ks-editor-input-tip");
                         inp.val(tip);
                     }
                 });
-                inp.on("focus", function () {
+                inp.on('focus', function () {
                     inp.removeClass("ks-editor-input-tip");
                     if (S.trim(inp.val()) == tip) {
                         inp.val("");
@@ -176,7 +176,7 @@ KISSY.add(function (S,require) {
              * @param el
              */
             preventFocus: function (el) {
-                if (UA['ie']) {
+                if (UA.ie) {
                     //ie 点击按钮不丢失焦点
                     el.unselectable();
                 } else {

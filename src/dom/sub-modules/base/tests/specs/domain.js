@@ -12,7 +12,7 @@ KISSY.add(function (S, Dom) {
         it('getEmptyIframeSrc works', function () {
             var ret = Dom.getEmptyIframeSrc();
             var expected;
-            if (UA['ie'] && Dom.isCustomDomain()) {
+            if (UA.ie && Dom.isCustomDomain()) {
                 expected = 'javascript:void(function(){' + encodeURIComponent(
                     'document.open();' +
                         "document.domain='" +

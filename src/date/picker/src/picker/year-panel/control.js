@@ -3,7 +3,7 @@
  * month select for date picker
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S,require) {
+KISSY.add(function (S, require) {
     var Node = require('node'),
         Control = require('component/control'),
         DecadePanelRender = require('./render'),

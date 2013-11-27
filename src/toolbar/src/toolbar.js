@@ -12,7 +12,7 @@ KISSY.add(function (S, require) {
     var KeyCode = Node.KeyCode;
 
     function getNextEnabledItem(index, direction, self) {
-        var children = self.get("children"),
+        var children = self.get('children'),
             count = 0,
             childrenLength = children.length;
 
@@ -149,7 +149,7 @@ KISSY.add(function (S, require) {
         getNextItemByKeyDown: function (e, current) {
             var self = this,
                 orientation = self.get("orientation"),
-                children = self.get("children"),
+                children = self.get('children'),
                 childIndex = current && S.indexOf(current, children);
 
             if (current) {
@@ -167,7 +167,7 @@ KISSY.add(function (S, require) {
             // the key event, so attempt to handle it here.
             switch (e.keyCode) {
                 case KeyCode.ESC:
-                    self.view.getKeyEventTarget().fire("blur");
+                    self.view.getKeyEventTarget().fire('blur');
                     return true;
 
                 case KeyCode.HOME:
@@ -210,7 +210,7 @@ KISSY.add(function (S, require) {
             }
 
             if (nextHighlightedItem) {
-                nextHighlightedItem.set("highlighted", true);
+                nextHighlightedItem.set('highlighted', true);
             }
 
             return true;

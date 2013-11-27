@@ -116,12 +116,12 @@ KISSY.add(function (S, SWF, Dom) {
                             flashvars: {
                                 name1: 'http://taobao.com/?x=1&z=2',
                                 name2: {
-                                    s: "string",
+                                    s: 'string',
                                     b: false,
                                     n: 1,
                                     url: "http://taobao.com/?x=1&z=2",
                                     cpx: {
-                                        s: "string",
+                                        s: 'string',
                                         b: false,
                                         n: 1,
                                         url: "http://taobao.com/?x=1&z=2"

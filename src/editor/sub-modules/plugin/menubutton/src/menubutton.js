@@ -30,15 +30,15 @@ KISSY.add(function (S, require) {
         }
 
         var s = new SelectType(S.mix({
-            render: self.get("toolBarEl"),
+            render: self.get('toolBarEl'),
             prefixCls: prefixCls
         }, cfg)).render();
 
         if (cfg.mode == Editor.Mode.WYSIWYG_MODE) {
-            self.on("wysiwygMode", function () {
+            self.on('wysiwygMode', function () {
                 s.set('disabled', false);
             });
-            self.on("sourceMode", function () {
+            self.on('sourceMode', function () {
                 s.set('disabled', true);
             });
         }

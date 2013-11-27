@@ -506,7 +506,7 @@ function visit15_197_1(result) {
 function visit14_184_1(result) {
   _$jscoverage['/draft.js'].branchData['184'][1].ranCondition(result);
   return result;
-}_$jscoverage['/draft.js'].branchData['156'][1].init(2798, 30, 'editor.get("textarea")[0].form');
+}_$jscoverage['/draft.js'].branchData['156'][1].init(2798, 30, 'editor.get('textarea')[0].form');
 function visit13_156_1(result) {
   _$jscoverage['/draft.js'].branchData['156'][1].ranCondition(result);
   return result;
@@ -648,7 +648,7 @@ KISSY.add(function(S, require) {
   _init: function() {
   _$jscoverage['/draft.js'].functionData[6]++;
   _$jscoverage['/draft.js'].lineData[87]++;
-  var self = this, editor = self.editor, prefixCls = editor.get('prefixCls'), statusbar = editor.get("statusBarEl"), cfg = this.config;
+  var self = this, editor = self.editor, prefixCls = editor.get('prefixCls'), statusbar = editor.get('statusBarEl'), cfg = this.config;
   _$jscoverage['/draft.js'].lineData[92]++;
   cfg.draft = visit9_92_1(cfg.draft || {});
   _$jscoverage['/draft.js'].lineData[93]++;
@@ -696,12 +696,12 @@ KISSY.add(function(S, require) {
   _$jscoverage['/draft.js'].lineData[151]++;
   addRes.call(self, save);
   _$jscoverage['/draft.js'].lineData[156]++;
-  if (visit13_156_1(editor.get("textarea")[0].form)) {
+  if (visit13_156_1(editor.get('textarea')[0].form)) {
     _$jscoverage['/draft.js'].lineData[157]++;
     (function() {
   _$jscoverage['/draft.js'].functionData[9]++;
   _$jscoverage['/draft.js'].lineData[158]++;
-  var textarea = editor.get("textarea"), form = textarea[0].form;
+  var textarea = editor.get('textarea'), form = textarea[0].form;
   _$jscoverage['/draft.js'].lineData[161]++;
   function saveF() {
     _$jscoverage['/draft.js'].functionData[10]++;
@@ -709,12 +709,12 @@ KISSY.add(function(S, require) {
     self.save(true);
   }
   _$jscoverage['/draft.js'].lineData[165]++;
-  Event.on(form, "submit", saveF);
+  Event.on(form, 'submit', saveF);
   _$jscoverage['/draft.js'].lineData[166]++;
   addRes.call(self, function() {
   _$jscoverage['/draft.js'].functionData[11]++;
   _$jscoverage['/draft.js'].lineData[167]++;
-  Event.remove(form, "submit", saveF);
+  Event.remove(form, 'submit', saveF);
 });
 })();
   }
@@ -755,7 +755,7 @@ KISSY.add(function(S, require) {
   }
 });
     _$jscoverage['/draft.js'].lineData[203]++;
-    help.on("blur", function() {
+    help.on('blur', function() {
   _$jscoverage['/draft.js'].functionData[15]++;
   _$jscoverage['/draft.js'].lineData[204]++;
   visit16_204_1(self.helpPopup && self.helpPopup.hide());
@@ -792,7 +792,7 @@ KISSY.add(function(S, require) {
   zIndex: Editor.baseZIndex(Editor.ZIndexManager.OVERLAY), 
   mask: false}).render();
   _$jscoverage['/draft.js'].lineData[251]++;
-  self.helpPopup.get("el").css("border", "none");
+  self.helpPopup.get('el').css("border", "none");
   _$jscoverage['/draft.js'].lineData[252]++;
   self.helpPopup.arrow = arrow;
 }, 
@@ -805,9 +805,9 @@ KISSY.add(function(S, require) {
   _$jscoverage['/draft.js'].lineData[259]++;
   var off = helpBtn.offset();
   _$jscoverage['/draft.js'].lineData[260]++;
-  win.get("el").offset({
-  left: (off.left - win.get("el").width()) + 17, 
-  top: (off.top - win.get("el").height()) - 7});
+  win.get('el').offset({
+  left: (off.left - win.get('el').width()) + 17,
+  top: (off.top - win.get('el').height()) - 7});
   _$jscoverage['/draft.js'].lineData[264]++;
   arrow.offset({
   left: off.left - 2, 

@@ -132,7 +132,7 @@ KISSY.add(function (S, require) {
                  @ignore
                  @type KISSY.Component.Control
                  */tabs.get("bar"),
-                barCs = bar.get("children"),
+                barCs = bar.get('children'),
                 tab = bar.getChildAt(index),
                 body = /**
                  @ignore
@@ -159,7 +159,7 @@ KISSY.add(function (S, require) {
          * @chainable
          */
         'removeItemByTab': function (tab, destroy) {
-            var index = S.indexOf(tab, this.get("bar").get("children"));
+            var index = S.indexOf(tab, this.get("bar").get('children'));
             return this.removeItemAt(index, destroy);
         },
 
@@ -170,7 +170,7 @@ KISSY.add(function (S, require) {
          * @chainable
          */
         'removeItemByPanel': function (panel, destroy) {
-            var index = S.indexOf(panel, this.get("body").get("children"));
+            var index = S.indexOf(panel, this.get("body").get('children'));
             return this.removeItemAt(index, destroy);
         },
 
@@ -183,7 +183,7 @@ KISSY.add(function (S, require) {
                 bar = tabs.get("bar"),
                 child = null;
 
-            S.each(bar.get("children"), function (c) {
+            S.each(bar.get('children'), function (c) {
                 if (c.get("selected")) {
                     child = c;
                     return false;
@@ -203,7 +203,7 @@ KISSY.add(function (S, require) {
                 body = tabs.get("body"),
                 child = null;
 
-            S.each(body.get("children"), function (c) {
+            S.each(body.get('children'), function (c) {
                 if (c.get("selected")) {
                     child = c;
                     return false;
@@ -219,7 +219,7 @@ KISSY.add(function (S, require) {
          * @return {KISSY.Tabs.Tab[]}
          */
         getTabs: function () {
-            return   this.get("bar").get("children");
+            return   this.get("bar").get('children');
         },
 
         /**
@@ -227,21 +227,21 @@ KISSY.add(function (S, require) {
          * @return {KISSY.Tabs.Panel[]}
          */
         getPanels: function () {
-            return   this.get("body").get("children");
+            return   this.get("body").get('children');
         },
 
         /**
          * @ignore
          */
         getTabAt: function (index) {
-            return this.get("bar").get("children")[index];
+            return this.get("bar").get('children')[index];
         },
 
         /**
          * @ignore
          */
         'getPanelAt': function (index) {
-            return this.get("body").get("children")[index];
+            return this.get("body").get('children')[index];
         },
 
         /**

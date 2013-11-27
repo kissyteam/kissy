@@ -83,7 +83,7 @@ KISSY.add(function (S, require) {
         for (var i = 0; i < $cells.length; i++) {
             $cells[ i ].innerHTML = '';
             if (!OLD_IE)
-                ( new Node($cells[ i ]) )._4e_appendBogus(undefined);
+                ( new Node($cells[ i ]) )._4eAppendBogus(undefined);
         }
     }
 
@@ -177,7 +177,7 @@ KISSY.add(function (S, require) {
             cell = new Node($row.cells[ cellIndex ].cloneNode(undefined));
 
             if (!OLD_IE)
-                cell._4e_appendBogus(undefined);
+                cell._4eAppendBogus(undefined);
             // Get back the currently selected cell.
             var baseCell = new Node($row.cells[ cellIndex ]);
             if (insertBefore)
@@ -333,7 +333,7 @@ KISSY.add(function (S, require) {
         cssTemplate =
             // IE6 don't have child selector support,
             // where nested table cells could be incorrect.
-            ( UA['ie'] === 6 ?
+            ( UA.ie === 6 ?
                 [
                     'table.%2,',
                     'table.%2 td, table.%2 th,',
@@ -525,7 +525,7 @@ KISSY.add(function (S, require) {
                     },
                     beforeVisibleChange: function (e) {
                         if (e.newVal) {
-                            var self = this, children = self.get("children");
+                            var self = this, children = self.get('children');
                             var editor = self.get("editor");
                             S.each(children, function (c) {
                                 var content = c.get("content");

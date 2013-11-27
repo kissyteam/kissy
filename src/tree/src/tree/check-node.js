@@ -60,7 +60,7 @@ KISSY.add(function (S, require) {
                 cs;
 
             if (s == CHECK || s == EMPTY) {
-                S.each(self.get("children"), function (c) {
+                S.each(self.get('children'), function (c) {
                     c.set("checkState", s);
                 });
             }
@@ -69,7 +69,7 @@ KISSY.add(function (S, require) {
             // 效率不高，但是结构清晰
             if (parent) {
                 checkCount = 0;
-                cs = parent.get("children");
+                cs = parent.get('children');
                 for (i = 0; i < cs.length; i++) {
                     c = cs[i];
                     cState = c.get("checkState");

@@ -67,7 +67,7 @@ KISSY.add(function (S, require) {
 
     var styleObjectElements = {
         "img": 1, "hr": 1, "li": 1, "table": 1, "tr": 1, "td": 1, "th": 1, "embed": 1, "object": 1, "ol": 1, "ul": 1,
-        "a": 1, 'input': 1, "form": 1, "select": 1, "textarea": 1, "button": 1, "fieldset": 1, "thead": 1, "tfoot": 1
+        "a": 1, 'input': 1, "form": 1, "select": 1, 'textarea': 1, "button": 1, "fieldset": 1, "thead": 1, "tfoot": 1
     };
 
     S.augment(KESelection, {
@@ -540,11 +540,11 @@ KISSY.add(function (S, require) {
                     // will not be visible.
                     // opera move out of this element
                     if (range.collapsed &&
-                        (( UA.gecko && UA.gecko < 1.0900 ) || UA.opera || UA['webkit']) &&
+                        (( UA.gecko && UA.gecko < 1.0900 ) || UA.opera || UA.webkit) &&
                         startContainer[0].nodeType == Dom.NodeType.ELEMENT_NODE && !startContainer[0].childNodes.length) {
                         // webkit 光标停留不到在空元素内，要fill char，之后范围定在 fill char 之后
                         startContainer[0].appendChild(
-                            self.document.createTextNode(UA['webkit'] ? "\u200b" : "")
+                            self.document.createTextNode(UA.webkit ? "\u200b" : "")
                         );
                         range.startOffset++;
                         range.endOffset++;
@@ -688,7 +688,7 @@ KISSY.add(function (S, require) {
                     //还是有差异的，特别是img选择框问题
                     if (
                     //ie8 有问题？？
-                    //UA['ie']Engine!=8 &&
+                    //UA.ieEngine!=8 &&
                         self.startContainer[0] === self.endContainer[0]
                             && self.endOffset - self.startOffset == 1) {
                         var selEl = self.startContainer[0].childNodes[self.startOffset];

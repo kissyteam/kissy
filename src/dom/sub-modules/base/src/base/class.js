@@ -3,7 +3,7 @@
  * @ignore
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S,require) {
+KISSY.add(function (S, require) {
     var Dom = require('./api');
     var slice = [].slice,
         NodeType = Dom.NodeType,
@@ -16,7 +16,7 @@ KISSY.add(function (S,require) {
             l = arr.length,
             i = 0;
         for (; i < l; i++) {
-            if (v = arr[i]) {
+            if ((v = arr[i])) {
                 newArr.push(v);
             }
         }
@@ -30,11 +30,11 @@ KISSY.add(function (S,require) {
                 classList = elem.classList,
                 extraArgs = slice.call(arguments, 2);
             for (i = 0, l = classNames.length; i < l; i++) {
-                if (className = classNames[i]) {
+                if ((className = classNames[i])) {
                     classList[method].apply(classList, [className].concat(extraArgs));
                 }
             }
-        }
+        };
     }
 
     function batchEls(method) {
@@ -42,11 +42,11 @@ KISSY.add(function (S,require) {
             var classNames = strToArray(className),
                 extraArgs = slice.call(arguments, 2);
             Dom.query(selector).each(function (elem) {
-                if (elem.nodeType == NodeType.ELEMENT_NODE) {
+                if (elem.nodeType === NodeType.ELEMENT_NODE) {
                     Dom[method].apply(Dom, [elem, classNames].concat(extraArgs));
                 }
             });
-        }
+        };
     }
 
     S.mix(Dom,
@@ -86,7 +86,7 @@ KISSY.add(function (S,require) {
              */
             hasClass: function (selector, className) {
                 var elem = Dom.get(selector);
-                return elem && elem.nodeType == NodeType.ELEMENT_NODE && Dom._hasClass(elem, strToArray(className));
+                return elem && elem.nodeType === NodeType.ELEMENT_NODE && Dom._hasClass(elem, strToArray(className));
             },
 
             /**

@@ -83,7 +83,7 @@ KISSY.add(function (S, require) {
         },
 
         '_onSetShowRootNode': function (v) {
-            this.get("rowEl")[v ? "show" : "hide"]();
+            this.get("rowEl")[v ? 'show' : 'hide']();
         }
     });
 

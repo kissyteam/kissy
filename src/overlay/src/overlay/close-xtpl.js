@@ -20,7 +20,7 @@ KISSY.add(function (S, require, exports, module) {
             config0.fn = function (scopes) {
                 var buffer = "";
                 buffer += '\n<a href="javascript:void(\'close\')"\n   id="ks-overlay-close-';
-                var id3 = getPropertyOrRunCommandUtil(engine, scopes, {}, "id", 0, 3, undefined, false);
+                var id3 = getPropertyOrRunCommandUtil(engine, scopes, {}, 'id', 0, 3, undefined, false);
                 buffer += getExpressionUtil(id3, true);
                 buffer += '"\n   class="';
                 var config5 = {};

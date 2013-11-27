@@ -12,16 +12,16 @@ KISSY.add(function (S, require) {
    return Base.extend({
         equals: function (other) {
             var self = this;
-            if (!S.equals(other.get("rhs"), self.get("rhs"))) {
+            if (!S.equals(other.get('rhs'), self.get('rhs'))) {
                 return false;
             }
-            return other.get("symbol") == self.get("symbol");
+            return other.get('symbol') == self.get('symbol');
 
         },
 
         toString: function (dot) {
             var rhsStr = "";
-            var rhs = this.get("rhs");
+            var rhs = this.get('rhs');
             S.each(rhs, function (r, index) {
                 if (index == dot) {
                     rhsStr += " . ";
@@ -31,7 +31,7 @@ KISSY.add(function (S, require) {
             if (dot == rhs.length) {
                 rhsStr += " . ";
             }
-            return this.get("symbol") + " => " + rhsStr;
+            return this.get('symbol') + " => " + rhsStr;
         }
     }, {
         ATTRS: {

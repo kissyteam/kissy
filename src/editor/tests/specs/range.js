@@ -712,7 +712,7 @@ KISSY.add(function (S, Editor) {
                     "<div><span>123</span></div>" +
                     "</div>").appendTo("body");
                 var range = new Range(document);
-                var div2 = div.one("div");
+                var div2 = div.one('div');
                 range.setStart(div, 0);
                 range.setEnd(div, 1);
                 range.shrink(SHRINK_ELEMENT);
@@ -729,7 +729,7 @@ KISSY.add(function (S, Editor) {
                     "<div>22<span>123</span>22</div>" +
                     "</div>").appendTo("body");
                 var range = new Range(document);
-                var div2 = div.one("div");
+                var div2 = div.one('div');
                 range.setStart(div, 0);
                 range.setEnd(div, 1);
                 range.shrink(SHRINK_ELEMENT);

@@ -288,7 +288,7 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/content-xtpl.js'].lineData[14]++;
   buffer += '<div id="ks-content-';
   _$jscoverage['/content-xtpl.js'].lineData[15]++;
-  var id0 = getPropertyOrRunCommandUtil(engine, scopes, {}, "id", 0, 1, undefined, false);
+  var id0 = getPropertyOrRunCommandUtil(engine, scopes, {}, 'id', 0, 1, undefined, false);
   _$jscoverage['/content-xtpl.js'].lineData[16]++;
   buffer += getExpressionUtil(id0, true);
   _$jscoverage['/content-xtpl.js'].lineData[17]++;

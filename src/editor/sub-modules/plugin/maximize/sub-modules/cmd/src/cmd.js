@@ -8,7 +8,7 @@ KISSY.add(function (S, require) {
         var Event=require('event');
 
     var UA = S.UA,
-        ie = UA['ie'],
+        ie = UA.ie,
         doc = document,
         Node = S.Node,
         Dom = S.DOM,
@@ -67,7 +67,7 @@ KISSY.add(function (S, require) {
         _restoreState: function () {
             var self = this,
                 editor = self.editor,
-                textareaEl = editor.get("textarea"),
+                textareaEl = editor.get('textarea'),
             //恢复父节点的position原状态 bugfix:最大化被父元素限制
                 _savedParents = self._savedParents;
             if (_savedParents) {
@@ -93,8 +93,8 @@ KISSY.add(function (S, require) {
             //documentElement 设置宽高，ie崩溃
             doc.documentElement.style.overflow = "";
 
-            var editorElStyle = editor.get("el")[0].style;
-            editorElStyle.position = "static";
+            var editorElStyle = editor.get('el')[0].style;
+            editorElStyle.position = 'static';
             editorElStyle.width = self.editorElWidth;
 
             iframe.css({
@@ -105,7 +105,7 @@ KISSY.add(function (S, require) {
             window.scrollTo(self.scrollLeft, self.scrollTop);
 
             if (ie < 8) {
-                editor.get("toolBarEl").removeClass(
+                editor.get('toolBarEl').removeClass(
                     editor.get('prefixCls') + MAXIMIZE_TOOLBAR_CLASS, undefined);
             }
         },
@@ -117,8 +117,8 @@ KISSY.add(function (S, require) {
             var self = this,
                 editor = self.editor,
                 _savedParents = [],
-                editorEl = editor.get("el");
-            self.iframeHeight = editor.get("textarea").parent().style("height");
+                editorEl = editor.get('el');
+            self.iframeHeight = editor.get('textarea').parent().style("height");
             self.editorElWidth = editorEl.style('width');
             //主窗口滚动条也要保存哦
             self.scrollLeft = Dom.scrollLeft();
@@ -130,12 +130,12 @@ KISSY.add(function (S, require) {
 
             while (p) {
                 var pre = p.css("position");
-                if (pre != "static") {
+                if (pre != 'static') {
                     _savedParents.push({
                         el: p,
                         position: pre
                     });
-                    p.css("position", "static");
+                    p.css("position", 'static');
                 }
                 p = p.parent();
             }
@@ -143,7 +143,7 @@ KISSY.add(function (S, require) {
 
             //ie6,7 图标到了窗口边界，不可点击，给个padding
             if (ie < 8) {
-                editor.get("toolBarEl").addClass(
+                editor.get('toolBarEl').addClass(
                     editor.get('prefixCls') + MAXIMIZE_TOOLBAR_CLASS, undefined);
             }
         },
@@ -156,7 +156,7 @@ KISSY.add(function (S, require) {
             var self = this,
                 editor = self.editor;
             self.savedRanges = null;
-            if (!UA['gecko'] || !editor.__iframeFocus) {
+            if (!UA.gecko || !editor.__iframeFocus) {
                 return;
             }
             var sel = editor.getSelection();
@@ -178,7 +178,7 @@ KISSY.add(function (S, require) {
 
             //原来是聚焦，现在刷新designmode
             //firefox 先失去焦点才行
-            if (UA['gecko']) {
+            if (UA.gecko) {
                 editor.activateGecko();
             }
 
@@ -206,13 +206,13 @@ KISSY.add(function (S, require) {
         _maximize: function (stop) {
             var self = this,
                 editor = self.editor,
-                editorEl = editor.get("el"),
+                editorEl = editor.get('el'),
                 viewportHeight = Dom.viewportHeight(),
                 viewportWidth = Dom.viewportWidth(),
-                textareaEl = editor.get("textarea"),
-                statusHeight = editor.get("statusBarEl") ?
-                    editor.get("statusBarEl")[0].offsetHeight : 0,
-                toolHeight = editor.get("toolBarEl")[0].offsetHeight;
+                textareaEl = editor.get('textarea'),
+                statusHeight = editor.get('statusBarEl') ?
+                    editor.get('statusBarEl')[0].offsetHeight : 0,
+                toolHeight = editor.get('toolBarEl')[0].offsetHeight;
 
             if (!ie) {
                 Dom.css(doc.body, {

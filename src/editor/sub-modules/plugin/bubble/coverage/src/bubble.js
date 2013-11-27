@@ -519,7 +519,7 @@ function visit12_91_1(result) {
 function visit11_64_1(result) {
   _$jscoverage['/bubble.js'].branchData['64'][1].ranCondition(result);
   return result;
-}_$jscoverage['/bubble.js'].branchData['51'][1].init(97, 33, 'archor.get("y") < bubble.get("y")');
+}_$jscoverage['/bubble.js'].branchData['51'][1].init(97, 33, 'archor.get('y') < bubble.get('y')');
 function visit10_51_1(result) {
   _$jscoverage['/bubble.js'].branchData['51'][1].ranCondition(result);
   return result;
@@ -586,7 +586,7 @@ KISSY.add(function(S, require) {
   function overlap(b1, b2) {
     _$jscoverage['/bubble.js'].functionData[2]++;
     _$jscoverage['/bubble.js'].lineData[29]++;
-    var b1_top = b1.get("y"), b1_bottom = b1_top + b1.get("el").outerHeight(), b2_top = b2.get("y"), b2_bottom = b2_top + b2.get("el").outerHeight();
+    var b1_top = b1.get('y'), b1_bottom = b1_top + b1.get('el').outerHeight(), b2_top = b2.get('y'), b2_bottom = b2_top + b2.get('el').outerHeight();
     _$jscoverage['/bubble.js'].lineData[34]++;
     return visit4_34_1(inRange(b1_top, b1_bottom, b2_bottom) || inRange(b1_top, b1_bottom, b2_top));
   }
@@ -606,7 +606,7 @@ KISSY.add(function(S, require) {
       archor = bubble;
     } else {
       _$jscoverage['/bubble.js'].lineData[51]++;
-      if (visit10_51_1(archor.get("y") < bubble.get("y"))) {
+      if (visit10_51_1(archor.get('y') < bubble.get('y'))) {
         _$jscoverage['/bubble.js'].lineData[52]++;
         archor = bubble;
       }
@@ -738,7 +738,7 @@ KISSY.add(function(S, require) {
     }
   }
   _$jscoverage['/bubble.js'].lineData[182]++;
-  editor.on("sourceMode", onHide);
+  editor.on('sourceMode', onHide);
   _$jscoverage['/bubble.js'].lineData[184]++;
   function showImmediately() {
     _$jscoverage['/bubble.js'].functionData[9]++;
@@ -753,7 +753,7 @@ KISSY.add(function(S, require) {
       _$jscoverage['/bubble.js'].lineData[189]++;
       if (visit37_189_1(archor)) {
         _$jscoverage['/bubble.js'].lineData[190]++;
-        xy[1] = archor.get("y") + archor.get("el").outerHeight();
+        xy[1] = archor.get('y') + archor.get('el').outerHeight();
         _$jscoverage['/bubble.js'].lineData[191]++;
         bubble.move(xy[0], xy[1]);
       }
@@ -778,7 +778,7 @@ KISSY.add(function(S, require) {
       return;
     }
     _$jscoverage['/bubble.js'].lineData[207]++;
-    var el = bubble.get("el");
+    var el = bubble.get('el');
     _$jscoverage['/bubble.js'].lineData[208]++;
     bubble.hide();
     _$jscoverage['/bubble.js'].lineData[209]++;

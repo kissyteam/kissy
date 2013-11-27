@@ -293,10 +293,10 @@ KISSY.add(function (S, Control, Container, DelegateChildrenExtension) {
                 });
                 c.render();
                 expect(c.getOwnerControl).not.toBeUndefined();
-                expect(c.get("el")[0].parentNode).toBe(document.body);
-                expect(c.get("el").html()).toBe("xx");
+                expect(c.get('el')[0].parentNode).toBe(document.body);
+                expect(c.get('el').html()).toBe("xx");
                 c.destroy();
-                expect(invalidNode(c.get("el")[0].parentNode)).toBe(true);
+                expect(invalidNode(c.get('el')[0].parentNode)).toBe(true);
             });
 
             if (S.Features.isTouchEventSupported()) {
@@ -331,14 +331,14 @@ KISSY.add(function (S, Control, Container, DelegateChildrenExtension) {
 
                     waits(100);
                     runs(function () {
-                        jasmine.simulate(c.get("el")[0], "mousedown");
+                        jasmine.simulate(c.get('el')[0], "mousedown");
                     });
                     waits(100);
                     runs(function () {
                         expect(c.get('active')).toBe(true);
                     });
                     runs(function () {
-                        jasmine.simulate(c.get("el")[0], "mouseup");
+                        jasmine.simulate(c.get('el')[0], "mouseup");
                     });
                     waits(100);
                     runs(function () {
@@ -346,7 +346,7 @@ KISSY.add(function (S, Control, Container, DelegateChildrenExtension) {
                     });
 
                     runs(function () {
-                        jasmine.simulate(child1.get("el")[0], "mousedown");
+                        jasmine.simulate(child1.get('el')[0], "mousedown");
                     });
                     waits(100);
                     runs(function () {
@@ -356,7 +356,7 @@ KISSY.add(function (S, Control, Container, DelegateChildrenExtension) {
                         expect(child2.get('active')).toBeFalsy();
                     });
                     runs(function () {
-                        jasmine.simulate(child1.get("el")[0], "mouseup");
+                        jasmine.simulate(child1.get('el')[0], "mouseup");
                     });
 
                     waits(100);
@@ -369,7 +369,7 @@ KISSY.add(function (S, Control, Container, DelegateChildrenExtension) {
 
                     runs(function () {
                         c.destroy();
-                        expect(invalidNode(child1.get("el")[0].parentNode)).toBe(true);
+                        expect(invalidNode(child1.get('el')[0].parentNode)).toBe(true);
                     });
                 });
             }

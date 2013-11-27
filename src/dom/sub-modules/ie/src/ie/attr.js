@@ -3,7 +3,7 @@
  * attr ie hack
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S,require) {
+KISSY.add(function (S, require) {
     var Dom = require('dom/base');
     var attrHooks = Dom._attrHooks,
         attrNodeHook = Dom._attrNodeHook,
@@ -15,7 +15,7 @@ KISSY.add(function (S,require) {
         IE_VERSION = S.UA.ieMode;
 
     if (IE_VERSION < 8) {
-        attrHooks['style'].set = function (el, val) {
+        attrHooks.style.set = function (el, val) {
             el.style.cssText = val;
         };
 
@@ -26,8 +26,7 @@ KISSY.add(function (S,require) {
                 // Return undefined if attribute node specified by user
                 return ret && (
                     // fix #100
-                    ret.specified
-                        || ret.nodeValue) ?
+                    ret.specified || ret.nodeValue) ?
                     ret.nodeValue :
                     undefined;
             },
@@ -83,7 +82,7 @@ KISSY.add(function (S,require) {
         // 当没有设定 value 时，标准浏览器 option.value === option.text
         // ie7- 下，没有设定 value 时，option.value === '',
         // 需要用 el.attributes.value 来判断是否有设定 value
-        valHooks['option'] = {
+        valHooks.option = {
             get: function (elem) {
                 var val = elem.attributes.value;
                 return !val || val.specified ? elem.value : elem.text;
@@ -103,7 +102,7 @@ KISSY.add(function (S,require) {
             len = childNodes.length,
             allText = len > 0;
         for (len = len - 1; len >= 0; len--) {
-            if (childNodes[len].nodeType != NodeType.TEXT_NODE) {
+            if (childNodes[len].nodeType !== NodeType.TEXT_NODE) {
                 allText = 0;
             }
         }
@@ -120,14 +119,14 @@ KISSY.add(function (S,require) {
 
 
     function getText(el) {
-        var ret = "",
+        var ret = '',
             nodeType = el.nodeType;
 
         if (nodeType === Dom.NodeType.ELEMENT_NODE) {
             for (el = el.firstChild; el; el = el.nextSibling) {
                 ret += getText(el);
             }
-        } else if (nodeType == NodeType.TEXT_NODE || nodeType == NodeType.CDATA_SECTION_NODE) {
+        } else if (nodeType === NodeType.TEXT_NODE || nodeType === NodeType.CDATA_SECTION_NODE) {
             ret += el.nodeValue;
         }
         return ret;

@@ -63,7 +63,7 @@ KISSY.add(function (S, require) {
     var ColorButton = Button.extend({
         initializer: function () {
             var self = this;
-            self.on("blur", function () {
+            self.on('blur', function () {
                 // make select color works
                 setTimeout(function () {
                     self.colorWin && self.colorWin.hide();
@@ -101,7 +101,7 @@ KISSY.add(function (S, require) {
             var colorWin = self.colorWin;
             colorPanel = colorWin.get('contentEl');
             colorPanel.on("click", self._selectColor, self);
-            colorWin.on("hide", function () {
+            colorWin.on('hide', function () {
                 self.set("checked", false);
             });
             var others = colorPanel.one("." + prefixCls + "editor-color-others");
@@ -116,7 +116,7 @@ KISSY.add(function (S, require) {
 
         _show: function () {
             var self = this,
-                el = self.get("el"),
+                el = self.get('el'),
                 colorWin = self.colorWin;
             colorWin.set("align", {
                 node: el,

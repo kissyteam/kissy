@@ -29,7 +29,7 @@ KISSY.add(function (S, require) {
         cfg.elCls = prefixCls + 'button ' + (cfg.elCls || "");
 
         var b = new ButtonType(S.mix({
-            render: self.get("toolBarEl"),
+            render: self.get('toolBarEl'),
             content: '<span ' +
                 'class="' + prefixCls + 'item ' +
                 prefixCls + id +
@@ -40,7 +40,7 @@ KISSY.add(function (S, require) {
         }, cfg)).render();
 
         if (!cfg.content) {
-            var contentEl = b.get("el").one("span");
+            var contentEl = b.get('el').one("span");
             b.on("afterContentClsChange", function (e) {
                 contentEl[0].className = prefixCls + 'item ' +
                     prefixCls + e.newVal;
@@ -48,10 +48,10 @@ KISSY.add(function (S, require) {
         }
 
         if (b.get("mode") == Editor.Mode.WYSIWYG_MODE) {
-            self.on("wysiwygMode", function () {
+            self.on('wysiwygMode', function () {
                 b.set('disabled', false);
             });
-            self.on("sourceMode", function () {
+            self.on('sourceMode', function () {
                 b.set('disabled', true);
             });
         }

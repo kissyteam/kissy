@@ -464,9 +464,9 @@ KISSY.add(function(S, require) {
   _$jscoverage['/image.js'].lineData[76]++;
   var doc = editor.get("document")[0], p = new Node(doc.createElement("p"));
   _$jscoverage['/image.js'].lineData[78]++;
-  if (visit5_78_1(!UA['ie'])) {
+  if (visit5_78_1(!UA.ie)) {
     _$jscoverage['/image.js'].lineData[79]++;
-    p._4e_appendBogus(undefined);
+    p._4eAppendBogus(undefined);
   }
   _$jscoverage['/image.js'].lineData[81]++;
   var r = new Editor.Range(doc);
@@ -513,7 +513,7 @@ KISSY.add(function(S, require) {
   editor.docReady(function() {
   _$jscoverage['/image.js'].functionData[11]++;
   _$jscoverage['/image.js'].lineData[116]++;
-  editor.get("document").on("dblclick", function(ev) {
+  editor.get("document").on('dblclick', function(ev) {
   _$jscoverage['/image.js'].functionData[12]++;
   _$jscoverage['/image.js'].lineData[117]++;
   ev.halt();
@@ -552,7 +552,7 @@ KISSY.add(function(S, require) {
   tipRemoveEl.on("click", function(ev) {
   _$jscoverage['/image.js'].functionData[15]++;
   _$jscoverage['/image.js'].lineData[142]++;
-  if (visit8_142_1(UA['webkit'])) {
+  if (visit8_142_1(UA.webkit)) {
     _$jscoverage['/image.js'].lineData[143]++;
     var r = editor.getSelection().getRanges();
     _$jscoverage['/image.js'].lineData[144]++;
@@ -573,7 +573,7 @@ KISSY.add(function(S, require) {
   ev.halt();
 });
   _$jscoverage['/image.js'].lineData[154]++;
-  bubble.on("show", function() {
+  bubble.on('show', function() {
   _$jscoverage['/image.js'].functionData[16]++;
   _$jscoverage['/image.js'].lineData[155]++;
   var a = bubble.get("editorSelectedEl");

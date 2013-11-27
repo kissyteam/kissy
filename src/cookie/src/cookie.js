@@ -11,7 +11,7 @@ KISSY.add(function (S) {
         decode = S.urlDecode;
 
     function isNotEmptyString(val) {
-        return (typeof val == 'string') && val !== '';
+        return (typeof val === 'string') && val !== '';
     }
 
     /**
@@ -19,7 +19,7 @@ KISSY.add(function (S) {
      * @class KISSY.Cookie
      * @singleton
      */
-    return S.Cookie = {
+    S.Cookie = {
 
         /**
          * Returns the cookie value for given name
@@ -90,6 +90,7 @@ KISSY.add(function (S) {
         }
     };
 
+    return S.Cookie;
 });
 
 /*

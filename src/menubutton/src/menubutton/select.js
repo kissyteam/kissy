@@ -9,7 +9,7 @@ KISSY.add(function (S, require) {
 
     function getSelectedItem(self) {
         var menu = self.get('menu'),
-            cs = menu.children || menu.get && menu.get("children") || [],
+            cs = menu.children || menu.get && menu.get('children') || [],
             value = self.get("value"),
             c,
             i;
@@ -45,7 +45,7 @@ KISSY.add(function (S, require) {
     function deSelectAllExcept(self) {
         var menu = self.get('menu'),
             value = self.get("value"),
-            cs = menu && menu.get && menu.get("children");
+            cs = menu && menu.get && menu.get('children');
         S.each(cs, function (c) {
             if (c && c.set) {
                 c.set("selected", getItemValue(c) == value)

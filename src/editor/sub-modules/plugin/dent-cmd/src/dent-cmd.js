@@ -145,7 +145,7 @@ KISSY.add(function (S, require) {
                     followingList.nodeName() in listNodeNames) {
                     // IE requires a filler NBSP for nested list inside empty list item,
                     // otherwise the list item will be inaccessiable. (#4476)
-                    if (UA['ie'] && !li.first(function (node) {
+                    if (UA.ie && !li.first(function (node) {
                         return isNotWhitespaces(node) && isNotBookmark(node);
                     }, 1)) {
                         li[0].appendChild(range.document.createTextNode('\u00a0'));

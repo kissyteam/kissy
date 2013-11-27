@@ -28,7 +28,7 @@
             frame.src = Dom.getEmptyIframeSrc();
             S.log("doFormUpload : " + frame.src);
             document.body.appendChild(frame);
-            if (UA['ie']) {
+            if (UA.ie) {
                 document['frames'][id].name = id;
             }
             var form = o.form,
@@ -71,7 +71,7 @@
                 try { //
                     var doc;
 
-                    if (UA['ie']) {
+                    if (UA.ie) {
                         doc = frame.contentWindow.document;
                     } else {
                         doc = (frame.contentDocument || window.frames[id].document);

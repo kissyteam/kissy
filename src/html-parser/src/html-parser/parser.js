@@ -54,7 +54,7 @@ KISSY.add(function (S, require) {
 
             doc.nodeType = 9;
 
-            Scanner.getScanner("div").scan(root, lexer, opts);
+            Scanner.getScanner('div').scan(root, lexer, opts);
 
             var body = fixBody(doc);
 

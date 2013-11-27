@@ -82,7 +82,7 @@
             });
             tree.on("expand", function (e) {
                 var node = e.target;
-                if (!node.get("children").length) {
+                if (!node.get('children').length) {
                     var c = getNode(data, node.get("content")).children;
                     S.each(c, function (v) {
                         node.addChild(new Tree.Node({

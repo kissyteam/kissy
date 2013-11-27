@@ -12,7 +12,7 @@ KISSY.add(function (S, require, exports, module) {
                 getExpressionUtil = utils["getExpression"],
                 getPropertyOrRunCommandUtil = utils["getPropertyOrRunCommand"];
             buffer += '<div id="ks-scrollbar-arrow-up-';
-            var id0 = getPropertyOrRunCommandUtil(engine, scopes, {}, "id", 0, 1, undefined, false);
+            var id0 = getPropertyOrRunCommandUtil(engine, scopes, {}, 'id', 0, 1, undefined, false);
             buffer += getExpressionUtil(id0, true);
             buffer += '"\n        class="';
             var config2 = {};
@@ -23,7 +23,7 @@ KISSY.add(function (S, require, exports, module) {
             var id1 = getPropertyOrRunCommandUtil(engine, scopes, config2, "getBaseCssClasses", 0, 2, true, undefined);
             buffer += id1;
             buffer += '">\n    <a href="javascript:void(\'up\')">up</a>\n</div>\n<div id="ks-scrollbar-arrow-down-';
-            var id5 = getPropertyOrRunCommandUtil(engine, scopes, {}, "id", 0, 5, undefined, false);
+            var id5 = getPropertyOrRunCommandUtil(engine, scopes, {}, 'id', 0, 5, undefined, false);
             buffer += getExpressionUtil(id5, true);
             buffer += '"\n        class="';
             var config7 = {};
@@ -34,7 +34,7 @@ KISSY.add(function (S, require, exports, module) {
             var id6 = getPropertyOrRunCommandUtil(engine, scopes, config7, "getBaseCssClasses", 0, 6, true, undefined);
             buffer += id6;
             buffer += '">\n    <a href="javascript:void(\'down\')">down</a>\n</div>\n<div id="ks-scrollbar-track-';
-            var id10 = getPropertyOrRunCommandUtil(engine, scopes, {}, "id", 0, 9, undefined, false);
+            var id10 = getPropertyOrRunCommandUtil(engine, scopes, {}, 'id', 0, 9, undefined, false);
             buffer += getExpressionUtil(id10, true);
             buffer += '"\n     class="';
             var config12 = {};
@@ -45,7 +45,7 @@ KISSY.add(function (S, require, exports, module) {
             var id11 = getPropertyOrRunCommandUtil(engine, scopes, config12, "getBaseCssClasses", 0, 10, true, undefined);
             buffer += id11;
             buffer += '">\n<div id="ks-scrollbar-drag-';
-            var id15 = getPropertyOrRunCommandUtil(engine, scopes, {}, "id", 0, 11, undefined, false);
+            var id15 = getPropertyOrRunCommandUtil(engine, scopes, {}, 'id', 0, 11, undefined, false);
             buffer += getExpressionUtil(id15, true);
             buffer += '"\n     class="';
             var config17 = {};

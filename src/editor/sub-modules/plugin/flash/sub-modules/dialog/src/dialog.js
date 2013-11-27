@@ -168,7 +168,7 @@ KISSY.add(function (S, require) {
                 d = self.dialog,
                 editor = self.editor,
                 prefixCls = editor.get('prefixCls'),
-                el = d.get("el");
+                el = d.get('el');
             self.dHeight = el.one("." + prefixCls + "editor-flash-height");
             self.dWidth = el.one("." + prefixCls + "editor-flash-width");
             self.dUrl = el.one("." + prefixCls + "editor-flash-url");
@@ -223,7 +223,7 @@ KISSY.add(function (S, require) {
             if (!dinfo) {
                 return;
             }
-            var re = Editor.Utils.verifyInputs(self.dialog.get("el").all('input'));
+            var re = Editor.Utils.verifyInputs(self.dialog.get('el').all('input'));
             if (!re) {
                 return;
             }

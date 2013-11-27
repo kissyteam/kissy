@@ -817,7 +817,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/compiler.js'].lineData[121]++;
   if (visit56_121_1(idString == 'include')) {
     _$jscoverage['/compiler.js'].lineData[123]++;
-    source.push('if(moduleWrap) {re' + 'quire("' + tplNode.params[0].value + '");' + configName + '.params[0]=moduleWrap.resolveByName(' + configName + '.params[0])' + '}');
+    source.push('if(moduleWrap) {re' + 'quire("' + tplNode.params[0].value + '");' + configName + '.params[0]=moduleWrap.resolveByName(' + configName + '.params[0]);' + '}');
   }
   _$jscoverage['/compiler.js'].lineData[128]++;
   source.push('var ' + idName + ' = getPropertyOrRunCommandUtil(engine,scopes,' + (visit57_130_1(configName || '{}')) + ',"' + idString + '",' + depth + ',' + idNode.lineNumber + ',' + (visit58_133_1(tplNode && tplNode.escaped)) + ',' + preserveUndefined + ');');

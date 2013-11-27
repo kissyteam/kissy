@@ -320,14 +320,14 @@ KISSY.add(function(S, require) {
   cfg.elCls = prefixCls + 'button ' + (visit3_29_1(cfg.elCls || ""));
   _$jscoverage['/button.js'].lineData[31]++;
   var b = new ButtonType(S.mix({
-  render: self.get("toolBarEl"), 
+  render: self.get('toolBarEl'),
   content: '<span ' + 'class="' + prefixCls + 'item ' + prefixCls + id + '"></span' + '>', 
   prefixCls: self.get('prefixCls') + "editor-", 
   editor: self}, cfg)).render();
   _$jscoverage['/button.js'].lineData[42]++;
   if (visit4_42_1(!cfg.content)) {
     _$jscoverage['/button.js'].lineData[43]++;
-    var contentEl = b.get("el").one("span");
+    var contentEl = b.get('el').one("span");
     _$jscoverage['/button.js'].lineData[44]++;
     b.on("afterContentClsChange", function(e) {
   _$jscoverage['/button.js'].functionData[2]++;
@@ -338,13 +338,13 @@ KISSY.add(function(S, require) {
   _$jscoverage['/button.js'].lineData[50]++;
   if (visit5_50_1(b.get("mode") == Editor.Mode.WYSIWYG_MODE)) {
     _$jscoverage['/button.js'].lineData[51]++;
-    self.on("wysiwygMode", function() {
+    self.on('wysiwygMode', function() {
   _$jscoverage['/button.js'].functionData[3]++;
   _$jscoverage['/button.js'].lineData[52]++;
   b.set('disabled', false);
 });
     _$jscoverage['/button.js'].lineData[54]++;
-    self.on("sourceMode", function() {
+    self.on('sourceMode', function() {
   _$jscoverage['/button.js'].functionData[4]++;
   _$jscoverage['/button.js'].lineData[55]++;
   b.set('disabled', true);

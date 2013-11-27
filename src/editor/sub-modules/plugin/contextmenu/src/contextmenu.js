@@ -30,7 +30,7 @@ KISSY.add(function (S, require) {
         focusFix.init(menu);
 
         menu.on("afterRenderUI", function () {
-            menu.get("el").on("keydown", function (e) {
+            menu.get('el').on('keydown', function (e) {
                 if (e.keyCode == Event.KeyCode.ESC) {
                     menu.hide();
                 }
@@ -45,7 +45,7 @@ KISSY.add(function (S, require) {
                     menu.hide();
                 }
             });
-            doc.delegate("contextmenu", filter, function (ev) {
+            doc.delegate('contextmenu', filter, function (ev) {
                 ev.halt();
                 showNow(ev);
             });
@@ -75,7 +75,7 @@ KISSY.add(function (S, require) {
                     silent: 1
                 });
                 menu.move(x, y);
-                self.fire("contextmenu", {
+                self.fire('contextmenu', {
                     contextmenu: menu
                 });
                 menu.show();

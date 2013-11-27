@@ -12,7 +12,7 @@ KISSY.add(function (S, require, exports, module) {
                 getExpressionUtil = utils["getExpression"],
                 getPropertyOrRunCommandUtil = utils["getPropertyOrRunCommand"];
             buffer += '<div id="ks-filter-menu-input-wrap-';
-            var id0 = getPropertyOrRunCommandUtil(engine, scopes, {}, "id", 0, 1, undefined, false);
+            var id0 = getPropertyOrRunCommandUtil(engine, scopes, {}, 'id', 0, 1, undefined, false);
             buffer += getExpressionUtil(id0, true);
             buffer += '"\n     class="';
             var config2 = {};
@@ -22,7 +22,7 @@ KISSY.add(function (S, require, exports, module) {
             var id1 = getPropertyOrRunCommandUtil(engine, scopes, config2, "getBaseCssClasses", 0, 2, true, undefined);
             buffer += id1;
             buffer += '">\n    <div id="ks-filter-menu-placeholder-';
-            var id4 = getPropertyOrRunCommandUtil(engine, scopes, {}, "id", 0, 3, undefined, false);
+            var id4 = getPropertyOrRunCommandUtil(engine, scopes, {}, 'id', 0, 3, undefined, false);
             buffer += getExpressionUtil(id4, true);
             buffer += '"\n         class="';
             var config6 = {};
@@ -35,7 +35,7 @@ KISSY.add(function (S, require, exports, module) {
             var id8 = getPropertyOrRunCommandUtil(engine, scopes, {}, "placeholder", 0, 5, undefined, false);
             buffer += getExpressionUtil(id8, true);
             buffer += '\n    </div>\n    <input id="ks-filter-menu-input-';
-            var id9 = getPropertyOrRunCommandUtil(engine, scopes, {}, "id", 0, 7, undefined, false);
+            var id9 = getPropertyOrRunCommandUtil(engine, scopes, {}, 'id', 0, 7, undefined, false);
             buffer += getExpressionUtil(id9, true);
             buffer += '"\n           class="';
             var config11 = {};

@@ -12,7 +12,7 @@ KISSY.add(function (S) {
             S.all('<span ' +
                 'class="'+editor.get('prefixCls')+'editor-toolbar-separator">&nbsp;' +
                 '</span>')
-                .appendTo(editor.get("toolBarEl"));
+                .appendTo(editor.get('toolBarEl'));
         }
     });
 

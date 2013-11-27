@@ -772,7 +772,7 @@ KISSY.add(function(S) {
               Dom._4e_remove(currentListItem.lastChild);
             }
             _$jscoverage['/list-utils.js'].lineData[141]++;
-            Dom._4e_appendBogus(currentListItem);
+            Dom._4eAppendBogus(currentListItem);
           }
           _$jscoverage['/list-utils.js'].lineData[144]++;
           if (visit35_144_1(visit36_144_2(currentListItem.nodeType == Dom.NodeType.ELEMENT_NODE) && visit37_145_1(visit38_145_2(Dom.nodeName(currentListItem) == paragraphMode) && currentListItem.firstChild))) {
@@ -793,9 +793,9 @@ KISSY.add(function(S) {
           _$jscoverage['/list-utils.js'].lineData[157]++;
           var currentListItemName = Dom.nodeName(currentListItem);
           _$jscoverage['/list-utils.js'].lineData[158]++;
-          if (visit41_158_1(!UA['ie'] && (visit42_158_2(visit43_158_3(currentListItemName == 'div') || visit44_159_1(currentListItemName == 'p'))))) {
+          if (visit41_158_1(!UA.ie && (visit42_158_2(visit43_158_3(currentListItemName == 'div') || visit44_159_1(currentListItemName == 'p'))))) {
             _$jscoverage['/list-utils.js'].lineData[160]++;
-            Dom._4e_appendBogus(currentListItem);
+            Dom._4eAppendBogus(currentListItem);
           }
           _$jscoverage['/list-utils.js'].lineData[162]++;
           retval.appendChild(currentListItem);

@@ -290,15 +290,15 @@ if (! _$jscoverage['/resize.js'].branchData) {
   _$jscoverage['/resize.js'].branchData['69'] = [];
   _$jscoverage['/resize.js'].branchData['69'][1] = new BranchData();
 }
-_$jscoverage['/resize.js'].branchData['69'][1].init(271, 25, 'S.inArray("x", direction)');
+_$jscoverage['/resize.js'].branchData['69'][1].init(271, 25, 'S.inArray('x', direction)');
 function visit6_69_1(result) {
   _$jscoverage['/resize.js'].branchData['69'][1].ranCondition(result);
   return result;
-}_$jscoverage['/resize.js'].branchData['66'][1].init(146, 25, 'S.inArray("y", direction)');
+}_$jscoverage['/resize.js'].branchData['66'][1].init(146, 25, 'S.inArray('y', direction)');
 function visit5_66_1(result) {
   _$jscoverage['/resize.js'].branchData['66'][1].ranCondition(result);
   return result;
-}_$jscoverage['/resize.js'].branchData['25'][1].init(21, 19, 'direction[0] == "x"');
+}_$jscoverage['/resize.js'].branchData['25'][1].init(21, 19, 'direction[0] == 'x'');
 function visit4_25_1(result) {
   _$jscoverage['/resize.js'].branchData['25'][1].ranCondition(result);
   return result;
@@ -306,7 +306,7 @@ function visit4_25_1(result) {
 function visit3_24_1(result) {
   _$jscoverage['/resize.js'].branchData['24'][1].ranCondition(result);
   return result;
-}_$jscoverage['/resize.js'].branchData['20'][1].init(203, 30, 'cfg["direction"] || ["x", "y"]');
+}_$jscoverage['/resize.js'].branchData['20'][1].init(203, 30, 'cfg["direction"] || ['x', 'y']');
 function visit2_20_1(result) {
   _$jscoverage['/resize.js'].branchData['20'][1].ranCondition(result);
   return result;
@@ -332,13 +332,13 @@ KISSY.add(function(S, require) {
   pluginRenderUI: function(editor) {
   _$jscoverage['/resize.js'].functionData[2]++;
   _$jscoverage['/resize.js'].lineData[16]++;
-  var Draggable = DD['Draggable'], statusBarEl = editor.get("statusBarEl"), textarea = editor.get("textarea"), cfg = this.config, direction = visit2_20_1(cfg["direction"] || ["x", "y"]);
+  var Draggable = DD['Draggable'], statusBarEl = editor.get('statusBarEl'), textarea = editor.get('textarea'), cfg = this.config, direction = visit2_20_1(cfg["direction"] || ['x', 'y']);
   _$jscoverage['/resize.js'].lineData[22]++;
   var cursor = 'se-resize';
   _$jscoverage['/resize.js'].lineData[24]++;
   if (visit3_24_1(direction.length == 1)) {
     _$jscoverage['/resize.js'].lineData[25]++;
-    if (visit4_25_1(direction[0] == "x")) {
+    if (visit4_25_1(direction[0] == 'x')) {
       _$jscoverage['/resize.js'].lineData[26]++;
       cursor = "e-resize";
     } else {
@@ -363,7 +363,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/resize.js'].lineData[46]++;
   var d = new Draggable({
   node: resizer, 
-  groups: false}), height = 0, width = 0, dragStartMousePos, heightEl = editor.get("el"), widthEl = editor.get("el");
+  groups: false}), height = 0, width = 0, dragStartMousePos, heightEl = editor.get('el'), widthEl = editor.get('el');
   _$jscoverage['/resize.js'].lineData[56]++;
   d.on("dragstart", function() {
   _$jscoverage['/resize.js'].functionData[5]++;
@@ -382,12 +382,12 @@ KISSY.add(function(S, require) {
   _$jscoverage['/resize.js'].lineData[64]++;
   var diffX = ev.pageX - dragStartMousePos.left, diffY = ev.pageY - dragStartMousePos.top;
   _$jscoverage['/resize.js'].lineData[66]++;
-  if (visit5_66_1(S.inArray("y", direction))) {
+  if (visit5_66_1(S.inArray('y', direction))) {
     _$jscoverage['/resize.js'].lineData[67]++;
     editor.set("height", height + diffY);
   }
   _$jscoverage['/resize.js'].lineData[69]++;
-  if (visit6_69_1(S.inArray("x", direction))) {
+  if (visit6_69_1(S.inArray('x', direction))) {
     _$jscoverage['/resize.js'].lineData[70]++;
     editor.set('width', width + diffX);
   }

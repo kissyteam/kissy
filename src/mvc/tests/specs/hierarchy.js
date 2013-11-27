@@ -75,7 +75,7 @@ KISSY.add(function (S, mvc) {
         it("basic should works", function () {
             expect(model.get('title')).toBe("1");
             expect(model.get("content")).toBe("1-1");
-            expect(model.get("children")).toBeUndefined();
+            expect(model.get('children')).toBeUndefined();
         })
 
         it("children should be array of Model", function () {

@@ -41,7 +41,7 @@ KISSY.add(function (S, require) {
         },
 
         _removeEvents: function (events) {
-            var el = this.get("el");
+            var el = this.get('el');
             for (var selector in events) {
                 var event = events[selector];
                 for (var type in event) {
@@ -52,7 +52,7 @@ KISSY.add(function (S, require) {
         },
 
         _addEvents: function (events) {
-            var el = this.get("el");
+            var el = this.get('el');
             for (var selector in events) {
                 var event = events[selector];
                 for (var type in event) {
@@ -73,7 +73,7 @@ KISSY.add(function (S, require) {
          * Remove root element.
          */
         destroy: function () {
-            this.get("el").remove();
+            this.get('el').remove();
         }
 
     }, {
@@ -93,7 +93,7 @@ KISSY.add(function (S, require) {
                 getter: function (s) {
                     if (typeof s == 'string') {
                         s = $(s);
-                        this.setInternal("el", s);
+                        this.setInternal('el', s);
                     }
                     return s;
                 }

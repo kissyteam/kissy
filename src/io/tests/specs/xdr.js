@@ -129,7 +129,7 @@ KISSY.add(function (S, UA, io, Node) {
                                     }
                                 },
                                 data: {
-                                    action: "x"
+                                    action: 'x'
                                 },
                                 success: function (d, s, r) {
                                     // body 都可读

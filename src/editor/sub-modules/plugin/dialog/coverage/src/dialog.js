@@ -297,13 +297,13 @@ KISSY.add(function(S, require) {
   _$jscoverage['/dialog.js'].lineData[33]++;
   self.center();
   _$jscoverage['/dialog.js'].lineData[34]++;
-  var y = self.get("y");
+  var y = self.get('y');
   _$jscoverage['/dialog.js'].lineData[36]++;
   if (visit1_36_1(y - S.DOM.scrollTop() > 200)) {
     _$jscoverage['/dialog.js'].lineData[37]++;
     y = S.DOM.scrollTop() + 200;
     _$jscoverage['/dialog.js'].lineData[38]++;
-    self.set("y", y);
+    self.set('y', y);
   }
   _$jscoverage['/dialog.js'].lineData[40]++;
   self.callSuper();

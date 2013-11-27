@@ -4,11 +4,10 @@
  * Inspired by DateTimeFormat from JDK.
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S,require) {
-    var GregorianCalendar=require('date/gregorian');
-    var defaultLocale=require('i18n!date');
+KISSY.add(function (S, require) {
+    var GregorianCalendar = require('date/gregorian');
+    var defaultLocale = require('i18n!date');
     var MAX_VALUE = Number.MAX_VALUE,
-        undefined=undefined,
         /**
          * date or time style enum
          * @enum {Number} KISSY.Date.Formatter.Style
@@ -31,7 +30,7 @@ KISSY.add(function (S,require) {
              */
             SHORT: 3
         };
-        var logger = S.getLogger('s/date/format');
+    var logger = S.getLogger('s/date/format');
 
     /*
      Letter    Date or Time Component    Presentation    Examples
@@ -104,14 +103,14 @@ KISSY.add(function (S,require) {
         for (var i = 0; i < length; i++) {
             var c = pattern.charAt(i);
 
-            if (c == "'") {
+            if (c === '\'') {
                 // '' is treated as a single quote regardless of being
                 // in a quoted section.
                 if ((i + 1) < length) {
                     c = pattern.charAt(i + 1);
-                    if (c == '\'') {
+                    if (c === '\'') {
                         i++;
-                        if (count != 0) {
+                        if (count !== 0) {
                             encode(lastField, count, compiledPattern);
                             lastField = -1;
                             count = 0;
@@ -123,7 +122,7 @@ KISSY.add(function (S,require) {
                     }
                 }
                 if (!inQuote) {
-                    if (count != 0) {
+                    if (count !== 0) {
                         encode(lastField, count, compiledPattern);
                         lastField = -1;
                         count = 0;
@@ -143,7 +142,7 @@ KISSY.add(function (S,require) {
                 continue;
             }
             if (!(c >= 'a' && c <= 'z' || c >= 'A' && c <= 'Z')) {
-                if (count != 0) {
+                if (count !== 0) {
                     encode(lastField, count, compiledPattern);
                     lastField = -1;
                     count = 0;
@@ -154,12 +153,11 @@ KISSY.add(function (S,require) {
                 continue;
             }
 
-            if (patternChars.indexOf(c) == -1) {
-                throw new Error("Illegal pattern character " +
-                    "'" + c + "'");
+            if (patternChars.indexOf(c) === -1) {
+                throw new Error('Illegal pattern character "' + c + '"');
             }
 
-            if (lastField == -1 || lastField == c) {
+            if (lastField === -1 || lastField === c) {
                 lastField = c;
                 count++;
                 continue;
@@ -170,10 +168,10 @@ KISSY.add(function (S,require) {
         }
 
         if (inQuote) {
-            throw new Error("Unterminated quote");
+            throw new Error('Unterminated quote');
         }
 
-        if (count != 0) {
+        if (count !== 0) {
             encode(lastField, count, compiledPattern);
         }
 
@@ -192,17 +190,17 @@ KISSY.add(function (S,require) {
         maxDigits = maxDigits || MAX_VALUE;
         if (value >= 0) {
             if (value < 100 && minDigits >= 1 && minDigits <= 2) {
-                if (value < 10 && minDigits == 2) {
+                if (value < 10 && minDigits === 2) {
                     buffer.push(zeroDigit);
                 }
                 buffer.push(value);
                 return buffer.join('');
             } else if (value >= 1000 && value < 10000) {
-                if (minDigits == 4) {
+                if (minDigits === 4) {
                     buffer.push(value);
                     return buffer.join('');
                 }
-                if (minDigits == 2 && maxDigits == 2) {
+                if (minDigits === 2 && maxDigits === 2) {
                     return zeroPaddingNumber(value % 100, 2, 2, buffer);
                 }
             }
@@ -355,13 +353,13 @@ KISSY.add(function (S,require) {
                 if (value <= 0) {
                     value = 1 - value;
                 }
-                current = (zeroPaddingNumber(value, 2, count != 2 ? MAX_VALUE : 2));
+                current = (zeroPaddingNumber(value, 2, count !== 2 ? MAX_VALUE : 2));
                 break;
             case 'M':
                 value = calendar.getMonth();
                 if (count >= 4) {
                     current = locale.months[value];
-                } else if (count == 3) {
+                } else if (count === 3) {
                     current = locale.shortMonths[value];
                 } else {
                     current = zeroPaddingNumber(value + 1, count);
@@ -437,7 +435,7 @@ KISSY.add(function (S,require) {
 
     function matchPartString(dateStr, startIndex, match, mLen) {
         for (var i = 0; i < mLen; i++) {
-            if (dateStr.charAt(startIndex + i) != match.charAt(i)) {
+            if (dateStr.charAt(startIndex + i) !== match.charAt(i)) {
                 return false;
             }
         }
@@ -486,9 +484,9 @@ KISSY.add(function (S,require) {
         }
         switch (field) {
             case 'G':
-                if (match = matchField(dateStr, startIndex, locale.eras)) {
+                if ((match = matchField(dateStr, startIndex, locale.eras))) {
                     if (calendar.isSetYear()) {
-                        if (match.value == 0) {
+                        if (match.value === 0) {
                             year = calendar.getYear();
                             calendar.setYear(1 - year);
                         }
@@ -498,7 +496,7 @@ KISSY.add(function (S,require) {
                 }
                 break;
             case 'y':
-                if (match = matchNumber(dateStr, startIndex, count, obeyCount)) {
+                if ((match = matchNumber(dateStr, startIndex, count, obeyCount))) {
                     year = match.value;
                     if ('era' in tmp) {
                         if (tmp.era === 0) {
@@ -511,12 +509,12 @@ KISSY.add(function (S,require) {
             case 'M':
                 var month;
                 if (count >= 3) {
-                    if (match = matchField(dateStr, startIndex, locale[count == 3 ?
-                        'shortMonths' : 'months'])) {
+                    if ((match = matchField(dateStr, startIndex, locale[count === 3 ?
+                        'shortMonths' : 'months']))) {
                         month = match.value;
                     }
                 } else {
-                    if (match = matchNumber(dateStr, startIndex, count, obeyCount)) {
+                    if ((match = matchNumber(dateStr, startIndex, count, obeyCount))) {
                         month = match.value - 1;
                     }
                 }
@@ -525,19 +523,19 @@ KISSY.add(function (S,require) {
                 }
                 break;
             case 'k':
-                if (match = matchNumber(dateStr, startIndex, count, obeyCount)) {
+                if ((match = matchNumber(dateStr, startIndex, count, obeyCount))) {
                     calendar.setHourOfDay(match.value % 24);
                 }
                 break;
             case 'E':
-                if (match = matchField(dateStr, startIndex, locale[count > 3 ?
+                if ((match = matchField(dateStr, startIndex, locale[count > 3 ?
                     'weekdays' :
-                    'shortWeekdays'])) {
+                    'shortWeekdays']))) {
                     calendar.setDayOfWeek(match.value);
                 }
                 break;
             case 'a':
-                if (match = matchField(dateStr, startIndex, locale.ampms)) {
+                if ((match = matchField(dateStr, startIndex, locale.ampms))) {
                     if (calendar.isSetHourOfDay()) {
                         if (match.value) {
                             hour = calendar.getHourOfDay();
@@ -551,7 +549,7 @@ KISSY.add(function (S,require) {
                 }
                 break;
             case 'h':
-                if (match = matchNumber(dateStr, startIndex, count, obeyCount)) {
+                if ((match = matchNumber(dateStr, startIndex, count, obeyCount))) {
                     hour = match.value %= 12;
                     if (tmp.ampm) {
                         hour += 12;
@@ -560,7 +558,7 @@ KISSY.add(function (S,require) {
                 }
                 break;
             case 'K':
-                if (match = matchNumber(dateStr, startIndex, count, obeyCount)) {
+                if ((match = matchNumber(dateStr, startIndex, count, obeyCount))) {
                     hour = match.value;
                     if (tmp.ampm) {
                         hour += 12;
@@ -569,22 +567,21 @@ KISSY.add(function (S,require) {
                 }
                 break;
             case 'Z':
-                if (dateStr)
-                    var sign = 1,
-                        zoneChar = dateStr.charAt(startIndex);
-                if (zoneChar == '-') {
+                var sign = 1,
+                    zoneChar = dateStr.charAt(startIndex);
+                if (zoneChar === '-') {
                     sign = -1;
                     startIndex++;
-                } else if (zoneChar == '+') {
+                } else if (zoneChar === '+') {
                     startIndex++;
                 } else {
                     break;
                 }
-                if (match = matchNumber(dateStr, startIndex, 2, true)) {
+                if ((match = matchNumber(dateStr, startIndex, 2, true))) {
                     var zoneOffset = match.value * 60;
                     startIndex = match.startIndex;
-                    if (match = matchNumber(dateStr, startIndex, 2, true)) {
-                        zoneOffset += match.value
+                    if ((match = matchNumber(dateStr, startIndex, 2, true))) {
+                        zoneOffset += match.value;
                     }
                     calendar.setTimezoneOffset(zoneOffset);
                 }
@@ -599,7 +596,7 @@ KISSY.add(function (S,require) {
                 // case 'F':
                 // case 'w':
                 // case 'W'
-                if (match = matchNumber(dateStr, startIndex, count, obeyCount)) {
+                if ((match = matchNumber(dateStr, startIndex, count, obeyCount))) {
                     var index = calendarIndexMap[field];
                     calendar.set(index, match.value);
                 }
@@ -659,13 +656,13 @@ KISSY.add(function (S,require) {
                 for (i = 0; errorIndex < 0 && i < len; i++) {
                     var comp = pattern[i], text, textLen;
                     oldStartIndex = startIndex;
-                    if (text = comp.text) {
+                    if ((text = comp.text)) {
                         textLen = text.length;
                         if ((textLen + startIndex) > dateStrLen) {
                             errorIndex = startIndex;
                         } else {
                             for (j = 0; j < textLen; j++) {
-                                if (text.charAt(j) != dateStr.charAt(j + startIndex)) {
+                                if (text.charAt(j) !== dateStr.charAt(j + startIndex)) {
                                     errorIndex = startIndex;
                                     break loopPattern;
                                 }
@@ -693,7 +690,7 @@ KISSY.add(function (S,require) {
                             this.locale,
                             obeyCount,
                             tmp);
-                        if (startIndex == oldStartIndex) {
+                        if (startIndex === oldStartIndex) {
                             errorIndex = startIndex;
                         }
                     }

@@ -1,16 +1,17 @@
 /** Compiled By kissy-xtemplate */
 KISSY.add(function (S, require, exports, module) {
+        /*jshint quotmark: false, unused:false, indent:false*/
         return function (scopes, S, undefined) {
             var buffer = "",
                 config = this.config,
                 engine = this,
                 moduleWrap, utils = config.utils;
-            if (typeof module != "undefined" && module.kissy) {
+            if (typeof module !== "undefined" && module.kissy) {
                 moduleWrap = module;
             }
-            var runBlockCommandUtil = utils["runBlockCommand"],
-                getExpressionUtil = utils["getExpression"],
-                getPropertyOrRunCommandUtil = utils["getPropertyOrRunCommand"];
+            var runBlockCommandUtil = utils.runBlockCommand,
+                getExpressionUtil = utils.getExpression,
+                getPropertyOrRunCommandUtil = utils.getPropertyOrRunCommand;
             buffer += '';
             var config0 = {};
             var params1 = [];
@@ -29,7 +30,7 @@ KISSY.add(function (S, require, exports, module) {
                 config3.fn = function (scopes) {
                     var buffer = "";
                     buffer += '\n    <td role="gridcell"\n        title="';
-                    var id7 = getPropertyOrRunCommandUtil(engine, scopes, {}, 'title', 0, 5, undefined, false);
+                    var id7 = getPropertyOrRunCommandUtil(engine, scopes, {}, "title", 0, 5, undefined, false);
                     buffer += getExpressionUtil(id7, true);
                     buffer += '"\n        class="';
                     var config9 = {};
@@ -77,5 +78,5 @@ KISSY.add(function (S, require, exports, module) {
             };
             buffer += runBlockCommandUtil(engine, scopes, config0, "each", 1);
             return buffer;
-        }
+        };
 });

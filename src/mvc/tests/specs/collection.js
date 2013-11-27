@@ -24,10 +24,10 @@ KISSY.add(function (S, MVC) {
                 success:function () {
                     expect(c.get("models").length).toBe(1);
                     var model = c.get("models")[0];
-                    expect(model.get("x")).toBe(11);
+                    expect(model.get('x')).toBe(11);
                     expect(model.isNew()).toBe(false);
                     expect(model.isModified()).toBe(false);
-                    model.set("x", 1);
+                    model.set('x', 1);
                     expect(model.isModified()).toBe(true);
                     expect(model.isNew()).toBe(false);
                     expect(c.getById(9)).toBe(model);
@@ -53,10 +53,10 @@ KISSY.add(function (S, MVC) {
                 success:function () {
                     expect(c.get("models").length).toBe(1);
                     var model = c.get("models")[0];
-                    expect(model.get("x")).toBe(11);
+                    expect(model.get('x')).toBe(11);
                     expect(model.isNew()).toBe(false);
                     expect(model.isModified()).toBe(false);
-                    model.set("x", 1);
+                    model.set('x', 1);
                     expect(model.isModified()).toBe(true);
                     expect(model.isNew()).toBe(false);
                     expect(c.getById(9)).toBe(model);
@@ -108,7 +108,7 @@ KISSY.add(function (S, MVC) {
 
                 var model = c.add({x:1, y:1});
 
-                c.on("remove", function (e) {
+                c.on('remove', function (e) {
                     remove = 1;
                     removeModel = e.model;
                 });
@@ -140,19 +140,19 @@ KISSY.add(function (S, MVC) {
                 var c = new Collection(),
                     called = 0,
                     m = c.add({
-                        "x":1,
-                        "y":1
+                        'x':1,
+                        'y':1
                     });
 
                 c.on("*Change", function (e) {
                     expect(e.target).toBe(m);
                     expect(e.prevVal).toEqual([1]);
-                    expect(e.attrName).toEqual(["x"]);
+                    expect(e.attrName).toEqual(['x']);
                     expect(e.newVal).toEqual([2]);
                     called = 1;
                 });
 
-                m.set("x", 2);
+                m.set('x', 2);
 
                 waitsFor(function () {
                     return called;

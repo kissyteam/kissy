@@ -5,10 +5,10 @@ KISSY.add(function (S, UA, Node, Overlay) {
                 content:"haha"
             });
             var show = 0, hide = 0;
-            overlay.on("show", function () {
+            overlay.on('show', function () {
                 show = 1;
             });
-            overlay.on("hide", function () {
+            overlay.on('hide', function () {
                 hide++;
             });
             overlay.hide();
@@ -26,10 +26,10 @@ KISSY.add(function (S, UA, Node, Overlay) {
                 content:"haha"
             });
             var show = 0, hide = 0;
-            overlay.on("show", function () {
+            overlay.on('show', function () {
                 show = 1;
             });
-            overlay.on("hide", function () {
+            overlay.on('hide', function () {
                 hide++;
             });
             overlay.render();
@@ -45,10 +45,10 @@ KISSY.add(function (S, UA, Node, Overlay) {
             }),
                 show = 0,
                 hide = 0;
-            overlay.on("show", function () {
+            overlay.on('show', function () {
                 show = 1;
             });
-            overlay.on("hide", function () {
+            overlay.on('hide', function () {
                 hide++;
             });
             overlay.show();

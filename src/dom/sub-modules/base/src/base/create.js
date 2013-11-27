@@ -3,9 +3,9 @@
  * dom-create
  * @author lifesinger@gmail.com, yiminghe@gmail.com
  */
-KISSY.add(function (S,require) {
+KISSY.add(function (S, require) {
     var Dom = require('./api');
-    var  logger = S.getLogger('s/dom');
+    var logger = S.getLogger('s/dom');
     var doc = S.Env.host.document,
         NodeType = Dom.NodeType,
         UA = S.UA,
@@ -30,7 +30,7 @@ KISSY.add(function (S,require) {
     }
 
     function getHolderDiv(ownerDoc) {
-        var holder = ownerDoc && ownerDoc != doc ?
+        var holder = ownerDoc && ownerDoc !== doc ?
             ownerDoc.createElement(DIV) :
             DEFAULT_DIV;
         if (holder === DEFAULT_DIV) {
@@ -49,14 +49,14 @@ KISSY.add(function (S,require) {
     function _empty(node) {
         try {
             // fast path
-            node.innerHTML = "";
+            node.innerHTML = '';
             return;
         } catch (e) {
             // innerHTML is readOnly (e.g. TABLE (sub)elements in quirks mode)
             // Fall through (saves bytes)
         }
         // SVG/strict elements don't support innerHTML/canHaveChildren, and OBJECT/APPLET elements in quirks node have canHaveChildren=false
-        for (var c; c = node.lastChild;) { // intentional assignment
+        for (var c; (c = node.lastChild);) { // intentional assignment
             _destroy(c, node); // destroy is better than removeChild so TABLE subelements are removed in proper order
         }
     }
@@ -67,12 +67,12 @@ KISSY.add(function (S,require) {
             // In IE quirks mode, PARAM nodes as children of OBJECT/APPLET nodes have a removeNode method that does nothing and
             // the parent node has canHaveChildren=false even though removeChild correctly removes the PARAM children.
             // In IE, SVG/strict nodes don't have a removeNode method nor a canHaveChildren boolean.
-            if (oldIE && parent['canHaveChildren'] && "removeNode" in node) {
+            if (oldIE && parent.canHaveChildren && 'removeNode' in node) {
                 // in IE quirks, node.canHaveChildren can be false but firstChild can be non-null (OBJECT/APPLET)
                 if (node.firstChild) {
                     _empty(node);
                 }
-                node['removeNode'](false)
+                node.removeNode(false);
             } else {
                 parent.removeChild(node);
             }
@@ -108,7 +108,7 @@ KISSY.add(function (S,require) {
                 }
 
 
-                if (typeof html != 'string') {
+                if (typeof html !== 'string') {
                     return ret;
                 }
 
@@ -208,9 +208,9 @@ KISSY.add(function (S,require) {
                 // getter
                 if (htmlString === undefined) {
                     // only gets value on the first of element nodes
-                    if (el.nodeType == NodeType.ELEMENT_NODE) {
+                    if (el.nodeType === NodeType.ELEMENT_NODE) {
                         return el.innerHTML;
-                    } else if (el.nodeType == NodeType.DOCUMENT_FRAGMENT_NODE) {
+                    } else if (el.nodeType === NodeType.DOCUMENT_FRAGMENT_NODE) {
                         var holder = getHolderDiv(el.ownerDocument);
                         holder.appendChild(el);
                         return holder.innerHTML;
@@ -230,7 +230,7 @@ KISSY.add(function (S,require) {
                         try {
                             for (i = els.length - 1; i >= 0; i--) {
                                 elem = els[i];
-                                if (elem.nodeType == NodeType.ELEMENT_NODE) {
+                                if (elem.nodeType === NodeType.ELEMENT_NODE) {
                                     Dom.cleanData(getElementsByTagName(elem, '*'));
                                     elem.innerHTML = htmlString;
                                 }
@@ -272,8 +272,8 @@ KISSY.add(function (S,require) {
                 }
                 // getter
                 if (htmlString === undefined) {
-                    if (supportOuterHTML && el.nodeType != Dom.DOCUMENT_FRAGMENT_NODE) {
-                        return el.outerHTML
+                    if (supportOuterHTML && el.nodeType !== Dom.DOCUMENT_FRAGMENT_NODE) {
+                        return el.outerHTML;
                     } else {
                         holder = getHolderDiv(el.ownerDocument);
                         holder.appendChild(Dom.clone(el, true));
@@ -284,8 +284,8 @@ KISSY.add(function (S,require) {
                     if (!htmlString.match(/<(?:script|style|link)/i) && supportOuterHTML) {
                         for (i = length - 1; i >= 0; i--) {
                             el = els[i];
-                            if (el.nodeType == NodeType.ELEMENT_NODE) {
-                                Dom.cleanData(el,1);
+                            if (el.nodeType === NodeType.ELEMENT_NODE) {
+                                Dom.cleanData(el, 1);
                                 el.outerHTML = htmlString;
                             }
                         }
@@ -311,7 +311,7 @@ KISSY.add(function (S,require) {
                     i;
                 for (i = els.length - 1; i >= 0; i--) {
                     el = els[i];
-                    if (!keepData && el.nodeType == NodeType.ELEMENT_NODE) {
+                    if (!keepData && el.nodeType === NodeType.ELEMENT_NODE) {
                         all = S.makeArray(getElementsByTagName(el, '*'));
                         all.push(el);
                         Dom.removeData(all);
@@ -349,9 +349,9 @@ KISSY.add(function (S,require) {
              */
             clone: function (selector, deep, withDataAndEvent, deepWithDataAndEvent) {
                 if (typeof deep === 'object') {
-                    deepWithDataAndEvent = deep['deepWithDataAndEvent'];
-                    withDataAndEvent = deep['withDataAndEvent'];
-                    deep = deep['deep'];
+                    deepWithDataAndEvent = deep.deepWithDataAndEvent;
+                    withDataAndEvent = deep.withDataAndEvent;
+                    deep = deep.deep;
                 }
 
                 var elem = Dom.get(selector),
@@ -373,14 +373,14 @@ KISSY.add(function (S,require) {
                  @type HTMLElement
                  @ignore*/elem.cloneNode(deep);
 
-                if (elemNodeType == NodeType.ELEMENT_NODE ||
-                    elemNodeType == NodeType.DOCUMENT_FRAGMENT_NODE) {
+                if (elemNodeType === NodeType.ELEMENT_NODE ||
+                    elemNodeType === NodeType.DOCUMENT_FRAGMENT_NODE) {
                     // IE copies events bound via attachEvent when using cloneNode.
                     // Calling detachEvent on the clone will also remove the events
                     // from the original. In order to get around this, we use some
                     // proprietary methods to clear the events. Thanks to MooTools
                     // guys for this hotness.
-                    if (_fixCloneAttributes && elemNodeType == NodeType.ELEMENT_NODE) {
+                    if (_fixCloneAttributes && elemNodeType === NodeType.ELEMENT_NODE) {
                         _fixCloneAttributes(elem, clone);
                     }
 
@@ -419,7 +419,7 @@ KISSY.add(function (S,require) {
 
     function processAll(fn, elem, clone) {
         var elemNodeType = elem.nodeType;
-        if (elemNodeType == NodeType.DOCUMENT_FRAGMENT_NODE) {
+        if (elemNodeType === NodeType.DOCUMENT_FRAGMENT_NODE) {
             var eCs = elem.childNodes,
                 cloneCs = clone.childNodes,
                 fIndex = 0;
@@ -429,7 +429,7 @@ KISSY.add(function (S,require) {
                 }
                 fIndex++;
             }
-        } else if (elemNodeType == NodeType.ELEMENT_NODE) {
+        } else if (elemNodeType === NodeType.ELEMENT_NODE) {
             var elemChildren = getElementsByTagName(elem, '*'),
                 cloneChildren = getElementsByTagName(clone, '*'),
                 cIndex = 0;
@@ -448,7 +448,7 @@ KISSY.add(function (S,require) {
             srcData,
             d;
 
-        if (dest.nodeType == NodeType.ELEMENT_NODE && !Dom.hasData(src)) {
+        if (dest.nodeType === NodeType.ELEMENT_NODE && !Dom.hasData(src)) {
             return;
         }
 
@@ -469,11 +469,11 @@ KISSY.add(function (S,require) {
     // 添加成员到元素中
     function attachProps(elem, props) {
         if (S.isPlainObject(props)) {
-            if (elem.nodeType == NodeType.ELEMENT_NODE) {
+            if (elem.nodeType === NodeType.ELEMENT_NODE) {
                 Dom.attr(elem, props, true);
             }
             // document fragment
-            else if (elem.nodeType == NodeType.DOCUMENT_FRAGMENT_NODE) {
+            else if (elem.nodeType === NodeType.DOCUMENT_FRAGMENT_NODE) {
                 Dom.attr(elem.childNodes, props, true);
             }
         }
@@ -517,6 +517,7 @@ KISSY.add(function (S,require) {
         }, p;
 
     for (p in creatorsMap) {
+        /*jshint loopfunc: true*/
         (function (tag) {
             creators[p] = function (html, ownerDoc) {
                 return create('<' + tag + '>' +
@@ -527,7 +528,7 @@ KISSY.add(function (S,require) {
     }
 
     // https://github.com/kissyteam/kissy/issues/422
-    creatorsMap['option'] = creatorsMap['optgroup'] = function (html, ownerDoc) {
+    creatorsMap.option = creatorsMap.optgroup = function (html, ownerDoc) {
         return create('<select multiple="multiple">' + html + '</select>', undefined, ownerDoc);
     };
 

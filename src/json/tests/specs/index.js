@@ -226,7 +226,7 @@ KISSY.add(function (S, Json) {
             });
 
             it('should throw exception when encounter non-whitespace', function () {
-                var t = '{"x": x"2"}';
+                var t = '{'x': x"2"}';
                 expect(function () {
                     Json.parse(t);
                 }).toThrow();
@@ -322,7 +322,7 @@ KISSY.add(function (S, Json) {
             it('should throw exception when encounter control character', function () {
                 var t;
                 expect(function () {
-                    Json.parse(t = '{"x":"\t"}');
+                    Json.parse(t = '{'x':"\t"}');
                 }).toThrow();
                 if (JSON && !phantomjs) {
                     expect(

@@ -680,9 +680,9 @@ KISSY.add(function (S, XTemplate, XTemplateNodeJs) {
                 });
 
                 it('support template extend', function () {
-                    KISSY.add('xtemplate/parent', '{{#macro "x"}}{{title}} parent{{/macro}}' +
-                        '{{macro "x"}}');
-                    var render = new XTemplate('{{#macro "x"}}{{content}} child{{/macro}}' +
+                    KISSY.add('xtemplate/parent', '{{#macro 'x'}}{{title}} parent{{/macro}}' +
+                        '{{macro 'x'}}');
+                    var render = new XTemplate('{{#macro 'x'}}{{content}} child{{/macro}}' +
                         '{{include "xtemplate/parent"}}').render({
                             title: 'title',
                             content: 'content'
@@ -812,9 +812,25 @@ KISSY.add(function (S, XTemplate, XTemplateNodeJs) {
                 });
 
                 it('support compiled xtemplate module', function () {
-                    KISSY.config('packages', {'xtpls': {
-                        base: '../specs'
-                    }});
+                    var path;
+                    if (S.UA.nodejs) {
+                        path = S.config('packages').src.baseUri
+                            .resolve('src/xtemplate/tests/specs/')
+                            .getPath();
+
+                        S.config('packages', {
+                            xtpls: {
+                                base: path
+                            }
+                        });
+                    } else {
+                        KISSY.config('packages', {
+                            'xtpls': {
+                                base: '../specs'
+                            }
+                        });
+                    }
+
                     var ret;
                     KISSY.use('xtpls/a-xtpl', function (S, A) {
                         ret = new XTemplate(A).render({
@@ -1351,7 +1367,6 @@ KISSY.add(function (S, XTemplate, XTemplateNodeJs) {
             });
 
         });
-
     });
 
     if (S.UA.nodejs) {
@@ -1373,7 +1388,7 @@ KISSY.add(function (S, XTemplate, XTemplateNodeJs) {
                 expect(xtemplate.render({
                     n: 3
                 })).toBe('12345');
-            })
+            });
         });
     }
 }, {

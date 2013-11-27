@@ -603,7 +603,7 @@ KISSY.add(function(S, require) {
       _$jscoverage['/dialog.js'].lineData[68]++;
       if (visit8_68_1(!frag)) {
         _$jscoverage['/dialog.js'].lineData[69]++;
-        frag = document.createElement("textarea");
+        frag = document.createElement('textarea');
         _$jscoverage['/dialog.js'].lineData[70]++;
         frag.style.display = "none";
         _$jscoverage['/dialog.js'].lineData[71]++;

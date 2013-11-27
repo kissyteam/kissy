@@ -15,7 +15,7 @@ KISSY.add(function (S, require, exports, module) {
             var id0 = getPropertyOrRunCommandUtil(engine, scopes, {}, "prefixCls", 0, 1, undefined, false);
             buffer += getExpressionUtil(id0, true);
             buffer += 'editor-tools"\n     id="ks-editor-tools-';
-            var id1 = getPropertyOrRunCommandUtil(engine, scopes, {}, "id", 0, 2, undefined, false);
+            var id1 = getPropertyOrRunCommandUtil(engine, scopes, {}, 'id', 0, 2, undefined, false);
             buffer += getExpressionUtil(id1, true);
             buffer += '">\n\n</div>\n\n<!--\nhttp://johanbrook.com/browsers/native-momentum-scrolling-ios-5/\nios 不能放在 iframe 上！\n-->\n\n<div class="';
             var id2 = getPropertyOrRunCommandUtil(engine, scopes, {}, "prefixCls", 0, 11, undefined, false);
@@ -33,10 +33,10 @@ KISSY.add(function (S, require, exports, module) {
             };
             buffer += runBlockCommandUtil(engine, scopes, config3, "if", 13);
             buffer += '\n\nid="ks-editor-textarea-wrap-';
-            var id6 = getPropertyOrRunCommandUtil(engine, scopes, {}, "id", 0, 17, undefined, false);
+            var id6 = getPropertyOrRunCommandUtil(engine, scopes, {}, 'id', 0, 17, undefined, false);
             buffer += getExpressionUtil(id6, true);
             buffer += '"\n>\n\n<textarea\n        id="ks-editor-textarea-';
-            var id7 = getPropertyOrRunCommandUtil(engine, scopes, {}, "id", 0, 21, undefined, false);
+            var id7 = getPropertyOrRunCommandUtil(engine, scopes, {}, 'id', 0, 21, undefined, false);
             buffer += getExpressionUtil(id7, true);
             buffer += '"\n        class="';
             var id8 = getPropertyOrRunCommandUtil(engine, scopes, {}, "prefixCls", 0, 22, undefined, false);
@@ -78,7 +78,7 @@ KISSY.add(function (S, require, exports, module) {
             var id18 = getPropertyOrRunCommandUtil(engine, scopes, {}, "prefixCls", 0, 36, undefined, false);
             buffer += getExpressionUtil(id18, true);
             buffer += 'editor-status"\n     id="ks-editor-status-';
-            var id19 = getPropertyOrRunCommandUtil(engine, scopes, {}, "id", 0, 37, undefined, false);
+            var id19 = getPropertyOrRunCommandUtil(engine, scopes, {}, 'id', 0, 37, undefined, false);
             buffer += getExpressionUtil(id19, true);
             buffer += '">\n\n</div>';
             return buffer;

@@ -3,19 +3,18 @@
  * dd support for kissy, dd objects central management module
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S,require) {
+KISSY.add(function (S, require) {
     var Node = require('node'),
         Base = require('base');
-    var   logger= S.getLogger('dd/ddm');
+    var logger = S.getLogger('dd/ddm');
     var UA = S.UA,
-        undefined=undefined,
         $ = Node.all,
 
         win = S.Env.host,
         doc = win.document,
         $doc = $(doc),
         $win = $(win),
-        ie6 = UA['ie'] === 6,
+        ie6 = UA.ie === 6,
     // prevent collision with click , only start when move
         PIXEL_THRESH = 3,
     // or start when mousedown for 1 second
@@ -61,7 +60,7 @@ KISSY.add(function (S,require) {
             var self = this,
                 drops = self.get('drops'),
                 index = S.indexOf(d, drops);
-            if (index != -1) {
+            if (index !== -1) {
                 drops.splice(index, 1);
             }
         },
@@ -86,7 +85,6 @@ KISSY.add(function (S,require) {
          */
         _start: function () {
             var self = this,
-                drops = self.get('drops'),
                 drag = self.__activeToDrag;
             if (!drag) {
                 return;
@@ -266,9 +264,9 @@ KISSY.add(function (S,require) {
         }
 
         // 先处理预备役，效率!
-        if (__activeToDrag = self.__activeToDrag) {
+        if ((__activeToDrag = self.__activeToDrag)) {
             __activeToDrag._move(ev);
-        } else if (activeDrag = self.get('activeDrag')) {
+        } else if ((activeDrag = self.get('activeDrag'))) {
             activeDrag._move(ev);
             // for drop-free draggable performance
             if (self.__needDropCheck) {
@@ -304,7 +302,7 @@ KISSY.add(function (S,require) {
             }
 
             var a,
-                node = drop['getNodeFromTarget'](ev,
+                node = drop.getNodeFromTarget(ev,
                     // node
                     activeDrag.get('dragNode')[0],
                     // proxy node
@@ -317,7 +315,7 @@ KISSY.add(function (S,require) {
                 return undefined;
             }
 
-            if (mode == 'point') {
+            if (mode === 'point') {
                 //取鼠标所在的 drop 区域
                 if (inNodeByPointer(node, activeDrag.mousePos)) {
                     a = area(region(node));
@@ -332,7 +330,7 @@ KISSY.add(function (S,require) {
                         }
                     }
                 }
-            } else if (mode == 'intersect') {
+            } else if (mode === 'intersect') {
                 //取一个和activeDrag交集最大的drop区域
                 a = area(intersect(dragRegion, region(node)));
                 if (a > vArea) {
@@ -340,10 +338,10 @@ KISSY.add(function (S,require) {
                     activeDrop = drop;
                 }
 
-            } else if (mode == 'strict') {
+            } else if (mode === 'strict') {
                 //drag 全部在 drop 里面
                 a = area(intersect(dragRegion, region(node)));
-                if (a == dragArea) {
+                if (a === dragArea) {
                     activeDrop = drop;
                     return false;
                 }
@@ -352,13 +350,13 @@ KISSY.add(function (S,require) {
         });
 
         oldDrop = self.get('activeDrop');
-        if (oldDrop && oldDrop != activeDrop) {
+        if (oldDrop && oldDrop !== activeDrop) {
             oldDrop._handleOut(ev);
             activeDrag._handleOut(ev);
         }
         self.setInternal('activeDrop', activeDrop);
         if (activeDrop) {
-            if (oldDrop != activeDrop) {
+            if (oldDrop !== activeDrop) {
                 activeDrop._handleEnter(ev);
             } else {
                 // 注意处理代理时内部节点变化导致的 out、enter
@@ -370,7 +368,7 @@ KISSY.add(function (S,require) {
     /*
      垫片只需创建一次
      */
-    function activeShim(self) {
+    var activeShim = function (self) {
         //创造垫片，防止进入iframe，外面document监听不到 mousedown/up/move
         self._shim = $('<div ' +
             'style="' +
@@ -384,8 +382,7 @@ KISSY.add(function (S,require) {
             'cursor:' + ddm.get('dragCursor') + ';' +
             'z-index:' +
             //覆盖iframe上面即可
-            SHIM_Z_INDEX
-            + ';' +
+            SHIM_Z_INDEX + ';' +
             '"><' + '/div>')
             .prependTo(doc.body || doc.documentElement)
             //0.5 for debug
@@ -401,7 +398,7 @@ KISSY.add(function (S,require) {
         }
 
         showShim(self);
-    }
+    };
 
     var adjustShimSize = S.throttle(function () {
         var self = this,
@@ -422,7 +419,7 @@ KISSY.add(function (S,require) {
         if (ah) {
             cur = ah.css('cursor');
         }
-        if (cur == 'auto') {
+        if (cur === 'auto') {
             cur = self.get('dragCursor');
         }
         self._shim.css({
@@ -481,23 +478,23 @@ KISSY.add(function (S,require) {
 
     function region(node) {
         var offset = node.offset();
-        if (!node.__dd_cached_width) {
+        if (!node.__ddCachedWidth) {
             logger.debug('no cache in dd!');
             logger.debug(node[0]);
         }
         return {
             left: offset.left,
-            right: offset.left + (node.__dd_cached_width || node.outerWidth()),
+            right: offset.left + (node.__ddCachedWidth || node.outerWidth()),
             top: offset.top,
-            bottom: offset.top + (node.__dd_cached_height || node.outerHeight())
+            bottom: offset.top + (node.__ddCachedHeight || node.outerHeight())
         };
     }
 
     function inRegion(region, pointer) {
-        return region.left <= pointer.left
-            && region.right >= pointer.left
-            && region.top <= pointer.top
-            && region.bottom >= pointer.top;
+        return region.left <= pointer.left &&
+            region.right >= pointer.left &&
+            region.top <= pointer.top &&
+            region.bottom >= pointer.top;
     }
 
     function area(region) {
@@ -508,9 +505,9 @@ KISSY.add(function (S,require) {
     }
 
     function intersect(r1, r2) {
-        var t = Math.max(r1['top'], r2.top),
+        var t = Math.max(r1.top, r2.top),
             r = Math.min(r1.right, r2.right),
-            b = Math.min(r1['bottom'], r2.bottom),
+            b = Math.min(r1.bottom, r2.bottom),
             l = Math.max(r1.left, r2.left);
         return {
             left: l,
@@ -526,8 +523,8 @@ KISSY.add(function (S,require) {
 
     function cacheWH(node) {
         if (node) {
-            node.__dd_cached_width = node.outerWidth();
-            node.__dd_cached_height = node.outerHeight();
+            node.__ddCachedWidth = node.outerWidth();
+            node.__ddCachedHeight = node.outerHeight();
         }
     }
 

@@ -164,7 +164,7 @@ KISSY.add(function (S, require) {
                     css.push(rule.selectorText + " {" + rule.style.cssText + "}");
 
                 }
-                return css.join("\n");
+                return css.join('\n');
             }
         }
 

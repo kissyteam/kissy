@@ -99,7 +99,7 @@ KISSY.add(function (S, require) {
                     }
                 }
                 o.length = j + 1;
-                this.append("\n");
+                this.append('\n');
             }
             // allow indentation if encounter next tag
             this.allowIndent = 1;

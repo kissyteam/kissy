@@ -22,7 +22,7 @@ KISSY.add(function (S, require) {
         _init: function () {
             var self = this,
                 editor = self.editor,
-                statusBarEl = editor.get("statusBarEl");
+                statusBarEl = editor.get('statusBarEl');
             self.holder = new Node("<span " +
                 "style='zoom:1;display:inline-block;height:22px;line-height:22px;'>" +
                 "<label style='vertical-align:middle;'>" +
@@ -32,8 +32,8 @@ KISSY.add(function (S, require) {
                 .appendTo(statusBarEl);
             var el = self.el = self.holder.one('input');
             el.on("click", self._check, self);
-            editor.on("wysiwygMode", self._wysiwygmode, self);
-            editor.on("sourceMode", self._sourcemode, self);
+            editor.on('wysiwygMode', self._wysiwygmode, self);
+            editor.on('sourceMode', self._sourcemode, self);
         },
         _sourcemode: function () {
             this.el.attr("checked", true);

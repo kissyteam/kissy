@@ -6,40 +6,40 @@
 KISSY.add(function (S,require) {
     var Dom = require('dom/base');
     Dom._contains = function (a, b) {
-        if (a.nodeType == Dom.NodeType.DOCUMENT_NODE) {
+        if (a.nodeType === Dom.NodeType.DOCUMENT_NODE) {
             a = a.documentElement;
         }
         // !a.contains => a===document || text
         // 注意原生 contains 判断时 a===b 也返回 true
         b = b.parentNode;
 
-        if (a == b) {
+        if (a === b) {
             return true;
         }
 
         // when b is document, a.contains(b) 不支持的接口 in ie
-        if (b && b.nodeType == Dom.NodeType.ELEMENT_NODE) {
+        if (b && b.nodeType === Dom.NodeType.ELEMENT_NODE) {
             return a.contains && a.contains(b);
         } else {
             return false;
         }
     };
 
-    var div = document.createElement("div");
-    div.appendChild(document.createComment(""));
+    var div = document.createElement('div');
+    div.appendChild(document.createComment(''));
 
     var getElementsByTagName;
 
-    if (div.getElementsByTagName("*").length) {
+    if (div.getElementsByTagName('*').length) {
         getElementsByTagName = function (name, context) {
             var nodes = context.getElementsByTagName(name),
-                needsFilter = name == '*';
+                needsFilter = name === '*';
             // <input id='length'>
-            if (needsFilter || typeof nodes.length != 'number') {
+            if (needsFilter || typeof nodes.length !== 'number') {
                 var ret = [],
                     i = 0,
                     el;
-                while (el = nodes[i++]) {
+                while ((el = nodes[i++])) {
                     if (!needsFilter || el.nodeType === 1) {
                         ret.push(el);
                     }
@@ -63,7 +63,7 @@ KISSY.add(function (S,require) {
         if (el && getAttr(el, 'id') !== id) {
             var children = getElementsByTagName('*', doc);
             for (var i = 0, l = children.length; i < l; i++) {
-                if (getAttr(children[i], 'id') == id) {
+                if (getAttr(children[i], 'id') === id) {
                     return children[i];
                 }
             }

@@ -23,7 +23,7 @@ KISSY.add(function (S, require) {
 
         syncUI: function () {
             var bar = this,
-                children = bar.get("children");
+                children = bar.get('children');
             S.each(children, function (c) {
                 if (c.get("selected")) {
                     bar.setInternal("selectedTab", c);
