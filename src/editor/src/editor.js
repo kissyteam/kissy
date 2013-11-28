@@ -5,6 +5,7 @@
  */
 KISSY.add(function (S, require, exports, module) {
     var Node = require('node');
+    var Dom = require('dom');
     var iframeContentTpl = require('editor/iframe-content-tpl');
     var Editor = require('editor/base');
     var Utils = require('editor/utils');
@@ -654,6 +655,13 @@ KISSY.add(function (S, require, exports, module) {
 
             if ((htmlDataProcessor = self.htmlDataProcessor)) {
                 data = htmlDataProcessor.toDataFormat(data, dataFilter);
+            }
+
+            if (UA.ieMode === 11) {
+                // https://bugs.dojotoolkit.org/ticket/17431
+                // inserthtml does not support in ie11
+                self.insertElement($(Dom.create(data, null, editorDoc)));
+                return;
             }
 
             self.focus();

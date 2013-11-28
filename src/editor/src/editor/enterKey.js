@@ -75,13 +75,13 @@ KISSY.add(function (S, require) {
             node = nextBlock.parent();
             if (node.nodeName() == 'li') {
                 nextBlock._4e_breakParent(node);
-                nextBlock._4e_move(nextBlock.next(), true);
+                nextBlock._4eMove(nextBlock.next(), true);
             }
         }
         else if (previousBlock && ( node = previousBlock.parent() ) && node.nodeName() == 'li') {
             previousBlock._4e_breakParent(node);
             range.moveToElementEditablePosition(previousBlock.next());
-            previousBlock._4e_move(previousBlock.prev());
+            previousBlock._4eMove(previousBlock.prev());
         }
 
         // If we have both the previous and next blocks, it means that the
@@ -132,7 +132,7 @@ KISSY.add(function (S, require) {
                     //<li><strong>^</strong></li>
                     if (dtd.$removeEmpty[ element.nodeName() ]) {
                         element = element.clone();
-                        newBlock._4e_moveChildren(element);
+                        newBlock._4eMoveChildren(element);
                         newBlock.append(element);
                     }
                 }
@@ -190,7 +190,7 @@ KISSY.add(function (S, require) {
     }
 
     function EnterKey(editor) {
-        var doc = editor.get("document");
+        var doc = editor.get('document');
         doc.on('keydown', function (ev) {
             var keyCode = ev.keyCode;
             if (keyCode === 13) {

@@ -26,7 +26,7 @@ KISSY.add(function (S, require) {
             window['focus']();
             document.body.focus();
 
-            var $selection = editor.get("document")[0].selection,
+            var $selection = editor.get('document')[0].selection,
                 $range;
             // 中途更改了 domain，编辑器失去焦点，不能取得 range
             // 拒绝访问错误
@@ -43,7 +43,7 @@ KISSY.add(function (S, require) {
                 // ||
                 // 缩放图片那个框在ie下会突出浮动层来
                     $range.item
-                        && $range.item(0).ownerDocument == editor.get("document")[0]) {
+                        && $range.item(0).ownerDocument == editor.get('document')[0]) {
                     var $myRange = document.body.createTextRange();
                     $myRange.moveToElementText(self.get('el').first()[0]);
                     $myRange.collapse(true);

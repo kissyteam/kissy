@@ -354,7 +354,7 @@ KISSY.add(function(S, require) {
   editor.docReady(function() {
   _$jscoverage['/justify-left.js'].functionData[6]++;
   _$jscoverage['/justify-left.js'].lineData[46]++;
-  editor.get("document").on('keydown', function(e) {
+  editor.get('document').on('keydown', function(e) {
   _$jscoverage['/justify-left.js'].functionData[7]++;
   _$jscoverage['/justify-left.js'].lineData[47]++;
   if (visit3_47_1(e.ctrlKey && visit4_47_2(e.keyCode == S.Node.KeyCode.L))) {

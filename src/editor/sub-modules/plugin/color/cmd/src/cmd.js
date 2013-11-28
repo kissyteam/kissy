@@ -7,7 +7,7 @@ KISSY.add(function (S, require) {
     var Editor = require('editor');
 
     function applyColor(editor, c, styles) {
-        var doc = editor.get("document")[0];
+        var doc = editor.get('document')[0];
         editor.execCommand("save");
         if (c) {
             new Editor.Style(styles, {

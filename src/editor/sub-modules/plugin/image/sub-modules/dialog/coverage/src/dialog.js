@@ -1278,7 +1278,7 @@ KISSY.add(function(S, require) {
   "style": style});
   } else {
     _$jscoverage['/dialog.js'].lineData[336]++;
-    img = new Node("<img " + (style ? ("style='" + style + "'") : "") + " src='" + url + "' " + "_ke_saved_src='" + url + "' alt='' />", null, self.editor.get("document")[0]);
+    img = new Node("<img " + (style ? ("style='" + style + "'") : "") + " src='" + url + "' " + "_ke_saved_src='" + url + "' alt='' />", null, self.editor.get('document')[0]);
     _$jscoverage['/dialog.js'].lineData[346]++;
     self.editor.insertElement(img);
   }

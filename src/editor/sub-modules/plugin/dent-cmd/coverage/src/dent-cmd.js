@@ -740,7 +740,7 @@ KISSY.add(function(S, require) {
       return;
     }
     _$jscoverage['/dent-cmd.js'].lineData[60]++;
-    var listParents = listNode._4e_parents(true, undefined);
+    var listParents = listNode._4eParents(true, undefined);
     _$jscoverage['/dent-cmd.js'].lineData[62]++;
     listParents.each(function(n, i) {
   _$jscoverage['/dent-cmd.js'].functionData[3]++;

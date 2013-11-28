@@ -105,7 +105,7 @@ KISSY.add(function (S, require) {
 
             editor.docReady(function () {
                 //注册双击，双击时检测
-                editor.get("document").on('dblclick', self._dbClick, self);
+                editor.get('document').on('dblclick', self._dbClick, self);
             });
         },
 

@@ -32,7 +32,7 @@ KISSY.add(function (S, require) {
             // included.
             if (node[0].nodeType == Dom.NodeType.ELEMENT_NODE &&
                 cellNodeRegex.test(node.nodeName()) && !node.data('selected_cell')) {
-                node._4e_setMarker(database, 'selected_cell', true, undefined);
+                node._4eSetMarker(database, 'selected_cell', true, undefined);
                 retval.push(node);
             }
         }
@@ -62,7 +62,7 @@ KISSY.add(function (S, require) {
 
                     var parent = node.parent();
                     if (parent && cellNodeRegex.test(parent.nodeName()) && !parent.data('selected_cell')) {
-                        parent._4e_setMarker(database, 'selected_cell', true, undefined);
+                        parent._4eSetMarker(database, 'selected_cell', true, undefined);
                         retval.push(parent);
                     }
                 }

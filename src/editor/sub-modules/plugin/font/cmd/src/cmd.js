@@ -59,7 +59,7 @@ KISSY.add(function (S, require) {
             if (!editor.hasCommand(cmdType)) {
                 editor.addCommand(cmdType, {
                     exec: function (editor, effect) {
-                        var doc = editor.get("document")[0];
+                        var doc = editor.get('document')[0];
                         editor.execCommand("save");
                         var checked = editor.queryCommandValue(cmdType);
                         if (checked) {
@@ -95,7 +95,7 @@ KISSY.add(function (S, require) {
                         var style = new Editor.Style(styleObj, {
                                 value: value
                             }),
-                            doc = editor.get("document")[0];
+                            doc = editor.get('document')[0];
                         editor.execCommand("save");
                         if (value.toLowerCase() == currentValue.toLowerCase()) {
                             style.remove(doc);

@@ -59,7 +59,7 @@ KISSY.add(function (S, require) {
                 listeners: {
                     click: function () {
                         var real = new Node(PAGE_BREAK_MARKUP, null,
-                                editor.get("document")[0]),
+                                editor.get('document')[0]),
                             substitute = editor.createFakeElement(real, CLS,
                                 TYPE,
                                 //不可缩放，也不用

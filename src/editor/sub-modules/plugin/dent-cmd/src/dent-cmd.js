@@ -57,7 +57,7 @@ KISSY.add(function (S, require) {
         // list's Dom tree itself. The array model demands that it knows as much as
         // possible about the surrounding lists, we need to feed it the further
         // ancestor node that is still a list.
-        var listParents = listNode._4e_parents(true, undefined);
+        var listParents = listNode._4eParents(true, undefined);
 
         listParents.each(function (n, i) {
             listParents[i] = n;

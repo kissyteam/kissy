@@ -293,7 +293,7 @@ KISSY.add(function(S, require) {
   editor.docReady(function() {
   _$jscoverage['/italic.js'].functionData[3]++;
   _$jscoverage['/italic.js'].lineData[24]++;
-  editor.get("document").on('keydown', function(e) {
+  editor.get('document').on('keydown', function(e) {
   _$jscoverage['/italic.js'].functionData[4]++;
   _$jscoverage['/italic.js'].lineData[25]++;
   if (visit1_25_1(e.ctrlKey && visit2_25_2(e.keyCode == S.Node.KeyCode.I))) {

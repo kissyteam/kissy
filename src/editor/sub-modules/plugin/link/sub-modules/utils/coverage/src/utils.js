@@ -375,7 +375,7 @@ KISSY.add(function(S, require) {
       _$jscoverage['/utils.js'].lineData[47]++;
       var bs = sel.createBookmarks();
       _$jscoverage['/utils.js'].lineData[49]++;
-      a._4e_remove(true);
+      a._4eRemove(true);
       _$jscoverage['/utils.js'].lineData[50]++;
       sel.selectBookmarks(bs);
     } else {
@@ -384,7 +384,7 @@ KISSY.add(function(S, require) {
         _$jscoverage['/utils.js'].lineData[52]++;
         var attrs = getAttributes(a[0]);
         _$jscoverage['/utils.js'].lineData[53]++;
-        new KEStyle(link_Style, attrs).remove(editor.get("document")[0]);
+        new KEStyle(link_Style, attrs).remove(editor.get('document')[0]);
       }
     }
     _$jscoverage['/utils.js'].lineData[55]++;
@@ -409,7 +409,7 @@ KISSY.add(function(S, require) {
       _$jscoverage['/utils.js'].lineData[70]++;
       if (visit8_70_1(!range || range.collapsed)) {
         _$jscoverage['/utils.js'].lineData[71]++;
-        var a = new Node("<a>" + attr.href + "</a>", attr, editor.get("document")[0]);
+        var a = new Node("<a>" + attr.href + "</a>", attr, editor.get('document')[0]);
         _$jscoverage['/utils.js'].lineData[73]++;
         editor.insertElement(a);
       } else {
@@ -418,7 +418,7 @@ KISSY.add(function(S, require) {
         _$jscoverage['/utils.js'].lineData[76]++;
         var linkStyle = new KEStyle(link_Style, attr);
         _$jscoverage['/utils.js'].lineData[77]++;
-        linkStyle.apply(editor.get("document")[0]);
+        linkStyle.apply(editor.get('document')[0]);
       }
     }
     _$jscoverage['/utils.js'].lineData[80]++;

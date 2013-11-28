@@ -299,7 +299,7 @@ KISSY.add(function(S, require) {
   var nodeInfo = flashUtils.createSWF({
   src: src, 
   attrs: attrs, 
-  document: editor.get("document")[0]}), real = nodeInfo.el, substitute = editor.createFakeElement(real, visit1_20_1(_cls || 'ke_flash'), visit2_21_1(_type || 'flash'), true, nodeInfo.html, attrs);
+  document: editor.get('document')[0]}), real = nodeInfo.el, substitute = editor.createFakeElement(real, visit1_20_1(_cls || 'ke_flash'), visit2_21_1(_type || 'flash'), true, nodeInfo.html, attrs);
   _$jscoverage['/utils.js'].lineData[25]++;
   editor.insertElement(substitute);
   _$jscoverage['/utils.js'].lineData[26]++;

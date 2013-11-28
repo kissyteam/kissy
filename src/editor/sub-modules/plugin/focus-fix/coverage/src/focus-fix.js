@@ -291,11 +291,11 @@ function visit6_64_1(result) {
 function visit5_58_1(result) {
   _$jscoverage['/focus-fix.js'].branchData['58'][1].ranCondition(result);
   return result;
-}_$jscoverage['/focus-fix.js'].branchData['46'][1].init(38, 57, '$range.item(0).ownerDocument == editor.get("document")[0]');
+}_$jscoverage['/focus-fix.js'].branchData['46'][1].init(38, 57, '$range.item(0).ownerDocument == editor.get('document')[0]');
 function visit4_46_1(result) {
   _$jscoverage['/focus-fix.js'].branchData['46'][1].ranCondition(result);
   return result;
-}_$jscoverage['/focus-fix.js'].branchData['45'][1].init(235, 96, '$range.item && $range.item(0).ownerDocument == editor.get("document")[0]');
+}_$jscoverage['/focus-fix.js'].branchData['45'][1].init(235, 96, '$range.item && $range.item(0).ownerDocument == editor.get('document')[0]');
 function visit3_45_1(result) {
   _$jscoverage['/focus-fix.js'].branchData['45'][1].ranCondition(result);
   return result;
@@ -330,7 +330,7 @@ KISSY.add(function(S, require) {
       _$jscoverage['/focus-fix.js'].lineData[27]++;
       document.body.focus();
       _$jscoverage['/focus-fix.js'].lineData[29]++;
-      var $selection = editor.get("document")[0].selection, $range;
+      var $selection = editor.get('document')[0].selection, $range;
       _$jscoverage['/focus-fix.js'].lineData[33]++;
       try {
         _$jscoverage['/focus-fix.js'].lineData[34]++;
@@ -342,7 +342,7 @@ KISSY.add(function(S, require) {
       _$jscoverage['/focus-fix.js'].lineData[38]++;
       if (visit2_38_1($range)) {
         _$jscoverage['/focus-fix.js'].lineData[39]++;
-        if (visit3_45_1($range.item && visit4_46_1($range.item(0).ownerDocument == editor.get("document")[0]))) {
+        if (visit3_45_1($range.item && visit4_46_1($range.item(0).ownerDocument == editor.get('document')[0]))) {
           _$jscoverage['/focus-fix.js'].lineData[47]++;
           var $myRange = document.body.createTextRange();
           _$jscoverage['/focus-fix.js'].lineData[48]++;

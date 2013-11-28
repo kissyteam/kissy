@@ -47,7 +47,7 @@ KISSY.add(function (S) {
                         itemObj.grandparent = grandparentNode;
                     }
                     if (database) {
-                        listItem._4e_setMarker(database, 'listarray_index', baseArray.length, undefined);
+                        listItem._4eSetMarker(database, 'listarray_index', baseArray.length, undefined);
                     }
                     baseArray.push(itemObj);
 
@@ -116,7 +116,7 @@ KISSY.add(function (S) {
                             //为什么要把属性去掉？？？#3857
                             if (item.grandparent.nodeName() != 'td') {
                                 currentListItem = doc.createElement(paragraphMode);
-                                item.element._4e_copyAttributes(new Node(currentListItem));
+                                item.element._4eCopyAttributes(new Node(currentListItem));
                             }
                             else
                                 currentListItem = doc.createDocumentFragment();
@@ -126,7 +126,7 @@ KISSY.add(function (S) {
                             var ic = item.contents[i].clone(true);
                             //如果是list中，应该只退出ul，保留margin-left
                             if (currentListItem.nodeType == NodeType.DOCUMENT_FRAGMENT_NODE) {
-                                item.element._4e_copyAttributes(new Node(ic));
+                                item.element._4eCopyAttributes(new Node(ic));
                             }
                             currentListItem.appendChild(ic[0]);
                         }
@@ -136,7 +136,7 @@ KISSY.add(function (S) {
                             if (currentListItem.lastChild
                                 && currentListItem.lastChild.nodeType == Dom.NodeType.ELEMENT_NODE
                                 && currentListItem.lastChild.getAttribute('type') == '_moz') {
-                                Dom._4e_remove(currentListItem.lastChild);
+                                Dom._4eRemove(currentListItem.lastChild);
                             }
                             Dom._4eAppendBogus(currentListItem);
                         }
@@ -144,12 +144,12 @@ KISSY.add(function (S) {
                         if (currentListItem.nodeType == Dom.NodeType.ELEMENT_NODE &&
                             Dom.nodeName(currentListItem) == paragraphMode &&
                             currentListItem.firstChild) {
-                            Dom._4e_trim(currentListItem);
+                            Dom._4eTrim(currentListItem);
                             var firstChild = currentListItem.firstChild;
                             if (firstChild.nodeType == Dom.NodeType.ELEMENT_NODE &&
-                                Dom._4e_isBlockBoundary(firstChild)) {
+                                Dom._4eIsBlockBoundary(firstChild)) {
                                 var tmp = doc.createDocumentFragment();
-                                Dom._4e_moveChildren(currentListItem, tmp);
+                                Dom._4eMoveChildren(currentListItem, tmp);
                                 currentListItem = tmp;
                             }
                         }
@@ -176,9 +176,9 @@ KISSY.add(function (S) {
                     var currentNode = new Node(retval.firstChild);
                     while (currentNode && currentNode[0]) {
                         if (currentNode[0].nodeType == Dom.NodeType.ELEMENT_NODE) {
-                            currentNode._4e_clearMarkers(database, true);
+                            currentNode._4eClearMarkers(database, true);
                         }
-                        currentNode = currentNode._4e_nextSourceNode();
+                        currentNode = currentNode._4eNextSourceNode();
                     }
                 }
 

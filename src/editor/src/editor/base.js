@@ -15,7 +15,7 @@ KISSY.add(function (S,require) {
     return Control.extend({}, {
         Config: {},
 
-        XHTML_DTD: HtmlParser['DTD'],
+        XHTML_DTD: HtmlParser.DTD,
 
         ATTRS: {
 
@@ -95,7 +95,7 @@ KISSY.add(function (S,require) {
              * @type {String}
              */
             customStyle: {
-                value: ""
+                value: ''
             },
 
             /**

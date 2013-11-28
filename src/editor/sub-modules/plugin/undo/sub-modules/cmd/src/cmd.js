@@ -15,7 +15,7 @@ KISSY.add(function (S, require) {
      * @private
      */
     function Snapshot(editor) {
-        var contents = editor.get("document")[0].body.innerHTML,
+        var contents = editor.get('document')[0].body.innerHTML,
             self = this,
             selection;
         if (contents) {
@@ -72,7 +72,7 @@ KISSY.add(function (S, require) {
                 editor = self.editor;
 
             editor.docReady(function () {
-                editor.get("document").on('keydown', function (ev) {
+                editor.get('document').on('keydown', function (ev) {
                     var keyCode = ev.keyCode;
                     if (keyCode in navigationKeyCodes
                         || keyCode in modifierKeyCodes) {
@@ -132,7 +132,7 @@ KISSY.add(function (S, require) {
                 return;
             }
 
-            if (!editor.get("document")) {
+            if (!editor.get('document')) {
                 return;
             }
 
@@ -177,7 +177,7 @@ KISSY.add(function (S, require) {
             var self = this,
                 history = self.history,
                 editor = self.editor,
-                editorDomBody = editor.get("document")[0].body,
+                editorDomBody = editor.get('document')[0].body,
                 snapshot = history[self.index + d];
 
             if (snapshot) {

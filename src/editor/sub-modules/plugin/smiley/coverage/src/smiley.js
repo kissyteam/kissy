@@ -399,7 +399,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/smiley.js'].lineData[57]++;
   if (visit5_57_1(visit6_57_2(t.nodeName() == "a") && (icon = t.attr("data-icon")))) {
     _$jscoverage['/smiley.js'].lineData[59]++;
-    var img = new S.Node("<img " + "alt='' src='" + icon + "'/>", null, editor.get("document")[0]);
+    var img = new S.Node("<img " + "alt='' src='" + icon + "'/>", null, editor.get('document')[0]);
     _$jscoverage['/smiley.js'].lineData[63]++;
     editor.insertElement(img);
   }

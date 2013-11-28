@@ -342,7 +342,7 @@ KISSY.add(function (S, require) {
                     "' " +
                     "_ke_saved_src='" +
                     url +
-                    "' alt='' />", null, self.editor.get("document")[0]);
+                    "' alt='' />", null, self.editor.get('document')[0]);
                 self.editor.insertElement(img);
             }
 

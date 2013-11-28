@@ -414,7 +414,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/cmd.js'].lineData[91]++;
     breakParent(endNode);
     _$jscoverage['/cmd.js'].lineData[94]++;
-    var currentNode = startNode._4e_nextSourceNode(true, Dom.NodeType.ELEMENT_NODE, undefined, undefined);
+    var currentNode = startNode._4eNextSourceNode(true, Dom.NodeType.ELEMENT_NODE, undefined, undefined);
     _$jscoverage['/cmd.js'].lineData[98]++;
     while (currentNode) {
       _$jscoverage['/cmd.js'].lineData[100]++;
@@ -423,13 +423,13 @@ KISSY.add(function(S, require) {
         break;
       }
       _$jscoverage['/cmd.js'].lineData[106]++;
-      var nextNode = currentNode._4e_nextSourceNode(false, Dom.NodeType.ELEMENT_NODE, undefined, undefined);
+      var nextNode = currentNode._4eNextSourceNode(false, Dom.NodeType.ELEMENT_NODE, undefined, undefined);
       _$jscoverage['/cmd.js'].lineData[110]++;
       if (visit7_110_1(!(visit8_110_2(visit9_110_3(currentNode.nodeName() == 'img') && (visit10_112_1(currentNode.attr('_ke_realelement') || /\bke_/.test(currentNode[0].className))))))) {
         _$jscoverage['/cmd.js'].lineData[117]++;
         if (visit11_117_1(tagsRegex.test(currentNode.nodeName()))) {
           _$jscoverage['/cmd.js'].lineData[118]++;
-          currentNode._4e_remove(true);
+          currentNode._4eRemove(true);
         } else {
           _$jscoverage['/cmd.js'].lineData[120]++;
           removeAttrs(currentNode, removeFormatAttributes);

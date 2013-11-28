@@ -393,7 +393,7 @@ KISSY.add(function (S, require) {
             html += "</tbody>";
             html += "</table>";
 
-            var table = new Node(html, null, editor.get("document")[0]);
+            var table = new Node(html, null, editor.get('document')[0]);
             editor.insertElement(table);
         },
         _fillTableDialog: function () {

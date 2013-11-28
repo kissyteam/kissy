@@ -384,7 +384,7 @@ KISSY.add(function(S, require) {
   self.docReady(function() {
   _$jscoverage['/contextmenu.js'].functionData[4]++;
   _$jscoverage['/contextmenu.js'].lineData[41]++;
-  var doc = self.get("document");
+  var doc = self.get('document');
   _$jscoverage['/contextmenu.js'].lineData[43]++;
   doc.on("mousedown", function(e) {
   _$jscoverage['/contextmenu.js'].functionData[5]++;

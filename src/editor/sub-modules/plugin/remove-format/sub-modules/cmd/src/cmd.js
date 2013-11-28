@@ -93,7 +93,7 @@ KISSY.add(function (S, require) {
                             // Navigate through all nodes between the bookmarks.
                             var currentNode = startNode
                                 // start from sibling , because obvious bookmark has no children
-                                ._4e_nextSourceNode(true, Dom.NodeType.ELEMENT_NODE, undefined, undefined);
+                                ._4eNextSourceNode(true, Dom.NodeType.ELEMENT_NODE, undefined, undefined);
 
                             while (currentNode) {
                                 // If we have reached the end of the selection, stop looping.
@@ -104,7 +104,7 @@ KISSY.add(function (S, require) {
                                 // Cache the next node to be processed. Do it now, because
                                 // currentNode may be removed.
                                 var nextNode = currentNode.
-                                    _4e_nextSourceNode(false, Dom.NodeType.ELEMENT_NODE, undefined, undefined);
+                                    _4eNextSourceNode(false, Dom.NodeType.ELEMENT_NODE, undefined, undefined);
 
                                 // This node must not be a fake element.
                                 if (!( currentNode.nodeName() == 'img' &&
@@ -115,7 +115,7 @@ KISSY.add(function (S, require) {
                                         ) )) {
                                     // Remove elements nodes that match with this style rules.
                                     if (tagsRegex.test(currentNode.nodeName()))
-                                        currentNode._4e_remove(true);
+                                        currentNode._4eRemove(true);
                                     else {
                                         removeAttrs(currentNode, removeFormatAttributes);
                                     }

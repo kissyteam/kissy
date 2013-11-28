@@ -1011,7 +1011,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/dialog.js'].lineData[394]++;
   html += "</table>";
   _$jscoverage['/dialog.js'].lineData[396]++;
-  var table = new Node(html, null, editor.get("document")[0]);
+  var table = new Node(html, null, editor.get('document')[0]);
   _$jscoverage['/dialog.js'].lineData[397]++;
   editor.insertElement(table);
 }, 

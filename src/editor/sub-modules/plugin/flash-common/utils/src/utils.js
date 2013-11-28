@@ -13,7 +13,7 @@ KISSY.add(function (S, require) {
                 var nodeInfo = flashUtils.createSWF({
                         src: src,
                         attrs: attrs,
-                        document: editor.get("document")[0]
+                        document: editor.get('document')[0]
                     }),
                     real = nodeInfo.el,
                     substitute = editor.createFakeElement(real,

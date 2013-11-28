@@ -182,7 +182,7 @@ KISSY.add(function (S,require) {
             // If the element name is the same as the style name.
             if (element.nodeName() == this.element) {
                 // If no attributes are defined in the element.
-                if (!fullMatch && !element._4e_hasAttributes())
+                if (!fullMatch && !element._4eHasAttributes())
                     return TRUE;
 
                 attribs = getAttributesForComparison(def);
@@ -352,7 +352,7 @@ KISSY.add(function (S,require) {
 
         // #6226: attributes should be copied before the new ones are applied
         if (element)
-            element._4e_copyAttributes(el);
+            element._4eCopyAttributes(el);
 
         return setupElement(el, style);
     }
@@ -437,7 +437,7 @@ KISSY.add(function (S,require) {
             temp.appendChild(newBlock[0]);
             newBlock.outerHtml('<pre>' + preHTML + '</pre>');
             newBlock = new Node(temp.firstChild);
-            newBlock._4e_remove();
+            newBlock._4eRemove();
         }
         else
             newBlock.html(preHTML);
@@ -481,7 +481,7 @@ KISSY.add(function (S,require) {
         // Split big <pre> into pieces before start to convert.
             newBlock = fromPres(splitIntoPres(block), newBlock);
         else
-            block._4e_moveChildren(newBlock);
+            block._4eMoveChildren(newBlock);
 
         block[0].parentNode.replaceChild(newBlock[0], block[0]);
         if (newBlockIsPre) {
@@ -493,7 +493,7 @@ KISSY.add(function (S,require) {
    // Merge a <pre> block with a previous sibling if available.
     function mergePre(preBlock) {
         var previousBlock;
-        if (!( ( previousBlock = preBlock._4e_previousSourceNode(TRUE, Dom.NodeType.ELEMENT_NODE) )
+        if (!( ( previousBlock = preBlock._4ePreviousSourceNode(TRUE, Dom.NodeType.ELEMENT_NODE) )
             && previousBlock.nodeName() == 'pre' ))
             return;
 
@@ -513,7 +513,7 @@ KISSY.add(function (S,require) {
         else
             preBlock.html(mergedHTML);
 
-        previousBlock._4e_remove();
+        previousBlock._4eRemove();
     }
 
 
@@ -604,14 +604,14 @@ KISSY.add(function (S,require) {
                         currentNode.nodeName() : NULL;
 
                 if (nodeName && currentNode.attr('_ke_bookmark')) {
-                    currentNode = currentNode._4e_nextSourceNode(TRUE);
+                    currentNode = currentNode._4eNextSourceNode(TRUE);
                     continue;
                 }
 
                 // Check if the current node can be a child of the style element.
                 if (!nodeName || (
                     dtd[ nodeName ] &&
-                        ( currentNode._4e_position(lastNode) |
+                        ( currentNode._4ePosition(lastNode) |
                             ( KEP.POSITION_PRECEDING |
                                 KEP.POSITION_IDENTICAL |
                                 KEP.POSITION_IS_CONTAINED) )
@@ -635,9 +635,9 @@ KISSY.add(function (S,require) {
                         elementName == "a" &&
                         currentParent.nodeName() == elementName) {
                         var tmpANode = getElement(self, document, undefined);
-                        currentParent._4e_moveChildren(tmpANode);
+                        currentParent._4eMoveChildren(tmpANode);
                         currentParent[0].parentNode.replaceChild(tmpANode[0], currentParent[0]);
-                        tmpANode._4e_mergeSiblings();
+                        tmpANode._4eMergeSiblings();
                     }
 
                     // Check if the style element can be a child of the current
@@ -654,7 +654,7 @@ KISSY.add(function (S,require) {
                         if (!styleRange &&
                             ( !nodeName
                                 || !DTD.$removeEmpty[ nodeName ]
-                                || ( currentNode._4e_position(lastNode) |
+                                || ( currentNode._4ePosition(lastNode) |
                                 ( KEP.POSITION_PRECEDING |
                                     KEP.POSITION_IDENTICAL |
                                     KEP.POSITION_IS_CONTAINED ))
@@ -688,7 +688,7 @@ KISSY.add(function (S,require) {
                                 (applyStyle = !includedNode.next(notBookmark, 1))
                                     && ( (parentNode = includedNode.parent()) &&
                                     dtd[ parentNode.nodeName() ] )
-                                    && ( parentNode._4e_position(firstNode) |
+                                    && ( parentNode._4ePosition(firstNode) |
                                     KEP.POSITION_FOLLOWING |
                                     KEP.POSITION_IDENTICAL |
                                     KEP.POSITION_IS_CONTAINED) ==
@@ -710,7 +710,7 @@ KISSY.add(function (S,require) {
                     applyStyle = TRUE;
 
                 // Get the next node to be processed.
-                currentNode = currentNode._4e_nextSourceNode();
+                currentNode = currentNode._4eNextSourceNode();
             }
 
             // Apply the style if we have something to which apply it.
@@ -768,7 +768,7 @@ KISSY.add(function (S,require) {
 
                         }
 
-                        if (!styleNode._4e_hasAttributes()) {
+                        if (!styleNode._4eHasAttributes()) {
                             styleNode = NULL;
                             break;
                         }
@@ -790,7 +790,7 @@ KISSY.add(function (S,require) {
                     styleRange.insertNode(styleNode);
 
                     // Let's merge our new style with its neighbors, if possible.
-                    styleNode._4e_mergeSiblings();
+                    styleNode._4eMergeSiblings();
 
                     // As the style system breaks text nodes constantly, let's normalize
                     // things for performance.
@@ -816,7 +816,7 @@ KISSY.add(function (S,require) {
                     styleNode[0].appendChild(styleRange.extractContents());
                     styleRange.insertNode(styleNode);
                     removeFromInsideElement(self, styleNode);
-                    styleNode._4e_remove(true);
+                    styleNode._4eRemove(true);
                 }
 
                 // Style applied, let's release the range, so it gets
@@ -825,8 +825,8 @@ KISSY.add(function (S,require) {
             }
         }
 
-        firstNode._4e_remove();
-        lastNode._4e_remove();
+        firstNode._4eRemove();
+        lastNode._4eRemove();
         range.moveToBookmark(bookmark);
         // Minimize the result range to exclude empty text nodes. (#5374)
         range.shrink(KER.SHRINK_TEXT);
@@ -877,7 +877,7 @@ KISSY.add(function (S,require) {
                           no difference that they're separate entities in the Dom tree. So, merge
                           them before removal.
                          */
-                        element._4e_mergeSiblings();
+                        element._4eMergeSiblings();
                         //yiminghe:note,bug for ckeditor
                         //qc #3700 for chengyu(yiminghe)
                         //从word复制过来的已编辑文本无法使用粗体和斜体等功能取消
@@ -981,7 +981,7 @@ KISSY.add(function (S,require) {
                  * Need to get the next node first because removeFromElement() can remove
                  * the current node from Dom tree.
                  */
-                var nextNode = currentNode._4e_nextSourceNode();
+                var nextNode = currentNode._4eNextSourceNode();
                 if (currentNode[0] &&
                     currentNode[0].nodeType == Dom.NodeType.ELEMENT_NODE &&
                     this.checkElementRemovable(currentNode)) {
@@ -1314,22 +1314,22 @@ KISSY.add(function (S,require) {
     function removeNoAttribsElement(element) {
         // If no more attributes remained in the element, remove it,
         // leaving its children.
-        if (!element._4e_hasAttributes()) {
+        if (!element._4eHasAttributes()) {
             // Removing elements may open points where merging is possible,
             // so let's cache the first and last nodes for later checking.
             var firstChild = element[0].firstChild,
                 lastChild = element[0].lastChild;
 
-            element._4e_remove(TRUE);
+            element._4eRemove(TRUE);
 
             if (firstChild) {
                 // Check the cached nodes for merging.
                 firstChild.nodeType == Dom.NodeType.ELEMENT_NODE &&
-                Dom._4e_mergeSiblings(firstChild);
+                Dom._4eMergeSiblings(firstChild);
 
                 if (lastChild && firstChild != lastChild
                     && lastChild.nodeType == Dom.NodeType.ELEMENT_NODE)
-                    Dom._4e_mergeSiblings(lastChild);
+                    Dom._4eMergeSiblings(lastChild);
             }
         }
     }

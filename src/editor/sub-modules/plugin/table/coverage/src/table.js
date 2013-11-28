@@ -1034,7 +1034,7 @@ KISSY.add(function(S, require) {
       _$jscoverage['/table.js'].lineData[33]++;
       if (visit3_33_1(visit4_33_2(node[0].nodeType == Dom.NodeType.ELEMENT_NODE) && visit5_34_1(cellNodeRegex.test(node.nodeName()) && !node.data('selected_cell')))) {
         _$jscoverage['/table.js'].lineData[35]++;
-        node._4e_setMarker(database, 'selected_cell', true, undefined);
+        node._4eSetMarker(database, 'selected_cell', true, undefined);
         _$jscoverage['/table.js'].lineData[36]++;
         retval.push(node);
       }
@@ -1064,7 +1064,7 @@ KISSY.add(function(S, require) {
           _$jscoverage['/table.js'].lineData[64]++;
           if (visit10_64_1(parent && visit11_64_2(cellNodeRegex.test(parent.nodeName()) && !parent.data('selected_cell')))) {
             _$jscoverage['/table.js'].lineData[65]++;
-            parent._4e_setMarker(database, 'selected_cell', true, undefined);
+            parent._4eSetMarker(database, 'selected_cell', true, undefined);
             _$jscoverage['/table.js'].lineData[66]++;
             retval.push(parent);
           }

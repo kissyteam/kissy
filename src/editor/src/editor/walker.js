@@ -30,8 +30,8 @@ KISSY.add(function (S,require) {
             guard,
             userGuard = self.guard,
             type = self.type,
-            getSourceNodeFn = ( rtl ? '_4e_previousSourceNode' :
-                '_4e_nextSourceNode' );
+            getSourceNodeFn = ( rtl ? '_4ePreviousSourceNode' :
+                '_4eNextSourceNode' );
 
         // This is the first call. Initialize it.
         if (!self._.start) {
@@ -115,7 +115,7 @@ KISSY.add(function (S,require) {
                     }
                 } else {
                     node = ( guard(node, TRUE) === FALSE ) ?
-                        NULL : node._4e_previousSourceNode(TRUE, type, guard, undefined);
+                        NULL : node._4ePreviousSourceNode(TRUE, type, guard, undefined);
                 }
             }
             else {
@@ -128,7 +128,7 @@ KISSY.add(function (S,require) {
                     }
                 } else {
                     node = ( guard(range.startContainer, TRUE) === FALSE ) ?
-                        NULL : range.startContainer._4e_nextSourceNode(TRUE, type, guard, undefined);
+                        NULL : range.startContainer._4eNextSourceNode(TRUE, type, guard, undefined);
                 }
             }
         }
@@ -280,7 +280,7 @@ KISSY.add(function (S,require) {
             blockBoundary:function (customNodeNames) {
                 return function (node) {
                     return !(node.nodeType == Dom.NodeType.ELEMENT_NODE &&
-                        Dom._4e_isBlockBoundary(node, customNodeNames) );
+                        Dom._4eIsBlockBoundary(node, customNodeNames) );
                 };
             },
 
@@ -359,7 +359,7 @@ KISSY.add(function (S,require) {
     function getBogus(tail) {
         // Bogus are not always at the end, e.g. <p><a>text<br /></a></p>
         do {
-            tail = tail._4e_previousSourceNode();
+            tail = tail._4ePreviousSourceNode();
         } while (tail && toSkip(tail[0]));
 
         if (tail && ( !UA.ie ? tail.nodeName() == "br"

@@ -359,7 +359,7 @@ KISSY.add(function (S, require) {
                                 // Limit the fix only to non-block elements.(#3950)
                                 if (startOffset == ( startContainer[0].nodeType === Dom.NodeType.ELEMENT_NODE ?
                                     startContainer[0].childNodes.length : startContainer[0].nodeValue.length )
-                                    && !startContainer._4e_isBlockBoundary()) {
+                                    && !startContainer._4eIsBlockBoundary()) {
                                     range.setStartAfter(startContainer);
                                 } else {
                                     break;
@@ -612,7 +612,7 @@ KISSY.add(function (S, require) {
             var ranges = this.getRanges(),
                 startNode = ranges[ 0 ].startContainer,
                 endNode = ranges[ ranges.length - 1 ].endContainer;
-            return startNode._4e_commonAncestor(endNode);
+            return startNode._4eCommonAncestor(endNode);
         },
 
         // Moving scroll bar to the current selection's start position.
@@ -770,7 +770,7 @@ KISSY.add(function (S, require) {
 
                     // Remove the markers (reset the position, because of the changes in the Dom tree).
                     self.setStartBefore(startNode);
-                    startNode._4e_remove();
+                    startNode._4eRemove();
 
                     if (collapsed) {
                         if (isStartMarkerAlone) {
@@ -783,11 +783,11 @@ KISSY.add(function (S, require) {
                             ieRange.select();
                         if (dummySpan) {
                             self.moveToPosition(dummySpan, KER.POSITION_BEFORE_START);
-                            dummySpan._4e_remove();
+                            dummySpan._4eRemove();
                         }
                     } else {
                         self.setEndBefore(endNode);
-                        endNode._4e_remove();
+                        endNode._4eRemove();
                         ieRange.select();
                     }
                 };

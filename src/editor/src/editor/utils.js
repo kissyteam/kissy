@@ -75,7 +75,7 @@ KISSY.add(function (S,require) {
 
             clearAllMarkers: function (database) {
                 for (var i in database) {
-                    database[i]._4e_clearMarkers(database, TRUE, undefined);
+                    database[i]._4eClearMarkers(database, TRUE, undefined);
                 }
             },
 

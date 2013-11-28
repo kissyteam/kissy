@@ -788,7 +788,7 @@ KISSY.add(function (S, Editor) {
 
                 expect(range.startContainer[0]).toBe(document.body);
                 expect(range.endContainer[0]).toBe(span[0]);
-                expect(range.startOffset).toBe(div._4e_index());
+                expect(range.startOffset).toBe(div._4eIndex());
                 expect(range.endOffset).toBe(span[0].childNodes.length);
 
 
@@ -796,7 +796,7 @@ KISSY.add(function (S, Editor) {
 
                 expect(range.startContainer[0]).toBe(document.body);
                 expect(range.endContainer[0]).toBe(textEnd[0]);
-                expect(range.startOffset).toBe(div._4e_index());
+                expect(range.startOffset).toBe(div._4eIndex());
                 expect(range.endOffset).toBe(textEnd[0].nodeValue.length);
 
 
@@ -844,8 +844,8 @@ KISSY.add(function (S, Editor) {
             expect(bookmark2.is2).toBe(true);
             expect(bookmark2.startOffset).toBe(0);
             expect(bookmark2.endOffset).toBe(1);
-            expect(bookmark2.start).toEqual(div._4e_address());
-            expect(bookmark2.end).toEqual(div._4e_address());
+            expect(bookmark2.start).toEqual(div._4eAddress());
+            expect(bookmark2.end).toEqual(div._4eAddress());
 
             div.remove();
         });

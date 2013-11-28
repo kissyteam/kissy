@@ -59,7 +59,7 @@ KISSY.add(function (S, require) {
                                         var img = new S.Node("<img " +
                                             "alt='' src='" +
                                             icon + "'/>", null,
-                                            editor.get("document")[0]);
+                                            editor.get('document')[0]);
                                         editor.insertElement(img);
                                     }
                                 });

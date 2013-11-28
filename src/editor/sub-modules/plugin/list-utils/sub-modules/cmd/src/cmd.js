@@ -43,7 +43,7 @@ KISSY.add(function (S, require) {
                     itemNode.data('list_item_processed'))
                     continue;
                 selectedListItems.push(itemNode);
-                itemNode._4e_setMarker(database, 'list_item_processed', true, undefined);
+                itemNode._4eSetMarker(database, 'list_item_processed', true, undefined);
             }
 
             var fakeParent = new Node(groupObj.root[0].ownerDocument.createElement(this.type));
@@ -75,7 +75,7 @@ KISSY.add(function (S, require) {
                 && contents[0][0] === groupObj.root[0]) {
                 var divBlock = new Node(doc.createElement('div'));
                 contents[0][0].nodeType != Dom.NodeType.TEXT_NODE &&
-                contents[0]._4e_moveChildren(divBlock, undefined, undefined);
+                contents[0]._4eMoveChildren(divBlock, undefined, undefined);
                 contents[0][0].appendChild(divBlock[0]);
                 contents[0] = divBlock;
             }
@@ -84,7 +84,7 @@ KISSY.add(function (S, require) {
             var commonParent = groupObj.contents[0].parent();
 
             for (var i = 0; i < contents.length; i++) {
-                commonParent = commonParent._4e_commonAncestor(contents[i].parent(), undefined);
+                commonParent = commonParent._4eCommonAncestor(contents[i].parent(), undefined);
             }
 
             // We want to insert things that are in the same tree level only,
@@ -120,8 +120,8 @@ KISSY.add(function (S, require) {
                 if (headerTagRegex.test(contentBlock.nodeName())) {
                     listItem[0].appendChild(contentBlock[0]);
                 } else {
-                    contentBlock._4e_copyAttributes(listItem, undefined, undefined);
-                    contentBlock._4e_moveChildren(listItem, undefined, undefined);
+                    contentBlock._4eCopyAttributes(listItem, undefined, undefined);
+                    contentBlock._4eMoveChildren(listItem, undefined, undefined);
                     contentBlock.remove();
                 }
                 listNode[0].appendChild(listItem[0]);
@@ -150,7 +150,7 @@ KISSY.add(function (S, require) {
                 if (!itemNode || itemNode.data('list_item_processed'))
                     continue;
                 selectedListItems.push(itemNode);
-                itemNode._4e_setMarker(database, 'list_item_processed', true, undefined);
+                itemNode._4eSetMarker(database, 'list_item_processed', true, undefined);
             }
 
             var lastListIndex = null;
@@ -188,12 +188,12 @@ KISSY.add(function (S, require) {
             function compensateBrs(isStart) {
                 if (( boundaryNode = new Node(docFragment[ isStart ? 'firstChild' : 'lastChild' ]) )
                     && !( boundaryNode[0].nodeType == Dom.NodeType.ELEMENT_NODE &&
-                    boundaryNode._4e_isBlockBoundary(undefined, undefined) )
+                    boundaryNode._4eIsBlockBoundary(undefined, undefined) )
                     && ( siblingNode = groupObj.root[ isStart ? 'prev' : 'next' ]
                     (Walker.whitespaces(true), 1) )
                     && !( boundaryNode[0].nodeType == Dom.NodeType.ELEMENT_NODE &&
-                    siblingNode._4e_isBlockBoundary({ br: 1 }, undefined) )) {
-                    boundaryNode[ isStart ? 'before' : 'after' ](editor.get("document")[0].createElement('br'));
+                    siblingNode._4eIsBlockBoundary({ br: 1 }, undefined) )) {
+                    boundaryNode[ isStart ? 'before' : 'after' ](editor.get('document')[0].createElement('br'));
                 }
             }
 
@@ -247,7 +247,7 @@ KISSY.add(function (S, require) {
                     if (block.data('list_block'))
                         continue;
                     else
-                        block._4e_setMarker(database, 'list_block', 1, undefined);
+                        block._4eSetMarker(database, 'list_block', 1, undefined);
 
 
                     var path = new ElementPath(block),
@@ -279,7 +279,7 @@ KISSY.add(function (S, require) {
                             else {
                                 groupObj = { root: element, contents: [ block ] };
                                 listGroups.push(groupObj);
-                                element._4e_setMarker(database, 'list_group_object', groupObj, undefined);
+                                element._4eSetMarker(database, 'list_group_object', groupObj, undefined);
                             }
                             processedFlag = true;
                             break;
@@ -296,7 +296,7 @@ KISSY.add(function (S, require) {
                         root.data('list_group_object').contents.push(block);
                     } else {
                         groupObj = { root: root, contents: [ block ] };
-                        root._4e_setMarker(database, 'list_group_object', groupObj, undefined);
+                        root._4eSetMarker(database, 'list_group_object', groupObj, undefined);
                         listGroups.push(groupObj);
                     }
                 }
@@ -334,7 +334,7 @@ KISSY.add(function (S, require) {
                 listNode = listsCreated[i];
 
                 // note by yiminghe,why not use merge sibling directly
-                // listNode._4e_mergeSiblings();
+                // listNode._4eMergeSiblings();
                 function mergeSibling(rtl, listNode) {
                     var sibling = listNode[ rtl ?
                         'prev' : 'next' ](Walker.whitespaces(true), 1);
@@ -345,7 +345,7 @@ KISSY.add(function (S, require) {
                         sibling.css('list-style-type') == listStyleType) {
                         sibling.remove();
                         // Move children order by merge direction.(#3820)
-                        sibling._4e_moveChildren(listNode, rtl ? true : false, undefined);
+                        sibling._4eMoveChildren(listNode, rtl ? true : false, undefined);
                     }
                 }
 

@@ -44,7 +44,7 @@ KISSY.add(function (S, require) {
 
             if (isResizable)
                 attributes._ke_resizable = isResizable;
-            return new Node("<img/>", attributes, self.get("document")[0]);
+            return new Node("<img/>", attributes, self.get('document')[0]);
         },
 
         restoreRealElement: function (fakeElement) {
@@ -54,7 +54,7 @@ KISSY.add(function (S, require) {
 
             var html = (S.urlDecode(fakeElement.attr('_ke_realelement')));
 
-            var temp = new Node('<div>', null, this.get("document")[0]);
+            var temp = new Node('<div>', null, this.get('document')[0]);
             temp.html(html);
             // When returning the node, remove it from its parent to detach it.
             return temp.first().remove();
@@ -124,7 +124,7 @@ KISSY.add(function (S, require) {
 
                     var html = (S.urlDecode(fakeElement.attr('_ke_realelement')));
 
-                    var temp = new Node('<div>', null, editor.get("document")[0]);
+                    var temp = new Node('<div>', null, editor.get('document')[0]);
                     temp.html(html);
                     // When returning the node, remove it from its parent to detach it.
                     return temp.first().remove();

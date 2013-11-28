@@ -154,7 +154,7 @@ KISSY.add(function (S,require) {
         //最关键：一般起始都是在文字节点中，得到起点选择右边的文字节点，只对节点处理！
         if (endNode[0].nodeType == Dom.NodeType.TEXT_NODE) {
             hasSplitEnd = TRUE;
-            endNode = endNode._4e_splitText(endOffset);
+            endNode = endNode._4eSplitText(endOffset);
         } else {
             // If the end container has children and the offset is pointing
             // to a child, then we should start from it.
@@ -178,7 +178,7 @@ KISSY.add(function (S,require) {
         // be handled by the rest of the code .
         if (startNode[0].nodeType == Dom.NodeType.TEXT_NODE) {
             hasSplitStart = TRUE;
-            startNode._4e_splitText(startOffset);
+            startNode._4eSplitText(startOffset);
         } else {
             // If the start container has children and the offset is pointing
             // to a child, then we should start from its previous sibling.
@@ -205,8 +205,8 @@ KISSY.add(function (S,require) {
 
         // Get the parent nodes tree for the start and end boundaries.
         //从根到自己
-        var startParents = startNode._4e_parents(),
-            endParents = endNode._4e_parents();
+        var startParents = startNode._4eParents(),
+            endParents = endNode._4eParents();
 
         startParents.each(function (n, i) {
             startParents[i] = n;
@@ -283,7 +283,7 @@ KISSY.add(function (S,require) {
                         currentNode = tmp;
                     } else {
                         // Both Delete and Extract will remove the node.
-                        Dom._4e_remove(currentNode);
+                        Dom._4eRemove(currentNode);
                     }
 
                     // When Extracting, move the removed node to the docFrag.
@@ -321,7 +321,7 @@ KISSY.add(function (S,require) {
             if (
                 !startParents[ k ] ||
                     // 前面 startParents 循环已经处理过了
-                    !levelStartNode._4e_sameLevel(startParents[ k ])
+                    !levelStartNode._4eSameLevel(startParents[ k ])
                 ) {
                 currentNode = levelStartNode[0].previousSibling;
                 while (currentNode) {
@@ -334,7 +334,7 @@ KISSY.add(function (S,require) {
                             clone.firstChild);
                     } else {
                         // Both Delete and Extract will remove the node.
-                        Dom._4e_remove(currentNode);
+                        Dom._4eRemove(currentNode);
 
                         // When Extracting, mode the removed node to the docFrag.
                         if (action == 1) {
@@ -386,17 +386,17 @@ KISSY.add(function (S,require) {
             if (
                 topStart && topEnd &&
                     (
-                        !startNode._4e_sameLevel(topStart)
-                            || !endNode._4e_sameLevel(topEnd)
+                        !startNode._4eSameLevel(topStart)
+                            || !endNode._4eSameLevel(topEnd)
                         )
                 ) {
-                var startIndex = topStart._4e_index();
+                var startIndex = topStart._4eIndex();
 
                 // If the start node is to be removed, we must correct the
                 // index to reflect the removal.
                 if (removeStartNode &&
                     // startNode 和 topStart 同级
-                    (topStart._4e_sameLevel(startNode))) {
+                    (topStart._4eSameLevel(startNode))) {
                     startIndex--;
                 }
 
@@ -495,28 +495,28 @@ KISSY.add(function (S,require) {
          * @param {KISSY.NodeList} node
          */
         setStartAfter: function (node) {
-            this.setStart(node.parent(), node._4e_index() + 1);
+            this.setStart(node.parent(), node._4eIndex() + 1);
         },
         /**
          * Set range start before node
          * @param {KISSY.NodeList} node
          */
         setStartBefore: function (node) {
-            this.setStart(node.parent(), node._4e_index());
+            this.setStart(node.parent(), node._4eIndex());
         },
         /**
          * Set range end after node
          * @param {KISSY.NodeList} node
          */
         setEndAfter: function (node) {
-            this.setEnd(node.parent(), node._4e_index() + 1);
+            this.setEnd(node.parent(), node._4eIndex() + 1);
         },
         /**
          * Set range end before node
          * @param {KISSY.NodeList} node
          */
         setEndBefore: function (node) {
-            this.setEnd(node.parent(), node._4e_index());
+            this.setEnd(node.parent(), node._4eIndex());
         },
 
         /**
@@ -556,7 +556,7 @@ KISSY.add(function (S,require) {
             var self = this;
             if (startNode[0].nodeType == Dom.NodeType.ELEMENT_NODE && EMPTY[ startNode.nodeName() ]) {
                 startNode = startNode.parent();
-                startOffset = startNode._4e_index();
+                startOffset = startNode._4eIndex();
             }
 
             self.startContainer = startNode;
@@ -587,7 +587,7 @@ KISSY.add(function (S,require) {
             var self = this;
             if (endNode[0].nodeType == Dom.NodeType.ELEMENT_NODE && EMPTY[ endNode.nodeName() ]) {
                 endNode = endNode.parent();
-                endOffset = endNode._4e_index() + 1;
+                endOffset = endNode._4eIndex() + 1;
             }
 
             self.endContainer = endNode;
@@ -923,8 +923,8 @@ KISSY.add(function (S,require) {
             }
 
             return {
-                start: startContainer._4e_address(normalized),
-                end: self.collapsed ? NULL : endContainer._4e_address(normalized),
+                start: startContainer._4eAddress(normalized),
+                end: self.collapsed ? NULL : endContainer._4eAddress(normalized),
                 startOffset: startOffset,
                 endOffset: endOffset,
                 normalized: normalized,
@@ -1017,21 +1017,21 @@ KISSY.add(function (S,require) {
                 // If the offset is zero, we just insert the new node before
                 // the start.
                 if (!startOffset) {
-                    startOffset = startContainer._4e_index();
+                    startOffset = startContainer._4eIndex();
                     startContainer = startContainer.parent();
                 }
                 // If the offset is at the end, we'll insert it after the text
                 // node.
                 else if (startOffset >= startContainer[0].nodeValue.length) {
-                    startOffset = startContainer._4e_index() + 1;
+                    startOffset = startContainer._4eIndex() + 1;
                     startContainer = startContainer.parent();
                 }
                 // In other case, we split the text node and insert the new
                 // node at the split point.
                 else {
-                    var nextText = startContainer._4e_splitText(startOffset);
+                    var nextText = startContainer._4eSplitText(startOffset);
 
-                    startOffset = startContainer._4e_index() + 1;
+                    startOffset = startContainer._4eIndex() + 1;
                     startContainer = startContainer.parent();
 
                     // Check all necessity of updating the end boundary.
@@ -1058,21 +1058,21 @@ KISSY.add(function (S,require) {
                 // If the offset is zero, we just insert the new node before
                 // the start.
                 if (!endOffset) {
-                    endOffset = endContainer._4e_index();
+                    endOffset = endContainer._4eIndex();
                     endContainer = endContainer.parent();
                 }
                 // If the offset is at the end, we'll insert it after the text
                 // node.
                 else if (endOffset >= endContainer[0].nodeValue.length) {
-                    endOffset = endContainer._4e_index() + 1;
+                    endOffset = endContainer._4eIndex() + 1;
                     endContainer = endContainer.parent();
                 }
                 // In other case, we split the text node and insert the new
                 // node at the split point.
                 else {
-                    endContainer._4e_splitText(endOffset);
+                    endContainer._4eSplitText(endOffset);
 
-                    endOffset = endContainer._4e_index() + 1;
+                    endOffset = endContainer._4eIndex() + 1;
                     endContainer = endContainer.parent();
                 }
 
@@ -1109,9 +1109,9 @@ KISSY.add(function (S,require) {
                 doc = $(self.document);
             if (bookmark.is2) {
                 // Get the start information.
-                var startContainer = doc._4e_getByAddress(bookmark.start, bookmark.normalized),
+                var startContainer = doc._4eGetByAddress(bookmark.start, bookmark.normalized),
                     startOffset = bookmark.startOffset,
-                    endContainer = bookmark.end && doc._4e_getByAddress(bookmark.end, bookmark.normalized),
+                    endContainer = bookmark.end && doc._4eGetByAddress(bookmark.end, bookmark.normalized),
                     endOffset = bookmark.endOffset;
 
                 // Set the start boundary.
@@ -1135,13 +1135,13 @@ KISSY.add(function (S,require) {
                 self.setStartBefore(startNode);
 
                 // Remove it, because it may interfere in the setEndBefore call.
-                startNode._4e_remove();
+                startNode._4eRemove();
 
                 // Set the range end at the bookmark end node position, or simply
                 // collapse it if it is not available.
                 if (endNode && endNode[0]) {
                     self.setEndBefore(endNode);
-                    endNode._4e_remove();
+                    endNode._4eRemove();
                 } else {
                     self.collapse(TRUE);
                 }
@@ -1168,7 +1168,7 @@ KISSY.add(function (S,require) {
                     ancestor = start;
                 }
             } else {
-                ancestor = start._4e_commonAncestor(end);
+                ancestor = start._4eCommonAncestor(end);
             }
 
             return ignoreTextNode && ancestor[0].nodeType == Dom.NodeType.TEXT_NODE
@@ -1489,7 +1489,7 @@ KISSY.add(function (S,require) {
                     startNode = $(startNode[0].childNodes[startOffset]);
                 } else if (childCount == 0) {
                     // ?? startNode
-                    startNode = startNode._4e_previousSourceNode();
+                    startNode = startNode._4ePreviousSourceNode();
                 } else {
                     // startOffset >= childCount but childCount is not 0
                     // Try to take the node just after the current position.
@@ -1503,7 +1503,7 @@ KISSY.add(function (S,require) {
                     // Normally we should take the next node in DFS order. But it
                     // is also possible that we've already reached the end of
                     // document.
-                    startNode = startNode._4e_nextSourceNode() || startNode;
+                    startNode = startNode._4eNextSourceNode() || startNode;
                 }
             }
 
@@ -1512,9 +1512,9 @@ KISSY.add(function (S,require) {
                 if (childCount > endOffset) {
                     endNode = $(endNode[0].childNodes[endOffset])
                         // in case endOffset == 0
-                        ._4e_previousSourceNode(TRUE);
+                        ._4ePreviousSourceNode(TRUE);
                 } else if (childCount == 0) {
-                    endNode = endNode._4e_previousSourceNode();
+                    endNode = endNode._4ePreviousSourceNode();
                 } else {
                     // endOffset > childCount but childCount is not 0
                     // Try to take the node just before the current position.
@@ -1527,7 +1527,7 @@ KISSY.add(function (S,require) {
 
             // Sometimes the endNode will come right before startNode for collapsed
             // ranges. Fix it. (#3780)
-            if (startNode._4e_position(endNode) & KEP.POSITION_FOLLOWING) {
+            if (startNode._4ePosition(endNode) & KEP.POSITION_FOLLOWING) {
                 startNode = endNode;
             }
 
@@ -1548,7 +1548,7 @@ KISSY.add(function (S,require) {
             self.collapse(isStart);
             self.enlarge(KER.ENLARGE_BLOCK_CONTENTS);
             fixedBlock[0].appendChild(self.extractContents());
-            fixedBlock._4e_trim();
+            fixedBlock._4eTrim();
             if (!UA.ie) {
                 fixedBlock._4eAppendBogus();
             }
@@ -1665,7 +1665,7 @@ KISSY.add(function (S,require) {
                 var next;
 
                 if (node[0].nodeType == Dom.NodeType.ELEMENT_NODE &&
-                    node._4e_isEditable()) {
+                    node._4eIsEditable()) {
                     next = node[ isMoveToEnd ? 'last' : 'first' ](nonWhitespaceOrIsBookmark, 1);
                 }
 
@@ -1689,7 +1689,7 @@ KISSY.add(function (S,require) {
                 }
 
                 // If an editable element is found, move inside it, but not stop the searching.
-                if (el[0].nodeType == Dom.NodeType.ELEMENT_NODE && el._4e_isEditable()) {
+                if (el[0].nodeType == Dom.NodeType.ELEMENT_NODE && el._4eIsEditable()) {
                     self.moveToPosition(el, isMoveToEnd ?
                         KER.POSITION_BEFORE_END :
                         KER.POSITION_AFTER_START);

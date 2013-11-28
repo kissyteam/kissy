@@ -408,7 +408,7 @@ KISSY.add(function(S, require) {
   click: function() {
   _$jscoverage['/page-break.js'].functionData[4]++;
   _$jscoverage['/page-break.js'].lineData[61]++;
-  var real = new Node(PAGE_BREAK_MARKUP, null, editor.get("document")[0]), substitute = editor.createFakeElement(real, CLS, TYPE, false, PAGE_BREAK_MARKUP);
+  var real = new Node(PAGE_BREAK_MARKUP, null, editor.get('document')[0]), substitute = editor.createFakeElement(real, CLS, TYPE, false, PAGE_BREAK_MARKUP);
   _$jscoverage['/page-break.js'].lineData[69]++;
   editor.focus();
   _$jscoverage['/page-break.js'].lineData[71]++;

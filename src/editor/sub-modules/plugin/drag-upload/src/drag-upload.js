@@ -35,7 +35,7 @@ KISSY.add(function (S, require) {
             }
 
             editor.docReady(function () {
-                var document = editor.get("document")[0];
+                var document = editor.get('document')[0];
                 Event.on(document, "dragenter", function () {
                     //firefox 会插入伪数据
                     if (!startMonitor) {
@@ -67,7 +67,7 @@ KISSY.add(function (S, require) {
                     }
 
                     var dt = ev['dataTransfer'];
-                    dt.dropEffect = "copy";
+                    dt.dropEffect = 'copy';
                     var files = dt['files'];
                     if (!files) {
                         return;

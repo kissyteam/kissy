@@ -531,7 +531,7 @@ KISSY.add(function(S, require) {
   editor.docReady(function() {
   _$jscoverage['/drag-upload.js'].functionData[4]++;
   _$jscoverage['/drag-upload.js'].lineData[38]++;
-  var document = editor.get("document")[0];
+  var document = editor.get('document')[0];
   _$jscoverage['/drag-upload.js'].lineData[39]++;
   Event.on(document, "dragenter", function() {
   _$jscoverage['/drag-upload.js'].functionData[5]++;
@@ -582,7 +582,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/drag-upload.js'].lineData[69]++;
   var dt = ev['dataTransfer'];
   _$jscoverage['/drag-upload.js'].lineData[70]++;
-  dt.dropEffect = "copy";
+  dt.dropEffect = 'copy';
   _$jscoverage['/drag-upload.js'].lineData[71]++;
   var files = dt['files'];
   _$jscoverage['/drag-upload.js'].lineData[72]++;

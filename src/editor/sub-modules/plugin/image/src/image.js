@@ -73,7 +73,7 @@ KISSY.add(function (S,require) {
                     content: "插入新行",
                     fn: function () {
                         this.hide();
-                        var doc = editor.get("document")[0],
+                        var doc = editor.get('document')[0],
                             p = new Node(doc.createElement("p"));
                         if (!UA.ie) {
                             p._4eAppendBogus(undefined);
@@ -113,7 +113,7 @@ KISSY.add(function (S,require) {
             });
 
             editor.docReady(function () {
-                editor.get("document").on('dblclick', function (ev) {
+                editor.get('document').on('dblclick', function (ev) {
                     ev.halt();
                     var t = $(ev.target);
                     if (checkImg(t)) {

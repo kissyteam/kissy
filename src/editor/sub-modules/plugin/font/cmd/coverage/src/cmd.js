@@ -511,7 +511,7 @@ KISSY.add(function(S, require) {
   exec: function(editor, effect) {
   _$jscoverage['/cmd.js'].functionData[4]++;
   _$jscoverage['/cmd.js'].lineData[62]++;
-  var doc = editor.get("document")[0];
+  var doc = editor.get('document')[0];
   _$jscoverage['/cmd.js'].lineData[63]++;
   editor.execCommand("save");
   _$jscoverage['/cmd.js'].lineData[64]++;
@@ -561,7 +561,7 @@ KISSY.add(function(S, require) {
   var currentValue = visit17_94_1(editor.queryCommandValue(cmdType) || "");
   _$jscoverage['/cmd.js'].lineData[95]++;
   var style = new Editor.Style(styleObj, {
-  value: value}), doc = editor.get("document")[0];
+  value: value}), doc = editor.get('document')[0];
   _$jscoverage['/cmd.js'].lineData[99]++;
   editor.execCommand("save");
   _$jscoverage['/cmd.js'].lineData[100]++;

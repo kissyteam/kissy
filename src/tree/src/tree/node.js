@@ -361,7 +361,7 @@ KISSY.add(function (S, require) {
         return getLastVisibleDescendant(children[children.length - 1]);
     }
 
-    // not same with _4e_previousSourceNode in editor !
+    // not same with _4ePreviousSourceNode in editor !
     function getPreviousVisibleNode(self) {
         var prev = self.prev();
         if (!prev) {
@@ -372,7 +372,7 @@ KISSY.add(function (S, require) {
         return prev;
     }
 
-    // similar to _4e_nextSourceNode in editor
+    // similar to _4eNextSourceNode in editor
     function getNextVisibleNode(self) {
         var children = self.get('children'),
             n,

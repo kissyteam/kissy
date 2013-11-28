@@ -3,16 +3,16 @@
  * monitor user's paste behavior.
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S,require) {
+KISSY.add(function (S, require) {
     var Node = require('node');
     var Editor = require('./base');
     var KERange = require('./range');
     var KES = require('./selection');
-    var  logger = S.getLogger('s/editor');
+    var logger = S.getLogger('s/editor');
     var $ = Node.all,
         UA = S.UA,
-
-        pasteEvent = UA.ie ? 'beforepaste' : 'paste',
+        OLD_IE = UA.ieMode < 11,
+        pasteEvent = OLD_IE ? 'beforepaste' : 'paste',
         KER = Editor.RangeType;
 
     function Paste(editor) {
@@ -25,7 +25,7 @@ KISSY.add(function (S,require) {
         _init: function () {
             var self = this,
                 editor = self.editor,
-                editorDoc = editor.get("document"),
+                editorDoc = editor.get('document'),
                 editorBody = editorDoc.one('body'),
                 CutCopyPasteCmd = function (type) {
                     this.type = type;
@@ -36,10 +36,10 @@ KISSY.add(function (S,require) {
                     var type = this.type;
                     editor.focus();
                     setTimeout(function () {
-                        if (UA.ie) {
-                            if (type == 'cut') {
+                        if (OLD_IE) {
+                            if (type === 'cut') {
                                 fixCut(editor);
-                            } else if (type == 'paste') {
+                            } else if (type === 'paste') {
                                 // ie prepares to get clipboard data
                                 // ie only can get data from beforepaste
                                 // non-ie paste
@@ -50,7 +50,8 @@ KISSY.add(function (S,require) {
                         // will trigger paste for all browsers
                         // disable handle for ie
                         if (!tryToCutCopyPaste(editor, type)) {
-                            alert(error_types[type]);
+                            /*global alert*/
+                            alert(errorTypes[type]);
                         }
                     }, 0);
                 }
@@ -62,7 +63,7 @@ KISSY.add(function (S,require) {
             // http://stackoverflow.com/questions/2176861/javascript-get-clipboard-data-on-paste-event-cross-browser
             editorBody.on(pasteEvent, self._getClipboardDataFromPasteBin, self);
 
-            if (UA.ie) {
+            if (OLD_IE) {
                 editorBody.on('paste', self._iePaste, self);
                 editorDoc.on('keydown', self._onKeyDown, self);
                 editorDoc.on('contextmenu', function () {
@@ -70,24 +71,24 @@ KISSY.add(function (S,require) {
                     setTimeout(function () {
                         self._isPreventBeforePaste = 0;
                     }, 0);
-                })
+                });
             }
 
-            editor.addCommand("copy", new CutCopyPasteCmd("copy"));
-            editor.addCommand("cut", new CutCopyPasteCmd("cut"));
-            editor.addCommand("paste", new CutCopyPasteCmd("paste"));
+            editor.addCommand('copy', new CutCopyPasteCmd('copy'));
+            editor.addCommand('cut', new CutCopyPasteCmd('cut'));
+            editor.addCommand('paste', new CutCopyPasteCmd('paste'));
         },
 
         '_onKeyDown': function (e) {
             var self = this,
                 editor = self.editor;
-            if (editor.get('mode') != Editor.Mode.WYSIWYG_MODE) {
+            if (editor.get('mode') !== Editor.Mode.WYSIWYG_MODE) {
                 return;
             }
             // ctrl+v
-            if (e.ctrlKey && e.keyCode == 86 ||
+            if (e.ctrlKey && e.keyCode === 86 ||
                 // shift+insert
-                e.shiftKey && e.keyCode == 45) {
+                e.shiftKey && e.keyCode === 45) {
                 self._preventPasteEvent();
             }
         },
@@ -97,7 +98,7 @@ KISSY.add(function (S,require) {
             var self = this;
             var editor = self.editor;
 
-            if (command == 'paste') {
+            if (command === 'paste') {
                 // IE Bug: queryCommandEnabled('paste') fires also 'beforepaste(copy/cut)',
                 // guard to distinguish from the ordinary sources (either
                 // keyboard paste or execCommand) (#4874).
@@ -112,7 +113,7 @@ KISSY.add(function (S,require) {
             else {
                 var sel = editor.getSelection(),
                     ranges = sel && sel.getRanges();
-                ret = ranges && !( ranges.length == 1 && ranges[ 0 ].collapsed );
+                ret = ranges && !( ranges.length === 1 && ranges[ 0 ].collapsed );
             }
 
             return ret;
@@ -153,15 +154,15 @@ KISSY.add(function (S,require) {
                 return;
             }
 
-            logger.debug(pasteEvent + ": " + " paste event happen");
+            logger.debug(pasteEvent + ': ' + ' paste event happen');
 
             var self = this,
                 editor = self.editor,
-                doc = editor.get("document")[0];
+                doc = editor.get('document')[0];
 
             // Avoid recursions on 'paste' event or consequent paste too fast. (#5730)
             if (doc.getElementById('ke-paste-bin')) {
-                logger.debug(pasteEvent + ": trigger more than once ...");
+                logger.debug(pasteEvent + ': trigger more than once ...');
                 return;
             }
 
@@ -204,7 +205,6 @@ KISSY.add(function (S,require) {
             range.select(true);
             // Wait a while and grab the pasted contents
             setTimeout(function () {
-
                 // Grab the HTML contents.
                 // We need to look for a apple style wrapper on webkit it also adds
                 // a div wrapper if you copy/paste the body of the editor.
@@ -212,9 +212,8 @@ KISSY.add(function (S,require) {
                 var bogusSpan;
                 var oldPasteBin = pasteBin;
 
-                pasteBin = ( UA.webkit
-                    && ( bogusSpan = pasteBin.first() )
-                    && (bogusSpan.hasClass('Apple-style-span') ) ?
+                pasteBin = ( UA.webkit && ( bogusSpan = pasteBin.first() ) &&
+                    (bogusSpan.hasClass('Apple-style-span') ) ?
                     bogusSpan : pasteBin );
 
                 sel.selectBookmarks(bms);
@@ -230,9 +229,9 @@ KISSY.add(function (S,require) {
                     return;
                 }
 
-                logger.debug("paste " + html);
+                logger.debug('paste ' + html);
 
-                var re = editor.fire("paste", {
+                var re = editor.fire('paste', {
                     html: html
                 });
 
@@ -248,7 +247,7 @@ KISSY.add(function (S,require) {
                 // MS-WORD format sniffing.
                 if (/(class="?Mso|style="[^"]*\bmso\-|w:WordDocument)/.test(html)) {
                     // 动态载入 word 过滤规则
-                    S.use("editor/plugin/word-filter", function (S, wordFilter) {
+                    S.use('editor/plugin/word-filter', function (S, wordFilter) {
                         editor.insertHtml(wordFilter.toDataFormat(html, editor));
                     });
                 } else {
@@ -261,7 +260,7 @@ KISSY.add(function (S,require) {
     // Tries to execute any of the paste, cut or copy commands in IE. Returns a
     // boolean indicating that the operation succeeded.
     var execIECommand = function (editor, command) {
-        var doc = editor.get("document")[0],
+        var doc = editor.get('document')[0],
             body = $(doc.body),
             enabled = false,
             onExec = function () {
@@ -275,7 +274,7 @@ KISSY.add(function (S,require) {
         body.on(command, onExec);
 
         // IE6/7: document.execCommand has problem to paste into positioned element.
-        ( UA.ie > 7 ? doc : doc.selection.createRange() ) [ 'execCommand' ](command);
+        ( UA.ieMode > 7 ? doc : doc.selection.createRange() ).execCommand(command);
 
         body.detach(command, onExec);
 
@@ -283,7 +282,7 @@ KISSY.add(function (S,require) {
     };
 
     // Attempts to execute the Cut and Copy operations.
-    var tryToCutCopyPaste = UA.ie ?
+    var tryToCutCopyPaste = OLD_IE ?
         function (editor, type) {
             return execIECommand(editor, type);
         }
@@ -291,25 +290,25 @@ KISSY.add(function (S,require) {
         function (editor, type) {
             try {
                 // Other browsers throw an error if the command is disabled.
-                return editor.get("document")[0].execCommand(type);
+                return editor.get('document')[0].execCommand(type);
             }
             catch (e) {
                 return false;
             }
         };
 
-    var error_types = {
-        "cut": "您的浏览器安全设置不允许编辑器自动执行剪切操作，请使用键盘快捷键(Ctrl/Cmd+X)来完成",
-        "copy": "您的浏览器安全设置不允许编辑器自动执行复制操作，请使用键盘快捷键(Ctrl/Cmd+C)来完成",
-        "paste": "您的浏览器安全设置不允许编辑器自动执行粘贴操作，请使用键盘快捷键(Ctrl/Cmd+V)来完成"
+    var errorTypes = {
+        'cut': '您的浏览器安全设置不允许编辑器自动执行剪切操作，请使用键盘快捷键(Ctrl/Cmd+X)来完成',
+        'copy': '您的浏览器安全设置不允许编辑器自动执行复制操作，请使用键盘快捷键(Ctrl/Cmd+C)来完成',
+        'paste': '您的浏览器安全设置不允许编辑器自动执行粘贴操作，请使用键盘快捷键(Ctrl/Cmd+V)来完成'
     };
 
     // Cutting off control type element in IE standards breaks the selection entirely. (#4881)
     function fixCut(editor) {
-        var editorDoc = editor.get("document")[0];
+        var editorDoc = editor.get('document')[0];
         var sel = editor.getSelection();
         var control;
-        if (( sel.getType() == KES.SELECTION_ELEMENT ) &&
+        if (( sel.getType() === KES.SELECTION_ELEMENT ) &&
             ( control = sel.getSelectedElement() )) {
             var range = sel.getRanges()[ 0 ];
             var dummy = $(editorDoc.createTextNode(''));
@@ -332,18 +331,22 @@ KISSY.add(function (S,require) {
     function isPlainText(html) {
         if (UA.webkit) {
             // Plain text or ( <div><br></div> and text inside <div> ).
-            if (!html.match(/^[^<]*$/g) && !html.match(/^(<div><br( ?\/)?><\/div>|<div>[^<]*<\/div>)*$/gi))
+            if (!html.match(/^[^<]*$/g) && !html.match(/^(<div><br( ?\/)?><\/div>|<div>[^<]*<\/div>)*$/gi)) {
                 return 0;
+            }
         } else if (UA.ie) {
             // Text and <br> or ( text and <br> in <p> - paragraphs can be separated by new \r\n ).
-            if (!html.match(/^([^<]|<br( ?\/)?>)*$/gi) && !html.match(/^(<p>([^<]|<br( ?\/)?>)*<\/p>|(\r\n))*$/gi))
+            if (!html.match(/^([^<]|<br( ?\/)?>)*$/gi) && !html.match(/^(<p>([^<]|<br( ?\/)?>)*<\/p>|(\r\n))*$/gi)) {
                 return 0;
+            }
         } else if (UA.gecko || UA.opera) {
             // Text or <br>.
-            if (!html.match(/^([^<]|<br( ?\/)?>)*$/gi))
+            if (!html.match(/^([^<]|<br( ?\/)?>)*$/gi)) {
                 return 0;
-        } else
+            }
+        } else {
             return 0;
+        }
 
         return 1;
     }
@@ -378,7 +381,7 @@ KISSY.add(function (S,require) {
                     .replace(/^<\/div>/, '</p>');
             }
         }
-        // Opera and Firefox and enterMode != BR.
+        // Opera and Firefox and enterMode !== BR.
         else if (UA.gecko || UA.opera) {
             //  bogus <br>
             if (UA.gecko) {
@@ -396,7 +399,7 @@ KISSY.add(function (S,require) {
     function cleanPaste(html) {
         var htmlMode = 0;
         html = html.replace(/<span[^>]+_ke_bookmark[^<]*?<\/span>(&nbsp;)*/ig, '');
-        if (html.indexOf('Apple-') != -1) {
+        if (html.indexOf('Apple-') !== -1) {
             // replace webkit space
             html = html.replace(/<span class="Apple-converted-space">&nbsp;<\/span>/gi, ' ');
             html = html.replace(/<span class="Apple-tab-span"[^>]*>([^<]*)<\/span>/gi, function (all, spaces) {
@@ -418,9 +421,9 @@ KISSY.add(function (S,require) {
     }
 
     var lang = {
-        "copy": "复制",
-        "paste": "粘贴",
-        "cut": "剪切"
+        'copy': '复制',
+        'paste': '粘贴',
+        'cut': '剪切'
     };
 
     return {
@@ -455,21 +458,20 @@ KISSY.add(function (S,require) {
             }
 
             var clipboardCommands = {
-                "copy": 1,
-                "cut": 1,
-                "paste": 1
+                'copy': 1,
+                'cut': 1,
+                'paste': 1
             };
-            var clipboardCommandsList = ["copy", "cut", "paste"];
+            var clipboardCommandsList = ['copy', 'cut', 'paste'];
 
 
             // 给所有右键都加入复制粘贴
             editor.on('contextmenu', function (ev) {
-                var contextmenu = ev.contextmenu;
-
-                if (!contextmenu.__copy_fix) {
-
-                    contextmenu.__copy_fix = 1;
-                    var i = 0;
+                var contextmenu = ev.contextmenu,
+                    i;
+                if (!contextmenu.__copyFix) {
+                    contextmenu.__copyFix = 1;
+                    i = 0;
                     for (; i < clipboardCommandsList.length; i++) {
                         contextmenu.addChild({
                             content: lang[clipboardCommandsList[i]],
@@ -478,7 +480,7 @@ KISSY.add(function (S,require) {
                     }
 
                     contextmenu.on('click', function (e) {
-                        var value = e.target.get("value");
+                        var value = e.target.get('value');
                         if (clipboardCommands[value]) {
                             contextmenu.hide();
                             // 给 ie 一点 hide() 中的事件触发 handler 运行机会，
@@ -501,7 +503,7 @@ KISSY.add(function (S,require) {
                     var c = menuChildren[i];
                     var value;
                     if (c.get) {
-                        value = c.get("value");
+                        value = c.get('value');
                     } else {
                         value = c.value;
                     }

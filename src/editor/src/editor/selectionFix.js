@@ -27,7 +27,7 @@ KISSY.add(function (S, require) {
     function fixCursorForIE(editor) {
         var started,
             win = editor.get("window")[0],
-            $doc = editor.get("document"),
+            $doc = editor.get('document'),
             doc = $doc[0],
             startRng;
 
@@ -111,7 +111,7 @@ KISSY.add(function (S, require) {
 
 
     function fixSelectionForIEWhenDocReady(editor) {
-        var doc = editor.get("document")[0],
+        var doc = editor.get('document')[0],
             body = new Node(doc.body),
             html = new Node(doc.documentElement);
         //ie 焦点管理不行 (ie9 也不行) ,编辑器 iframe 失去焦点，选择区域/光标位置也丢失了
@@ -319,7 +319,7 @@ KISSY.add(function (S, require) {
             editor.checkSelectionChange();
         }
 
-        editor.get("document").on('mouseup keyup ' +
+        editor.get('document').on('mouseup keyup ' +
             // ios does not fire mouseup/keyup ....
             // http://stackoverflow.com/questions/8442158/selection-change-event-in-contenteditable
             // https://www.w3.org/Bugs/Public/show_bug.cgi?id=13952
@@ -352,7 +352,7 @@ KISSY.add(function (S, require) {
         // 光标可以不能放在里面
         function cannotCursorPlaced(element) {
             var dtd = Editor.XHTML_DTD;
-            return element._4e_isBlockBoundary() && dtd.$empty[ element.nodeName() ];
+            return element._4eIsBlockBoundary() && dtd.$empty[ element.nodeName() ];
         }
 
         function isNotEmpty(node) {
@@ -365,7 +365,7 @@ KISSY.add(function (S, require) {
         editor.on("selectionChange", function (ev) {
             // S.log("monitor selectionChange in selection/index.js");
             var path = ev.path,
-                editorDoc = editor.get("document")[0],
+                editorDoc = editor.get('document')[0],
                 body = new Node(editorDoc.body),
                 selection = ev.selection,
                 range = selection && selection.getRanges()[0],
@@ -393,9 +393,9 @@ KISSY.add(function (S, require) {
                     lastNode = pathBlock && pathBlock.last(isNotEmpty);
                 if (pathBlock
                     // style as block
-                    && pathBlock._4e_isBlockBoundary()
+                    && pathBlock._4eIsBlockBoundary()
                     // lastNode is not block
-                    && !( lastNode && lastNode[0].nodeType == 1 && lastNode._4e_isBlockBoundary() )
+                    && !( lastNode && lastNode[0].nodeType == 1 && lastNode._4eIsBlockBoundary() )
                     // not pre
                     && pathBlock.nodeName() != 'pre'
                     // does not have bogus
@@ -425,7 +425,7 @@ KISSY.add(function (S, require) {
                         if (element &&
                             element[0].nodeType == Dom.NodeType.ELEMENT_NODE && !cannotCursorPlaced[ element ]) {
                             range.moveToElementEditablePosition(element);
-                            fixedBlock._4e_remove();
+                            fixedBlock._4eRemove();
                         } else {
                             element = fixedBlock.prev(nextValidEl, 1);
                             if (element &&
@@ -433,7 +433,7 @@ KISSY.add(function (S, require) {
                                 range.moveToElementEditablePosition(element,
                                     // 空行的话还是要移到开头的
                                     isBlankParagraph(element) ? FALSE : TRUE);
-                                fixedBlock._4e_remove();
+                                fixedBlock._4eRemove();
                             } else {
                                 // 否则的话，就在文章中间添加空行了！
                             }
@@ -449,7 +449,7 @@ KISSY.add(function (S, require) {
              当 table pre div 是 body 最后一个元素时，鼠标没法移到后面添加内容了
              解决：增加新的 p
              */
-            var doc = editor.get("document")[0],
+            var doc = editor.get('document')[0],
                 lastRange = new Editor.Range(doc),
                 lastPath, editBlock;
             // 最后的编辑地方

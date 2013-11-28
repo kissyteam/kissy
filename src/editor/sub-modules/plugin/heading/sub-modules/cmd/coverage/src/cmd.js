@@ -343,7 +343,7 @@ KISSY.add(function(S, require) {
   }
   _$jscoverage['/cmd.js'].lineData[22]++;
   new Editor.Style({
-  element: tag}).apply(editor.get("document")[0]);
+  element: tag}).apply(editor.get('document')[0]);
   _$jscoverage['/cmd.js'].lineData[25]++;
   editor.execCommand("save");
 }});

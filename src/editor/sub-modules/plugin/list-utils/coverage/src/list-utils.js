@@ -456,7 +456,7 @@ function visit41_158_1(result) {
 function visit40_149_2(result) {
   _$jscoverage['/list-utils.js'].branchData['149'][2].ranCondition(result);
   return result;
-}_$jscoverage['/list-utils.js'].branchData['149'][1].init(165, 119, 'firstChild.nodeType == Dom.NodeType.ELEMENT_NODE && Dom._4e_isBlockBoundary(firstChild)');
+}_$jscoverage['/list-utils.js'].branchData['149'][1].init(165, 119, 'firstChild.nodeType == Dom.NodeType.ELEMENT_NODE && Dom._4eIsBlockBoundary(firstChild)');
 function visit39_149_1(result) {
   _$jscoverage['/list-utils.js'].branchData['149'][1].ranCondition(result);
   return result;
@@ -667,7 +667,7 @@ KISSY.add(function(S) {
     _$jscoverage['/list-utils.js'].lineData[49]++;
     if (visit9_49_1(database)) {
       _$jscoverage['/list-utils.js'].lineData[50]++;
-      listItem._4e_setMarker(database, 'listarray_index', baseArray.length, undefined);
+      listItem._4eSetMarker(database, 'listarray_index', baseArray.length, undefined);
     }
     _$jscoverage['/list-utils.js'].lineData[52]++;
     baseArray.push(itemObj);
@@ -746,7 +746,7 @@ KISSY.add(function(S) {
               _$jscoverage['/list-utils.js'].lineData[118]++;
               currentListItem = doc.createElement(paragraphMode);
               _$jscoverage['/list-utils.js'].lineData[119]++;
-              item.element._4e_copyAttributes(new Node(currentListItem));
+              item.element._4eCopyAttributes(new Node(currentListItem));
             } else {
               _$jscoverage['/list-utils.js'].lineData[122]++;
               currentListItem = doc.createDocumentFragment();
@@ -759,7 +759,7 @@ KISSY.add(function(S) {
             _$jscoverage['/list-utils.js'].lineData[128]++;
             if (visit27_128_1(currentListItem.nodeType == NodeType.DOCUMENT_FRAGMENT_NODE)) {
               _$jscoverage['/list-utils.js'].lineData[129]++;
-              item.element._4e_copyAttributes(new Node(ic));
+              item.element._4eCopyAttributes(new Node(ic));
             }
             _$jscoverage['/list-utils.js'].lineData[131]++;
             currentListItem.appendChild(ic[0]);
@@ -769,7 +769,7 @@ KISSY.add(function(S) {
             _$jscoverage['/list-utils.js'].lineData[136]++;
             if (visit31_136_1(currentListItem.lastChild && visit32_137_1(visit33_137_2(currentListItem.lastChild.nodeType == Dom.NodeType.ELEMENT_NODE) && visit34_138_1(currentListItem.lastChild.getAttribute('type') == '_moz')))) {
               _$jscoverage['/list-utils.js'].lineData[139]++;
-              Dom._4e_remove(currentListItem.lastChild);
+              Dom._4eRemove(currentListItem.lastChild);
             }
             _$jscoverage['/list-utils.js'].lineData[141]++;
             Dom._4eAppendBogus(currentListItem);
@@ -777,15 +777,15 @@ KISSY.add(function(S) {
           _$jscoverage['/list-utils.js'].lineData[144]++;
           if (visit35_144_1(visit36_144_2(currentListItem.nodeType == Dom.NodeType.ELEMENT_NODE) && visit37_145_1(visit38_145_2(Dom.nodeName(currentListItem) == paragraphMode) && currentListItem.firstChild))) {
             _$jscoverage['/list-utils.js'].lineData[147]++;
-            Dom._4e_trim(currentListItem);
+            Dom._4eTrim(currentListItem);
             _$jscoverage['/list-utils.js'].lineData[148]++;
             var firstChild = currentListItem.firstChild;
             _$jscoverage['/list-utils.js'].lineData[149]++;
-            if (visit39_149_1(visit40_149_2(firstChild.nodeType == Dom.NodeType.ELEMENT_NODE) && Dom._4e_isBlockBoundary(firstChild))) {
+            if (visit39_149_1(visit40_149_2(firstChild.nodeType == Dom.NodeType.ELEMENT_NODE) && Dom._4eIsBlockBoundary(firstChild))) {
               _$jscoverage['/list-utils.js'].lineData[151]++;
               var tmp = doc.createDocumentFragment();
               _$jscoverage['/list-utils.js'].lineData[152]++;
-              Dom._4e_moveChildren(currentListItem, tmp);
+              Dom._4eMoveChildren(currentListItem, tmp);
               _$jscoverage['/list-utils.js'].lineData[153]++;
               currentListItem = tmp;
             }
@@ -824,10 +824,10 @@ KISSY.add(function(S) {
       _$jscoverage['/list-utils.js'].lineData[178]++;
       if (visit50_178_1(currentNode[0].nodeType == Dom.NodeType.ELEMENT_NODE)) {
         _$jscoverage['/list-utils.js'].lineData[179]++;
-        currentNode._4e_clearMarkers(database, true);
+        currentNode._4eClearMarkers(database, true);
       }
       _$jscoverage['/list-utils.js'].lineData[181]++;
-      currentNode = currentNode._4e_nextSourceNode();
+      currentNode = currentNode._4eNextSourceNode();
     }
   }
   _$jscoverage['/list-utils.js'].lineData[185]++;

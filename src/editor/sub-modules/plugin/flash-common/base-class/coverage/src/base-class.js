@@ -468,7 +468,7 @@ KISSY.add(function(S, require) {
   editor.docReady(function() {
   _$jscoverage['/base-class.js'].functionData[9]++;
   _$jscoverage['/base-class.js'].lineData[108]++;
-  editor.get("document").on('dblclick', self._dbClick, self);
+  editor.get('document').on('dblclick', self._dbClick, self);
 });
 }, 
   _getFlashUrl: function(r) {

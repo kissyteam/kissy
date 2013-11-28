@@ -263,7 +263,7 @@ KISSY.add(function(S, require) {
   function applyColor(editor, c, styles) {
     _$jscoverage['/cmd.js'].functionData[1]++;
     _$jscoverage['/cmd.js'].lineData[10]++;
-    var doc = editor.get("document")[0];
+    var doc = editor.get('document')[0];
     _$jscoverage['/cmd.js'].lineData[11]++;
     editor.execCommand("save");
     _$jscoverage['/cmd.js'].lineData[12]++;

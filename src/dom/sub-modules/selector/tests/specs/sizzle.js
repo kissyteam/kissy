@@ -1010,7 +1010,7 @@ KISSY.add(function (S, engine) {
             return matchesSelector(docElem, ":lang(" + docElem.lang + ")");
         }, "starting :lang");
 
-        testLang("document", function () {
+        testLang('document', function () {
             return anchor
         }, docElem, "en", "us");
 

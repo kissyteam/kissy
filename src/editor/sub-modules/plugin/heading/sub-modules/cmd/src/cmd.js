@@ -21,7 +21,7 @@ KISSY.add(function (S, require) {
                         }
                         new Editor.Style({
                             element: tag
-                        }).apply(editor.get("document")[0]);
+                        }).apply(editor.get('document')[0]);
                         editor.execCommand("save");
                     }
                 });

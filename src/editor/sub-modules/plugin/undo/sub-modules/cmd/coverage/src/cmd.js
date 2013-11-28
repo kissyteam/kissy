@@ -439,7 +439,7 @@ function visit19_155_1(result) {
 function visit18_139_1(result) {
   _$jscoverage['/cmd.js'].branchData['139'][1].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['135'][1].init(194, 23, '!editor.get("document")');
+}_$jscoverage['/cmd.js'].branchData['135'][1].init(194, 23, '!editor.get('document')');
 function visit17_135_1(result) {
   _$jscoverage['/cmd.js'].branchData['135'][1].ranCondition(result);
   return result;
@@ -518,7 +518,7 @@ KISSY.add(function(S, require) {
   function Snapshot(editor) {
     _$jscoverage['/cmd.js'].functionData[1]++;
     _$jscoverage['/cmd.js'].lineData[18]++;
-    var contents = editor.get("document")[0].body.innerHTML, self = this, selection;
+    var contents = editor.get('document')[0].body.innerHTML, self = this, selection;
     _$jscoverage['/cmd.js'].lineData[21]++;
     if (visit1_21_1(contents)) {
       _$jscoverage['/cmd.js'].lineData[22]++;
@@ -575,7 +575,7 @@ KISSY.add(function(S, require) {
   editor.docReady(function() {
   _$jscoverage['/cmd.js'].functionData[5]++;
   _$jscoverage['/cmd.js'].lineData[75]++;
-  editor.get("document").on('keydown', function(ev) {
+  editor.get('document').on('keydown', function(ev) {
   _$jscoverage['/cmd.js'].functionData[6]++;
   _$jscoverage['/cmd.js'].lineData[76]++;
   var keyCode = ev.keyCode;
@@ -655,7 +655,7 @@ KISSY.add(function(S, require) {
     return;
   }
   _$jscoverage['/cmd.js'].lineData[135]++;
-  if (visit17_135_1(!editor.get("document"))) {
+  if (visit17_135_1(!editor.get('document'))) {
     _$jscoverage['/cmd.js'].lineData[136]++;
     return;
   }
@@ -701,7 +701,7 @@ KISSY.add(function(S, require) {
     return undefined;
   }
   _$jscoverage['/cmd.js'].lineData[177]++;
-  var self = this, history = self.history, editor = self.editor, editorDomBody = editor.get("document")[0].body, snapshot = history[self.index + d];
+  var self = this, history = self.history, editor = self.editor, editorDomBody = editor.get('document')[0].body, snapshot = history[self.index + d];
   _$jscoverage['/cmd.js'].lineData[183]++;
   if (visit22_183_1(snapshot)) {
     _$jscoverage['/cmd.js'].lineData[184]++;

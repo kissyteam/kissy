@@ -46,11 +46,11 @@ KISSY.add(function (S, require) {
         if (range && range.collapsed) {
             var bs = sel.createBookmarks();
             // 不使用核心 styles ，直接清除元素标记即可。
-            a._4e_remove(true);
+            a._4eRemove(true);
             sel.selectBookmarks(bs);
         } else if (range) {
             var attrs = getAttributes(a[0]);
-            new KEStyle(link_Style, attrs).remove(editor.get("document")[0]);
+            new KEStyle(link_Style, attrs).remove(editor.get('document')[0]);
         }
         editor.execCommand("save");
         editor.notifySelectionChange();
@@ -69,12 +69,12 @@ KISSY.add(function (S, require) {
             //编辑器没有焦点或没有选择区域时直接插入链接地址
             if (!range || range.collapsed) {
                 var a = new Node("<a>" + attr.href + "</a>",
-                    attr, editor.get("document")[0]);
+                    attr, editor.get('document')[0]);
                 editor.insertElement(a);
             } else {
                 editor.execCommand("save");
                 var linkStyle = new KEStyle(link_Style, attr);
-                linkStyle.apply(editor.get("document")[0]);
+                linkStyle.apply(editor.get('document')[0]);
             }
         }
         editor.execCommand("save");

@@ -688,11 +688,11 @@ function visit34_208_1(result) {
 function visit33_194_2(result) {
   _$jscoverage['/cmd.js'].branchData['194'][2].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['194'][1].init(134, 130, 'boundaryNode[0].nodeType == Dom.NodeType.ELEMENT_NODE && siblingNode._4e_isBlockBoundary({\n  br: 1}, undefined)');
+}_$jscoverage['/cmd.js'].branchData['194'][1].init(134, 130, 'boundaryNode[0].nodeType == Dom.NodeType.ELEMENT_NODE && siblingNode._4eIsBlockBoundary({\n  br: 1}, undefined)');
 function visit32_194_1(result) {
   _$jscoverage['/cmd.js'].branchData['194'][1].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['192'][1].init(161, 267, '(siblingNode = groupObj.root[isStart ? \'prev\' : \'next\'](Walker.whitespaces(true), 1)) && !(boundaryNode[0].nodeType == Dom.NodeType.ELEMENT_NODE && siblingNode._4e_isBlockBoundary({\n  br: 1}, undefined))');
+}_$jscoverage['/cmd.js'].branchData['192'][1].init(161, 267, '(siblingNode = groupObj.root[isStart ? \'prev\' : \'next\'](Walker.whitespaces(true), 1)) && !(boundaryNode[0].nodeType == Dom.NodeType.ELEMENT_NODE && siblingNode._4eIsBlockBoundary({\n  br: 1}, undefined))');
 function visit31_192_1(result) {
   _$jscoverage['/cmd.js'].branchData['192'][1].ranCondition(result);
   return result;
@@ -700,15 +700,15 @@ function visit31_192_1(result) {
 function visit30_190_3(result) {
   _$jscoverage['/cmd.js'].branchData['190'][3].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['190'][2].init(130, 131, 'boundaryNode[0].nodeType == Dom.NodeType.ELEMENT_NODE && boundaryNode._4e_isBlockBoundary(undefined, undefined)');
+}_$jscoverage['/cmd.js'].branchData['190'][2].init(130, 131, 'boundaryNode[0].nodeType == Dom.NodeType.ELEMENT_NODE && boundaryNode._4eIsBlockBoundary(undefined, undefined)');
 function visit29_190_2(result) {
   _$jscoverage['/cmd.js'].branchData['190'][2].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['190'][1].init(101, 429, '!(boundaryNode[0].nodeType == Dom.NodeType.ELEMENT_NODE && boundaryNode._4e_isBlockBoundary(undefined, undefined)) && (siblingNode = groupObj.root[isStart ? \'prev\' : \'next\'](Walker.whitespaces(true), 1)) && !(boundaryNode[0].nodeType == Dom.NodeType.ELEMENT_NODE && siblingNode._4e_isBlockBoundary({\n  br: 1}, undefined))');
+}_$jscoverage['/cmd.js'].branchData['190'][1].init(101, 429, '!(boundaryNode[0].nodeType == Dom.NodeType.ELEMENT_NODE && boundaryNode._4eIsBlockBoundary(undefined, undefined)) && (siblingNode = groupObj.root[isStart ? \'prev\' : \'next\'](Walker.whitespaces(true), 1)) && !(boundaryNode[0].nodeType == Dom.NodeType.ELEMENT_NODE && siblingNode._4eIsBlockBoundary({\n  br: 1}, undefined))');
 function visit28_190_1(result) {
   _$jscoverage['/cmd.js'].branchData['190'][1].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['189'][1].init(23, 531, '(boundaryNode = new Node(docFragment[isStart ? \'firstChild\' : \'lastChild\'])) && !(boundaryNode[0].nodeType == Dom.NodeType.ELEMENT_NODE && boundaryNode._4e_isBlockBoundary(undefined, undefined)) && (siblingNode = groupObj.root[isStart ? \'prev\' : \'next\'](Walker.whitespaces(true), 1)) && !(boundaryNode[0].nodeType == Dom.NodeType.ELEMENT_NODE && siblingNode._4e_isBlockBoundary({\n  br: 1}, undefined))');
+}_$jscoverage['/cmd.js'].branchData['189'][1].init(23, 531, '(boundaryNode = new Node(docFragment[isStart ? \'firstChild\' : \'lastChild\'])) && !(boundaryNode[0].nodeType == Dom.NodeType.ELEMENT_NODE && boundaryNode._4eIsBlockBoundary(undefined, undefined)) && (siblingNode = groupObj.root[isStart ? \'prev\' : \'next\'](Walker.whitespaces(true), 1)) && !(boundaryNode[0].nodeType == Dom.NodeType.ELEMENT_NODE && siblingNode._4eIsBlockBoundary({\n  br: 1}, undefined))');
 function visit27_189_1(result) {
   _$jscoverage['/cmd.js'].branchData['189'][1].ranCondition(result);
   return result;
@@ -772,7 +772,7 @@ function visit13_86_1(result) {
 function visit12_77_2(result) {
   _$jscoverage['/cmd.js'].branchData['77'][2].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['77'][1].init(84, 129, 'contents[0][0].nodeType != Dom.NodeType.TEXT_NODE && contents[0]._4e_moveChildren(divBlock, undefined, undefined)');
+}_$jscoverage['/cmd.js'].branchData['77'][1].init(84, 129, 'contents[0][0].nodeType != Dom.NodeType.TEXT_NODE && contents[0]._4eMoveChildren(divBlock, undefined, undefined)');
 function visit11_77_1(result) {
   _$jscoverage['/cmd.js'].branchData['77'][1].ranCondition(result);
   return result;
@@ -854,7 +854,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/cmd.js'].lineData[45]++;
     selectedListItems.push(itemNode);
     _$jscoverage['/cmd.js'].lineData[46]++;
-    itemNode._4e_setMarker(database, 'list_item_processed', true, undefined);
+    itemNode._4eSetMarker(database, 'list_item_processed', true, undefined);
   }
   _$jscoverage['/cmd.js'].lineData[49]++;
   var fakeParent = new Node(groupObj.root[0].ownerDocument.createElement(this.type));
@@ -893,7 +893,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/cmd.js'].lineData[76]++;
     var divBlock = new Node(doc.createElement('div'));
     _$jscoverage['/cmd.js'].lineData[77]++;
-    visit11_77_1(visit12_77_2(contents[0][0].nodeType != Dom.NodeType.TEXT_NODE) && contents[0]._4e_moveChildren(divBlock, undefined, undefined));
+    visit11_77_1(visit12_77_2(contents[0][0].nodeType != Dom.NodeType.TEXT_NODE) && contents[0]._4eMoveChildren(divBlock, undefined, undefined));
     _$jscoverage['/cmd.js'].lineData[79]++;
     contents[0][0].appendChild(divBlock[0]);
     _$jscoverage['/cmd.js'].lineData[80]++;
@@ -904,7 +904,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/cmd.js'].lineData[86]++;
   for (var i = 0; visit13_86_1(i < contents.length); i++) {
     _$jscoverage['/cmd.js'].lineData[87]++;
-    commonParent = commonParent._4e_commonAncestor(contents[i].parent(), undefined);
+    commonParent = commonParent._4eCommonAncestor(contents[i].parent(), undefined);
   }
   _$jscoverage['/cmd.js'].lineData[93]++;
   for (i = 0; visit14_93_1(i < contents.length); i++) {
@@ -944,9 +944,9 @@ KISSY.add(function(S, require) {
       listItem[0].appendChild(contentBlock[0]);
     } else {
       _$jscoverage['/cmd.js'].lineData[123]++;
-      contentBlock._4e_copyAttributes(listItem, undefined, undefined);
+      contentBlock._4eCopyAttributes(listItem, undefined, undefined);
       _$jscoverage['/cmd.js'].lineData[124]++;
-      contentBlock._4e_moveChildren(listItem, undefined, undefined);
+      contentBlock._4eMoveChildren(listItem, undefined, undefined);
       _$jscoverage['/cmd.js'].lineData[125]++;
       contentBlock.remove();
     }
@@ -985,7 +985,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/cmd.js'].lineData[152]++;
     selectedListItems.push(itemNode);
     _$jscoverage['/cmd.js'].lineData[153]++;
-    itemNode._4e_setMarker(database, 'list_item_processed', true, undefined);
+    itemNode._4eSetMarker(database, 'list_item_processed', true, undefined);
   }
   _$jscoverage['/cmd.js'].lineData[156]++;
   var lastListIndex = null;
@@ -1025,10 +1025,10 @@ KISSY.add(function(S, require) {
   function compensateBrs(isStart) {
     _$jscoverage['/cmd.js'].functionData[5]++;
     _$jscoverage['/cmd.js'].lineData[189]++;
-    if (visit27_189_1((boundaryNode = new Node(docFragment[isStart ? 'firstChild' : 'lastChild'])) && visit28_190_1(!(visit29_190_2(visit30_190_3(boundaryNode[0].nodeType == Dom.NodeType.ELEMENT_NODE) && boundaryNode._4e_isBlockBoundary(undefined, undefined))) && visit31_192_1((siblingNode = groupObj.root[isStart ? 'prev' : 'next'](Walker.whitespaces(true), 1)) && !(visit32_194_1(visit33_194_2(boundaryNode[0].nodeType == Dom.NodeType.ELEMENT_NODE) && siblingNode._4e_isBlockBoundary({
+    if (visit27_189_1((boundaryNode = new Node(docFragment[isStart ? 'firstChild' : 'lastChild'])) && visit28_190_1(!(visit29_190_2(visit30_190_3(boundaryNode[0].nodeType == Dom.NodeType.ELEMENT_NODE) && boundaryNode._4eIsBlockBoundary(undefined, undefined))) && visit31_192_1((siblingNode = groupObj.root[isStart ? 'prev' : 'next'](Walker.whitespaces(true), 1)) && !(visit32_194_1(visit33_194_2(boundaryNode[0].nodeType == Dom.NodeType.ELEMENT_NODE) && siblingNode._4eIsBlockBoundary({
   br: 1}, undefined))))))) {
       _$jscoverage['/cmd.js'].lineData[196]++;
-      boundaryNode[isStart ? 'before' : 'after'](editor.get("document")[0].createElement('br'));
+      boundaryNode[isStart ? 'before' : 'after'](editor.get('document')[0].createElement('br'));
     }
   }
   _$jscoverage['/cmd.js'].lineData[200]++;
@@ -1085,7 +1085,7 @@ KISSY.add(function(S, require) {
         continue;
       } else {
         _$jscoverage['/cmd.js'].lineData[250]++;
-        block._4e_setMarker(database, 'list_block', 1, undefined);
+        block._4eSetMarker(database, 'list_block', 1, undefined);
       }
       _$jscoverage['/cmd.js'].lineData[253]++;
       var path = new ElementPath(block), pathElements = path.elements, pathElementsCount = pathElements.length, listNode = null, processedFlag = false, blockLimit = path.blockLimit, element;
@@ -1109,7 +1109,7 @@ KISSY.add(function(S, require) {
             _$jscoverage['/cmd.js'].lineData[281]++;
             listGroups.push(groupObj);
             _$jscoverage['/cmd.js'].lineData[282]++;
-            element._4e_setMarker(database, 'list_group_object', groupObj, undefined);
+            element._4eSetMarker(database, 'list_group_object', groupObj, undefined);
           }
           _$jscoverage['/cmd.js'].lineData[284]++;
           processedFlag = true;
@@ -1134,7 +1134,7 @@ KISSY.add(function(S, require) {
   root: root, 
   contents: [block]};
         _$jscoverage['/cmd.js'].lineData[299]++;
-        root._4e_setMarker(database, 'list_group_object', groupObj, undefined);
+        root._4eSetMarker(database, 'list_group_object', groupObj, undefined);
         _$jscoverage['/cmd.js'].lineData[300]++;
         listGroups.push(groupObj);
       }
@@ -1188,7 +1188,7 @@ KISSY.add(function(S, require) {
         _$jscoverage['/cmd.js'].lineData[346]++;
         sibling.remove();
         _$jscoverage['/cmd.js'].lineData[348]++;
-        sibling._4e_moveChildren(listNode, rtl ? true : false, undefined);
+        sibling._4eMoveChildren(listNode, rtl ? true : false, undefined);
       }
     }    _$jscoverage['/cmd.js'].lineData[352]++;
     mergeSibling(undefined, listNode);

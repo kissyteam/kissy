@@ -293,7 +293,7 @@ KISSY.add(function(S, require) {
   editor.docReady(function() {
   _$jscoverage['/underline.js'].functionData[3]++;
   _$jscoverage['/underline.js'].lineData[23]++;
-  editor.get("document").on('keydown', function(e) {
+  editor.get('document').on('keydown', function(e) {
   _$jscoverage['/underline.js'].functionData[4]++;
   _$jscoverage['/underline.js'].lineData[24]++;
   if (visit1_24_1(e.ctrlKey && visit2_24_2(e.keyCode == S.Node.KeyCode.U))) {

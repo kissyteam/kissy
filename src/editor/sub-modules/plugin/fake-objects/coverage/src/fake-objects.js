@@ -529,7 +529,7 @@ KISSY.add(function(S, require) {
     attributes._ke_resizable = isResizable;
   }
   _$jscoverage['/fake-objects.js'].lineData[47]++;
-  return new Node("<img/>", attributes, self.get("document")[0]);
+  return new Node("<img/>", attributes, self.get('document')[0]);
 }, 
   restoreRealElement: function(fakeElement) {
   _$jscoverage['/fake-objects.js'].functionData[2]++;
@@ -541,7 +541,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/fake-objects.js'].lineData[55]++;
   var html = (S.urlDecode(fakeElement.attr('_ke_realelement')));
   _$jscoverage['/fake-objects.js'].lineData[57]++;
-  var temp = new Node('<div>', null, this.get("document")[0]);
+  var temp = new Node('<div>', null, this.get('document')[0]);
   _$jscoverage['/fake-objects.js'].lineData[58]++;
   temp.html(html);
   _$jscoverage['/fake-objects.js'].lineData[60]++;
@@ -618,7 +618,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/fake-objects.js'].lineData[125]++;
   var html = (S.urlDecode(fakeElement.attr('_ke_realelement')));
   _$jscoverage['/fake-objects.js'].lineData[127]++;
-  var temp = new Node('<div>', null, editor.get("document")[0]);
+  var temp = new Node('<div>', null, editor.get('document')[0]);
   _$jscoverage['/fake-objects.js'].lineData[128]++;
   temp.html(html);
   _$jscoverage['/fake-objects.js'].lineData[130]++;
