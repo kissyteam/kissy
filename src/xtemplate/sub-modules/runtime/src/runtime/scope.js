@@ -1,3 +1,7 @@
+/**
+ * scope resolution for xtemplate like function in javascript but keep original data unmodified
+ * @author yiminghe@gmail.com
+ */
 KISSY.add(function (S) {
     function Scope(data, affix) {
         // {}
@@ -23,7 +27,7 @@ KISSY.add(function (S) {
             return this.root;
         },
 
-        // prevent modify original data
+        // keep original data unmodified
         set: function (name, value) {
             if (!this.affix) {
                 this.affix = {};
