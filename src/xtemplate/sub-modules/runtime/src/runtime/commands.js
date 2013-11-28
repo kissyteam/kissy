@@ -6,93 +6,94 @@
 KISSY.add(function (S, require) {
     var commands;
     var Path = require('path');
+    var Scope = require('./scope');
 
     commands = {
-        'each': function (scopes, config) {
+        'each': function (scope, config) {
             var params = config.params;
             var param0 = params[0];
             var buffer = '';
             var xcount;
+            var opScope;
             // if undefined, will emit warning by compiler
             if (param0) {
-                // skip array check for performance
-                var opScopes = [0, 0].concat(scopes);
+                opScope = new Scope();
                 if (S.isArray(param0)) {
                     xcount = param0.length;
                     for (var xindex = 0; xindex < xcount; xindex++) {
                         // two more variable scope for array looping
-                        opScopes[0] = param0[xindex];
-                        opScopes[1] = {
+                        opScope.data = param0[xindex];
+                        opScope.affix = {
                             xcount: xcount,
                             xindex: xindex
                         };
-                        buffer += config.fn(opScopes);
+                        opScope.setParent(scope);
+                        buffer += config.fn(opScope);
                     }
                 } else {
                     for (var name in param0) {
-                        opScopes[0] = param0[name];
-                        opScopes[1] = {
+                        opScope.data = param0[name];
+                        opScope.affix = {
                             xindex: name
                         };
-                        buffer += config.fn(opScopes);
+                        opScope.setParent(scope);
+                        buffer += config.fn(opScope);
                     }
                 }
 
             } else if (config.inverse) {
-                buffer = config.inverse(scopes);
+                buffer = config.inverse(scope);
             }
             return buffer;
         },
 
-        'with': function (scopes, config) {
+        'with': function (scope, config) {
             var params = config.params;
             var param0 = params[0];
-            var opScopes = [0].concat(scopes);
             var buffer = '';
             if (param0) {
                 // skip object check for performance
-                opScopes[0] = param0;
-                buffer = config.fn(opScopes);
+                var opScope = new Scope(param0);
+                opScope.setParent(scope);
+                buffer = config.fn(opScope);
             } else if (config.inverse) {
-                buffer = config.inverse(scopes);
+                buffer = config.inverse(scope);
             }
             return buffer;
         },
 
-        'if': function (scopes, config) {
+        'if': function (scope, config) {
             var params = config.params;
             var param0 = params[0];
             var buffer = '';
             if (param0) {
                 if (config.fn) {
-                    buffer = config.fn(scopes);
+                    buffer = config.fn(scope);
                 }
             } else if (config.inverse) {
-                buffer = config.inverse(scopes);
+                buffer = config.inverse(scope);
             }
             return buffer;
         },
 
-        'set': function (scopes, config) {
-            // in case scopes[0] is not object ,{{#each}}{{set }}{{/each}}
-            for (var i = scopes.length - 1; i >= 0; i--) {
-                if (typeof scopes[i] === 'object') {
-                    S.mix(scopes[i], config.hash);
-                    break;
-                }
-            }
+        'set': function (scope, config) {
+            scope.mix(config.hash);
             return '';
         },
 
-        include: function (scopes, config) {
+        include: function (scope, config) {
             var params = config.params;
-            // allow hash to shadow parent scopes
-            var extra = config.hash ? [config.hash] : [];
-            scopes = extra.concat(scopes);
 
             if (!params || params.length !== 1) {
                 S.error('include must has one param');
                 return '';
+            }
+
+            // sub template scope
+            if (config.hash) {
+                var newScope = new Scope(config.hash);
+                newScope.setParent(scope);
+                scope = newScope;
             }
 
             var myName = this.config.name;
@@ -115,10 +116,10 @@ KISSY.add(function (S, require) {
             config.commands = this.config.commands;
             // share macros with parent template and sub template
             config.macros = this.config.macros;
-            return this.invokeEngine(tpl, scopes, config);
+            return this.invokeEngine(tpl, scope, config);
         },
 
-        'macro': function (scopes, config) {
+        'macro': function (scope, config) {
             var params = config.params;
             var macroName = params[0];
             var params1 = params.slice(1);
@@ -135,25 +136,24 @@ KISSY.add(function (S, require) {
             } else {
                 var paramValues = {};
                 var macro = macros[macroName];
+
                 if (!macro) {
-                    macro = S.require(macroName);
-                    if (!macro) {
-                        S.error('can not find macro module:' + name);
-                    }
+                    S.error('can not find macro:' + name);
                 }
+
                 S.each(macro.paramNames, function (p, i) {
                     paramValues[p] = params1[i];
                 });
-                var newScopes = scopes.concat();
-                newScopes.unshift(paramValues);
-                return macro.fn.call(this, newScopes);
+                var newScope = new Scope(paramValues);
+                // no caller scope
+                return macro.fn.call(this, newScope);
             }
             return '';
         },
 
-        parse: function (scopes, config) {
-            // abandon parent scopes
-            return commands.include.call(this, [], config);
+        parse: function (scope, config) {
+            // abandon scope
+            return commands.include.call(this, new Scope(), config);
         }
     };
 

@@ -1,88 +1,194 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 28 17:03
+build time: Nov 28 19:32
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
 
+ xtemplate/runtime/scope
  xtemplate/runtime/commands
  xtemplate/runtime
 */
 
-KISSY.add("xtemplate/runtime/commands", ["path"], function(S, require) {
+KISSY.add("xtemplate/runtime/scope", [], function(S) {
+  function Scope(data, affix) {
+    this.data = data || {};
+    this.affix = affix;
+    this.root = this
+  }
+  Scope.prototype = {isScope:1, setParent:function(parentScope) {
+    this.parent = parentScope;
+    this.root = parentScope.root
+  }, getParent:function() {
+    return this.parent
+  }, getRoot:function() {
+    return this.root
+  }, set:function(name, value) {
+    if(!this.affix) {
+      this.affix = {}
+    }
+    this.affix[name] = value
+  }, setData:function(data) {
+    this.data = data
+  }, getData:function() {
+    return this.data
+  }, mix:function(v) {
+    if(!this.affix) {
+      this.affix = {}
+    }
+    S.mix(this.affix, v)
+  }, has:function(name) {
+    var data = this.data;
+    var affix = this.affix;
+    if(affix && name in affix) {
+      return true
+    }
+    return typeof data === "object" && name in data
+  }, get:function(name) {
+    var data = this.data;
+    var affix = this.affix;
+    if(affix && name in affix) {
+      return affix[name]
+    }
+    if(typeof data === "object" && name in data) {
+      return data[name]
+    }
+    return undefined
+  }, resolve:function(name, depth) {
+    if(name === ".") {
+      name = "this"
+    }
+    var parts = name.split(".");
+    var scope = this, len, i, v, p, valid;
+    if(parts[0] === "root") {
+      parts.shift();
+      scope = scope.root
+    }else {
+      if(depth) {
+        while(scope && depth--) {
+          scope = scope.parent
+        }
+      }
+    }
+    var endScopeFind = 0;
+    len = parts.length;
+    while(scope) {
+      valid = 1;
+      v = scope;
+      for(i = 0;i < len;i++) {
+        p = parts[i];
+        if(p === "this") {
+          endScopeFind = 1;
+          continue
+        }
+        if(v === scope) {
+          if(!scope.has(p)) {
+            valid = 0;
+            break
+          }
+          v = scope.get(p)
+        }else {
+          if(typeof v !== "object" || !(p in v)) {
+            valid = 0;
+            break
+          }
+          v = v[p]
+        }
+      }
+      if(valid) {
+        if(v && v.isScope) {
+          v = v.data
+        }
+        if(typeof v === "function") {
+          v = v.call(this.data)
+        }
+        return[v]
+      }
+      if(endScopeFind) {
+        break
+      }
+      scope = scope.parent
+    }
+    return false
+  }};
+  return Scope
+});
+KISSY.add("xtemplate/runtime/commands", ["path", "./scope"], function(S, require) {
   var commands;
   var Path = require("path");
-  commands = {each:function(scopes, config) {
+  var Scope = require("./scope");
+  commands = {each:function(scope, config) {
     var params = config.params;
     var param0 = params[0];
     var buffer = "";
     var xcount;
+    var opScope;
     if(param0) {
-      var opScopes = [0, 0].concat(scopes);
+      opScope = new Scope;
       if(S.isArray(param0)) {
         xcount = param0.length;
         for(var xindex = 0;xindex < xcount;xindex++) {
-          opScopes[0] = param0[xindex];
-          opScopes[1] = {xcount:xcount, xindex:xindex};
-          buffer += config.fn(opScopes)
+          opScope.data = param0[xindex];
+          opScope.affix = {xcount:xcount, xindex:xindex};
+          opScope.setParent(scope);
+          buffer += config.fn(opScope)
         }
       }else {
         for(var name in param0) {
-          opScopes[0] = param0[name];
-          opScopes[1] = {xindex:name};
-          buffer += config.fn(opScopes)
+          opScope.data = param0[name];
+          opScope.affix = {xindex:name};
+          opScope.setParent(scope);
+          buffer += config.fn(opScope)
         }
       }
     }else {
       if(config.inverse) {
-        buffer = config.inverse(scopes)
+        buffer = config.inverse(scope)
       }
     }
     return buffer
-  }, "with":function(scopes, config) {
+  }, "with":function(scope, config) {
     var params = config.params;
     var param0 = params[0];
-    var opScopes = [0].concat(scopes);
     var buffer = "";
     if(param0) {
-      opScopes[0] = param0;
-      buffer = config.fn(opScopes)
+      var opScope = new Scope(param0);
+      opScope.setParent(scope);
+      buffer = config.fn(opScope)
     }else {
       if(config.inverse) {
-        buffer = config.inverse(scopes)
+        buffer = config.inverse(scope)
       }
     }
     return buffer
-  }, "if":function(scopes, config) {
+  }, "if":function(scope, config) {
     var params = config.params;
     var param0 = params[0];
     var buffer = "";
     if(param0) {
       if(config.fn) {
-        buffer = config.fn(scopes)
+        buffer = config.fn(scope)
       }
     }else {
       if(config.inverse) {
-        buffer = config.inverse(scopes)
+        buffer = config.inverse(scope)
       }
     }
     return buffer
-  }, set:function(scopes, config) {
-    for(var i = scopes.length - 1;i >= 0;i--) {
-      if(typeof scopes[i] === "object") {
-        S.mix(scopes[i], config.hash);
-        break
-      }
-    }
+  }, set:function(scope, config) {
+    scope.mix(config.hash);
     return""
-  }, include:function(scopes, config) {
+  }, include:function(scope, config) {
     var params = config.params;
-    var extra = config.hash ? [config.hash] : [];
-    scopes = extra.concat(scopes);
     if(!params || params.length !== 1) {
       S.error("include must has one param");
       return""
+    }
+    if(config.hash) {
+      var newScope = new Scope(config.hash);
+      newScope.setParent(scope);
+      scope = newScope
     }
     var myName = this.config.name;
     var subTplName = params[0];
@@ -98,8 +204,8 @@ KISSY.add("xtemplate/runtime/commands", ["path"], function(S, require) {
     config.name = subTplName;
     config.commands = this.config.commands;
     config.macros = this.config.macros;
-    return this.invokeEngine(tpl, scopes, config)
-  }, macro:function(scopes, config) {
+    return this.invokeEngine(tpl, scope, config)
+  }, macro:function(scope, config) {
     var params = config.params;
     var macroName = params[0];
     var params1 = params.slice(1);
@@ -112,26 +218,23 @@ KISSY.add("xtemplate/runtime/commands", ["path"], function(S, require) {
       var paramValues = {};
       var macro = macros[macroName];
       if(!macro) {
-        macro = S.require(macroName);
-        if(!macro) {
-          S.error("can not find macro module:" + name)
-        }
+        S.error("can not find macro:" + name)
       }
       S.each(macro.paramNames, function(p, i) {
         paramValues[p] = params1[i]
       });
-      var newScopes = scopes.concat();
-      newScopes.unshift(paramValues);
-      return macro.fn.call(this, newScopes)
+      var newScope = new Scope(paramValues);
+      return macro.fn.call(this, newScope)
     }
     return""
-  }, parse:function(scopes, config) {
-    return commands.include.call(this, [], config)
+  }, parse:function(scope, config) {
+    return commands.include.call(this, new Scope, config)
   }};
   return commands
 });
-KISSY.add("xtemplate/runtime", ["./runtime/commands"], function(S, require) {
+KISSY.add("xtemplate/runtime", ["./runtime/commands", "./runtime/scope"], function(S, require) {
   var commands = require("./runtime/commands");
+  var Scope = require("./runtime/scope");
   var escapeHtml = S.escapeHtml;
   var logger = S.getLogger("s/xtemplate");
   function info(s) {
@@ -149,54 +252,17 @@ KISSY.add("xtemplate/runtime", ["./runtime/commands"], function(S, require) {
     }
     return cmd
   }
-  function getProperty(parts, scopes, depth) {
-    if(parts === ".") {
-      parts = "this"
-    }
-    parts = parts.split(".");
-    var len = parts.length, i, j = depth || 0, v, p, valid, sl = scopes.length;
-    if(parts[0] === "root") {
-      j = sl - 1;
-      parts.shift();
-      len--
-    }
-    var endScopeFind = 0;
-    for(;j < sl;j++) {
-      v = scopes[j];
-      valid = 1;
-      for(i = 0;i < len;i++) {
-        p = parts[i];
-        if(p === "this") {
-          endScopeFind = 1;
-          continue
-        }else {
-          if(typeof v !== "object" || !(p in v)) {
-            valid = 0;
-            break
-          }
-        }
-        v = v[p]
-      }
-      if(valid) {
-        if(typeof v === "function") {
-          v = v.call(scopes[0])
-        }
-        return[v]
-      }
-      if(endScopeFind) {
-        break
-      }
-    }
-    return false
+  function getProperty(name, scope, depth) {
+    return scope.resolve(name, depth)
   }
-  var utils = {runBlockCommand:function(engine, scopes, options, name, line) {
+  var utils = {runBlockCommand:function(engine, scope, options, name, line) {
     var config = engine.config;
     var logFn = config.silent ? info : S.error;
     var commands = config.commands;
     var command = findCommand(commands, name);
     if(!command) {
       if(!options.params && !options.hash) {
-        var property = getProperty(name, scopes);
+        var property = getProperty(name, scope);
         if(property === false) {
           logFn('can not find property: "' + name + '" at line ' + line);
           property = ""
@@ -219,7 +285,7 @@ KISSY.add("xtemplate/runtime", ["./runtime/commands"], function(S, require) {
     }
     var ret = "";
     try {
-      ret = command.call(engine, scopes, options)
+      ret = command.call(engine, scope, options)
     }catch(e) {
       S.error(e.message + ': "' + name + '" at line ' + line)
     }
@@ -232,7 +298,7 @@ KISSY.add("xtemplate/runtime", ["./runtime/commands"], function(S, require) {
       exp = ""
     }
     return escaped && exp ? escapeHtml(exp) : exp
-  }, getPropertyOrRunCommand:function(engine, scopes, options, name, depth, line, escape, preserveUndefined) {
+  }, getPropertyOrRunCommand:function(engine, scope, options, name, depth, line, escape, preserveUndefined) {
     var id0;
     var config = engine.config;
     var commands = config.commands;
@@ -240,13 +306,13 @@ KISSY.add("xtemplate/runtime", ["./runtime/commands"], function(S, require) {
     var logFn = config.silent ? info : S.error;
     if(command1) {
       try {
-        id0 = command1.call(engine, scopes, options)
+        id0 = command1.call(engine, scope, options)
       }catch(e) {
         S.error(e.message + ': "' + name + '" at line ' + line);
         return""
       }
     }else {
-      var tmp2 = getProperty(name, scopes, depth);
+      var tmp2 = getProperty(name, scope, depth);
       if(tmp2 === false) {
         logFn('can not find property: "' + name + '" at line ' + line, "warn");
         return preserveUndefined ? undefined : ""
@@ -279,18 +345,20 @@ KISSY.add("xtemplate/runtime", ["./runtime/commands"], function(S, require) {
   }, removeCommand:function(commandName) {
     delete commands[commandName]
   }});
-  XTemplateRuntime.prototype = {constructor:XTemplateRuntime, invokeEngine:function(tpl, scopes, config) {
-    return(new this.constructor(tpl, config)).render(scopes, true)
+  XTemplateRuntime.prototype = {constructor:XTemplateRuntime, invokeEngine:function(tpl, scope, config) {
+    return(new this.constructor(tpl, config)).render(scope, true)
   }, removeCommand:function(commandName) {
     delete this.config.commands[commandName]
   }, addCommand:function(commandName, fn) {
     this.config.commands[commandName] = fn
-  }, render:function(data, keepDataFormat) {
-    if(!keepDataFormat) {
-      data = [data]
+  }, render:function(data) {
+    var root = data;
+    if(!(root && root.isScope)) {
+      root = new Scope(data)
     }
-    return this.tpl(data, S)
+    return this.tpl(root, S)
   }};
+  XTemplateRuntime.Scope = Scope;
   return XTemplateRuntime
 });
 

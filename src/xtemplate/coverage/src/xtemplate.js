@@ -249,7 +249,7 @@ if (! _$jscoverage['/xtemplate.js']) {
   _$jscoverage['/xtemplate.js'].lineData[55] = 0;
   _$jscoverage['/xtemplate.js'].lineData[58] = 0;
   _$jscoverage['/xtemplate.js'].lineData[61] = 0;
-  _$jscoverage['/xtemplate.js'].lineData[84] = 0;
+  _$jscoverage['/xtemplate.js'].lineData[86] = 0;
 }
 if (! _$jscoverage['/xtemplate.js'].functionData) {
   _$jscoverage['/xtemplate.js'].functionData = [];
@@ -266,7 +266,7 @@ if (! _$jscoverage['/xtemplate.js'].branchData) {
   _$jscoverage['/xtemplate.js'].branchData['54'] = [];
   _$jscoverage['/xtemplate.js'].branchData['54'][1] = new BranchData();
 }
-_$jscoverage['/xtemplate.js'].branchData['54'][1].init(85, 22, 'typeof tpl == \'string\'');
+_$jscoverage['/xtemplate.js'].branchData['54'][1].init(85, 23, 'typeof tpl === \'string\'');
 function visit3_54_1(result) {
   _$jscoverage['/xtemplate.js'].branchData['54'][1].ranCondition(result);
   return result;
@@ -318,7 +318,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/xtemplate.js'].lineData[52]++;
     config = S.merge(defaultCfg, config);
     _$jscoverage['/xtemplate.js'].lineData[54]++;
-    if (visit3_54_1(typeof tpl == 'string')) {
+    if (visit3_54_1(typeof tpl === 'string')) {
       _$jscoverage['/xtemplate.js'].lineData[55]++;
       tpl = compile(tpl, config);
     }
@@ -328,9 +328,10 @@ KISSY.add(function(S, require) {
   _$jscoverage['/xtemplate.js'].lineData[61]++;
   S.extend(XTemplate, XTemplateRuntime, {}, {
   compiler: compiler, 
+  Scope: XTemplateRuntime.Scope, 
   RunTime: XTemplateRuntime, 
   addCommand: XTemplateRuntime.addCommand, 
   removeCommand: XTemplateRuntime.removeCommand});
-  _$jscoverage['/xtemplate.js'].lineData[84]++;
+  _$jscoverage['/xtemplate.js'].lineData[86]++;
   return XTemplate;
 });

@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:51
+build time: Nov 28 19:32
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -28,12 +28,12 @@ KISSY.add("xtemplate", ["xtemplate/runtime", "xtemplate/compiler"], function(S, 
   function XTemplate(tpl, config) {
     var self = this;
     config = S.merge(defaultCfg, config);
-    if(typeof tpl == "string") {
+    if(typeof tpl === "string") {
       tpl = compile(tpl, config)
     }
     XTemplate.superclass.constructor.call(self, tpl, config)
   }
-  S.extend(XTemplate, XTemplateRuntime, {}, {compiler:compiler, RunTime:XTemplateRuntime, addCommand:XTemplateRuntime.addCommand, removeCommand:XTemplateRuntime.removeCommand});
+  S.extend(XTemplate, XTemplateRuntime, {}, {compiler:compiler, Scope:XTemplateRuntime.Scope, RunTime:XTemplateRuntime, addCommand:XTemplateRuntime.addCommand, removeCommand:XTemplateRuntime.removeCommand});
   return XTemplate
 });
 

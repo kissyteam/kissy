@@ -51,7 +51,7 @@ KISSY.add(function (S, require) {
         var self = this;
         config = S.merge(defaultCfg, config);
 
-        if (typeof tpl == 'string') {
+        if (typeof tpl === 'string') {
             tpl = compile(tpl, config);
         }
 
@@ -60,6 +60,8 @@ KISSY.add(function (S, require) {
 
     S.extend(XTemplate, XTemplateRuntime, {}, {
         compiler: compiler,
+
+        Scope:XTemplateRuntime.Scope,
 
         RunTime: XTemplateRuntime,
 

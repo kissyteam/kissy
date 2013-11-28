@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 28 16:49
+build time: Nov 28 19:32
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -515,7 +515,7 @@ KISSY.add("xtemplate/compiler", ["xtemplate/runtime", "./compiler/parser", "./co
   var gen = {genFunction:function(statements, global) {
     var source = [];
     if(!global) {
-      source.push("function(scopes) {")
+      source.push("function(scope) {")
     }
     source.push('var buffer = ""' + (global ? "," : ";"));
     if(global) {
@@ -539,23 +539,22 @@ KISSY.add("xtemplate/compiler", ["xtemplate/runtime", "./compiler/parser", "./co
       source.push("}");
       return source
     }else {
-      return{params:["scopes", "S", "undefined"], source:source}
+      return{params:["scope", "S", "undefined"], source:source}
     }
   }, genId:function(idNode, tplNode, preserveUndefined) {
-    var source = [], depth = idNode.depth, idParts = idNode.parts, idName = guid("id"), self = this;
-    if(depth == 0) {
+    var source = [], depth = idNode.depth, configName, idParts = idNode.parts, idName = guid("id"), self = this;
+    if(depth === 0) {
       var configNameCode = tplNode && self.genConfig(tplNode);
-      var configName;
       if(configNameCode) {
         configName = configNameCode[0];
         pushToArray(source, configNameCode[1])
       }
     }
     var idString = self.getIdStringFromIdParts(source, idParts);
-    if(idString == "include") {
+    if(idString === "include") {
       source.push("if(moduleWrap) {re" + 'quire("' + tplNode.params[0].value + '");' + configName + ".params[0]=moduleWrap.resolveByName(" + configName + ".params[0]);" + "}")
     }
-    source.push("var " + idName + " = getPropertyOrRunCommandUtil(engine,scopes," + (configName || "{}") + ',"' + idString + '",' + depth + "," + idNode.lineNumber + "," + (tplNode && tplNode.escaped) + "," + preserveUndefined + ");");
+    source.push("var " + idName + " = getPropertyOrRunCommandUtil(engine,scope," + (configName || "{}") + ',"' + idString + '",' + depth + "," + idNode.lineNumber + "," + (tplNode && tplNode.escaped) + "," + preserveUndefined + ");");
     return[idName, source]
   }, genOpExpression:function(e, type) {
     var source = [], name1, name2, code1 = this[e.op1.type](e.op1), code2 = this[e.op2.type](e.op2);
@@ -677,13 +676,13 @@ KISSY.add("xtemplate/compiler", ["xtemplate/runtime", "./compiler/parser", "./co
     if(!tplNode.hash && !tplNode.params) {
       var parts = tplPath.parts;
       for(var i = 0;i < parts.length;i++) {
-        if(typeof parts[i] != "string") {
+        if(typeof parts[i] !== "string") {
           pathString = self.getIdStringFromIdParts(source, parts);
           break
         }
       }
     }
-    source.push("buffer += runBlockCommandUtil(engine, scopes, " + configName + ", " + '"' + pathString + '", ' + tplPath.lineNumber + ");");
+    source.push("buffer += runBlockCommandUtil(engine, scope, " + configName + ", " + '"' + pathString + '", ' + tplPath.lineNumber + ");");
     return source
   }, content:function(contentNode) {
     return["buffer += '" + escapeString(contentNode.value, false) + "';"]
@@ -727,7 +726,7 @@ KISSY.add("xtemplate/compiler", ["xtemplate/runtime", "./compiler/parser", "./co
     return idString
   }};
   var compiler;
-  return compiler = {parse:function(tpl) {
+  compiler = {parse:function(tpl) {
     return parser.parse(tpl)
   }, compileToStr:function(tpl) {
     var func = this.compile(tpl);
@@ -741,6 +740,7 @@ KISSY.add("xtemplate/compiler", ["xtemplate/runtime", "./compiler/parser", "./co
     config = config || {};
     var sourceURL = "sourceURL=" + (config.name ? config.name : "xtemplate" + xtemplateId++) + ".js";
     return Function.apply(null, [].concat(code.params).concat(code.source.join("\n") + "\n//@ " + sourceURL + "\n//# " + sourceURL))
-  }}
+  }};
+  return compiler
 });
 

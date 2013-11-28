@@ -5,6 +5,7 @@
  */
 KISSY.add(function (S, require) {
     var commands = require('./runtime/commands');
+    var Scope = require('./runtime/scope');
 
     var escapeHtml = S.escapeHtml;
     var logger = S.getLogger('s/xtemplate');
@@ -26,65 +27,19 @@ KISSY.add(function (S, require) {
         return cmd;
     }
 
-    function getProperty(parts, scopes, depth) {
-        // this refer to current scope object
-        if (parts === '.') {
-            parts = 'this';
-        }
-        parts = parts.split('.');
-        var len = parts.length,
-            i,
-            j = depth || 0,
-            v,
-            p,
-            valid,
-            sl = scopes.length;
-        // root keyword for root scope
-        if (parts[0] === 'root') {
-            j = sl - 1;
-            parts.shift();
-            len--;
-        }
-        var endScopeFind = 0;
-        for (; j < sl; j++) {
-            v = scopes[j];
-            valid = 1;
-            for (i = 0; i < len; i++) {
-                p = parts[i];
-                if (p === 'this') {
-                    endScopeFind = 1;
-                    continue;
-                }
-                // may not be object at all
-                else if (typeof v !== 'object' || !(p in v)) {
-                    valid = 0;
-                    break;
-                }
-                v = v[p];
-            }
-            if (valid) {
-                // support property function return value as property value
-                if (typeof v === 'function') {
-                    v = v.call(scopes[0]);
-                }
-                return [v];
-            }
-            if (endScopeFind) {
-                break;
-            }
-        }
-        return false;
+    function getProperty(name, scope, depth) {
+        return scope.resolve(name, depth);
     }
 
     var utils = {
-            'runBlockCommand': function (engine, scopes, options, name, line) {
+            'runBlockCommand': function (engine, scope, options, name, line) {
                 var config = engine.config;
                 var logFn = config.silent ? info : S.error;
                 var commands = config.commands;
                 var command = findCommand(commands, name);
                 if (!command) {
                     if (!options.params && !options.hash) {
-                        var property = getProperty(name, scopes);
+                        var property = getProperty(name, scope);
                         if (property === false) {
                             logFn('can not find property: "' + name + '" at line ' + line);
                             property = '';
@@ -106,7 +61,7 @@ KISSY.add(function (S, require) {
                 }
                 var ret = '';
                 try {
-                    ret = command.call(engine, scopes, options);
+                    ret = command.call(engine, scope, options);
                 } catch (e) {
                     S.error(e.message + ': "' + name + '" at line ' + line);
                 }
@@ -123,7 +78,7 @@ KISSY.add(function (S, require) {
                 return escaped && exp ? escapeHtml(exp) : exp;
             },
 
-            'getPropertyOrRunCommand': function (engine, scopes, options, name, depth, line, escape, preserveUndefined) {
+            'getPropertyOrRunCommand': function (engine, scope, options, name, depth, line, escape, preserveUndefined) {
                 var id0;
                 var config = engine.config;
                 var commands = config.commands;
@@ -131,14 +86,14 @@ KISSY.add(function (S, require) {
                 var logFn = config.silent ? info : S.error;
                 if (command1) {
                     try {
-                        id0 = command1.call(engine, scopes, options);
+                        id0 = command1.call(engine, scope, options);
                     } catch (e) {
                         S.error(e.message + ': "' + name + '" at line ' + line);
                         return '';
                     }
                 }
                 else {
-                    var tmp2 = getProperty(name, scopes, depth);
+                    var tmp2 = getProperty(name, scope, depth);
                     if (tmp2 === false) {
                         logFn('can not find property: "' + name + '" at line ' + line, 'warn');
                         // undefined for expression
@@ -198,15 +153,6 @@ KISSY.add(function (S, require) {
 
     /**
      * XTemplate runtime. only accept tpl as function.
-     *
-     *
-     *      @example
-     *      KISSY.use('xtemplate/runtime',function(S, XTemplateRunTime){
-     *          document.writeln(
-     *              new XTemplateRunTime(function(scopes){ return scopes[0].title;}).render({title:2})
-     *          );
-     *      });
-     *
      * @class KISSY.XTemplate.Runtime
      */
     function XTemplateRuntime(tpl, config) {
@@ -252,8 +198,8 @@ KISSY.add(function (S, require) {
         constructor: XTemplateRuntime,
 
         // allow str sub template
-        invokeEngine: function (tpl, scopes, config) {
-            return new this.constructor(tpl, config).render(scopes, true);
+        invokeEngine: function (tpl, scope, config) {
+            return new this.constructor(tpl, config).render(scope, true);
         },
 
         /**
@@ -277,15 +223,17 @@ KISSY.add(function (S, require) {
          * get result by merge data with template
          * @param data
          * @return {String}
-         * @param {Boolean} [keepDataFormat] for internal use
          */
-        render: function (data, keepDataFormat) {
-            if (!keepDataFormat) {
-                data = [data];
+        render: function (data) {
+            var root = data;
+            if (!(root && root.isScope)) {
+                root = new Scope(data);
             }
-            return this.tpl(data, S);
+            return this.tpl(root, S);
         }
     };
+
+    XTemplateRuntime.Scope = Scope;
 
     return XTemplateRuntime;
 });

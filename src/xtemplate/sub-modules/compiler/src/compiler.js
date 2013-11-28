@@ -23,6 +23,7 @@ KISSY.add(function (S, require) {
         if (isCode) {
             str = escapeSingleQuoteInCodeString(str, false);
         } else {
+            /*jshint quotmark:false*/
             str = str.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
         }
         str = str.replace(/\r/g, '\\r')
@@ -53,7 +54,7 @@ KISSY.add(function (S, require) {
         genFunction: function (statements, global) {
             var source = [];
             if (!global) {
-                source.push('function(scopes) {');
+                source.push('function(scope) {');
             }
             source.push('var buffer = ""' + (global ? ',' : ';'));
             if (global) {
@@ -90,7 +91,7 @@ KISSY.add(function (S, require) {
                 return source;
             } else {
                 return {
-                    params: ['scopes', 'S', 'undefined'],
+                    params: ['scope', 'S', 'undefined'],
                     source: source
                 };
             }
@@ -99,15 +100,15 @@ KISSY.add(function (S, require) {
         genId: function (idNode, tplNode, preserveUndefined) {
             var source = [],
                 depth = idNode.depth,
+                configName,
                 idParts = idNode.parts,
                 idName = guid('id'),
                 self = this;
 
             // {{#each variable}} {{variable}}
             // {{command}}
-            if (depth == 0) {
+            if (depth === 0) {
                 var configNameCode = tplNode && self.genConfig(tplNode);
-                var configName;
                 if (configNameCode) {
                     configName = configNameCode[0];
                     pushToArray(source, configNameCode[1]);
@@ -118,7 +119,7 @@ KISSY.add(function (S, require) {
             var idString = self.getIdStringFromIdParts(source, idParts);
 
             // require include modules
-            if (idString == 'include') {
+            if (idString === 'include') {
                 // prevent require parse...
                 source.push('if(moduleWrap) {re' + 'quire("' + tplNode.params[0].value + '");' +
                     configName + '.params[0]=moduleWrap.resolveByName(' + configName + '.params[0]);' +
@@ -126,7 +127,7 @@ KISSY.add(function (S, require) {
             }
 
             source.push('var ' + idName +
-                ' = getPropertyOrRunCommandUtil(engine,scopes,' +
+                ' = getPropertyOrRunCommandUtil(engine,scope,' +
                 (configName || '{}') + ',"' +
                 idString +
                 '",' + depth + ',' + idNode.lineNumber +
@@ -210,10 +211,10 @@ KISSY.add(function (S, require) {
                         var nextIdNameCode = self[param.type](param);
                         if (nextIdNameCode[0]) {
                             pushToArray(source, nextIdNameCode[1]);
-                            source.push(paramsName + '.push(' + nextIdNameCode[0] + ');')
+                            source.push(paramsName + '.push(' + nextIdNameCode[0] + ');');
                         } else {
                             pushToArray(source, nextIdNameCode[1].slice(0, -1));
-                            source.push(paramsName + '.push(' + lastOfArray(nextIdNameCode[1]) + ');')
+                            source.push(paramsName + '.push(' + lastOfArray(nextIdNameCode[1]) + ');');
                         }
                     });
                     source.push(configName + '.params=' + paramsName + ';');
@@ -226,10 +227,10 @@ KISSY.add(function (S, require) {
                         var nextIdNameCode = self[v.type](v);
                         if (nextIdNameCode[0]) {
                             pushToArray(source, nextIdNameCode[1]);
-                            source.push(hashName + '["' + key + '"] = ' + nextIdNameCode[0] + ';')
+                            source.push(hashName + '["' + key + '"] = ' + nextIdNameCode[0] + ';');
                         } else {
                             pushToArray(source, nextIdNameCode[1].slice(0, -1));
-                            source.push(hashName + '["' + key + '"] = ' + lastOfArray(nextIdNameCode[1]) + ';')
+                            source.push(hashName + '["' + key + '"] = ' + lastOfArray(nextIdNameCode[1]) + ';');
                         }
                     });
                     source.push(configName + '.hash=' + hashName + ';');
@@ -269,7 +270,7 @@ KISSY.add(function (S, require) {
                 name,
                 code = this[e.value.type](e.value);
             arrayPush.apply(source, code[1]);
-            if (name = code[0]) {
+            if ((name = code[0])) {
                 source.push(name + '=!' + name + ';');
             } else {
                 source[source.length - 1] = '!' + lastOfArray(source);
@@ -279,6 +280,7 @@ KISSY.add(function (S, require) {
 
         'string': function (e) {
             // same as contentNode.value
+            /*jshint quotmark:false*/
             return ['', ["'" + escapeString(e.value, true) + "'"]];
         },
 
@@ -334,14 +336,14 @@ KISSY.add(function (S, require) {
                 var parts = tplPath.parts;
                 for (var i = 0; i < parts.length; i++) {
                     // {{x[d]}}
-                    if (typeof parts[i] != 'string') {
+                    if (typeof parts[i] !== 'string') {
                         pathString = self.getIdStringFromIdParts(source, parts);
                         break;
                     }
                 }
             }
 
-            source.push('buffer += runBlockCommandUtil(engine, scopes, ' +
+            source.push('buffer += runBlockCommandUtil(engine, scope, ' +
                 configName + ', ' +
                 '"' + pathString + '", ' +
                 tplPath.lineNumber + ');');
@@ -396,7 +398,7 @@ KISSY.add(function (S, require) {
                     if (nextIdNameCode[0]) {
                         pushToArray(source, nextIdNameCode[1]);
                         idString += '"+' + nextIdNameCode[0] + '+"';
-                        first = true
+                        first = true;
                     }
                 } else {
                     // number or string
@@ -415,7 +417,7 @@ KISSY.add(function (S, require) {
      * @class KISSY.XTemplate.compiler
      * @singleton
      */
-    return compiler = {
+    compiler = {
         /**
          * get ast of template
          * @param {String} tpl
@@ -469,6 +471,8 @@ KISSY.add(function (S, require) {
                     '\n//# ' + sourceURL));
         }
     };
+
+    return compiler;
 });
 
 /*
