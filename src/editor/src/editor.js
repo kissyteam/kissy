@@ -659,6 +659,7 @@ KISSY.add(function (S, require, exports, module) {
 
             if (UA.ieMode === 11) {
                 // https://bugs.dojotoolkit.org/ticket/17431
+                // https://github.com/kissyteam/kissy/issues/514
                 // inserthtml does not support in ie11
                 self.insertElement($(Dom.create(data, null, editorDoc)));
                 return;
