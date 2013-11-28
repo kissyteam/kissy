@@ -13,12 +13,13 @@
     });
 
     S.add('path', function () {
-        return S.Path
+        return S.Path;
     });
 
     var UA = S.UA,
         Env = S.Env,
         win = Env.host,
+    /*global global*/
         nativeJson = ((UA.nodejs && typeof global === 'object') ? global : win).JSON;
 
     // ie 8.0.7600.16315@win7 json bug!
@@ -28,7 +29,8 @@
 
     if (nativeJson) {
         S.add('json', function () {
-            return S.JSON = nativeJson;
+            S.JSON = nativeJson;
+            return nativeJson;
         });
         // light weight json parse
         S.parseJson = function (data) {
@@ -49,21 +51,22 @@
                 data = S.trim(data);
                 if (data) {
                     // from json2
-                    if (INVALID_CHARS_REG.test(data.replace(INVALID_ESCAPES_REG, "@")
-                        .replace(INVALID_TOKENS_REG, "]")
-                        .replace(INVALID_BRACES_REG, ""))) {
-
-                        return ( new Function("return " + data) )();
+                    if (INVALID_CHARS_REG.test(data.replace(INVALID_ESCAPES_REG, '@')
+                        .replace(INVALID_TOKENS_REG, ']')
+                        .replace(INVALID_BRACES_REG, ''))) {
+                        /*jshint evil:true*/
+                        return ( new Function('return ' + data) )();
                     }
                 }
             }
-            return S.error("Invalid Json: " + data);
+            return S.error('Invalid Json: ' + data);
         };
     }
 
     // exports for nodejs
     if (S.UA.nodejs) {
         S.KISSY = S;
+        /*global module*/
         module.exports = S;
     }
 })(KISSY);

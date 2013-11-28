@@ -11,6 +11,7 @@
     var defaultComboSep = ',';
 
     function returnJson(s) {
+        /*jshint evil:true*/
         return (new Function('return ' + s))();
     }
 
@@ -41,13 +42,13 @@
             index = src.indexOf(comboPrefix);
 
         // no combo
-        if (index == -1) {
+        if (index === -1) {
             base = src.replace(baseReg, '$1');
         } else {
             base = src.substring(0, index);
             // a.tbcdn.cn??y.js, ie does not insert / after host
             // a.tbcdn.cn/combo? comboPrefix=/combo?
-            if (base.charAt(base.length - 1) != '/') {
+            if (base.charAt(base.length - 1) !== '/') {
                 base += '/';
             }
             parts = src.substring(index + comboPrefix.length).split(comboSep);
@@ -86,7 +87,7 @@
             info;
 
         for (i = scripts.length - 1; i >= 0; i--) {
-            if (info = getBaseInfoFromOneScript(scripts[i])) {
+            if ((info = getBaseInfoFromOneScript(scripts[i]))) {
                 return info;
             }
         }
@@ -108,6 +109,7 @@
         // noinspection JSUnresolvedVariable
         S.config({
             charset: 'utf-8',
+            /*global __dirname*/
             base: __dirname.replace(/\\/g, '/').replace(/\/$/, '') + '/'
         });
         // ejecta

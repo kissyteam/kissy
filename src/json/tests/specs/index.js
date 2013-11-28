@@ -1,4 +1,5 @@
 KISSY.add(function (S, Json) {
+    /*global global*/
     var JSON = ((S.UA.nodejs && typeof global === 'object') ? global : S.Env.host).JSON;
 
     var phantomjs = S.UA.phantomjs;
@@ -24,7 +25,7 @@ KISSY.add(function (S, Json) {
             });
 
             describe('indent', function () {
-                it('string works for object', function (){
+                it('string works for object', function () {
                     var gap = ' ';
                     var space = ' ';
                     var ret = Json.stringify({
@@ -130,7 +131,7 @@ KISSY.add(function (S, Json) {
                             }
                         }
                     }, function (key, value) {
-                        if (key == 'b') {
+                        if (key === 'b') {
                             expect(value.z).toBe(1);
                             return 1;
                         }
@@ -152,7 +153,7 @@ KISSY.add(function (S, Json) {
                                 }
                             }
                         }, function (key, value) {
-                            if (key == 'b') {
+                            if (key === 'b') {
                                 expect(value.z).toBe(1);
                                 return 1;
                             }
@@ -217,7 +218,7 @@ KISSY.add(function (S, Json) {
             });
 
             it('works for array', function () {
-                var t = "{\"test\":[\"t1\",\"t2\"]}" ,
+                var t = '{"test":["t1","t2"]}',
                     r = {test: ['t1', 't2']};
                 expect(Json.parse(t)).toEqual(r);
                 if (JSON) {
@@ -226,7 +227,7 @@ KISSY.add(function (S, Json) {
             });
 
             it('should throw exception when encounter non-whitespace', function () {
-                var t = '{'x': x"2"}';
+                var t = '{"x": x"2"}';
                 expect(function () {
                     Json.parse(t);
                 }).toThrow();
@@ -282,7 +283,7 @@ KISSY.add(function (S, Json) {
             it('reviver works', function () {
                 var t, f, r;
                 expect(Json.parse(t = '{"test": 1,"t":2}', f = function (key, v) {
-                    if (key == 't') {
+                    if (key === 't') {
                         return v + 1;
                     }
                     return v;
@@ -292,7 +293,7 @@ KISSY.add(function (S, Json) {
                 }
 
                 expect(Json.parse(t = '{"test": 1,"t":2}', f = function (key, v) {
-                    if (key == 't') {
+                    if (key === 't') {
                         return undefined;
                     }
                     return v;
@@ -302,10 +303,10 @@ KISSY.add(function (S, Json) {
                 }
 
                 expect(Json.parse(t = '{"test": {"t":{ "t3":4},"t2":4}}', f = function (key, v) {
-                    if (key == 't') {
+                    if (key === 't') {
                         return 1;
                     }
-                    if (key == 't2') {
+                    if (key === 't2') {
                         return v + 1;
                     }
                     return v;
@@ -322,7 +323,7 @@ KISSY.add(function (S, Json) {
             it('should throw exception when encounter control character', function () {
                 var t;
                 expect(function () {
-                    Json.parse(t = '{'x':"\t"}');
+                    Json.parse(t = '{"x":"\t"}');
                 }).toThrow();
                 if (JSON && !phantomjs) {
                     expect(

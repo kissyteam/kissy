@@ -56,11 +56,11 @@
         }
 
         if (S.isPlainObject(config)) {
-            success = config['success'];
-            error = config['error'];
-            timeout = config['timeout'];
-            charset = config['charset'];
-            attrs = config['attrs'];
+            success = config.success;
+            error = config.error;
+            timeout = config.timeout;
+            charset = config.charset;
+            attrs = config.attrs;
         }
 
         callbacks = jsCssCallbacks[url] = jsCssCallbacks[url] || [];
@@ -104,7 +104,7 @@
                 fn;
             clearTimer();
             S.each(jsCssCallbacks[url], function (callback) {
-                if (fn = callback[index]) {
+                if ((fn = callback[index])) {
                     fn.call(node);
                 }
             });
@@ -117,7 +117,7 @@
         // https://bugzilla.mozilla.org/show_bug.cgi?id=185236
         // https://developer.mozilla.org/en/HTML/Element/link#Stylesheet_load_events
         // phantomjs 1.7 == webkit 534.34
-        var forceCssPoll = S.Config['forceCssPoll'] || (UA.webkit && UA.webkit < 536);
+        var forceCssPoll = S.Config.forceCssPoll || (UA.webkit && UA.webkit < 536);
 
         if (css && forceCssPoll && useNative) {
             useNative = false;
@@ -126,8 +126,8 @@
         function onload() {
             var readyState = node.readyState;
             if (!readyState ||
-                readyState == "loaded" ||
-                readyState == "complete") {
+                readyState === 'loaded' ||
+                readyState === 'complete') {
                 node.onreadystatechange = node.onload = null;
                 end(0);
             }

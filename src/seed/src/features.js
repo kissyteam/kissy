@@ -35,7 +35,7 @@
     if (documentElement) {
         if (documentElement.querySelector &&
             // broken ie8
-            ie != 8) {
+            ie !== 8) {
             isQuerySelectorSupportedState = true;
         }
         documentElementStyle = documentElement.style;
@@ -57,8 +57,8 @@
 
         isClassListSupportedState = 'classList' in documentElement;
         var navigator = (win.navigator || {});
-        isMsPointerSupported = "msPointerEnabled" in navigator;
-        isPointerSupported = "pointerEnabled" in navigator;
+        isMsPointerSupported = 'msPointerEnabled' in navigator;
+        isPointerSupported = 'pointerEnabled' in navigator;
     }
 
     /**
@@ -104,7 +104,7 @@
          * @returns {boolean}
          */
         isDeviceMotionSupported: function () {
-            return !!win['DeviceMotionEvent'];
+            return !!win.DeviceMotionEvent;
         },
 
         /**
@@ -139,7 +139,7 @@
          * @returns {boolean}
          */
         'isClassListSupported': function () {
-            return isClassListSupportedState
+            return isClassListSupportedState;
         },
 
         /**

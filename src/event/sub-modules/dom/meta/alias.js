@@ -1,7 +1,7 @@
 config({
-    "event/dom": {
-        "alias": [
-            "event/dom/base",
+    'event/dom': {
+        'alias': [
+            'event/dom/base',
             Features.isTouchGestureSupported() ?
                 'event/dom/touch' : '',
             Features.isDeviceMotionSupported() ?

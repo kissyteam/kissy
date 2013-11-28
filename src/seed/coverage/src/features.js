@@ -361,7 +361,7 @@ function visit21_99_2(result) {
 function visit20_99_1(result) {
   _$jscoverage['/features.js'].branchData['99'][1].ranCondition(result);
   return result;
-}_$jscoverage['/features.js'].branchData['59'][1].init(903, 19, 'win.navigator || {}');
+}_$jscoverage['/features.js'].branchData['59'][1].init(904, 19, 'win.navigator || {}');
 function visit19_59_1(result) {
   _$jscoverage['/features.js'].branchData['59'][1].ranCondition(result);
   return result;
@@ -381,11 +381,11 @@ function visit16_46_2(result) {
 function visit15_46_1(result) {
   _$jscoverage['/features.js'].branchData['46'][1].ranCondition(result);
   return result;
-}_$jscoverage['/features.js'].branchData['38'][1].init(70, 7, 'ie != 8');
+}_$jscoverage['/features.js'].branchData['38'][1].init(70, 8, 'ie !== 8');
 function visit14_38_1(result) {
   _$jscoverage['/features.js'].branchData['38'][1].ranCondition(result);
   return result;
-}_$jscoverage['/features.js'].branchData['36'][1].init(13, 78, 'documentElement.querySelector && ie != 8');
+}_$jscoverage['/features.js'].branchData['36'][1].init(13, 79, 'documentElement.querySelector && ie !== 8');
 function visit13_36_1(result) {
   _$jscoverage['/features.js'].branchData['36'][1].ranCondition(result);
   return result;
@@ -409,7 +409,7 @@ function visit10_19_1(result) {
   _$jscoverage['/features.js'].lineData[35]++;
   if (visit12_35_1(documentElement)) {
     _$jscoverage['/features.js'].lineData[36]++;
-    if (visit13_36_1(documentElement.querySelector && visit14_38_1(ie != 8))) {
+    if (visit13_36_1(documentElement.querySelector && visit14_38_1(ie !== 8))) {
       _$jscoverage['/features.js'].lineData[39]++;
       isQuerySelectorSupportedState = true;
     }
@@ -440,9 +440,9 @@ function visit10_19_1(result) {
     _$jscoverage['/features.js'].lineData[59]++;
     var navigator = (visit19_59_1(win.navigator || {}));
     _$jscoverage['/features.js'].lineData[60]++;
-    isMsPointerSupported = "msPointerEnabled" in navigator;
+    isMsPointerSupported = 'msPointerEnabled' in navigator;
     _$jscoverage['/features.js'].lineData[61]++;
-    isPointerSupported = "pointerEnabled" in navigator;
+    isPointerSupported = 'pointerEnabled' in navigator;
   }
   _$jscoverage['/features.js'].lineData[70]++;
   S.Features = {
@@ -469,7 +469,7 @@ function visit10_19_1(result) {
   isDeviceMotionSupported: function() {
   _$jscoverage['/features.js'].functionData[6]++;
   _$jscoverage['/features.js'].lineData[107]++;
-  return !!win['DeviceMotionEvent'];
+  return !!win.DeviceMotionEvent;
 }, 
   'isHashChangeSupported': function() {
   _$jscoverage['/features.js'].functionData[7]++;

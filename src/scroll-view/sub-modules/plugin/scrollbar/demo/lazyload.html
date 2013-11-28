@@ -1,0 +1,134 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <title>KISSY ScrollView</title>
+    <script src="/kissy/build/seed.js"></script>
+    <script src="/kissy/src/log.js"></script>
+    <link rel="stylesheet" href="../../../../assets/dpl.css">
+    <style>
+        body, ul, li {
+            padding: 0;
+            margin: 0;
+            border: 0;
+        }
+
+        html, body {
+            font-size: 12px;
+            -webkit-text-size-adjust: none;
+            font-family: helvetica;
+            overflow: hidden;
+        }
+
+        #header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 45px;
+            line-height: 45px;
+            background-color: #00A0E9;
+            padding: 0;
+            color: #eee;
+            font-size: 20px;
+            text-align: center;
+        }
+
+        #header a {
+            color: #f3f3f3;
+            text-decoration: none;
+            font-weight: bold;
+            text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.5);
+        }
+
+        #footer {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 48px;
+            background-color: #888;
+            padding: 0;
+            border-top: 1px solid #444;
+        }
+
+        #wrapper {
+            position: absolute;
+            top: 45px;
+            bottom: 48px;
+            left: 0;
+            width: 100%;
+            background: #555;
+            overflow: auto;
+        }
+
+        .ks-ie6 #wrapper {
+            height: expression(document.documentElement.clientHeight-48-45);
+        }
+
+        #wrapper p {
+            margin: 0;
+            padding: 0 10px;
+            height: 40px;
+            line-height: 40px;
+            border-bottom: 1px solid #ccc;
+            border-top: 1px solid #fff;
+            background-color: #fafafa;
+            font-size: 14px;
+        }
+
+    </style>
+</head>
+<body>
+<div id="header">KISSY ScrollView</div>
+<div id="wrapper" class="ks-scroll-view">
+    <div class="ks-scroll-view-content">
+        <div id="thelist">
+        </div>
+    </div>
+</div>
+
+<div id="footer"></div>
+
+<script src="/kissy/src/package.js"></script>
+
+<script>
+
+    // 本 demo 会在 ie10 模拟 ie7 下白屏，原因不明，请设置
+    // <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    KISSY.use('scroll-view,scroll-view/plugin/scrollbar', function (S, ScrollView, ScrollbarPlugin) {
+        S.ready(function () {
+            var num = new S.Uri(location.href).getQuery().get('num') || '41';
+
+            num = parseInt(num);
+
+            var str = '';
+            for (var i = 1; i < num; i++) {
+                str += '<p>line ' + i + '</p>'
+            }
+            S.all('#thelist').html(str);
+
+            window.scrollView = new ScrollView({
+                srcNode: '#wrapper',
+                plugins: [new ScrollbarPlugin({})]
+            }).render();
+
+            scrollView.on('afterScrollTopChange', function (e) {
+                if (e.newVal + this.clientHeight + 300 > this.scrollHeight) {
+                    scrollView.get('contentEl').append(str);
+                    scrollView.sync();
+                }
+            });
+
+            S.all(window).on('resize orientationchange', S.UA.ieMode < 9 ?
+                    S.buffer(scrollView.sync, 30) :
+                    scrollView.sync, scrollView);
+        });
+    });
+</script>
+</body>
+</html>

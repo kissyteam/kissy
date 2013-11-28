@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:50
+build time: Nov 28 21:48
 */
 /**
  * @ignore
@@ -26,11 +26,55 @@ build time: Nov 27 00:50
  * @singleton
  * @class KISSY
  */
+/* exported KISSY */
 var KISSY = (function (undefined) {
     var host = this,
         S,
         guid = 0,
         EMPTY = '';
+
+    /**
+     * Log class for specified logger
+     * @class KISSY.Logger
+     * @private
+     */
+
+    /**
+     * print debug log
+     * @method
+     * @param {String} str log str
+     */
+
+    /**
+     * print info log
+     * @method
+     * @param {String} str log str
+     */
+
+    /**
+     * print warn log
+     * @method
+     * @param {String} str log str
+     */
+
+    /**
+     * print error log
+     * @method
+     * @param {String} str log str
+     */
+
+    function getLogger(logger) {
+        var obj = {};
+        for (var cat in loggerLevel) {
+            /*jshint loopfunc: true*/
+            (function (obj, cat) {
+                obj[cat] = function (msg) {
+                    return S.log(msg, cat, logger);
+                };
+            })(obj, cat);
+        }
+        return obj;
+    }
 
     var loggerLevel = {
         'debug': 10,
@@ -42,11 +86,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20131127005000' will replace with current timestamp when compressing.
+         * NOTICE: '20131128214825' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20131127005000',
+        __BUILD_TIME: '20131128214825',
 
         /**
          * KISSY Environment.
@@ -171,26 +215,26 @@ var KISSY = (function (undefined) {
                     var loggerCfg = S.Config.logger || {},
                         list, i, l, level, minLevel, maxLevel, reg;
                     cat = cat || 'debug';
-                    level = loggerLevel[cat] || loggerLevel['debug'];
-                    if (list = loggerCfg.includes) {
+                    level = loggerLevel[cat] || loggerLevel.debug;
+                    if ((list = loggerCfg.includes)) {
                         matched = 0;
                         for (i = 0; i < list.length; i++) {
                             l = list[i];
                             reg = l.logger;
-                            maxLevel = loggerLevel[l.maxLevel] || loggerLevel['error'];
-                            minLevel = loggerLevel[l.minLevel] || loggerLevel['debug'];
+                            maxLevel = loggerLevel[l.maxLevel] || loggerLevel.error;
+                            minLevel = loggerLevel[l.minLevel] || loggerLevel.debug;
                             if (minLevel <= level && maxLevel >= level && logger.match(reg)) {
                                 matched = 1;
                                 break;
                             }
                         }
-                    } else if (list = loggerCfg.excludes) {
+                    } else if ((list = loggerCfg.excludes)) {
                         matched = 1;
                         for (i = 0; i < list.length; i++) {
                             l = list[i];
                             reg = l.logger;
-                            maxLevel = loggerLevel[l.maxLevel] || loggerLevel['error'];
-                            minLevel = loggerLevel[l.minLevel] || loggerLevel['debug'];
+                            maxLevel = loggerLevel[l.maxLevel] || loggerLevel.error;
+                            minLevel = loggerLevel[l.minLevel] || loggerLevel.debug;
                             if (minLevel <= level && maxLevel >= level && logger.match(reg)) {
                                 matched = 0;
                                 break;
@@ -201,7 +245,8 @@ var KISSY = (function (undefined) {
                         msg = logger + ': ' + msg;
                     }
                 }
-                if (host['console'] !== undefined && console.log && matched) {
+                var console = host.console;
+                if (console !== undefined && console.log && matched) {
                     console[cat && console[cat] ? cat : 'log'](msg);
                     return msg;
                 }
@@ -248,56 +293,6 @@ var KISSY = (function (undefined) {
                 }
             ]
         };
-
-        /**
-         * Log class for specified logger
-         * @class KISSY.Logger
-         * @private
-         */
-        function Logger() {
-
-        }
-
-        /**
-         * print debug log
-         * @method
-         * @param {String} str log str
-         */
-        Logger.prototype.debug = function (str) {
-        };
-        /**
-         * print info log
-         * @method
-         * @param {String} str log str
-         */
-        Logger.prototype.info = function (str) {
-        };
-        /**
-         * print warn log
-         * @method
-         * @param {String} str log str
-         */
-        Logger.prototype.warn = function (str) {
-        };
-        /**
-         * print error log
-         * @method
-         * @param {String} str log str
-         */
-        Logger.prototype.error = function (str) {
-        };
-    }
-
-    function getLogger(logger) {
-        var obj = {};
-        for (var cat in loggerLevel) {
-            (function (obj, cat) {
-                obj[cat] = function (msg) {
-                    return S.log(msg, cat, logger);
-                };
-            })(obj, cat);
-        }
-        return obj;
     }
 
     /**
@@ -333,7 +328,7 @@ var KISSY = (function (undefined) {
  *
  */
 (function (S, undefined) {
-var  logger = S.getLogger('s/lang');
+    var logger = S.getLogger('s/lang');
     var MIX_CIRCULAR_DETECTION = '__MIX_CIRCULAR',
         STAMP_MARKER = '__~ks_stamped',
         host = this,
@@ -341,9 +336,9 @@ var  logger = S.getLogger('s/lang');
         EMPTY = '',
         Obj = Object,
 
-        ObjectCreate = Obj.create,
+        objectCreate = Obj.create,
     // error in native ie678, not in simulated ie9
-        hasEnumBug = !({toString: 1}['propertyIsEnumerable']('toString')),
+        hasEnumBug = !({toString: 1}.propertyIsEnumerable('toString')),
         enumProperties = [
             'constructor',
             'hasOwnProperty',
@@ -435,9 +430,9 @@ var  logger = S.getLogger('s/lang');
                 wl = /**
                  @ignore
                  @type {String[]|Function}
-                 */ov['whitelist'];
-                deep = ov['deep'];
-                ov = ov['overwrite'];
+                 */ov.whitelist;
+                deep = ov.deep;
+                ov = ov.overwrite;
             }
 
             if (wl && (typeof wl !== 'function')) {
@@ -455,7 +450,7 @@ var  logger = S.getLogger('s/lang');
                 c,
                 i = 0;
             mixInternal(r, s, ov, wl, deep, cache);
-            while (c = cache[i++]) {
+            while ((c = cache[i++])) {
                 delete c[MIX_CIRCULAR_DETECTION];
             }
             return r;
@@ -466,17 +461,17 @@ var  logger = S.getLogger('s/lang');
          * all the supplied objects. The properties from later objects
          * will overwrite those in earlier objects. Passing in a
          * single object will create a shallow copy of it.
-         * @param {...Object} var_args objects need to be merged
+         * @param {...Object} varArgs objects need to be merged
          * @return {Object} the new merged object
          * @member KISSY
          */
-        merge: function (var_args) {
-            var_args = S.makeArray(arguments);
+        merge: function (varArgs) {
+            varArgs = S.makeArray(arguments);
             var o = {},
                 i,
-                l = var_args.length;
+                l = varArgs.length;
             for (i = 0; i < l; i++) {
-                S.mix(o, var_args[i]);
+                S.mix(o, varArgs[i]);
             }
             return o;
         },
@@ -484,13 +479,13 @@ var  logger = S.getLogger('s/lang');
         /**
          * Applies prototype properties from the supplier to the receiver.
          * @param   {Object} r received object
-         * @param   {...Object} var_args object need to  augment
+         * @param   {...Object} varArgs object need to  augment
          *          {Boolean} [ov=TRUE] whether overwrite existing property
          *          {String[]} [wl] array of white-list properties
          * @return  {Object} the augmented object
          * @member KISSY
          */
-        augment: function (r, var_args) {
+        augment: function (r, varArgs) {
             var args = S.makeArray(arguments),
                 len = args.length - 2,
                 i = 1,
@@ -498,6 +493,8 @@ var  logger = S.getLogger('s/lang');
                 arg,
                 ov = args[len],
                 wl = args[len + 1];
+
+            args[1] = varArgs;
 
             if (!S.isArray(wl)) {
                 ov = wl;
@@ -511,7 +508,7 @@ var  logger = S.getLogger('s/lang');
 
             for (; i < len; i++) {
                 arg = args[i];
-                if (proto = arg.prototype) {
+                if ((proto = arg.prototype)) {
                     arg = S.mix({}, proto, true, removeConstructor);
                 }
                 S.mix(r.prototype, arg, ov, wl);
@@ -606,8 +603,8 @@ var  logger = S.getLogger('s/lang');
 
     function createObject(proto, constructor) {
         var newProto;
-        if (ObjectCreate) {
-            newProto = ObjectCreate(proto);
+        if (objectCreate) {
+            newProto = objectCreate(proto);
         } else {
             Empty.prototype = proto;
             newProto = new Empty();
@@ -639,7 +636,7 @@ var  logger = S.getLogger('s/lang');
         len = keys.length;
         for (i = 0; i < len; i++) {
             p = keys[i];
-            if (p != MIX_CIRCULAR_DETECTION) {
+            if (p !== MIX_CIRCULAR_DETECTION) {
                 // no hasOwnProperty judge!
                 _mix(p, r, s, ov, wl, deep, cache);
             }
@@ -649,7 +646,7 @@ var  logger = S.getLogger('s/lang');
     }
 
     function removeConstructor(k, v) {
-        return k == 'constructor' ? undefined : v;
+        return k === 'constructor' ? undefined : v;
     }
 
     function _mix(p, r, s, ov, wl, deep, cache) {
@@ -723,7 +720,7 @@ var  logger = S.getLogger('s/lang');
                     i = 0,
                     length = object && object.length,
                 // do not use typeof obj == 'function': bug in phantomjs
-                    isObj = length === undefined || S.type(object) == 'function';
+                    isObj = length === undefined || S.type(object) === 'function';
 
                 context = context || null;
 
@@ -881,9 +878,8 @@ var  logger = S.getLogger('s/lang');
                 var len = arr.length,
                     res = new Array(len);
                 for (var i = 0; i < len; i++) {
-                    var el = typeof arr == 'string' ? arr.charAt(i) : arr[i];
-                    if (el
-                        ||
+                    var el = typeof arr === 'string' ? arr.charAt(i) : arr[i];
+                    if (el ||
                         //ie<9 in invalid when typeof arr == string
                         i in arr) {
                         res[i] = fn.call(context || this, el, i, arr);
@@ -905,25 +901,21 @@ var  logger = S.getLogger('s/lang');
          * @return {Array} The items on which the supplied function returned
          * @member KISSY
          */
-        reduce: /*
-         NaN ?
-         reduce ? function(arr, callback, initialValue) {
-         return arr.reduce(callback, initialValue);
-         } : */function (arr, callback, initialValue) {
+        reduce: function (arr, callback, initialValue) {
             var len = arr.length;
             if (typeof callback !== 'function') {
                 throw new TypeError('callback is not function!');
             }
 
             // no value to return if no initial value and an empty array
-            if (len === 0 && arguments.length == 2) {
+            if (len === 0 && arguments.length === 2) {
                 throw new TypeError('arguments invalid');
             }
 
             var k = 0;
             var accumulator;
             if (arguments.length >= 3) {
-                accumulator = arguments[2];
+                accumulator = initialValue;
             }
             else {
                 do {
@@ -1012,15 +1004,15 @@ var  logger = S.getLogger('s/lang');
             var lengthType = typeof o.length,
                 oType = typeof o;
             // The strings and functions also have 'length'
-            if (lengthType != 'number' ||
+            if (lengthType !== 'number' ||
                 // form.elements in ie78 has nodeName 'form'
                 // then caution select
                 // o.nodeName
                 // window
                 o.alert ||
-                oType == 'string' ||
+                oType === 'string' ||
                 // https://github.com/ariya/phantomjs/issues/11478
-                (oType == 'function' && !( 'item' in o && lengthType == 'number'))) {
+                (oType === 'function' && !( 'item' in o && lengthType === 'number'))) {
                 return [o];
             }
             var ret = [];
@@ -1041,7 +1033,7 @@ var  logger = S.getLogger('s/lang');
     // IE doesn't include non-breaking-space (0xa0) in their \s character
     // class (as required by section 7.2 of the ECMAScript spec), we explicitly
     // include it in the regexp to enforce consistent cross-browser behavior.
-   var   logger= S.getLogger('s/lang');
+    var logger = S.getLogger('s/lang');
     var SEP = '&',
         EMPTY = '',
         EQ = '=',
@@ -1058,6 +1050,7 @@ var  logger = S.getLogger('s/lang');
             '&#x60;': '`',
             '&#x2F;': '/',
             '&quot;': '"',
+            /*jshint quotmark:false*/
             '&#x27;': "'"
         },
         reverseEntities = {},
@@ -1079,26 +1072,28 @@ var  logger = S.getLogger('s/lang');
 
     function getEscapeReg() {
         if (escapeReg) {
-            return escapeReg
+            return escapeReg;
         }
         var str = EMPTY;
         S.each(htmlEntities, function (entity) {
             str += entity + '|';
         });
         str = str.slice(0, -1);
-        return escapeReg = new RegExp(str, 'g');
+        escapeReg = new RegExp(str, 'g');
+        return escapeReg;
     }
 
     function getUnEscapeReg() {
         if (unEscapeReg) {
-            return unEscapeReg
+            return unEscapeReg;
         }
         var str = EMPTY;
         S.each(reverseEntities, function (entity) {
             str += entity + '|';
         });
         str += '&#(\\d{1,5});';
-        return unEscapeReg = new RegExp(str, 'g');
+        unEscapeReg = new RegExp(str, 'g');
+        return unEscapeReg;
     }
 
     S.mix(S, {
@@ -1251,7 +1246,7 @@ var  logger = S.getLogger('s/lang');
          * @member KISSY
          */
         unparam: function (str, sep, eq) {
-            if (typeof str != 'string' || !(str = S.trim(str))) {
+            if (typeof str !== 'string' || !(str = S.trim(str))) {
                 return {};
             }
             sep = sep || SEP;
@@ -1265,7 +1260,7 @@ var  logger = S.getLogger('s/lang');
 
             for (; i < len; ++i) {
                 eqIndex = pairs[i].indexOf(eq);
-                if (eqIndex == -1) {
+                if (eqIndex === -1) {
                     key = decode(pairs[i]);
                     val = undefined;
                 } else {
@@ -1307,21 +1302,22 @@ var  logger = S.getLogger('s/lang');
 (function (S, undefined) {
     // ios Function.prototype.bind === undefined
     function bindFn(r, fn, obj) {
+        function FNOP() {
+        }
+
         var slice = [].slice,
             args = slice.call(arguments, 3),
-            fNOP = function () {
-            },
             bound = function () {
                 var inArgs = slice.call(arguments);
                 return fn.apply(
-                    this instanceof fNOP ? this :
+                    this instanceof FNOP ? this :
                         // fix: y.x=S.bind(fn);
-                        obj||this,
+                        obj || this,
                     (r ? inArgs.concat(args) : args.concat(inArgs))
                 );
             };
-        fNOP.prototype = fn.prototype;
-        bound.prototype = new fNOP();
+        FNOP.prototype = fn.prototype;
+        bound.prototype = new FNOP();
         return bound;
     }
 
@@ -1388,7 +1384,7 @@ var  logger = S.getLogger('s/lang');
                 f,
                 r;
 
-            if (typeof fn == 'string') {
+            if (typeof fn === 'string') {
                 m = context[fn];
             }
 
@@ -1429,20 +1425,20 @@ var  logger = S.getLogger('s/lang');
             ms = ms || 150;
 
             if (ms === -1) {
-                return (function () {
+                return function () {
                     fn.apply(context || this, arguments);
-                });
+                };
             }
 
             var last = S.now();
 
-            return (function () {
+            return function () {
                 var now = S.now();
                 if (now - last > ms) {
                     last = now;
                     fn.apply(context || this, arguments);
                 }
-            });
+            };
         },
 
         /**
@@ -1514,13 +1510,13 @@ var  logger = S.getLogger('s/lang');
                 return a == null && b == null;
             }
             if (a instanceof Date && b instanceof Date) {
-                return a.getTime() == b.getTime();
+                return a.getTime() === b.getTime();
             }
-            if (typeof a == 'string' && typeof b == 'string') {
-                return (a == b);
+            if (typeof a === 'string' && typeof b === 'string') {
+                return (a === b);
             }
             if (typeof a === 'number' && typeof b === 'number') {
-                return (a == b);
+                return (a === b);
             }
             if (typeof a === 'object' && typeof b === 'object') {
                 return compareObjects(a, b, mismatchKeys, mismatchValues);
@@ -1592,14 +1588,14 @@ var  logger = S.getLogger('s/lang');
             return memory[input[CLONE_MARKER]].destination;
         } else if (typeof input === 'object') {
             // 引用类型要先记录
-            var constructor = input.constructor;
-            if (S.inArray(constructor, [Boolean, String, Number, Date, RegExp])) {
-                destination = new constructor(input.valueOf());
+            var Constructor = input.constructor;
+            if (S.inArray(Constructor, [Boolean, String, Number, Date, RegExp])) {
+                destination = new Constructor(input.valueOf());
             }
             // ImageData , File, Blob , FileList .. etc
-            else if (isArray = S.isArray(input)) {
+            else if ((isArray = S.isArray(input))) {
                 destination = f ? S.filter(input, f) : input.concat();
-            } else if (isPlainObject = S.isPlainObject(input)) {
+            } else if ((isPlainObject = S.isPlainObject(input))) {
                 destination = {};
             }
             // Add a mapping from input (the source object)
@@ -1649,30 +1645,31 @@ var  logger = S.getLogger('s/lang');
         for (var property in b) {
 
             if (!hasKey(a, property) && hasKey(b, property)) {
-                mismatchKeys.push("expected has key '" + property + "', but missing from actual.");
+                mismatchKeys.push('expected has key ' + property + '", but missing from actual.');
             }
 
         }
         for (property in a) {
 
             if (!hasKey(b, property) && hasKey(a, property)) {
-                mismatchKeys.push("expected missing key '" + property + "', but present in actual.");
+                mismatchKeys.push('expected missing key "' + property + '", but present in actual.');
             }
 
         }
         for (property in b) {
 
-            if (property == COMPARE_MARKER) {
+            if (property === COMPARE_MARKER) {
                 continue;
             }
             if (!S.equals(a[property], b[property], mismatchKeys, mismatchValues)) {
-                mismatchValues.push("'" + property + "' was '" + (b[property] ? (b[property].toString()) : b[property])
-                    + "' in expected, but was '" +
-                    (a[property] ? (a[property].toString()) : a[property]) + "' in actual.");
+                mismatchValues.push('"' + property + '" was "' +
+                    (b[property] ? (b[property].toString()) : b[property]) +
+                    '" in expected, but was "' +
+                    (a[property] ? (a[property].toString()) : a[property]) + '" in actual.');
             }
 
         }
-        if (S.isArray(a) && S.isArray(b) && a.length != b.length) {
+        if (S.isArray(a) && S.isArray(b) && a.length !== b.length) {
             mismatchValues.push('arrays were not the same length');
         }
         delete a[COMPARE_MARKER];
@@ -1720,7 +1717,7 @@ var  logger = S.getLogger('s/lang');
          * @param {RegExp} [regexp] to match a piece of template string
          */
         substitute: function (str, o, regexp) {
-            if (typeof str != 'string' || !o) {
+            if (typeof str !== 'string' || !o) {
                 return str;
             }
 
@@ -1761,7 +1758,7 @@ var  logger = S.getLogger('s/lang');
          */
         endsWith: function (str, suffix) {
             var ind = str.length - suffix.length;
-            return ind >= 0 && str.indexOf(suffix, ind) == ind;
+            return ind >= 0 && str.indexOf(suffix, ind) === ind;
         }
 
     });
@@ -1834,7 +1831,7 @@ var  logger = S.getLogger('s/lang');
             // Must be an Object.
             // Because of IE, we also have to check the presence of the constructor property.
             // Make sure that Dom nodes and window objects don't pass through, as well
-            if (!obj || S.type(obj) !== "object" || obj.nodeType || obj.window == obj) {
+            if (!obj || S.type(obj) !== 'object' || obj.nodeType || obj.window === obj) {
                 return FALSE;
             }
 
@@ -1842,7 +1839,7 @@ var  logger = S.getLogger('s/lang');
 
             try {
                 // Not own constructor property must be Object
-                if ((objConstructor = obj.constructor) && !hasOwnProperty(obj, "constructor") && !hasOwnProperty(objConstructor.prototype, "isPrototypeOf")) {
+                if ((objConstructor = obj.constructor) && !hasOwnProperty(obj, 'constructor') && !hasOwnProperty(objConstructor.prototype, 'isPrototypeOf')) {
                     return FALSE;
                 }
             } catch (e) {
@@ -1852,12 +1849,11 @@ var  logger = S.getLogger('s/lang');
 
             // Own properties are enumerated firstly, so to speed up,
             // if last one is own, then all properties are own.
-
-
+            /*jshint noempty:false*/
             for (key in obj) {
             }
 
-            return key === undefined || hasOwnProperty(obj, key);
+            return ((key === undefined) || hasOwnProperty(obj, key));
         }
     });
 
@@ -1936,26 +1932,32 @@ var  logger = S.getLogger('s/lang');
 
         // add isBoolean/isNumber/...
         S['is' + name] = function (o) {
-            return S.type(o) == lc;
-        }
+            return S.type(o) === lc;
+        };
     });
     S.isArray = Array.isArray || S.isArray;
 })(KISSY);/*
  setImmediate polyfill inspired by Q
  @author yiminghe@gmail.com
  */
+/*global setImmediate*/
+/*global process */
+/*global MessageChannel */
 (function (S) {
+
+
     var queue = [];
 
     var flushing = 0;
 
     function flush() {
         var i = 0, item;
-        while (item = queue[i++]) {
+        while ((item = queue[i++])) {
             try {
                 item();
             } catch (e) {
                 S.log(e.stack || e, 'error');
+                /*jshint loopfunc:true*/
                 setTimeout(function () {
                     throw e;
                 }, 0);
@@ -1968,9 +1970,9 @@ var  logger = S.getLogger('s/lang');
     }
 
     /*
-      setImmediate for loader and promise
-      @param {Function} fn async function to call
-      @private
+     setImmediate for loader and promise
+     @param {Function} fn async function to call
+     @private
      */
     S.setImmediate = function (fn) {
         queue.push(fn);
@@ -1981,15 +1983,16 @@ var  logger = S.getLogger('s/lang');
     };
 
     var requestFlush;
-    if (typeof setImmediate === "function") {
+    if (typeof setImmediate === 'function') {
         requestFlush = function () {
+
             setImmediate(flush);
         };
-    } else if (typeof process !== 'undefined' && typeof  process.nextTick == 'function') {
+    } else if (typeof process !== 'undefined' && typeof  process.nextTick === 'function') {
         requestFlush = function () {
             process.nextTick(flush);
         };
-    } else if (typeof MessageChannel !== "undefined") {
+    } else if (typeof MessageChannel !== 'undefined') {
         // modern browsers
         // http://msdn.microsoft.com/en-us/library/windows/apps/hh441303.aspx
         var channel = new MessageChannel();
@@ -2039,13 +2042,14 @@ var  logger = S.getLogger('s/lang');
 
         for (; i >= 0; i--) {
             last = parts[i];
-            if (last == '.') {
-            } else if (last === '..') {
-                up++;
-            } else if (up) {
-                up--;
-            } else {
-                newParts[newParts.length] = last;
+            if (last !== '.') {
+                if (last === '..') {
+                    up++;
+                } else if (up) {
+                    up--;
+                } else {
+                    newParts[newParts.length] = last;
+                }
             }
         }
 
@@ -2081,11 +2085,11 @@ var  logger = S.getLogger('s/lang');
 
             for (i = args.length - 1; i >= 0 && !absolute; i--) {
                 path = args[i];
-                if (typeof path != 'string' || !path) {
+                if (typeof path !== 'string' || !path) {
                     continue;
                 }
                 resolvedPath = path + '/' + resolvedPath;
-                absolute = path.charAt(0) == '/';
+                absolute = path.charAt(0) === '/';
             }
 
             resolvedPathStr = normalizeArray(S.filter(resolvedPath.split('/'), function (p) {
@@ -2106,8 +2110,8 @@ var  logger = S.getLogger('s/lang');
          * @return {String}
          */
         normalize: function (path) {
-            var absolute = path.charAt(0) == '/',
-                trailingSlash = path.slice(-1) == '/';
+            var absolute = path.charAt(0) === '/',
+                trailingSlash = path.slice(-1) === '/';
 
             path = normalizeArray(S.filter(path.split('/'), function (p) {
                 return !!p;
@@ -2132,7 +2136,7 @@ var  logger = S.getLogger('s/lang');
         join: function () {
             var args = S.makeArray(arguments);
             return Path.normalize(S.filter(args,function (p) {
-                return p && (typeof p == 'string');
+                return p && (typeof p === 'string');
             }).join('/'));
         },
 
@@ -2162,7 +2166,7 @@ var  logger = S.getLogger('s/lang');
                 }), commonLength = Math.min(fromParts.length, toParts.length);
 
             for (sameIndex = 0; sameIndex < commonLength; sameIndex++) {
-                if (fromParts[sameIndex] != toParts[sameIndex]) {
+                if (fromParts[sameIndex] !== toParts[sameIndex]) {
                     break;
                 }
             }
@@ -2191,7 +2195,7 @@ var  logger = S.getLogger('s/lang');
             var result = path.match(splitPathRe) || [],
                 basename;
             basename = result[3] || '';
-            if (ext && basename && basename.slice(-1 * ext.length) == ext) {
+            if (ext && basename && basename.slice(-1 * ext.length) === ext) {
                 basename = basename.slice(0, -1 * ext.length);
             }
             return basename;
@@ -2422,7 +2426,7 @@ var  logger = S.getLogger('s/lang');
             var self = this, _queryMap;
             parseQuery(self);
             _queryMap = self._queryMap;
-            if (typeof key == 'string') {
+            if (typeof key === 'string') {
                 self._queryMap[key] = value;
             } else {
                 if (key instanceof Query) {
@@ -2462,7 +2466,7 @@ var  logger = S.getLogger('s/lang');
             var self = this,
                 _queryMap,
                 currentValue;
-            if (typeof key == 'string') {
+            if (typeof key === 'string') {
                 parseQuery(self);
                 _queryMap = self._queryMap;
                 currentValue = _queryMap[key];
@@ -2496,11 +2500,11 @@ var  logger = S.getLogger('s/lang');
     };
 
     function padding2(str) {
-        return str.length == 1 ? '0' + str : str;
+        return str.length === 1 ? '0' + str : str;
     }
 
     function equalsIgnoreCase(str1, str2) {
-        return str1.toLowerCase() == str2.toLowerCase();
+        return str1.toLowerCase() === str2.toLowerCase();
     }
 
     // www.ta#bao.com // => www.ta.com/#bao.com
@@ -2525,7 +2529,7 @@ var  logger = S.getLogger('s/lang');
     function Uri(uriStr) {
 
         if (uriStr instanceof  Uri) {
-            return uriStr['clone']();
+            return uriStr.clone();
         }
 
         var components, self = this;
@@ -2572,7 +2576,7 @@ var  logger = S.getLogger('s/lang');
 
         S.each(components, function (v, key) {
             v = v || '';
-            if (key == 'query') {
+            if (key === 'query') {
                 // need encoded content
                 self.query = new Query(v);
             } else {
@@ -2626,7 +2630,7 @@ var  logger = S.getLogger('s/lang');
          */
         resolve: function (relativeUri) {
 
-            if (typeof relativeUri == 'string') {
+            if (typeof relativeUri === 'string') {
                 relativeUri = new Uri(relativeUri);
             }
 
@@ -2637,12 +2641,12 @@ var  logger = S.getLogger('s/lang');
                 target = self.clone();
 
             S.each(order, function (o) {
-                if (o == 'path') {
+                if (o === 'path') {
                     // relativeUri does not set for scheme/userInfo/hostname/port
                     if (override) {
                         target[o] = relativeUri[o];
                     } else {
-                        var path = relativeUri['path'];
+                        var path = relativeUri.path;
                         if (path) {
                             // force to override target 's query with relative
                             override = 1;
@@ -2653,7 +2657,7 @@ var  logger = S.getLogger('s/lang');
                                 } else if (target.path) {
                                     // RFC 3986, section 5.2.3, case 2
                                     lastSlashIndex = target.path.lastIndexOf('/');
-                                    if (lastSlashIndex != -1) {
+                                    if (lastSlashIndex !== -1) {
                                         path = target.path.slice(0, lastSlashIndex + 1) + path;
                                     }
                                 }
@@ -2662,9 +2666,9 @@ var  logger = S.getLogger('s/lang');
                             target.path = Path.normalize(path);
                         }
                     }
-                } else if (o == 'query') {
-                    if (override || relativeUri['query'].toString()) {
-                        target.query = relativeUri['query'].clone();
+                } else if (o === 'query') {
+                    if (override || relativeUri.query.toString()) {
+                        target.query = relativeUri.query.clone();
                         override = 1;
                     }
                 } else if (override || relativeUri[o]) {
@@ -2772,7 +2776,7 @@ var  logger = S.getLogger('s/lang');
          * @chainable
          */
         'setQuery': function (query) {
-            if (typeof query == 'string') {
+            if (typeof query === 'string') {
                 if (S.startsWith(query, '?')) {
                     query = query.slice(1);
                 }
@@ -2820,9 +2824,9 @@ var  logger = S.getLogger('s/lang');
         isSameOriginAs: function (other) {
             var self = this;
             // port and hostname has to be same
-            return equalsIgnoreCase(self.hostname, other['hostname']) &&
-                equalsIgnoreCase(self.scheme, other['scheme']) &&
-                equalsIgnoreCase(self.port, other['port']);
+            return equalsIgnoreCase(self.hostname, other.hostname) &&
+                equalsIgnoreCase(self.scheme, other.scheme) &&
+                equalsIgnoreCase(self.port, other.port);
         },
 
         /**
@@ -2845,27 +2849,27 @@ var  logger = S.getLogger('s/lang');
                 query,
                 userInfo;
 
-            if (scheme = self.scheme) {
+            if ((scheme = self.scheme)) {
                 out.push(encodeSpecialChars(scheme, reDisallowedInSchemeOrUserInfo));
                 out.push(':');
             }
 
-            if (hostname = self.hostname) {
+            if ((hostname = self.hostname)) {
                 out.push('//');
-                if (userInfo = self.userInfo) {
+                if ((userInfo = self.userInfo)) {
                     out.push(encodeSpecialChars(userInfo, reDisallowedInSchemeOrUserInfo));
                     out.push('@');
                 }
 
                 out.push(encodeURIComponent(hostname));
 
-                if (port = self.port) {
+                if ((port = self.port)) {
                     out.push(':');
                     out.push(port);
                 }
             }
 
-            if (path = self.path) {
+            if ((path = self.path)) {
                 if (hostname && !S.startsWith(path, '/')) {
                     path = '/' + path;
                 }
@@ -2873,14 +2877,14 @@ var  logger = S.getLogger('s/lang');
                 out.push(encodeSpecialChars(path, reDisallowedInPathName));
             }
 
-            if (query = ( self.query.toString.call(self.query, serializeArray))) {
+            if ((query = ( self.query.toString.call(self.query, serializeArray)))) {
                 out.push('?');
                 out.push(query);
             }
 
-            if (fragment = self.fragment) {
+            if ((fragment = self.fragment)) {
                 out.push('#');
-                out.push(encodeSpecialChars(fragment, reDisallowedInFragment))
+                out.push(encodeSpecialChars(fragment, reDisallowedInFragment));
             }
 
             return out.join('');
@@ -2890,7 +2894,7 @@ var  logger = S.getLogger('s/lang');
     Uri.Query = Query;
 
     Uri.getComponents = function (url) {
-        url = url || "";
+        url = url || '';
         var m = url.match(URI_SPLIT_REG) || [],
             ret = {};
         S.each(REG_INFO, function (index, key) {
@@ -2917,7 +2921,7 @@ var  logger = S.getLogger('s/lang');
     var win = S.Env.host,
         doc = win.document,
         navigator = win.navigator,
-        ua = navigator && navigator.userAgent || "";
+        ua = navigator && navigator.userAgent || '';
 
     function numberify(s) {
         var c = 0;
@@ -3212,7 +3216,7 @@ var  logger = S.getLogger('s/lang');
                     // MSIE
                     // 由于最开始已经使用了 IE 条件注释判断，因此落到这里的唯一可能性只有 IE10+
                     // and analysis tools in nodejs
-                    if (ieVersion = getIEVersion(ua)) {
+                    if ((ieVersion = getIEVersion(ua))) {
                         UA[shell = 'ie'] = ieVersion;
                         setTridentVersion(ua, UA);
                         // NOT WebKit, Presto or IE
@@ -3223,7 +3227,7 @@ var  logger = S.getLogger('s/lang');
                             if ((m = ua.match(/rv:([\d.]*)/)) && m[1]) {
                                 UA[core] = numberify(m[1]);
                                 if (/Mobile|Tablet/.test(ua)) {
-                                    UA.mobile = "firefox";
+                                    UA.mobile = 'firefox';
                                 }
                             }
                             // Firefox
@@ -3261,6 +3265,7 @@ var  logger = S.getLogger('s/lang');
     // nodejs
     if (typeof process === 'object') {
         var versions, nodeVersion;
+        /*global process*/
         if ((versions = process.versions) && (nodeVersion = versions.node)) {
             UA.os = process.platform;
             UA.nodejs = numberify(nodeVersion);
@@ -3361,7 +3366,7 @@ var  logger = S.getLogger('s/lang');
     if (documentElement) {
         if (documentElement.querySelector &&
             // broken ie8
-            ie != 8) {
+            ie !== 8) {
             isQuerySelectorSupportedState = true;
         }
         documentElementStyle = documentElement.style;
@@ -3383,8 +3388,8 @@ var  logger = S.getLogger('s/lang');
 
         isClassListSupportedState = 'classList' in documentElement;
         var navigator = (win.navigator || {});
-        isMsPointerSupported = "msPointerEnabled" in navigator;
-        isPointerSupported = "pointerEnabled" in navigator;
+        isMsPointerSupported = 'msPointerEnabled' in navigator;
+        isPointerSupported = 'pointerEnabled' in navigator;
     }
 
     /**
@@ -3430,7 +3435,7 @@ var  logger = S.getLogger('s/lang');
          * @returns {boolean}
          */
         isDeviceMotionSupported: function () {
-            return !!win['DeviceMotionEvent'];
+            return !!win.DeviceMotionEvent;
         },
 
         /**
@@ -3465,7 +3470,7 @@ var  logger = S.getLogger('s/lang');
          * @returns {boolean}
          */
         'isClassListSupported': function () {
-            return isClassListSupportedState
+            return isClassListSupportedState;
         },
 
         /**
@@ -3577,7 +3582,7 @@ var  logger = S.getLogger('s/lang');
     // http://wiki.commonjs.org/wiki/Packages/Mappings/A
     // 如果模块名以 / 结尾，自动加 index
     function indexMap(s) {
-        if (typeof s == 'string') {
+        if (typeof s === 'string') {
             return indexMapStr(s);
         } else {
             var ret = [],
@@ -3592,7 +3597,7 @@ var  logger = S.getLogger('s/lang');
 
     function indexMapStr(s) {
         // 'x/' 'x/y/z/'
-        if (s.charAt(s.length - 1) == '/') {
+        if (s.charAt(s.length - 1) === '/') {
             s += 'index';
         }
         return s;
@@ -3600,7 +3605,7 @@ var  logger = S.getLogger('s/lang');
 
     function pluginAlias(runtime, name) {
         var index = name.indexOf('!');
-        if (index != -1) {
+        if (index !== -1) {
             var pluginName = name.substring(0, index);
             name = name.substring(index + 1);
             S.use(pluginName, {
@@ -3638,7 +3643,7 @@ var  logger = S.getLogger('s/lang');
                 return depName;
             }
 
-            if (typeof depName == 'string') {
+            if (typeof depName === 'string') {
                 if (startsWith(depName, '../') || startsWith(depName, './')) {
                     // x/y/z -> x/y/
                     return Path.resolve(Path.dirname(moduleName), depName);
@@ -3705,7 +3710,7 @@ var  logger = S.getLogger('s/lang');
 
             S.each(modNames, function (modName) {
                 module = runtimeMods[modName];
-                if (!module || module.getType() != 'css') {
+                if (!module || module.getType() !== 'css') {
                     unalias = Utils.unalias(runtime, modName);
                     allOk = S.reduce(unalias, function (a, n) {
                         m = runtimeMods[n];
@@ -3762,23 +3767,28 @@ var  logger = S.getLogger('s/lang');
                 return cache[modName];
             }
             if (!m) {
-                return cache[modName] = FALSE;
+                cache[modName] = FALSE;
+                return FALSE;
             }
             status = m.status;
-            if (status == ERROR) {
+            if (status === ERROR) {
                 errorList.push(m);
-                return cache[modName] = FALSE;
+                cache[modName] = FALSE;
+                return FALSE;
             }
             if (status >= READY_TO_ATTACH) {
-                return cache[modName] = TRUE;
+                cache[modName] = TRUE;
+                return TRUE;
             }
-            if (status != LOADED) {
-                return cache[modName] = FALSE;
+            if (status !== LOADED) {
+                cache[modName] = FALSE;
+                return FALSE;
             }
             if ('@DEBUG@') {
                 if (S.inArray(modName, stack)) {
                     S.log('find cyclic dependency between mods: ' + stack, 'warn');
-                    return cache[modName] = TRUE;
+                    cache[modName] = TRUE;
+                    return TRUE;
                 }
                 stack.push(modName);
             }
@@ -3786,10 +3796,12 @@ var  logger = S.getLogger('s/lang');
             if (Utils.checkModsLoadRecursively(m.getNormalizedRequires(),
                 runtime, stack, errorList, cache)) {
                 m.status = READY_TO_ATTACH;
-                return cache[modName] = TRUE;
+                cache[modName] = TRUE;
+                return TRUE;
             }
 
-            return cache[modName] = FALSE;
+            cache[modName] = FALSE;
+            return FALSE;
         },
 
         /**
@@ -3823,7 +3835,7 @@ var  logger = S.getLogger('s/lang');
          */
         attachMod: function (runtime, module) {
             var factory = module.factory,
-                exports = undefined;
+                exports;
 
             if (typeof factory === 'function') {
                 // compatible and efficiency
@@ -3856,7 +3868,7 @@ var  logger = S.getLogger('s/lang');
          * @return {String[]}
          */
         getModNamesAsArray: function (modNames) {
-            if (typeof modNames == 'string') {
+            if (typeof modNames === 'string') {
                 modNames = modNames.replace(/\s+/g, '').split(',');
             }
             return modNames;
@@ -3891,14 +3903,14 @@ var  logger = S.getLogger('s/lang');
                 alias,
                 ok = 0,
                 j,
-                mods = runtime['Env'].mods;
+                mods = runtime.Env.mods;
             while (!ok) {
                 ok = 1;
                 for (i = ret.length - 1; i >= 0; i--) {
                     if ((m = mods[ret[i]]) && ('alias' in m)) {
                         ok = 0;
                         alias = m.alias;
-                        if (typeof alias == 'string') {
+                        if (typeof alias === 'string') {
                             alias = [alias];
                         }
                         for (j = alias.length - 1; j >= 0; j--) {
@@ -4008,8 +4020,7 @@ var  logger = S.getLogger('s/lang');
     function getRequireVal(str) {
         var m;
         // simple string
-        if (m = str.match(/^\s*["']([^'"\s]+)["']\s*$/)) {
-        } else {
+        if (!(m = str.match(/^\s*["']([^'"\s]+)["']\s*$/))) {
             S.error('can not find required mod in require call: ' + str);
         }
         return  m[1];
@@ -4022,7 +4033,6 @@ var  logger = S.getLogger('s/lang');
 (function (S) {
     var Loader = S.Loader,
         Path = S.Path,
-        undefined = undefined,
         IGNORE_PACKAGE_NAME_IN_URI = 'ignorePackageNameInUri',
         Utils = Loader.Utils;
 
@@ -4088,10 +4098,10 @@ var  logger = S.getLogger('s/lang');
          */
         getPackageUri: function () {
             var self = this;
-            if (self.packageUri) {
-                return self.packageUri;
+            if (!self.packageUri) {
+                self.packageUri = new S.Uri(this.getPrefixUriForCombo());
             }
-            return self.packageUri = new S.Uri(this.getPrefixUriForCombo());
+            return self.packageUri;
         },
 
         /**
@@ -4229,6 +4239,7 @@ var  logger = S.getLogger('s/lang');
                     callback(this);
                 } catch (e) {
                     S.log(e.stack || e, 'error');
+                    /*jshint loopfunc:true*/
                     setTimeout(function () {
                         throw e;
                     }, 0);
@@ -4245,7 +4256,7 @@ var  logger = S.getLogger('s/lang');
             var self = this,
                 v = self.type;
             if (!v) {
-                if (Path.extname(self.name).toLowerCase() == '.css') {
+                if (Path.extname(self.name).toLowerCase() === '.css') {
                     v = 'css';
                 } else {
                     v = 'js';
@@ -4282,7 +4293,7 @@ var  logger = S.getLogger('s/lang');
                         path = Path.relative(packageName, path);
                     }
                     fullPathUri = packageBaseUri.resolve(path);
-                    if (t = self.getTag()) {
+                    if ((t = self.getTag())) {
                         t += '.' + self.getType();
                         fullPathUri.query.set('t', t);
                     }
@@ -4360,7 +4371,7 @@ var  logger = S.getLogger('s/lang');
             var self = this,
                 requiresWithAlias = self.requiresWithAlias,
                 requires = self.requires;
-            if (!requires || requires.length == 0) {
+            if (!requires || requires.length === 0) {
                 return requires || [];
             } else if (!requiresWithAlias) {
                 self.requiresWithAlias = requiresWithAlias =
@@ -4391,16 +4402,16 @@ var  logger = S.getLogger('s/lang');
                 normalizedRequiresStatus = self.normalizedRequiresStatus,
                 status = self.status,
                 requires = self.requires;
-            if (!requires || requires.length == 0) {
+            if (!requires || requires.length === 0) {
                 return requires || [];
             } else if ((normalizedRequires = self.normalizedRequires) &&
                 // 事先声明的依赖不能当做 loaded 状态下真正的依赖
-                (normalizedRequiresStatus == status)) {
+                (normalizedRequiresStatus === status)) {
                 return normalizedRequires;
             } else {
                 self.normalizedRequiresStatus = status;
-                return self.normalizedRequires =
-                    Utils.normalizeModNames(self.runtime, requires, self.name);
+                self.normalizedRequires = Utils.normalizeModNames(self.runtime, requires, self.name);
+                return self.normalizedRequires;
             }
         }
     };
@@ -4451,9 +4462,8 @@ var  logger = S.getLogger('s/lang');
         Utils = S.Loader.Utils,
     // central poll for link node
         timer = 0,
-        monitors = {
-            // node.id:{callback:callback,node:node}
-        };
+    // node.id:{callback:callback,node:node}
+        monitors = {};
 
     function startCssTimer() {
         if (!timer) {
@@ -4466,13 +4476,13 @@ var  logger = S.getLogger('s/lang');
         var loaded = 0;
         if (UA.webkit) {
             // http://www.w3.org/TR/Dom-Level-2-Style/stylesheets.html
-            if (node['sheet']) {
+            if (node.sheet) {
                 logger.debug('webkit css poll loaded: ' + url);
                 loaded = 1;
             }
-        } else if (node['sheet']) {
+        } else if (node.sheet) {
             try {
-                var cssRules = node['sheet'].cssRules;
+                var cssRules = node.sheet.cssRules;
                 if (cssRules) {
                     logger.debug('same domain css poll loaded: ' + url);
                     loaded = 1;
@@ -4483,7 +4493,7 @@ var  logger = S.getLogger('s/lang');
                 // http://www.w3.org/TR/dom/#dom-domexception-code
                 if (// exName == 'SecurityError' ||
                 // for old firefox
-                    exName == 'NS_ERROR_DOM_SECURITY_ERR') {
+                    exName === 'NS_ERROR_DOM_SECURITY_ERR') {
                     logger.debug('css poll exception: ' + exName + 'loaded : ' + url);
                     loaded = 1;
                 }
@@ -4551,6 +4561,7 @@ var  logger = S.getLogger('s/lang');
  * @author yiminghe@gmail.com
  */
 (function (S) {
+    /*global require*/
     var fs = require('fs'),
         vm = require('vm');
 
@@ -4564,8 +4575,10 @@ var  logger = S.getLogger('s/lang');
         }
 
         if (S.startsWith(S.Path.extname(url).toLowerCase(), '.css')) {
-            S.log('node js can not load css: ' + url,'warn');
-            success && success();
+            S.log('node js can not load css: ' + url, 'warn');
+            if (success) {
+                success();
+            }
             return;
         }
 
@@ -4577,11 +4590,15 @@ var  logger = S.getLogger('s/lang');
             //noinspection JSUnresolvedFunction
             var factory = vm.runInThisContext('(function(KISSY,requireNode){' + mod + '})', url);
             factory(S, require);
-            success && success();
+            if (success) {
+                success();
+            }
         } catch (e) {
-            S.log('in file: ' + url,'error');
-            S.log(e.stack,'error');
-            error && error(e);
+            S.log('in file: ' + url, 'error');
+            S.log(e.stack, 'error');
+            if (error) {
+                error(e);
+            }
         }
     };
 })(KISSY);/**
@@ -4599,7 +4616,7 @@ var  logger = S.getLogger('s/lang');
         configFns = S.Config.fns;
 
     if (!S.UA.nodejs && location && (locationHref = location.href)) {
-        simulatedLocation = new S.Uri(locationHref)
+        simulatedLocation = new S.Uri(locationHref);
     }
 
     S.Config.loadModsFn = function (rs, config) {
@@ -4643,7 +4660,7 @@ var  logger = S.getLogger('s/lang');
             S.each(modules, function (modCfg, modName) {
                 var mod = Utils.createModuleInfo(self, modName, modCfg);
                 // #485, invalid after add
-                if (mod.status == Loader.Status.INIT) {
+                if (mod.status === Loader.Status.INIT) {
                     S.mix(mod, modCfg);
                 }
             });
@@ -4666,7 +4683,7 @@ var  logger = S.getLogger('s/lang');
     function normalizeBase(base) {
         var baseUri;
         base = base.replace(/\\/g, '/');
-        if (base.charAt(base.length - 1) != '/') {
+        if (base.charAt(base.length - 1) !== '/') {
             base += '/';
         }
         if (simulatedLocation) {
@@ -4724,7 +4741,7 @@ var  logger = S.getLogger('s/lang');
             };
             if (!rs.combine) {
                 mod = rs.mods[0];
-                if (mod.getType() == 'css') {
+                if (mod.getType() === 'css') {
                     mod = undefined;
                 }
                 else if (oldIE) {
@@ -4738,7 +4755,8 @@ var  logger = S.getLogger('s/lang');
             S.Config.loadModsFn(rs, config);
         });
     }
-var  logger = S.getLogger('s/loader');
+
+    var logger = S.getLogger('s/loader');
     var Loader = S.Loader,
 
         Status = Loader.Status,
@@ -4772,7 +4790,7 @@ var  logger = S.getLogger('s/loader');
 
     function checkKISSYRequire(config, factory) {
         // use require primitive statement
-        if (!config && typeof factory == 'function') {
+        if (!config && typeof factory === 'function') {
             var requires = Utils.getRequiresFromFn(factory);
             if (requires.length) {
                 config = config || {};
@@ -4789,7 +4807,7 @@ var  logger = S.getLogger('s/loader');
 
     ComboLoader.add = function (name, factory, config, runtime, argsLen) {
         // KISSY.add('xx',[],function(){});
-        if (argsLen == 3 && S.isArray(factory)) {
+        if (argsLen === 3 && S.isArray(factory)) {
             var tmp = factory;
             factory = config;
             config = {
@@ -4798,7 +4816,7 @@ var  logger = S.getLogger('s/loader');
             };
         }
         // KISSY.add(function(){}), KISSY.add('a'), KISSY.add(function(){},{requires:[]})
-        if (typeof name === 'function' || argsLen == 1) {
+        if (typeof name === 'function' || argsLen === 1) {
             config = factory;
             factory = name;
             config = checkKISSYRequire(config, factory);
@@ -4840,7 +4858,7 @@ var  logger = S.getLogger('s/loader');
 
         for (i = scripts.length - 1; i >= 0; i--) {
             script = scripts[i];
-            if (script.readyState == 'interactive') {
+            if (script.readyState === 'interactive') {
                 re = script;
                 break;
             }
@@ -4864,7 +4882,7 @@ var  logger = S.getLogger('s/loader');
         S.each(rss, function (rs) {
             var ms = [];
             S.each(rs.mods, function (m) {
-                if (m.status == LOADED) {
+                if (m.status === LOADED) {
                     ms.push(m.name);
                 }
             });
@@ -4933,7 +4951,7 @@ var  logger = S.getLogger('s/loader');
             });
 
             // jss css download in parallel
-            S.each(comboUrls['js'], function (jsOne) {
+            S.each(comboUrls.js, function (jsOne) {
                 loadScripts(runtime, jsOne, function (success) {
                     if ('@DEBUG@') {
                         debugRemoteModules(success);
@@ -4986,12 +5004,13 @@ var  logger = S.getLogger('s/loader');
                 if (modStatus >= READY_TO_ATTACH) {
                     continue;
                 }
-                if (modStatus != LOADED) {
+                if (modStatus !== LOADED) {
                     if (!waitingModules.contains(m)) {
-                        if (modStatus != LOADING) {
+                        if (modStatus !== LOADING) {
                             mod.status = LOADING;
                             ret[m] = 1;
                         }
+                        /*jshint loopfunc:true*/
                         mod.wait(function (mod) {
                             waitingModules.remove(mod.name);
                             // notify current loader instance
@@ -5040,7 +5059,7 @@ var  logger = S.getLogger('s/loader');
                     comboName = group + '_' + charset + '_' + groupTag;
 
                     var groupPrefixUri;
-                    if (groupPrefixUri = comboPrefixes[comboName]) {
+                    if ((groupPrefixUri = comboPrefixes[comboName])) {
                         if (groupPrefixUri.isSameOriginAs(packageUri)) {
                             groupPrefixUri.setPath(getCommonPrefix(groupPrefixUri.getPath(),
                                 packageUri.getPath()));
@@ -5061,9 +5080,7 @@ var  logger = S.getLogger('s/loader');
                     mods.charset = charset;
                     mods.tags = [tag]; // [package tag]
                 } else {
-                    if (mods.tags.length == 1 && mods.tags[0] == tag) {
-
-                    } else {
+                    if (!(mods.tags.length === 1 && mods.tags[0] === tag)) {
                         mods.tags.push(tag);
                     }
                 }
@@ -5111,14 +5128,15 @@ var  logger = S.getLogger('s/loader');
                     res.charset = mods.charset;
                     res.mods = [];
 
-                    function pushComboUrl() {
+                    /*jshint loopfunc:true*/
+                    var pushComboUrl = function () {
                         //noinspection JSReferencingMutableVariableFromClosure
                         res.push({
                             combine: 1,
                             fullpath: prefix + currentComboUrls.join(comboSep) + suffix,
                             mods: currentComboMods
                         });
-                    }
+                    };
 
                     for (var i = 0; i < mods.length; i++) {
                         var currentMod = mods[i];
@@ -5365,11 +5383,12 @@ var  logger = S.getLogger('s/loader');
     var doc = S.Env.host && S.Env.host.document;
     // var logger = S.getLogger('s/loader');
     var Utils = S.Loader.Utils;
-    var TIMESTAMP = '20131127005000';
+    var TIMESTAMP = '20131128214825';
     var defaultComboPrefix = '??';
     var defaultComboSep = ',';
 
     function returnJson(s) {
+        /*jshint evil:true*/
         return (new Function('return ' + s))();
     }
 
@@ -5400,13 +5419,13 @@ var  logger = S.getLogger('s/loader');
             index = src.indexOf(comboPrefix);
 
         // no combo
-        if (index == -1) {
+        if (index === -1) {
             base = src.replace(baseReg, '$1');
         } else {
             base = src.substring(0, index);
             // a.tbcdn.cn??y.js, ie does not insert / after host
             // a.tbcdn.cn/combo? comboPrefix=/combo?
-            if (base.charAt(base.length - 1) != '/') {
+            if (base.charAt(base.length - 1) !== '/') {
                 base += '/';
             }
             parts = src.substring(index + comboPrefix.length).split(comboSep);
@@ -5445,7 +5464,7 @@ var  logger = S.getLogger('s/loader');
             info;
 
         for (i = scripts.length - 1; i >= 0; i--) {
-            if (info = getBaseInfoFromOneScript(scripts[i])) {
+            if ((info = getBaseInfoFromOneScript(scripts[i]))) {
                 return info;
             }
         }
@@ -5467,6 +5486,7 @@ var  logger = S.getLogger('s/loader');
         // noinspection JSUnresolvedVariable
         S.config({
             charset: 'utf-8',
+            /*global __dirname*/
             base: __dirname.replace(/\\/g, '/').replace(/\/$/, '') + '/'
         });
         // ejecta
@@ -5494,11 +5514,11 @@ KISSY.add('i18n', {
  * @author lifesinger@gmail.com, yiminghe@gmail.com
  */
 (function (S, undefined) {
-    var  logger = S.getLogger('s/web');
+    var logger = S.getLogger('s/web');
     var win = S.Env.host,
 
         UA = S.UA,
-        doc = win['document'],
+        doc = win.document,
         docElem = doc && doc.documentElement,
         location = win.location,
         EMPTY = '',
@@ -5533,7 +5553,7 @@ KISSY.add('i18n', {
          * @member KISSY
          */
         isWindow: function (obj) {
-            return obj != null && obj == obj.window;
+            return obj != null && obj === obj.window;
         },
 
         /**
@@ -5549,9 +5569,10 @@ KISSY.add('i18n', {
             var xml;
             try {
                 // Standard
-                if (win['DOMParser']) {
+                if (win.DOMParser) {
                     xml = new DOMParser().parseFromString(data, 'text/xml');
                 } else { // IE
+                    /*global ActiveXObject*/
                     xml = new ActiveXObject('Microsoft.XMLDOM');
                     xml.async = false;
                     xml.loadXML(data);
@@ -5575,9 +5596,14 @@ KISSY.add('i18n', {
             if (data && RE_NOT_WHITESPACE.test(data)) {
                 // http://weblogs.java.net/blog/driscoll/archive/2009/09/08/eval-javascript-global-context
                 // http://msdn.microsoft.com/en-us/library/ie/ms536420(v=vs.85).aspx always return null
-                ( win.execScript || function (data) {
-                    win[ 'eval' ].call(win, data);
-                } )(data);
+                if (win.exeScript) {
+                    /*jshint evil:true*/
+                    win.execScript(data);
+                } else {
+                    (function (data) {
+                        win.eval.call(win, data);
+                    })(data);
+                }
             }
         },
 
@@ -5640,6 +5666,7 @@ KISSY.add('i18n', {
                 callbacks[i](S);
             } catch (e) {
                 S.log(e.stack || e, 'error');
+                /*jshint loopfunc:true*/
                 setTimeout(function () {
                     throw e;
                 }, 0);
@@ -5687,7 +5714,7 @@ KISSY.add('i18n', {
                 doScroll = docElem && docElem.doScroll;
 
             try {
-                notframe = (win['frameElement'] === null);
+                notframe = (win.frameElement === null);
             } catch (e) {
                 notframe = false;
             }
@@ -5746,7 +5773,7 @@ KISSY.add('i18n', {
             }
         }
     });
-    if (typeof location != 'undefined') {
+    if (typeof location !== 'undefined') {
         var https = S.startsWith(location.href, 'https');
         var prefix = https ? 'https://s.tbcdn.cn/s/kissy/' : 'http://a.tbcdn.cn/s/kissy/';
         S.config({
@@ -5762,10 +5789,11 @@ KISSY.add('i18n', {
     }
 })(KISSY);
 
+/*jshint indent:false*/
 (function(config,Features,UA){
 config({
     'anim/transition?':{
-        alias:KISSY.Features.isTransitionSupported() ? "anim/transition" : ""
+        alias:KISSY.Features.isTransitionSupported() ? 'anim/transition' : ''
     }
 });/*Generated By KISSY Module Compiler*/
 config({
@@ -5864,15 +5892,15 @@ config({
 'dd/plugin/scroll': {requires: ['node','dd','base']}
 });
 config({
-    "dom/basic": {
-        "alias": [
+    'dom/basic': {
+        'alias': [
             'dom/base',
             Features.isIELessThan(9) ? 'dom/ie' : '',
             Features.isClassListSupported() ? '' : 'dom/class-list'
         ]
     },
-    "dom": {
-        "alias": [
+    'dom': {
+        'alias': [
             'dom/basic',
             !Features.isQuerySelectorSupported() ? 'dom/selector' : ''
         ]
@@ -5902,9 +5930,9 @@ config({
 'event/custom': {requires: ['event/base']}
 });
 config({
-    "event/dom": {
-        "alias": [
-            "event/dom/base",
+    'event/dom': {
+        'alias': [
+            'event/dom/base',
             Features.isTouchGestureSupported() ?
                 'event/dom/touch' : '',
             Features.isDeviceMotionSupported() ?
@@ -5981,7 +6009,7 @@ config({
 'resizable/plugin/proxy': {requires: ['node','base']}
 });
 config({
-    "scroll-view": {
+    'scroll-view': {
         alias: Features.isTouchGestureSupported() ? 'scroll-view/drag' : 'scroll-view/base'
     }
 });/*Generated By KISSY Module Compiler*/
@@ -6063,12 +6091,13 @@ config({
     });
 
     S.add('path', function () {
-        return S.Path
+        return S.Path;
     });
 
     var UA = S.UA,
         Env = S.Env,
         win = Env.host,
+    /*global global*/
         nativeJson = ((UA.nodejs && typeof global === 'object') ? global : win).JSON;
 
     // ie 8.0.7600.16315@win7 json bug!
@@ -6078,7 +6107,8 @@ config({
 
     if (nativeJson) {
         S.add('json', function () {
-            return S.JSON = nativeJson;
+            S.JSON = nativeJson;
+            return nativeJson;
         });
         // light weight json parse
         S.parseJson = function (data) {
@@ -6094,26 +6124,27 @@ config({
             if (data === null) {
                 return data;
             }
-            if (typeof data === "string") {
+            if (typeof data === 'string') {
                 // for ie
                 data = S.trim(data);
                 if (data) {
                     // from json2
-                    if (INVALID_CHARS_REG.test(data.replace(INVALID_ESCAPES_REG, "@")
-                        .replace(INVALID_TOKENS_REG, "]")
-                        .replace(INVALID_BRACES_REG, ""))) {
-
-                        return ( new Function("return " + data) )();
+                    if (INVALID_CHARS_REG.test(data.replace(INVALID_ESCAPES_REG, '@')
+                        .replace(INVALID_TOKENS_REG, ']')
+                        .replace(INVALID_BRACES_REG, ''))) {
+                        /*jshint evil:true*/
+                        return ( new Function('return ' + data) )();
                     }
                 }
             }
-            return S.error("Invalid Json: " + data);
+            return S.error('Invalid Json: ' + data);
         };
     }
 
     // exports for nodejs
     if (S.UA.nodejs) {
         S.KISSY = S;
+        /*global module*/
         module.exports = S;
     }
 })(KISSY);

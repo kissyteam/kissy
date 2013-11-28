@@ -4,11 +4,11 @@
  * @author lifesinger@gmail.com, yiminghe@gmail.com
  */
 (function (S, undefined) {
-    var  logger = S.getLogger('s/web');
+    var logger = S.getLogger('s/web');
     var win = S.Env.host,
 
         UA = S.UA,
-        doc = win['document'],
+        doc = win.document,
         docElem = doc && doc.documentElement,
         location = win.location,
         EMPTY = '',
@@ -43,7 +43,7 @@
          * @member KISSY
          */
         isWindow: function (obj) {
-            return obj != null && obj == obj.window;
+            return obj != null && obj === obj.window;
         },
 
         /**
@@ -59,9 +59,10 @@
             var xml;
             try {
                 // Standard
-                if (win['DOMParser']) {
+                if (win.DOMParser) {
                     xml = new DOMParser().parseFromString(data, 'text/xml');
                 } else { // IE
+                    /*global ActiveXObject*/
                     xml = new ActiveXObject('Microsoft.XMLDOM');
                     xml.async = false;
                     xml.loadXML(data);
@@ -85,9 +86,14 @@
             if (data && RE_NOT_WHITESPACE.test(data)) {
                 // http://weblogs.java.net/blog/driscoll/archive/2009/09/08/eval-javascript-global-context
                 // http://msdn.microsoft.com/en-us/library/ie/ms536420(v=vs.85).aspx always return null
-                ( win.execScript || function (data) {
-                    win[ 'eval' ].call(win, data);
-                } )(data);
+                if (win.exeScript) {
+                    /*jshint evil:true*/
+                    win.execScript(data);
+                } else {
+                    (function (data) {
+                        win.eval.call(win, data);
+                    })(data);
+                }
             }
         },
 
@@ -150,6 +156,7 @@
                 callbacks[i](S);
             } catch (e) {
                 S.log(e.stack || e, 'error');
+                /*jshint loopfunc:true*/
                 setTimeout(function () {
                     throw e;
                 }, 0);
@@ -197,7 +204,7 @@
                 doScroll = docElem && docElem.doScroll;
 
             try {
-                notframe = (win['frameElement'] === null);
+                notframe = (win.frameElement === null);
             } catch (e) {
                 notframe = false;
             }

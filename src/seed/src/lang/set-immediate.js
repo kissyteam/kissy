@@ -3,17 +3,22 @@
  @author yiminghe@gmail.com
  */
 (function (S) {
+    /*global setImmediate*/
+    /*global process */
+    /*global MessageChannel */
+
     var queue = [];
 
     var flushing = 0;
 
     function flush() {
         var i = 0, item;
-        while (item = queue[i++]) {
+        while ((item = queue[i++])) {
             try {
                 item();
             } catch (e) {
                 S.log(e.stack || e, 'error');
+                /*jshint loopfunc:true*/
                 setTimeout(function () {
                     throw e;
                 }, 0);
@@ -26,9 +31,9 @@
     }
 
     /*
-      setImmediate for loader and promise
-      @param {Function} fn async function to call
-      @private
+     setImmediate for loader and promise
+     @param {Function} fn async function to call
+     @private
      */
     S.setImmediate = function (fn) {
         queue.push(fn);
@@ -41,13 +46,14 @@
     var requestFlush;
     if (typeof setImmediate === 'function') {
         requestFlush = function () {
+
             setImmediate(flush);
         };
-    } else if (typeof process !== 'undefined' && typeof  process.nextTick == 'function') {
+    } else if (typeof process !== 'undefined' && typeof  process.nextTick === 'function') {
         requestFlush = function () {
             process.nextTick(flush);
         };
-    } else if (typeof MessageChannel !== "undefined") {
+    } else if (typeof MessageChannel !== 'undefined') {
         // modern browsers
         // http://msdn.microsoft.com/en-us/library/windows/apps/hh441303.aspx
         var channel = new MessageChannel();

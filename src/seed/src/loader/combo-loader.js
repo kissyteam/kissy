@@ -40,7 +40,7 @@
             };
             if (!rs.combine) {
                 mod = rs.mods[0];
-                if (mod.getType() == 'css') {
+                if (mod.getType() === 'css') {
                     mod = undefined;
                 }
                 else if (oldIE) {
@@ -54,7 +54,8 @@
             S.Config.loadModsFn(rs, config);
         });
     }
-var  logger = S.getLogger('s/loader');
+
+    var logger = S.getLogger('s/loader');
     var Loader = S.Loader,
 
         Status = Loader.Status,
@@ -88,7 +89,7 @@ var  logger = S.getLogger('s/loader');
 
     function checkKISSYRequire(config, factory) {
         // use require primitive statement
-        if (!config && typeof factory == 'function') {
+        if (!config && typeof factory === 'function') {
             var requires = Utils.getRequiresFromFn(factory);
             if (requires.length) {
                 config = config || {};
@@ -105,7 +106,7 @@ var  logger = S.getLogger('s/loader');
 
     ComboLoader.add = function (name, factory, config, runtime, argsLen) {
         // KISSY.add('xx',[],function(){});
-        if (argsLen == 3 && S.isArray(factory)) {
+        if (argsLen === 3 && S.isArray(factory)) {
             var tmp = factory;
             factory = config;
             config = {
@@ -114,7 +115,7 @@ var  logger = S.getLogger('s/loader');
             };
         }
         // KISSY.add(function(){}), KISSY.add('a'), KISSY.add(function(){},{requires:[]})
-        if (typeof name === 'function' || argsLen == 1) {
+        if (typeof name === 'function' || argsLen === 1) {
             config = factory;
             factory = name;
             config = checkKISSYRequire(config, factory);
@@ -156,7 +157,7 @@ var  logger = S.getLogger('s/loader');
 
         for (i = scripts.length - 1; i >= 0; i--) {
             script = scripts[i];
-            if (script.readyState == 'interactive') {
+            if (script.readyState === 'interactive') {
                 re = script;
                 break;
             }
@@ -180,7 +181,7 @@ var  logger = S.getLogger('s/loader');
         S.each(rss, function (rs) {
             var ms = [];
             S.each(rs.mods, function (m) {
-                if (m.status == LOADED) {
+                if (m.status === LOADED) {
                     ms.push(m.name);
                 }
             });
@@ -249,7 +250,7 @@ var  logger = S.getLogger('s/loader');
             });
 
             // jss css download in parallel
-            S.each(comboUrls['js'], function (jsOne) {
+            S.each(comboUrls.js, function (jsOne) {
                 loadScripts(runtime, jsOne, function (success) {
                     if ('@DEBUG@') {
                         debugRemoteModules(success);
@@ -302,12 +303,13 @@ var  logger = S.getLogger('s/loader');
                 if (modStatus >= READY_TO_ATTACH) {
                     continue;
                 }
-                if (modStatus != LOADED) {
+                if (modStatus !== LOADED) {
                     if (!waitingModules.contains(m)) {
-                        if (modStatus != LOADING) {
+                        if (modStatus !== LOADING) {
                             mod.status = LOADING;
                             ret[m] = 1;
                         }
+                        /*jshint loopfunc:true*/
                         mod.wait(function (mod) {
                             waitingModules.remove(mod.name);
                             // notify current loader instance
@@ -356,7 +358,7 @@ var  logger = S.getLogger('s/loader');
                     comboName = group + '_' + charset + '_' + groupTag;
 
                     var groupPrefixUri;
-                    if (groupPrefixUri = comboPrefixes[comboName]) {
+                    if ((groupPrefixUri = comboPrefixes[comboName])) {
                         if (groupPrefixUri.isSameOriginAs(packageUri)) {
                             groupPrefixUri.setPath(getCommonPrefix(groupPrefixUri.getPath(),
                                 packageUri.getPath()));
@@ -377,9 +379,7 @@ var  logger = S.getLogger('s/loader');
                     mods.charset = charset;
                     mods.tags = [tag]; // [package tag]
                 } else {
-                    if (mods.tags.length == 1 && mods.tags[0] == tag) {
-
-                    } else {
+                    if (!(mods.tags.length === 1 && mods.tags[0] === tag)) {
                         mods.tags.push(tag);
                     }
                 }
@@ -427,14 +427,15 @@ var  logger = S.getLogger('s/loader');
                     res.charset = mods.charset;
                     res.mods = [];
 
-                    function pushComboUrl() {
+                    /*jshint loopfunc:true*/
+                    var pushComboUrl = function () {
                         //noinspection JSReferencingMutableVariableFromClosure
                         res.push({
                             combine: 1,
                             fullpath: prefix + currentComboUrls.join(comboSep) + suffix,
                             mods: currentComboMods
                         });
-                    }
+                    };
 
                     for (var i = 0; i < mods.length; i++) {
                         var currentMod = mods[i];

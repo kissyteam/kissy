@@ -8,7 +8,7 @@
     // IE doesn't include non-breaking-space (0xa0) in their \s character
     // class (as required by section 7.2 of the ECMAScript spec), we explicitly
     // include it in the regexp to enforce consistent cross-browser behavior.
-   var   logger= S.getLogger('s/lang');
+    var logger = S.getLogger('s/lang');
     var SEP = '&',
         EMPTY = '',
         EQ = '=',
@@ -25,6 +25,7 @@
             '&#x60;': '`',
             '&#x2F;': '/',
             '&quot;': '"',
+            /*jshint quotmark:false*/
             '&#x27;': "'"
         },
         reverseEntities = {},
@@ -46,26 +47,28 @@
 
     function getEscapeReg() {
         if (escapeReg) {
-            return escapeReg
+            return escapeReg;
         }
         var str = EMPTY;
         S.each(htmlEntities, function (entity) {
             str += entity + '|';
         });
         str = str.slice(0, -1);
-        return escapeReg = new RegExp(str, 'g');
+        escapeReg = new RegExp(str, 'g');
+        return escapeReg;
     }
 
     function getUnEscapeReg() {
         if (unEscapeReg) {
-            return unEscapeReg
+            return unEscapeReg;
         }
         var str = EMPTY;
         S.each(reverseEntities, function (entity) {
             str += entity + '|';
         });
         str += '&#(\\d{1,5});';
-        return unEscapeReg = new RegExp(str, 'g');
+        unEscapeReg = new RegExp(str, 'g');
+        return unEscapeReg;
     }
 
     S.mix(S, {
@@ -218,7 +221,7 @@
          * @member KISSY
          */
         unparam: function (str, sep, eq) {
-            if (typeof str != 'string' || !(str = S.trim(str))) {
+            if (typeof str !== 'string' || !(str = S.trim(str))) {
                 return {};
             }
             sep = sep || SEP;
@@ -232,7 +235,7 @@
 
             for (; i < len; ++i) {
                 eqIndex = pairs[i].indexOf(eq);
-                if (eqIndex == -1) {
+                if (eqIndex === -1) {
                     key = decode(pairs[i]);
                     val = undefined;
                 } else {

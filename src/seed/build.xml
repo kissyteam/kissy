@@ -7,6 +7,7 @@
     <target name="merge-dependency">
         <concat destfile="${component.src.dir}/meta/modules.js" encoding="${charset}" outputencoding="${charset}">
             <header filtering="no" trimleading="yes">
+                /*jshint indent:false*/
                 (function(config,Features,UA){
             </header>
             <fileset dir="${kissy.src.dir}" includes="**/meta/*.js"

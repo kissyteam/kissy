@@ -229,73 +229,73 @@ if (! this._$jscoverage) {
 if (! _$jscoverage['/meta/modules.js']) {
   _$jscoverage['/meta/modules.js'] = {};
   _$jscoverage['/meta/modules.js'].lineData = [];
-  _$jscoverage['/meta/modules.js'].lineData[2] = 0;
   _$jscoverage['/meta/modules.js'].lineData[3] = 0;
-  _$jscoverage['/meta/modules.js'].lineData[8] = 0;
-  _$jscoverage['/meta/modules.js'].lineData[12] = 0;
-  _$jscoverage['/meta/modules.js'].lineData[16] = 0;
-  _$jscoverage['/meta/modules.js'].lineData[20] = 0;
-  _$jscoverage['/meta/modules.js'].lineData[24] = 0;
-  _$jscoverage['/meta/modules.js'].lineData[28] = 0;
-  _$jscoverage['/meta/modules.js'].lineData[32] = 0;
-  _$jscoverage['/meta/modules.js'].lineData[36] = 0;
-  _$jscoverage['/meta/modules.js'].lineData[40] = 0;
-  _$jscoverage['/meta/modules.js'].lineData[44] = 0;
-  _$jscoverage['/meta/modules.js'].lineData[48] = 0;
-  _$jscoverage['/meta/modules.js'].lineData[52] = 0;
-  _$jscoverage['/meta/modules.js'].lineData[56] = 0;
-  _$jscoverage['/meta/modules.js'].lineData[60] = 0;
-  _$jscoverage['/meta/modules.js'].lineData[64] = 0;
-  _$jscoverage['/meta/modules.js'].lineData[68] = 0;
-  _$jscoverage['/meta/modules.js'].lineData[72] = 0;
-  _$jscoverage['/meta/modules.js'].lineData[76] = 0;
-  _$jscoverage['/meta/modules.js'].lineData[80] = 0;
-  _$jscoverage['/meta/modules.js'].lineData[84] = 0;
-  _$jscoverage['/meta/modules.js'].lineData[88] = 0;
-  _$jscoverage['/meta/modules.js'].lineData[92] = 0;
-  _$jscoverage['/meta/modules.js'].lineData[96] = 0;
-  _$jscoverage['/meta/modules.js'].lineData[100] = 0;
-  _$jscoverage['/meta/modules.js'].lineData[103] = 0;
-  _$jscoverage['/meta/modules.js'].lineData[118] = 0;
-  _$jscoverage['/meta/modules.js'].lineData[122] = 0;
-  _$jscoverage['/meta/modules.js'].lineData[126] = 0;
-  _$jscoverage['/meta/modules.js'].lineData[130] = 0;
-  _$jscoverage['/meta/modules.js'].lineData[134] = 0;
-  _$jscoverage['/meta/modules.js'].lineData[138] = 0;
-  _$jscoverage['/meta/modules.js'].lineData[141] = 0;
-  _$jscoverage['/meta/modules.js'].lineData[157] = 0;
-  _$jscoverage['/meta/modules.js'].lineData[161] = 0;
-  _$jscoverage['/meta/modules.js'].lineData[165] = 0;
-  _$jscoverage['/meta/modules.js'].lineData[169] = 0;
-  _$jscoverage['/meta/modules.js'].lineData[173] = 0;
-  _$jscoverage['/meta/modules.js'].lineData[177] = 0;
-  _$jscoverage['/meta/modules.js'].lineData[181] = 0;
-  _$jscoverage['/meta/modules.js'].lineData[185] = 0;
-  _$jscoverage['/meta/modules.js'].lineData[189] = 0;
-  _$jscoverage['/meta/modules.js'].lineData[193] = 0;
-  _$jscoverage['/meta/modules.js'].lineData[197] = 0;
-  _$jscoverage['/meta/modules.js'].lineData[201] = 0;
-  _$jscoverage['/meta/modules.js'].lineData[205] = 0;
-  _$jscoverage['/meta/modules.js'].lineData[209] = 0;
-  _$jscoverage['/meta/modules.js'].lineData[213] = 0;
-  _$jscoverage['/meta/modules.js'].lineData[217] = 0;
-  _$jscoverage['/meta/modules.js'].lineData[220] = 0;
-  _$jscoverage['/meta/modules.js'].lineData[225] = 0;
-  _$jscoverage['/meta/modules.js'].lineData[229] = 0;
-  _$jscoverage['/meta/modules.js'].lineData[233] = 0;
-  _$jscoverage['/meta/modules.js'].lineData[237] = 0;
-  _$jscoverage['/meta/modules.js'].lineData[241] = 0;
-  _$jscoverage['/meta/modules.js'].lineData[245] = 0;
-  _$jscoverage['/meta/modules.js'].lineData[249] = 0;
-  _$jscoverage['/meta/modules.js'].lineData[253] = 0;
-  _$jscoverage['/meta/modules.js'].lineData[257] = 0;
-  _$jscoverage['/meta/modules.js'].lineData[261] = 0;
-  _$jscoverage['/meta/modules.js'].lineData[265] = 0;
-  _$jscoverage['/meta/modules.js'].lineData[269] = 0;
-  _$jscoverage['/meta/modules.js'].lineData[273] = 0;
-  _$jscoverage['/meta/modules.js'].lineData[277] = 0;
-  _$jscoverage['/meta/modules.js'].lineData[281] = 0;
-  _$jscoverage['/meta/modules.js'].lineData[286] = 0;
+  _$jscoverage['/meta/modules.js'].lineData[4] = 0;
+  _$jscoverage['/meta/modules.js'].lineData[9] = 0;
+  _$jscoverage['/meta/modules.js'].lineData[13] = 0;
+  _$jscoverage['/meta/modules.js'].lineData[17] = 0;
+  _$jscoverage['/meta/modules.js'].lineData[21] = 0;
+  _$jscoverage['/meta/modules.js'].lineData[25] = 0;
+  _$jscoverage['/meta/modules.js'].lineData[29] = 0;
+  _$jscoverage['/meta/modules.js'].lineData[33] = 0;
+  _$jscoverage['/meta/modules.js'].lineData[37] = 0;
+  _$jscoverage['/meta/modules.js'].lineData[41] = 0;
+  _$jscoverage['/meta/modules.js'].lineData[45] = 0;
+  _$jscoverage['/meta/modules.js'].lineData[49] = 0;
+  _$jscoverage['/meta/modules.js'].lineData[53] = 0;
+  _$jscoverage['/meta/modules.js'].lineData[57] = 0;
+  _$jscoverage['/meta/modules.js'].lineData[61] = 0;
+  _$jscoverage['/meta/modules.js'].lineData[65] = 0;
+  _$jscoverage['/meta/modules.js'].lineData[69] = 0;
+  _$jscoverage['/meta/modules.js'].lineData[73] = 0;
+  _$jscoverage['/meta/modules.js'].lineData[77] = 0;
+  _$jscoverage['/meta/modules.js'].lineData[81] = 0;
+  _$jscoverage['/meta/modules.js'].lineData[85] = 0;
+  _$jscoverage['/meta/modules.js'].lineData[89] = 0;
+  _$jscoverage['/meta/modules.js'].lineData[93] = 0;
+  _$jscoverage['/meta/modules.js'].lineData[97] = 0;
+  _$jscoverage['/meta/modules.js'].lineData[101] = 0;
+  _$jscoverage['/meta/modules.js'].lineData[104] = 0;
+  _$jscoverage['/meta/modules.js'].lineData[119] = 0;
+  _$jscoverage['/meta/modules.js'].lineData[123] = 0;
+  _$jscoverage['/meta/modules.js'].lineData[127] = 0;
+  _$jscoverage['/meta/modules.js'].lineData[131] = 0;
+  _$jscoverage['/meta/modules.js'].lineData[135] = 0;
+  _$jscoverage['/meta/modules.js'].lineData[139] = 0;
+  _$jscoverage['/meta/modules.js'].lineData[142] = 0;
+  _$jscoverage['/meta/modules.js'].lineData[158] = 0;
+  _$jscoverage['/meta/modules.js'].lineData[162] = 0;
+  _$jscoverage['/meta/modules.js'].lineData[166] = 0;
+  _$jscoverage['/meta/modules.js'].lineData[170] = 0;
+  _$jscoverage['/meta/modules.js'].lineData[174] = 0;
+  _$jscoverage['/meta/modules.js'].lineData[178] = 0;
+  _$jscoverage['/meta/modules.js'].lineData[182] = 0;
+  _$jscoverage['/meta/modules.js'].lineData[186] = 0;
+  _$jscoverage['/meta/modules.js'].lineData[190] = 0;
+  _$jscoverage['/meta/modules.js'].lineData[194] = 0;
+  _$jscoverage['/meta/modules.js'].lineData[198] = 0;
+  _$jscoverage['/meta/modules.js'].lineData[202] = 0;
+  _$jscoverage['/meta/modules.js'].lineData[206] = 0;
+  _$jscoverage['/meta/modules.js'].lineData[210] = 0;
+  _$jscoverage['/meta/modules.js'].lineData[214] = 0;
+  _$jscoverage['/meta/modules.js'].lineData[218] = 0;
+  _$jscoverage['/meta/modules.js'].lineData[221] = 0;
+  _$jscoverage['/meta/modules.js'].lineData[226] = 0;
+  _$jscoverage['/meta/modules.js'].lineData[230] = 0;
+  _$jscoverage['/meta/modules.js'].lineData[234] = 0;
+  _$jscoverage['/meta/modules.js'].lineData[238] = 0;
+  _$jscoverage['/meta/modules.js'].lineData[242] = 0;
+  _$jscoverage['/meta/modules.js'].lineData[246] = 0;
+  _$jscoverage['/meta/modules.js'].lineData[250] = 0;
+  _$jscoverage['/meta/modules.js'].lineData[254] = 0;
+  _$jscoverage['/meta/modules.js'].lineData[258] = 0;
+  _$jscoverage['/meta/modules.js'].lineData[262] = 0;
+  _$jscoverage['/meta/modules.js'].lineData[266] = 0;
+  _$jscoverage['/meta/modules.js'].lineData[270] = 0;
+  _$jscoverage['/meta/modules.js'].lineData[274] = 0;
+  _$jscoverage['/meta/modules.js'].lineData[278] = 0;
+  _$jscoverage['/meta/modules.js'].lineData[282] = 0;
+  _$jscoverage['/meta/modules.js'].lineData[287] = 0;
 }
 if (! _$jscoverage['/meta/modules.js'].functionData) {
   _$jscoverage['/meta/modules.js'].functionData = [];
@@ -305,273 +305,273 @@ if (! _$jscoverage['/meta/modules.js'].functionData) {
 if (! _$jscoverage['/meta/modules.js'].branchData) {
   _$jscoverage['/meta/modules.js'].branchData = {};
 }
-_$jscoverage['/meta/modules.js'].lineData[2]++;
+_$jscoverage['/meta/modules.js'].lineData[3]++;
 (function(config, Features, UA) {
   _$jscoverage['/meta/modules.js'].functionData[0]++;
-  _$jscoverage['/meta/modules.js'].lineData[3]++;
+  _$jscoverage['/meta/modules.js'].lineData[4]++;
   config({
   'anim/transition?': {
-  alias: KISSY.Features.isTransitionSupported() ? "anim/transition" : ""}});
-  _$jscoverage['/meta/modules.js'].lineData[8]++;
+  alias: KISSY.Features.isTransitionSupported() ? 'anim/transition' : ''}});
+  _$jscoverage['/meta/modules.js'].lineData[9]++;
   config({
   'anim': {
   requires: ['anim/base', 'anim/timer', 'anim/transition?']}});
-  _$jscoverage['/meta/modules.js'].lineData[12]++;
+  _$jscoverage['/meta/modules.js'].lineData[13]++;
   config({
   'anim/base': {
   requires: ['dom', 'promise']}});
-  _$jscoverage['/meta/modules.js'].lineData[16]++;
+  _$jscoverage['/meta/modules.js'].lineData[17]++;
   config({
   'anim/timer': {
   requires: ['dom', 'anim/base']}});
-  _$jscoverage['/meta/modules.js'].lineData[20]++;
+  _$jscoverage['/meta/modules.js'].lineData[21]++;
   config({
   'anim/transition': {
   requires: ['dom', 'event/dom', 'anim/base']}});
-  _$jscoverage['/meta/modules.js'].lineData[24]++;
+  _$jscoverage['/meta/modules.js'].lineData[25]++;
   config({
   'attribute': {
   requires: ['event/custom']}});
-  _$jscoverage['/meta/modules.js'].lineData[28]++;
+  _$jscoverage['/meta/modules.js'].lineData[29]++;
   config({
   'base': {
   requires: ['attribute']}});
-  _$jscoverage['/meta/modules.js'].lineData[32]++;
+  _$jscoverage['/meta/modules.js'].lineData[33]++;
   config({
   'button': {
   requires: ['node', 'component/control']}});
-  _$jscoverage['/meta/modules.js'].lineData[36]++;
+  _$jscoverage['/meta/modules.js'].lineData[37]++;
   config({
   'color': {
   requires: ['attribute']}});
-  _$jscoverage['/meta/modules.js'].lineData[40]++;
+  _$jscoverage['/meta/modules.js'].lineData[41]++;
   config({
   'combobox': {
   requires: ['node', 'component/control', 'menu', 'attribute', 'io']}});
-  _$jscoverage['/meta/modules.js'].lineData[44]++;
+  _$jscoverage['/meta/modules.js'].lineData[45]++;
   config({
   'component/container': {
   requires: ['component/control', 'component/manager']}});
-  _$jscoverage['/meta/modules.js'].lineData[48]++;
+  _$jscoverage['/meta/modules.js'].lineData[49]++;
   config({
   'component/control': {
   requires: ['node', 'base', 'promise', 'component/manager', 'xtemplate/runtime']}});
-  _$jscoverage['/meta/modules.js'].lineData[52]++;
+  _$jscoverage['/meta/modules.js'].lineData[53]++;
   config({
   'component/extension/align': {
   requires: ['node']}});
-  _$jscoverage['/meta/modules.js'].lineData[56]++;
+  _$jscoverage['/meta/modules.js'].lineData[57]++;
   config({
   'component/extension/content-render': {
   requires: ['component/extension/content-xtpl']}});
-  _$jscoverage['/meta/modules.js'].lineData[60]++;
+  _$jscoverage['/meta/modules.js'].lineData[61]++;
   config({
   'component/extension/delegate-children': {
   requires: ['node', 'component/manager']}});
-  _$jscoverage['/meta/modules.js'].lineData[64]++;
+  _$jscoverage['/meta/modules.js'].lineData[65]++;
   config({
   'component/plugin/drag': {
-  requires: ['base', 'dd']}});
-  _$jscoverage['/meta/modules.js'].lineData[68]++;
+  requires: ['dd']}});
+  _$jscoverage['/meta/modules.js'].lineData[69]++;
   config({
   'component/plugin/resize': {
   requires: ['resizable']}});
-  _$jscoverage['/meta/modules.js'].lineData[72]++;
+  _$jscoverage['/meta/modules.js'].lineData[73]++;
   config({
   'date/format': {
   requires: ['date/gregorian', 'i18n!date']}});
-  _$jscoverage['/meta/modules.js'].lineData[76]++;
+  _$jscoverage['/meta/modules.js'].lineData[77]++;
   config({
   'date/gregorian': {
   requires: ['i18n!date']}});
-  _$jscoverage['/meta/modules.js'].lineData[80]++;
+  _$jscoverage['/meta/modules.js'].lineData[81]++;
   config({
   'date/picker': {
   requires: ['node', 'date/gregorian', 'i18n!date/picker', 'component/control', 'date/format']}});
-  _$jscoverage['/meta/modules.js'].lineData[84]++;
+  _$jscoverage['/meta/modules.js'].lineData[85]++;
   config({
   'date/popup-picker': {
   requires: ['date/picker/picker-xtpl', 'date/picker', 'component/extension/shim', 'component/extension/align']}});
-  _$jscoverage['/meta/modules.js'].lineData[88]++;
+  _$jscoverage['/meta/modules.js'].lineData[89]++;
   config({
   'dd': {
   requires: ['node', 'base']}});
-  _$jscoverage['/meta/modules.js'].lineData[92]++;
+  _$jscoverage['/meta/modules.js'].lineData[93]++;
   config({
   'dd/plugin/constrain': {
   requires: ['node', 'base']}});
-  _$jscoverage['/meta/modules.js'].lineData[96]++;
+  _$jscoverage['/meta/modules.js'].lineData[97]++;
   config({
   'dd/plugin/proxy': {
   requires: ['node', 'dd', 'base']}});
-  _$jscoverage['/meta/modules.js'].lineData[100]++;
+  _$jscoverage['/meta/modules.js'].lineData[101]++;
   config({
   'dd/plugin/scroll': {
   requires: ['node', 'dd', 'base']}});
-  _$jscoverage['/meta/modules.js'].lineData[103]++;
+  _$jscoverage['/meta/modules.js'].lineData[104]++;
   config({
-  "dom/basic": {
-  "alias": ['dom/base', Features.isIELessThan(9) ? 'dom/ie' : '', Features.isClassListSupported() ? '' : 'dom/class-list']}, 
-  "dom": {
-  "alias": ['dom/basic', !Features.isQuerySelectorSupported() ? 'dom/selector' : '']}});
-  _$jscoverage['/meta/modules.js'].lineData[118]++;
+  'dom/basic': {
+  'alias': ['dom/base', Features.isIELessThan(9) ? 'dom/ie' : '', Features.isClassListSupported() ? '' : 'dom/class-list']}, 
+  'dom': {
+  'alias': ['dom/basic', !Features.isQuerySelectorSupported() ? 'dom/selector' : '']}});
+  _$jscoverage['/meta/modules.js'].lineData[119]++;
   config({
   'dom/class-list': {
   requires: ['dom/base']}});
-  _$jscoverage['/meta/modules.js'].lineData[122]++;
+  _$jscoverage['/meta/modules.js'].lineData[123]++;
   config({
   'dom/ie': {
   requires: ['dom/base']}});
-  _$jscoverage['/meta/modules.js'].lineData[126]++;
+  _$jscoverage['/meta/modules.js'].lineData[127]++;
   config({
   'dom/selector': {
   requires: ['dom/basic']}});
-  _$jscoverage['/meta/modules.js'].lineData[130]++;
+  _$jscoverage['/meta/modules.js'].lineData[131]++;
   config({
   'editor': {
   requires: ['node', 'html-parser', 'component/control']}});
-  _$jscoverage['/meta/modules.js'].lineData[134]++;
+  _$jscoverage['/meta/modules.js'].lineData[135]++;
   config({
   'event': {
   requires: ['event/dom', 'event/custom']}});
-  _$jscoverage['/meta/modules.js'].lineData[138]++;
+  _$jscoverage['/meta/modules.js'].lineData[139]++;
   config({
   'event/custom': {
   requires: ['event/base']}});
-  _$jscoverage['/meta/modules.js'].lineData[141]++;
+  _$jscoverage['/meta/modules.js'].lineData[142]++;
   config({
-  "event/dom": {
-  "alias": ["event/dom/base", Features.isTouchGestureSupported() ? 'event/dom/touch' : '', Features.isDeviceMotionSupported() ? 'event/dom/shake' : '', Features.isHashChangeSupported() ? '' : 'event/dom/hashchange', Features.isIELessThan(9) ? 'event/dom/ie' : '', UA.ie ? '' : 'event/dom/focusin']}});
-  _$jscoverage['/meta/modules.js'].lineData[157]++;
+  'event/dom': {
+  'alias': ['event/dom/base', Features.isTouchGestureSupported() ? 'event/dom/touch' : '', Features.isDeviceMotionSupported() ? 'event/dom/shake' : '', Features.isHashChangeSupported() ? '' : 'event/dom/hashchange', Features.isIELessThan(9) ? 'event/dom/ie' : '', UA.ie ? '' : 'event/dom/focusin']}});
+  _$jscoverage['/meta/modules.js'].lineData[158]++;
   config({
   'event/dom/base': {
   requires: ['event/base', 'dom']}});
-  _$jscoverage['/meta/modules.js'].lineData[161]++;
+  _$jscoverage['/meta/modules.js'].lineData[162]++;
   config({
   'event/dom/focusin': {
   requires: ['event/dom/base']}});
-  _$jscoverage['/meta/modules.js'].lineData[165]++;
+  _$jscoverage['/meta/modules.js'].lineData[166]++;
   config({
   'event/dom/hashchange': {
   requires: ['event/dom/base', 'dom']}});
-  _$jscoverage['/meta/modules.js'].lineData[169]++;
+  _$jscoverage['/meta/modules.js'].lineData[170]++;
   config({
   'event/dom/ie': {
   requires: ['event/dom/base', 'dom']}});
-  _$jscoverage['/meta/modules.js'].lineData[173]++;
+  _$jscoverage['/meta/modules.js'].lineData[174]++;
   config({
   'event/dom/shake': {
   requires: ['event/dom/base']}});
-  _$jscoverage['/meta/modules.js'].lineData[177]++;
+  _$jscoverage['/meta/modules.js'].lineData[178]++;
   config({
   'event/dom/touch': {
   requires: ['event/dom/base', 'dom']}});
-  _$jscoverage['/meta/modules.js'].lineData[181]++;
+  _$jscoverage['/meta/modules.js'].lineData[182]++;
   config({
   'filter-menu': {
   requires: ['menu', 'component/extension/content-xtpl', 'component/extension/content-render']}});
-  _$jscoverage['/meta/modules.js'].lineData[185]++;
+  _$jscoverage['/meta/modules.js'].lineData[186]++;
   config({
   'io': {
   requires: ['dom', 'event/custom', 'promise', 'event/dom']}});
-  _$jscoverage['/meta/modules.js'].lineData[189]++;
+  _$jscoverage['/meta/modules.js'].lineData[190]++;
   config({
   'kison': {
   requires: ['base']}});
-  _$jscoverage['/meta/modules.js'].lineData[193]++;
+  _$jscoverage['/meta/modules.js'].lineData[194]++;
   config({
   'menu': {
   requires: ['node', 'component/container', 'component/extension/delegate-children', 'component/control', 'component/extension/content-render', 'component/extension/content-xtpl', 'component/extension/align', 'component/extension/shim']}});
-  _$jscoverage['/meta/modules.js'].lineData[197]++;
+  _$jscoverage['/meta/modules.js'].lineData[198]++;
   config({
   'menubutton': {
   requires: ['node', 'button', 'component/extension/content-xtpl', 'component/extension/content-render', 'menu']}});
-  _$jscoverage['/meta/modules.js'].lineData[201]++;
+  _$jscoverage['/meta/modules.js'].lineData[202]++;
   config({
   'mvc': {
   requires: ['io', 'json', 'attribute', 'node']}});
-  _$jscoverage['/meta/modules.js'].lineData[205]++;
+  _$jscoverage['/meta/modules.js'].lineData[206]++;
   config({
   'node': {
   requires: ['dom', 'event/dom', 'anim']}});
-  _$jscoverage['/meta/modules.js'].lineData[209]++;
+  _$jscoverage['/meta/modules.js'].lineData[210]++;
   config({
   'overlay': {
   requires: ['component/container', 'component/extension/shim', 'component/extension/align', 'node', 'component/extension/content-xtpl', 'component/extension/content-render']}});
-  _$jscoverage['/meta/modules.js'].lineData[213]++;
+  _$jscoverage['/meta/modules.js'].lineData[214]++;
   config({
   'resizable': {
   requires: ['node', 'base', 'dd']}});
-  _$jscoverage['/meta/modules.js'].lineData[217]++;
+  _$jscoverage['/meta/modules.js'].lineData[218]++;
   config({
   'resizable/plugin/proxy': {
   requires: ['node', 'base']}});
-  _$jscoverage['/meta/modules.js'].lineData[220]++;
+  _$jscoverage['/meta/modules.js'].lineData[221]++;
   config({
-  "scroll-view": {
+  'scroll-view': {
   alias: Features.isTouchGestureSupported() ? 'scroll-view/drag' : 'scroll-view/base'}});
-  _$jscoverage['/meta/modules.js'].lineData[225]++;
+  _$jscoverage['/meta/modules.js'].lineData[226]++;
   config({
   'scroll-view/base': {
   requires: ['node', 'anim', 'component/container', 'component/extension/content-render']}});
-  _$jscoverage['/meta/modules.js'].lineData[229]++;
+  _$jscoverage['/meta/modules.js'].lineData[230]++;
   config({
   'scroll-view/drag': {
   requires: ['scroll-view/base', 'node', 'anim']}});
-  _$jscoverage['/meta/modules.js'].lineData[233]++;
+  _$jscoverage['/meta/modules.js'].lineData[234]++;
   config({
   'scroll-view/plugin/pull-to-refresh': {
   requires: ['base']}});
-  _$jscoverage['/meta/modules.js'].lineData[237]++;
+  _$jscoverage['/meta/modules.js'].lineData[238]++;
   config({
   'scroll-view/plugin/scrollbar': {
   requires: ['base', 'node', 'component/control']}});
-  _$jscoverage['/meta/modules.js'].lineData[241]++;
+  _$jscoverage['/meta/modules.js'].lineData[242]++;
   config({
   'separator': {
   requires: ['component/control']}});
-  _$jscoverage['/meta/modules.js'].lineData[245]++;
+  _$jscoverage['/meta/modules.js'].lineData[246]++;
   config({
   'split-button': {
   requires: ['component/container', 'button', 'menubutton']}});
-  _$jscoverage['/meta/modules.js'].lineData[249]++;
+  _$jscoverage['/meta/modules.js'].lineData[250]++;
   config({
   'stylesheet': {
   requires: ['dom']}});
-  _$jscoverage['/meta/modules.js'].lineData[253]++;
+  _$jscoverage['/meta/modules.js'].lineData[254]++;
   config({
   'swf': {
-  requires: ['dom', 'json', 'base']}});
-  _$jscoverage['/meta/modules.js'].lineData[257]++;
+  requires: ['dom', 'json', 'attribute']}});
+  _$jscoverage['/meta/modules.js'].lineData[258]++;
   config({
   'tabs': {
   requires: ['component/container', 'toolbar', 'button']}});
-  _$jscoverage['/meta/modules.js'].lineData[261]++;
+  _$jscoverage['/meta/modules.js'].lineData[262]++;
   config({
   'toolbar': {
   requires: ['component/container', 'component/extension/delegate-children', 'node']}});
-  _$jscoverage['/meta/modules.js'].lineData[265]++;
+  _$jscoverage['/meta/modules.js'].lineData[266]++;
   config({
   'tree': {
-  requires: ['node', 'component/container', 'component/extension/content-render', 'component/extension/delegate-children']}});
-  _$jscoverage['/meta/modules.js'].lineData[269]++;
+  requires: ['node', 'component/container', 'component/extension/content-xtpl', 'component/extension/content-render', 'component/extension/delegate-children']}});
+  _$jscoverage['/meta/modules.js'].lineData[270]++;
   config({
   'xtemplate': {
   requires: ['xtemplate/runtime', 'xtemplate/compiler']}});
-  _$jscoverage['/meta/modules.js'].lineData[273]++;
+  _$jscoverage['/meta/modules.js'].lineData[274]++;
   config({
   'xtemplate/compiler': {
   requires: ['xtemplate/runtime']}});
-  _$jscoverage['/meta/modules.js'].lineData[277]++;
+  _$jscoverage['/meta/modules.js'].lineData[278]++;
   config({
   'xtemplate/nodejs': {
   requires: ['xtemplate']}});
-  _$jscoverage['/meta/modules.js'].lineData[281]++;
+  _$jscoverage['/meta/modules.js'].lineData[282]++;
   config({
   'xtemplate/runtime': {
   requires: ['path']}});
 })(function(c) {
   _$jscoverage['/meta/modules.js'].functionData[1]++;
-  _$jscoverage['/meta/modules.js'].lineData[286]++;
+  _$jscoverage['/meta/modules.js'].lineData[287]++;
   KISSY.config('modules', c);
 }, KISSY.Features, KISSY.UA);

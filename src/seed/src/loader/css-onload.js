@@ -11,9 +11,8 @@
         Utils = S.Loader.Utils,
     // central poll for link node
         timer = 0,
-        monitors = {
-            // node.id:{callback:callback,node:node}
-        };
+    // node.id:{callback:callback,node:node}
+        monitors = {};
 
     function startCssTimer() {
         if (!timer) {
@@ -26,13 +25,13 @@
         var loaded = 0;
         if (UA.webkit) {
             // http://www.w3.org/TR/Dom-Level-2-Style/stylesheets.html
-            if (node['sheet']) {
+            if (node.sheet) {
                 logger.debug('webkit css poll loaded: ' + url);
                 loaded = 1;
             }
-        } else if (node['sheet']) {
+        } else if (node.sheet) {
             try {
-                var cssRules = node['sheet'].cssRules;
+                var cssRules = node.sheet.cssRules;
                 if (cssRules) {
                     logger.debug('same domain css poll loaded: ' + url);
                     loaded = 1;
@@ -43,7 +42,7 @@
                 // http://www.w3.org/TR/dom/#dom-domexception-code
                 if (// exName == 'SecurityError' ||
                 // for old firefox
-                    exName == 'NS_ERROR_DOM_SECURITY_ERR') {
+                    exName === 'NS_ERROR_DOM_SECURITY_ERR') {
                     logger.debug('css poll exception: ' + exName + 'loaded : ' + url);
                     loaded = 1;
                 }

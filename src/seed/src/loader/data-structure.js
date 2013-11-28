@@ -6,7 +6,6 @@
 (function (S) {
     var Loader = S.Loader,
         Path = S.Path,
-        undefined = undefined,
         IGNORE_PACKAGE_NAME_IN_URI = 'ignorePackageNameInUri',
         Utils = Loader.Utils;
 
@@ -72,10 +71,10 @@
          */
         getPackageUri: function () {
             var self = this;
-            if (self.packageUri) {
-                return self.packageUri;
+            if (!self.packageUri) {
+                self.packageUri = new S.Uri(this.getPrefixUriForCombo());
             }
-            return self.packageUri = new S.Uri(this.getPrefixUriForCombo());
+            return self.packageUri;
         },
 
         /**
@@ -213,6 +212,7 @@
                     callback(this);
                 } catch (e) {
                     S.log(e.stack || e, 'error');
+                    /*jshint loopfunc:true*/
                     setTimeout(function () {
                         throw e;
                     }, 0);
@@ -229,7 +229,7 @@
             var self = this,
                 v = self.type;
             if (!v) {
-                if (Path.extname(self.name).toLowerCase() == '.css') {
+                if (Path.extname(self.name).toLowerCase() === '.css') {
                     v = 'css';
                 } else {
                     v = 'js';
@@ -266,7 +266,7 @@
                         path = Path.relative(packageName, path);
                     }
                     fullPathUri = packageBaseUri.resolve(path);
-                    if (t = self.getTag()) {
+                    if ((t = self.getTag())) {
                         t += '.' + self.getType();
                         fullPathUri.query.set('t', t);
                     }
@@ -344,7 +344,7 @@
             var self = this,
                 requiresWithAlias = self.requiresWithAlias,
                 requires = self.requires;
-            if (!requires || requires.length == 0) {
+            if (!requires || requires.length === 0) {
                 return requires || [];
             } else if (!requiresWithAlias) {
                 self.requiresWithAlias = requiresWithAlias =
@@ -375,16 +375,16 @@
                 normalizedRequiresStatus = self.normalizedRequiresStatus,
                 status = self.status,
                 requires = self.requires;
-            if (!requires || requires.length == 0) {
+            if (!requires || requires.length === 0) {
                 return requires || [];
             } else if ((normalizedRequires = self.normalizedRequires) &&
                 // 事先声明的依赖不能当做 loaded 状态下真正的依赖
-                (normalizedRequiresStatus == status)) {
+                (normalizedRequiresStatus === status)) {
                 return normalizedRequires;
             } else {
                 self.normalizedRequiresStatus = status;
-                return self.normalizedRequires =
-                    Utils.normalizeModNames(self.runtime, requires, self.name);
+                self.normalizedRequires = Utils.normalizeModNames(self.runtime, requires, self.name);
+                return self.normalizedRequires;
             }
         }
     };

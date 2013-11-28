@@ -6,7 +6,7 @@
     var win = S.Env.host,
         doc = win.document,
         navigator = win.navigator,
-        ua = navigator && navigator.userAgent || "";
+        ua = navigator && navigator.userAgent || '';
 
     function numberify(s) {
         var c = 0;
@@ -301,7 +301,7 @@
                     // MSIE
                     // 由于最开始已经使用了 IE 条件注释判断，因此落到这里的唯一可能性只有 IE10+
                     // and analysis tools in nodejs
-                    if (ieVersion = getIEVersion(ua)) {
+                    if ((ieVersion = getIEVersion(ua))) {
                         UA[shell = 'ie'] = ieVersion;
                         setTridentVersion(ua, UA);
                         // NOT WebKit, Presto or IE
@@ -312,7 +312,7 @@
                             if ((m = ua.match(/rv:([\d.]*)/)) && m[1]) {
                                 UA[core] = numberify(m[1]);
                                 if (/Mobile|Tablet/.test(ua)) {
-                                    UA.mobile = "firefox";
+                                    UA.mobile = 'firefox';
                                 }
                             }
                             // Firefox
@@ -350,6 +350,7 @@
     // nodejs
     if (typeof process === 'object') {
         var versions, nodeVersion;
+        /*global process*/
         if ((versions = process.versions) && (nodeVersion = versions.node)) {
             UA.os = process.platform;
             UA.nodejs = numberify(nodeVersion);

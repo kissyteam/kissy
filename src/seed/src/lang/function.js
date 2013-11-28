@@ -7,21 +7,22 @@
 (function (S, undefined) {
     // ios Function.prototype.bind === undefined
     function bindFn(r, fn, obj) {
+        function FNOP() {
+        }
+
         var slice = [].slice,
             args = slice.call(arguments, 3),
-            fNOP = function () {
-            },
             bound = function () {
                 var inArgs = slice.call(arguments);
                 return fn.apply(
-                    this instanceof fNOP ? this :
+                    this instanceof FNOP ? this :
                         // fix: y.x=S.bind(fn);
-                        obj||this,
+                        obj || this,
                     (r ? inArgs.concat(args) : args.concat(inArgs))
                 );
             };
-        fNOP.prototype = fn.prototype;
-        bound.prototype = new fNOP();
+        FNOP.prototype = fn.prototype;
+        bound.prototype = new FNOP();
         return bound;
     }
 
@@ -88,7 +89,7 @@
                 f,
                 r;
 
-            if (typeof fn == 'string') {
+            if (typeof fn === 'string') {
                 m = context[fn];
             }
 
@@ -129,20 +130,20 @@
             ms = ms || 150;
 
             if (ms === -1) {
-                return (function () {
+                return function () {
                     fn.apply(context || this, arguments);
-                });
+                };
             }
 
             var last = S.now();
 
-            return (function () {
+            return function () {
                 var now = S.now();
                 if (now - last > ms) {
                     last = now;
                     fn.apply(context || this, arguments);
                 }
-            });
+            };
         },
 
         /**

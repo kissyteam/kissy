@@ -18,7 +18,7 @@
             }
         }
     });
-    if (typeof location != 'undefined') {
+    if (typeof location !== 'undefined') {
         var https = S.startsWith(location.href, 'https');
         var prefix = https ? 'https://s.tbcdn.cn/s/kissy/' : 'http://a.tbcdn.cn/s/kissy/';
         S.config({

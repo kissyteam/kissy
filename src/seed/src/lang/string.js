@@ -37,7 +37,7 @@
          * @param {RegExp} [regexp] to match a piece of template string
          */
         substitute: function (str, o, regexp) {
-            if (typeof str != 'string' || !o) {
+            if (typeof str !== 'string' || !o) {
                 return str;
             }
 
@@ -78,7 +78,7 @@
          */
         endsWith: function (str, suffix) {
             var ind = str.length - suffix.length;
-            return ind >= 0 && str.indexOf(suffix, ind) == ind;
+            return ind >= 0 && str.indexOf(suffix, ind) === ind;
         }
 
     });

@@ -21,11 +21,55 @@
  * @singleton
  * @class KISSY
  */
+/* exported KISSY */
 var KISSY = (function (undefined) {
     var host = this,
         S,
         guid = 0,
         EMPTY = '';
+
+    /**
+     * Log class for specified logger
+     * @class KISSY.Logger
+     * @private
+     */
+
+    /**
+     * print debug log
+     * @method
+     * @param {String} str log str
+     */
+
+    /**
+     * print info log
+     * @method
+     * @param {String} str log str
+     */
+
+    /**
+     * print warn log
+     * @method
+     * @param {String} str log str
+     */
+
+    /**
+     * print error log
+     * @method
+     * @param {String} str log str
+     */
+
+    function getLogger(logger) {
+        var obj = {};
+        for (var cat in loggerLevel) {
+            /*jshint loopfunc: true*/
+            (function (obj, cat) {
+                obj[cat] = function (msg) {
+                    return S.log(msg, cat, logger);
+                };
+            })(obj, cat);
+        }
+        return obj;
+    }
 
     var loggerLevel = {
         'debug': 10,
@@ -166,26 +210,26 @@ var KISSY = (function (undefined) {
                     var loggerCfg = S.Config.logger || {},
                         list, i, l, level, minLevel, maxLevel, reg;
                     cat = cat || 'debug';
-                    level = loggerLevel[cat] || loggerLevel['debug'];
-                    if (list = loggerCfg.includes) {
+                    level = loggerLevel[cat] || loggerLevel.debug;
+                    if ((list = loggerCfg.includes)) {
                         matched = 0;
                         for (i = 0; i < list.length; i++) {
                             l = list[i];
                             reg = l.logger;
-                            maxLevel = loggerLevel[l.maxLevel] || loggerLevel['error'];
-                            minLevel = loggerLevel[l.minLevel] || loggerLevel['debug'];
+                            maxLevel = loggerLevel[l.maxLevel] || loggerLevel.error;
+                            minLevel = loggerLevel[l.minLevel] || loggerLevel.debug;
                             if (minLevel <= level && maxLevel >= level && logger.match(reg)) {
                                 matched = 1;
                                 break;
                             }
                         }
-                    } else if (list = loggerCfg.excludes) {
+                    } else if ((list = loggerCfg.excludes)) {
                         matched = 1;
                         for (i = 0; i < list.length; i++) {
                             l = list[i];
                             reg = l.logger;
-                            maxLevel = loggerLevel[l.maxLevel] || loggerLevel['error'];
-                            minLevel = loggerLevel[l.minLevel] || loggerLevel['debug'];
+                            maxLevel = loggerLevel[l.maxLevel] || loggerLevel.error;
+                            minLevel = loggerLevel[l.minLevel] || loggerLevel.debug;
                             if (minLevel <= level && maxLevel >= level && logger.match(reg)) {
                                 matched = 0;
                                 break;
@@ -196,7 +240,8 @@ var KISSY = (function (undefined) {
                         msg = logger + ': ' + msg;
                     }
                 }
-                if (host['console'] !== undefined && console.log && matched) {
+                var console = host.console;
+                if (console !== undefined && console.log && matched) {
                     console[cat && console[cat] ? cat : 'log'](msg);
                     return msg;
                 }
@@ -243,56 +288,6 @@ var KISSY = (function (undefined) {
                 }
             ]
         };
-
-        /**
-         * Log class for specified logger
-         * @class KISSY.Logger
-         * @private
-         */
-        function Logger() {
-
-        }
-
-        /**
-         * print debug log
-         * @method
-         * @param {String} str log str
-         */
-        Logger.prototype.debug = function (str) {
-        };
-        /**
-         * print info log
-         * @method
-         * @param {String} str log str
-         */
-        Logger.prototype.info = function (str) {
-        };
-        /**
-         * print warn log
-         * @method
-         * @param {String} str log str
-         */
-        Logger.prototype.warn = function (str) {
-        };
-        /**
-         * print error log
-         * @method
-         * @param {String} str log str
-         */
-        Logger.prototype.error = function (str) {
-        };
-    }
-
-    function getLogger(logger) {
-        var obj = {};
-        for (var cat in loggerLevel) {
-            (function (obj, cat) {
-                obj[cat] = function (msg) {
-                    return S.log(msg, cat, logger);
-                };
-            })(obj, cat);
-        }
-        return obj;
     }
 
     /**

@@ -5,6 +5,7 @@
  * @author yiminghe@gmail.com
  */
 (function (S) {
+    /*global require*/
     var fs = require('fs'),
         vm = require('vm');
 
@@ -18,8 +19,10 @@
         }
 
         if (S.startsWith(S.Path.extname(url).toLowerCase(), '.css')) {
-            S.log('node js can not load css: ' + url,'warn');
-            success && success();
+            S.log('node js can not load css: ' + url, 'warn');
+            if (success) {
+                success();
+            }
             return;
         }
 
@@ -31,11 +34,15 @@
             //noinspection JSUnresolvedFunction
             var factory = vm.runInThisContext('(function(KISSY,requireNode){' + mod + '})', url);
             factory(S, require);
-            success && success();
+            if (success) {
+                success();
+            }
         } catch (e) {
-            S.log('in file: ' + url,'error');
-            S.log(e.stack,'error');
-            error && error(e);
+            S.log('in file: ' + url, 'error');
+            S.log(e.stack, 'error');
+            if (error) {
+                error(e);
+            }
         }
     };
 })(KISSY);

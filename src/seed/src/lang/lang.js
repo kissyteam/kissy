@@ -34,13 +34,13 @@
                 return a == null && b == null;
             }
             if (a instanceof Date && b instanceof Date) {
-                return a.getTime() == b.getTime();
+                return a.getTime() === b.getTime();
             }
-            if (typeof a == 'string' && typeof b == 'string') {
-                return (a == b);
+            if (typeof a === 'string' && typeof b === 'string') {
+                return (a === b);
             }
             if (typeof a === 'number' && typeof b === 'number') {
-                return (a == b);
+                return (a === b);
             }
             if (typeof a === 'object' && typeof b === 'object') {
                 return compareObjects(a, b, mismatchKeys, mismatchValues);
@@ -112,14 +112,14 @@
             return memory[input[CLONE_MARKER]].destination;
         } else if (typeof input === 'object') {
             // 引用类型要先记录
-            var constructor = input.constructor;
-            if (S.inArray(constructor, [Boolean, String, Number, Date, RegExp])) {
-                destination = new constructor(input.valueOf());
+            var Constructor = input.constructor;
+            if (S.inArray(Constructor, [Boolean, String, Number, Date, RegExp])) {
+                destination = new Constructor(input.valueOf());
             }
             // ImageData , File, Blob , FileList .. etc
-            else if (isArray = S.isArray(input)) {
+            else if ((isArray = S.isArray(input))) {
                 destination = f ? S.filter(input, f) : input.concat();
-            } else if (isPlainObject = S.isPlainObject(input)) {
+            } else if ((isPlainObject = S.isPlainObject(input))) {
                 destination = {};
             }
             // Add a mapping from input (the source object)
@@ -169,30 +169,31 @@
         for (var property in b) {
 
             if (!hasKey(a, property) && hasKey(b, property)) {
-                mismatchKeys.push("expected has key '" + property + "', but missing from actual.");
+                mismatchKeys.push('expected has key ' + property + '", but missing from actual.');
             }
 
         }
         for (property in a) {
 
             if (!hasKey(b, property) && hasKey(a, property)) {
-                mismatchKeys.push("expected missing key '" + property + "', but present in actual.");
+                mismatchKeys.push('expected missing key "' + property + '", but present in actual.');
             }
 
         }
         for (property in b) {
 
-            if (property == COMPARE_MARKER) {
+            if (property === COMPARE_MARKER) {
                 continue;
             }
             if (!S.equals(a[property], b[property], mismatchKeys, mismatchValues)) {
-                mismatchValues.push("'" + property + "' was '" + (b[property] ? (b[property].toString()) : b[property])
-                    + "' in expected, but was '" +
-                    (a[property] ? (a[property].toString()) : a[property]) + "' in actual.");
+                mismatchValues.push('"' + property + '" was "' +
+                    (b[property] ? (b[property].toString()) : b[property]) +
+                    '" in expected, but was "' +
+                    (a[property] ? (a[property].toString()) : a[property]) + '" in actual.');
             }
 
         }
-        if (S.isArray(a) && S.isArray(b) && a.length != b.length) {
+        if (S.isArray(a) && S.isArray(b) && a.length !== b.length) {
             mismatchValues.push('arrays were not the same length');
         }
         delete a[COMPARE_MARKER];

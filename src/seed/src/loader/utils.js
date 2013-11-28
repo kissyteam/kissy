@@ -28,7 +28,7 @@
     // http://wiki.commonjs.org/wiki/Packages/Mappings/A
     // 如果模块名以 / 结尾，自动加 index
     function indexMap(s) {
-        if (typeof s == 'string') {
+        if (typeof s === 'string') {
             return indexMapStr(s);
         } else {
             var ret = [],
@@ -43,7 +43,7 @@
 
     function indexMapStr(s) {
         // 'x/' 'x/y/z/'
-        if (s.charAt(s.length - 1) == '/') {
+        if (s.charAt(s.length - 1) === '/') {
             s += 'index';
         }
         return s;
@@ -51,7 +51,7 @@
 
     function pluginAlias(runtime, name) {
         var index = name.indexOf('!');
-        if (index != -1) {
+        if (index !== -1) {
             var pluginName = name.substring(0, index);
             name = name.substring(index + 1);
             S.use(pluginName, {
@@ -89,7 +89,7 @@
                 return depName;
             }
 
-            if (typeof depName == 'string') {
+            if (typeof depName === 'string') {
                 if (startsWith(depName, '../') || startsWith(depName, './')) {
                     // x/y/z -> x/y/
                     return Path.resolve(Path.dirname(moduleName), depName);
@@ -156,7 +156,7 @@
 
             S.each(modNames, function (modName) {
                 module = runtimeMods[modName];
-                if (!module || module.getType() != 'css') {
+                if (!module || module.getType() !== 'css') {
                     unalias = Utils.unalias(runtime, modName);
                     allOk = S.reduce(unalias, function (a, n) {
                         m = runtimeMods[n];
@@ -213,23 +213,28 @@
                 return cache[modName];
             }
             if (!m) {
-                return cache[modName] = FALSE;
+                cache[modName] = FALSE;
+                return FALSE;
             }
             status = m.status;
-            if (status == ERROR) {
+            if (status === ERROR) {
                 errorList.push(m);
-                return cache[modName] = FALSE;
+                cache[modName] = FALSE;
+                return FALSE;
             }
             if (status >= READY_TO_ATTACH) {
-                return cache[modName] = TRUE;
+                cache[modName] = TRUE;
+                return TRUE;
             }
-            if (status != LOADED) {
-                return cache[modName] = FALSE;
+            if (status !== LOADED) {
+                cache[modName] = FALSE;
+                return FALSE;
             }
             if ('@DEBUG@') {
                 if (S.inArray(modName, stack)) {
                     S.log('find cyclic dependency between mods: ' + stack, 'warn');
-                    return cache[modName] = TRUE;
+                    cache[modName] = TRUE;
+                    return TRUE;
                 }
                 stack.push(modName);
             }
@@ -237,10 +242,12 @@
             if (Utils.checkModsLoadRecursively(m.getNormalizedRequires(),
                 runtime, stack, errorList, cache)) {
                 m.status = READY_TO_ATTACH;
-                return cache[modName] = TRUE;
+                cache[modName] = TRUE;
+                return TRUE;
             }
 
-            return cache[modName] = FALSE;
+            cache[modName] = FALSE;
+            return FALSE;
         },
 
         /**
@@ -274,7 +281,7 @@
          */
         attachMod: function (runtime, module) {
             var factory = module.factory,
-                exports = undefined;
+                exports;
 
             if (typeof factory === 'function') {
                 // compatible and efficiency
@@ -307,7 +314,7 @@
          * @return {String[]}
          */
         getModNamesAsArray: function (modNames) {
-            if (typeof modNames == 'string') {
+            if (typeof modNames === 'string') {
                 modNames = modNames.replace(/\s+/g, '').split(',');
             }
             return modNames;
@@ -342,14 +349,14 @@
                 alias,
                 ok = 0,
                 j,
-                mods = runtime['Env'].mods;
+                mods = runtime.Env.mods;
             while (!ok) {
                 ok = 1;
                 for (i = ret.length - 1; i >= 0; i--) {
                     if ((m = mods[ret[i]]) && ('alias' in m)) {
                         ok = 0;
                         alias = m.alias;
-                        if (typeof alias == 'string') {
+                        if (typeof alias === 'string') {
                             alias = [alias];
                         }
                         for (j = alias.length - 1; j >= 0; j--) {
@@ -459,8 +466,7 @@
     function getRequireVal(str) {
         var m;
         // simple string
-        if (m = str.match(/^\s*["']([^'"\s]+)["']\s*$/)) {
-        } else {
+        if (!(m = str.match(/^\s*["']([^'"\s]+)["']\s*$/))) {
             S.error('can not find required mod in require call: ' + str);
         }
         return  m[1];

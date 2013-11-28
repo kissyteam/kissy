@@ -33,7 +33,7 @@
                     i = 0,
                     length = object && object.length,
                 // do not use typeof obj == 'function': bug in phantomjs
-                    isObj = length === undefined || S.type(object) == 'function';
+                    isObj = length === undefined || S.type(object) === 'function';
 
                 context = context || null;
 
@@ -191,9 +191,8 @@
                 var len = arr.length,
                     res = new Array(len);
                 for (var i = 0; i < len; i++) {
-                    var el = typeof arr == 'string' ? arr.charAt(i) : arr[i];
-                    if (el
-                        ||
+                    var el = typeof arr === 'string' ? arr.charAt(i) : arr[i];
+                    if (el ||
                         //ie<9 in invalid when typeof arr == string
                         i in arr) {
                         res[i] = fn.call(context || this, el, i, arr);
@@ -215,25 +214,21 @@
          * @return {Array} The items on which the supplied function returned
          * @member KISSY
          */
-        reduce: /*
-         NaN ?
-         reduce ? function(arr, callback, initialValue) {
-         return arr.reduce(callback, initialValue);
-         } : */function (arr, callback, initialValue) {
+        reduce: function (arr, callback, initialValue) {
             var len = arr.length;
             if (typeof callback !== 'function') {
                 throw new TypeError('callback is not function!');
             }
 
             // no value to return if no initial value and an empty array
-            if (len === 0 && arguments.length == 2) {
+            if (len === 0 && arguments.length === 2) {
                 throw new TypeError('arguments invalid');
             }
 
             var k = 0;
             var accumulator;
             if (arguments.length >= 3) {
-                accumulator = arguments[2];
+                accumulator = initialValue;
             }
             else {
                 do {
@@ -322,15 +317,15 @@
             var lengthType = typeof o.length,
                 oType = typeof o;
             // The strings and functions also have 'length'
-            if (lengthType != 'number' ||
+            if (lengthType !== 'number' ||
                 // form.elements in ie78 has nodeName 'form'
                 // then caution select
                 // o.nodeName
                 // window
                 o.alert ||
-                oType == 'string' ||
+                oType === 'string' ||
                 // https://github.com/ariya/phantomjs/issues/11478
-                (oType == 'function' && !( 'item' in o && lengthType == 'number'))) {
+                (oType === 'function' && !( 'item' in o && lengthType === 'number'))) {
                 return [o];
             }
             var ret = [];

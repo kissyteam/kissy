@@ -187,7 +187,7 @@
             var self = this, _queryMap;
             parseQuery(self);
             _queryMap = self._queryMap;
-            if (typeof key == 'string') {
+            if (typeof key === 'string') {
                 self._queryMap[key] = value;
             } else {
                 if (key instanceof Query) {
@@ -227,7 +227,7 @@
             var self = this,
                 _queryMap,
                 currentValue;
-            if (typeof key == 'string') {
+            if (typeof key === 'string') {
                 parseQuery(self);
                 _queryMap = self._queryMap;
                 currentValue = _queryMap[key];
@@ -261,11 +261,11 @@
     };
 
     function padding2(str) {
-        return str.length == 1 ? '0' + str : str;
+        return str.length === 1 ? '0' + str : str;
     }
 
     function equalsIgnoreCase(str1, str2) {
-        return str1.toLowerCase() == str2.toLowerCase();
+        return str1.toLowerCase() === str2.toLowerCase();
     }
 
     // www.ta#bao.com // => www.ta.com/#bao.com
@@ -337,7 +337,7 @@
 
         S.each(components, function (v, key) {
             v = v || '';
-            if (key == 'query') {
+            if (key === 'query') {
                 // need encoded content
                 self.query = new Query(v);
             } else {
@@ -391,7 +391,7 @@
          */
         resolve: function (relativeUri) {
 
-            if (typeof relativeUri == 'string') {
+            if (typeof relativeUri === 'string') {
                 relativeUri = new Uri(relativeUri);
             }
 
@@ -402,12 +402,12 @@
                 target = self.clone();
 
             S.each(order, function (o) {
-                if (o == 'path') {
+                if (o === 'path') {
                     // relativeUri does not set for scheme/userInfo/hostname/port
                     if (override) {
                         target[o] = relativeUri[o];
                     } else {
-                        var path = relativeUri['path'];
+                        var path = relativeUri.path;
                         if (path) {
                             // force to override target 's query with relative
                             override = 1;
@@ -418,7 +418,7 @@
                                 } else if (target.path) {
                                     // RFC 3986, section 5.2.3, case 2
                                     lastSlashIndex = target.path.lastIndexOf('/');
-                                    if (lastSlashIndex != -1) {
+                                    if (lastSlashIndex !== -1) {
                                         path = target.path.slice(0, lastSlashIndex + 1) + path;
                                     }
                                 }
@@ -427,9 +427,9 @@
                             target.path = Path.normalize(path);
                         }
                     }
-                } else if (o == 'query') {
-                    if (override || relativeUri['query'].toString()) {
-                        target.query = relativeUri['query'].clone();
+                } else if (o === 'query') {
+                    if (override || relativeUri.query.toString()) {
+                        target.query = relativeUri.query.clone();
                         override = 1;
                     }
                 } else if (override || relativeUri[o]) {
@@ -537,7 +537,7 @@
          * @chainable
          */
         'setQuery': function (query) {
-            if (typeof query == 'string') {
+            if (typeof query === 'string') {
                 if (S.startsWith(query, '?')) {
                     query = query.slice(1);
                 }
@@ -585,9 +585,9 @@
         isSameOriginAs: function (other) {
             var self = this;
             // port and hostname has to be same
-            return equalsIgnoreCase(self.hostname, other['hostname']) &&
-                equalsIgnoreCase(self.scheme, other['scheme']) &&
-                equalsIgnoreCase(self.port, other['port']);
+            return equalsIgnoreCase(self.hostname, other.hostname) &&
+                equalsIgnoreCase(self.scheme, other.scheme) &&
+                equalsIgnoreCase(self.port, other.port);
         },
 
         /**
@@ -610,27 +610,27 @@
                 query,
                 userInfo;
 
-            if (scheme = self.scheme) {
+            if ((scheme = self.scheme)) {
                 out.push(encodeSpecialChars(scheme, reDisallowedInSchemeOrUserInfo));
                 out.push(':');
             }
 
-            if (hostname = self.hostname) {
+            if ((hostname = self.hostname)) {
                 out.push('//');
-                if (userInfo = self.userInfo) {
+                if ((userInfo = self.userInfo)) {
                     out.push(encodeSpecialChars(userInfo, reDisallowedInSchemeOrUserInfo));
                     out.push('@');
                 }
 
                 out.push(encodeURIComponent(hostname));
 
-                if (port = self.port) {
+                if ((port = self.port)) {
                     out.push(':');
                     out.push(port);
                 }
             }
 
-            if (path = self.path) {
+            if ((path = self.path)) {
                 if (hostname && !S.startsWith(path, '/')) {
                     path = '/' + path;
                 }
@@ -638,14 +638,14 @@
                 out.push(encodeSpecialChars(path, reDisallowedInPathName));
             }
 
-            if (query = ( self.query.toString.call(self.query, serializeArray))) {
+            if ((query = ( self.query.toString.call(self.query, serializeArray)))) {
                 out.push('?');
                 out.push(query);
             }
 
-            if (fragment = self.fragment) {
+            if ((fragment = self.fragment)) {
                 out.push('#');
-                out.push(encodeSpecialChars(fragment, reDisallowedInFragment))
+                out.push(encodeSpecialChars(fragment, reDisallowedInFragment));
             }
 
             return out.join('');
@@ -655,7 +655,7 @@
     Uri.Query = Query;
 
     Uri.getComponents = function (url) {
-        url = url || "";
+        url = url || '';
         var m = url.match(URI_SPLIT_REG) || [],
             ret = {};
         S.each(REG_INFO, function (index, key) {

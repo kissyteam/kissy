@@ -5,7 +5,7 @@
  *
  */
 (function (S, undefined) {
-var  logger = S.getLogger('s/lang');
+    var logger = S.getLogger('s/lang');
     var MIX_CIRCULAR_DETECTION = '__MIX_CIRCULAR',
         STAMP_MARKER = '__~ks_stamped',
         host = this,
@@ -13,9 +13,9 @@ var  logger = S.getLogger('s/lang');
         EMPTY = '',
         Obj = Object,
 
-        ObjectCreate = Obj.create,
+        objectCreate = Obj.create,
     // error in native ie678, not in simulated ie9
-        hasEnumBug = !({toString: 1}['propertyIsEnumerable']('toString')),
+        hasEnumBug = !({toString: 1}.propertyIsEnumerable('toString')),
         enumProperties = [
             'constructor',
             'hasOwnProperty',
@@ -107,9 +107,9 @@ var  logger = S.getLogger('s/lang');
                 wl = /**
                  @ignore
                  @type {String[]|Function}
-                 */ov['whitelist'];
-                deep = ov['deep'];
-                ov = ov['overwrite'];
+                 */ov.whitelist;
+                deep = ov.deep;
+                ov = ov.overwrite;
             }
 
             if (wl && (typeof wl !== 'function')) {
@@ -127,7 +127,7 @@ var  logger = S.getLogger('s/lang');
                 c,
                 i = 0;
             mixInternal(r, s, ov, wl, deep, cache);
-            while (c = cache[i++]) {
+            while ((c = cache[i++])) {
                 delete c[MIX_CIRCULAR_DETECTION];
             }
             return r;
@@ -138,17 +138,17 @@ var  logger = S.getLogger('s/lang');
          * all the supplied objects. The properties from later objects
          * will overwrite those in earlier objects. Passing in a
          * single object will create a shallow copy of it.
-         * @param {...Object} var_args objects need to be merged
+         * @param {...Object} varArgs objects need to be merged
          * @return {Object} the new merged object
          * @member KISSY
          */
-        merge: function (var_args) {
-            var_args = S.makeArray(arguments);
+        merge: function (varArgs) {
+            varArgs = S.makeArray(arguments);
             var o = {},
                 i,
-                l = var_args.length;
+                l = varArgs.length;
             for (i = 0; i < l; i++) {
-                S.mix(o, var_args[i]);
+                S.mix(o, varArgs[i]);
             }
             return o;
         },
@@ -156,13 +156,13 @@ var  logger = S.getLogger('s/lang');
         /**
          * Applies prototype properties from the supplier to the receiver.
          * @param   {Object} r received object
-         * @param   {...Object} var_args object need to  augment
+         * @param   {...Object} varArgs object need to  augment
          *          {Boolean} [ov=TRUE] whether overwrite existing property
          *          {String[]} [wl] array of white-list properties
          * @return  {Object} the augmented object
          * @member KISSY
          */
-        augment: function (r, var_args) {
+        augment: function (r, varArgs) {
             var args = S.makeArray(arguments),
                 len = args.length - 2,
                 i = 1,
@@ -170,6 +170,8 @@ var  logger = S.getLogger('s/lang');
                 arg,
                 ov = args[len],
                 wl = args[len + 1];
+
+            args[1] = varArgs;
 
             if (!S.isArray(wl)) {
                 ov = wl;
@@ -183,7 +185,7 @@ var  logger = S.getLogger('s/lang');
 
             for (; i < len; i++) {
                 arg = args[i];
-                if (proto = arg.prototype) {
+                if ((proto = arg.prototype)) {
                     arg = S.mix({}, proto, true, removeConstructor);
                 }
                 S.mix(r.prototype, arg, ov, wl);
@@ -278,8 +280,8 @@ var  logger = S.getLogger('s/lang');
 
     function createObject(proto, constructor) {
         var newProto;
-        if (ObjectCreate) {
-            newProto = ObjectCreate(proto);
+        if (objectCreate) {
+            newProto = objectCreate(proto);
         } else {
             Empty.prototype = proto;
             newProto = new Empty();
@@ -311,7 +313,7 @@ var  logger = S.getLogger('s/lang');
         len = keys.length;
         for (i = 0; i < len; i++) {
             p = keys[i];
-            if (p != MIX_CIRCULAR_DETECTION) {
+            if (p !== MIX_CIRCULAR_DETECTION) {
                 // no hasOwnProperty judge!
                 _mix(p, r, s, ov, wl, deep, cache);
             }
@@ -321,7 +323,7 @@ var  logger = S.getLogger('s/lang');
     }
 
     function removeConstructor(k, v) {
-        return k == 'constructor' ? undefined : v;
+        return k === 'constructor' ? undefined : v;
     }
 
     function _mix(p, r, s, ov, wl, deep, cache) {

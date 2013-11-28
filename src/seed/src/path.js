@@ -21,13 +21,14 @@
 
         for (; i >= 0; i--) {
             last = parts[i];
-            if (last == '.') {
-            } else if (last === '..') {
-                up++;
-            } else if (up) {
-                up--;
-            } else {
-                newParts[newParts.length] = last;
+            if (last !== '.') {
+                if (last === '..') {
+                    up++;
+                } else if (up) {
+                    up--;
+                } else {
+                    newParts[newParts.length] = last;
+                }
             }
         }
 
@@ -63,11 +64,11 @@
 
             for (i = args.length - 1; i >= 0 && !absolute; i--) {
                 path = args[i];
-                if (typeof path != 'string' || !path) {
+                if (typeof path !== 'string' || !path) {
                     continue;
                 }
                 resolvedPath = path + '/' + resolvedPath;
-                absolute = path.charAt(0) == '/';
+                absolute = path.charAt(0) === '/';
             }
 
             resolvedPathStr = normalizeArray(S.filter(resolvedPath.split('/'), function (p) {
@@ -88,8 +89,8 @@
          * @return {String}
          */
         normalize: function (path) {
-            var absolute = path.charAt(0) == '/',
-                trailingSlash = path.slice(-1) == '/';
+            var absolute = path.charAt(0) === '/',
+                trailingSlash = path.slice(-1) === '/';
 
             path = normalizeArray(S.filter(path.split('/'), function (p) {
                 return !!p;
@@ -114,7 +115,7 @@
         join: function () {
             var args = S.makeArray(arguments);
             return Path.normalize(S.filter(args,function (p) {
-                return p && (typeof p == 'string');
+                return p && (typeof p === 'string');
             }).join('/'));
         },
 
@@ -144,7 +145,7 @@
                 }), commonLength = Math.min(fromParts.length, toParts.length);
 
             for (sameIndex = 0; sameIndex < commonLength; sameIndex++) {
-                if (fromParts[sameIndex] != toParts[sameIndex]) {
+                if (fromParts[sameIndex] !== toParts[sameIndex]) {
                     break;
                 }
             }
@@ -173,7 +174,7 @@
             var result = path.match(splitPathRe) || [],
                 basename;
             basename = result[3] || '';
-            if (ext && basename && basename.slice(-1 * ext.length) == ext) {
+            if (ext && basename && basename.slice(-1 * ext.length) === ext) {
                 basename = basename.slice(0, -1 * ext.length);
             }
             return basename;

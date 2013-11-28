@@ -13,7 +13,7 @@
         configFns = S.Config.fns;
 
     if (!S.UA.nodejs && location && (locationHref = location.href)) {
-        simulatedLocation = new S.Uri(locationHref)
+        simulatedLocation = new S.Uri(locationHref);
     }
 
     S.Config.loadModsFn = function (rs, config) {
@@ -57,7 +57,7 @@
             S.each(modules, function (modCfg, modName) {
                 var mod = Utils.createModuleInfo(self, modName, modCfg);
                 // #485, invalid after add
-                if (mod.status == Loader.Status.INIT) {
+                if (mod.status === Loader.Status.INIT) {
                     S.mix(mod, modCfg);
                 }
             });
@@ -80,7 +80,7 @@
     function normalizeBase(base) {
         var baseUri;
         base = base.replace(/\\/g, '/');
-        if (base.charAt(base.length - 1) != '/') {
+        if (base.charAt(base.length - 1) !== '/') {
             base += '/';
         }
         if (simulatedLocation) {

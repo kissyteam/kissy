@@ -67,7 +67,7 @@
             // Must be an Object.
             // Because of IE, we also have to check the presence of the constructor property.
             // Make sure that Dom nodes and window objects don't pass through, as well
-            if (!obj || S.type(obj) !== "object" || obj.nodeType || obj.window == obj) {
+            if (!obj || S.type(obj) !== 'object' || obj.nodeType || obj.window === obj) {
                 return FALSE;
             }
 
@@ -75,7 +75,7 @@
 
             try {
                 // Not own constructor property must be Object
-                if ((objConstructor = obj.constructor) && !hasOwnProperty(obj, "constructor") && !hasOwnProperty(objConstructor.prototype, "isPrototypeOf")) {
+                if ((objConstructor = obj.constructor) && !hasOwnProperty(obj, 'constructor') && !hasOwnProperty(objConstructor.prototype, 'isPrototypeOf')) {
                     return FALSE;
                 }
             } catch (e) {
@@ -85,12 +85,11 @@
 
             // Own properties are enumerated firstly, so to speed up,
             // if last one is own, then all properties are own.
-
-
+            /*jshint noempty:false*/
             for (key in obj) {
             }
 
-            return key === undefined || hasOwnProperty(obj, key);
+            return ((key === undefined) || hasOwnProperty(obj, key));
         }
     });
 
@@ -169,8 +168,8 @@
 
         // add isBoolean/isNumber/...
         S['is' + name] = function (o) {
-            return S.type(o) == lc;
-        }
+            return S.type(o) === lc;
+        };
     });
     S.isArray = Array.isArray || S.isArray;
 })(KISSY);
