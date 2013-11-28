@@ -486,8 +486,8 @@ KISSY.add(function (S, require) {
                 value: XTemplateRuntime
             },
             contentTpl: {
-                value: function (scopes) {
-                    return scopes && scopes[scopes.length - 1].content || '';
+                value: function (scope) {
+                    return scope.get('content') || '';
                 }
             }
         },

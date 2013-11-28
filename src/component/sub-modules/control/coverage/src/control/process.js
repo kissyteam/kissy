@@ -268,19 +268,24 @@ if (! _$jscoverage['/control/process.js']) {
   _$jscoverage['/control/process.js'].lineData[133] = 0;
   _$jscoverage['/control/process.js'].lineData[135] = 0;
   _$jscoverage['/control/process.js'].lineData[136] = 0;
-  _$jscoverage['/control/process.js'].lineData[137] = 0;
   _$jscoverage['/control/process.js'].lineData[138] = 0;
   _$jscoverage['/control/process.js'].lineData[139] = 0;
-  _$jscoverage['/control/process.js'].lineData[140] = 0;
+  _$jscoverage['/control/process.js'].lineData[141] = 0;
   _$jscoverage['/control/process.js'].lineData[142] = 0;
-  _$jscoverage['/control/process.js'].lineData[168] = 0;
-  _$jscoverage['/control/process.js'].lineData[169] = 0;
-  _$jscoverage['/control/process.js'].lineData[188] = 0;
-  _$jscoverage['/control/process.js'].lineData[194] = 0;
-  _$jscoverage['/control/process.js'].lineData[195] = 0;
-  _$jscoverage['/control/process.js'].lineData[196] = 0;
-  _$jscoverage['/control/process.js'].lineData[202] = 0;
+  _$jscoverage['/control/process.js'].lineData[144] = 0;
+  _$jscoverage['/control/process.js'].lineData[145] = 0;
+  _$jscoverage['/control/process.js'].lineData[147] = 0;
+  _$jscoverage['/control/process.js'].lineData[148] = 0;
+  _$jscoverage['/control/process.js'].lineData[149] = 0;
+  _$jscoverage['/control/process.js'].lineData[152] = 0;
+  _$jscoverage['/control/process.js'].lineData[178] = 0;
+  _$jscoverage['/control/process.js'].lineData[179] = 0;
+  _$jscoverage['/control/process.js'].lineData[198] = 0;
+  _$jscoverage['/control/process.js'].lineData[204] = 0;
   _$jscoverage['/control/process.js'].lineData[205] = 0;
+  _$jscoverage['/control/process.js'].lineData[206] = 0;
+  _$jscoverage['/control/process.js'].lineData[212] = 0;
+  _$jscoverage['/control/process.js'].lineData[215] = 0;
 }
 if (! _$jscoverage['/control/process.js'].functionData) {
   _$jscoverage['/control/process.js'].functionData = [];
@@ -305,44 +310,44 @@ if (! _$jscoverage['/control/process.js'].branchData) {
   _$jscoverage['/control/process.js'].branchData['133'][1] = new BranchData();
   _$jscoverage['/control/process.js'].branchData['135'] = [];
   _$jscoverage['/control/process.js'].branchData['135'][1] = new BranchData();
-  _$jscoverage['/control/process.js'].branchData['136'] = [];
-  _$jscoverage['/control/process.js'].branchData['136'][1] = new BranchData();
-  _$jscoverage['/control/process.js'].branchData['137'] = [];
-  _$jscoverage['/control/process.js'].branchData['137'][1] = new BranchData();
   _$jscoverage['/control/process.js'].branchData['138'] = [];
   _$jscoverage['/control/process.js'].branchData['138'][1] = new BranchData();
-  _$jscoverage['/control/process.js'].branchData['139'] = [];
-  _$jscoverage['/control/process.js'].branchData['139'][1] = new BranchData();
-  _$jscoverage['/control/process.js'].branchData['140'] = [];
-  _$jscoverage['/control/process.js'].branchData['140'][1] = new BranchData();
-  _$jscoverage['/control/process.js'].branchData['168'] = [];
-  _$jscoverage['/control/process.js'].branchData['168'][1] = new BranchData();
+  _$jscoverage['/control/process.js'].branchData['141'] = [];
+  _$jscoverage['/control/process.js'].branchData['141'][1] = new BranchData();
+  _$jscoverage['/control/process.js'].branchData['144'] = [];
+  _$jscoverage['/control/process.js'].branchData['144'][1] = new BranchData();
+  _$jscoverage['/control/process.js'].branchData['147'] = [];
+  _$jscoverage['/control/process.js'].branchData['147'][1] = new BranchData();
+  _$jscoverage['/control/process.js'].branchData['148'] = [];
+  _$jscoverage['/control/process.js'].branchData['148'][1] = new BranchData();
+  _$jscoverage['/control/process.js'].branchData['178'] = [];
+  _$jscoverage['/control/process.js'].branchData['178'][1] = new BranchData();
 }
-_$jscoverage['/control/process.js'].branchData['168'][1].init(25, 1, 'v');
-function visit10_168_1(result) {
-  _$jscoverage['/control/process.js'].branchData['168'][1].ranCondition(result);
+_$jscoverage['/control/process.js'].branchData['178'][1].init(25, 1, 'v');
+function visit10_178_1(result) {
+  _$jscoverage['/control/process.js'].branchData['178'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control/process.js'].branchData['140'][1].init(17, 50, 'p[\'pluginCreateDom\'] && p[\'pluginCreateDom\'](self)');
-function visit9_140_1(result) {
-  _$jscoverage['/control/process.js'].branchData['140'][1].ranCondition(result);
+}_$jscoverage['/control/process.js'].branchData['148'][1].init(21, 17, 'p.pluginCreateDom');
+function visit9_148_1(result) {
+  _$jscoverage['/control/process.js'].branchData['148'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control/process.js'].branchData['139'][1].init(533, 19, 'self.get(\'created\')');
-function visit8_139_1(result) {
-  _$jscoverage['/control/process.js'].branchData['139'][1].ranCondition(result);
+}_$jscoverage['/control/process.js'].branchData['147'][1].init(696, 19, 'self.get(\'created\')');
+function visit8_147_1(result) {
+  _$jscoverage['/control/process.js'].branchData['147'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control/process.js'].branchData['138'][1].init(253, 38, 'p.pluginSyncUI && p.pluginSyncUI(self)');
-function visit7_138_1(result) {
+}_$jscoverage['/control/process.js'].branchData['144'][1].init(378, 14, 'p.pluginSyncUI');
+function visit7_144_1(result) {
+  _$jscoverage['/control/process.js'].branchData['144'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/control/process.js'].branchData['141'][1].init(280, 14, 'p.pluginBindUI');
+function visit6_141_1(result) {
+  _$jscoverage['/control/process.js'].branchData['141'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/control/process.js'].branchData['138'][1].init(177, 16, 'p.pluginRenderUI');
+function visit5_138_1(result) {
   _$jscoverage['/control/process.js'].branchData['138'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control/process.js'].branchData['137'][1].init(197, 38, 'p.pluginBindUI && p.pluginBindUI(self)');
-function visit6_137_1(result) {
-  _$jscoverage['/control/process.js'].branchData['137'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/control/process.js'].branchData['136'][1].init(137, 42, 'p.pluginRenderUI && p.pluginRenderUI(self)');
-function visit5_136_1(result) {
-  _$jscoverage['/control/process.js'].branchData['136'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/control/process.js'].branchData['135'][1].init(69, 50, 'p[\'pluginCreateDom\'] && p[\'pluginCreateDom\'](self)');
+}_$jscoverage['/control/process.js'].branchData['135'][1].init(73, 17, 'p.pluginCreateDom');
 function visit4_135_1(result) {
   _$jscoverage['/control/process.js'].branchData['135'][1].ranCondition(result);
   return result;
@@ -350,11 +355,11 @@ function visit4_135_1(result) {
 function visit3_133_1(result) {
   _$jscoverage['/control/process.js'].branchData['133'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control/process.js'].branchData['75'][1].init(69, 21, '!self.get("rendered")');
+}_$jscoverage['/control/process.js'].branchData['75'][1].init(69, 21, '!self.get(\'rendered\')');
 function visit2_75_1(result) {
   _$jscoverage['/control/process.js'].branchData['75'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control/process.js'].branchData['43'][1].init(46, 20, '!self.get("created")');
+}_$jscoverage['/control/process.js'].branchData['43'][1].init(46, 20, '!self.get(\'created\')');
 function visit1_43_1(result) {
   _$jscoverage['/control/process.js'].branchData['43'][1].ranCondition(result);
   return result;
@@ -389,7 +394,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/control/process.js'].lineData[42]++;
   var self = this;
   _$jscoverage['/control/process.js'].lineData[43]++;
-  if (visit1_43_1(!self.get("created"))) {
+  if (visit1_43_1(!self.get('created'))) {
     _$jscoverage['/control/process.js'].lineData[49]++;
     self.fire('beforeCreateDom');
     _$jscoverage['/control/process.js'].lineData[50]++;
@@ -399,7 +404,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/control/process.js'].lineData[57]++;
     self.fire('afterCreateDom');
     _$jscoverage['/control/process.js'].lineData[59]++;
-    self.setInternal("created", true);
+    self.setInternal('created', true);
   }
   _$jscoverage['/control/process.js'].lineData[61]++;
   return self;
@@ -414,7 +419,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/control/process.js'].lineData[73]++;
   var self = this;
   _$jscoverage['/control/process.js'].lineData[75]++;
-  if (visit2_75_1(!self.get("rendered"))) {
+  if (visit2_75_1(!self.get('rendered'))) {
     _$jscoverage['/control/process.js'].lineData[76]++;
     self.create();
     _$jscoverage['/control/process.js'].lineData[84]++;
@@ -440,7 +445,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/control/process.js'].lineData[113]++;
     syncUIs(self);
     _$jscoverage['/control/process.js'].lineData[115]++;
-    self.setInternal("rendered", true);
+    self.setInternal('rendered', true);
   }
   _$jscoverage['/control/process.js'].lineData[117]++;
   return self;
@@ -461,21 +466,36 @@ KISSY.add(function(S, require) {
   _$jscoverage['/control/process.js'].lineData[133]++;
   if (visit3_133_1(self.get('rendered'))) {
     _$jscoverage['/control/process.js'].lineData[135]++;
-    visit4_135_1(p['pluginCreateDom'] && p['pluginCreateDom'](self));
-    _$jscoverage['/control/process.js'].lineData[136]++;
-    visit5_136_1(p.pluginRenderUI && p.pluginRenderUI(self));
-    _$jscoverage['/control/process.js'].lineData[137]++;
-    visit6_137_1(p.pluginBindUI && p.pluginBindUI(self));
+    if (visit4_135_1(p.pluginCreateDom)) {
+      _$jscoverage['/control/process.js'].lineData[136]++;
+      p.pluginCreateDom(self);
+    }
     _$jscoverage['/control/process.js'].lineData[138]++;
-    visit7_138_1(p.pluginSyncUI && p.pluginSyncUI(self));
+    if (visit5_138_1(p.pluginRenderUI)) {
+      _$jscoverage['/control/process.js'].lineData[139]++;
+      p.pluginCreateDom(self);
+    }
+    _$jscoverage['/control/process.js'].lineData[141]++;
+    if (visit6_141_1(p.pluginBindUI)) {
+      _$jscoverage['/control/process.js'].lineData[142]++;
+      p.pluginBindUI(self);
+    }
+    _$jscoverage['/control/process.js'].lineData[144]++;
+    if (visit7_144_1(p.pluginSyncUI)) {
+      _$jscoverage['/control/process.js'].lineData[145]++;
+      p.pluginSyncUI(self);
+    }
   } else {
-    _$jscoverage['/control/process.js'].lineData[139]++;
-    if (visit8_139_1(self.get('created'))) {
-      _$jscoverage['/control/process.js'].lineData[140]++;
-      visit9_140_1(p['pluginCreateDom'] && p['pluginCreateDom'](self));
+    _$jscoverage['/control/process.js'].lineData[147]++;
+    if (visit8_147_1(self.get('created'))) {
+      _$jscoverage['/control/process.js'].lineData[148]++;
+      if (visit9_148_1(p.pluginCreateDom)) {
+        _$jscoverage['/control/process.js'].lineData[149]++;
+        p.pluginCreateDom(self);
+      }
     }
   }
-  _$jscoverage['/control/process.js'].lineData[142]++;
+  _$jscoverage['/control/process.js'].lineData[152]++;
   return self;
 }}, {
   __hooks__: {
@@ -489,26 +509,26 @@ KISSY.add(function(S, require) {
   value: false, 
   setter: function(v) {
   _$jscoverage['/control/process.js'].functionData[8]++;
-  _$jscoverage['/control/process.js'].lineData[168]++;
-  if (visit10_168_1(v)) {
-    _$jscoverage['/control/process.js'].lineData[169]++;
+  _$jscoverage['/control/process.js'].lineData[178]++;
+  if (visit10_178_1(v)) {
+    _$jscoverage['/control/process.js'].lineData[179]++;
     this._renderedDefer.resolve(this);
   }
 }}, 
   created: {
   value: false}}});
-  _$jscoverage['/control/process.js'].lineData[188]++;
+  _$jscoverage['/control/process.js'].lineData[198]++;
   function syncUIs(self) {
     _$jscoverage['/control/process.js'].functionData[9]++;
-    _$jscoverage['/control/process.js'].lineData[194]++;
+    _$jscoverage['/control/process.js'].lineData[204]++;
     self.fire('beforeSyncUI');
-    _$jscoverage['/control/process.js'].lineData[195]++;
+    _$jscoverage['/control/process.js'].lineData[205]++;
     self.syncUI();
-    _$jscoverage['/control/process.js'].lineData[196]++;
+    _$jscoverage['/control/process.js'].lineData[206]++;
     self.__callPluginsMethod('pluginSyncUI');
-    _$jscoverage['/control/process.js'].lineData[202]++;
+    _$jscoverage['/control/process.js'].lineData[212]++;
     self.fire('afterSyncUI');
   }
-  _$jscoverage['/control/process.js'].lineData[205]++;
+  _$jscoverage['/control/process.js'].lineData[215]++;
   return ComponentProcess;
 });

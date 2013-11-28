@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:38
+build time: Nov 28 22:19
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -57,13 +57,23 @@ KISSY.add("component/control/process", ["base", "promise"], function(S, require)
     self.callSuper(plugin);
     p = plugins[plugins.length - 1];
     if(self.get("rendered")) {
-      p["pluginCreateDom"] && p["pluginCreateDom"](self);
-      p.pluginRenderUI && p.pluginRenderUI(self);
-      p.pluginBindUI && p.pluginBindUI(self);
-      p.pluginSyncUI && p.pluginSyncUI(self)
+      if(p.pluginCreateDom) {
+        p.pluginCreateDom(self)
+      }
+      if(p.pluginRenderUI) {
+        p.pluginCreateDom(self)
+      }
+      if(p.pluginBindUI) {
+        p.pluginBindUI(self)
+      }
+      if(p.pluginSyncUI) {
+        p.pluginSyncUI(self)
+      }
     }else {
       if(self.get("created")) {
-        p["pluginCreateDom"] && p["pluginCreateDom"](self)
+        if(p.pluginCreateDom) {
+          p.pluginCreateDom(self)
+        }
       }
     }
     return self
@@ -81,73 +91,73 @@ KISSY.add("component/control/process", ["base", "promise"], function(S, require)
   return ComponentProcess
 });
 KISSY.add("component/control/render-xtpl", [], function(S, require, exports, module) {
-  return function(scopes, S, undefined) {
+  return function(scope, S, undefined) {
     var buffer = "", config = this.config, engine = this, moduleWrap, utils = config.utils;
-    if(typeof module != "undefined" && module.kissy) {
+    if(typeof module !== "undefined" && module.kissy) {
       moduleWrap = module
     }
-    var runBlockCommandUtil = utils["runBlockCommand"], getExpressionUtil = utils["getExpression"], getPropertyOrRunCommandUtil = utils["getPropertyOrRunCommand"];
+    var runBlockCommandUtil = utils.runBlockCommand, getExpressionUtil = utils.getExpression, getPropertyOrRunCommandUtil = utils.getPropertyOrRunCommand;
     buffer += '<div id="';
-    var id0 = getPropertyOrRunCommandUtil(engine, scopes, {}, "id", 0, 1, undefined, false);
+    var id0 = getPropertyOrRunCommandUtil(engine, scope, {}, "id", 0, 1, undefined, false);
     buffer += getExpressionUtil(id0, true);
     buffer += '"\n class="';
     var config2 = {};
     var params3 = [];
     params3.push("");
     config2.params = params3;
-    var id1 = getPropertyOrRunCommandUtil(engine, scopes, config2, "getBaseCssClasses", 0, 2, true, undefined);
+    var id1 = getPropertyOrRunCommandUtil(engine, scope, config2, "getBaseCssClasses", 0, 2, true, undefined);
     buffer += id1;
     buffer += "\n";
     var config4 = {};
     var params5 = [];
-    var id6 = getPropertyOrRunCommandUtil(engine, scopes, {}, "elCls", 0, 3, undefined, true);
+    var id6 = getPropertyOrRunCommandUtil(engine, scope, {}, "elCls", 0, 3, undefined, true);
     params5.push(id6);
     config4.params = params5;
-    config4.fn = function(scopes) {
+    config4.fn = function(scope) {
       var buffer = "";
       buffer += "\n ";
-      var id7 = getPropertyOrRunCommandUtil(engine, scopes, {}, ".", 0, 4, undefined, false);
+      var id7 = getPropertyOrRunCommandUtil(engine, scope, {}, ".", 0, 4, undefined, false);
       buffer += getExpressionUtil(id7, true);
       buffer += "  \n";
       return buffer
     };
-    buffer += runBlockCommandUtil(engine, scopes, config4, "each", 3);
+    buffer += runBlockCommandUtil(engine, scope, config4, "each", 3);
     buffer += '\n"\n\n';
     var config8 = {};
     var params9 = [];
-    var id10 = getPropertyOrRunCommandUtil(engine, scopes, {}, "elAttrs", 0, 8, undefined, true);
+    var id10 = getPropertyOrRunCommandUtil(engine, scope, {}, "elAttrs", 0, 8, undefined, true);
     params9.push(id10);
     config8.params = params9;
-    config8.fn = function(scopes) {
+    config8.fn = function(scope) {
       var buffer = "";
       buffer += " \n ";
-      var id11 = getPropertyOrRunCommandUtil(engine, scopes, {}, "xindex", 0, 9, undefined, false);
+      var id11 = getPropertyOrRunCommandUtil(engine, scope, {}, "xindex", 0, 9, undefined, false);
       buffer += getExpressionUtil(id11, true);
       buffer += '="';
-      var id12 = getPropertyOrRunCommandUtil(engine, scopes, {}, ".", 0, 9, undefined, false);
+      var id12 = getPropertyOrRunCommandUtil(engine, scope, {}, ".", 0, 9, undefined, false);
       buffer += getExpressionUtil(id12, true);
       buffer += '"\n';
       return buffer
     };
-    buffer += runBlockCommandUtil(engine, scopes, config8, "each", 8);
+    buffer += runBlockCommandUtil(engine, scope, config8, "each", 8);
     buffer += '\n\nstyle="\n';
     var config13 = {};
     var params14 = [];
-    var id15 = getPropertyOrRunCommandUtil(engine, scopes, {}, "elStyle", 0, 13, undefined, true);
+    var id15 = getPropertyOrRunCommandUtil(engine, scope, {}, "elStyle", 0, 13, undefined, true);
     params14.push(id15);
     config13.params = params14;
-    config13.fn = function(scopes) {
+    config13.fn = function(scope) {
       var buffer = "";
       buffer += " \n ";
-      var id16 = getPropertyOrRunCommandUtil(engine, scopes, {}, "xindex", 0, 14, undefined, false);
+      var id16 = getPropertyOrRunCommandUtil(engine, scope, {}, "xindex", 0, 14, undefined, false);
       buffer += getExpressionUtil(id16, true);
       buffer += ":";
-      var id17 = getPropertyOrRunCommandUtil(engine, scopes, {}, ".", 0, 14, undefined, false);
+      var id17 = getPropertyOrRunCommandUtil(engine, scope, {}, ".", 0, 14, undefined, false);
       buffer += getExpressionUtil(id17, true);
       buffer += ";\n";
       return buffer
     };
-    buffer += runBlockCommandUtil(engine, scopes, config13, "each", 13);
+    buffer += runBlockCommandUtil(engine, scope, config13, "each", 13);
     buffer += '\n">';
     return buffer
   }
@@ -160,7 +170,7 @@ KISSY.add("component/control/render", ["node", "xtemplate/runtime", "./process",
   var Manager = require("component/manager");
   var ON_SET = "_onSet", trim = S.trim, $ = Node.all, UA = S.UA, startTpl = RenderTpl, endTpl = "</div>", doc = S.Env.host.document, HTML_PARSER = "HTML_PARSER";
   function pxSetter(v) {
-    if(typeof v == "number") {
+    if(typeof v === "number") {
       v += "px"
     }
     return v
@@ -175,7 +185,7 @@ KISSY.add("component/control/render", ["node", "xtemplate/runtime", "./process",
           control.setInternal(p, ret)
         }
       }else {
-        if(typeof v == "string") {
+        if(typeof v === "string") {
           control.setInternal(p, srcNode.one(v))
         }else {
           if(S.isArray(v) && v[0]) {
@@ -189,7 +199,7 @@ KISSY.add("component/control/render", ["node", "xtemplate/runtime", "./process",
     if(!extras) {
       extras = [""]
     }
-    if(typeof extras == "string") {
+    if(typeof extras === "string") {
       extras = extras.split(/\s+/)
     }
     return extras
@@ -205,7 +215,7 @@ KISSY.add("component/control/render", ["node", "xtemplate/runtime", "./process",
   }
   function onSetAttrChange(e) {
     var self = this, method;
-    if(e.target == self.control) {
+    if(e.target === self.control) {
       method = self[ON_SET + e.type.slice(5).slice(0, -6)];
       method.call(self, e.newVal, e)
     }
@@ -224,7 +234,7 @@ KISSY.add("component/control/render", ["node", "xtemplate/runtime", "./process",
       self.callSuper()
     }
   }, beforeCreateDom:function(renderData) {
-    var self = this, control = self.control, width, height, visible, elAttrs = control.get("elAttrs"), cls = control.get("elCls"), disabled, attrs = control["getAttrs"](), a, attr, elStyle = control.get("elStyle"), zIndex, elCls = control.get("elCls");
+    var self = this, control = self.control, width, height, visible, elAttrs = control.get("elAttrs"), cls = control.get("elCls"), disabled, attrs = control.getAttrs(), a, attr, elStyle = control.get("elStyle"), zIndex, elCls = control.get("elCls");
     for(a in attrs) {
       attr = attrs[a];
       if(attr.view) {
@@ -256,13 +266,13 @@ KISSY.add("component/control/render", ["node", "xtemplate/runtime", "./process",
     }
     if(control.get("focusable")) {
       if(UA.ieMode < 9) {
-        elAttrs["hideFocus"] = "true"
+        elAttrs.hideFocus = "true"
       }
-      elAttrs["tabindex"] = disabled ? "-1" : "0"
+      elAttrs.tabindex = disabled ? "-1" : "0"
     }
   }, createDom:function() {
     var self = this;
-    self["beforeCreateDom"](self.renderData = {}, self.childrenElSelectors = {}, self.renderCommands = {getBaseCssClasses:getBaseCssClassesCmd, getBaseCssClass:getBaseCssClassCmd});
+    self.beforeCreateDom(self.renderData = {}, self.childrenElSelectors = {}, self.renderCommands = {getBaseCssClasses:getBaseCssClassesCmd, getBaseCssClass:getBaseCssClassCmd});
     var control = self.control, html;
     html = self.renderTpl(startTpl) + self.renderTpl(self.get("contentTpl")) + endTpl;
     control.setInternal("el", self.$el = $(html));
@@ -281,7 +291,7 @@ KISSY.add("component/control/render", ["node", "xtemplate/runtime", "./process",
     if(!control.get("srcNode")) {
       var render = control.get("render"), renderBefore = control.get("elBefore");
       if(renderBefore) {
-        el["insertBefore"](renderBefore, undefined)
+        el.insertBefore(renderBefore, undefined)
       }else {
         if(render) {
           el.appendTo(render, undefined)
@@ -293,7 +303,7 @@ KISSY.add("component/control/render", ["node", "xtemplate/runtime", "./process",
   }, bindUI:function() {
     var self = this;
     var control = self.control;
-    var attrs = control["getAttrs"]();
+    var attrs = control.getAttrs();
     var attrName, attrCfg;
     for(attrName in attrs) {
       attrCfg = attrs[attrName];
@@ -347,7 +357,8 @@ KISSY.add("component/control/render", ["node", "xtemplate/runtime", "./process",
       }
       constructor = constructor.superclass && constructor.superclass.constructor
     }
-    return self.componentCssClasses = re
+    self.componentCssClasses = re;
+    return re
   }, getBaseCssClasses:function(extras) {
     extras = normalExtras(extras);
     var componentCssClasses = this.getComponentCssClasses(), i = 0, control = this.get("control"), cls = "", l = componentCssClasses.length, prefixCls = control.get("prefixCls");
@@ -398,7 +409,7 @@ KISSY.add("component/control/render", ["node", "xtemplate/runtime", "./process",
     NewClass = ComponentProcess.extend.apply(SuperClass, arguments);
     NewClass[HTML_PARSER] = NewClass[HTML_PARSER] || {};
     if(S.isArray(extensions)) {
-      S.each(extensions["concat"](NewClass), function(ext) {
+      S.each(extensions.concat(NewClass), function(ext) {
         if(ext) {
           S.each(ext.HTML_PARSER, function(v, name) {
             parsers[name] = v
@@ -412,8 +423,8 @@ KISSY.add("component/control/render", ["node", "xtemplate/runtime", "./process",
     return NewClass
   }, ATTRS:{control:{setter:function(v) {
     this.control = v
-  }}, xtemplate:{value:XTemplateRuntime}, contentTpl:{value:function(scopes) {
-    return scopes && scopes[scopes.length - 1].content || ""
+  }}, xtemplate:{value:XTemplateRuntime}, contentTpl:{value:function(scope) {
+    return scope.get("content") || ""
   }}}, HTML_PARSER:{id:function(el) {
     var id = el[0].id;
     return id ? id : undefined
@@ -428,7 +439,7 @@ KISSY.add("component/control", ["node", "./control/process", "component/manager"
   var ComponentProcess = require("./control/process");
   var Manager = require("component/manager");
   var Render = require("./control/render");
-  var ie = S.UA.ieMode, undefined = undefined, Features = S.Features, Gesture = Node.Gesture, isTouchGestureSupported = Features.isTouchGestureSupported(), isTouchEventSupported = Features.isTouchEventSupported();
+  var ie = S.UA.ieMode, Features = S.Features, Gesture = Node.Gesture, isTouchGestureSupported = Features.isTouchGestureSupported(), isTouchEventSupported = Features.isTouchEventSupported();
   var Control = ComponentProcess.extend({isControl:true, createDom:function() {
     var self = this, Render = self.get("xrender"), view = self.get("view"), id = self.get("id"), el;
     if(view) {
@@ -476,7 +487,7 @@ KISSY.add("component/control", ["node", "./control/process", "component/manager"
     if(v) {
       target.focus()
     }else {
-      if(target.ownerDocument.activeElement == target) {
+      if(target.ownerDocument.activeElement === target) {
         target.ownerDocument.body.focus()
       }
     }
@@ -530,7 +541,7 @@ KISSY.add("component/control", ["node", "./control/process", "component/manager"
       this.handleMouseDownInternal(ev)
     }
   }, handleMouseDownInternal:function(ev) {
-    var self = this, n, isMouseActionButton = ev["which"] == 1;
+    var self = this, n, isMouseActionButton = ev.which === 1;
     if(isMouseActionButton || isTouchGestureSupported) {
       if(self.get("activeable")) {
         self.set("active", true)
@@ -541,8 +552,8 @@ KISSY.add("component/control", ["node", "./control/process", "component/manager"
       if(!self.get("allowTextSelection")) {
         n = ev.target.nodeName;
         n = n && n.toLowerCase();
-        if(n != "input" && n != "textarea") {
-          ev["preventDefault"]()
+        if(n !== "input" && n !== "textarea") {
+          ev.preventDefault()
         }
       }
     }
@@ -552,14 +563,14 @@ KISSY.add("component/control", ["node", "./control/process", "component/manager"
     }
   }, handleMouseUpInternal:function(ev) {
     var self = this;
-    if(self.get("active") && (ev["which"] == 1 || isTouchGestureSupported)) {
+    if(self.get("active") && (ev.which === 1 || isTouchGestureSupported)) {
       self.set("active", false)
     }
   }, handleContextMenu:function(ev) {
     if(!this.get("disabled")) {
       this.handleContextMenuInternal(ev)
     }
-  }, handleContextMenuInternal:function(ev) {
+  }, handleContextMenuInternal:function() {
   }, handleFocus:function() {
     if(!this.get("disabled")) {
       this.handleFocusInternal()
@@ -577,12 +588,12 @@ KISSY.add("component/control", ["node", "./control/process", "component/manager"
   }, handleKeydown:function(ev) {
     var self = this;
     if(!this.get("disabled") && self.handleKeyDownInternal(ev)) {
-      ev["halt"]();
+      ev.halt();
       return true
     }
     return undefined
   }, handleKeyDownInternal:function(ev) {
-    if(ev["keyCode"] == Node.KeyCode.ENTER) {
+    if(ev.keyCode === Node.KeyCode.ENTER) {
       return this.handleClickInternal(ev)
     }
     return undefined
@@ -590,7 +601,7 @@ KISSY.add("component/control", ["node", "./control/process", "component/manager"
     if(!this.get("disabled")) {
       this.handleClickInternal(ev)
     }
-  }, handleClickInternal:function(ev) {
+  }, handleClickInternal:function() {
     var self = this;
     if(self.get("focusable")) {
       self.focus()
@@ -603,7 +614,7 @@ KISSY.add("component/control", ["node", "./control/process", "component/manager"
   }}, {name:"control", ATTRS:{id:{view:1, valueFn:function() {
     return S.guid("ks-component")
   }}, content:{view:1, value:""}, width:{view:1}, height:{view:1}, elCls:{view:1, value:[], setter:function(v) {
-    if(typeof v == "string") {
+    if(typeof v === "string") {
       v = v.split(/\s+/)
     }
     return v || []
@@ -613,8 +624,12 @@ KISSY.add("component/control", ["node", "./control/process", "component/manager"
   }}, x:{}, y:{}, xy:{setter:function(v) {
     var self = this, xy = S.makeArray(v);
     if(xy.length) {
-      xy[0] && self.set("x", xy[0]);
-      xy[1] && self.set("y", xy[1])
+      if(xy[0] !== undefined) {
+        self.set("x", xy[0])
+      }
+      if(xy[1] !== undefined) {
+        self.set("y", xy[1])
+      }
     }
     return v
   }, getter:function() {
