@@ -15,10 +15,10 @@ KISSY.add(function (S, require) {
     var Node = S.Node,
         LIMIT = 5,
         INTERVAL = 5,
-        DRAFT_SAVE = "ks-editor-draft-save20110503";
+        DRAFT_SAVE = 'ks-editor-draft-save20110503';
 
     function padding(n, l, p) {
-        n += "";
+        n += '';
         while (n.length < l) {
             n = p + n;
         }
@@ -29,25 +29,27 @@ KISSY.add(function (S, require) {
         if (typeof d === 'number') {
             d = new Date(d);
         }
-        if (d instanceof Date)
+        if (d instanceof Date) {
             return [
                 d.getFullYear(),
-                "-",
-                padding(d.getMonth() + 1, 2, "0"),
-                "-",
-                padding(d.getDate(), 2, "0"),
-                " ",
-                //"&nbsp;",
-                padding(d.getHours(), 2, "0"),
-                ":",
-                padding(d.getMinutes(), 2, "0"),
-                ":",
-                padding(d.getSeconds(), 2, "0")
-                //"&nbsp;",
-                //"&nbsp;"
-            ].join("");
-        else
+                '-',
+                padding(d.getMonth() + 1, 2, '0'),
+                '-',
+                padding(d.getDate(), 2, '0'),
+                ' ',
+                //'&nbsp;',
+                padding(d.getHours(), 2, '0'),
+                ':',
+                padding(d.getMinutes(), 2, '0'),
+                ':',
+                padding(d.getSeconds(), 2, '0')
+                //'&nbsp;',
+                //'&nbsp;'
+            ].join('');
+        }
+        else {
             return d;
+        }
     }
 
     function Draft(editor, config) {
@@ -63,7 +65,7 @@ KISSY.add(function (S, require) {
         _getSaveKey: function () {
             var self = this,
                 cfg = self.config;
-            return cfg.draft && cfg.draft['saveKey'] || DRAFT_SAVE;
+            return cfg.draft && cfg.draft.saveKey || DRAFT_SAVE;
         },
 
 
@@ -75,7 +77,7 @@ KISSY.add(function (S, require) {
                     drafts = [];
                 if (str) {
                     // 原生 localStorage 必须串行化
-                    drafts = (localStorage == window.localStorage) ?
+                    drafts = (localStorage === window.localStorage) ?
                         Json.parse(S.urlDecode(str)) : str;
                 }
                 self.drafts = drafts;
@@ -90,59 +92,55 @@ KISSY.add(function (S, require) {
                 statusbar = editor.get('statusBarEl'),
                 cfg = this.config;
             cfg.draft = cfg.draft || {};
-            self.draftInterval = cfg.draft.interval
-                = cfg.draft.interval || INTERVAL;
-            self.draftLimit = cfg.draft.limit
-                = cfg.draft.limit || LIMIT;
+            self.draftInterval = cfg.draft.interval = cfg.draft.interval || INTERVAL;
+            self.draftLimit = cfg.draft.limit = cfg.draft.limit || LIMIT;
             var holder = new Node(
-                "<div class='" + prefixCls + "editor-draft'>" +
-                    "<span class='" + prefixCls + "editor-draft-title'>" +
-                    "内容正文每" +
-                    cfg.draft.interval
-                    + "分钟自动保存一次。" +
-                    "</span>" +
-                    "</div>").appendTo(statusbar);
-            self.timeTip = new Node("<span class='" + prefixCls + "editor-draft-time'/>")
+                '<div class="' + prefixCls + 'editor-draft">' +
+                    '<span class="' + prefixCls + 'editor-draft-title">' +
+                    '内容正文每' +
+                    cfg.draft.interval + '分钟自动保存一次。' +
+                    '</span>' +
+                    '</div>').appendTo(statusbar);
+            self.timeTip = new Node('<span class="' + prefixCls + 'editor-draft-time"/>')
                 .appendTo(holder);
 
             var save = new Node(
-                    S.substitute("<a href='#' " +
-                        "onclick='return false;' " +
-                        "class='{prefixCls}editor-button " +
-                        "{prefixCls}editor-draft-save-btn ks-inline-block' " +
-                        "style='" +
-                        "vertical-align:middle;" +
-                        "padding:1px 9px;" +
-                        "'>" +
-                        "<span class='{prefixCls}editor-draft-save'>" +
-                        "</span>" +
-                        "<span>立即保存</span>" +
-                        "</a>", {
-                        prefixCls: prefixCls
+                    S.substitute('<a href="#" ' +
+                        'onclick="return false;" ' +
+                        'class="{prefixCls}editor-button ' +
+                        '{prefixCls}editor-draft-save-btn ks-inline-block" ' +
+                        'style="' +
+                        'vertical-align:middle;' +
+                        'padding:1px 9px;' +
+                        '">' +
+                        '<span class="{prefixCls}editor-draft-save">' +
+                        '</span>' +
+                        '<span>立即保存</span>' +
+                        '</a>', { prefixCls: prefixCls
                     })).unselectable(undefined).appendTo(holder),
                 versions = new MenuButton({
                     render: holder,
                     collapseOnClick: true,
-                    width: "100px",
-                    prefixCls: prefixCls + "editor-",
+                    width: '100px',
+                    prefixCls: prefixCls + 'editor-',
                     menu: {
-                        width: "225px",
+                        width: '225px',
                         align: {
                             points: ['tr', 'br']
                         }
                     },
                     matchElWidth: false,
-                    content: "恢复编辑历史"
+                    content: '恢复编辑历史'
                 }).render();
             self.versions = versions;
             // 点击才开始 parse
-            versions.on("beforeCollapsedChange", function (e) {
+            versions.on('beforeCollapsedChange', function beforeCollapsedChange(e) {
                 if (!e.newValue) {
-                    versions.detach("beforeCollapsedChange", arguments.callee);
+                    versions.detach('beforeCollapsedChange', beforeCollapsedChange);
                     self.sync();
                 }
             });
-            save.on("click", function (ev) {
+            save.on('click', function (ev) {
                 self.save(false);
                 //如果不阻止，部分页面在ie6下会莫名奇妙把其他input的值丢掉！
                 ev.halt();
@@ -178,11 +176,10 @@ KISSY.add(function (S, require) {
                 clearInterval(timer);
             });
 
-            versions.on("click", self.recover, self);
+            versions.on('click', self.recover, self);
             addRes.call(self, versions);
             self.holder = holder;
-            if (cfg.draft['helpHTML']) {
-
+            if (cfg.draft.helpHTML) {
                 var help = new Node('<a ' +
                     'tabindex="0" ' +
                     'hidefocus="hidefocus" ' +
@@ -192,7 +189,7 @@ KISSY.add(function (S, require) {
                     .unselectable(undefined)
                     .appendTo(holder);
 
-                help.on("click", function () {
+                help.on('click', function () {
                     help[0].focus();
                     if (self.helpPopup && self.helpPopup.get('visible')) {
                         self.helpPopup.hide();
@@ -201,11 +198,13 @@ KISSY.add(function (S, require) {
                     }
                 });
                 help.on('blur', function () {
-                    self.helpPopup && self.helpPopup.hide();
+                    if (self.helpPopup) {
+                        self.helpPopup.hide();
+                    }
                 });
                 self.helpBtn = help;
                 addRes.call(self, help);
-                Editor.Utils.lazyRun(self, "_prepareHelp", "_realHelp");
+                Editor.Utils.lazyRun(self, '_prepareHelp', '_realHelp');
             }
             addRes.call(self, holder);
         },
@@ -215,40 +214,40 @@ KISSY.add(function (S, require) {
                 prefixCls = editor.get('prefixCls'),
                 cfg = self.config,
                 draftCfg = cfg.draft,
-                help = new Node(draftCfg['helpHTML'] || "");
-            var arrowCss = "height:0;" +
-                "position:absolute;" +
-                "font-size:0;" +
-                "width:0;" +
-                "border:8px #000 solid;" +
-                "border-color:#000 transparent transparent transparent;" +
-                "border-style:solid dashed dashed dashed;";
-            var arrow = new Node("<div style='" +
+                help = new Node(draftCfg.helpHTML || '');
+            var arrowCss = 'height:0;' +
+                'position:absolute;' +
+                'font-size:0;' +
+                'width:0;' +
+                'border:8px #000 solid;' +
+                'border-color:#000 transparent transparent transparent;' +
+                'border-style:solid dashed dashed dashed;';
+            var arrow = new Node('<div style="' +
                 arrowCss +
-                "border-top-color:#CED5E0;" +
-                "'>" +
-                "<div style='" +
+                'border-top-color:#CED5E0;' +
+                '">' +
+                '<div style="' +
                 arrowCss +
-                "left:-8px;" +
-                "top:-10px;" +
-                "border-top-color:white;" +
-                "'>" +
-                "</div>" +
-                "</div>");
+                'left:-8px;' +
+                'top:-10px;' +
+                'border-top-color:white;' +
+                '">' +
+                '</div>' +
+                '</div>');
             help.append(arrow);
             help.css({
-                border: "1px solid #ACB4BE",
-                "text-align": "left"
+                border: '1px solid #ACB4BE',
+                'text-align': 'left'
             });
             self.helpPopup = new Overlay({
                 content: help,
                 prefixCls: prefixCls + 'editor-',
-                width: help.width() + "px",
+                width: help.width() + 'px',
                 zIndex: Editor.baseZIndex(Editor.ZIndexManager.OVERLAY),
                 mask: false
             }).render();
             self.helpPopup.get('el')
-                .css("border", "none");
+                .css('border', 'none');
             self.helpPopup.arrow = arrow;
         },
         _realHelp: function () {
@@ -267,10 +266,10 @@ KISSY.add(function (S, require) {
             });
         },
         disable: function () {
-            this.holder.css("visibility", "hidden");
+            this.holder.css('visibility', 'hidden');
         },
         enable: function () {
-            this.holder.css("visibility", "");
+            this.holder.css('visibility', '');
         },
         sync: function () {
             var self = this,
@@ -289,8 +288,7 @@ KISSY.add(function (S, require) {
 
             for (i = 0; i < drafts.length; i++) {
                 draft = drafts[i];
-                tip = (draft.auto ? "自动" : "手动") + "保存于 : "
-                    + date(draft.date);
+                tip = (draft.auto ? '自动' : '手动') + '保存于 : ' + date(draft.date);
                 versions.addItem({
                     content: tip,
                     value: i
@@ -307,7 +305,7 @@ KISSY.add(function (S, require) {
 
             timeTip.html(tip);
             localStorage.setItem(self._getSaveKey(),
-                (localStorage == window.localStorage) ?
+                (localStorage === window.localStorage) ?
                     encodeURIComponent(Json.stringify(drafts))
                     : drafts);
         },
@@ -329,7 +327,7 @@ KISSY.add(function (S, require) {
             }
 
             if (drafts[drafts.length - 1] &&
-                data == drafts[drafts.length - 1].content) {
+                data === drafts[drafts.length - 1].content) {
                 drafts.length -= 1;
             }
             self.drafts = drafts.concat({
@@ -344,8 +342,8 @@ KISSY.add(function (S, require) {
             var self = this,
                 editor = self.editor,
                 drafts = self._getDrafts(),
-                v = ev.target.get("value");
-            if (confirm("确认恢复 " + date(drafts[v].date) + " 的编辑历史？")) {
+                v = ev.target.get('value');
+            if (window.confirm('确认恢复 ' + date(drafts[v].date) + ' 的编辑历史？')) {
                 editor.execCommand('save');
                 editor.setData(drafts[v].content);
                 editor.execCommand('save');
@@ -360,7 +358,7 @@ KISSY.add(function (S, require) {
 
     function init(editor, config) {
         var d = new Draft(editor, config);
-        editor.on("destroy", function () {
+        editor.on('destroy', function () {
             d.destroy();
         });
     }

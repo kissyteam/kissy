@@ -4,9 +4,9 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
-        var Editor = require('editor');
-        var ui = require('./font/ui');
-        var cmd = require('./font-size/cmd');
+    var Editor = require('editor');
+    var ui = require('./font/ui');
+    var cmd = require('./font-size/cmd');
     require('./menubutton');
 
     function FontSizePlugin(config) {
@@ -14,7 +14,7 @@ KISSY.add(function (S, require) {
     }
 
     S.augment(FontSizePlugin, {
-        pluginRenderUI:function (editor) {
+        pluginRenderUI: function (editor) {
 
             cmd.init(editor);
 
@@ -22,8 +22,8 @@ KISSY.add(function (S, require) {
                 var v = [];
                 S.each(vs, function (n) {
                     v.push({
-                        content:n,
-                        value:n
+                        content: n,
+                        value: n
                     });
                 });
                 return v;
@@ -32,19 +32,19 @@ KISSY.add(function (S, require) {
             var fontSizeConfig = this.config;
 
             fontSizeConfig.menu = S.mix({
-                children:wrapFont([
-                    "8px", "10px", "12px",
-                    "14px", "18px", "24px",
-                    "36px", "48px", "60px",
-                    "72px", "84px", "96px"
+                children: wrapFont([
+                    '8px', '10px', '12px',
+                    '14px', '18px', '24px',
+                    '36px', '48px', '60px',
+                    '72px', '84px', '96px'
                 ])
             }, fontSizeConfig.menu);
 
-            editor.addSelect("fontSize", S.mix({
-                cmdType:"fontSize",
-                defaultCaption:"大小",
-                width:"70px",
-                mode:Editor.Mode.WYSIWYG_MODE
+            editor.addSelect('fontSize', S.mix({
+                cmdType: 'fontSize',
+                defaultCaption: '大小',
+                width: '70px',
+                mode: Editor.Mode.WYSIWYG_MODE
             }, fontSizeConfig), ui.Select);
         }
     });

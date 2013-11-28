@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ',"src":' + jscoverage_quote(this.src)
+            + ','src':' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -283,7 +283,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/cmd.js'].lineData[8]++;
   var listCmd = require('../list-utils/cmd');
   _$jscoverage['/cmd.js'].lineData[10]++;
-  var insertUnorderedList = "insertUnorderedList", ListCommand = listCmd.ListCommand, queryActive = listCmd.queryActive, ulCmd = new ListCommand("ul");
+  var insertUnorderedList = "insertUnorderedList", ListCommand = listCmd.ListCommand, queryActive = listCmd.queryActive, ulCmd = new ListCommand('ul');
   _$jscoverage['/cmd.js'].lineData[15]++;
   return {
   init: function(editor) {
@@ -317,7 +317,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/cmd.js'].lineData[34]++;
     var elementPath = new Editor.ElementPath(startElement);
     _$jscoverage['/cmd.js'].lineData[35]++;
-    return queryActive("ul", elementPath);
+    return queryActive('ul', elementPath);
   }
 }});
   }

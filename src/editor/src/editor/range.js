@@ -7,7 +7,7 @@
  Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.html or http://ckeditor.com/license
  */
-KISSY.add(function (S,require) {
+KISSY.add(function (S, require) {
     require('./dom');
     var Node = require('node');
     var Utils = require('./utils');
@@ -19,10 +19,10 @@ KISSY.add(function (S,require) {
      * @enum {number} KISSY.Editor.RangeType
      */
     Editor.RangeType = {
-        POSITION_AFTER_START: 1, // <element>^contents</element>		"^text"
-        POSITION_BEFORE_END: 2, // <element>contents^</element>		"text^"
-        POSITION_BEFORE_START: 3, // ^<element>contents</element>		^"text"
-        POSITION_AFTER_END: 4, // <element>contents</element>^		"text"^
+        POSITION_AFTER_START: 1, // <element>^contents</element>		'^text'
+        POSITION_BEFORE_END: 2, // <element>contents^</element>		'text^'
+        POSITION_BEFORE_START: 3, // ^<element>contents</element>		^'text'
+        POSITION_AFTER_END: 4, // <element>contents</element>^		'text'^
         ENLARGE_ELEMENT: 1,
         ENLARGE_BLOCK_CONTENTS: 2,
         ENLARGE_LIST_ITEM_CONTENTS: 3,
@@ -45,10 +45,16 @@ KISSY.add(function (S,require) {
             'td': 1
         },
         EMPTY = {
-            "area": 1, "base": 1, "br": 1,
-            "col": 1, "hr": 1, "img": 1,
-            'input': 1, "link": 1, "meta": 1,
-            "param": 1
+            'area': 1,
+            'base': 1,
+            'br': 1,
+            'col': 1,
+            'hr': 1,
+            'img': 1,
+            'input': 1,
+            'link': 1,
+            'meta': 1,
+            'param': 1
         };
 
     var isWhitespace = new Walker.whitespaces(),
@@ -57,12 +63,32 @@ KISSY.add(function (S,require) {
         isNotBookmarks = Walker.bookmark(false, true);
 
     var inlineChildReqElements = {
-        "abbr": 1, "acronym": 1, "b": 1, "bdo": 1,
-        "big": 1, "cite": 1, "code": 1, "del": 1, "dfn": 1,
-        "em": 1, "font": 1, "i": 1, "ins": 1, "label": 1,
-        "kbd": 1, "q": 1, "samp": 1, "small": 1, "span": 1,
-        "strike": 1, "strong": 1, "sub": 1, "sup": 1,
-        "tt": 1, "u": 1, 'var': 1
+        'abbr': 1,
+        'acronym': 1,
+        'b': 1,
+        'bdo': 1,
+        'big': 1,
+        'cite': 1,
+        'code': 1,
+        'del': 1,
+        'dfn': 1,
+        'em': 1,
+        'font': 1,
+        'i': 1,
+        'ins': 1,
+        'label': 1,
+        'kbd': 1,
+        'q': 1,
+        'samp': 1,
+        'small': 1,
+        'span': 1,
+        'strike': 1,
+        'strong': 1,
+        'sub': 1,
+        'sup': 1,
+        'tt': 1,
+        'u': 1,
+        'var': 1
     };
 
     // Evaluator for checkBoundaryOfElement, reject any
@@ -71,10 +97,10 @@ KISSY.add(function (S,require) {
         // Reject any text node unless it's being bookmark
         // OR it's spaces. (#3883)
         // 如果不是文本节点并且是空的，可以继续取下一个判断边界
-        var c1 = node.nodeType != Dom.NodeType.TEXT_NODE &&
+        var c1 = node.nodeType !== Dom.NodeType.TEXT_NODE &&
                 Dom.nodeName(node) in dtd.$removeEmpty,
         // 文本为空，可以继续取下一个判断边界
-            c2 = node.nodeType == Dom.NodeType.TEXT_NODE && !S.trim(node.nodeValue),
+            c2 = node.nodeType === Dom.NodeType.TEXT_NODE && !S.trim(node.nodeValue),
         // 恩，进去了书签，可以继续取下一个判断边界
             c3 = !!node.parentNode.getAttribute('_ke_bookmark');
         return c1 || c2 || c3;
@@ -89,22 +115,23 @@ KISSY.add(function (S,require) {
         var hadBr = FALSE;
         return function (node) {
             // First ignore bookmark nodes.
-            if (isBookmark(node))
+            if (isBookmark(node)) {
                 return TRUE;
+            }
 
-            if (node.nodeType == Dom.NodeType.TEXT_NODE) {
+            if (node.nodeType === Dom.NodeType.TEXT_NODE) {
                 // If there's any visible text, then we're not at the start.
                 if (S.trim(node.nodeValue).length) {
                     return FALSE;
                 }
-            } else if (node.nodeType == Dom.NodeType.ELEMENT_NODE) {
+            } else if (node.nodeType === Dom.NodeType.ELEMENT_NODE) {
                 var nodeName = Dom.nodeName(node);
                 // If there are non-empty inline elements (e.g. <img />), then we're not
                 // at the start.
                 if (!inlineChildReqElements[ nodeName ]) {
                     // If we're working at the end-of-block, forgive the first <br /> in non-IE
                     // browsers.
-                    if (!isStart && !UA.ie && nodeName == 'br' && !hadBr) {
+                    if (!isStart && !UA.ie && nodeName === 'br' && !hadBr) {
                         hadBr = TRUE;
                     } else {
                         return FALSE;
@@ -117,10 +144,10 @@ KISSY.add(function (S,require) {
 
 
     /*
-      Extract html content within range.
-      0 : delete
-      1 : extract
-      2 : clone
+     Extract html content within range.
+     0 : delete
+     1 : extract
+     2 : clone
      */
     function execContentsAction(self, action) {
         var startNode = self.startContainer,
@@ -131,7 +158,7 @@ KISSY.add(function (S,require) {
             hasSplitStart = FALSE,
             hasSplitEnd = FALSE,
             t,
-            docFrag = undefined,
+            docFrag,
             doc = self.document,
             removeEndNode;
 
@@ -152,7 +179,7 @@ KISSY.add(function (S,require) {
         // For text containers, we must simply split the node and point to the
         // second part. The removal will be handled by the rest of the code .
         //最关键：一般起始都是在文字节点中，得到起点选择右边的文字节点，只对节点处理！
-        if (endNode[0].nodeType == Dom.NodeType.TEXT_NODE) {
+        if (endNode[0].nodeType === Dom.NodeType.TEXT_NODE) {
             hasSplitEnd = TRUE;
             endNode = endNode._4eSplitText(endOffset);
         } else {
@@ -163,7 +190,7 @@ KISSY.add(function (S,require) {
                 if (endOffset >= endNode[0].childNodes.length) {
                     // Let's create a temporary node and mark it for removal.
                     endNode = new Node(
-                        endNode[0].appendChild(doc.createTextNode(""))
+                        endNode[0].appendChild(doc.createTextNode(''))
                     );
                     removeEndNode = TRUE;
                 } else {
@@ -176,7 +203,7 @@ KISSY.add(function (S,require) {
 
         // For text containers, we must simply split the node. The removal will
         // be handled by the rest of the code .
-        if (startNode[0].nodeType == Dom.NodeType.TEXT_NODE) {
+        if (startNode[0].nodeType === Dom.NodeType.TEXT_NODE) {
             hasSplitStart = TRUE;
             startNode._4eSplitText(startOffset);
         } else {
@@ -187,7 +214,7 @@ KISSY.add(function (S,require) {
             // sibling, so let's use the first one, but mark it for removal.
             if (!startOffset) {
                 // Let's create a temporary node and mark it for removal.
-                t = new Node(doc.createTextNode(""));
+                t = new Node(doc.createTextNode(''));
                 startNode.prepend(t);
                 startNode = t;
                 removeStartNode = TRUE;
@@ -197,10 +224,11 @@ KISSY.add(function (S,require) {
                 startNode = new Node(startNode[0]
                     .appendChild(doc.createTextNode('')));
                 removeStartNode = TRUE;
-            } else
+            } else {
                 startNode = new Node(
                     startNode[0].childNodes[startOffset].previousSibling
                 );
+            }
         }
 
         // Get the parent nodes tree for the start and end boundaries.
@@ -226,7 +254,7 @@ KISSY.add(function (S,require) {
 
             // The compared nodes will match until we find the top most
             // siblings (different nodes that have the same parent).
-            // "i" will hold the index in the parents array for the top
+            // 'i' will hold the index in the parents array for the top
             // most element.
             if (!topStart.equals(topEnd)) {
                 break;
@@ -262,7 +290,7 @@ KISSY.add(function (S,require) {
             while (currentNode) {
                 // Stop processing when the current node matches a node in the
                 // endParents tree or if it is the endNode.
-                if (domEndParentJ == currentNode || domEndNode == currentNode) {
+                if (domEndParentJ === currentNode || domEndNode === currentNode) {
                     break;
                 }
 
@@ -270,7 +298,7 @@ KISSY.add(function (S,require) {
                 currentSibling = currentNode.nextSibling;
 
                 // If cloning, just clone it.
-                if (action == 2) {
+                if (action === 2) {
                     // 2 = Clone
                     clone.appendChild(currentNode.cloneNode(TRUE));
                 } else {
@@ -279,7 +307,7 @@ KISSY.add(function (S,require) {
                     // in case table structure is destroyed
                     if (UN_REMOVABLE[currentNode.nodeName.toLowerCase()]) {
                         var tmp = currentNode.cloneNode(TRUE);
-                        currentNode.innerHTML='';
+                        currentNode.innerHTML = '';
                         currentNode = tmp;
                     } else {
                         // Both Delete and Extract will remove the node.
@@ -287,7 +315,7 @@ KISSY.add(function (S,require) {
                     }
 
                     // When Extracting, move the removed node to the docFrag.
-                    if (action == 1) {
+                    if (action === 1) {
                         // 1 = Extract
                         clone.appendChild(currentNode);
                     }
@@ -329,7 +357,7 @@ KISSY.add(function (S,require) {
                     currentSibling = currentNode.previousSibling;
 
                     // If cloning, just clone it.
-                    if (action == 2) {    // 2 = Clone
+                    if (action === 2) {    // 2 = Clone
                         clone.insertBefore(currentNode.cloneNode(TRUE),
                             clone.firstChild);
                     } else {
@@ -337,7 +365,7 @@ KISSY.add(function (S,require) {
                         Dom._4eRemove(currentNode);
 
                         // When Extracting, mode the removed node to the docFrag.
-                        if (action == 1) {
+                        if (action === 1) {
                             // 1 = Extract
                             clone.insertBefore(currentNode, clone.firstChild);
                         }
@@ -352,16 +380,15 @@ KISSY.add(function (S,require) {
             }
         }
         // 2 = Clone.
-        if (action == 2) {
+        if (action === 2) {
 
             // No changes in the Dom should be done, so fix the split text (if any).
 
             if (hasSplitStart) {
                 var startTextNode = startNode[0];
-                if (startTextNode.nodeType == Dom.NodeType.TEXT_NODE
-                    && startTextNode.nextSibling
+                if (startTextNode.nodeType === Dom.NodeType.TEXT_NODE && startTextNode.nextSibling &&
                     // careful, next sibling should be text node
-                    && startTextNode.nextSibling.nodeType == Dom.NodeType.TEXT_NODE) {
+                    startTextNode.nextSibling.nodeType === Dom.NodeType.TEXT_NODE) {
                     startTextNode.data += startTextNode.nextSibling.data;
                     startTextNode.parentNode.removeChild(startTextNode.nextSibling);
                 }
@@ -369,9 +396,9 @@ KISSY.add(function (S,require) {
 
             if (hasSplitEnd) {
                 var endTextNode = endNode[0];
-                if (endTextNode.nodeType == Dom.NodeType.TEXT_NODE &&
+                if (endTextNode.nodeType === Dom.NodeType.TEXT_NODE &&
                     endTextNode.previousSibling &&
-                    endTextNode.previousSibling.nodeType == Dom.NodeType.TEXT_NODE) {
+                    endTextNode.previousSibling.nodeType === Dom.NodeType.TEXT_NODE) {
                     endTextNode.previousSibling.data += endTextNode.data;
                     endTextNode.parentNode.removeChild(endTextNode);
                 }
@@ -386,8 +413,7 @@ KISSY.add(function (S,require) {
             if (
                 topStart && topEnd &&
                     (
-                        !startNode._4eSameLevel(topStart)
-                            || !endNode._4eSameLevel(topEnd)
+                        !startNode._4eSameLevel(topStart) || !endNode._4eSameLevel(topEnd)
                         )
                 ) {
                 var startIndex = topStart._4eIndex();
@@ -424,8 +450,8 @@ KISSY.add(function (S,require) {
         self.collapsed = (
             self.startContainer &&
                 self.endContainer &&
-                self.startContainer[0] == self.endContainer[0] &&
-                self.startOffset == self.endOffset );
+                self.startContainer[0] === self.endContainer[0] &&
+                self.startOffset === self.endOffset );
     }
 
 
@@ -454,9 +480,9 @@ KISSY.add(function (S,require) {
                 self = this,
                 startContainer = self.startContainer[0],
                 endContainer = self.endContainer[0];
-            s.push((startContainer.id || startContainer.nodeName) + ":" + self.startOffset);
-            s.push((endContainer.id || endContainer.nodeName) + ":" + self.endOffset);
-            return s.join("<br/>");
+            s.push((startContainer.id || startContainer.nodeName) + ':' + self.startOffset);
+            s.push((endContainer.id || endContainer.nodeName) + ':' + self.endOffset);
+            return s.join('<br/>');
         },
 
         /**
@@ -470,7 +496,7 @@ KISSY.add(function (S,require) {
                 container = self.startContainer,
                 offset = self.startOffset;
 
-            if (container[0].nodeType != Dom.NodeType.ELEMENT_NODE) {
+            if (container[0].nodeType !== Dom.NodeType.ELEMENT_NODE) {
                 if (!offset) {
                     self.setStartBefore(container);
                 } else if (offset >= container[0].nodeValue.length) {
@@ -481,7 +507,7 @@ KISSY.add(function (S,require) {
             container = self.endContainer;
             offset = self.endOffset;
 
-            if (container[0].nodeType != Dom.NodeType.ELEMENT_NODE) {
+            if (container[0].nodeType !== Dom.NodeType.ELEMENT_NODE) {
                 if (!offset) {
                     self.setEndBefore(container);
                 } else if (offset >= container[0].nodeValue.length) {
@@ -528,12 +554,12 @@ KISSY.add(function (S,require) {
                 endNode = self.endContainer;
 
             if (startNode &&
-                startNode.nodeName() == 'span' &&
+                startNode.nodeName() === 'span' &&
                 startNode.attr('_ke_bookmark')) {
                 self.setStartBefore(startNode);
             }
             if (endNode &&
-                endNode.nodeName() == 'span' &&
+                endNode.nodeName() === 'span' &&
                 endNode.attr('_ke_bookmark')) {
                 self.setEndAfter(endNode);
             }
@@ -554,7 +580,7 @@ KISSY.add(function (S,require) {
 
             // Fixing invalid range start inside dtd empty elements.
             var self = this;
-            if (startNode[0].nodeType == Dom.NodeType.ELEMENT_NODE && EMPTY[ startNode.nodeName() ]) {
+            if (startNode[0].nodeType === Dom.NodeType.ELEMENT_NODE && EMPTY[ startNode.nodeName() ]) {
                 startNode = startNode.parent();
                 startOffset = startNode._4eIndex();
             }
@@ -585,7 +611,7 @@ KISSY.add(function (S,require) {
 
             // Fixing invalid range end inside dtd empty elements.
             var self = this;
-            if (endNode[0].nodeType == Dom.NodeType.ELEMENT_NODE && EMPTY[ endNode.nodeName() ]) {
+            if (endNode[0].nodeType === Dom.NodeType.ELEMENT_NODE && EMPTY[ endNode.nodeName() ]) {
                 endNode = endNode.parent();
                 endOffset = endNode._4eIndex() + 1;
             }
@@ -614,7 +640,7 @@ KISSY.add(function (S,require) {
                     break;
 
                 case KER.POSITION_BEFORE_END :
-                    if (node[0].nodeType == Dom.NodeType.TEXT_NODE) {
+                    if (node[0].nodeType === Dom.NodeType.TEXT_NODE) {
                         self.setStart(node, node[0].nodeValue.length);
                     } else {
                         self.setStart(node, node[0].childNodes.length);
@@ -645,7 +671,7 @@ KISSY.add(function (S,require) {
                     break;
 
                 case KER.POSITION_BEFORE_END :
-                    if (node[0].nodeType == Dom.NodeType.TEXT_NODE) {
+                    if (node[0].nodeType === Dom.NodeType.TEXT_NODE) {
                         self.setEnd(node, node[0].nodeValue.length);
                     } else {
                         self.setEnd(node, node[0].childNodes.length);
@@ -731,8 +757,8 @@ KISSY.add(function (S,require) {
             // Optimize and analyze the range to avoid Dom destructive nature of walker.
             walkerRange.optimize();
 
-            if (walkerRange.startContainer[0].nodeType != Dom.NodeType.ELEMENT_NODE ||
-                walkerRange.endContainer[0].nodeType != Dom.NodeType.ELEMENT_NODE) {
+            if (walkerRange.startContainer[0].nodeType !== Dom.NodeType.ELEMENT_NODE ||
+                walkerRange.endContainer[0].nodeType !== Dom.NodeType.ELEMENT_NODE) {
                 return NULL;
             }
 
@@ -777,7 +803,7 @@ KISSY.add(function (S,require) {
                     moveEnd = TRUE;
 
                 if (startContainer &&
-                    startContainer[0].nodeType == Dom.NodeType.TEXT_NODE) {
+                    startContainer[0].nodeType === Dom.NodeType.TEXT_NODE) {
                     if (!startOffset) {
                         walkerRange.setStartBefore(startContainer);
                     } else if (startOffset >= startContainer[0].nodeValue.length) {
@@ -791,7 +817,7 @@ KISSY.add(function (S,require) {
                 }
 
                 if (endContainer &&
-                    endContainer[0].nodeType == Dom.NodeType.TEXT_NODE) {
+                    endContainer[0].nodeType === Dom.NodeType.TEXT_NODE) {
                     if (!endOffset) {
                         walkerRange.setEndBefore(endContainer);
                     } else if (endOffset >= endContainer[0].nodeValue.length) {
@@ -807,21 +833,21 @@ KISSY.add(function (S,require) {
                     walker = new Walker(walkerRange);
 
                     walker.evaluator = function (node) {
-                        return node.nodeType == ( mode == KER.SHRINK_ELEMENT ?
+                        return node.nodeType === ( mode === KER.SHRINK_ELEMENT ?
                             Dom.NodeType.ELEMENT_NODE : Dom.NodeType.TEXT_NODE );
                     };
 
                     walker.guard = function (node, movingOut) {
                         // Stop when we're shrink in element mode while encountering a text node.
-                        if (mode == KER.SHRINK_ELEMENT &&
-                            node.nodeType == Dom.NodeType.TEXT_NODE) {
+                        if (mode === KER.SHRINK_ELEMENT &&
+                            node.nodeType === Dom.NodeType.TEXT_NODE) {
                             return FALSE;
                         }
-                        // Stop when we've already walked "through" an element.
-                        if (movingOut && node == currentElement) {
+                        // Stop when we've already walked 'through' an element.
+                        if (movingOut && node === currentElement) {
                             return FALSE;
                         }
-                        if (!movingOut && node.nodeType == Dom.NodeType.ELEMENT_NODE) {
+                        if (!movingOut && node.nodeType === Dom.NodeType.ELEMENT_NODE) {
                             currentElement = node;
                         }
                         return TRUE;
@@ -830,7 +856,7 @@ KISSY.add(function (S,require) {
                 }
 
                 if (moveStart) {
-                    var textStart = walker[mode == KER.SHRINK_ELEMENT ? 'lastForward' : 'next']();
+                    var textStart = walker[mode === KER.SHRINK_ELEMENT ? 'lastForward' : 'next']();
                     if (textStart) {
                         self.setStartAt(textStart, selectContents ? KER.POSITION_AFTER_START : KER.POSITION_BEFORE_START);
                     }
@@ -838,7 +864,7 @@ KISSY.add(function (S,require) {
 
                 if (moveEnd) {
                     walker.reset();
-                    var textEnd = walker[mode == KER.SHRINK_ELEMENT ? 'lastBackward' : 'previous']();
+                    var textEnd = walker[mode === KER.SHRINK_ELEMENT ? 'lastBackward' : 'previous']();
                     if (textEnd) {
                         self.setEndAt(textEnd, selectContents ? KER.POSITION_BEFORE_END : KER.POSITION_AFTER_END);
                     }
@@ -874,13 +900,13 @@ KISSY.add(function (S,require) {
             if (normalized) {
                 // Find out if the start is pointing to a text node that will
                 // be normalized.
-                if (startContainer[0].nodeType == Dom.NodeType.ELEMENT_NODE) {
+                if (startContainer[0].nodeType === Dom.NodeType.ELEMENT_NODE) {
                     child = new Node(startContainer[0].childNodes[startOffset]);
 
                     // In this case, move the start information to that text
                     // node.
-                    if (child && child[0] && child[0].nodeType == Dom.NodeType.TEXT_NODE
-                        && startOffset > 0 && child[0].previousSibling.nodeType == Dom.NodeType.TEXT_NODE) {
+                    if (child && child[0] && child[0].nodeType === Dom.NodeType.TEXT_NODE &&
+                        startOffset > 0 && child[0].previousSibling.nodeType === Dom.NodeType.TEXT_NODE) {
                         startContainer = child;
                         startOffset = 0;
                     }
@@ -888,9 +914,9 @@ KISSY.add(function (S,require) {
                 }
 
                 // Normalize the start.
-                while (startContainer[0].nodeType == Dom.NodeType.TEXT_NODE
-                    && ( previous = startContainer.prev(undefined, 1) )
-                    && previous[0].nodeType == Dom.NodeType.TEXT_NODE) {
+                while (startContainer[0].nodeType === Dom.NodeType.TEXT_NODE &&
+                    ( previous = startContainer.prev(undefined, 1) ) &&
+                    previous[0].nodeType === Dom.NodeType.TEXT_NODE) {
                     startContainer = previous;
                     startOffset += previous[0].nodeValue.length;
                 }
@@ -899,23 +925,23 @@ KISSY.add(function (S,require) {
                 if (!self.collapsed) {
                     // Find out if the start is pointing to a text node that
                     // will be normalized.
-                    if (endContainer[0].nodeType == Dom.NodeType.ELEMENT_NODE) {
+                    if (endContainer[0].nodeType === Dom.NodeType.ELEMENT_NODE) {
                         child = new Node(endContainer[0].childNodes[endOffset]);
 
                         // In this case, move the start information to that
                         // text node.
                         if (child && child[0] &&
-                            child[0].nodeType == Dom.NodeType.TEXT_NODE && endOffset > 0 &&
-                            child[0].previousSibling.nodeType == Dom.NodeType.TEXT_NODE) {
+                            child[0].nodeType === Dom.NodeType.TEXT_NODE && endOffset > 0 &&
+                            child[0].previousSibling.nodeType === Dom.NodeType.TEXT_NODE) {
                             endContainer = child;
                             endOffset = 0;
                         }
                     }
 
                     // Normalize the end.
-                    while (endContainer[0].nodeType == Dom.NodeType.TEXT_NODE
-                        && ( previous = endContainer.prev(undefined, 1) )
-                        && previous[0].nodeType == Dom.NodeType.TEXT_NODE) {
+                    while (endContainer[0].nodeType === Dom.NodeType.TEXT_NODE &&
+                        ( previous = endContainer.prev(undefined, 1) ) &&
+                        previous[0].nodeType === Dom.NodeType.TEXT_NODE) {
                         endContainer = previous;
                         endOffset += previous[0].nodeValue.length;
                     }
@@ -942,7 +968,7 @@ KISSY.add(function (S,require) {
                 clone,
                 self = this,
                 collapsed = self.collapsed;
-            startNode = new Node("<span>", NULL, self.document);
+            startNode = new Node('<span>', NULL, self.document);
             startNode.attr('_ke_bookmark', 1);
             startNode.css('display', 'none');
 
@@ -1013,7 +1039,7 @@ KISSY.add(function (S,require) {
 
             if (( !ignoreStart || collapsed ) &&
                 startContainer[0] &&
-                startContainer[0].nodeType == Dom.NodeType.TEXT_NODE) {
+                startContainer[0].nodeType === Dom.NodeType.TEXT_NODE) {
                 // If the offset is zero, we just insert the new node before
                 // the start.
                 if (!startOffset) {
@@ -1054,7 +1080,7 @@ KISSY.add(function (S,require) {
                 endOffset = self.endOffset;
 
             if (!( ignoreEnd || collapsed ) &&
-                endContainer[0] && endContainer[0].nodeType == Dom.NodeType.TEXT_NODE) {
+                endContainer[0] && endContainer[0].nodeType === Dom.NodeType.TEXT_NODE) {
                 // If the offset is zero, we just insert the new node before
                 // the start.
                 if (!endOffset) {
@@ -1093,7 +1119,7 @@ KISSY.add(function (S,require) {
 
             startContainer[0].insertBefore(node[0], nextNode);
             // Check if we need to update the end boundary.
-            if (startContainer[0] == self.endContainer[0]) {
+            if (startContainer[0] === self.endContainer[0]) {
                 self.endOffset++;
             }
             // Expand the range to embrace the new node.
@@ -1126,9 +1152,9 @@ KISSY.add(function (S,require) {
             } else {
                 // Created with createBookmark().
                 var serializable = bookmark.serializable,
-                    startNode = serializable ? S.one("#" + bookmark.startNode,
+                    startNode = serializable ? S.one('#' + bookmark.startNode,
                         doc) : bookmark.startNode,
-                    endNode = serializable ? S.one("#" + bookmark.endNode,
+                    endNode = serializable ? S.one('#' + bookmark.endNode,
                         doc) : bookmark.endNode;
 
                 // Set the range start at the bookmark start node position.
@@ -1159,10 +1185,10 @@ KISSY.add(function (S,require) {
                 end = self.endContainer,
                 ancestor;
 
-            if (start[0] == end[0]) {
+            if (start[0] === end[0]) {
                 if (includeSelf &&
-                    start[0].nodeType == Dom.NodeType.ELEMENT_NODE &&
-                    self.startOffset == self.endOffset - 1) {
+                    start[0].nodeType === Dom.NodeType.ELEMENT_NODE &&
+                    self.startOffset === self.endOffset - 1) {
                     ancestor = new Node(start[0].childNodes[self.startOffset]);
                 } else {
                     ancestor = start;
@@ -1171,8 +1197,7 @@ KISSY.add(function (S,require) {
                 ancestor = start._4eCommonAncestor(end);
             }
 
-            return ignoreTextNode && ancestor[0].nodeType == Dom.NodeType.TEXT_NODE
-                ? ancestor.parent() : ancestor;
+            return ignoreTextNode && ancestor[0].nodeType === Dom.NodeType.TEXT_NODE ? ancestor.parent() : ancestor;
         },
         /**
          * Enlarge the range as mush as possible
@@ -1191,10 +1216,10 @@ KISSY.add(function (S,require) {
                     sibling,
                     index = left ? 0 : 1,
                     commonReached = 0,
-                    direction = left ? "previousSibling" : "nextSibling",
+                    direction = left ? 'previousSibling' : 'nextSibling',
                     offset = self[left ? 'startOffset' : 'endOffset'];
 
-                if (container[0].nodeType == Dom.NodeType.TEXT_NODE) {
+                if (container[0].nodeType === Dom.NodeType.TEXT_NODE) {
                     if (left) {
                         // 不在字的开头，立即结束
                         if (offset) {
@@ -1202,7 +1227,7 @@ KISSY.add(function (S,require) {
                         }
                     } else {
                         if (offset < container[0].nodeValue.length) {
-                            return
+                            return;
                         }
                     }
 
@@ -1243,7 +1268,7 @@ KISSY.add(function (S,require) {
 
                     enlarge = $(enlarge);
 
-                    if (enlarge.nodeName() == "body") {
+                    if (enlarge.nodeName() === 'body') {
                         return;
                     }
 
@@ -1298,7 +1323,7 @@ KISSY.add(function (S,require) {
                             blockBoundary, // The node on which the enlarging should stop.
                             tailBr, //
                             defaultGuard = Walker.blockBoundary(
-                                ( unit == KER.ENLARGE_LIST_ITEM_CONTENTS ) ?
+                                ( unit === KER.ENLARGE_LIST_ITEM_CONTENTS ) ?
                                 { br: 1 } : NULL),
                         // Record the encountered 'blockBoundary' for later use.
                             boundaryGuard = function (node) {
@@ -1311,7 +1336,7 @@ KISSY.add(function (S,require) {
                         // Record the encountered 'tailBr' for later use.
                             tailBrGuard = function (node) {
                                 var retVal = boundaryGuard(node);
-                                if (!retVal && Dom.nodeName(node) == 'br') {
+                                if (!retVal && Dom.nodeName(node) === 'br') {
                                     tailBr = $(node);
                                 }
                                 return retVal;
@@ -1328,7 +1353,7 @@ KISSY.add(function (S,require) {
                         // the document position of it with 'enlargeable' node.
                         self.setStartAt(
                             blockBoundary,
-                            blockBoundary.nodeName() != 'br' &&
+                            blockBoundary.nodeName() !== 'br' &&
                                 // <table></table> <span>1234^56</span> <table></table>
                                 // =>
                                 // <table></table> ^<span>123456</span>$ <table></table>
@@ -1336,8 +1361,7 @@ KISSY.add(function (S,require) {
                                 // <p> <span>123^456</span> </p>
                                 // =>
                                 // <p> ^<span>123456</span>$ </p>
-                                ( !enlargeable && self.checkStartOfBlock()
-                                    || enlargeable && blockBoundary.contains(enlargeable) ) ?
+                                ( !enlargeable && self.checkStartOfBlock() || enlargeable && blockBoundary.contains(enlargeable) ) ?
                                 KER.POSITION_AFTER_START :
                                 KER.POSITION_AFTER_END);
 
@@ -1348,7 +1372,7 @@ KISSY.add(function (S,require) {
                         walker = new Walker(walkerRange);
 
                         // tailBrGuard only used for on range end.
-                        walker.guard = ( unit == KER.ENLARGE_LIST_ITEM_CONTENTS ) ?
+                        walker.guard = ( unit === KER.ENLARGE_LIST_ITEM_CONTENTS ) ?
                             tailBrGuard : boundaryGuard;
                         blockBoundary = NULL;
                         // End the range right before the block boundary node.
@@ -1362,8 +1386,7 @@ KISSY.add(function (S,require) {
                         // the document position of it with 'enlargeable' node.
                         self.setEndAt(
                             blockBoundary,
-                            ( !enlargeable && self.checkEndOfBlock()
-                                || enlargeable && blockBoundary.contains(enlargeable) ) ?
+                            ( !enlargeable && self.checkEndOfBlock() || enlargeable && blockBoundary.contains(enlargeable) ) ?
                                 KER.POSITION_BEFORE_END :
                                 KER.POSITION_BEFORE_START);
                         // We must include the <br> at the end of range if there's
@@ -1372,7 +1395,7 @@ KISSY.add(function (S,require) {
                             self.setEndAfter(tailBr);
                         }
                 }
-            }
+            };
         })(),
 
         /**
@@ -1386,7 +1409,7 @@ KISSY.add(function (S,require) {
 
             // If the starting node is a text node, and non-empty before the offset,
             // then we're surely not at the start of block.
-            if (startOffset && startContainer[0].nodeType == Dom.NodeType.TEXT_NODE) {
+            if (startOffset && startContainer[0].nodeType === Dom.NodeType.TEXT_NODE) {
                 var textBefore = S.trim(startContainer[0].nodeValue.substring(0, startOffset));
                 if (textBefore.length) {
                     return FALSE;
@@ -1423,7 +1446,7 @@ KISSY.add(function (S,require) {
 
             // If the ending node is a text node, and non-empty after the offset,
             // then we're surely not at the end of block.
-            if (endContainer[0].nodeType == Dom.NodeType.TEXT_NODE) {
+            if (endContainer[0].nodeType === Dom.NodeType.TEXT_NODE) {
                 var textAfter = S.trim(endContainer[0].nodeValue.substring(endOffset));
                 if (textAfter.length) {
                     return FALSE;
@@ -1458,16 +1481,16 @@ KISSY.add(function (S,require) {
         checkBoundaryOfElement: function (element, checkType) {
             var walkerRange = this.clone();
             // Expand the range to element boundary.
-            walkerRange[ checkType == KER.START ?
+            walkerRange[ checkType === KER.START ?
                 'setStartAt' : 'setEndAt' ]
-                (element, checkType == KER.START ?
+                (element, checkType === KER.START ?
                     KER.POSITION_AFTER_START
                     : KER.POSITION_BEFORE_END);
 
             var walker = new Walker(walkerRange);
 
             walker.evaluator = elementBoundaryEval;
-            return walker[ checkType == KER.START ?
+            return walker[ checkType === KER.START ?
                 'checkBackward' : 'checkForward' ]();
         },
 
@@ -1483,11 +1506,11 @@ KISSY.add(function (S,require) {
                 endOffset = self.endOffset,
                 childCount;
 
-            if (startNode[0].nodeType == Dom.NodeType.ELEMENT_NODE) {
+            if (startNode[0].nodeType === Dom.NodeType.ELEMENT_NODE) {
                 childCount = startNode[0].childNodes.length;
                 if (childCount > startOffset) {
                     startNode = $(startNode[0].childNodes[startOffset]);
-                } else if (childCount == 0) {
+                } else if (childCount === 0) {
                     // ?? startNode
                     startNode = startNode._4ePreviousSourceNode();
                 } else {
@@ -1507,20 +1530,21 @@ KISSY.add(function (S,require) {
                 }
             }
 
-            if (endNode[0].nodeType == Dom.NodeType.ELEMENT_NODE) {
+            if (endNode[0].nodeType === Dom.NodeType.ELEMENT_NODE) {
                 childCount = endNode[0].childNodes.length;
                 if (childCount > endOffset) {
                     endNode = $(endNode[0].childNodes[endOffset])
-                        // in case endOffset == 0
+                        // in case endOffset === 0
                         ._4ePreviousSourceNode(TRUE);
-                } else if (childCount == 0) {
+                } else if (childCount === 0) {
                     endNode = endNode._4ePreviousSourceNode();
                 } else {
                     // endOffset > childCount but childCount is not 0
                     // Try to take the node just before the current position.
                     endNode = endNode[0];
-                    while (endNode.lastChild)
+                    while (endNode.lastChild) {
                         endNode = endNode.lastChild;
+                    }
                     endNode = $(endNode);
                 }
             }
@@ -1578,7 +1602,7 @@ KISSY.add(function (S,require) {
             }
 
             // Get or fix current blocks.
-            if (blockTag != 'br') {
+            if (blockTag !== 'br') {
                 if (!startBlock) {
                     startBlock = self.fixBlock(TRUE, blockTag);
                     endBlock = new ElementPath(self.endContainer).block;
@@ -1596,7 +1620,7 @@ KISSY.add(function (S,require) {
             // Delete the current contents.
             self.deleteContents();
 
-            if (startBlock && startBlock[0] == endBlock[0]) {
+            if (startBlock && startBlock[0] === endBlock[0]) {
                 if (isEndOfBlock) {
                     elementPath = new ElementPath(self.startContainer);
                     self.moveToPosition(endBlock, KER.POSITION_AFTER_END);
@@ -1634,8 +1658,9 @@ KISSY.add(function (S,require) {
          */
         splitElement: function (toSplit) {
             var self = this;
-            if (!self.collapsed)
+            if (!self.collapsed) {
                 return NULL;
+            }
 
             // Extract the contents of the block from the selection point to the end
             // of its contents.
@@ -1664,7 +1689,7 @@ KISSY.add(function (S,require) {
             function nextDFS(node, childOnly) {
                 var next;
 
-                if (node[0].nodeType == Dom.NodeType.ELEMENT_NODE &&
+                if (node[0].nodeType === Dom.NodeType.ELEMENT_NODE &&
                     node._4eIsEditable()) {
                     next = node[ isMoveToEnd ? 'last' : 'first' ](nonWhitespaceOrIsBookmark, 1);
                 }
@@ -1680,7 +1705,7 @@ KISSY.add(function (S,require) {
 
             while (el) {
                 // Stop immediately if we've found a text node.
-                if (el[0].nodeType == Dom.NodeType.TEXT_NODE) {
+                if (el[0].nodeType === Dom.NodeType.TEXT_NODE) {
                     self.moveToPosition(el, isMoveToEnd ?
                         KER.POSITION_AFTER_END :
                         KER.POSITION_BEFORE_START);
@@ -1689,7 +1714,7 @@ KISSY.add(function (S,require) {
                 }
 
                 // If an editable element is found, move inside it, but not stop the searching.
-                if (el[0].nodeType == Dom.NodeType.ELEMENT_NODE && el._4eIsEditable()) {
+                if (el[0].nodeType === Dom.NodeType.ELEMENT_NODE && el._4eIsEditable()) {
                     self.moveToPosition(el, isMoveToEnd ?
                         KER.POSITION_BEFORE_END :
                         KER.POSITION_AFTER_START);
@@ -1709,7 +1734,7 @@ KISSY.add(function (S,require) {
         selectNodeContents: function (node) {
             var self = this, domNode = node[0];
             self.setStart(node, 0);
-            self.setEnd(node, domNode.nodeType == Dom.NodeType.TEXT_NODE ?
+            self.setEnd(node, domNode.nodeType === Dom.NodeType.TEXT_NODE ?
                 domNode.nodeValue.length :
                 domNode.childNodes.length);
         },

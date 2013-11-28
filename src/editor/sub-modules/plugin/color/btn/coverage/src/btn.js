@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ',"src":' + jscoverage_quote(this.src)
+            + ','src':' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -459,7 +459,7 @@ KISSY.add(function(S, require) {
   self.on('click', function() {
   _$jscoverage['/btn.js'].functionData[5]++;
   _$jscoverage['/btn.js'].lineData[73]++;
-  var checked = self.get("checked");
+  var checked = self.get('checked');
   _$jscoverage['/btn.js'].lineData[74]++;
   if (visit5_74_1(checked)) {
     _$jscoverage['/btn.js'].lineData[75]++;
@@ -473,7 +473,7 @@ KISSY.add(function(S, require) {
   _prepare: function() {
   _$jscoverage['/btn.js'].functionData[6]++;
   _$jscoverage['/btn.js'].lineData[83]++;
-  var self = this, editor = self.get("editor"), prefixCls = editor.get('prefixCls'), colorPanel;
+  var self = this, editor = self.get('editor'), prefixCls = editor.get('prefixCls'), colorPanel;
   _$jscoverage['/btn.js'].lineData[88]++;
   self.colorWin = new Overlay4E({
   elAttrs: {
@@ -488,17 +488,17 @@ KISSY.add(function(S, require) {
   _$jscoverage['/btn.js'].lineData[102]++;
   colorPanel = colorWin.get('contentEl');
   _$jscoverage['/btn.js'].lineData[103]++;
-  colorPanel.on("click", self._selectColor, self);
+  colorPanel.on('click', self._selectColor, self);
   _$jscoverage['/btn.js'].lineData[104]++;
   colorWin.on('hide', function() {
   _$jscoverage['/btn.js'].functionData[7]++;
   _$jscoverage['/btn.js'].lineData[105]++;
-  self.set("checked", false);
+  self.set('checked', false);
 });
   _$jscoverage['/btn.js'].lineData[107]++;
   var others = colorPanel.one("." + prefixCls + "editor-color-others");
   _$jscoverage['/btn.js'].lineData[108]++;
-  others.on("click", function(ev) {
+  others.on('click', function(ev) {
   _$jscoverage['/btn.js'].functionData[8]++;
   _$jscoverage['/btn.js'].lineData[109]++;
   ev.halt();
@@ -532,7 +532,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/btn.js'].lineData[134]++;
   ev.halt();
   _$jscoverage['/btn.js'].lineData[135]++;
-  var self = this, editor = self.get("editor"), prefixCls = editor.get('prefixCls'), t = new Node(ev.target);
+  var self = this, editor = self.get('editor'), prefixCls = editor.get('prefixCls'), t = new Node(ev.target);
   _$jscoverage['/btn.js'].lineData[139]++;
   if (visit7_139_1(t.hasClass(prefixCls + "editor-color-a"))) {
     _$jscoverage['/btn.js'].lineData[140]++;

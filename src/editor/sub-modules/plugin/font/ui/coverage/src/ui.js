@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ',"src":' + jscoverage_quote(this.src)
+            + ','src':' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -306,7 +306,7 @@ _$jscoverage['/ui.js'].branchData['75'][1].init(188, 33, 'editor.queryCommandVal
 function visit9_75_1(result) {
   _$jscoverage['/ui.js'].branchData['75'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ui.js'].branchData['71'][1].init(22, 45, 'editor.get("mode") == Editor.Mode.SOURCE_MODE');
+}_$jscoverage['/ui.js'].branchData['71'][1].init(22, 45, 'editor.get('mode') == Editor.Mode.SOURCE_MODE');
 function visit8_71_1(result) {
   _$jscoverage['/ui.js'].branchData['71'][1].ranCondition(result);
   return result;
@@ -334,7 +334,7 @@ function visit3_31_1(result) {
 function visit2_29_1(result) {
   _$jscoverage['/ui.js'].branchData['29'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ui.js'].branchData['23'][1].init(21, 45, 'editor.get("mode") == Editor.Mode.SOURCE_MODE');
+}_$jscoverage['/ui.js'].branchData['23'][1].init(21, 45, 'editor.get('mode') == Editor.Mode.SOURCE_MODE');
 function visit1_23_1(result) {
   _$jscoverage['/ui.js'].branchData['23'][1].ranCondition(result);
   return result;
@@ -352,25 +352,25 @@ KISSY.add(function(S, require) {
   initializer: function() {
   _$jscoverage['/ui.js'].functionData[1]++;
   _$jscoverage['/ui.js'].lineData[14]++;
-  var self = this, editor = self.get("editor");
+  var self = this, editor = self.get('editor');
   _$jscoverage['/ui.js'].lineData[16]++;
-  self.on("click", function(ev) {
+  self.on('click', function(ev) {
   _$jscoverage['/ui.js'].functionData[2]++;
   _$jscoverage['/ui.js'].lineData[17]++;
-  var v = ev.target.get("value"), cmdType = self.get("cmdType");
+  var v = ev.target.get('value'), cmdType = self.get('cmdType');
   _$jscoverage['/ui.js'].lineData[19]++;
   editor.execCommand(cmdType, v);
 });
   _$jscoverage['/ui.js'].lineData[22]++;
-  editor.on("selectionChange", function() {
+  editor.on('selectionChange', function() {
   _$jscoverage['/ui.js'].functionData[3]++;
   _$jscoverage['/ui.js'].lineData[23]++;
-  if (visit1_23_1(editor.get("mode") == Editor.Mode.SOURCE_MODE)) {
+  if (visit1_23_1(editor.get('mode') == Editor.Mode.SOURCE_MODE)) {
     _$jscoverage['/ui.js'].lineData[24]++;
     return;
   }
   _$jscoverage['/ui.js'].lineData[27]++;
-  var cmdType = self.get("cmdType"), menu = self.get('menu'), children = visit2_29_1(menu.get && menu.get('children'));
+  var cmdType = self.get('cmdType'), menu = self.get('menu'), children = visit2_29_1(menu.get && menu.get('children'));
   _$jscoverage['/ui.js'].lineData[31]++;
   if (visit3_31_1(children)) {
     _$jscoverage['/ui.js'].lineData[34]++;
@@ -384,18 +384,18 @@ KISSY.add(function(S, require) {
         _$jscoverage['/ui.js'].lineData[38]++;
         var item = children[j];
         _$jscoverage['/ui.js'].lineData[39]++;
-        var value = item.get("value");
+        var value = item.get('value');
         _$jscoverage['/ui.js'].lineData[40]++;
         if (visit6_40_1(currentValue == value.toLowerCase())) {
           _$jscoverage['/ui.js'].lineData[41]++;
-          self.set("value", value);
+          self.set('value', value);
           _$jscoverage['/ui.js'].lineData[42]++;
           return;
         }
       }
     }
     _$jscoverage['/ui.js'].lineData[46]++;
-    self.set("value", null);
+    self.set('value', null);
   }
 });
 }});
@@ -404,12 +404,12 @@ KISSY.add(function(S, require) {
   initializer: function() {
   _$jscoverage['/ui.js'].functionData[4]++;
   _$jscoverage['/ui.js'].lineData[56]++;
-  var self = this, editor = self.get("editor"), cmdType = self.get("cmdType");
+  var self = this, editor = self.get('editor'), cmdType = self.get('cmdType');
   _$jscoverage['/ui.js'].lineData[59]++;
-  self.on("click", function() {
+  self.on('click', function() {
   _$jscoverage['/ui.js'].functionData[5]++;
   _$jscoverage['/ui.js'].lineData[60]++;
-  var checked = self.get("checked");
+  var checked = self.get('checked');
   _$jscoverage['/ui.js'].lineData[61]++;
   if (visit7_61_1(checked)) {
     _$jscoverage['/ui.js'].lineData[62]++;
@@ -424,22 +424,22 @@ KISSY.add(function(S, require) {
   }
 });
   _$jscoverage['/ui.js'].lineData[69]++;
-  editor.on("selectionChange", function() {
+  editor.on('selectionChange', function() {
   _$jscoverage['/ui.js'].functionData[6]++;
   _$jscoverage['/ui.js'].lineData[71]++;
-  if (visit8_71_1(editor.get("mode") == Editor.Mode.SOURCE_MODE)) {
+  if (visit8_71_1(editor.get('mode') == Editor.Mode.SOURCE_MODE)) {
     _$jscoverage['/ui.js'].lineData[72]++;
     return;
   }
   _$jscoverage['/ui.js'].lineData[74]++;
-  var cmdType = self.get("cmdType");
+  var cmdType = self.get('cmdType');
   _$jscoverage['/ui.js'].lineData[75]++;
   if (visit9_75_1(editor.queryCommandValue(cmdType))) {
     _$jscoverage['/ui.js'].lineData[76]++;
-    self.set("checked", true);
+    self.set('checked', true);
   } else {
     _$jscoverage['/ui.js'].lineData[78]++;
-    self.set("checked", false);
+    self.set('checked', false);
   }
 });
 }}, {

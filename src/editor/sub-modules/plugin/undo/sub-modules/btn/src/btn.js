@@ -12,12 +12,12 @@ KISSY.add(function (S, require) {
 
         bindUI: function () {
             var self = this,
-                editor = self.get("editor");
+                editor = self.get('editor');
 
-            self.on("click", function () {
-                editor.execCommand("undo");
+            self.on('click', function () {
+                editor.execCommand('undo');
             });
-            editor.on("afterUndo afterRedo afterSave", function (ev) {
+            editor.on('afterUndo afterRedo afterSave', function (ev) {
                 var index = ev.index;
                 //有状态可后退
                 if (index > 0) {
@@ -53,11 +53,11 @@ KISSY.add(function (S, require) {
 
         bindUI: function () {
             var self = this,
-                editor = self.get("editor");
-            self.on("click", function () {
-                editor.execCommand("redo");
+                editor = self.get('editor');
+            self.on('click', function () {
+                editor.execCommand('redo');
             });
-            editor.on("afterUndo afterRedo afterSave", function (ev) {
+            editor.on('afterUndo afterRedo afterSave', function (ev) {
                 var history = ev.history,
                     index = ev.index;
                 //有状态可前进

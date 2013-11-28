@@ -151,7 +151,7 @@ KISSY.add(function (S, engine) {
         });
 
         t("Element Selector html", "html", ["html"]);
-        t("Element Selector body", "body", ["body"]);
+        t("Element Selector body", 'body', ['body']);
         t("Element Selector p", "#qunit-fixture p", ["firstp", "ap", "sndp", "en", "sap", "first"]);
 
         t("Parent Element", "dl ol", ["empty", "listWithTabIndex"]);
@@ -317,8 +317,8 @@ KISSY.add(function (S, engine) {
 
     describe('id', function () {
 
-        t("ID Selector", "#body", ["body"]);
-        t("ID Selector w/ Element", "body#body", ["body"]);
+        t("ID Selector", "#body", ['body']);
+        t("ID Selector w/ Element", "body#body", ['body']);
         t("ID Selector w/ Element", "ul#first", []);
         t("ID selector with existing ID descendant", "#firstp #simon1", ["simon1"]);
         t("ID selector with non-existant descendant", "#firstp #foobar", []);
@@ -467,7 +467,7 @@ KISSY.add(function (S, engine) {
         });
 
         it("Make sure that rooted queries on forms (with possible expandos) work.", function () {
-            var form = jQuery("<form><input name='id'/></form>").appendTo("body");
+            var form = jQuery("<form><input name='id'/></form>").appendTo('body');
             expect(select('input', form[0]).length).toEqual(1);
         });
 

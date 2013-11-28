@@ -43,7 +43,7 @@ KISSY.add(function (S, require, exports, module) {
                     var config11 = {};
                     var params12 = [];
                     var id13 = getPropertyOrRunCommandUtil(engine, scopes, {}, "month", 0, 7, undefined, true);
-                    var id14 = getPropertyOrRunCommandUtil(engine, scopes, {}, "value", 0, 7, undefined, true);
+                    var id14 = getPropertyOrRunCommandUtil(engine, scopes, {}, 'value', 0, 7, undefined, true);
                     params12.push(id13 === id14);
                     config11.params = params12;
                     config11.fn = function (scopes) {
@@ -67,7 +67,7 @@ KISSY.add(function (S, require, exports, module) {
                     var id18 = getPropertyOrRunCommandUtil(engine, scopes, config19, "getBaseCssClasses", 0, 13, true, undefined);
                     buffer += id18;
                     buffer += '">\n            ';
-                    var id21 = getPropertyOrRunCommandUtil(engine, scopes, {}, "content", 0, 14, undefined, false);
+                    var id21 = getPropertyOrRunCommandUtil(engine, scopes, {}, 'content', 0, 14, undefined, false);
                     buffer += getExpressionUtil(id21, true);
                     buffer += '\n        </a>\n    </td>\n    ';
                     return buffer;

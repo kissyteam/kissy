@@ -6,7 +6,7 @@
 KISSY.add(function (S, require) {
     var Editor = require('editor');
     var Node = S.Node;
-    var CLASS = "editor-element-path";
+    var CLASS = 'editor-element-path';
 
     function ElementPaths(cfg) {
         var self = this;
@@ -20,16 +20,16 @@ KISSY.add(function (S, require) {
             var self = this,
                 cfg = self.cfg,
                 editor = cfg.editor;
-            self.holder = new Node("<span>");
+            self.holder = new Node('<span>');
             self.holder.appendTo(editor.get('statusBarEl'), undefined);
-            editor.on("selectionChange", self._selectionChange, self);
+            editor.on('selectionChange', self._selectionChange, self);
             Editor.Utils.sourceDisable(editor, self);
         },
         disable: function () {
-            this.holder.css("visibility", "hidden");
+            this.holder.css('visibility', 'hidden');
         },
         enable: function () {
-            this.holder.css("visibility", "");
+            this.holder.css('visibility', '');
         },
         _selectionChange: function (ev) {
             var self = this,
@@ -49,17 +49,18 @@ KISSY.add(function (S, require) {
             for (i = 0; i < elements.length; i++) {
                 element = elements[i];
                 // 考虑 fake objects
-                var type = element.attr("_ke_real_element_type") || element.nodeName(),
-                    a = new Node("<a " +
-                        "href='javascript(\"" +
-                        type + "\")' " +
-                        "class='" +
-                        prefixCls + CLASS + "'>" +
+                var type = element.attr('_keRealElementType') || element.nodeName(),
+                    a = new Node('<a ' +
+                        'href="javascript(\'' +
+                        type + '\')" ' +
+                        'class="' +
+                        prefixCls + CLASS + '">' +
                         type +
-                        "</a>");
+                        '</a>');
                 self._cache.push(a);
+                /*jshint loopfunc:true*/
                 (function (element) {
-                    a.on("click", function (ev2) {
+                    a.on('click', function (ev2) {
                         ev2.halt();
                         editor.focus();
                         setTimeout(function () {
@@ -84,7 +85,7 @@ KISSY.add(function (S, require) {
             var elemPath = new ElementPaths({
                 editor: editor
             });
-            editor.on("destroy", function () {
+            editor.on('destroy', function () {
                 elemPath.destroy();
             });
         }

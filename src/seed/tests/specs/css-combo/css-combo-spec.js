@@ -7,7 +7,7 @@ describe("css-combo", function () {
         $("<div>" +
             "<div class='test2'></div>" +
             "<div class='test1'></div>" +
-            "</div>").appendTo("body");
+            "</div>").appendTo('body');
 
         KISSY.config({
             packages: {
@@ -54,7 +54,7 @@ describe("css-combo", function () {
         $("<div>" +
             "<div class='test2'></div>" +
             "<div class='test1'></div>" +
-            "</div>").appendTo("body");
+            "</div>").appendTo('body');
 
         KISSY.config({
 

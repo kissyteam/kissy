@@ -4,6 +4,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
+    /*global alert*/
     var Editor = require('editor');
     var IO = require('io');
     var Dialog4E = require('../dialog');
@@ -18,16 +19,16 @@ KISSY.add(function (S, require) {
         MARGIN_DEFAULT = 10,
         IMAGE_DIALOG_BODY_HTML = bodyTpl,
 
-        IMAGE_DIALOG_FOOT_HTML = "<div style='padding:5px 20px 20px;'>" +
-            "<a " +
-            "href='javascript:void(\'确定\')' " +
-            "class='{prefixCls}img-insert {prefixCls}button ks-inline-block' " +
-            "style='margin-right:30px;'>确定</a> " +
-            "<a  " +
-            "href='javascript:void(\'取消\')' " +
-            "class='{prefixCls}img-cancel {prefixCls}button ks-inline-block'>取消</a></div>",
+        IMAGE_DIALOG_FOOT_HTML = '<div style="padding:5px 20px 20px;">' +
+            '<a ' +
+            'href="javascript:void(\'确定\')" ' +
+            'class="{prefixCls}img-insert {prefixCls}button ks-inline-block" ' +
+            'style="margin-right:30px;">确定</a> ' +
+            '<a  ' +
+            'href="javascript:void(\'取消\')" ' +
+            'class="{prefixCls}img-cancel {prefixCls}button ks-inline-block">取消</a></div>',
 
-        warning = "请点击浏览上传图片",
+        warning = '请点击浏览上传图片',
 
         valInput = Editor.Utils.valInput;
 
@@ -35,7 +36,7 @@ KISSY.add(function (S, require) {
         var ret = img;
         while (ret) {
             var name = ret.nodeName();
-            if (name == "a") {
+            if (name === 'a') {
                 return ret;
             }
             if (dtd.$block[name] || dtd.$blockLimit[name]) {
@@ -50,11 +51,11 @@ KISSY.add(function (S, require) {
         var self = this;
         self.editor = editor;
         self.imageCfg = config || {};
-        self.cfg = self.imageCfg["upload"] || null;
-        self.suffix = self.cfg && self.cfg["suffix"] || "png,jpg,jpeg,gif";
+        self.cfg = self.imageCfg.upload || null;
+        self.suffix = self.cfg && self.cfg.suffix || 'png,jpg,jpeg,gif';
         // 不要加g：http://yiminghe.javaeye.com/blog/581347
-        self.suffix_reg = new RegExp(self.suffix.split(/,/).join("|") + "$", "i");
-        self.suffix_warning = "只允许后缀名为" + self.suffix + "的图片";
+        self.suffixReg = new RegExp(self.suffix.split(/,/).join('|') + '$', 'i');
+        self.suffixWarning = '只允许后缀名为' + self.suffix + '的图片';
     }
 
     S.augment(ImageDialog, {
@@ -64,7 +65,7 @@ KISSY.add(function (S, require) {
                 prefixCls = editor.get('prefixCls') + 'editor-';
             self.dialog = self.d = new Dialog4E({
                 width: 500,
-                headerContent: "图片",
+                headerContent: '图片',
                 bodyContent: S.substitute(IMAGE_DIALOG_BODY_HTML, {
                     prefixCls: prefixCls
                 }),
@@ -75,22 +76,22 @@ KISSY.add(function (S, require) {
             }).render();
 
             var content = self.d.get('el'),
-                cancel = content.one("." + prefixCls + "img-cancel"),
-                ok = content.one("." + prefixCls + "img-insert"),
+                cancel = content.one('.' + prefixCls + 'img-cancel'),
+                ok = content.one('.' + prefixCls + 'img-insert'),
                 verifyInputs = Editor.Utils.verifyInputs,
-                commonSettingTable = content.one("." + prefixCls + "img-setting");
-            self.uploadForm = content.one("." + prefixCls + "img-upload-form");
-            self.imgLocalUrl = content.one("." + prefixCls + "img-local-url");
+                commonSettingTable = content.one('.' + prefixCls + 'img-setting');
+            self.uploadForm = content.one('.' + prefixCls + 'img-upload-form');
+            self.imgLocalUrl = content.one('.' + prefixCls + 'img-local-url');
             self.tab = new Tabs({
-                "srcNode": self.d.get("body").one('.' + prefixCls + 'img-tabs'),
+                'srcNode': self.d.get('body').one('.' + prefixCls + 'img-tabs'),
                 prefixCls: prefixCls + 'img-'
             }).render();
             self.imgLocalUrl.val(warning);
-            self.imgUrl = content.one("." + prefixCls + "img-url");
-            self.imgHeight = content.one("." + prefixCls + "img-height");
-            self.imgWidth = content.one("." + prefixCls + "img-width");
-            self.imgRatio = content.one("." + prefixCls + "img-ratio");
-            self.imgAlign = MenuButton.Select.decorate(content.one("." + prefixCls + "img-align"), {
+            self.imgUrl = content.one('.' + prefixCls + 'img-url');
+            self.imgHeight = content.one('.' + prefixCls + 'img-height');
+            self.imgWidth = content.one('.' + prefixCls + 'img-width');
+            self.imgRatio = content.one('.' + prefixCls + 'img-ratio');
+            self.imgAlign = MenuButton.Select.decorate(content.one('.' + prefixCls + 'img-align'), {
                 prefixCls: prefixCls + 'big-',
                 width: 80,
                 menuCfg: {
@@ -98,16 +99,16 @@ KISSY.add(function (S, require) {
                     render: content
                 }
             });
-            self.imgMargin = content.one("." + prefixCls + "img-margin");
-            self.imgLink = content.one("." + prefixCls + "img-link");
-            self.imgLinkBlank = content.one("." + prefixCls + "img-link-blank");
+            self.imgMargin = content.one('.' + prefixCls + 'img-margin');
+            self.imgLink = content.one('.' + prefixCls + 'img-link');
+            self.imgLinkBlank = content.one('.' + prefixCls + 'img-link-blank');
             var placeholder = Editor.Utils.placeholder;
             placeholder(self.imgUrl, HTTP_TIP);
             placeholder(self.imgHeight, AUTOMATIC_TIP);
             placeholder(self.imgWidth, AUTOMATIC_TIP);
-            placeholder(self.imgLink, "http://");
+            placeholder(self.imgLink, 'http://');
 
-            self.imgHeight.on("keyup", function () {
+            self.imgHeight.on('keyup', function () {
                 var v = parseInt(valInput(self.imgHeight));
                 if (!v || !self.imgRatio[0].checked ||
                     self.imgRatio[0].disabled || !self.imgRatioValue) {
@@ -116,7 +117,7 @@ KISSY.add(function (S, require) {
                 valInput(self.imgWidth, Math.floor(v * self.imgRatioValue));
             });
 
-            self.imgWidth.on("keyup", function () {
+            self.imgWidth.on('keyup', function () {
                 var v = parseInt(valInput(self.imgWidth));
                 if (!v || !self.imgRatio[0].checked ||
                     self.imgRatio[0].disabled || !self.imgRatioValue) {
@@ -125,29 +126,29 @@ KISSY.add(function (S, require) {
                 valInput(self.imgHeight, Math.floor(v / self.imgRatioValue));
             });
 
-            cancel.on("click", function (ev) {
+            cancel.on('click', function (ev) {
                 self.d.hide();
                 ev.halt();
             });
 
-            var loadingCancel = new Node("<a class='" + prefixCls + "button ks-inline-block' " +
-                "style='position:absolute;" +
-                "z-index:" +
-                Editor.baseZIndex(Editor.ZIndexManager.LOADING_CANCEL) + ";" +
-                "left:-9999px;" +
-                "top:-9999px;" +
-                "'>取消上传</a>").appendTo(document.body, undefined);
+            var loadingCancel = new Node('<a class="' + prefixCls + 'button ks-inline-block" ' +
+                'style="position:absolute;' +
+                'z-index:' +
+                Editor.baseZIndex(Editor.ZIndexManager.LOADING_CANCEL) + ';' +
+                'left:-9999px;' +
+                'top:-9999px;' +
+                '">取消上传</a>').appendTo(document.body, undefined);
 
             self.loadingCancel = loadingCancel;
 
             function getFileSize(file) {
-                if (file['files']) {
-                    return file['files'][0].size;
+                if (file.files) {
+                    return file.files[0].size;
                 } else if (1 > 2) {
                     //ie 会安全警告
                     try {
-                        var fso = new ActiveXObject("Scripting.FileSystemObject"),
-                            file2 = fso['GetFile'](file.value);
+                        var fso = new window.ActiveXObject('Scripting.FileSystemObject'),
+                            file2 = fso.GetFile(file.value);
                         return file2.size;
                     } catch (e) {
                     }
@@ -155,24 +156,24 @@ KISSY.add(function (S, require) {
                 return 0;
             }
 
-            ok.on("click", function (ev) {
+            ok.on('click', function (ev) {
                 ev.halt();
-                if ((self.imageCfg['remote'] === false ||
-                    S.indexOf(self.tab.getSelectedTab(), self.tab.getTabs()) == 1) &&
+                if ((self.imageCfg.remote === false ||
+                    S.indexOf(self.tab.getSelectedTab(), self.tab.getTabs()) === 1) &&
                     self.cfg) {
 
                     if (!verifyInputs(commonSettingTable.all('input'))) {
                         return;
                     }
 
-                    if (self.imgLocalUrl.val() == warning) {
-                        alert("请先选择文件!");
+                    if (self.imgLocalUrl.val() === warning) {
+                        alert('请先选择文件!');
                         return;
                     }
 
-                    if (!self.suffix_reg.test(self.imgLocalUrl.val())) {
-                        alert(self.suffix_warning);
-                        // 清除已选文件 ie 不能使用 val("")
+                    if (!self.suffixReg.test(self.imgLocalUrl.val())) {
+                        alert(self.suffixWarning);
+                        // 清除已选文件 ie 不能使用 val('')
                         self.uploadForm[0].reset();
                         self.imgLocalUrl.val(warning);
                         return;
@@ -181,26 +182,26 @@ KISSY.add(function (S, require) {
                     var size = (getFileSize(self.fileInput[0]));
 
                     if (sizeLimit && sizeLimit < (size / 1000)) {
-                        alert("上传图片最大：" + sizeLimit / 1000 + "M");
+                        alert('上传图片最大：' + sizeLimit / 1000 + 'M');
                         return;
                     }
 
                     self.d.loading();
 
                     // 取消当前iframe的上传
-                    loadingCancel.on("click", function (ev) {
+                    loadingCancel.on('click', function (ev) {
                         ev.halt();
                         uploadIO.abort();
                     });
 
-                    var serverParams = Editor.Utils.normParams(self.cfg['serverParams']) || {};
+                    var serverParams = Editor.Utils.normParams(self.cfg.serverParams) || {};
 
                     // 后端返回设置 domain 的 script，每次都传，防止 domain 中途变化
                     serverParams['document-domain'] = document.domain;
 
                     var uploadIO = IO({
                         data: serverParams,
-                        url: self.cfg['serverUrl'],
+                        url: self.cfg.serverUrl,
                         form: self.uploadForm[0],
                         dataType: 'json',
                         type: 'post',
@@ -210,20 +211,20 @@ KISSY.add(function (S, require) {
                                 top: -9999
                             });
                             self.d.unloading();
-                            if (status == "abort") {
+                            if (status === 'abort') {
                                 return;
                             }
                             if (!data) {
-                                data = {error: "服务器出错，请重试"};
+                                data = {error: '服务器出错，请重试'};
                             }
                             if (data.error) {
                                 alert(data.error);
                                 return;
                             }
-                            valInput(self.imgUrl, data['imgUrl']);
+                            valInput(self.imgUrl, data.imgUrl);
                             // chrome 中空 iframe 的 img 请求 header 中没有 refer
                             // 在主页面先请求一次，带入 header
-                            new Image().src = data['imgUrl'];
+                            new Image().src = data.imgUrl;
                             self._insert();
                         }
                     });
@@ -239,50 +240,52 @@ KISSY.add(function (S, require) {
                     });
 
                 } else {
-                    if (!verifyInputs(content.all('input')))
+                    if (!verifyInputs(content.all('input'))) {
                         return;
+                    }
                     self._insert();
                 }
             });
 
             if (self.cfg) {
-                if (self.cfg['extraHTML']) {
-                    content.one("." + prefixCls + "img-up-extraHTML")
-                        .html(self.cfg['extraHTML']);
+                if (self.cfg.extraHTML) {
+                    content.one('.' + prefixCls + 'img-up-extraHTML')
+                        .html(self.cfg.extraHTML);
                 }
-                var ke_image_up = content.one("." + prefixCls + "image-up"),
-                    sizeLimit = self.cfg && self.cfg['sizeLimit'];
+                var imageUp = content.one('.' + prefixCls + 'image-up'),
+                    sizeLimit = self.cfg && self.cfg.sizeLimit;
 
-                self.fileInput = new Node("<input " +
-                    "type='file' " +
-                    "style='position:absolute;" +
-                    "cursor:pointer;" +
-                    "left:" +
-                    (UA.ie ? "360" : (UA["chrome"] ? "319" : "369")) +
-                    "px;" +
-                    "z-index:2;" +
-                    "top:0px;" +
-                    "height:26px;' " +
-                    "size='1' " +
-                    "name='" + (self.cfg['fileInput'] || "Filedata") + "'/>")
+                self.fileInput = new Node('<input ' +
+                    'type="file" ' +
+                    'style="position:absolute;' +
+                    'cursor:pointer;' +
+                    'left:' +
+                    (UA.ie ? '360' : (UA.chrome ? '319' : '369')) +
+                    'px;' +
+                    'z-index:2;' +
+                    'top:0px;' +
+                    'height:26px;" ' +
+                    'size="1" ' +
+                    'name="' + (self.cfg.fileInput || 'Filedata') + '"/>')
                     .insertAfter(self.imgLocalUrl);
-                if (sizeLimit)
-                    warning = "单张图片容量不超过 " + (sizeLimit / 1000) + " M";
+                if (sizeLimit) {
+                    warning = '单张图片容量不超过 ' + (sizeLimit / 1000) + ' M';
+                }
                 self.imgLocalUrl.val(warning);
-                self.fileInput.css("opacity", 0);
+                self.fileInput.css('opacity', 0);
                 self.fileInput.on('mouseenter', function () {
-                    ke_image_up.addClass("" + prefixCls + "button-hover");
+                    imageUp.addClass('' + prefixCls + 'button-hover');
                 });
                 self.fileInput.on('mouseleave', function () {
-                    ke_image_up.removeClass("" + prefixCls + "button-hover");
+                    imageUp.removeClass('' + prefixCls + 'button-hover');
                 });
-                self.fileInput.on("change", function () {
+                self.fileInput.on('change', function () {
                     var file = self.fileInput.val();
                     //去除路径
-                    self.imgLocalUrl.val(file.replace(/.+[\/\\]/, ""));
+                    self.imgLocalUrl.val(file.replace(/.+[\/\\]/, ''));
                 });
 
-                if (self.imageCfg['remote'] === false) {
+                if (self.imageCfg.remote === false) {
                     self.tab.removeItemAt(0, 1);
                 }
             }
@@ -299,21 +302,21 @@ KISSY.add(function (S, require) {
                 img,
                 height = parseInt(valInput(self.imgHeight)),
                 width = parseInt(valInput(self.imgWidth)),
-                align = self.imgAlign.get("value"),
+                align = self.imgAlign.get('value'),
                 margin = parseInt(self.imgMargin.val()),
                 style = '';
 
             if (height) {
-                style += "height:" + height + "px;";
+                style += 'height:' + height + 'px;';
             }
             if (width) {
-                style += "width:" + width + "px;";
+                style += 'width:' + width + 'px;';
             }
-            if (align != 'none') {
-                style += "float:" + align + ";";
+            if (align !== 'none') {
+                style += 'float:' + align + ';';
             }
-            if (!isNaN(margin) && margin != 0) {
-                style += "margin:" + margin + "px;";
+            if (!isNaN(margin) && margin !== 0) {
+                style += 'margin:' + margin + 'px;';
             }
 
             self.d.hide();
@@ -327,22 +330,22 @@ KISSY.add(function (S, require) {
                 img = self.selectedEl;
                 self.editor.execCommand('save');
                 self.selectedEl.attr({
-                    "src": url,
-                    //注意设置，取的话要从 _ke_saved_src 里取
-                    "_ke_saved_src": url,
-                    "style": style
+                    'src': url,
+                    //注意设置，取的话要从 _keSaved_src 里取
+                    '_keSaved_src': url,
+                    'style': style
                 });
             } else {
-                img = new Node("<img " +
-                    (style ? ("style='" +
+                img = new Node('<img ' +
+                    (style ? ('style="' +
                         style +
-                        "'") : "") +
-                    " src='" +
+                        '"') : '') +
+                    ' src="' +
                     url +
-                    "' " +
-                    "_ke_saved_src='" +
+                    '" ' +
+                    '_keSaved_src="' +
                     url +
-                    "' alt='' />", null, self.editor.get('document')[0]);
+                    '" alt="" />', null, self.editor.get('document')[0]);
                 self.editor.insertElement(img);
             }
 
@@ -352,7 +355,7 @@ KISSY.add(function (S, require) {
                 var link = findAWithImg(img),
                     linkVal = S.trim(valInput(self.imgLink)),
                     sel = self.editor.getSelection(),
-                    target = self.imgLinkBlank.attr("checked") ? "_blank" : "_self",
+                    target = self.imgLinkBlank.attr('checked') ? '_blank' : '_self',
                     linkTarget,
                     skip = 0,
                     prev,
@@ -360,14 +363,14 @@ KISSY.add(function (S, require) {
                     bs;
 
                 if (link) {
-                    linkTarget = link.attr('target') || "_self";
-                    if (linkVal != link.attr('href') || linkTarget != target) {
+                    linkTarget = link.attr('target') || '_self';
+                    if (linkVal !== link.attr('href') || linkTarget !== target) {
                         img._4eBreakParent(link);
-                        if ((prev = img.prev()) && (prev.nodeName() == 'a') && !(prev[0].childNodes.length)) {
+                        if ((prev = img.prev()) && (prev.nodeName() === 'a') && !(prev[0].childNodes.length)) {
                             prev.remove();
                         }
 
-                        if ((next = img.next()) && (next.nodeName() == 'a') && !(next[0].childNodes.length)) {
+                        if ((next = img.next()) && (next.nodeName() === 'a') && !(next[0].childNodes.length)) {
                             next.remove();
                         }
                     } else {
@@ -380,10 +383,10 @@ KISSY.add(function (S, require) {
                     if (!self.selectedEl) {
                         bs = sel.createBookmarks();
                     }
-                    link = new Node("<a></a>");
-                    link.attr("_ke_saved_href", linkVal)
-                        .attr("href", linkVal)
-                        .attr("target", target);
+                    link = new Node('<a></a>');
+                    link.attr('_keSavedHref', linkVal)
+                        .attr('href', linkVal)
+                        .attr('target', target);
                     var t = img[0];
                     t.parentNode.replaceChild(link[0], t);
                     link.append(t);
@@ -407,10 +410,10 @@ KISSY.add(function (S, require) {
                 link,
                 resetInput = Editor.Utils.resetInput;
             self.selectedEl = selectedEl;
-            if (selectedEl && self.imageCfg['remote'] !== false) {
-                valInput(self.imgUrl, selectedEl.attr("src"));
+            if (selectedEl && self.imageCfg.remote !== false) {
+                valInput(self.imgUrl, selectedEl.attr('src'));
                 var w = parseInt(selectedEl.style('width')),
-                    h = parseInt(selectedEl.style("height"));
+                    h = parseInt(selectedEl.style('height'));
                 if (h) {
                     valInput(self.imgHeight, h);
                 } else {
@@ -421,9 +424,8 @@ KISSY.add(function (S, require) {
                 } else {
                     resetInput(self.imgWidth);
                 }
-                self.imgAlign.set("value", selectedEl.style("float") || "none");
-                var margin = parseInt(selectedEl.style("margin"))
-                    || 0;
+                self.imgAlign.set('value', selectedEl.style('float') || 'none');
+                var margin = parseInt(selectedEl.style('margin')) || 0;
                 self.imgMargin.val(margin);
                 self.imgRatio[0].disabled = false;
                 self.imgRatioValue = w / h;
@@ -435,29 +437,29 @@ KISSY.add(function (S, require) {
                 if (inElement) {
                     link = findAWithImg(inElement);
                 }
-                var defaultMargin = self.imageCfg['defaultMargin'];
-                if (defaultMargin == undefined) {
+                var defaultMargin = self.imageCfg.defaultMargin;
+                if (defaultMargin === undefined) {
                     defaultMargin = MARGIN_DEFAULT;
                 }
-                if (self.tab.get('bar').get('children').length == 2) {
+                if (self.tab.get('bar').get('children').length === 2) {
                     active = 1;
                 }
-                self.imgLinkBlank.attr("checked", true);
+                self.imgLinkBlank.attr('checked', true);
                 resetInput(self.imgUrl);
                 resetInput(self.imgLink);
                 resetInput(self.imgHeight);
                 resetInput(self.imgWidth);
-                self.imgAlign.set("value", "none");
+                self.imgAlign.set('value', 'none');
                 self.imgMargin.val(defaultMargin);
                 self.imgRatio[0].disabled = true;
                 self.imgRatioValue = null;
             }
             if (link) {
-                valInput(self.imgLink, link.attr("_ke_saved_href") || link.attr("href"));
-                self.imgLinkBlank.attr("checked", link.attr("target") == "_blank");
+                valInput(self.imgLink, link.attr('_keSavedHref') || link.attr('href'));
+                self.imgLinkBlank.attr('checked', link.attr('target') === '_blank');
             } else {
                 resetInput(self.imgLink);
-                self.imgLinkBlank.attr("checked", true);
+                self.imgLinkBlank.attr('checked', true);
             }
             self.uploadForm[0].reset();
             self.imgLocalUrl.val(warning);

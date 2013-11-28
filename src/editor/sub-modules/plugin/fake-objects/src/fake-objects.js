@@ -15,21 +15,21 @@ KISSY.add(function (S, require) {
     Editor.addMembers({
         //ie6 ,object outHTML error
         createFakeElement: function (realElement, className, realElementType, isResizable, outerHTML, attrs) {
-            var style = realElement.attr("style") || '';
+            var style = realElement.attr('style') || '';
             if (realElement.attr('width')) {
-                style = "width:" + realElement.attr('width') + "px;" + style;
+                style = 'width:' + realElement.attr('width') + 'px;' + style;
             }
-            if (realElement.attr("height")) {
-                style = "height:" + realElement.attr("height") + "px;" + style;
+            if (realElement.attr('height')) {
+                style = 'height:' + realElement.attr('height') + 'px;' + style;
             }
             var self = this,
             // add current class to fake element
                 existClass = S.trim(realElement.attr('class')),
                 attributes = {
-                    'class': className + " " + existClass,
+                    'class': className + ' ' + existClass,
                     src: SPACER_GIF,
-                    _ke_realelement: encodeURIComponent(outerHTML || realElement.outerHtml()),
-                    _ke_real_node_type: realElement[0].nodeType,
+                    _keRealElement: encodeURIComponent(outerHTML || realElement.outerHtml()),
+                    _keRealNodeType: realElement[0].nodeType,
                     style: style
                 };
 
@@ -39,20 +39,22 @@ KISSY.add(function (S, require) {
                 S.mix(attributes, attrs, false);
             }
 
-            if (realElementType)
-                attributes._ke_real_element_type = realElementType;
+            if (realElementType){
+                attributes._keRealElementType = realElementType;
+            }
 
-            if (isResizable)
-                attributes._ke_resizable = isResizable;
-            return new Node("<img/>", attributes, self.get('document')[0]);
+            if (isResizable){
+                attributes._keResizable = isResizable;
+            }
+            return new Node('<img/>', attributes, self.get('document')[0]);
         },
 
         restoreRealElement: function (fakeElement) {
-            if (fakeElement.attr('_ke_real_node_type') != Dom.NodeType.ELEMENT_NODE) {
+            if (fakeElement.attr('_keRealNodeType') !== Dom.NodeType.ELEMENT_NODE) {
                 return null;
             }
 
-            var html = (S.urlDecode(fakeElement.attr('_ke_realelement')));
+            var html = (S.urlDecode(fakeElement.attr('_keRealElement')));
 
             var temp = new Node('<div>', null, this.get('document')[0]);
             temp.html(html);
@@ -65,7 +67,7 @@ KISSY.add(function (S, require) {
         tags: {
             // 生成最终html时，从编辑器html转化把fake替换为真实，并将style的width,height搞到属性上去
             $: function (element) {
-                var realHTML = element.getAttribute("_ke_realelement");
+                var realHTML = element.getAttribute('_keRealElement');
 
                 var realFragment;
 
@@ -78,7 +80,7 @@ KISSY.add(function (S, require) {
                 // If we have width/height in the element, we must move it into
                 // the real element.
                 if (realElement) {
-                    var style = element.getAttribute("style");
+                    var style = element.getAttribute('style');
                     if (style) {
                         // Get the width from the style.
                         var match = /(?:^|\s)width\s*:\s*(\d+)/i.exec(style),
@@ -93,7 +95,7 @@ KISSY.add(function (S, require) {
                             realElement.setAttribute('width', width);
                         }
                         if (height) {
-                            realElement.setAttribute("height", height);
+                            realElement.setAttribute('height', height);
                         }
                     }
                     return realElement;
@@ -118,11 +120,11 @@ KISSY.add(function (S, require) {
 
             S.mix(dataProcessor, {
                 restoreRealElement: function (fakeElement) {
-                    if (fakeElement.attr('_ke_real_node_type') != Dom.NodeType.ELEMENT_NODE) {
+                    if (fakeElement.attr('_keRealNodeType') !== Dom.NodeType.ELEMENT_NODE) {
                         return null;
                     }
 
-                    var html = (S.urlDecode(fakeElement.attr('_ke_realelement')));
+                    var html = (S.urlDecode(fakeElement.attr('_keRealElement')));
 
                     var temp = new Node('<div>', null, editor.get('document')[0]);
                     temp.html(html);
@@ -134,22 +136,22 @@ KISSY.add(function (S, require) {
                 // 从外边真实的html，转为为编辑器代码支持的替换元素
                 createFakeParserElement: function (realElement, className, realElementType, isResizable, attrs) {
                     var html = HtmlParser.serialize(realElement);
-                    var style = realElement.getAttribute("style") || '';
+                    var style = realElement.getAttribute('style') || '';
                     if (realElement.getAttribute('width')) {
-                        style = "width:" + realElement.getAttribute('width') + "px;" + style;
+                        style = 'width:' + realElement.getAttribute('width') + 'px;' + style;
                     }
-                    if (realElement.getAttribute("height")) {
-                        style = "height:" + realElement.getAttribute("height") + "px;" + style;
+                    if (realElement.getAttribute('height')) {
+                        style = 'height:' + realElement.getAttribute('height') + 'px;' + style;
                     }
                     // add current class to fake element
-                    var existClass = S.trim(realElement.getAttribute("class")),
+                    var existClass = S.trim(realElement.getAttribute('class')),
                         attributes = {
-                            'class': className + " " + existClass,
+                            'class': className + ' ' + existClass,
                             src: SPACER_GIF,
-                            _ke_realelement: encodeURIComponent(html),
-                            _ke_real_node_type: realElement.nodeType + "",
+                            _keRealElement: encodeURIComponent(html),
+                            _keRealNodeType: realElement.nodeType + '',
                             style: style,
-                            align: realElement.getAttribute("align") || ''
+                            align: realElement.getAttribute('align') || ''
                         };
 
                     if (attrs) {
@@ -159,10 +161,10 @@ KISSY.add(function (S, require) {
                     }
 
                     if (realElementType) {
-                        attributes._ke_real_element_type = realElementType;
+                        attributes._keRealElementType = realElementType;
                     }
                     if (isResizable) {
-                        attributes._ke_resizable = "_ke_resizable";
+                        attributes._keResizable = '_keResizable';
                     }
                     return new HtmlParser.Tag('img', attributes);
                 }

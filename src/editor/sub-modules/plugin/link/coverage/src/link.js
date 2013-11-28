@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ',"src":' + jscoverage_quote(this.src)
+            + ','src':' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -290,7 +290,7 @@ if (! _$jscoverage['/link.js'].branchData) {
   _$jscoverage['/link.js'].branchData['92'] = [];
   _$jscoverage['/link.js'].branchData['92'][1] = new BranchData();
 }
-_$jscoverage['/link.js'].branchData['92'][1].init(216, 78, 'a.attr(Utils._ke_saved_href) || a.attr("href")');
+_$jscoverage['/link.js'].branchData['92'][1].init(216, 78, 'a.attr(Utils._keSavedHref) || a.attr('href')');
 function visit3_92_1(result) {
   _$jscoverage['/link.js'].branchData['92'][1].ranCondition(result);
   return result;
@@ -366,22 +366,22 @@ KISSY.add(function(S, require) {
   el.html(S.substitute(tipHTML, {
   prefixCls: prefixCls}));
   _$jscoverage['/link.js'].lineData[70]++;
-  var tipUrl = el.one("." + prefixCls + "editor-bubble-url"), tipChange = el.one("." + prefixCls + "editor-bubble-change"), tipRemove = el.one("." + prefixCls + "editor-bubble-remove");
+  var tipUrl = el.one("." + prefixCls + 'editor-bubble-url'), tipChange = el.one("." + prefixCls + 'editor-bubble-change'), tipRemove = el.one("." + prefixCls + 'editor-bubble-remove');
   _$jscoverage['/link.js'].lineData[75]++;
   Editor.Utils.preventFocus(el);
   _$jscoverage['/link.js'].lineData[77]++;
-  tipChange.on("click", function(ev) {
+  tipChange.on('click', function(ev) {
   _$jscoverage['/link.js'].functionData[7]++;
   _$jscoverage['/link.js'].lineData[78]++;
-  showLinkEditDialog(bubble.get("editorSelectedEl"));
+  showLinkEditDialog(bubble.get('editorSelectedEl'));
   _$jscoverage['/link.js'].lineData[79]++;
   ev.halt();
 });
   _$jscoverage['/link.js'].lineData[82]++;
-  tipRemove.on("click", function(ev) {
+  tipRemove.on('click', function(ev) {
   _$jscoverage['/link.js'].functionData[8]++;
   _$jscoverage['/link.js'].lineData[83]++;
-  Utils.removeLink(editor, bubble.get("editorSelectedEl"));
+  Utils.removeLink(editor, bubble.get('editorSelectedEl'));
   _$jscoverage['/link.js'].lineData[84]++;
   ev.halt();
 });
@@ -389,18 +389,18 @@ KISSY.add(function(S, require) {
   bubble.on('show', function() {
   _$jscoverage['/link.js'].functionData[9]++;
   _$jscoverage['/link.js'].lineData[88]++;
-  var a = bubble.get("editorSelectedEl");
+  var a = bubble.get('editorSelectedEl');
   _$jscoverage['/link.js'].lineData[89]++;
   if (visit2_89_1(!a)) {
     _$jscoverage['/link.js'].lineData[90]++;
     return;
   }
   _$jscoverage['/link.js'].lineData[92]++;
-  var href = visit3_92_1(a.attr(Utils._ke_saved_href) || a.attr("href"));
+  var href = visit3_92_1(a.attr(Utils._keSavedHref) || a.attr('href'));
   _$jscoverage['/link.js'].lineData[94]++;
   tipUrl.html(href);
   _$jscoverage['/link.js'].lineData[95]++;
-  tipUrl.attr("href", href);
+  tipUrl.attr('href', href);
 });
 }}});
 }});

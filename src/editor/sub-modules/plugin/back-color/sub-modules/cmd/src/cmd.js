@@ -33,8 +33,8 @@ KISSY.add(function (S,require) {
 
     return {
         init:function (editor) {
-            if (!editor.hasCommand("backColor")) {
-                editor.addCommand("backColor", {
+            if (!editor.hasCommand('backColor')) {
+                editor.addCommand('backColor', {
                     exec:function (editor, c) {
                         editor.execCommand('save');
                         cmd.applyColor(editor, c, BACK_COLOR_STYLE);

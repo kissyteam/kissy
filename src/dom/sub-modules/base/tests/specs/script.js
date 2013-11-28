@@ -3,7 +3,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, Dom) {
-    var div = $('<div style="display:none"></div>').prependTo("body");
+    var div = $('<div style="display:none"></div>').prependTo('body');
 
     describe("script", function () {
         var o1, o2, scriptTestHolder2, o22;

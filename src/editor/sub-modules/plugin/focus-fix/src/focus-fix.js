@@ -23,7 +23,7 @@ KISSY.add(function (S, require) {
             // 聚焦到当前窗口
             // 使得编辑器失去焦点，促使ie保存当前选择区域（位置）
             // chrome 需要下面两句
-            window['focus']();
+            window.focus();
             document.body.focus();
 
             var $selection = editor.get('document')[0].selection,
@@ -42,8 +42,7 @@ KISSY.add(function (S, require) {
                 // $range.parentElement().ownerDocument == editor.document
                 // ||
                 // 缩放图片那个框在ie下会突出浮动层来
-                    $range.item
-                        && $range.item(0).ownerDocument == editor.get('document')[0]) {
+                    $range.item&& $range.item(0).ownerDocument === editor.get('document')[0]) {
                     var $myRange = document.body.createTextRange();
                     $myRange.moveToElementText(self.get('el').first()[0]);
                     $myRange.collapse(true);
@@ -55,12 +54,14 @@ KISSY.add(function (S, require) {
 
     function _hide4FocusExt() {
         var editor = this._focusEditor;
-        editor && editor.focus();
+        if(editor){
+            editor.focus();
+        }
     }
 
     return {
         init: function (self) {
-            self.on("beforeVisibleChange", function (e) {
+            self.on('beforeVisibleChange', function (e) {
                 if (e.newVal) {
                     _show4FocusExt.call(self);
                 }

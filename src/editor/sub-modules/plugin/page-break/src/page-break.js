@@ -8,7 +8,7 @@ KISSY.add(function (S, require) {
     var fakeObjects = require('./fake-objects');
     require('./button');
     var Node = S.Node,
-        CLS = "ke_pagebreak",
+        CLS = 'ke_pagebreak',
         TYPE = 'div',
         PAGE_BREAK_MARKUP = '<div' +
             ' style="page-break-after: always; ">' +
@@ -28,21 +28,21 @@ KISSY.add(function (S, require) {
             dataFilter.addRules({
                 tags: {
                     div: function (element) {
-                        var style = element.getAttribute("style"),
+                        var style = element.getAttribute('style'),
                             child;
 
                         if (style) {
                             var childNodes = element.childNodes;
                             for (var i = 0; i < childNodes.length; i++) {
-                                if (childNodes[i].nodeType == 1) {
+                                if (childNodes[i].nodeType === 1) {
                                     child = childNodes[i];
                                 }
                             }
                         }
 
                         var childStyle = child &&
-                            ( child.nodeName == 'span' ) &&
-                            child.getAttribute("style");
+                            ( child.nodeName === 'span' ) &&
+                            child.getAttribute('style');
 
                         if (childStyle &&
                             ( /page-break-after\s*:\s*always/i ).test(style) &&
@@ -54,8 +54,8 @@ KISSY.add(function (S, require) {
                 }
             });
 
-            editor.addButton("pageBreak", {
-                tooltip: "分页",
+            editor.addButton('pageBreak', {
+                tooltip: '分页',
                 listeners: {
                     click: function () {
                         var real = new Node(PAGE_BREAK_MARKUP, null,
@@ -80,7 +80,7 @@ KISSY.add(function (S, require) {
                         var start = range.startContainer,
                             pre = start;
 
-                        while (start.nodeName() !== "body") {
+                        while (start.nodeName() !== 'body') {
                             pre = start;
                             start = start.parent();
                         }

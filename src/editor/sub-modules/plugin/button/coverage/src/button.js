@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ',"src":' + jscoverage_quote(this.src)
+            + ','src':' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -274,7 +274,7 @@ if (! _$jscoverage['/button.js'].branchData) {
   _$jscoverage['/button.js'].branchData['50'] = [];
   _$jscoverage['/button.js'].branchData['50'][1] = new BranchData();
 }
-_$jscoverage['/button.js'].branchData['50'][1].init(965, 41, 'b.get("mode") == Editor.Mode.WYSIWYG_MODE');
+_$jscoverage['/button.js'].branchData['50'][1].init(965, 41, 'b.get('mode') == Editor.Mode.WYSIWYG_MODE');
 function visit5_50_1(result) {
   _$jscoverage['/button.js'].branchData['50'][1].ranCondition(result);
   return result;
@@ -322,7 +322,7 @@ KISSY.add(function(S, require) {
   var b = new ButtonType(S.mix({
   render: self.get('toolBarEl'),
   content: '<span ' + 'class="' + prefixCls + 'item ' + prefixCls + id + '"></span' + '>', 
-  prefixCls: self.get('prefixCls') + "editor-", 
+  prefixCls: self.get('prefixCls') + 'editor-',
   editor: self}, cfg)).render();
   _$jscoverage['/button.js'].lineData[42]++;
   if (visit4_42_1(!cfg.content)) {
@@ -336,7 +336,7 @@ KISSY.add(function(S, require) {
 });
   }
   _$jscoverage['/button.js'].lineData[50]++;
-  if (visit5_50_1(b.get("mode") == Editor.Mode.WYSIWYG_MODE)) {
+  if (visit5_50_1(b.get('mode') == Editor.Mode.WYSIWYG_MODE)) {
     _$jscoverage['/button.js'].lineData[51]++;
     self.on('wysiwygMode', function() {
   _$jscoverage['/button.js'].functionData[3]++;

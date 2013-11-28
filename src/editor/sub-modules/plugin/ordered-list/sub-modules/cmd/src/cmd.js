@@ -4,21 +4,21 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
-        var Editor = require('editor');
-        var listCmd = require('../list-utils/cmd');
+    var Editor = require('editor');
+    var listCmd = require('../list-utils/cmd');
 
-    var insertOrderedList = "insertOrderedList",
+    var insertOrderedList = 'insertOrderedList',
         ListCommand = listCmd.ListCommand,
         queryActive = listCmd.queryActive,
-        olCmd = new ListCommand("ol");
+        olCmd = new ListCommand('ol');
 
     return {
-        init:function (editor) {
+        init: function (editor) {
             if (!editor.hasCommand(insertOrderedList)) {
                 editor.addCommand(insertOrderedList, {
-                    exec:function (editor,listStyleType) {
+                    exec: function (editor, listStyleType) {
                         editor.focus();
-                        olCmd.exec(editor,listStyleType);
+                        olCmd.exec(editor, listStyleType);
                     }
                 });
             }
@@ -27,12 +27,12 @@ KISSY.add(function (S, require) {
 
             if (!editor.hasCommand(queryOl)) {
                 editor.addCommand(queryOl, {
-                    exec:function (editor) {
+                    exec: function (editor) {
                         var selection = editor.getSelection();
                         if (selection && !selection.isInvalid) {
                             var startElement = selection.getStartElement();
                             var elementPath = new Editor.ElementPath(startElement);
-                            return queryActive("ol", elementPath);
+                            return queryActive('ol', elementPath);
                         }
                     }
                 });

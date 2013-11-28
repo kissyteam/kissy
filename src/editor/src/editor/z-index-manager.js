@@ -45,7 +45,7 @@ KISSY.add(function (S,require) {
     };
 
     Editor.baseZIndex = function (z) {
-        return (Editor['Config'].baseZIndex || 10000) + z;
+        return (Editor.Config.baseZIndex || 10000) + z;
     };
 
     return ZIndexManager;

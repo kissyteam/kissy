@@ -145,7 +145,7 @@ if (!loc.getQuery().has('build') && !loc.getQuery().has('min')) {
             "base": "/kissy/src/dom/sub-modules/selector/src/selector",
             "ignorePackageNameInUri": 1
         },
-        "editor": {
+        'editor': {
             "base": "/kissy/src/editor/src/editor",
             "ignorePackageNameInUri": 1
         },

@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ',"src":' + jscoverage_quote(this.src)
+            + ','src':' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -404,7 +404,7 @@ function visit8_152_1(result) {
 function visit7_149_1(result) {
   _$jscoverage['/dialog.js'].branchData['149'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['144'][1].init(266, 15, 'f.css("height")');
+}_$jscoverage['/dialog.js'].branchData['144'][1].init(266, 15, 'f.css('height')');
 function visit6_144_1(result) {
   _$jscoverage['/dialog.js'].branchData['144'][1].ranCondition(result);
   return result;
@@ -527,12 +527,12 @@ KISSY.add(function(S, require) {
       self.dWidth.val(parseInt(f.css('width')));
     }
     _$jscoverage['/dialog.js'].lineData[144]++;
-    if (visit6_144_1(f.css("height"))) {
+    if (visit6_144_1(f.css('height'))) {
       _$jscoverage['/dialog.js'].lineData[145]++;
-      self.dHeight.val(parseInt(f.css("height")));
+      self.dHeight.val(parseInt(f.css('height')));
     }
     _$jscoverage['/dialog.js'].lineData[147]++;
-    self.dAlign.set("value", f.css("float"));
+    self.dAlign.set('value', f.css("float"));
     _$jscoverage['/dialog.js'].lineData[148]++;
     Editor.Utils.valInput(self.dUrl, self._getFlashUrl(r));
     _$jscoverage['/dialog.js'].lineData[149]++;
@@ -545,7 +545,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/dialog.js'].lineData[153]++;
     self.dHeight.val(visit9_153_1(cfg['defaultHeight'] || ""));
     _$jscoverage['/dialog.js'].lineData[154]++;
-    self.dAlign.set("value", "none");
+    self.dAlign.set('value', "none");
     _$jscoverage['/dialog.js'].lineData[155]++;
     self.dMargin.val("5");
   }
@@ -581,9 +581,9 @@ KISSY.add(function(S, require) {
   _$jscoverage['/dialog.js'].lineData[185]++;
   var action = el.one("." + prefixCls + "editor-flash-ok"), cancel = el.one("." + prefixCls + "editor-flash-cancel");
   _$jscoverage['/dialog.js'].lineData[187]++;
-  action.on("click", self._gen, self);
+  action.on('click', self._gen, self);
   _$jscoverage['/dialog.js'].lineData[188]++;
-  cancel.on("click", function(ev) {
+  cancel.on('click', function(ev) {
   _$jscoverage['/dialog.js'].functionData[9]++;
   _$jscoverage['/dialog.js'].lineData[189]++;
   d.hide();
@@ -605,7 +605,7 @@ KISSY.add(function(S, require) {
   attrs: {
   width: self.dWidth.val(), 
   height: self.dHeight.val(), 
-  style: "margin:" + (visit11_207_1(parseInt(self.dMargin.val()) || 0)) + "px;" + "float:" + self.dAlign.get("value") + ";"}};
+  style: "margin:" + (visit11_207_1(parseInt(self.dMargin.val()) || 0)) + "px;" + "float:" + self.dAlign.get('value') + ";"}};
 }, 
   _gen: function(ev) {
   _$jscoverage['/dialog.js'].functionData[11]++;

@@ -76,7 +76,7 @@ KISSY.add(function (S, Dom) {
 
         it("closest works for text node", function () {
             var div = Dom.create("<div>1</div>");
-            Dom.append(div, "body");
+            Dom.append(div, 'body');
             var text = div.firstChild;
 
             var d = Dom.closest(text, undefined, undefined, true);
@@ -92,7 +92,7 @@ KISSY.add(function (S, Dom) {
 
         it("first works for text node", function () {
             var div = Dom.create("<div>1<span></span></div>");
-            Dom.append(div, "body");
+            Dom.append(div, 'body');
             var cs = div.childNodes;
 
             expect(Dom.first(div)).toBe(cs[1]);
@@ -103,7 +103,7 @@ KISSY.add(function (S, Dom) {
 
         it("last works for text node", function () {
             var div = Dom.create("<div>1<span></span>1</div>");
-            Dom.append(div, "body");
+            Dom.append(div, 'body');
             var cs = div.childNodes;
 
             expect(Dom.last(div)).toBe(cs[1]);
@@ -114,7 +114,7 @@ KISSY.add(function (S, Dom) {
 
         it("next works for text node", function () {
             var div = Dom.create("<div><span></span>1<span></span></div>");
-            Dom.append(div, "body");
+            Dom.append(div, 'body');
             var cs = div.childNodes;
             expect(Dom.next(cs[0])).toBe(cs[2]);
             expect(Dom.next(cs[0], undefined, 1)).toBe(cs[1]);
@@ -123,7 +123,7 @@ KISSY.add(function (S, Dom) {
 
         it("prev works for text node", function () {
             var div = Dom.create("<div><span></span>1<span></span></div>");
-            Dom.append(div, "body");
+            Dom.append(div, 'body');
             var cs = div.childNodes;
             expect(Dom.prev(cs[2])).toBe(cs[0]);
             expect(Dom.prev(cs[2], undefined, 1)).toBe(cs[1]);
@@ -132,7 +132,7 @@ KISSY.add(function (S, Dom) {
 
         it("siblings works for text node", function () {
             var div = Dom.create("<div><span></span>1<span></span></div>");
-            Dom.append(div, "body");
+            Dom.append(div, 'body');
             var cs = div.childNodes;
             expect(Dom.siblings(cs[2]).length).toBe(1);
             expect(Dom.siblings(cs[2], undefined, 1).length).toBe(2);
@@ -200,7 +200,7 @@ KISSY.add(function (S, Dom) {
 
         it("contents works", function () {
             var div = Dom.create("<div>1<span>2</span></div>");
-            Dom.append(div, "body");
+            Dom.append(div, 'body');
             expect(Dom.contents(div).length).toBe(2);
             Dom.remove(div);
         });

@@ -15,7 +15,7 @@ KISSY.add(function (S, require) {
             ListCmd.init(editor);
 
             ListButton.init(editor, {
-                cmdType: "insertOrderedList",
+                cmdType: 'insertOrderedList',
                 buttonId: 'orderedList',
                 menu: {
                     width: 75,

@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ',"src":' + jscoverage_quote(this.src)
+            + ','src':' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -326,7 +326,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/focus-fix.js'].lineData[22]++;
     if (visit1_22_1(UA.ie && editor)) {
       _$jscoverage['/focus-fix.js'].lineData[26]++;
-      window['focus']();
+      window.focus();
       _$jscoverage['/focus-fix.js'].lineData[27]++;
       document.body.focus();
       _$jscoverage['/focus-fix.js'].lineData[29]++;
@@ -368,7 +368,7 @@ KISSY.add(function(S, require) {
   init: function(self) {
   _$jscoverage['/focus-fix.js'].functionData[3]++;
   _$jscoverage['/focus-fix.js'].lineData[63]++;
-  self.on("beforeVisibleChange", function(e) {
+  self.on('beforeVisibleChange', function(e) {
   _$jscoverage['/focus-fix.js'].functionData[4]++;
   _$jscoverage['/focus-fix.js'].lineData[64]++;
   if (visit6_64_1(e.newVal)) {

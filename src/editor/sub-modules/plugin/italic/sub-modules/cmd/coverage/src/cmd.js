@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ',"src":' + jscoverage_quote(this.src)
+            + ','src':' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -264,6 +264,6 @@ KISSY.add(function(S, require) {
   init: function(editor) {
   _$jscoverage['/cmd.js'].functionData[1]++;
   _$jscoverage['/cmd.js'].lineData[26]++;
-  Cmd.addButtonCmd(editor, "italic", ITALIC_STYLE);
+  Cmd.addButtonCmd(editor, 'italic', ITALIC_STYLE);
 }};
 });

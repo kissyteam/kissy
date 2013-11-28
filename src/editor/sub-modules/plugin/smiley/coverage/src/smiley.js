@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ',"src":' + jscoverage_quote(this.src)
+            + ','src':' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -377,7 +377,7 @@ KISSY.add(function(S, require) {
   click: function() {
   _$jscoverage['/smiley.js'].functionData[6]++;
   _$jscoverage['/smiley.js'].lineData[41]++;
-  var self = this, smiley, checked = self.get("checked");
+  var self = this, smiley, checked = self.get('checked');
   _$jscoverage['/smiley.js'].lineData[42]++;
   if (visit3_42_1(checked)) {
     _$jscoverage['/smiley.js'].lineData[43]++;
@@ -392,7 +392,7 @@ KISSY.add(function(S, require) {
   zIndex: Editor.baseZIndex(Editor.ZIndexManager.POPUP_MENU), 
   mask: false}).render();
       _$jscoverage['/smiley.js'].lineData[54]++;
-      smiley.get('el').on("click", function(ev) {
+      smiley.get('el').on('click', function(ev) {
   _$jscoverage['/smiley.js'].functionData[7]++;
   _$jscoverage['/smiley.js'].lineData[55]++;
   var t = new S.Node(ev.target), icon;
@@ -408,7 +408,7 @@ KISSY.add(function(S, require) {
       smiley.on('hide', function() {
   _$jscoverage['/smiley.js'].functionData[8]++;
   _$jscoverage['/smiley.js'].lineData[67]++;
-  self.set("checked", false);
+  self.set('checked', false);
 });
     }
     _$jscoverage['/smiley.js'].lineData[70]++;

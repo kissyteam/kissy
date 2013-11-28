@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ',"src":' + jscoverage_quote(this.src)
+            + ','src':' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -274,7 +274,7 @@ _$jscoverage['/heading.js'].branchData['74'][1].init(37, 21, 'value == headingVa
 function visit2_74_1(result) {
   _$jscoverage['/heading.js'].branchData['74'][1].ranCondition(result);
   return result;
-}_$jscoverage['/heading.js'].branchData['66'][1].init(33, 45, 'editor.get("mode") == Editor.Mode.SOURCE_MODE');
+}_$jscoverage['/heading.js'].branchData['66'][1].init(33, 45, 'editor.get('mode') == Editor.Mode.SOURCE_MODE');
 function visit1_66_1(result) {
   _$jscoverage['/heading.js'].branchData['66'][1].ranCondition(result);
   return result;
@@ -323,7 +323,7 @@ KISSY.add(function(S, require) {
   style: "font-size:" + FORMAT_SIZES[FORMATS[p]]}});
   }
   _$jscoverage['/heading.js'].lineData[51]++;
-  editor.addSelect("heading", {
+  editor.addSelect('heading', {
   defaultCaption: "\u6807\u9898", 
   width: "120px", 
   menu: {
@@ -333,36 +333,36 @@ KISSY.add(function(S, require) {
   click: function(ev) {
   _$jscoverage['/heading.js'].functionData[3]++;
   _$jscoverage['/heading.js'].lineData[60]++;
-  var v = ev.target.get("value");
+  var v = ev.target.get('value');
   _$jscoverage['/heading.js'].lineData[61]++;
-  editor.execCommand("heading", v);
+  editor.execCommand('heading', v);
 }, 
   afterSyncUI: function() {
   _$jscoverage['/heading.js'].functionData[4]++;
   _$jscoverage['/heading.js'].lineData[64]++;
   var self = this;
   _$jscoverage['/heading.js'].lineData[65]++;
-  editor.on("selectionChange", function() {
+  editor.on('selectionChange', function() {
   _$jscoverage['/heading.js'].functionData[5]++;
   _$jscoverage['/heading.js'].lineData[66]++;
-  if (visit1_66_1(editor.get("mode") == Editor.Mode.SOURCE_MODE)) {
+  if (visit1_66_1(editor.get('mode') == Editor.Mode.SOURCE_MODE)) {
     _$jscoverage['/heading.js'].lineData[67]++;
     return;
   }
   _$jscoverage['/heading.js'].lineData[72]++;
-  var headingValue = editor.queryCommandValue("heading"), value;
+  var headingValue = editor.queryCommandValue('heading'), value;
   _$jscoverage['/heading.js'].lineData[73]++;
   for (value in FORMAT_SIZES) {
     _$jscoverage['/heading.js'].lineData[74]++;
     if (visit2_74_1(value == headingValue)) {
       _$jscoverage['/heading.js'].lineData[75]++;
-      self.set("value", value);
+      self.set('value', value);
       _$jscoverage['/heading.js'].lineData[76]++;
       return;
     }
   }
   _$jscoverage['/heading.js'].lineData[79]++;
-  self.set("value", null);
+  self.set('value', null);
 });
 }}});
 }});

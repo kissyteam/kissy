@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ',"src":' + jscoverage_quote(this.src)
+            + ','src':' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -288,7 +288,7 @@ function visit3_50_1(result) {
 function visit2_36_1(result) {
   _$jscoverage['/justify-right.js'].branchData['36'][1].ranCondition(result);
   return result;
-}_$jscoverage['/justify-right.js'].branchData['33'][1].init(33, 45, 'editor.get("mode") == Editor.Mode.SOURCE_MODE');
+}_$jscoverage['/justify-right.js'].branchData['33'][1].init(33, 45, 'editor.get('mode') == Editor.Mode.SOURCE_MODE');
 function visit1_33_1(result) {
   _$jscoverage['/justify-right.js'].branchData['33'][1].ranCondition(result);
   return result;
@@ -305,7 +305,7 @@ KISSY.add(function(S, require) {
   function exec() {
     _$jscoverage['/justify-right.js'].functionData[1]++;
     _$jscoverage['/justify-right.js'].lineData[11]++;
-    var editor = this.get("editor");
+    var editor = this.get('editor');
     _$jscoverage['/justify-right.js'].lineData[12]++;
     editor.execCommand("justifyRight");
     _$jscoverage['/justify-right.js'].lineData[13]++;
@@ -332,20 +332,20 @@ KISSY.add(function(S, require) {
   _$jscoverage['/justify-right.js'].lineData[31]++;
   var self = this;
   _$jscoverage['/justify-right.js'].lineData[32]++;
-  editor.on("selectionChange", function() {
+  editor.on('selectionChange', function() {
   _$jscoverage['/justify-right.js'].functionData[5]++;
   _$jscoverage['/justify-right.js'].lineData[33]++;
-  if (visit1_33_1(editor.get("mode") == Editor.Mode.SOURCE_MODE)) {
+  if (visit1_33_1(editor.get('mode') == Editor.Mode.SOURCE_MODE)) {
     _$jscoverage['/justify-right.js'].lineData[34]++;
     return;
   }
   _$jscoverage['/justify-right.js'].lineData[36]++;
   if (visit2_36_1(editor.queryCommandValue("justifyRight"))) {
     _$jscoverage['/justify-right.js'].lineData[37]++;
-    self.set("checked", true);
+    self.set('checked', true);
   } else {
     _$jscoverage['/justify-right.js'].lineData[39]++;
-    self.set("checked", false);
+    self.set('checked', false);
   }
 });
 }}, 

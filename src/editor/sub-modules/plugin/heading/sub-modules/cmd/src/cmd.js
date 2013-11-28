@@ -9,14 +9,16 @@ KISSY.add(function (S, require) {
 
     return {
         init: function (editor) {
-            if (!editor.hasCommand("heading")) {
-                editor.addCommand("heading", {
+
+            if (!editor.hasCommand('heading')) {
+                editor.addCommand('heading', {
                     exec: function (editor, tag) {
+                        var currentValue;
                         editor.execCommand('save');
-                        if (tag != 'p') {
-                            var currentValue = editor.queryCommandValue("heading");
+                        if (tag !== 'p') {
+                            currentValue = editor.queryCommandValue('heading');
                         }
-                        if (tag == currentValue) {
+                        if (tag === currentValue) {
                             tag = 'p';
                         }
                         new Editor.Style({
@@ -26,7 +28,7 @@ KISSY.add(function (S, require) {
                     }
                 });
 
-                var queryCmd = Editor.Utils.getQueryCmd("heading");
+                var queryCmd = Editor.Utils.getQueryCmd('heading');
 
                 editor.addCommand(queryCmd, {
                     exec: function (editor) {
@@ -35,8 +37,8 @@ KISSY.add(function (S, require) {
                             var startElement = selection.getStartElement();
                             var currentPath = new Editor.ElementPath(startElement);
                             var block = currentPath.block || currentPath.blockLimit;
-                            var nodeName = block && block.nodeName() || "";
-                            if (nodeName.match(/^h\d$/) || nodeName == 'p') {
+                            var nodeName = block && block.nodeName() || '';
+                            if (nodeName.match(/^h\d$/) || nodeName === 'p') {
                                 return nodeName;
                             }
                         }

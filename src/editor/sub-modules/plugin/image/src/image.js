@@ -21,10 +21,8 @@ KISSY.add(function (S,require) {
             }
         },
         tipHTML = '<a class="{prefixCls}editor-bubble-url" ' +
-            'target="_blank" href="#">在新窗口查看</a>  |  '
-            + '<a class="{prefixCls}editor-bubble-link ' +
-            '{prefixCls}editor-bubble-change" href="#">编辑</a>  |  '
-            + '<a class="{prefixCls}editor-bubble-link ' +
+            'target="_blank" href="#">在新窗口查看</a>  |  '+ '<a class="{prefixCls}editor-bubble-link ' +
+            '{prefixCls}editor-bubble-change" href="#">编辑</a>  |  ' + '<a class="{prefixCls}editor-bubble-link ' +
             '{prefixCls}editor-bubble-remove" href="#">删除</a>';
 
 
@@ -40,14 +38,14 @@ KISSY.add(function (S,require) {
             var prefixCls = editor.get('prefixCls');
 
             function showImageEditor(selectedEl) {
-                DialogLoader.useDialog(editor, "image",
+                DialogLoader.useDialog(editor, 'image',
                     self.config,
                     selectedEl);
             }
 
             // 重新采用form提交，不采用flash，国产浏览器很多问题
-            editor.addButton("image", {
-                tooltip: "插入图片",
+            editor.addButton('image', {
+                tooltip: '插入图片',
                 listeners: {
                     click: function () {
                         showImageEditor(null);
@@ -59,9 +57,9 @@ KISSY.add(function (S,require) {
 
             var handlers = [
                 {
-                    content: "图片属性",
+                    content: '图片属性',
                     fn: function () {
-                        var img = checkImg(this.get("editorSelectedEl"));
+                        var img = checkImg(this.get('editorSelectedEl'));
                         if (img) {
                             // make editor restore focus
                             this.hide();
@@ -70,7 +68,7 @@ KISSY.add(function (S,require) {
                     }
                 },
                 {
-                    content: "插入新行",
+                    content: '插入新行',
                     fn: function () {
                         this.hide();
                         var doc = editor.get('document')[0],
@@ -79,7 +77,7 @@ KISSY.add(function (S,require) {
                             p._4eAppendBogus(undefined);
                         }
                         var r = new Editor.Range(doc);
-                        r.setStartAfter(this.get("editorSelectedEl"));
+                        r.setStartAfter(this.get('editorSelectedEl'));
                         r.select();
                         editor.insertElement(p);
                         r.moveToElementEditablePosition(p, 1);
@@ -93,17 +91,17 @@ KISSY.add(function (S,require) {
             S.each(handlers, function (h) {
                 children.push({
                     content: h.content
-                })
+                });
             });
 
-            editor.addContextMenu("image", checkImg, {
+            editor.addContextMenu('image', checkImg, {
                 width: 120,
                 children: children,
                 listeners: {
                     click: function (e) {
                         var self = this, content = e.target.get('content');
                         S.each(handlers, function (h) {
-                            if (h.content == content) {
+                            if (h.content === content) {
                                 h.fn.call(self);
                             }
                         });
@@ -122,7 +120,7 @@ KISSY.add(function (S,require) {
                 });
             });
 
-            editor.addBubble("image", checkImg, {
+            editor.addBubble('image', checkImg, {
                 listeners: {
                     afterRenderUI: function () {
                         var bubble = this,
@@ -130,15 +128,15 @@ KISSY.add(function (S,require) {
                         el.html(S.substitute(tipHTML, {
                             prefixCls: prefixCls
                         }));
-                        var tipUrlEl = el.one("." + prefixCls + "editor-bubble-url"),
-                            tipChangeEl = el.one("." + prefixCls + "editor-bubble-change"),
-                            tipRemoveEl = el.one("." + prefixCls + "editor-bubble-remove");
+                        var tipUrlEl = el.one('.' + prefixCls + 'editor-bubble-url'),
+                            tipChangeEl = el.one('.' + prefixCls + 'editor-bubble-change'),
+                            tipRemoveEl = el.one('.' + prefixCls + 'editor-bubble-remove');
                         Editor.Utils.preventFocus(el);
-                        tipChangeEl.on("click", function (ev) {
-                            showImageEditor(bubble.get("editorSelectedEl"));
+                        tipChangeEl.on('click', function (ev) {
+                            showImageEditor(bubble.get('editorSelectedEl'));
                             ev.halt();
                         });
-                        tipRemoveEl.on("click", function (ev) {
+                        tipRemoveEl.on('click', function (ev) {
                             if (UA.webkit) {
                                 var r = editor.getSelection().getRanges();
                                 if (r && r[0]) {
@@ -146,16 +144,16 @@ KISSY.add(function (S,require) {
                                     r[0].select();
                                 }
                             }
-                            bubble.get("editorSelectedEl").remove();
+                            bubble.get('editorSelectedEl').remove();
                             bubble.hide();
                             editor.notifySelectionChange();
                             ev.halt();
                         });
                         bubble.on('show', function () {
-                            var a = bubble.get("editorSelectedEl");
+                            var a = bubble.get('editorSelectedEl');
                             if (a) {
-                                var src = a.attr("_ke_saved_src") || a.attr("src");
-                                tipUrlEl.attr("href", src);
+                                var src = a.attr('_keSaved_src') || a.attr('src');
+                                tipUrlEl.attr('href', src);
                             }
                         });
                     }

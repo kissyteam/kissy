@@ -7,7 +7,7 @@ KISSY.add(function (S, require) {
     var justifyUtils = require('../justify-cmd');
     return {
         init: function (editor) {
-            justifyUtils.addCommand(editor, "justifyLeft", "left");
+            justifyUtils.addCommand(editor, 'justifyLeft', 'left');
         }
     };
 });

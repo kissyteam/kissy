@@ -31,7 +31,7 @@ KISSY.add(function (S, require) {
                 "select": 1,
                 // add unnecessary whitespaces is ok for script and style
                 "script": 1,
-                "style": 1
+                'style': 1
             }
         )) {
             self.setRules(e, {

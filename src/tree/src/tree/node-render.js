@@ -31,7 +31,7 @@ KISSY.add(function (S, require) {
         ROW_EL_CLS = 'row',
         CHILDREN_CLS = 'children',
         CHILDREN_CLS_L = "lchildren",
-        CHECK_CLS = "checked",
+        CHECK_CLS = 'checked',
         ALL_STATES_CLS = "checked0 checked1 checked2";
 
     return Container.getDefaultRender().extend([ContentRenderExtension], {

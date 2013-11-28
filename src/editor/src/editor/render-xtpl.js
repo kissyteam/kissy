@@ -62,7 +62,7 @@ KISSY.add(function (S, require, exports, module) {
             buffer += '\n\n';
             var config14 = {};
             var params15 = [];
-            var id16 = getPropertyOrRunCommandUtil(engine, scopes, {}, "mode", 0, 28, undefined, true);
+            var id16 = getPropertyOrRunCommandUtil(engine, scopes, {}, 'mode', 0, 28, undefined, true);
             params15.push(id16);
             config14.params = params15;
             config14.fn = function (scopes) {

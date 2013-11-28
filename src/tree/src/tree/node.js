@@ -155,7 +155,7 @@ KISSY.add(function (S, require) {
                 self.set("expanded", !expanded);
             } else {
                 self.select();
-                self.fire("click");
+                self.fire('click');
             }
             return true;
         },

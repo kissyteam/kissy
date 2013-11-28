@@ -48,7 +48,7 @@ KISSY.add(function (S, Event, UA, Node, Overlay, ResizePlugin) {
 
             it("渲染后元素会正确配置", function () {
                 o.render();
-                expect(o.get('el').css("left")).toBe("-9999px");
+                expect(o.get('el').css('left')).toBe("-9999px");
                 expect(o.get('el').css("top")).toBe("-9999px");
                 expect(o.get('el').css('width')).toBe("400px");
             });
@@ -61,7 +61,7 @@ KISSY.add(function (S, Event, UA, Node, Overlay, ResizePlugin) {
 
                 o.show();
 
-                expect(parseInt(o.get('el').css("left")))
+                expect(parseInt(o.get('el').css('left')))
                     .toBeEqual(Math.ceil((Dom.viewportWidth()
                         - o.get('el').outerWidth()) / 2));
 
@@ -109,7 +109,7 @@ KISSY.add(function (S, Event, UA, Node, Overlay, ResizePlugin) {
 
                 o.show();
 
-                expect(o.get('el').css("left")).toBeEqual("100px");
+                expect(o.get('el').css('left')).toBeEqual("100px");
                 expect(Math.ceil(parseFloat(o.get('el').css("top")))).toBeEqual(150);
 
             });
@@ -142,7 +142,7 @@ KISSY.add(function (S, Event, UA, Node, Overlay, ResizePlugin) {
             });
 
             it("渲染后元素会正确配置", function () {
-                expect(o.get('el').css("left")).toBe("-9999px");
+                expect(o.get('el').css('left')).toBe("-9999px");
                 expect(o.get('el').css("top")).toBe("-9999px");
                 expect(o.get('el').css('width')).toBe("400px");
             });
@@ -174,7 +174,7 @@ KISSY.add(function (S, Event, UA, Node, Overlay, ResizePlugin) {
 
                 o.move(300, 350);
 
-                expect(o.get('el').css("left")).toBeEqual("300px");
+                expect(o.get('el').css('left')).toBeEqual("300px");
                 expect(Math.ceil(parseFloat(o.get('el').css("top")))).toBeEqual(350);
 
             });
@@ -244,7 +244,7 @@ KISSY.add(function (S, Event, UA, Node, Overlay, ResizePlugin) {
         describe("方位能够自由指定", function () {
 
             it("render works", function () {
-                var div = $("<div/>").appendTo("body");
+                var div = $("<div/>").appendTo('body');
                 var o = new Overlay({
                     width: 400,
                     render: div,
@@ -263,7 +263,7 @@ KISSY.add(function (S, Event, UA, Node, Overlay, ResizePlugin) {
 
 
             it("no render works", function () {
-                var div = $("<div/>").appendTo("body");
+                var div = $("<div/>").appendTo('body');
                 var o = new Overlay({
                     width: 400,
                     elCls: "popup",
@@ -273,14 +273,14 @@ KISSY.add(function (S, Event, UA, Node, Overlay, ResizePlugin) {
                     content: "render by javascript"
                 });
                 o.render();
-                expect(o.get('el').parent().equals($("body"))).toBe(true);
+                expect(o.get('el').parent().equals($('body'))).toBe(true);
                 o.destroy();
                 div.remove();
             });
 
 
             it("elBefore works", function () {
-                var div = $("<div/>").appendTo("body");
+                var div = $("<div/>").appendTo('body');
                 var o = new Overlay({
                     width: 400,
                     // 同时指定优先 elBefore
@@ -318,7 +318,7 @@ KISSY.add(function (S, Event, UA, Node, Overlay, ResizePlugin) {
                 });
                 o.show();
 
-                expect(parseInt(o.get('el').css("left")))
+                expect(parseInt(o.get('el').css('left')))
                     .toBeEqual(Math.ceil((Dom.viewportWidth()
                         - o.get('el').outerWidth()) / 2));
 

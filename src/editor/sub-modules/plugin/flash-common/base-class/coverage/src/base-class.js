@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ',"src":' + jscoverage_quote(this.src)
+            + ','src':' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -324,7 +324,7 @@ _$jscoverage['/base-class.js'].branchData['132'][2].init(87, 22, 't.nodeName() =
 function visit9_132_2(result) {
   _$jscoverage['/base-class.js'].branchData['132'][2].ranCondition(result);
   return result;
-}_$jscoverage['/base-class.js'].branchData['132'][1].init(87, 64, 't.nodeName() === "img" && t.hasClass(self.get("cls"), undefined)');
+}_$jscoverage['/base-class.js'].branchData['132'][1].init(87, 64, 't.nodeName() === "img" && t.hasClass(self.get('cls'), undefined)');
 function visit8_132_1(result) {
   _$jscoverage['/base-class.js'].branchData['132'][1].ranCondition(result);
   return result;
@@ -378,7 +378,7 @@ KISSY.add(function(S, require) {
   initializer: function() {
   _$jscoverage['/base-class.js'].functionData[1]++;
   _$jscoverage['/base-class.js'].lineData[23]++;
-  var self = this, cls = self.get("cls"), editor = self.get("editor"), prefixCls = editor.get('prefixCls'), children = [], bubbleId = self.get("bubbleId"), contextMenuId = self.get("contextMenuId"), contextMenuHandlers = self.get("contextMenuHandlers");
+  var self = this, cls = self.get('cls'), editor = self.get('editor'), prefixCls = editor.get('prefixCls'), children = [], bubbleId = self.get("bubbleId"), contextMenuId = self.get("contextMenuId"), contextMenuHandlers = self.get("contextMenuHandlers");
   _$jscoverage['/base-class.js'].lineData[32]++;
   S.each(contextMenuHandlers, function(h, content) {
   _$jscoverage['/base-class.js'].functionData[2]++;
@@ -394,7 +394,7 @@ KISSY.add(function(S, require) {
   click: function(e) {
   _$jscoverage['/base-class.js'].functionData[3]++;
   _$jscoverage['/base-class.js'].lineData[43]++;
-  var content = e.target.get("content");
+  var content = e.target.get('content');
   _$jscoverage['/base-class.js'].lineData[44]++;
   if (visit1_44_1(contextMenuHandlers[content])) {
     _$jscoverage['/base-class.js'].lineData[45]++;
@@ -414,22 +414,22 @@ KISSY.add(function(S, require) {
   var bubble = this, el = bubble.get('contentEl');
   _$jscoverage['/base-class.js'].lineData[59]++;
   el.html(S.substitute(tipHTML, {
-  label: self.get("label"), 
+  label: self.get('label'),
   prefixCls: prefixCls}));
   _$jscoverage['/base-class.js'].lineData[63]++;
-  var tipUrlEl = el.one("." + prefixCls + "editor-bubble-url"), tipChangeEl = el.one("." + prefixCls + "editor-bubble-change"), tipRemoveEl = el.one("." + prefixCls + "editor-bubble-remove");
+  var tipUrlEl = el.one("." + prefixCls + 'editor-bubble-url'), tipChangeEl = el.one("." + prefixCls + 'editor-bubble-change'), tipRemoveEl = el.one("." + prefixCls + 'editor-bubble-remove');
   _$jscoverage['/base-class.js'].lineData[68]++;
   Editor.Utils.preventFocus(el);
   _$jscoverage['/base-class.js'].lineData[70]++;
-  tipChangeEl.on("click", function(ev) {
+  tipChangeEl.on('click', function(ev) {
   _$jscoverage['/base-class.js'].functionData[6]++;
   _$jscoverage['/base-class.js'].lineData[72]++;
-  self.show(bubble.get("editorSelectedEl"));
+  self.show(bubble.get('editorSelectedEl'));
   _$jscoverage['/base-class.js'].lineData[73]++;
   ev.halt();
 });
   _$jscoverage['/base-class.js'].lineData[76]++;
-  tipRemoveEl.on("click", function(ev) {
+  tipRemoveEl.on('click', function(ev) {
   _$jscoverage['/base-class.js'].functionData[7]++;
   _$jscoverage['/base-class.js'].lineData[78]++;
   if (visit3_78_1(S.UA.webkit)) {
@@ -444,7 +444,7 @@ KISSY.add(function(S, require) {
     }
   }
   _$jscoverage['/base-class.js'].lineData[86]++;
-  bubble.get("editorSelectedEl").remove();
+  bubble.get('editorSelectedEl').remove();
   _$jscoverage['/base-class.js'].lineData[87]++;
   bubble.hide();
   _$jscoverage['/base-class.js'].lineData[88]++;
@@ -456,7 +456,7 @@ KISSY.add(function(S, require) {
   bubble.on('show', function() {
   _$jscoverage['/base-class.js'].functionData[8]++;
   _$jscoverage['/base-class.js'].lineData[96]++;
-  var a = bubble.get("editorSelectedEl");
+  var a = bubble.get('editorSelectedEl');
   _$jscoverage['/base-class.js'].lineData[97]++;
   if (visit6_97_1(a)) {
     _$jscoverage['/base-class.js'].lineData[98]++;
@@ -479,7 +479,7 @@ KISSY.add(function(S, require) {
   _updateTip: function(tipUrlElEl, selectedFlash) {
   _$jscoverage['/base-class.js'].functionData[11]++;
   _$jscoverage['/base-class.js'].lineData[118]++;
-  var self = this, editor = self.get("editor"), r = editor.restoreRealElement(selectedFlash);
+  var self = this, editor = self.get('editor'), r = editor.restoreRealElement(selectedFlash);
   _$jscoverage['/base-class.js'].lineData[121]++;
   if (visit7_121_1(!r)) {
     _$jscoverage['/base-class.js'].lineData[122]++;
@@ -488,14 +488,14 @@ KISSY.add(function(S, require) {
   _$jscoverage['/base-class.js'].lineData[124]++;
   var url = self._getFlashUrl(r);
   _$jscoverage['/base-class.js'].lineData[125]++;
-  tipUrlElEl.attr("href", url);
+  tipUrlElEl.attr('href', url);
 }, 
   _dbClick: function(ev) {
   _$jscoverage['/base-class.js'].functionData[12]++;
   _$jscoverage['/base-class.js'].lineData[130]++;
   var self = this, t = new Node(ev.target);
   _$jscoverage['/base-class.js'].lineData[132]++;
-  if (visit8_132_1(visit9_132_2(t.nodeName() === "img") && t.hasClass(self.get("cls"), undefined))) {
+  if (visit8_132_1(visit9_132_2(t.nodeName() === "img") && t.hasClass(self.get('cls'), undefined))) {
     _$jscoverage['/base-class.js'].lineData[133]++;
     self.show(t);
     _$jscoverage['/base-class.js'].lineData[134]++;
@@ -505,9 +505,9 @@ KISSY.add(function(S, require) {
   show: function(selectedEl) {
   _$jscoverage['/base-class.js'].functionData[13]++;
   _$jscoverage['/base-class.js'].lineData[139]++;
-  var self = this, editor = self.get("editor");
+  var self = this, editor = self.get('editor');
   _$jscoverage['/base-class.js'].lineData[141]++;
-  DialogLoader.useDialog(editor, self.get("type"), self.get("pluginConfig"), selectedEl);
+  DialogLoader.useDialog(editor, self.get('type'), self.get("pluginConfig"), selectedEl);
 }}, {
   ATTRS: {
   cls: {}, 

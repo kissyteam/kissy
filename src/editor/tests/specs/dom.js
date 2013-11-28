@@ -10,8 +10,8 @@ KISSY.add(function (S, Editor) {
         it("_4eIsBlockBoundary works", function () {
             var div = Dom.create("<div>");
             var span = Dom.create("<span>");
-            Dom.append(div, "body");
-            Dom.append(span, "body");
+            Dom.append(div, 'body');
+            Dom.append(span, 'body');
             expect(Dom._4eIsBlockBoundary(div)).toBe(true);
             expect(Dom._4eIsBlockBoundary(span)).toBe(false);
             expect(Dom._4eIsBlockBoundary(span, {
@@ -24,7 +24,7 @@ KISSY.add(function (S, Editor) {
 
         it("_4eIndex works", function () {
             var div = Dom.create("<div><span>1</span><span>2</span></div>");
-            Dom.append(div, "body");
+            Dom.append(div, 'body');
             expect(Dom._4eIndex(div.childNodes[1])).toBe(1);
             Dom.remove(div);
         });
@@ -32,8 +32,8 @@ KISSY.add(function (S, Editor) {
         it("_4eMove works", function () {
             var div = Dom.create("<div>1</div>");
             var span = Dom.create("<span>");
-            Dom.append(div, "body");
-            Dom.append(span, "body");
+            Dom.append(div, 'body');
+            Dom.append(span, 'body');
 
             Dom._4eMove(span, div, undefined);
             expect(div.lastChild).toBe(span);
@@ -98,7 +98,7 @@ KISSY.add(function (S, Editor) {
                 "</span>" +
                 "</div>");
 
-            Dom.append(div, "body");
+            Dom.append(div, 'body');
 
             var target = Dom.query('.target', div)[1];
 
@@ -131,9 +131,9 @@ KISSY.add(function (S, Editor) {
 
         it("_4eAddress works", function () {
             var div = $("<div><span>1<span></span></span></div>");
-            div.prependTo("body");
+            div.prependTo('body');
             var span = div.first().last();
-            var bodyIndex = S.one("body")._4eIndex();
+            var bodyIndex = S.one('body')._4eIndex();
             expect(span._4eAddress()).toEqual([bodyIndex, 0, 0, 1]);
             div.remove();
         });

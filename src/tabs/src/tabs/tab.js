@@ -15,7 +15,7 @@ KISSY.add(function (S, require) {
         isTabsTab: true,
 
         bindUI: function () {
-            this.on("click", function () {
+            this.on('click', function () {
                 this.set("selected", true);
             });
         }

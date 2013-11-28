@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ',"src":' + jscoverage_quote(this.src)
+            + ','src':' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -1300,7 +1300,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/table.js'].lineData[279]++;
     var range = new Editor.Range(cell[0].ownerDocument);
     _$jscoverage['/table.js'].lineData[280]++;
-    if (visit53_280_1(!range['moveToElementEditablePosition'](cell, placeAtEnd ? true : undefined))) {
+    if (visit53_280_1(!range.moveToElementEditablePosition(cell, placeAtEnd ? true : undefined))) {
       _$jscoverage['/table.js'].lineData[282]++;
       range.selectNodeContents(cell);
       _$jscoverage['/table.js'].lineData[283]++;
@@ -1569,7 +1569,7 @@ KISSY.add(function(S, require) {
   click: function(e) {
   _$jscoverage['/table.js'].functionData[29]++;
   _$jscoverage['/table.js'].lineData[520]++;
-  var content = e.target.get("content");
+  var content = e.target.get('content');
   _$jscoverage['/table.js'].lineData[521]++;
   if (visit85_521_1(handlers[content])) {
     _$jscoverage['/table.js'].lineData[522]++;
@@ -1583,12 +1583,12 @@ KISSY.add(function(S, require) {
     _$jscoverage['/table.js'].lineData[528]++;
     var self = this, children = self.get('children');
     _$jscoverage['/table.js'].lineData[529]++;
-    var editor = self.get("editor");
+    var editor = self.get('editor');
     _$jscoverage['/table.js'].lineData[530]++;
     S.each(children, function(c) {
   _$jscoverage['/table.js'].functionData[31]++;
   _$jscoverage['/table.js'].lineData[531]++;
-  var content = c.get("content");
+  var content = c.get('content');
   _$jscoverage['/table.js'].lineData[532]++;
   if (visit87_532_1(!statusChecker[content] || statusChecker[content].call(self, editor))) {
     _$jscoverage['/table.js'].lineData[534]++;

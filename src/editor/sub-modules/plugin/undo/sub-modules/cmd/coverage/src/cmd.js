@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ',"src":' + jscoverage_quote(this.src)
+            + ','src':' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -423,7 +423,7 @@ function visit23_185_1(result) {
 function visit22_183_1(result) {
   _$jscoverage['/cmd.js'].branchData['183'][1].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['173'][1].init(50, 51, 'this.editor.get("mode") != Editor.Mode.WYSIWYG_MODE');
+}_$jscoverage['/cmd.js'].branchData['173'][1].init(50, 51, 'this.editor.get('mode') != Editor.Mode.WYSIWYG_MODE');
 function visit21_173_1(result) {
   _$jscoverage['/cmd.js'].branchData['173'][1].ranCondition(result);
   return result;
@@ -443,7 +443,7 @@ function visit18_139_1(result) {
 function visit17_135_1(result) {
   _$jscoverage['/cmd.js'].branchData['135'][1].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['131'][1].init(89, 46, 'editor.get("mode") != Editor.Mode.WYSIWYG_MODE');
+}_$jscoverage['/cmd.js'].branchData['131'][1].init(89, 46, 'editor.get('mode') != Editor.Mode.WYSIWYG_MODE');
 function visit16_131_1(result) {
   _$jscoverage['/cmd.js'].branchData['131'][1].ranCondition(result);
   return result;
@@ -455,11 +455,11 @@ function visit15_111_1(result) {
 function visit14_110_1(result) {
   _$jscoverage['/cmd.js'].branchData['110'][1].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['97'][1].init(914, 48, 'editor.fire("beforeSave", {\n  buffer: 1}) !== false');
+}_$jscoverage['/cmd.js'].branchData['97'][1].init(914, 48, 'editor.fire('beforeSave', {\n  buffer: 1}) !== false');
 function visit13_97_1(result) {
   _$jscoverage['/cmd.js'].branchData['97'][1].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['91'][1].init(29, 35, 'false !== editor.fire("beforeUndo")');
+}_$jscoverage['/cmd.js'].branchData['91'][1].init(29, 35, 'false !== editor.fire('beforeUndo')');
 function visit12_91_1(result) {
   _$jscoverage['/cmd.js'].branchData['91'][1].ranCondition(result);
   return result;
@@ -475,7 +475,7 @@ function visit10_90_2(result) {
 function visit9_90_1(result) {
   _$jscoverage['/cmd.js'].branchData['90'][1].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['83'][1].init(29, 35, 'false !== editor.fire("beforeRedo")');
+}_$jscoverage['/cmd.js'].branchData['83'][1].init(29, 35, 'false !== editor.fire('beforeRedo')');
 function visit8_83_1(result) {
   _$jscoverage['/cmd.js'].branchData['83'][1].ranCondition(result);
   return result;
@@ -587,7 +587,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/cmd.js'].lineData[82]++;
   if (visit5_82_1(visit6_82_2(keyCode === zKeyCode) && (visit7_82_3(ev.ctrlKey || ev.metaKey)))) {
     _$jscoverage['/cmd.js'].lineData[83]++;
-    if (visit8_83_1(false !== editor.fire("beforeRedo"))) {
+    if (visit8_83_1(false !== editor.fire('beforeRedo'))) {
       _$jscoverage['/cmd.js'].lineData[84]++;
       self.restore(-1);
     }
@@ -599,7 +599,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/cmd.js'].lineData[90]++;
   if (visit9_90_1(visit10_90_2(keyCode === yKeyCode) && (visit11_90_3(ev.ctrlKey || ev.metaKey)))) {
     _$jscoverage['/cmd.js'].lineData[91]++;
-    if (visit12_91_1(false !== editor.fire("beforeUndo"))) {
+    if (visit12_91_1(false !== editor.fire('beforeUndo'))) {
       _$jscoverage['/cmd.js'].lineData[92]++;
       self.restore(1);
     }
@@ -609,7 +609,7 @@ KISSY.add(function(S, require) {
     return;
   }
   _$jscoverage['/cmd.js'].lineData[97]++;
-  if (visit13_97_1(editor.fire("beforeSave", {
+  if (visit13_97_1(editor.fire('beforeSave', {
   buffer: 1}) !== false)) {
     _$jscoverage['/cmd.js'].lineData[98]++;
     self.save(1);
@@ -650,7 +650,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/cmd.js'].lineData[128]++;
   var editor = this.editor;
   _$jscoverage['/cmd.js'].lineData[131]++;
-  if (visit16_131_1(editor.get("mode") != Editor.Mode.WYSIWYG_MODE)) {
+  if (visit16_131_1(editor.get('mode') != Editor.Mode.WYSIWYG_MODE)) {
     _$jscoverage['/cmd.js'].lineData[132]++;
     return;
   }
@@ -696,7 +696,7 @@ KISSY.add(function(S, require) {
   restore: function(d) {
   _$jscoverage['/cmd.js'].functionData[11]++;
   _$jscoverage['/cmd.js'].lineData[173]++;
-  if (visit21_173_1(this.editor.get("mode") != Editor.Mode.WYSIWYG_MODE)) {
+  if (visit21_173_1(this.editor.get('mode') != Editor.Mode.WYSIWYG_MODE)) {
     _$jscoverage['/cmd.js'].lineData[174]++;
     return undefined;
   }
@@ -758,7 +758,7 @@ KISSY.add(function(S, require) {
   undoRedo.save(buffer);
 }});
     _$jscoverage['/cmd.js'].lineData[222]++;
-    editor.addCommand("undo", {
+    editor.addCommand('undo', {
   exec: function() {
   _$jscoverage['/cmd.js'].functionData[14]++;
   _$jscoverage['/cmd.js'].lineData[224]++;
@@ -767,7 +767,7 @@ KISSY.add(function(S, require) {
   undoRedo.restore(-1);
 }});
     _$jscoverage['/cmd.js'].lineData[228]++;
-    editor.addCommand("redo", {
+    editor.addCommand('redo', {
   exec: function() {
   _$jscoverage['/cmd.js'].functionData[15]++;
   _$jscoverage['/cmd.js'].lineData[230]++;

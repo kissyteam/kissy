@@ -33,7 +33,7 @@ KISSY.add(function (S, Dom) {
         scrolling="no"\
         ></iframe>';
 
-    describe("scroll", function () {
+    describe('scroll', function () {
         var container ,
             node , container_border_width,
             container_client_height,

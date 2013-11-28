@@ -138,9 +138,9 @@ KISSY.add(function (S, require) {
                 }
             },
             /**
-             * How to activate trigger element, "click" or "mouse".
+             * How to activate trigger element, 'click' or "mouse".
              *
-             * Defaults to: "click".
+             * Defaults to: 'click'.
              *
              * @cfg {String} triggerType
              */

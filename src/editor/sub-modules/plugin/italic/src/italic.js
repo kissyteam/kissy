@@ -15,15 +15,15 @@ KISSY.add(function (S, require) {
         pluginRenderUI: function (editor) {
             cmd.init(editor);
 
-            editor.addButton("italic", {
+            editor.addButton('italic', {
                 cmdType: 'italic',
-                tooltip: "斜体 "
+                tooltip: '斜体'
             }, ui.Button);
 
             editor.docReady(function () {
                 editor.get('document').on('keydown', function (e) {
-                    if (e.ctrlKey && e.keyCode == S.Node.KeyCode.I) {
-                        editor.execCommand("italic");
+                    if (e.ctrlKey && e.keyCode === S.Node.KeyCode.I) {
+                        editor.execCommand('italic');
                         e.preventDefault();
                     }
                 });

@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ',"src":' + jscoverage_quote(this.src)
+            + ','src':' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -286,8 +286,8 @@ KISSY.add(function(S, require) {
   _$jscoverage['/underline.js'].lineData[15]++;
   cmd.init(editor);
   _$jscoverage['/underline.js'].lineData[17]++;
-  editor.addButton("underline", {
-  cmdType: "underline", 
+  editor.addButton('underline', {
+  cmdType: 'underline',
   tooltip: "\u4e0b\u5212\u7ebf "}, ui.Button);
   _$jscoverage['/underline.js'].lineData[22]++;
   editor.docReady(function() {
@@ -298,7 +298,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/underline.js'].lineData[24]++;
   if (visit1_24_1(e.ctrlKey && visit2_24_2(e.keyCode == S.Node.KeyCode.U))) {
     _$jscoverage['/underline.js'].lineData[25]++;
-    editor.execCommand("underline");
+    editor.execCommand('underline');
     _$jscoverage['/underline.js'].lineData[26]++;
     e.preventDefault();
   }

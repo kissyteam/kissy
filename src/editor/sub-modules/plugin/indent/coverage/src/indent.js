@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ',"src":' + jscoverage_quote(this.src)
+            + ','src':' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -271,13 +271,13 @@ KISSY.add(function(S, require) {
   _$jscoverage['/indent.js'].lineData[16]++;
   indexCmd.init(editor);
   _$jscoverage['/indent.js'].lineData[17]++;
-  editor.addButton("indent", {
+  editor.addButton('indent', {
   tooltip: "\u589e\u52a0\u7f29\u8fdb\u91cf ", 
   listeners: {
   click: function() {
   _$jscoverage['/indent.js'].functionData[3]++;
   _$jscoverage['/indent.js'].lineData[21]++;
-  editor.execCommand("indent");
+  editor.execCommand('indent');
   _$jscoverage['/indent.js'].lineData[22]++;
   editor.focus();
 }}, 

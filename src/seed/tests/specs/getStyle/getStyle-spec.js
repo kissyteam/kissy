@@ -21,11 +21,11 @@
 
             var state = 0;
 
-            expect($('#special').css("height")).not.toBe("330px");
+            expect($('#special').css('height')).not.toBe("330px");
 
             S.getScript(d + "getStyle/height.css", function () {
                 setTimeout(function () {
-                    expect($('#special').css("height")).toBe("330px");
+                    expect($('#special').css('height')).toBe("330px");
                     state++;
                     // breath
                 }, 100);
@@ -36,7 +36,7 @@
             var d2 = d.replace(":8888", ":9999");
             S.getScript(d2 + "getStyle/height2.css", function () {
                 setTimeout(function () {
-                    expect($('#special2').css("height")).toBe("440px");
+                    expect($('#special2').css('height')).toBe("440px");
                     state++;
                     // breath
                 }, 100);

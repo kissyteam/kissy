@@ -141,17 +141,17 @@ KISSY.add(function (S, require) {
                 if (f.css('width')) {
                     self.dWidth.val(parseInt(f.css('width')));
                 }
-                if (f.css("height")) {
-                    self.dHeight.val(parseInt(f.css("height")));
+                if (f.css('height')) {
+                    self.dHeight.val(parseInt(f.css('height')));
                 }
-                self.dAlign.set("value", f.css("float"));
+                self.dAlign.set('value', f.css("float"));
                 Editor.Utils.valInput(self.dUrl, self._getFlashUrl(r));
                 self.dMargin.val(parseInt(r.style("margin")) || 0);
             } else {
                 Editor.Utils.resetInput(self.dUrl);
                 self.dWidth.val(cfg['defaultWidth'] || "");
                 self.dHeight.val(cfg['defaultHeight'] || "");
-                self.dAlign.set("value", "none");
+                self.dAlign.set('value', "none");
                 self.dMargin.val("5");
             }
         },
@@ -184,8 +184,8 @@ KISSY.add(function (S, require) {
             self.dMargin = el.one("." + prefixCls + "editor-flash-margin");
             var action = el.one("." + prefixCls + "editor-flash-ok"),
                 cancel = el.one("." + prefixCls + "editor-flash-cancel");
-            action.on("click", self._gen, self);
-            cancel.on("click", function (ev) {
+            action.on('click', self._gen, self);
+            cancel.on('click', function (ev) {
                 d.hide();
                 ev && ev.halt();
             });
@@ -206,7 +206,7 @@ KISSY.add(function (S, require) {
                     style: "margin:" +
                         (parseInt(self.dMargin.val()) || 0) +
                         "px;" +
-                        "float:" + self.dAlign.get("value") + ";"
+                        "float:" + self.dAlign.get('value') + ";"
                 }
             };
         },

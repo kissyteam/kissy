@@ -8,8 +8,8 @@
  Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.html or http://ckeditor.com/license
  */
-KISSY.add(function (S,require) {
-    var Editor=require('./base');
+KISSY.add(function (S, require) {
+    var Editor = require('./base');
 
     var TRUE = true,
         FALSE = false,
@@ -56,12 +56,12 @@ KISSY.add(function (S,require) {
             // 从左到右保证在 range 区间内获取 nextSourceNode
             this._.guardLTR = function (node, movingOut) {
                 // 从endContainer移出去，失败返回false
-                if (movingOut && (limitLTR == node || Dom.nodeName(node) == "body")) {
+                if (movingOut && (limitLTR === node || Dom.nodeName(node) === 'body')) {
                     return false;
                 }
                 // 达到边界的下一个节点,注意 null 的情况
                 // node 永远不能为 null
-                return node != blockerLTR;
+                return node !== blockerLTR;
 
             };
         }
@@ -75,12 +75,12 @@ KISSY.add(function (S,require) {
 
             self._.guardRTL = function (node, movingOut) {
                 // 从endContainer移出去，失败返回false
-                if (movingOut && (limitRTL == node || Dom.nodeName(node) == "body")) {
+                if (movingOut && (limitRTL === node || Dom.nodeName(node) === 'body')) {
                     return false;
                 }
                 // 达到边界的下一个节点,注意 null 的情况
                 // node 永远不能为 null
-                return node != blockerRTL;
+                return node !== blockerRTL;
             };
         }
 
@@ -146,13 +146,14 @@ KISSY.add(function (S,require) {
         }
 
         self.end();
-        return self.current = NULL;
+        self.current = NULL;
+        return NULL;
     }
 
     function iterateToLast(rtl) {
         var node,
             last = NULL;
-        while (node = iterate.call(this, rtl)) {
+        while ((node = iterate.call(this, rtl))) {
             last = node;
         }
         return last;
@@ -193,155 +194,154 @@ KISSY.add(function (S,require) {
     }
 
 
-    S.augment(Walker,{
-            /**
-             * Stop walking. No more nodes are retrieved if this function gets
-             * called.
-             */
-            end:function () {
-                this._.end = 1;
-            },
+    S.augment(Walker, {
+        /**
+         * Stop walking. No more nodes are retrieved if this function gets
+         * called.
+         */
+        end: function () {
+            this._.end = 1;
+        },
 
-            /**
-             * Retrieves the next node (at right).
-             * @return {Boolean} The next node or NULL if no more
-             *        nodes are available.
-             */
-            next:function () {
-                return iterate.call(this);
-            },
+        /**
+         * Retrieves the next node (at right).
+         * @return {Boolean} The next node or NULL if no more
+         *        nodes are available.
+         */
+        next: function () {
+            return iterate.call(this);
+        },
 
-            /**
-             * Retrieves the previous node (at left).
-             * @return {Boolean} The previous node or NULL if no more
-             *        nodes are available.
-             */
-            previous:function () {
-                return iterate.call(this, TRUE);
-            },
+        /**
+         * Retrieves the previous node (at left).
+         * @return {Boolean} The previous node or NULL if no more
+         *        nodes are available.
+         */
+        previous: function () {
+            return iterate.call(this, TRUE);
+        },
 
-            /**
-             * Check all nodes at right, executing the evaluation function.
-             * @return {Boolean} "FALSE" if the evaluator function returned
-             *        "FALSE" for any of the matched nodes. Otherwise "TRUE".
-             */
-            checkForward:function () {
-                return iterate.call(this, FALSE, TRUE) !== FALSE;
-            },
+        /**
+         * Check all nodes at right, executing the evaluation function.
+         * @return {Boolean} "FALSE" if the evaluator function returned
+         *        "FALSE" for any of the matched nodes. Otherwise "TRUE".
+         */
+        checkForward: function () {
+            return iterate.call(this, FALSE, TRUE) !== FALSE;
+        },
 
-            /**
-             * Check all nodes at left, executing the evaluation function.
-             * 是不是 (不能后退了)
-             * @return {Boolean} "FALSE" if the evaluator function returned
-             *        "FALSE" for any of the matched nodes. Otherwise "TRUE".
-             */
-            checkBackward:function () {
-                // 在当前 range 范围内不会出现 evaluator 返回 false 的情况
-                return iterate.call(this, TRUE, TRUE) !== FALSE;
-            },
+        /**
+         * Check all nodes at left, executing the evaluation function.
+         * 是不是 (不能后退了)
+         * @return {Boolean} "FALSE" if the evaluator function returned
+         *        "FALSE" for any of the matched nodes. Otherwise "TRUE".
+         */
+        checkBackward: function () {
+            // 在当前 range 范围内不会出现 evaluator 返回 false 的情况
+            return iterate.call(this, TRUE, TRUE) !== FALSE;
+        },
 
-            /**
-             * Executes a full walk forward (to the right), until no more nodes
-             * are available, returning the last valid node.
-             * @return {Boolean} The last node at the right or NULL
-             *        if no valid nodes are available.
-             */
-            lastForward:function () {
-                return iterateToLast.call(this);
-            },
+        /**
+         * Executes a full walk forward (to the right), until no more nodes
+         * are available, returning the last valid node.
+         * @return {Boolean} The last node at the right or NULL
+         *        if no valid nodes are available.
+         */
+        lastForward: function () {
+            return iterateToLast.call(this);
+        },
 
-            /**
-             * Executes a full walk backwards (to the left), until no more nodes
-             * are available, returning the last valid node.
-             * @return {Boolean} The last node at the left or NULL
-             *        if no valid nodes are available.
-             */
-            lastBackward:function () {
-                return iterateToLast.call(this, TRUE);
-            },
+        /**
+         * Executes a full walk backwards (to the left), until no more nodes
+         * are available, returning the last valid node.
+         * @return {Boolean} The last node at the left or NULL
+         *        if no valid nodes are available.
+         */
+        lastBackward: function () {
+            return iterateToLast.call(this, TRUE);
+        },
 
-            reset:function () {
-                delete this.current;
-                this._ = {};
-            },
+        reset: function () {
+            delete this.current;
+            this._ = {};
+        },
 
-            // for unit test
-            _iterator:iterate
+        // for unit test
+        _iterator: iterate
 
-        });
+    });
 
 
-    S.mix(Walker,{
-            /**
-             * Whether the to-be-evaluated node is not a block node and does not match given node name map.
-             * @param {Object} customNodeNames Given node name map.
-             * @return {Function} Function for evaluation.
-             */
-            blockBoundary:function (customNodeNames) {
-                return function (node) {
-                    return !(node.nodeType == Dom.NodeType.ELEMENT_NODE &&
-                        Dom._4eIsBlockBoundary(node, customNodeNames) );
-                };
-            },
+    S.mix(Walker, {
+        /**
+         * Whether the to-be-evaluated node is not a block node and does not match given node name map.
+         * @param {Object} customNodeNames Given node name map.
+         * @return {Function} Function for evaluation.
+         */
+        blockBoundary: function (customNodeNames) {
+            return function (node) {
+                return !(node.nodeType === Dom.NodeType.ELEMENT_NODE &&
+                    Dom._4eIsBlockBoundary(node, customNodeNames) );
+            };
+        },
 
-            /**
-             * Whether the to-be-evaluated node is a bookmark node OR bookmark node
-             * inner contents.
-             * @param {Boolean} [contentOnly] Whether only test againt the text content of
-             * bookmark node instead of the element itself(default).
-             * @param {Boolean} [isReject] Whether should return 'FALSE' for the bookmark
-             * node instead of 'TRUE'(default).
-             * @return {Function} Function for evaluation.
-             */
-            bookmark:function (contentOnly, isReject) {
-                function isBookmarkNode(node) {
-                    return  Dom.nodeName(node) == 'span' &&
-                        Dom.attr(node, '_ke_bookmark');
-                }
-
-                return function (node) {
-                    var isBookmark, parent;
-                    // Is bookmark inner text node?
-                    isBookmark = ( node.nodeType == Dom.NodeType.TEXT_NODE &&
-                        ( parent = node.parentNode ) &&
-                        isBookmarkNode(parent) );
-                    // Is bookmark node?
-                    isBookmark = contentOnly ? isBookmark : isBookmark || isBookmarkNode(node);
-                    // !! 2012-05-15
-                    // evaluator check ===false, must turn it to boolean false
-                    return !!(isReject ^ isBookmark);
-                };
-            },
-
-            /**
-             * Whether the node is a text node containing only whitespaces characters.
-             * @param {Boolean} [isReject]
-             */
-            whitespaces:function (isReject) {
-                return function (node) {
-                    var isWhitespace = node.nodeType == Dom.NodeType.TEXT_NODE &&
-                        !S.trim(node.nodeValue);
-                    return !!(isReject ^ isWhitespace);
-                };
-            },
-            /**
-             * Whether the node is invisible in wysiwyg mode.
-             * @param isReject
-             */
-            invisible:function (isReject) {
-                var whitespace = Walker.whitespaces();
-                return function (node) {
-                    // Nodes that take no spaces in wysiwyg:
-                    // 1. White-spaces but not including NBSP;
-                    // 2. Empty inline elements, e.g. <b></b> we're checking here
-                    // 'offsetHeight' instead of 'offsetWidth' for properly excluding
-                    // all sorts of empty paragraph, e.g. <br />.
-                    var isInvisible = whitespace(node) ||
-                        node.nodeType == Dom.NodeType.ELEMENT_NODE && !node.offsetHeight;
-                    return !!(isReject ^ isInvisible);
-                };
+        /**
+         * Whether the to-be-evaluated node is a bookmark node OR bookmark node
+         * inner contents.
+         * @param {Boolean} [contentOnly] Whether only test againt the text content of
+         * bookmark node instead of the element itself(default).
+         * @param {Boolean} [isReject] Whether should return 'FALSE' for the bookmark
+         * node instead of 'TRUE'(default).
+         * @return {Function} Function for evaluation.
+         */
+        bookmark: function (contentOnly, isReject) {
+            function isBookmarkNode(node) {
+                return  Dom.nodeName(node) === 'span' &&
+                    Dom.attr(node, '_ke_bookmark');
             }
-        });
+
+            return function (node) {
+                var isBookmark, parent;
+                // Is bookmark inner text node?
+                isBookmark = ( node.nodeType === Dom.NodeType.TEXT_NODE &&
+                    ( parent = node.parentNode ) &&
+                    isBookmarkNode(parent) );
+                // Is bookmark node?
+                isBookmark = contentOnly ? isBookmark : isBookmark || isBookmarkNode(node);
+                // !! 2012-05-15
+                // evaluator check ===false, must turn it to boolean false
+                return !!(isReject ^ isBookmark);
+            };
+        },
+
+        /**
+         * Whether the node is a text node containing only whitespaces characters.
+         * @param {Boolean} [isReject]
+         */
+        whitespaces: function (isReject) {
+            return function (node) {
+                var isWhitespace = node.nodeType === Dom.NodeType.TEXT_NODE && !S.trim(node.nodeValue);
+                return !!(isReject ^ isWhitespace);
+            };
+        },
+        /**
+         * Whether the node is invisible in wysiwyg mode.
+         * @param isReject
+         */
+        invisible: function (isReject) {
+            var whitespace = Walker.whitespaces();
+            return function (node) {
+                // Nodes that take no spaces in wysiwyg:
+                // 1. White-spaces but not including NBSP;
+                // 2. Empty inline elements, e.g. <b></b> we're checking here
+                // 'offsetHeight' instead of 'offsetWidth' for properly excluding
+                // all sorts of empty paragraph, e.g. <br />.
+                var isInvisible = whitespace(node) ||
+                    node.nodeType === Dom.NodeType.ELEMENT_NODE && !node.offsetHeight;
+                return !!(isReject ^ isInvisible);
+            };
+        }
+    });
 
     var tailNbspRegex = /^[\t\r\n ]*(?:&nbsp;|\xa0)$/,
         isWhitespaces = Walker.whitespaces(),
@@ -350,9 +350,8 @@ KISSY.add(function (S,require) {
             var name = Dom.nodeName(node);
             return isBookmark(node) ||
                 isWhitespaces(node) ||
-                node.nodeType == 1 &&
-                    name in dtd.$inline &&
-                    !( name in dtd.$empty );
+                node.nodeType === 1 &&
+                    name in dtd.$inline && !( name in dtd.$empty );
         };
 
     // Check if there's a filler node at the end of an element, and return it.
@@ -362,15 +361,14 @@ KISSY.add(function (S,require) {
             tail = tail._4ePreviousSourceNode();
         } while (tail && toSkip(tail[0]));
 
-        if (tail && ( !UA.ie ? tail.nodeName() == "br"
-            : tail[0].nodeType == 3 && tailNbspRegex.test(tail.text()) )) {
+        if (tail && ( !UA.ie ? tail.nodeName() === 'br' : tail[0].nodeType === 3 && tailNbspRegex.test(tail.text()) )) {
             return tail[0];
         }
         return false;
     }
 
     Editor.Utils.injectDom({
-        _4e_getBogus:function (el) {
+        _4eGetBogus: function (el) {
             return getBogus(new Node(el));
         }
     });

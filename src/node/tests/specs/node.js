@@ -86,12 +86,12 @@ KISSY.add(function (S, Dom, Node) {
 
                     //chain
                     expect(nl.css({
-                        "height": "200px",
+                        'height': "200px",
                         'overflow': 'hidden'
                     })).toBe(nl);
 
                     nl.each(function (n) {
-                        expect(n.css("height")).toBe("200px");
+                        expect(n.css('height')).toBe("200px");
                     });
                 });
 
@@ -276,14 +276,14 @@ KISSY.add(function (S, Dom, Node) {
                     var handler = function () {
                         expect(this).toBe(cb.getDOMNode());
                     };
-                    cb.on("click", handler);
+                    cb.on('click', handler);
 
-                    jasmine.simulate(cb.getDOMNode(), "click");
+                    jasmine.simulate(cb.getDOMNode(), 'click');
 
                     waits(10);
 
                     runs(function () {
-                        cb.detach("click", handler);
+                        cb.detach('click', handler);
                     });
 
                     var h2 = function () {
@@ -295,16 +295,16 @@ KISSY.add(function (S, Dom, Node) {
                     var ps = body.all(".test-div");
 
                     runs(function () {
-                        ps.on("click", h2);
+                        ps.on('click', h2);
                         ps.each(function (n) {
-                            jasmine.simulate(n.getDOMNode(), "click");
+                            jasmine.simulate(n.getDOMNode(), 'click');
                         });
                     });
 
                     waits(10);
 
                     runs(function () {
-                        ps.detach("click", h2);
+                        ps.detach('click', h2);
                     });
 
                 });
@@ -338,7 +338,7 @@ KISSY.add(function (S, Dom, Node) {
 
 
                 it("should end correctly", function () {
-                    var html = $("<div id='end1'><div class='end2'></div><div class='end3'></div></div>").appendTo("body");
+                    var html = $("<div id='end1'><div class='end2'></div><div class='end3'></div></div>").appendTo('body');
                     html.all(".end2").text("end2").end().all(".end3").text("end3").end().append("<div class='end4'></div>");
                     expect($("#end1 .end2").text()).toBe("end2");
                     expect($("#end1 .end3").text()).toBe("end3");
@@ -357,7 +357,7 @@ KISSY.add(function (S, Dom, Node) {
                         "<div class='context-test-3' id='context-test-5'>" +
                         "</div>" +
                         "</div>" +
-                        "</div>").appendTo("body");
+                        "</div>").appendTo('body');
 
                 it("should support #id", function () {
                     expect($(".context-test-3", "#context-test-1").length).toBe(1);
@@ -387,7 +387,7 @@ KISSY.add(function (S, Dom, Node) {
 
                 // #85
                 it("slice works", function () {
-                    expect($("body").slice(-1)[0]).toBe(document.body);
+                    expect($('body').slice(-1)[0]).toBe(document.body);
                     expect($(".context-test-3").slice(-2).length).toBe(2);
                     expect($(".context-test-3").slice(-2, -1).length).toBe(1);
                 });

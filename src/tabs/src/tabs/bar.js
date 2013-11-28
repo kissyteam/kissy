@@ -68,7 +68,7 @@ KISSY.add(function (S, require) {
             selectedTab: {
             },
             changeType: {
-                value: "click"
+                value: 'click'
             },
             defaultChildCfg: {
                 value: {
@@ -90,7 +90,7 @@ KISSY.add(function (S, require) {
         /**
          * click
          */
-        CLICK: "click",
+        CLICK: 'click',
         /**
          * mouse
          */

@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ',"src":' + jscoverage_quote(this.src)
+            + ','src':' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -411,7 +411,7 @@ if (! _$jscoverage['/cmd.js'].branchData) {
   _$jscoverage['/cmd.js'].branchData['306'] = [];
   _$jscoverage['/cmd.js'].branchData['306'][1] = new BranchData();
 }
-_$jscoverage['/cmd.js'].branchData['306'][1].init(17, 36, '!editor.hasCommand("maximizeWindow")');
+_$jscoverage['/cmd.js'].branchData['306'][1].init(17, 36, '!editor.hasCommand('maximizeWindow')');
 function visit21_306_1(result) {
   _$jscoverage['/cmd.js'].branchData['306'][1].ranCondition(result);
   return result;
@@ -503,7 +503,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/cmd.js'].lineData[8]++;
   var Event = require('event');
   _$jscoverage['/cmd.js'].lineData[10]++;
-  var UA = S.UA, ie = UA.ie, doc = document, Node = S.Node, Dom = S.DOM, iframe, MAXIMIZE_TOOLBAR_CLASS = "editor-toolbar-padding", init = function() {
+  var UA = S.UA, ie = UA.ie, doc = document, Node = S.Node, Dom = S.DOM, iframe, MAXIMIZE_TOOLBAR_CLASS = 'editor-toolbar-padding', init = function() {
   _$jscoverage['/cmd.js'].functionData[1]++;
   _$jscoverage['/cmd.js'].lineData[18]++;
   if (visit1_18_1(!iframe)) {
@@ -607,7 +607,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/cmd.js'].lineData[117]++;
   var self = this, editor = self.editor, _savedParents = [], editorEl = editor.get('el');
   _$jscoverage['/cmd.js'].lineData[121]++;
-  self.iframeHeight = editor.get('textarea').parent().style("height");
+  self.iframeHeight = editor.get('textarea').parent().style('height');
   _$jscoverage['/cmd.js'].lineData[122]++;
   self.editorElWidth = editorEl.style('width');
   _$jscoverage['/cmd.js'].lineData[124]++;
@@ -704,12 +704,12 @@ KISSY.add(function(S, require) {
   editorEl.css({
   position: "absolute", 
   zIndex: Editor.baseZIndex(Editor.ZIndexManager.MAXIMIZE), 
-  width: viewportWidth + "px"});
+  width: viewportWidth + 'px'});
   _$jscoverage['/cmd.js'].lineData[233]++;
   iframe.css({
   zIndex: Editor.baseZIndex(Editor.ZIndexManager.MAXIMIZE - 5), 
-  height: viewportHeight + "px", 
-  width: viewportWidth + "px"});
+  height: viewportHeight + 'px',
+  width: viewportWidth + 'px'});
   _$jscoverage['/cmd.js'].lineData[238]++;
   editorEl.offset({
   left: 0, 
@@ -720,10 +720,10 @@ KISSY.add(function(S, require) {
   top: 0});
   _$jscoverage['/cmd.js'].lineData[247]++;
   textareaEl.parent().css({
-  height: (viewportHeight - statusHeight - toolHeight) + "px"});
+  height: (viewportHeight - statusHeight - toolHeight) + 'px'});
   _$jscoverage['/cmd.js'].lineData[252]++;
   textareaEl.css({
-  height: (viewportHeight - statusHeight - toolHeight) + "px"});
+  height: (viewportHeight - statusHeight - toolHeight) + 'px'});
   _$jscoverage['/cmd.js'].lineData[256]++;
   if (visit16_256_1(stop !== true)) {
     _$jscoverage['/cmd.js'].lineData[257]++;
@@ -802,18 +802,18 @@ KISSY.add(function(S, require) {
   init: function(editor) {
   _$jscoverage['/cmd.js'].functionData[15]++;
   _$jscoverage['/cmd.js'].lineData[306]++;
-  if (visit21_306_1(!editor.hasCommand("maximizeWindow"))) {
+  if (visit21_306_1(!editor.hasCommand('maximizeWindow'))) {
     _$jscoverage['/cmd.js'].lineData[307]++;
     var maximizeCmd = new MaximizeCmd(editor);
     _$jscoverage['/cmd.js'].lineData[309]++;
-    editor.addCommand("maximizeWindow", {
+    editor.addCommand('maximizeWindow', {
   exec: function() {
   _$jscoverage['/cmd.js'].functionData[16]++;
   _$jscoverage['/cmd.js'].lineData[311]++;
   maximizeCmd.maximizeWindow();
 }});
     _$jscoverage['/cmd.js'].lineData[315]++;
-    editor.addCommand("restoreWindow", {
+    editor.addCommand('restoreWindow', {
   exec: function() {
   _$jscoverage['/cmd.js'].functionData[17]++;
   _$jscoverage['/cmd.js'].lineData[317]++;

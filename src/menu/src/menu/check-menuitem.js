@@ -14,7 +14,7 @@ KISSY.add(function (S, require) {
         handleClickInternal: function () {
             var self = this;
             self.callSuper();
-            self.set("checked", !self.get("checked"));
+            self.set('checked', !self.get('checked'));
             self.fire('click');
             return true;
         }

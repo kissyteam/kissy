@@ -34,7 +34,7 @@ KISSY.add(function (S, require) {
                 otherContents = otherImage.contents;
             // 不比较书签！
             // source mode -> wysiwyg mode 光标不保持
-            return thisContents == otherContents;
+            return thisContents === otherContents;
         }
     });
 
@@ -74,13 +74,12 @@ KISSY.add(function (S, require) {
             editor.docReady(function () {
                 editor.get('document').on('keydown', function (ev) {
                     var keyCode = ev.keyCode;
-                    if (keyCode in navigationKeyCodes
-                        || keyCode in modifierKeyCodes) {
+                    if (keyCode in navigationKeyCodes || keyCode in modifierKeyCodes) {
                         return;
                     }
                     // ctrl+z，撤销
                     if (keyCode === zKeyCode && (ev.ctrlKey || ev.metaKey)) {
-                        if (false !== editor.fire("beforeRedo")) {
+                        if (false !== editor.fire('beforeRedo')) {
                             self.restore(-1);
                         }
                         ev.halt();
@@ -88,13 +87,13 @@ KISSY.add(function (S, require) {
                     }
                     // ctrl+y，重做
                     if (keyCode === yKeyCode && (ev.ctrlKey || ev.metaKey)) {
-                        if (false !== editor.fire("beforeUndo")) {
+                        if (false !== editor.fire('beforeUndo')) {
                             self.restore(1);
                         }
                         ev.halt();
                         return;
                     }
-                    if (editor.fire("beforeSave", {buffer: 1}) !== false) {
+                    if (editor.fire('beforeSave', {buffer: 1}) !== false) {
                         self.save(1);
                     }
                 });
@@ -107,13 +106,13 @@ KISSY.add(function (S, require) {
             self._keyMonitor();
             setTimeout(function () {
                 // 只初始化保存一次，切换模式不保存
-                if (editor.get('mode') == Editor.Mode.WYSIWYG_MODE) {
+                if (editor.get('mode') === Editor.Mode.WYSIWYG_MODE) {
                     if (editor.isDocReady()) {
                         self.save();
                     } else {
-                        editor.on('docReady', function () {
+                        editor.on('docReady', function docReady() {
                             self.save();
-                            editor.detach('docReady', arguments.callee);
+                            editor.detach('docReady', docReady);
                         });
                     }
                 }
@@ -128,7 +127,7 @@ KISSY.add(function (S, require) {
             var editor = this.editor;
 
             // 代码模式下不和可视模式下混在一起
-            if (editor.get("mode") != Editor.Mode.WYSIWYG_MODE) {
+            if (editor.get('mode') !== Editor.Mode.WYSIWYG_MODE) {
                 return;
             }
 
@@ -160,7 +159,7 @@ KISSY.add(function (S, require) {
                 }
                 history.push(current);
                 self.index = index = l;
-                editor.fire("afterSave", {history: history, index: index});
+                editor.fire('afterSave', {history: history, index: index});
             }
         },
 
@@ -170,7 +169,7 @@ KISSY.add(function (S, require) {
         restore: function (d) {
 
             // 代码模式下不和可视模式下混在一起
-            if (this.editor.get("mode") != Editor.Mode.WYSIWYG_MODE) {
+            if (this.editor.get('mode') != Editor.Mode.WYSIWYG_MODE) {
                 return undefined;
             }
 
@@ -219,13 +218,13 @@ KISSY.add(function (S, require) {
                         undoRedo.save(buffer);
                     }
                 });
-                editor.addCommand("undo", {
+                editor.addCommand('undo', {
                     exec: function () {
                         editor.focus();
                         undoRedo.restore(-1);
                     }
                 });
-                editor.addCommand("redo", {
+                editor.addCommand('redo', {
                     exec: function () {
                         editor.focus();
                         undoRedo.restore(1);

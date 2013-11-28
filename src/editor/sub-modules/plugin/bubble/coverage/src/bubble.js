@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ',"src":' + jscoverage_quote(this.src)
+            + ','src':' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -403,7 +403,7 @@ if (! _$jscoverage['/bubble.js'].branchData) {
   _$jscoverage['/bubble.js'].branchData['204'] = [];
   _$jscoverage['/bubble.js'].branchData['204'][1] = new BranchData();
 }
-_$jscoverage['/bubble.js'].branchData['204'][1].init(17, 31, '!bubble.get("editorSelectedEl")');
+_$jscoverage['/bubble.js'].branchData['204'][1].init(17, 31, '!bubble.get('editorSelectedEl')');
 function visit39_204_1(result) {
   _$jscoverage['/bubble.js'].branchData['204'][1].ranCondition(result);
   return result;
@@ -594,7 +594,7 @@ KISSY.add(function(S, require) {
   function getTopPosition(self) {
     _$jscoverage['/bubble.js'].functionData[3]++;
     _$jscoverage['/bubble.js'].lineData[41]++;
-    var archor = null, editor = self.get("editor"), myBubbles = editor.getControls();
+    var archor = null, editor = self.get('editor'), myBubbles = editor.getControls();
     _$jscoverage['/bubble.js'].lineData[44]++;
     S.each(myBubbles, function(bubble) {
   _$jscoverage['/bubble.js'].functionData[4]++;
@@ -620,14 +620,14 @@ KISSY.add(function(S, require) {
   function getXy(bubble) {
     _$jscoverage['/bubble.js'].functionData[5]++;
     _$jscoverage['/bubble.js'].lineData[61]++;
-    var el = bubble.get("editorSelectedEl");
+    var el = bubble.get('editorSelectedEl');
     _$jscoverage['/bubble.js'].lineData[64]++;
     if (visit11_64_1(!el)) {
       _$jscoverage['/bubble.js'].lineData[65]++;
       return undefined;
     }
     _$jscoverage['/bubble.js'].lineData[68]++;
-    var editor = bubble.get("editor"), editorWin = editor.get("window"), iframeXY = editor.get("iframe").offset(), top = iframeXY.top, left = iframeXY.left, right = left + editorWin.width(), bottom = top + editorWin.height();
+    var editor = bubble.get('editor'), editorWin = editor.get('window'), iframeXY = editor.get("iframe").offset(), top = iframeXY.top, left = iframeXY.left, right = left + editorWin.width(), bottom = top + editorWin.height();
     _$jscoverage['/bubble.js'].lineData[79]++;
     var elXY = el.offset();
     _$jscoverage['/bubble.js'].lineData[81]++;
@@ -693,7 +693,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/bubble.js'].lineData[144]++;
   editor.addControl(id + "/bubble", bubble);
   _$jscoverage['/bubble.js'].lineData[147]++;
-  editor.on("selectionChange", function(ev) {
+  editor.on('selectionChange', function(ev) {
   _$jscoverage['/bubble.js'].functionData[7]++;
   _$jscoverage['/bubble.js'].lineData[148]++;
   var elementPath = ev.path, elements = elementPath.elements, a, lastElement;
@@ -711,7 +711,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/bubble.js'].lineData[158]++;
     if (visit34_158_1(a)) {
       _$jscoverage['/bubble.js'].lineData[159]++;
-      bubble.set("editorSelectedEl", a);
+      bubble.set('editorSelectedEl', a);
       _$jscoverage['/bubble.js'].lineData[161]++;
       bubble.hide();
       _$jscoverage['/bubble.js'].lineData[163]++;
@@ -728,11 +728,11 @@ KISSY.add(function(S, require) {
     _$jscoverage['/bubble.js'].lineData[173]++;
     bubble.hide();
     _$jscoverage['/bubble.js'].lineData[174]++;
-    var editorWin = editor.get("window");
+    var editorWin = editor.get('window');
     _$jscoverage['/bubble.js'].lineData[176]++;
     if (visit35_176_1(editorWin)) {
       _$jscoverage['/bubble.js'].lineData[177]++;
-      editorWin.detach("scroll", onScroll);
+      editorWin.detach('scroll', onScroll);
       _$jscoverage['/bubble.js'].lineData[178]++;
       bufferScroll.stop();
     }
@@ -773,7 +773,7 @@ KISSY.add(function(S, require) {
   function onScroll() {
     _$jscoverage['/bubble.js'].functionData[10]++;
     _$jscoverage['/bubble.js'].lineData[204]++;
-    if (visit39_204_1(!bubble.get("editorSelectedEl"))) {
+    if (visit39_204_1(!bubble.get('editorSelectedEl'))) {
       _$jscoverage['/bubble.js'].lineData[205]++;
       return;
     }
@@ -788,9 +788,9 @@ KISSY.add(function(S, require) {
   function onShow() {
     _$jscoverage['/bubble.js'].functionData[11]++;
     _$jscoverage['/bubble.js'].lineData[213]++;
-    var editorWin = editor.get("window");
+    var editorWin = editor.get('window');
     _$jscoverage['/bubble.js'].lineData[214]++;
-    editorWin.on("scroll", onScroll);
+    editorWin.on('scroll', onScroll);
     _$jscoverage['/bubble.js'].lineData[215]++;
     showImmediately();
   }

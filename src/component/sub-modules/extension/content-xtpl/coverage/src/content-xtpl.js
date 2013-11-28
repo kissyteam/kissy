@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ',"src":' + jscoverage_quote(this.src)
+            + ','src':' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -308,7 +308,7 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/content-xtpl.js'].lineData[24]++;
   buffer += '">';
   _$jscoverage['/content-xtpl.js'].lineData[25]++;
-  var id4 = getPropertyOrRunCommandUtil(engine, scopes, {}, "content", 0, 2, undefined, false);
+  var id4 = getPropertyOrRunCommandUtil(engine, scopes, {}, 'content', 0, 2, undefined, false);
   _$jscoverage['/content-xtpl.js'].lineData[26]++;
   buffer += getExpressionUtil(id4, false);
   _$jscoverage['/content-xtpl.js'].lineData[27]++;

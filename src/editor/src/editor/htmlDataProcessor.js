@@ -29,8 +29,7 @@ KISSY.add(function (S, require) {
                     allEmpty = 1;
                     for (i = 0; i < l; i++) {
                         child = childNodes[i];
-                        if (child.nodeType == S.DOM.NodeType.TEXT_NODE && !child.nodeValue) {
-                        } else {
+                        if (!(child.nodeType === S.DOM.NodeType.TEXT_NODE && !child.nodeValue)) {
                             allEmpty = 0;
                             break;
                         }
@@ -46,8 +45,7 @@ KISSY.add(function (S, require) {
                 function wrapAsComment(element) {
                     var html = HtmlParser.serialize(element);
                     return new HtmlParser.Comment(protectedSourceMarker +
-                        encodeURIComponent(html).replace(/--/g,
-                            "%2D%2D"));
+                        encodeURIComponent(html).replace(/--/g,'%2D%2D'));
                 }
 
                 // 过滤外边来的 html
@@ -87,7 +85,7 @@ KISSY.add(function (S, require) {
                                 var attributeNames = [ 'name', 'href', 'src' ],
                                     savedAttributeName;
                                 for (var i = 0; i < attributeNames.length; i++) {
-                                    savedAttributeName = '_ke_saved_' + attributeNames[ i ];
+                                    savedAttributeName = '_keSaved_' + attributeNames[ i ];
                                     if (element.getAttribute(savedAttributeName)) {
                                         element.removeAttribute(attributeNames[i]);
                                     }
@@ -100,9 +98,9 @@ KISSY.add(function (S, require) {
                             var parent = element.parentNode;
                             // If the <embed> is child of a <object>, copy the width
                             // and height attributes from it.
-                            if (parent && parent.nodeName == 'object') {
+                            if (parent && parent.nodeName === 'object') {
                                 var parentWidth = parent.getAttribute('width'),
-                                    parentHeight = parent.getAttribute("height");
+                                    parentHeight = parent.getAttribute('height');
                                 if (parentWidth) {
                                     element.setAttribute('width', parentWidth);
                                 }
@@ -136,9 +134,9 @@ KISSY.add(function (S, require) {
                     },
                     attributeNames: [
                         // 把保存的作为真正的属性，替换掉原来的
-                        // replace(/^_ke_saved_/,"")
-                        // _ke_saved_href -> href
-                        [ ( /^_ke_saved_/ ), '' ],
+                        // replace(/^_keSaved_/,"")
+                        // _keSavedHref -> href
+                        [ ( /^_keSaved_/ ), '' ],
                         [ ( /^ke_on/ ), 'on' ],
                         [ ( /^_ke.*/ ), '' ],
                         [ ( /^ke:.*$/ ), '' ],
@@ -147,7 +145,7 @@ KISSY.add(function (S, require) {
                     ],
                     comment: function (contents) {
                         // If this is a comment for protected source.
-                        if (contents.substr(0, protectedSourceMarker.length) == protectedSourceMarker) {
+                        if (contents.substr(0, protectedSourceMarker.length) === protectedSourceMarker) {
                             contents = S.trim(S.urlDecode(contents.substr(protectedSourceMarker.length)));
                             return HtmlParser.parse(contents).childNodes[0];
                         }
@@ -188,7 +186,7 @@ KISSY.add(function (S, require) {
                     var childNodes = block.childNodes,
                         lastIndex = childNodes.length,
                         last = childNodes[ lastIndex - 1 ];
-                    while (last && last.nodeType == 3 && !S.trim(last.nodeValue)) {
+                    while (last && last.nodeType === 3 && !S.trim(last.nodeValue)) {
                         last = childNodes[ --lastIndex ];
                     }
                     return last;
@@ -197,10 +195,10 @@ KISSY.add(function (S, require) {
                 function trimFillers(block) {
                     var lastChild = lastNoneSpaceChild(block);
                     if (lastChild) {
-                        if (lastChild.nodeType == 1 && lastChild.nodeName == 'br') {
+                        if (lastChild.nodeType === 1 && lastChild.nodeName === 'br') {
                             block.removeChild(lastChild);
                         }
-                        else if (lastChild.nodeType == 3 && tailNbspRegex.test(lastChild.nodeValue)) {
+                        else if (lastChild.nodeType === 3 && tailNbspRegex.test(lastChild.nodeValue)) {
                             block.removeChild(lastChild);
                         }
                     }
@@ -209,11 +207,11 @@ KISSY.add(function (S, require) {
                 function blockNeedsExtension(block) {
                     var lastChild = lastNoneSpaceChild(block);
                     // empty block <p></p> <td></td>
-                    return !lastChild
+                    return !lastChild ||
                         // Some of the controls in form needs extension too,
                         // to move cursor at the end of the form. (#4791)
-                        || block.nodeName == 'form' &&
-                        lastChild.nodeName == 'input';
+                        block.nodeName === 'form' &&
+                        lastChild.nodeName === 'input';
                 }
 
                 // 外部 html 到编辑器 html
@@ -273,7 +271,7 @@ KISSY.add(function (S, require) {
                 text: function (text) {
                     return text
                         //.replace(/&nbsp;/g, "\xa0")
-                        .replace(/\xa0/g, "&nbsp;");
+                        .replace(/\xa0/g, '&nbsp;');
                 }
             });
 
@@ -288,8 +286,8 @@ KISSY.add(function (S, require) {
                     return '<' + tag + attributes.replace(protectAttributeRegex, function (fullAttr, attrName) {
                         // We should not rewrite the existed protected attributes,
                         // e.g. clipboard content from editor. (#5218)
-                        if (attributes.indexOf('_ke_saved_' + attrName) == -1) {
-                            return ' _ke_saved_' + fullAttr + ' ' + fullAttr;
+                        if (attributes.indexOf('_keSaved_' + attrName) === -1) {
+                            return ' _keSaved_' + fullAttr + ' ' + fullAttr;
                         }
                         return fullAttr;
                     }) + '>';
@@ -375,7 +373,7 @@ KISSY.add(function (S, require) {
                     // 标签不合法可能 parser 出错，这里先用浏览器帮我们建立棵合法的 dom 树的 html
                     // Call the browser to help us fixing a possibly invalid HTML
                     // structure.
-                    var div = new Node("<div>");
+                    var div = new Node('<div>');
                     // Add fake character to workaround IE comments bug. (#3801)
                     div.html('a' + html);
                     html = div.html().substr(1);

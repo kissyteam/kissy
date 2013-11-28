@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ',"src":' + jscoverage_quote(this.src)
+            + ','src':' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -273,7 +273,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/maximize.js'].lineData[9]++;
   require('./button');
   _$jscoverage['/maximize.js'].lineData[11]++;
-  var MAXIMIZE_CLASS = "maximize", RESTORE_CLASS = "restore", MAXIMIZE_TIP = "\u5168\u5c4f", RESTORE_TIP = "\u53d6\u6d88\u5168\u5c4f";
+  var MAXIMIZE_CLASS = 'maximize', RESTORE_CLASS = 'restore', MAXIMIZE_TIP = "\u5168\u5c4f", RESTORE_TIP = "\u53d6\u6d88\u5168\u5c4f";
   _$jscoverage['/maximize.js'].lineData[16]++;
   function maximizePlugin() {
     _$jscoverage['/maximize.js'].functionData[1]++;
@@ -285,7 +285,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/maximize.js'].lineData[22]++;
   maximizeCmd.init(editor);
   _$jscoverage['/maximize.js'].lineData[23]++;
-  editor.addButton("maximize", {
+  editor.addButton('maximize', {
   tooltip: MAXIMIZE_TIP, 
   listeners: {
   click: function() {
@@ -293,22 +293,22 @@ KISSY.add(function(S, require) {
   _$jscoverage['/maximize.js'].lineData[27]++;
   var self = this;
   _$jscoverage['/maximize.js'].lineData[28]++;
-  var checked = self.get("checked");
+  var checked = self.get('checked');
   _$jscoverage['/maximize.js'].lineData[29]++;
   if (visit1_29_1(checked)) {
     _$jscoverage['/maximize.js'].lineData[30]++;
-    editor.execCommand("maximizeWindow");
+    editor.execCommand('maximizeWindow');
     _$jscoverage['/maximize.js'].lineData[31]++;
-    self.set("tooltip", RESTORE_TIP);
+    self.set('tooltip', RESTORE_TIP);
     _$jscoverage['/maximize.js'].lineData[32]++;
-    self.set("contentCls", RESTORE_CLASS);
+    self.set('contentCls', RESTORE_CLASS);
   } else {
     _$jscoverage['/maximize.js'].lineData[34]++;
-    editor.execCommand("restoreWindow");
+    editor.execCommand('restoreWindow');
     _$jscoverage['/maximize.js'].lineData[35]++;
-    self.set("tooltip", MAXIMIZE_TIP);
+    self.set('tooltip', MAXIMIZE_TIP);
     _$jscoverage['/maximize.js'].lineData[36]++;
-    self.set("contentCls", MAXIMIZE_CLASS);
+    self.set('contentCls', MAXIMIZE_CLASS);
   }
   _$jscoverage['/maximize.js'].lineData[39]++;
   editor.focus();

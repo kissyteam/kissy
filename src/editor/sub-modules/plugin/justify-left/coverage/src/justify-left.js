@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ',"src":' + jscoverage_quote(this.src)
+            + ','src':' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -284,11 +284,11 @@ function visit4_47_2(result) {
 function visit3_47_1(result) {
   _$jscoverage['/justify-left.js'].branchData['47'][1].ranCondition(result);
   return result;
-}_$jscoverage['/justify-left.js'].branchData['34'][1].init(184, 39, 'editor.queryCommandValue("justifyLeft")');
+}_$jscoverage['/justify-left.js'].branchData['34'][1].init(184, 39, 'editor.queryCommandValue('justifyLeft')');
 function visit2_34_1(result) {
   _$jscoverage['/justify-left.js'].branchData['34'][1].ranCondition(result);
   return result;
-}_$jscoverage['/justify-left.js'].branchData['31'][1].init(33, 45, 'editor.get("mode") == Editor.Mode.SOURCE_MODE');
+}_$jscoverage['/justify-left.js'].branchData['31'][1].init(33, 45, 'editor.get('mode') == Editor.Mode.SOURCE_MODE');
 function visit1_31_1(result) {
   _$jscoverage['/justify-left.js'].branchData['31'][1].ranCondition(result);
   return result;
@@ -305,9 +305,9 @@ KISSY.add(function(S, require) {
   function exec() {
     _$jscoverage['/justify-left.js'].functionData[1]++;
     _$jscoverage['/justify-left.js'].lineData[11]++;
-    var editor = this.get("editor");
+    var editor = this.get('editor');
     _$jscoverage['/justify-left.js'].lineData[12]++;
-    editor.execCommand("justifyLeft");
+    editor.execCommand('justifyLeft');
     _$jscoverage['/justify-left.js'].lineData[13]++;
     editor.focus();
   }
@@ -322,7 +322,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/justify-left.js'].lineData[21]++;
   justifyCenterCmd.init(editor);
   _$jscoverage['/justify-left.js'].lineData[23]++;
-  editor.addButton("justifyLeft", {
+  editor.addButton('justifyLeft', {
   tooltip: "\u5de6\u5bf9\u9f50", 
   checkable: true, 
   listeners: {
@@ -332,20 +332,20 @@ KISSY.add(function(S, require) {
   _$jscoverage['/justify-left.js'].lineData[29]++;
   var self = this;
   _$jscoverage['/justify-left.js'].lineData[30]++;
-  editor.on("selectionChange", function() {
+  editor.on('selectionChange', function() {
   _$jscoverage['/justify-left.js'].functionData[5]++;
   _$jscoverage['/justify-left.js'].lineData[31]++;
-  if (visit1_31_1(editor.get("mode") == Editor.Mode.SOURCE_MODE)) {
+  if (visit1_31_1(editor.get('mode') == Editor.Mode.SOURCE_MODE)) {
     _$jscoverage['/justify-left.js'].lineData[32]++;
     return;
   }
   _$jscoverage['/justify-left.js'].lineData[34]++;
-  if (visit2_34_1(editor.queryCommandValue("justifyLeft"))) {
+  if (visit2_34_1(editor.queryCommandValue('justifyLeft'))) {
     _$jscoverage['/justify-left.js'].lineData[35]++;
-    self.set("checked", true);
+    self.set('checked', true);
   } else {
     _$jscoverage['/justify-left.js'].lineData[37]++;
-    self.set("checked", false);
+    self.set('checked', false);
   }
 });
 }}, 
@@ -359,7 +359,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/justify-left.js'].lineData[47]++;
   if (visit3_47_1(e.ctrlKey && visit4_47_2(e.keyCode == S.Node.KeyCode.L))) {
     _$jscoverage['/justify-left.js'].lineData[48]++;
-    editor.execCommand("justifyLeft");
+    editor.execCommand('justifyLeft');
     _$jscoverage['/justify-left.js'].lineData[49]++;
     e.preventDefault();
   }

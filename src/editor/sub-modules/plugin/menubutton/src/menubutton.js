@@ -4,8 +4,8 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
-        var Editor=require('editor');
-        var MenuButton=require('menubutton');
+    var Editor = require('editor');
+    var MenuButton = require('menubutton');
     /**
      * add select to editor toolbar
      * @param {String} id control id
@@ -14,10 +14,9 @@ KISSY.add(function (S, require) {
      * @member KISSY.Editor
      */
     Editor.prototype.addSelect = function (id, cfg, SelectType) {
-
         SelectType = SelectType || MenuButton.Select;
 
-        var self = this, prefixCls = self.get('prefixCls') + "editor-";
+        var self = this, prefixCls = self.get('prefixCls') + 'editor-';
 
         if (cfg) {
             cfg.editor = self;
@@ -34,7 +33,7 @@ KISSY.add(function (S, require) {
             prefixCls: prefixCls
         }, cfg)).render();
 
-        if (cfg.mode == Editor.Mode.WYSIWYG_MODE) {
+        if (cfg.mode === Editor.Mode.WYSIWYG_MODE) {
             self.on('wysiwygMode', function () {
                 s.set('disabled', false);
             });
@@ -42,7 +41,7 @@ KISSY.add(function (S, require) {
                 s.set('disabled', true);
             });
         }
-        self.addControl(id + "/select", s);
+        self.addControl(id + '/select', s);
         return s;
 
     };

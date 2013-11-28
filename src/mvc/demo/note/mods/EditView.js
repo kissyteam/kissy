@@ -49,7 +49,7 @@ KISSY.add(function(S, Node, mvc, Template) {
             events:{
                 value:{
                     ".submit":{
-                        "click":'submit'
+                        'click':'submit'
                     }
                 }
             }

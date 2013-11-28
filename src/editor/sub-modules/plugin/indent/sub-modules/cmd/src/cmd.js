@@ -9,7 +9,7 @@ KISSY.add(function (S, require) {
     var addCommand = dentUtils.addCommand;
     return {
         init: function (editor) {
-            addCommand(editor, "indent");
+            addCommand(editor, 'indent');
         }
     };
 });

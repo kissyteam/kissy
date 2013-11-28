@@ -28,12 +28,12 @@ KISSY.add(function (S, require) {
             dataFilter.addRules({
                     tags: {
                         'object': function (element) {
-                            var classId = element.getAttribute("classid"), i;
+                            var classId = element.getAttribute('classid'), i;
                             if (!classId) {
                                 var childNodes = element.childNodes;
                                 // Look for the inner <embed>
                                 for (i = 0; i < childNodes.length; i++) {
-                                    if (childNodes[i].nodeName == 'embed') {
+                                    if (childNodes[i].nodeName === 'embed') {
                                         if (!flashUtils.isFlashEmbed(childNodes[i][ i ])) {
                                             return dataProcessor
                                                 .createFakeParserElement(element,
@@ -56,7 +56,8 @@ KISSY.add(function (S, require) {
                                 return null;
                             }
                         }
-                    }},
+                    }
+                },
                 5);
 
 
@@ -65,11 +66,11 @@ KISSY.add(function (S, require) {
                 cls: CLS_FLASH,
                 type: TYPE_FLASH,
                 pluginConfig: this.config,
-                bubbleId: "flash",
+                bubbleId: 'flash',
                 contextMenuId: 'flash',
                 contextMenuHandlers: {
-                    "Flash属性": function () {
-                        var selectedEl = this.get("editorSelectedEl");
+                    'Flash属性': function () {
+                        var selectedEl = this.get('editorSelectedEl');
                         if (selectedEl) {
                             flashControl.show(selectedEl);
                         }
@@ -79,8 +80,8 @@ KISSY.add(function (S, require) {
 
             this.flashControl = flashControl;
 
-            editor.addButton("flash", {
-                tooltip: "插入Flash",
+            editor.addButton('flash', {
+                tooltip: '插入Flash',
                 listeners: {
                     click: function () {
                         flashControl.show();

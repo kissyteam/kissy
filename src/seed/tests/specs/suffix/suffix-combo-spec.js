@@ -17,7 +17,7 @@ describe("mod with suffix", function () {
             }
         });
 
-        $("<div id='suffix-test'></div>").appendTo("body");
+        $("<div id='suffix-test'></div>").appendTo('body');
 
         S.use("suffix/a.tpl", function (S, A) {
             expect(A).toBe(1);

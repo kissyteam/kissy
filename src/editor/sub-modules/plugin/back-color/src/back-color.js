@@ -15,8 +15,8 @@ KISSY.add(function (S,require) {
             cmd.init(editor);
             Button.init(editor, {
                 defaultColor: 'rgb(255, 217, 102)',
-                cmdType: "backColor",
-                tooltip: "背景颜色"
+                cmdType: 'backColor',
+                tooltip: '背景颜色'
             });
         }
     });

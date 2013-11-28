@@ -14,14 +14,14 @@ KISSY.add(function (S, require) {
         childRule: function (el) {
             // <span style='color:red'><a href='g.cn'>abcdefg</a></span>
             // 不起作用
-            return !(el.nodeName() == "a" || el.all("a").length);
+            return !(el.nodeName() === 'a' || el.all('a').length);
         }
     };
 
     return {
         init: function (editor) {
-            if (!editor.hasCommand("foreColor")) {
-                editor.addCommand("foreColor", {
+            if (!editor.hasCommand('foreColor')) {
+                editor.addCommand('foreColor', {
                     exec: function (editor, c) {
                         editor.execCommand('save');
                         cmd.applyColor(editor, c, COLOR_STYLES);

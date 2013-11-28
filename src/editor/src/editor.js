@@ -1101,12 +1101,11 @@ KISSY.add(function (S, require, exports, module) {
                     // ie 特有，即使自己创建的空 iframe 也要设置 domain （如果外层设置了）
                     // 否则下面的 parent.KISSY.Editor._initIframe 不能执行
                     ( $(window).isCustomDomain() ? ( 'document.domain="' + document.domain + '";' ) : '' ) +
-                    'parent.KISSY.require("editor")._initIframe("' + id + '");' +
+                    'parent.KISSY.require(\'editor\')._initIframe("' + id + '");' +
                     '</script>') :
                 ''
         });
     }
-
     var saveLater = S.buffer(function () {
         this.execCommand('save');
     }, 50);
@@ -1131,7 +1130,7 @@ KISSY.add(function (S, require, exports, module) {
             doc = win.document;
         } catch (e) {
             // Trick to solve this issue, forcing the iframe to get ready
-            // by simply setting its "src" property.
+            // by simply setting its 'src' property.
             //noinspection SillyAssignmentJS
             iframeDom.src = iframeDom.src;
             // In IE6 though, the above is not enough, so we must pause the
@@ -1199,7 +1198,6 @@ KISSY.add(function (S, require, exports, module) {
         });
         iframe.remove();
     }
-
     // ------------------------------------------------------------------- end private
 });
 /**

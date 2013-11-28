@@ -9,8 +9,8 @@ KISSY.add(function (S, require) {
     var FlashBaseClass = require('./flash-common/base-class');
     var fakeObjects = require('./fake-objects');
     require('./button');
-    var CLS_VIDEO = "ke_video",
-        TYPE_VIDEO = "video";
+    var CLS_VIDEO = 'ke_video',
+        TYPE_VIDEO = 'video';
 
     function video(config) {
         this.config = config;
@@ -31,7 +31,7 @@ KISSY.add(function (S, require) {
                      i < provider.length;
                      i++) {
                     var p = provider[i];
-                    if (p['reg'].test(url)) {
+                    if (p.reg.test(url)) {
                         return p;
                     }
                 }
@@ -40,58 +40,62 @@ KISSY.add(function (S, require) {
 
             var videoCfg = this.config;
 
-            if (videoCfg['providers']) {
-                provider.push.apply(provider, videoCfg['providers']);
+            if (videoCfg.providers) {
+                provider.push.apply(provider, videoCfg.providers);
             }
 
             videoCfg.getProvider = getProvider;
 
-            dataFilter && dataFilter.addRules({
-                tags: {
-                    'object': function (element) {
-                        var classId = element.getAttribute("classid"), i;
-                        var childNodes = element.childNodes;
-                        if (!classId) {
+            if (dataFilter) {
+                dataFilter.addRules({
+                    tags: {
+                        'object': function (element) {
+                            var classId = element.getAttribute('classid'), i;
+                            var childNodes = element.childNodes;
+                            if (!classId) {
 
-                            // Look for the inner <embed>
-                            for (i = 0; i < childNodes.length; i++) {
-                                if (childNodes[ i ].nodeName == 'embed') {
-                                    if (!flashUtils.isFlashEmbed(childNodes[ i ])) {
-                                        return null;
+                                // Look for the inner <embed>
+                                for (i = 0; i < childNodes.length; i++) {
+                                    if (childNodes[ i ].nodeName === 'embed') {
+                                        if (!flashUtils.isFlashEmbed(childNodes[ i ])) {
+                                            return null;
+                                        }
+                                        if (getProvider(childNodes[ i ].getAttribute('src'))) {
+                                            return dataProcessor.createFakeParserElement(element,
+                                                CLS_VIDEO, TYPE_VIDEO, true);
+                                        }
                                     }
-                                    if (getProvider(childNodes[ i ].getAttribute("src"))) {
+                                }
+                                return null;
+                            }
+                            for (i = 0; i < childNodes.length; i++) {
+                                var c = childNodes[ i ];
+                                if (c.nodeName === 'param' &&
+                                    c.getAttribute('name').toLowerCase() === 'movie') {
+                                    if (getProvider(c.getAttribute('value') ||
+                                        c.getAttribute('VALUE'))) {
                                         return dataProcessor.createFakeParserElement(element,
                                             CLS_VIDEO, TYPE_VIDEO, true);
                                     }
                                 }
                             }
-                            return null;
-                        }
-                        for (i = 0; i < childNodes.length; i++) {
-                            var c = childNodes[ i ];
-                            if (c.nodeName == 'param' &&
-                                c.getAttribute("name").toLowerCase() == "movie") {
-                                if (getProvider(c.getAttribute("value") ||
-                                    c.getAttribute("VALUE"))) {
-                                    return dataProcessor.createFakeParserElement(element,
-                                        CLS_VIDEO, TYPE_VIDEO, true);
-                                }
+
+                        },
+
+                        'embed': function (element) {
+                            if (!flashUtils.isFlashEmbed(element)) {
+                                return null;
                             }
+                            if (getProvider(element.getAttribute('src'))) {
+                                return dataProcessor.createFakeParserElement(element,
+                                    CLS_VIDEO, TYPE_VIDEO, true);
+                            }
+
                         }
-
-                    },
-
-                    'embed': function (element) {
-                        if (!flashUtils.isFlashEmbed(element))
-                            return null;
-                        if (getProvider(element.getAttribute("src"))) {
-                            return dataProcessor.createFakeParserElement(element,
-                                CLS_VIDEO, TYPE_VIDEO, true);
-                        }
-
+                        //4 比 flash 的优先级 5 高！
                     }
-                    //4 比 flash 的优先级 5 高！
-                }}, 4);
+                }, 4);
+            }
 
 
             var flashControl = new FlashBaseClass({
@@ -99,11 +103,11 @@ KISSY.add(function (S, require) {
                 cls: CLS_VIDEO,
                 type: TYPE_VIDEO,
                 pluginConfig: this.config,
-                bubbleId: "video",
-                contextMenuId: "video",
+                bubbleId: 'video',
+                contextMenuId: 'video',
                 contextMenuHandlers: {
-                    "视频属性": function () {
-                        var selectedEl = this.get("editorSelectedEl");
+                    '视频属性': function () {
+                        var selectedEl = this.get('editorSelectedEl');
                         if (selectedEl) {
                             flashControl.show(selectedEl);
                         }
@@ -111,8 +115,8 @@ KISSY.add(function (S, require) {
                 }
             });
 
-            editor.addButton("video", {
-                tooltip: "插入视频",
+            editor.addButton('video', {
+                tooltip: '插入视频',
                 listeners: {
                     click: function () {
                         flashControl.show();

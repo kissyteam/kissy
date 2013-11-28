@@ -26,10 +26,10 @@ KISSY.add(function (S, Dom, Event) {
 
         it("should call delegate before on", function () {
             var ret = [];
-            Event.on("#delegateAdvanced", "click", function () {
+            Event.on("#delegateAdvanced", 'click', function () {
                 ret.push(2);
             });
-            Event.delegate("#delegateAdvanced", "click", 'input', function () {
+            Event.delegate("#delegateAdvanced", 'click', 'input', function () {
                 ret.push(1);
             });
             Dom.get("#delegateAdvanced2").click();
@@ -41,14 +41,14 @@ KISSY.add(function (S, Dom, Event) {
 
         it("should stop delegation", function () {
             var ret = [];
-            Event.on("#delegateAdvanced", "click", function () {
+            Event.on("#delegateAdvanced", 'click', function () {
                 ret.push(3);
             });
-            Event.on("#delegateAdvanced2", "click", function (e) {
+            Event.on("#delegateAdvanced2", 'click', function (e) {
                 ret.push(1);
                 e.stopPropagation();
             });
-            Event.delegate("#delegateAdvanced", "click", 'input', function () {
+            Event.delegate("#delegateAdvanced", 'click', 'input', function () {
                 ret.push(2);
             });
             Dom.get("#delegateAdvanced2").click();
@@ -60,17 +60,17 @@ KISSY.add(function (S, Dom, Event) {
 
         it("should stop between delegation", function () {
             var ret = [];
-            Event.on("#delegateAdvanced", "click", function () {
+            Event.on("#delegateAdvanced", 'click', function () {
                 ret.push(4);
             });
-            Event.delegate("#delegateAdvanced", "click", 'input', function (e) {
+            Event.delegate("#delegateAdvanced", 'click', 'input', function (e) {
                 ret.push(1);
                 e.stopPropagation();
             });
-            Event.delegate("#delegateAdvanced", "click", 'input', function () {
+            Event.delegate("#delegateAdvanced", 'click', 'input', function () {
                 ret.push(2);
             });
-            Event.delegate("#delegateAdvanced", "click", ".c", function () {
+            Event.delegate("#delegateAdvanced", 'click', ".c", function () {
                 ret.push(3);
             });
             Dom.get("#delegateAdvanced2").click();
@@ -82,17 +82,17 @@ KISSY.add(function (S, Dom, Event) {
 
         it("should stopImmediatePropagation between delegation", function () {
             var ret = [];
-            Event.on("#delegateAdvanced", "click", function () {
+            Event.on("#delegateAdvanced", 'click', function () {
                 ret.push(4);
             });
-            Event.delegate("#delegateAdvanced", "click", 'input', function (e) {
+            Event.delegate("#delegateAdvanced", 'click', 'input', function (e) {
                 ret.push(1);
                 e.stopImmediatePropagation();
             });
-            Event.delegate("#delegateAdvanced", "click", 'input', function () {
+            Event.delegate("#delegateAdvanced", 'click', 'input', function () {
                 ret.push(2);
             });
-            Event.delegate("#delegateAdvanced", "click", ".c", function () {
+            Event.delegate("#delegateAdvanced", 'click', ".c", function () {
                 ret.push(3);
             });
             Dom.get("#delegateAdvanced2").click();
@@ -104,16 +104,16 @@ KISSY.add(function (S, Dom, Event) {
 
         it("should undelegate only delegates", function () {
             var ret = [];
-            Event.delegate("#delegateAdvanced", "click", 'input', function () {
+            Event.delegate("#delegateAdvanced", 'click', 'input', function () {
                 ret.push(1);
             });
-            Event.delegate("#delegateAdvanced", "click", ".c", function () {
+            Event.delegate("#delegateAdvanced", 'click', ".c", function () {
                 ret.push(2);
             });
             Event.delegate("#delegateAdvanced", 'focus', ".c", function () {
                 ret.push(4);
             });
-            Event.on("#delegateAdvanced", "click", function () {
+            Event.on("#delegateAdvanced", 'click', function () {
                 ret.push(3);
             });
             Event.undelegate("#delegateAdvanced");
@@ -134,19 +134,19 @@ KISSY.add(function (S, Dom, Event) {
 
         it("should undelegate specified filter with eventType only delegates", function () {
             var ret = [];
-            Event.delegate("#delegateAdvanced", "click", 'input', function () {
+            Event.delegate("#delegateAdvanced", 'click', 'input', function () {
                 ret.push(1);
             });
-            Event.delegate("#delegateAdvanced", "click", 'input', function () {
+            Event.delegate("#delegateAdvanced", 'click', 'input', function () {
                 ret.push(4);
             });
-            Event.delegate("#delegateAdvanced", "click", ".c", function () {
+            Event.delegate("#delegateAdvanced", 'click', ".c", function () {
                 ret.push(2);
             });
-            Event.on("#delegateAdvanced", "click", function () {
+            Event.on("#delegateAdvanced", 'click', function () {
                 ret.push(3);
             });
-            Event.undelegate("#delegateAdvanced", "click", 'input');
+            Event.undelegate("#delegateAdvanced", 'click', 'input');
             Dom.get("#delegateAdvanced2").click();
             waits(100);
             runs(function () {
@@ -156,16 +156,16 @@ KISSY.add(function (S, Dom, Event) {
 
         it("should undelegate specified filter only delegates", function () {
             var ret = [];
-            Event.delegate("#delegateAdvanced", "click", 'input', function () {
+            Event.delegate("#delegateAdvanced", 'click', 'input', function () {
                 ret.push(1);
             });
-            Event.delegate("#delegateAdvanced", "click", 'input', function () {
+            Event.delegate("#delegateAdvanced", 'click', 'input', function () {
                 ret.push(4);
             });
-            Event.delegate("#delegateAdvanced", "click", ".c", function () {
+            Event.delegate("#delegateAdvanced", 'click', ".c", function () {
                 ret.push(2);
             });
-            Event.on("#delegateAdvanced", "click", function () {
+            Event.on("#delegateAdvanced", 'click', function () {
                 ret.push(3);
             });
             Event.delegate("#delegateAdvanced", 'focus', 'input', function () {
@@ -191,16 +191,16 @@ KISSY.add(function (S, Dom, Event) {
 
         it("should undelegate specified fn only delegates", function () {
             var ret = [], t;
-            Event.delegate("#delegateAdvanced", "click", 'input', t = function () {
+            Event.delegate("#delegateAdvanced", 'click', 'input', t = function () {
                 ret.push(1);
             });
-            Event.delegate("#delegateAdvanced", "click", ".c", function () {
+            Event.delegate("#delegateAdvanced", 'click', ".c", function () {
                 ret.push(2);
             });
-            Event.on("#delegateAdvanced", "click", function () {
+            Event.on("#delegateAdvanced", 'click', function () {
                 ret.push(3);
             });
-            Event.undelegate("#delegateAdvanced", "click", 'input', t);
+            Event.undelegate("#delegateAdvanced", 'click', 'input', t);
             Dom.get("#delegateAdvanced2").click();
             waits(100);
             runs(function () {
@@ -211,19 +211,19 @@ KISSY.add(function (S, Dom, Event) {
 
         it("should undelegate specified eventType only delegates", function () {
             var ret = [];
-            Event.delegate("#delegateAdvanced", "click", 'input', function () {
+            Event.delegate("#delegateAdvanced", 'click', 'input', function () {
                 ret.push(1);
             });
-            Event.delegate("#delegateAdvanced", "click", ".c", function () {
+            Event.delegate("#delegateAdvanced", 'click', ".c", function () {
                 ret.push(2);
             });
             Event.delegate("#delegateAdvanced", 'focusin', ".c", function () {
                 ret.push(4);
             });
-            Event.on("#delegateAdvanced", "click", function () {
+            Event.on("#delegateAdvanced", 'click', function () {
                 ret.push(3);
             });
-            Event.undelegate("#delegateAdvanced", "click");
+            Event.undelegate("#delegateAdvanced", 'click');
             Dom.get("#delegateAdvanced2").click();
             waits(100);
             runs(function () {
@@ -241,7 +241,7 @@ KISSY.add(function (S, Dom, Event) {
 
         it("remove remove delegate", function () {
             var ret = [];
-            Event.delegate("#delegateAdvanced", "click", 'input', function () {
+            Event.delegate("#delegateAdvanced", 'click', 'input', function () {
                 ret.push(1);
             });
             Event.remove("#delegateAdvanced");
@@ -254,10 +254,10 @@ KISSY.add(function (S, Dom, Event) {
 
         it("remove remove delegate with event", function () {
             var ret = [];
-            Event.delegate("#delegateAdvanced", "click", 'input', function () {
+            Event.delegate("#delegateAdvanced", 'click', 'input', function () {
                 ret.push(1);
             });
-            Event.remove("#delegateAdvanced","click");
+            Event.remove("#delegateAdvanced",'click');
             Dom.get("#delegateAdvanced2").click();
             waits(100);
             runs(function () {
@@ -267,7 +267,7 @@ KISSY.add(function (S, Dom, Event) {
 
         it("remove remove delegate with fn", function () {
             var ret = [],t;
-            Event.delegate("#delegateAdvanced", "click", 'input', t=function () {
+            Event.delegate("#delegateAdvanced", 'click', 'input', t=function () {
                 ret.push(1);
             });
             Event.remove("#delegateAdvanced",undefined,t);
@@ -280,10 +280,10 @@ KISSY.add(function (S, Dom, Event) {
 
         it("remove remove delegate with event and fn", function () {
             var ret = [],t;
-            Event.delegate("#delegateAdvanced", "click", 'input', t=function () {
+            Event.delegate("#delegateAdvanced", 'click', 'input', t=function () {
                 ret.push(1);
             });
-            Event.remove("#delegateAdvanced","click",t);
+            Event.remove("#delegateAdvanced",'click',t);
             Dom.get("#delegateAdvanced2").click();
             waits(100);
             runs(function () {

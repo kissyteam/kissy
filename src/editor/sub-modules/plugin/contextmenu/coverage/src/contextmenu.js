@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ',"src":' + jscoverage_quote(this.src)
+            + ','src':' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -356,7 +356,7 @@ KISSY.add(function(S, require) {
     delete cfg.event;
   }
   _$jscoverage['/contextmenu.js'].lineData[23]++;
-  cfg.prefixCls = self.get('prefixCls') + "editor-";
+  cfg.prefixCls = self.get('prefixCls') + 'editor-';
   _$jscoverage['/contextmenu.js'].lineData[24]++;
   cfg.editor = self;
   _$jscoverage['/contextmenu.js'].lineData[25]++;
@@ -368,7 +368,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/contextmenu.js'].lineData[30]++;
   focusFix.init(menu);
   _$jscoverage['/contextmenu.js'].lineData[32]++;
-  menu.on("afterRenderUI", function() {
+  menu.on('afterRenderUI', function() {
   _$jscoverage['/contextmenu.js'].functionData[2]++;
   _$jscoverage['/contextmenu.js'].lineData[33]++;
   menu.get('el').on('keydown', function(e) {
@@ -386,7 +386,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/contextmenu.js'].lineData[41]++;
   var doc = self.get('document');
   _$jscoverage['/contextmenu.js'].lineData[43]++;
-  doc.on("mousedown", function(e) {
+  doc.on('mousedown', function(e) {
   _$jscoverage['/contextmenu.js'].functionData[5]++;
   _$jscoverage['/contextmenu.js'].lineData[44]++;
   if (visit4_44_1(e.which == 1)) {
@@ -428,7 +428,7 @@ KISSY.add(function(S, require) {
     setTimeout(function() {
   _$jscoverage['/contextmenu.js'].functionData[8]++;
   _$jscoverage['/contextmenu.js'].lineData[74]++;
-  menu.set("editorSelectedEl", t, {
+  menu.set('editorSelectedEl', t, {
   silent: 1});
   _$jscoverage['/contextmenu.js'].lineData[77]++;
   menu.move(x, y);

@@ -29,7 +29,7 @@ KISSY.add(function (S, Editor) {
                 "3-1" +
                 "</span>" +
                 "</span>" +
-                "</div>").appendTo("body");
+                "</div>").appendTo('body');
 
             var range = new Range(document);
             range.setStart(div, 1)
@@ -74,7 +74,7 @@ KISSY.add(function (S, Editor) {
                 "3-1" +
                 "</span>" +
                 "</span>" +
-                "</div>").appendTo("body");
+                "</div>").appendTo('body');
 
             var range = new Range(document);
             range.setStart(div, 1)
@@ -125,7 +125,7 @@ KISSY.add(function (S, Editor) {
                 "3-1" +
                 "</span>" +
                 "</span>" +
-                "</div>").appendTo("body");
+                "</div>").appendTo('body');
 
             var range = new Range(document);
             range.setStart(div, 1)
@@ -176,7 +176,7 @@ KISSY.add(function (S, Editor) {
                 "1-1" +
                 "</span>" +
                 "</span>" +
-                "</div>").appendTo("body");
+                "</div>").appendTo('body');
 
             var div2 = $("<div>" +
                 "<span>" +
@@ -185,7 +185,7 @@ KISSY.add(function (S, Editor) {
                 "1-1" +
                 "</span>" +
                 "</span>" +
-                "</div>").appendTo("body");
+                "</div>").appendTo('body');
 
             var range = new Range(document);
             range.setStart(div, 0)

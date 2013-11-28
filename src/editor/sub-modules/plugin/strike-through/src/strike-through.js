@@ -13,9 +13,9 @@ KISSY.add(function (S, require) {
     S.augment(StrikeThrough, {
         pluginRenderUI: function (editor) {
             cmd.init(editor);
-            editor.addButton("strikeThrough", {
-                cmdType: "strikeThrough",
-                tooltip: "删除线 "
+            editor.addButton('strikeThrough', {
+                cmdType: 'strikeThrough',
+                tooltip: '删除线'
             }, ui.Button);
         }
     });

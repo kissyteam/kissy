@@ -38,12 +38,12 @@ KISSY.add(function (S, require) {
                     "filter:alpha(opacity=0);" +
                     "z-index:-1;'></iframe>" : "") +
                 "</div>")
-                .prependTo("body");
+                .prependTo('body');
         /*
          点 mask 焦点不转移
          */
         mask['unselectable']();
-        mask.on("mousedown", function (e) {
+        mask.on('mousedown', function (e) {
             e.preventDefault();
         });
         return mask;

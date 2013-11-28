@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ',"src":' + jscoverage_quote(this.src)
+            + ','src':' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -318,7 +318,7 @@ function visit7_121_1(result) {
 function visit6_120_1(result) {
   _$jscoverage['/dialog.js'].branchData['120'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['118'][1].init(27, 60, '_selectedEl.attr(_ke_saved_href) || _selectedEl.attr("href")');
+}_$jscoverage['/dialog.js'].branchData['118'][1].init(27, 60, '_selectedEl.attr(_keSavedHref) || _selectedEl.attr('href')');
 function visit5_118_1(result) {
   _$jscoverage['/dialog.js'].branchData['118'][1].ranCondition(result);
   return result;
@@ -348,7 +348,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/dialog.js'].lineData[9]++;
   var Utils = require('./utils');
   _$jscoverage['/dialog.js'].lineData[12]++;
-  var _ke_saved_href = Utils._ke_saved_href, bodyHTML = "<div style='padding:20px 20px 0 20px'>" + "<p>" + "<label>" + "\u94fe\u63a5\u7f51\u5740\uff1a " + "<input " + " data-verify='^(https?://[^\\s]+)|(#.+)$' " + " data-warning='\u8bf7\u8f93\u5165\u5408\u9002\u7684\u7f51\u5740\u683c\u5f0f' " + "class='{prefixCls}editor-link-url {prefixCls}editor-input' " + "style='width:390px;" + "'" + " />" + "</label>" + "</p>" + "<p " + "style='margin: 15px 0 10px 0px;'>" + "<label>" + "\u94fe\u63a5\u540d\u79f0\uff1a " + "<input class='{prefixCls}editor-link-title {prefixCls}editor-input' style='width:100px;" + "'>" + "</label> " + "<label>" + "<input " + "class='{prefixCls}editor-link-blank' " + "style='vertical-align: middle; margin-left: 21px;' " + "type='checkbox'/>" + " &nbsp; \u5728\u65b0\u7a97\u53e3\u6253\u5f00\u94fe\u63a5" + "</label>" + "</p>" + "</div>", footHTML = "<div style='padding:5px 20px 20px;'>" + "<a " + "href='javascript:void('\u786e\u5b9a')' " + "class='{prefixCls}editor-link-ok {prefixCls}editor-button ks-inline-block' " + "style='margin-left:65px;margin-right:20px;'>\u786e\u5b9a</a> " + "<a " + "href='javascript:void('\u53d6\u6d88')' " + "class='{prefixCls}editor-link-cancel {prefixCls}editor-button ks-inline-block'>\u53d6\u6d88</a>" + "</div>";
+  var _keSavedHref = Utils._keSavedHref, bodyHTML = "<div style='padding:20px 20px 0 20px'>" + "<p>" + "<label>" + "\u94fe\u63a5\u7f51\u5740\uff1a " + "<input " + " data-verify='^(https?://[^\\s]+)|(#.+)$' " + " data-warning='\u8bf7\u8f93\u5165\u5408\u9002\u7684\u7f51\u5740\u683c\u5f0f' " + "class='{prefixCls}editor-link-url {prefixCls}editor-input' " + "style='width:390px;" + "'" + " />" + "</label>" + "</p>" + "<p " + "style='margin: 15px 0 10px 0px;'>" + "<label>" + "\u94fe\u63a5\u540d\u79f0\uff1a " + "<input class='{prefixCls}editor-link-title {prefixCls}editor-input' style='width:100px;" + "'>" + "</label> " + "<label>" + "<input " + "class='{prefixCls}editor-link-blank' " + "style='vertical-align: middle; margin-left: 21px;' " + "type='checkbox'/>" + " &nbsp; \u5728\u65b0\u7a97\u53e3\u6253\u5f00\u94fe\u63a5" + "</label>" + "</p>" + "</div>", footHTML = "<div style='padding:5px 20px 20px;'>" + "<a " + "href='javascript:void('\u786e\u5b9a')' " + "class='{prefixCls}editor-link-ok {prefixCls}editor-button ks-inline-block' " + "style='margin-left:65px;margin-right:20px;'>\u786e\u5b9a</a> " + "<a " + "href='javascript:void('\u53d6\u6d88')' " + "class='{prefixCls}editor-link-cancel {prefixCls}editor-button ks-inline-block'>\u53d6\u6d88</a>" + "</div>";
   _$jscoverage['/dialog.js'].lineData[52]++;
   function LinkDialog(editor, config) {
     _$jscoverage['/dialog.js'].functionData[1]++;
@@ -377,7 +377,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/dialog.js'].lineData[75]++;
   self.dialog = d;
   _$jscoverage['/dialog.js'].lineData[76]++;
-  var body = d.get("body"), foot = d.get("footer");
+  var body = d.get('body'), foot = d.get("footer");
   _$jscoverage['/dialog.js'].lineData[78]++;
   d.urlEl = body.one("." + prefixCls + "editor-link-url");
   _$jscoverage['/dialog.js'].lineData[79]++;
@@ -387,9 +387,9 @@ KISSY.add(function(S, require) {
   _$jscoverage['/dialog.js'].lineData[81]++;
   var cancel = foot.one("." + prefixCls + "editor-link-cancel"), ok = foot.one("." + prefixCls + "editor-link-ok");
   _$jscoverage['/dialog.js'].lineData[83]++;
-  ok.on("click", self._link, self);
+  ok.on('click', self._link, self);
   _$jscoverage['/dialog.js'].lineData[84]++;
-  cancel.on("click", function(ev) {
+  cancel.on('click', function(ev) {
   _$jscoverage['/dialog.js'].functionData[3]++;
   _$jscoverage['/dialog.js'].lineData[85]++;
   visit2_85_1(ev && ev.halt());
@@ -431,7 +431,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/dialog.js'].lineData[117]++;
   if (visit4_117_1(_selectedEl)) {
     _$jscoverage['/dialog.js'].lineData[118]++;
-    var url = visit5_118_1(_selectedEl.attr(_ke_saved_href) || _selectedEl.attr("href"));
+    var url = visit5_118_1(_selectedEl.attr(_keSavedHref) || _selectedEl.attr('href'));
     _$jscoverage['/dialog.js'].lineData[119]++;
     Editor.Utils.valInput(d.urlEl, url);
     _$jscoverage['/dialog.js'].lineData[120]++;

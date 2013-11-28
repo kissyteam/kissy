@@ -10,22 +10,24 @@ KISSY.add(function (S, require) {
 
     //获取颜色数组
     function getData(color) {
-        if (S.isArray(color)) return color;
+        if (S.isArray(color)) {
+            return color;
+        }
         var re = RegExp;
         if (/^#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i.test(color)) {
             //#rrggbb
-            return map([ re['$1'], re['$2'], re['$3'] ], function (x) {
+            return map([ re.$1, re.$2, re.$3 ], function (x) {
                 return parseInt(x, 16);
             });
         } else if (/^#([0-9a-f])([0-9a-f])([0-9a-f])$/i.test(color)) {
             //#rgb
-            return map([ re['$1'], re['$2'], re['$3'] ], function (x) {
+            return map([ re.$1, re.$2, re.$3 ], function (x) {
                 return parseInt(x + x, 16);
             });
         } else if (/^rgb\((.*),(.*),(.*)\)$/i.test(color)) {
             //rgb(n,n,n) or rgb(n%,n%,n%)
-            return map([ re['$1'], re['$2'], re['$3'] ], function (x) {
-                return x.indexOf("%") > 0 ? parseFloat(x, 10) * 2.55 : x | 0;
+            return map([ re.$1, re.$2, re.$3 ], function (x) {
+                return x.indexOf('%') > 0 ? parseFloat(x, 10) * 2.55 : x | 0;
             });
         }
         return undefined;
@@ -34,7 +36,7 @@ KISSY.add(function (S, require) {
     //refer:http://www.cnblogs.com/cloudgamer/archive/2009/03/11/color.html
     //http://yiminghe.javaeye.com/blog/511589
     //获取颜色梯度方法
-    var ColorGrads = (function () {
+    var colorGrads = (function () {
         //获取颜色梯度数据
         function getStep(start, end, step) {
             var colors = [];
@@ -67,7 +69,7 @@ KISSY.add(function (S, require) {
             if (ret === undefined) {
                 if (!frag) {
                     frag = document.createElement('textarea');
-                    frag.style.display = "none";
+                    frag.style.display = 'none';
                     Dom.prepend(frag, document.body);
                 }
                 try {
@@ -79,7 +81,7 @@ KISSY.add(function (S, require) {
                 if (document.defaultView) {
                     ret = getData(document.defaultView.getComputedStyle(frag, null).color);
                 } else {
-                    color = frag.createTextRange()['queryCommandValue']("ForeColor");
+                    color = frag.createTextRange().queryCommandValue('ForeColor');
                     ret = [ color & 0x0000ff, (color & 0x00ff00) >>> 8, (color & 0xff0000) >>> 16 ];
                 }
             }
@@ -92,62 +94,62 @@ KISSY.add(function (S, require) {
             if (step === undefined) {
                 step = 20;
             }
-            if (len == 1) {
+            if (len === 1) {
                 ret = getStep(colors[0], colors[0], step);
             } else if (len > 1) {
                 for (var i = 0, n = len - 1; i < n; i++) {
                     var t = step[i] || step;
                     var steps = getStep(colors[i], colors[i + 1], t);
-                    i < n - 1 && steps.pop();
+                    if (i < n - 1) {
+                        steps.pop();
+                    }
                     ret = ret.concat(steps);
                 }
             }
             return ret;
-        }
+        };
     })();
 
     function padding2(x) {
-        x = "0" + x;
+        x = '0' + x;
         var l = x.length;
         return x.slice(l - 2, l);
     }
 
     function hex(c) {
         c = getData(c);
-        return "#" + padding2(c[0].toString(16))
-            + padding2(c[1].toString(16))
-            + padding2(c[2].toString(16));
+        return '#' + padding2(c[0].toString(16)) + padding2(c[1].toString(16)) + padding2(c[2].toString(16));
     }
 
-    var pickerHTML = "<ul>" +
-            map(ColorGrads([ "red", "orange", "yellow", "green", "cyan", "blue", "purple" ], 5),
+    var pickerHTML = '<ul>' +
+            map(colorGrads([ 'red', 'orange', 'yellow', 'green', 'cyan', 'blue', 'purple' ], 5),
                 function (x) {
-                    return map(ColorGrads([ "white", "rgb(" + x.join(",") + ")" , "black" ], 5),
+                    return map(colorGrads([ 'white', 'rgb(' + x.join(',') + ')' , 'black' ], 5),
                         function (x) {
-                            return "<li><a style='background-color" + ":" + hex(x) + "' href='#'></a></li>";
-                        }).join("");
-                }).join("</ul><ul>") + "</ul>",
-        panelHTML = "<div class='{prefixCls}editor-color-advanced-picker'>" +
-            "<div class='ks-clear'>" +
-            "<div class='{prefixCls}editor-color-advanced-picker-left'>" +
+                            return '<li><a style="background-color' + ':' + hex(x) + '" href="#"></a></li>';
+                        }).join('');
+                }).join('</ul><ul>') + '</ul>',
+        panelHTML = '<div class="{prefixCls}editor-color-advanced-picker">' +
+            '<div class="ks-clear">' +
+            '<div class="{prefixCls}editor-color-advanced-picker-left">' +
             pickerHTML +
-            "</div>" +
-            "<div class='{prefixCls}editor-color-advanced-picker-right'>" +
-            "</div>" +
-            "</div>" +
-            "<div style='padding:10px;'>" +
-            "<label>" +
-            "颜色值： " +
-            "<input style='width:100px' class='{prefixCls}editor-color-advanced-value'/>" +
-            "</label>" +
-            "<span class='{prefixCls}editor-color-advanced-indicator'></span>" +
-            "</div>" +
-            "</div>",
-        footHTML = "<div style='padding:5px 20px 20px;'>" +
-            "<a class='{prefixCls}editor-button {prefixCls}editor-color-advanced-ok ks-inline-block'>确定</a>" +
-            "&nbsp;&nbsp;&nbsp;" +
-            "<a class='{prefixCls}editor-button  {prefixCls}editor-color-advanced-cancel ks-inline-block'>取消</a>" +
-            "</div>";
+            '</div>' +
+            '<div class="{prefixCls}editor-color-advanced-picker-right">' +
+            '</div>' +
+            '</div>' +
+            '<div style="padding:10px;">' +
+            '<label>' +
+            '颜色值： ' +
+            '<input style="width:100px" class="{prefixCls}editor-color-advanced-value"/>' +
+            '</label>' +
+            '<span class="{prefixCls}editor-color-advanced-indicator"></span>' +
+            '</div>' +
+            '</div>',
+        footHTML = '<div style="padding:5px 20px 20px;">' +
+            '<a class="{prefixCls}editor-button {prefixCls}editor-color-advanced-ok ks-inline-block">确定</a>' +
+            '&nbsp;&nbsp;&nbsp;' +
+            '<a class="{prefixCls}editor-button  {prefixCls}editor-color-advanced-cancel ks-inline-block">取消</a>' +
+            '</div>';
 
     function ColorPicker(editor) {
         this.editor = editor;
@@ -164,30 +166,30 @@ KISSY.add(function (S, require) {
 
             self.dialog = new Dialog4E({
                 mask: true,
-                headerContent: "颜色拾取器",
+                headerContent: '颜色拾取器',
                 bodyContent: S.substitute(panelHTML, {
                     prefixCls: prefixCls
                 }),
                 footerContent: S.substitute(footHTML, {
                     prefixCls: prefixCls
                 }),
-                width: "550px"
+                width: '550px'
             }).render();
             var win = self.dialog,
-                body = win.get("body"),
-                foot = win.get("footer"),
-                indicator = body.one("." + prefixCls + "editor-color-advanced-indicator"),
-                indicatorValue = body.one("." + prefixCls + "editor-color-advanced-value"),
-                left = body.one("." + prefixCls + "editor-color-advanced-picker-left"),
-                right = body.one("." + prefixCls + "editor-color-advanced-picker-right"),
-                ok = foot.one("." + prefixCls + "editor-color-advanced-ok"),
-                cancel = foot.one("." + prefixCls + "editor-color-advanced-cancel");
+                body = win.get('body'),
+                foot = win.get('footer'),
+                indicator = body.one('.' + prefixCls + 'editor-color-advanced-indicator'),
+                indicatorValue = body.one('.' + prefixCls + 'editor-color-advanced-value'),
+                left = body.one('.' + prefixCls + 'editor-color-advanced-picker-left'),
+                ok = foot.one('.' + prefixCls + 'editor-color-advanced-ok'),
+                cancel = foot.one('.' + prefixCls + 'editor-color-advanced-cancel');
 
-            ok.on("click", function (ev) {
+            ok.on('click', function (ev) {
                 var v = S.trim(indicatorValue.val()),
                     colorButtonArrow = self.colorButtonArrow;
                 if (!/^#([a-f0-9]{1,2}){3,3}$/i.test(v)) {
-                    alert("请输入正确的颜色代码");
+                    /*global alert*/
+                    alert('请输入正确的颜色代码');
                     return;
                 }
                 //先隐藏窗口，使得编辑器恢复焦点，恢复原先range
@@ -199,50 +201,52 @@ KISSY.add(function (S, require) {
             });
 
 
-            indicatorValue.on("change", function () {
+            indicatorValue.on('change', function () {
                 var v = S.trim(indicatorValue.val());
                 if (!/^#([a-f0-9]{1,2}){3,3}$/i.test(v)) {
-                    alert("请输入正确的颜色代码");
+                    alert('请输入正确的颜色代码');
                     return;
                 }
-                indicator.css("background-color", v);
+                indicator.css('background-color', v);
             });
 
 
-            cancel.on("click", function (ev) {
+            cancel.on('click', function (ev) {
                 self.hide();
-                ev && ev.halt();
+                ev.halt();
             });
-            body.on("click", function (ev) {
+            body.on('click', function (ev) {
                 ev.halt();
                 var t = new S.Node(ev.target);
-                if (t.nodeName() == "a") {
-                    var c = hex(t.css("background-color"));
-                    if (left.contains(t))self._detailColor(c);
+                if (t.nodeName() === 'a') {
+                    var c = hex(t.css('background-color'));
+                    if (left.contains(t)) {
+                        self._detailColor(c);
+                    }
                     indicatorValue.val(c);
-                    indicator.css("background-color", c);
+                    indicator.css('background-color', c);
                 }
             });
             addRes.call(self, ok, indicatorValue, cancel, body, self.dialog);
 
-            var defaultColor = "#FF9900";
+            var defaultColor = '#FF9900';
             self._detailColor(defaultColor);
             indicatorValue.val(defaultColor);
-            indicator.css("background-color", defaultColor);
+            indicator.css('background-color', defaultColor);
         },
 
         _detailColor: function (color) {
             var self = this,
                 win = self.dialog,
-                body = win.get("body"),
+                body = win.get('body'),
                 editor = self.editor,
                 prefixCls = editor.get('prefixCls'),
-                detailPanel = body.one("." + prefixCls + "editor-color-advanced-picker-right");
+                detailPanel = body.one('.' + prefixCls + 'editor-color-advanced-picker-right');
 
-            detailPanel.html(map(ColorGrads(["#ffffff", color, "#000000"], 40),
+            detailPanel.html(map(colorGrads(['#ffffff', color, '#000000'], 40),
                 function (x) {
-                    return "<a style='background-color:" + hex(x) + "'></a>";
-                }).join(""));
+                    return '<a style="background-color:' + hex(x) + '"></a>';
+                }).join(''));
         },
         show: function (colorButtonArrow) {
             this.colorButtonArrow = colorButtonArrow;

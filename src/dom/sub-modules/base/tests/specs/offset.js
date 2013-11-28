@@ -49,7 +49,7 @@ KISSY.add(function (S, Dom) {
 
             var a;
 
-            Dom.append(a = Dom.create("<div style='position: absolute;top:0;'/>"), "body");
+            Dom.append(a = Dom.create("<div style='position: absolute;top:0;'/>"), 'body');
 
             // ie < 9 相对于 document.documentElement 即窗口
             expect(Dom.offset(a).top).toBe(0);

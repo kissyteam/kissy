@@ -23,7 +23,7 @@ KISSY.add(function (S, require) {
 
     return {
         init: function (editor) {
-            Cmd.addSelectCmd(editor, "fontFamily", fontFamilyStyle);
+            Cmd.addSelectCmd(editor, 'fontFamily', fontFamilyStyle);
         }
     };
 });

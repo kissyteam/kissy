@@ -137,7 +137,7 @@ KISSY.add(function (S, Dom) {
                 expect(jQuery(radio).attr('checked')).toBe(undefined);
                 // standard browser returns null
                 // ie<8 return false , === radio.checked
-                // expect(radio.getAttribute("checked")).toBe(undefined);
+                // expect(radio.getAttribute('checked')).toBe(undefined);
                 expect(Dom.attr(input, 'value')).toBe('hello');
                 expect(Dom.val(input)).toBe('hello');
                 Dom.attr(input, 'value', 'zz');
@@ -147,7 +147,7 @@ KISSY.add(function (S, Dom) {
             });
 
             it("should return style correctly", function () {
-                expect(typeof (Dom.attr(a, "style")) == 'string').toBe(true);
+                expect(typeof (Dom.attr(a, 'style')) == 'string').toBe(true);
             });
 
             it("should return selected correctly", function () {
@@ -227,16 +227,16 @@ KISSY.add(function (S, Dom) {
                 Dom.removeAttr(checkbox2, 'checked');
                 expect(Dom.attr(checkbox2, 'checked')).toBe(undefined);
                 expect(Dom.prop(checkbox2, 'checked')).toBe(false);
-                expect(Dom.hasAttr(checkbox2, "checked")).toBe(false);
+                expect(Dom.hasAttr(checkbox2, 'checked')).toBe(false);
                 checkbox2.checked = true;
                 Dom.attr(checkbox2, "dd", "dd");
                 expect(Dom.hasAttr(checkbox2, "dd")).toBe(true);
-                expect(Dom.hasProp(checkbox2, "checked")).toBe(true);
+                expect(Dom.hasProp(checkbox2, 'checked')).toBe(true);
                 /**
                  * 2011-08-19 集合中，一个为true 都为true
                  */
                 expect(Dom.hasAttr([body, checkbox2], "dd")).toBe(true);
-                expect(Dom.hasProp([body, checkbox2], "checked")).toBe(true);
+                expect(Dom.hasProp([body, checkbox2], 'checked')).toBe(true);
             });
 
             it("should handle disabled correctly", function () {
@@ -263,10 +263,10 @@ KISSY.add(function (S, Dom) {
             it("option.attr(\"value\")", function () {
                 var s = Dom.create("<select><option value='1'>一</option>" +
                     "<option value=''>二</option><option>三</option></select>");
-                Dom.append(s, "body");
+                Dom.append(s, 'body');
                 var ret = [];
                 S.each(Dom.query('option', s), function (o) {
-                    ret.push(Dom.attr(o, "value"));
+                    ret.push(Dom.attr(o, 'value'));
                 });
                 expect(ret).toEqual(["1", "", undefined]);
                 Dom.remove(s);
@@ -275,8 +275,8 @@ KISSY.add(function (S, Dom) {
             // https://github.com/kissyteam/kissy/issues/198
             it("do not change text when change link", function () {
                 var a = Dom.create("<a href='#'>haha@haha</a>");
-                Dom.attr(a, "href", "http://www.g.cn");
-                expect(Dom.attr(a, "href")).toBe("http://www.g.cn");
+                Dom.attr(a, 'href', "http://www.g.cn");
+                expect(Dom.attr(a, 'href')).toBe("http://www.g.cn");
                 expect(Dom.html(a)).toBe("haha@haha");
             });
 
@@ -297,7 +297,7 @@ KISSY.add(function (S, Dom) {
                 expect(Dom.attr(form, "xx")).toBe("qq");
                 expect(Dom.val(Dom.first(form))).toBe("yy");
                 var button = Dom.create("<button value='xxx'>zzzz</button>");
-                expect(Dom.attr(button, "value")).toBe("xxx");
+                expect(Dom.attr(button, 'value')).toBe("xxx");
             });
         });
 
@@ -310,7 +310,7 @@ KISSY.add(function (S, Dom) {
                 expect(Dom.attr(label, 'test-remove')).toBe(undefined);
                 // style
                 Dom.removeAttr(a, 'style');
-                expect(Dom.attr(a, "style")).toBe("");
+                expect(Dom.attr(a, 'style')).toBe("");
             });
         });
 

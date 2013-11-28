@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ',"src":' + jscoverage_quote(this.src)
+            + ','src':' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -824,9 +824,9 @@ KISSY.add(function(S, require) {
   _$jscoverage['/cmd.js'].lineData[8]++;
   var ListUtils = require('../list-utils');
   _$jscoverage['/cmd.js'].lineData[10]++;
-  var insertUnorderedList = "insertUnorderedList", insertOrderedList = "insertOrderedList", listNodeNames = {
-  "ol": insertOrderedList, 
-  "ul": insertUnorderedList}, KER = Editor.RangeType, ElementPath = Editor.ElementPath, Walker = Editor.Walker, UA = S.UA, Node = S.Node, Dom = S.DOM, headerTagRegex = /^h[1-6]$/;
+  var insertUnorderedList = "insertUnorderedList", insertOrderedList = 'insertOrderedList', listNodeNames = {
+  'ol': insertOrderedList,
+  'ul': insertUnorderedList}, KER = Editor.RangeType, ElementPath = Editor.ElementPath, Walker = Editor.Walker, UA = S.UA, Node = S.Node, Dom = S.DOM, headerTagRegex = /^h[1-6]$/;
   _$jscoverage['/cmd.js'].lineData[21]++;
   function ListCommand(type) {
     _$jscoverage['/cmd.js'].functionData[1]++;

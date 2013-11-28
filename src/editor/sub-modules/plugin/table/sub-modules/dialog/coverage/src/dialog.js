@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ',"src":' + jscoverage_quote(this.src)
+            + ','src':' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -515,7 +515,7 @@ function visit48_450_1(result) {
 function visit47_432_1(result) {
   _$jscoverage['/dialog.js'].branchData['432'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['429'][1].init(-1, 35, 'selectedTable.style("height") || ""');
+}_$jscoverage['/dialog.js'].branchData['429'][1].init(-1, 35, 'selectedTable.style('height') || ""');
 function visit46_429_1(result) {
   _$jscoverage['/dialog.js'].branchData['429'][1].ranCondition(result);
   return result;
@@ -555,7 +555,7 @@ function visit38_386_1(result) {
 function visit37_377_1(result) {
   _$jscoverage['/dialog.js'].branchData['377'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['374'][1].init(1710, 20, 'd.thead.get("value")');
+}_$jscoverage['/dialog.js'].branchData['374'][1].init(1710, 20, 'd.thead.get('value')');
 function visit36_374_1(result) {
   _$jscoverage['/dialog.js'].branchData['374'][1].ranCondition(result);
   return result;
@@ -595,7 +595,7 @@ function visit28_342_1(result) {
 function visit27_336_1(result) {
   _$jscoverage['/dialog.js'].branchData['336'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['333'][1].init(424, 28, 'valid(d.talign.get("value"))');
+}_$jscoverage['/dialog.js'].branchData['333'][1].init(424, 28, 'valid(d.talign.get('value'))');
 function visit26_333_1(result) {
   _$jscoverage['/dialog.js'].branchData['333'][1].ranCondition(result);
   return result;
@@ -679,7 +679,7 @@ function visit7_240_1(result) {
 function visit6_239_1(result) {
   _$jscoverage['/dialog.js'].branchData['239'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['236'][1].init(180, 42, 'tableDialog.twidthunit.get("value") == "%"');
+}_$jscoverage['/dialog.js'].branchData['236'][1].init(180, 42, 'tableDialog.twidthunit.get('value') == "%"');
 function visit5_236_1(result) {
   _$jscoverage['/dialog.js'].branchData['236'][1].ranCondition(result);
   return result;
@@ -745,7 +745,7 @@ KISSY.add(function(S, require) {
   mask: true, 
   headerContent: "\u8868\u683c", 
   bodyContent: replacePrefix(TABLE_HTML, prefixCls), 
-  footerContent: replacePrefix(footHTML, prefixCls)}).render(), dbody = d.get("body"), foot = d.get("footer");
+  footerContent: replacePrefix(footHTML, prefixCls)}).render(), dbody = d.get('body'), foot = d.get("footer");
   _$jscoverage['/dialog.js'].lineData[186]++;
   d.twidth = dbody.one(replacePrefix(".{prefixCls}editor-table-width", prefixCls));
   _$jscoverage['/dialog.js'].lineData[187]++;
@@ -790,9 +790,9 @@ KISSY.add(function(S, require) {
   _$jscoverage['/dialog.js'].lineData[221]++;
   self.dialog = d;
   _$jscoverage['/dialog.js'].lineData[222]++;
-  tok.on("click", self._tableOk, self);
+  tok.on('click', self._tableOk, self);
   _$jscoverage['/dialog.js'].lineData[224]++;
-  tclose.on("click", function(ev) {
+  tclose.on('click', function(ev) {
   _$jscoverage['/dialog.js'].functionData[5]++;
   _$jscoverage['/dialog.js'].lineData[225]++;
   visit3_225_1(ev && ev.halt());
@@ -809,7 +809,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/dialog.js'].lineData[232]++;
   var self = this, tableDialog = self.dialog, inputs = tableDialog.get('el').all('input');
   _$jscoverage['/dialog.js'].lineData[236]++;
-  if (visit5_236_1(tableDialog.twidthunit.get("value") == "%")) {
+  if (visit5_236_1(tableDialog.twidthunit.get('value') == "%")) {
     _$jscoverage['/dialog.js'].lineData[237]++;
     var tw = parseInt(tableDialog.twidth.val());
     _$jscoverage['/dialog.js'].lineData[238]++;
@@ -843,7 +843,7 @@ KISSY.add(function(S, require) {
   _modifyTable: function() {
   _$jscoverage['/dialog.js'].functionData[8]++;
   _$jscoverage['/dialog.js'].lineData[260]++;
-  var self = this, d = self.dialog, selectedTable = self.selectedTable, caption = selectedTable.one("caption"), talignVal = d.talign.get("value"), tborderVal = d.tborder.val();
+  var self = this, d = self.dialog, selectedTable = self.selectedTable, caption = selectedTable.one("caption"), talignVal = d.talign.get('value'), tborderVal = d.tborder.val();
   _$jscoverage['/dialog.js'].lineData[267]++;
   if (visit12_267_1(valid(talignVal))) {
     _$jscoverage['/dialog.js'].lineData[268]++;
@@ -871,7 +871,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/dialog.js'].lineData[283]++;
   if (visit16_283_1(valid(d.twidth.val()))) {
     _$jscoverage['/dialog.js'].lineData[284]++;
-    selectedTable.css('width', trim(d.twidth.val()) + d.twidthunit.get("value"));
+    selectedTable.css('width', trim(d.twidth.val()) + d.twidthunit.get('value'));
   } else {
     _$jscoverage['/dialog.js'].lineData[287]++;
     selectedTable.css('width', "");
@@ -879,10 +879,10 @@ KISSY.add(function(S, require) {
   _$jscoverage['/dialog.js'].lineData[288]++;
   if (visit17_288_1(valid(d.theight.val()))) {
     _$jscoverage['/dialog.js'].lineData[289]++;
-    selectedTable.css("height", trim(d.theight.val()));
+    selectedTable.css('height', trim(d.theight.val()));
   } else {
     _$jscoverage['/dialog.js'].lineData[292]++;
-    selectedTable.css("height", "");
+    selectedTable.css('height', "");
   }
   _$jscoverage['/dialog.js'].lineData[294]++;
   if (visit18_294_1(d.tcollapse[0].checked)) {
@@ -924,9 +924,9 @@ KISSY.add(function(S, require) {
   _$jscoverage['/dialog.js'].lineData[322]++;
   var self = this, d = self.dialog, html = "<table ", i, cols = visit24_326_1(parseInt(d.tcols.val()) || 1), rows = visit25_327_1(parseInt(d.trows.val()) || 1), cellPad = OLD_IE ? '' : '<br/>', editor = self.editor;
   _$jscoverage['/dialog.js'].lineData[333]++;
-  if (visit26_333_1(valid(d.talign.get("value")))) {
+  if (visit26_333_1(valid(d.talign.get('value')))) {
     _$jscoverage['/dialog.js'].lineData[334]++;
-    html += "align='" + trim(d.talign.get("value")) + "' ";
+    html += "align='" + trim(d.talign.get('value')) + "' ";
   }
   _$jscoverage['/dialog.js'].lineData[336]++;
   if (visit27_336_1(valid(d.tborder.val()))) {
@@ -938,7 +938,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/dialog.js'].lineData[342]++;
   if (visit28_342_1(valid(d.twidth.val()))) {
     _$jscoverage['/dialog.js'].lineData[343]++;
-    styles.push("width:" + trim(d.twidth.val()) + d.twidthunit.get("value") + ";");
+    styles.push("width:" + trim(d.twidth.val()) + d.twidthunit.get('value') + ";");
   }
   _$jscoverage['/dialog.js'].lineData[347]++;
   if (visit29_347_1(valid(d.theight.val()))) {
@@ -975,7 +975,7 @@ KISSY.add(function(S, require) {
     html += "<caption><span>" + S.escapeHtml(trim(d.tcaption.val())) + "</span></caption>";
   }
   _$jscoverage['/dialog.js'].lineData[374]++;
-  if (visit36_374_1(d.thead.get("value"))) {
+  if (visit36_374_1(d.thead.get('value'))) {
     _$jscoverage['/dialog.js'].lineData[375]++;
     html += "<thead>";
     _$jscoverage['/dialog.js'].lineData[376]++;
@@ -1025,7 +1025,7 @@ KISSY.add(function(S, require) {
     d.cellpadding.val(visit41_406_1(parseInt(self.selectedTd.css("padding")) || "0"));
   }
   _$jscoverage['/dialog.js'].lineData[410]++;
-  d.talign.set("value", visit42_410_1(selectedTable.attr("align") || ""));
+  d.talign.set('value', visit42_410_1(selectedTable.attr("align") || ""));
   _$jscoverage['/dialog.js'].lineData[414]++;
   d.tborder.val(visit43_414_1(selectedTable.attr("border") || "0"));
   _$jscoverage['/dialog.js'].lineData[416]++;
@@ -1037,13 +1037,13 @@ KISSY.add(function(S, require) {
   _$jscoverage['/dialog.js'].lineData[423]++;
   if (visit45_423_1(w.indexOf("%") != -1)) {
     _$jscoverage['/dialog.js'].lineData[424]++;
-    d.twidthunit.set("value", "%");
+    d.twidthunit.set('value', "%");
   } else {
     _$jscoverage['/dialog.js'].lineData[426]++;
-    d.twidthunit.set("value", "px");
+    d.twidthunit.set('value', 'px');
   }
   _$jscoverage['/dialog.js'].lineData[429]++;
-  d.theight.val((visit46_429_1(selectedTable.style("height") || "")).replace(/px|%/i, ""));
+  d.theight.val((visit46_429_1(selectedTable.style('height') || "")).replace(/px|%/i, ""));
   _$jscoverage['/dialog.js'].lineData[431]++;
   var c = "";
   _$jscoverage['/dialog.js'].lineData[432]++;
@@ -1060,7 +1060,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/dialog.js'].lineData[441]++;
   d.tcols.val(selectedTable.one("tr") ? selectedTable.one("tr").children().length : 0);
   _$jscoverage['/dialog.js'].lineData[443]++;
-  d.thead.set("value", head ? '1' : '');
+  d.thead.set('value', head ? '1' : '');
 }, 
   _realTableShow: function() {
   _$jscoverage['/dialog.js'].functionData[11]++;

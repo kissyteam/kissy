@@ -45,7 +45,7 @@ KISSY.use("anim,node,button",function(S,Anim,Node,Button){
     }).addClass(cls[clsIdx]);
 
     // 事件绑定
-    start.on("click", function() {
+    start.on('click', function() {
         start.set('disabled', true);
         // 向右
         obj.animate({
@@ -66,18 +66,18 @@ KISSY.use("anim,node,button",function(S,Anim,Node,Button){
     });
 
 
-    endCurrent.on("click", function() {
+    endCurrent.on('click', function() {
         adjustCls();
 
         obj.stop(); // 0, 0
     });
-    endCurrentNext.on("click", function() {
+    endCurrentNext.on('click', function() {
         obj.stop(1); // 1, 0
     });
-    endCurrentNextStop.on("click", function() {
+    endCurrentNextStop.on('click', function() {
         obj.stop(0, 1); // 0, 1
     });
-    endAll.on("click", function() {
+    endAll.on('click', function() {
         obj.stop(1, 1); // 1, 1
     });
 

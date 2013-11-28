@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ',"src":' + jscoverage_quote(this.src)
+            + ','src':' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -282,7 +282,7 @@ KISSY.add(function(S, require) {
   initializer: function() {
   _$jscoverage['/progressbar.js'].functionData[2]++;
   _$jscoverage['/progressbar.js'].lineData[16]++;
-  var self = this, h = self.get("height"), prefixCls = self.get('prefixCls'), el = new Node(S.substitute("<div" + " class='{prefixCls}editor-progressbar' " + " style='width:" + self.get('width') + ";" + "height:" + h + ";'" + "></div>", {
+  var self = this, h = self.get('height'), prefixCls = self.get('prefixCls'), el = new Node(S.substitute("<div" + " class='{prefixCls}editor-progressbar' " + " style='width:" + self.get('width') + ";" + "height:" + h + ";'" + "></div>", {
   prefixCls: prefixCls})), container = self.get("container"), p = new Node(S.substitute("<div style='overflow:hidden;'>" + "<div class='{prefixCls}editor-progressbar-inner' style='height:" + (parseInt(h) - 4) + "px'>" + "<div class='{prefixCls}editor-progressbar-inner-bg'></div>" + "</div>" + "</div>", {
   prefixCls: prefixCls})).appendTo(el), title = new Node("<span class='" + prefixCls + "editor-progressbar-title'></span>").appendTo(el);
   _$jscoverage['/progressbar.js'].lineData[44]++;

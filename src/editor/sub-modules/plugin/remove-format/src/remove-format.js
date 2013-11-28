@@ -14,11 +14,11 @@ KISSY.add(function (S, require) {
     S.augment(removeFormat, {
         pluginRenderUI: function (editor) {
             formatCmd.init(editor);
-            editor.addButton("removeFormat", {
-                tooltip: "清除格式",
+            editor.addButton('removeFormat', {
+                tooltip: '清除格式',
                 listeners: {
                     click: function () {
-                        editor.execCommand("removeFormat");
+                        editor.execCommand('removeFormat');
                     }
                 },
                 mode: Editor.Mode.WYSIWYG_MODE

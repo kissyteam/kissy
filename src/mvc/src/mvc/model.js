@@ -106,7 +106,7 @@ KISSY.add(function (S, require) {
                 for (var l in lists) {
                     lists[l].remove(self, opts);
                 }
-                self.fire("destroy");
+                self.fire('destroy');
                 success && success.apply(this, arguments);
             };
             if (!self.isNew() && opts['delete']) {

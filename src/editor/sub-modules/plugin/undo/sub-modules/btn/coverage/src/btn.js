@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ',"src":' + jscoverage_quote(this.src)
+            + ','src':' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -310,12 +310,12 @@ KISSY.add(function(S, require) {
   bindUI: function() {
   _$jscoverage['/btn.js'].functionData[1]++;
   _$jscoverage['/btn.js'].lineData[14]++;
-  var self = this, editor = self.get("editor");
+  var self = this, editor = self.get('editor');
   _$jscoverage['/btn.js'].lineData[17]++;
-  self.on("click", function() {
+  self.on('click', function() {
   _$jscoverage['/btn.js'].functionData[2]++;
   _$jscoverage['/btn.js'].lineData[18]++;
-  editor.execCommand("undo");
+  editor.execCommand('undo');
 });
   _$jscoverage['/btn.js'].lineData[20]++;
   editor.on("afterUndo afterRedo afterSave", function(ev) {
@@ -353,12 +353,12 @@ KISSY.add(function(S, require) {
   bindUI: function() {
   _$jscoverage['/btn.js'].functionData[5]++;
   _$jscoverage['/btn.js'].lineData[55]++;
-  var self = this, editor = self.get("editor");
+  var self = this, editor = self.get('editor');
   _$jscoverage['/btn.js'].lineData[57]++;
-  self.on("click", function() {
+  self.on('click', function() {
   _$jscoverage['/btn.js'].functionData[6]++;
   _$jscoverage['/btn.js'].lineData[58]++;
-  editor.execCommand("redo");
+  editor.execCommand('redo');
 });
   _$jscoverage['/btn.js'].lineData[60]++;
   editor.on("afterUndo afterRedo afterSave", function(ev) {

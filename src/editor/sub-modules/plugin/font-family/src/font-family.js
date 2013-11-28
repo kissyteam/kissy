@@ -27,70 +27,70 @@ KISSY.add(function (S, require) {
                 children: [
                     //ie 不认识中文？？？
                     {
-                        content: "宋体",
-                        value: "SimSun"
+                        content: '宋体',
+                        value: 'SimSun'
                     },
                     {
-                        content: "黑体",
-                        value: "SimHei"
+                        content: '黑体',
+                        value: 'SimHei'
                     },
                     {
-                        content: "隶书",
-                        value: "LiSu"
+                        content: '隶书',
+                        value: 'LiSu'
                     },
                     {
-                        content: "楷体",
-                        value: "KaiTi_GB2312"
+                        content: '楷体',
+                        value: 'KaiTi_GB2312'
                     },
                     {
-                        content: "微软雅黑",
-                        value: "'Microsoft YaHei'"
+                        content: '微软雅黑',
+                        value: '"Microsoft YaHei"'
                     },
                     {
-                        content: "Georgia",
-                        value: "Georgia"
+                        content: 'Georgia',
+                        value: 'Georgia'
                     },
                     {
-                        content: "Times New Roman",
-                        value: "'Times New Roman'"
+                        content: 'Times New Roman',
+                        value: '"Times New Roman"'
                     },
                     {
-                        content: "Impact",
-                        value: "Impact"
+                        content: 'Impact',
+                        value: 'Impact'
                     },
                     {
-                        content: "Courier New",
-                        value: "'Courier New'"
+                        content: 'Courier New',
+                        value: '"Courier New"'
                     },
                     {
-                        content: "Arial",
-                        value: "Arial"
+                        content: 'Arial',
+                        value: 'Arial'
                     },
                     {
-                        content: "Verdana",
-                        value: "Verdana"
+                        content: 'Verdana',
+                        value: 'Verdana'
                     },
                     {
-                        content: "Tahoma",
-                        value: "Tahoma"
+                        content: 'Tahoma',
+                        value: 'Tahoma'
                     }
                 ],
-                width: "130px"
+                width: '130px'
             });
 
             S.each(menu.children, function (item) {
                 var attrs = item.elAttrs || {},
                     value = item.value;
-                attrs.style = attrs.style || "";
-                attrs.style += ";font-family:" + value;
+                attrs.style = attrs.style || '';
+                attrs.style += ';font-family:' + value;
                 item.elAttrs = attrs;
             });
 
             fontFamilies.menu = S.mix(menu, fontFamilies.menu);
 
-            editor.addSelect("fontFamily", S.mix({
-                cmdType: "fontFamily",
-                defaultCaption: "字体",
+            editor.addSelect('fontFamily', S.mix({
+                cmdType: 'fontFamily',
+                defaultCaption: '字体',
                 width: 130,
                 mode: Editor.Mode.WYSIWYG_MODE
             }, fontFamilies), ui.Select);

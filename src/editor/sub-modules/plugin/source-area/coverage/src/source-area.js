@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ',"src":' + jscoverage_quote(this.src)
+            + ','src':' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -296,13 +296,13 @@ KISSY.add(function(S, require) {
   editor.on('wysiwygMode', function() {
   _$jscoverage['/source-area.js'].functionData[4]++;
   _$jscoverage['/source-area.js'].lineData[23]++;
-  self.set("checked", false);
+  self.set('checked', false);
 });
   _$jscoverage['/source-area.js'].lineData[25]++;
   editor.on('sourceMode', function() {
   _$jscoverage['/source-area.js'].functionData[5]++;
   _$jscoverage['/source-area.js'].lineData[26]++;
-  self.set("checked", true);
+  self.set('checked', true);
 });
 }, 
   click: function() {
@@ -310,14 +310,14 @@ KISSY.add(function(S, require) {
   _$jscoverage['/source-area.js'].lineData[31]++;
   var self = this;
   _$jscoverage['/source-area.js'].lineData[32]++;
-  var checked = self.get("checked");
+  var checked = self.get('checked');
   _$jscoverage['/source-area.js'].lineData[33]++;
   if (visit1_33_1(checked)) {
     _$jscoverage['/source-area.js'].lineData[34]++;
-    editor.set("mode", SOURCE_MODE);
+    editor.set('mode', SOURCE_MODE);
   } else {
     _$jscoverage['/source-area.js'].lineData[36]++;
-    editor.set("mode", WYSIWYG_MODE);
+    editor.set('mode', WYSIWYG_MODE);
   }
 }}, 
   checkable: true});

@@ -46,7 +46,7 @@ KISSY.add(function (S, Dom, Anim, Node) {
                 beforeEach(function () {
                     test = $("<div style='width: 100px;" +
                         "height: 100px;" +
-                        "border: 1px solid red;'></div>").appendTo("body");
+                        "border: 1px solid red;'></div>").appendTo('body');
                 });
 
                 afterEach(function () {
@@ -412,7 +412,7 @@ KISSY.add(function (S, Dom, Anim, Node) {
                     waits(800);
                     runs(function () {
                         expect(test.isRunning()).toBeFalsy();
-                        expect(test.style("height")).toBe("100px");
+                        expect(test.style('height')).toBe("100px");
                         var anims = test.data(ANIM_KEY);
                         expect(test.hasData(ANIM_KEY)).toBe(false);
                         expect(anims).toBe(undefined);

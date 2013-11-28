@@ -10,7 +10,7 @@ KISSY.add(function (S, require) {
     function getSelectedItem(self) {
         var menu = self.get('menu'),
             cs = menu.children || menu.get && menu.get('children') || [],
-            value = self.get("value"),
+            value = self.get('value'),
             c,
             i;
         for (i = 0; i < cs.length; i++) {
@@ -23,15 +23,15 @@ KISSY.add(function (S, require) {
     }
 
     // c: Option
-    // c.get("value")
+    // c.get('value')
     // c: Object
     // c.value
     function getItemValue(c) {
         var v;
         if (c) {
             if (c.get) {
-                if ((v = c.get("value")) === undefined) {
-                    v = c.get('textContent') || c.get("content");
+                if ((v = c.get('value')) === undefined) {
+                    v = c.get('textContent') || c.get('content');
                 }
             } else {
                 if ((v = c.value) === undefined) {
@@ -44,7 +44,7 @@ KISSY.add(function (S, require) {
 
     function deSelectAllExcept(self) {
         var menu = self.get('menu'),
-            value = self.get("value"),
+            value = self.get('value'),
             cs = menu && menu.get && menu.get('children');
         S.each(cs, function (c) {
             if (c && c.set) {
@@ -76,7 +76,7 @@ KISSY.add(function (S, require) {
             textContent = item && ( item.textContent || item.get && item.get('textContent')),
             content = item && (item.content || item.get && item.get('content'));
         // 可能设置到 select content 的内容并不和 menuitem 的内容完全一致
-        self.set("content", textContent || content || self.get("defaultCaption"));
+        self.set('content', textContent || content || self.get("defaultCaption"));
     }
 
 
@@ -90,8 +90,8 @@ KISSY.add(function (S, require) {
             target = e.target;
         if (target.isMenuItem) {
             var newValue = getItemValue(target),
-                oldValue = self.get("value");
-            self.set("value", newValue);
+                oldValue = self.get('value');
+            self.set('value', newValue);
             if (newValue != oldValue) {
                 self.fire("change", {
                     prevVal: oldValue,
@@ -111,7 +111,7 @@ KISSY.add(function (S, require) {
      */
     var Select = MenuButton.extend({
             bindUI: function () {
-                this.on("click", handleMenuClick, this);
+                this.on('click', handleMenuClick, this);
                 this.on('show', _handleMenuShow, this);
             },
 
@@ -122,7 +122,7 @@ KISSY.add(function (S, require) {
             removeItems: function () {
                 var self = this;
                 self.callSuper.apply(self, arguments);
-                self.set("value", null);
+                self.set('value', null);
             },
 
             /**
@@ -134,8 +134,8 @@ KISSY.add(function (S, require) {
             removeItem: function (c, destroy) {
                 var self = this;
                 self.callSuper(c, destroy);
-                if (c.get("value") == self.get("value")) {
-                    self.set("value", null);
+                if (c.get('value') == self.get('value')) {
+                    self.set('value', null);
                 }
             },
 

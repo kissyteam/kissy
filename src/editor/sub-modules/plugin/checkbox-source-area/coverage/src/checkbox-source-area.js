@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ',"src":' + jscoverage_quote(this.src)
+            + ','src':' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -276,7 +276,7 @@ if (! _$jscoverage['/checkbox-source-area.js'].branchData) {
   _$jscoverage['/checkbox-source-area.js'].branchData['48'] = [];
   _$jscoverage['/checkbox-source-area.js'].branchData['48'][1] = new BranchData();
 }
-_$jscoverage['/checkbox-source-area.js'].branchData['48'][1].init(114, 18, 'el.attr("checked")');
+_$jscoverage['/checkbox-source-area.js'].branchData['48'][1].init(114, 18, 'el.attr('checked')');
 function visit1_48_1(result) {
   _$jscoverage['/checkbox-source-area.js'].branchData['48'][1].ranCondition(result);
   return result;
@@ -310,7 +310,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/checkbox-source-area.js'].lineData[33]++;
   var el = self.el = self.holder.one('input');
   _$jscoverage['/checkbox-source-area.js'].lineData[34]++;
-  el.on("click", self._check, self);
+  el.on('click', self._check, self);
   _$jscoverage['/checkbox-source-area.js'].lineData[35]++;
   editor.on('wysiwygMode', self._wysiwygmode, self);
   _$jscoverage['/checkbox-source-area.js'].lineData[36]++;
@@ -319,24 +319,24 @@ KISSY.add(function(S, require) {
   _sourcemode: function() {
   _$jscoverage['/checkbox-source-area.js'].functionData[3]++;
   _$jscoverage['/checkbox-source-area.js'].lineData[39]++;
-  this.el.attr("checked", true);
+  this.el.attr('checked', true);
 }, 
   _wysiwygmode: function() {
   _$jscoverage['/checkbox-source-area.js'].functionData[4]++;
   _$jscoverage['/checkbox-source-area.js'].lineData[42]++;
-  this.el.attr("checked", false);
+  this.el.attr('checked', false);
 }, 
   _check: function() {
   _$jscoverage['/checkbox-source-area.js'].functionData[5]++;
   _$jscoverage['/checkbox-source-area.js'].lineData[45]++;
   var self = this, editor = self.editor, el = self.el;
   _$jscoverage['/checkbox-source-area.js'].lineData[48]++;
-  if (visit1_48_1(el.attr("checked"))) {
+  if (visit1_48_1(el.attr('checked'))) {
     _$jscoverage['/checkbox-source-area.js'].lineData[49]++;
-    editor.set("mode", SOURCE_MODE);
+    editor.set('mode', SOURCE_MODE);
   } else {
     _$jscoverage['/checkbox-source-area.js'].lineData[51]++;
-    editor.set("mode", WYSIWYG_MODE);
+    editor.set('mode', WYSIWYG_MODE);
   }
 }, 
   destroy: function() {
@@ -355,7 +355,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/checkbox-source-area.js'].lineData[65]++;
   var c = new CheckboxSourceArea(editor);
   _$jscoverage['/checkbox-source-area.js'].lineData[66]++;
-  editor.on("destroy", function() {
+  editor.on('destroy', function() {
   _$jscoverage['/checkbox-source-area.js'].functionData[9]++;
   _$jscoverage['/checkbox-source-area.js'].lineData[67]++;
   c.destroy();

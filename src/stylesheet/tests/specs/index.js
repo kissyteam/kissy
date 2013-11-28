@@ -31,15 +31,15 @@ KISSY.add(function (S, StyleSheet, Node) {
 
     describe("stylesheet", function () {
         it("works for link at same domain", function () {
-            var n = S.all("<p class='test1'>test1</p>").appendTo("body");
+            var n = S.all("<p class='test1'>test1</p>").appendTo('body');
 
-            var n2 = S.all("<p class='test2'>test1</p>").appendTo("body");
+            var n2 = S.all("<p class='test2'>test1</p>").appendTo('body');
 
             var ret = 0;
 
             var style = S.getScript("../data/test.css", function () {
 
-                expect(n.css("height")).toBe("120px");
+                expect(n.css('height')).toBe("120px");
 
                 var styleSheet = new StyleSheet(style);
 
@@ -56,7 +56,7 @@ KISSY.add(function (S, StyleSheet, Node) {
                 expect(filter(styleSheet.get())).toBe(filter(".test1 {color: #ff0000;" +
                     " height: 200px;}"));
 
-                expect(n.css("height")).toBe("200px");
+                expect(n.css('height')).toBe("200px");
 
                 // unset
                 styleSheet.set(".test1", {
@@ -65,7 +65,7 @@ KISSY.add(function (S, StyleSheet, Node) {
 
                 expect(filter(styleSheet.get())).toBe(filter(".test1 {color: #ff0000;}"));
 
-                expect(n.css("height")).not.toBe("200px");
+                expect(n.css('height')).not.toBe("200px");
 
                 expect(filter(n.css("color"))).toBe("#ff0000");
 
@@ -85,15 +85,15 @@ KISSY.add(function (S, StyleSheet, Node) {
 
                 expect(filter(styleSheet.get())).toBe(filter(".test2 {height: 120px;}"));
 
-                expect(n2.css("height")).toBe("120px");
+                expect(n2.css('height')).toBe("120px");
 
                 // disable
                 styleSheet.disable();
-                expect(n2.css("height")).not.toBe("120px");
+                expect(n2.css('height')).not.toBe("120px");
 
                 // enable
                 styleSheet.enable();
-                expect(n2.css("height")).toBe("120px");
+                expect(n2.css('height')).toBe("120px");
 
                 ret = 1;
             });
@@ -111,20 +111,20 @@ KISSY.add(function (S, StyleSheet, Node) {
 
 
         it("works for inline style", function () {
-            var n = S.all("<p class='test1'>test1</p>").appendTo("body");
+            var n = S.all("<p class='test1'>test1</p>").appendTo('body');
 
-            var n2 = S.all("<p class='test2'>test1</p>").appendTo("body");
+            var n2 = S.all("<p class='test2'>test1</p>").appendTo('body');
 
             var ret = 0;
 
             var style = S.all("<style>.test1 {" +
                 "color:#ff0000;" +
                 "height: 120px;" +
-                "}</style>").appendTo("body")[0];
+                "}</style>").appendTo('body')[0];
 
             (function () {
 
-                expect(n.css("height")).toBe("120px");
+                expect(n.css('height')).toBe("120px");
 
                 var styleSheet = new StyleSheet(style);
 
@@ -141,7 +141,7 @@ KISSY.add(function (S, StyleSheet, Node) {
                 expect(filter(styleSheet.get()))
                     .toBe(filter(".test1 {color: #ff0000; height: 200px;}"));
 
-                expect(n.css("height")).toBe("200px");
+                expect(n.css('height')).toBe("200px");
 
                 // unset
                 styleSheet.set(".test1", {
@@ -150,7 +150,7 @@ KISSY.add(function (S, StyleSheet, Node) {
 
                 expect(filter(styleSheet.get())).toBe(filter(".test1 {color: #ff0000;}"));
 
-                expect(n.css("height")).not.toBe("200px");
+                expect(n.css('height')).not.toBe("200px");
 
                 expect(filter(n.css("color"))).toBe("#ff0000");
 
@@ -169,15 +169,15 @@ KISSY.add(function (S, StyleSheet, Node) {
 
                 expect(filter(styleSheet.get())).toBe(filter(".test2 {height: 120px;}"));
 
-                expect(n2.css("height")).toBe("120px");
+                expect(n2.css('height')).toBe("120px");
 
                 // disable
                 styleSheet.disable();
-                expect(n2.css("height")).not.toBe("120px");
+                expect(n2.css('height')).not.toBe("120px");
 
                 // enable
                 styleSheet.enable();
-                expect(n2.css("height")).toBe("120px");
+                expect(n2.css('height')).toBe("120px");
 
                 ret = 1;
             })();

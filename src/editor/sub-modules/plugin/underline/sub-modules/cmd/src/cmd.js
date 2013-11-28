@@ -20,6 +20,7 @@ KISSY.add(function (S, require) {
     });
     return {
         init: function (editor) {
-            Cmd.addButtonCmd(editor, "underline", UNDERLINE_STYLE);
-        }};
+            Cmd.addButtonCmd(editor, 'underline', UNDERLINE_STYLE);
+        }
+    };
 });

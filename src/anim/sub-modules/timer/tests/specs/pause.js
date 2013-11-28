@@ -10,7 +10,7 @@ KISSY.add(function (S, _, Anim) {
 
             var div = $("<div style='width:100px;height: 100px;" +
                 "overflow:hidden;'></div>")
-                .appendTo("body");
+                .appendTo('body');
 
             var anim = Anim(div[0], {
                 width:"10px",
@@ -64,7 +64,7 @@ KISSY.add(function (S, _, Anim) {
             var div = $("<div style='width:100px;" +
                 // ie6 撑破
                 "overflow:hidden;" +
-                "height: 100px;'></div>").appendTo("body");
+                "height: 100px;'></div>").appendTo('body');
 
             div.animate({
                 width:"10px",

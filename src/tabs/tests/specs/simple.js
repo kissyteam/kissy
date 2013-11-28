@@ -30,8 +30,8 @@ KISSY.add(function (S, Tabs) {
             expect($(".ks-tabs-panel").item(1).html().toLowerCase())
                 .toBe('<p>panel-2</p>');
 
-            expect(tabs.getSelectedTab().get("content")).toBe("tab-1");
-            expect(tabs.getSelectedPanel().get("content")).toBe("<p>panel-1</p>");
+            expect(tabs.getSelectedTab().get('content')).toBe("tab-1");
+            expect(tabs.getSelectedPanel().get('content')).toBe("<p>panel-1</p>");
 
             tabs.destroy();
 
@@ -63,13 +63,13 @@ KISSY.add(function (S, Tabs) {
                     run_ed = 1;
                 });
 
-                jasmine.simulate(tabB[0], "click");
+                jasmine.simulate(tabB[0], 'click');
 
                 runs(function () {
                     expect(run_ed).toBe(1);
-                    expect(tabs.getSelectedTab().get("content")).toBe("tab-2");
+                    expect(tabs.getSelectedTab().get('content')).toBe("tab-2");
                     expect(tabs.getSelectedPanel()
-                        .get("content").toLowerCase()).toBe("<p>panel-2</p>");
+                        .get('content').toLowerCase()).toBe("<p>panel-2</p>");
                 });
 
                 runs(function () {
@@ -102,9 +102,9 @@ KISSY.add(function (S, Tabs) {
 
                     waits(10);
                     runs(function () {
-                        expect(tabs.getSelectedTab().get("content")).toBe("tab-2");
+                        expect(tabs.getSelectedTab().get('content')).toBe("tab-2");
                         expect(tabs.getSelectedPanel()
-                            .get("content").toLowerCase()).toBe("<p>panel-2</p>");
+                            .get('content').toLowerCase()).toBe("<p>panel-2</p>");
                     });
 
                     runs(function () {
@@ -145,9 +145,9 @@ KISSY.add(function (S, Tabs) {
             expect($(".ks-tabs-tab").length).toBe(3);
             expect($(".ks-tabs-panel").length).toBe(3);
 
-            expect(tabs.getSelectedTab().get("content")).toBe('add-tab');
+            expect(tabs.getSelectedTab().get('content')).toBe('add-tab');
 
-            expect(tabs.getSelectedPanel().get("content")).toBe('add-panel');
+            expect(tabs.getSelectedPanel().get('content')).toBe('add-panel');
 
             tabs.destroy();
 
@@ -180,7 +180,7 @@ KISSY.add(function (S, Tabs) {
                 expect($(".ks-tabs-tab").length).toBe(1);
                 expect($(".ks-tabs-panel").length).toBe(1);
 
-                expect(tabs.getSelectedTab().get("content")).toBe("tab-1");
+                expect(tabs.getSelectedTab().get('content')).toBe("tab-1");
 
                 tabs.destroy();
             });
@@ -211,7 +211,7 @@ KISSY.add(function (S, Tabs) {
                 expect($(".ks-tabs-tab").length).toBe(1);
                 expect($(".ks-tabs-panel").length).toBe(1);
 
-                expect(tabs.getSelectedTab().get("content")).toBe("tab-2");
+                expect(tabs.getSelectedTab().get('content')).toBe("tab-2");
 
                 tabs.destroy();
             });

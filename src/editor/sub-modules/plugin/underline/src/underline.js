@@ -14,15 +14,15 @@ KISSY.add(function (S, require) {
         pluginRenderUI: function (editor) {
             cmd.init(editor);
 
-            editor.addButton("underline", {
-                cmdType: "underline",
-                tooltip: "下划线 "
+            editor.addButton('underline', {
+                cmdType: 'underline',
+                tooltip: '下划线'
             }, ui.Button);
 
             editor.docReady(function () {
                 editor.get('document').on('keydown', function (e) {
                     if (e.ctrlKey && e.keyCode == S.Node.KeyCode.U) {
-                        editor.execCommand("underline");
+                        editor.execCommand('underline');
                         e.preventDefault();
                     }
                 });

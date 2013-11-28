@@ -13,7 +13,7 @@ KISSY.add(function (S, Dom, Event, Node, DD, Scroll, IO) {
         return;
     }
 
-    describe("scroll", function () {
+    describe('scroll', function () {
         var drag, dragNode, dragContainer, dragOffset, containerOffset, scrollTop = 0;
 
         var html;

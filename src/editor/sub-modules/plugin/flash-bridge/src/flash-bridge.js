@@ -12,14 +12,14 @@ KISSY.add(function (S, require) {
     var logger = S.getLogger('s/editor/plugin/flash-bridge');
 
     function FlashBridge(cfg) {
-        this._init(cfg)
+        this._init(cfg);
     }
 
     S.augment(FlashBridge, Event.Target, {
         _init: function (cfg) {
             var self = this,
-                id = S.guid("flash-bridge-"),
-                callback = "KISSY.require('editor').FlashBridge.EventHandler";
+                id = S.guid('flash-bridge-'),
+                callback = 'KISSY.require(\'editor\').FlashBridge.EventHandler';
             cfg.id = id;
             cfg.attrs = cfg.attrs || {};
             cfg.params = cfg.params || {};
@@ -63,6 +63,7 @@ KISSY.add(function (S, require) {
             var self = this;
             for (var i = 0; i < methods.length; i++) {
                 var m = methods[i];
+                /*jshint loopfunc:true*/
                 (function (m) {
                     self[m] = function () {
                         return self._callSWF(m, S.makeArray(arguments));
@@ -87,7 +88,7 @@ KISSY.add(function (S, require) {
             if (self._ready) {
                 fn.call(this);
             } else {
-                self.on("contentReady", fn);
+                self.on('contentReady', fn);
             }
         },
         destroy: function () {
@@ -97,7 +98,7 @@ KISSY.add(function (S, require) {
     });
 
     FlashBridge.EventHandler = function (id, event) {
-        logger.debug("fire event: " + event.type);
+        logger.debug('fire event: ' + event.type);
         var instance = instances[id];
         if (instance) {
             //防止ie同步触发事件，后面还没on呢，另外给 swf 喘息机会

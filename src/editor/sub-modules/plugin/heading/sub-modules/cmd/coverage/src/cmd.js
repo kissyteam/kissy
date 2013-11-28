@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ',"src":' + jscoverage_quote(this.src)
+            + ','src':' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -310,7 +310,7 @@ function visit3_19_1(result) {
 function visit2_16_1(result) {
   _$jscoverage['/cmd.js'].branchData['16'][1].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['12'][1].init(17, 29, '!editor.hasCommand("heading")');
+}_$jscoverage['/cmd.js'].branchData['12'][1].init(17, 29, '!editor.hasCommand('heading')');
 function visit1_12_1(result) {
   _$jscoverage['/cmd.js'].branchData['12'][1].ranCondition(result);
   return result;
@@ -324,9 +324,9 @@ KISSY.add(function(S, require) {
   init: function(editor) {
   _$jscoverage['/cmd.js'].functionData[1]++;
   _$jscoverage['/cmd.js'].lineData[12]++;
-  if (visit1_12_1(!editor.hasCommand("heading"))) {
+  if (visit1_12_1(!editor.hasCommand('heading'))) {
     _$jscoverage['/cmd.js'].lineData[13]++;
-    editor.addCommand("heading", {
+    editor.addCommand('heading', {
   exec: function(editor, tag) {
   _$jscoverage['/cmd.js'].functionData[2]++;
   _$jscoverage['/cmd.js'].lineData[15]++;
@@ -334,7 +334,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/cmd.js'].lineData[16]++;
   if (visit2_16_1(tag != 'p')) {
     _$jscoverage['/cmd.js'].lineData[17]++;
-    var currentValue = editor.queryCommandValue("heading");
+    var currentValue = editor.queryCommandValue('heading');
   }
   _$jscoverage['/cmd.js'].lineData[19]++;
   if (visit3_19_1(tag == currentValue)) {
@@ -348,7 +348,7 @@ KISSY.add(function(S, require) {
   editor.execCommand('save');
 }});
     _$jscoverage['/cmd.js'].lineData[29]++;
-    var queryCmd = Editor.Utils.getQueryCmd("heading");
+    var queryCmd = Editor.Utils.getQueryCmd('heading');
     _$jscoverage['/cmd.js'].lineData[31]++;
     editor.addCommand(queryCmd, {
   exec: function(editor) {

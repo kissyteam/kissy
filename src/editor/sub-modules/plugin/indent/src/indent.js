@@ -14,11 +14,11 @@ KISSY.add(function (S, require) {
     S.augment(Indent, {
         pluginRenderUI: function (editor) {
             indexCmd.init(editor);
-            editor.addButton("indent", {
-                tooltip: "增加缩进量 ",
+            editor.addButton('indent', {
+                tooltip: '增加缩进量',
                 listeners: {
                     click: function () {
-                        editor.execCommand("indent");
+                        editor.execCommand('indent');
                         editor.focus();
                     }
                 },

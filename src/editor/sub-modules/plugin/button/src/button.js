@@ -20,13 +20,13 @@ KISSY.add(function (S, require) {
             ButtonType = Button;
         }
         var self = this,
-            prefixCls = self.get('prefixCls') + "editor-toolbar-";
+            prefixCls = self.get('prefixCls') + 'editor-toolbar-';
 
         if (cfg.elCls) {
             cfg.elCls = prefixCls + cfg.elCls;
         }
 
-        cfg.elCls = prefixCls + 'button ' + (cfg.elCls || "");
+        cfg.elCls = prefixCls + 'button ' + (cfg.elCls || '');
 
         var b = new ButtonType(S.mix({
             render: self.get('toolBarEl'),
@@ -35,19 +35,19 @@ KISSY.add(function (S, require) {
                 prefixCls + id +
                 '"></span' +
                 '>',
-            prefixCls: self.get('prefixCls') + "editor-",
+            prefixCls: self.get('prefixCls') + 'editor-',
             editor: self
         }, cfg)).render();
 
         if (!cfg.content) {
-            var contentEl = b.get('el').one("span");
-            b.on("afterContentClsChange", function (e) {
+            var contentEl = b.get('el').one('span');
+            b.on('afterContentClsChange', function (e) {
                 contentEl[0].className = prefixCls + 'item ' +
                     prefixCls + e.newVal;
             });
         }
 
-        if (b.get("mode") == Editor.Mode.WYSIWYG_MODE) {
+        if (b.get('mode') === Editor.Mode.WYSIWYG_MODE) {
             self.on('wysiwygMode', function () {
                 b.set('disabled', false);
             });
@@ -56,7 +56,7 @@ KISSY.add(function (S, require) {
             });
         }
 
-        self.addControl(id + "/button", b);
+        self.addControl(id + '/button', b);
 
         return b;
     };

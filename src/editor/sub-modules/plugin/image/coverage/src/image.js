@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ',"src":' + jscoverage_quote(this.src)
+            + ','src':' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -345,7 +345,7 @@ if (! _$jscoverage['/image.js'].branchData) {
   _$jscoverage['/image.js'].branchData['157'] = [];
   _$jscoverage['/image.js'].branchData['157'][1] = new BranchData();
 }
-_$jscoverage['/image.js'].branchData['157'][1].init(43, 40, 'a.attr("_ke_saved_src") || a.attr("src")');
+_$jscoverage['/image.js'].branchData['157'][1].init(43, 40, 'a.attr('_keSaved_src') || a.attr('src')');
 function visit11_157_1(result) {
   _$jscoverage['/image.js'].branchData['157'][1].ranCondition(result);
   return result;
@@ -429,10 +429,10 @@ KISSY.add(function(S, require) {
   function showImageEditor(selectedEl) {
     _$jscoverage['/image.js'].functionData[4]++;
     _$jscoverage['/image.js'].lineData[43]++;
-    DialogLoader.useDialog(editor, "image", self.config, selectedEl);
+    DialogLoader.useDialog(editor, 'image', self.config, selectedEl);
   }
   _$jscoverage['/image.js'].lineData[49]++;
-  editor.addButton("image", {
+  editor.addButton('image', {
   tooltip: "\u63d2\u5165\u56fe\u7247", 
   listeners: {
   click: function() {
@@ -447,7 +447,7 @@ KISSY.add(function(S, require) {
   fn: function() {
   _$jscoverage['/image.js'].functionData[6]++;
   _$jscoverage['/image.js'].lineData[64]++;
-  var img = checkImg(this.get("editorSelectedEl"));
+  var img = checkImg(this.get('editorSelectedEl'));
   _$jscoverage['/image.js'].lineData[65]++;
   if (visit4_65_1(img)) {
     _$jscoverage['/image.js'].lineData[67]++;
@@ -471,7 +471,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/image.js'].lineData[81]++;
   var r = new Editor.Range(doc);
   _$jscoverage['/image.js'].lineData[82]++;
-  r.setStartAfter(this.get("editorSelectedEl"));
+  r.setStartAfter(this.get('editorSelectedEl'));
   _$jscoverage['/image.js'].lineData[83]++;
   r.select();
   _$jscoverage['/image.js'].lineData[84]++;
@@ -491,7 +491,7 @@ KISSY.add(function(S, require) {
   content: h.content});
 });
   _$jscoverage['/image.js'].lineData[99]++;
-  editor.addContextMenu("image", checkImg, {
+  editor.addContextMenu('image', checkImg, {
   width: 120, 
   children: children, 
   listeners: {
@@ -527,7 +527,7 @@ KISSY.add(function(S, require) {
 });
 });
   _$jscoverage['/image.js'].lineData[125]++;
-  editor.addBubble("image", checkImg, {
+  editor.addBubble('image', checkImg, {
   listeners: {
   afterRenderUI: function() {
   _$jscoverage['/image.js'].functionData[13]++;
@@ -537,19 +537,19 @@ KISSY.add(function(S, require) {
   el.html(S.substitute(tipHTML, {
   prefixCls: prefixCls}));
   _$jscoverage['/image.js'].lineData[133]++;
-  var tipUrlEl = el.one("." + prefixCls + "editor-bubble-url"), tipChangeEl = el.one("." + prefixCls + "editor-bubble-change"), tipRemoveEl = el.one("." + prefixCls + "editor-bubble-remove");
+  var tipUrlEl = el.one("." + prefixCls + 'editor-bubble-url'), tipChangeEl = el.one("." + prefixCls + 'editor-bubble-change'), tipRemoveEl = el.one("." + prefixCls + 'editor-bubble-remove');
   _$jscoverage['/image.js'].lineData[136]++;
   Editor.Utils.preventFocus(el);
   _$jscoverage['/image.js'].lineData[137]++;
-  tipChangeEl.on("click", function(ev) {
+  tipChangeEl.on('click', function(ev) {
   _$jscoverage['/image.js'].functionData[14]++;
   _$jscoverage['/image.js'].lineData[138]++;
-  showImageEditor(bubble.get("editorSelectedEl"));
+  showImageEditor(bubble.get('editorSelectedEl'));
   _$jscoverage['/image.js'].lineData[139]++;
   ev.halt();
 });
   _$jscoverage['/image.js'].lineData[141]++;
-  tipRemoveEl.on("click", function(ev) {
+  tipRemoveEl.on('click', function(ev) {
   _$jscoverage['/image.js'].functionData[15]++;
   _$jscoverage['/image.js'].lineData[142]++;
   if (visit8_142_1(UA.webkit)) {
@@ -564,7 +564,7 @@ KISSY.add(function(S, require) {
     }
   }
   _$jscoverage['/image.js'].lineData[149]++;
-  bubble.get("editorSelectedEl").remove();
+  bubble.get('editorSelectedEl').remove();
   _$jscoverage['/image.js'].lineData[150]++;
   bubble.hide();
   _$jscoverage['/image.js'].lineData[151]++;
@@ -576,13 +576,13 @@ KISSY.add(function(S, require) {
   bubble.on('show', function() {
   _$jscoverage['/image.js'].functionData[16]++;
   _$jscoverage['/image.js'].lineData[155]++;
-  var a = bubble.get("editorSelectedEl");
+  var a = bubble.get('editorSelectedEl');
   _$jscoverage['/image.js'].lineData[156]++;
   if (visit10_156_1(a)) {
     _$jscoverage['/image.js'].lineData[157]++;
-    var src = visit11_157_1(a.attr("_ke_saved_src") || a.attr("src"));
+    var src = visit11_157_1(a.attr('_keSaved_src') || a.attr('src'));
     _$jscoverage['/image.js'].lineData[158]++;
-    tipUrlEl.attr("href", src);
+    tipUrlEl.attr('href', src);
   }
 });
 }}});

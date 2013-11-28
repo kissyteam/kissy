@@ -83,6 +83,8 @@ KISSY.add(function (S, require) {
             range.moveToElementEditablePosition(previousBlock.next());
             previousBlock._4eMove(previousBlock.prev());
         }
+        
+        var newBlock;
 
         // If we have both the previous and next blocks, it means that the
         // boundaries were on separated blocks, or none of them where on the
@@ -104,7 +106,7 @@ KISSY.add(function (S, require) {
             }
         }
         else {
-            var newBlock;
+           
 
             if (previousBlock) {
                 // Do not enter this block if it's a header tag, or we are in
@@ -196,13 +198,12 @@ KISSY.add(function (S, require) {
         return true;
     }
 
-    function EnterKey(editor) {
+    function enterKey(editor) {
         var doc = editor.get('document');
         doc.on('keydown', function (ev) {
             var keyCode = ev.keyCode;
             if (keyCode === 13) {
-                if (ev.shiftKey || ev.ctrlKey || ev.metaKey) {
-                } else {
+                if (!(ev.shiftKey || ev.ctrlKey || ev.metaKey)) {
                     editor.execCommand('save');
                     var re = editor.execCommand('enterBlock');
                     editor.execCommand('save');
@@ -220,7 +221,7 @@ KISSY.add(function (S, require) {
                 exec: enterBlock
             });
             editor.docReady(function () {
-                EnterKey(editor);
+                enterKey(editor);
             });
         }
     };

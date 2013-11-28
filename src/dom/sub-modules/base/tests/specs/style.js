@@ -5,7 +5,7 @@
 KISSY.add(function (S, Dom) {
     var UA = S.UA;
 
-    describe("style", function () {
+    describe('style', function () {
         beforeEach(function () {
             this.addMatchers({
                 toBeAlmostEqual: function (expected) {
@@ -203,11 +203,11 @@ KISSY.add(function (S, Dom) {
             Dom.addStyleSheet("." + tag + " {float:left}",tag+'style');
             var d = Dom.create("<div class='" + tag + "' style='float:right'><" + "/div>")
             Dom.append(d, document.body);
-            expect(Dom.css(d, "float")).toBe("right");
-            expect(Dom.style(d, "float")).toBe("right");
+            expect(Dom.css(d, "float")).toBe('right');
+            expect(Dom.style(d, "float")).toBe('right');
             Dom.css(d, "float", "");
 
-            expect(Dom.css(d, "float")).toBe("left");
+            expect(Dom.css(d, "float")).toBe('left');
             expect(Dom.style(d, "float")).toBe("");
 
             Dom.remove(d);
@@ -221,20 +221,20 @@ KISSY.add(function (S, Dom) {
 
             var d = Dom.create("<div class='" + tag + "' style='float:right'><" + "/div>")
             Dom.append(d, document.body);
-            expect(Dom.css(d, "float")).toBe("right");
-            expect(Dom.style(d, "float")).toBe("right");
+            expect(Dom.css(d, "float")).toBe('right');
+            expect(Dom.style(d, "float")).toBe('right');
             // test style array
             Dom.style([d], "float", "");
 
-            expect(Dom.css(d, "float")).toBe("left");
+            expect(Dom.css(d, "float")).toBe('left');
             expect(Dom.style(d, "float")).toBe("");
 
 
             // test style obj
-            Dom.style([d], {"float": "right"});
+            Dom.style([d], {"float": 'right'});
 
-            expect(Dom.css(d, "float")).toBe("right");
-            expect(Dom.style(d, "float")).toBe("right");
+            expect(Dom.css(d, "float")).toBe('right');
+            expect(Dom.style(d, "float")).toBe('right');
 
             Dom.remove(d);
             Dom.remove('#'+tag+'style');
@@ -277,7 +277,7 @@ KISSY.add(function (S, Dom) {
             var el = $("<div style='position: relative;padding: 20px;'>" +
                 "<div style='position: absolute'></div><span></span>" +
                 "<s style='position: fixed'></s></div>").appendTo('body')[0];
-            expect(Dom.css(el, "left")).toBe('0px');
+            expect(Dom.css(el, 'left')).toBe('0px');
             expect(Math.round(parseFloat(Dom.css(Dom.get('div', el), "top")))).toBe(20);
             expect(Dom.css(Dom.get('span', el), "top")).toBe('auto');
             expect(parseInt(Dom.css(Dom.get('s', el), "top")) || 1)
@@ -290,7 +290,7 @@ KISSY.add(function (S, Dom) {
             Dom.css(div, "font-family", "宋体");
             Dom.css(div, "font-family", "");
             expect(div.style.cssText).toBe("");
-            div.removeAttribute("style");
+            div.removeAttribute('style');
             Dom.remove(div);
         });
 

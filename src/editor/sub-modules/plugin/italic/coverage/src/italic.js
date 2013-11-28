@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ',"src":' + jscoverage_quote(this.src)
+            + ','src':' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -286,7 +286,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/italic.js'].lineData[16]++;
   cmd.init(editor);
   _$jscoverage['/italic.js'].lineData[18]++;
-  editor.addButton("italic", {
+  editor.addButton('italic', {
   cmdType: 'italic', 
   tooltip: "\u659c\u4f53 "}, ui.Button);
   _$jscoverage['/italic.js'].lineData[23]++;
@@ -298,7 +298,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/italic.js'].lineData[25]++;
   if (visit1_25_1(e.ctrlKey && visit2_25_2(e.keyCode == S.Node.KeyCode.I))) {
     _$jscoverage['/italic.js'].lineData[26]++;
-    editor.execCommand("italic");
+    editor.execCommand('italic');
     _$jscoverage['/italic.js'].lineData[27]++;
     e.preventDefault();
   }

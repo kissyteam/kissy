@@ -7,66 +7,65 @@ KISSY.add(function (S, require) {
     var Base = require('base');
 
     return Base.extend({
-        destroy:function() {
+        destroy: function () {
             var self = this;
             self.detach();
             self.el.remove();
         },
-        initializer:function() {
+        initializer: function () {
             var self = this,
-                h = self.get("height"),
-                prefixCls=self.get('prefixCls'),
+                h = self.get('height'),
+                prefixCls = self.get('prefixCls'),
                 el = new Node(
 
-                    S.substitute("<div" +
-                    " class='{prefixCls}editor-progressbar' " +
-                    " style='width:" +
-                    self.get('width') +
-                    ";" +
-                    "height:" +
-                    h +
-                    ";'" +
-                    "></div>",{
-                        prefixCls:prefixCls
+                    S.substitute('<div' +
+                        ' class="{prefixCls}editor-progressbar" ' +
+                        ' style="width:' +
+                        self.get('width') +
+                        ';' +
+                        'height:' +
+                        h +
+                        ';"' +
+                        '></div>', {prefixCls: prefixCls
                     })),
-                container = self.get("container"),
+                container = self.get('container'),
                 p = new Node(
-                    S.substitute("<div style='overflow:hidden;'>" +
-                        "<div class='{prefixCls}editor-progressbar-inner' style='height:" + (parseInt(h) - 4) + "px'>" +
-                        "<div class='{prefixCls}editor-progressbar-inner-bg'></div>" +
-                        "</div>" +
-                        "</div>",{
-                        prefixCls:prefixCls
+                    S.substitute('<div style="overflow:hidden;">' +
+                        '<div class="{prefixCls}editor-progressbar-inner" style="height:' + (parseInt(h) - 4) + 'px">' +
+                        '<div class="{prefixCls}editor-progressbar-inner-bg"></div>' +
+                        '</div>' +
+                        '</div>', {  prefixCls: prefixCls
                     })
                 ).appendTo(el),
-                title = new Node("<span class='"+prefixCls+"editor-progressbar-title'></span>")
+                title = new Node('<span class="' + prefixCls + 'editor-progressbar-title"></span>')
                     .appendTo(el);
-            if (container)
+            if (container) {
                 el.appendTo(container);
+            }
             self.el = el;
             self._title = title;
             self._p = p;
-            self.on("afterProgressChange", self._progressChange, self);
-            self._progressChange({newVal:self.get("progress")});
+            self.on('afterProgressChange', self._progressChange, self);
+            self._progressChange({newVal: self.get('progress')});
         },
 
-        _progressChange:function(ev) {
+        _progressChange: function (ev) {
             var self = this,
                 v = ev.newVal;
-            self._p.css('width', v + "%");
-            self._title.html(v + "%");
+            self._p.css('width', v + '%');
+            self._title.html(v + '%');
         }
-    },{
-        ATTRS:{
-            container:{},
-            width:{},
-            height:{},
+    }, {
+        ATTRS: {
+            container: {},
+            width: {},
+            height: {},
             //0-100
-            progress:{
-                value:0
+            progress: {
+                value: 0
             },
-            prefixCls:{
-                value:'ks-'
+            prefixCls: {
+                value: 'ks-'
             }
         }
     });

@@ -4,30 +4,31 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
-        var Editor = require('editor');
+    var Editor = require('editor');
     require('./button');
-        var indexCmd = require('./outdent/cmd');
+    var indexCmd = require('./outdent/cmd');
+
     function outdent() {
 
     }
 
     S.augment(outdent, {
-        pluginRenderUI:function (editor) {
+        pluginRenderUI: function (editor) {
 
             indexCmd.init(editor);
 
-            editor.addButton("outdent", {
-                tooltip:"减少缩进量 ",
-                listeners:{
-                    click:function () {
+            editor.addButton('outdent', {
+                tooltip: '减少缩进量',
+                listeners: {
+                    click: function () {
                         editor.execCommand("outdent");
                         editor.focus();
 
                     },
-                    afterSyncUI:function () {
+                    afterSyncUI: function () {
                         var self = this;
-                        editor.on("selectionChange", function () {
-                            if (editor.get("mode") == Editor.Mode.SOURCE_MODE) {
+                        editor.on('selectionChange', function () {
+                            if (editor.get('mode') == Editor.Mode.SOURCE_MODE) {
                                 return;
                             }
                             if (editor.queryCommandValue("outdent")) {
@@ -39,7 +40,7 @@ KISSY.add(function (S, require) {
 
                     }
                 },
-                mode:Editor.Mode.WYSIWYG_MODE
+                mode: Editor.Mode.WYSIWYG_MODE
             });
         }
     });

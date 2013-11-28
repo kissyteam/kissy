@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ',"src":' + jscoverage_quote(this.src)
+            + ','src':' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -333,12 +333,12 @@ KISSY.add(function(S, require) {
   _$jscoverage['/utils.js'].lineData[7]++;
   var Editor = require('editor');
   _$jscoverage['/utils.js'].lineData[8]++;
-  var Node = S.Node, KEStyle = Editor.Style, _ke_saved_href = "_ke_saved_href", link_Style = {
+  var Node = S.Node, KEStyle = Editor.Style, _keSavedHref = '_keSavedHref', link_Style = {
   element: 'a', 
   attributes: {
-  "href": "#(href)", 
+  'href': "#(href)",
   'title': "#(title)",
-  "_ke_saved_href": "#(_ke_saved_href)", 
+  '_keSavedHref': "#(_keSavedHref)",
   target: "#(target)"}};
   _$jscoverage['/utils.js'].lineData[26]++;
   function getAttributes(el) {
@@ -396,7 +396,7 @@ KISSY.add(function(S, require) {
   function applyLink(editor, attr, _selectedEl) {
     _$jscoverage['/utils.js'].functionData[3]++;
     _$jscoverage['/utils.js'].lineData[61]++;
-    attr[_ke_saved_href] = attr.href;
+    attr[_keSavedHref] = attr.href;
     _$jscoverage['/utils.js'].lineData[63]++;
     if (visit6_63_1(_selectedEl)) {
       _$jscoverage['/utils.js'].lineData[64]++;
@@ -430,5 +430,5 @@ KISSY.add(function(S, require) {
   return {
   removeLink: removeLink, 
   applyLink: applyLink, 
-  _ke_saved_href: _ke_saved_href};
+  _keSavedHref: _keSavedHref};
 });

@@ -18,7 +18,7 @@ KISSY.add(function (S, require) {
             Button.init(editor, {
                 cmdType: 'foreColor',
                 defaultColor: 'rgb(204, 0, 0)',
-                tooltip: "文本颜色"
+                tooltip: '文本颜色'
             });
         }
     });

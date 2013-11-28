@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ',"src":' + jscoverage_quote(this.src)
+            + ','src':' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -268,7 +268,7 @@ _$jscoverage['/outdent.js'].branchData['33'][1].init(184, 35, 'editor.queryComma
 function visit2_33_1(result) {
   _$jscoverage['/outdent.js'].branchData['33'][1].ranCondition(result);
   return result;
-}_$jscoverage['/outdent.js'].branchData['30'][1].init(33, 45, 'editor.get("mode") == Editor.Mode.SOURCE_MODE');
+}_$jscoverage['/outdent.js'].branchData['30'][1].init(33, 45, 'editor.get('mode') == Editor.Mode.SOURCE_MODE');
 function visit1_30_1(result) {
   _$jscoverage['/outdent.js'].branchData['30'][1].ranCondition(result);
   return result;
@@ -307,10 +307,10 @@ KISSY.add(function(S, require) {
   _$jscoverage['/outdent.js'].lineData[28]++;
   var self = this;
   _$jscoverage['/outdent.js'].lineData[29]++;
-  editor.on("selectionChange", function() {
+  editor.on('selectionChange', function() {
   _$jscoverage['/outdent.js'].functionData[5]++;
   _$jscoverage['/outdent.js'].lineData[30]++;
-  if (visit1_30_1(editor.get("mode") == Editor.Mode.SOURCE_MODE)) {
+  if (visit1_30_1(editor.get('mode') == Editor.Mode.SOURCE_MODE)) {
     _$jscoverage['/outdent.js'].lineData[31]++;
     return;
   }

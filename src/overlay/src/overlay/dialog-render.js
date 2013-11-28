@@ -33,7 +33,7 @@ KISSY.add(function (S, require) {
         },
 
         '_onSetBodyStyle': function (v) {
-            this.control.get("body").css(v);
+            this.control.get('body').css(v);
         },
 
         '_onSetHeaderStyle': function (v) {
@@ -44,7 +44,7 @@ KISSY.add(function (S, require) {
         },
 
         '_onSetBodyContent': function (v) {
-            _setStdModRenderContent(this, "body", v);
+            _setStdModRenderContent(this, 'body', v);
         },
 
         '_onSetHeaderContent': function (v) {

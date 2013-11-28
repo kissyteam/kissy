@@ -20,12 +20,12 @@ KISSY.add(function (S, Event, DD, Constrain) {
             "background:red;" +
             "position: absolute;left:0;top:0;'>" +
             "</div>")
-            .appendTo("body");
+            .appendTo('body');
 
         var container = $("<div style='width:300px;height:500px;" +
             "position: absolute;left:0;top:0;'>" +
             "</div>")
-            .prependTo("body");
+            .prependTo('body');
 
         var draggable = new Draggable({
             node: node,
@@ -82,7 +82,7 @@ KISSY.add(function (S, Event, DD, Constrain) {
             waits(100);
 
             runs(function () {
-                expect(node.css("left")).toBe("200px");
+                expect(node.css('left')).toBe("200px");
                 expect(node.css("top")).toBe("300px");
             });
         });
@@ -132,7 +132,7 @@ KISSY.add(function (S, Event, DD, Constrain) {
             waits(100);
 
             runs(function () {
-                expect(parseInt(node.css("left"))).toBe(win.width() - 100);
+                expect(parseInt(node.css('left'))).toBe(win.width() - 100);
                 expect(parseInt(node.css("top"))).toBe(win.height() - 200);
             });
         });
@@ -182,7 +182,7 @@ KISSY.add(function (S, Event, DD, Constrain) {
             waits(100);
 
             runs(function () {
-                expect(parseInt(node.css("left"))).toBe(win.width() - 100);
+                expect(parseInt(node.css('left'))).toBe(win.width() - 100);
                 expect(parseInt(node.css("top"))).toBe(win.height() - 200);
             });
         });
@@ -230,7 +230,7 @@ KISSY.add(function (S, Event, DD, Constrain) {
             waits(100);
 
             runs(function () {
-                expect(parseInt(node.css("left"))).toBe(5490);
+                expect(parseInt(node.css('left'))).toBe(5490);
                 expect(parseInt(node.css("top"))).toBe(5490);
             });
         });
@@ -280,7 +280,7 @@ KISSY.add(function (S, Event, DD, Constrain) {
             waits(100);
 
             runs(function () {
-                expect(parseInt(node.css("left"))).toBe(5490);
+                expect(parseInt(node.css('left'))).toBe(5490);
                 expect(parseInt(node.css("top"))).toBe(5490);
             });
         });

@@ -20,7 +20,7 @@ KISSY.add(function (S, require) {
             delete  cfg.event;
         }
 
-        cfg.prefixCls = self.get('prefixCls') + "editor-";
+        cfg.prefixCls = self.get('prefixCls') + 'editor-';
         cfg.editor = self;
         cfg.focusable = 1;
         cfg.zIndex = Editor.baseZIndex(Editor.ZIndexManager.POPUP_MENU);
@@ -29,9 +29,9 @@ KISSY.add(function (S, require) {
 
         focusFix.init(menu);
 
-        menu.on("afterRenderUI", function () {
+        menu.on('afterRenderUI', function () {
             menu.get('el').on('keydown', function (e) {
-                if (e.keyCode == Event.KeyCode.ESC) {
+                if (e.keyCode === Event.KeyCode.ESC) {
                     menu.hide();
                 }
             });
@@ -40,8 +40,8 @@ KISSY.add(function (S, require) {
         self.docReady(function () {
             var doc = self.get('document');
             // 编辑器获得焦点，不会触发 menu el blur？
-            doc.on("mousedown", function (e) {
-                if (e.which == 1) {
+            doc.on('mousedown', function (e) {
+                if (e.which === 1) {
                     menu.hide();
                 }
             });
@@ -71,7 +71,7 @@ KISSY.add(function (S, require) {
                 y = translate.top;
             }
             setTimeout(function () {
-                menu.set("editorSelectedEl", t, {
+                menu.set('editorSelectedEl', t, {
                     silent: 1
                 });
                 menu.move(x, y);
@@ -90,7 +90,7 @@ KISSY.add(function (S, require) {
             showNow(event);
         }
 
-        self.addControl(id + "/contextmenu", menu);
+        self.addControl(id + '/contextmenu', menu);
 
         return menu;
     };

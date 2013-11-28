@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ',"src":' + jscoverage_quote(this.src)
+            + ','src':' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -625,7 +625,7 @@ function visit70_477_1(result) {
 function visit69_457_1(result) {
   _$jscoverage['/dialog.js'].branchData['457'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['456'][1].init(40, 48, 'link.attr("_ke_saved_href") || link.attr("href")');
+}_$jscoverage['/dialog.js'].branchData['456'][1].init(40, 48, 'link.attr('_keSavedHref') || link.attr('href')');
 function visit68_456_1(result) {
   _$jscoverage['/dialog.js'].branchData['456'][1].ranCondition(result);
   return result;
@@ -982,7 +982,7 @@ KISSY.add(function(S, require) {
   self.imgLocalUrl = content.one("." + prefixCls + "img-local-url");
   _$jscoverage['/dialog.js'].lineData[84]++;
   self.tab = new Tabs({
-  "srcNode": self.d.get("body").one('.' + prefixCls + 'img-tabs'), 
+  "srcNode": self.d.get('body').one('.' + prefixCls + 'img-tabs'),
   prefixCls: prefixCls + 'img-'}).render();
   _$jscoverage['/dialog.js'].lineData[88]++;
   self.imgLocalUrl.val(warning);
@@ -1044,7 +1044,7 @@ KISSY.add(function(S, require) {
   valInput(self.imgHeight, Math.floor(v / self.imgRatioValue));
 });
   _$jscoverage['/dialog.js'].lineData[128]++;
-  cancel.on("click", function(ev) {
+  cancel.on('click', function(ev) {
   _$jscoverage['/dialog.js'].functionData[6]++;
   _$jscoverage['/dialog.js'].lineData[129]++;
   self.d.hide();
@@ -1079,7 +1079,7 @@ KISSY.add(function(S, require) {
     return 0;
   }
   _$jscoverage['/dialog.js'].lineData[158]++;
-  ok.on("click", function(ev) {
+  ok.on('click', function(ev) {
   _$jscoverage['/dialog.js'].functionData[8]++;
   _$jscoverage['/dialog.js'].lineData[159]++;
   ev.halt();
@@ -1120,7 +1120,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/dialog.js'].lineData[188]++;
     self.d.loading();
     _$jscoverage['/dialog.js'].lineData[191]++;
-    loadingCancel.on("click", function(ev) {
+    loadingCancel.on('click', function(ev) {
   _$jscoverage['/dialog.js'].functionData[9]++;
   _$jscoverage['/dialog.js'].lineData[192]++;
   ev.halt();
@@ -1242,7 +1242,7 @@ KISSY.add(function(S, require) {
   _insert: function() {
   _$jscoverage['/dialog.js'].functionData[14]++;
   _$jscoverage['/dialog.js'].lineData[297]++;
-  var self = this, url = valInput(self.imgUrl), img, height = parseInt(valInput(self.imgHeight)), width = parseInt(valInput(self.imgWidth)), align = self.imgAlign.get("value"), margin = parseInt(self.imgMargin.val()), style = '';
+  var self = this, url = valInput(self.imgUrl), img, height = parseInt(valInput(self.imgHeight)), width = parseInt(valInput(self.imgWidth)), align = self.imgAlign.get('value'), margin = parseInt(self.imgMargin.val()), style = '';
   _$jscoverage['/dialog.js'].lineData[306]++;
   if (visit35_306_1(height)) {
     _$jscoverage['/dialog.js'].lineData[307]++;
@@ -1273,12 +1273,12 @@ KISSY.add(function(S, require) {
     self.editor.execCommand('save');
     _$jscoverage['/dialog.js'].lineData[329]++;
     self.selectedEl.attr({
-  "src": url, 
-  "_ke_saved_src": url, 
-  "style": style});
+  'src': url,
+  '_keSaved_src': url,
+  'style': style});
   } else {
     _$jscoverage['/dialog.js'].lineData[336]++;
-    img = new Node("<img " + (style ? ("style='" + style + "'") : "") + " src='" + url + "' " + "_ke_saved_src='" + url + "' alt='' />", null, self.editor.get('document')[0]);
+    img = new Node("<img " + (style ? ("style='" + style + "'") : "") + " src='" + url + "' " + "_keSaved_src='" + url + "' alt='' />", null, self.editor.get('document')[0]);
     _$jscoverage['/dialog.js'].lineData[346]++;
     self.editor.insertElement(img);
   }
@@ -1286,7 +1286,7 @@ KISSY.add(function(S, require) {
   setTimeout(function() {
   _$jscoverage['/dialog.js'].functionData[15]++;
   _$jscoverage['/dialog.js'].lineData[352]++;
-  var link = findAWithImg(img), linkVal = S.trim(valInput(self.imgLink)), sel = self.editor.getSelection(), target = self.imgLinkBlank.attr("checked") ? "_blank" : "_self", linkTarget, skip = 0, prev, next, bs;
+  var link = findAWithImg(img), linkVal = S.trim(valInput(self.imgLink)), sel = self.editor.getSelection(), target = self.imgLinkBlank.attr('checked') ? "_blank" : "_self", linkTarget, skip = 0, prev, next, bs;
   _$jscoverage['/dialog.js'].lineData[362]++;
   if (visit41_362_1(link)) {
     _$jscoverage['/dialog.js'].lineData[363]++;
@@ -1320,7 +1320,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/dialog.js'].lineData[383]++;
     link = new Node("<a></a>");
     _$jscoverage['/dialog.js'].lineData[386]++;
-    link.attr("_ke_saved_href", linkVal).attr("href", linkVal).attr("target", target);
+    link.attr('_keSavedHref', linkVal).attr('href', linkVal).attr("target", target);
     _$jscoverage['/dialog.js'].lineData[387]++;
     var t = img[0];
     _$jscoverage['/dialog.js'].lineData[388]++;
@@ -1355,9 +1355,9 @@ KISSY.add(function(S, require) {
   _$jscoverage['/dialog.js'].lineData[410]++;
   if (visit57_410_1(selectedEl && visit58_410_2(self.imageCfg['remote'] !== false))) {
     _$jscoverage['/dialog.js'].lineData[411]++;
-    valInput(self.imgUrl, selectedEl.attr("src"));
+    valInput(self.imgUrl, selectedEl.attr('src'));
     _$jscoverage['/dialog.js'].lineData[412]++;
-    var w = parseInt(selectedEl.style('width')), h = parseInt(selectedEl.style("height"));
+    var w = parseInt(selectedEl.style('width')), h = parseInt(selectedEl.style('height'));
     _$jscoverage['/dialog.js'].lineData[414]++;
     if (visit59_414_1(h)) {
       _$jscoverage['/dialog.js'].lineData[415]++;
@@ -1375,7 +1375,7 @@ KISSY.add(function(S, require) {
       resetInput(self.imgWidth);
     }
     _$jscoverage['/dialog.js'].lineData[424]++;
-    self.imgAlign.set("value", visit61_424_1(selectedEl.style("float") || "none"));
+    self.imgAlign.set('value', visit61_424_1(selectedEl.style("float") || "none"));
     _$jscoverage['/dialog.js'].lineData[425]++;
     var margin = visit62_425_1(parseInt(selectedEl.style("margin")) || 0);
     _$jscoverage['/dialog.js'].lineData[427]++;
@@ -1411,7 +1411,7 @@ KISSY.add(function(S, require) {
       active = 1;
     }
     _$jscoverage['/dialog.js'].lineData[445]++;
-    self.imgLinkBlank.attr("checked", true);
+    self.imgLinkBlank.attr('checked', true);
     _$jscoverage['/dialog.js'].lineData[446]++;
     resetInput(self.imgUrl);
     _$jscoverage['/dialog.js'].lineData[447]++;
@@ -1421,7 +1421,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/dialog.js'].lineData[449]++;
     resetInput(self.imgWidth);
     _$jscoverage['/dialog.js'].lineData[450]++;
-    self.imgAlign.set("value", "none");
+    self.imgAlign.set('value', "none");
     _$jscoverage['/dialog.js'].lineData[451]++;
     self.imgMargin.val(defaultMargin);
     _$jscoverage['/dialog.js'].lineData[452]++;
@@ -1432,14 +1432,14 @@ KISSY.add(function(S, require) {
   _$jscoverage['/dialog.js'].lineData[455]++;
   if (visit67_455_1(link)) {
     _$jscoverage['/dialog.js'].lineData[456]++;
-    valInput(self.imgLink, visit68_456_1(link.attr("_ke_saved_href") || link.attr("href")));
+    valInput(self.imgLink, visit68_456_1(link.attr('_keSavedHref') || link.attr('href')));
     _$jscoverage['/dialog.js'].lineData[457]++;
-    self.imgLinkBlank.attr("checked", visit69_457_1(link.attr("target") == "_blank"));
+    self.imgLinkBlank.attr('checked', visit69_457_1(link.attr("target") == "_blank"));
   } else {
     _$jscoverage['/dialog.js'].lineData[459]++;
     resetInput(self.imgLink);
     _$jscoverage['/dialog.js'].lineData[460]++;
-    self.imgLinkBlank.attr("checked", true);
+    self.imgLinkBlank.attr('checked', true);
   }
   _$jscoverage['/dialog.js'].lineData[462]++;
   self.uploadForm[0].reset();

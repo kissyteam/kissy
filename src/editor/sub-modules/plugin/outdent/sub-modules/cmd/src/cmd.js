@@ -11,8 +11,8 @@ KISSY.add(function (S, require) {
     var checkOutdentActive = dentUtils.checkOutdentActive;
     return {
         init: function (editor) {
-            addCommand(editor, "outdent");
-            var queryCmd = Editor.Utils.getQueryCmd("outdent");
+            addCommand(editor, 'outdent');
+            var queryCmd = Editor.Utils.getQueryCmd('outdent');
             if (!editor.hasCommand(queryCmd)) {
                 editor.addCommand(queryCmd, {
                     exec: function (editor) {

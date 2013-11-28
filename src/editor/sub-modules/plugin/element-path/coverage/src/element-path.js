@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ',"src":' + jscoverage_quote(this.src)
+            + ','src':' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -294,7 +294,7 @@ if (! _$jscoverage['/element-path.js'].branchData) {
   _$jscoverage['/element-path.js'].branchData['52'] = [];
   _$jscoverage['/element-path.js'].branchData['52'][1] = new BranchData();
 }
-_$jscoverage['/element-path.js'].branchData['52'][1].init(102, 59, 'element.attr("_ke_real_element_type") || element.nodeName()');
+_$jscoverage['/element-path.js'].branchData['52'][1].init(102, 59, 'element.attr("_keRealElementType") || element.nodeName()');
 function visit3_52_1(result) {
   _$jscoverage['/element-path.js'].branchData['52'][1].ranCondition(result);
   return result;
@@ -338,7 +338,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/element-path.js'].lineData[24]++;
   self.holder.appendTo(editor.get('statusBarEl'), undefined);
   _$jscoverage['/element-path.js'].lineData[25]++;
-  editor.on("selectionChange", self._selectionChange, self);
+  editor.on('selectionChange', self._selectionChange, self);
   _$jscoverage['/element-path.js'].lineData[26]++;
   Editor.Utils.sourceDisable(editor, self);
 }, 
@@ -368,14 +368,14 @@ KISSY.add(function(S, require) {
     _$jscoverage['/element-path.js'].lineData[50]++;
     element = elements[i];
     _$jscoverage['/element-path.js'].lineData[52]++;
-    var type = visit3_52_1(element.attr("_ke_real_element_type") || element.nodeName()), a = new Node("<a " + "href='javascript(\"" + type + "\")' " + "class='" + prefixCls + CLASS + "'>" + type + "</a>");
+    var type = visit3_52_1(element.attr("_keRealElementType") || element.nodeName()), a = new Node("<a " + "href='javascript(\"" + type + "\")' " + "class='" + prefixCls + CLASS + "'>" + type + "</a>");
     _$jscoverage['/element-path.js'].lineData[60]++;
     self._cache.push(a);
     _$jscoverage['/element-path.js'].lineData[61]++;
     (function(element) {
   _$jscoverage['/element-path.js'].functionData[6]++;
   _$jscoverage['/element-path.js'].lineData[62]++;
-  a.on("click", function(ev2) {
+  a.on('click', function(ev2) {
   _$jscoverage['/element-path.js'].functionData[7]++;
   _$jscoverage['/element-path.js'].lineData[63]++;
   ev2.halt();
@@ -410,7 +410,7 @@ KISSY.add(function(S, require) {
   var elemPath = new ElementPaths({
   editor: editor});
   _$jscoverage['/element-path.js'].lineData[87]++;
-  editor.on("destroy", function() {
+  editor.on('destroy', function() {
   _$jscoverage['/element-path.js'].functionData[12]++;
   _$jscoverage['/element-path.js'].lineData[88]++;
   elemPath.destroy();

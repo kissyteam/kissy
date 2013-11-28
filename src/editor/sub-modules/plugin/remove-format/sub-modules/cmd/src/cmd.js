@@ -8,20 +8,20 @@ KISSY.add(function (S, require) {
     var KER = Editor.RangeType,
         ElementPath = Editor.ElementPath,
         Dom = S.DOM,
-        /*
-          A comma separated list of elements to be removed
-          when executing the "remove format" command.
-          Note that only inline elements are allowed.
-          Defaults to: 'b,big,code,del,dfn,em,font,i,ins,kbd,q,samp,small,span,strike,strong,sub,sup,tt,u,var'
-         */
-            removeFormatTags = 'b,big,code,del,dfn,em,font,i,ins,kbd,' +
+    /*
+     A comma separated list of elements to be removed
+     when executing the "remove format" command.
+     Note that only inline elements are allowed.
+     Defaults to: 'b,big,code,del,dfn,em,font,i,ins,kbd,q,samp,small,span,strike,strong,sub,sup,tt,u,var'
+     */
+        removeFormatTags = 'b,big,code,del,dfn,em,font,i,ins,kbd,' +
             'q,samp,small,span,strike,strong,sub,sup,tt,u,var,s',
-        /*
-          A comma separated list of elements attributes to be removed
-          when executing the "remove format" command.
-          Defaults to: 'class,style,lang,width,height,align,hspace,valign'
-         */
-            removeFormatAttributes = ('class,style,lang,width,height,' +
+    /*
+     A comma separated list of elements attributes to be removed
+     when executing the "remove format" command.
+     Defaults to: 'class,style,lang,width,height,align,hspace,valign'
+     */
+        removeFormatAttributes = ('class,style,lang,width,height,' +
             'align,hspace,valign').split(/,/),
         tagsRegex = new RegExp('^(?:' +
             removeFormatTags.replace(/,/g, '|') +
@@ -34,15 +34,15 @@ KISSY.add(function (S, require) {
     }
 
     return {
-        init:function (editor) {
-            if (!editor.hasCommand("removeFormat")) {
-                editor.addCommand("removeFormat", {
-                    exec:function () {
+        init: function (editor) {
+            if (!editor.hasCommand('removeFormat')) {
+                editor.addCommand('removeFormat', {
+                    exec: function () {
                         editor.focus();
                         tagsRegex.lastIndex = 0;
                         var ranges = editor.getSelection().getRanges();
                         editor.execCommand('save');
-                        for (var i = 0, range; range = ranges[ i ]; i++) {
+                        for (var i = 0, range; (range = ranges[i]); i++) {
 
                             if (range.collapsed) {
                                 continue;
@@ -66,13 +66,14 @@ KISSY.add(function (S, require) {
                             // removal logic, having something that could be represented this way:
                             //		<b>This is </b>[<b>some text</b> to show <b>the</b>]<b> problem</b>
 
+                            /*jshint loopfunc:true*/
                             var breakParent = function (node) {
                                 // Let's start checking the start boundary.
                                 var path = new ElementPath(node),
                                     pathElements = path.elements;
 
                                 for (var i = 1, pathElement;
-                                     pathElement = pathElements[ i ];
+                                     (pathElement = pathElements[i]);
                                      i++) {
                                     if (pathElement.equals(path.block) ||
                                         pathElement.equals(path.blockLimit)) {
@@ -107,15 +108,16 @@ KISSY.add(function (S, require) {
                                     _4eNextSourceNode(false, Dom.NodeType.ELEMENT_NODE, undefined, undefined);
 
                                 // This node must not be a fake element.
-                                if (!( currentNode.nodeName() == 'img' &&
+                                if (!( currentNode.nodeName() === 'img' &&
                                     (
-                                        currentNode.attr('_ke_realelement') ||
+                                        currentNode.attr('_keRealElement') ||
                                             // 占位符
                                             /\bke_/.test(currentNode[0].className)
                                         ) )) {
                                     // Remove elements nodes that match with this style rules.
-                                    if (tagsRegex.test(currentNode.nodeName()))
+                                    if (tagsRegex.test(currentNode.nodeName())) {
                                         currentNode._4eRemove(true);
+                                    }
                                     else {
                                         removeAttrs(currentNode, removeFormatAttributes);
                                     }
@@ -130,6 +132,5 @@ KISSY.add(function (S, require) {
                 });
             }
         }
-    }
-
+    };
 });

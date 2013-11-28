@@ -88,7 +88,7 @@ KISSY.add(function (S, require, exports, module) {
             var id24 = getPropertyOrRunCommandUtil(engine, scopes, config25, "getBaseCssClasses", 0, 27, true, undefined);
             buffer += id24;
             buffer += '"\n\n    value="';
-            var id27 = getPropertyOrRunCommandUtil(engine, scopes, {}, "value", 0, 29, undefined, false);
+            var id27 = getPropertyOrRunCommandUtil(engine, scopes, {}, 'value', 0, 29, undefined, false);
             buffer += getExpressionUtil(id27, true);
             buffer += '"\n    />\n\n\n    <label id="ks-combobox-placeholder-';
             var id28 = getPropertyOrRunCommandUtil(engine, scopes, {}, 'id', 0, 33, undefined, false);
@@ -99,7 +99,7 @@ KISSY.add(function (S, require, exports, module) {
             buffer += '"\n            style=\'display:';
             var config30 = {};
             var params31 = [];
-            var id32 = getPropertyOrRunCommandUtil(engine, scopes, {}, "value", 0, 35, undefined, true);
+            var id32 = getPropertyOrRunCommandUtil(engine, scopes, {}, 'value', 0, 35, undefined, true);
             params31.push(id32);
             config30.params = params31;
             config30.fn = function (scopes) {

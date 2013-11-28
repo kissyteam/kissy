@@ -4,29 +4,29 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
-        var Editor = require('editor');
+    var Editor = require('editor');
     var getQueryCmd = Editor.Utils.getQueryCmd;
 
     function getValueFromSingle(element, styleObj) {
         var nodeName = element.nodeName();
-        if (styleObj.element != nodeName) {
+        if (styleObj.element !== nodeName) {
             return false;
         }
         var styles = styleObj.styles, v;
         for (var s in styles) {
-            if (v = element.style(s)) {
+            if ((v = element.style(s))) {
                 return v;
             }
         }
         var overrides = styleObj.overrides;
         for (var i = 0; i < overrides.length; i++) {
             var override = overrides[i];
-            if (override.element != nodeName) {
+            if( (override.element !== nodeName)) {
                 continue;
             }
             var attributes = override.attributes;
             for (var a in attributes) {
-                if (v = element.attr(a)) {
+                if ((v = element.attr(a))) {
                     return v;
                 }
             }
@@ -41,8 +41,8 @@ KISSY.add(function (S, require) {
             v;
         for (i = 0; i < elements.length; i++) {
             element = elements[ i ];
-            if (elementPath.block && element[0] == elementPath.block[0] ||
-                elementPath.blockLimit && element[0] == elementPath.blockLimit[0]) {
+            if (elementPath.block && element[0] === elementPath.block[0] ||
+                elementPath.blockLimit && element[0] === elementPath.blockLimit[0]) {
                 continue;
             }
             v = getValueFromSingle(element, styleObj);
@@ -58,7 +58,7 @@ KISSY.add(function (S, require) {
             var queryCmd = getQueryCmd(cmdType);
             if (!editor.hasCommand(cmdType)) {
                 editor.addCommand(cmdType, {
-                    exec: function (editor, effect) {
+                    exec: function (editor) {
                         var doc = editor.get('document')[0];
                         editor.execCommand('save');
                         var checked = editor.queryCommandValue(cmdType);
@@ -91,13 +91,13 @@ KISSY.add(function (S, require) {
                 editor.addCommand(cmdType, {
                     exec: function (editor, value) {
                         editor.focus();
-                        var currentValue = editor.queryCommandValue(cmdType) || "";
+                        var currentValue = editor.queryCommandValue(cmdType) || '';
                         var style = new Editor.Style(styleObj, {
                                 value: value
                             }),
                             doc = editor.get('document')[0];
                         editor.execCommand('save');
-                        if (value.toLowerCase() == currentValue.toLowerCase()) {
+                        if (value.toLowerCase() === currentValue.toLowerCase()) {
                             style.remove(doc);
                         } else {
                             style.apply(doc);

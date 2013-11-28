@@ -49,10 +49,10 @@ KISSY.add(
                 d.show();
 
                 expect(d.get("header").html()).toBe("header");
-                expect(d.get("body").html()).toBe("body");
+                expect(d.get('body').html()).toBe('body');
                 expect(d.get("footer").html()).toBe("footer");
                 expect(d.get("headerContent")).toBe("header");
-                expect(d.get("bodyContent")).toBe("body");
+                expect(d.get("bodyContent")).toBe('body');
                 expect(d.get("footerContent")).toBe("footer");
                 d.destroy();
             });
@@ -97,7 +97,7 @@ KISSY.add(
                     d.center();
                     d.show();
                     expect(d.get("header").html()).toBe("头");
-                    expect(d.get("body").html()).toBe("体");
+                    expect(d.get('body').html()).toBe("体");
                     expect(d.get("footer").html()).toBe("尾");
                 });
 

@@ -43,9 +43,9 @@ KISSY.add(function (S, require) {
     }, {
         ATTRS: {
             prefixCls: {
-                value: "ks-editor-"
+                value: 'ks-editor-'
             },
-            "zIndex": {
+            'zIndex': {
                 value: Editor.baseZIndex(Editor.ZIndexManager.OVERLAY)
             }
         }

@@ -26,7 +26,7 @@ KISSY.add(function (S, require) {
      */
     function fixCursorForIE(editor) {
         var started,
-            win = editor.get("window")[0],
+            win = editor.get('window')[0],
             $doc = editor.get('document'),
             doc = $doc[0],
             startRng;
@@ -36,7 +36,7 @@ KISSY.add(function (S, require) {
             var rng = doc.body.createTextRange();
 
             try {
-                rng['moveToPoint'](x, y);
+                rng.moveToPoint(x, y);
             } catch (ex) {
                 // IE sometimes throws and exception, so lets just ignore it
                 rng = NULL;
@@ -69,10 +69,12 @@ KISSY.add(function (S, require) {
 
                 if (pointRng) {
                     // Check if pointRange is before/after selection then change the endPoint
-                    if (pointRng.compareEndPoints('StartToStart', startRng) > 0)
+                    if (pointRng.compareEndPoints('StartToStart', startRng) > 0) {
                         pointRng.setEndPoint('StartToStart', startRng);
-                    else
+                    }
+                    else {
                         pointRng.setEndPoint('EndToEnd', startRng);
+                    }
 
                     pointRng.select();
                 }
@@ -83,7 +85,7 @@ KISSY.add(function (S, require) {
 
         // ie 点击空白处光标不能定位到末尾
         // IE has an issue where you can't select/move the caret by clicking outside the body if the document is in standards mode
-        $doc.on("mousedown contextmenu", function (e) {
+        $doc.on('mousedown contextmenu', function (e) {
             var html = doc.documentElement;
             if (e.target === html) {
                 if (started) {
@@ -126,7 +128,7 @@ KISSY.add(function (S, require) {
             // the empty space following <body> has been clicked.
             html.on('click', function (evt) {
                 var t = new Node(evt.target);
-                if (t.nodeName() === "html") {
+                if (t.nodeName() === 'html') {
                     editor.getSelection().getNative().createRange().select();
                 }
             });
@@ -180,8 +182,9 @@ KISSY.add(function (S, require) {
             var t = new Node(evt.target);
             // If there are elements with layout they fire this event but
             // it must be ignored to allow edit its contents #4682
-            if (t.nodeName() != 'body')
+            if (t.nodeName() !== 'body') {
                 return;
+            }
 
             // If we have saved a range, restore it at this
             // point.
@@ -211,8 +214,9 @@ KISSY.add(function (S, require) {
         body.on('beforedeactivate', function (evt) {
             // Ignore this event if it's caused by focus switch between
             // internal editable control type elements, e.g. layouted paragraph. (#4682)
-            if (evt.relatedTarget)
+            if (evt.relatedTarget) {
                 return;
+            }
 
             // S.log("beforedeactivate");
             // Disable selections from being saved.
@@ -269,12 +273,12 @@ KISSY.add(function (S, require) {
                 // such situation we have to test the range, to
                 // be sure it's valid.
                 // 右键时，若前一个操作选中，则该次一直为None
-                if (testIt && nativeSel && type == KES.SELECTION_NONE) {
+                if (testIt && nativeSel && type === KES.SELECTION_NONE) {
                     // The "InsertImage" command can be used to
                     // test whether the selection is good or not.
                     // If not, it's enough to give some time to
                     // IE to put things in order for us.
-                    if (!doc['queryCommandEnabled']('InsertImage')) {
+                    if (!doc.queryCommandEnabled('InsertImage')) {
                         setTimeout(function () {
                             //S.log("retry");
                             saveSelection(TRUE);
@@ -285,11 +289,11 @@ KISSY.add(function (S, require) {
 
                 // Avoid saving selection from within text input. (#5747)
                 var parentTag;
-                if (nativeSel && nativeSel.type && nativeSel.type != 'Control'
-                    && ( parentTag = nativeSel.createRange() )
-                    && ( parentTag = parentTag.parentElement() )
-                    && ( parentTag = parentTag.nodeName )
-                    && parentTag.toLowerCase() in { input: 1, textarea: 1 }) {
+                if (nativeSel && nativeSel.type && nativeSel.type !== 'Control' &&
+                    ( parentTag = nativeSel.createRange() ) &&
+                    ( parentTag = parentTag.parentElement() ) &&
+                    ( parentTag = parentTag.nodeName ) &&
+                    parentTag.toLowerCase() in { input: 1, textarea: 1 }) {
                     return;
                 }
                 savedRange = nativeSel && sel.getRanges()[ 0 ];
@@ -346,7 +350,7 @@ KISSY.add(function (S, require) {
             isNotBookmark = Editor.Walker.bookmark(FALSE, TRUE);
         //除去注释和空格的下一个有效元素
         var nextValidEl = function (node) {
-            return isNotWhitespace(node) && node.nodeType != 8
+            return isNotWhitespace(node) && node.nodeType !== 8;
         };
 
         // 光标可以不能放在里面
@@ -362,7 +366,7 @@ KISSY.add(function (S, require) {
         /*
          如果选择了body下面的直接inline元素，则新建p
          */
-        editor.on("selectionChange", function (ev) {
+        editor.on('selectionChange', function (ev) {
             // S.log("monitor selectionChange in selection/index.js");
             var path = ev.path,
                 editorDoc = editor.get('document')[0],
@@ -391,15 +395,15 @@ KISSY.add(function (S, require) {
             if (UA.gecko) {
                 var pathBlock = path.block || path.blockLimit,
                     lastNode = pathBlock && pathBlock.last(isNotEmpty);
-                if (pathBlock
+                if (pathBlock &&
                     // style as block
-                    && pathBlock._4eIsBlockBoundary()
+                    pathBlock._4eIsBlockBoundary() &&
                     // lastNode is not block
-                    && !( lastNode && lastNode[0].nodeType == 1 && lastNode._4eIsBlockBoundary() )
+                    !( lastNode && lastNode[0].nodeType === 1 && lastNode._4eIsBlockBoundary() ) &&
                     // not pre
-                    && pathBlock.nodeName() != 'pre'
+                    pathBlock.nodeName() !== 'pre' &&
                     // does not have bogus
-                    && !pathBlock._4e_getBogus()) {
+                    !pathBlock._4eGetBogus()) {
                     pathBlock._4eAppendBogus();
                 }
             }
@@ -409,8 +413,8 @@ KISSY.add(function (S, require) {
             }
 
             // 裸的光标出现在 body 里面
-            if (blockLimit.nodeName() == "body") {
-                if (range.startContainer.nodeName() == 'html') {
+            if (blockLimit.nodeName() === 'body') {
+                if (range.startContainer.nodeName() === 'html') {
                     range.setStart(body, 0);
                 }
                 var fixedBlock = range.fixBlock(TRUE, 'p');
@@ -418,25 +422,24 @@ KISSY.add(function (S, require) {
                     // https://dev.ckeditor.com/ticket/8550
                     // 新加的 p 在 body 最后，那么不要删除
                     // <table><td/></table>^ => <table><td/></table><p>^</p>
-                    fixedBlock[0] != body[0].lastChild) {
+                    fixedBlock[0] !== body[0].lastChild) {
                     // firefox选择区域变化时自动添加空行，不要出现裸的text
                     if (isBlankParagraph(fixedBlock)) {
                         var element = fixedBlock.next(nextValidEl, 1);
                         if (element &&
-                            element[0].nodeType == Dom.NodeType.ELEMENT_NODE && !cannotCursorPlaced[ element ]) {
+                            element[0].nodeType === Dom.NodeType.ELEMENT_NODE && !cannotCursorPlaced[ element ]) {
                             range.moveToElementEditablePosition(element);
                             fixedBlock._4eRemove();
                         } else {
                             element = fixedBlock.prev(nextValidEl, 1);
                             if (element &&
-                                element[0].nodeType == Dom.NodeType.ELEMENT_NODE && !cannotCursorPlaced[element]) {
+                                element[0].nodeType === Dom.NodeType.ELEMENT_NODE && !cannotCursorPlaced[element]) {
                                 range.moveToElementEditablePosition(element,
                                     // 空行的话还是要移到开头的
                                     isBlankParagraph(element) ? FALSE : TRUE);
                                 fixedBlock._4eRemove();
-                            } else {
-                                // 否则的话，就在文章中间添加空行了！
                             }
+                            // 否则的话，就在文章中间添加空行了！
                         }
                     }
                 }
@@ -471,13 +474,13 @@ KISSY.add(function (S, require) {
         init: function (editor) {
             editor.docReady(function () {
                 // S.log("editor docReady for fix selection");
-                if (UA.ieMode < 11) {
+                if (document.selection) {
                     fixCursorForIE(editor);
                     fixSelectionForIEWhenDocReady(editor);
                 } else {
                     fireSelectionChangeForStandard(editor);
                     // ie buggy, will not show cursor sometimes
-                    if (UA.ieMode == 11) {
+                    if (UA.ieMode === 11) {
                         editor.get('document').on('focusin', function (e) {
                             var selection = editor.getSelection();
                             var range = selection && selection.getRanges()[0];

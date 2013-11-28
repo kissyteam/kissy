@@ -17,13 +17,13 @@ KISSY.add(function (S, require) {
         Node = S.Node,
         UA = S.UA,
         isNotWhitespaces = Walker.whitespaces(true),
-        INDENT_CSS_PROPERTY = "margin-left",
+        INDENT_CSS_PROPERTY = 'margin-left',
         INDENT_OFFSET = 40,
-        INDENT_UNIT = "px",
+        INDENT_UNIT = 'px',
         isNotBookmark = Walker.bookmark(false, true);
 
     function isListItem(node) {
-        return node.nodeType == Dom.NodeType.ELEMENT_NODE && Dom.nodeName(node) == 'li';
+        return node.nodeType === Dom.NodeType.ELEMENT_NODE && Dom.nodeName(node) === 'li';
     }
 
     function indentList(range, listNode, type) {
@@ -32,26 +32,31 @@ KISSY.add(function (S, require) {
 
         var startContainer = range.startContainer,
             endContainer = range.endContainer;
-        while (startContainer && !startContainer.parent().equals(listNode))
+        while (startContainer && !startContainer.parent().equals(listNode)) {
             startContainer = startContainer.parent();
-        while (endContainer && !endContainer.parent().equals(listNode))
+        }
+        while (endContainer && !endContainer.parent().equals(listNode)) {
             endContainer = endContainer.parent();
+        }
 
-        if (!startContainer || !endContainer)
+        if (!startContainer || !endContainer) {
             return;
+        }
 
         // Now we can iterate over the individual items on the same tree depth.
         var block = startContainer,
             itemsToMove = [],
             stopFlag = false;
         while (!stopFlag) {
-            if (block.equals(endContainer))
+            if (block.equals(endContainer)) {
                 stopFlag = true;
+            }
             itemsToMove.push(block);
             block = block.next();
         }
-        if (itemsToMove.length < 1)
+        if (itemsToMove.length < 1) {
             return;
+        }
 
         // Do indent or outdent operations on the array model of the list, not the
         // list's Dom tree itself. The array model demands that it knows as much as
@@ -69,7 +74,7 @@ KISSY.add(function (S, require) {
                 break;
             }
         }
-        var indentOffset = type == 'indent' ? 1 : -1,
+        var indentOffset = type === 'indent' ? 1 : -1,
             startItem = itemsToMove[0],
             lastItem = itemsToMove[ itemsToMove.length - 1 ],
             database = {};
@@ -102,8 +107,9 @@ KISSY.add(function (S, require) {
          一直处理到大于或等于，跳出了当前嵌套
          */
         for (i = lastItem.data('listarray_index') + 1;
-             i < listArray.length && listArray[i].indent > baseIndent; i++)
+             i < listArray.length && listArray[i].indent > baseIndent; i++) {
             listArray[i].indent += indentOffset;
+        }
 
         // Convert the array back to a Dom forest (yes we might have a few subtrees now).
         // And replace the old list with the new forest.
@@ -112,18 +118,19 @@ KISSY.add(function (S, require) {
         // Avoid nested <li> after outdent even they're visually same,
         // recording them for later refactoring.(#3982)
         var pendingList = [];
-        if (type == 'outdent') {
-            var parentLiElement;
+        var parentLiElement;
+        if (type === 'outdent') {
+
             if (( parentLiElement = listNode.parent() ) &&
-                parentLiElement.nodeName() == 'li') {
-                var children = newList.listNode.childNodes
-                    , count = children.length,
+                parentLiElement.nodeName() === 'li') {
+                var children = newList.listNode.childNodes, count = children.length,
                     child;
 
                 for (i = count - 1; i >= 0; i--) {
                     if (( child = new Node(children[i]) ) &&
-                        child.nodeName() == 'li')
+                        child.nodeName() === 'li') {
                         pendingList.push(child);
+                    }
                 }
             }
         }
@@ -145,6 +152,7 @@ KISSY.add(function (S, require) {
                     followingList.nodeName() in listNodeNames) {
                     // IE requires a filler NBSP for nested list inside empty list item,
                     // otherwise the list item will be inaccessiable. (#4476)
+                    /*jshint loopfunc:true*/
                     if (UA.ie && !li.first(function (node) {
                         return isNotWhitespaces(node) && isNotBookmark(node);
                     }, 1)) {
@@ -166,7 +174,7 @@ KISSY.add(function (S, require) {
         //  enterMode = 'p';
         iterator.enforceRealBlocks = true;
         iterator.enlargeBr = true;
-        while (block = iterator.getNextParagraph()) {
+        while ((block = iterator.getNextParagraph())) {
             indentElement(block, type);
         }
     }
@@ -176,7 +184,7 @@ KISSY.add(function (S, require) {
         if (isNaN(currentOffset)) {
             currentOffset = 0;
         }
-        currentOffset += ( type == 'indent' ? 1 : -1 ) * INDENT_OFFSET;
+        currentOffset += ( type === 'indent' ? 1 : -1 ) * INDENT_OFFSET;
         if (currentOffset < 0) {
             return false;
         }
@@ -202,26 +210,24 @@ KISSY.add(function (S, require) {
             rangeRoot = range.getCommonAncestor(),
             nearestListBlock = rangeRoot;
 
-        while (nearestListBlock && !( nearestListBlock[0].nodeType == Dom.NodeType.ELEMENT_NODE &&
+        while (nearestListBlock && !( nearestListBlock[0].nodeType === Dom.NodeType.ELEMENT_NODE &&
             listNodeNames[ nearestListBlock.nodeName() ] )) {
             nearestListBlock = nearestListBlock.parent();
         }
-
+        var walker;
         // Avoid selection anchors under list root.
         // <ul>[<li>...</li>]</ul> =>	<ul><li>[...]</li></ul>
         //注：firefox 永远不会出现
         //注2：哪种情况会出现？
-        if (nearestListBlock
-            && startContainer[0].nodeType == Dom.NodeType.ELEMENT_NODE
-            && startContainer.nodeName() in listNodeNames) {
-            var walker = new Walker(range);
+        if (nearestListBlock && startContainer[0].nodeType === Dom.NodeType.ELEMENT_NODE &&
+            startContainer.nodeName() in listNodeNames) {
+            walker = new Walker(range);
             walker.evaluator = isListItem;
             range.startContainer = walker.next();
         }
 
-        if (nearestListBlock
-            && endContainer[0].nodeType == Dom.NodeType.ELEMENT_NODE
-            && endContainer.nodeName() in listNodeNames) {
+        if (nearestListBlock && endContainer[0].nodeType === Dom.NodeType.ELEMENT_NODE &&
+            endContainer.nodeName() in listNodeNames) {
             walker = new Walker(range);
             walker.evaluator = isListItem;
             range.endContainer = walker.previous();
@@ -231,11 +237,11 @@ KISSY.add(function (S, require) {
 
         if (nearestListBlock) {
             var firstListItem = nearestListBlock.first();
-            while (firstListItem && firstListItem.nodeName() != "li") {
+            while (firstListItem && firstListItem.nodeName() !== 'li') {
                 firstListItem = firstListItem.next();
             }
             var rangeStart = range.startContainer,
-                indentWholeList = firstListItem[0] == rangeStart[0] || firstListItem.contains(rangeStart);
+                indentWholeList = firstListItem[0] === rangeStart[0] || firstListItem.contains(rangeStart);
 
             // Indent the entire list if  cursor is inside the first list item. (#3893)
             if (!( indentWholeList &&

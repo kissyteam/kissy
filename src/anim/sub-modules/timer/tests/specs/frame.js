@@ -72,7 +72,7 @@ KISSY.add(function (S, require) {
 
         it("should call frame", function () {
             var stoppedCalled = 0,
-                t = $("<div style='height:100px;width:100px;overflow: hidden;'></div>").appendTo("body");
+                t = $("<div style='height:100px;width:100px;overflow: hidden;'></div>").appendTo('body');
 
             var anim = new Anim(t, {
                 width: 10
@@ -82,7 +82,7 @@ KISSY.add(function (S, require) {
                     if (fx.pos == 1) {
                         stoppedCalled = 1;
                     }
-                    t.css("height", fx.val);
+                    t.css('height', fx.val);
                     t.css(fx.prop, fx.val);
                 }
             });
@@ -90,14 +90,14 @@ KISSY.add(function (S, require) {
             waits(100);
             runs(function () {
                 expect(t.css('width')).not.toBe("100px");
-                expect(t.css("height")).not.toBe("100px");
+                expect(t.css('height')).not.toBe("100px");
                 anim.stop(1);
             });
             waits(100);
             runs(function () {
                 expect(stoppedCalled).toBe(1);
                 expect(t.css('width')).toBe("10px");
-                expect(t.css("height")).toBe("10px");
+                expect(t.css('height')).toBe("10px");
                 t.remove();
             });
         });
@@ -105,7 +105,7 @@ KISSY.add(function (S, require) {
         it("frame can call stop", function () {
             var t = $("<div style='height:100px;" +
                 "width:100px;overflow: hidden;'>" +
-                "</div>").appendTo("body");
+                "</div>").appendTo('body');
             var start = S.now();
             var called = 0;
             var anim = new Anim(t, {
@@ -140,7 +140,7 @@ KISSY.add(function (S, require) {
         });
 
         it("frame can call stop", function () {
-            var t = $("<div style='height:100px;width:100px;overflow: hidden;'></div>").appendTo("body");
+            var t = $("<div style='height:100px;width:100px;overflow: hidden;'></div>").appendTo('body');
             var called = 0;
             var calledComplete = 0;
             var anim = new Anim(t, {
@@ -180,7 +180,7 @@ KISSY.add(function (S, require) {
 
 // to be removed, do not use this feature
         it("frame can ignore native update", function () {
-            var t = $("<div style='height:100px;width:100px;overflow: hidden;'></div>").appendTo("body");
+            var t = $("<div style='height:100px;width:100px;overflow: hidden;'></div>").appendTo('body');
             var anim = new Anim(t, {
                 width: 10
             }, {
@@ -204,7 +204,7 @@ KISSY.add(function (S, require) {
 
 // to be removed, do not use this feature
         it("frame can stop early and ignore native update", function () {
-            var t = $("<div style='height:100px;width:100px;overflow: hidden;'></div>").appendTo("body");
+            var t = $("<div style='height:100px;width:100px;overflow: hidden;'></div>").appendTo('body');
             var start = S.now();
             var called = 0;
             var anim = new Anim(t, {
@@ -236,7 +236,7 @@ KISSY.add(function (S, require) {
 
 // to be removed, do not use this feature
         it("frame can stop early and perform native update", function () {
-            var t = $("<div style='height:100px;width:100px;overflow: hidden;'></div>").appendTo("body");
+            var t = $("<div style='height:100px;width:100px;overflow: hidden;'></div>").appendTo('body');
             var start = S.now();
             var called = 0;
             var anim = new Anim(t, {

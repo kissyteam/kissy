@@ -30,7 +30,7 @@ KISSY.add(function (S, require) {
         KES = Editor.SelectionType,
         KER = Editor.RangeType,
     // ie9 仍然采用老的 range api，发现新的不稳定
-        OLD_IE = UA.ieMode < 11; //!window.getSelection,
+        OLD_IE = document.selection; //!window.getSelection,
     //ElementPath = Editor.ElementPath;
     /**
      * selection normalizer class
@@ -51,9 +51,8 @@ KISSY.add(function (S, require) {
         if (OLD_IE) {
             try {
                 var range = self.getNative().createRange();
-                if (!range
-                    || ( range.item && range.item(0).ownerDocument != document )
-                    || ( range.parentElement && range.parentElement().ownerDocument != document )) {
+                if (!range || ( range.item && range.item(0).ownerDocument !== document ) ||
+                    ( range.parentElement && range.parentElement().ownerDocument !== document )) {
                     self.isInvalid = TRUE;
                 }
             }
@@ -66,8 +65,26 @@ KISSY.add(function (S, require) {
     }
 
     var styleObjectElements = {
-        "img": 1, "hr": 1, "li": 1, "table": 1, "tr": 1, "td": 1, "th": 1, "embed": 1, "object": 1, "ol": 1, "ul": 1,
-        "a": 1, 'input': 1, "form": 1, "select": 1, 'textarea': 1, "button": 1, "fieldset": 1, "thead": 1, "tfoot": 1
+        'img': 1,
+        'hr': 1,
+        'li': 1,
+        'table': 1,
+        'tr': 1,
+        'td': 1,
+        'th': 1,
+        'embed': 1,
+        'object': 1,
+        'ol': 1,
+        'ul': 1,
+        'a': 1,
+        'input': 1,
+        'form': 1,
+        'select': 1,
+        'textarea': 1,
+        'button': 1,
+        'fieldset': 1,
+        'thead': 1,
+        'tfoot': 1
     };
 
     S.augment(KESelection, {
@@ -105,41 +122,45 @@ KISSY.add(function (S, require) {
          *         SELECTION_ELEMENT.
          *
          *
-         *      if ( editor.getSelection().<b>getType()</b> == SELECTION_TEXT )
+         *      if ( editor.getSelection().<b>getType()</b> === SELECTION_TEXT )
          *          alert( 'Text is selected' );
          */
         getType: !OLD_IE ?
             function () {
                 var self = this, cache = self._.cache;
-                if (cache.type)
+                if (cache.type) {
                     return cache.type;
+                }
 
                 var type = KES.SELECTION_TEXT,
                     sel = self.getNative();
 
-                if (!sel)
+                if (!sel) {
                     type = KES.SELECTION_NONE;
-                else if (sel.rangeCount == 1) {
+                }
+                else if (sel.rangeCount === 1) {
                     // Check if the actual selection is a control (IMG,
                     // TABLE, HR, etc...).
 
                     var range = sel.getRangeAt(0),
                         startContainer = range.startContainer;
 
-                    if (startContainer == range.endContainer
-                        && startContainer.nodeType == Dom.NodeType.ELEMENT_NODE
-                        && Number(range.endOffset - range.startOffset) == 1
-                        && styleObjectElements[ startContainer.childNodes[ range.startOffset ].nodeName.toLowerCase() ]) {
+                    if (startContainer === range.endContainer &&
+                        startContainer.nodeType === Dom.NodeType.ELEMENT_NODE &&
+                        Number(range.endOffset - range.startOffset) === 1 &&
+                        styleObjectElements[ startContainer.childNodes[ range.startOffset ].nodeName.toLowerCase() ]) {
                         type = KES.SELECTION_ELEMENT;
                     }
                 }
 
-                return ( cache.type = type );
+                cache.type = type;
+                return type;
             } :
             function () {
                 var self = this, cache = self._.cache;
-                if (cache.type)
+                if (cache.type) {
                     return cache.type;
+                }
 
                 var type = KES.SELECTION_NONE;
 
@@ -147,24 +168,28 @@ KISSY.add(function (S, require) {
                     var sel = self.getNative(),
                         ieType = sel.type;
 
-                    if (ieType == 'Text')
+                    if (ieType === 'Text') {
                         type = KES.SELECTION_TEXT;
+                    }
 
-                    if (ieType == 'Control')
+                    if (ieType === 'Control') {
                         type = KES.SELECTION_ELEMENT;
+                    }
 
                     // It is possible that we can still get a text range
-                    // object even when type == 'None' is returned by IE.
+                    // object even when type === 'None' is returned by IE.
                     // So we'd better check the object returned by
                     // createRange() rather than by looking at the type.
                     //当前一个操作选中文本，后一个操作右键点了字串中间就会出现了
-                    if (sel.createRange().parentElement)
+                    if (sel.createRange().parentElement) {
                         type = KES.SELECTION_TEXT;
+                    }
                 }
                 catch (e) {
                 }
 
-                return ( cache.type = type );
+                cache.type = type;
+                return type;
             },
 
         getRanges: OLD_IE ?
@@ -183,7 +208,7 @@ KISSY.add(function (S, require) {
                     for (var i = 0; i < siblings.length; i++) {
                         var child = siblings[ i ];
 
-                        if (child.nodeType == Dom.NodeType.ELEMENT_NODE) {
+                        if (child.nodeType === Dom.NodeType.ELEMENT_NODE) {
                             testRange = range.duplicate();
 
                             testRange.moveToElementText(child);
@@ -193,15 +218,17 @@ KISSY.add(function (S, require) {
 
                             testRange.collapse();
                             //中间有其他标签
-                            if (comparisonStart > 0)
+                            if (comparisonStart > 0) {
                                 break;
+                            }
                             // When selection stay at the side of certain self-closing elements, e.g. BR,
                             // our comparison will never shows an equality. (#4824)
-                            else if (!comparisonStart
-                                || comparisonEnd == 1 && comparisonStart == -1)
+                            else if (!comparisonStart || comparisonEnd === 1 && comparisonStart === -1) {
                                 return { container: parent, offset: i };
-                            else if (!comparisonEnd)
+                            }
+                            else if (!comparisonEnd) {
                                 return { container: parent, offset: i + 1 };
+                            }
 
                             testRange = NULL;
                         }
@@ -225,7 +252,9 @@ KISSY.add(function (S, require) {
                             //bug? 可能不是文本节点 nodeValue undefined
                             //永远不会出现 textnode<img/>textnode
                             //停止时，前面一定为textnode
+                        {
                             distance -= siblings[ --i ].nodeValue.length;
+                        }
                     }
                         // Measurement in IE could be somtimes wrong because of <select> element. (#4611)
                     catch (e) {
@@ -249,8 +278,9 @@ KISSY.add(function (S, require) {
 
                 return function (force) {
                     var self = this, cache = self._.cache;
-                    if (cache.ranges && !force)
+                    if (cache.ranges && !force) {
                         return cache.ranges;
+                    }
 
                     // IE doesn't have range support (in the W3C way), so we
                     // need to do some magic to transform selections into
@@ -261,17 +291,19 @@ KISSY.add(function (S, require) {
                         type = self.getType(),
                         range;
 
-                    if (!sel)
+                    if (!sel) {
                         return [];
+                    }
 
-                    if (type == KES.SELECTION_TEXT) {
+                    if (type === KES.SELECTION_TEXT) {
                         range = new KERange(self.document);
                         var boundaryInfo = getBoundaryInformation(nativeRange, TRUE);
                         range.setStart(new Node(boundaryInfo.container), boundaryInfo.offset);
                         boundaryInfo = getBoundaryInformation(nativeRange);
                         range.setEnd(new Node(boundaryInfo.container), boundaryInfo.offset);
-                        return ( cache.ranges = [ range ] );
-                    } else if (type == KES.SELECTION_ELEMENT) {
+                        cache.ranges = [ range ];
+                        return [range];
+                    } else if (type === KES.SELECTION_ELEMENT) {
                         var retval = cache.ranges = [];
 
                         for (var i = 0; i < nativeRange.length; i++) {
@@ -281,7 +313,8 @@ KISSY.add(function (S, require) {
 
                             range = new KERange(self.document);
 
-                            for (; j < parentElement.childNodes.length && parentElement.childNodes[j] != element; j++) { /*jsl:pass*/
+                            /*jshint noempty:false*/
+                            for (; j < parentElement.childNodes.length && parentElement.childNodes[j] !== element; j++) {
                             }
 
                             range.setStart(new Node(parentElement), j);
@@ -292,14 +325,16 @@ KISSY.add(function (S, require) {
                         return retval;
                     }
 
-                    return ( cache.ranges = [] );
+                    cache.ranges = [];
+                    return [];
                 };
             })()
             :
             function (force) {
                 var self = this, cache = self._.cache;
-                if (cache.ranges && !force)
+                if (cache.ranges && !force) {
                     return cache.ranges;
+                }
 
                 // On browsers implementing the W3C range, we simply
                 // tranform the native ranges in Range
@@ -307,8 +342,9 @@ KISSY.add(function (S, require) {
 
                 var ranges = [], sel = self.getNative();
 
-                if (!sel)
+                if (!sel) {
                     return [];
+                }
 
                 for (var i = 0; i < sel.rangeCount; i++) {
                     var nativeRange = sel.getRangeAt(i), range = new KERange(self.document);
@@ -318,7 +354,8 @@ KISSY.add(function (S, require) {
                     ranges.push(range);
                 }
 
-                return ( cache.ranges = ranges );
+                cache.ranges = ranges;
+                return ranges;
             },
 
         /**
@@ -332,8 +369,9 @@ KISSY.add(function (S, require) {
          */
         getStartElement: function () {
             var self = this, cache = self._.cache;
-            if (cache.startElement !== undefined)
+            if (cache.startElement !== undefined) {
                 return cache.startElement;
+            }
 
             var node,
                 sel = self.getNative();
@@ -357,9 +395,8 @@ KISSY.add(function (S, require) {
                                 var startContainer = range.startContainer,
                                     startOffset = range.startOffset;
                                 // Limit the fix only to non-block elements.(#3950)
-                                if (startOffset == ( startContainer[0].nodeType === Dom.NodeType.ELEMENT_NODE ?
-                                    startContainer[0].childNodes.length : startContainer[0].nodeValue.length )
-                                    && !startContainer._4eIsBlockBoundary()) {
+                                if (startOffset === ( startContainer[0].nodeType === Dom.NodeType.ELEMENT_NODE ?
+                                    startContainer[0].childNodes.length : startContainer[0].nodeValue.length ) && !startContainer._4eIsBlockBoundary()) {
                                     range.setStartAfter(startContainer);
                                 } else {
                                     break;
@@ -368,18 +405,18 @@ KISSY.add(function (S, require) {
 
                             node = range.startContainer;
 
-                            if (node[0].nodeType != Dom.NodeType.ELEMENT_NODE) {
+                            if (node[0].nodeType !== Dom.NodeType.ELEMENT_NODE) {
                                 return node.parent();
                             }
 
                             node = new Node(node[0].childNodes[range.startOffset]);
 
-                            if (!node[0] || node[0].nodeType != Dom.NodeType.ELEMENT_NODE) {
+                            if (!node[0] || node[0].nodeType !== Dom.NodeType.ELEMENT_NODE) {
                                 return range.startContainer;
                             }
 
                             var child = node[0].firstChild;
-                            while (child && child.nodeType == Dom.NodeType.ELEMENT_NODE) {
+                            while (child && child.nodeType === Dom.NodeType.ELEMENT_NODE) {
                                 node = new Node(child);
                                 child = child.firstChild;
                             }
@@ -394,7 +431,7 @@ KISSY.add(function (S, require) {
                     }
                     else {
                         node = sel.anchorNode;
-                        if (node && node.nodeType != Dom.NodeType.ELEMENT_NODE) {
+                        if (node && node.nodeType !== Dom.NodeType.ELEMENT_NODE) {
                             node = node.parentNode;
                         }
                         if (node) {
@@ -403,7 +440,8 @@ KISSY.add(function (S, require) {
                     }
             }
 
-            return cache.startElement = node;
+            cache.startElement = node;
+            return node;
         },
 
         /**
@@ -446,7 +484,7 @@ KISSY.add(function (S, require) {
                     // <div><span>^<img/>^</span></div>
                     for (var i = 2;
                          i && !(( enclosed = range.getEnclosedNode() ) &&
-                             ( enclosed[0].nodeType == Dom.NodeType.ELEMENT_NODE ) &&
+                             ( enclosed[0].nodeType === Dom.NodeType.ELEMENT_NODE ) &&
                              // 某些值得这么多的元素？？
                              styleObjectElements[ enclosed.nodeName() ] &&
                              ( selected = enclosed ));
@@ -465,7 +503,8 @@ KISSY.add(function (S, require) {
                 node = new Node(node);
             }
 
-            return cache.selectedElement = node;
+            cache.selectedElement = node;
+            return node;
         },
 
 
@@ -483,8 +522,8 @@ KISSY.add(function (S, require) {
                 //self.getNative().empty();
                 try {
                     // Try to select the node as a control.
-                    range = doc.body['createControlRange']();
-                    range['addElement'](element[0]);
+                    range = doc.body.createControlRange();
+                    range.addElement(element[0]);
                     range.select();
                 } catch (e) {
                     // If failed, select it as a text range.
@@ -519,8 +558,9 @@ KISSY.add(function (S, require) {
 
                 // IE doesn't accept multiple ranges selection, so we just
                 // select the first one.
-                if (ranges[ 0 ])
+                if (ranges[ 0 ]) {
                     ranges[ 0 ].select();
+                }
 
                 self.reset();
             }
@@ -541,10 +581,10 @@ KISSY.add(function (S, require) {
                     // opera move out of this element
                     if (range.collapsed &&
                         (( UA.gecko && UA.gecko < 1.0900 ) || UA.opera || UA.webkit) &&
-                        startContainer[0].nodeType == Dom.NodeType.ELEMENT_NODE && !startContainer[0].childNodes.length) {
+                        startContainer[0].nodeType === Dom.NodeType.ELEMENT_NODE && !startContainer[0].childNodes.length) {
                         // webkit 光标停留不到在空元素内，要fill char，之后范围定在 fill char 之后
                         startContainer[0].appendChild(
-                            self.document.createTextNode(UA.webkit ? "\u200b" : "")
+                            self.document.createTextNode(UA.webkit ? '\u200b' : '')
                         );
                         range.startOffset++;
                         range.endOffset++;
@@ -562,8 +602,9 @@ KISSY.add(function (S, require) {
             var bookmarks = [],
                 ranges = this.getRanges();
 
-            for (var i = 0; i < ranges.length; i++)
+            for (var i = 0; i < ranges.length; i++) {
                 bookmarks.push(ranges[i].createBookmark2(normalized));
+            }
 
             return bookmarks;
         },
@@ -578,8 +619,8 @@ KISSY.add(function (S, require) {
                 retval.push(bookmark = ranges[ i ].createBookmark(serializable, TRUE));
                 serializable = bookmark.serializable;
 
-                var bookmarkStart = serializable ? S.one("#" + bookmark.startNode, doc) : bookmark.startNode,
-                    bookmarkEnd = serializable ? S.one("#" + bookmark.endNode, doc) : bookmark.endNode;
+                var bookmarkStart = serializable ? S.one('#' + bookmark.startNode, doc) : bookmark.startNode,
+                    bookmarkEnd = serializable ? S.one('#' + bookmark.endNode, doc) : bookmark.endNode;
 
                 // Updating the offset values for rest of ranges which have been mangled(#3256).
                 for (var j = i + 1; j < length; j++) {
@@ -587,10 +628,18 @@ KISSY.add(function (S, require) {
                         rangeStart = dirtyRange.startContainer,
                         rangeEnd = dirtyRange.endContainer;
 
-                    Dom.equals(rangeStart, bookmarkStart.parent()) && dirtyRange.startOffset++;
-                    Dom.equals(rangeStart, bookmarkEnd.parent()) && dirtyRange.startOffset++;
-                    Dom.equals(rangeEnd, bookmarkStart.parent()) && dirtyRange.endOffset++;
-                    Dom.equals(rangeEnd, bookmarkEnd.parent()) && dirtyRange.endOffset++;
+                    if (Dom.equals(rangeStart, bookmarkStart.parent())) {
+                        dirtyRange.startOffset++;
+                    }
+                    if (Dom.equals(rangeStart, bookmarkEnd.parent())) {
+                        dirtyRange.startOffset++;
+                    }
+                    if (Dom.equals(rangeEnd, bookmarkStart.parent())) {
+                        dirtyRange.endOffset++;
+                    }
+                    if (Dom.equals(rangeEnd, bookmarkEnd.parent())) {
+                        dirtyRange.endOffset++;
+                    }
                 }
             }
 
@@ -620,177 +669,183 @@ KISSY.add(function (S, require) {
             // If we have split the block, adds a temporary span at the
             // range position and scroll relatively to it.
             var start = this.getStartElement();
-            start && start.scrollIntoView(undefined, {
-                alignWithTop: false,
-                allowHorizontalScroll: true,
-                onlyScrollIfNeeded: true
-            });
+            if (start) {
+                start.scrollIntoView(undefined, {
+                    alignWithTop: false,
+                    allowHorizontalScroll: true,
+                    onlyScrollIfNeeded: true
+                });
+            }
         },
         removeAllRanges: function () {
             var sel = this.getNative();
             if (!OLD_IE) {
-                sel && sel.removeAllRanges();
+                if (sel) {
+                    sel.removeAllRanges();
+                }
             } else {
-                sel && sel.clear();
+                if (sel) {
+                    sel.clear();
+                }
             }
         }
     });
 
 
-    var nonCells = { "table": 1, "tbody": 1, "tr": 1 }, notWhitespaces = Walker.whitespaces(TRUE),
+    var nonCells = { 'table': 1, 'tbody': 1, 'tr': 1 }, notWhitespaces = Walker.whitespaces(TRUE),
         fillerTextRegex = /\ufeff|\u00a0/;
-    KERange.prototype["select"] =
-        KERange.prototype.select =
-            !OLD_IE ? function () {
-                var self = this, startContainer = self.startContainer;
+    KERange.prototype.select =
+        !OLD_IE ? function () {
+            var self = this, startContainer = self.startContainer;
 
-                // If we have a collapsed range, inside an empty element, we must add
-                // something to it, otherwise the caret will not be visible.
-                if (self.collapsed &&
-                    startContainer[0].nodeType == Dom.NodeType.ELEMENT_NODE && !startContainer[0].childNodes.length) {
-                    startContainer[0].appendChild(
-                        // webkit need filling char
-                        self.document.createTextNode(UA.webkit ? '\u200b' : '')
-                    );
-                    self.startOffset++;
-                    self.endOffset++;
-                }
+            // If we have a collapsed range, inside an empty element, we must add
+            // something to it, otherwise the caret will not be visible.
+            if (self.collapsed &&
+                startContainer[0].nodeType === Dom.NodeType.ELEMENT_NODE && !startContainer[0].childNodes.length) {
+                startContainer[0].appendChild(
+                    // webkit need filling char
+                    self.document.createTextNode(UA.webkit ? '\u200b' : '')
+                );
+                self.startOffset++;
+                self.endOffset++;
+            }
 
 
-                var nativeRange = self.document.createRange();
-                nativeRange.setStart(startContainer[0], self.startOffset);
+            var nativeRange = self.document.createRange();
+            nativeRange.setStart(startContainer[0], self.startOffset);
 
-                try {
+            try {
+                nativeRange.setEnd(self.endContainer[0], self.endOffset);
+            } catch (e) {
+                // There is a bug in Firefox implementation (it would be too easy
+                // otherwise). The new start can't be after the end (W3C says it can).
+                // So, let's create a new range and collapse it to the desired point.
+                if (e.toString().indexOf('NS_ERROR_ILLEGAL_VALUE') >= 0) {
+                    self.collapse(TRUE);
                     nativeRange.setEnd(self.endContainer[0], self.endOffset);
-                } catch (e) {
-                    // There is a bug in Firefox implementation (it would be too easy
-                    // otherwise). The new start can't be after the end (W3C says it can).
-                    // So, let's create a new range and collapse it to the desired point.
-                    if (e.toString().indexOf('NS_ERROR_ILLEGAL_VALUE') >= 0) {
-                        self.collapse(TRUE);
-                        nativeRange.setEnd(self.endContainer[0], self.endOffset);
+                }
+                else {
+                    throw( e );
+                }
+            }
+
+            var selection = getSelection(self.document).getNative();
+            selection.removeAllRanges();
+            selection.addRange(nativeRange);
+        } : // V2
+            function (forceExpand) {
+
+                var self = this,
+                    collapsed = self.collapsed,
+                    isStartMarkerAlone,
+                    dummySpan;
+                //选的是元素，直接使用selectElement
+                //还是有差异的，特别是img选择框问题
+                if (
+                //ie8 有问题？？
+                //UA.ieEngine!=8 &&
+                    self.startContainer[0] === self.endContainer[0] && self.endOffset - self.startOffset === 1) {
+                    var selEl = self.startContainer[0].childNodes[self.startOffset];
+                    if (selEl.nodeType === Dom.NodeType.ELEMENT_NODE) {
+                        new KESelection(self.document).selectElement(new Node(selEl));
+                        return;
                     }
-                    else
-                        throw( e );
+                }
+                // IE doesn't support selecting the entire table row/cell, move the selection into cells, e.g.
+                // <table><tbody><tr>[<td>cell</b></td>... => <table><tbody><tr><td>[cell</td>...
+                if (self.startContainer[0].nodeType === Dom.NodeType.ELEMENT_NODE &&
+                    self.startContainer.nodeName() in nonCells ||
+                    self.endContainer[0].nodeType === Dom.NodeType.ELEMENT_NODE &&
+                        self.endContainer.nodeName() in nonCells) {
+                    self.shrink(KER.SHRINK_ELEMENT, TRUE);
                 }
 
-                var selection = getSelection(self.document).getNative();
-                selection.removeAllRanges();
-                selection.addRange(nativeRange);
-            } : // V2
-                function (forceExpand) {
+                var bookmark = self.createBookmark(),
+                // Create marker tags for the start and end boundaries.
+                    startNode = bookmark.startNode,
+                    endNode;
+                if (!collapsed) {
+                    endNode = bookmark.endNode;
+                }
 
-                    var self = this,
-                        collapsed = self.collapsed,
-                        isStartMarkerAlone,
-                        dummySpan;
-                    //选的是元素，直接使用selectElement
-                    //还是有差异的，特别是img选择框问题
-                    if (
-                    //ie8 有问题？？
-                    //UA.ieEngine!=8 &&
-                        self.startContainer[0] === self.endContainer[0]
-                            && self.endOffset - self.startOffset == 1) {
-                        var selEl = self.startContainer[0].childNodes[self.startOffset];
-                        if (selEl.nodeType == Dom.NodeType.ELEMENT_NODE) {
-                            new KESelection(self.document).selectElement(new Node(selEl));
-                            return;
-                        }
+                // Create the main range which will be used for the selection.
+                var ieRange = self.document.body.createTextRange();
+
+                // Position the range at the start boundary.
+                ieRange.moveToElementText(startNode[0]);
+                //跳过开始 bookmark 标签
+                ieRange.moveStart('character', 1);
+
+                if (endNode) {
+                    // Create a tool range for the end.
+                    var ieRangeEnd = self.document.body.createTextRange();
+                    // Position the tool range at the end.
+                    ieRangeEnd.moveToElementText(endNode[0]);
+                    // Move the end boundary of the main range to match the tool range.
+                    ieRange.setEndPoint('EndToEnd', ieRangeEnd);
+                    ieRange.moveEnd('character', -1);
+                }
+                else {
+                    // The isStartMarkerAlone logic comes from V2. It guarantees that the lines
+                    // will expand and that the cursor will be blinking on the right place.
+                    // Actually, we are using this flag just to avoid using this hack in all
+                    // situations, but just on those needed.
+                    var next = startNode[0].nextSibling;
+                    while (next && !notWhitespaces(next)) {
+                        next = next.nextSibling;
                     }
-                    // IE doesn't support selecting the entire table row/cell, move the selection into cells, e.g.
-                    // <table><tbody><tr>[<td>cell</b></td>... => <table><tbody><tr><td>[cell</td>...
-                    if (self.startContainer[0].nodeType == Dom.NodeType.ELEMENT_NODE &&
-                        self.startContainer.nodeName() in nonCells
-                        || self.endContainer[0].nodeType == Dom.NodeType.ELEMENT_NODE &&
-                        self.endContainer.nodeName() in nonCells) {
-                        self.shrink(KER.SHRINK_ELEMENT, TRUE);
-                    }
-
-                    var bookmark = self.createBookmark(),
-                    // Create marker tags for the start and end boundaries.
-                        startNode = bookmark.startNode,
-                        endNode;
-                    if (!collapsed)
-                        endNode = bookmark.endNode;
-
-                    // Create the main range which will be used for the selection.
-                    var ieRange = self.document.body.createTextRange();
-
-                    // Position the range at the start boundary.
-                    ieRange.moveToElementText(startNode[0]);
-                    //跳过开始 bookmark 标签
-                    ieRange.moveStart('character', 1);
-
-                    if (endNode) {
-                        // Create a tool range for the end.
-                        var ieRangeEnd = self.document.body.createTextRange();
-                        // Position the tool range at the end.
-                        ieRangeEnd.moveToElementText(endNode[0]);
-                        // Move the end boundary of the main range to match the tool range.
-                        ieRange.setEndPoint('EndToEnd', ieRangeEnd);
-                        ieRange.moveEnd('character', -1);
-                    }
-                    else {
-                        // The isStartMarkerAlone logic comes from V2. It guarantees that the lines
-                        // will expand and that the cursor will be blinking on the right place.
-                        // Actually, we are using this flag just to avoid using this hack in all
-                        // situations, but just on those needed.
-                        var next = startNode[0].nextSibling;
-                        while (next && !notWhitespaces(next)) {
-                            next = next.nextSibling;
-                        }
-                        isStartMarkerAlone = (
-                            !( next && next.nodeValue && next.nodeValue.match(fillerTextRegex) )
-                                &&
-                                // already a filler there?
-                                ( forceExpand || !startNode[0].previousSibling ||
-                                    (
-                                        startNode[0].previousSibling &&
-                                            Dom.nodeName(startNode[0].previousSibling) == 'br'
-                                        )
+                    isStartMarkerAlone = (
+                        !( next && next.nodeValue && next.nodeValue.match(fillerTextRegex) ) &&
+                            // already a filler there?
+                            ( forceExpand || !startNode[0].previousSibling ||
+                                (
+                                    startNode[0].previousSibling &&
+                                        Dom.nodeName(startNode[0].previousSibling) === 'br'
                                     )
-                            );
+                                )
+                        );
 
-                        // Append a temporary <span>&#65279;</span> before the selection.
-                        // This is needed to avoid IE destroying selections inside empty
-                        // inline elements, like <b></b> (#253).
-                        // It is also needed when placing the selection right after an inline
-                        // element to avoid the selection moving inside of it.
-                        dummySpan = new Node(self.document.createElement('span'));
-                        dummySpan.html('&#65279;');	// Zero Width No-Break Space (U+FEFF). See #1359.
-                        dummySpan.insertBefore(startNode);
-                        if (isStartMarkerAlone) {
-                            // To expand empty blocks or line spaces after <br>, we need
-                            // instead to have any char, which will be later deleted using the
-                            // selection.
-                            // \ufeff = Zero Width No-Break Space (U+FEFF). (#1359)
-                            Dom.insertBefore(self.document.createTextNode('\ufeff'), startNode[0] || startNode);
-                        }
+                    // Append a temporary <span>&#65279;</span> before the selection.
+                    // This is needed to avoid IE destroying selections inside empty
+                    // inline elements, like <b></b> (#253).
+                    // It is also needed when placing the selection right after an inline
+                    // element to avoid the selection moving inside of it.
+                    dummySpan = new Node(self.document.createElement('span'));
+                    dummySpan.html('&#65279;');	// Zero Width No-Break Space (U+FEFF). See #1359.
+                    dummySpan.insertBefore(startNode);
+                    if (isStartMarkerAlone) {
+                        // To expand empty blocks or line spaces after <br>, we need
+                        // instead to have any char, which will be later deleted using the
+                        // selection.
+                        // \ufeff = Zero Width No-Break Space (U+FEFF). (#1359)
+                        Dom.insertBefore(self.document.createTextNode('\ufeff'), startNode[0] || startNode);
                     }
+                }
 
-                    // Remove the markers (reset the position, because of the changes in the Dom tree).
-                    self.setStartBefore(startNode);
-                    startNode._4eRemove();
+                // Remove the markers (reset the position, because of the changes in the Dom tree).
+                self.setStartBefore(startNode);
+                startNode._4eRemove();
 
-                    if (collapsed) {
-                        if (isStartMarkerAlone) {
-                            // Move the selection start to include the temporary \ufeff.
-                            ieRange.moveStart('character', -1);
-                            ieRange.select();
-                            // Remove our temporary stuff.
-                            self.document.selection.clear();
-                        } else
-                            ieRange.select();
-                        if (dummySpan) {
-                            self.moveToPosition(dummySpan, KER.POSITION_BEFORE_START);
-                            dummySpan._4eRemove();
-                        }
+                if (collapsed) {
+                    if (isStartMarkerAlone) {
+                        // Move the selection start to include the temporary \ufeff.
+                        ieRange.moveStart('character', -1);
+                        ieRange.select();
+                        // Remove our temporary stuff.
+                        self.document.selection.clear();
                     } else {
-                        self.setEndBefore(endNode);
-                        endNode._4eRemove();
                         ieRange.select();
                     }
-                };
+                    if (dummySpan) {
+                        self.moveToPosition(dummySpan, KER.POSITION_BEFORE_START);
+                        dummySpan._4eRemove();
+                    }
+                } else {
+                    self.setEndBefore(endNode);
+                    endNode._4eRemove();
+                    ieRange.select();
+                }
+            };
 
 
     function getSelection(doc) {

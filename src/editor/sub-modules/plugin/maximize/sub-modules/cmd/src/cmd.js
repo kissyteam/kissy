@@ -4,8 +4,8 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
-        var Editor=require('editor');
-        var Event=require('event');
+    var Editor = require('editor');
+    var Event = require('event');
 
     var UA = S.UA,
         ie = UA.ie,
@@ -13,16 +13,16 @@ KISSY.add(function (S, require) {
         Node = S.Node,
         Dom = S.DOM,
         iframe,
-        MAXIMIZE_TOOLBAR_CLASS = "editor-toolbar-padding",
+        MAXIMIZE_TOOLBAR_CLASS = 'editor-toolbar-padding',
         init = function () {
             if (!iframe) {
-                iframe = new Node("<" + "iframe " +
-                    " style='" +
-                    "position:absolute;" +
-                    "top:-9999px;" +
-                    "left:-9999px;" +
-                    "'" +
-                    " frameborder='0'>").prependTo(doc.body, undefined);
+                iframe = new Node('<' + 'iframe ' +
+                    ' style="' +
+                    'position:absolute;' +
+                    'top:-9999px;' +
+                    'left:-9999px;' +
+                    '"' +
+                    ' frameborder="0">').prependTo(doc.body, undefined);
             }
         };
 
@@ -36,12 +36,12 @@ KISSY.add(function (S, require) {
             var self = this,
                 editor = self.editor;
 
-            if (editor.fire("beforeRestoreWindow") === false) {
+            if (editor.fire('beforeRestoreWindow') === false) {
                 return;
             }
 
             if (self._resize) {
-                Event.remove(window, "resize", self._resize);
+                Event.remove(window, 'resize', self._resize);
                 self._resize.stop();
                 self._resize = 0;
             } else {
@@ -56,7 +56,7 @@ KISSY.add(function (S, require) {
             setTimeout(function () {
                 self._restoreEditorStatus();
                 editor.notifySelectionChange();
-                editor.fire("afterRestoreWindow");
+                editor.fire('afterRestoreWindow');
             }, 30);
         },
 
@@ -73,7 +73,7 @@ KISSY.add(function (S, require) {
             if (_savedParents) {
                 for (var i = 0; i < _savedParents.length; i++) {
                     var po = _savedParents[i];
-                    po.el.css("position", po.position);
+                    po.el.css('position', po.position);
                 }
                 self._savedParents = null;
             }
@@ -86,20 +86,20 @@ KISSY.add(function (S, require) {
                 height: self.iframeHeight
             });
             Dom.css(doc.body, {
-                width: "",
-                height: "",
-                overflow: ""
+                width: '',
+                height: '',
+                overflow: ''
             });
             //documentElement 设置宽高，ie崩溃
-            doc.documentElement.style.overflow = "";
+            doc.documentElement.style.overflow = '';
 
             var editorElStyle = editor.get('el')[0].style;
             editorElStyle.position = 'static';
             editorElStyle.width = self.editorElWidth;
 
             iframe.css({
-                left: "-99999px",
-                top: "-99999px"
+                left: '-99999px',
+                top: '-99999px'
             });
 
             window.scrollTo(self.scrollLeft, self.scrollTop);
@@ -118,7 +118,7 @@ KISSY.add(function (S, require) {
                 editor = self.editor,
                 _savedParents = [],
                 editorEl = editor.get('el');
-            self.iframeHeight = editor.get('textarea').parent().style("height");
+            self.iframeHeight = editor.get('textarea').parent().style('height');
             self.editorElWidth = editorEl.style('width');
             //主窗口滚动条也要保存哦
             self.scrollLeft = Dom.scrollLeft();
@@ -129,13 +129,13 @@ KISSY.add(function (S, require) {
             var p = editorEl.parent();
 
             while (p) {
-                var pre = p.css("position");
-                if (pre != 'static') {
+                var pre = p.css('position');
+                if (pre !== 'static') {
                     _savedParents.push({
                         el: p,
                         position: pre
                     });
-                    p.css("position", 'static');
+                    p.css('position', 'static');
                 }
                 p = p.parent();
             }
@@ -191,11 +191,13 @@ KISSY.add(function (S, require) {
                 var element = sel.getStartElement();
                 //使用原生不行的，会使主窗口滚动
                 //element[0] && element[0].scrollIntoView(true);
-                element && element.scrollIntoView(undefined, {
-                    alignWithTop: false,
-                    allowHorizontalScroll: true,
-                    onlyScrollIfNeeded: true
-                });
+                if(element){
+                    element.scrollIntoView(undefined, {
+                        alignWithTop: false,
+                        allowHorizontalScroll: true,
+                        onlyScrollIfNeeded: true
+                    });
+                }
             }
         },
 
@@ -218,22 +220,22 @@ KISSY.add(function (S, require) {
                 Dom.css(doc.body, {
                     width: 0,
                     height: 0,
-                    overflow: "hidden"
+                    overflow: 'hidden'
                 });
             } else {
-                doc.body.style.overflow = "hidden";
+                doc.body.style.overflow = 'hidden';
             }
-            doc.documentElement.style.overflow = "hidden";
+            doc.documentElement.style.overflow = 'hidden';
 
             editorEl.css({
-                position: "absolute",
+                position: 'absolute',
                 zIndex: Editor.baseZIndex(Editor.ZIndexManager.MAXIMIZE),
-                width: viewportWidth + "px"
+                width: viewportWidth + 'px'
             });
             iframe.css({
                 zIndex: Editor.baseZIndex(Editor.ZIndexManager.MAXIMIZE - 5),
-                height: viewportHeight + "px",
-                width: viewportWidth + "px"
+                height: viewportHeight + 'px',
+                width: viewportWidth + 'px'
             });
             editorEl.offset({
                 left: 0,
@@ -245,15 +247,16 @@ KISSY.add(function (S, require) {
             });
 
             textareaEl.parent().css({
-                height: (viewportHeight - statusHeight - toolHeight ) + "px"
+                height: (viewportHeight - statusHeight - toolHeight ) + 'px'
             });
 
 
             textareaEl.css({
-                height: (viewportHeight - statusHeight - toolHeight ) + "px"
+                height: (viewportHeight - statusHeight - toolHeight ) + 'px'
             });
 
             if (stop !== true) {
+                /*jshint noarg:false*/
                 arguments.callee.call(self, true);
             }
         },
@@ -270,22 +273,22 @@ KISSY.add(function (S, require) {
             if (!self._resize) {
                 self._resize = S.buffer(function () {
                     self._maximize();
-                    editor.fire("afterMaximizeWindow");
+                    editor.fire('afterMaximizeWindow');
                 }, 100);
             }
 
-            Event.on(window, "resize", self._resize);
+            Event.on(window, 'resize', self._resize);
 
             setTimeout(function () {
                 self._restoreEditorStatus();
                 editor.notifySelectionChange();
-                editor.fire("afterMaximizeWindow");
+                editor.fire('afterMaximizeWindow');
             }, 30);
         },
         maximizeWindow: function () {
             var self = this,
                 editor = self.editor;
-            if (editor.fire("beforeMaximizeWindow") === false) {
+            if (editor.fire('beforeMaximizeWindow') === false) {
                 return;
             }
             init();
@@ -294,7 +297,7 @@ KISSY.add(function (S, require) {
         destroy: function () {
             var self = this;
             if (self._resize) {
-                Event.remove(window, "resize", self._resize);
+                Event.remove(window, 'resize', self._resize);
                 self._resize.stop();
                 self._resize = 0;
             }
@@ -303,16 +306,16 @@ KISSY.add(function (S, require) {
 
     return {
         init: function (editor) {
-            if (!editor.hasCommand("maximizeWindow")) {
+            if (!editor.hasCommand('maximizeWindow')) {
                 var maximizeCmd = new MaximizeCmd(editor);
 
-                editor.addCommand("maximizeWindow", {
+                editor.addCommand('maximizeWindow', {
                     exec: function () {
                         maximizeCmd.maximizeWindow();
                     }
                 });
 
-                editor.addCommand("restoreWindow", {
+                editor.addCommand('restoreWindow', {
                     exec: function () {
                         maximizeCmd.restoreWindow();
                     }

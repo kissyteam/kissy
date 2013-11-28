@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ',"src":' + jscoverage_quote(this.src)
+            + ','src':' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -354,7 +354,7 @@ KISSY.add(function(S, require) {
   'object': function(element) {
   _$jscoverage['/flash.js'].functionData[3]++;
   _$jscoverage['/flash.js'].lineData[31]++;
-  var classId = element.getAttribute("classid"), i;
+  var classId = element.getAttribute('classid'), i;
   _$jscoverage['/flash.js'].lineData[32]++;
   if (visit2_32_1(!classId)) {
     _$jscoverage['/flash.js'].lineData[33]++;
@@ -396,13 +396,13 @@ KISSY.add(function(S, require) {
   cls: CLS_FLASH, 
   type: TYPE_FLASH, 
   pluginConfig: this.config, 
-  bubbleId: "flash", 
+  bubbleId: 'flash',
   contextMenuId: 'flash', 
   contextMenuHandlers: {
   "Flash\u5c5e\u6027": function() {
   _$jscoverage['/flash.js'].functionData[5]++;
   _$jscoverage['/flash.js'].lineData[72]++;
-  var selectedEl = this.get("editorSelectedEl");
+  var selectedEl = this.get('editorSelectedEl');
   _$jscoverage['/flash.js'].lineData[73]++;
   if (visit7_73_1(selectedEl)) {
     _$jscoverage['/flash.js'].lineData[74]++;
@@ -412,7 +412,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/flash.js'].lineData[80]++;
   this.flashControl = flashControl;
   _$jscoverage['/flash.js'].lineData[82]++;
-  editor.addButton("flash", {
+  editor.addButton('flash', {
   tooltip: "\u63d2\u5165Flash", 
   listeners: {
   click: function() {

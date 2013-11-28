@@ -18,7 +18,7 @@ KISSY.add(function (S, require) {
             __afterCreateEffectGhost: function (ghost) {
                 var self = this,
                     body,
-                    elBody = self.get("body");
+                    elBody = self.get('body');
 
                 ghost.all('.' + self.get('prefixCls') + 'stdmod-body')
                     .css({

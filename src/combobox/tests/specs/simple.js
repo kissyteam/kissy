@@ -142,9 +142,9 @@ KISSY.add(function (S, Event,ComboBox) {
                 var menu = comboBox.get('menu');
                 var children = menu.get('children');
                 expect(children.length).toBe(1);
-                expect(children[0].get("content")).toBe("<b>2</b>1");
+                expect(children[0].get('content')).toBe("<b>2</b>1");
                 expect(children[0].get('textContent')).toBe("21");
-                expect(children[0].get("value")).toBe("21");
+                expect(children[0].get('value')).toBe("21");
                 // 输入项和提示项 textContent 不一样，默认不高亮
                 expect(menu.get('highlightedItem')).toBeFalsy();
                 t.blur();
@@ -174,17 +174,17 @@ KISSY.add(function (S, Event,ComboBox) {
                 var menu = comboBox.get('menu');
                 var children = menu.get('children');
 
-                expect(children[0].get("content")).toBe("<b>1</b>");
-                expect(children[1].get("content")).toBe("2<b>1</b>");
-                expect(children[2].get("content")).toBe("3<b>1</b>");
+                expect(children[0].get('content')).toBe("<b>1</b>");
+                expect(children[1].get('content')).toBe("2<b>1</b>");
+                expect(children[2].get('content')).toBe("3<b>1</b>");
 
                 expect(children[0].get('textContent')).toBe("1");
                 expect(children[1].get('textContent')).toBe("21");
                 expect(children[2].get('textContent')).toBe("31");
 
-                expect(children[0].get("value")).toBe("1");
-                expect(children[1].get("value")).toBe("21");
-                expect(children[2].get("value")).toBe("31");
+                expect(children[0].get('value')).toBe("1");
+                expect(children[1].get('value')).toBe("21");
+                expect(children[2].get('value')).toBe("31");
 
                 // 入项和第一个提示项 textContent 一样，那么第一个高亮
                 expect(S.indexOf(menu.get('highlightedItem'), menu.get('children')))

@@ -64,10 +64,10 @@ KISSY.add(function (S, Dom, Event) {
                     '<param name="movie" value="movie_name.swf"/>' +
                     '<' + '/object>';
                 var el = Dom.create(flash);
-                Dom.append(el, "body");
-                expect(Dom.attr(el.firstChild, "value")).toBe("movie_name.swf");
+                Dom.append(el, 'body');
+                expect(Dom.attr(el.firstChild, 'value')).toBe("movie_name.swf");
                 var cloned = Dom.clone(el);
-                expect(Dom.attr(cloned.firstChild, "value")).toBe("movie_name.swf");
+                expect(Dom.attr(cloned.firstChild, 'value')).toBe("movie_name.swf");
                 Dom.remove(el);
             });
         } else {
@@ -82,12 +82,12 @@ KISSY.add(function (S, Dom, Event) {
                     'title="Taobao.com - 阿里巴巴旗下网站" width="167" /> </a>' +
                     '</object>';
                 var el = Dom.create(flash);
-                Dom.append(el, "body");
-                expect(Dom.attr(el.firstChild, "value")).toBe("transparent");
+                Dom.append(el, 'body');
+                expect(Dom.attr(el.firstChild, 'value')).toBe("transparent");
                 expect(Dom.attr(el, 'data'))
                     .toBe("http://img01.taobaocdn.com/tps/i1/T12MVIXfVNXXXXXXXX.swf");
                 var cloned = Dom.clone(el, true);
-                expect(Dom.attr(cloned.firstChild, "value")).toBe("transparent");
+                expect(Dom.attr(cloned.firstChild, 'value')).toBe("transparent");
                 expect(Dom.attr(cloned, 'data'))
                     .toBe("http://img01.taobaocdn.com/tps/i1/T12MVIXfVNXXXXXXXX.swf");
                 Dom.remove(el);
@@ -96,15 +96,15 @@ KISSY.add(function (S, Dom, Event) {
 
         it("works with data and event", function () {
             var div = Dom.create("<div><" + "/div>");
-            Dom.append(div, "body");
+            Dom.append(div, 'body');
             var x = {x: 1};
             Dom.data(div, "web", x);
             Dom.data(div, "web2", 2);
             var d = 1;
-            Event.on(div, "click", function () {
+            Event.on(div, 'click', function () {
                 d++;
             });
-            Event.fire(div, "click", undefined, true);
+            Event.fire(div, 'click', undefined, true);
             expect(d).toBe(2);
             var cloned = Dom.clone(div, {
                 deep: false,
@@ -122,12 +122,12 @@ KISSY.add(function (S, Dom, Event) {
             expect(Dom.data(cloned, "web").x).toBe(3);
             expect(Dom.data(cloned, "web2")).toBe(2);
 
-            Event.fire(cloned, "click", undefined, true);
+            Event.fire(cloned, 'click', undefined, true);
             expect(d).toBe(3);
 
-            Dom.append(cloned, "body");
+            Dom.append(cloned, 'body');
 
-            jasmine.simulate(cloned, "click");
+            jasmine.simulate(cloned, 'click');
 
             waits(500);
 
@@ -141,18 +141,18 @@ KISSY.add(function (S, Dom, Event) {
         it("works with data and event when deep", function () {
             var div = Dom.create("<div><span><" + "/span><" + "/div>");
             var span = Dom.get("span", div);
-            Dom.append(div, "body");
+            Dom.append(div, 'body');
             var x = {x: 1};
             Dom.data(span, "web", x);
             Dom.data(span, "web2", 2);
 
             var d = 1;
 
-            Event.on(span, "click", function () {
+            Event.on(span, 'click', function () {
                 d++;
             });
 
-            Event.fire(span, "click", undefined, true);
+            Event.fire(span, 'click', undefined, true);
 
             expect(d).toBe(2);
 
@@ -176,12 +176,12 @@ KISSY.add(function (S, Dom, Event) {
             expect(Dom.data(clonedSpan, "web").x).toBe(3);
             expect(Dom.data(clonedSpan, "web2")).toBe(2);
 
-            Event.fire(clonedSpan, "click", undefined, true);
+            Event.fire(clonedSpan, 'click', undefined, true);
             expect(d).toBe(3);
 
-            Dom.append(cloned, "body");
+            Dom.append(cloned, 'body');
 
-            jasmine.simulate(clonedSpan, "click");
+            jasmine.simulate(clonedSpan, 'click');
 
             waits(500);
 
@@ -197,14 +197,14 @@ KISSY.add(function (S, Dom, Event) {
 
             var span = Dom.get("span", div);
 
-            Dom.append(div, "body");
+            Dom.append(div, 'body');
 
             var d = {
                 t1: 1,
                 t2: 1
             };
 
-            Event.on(span, "click", function () {
+            Event.on(span, 'click', function () {
                 d[this.id]++;
             });
 
@@ -219,7 +219,7 @@ KISSY.add(function (S, Dom, Event) {
 
             span2.id = 't2';
 
-            Dom.append(span2, "body");
+            Dom.append(span2, 'body');
 
             jasmine.simulate(span2, 'click');
 
@@ -247,14 +247,14 @@ KISSY.add(function (S, Dom, Event) {
 
             var span = Dom.get("span", div);
 
-            Dom.append(div, "body");
+            Dom.append(div, 'body');
 
             var d = {
                 t1: 1,
                 t2: 1
             };
 
-            Event.on(span, "click", function () {
+            Event.on(span, 'click', function () {
                 d[this.id]++;
             });
 
@@ -266,7 +266,7 @@ KISSY.add(function (S, Dom, Event) {
 
             span2.id = 't2';
 
-            Dom.append(span2, "body");
+            Dom.append(span2, 'body');
 
             Event.fire(span2, 'click');
 

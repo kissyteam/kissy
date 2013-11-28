@@ -223,7 +223,7 @@ KISSY.add(function (S, Menu) {
 
                     runs(function () {
                         // click
-                        jasmine.simulate(secondEl, "click");
+                        jasmine.simulate(secondEl, 'click');
                     });
 
                     waits(100);
@@ -238,7 +238,7 @@ KISSY.add(function (S, Menu) {
                     });
 
                     runs(function () {
-                        jasmine.simulate(secondEl, "mousedown");
+                        jasmine.simulate(secondEl, 'mousedown');
                         jasmine.simulate(secondEl, "mouseup");
                     });
 

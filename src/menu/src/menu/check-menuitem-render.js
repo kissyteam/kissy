@@ -11,13 +11,13 @@ KISSY.add(function (S, require) {
     return MenuItemRender.extend([ContentRenderExtension], {
         beforeCreateDom: function (renderData) {
             if (renderData.checked) {
-                renderData.elCls.push(self.getBaseCssClasses("checked"));
+                renderData.elCls.push(self.getBaseCssClasses('checked'));
             }
         },
 
         _onSetChecked: function (v) {
             var self = this,
-                cls = self.getBaseCssClasses("checked");
+                cls = self.getBaseCssClasses('checked');
             self.$el[v ? 'addClass' : 'removeClass'](cls);
         }
     }, {

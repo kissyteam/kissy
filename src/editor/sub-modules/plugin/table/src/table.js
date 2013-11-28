@@ -6,13 +6,14 @@
 KISSY.add(function (S, require) {
     var Editor = require('editor');
     var OLD_IE = S.UA.ieMode < 11;
+    var Walker = Editor.Walker;
     var DialogLoader = require('./dialog-loader');
     require('./contextmenu');
     require('./button');
     var UA = S.UA,
         Dom = S.DOM,
         Node = S.Node,
-        tableRules = ["tr", "th", "td", "tbody", "table"],
+        tableRules = ['tr', 'th', 'td', 'tbody', 'table'],
         cellNodeRegex = /^(?:td|th)$/;
 
     function getSelectedCells(selection) {
@@ -30,7 +31,7 @@ KISSY.add(function (S, require) {
             }
             // If we are exiting from the first </td>, then the td should definitely be
             // included.
-            if (node[0].nodeType == Dom.NodeType.ELEMENT_NODE &&
+            if (node[0].nodeType === Dom.NodeType.ELEMENT_NODE &&
                 cellNodeRegex.test(node.nodeName()) && !node.data('selected_cell')) {
                 node._4eSetMarker(database, 'selected_cell', true, undefined);
                 retval.push(node);
@@ -45,8 +46,9 @@ KISSY.add(function (S, require) {
                 var startNode = range.getCommonAncestor(),
                     nearestCell = startNode.closest('td', undefined) ||
                         startNode.closest('th', undefined);
-                if (nearestCell)
+                if (nearestCell) {
                     retval.push(nearestCell);
+                }
             } else {
                 var walker = new Walker(range),
                     node;
@@ -82,16 +84,18 @@ KISSY.add(function (S, require) {
         // Empty all cells.
         for (var i = 0; i < $cells.length; i++) {
             $cells[ i ].innerHTML = '';
-            if (!OLD_IE)
+            if (!OLD_IE) {
                 ( new Node($cells[ i ]) )._4eAppendBogus(undefined);
+            }
         }
     }
 
     function insertRow(selection, insertBefore) {
         // Get the row where the selection is placed in.
         var row = selection.getStartElement().parent('tr');
-        if (!row)
+        if (!row) {
             return;
+        }
 
         // Create a clone of the row.
         var newRow = row.clone(true);
@@ -104,27 +108,32 @@ KISSY.add(function (S, require) {
     }
 
     function deleteRows(selectionOrRow) {
+        var table;
         if (selectionOrRow instanceof Editor.Selection) {
             var cells = getSelectedCells(selectionOrRow),
                 cellsCount = cells.length,
                 rowsToDelete = [],
                 cursorPosition,
                 previousRowIndex,
+                row,
                 nextRowIndex;
 
             // Queue up the rows - it's possible and
             // likely that we have duplicates.
             for (var i = 0; i < cellsCount; i++) {
-                var row = cells[ i ].parent(),
-                    rowIndex = row[0].rowIndex;
+                row = cells[ i ].parent();
+                var rowIndex = row[0].rowIndex;
 
-                !i && ( previousRowIndex = rowIndex - 1 );
+                if (!i) {
+                    ( previousRowIndex = rowIndex - 1 );
+                }
                 rowsToDelete[ rowIndex ] = row;
-                i == cellsCount - 1 && ( nextRowIndex = rowIndex + 1 );
+                if (i === cellsCount - 1) {
+                    ( nextRowIndex = rowIndex + 1 );
+                }
             }
-
-            var table = row.parent('table'),
-                rows = table[0].rows,
+            table = row.parent('table');
+            var rows = table[0].rows,
                 rowCount = rows.length;
 
             // Where to put the cursor after rows been deleted?
@@ -137,8 +146,9 @@ KISSY.add(function (S, require) {
                     table[0].parentNode);
 
             for (i = rowsToDelete.length; i >= 0; i--) {
-                if (rowsToDelete[ i ])
+                if (rowsToDelete[ i ]) {
                     deleteRows(rowsToDelete[ i ]);
+                }
             }
 
             return cursorPosition;
@@ -146,10 +156,12 @@ KISSY.add(function (S, require) {
         else if (selectionOrRow instanceof Node) {
             table = selectionOrRow.parent('table');
 
-            if (table[0].rows.length == 1)
+            if (table[0].rows.length === 1) {
                 table.remove();
-            else
+            }
+            else {
                 selectionOrRow.remove();
+            }
         }
 
         return 0;
@@ -172,18 +184,21 @@ KISSY.add(function (S, require) {
         for (var i = 0; i < table[0].rows.length; i++) {
             var $row = table[0].rows[ i ];
             // If the row doesn't have enough cells, ignore it.
-            if ($row.cells.length < ( cellIndex + 1 ))
+            if ($row.cells.length < ( cellIndex + 1 )) {
                 continue;
+            }
             cell = new Node($row.cells[ cellIndex ].cloneNode(undefined));
 
-            if (!OLD_IE)
+            if (!OLD_IE) {
                 cell._4eAppendBogus(undefined);
+            }
             // Get back the currently selected cell.
             var baseCell = new Node($row.cells[ cellIndex ]);
-            if (insertBefore)
+            if (insertBefore) {
                 cell.insertBefore(baseCell);
-            else
+            } else {
                 cell.insertAfter(baseCell);
+            }
         }
     }
 
@@ -227,11 +242,12 @@ KISSY.add(function (S, require) {
     }
 
     function deleteColumns(selectionOrCell) {
+        var i;
         if (selectionOrCell instanceof Editor.Selection) {
             var colsToDelete = getSelectedCells(selectionOrCell),
                 elementToFocus = getFocusElementAfterDelCols(colsToDelete);
 
-            for (var i = colsToDelete.length - 1; i >= 0; i--) {
+            for (i = colsToDelete.length - 1; i >= 0; i--) {
                 //某一列已经删除？？这一列的cell再做？ !table判断处理
                 if (colsToDelete[ i ]) {
                     deleteColumns(colsToDelete[i]);
@@ -244,8 +260,9 @@ KISSY.add(function (S, require) {
             var table = selectionOrCell.parent('table');
 
             //该单元格所属的列已经被删除了
-            if (!table)
+            if (!table) {
                 return null;
+            }
 
             // Get the cell index.
             var cellIndex = selectionOrCell[0].cellIndex;
@@ -261,14 +278,15 @@ KISSY.add(function (S, require) {
 
                 // If the cell to be removed is the first one and
                 //  the row has just one cell.
-                if (!cellIndex && row[0].cells.length == 1) {
+                if (!cellIndex && row[0].cells.length === 1) {
                     deleteRows(row);
                     continue;
                 }
 
                 // Else, just delete the cell.
-                if (row[0].cells[ cellIndex ])
+                if (row[0].cells[ cellIndex ]) {
                     row[0].removeChild(row[0].cells[ cellIndex ]);
+                }
             }
         }
 
@@ -277,7 +295,7 @@ KISSY.add(function (S, require) {
 
     function placeCursorInCell(cell, placeAtEnd) {
         var range = new Editor.Range(cell[0].ownerDocument);
-        if (!range['moveToElementEditablePosition'](cell,
+        if (!range.moveToElementEditablePosition(cell,
             placeAtEnd ? true : undefined)) {
             range.selectNodeContents(cell);
             range.collapse(placeAtEnd ? false : true);
@@ -289,15 +307,16 @@ KISSY.add(function (S, require) {
         var selection = editor.getSelection(),
             startElement = selection && selection.getStartElement(),
             table = startElement && startElement.closest('table', undefined);
-        if (!table)
+        if (!table) {
             return undefined;
+        }
         var td = startElement.closest(function (n) {
             var name = Dom.nodeName(n);
-            return table.contains(n) && (name == "td" || name == "th");
+            return table.contains(n) && (name === 'td' || name === 'th');
         }, undefined);
         var tr = startElement.closest(function (n) {
             var name = Dom.nodeName(n);
-            return table.contains(n) && name == "tr";
+            return table.contains(n) && name === 'tr';
         }, undefined);
         return {
             table: table,
@@ -318,10 +337,10 @@ KISSY.add(function (S, require) {
     }
 
     var statusChecker = {
-        "表格属性": getSel,
-        "删除表格": ensureTd,
-        "删除列": ensureTd,
-        "删除行": ensureTr,
+        '表格属性': getSel,
+        '删除表格': ensureTd,
+        '删除列': ensureTd,
+        '删除行': ensureTr,
         '在上方插入行': ensureTr,
         '在下方插入行': ensureTr,
         '在左侧插入列': ensureTd,
@@ -334,17 +353,11 @@ KISSY.add(function (S, require) {
             // IE6 don't have child selector support,
             // where nested table cells could be incorrect.
             ( UA.ie === 6 ?
-                [
-                    'table.%2,',
-                    'table.%2 td, table.%2 th,',
-                    '{',
-                    'border : #d3d3d3 1px dotted',
-                    '}'
-                ] :
-                [
-                    ' table.%2,',
+                ['table.%2,', 'table.%2 td, table.%2 th,', '{', 'border : #d3d3d3 1px dotted', '}'] :
+                [' table.%2,',
                     ' table.%2 > tr > td,  table.%2 > tr > th,',
-                    ' table.%2 > tbody > tr > td,  table.%2 > tbody > tr > th,',
+                    ' table.%2 > tbody > tr > td, ' +
+                        ' table.%2 > tbody > tr > th,',
                     ' table.%2 > thead > tr > td,  table.%2 > thead > tr > th,',
                     ' table.%2 > tfoot > tr > td,  table.%2 > tfoot > tr > th',
                     '{',
@@ -357,11 +370,11 @@ KISSY.add(function (S, require) {
         extraDataFilter = {
             tags: {
                 'table': function (element) {
-                    var cssClass = element.getAttribute("class"),
-                        border = parseInt(element.getAttribute("border"), 10);
+                    var cssClass = element.getAttribute('class'),
+                        border = parseInt(element.getAttribute('border'), 10);
 
                     if (!border || border <= 0) {
-                        element.setAttribute("class", S.trim((cssClass || "") +
+                        element.setAttribute('class', S.trim((cssClass || '') +
                             ' ' + showBorderClassName));
                     }
                 }
@@ -371,14 +384,14 @@ KISSY.add(function (S, require) {
         extraHTMLFilter = {
             tags: {
                 'table': function (table) {
-                    var cssClass = table.getAttribute("class"), v;
+                    var cssClass = table.getAttribute('class'), v;
 
                     if (cssClass) {
-                        v = S.trim(cssClass.replace(showBorderClassName, ""));
+                        v = S.trim(cssClass.replace(showBorderClassName, ''));
                         if (v) {
-                            table.setAttribute("class", v);
+                            table.setAttribute('class', v);
                         } else {
-                            table.removeAttribute("class");
+                            table.removeAttribute('class');
                         }
                     }
 
@@ -407,11 +420,11 @@ KISSY.add(function (S, require) {
             var self = this,
                 handlers = {
 
-                    "表格属性": function () {
+                    '表格属性': function () {
                         this.hide();
                         var info = getSel(editor);
                         if (info) {
-                            DialogLoader.useDialog(editor, "table",
+                            DialogLoader.useDialog(editor, 'table',
                                 self.config,
                                 {
                                     selectedTable: info.table,
@@ -420,7 +433,7 @@ KISSY.add(function (S, require) {
                         }
                     },
 
-                    "删除表格": function () {
+                    '删除表格': function () {
                         this.hide();
                         var selection = editor.getSelection(),
                             startElement = selection && selection.getStartElement(),
@@ -441,9 +454,9 @@ KISSY.add(function (S, require) {
                         // If the table's parent has only one child,
                         // remove it,except body,as well.( #5416 )
                         var parent = table.parent();
-                        if (parent[0].childNodes.length == 1 &&
-                            parent.nodeName() != 'body' &&
-                            parent.nodeName() != 'td') {
+                        if (parent[0].childNodes.length === 1 &&
+                            parent.nodeName() !== 'body' &&
+                            parent.nodeName() !== 'td') {
                             parent.remove();
                         } else {
                             table.remove();
@@ -464,7 +477,9 @@ KISSY.add(function (S, require) {
                         editor.execCommand('save');
                         var selection = editor.getSelection(),
                             element = deleteColumns(selection);
-                        element && placeCursorInCell(element, true);
+                        if (element) {
+                            placeCursorInCell(element, true);
+                        }
                         editor.execCommand('save');
                     },
 
@@ -508,16 +523,16 @@ KISSY.add(function (S, require) {
                 });
             });
 
-            editor.addContextMenu("table", function (node) {
+            editor.addContextMenu('table', function (node) {
                 if (S.inArray(Dom.nodeName(node), tableRules)) {
                     return true;
                 }
             }, {
-                width: "120px",
+                width: '120px',
                 children: children,
                 listeners: {
                     click: function (e) {
-                        var content = e.target.get("content");
+                        var content = e.target.get('content');
                         if (handlers[content]) {
                             handlers[content].apply(this);
                         }
@@ -526,9 +541,9 @@ KISSY.add(function (S, require) {
                     beforeVisibleChange: function (e) {
                         if (e.newVal) {
                             var self = this, children = self.get('children');
-                            var editor = self.get("editor");
+                            var editor = self.get('editor');
                             S.each(children, function (c) {
-                                var content = c.get("content");
+                                var content = c.get('content');
                                 if (!statusChecker[content] ||
                                     statusChecker[content].call(self, editor)) {
                                     c.set('disabled', false);
@@ -542,11 +557,11 @@ KISSY.add(function (S, require) {
                 }
             });
 
-            editor.addButton("table", {
+            editor.addButton('table', {
                 mode: Editor.Mode.WYSIWYG_MODE,
                 listeners: {
                     click: function () {
-                        DialogLoader.useDialog(editor, "table",
+                        DialogLoader.useDialog(editor, 'table',
                             self.config,
                             {
                                 selectedTable: 0,
@@ -555,7 +570,7 @@ KISSY.add(function (S, require) {
 
                     }
                 },
-                tooltip: "插入表格"
+                tooltip: '插入表格'
             });
 
         }

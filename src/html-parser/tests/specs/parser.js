@@ -166,7 +166,7 @@ KISSY.add(function (S, HtmlParser) {
                         if (el.getAttribute("class") == "li") {
                             el.nodeName = el.tagName = "li";
                             el.removeAttribute("class");
-                        } else if (el.getAttribute("class") == "ul") {
+                        } else if (el.getAttribute("class") == 'ul') {
                             // filter its children first, root node need children info after filtering
                             el.filterChildren();
                             var childNodes = el.childNodes;
@@ -175,7 +175,7 @@ KISSY.add(function (S, HtmlParser) {
                                     return;
                                 }
                             }
-                            el.nodeName = el.tagName = "ul";
+                            el.nodeName = el.tagName = 'ul';
                             el.removeAttribute("class");
                         }
                     }
@@ -253,13 +253,13 @@ KISSY.add(function (S, HtmlParser) {
                     writer = new HtmlParser.BasicWriter();
                 node.writeHtml(writer);
                 expect(writer.getHtml()).toBe('<input ' +
-                    'checked="checked" />');
+                    'checked='checked' />');
 
 
                 var beatifyWriter = new HtmlParser.BeautifyWriter();
                 node.writeHtml(beatifyWriter);
                 expect(beatifyWriter.getHtml()).toBe('<input ' +
-                    'checked="checked" />');
+                    'checked='checked' />');
 
                 var minifyWriter = new HtmlParser.MinifyWriter();
                 node.writeHtml(minifyWriter);
@@ -274,13 +274,13 @@ KISSY.add(function (S, HtmlParser) {
                     writer = new HtmlParser.BasicWriter();
                 node.writeHtml(writer);
                 expect(writer.getHtml()).toBe('<input ' +
-                    'checked="checked" />');
+                    'checked='checked' />');
 
 
                 var beatifyWriter = new HtmlParser.BeautifyWriter();
                 node.writeHtml(beatifyWriter);
                 expect(beatifyWriter.getHtml()).toBe('<input ' +
-                    'checked="checked" />');
+                    'checked='checked' />');
 
                 var minifyWriter = new HtmlParser.MinifyWriter();
                 node.writeHtml(minifyWriter);

@@ -3,7 +3,7 @@
  * preview for kissy editor
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S,require) {
+KISSY.add(function (S, require) {
     var win = window;
     require('./button');
     function Preview() {
@@ -11,15 +11,16 @@ KISSY.add(function (S,require) {
 
     S.augment(Preview, {
         pluginRenderUI: function (editor) {
-            editor.addButton("preview", {
-                tooltip: "预览",
+            editor.addButton('preview', {
+                tooltip: '预览',
                 listeners: {
                     click: function () {
+                        var iWidth, iHeight, iLeft;
                         try {
-                            var screen = win.screen,
-                                iWidth = Math.round(screen.width * 0.8),
-                                iHeight = Math.round(screen.height * 0.7),
-                                iLeft = Math.round(screen.width * 0.1);
+                            var screen = win.screen;
+                            iHeight = Math.round(screen.height * 0.7);
+                            iLeft = Math.round(screen.width * 0.1);
+                            iWidth = Math.round(screen.width * 0.8);
                         } catch (e) {
                             iWidth = 640; // 800 * 0.8,
                             iHeight = 420; // 600 * 0.7,
@@ -40,10 +41,7 @@ KISSY.add(function (S,require) {
                                     'resizable=yes,' +
                                     'width=' +
                                     iWidth +
-                                    ',height='
-                                    + iHeight
-                                    + ',left='
-                                    + iLeft), winDoc = oWindow.document;
+                                    ',height=' + iHeight + ',left=' + iLeft), winDoc = oWindow.document;
                         winDoc.open();
                         winDoc.write(sHTML);
                         winDoc.close();
@@ -53,7 +51,8 @@ KISSY.add(function (S,require) {
 
                 }
             });
-        }});
+        }
+    });
 
     return Preview;
 });

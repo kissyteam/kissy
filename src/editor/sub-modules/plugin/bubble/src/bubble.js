@@ -4,20 +4,19 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
-    var Overlay=require('overlay');
-    var Editor=require('editor');
-    var  logger= S.getLogger('s/editor');
-    var undefined = {}['a'],
+    var Overlay = require('overlay');
+    var Editor = require('editor');
+    var logger = S.getLogger('s/editor');
 
-        BUBBLE_CFG = {
-            zIndex: Editor.baseZIndex(Editor.ZIndexManager.BUBBLE_VIEW),
-            elCls: "{prefixCls}editor-bubble",
-            prefixCls: "{prefixCls}editor-",
-            effect: {
-                effect: "fade",
-                duration: 0.3
-            }
-        };
+    var BUBBLE_CFG = {
+        zIndex: Editor.baseZIndex(Editor.ZIndexManager.BUBBLE_VIEW),
+        elCls: '{prefixCls}editor-bubble',
+        prefixCls: '{prefixCls}editor-',
+        effect: {
+            effect: 'fade',
+            duration: 0.3
+        }
+    };
 
     function inRange(t, b, r) {
         return t <= r && b >= r;
@@ -26,20 +25,20 @@ KISSY.add(function (S, require) {
 
     // 是否两个bubble上下重叠？
     function overlap(b1, b2) {
-        var b1_top = b1.get('y'),
-            b1_bottom = b1_top + b1.get('el').outerHeight(),
-            b2_top = b2.get('y'),
-            b2_bottom = b2_top + b2.get('el').outerHeight();
+        var b1Top = b1.get('y'),
+            b1Bottom = b1Top + b1.get('el').outerHeight(),
+            b2Top = b2.get('y'),
+            b2Bottom = b2Top + b2.get('el').outerHeight();
 
-        return inRange(b1_top, b1_bottom, b2_bottom) ||
-            inRange(b1_top, b1_bottom, b2_top);
+        return inRange(b1Top, b1Bottom, b2Bottom) ||
+            inRange(b1Top, b1Bottom, b2Top);
     }
 
 
     // 得到依附在同一个节点上的所有 bubble 中的最下面一个
     function getTopPosition(self) {
         var archor = null,
-            editor = self.get("editor"),
+            editor = self.get('editor'),
             myBubbles = editor.getControls();
         S.each(myBubbles, function (bubble) {
             if (bubble.isKeBubble &&
@@ -58,16 +57,16 @@ KISSY.add(function (S, require) {
 
     function getXy(bubble) {
 
-        var el = bubble.get("editorSelectedEl");
+        var el = bubble.get('editorSelectedEl');
 
 
         if (!el) {
             return undefined;
         }
 
-        var editor = bubble.get("editor"),
-            editorWin = editor.get("window"),
-            iframeXY = editor.get("iframe").offset(),
+        var editor = bubble.get('editor'),
+            editorWin = editor.get('window'),
+            iframeXY = editor.get('iframe').offset(),
             top = iframeXY.top,
             left = iframeXY.left,
             right = left + editorWin.width(),
@@ -89,7 +88,7 @@ KISSY.add(function (S, require) {
 
         // ie 图片缩放框大于编辑区域底部，bubble 点击不了了，干脆不显示
         if (S.UA.ie &&
-            el[0].nodeName.toLowerCase() == 'img' &&
+            el[0].nodeName.toLowerCase() === 'img' &&
             elBottom > bottom) {
             return undefined;
         }
@@ -141,10 +140,10 @@ KISSY.add(function (S, require) {
 
         bubble.isKeBubble = 1;
 
-        editor.addControl(id + "/bubble", bubble);
+        editor.addControl(id + '/bubble', bubble);
 
         // 借鉴google doc tip提示显示
-        editor.on("selectionChange", function (ev) {
+        editor.on('selectionChange', function (ev) {
             var elementPath = ev.path,
                 elements = elementPath.elements,
                 a,
@@ -156,7 +155,7 @@ KISSY.add(function (S, require) {
                 }
                 a = filter(lastElement);
                 if (a) {
-                    bubble.set("editorSelectedEl", a);
+                    bubble.set('editorSelectedEl', a);
                     // 重新触发 bubble show 事件
                     bubble.hide();
                     // 等所有 bubble hide 再show
@@ -171,10 +170,10 @@ KISSY.add(function (S, require) {
         // !TODO 耦合---
         function onHide() {
             bubble.hide();
-            var editorWin = editor.get("window");
+            var editorWin = editor.get('window');
             // 刚开始就配置 mode 为 sourcecode
             if (editorWin) {
-                editorWin.detach("scroll", onScroll);
+                editorWin.detach('scroll', onScroll);
                 bufferScroll.stop();
             }
         }
@@ -184,16 +183,16 @@ KISSY.add(function (S, require) {
         function showImmediately() {
             var xy = getXy(bubble);
             if (xy) {
-                bubble.move(xy[0],xy[1]);
+                bubble.move(xy[0], xy[1]);
                 var archor = getTopPosition(bubble);
                 if (archor) {
                     xy[1] = archor.get('y') + archor.get('el').outerHeight();
-                    bubble.move(xy[0],xy[1]);
+                    bubble.move(xy[0], xy[1]);
                 }
                 if (!bubble.get('visible')) {
                     bubble.show();
                 } else {
-                    logger.debug("already show by selectionChange");
+                    logger.debug('already show by selectionChange');
                 }
             }
         }
@@ -201,17 +200,16 @@ KISSY.add(function (S, require) {
         var bufferScroll = S.buffer(showImmediately, 350);
 
         function onScroll() {
-            if (!bubble.get("editorSelectedEl")) {
+            if (!bubble.get('editorSelectedEl')) {
                 return;
             }
-            var el = bubble.get('el');
             bubble.hide();
             bufferScroll();
         }
 
         function onShow() {
-            var editorWin = editor.get("window");
-            editorWin.on("scroll", onScroll);
+            var editorWin = editor.get('window');
+            editorWin.on('scroll', onScroll);
             showImmediately();
         }
     };

@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ',"src":' + jscoverage_quote(this.src)
+            + ','src':' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -524,7 +524,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/dialog.js'].lineData[15]++;
     if (visit2_15_1(/^#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i.test(color))) {
       _$jscoverage['/dialog.js'].lineData[17]++;
-      return map([re['$1'], re['$2'], re['$3']], function(x) {
+      return map([re.$1, re.$2, re.$3], function(x) {
   _$jscoverage['/dialog.js'].functionData[2]++;
   _$jscoverage['/dialog.js'].lineData[18]++;
   return parseInt(x, 16);
@@ -533,7 +533,7 @@ KISSY.add(function(S, require) {
       _$jscoverage['/dialog.js'].lineData[20]++;
       if (visit3_20_1(/^#([0-9a-f])([0-9a-f])([0-9a-f])$/i.test(color))) {
         _$jscoverage['/dialog.js'].lineData[22]++;
-        return map([re['$1'], re['$2'], re['$3']], function(x) {
+        return map([re.$1, re.$2, re.$3], function(x) {
   _$jscoverage['/dialog.js'].functionData[3]++;
   _$jscoverage['/dialog.js'].lineData[23]++;
   return parseInt(x + x, 16);
@@ -542,7 +542,7 @@ KISSY.add(function(S, require) {
         _$jscoverage['/dialog.js'].lineData[25]++;
         if (visit4_25_1(/^rgb\((.*),(.*),(.*)\)$/i.test(color))) {
           _$jscoverage['/dialog.js'].lineData[27]++;
-          return map([re['$1'], re['$2'], re['$3']], function(x) {
+          return map([re.$1, re.$2, re.$3], function(x) {
   _$jscoverage['/dialog.js'].functionData[4]++;
   _$jscoverage['/dialog.js'].lineData[28]++;
   return visit5_28_1(x.indexOf("%") > 0) ? parseFloat(x, 10) * 2.55 : x | 0;
@@ -623,7 +623,7 @@ KISSY.add(function(S, require) {
         ret = getData(document.defaultView.getComputedStyle(frag, null).color);
       } else {
         _$jscoverage['/dialog.js'].lineData[82]++;
-        color = frag.createTextRange()['queryCommandValue']("ForeColor");
+        color = frag.createTextRange().queryCommandValue("ForeColor");
         _$jscoverage['/dialog.js'].lineData[83]++;
         ret = [color & 0x0000ff, (color & 0x00ff00) >>> 8, (color & 0xff0000) >>> 16];
       }
@@ -719,9 +719,9 @@ KISSY.add(function(S, require) {
   prefixCls: prefixCls}), 
   width: "550px"}).render();
   _$jscoverage['/dialog.js'].lineData[176]++;
-  var win = self.dialog, body = win.get("body"), foot = win.get("footer"), indicator = body.one("." + prefixCls + "editor-color-advanced-indicator"), indicatorValue = body.one("." + prefixCls + "editor-color-advanced-value"), left = body.one("." + prefixCls + "editor-color-advanced-picker-left"), right = body.one("." + prefixCls + "editor-color-advanced-picker-right"), ok = foot.one("." + prefixCls + "editor-color-advanced-ok"), cancel = foot.one("." + prefixCls + "editor-color-advanced-cancel");
+  var win = self.dialog, body = win.get('body'), foot = win.get("footer"), indicator = body.one("." + prefixCls + "editor-color-advanced-indicator"), indicatorValue = body.one("." + prefixCls + "editor-color-advanced-value"), left = body.one("." + prefixCls + "editor-color-advanced-picker-left"), right = body.one("." + prefixCls + "editor-color-advanced-picker-right"), ok = foot.one("." + prefixCls + "editor-color-advanced-ok"), cancel = foot.one("." + prefixCls + "editor-color-advanced-cancel");
   _$jscoverage['/dialog.js'].lineData[186]++;
-  ok.on("click", function(ev) {
+  ok.on('click', function(ev) {
   _$jscoverage['/dialog.js'].functionData[17]++;
   _$jscoverage['/dialog.js'].lineData[187]++;
   var v = S.trim(indicatorValue.val()), colorButtonArrow = self.colorButtonArrow;
@@ -756,7 +756,7 @@ KISSY.add(function(S, require) {
   indicator.css("background-color", v);
 });
   _$jscoverage['/dialog.js'].lineData[212]++;
-  cancel.on("click", function(ev) {
+  cancel.on('click', function(ev) {
   _$jscoverage['/dialog.js'].functionData[19]++;
   _$jscoverage['/dialog.js'].lineData[213]++;
   self.hide();
@@ -764,7 +764,7 @@ KISSY.add(function(S, require) {
   visit19_214_1(ev && ev.halt());
 });
   _$jscoverage['/dialog.js'].lineData[216]++;
-  body.on("click", function(ev) {
+  body.on('click', function(ev) {
   _$jscoverage['/dialog.js'].functionData[20]++;
   _$jscoverage['/dialog.js'].lineData[217]++;
   ev.halt();
@@ -797,7 +797,7 @@ KISSY.add(function(S, require) {
   _detailColor: function(color) {
   _$jscoverage['/dialog.js'].functionData[21]++;
   _$jscoverage['/dialog.js'].lineData[235]++;
-  var self = this, win = self.dialog, body = win.get("body"), editor = self.editor, prefixCls = editor.get('prefixCls'), detailPanel = body.one("." + prefixCls + "editor-color-advanced-picker-right");
+  var self = this, win = self.dialog, body = win.get('body'), editor = self.editor, prefixCls = editor.get('prefixCls'), detailPanel = body.one("." + prefixCls + "editor-color-advanced-picker-right");
   _$jscoverage['/dialog.js'].lineData[242]++;
   detailPanel.html(map(ColorGrads(["#ffffff", color, "#000000"], 40), function(x) {
   _$jscoverage['/dialog.js'].functionData[22]++;

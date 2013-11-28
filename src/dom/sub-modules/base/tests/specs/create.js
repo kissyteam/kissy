@@ -58,7 +58,7 @@ KISSY.add(function (S, Dom) {
         it("create should works for style with content in ie<8", function () {
             var style, d;
             expect((style = Dom.create("<style>.styleie67 {width:99px;}</style>"))
-                .nodeName.toLowerCase()).toBe("style");
+                .nodeName.toLowerCase()).toBe('style');
             Dom.append(d = Dom.create("<div class='styleie67'></div>"), document.body);
             Dom.append(style, document.getElementsByTagName("head")[0]);
 
@@ -185,8 +185,8 @@ KISSY.add(function (S, Dom) {
             var span2 = Dom.create("<span></span>");
             Dom.append(span, div);
             Dom.append(span2, div2);
-            Dom.append(div, "body");
-            Dom.append(div2, "body");
+            Dom.append(div, 'body');
+            Dom.append(div2, 'body');
 
             Dom.outerHtml(span, "5<span>3</span>");
             expect(Dom.html(div).toLowerCase()).toBe("5<span>3</span>");

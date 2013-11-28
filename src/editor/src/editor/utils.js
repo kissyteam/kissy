@@ -3,7 +3,7 @@
  * common utils for kissy editor
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S,require) {
+KISSY.add(function (S, require) {
     var Node = require('node');
     var Editor = require('./base');
     var TRUE = true,
@@ -21,17 +21,17 @@ KISSY.add(function (S,require) {
             debugUrl: function (url) {
                 var Config = S.Config;
                 if (!Config.debug) {
-                    url = url.replace(/\.(js|css)/i, "-min.$1");
+                    url = url.replace(/\.(js|css)/i, '-min.$1');
                 }
-                if (url.indexOf("?t") == -1) {
-                    if (url.indexOf("?") != -1) {
-                        url += "&";
+                if (url.indexOf('?t') === -1) {
+                    if (url.indexOf('?') !== -1) {
+                        url += '&';
                     } else {
-                        url += "?";
+                        url += '?';
                     }
-                    url += "t=" + encodeURIComponent(Config.tag);
+                    url += 't=' + encodeURIComponent(Config.tag);
                 }
-                return Config.base + "editor/" + url;
+                return Config.base + 'editor/' + url;
             },
 
             lazyRun: function (obj, before, after) {
@@ -46,20 +46,20 @@ KISSY.add(function (S,require) {
             getXY: function (offset, editor) {
                 var x = offset.left,
                     y = offset.top,
-                    currentWindow = editor.get("window")[0];
+                    currentWindow = editor.get('window')[0];
                 //x,y相对于当前iframe文档,防止当前iframe有滚动条
                 x -= Dom.scrollLeft(currentWindow);
                 y -= Dom.scrollTop(currentWindow);
 
                 //note:when iframe is static ,still some mistake
-                var iframePosition = editor.get("iframe").offset();
+                var iframePosition = editor.get('iframe').offset();
                 x += iframePosition.left;
                 y += iframePosition.top;
 
                 return {left: x, top: y};
             },
 
-            tryThese: function (var_args) {
+            tryThese: function () {
                 var returnValue;
                 for (var i = 0, length = arguments.length; i < length; i++) {
                     var lambda = arguments[i];
@@ -80,24 +80,25 @@ KISSY.add(function (S,require) {
             },
 
             ltrim: function (str) {
-                return str.replace(/^\s+/, "");
+                return str.replace(/^\s+/, '');
             },
 
             rtrim: function (str) {
-                return str.replace(/\s+$/, "");
+                return str.replace(/\s+$/, '');
             },
 
             isNumber: function (n) {
-                return /^\d+(.\d+)?$/.test(S.trim(n));
+                return (/^\d+(.\d+)?$/).test(S.trim(n));
             },
 
             verifyInputs: function (inputs) {
                 for (var i = 0; i < inputs.length; i++) {
                     var input = new Node(inputs[i]),
                         v = S.trim(Utils.valInput(input)),
-                        verify = input.attr("data-verify"),
-                        warning = input.attr("data-warning");
+                        verify = input.attr('data-verify'),
+                        warning = input.attr('data-warning');
                     if (verify && !new RegExp(verify).test(v)) {
+                        /*global alert*/
                         alert(warning);
                         return FALSE;
                     }
@@ -111,44 +112,44 @@ KISSY.add(function (S,require) {
             },
 
             resetInput: function (inp) {
-                var placeholder = inp.attr("placeholder");
+                var placeholder = inp.attr('placeholder');
                 if (placeholder && UA.ie) {
-                    inp.addClass("ks-editor-input-tip");
+                    inp.addClass('ks-editor-input-tip');
                     inp.val(placeholder);
                 } else if (!UA.ie) {
-                    inp.val("");
+                    inp.val('');
                 }
             },
 
             valInput: function (inp, val) {
                 if (val === undefined) {
-                    if (inp.hasClass("ks-editor-input-tip")) {
-                        return "";
+                    if (inp.hasClass('ks-editor-input-tip')) {
+                        return '';
                     } else {
                         return inp.val();
                     }
                 } else {
-                    inp.removeClass("ks-editor-input-tip");
+                    inp.removeClass('ks-editor-input-tip');
                     inp.val(val);
                 }
                 return undefined;
             },
 
             placeholder: function (inp, tip) {
-                inp.attr("placeholder", tip);
+                inp.attr('placeholder', tip);
                 if (!UA.ie) {
                     return;
                 }
                 inp.on('blur', function () {
                     if (!S.trim(inp.val())) {
-                        inp.addClass("ks-editor-input-tip");
+                        inp.addClass('ks-editor-input-tip');
                         inp.val(tip);
                     }
                 });
                 inp.on('focus', function () {
-                    inp.removeClass("ks-editor-input-tip");
-                    if (S.trim(inp.val()) == tip) {
-                        inp.val("");
+                    inp.removeClass('ks-editor-input-tip');
+                    if (S.trim(inp.val()) === tip) {
+                        inp.val('');
                     }
                 });
             },
@@ -180,13 +181,14 @@ KISSY.add(function (S,require) {
                     //ie 点击按钮不丢失焦点
                     el.unselectable();
                 } else {
-                    el.attr("onmousedown", "return false;");
+                    el.attr('onmousedown', 'return false;');
                 }
             },
 
             injectDom: function (editorDom) {
                 S.mix(Dom, editorDom);
                 for (var dm in editorDom) {
+                    /*jshint loopfunc:true*/
                     (function (dm) {
                         Node.prototype[dm] = function () {
                             var args = [].slice.call(arguments, 0);
@@ -232,9 +234,9 @@ KISSY.add(function (S,require) {
             },
 
             getQueryCmd: function (cmd) {
-                return "query" + ("-" + cmd).replace(/-(\w)/g, function (m, m1) {
-                    return m1.toUpperCase()
-                }) + "Value";
+                return 'query' + ('-' + cmd).replace(/-(\w)/g, function (m, m1) {
+                    return m1.toUpperCase();
+                }) + 'Value';
             }
         };
 

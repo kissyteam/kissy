@@ -13,34 +13,32 @@ KISSY.add(function (S, require) {
 
     S.augment(Resize, {
         pluginRenderUI: function (editor) {
-            var Draggable = DD['Draggable'],
+            var Draggable = DD.Draggable,
                 statusBarEl = editor.get('statusBarEl'),
-                textarea = editor.get('textarea'),
                 cfg = this.config,
-                direction = cfg["direction"] || ['x', 'y'];
+                direction = cfg.direction || ['x', 'y'];
 
             var cursor = 'se-resize';
 
-            if (direction.length == 1) {
-                if (direction[0] == 'x') {
-                    cursor = "e-resize"
+            if (direction.length === 1) {
+                if (direction[0] === 'x') {
+                    cursor = 'e-resize';
                 } else {
-                    cursor = "s-resize"
+                    cursor = 's-resize';
                 }
             }
 
-            var resizer = new Node("<div class='" + editor.get('prefixCls') +
-                "editor-resizer' style='cursor: "
-                + cursor +
-                "'></div>").appendTo(statusBarEl);
+            var resizer = new Node('<div class="' + editor.get('prefixCls') +
+                'editor-resizer" style="cursor: '+ cursor +
+                '"></div>').appendTo(statusBarEl);
 
             //最大化时就不能缩放了
-            editor.on("maximizeWindow", function () {
-                resizer.css("display", "none");
+            editor.on('maximizeWindow', function () {
+                resizer.css('display', 'none');
             });
 
-            editor.on("restoreWindow", function () {
-                resizer.css("display", "");
+            editor.on('restoreWindow', function () {
+                resizer.css('display', '');
             });
 
             var d = new Draggable({
@@ -53,26 +51,26 @@ KISSY.add(function (S, require) {
                 heightEl = editor.get('el'),
                 widthEl = editor.get('el');
 
-            d.on("dragstart", function () {
+            d.on('dragstart', function () {
                 height = heightEl.height();
                 width = widthEl.width();
-                editor.fire("resizeStart");
+                editor.fire('resizeStart');
                 dragStartMousePos = d.get('dragStartMousePos');
             });
 
-            d.on("drag", function (ev) {
+            d.on('drag', function (ev) {
                 var diffX = ev.pageX - dragStartMousePos.left,
                     diffY = ev.pageY - dragStartMousePos.top;
                 if (S.inArray('y', direction)) {
-                    editor.set("height", height + diffY);
+                    editor.set('height', height + diffY);
                 }
                 if (S.inArray('x', direction)) {
                     editor.set('width', width + diffX);
                 }
-                editor.fire("resize");
+                editor.fire('resize');
             });
 
-            editor.on("destroy", function () {
+            editor.on('destroy', function () {
                 d.destroy();
                 resizer.remove();
             });

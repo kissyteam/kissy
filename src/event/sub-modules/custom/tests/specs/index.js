@@ -243,11 +243,11 @@ KISSY.add(function (S, Event) {
 
                 var ret = 0;
 
-                r1.on("click", function () {
+                r1.on('click', function () {
                     ret = 1;
                 });
 
-                r3.fire("click");
+                r3.fire('click');
 
                 expect(ret).toBe(1);
 
@@ -271,11 +271,11 @@ KISSY.add(function (S, Event) {
 
                 var ret = 0;
 
-                r1.on("click", function () {
+                r1.on('click', function () {
                     ret = 1;
                 });
 
-                r3.fire("click");
+                r3.fire('click');
 
                 expect(ret).toBe(0);
 
@@ -293,25 +293,25 @@ KISSY.add(function (S, Event) {
                 },
                 noop3 = function () {
                 };
-            eventTarget.on("click", noop);
-            eventTarget.on("click", noop2);
-            eventTarget.on("click", noop3);
+            eventTarget.on('click', noop);
+            eventTarget.on('click', noop2);
+            eventTarget.on('click', noop3);
             eventTarget.on('keydown', noop);
             (function () {
                 var customEventObservables = eventTarget.getCustomEvents();
 
                 var num = 0;
                 for (i in customEventObservables) {
-                    expect(S.inArray(i, ["click", 'keydown']))
+                    expect(S.inArray(i, ['click', 'keydown']))
                         .toBe(true);
                     num++;
                 }
                 expect(num).toBe(2);
-                var clickObserver = customEventObservables["click"];
+                var clickObserver = customEventObservables['click'];
                 expect(clickObserver.observers.length).toBe(3);
             })();
 
-            eventTarget.detach("click", noop);
+            eventTarget.detach('click', noop);
 
             (function () {
                 var customEventObservables = eventTarget.getCustomEvents();
@@ -319,23 +319,23 @@ KISSY.add(function (S, Event) {
 
                 for (i in customEventObservables) {
 
-                    expect(S.inArray(i, ["click", 'keydown']))
+                    expect(S.inArray(i, ['click', 'keydown']))
                         .toBe(true);
                     num++;
 
                 }
                 expect(num).toBe(2);
-                var clickObserver = customEventObservables["click"];
+                var clickObserver = customEventObservables['click'];
                 expect(clickObserver.observers.length).toBe(2);
             })();
 
-            eventTarget.detach("click");
+            eventTarget.detach('click');
 
             (function () {
                 var customEventObservables = eventTarget.getCustomEvents();
 
                 expect(customEventObservables['keydown'].hasObserver()).toBeTruthy();
-                var clickObserver = customEventObservables["click"];
+                var clickObserver = customEventObservables['click'];
                 expect(clickObserver.hasObserver()).toBeFalsy();
             })();
 
@@ -451,7 +451,7 @@ KISSY.add(function (S, Event) {
                     });
                     // 只删去属于 two 组的 click handler
                     g.detach("click.two");
-                    g.fire("click");
+                    g.fire('click');
                     runs(function () {
                         expect(ret).toEqual([]);
                     });
@@ -466,7 +466,7 @@ KISSY.add(function (S, Event) {
                     g.on('click.two', function () {
                         ret.push(2);
                     });
-                    g.fire("click");
+                    g.fire('click');
                     expect(ret).toEqual([1, 2]);
 
                 });
@@ -519,11 +519,11 @@ KISSY.add(function (S, Event) {
                 it("should works with multiple events", function () {
                     var g = new Target(), ret = [];
                     g.on("click.one.two click.two", function (e) {
-                        expect(e.type).toBe("click");
+                        expect(e.type).toBe('click');
                         ret.push(1);
                     });
                     g.detach("click.two");
-                    g.fire("click");
+                    g.fire('click');
                     runs(function () {
                         expect(ret).toEqual([]);
                     });
@@ -532,12 +532,12 @@ KISSY.add(function (S, Event) {
                 it("should works with multiple events when remove", function () {
                     var g = new Target(), ret = [];
                     g.on("click.one click.two", function (e) {
-                        expect(e.type).toBe("click");
+                        expect(e.type).toBe('click');
                         ret.push(1);
                     });
                     // 删除 two 组和 one 组 的 click handler
                     g.detach("click.two click.one");
-                    g.fire("click");
+                    g.fire('click');
                     runs(function () {
                         expect(ret).toEqual([]);
                     });
@@ -546,12 +546,12 @@ KISSY.add(function (S, Event) {
                 it("should works with multiple events and no type when remove", function () {
                     var g = new Target(), ret = [];
                     g.on("click.one click.two", function (e) {
-                        expect(e.type).toBe("click");
+                        expect(e.type).toBe('click');
                         ret.push(1);
                     });
                     // 删除所有事件的 two 组和 one 组
                     g.detach(".two .one");
-                    g.fire("click");
+                    g.fire('click');
                     runs(function () {
                         expect(ret).toEqual([]);
                     });
@@ -560,12 +560,12 @@ KISSY.add(function (S, Event) {
                 it("should works with multiple events and groups", function () {
                     var g = new Target(), ret = [];
                     g.on("click.one.two click.two", function (e) {
-                        expect(e.type).toBe("click");
+                        expect(e.type).toBe('click');
                         ret.push(1);
                     });
                     // 删除既属于 two 组又属于 one 组的所有事件的 handler
                     g.detach(".two.one");
-                    g.fire("click");
+                    g.fire('click');
                     runs(function () {
                         expect(ret).toEqual([1]);
                     });
@@ -581,7 +581,7 @@ KISSY.add(function (S, Event) {
                     });
 
                     g.detach("click.one");
-                    g.fire("click");
+                    g.fire('click');
                     runs(function () {
                         expect(ret).toEqual([2]);
                     });

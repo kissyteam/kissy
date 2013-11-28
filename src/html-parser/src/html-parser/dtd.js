@@ -10,17 +10,17 @@
 KISSY.add(function(S) {
     var merge = S.merge,
         A = {"isindex":1,"fieldset":1},
-        B = {'input':1,"button":1,"select":1,'textarea':1,"label":1},
+        B = {'input':1,"button":1,"select":1,'textarea':1,'label':1},
         C = merge({"a":1}, B),
         D = merge({"iframe":1}, C),
         E = {
-            "hr":1,"ul":1,'menu':1,'div':1,
+            "hr":1,'ul':1,'menu':1,'div':1,
             "blockquote":1,"noscript":1,"table":1,
-            "center":1,"address":1,"dir":1,"pre":1,"h5":1,
+            'center':1,"address":1,"dir":1,"pre":1,"h5":1,
             "dl":1,"h4":1,"noframes":1,"h6":1,
-            "ol":1,"h1":1,"h3":1,"h2":1
+            'ol':1,"h1":1,"h3":1,"h2":1
         },
-        F = {"ins":1,"del":1,"script":1,"style":1},
+        F = {"ins":1,"del":1,"script":1,'style':1},
         G = merge({
             "b":1,"acronym":1,"bdo":1,'var':1,'#text':1,
             "abbr":1,"code":1,
@@ -52,9 +52,9 @@ KISSY.add(function(S) {
         J = merge({"iframe":1}, H, B),
         K = {
             "img":1,"noscript":1,"br":1,"kbd":1,
-            "center":1,"button":1,
+            'center':1,"button":1,
             "basefont":1,"h5":1,"h4":1,"samp":1,
-            "h6":1,"ol":1,
+            "h6":1,'ol':1,
             "h1":1,"h3":1,"h2":1,
             "form":1,
             "font":1,
@@ -63,7 +63,7 @@ KISSY.add(function(S) {
             'menu':1,
             "ins":1,
             "abbr":1,
-            "label":1,
+            'label':1,
             "code":1,
             "table":1,
             "script":1,"cite":1,'input':1,"iframe":1,
@@ -71,7 +71,7 @@ KISSY.add(function(S) {
             "small":1,"span":1,"hr":1,"sub":1,"bdo":1,
             'var':1,'div':1,"object":1,"sup":1,"strike":1,
             "dir":1,"map":1,"dl":1,"applet":1,"del":1,"isindex":1,
-            "fieldset":1,"ul":1,"b":1,"acronym":1,"a":1,"blockquote":1,
+            "fieldset":1,'ul':1,"b":1,"acronym":1,"a":1,"blockquote":1,
             "i":1,"u":1,"s":1,"tt":1,"address":1,"q":1,
             "pre":1,'p':1,"em":1,"dfn":1
         },
@@ -81,19 +81,19 @@ KISSY.add(function(S) {
         O = merge({"param":1}, K),
         P = merge({"form":1}, A, D, E, I),
         Q = {"li":1},
-        R = {"style":1,"script":1},
+        R = {'style':1,"script":1},
         headTags = {"base":1,"link":1,"meta":1,'title':1},
         T = merge(headTags, R),
-        U = {"head":1,"body":1},
+        U = {"head":1,'body':1},
         V = {"html":1};
 
     var block = {
-        "address":1,"blockquote":1,"center":1,
+        "address":1,"blockquote":1,'center':1,
         "dir":1,'div':1,"dl":1,"fieldset":1,
         "form":1,"h1":1,"h2":1,"h3":1,"h4":1,
         "h5":1,"h6":1,"hr":1,"isindex":1,
-        'menu':1,"noframes":1,"ol":1,'p':1,
-        "pre":1,"table":1,"ul":1
+        'menu':1,"noframes":1,'ol':1,'p':1,
+        "pre":1,"table":1,'ul':1
     };
 
     /**
@@ -135,7 +135,7 @@ KISSY.add(function(S) {
          * List of block limit elements.
          * @type {Object}
          */
-        $blockLimit : {"body":1,'div':1,"td":1,"th":1,"caption":1,"form":1 },
+        $blockLimit : {'body':1,'div':1,"td":1,"th":1,"caption":1,"form":1 },
 
         /**
          * List of inline elements
@@ -147,13 +147,13 @@ KISSY.add(function(S) {
          * elements which can be include in body
          * @type {Object}
          */
-        $body : merge({"script":1,"style":1}, block),
+        $body : merge({"script":1,'style':1}, block),
 
         /**
          * cdata elements
          * @type {Object}
          */
-        $cdata : {"script":1,"style":1},
+        $cdata : {"script":1,'style':1},
 
         /**
          * List of empty (self-closing) elements, like "br" or "img".
@@ -171,7 +171,7 @@ KISSY.add(function(S) {
          * List of list root elements.
          * @type {Object}
          */
-        $list: {"ul":1,"ol":1,"dl":1},
+        $list: {'ul':1,'ol':1,"dl":1},
 
         /**
          * Elements that accept text nodes, but are not possible to edit into
@@ -190,7 +190,7 @@ KISSY.add(function(S) {
         $removeEmpty : {
             "abbr":1,"acronym":1,"address":1,"b":1,"bdo":1,"big":1,
             "cite":1,"code":1,"del":1,"dfn":1,"em":1,"font":1,"i":1,"ins":1,
-            "label":1,"kbd":1,"q":1,"s":1,"samp":1,"small":1,"span":1,"strike":1,
+            'label':1,"kbd":1,"q":1,"s":1,"samp":1,"small":1,"span":1,"strike":1,
             "strong":1,"sub":1,"sup":1,"tt":1,"u":1,'var':1
         },
 
@@ -224,15 +224,15 @@ KISSY.add(function(S) {
          */
         "head": T,
         /**
-         * List of elements used inside the "style" element
+         * List of elements used inside the 'style' element
          * @type {Object}
          */
-        "style": N,
+        'style': N,
         /**
-         * List of elements used inside the "body" element
+         * List of elements used inside the 'body' element
          * @type {Object}
          */
-        "body": P,
+        'body': P,
         /**
          * List of elements used inside the "base" element
          * @type {Object}
@@ -297,10 +297,10 @@ KISSY.add(function(S) {
          */
         "th": P,
         /**
-         * List of elements used inside the "center" element
+         * List of elements used inside the 'center' element
          * @type {Object}
          */
-        "center": P,
+        'center': P,
         /**
          * List of elements used inside the "kbd" element
          * @type {Object}
@@ -337,10 +337,10 @@ KISSY.add(function(S) {
          */
         "h6": L,
         /**
-         * List of elements used inside the "ol" element
+         * List of elements used inside the 'ol' element
          * @type {Object}
          */
-        "ol": Q,
+        'ol': Q,
         /**
          * List of elements used inside the "h1" element
          * @type {Object}
@@ -395,10 +395,10 @@ KISSY.add(function(S) {
          */
         "abbr": L,
         /**
-         * List of elements used inside the "label" element
+         * List of elements used inside the 'label' element
          * @type {Object}
          */
-        "label": L,
+        'label': L,
         /**
          * List of elements used inside the "table" element
          * @type {Object}
@@ -585,10 +585,10 @@ KISSY.add(function(S) {
          */
         "thead": M,
         /**
-         * List of elements used inside the "ul" element
+         * List of elements used inside the 'ul' element
          * @type {Object}
          */
-        "ul": Q,
+        'ul': Q,
         /**
          * List of elements used inside the "acronym" element
          * @type {Object}

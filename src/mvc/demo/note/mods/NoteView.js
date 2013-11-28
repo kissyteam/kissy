@@ -14,7 +14,7 @@ KISSY.add(function(S, Node,mvc, Template) {
             // 任何属性发生变化就重新渲染，简化处理
             self.get("note").on("*Change", self.render, self);
             // 模型销毁时，销毁 view
-            self.get("note").on("destroy", self.destroy, self);
+            self.get("note").on('destroy', self.destroy, self);
         },
         /**
          * 根据模板以及数据渲染单个笔记

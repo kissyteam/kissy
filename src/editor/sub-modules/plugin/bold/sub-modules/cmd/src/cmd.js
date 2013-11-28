@@ -22,7 +22,7 @@ KISSY.add(function (S, require) {
     });
     return {
         init:function (editor) {
-            Cmd.addButtonCmd(editor, "bold", BOLD_STYLE);
+            Cmd.addButtonCmd(editor, 'bold', BOLD_STYLE);
         }
-    }
+    };
 });

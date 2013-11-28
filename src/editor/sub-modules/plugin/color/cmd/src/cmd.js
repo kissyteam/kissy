@@ -18,7 +18,7 @@ KISSY.add(function (S, require) {
             // which will match any value.
             //清除已设格式
             new Editor.Style(styles, {
-                color: "inherit"
+                color: 'inherit'
             }).remove(doc);
         }
         editor.execCommand('save');

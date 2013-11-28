@@ -33,7 +33,7 @@ KISSY.add(function (S, Node, io) {
                     '<input type='submit' name="g" value="Submit" id="g" />' +
                     '</div>' +
                     '</form>',
-                form = $(html).appendTo("body"),
+                form = $(html).appendTo('body'),
                 ret = io.serialize(form);
 
             expect(ret).toBe("a=1&b=2&c=3&d=4&e=5");
@@ -59,17 +59,17 @@ KISSY.add(function (S, Node, io) {
                     ' <option selected="selected">Multiple3</option>' +
                     '   </select>' +
                     '   <br/>' +
-                    '  <input type="checkbox" name="check" value="check1" checked="checked" id="ch1"/>' +
+                    '  <input type="checkbox" name="check" value="check1" checked='checked' id="ch1"/>' +
                     '<label for="ch1">check1</label>' +
-                    ' <input type="checkbox" name="check" value="check2" checked="checked" id="ch2"/>' +
+                    ' <input type="checkbox" name="check" value="check2" checked='checked' id="ch2"/>' +
                     ' <label for="ch2">check2</label>' +
                     '  <br />' +
-                    '<input type="radio" name="radio" value="radio1" checked="checked" id="r1"/>' +
+                    '<input type="radio" name="radio" value="radio1" checked='checked' id="r1"/>' +
                     '<label for="r1">radio1</label>' +
                     ' <input type="radio" name="radio" value="radio2" id="r2"/>' +
                     ' <label for="r2">radio2</label>' +
                     '  </form>',
-                form = $(html).appendTo("body"),
+                form = $(html).appendTo('body'),
                 ret = io.serialize(form);
 
             expect(ret).toBe("single=Single&multiple=Multiple&multiple=Multiple3" +

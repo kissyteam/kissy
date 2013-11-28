@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ',"src":' + jscoverage_quote(this.src)
+            + ','src':' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -665,7 +665,7 @@ KISSY.add(function(S, require) {
   render: holder, 
   collapseOnClick: true, 
   width: "100px", 
-  prefixCls: prefixCls + "editor-", 
+  prefixCls: prefixCls + 'editor-',
   menu: {
   width: "225px", 
   align: {
@@ -686,7 +686,7 @@ KISSY.add(function(S, require) {
   }
 });
   _$jscoverage['/draft.js'].lineData[145]++;
-  save.on("click", function(ev) {
+  save.on('click', function(ev) {
   _$jscoverage['/draft.js'].functionData[8]++;
   _$jscoverage['/draft.js'].lineData[146]++;
   self.save(false);
@@ -731,7 +731,7 @@ KISSY.add(function(S, require) {
   clearInterval(timer);
 });
   _$jscoverage['/draft.js'].lineData[181]++;
-  versions.on("click", self.recover, self);
+  versions.on('click', self.recover, self);
   _$jscoverage['/draft.js'].lineData[182]++;
   addRes.call(self, versions);
   _$jscoverage['/draft.js'].lineData[183]++;
@@ -741,7 +741,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/draft.js'].lineData[186]++;
     var help = new Node('<a ' + 'tabindex="0" ' + 'hidefocus="hidefocus" ' + 'class="' + prefixCls + 'editor-draft-help" ' + 'title="\u70b9\u51fb\u67e5\u770b\u5e2e\u52a9" ' + 'href="javascript:void(\'\u70b9\u51fb\u67e5\u770b\u5e2e\u52a9 \')">\u70b9\u51fb\u67e5\u770b\u5e2e\u52a9</a>').unselectable(undefined).appendTo(holder);
     _$jscoverage['/draft.js'].lineData[195]++;
-    help.on("click", function() {
+    help.on('click', function() {
   _$jscoverage['/draft.js'].functionData[14]++;
   _$jscoverage['/draft.js'].lineData[196]++;
   help[0].focus();
@@ -783,12 +783,12 @@ KISSY.add(function(S, require) {
   _$jscoverage['/draft.js'].lineData[239]++;
   help.css({
   border: "1px solid #ACB4BE", 
-  "text-align": "left"});
+  'text-align': 'left'});
   _$jscoverage['/draft.js'].lineData[243]++;
   self.helpPopup = new Overlay({
   content: help, 
   prefixCls: prefixCls + 'editor-', 
-  width: help.width() + "px", 
+  width: help.width() + 'px',
   zIndex: Editor.baseZIndex(Editor.ZIndexManager.OVERLAY), 
   mask: false}).render();
   _$jscoverage['/draft.js'].lineData[251]++;
@@ -883,7 +883,7 @@ KISSY.add(function(S, require) {
   recover: function(ev) {
   _$jscoverage['/draft.js'].functionData[22]++;
   _$jscoverage['/draft.js'].lineData[344]++;
-  var self = this, editor = self.editor, drafts = self._getDrafts(), v = ev.target.get("value");
+  var self = this, editor = self.editor, drafts = self._getDrafts(), v = ev.target.get('value');
   _$jscoverage['/draft.js'].lineData[348]++;
   if (visit25_348_1(confirm("\u786e\u8ba4\u6062\u590d " + date(drafts[v].date) + " \u7684\u7f16\u8f91\u5386\u53f2\uff1f"))) {
     _$jscoverage['/draft.js'].lineData[349]++;
@@ -907,7 +907,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/draft.js'].lineData[362]++;
     var d = new Draft(editor, config);
     _$jscoverage['/draft.js'].lineData[363]++;
-    editor.on("destroy", function() {
+    editor.on('destroy', function() {
   _$jscoverage['/draft.js'].functionData[25]++;
   _$jscoverage['/draft.js'].lineData[364]++;
   d.destroy();

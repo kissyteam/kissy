@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ',"src":' + jscoverage_quote(this.src)
+            + ','src':' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -299,19 +299,19 @@ KISSY.add(function(S, require) {
   mode: Editor.Mode.WYSIWYG_MODE, 
   tooltip: "\u8bbe\u7f6e" + tooltip});
   _$jscoverage['/btn.js'].lineData[23]++;
-  editor.on("selectionChange", function() {
+  editor.on('selectionChange', function() {
   _$jscoverage['/btn.js'].functionData[2]++;
   _$jscoverage['/btn.js'].lineData[24]++;
   var v;
   _$jscoverage['/btn.js'].lineData[25]++;
   if (visit1_25_1(v = editor.queryCommandValue(cmdType))) {
     _$jscoverage['/btn.js'].lineData[26]++;
-    button.set("checked", true);
+    button.set('checked', true);
     _$jscoverage['/btn.js'].lineData[27]++;
     arrow.set('value', v);
   } else {
     _$jscoverage['/btn.js'].lineData[29]++;
-    button.set("checked", false);
+    button.set('checked', false);
   }
 });
   _$jscoverage['/btn.js'].lineData[33]++;

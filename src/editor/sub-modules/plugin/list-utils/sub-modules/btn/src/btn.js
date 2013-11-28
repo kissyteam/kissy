@@ -17,21 +17,21 @@ KISSY.add(function (S, require) {
             var button = editor.addButton(buttonId, {
                 elCls: buttonId + 'Btn',
                 mode: Editor.Mode.WYSIWYG_MODE,
-                tooltip: "设置" + tooltip
+                tooltip: '设置' + tooltip
             });
 
-            editor.on("selectionChange", function () {
+            editor.on('selectionChange', function () {
                 var v;
-                if (v = editor.queryCommandValue(cmdType)) {
-                    button.set("checked", true);
+                if ((v = editor.queryCommandValue(cmdType))) {
+                    button.set('checked', true);
                     arrow.set('value', v);
                 } else {
-                    button.set("checked", false);
+                    button.set('checked', false);
                 }
             });
 
             var arrow = editor.addSelect(buttonId + 'Arrow', {
-                tooltip: "选择并设置" + tooltip,
+                tooltip: '选择并设置' + tooltip,
                 mode: Editor.Mode.WYSIWYG_MODE,
                 menu: cfg.menu,
                 matchElWidth: false,

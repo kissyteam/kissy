@@ -8,6 +8,7 @@
         <concat destfile="${component.src.dir}/editor/plugin-meta.js"
                 encoding="${charset}" outputencoding="${charset}">
             <header filtering="no" trimleading="yes">
+                /*jshint indent:false, unused:false*/
                 KISSY.add(function(){
                 (function(config,Features,UA){
             </header>

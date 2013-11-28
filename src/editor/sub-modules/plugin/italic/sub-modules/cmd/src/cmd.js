@@ -23,7 +23,7 @@ KISSY.add(function (S, require) {
     });
     return {
         init: function (editor) {
-            Cmd.addButtonCmd(editor, "italic", ITALIC_STYLE);
+            Cmd.addButtonCmd(editor, 'italic', ITALIC_STYLE);
         }
-    }
+    };
 });

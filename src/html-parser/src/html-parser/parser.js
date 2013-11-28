@@ -85,7 +85,7 @@ KISSY.add(function (S, require) {
 
     function fixBody(doc) {
         // 3 limit depth
-        var body = findTagWithName(doc, "body", 3);
+        var body = findTagWithName(doc, 'body', 3);
         if (body) {
             /**
              * <body>
@@ -103,7 +103,7 @@ KISSY.add(function (S, require) {
                 var fixes = silbing.slice(bodyIndex + 1, silbing.length);
                 for (var i = 0; i < fixes.length; i++) {
                     parent.removeChild(fixes[i]);
-                    if (fixes[i].tagName === "body") {
+                    if (fixes[i].tagName === 'body') {
                         S.each(fixes[i].childNodes, function (c) {
                             body.appendChild(c);
                         });

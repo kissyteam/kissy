@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ',"src":' + jscoverage_quote(this.src)
+            + ','src':' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -304,7 +304,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/menubutton.js'].lineData[18]++;
   SelectType = visit1_18_1(SelectType || MenuButton.Select);
   _$jscoverage['/menubutton.js'].lineData[20]++;
-  var self = this, prefixCls = self.get('prefixCls') + "editor-";
+  var self = this, prefixCls = self.get('prefixCls') + 'editor-';
   _$jscoverage['/menubutton.js'].lineData[22]++;
   if (visit2_22_1(cfg)) {
     _$jscoverage['/menubutton.js'].lineData[23]++;

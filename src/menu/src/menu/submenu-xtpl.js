@@ -22,7 +22,7 @@ KISSY.add(function (S, require, exports, module) {
             var id1 = getPropertyOrRunCommandUtil(engine, scopes, config2, "getBaseCssClasses", 0, 2, true, undefined);
             buffer += id1;
             buffer += '">';
-            var id4 = getPropertyOrRunCommandUtil(engine, scopes, {}, "content", 0, 2, undefined, false);
+            var id4 = getPropertyOrRunCommandUtil(engine, scopes, {}, 'content', 0, 2, undefined, false);
             buffer += getExpressionUtil(id4, false);
             buffer += '</div>\n<span class="';
             var id5 = getPropertyOrRunCommandUtil(engine, scopes, {}, "prefixCls", 0, 3, undefined, false);

@@ -43,13 +43,13 @@ KISSY.add(function (S, Node, MVC) {
 
             var c = v.get('el');
 
-            c.html("<span class='x'>1</span><span class='y'>2</span>").appendTo("body");
+            c.html("<span class='x'>1</span><span class='y'>2</span>").appendTo('body');
 
             var x = c.one(".x"),
                 y = c.one(".y");
 
-            jasmine.simulate(x[0], "click");
-            jasmine.simulate(y[0], "click");
+            jasmine.simulate(x[0], 'click');
+            jasmine.simulate(y[0], 'click');
 
             waitsFor(function () {
                 return click === "1" && click2 === "2";

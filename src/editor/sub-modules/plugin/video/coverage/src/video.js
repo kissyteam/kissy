@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ',"src":' + jscoverage_quote(this.src)
+            + ','src':' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -334,7 +334,7 @@ _$jscoverage['/video.js'].branchData['107'][1].init(100, 10, 'selectedEl');
 function visit19_107_1(result) {
   _$jscoverage['/video.js'].branchData['107'][1].ranCondition(result);
   return result;
-}_$jscoverage['/video.js'].branchData['87'][1].init(133, 40, 'getProvider(element.getAttribute("src"))');
+}_$jscoverage['/video.js'].branchData['87'][1].init(133, 40, 'getProvider(element.getAttribute('src'))');
 function visit18_87_1(result) {
   _$jscoverage['/video.js'].branchData['87'][1].ranCondition(result);
   return result;
@@ -342,11 +342,11 @@ function visit18_87_1(result) {
 function visit17_85_1(result) {
   _$jscoverage['/video.js'].branchData['85'][1].ranCondition(result);
   return result;
-}_$jscoverage['/video.js'].branchData['74'][2].init(49, 86, 'c.getAttribute("value") || c.getAttribute("VALUE")');
+}_$jscoverage['/video.js'].branchData['74'][2].init(49, 86, 'c.getAttribute('value') || c.getAttribute("VALUE")');
 function visit16_74_2(result) {
   _$jscoverage['/video.js'].branchData['74'][2].ranCondition(result);
   return result;
-}_$jscoverage['/video.js'].branchData['74'][1].init(37, 99, 'getProvider(c.getAttribute("value") || c.getAttribute("VALUE"))');
+}_$jscoverage['/video.js'].branchData['74'][1].init(37, 99, 'getProvider(c.getAttribute('value') || c.getAttribute("VALUE"))');
 function visit15_74_1(result) {
   _$jscoverage['/video.js'].branchData['74'][1].ranCondition(result);
   return result;
@@ -366,7 +366,7 @@ function visit12_72_1(result) {
 function visit11_70_1(result) {
   _$jscoverage['/video.js'].branchData['70'][1].ranCondition(result);
   return result;
-}_$jscoverage['/video.js'].branchData['62'][1].init(217, 48, 'getProvider(childNodes[i].getAttribute("src"))');
+}_$jscoverage['/video.js'].branchData['62'][1].init(217, 48, 'getProvider(childNodes[i].getAttribute('src'))');
 function visit10_62_1(result) {
   _$jscoverage['/video.js'].branchData['62'][1].ranCondition(result);
   return result;
@@ -386,7 +386,7 @@ function visit7_57_1(result) {
 function visit6_54_1(result) {
   _$jscoverage['/video.js'].branchData['54'][1].ranCondition(result);
   return result;
-}_$jscoverage['/video.js'].branchData['49'][1].init(784, 2251, 'dataFilter && dataFilter.addRules({\n  tags: {\n  \'object\': function(element) {\n  var classId = element.getAttribute("classid"), i;\n  var childNodes = element.childNodes;\n  if (!classId) {\n    for (i = 0; i < childNodes.length; i++) {\n      if (childNodes[i].nodeName == \'embed\') {\n        if (!flashUtils.isFlashEmbed(childNodes[i])) {\n          return null;\n        }\n        if (getProvider(childNodes[i].getAttribute("src"))) {\n          return dataProcessor.createFakeParserElement(element, CLS_VIDEO, TYPE_VIDEO, true);\n        }\n      }\n    }\n    return null;\n  }\n  for (i = 0; i < childNodes.length; i++) {\n    var c = childNodes[i];\n    if (c.nodeName == \'param\' && c.getAttribute("name").toLowerCase() == "movie") {\n      if (getProvider(c.getAttribute("value") || c.getAttribute("VALUE"))) {\n        return dataProcessor.createFakeParserElement(element, CLS_VIDEO, TYPE_VIDEO, true);\n      }\n    }\n  }\n}, \n  \'embed\': function(element) {\n  if (!flashUtils.isFlashEmbed(element)) {\n    return null;\n  }\n  if (getProvider(element.getAttribute("src"))) {\n    return dataProcessor.createFakeParserElement(element, CLS_VIDEO, TYPE_VIDEO, true);\n  }\n}}}, 4)');
+}_$jscoverage['/video.js'].branchData['49'][1].init(784, 2251, 'dataFilter && dataFilter.addRules({\n  tags: {\n  \'object\': function(element) {\n  var classId = element.getAttribute('classid'), i;\n  var childNodes = element.childNodes;\n  if (!classId) {\n    for (i = 0; i < childNodes.length; i++) {\n      if (childNodes[i].nodeName == \'embed\') {\n        if (!flashUtils.isFlashEmbed(childNodes[i])) {\n          return null;\n        }\n        if (getProvider(childNodes[i].getAttribute('src'))) {\n          return dataProcessor.createFakeParserElement(element, CLS_VIDEO, TYPE_VIDEO, true);\n        }\n      }\n    }\n    return null;\n  }\n  for (i = 0; i < childNodes.length; i++) {\n    var c = childNodes[i];\n    if (c.nodeName == \'param\' && c.getAttribute("name").toLowerCase() == "movie") {\n      if (getProvider(c.getAttribute('value') || c.getAttribute("VALUE"))) {\n        return dataProcessor.createFakeParserElement(element, CLS_VIDEO, TYPE_VIDEO, true);\n      }\n    }\n  }\n}, \n  \'embed\': function(element) {\n  if (!flashUtils.isFlashEmbed(element)) {\n    return null;\n  }\n  if (getProvider(element.getAttribute('src'))) {\n    return dataProcessor.createFakeParserElement(element, CLS_VIDEO, TYPE_VIDEO, true);\n  }\n}}}, 4)');
 function visit5_49_1(result) {
   _$jscoverage['/video.js'].branchData['49'][1].ranCondition(result);
   return result;
@@ -468,7 +468,7 @@ KISSY.add(function(S, require) {
   'object': function(element) {
   _$jscoverage['/video.js'].functionData[4]++;
   _$jscoverage['/video.js'].lineData[52]++;
-  var classId = element.getAttribute("classid"), i;
+  var classId = element.getAttribute('classid'), i;
   _$jscoverage['/video.js'].lineData[53]++;
   var childNodes = element.childNodes;
   _$jscoverage['/video.js'].lineData[54]++;
@@ -483,7 +483,7 @@ KISSY.add(function(S, require) {
           return null;
         }
         _$jscoverage['/video.js'].lineData[62]++;
-        if (visit10_62_1(getProvider(childNodes[i].getAttribute("src")))) {
+        if (visit10_62_1(getProvider(childNodes[i].getAttribute('src')))) {
           _$jscoverage['/video.js'].lineData[63]++;
           return dataProcessor.createFakeParserElement(element, CLS_VIDEO, TYPE_VIDEO, true);
         }
@@ -499,7 +499,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/video.js'].lineData[72]++;
     if (visit12_72_1(visit13_72_2(c.nodeName == 'param') && visit14_73_1(c.getAttribute("name").toLowerCase() == "movie"))) {
       _$jscoverage['/video.js'].lineData[74]++;
-      if (visit15_74_1(getProvider(visit16_74_2(c.getAttribute("value") || c.getAttribute("VALUE"))))) {
+      if (visit15_74_1(getProvider(visit16_74_2(c.getAttribute('value') || c.getAttribute("VALUE"))))) {
         _$jscoverage['/video.js'].lineData[76]++;
         return dataProcessor.createFakeParserElement(element, CLS_VIDEO, TYPE_VIDEO, true);
       }
@@ -514,7 +514,7 @@ KISSY.add(function(S, require) {
     return null;
   }
   _$jscoverage['/video.js'].lineData[87]++;
-  if (visit18_87_1(getProvider(element.getAttribute("src")))) {
+  if (visit18_87_1(getProvider(element.getAttribute('src')))) {
     _$jscoverage['/video.js'].lineData[88]++;
     return dataProcessor.createFakeParserElement(element, CLS_VIDEO, TYPE_VIDEO, true);
   }
@@ -531,7 +531,7 @@ KISSY.add(function(S, require) {
   "\u89c6\u9891\u5c5e\u6027": function() {
   _$jscoverage['/video.js'].functionData[6]++;
   _$jscoverage['/video.js'].lineData[106]++;
-  var selectedEl = this.get("editorSelectedEl");
+  var selectedEl = this.get('editorSelectedEl');
   _$jscoverage['/video.js'].lineData[107]++;
   if (visit19_107_1(selectedEl)) {
     _$jscoverage['/video.js'].lineData[108]++;

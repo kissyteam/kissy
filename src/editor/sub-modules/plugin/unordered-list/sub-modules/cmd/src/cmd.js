@@ -7,10 +7,10 @@ KISSY.add(function (S, require) {
     var Editor = require('editor');
     var listCmd = require('../list-utils/cmd');
 
-    var insertUnorderedList = "insertUnorderedList",
+    var insertUnorderedList = 'insertUnorderedList',
         ListCommand = listCmd.ListCommand,
         queryActive = listCmd.queryActive,
-        ulCmd = new ListCommand("ul");
+        ulCmd = new ListCommand('ul');
 
     return {
         init: function (editor) {
@@ -32,7 +32,7 @@ KISSY.add(function (S, require) {
                         if (selection && !selection.isInvalid) {
                             var startElement = selection.getStartElement();
                             var elementPath = new Editor.ElementPath(startElement);
-                            return queryActive("ul", elementPath);
+                            return queryActive('ul', elementPath);
                         }
                     }
                 });

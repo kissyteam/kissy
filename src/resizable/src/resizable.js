@@ -15,7 +15,7 @@ KISSY.add(function (S, require) {
         CLS_PREFIX = "resizable-handler",
         horizontal = ["l", "r"],
         vertical = ["t", "b"],
-        ATTRS_ORDER = ['width', "height", "top", "left"],
+        ATTRS_ORDER = ['width', 'height', "top", 'left'],
         hcNormal = {
             "t": function (minW, maxW, minH, maxH, ot, ol, ow, oh, diffT, diffL, preserveRatio) {
                 var h = getBoundValue(minH, maxH, oh - diffT),
@@ -129,7 +129,7 @@ KISSY.add(function (S, require) {
                     preserveRatio = self.get('preserveRatio');
                     self._width = node.width();
                     self._top = parseInt(node.css("top"));
-                    self._left = parseInt(node.css("left"));
+                    self._left = parseInt(node.css('left'));
                     self._height = node.height();
                     self.fire('resizeStart', {
                         handler: hc,

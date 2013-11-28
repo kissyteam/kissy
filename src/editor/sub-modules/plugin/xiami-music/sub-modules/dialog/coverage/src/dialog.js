@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ',"src":' + jscoverage_quote(this.src)
+            + ','src':' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -637,7 +637,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/dialog.js'].lineData[116]++;
   self._xiami_submit = del.one("." + prefixCls + "editor-xiami-submit");
   _$jscoverage['/dialog.js'].lineData[117]++;
-  self._xiami_submit.on("click", function(ev) {
+  self._xiami_submit.on('click', function(ev) {
   _$jscoverage['/dialog.js'].functionData[5]++;
   _$jscoverage['/dialog.js'].lineData[118]++;
   if (visit2_118_1(!self._xiami_submit.hasClass("ks-editor-button-disabled", undefined))) {
@@ -667,7 +667,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/dialog.js'].lineData[132]++;
   var _xiami_ok = dfoot.one("." + prefixCls + "editor-xiami-ok");
   _$jscoverage['/dialog.js'].lineData[133]++;
-  dfoot.one("." + prefixCls + "editor-xiami-cancel").on("click", function(ev) {
+  dfoot.one("." + prefixCls + "editor-xiami-cancel").on('click', function(ev) {
   _$jscoverage['/dialog.js'].functionData[7]++;
   _$jscoverage['/dialog.js'].lineData[134]++;
   d.hide();
@@ -677,7 +677,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/dialog.js'].lineData[137]++;
   self.addRes(dfoot);
   _$jscoverage['/dialog.js'].lineData[138]++;
-  _xiami_ok.on("click", function(ev) {
+  _xiami_ok.on('click', function(ev) {
   _$jscoverage['/dialog.js'].functionData[8]++;
   _$jscoverage['/dialog.js'].lineData[139]++;
   var f = self.selectedFlash, r = editor.restoreRealElement(f);
@@ -686,7 +686,7 @@ KISSY.add(function(S, require) {
   url: self._getFlashUrl(r), 
   attrs: {
   title: f.attr('title'),
-  style: "margin:" + (visit4_147_1(parseInt(self.dMargin.val()) || 0)) + "px;" + "float:" + self.dAlign.get("value") + ";"}};
+  style: "margin:" + (visit4_147_1(parseInt(self.dMargin.val()) || 0)) + "px;" + "float:" + self.dAlign.get('value') + ";"}};
   _$jscoverage['/dialog.js'].lineData[152]++;
   self._gen();
   _$jscoverage['/dialog.js'].lineData[153]++;
@@ -751,7 +751,7 @@ KISSY.add(function(S, require) {
 });
   }
   _$jscoverage['/dialog.js'].lineData[200]++;
-  self._xiamia_list.on("click", function(ev) {
+  self._xiamia_list.on('click', function(ev) {
   _$jscoverage['/dialog.js'].functionData[13]++;
   _$jscoverage['/dialog.js'].lineData[201]++;
   ev.preventDefault();
@@ -772,7 +772,7 @@ KISSY.add(function(S, require) {
   url: ("http://www.xiami.com/widget/" + add.attr("data-value") + "/singlePlayer.swf"), 
   attrs: {
   title: add.attr('title'),
-  style: "margin:" + (visit11_220_1(parseInt(self.dMargin.val()) || 0)) + "px;" + "float:" + self.dAlign.get("value") + ";"}};
+  style: "margin:" + (visit11_220_1(parseInt(self.dMargin.val()) || 0)) + "px;" + "float:" + self.dAlign.get('value') + ";"}};
     _$jscoverage['/dialog.js'].lineData[225]++;
     self._gen();
   } else {
@@ -884,7 +884,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/dialog.js'].lineData[323]++;
     self._xiamia_title.html(f.attr('title'));
     _$jscoverage['/dialog.js'].lineData[324]++;
-    self.dAlign.set("value", f.css("float"));
+    self.dAlign.set('value', f.css("float"));
     _$jscoverage['/dialog.js'].lineData[325]++;
     self.dMargin.val(visit26_325_1(parseInt(f.style("margin")) || 0));
     _$jscoverage['/dialog.js'].lineData[326]++;
@@ -897,7 +897,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/dialog.js'].lineData[330]++;
     Editor.Utils.resetInput(self._xiami_input);
     _$jscoverage['/dialog.js'].lineData[331]++;
-    self.dAlign.set("value", "none");
+    self.dAlign.set('value', "none");
     _$jscoverage['/dialog.js'].lineData[332]++;
     self.dMargin.val(MARGIN_DEFAULT);
     _$jscoverage['/dialog.js'].lineData[333]++;

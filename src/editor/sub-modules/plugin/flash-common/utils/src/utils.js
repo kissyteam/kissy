@@ -28,8 +28,8 @@ KISSY.add(function (S, require) {
 
             isFlashEmbed: function (element) {
                 return (
-                    Dom.attr(element, "type") == 'application/x-shockwave-flash' ||
-                        /\.swf(?:$|\?)/i.test(Dom.attr(element, "src") || '')
+                    Dom.attr(element, 'type') === 'application/x-shockwave-flash' ||
+                        /\.swf(?:$|\?)/i.test(Dom.attr(element, 'src') || '')
                     );
             },
 
@@ -39,7 +39,7 @@ KISSY.add(function (S, require) {
 
             createSWF: function (cfg) {
                 var render = Dom.create('<div style="' +
-                    "position:absolute;left:-9999px;top:-9999px;" +
+                    'position:absolute;left:-9999px;top:-9999px;' +
                     '"></div>', undefined, cfg.document);
                 cfg.htmlMode = 'full';
                 Dom.append(render, cfg.document.body);

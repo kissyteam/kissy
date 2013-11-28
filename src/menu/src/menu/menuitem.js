@@ -34,7 +34,7 @@ KISSY.add(function (S, require) {
             if (self.get("selectable")) {
                 self.set("selected", true);
             }
-            self.fire("click");
+            self.fire('click');
             return true;
         },
 

@@ -1,5 +1,5 @@
 (function () {
-    KISSY.use("editor", function (S, Editor) {
+    KISSY.use('editor', function (S, Editor) {
 
         var cfg = S.mix({
             // 是否初始聚焦
@@ -61,7 +61,7 @@
             link: {
                 target: "_blank"
             },
-            "image": {
+            'image': {
                 defaultMargin: 0,
                 //remote:false,
                 upload: {
@@ -77,7 +77,7 @@
                     extraHTML: "<p style='margin-top:10px;'><input type='checkbox' id='ke_img_up_watermark_1' checked='checked'> 图片加水印，防止别人盗用</p>"
                 }
             },
-            "flash": {
+            'flash': {
                 "defaultWidth": "300",
                 "defaultHeight": "300"
             },
@@ -259,7 +259,7 @@
             editor.on('focus', function () {
                 S.log("editor focus");
             });
-            editor.on("selectionChange", function (e) {
+            editor.on('selectionChange', function (e) {
                 S.log("selectionChange : " + e.path.toString());
             });
 

@@ -49,11 +49,11 @@ KISSY.add(function (S, Dom, Event) {
                 ret.push(this.id);
             }
 
-            Event.delegate(S.get('#test-delegate'), "click", ".xx", test);
+            Event.delegate(S.get('#test-delegate'), 'click', ".xx", test);
             var a = S.get('#test-delegate-a');
             var b = S.get('#test-delegate-b');
             // support native dom event
-            jasmine.simulate(a, "click",{
+            jasmine.simulate(a, 'click',{
                 which:1
             });
             waits(10);
@@ -69,7 +69,7 @@ KISSY.add(function (S, Dom, Event) {
             runs(function () {
                 ret = [];
                 // support simulated event
-                Event.fire(b, "click",{
+                Event.fire(b, 'click',{
                     which:1
                 });
             });
@@ -85,10 +85,10 @@ KISSY.add(function (S, Dom, Event) {
             });
 
             runs(function () {
-                Event.undelegate(S.get('#test-delegate'), "click", ".xx", test);
+                Event.undelegate(S.get('#test-delegate'), 'click', ".xx", test);
                 ret = [];
                 // support simulated event
-                Event.fire(b, "click",{
+                Event.fire(b, 'click',{
                     which:1
                 });
             });
@@ -110,10 +110,10 @@ KISSY.add(function (S, Dom, Event) {
                 e.stopPropagation();
             }
 
-            Event.delegate(S.get('#test-delegate'), "click", ".xx", test);
+            Event.delegate(S.get('#test-delegate'), 'click', ".xx", test);
             var a = S.get('#test-delegate-b');
             // support native dom event
-            jasmine.simulate(a, "click");
+            jasmine.simulate(a, 'click');
             waits(10);
             runs(function () {
                 expect(ret + "").toBe([a.id,
@@ -124,7 +124,7 @@ KISSY.add(function (S, Dom, Event) {
             runs(function () {
                 ret = [];
                 // support simulated event
-                Event.fire(a, "click");
+                Event.fire(a, 'click');
             });
             waits(10);
             runs(function () {
@@ -135,10 +135,10 @@ KISSY.add(function (S, Dom, Event) {
             });
 
             runs(function () {
-                Event.undelegate(S.get('#test-delegate'), "click", ".xx", test);
+                Event.undelegate(S.get('#test-delegate'), 'click', ".xx", test);
                 ret = [];
                 // support simulated event
-                Event.fire(a, "click");
+                Event.fire(a, 'click');
             });
             waits(10);
             runs(function () {
@@ -157,11 +157,11 @@ KISSY.add(function (S, Dom, Event) {
                 ret.push(this.id);
             }
 
-            Event.delegate(S.get('#test-delegate'), "click", ".xx", test);
+            Event.delegate(S.get('#test-delegate'), 'click', ".xx", test);
             var a = S.get('#test-delegate-b');
             // support native dom event
 
-            Event.fire(a, "click");
+            Event.fire(a, 'click');
             waits(10);
 
             runs(function () {
@@ -187,9 +187,9 @@ KISSY.add(function (S, Dom, Event) {
                 ret.push(1);
             }
 
-            Event.delegate(d, "click", "button", t);
+            Event.delegate(d, 'click', "button", t);
 
-            jasmine.simulate(s, "click");
+            jasmine.simulate(s, 'click');
 
             waits(10);
 
@@ -199,7 +199,7 @@ KISSY.add(function (S, Dom, Event) {
             });
 
             runs(function () {
-                Event.undelegate(d, "click", "button", t);
+                Event.undelegate(d, 'click', "button", t);
                 jasmine.simulate(s, 'click');
             });
 
@@ -212,8 +212,8 @@ KISSY.add(function (S, Dom, Event) {
 
             runs(function () {
                 ret = [];
-                Event.delegate(d, "click", "button", t);
-                Event.undelegate(d, "click", "button");
+                Event.delegate(d, 'click', "button", t);
+                Event.undelegate(d, 'click', "button");
                 jasmine.simulate(s, 'click');
             });
             waits(10);
@@ -223,8 +223,8 @@ KISSY.add(function (S, Dom, Event) {
 
             runs(function () {
                 ret = [];
-                Event.delegate(d, "click", "button", t);
-                Event.undelegate(d, "click");
+                Event.delegate(d, 'click', "button", t);
+                Event.undelegate(d, 'click');
                 jasmine.simulate(s, 'click');
             });
             waits(10);

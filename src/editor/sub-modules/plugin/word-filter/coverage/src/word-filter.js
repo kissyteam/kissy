@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ',"src":' + jscoverage_quote(this.src)
+            + ','src':' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -1093,7 +1093,7 @@ _$jscoverage['/word-filter.js'].branchData['1165'][1].init(790, 8, 'UA.gecko');
 function visit191_1165_1(result) {
   _$jscoverage['/word-filter.js'].branchData['1165'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['1136'][1].init(557, 45, 'imgSrc && (img.setAttribute("src", imgSrc))');
+}_$jscoverage['/word-filter.js'].branchData['1136'][1].init(557, 45, 'imgSrc && (img.setAttribute('src', imgSrc))');
 function visit190_1136_1(result) {
   _$jscoverage['/word-filter.js'].branchData['1136'][1].ranCondition(result);
   return result;
@@ -1169,7 +1169,7 @@ function visit173_1016_2(result) {
 function visit172_1016_1(result) {
   _$jscoverage['/word-filter.js'].branchData['1016'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['1014'][1].init(55, 70, '!(href = element.getAttribute("href")) && element.getAttribute("name")');
+}_$jscoverage['/word-filter.js'].branchData['1014'][1].init(55, 70, '!(href = element.getAttribute('href')) && element.getAttribute("name")');
 function visit171_1014_1(result) {
   _$jscoverage['/word-filter.js'].branchData['1014'][1].ranCondition(result);
   return result;
@@ -1177,7 +1177,7 @@ function visit171_1014_1(result) {
 function visit170_996_1(result) {
   _$jscoverage['/word-filter.js'].branchData['996'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['983'][1].init(462, 119, 'ancestor && (/ mso-hide:\\s*all|display:\\s*none /).test(ancestor.getAttribute("style"))');
+}_$jscoverage['/word-filter.js'].branchData['983'][1].init(462, 119, 'ancestor && (/ mso-hide:\\s*all|display:\\s*none /).test(ancestor.getAttribute('style'))');
 function visit169_983_1(result) {
   _$jscoverage['/word-filter.js'].branchData['983'][1].ranCondition(result);
   return result;
@@ -1265,7 +1265,7 @@ function visit149_912_1(result) {
 function visit148_900_1(result) {
   _$jscoverage['/word-filter.js'].branchData['900'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['887'][1].init(248, 29, 'element.getAttribute("style")');
+}_$jscoverage['/word-filter.js'].branchData['887'][1].init(248, 29, 'element.getAttribute('style')');
 function visit147_887_1(result) {
   _$jscoverage['/word-filter.js'].branchData['887'][1].ranCondition(result);
   return result;
@@ -1277,7 +1277,7 @@ function visit146_880_2(result) {
 function visit145_880_1(result) {
   _$jscoverage['/word-filter.js'].branchData['880'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['867'][1].init(307, 85, '!bullet.getAttribute("style") && (bullet.setAttribute("style", \'mso-list: Ignore;\'))');
+}_$jscoverage['/word-filter.js'].branchData['867'][1].init(307, 85, '!bullet.getAttribute('style') && (bullet.setAttribute('style', \'mso-list: Ignore;\'))');
 function visit144_867_1(result) {
   _$jscoverage['/word-filter.js'].branchData['867'][1].ranCondition(result);
   return result;
@@ -1381,7 +1381,7 @@ function visit120_760_1(result) {
 function visit119_757_1(result) {
   _$jscoverage['/word-filter.js'].branchData['757'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['749'][1].init(212, 53, 'tagName in blockLike && element.getAttribute("style")');
+}_$jscoverage['/word-filter.js'].branchData['749'][1].init(212, 53, 'tagName in blockLike && element.getAttribute('style')');
 function visit118_749_1(result) {
   _$jscoverage['/word-filter.js'].branchData['749'][1].ranCondition(result);
   return result;
@@ -1449,7 +1449,7 @@ function visit103_635_2(result) {
 function visit102_635_1(result) {
   _$jscoverage['/word-filter.js'].branchData['635'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['625'][1].init(67, 29, 'element.getAttribute("style")');
+}_$jscoverage['/word-filter.js'].branchData['625'][1].init(67, 29, 'element.getAttribute('style')');
 function visit101_625_1(result) {
   _$jscoverage['/word-filter.js'].branchData['625'][1].ranCondition(result);
   return result;
@@ -1493,11 +1493,11 @@ function visit92_570_1(result) {
 function visit91_569_1(result) {
   _$jscoverage['/word-filter.js'].branchData['569'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['563'][2].init(84, 44, 'Number(child.getAttribute("value")) == i + 1');
+}_$jscoverage['/word-filter.js'].branchData['563'][2].init(84, 44, 'Number(child.getAttribute('value')) == i + 1');
 function visit90_563_2(result) {
   _$jscoverage['/word-filter.js'].branchData['563'][2].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['563'][1].init(53, 75, 'child.getAttribute("value") && Number(child.getAttribute("value")) == i + 1');
+}_$jscoverage['/word-filter.js'].branchData['563'][1].init(53, 75, 'child.getAttribute('value') && Number(child.getAttribute('value')) == i + 1');
 function visit89_563_1(result) {
   _$jscoverage['/word-filter.js'].branchData['563'][1].ranCondition(result);
   return result;
@@ -1505,7 +1505,7 @@ function visit89_563_1(result) {
 function visit88_560_1(result) {
   _$jscoverage['/word-filter.js'].branchData['560'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['557'][1].init(271, 48, 'styleTypeRegexp.exec(list.getAttribute("style"))');
+}_$jscoverage['/word-filter.js'].branchData['557'][1].init(271, 48, 'styleTypeRegexp.exec(list.getAttribute('style'))');
 function visit87_557_1(result) {
   _$jscoverage['/word-filter.js'].branchData['557'][1].ranCondition(result);
   return result;
@@ -1717,11 +1717,11 @@ function visit36_267_1(result) {
 function visit35_264_1(result) {
   _$jscoverage['/word-filter.js'].branchData['264'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['256'][2].init(769, 89, '!i && (element.setAttribute("value", element.getAttribute("start")))');
+}_$jscoverage['/word-filter.js'].branchData['256'][2].init(769, 89, '!i && (element.setAttribute('value', element.getAttribute("start")))');
 function visit34_256_2(result) {
   _$jscoverage['/word-filter.js'].branchData['256'][2].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['256'][1].init(736, 122, 'element.getAttribute("start") && !i && (element.setAttribute("value", element.getAttribute("start")))');
+}_$jscoverage['/word-filter.js'].branchData['256'][1].init(736, 122, 'element.getAttribute("start") && !i && (element.setAttribute('value', element.getAttribute("start")))');
 function visit33_256_1(result) {
   _$jscoverage['/word-filter.js'].branchData['256'][1].ranCondition(result);
   return result;
@@ -1911,10 +1911,10 @@ KISSY.add(function(S, require) {
     _$jscoverage['/word-filter.js'].lineData[76]++;
     if (visit4_76_1(str)) {
       _$jscoverage['/word-filter.js'].lineData[77]++;
-      element.setAttribute("style", str);
+      element.setAttribute('style', str);
     } else {
       _$jscoverage['/word-filter.js'].lineData[79]++;
-      element.removeAttribute("style");
+      element.removeAttribute('style');
     }
   }
   _$jscoverage['/word-filter.js'].lineData[87]++;
@@ -1928,7 +1928,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/word-filter.js'].lineData[91]++;
   if (visit5_91_1(!calculator)) {
     _$jscoverage['/word-filter.js'].lineData[92]++;
-    calculator = $('<div style="position:absolute;left:-9999px;' + 'top:-9999px;margin:0px;padding:0px;border:0px;"' + '></div>')['prependTo']("body");
+    calculator = $('<div style="position:absolute;left:-9999px;' + 'top:-9999px;margin:0px;padding:0px;border:0px;"' + '></div>')['prependTo']('body');
   }
   _$jscoverage['/word-filter.js'].lineData[99]++;
   if (visit6_99_1(!(/%$/).test(cssLength))) {
@@ -2045,7 +2045,7 @@ KISSY.add(function(S, require) {
       isPrepend = value;
     }
     _$jscoverage['/word-filter.js'].lineData[189]++;
-    styleText = elem.getAttribute("style");
+    styleText = elem.getAttribute('style');
     _$jscoverage['/word-filter.js'].lineData[191]++;
     styleText = (isPrepend ? [addingStyleText, styleText] : [styleText, addingStyleText]).join(';');
     _$jscoverage['/word-filter.js'].lineData[195]++;
@@ -2076,7 +2076,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/word-filter.js'].lineData[220]++;
   var listStyleType;
   _$jscoverage['/word-filter.js'].lineData[223]++;
-  switch (element.getAttribute("type")) {
+  switch (element.getAttribute('type')) {
     case 'a':
       _$jscoverage['/word-filter.js'].lineData[225]++;
       listStyleType = 'lower-alpha';
@@ -2111,7 +2111,7 @@ KISSY.add(function(S, require) {
       _$jscoverage['/word-filter.js'].lineData[253]++;
       child.setTagName('ke:li');
       _$jscoverage['/word-filter.js'].lineData[256]++;
-      visit33_256_1(element.getAttribute("start") && visit34_256_2(!i && (element.setAttribute("value", element.getAttribute("start")))));
+      visit33_256_1(element.getAttribute("start") && visit34_256_2(!i && (element.setAttribute('value', element.getAttribute("start")))));
       _$jscoverage['/word-filter.js'].lineData[275]++;
       filters.stylesFilter([['tab-stops', null, function(val) {
   _$jscoverage['/word-filter.js'].functionData[13]++;
@@ -2132,7 +2132,7 @@ KISSY.add(function(S, require) {
   }
   _$jscoverage['/word-filter.js'].lineData[273]++;
   previousListId = listId;
-}] : null)])(child.getAttribute("style"));
+}] : null)])(child.getAttribute('style'));
       _$jscoverage['/word-filter.js'].lineData[277]++;
       child.setAttribute('ke:indent', level);
       _$jscoverage['/word-filter.js'].lineData[278]++;
@@ -2279,7 +2279,7 @@ KISSY.add(function(S, require) {
             break;
         }
         _$jscoverage['/word-filter.js'].lineData[417]++;
-        listItem.setAttribute("value", itemNumeric);
+        listItem.setAttribute('value', itemNumeric);
       }
       _$jscoverage['/word-filter.js'].lineData[421]++;
       if (visit63_421_1(!list)) {
@@ -2420,7 +2420,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/word-filter.js'].lineData[548]++;
     var children = visit86_548_1(list.childNodes || []), child, count = children.length, match, mergeStyle, styleTypeRegexp = /list-style-type:(.*?)(?:;|$)/, stylesFilter = filters.stylesFilter;
     _$jscoverage['/word-filter.js'].lineData[557]++;
-    if (visit87_557_1(styleTypeRegexp.exec(list.getAttribute("style")))) {
+    if (visit87_557_1(styleTypeRegexp.exec(list.getAttribute('style')))) {
       _$jscoverage['/word-filter.js'].lineData[558]++;
       return;
     }
@@ -2429,12 +2429,12 @@ KISSY.add(function(S, require) {
       _$jscoverage['/word-filter.js'].lineData[561]++;
       child = children[i];
       _$jscoverage['/word-filter.js'].lineData[563]++;
-      if (visit89_563_1(child.getAttribute("value") && visit90_563_2(Number(child.getAttribute("value")) == i + 1))) {
+      if (visit89_563_1(child.getAttribute('value') && visit90_563_2(Number(child.getAttribute('value')) == i + 1))) {
         _$jscoverage['/word-filter.js'].lineData[564]++;
-        child.removeAttribute("value");
+        child.removeAttribute('value');
       }
       _$jscoverage['/word-filter.js'].lineData[567]++;
-      match = styleTypeRegexp.exec(child.getAttribute("style"));
+      match = styleTypeRegexp.exec(child.getAttribute('style'));
       _$jscoverage['/word-filter.js'].lineData[569]++;
       if (visit91_569_1(match)) {
         _$jscoverage['/word-filter.js'].lineData[570]++;
@@ -2454,7 +2454,7 @@ KISSY.add(function(S, require) {
       _$jscoverage['/word-filter.js'].lineData[580]++;
       for (i = 0; visit95_580_1(i < count); i++) {
         _$jscoverage['/word-filter.js'].lineData[581]++;
-        var style = children[i].getAttribute("style");
+        var style = children[i].getAttribute('style');
         _$jscoverage['/word-filter.js'].lineData[583]++;
         if (visit96_583_1(style)) {
           _$jscoverage['/word-filter.js'].lineData[584]++;
@@ -2483,7 +2483,7 @@ KISSY.add(function(S, require) {
   isListBulletIndicator: function(element) {
   _$jscoverage['/word-filter.js'].functionData[22]++;
   _$jscoverage['/word-filter.js'].lineData[604]++;
-  var styleText = element.getAttribute("style");
+  var styleText = element.getAttribute('style');
   _$jscoverage['/word-filter.js'].lineData[605]++;
   if (visit97_605_1(/mso-list\s*:\s*Ignore/i.test(styleText))) {
     _$jscoverage['/word-filter.js'].lineData[606]++;
@@ -2506,7 +2506,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/word-filter.js'].lineData[623]++;
     element.setTagName('ke:li');
     _$jscoverage['/word-filter.js'].lineData[625]++;
-    if (visit101_625_1(element.getAttribute("style"))) {
+    if (visit101_625_1(element.getAttribute('style'))) {
       _$jscoverage['/word-filter.js'].lineData[626]++;
       var styleStr = filters.stylesFilter([['text-indent'], ['line-height'], [(/^margin(:?-left)?$/), null, function(margin) {
   _$jscoverage['/word-filter.js'].functionData[25]++;
@@ -2541,7 +2541,7 @@ KISSY.add(function(S, require) {
   }
   _$jscoverage['/word-filter.js'].lineData[660]++;
   element.setAttribute('ke:indent', indent);
-}]])(element.getAttribute("style"), element);
+}]])(element.getAttribute('style'), element);
       _$jscoverage['/word-filter.js'].lineData[664]++;
       setStyle(element, styleStr);
     }
@@ -2570,7 +2570,7 @@ KISSY.add(function(S, require) {
   getStyleComponents: (function() {
   _$jscoverage['/word-filter.js'].functionData[28]++;
   _$jscoverage['/word-filter.js'].lineData[689]++;
-  var calculator = $('<div style="position:absolute;left:-9999px;top:-9999px;"></div>').prependTo("body");
+  var calculator = $('<div style="position:absolute;left:-9999px;top:-9999px;"></div>').prependTo('body');
   _$jscoverage['/word-filter.js'].lineData[692]++;
   return function(name, styleValue, fetchList) {
   _$jscoverage['/word-filter.js'].functionData[29]++;
@@ -2625,9 +2625,9 @@ KISSY.add(function(S, require) {
   _$jscoverage['/word-filter.js'].lineData[745]++;
   var tagName = visit117_745_1(element.nodeName || '');
   _$jscoverage['/word-filter.js'].lineData[749]++;
-  if (visit118_749_1(tagName in blockLike && element.getAttribute("style"))) {
+  if (visit118_749_1(tagName in blockLike && element.getAttribute('style'))) {
     _$jscoverage['/word-filter.js'].lineData[750]++;
-    setStyle(element, stylesFilter([[(/^(:?width|height)$/), null, convertToPxStr]])(element.getAttribute("style")));
+    setStyle(element, stylesFilter([[(/^(:?width|height)$/), null, convertToPxStr]])(element.getAttribute('style')));
   }
   _$jscoverage['/word-filter.js'].lineData[757]++;
   if (visit119_757_1(tagName.match(/h\d/))) {
@@ -2660,7 +2660,7 @@ KISSY.add(function(S, require) {
           _$jscoverage['/word-filter.js'].lineData[780]++;
           if (visit127_780_1(href)) {
             _$jscoverage['/word-filter.js'].lineData[781]++;
-            element.setAttribute("src", href);
+            element.setAttribute('src', href);
           }
           _$jscoverage['/word-filter.js'].lineData[783]++;
           element.setTagName('img');
@@ -2761,7 +2761,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/word-filter.js'].lineData[866]++;
     var bullet = visit143_866_1(bulletText && bulletText.parentNode);
     _$jscoverage['/word-filter.js'].lineData[867]++;
-    visit144_867_1(!bullet.getAttribute("style") && (bullet.setAttribute("style", 'mso-list: Ignore;')));
+    visit144_867_1(!bullet.getAttribute('style') && (bullet.setAttribute('style', 'mso-list: Ignore;')));
   }
   _$jscoverage['/word-filter.js'].lineData[870]++;
   element.filterChildren();
@@ -2783,9 +2783,9 @@ KISSY.add(function(S, require) {
   singleChild.setAttribute(attr.name, attr.value);
 });
     _$jscoverage['/word-filter.js'].lineData[887]++;
-    if (visit147_887_1(element.getAttribute("style"))) {
+    if (visit147_887_1(element.getAttribute('style'))) {
       _$jscoverage['/word-filter.js'].lineData[888]++;
-      addStyle(singleChild, element.getAttribute("style"));
+      addStyle(singleChild, element.getAttribute('style'));
     }
     _$jscoverage['/word-filter.js'].lineData[891]++;
     var clearFloatDiv = new HtmlParser.Tag('div');
@@ -2820,7 +2820,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/word-filter.js'].lineData[917]++;
   element.filterChildren();
   _$jscoverage['/word-filter.js'].lineData[919]++;
-  var styleText = element.getAttribute("style"), parent = element.parentNode;
+  var styleText = element.getAttribute('style'), parent = element.parentNode;
   _$jscoverage['/word-filter.js'].lineData[922]++;
   if (visit150_922_1('font' == parent.name)) {
     _$jscoverage['/word-filter.js'].lineData[924]++;
@@ -2898,7 +2898,7 @@ KISSY.add(function(S, require) {
       _$jscoverage['/word-filter.js'].lineData[982]++;
       var ancestor = getAncestor(element, 'span');
       _$jscoverage['/word-filter.js'].lineData[983]++;
-      if (visit169_983_1(ancestor && (/ mso-hide:\s*all|display:\s*none /).test(ancestor.getAttribute("style")))) {
+      if (visit169_983_1(ancestor && (/ mso-hide:\s*all|display:\s*none /).test(ancestor.getAttribute('style')))) {
         _$jscoverage['/word-filter.js'].lineData[985]++;
         marker.setAttribute('ke:ignored', 1);
       }
@@ -2907,7 +2907,7 @@ KISSY.add(function(S, require) {
     }
   }
   _$jscoverage['/word-filter.js'].lineData[992]++;
-  var styleText = element.getAttribute("style");
+  var styleText = element.getAttribute('style');
   _$jscoverage['/word-filter.js'].lineData[996]++;
   if (visit170_996_1(styleText)) {
     _$jscoverage['/word-filter.js'].lineData[998]++;
@@ -2919,14 +2919,14 @@ KISSY.add(function(S, require) {
   _$jscoverage['/word-filter.js'].lineData[1013]++;
   var href;
   _$jscoverage['/word-filter.js'].lineData[1014]++;
-  if (visit171_1014_1(!(href = element.getAttribute("href")) && element.getAttribute("name"))) {
+  if (visit171_1014_1(!(href = element.getAttribute('href')) && element.getAttribute("name"))) {
     _$jscoverage['/word-filter.js'].lineData[1015]++;
     element.setTagName(null);
   } else {
     _$jscoverage['/word-filter.js'].lineData[1016]++;
     if (visit172_1016_1(UA.webkit && visit173_1016_2(href && href.match(/file:\/\/\/[\S]+#/i)))) {
       _$jscoverage['/word-filter.js'].lineData[1017]++;
-      element.setAttribute("href", href.replace(/file:\/\/\/[^#]+/i, ''));
+      element.setAttribute('href', href.replace(/file:\/\/\/[^#]+/i, ''));
     }
   }
 }, 
@@ -3027,7 +3027,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/word-filter.js'].lineData[1129]++;
     var img = new HtmlParser.Parser(imageInfo[0]).parse().childNodes[0], previousComment = node.previousSibling, imgSrcInfo = visit188_1132_1(previousComment && previousComment.toHtml().match(/<v:imagedata[^>]*o:href=['"](.*?)['"]/)), imgSrc = visit189_1133_1(imgSrcInfo && imgSrcInfo[1]);
     _$jscoverage['/word-filter.js'].lineData[1136]++;
-    visit190_1136_1(imgSrc && (img.setAttribute("src", imgSrc)));
+    visit190_1136_1(imgSrc && (img.setAttribute('src', imgSrc)));
     _$jscoverage['/word-filter.js'].lineData[1137]++;
     return img;
   }

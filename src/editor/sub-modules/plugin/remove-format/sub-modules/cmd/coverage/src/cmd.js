@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ',"src":' + jscoverage_quote(this.src)
+            + ','src':' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -305,7 +305,7 @@ _$jscoverage['/cmd.js'].branchData['117'][1].init(136, 38, 'tagsRegex.test(curre
 function visit11_117_1(result) {
   _$jscoverage['/cmd.js'].branchData['117'][1].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['112'][1].init(-1, 172, 'currentNode.attr(\'_ke_realelement\') || /\\bke_/.test(currentNode[0].className)');
+}_$jscoverage['/cmd.js'].branchData['112'][1].init(-1, 172, 'currentNode.attr(\'_keRealElement\') || /\\bke_/.test(currentNode[0].className)');
 function visit10_112_1(result) {
   _$jscoverage['/cmd.js'].branchData['112'][1].ranCondition(result);
   return result;
@@ -313,11 +313,11 @@ function visit10_112_1(result) {
 function visit9_110_3(result) {
   _$jscoverage['/cmd.js'].branchData['110'][3].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['110'][2].init(679, 327, 'currentNode.nodeName() == \'img\' && (currentNode.attr(\'_ke_realelement\') || /\\bke_/.test(currentNode[0].className))');
+}_$jscoverage['/cmd.js'].branchData['110'][2].init(679, 327, 'currentNode.nodeName() == \'img\' && (currentNode.attr(\'_keRealElement\') || /\\bke_/.test(currentNode[0].className))');
 function visit8_110_2(result) {
   _$jscoverage['/cmd.js'].branchData['110'][2].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['110'][1].init(676, 332, '!(currentNode.nodeName() == \'img\' && (currentNode.attr(\'_ke_realelement\') || /\\bke_/.test(currentNode[0].className)))');
+}_$jscoverage['/cmd.js'].branchData['110'][1].init(676, 332, '!(currentNode.nodeName() == \'img\' && (currentNode.attr(\'_keRealElement\') || /\\bke_/.test(currentNode[0].className)))');
 function visit7_110_1(result) {
   _$jscoverage['/cmd.js'].branchData['110'][1].ranCondition(result);
   return result;
@@ -425,7 +425,7 @@ KISSY.add(function(S, require) {
       _$jscoverage['/cmd.js'].lineData[106]++;
       var nextNode = currentNode._4eNextSourceNode(false, Dom.NodeType.ELEMENT_NODE, undefined, undefined);
       _$jscoverage['/cmd.js'].lineData[110]++;
-      if (visit7_110_1(!(visit8_110_2(visit9_110_3(currentNode.nodeName() == 'img') && (visit10_112_1(currentNode.attr('_ke_realelement') || /\bke_/.test(currentNode[0].className))))))) {
+      if (visit7_110_1(!(visit8_110_2(visit9_110_3(currentNode.nodeName() == 'img') && (visit10_112_1(currentNode.attr('_keRealElement') || /\bke_/.test(currentNode[0].className))))))) {
         _$jscoverage['/cmd.js'].lineData[117]++;
         if (visit11_117_1(tagsRegex.test(currentNode.nodeName()))) {
           _$jscoverage['/cmd.js'].lineData[118]++;

@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ',"src":' + jscoverage_quote(this.src)
+            + ','src':' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -284,11 +284,11 @@ function visit4_47_2(result) {
 function visit3_47_1(result) {
   _$jscoverage['/justify-center.js'].branchData['47'][1].ranCondition(result);
   return result;
-}_$jscoverage['/justify-center.js'].branchData['33'][1].init(184, 41, 'editor.queryCommandValue("justifyCenter")');
+}_$jscoverage['/justify-center.js'].branchData['33'][1].init(184, 41, 'editor.queryCommandValue('justifyCenter')');
 function visit2_33_1(result) {
   _$jscoverage['/justify-center.js'].branchData['33'][1].ranCondition(result);
   return result;
-}_$jscoverage['/justify-center.js'].branchData['30'][1].init(33, 45, 'editor.get("mode") == Editor.Mode.SOURCE_MODE');
+}_$jscoverage['/justify-center.js'].branchData['30'][1].init(33, 45, 'editor.get('mode') == Editor.Mode.SOURCE_MODE');
 function visit1_30_1(result) {
   _$jscoverage['/justify-center.js'].branchData['30'][1].ranCondition(result);
   return result;
@@ -305,9 +305,9 @@ KISSY.add(function(S, require) {
   function exec() {
     _$jscoverage['/justify-center.js'].functionData[1]++;
     _$jscoverage['/justify-center.js'].lineData[11]++;
-    var editor = this.get("editor");
+    var editor = this.get('editor');
     _$jscoverage['/justify-center.js'].lineData[12]++;
-    editor.execCommand("justifyCenter");
+    editor.execCommand('justifyCenter');
     _$jscoverage['/justify-center.js'].lineData[13]++;
     editor.focus();
   }
@@ -322,7 +322,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/justify-center.js'].lineData[21]++;
   justifyCenterCmd.init(editor);
   _$jscoverage['/justify-center.js'].lineData[22]++;
-  editor.addButton("justifyCenter", {
+  editor.addButton('justifyCenter', {
   tooltip: "\u5c45\u4e2d\u5bf9\u9f50", 
   checkable: true, 
   listeners: {
@@ -332,20 +332,20 @@ KISSY.add(function(S, require) {
   _$jscoverage['/justify-center.js'].lineData[28]++;
   var self = this;
   _$jscoverage['/justify-center.js'].lineData[29]++;
-  editor.on("selectionChange", function() {
+  editor.on('selectionChange', function() {
   _$jscoverage['/justify-center.js'].functionData[5]++;
   _$jscoverage['/justify-center.js'].lineData[30]++;
-  if (visit1_30_1(editor.get("mode") == Editor.Mode.SOURCE_MODE)) {
+  if (visit1_30_1(editor.get('mode') == Editor.Mode.SOURCE_MODE)) {
     _$jscoverage['/justify-center.js'].lineData[31]++;
     return;
   }
   _$jscoverage['/justify-center.js'].lineData[33]++;
-  if (visit2_33_1(editor.queryCommandValue("justifyCenter"))) {
+  if (visit2_33_1(editor.queryCommandValue('justifyCenter'))) {
     _$jscoverage['/justify-center.js'].lineData[34]++;
-    self.set("checked", true);
+    self.set('checked', true);
   } else {
     _$jscoverage['/justify-center.js'].lineData[36]++;
-    self.set("checked", false);
+    self.set('checked', false);
   }
 });
 }}, 
@@ -359,7 +359,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/justify-center.js'].lineData[47]++;
   if (visit3_47_1(e.ctrlKey && visit4_47_2(e.keyCode == S.Node.KeyCode.E))) {
     _$jscoverage['/justify-center.js'].lineData[48]++;
-    editor.execCommand("justifyCenter");
+    editor.execCommand('justifyCenter');
     _$jscoverage['/justify-center.js'].lineData[49]++;
     e.preventDefault();
   }

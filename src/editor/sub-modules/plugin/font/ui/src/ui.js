@@ -12,19 +12,19 @@ KISSY.add(function (S, require) {
 
         initializer: function () {
             var self = this,
-                editor = self.get("editor");
-            self.on("click", function (ev) {
-                var v = ev.target.get("value"),
-                    cmdType = self.get("cmdType");
+                editor = self.get('editor');
+            self.on('click', function (ev) {
+                var v = ev.target.get('value'),
+                    cmdType = self.get('cmdType');
                 editor.execCommand(cmdType, v);
             });
 
-            editor.on("selectionChange", function () {
-                if (editor.get("mode") == Editor.Mode.SOURCE_MODE) {
+            editor.on('selectionChange', function () {
+                if (editor.get('mode') === Editor.Mode.SOURCE_MODE) {
                     return;
                 }
 
-                var cmdType = self.get("cmdType"),
+                var cmdType = self.get('cmdType'),
                     menu = self.get('menu'),
                     children = menu.get && menu.get('children');
 
@@ -33,17 +33,17 @@ KISSY.add(function (S, require) {
                     // the styles.
                     var currentValue = editor.queryCommandValue(cmdType);
                     if (currentValue !== false) {
-                        currentValue = (currentValue + "").toLowerCase();
+                        currentValue = (currentValue + '').toLowerCase();
                         for (var j = 0; j < children.length; j++) {
                             var item = children[j];
-                            var value = item.get("value");
-                            if (currentValue == value.toLowerCase()) {
-                                self.set("value", value);
+                            var value = item.get('value');
+                            if (currentValue === value.toLowerCase()) {
+                                self.set('value', value);
                                 return;
                             }
                         }
                     }
-                    self.set("value", null);
+                    self.set('value', null);
                 }
             });
         }
@@ -54,10 +54,10 @@ KISSY.add(function (S, require) {
 
         initializer: function () {
             var self = this,
-                editor = self.get("editor"),
-                cmdType = self.get("cmdType");
-            self.on("click", function () {
-                var checked = self.get("checked");
+                editor = self.get('editor'),
+                cmdType = self.get('cmdType');
+            self.on('click', function () {
+                var checked = self.get('checked');
                 if (checked) {
                     editor.execCommand(cmdType);
                     editor.focus();
@@ -66,16 +66,16 @@ KISSY.add(function (S, require) {
                     editor.focus();
                 }
             });
-            editor.on("selectionChange", function () {
+            editor.on('selectionChange', function () {
 
-                if (editor.get("mode") == Editor.Mode.SOURCE_MODE) {
+                if (editor.get('mode') === Editor.Mode.SOURCE_MODE) {
                     return;
                 }
-                var cmdType = self.get("cmdType");
+                var cmdType = self.get('cmdType');
                 if (editor.queryCommandValue(cmdType)) {
-                    self.set("checked", true);
+                    self.set('checked', true);
                 } else {
-                    self.set("checked", false);
+                    self.set('checked', false);
                 }
             });
         }

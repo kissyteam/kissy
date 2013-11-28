@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ',"src":' + jscoverage_quote(this.src)
+            + ','src':' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -255,7 +255,7 @@ if (! _$jscoverage['/cmd.js'].branchData) {
   _$jscoverage['/cmd.js'].branchData['23'] = [];
   _$jscoverage['/cmd.js'].branchData['23'][1] = new BranchData();
 }
-_$jscoverage['/cmd.js'].branchData['23'][1].init(17, 31, '!editor.hasCommand("foreColor")');
+_$jscoverage['/cmd.js'].branchData['23'][1].init(17, 31, '!editor.hasCommand('foreColor')');
 function visit3_23_1(result) {
   _$jscoverage['/cmd.js'].branchData['23'][1].ranCondition(result);
   return result;
@@ -291,9 +291,9 @@ KISSY.add(function(S, require) {
   init: function(editor) {
   _$jscoverage['/cmd.js'].functionData[2]++;
   _$jscoverage['/cmd.js'].lineData[23]++;
-  if (visit3_23_1(!editor.hasCommand("foreColor"))) {
+  if (visit3_23_1(!editor.hasCommand('foreColor'))) {
     _$jscoverage['/cmd.js'].lineData[24]++;
-    editor.addCommand("foreColor", {
+    editor.addCommand('foreColor', {
   exec: function(editor, c) {
   _$jscoverage['/cmd.js'].functionData[3]++;
   _$jscoverage['/cmd.js'].lineData[26]++;

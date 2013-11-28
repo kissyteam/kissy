@@ -51,10 +51,10 @@ KISSY.add(function (S, Dom) {
 
         it("consider checkbox/radio in ie6/7", function () {
             var radio = Dom.create("<input />");
-            Dom.attr(radio, "type", "radio");
-            Dom.attr(radio, "checked", true);
+            Dom.attr(radio, 'type', "radio");
+            Dom.attr(radio, 'checked', true);
             Dom.append(radio, document.body);
-            expect(Dom.attr(radio, "checked")).toBe("checked");
+            expect(Dom.attr(radio, 'checked')).toBe('checked');
             Dom.remove(radio);
         });
 

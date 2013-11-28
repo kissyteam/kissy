@@ -129,6 +129,7 @@ KISSY.add(function (S, require) {
                 editor = self.editor,
                 code = self.code;
             if (!S.trim(val = code.val())) {
+                /*global alert*/
                 alert('请输入代码!');
                 return;
             }
@@ -147,14 +148,12 @@ KISSY.add(function (S, require) {
             var range = editor.getSelection().getRanges()[0];
 
             var next = codeEl.next(notWhitespaceEval, 1);
-            var nextName = next && next[0].nodeType == NodeType.ELEMENT_NODE
-                && next.nodeName();
+            var nextName = next && next[0].nodeType === NodeType.ELEMENT_NODE&& next.nodeName();
             // Check if it's a block element that accepts text.
-            if (nextName &&
+            if (!(nextName &&
                 xhtmlDtd.$block[ nextName ] &&
-                xhtmlDtd[ nextName ]['#text']) {
-            } else {
-                next = S.all("<p></p>", editor.get('document')[0]);
+                xhtmlDtd[ nextName ]['#text'])) {
+                next = S.all('<p></p>', editor.get('document')[0]);
                 if (!S.UA.ie) {
                     next._4eAppendBogus();
                 }

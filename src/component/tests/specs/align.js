@@ -55,7 +55,7 @@ KISSY.add(
 
                 for (var i = 0; i < 4; i++) {
                     dom[i] = Dom.create(test[i]);
-                    Dom.append(dom[i], "body");
+                    Dom.append(dom[i], 'body');
                 }
 
                 expect(getOffsetParent(dom[0].firstChild)).toBe(dom[0]);
@@ -75,7 +75,7 @@ KISSY.add(
 
 
                     var gap = Dom.create("<div style='height: 1500px;width: 100000px;'></div>");
-                    Dom.append(gap, "body");
+                    Dom.append(gap, 'body');
 
                     var getVisibleRectForElement = AlignExtension.__getVisibleRectForElement,
                         test = [];
@@ -102,7 +102,7 @@ KISSY.add(
 
                     for (var i = 3; i >= 0; i--) {
                         dom[i] = Dom.create(test[i]);
-                        Dom.prepend(dom[i], "body");
+                        Dom.prepend(dom[i], 'body');
                     }
 
                     // 1
@@ -204,7 +204,7 @@ KISSY.add(
                             "</div>" +
                             "<div style='position: absolute;left:0;top:20px;'></div>" +
                             "<div style='position: absolute;left:0;top:80px;'></div>" +
-                            "</div>").appendTo("body");
+                            "</div>").appendTo('body');
 
                         var target = node.first(),
                         //upper = node.children().item(1),
@@ -267,7 +267,7 @@ KISSY.add(
                             "</div>" +
                             "<div style='position: absolute;left:0;top:20px;'></div>" +
                             "<div style='position: absolute;left:0;top:80px;'></div>" +
-                            "</div>").appendTo("body");
+                            "</div>").appendTo('body');
 
                         var target = node.first(),
                         //upper = node.children().item(1),

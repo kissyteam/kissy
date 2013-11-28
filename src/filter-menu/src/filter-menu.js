@@ -98,7 +98,7 @@ KISSY.add(function (S, require) {
                             //待补全的项
                             lastWord = items[items.length - 1];
                             var item = self.get('highlightedItem'),
-                                content = item && item.get("content");
+                                content = item && item.get('content');
                             // 有高亮而且最后一项不为空补全
                             if (content && content.indexOf(lastWord) > -1 && lastWord) {
                                 enteredItems[enteredItems.length - 1] = content;
@@ -131,7 +131,7 @@ KISSY.add(function (S, require) {
 
                 // 过滤所有子组件
                 S.each(children, function (c) {
-                    var content = c.get("content");
+                    var content = c.get('content');
                     if (!str) {
                         // 没有过滤条件
                         // 恢复原有内容

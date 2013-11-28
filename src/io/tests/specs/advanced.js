@@ -125,7 +125,7 @@ KISSY.add(function (S, UA, Json, io, Node) {
 
             var ok = 0;
 
-            var form = $("<form><input name='t' value='t'/></form>").appendTo("body");
+            var form = $("<form><input name='t' value='t'/></form>").appendTo('body');
 
             io({
                 url: '../data/ifModified.jss',
@@ -386,7 +386,7 @@ KISSY.add(function (S, UA, Json, io, Node) {
                 '<option value="t1" selected>v</option>' +
                 '<option value="t2" selected>v2</option>' +
                 '</select>' +
-                '</form>').appendTo("body");
+                '</form>').appendTo('body');
 
 
             var ok, d;
@@ -435,7 +435,7 @@ KISSY.add(function (S, UA, Json, io, Node) {
                 '<option value="t1" selected>v</option>' +
                 '<option value="t2" selected>v2</option>' +
                 '</select>' +
-                '</form>').appendTo("body");
+                '</form>').appendTo('body');
 
             var ok, d;
             io({

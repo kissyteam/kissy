@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ',"src":' + jscoverage_quote(this.src)
+            + ','src':' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -458,9 +458,9 @@ KISSY.add(function(S, require) {
   _$jscoverage['/dialog.js'].lineData[116]++;
   var action = el.one("." + prefixCls + "editor-video-ok"), cancel = el.one("." + prefixCls + "editor-video-cancel");
   _$jscoverage['/dialog.js'].lineData[118]++;
-  action.on("click", self._gen, self);
+  action.on('click', self._gen, self);
   _$jscoverage['/dialog.js'].lineData[119]++;
-  cancel.on("click", function(ev) {
+  cancel.on('click', function(ev) {
   _$jscoverage['/dialog.js'].functionData[4]++;
   _$jscoverage['/dialog.js'].lineData[120]++;
   d.hide();
@@ -502,7 +502,7 @@ KISSY.add(function(S, require) {
   attrs: {
   height: visit4_145_1(parseInt(self.dHeight.val()) || p.height), 
   width: visit5_146_1(parseInt(self.dWidth.val()) || p.width), 
-  style: "margin:" + (visit6_147_1(parseInt(self.dMargin.val()) || 0)) + "px;" + "float:" + self.dAlign.get("value") + ";"}};
+  style: "margin:" + (visit6_147_1(parseInt(self.dMargin.val()) || 0)) + "px;" + "float:" + self.dAlign.get('value') + ";"}};
   }
   _$jscoverage['/dialog.js'].lineData[152]++;
   return undefined;
@@ -567,18 +567,18 @@ KISSY.add(function(S, require) {
     _$jscoverage['/dialog.js'].lineData[199]++;
     Editor.Utils.valInput(self.dUrl, self._getFlashUrl(r));
     _$jscoverage['/dialog.js'].lineData[200]++;
-    self.dAlign.set("value", f.css("float"));
+    self.dAlign.set('value', f.css("float"));
     _$jscoverage['/dialog.js'].lineData[201]++;
     self.dMargin.val(visit13_201_1(parseInt(r.style("margin")) || 0));
     _$jscoverage['/dialog.js'].lineData[202]++;
     Editor.Utils.valInput(self.dWidth, parseInt(f.css('width')));
     _$jscoverage['/dialog.js'].lineData[203]++;
-    Editor.Utils.valInput(self.dHeight, parseInt(f.css("height")));
+    Editor.Utils.valInput(self.dHeight, parseInt(f.css('height')));
   } else {
     _$jscoverage['/dialog.js'].lineData[205]++;
     Editor.Utils.resetInput(self.dUrl);
     _$jscoverage['/dialog.js'].lineData[206]++;
-    self.dAlign.set("value", "none");
+    self.dAlign.set('value', "none");
     _$jscoverage['/dialog.js'].lineData[207]++;
     self.dMargin.val(MARGIN_DEFAULT);
     _$jscoverage['/dialog.js'].lineData[208]++;

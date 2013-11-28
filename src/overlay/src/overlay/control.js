@@ -16,7 +16,7 @@ KISSY.add(function (S, require) {
     var HIDE = 'hide',
         actions = {
             hide: HIDE,
-            destroy: "destroy"
+            destroy: 'destroy'
         };
     /**
      * KISSY Overlay Component.
@@ -40,7 +40,7 @@ KISSY.add(function (S, require) {
             var self = this,
                 closeBtn = self.get("closeBtn");
             if (closeBtn) {
-                closeBtn.on("click", function (ev) {
+                closeBtn.on('click', function (ev) {
                     self.close();
                     ev.preventDefault();
                 });
@@ -95,7 +95,7 @@ KISSY.add(function (S, require) {
 
             /**
              * Whether to destroy or hide current element when click close button.
-             * Can set "destroy" to destroy it when click close button.
+             * Can set 'destroy' to destroy it when click close button.
              *
              * Defaults to: 'hide'.
              *

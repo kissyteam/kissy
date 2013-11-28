@@ -7,9 +7,9 @@ KISSY.use('menu', function (S, Menu) {
         width: 200,
         render: '#index',
         listeners: {
-            "click": function (e) {
+            'click': function (e) {
                 var h;
-                if (h = e.target.get("href")) {
+                if (h = e.target.get('href')) {
                     window.open(h);
                 } else {
                     alert("敬请期待!")
@@ -315,11 +315,11 @@ KISSY.use('menu', function (S, Menu) {
         }
     }
 
-    $("#gen").on("click", function () {
+    $("#gen").on('click', function () {
 
-        var min = $("#min").attr("checked"), html = "";
+        var min = $("#min").attr('checked'), html = "";
 
-        var base = $("#cdn").attr("checked") ?
+        var base = $("#cdn").attr('checked') ?
             "http://a.tbcdn.cn/s/kissy/1.3.0rc/" :
             S.config("base");
 

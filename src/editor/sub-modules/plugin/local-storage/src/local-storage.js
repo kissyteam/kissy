@@ -18,7 +18,7 @@ KISSY.add(function (S, require) {
     }
 
     // 国产浏览器用随机数/时间戳试试 ! 是可以的
-    var swfSrc = Editor.Utils.debugUrl("plugin/local-storage/assets/swfstore.swf?t=" + (+new Date()));
+    var swfSrc = Editor.Utils.debugUrl('plugin/local-storage/assets/swfstore.swf?t=' + (+new Date()));
 
     var css = {
         width: 215,
@@ -35,8 +35,8 @@ KISSY.add(function (S, require) {
             background: 'white'
         },
         width: '0px',
-        content: "<h1 style='" + "text-align:center;'>请点击允许</h1>" +
-            "<div class='storage-container'></div>",
+        content: '<h1 style="' + 'text-align:center;">请点击允许</h1>' +
+            '<div class="storage-container"></div>',
         zIndex: Editor.baseZIndex(Editor.ZIndexManager.STORE_FLASH_SHOW)
     });
     o.render();
@@ -54,7 +54,7 @@ KISSY.add(function (S, require) {
             height: 138,
             width: '100%'
         },
-        methods: ["setItem", "removeItem", "getItem", "setMinDiskSpace", "getValueOf"]
+        methods: ['setItem', 'removeItem', 'getItem', 'setMinDiskSpace', 'getValueOf']
     });
 
     // 必须在视窗范围内才可以初始化，触发 contentReady 事件
@@ -64,7 +64,7 @@ KISSY.add(function (S, require) {
         }, 0);
     });
 
-    store.on("pending", function () {
+    store.on('pending', function () {
         o.get('el').css(css);
         o.center();
         o.show();
@@ -83,7 +83,7 @@ KISSY.add(function (S, require) {
     S.mix(store, {
         _ke: 1,
         getItem: function (k) {
-            return this['getValueOf'](k);
+            return this.getValueOf(k);
         },
         retrySave: function () {
             var self = this;
@@ -97,15 +97,15 @@ KISSY.add(function (S, require) {
     });
 
     //非原生，等待flash通知
-    store.on("contentReady", function () {
+    store.on('contentReady', function () {
         store._ready = 1;
     });
 
     /*
-     "quotaExceededError"
-     "error"
+     'quotaExceededError'
+     'error'
      'save'
-     "inadequateDimensions"
+     'inadequateDimensions'
      */
 
     return store;

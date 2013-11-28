@@ -26,7 +26,7 @@ KISSY.add(function (S, require) {
     });
     return {
         init: function (editor) {
-            Cmd.addButtonCmd(editor, "strikeThrough", STRIKE_STYLE);
+            Cmd.addButtonCmd(editor, 'strikeThrough', STRIKE_STYLE);
         }
-    }
+    };
 });

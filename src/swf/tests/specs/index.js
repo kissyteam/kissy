@@ -15,7 +15,7 @@ KISSY.add(function (S, SWF, Dom) {
                     var param = params[i];
                     if (param.nodeType == 1) {
                         if (Dom.attr(params[i], 'name').toLowerCase() == "flashvars") {
-                            return S.unparam(Dom.attr(param, "value"));
+                            return S.unparam(Dom.attr(param, 'value'));
                         }
                     }
                 }

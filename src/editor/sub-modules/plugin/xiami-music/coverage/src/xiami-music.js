@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ',"src":' + jscoverage_quote(this.src)
+            + ','src':' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -329,15 +329,15 @@ _$jscoverage['/xiami-music.js'].branchData['115'][1].init(100, 10, 'selectedEl')
 function visit17_115_1(result) {
   _$jscoverage['/xiami-music.js'].branchData['115'][1].ranCondition(result);
   return result;
-}_$jscoverage['/xiami-music.js'].branchData['94'][1].init(29, 103, 'flashUtils.isFlashEmbed(element) && checkXiami(element.getAttribute("src"))');
+}_$jscoverage['/xiami-music.js'].branchData['94'][1].init(29, 103, 'flashUtils.isFlashEmbed(element) && checkXiami(element.getAttribute('src'))');
 function visit16_94_1(result) {
   _$jscoverage['/xiami-music.js'].branchData['94'][1].ranCondition(result);
   return result;
-}_$jscoverage['/xiami-music.js'].branchData['82'][2].init(49, 86, 'c.getAttribute("value") || c.getAttribute("VALUE")');
+}_$jscoverage['/xiami-music.js'].branchData['82'][2].init(49, 86, 'c.getAttribute('value') || c.getAttribute("VALUE")');
 function visit15_82_2(result) {
   _$jscoverage['/xiami-music.js'].branchData['82'][2].ranCondition(result);
   return result;
-}_$jscoverage['/xiami-music.js'].branchData['82'][1].init(38, 98, 'checkXiami(c.getAttribute("value") || c.getAttribute("VALUE"))');
+}_$jscoverage['/xiami-music.js'].branchData['82'][1].init(38, 98, 'checkXiami(c.getAttribute('value') || c.getAttribute("VALUE"))');
 function visit14_82_1(result) {
   _$jscoverage['/xiami-music.js'].branchData['82'][1].ranCondition(result);
   return result;
@@ -377,7 +377,7 @@ function visit6_59_1(result) {
 function visit5_57_1(result) {
   _$jscoverage['/xiami-music.js'].branchData['57'][1].ranCondition(result);
   return result;
-}_$jscoverage['/xiami-music.js'].branchData['48'][1].init(286, 2783, 'dataFilter && dataFilter.addRules({\n  tags: {\n  \'object\': function(element) {\n  var title = element.getAttribute('title'), i, c, classId = element.getAttribute("classid");\n  var childNodes = element.childNodes;\n  if (!classId) {\n    for (i = 0; i < childNodes.length; i++) {\n      c = childNodes[i];\n      if (c.nodeName == \'embed\') {\n        if (!flashUtils.isFlashEmbed(c)) {\n          return null;\n        }\n        if (checkXiami(c.attributes.src)) {\n          return dataProcessor.createFakeParserElement(element, CLS_XIAMI, TYPE_XIAMI, true, {\n  title: title});\n        }\n      }\n    }\n    return null;\n  }\n  for (i = 0; i < childNodes.length; i++) {\n    c = childNodes[i];\n    if (c.nodeName == \'param\' && c.getAttribute("name").toLowerCase() == "movie") {\n      if (checkXiami(c.getAttribute("value") || c.getAttribute("VALUE"))) {\n        return dataProcessor.createFakeParserElement(element, CLS_XIAMI, TYPE_XIAMI, true, {\n  title: title});\n      }\n    }\n  }\n}, \n  \'embed\': function(element) {\n  if (flashUtils.isFlashEmbed(element) && checkXiami(element.getAttribute("src"))) {\n    return dataProcessor.createFakeParserElement(element, CLS_XIAMI, TYPE_XIAMI, true, {\n  title: element.getAttribute('title')});\n  }\n}}}, 4)');
+}_$jscoverage['/xiami-music.js'].branchData['48'][1].init(286, 2783, 'dataFilter && dataFilter.addRules({\n  tags: {\n  \'object\': function(element) {\n  var title = element.getAttribute('title'), i, c, classId = element.getAttribute('classid');\n  var childNodes = element.childNodes;\n  if (!classId) {\n    for (i = 0; i < childNodes.length; i++) {\n      c = childNodes[i];\n      if (c.nodeName == \'embed\') {\n        if (!flashUtils.isFlashEmbed(c)) {\n          return null;\n        }\n        if (checkXiami(c.attributes.src)) {\n          return dataProcessor.createFakeParserElement(element, CLS_XIAMI, TYPE_XIAMI, true, {\n  title: title});\n        }\n      }\n    }\n    return null;\n  }\n  for (i = 0; i < childNodes.length; i++) {\n    c = childNodes[i];\n    if (c.nodeName == \'param\' && c.getAttribute("name").toLowerCase() == "movie") {\n      if (checkXiami(c.getAttribute('value') || c.getAttribute("VALUE"))) {\n        return dataProcessor.createFakeParserElement(element, CLS_XIAMI, TYPE_XIAMI, true, {\n  title: title});\n      }\n    }\n  }\n}, \n  \'embed\': function(element) {\n  if (flashUtils.isFlashEmbed(element) && checkXiami(element.getAttribute('src'))) {\n    return dataProcessor.createFakeParserElement(element, CLS_XIAMI, TYPE_XIAMI, true, {\n  title: element.getAttribute('title')});\n  }\n}}}, 4)');
 function visit4_48_1(result) {
   _$jscoverage['/xiami-music.js'].branchData['48'][1].ranCondition(result);
   return result;
@@ -419,13 +419,13 @@ KISSY.add(function(S, require) {
   _updateTip: function(tipUrlEl, selectedFlash) {
   _$jscoverage['/xiami-music.js'].functionData[2]++;
   _$jscoverage['/xiami-music.js'].lineData[22]++;
-  var self = this, editor = self.get("editor"), r = editor.restoreRealElement(selectedFlash);
+  var self = this, editor = self.get('editor'), r = editor.restoreRealElement(selectedFlash);
   _$jscoverage['/xiami-music.js'].lineData[25]++;
   if (visit1_25_1(r)) {
     _$jscoverage['/xiami-music.js'].lineData[26]++;
     tipUrlEl.html(selectedFlash.attr('title'));
     _$jscoverage['/xiami-music.js'].lineData[27]++;
-    tipUrlEl.attr("href", self._getFlashUrl(r));
+    tipUrlEl.attr('href', self._getFlashUrl(r));
   }
 }});
   _$jscoverage['/xiami-music.js'].lineData[32]++;
@@ -454,7 +454,7 @@ KISSY.add(function(S, require) {
   'object': function(element) {
   _$jscoverage['/xiami-music.js'].functionData[6]++;
   _$jscoverage['/xiami-music.js'].lineData[51]++;
-  var title = element.getAttribute('title'), i, c, classId = element.getAttribute("classid");
+  var title = element.getAttribute('title'), i, c, classId = element.getAttribute('classid');
   _$jscoverage['/xiami-music.js'].lineData[56]++;
   var childNodes = element.childNodes;
   _$jscoverage['/xiami-music.js'].lineData[57]++;
@@ -488,7 +488,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/xiami-music.js'].lineData[78]++;
     if (visit11_78_1(visit12_78_2(c.nodeName == 'param') && visit13_80_1(c.getAttribute("name").toLowerCase() == "movie"))) {
       _$jscoverage['/xiami-music.js'].lineData[82]++;
-      if (visit14_82_1(checkXiami(visit15_82_2(c.getAttribute("value") || c.getAttribute("VALUE"))))) {
+      if (visit14_82_1(checkXiami(visit15_82_2(c.getAttribute('value') || c.getAttribute("VALUE"))))) {
         _$jscoverage['/xiami-music.js'].lineData[84]++;
         return dataProcessor.createFakeParserElement(element, CLS_XIAMI, TYPE_XIAMI, true, {
   title: title});
@@ -499,7 +499,7 @@ KISSY.add(function(S, require) {
   'embed': function(element) {
   _$jscoverage['/xiami-music.js'].functionData[7]++;
   _$jscoverage['/xiami-music.js'].lineData[94]++;
-  if (visit16_94_1(flashUtils.isFlashEmbed(element) && checkXiami(element.getAttribute("src")))) {
+  if (visit16_94_1(flashUtils.isFlashEmbed(element) && checkXiami(element.getAttribute('src')))) {
     _$jscoverage['/xiami-music.js'].lineData[96]++;
     return dataProcessor.createFakeParserElement(element, CLS_XIAMI, TYPE_XIAMI, true, {
   title: element.getAttribute('title')});
@@ -517,7 +517,7 @@ KISSY.add(function(S, require) {
   "\u867e\u7c73\u5c5e\u6027": function() {
   _$jscoverage['/xiami-music.js'].functionData[8]++;
   _$jscoverage['/xiami-music.js'].lineData[114]++;
-  var selectedEl = this.get("editorSelectedEl");
+  var selectedEl = this.get('editorSelectedEl');
   _$jscoverage['/xiami-music.js'].lineData[115]++;
   if (visit17_115_1(selectedEl)) {
     _$jscoverage['/xiami-music.js'].lineData[116]++;

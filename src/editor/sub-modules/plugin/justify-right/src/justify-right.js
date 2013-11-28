@@ -8,8 +8,8 @@ KISSY.add(function (S, require) {
     var justifyCenterCmd = require('./justify-right/cmd');
     require('./button');
     function exec() {
-        var editor = this.get("editor");
-        editor.execCommand("justifyRight");
+        var editor = this.get('editor');
+        editor.execCommand('justifyRight');
         editor.focus();
     }
 
@@ -22,21 +22,21 @@ KISSY.add(function (S, require) {
 
             justifyCenterCmd.init(editor);
 
-            editor.addButton("justifyRight", {
-                tooltip: "右对齐",
+            editor.addButton('justifyRight', {
+                tooltip: '右对齐',
                 checkable: true,
                 listeners: {
                     click: exec,
                     afterSyncUI: function () {
                         var self = this;
-                        editor.on("selectionChange", function () {
-                            if (editor.get("mode") == Editor.Mode.SOURCE_MODE) {
+                        editor.on('selectionChange', function () {
+                            if (editor.get('mode') === Editor.Mode.SOURCE_MODE) {
                                 return;
                             }
-                            if (editor.queryCommandValue("justifyRight")) {
-                                self.set("checked", true);
+                            if (editor.queryCommandValue('justifyRight')) {
+                                self.set('checked', true);
                             } else {
-                                self.set("checked", false);
+                                self.set('checked', false);
                             }
                         });
                     }
@@ -47,8 +47,8 @@ KISSY.add(function (S, require) {
 
             editor.docReady(function () {
                 editor.get('document').on('keydown', function (e) {
-                    if (e.ctrlKey && e.keyCode == S.Node.KeyCode.R) {
-                        editor.execCommand("justifyRight");
+                    if (e.ctrlKey && e.keyCode === S.Node.KeyCode.R) {
+                        editor.execCommand('justifyRight');
                         e.preventDefault();
                     }
                 });

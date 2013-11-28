@@ -35,7 +35,7 @@ KISSY.add(function (S, Editor) {
         describe("cloneContents", function () {
 
             it("works for simple text node", function () {
-                var div = $("<div>123456789</div>").appendTo("body");
+                var div = $("<div>123456789</div>").appendTo('body');
                 var range = new Range(document);
                 var text = new Node(div[0].firstChild);
 
@@ -44,7 +44,7 @@ KISSY.add(function (S, Editor) {
 
                 var f = range.cloneContents();
 
-                var newDiv = $("<div>").appendTo("body");
+                var newDiv = $("<div>").appendTo('body');
 
                 newDiv.append(f);
 
@@ -97,7 +97,7 @@ KISSY.add(function (S, Editor) {
                     "</span>" +
                     "f" +
                     "</span>" +
-                    "g</div>").appendTo("body", undefined);
+                    "g</div>").appendTo('body', undefined);
 
                 var range = new Range(document);
                 var textStart = new Node($("#start")[0].firstChild);
@@ -107,7 +107,7 @@ KISSY.add(function (S, Editor) {
 
                 var f = range.cloneContents();
 
-                var newDiv = $("<div>").appendTo("body");
+                var newDiv = $("<div>").appendTo('body');
 
                 newDiv.append(f);
 
@@ -179,7 +179,7 @@ KISSY.add(function (S, Editor) {
                     "</span>" +
                     "f" +
                     "</span>" +
-                    "g</div>").appendTo("body", undefined);
+                    "g</div>").appendTo('body', undefined);
 
 
                 var range = new Range(document);
@@ -192,7 +192,7 @@ KISSY.add(function (S, Editor) {
 
                 var f = range.cloneContents();
 
-                var newDiv = $("<div>").appendTo("body");
+                var newDiv = $("<div>").appendTo('body');
 
                 newDiv.append(f);
 
@@ -221,7 +221,7 @@ KISSY.add(function (S, Editor) {
         describe("extractContents", function () {
 
             it("works for simple text node", function () {
-                var div = $("<div>123456789</div>").appendTo("body");
+                var div = $("<div>123456789</div>").appendTo('body');
                 var range = new Range(document);
                 var text = new Node(div[0].firstChild);
 
@@ -230,7 +230,7 @@ KISSY.add(function (S, Editor) {
 
                 var f = range.extractContents();
 
-                var newDiv = $("<div>").appendTo("body");
+                var newDiv = $("<div>").appendTo('body');
 
                 newDiv.append(f);
                 expect(myHTML(newDiv)).toBe("345");
@@ -287,7 +287,7 @@ KISSY.add(function (S, Editor) {
                     "</span>" +
                     "f" +
                     "</span>" +
-                    "g</div>").appendTo("body", undefined);
+                    "g</div>").appendTo('body', undefined);
 
                 var endwrapper = $("#endwrapper");
                 var range = new Range(document);
@@ -298,7 +298,7 @@ KISSY.add(function (S, Editor) {
 
                 var f = range.extractContents();
 
-                var newDiv = $("<div>").appendTo("body");
+                var newDiv = $("<div>").appendTo('body');
 
                 newDiv.append(f);
 
@@ -345,7 +345,7 @@ KISSY.add(function (S, Editor) {
 
                 f = range.extractContents();
 
-                newDiv = $("<div>").appendTo("body");
+                newDiv = $("<div>").appendTo('body');
 
                 newDiv.append(f);
 
@@ -402,7 +402,7 @@ KISSY.add(function (S, Editor) {
                     "</span>" +
                     "f" +
                     "</span>" +
-                    "g</div>").appendTo("body", undefined);
+                    "g</div>").appendTo('body', undefined);
 
 
                 var range = new Range(document);
@@ -415,7 +415,7 @@ KISSY.add(function (S, Editor) {
 
                 var f = range.extractContents();
 
-                var newDiv = $("<div>").appendTo("body");
+                var newDiv = $("<div>").appendTo('body');
 
                 newDiv.append(f);
 
@@ -452,7 +452,7 @@ KISSY.add(function (S, Editor) {
         describe("deleteContents", function () {
 
             it("works for simple text node", function () {
-                var div = $("<div>123456789</div>").appendTo("body");
+                var div = $("<div>123456789</div>").appendTo('body');
                 var range = new Range(document);
                 var text = new Node(div[0].firstChild);
 
@@ -514,7 +514,7 @@ KISSY.add(function (S, Editor) {
                     "</span>" +
                     "f" +
                     "</span>" +
-                    "g</div>").appendTo("body", undefined);
+                    "g</div>").appendTo('body', undefined);
 
                 var endwrapper = $("#endwrapper");
                 var range = new Range(document);
@@ -589,7 +589,7 @@ KISSY.add(function (S, Editor) {
                     "</span>" +
                     "f" +
                     "</span>" +
-                    "g</div>").appendTo("body", undefined);
+                    "g</div>").appendTo('body', undefined);
 
 
                 var range = new Range(document);
@@ -620,7 +620,7 @@ KISSY.add(function (S, Editor) {
 
         it("optimize change range from text to node", function () {
             var div = $("<div><span>123456</span></div>");
-            div.appendTo("body");
+            div.appendTo('body');
             var range = new Range(document);
             var text = $(div[0].firstChild.firstChild);
             var span = div.first();
@@ -646,7 +646,7 @@ KISSY.add(function (S, Editor) {
                 "<span _ke_bookmark=1 class='bookmark'>y</span>" +
                 "6</span>" +
                 "</div>");
-            div.appendTo("body");
+            div.appendTo('body');
 
             var bookmarks = div.all(".bookmark");
 
@@ -677,7 +677,7 @@ KISSY.add(function (S, Editor) {
                 "6</span>" +
                 "<span _ke_bookmark=1 class='bookmark'>y0</span>" +
                 "</div>");
-            div.appendTo("body");
+            div.appendTo('body');
 
             var range = new Range(document);
             range.setStartBefore(div);
@@ -710,7 +710,7 @@ KISSY.add(function (S, Editor) {
             it("works simply", function () {
                 var div = $("<div>" +
                     "<div><span>123</span></div>" +
-                    "</div>").appendTo("body");
+                    "</div>").appendTo('body');
                 var range = new Range(document);
                 var div2 = div.one('div');
                 range.setStart(div, 0);
@@ -727,7 +727,7 @@ KISSY.add(function (S, Editor) {
             it("works simply", function () {
                 var div = $("<div>" +
                     "<div>22<span>123</span>22</div>" +
-                    "</div>").appendTo("body");
+                    "</div>").appendTo('body');
                 var range = new Range(document);
                 var div2 = div.one('div');
                 range.setStart(div, 0);
@@ -749,7 +749,7 @@ KISSY.add(function (S, Editor) {
                     "<span _ke_bookmark=1 class='bookmark'>y</span>" +
                     "6</span>" +
                     "</div>");
-                div.appendTo("body");
+                div.appendTo('body');
 
                 var span = div.first("span");
 
@@ -831,7 +831,7 @@ KISSY.add(function (S, Editor) {
                 "<span _ke_bookmark=1 class='bookmark'>y</span>" +
                 "6</span>" +
                 "</div>");
-            div.prependTo("body");
+            div.prependTo('body');
 
             var span = div.first();
 
@@ -859,7 +859,7 @@ KISSY.add(function (S, Editor) {
                 "<span _ke_bookmark=1 class='bookmark'>y</span>" +
                 "6</span>" +
                 "</div>");
-            div.prependTo("body");
+            div.prependTo('body');
 
             var span = div.first();
 
@@ -891,7 +891,7 @@ KISSY.add(function (S, Editor) {
                 "<span _ke_bookmark=1 class='bookmark'>y</span>" +
                 "6</span>" +
                 "</div>");
-            div.prependTo("body");
+            div.prependTo('body');
 
             var books = div.all(".bookmark");
             var range = new Range();
@@ -920,7 +920,7 @@ KISSY.add(function (S, Editor) {
                     "<span _ke_bookmark=1 class='bookmark'>y</span>" +
                     "6</span>" +
                     "</div>");
-                div.prependTo("body");
+                div.prependTo('body');
 
                 var span = div.first();
 
@@ -950,7 +950,7 @@ KISSY.add(function (S, Editor) {
                     "<span _ke_bookmark=1 class='bookmark'>y</span>" +
                     "6</span>" +
                     "</div>");
-                div.prependTo("body");
+                div.prependTo('body');
 
                 var span = div.first();
 
@@ -983,7 +983,7 @@ KISSY.add(function (S, Editor) {
                 "<span _ke_bookmark=1 class='bookmark'>y</span>" +
                 "6</span>" +
                 "</div>");
-            div.prependTo("body");
+            div.prependTo('body');
 
             var span = div.first();
 
@@ -1014,7 +1014,7 @@ KISSY.add(function (S, Editor) {
                 it("enlarge element within same element", function () {
 
                     var div = $("<div><strong><span>123</span>abc</strong>def</div>")
-                        .prependTo("body");
+                        .prependTo('body');
 
                     var span = div.first().first();
 
@@ -1041,7 +1041,7 @@ KISSY.add(function (S, Editor) {
                 it("enlarge element within same element 2", function () {
 
                     var div = $("<div><strong>x<span>123</span>abc</strong>def</div>")
-                        .prependTo("body");
+                        .prependTo('body');
 
                     var span = div.first("strong").first("span");
 
@@ -1070,7 +1070,7 @@ KISSY.add(function (S, Editor) {
                 it("enlarge element within same element 3", function () {
 
                     var div = $("<div><strong>x<span>123</span><span>abc</span></strong>def</div>")
-                        .prependTo("body");
+                        .prependTo('body');
 
                     var span = div.first("strong").first("span");
 
@@ -1107,7 +1107,7 @@ KISSY.add(function (S, Editor) {
                         "</strong>" +
                         "def" +
                         "</div>")
-                        .prependTo("body");
+                        .prependTo('body');
 
                     var span = div.one("span").next();
                     var span2 = span.next();
@@ -1133,9 +1133,9 @@ KISSY.add(function (S, Editor) {
             describe("enlarge block", function () {
 
                 it("enlarge block", function () {
-                    var div = $("<div>12<span>3456</span>789</div>").appendTo("body");
+                    var div = $("<div>12<span>3456</span>789</div>").appendTo('body');
                     var text = $(div.one("span")[0].firstChild);
-                    var div2 = $("<div>ab<span>cdefg</span>hij<br/></div>").appendTo("body");
+                    var div2 = $("<div>ab<span>cdefg</span>hij<br/></div>").appendTo('body');
                     var text2 = $(div2.one("span")[0].firstChild);
 
                     var range = new Range(document);
@@ -1155,9 +1155,9 @@ KISSY.add(function (S, Editor) {
 
 
                 it("enlarge block 2", function () {
-                    var div = $("<div>12<span>3456</span>789</div>").appendTo("body");
+                    var div = $("<div>12<span>3456</span>789</div>").appendTo('body');
                     var text = $(div.one("span")[0].firstChild);
-                    var div2 = $("<div>ab<span>cdefg</span>hij<br/></div>").appendTo("body");
+                    var div2 = $("<div>ab<span>cdefg</span>hij<br/></div>").appendTo('body');
                     var text2 = $(div2.one("span")[0].firstChild);
 
                     var range = new Range(document);
@@ -1183,7 +1183,7 @@ KISSY.add(function (S, Editor) {
                 it("enlarge list", function () {
 
                     // 不能跳过 br !! ??
-                    var ul = $("<ul></ul>").appendTo("body");
+                    var ul = $("<ul></ul>").appendTo('body');
                     var div = $("<li><br/>12<br/><span>3456</span>789</li>").appendTo(ul);
                     var text = $(div.one("span")[0].firstChild);
                     var div2 = $("<li>ab<span>cdefg</span><br/>hij<br/></li>").appendTo(ul);
@@ -1212,7 +1212,7 @@ KISSY.add(function (S, Editor) {
         it("checkStartOfBlock/checkEndOfBlock works", function () {
             var div = $("<div>" +
                 "<span><b><i>123456789</i></b></span>" +
-                "</div>").appendTo("body");
+                "</div>").appendTo('body');
 
             var range = new Range(document);
             var textNode = $(div.one("i")[0].firstChild);
@@ -1253,7 +1253,7 @@ KISSY.add(function (S, Editor) {
             it("check start correctly", function () {
 
                 var div = $("<div><span></span>" +
-                    "<span>2</span></div>").appendTo("body");
+                    "<span>2</span></div>").appendTo('body');
 
                 var span = div.all("span").item(1);
 
@@ -1267,7 +1267,7 @@ KISSY.add(function (S, Editor) {
                 div.remove();
 
                 div = $("<div><img />" +
-                    "<span>2</span></div>").appendTo("body");
+                    "<span>2</span></div>").appendTo('body');
 
                 span = div.all("span").item(0);
 
@@ -1285,7 +1285,7 @@ KISSY.add(function (S, Editor) {
             it("check end correctly", function () {
 
                 var div = $("<div>" +
-                    "<span>2</span><span></span></div>").appendTo("body");
+                    "<span>2</span><span></span></div>").appendTo('body');
 
                 var span = div.all("span").item(0);
 
@@ -1299,7 +1299,7 @@ KISSY.add(function (S, Editor) {
                 div.remove();
 
                 div = $("<div><img />" +
-                    "<span>2</span><img /></div>").appendTo("body");
+                    "<span>2</span><img /></div>").appendTo('body');
 
                 span = div.all("span").item(0);
 
@@ -1319,7 +1319,7 @@ KISSY.add(function (S, Editor) {
             var div = $("<div>" +
                     "<span>1<span>4</span></span>" +
                     "<span>2<span>3</span>4</span><span>2</span>" +
-                    "</div>").appendTo("body"),
+                    "</div>").appendTo('body'),
                 span = div.all("span");
             var range = new Range();
             range.setStart(span.item(0), 2);
@@ -1338,7 +1338,7 @@ KISSY.add(function (S, Editor) {
             var div = $("<div>" +
                     "<span>1<span>4</span></span>" +
                     "<span>2<span>3</span>4</span><span>2</span>" +
-                    "</div>").appendTo("body"),
+                    "</div>").appendTo('body'),
                 span = div.all("span");
 
             var range = new Range(document);
@@ -1359,7 +1359,7 @@ KISSY.add(function (S, Editor) {
             div = $("<div>" +
                 "<span>1<span>4</span></span>" +
                 "<span>2<span>3</span>4</span><span>2</span>" +
-                "</div>").appendTo("body");
+                "</div>").appendTo('body');
             span = div.all("span");
 
             range = new Range(document);
@@ -1384,7 +1384,7 @@ KISSY.add(function (S, Editor) {
                     "<span>1<span>4</span></span>" +
                     "<span>2<span>3</span>4</span><span>2</span>" +
                     "</div>" +
-                    "</div>").appendTo("body"),
+                    "</div>").appendTo('body'),
                 span = div.all("span");
 
             var range = new Range(document);
@@ -1409,7 +1409,7 @@ KISSY.add(function (S, Editor) {
         describe("splitBlock", function () {
             it("splitBlock in the same block works", function () {
                 var div = $("<div><p>1</p>2345<p>6</p>" +
-                    "7890<p>ok</p></div>").appendTo("body");
+                    "7890<p>ok</p></div>").appendTo('body');
 
                 var firstText = $(div[0].childNodes[1]);
 
@@ -1438,7 +1438,7 @@ KISSY.add(function (S, Editor) {
 
             it("splitBlock across block works", function () {
                 var div = $("<div><p>1</p>2345<p>6</p>" +
-                    "7890<p>ok</p></div>").appendTo("body");
+                    "7890<p>ok</p></div>").appendTo('body');
 
                 var firstText = $(div[0].childNodes[1]);
 
@@ -1472,7 +1472,7 @@ KISSY.add(function (S, Editor) {
 
             it("splitBlock at the start position of block works", function () {
                 var div = $("<div><p>1</p>2345<p>6</p>" +
-                    "7890<p>ok</p></div>").appendTo("body");
+                    "7890<p>ok</p></div>").appendTo('body');
 
                 var firstText = $(div[0].childNodes[1]);
 
@@ -1503,7 +1503,7 @@ KISSY.add(function (S, Editor) {
 
             it("moveToElementEditablePosition works", function () {
                 var div = $("<div><span><i></i></span><span><i>5678</i></span></div>")
-                    .appendTo("body");
+                    .appendTo('body');
                 var range = new Range(document);
                 var is = div.all("i");
                 range.moveToElementEditablePosition(div);
@@ -1524,7 +1524,7 @@ KISSY.add(function (S, Editor) {
 
             it("_4eBreakParent works", function () {
                 var div = $("<div><div><span>12<i></i>34</span><span><i>5678</i></span></div></div>")
-                        .appendTo("body"),
+                        .appendTo('body'),
                     range = new Range(document),
                     is = div.all("i");
 
@@ -1551,7 +1551,7 @@ KISSY.add(function (S, Editor) {
                     "1234567" +
                     "</span>" +
                     "</p>" +
-                    "</div>").appendTo("body");
+                    "</div>").appendTo('body');
 
                 var text = $(div.one(".text-wrapper")[0].firstChild);
 
@@ -1580,7 +1580,7 @@ KISSY.add(function (S, Editor) {
                     "<p>" +
                     "<br/>" +
                     "</p>" +
-                    "</div>").appendTo("body");
+                    "</div>").appendTo('body');
 
                 var p = div.first();
 

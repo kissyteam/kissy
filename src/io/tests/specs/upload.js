@@ -23,7 +23,7 @@ KISSY.add(function (S, UA,  io, Node) {
                 '<option value="t1" selected>v</option>' +
                 '<option value="t2" selected>v2</option>' +
                 '</select>' +
-                '</form>').appendTo("body");
+                '</form>').appendTo('body');
 
             var re = [], ok, d;
 
@@ -73,7 +73,7 @@ KISSY.add(function (S, UA,  io, Node) {
                 '<option value="t1" selected>v</option>' +
                 '<option value="t2" selected>v2</option>' +
                 '</select>' +
-                '</form>').appendTo("body");
+                '</form>').appendTo('body');
 
             var re = [], ok, d;
 
@@ -114,7 +114,7 @@ KISSY.add(function (S, UA,  io, Node) {
                 '<input name="test" value=\'1\'/>' +
                 '<input name="test2" value=\'2\'/>' +
                 '<input name="testFile" type="file"/>' +
-                '</form>').appendTo("body");
+                '</form>').appendTo('body');
 
             var ok = 0;
 
@@ -145,7 +145,7 @@ KISSY.add(function (S, UA,  io, Node) {
                 '<input name="test" value=\'1\'/>' +
                 '<input name="test2" value=\'2\'/>' +
                 '<input name="testFile" type="file"/>' +
-                '</form>').appendTo("body");
+                '</form>').appendTo('body');
 
             var ok = 0;
 
@@ -176,7 +176,7 @@ KISSY.add(function (S, UA,  io, Node) {
                 '<input name="test" value=\'1\'/>' +
                 '<input name="test2" value=\'2\'/>' +
                 '<input name="testFile" type="file"/>' +
-                '</form>').appendTo("body");
+                '</form>').appendTo('body');
 
             var ok = 0;
 
@@ -206,7 +206,7 @@ KISSY.add(function (S, UA,  io, Node) {
                 '<input name="test" value=\'1\'/>' +
                 '<input name="test2" value=\'2\'/>' +
                 '<input name="test3" type=\'file\'/>' +
-                '</form>').appendTo("body");
+                '</form>').appendTo('body');
 
             var ok = 0;
 

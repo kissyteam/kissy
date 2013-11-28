@@ -6,7 +6,7 @@
 KISSY.add(function (S, require) {
     var Editor = require('editor');
     var alignRemoveRegex = /(-moz-|-webkit-|start|auto)/gi,
-        default_align = "left";
+        defaultAlign = 'left';
 
     function exec(editor, textAlign) {
         editor.focus();
@@ -34,11 +34,9 @@ KISSY.add(function (S, require) {
     }
 
     function isAlign(block, textAlign) {
-        var align = block.css("text-align")
-            .replace(alignRemoveRegex, "")
-            //默认值，没有设置
-            || default_align;
-        return align == textAlign;
+        var align = block.css('text-align')
+            .replace(alignRemoveRegex, '')|| defaultAlign;
+        return align === textAlign;
     }
 
     return {
@@ -58,7 +56,7 @@ KISSY.add(function (S, require) {
                             var startElement = selection.getStartElement();
                             var path = new Editor.ElementPath(startElement);
                             var block = path.block || path.blockLimit;
-                            if (!block || block.nodeName() === "body") {
+                            if (!block || block.nodeName() === 'body') {
                                 return false;
                             }
                             return isAlign(block, textAlign);

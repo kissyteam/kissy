@@ -122,7 +122,7 @@ KISSY.add(function (S, UA, io, Node) {
                                 },
                                 xdr: {
                                     // 强制用 flash，ie 可携带cookie
-                                    // use: "flash",
+                                    // use: 'flash',
                                     // force to use native xhr no sub domain proxy
                                     subDomain: {
                                         proxy: false
@@ -226,7 +226,7 @@ KISSY.add(function (S, UA, io, Node) {
                             '<input name="test" value=\'1\'/>' +
                             '<input name="test2" value=\'2\'/>' +
                             '<input type="file" name="testFile"/>' +
-                            '</form>').appendTo("body");
+                            '</form>').appendTo('body');
 
                         var ok = 0;
 

@@ -4,6 +4,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
+    /*jshint loopfunc:true*/
     var HtmlParser = require('html-parser');
 
     var $ = S.all,
@@ -47,14 +48,14 @@ KISSY.add(function (S, require) {
             [4, 'IV'],
             [1, 'I']
         ],
-        alphabets = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        alphabets = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
     // Convert roman numbering back to decimal.
     function fromRoman(str) {
         str = str.toUpperCase();
         var l = romans.length, retVal = 0;
         for (var i = 0; i < l; ++i) {
-            for (var j = romans[i], k = j[1].length; str.substr(0, k) == j[1]; str = str.substr(k)) {
+            for (var j = romans[i], k = j[1].length; str.substr(0, k) === j[1]; str = str.substr(k)) {
                 retVal += j[ 0 ];
             }
         }
@@ -74,9 +75,9 @@ KISSY.add(function (S, require) {
 
     function setStyle(element, str) {
         if (str) {
-            element.setAttribute("style", str);
+            element.setAttribute('style', str);
         } else {
-            element.removeAttribute("style");
+            element.removeAttribute('style');
         }
     }
 
@@ -92,7 +93,7 @@ KISSY.add(function (S, require) {
                 calculator = $(
                     '<div style="position:absolute;left:-9999px;' +
                         'top:-9999px;margin:0px;padding:0px;border:0px;"' +
-                        '></div>')['prependTo']("body");
+                        '></div>').prependTo('body');
 
             }
 
@@ -112,7 +113,7 @@ KISSY.add(function (S, require) {
     function onlyChild(elem) {
         var childNodes = elem.childNodes || [],
             count = childNodes.length,
-            firstChild = (count == 1) && childNodes[0];
+            firstChild = (count === 1) && childNodes[0];
         return firstChild || null;
     }
 
@@ -126,7 +127,7 @@ KISSY.add(function (S, require) {
             if (!child.nodeName) {
                 continue;
             }
-            if (child.nodeName == tagName) {
+            if (child.nodeName === tagName) {
                 ret.push(child);
                 children.splice(i--, 1);
             }
@@ -167,11 +168,11 @@ KISSY.add(function (S, require) {
     function addStyle(elem, name, value, isPrepend) {
         var styleText, addingStyleText = '', style;
         // name/value pair.
-        if (typeof value == 'string') {
+        if (typeof value === 'string') {
             addingStyleText += name + ':' + value + ';';
         } else {
             // style literal.
-            if (typeof name == 'object') {
+            if (typeof name === 'object') {
                 for (style in name) {
 
                     addingStyleText += style + ':' + name[ style ] + ';';
@@ -186,7 +187,7 @@ KISSY.add(function (S, require) {
         }
 
 
-        styleText = elem.getAttribute("style");
+        styleText = elem.getAttribute('style');
 
         styleText = ( isPrepend ?
             [ addingStyleText, styleText ]
@@ -201,7 +202,7 @@ KISSY.add(function (S, require) {
             tag;
         for (tag in dtd) {
 
-            if (tag.indexOf('$') == -1 && dtd[ tag ][ tagName ]) {
+            if (tag.indexOf('$') === -1 && dtd[ tag ][ tagName ]) {
                 result[ tag ] = 1;
             }
 
@@ -212,15 +213,15 @@ KISSY.add(function (S, require) {
     var filters = {
         // Transform a normal list into flat list items only presentation.
         // E.g. <ul><li>level1<ol><li>level2</li></ol></li> =>
-        // <ke:li ke:listtype="ul" ke:indent="1">level1</ke:li>
-        // <ke:li ke:listtype="ol" ke:indent="2">level2</ke:li>
+        // <ke:li ke:listtype='ul' ke:indent='1'>level1</ke:li>
+        // <ke:li ke:listtype='ol' ke:indent='2'>level2</ke:li>
         flattenList: function (element, level) {
-            level = typeof level == 'number' ? level : 1;
+            level = typeof level === 'number' ? level : 1;
 
             var listStyleType;
 
             // All list items are of the same type.
-            switch (element.getAttribute("type")) {
+            switch (element.getAttribute('type')) {
                 case 'a' :
                     listStyleType = 'lower-alpha';
                     break;
@@ -253,26 +254,28 @@ KISSY.add(function (S, require) {
                     child.setTagName('ke:li');
 
                     // Inherit numbering from list root on the first list item.
-                    element.getAttribute("start") && !i &&
-                    ( element.setAttribute("value", element.getAttribute("start")));
+                    if (element.getAttribute('start') && !i) {
+                        element.setAttribute('value', element.getAttribute('start'));
+                    }
 
                     filters.stylesFilter(
                         [
-                            [
-                                'tab-stops', null, function (val) {
+                            ['tab-stops', null, function (val) {
                                 var margin = val.split(' ')[ 1 ].match(cssLengthRelativeUnit);
-                                margin && ( previousListItemMargin = convertToPx(margin[ 0 ]) );
+                                if (margin) {
+                                    ( previousListItemMargin = convertToPx(margin[ 0 ]) );
+                                }
                             }
                             ],
-                            ( level == 1 ? [ 'mso-list', null, function (val) {
+                            ( level === 1 ? [ 'mso-list', null, function (val) {
                                 val = val.split(' ');
                                 var listId = Number(val[ 0 ].match(/\d+/));
                                 if (listId !== previousListId) {
-                                    child.setAttribute('ke:reset', 1)
+                                    child.setAttribute('ke:reset', 1);
                                 }
                                 previousListId = listId;
                             } ] : null )
-                        ])(child.getAttribute("style"));
+                        ])(child.getAttribute('style'));
 
                     child.setAttribute('ke:indent', level);
                     child.setAttribute('ke:listtype', element.nodeName);
@@ -280,6 +283,7 @@ KISSY.add(function (S, require) {
                 }
                 // Flatten sub list.
                 else if (child.nodeName in dtd.$list) {
+                    /*jshint noarg:false*/
                     // Absorb sub list children.
                     arguments.callee.apply(this, [ child, level + 1 ]);
                     children = children.slice(0, i).concat(child.childNodes).concat(children.slice(i + 1));
@@ -321,7 +325,7 @@ KISSY.add(function (S, require) {
             for (var i = 0; i < children.length; i++) {
                 child = children[ i ];
 
-                if ('ke:li' == child.nodeName) {
+                if ('ke:li' === child.nodeName) {
                     child.setTagName('li');
                     listItem = child;
 
@@ -336,7 +340,9 @@ KISSY.add(function (S, require) {
 
 
                     // This's from a new list root.
-                    listItem.getAttribute('ke:reset') && ( list = lastIndent = lastListItem = null );
+                    if (listItem.getAttribute('ke:reset')) {
+                        ( list = lastIndent = lastListItem = null );
+                    }
 
                     // List item indent level might come from a real list indentation or
                     // been resolved from a pseudo list item's margin value, even get
@@ -344,8 +350,9 @@ KISSY.add(function (S, require) {
                     listItemIndent = Number(listItem.getAttribute('ke:indent'));
 
                     // We're moving out of the current list, cleaning up.
-                    if (listItemIndent != lastIndent)
+                    if (listItemIndent !== lastIndent) {
                         previousListType = previousListStyleType = null;
+                    }
 
                     // List type and item style are already resolved.
                     if (!bullet) {
@@ -368,7 +375,7 @@ KISSY.add(function (S, require) {
                                     if (listMarkerPatterns[ type ][ style ].test(bullet[ 1 ])) {
                                         // Small numbering has higher priority, when dealing with ambiguous
                                         // between C(Alpha) and C.(Roman).
-                                        if (type == 'ol' && ( /alpha|roman/ ).test(style)) {
+                                        if (type === 'ol' && ( /alpha|roman/ ).test(style)) {
                                             var num = /roman/.test(style) ? fromRoman(bullet[ 1 ]) : fromAlphabet(bullet[ 1 ]);
                                             if (!itemNumeric || num < itemNumeric) {
                                                 itemNumeric = num;
@@ -389,16 +396,19 @@ KISSY.add(function (S, require) {
                         // Simply use decimal/disc for the rest forms of unrepresentable
                         // numerals, e.g. Chinese..., but as long as there a second part
                         // included, it has a bigger chance of being a order list ;)
-                        !listType && ( listType = bullet[ 2 ] ? 'ol' : 'ul' );
+                        if (!listType) {
+                            ( listType = bullet[ 2 ] ? 'ol' : 'ul' );
+                        }
                     }
 
                     previousListType = listType;
-                    previousListStyleType = listStyleType || ( listType == 'ol' ? 'decimal' : 'disc' );
-                    if (listStyleType && listStyleType != ( listType == 'ol' ? 'decimal' : 'disc' ))
+                    previousListStyleType = listStyleType || ( listType === 'ol' ? 'decimal' : 'disc' );
+                    if (listStyleType && listStyleType !== ( listType === 'ol' ? 'decimal' : 'disc' )) {
                         addStyle(listItem, 'list-style-type', listStyleType);
+                    }
 
                     // Figure out start numbering.
-                    if (listType == 'ol' && bullet) {
+                    if (listType === 'ol' && bullet) {
                         switch (listStyleType) {
                             case 'decimal' :
                                 itemNumeric = Number(bullet[ 1 ]);
@@ -414,7 +424,7 @@ KISSY.add(function (S, require) {
                         }
 
                         // Always create the numbering, swipe out unnecessary ones later.
-                        listItem.setAttribute("value", itemNumeric);
+                        listItem.setAttribute('value', itemNumeric);
                     }
 
                     // Start the list construction.
@@ -446,9 +456,7 @@ KISSY.add(function (S, require) {
                     lastListItem = listItem;
                     lastIndent = listItemIndent;
                 }
-                else if (child.nodeType == 3 && !S.trim(child.nodeValue)) {
-                    //  li 间的空文字节点忽略
-                } else if (list) {
+                else if (list && !(child.nodeType === 3 && !S.trim(child.nodeValue))) {
                     list = lastIndent = lastListItem = null;
                 }
             }
@@ -483,7 +491,9 @@ KISSY.add(function (S, require) {
                     .replace(/\s*([^ :;]+)\s*:\s*([^;]+)\s*(?=;|$)/g,
                     function (match, name, value) {
                         name = name.toLowerCase();
-                        name == 'font-family' && ( value = value.replace(/["']/g, '') );
+                        if (name === 'font-family') {
+                            ( value = value.replace(/['']/g, '') );
+                        }
 
                         var namePattern,
                             valuePattern,
@@ -496,12 +506,13 @@ KISSY.add(function (S, require) {
                                 newValue = styles[ i ][ 2 ];
                                 newName = styles[ i ][ 3 ];
 
-                                if (name.match(namePattern)
-                                    && ( !valuePattern || value.match(valuePattern) )) {
+                                if (name.match(namePattern) && ( !valuePattern || value.match(valuePattern) )) {
                                     name = newName || name;
-                                    whitelist && ( newValue = newValue || value );
+                                    if (whitelist) {
+                                        ( newValue = newValue || value );
+                                    }
 
-                                    if (typeof newValue == 'function') {
+                                    if (typeof newValue === 'function') {
                                         newValue = newValue(value, element, name);
                                     }
 
@@ -512,7 +523,7 @@ KISSY.add(function (S, require) {
                                         newValue = newValue[ 1 ];
                                     }
 
-                                    if (typeof newValue == 'string') {
+                                    if (typeof newValue === 'string') {
                                         rules.push([ name, newValue ]);
                                     }
 
@@ -521,7 +532,9 @@ KISSY.add(function (S, require) {
                             }
                         }
 
-                        !whitelist && rules.push([ name, value ]);
+                        if (!whitelist) {
+                            rules.push([ name, value ]);
+                        }
 
                     });
 
@@ -554,21 +567,23 @@ KISSY.add(function (S, require) {
             stylesFilter = filters.stylesFilter;
 
 
-        if (styleTypeRegexp.exec(list.getAttribute("style")))
+        if (styleTypeRegexp.exec(list.getAttribute('style'))) {
             return;
+        }
 
         for (var i = 0; i < count; i++) {
             child = children[ i ];
 
-            if (child.getAttribute("value") && Number(child.getAttribute("value")) == i + 1) {
-                child.removeAttribute("value");
+            if (child.getAttribute('value') && Number(child.getAttribute('value')) === i + 1) {
+                child.removeAttribute('value');
             }
 
-            match = styleTypeRegexp.exec(child.getAttribute("style"));
+            match = styleTypeRegexp.exec(child.getAttribute('style'));
 
             if (match) {
-                if (match[ 1 ] == mergeStyle || !mergeStyle)
+                if (match[ 1 ] === mergeStyle || !mergeStyle) {
                     mergeStyle = match[ 1 ];
+                }
                 else {
                     mergeStyle = null;
                     break;
@@ -578,7 +593,7 @@ KISSY.add(function (S, require) {
 
         if (mergeStyle) {
             for (i = 0; i < count; i++) {
-                var style = children[ i ].getAttribute("style");
+                var style = children[ i ].getAttribute('style');
 
                 if (style) {
                     style = stylesFilter([
@@ -595,13 +610,13 @@ KISSY.add(function (S, require) {
         // Create a <ke:listbullet> which indicate an list item type.
         createListBulletMarker: function (bullet, bulletText) {
             var marker = new HtmlParser.Tag('ke:listbullet');
-            marker.setAttribute("ke:listsymbol", bullet[ 0 ]);
+            marker.setAttribute('ke:listsymbol', bullet[ 0 ]);
             marker.appendChild(new HtmlParser.Text(bulletText));
             return marker;
         },
 
         isListBulletIndicator: function (element) {
-            var styleText = element.getAttribute("style");
+            var styleText = element.getAttribute('style');
             if (/mso-list\s*:\s*Ignore/i.test(styleText)) {
                 return true;
             }
@@ -609,20 +624,18 @@ KISSY.add(function (S, require) {
 
         isContainingOnlySpaces: function (element) {
             var text;
-            return ( ( text = onlyChild(element) )
-                && ( /^(:?\s|&nbsp;)+$/ ).test(text.nodeValue) );
+            return ( ( text = onlyChild(element) ) && ( /^(:?\s|&nbsp;)+$/ ).test(text.nodeValue) );
         },
 
         resolveList: function (element) {
             // <ke:listbullet> indicate a list item.
             var listMarker;
 
-            if (( listMarker = removeAnyChildWithName(element, 'ke:listbullet') )
-                && listMarker.length
-                && ( listMarker = listMarker[ 0 ] )) {
+            if (( listMarker = removeAnyChildWithName(element, 'ke:listbullet') ) &&
+                listMarker.length && ( listMarker = listMarker[ 0 ] )) {
                 element.setTagName('ke:li');
 
-                if (element.getAttribute("style")) {
+                if (element.getAttribute('style')) {
                     var styleStr = filters.stylesFilter(
                         [
                             // Text-indent is not representing list item level any more.
@@ -646,27 +659,29 @@ KISSY.add(function (S, require) {
                                         ( Math.ceil(margin / listBaseIndent) + 1 ) || 1);
                                 }
                             } ],
-                            // The best situation: "mso-list:l0 level1 lfo2" tells the belonged list root, list item indentation, etc.
+                            // The best situation: 'mso-list:l0 level1 lfo2' tells the belonged list root, list item indentation, etc.
                             [ ( /^mso-list$/ ), null, function (val) {
                                 val = val.split(' ');
                                 var listId = Number(val[ 0 ].match(/\d+/)),
                                     indent = Number(val[ 1 ].match(/\d+/));
 
-                                if (indent == 1) {
-                                    listId !== previousListId && ( element.setAttribute('ke:reset', 1) );
+                                if (indent === 1) {
+                                    if (listId !== previousListId) {
+                                        ( element.setAttribute('ke:reset', 1) );
+                                    }
 
                                     previousListId = listId;
                                 }
                                 element.setAttribute('ke:indent', indent);
                             } ]
-                        ])(element.getAttribute("style"), element);
+                        ])(element.getAttribute('style'), element);
 
                     setStyle(element, styleStr);
                 }
 
                 // First level list item might be presented without a margin.
                 // In case all above doesn't apply.
-                if (!element.getAttribute("ke:indent")) {
+                if (!element.getAttribute('ke:indent')) {
                     previousListItemMargin = 0;
                     element.setAttribute('ke:indent', 1);
                 }
@@ -687,7 +702,7 @@ KISSY.add(function (S, require) {
         // Providing a shorthand style then retrieve one or more style component values.
         getStyleComponents: (function () {
             var calculator = $(
-                '<div style="position:absolute;left:-9999px;top:-9999px;"></div>').prependTo("body");
+                '<div style="position:absolute;left:-9999px;top:-9999px;"></div>').prependTo('body');
 
             return function (name, styleValue, fetchList) {
                 calculator.css(name, styleValue);
@@ -737,8 +752,9 @@ KISSY.add(function (S, require) {
                 '^': function (element) {
                     // Transform CSS style declaration to inline style.
                     var applyStyleFilter;
-                    if (UA.gecko && ( applyStyleFilter = filters.applyStyleFilter ))
+                    if (UA.gecko && ( applyStyleFilter = filters.applyStyleFilter )) {
                         applyStyleFilter(element);
+                    }
                 },
 
                 $: function (element) {
@@ -746,11 +762,11 @@ KISSY.add(function (S, require) {
 
                     // Convert length unit of width/height on blocks to
                     // a more editor-friendly way (px).
-                    if (tagName in blockLike && element.getAttribute("style")) {
+                    if (tagName in blockLike && element.getAttribute('style')) {
                         setStyle(element, stylesFilter(
                             [
                                 [ ( /^(:?width|height)$/ ), null, convertToPxStr ]
-                            ])(element.getAttribute("style")));
+                            ])(element.getAttribute('style')));
                     }
 
                     // Processing headings.
@@ -770,15 +786,14 @@ KISSY.add(function (S, require) {
                     }
                     // Remove element with ms-office namespace,
                     // with it's content preserved, e.g. 'o:p'.
-                    else if (tagName.indexOf(':') != -1
-                        && tagName.indexOf('ke') == -1) {
+                    else if (tagName.indexOf(':') !== -1 && tagName.indexOf('ke') === -1) {
                         element.filterChildren();
 
                         // Restore image real link from vml.
-                        if (tagName == 'v:imagedata') {
+                        if (tagName === 'v:imagedata') {
                             var href = element.getAttribute('o:href');
                             if (href) {
-                                element.setAttribute("src", href);
+                                element.setAttribute('src', href);
                             }
                             element.setTagName('img');
                             return;
@@ -823,8 +838,9 @@ KISSY.add(function (S, require) {
                                                 className = className.substring(1, className.length);
 
                                                 // Reject MS-Word Normal styles.
-                                                if (className.match(/MsoNormal/))
+                                                if (className.match(/MsoNormal/)) {
                                                     return;
+                                                }
 
                                                 if (!rules[ tagName ]) {
                                                     rules[ tagName ] = {};
@@ -844,10 +860,13 @@ KISSY.add(function (S, require) {
                                     style;
                                 if (name in rules) {
                                     style = rules[ name ];
-                                    if (typeof style == 'object')
+                                    if (typeof style === 'object') {
                                         style = style[ className ];
+                                    }
                                     // Maintain style rules priorities.
-                                    style && addStyle(element, style, true);
+                                    if (style) {
+                                        addStyle(element, style, true);
+                                    }
                                 }
                             };
                         }
@@ -857,19 +876,21 @@ KISSY.add(function (S, require) {
 
                 'p': function (element) {
                     // This's a fall-back approach to recognize list item in FF3.6,
-                    // as it's not perfect as not all list style (e.g. "heading list") is shipped
+                    // as it's not perfect as not all list style (e.g. 'heading list') is shipped
                     // with this pattern. (#6662)
                     if (/MsoListParagraph/.exec(element.getAttribute('class'))) {
                         var bulletText = firstChild(element, function (node) {
-                            return node.nodeType == 3 && !containsNothingButSpaces(node.parentNode);
+                            return node.nodeType === 3 && !containsNothingButSpaces(node.parentNode);
                         });
                         var bullet = bulletText && bulletText.parentNode;
-                        !bullet.getAttribute("style") && ( bullet.setAttribute("style", 'mso-list: Ignore;'));
+                        if (!bullet.getAttribute('style')) {
+                            ( bullet.setAttribute('style', 'mso-list: Ignore;'));
+                        }
                     }
 
                     element.filterChildren();
                     // Is the paragraph actually a list item?
-                    resolveListItem(element)
+                    resolveListItem(element);
                 },
 
                 'div': function (element) {
@@ -877,15 +898,15 @@ KISSY.add(function (S, require) {
                     // table cells inherit as text-align styles, which is wrong.
                     // Instead we use a clear-float div after the table to properly achieve the same layout.
                     var singleChild = onlyChild(element);
-                    if (singleChild && singleChild.nodeName == 'table') {
+                    if (singleChild && singleChild.nodeName === 'table') {
                         var attrs = element.attributes;
 
                         S.each(attrs, function (attr) {
                             singleChild.setAttribute(attr.name, attr.value);
                         });
 
-                        if (element.getAttribute("style")) {
-                            addStyle(singleChild, element.getAttribute("style"));
+                        if (element.getAttribute('style')) {
+                            addStyle(singleChild, element.getAttribute('style'));
                         }
 
                         var clearFloatDiv = new HtmlParser.Tag('div');
@@ -897,8 +918,9 @@ KISSY.add(function (S, require) {
 
                 'td': function (element) {
                     // 'td' in 'thead' is actually <th>.
-                    if (getAncestor(element, 'thead'))
+                    if (getAncestor(element, 'thead')) {
                         element.setTagName('th');
+                    }
                 },
 
                 // MS-Word sometimes present list as a mixing of normal list
@@ -916,39 +938,43 @@ KISSY.add(function (S, require) {
 
                     element.filterChildren();
 
-                    var styleText = element.getAttribute("style"),
+                    var styleText = element.getAttribute('style'),
                         parent = element.parentNode;
 
-                    if ('font' == parent.name)     // Merge nested <font> tags.
+                    if ('font' === parent.name)     // Merge nested <font> tags.
                     {
                         S.each(element.attributes, function (attr) {
                             parent.setAttribute(attr.name, attr.value);
                         });
-                        styleText && addStyle(parent, styleText);
+                        if (styleText) {
+                            addStyle(parent, styleText);
+                        }
                         element.setTagName(null);
                     }
                     // Convert the merged into a span with all attributes preserved.
                     else {
                         styleText = styleText || '';
                         // IE's having those deprecated attributes, normalize them.
-                        if (element.getAttribute("color")) {
-                            element.getAttribute("color") != '#000000' && ( styleText += 'color:' + element.getAttribute("color") + ';' );
-                            element.removeAttribute("color");
+                        if (element.getAttribute('color')) {
+                            if (element.getAttribute('color') !== '#000000') {
+                                styleText += 'color:' + element.getAttribute('color') + ';';
+                            }
+                            element.removeAttribute('color');
                         }
-                        if (element.getAttribute("face")) {
-                            styleText += 'font-family:' + element.getAttribute("face") + ';';
-                            element.removeAttribute("face");
+                        if (element.getAttribute('face')) {
+                            styleText += 'font-family:' + element.getAttribute('face') + ';';
+                            element.removeAttribute('face');
                         }
-                        var size = element.getAttribute("size");
+                        var size = element.getAttribute('size');
                         // TODO: Mapping size in ranges of xx-small,
                         // x-small, small, medium, large, x-large, xx-large.
                         if (size) {
                             styleText += 'font-size:' +
                                 (size > 3 ? 'large'
                                     : ( size < 3 ? 'small' : 'medium' ) ) + ';';
-                            element.removeAttribute("size");
+                            element.removeAttribute('size');
                         }
-                        element.setTagName("span");
+                        element.setTagName('span');
                         addStyle(element, styleText);
                     }
                 },
@@ -968,7 +994,7 @@ KISSY.add(function (S, require) {
                     // the text of a span with style 'mso-list : Ignore' or an image.
                     if (isListBulletIndicator(element)) {
                         var listSymbolNode = firstChild(element, function (node) {
-                            return node.nodeValue || node.nodeName == 'img';
+                            return node.nodeValue || node.nodeName === 'img';
                         });
 
                         var listSymbol = listSymbolNode && ( listSymbolNode.nodeValue || 'l.' ),
@@ -977,11 +1003,11 @@ KISSY.add(function (S, require) {
                         if (listType) {
                             var marker = createListBulletMarker(listType, listSymbol);
                             // Some non-existed list items might be carried by an inconsequential list,
-                            // indicate by "mso-hide:all/display:none",
-                            // those are to be removed later, now mark it with "ke:ignored".
+                            // indicate by 'mso-hide:all/display:none',
+                            // those are to be removed later, now mark it with 'ke:ignored'.
                             var ancestor = getAncestor(element, 'span');
                             if (ancestor && (/ mso-hide:\s*all|display:\s*none /).
-                                test(ancestor.getAttribute("style"))) {
+                                test(ancestor.getAttribute('style'))) {
                                 marker.setAttribute('ke:ignored', 1);
                             }
                             return marker;
@@ -989,7 +1015,7 @@ KISSY.add(function (S, require) {
                     }
 
                     // Update the src attribute of image element with href.
-                    var styleText = element.getAttribute("style");
+                    var styleText = element.getAttribute('style');
 
                     // Assume MS-Word mostly carry font related styles on <span>,
                     // adapting them to editor's convention.
@@ -1011,10 +1037,10 @@ KISSY.add(function (S, require) {
                 // drop such anchors with content preserved.
                 'a': function (element) {
                     var href;
-                    if (!(href = element.getAttribute("href")) && element.getAttribute("name")) {
+                    if (!(href = element.getAttribute('href')) && element.getAttribute('name')) {
                         element.setTagName(null);
                     } else if (UA.webkit && href && href.match(/file:\/\/\/[\S]+#/i)) {
-                        element.setAttribute("href", href.replace(/file:\/\/\/[^#]+/i, ''));
+                        element.setAttribute('href', href.replace(/file:\/\/\/[^#]+/i, ''));
                     }
                 },
                 'ke:listbullet': function (element) {
@@ -1036,59 +1062,62 @@ KISSY.add(function (S, require) {
             ],
 
             attributes: {
-                'style': stylesFilter(
-                    // Provide a white-list of styles that we preserve, those should
-                    // be the ones that could later be altered with editor tools.
-                    [
-                        // Leave list-style-type
-                        [ ( /^list-style-type$/ ) ],
+                // Provide a white-list of styles that we preserve, those should
+                // be the ones that could later be altered with editor tools.
+                'style': stylesFilter([
+                    [ ( /^list-style-type$/ ) ],
 
-                        // Preserve margin-left/right which used as default indent style in the editor.
-                        [ ( /^margin$|^margin-(?!bottom|top)/ ), null, function (value, element, name) {
-                            if (element.nodeName in { p: 1, div: 1 }) {
-                                var indentStyleName = 'margin-left';
+                    // Preserve margin-left/right which used as default indent style in the editor.
+                    [ ( /^margin$|^margin-(?!bottom|top)/ ), null, function (value, element, name) {
+                        if (element.nodeName in { p: 1, div: 1 }) {
+                            var indentStyleName = 'margin-left';
 
-                                // Extract component value from 'margin' shorthand.
-                                if (name == 'margin') {
-                                    value = getStyleComponents(name, value,
-                                        [ indentStyleName ])[ indentStyleName ];
-                                } else if (name != indentStyleName) {
-                                    return null;
-                                }
-
-                                if (value && !emptyMarginRegex.test(value)) {
-                                    return [ indentStyleName, value ];
-                                }
+                            // Extract component value from 'margin' shorthand.
+                            if (name === 'margin') {
+                                value = getStyleComponents(name, value,
+                                    [ indentStyleName ])[ indentStyleName ];
+                            } else if (name !== indentStyleName) {
+                                return null;
                             }
 
-                            return null;
+                            if (value && !emptyMarginRegex.test(value)) {
+                                return [ indentStyleName, value ];
+                            }
+                        }
+
+                        return null;
+                    } ],
+
+                    // Preserve clear float style.
+                    [ ( /^clear$/ ) ],
+
+                    [ ( /^border.*|margin.*|vertical-align|float$/ ), null,
+                        function (value, element) {
+                            if (element.nodeName === 'img') {
+                                return value;
+                            }
                         } ],
 
-                        // Preserve clear float style.
-                        [ ( /^clear$/ ) ],
-
-                        [ ( /^border.*|margin.*|vertical-align|float$/ ), null,
-                            function (value, element) {
-                                if (element.nodeName == 'img')
-                                    return value;
-                            } ],
-
-                        [ (/^width|height$/ ), null,
-                            function (value, element) {
-                                if (element.nodeName in { table: 1, td: 1, th: 1, img: 1 })
-                                    return value;
-                            } ]
-                    ], 1),
+                    [ (/^width|height$/ ), null,
+                        function (value, element) {
+                            if (element.nodeName in { table: 1, td: 1, th: 1, img: 1 }) {
+                                return value;
+                            }
+                        } ]
+                ],
+                    1),
 
                 // Prefer width styles over 'width' attributes.
                 'width': function (value, element) {
-                    if (element.nodeName in dtd.$tableContent)
+                    if (element.nodeName in dtd.$tableContent) {
                         return false;
+                    }
                 },
                 // Prefer border styles over table 'border' attributes.
                 'border': function (value, element) {
-                    if (element.nodeName in dtd.$tableContent)
+                    if (element.nodeName in dtd.$tableContent) {
                         return false;
+                    }
                 },
 
                 // Only Firefox carry style sheet from MS-Word, which
@@ -1129,11 +1158,13 @@ KISSY.add(function (S, require) {
                         var img = new HtmlParser.Parser(imageInfo[0]).parse().childNodes[ 0 ],
                             previousComment = node.previousSibling,
                         // Try to dig the real image link from vml markup from previous comment text.
-                            imgSrcInfo = previousComment && previousComment.toHtml().match(/<v:imagedata[^>]*o:href=['"](.*?)['"]/),
+                            imgSrcInfo = previousComment && previousComment.toHtml().match(/<v:imagedata[^>]*o:href=[''](.*?)['']/),
                             imgSrc = imgSrcInfo && imgSrcInfo[ 1 ];
 
                         // Is there a real 'src' url to be used?
-                        imgSrc && ( img.setAttribute("src", imgSrc) );
+                        if (imgSrc) {
+                            ( img.setAttribute('src', imgSrc) );
+                        }
                         return img;
                     }
 
@@ -1150,16 +1181,16 @@ KISSY.add(function (S, require) {
             // comments, fixing them first( convert it to upperlevel-revealed one ).
             // e.g. <![if !vml]>...<![endif]>
             //<!--[if !supportLists]-->
-            // <span style=\"font-family: Wingdings;\" lang=\"EN-US\">
-            // <span style=\"\">l<span style=\"font: 7pt &quot;Times New Roman&quot;;\">&nbsp;
+            // <span style=\'font-family: Wingdings;\' lang=\'EN-US\'>
+            // <span style=\'\'>l<span style=\'font: 7pt &quot;Times New Roman&quot;;\'>&nbsp;
             // </span></span></span>
             // <!--[endif]-->
 
             //变成：
 
             //<!--[if !supportLists]
-            // <span style=\"font-family: Wingdings;\" lang=\"EN-US\">
-            // <span style=\"\">l<span style=\"font: 7pt &quot;Times New Roman&quot;;\">&nbsp;
+            // <span style=\'font-family: Wingdings;\' lang=\'EN-US\'>
+            // <span style=\'\'>l<span style=\'font: 7pt &quot;Times New Roman&quot;;\'>&nbsp;
             // </span></span></span>
             // [endif]-->
             if (UA.gecko) {
@@ -1168,7 +1199,7 @@ KISSY.add(function (S, require) {
             }
 
             // 针对 word 一次
-            html = editor['htmlDataProcessor'].toDataFormat(html, wordFilter);
+            html = editor.htmlDataProcessor.toDataFormat(html, wordFilter);
 
             return html;
         }

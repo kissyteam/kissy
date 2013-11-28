@@ -3,8 +3,36 @@
  * @ignore
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S,require) {
+KISSY.add(function (S, require) {
     var Editor = require('./base');
+
+    function focus() {
+        var editor = this;
+        editor.__iframeFocus = TRUE;
+        currentInstance = editor;
+        if (timer) {
+            clearTimeout(timer);
+        }
+        timer = setTimeout(function () {
+            editor.fire('focus');
+        }, 30);
+    }
+
+    function blur() {
+        var editor = this;
+        editor.__iframeFocus = FALSE;
+        currentInstance = NULL;
+        if (timer) {
+            clearTimeout(timer);
+        }
+        /*
+         Note that this functions acts asynchronously with a delay of 30ms to
+         avoid subsequent blur/focus effects.
+         */
+        timer = setTimeout(function () {
+            editor.fire('blur');
+        }, 30);
+    }
 
     var INSTANCES = {},
         timer,
@@ -42,7 +70,7 @@ KISSY.add(function (S,require) {
              */
             add: function (editor) {
                 this.register(editor);
-                editor.get("window").on('focus', focus, editor)
+                editor.get('window').on('focus', focus, editor)
                     .on('blur', blur, editor);
             },
             /**
@@ -51,7 +79,7 @@ KISSY.add(function (S,require) {
              */
             remove: function (editor) {
                 delete INSTANCES[editor.get('id')];
-                editor.get("window").detach('focus', focus, editor)
+                editor.get('window').detach('focus', focus, editor)
                     .detach('blur', blur, editor);
             }
         },
@@ -59,33 +87,6 @@ KISSY.add(function (S,require) {
         FALSE = false,
         NULL = null;
 
-    function focus() {
-        var editor = this;
-        editor.__iframeFocus = TRUE;
-        currentInstance = editor;
-        if (timer) {
-            clearTimeout(timer);
-        }
-        timer = setTimeout(function () {
-            editor.fire('focus');
-        }, 30);
-    }
-
-    function blur() {
-        var editor = this;
-        editor.__iframeFocus = FALSE;
-        currentInstance = NULL;
-        if (timer) {
-            clearTimeout(timer);
-        }
-        /*
-         Note that this functions acts asynchronously with a delay of 30ms to
-         avoid subsequent blur/focus effects.
-         */
-        timer = setTimeout(function () {
-            editor.fire('blur');
-        }, 30);
-    }
 
     Editor.focusManager = focusManager;
     Editor.getInstances = function () {

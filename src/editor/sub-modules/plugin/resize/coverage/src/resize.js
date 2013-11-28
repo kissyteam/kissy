@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ',"src":' + jscoverage_quote(this.src)
+            + ','src':' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -349,13 +349,13 @@ KISSY.add(function(S, require) {
   _$jscoverage['/resize.js'].lineData[32]++;
   var resizer = new Node("<div class='" + editor.get('prefixCls') + "editor-resizer' style='cursor: " + cursor + "'></div>").appendTo(statusBarEl);
   _$jscoverage['/resize.js'].lineData[38]++;
-  editor.on("maximizeWindow", function() {
+  editor.on('maximizeWindow', function() {
   _$jscoverage['/resize.js'].functionData[3]++;
   _$jscoverage['/resize.js'].lineData[39]++;
   resizer.css("display", "none");
 });
   _$jscoverage['/resize.js'].lineData[42]++;
-  editor.on("restoreWindow", function() {
+  editor.on('restoreWindow', function() {
   _$jscoverage['/resize.js'].functionData[4]++;
   _$jscoverage['/resize.js'].lineData[43]++;
   resizer.css("display", "");
@@ -384,7 +384,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/resize.js'].lineData[66]++;
   if (visit5_66_1(S.inArray('y', direction))) {
     _$jscoverage['/resize.js'].lineData[67]++;
-    editor.set("height", height + diffY);
+    editor.set('height', height + diffY);
   }
   _$jscoverage['/resize.js'].lineData[69]++;
   if (visit6_69_1(S.inArray('x', direction))) {
@@ -395,7 +395,7 @@ KISSY.add(function(S, require) {
   editor.fire("resize");
 });
   _$jscoverage['/resize.js'].lineData[75]++;
-  editor.on("destroy", function() {
+  editor.on('destroy', function() {
   _$jscoverage['/resize.js'].functionData[7]++;
   _$jscoverage['/resize.js'].lineData[76]++;
   d.destroy();

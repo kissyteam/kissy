@@ -331,7 +331,7 @@ KISSY.add(function (S, Control, Container, DelegateChildrenExtension) {
 
                     waits(100);
                     runs(function () {
-                        jasmine.simulate(c.get('el')[0], "mousedown");
+                        jasmine.simulate(c.get('el')[0], 'mousedown');
                     });
                     waits(100);
                     runs(function () {
@@ -346,7 +346,7 @@ KISSY.add(function (S, Control, Container, DelegateChildrenExtension) {
                     });
 
                     runs(function () {
-                        jasmine.simulate(child1.get('el')[0], "mousedown");
+                        jasmine.simulate(child1.get('el')[0], 'mousedown');
                     });
                     waits(100);
                     runs(function () {

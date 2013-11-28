@@ -15,10 +15,10 @@ KISSY.add(function (S, require) {
     S.augment(CodePlugin, {
         pluginRenderUI: function (editor) {
             editor.addButton('code', {
-                tooltip: "插入代码",
+                tooltip: '插入代码',
                 listeners: {
                     click: function () {
-                        DialogLoader.useDialog(editor, "code");
+                        DialogLoader.useDialog(editor, 'code');
                     }
                 },
                 mode: Editor.Mode.WYSIWYG_MODE

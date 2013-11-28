@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ',"src":' + jscoverage_quote(this.src)
+            + ','src':' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -300,7 +300,7 @@ if (! _$jscoverage['/page-break.js'].branchData) {
   _$jscoverage['/page-break.js'].branchData['83'] = [];
   _$jscoverage['/page-break.js'].branchData['83'][1] = new BranchData();
 }
-_$jscoverage['/page-break.js'].branchData['83'][1].init(827, 27, 'start.nodeName() !== "body"');
+_$jscoverage['/page-break.js'].branchData['83'][1].init(827, 27, 'start.nodeName() !== 'body'');
 function visit12_83_1(result) {
   _$jscoverage['/page-break.js'].branchData['83'][1].ranCondition(result);
   return result;
@@ -324,11 +324,11 @@ function visit8_47_1(result) {
 function visit7_44_2(result) {
   _$jscoverage['/page-break.js'].branchData['44'][2].ranCondition(result);
   return result;
-}_$jscoverage['/page-break.js'].branchData['44'][1].init(38, 85, '(child.nodeName == \'span\') && child.getAttribute("style")');
+}_$jscoverage['/page-break.js'].branchData['44'][1].init(38, 85, '(child.nodeName == \'span\') && child.getAttribute('style')');
 function visit6_44_1(result) {
   _$jscoverage['/page-break.js'].branchData['44'][1].ranCondition(result);
   return result;
-}_$jscoverage['/page-break.js'].branchData['43'][1].init(538, 124, 'child && (child.nodeName == \'span\') && child.getAttribute("style")');
+}_$jscoverage['/page-break.js'].branchData['43'][1].init(538, 124, 'child && (child.nodeName == \'span\') && child.getAttribute('style')');
 function visit5_43_1(result) {
   _$jscoverage['/page-break.js'].branchData['43'][1].ranCondition(result);
   return result;
@@ -377,7 +377,7 @@ KISSY.add(function(S, require) {
   div: function(element) {
   _$jscoverage['/page-break.js'].functionData[3]++;
   _$jscoverage['/page-break.js'].lineData[31]++;
-  var style = element.getAttribute("style"), child;
+  var style = element.getAttribute('style'), child;
   _$jscoverage['/page-break.js'].lineData[34]++;
   if (visit2_34_1(style)) {
     _$jscoverage['/page-break.js'].lineData[35]++;
@@ -392,7 +392,7 @@ KISSY.add(function(S, require) {
     }
   }
   _$jscoverage['/page-break.js'].lineData[43]++;
-  var childStyle = visit5_43_1(child && visit6_44_1((visit7_44_2(child.nodeName == 'span')) && child.getAttribute("style")));
+  var childStyle = visit5_43_1(child && visit6_44_1((visit7_44_2(child.nodeName == 'span')) && child.getAttribute('style')));
   _$jscoverage['/page-break.js'].lineData[47]++;
   if (visit8_47_1(childStyle && visit9_48_1((/page-break-after\s*:\s*always/i).test(style) && (/display\s*:\s*none/i).test(childStyle)))) {
     _$jscoverage['/page-break.js'].lineData[50]++;
@@ -423,7 +423,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/page-break.js'].lineData[80]++;
   var start = range.startContainer, pre = start;
   _$jscoverage['/page-break.js'].lineData[83]++;
-  while (visit12_83_1(start.nodeName() !== "body")) {
+  while (visit12_83_1(start.nodeName() !== 'body')) {
     _$jscoverage['/page-break.js'].lineData[84]++;
     pre = start;
     _$jscoverage['/page-break.js'].lineData[85]++;

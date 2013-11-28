@@ -13,15 +13,15 @@ KISSY.add(function (S, require) {
     S.augment(bold, {
         pluginRenderUI:function (editor) {
             cmd.init(editor);
-            editor.addButton("bold", {
+            editor.addButton('bold', {
                 cmdType:'bold',
-                tooltip:"粗体 "
+                tooltip:'粗体'
             }, ui.Button);
 
             editor.docReady(function () {
                 editor.get('document').on('keydown', function (e) {
-                    if (e.ctrlKey && e.keyCode == S.Node.KeyCode.B) {
-                        editor.execCommand("bold");
+                    if (e.ctrlKey && e.keyCode === S.Node.KeyCode.B) {
+                        editor.execCommand('bold');
                         e.preventDefault();
                     }
                 });
