@@ -133,6 +133,24 @@ KISSY.add(function (S, require) {
         });
 
         describe('each', function () {
+            it('support xindex name',function(){
+                var tpl = '{{#each data "i" "v"}}{{i}}: {{v}}{{/each}}';
+                var data = {
+                    data: [1, 2]
+                };
+                var render = new XTemplate(tpl).render(data);
+                expect(render).toBe('0: 11: 2');
+            });
+
+            it('support value name',function(){
+                var tpl = '{{#each data "v"}}{{xindex}}: {{v}}{{/each}}';
+                var data = {
+                    data: [1, 2]
+                };
+                var render = new XTemplate(tpl).render(data);
+                expect(render).toBe('0: 11: 2');
+            });
+
             it('support nest array', function () {
                 var tpl = '{{#each data}}{{this.0}}{{this.1}}{{.}}{{/each}}';
                 var data = {

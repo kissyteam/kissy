@@ -12,9 +12,18 @@ KISSY.add(function (S, require) {
         'each': function (scope, config) {
             var params = config.params;
             var param0 = params[0];
+            var xindexName = 'xindex';
+            var valueName;
+            if (params.length === 3) {
+                xindexName = params[1];
+                valueName = params[2];
+            } else if (params.length === 2) {
+                valueName = params[1];
+            }
             var buffer = '';
             var xcount;
             var opScope;
+            var affix;
             // if undefined, will emit warning by compiler
             if (param0) {
                 opScope = new Scope();
@@ -23,19 +32,24 @@ KISSY.add(function (S, require) {
                     for (var xindex = 0; xindex < xcount; xindex++) {
                         // two more variable scope for array looping
                         opScope.data = param0[xindex];
-                        opScope.affix = {
-                            xcount: xcount,
-                            xindex: xindex
+                        affix = opScope.affix = {
+                            xcount: xcount
                         };
+                        affix[xindexName] = xindex;
+                        if (valueName) {
+                            affix[valueName] = param0[xindex];
+                        }
                         opScope.setParent(scope);
                         buffer += config.fn(opScope);
                     }
                 } else {
                     for (var name in param0) {
                         opScope.data = param0[name];
-                        opScope.affix = {
-                            xindex: name
-                        };
+                        affix = opScope.affix = {};
+                        affix[xindexName] = name;
+                        if (valueName) {
+                            affix[valueName] = param0[name];
+                        }
                         opScope.setParent(scope);
                         buffer += config.fn(opScope);
                     }

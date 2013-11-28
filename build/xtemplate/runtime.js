@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 28 19:32
+build time: Nov 28 20:17
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -121,23 +121,42 @@ KISSY.add("xtemplate/runtime/commands", ["path", "./scope"], function(S, require
   commands = {each:function(scope, config) {
     var params = config.params;
     var param0 = params[0];
+    var xindexName = "xindex";
+    var valueName;
+    if(params.length === 3) {
+      xindexName = params[1];
+      valueName = params[2]
+    }else {
+      if(params.length === 2) {
+        valueName = params[1]
+      }
+    }
     var buffer = "";
     var xcount;
     var opScope;
+    var affix;
     if(param0) {
       opScope = new Scope;
       if(S.isArray(param0)) {
         xcount = param0.length;
         for(var xindex = 0;xindex < xcount;xindex++) {
           opScope.data = param0[xindex];
-          opScope.affix = {xcount:xcount, xindex:xindex};
+          affix = opScope.affix = {xcount:xcount};
+          affix[xindexName] = xindex;
+          if(valueName) {
+            affix[valueName] = param0[xindex]
+          }
           opScope.setParent(scope);
           buffer += config.fn(opScope)
         }
       }else {
         for(var name in param0) {
           opScope.data = param0[name];
-          opScope.affix = {xindex:name};
+          affix = opScope.affix = {};
+          affix[xindexName] = name;
+          if(valueName) {
+            affix[valueName] = param0[name]
+          }
           opScope.setParent(scope);
           buffer += config.fn(opScope)
         }
