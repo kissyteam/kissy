@@ -278,11 +278,11 @@ if (! _$jscoverage['/cmd.js'].branchData) {
   _$jscoverage['/cmd.js'].branchData['39'][1] = new BranchData();
   _$jscoverage['/cmd.js'].branchData['39'][2] = new BranchData();
 }
-_$jscoverage['/cmd.js'].branchData['39'][2].init(381, 15, 'nodeName == "p"');
+_$jscoverage['/cmd.js'].branchData['39'][2].init(381, 15, 'nodeName == 'p'');
 function visit9_39_2(result) {
   _$jscoverage['/cmd.js'].branchData['39'][2].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['39'][1].init(354, 42, 'nodeName.match(/^h\\d$/) || nodeName == "p"');
+}_$jscoverage['/cmd.js'].branchData['39'][1].init(354, 42, 'nodeName.match(/^h\\d$/) || nodeName == 'p'');
 function visit8_39_1(result) {
   _$jscoverage['/cmd.js'].branchData['39'][1].ranCondition(result);
   return result;
@@ -306,7 +306,7 @@ function visit4_34_1(result) {
 function visit3_19_1(result) {
   _$jscoverage['/cmd.js'].branchData['19'][1].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['16'][1].init(81, 10, 'tag != "p"');
+}_$jscoverage['/cmd.js'].branchData['16'][1].init(81, 10, 'tag != 'p'');
 function visit2_16_1(result) {
   _$jscoverage['/cmd.js'].branchData['16'][1].ranCondition(result);
   return result;
@@ -330,22 +330,22 @@ KISSY.add(function(S, require) {
   exec: function(editor, tag) {
   _$jscoverage['/cmd.js'].functionData[2]++;
   _$jscoverage['/cmd.js'].lineData[15]++;
-  editor.execCommand("save");
+  editor.execCommand('save');
   _$jscoverage['/cmd.js'].lineData[16]++;
-  if (visit2_16_1(tag != "p")) {
+  if (visit2_16_1(tag != 'p')) {
     _$jscoverage['/cmd.js'].lineData[17]++;
     var currentValue = editor.queryCommandValue("heading");
   }
   _$jscoverage['/cmd.js'].lineData[19]++;
   if (visit3_19_1(tag == currentValue)) {
     _$jscoverage['/cmd.js'].lineData[20]++;
-    tag = "p";
+    tag = 'p';
   }
   _$jscoverage['/cmd.js'].lineData[22]++;
   new Editor.Style({
   element: tag}).apply(editor.get('document')[0]);
   _$jscoverage['/cmd.js'].lineData[25]++;
-  editor.execCommand("save");
+  editor.execCommand('save');
 }});
     _$jscoverage['/cmd.js'].lineData[29]++;
     var queryCmd = Editor.Utils.getQueryCmd("heading");
@@ -366,7 +366,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/cmd.js'].lineData[38]++;
     var nodeName = visit6_38_1(visit7_38_2(block && block.nodeName()) || "");
     _$jscoverage['/cmd.js'].lineData[39]++;
-    if (visit8_39_1(nodeName.match(/^h\d$/) || visit9_39_2(nodeName == "p"))) {
+    if (visit8_39_1(nodeName.match(/^h\d$/) || visit9_39_2(nodeName == 'p'))) {
       _$jscoverage['/cmd.js'].lineData[40]++;
       return nodeName;
     }

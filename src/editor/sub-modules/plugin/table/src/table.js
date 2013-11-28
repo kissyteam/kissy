@@ -430,7 +430,7 @@ KISSY.add(function (S, require) {
                             return;
                         }
 
-                        editor.execCommand("save");
+                        editor.execCommand('save');
 
                         // Maintain the selection point at where the table was deleted.
                         selection.selectElement(table);
@@ -448,56 +448,56 @@ KISSY.add(function (S, require) {
                         } else {
                             table.remove();
                         }
-                        editor.execCommand("save");
+                        editor.execCommand('save');
                     },
 
                     '删除行 ': function () {
                         this.hide();
-                        editor.execCommand("save");
+                        editor.execCommand('save');
                         var selection = editor.getSelection();
                         placeCursorInCell(deleteRows(selection), undefined);
-                        editor.execCommand("save");
+                        editor.execCommand('save');
                     },
 
                     '删除列 ': function () {
                         this.hide();
-                        editor.execCommand("save");
+                        editor.execCommand('save');
                         var selection = editor.getSelection(),
                             element = deleteColumns(selection);
                         element && placeCursorInCell(element, true);
-                        editor.execCommand("save");
+                        editor.execCommand('save');
                     },
 
                     '在上方插入行': function () {
                         this.hide();
-                        editor.execCommand("save");
+                        editor.execCommand('save');
                         var selection = editor.getSelection();
                         insertRow(selection, true);
-                        editor.execCommand("save");
+                        editor.execCommand('save');
                     },
 
                     '在下方插入行': function () {
                         this.hide();
-                        editor.execCommand("save");
+                        editor.execCommand('save');
                         var selection = editor.getSelection();
                         insertRow(selection, undefined);
-                        editor.execCommand("save");
+                        editor.execCommand('save');
                     },
 
                     '在左侧插入列': function () {
                         this.hide();
-                        editor.execCommand("save");
+                        editor.execCommand('save');
                         var selection = editor.getSelection();
                         insertColumn(selection, true);
-                        editor.execCommand("save");
+                        editor.execCommand('save');
                     },
 
                     '在右侧插入列': function () {
                         this.hide();
-                        editor.execCommand("save");
+                        editor.execCommand('save');
                         var selection = editor.getSelection();
                         insertColumn(selection, undefined);
-                        editor.execCommand("save");
+                        editor.execCommand('save');
                     }
                 };
 

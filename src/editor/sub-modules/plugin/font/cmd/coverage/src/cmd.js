@@ -513,7 +513,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/cmd.js'].lineData[62]++;
   var doc = editor.get('document')[0];
   _$jscoverage['/cmd.js'].lineData[63]++;
-  editor.execCommand("save");
+  editor.execCommand('save');
   _$jscoverage['/cmd.js'].lineData[64]++;
   var checked = editor.queryCommandValue(cmdType);
   _$jscoverage['/cmd.js'].lineData[65]++;
@@ -525,7 +525,7 @@ KISSY.add(function(S, require) {
     style.apply(doc);
   }
   _$jscoverage['/cmd.js'].lineData[70]++;
-  editor.execCommand("save");
+  editor.execCommand('save');
   _$jscoverage['/cmd.js'].lineData[71]++;
   editor.notifySelectionChange();
 }});
@@ -563,7 +563,7 @@ KISSY.add(function(S, require) {
   var style = new Editor.Style(styleObj, {
   value: value}), doc = editor.get('document')[0];
   _$jscoverage['/cmd.js'].lineData[99]++;
-  editor.execCommand("save");
+  editor.execCommand('save');
   _$jscoverage['/cmd.js'].lineData[100]++;
   if (visit18_100_1(value.toLowerCase() == currentValue.toLowerCase())) {
     _$jscoverage['/cmd.js'].lineData[101]++;
@@ -573,7 +573,7 @@ KISSY.add(function(S, require) {
     style.apply(doc);
   }
   _$jscoverage['/cmd.js'].lineData[105]++;
-  editor.execCommand("save");
+  editor.execCommand('save');
 }});
     _$jscoverage['/cmd.js'].lineData[108]++;
     editor.addCommand(queryCmd, {

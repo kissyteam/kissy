@@ -75,7 +75,7 @@ KISSY.add(function (S, require) {
                             return;
                         }
 
-                        editor.execCommand("save");
+                        editor.execCommand('save');
 
                         var start = range.startContainer,
                             pre = start;
@@ -91,7 +91,7 @@ KISSY.add(function (S, require) {
 
                         substitute.insertAfter(pre);
 
-                        editor.execCommand("save");
+                        editor.execCommand('save');
                     }
 
                 },

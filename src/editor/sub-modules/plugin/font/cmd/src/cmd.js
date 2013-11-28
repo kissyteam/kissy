@@ -60,14 +60,14 @@ KISSY.add(function (S, require) {
                 editor.addCommand(cmdType, {
                     exec: function (editor, effect) {
                         var doc = editor.get('document')[0];
-                        editor.execCommand("save");
+                        editor.execCommand('save');
                         var checked = editor.queryCommandValue(cmdType);
                         if (checked) {
                             style.remove(doc);
                         } else {
                             style.apply(doc);
                         }
-                        editor.execCommand("save");
+                        editor.execCommand('save');
                         editor.notifySelectionChange();
                     }
                 });
@@ -96,13 +96,13 @@ KISSY.add(function (S, require) {
                                 value: value
                             }),
                             doc = editor.get('document')[0];
-                        editor.execCommand("save");
+                        editor.execCommand('save');
                         if (value.toLowerCase() == currentValue.toLowerCase()) {
                             style.remove(doc);
                         } else {
                             style.apply(doc);
                         }
-                        editor.execCommand("save");
+                        editor.execCommand('save');
                     }
                 });
                 editor.addCommand(queryCmd, {

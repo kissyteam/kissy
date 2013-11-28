@@ -778,7 +778,7 @@ KISSY.add(function(S, require) {
       listArray[i].indent += indentOffset;
     }
     _$jscoverage['/dent-cmd.js'].lineData[110]++;
-    var newList = ListUtils.arrayToList(listArray, database, null, "p");
+    var newList = ListUtils.arrayToList(listArray, database, null, 'p');
     _$jscoverage['/dent-cmd.js'].lineData[114]++;
     var pendingList = [];
     _$jscoverage['/dent-cmd.js'].lineData[115]++;
@@ -949,11 +949,11 @@ KISSY.add(function(S, require) {
   exec: function(editor) {
   _$jscoverage['/dent-cmd.js'].functionData[9]++;
   _$jscoverage['/dent-cmd.js'].lineData[256]++;
-  editor.execCommand("save");
+  editor.execCommand('save');
   _$jscoverage['/dent-cmd.js'].lineData[257]++;
   indentEditor(editor, cmdType);
   _$jscoverage['/dent-cmd.js'].lineData[258]++;
-  editor.execCommand("save");
+  editor.execCommand('save');
   _$jscoverage['/dent-cmd.js'].lineData[259]++;
   editor.notifySelectionChange();
 }});

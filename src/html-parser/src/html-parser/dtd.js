@@ -48,7 +48,7 @@ KISSY.add(function(S) {
             "big":1,
             "small":1
         }, G),
-        I = merge({"p":1}, H),
+        I = merge({'p':1}, H),
         J = merge({"iframe":1}, H, B),
         K = {
             "img":1,"noscript":1,"br":1,"kbd":1,
@@ -73,7 +73,7 @@ KISSY.add(function(S) {
             "dir":1,"map":1,"dl":1,"applet":1,"del":1,"isindex":1,
             "fieldset":1,"ul":1,"b":1,"acronym":1,"a":1,"blockquote":1,
             "i":1,"u":1,"s":1,"tt":1,"address":1,"q":1,
-            "pre":1,"p":1,"em":1,"dfn":1
+            "pre":1,'p':1,"em":1,"dfn":1
         },
         L = merge({"a":1}, J),
         M = {"tr":1},
@@ -92,7 +92,7 @@ KISSY.add(function(S) {
         "dir":1,'div':1,"dl":1,"fieldset":1,
         "form":1,"h1":1,"h2":1,"h3":1,"h4":1,
         "h5":1,"h6":1,"hr":1,"isindex":1,
-        'menu':1,"noframes":1,"ol":1,"p":1,
+        'menu':1,"noframes":1,"ol":1,'p':1,
         "pre":1,"table":1,"ul":1
     };
 
@@ -111,11 +111,11 @@ KISSY.add(function(S) {
      * @singleton
      *
      *
-     *      // Check if 'div' can be contained in a "p" element.
+     *      // Check if 'div' can be contained in a 'p' element.
      *      alert( !!dtd[ 'p' ][ 'div' ] );  "false"
-     *      // Check if "p" can be contained in a 'div' element.
+     *      // Check if 'p' can be contained in a 'div' element.
      *      alert( !!dtd[ 'div' ][ 'p' ] );  "true"
-     *      // Check if "p" is a block element.
+     *      // Check if 'p' is a block element.
      *      alert( !!dtd.$block[ 'p' ] );  "true"
      */
     var dtd = {
@@ -126,7 +126,7 @@ KISSY.add(function(S) {
         $nonBodyContent: merge(V, U, headTags),
 
         /**
-         * List of block elements, like "p" or 'div'.
+         * List of block elements, like 'p' or 'div'.
          * @type {Object}
          */
         $block : block,
@@ -551,7 +551,7 @@ KISSY.add(function(S) {
          * List of elements used inside the "map" element
          * @type {Object}
          */
-        "map": merge({"area":1,"form":1,"p":1}, A, F, E),
+        "map": merge({"area":1,"form":1,'p':1}, A, F, E),
         /**
          * List of elements used inside the "applet" element
          * @type {Object}
@@ -660,10 +660,10 @@ KISSY.add(function(S) {
          */
         "pre": merge(G, C),
         /**
-         * List of elements used inside the "p" element
+         * List of elements used inside the 'p' element
          * @type {Object}
          */
-        "p": L,
+        'p': L,
         /**
          * List of elements used inside the "em" element
          * @type {Object}

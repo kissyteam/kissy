@@ -1445,7 +1445,7 @@ KISSY.add(function(S, require) {
     return;
   }
   _$jscoverage['/table.js'].lineData[433]++;
-  editor.execCommand("save");
+  editor.execCommand('save');
   _$jscoverage['/table.js'].lineData[436]++;
   selection.selectElement(table);
   _$jscoverage['/table.js'].lineData[437]++;
@@ -1465,85 +1465,85 @@ KISSY.add(function(S, require) {
     table.remove();
   }
   _$jscoverage['/table.js'].lineData[451]++;
-  editor.execCommand("save");
+  editor.execCommand('save');
 }, 
   '\u5220\u9664\u884c ': function() {
   _$jscoverage['/table.js'].functionData[21]++;
   _$jscoverage['/table.js'].lineData[455]++;
   this.hide();
   _$jscoverage['/table.js'].lineData[456]++;
-  editor.execCommand("save");
+  editor.execCommand('save');
   _$jscoverage['/table.js'].lineData[457]++;
   var selection = editor.getSelection();
   _$jscoverage['/table.js'].lineData[458]++;
   placeCursorInCell(deleteRows(selection), undefined);
   _$jscoverage['/table.js'].lineData[459]++;
-  editor.execCommand("save");
+  editor.execCommand('save');
 }, 
   '\u5220\u9664\u5217 ': function() {
   _$jscoverage['/table.js'].functionData[22]++;
   _$jscoverage['/table.js'].lineData[463]++;
   this.hide();
   _$jscoverage['/table.js'].lineData[464]++;
-  editor.execCommand("save");
+  editor.execCommand('save');
   _$jscoverage['/table.js'].lineData[465]++;
   var selection = editor.getSelection(), element = deleteColumns(selection);
   _$jscoverage['/table.js'].lineData[467]++;
   visit83_467_1(element && placeCursorInCell(element, true));
   _$jscoverage['/table.js'].lineData[468]++;
-  editor.execCommand("save");
+  editor.execCommand('save');
 }, 
   '\u5728\u4e0a\u65b9\u63d2\u5165\u884c': function() {
   _$jscoverage['/table.js'].functionData[23]++;
   _$jscoverage['/table.js'].lineData[472]++;
   this.hide();
   _$jscoverage['/table.js'].lineData[473]++;
-  editor.execCommand("save");
+  editor.execCommand('save');
   _$jscoverage['/table.js'].lineData[474]++;
   var selection = editor.getSelection();
   _$jscoverage['/table.js'].lineData[475]++;
   insertRow(selection, true);
   _$jscoverage['/table.js'].lineData[476]++;
-  editor.execCommand("save");
+  editor.execCommand('save');
 }, 
   '\u5728\u4e0b\u65b9\u63d2\u5165\u884c': function() {
   _$jscoverage['/table.js'].functionData[24]++;
   _$jscoverage['/table.js'].lineData[480]++;
   this.hide();
   _$jscoverage['/table.js'].lineData[481]++;
-  editor.execCommand("save");
+  editor.execCommand('save');
   _$jscoverage['/table.js'].lineData[482]++;
   var selection = editor.getSelection();
   _$jscoverage['/table.js'].lineData[483]++;
   insertRow(selection, undefined);
   _$jscoverage['/table.js'].lineData[484]++;
-  editor.execCommand("save");
+  editor.execCommand('save');
 }, 
   '\u5728\u5de6\u4fa7\u63d2\u5165\u5217': function() {
   _$jscoverage['/table.js'].functionData[25]++;
   _$jscoverage['/table.js'].lineData[488]++;
   this.hide();
   _$jscoverage['/table.js'].lineData[489]++;
-  editor.execCommand("save");
+  editor.execCommand('save');
   _$jscoverage['/table.js'].lineData[490]++;
   var selection = editor.getSelection();
   _$jscoverage['/table.js'].lineData[491]++;
   insertColumn(selection, true);
   _$jscoverage['/table.js'].lineData[492]++;
-  editor.execCommand("save");
+  editor.execCommand('save');
 }, 
   '\u5728\u53f3\u4fa7\u63d2\u5165\u5217': function() {
   _$jscoverage['/table.js'].functionData[26]++;
   _$jscoverage['/table.js'].lineData[496]++;
   this.hide();
   _$jscoverage['/table.js'].lineData[497]++;
-  editor.execCommand("save");
+  editor.execCommand('save');
   _$jscoverage['/table.js'].lineData[498]++;
   var selection = editor.getSelection();
   _$jscoverage['/table.js'].lineData[499]++;
   insertColumn(selection, undefined);
   _$jscoverage['/table.js'].lineData[500]++;
-  editor.execCommand("save");
+  editor.execCommand('save');
 }};
   _$jscoverage['/table.js'].lineData[504]++;
   var children = [];

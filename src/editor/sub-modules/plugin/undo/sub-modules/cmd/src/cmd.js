@@ -211,9 +211,9 @@ KISSY.add(function (S, require) {
 
     return {
         init: function (editor) {
-            if (!editor.hasCommand("save")) {
+            if (!editor.hasCommand('save')) {
                 var undoRedo = new UndoManager(editor);
-                editor.addCommand("save", {
+                editor.addCommand('save', {
                     exec: function (_, buffer) {
                         editor.focus();
                         undoRedo.save(buffer);

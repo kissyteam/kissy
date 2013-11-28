@@ -1267,6 +1267,17 @@ KISSY.add(function (S, XTemplate, XTemplateNodeJs) {
         });
 
         describe('error detection', function () {
+            // https://github.com/kissyteam/kissy/issues/516
+            it('error when string encounter \\', function () {
+                /*jshint quotmark:false*/
+                var ret;
+                try {
+                    ret = new XTemplate("{{'\\'}}").render();
+                } catch (e) {
+                    ret = e.toString();
+                }
+                expect(ret.indexOf('expect LPAREN')).not.toBe(-1);
+            });
 
             it('detect un-closed block tag', function () {
                 var tpl = '{{#if title}}\n' +

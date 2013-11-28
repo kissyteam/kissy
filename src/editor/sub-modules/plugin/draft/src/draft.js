@@ -346,9 +346,9 @@ KISSY.add(function (S, require) {
                 drafts = self._getDrafts(),
                 v = ev.target.get("value");
             if (confirm("确认恢复 " + date(drafts[v].date) + " 的编辑历史？")) {
-                editor.execCommand("save");
+                editor.execCommand('save');
                 editor.setData(drafts[v].content);
-                editor.execCommand("save");
+                editor.execCommand('save');
             }
             ev.halt();
         },

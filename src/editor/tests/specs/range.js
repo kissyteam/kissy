@@ -1345,7 +1345,7 @@ KISSY.add(function (S, Editor) {
             range.setStart(span.item(0), 2);
             range.setEnd(span.item(4), 0);
 
-            range.fixBlock(true, "p");
+            range.fixBlock(true, 'p');
 
             expect(myHTML(div)).toBe("<p>" +
                 "<span>1<span>4</span></span>" +
@@ -1366,7 +1366,7 @@ KISSY.add(function (S, Editor) {
             range.setStart(span.item(0), 2);
             range.setEnd(span.item(4), 0);
 
-            range.fixBlock(false, "p");
+            range.fixBlock(false, 'p');
 
             expect(myHTML(div)).toBe("<p>" +
                 "<span>1<span>4</span></span>" +
@@ -1417,7 +1417,7 @@ KISSY.add(function (S, Editor) {
                 range.setStart(firstText, 1);
                 range.setEnd(firstText, 2);
 
-                range.splitBlock("p");
+                range.splitBlock('p');
 
                 var fake = UA.ie ? "" : "<br>";
 
@@ -1448,7 +1448,7 @@ KISSY.add(function (S, Editor) {
                 range.setStart(firstText, 1);
                 range.setEnd(secondText, 1);
 
-                range.splitBlock("p");
+                range.splitBlock('p');
 
                 var fake = UA.ie ? "" : "<br>";
 
@@ -1480,7 +1480,7 @@ KISSY.add(function (S, Editor) {
                 range.setStart(firstText, 0);
                 range.setEnd(firstText, 4);
 
-                range.splitBlock("p");
+                range.splitBlock('p');
 
                 var fake = UA.ie ? "" : "<br>";
 
@@ -1522,13 +1522,13 @@ KISSY.add(function (S, Editor) {
                 div.remove();
             });
 
-            it("_4e_breakParent works", function () {
+            it("_4eBreakParent works", function () {
                 var div = $("<div><div><span>12<i></i>34</span><span><i>5678</i></span></div></div>")
                         .appendTo("body"),
                     range = new Range(document),
                     is = div.all("i");
 
-                is.item(0)._4e_breakParent(div.first());
+                is.item(0)._4eBreakParent(div.first());
                 expect(myHTML(div)).toBe("<div><span>12" +
                     "</span>" +
                     "</div>" +

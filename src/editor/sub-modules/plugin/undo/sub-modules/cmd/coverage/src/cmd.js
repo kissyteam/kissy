@@ -399,7 +399,7 @@ if (! _$jscoverage['/cmd.js'].branchData) {
   _$jscoverage['/cmd.js'].branchData['214'] = [];
   _$jscoverage['/cmd.js'].branchData['214'][1] = new BranchData();
 }
-_$jscoverage['/cmd.js'].branchData['214'][1].init(17, 26, '!editor.hasCommand("save")');
+_$jscoverage['/cmd.js'].branchData['214'][1].init(17, 26, '!editor.hasCommand('save')');
 function visit27_214_1(result) {
   _$jscoverage['/cmd.js'].branchData['214'][1].ranCondition(result);
   return result;
@@ -745,11 +745,11 @@ KISSY.add(function(S, require) {
   init: function(editor) {
   _$jscoverage['/cmd.js'].functionData[12]++;
   _$jscoverage['/cmd.js'].lineData[214]++;
-  if (visit27_214_1(!editor.hasCommand("save"))) {
+  if (visit27_214_1(!editor.hasCommand('save'))) {
     _$jscoverage['/cmd.js'].lineData[215]++;
     var undoRedo = new UndoManager(editor);
     _$jscoverage['/cmd.js'].lineData[216]++;
-    editor.addCommand("save", {
+    editor.addCommand('save', {
   exec: function(_, buffer) {
   _$jscoverage['/cmd.js'].functionData[13]++;
   _$jscoverage['/cmd.js'].lineData[218]++;

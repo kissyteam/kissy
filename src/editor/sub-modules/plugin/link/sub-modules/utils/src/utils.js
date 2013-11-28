@@ -40,7 +40,7 @@ KISSY.add(function (S, require) {
 
 
     function removeLink(editor, a) {
-        editor.execCommand("save");
+        editor.execCommand('save');
         var sel = editor.getSelection(),
             range = sel.getRanges()[0];
         if (range && range.collapsed) {
@@ -52,7 +52,7 @@ KISSY.add(function (S, require) {
             var attrs = getAttributes(a[0]);
             new KEStyle(link_Style, attrs).remove(editor.get('document')[0]);
         }
-        editor.execCommand("save");
+        editor.execCommand('save');
         editor.notifySelectionChange();
     }
 
@@ -61,7 +61,7 @@ KISSY.add(function (S, require) {
         attr[_ke_saved_href] = attr.href;
         // 是修改行为
         if (_selectedEl) {
-            editor.execCommand("save");
+            editor.execCommand('save');
             _selectedEl.attr(attr);
         } else {
             var sel = editor.getSelection(),
@@ -72,12 +72,12 @@ KISSY.add(function (S, require) {
                     attr, editor.get('document')[0]);
                 editor.insertElement(a);
             } else {
-                editor.execCommand("save");
+                editor.execCommand('save');
                 var linkStyle = new KEStyle(link_Style, attr);
                 linkStyle.apply(editor.get('document')[0]);
             }
         }
-        editor.execCommand("save");
+        editor.execCommand('save');
         editor.notifySelectionChange();
     }
 

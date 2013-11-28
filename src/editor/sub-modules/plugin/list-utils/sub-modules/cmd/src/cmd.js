@@ -52,7 +52,7 @@ KISSY.add(function (S, require) {
                 var listIndex = selectedListItems[i].data('listarray_index');
                 listArray[listIndex].parent = fakeParent;
             }
-            var newList = ListUtils.arrayToList(listArray, database, null, "p");
+            var newList = ListUtils.arrayToList(listArray, database, null, 'p');
             var child, length = newList.listNode.childNodes.length;
             for (i = 0; i < length &&
                 ( child = new Node(newList.listNode.childNodes[i]) ); i++) {
@@ -180,7 +180,7 @@ KISSY.add(function (S, require) {
                 }
             }
 
-            var newList = ListUtils.arrayToList(listArray, database, null, "p");
+            var newList = ListUtils.arrayToList(listArray, database, null, 'p');
 
             // Compensate <br> before/after the list node if the surrounds are non-blocks.(#3836)
             var docFragment = newList.listNode, boundaryNode, siblingNode;

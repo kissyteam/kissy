@@ -74,7 +74,7 @@ KISSY.add(function (S, require) {
         }, 1000);
     });
 
-    store.on("save", function () {
+    store.on('save', function () {
         o.get('el').css(reverseCss);
     });
 
@@ -104,7 +104,7 @@ KISSY.add(function (S, require) {
     /*
      "quotaExceededError"
      "error"
-     "save"
+     'save'
      "inadequateDimensions"
      */
 

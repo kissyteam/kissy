@@ -286,11 +286,11 @@ KISSY.add(function(S, require) {
   exec: function(editor, c) {
   _$jscoverage['/cmd.js'].functionData[3]++;
   _$jscoverage['/cmd.js'].lineData[39]++;
-  editor.execCommand("save");
+  editor.execCommand('save');
   _$jscoverage['/cmd.js'].lineData[40]++;
   cmd.applyColor(editor, c, BACK_COLOR_STYLE);
   _$jscoverage['/cmd.js'].lineData[41]++;
-  editor.execCommand("save");
+  editor.execCommand('save');
 }});
   }
 }};

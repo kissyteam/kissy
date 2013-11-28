@@ -32,7 +32,7 @@ KISSY.add(function (S,require) {
             "h4": 1,
             "h5": 1,
             "h6": 1,
-            "p": 1,
+            'p': 1,
             "pre": 1
         },
         DTD = Editor.XHTML_DTD,
@@ -967,9 +967,9 @@ KISSY.add(function (S,require) {
                 }
 
                 if (breakEnd)
-                    endNode._4e_breakParent(breakEnd);
+                    endNode._4eBreakParent(breakEnd);
                 if (breakStart)
-                    startNode._4e_breakParent(breakStart);
+                    startNode._4eBreakParent(breakStart);
             }
 
             breakNodes();

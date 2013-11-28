@@ -10,7 +10,7 @@ KISSY.add(function (S, require) {
 
     function exec(editor, textAlign) {
         editor.focus();
-        editor.execCommand("save");
+        editor.execCommand('save');
         var selection = editor.getSelection(),
             bookmarks = selection.createBookmarks(),
             ranges = selection.getRanges(),
@@ -29,7 +29,7 @@ KISSY.add(function (S, require) {
             }
         }
         selection.selectBookmarks(bookmarks);
-        editor.execCommand("save");
+        editor.execCommand('save');
         editor.notifySelectionChange();
     }
 

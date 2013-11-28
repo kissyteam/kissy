@@ -18,7 +18,7 @@ KISSY.add(function (S, require) {
 
             var FORMAT_SELECTION_ITEMS = [],
                 FORMATS = {
-                    "普通文本": "p",
+                    "普通文本": 'p',
                     "标题1": "h1",
                     "标题2": "h2",
                     "标题3": "h3",

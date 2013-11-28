@@ -367,7 +367,7 @@ KISSY.add(function(S, require) {
   function removeLink(editor, a) {
     _$jscoverage['/utils.js'].functionData[2]++;
     _$jscoverage['/utils.js'].lineData[43]++;
-    editor.execCommand("save");
+    editor.execCommand('save');
     _$jscoverage['/utils.js'].lineData[44]++;
     var sel = editor.getSelection(), range = sel.getRanges()[0];
     _$jscoverage['/utils.js'].lineData[46]++;
@@ -388,7 +388,7 @@ KISSY.add(function(S, require) {
       }
     }
     _$jscoverage['/utils.js'].lineData[55]++;
-    editor.execCommand("save");
+    editor.execCommand('save');
     _$jscoverage['/utils.js'].lineData[56]++;
     editor.notifySelectionChange();
   }
@@ -400,7 +400,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/utils.js'].lineData[63]++;
     if (visit6_63_1(_selectedEl)) {
       _$jscoverage['/utils.js'].lineData[64]++;
-      editor.execCommand("save");
+      editor.execCommand('save');
       _$jscoverage['/utils.js'].lineData[65]++;
       _selectedEl.attr(attr);
     } else {
@@ -414,7 +414,7 @@ KISSY.add(function(S, require) {
         editor.insertElement(a);
       } else {
         _$jscoverage['/utils.js'].lineData[75]++;
-        editor.execCommand("save");
+        editor.execCommand('save');
         _$jscoverage['/utils.js'].lineData[76]++;
         var linkStyle = new KEStyle(link_Style, attr);
         _$jscoverage['/utils.js'].lineData[77]++;
@@ -422,7 +422,7 @@ KISSY.add(function(S, require) {
       }
     }
     _$jscoverage['/utils.js'].lineData[80]++;
-    editor.execCommand("save");
+    editor.execCommand('save');
     _$jscoverage['/utils.js'].lineData[81]++;
     editor.notifySelectionChange();
   }

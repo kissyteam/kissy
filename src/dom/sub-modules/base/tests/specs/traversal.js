@@ -155,7 +155,7 @@ KISSY.add(function (S, Dom) {
             expect(Dom.next(t,
                 function (elem) {
                     return elem.className === 'test-p';
-                }).tagName.toLowerCase()).toBe("p");
+                }).tagName.toLowerCase()).toBe('p');
         });
 
         it("prev works", function () {
@@ -172,7 +172,7 @@ KISSY.add(function (S, Dom) {
             expect(Dom.prev(t,
                 function (elem) {
                     return elem.className === 'test-next-p';
-                }).tagName.toLowerCase()).toBe("p");
+                }).tagName.toLowerCase()).toBe('p');
         });
 
 

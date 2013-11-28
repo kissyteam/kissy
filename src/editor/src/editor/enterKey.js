@@ -13,8 +13,7 @@ KISSY.add(function (S, require) {
     var Editor = require('./base');
     var ElementPath = require('./elementPath');
     var OLD_IE = S.UA.ieMode < 11;
-    var UA = S.UA,
-        headerTagRegex = /^h[1-6]$/,
+    var headerTagRegex = /^h[1-6]$/,
         dtd = Editor.XHTML_DTD;
 
     function getRange(editor) {
@@ -38,13 +37,13 @@ KISSY.add(function (S, require) {
                 block = path.block;
             //只有两层？
             if (block &&
-                ( block.nodeName() == 'li' || block.parent().nodeName() == 'li' )
+                ( block.nodeName() === 'li' || block.parent().nodeName() === 'li' )
 
                 ) {
                 if (editor.hasCommand('outdent')) {
-                    editor.execCommand("save");
+                    editor.execCommand('save');
                     editor.execCommand('outdent');
-                    editor.execCommand("save");
+                    editor.execCommand('save');
                     return true;
                 } else {
                     return false;
@@ -53,13 +52,14 @@ KISSY.add(function (S, require) {
         }
 
         // Determine the block element to be used.
-        var blockTag = "p";
+        var blockTag = 'p';
 
         // Split the range.
         var splitInfo = range.splitBlock(blockTag);
 
-        if (!splitInfo)
+        if (!splitInfo){
             return true;
+        }
 
         // Get the current blocks.
         var previousBlock = splitInfo.previousBlock,
@@ -73,13 +73,13 @@ KISSY.add(function (S, require) {
         // If this is a block under a list item, split it as well. (#1647)
         if (nextBlock) {
             node = nextBlock.parent();
-            if (node.nodeName() == 'li') {
-                nextBlock._4e_breakParent(node);
+            if (node.nodeName() === 'li') {
+                nextBlock._4eBreakParent(node);
                 nextBlock._4eMove(nextBlock.next(), true);
             }
         }
-        else if (previousBlock && ( node = previousBlock.parent() ) && node.nodeName() == 'li') {
-            previousBlock._4e_breakParent(node);
+        else if (previousBlock && ( node = previousBlock.parent() ) && node.nodeName() === 'li') {
+            previousBlock._4eBreakParent(node);
             range.moveToElementEditablePosition(previousBlock.next());
             previousBlock._4eMove(previousBlock.prev());
         }
@@ -91,15 +91,17 @@ KISSY.add(function (S, require) {
             // If the next block is an <li> with another list tree as the first
             // child, we'll need to append a filler (<br>/NBSP) or the list item
             // wouldn't be editable. (#1420)
-            if (nextBlock.nodeName() == 'li' &&
+            if (nextBlock.nodeName() === 'li' &&
                 ( node = nextBlock.first(Walker.invisible(true)) ) &&
-                S.inArray(node.nodeName(), ['ul', 'ol']))
+                S.inArray(node.nodeName(), ['ul', 'ol'])){
                 (OLD_IE ? new Node(doc.createTextNode('\xa0')) :
                     new Node(doc.createElement('br'))).insertBefore(node);
+            }
 
             // Move the selection to the end block.
-            if (nextBlock)
+            if (nextBlock){
                 range.moveToElementEditablePosition(nextBlock);
+            }
         }
         else {
             var newBlock;
@@ -108,16 +110,18 @@ KISSY.add(function (S, require) {
                 // Do not enter this block if it's a header tag, or we are in
                 // a Shift+Enter (#77). Create a new block element instead
                 // (later in the code).
-                if (previousBlock.nodeName() == 'li' || !headerTagRegex.test(previousBlock.nodeName())) {
+                if (previousBlock.nodeName() === 'li' || !headerTagRegex.test(previousBlock.nodeName())) {
                     // Otherwise, duplicate the previous block.
                     newBlock = previousBlock.clone();
                 }
             }
-            else if (nextBlock)
+            else if (nextBlock){
                 newBlock = nextBlock.clone();
+            }
 
-            if (!newBlock)
-                newBlock = new Node("<" + blockTag + ">", null, doc);
+            if (!newBlock){
+                newBlock = new Node('<' + blockTag + '>', null, doc);
+            }
 
             // Recreate the inline elements tree, which was available
             // before hitting enter, so the same styles will be available in
@@ -127,8 +131,10 @@ KISSY.add(function (S, require) {
                 for (var i = 0, len = elementPath.elements.length; i < len; i++) {
                     var element = elementPath.elements[ i ];
 
-                    if (element.equals(elementPath.block) || element.equals(elementPath.blockLimit))
+                    if (element.equals(elementPath.block) ||
+                        element.equals(elementPath.blockLimit)){
                         break;
+                    }
                     //<li><strong>^</strong></li>
                     if (dtd.$removeEmpty[ element.nodeName() ]) {
                         element = element.clone();
@@ -138,8 +144,9 @@ KISSY.add(function (S, require) {
                 }
             }
 
-            if (!OLD_IE)
+            if (!OLD_IE){
                 newBlock._4eAppendBogus();
+            }
 
             range.insertNode(newBlock);
 
@@ -196,9 +203,9 @@ KISSY.add(function (S, require) {
             if (keyCode === 13) {
                 if (ev.shiftKey || ev.ctrlKey || ev.metaKey) {
                 } else {
-                    editor.execCommand("save");
-                    var re = editor.execCommand("enterBlock");
-                    editor.execCommand("save");
+                    editor.execCommand('save');
+                    var re = editor.execCommand('enterBlock');
+                    editor.execCommand('save');
                     if (re !== false) {
                         ev.preventDefault();
                     }
@@ -209,7 +216,7 @@ KISSY.add(function (S, require) {
 
     return {
         init: function (editor) {
-            editor.addCommand("enterBlock", {
+            editor.addCommand('enterBlock', {
                 exec: enterBlock
             });
             editor.docReady(function () {

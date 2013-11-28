@@ -265,7 +265,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/cmd.js'].lineData[10]++;
     var doc = editor.get('document')[0];
     _$jscoverage['/cmd.js'].lineData[11]++;
-    editor.execCommand("save");
+    editor.execCommand('save');
     _$jscoverage['/cmd.js'].lineData[12]++;
     if (visit1_12_1(c)) {
       _$jscoverage['/cmd.js'].lineData[13]++;
@@ -277,7 +277,7 @@ KISSY.add(function(S, require) {
   color: "inherit"}).remove(doc);
     }
     _$jscoverage['/cmd.js'].lineData[24]++;
-    editor.execCommand("save");
+    editor.execCommand('save');
   }
   _$jscoverage['/cmd.js'].lineData[27]++;
   return {

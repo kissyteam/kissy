@@ -299,7 +299,7 @@ KISSY.add(function(S, require) {
   headingCmd.init(editor);
   _$jscoverage['/heading.js'].lineData[19]++;
   var FORMAT_SELECTION_ITEMS = [], FORMATS = {
-  "\u666e\u901a\u6587\u672c": "p", 
+  "\u666e\u901a\u6587\u672c": 'p',
   "\u6807\u98981": "h1", 
   "\u6807\u98982": "h2", 
   "\u6807\u98983": "h3", 

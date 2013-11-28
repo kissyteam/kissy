@@ -12,17 +12,17 @@ KISSY.add(function (S, require) {
             if (!editor.hasCommand("heading")) {
                 editor.addCommand("heading", {
                     exec: function (editor, tag) {
-                        editor.execCommand("save");
-                        if (tag != "p") {
+                        editor.execCommand('save');
+                        if (tag != 'p') {
                             var currentValue = editor.queryCommandValue("heading");
                         }
                         if (tag == currentValue) {
-                            tag = "p";
+                            tag = 'p';
                         }
                         new Editor.Style({
                             element: tag
                         }).apply(editor.get('document')[0]);
-                        editor.execCommand("save");
+                        editor.execCommand('save');
                     }
                 });
 
@@ -36,7 +36,7 @@ KISSY.add(function (S, require) {
                             var currentPath = new Editor.ElementPath(startElement);
                             var block = currentPath.block || currentPath.blockLimit;
                             var nodeName = block && block.nodeName() || "";
-                            if (nodeName.match(/^h\d$/) || nodeName == "p") {
+                            if (nodeName.match(/^h\d$/) || nodeName == 'p') {
                                 return nodeName;
                             }
                         }

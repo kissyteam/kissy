@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 22:45
+build time: Nov 28 16:49
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -32,7 +32,7 @@ KISSY.add("xtemplate/compiler/parser", [], function() {
     S.each(self.rules, function(r) {
       var state = r.state || r[3];
       if(!state) {
-        if(currentState == Lexer.STATIC.INITIAL) {
+        if(currentState === Lexer.STATIC.INITIAL) {
           rules.push(r)
         }
       }else {
@@ -100,7 +100,7 @@ KISSY.add("xtemplate/compiler/parser", [], function() {
         self.text = match;
         self.matched += match;
         ret = action && action.call(self);
-        if(ret == undefined) {
+        if(ret === undefined) {
           ret = token
         }else {
           ret = self.mapSymbol(ret)
@@ -144,9 +144,9 @@ KISSY.add("xtemplate/compiler/parser", [], function() {
     this.popState()
   }, ["t"]], [6, /^{{{?/, 0, ["t"]], [0, /^\s+/, 0, ["t"]], [7, /^}}}?/, function popState() {
     this.popState()
-  }, ["t"]], [8, /^\(/, 0, ["t"]], [9, /^\)/, 0, ["t"]], [10, /^\|\|/, 0, ["t"]], [11, /^&&/, 0, ["t"]], [12, /^===/, 0, ["t"]], [13, /^!==/, 0, ["t"]], [15, /^>=/, 0, ["t"]], [17, /^<=/, 0, ["t"]], [14, /^>/, 0, ["t"]], [16, /^</, 0, ["t"]], [18, /^\+/, 0, ["t"]], [19, /^-/, 0, ["t"]], [20, /^\*/, 0, ["t"]], [21, /^\//, 0, ["t"]], [22, /^%/, 0, ["t"]], [23, /^!/, 0, ["t"]], [24, /^"(\\[\s\S]|[^"])*"/, function() {
+  }, ["t"]], [8, /^\(/, 0, ["t"]], [9, /^\)/, 0, ["t"]], [10, /^\|\|/, 0, ["t"]], [11, /^&&/, 0, ["t"]], [12, /^===/, 0, ["t"]], [13, /^!==/, 0, ["t"]], [15, /^>=/, 0, ["t"]], [17, /^<=/, 0, ["t"]], [14, /^>/, 0, ["t"]], [16, /^</, 0, ["t"]], [18, /^\+/, 0, ["t"]], [19, /^-/, 0, ["t"]], [20, /^\*/, 0, ["t"]], [21, /^\//, 0, ["t"]], [22, /^%/, 0, ["t"]], [23, /^!/, 0, ["t"]], [24, /^"(\\[\s\S]|[^\\"])*"/, function() {
     this.text = this.text.slice(1, -1).replace(/\\"/g, '"')
-  }, ["t"]], [24, /^'(\\[\s\S]|[^'])*'/, function() {
+  }, ["t"]], [24, /^'(\\[\s\S]|[^\\'])*'/, function() {
     this.text = this.text.slice(1, -1).replace(/\\'/g, "'")
   }, ["t"]], [25, /^true/, 0, ["t"]], [25, /^false/, 0, ["t"]], [26, /^\d+(?:\.\d+)?(?:e-?\d+)?/i, 0, ["t"]], [27, /^=/, 0, ["t"]], [28, /^\.(?=})/, 0, ["t"]], [28, /^\.\./, function() {
     this.pushState("ws")
@@ -171,8 +171,8 @@ KISSY.add("xtemplate/compiler/parser", [], function() {
   }], [40, [41], function() {
     return new this.yy.TplNode(this.lexer.lineNumber, this.$1)
   }], [40, [42]], [37, [3, 40, 7], function() {
-    if(this.$1.charAt(this.$1.length - 1) == "^") {
-      this.$2["isInverted"] = 1
+    if(this.$1.charAt(this.$1.length - 1) === "^") {
+      this.$2.isInverted = 1
     }
     return this.$2
   }], [38, [4, 41, 7], function() {
@@ -320,7 +320,7 @@ KISSY.add("xtemplate/compiler/parser", [], function() {
           symbol = null;
           break;
         case GrammarConst.REDUCE_TYPE:
-          var production = productions[action[GrammarConst.PRODUCTION_INDEX]], reducedSymbol = production.symbol || production[0], reducedAction = production.action || production[2], reducedRhs = production.rhs || production[1], len = reducedRhs.length, i = 0, ret = undefined, $$ = valueStack[valueStack.length - len];
+          var production = productions[action[GrammarConst.PRODUCTION_INDEX]], reducedSymbol = production.symbol || production[0], reducedAction = production.action || production[2], reducedRhs = production.rhs || production[1], len = reducedRhs.length, i = 0, ret, $$ = valueStack[valueStack.length - len];
           self.$$ = $$;
           for(;i < len;i++) {
             self["$" + (len - i)] = valueStack[valueStack.length - 1 - i]

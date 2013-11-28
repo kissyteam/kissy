@@ -325,7 +325,7 @@ KISSY.add(function (S, require) {
              */
             if (self.selectedEl) {
                 img = self.selectedEl;
-                self.editor.execCommand("save");
+                self.editor.execCommand('save');
                 self.selectedEl.attr({
                     "src": url,
                     //注意设置，取的话要从 _ke_saved_src 里取
@@ -362,7 +362,7 @@ KISSY.add(function (S, require) {
                 if (link) {
                     linkTarget = link.attr('target') || "_self";
                     if (linkVal != link.attr('href') || linkTarget != target) {
-                        img._4e_breakParent(link);
+                        img._4eBreakParent(link);
                         if ((prev = img.prev()) && (prev.nodeName() == 'a') && !(prev[0].childNodes.length)) {
                             prev.remove();
                         }
@@ -396,7 +396,7 @@ KISSY.add(function (S, require) {
                     self.editor.getSelection().selectElement(self.selectedEl);
                 }
                 if (!skip) {
-                    self.editor.execCommand("save");
+                    self.editor.execCommand('save');
                 }
             }, 100);
         },

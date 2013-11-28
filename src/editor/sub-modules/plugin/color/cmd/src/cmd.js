@@ -8,7 +8,7 @@ KISSY.add(function (S, require) {
 
     function applyColor(editor, c, styles) {
         var doc = editor.get('document')[0];
-        editor.execCommand("save");
+        editor.execCommand('save');
         if (c) {
             new Editor.Style(styles, {
                 color: c
@@ -21,7 +21,7 @@ KISSY.add(function (S, require) {
                 color: "inherit"
             }).remove(doc);
         }
-        editor.execCommand("save");
+        editor.execCommand('save');
     }
 
     return {

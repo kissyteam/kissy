@@ -532,151 +532,151 @@ if (! _$jscoverage['/compiler.js'].branchData) {
   _$jscoverage['/compiler.js'].branchData['457'][1] = new BranchData();
 }
 _$jscoverage['/compiler.js'].branchData['457'][1].init(68, 12, 'config || {}');
-function visit81_457_1(result) {
+function visit79_457_1(result) {
   _$jscoverage['/compiler.js'].branchData['457'][1].ranCondition(result);
   return result;
 }_$jscoverage['/compiler.js'].branchData['396'][1].init(88, 17, 'nextIdNameCode[0]');
-function visit80_396_1(result) {
+function visit78_396_1(result) {
   _$jscoverage['/compiler.js'].branchData['396'][1].ranCondition(result);
   return result;
 }_$jscoverage['/compiler.js'].branchData['394'][1].init(185, 10, 'idPartType');
-function visit79_394_1(result) {
+function visit77_394_1(result) {
   _$jscoverage['/compiler.js'].branchData['394'][1].ranCondition(result);
   return result;
 }_$jscoverage['/compiler.js'].branchData['391'][1].init(100, 6, '!first');
-function visit78_391_1(result) {
+function visit76_391_1(result) {
   _$jscoverage['/compiler.js'].branchData['391'][1].ranCondition(result);
   return result;
 }_$jscoverage['/compiler.js'].branchData['388'][1].init(218, 18, 'i < idParts.length');
-function visit77_388_1(result) {
+function visit75_388_1(result) {
   _$jscoverage['/compiler.js'].branchData['388'][1].ranCondition(result);
   return result;
 }_$jscoverage['/compiler.js'].branchData['368'][1].init(186, 7, 'code[0]');
-function visit76_368_1(result) {
+function visit74_368_1(result) {
   _$jscoverage['/compiler.js'].branchData['368'][1].ranCondition(result);
   return result;
 }_$jscoverage['/compiler.js'].branchData['337'][1].init(57, 27, 'typeof parts[i] != \'string\'');
-function visit75_337_1(result) {
+function visit73_337_1(result) {
   _$jscoverage['/compiler.js'].branchData['337'][1].ranCondition(result);
   return result;
 }_$jscoverage['/compiler.js'].branchData['335'][1].init(76, 16, 'i < parts.length');
-function visit74_335_1(result) {
+function visit72_335_1(result) {
   _$jscoverage['/compiler.js'].branchData['335'][1].ranCondition(result);
   return result;
 }_$jscoverage['/compiler.js'].branchData['333'][1].init(1293, 32, '!tplNode.hash && !tplNode.params');
-function visit73_333_1(result) {
+function visit71_333_1(result) {
   _$jscoverage['/compiler.js'].branchData['333'][1].ranCondition(result);
   return result;
 }_$jscoverage['/compiler.js'].branchData['326'][1].init(978, 18, 'tplNode.isInverted');
-function visit72_326_1(result) {
+function visit70_326_1(result) {
   _$jscoverage['/compiler.js'].branchData['326'][1].ranCondition(result);
   return result;
 }_$jscoverage['/compiler.js'].branchData['319'][1].init(706, 19, 'programNode.inverse');
-function visit71_319_1(result) {
+function visit69_319_1(result) {
   _$jscoverage['/compiler.js'].branchData['319'][1].ranCondition(result);
   return result;
 }_$jscoverage['/compiler.js'].branchData['311'][1].init(429, 11, '!configName');
-function visit70_311_1(result) {
+function visit68_311_1(result) {
   _$jscoverage['/compiler.js'].branchData['311'][1].ranCondition(result);
   return result;
 }_$jscoverage['/compiler.js'].branchData['272'][1].init(166, 14, 'name = code[0]');
-function visit69_272_1(result) {
+function visit67_272_1(result) {
   _$jscoverage['/compiler.js'].branchData['272'][1].ranCondition(result);
   return result;
 }_$jscoverage['/compiler.js'].branchData['227'][1].init(91, 17, 'nextIdNameCode[0]');
-function visit68_227_1(result) {
+function visit66_227_1(result) {
   _$jscoverage['/compiler.js'].branchData['227'][1].ranCondition(result);
   return result;
 }_$jscoverage['/compiler.js'].branchData['222'][1].init(1113, 4, 'hash');
-function visit67_222_1(result) {
+function visit65_222_1(result) {
   _$jscoverage['/compiler.js'].branchData['222'][1].ranCondition(result);
   return result;
 }_$jscoverage['/compiler.js'].branchData['211'][1].init(99, 17, 'nextIdNameCode[0]');
-function visit66_211_1(result) {
+function visit64_211_1(result) {
   _$jscoverage['/compiler.js'].branchData['211'][1].ranCondition(result);
   return result;
 }_$jscoverage['/compiler.js'].branchData['206'][1].init(271, 6, 'params');
-function visit65_206_1(result) {
+function visit63_206_1(result) {
   _$jscoverage['/compiler.js'].branchData['206'][1].ranCondition(result);
   return result;
 }_$jscoverage['/compiler.js'].branchData['201'][1].init(100, 14, 'params || hash');
-function visit64_201_1(result) {
+function visit62_201_1(result) {
   _$jscoverage['/compiler.js'].branchData['201'][1].ranCondition(result);
   return result;
 }_$jscoverage['/compiler.js'].branchData['197'][1].init(150, 7, 'tplNode');
-function visit63_197_1(result) {
+function visit61_197_1(result) {
   _$jscoverage['/compiler.js'].branchData['197'][1].ranCondition(result);
   return result;
 }_$jscoverage['/compiler.js'].branchData['177'][1].init(1211, 15, '!name1 && name2');
-function visit62_177_1(result) {
+function visit60_177_1(result) {
   _$jscoverage['/compiler.js'].branchData['177'][1].ranCondition(result);
   return result;
 }_$jscoverage['/compiler.js'].branchData['167'][1].init(878, 15, 'name1 && !name2');
-function visit61_167_1(result) {
+function visit59_167_1(result) {
   _$jscoverage['/compiler.js'].branchData['167'][1].ranCondition(result);
   return result;
 }_$jscoverage['/compiler.js'].branchData['156'][1].init(483, 16, '!name1 && !name2');
-function visit60_156_1(result) {
+function visit58_156_1(result) {
   _$jscoverage['/compiler.js'].branchData['156'][1].ranCondition(result);
   return result;
 }_$jscoverage['/compiler.js'].branchData['149'][1].init(252, 14, 'name1 && name2');
-function visit59_149_1(result) {
+function visit57_149_1(result) {
   _$jscoverage['/compiler.js'].branchData['149'][1].ranCondition(result);
   return result;
 }_$jscoverage['/compiler.js'].branchData['133'][1].init(236, 26, 'tplNode && tplNode.escaped');
-function visit58_133_1(result) {
+function visit56_133_1(result) {
   _$jscoverage['/compiler.js'].branchData['133'][1].ranCondition(result);
   return result;
 }_$jscoverage['/compiler.js'].branchData['130'][1].init(100, 18, 'configName || \'{}\'');
-function visit57_130_1(result) {
+function visit55_130_1(result) {
   _$jscoverage['/compiler.js'].branchData['130'][1].ranCondition(result);
   return result;
 }_$jscoverage['/compiler.js'].branchData['121'][1].init(745, 21, 'idString == \'include\'');
-function visit56_121_1(result) {
+function visit54_121_1(result) {
   _$jscoverage['/compiler.js'].branchData['121'][1].ranCondition(result);
   return result;
 }_$jscoverage['/compiler.js'].branchData['111'][1].init(126, 14, 'configNameCode');
-function visit55_111_1(result) {
+function visit53_111_1(result) {
   _$jscoverage['/compiler.js'].branchData['111'][1].ranCondition(result);
   return result;
 }_$jscoverage['/compiler.js'].branchData['109'][1].init(38, 34, 'tplNode && self.genConfig(tplNode)');
-function visit54_109_1(result) {
+function visit52_109_1(result) {
   _$jscoverage['/compiler.js'].branchData['109'][1].ranCondition(result);
   return result;
 }_$jscoverage['/compiler.js'].branchData['108'][1].init(265, 10, 'depth == 0');
-function visit53_108_1(result) {
+function visit51_108_1(result) {
   _$jscoverage['/compiler.js'].branchData['108'][1].ranCondition(result);
   return result;
 }_$jscoverage['/compiler.js'].branchData['88'][1].init(1248, 7, '!global');
-function visit52_88_1(result) {
+function visit50_88_1(result) {
   _$jscoverage['/compiler.js'].branchData['88'][1].ranCondition(result);
   return result;
 }_$jscoverage['/compiler.js'].branchData['83'][1].init(58, 7, 'i < len');
-function visit51_83_1(result) {
+function visit49_83_1(result) {
   _$jscoverage['/compiler.js'].branchData['83'][1].ranCondition(result);
   return result;
 }_$jscoverage['/compiler.js'].branchData['82'][1].init(988, 10, 'statements');
-function visit50_82_1(result) {
+function visit48_82_1(result) {
   _$jscoverage['/compiler.js'].branchData['82'][1].ranCondition(result);
   return result;
 }_$jscoverage['/compiler.js'].branchData['78'][1].init(629, 7, 'natives');
-function visit49_78_1(result) {
+function visit47_78_1(result) {
   _$jscoverage['/compiler.js'].branchData['78'][1].ranCondition(result);
   return result;
 }_$jscoverage['/compiler.js'].branchData['59'][1].init(205, 6, 'global');
-function visit48_59_1(result) {
+function visit46_59_1(result) {
   _$jscoverage['/compiler.js'].branchData['59'][1].ranCondition(result);
   return result;
 }_$jscoverage['/compiler.js'].branchData['55'][1].init(46, 7, '!global');
-function visit47_55_1(result) {
+function visit45_55_1(result) {
   _$jscoverage['/compiler.js'].branchData['55'][1].ranCondition(result);
   return result;
 }_$jscoverage['/compiler.js'].branchData['36'][1].init(87, 12, 'm.length % 2');
-function visit46_36_1(result) {
+function visit44_36_1(result) {
   _$jscoverage['/compiler.js'].branchData['36'][1].ranCondition(result);
   return result;
 }_$jscoverage['/compiler.js'].branchData['23'][1].init(13, 6, 'isCode');
-function visit45_23_1(result) {
+function visit43_23_1(result) {
   _$jscoverage['/compiler.js'].branchData['23'][1].ranCondition(result);
   return result;
 }_$jscoverage['/compiler.js'].lineData[6]++;
@@ -700,7 +700,7 @@ KISSY.add(function(S, require) {
   function escapeString(str, isCode) {
     _$jscoverage['/compiler.js'].functionData[2]++;
     _$jscoverage['/compiler.js'].lineData[23]++;
-    if (visit45_23_1(isCode)) {
+    if (visit43_23_1(isCode)) {
       _$jscoverage['/compiler.js'].lineData[24]++;
       str = escapeSingleQuoteInCodeString(str, false);
     } else {
@@ -719,7 +719,7 @@ KISSY.add(function(S, require) {
     return str.replace(isDouble ? doubleReg : singleReg, function(m) {
   _$jscoverage['/compiler.js'].functionData[4]++;
   _$jscoverage['/compiler.js'].lineData[36]++;
-  if (visit46_36_1(m.length % 2)) {
+  if (visit44_36_1(m.length % 2)) {
     _$jscoverage['/compiler.js'].lineData[37]++;
     m = '\\' + m;
   }
@@ -746,14 +746,14 @@ KISSY.add(function(S, require) {
   _$jscoverage['/compiler.js'].lineData[54]++;
   var source = [];
   _$jscoverage['/compiler.js'].lineData[55]++;
-  if (visit47_55_1(!global)) {
+  if (visit45_55_1(!global)) {
     _$jscoverage['/compiler.js'].lineData[56]++;
     source.push('function(scopes) {');
   }
   _$jscoverage['/compiler.js'].lineData[58]++;
   source.push('var buffer = ""' + (global ? ',' : ';'));
   _$jscoverage['/compiler.js'].lineData[59]++;
-  if (visit48_59_1(global)) {
+  if (visit46_59_1(global)) {
     _$jscoverage['/compiler.js'].lineData[60]++;
     source.push('config = this.config,' + 'engine = this,' + 'moduleWrap, ' + 'utils = config.utils;');
     _$jscoverage['/compiler.js'].lineData[66]++;
@@ -766,15 +766,15 @@ KISSY.add(function(S, require) {
       natives += c + 'Util = utils.' + c + ',';
     }
     _$jscoverage['/compiler.js'].lineData[78]++;
-    if (visit49_78_1(natives)) {
+    if (visit47_78_1(natives)) {
       _$jscoverage['/compiler.js'].lineData[79]++;
       source.push('var ' + natives.slice(0, natives.length - 1) + ';');
     }
   }
   _$jscoverage['/compiler.js'].lineData[82]++;
-  if (visit50_82_1(statements)) {
+  if (visit48_82_1(statements)) {
     _$jscoverage['/compiler.js'].lineData[83]++;
-    for (var i = 0, len = statements.length; visit51_83_1(i < len); i++) {
+    for (var i = 0, len = statements.length; visit49_83_1(i < len); i++) {
       _$jscoverage['/compiler.js'].lineData[84]++;
       pushToArray(source, this[statements[i].type](statements[i]));
     }
@@ -782,7 +782,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/compiler.js'].lineData[87]++;
   source.push('return buffer;');
   _$jscoverage['/compiler.js'].lineData[88]++;
-  if (visit52_88_1(!global)) {
+  if (visit50_88_1(!global)) {
     _$jscoverage['/compiler.js'].lineData[89]++;
     source.push('}');
     _$jscoverage['/compiler.js'].lineData[90]++;
@@ -799,13 +799,13 @@ KISSY.add(function(S, require) {
   _$jscoverage['/compiler.js'].lineData[100]++;
   var source = [], depth = idNode.depth, idParts = idNode.parts, idName = guid('id'), self = this;
   _$jscoverage['/compiler.js'].lineData[108]++;
-  if (visit53_108_1(depth == 0)) {
+  if (visit51_108_1(depth == 0)) {
     _$jscoverage['/compiler.js'].lineData[109]++;
-    var configNameCode = visit54_109_1(tplNode && self.genConfig(tplNode));
+    var configNameCode = visit52_109_1(tplNode && self.genConfig(tplNode));
     _$jscoverage['/compiler.js'].lineData[110]++;
     var configName;
     _$jscoverage['/compiler.js'].lineData[111]++;
-    if (visit55_111_1(configNameCode)) {
+    if (visit53_111_1(configNameCode)) {
       _$jscoverage['/compiler.js'].lineData[112]++;
       configName = configNameCode[0];
       _$jscoverage['/compiler.js'].lineData[113]++;
@@ -815,12 +815,12 @@ KISSY.add(function(S, require) {
   _$jscoverage['/compiler.js'].lineData[118]++;
   var idString = self.getIdStringFromIdParts(source, idParts);
   _$jscoverage['/compiler.js'].lineData[121]++;
-  if (visit56_121_1(idString == 'include')) {
+  if (visit54_121_1(idString == 'include')) {
     _$jscoverage['/compiler.js'].lineData[123]++;
     source.push('if(moduleWrap) {re' + 'quire("' + tplNode.params[0].value + '");' + configName + '.params[0]=moduleWrap.resolveByName(' + configName + '.params[0]);' + '}');
   }
   _$jscoverage['/compiler.js'].lineData[128]++;
-  source.push('var ' + idName + ' = getPropertyOrRunCommandUtil(engine,scopes,' + (visit57_130_1(configName || '{}')) + ',"' + idString + '",' + depth + ',' + idNode.lineNumber + ',' + (visit58_133_1(tplNode && tplNode.escaped)) + ',' + preserveUndefined + ');');
+  source.push('var ' + idName + ' = getPropertyOrRunCommandUtil(engine,scopes,' + (visit55_130_1(configName || '{}')) + ',"' + idString + '",' + depth + ',' + idNode.lineNumber + ',' + (visit56_133_1(tplNode && tplNode.escaped)) + ',' + preserveUndefined + ');');
   _$jscoverage['/compiler.js'].lineData[136]++;
   return [idName, source];
 }, 
@@ -833,7 +833,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/compiler.js'].lineData[147]++;
   name2 = code2[0];
   _$jscoverage['/compiler.js'].lineData[149]++;
-  if (visit59_149_1(name1 && name2)) {
+  if (visit57_149_1(name1 && name2)) {
     _$jscoverage['/compiler.js'].lineData[150]++;
     pushToArray(source, code1[1]);
     _$jscoverage['/compiler.js'].lineData[151]++;
@@ -844,7 +844,7 @@ KISSY.add(function(S, require) {
     return ['', source];
   }
   _$jscoverage['/compiler.js'].lineData[156]++;
-  if (visit60_156_1(!name1 && !name2)) {
+  if (visit58_156_1(!name1 && !name2)) {
     _$jscoverage['/compiler.js'].lineData[157]++;
     pushToArray(source, code1[1].slice(0, -1));
     _$jscoverage['/compiler.js'].lineData[158]++;
@@ -855,7 +855,7 @@ KISSY.add(function(S, require) {
     return ['', source];
   }
   _$jscoverage['/compiler.js'].lineData[167]++;
-  if (visit61_167_1(name1 && !name2)) {
+  if (visit59_167_1(name1 && !name2)) {
     _$jscoverage['/compiler.js'].lineData[168]++;
     pushToArray(source, code1[1]);
     _$jscoverage['/compiler.js'].lineData[169]++;
@@ -866,7 +866,7 @@ KISSY.add(function(S, require) {
     return ['', source];
   }
   _$jscoverage['/compiler.js'].lineData[177]++;
-  if (visit62_177_1(!name1 && name2)) {
+  if (visit60_177_1(!name1 && name2)) {
     _$jscoverage['/compiler.js'].lineData[178]++;
     pushToArray(source, code1[1].slice(0, -1));
     _$jscoverage['/compiler.js'].lineData[179]++;
@@ -884,20 +884,20 @@ KISSY.add(function(S, require) {
   _$jscoverage['/compiler.js'].lineData[191]++;
   var source = [], configName, params, hash, self = this;
   _$jscoverage['/compiler.js'].lineData[197]++;
-  if (visit63_197_1(tplNode)) {
+  if (visit61_197_1(tplNode)) {
     _$jscoverage['/compiler.js'].lineData[198]++;
     params = tplNode.params;
     _$jscoverage['/compiler.js'].lineData[199]++;
     hash = tplNode.hash;
     _$jscoverage['/compiler.js'].lineData[201]++;
-    if (visit64_201_1(params || hash)) {
+    if (visit62_201_1(params || hash)) {
       _$jscoverage['/compiler.js'].lineData[202]++;
       configName = guid('config');
       _$jscoverage['/compiler.js'].lineData[203]++;
       source.push('var ' + configName + ' = {};');
     }
     _$jscoverage['/compiler.js'].lineData[206]++;
-    if (visit65_206_1(params)) {
+    if (visit63_206_1(params)) {
       _$jscoverage['/compiler.js'].lineData[207]++;
       var paramsName = guid('params');
       _$jscoverage['/compiler.js'].lineData[208]++;
@@ -908,7 +908,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/compiler.js'].lineData[210]++;
   var nextIdNameCode = self[param.type](param);
   _$jscoverage['/compiler.js'].lineData[211]++;
-  if (visit66_211_1(nextIdNameCode[0])) {
+  if (visit64_211_1(nextIdNameCode[0])) {
     _$jscoverage['/compiler.js'].lineData[212]++;
     pushToArray(source, nextIdNameCode[1]);
     _$jscoverage['/compiler.js'].lineData[213]++;
@@ -924,7 +924,7 @@ KISSY.add(function(S, require) {
       source.push(configName + '.params=' + paramsName + ';');
     }
     _$jscoverage['/compiler.js'].lineData[222]++;
-    if (visit67_222_1(hash)) {
+    if (visit65_222_1(hash)) {
       _$jscoverage['/compiler.js'].lineData[223]++;
       var hashName = guid('hash');
       _$jscoverage['/compiler.js'].lineData[224]++;
@@ -935,7 +935,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/compiler.js'].lineData[226]++;
   var nextIdNameCode = self[v.type](v);
   _$jscoverage['/compiler.js'].lineData[227]++;
-  if (visit68_227_1(nextIdNameCode[0])) {
+  if (visit66_227_1(nextIdNameCode[0])) {
     _$jscoverage['/compiler.js'].lineData[228]++;
     pushToArray(source, nextIdNameCode[1]);
     _$jscoverage['/compiler.js'].lineData[229]++;
@@ -991,7 +991,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/compiler.js'].lineData[271]++;
   arrayPush.apply(source, code[1]);
   _$jscoverage['/compiler.js'].lineData[272]++;
-  if (visit69_272_1(name = code[0])) {
+  if (visit67_272_1(name = code[0])) {
     _$jscoverage['/compiler.js'].lineData[273]++;
     source.push(name + '=!' + name + ';');
   } else {
@@ -1028,7 +1028,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/compiler.js'].lineData[309]++;
   pushToArray(source, configNameCode[1]);
   _$jscoverage['/compiler.js'].lineData[311]++;
-  if (visit70_311_1(!configName)) {
+  if (visit68_311_1(!configName)) {
     _$jscoverage['/compiler.js'].lineData[312]++;
     configName = S.guid('config');
     _$jscoverage['/compiler.js'].lineData[313]++;
@@ -1037,14 +1037,14 @@ KISSY.add(function(S, require) {
   _$jscoverage['/compiler.js'].lineData[316]++;
   source.push(configName + '.fn=' + self.genFunction(programNode.statements).join('\n') + ';');
   _$jscoverage['/compiler.js'].lineData[319]++;
-  if (visit71_319_1(programNode.inverse)) {
+  if (visit69_319_1(programNode.inverse)) {
     _$jscoverage['/compiler.js'].lineData[320]++;
     inverseFn = self.genFunction(programNode.inverse).join('\n');
     _$jscoverage['/compiler.js'].lineData[321]++;
     source.push(configName + '.inverse=' + inverseFn + ';');
   }
   _$jscoverage['/compiler.js'].lineData[326]++;
-  if (visit72_326_1(tplNode.isInverted)) {
+  if (visit70_326_1(tplNode.isInverted)) {
     _$jscoverage['/compiler.js'].lineData[327]++;
     var tmp = guid('inverse');
     _$jscoverage['/compiler.js'].lineData[328]++;
@@ -1055,13 +1055,13 @@ KISSY.add(function(S, require) {
     source.push(configName + '.inverse = ' + tmp + ';');
   }
   _$jscoverage['/compiler.js'].lineData[333]++;
-  if (visit73_333_1(!tplNode.hash && !tplNode.params)) {
+  if (visit71_333_1(!tplNode.hash && !tplNode.params)) {
     _$jscoverage['/compiler.js'].lineData[334]++;
     var parts = tplPath.parts;
     _$jscoverage['/compiler.js'].lineData[335]++;
-    for (var i = 0; visit74_335_1(i < parts.length); i++) {
+    for (var i = 0; visit72_335_1(i < parts.length); i++) {
       _$jscoverage['/compiler.js'].lineData[337]++;
-      if (visit75_337_1(typeof parts[i] != 'string')) {
+      if (visit73_337_1(typeof parts[i] != 'string')) {
         _$jscoverage['/compiler.js'].lineData[338]++;
         pathString = self.getIdStringFromIdParts(source, parts);
         _$jscoverage['/compiler.js'].lineData[339]++;
@@ -1097,7 +1097,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/compiler.js'].lineData[367]++;
   var code = this[e.expression.type](e.expression, 1);
   _$jscoverage['/compiler.js'].lineData[368]++;
-  if (visit76_368_1(code[0])) {
+  if (visit74_368_1(code[0])) {
     _$jscoverage['/compiler.js'].lineData[369]++;
     pushToArray(source, code[1]);
     _$jscoverage['/compiler.js'].lineData[370]++;
@@ -1118,22 +1118,22 @@ KISSY.add(function(S, require) {
   _$jscoverage['/compiler.js'].lineData[381]++;
   var idString = '', self = this, i, idPart, idPartType, nextIdNameCode, first = true;
   _$jscoverage['/compiler.js'].lineData[388]++;
-  for (i = 0; visit77_388_1(i < idParts.length); i++) {
+  for (i = 0; visit75_388_1(i < idParts.length); i++) {
     _$jscoverage['/compiler.js'].lineData[389]++;
     idPart = idParts[i];
     _$jscoverage['/compiler.js'].lineData[390]++;
     idPartType = idPart.type;
     _$jscoverage['/compiler.js'].lineData[391]++;
-    if (visit78_391_1(!first)) {
+    if (visit76_391_1(!first)) {
       _$jscoverage['/compiler.js'].lineData[392]++;
       idString += '.';
     }
     _$jscoverage['/compiler.js'].lineData[394]++;
-    if (visit79_394_1(idPartType)) {
+    if (visit77_394_1(idPartType)) {
       _$jscoverage['/compiler.js'].lineData[395]++;
       nextIdNameCode = self[idPartType](idPart);
       _$jscoverage['/compiler.js'].lineData[396]++;
-      if (visit80_396_1(nextIdNameCode[0])) {
+      if (visit78_396_1(nextIdNameCode[0])) {
         _$jscoverage['/compiler.js'].lineData[397]++;
         pushToArray(source, nextIdNameCode[1]);
         _$jscoverage['/compiler.js'].lineData[398]++;
@@ -1181,7 +1181,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/compiler.js'].lineData[456]++;
   var code = compiler.compile(tpl);
   _$jscoverage['/compiler.js'].lineData[457]++;
-  config = visit81_457_1(config || {});
+  config = visit79_457_1(config || {});
   _$jscoverage['/compiler.js'].lineData[458]++;
   var sourceURL = 'sourceURL=' + (config.name ? config.name : ('xtemplate' + (xtemplateId++))) + '.js';
   _$jscoverage['/compiler.js'].lineData[463]++;

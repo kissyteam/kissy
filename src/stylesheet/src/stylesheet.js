@@ -98,9 +98,9 @@ KISSY.add(function (S, require) {
          *
          * for example:
          *      // set
-         *      set("p",{color:'red'})
+         *      set('p',{color:'red'})
          *      // unset
-         *      set("p",{color:''})
+         *      set('p',{color:''})
          * @chainable
          */
         set: function (selectorText, css) {
@@ -173,7 +173,7 @@ KISSY.add(function (S, require) {
 
     // # ------------------ private start
 
-    var workerElement = document.createElement("p");
+    var workerElement = document.createElement('p');
 
     function toCssText(css, base) {
         workerElement.style.cssText = base || "";

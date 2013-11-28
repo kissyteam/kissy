@@ -340,7 +340,7 @@ KISSY.add(function (S, require) {
                         // remove filling char for webkit
                         html = html.replace(/\u200b/g, '');
                     }
-                    // fixForBody = fixForBody || "p";
+                    // fixForBody = fixForBody || 'p';
                     // Now use our parser to make further fixes to the structure, as
                     // well as apply the filter.
                     //使用 htmlWriter 界面美观，加入额外文字节点\n,\t空白等
@@ -385,7 +385,7 @@ KISSY.add(function (S, require) {
 
                     html = unprotectElements(html);
 
-                    // fixForBody = fixForBody || "p";
+                    // fixForBody = fixForBody || 'p';
                     // bug:qc #3710:使用 basicWriter ，去除无用的文字节点，标签间连续\n空白等
 
                     var writer = new HtmlParser.BasicWriter(),

@@ -462,7 +462,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/image.js'].lineData[75]++;
   this.hide();
   _$jscoverage['/image.js'].lineData[76]++;
-  var doc = editor.get('document')[0], p = new Node(doc.createElement("p"));
+  var doc = editor.get('document')[0], p = new Node(doc.createElement('p'));
   _$jscoverage['/image.js'].lineData[78]++;
   if (visit5_78_1(!UA.ie)) {
     _$jscoverage['/image.js'].lineData[79]++;

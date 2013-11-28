@@ -419,7 +419,7 @@ KISSY.add(function(S, require) {
     return;
   }
   _$jscoverage['/page-break.js'].lineData[78]++;
-  editor.execCommand("save");
+  editor.execCommand('save');
   _$jscoverage['/page-break.js'].lineData[80]++;
   var start = range.startContainer, pre = start;
   _$jscoverage['/page-break.js'].lineData[83]++;
@@ -436,7 +436,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/page-break.js'].lineData[92]++;
   substitute.insertAfter(pre);
   _$jscoverage['/page-break.js'].lineData[94]++;
-  editor.execCommand("save");
+  editor.execCommand('save');
 }}, 
   mode: Editor.Mode.WYSIWYG_MODE});
 }});

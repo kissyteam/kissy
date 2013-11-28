@@ -868,7 +868,7 @@ KISSY.add(function(S, require) {
     listArray[listIndex].parent = fakeParent;
   }
   _$jscoverage['/cmd.js'].lineData[55]++;
-  var newList = ListUtils.arrayToList(listArray, database, null, "p");
+  var newList = ListUtils.arrayToList(listArray, database, null, 'p');
   _$jscoverage['/cmd.js'].lineData[56]++;
   var child, length = newList.listNode.childNodes.length;
   _$jscoverage['/cmd.js'].lineData[57]++;
@@ -1018,7 +1018,7 @@ KISSY.add(function(S, require) {
     }
   }
   _$jscoverage['/cmd.js'].lineData[183]++;
-  var newList = ListUtils.arrayToList(listArray, database, null, "p");
+  var newList = ListUtils.arrayToList(listArray, database, null, 'p');
   _$jscoverage['/cmd.js'].lineData[186]++;
   var docFragment = newList.listNode, boundaryNode, siblingNode;
   _$jscoverage['/cmd.js'].lineData[188]++;

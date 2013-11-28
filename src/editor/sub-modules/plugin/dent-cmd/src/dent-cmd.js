@@ -107,7 +107,7 @@ KISSY.add(function (S, require) {
 
         // Convert the array back to a Dom forest (yes we might have a few subtrees now).
         // And replace the old list with the new forest.
-        var newList = ListUtils.arrayToList(listArray, database, null, "p");
+        var newList = ListUtils.arrayToList(listArray, database, null, 'p');
 
         // Avoid nested <li> after outdent even they're visually same,
         // recording them for later refactoring.(#3982)
@@ -163,7 +163,7 @@ KISSY.add(function (S, require) {
     function indentBlock(range, type) {
         var iterator = range.createIterator(),
             block;
-        //  enterMode = "p";
+        //  enterMode = 'p';
         iterator.enforceRealBlocks = true;
         iterator.enlargeBr = true;
         while (block = iterator.getNextParagraph()) {
@@ -253,9 +253,9 @@ KISSY.add(function (S, require) {
         if (!editor.hasCommand(cmdType)) {
             editor.addCommand(cmdType, {
                 exec: function (editor) {
-                    editor.execCommand("save");
+                    editor.execCommand('save');
                     indentEditor(editor, cmdType);
-                    editor.execCommand("save");
+                    editor.execCommand('save');
                     editor.notifySelectionChange();
                 }
             });

@@ -36,9 +36,9 @@ KISSY.add(function (S,require) {
             if (!editor.hasCommand("backColor")) {
                 editor.addCommand("backColor", {
                     exec:function (editor, c) {
-                        editor.execCommand("save");
+                        editor.execCommand('save');
                         cmd.applyColor(editor, c, BACK_COLOR_STYLE);
-                        editor.execCommand("save");
+                        editor.execCommand('save');
                     }
                 });
             }

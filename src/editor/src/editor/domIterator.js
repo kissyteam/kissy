@@ -57,7 +57,9 @@ KISSY.add(function (S, require) {
         // 可能只是返回包含文字的段落概念？
         getNextParagraph: function (blockTag) {
             // The block element to be returned.
-            var block, self = this;
+            var block,
+                lastNode,
+                self = this;
 
             // The range object used to identify the paragraph contents.
             var range;
@@ -88,14 +90,14 @@ KISSY.add(function (S, require) {
                 // TODO: It's better to have walker.reset() used here.
                 walker = new Walker(range);
                 walker.evaluator = ignoreBookmarkTextEvaluator;
-                var lastNode = walker.previous();
+                lastNode = walker.previous();
                 self._.lastNode = lastNode._4eNextSourceNode(TRUE);
 
                 // We may have an empty text node at the end of block due to [3770].
                 // If that node is the lastNode, it would cause our logic to leak to the
                 // next block.(#3887)
                 if (self._.lastNode &&
-                    self._.lastNode[0].nodeType == Dom.NodeType.TEXT_NODE && !S.trim(self._.lastNode[0].nodeValue) &&
+                    self._.lastNode[0].nodeType === Dom.NodeType.TEXT_NODE && !S.trim(self._.lastNode[0].nodeValue) &&
                     self._.lastNode.parent()._4eIsBlockBoundary()) {
                     var testRange = new KERange(range.document);
                     testRange.moveToPosition(self._.lastNode, KER.POSITION_AFTER_END);
@@ -127,7 +129,7 @@ KISSY.add(function (S, require) {
 
                 // includeNode indicates that the current node is good to be part
                 // of the range. By default, any non-element node is ok for it.
-                var includeNode = ( currentNode[0].nodeType != Dom.NodeType.ELEMENT_NODE ),
+                var includeNode = ( currentNode[0].nodeType !== Dom.NodeType.ELEMENT_NODE ),
                     continueFromSibling = FALSE;
 
                 // If it is an element node, let's check if it can be part of the
@@ -138,9 +140,10 @@ KISSY.add(function (S, require) {
                     if (currentNode._4eIsBlockBoundary(self.forceBrBreak && { br: 1 })) {
                         // <br> boundaries must be part of the range. It will
                         // happen only if ForceBrBreak.
-                        if (nodeName === 'br')
+                        if (nodeName === 'br') {
                             includeNode = TRUE;
-                        else if (!range && !currentNode[0].childNodes.length && nodeName != 'hr') {
+                        }
+                        else if (!range && !currentNode[0].childNodes.length && nodeName !== 'hr') {
                             // If we have found an empty block, and haven't started
                             // the range yet, it means we must return self block.
                             block = currentNode;
@@ -155,8 +158,9 @@ KISSY.add(function (S, require) {
 
                             // The found boundary must be set as the next one at self
                             // point. (#1717)
-                            if (nodeName != 'br')
+                            if (nodeName !== 'br') {
                                 self._.nextNode = currentNode;
+                            }
                         }
 
                         closeRange = TRUE;
@@ -178,8 +182,9 @@ KISSY.add(function (S, require) {
                 else if (currentNode[0].nodeType === Dom.NodeType.TEXT_NODE) {
                     // Ignore normal whitespaces (i.e. not including &nbsp; or
                     // other unicode whitespaces) before/after a block node.
-                    if (beginWhitespaceRegex.test(currentNode[0].nodeValue))
+                    if (beginWhitespaceRegex.test(currentNode[0].nodeValue)) {
                         includeNode = FALSE;
+                    }
                 }
 
                 // The current node is good to be part of the range and we are
@@ -212,23 +217,27 @@ KISSY.add(function (S, require) {
                 }
 
                 // Now finally include the node.
-                if (includeNode)
+                if (includeNode) {
                     range.setEndAt(currentNode, KER.POSITION_AFTER_END);
+                }
 
                 currentNode = currentNode._4eNextSourceNode(continueFromSibling, NULL, lastNode);
                 isLast = !currentNode;
 
                 // We have found a block boundary. Let's close the range and move out of the
                 // loop.
-                if (isLast || ( closeRange && range ))
+                if (isLast || ( closeRange && range )) {
                     break;
+                }
             }
 
             // Now, based on the processed range, look for (or create) the block to be returned.
             if (!block) {
                 // If no range has been found, self is the end.
                 if (!range) {
-                    self._.docEndMarker && self._.docEndMarker._4eRemove();
+                    if (self._.docEndMarker) {
+                        self._.docEndMarker._4eRemove();
+                    }
                     self._.nextNode = NULL;
                     return NULL;
                 }
@@ -238,12 +247,12 @@ KISSY.add(function (S, require) {
                     checkLimits = { div: 1, th: 1, td: 1 };
                 block = startPath.block;
 
-                if ((!block || !block[0])
-                    && !self.enforceRealBlocks
-                    && checkLimits[ startBlockLimit.nodeName() ]
-                    && range.checkStartOfBlock()
-                    && range.checkEndOfBlock())
+                if ((!block || !block[0]) && !self.enforceRealBlocks &&
+                    checkLimits[ startBlockLimit.nodeName() ] &&
+                    range.checkStartOfBlock() &&
+                    range.checkEndOfBlock()) {
                     block = startBlockLimit;
+                }
                 else if (!block || ( self.enforceRealBlocks && block.nodeName() === 'li' )) {
                     // Create the fixed block.
                     block = new Node(self.range.document.createElement(blockTag || 'p'));
@@ -254,7 +263,7 @@ KISSY.add(function (S, require) {
                     range.insertNode(block);
                     removePreviousBr = removeLastBr = TRUE;
                 }
-                else if (block.nodeName() != 'li') {
+                else if (block.nodeName() !== 'li') {
                     // If the range doesn't includes the entire contents of the
                     // block, we must split it, isolating the range in a dedicated
                     // block.
@@ -291,10 +300,12 @@ KISSY.add(function (S, require) {
             if (removePreviousBr) {
                 var previousSibling = new Node(block[0].previousSibling);
                 if (previousSibling[0] && previousSibling[0].nodeType === Dom.NodeType.ELEMENT_NODE) {
-                    if (previousSibling.nodeName() === 'br')
+                    if (previousSibling.nodeName() === 'br') {
                         previousSibling._4eRemove();
-                    else if (previousSibling[0].lastChild && Dom.nodeName(previousSibling[0].lastChild) === 'br')
+                    }
+                    else if (previousSibling[0].lastChild && Dom.nodeName(previousSibling[0].lastChild) === 'br') {
                         Dom._4eRemove(previousSibling[0].lastChild);
+                    }
                 }
             }
 
@@ -305,10 +316,10 @@ KISSY.add(function (S, require) {
                 var lastChild = new Node(block[0].lastChild);
                 if (lastChild[0] && lastChild[0].nodeType === Dom.NodeType.ELEMENT_NODE && lastChild.nodeName() === 'br') {
                     // Take care not to remove the block expanding <br> in non-IE browsers.
-                    if (UA.ie
-                        || lastChild.prev(bookmarkGuard, 1)
-                        || lastChild.next(bookmarkGuard, 1))
+                    if (UA.ie || lastChild.prev(bookmarkGuard, 1) ||
+                        lastChild.next(bookmarkGuard, 1)) {
                         lastChild.remove();
+                    }
                 }
             }
 

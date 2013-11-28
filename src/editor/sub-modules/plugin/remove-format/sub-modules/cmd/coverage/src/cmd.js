@@ -378,7 +378,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/cmd.js'].lineData[43]++;
   var ranges = editor.getSelection().getRanges();
   _$jscoverage['/cmd.js'].lineData[44]++;
-  editor.execCommand("save");
+  editor.execCommand('save');
   _$jscoverage['/cmd.js'].lineData[45]++;
   for (var i = 0, range; range = ranges[i]; i++) {
     _$jscoverage['/cmd.js'].lineData[47]++;
@@ -405,7 +405,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/cmd.js'].lineData[82]++;
     if (visit5_82_1(tagsRegex.test(pathElement.nodeName()))) {
       _$jscoverage['/cmd.js'].lineData[83]++;
-      node._4e_breakParent(pathElement);
+      node._4eBreakParent(pathElement);
     }
   }
 };
@@ -444,7 +444,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/cmd.js'].lineData[127]++;
   editor.getSelection().selectRanges(ranges);
   _$jscoverage['/cmd.js'].lineData[128]++;
-  editor.execCommand("save");
+  editor.execCommand('save');
 }});
   }
 }};

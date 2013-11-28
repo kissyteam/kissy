@@ -1752,7 +1752,7 @@ KISSY.add(function (S,require) {
     });
 
     Utils.injectDom({
-        _4e_breakParent: function (el, parent) {
+        _4eBreakParent: function (el, parent) {
             parent = $(parent);
             el = $(el);
 

@@ -23,9 +23,9 @@ KISSY.add(function (S, require) {
             if (!editor.hasCommand("foreColor")) {
                 editor.addCommand("foreColor", {
                     exec: function (editor, c) {
-                        editor.execCommand("save");
+                        editor.execCommand('save');
                         cmd.applyColor(editor, c, COLOR_STYLES);
-                        editor.execCommand("save");
+                        editor.execCommand('save');
                     }
                 });
             }

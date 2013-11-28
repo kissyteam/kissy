@@ -1270,7 +1270,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/dialog.js'].lineData[327]++;
     img = self.selectedEl;
     _$jscoverage['/dialog.js'].lineData[328]++;
-    self.editor.execCommand("save");
+    self.editor.execCommand('save');
     _$jscoverage['/dialog.js'].lineData[329]++;
     self.selectedEl.attr({
   "src": url, 
@@ -1294,7 +1294,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/dialog.js'].lineData[364]++;
     if (visit43_364_1(visit44_364_2(linkVal != link.attr('href')) || visit45_364_3(linkTarget != target))) {
       _$jscoverage['/dialog.js'].lineData[365]++;
-      img._4e_breakParent(link);
+      img._4eBreakParent(link);
       _$jscoverage['/dialog.js'].lineData[366]++;
       if (visit46_366_1((prev = img.prev()) && visit47_366_2((visit48_366_3(prev.nodeName() == 'a')) && !(prev[0].childNodes.length)))) {
         _$jscoverage['/dialog.js'].lineData[367]++;
@@ -1342,7 +1342,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/dialog.js'].lineData[398]++;
   if (visit56_398_1(!skip)) {
     _$jscoverage['/dialog.js'].lineData[399]++;
-    self.editor.execCommand("save");
+    self.editor.execCommand('save');
   }
 }, 100);
 }, 

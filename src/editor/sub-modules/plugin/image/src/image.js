@@ -74,7 +74,7 @@ KISSY.add(function (S,require) {
                     fn: function () {
                         this.hide();
                         var doc = editor.get('document')[0],
-                            p = new Node(doc.createElement("p"));
+                            p = new Node(doc.createElement('p'));
                         if (!UA.ie) {
                             p._4eAppendBogus(undefined);
                         }

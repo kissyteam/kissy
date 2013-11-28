@@ -134,7 +134,7 @@ KISSY.add(function (S, require) {
         if (needFix) {
             var newChildren = [],
                 holder = new Tag();
-            holder.nodeName = holder.tagName = "p";
+            holder.nodeName = holder.tagName = 'p';
             for (i = 0; i < childNodes.length; i++) {
                 c = childNodes[i];
                 if (c.nodeType == 3 || (c.nodeType == 1 && pDtd[c.nodeName])) {

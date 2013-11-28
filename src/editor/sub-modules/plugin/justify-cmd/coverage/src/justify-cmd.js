@@ -342,7 +342,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/justify-cmd.js'].lineData[12]++;
     editor.focus();
     _$jscoverage['/justify-cmd.js'].lineData[13]++;
-    editor.execCommand("save");
+    editor.execCommand('save');
     _$jscoverage['/justify-cmd.js'].lineData[14]++;
     var selection = editor.getSelection(), bookmarks = selection.createBookmarks(), ranges = selection.getRanges(), iterator, block;
     _$jscoverage['/justify-cmd.js'].lineData[19]++;
@@ -368,7 +368,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/justify-cmd.js'].lineData[31]++;
     selection.selectBookmarks(bookmarks);
     _$jscoverage['/justify-cmd.js'].lineData[32]++;
-    editor.execCommand("save");
+    editor.execCommand('save');
     _$jscoverage['/justify-cmd.js'].lineData[33]++;
     editor.notifySelectionChange();
   }

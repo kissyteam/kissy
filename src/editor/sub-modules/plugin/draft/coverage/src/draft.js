@@ -887,11 +887,11 @@ KISSY.add(function(S, require) {
   _$jscoverage['/draft.js'].lineData[348]++;
   if (visit25_348_1(confirm("\u786e\u8ba4\u6062\u590d " + date(drafts[v].date) + " \u7684\u7f16\u8f91\u5386\u53f2\uff1f"))) {
     _$jscoverage['/draft.js'].lineData[349]++;
-    editor.execCommand("save");
+    editor.execCommand('save');
     _$jscoverage['/draft.js'].lineData[350]++;
     editor.setData(drafts[v].content);
     _$jscoverage['/draft.js'].lineData[351]++;
-    editor.execCommand("save");
+    editor.execCommand('save');
   }
   _$jscoverage['/draft.js'].lineData[353]++;
   ev.halt();

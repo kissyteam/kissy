@@ -18,7 +18,7 @@
                 config.success();
             } else {
                 xhr(fullpath, function (code) {
-                    try{
+                        try{
                     localStorage.setItem(fullpath, code);
                     }catch (e){
                         // QUOTA_EXCEEDED_ERR

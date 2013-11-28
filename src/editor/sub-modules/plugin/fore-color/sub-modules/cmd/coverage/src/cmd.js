@@ -297,11 +297,11 @@ KISSY.add(function(S, require) {
   exec: function(editor, c) {
   _$jscoverage['/cmd.js'].functionData[3]++;
   _$jscoverage['/cmd.js'].lineData[26]++;
-  editor.execCommand("save");
+  editor.execCommand('save');
   _$jscoverage['/cmd.js'].lineData[27]++;
   cmd.applyColor(editor, c, COLOR_STYLES);
   _$jscoverage['/cmd.js'].lineData[28]++;
-  editor.execCommand("save");
+  editor.execCommand('save');
 }});
   }
 }};

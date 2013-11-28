@@ -7,7 +7,7 @@ KISSY.add(function (S, require) {
     var commands;
     var Path = require('path');
 
-    return commands = {
+    commands = {
         'each': function (scopes, config) {
             var params = config.params;
             var param0 = params[0];
@@ -76,7 +76,7 @@ KISSY.add(function (S, require) {
         'set': function (scopes, config) {
             // in case scopes[0] is not object ,{{#each}}{{set }}{{/each}}
             for (var i = scopes.length - 1; i >= 0; i--) {
-                if (typeof scopes[i] == 'object') {
+                if (typeof scopes[i] === 'object') {
                     S.mix(scopes[i], config.hash);
                     break;
                 }
@@ -90,7 +90,7 @@ KISSY.add(function (S, require) {
             var extra = config.hash ? [config.hash] : [];
             scopes = extra.concat(scopes);
 
-            if (!params || params.length != 1) {
+            if (!params || params.length !== 1) {
                 S.error('include must has one param');
                 return '';
             }
@@ -98,8 +98,8 @@ KISSY.add(function (S, require) {
             var myName = this.config.name;
             var subTplName = params[0];
 
-            if (subTplName.charAt(0) == '.') {
-                if (myName == 'unspecified') {
+            if (subTplName.charAt(0) === '.') {
+                if (myName === 'unspecified') {
                     S.error('parent template does not have name' + ' for relative sub tpl name: ' + subTplName);
                     return '';
                 }
@@ -115,7 +115,7 @@ KISSY.add(function (S, require) {
             config.commands = this.config.commands;
             // share macros with parent template and sub template
             config.macros = this.config.macros;
-            return this.invokeEngine(tpl, scopes, config)
+            return this.invokeEngine(tpl, scopes, config);
         },
 
         'macro': function (scopes, config) {
@@ -138,7 +138,7 @@ KISSY.add(function (S, require) {
                 if (!macro) {
                     macro = S.require(macroName);
                     if (!macro) {
-                        S.error("can not find macro module:" + name);
+                        S.error('can not find macro module:' + name);
                     }
                 }
                 S.each(macro.paramNames, function (p, i) {
@@ -156,4 +156,6 @@ KISSY.add(function (S, require) {
             return commands.include.call(this, [], config);
         }
     };
+
+    return commands;
 });

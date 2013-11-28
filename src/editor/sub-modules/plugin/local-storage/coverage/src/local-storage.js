@@ -371,7 +371,7 @@ KISSY.add(function(S, require) {
 }, 1000);
 });
   _$jscoverage['/local-storage.js'].lineData[77]++;
-  store.on("save", function() {
+  store.on('save', function() {
   _$jscoverage['/local-storage.js'].functionData[5]++;
   _$jscoverage['/local-storage.js'].lineData[78]++;
   o.get('el').css(reverseCss);

@@ -413,7 +413,7 @@ KISSY.add(function (S, require) {
                 if (range.startContainer.nodeName() == 'html') {
                     range.setStart(body, 0);
                 }
-                var fixedBlock = range.fixBlock(TRUE, "p");
+                var fixedBlock = range.fixBlock(TRUE, 'p');
                 if (fixedBlock &&
                     // https://dev.ckeditor.com/ticket/8550
                     // 新加的 p 在 body 最后，那么不要删除

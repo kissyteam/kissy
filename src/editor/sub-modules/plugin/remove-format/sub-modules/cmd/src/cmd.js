@@ -41,7 +41,7 @@ KISSY.add(function (S, require) {
                         editor.focus();
                         tagsRegex.lastIndex = 0;
                         var ranges = editor.getSelection().getRanges();
-                        editor.execCommand("save");
+                        editor.execCommand('save');
                         for (var i = 0, range; range = ranges[ i ]; i++) {
 
                             if (range.collapsed) {
@@ -80,7 +80,7 @@ KISSY.add(function (S, require) {
                                     }
                                     // If this element can be removed (even partially).
                                     if (tagsRegex.test(pathElement.nodeName())) {
-                                        node._4e_breakParent(pathElement);
+                                        node._4eBreakParent(pathElement);
                                     }
                                 }
                             };
@@ -125,7 +125,7 @@ KISSY.add(function (S, require) {
                             range.moveToBookmark(bookmark);
                         }
                         editor.getSelection().selectRanges(ranges);
-                        editor.execCommand("save");
+                        editor.execCommand('save');
                     }
                 });
             }
