@@ -315,6 +315,7 @@ if (! _$jscoverage['/runtime/commands.js']) {
   _$jscoverage['/runtime/commands.js'].lineData[149] = 0;
   _$jscoverage['/runtime/commands.js'].lineData[151] = 0;
   _$jscoverage['/runtime/commands.js'].lineData[156] = 0;
+  _$jscoverage['/runtime/commands.js'].lineData[160] = 0;
 }
 if (! _$jscoverage['/runtime/commands.js'].functionData) {
   _$jscoverage['/runtime/commands.js'].functionData = [];
@@ -384,23 +385,23 @@ function visit17_129_1(result) {
 function visit16_127_1(result) {
   _$jscoverage['/runtime/commands.js'].branchData['127'][1].ranCondition(result);
   return result;
-}_$jscoverage['/runtime/commands.js'].branchData['102'][1].init(21, 23, 'myName == \'unspecified\'');
+}_$jscoverage['/runtime/commands.js'].branchData['102'][1].init(21, 24, 'myName === \'unspecified\'');
 function visit15_102_1(result) {
   _$jscoverage['/runtime/commands.js'].branchData['102'][1].ranCondition(result);
   return result;
-}_$jscoverage['/runtime/commands.js'].branchData['101'][1].init(439, 27, 'subTplName.charAt(0) == \'.\'');
+}_$jscoverage['/runtime/commands.js'].branchData['101'][1].init(440, 28, 'subTplName.charAt(0) === \'.\'');
 function visit14_101_1(result) {
   _$jscoverage['/runtime/commands.js'].branchData['101'][1].ranCondition(result);
   return result;
-}_$jscoverage['/runtime/commands.js'].branchData['93'][2].init(220, 18, 'params.length != 1');
+}_$jscoverage['/runtime/commands.js'].branchData['93'][2].init(220, 19, 'params.length !== 1');
 function visit13_93_2(result) {
   _$jscoverage['/runtime/commands.js'].branchData['93'][2].ranCondition(result);
   return result;
-}_$jscoverage['/runtime/commands.js'].branchData['93'][1].init(209, 29, '!params || params.length != 1');
+}_$jscoverage['/runtime/commands.js'].branchData['93'][1].init(209, 30, '!params || params.length !== 1');
 function visit12_93_1(result) {
   _$jscoverage['/runtime/commands.js'].branchData['93'][1].ranCondition(result);
   return result;
-}_$jscoverage['/runtime/commands.js'].branchData['79'][1].init(21, 28, 'typeof scopes[i] == \'object\'');
+}_$jscoverage['/runtime/commands.js'].branchData['79'][1].init(21, 29, 'typeof scopes[i] === \'object\'');
 function visit11_79_1(result) {
   _$jscoverage['/runtime/commands.js'].branchData['79'][1].ranCondition(result);
   return result;
@@ -452,7 +453,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/runtime/commands.js'].lineData[8]++;
   var Path = require('path');
   _$jscoverage['/runtime/commands.js'].lineData[10]++;
-  return commands = {
+  commands = {
   'each': function(scopes, config) {
   _$jscoverage['/runtime/commands.js'].functionData[1]++;
   _$jscoverage['/runtime/commands.js'].lineData[12]++;
@@ -560,7 +561,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/runtime/commands.js'].lineData[78]++;
   for (var i = scopes.length - 1; visit10_78_1(i >= 0); i--) {
     _$jscoverage['/runtime/commands.js'].lineData[79]++;
-    if (visit11_79_1(typeof scopes[i] == 'object')) {
+    if (visit11_79_1(typeof scopes[i] === 'object')) {
       _$jscoverage['/runtime/commands.js'].lineData[80]++;
       S.mix(scopes[i], config.hash);
       _$jscoverage['/runtime/commands.js'].lineData[81]++;
@@ -579,7 +580,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/runtime/commands.js'].lineData[91]++;
   scopes = extra.concat(scopes);
   _$jscoverage['/runtime/commands.js'].lineData[93]++;
-  if (visit12_93_1(!params || visit13_93_2(params.length != 1))) {
+  if (visit12_93_1(!params || visit13_93_2(params.length !== 1))) {
     _$jscoverage['/runtime/commands.js'].lineData[94]++;
     S.error('include must has one param');
     _$jscoverage['/runtime/commands.js'].lineData[95]++;
@@ -590,9 +591,9 @@ KISSY.add(function(S, require) {
   _$jscoverage['/runtime/commands.js'].lineData[99]++;
   var subTplName = params[0];
   _$jscoverage['/runtime/commands.js'].lineData[101]++;
-  if (visit14_101_1(subTplName.charAt(0) == '.')) {
+  if (visit14_101_1(subTplName.charAt(0) === '.')) {
     _$jscoverage['/runtime/commands.js'].lineData[102]++;
-    if (visit15_102_1(myName == 'unspecified')) {
+    if (visit15_102_1(myName === 'unspecified')) {
       _$jscoverage['/runtime/commands.js'].lineData[103]++;
       S.error('parent template does not have name' + ' for relative sub tpl name: ' + subTplName);
       _$jscoverage['/runtime/commands.js'].lineData[104]++;
@@ -645,7 +646,7 @@ KISSY.add(function(S, require) {
       _$jscoverage['/runtime/commands.js'].lineData[140]++;
       if (visit19_140_1(!macro)) {
         _$jscoverage['/runtime/commands.js'].lineData[141]++;
-        S.error("can not find macro module:" + name);
+        S.error('can not find macro module:' + name);
       }
     }
     _$jscoverage['/runtime/commands.js'].lineData[144]++;
@@ -669,4 +670,6 @@ KISSY.add(function(S, require) {
   _$jscoverage['/runtime/commands.js'].lineData[156]++;
   return commands.include.call(this, [], config);
 }};
+  _$jscoverage['/runtime/commands.js'].lineData[160]++;
+  return commands;
 });

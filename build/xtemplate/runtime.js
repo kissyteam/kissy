@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:51
+build time: Nov 28 17:03
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -13,7 +13,7 @@ build time: Nov 27 00:51
 KISSY.add("xtemplate/runtime/commands", ["path"], function(S, require) {
   var commands;
   var Path = require("path");
-  return commands = {each:function(scopes, config) {
+  commands = {each:function(scopes, config) {
     var params = config.params;
     var param0 = params[0];
     var buffer = "";
@@ -70,7 +70,7 @@ KISSY.add("xtemplate/runtime/commands", ["path"], function(S, require) {
     return buffer
   }, set:function(scopes, config) {
     for(var i = scopes.length - 1;i >= 0;i--) {
-      if(typeof scopes[i] == "object") {
+      if(typeof scopes[i] === "object") {
         S.mix(scopes[i], config.hash);
         break
       }
@@ -80,14 +80,14 @@ KISSY.add("xtemplate/runtime/commands", ["path"], function(S, require) {
     var params = config.params;
     var extra = config.hash ? [config.hash] : [];
     scopes = extra.concat(scopes);
-    if(!params || params.length != 1) {
+    if(!params || params.length !== 1) {
       S.error("include must has one param");
       return""
     }
     var myName = this.config.name;
     var subTplName = params[0];
-    if(subTplName.charAt(0) == ".") {
-      if(myName == "unspecified") {
+    if(subTplName.charAt(0) === ".") {
+      if(myName === "unspecified") {
         S.error("parent template does not have name" + " for relative sub tpl name: " + subTplName);
         return""
       }
@@ -127,7 +127,8 @@ KISSY.add("xtemplate/runtime/commands", ["path"], function(S, require) {
     return""
   }, parse:function(scopes, config) {
     return commands.include.call(this, [], config)
-  }}
+  }};
+  return commands
 });
 KISSY.add("xtemplate/runtime", ["./runtime/commands"], function(S, require) {
   var commands = require("./runtime/commands");
@@ -154,20 +155,22 @@ KISSY.add("xtemplate/runtime", ["./runtime/commands"], function(S, require) {
     }
     parts = parts.split(".");
     var len = parts.length, i, j = depth || 0, v, p, valid, sl = scopes.length;
-    if(parts[0] == "root") {
+    if(parts[0] === "root") {
       j = sl - 1;
       parts.shift();
       len--
     }
+    var endScopeFind = 0;
     for(;j < sl;j++) {
       v = scopes[j];
       valid = 1;
       for(i = 0;i < len;i++) {
         p = parts[i];
         if(p === "this") {
+          endScopeFind = 1;
           continue
         }else {
-          if(typeof v != "object" || !(p in v)) {
+          if(typeof v !== "object" || !(p in v)) {
             valid = 0;
             break
           }
@@ -175,10 +178,13 @@ KISSY.add("xtemplate/runtime", ["./runtime/commands"], function(S, require) {
         v = v[p]
       }
       if(valid) {
-        if(typeof v == "function") {
+        if(typeof v === "function") {
           v = v.call(scopes[0])
         }
         return[v]
+      }
+      if(endScopeFind) {
+        break
       }
     }
     return false
@@ -192,7 +198,7 @@ KISSY.add("xtemplate/runtime", ["./runtime/commands"], function(S, require) {
       if(!options.params && !options.hash) {
         var property = getProperty(name, scopes);
         if(property === false) {
-          logFn("can not find property: '" + name + "' at line " + line);
+          logFn('can not find property: "' + name + '" at line ' + line);
           property = ""
         }else {
           property = property[0]
@@ -201,13 +207,13 @@ KISSY.add("xtemplate/runtime", ["./runtime/commands"], function(S, require) {
         if(S.isArray(property)) {
           command = commands.each
         }else {
-          if(typeof property == "object") {
+          if(typeof property === "object") {
             command = commands["with"]
           }
         }
         options.params = [property]
       }else {
-        S.error("can not find command module: " + name + "' at line " + line);
+        S.error("can not find command module: " + name + '" at line ' + line);
         return""
       }
     }
@@ -215,7 +221,7 @@ KISSY.add("xtemplate/runtime", ["./runtime/commands"], function(S, require) {
     try {
       ret = command.call(engine, scopes, options)
     }catch(e) {
-      S.error(e.message + ": '" + name + "' at line " + line)
+      S.error(e.message + ': "' + name + '" at line ' + line)
     }
     if(ret === undefined) {
       ret = ""
@@ -236,13 +242,13 @@ KISSY.add("xtemplate/runtime", ["./runtime/commands"], function(S, require) {
       try {
         id0 = command1.call(engine, scopes, options)
       }catch(e) {
-        S.error(e.message + ": '" + name + "' at line " + line);
+        S.error(e.message + ': "' + name + '" at line ' + line);
         return""
       }
     }else {
       var tmp2 = getProperty(name, scopes, depth);
       if(tmp2 === false) {
-        logFn("can not find property: '" + name + "' at line " + line, "warn");
+        logFn('can not find property: "' + name + '" at line ' + line, "warn");
         return preserveUndefined ? undefined : ""
       }else {
         id0 = tmp2[0]

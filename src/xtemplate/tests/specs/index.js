@@ -382,6 +382,19 @@ KISSY.add(function (S, XTemplate, XTemplateNodeJs) {
                     expect(render).toBe('x1xx2x');
                 });
 
+                it('this will prevent scope finding', function () {
+                    var ret = new XTemplate('{{a}}^{{#each b}}|{{this.a}}{{/each}}$').render({
+                        a: 1,
+                        b: [
+                            {
+                                a: 2
+                            },
+                            {}
+                        ]
+                    });
+                    expect(ret).toBe('1^|2|$');
+                });
+
                 it('support for with', function () {
                     var tpl = '{{#with data}}' +
                         '{{#with p}}' +
@@ -808,7 +821,7 @@ KISSY.add(function (S, XTemplate, XTemplateNodeJs) {
                         new XTemplate(tpl).render(data);
                     }).toThrow('parent template does not have name ' +
                             'for relative sub tpl name:' +
-                            ' ./sub-tpl-6: \'include\' at line 1');
+                            ' ./sub-tpl-6: "include" at line 1');
                 });
 
                 it('support compiled xtemplate module', function () {
@@ -1141,7 +1154,7 @@ KISSY.add(function (S, XTemplate, XTemplateNodeJs) {
                         r = e.message;
                     }
                     if (KISSY.Config.debug) {
-                        expect(r).toBe('can not find property: \'data\' at line 1');
+                        expect(r).toBe('can not find property: "data" at line 1');
                     }
                 });
 
@@ -1323,7 +1336,7 @@ KISSY.add(function (S, XTemplate, XTemplateNodeJs) {
 
                 expect(render).toBe('this is \n');
 
-                expect(msg2).toBe('can not find property: \'title\' at line 2');
+                expect(msg2).toBe('can not find property: "title" at line 2');
 
                 S.log = log;
             });
@@ -1350,7 +1363,7 @@ KISSY.add(function (S, XTemplate, XTemplateNodeJs) {
                     msg = e.message;
                 }
 
-                expect(msg).toBe('can not find property: \'title\' at line 2');
+                expect(msg).toBe('can not find property: "title" at line 2');
             });
 
             it('detect unmatched', function () {

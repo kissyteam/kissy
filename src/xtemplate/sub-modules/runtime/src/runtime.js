@@ -40,21 +40,23 @@ KISSY.add(function (S, require) {
             valid,
             sl = scopes.length;
         // root keyword for root scope
-        if (parts[0] == 'root') {
+        if (parts[0] === 'root') {
             j = sl - 1;
             parts.shift();
             len--;
         }
+        var endScopeFind = 0;
         for (; j < sl; j++) {
             v = scopes[j];
             valid = 1;
             for (i = 0; i < len; i++) {
                 p = parts[i];
                 if (p === 'this') {
+                    endScopeFind = 1;
                     continue;
                 }
                 // may not be object at all
-                else if (typeof v != 'object' || !(p in v)) {
+                else if (typeof v !== 'object' || !(p in v)) {
                     valid = 0;
                     break;
                 }
@@ -62,10 +64,13 @@ KISSY.add(function (S, require) {
             }
             if (valid) {
                 // support property function return value as property value
-                if (typeof v == 'function') {
+                if (typeof v === 'function') {
                     v = v.call(scopes[0]);
                 }
                 return [v];
+            }
+            if (endScopeFind) {
+                break;
             }
         }
         return false;
@@ -81,7 +86,7 @@ KISSY.add(function (S, require) {
                     if (!options.params && !options.hash) {
                         var property = getProperty(name, scopes);
                         if (property === false) {
-                            logFn("can not find property: '" + name + "' at line " + line);
+                            logFn('can not find property: "' + name + '" at line ' + line);
                             property = '';
                         } else {
                             property = property[0];
@@ -90,12 +95,12 @@ KISSY.add(function (S, require) {
                         if (S.isArray(property)) {
                             command = commands.each;
                         }
-                        else if (typeof property == 'object') {
+                        else if (typeof property === 'object') {
                             command = commands['with'];
                         }
                         options.params = [property];
                     } else {
-                        S.error("can not find command module: " + name + "' at line " + line);
+                        S.error('can not find command module: ' + name + '" at line ' + line);
                         return '';
                     }
                 }
@@ -103,7 +108,7 @@ KISSY.add(function (S, require) {
                 try {
                     ret = command.call(engine, scopes, options);
                 } catch (e) {
-                    S.error(e.message + ": '" + name + "' at line " + line);
+                    S.error(e.message + ': "' + name + '" at line ' + line);
                 }
                 if (ret === undefined) {
                     ret = '';
@@ -128,15 +133,14 @@ KISSY.add(function (S, require) {
                     try {
                         id0 = command1.call(engine, scopes, options);
                     } catch (e) {
-                        S.error(e.message + ": '" + name + "' at line " + line);
+                        S.error(e.message + ': "' + name + '" at line ' + line);
                         return '';
                     }
                 }
                 else {
                     var tmp2 = getProperty(name, scopes, depth);
                     if (tmp2 === false) {
-                        logFn("can not find property: '" +
-                            name + "' at line " + line, "warn");
+                        logFn('can not find property: "' + name + '" at line ' + line, 'warn');
                         // undefined for expression
                         // {{n+2}}
                         return preserveUndefined ? undefined : '';
