@@ -243,7 +243,6 @@ KISSY.add(function (S, require) {
                 if (re !== undefined) {
                     html = re;
                 }
-
                 // MS-WORD format sniffing.
                 if (/(class="?Mso|style="[^"]*\bmso\-|w:WordDocument)/.test(html)) {
                     // 动态载入 word 过滤规则

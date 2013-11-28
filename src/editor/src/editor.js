@@ -5,7 +5,6 @@
  */
 KISSY.add(function (S, require, exports, module) {
     var Node = require('node');
-    var Dom = require('dom');
     var iframeContentTpl = require('editor/iframe-content-tpl');
     var Editor = require('editor/base');
     var Utils = require('editor/utils');
@@ -657,21 +656,13 @@ KISSY.add(function (S, require, exports, module) {
                 data = htmlDataProcessor.toDataFormat(data, dataFilter);
             }
 
-            if (UA.ieMode === 11) {
-                // https://bugs.dojotoolkit.org/ticket/17431
-                // https://github.com/kissyteam/kissy/issues/514
-                // inserthtml does not support in ie11
-                self.insertElement($(Dom.create(data, null, editorDoc)));
-                return;
-            }
-
             self.focus();
             self.execCommand('save');
 
             // ie9 仍然需要这样！
             // ie9 标准 selection 有问题，连续插入不能定位光标到插入内容后面
-            if (IS_IE) {
-                var $sel = editorDoc.selection;
+            var $sel = editorDoc.selection;
+            if ($sel) {
                 if ($sel.type === 'Control') {
                     $sel.clear();
                 }
@@ -681,30 +672,33 @@ KISSY.add(function (S, require, exports, module) {
                     logger.error('insertHtml error in ie');
                 }
             } else {
-                // ie9 仍然没有
-                // 1.webkit insert html 有问题！会把标签去掉，算了直接用 insertElement.
-                // 10.0 修复？？
-                // firefox 初始编辑器无焦点报异常
-                try {
-                    editorDoc.execCommand('inserthtml', FALSE, data);
-                } catch (e) {
-                    setTimeout(function () {
-                        // still not ok in ff!
-                        // 手动选择 body 的第一个节点
-                        if (self.getSelection().getRanges().length === 0) {
-                            var r = new Editor.Range(editorDoc),
-                                node = $(editorDoc.body).first(function (el) {
-                                    return el.nodeType === 1 && el.nodeName.toLowerCase() !== 'br';
-                                });
-                            if (!node) {
-                                node = $(editorDoc.createElement('p'));
-                                node._4eAppendBogus().appendTo(editorDoc.body);
-                            }
-                            r.setStartAt(node, Editor.RangeType.POSITION_AFTER_START);
-                            r.select();
-                        }
-                        editorDoc.execCommand('inserthtml', FALSE, data);
-                    }, 50);
+                // https://bugs.dojotoolkit.org/ticket/17431
+                // https://github.com/kissyteam/kissy/issues/514
+                // inserthtml does not support in ie11
+                // http://stackoverflow.com/questions/6690752/insert-html-at-caret-in-a-contenteditable-div/6691294#6691294
+                var sel = self.get('iframe')[0].contentWindow.getSelection(),
+                    range = sel.getRangeAt(0);
+
+                range.deleteContents();
+
+                // Range.createContextualFragment() would be useful here but is
+                // only relatively recently standardized and is not supported in
+                // some browsers (IE9, for one)
+                var el = editorDoc.createElement('div');
+                el.innerHTML = data;
+                var frag = editorDoc.createDocumentFragment(), node, lastNode;
+                while ((node = el.firstChild)) {
+                    lastNode = frag.appendChild(node);
+                }
+                range.insertNode(frag);
+
+                // Preserve the selection
+                if (lastNode) {
+                    range = range.cloneRange();
+                    range.setStartAfter(lastNode);
+                    range.collapse(true);
+                    sel.removeAllRanges();
+                    sel.addRange(range);
                 }
             }
             // bug by zjw2004112@163.com :
