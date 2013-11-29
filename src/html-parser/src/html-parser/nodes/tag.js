@@ -33,7 +33,7 @@ KISSY.add(function (S, require) {
         self.attributes = attributes || [];
         self.nodeType = 1;
 
-        if (typeof page == 'string') {
+        if (typeof page === 'string') {
             createTag.apply(null, [self].concat(S.makeArray(arguments)));
         } else {
             Tag.superclass.constructor.apply(self, arguments);
@@ -44,7 +44,7 @@ KISSY.add(function (S, require) {
             if (attributes[0]) {
                 self.nodeName = attributes[0].name.toLowerCase();
                 // end tag (</div>) is a tag too in lexer , but not exist in parsed dom tree
-                self.tagName = self.nodeName.replace(/\//, "");
+                self.tagName = self.nodeName.replace(/\//, '');
                 self._updateSelfClosed();
                 attributes.splice(0, 1);
             }
@@ -61,10 +61,10 @@ KISSY.add(function (S, require) {
 
             // whether has been closed by its end tag
             // !TODO how to set closed position correctly
-            self['closed'] = self.isSelfClosed;
+            self.closed = self.isSelfClosed;
         }
-        self['closedStartPosition'] = -1;
-        self['closedEndPosition'] = -1;
+        self.closedStartPosition = -1;
+        self.closedEndPosition = -1;
     }
 
     function refreshChildNodes(self) {
@@ -81,7 +81,7 @@ KISSY.add(function (S, require) {
                 c[i + 1].previousSibling = c[i];
                 c[i + 1].parentNode = self;
             }
-            c[c.length - 1].nextSibling = null
+            c[c.length - 1].nextSibling = null;
         }
     }
 
@@ -94,7 +94,7 @@ KISSY.add(function (S, require) {
             if (!self.isSelfClosed) {
                 self.isSelfClosed = /\/$/.test(self.nodeName);
             }
-            self['closed'] = self.isSelfClosed;
+            self.closed = self.isSelfClosed;
         },
 
         clone: function () {
@@ -146,7 +146,7 @@ KISSY.add(function (S, require) {
         },
 
         isEndTag: function () {
-            return /^\//.test(this.nodeName);
+            return (/^\//).test(this.nodeName);
         },
 
         appendChild: function (node) {
@@ -185,7 +185,7 @@ KISSY.add(function (S, require) {
         insertAfter: function (ref) {
             var silbing = ref.parentNode.childNodes,
                 index = S.indexOf(ref, silbing);
-            if (index == silbing.length - 1) {
+            if (index === silbing.length - 1) {
                 ref.parentNode.appendChild(this);
             } else {
                 this.insertBefore(ref.parentNode.childNodes[[index + 1]]);
@@ -256,7 +256,7 @@ KISSY.add(function (S, require) {
                 tagName = el.tagName;
 
             // special treat for doctype
-            if (tagName == "!doctype") {
+            if (tagName === '!doctype') {
                 writer.append(this.toHtml() + '\n');
                 return;
             }
@@ -347,7 +347,7 @@ KISSY.add(function (S, require) {
     function findAttributeByName(attributes, name) {
         if (attributes && attributes.length) {
             for (var i = 0; i < attributes.length; i++) {
-                if (attributes[i].name == name) {
+                if (attributes[i].name === name) {
                     return attributes[i];
                 }
             }

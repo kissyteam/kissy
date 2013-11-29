@@ -52,7 +52,7 @@ KISSY.add(function (S) {
                 observers = self.observers,
                 len = observers.length;
             for (i = 0; i < len; i++) {
-                if (observers[i] == observer) {
+                if (observers[i] === observer) {
                     observers.splice(i, 1);
                     break;
                 }

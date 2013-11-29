@@ -4,7 +4,6 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
-    var undefined = undefined;
     var serializer = require('io/form-serializer'),
         IO = require('io/base');
 

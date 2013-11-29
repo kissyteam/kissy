@@ -88,7 +88,7 @@ KISSY.add(function (S, require) {
     function prevent(e) {
         // android can not throttle
         // need preventDefault always
-        if (e.touches.length == 2) {
+        if (e.touches.length === 2) {
             e.preventDefault();
         }
     }

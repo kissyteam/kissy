@@ -46,7 +46,7 @@ KISSY.add(function (S, require) {
                 handle = eventDesc.handle;
             // 第一次注册该事件，dom 节点才需要注册 dom 事件
             if (!s.setup || s.setup.call(currentTarget, type) === false) {
-                DomEventUtils.simpleAdd(currentTarget, type, handle)
+                DomEventUtils.simpleAdd(currentTarget, type, handle);
             }
         },
 
@@ -76,7 +76,7 @@ KISSY.add(function (S, require) {
              Dom3 Events: EventListenerList objects in the Dom are live. ??
              */
             var target = event.target,
-                eventType = event['type'],
+                eventType = event.type,
                 self = this,
                 currentTarget = self.currentTarget,
                 observers = self.observers,
@@ -95,7 +95,7 @@ KISSY.add(function (S, require) {
 
             // collect delegated observers and corresponding element
             if (delegateCount && target.nodeType) {
-                while (target != currentTarget) {
+                while (target !== currentTarget) {
                     if (target.disabled !== true || eventType !== 'click') {
                         var cachedMatch = {},
                             matched, key, filter;
@@ -224,7 +224,7 @@ KISSY.add(function (S, require) {
 
             // bubble up dom tree
             do {
-                event['currentTarget'] = cur;
+                event.currentTarget = cur;
                 domEventObservable = DomEventObservable.getDomEventObservable(cur, eventType);
                 // default bubble for html node
                 if (domEventObservable) {
@@ -282,7 +282,7 @@ KISSY.add(function (S, require) {
             }
 
             if (self.findObserver(/**@type KISSY.Event.DomEvent.Observer
-             @ignore*/observer) == -1) {
+             @ignore*/observer) === -1) {
                 // 增加 listener
                 if (observer.filter) {
                     observers.splice(self.delegateCount, 0, observer);
@@ -336,9 +336,9 @@ KISSY.add(function (S, require) {
                     observer = observers[i];
                     observerContext = observer.context || currentTarget;
                     if (
-                        (context != observerContext) ||
+                        (context !== observerContext) ||
                             // 指定了函数，函数不相等，保留
-                            (fn && fn != observer.fn) ||
+                            (fn && fn !== observer.fn) ||
                             // 1.没指定函数
                             // 1.1 没有指定选择器,删掉 else2
                             // 1.2 指定选择器,字符串为空
@@ -356,7 +356,7 @@ KISSY.add(function (S, require) {
                             (
                                 hasFilter &&
                                     (
-                                        (filter && filter != observer.filter) ||
+                                        (filter && filter !== observer.filter) ||
                                             (!filter && !observer.filter)
                                         )
                                 ) ||
@@ -401,7 +401,7 @@ KISSY.add(function (S, require) {
                     handle = eventDesc.handle;
                     // remove(el, type) or fn 已移除光
                     // dom node need to detach handler from dom node
-                    if ((!s['tearDown'] || s['tearDown'].call(currentTarget, type) === false)) {
+                    if ((!s.tearDown || s.tearDown.call(currentTarget, type) === false)) {
                         DomEventUtils.simpleRemove(currentTarget, type, handle);
                     }
                     // remove currentTarget's single event description

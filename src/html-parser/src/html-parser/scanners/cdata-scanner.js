@@ -15,7 +15,7 @@ KISSY.add(function () {
                 // 这段应该永远不会执行到的
                 if (node.nodeType !== 1 ||
                     !(node.isEndTag() &&
-                        node.tagName == tag.tagName)) {
+                        node.tagName === tag.tagName)) {
                     lexer.setPosition(position);
                     node = null;
                 }

@@ -8,11 +8,7 @@ KISSY.add(function (S, require) {
     var BaseEvent = require('event/base');
     var CustomEventObserver = require('./observer');
     var CustomEventObject = require('./object');
-
-
-
     var Utils = BaseEvent.Utils;
-    var undefined = undefined;
 
     /**
      * custom event for registering and un-registering observer for specified event on normal object.
@@ -51,7 +47,7 @@ KISSY.add(function (S, require) {
                     S.error('lack event handler for ' + this.type);
                 }
             }
-            if (this.findObserver(observer) == -1) {
+            if (this.findObserver(observer) === -1) {
                 this.observers.push(observer);
             }
         },
@@ -87,7 +83,7 @@ KISSY.add(function (S, require) {
 
             ret = self.notify(customEventObject);
 
-            if (gRet !== false && ret != undefined) {
+            if (gRet !== false && ret !== undefined) {
                 gRet = ret;
             }
 
@@ -117,7 +113,7 @@ KISSY.add(function (S, require) {
                 var target = customEventObject.target,
                     lowestCustomEventObservable = target.getCustomEventObservable(customEventObject.type);
                 if ((!self.defaultTargetOnly && !lowestCustomEventObservable.defaultTargetOnly) ||
-                    currentTarget == target) {
+                    currentTarget === target) {
                     // default value as final value if possible
                     gRet = defaultFn.call(currentTarget, customEventObject);
                 }
@@ -182,9 +178,9 @@ KISSY.add(function (S, require) {
                     observer = observers[i];
                     observerContext = observer.context || currentTarget;
                     if (
-                        (context != observerContext) ||
+                        (context !== observerContext) ||
                             // 指定了函数，函数不相等，保留
-                            (fn && fn != observer.fn) ||
+                            (fn && fn !== observer.fn) ||
                             // 指定了删除的某些组，而该 observer 不属于这些组，保留，否则删除
                             (groupsRe && !observer.groups.match(groupsRe))
                         ) {

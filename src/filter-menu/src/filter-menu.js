@@ -7,7 +7,7 @@ KISSY.add(function (S, require) {
     var Menu = require('menu');
     var FilterMenuRender = require('filter-menu/render');
 
-    var HIT_CLS = "menuitem-hit";
+    var HIT_CLS = 'menuitem-hit';
 
     /**
      * Filter Menu for KISSY.
@@ -18,9 +18,9 @@ KISSY.add(function (S, require) {
     return Menu.extend({
             bindUI: function () {
                 var self = this,
-                    filterInput = self.get("filterInput");
+                    filterInput = self.get('filterInput');
                 /*监控键盘事件*/
-                filterInput.on("valuechange", self.handleFilterEvent, self);
+                filterInput.on('valuechange', self.handleFilterEvent, self);
             },
 
             handleMouseEnterInternal: function (e) {
@@ -34,10 +34,10 @@ KISSY.add(function (S, require) {
             handleFilterEvent: function () {
                 var self = this,
                     str,
-                    filterInput = self.get("filterInput"),
+                    filterInput = self.get('filterInput'),
                     highlightedItem = self.get('highlightedItem');
                 /* 根据用户输入过滤 */
-                self.set("filterStr", filterInput.val());
+                self.set('filterStr', filterInput.val());
                 str = filterInput.val();
                 if (self.get('allowMultiple')) {
                     str = str.replace(/^.+,/, '');
@@ -69,13 +69,13 @@ KISSY.add(function (S, require) {
             filterItems: function (str) {
                 var self = this,
                     prefixCls = self.get('prefixCls'),
-                    _placeholderEl = self.get("placeholderEl"),
-                    filterInput = self.get("filterInput");
+                    _placeholderEl = self.get('placeholderEl'),
+                    filterInput = self.get('filterInput');
 
                 // 有过滤条件提示隐藏,否则提示显示
                 _placeholderEl[str ? 'hide' : 'show']();
 
-                if (self.get("allowMultiple")) {
+                if (self.get('allowMultiple')) {
                     var enteredItems = [],
                         lastWord;
                     // \uff0c => ，
@@ -103,13 +103,13 @@ KISSY.add(function (S, require) {
                             if (content && content.indexOf(lastWord) > -1 && lastWord) {
                                 enteredItems[enteredItems.length - 1] = content;
                             }
-                            filterInput.val(enteredItems.join(",") + ",");
+                            filterInput.val(enteredItems.join(',') + ',');
                         }
                         str = '';
                     } else {
                         // 需要菜单过滤的过滤词,在最后一个 , 后面
                         if (match) {
-                            str = match[2] || "";
+                            str = match[2] || '';
                         }
                         // 没有 , 则就是当前输入的
                         // else{ str=str}
@@ -117,17 +117,17 @@ KISSY.add(function (S, require) {
                         //记录下
                         enteredItems = items;
                     }
-                    var oldEnteredItems = self.get("enteredItems");
+                    var oldEnteredItems = self.get('enteredItems');
                     // 发生变化,长度变化和内容变化等同
-                    if (oldEnteredItems.length != enteredItems.length) {
-                        // S.log("enteredItems : ");
+                    if (oldEnteredItems.length !== enteredItems.length) {
+                        // S.log('enteredItems : ');
                         // S.log(enteredItems);
-                        self.set("enteredItems", enteredItems);
+                        self.set('enteredItems', enteredItems);
                     }
                 }
 
                 var children = self.get('children'),
-                    strExp = str && new RegExp(S.escapeRegExp(str), "ig");
+                    strExp = str && new RegExp(S.escapeRegExp(str), 'ig');
 
                 // 过滤所有子组件
                 S.each(children, function (c) {
@@ -145,7 +145,7 @@ KISSY.add(function (S, require) {
                             c.set('visible', true);
                             // 匹配子串着重 input-wrap
                             c.get('el').html(content.replace(strExp, function (m) {
-                                return "<span class='" + prefixCls + HIT_CLS + "'>" + m + "<" + "/span>";
+                                return '<span class="' + prefixCls + HIT_CLS + '">' + m + '<' + '/span>';
                             }));
                         } else {
                             // 不符合
@@ -161,9 +161,9 @@ KISSY.add(function (S, require) {
              */
             reset: function () {
                 var self = this;
-                self.set("filterStr", "");
-                self.set("enteredItems", []);
-                self.get("filterInput").val("");
+                self.set('filterStr', '');
+                self.set('enteredItems', []);
+                self.get('filterInput').val('');
             }
 
         },

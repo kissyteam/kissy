@@ -21,11 +21,11 @@ KISSY.add(function (S, require) {
         },
 
         getKeyEventTarget: function () {
-            return this.control.get("filterInput");
+            return this.control.get('filterInput');
         },
 
         '_onSetPlaceholder': function (v) {
-            this.control.get("placeholderEl").html(v);
+            this.control.get('placeholderEl').html(v);
         }
     }, {
         ATTRS: {
@@ -36,13 +36,13 @@ KISSY.add(function (S, require) {
 
         HTML_PARSER: {
             placeholderEl: function (el) {
-                return el.one("." + this.getBaseCssClass('placeholder'))
+                return el.one('.' + this.getBaseCssClass('placeholder'));
             },
             'filterInputWrap': function (el) {
-                return el.one("." + this.getBaseCssClass('input-wrap'));
+                return el.one('.' + this.getBaseCssClass('input-wrap'));
             },
             filterInput: function (el) {
-                return el.one("." + this.getBaseCssClass('input'));
+                return el.one('.' + this.getBaseCssClass('input'));
             }
         }
     });

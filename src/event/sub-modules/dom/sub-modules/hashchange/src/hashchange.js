@@ -37,7 +37,7 @@ KISSY.add(function (S, require) {
             // 其他浏览器 => location.hash = #yy?z=1
             // 2.
             // #!/home/q={%22thedate%22:%2220121010~20121010%22}
-            // firefox 15 => #!/home/q={"thedate":"20121010~20121010"}
+            // firefox 15 => #!/home/q={'thedate':'20121010~20121010'}
             // !! :(
             var uri = new S.Uri(location.href);
             return '#' + uri.getFragment();
@@ -51,7 +51,7 @@ KISSY.add(function (S, require) {
         poll = function () {
             var hash = getHash(), replaceHistory;
 
-            if (replaceHistory = S.endsWith(hash, REPLACE_HISTORY)) {
+            if ((replaceHistory = S.endsWith(hash, REPLACE_HISTORY))) {
                 hash = hash.slice(0, -REPLACE_HISTORY.length);
                 // 去除 ie67 hack 标记
                 location.hash = hash;
@@ -73,17 +73,16 @@ KISSY.add(function (S, require) {
                     // 后面通过 innerText，相当于 unEscapeHtml
                     hash: S.escapeHtml(hash),
                     // 一定要加哦
-                    head: Dom.isCustomDomain() ? ("<script>" +
-                        "document." +
-                        "domain = '" +
-                        doc.domain
-                        + "';</script>") : ''
+                    head: Dom.isCustomDomain() ? ('<script>' +
+                        'document.' +
+                        'domain = "' +
+                        doc.domain + '";</script>') : ''
                 }),
                 iframeDoc = getIframeDoc(iframe);
             try {
                 // ie 下不留历史记录！
                 if (replaceHistory) {
-                    iframeDoc.open("text/html", "replace");
+                    iframeDoc.open('text/html', 'replace');
                 } else {
                     // 写入历史 hash
                     iframeDoc.open();
@@ -112,7 +111,9 @@ KISSY.add(function (S, require) {
             }
         },
         tearDown = function () {
-            timer && clearTimeout(timer);
+            if (timer) {
+                clearTimeout(timer);
+            }
             timer = 0;
         },
         iframe;
@@ -172,7 +173,7 @@ KISSY.add(function (S, require) {
                  触发统一在 start(load)
                  iframe 内容和 url 同步
                  */
-                function onIframeLoad() {
+                var onIframeLoad = function () {
                     // S.log('iframe start load..');
 
                     // 2011.11.02 note: 不能用 innerHTML 会自动转义！！
@@ -182,7 +183,7 @@ KISSY.add(function (S, require) {
 
                     // 后退时不等
                     // 定时器调用 hashChange() 修改 iframe 同步调用过来的(手动改变 location)则相等
-                    if (c != ch) {
+                    if (c !== ch) {
                         // S.log('set loc hash :' + c);
                         location.hash = c;
                         // 使 last hash 为 iframe 历史， 不然重新写iframe，
@@ -193,12 +194,14 @@ KISSY.add(function (S, require) {
                         lastHash = c;
                     }
                     notifyHashChange();
-                }
+                };
             }
         };
 
         tearDown = function () {
-            timer && clearTimeout(timer);
+            if(timer){
+                clearTimeout(timer);
+            }
             timer = 0;
             DomEvent.detach(iframe);
             Dom.remove(iframe);

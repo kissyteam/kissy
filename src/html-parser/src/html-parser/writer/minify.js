@@ -16,11 +16,11 @@ KISSY.add(function (S, require) {
                 '?:down|up|over|move|out)|key(?:press|down|up)))$');
 
     function escapeAttrValue(str) {
-        return String(str).replace(/"/g, "&quote;");
+        return String(str).replace(/"/g, '&quote;');
     }
 
     function canDeleteEmptyAttribute(tag, attr) {
-        var attrValue = attr.value || "",
+        var attrValue = attr.value || '',
             attrName = attr.name;
         if (!trim(attrValue)) {
             return ((tag === 'input' && attrName === 'value') ||
@@ -39,7 +39,7 @@ KISSY.add(function (S, require) {
     function isAttributeRedundant(el, attr) {
         var tag = el.nodeName,
             attrName = attr.name,
-            attrValue = attr.value || "";
+            attrValue = attr.value || '';
         attrValue = trim(attrValue.toLowerCase());
         return (
             (tag === 'script' &&
@@ -99,14 +99,14 @@ KISSY.add(function (S, require) {
                 (tag === 'textarea' && (/^(?:rows|cols|tabindex)$/).test(attrName)) ||
                 (tag === 'colgroup' && attrName === 'span') ||
                 (tag === 'col' && attrName === 'span') ||
-                ((tag === 'th' || tag == 'td') && (attrName === 'rowspan' || attrName === 'colspan'))
+                ((tag === 'th' || tag === 'td') && (attrName === 'rowspan' || attrName === 'colspan'))
             );
     }
 
     function cleanAttributeValue(el, attr) {
         var tag = el.nodeName,
             attrName = attr.name,
-            attrValue = attr.value || "";
+            attrValue = attr.value || '';
         if (isEventAttribute(attrName)) {
             attrValue = trim(attrValue)
                 .replace(/^javascript:[\s\xa0]*/i, '')
@@ -166,7 +166,7 @@ KISSY.add(function (S, require) {
          */
         openTag: function (el) {
             var self = this;
-            if (el.tagName == 'pre') {
+            if (el.tagName === 'pre') {
                 self.inPre = 1;
             }
             MinifyWriter.superclass.openTag.apply(self, arguments);
@@ -177,7 +177,7 @@ KISSY.add(function (S, require) {
          */
         closeTag: function (el) {
             var self = this;
-            if (el.tagName == 'pre') {
+            if (el.tagName === 'pre') {
                 self.inPre = 0;
             }
             MinifyWriter.superclass.closeTag.apply(self, arguments);
@@ -195,7 +195,7 @@ KISSY.add(function (S, require) {
             var self = this,
                 name = attr.name,
                 normalizedValue,
-                value = attr.value || "";
+                value = attr.value || '';
 
             // remove empty attribute
             if (canDeleteEmptyAttribute(el, attr) ||
@@ -206,20 +206,19 @@ KISSY.add(function (S, require) {
 
             if (isBooleanAttribute(name)) {
                 // collapse boolean attributes
-                self.append(" ", name);
+                self.append(' ', name);
                 return;
             }
 
             // clean attribute value
             normalizedValue = escapeAttrValue(cleanAttributeValue(el, attr));
 
-            if (value && canRemoveAttributeQuotes(value)) {
+            if (!(value && canRemoveAttributeQuotes(value))) {
                 // remove quote if value is not empty
-            } else {
                 normalizedValue = '"' + normalizedValue + '"';
             }
 
-            self.append(" ", name, "=", normalizedValue);
+            self.append(' ', name, '=', normalizedValue);
         },
 
         /**

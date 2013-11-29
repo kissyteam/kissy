@@ -42,9 +42,9 @@ KISSY.add(function (S, require) {
      @param tag
      */
     function fixCloseTagByDtd(tag, opts) {
-        tag['closed'] = 1;
+        tag.closed = 1;
 
-        if (!opts['fixByDtd']) {
+        if (!opts.fixByDtd) {
             return 0;
         }
 
@@ -106,12 +106,11 @@ KISSY.add(function (S, require) {
                         pTag = new Tag();
                     pTag.nodeName = pTag.tagName = pTagName;
                     while (i < childNodes.length) {
-                        if (childNodes[i].tagName == currentChildName) {
+                        if (childNodes[i].tagName === currentChildName) {
                             pTag.appendChild(childNodes[i]);
-                        } else if (childNodes[i].nodeType == 3 && !S.trim(childNodes[i].toHtml())) {
                         }
                         // non-empty text leave it to outer loop
-                        else if (childNodes[i].nodeType == 3) {
+                        else if (childNodes[i].nodeType === 3 && S.trim(childNodes[i].toHtml())) {
                             break;
                         }
                         i++;
@@ -130,6 +129,7 @@ KISSY.add(function (S, require) {
                     // <a><p></p></a> => <p><a></a></p>
                     if (canHasNodeAsChild(c, holder)) {
                         holder = tag.clone();
+                        /*jshint loopfunc:true*/
                         S.each(c.childNodes, function (cc) {
                             holder.appendChild(cc);
                         });
@@ -166,7 +166,7 @@ KISSY.add(function (S, require) {
         // =>
         // <div><a><div>1</div></a></div>
 
-        // => fixCloseTagByDtd("<a><div>1</div></a>")
+        // => fixCloseTagByDtd('<a><div>1</div></a>')
         S.each(recursives, function (r) {
             fixCloseTagByDtd(r, opts);
         });
@@ -180,13 +180,13 @@ KISSY.add(function (S, require) {
      */
     function canHasNodeAsChild(tag, node) {
         // document can nest any tag
-        if (tag.nodeType == 9) {
+        if (tag.nodeType === 9) {
             return 1;
         }
         if (!dtd[tag.tagName]) {
-            S.error("dtd[" + tag.tagName + "] === undefined!")
+            S.error('dtd[' + tag.tagName + '] === undefined!');
         }
-        if (node.nodeType == 8) {
+        if (node.nodeType === 8) {
             return 1;
         }
         var nodeName = node.tagName || node.nodeName;
@@ -213,14 +213,14 @@ KISSY.add(function (S, require) {
                 var needFix = 0,
                     endParentTagName;
                 // <ul><li>1<ul><li>2</ul></ul>
-                if (endParentTagName = impliedEndTag[node.tagName]) {
+                if ((endParentTagName = impliedEndTag[node.tagName])) {
                     var from = stack.length - 1,
                         parent = stack[from];
                     // <ol><li><ol><li>
                     // parent ol break li check
                     while (parent && !(parent.tagName in endParentTagName)) {
                         // <ul><li>1<div><li>2</div></ul>
-                        if (parent.tagName == node.tagName) {
+                        if (parent.tagName === node.tagName) {
                             needFix = 1;
                             break;
                         }
@@ -246,7 +246,7 @@ KISSY.add(function (S, require) {
                     if (node.nodeType === 1) {
                         // normal end tag
                         if (node.isEndTag() &&
-                            node.tagName == tag.tagName) {
+                            node.tagName === tag.tagName) {
                             node = null;
                         } else if (!node.isEndTag()) {
 
@@ -307,10 +307,8 @@ KISSY.add(function (S, require) {
                                 fixCloseTagByDtd(tag, opts);
                                 closeStackOpenTag(stack.length - 1, index);
                                 node = null;
-                            } else {
-                                // discard this close tag
                             }
-
+                            // discard this close tag
                         }
                     } else {
                         tag.appendChild(node);
@@ -318,7 +316,7 @@ KISSY.add(function (S, require) {
                 }
 
                 // fake recursive success , stack retreat
-                if (node == null) {
+                if (node === null) {
                     if (stack.length > 0) {
                         node = stack[stack.length - 1];
                         // fake recursion

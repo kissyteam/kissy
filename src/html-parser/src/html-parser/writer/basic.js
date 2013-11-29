@@ -9,7 +9,7 @@ KISSY.add(function (S, require) {
     var isBooleanAttribute = Utils.isBooleanAttribute;
 
     function escapeAttrValue(str) {
-        return String(str).replace(/"/g, "&quote;");
+        return String(str).replace(/'/g, '&quote;');
     }
 
     /**
@@ -41,18 +41,18 @@ KISSY.add(function (S, require) {
         },
 
         openTag: function (el) {
-            this.append("<", el.tagName);
+            this.append('<', el.tagName);
         },
 
         openTagClose: function (el) {
             if (el.isSelfClosed) {
-                this.append(" ", "/");
+                this.append(' ', '/');
             }
-            this.append(">");
+            this.append('>');
         },
 
         closeTag: function (el) {
-            this.append("<\/", el.tagName, ">");
+            this.append('<\/', el.tagName, '>');
         },
 
         attribute: function (attr) {
@@ -61,11 +61,11 @@ KISSY.add(function (S, require) {
             if (isBooleanAttribute(name) && !value) {
                 value = name;
             }
-            this.append(" ",
+            this.append(' ',
                 name,
-                "=\"",
+                '="',
                 escapeAttrValue(value),
-                "\"");
+                '"');
         },
 
         text: function (text) {
@@ -77,7 +77,7 @@ KISSY.add(function (S, require) {
         },
 
         comment: function (comment) {
-            this.append("<!--" + comment + "-->");
+            this.append('<!--' + comment + '-->');
         },
 
         /**
@@ -85,7 +85,7 @@ KISSY.add(function (S, require) {
          * @returns {string}
          */
         getHtml: function () {
-            return this.output.join("");
+            return this.output.join('');
         }
     };
 

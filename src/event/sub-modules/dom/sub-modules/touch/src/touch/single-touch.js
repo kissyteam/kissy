@@ -13,7 +13,7 @@ KISSY.add(function (S) {
         onTouchStart: function (e) {
             var self = this,
                 touches;
-            if (e.touches.length != self.requiredTouchCount) {
+            if (e.touches.length !== self.requiredTouchCount) {
                 return false;
             }
             touches = self.lastTouches = e.touches;

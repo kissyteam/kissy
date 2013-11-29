@@ -58,16 +58,16 @@ KISSY.add(function (S, require) {
         if (Dom.hasData(target, POLL_KEY)) {
             return;
         }
-        Dom.data(target, POLL_KEY, setTimeout(function () {
+        Dom.data(target, POLL_KEY, setTimeout(function check() {
             checkChange(target);
-            Dom.data(target, POLL_KEY, setTimeout(arguments.callee, interval));
+            Dom.data(target, POLL_KEY, setTimeout(check, interval));
         }, interval));
     }
 
     function startPollHandler(ev) {
         var target = ev.target;
         // when focus ,record its current value immediately
-        if (ev.type == 'focus') {
+        if (ev.type === 'focus') {
             Dom.data(target, HISTORY_KEY, target.value);
         }
         startPoll(target);
@@ -96,7 +96,7 @@ KISSY.add(function (S, require) {
     Special[VALUE_CHANGE] = {
         setup: function () {
             var target = this, nodeName = getNodeName(target);
-            if (nodeName == 'input' || nodeName == 'textarea') {
+            if (nodeName === 'input' || nodeName === 'textarea') {
                 monitor(target);
             }
         },

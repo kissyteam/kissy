@@ -9,7 +9,7 @@ KISSY.add(function (S, require) {
     function CData() {
         CData.superclass.constructor.apply(this, arguments);
         this.nodeType = 4;
-        this.nodeName = "#cdata";
+        this.nodeName = '#cdata';
     }
 
     S.extend(CData, Text, {

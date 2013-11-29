@@ -7,8 +7,7 @@ KISSY.add(function (S, require) {
     var DomEvent = require('./dom-event');
     var Special = require('./special');
 
-    var undefined = undefined,
-        UA = S.UA,
+    var UA = S.UA,
         MOUSE_WHEEL = UA.gecko ? 'DOMMouseScroll' : 'mousewheel';
 
     return S.mix(Special, {
@@ -24,8 +23,8 @@ KISSY.add(function (S, require) {
             // use native click for correct check state order
             fire: function (onlyHandlers) {
                 var target = this;
-                if (!onlyHandlers && String(target.type) === "checkbox" &&
-                    target.click && target.nodeName.toLowerCase() == 'input') {
+                if (!onlyHandlers && String(target.type) === 'checkbox' &&
+                    target.click && target.nodeName.toLowerCase() === 'input') {
                     target.click();
                     return false;
                 }

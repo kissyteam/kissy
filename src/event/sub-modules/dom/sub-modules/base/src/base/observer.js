@@ -14,7 +14,7 @@ KISSY.add(function (S, require) {
      * @private
      */
     function DomEventObserver(cfg) {
-        DomEventObserver.superclass.constructor.apply(this, arguments);
+        DomEventObserver.superclass.constructor.call(this, cfg);
         /**
          * filter selector string or function to find right element
          * @cfg {String} filter
@@ -34,7 +34,7 @@ KISSY.add(function (S, require) {
                 type = event.type,
                 originalType;
 
-            if (originalType = self.originalType) {
+            if ((originalType = self.originalType)) {
                 event.type = originalType;
             } else {
                 originalType = type;

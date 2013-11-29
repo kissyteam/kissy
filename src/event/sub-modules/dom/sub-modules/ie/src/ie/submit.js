@@ -9,11 +9,11 @@ KISSY.add(function (S, require) {
     var Special = DomEvent.Special,
         getNodeName = Dom.nodeName;
 
-    Special['submit'] = {
+    Special.submit = {
         setup: function () {
             var el = this;
             // form use native
-            if (getNodeName(el) == 'form') {
+            if (getNodeName(el) === 'form') {
                 return false;
             }
             // lazy add submit for inside forms
@@ -24,13 +24,13 @@ KISSY.add(function (S, require) {
         tearDown: function () {
             var el = this;
             // form use native
-            if (getNodeName(el) == 'form') {
+            if (getNodeName(el) === 'form') {
                 return false;
             }
             DomEvent.remove(el, 'click keypress', detector);
             S.each(Dom.query('form', el), function (form) {
-                if (form.__submit__fix) {
-                    form.__submit__fix = 0;
+                if (form.__submitFix) {
+                    form.__submitFix = 0;
                     DomEvent.remove(form, 'submit', {
                         fn: submitBubble,
                         last: 1
@@ -43,10 +43,10 @@ KISSY.add(function (S, require) {
     function detector(e) {
         var t = e.target,
             nodeName = getNodeName(t),
-            form = (nodeName == 'input' || nodeName == 'button') ? t.form : null;
+            form = (nodeName === 'input' || nodeName === 'button') ? t.form : null;
 
-        if (form && !form.__submit__fix) {
-            form.__submit__fix = 1;
+        if (form && !form.__submitFix) {
+            form.__submitFix = 1;
             DomEvent.on(form, 'submit', {
                 fn: submitBubble,
                 last: 1

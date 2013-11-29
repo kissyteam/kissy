@@ -15,10 +15,10 @@ KISSY.add(function (S, require) {
 
     function isCheckBoxOrRadio(el) {
         var type = el.type;
-        return type == 'checkbox' || type == 'radio';
+        return type === 'checkbox' || type === 'radio';
     }
 
-    Special['change'] = {
+    Special.change = {
         setup: function () {
             var el = this;
             if (isFormElement(el)) {
@@ -64,7 +64,7 @@ KISSY.add(function (S, require) {
 
     function propertyChange(e) {
         // if only checked property 's value is changed
-        if (e.originalEvent.propertyName == 'checked') {
+        if (e.originalEvent.propertyName === 'checked') {
             this.__changed = 1;
         }
     }
@@ -101,7 +101,7 @@ KISSY.add(function (S, require) {
             return;
         }
         var p;
-        if (p = fel.parentNode) {
+        if ((p = fel.parentNode)) {
             // fire from parent , itself is handled natively
             DomEvent.fire(p, 'change', e);
         }

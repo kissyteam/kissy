@@ -6,7 +6,6 @@
 KISSY.add(function (S, require) {
     var Promise = require('promise'),
         IO = require('./base');
-    var   logger = S.getLogger('s/logger');
     var OK_CODE = 200,
 
         MULTIPLE_CHOICES = 300,
@@ -33,7 +32,7 @@ KISSY.add(function (S, require) {
             contentType = io.mimeType || io.getResponseHeader('Content-Type');
 
             // 去除无用的通用格式
-            while (dataType[0] == '*') {
+            while (dataType[0] === '*') {
                 dataType.shift();
             }
 
@@ -41,7 +40,7 @@ KISSY.add(function (S, require) {
                 // 获取源数据格式，放在第一个
                 for (type in contents) {
                     if (contents[type].test(contentType)) {
-                        if (dataType[0] != type) {
+                        if (dataType[0] !== type) {
                             dataType.unshift(type);
                         }
                         break;
@@ -53,12 +52,12 @@ KISSY.add(function (S, require) {
 
             // 获得合适的初始数据
             for (var dataTypeIndex = 0; dataTypeIndex < dataType.length; dataTypeIndex++) {
-                if (dataType[dataTypeIndex] == 'text' && text !== undefined) {
+                if (dataType[dataTypeIndex] === 'text' && text !== undefined) {
                     responseData = text;
                     break;
                 }
                 // 有 xml 值才直接取，否则可能还要从 xml 转
-                else if (dataType[dataTypeIndex] == 'xml' && xml !== undefined) {
+                else if (dataType[dataTypeIndex] === 'xml' && xml !== undefined) {
                     responseData = xml;
                     break;
                 }
@@ -72,7 +71,7 @@ KISSY.add(function (S, require) {
                         converter = converts[prevType] && converts[prevType][type];
                     if (converter && rawData[prevType]) {
                         dataType.unshift(prevType);
-                        responseData = prevType == 'text' ? text : xml;
+                        responseData = prevType === 'text' ? text : xml;
                         return false;
                     }
                     return undefined;
@@ -170,8 +169,8 @@ KISSY.add(function (S, require) {
              * @return {XMLHttpRequest}
              */
             getNativeXhr: function () {
-                var transport;
-                if (transport = this.transport) {
+                var transport = this.transport;
+                if (transport) {
                     return transport.nativeXhr;
                 }
                 return null;
@@ -185,16 +184,16 @@ KISSY.add(function (S, require) {
                 // 到这要么成功，调用success
                 // 要么失败，调用 error
                 // 最终都会调用 complete
-                if (self.state == 2) {
+                if (self.state === 2) {
                     return;
                 }
                 self.state = 2;
                 self.readyState = 4;
                 var isSuccess;
-                if (status >= OK_CODE && status < MULTIPLE_CHOICES || status == NOT_MODIFIED) {
+                if (status >= OK_CODE && status < MULTIPLE_CHOICES || status === NOT_MODIFIED) {
                     // note: not same with nativeStatusText, such as 'OK'/'Not Modified'
                     // 为了整个框架的和谐以及兼容性，用小写，并改变写法
-                    if (status == NOT_MODIFIED) {
+                    if (status === NOT_MODIFIED) {
                         statusText = 'not modified';
                         isSuccess = true;
                     } else {

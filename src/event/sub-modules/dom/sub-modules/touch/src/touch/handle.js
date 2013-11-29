@@ -94,19 +94,19 @@ KISSY.add(function (S, require) {
         },
 
         addTouch: function (originalEvent) {
-            originalEvent.identifier = originalEvent['pointerId'];
+            originalEvent.identifier = originalEvent.pointerId;
             this.touches.push(originalEvent);
         },
 
         removeTouch: function (originalEvent) {
             var i = 0,
                 touch,
-                pointerId = originalEvent['pointerId'],
+                pointerId = originalEvent.pointerId,
                 touches = this.touches,
                 l = touches.length;
             for (; i < l; i++) {
                 touch = touches[i];
-                if (touch['pointerId'] === pointerId) {
+                if (touch.pointerId === pointerId) {
                     touches.splice(i, 1);
                     break;
                 }
@@ -116,12 +116,12 @@ KISSY.add(function (S, require) {
         updateTouch: function (originalEvent) {
             var i = 0,
                 touch,
-                pointerId = originalEvent['pointerId'],
+                pointerId = originalEvent.pointerId,
                 touches = this.touches,
                 l = touches.length;
             for (; i < l; i++) {
                 touch = touches[i];
-                if (touch['pointerId'] === pointerId) {
+                if (touch.pointerId === pointerId) {
                     touches[i] = originalEvent;
                 }
             }
@@ -182,10 +182,10 @@ KISSY.add(function (S, require) {
                 notUp,
                 touchList;
             if (isTouchEvent(type)) {
-                touchList = (type == 'touchend' || type == 'touchcancel') ?
+                touchList = (type === 'touchend' || type === 'touchcancel') ?
                     e.changedTouches :
                     e.touches;
-                if (touchList.length == 1) {
+                if (touchList.length === 1) {
                     e.which = 1;
                     e.pageX = touchList[0].pageX;
                     e.pageY = touchList[0].pageY;
@@ -216,7 +216,7 @@ KISSY.add(function (S, require) {
                 self.touches = [event.originalEvent];
             } else if (isPointerEvent(type)) {
                 self.addTouch(event.originalEvent);
-                if (self.touches.length == 1) {
+                if (self.touches.length === 1) {
                     DomEvent.on(self.doc, gestureMoveEvent, self.onTouchMove, self);
                 }
             } else {
@@ -234,15 +234,14 @@ KISSY.add(function (S, require) {
         onTouchMove: function (event) {
             var self = this,
                 type = event.type;
-            if (isTouchEvent(type)) {
-            } else if (isMouseEvent(type)) {
+            if (isMouseEvent(type)) {
                 if (self.isEventSimulatedFromTouch(type)) {
                     return;
                 }
                 self.touches = [event.originalEvent];
             } else if (isPointerEvent(type)) {
                 self.updateTouch(event.originalEvent);
-            } else {
+            } else if (!isTouchEvent()) {
                 throw new Error('unrecognized touch event: ' + event.type);
             }
             // no throttle! to allow preventDefault

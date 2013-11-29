@@ -47,8 +47,8 @@ KISSY.add(function (S, require) {
                         delta,
                         wheelDelta = originalEvent.wheelDelta,
                         axis = originalEvent.axis,
-                        wheelDeltaY = originalEvent['wheelDeltaY'],
-                        wheelDeltaX = originalEvent['wheelDeltaX'],
+                        wheelDeltaY = originalEvent.wheelDeltaY,
+                        wheelDeltaX = originalEvent.wheelDeltaX,
                         detail = originalEvent.detail;
 
                     // ie/webkit
@@ -59,15 +59,15 @@ KISSY.add(function (S, require) {
                     // gecko
                     if (detail) {
                         // press control e.detail == 1 else e.detail == 3
-                        delta = -(detail % 3 == 0 ? detail / 3 : detail);
+                        delta = -(detail % 3 === 0 ? detail / 3 : detail);
                     }
 
                     // Gecko
                     if (axis !== undefined) {
-                        if (axis === event['HORIZONTAL_AXIS']) {
+                        if (axis === event.HORIZONTAL_AXIS) {
                             deltaY = 0;
                             deltaX = -1 * delta;
-                        } else if (axis === event['VERTICAL_AXIS']) {
+                        } else if (axis === event.VERTICAL_AXIS) {
                             deltaX = 0;
                             deltaY = delta;
                         }
@@ -395,10 +395,10 @@ KISSY.add(function (S, require) {
         // in case dom event has been mark as default prevented by lower dom node
         var isDefaultPrevented = retFalse;
         if ('defaultPrevented' in originalEvent) {
-            isDefaultPrevented = originalEvent['defaultPrevented'] ? retTrue : retFalse;
+            isDefaultPrevented = originalEvent.defaultPrevented ? retTrue : retFalse;
         } else if ('getPreventDefault' in originalEvent) {
             // https://bugzilla.mozilla.org/show_bug.cgi?id=691151
-            isDefaultPrevented = originalEvent['getPreventDefault']() ? retTrue : retFalse;
+            isDefaultPrevented = originalEvent.getPreventDefault() ? retTrue : retFalse;
         } else if ('returnValue' in originalEvent) {
             isDefaultPrevented = originalEvent.returnValue === FALSE ? retTrue : retFalse;
         }
@@ -414,8 +414,9 @@ KISSY.add(function (S, require) {
         S.each(eventNormalizers, function (normalizer) {
             if (type.match(normalizer.reg)) {
                 props = props.concat(normalizer.props);
-                if (normalizer.fix)
+                if (normalizer.fix){
                     fixFns.push(normalizer.fix);
+                }
             }
             return undefined;
         });

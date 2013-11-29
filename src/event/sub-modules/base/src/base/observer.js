@@ -87,10 +87,10 @@ KISSY.add(function (S, undefined) {
          */
         notify: function (event, ce) {
             var self = this,
-                _ks_groups = event._ks_groups;
+                _ksGroups = event._ksGroups;
 
             // handler's group does not match specified groups (at fire step)
-            if (_ks_groups && (!self.groups || !(self.groups.match(_ks_groups)))) {
+            if (_ksGroups && (!self.groups || !(self.groups.match(_ksGroups)))) {
                 return undefined;
             }
 

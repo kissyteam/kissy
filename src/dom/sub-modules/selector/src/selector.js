@@ -3,10 +3,7 @@
  * css3 selector engine for ie6-8
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, require) {
-    var Dom = require('dom/basic');
-    var parser = require('./selector/parser');
-
+KISSY.add('dom/selector', function (S, parser, Dom) {
     var logger = S.getLogger('s/dom');
 
     logger.info('use KISSY css3 selector');
@@ -543,9 +540,10 @@ KISSY.add(function (S, require) {
         var selectorId = genId(el),
             matchKey;
         matchKey = selectorId + '_' + (match.order || 0);
-        if (!(matchKey in subMatchesCache)) {
-            subMatchesCache[matchKey] = matchSubInternal(el, match);
+        if (matchKey in subMatchesCache) {
+            return subMatchesCache[matchKey];
         }
+        subMatchesCache[matchKey] = matchSubInternal(el, match);
         return subMatchesCache[matchKey];
     }
 
@@ -688,6 +686,11 @@ KISSY.add(function (S, require) {
         select: select,
         matches: matches
     };
+}, {
+    requires: [
+        './selector/parser',
+        'dom/basic'
+    ]
 });
 /**
  * @ignore

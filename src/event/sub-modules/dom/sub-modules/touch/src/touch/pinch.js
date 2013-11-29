@@ -32,9 +32,7 @@ KISSY.add(function (S, require) {
             var touches = e.touches;
 
             // error report in android 2.3
-            if (touches[0].pageX > 0 && touches[0].pageY > 0 && touches[1].pageX > 0 && touches[1].pageY > 0) {
-
-            } else {
+            if (!(touches[0].pageX > 0 && touches[0].pageY > 0 && touches[1].pageX > 0 && touches[1].pageY > 0)) {
                 return;
             }
 
@@ -76,7 +74,7 @@ KISSY.add(function (S, require) {
         };
 
     function prevent(e) {
-        if (e.touches.length == 2) {
+        if (e.touches.length === 2) {
             e.preventDefault();
         }
     }

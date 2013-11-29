@@ -3,6 +3,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, HtmlParser, UA) {
+    /*jshint quotmark:false*/
     function getTextSync(path, callback) {
         if (S.UA.nodejs) {
             path = S.config('packages').src.baseUri
@@ -19,8 +20,8 @@ KISSY.add(function (S, HtmlParser, UA) {
         }
     }
 
-    describe("htmlparser_for_editor", function () {
-        it("can filter elementNames", function () {
+    describe('htmlparser_for_editor', function () {
+        it('can filter elementNames', function () {
             var dataFilterRules = {
                 tagNames: [
                     [  /^script$/i , '' ],
@@ -62,7 +63,7 @@ KISSY.add(function (S, HtmlParser, UA) {
                                 var href = el.getAttribute('o:href');
                                 if (href) {
                                     el.setAttribute('src', href);
-                                    el.removeAttribute('o:href')
+                                    el.removeAttribute('o:href');
                                 }
                                 var title = el.getAttribute('o:title');
                                 if (title) {
@@ -83,9 +84,9 @@ KISSY.add(function (S, HtmlParser, UA) {
 
             var writer = new HtmlParser.BasicWriter();
 
-            var before = "";
+            var before = '';
 
-            getTextSync("../others/editor/vml_img.html", function (d) {
+            getTextSync('../others/editor/vml_img.html', function (d) {
                 before = d;
             });
 
@@ -95,7 +96,7 @@ KISSY.add(function (S, HtmlParser, UA) {
             expect(writer.getHtml().indexOf('<img src="xx.jpg" title="me" />') != -1).toBe(true);
         });
 
-        it("can filter attribute", function () {
+        it('can filter attribute', function () {
             function stylesFilter(styles, whitelist) {
                 return function (styleText, element) {
                     var rules = [];

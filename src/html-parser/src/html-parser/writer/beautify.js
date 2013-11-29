@@ -14,28 +14,27 @@ KISSY.add(function (S, require) {
         // tag in pre should not indent
         // space (\t\r\n ) in pre should not collapse
         self.inPre = 0;
-        self.indentChar = "\t";
+        self.indentChar = '\t';
         self.indentLevel = 0;
         // whether to indent on current line
         // if already indent and then not line break ,next tag should not indent
         self.allowIndent = 0;
         self.rules = {};
 
-        for (var e in S.merge(
+        var beauty = S.merge(
             dtd.$nonBodyContent,
             dtd.$block,
             dtd.$listItem,
-            dtd.$tableContent,
-            // may add unnecessary whitespaces
-            {
-                "select": 1,
+            dtd.$tableContent, {
+                // may add unnecessary whitespaces
+                'select': 1,
                 // add unnecessary whitespaces is ok for script and style
-                "script": 1,
+                'script': 1,
                 'style': 1
-            }
-        )) {
+            });
+        for (var e in beauty) {
+            // whether its tag/text children should indent
             self.setRules(e, {
-                // whether its tag/text children should indent
                 allowIndent: 1,
                 breakBeforeOpen: 1,
                 breakAfterOpen: 1,
@@ -130,9 +129,9 @@ KISSY.add(function (S, require) {
             var tagName = el.tagName;
             var rules = this.rules[tagName] || {};
             if (el.isSelfClosed) {
-                this.append(" />")
+                this.append(' />');
             } else {
-                this.append(">");
+                this.append('>');
                 if (rules.allowIndent) {
                     this.indentLevel++;
                 }
@@ -163,7 +162,7 @@ KISSY.add(function (S, require) {
 
             BeautifyWriter.superclass.closeTag.apply(self, arguments);
 
-            if (tagName === "pre") {
+            if (tagName === 'pre') {
                 self.inPre = 0;
             }
 
@@ -189,7 +188,7 @@ KISSY.add(function (S, require) {
             if (this.allowIndent) {
                 this.indentation();
             }
-            this.append("<!--" + comment + "-->");
+            this.append('<!--' + comment + '-->');
         },
 
         cdata: function (text) {

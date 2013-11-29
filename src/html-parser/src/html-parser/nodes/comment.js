@@ -9,7 +9,7 @@ KISSY.add(function (S, require) {
     function Comment() {
         Comment.superclass.constructor.apply(this, arguments);
         this.nodeType = 8;
-        this.nodeName = "#comment";
+        this.nodeName = '#comment';
     }
 
     S.extend(Comment, Text, {

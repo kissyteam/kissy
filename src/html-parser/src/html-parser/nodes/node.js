@@ -3,7 +3,7 @@
  * abstract class for tag and text, comment .. etc
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S) {
+KISSY.add(function () {
     function lineCount(str) {
         var i = 0;
         // cpu!
@@ -68,13 +68,13 @@ KISSY.add(function (S) {
             var ret = [],
                 self = this;
             ret.push(self.nodeName +
-                "  [ " + self.startPosition + "|" +
+                '  [ ' + self.startPosition + '|' +
                 self.getStartLine() +
-                " : " + self.endPosition +
-                "|" + self.getEndLine() +
-                " ]\n");
+                ' : ' + self.endPosition +
+                '|' + self.getEndLine() +
+                ' ]\n');
             ret.push(self.toHtml());
-            return ret.join("");
+            return ret.join('');
         }
     };
 

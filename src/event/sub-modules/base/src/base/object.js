@@ -4,9 +4,9 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, undefined) {
-    var FALSE_FN = function f_f() {
+    var returnFalse = function () {
         return false;
-    }, TRUE_FN = function t_f() {
+    }, returnTrue = function () {
         return true;
     };
 
@@ -47,26 +47,26 @@ KISSY.add(function (S, undefined) {
          * @method
          * @member KISSY.Event.Object
          */
-        isDefaultPrevented: FALSE_FN,
+        isDefaultPrevented: returnFalse,
         /**
          * Flag for stopPropagation that is modified during fire event. true means to stop propagation to bubble targets.
          * @method
          * @member KISSY.Event.Object
          */
-        isPropagationStopped: FALSE_FN,
+        isPropagationStopped: returnFalse,
         /**
          * Flag for stopImmediatePropagation that is modified during fire event. true means to stop propagation to bubble targets and other listener.
          * @method
          * @member KISSY.Event.Object
          */
-        isImmediatePropagationStopped: FALSE_FN,
+        isImmediatePropagationStopped: returnFalse,
 
         /**
          * Prevents the event's default behavior
          * @member KISSY.Event.Object
          */
         preventDefault: function () {
-            this.isDefaultPrevented = TRUE_FN;
+            this.isDefaultPrevented = returnTrue;
         },
 
         /**
@@ -74,7 +74,7 @@ KISSY.add(function (S, undefined) {
          * @member KISSY.Event.Object
          */
         stopPropagation: function () {
-            this.isPropagationStopped = TRUE_FN;
+            this.isPropagationStopped = returnTrue;
         },
 
         /**
@@ -85,7 +85,7 @@ KISSY.add(function (S, undefined) {
          */
         stopImmediatePropagation: function () {
             var self = this;
-            self.isImmediatePropagationStopped = TRUE_FN;
+            self.isImmediatePropagationStopped = returnTrue;
             // fixed 1.2
             // call stopPropagation implicitly
             self.stopPropagation();

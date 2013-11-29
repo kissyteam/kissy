@@ -13,8 +13,6 @@ KISSY.add(function (S, require) {
 
     var BaseUtils = BaseEvent.Utils;
 
-    var undefined = undefined;
-
     function fixType(cfg, type) {
         var s = Special[type] || {},
             typeFix;
@@ -51,8 +49,8 @@ KISSY.add(function (S, require) {
                 var type = event.type,
                     domEventObservable,
                     currentTarget = handle.currentTarget;
-                if (DomEventObservable.triggeredEvent == type ||
-                    typeof KISSY == 'undefined') {
+                if (DomEventObservable.triggeredEvent === type ||
+                    typeof KISSY === 'undefined') {
                     return undefined;
                 }
                 domEventObservable = DomEventObservable.getDomEventObservable(currentTarget, type);
@@ -244,7 +242,7 @@ KISSY.add(function (S, require) {
          * return last value of custom event 's observers (include bubbled) 's return value.
          */
         fire: function (targets, eventType, eventData, onlyHandlers/*internal usage*/) {
-            var ret = undefined;
+            var ret;
             // custom event firing moved to target.js
             eventData = eventData || {};
 

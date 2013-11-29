@@ -4,8 +4,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S,require) {
-    var undefined = undefined,
-        CustomEvent = require('event/custom'),
+    var CustomEvent = require('event/custom'),
         Promise = require('promise');
     var rlocalProtocol = /^(?:about|app|app\-storage|.+\-extension|file|widget)$/,
         rspace = /\s+/,
@@ -79,7 +78,7 @@ KISSY.add(function (S,require) {
         type = c.type = type.toUpperCase();
         c.hasContent = !rnoContent.test(type);
 
-        if (c.processData && (data = c.data) && typeof data != 'string') {
+        if (c.processData && (data = c.data) && typeof data !== 'string') {
             // normalize to string
             c.data = S.param(data, undefined, undefined, c.serializeArray);
         }
@@ -338,7 +337,7 @@ KISSY.add(function (S,require) {
 
         Promise.Defer(self);
 
-        var transportConstructor,
+        var TransportConstructor,
             transport;
 
         /**
@@ -355,8 +354,8 @@ KISSY.add(function (S,require) {
             io: self
         });
 
-        transportConstructor = transports[c.dataType[0]] || transports['*'];
-        transport = new transportConstructor(self);
+        TransportConstructor = transports[c.dataType[0]] || transports['*'];
+        transport = new TransportConstructor(self);
 
         self.transport = transport;
 

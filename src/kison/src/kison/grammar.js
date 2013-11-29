@@ -798,6 +798,8 @@ KISSY.add(function (S, require) {
                         ret,
                         $$ = valueStack[valueStack.length - len]; // default to $$ = $1
 
+                    ret = undefined;
+
                     self.$$ = $$;
 
                     for (; i < len; i++) {

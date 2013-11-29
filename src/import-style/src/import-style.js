@@ -47,7 +47,7 @@
                     // map individual module
                     var fullpath = currentCss.getFullPath();
                     if (!currentPackage.isCombine() || !S.startsWith(fullpath, packagePath)) {
-                        document.writeln('<link href="' + fullpath + '"  rel="stylesheet"/>');
+                        doc.writeln('<link href="' + fullpath + '"  rel="stylesheet"/>');
                         continue;
                     }
                     var path = fullpath.slice(packagePath.length).replace(/\?.*$/, '');
@@ -60,10 +60,10 @@
                         if ((combinedUrl.length > maxFileNum) ||
                             (prefix.length + combinedUrl.join(comboSep).length +
                                 suffix.length > maxUrlLength) ||
-                            combined[0].getPackage() != currentPackage) {
+                            combined[0].getPackage() !== currentPackage) {
                             combined.pop();
                             combinedUrl.pop();
-                            document.writeln('<link href="' +
+                            doc.writeln('<link href="' +
                                 (prefix + combinedUrl.join(comboSep) + suffix) +
                                 '"  rel="stylesheet"/>');
                             combined = [];
@@ -79,7 +79,7 @@
                 }
             } else {
                 S.each(cssList, function (css) {
-                    doc.writeln('<link href="' + css.getFullPath() + '"  rel="stylesheet"/>')
+                    doc.writeln('<link href="' + css.getFullPath() + '"  rel="stylesheet"/>');
                 });
             }
         }
@@ -95,7 +95,7 @@
             return;
         }
         processed[name] = 1;
-        if (mod.getType() == 'css') {
+        if (mod.getType() === 'css') {
             if (!cssCache[name]) {
                 mod.status = 4;
                 cssList.push(mod);

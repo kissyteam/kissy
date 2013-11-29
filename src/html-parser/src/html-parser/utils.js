@@ -23,9 +23,9 @@ KISSY.add(function () {
         isValidAttributeNameStartChar: function (ch) {
             return !this.isWhitespace(ch) &&
                 ch !== '"' &&
-                ch !== "'" &&
+                ch !== '\'' &&
                 ch !== '>' &&
-                ch !== "<" &&
+                ch !== '' < '' &&
                 ch !== '/' &&
                 ch !== '=';
         },

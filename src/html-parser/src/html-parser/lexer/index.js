@@ -18,7 +18,7 @@ KISSY.add(function () {
 
         add: function (cursor) {
             var index = indexOfCursorForInsert(this.lineCursors, cursor);
-            if (index != -1) {
+            if (index !== -1) {
                 this.lineCursors.splice(index, 0, cursor.clone());
             }
         },
@@ -47,8 +47,8 @@ KISSY.add(function () {
 
         col: function (cursor) {
             var linePosition = 0,
-                lineCursor;
-            if (lineCursor = this.lineCursors[this.row(cursor) - 1]) {
+                lineCursor = this.lineCursors[this.row(cursor) - 1];
+            if (lineCursor) {
                 linePosition = lineCursor.position;
             }
             return cursor.position - linePosition;

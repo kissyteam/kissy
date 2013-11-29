@@ -5,7 +5,7 @@
 KISSY.add(function (S, engine) {
     var select = engine.select;
     var matches = engine.matches;
-    var ieVersion = S.UA.ieMode;
+    var ieVersion = S.UA.ie;
 
     var it = function (name, fn) {
         var self;
@@ -151,7 +151,7 @@ KISSY.add(function (S, engine) {
         });
 
         t("Element Selector html", "html", ["html"]);
-        t("Element Selector body", 'body', ['body']);
+        t("Element Selector body", "body", ["body"]);
         t("Element Selector p", "#qunit-fixture p", ["firstp", "ap", "sndp", "en", "sap", "first"]);
 
         t("Parent Element", "dl ol", ["empty", "listWithTabIndex"]);
@@ -315,10 +315,10 @@ KISSY.add(function (S, engine) {
         });
     });
 
-    describe('id', function () {
+    describe("id", function () {
 
-        t("ID Selector", "#body", ['body']);
-        t("ID Selector w/ Element", "body#body", ['body']);
+        t("ID Selector", "#body", ["body"]);
+        t("ID Selector w/ Element", "body#body", ["body"]);
         t("ID Selector w/ Element", "ul#first", []);
         t("ID selector with existing ID descendant", "#firstp #simon1", ["simon1"]);
         t("ID selector with non-existant descendant", "#firstp #foobar", []);
@@ -405,20 +405,20 @@ KISSY.add(function (S, engine) {
 
 
         it("Finding a second class.", function () {
-            var div = document.createElement('div');
+            var div = document.createElement("div");
             div.innerHTML = "<div class='test e'></div><div class='test'></div>";
             expect(select(".e", div)).toEqual([ div.firstChild ]);
 
         });
 
         it("Finding a modified class.", function () {
-            var div = document.createElement('div');
+            var div = document.createElement("div");
             div.innerHTML = "<div class='test e'></div><div class='test'></div>";
             div.lastChild.className = "e";
             expect(select(".e", div)).toEqual([ div.firstChild, div.lastChild ]);
         });
         it('".null does not match an element with no class"', function () {
-            var div = document.createElement('div');
+            var div = document.createElement("div");
             div.innerHTML = "<div class='test e'></div><div class='test'></div>";
             expect(matches('.null', [div]).length).toBe(0);
             div.className = "null";
@@ -426,7 +426,7 @@ KISSY.add(function (S, engine) {
         });
 
         it('".null does not match an element with no class"', function () {
-            var div = document.createElement('div');
+            var div = document.createElement("div");
             div.innerHTML = "<div class='test e'></div><div class='test'></div>";
             expect(matches('.null div', [div.firstChild]).length).toBe(0);
             div.className = "null";
@@ -435,7 +435,7 @@ KISSY.add(function (S, engine) {
 
 
         it("Classes match Object.prototype properties", function () {
-            var div = document.createElement('div');
+            var div = document.createElement("div");
             div.innerHTML = "<div class='test e'></div><div class='test'></div>";
 
             div.lastChild.className += " hasOwnProperty toString";
@@ -467,8 +467,8 @@ KISSY.add(function (S, engine) {
         });
 
         it("Make sure that rooted queries on forms (with possible expandos) work.", function () {
-            var form = jQuery("<form><input name='id'/></form>").appendTo('body');
-            expect(select('input', form[0]).length).toEqual(1);
+            var form = jQuery("<form><input name='id'/></form>").appendTo("body");
+            expect(select("input", form[0]).length).toEqual(1);
         });
 
         describe('name nested', function () {
@@ -694,7 +694,7 @@ KISSY.add(function (S, engine) {
         }
 
         // #3279
-        div = document.createElement('div');
+        div = document.createElement("div");
         div.innerHTML = "<div id='foo' xml:test='something'></div>";
 
         equal(select("[xml\\:test]", div), [ div.firstChild ], "Finding by attribute with escaped characters.");
@@ -797,7 +797,7 @@ KISSY.add(function (S, engine) {
         // Recreate tmp
 
         it('div focus', function () {
-            var tmp = document.createElement('div');
+            var tmp = document.createElement("div");
             tmp.id = "tmp_input";
             tmp.innerHTML = "<span>Hello I am focusable.</span>";
             // Setting tabIndex should make the element focusable
@@ -821,7 +821,7 @@ KISSY.add(function (S, engine) {
 
 
         it('input focus', function () {
-            var tmp = document.createElement('input');
+            var tmp = document.createElement("input");
             tmp.type = "text";
             tmp.id = "tmp_input";
 
@@ -1010,7 +1010,7 @@ KISSY.add(function (S, engine) {
             return matchesSelector(docElem, ":lang(" + docElem.lang + ")");
         }, "starting :lang");
 
-        testLang('document', function () {
+        testLang("document", function () {
             return anchor
         }, docElem, "en", "us");
 

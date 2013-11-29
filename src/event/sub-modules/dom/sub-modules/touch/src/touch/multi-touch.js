@@ -4,8 +4,10 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
-        var Dom = require('dom');
-    function MultiTouch() {}
+    var Dom = require('dom');
+
+    function MultiTouch() {
+    }
 
     MultiTouch.prototype = {
         constructor: MultiTouch,
@@ -43,7 +45,7 @@ KISSY.add(function (S, require) {
             var touches = e.touches,
                 t1 = touches[0].target,
                 t2 = touches[1].target;
-            if (t1 == t2) {
+            if (t1 === t2) {
                 return t1;
             }
             if (Dom.contains(t1, t2)) {

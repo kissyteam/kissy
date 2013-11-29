@@ -496,7 +496,7 @@ KISSY.add(function (S) {
         }
 
         // Safari sends zero key code for non-latin characters.
-        if (UA.webkit && keyCode == 0) {
+        if (UA.webkit && keyCode === 0) {
             return true;
         }
 

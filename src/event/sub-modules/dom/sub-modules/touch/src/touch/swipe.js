@@ -4,12 +4,11 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
-        var eventHandleMap = require('./handle-map');
-        var DomEvent = require('event/dom/base');
-        var SingleTouch = require('./single-touch');
+    var eventHandleMap = require('./handle-map');
+    var DomEvent = require('event/dom/base');
+    var SingleTouch = require('./single-touch');
 
     var event = 'swipe',
-        undefined = undefined,
         ingEvent = 'swiping',
         MAX_DURATION = 1000,
         MAX_OFFSET = 35,
@@ -124,7 +123,7 @@ KISSY.add(function (S, require) {
             self.startX = touch.pageX;
             this.startY = touch.pageY;
 
-            if (e.type.indexOf('mouse') != -1) {
+            if (e.type.indexOf('mouse') !== -1) {
                 e.preventDefault();
             }
             return undefined;

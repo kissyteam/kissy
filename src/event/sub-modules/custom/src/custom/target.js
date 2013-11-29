@@ -9,7 +9,6 @@ KISSY.add(function (S, require) {
 
     var Utils = BaseEvent.Utils,
         splitAndRun = Utils.splitAndRun,
-        undefined = undefined,
         KS_BUBBLE_TARGETS = '__~ks_bubble_targets';
 
     /**
@@ -73,7 +72,7 @@ KISSY.add(function (S, require) {
          */
         fire: function (type, eventData) {
             var self = this,
-                ret = undefined,
+                ret,
                 targets = self.getTargets(),
                 hasTargets = targets && targets.length;
 
@@ -141,7 +140,7 @@ KISSY.add(function (S, require) {
 
             splitAndRun(type, function (t) {
                 customEventObservable = self.getCustomEventObservable(t, true);
-                S.mix(customEventObservable, cfg)
+                S.mix(customEventObservable, cfg);
             });
 
             return self;
@@ -172,7 +171,7 @@ KISSY.add(function (S, require) {
             var self = this,
                 targets = self.getTargets(),
                 index = S.indexOf(anotherTarget, targets);
-            if (index != -1) {
+            if (index !== -1) {
                 targets.splice(index, 1);
             }
             return self;

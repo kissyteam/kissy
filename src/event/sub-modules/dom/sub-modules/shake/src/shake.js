@@ -29,15 +29,15 @@ KISSY.add(function (S, require) {
         }, 250);
 
     // only for window
-    Special['shake'] = {
+    Special.shake = {
         setup: function () {
-            if (this != win) {
+            if (this !== win) {
                 return;
             }
             win.addEventListener(devicemotion, shake, false);
         },
         tearDown: function () {
-            if (this != win) {
+            if (this !== win) {
                 return;
             }
             checkShake.stop();

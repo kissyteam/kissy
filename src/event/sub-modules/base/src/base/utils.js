@@ -30,7 +30,7 @@ KISSY.add(function (S) {
                 return;
             }
             type = S.trim(type);
-            if (type.indexOf(' ') == -1) {
+            if (type.indexOf(' ') === -1) {
                 fn(type);
             } else {
                 S.each(type.split(/\s+/), fn);
@@ -65,7 +65,7 @@ KISSY.add(function (S) {
             var args = S.makeArray(arguments),
                 types = args[2 + num];
             // in case null
-            if (types && typeof types == 'object') {
+            if (types && typeof types === 'object') {
                 S.each(types, function (value, type) {
                     var args2 = [].concat(args);
                     args2.splice(0, 2);
@@ -85,11 +85,11 @@ KISSY.add(function (S) {
 
         fillGroupsForEvent: function (type, eventData) {
             var typedGroups = getTypedGroups(type),
-                _ks_groups = typedGroups[1];
+                _ksGroups = typedGroups[1];
 
-            if (_ks_groups) {
-                _ks_groups = getGroupsRe(_ks_groups);
-                eventData._ks_groups = _ks_groups;
+            if (_ksGroups) {
+                _ksGroups = getGroupsRe(_ksGroups);
+                eventData._ksGroups = _ksGroups;
             }
 
             eventData.type = typedGroups[0];

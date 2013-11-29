@@ -28,9 +28,9 @@ KISSY.add(function (S, require) {
         // 4. not start with <head
         // 5. not start with <meta
         if (/^(<!doctype|<html|<body)/i.test(html)) {
-            html = "<document>" + html + "</document>";
+            html = '<document>' + html + '</document>';
         } else {
-            html = "<body>" + html + "</body>";
+            html = '<body>' + html + '</body>';
         }
         this.lexer = new Lexer(html);
         this.opts = opts || {};
@@ -58,11 +58,11 @@ KISSY.add(function (S, require) {
 
             var body = fixBody(doc);
 
-            if (body && opts['autoParagraph']) {
+            if (body && opts.autoParagraph) {
                 autoParagraph(body);
             }
 
-            post_process(doc);
+            postProcess(doc);
 
             var originalHTML = this.originalHTML,
                 fragment = new Fragment(), cs;
@@ -104,6 +104,7 @@ KISSY.add(function (S, require) {
                 for (var i = 0; i < fixes.length; i++) {
                     parent.removeChild(fixes[i]);
                     if (fixes[i].tagName === 'body') {
+                        /*jshint loopfunc:true*/
                         S.each(fixes[i].childNodes, function (c) {
                             body.appendChild(c);
                         });
@@ -121,12 +122,12 @@ KISSY.add(function (S, require) {
         var childNodes = doc.childNodes,
             c,
             i,
-            pDtd = dtd['p'],
+            pDtd = dtd.p,
             needFix = 0;
 
         for (i = 0; i < childNodes.length; i++) {
             c = childNodes[i];
-            if (c.nodeType == 3 || (c.nodeType == 1 && pDtd[c.nodeName])) {
+            if (c.nodeType === 3 || (c.nodeType === 1 && pDtd[c.nodeName])) {
                 needFix = 1;
                 break;
             }
@@ -137,7 +138,7 @@ KISSY.add(function (S, require) {
             holder.nodeName = holder.tagName = 'p';
             for (i = 0; i < childNodes.length; i++) {
                 c = childNodes[i];
-                if (c.nodeType == 3 || (c.nodeType == 1 && pDtd[c.nodeName])) {
+                if (c.nodeType === 3 || (c.nodeType === 1 && pDtd[c.nodeName])) {
                     holder.appendChild(c);
                 } else {
                     if (holder.childNodes.length) {
@@ -162,7 +163,9 @@ KISSY.add(function (S, require) {
 
 
     function findTagWithName(root, tagName, level) {
-        if (level === 0) return 0;
+        if (level === 0) {
+            return 0;
+        }
         if (typeof level === 'number') {
             level--;
         }
@@ -172,7 +175,7 @@ KISSY.add(function (S, require) {
                 if (childNodes[i].tagName === tagName) {
                     return childNodes[i];
                 }
-                if (r = findTagWithName(childNodes[i], tagName, level)) {
+                if ((r = findTagWithName(childNodes[i], tagName, level))) {
                     return r;
                 }
             }
@@ -180,21 +183,21 @@ KISSY.add(function (S, require) {
         return 0;
     }
 
-    function post_process(doc) {
+    function postProcess(doc) {
         // Space characters before the root html element,
         // and space characters at the start of the html element and before the head element,
         // will be dropped when the document is parsed;
         var childNodes = [].concat(doc.childNodes);
         for (var i = 0; i < childNodes.length; i++) {
-            if (childNodes[i].nodeName == "html") {
+            if (childNodes[i].nodeName === 'html') {
                 var html = childNodes[i];
                 for (var j = 0; j < i; j++) {
-                    if (childNodes[j].nodeType == 3 && !S.trim(childNodes[j].toHtml())) {
+                    if (childNodes[j].nodeType === 3 && !S.trim(childNodes[j].toHtml())) {
                         doc.removeChild(childNodes[j]);
                     }
                 }
                 while (html.firstChild &&
-                    html.firstChild.nodeType == 3 && !S.trim(html.firstChild.toHtml())) {
+                    html.firstChild.nodeType === 3 && !S.trim(html.firstChild.toHtml())) {
                     html.removeChild(html.firstChild);
                 }
                 break;

@@ -3,8 +3,8 @@
  * jsonp transport based on script transport
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S,require) {
-    var IO=require('./base');
+KISSY.add(function (S, require) {
+    var IO = require('./base');
     var win = S.Env.host;
     IO.setupConfig({
         jsonp: 'callback',
@@ -17,7 +17,7 @@ KISSY.add(function (S,require) {
         var io = e.io,
             c = io.config,
             dataType = c.dataType;
-        if (dataType[0] == 'jsonp') {
+        if (dataType[0] === 'jsonp') {
             // jsonp does not need contentType.
             // https://github.com/kissyteam/kissy/issues/394
             delete c.contentType;
@@ -68,7 +68,7 @@ KISSY.add(function (S,require) {
             // and KISSY will notify user by error callback
             converters.script.json = function () {
                 if (!response) {
-                    S.error(' not call jsonpCallback: ' + jsonpCallback)
+                    S.error(' not call jsonpCallback: ' + jsonpCallback);
                 }
                 return response[0];
             };

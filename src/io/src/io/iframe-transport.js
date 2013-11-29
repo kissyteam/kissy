@@ -145,7 +145,7 @@ KISSY.add(function (S,require) {
             }
 
             // ie6 need a breath
-            if (S.UA.ie == 6) {
+            if (S.UA.ie === 6) {
                 setTimeout(go, 0);
             } else {
                 // can not setTimeout or else chrome will submit to top window
@@ -169,7 +169,7 @@ KISSY.add(function (S,require) {
             }
 
             // ie6 立即设置 action 设置为空导致白屏
-            if (eventType == 'abort' && S.UA.ie == 6) {
+            if (eventType === 'abort' && S.UA.ie === 6) {
                 setTimeout(function () {
                     Dom.attr(form, self.attrs);
                 }, 0);
@@ -189,7 +189,7 @@ KISSY.add(function (S,require) {
             // nullify to prevent memory leak?
             io.iframe = null;
 
-            if (eventType == 'load') {
+            if (eventType === 'load') {
 
                 try {
                     iframeDoc = iframe.contentWindow.document;
@@ -211,8 +211,8 @@ KISSY.add(function (S,require) {
                      use the XMLDocument property of the xml element.
                      Note that the support for the XMLDocument property has been removed in Internet Explorer 9.
                      */
-                    if (iframeDoc && iframeDoc['XMLDocument']) {
-                        io.responseXML = iframeDoc['XMLDocument'];
+                    if (iframeDoc && iframeDoc.XMLDocument) {
+                        io.responseXML = iframeDoc.XMLDocument;
                     }
                     // ie9 firefox chrome
                     else {
@@ -232,7 +232,7 @@ KISSY.add(function (S,require) {
                     // #245 submit to a  cross domain page except chrome
                     io._ioReady(ERROR_CODE, 'parser error');
                 }
-            } else if (eventType == 'error') {
+            } else if (eventType === 'error') {
                 io._ioReady(ERROR_CODE, 'error');
             }
         },
@@ -244,7 +244,7 @@ KISSY.add(function (S,require) {
         }
     });
 
-    IO['setupTransport']('iframe', IframeTransport);
+    IO.setupTransport('iframe', IframeTransport);
 
     return IO;
 });

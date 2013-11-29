@@ -1962,6 +1962,8 @@ KISSY.add(function () {
 
                     self.$$ = $$;
 
+                    ret = undefined;
+
                     for (; i < len; i++) {
                         self["$" + (len - i)] = valueStack[valueStack.length - 1 - i];
                     }

@@ -4,10 +4,10 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function(S) {
-    function Attribute(name, assignMent, value, quote) {
+    function Attribute(name, assignment, value, quote) {
         this.nodeType = 2;
         this.name = name;
-        this['assignMent'] = assignMent;
+        this.assignment = assignment;
         this.value = value;
         this.quote = quote;
     }
@@ -18,7 +18,7 @@ KISSY.add(function(S) {
             return ret;
         },
         equals:function(other) {
-            return this.name == other.name && this.value == other.value && this.nodeType == other.nodeType;
+            return this.name === other.name && this.value === other.value && this.nodeType === other.nodeType;
         }
     });
     Attribute.prototype.clone = function() {

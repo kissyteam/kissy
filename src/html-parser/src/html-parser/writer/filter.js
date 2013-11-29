@@ -33,6 +33,7 @@ KISSY.add(function (S) {
     function filterName(arr, v) {
         for (var i = 0; arr && i < arr.length; i++) {
             var items = arr[i].value;
+            /*jshint loopfunc:true*/
             S.each(items, function (item) {
                 v = v.replace(item[0], item[1]);
             });
@@ -50,7 +51,7 @@ KISSY.add(function (S) {
             // node can be replaced with another node
             if (el && ret && ret !== el) {
                 // text filter can return string value directly
-                if (typeof ret == 'string') {
+                if (typeof ret === 'string') {
                     if (el.toHtml() === ret) {
                         return el;
                     }
@@ -72,7 +73,7 @@ KISSY.add(function (S) {
                 return ret;
             }
             // 2012.06.26 change attribute value
-            if (typeof ret == 'string') {
+            if (typeof ret === 'string') {
                 attrNode.value = ret;
             }
         }
@@ -161,7 +162,7 @@ KISSY.add(function (S) {
 
         onTag: function (el) {
             // ^ tagName $
-            var filters = ["^", el.tagName, "$"],
+            var filters = ['^', el.tagName, '$'],
                 tags = this.tags,
                 ret;
             for (var i = 0; i < filters.length; i++) {

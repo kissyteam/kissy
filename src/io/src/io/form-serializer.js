@@ -3,8 +3,8 @@
  * form data  serialization util
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S,require) {
-    var Dom=require('dom');
+KISSY.add(function (S, require) {
+    var Dom = require('dom');
     var rselectTextarea = /^(?:select|textarea)/i,
         rCRLF = /\r?\n/g,
         FormSerializer,
@@ -14,7 +14,7 @@ KISSY.add(function (S,require) {
         return v.replace(rCRLF, '\r\n');
     }
 
-    return FormSerializer = {
+    FormSerializer = {
         /**
          * form serialization
          * @method
@@ -85,4 +85,5 @@ KISSY.add(function (S,require) {
             return data;
         }
     };
+    return FormSerializer;
 });

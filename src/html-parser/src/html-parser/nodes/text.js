@@ -7,7 +7,7 @@ KISSY.add(function (S, require) {
     var Node = require('./node');
 
     function Text(v) {
-        if (typeof v == 'string') {
+        if (typeof v === 'string') {
             this.nodeValue = v;
             Text.superclass.constructor.apply(this, [null, -1, -1]);
         } else {
@@ -15,7 +15,7 @@ KISSY.add(function (S, require) {
             this.nodeValue = this.toHtml();
         }
         this.nodeType = 3;
-        this.nodeName = "#text";
+        this.nodeName = '#text';
     }
 
     S.extend(Text, Node, {

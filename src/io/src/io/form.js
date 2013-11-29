@@ -3,13 +3,13 @@
  * process form config
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S,require) {
+KISSY.add(function (S, require) {
     var IO = require('./base');
     var Dom = require('dom');
     var FormSerializer = require('./form-serializer');
     var win = S.Env.host,
         slice = Array.prototype.slice,
-        FormData = win['FormData'];
+        FormData = win.FormData;
 
     IO.on('start', function (e) {
         var io = e.io,
@@ -18,11 +18,11 @@ KISSY.add(function (S,require) {
             dataType,
             formParam,
             data,
-            tmpForm,
-            c = io.config;
+            c = io.config,
+            tmpForm = c.form;
 
         // serialize form if needed
-        if (tmpForm = c.form) {
+        if (tmpForm) {
             form = Dom.get(tmpForm);
             data = c.data;
             var isUpload = false;
@@ -31,7 +31,7 @@ KISSY.add(function (S,require) {
             var inputs = Dom.query('input', form);
             for (var i = 0, l = inputs.length; i < l; i++) {
                 var input = inputs[i];
-                if (input.type.toLowerCase() == 'file') {
+                if (input.type.toLowerCase() === 'file') {
                     isUpload = true;
                     if (!FormData) {
                         break;
@@ -68,7 +68,7 @@ KISSY.add(function (S,require) {
                 // for old-ie
                 dataType = c.dataType;
                 d = dataType[0];
-                if (d == '*') {
+                if (d === '*') {
                     d = 'text';
                 }
                 dataType.length = 2;

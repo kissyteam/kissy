@@ -69,7 +69,7 @@ KISSY.add(function (S, require) {
                     which: 1,
                     pageY: touch.pageY,
                     duration: duration / 1000
-                })
+                });
             } else {
                 // buffer singleTap
                 // wait for a second tap
