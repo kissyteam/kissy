@@ -12,14 +12,8 @@ KISSY.add(function (S, require) {
         'each': function (scope, config) {
             var params = config.params;
             var param0 = params[0];
-            var xindexName = 'xindex';
-            var valueName;
-            if (params.length === 3) {
-                xindexName = params[1];
-                valueName = params[2];
-            } else if (params.length === 2) {
-                valueName = params[1];
-            }
+            var xindexName = params[2] || 'xindex';
+            var valueName = params[1];
             var buffer = '';
             var xcount;
             var opScope;

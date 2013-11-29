@@ -288,9 +288,9 @@ KISSY.add(function(S, require) {
   _$jscoverage['/overlay/control.js'].lineData[13]++;
   var OverlayEffect = require('./extension/overlay-effect');
   _$jscoverage['/overlay/control.js'].lineData[16]++;
-  var HIDE = "hide", actions = {
+  var HIDE = 'hide', actions = {
   hide: HIDE, 
-  destroy: "destroy"};
+  destroy: 'destroy'};
   _$jscoverage['/overlay/control.js'].lineData[32]++;
   return Container.extend([Shim, Loading, AlignExtension, Mask, OverlayEffect], {
   bindUI: function() {
@@ -300,7 +300,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/overlay/control.js'].lineData[42]++;
   if (visit3_42_1(closeBtn)) {
     _$jscoverage['/overlay/control.js'].lineData[43]++;
-    closeBtn.on("click", function(ev) {
+    closeBtn.on('click', function(ev) {
   _$jscoverage['/overlay/control.js'].functionData[2]++;
   _$jscoverage['/overlay/control.js'].lineData[44]++;
   self.close();

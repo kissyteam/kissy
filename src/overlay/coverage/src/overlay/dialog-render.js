@@ -322,7 +322,7 @@ KISSY.add(function(S, require) {
   '_onSetBodyStyle': function(v) {
   _$jscoverage['/overlay/dialog-render.js'].functionData[5]++;
   _$jscoverage['/overlay/dialog-render.js'].lineData[36]++;
-  this.control.get("body").css(v);
+  this.control.get('body').css(v);
 }, 
   '_onSetHeaderStyle': function(v) {
   _$jscoverage['/overlay/dialog-render.js'].functionData[6]++;
@@ -337,7 +337,7 @@ KISSY.add(function(S, require) {
   '_onSetBodyContent': function(v) {
   _$jscoverage['/overlay/dialog-render.js'].functionData[8]++;
   _$jscoverage['/overlay/dialog-render.js'].lineData[47]++;
-  _setStdModRenderContent(this, "body", v);
+  _setStdModRenderContent(this, 'body', v);
 }, 
   '_onSetHeaderContent': function(v) {
   _$jscoverage['/overlay/dialog-render.js'].functionData[9]++;

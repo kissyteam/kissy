@@ -355,7 +355,7 @@ KISSY.add(function(S, require) {
   __afterCreateEffectGhost: function(ghost) {
   _$jscoverage['/overlay/dialog.js'].functionData[1]++;
   _$jscoverage['/overlay/dialog.js'].lineData[19]++;
-  var self = this, body, elBody = self.get("body");
+  var self = this, body, elBody = self.get('body');
   _$jscoverage['/overlay/dialog.js'].lineData[28]++;
   ghost.all('.' + self.get('prefixCls') + 'stdmod-body').css({
   height: elBody.height(), 

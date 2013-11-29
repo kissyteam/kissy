@@ -134,7 +134,7 @@ KISSY.add(function (S, require) {
 
         describe('each', function () {
             it('support xindex name',function(){
-                var tpl = '{{#each data "i" "v"}}{{i}}: {{v}}{{/each}}';
+                var tpl = '{{#each data "v" "i"}}{{i}}: {{v}}{{/each}}';
                 var data = {
                     data: [1, 2]
                 };

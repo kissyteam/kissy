@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:49
+build time: Nov 29 12:45
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -37,17 +37,17 @@ KISSY.add("overlay/extension/loading", ["node"], function(S, require) {
   return Loading
 });
 KISSY.add("overlay/extension/mask", ["node"], function(S, require) {
-  var UA = S.UA, Node = require("node"), ie6 = UA["ie"] === 6, $ = Node.all;
+  var UA = S.UA, Node = require("node"), ie6 = UA.ie === 6, $ = Node.all;
   function docWidth() {
     return ie6 ? "expression(KISSY.DOM.docWidth())" : "100%"
   }
   function docHeight() {
     return ie6 ? "expression(KISSY.DOM.docHeight())" : "100%"
   }
-  function initMask(self) {
-    var maskCls = self.view.getBaseCssClasses("mask"), mask = $("<div " + " style='width:" + docWidth() + ";" + "left:0;" + "top:0;" + "height:" + docHeight() + ";" + "position:" + (ie6 ? "absolute" : "fixed") + ";'" + " class='" + maskCls + "'>" + (ie6 ? "<" + "iframe " + "style='position:absolute;" + "left:" + "0" + ";" + "top:" + "0" + ";" + "background:red;" + "width: expression(this.parentNode.offsetWidth);" + "height: expression(this.parentNode.offsetHeight);" + "filter:alpha(opacity=0);" + 
-    "z-index:-1;'></iframe>" : "") + "</div>").prependTo("body");
-    mask["unselectable"]();
+  function initMask(self, hiddenCls) {
+    var maskCls = self.view.getBaseCssClasses("mask"), mask = $("<div " + ' style="width:' + docWidth() + ";" + "left:0;" + "top:0;" + "height:" + docHeight() + ";" + "position:" + (ie6 ? "absolute" : "fixed") + ';"' + ' class="' + maskCls + " " + hiddenCls + '">' + (ie6 ? "<" + "iframe " + 'style="position:absolute;' + "left:" + "0" + ";" + "top:" + "0" + ";" + "background:red;" + "width: expression(this.parentNode.offsetWidth);" + "height: expression(this.parentNode.offsetHeight);" + "filter:alpha(opacity=0);" + 
+    'z-index:-1;"></iframe>' : "") + "</div>").prependTo("body");
+    mask.unselectable();
     mask.on("mousedown", function(e) {
       e.preventDefault()
     });
@@ -68,7 +68,7 @@ KISSY.add("overlay/extension/mask", ["node"], function(S, require) {
   function processMask(mask, el, show, self) {
     var effect = mask.effect || NONE;
     setMaskVisible(self, show);
-    if(effect == NONE) {
+    if(effect === NONE) {
       return
     }
     var duration = mask.duration, easing = mask.easing, m, index = show ? 1 : 0;
@@ -92,13 +92,13 @@ KISSY.add("overlay/extension/mask", ["node"], function(S, require) {
   Mask.prototype = {__renderUI:function() {
     var self = this;
     if(self.get("mask")) {
-      self.set("maskNode", initMask(self))
+      self.set("maskNode", initMask(self, self.get("visible") ? "" : self.view.getBaseCssClasses("mask-hidden")))
     }
   }, __bindUI:function() {
     var self = this, maskNode, mask;
     if(mask = self.get("mask")) {
       maskNode = self.get("maskNode");
-      if(mask["closeOnClick"]) {
+      if(mask.closeOnClick) {
         maskNode.on(Node.Gesture.tap, self.close, self)
       }
       self.on("afterVisibleChange", afterVisibleChange)
@@ -112,52 +112,52 @@ KISSY.add("overlay/extension/mask", ["node"], function(S, require) {
   return Mask
 });
 KISSY.add("overlay/close-xtpl", [], function(S, require, exports, module) {
-  return function(scopes, S, undefined) {
+  return function(scope, S, undefined) {
     var buffer = "", config = this.config, engine = this, moduleWrap, utils = config.utils;
-    if(typeof module != "undefined" && module.kissy) {
+    if(typeof module !== "undefined" && module.kissy) {
       moduleWrap = module
     }
-    var runBlockCommandUtil = utils["runBlockCommand"], getExpressionUtil = utils["getExpression"], getPropertyOrRunCommandUtil = utils["getPropertyOrRunCommand"];
+    var runBlockCommandUtil = utils.runBlockCommand, getExpressionUtil = utils.getExpression, getPropertyOrRunCommandUtil = utils.getPropertyOrRunCommand;
     buffer += "";
     var config0 = {};
     var params1 = [];
-    var id2 = getPropertyOrRunCommandUtil(engine, scopes, {}, "closable", 0, 1, undefined, true);
+    var id2 = getPropertyOrRunCommandUtil(engine, scope, {}, "closable", 0, 1, undefined, true);
     params1.push(id2);
     config0.params = params1;
-    config0.fn = function(scopes) {
+    config0.fn = function(scope) {
       var buffer = "";
       buffer += '\n<a href="javascript:void(\'close\')"\n   id="ks-overlay-close-';
-      var id3 = getPropertyOrRunCommandUtil(engine, scopes, {}, "id", 0, 3, undefined, false);
+      var id3 = getPropertyOrRunCommandUtil(engine, scope, {}, "id", 0, 3, undefined, false);
       buffer += getExpressionUtil(id3, true);
       buffer += '"\n   class="';
       var config5 = {};
       var params6 = [];
       params6.push("close");
       config5.params = params6;
-      var id4 = getPropertyOrRunCommandUtil(engine, scopes, config5, "getBaseCssClasses", 0, 4, true, undefined);
+      var id4 = getPropertyOrRunCommandUtil(engine, scope, config5, "getBaseCssClasses", 0, 4, true, undefined);
       buffer += id4;
       buffer += "\"\n   role='button'>\n    <span class=\"";
       var config8 = {};
       var params9 = [];
       params9.push("close-x");
       config8.params = params9;
-      var id7 = getPropertyOrRunCommandUtil(engine, scopes, config8, "getBaseCssClasses", 0, 6, true, undefined);
+      var id7 = getPropertyOrRunCommandUtil(engine, scope, config8, "getBaseCssClasses", 0, 6, true, undefined);
       buffer += id7;
       buffer += '">close</span>\n</a>\n';
       return buffer
     };
-    buffer += runBlockCommandUtil(engine, scopes, config0, "if", 1);
+    buffer += runBlockCommandUtil(engine, scope, config0, "if", 1);
     buffer += "\n";
     return buffer
   }
 });
 KISSY.add("overlay/overlay-xtpl", ["overlay/close-xtpl", "component/extension/content-xtpl"], function(S, require, exports, module) {
-  return function(scopes, S, undefined) {
+  return function(scope, S, undefined) {
     var buffer = "", config = this.config, engine = this, moduleWrap, utils = config.utils;
-    if(typeof module != "undefined" && module.kissy) {
+    if(typeof module !== "undefined" && module.kissy) {
       moduleWrap = module
     }
-    var runBlockCommandUtil = utils["runBlockCommand"], getExpressionUtil = utils["getExpression"], getPropertyOrRunCommandUtil = utils["getPropertyOrRunCommand"];
+    var runBlockCommandUtil = utils.runBlockCommand, getExpressionUtil = utils.getExpression, getPropertyOrRunCommandUtil = utils.getPropertyOrRunCommand;
     buffer += "";
     var config1 = {};
     var params2 = [];
@@ -167,7 +167,7 @@ KISSY.add("overlay/overlay-xtpl", ["overlay/close-xtpl", "component/extension/co
       require("overlay/close-xtpl");
       config1.params[0] = moduleWrap.resolveByName(config1.params[0])
     }
-    var id0 = getPropertyOrRunCommandUtil(engine, scopes, config1, "include", 0, 1, false, undefined);
+    var id0 = getPropertyOrRunCommandUtil(engine, scope, config1, "include", 0, 1, false, undefined);
     buffer += id0;
     buffer += "\n";
     var config4 = {};
@@ -178,7 +178,7 @@ KISSY.add("overlay/overlay-xtpl", ["overlay/close-xtpl", "component/extension/co
       require("component/extension/content-xtpl");
       config4.params[0] = moduleWrap.resolveByName(config4.params[0])
     }
-    var id3 = getPropertyOrRunCommandUtil(engine, scopes, config4, "include", 0, 2, false, undefined);
+    var id3 = getPropertyOrRunCommandUtil(engine, scope, config4, "include", 0, 2, false, undefined);
     buffer += id3;
     return buffer
   }
@@ -284,12 +284,12 @@ KISSY.add("overlay/control", ["component/container", "component/extension/shim",
   }}, {ATTRS:{contentEl:{}, closable:{value:false, view:1}, closeBtn:{view:1}, closeAction:{value:HIDE}, focusable:{value:false}, allowTextSelection:{value:true}, handleMouseEvents:{value:false}, visible:{value:false}, xrender:{value:OverlayRender}}, xclass:"overlay"})
 });
 KISSY.add("overlay/dialog-xtpl", ["overlay/close-xtpl"], function(S, require, exports, module) {
-  return function(scopes, S, undefined) {
+  return function(scope, S, undefined) {
     var buffer = "", config = this.config, engine = this, moduleWrap, utils = config.utils;
-    if(typeof module != "undefined" && module.kissy) {
+    if(typeof module !== "undefined" && module.kissy) {
       moduleWrap = module
     }
-    var runBlockCommandUtil = utils["runBlockCommand"], getExpressionUtil = utils["getExpression"], getPropertyOrRunCommandUtil = utils["getPropertyOrRunCommand"];
+    var runBlockCommandUtil = utils.runBlockCommand, getExpressionUtil = utils.getExpression, getPropertyOrRunCommandUtil = utils.getPropertyOrRunCommand;
     buffer += "";
     var config1 = {};
     var params2 = [];
@@ -299,110 +299,110 @@ KISSY.add("overlay/dialog-xtpl", ["overlay/close-xtpl"], function(S, require, ex
       require("overlay/close-xtpl");
       config1.params[0] = moduleWrap.resolveByName(config1.params[0])
     }
-    var id0 = getPropertyOrRunCommandUtil(engine, scopes, config1, "include", 0, 1, false, undefined);
+    var id0 = getPropertyOrRunCommandUtil(engine, scope, config1, "include", 0, 1, false, undefined);
     buffer += id0;
     buffer += '\n<div id="ks-content-';
-    var id3 = getPropertyOrRunCommandUtil(engine, scopes, {}, "id", 0, 2, undefined, false);
+    var id3 = getPropertyOrRunCommandUtil(engine, scope, {}, "id", 0, 2, undefined, false);
     buffer += getExpressionUtil(id3, true);
     buffer += '"\n     class="';
     var config5 = {};
     var params6 = [];
     params6.push("content");
     config5.params = params6;
-    var id4 = getPropertyOrRunCommandUtil(engine, scopes, config5, "getBaseCssClasses", 0, 3, true, undefined);
+    var id4 = getPropertyOrRunCommandUtil(engine, scope, config5, "getBaseCssClasses", 0, 3, true, undefined);
     buffer += id4;
     buffer += '">\n    <div class="';
     var config8 = {};
     var params9 = [];
     params9.push("header");
     config8.params = params9;
-    var id7 = getPropertyOrRunCommandUtil(engine, scopes, config8, "getBaseCssClasses", 0, 4, true, undefined);
+    var id7 = getPropertyOrRunCommandUtil(engine, scope, config8, "getBaseCssClasses", 0, 4, true, undefined);
     buffer += id7;
     buffer += '"\n         style="\n';
     var config10 = {};
     var params11 = [];
-    var id12 = getPropertyOrRunCommandUtil(engine, scopes, {}, "headerStyle", 0, 6, undefined, true);
+    var id12 = getPropertyOrRunCommandUtil(engine, scope, {}, "headerStyle", 0, 6, undefined, true);
     params11.push(id12);
     config10.params = params11;
-    config10.fn = function(scopes) {
+    config10.fn = function(scope) {
       var buffer = "";
       buffer += " \n ";
-      var id13 = getPropertyOrRunCommandUtil(engine, scopes, {}, "xindex", 0, 7, undefined, false);
+      var id13 = getPropertyOrRunCommandUtil(engine, scope, {}, "xindex", 0, 7, undefined, false);
       buffer += getExpressionUtil(id13, true);
       buffer += ":";
-      var id14 = getPropertyOrRunCommandUtil(engine, scopes, {}, ".", 0, 7, undefined, false);
+      var id14 = getPropertyOrRunCommandUtil(engine, scope, {}, ".", 0, 7, undefined, false);
       buffer += getExpressionUtil(id14, true);
       buffer += ";\n";
       return buffer
     };
-    buffer += runBlockCommandUtil(engine, scopes, config10, "each", 6);
+    buffer += runBlockCommandUtil(engine, scope, config10, "each", 6);
     buffer += '\n"\n         id="ks-stdmod-header-';
-    var id15 = getPropertyOrRunCommandUtil(engine, scopes, {}, "id", 0, 10, undefined, false);
+    var id15 = getPropertyOrRunCommandUtil(engine, scope, {}, "id", 0, 10, undefined, false);
     buffer += getExpressionUtil(id15, true);
     buffer += '">';
-    var id16 = getPropertyOrRunCommandUtil(engine, scopes, {}, "headerContent", 0, 10, undefined, false);
+    var id16 = getPropertyOrRunCommandUtil(engine, scope, {}, "headerContent", 0, 10, undefined, false);
     buffer += getExpressionUtil(id16, false);
     buffer += '</div>\n\n    <div class="';
     var config18 = {};
     var params19 = [];
     params19.push("body");
     config18.params = params19;
-    var id17 = getPropertyOrRunCommandUtil(engine, scopes, config18, "getBaseCssClasses", 0, 12, true, undefined);
+    var id17 = getPropertyOrRunCommandUtil(engine, scope, config18, "getBaseCssClasses", 0, 12, true, undefined);
     buffer += id17;
     buffer += '"\n         style="\n';
     var config20 = {};
     var params21 = [];
-    var id22 = getPropertyOrRunCommandUtil(engine, scopes, {}, "bodyStyle", 0, 14, undefined, true);
+    var id22 = getPropertyOrRunCommandUtil(engine, scope, {}, "bodyStyle", 0, 14, undefined, true);
     params21.push(id22);
     config20.params = params21;
-    config20.fn = function(scopes) {
+    config20.fn = function(scope) {
       var buffer = "";
       buffer += " \n ";
-      var id23 = getPropertyOrRunCommandUtil(engine, scopes, {}, "xindex", 0, 15, undefined, false);
+      var id23 = getPropertyOrRunCommandUtil(engine, scope, {}, "xindex", 0, 15, undefined, false);
       buffer += getExpressionUtil(id23, true);
       buffer += ":";
-      var id24 = getPropertyOrRunCommandUtil(engine, scopes, {}, ".", 0, 15, undefined, false);
+      var id24 = getPropertyOrRunCommandUtil(engine, scope, {}, ".", 0, 15, undefined, false);
       buffer += getExpressionUtil(id24, true);
       buffer += ";\n";
       return buffer
     };
-    buffer += runBlockCommandUtil(engine, scopes, config20, "each", 14);
+    buffer += runBlockCommandUtil(engine, scope, config20, "each", 14);
     buffer += '\n"\n         id="ks-stdmod-body-';
-    var id25 = getPropertyOrRunCommandUtil(engine, scopes, {}, "id", 0, 18, undefined, false);
+    var id25 = getPropertyOrRunCommandUtil(engine, scope, {}, "id", 0, 18, undefined, false);
     buffer += getExpressionUtil(id25, true);
     buffer += '">';
-    var id26 = getPropertyOrRunCommandUtil(engine, scopes, {}, "bodyContent", 0, 18, undefined, false);
+    var id26 = getPropertyOrRunCommandUtil(engine, scope, {}, "bodyContent", 0, 18, undefined, false);
     buffer += getExpressionUtil(id26, false);
     buffer += '</div>\n\n    <div class="';
     var config28 = {};
     var params29 = [];
     params29.push("footer");
     config28.params = params29;
-    var id27 = getPropertyOrRunCommandUtil(engine, scopes, config28, "getBaseCssClasses", 0, 20, true, undefined);
+    var id27 = getPropertyOrRunCommandUtil(engine, scope, config28, "getBaseCssClasses", 0, 20, true, undefined);
     buffer += id27;
     buffer += '"\n         style="\n';
     var config30 = {};
     var params31 = [];
-    var id32 = getPropertyOrRunCommandUtil(engine, scopes, {}, "footerStyle", 0, 22, undefined, true);
+    var id32 = getPropertyOrRunCommandUtil(engine, scope, {}, "footerStyle", 0, 22, undefined, true);
     params31.push(id32);
     config30.params = params31;
-    config30.fn = function(scopes) {
+    config30.fn = function(scope) {
       var buffer = "";
       buffer += " \n ";
-      var id33 = getPropertyOrRunCommandUtil(engine, scopes, {}, "xindex", 0, 23, undefined, false);
+      var id33 = getPropertyOrRunCommandUtil(engine, scope, {}, "xindex", 0, 23, undefined, false);
       buffer += getExpressionUtil(id33, true);
       buffer += ":";
-      var id34 = getPropertyOrRunCommandUtil(engine, scopes, {}, ".", 0, 23, undefined, false);
+      var id34 = getPropertyOrRunCommandUtil(engine, scope, {}, ".", 0, 23, undefined, false);
       buffer += getExpressionUtil(id34, true);
       buffer += ";\n";
       return buffer
     };
-    buffer += runBlockCommandUtil(engine, scopes, config30, "each", 22);
+    buffer += runBlockCommandUtil(engine, scope, config30, "each", 22);
     buffer += '\n"\n         id="ks-stdmod-footer-';
-    var id35 = getPropertyOrRunCommandUtil(engine, scopes, {}, "id", 0, 26, undefined, false);
+    var id35 = getPropertyOrRunCommandUtil(engine, scope, {}, "id", 0, 26, undefined, false);
     buffer += getExpressionUtil(id35, true);
     buffer += '">';
-    var id36 = getPropertyOrRunCommandUtil(engine, scopes, {}, "footerContent", 0, 26, undefined, false);
+    var id36 = getPropertyOrRunCommandUtil(engine, scope, {}, "footerContent", 0, 26, undefined, false);
     buffer += getExpressionUtil(id36, false);
     buffer += '</div>\n</div>\n<div tabindex="0"></div>';
     return buffer
