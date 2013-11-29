@@ -253,13 +253,13 @@ KISSY.add(function (S, HtmlParser) {
                     writer = new HtmlParser.BasicWriter();
                 node.writeHtml(writer);
                 expect(writer.getHtml()).toBe('<input ' +
-                    'checked='checked' />');
+                    'checked="checked" />');
 
 
                 var beatifyWriter = new HtmlParser.BeautifyWriter();
                 node.writeHtml(beatifyWriter);
                 expect(beatifyWriter.getHtml()).toBe('<input ' +
-                    'checked='checked' />');
+                    'checked="checked" />');
 
                 var minifyWriter = new HtmlParser.MinifyWriter();
                 node.writeHtml(minifyWriter);
@@ -274,13 +274,13 @@ KISSY.add(function (S, HtmlParser) {
                     writer = new HtmlParser.BasicWriter();
                 node.writeHtml(writer);
                 expect(writer.getHtml()).toBe('<input ' +
-                    'checked='checked' />');
+                    'checked="checked" />');
 
 
                 var beatifyWriter = new HtmlParser.BeautifyWriter();
                 node.writeHtml(beatifyWriter);
                 expect(beatifyWriter.getHtml()).toBe('<input ' +
-                    'checked='checked' />');
+                    'checked="checked" />');
 
                 var minifyWriter = new HtmlParser.MinifyWriter();
                 node.writeHtml(minifyWriter);
