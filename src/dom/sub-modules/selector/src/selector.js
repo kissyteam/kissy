@@ -3,9 +3,10 @@
  * css3 selector engine for ie6-8
  * @author yiminghe@gmail.com
  */
-KISSY.add('dom/selector', function (S, parser, Dom) {
+KISSY.add(function (S, require) {
     var logger = S.getLogger('s/dom');
-
+    var parser = require('./selector/parser.js');
+    var Dom = require('dom/basic');
     logger.info('use KISSY css3 selector');
 
     // ident === identifier
@@ -686,11 +687,6 @@ KISSY.add('dom/selector', function (S, parser, Dom) {
         select: select,
         matches: matches
     };
-}, {
-    requires: [
-        './selector/parser',
-        'dom/basic'
-    ]
 });
 /**
  * @ignore
