@@ -17,7 +17,7 @@ KISSY.add(function (S, require) {
     if ('@DEBUG@') {
         return Kison;
     } else {
-        alert('kison can only use uncompressed version!');
+        window.alert('kison can only use uncompressed version!');
         return null;
     }
 });

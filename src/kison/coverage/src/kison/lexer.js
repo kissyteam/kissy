@@ -231,106 +231,116 @@ if (! _$jscoverage['/kison/lexer.js']) {
   _$jscoverage['/kison/lexer.js'].lineData = [];
   _$jscoverage['/kison/lexer.js'].lineData[6] = 0;
   _$jscoverage['/kison/lexer.js'].lineData[7] = 0;
-  _$jscoverage['/kison/lexer.js'].lineData[8] = 0;
-  _$jscoverage['/kison/lexer.js'].lineData[15] = 0;
-  _$jscoverage['/kison/lexer.js'].lineData[31] = 0;
+  _$jscoverage['/kison/lexer.js'].lineData[10] = 0;
+  _$jscoverage['/kison/lexer.js'].lineData[17] = 0;
   _$jscoverage['/kison/lexer.js'].lineData[33] = 0;
-  _$jscoverage['/kison/lexer.js'].lineData[40] = 0;
-  _$jscoverage['/kison/lexer.js'].lineData[44] = 0;
-  _$jscoverage['/kison/lexer.js'].lineData[50] = 0;
-  _$jscoverage['/kison/lexer.js'].lineData[54] = 0;
-  _$jscoverage['/kison/lexer.js'].lineData[70] = 0;
+  _$jscoverage['/kison/lexer.js'].lineData[35] = 0;
+  _$jscoverage['/kison/lexer.js'].lineData[42] = 0;
+  _$jscoverage['/kison/lexer.js'].lineData[46] = 0;
+  _$jscoverage['/kison/lexer.js'].lineData[52] = 0;
+  _$jscoverage['/kison/lexer.js'].lineData[56] = 0;
+  _$jscoverage['/kison/lexer.js'].lineData[72] = 0;
+  _$jscoverage['/kison/lexer.js'].lineData[75] = 0;
+  _$jscoverage['/kison/lexer.js'].lineData[76] = 0;
   _$jscoverage['/kison/lexer.js'].lineData[77] = 0;
-  _$jscoverage['/kison/lexer.js'].lineData[79] = 0;
+  _$jscoverage['/kison/lexer.js'].lineData[78] = 0;
   _$jscoverage['/kison/lexer.js'].lineData[80] = 0;
   _$jscoverage['/kison/lexer.js'].lineData[81] = 0;
-  _$jscoverage['/kison/lexer.js'].lineData[84] = 0;
+  _$jscoverage['/kison/lexer.js'].lineData[82] = 0;
+  _$jscoverage['/kison/lexer.js'].lineData[83] = 0;
   _$jscoverage['/kison/lexer.js'].lineData[85] = 0;
-  _$jscoverage['/kison/lexer.js'].lineData[88] = 0;
-  _$jscoverage['/kison/lexer.js'].lineData[90] = 0;
-  _$jscoverage['/kison/lexer.js'].lineData[92] = 0;
-  _$jscoverage['/kison/lexer.js'].lineData[94] = 0;
-  _$jscoverage['/kison/lexer.js'].lineData[96] = 0;
-  _$jscoverage['/kison/lexer.js'].lineData[97] = 0;
-  _$jscoverage['/kison/lexer.js'].lineData[101] = 0;
-  _$jscoverage['/kison/lexer.js'].lineData[102] = 0;
+  _$jscoverage['/kison/lexer.js'].lineData[87] = 0;
+  _$jscoverage['/kison/lexer.js'].lineData[91] = 0;
+  _$jscoverage['/kison/lexer.js'].lineData[98] = 0;
+  _$jscoverage['/kison/lexer.js'].lineData[99] = 0;
+  _$jscoverage['/kison/lexer.js'].lineData[100] = 0;
+  _$jscoverage['/kison/lexer.js'].lineData[103] = 0;
   _$jscoverage['/kison/lexer.js'].lineData[104] = 0;
+  _$jscoverage['/kison/lexer.js'].lineData[107] = 0;
   _$jscoverage['/kison/lexer.js'].lineData[109] = 0;
-  _$jscoverage['/kison/lexer.js'].lineData[110] = 0;
   _$jscoverage['/kison/lexer.js'].lineData[111] = 0;
-  _$jscoverage['/kison/lexer.js'].lineData[114] = 0;
+  _$jscoverage['/kison/lexer.js'].lineData[113] = 0;
   _$jscoverage['/kison/lexer.js'].lineData[115] = 0;
-  _$jscoverage['/kison/lexer.js'].lineData[117] = 0;
-  _$jscoverage['/kison/lexer.js'].lineData[119] = 0;
-  _$jscoverage['/kison/lexer.js'].lineData[122] = 0;
-  _$jscoverage['/kison/lexer.js'].lineData[124] = 0;
-  _$jscoverage['/kison/lexer.js'].lineData[126] = 0;
-  _$jscoverage['/kison/lexer.js'].lineData[127] = 0;
+  _$jscoverage['/kison/lexer.js'].lineData[116] = 0;
+  _$jscoverage['/kison/lexer.js'].lineData[120] = 0;
+  _$jscoverage['/kison/lexer.js'].lineData[121] = 0;
+  _$jscoverage['/kison/lexer.js'].lineData[123] = 0;
   _$jscoverage['/kison/lexer.js'].lineData[128] = 0;
-  _$jscoverage['/kison/lexer.js'].lineData[132] = 0;
+  _$jscoverage['/kison/lexer.js'].lineData[129] = 0;
+  _$jscoverage['/kison/lexer.js'].lineData[130] = 0;
+  _$jscoverage['/kison/lexer.js'].lineData[133] = 0;
+  _$jscoverage['/kison/lexer.js'].lineData[134] = 0;
   _$jscoverage['/kison/lexer.js'].lineData[136] = 0;
-  _$jscoverage['/kison/lexer.js'].lineData[139] = 0;
-  _$jscoverage['/kison/lexer.js'].lineData[140] = 0;
+  _$jscoverage['/kison/lexer.js'].lineData[138] = 0;
   _$jscoverage['/kison/lexer.js'].lineData[141] = 0;
-  _$jscoverage['/kison/lexer.js'].lineData[142] = 0;
   _$jscoverage['/kison/lexer.js'].lineData[143] = 0;
-  _$jscoverage['/kison/lexer.js'].lineData[144] = 0;
   _$jscoverage['/kison/lexer.js'].lineData[146] = 0;
   _$jscoverage['/kison/lexer.js'].lineData[147] = 0;
-  _$jscoverage['/kison/lexer.js'].lineData[150] = 0;
-  _$jscoverage['/kison/lexer.js'].lineData[154] = 0;
-  _$jscoverage['/kison/lexer.js'].lineData[158] = 0;
+  _$jscoverage['/kison/lexer.js'].lineData[148] = 0;
+  _$jscoverage['/kison/lexer.js'].lineData[152] = 0;
+  _$jscoverage['/kison/lexer.js'].lineData[156] = 0;
+  _$jscoverage['/kison/lexer.js'].lineData[159] = 0;
+  _$jscoverage['/kison/lexer.js'].lineData[160] = 0;
+  _$jscoverage['/kison/lexer.js'].lineData[161] = 0;
   _$jscoverage['/kison/lexer.js'].lineData[162] = 0;
+  _$jscoverage['/kison/lexer.js'].lineData[163] = 0;
+  _$jscoverage['/kison/lexer.js'].lineData[164] = 0;
   _$jscoverage['/kison/lexer.js'].lineData[166] = 0;
-  _$jscoverage['/kison/lexer.js'].lineData[171] = 0;
-  _$jscoverage['/kison/lexer.js'].lineData[172] = 0;
-  _$jscoverage['/kison/lexer.js'].lineData[175] = 0;
-  _$jscoverage['/kison/lexer.js'].lineData[177] = 0;
-  _$jscoverage['/kison/lexer.js'].lineData[181] = 0;
-  _$jscoverage['/kison/lexer.js'].lineData[183] = 0;
-  _$jscoverage['/kison/lexer.js'].lineData[184] = 0;
+  _$jscoverage['/kison/lexer.js'].lineData[167] = 0;
+  _$jscoverage['/kison/lexer.js'].lineData[170] = 0;
+  _$jscoverage['/kison/lexer.js'].lineData[174] = 0;
+  _$jscoverage['/kison/lexer.js'].lineData[178] = 0;
+  _$jscoverage['/kison/lexer.js'].lineData[182] = 0;
   _$jscoverage['/kison/lexer.js'].lineData[186] = 0;
-  _$jscoverage['/kison/lexer.js'].lineData[190] = 0;
-  _$jscoverage['/kison/lexer.js'].lineData[194] = 0;
+  _$jscoverage['/kison/lexer.js'].lineData[191] = 0;
+  _$jscoverage['/kison/lexer.js'].lineData[192] = 0;
   _$jscoverage['/kison/lexer.js'].lineData[195] = 0;
-  _$jscoverage['/kison/lexer.js'].lineData[196] = 0;
   _$jscoverage['/kison/lexer.js'].lineData[197] = 0;
-  _$jscoverage['/kison/lexer.js'].lineData[200] = 0;
   _$jscoverage['/kison/lexer.js'].lineData[201] = 0;
   _$jscoverage['/kison/lexer.js'].lineData[203] = 0;
-  _$jscoverage['/kison/lexer.js'].lineData[208] = 0;
-  _$jscoverage['/kison/lexer.js'].lineData[210] = 0;
+  _$jscoverage['/kison/lexer.js'].lineData[204] = 0;
+  _$jscoverage['/kison/lexer.js'].lineData[207] = 0;
   _$jscoverage['/kison/lexer.js'].lineData[211] = 0;
-  _$jscoverage['/kison/lexer.js'].lineData[213] = 0;
+  _$jscoverage['/kison/lexer.js'].lineData[215] = 0;
+  _$jscoverage['/kison/lexer.js'].lineData[216] = 0;
   _$jscoverage['/kison/lexer.js'].lineData[217] = 0;
-  _$jscoverage['/kison/lexer.js'].lineData[226] = 0;
-  _$jscoverage['/kison/lexer.js'].lineData[228] = 0;
+  _$jscoverage['/kison/lexer.js'].lineData[218] = 0;
+  _$jscoverage['/kison/lexer.js'].lineData[221] = 0;
+  _$jscoverage['/kison/lexer.js'].lineData[222] = 0;
+  _$jscoverage['/kison/lexer.js'].lineData[224] = 0;
   _$jscoverage['/kison/lexer.js'].lineData[229] = 0;
+  _$jscoverage['/kison/lexer.js'].lineData[231] = 0;
   _$jscoverage['/kison/lexer.js'].lineData[232] = 0;
-  _$jscoverage['/kison/lexer.js'].lineData[233] = 0;
   _$jscoverage['/kison/lexer.js'].lineData[234] = 0;
-  _$jscoverage['/kison/lexer.js'].lineData[237] = 0;
   _$jscoverage['/kison/lexer.js'].lineData[238] = 0;
-  _$jscoverage['/kison/lexer.js'].lineData[239] = 0;
-  _$jscoverage['/kison/lexer.js'].lineData[240] = 0;
-  _$jscoverage['/kison/lexer.js'].lineData[242] = 0;
+  _$jscoverage['/kison/lexer.js'].lineData[247] = 0;
+  _$jscoverage['/kison/lexer.js'].lineData[249] = 0;
   _$jscoverage['/kison/lexer.js'].lineData[250] = 0;
-  _$jscoverage['/kison/lexer.js'].lineData[252] = 0;
+  _$jscoverage['/kison/lexer.js'].lineData[253] = 0;
+  _$jscoverage['/kison/lexer.js'].lineData[254] = 0;
   _$jscoverage['/kison/lexer.js'].lineData[255] = 0;
-  _$jscoverage['/kison/lexer.js'].lineData[257] = 0;
+  _$jscoverage['/kison/lexer.js'].lineData[258] = 0;
   _$jscoverage['/kison/lexer.js'].lineData[259] = 0;
   _$jscoverage['/kison/lexer.js'].lineData[260] = 0;
   _$jscoverage['/kison/lexer.js'].lineData[261] = 0;
-  _$jscoverage['/kison/lexer.js'].lineData[262] = 0;
-  _$jscoverage['/kison/lexer.js'].lineData[264] = 0;
-  _$jscoverage['/kison/lexer.js'].lineData[266] = 0;
-  _$jscoverage['/kison/lexer.js'].lineData[267] = 0;
-  _$jscoverage['/kison/lexer.js'].lineData[269] = 0;
-  _$jscoverage['/kison/lexer.js'].lineData[270] = 0;
+  _$jscoverage['/kison/lexer.js'].lineData[263] = 0;
+  _$jscoverage['/kison/lexer.js'].lineData[271] = 0;
   _$jscoverage['/kison/lexer.js'].lineData[273] = 0;
+  _$jscoverage['/kison/lexer.js'].lineData[276] = 0;
   _$jscoverage['/kison/lexer.js'].lineData[278] = 0;
-  _$jscoverage['/kison/lexer.js'].lineData[279] = 0;
+  _$jscoverage['/kison/lexer.js'].lineData[280] = 0;
+  _$jscoverage['/kison/lexer.js'].lineData[281] = 0;
+  _$jscoverage['/kison/lexer.js'].lineData[282] = 0;
   _$jscoverage['/kison/lexer.js'].lineData[283] = 0;
+  _$jscoverage['/kison/lexer.js'].lineData[285] = 0;
+  _$jscoverage['/kison/lexer.js'].lineData[287] = 0;
+  _$jscoverage['/kison/lexer.js'].lineData[288] = 0;
+  _$jscoverage['/kison/lexer.js'].lineData[290] = 0;
+  _$jscoverage['/kison/lexer.js'].lineData[291] = 0;
+  _$jscoverage['/kison/lexer.js'].lineData[294] = 0;
+  _$jscoverage['/kison/lexer.js'].lineData[299] = 0;
+  _$jscoverage['/kison/lexer.js'].lineData[300] = 0;
+  _$jscoverage['/kison/lexer.js'].lineData[304] = 0;
 }
 if (! _$jscoverage['/kison/lexer.js'].functionData) {
   _$jscoverage['/kison/lexer.js'].functionData = [];
@@ -350,502 +360,534 @@ if (! _$jscoverage['/kison/lexer.js'].functionData) {
   _$jscoverage['/kison/lexer.js'].functionData[13] = 0;
   _$jscoverage['/kison/lexer.js'].functionData[14] = 0;
   _$jscoverage['/kison/lexer.js'].functionData[15] = 0;
+  _$jscoverage['/kison/lexer.js'].functionData[16] = 0;
 }
 if (! _$jscoverage['/kison/lexer.js'].branchData) {
   _$jscoverage['/kison/lexer.js'].branchData = {};
-  _$jscoverage['/kison/lexer.js'].branchData['79'] = [];
-  _$jscoverage['/kison/lexer.js'].branchData['79'][1] = new BranchData();
-  _$jscoverage['/kison/lexer.js'].branchData['84'] = [];
-  _$jscoverage['/kison/lexer.js'].branchData['84'][1] = new BranchData();
-  _$jscoverage['/kison/lexer.js'].branchData['95'] = [];
-  _$jscoverage['/kison/lexer.js'].branchData['95'][1] = new BranchData();
-  _$jscoverage['/kison/lexer.js'].branchData['96'] = [];
-  _$jscoverage['/kison/lexer.js'].branchData['96'][1] = new BranchData();
-  _$jscoverage['/kison/lexer.js'].branchData['100'] = [];
-  _$jscoverage['/kison/lexer.js'].branchData['100'][1] = new BranchData();
-  _$jscoverage['/kison/lexer.js'].branchData['101'] = [];
-  _$jscoverage['/kison/lexer.js'].branchData['101'][1] = new BranchData();
-  _$jscoverage['/kison/lexer.js'].branchData['107'] = [];
-  _$jscoverage['/kison/lexer.js'].branchData['107'][1] = new BranchData();
-  _$jscoverage['/kison/lexer.js'].branchData['109'] = [];
-  _$jscoverage['/kison/lexer.js'].branchData['109'][1] = new BranchData();
+  _$jscoverage['/kison/lexer.js'].branchData['77'] = [];
+  _$jscoverage['/kison/lexer.js'].branchData['77'][1] = new BranchData();
+  _$jscoverage['/kison/lexer.js'].branchData['86'] = [];
+  _$jscoverage['/kison/lexer.js'].branchData['86'][1] = new BranchData();
+  _$jscoverage['/kison/lexer.js'].branchData['98'] = [];
+  _$jscoverage['/kison/lexer.js'].branchData['98'][1] = new BranchData();
+  _$jscoverage['/kison/lexer.js'].branchData['103'] = [];
+  _$jscoverage['/kison/lexer.js'].branchData['103'][1] = new BranchData();
   _$jscoverage['/kison/lexer.js'].branchData['114'] = [];
   _$jscoverage['/kison/lexer.js'].branchData['114'][1] = new BranchData();
-  _$jscoverage['/kison/lexer.js'].branchData['124'] = [];
-  _$jscoverage['/kison/lexer.js'].branchData['124'][1] = new BranchData();
-  _$jscoverage['/kison/lexer.js'].branchData['127'] = [];
-  _$jscoverage['/kison/lexer.js'].branchData['127'][1] = new BranchData();
-  _$jscoverage['/kison/lexer.js'].branchData['141'] = [];
-  _$jscoverage['/kison/lexer.js'].branchData['141'][1] = new BranchData();
-  _$jscoverage['/kison/lexer.js'].branchData['142'] = [];
-  _$jscoverage['/kison/lexer.js'].branchData['142'][1] = new BranchData();
+  _$jscoverage['/kison/lexer.js'].branchData['115'] = [];
+  _$jscoverage['/kison/lexer.js'].branchData['115'][1] = new BranchData();
+  _$jscoverage['/kison/lexer.js'].branchData['119'] = [];
+  _$jscoverage['/kison/lexer.js'].branchData['119'][1] = new BranchData();
+  _$jscoverage['/kison/lexer.js'].branchData['120'] = [];
+  _$jscoverage['/kison/lexer.js'].branchData['120'][1] = new BranchData();
+  _$jscoverage['/kison/lexer.js'].branchData['126'] = [];
+  _$jscoverage['/kison/lexer.js'].branchData['126'][1] = new BranchData();
+  _$jscoverage['/kison/lexer.js'].branchData['128'] = [];
+  _$jscoverage['/kison/lexer.js'].branchData['128'][1] = new BranchData();
+  _$jscoverage['/kison/lexer.js'].branchData['133'] = [];
+  _$jscoverage['/kison/lexer.js'].branchData['133'][1] = new BranchData();
   _$jscoverage['/kison/lexer.js'].branchData['143'] = [];
   _$jscoverage['/kison/lexer.js'].branchData['143'][1] = new BranchData();
-  _$jscoverage['/kison/lexer.js'].branchData['146'] = [];
-  _$jscoverage['/kison/lexer.js'].branchData['146'][1] = new BranchData();
-  _$jscoverage['/kison/lexer.js'].branchData['172'] = [];
-  _$jscoverage['/kison/lexer.js'].branchData['172'][1] = new BranchData();
-  _$jscoverage['/kison/lexer.js'].branchData['176'] = [];
-  _$jscoverage['/kison/lexer.js'].branchData['176'][1] = new BranchData();
-  _$jscoverage['/kison/lexer.js'].branchData['183'] = [];
-  _$jscoverage['/kison/lexer.js'].branchData['183'][1] = new BranchData();
-  _$jscoverage['/kison/lexer.js'].branchData['186'] = [];
-  _$jscoverage['/kison/lexer.js'].branchData['186'][1] = new BranchData();
-  _$jscoverage['/kison/lexer.js'].branchData['194'] = [];
-  _$jscoverage['/kison/lexer.js'].branchData['194'][1] = new BranchData();
-  _$jscoverage['/kison/lexer.js'].branchData['200'] = [];
-  _$jscoverage['/kison/lexer.js'].branchData['200'][1] = new BranchData();
-  _$jscoverage['/kison/lexer.js'].branchData['210'] = [];
-  _$jscoverage['/kison/lexer.js'].branchData['210'][1] = new BranchData();
-  _$jscoverage['/kison/lexer.js'].branchData['213'] = [];
-  _$jscoverage['/kison/lexer.js'].branchData['213'][1] = new BranchData();
-  _$jscoverage['/kison/lexer.js'].branchData['228'] = [];
-  _$jscoverage['/kison/lexer.js'].branchData['228'][1] = new BranchData();
-  _$jscoverage['/kison/lexer.js'].branchData['232'] = [];
-  _$jscoverage['/kison/lexer.js'].branchData['232'][1] = new BranchData();
+  _$jscoverage['/kison/lexer.js'].branchData['147'] = [];
+  _$jscoverage['/kison/lexer.js'].branchData['147'][1] = new BranchData();
+  _$jscoverage['/kison/lexer.js'].branchData['161'] = [];
+  _$jscoverage['/kison/lexer.js'].branchData['161'][1] = new BranchData();
+  _$jscoverage['/kison/lexer.js'].branchData['162'] = [];
+  _$jscoverage['/kison/lexer.js'].branchData['162'][1] = new BranchData();
+  _$jscoverage['/kison/lexer.js'].branchData['163'] = [];
+  _$jscoverage['/kison/lexer.js'].branchData['163'][1] = new BranchData();
+  _$jscoverage['/kison/lexer.js'].branchData['166'] = [];
+  _$jscoverage['/kison/lexer.js'].branchData['166'][1] = new BranchData();
+  _$jscoverage['/kison/lexer.js'].branchData['192'] = [];
+  _$jscoverage['/kison/lexer.js'].branchData['192'][1] = new BranchData();
+  _$jscoverage['/kison/lexer.js'].branchData['196'] = [];
+  _$jscoverage['/kison/lexer.js'].branchData['196'][1] = new BranchData();
+  _$jscoverage['/kison/lexer.js'].branchData['203'] = [];
+  _$jscoverage['/kison/lexer.js'].branchData['203'][1] = new BranchData();
+  _$jscoverage['/kison/lexer.js'].branchData['207'] = [];
+  _$jscoverage['/kison/lexer.js'].branchData['207'][1] = new BranchData();
+  _$jscoverage['/kison/lexer.js'].branchData['215'] = [];
+  _$jscoverage['/kison/lexer.js'].branchData['215'][1] = new BranchData();
+  _$jscoverage['/kison/lexer.js'].branchData['221'] = [];
+  _$jscoverage['/kison/lexer.js'].branchData['221'][1] = new BranchData();
+  _$jscoverage['/kison/lexer.js'].branchData['231'] = [];
+  _$jscoverage['/kison/lexer.js'].branchData['231'][1] = new BranchData();
   _$jscoverage['/kison/lexer.js'].branchData['234'] = [];
   _$jscoverage['/kison/lexer.js'].branchData['234'][1] = new BranchData();
-  _$jscoverage['/kison/lexer.js'].branchData['235'] = [];
-  _$jscoverage['/kison/lexer.js'].branchData['235'][1] = new BranchData();
-  _$jscoverage['/kison/lexer.js'].branchData['236'] = [];
-  _$jscoverage['/kison/lexer.js'].branchData['236'][1] = new BranchData();
-  _$jscoverage['/kison/lexer.js'].branchData['236'][2] = new BranchData();
-  _$jscoverage['/kison/lexer.js'].branchData['237'] = [];
-  _$jscoverage['/kison/lexer.js'].branchData['237'][1] = new BranchData();
-  _$jscoverage['/kison/lexer.js'].branchData['239'] = [];
-  _$jscoverage['/kison/lexer.js'].branchData['239'][1] = new BranchData();
+  _$jscoverage['/kison/lexer.js'].branchData['249'] = [];
+  _$jscoverage['/kison/lexer.js'].branchData['249'][1] = new BranchData();
+  _$jscoverage['/kison/lexer.js'].branchData['253'] = [];
+  _$jscoverage['/kison/lexer.js'].branchData['253'][1] = new BranchData();
+  _$jscoverage['/kison/lexer.js'].branchData['255'] = [];
+  _$jscoverage['/kison/lexer.js'].branchData['255'][1] = new BranchData();
+  _$jscoverage['/kison/lexer.js'].branchData['256'] = [];
+  _$jscoverage['/kison/lexer.js'].branchData['256'][1] = new BranchData();
+  _$jscoverage['/kison/lexer.js'].branchData['257'] = [];
+  _$jscoverage['/kison/lexer.js'].branchData['257'][1] = new BranchData();
+  _$jscoverage['/kison/lexer.js'].branchData['257'][2] = new BranchData();
   _$jscoverage['/kison/lexer.js'].branchData['260'] = [];
   _$jscoverage['/kison/lexer.js'].branchData['260'][1] = new BranchData();
-  _$jscoverage['/kison/lexer.js'].branchData['261'] = [];
-  _$jscoverage['/kison/lexer.js'].branchData['261'][1] = new BranchData();
-  _$jscoverage['/kison/lexer.js'].branchData['269'] = [];
-  _$jscoverage['/kison/lexer.js'].branchData['269'][1] = new BranchData();
+  _$jscoverage['/kison/lexer.js'].branchData['281'] = [];
+  _$jscoverage['/kison/lexer.js'].branchData['281'][1] = new BranchData();
+  _$jscoverage['/kison/lexer.js'].branchData['282'] = [];
+  _$jscoverage['/kison/lexer.js'].branchData['282'][1] = new BranchData();
+  _$jscoverage['/kison/lexer.js'].branchData['290'] = [];
+  _$jscoverage['/kison/lexer.js'].branchData['290'][1] = new BranchData();
 }
-_$jscoverage['/kison/lexer.js'].branchData['269'][1].init(1269, 3, 'ret');
-function visit122_269_1(result) {
-  _$jscoverage['/kison/lexer.js'].branchData['269'][1].ranCondition(result);
+_$jscoverage['/kison/lexer.js'].branchData['290'][1].init(1302, 3, 'ret');
+function visit123_290_1(result) {
+  _$jscoverage['/kison/lexer.js'].branchData['290'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kison/lexer.js'].branchData['261'][1].init(990, 16, 'ret == undefined');
-function visit121_261_1(result) {
-  _$jscoverage['/kison/lexer.js'].branchData['261'][1].ranCondition(result);
+}_$jscoverage['/kison/lexer.js'].branchData['282'][1].init(1014, 17, 'ret === undefined');
+function visit122_282_1(result) {
+  _$jscoverage['/kison/lexer.js'].branchData['282'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kison/lexer.js'].branchData['260'][1].init(937, 27, 'action && action.call(self)');
+}_$jscoverage['/kison/lexer.js'].branchData['281'][1].init(960, 27, 'action && action.call(self)');
+function visit121_281_1(result) {
+  _$jscoverage['/kison/lexer.js'].branchData['281'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/kison/lexer.js'].branchData['260'][1].init(76, 5, 'lines');
 function visit120_260_1(result) {
   _$jscoverage['/kison/lexer.js'].branchData['260'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kison/lexer.js'].branchData['239'][1].init(74, 5, 'lines');
-function visit119_239_1(result) {
-  _$jscoverage['/kison/lexer.js'].branchData['239'][1].ranCondition(result);
+}_$jscoverage['/kison/lexer.js'].branchData['257'][2].init(133, 20, 'rule[2] || undefined');
+function visit119_257_2(result) {
+  _$jscoverage['/kison/lexer.js'].branchData['257'][2].ranCondition(result);
   return result;
-}_$jscoverage['/kison/lexer.js'].branchData['237'][1].init(224, 23, 'm = input.match(regexp)');
-function visit118_237_1(result) {
-  _$jscoverage['/kison/lexer.js'].branchData['237'][1].ranCondition(result);
+}_$jscoverage['/kison/lexer.js'].branchData['257'][1].init(118, 35, 'rule.action || rule[2] || undefined');
+function visit118_257_1(result) {
+  _$jscoverage['/kison/lexer.js'].branchData['257'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kison/lexer.js'].branchData['236'][2].init(131, 20, 'rule[2] || undefined');
-function visit117_236_2(result) {
-  _$jscoverage['/kison/lexer.js'].branchData['236'][2].ranCondition(result);
+}_$jscoverage['/kison/lexer.js'].branchData['256'][1].init(65, 21, 'rule.token || rule[0]');
+function visit117_256_1(result) {
+  _$jscoverage['/kison/lexer.js'].branchData['256'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kison/lexer.js'].branchData['236'][1].init(116, 35, 'rule.action || rule[2] || undefined');
-function visit116_236_1(result) {
-  _$jscoverage['/kison/lexer.js'].branchData['236'][1].ranCondition(result);
+}_$jscoverage['/kison/lexer.js'].branchData['255'][1].init(65, 22, 'rule.regexp || rule[1]');
+function visit116_255_1(result) {
+  _$jscoverage['/kison/lexer.js'].branchData['255'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kison/lexer.js'].branchData['235'][1].init(64, 21, 'rule.token || rule[0]');
-function visit115_235_1(result) {
-  _$jscoverage['/kison/lexer.js'].branchData['235'][1].ranCondition(result);
+}_$jscoverage['/kison/lexer.js'].branchData['253'][1].init(403, 16, 'i < rules.length');
+function visit115_253_1(result) {
+  _$jscoverage['/kison/lexer.js'].branchData['253'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kison/lexer.js'].branchData['234'][1].init(63, 22, 'rule.regexp || rule[1]');
-function visit114_234_1(result) {
+}_$jscoverage['/kison/lexer.js'].branchData['249'][1].init(289, 6, '!input');
+function visit114_249_1(result) {
+  _$jscoverage['/kison/lexer.js'].branchData['249'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/kison/lexer.js'].branchData['234'][1].init(166, 55, 'stateMap[s] || (stateMap[s] = self.genShortId(\'state\'))');
+function visit113_234_1(result) {
   _$jscoverage['/kison/lexer.js'].branchData['234'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kison/lexer.js'].branchData['232'][1].init(387, 16, 'i < rules.length');
-function visit113_232_1(result) {
-  _$jscoverage['/kison/lexer.js'].branchData['232'][1].ranCondition(result);
+}_$jscoverage['/kison/lexer.js'].branchData['231'][1].init(91, 9, '!stateMap');
+function visit112_231_1(result) {
+  _$jscoverage['/kison/lexer.js'].branchData['231'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kison/lexer.js'].branchData['228'][1].init(277, 6, '!input');
-function visit112_228_1(result) {
-  _$jscoverage['/kison/lexer.js'].branchData['228'][1].ranCondition(result);
+}_$jscoverage['/kison/lexer.js'].branchData['221'][1].init(418, 16, 'reverseSymbolMap');
+function visit111_221_1(result) {
+  _$jscoverage['/kison/lexer.js'].branchData['221'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kison/lexer.js'].branchData['213'][1].init(160, 47, 'stateMap[s] || (stateMap[s] = (++self.stateId))');
-function visit111_213_1(result) {
-  _$jscoverage['/kison/lexer.js'].branchData['213'][1].ranCondition(result);
+}_$jscoverage['/kison/lexer.js'].branchData['215'][1].init(172, 30, '!reverseSymbolMap && symbolMap');
+function visit110_215_1(result) {
+  _$jscoverage['/kison/lexer.js'].branchData['215'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kison/lexer.js'].branchData['210'][1].init(88, 9, '!stateMap');
-function visit110_210_1(result) {
-  _$jscoverage['/kison/lexer.js'].branchData['210'][1].ranCondition(result);
+}_$jscoverage['/kison/lexer.js'].branchData['207'][1].init(229, 58, 'symbolMap[t] || (symbolMap[t] = self.genShortId(\'symbol\'))');
+function visit109_207_1(result) {
+  _$jscoverage['/kison/lexer.js'].branchData['207'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kison/lexer.js'].branchData['200'][1].init(407, 16, 'reverseSymbolMap');
-function visit109_200_1(result) {
-  _$jscoverage['/kison/lexer.js'].branchData['200'][1].ranCondition(result);
+}_$jscoverage['/kison/lexer.js'].branchData['203'][1].init(93, 10, '!symbolMap');
+function visit108_203_1(result) {
+  _$jscoverage['/kison/lexer.js'].branchData['203'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kison/lexer.js'].branchData['194'][1].init(167, 30, '!reverseSymbolMap && symbolMap');
-function visit108_194_1(result) {
-  _$jscoverage['/kison/lexer.js'].branchData['194'][1].ranCondition(result);
+}_$jscoverage['/kison/lexer.js'].branchData['196'][1].init(54, 33, 'next.length > DEBUG_CONTEXT_LIMIT');
+function visit107_196_1(result) {
+  _$jscoverage['/kison/lexer.js'].branchData['196'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kison/lexer.js'].branchData['186'][1].init(163, 50, 'symbolMap[t] || (symbolMap[t] = (++self.symbolId))');
-function visit107_186_1(result) {
-  _$jscoverage['/kison/lexer.js'].branchData['186'][1].ranCondition(result);
+}_$jscoverage['/kison/lexer.js'].branchData['192'][1].init(316, 36, 'matched.length > DEBUG_CONTEXT_LIMIT');
+function visit106_192_1(result) {
+  _$jscoverage['/kison/lexer.js'].branchData['192'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kison/lexer.js'].branchData['183'][1].init(90, 10, '!symbolMap');
-function visit106_183_1(result) {
-  _$jscoverage['/kison/lexer.js'].branchData['183'][1].ranCondition(result);
+}_$jscoverage['/kison/lexer.js'].branchData['166'][1].init(236, 30, 'S.inArray(currentState, state)');
+function visit105_166_1(result) {
+  _$jscoverage['/kison/lexer.js'].branchData['166'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kison/lexer.js'].branchData['176'][1].init(53, 33, 'next.length > DEBUG_CONTEXT_LIMIT');
-function visit105_176_1(result) {
-  _$jscoverage['/kison/lexer.js'].branchData['176'][1].ranCondition(result);
+}_$jscoverage['/kison/lexer.js'].branchData['163'][1].init(26, 37, 'currentState === Lexer.STATIC.INITIAL');
+function visit104_163_1(result) {
+  _$jscoverage['/kison/lexer.js'].branchData['163'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kison/lexer.js'].branchData['172'][1].init(309, 36, 'matched.length > DEBUG_CONTEXT_LIMIT');
-function visit104_172_1(result) {
-  _$jscoverage['/kison/lexer.js'].branchData['172'][1].ranCondition(result);
+}_$jscoverage['/kison/lexer.js'].branchData['162'][1].init(68, 6, '!state');
+function visit103_162_1(result) {
+  _$jscoverage['/kison/lexer.js'].branchData['162'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kison/lexer.js'].branchData['146'][1].init(229, 30, 'S.inArray(currentState, state)');
-function visit103_146_1(result) {
-  _$jscoverage['/kison/lexer.js'].branchData['146'][1].ranCondition(result);
+}_$jscoverage['/kison/lexer.js'].branchData['161'][1].init(30, 15, 'r.state || r[3]');
+function visit102_161_1(result) {
+  _$jscoverage['/kison/lexer.js'].branchData['161'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kison/lexer.js'].branchData['143'][1].init(25, 36, 'currentState == Lexer.STATIC.INITIAL');
-function visit102_143_1(result) {
+}_$jscoverage['/kison/lexer.js'].branchData['147'][1].init(155, 13, 'compressState');
+function visit101_147_1(result) {
+  _$jscoverage['/kison/lexer.js'].branchData['147'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/kison/lexer.js'].branchData['143'][1].init(1961, 31, 'compressState || compressSymbol');
+function visit100_143_1(result) {
   _$jscoverage['/kison/lexer.js'].branchData['143'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kison/lexer.js'].branchData['142'][1].init(66, 6, '!state');
-function visit101_142_1(result) {
-  _$jscoverage['/kison/lexer.js'].branchData['142'][1].ranCondition(result);
+}_$jscoverage['/kison/lexer.js'].branchData['133'][1].init(749, 5, 'state');
+function visit99_133_1(result) {
+  _$jscoverage['/kison/lexer.js'].branchData['133'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kison/lexer.js'].branchData['141'][1].init(29, 15, 'r.state || r[3]');
-function visit100_141_1(result) {
-  _$jscoverage['/kison/lexer.js'].branchData['141'][1].ranCondition(result);
+}_$jscoverage['/kison/lexer.js'].branchData['128'][1].init(511, 22, 'compressState && state');
+function visit98_128_1(result) {
+  _$jscoverage['/kison/lexer.js'].branchData['128'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kison/lexer.js'].branchData['127'][1].init(113, 13, 'compressState');
-function visit99_127_1(result) {
-  _$jscoverage['/kison/lexer.js'].branchData['127'][1].ranCondition(result);
+}_$jscoverage['/kison/lexer.js'].branchData['126'][1].init(105, 11, 'action || 0');
+function visit97_126_1(result) {
+  _$jscoverage['/kison/lexer.js'].branchData['126'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kison/lexer.js'].branchData['124'][1].init(1928, 31, 'compressState || compressSymbol');
-function visit98_124_1(result) {
-  _$jscoverage['/kison/lexer.js'].branchData['124'][1].ranCondition(result);
+}_$jscoverage['/kison/lexer.js'].branchData['120'][1].init(209, 5, 'token');
+function visit96_120_1(result) {
+  _$jscoverage['/kison/lexer.js'].branchData['120'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kison/lexer.js'].branchData['114'][1].init(731, 5, 'state');
-function visit97_114_1(result) {
+}_$jscoverage['/kison/lexer.js'].branchData['119'][1].init(139, 12, 'v.token || 0');
+function visit95_119_1(result) {
+  _$jscoverage['/kison/lexer.js'].branchData['119'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/kison/lexer.js'].branchData['115'][1].init(26, 13, 'v && v.regexp');
+function visit94_115_1(result) {
+  _$jscoverage['/kison/lexer.js'].branchData['115'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/kison/lexer.js'].branchData['114'][1].init(54, 31, 'compressState || compressSymbol');
+function visit93_114_1(result) {
   _$jscoverage['/kison/lexer.js'].branchData['114'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kison/lexer.js'].branchData['109'][1].init(498, 22, 'compressState && state');
-function visit96_109_1(result) {
-  _$jscoverage['/kison/lexer.js'].branchData['109'][1].ranCondition(result);
+}_$jscoverage['/kison/lexer.js'].branchData['103'][1].init(423, 13, 'compressState');
+function visit92_103_1(result) {
+  _$jscoverage['/kison/lexer.js'].branchData['103'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kison/lexer.js'].branchData['107'][1].init(102, 11, 'action || 0');
-function visit95_107_1(result) {
-  _$jscoverage['/kison/lexer.js'].branchData['107'][1].ranCondition(result);
+}_$jscoverage['/kison/lexer.js'].branchData['98'][1].init(284, 14, 'compressSymbol');
+function visit91_98_1(result) {
+  _$jscoverage['/kison/lexer.js'].branchData['98'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kison/lexer.js'].branchData['101'][1].init(204, 5, 'token');
-function visit94_101_1(result) {
-  _$jscoverage['/kison/lexer.js'].branchData['101'][1].ranCondition(result);
+}_$jscoverage['/kison/lexer.js'].branchData['86'][1].init(192, 10, 'index >= 0');
+function visit90_86_1(result) {
+  _$jscoverage['/kison/lexer.js'].branchData['86'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kison/lexer.js'].branchData['100'][1].init(136, 12, 'v.token || 0');
-function visit93_100_1(result) {
-  _$jscoverage['/kison/lexer.js'].branchData['100'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/kison/lexer.js'].branchData['96'][1].init(25, 13, 'v && v.regexp');
-function visit92_96_1(result) {
-  _$jscoverage['/kison/lexer.js'].branchData['96'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/kison/lexer.js'].branchData['95'][1].init(53, 31, 'compressState || compressSymbol');
-function visit91_95_1(result) {
-  _$jscoverage['/kison/lexer.js'].branchData['95'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/kison/lexer.js'].branchData['84'][1].init(430, 13, 'compressState');
-function visit90_84_1(result) {
-  _$jscoverage['/kison/lexer.js'].branchData['84'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/kison/lexer.js'].branchData['79'][1].init(296, 14, 'compressSymbol');
-function visit89_79_1(result) {
-  _$jscoverage['/kison/lexer.js'].branchData['79'][1].ranCondition(result);
+}_$jscoverage['/kison/lexer.js'].branchData['77'][1].init(191, 16, '!(field in self)');
+function visit89_77_1(result) {
+  _$jscoverage['/kison/lexer.js'].branchData['77'][1].ranCondition(result);
   return result;
 }_$jscoverage['/kison/lexer.js'].lineData[6]++;
 KISSY.add(function(S, require) {
   _$jscoverage['/kison/lexer.js'].functionData[0]++;
   _$jscoverage['/kison/lexer.js'].lineData[7]++;
   var Utils = require('./utils');
-  _$jscoverage['/kison/lexer.js'].lineData[8]++;
+  _$jscoverage['/kison/lexer.js'].lineData[10]++;
   var serializeObject = Utils.serializeObject, Lexer = function(cfg) {
   _$jscoverage['/kison/lexer.js'].functionData[1]++;
-  _$jscoverage['/kison/lexer.js'].lineData[15]++;
+  _$jscoverage['/kison/lexer.js'].lineData[17]++;
   var self = this;
-  _$jscoverage['/kison/lexer.js'].lineData[31]++;
-  self.rules = [];
   _$jscoverage['/kison/lexer.js'].lineData[33]++;
+  self.rules = [];
+  _$jscoverage['/kison/lexer.js'].lineData[35]++;
   S.mix(self, cfg);
-  _$jscoverage['/kison/lexer.js'].lineData[40]++;
+  _$jscoverage['/kison/lexer.js'].lineData[42]++;
   self.resetInput(self.input);
 };
-  _$jscoverage['/kison/lexer.js'].lineData[44]++;
+  _$jscoverage['/kison/lexer.js'].lineData[46]++;
   Lexer.STATIC = {
   INITIAL: 'I', 
   DEBUG_CONTEXT_LIMIT: 20, 
   END_TAG: '$EOF'};
-  _$jscoverage['/kison/lexer.js'].lineData[50]++;
+  _$jscoverage['/kison/lexer.js'].lineData[52]++;
   Lexer.prototype = {
   constructor: Lexer, 
   resetInput: function(input) {
   _$jscoverage['/kison/lexer.js'].functionData[2]++;
-  _$jscoverage['/kison/lexer.js'].lineData[54]++;
+  _$jscoverage['/kison/lexer.js'].lineData[56]++;
   S.mix(this, {
   input: input, 
-  matched: "", 
+  matched: '', 
   stateStack: [Lexer.STATIC.INITIAL], 
-  match: "", 
-  text: "", 
+  match: '', 
+  text: '', 
   firstLine: 1, 
   lineNumber: 1, 
   lastLine: 1, 
   firstColumn: 1, 
   lastColumn: 1});
 }, 
-  genCode: function(cfg) {
+  genShortId: function(field) {
   _$jscoverage['/kison/lexer.js'].functionData[3]++;
-  _$jscoverage['/kison/lexer.js'].lineData[70]++;
-  var STATIC = Lexer.STATIC, self = this, compressSymbol = cfg.compressSymbol, compressState = cfg.compressLexerState, code = [], stateMap;
+  _$jscoverage['/kison/lexer.js'].lineData[72]++;
+  var base = 97, max = 122, interval = max - base + 1;
+  _$jscoverage['/kison/lexer.js'].lineData[75]++;
+  field += '__gen';
+  _$jscoverage['/kison/lexer.js'].lineData[76]++;
+  var self = this;
   _$jscoverage['/kison/lexer.js'].lineData[77]++;
-  self.symbolId = self.stateId = 0;
-  _$jscoverage['/kison/lexer.js'].lineData[79]++;
-  if (visit89_79_1(compressSymbol)) {
-    _$jscoverage['/kison/lexer.js'].lineData[80]++;
+  if (visit89_77_1(!(field in self))) {
+    _$jscoverage['/kison/lexer.js'].lineData[78]++;
+    self[field] = -1;
+  }
+  _$jscoverage['/kison/lexer.js'].lineData[80]++;
+  var index = self[field] = self[field] + 1;
+  _$jscoverage['/kison/lexer.js'].lineData[81]++;
+  var ret = '';
+  _$jscoverage['/kison/lexer.js'].lineData[82]++;
+  do {
+    _$jscoverage['/kison/lexer.js'].lineData[83]++;
+    ret = String.fromCharCode(base + index % interval) + ret;
+    _$jscoverage['/kison/lexer.js'].lineData[85]++;
+    index = Math.floor(index / interval) - 1;
+  } while (visit90_86_1(index >= 0));
+  _$jscoverage['/kison/lexer.js'].lineData[87]++;
+  return ret;
+}, 
+  genCode: function(cfg) {
+  _$jscoverage['/kison/lexer.js'].functionData[4]++;
+  _$jscoverage['/kison/lexer.js'].lineData[91]++;
+  var STATIC = Lexer.STATIC, self = this, compressSymbol = cfg.compressSymbol, compressState = cfg.compressLexerState, code = ['/*jslint quotmark: false*/'], stateMap;
+  _$jscoverage['/kison/lexer.js'].lineData[98]++;
+  if (visit91_98_1(compressSymbol)) {
+    _$jscoverage['/kison/lexer.js'].lineData[99]++;
     self.symbolMap = {};
-    _$jscoverage['/kison/lexer.js'].lineData[81]++;
+    _$jscoverage['/kison/lexer.js'].lineData[100]++;
     self.mapSymbol(STATIC.END_TAG);
   }
-  _$jscoverage['/kison/lexer.js'].lineData[84]++;
-  if (visit90_84_1(compressState)) {
-    _$jscoverage['/kison/lexer.js'].lineData[85]++;
+  _$jscoverage['/kison/lexer.js'].lineData[103]++;
+  if (visit92_103_1(compressState)) {
+    _$jscoverage['/kison/lexer.js'].lineData[104]++;
     stateMap = self.stateMap = {};
   }
-  _$jscoverage['/kison/lexer.js'].lineData[88]++;
-  code.push("var Lexer = " + Lexer.toString() + ';');
-  _$jscoverage['/kison/lexer.js'].lineData[90]++;
-  code.push("Lexer.prototype= " + serializeObject(Lexer.prototype, /genCode/) + ";");
-  _$jscoverage['/kison/lexer.js'].lineData[92]++;
-  code.push("Lexer.STATIC= " + serializeObject(STATIC) + ";");
-  _$jscoverage['/kison/lexer.js'].lineData[94]++;
+  _$jscoverage['/kison/lexer.js'].lineData[107]++;
+  code.push('var Lexer = ' + Lexer.toString() + ';');
+  _$jscoverage['/kison/lexer.js'].lineData[109]++;
+  code.push('Lexer.prototype= ' + serializeObject(Lexer.prototype, /genCode/) + ';');
+  _$jscoverage['/kison/lexer.js'].lineData[111]++;
+  code.push('Lexer.STATIC= ' + serializeObject(STATIC) + ';');
+  _$jscoverage['/kison/lexer.js'].lineData[113]++;
   var newCfg = serializeObject({
-  rules: self.rules}, (visit91_95_1(compressState || compressSymbol)) ? function(v) {
-  _$jscoverage['/kison/lexer.js'].functionData[4]++;
-  _$jscoverage['/kison/lexer.js'].lineData[96]++;
-  if (visit92_96_1(v && v.regexp)) {
-    _$jscoverage['/kison/lexer.js'].lineData[97]++;
-    var state = v.state, ret, action = v.action, token = visit93_100_1(v.token || 0);
-    _$jscoverage['/kison/lexer.js'].lineData[101]++;
-    if (visit94_101_1(token)) {
-      _$jscoverage['/kison/lexer.js'].lineData[102]++;
+  rules: self.rules}, (visit93_114_1(compressState || compressSymbol)) ? function(v) {
+  _$jscoverage['/kison/lexer.js'].functionData[5]++;
+  _$jscoverage['/kison/lexer.js'].lineData[115]++;
+  if (visit94_115_1(v && v.regexp)) {
+    _$jscoverage['/kison/lexer.js'].lineData[116]++;
+    var state = v.state, ret, action = v.action, token = visit95_119_1(v.token || 0);
+    _$jscoverage['/kison/lexer.js'].lineData[120]++;
+    if (visit96_120_1(token)) {
+      _$jscoverage['/kison/lexer.js'].lineData[121]++;
       token = self.mapSymbol(token);
     }
-    _$jscoverage['/kison/lexer.js'].lineData[104]++;
-    ret = [token, v.regexp, visit95_107_1(action || 0)];
-    _$jscoverage['/kison/lexer.js'].lineData[109]++;
-    if (visit96_109_1(compressState && state)) {
-      _$jscoverage['/kison/lexer.js'].lineData[110]++;
+    _$jscoverage['/kison/lexer.js'].lineData[123]++;
+    ret = [token, v.regexp, visit97_126_1(action || 0)];
+    _$jscoverage['/kison/lexer.js'].lineData[128]++;
+    if (visit98_128_1(compressState && state)) {
+      _$jscoverage['/kison/lexer.js'].lineData[129]++;
       state = S.map(state, function(s) {
-  _$jscoverage['/kison/lexer.js'].functionData[5]++;
-  _$jscoverage['/kison/lexer.js'].lineData[111]++;
+  _$jscoverage['/kison/lexer.js'].functionData[6]++;
+  _$jscoverage['/kison/lexer.js'].lineData[130]++;
   return self.mapState(s);
 });
     }
-    _$jscoverage['/kison/lexer.js'].lineData[114]++;
-    if (visit97_114_1(state)) {
-      _$jscoverage['/kison/lexer.js'].lineData[115]++;
+    _$jscoverage['/kison/lexer.js'].lineData[133]++;
+    if (visit99_133_1(state)) {
+      _$jscoverage['/kison/lexer.js'].lineData[134]++;
       ret.push(state);
     }
-    _$jscoverage['/kison/lexer.js'].lineData[117]++;
+    _$jscoverage['/kison/lexer.js'].lineData[136]++;
     return ret;
   }
-  _$jscoverage['/kison/lexer.js'].lineData[119]++;
+  _$jscoverage['/kison/lexer.js'].lineData[138]++;
   return undefined;
 } : 0);
-  _$jscoverage['/kison/lexer.js'].lineData[122]++;
-  code.push("var lexer = new Lexer(" + newCfg + ");");
-  _$jscoverage['/kison/lexer.js'].lineData[124]++;
-  if (visit98_124_1(compressState || compressSymbol)) {
-    _$jscoverage['/kison/lexer.js'].lineData[126]++;
+  _$jscoverage['/kison/lexer.js'].lineData[141]++;
+  code.push('var lexer = new Lexer(' + newCfg + ');');
+  _$jscoverage['/kison/lexer.js'].lineData[143]++;
+  if (visit100_143_1(compressState || compressSymbol)) {
+    _$jscoverage['/kison/lexer.js'].lineData[146]++;
     self.rules = eval('(' + newCfg + ')').rules;
-    _$jscoverage['/kison/lexer.js'].lineData[127]++;
-    if (visit99_127_1(compressState)) {
-      _$jscoverage['/kison/lexer.js'].lineData[128]++;
+    _$jscoverage['/kison/lexer.js'].lineData[147]++;
+    if (visit101_147_1(compressState)) {
+      _$jscoverage['/kison/lexer.js'].lineData[148]++;
       code.push('lexer.stateMap = ' + serializeObject(stateMap) + ';');
     }
   }
-  _$jscoverage['/kison/lexer.js'].lineData[132]++;
-  return code.join("\n");
+  _$jscoverage['/kison/lexer.js'].lineData[152]++;
+  return code.join('\n');
 }, 
   getCurrentRules: function() {
-  _$jscoverage['/kison/lexer.js'].functionData[6]++;
-  _$jscoverage['/kison/lexer.js'].lineData[136]++;
-  var self = this, currentState = self.stateStack[self.stateStack.length - 1], rules = [];
-  _$jscoverage['/kison/lexer.js'].lineData[139]++;
-  currentState = self.mapState(currentState);
-  _$jscoverage['/kison/lexer.js'].lineData[140]++;
-  S.each(self.rules, function(r) {
   _$jscoverage['/kison/lexer.js'].functionData[7]++;
-  _$jscoverage['/kison/lexer.js'].lineData[141]++;
-  var state = visit100_141_1(r.state || r[3]);
-  _$jscoverage['/kison/lexer.js'].lineData[142]++;
-  if (visit101_142_1(!state)) {
-    _$jscoverage['/kison/lexer.js'].lineData[143]++;
-    if (visit102_143_1(currentState == Lexer.STATIC.INITIAL)) {
-      _$jscoverage['/kison/lexer.js'].lineData[144]++;
+  _$jscoverage['/kison/lexer.js'].lineData[156]++;
+  var self = this, currentState = self.stateStack[self.stateStack.length - 1], rules = [];
+  _$jscoverage['/kison/lexer.js'].lineData[159]++;
+  currentState = self.mapState(currentState);
+  _$jscoverage['/kison/lexer.js'].lineData[160]++;
+  S.each(self.rules, function(r) {
+  _$jscoverage['/kison/lexer.js'].functionData[8]++;
+  _$jscoverage['/kison/lexer.js'].lineData[161]++;
+  var state = visit102_161_1(r.state || r[3]);
+  _$jscoverage['/kison/lexer.js'].lineData[162]++;
+  if (visit103_162_1(!state)) {
+    _$jscoverage['/kison/lexer.js'].lineData[163]++;
+    if (visit104_163_1(currentState === Lexer.STATIC.INITIAL)) {
+      _$jscoverage['/kison/lexer.js'].lineData[164]++;
       rules.push(r);
     }
   } else {
-    _$jscoverage['/kison/lexer.js'].lineData[146]++;
-    if (visit103_146_1(S.inArray(currentState, state))) {
-      _$jscoverage['/kison/lexer.js'].lineData[147]++;
+    _$jscoverage['/kison/lexer.js'].lineData[166]++;
+    if (visit105_166_1(S.inArray(currentState, state))) {
+      _$jscoverage['/kison/lexer.js'].lineData[167]++;
       rules.push(r);
     }
   }
 });
-  _$jscoverage['/kison/lexer.js'].lineData[150]++;
+  _$jscoverage['/kison/lexer.js'].lineData[170]++;
   return rules;
 }, 
   pushState: function(state) {
-  _$jscoverage['/kison/lexer.js'].functionData[8]++;
-  _$jscoverage['/kison/lexer.js'].lineData[154]++;
+  _$jscoverage['/kison/lexer.js'].functionData[9]++;
+  _$jscoverage['/kison/lexer.js'].lineData[174]++;
   this.stateStack.push(state);
 }, 
   popState: function() {
-  _$jscoverage['/kison/lexer.js'].functionData[9]++;
-  _$jscoverage['/kison/lexer.js'].lineData[158]++;
+  _$jscoverage['/kison/lexer.js'].functionData[10]++;
+  _$jscoverage['/kison/lexer.js'].lineData[178]++;
   return this.stateStack.pop();
 }, 
   getStateStack: function() {
-  _$jscoverage['/kison/lexer.js'].functionData[10]++;
-  _$jscoverage['/kison/lexer.js'].lineData[162]++;
+  _$jscoverage['/kison/lexer.js'].functionData[11]++;
+  _$jscoverage['/kison/lexer.js'].lineData[182]++;
   return this.stateStack;
 }, 
   showDebugInfo: function() {
-  _$jscoverage['/kison/lexer.js'].functionData[11]++;
-  _$jscoverage['/kison/lexer.js'].lineData[166]++;
+  _$jscoverage['/kison/lexer.js'].functionData[12]++;
+  _$jscoverage['/kison/lexer.js'].lineData[186]++;
   var self = this, DEBUG_CONTEXT_LIMIT = Lexer.STATIC.DEBUG_CONTEXT_LIMIT, matched = self.matched, match = self.match, input = self.input;
-  _$jscoverage['/kison/lexer.js'].lineData[171]++;
+  _$jscoverage['/kison/lexer.js'].lineData[191]++;
   matched = matched.slice(0, matched.length - match.length);
-  _$jscoverage['/kison/lexer.js'].lineData[172]++;
-  var past = (visit104_172_1(matched.length > DEBUG_CONTEXT_LIMIT) ? "..." : "") + matched.slice(-DEBUG_CONTEXT_LIMIT).replace(/\n/, " "), next = match + input;
-  _$jscoverage['/kison/lexer.js'].lineData[175]++;
-  next = next.slice(0, DEBUG_CONTEXT_LIMIT) + (visit105_176_1(next.length > DEBUG_CONTEXT_LIMIT) ? "..." : "");
-  _$jscoverage['/kison/lexer.js'].lineData[177]++;
-  return past + next + "\n" + new Array(past.length + 1).join("-") + "^";
+  _$jscoverage['/kison/lexer.js'].lineData[192]++;
+  var past = (visit106_192_1(matched.length > DEBUG_CONTEXT_LIMIT) ? '...' : '') + matched.slice(-DEBUG_CONTEXT_LIMIT).replace(/\n/, ' '), next = match + input;
+  _$jscoverage['/kison/lexer.js'].lineData[195]++;
+  next = next.slice(0, DEBUG_CONTEXT_LIMIT) + (visit107_196_1(next.length > DEBUG_CONTEXT_LIMIT) ? '...' : '');
+  _$jscoverage['/kison/lexer.js'].lineData[197]++;
+  return past + next + '\n' + new Array(past.length + 1).join('-') + '^';
 }, 
   mapSymbol: function(t) {
-  _$jscoverage['/kison/lexer.js'].functionData[12]++;
-  _$jscoverage['/kison/lexer.js'].lineData[181]++;
+  _$jscoverage['/kison/lexer.js'].functionData[13]++;
+  _$jscoverage['/kison/lexer.js'].lineData[201]++;
   var self = this, symbolMap = self.symbolMap;
-  _$jscoverage['/kison/lexer.js'].lineData[183]++;
-  if (visit106_183_1(!symbolMap)) {
-    _$jscoverage['/kison/lexer.js'].lineData[184]++;
+  _$jscoverage['/kison/lexer.js'].lineData[203]++;
+  if (visit108_203_1(!symbolMap)) {
+    _$jscoverage['/kison/lexer.js'].lineData[204]++;
     return t;
   }
-  _$jscoverage['/kison/lexer.js'].lineData[186]++;
-  return visit107_186_1(symbolMap[t] || (symbolMap[t] = (++self.symbolId)));
+  _$jscoverage['/kison/lexer.js'].lineData[207]++;
+  return visit109_207_1(symbolMap[t] || (symbolMap[t] = self.genShortId('symbol')));
 }, 
   mapReverseSymbol: function(rs) {
-  _$jscoverage['/kison/lexer.js'].functionData[13]++;
-  _$jscoverage['/kison/lexer.js'].lineData[190]++;
+  _$jscoverage['/kison/lexer.js'].functionData[14]++;
+  _$jscoverage['/kison/lexer.js'].lineData[211]++;
   var self = this, symbolMap = self.symbolMap, i, reverseSymbolMap = self.reverseSymbolMap;
-  _$jscoverage['/kison/lexer.js'].lineData[194]++;
-  if (visit108_194_1(!reverseSymbolMap && symbolMap)) {
-    _$jscoverage['/kison/lexer.js'].lineData[195]++;
+  _$jscoverage['/kison/lexer.js'].lineData[215]++;
+  if (visit110_215_1(!reverseSymbolMap && symbolMap)) {
+    _$jscoverage['/kison/lexer.js'].lineData[216]++;
     reverseSymbolMap = self.reverseSymbolMap = {};
-    _$jscoverage['/kison/lexer.js'].lineData[196]++;
+    _$jscoverage['/kison/lexer.js'].lineData[217]++;
     for (i in symbolMap) {
-      _$jscoverage['/kison/lexer.js'].lineData[197]++;
+      _$jscoverage['/kison/lexer.js'].lineData[218]++;
       reverseSymbolMap[symbolMap[i]] = i;
     }
   }
-  _$jscoverage['/kison/lexer.js'].lineData[200]++;
-  if (visit109_200_1(reverseSymbolMap)) {
-    _$jscoverage['/kison/lexer.js'].lineData[201]++;
+  _$jscoverage['/kison/lexer.js'].lineData[221]++;
+  if (visit111_221_1(reverseSymbolMap)) {
+    _$jscoverage['/kison/lexer.js'].lineData[222]++;
     return reverseSymbolMap[rs];
   } else {
-    _$jscoverage['/kison/lexer.js'].lineData[203]++;
+    _$jscoverage['/kison/lexer.js'].lineData[224]++;
     return rs;
   }
 }, 
   mapState: function(s) {
-  _$jscoverage['/kison/lexer.js'].functionData[14]++;
-  _$jscoverage['/kison/lexer.js'].lineData[208]++;
+  _$jscoverage['/kison/lexer.js'].functionData[15]++;
+  _$jscoverage['/kison/lexer.js'].lineData[229]++;
   var self = this, stateMap = self.stateMap;
-  _$jscoverage['/kison/lexer.js'].lineData[210]++;
-  if (visit110_210_1(!stateMap)) {
-    _$jscoverage['/kison/lexer.js'].lineData[211]++;
+  _$jscoverage['/kison/lexer.js'].lineData[231]++;
+  if (visit112_231_1(!stateMap)) {
+    _$jscoverage['/kison/lexer.js'].lineData[232]++;
     return s;
   }
-  _$jscoverage['/kison/lexer.js'].lineData[213]++;
-  return visit111_213_1(stateMap[s] || (stateMap[s] = (++self.stateId)));
+  _$jscoverage['/kison/lexer.js'].lineData[234]++;
+  return visit113_234_1(stateMap[s] || (stateMap[s] = self.genShortId('state')));
 }, 
   lex: function() {
-  _$jscoverage['/kison/lexer.js'].functionData[15]++;
-  _$jscoverage['/kison/lexer.js'].lineData[217]++;
+  _$jscoverage['/kison/lexer.js'].functionData[16]++;
+  _$jscoverage['/kison/lexer.js'].lineData[238]++;
   var self = this, input = self.input, i, rule, m, ret, lines, rules = self.getCurrentRules();
-  _$jscoverage['/kison/lexer.js'].lineData[226]++;
-  self.match = self.text = "";
-  _$jscoverage['/kison/lexer.js'].lineData[228]++;
-  if (visit112_228_1(!input)) {
-    _$jscoverage['/kison/lexer.js'].lineData[229]++;
+  _$jscoverage['/kison/lexer.js'].lineData[247]++;
+  self.match = self.text = '';
+  _$jscoverage['/kison/lexer.js'].lineData[249]++;
+  if (visit114_249_1(!input)) {
+    _$jscoverage['/kison/lexer.js'].lineData[250]++;
     return self.mapSymbol(Lexer.STATIC.END_TAG);
   }
-  _$jscoverage['/kison/lexer.js'].lineData[232]++;
-  for (i = 0; visit113_232_1(i < rules.length); i++) {
-    _$jscoverage['/kison/lexer.js'].lineData[233]++;
+  _$jscoverage['/kison/lexer.js'].lineData[253]++;
+  for (i = 0; visit115_253_1(i < rules.length); i++) {
+    _$jscoverage['/kison/lexer.js'].lineData[254]++;
     rule = rules[i];
-    _$jscoverage['/kison/lexer.js'].lineData[234]++;
-    var regexp = visit114_234_1(rule.regexp || rule[1]), token = visit115_235_1(rule.token || rule[0]), action = visit116_236_1(rule.action || visit117_236_2(rule[2] || undefined));
-    _$jscoverage['/kison/lexer.js'].lineData[237]++;
-    if (visit118_237_1(m = input.match(regexp))) {
-      _$jscoverage['/kison/lexer.js'].lineData[238]++;
+    _$jscoverage['/kison/lexer.js'].lineData[255]++;
+    var regexp = visit116_255_1(rule.regexp || rule[1]), token = visit117_256_1(rule.token || rule[0]), action = visit118_257_1(rule.action || visit119_257_2(rule[2] || undefined));
+    _$jscoverage['/kison/lexer.js'].lineData[258]++;
+    if ((m = input.match(regexp))) {
+      _$jscoverage['/kison/lexer.js'].lineData[259]++;
       lines = m[0].match(/\n.*/g);
-      _$jscoverage['/kison/lexer.js'].lineData[239]++;
-      if (visit119_239_1(lines)) {
-        _$jscoverage['/kison/lexer.js'].lineData[240]++;
+      _$jscoverage['/kison/lexer.js'].lineData[260]++;
+      if (visit120_260_1(lines)) {
+        _$jscoverage['/kison/lexer.js'].lineData[261]++;
         self.lineNumber += lines.length;
       }
-      _$jscoverage['/kison/lexer.js'].lineData[242]++;
+      _$jscoverage['/kison/lexer.js'].lineData[263]++;
       S.mix(self, {
   firstLine: self.lastLine, 
   lastLine: self.lineNumber + 1, 
   firstColumn: self.lastColumn, 
   lastColumn: lines ? lines[lines.length - 1].length - 1 : self.lastColumn + m[0].length});
-      _$jscoverage['/kison/lexer.js'].lineData[250]++;
+      _$jscoverage['/kison/lexer.js'].lineData[271]++;
       var match;
-      _$jscoverage['/kison/lexer.js'].lineData[252]++;
+      _$jscoverage['/kison/lexer.js'].lineData[273]++;
       match = self.match = m[0];
-      _$jscoverage['/kison/lexer.js'].lineData[255]++;
+      _$jscoverage['/kison/lexer.js'].lineData[276]++;
       self.matches = m;
-      _$jscoverage['/kison/lexer.js'].lineData[257]++;
+      _$jscoverage['/kison/lexer.js'].lineData[278]++;
       self.text = match;
-      _$jscoverage['/kison/lexer.js'].lineData[259]++;
+      _$jscoverage['/kison/lexer.js'].lineData[280]++;
       self.matched += match;
-      _$jscoverage['/kison/lexer.js'].lineData[260]++;
-      ret = visit120_260_1(action && action.call(self));
-      _$jscoverage['/kison/lexer.js'].lineData[261]++;
-      if (visit121_261_1(ret == undefined)) {
-        _$jscoverage['/kison/lexer.js'].lineData[262]++;
+      _$jscoverage['/kison/lexer.js'].lineData[281]++;
+      ret = visit121_281_1(action && action.call(self));
+      _$jscoverage['/kison/lexer.js'].lineData[282]++;
+      if (visit122_282_1(ret === undefined)) {
+        _$jscoverage['/kison/lexer.js'].lineData[283]++;
         ret = token;
       } else {
-        _$jscoverage['/kison/lexer.js'].lineData[264]++;
+        _$jscoverage['/kison/lexer.js'].lineData[285]++;
         ret = self.mapSymbol(ret);
       }
-      _$jscoverage['/kison/lexer.js'].lineData[266]++;
+      _$jscoverage['/kison/lexer.js'].lineData[287]++;
       input = input.slice(match.length);
-      _$jscoverage['/kison/lexer.js'].lineData[267]++;
+      _$jscoverage['/kison/lexer.js'].lineData[288]++;
       self.input = input;
-      _$jscoverage['/kison/lexer.js'].lineData[269]++;
-      if (visit122_269_1(ret)) {
-        _$jscoverage['/kison/lexer.js'].lineData[270]++;
+      _$jscoverage['/kison/lexer.js'].lineData[290]++;
+      if (visit123_290_1(ret)) {
+        _$jscoverage['/kison/lexer.js'].lineData[291]++;
         return ret;
       } else {
-        _$jscoverage['/kison/lexer.js'].lineData[273]++;
+        _$jscoverage['/kison/lexer.js'].lineData[294]++;
         return self.lex();
       }
     }
   }
-  _$jscoverage['/kison/lexer.js'].lineData[278]++;
-  S.error("lex error at line " + self.lineNumber + ":\n" + self.showDebugInfo());
-  _$jscoverage['/kison/lexer.js'].lineData[279]++;
+  _$jscoverage['/kison/lexer.js'].lineData[299]++;
+  S.error('lex error at line ' + self.lineNumber + ':\n' + self.showDebugInfo());
+  _$jscoverage['/kison/lexer.js'].lineData[300]++;
   return undefined;
 }};
-  _$jscoverage['/kison/lexer.js'].lineData[283]++;
+  _$jscoverage['/kison/lexer.js'].lineData[304]++;
   return Lexer;
 });

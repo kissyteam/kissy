@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:48
+build time: Nov 29 16:36
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -20,7 +20,7 @@ KISSY.add("kison/utils", [], function(S) {
   var doubleReg = /"/g, single = /'/g, escapeString;
   return{escapeString:escapeString = function(str, quote) {
     var regexp = single;
-    if(quote == '"') {
+    if(quote === '"') {
       regexp = doubleReg
     }else {
       quote = "'"
@@ -35,7 +35,7 @@ KISSY.add("kison/utils", [], function(S) {
       obj = r
     }
     var ret = [];
-    if(typeof obj == "string") {
+    if(typeof obj === "string") {
       return"'" + escapeString(obj) + "'"
     }else {
       if(typeof obj === "number") {
@@ -58,7 +58,8 @@ KISSY.add("kison/utils", [], function(S) {
             return ret.join("")
           }else {
             if(S.isObject(obj)) {
-              ret = ["{"];
+              ret = [];
+              ret[0] = "{";
               var start = 1;
               for(var i in obj) {
                 var v = obj[i];
@@ -84,14 +85,14 @@ KISSY.add("kison/utils", [], function(S) {
     }
   }}
 });
-KISSY.add("kison/item", ["base"], function(S, require) {
+KISSY.add("kison/item", ["base"], function(S, require, exports, module) {
   var Base = require("base");
-  return Base.extend({equals:function(other, ignoreLookAhead) {
+  module.exports = Base.extend({equals:function(other, ignoreLookAhead) {
     var self = this;
     if(!other.get("production").equals(self.get("production"))) {
       return false
     }
-    if(other.get("dotPosition") != self.get("dotPosition")) {
+    if(other.get("dotPosition") !== self.get("dotPosition")) {
       return false
     }
     if(!ignoreLookAhead) {
@@ -137,7 +138,7 @@ KISSY.add("kison/item-set", ["base"], function(S, require) {
     return this.get("items")[index]
   }, equals:function(other, ignoreLookAhead) {
     var oneItems = this.get("items"), i, otherItems = other.get("items");
-    if(oneItems.length != otherItems.length) {
+    if(oneItems.length !== otherItems.length) {
       return false
     }
     for(i = 0;i < oneItems.length;i++) {
@@ -181,9 +182,22 @@ KISSY.add("kison/lexer", ["./utils"], function(S, require) {
   Lexer.STATIC = {INITIAL:"I", DEBUG_CONTEXT_LIMIT:20, END_TAG:"$EOF"};
   Lexer.prototype = {constructor:Lexer, resetInput:function(input) {
     S.mix(this, {input:input, matched:"", stateStack:[Lexer.STATIC.INITIAL], match:"", text:"", firstLine:1, lineNumber:1, lastLine:1, firstColumn:1, lastColumn:1})
+  }, genShortId:function(field) {
+    var base = 97, max = 122, interval = max - base + 1;
+    field += "__gen";
+    var self = this;
+    if(!(field in self)) {
+      self[field] = -1
+    }
+    var index = self[field] = self[field] + 1;
+    var ret = "";
+    do {
+      ret = String.fromCharCode(base + index % interval) + ret;
+      index = Math.floor(index / interval) - 1
+    }while(index >= 0);
+    return ret
   }, genCode:function(cfg) {
-    var STATIC = Lexer.STATIC, self = this, compressSymbol = cfg.compressSymbol, compressState = cfg.compressLexerState, code = [], stateMap;
-    self.symbolId = self.stateId = 0;
+    var STATIC = Lexer.STATIC, self = this, compressSymbol = cfg.compressSymbol, compressState = cfg.compressLexerState, code = ["/*jslint quotmark: false*/"], stateMap;
     if(compressSymbol) {
       self.symbolMap = {};
       self.mapSymbol(STATIC.END_TAG)
@@ -227,7 +241,7 @@ KISSY.add("kison/lexer", ["./utils"], function(S, require) {
     S.each(self.rules, function(r) {
       var state = r.state || r[3];
       if(!state) {
-        if(currentState == Lexer.STATIC.INITIAL) {
+        if(currentState === Lexer.STATIC.INITIAL) {
           rules.push(r)
         }
       }else {
@@ -254,7 +268,7 @@ KISSY.add("kison/lexer", ["./utils"], function(S, require) {
     if(!symbolMap) {
       return t
     }
-    return symbolMap[t] || (symbolMap[t] = ++self.symbolId)
+    return symbolMap[t] || (symbolMap[t] = self.genShortId("symbol"))
   }, mapReverseSymbol:function(rs) {
     var self = this, symbolMap = self.symbolMap, i, reverseSymbolMap = self.reverseSymbolMap;
     if(!reverseSymbolMap && symbolMap) {
@@ -273,7 +287,7 @@ KISSY.add("kison/lexer", ["./utils"], function(S, require) {
     if(!stateMap) {
       return s
     }
-    return stateMap[s] || (stateMap[s] = ++self.stateId)
+    return stateMap[s] || (stateMap[s] = self.genShortId("state"))
   }, lex:function() {
     var self = this, input = self.input, i, rule, m, ret, lines, rules = self.getCurrentRules();
     self.match = self.text = "";
@@ -295,7 +309,7 @@ KISSY.add("kison/lexer", ["./utils"], function(S, require) {
         self.text = match;
         self.matched += match;
         ret = action && action.call(self);
-        if(ret == undefined) {
+        if(ret === undefined) {
           ret = token
         }else {
           ret = self.mapSymbol(ret)
@@ -321,17 +335,17 @@ KISSY.add("kison/production", ["base"], function(S, require) {
     if(!S.equals(other.get("rhs"), self.get("rhs"))) {
       return false
     }
-    return other.get("symbol") == self.get("symbol")
+    return other.get("symbol") === self.get("symbol")
   }, toString:function(dot) {
     var rhsStr = "";
     var rhs = this.get("rhs");
     S.each(rhs, function(r, index) {
-      if(index == dot) {
+      if(index === dot) {
         rhsStr += " . "
       }
       rhsStr += r + " "
     });
-    if(dot == rhs.length) {
+    if(dot === rhs.length) {
       rhsStr += " . "
     }
     return this.get("symbol") + " => " + rhsStr
@@ -375,13 +389,13 @@ KISSY.add("kison/grammar", ["base", "./utils", "./item", "./item-set", "./non-te
         break
     }
     logger.debug("from production:");
-    if(action[GrammarConst.PRODUCTION_INDEX] != undefined) {
+    if(action[GrammarConst.PRODUCTION_INDEX] !== undefined) {
       logger.debug(productions[action[GrammarConst.PRODUCTION_INDEX]] + "")
     }else {
       logger.debug("undefined")
     }
     logger.debug("to itemSet:");
-    if(action[GrammarConst.TO_INDEX] != undefined) {
+    if(action[GrammarConst.TO_INDEX] !== undefined) {
       logger.debug(itemSets[action[GrammarConst.TO_INDEX]].toString(1))
     }else {
       logger.debug("undefined")
@@ -495,7 +509,7 @@ KISSY.add("kison/grammar", ["base", "./utils", "./item", "./item-set", "./non-te
       }
     }
   }, buildFirsts:function() {
-    var self = this, nonTerminal, productions = self.get("productions"), nonTerminals = self.get("nonTerminals"), cont = true, symbol, firsts;
+    var self = this, nonTerminal, nonTerminals = self.get("nonTerminals"), cont = true, symbol, firsts;
     while(cont) {
       cont = false;
       S.each(self.get("productions"), function(production) {
@@ -529,9 +543,9 @@ KISSY.add("kison/grammar", ["base", "./utils", "./item", "./item-set", "./non-te
           S.mix(finalFirsts, self.findFirst(rightRhs))
         });
         S.each(productions, function(p2) {
-          if(p2.get("symbol") == dotSymbol) {
+          if(p2.get("symbol") === dotSymbol) {
             var newItem = new Item({production:p2}), itemIndex = itemSet.findItemIndex(newItem, true), findItem;
-            if(itemIndex != -1) {
+            if(itemIndex !== -1) {
               findItem = itemSet.getItemAt(itemIndex);
               cont = cont || !!findItem.addLookAhead(finalFirsts)
             }else {
@@ -548,9 +562,9 @@ KISSY.add("kison/grammar", ["base", "./utils", "./item", "./item-set", "./non-te
     var j = new ItemSet, iItems = i.get("items");
     S.each(iItems, function(item) {
       var production = item.get("production"), dotPosition = item.get("dotPosition"), markSymbol = production.get("rhs")[dotPosition];
-      if(markSymbol == x) {
+      if(markSymbol === x) {
         var newItem = new Item({production:production, dotPosition:dotPosition + 1}), itemIndex = j.findItemIndex(newItem, true), findItem;
-        if(itemIndex != -1) {
+        if(itemIndex !== -1) {
           findItem = j.getItemAt(itemIndex);
           findItem.addLookAhead(item.get("lookAhead"))
         }else {
@@ -588,7 +602,7 @@ KISSY.add("kison/grammar", ["base", "./utils", "./item", "./item-set", "./non-te
           }
           var itemSetNew = self.gotos(itemSet, symbol);
           itemSet.__cache[symbol] = 1;
-          if(itemSetNew.size() == 0) {
+          if(itemSetNew.size() === 0) {
             return
           }
           var index = self.findItemSetIndex(itemSetNew);
@@ -638,14 +652,14 @@ KISSY.add("kison/grammar", ["base", "./utils", "./item", "./item-set", "./non-te
       S.each(itemSet.get("items"), function(item) {
         var production = item.get("production");
         var val;
-        if(item.get("dotPosition") == production.get("rhs").length) {
-          if(production.get("symbol") == mappedStartTag) {
+        if(item.get("dotPosition") === production.get("rhs").length) {
+          if(production.get("symbol") === mappedStartTag) {
             if(item.get("lookAhead")[mappedEndTag]) {
               action[i] = action[i] || {};
               t = action[i][mappedEndTag];
               val = [];
               val[GrammarConst.TYPE_INDEX] = GrammarConst.ACCEPT_TYPE;
-              if(t && t.toString() != val.toString()) {
+              if(t && t.toString() !== val.toString()) {
                 logger.debug((new Array(29)).join("*"));
                 logger.debug("***** conflict in reduce: action already defined ->", "warn");
                 logger.debug("***** current item:", "info");
@@ -664,7 +678,7 @@ KISSY.add("kison/grammar", ["base", "./utils", "./item", "./item-set", "./non-te
               val = [];
               val[GrammarConst.TYPE_INDEX] = GrammarConst.REDUCE_TYPE;
               val[GrammarConst.PRODUCTION_INDEX] = S.indexOf(production, productions);
-              if(t && t.toString() != val.toString()) {
+              if(t && t.toString() !== val.toString()) {
                 logger.debug((new Array(29)).join("*"));
                 logger.debug("conflict in reduce: action already defined ->", "warn");
                 logger.debug("***** current item:", "info");
@@ -687,7 +701,7 @@ KISSY.add("kison/grammar", ["base", "./utils", "./item", "./item-set", "./non-te
           val[GrammarConst.TYPE_INDEX] = GrammarConst.SHIFT_TYPE;
           val[GrammarConst.TO_INDEX] = indexOf(anotherItemSet, itemSets);
           t = action[i][symbol];
-          if(t && t.toString() != val.toString()) {
+          if(t && t.toString() !== val.toString()) {
             logger.debug((new Array(29)).join("*"));
             logger.debug("conflict in shift: action already defined ->", "warn");
             logger.debug("***** current itemSet:", "info");
@@ -706,7 +720,7 @@ KISSY.add("kison/grammar", ["base", "./utils", "./item", "./item-set", "./non-te
           gotos[i] = gotos[i] || {};
           t = gotos[i][symbol];
           val = indexOf(anotherItemSet, itemSets);
-          if(t && val != t) {
+          if(t && val !== t) {
             logger.debug((new Array(29)).join("*"));
             logger.debug("conflict in shift: goto already defined ->", "warn");
             logger.debug("***** current itemSet:", "info");
@@ -736,14 +750,14 @@ KISSY.add("kison/grammar", ["base", "./utils", "./item", "./item-set", "./non-te
     S.each(action, function(av, index) {
       S.each(av, function(v, s) {
         var str, type = v[GrammarConst.TYPE_INDEX];
-        if(type == GrammarConst.ACCEPT_TYPE) {
+        if(type === GrammarConst.ACCEPT_TYPE) {
           str = "acc"
         }else {
-          if(type == GrammarConst.REDUCE_TYPE) {
+          if(type === GrammarConst.REDUCE_TYPE) {
             var production = productions[v[GrammarConst.PRODUCTION_INDEX]];
             str = "r, " + production.get("symbol") + "=" + production.get("rhs").join(" ")
           }else {
-            if(type == GrammarConst.SHIFT_TYPE) {
+            if(type === GrammarConst.SHIFT_TYPE) {
               str = "s, " + v[GrammarConst.TO_INDEX]
             }
           }
@@ -806,9 +820,9 @@ KISSY.add("kison/grammar", ["base", "./utils", "./item", "./item-set", "./non-te
       if(!action) {
         var expected = [], error;
         if(tableAction[state]) {
-          S.each(tableAction[state], function(_, symbol) {
-            expected.push(self.lexer.mapReverseSymbol(symbol))
-          })
+          for(var symbolForState in tableAction[state]) {
+            expected.push(self.lexer.mapReverseSymbol(symbolForState))
+          }
         }
         error = "Syntax error at line " + lexer.lineNumber + ":\n" + lexer.showDebugInfo() + "\n" + "expect " + expected.join(", ");
         S.error(error);
@@ -822,7 +836,8 @@ KISSY.add("kison/grammar", ["base", "./utils", "./item", "./item-set", "./non-te
           symbol = null;
           break;
         case GrammarConst.REDUCE_TYPE:
-          var production = productions[action[GrammarConst.PRODUCTION_INDEX]], reducedSymbol = production.symbol || production[0], reducedAction = production.action || production[2], reducedRhs = production.rhs || production[1], len = reducedRhs.length, i = 0, ret = undefined, $$ = valueStack[valueStack.length - len];
+          var production = productions[action[GrammarConst.PRODUCTION_INDEX]], reducedSymbol = production.symbol || production[0], reducedAction = production.action || production[2], reducedRhs = production.rhs || production[1], len = reducedRhs.length, i = 0, ret, $$ = valueStack[valueStack.length - len];
+          ret = undefined;
           self.$$ = $$;
           for(;i < len;i++) {
             self["$" + (len - i)] = valueStack[valueStack.length - 1 - i]
@@ -864,7 +879,7 @@ KISSY.add("kison", ["kison/grammar", "kison/production", "kison/lexer", "kison/u
   if("@DEBUG@") {
     return Kison
   }else {
-    alert("kison can only use uncompressed version!");
+    window.alert("kison can only use uncompressed version!");
     return null
   }
 });

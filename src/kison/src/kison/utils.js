@@ -14,10 +14,10 @@ KISSY.add(function (S) {
     return {
         escapeString: escapeString = function (str, quote) {
             var regexp = single;
-            if (quote == '"') {
+            if (quote === '"') {
                 regexp = doubleReg;
             } else {
-                quote = "'";
+                quote = '\'';
             }
             return str.replace(/\\/g, '\\\\')
                 .replace(/\r/g, '\\r')
@@ -41,10 +41,10 @@ KISSY.add(function (S) {
 
             var ret = [];
 
-            if (typeof obj == 'string') {
-                return "'" + escapeString(obj) + "'";
-            } else if (typeof obj==='number') {
-                return obj + "";
+            if (typeof obj === 'string') {
+                return '\'' + escapeString(obj) + '\'';
+            } else if (typeof obj === 'number') {
+                return obj + '';
             } else if (S.isRegExp(obj)) {
                 return '/' +
                     obj.source + '/' +
@@ -62,9 +62,10 @@ KISSY.add(function (S) {
                 });
                 ret.push(sub.join(', '));
                 ret.push(']');
-                return ret.join("");
+                return ret.join('');
             } else if (S.isObject(obj)) {
-                ret = ['{'];
+                ret = [];
+                ret[0] = '{';
                 var start = 1;
                 for (var i in obj) {
                     var v = obj[i];
@@ -75,6 +76,7 @@ KISSY.add(function (S) {
                     if (t === false) {
                         continue;
                     }
+                    /*jshint quotmark:false*/
                     var key = "'" + escapeString(i) + "'";
                     ret.push((start ? '' : ',') + key + ': ' + t);
                     start = 0;

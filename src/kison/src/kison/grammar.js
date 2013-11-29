@@ -763,9 +763,9 @@ KISSY.add(function (S, require) {
             if (!action) {
                 var expected = [], error;
                 if (tableAction[state]) {
-                    S.each(tableAction[state], function (_, symbol) {
-                        expected.push(self.lexer.mapReverseSymbol(symbol));
-                    });
+                    for (var symbolForState in tableAction[state]) {
+                        expected.push(self.lexer.mapReverseSymbol(symbolForState));
+                    }
                 }
                 error = 'Syntax error at line ' + lexer.lineNumber +
                     ':\n' + lexer.showDebugInfo() +

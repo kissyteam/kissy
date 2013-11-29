@@ -3,19 +3,19 @@
  * Item for KISON
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, require) {
-        var Base = require('base');
+KISSY.add(function (S, require, exports, module) {
+    var Base = require('base');
     /**
      * grammar item
      * @class KISSY.Kison.Item
      */
-    return Base.extend({
+    module.exports = Base.extend({
         equals: function (other, ignoreLookAhead) {
             var self = this;
             if (!other.get('production').equals(self.get('production'))) {
                 return false;
             }
-            if (other.get('dotPosition') != self.get('dotPosition')) {
+            if (other.get('dotPosition') !== self.get('dotPosition')) {
                 return false;
             }
             if (!ignoreLookAhead) {
@@ -28,9 +28,8 @@ KISSY.add(function (S, require) {
 
         toString: function (ignoreLookAhead) {
             return this.get('production')
-                .toString(this.get('dotPosition'))
-                + (ignoreLookAhead ? "" :
-                ("," + S.keys(this.get('lookAhead')).join("/")));
+                .toString(this.get('dotPosition')) + (ignoreLookAhead ? '' :
+                (',' + S.keys(this.get('lookAhead')).join('/')));
         },
 
         addLookAhead: function (ls) {

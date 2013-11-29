@@ -299,39 +299,39 @@ if (! _$jscoverage['/kison/item-set.js'].branchData) {
   _$jscoverage['/kison/item-set.js'].branchData['75'] = [];
   _$jscoverage['/kison/item-set.js'].branchData['75'][1] = new BranchData();
 }
-_$jscoverage['/kison/item-set.js'].branchData['75'][1].init(93, 26, 'reverseGotos[symbol] || []');
+_$jscoverage['/kison/item-set.js'].branchData['75'][1].init(95, 26, 'reverseGotos[symbol] || []');
 function visit83_75_1(result) {
   _$jscoverage['/kison/item-set.js'].branchData['75'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kison/item-set.js'].branchData['62'][1].init(201, 8, 'withGoto');
+}_$jscoverage['/kison/item-set.js'].branchData['62'][1].init(207, 8, 'withGoto');
 function visit82_62_1(result) {
   _$jscoverage['/kison/item-set.js'].branchData['62'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kison/item-set.js'].branchData['50'][1].init(21, 51, '!oneItems[i].equals(otherItems[i], ignoreLookAhead)');
+}_$jscoverage['/kison/item-set.js'].branchData['50'][1].init(22, 51, '!oneItems[i].equals(otherItems[i], ignoreLookAhead)');
 function visit81_50_1(result) {
   _$jscoverage['/kison/item-set.js'].branchData['50'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kison/item-set.js'].branchData['49'][1].init(239, 19, 'i < oneItems.length');
+}_$jscoverage['/kison/item-set.js'].branchData['49'][1].init(247, 19, 'i < oneItems.length');
 function visit80_49_1(result) {
   _$jscoverage['/kison/item-set.js'].branchData['49'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kison/item-set.js'].branchData['46'][1].init(131, 36, 'oneItems.length != otherItems.length');
+}_$jscoverage['/kison/item-set.js'].branchData['46'][1].init(135, 37, 'oneItems.length !== otherItems.length');
 function visit79_46_1(result) {
   _$jscoverage['/kison/item-set.js'].branchData['46'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kison/item-set.js'].branchData['31'][1].init(21, 41, 'oneItems[i].equals(item, ignoreLookAhead)');
+}_$jscoverage['/kison/item-set.js'].branchData['31'][1].init(22, 41, 'oneItems[i].equals(item, ignoreLookAhead)');
 function visit78_31_1(result) {
   _$jscoverage['/kison/item-set.js'].branchData['31'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kison/item-set.js'].branchData['30'][1].init(75, 19, 'i < oneItems.length');
+}_$jscoverage['/kison/item-set.js'].branchData['30'][1].init(77, 19, 'i < oneItems.length');
 function visit77_30_1(result) {
   _$jscoverage['/kison/item-set.js'].branchData['30'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kison/item-set.js'].branchData['17'][1].init(21, 73, 'items[i].get("production").toString() > item.get("production").toString()');
+}_$jscoverage['/kison/item-set.js'].branchData['17'][1].init(22, 73, 'items[i].get(\'production\').toString() > item.get(\'production\').toString()');
 function visit76_17_1(result) {
   _$jscoverage['/kison/item-set.js'].branchData['17'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kison/item-set.js'].branchData['16'][1].init(72, 16, 'i < items.length');
+}_$jscoverage['/kison/item-set.js'].branchData['16'][1].init(74, 16, 'i < items.length');
 function visit75_16_1(result) {
   _$jscoverage['/kison/item-set.js'].branchData['16'][1].ranCondition(result);
   return result;
@@ -345,11 +345,11 @@ KISSY.add(function(S, require) {
   addItem: function(item) {
   _$jscoverage['/kison/item-set.js'].functionData[1]++;
   _$jscoverage['/kison/item-set.js'].lineData[15]++;
-  var items = this.get("items");
+  var items = this.get('items');
   _$jscoverage['/kison/item-set.js'].lineData[16]++;
   for (var i = 0; visit75_16_1(i < items.length); i++) {
     _$jscoverage['/kison/item-set.js'].lineData[17]++;
-    if (visit76_17_1(items[i].get("production").toString() > item.get("production").toString())) {
+    if (visit76_17_1(items[i].get('production').toString() > item.get('production').toString())) {
       _$jscoverage['/kison/item-set.js'].lineData[18]++;
       break;
     }
@@ -360,12 +360,12 @@ KISSY.add(function(S, require) {
   size: function() {
   _$jscoverage['/kison/item-set.js'].functionData[2]++;
   _$jscoverage['/kison/item-set.js'].lineData[25]++;
-  return this.get("items").length;
+  return this.get('items').length;
 }, 
   findItemIndex: function(item, ignoreLookAhead) {
   _$jscoverage['/kison/item-set.js'].functionData[3]++;
   _$jscoverage['/kison/item-set.js'].lineData[29]++;
-  var oneItems = this.get("items");
+  var oneItems = this.get('items');
   _$jscoverage['/kison/item-set.js'].lineData[30]++;
   for (var i = 0; visit77_30_1(i < oneItems.length); i++) {
     _$jscoverage['/kison/item-set.js'].lineData[31]++;
@@ -380,14 +380,14 @@ KISSY.add(function(S, require) {
   getItemAt: function(index) {
   _$jscoverage['/kison/item-set.js'].functionData[4]++;
   _$jscoverage['/kison/item-set.js'].lineData[39]++;
-  return this.get("items")[index];
+  return this.get('items')[index];
 }, 
   equals: function(other, ignoreLookAhead) {
   _$jscoverage['/kison/item-set.js'].functionData[5]++;
   _$jscoverage['/kison/item-set.js'].lineData[43]++;
-  var oneItems = this.get("items"), i, otherItems = other.get("items");
+  var oneItems = this.get('items'), i, otherItems = other.get('items');
   _$jscoverage['/kison/item-set.js'].lineData[46]++;
-  if (visit79_46_1(oneItems.length != otherItems.length)) {
+  if (visit79_46_1(oneItems.length !== otherItems.length)) {
     _$jscoverage['/kison/item-set.js'].lineData[47]++;
     return false;
   }
@@ -407,7 +407,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/kison/item-set.js'].lineData[57]++;
   var ret = [], gotos = this.get('gotos');
   _$jscoverage['/kison/item-set.js'].lineData[59]++;
-  S.each(this.get("items"), function(item) {
+  S.each(this.get('items'), function(item) {
   _$jscoverage['/kison/item-set.js'].functionData[7]++;
   _$jscoverage['/kison/item-set.js'].lineData[60]++;
   ret.push(item.toString());
@@ -428,12 +428,12 @@ KISSY.add(function(S, require) {
     ret.push('end gotos:');
   }
   _$jscoverage['/kison/item-set.js'].lineData[70]++;
-  return ret.join("\n");
+  return ret.join('\n');
 }, 
   addReverseGoto: function(symbol, item) {
   _$jscoverage['/kison/item-set.js'].functionData[9]++;
   _$jscoverage['/kison/item-set.js'].lineData[74]++;
-  var reverseGotos = this.get("reverseGotos");
+  var reverseGotos = this.get('reverseGotos');
   _$jscoverage['/kison/item-set.js'].lineData[75]++;
   reverseGotos[symbol] = visit83_75_1(reverseGotos[symbol] || []);
   _$jscoverage['/kison/item-set.js'].lineData[76]++;

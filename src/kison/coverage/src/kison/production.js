@@ -264,20 +264,20 @@ if (! _$jscoverage['/kison/production.js'].branchData) {
   _$jscoverage['/kison/production.js'].branchData['31'] = [];
   _$jscoverage['/kison/production.js'].branchData['31'][1] = new BranchData();
 }
-_$jscoverage['/kison/production.js'].branchData['31'][1].init(271, 17, 'dot == rhs.length');
-function visit126_31_1(result) {
+_$jscoverage['/kison/production.js'].branchData['31'][1].init(283, 18, 'dot === rhs.length');
+function visit127_31_1(result) {
   _$jscoverage['/kison/production.js'].branchData['31'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kison/production.js'].branchData['26'][1].init(21, 12, 'index == dot');
-function visit125_26_1(result) {
+}_$jscoverage['/kison/production.js'].branchData['26'][1].init(22, 13, 'index === dot');
+function visit126_26_1(result) {
   _$jscoverage['/kison/production.js'].branchData['26'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kison/production.js'].branchData['18'][1].init(157, 41, 'other.get("symbol") == self.get("symbol")');
-function visit124_18_1(result) {
+}_$jscoverage['/kison/production.js'].branchData['18'][1].init(162, 42, 'other.get(\'symbol\') === self.get(\'symbol\')');
+function visit125_18_1(result) {
   _$jscoverage['/kison/production.js'].branchData['18'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kison/production.js'].branchData['15'][1].init(46, 44, '!S.equals(other.get("rhs"), self.get("rhs"))');
-function visit123_15_1(result) {
+}_$jscoverage['/kison/production.js'].branchData['15'][1].init(48, 44, '!S.equals(other.get(\'rhs\'), self.get(\'rhs\'))');
+function visit124_15_1(result) {
   _$jscoverage['/kison/production.js'].branchData['15'][1].ranCondition(result);
   return result;
 }_$jscoverage['/kison/production.js'].lineData[6]++;
@@ -292,37 +292,37 @@ KISSY.add(function(S, require) {
   _$jscoverage['/kison/production.js'].lineData[14]++;
   var self = this;
   _$jscoverage['/kison/production.js'].lineData[15]++;
-  if (visit123_15_1(!S.equals(other.get("rhs"), self.get("rhs")))) {
+  if (visit124_15_1(!S.equals(other.get('rhs'), self.get('rhs')))) {
     _$jscoverage['/kison/production.js'].lineData[16]++;
     return false;
   }
   _$jscoverage['/kison/production.js'].lineData[18]++;
-  return visit124_18_1(other.get("symbol") == self.get("symbol"));
+  return visit125_18_1(other.get('symbol') === self.get('symbol'));
 }, 
   toString: function(dot) {
   _$jscoverage['/kison/production.js'].functionData[2]++;
   _$jscoverage['/kison/production.js'].lineData[23]++;
-  var rhsStr = "";
+  var rhsStr = '';
   _$jscoverage['/kison/production.js'].lineData[24]++;
-  var rhs = this.get("rhs");
+  var rhs = this.get('rhs');
   _$jscoverage['/kison/production.js'].lineData[25]++;
   S.each(rhs, function(r, index) {
   _$jscoverage['/kison/production.js'].functionData[3]++;
   _$jscoverage['/kison/production.js'].lineData[26]++;
-  if (visit125_26_1(index == dot)) {
+  if (visit126_26_1(index === dot)) {
     _$jscoverage['/kison/production.js'].lineData[27]++;
-    rhsStr += " . ";
+    rhsStr += ' . ';
   }
   _$jscoverage['/kison/production.js'].lineData[29]++;
   rhsStr += r + ' ';
 });
   _$jscoverage['/kison/production.js'].lineData[31]++;
-  if (visit126_31_1(dot == rhs.length)) {
+  if (visit127_31_1(dot === rhs.length)) {
     _$jscoverage['/kison/production.js'].lineData[32]++;
-    rhsStr += " . ";
+    rhsStr += ' . ';
   }
   _$jscoverage['/kison/production.js'].lineData[34]++;
-  return this.get("symbol") + " => " + rhsStr;
+  return this.get('symbol') + ' => ' + rhsStr;
 }}, {
   ATTRS: {
   firsts: {

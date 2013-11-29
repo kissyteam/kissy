@@ -43,7 +43,7 @@ KISSY.add(function (S, require) {
             var oneItems = this.get('items'),
                 i,
                 otherItems = other.get('items');
-            if (oneItems.length != otherItems.length) {
+            if (oneItems.length !== otherItems.length) {
                 return false;
             }
             for (i = 0; i < oneItems.length; i++) {
@@ -63,7 +63,7 @@ KISSY.add(function (S, require) {
                 ret.push('start gotos:');
                 S.each(gotos, function (itemSet, symbol) {
                     ret.push(symbol + ' -> ');
-                    ret.push(itemSet.toString())
+                    ret.push(itemSet.toString());
                 });
                 ret.push('end gotos:');
             }
@@ -71,7 +71,7 @@ KISSY.add(function (S, require) {
         },
 
         addReverseGoto: function (symbol, item) {
-            var reverseGotos = this.get("reverseGotos");
+            var reverseGotos = this.get('reverseGotos');
             reverseGotos[symbol] = reverseGotos[symbol] || [];
             reverseGotos[symbol].push(item);
         }

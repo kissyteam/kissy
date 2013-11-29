@@ -9,29 +9,29 @@ KISSY.add(function (S, require) {
      * production for grammar
      * @class KISSY.Kison.Production
      */
-   return Base.extend({
+    return Base.extend({
         equals: function (other) {
             var self = this;
             if (!S.equals(other.get('rhs'), self.get('rhs'))) {
                 return false;
             }
-            return other.get('symbol') == self.get('symbol');
+            return other.get('symbol') === self.get('symbol');
 
         },
 
         toString: function (dot) {
-            var rhsStr = "";
+            var rhsStr = '';
             var rhs = this.get('rhs');
             S.each(rhs, function (r, index) {
-                if (index == dot) {
-                    rhsStr += " . ";
+                if (index === dot) {
+                    rhsStr += ' . ';
                 }
-                rhsStr += r+' ';
+                rhsStr += r + ' ';
             });
-            if (dot == rhs.length) {
-                rhsStr += " . ";
+            if (dot === rhs.length) {
+                rhsStr += ' . ';
             }
-            return this.get('symbol') + " => " + rhsStr;
+            return this.get('symbol') + ' => ' + rhsStr;
         }
     }, {
         ATTRS: {

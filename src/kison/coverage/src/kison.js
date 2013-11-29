@@ -253,8 +253,8 @@ if (! _$jscoverage['/kison.js'].branchData) {
   _$jscoverage['/kison.js'].branchData['17'] = [];
   _$jscoverage['/kison.js'].branchData['17'][1] = new BranchData();
 }
-_$jscoverage['/kison.js'].branchData['17'][1].init(318, 9, '\'@DEBUG@\'');
-function visit142_17_1(result) {
+_$jscoverage['/kison.js'].branchData['17'][1].init(329, 9, '\'@DEBUG@\'');
+function visit143_17_1(result) {
   _$jscoverage['/kison.js'].branchData['17'][1].ranCondition(result);
   return result;
 }_$jscoverage['/kison.js'].lineData[6]++;
@@ -279,12 +279,12 @@ KISSY.add(function(S, require) {
   _$jscoverage['/kison.js'].lineData[16]++;
   Kison.Utils = Utils;
   _$jscoverage['/kison.js'].lineData[17]++;
-  if (visit142_17_1('@DEBUG@')) {
+  if (visit143_17_1('@DEBUG@')) {
     _$jscoverage['/kison.js'].lineData[18]++;
     return Kison;
   } else {
     _$jscoverage['/kison.js'].lineData[20]++;
-    alert('kison can only use uncompressed version!');
+    window.alert('kison can only use uncompressed version!');
     _$jscoverage['/kison.js'].lineData[21]++;
     return null;
   }

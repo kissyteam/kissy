@@ -5,6 +5,8 @@
  */
 KISSY.add(function (S, require) {
     var Utils = require('./utils');
+
+
     var serializeObject = Utils.serializeObject,
         /**
          * Lexer generator
@@ -63,18 +65,35 @@ KISSY.add(function (S, require) {
                 firstColumn: 1,
                 lastColumn: 1
             });
+
+        },
+
+        genShortId: function (field) {
+            var base = 97, // a-1
+                max = 122, // z
+                interval = max - base + 1;
+            field += '__gen';
+            var self = this;
+            if (!(field in self)) {
+                self[field] = -1;
+            }
+            var index = self[field] = self[field] + 1;
+            var ret = '';
+            do {
+                ret = String.fromCharCode(base + index % interval) + ret;
+                // 00 = 10*1+0
+                index = Math.floor(index / interval) - 1;
+            } while (index >= 0);
+            return ret;
         },
 
         genCode: function (cfg) {
-
             var STATIC = Lexer.STATIC,
                 self = this,
                 compressSymbol = cfg.compressSymbol,
                 compressState = cfg.compressLexerState,
                 code = ['/*jslint quotmark: false*/'],
                 stateMap;
-
-            self.symbolId = self.stateId = 0;
 
             if (compressSymbol) {
                 self.symbolMap = {};
@@ -184,7 +203,8 @@ KISSY.add(function (S, require) {
             if (!symbolMap) {
                 return t;
             }
-            return symbolMap[t] || (symbolMap[t] = (++self.symbolId));
+            // force string, see S.clone iphone5s ios7 bug
+            return symbolMap[t] || (symbolMap[t] = self.genShortId('symbol'));
         },
 
         mapReverseSymbol: function (rs) {
@@ -211,7 +231,7 @@ KISSY.add(function (S, require) {
             if (!stateMap) {
                 return s;
             }
-            return stateMap[s] || (stateMap[s] = (++self.stateId));
+            return stateMap[s] || (stateMap[s] = self.genShortId('state'));
         },
 
         lex: function () {
