@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.41
 MIT Licensed
-build time: Dec 2 17:30
+build time: Dec 2 17:47
 */
 /**
  * @ignore
@@ -87,11 +87,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20131202173007' will replace with current timestamp when compressing.
+         * NOTICE: '20131202174707' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20131202173007',
+        __BUILD_TIME: '20131202174707',
 
         /**
          * KISSY Environment.
@@ -3394,13 +3394,15 @@ var KISSY = (function (undefined) {
         isMsPointerSupported = 'msPointerEnabled' in navigator;
         isPointerSupported = 'pointerEnabled' in navigator;
 
-        if (transformPrefix) {
+        if (transformProperty) {
             // https://gist.github.com/lorenzopolidori/3794226
             // ie9 does not support 3d transform
-            var el = document.createElement('p');
+            // http://msdn.microsoft.com/en-us/ie/ff468705
+            var el = doc.createElement('p');
             documentElement.insertBefore(el, documentElement.firstChild);
-            el.style[transformPrefix] = 'translate3d(1px,1px,1px)';
-            var has3d = window.getComputedStyle(el).getPropertyValue(transformPrefix);
+            el.style[transformProperty] = 'translate3d(1px,1px,1px)';
+            var computedStyle = win.getComputedStyle(el);
+            var has3d = computedStyle.getPropertyValue(transformProperty) || computedStyle[transformProperty];
             documentElement.removeChild(el);
             isTransform3dSupported = (has3d !== undefined && has3d.length > 0 && has3d !== 'none');
         }
@@ -5540,7 +5542,7 @@ var KISSY = (function (undefined) {
     var doc = S.Env.host && S.Env.host.document;
     // var logger = S.getLogger('s/loader');
     var Utils = S.Loader.Utils;
-    var TIMESTAMP = '20131202173007';
+    var TIMESTAMP = '20131202174707';
     var defaultComboPrefix = '??';
     var defaultComboSep = ',';
 

@@ -61,13 +61,15 @@
         isMsPointerSupported = 'msPointerEnabled' in navigator;
         isPointerSupported = 'pointerEnabled' in navigator;
 
-        if (transformPrefix) {
+        if (transformProperty) {
             // https://gist.github.com/lorenzopolidori/3794226
             // ie9 does not support 3d transform
-            var el = document.createElement('p');
+            // http://msdn.microsoft.com/en-us/ie/ff468705
+            var el = doc.createElement('p');
             documentElement.insertBefore(el, documentElement.firstChild);
-            el.style[transformPrefix] = 'translate3d(1px,1px,1px)';
-            var has3d = window.getComputedStyle(el).getPropertyValue(transformPrefix);
+            el.style[transformProperty] = 'translate3d(1px,1px,1px)';
+            var computedStyle = win.getComputedStyle(el);
+            var has3d = computedStyle.getPropertyValue(transformProperty) || computedStyle[transformProperty];
             documentElement.removeChild(el);
             isTransform3dSupported = (has3d !== undefined && has3d.length > 0 && has3d !== 'none');
         }
