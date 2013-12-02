@@ -4,15 +4,15 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S) {
-    var   logger = S.getLogger('s/promise');
+    var logger = S.getLogger('s/promise');
     var PROMISE_VALUE = '__promise_value',
-        undefined = undefined,
         processImmediate = S.setImmediate,
 
         PROMISE_PROGRESS_LISTENERS = '__promise_progress_listeners',
         PROMISE_PENDINGS = '__promise_pendings';
 
     function logError(str) {
+        /*global console*/
         if (typeof console !== 'undefined' && console.error) {
             console.error(str);
         }
@@ -425,8 +425,9 @@ KISSY.add(function (S) {
             if (!count) {
                 return null;
             }
-            var defer = Defer();
+            var defer = new Defer();
             for (var i = 0; i < promises.length; i++) {
+                /*jshint loopfunc:true*/
                 (function (promise, i) {
                     when(promise, function (value) {
                         promises[i] = value;

@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:46
+build time: Dec 2 13:02
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -17,7 +17,7 @@ KISSY.add("editor/plugin/strike-through", ["./font/ui", "./strike-through/cmd", 
   }
   S.augment(StrikeThrough, {pluginRenderUI:function(editor) {
     cmd.init(editor);
-    editor.addButton("strikeThrough", {cmdType:"strikeThrough", tooltip:"\u5220\u9664\u7ebf "}, ui.Button)
+    editor.addButton("strikeThrough", {cmdType:"strikeThrough", tooltip:"\u5220\u9664\u7ebf"}, ui.Button)
   }});
   return StrikeThrough
 });

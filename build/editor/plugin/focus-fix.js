@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:42
+build time: Dec 2 12:58
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -16,8 +16,8 @@ KISSY.add("editor/plugin/focus-fix", ["editor"], function(S, require) {
     var self = this;
     self._focusEditor = focusManager.currentInstance();
     var editor = self._focusEditor;
-    if(UA["ie"] && editor) {
-      window["focus"]();
+    if(UA.ie && editor) {
+      window.focus();
       document.body.focus();
       var $selection = editor.get("document")[0].selection, $range;
       try {
@@ -26,7 +26,7 @@ KISSY.add("editor/plugin/focus-fix", ["editor"], function(S, require) {
         $range = 0
       }
       if($range) {
-        if($range.item && $range.item(0).ownerDocument == editor.get("document")[0]) {
+        if($range.item && $range.item(0).ownerDocument === editor.get("document")[0]) {
           var $myRange = document.body.createTextRange();
           $myRange.moveToElementText(self.get("el").first()[0]);
           $myRange.collapse(true);
@@ -37,7 +37,9 @@ KISSY.add("editor/plugin/focus-fix", ["editor"], function(S, require) {
   }
   function _hide4FocusExt() {
     var editor = this._focusEditor;
-    editor && editor.focus()
+    if(editor) {
+      editor.focus()
+    }
   }
   return{init:function(self) {
     self.on("beforeVisibleChange", function(e) {

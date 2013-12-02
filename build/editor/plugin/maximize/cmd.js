@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:44
+build time: Dec 2 13:01
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -12,9 +12,9 @@ build time: Nov 27 00:44
 KISSY.add("editor/plugin/maximize/cmd", ["editor", "event"], function(S, require) {
   var Editor = require("editor");
   var Event = require("event");
-  var UA = S.UA, ie = UA["ie"], doc = document, Node = S.Node, Dom = S.DOM, iframe, MAXIMIZE_TOOLBAR_CLASS = "editor-toolbar-padding", init = function() {
+  var UA = S.UA, ie = UA.ie, doc = document, Node = S.Node, Dom = S.DOM, iframe, MAXIMIZE_TOOLBAR_CLASS = "editor-toolbar-padding", init = function() {
     if(!iframe) {
-      iframe = (new Node("<" + "iframe " + " style='" + "position:absolute;" + "top:-9999px;" + "left:-9999px;" + "'" + " frameborder='0'>")).prependTo(doc.body, undefined)
+      iframe = (new Node("<" + "iframe " + ' style="' + "position:absolute;" + "top:-9999px;" + "left:-9999px;" + '"' + ' frameborder="0">')).prependTo(doc.body, undefined)
     }
   };
   function MaximizeCmd(editor) {
@@ -70,7 +70,7 @@ KISSY.add("editor/plugin/maximize/cmd", ["editor", "event"], function(S, require
     var p = editorEl.parent();
     while(p) {
       var pre = p.css("position");
-      if(pre != "static") {
+      if(pre !== "static") {
         _savedParents.push({el:p, position:pre});
         p.css("position", "static")
       }
@@ -83,14 +83,14 @@ KISSY.add("editor/plugin/maximize/cmd", ["editor", "event"], function(S, require
   }, _saveEditorStatus:function() {
     var self = this, editor = self.editor;
     self.savedRanges = null;
-    if(!UA["gecko"] || !editor.__iframeFocus) {
+    if(!UA.gecko || !editor.__iframeFocus) {
       return
     }
     var sel = editor.getSelection();
     self.savedRanges = sel && sel.getRanges()
   }, _restoreEditorStatus:function() {
     var self = this, editor = self.editor, sel = editor.getSelection(), savedRanges = self.savedRanges;
-    if(UA["gecko"]) {
+    if(UA.gecko) {
       editor.activateGecko()
     }
     if(savedRanges && sel) {
@@ -98,7 +98,9 @@ KISSY.add("editor/plugin/maximize/cmd", ["editor", "event"], function(S, require
     }
     if(editor.__iframeFocus && sel) {
       var element = sel.getStartElement();
-      element && element.scrollIntoView(undefined, {alignWithTop:false, allowHorizontalScroll:true, onlyScrollIfNeeded:true})
+      if(element) {
+        element.scrollIntoView(undefined, {alignWithTop:false, allowHorizontalScroll:true, onlyScrollIfNeeded:true})
+      }
     }
   }, _maximize:function(stop) {
     var self = this, editor = self.editor, editorEl = editor.get("el"), viewportHeight = Dom.viewportHeight(), viewportWidth = Dom.viewportWidth(), textareaEl = editor.get("textarea"), statusHeight = editor.get("statusBarEl") ? editor.get("statusBarEl")[0].offsetHeight : 0, toolHeight = editor.get("toolBarEl")[0].offsetHeight;

@@ -13,13 +13,13 @@ KISSY.add(function (S, require) {
     var TabBody = Container.extend({
         bindUI: function () {
             var self = this;
-            self.on("afterSelectedPanelIndexChange", function (e) {
+            self.on('afterSelectedPanelIndexChange', function (e) {
                 var children = self.get('children'),
                     newIndex = e.newVal,
                     hidePanel;
                 if (children[newIndex]) {
-                    if (hidePanel = children[e.prevVal]) {
-                        hidePanel.set("selected", false);
+                    if ((hidePanel = children[e.prevVal])) {
+                        hidePanel.set('selected', false);
                     }
                     self.selectPanelByIndex(newIndex);
                 }
@@ -30,8 +30,8 @@ KISSY.add(function (S, require) {
             var self = this,
                 children = self.get('children');
             S.each(children, function (c, i) {
-                if (c.get("selected")) {
-                    self.set("selectedPanelIndex", i);
+                if (c.get('selected')) {
+                    self.set('selectedPanelIndex', i);
                     return false;
                 }
                 return undefined;
@@ -47,7 +47,7 @@ KISSY.add(function (S, require) {
         },
 
         selectPanelByIndex: function (newIndex) {
-            this.get('children')[newIndex].set("selected", true);
+            this.get('children')[newIndex].set('selected', true);
             if (this.get('lazyRender')) {
                 // lazy render
                 this.renderChild(newIndex);

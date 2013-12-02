@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ','src':' + jscoverage_quote(this.src)
+            + ',"src":' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -253,32 +253,33 @@ if (! _$jscoverage['/video.js']) {
   _$jscoverage['/video.js'].lineData[44] = 0;
   _$jscoverage['/video.js'].lineData[47] = 0;
   _$jscoverage['/video.js'].lineData[49] = 0;
-  _$jscoverage['/video.js'].lineData[52] = 0;
+  _$jscoverage['/video.js'].lineData[50] = 0;
   _$jscoverage['/video.js'].lineData[53] = 0;
   _$jscoverage['/video.js'].lineData[54] = 0;
-  _$jscoverage['/video.js'].lineData[57] = 0;
+  _$jscoverage['/video.js'].lineData[55] = 0;
   _$jscoverage['/video.js'].lineData[58] = 0;
   _$jscoverage['/video.js'].lineData[59] = 0;
   _$jscoverage['/video.js'].lineData[60] = 0;
-  _$jscoverage['/video.js'].lineData[62] = 0;
+  _$jscoverage['/video.js'].lineData[61] = 0;
   _$jscoverage['/video.js'].lineData[63] = 0;
-  _$jscoverage['/video.js'].lineData[68] = 0;
-  _$jscoverage['/video.js'].lineData[70] = 0;
+  _$jscoverage['/video.js'].lineData[64] = 0;
+  _$jscoverage['/video.js'].lineData[69] = 0;
   _$jscoverage['/video.js'].lineData[71] = 0;
   _$jscoverage['/video.js'].lineData[72] = 0;
-  _$jscoverage['/video.js'].lineData[74] = 0;
-  _$jscoverage['/video.js'].lineData[76] = 0;
-  _$jscoverage['/video.js'].lineData[85] = 0;
+  _$jscoverage['/video.js'].lineData[73] = 0;
+  _$jscoverage['/video.js'].lineData[75] = 0;
+  _$jscoverage['/video.js'].lineData[77] = 0;
   _$jscoverage['/video.js'].lineData[86] = 0;
   _$jscoverage['/video.js'].lineData[87] = 0;
-  _$jscoverage['/video.js'].lineData[88] = 0;
-  _$jscoverage['/video.js'].lineData[97] = 0;
-  _$jscoverage['/video.js'].lineData[106] = 0;
-  _$jscoverage['/video.js'].lineData[107] = 0;
-  _$jscoverage['/video.js'].lineData[108] = 0;
-  _$jscoverage['/video.js'].lineData[114] = 0;
+  _$jscoverage['/video.js'].lineData[89] = 0;
+  _$jscoverage['/video.js'].lineData[90] = 0;
+  _$jscoverage['/video.js'].lineData[101] = 0;
+  _$jscoverage['/video.js'].lineData[110] = 0;
+  _$jscoverage['/video.js'].lineData[111] = 0;
+  _$jscoverage['/video.js'].lineData[112] = 0;
   _$jscoverage['/video.js'].lineData[118] = 0;
-  _$jscoverage['/video.js'].lineData[127] = 0;
+  _$jscoverage['/video.js'].lineData[122] = 0;
+  _$jscoverage['/video.js'].lineData[131] = 0;
 }
 if (! _$jscoverage['/video.js'].functionData) {
   _$jscoverage['/video.js'].functionData = [];
@@ -303,98 +304,98 @@ if (! _$jscoverage['/video.js'].branchData) {
   _$jscoverage['/video.js'].branchData['43'][1] = new BranchData();
   _$jscoverage['/video.js'].branchData['49'] = [];
   _$jscoverage['/video.js'].branchData['49'][1] = new BranchData();
-  _$jscoverage['/video.js'].branchData['54'] = [];
-  _$jscoverage['/video.js'].branchData['54'][1] = new BranchData();
-  _$jscoverage['/video.js'].branchData['57'] = [];
-  _$jscoverage['/video.js'].branchData['57'][1] = new BranchData();
+  _$jscoverage['/video.js'].branchData['55'] = [];
+  _$jscoverage['/video.js'].branchData['55'][1] = new BranchData();
   _$jscoverage['/video.js'].branchData['58'] = [];
   _$jscoverage['/video.js'].branchData['58'][1] = new BranchData();
   _$jscoverage['/video.js'].branchData['59'] = [];
   _$jscoverage['/video.js'].branchData['59'][1] = new BranchData();
-  _$jscoverage['/video.js'].branchData['62'] = [];
-  _$jscoverage['/video.js'].branchData['62'][1] = new BranchData();
-  _$jscoverage['/video.js'].branchData['70'] = [];
-  _$jscoverage['/video.js'].branchData['70'][1] = new BranchData();
-  _$jscoverage['/video.js'].branchData['72'] = [];
-  _$jscoverage['/video.js'].branchData['72'][1] = new BranchData();
-  _$jscoverage['/video.js'].branchData['72'][2] = new BranchData();
+  _$jscoverage['/video.js'].branchData['60'] = [];
+  _$jscoverage['/video.js'].branchData['60'][1] = new BranchData();
+  _$jscoverage['/video.js'].branchData['63'] = [];
+  _$jscoverage['/video.js'].branchData['63'][1] = new BranchData();
+  _$jscoverage['/video.js'].branchData['71'] = [];
+  _$jscoverage['/video.js'].branchData['71'][1] = new BranchData();
   _$jscoverage['/video.js'].branchData['73'] = [];
   _$jscoverage['/video.js'].branchData['73'][1] = new BranchData();
+  _$jscoverage['/video.js'].branchData['73'][2] = new BranchData();
   _$jscoverage['/video.js'].branchData['74'] = [];
   _$jscoverage['/video.js'].branchData['74'][1] = new BranchData();
-  _$jscoverage['/video.js'].branchData['74'][2] = new BranchData();
-  _$jscoverage['/video.js'].branchData['85'] = [];
-  _$jscoverage['/video.js'].branchData['85'][1] = new BranchData();
-  _$jscoverage['/video.js'].branchData['87'] = [];
-  _$jscoverage['/video.js'].branchData['87'][1] = new BranchData();
-  _$jscoverage['/video.js'].branchData['107'] = [];
-  _$jscoverage['/video.js'].branchData['107'][1] = new BranchData();
+  _$jscoverage['/video.js'].branchData['75'] = [];
+  _$jscoverage['/video.js'].branchData['75'][1] = new BranchData();
+  _$jscoverage['/video.js'].branchData['75'][2] = new BranchData();
+  _$jscoverage['/video.js'].branchData['86'] = [];
+  _$jscoverage['/video.js'].branchData['86'][1] = new BranchData();
+  _$jscoverage['/video.js'].branchData['89'] = [];
+  _$jscoverage['/video.js'].branchData['89'][1] = new BranchData();
+  _$jscoverage['/video.js'].branchData['111'] = [];
+  _$jscoverage['/video.js'].branchData['111'][1] = new BranchData();
 }
-_$jscoverage['/video.js'].branchData['107'][1].init(100, 10, 'selectedEl');
-function visit19_107_1(result) {
-  _$jscoverage['/video.js'].branchData['107'][1].ranCondition(result);
+_$jscoverage['/video.js'].branchData['111'][1].init(100, 10, 'selectedEl');
+function visit19_111_1(result) {
+  _$jscoverage['/video.js'].branchData['111'][1].ranCondition(result);
   return result;
-}_$jscoverage['/video.js'].branchData['87'][1].init(133, 40, 'getProvider(element.getAttribute('src'))');
-function visit18_87_1(result) {
-  _$jscoverage['/video.js'].branchData['87'][1].ranCondition(result);
+}_$jscoverage['/video.js'].branchData['89'][1].init(177, 40, 'getProvider(element.getAttribute(\'src\'))');
+function visit18_89_1(result) {
+  _$jscoverage['/video.js'].branchData['89'][1].ranCondition(result);
   return result;
-}_$jscoverage['/video.js'].branchData['85'][1].init(29, 33, '!flashUtils.isFlashEmbed(element)');
-function visit17_85_1(result) {
-  _$jscoverage['/video.js'].branchData['85'][1].ranCondition(result);
+}_$jscoverage['/video.js'].branchData['86'][1].init(33, 33, '!flashUtils.isFlashEmbed(element)');
+function visit17_86_1(result) {
+  _$jscoverage['/video.js'].branchData['86'][1].ranCondition(result);
   return result;
-}_$jscoverage['/video.js'].branchData['74'][2].init(49, 86, 'c.getAttribute('value') || c.getAttribute("VALUE")');
-function visit16_74_2(result) {
-  _$jscoverage['/video.js'].branchData['74'][2].ranCondition(result);
+}_$jscoverage['/video.js'].branchData['75'][2].init(53, 90, 'c.getAttribute(\'value\') || c.getAttribute(\'VALUE\')');
+function visit16_75_2(result) {
+  _$jscoverage['/video.js'].branchData['75'][2].ranCondition(result);
   return result;
-}_$jscoverage['/video.js'].branchData['74'][1].init(37, 99, 'getProvider(c.getAttribute('value') || c.getAttribute("VALUE"))');
-function visit15_74_1(result) {
+}_$jscoverage['/video.js'].branchData['75'][1].init(41, 103, 'getProvider(c.getAttribute(\'value\') || c.getAttribute(\'VALUE\'))');
+function visit15_75_1(result) {
+  _$jscoverage['/video.js'].branchData['75'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/video.js'].branchData['74'][1].init(61, 48, 'c.getAttribute(\'name\').toLowerCase() === \'movie\'');
+function visit14_74_1(result) {
   _$jscoverage['/video.js'].branchData['74'][1].ranCondition(result);
   return result;
-}_$jscoverage['/video.js'].branchData['73'][1].init(56, 47, 'c.getAttribute("name").toLowerCase() == "movie"');
-function visit14_73_1(result) {
+}_$jscoverage['/video.js'].branchData['73'][2].init(94, 22, 'c.nodeName === \'param\'');
+function visit13_73_2(result) {
+  _$jscoverage['/video.js'].branchData['73'][2].ranCondition(result);
+  return result;
+}_$jscoverage['/video.js'].branchData['73'][1].init(94, 110, 'c.nodeName === \'param\' && c.getAttribute(\'name\').toLowerCase() === \'movie\'');
+function visit12_73_1(result) {
   _$jscoverage['/video.js'].branchData['73'][1].ranCondition(result);
   return result;
-}_$jscoverage['/video.js'].branchData['72'][2].init(86, 21, 'c.nodeName == \'param\'');
-function visit13_72_2(result) {
-  _$jscoverage['/video.js'].branchData['72'][2].ranCondition(result);
+}_$jscoverage['/video.js'].branchData['71'][1].init(1094, 21, 'i < childNodes.length');
+function visit11_71_1(result) {
+  _$jscoverage['/video.js'].branchData['71'][1].ranCondition(result);
   return result;
-}_$jscoverage['/video.js'].branchData['72'][1].init(86, 104, 'c.nodeName == \'param\' && c.getAttribute("name").toLowerCase() == "movie"');
-function visit12_72_1(result) {
-  _$jscoverage['/video.js'].branchData['72'][1].ranCondition(result);
+}_$jscoverage['/video.js'].branchData['63'][1].init(233, 48, 'getProvider(childNodes[i].getAttribute(\'src\'))');
+function visit10_63_1(result) {
+  _$jscoverage['/video.js'].branchData['63'][1].ranCondition(result);
   return result;
-}_$jscoverage['/video.js'].branchData['70'][1].init(1021, 21, 'i < childNodes.length');
-function visit11_70_1(result) {
-  _$jscoverage['/video.js'].branchData['70'][1].ranCondition(result);
+}_$jscoverage['/video.js'].branchData['60'][1].init(45, 41, '!flashUtils.isFlashEmbed(childNodes[i])');
+function visit9_60_1(result) {
+  _$jscoverage['/video.js'].branchData['60'][1].ranCondition(result);
   return result;
-}_$jscoverage['/video.js'].branchData['62'][1].init(217, 48, 'getProvider(childNodes[i].getAttribute('src'))');
-function visit10_62_1(result) {
-  _$jscoverage['/video.js'].branchData['62'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/video.js'].branchData['59'][1].init(41, 41, '!flashUtils.isFlashEmbed(childNodes[i])');
-function visit9_59_1(result) {
+}_$jscoverage['/video.js'].branchData['59'][1].init(41, 36, 'childNodes[i].nodeName === \'embed\'');
+function visit8_59_1(result) {
   _$jscoverage['/video.js'].branchData['59'][1].ranCondition(result);
   return result;
-}_$jscoverage['/video.js'].branchData['58'][1].init(37, 35, 'childNodes[i].nodeName == \'embed\'');
-function visit8_58_1(result) {
+}_$jscoverage['/video.js'].branchData['58'][1].init(108, 21, 'i < childNodes.length');
+function visit7_58_1(result) {
   _$jscoverage['/video.js'].branchData['58'][1].ranCondition(result);
   return result;
-}_$jscoverage['/video.js'].branchData['57'][1].init(100, 21, 'i < childNodes.length');
-function visit7_57_1(result) {
-  _$jscoverage['/video.js'].branchData['57'][1].ranCondition(result);
+}_$jscoverage['/video.js'].branchData['55'][1].init(176, 8, '!classId');
+function visit6_55_1(result) {
+  _$jscoverage['/video.js'].branchData['55'][1].ranCondition(result);
   return result;
-}_$jscoverage['/video.js'].branchData['54'][1].init(164, 8, '!classId');
-function visit6_54_1(result) {
-  _$jscoverage['/video.js'].branchData['54'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/video.js'].branchData['49'][1].init(784, 2251, 'dataFilter && dataFilter.addRules({\n  tags: {\n  \'object\': function(element) {\n  var classId = element.getAttribute('classid'), i;\n  var childNodes = element.childNodes;\n  if (!classId) {\n    for (i = 0; i < childNodes.length; i++) {\n      if (childNodes[i].nodeName == \'embed\') {\n        if (!flashUtils.isFlashEmbed(childNodes[i])) {\n          return null;\n        }\n        if (getProvider(childNodes[i].getAttribute('src'))) {\n          return dataProcessor.createFakeParserElement(element, CLS_VIDEO, TYPE_VIDEO, true);\n        }\n      }\n    }\n    return null;\n  }\n  for (i = 0; i < childNodes.length; i++) {\n    var c = childNodes[i];\n    if (c.nodeName == \'param\' && c.getAttribute("name").toLowerCase() == "movie") {\n      if (getProvider(c.getAttribute('value') || c.getAttribute("VALUE"))) {\n        return dataProcessor.createFakeParserElement(element, CLS_VIDEO, TYPE_VIDEO, true);\n      }\n    }\n  }\n}, \n  \'embed\': function(element) {\n  if (!flashUtils.isFlashEmbed(element)) {\n    return null;\n  }\n  if (getProvider(element.getAttribute('src'))) {\n    return dataProcessor.createFakeParserElement(element, CLS_VIDEO, TYPE_VIDEO, true);\n  }\n}}}, 4)');
+}_$jscoverage['/video.js'].branchData['49'][1].init(779, 10, 'dataFilter');
 function visit5_49_1(result) {
   _$jscoverage['/video.js'].branchData['49'][1].ranCondition(result);
   return result;
-}_$jscoverage['/video.js'].branchData['43'][1].init(613, 21, 'videoCfg[\'providers\']');
+}_$jscoverage['/video.js'].branchData['43'][1].init(610, 18, 'videoCfg.providers');
 function visit4_43_1(result) {
   _$jscoverage['/video.js'].branchData['43'][1].ranCondition(result);
   return result;
-}_$jscoverage['/video.js'].branchData['34'][1].init(66, 18, 'p[\'reg\'].test(url)');
+}_$jscoverage['/video.js'].branchData['34'][1].init(66, 15, 'p.reg.test(url)');
 function visit3_34_1(result) {
   _$jscoverage['/video.js'].branchData['34'][1].ranCondition(result);
   return result;
@@ -420,7 +421,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/video.js'].lineData[11]++;
   require('./button');
   _$jscoverage['/video.js'].lineData[12]++;
-  var CLS_VIDEO = "ke_video", TYPE_VIDEO = "video";
+  var CLS_VIDEO = 'ke_video', TYPE_VIDEO = 'video';
   _$jscoverage['/video.js'].lineData[15]++;
   function video(config) {
     _$jscoverage['/video.js'].functionData[1]++;
@@ -445,7 +446,7 @@ KISSY.add(function(S, require) {
       _$jscoverage['/video.js'].lineData[33]++;
       var p = provider[i];
       _$jscoverage['/video.js'].lineData[34]++;
-      if (visit3_34_1(p['reg'].test(url))) {
+      if (visit3_34_1(p.reg.test(url))) {
         _$jscoverage['/video.js'].lineData[35]++;
         return p;
       }
@@ -456,51 +457,53 @@ KISSY.add(function(S, require) {
   _$jscoverage['/video.js'].lineData[41]++;
   var videoCfg = this.config;
   _$jscoverage['/video.js'].lineData[43]++;
-  if (visit4_43_1(videoCfg['providers'])) {
+  if (visit4_43_1(videoCfg.providers)) {
     _$jscoverage['/video.js'].lineData[44]++;
-    provider.push.apply(provider, videoCfg['providers']);
+    provider.push.apply(provider, videoCfg.providers);
   }
   _$jscoverage['/video.js'].lineData[47]++;
   videoCfg.getProvider = getProvider;
   _$jscoverage['/video.js'].lineData[49]++;
-  visit5_49_1(dataFilter && dataFilter.addRules({
+  if (visit5_49_1(dataFilter)) {
+    _$jscoverage['/video.js'].lineData[50]++;
+    dataFilter.addRules({
   tags: {
   'object': function(element) {
   _$jscoverage['/video.js'].functionData[4]++;
-  _$jscoverage['/video.js'].lineData[52]++;
-  var classId = element.getAttribute('classid'), i;
   _$jscoverage['/video.js'].lineData[53]++;
-  var childNodes = element.childNodes;
+  var classId = element.getAttribute('classid'), i;
   _$jscoverage['/video.js'].lineData[54]++;
-  if (visit6_54_1(!classId)) {
-    _$jscoverage['/video.js'].lineData[57]++;
-    for (i = 0; visit7_57_1(i < childNodes.length); i++) {
-      _$jscoverage['/video.js'].lineData[58]++;
-      if (visit8_58_1(childNodes[i].nodeName == 'embed')) {
-        _$jscoverage['/video.js'].lineData[59]++;
-        if (visit9_59_1(!flashUtils.isFlashEmbed(childNodes[i]))) {
-          _$jscoverage['/video.js'].lineData[60]++;
+  var childNodes = element.childNodes;
+  _$jscoverage['/video.js'].lineData[55]++;
+  if (visit6_55_1(!classId)) {
+    _$jscoverage['/video.js'].lineData[58]++;
+    for (i = 0; visit7_58_1(i < childNodes.length); i++) {
+      _$jscoverage['/video.js'].lineData[59]++;
+      if (visit8_59_1(childNodes[i].nodeName === 'embed')) {
+        _$jscoverage['/video.js'].lineData[60]++;
+        if (visit9_60_1(!flashUtils.isFlashEmbed(childNodes[i]))) {
+          _$jscoverage['/video.js'].lineData[61]++;
           return null;
         }
-        _$jscoverage['/video.js'].lineData[62]++;
-        if (visit10_62_1(getProvider(childNodes[i].getAttribute('src')))) {
-          _$jscoverage['/video.js'].lineData[63]++;
+        _$jscoverage['/video.js'].lineData[63]++;
+        if (visit10_63_1(getProvider(childNodes[i].getAttribute('src')))) {
+          _$jscoverage['/video.js'].lineData[64]++;
           return dataProcessor.createFakeParserElement(element, CLS_VIDEO, TYPE_VIDEO, true);
         }
       }
     }
-    _$jscoverage['/video.js'].lineData[68]++;
+    _$jscoverage['/video.js'].lineData[69]++;
     return null;
   }
-  _$jscoverage['/video.js'].lineData[70]++;
-  for (i = 0; visit11_70_1(i < childNodes.length); i++) {
-    _$jscoverage['/video.js'].lineData[71]++;
-    var c = childNodes[i];
+  _$jscoverage['/video.js'].lineData[71]++;
+  for (i = 0; visit11_71_1(i < childNodes.length); i++) {
     _$jscoverage['/video.js'].lineData[72]++;
-    if (visit12_72_1(visit13_72_2(c.nodeName == 'param') && visit14_73_1(c.getAttribute("name").toLowerCase() == "movie"))) {
-      _$jscoverage['/video.js'].lineData[74]++;
-      if (visit15_74_1(getProvider(visit16_74_2(c.getAttribute('value') || c.getAttribute("VALUE"))))) {
-        _$jscoverage['/video.js'].lineData[76]++;
+    var c = childNodes[i];
+    _$jscoverage['/video.js'].lineData[73]++;
+    if (visit12_73_1(visit13_73_2(c.nodeName === 'param') && visit14_74_1(c.getAttribute('name').toLowerCase() === 'movie'))) {
+      _$jscoverage['/video.js'].lineData[75]++;
+      if (visit15_75_1(getProvider(visit16_75_2(c.getAttribute('value') || c.getAttribute('VALUE'))))) {
+        _$jscoverage['/video.js'].lineData[77]++;
         return dataProcessor.createFakeParserElement(element, CLS_VIDEO, TYPE_VIDEO, true);
       }
     }
@@ -508,47 +511,48 @@ KISSY.add(function(S, require) {
 }, 
   'embed': function(element) {
   _$jscoverage['/video.js'].functionData[5]++;
-  _$jscoverage['/video.js'].lineData[85]++;
-  if (visit17_85_1(!flashUtils.isFlashEmbed(element))) {
-    _$jscoverage['/video.js'].lineData[86]++;
+  _$jscoverage['/video.js'].lineData[86]++;
+  if (visit17_86_1(!flashUtils.isFlashEmbed(element))) {
+    _$jscoverage['/video.js'].lineData[87]++;
     return null;
   }
-  _$jscoverage['/video.js'].lineData[87]++;
-  if (visit18_87_1(getProvider(element.getAttribute('src')))) {
-    _$jscoverage['/video.js'].lineData[88]++;
+  _$jscoverage['/video.js'].lineData[89]++;
+  if (visit18_89_1(getProvider(element.getAttribute('src')))) {
+    _$jscoverage['/video.js'].lineData[90]++;
     return dataProcessor.createFakeParserElement(element, CLS_VIDEO, TYPE_VIDEO, true);
   }
-}}}, 4));
-  _$jscoverage['/video.js'].lineData[97]++;
+}}}, 4);
+  }
+  _$jscoverage['/video.js'].lineData[101]++;
   var flashControl = new FlashBaseClass({
   editor: editor, 
   cls: CLS_VIDEO, 
   type: TYPE_VIDEO, 
   pluginConfig: this.config, 
-  bubbleId: "video", 
-  contextMenuId: "video", 
+  bubbleId: 'video', 
+  contextMenuId: 'video', 
   contextMenuHandlers: {
-  "\u89c6\u9891\u5c5e\u6027": function() {
+  '\u89c6\u9891\u5c5e\u6027': function() {
   _$jscoverage['/video.js'].functionData[6]++;
-  _$jscoverage['/video.js'].lineData[106]++;
+  _$jscoverage['/video.js'].lineData[110]++;
   var selectedEl = this.get('editorSelectedEl');
-  _$jscoverage['/video.js'].lineData[107]++;
-  if (visit19_107_1(selectedEl)) {
-    _$jscoverage['/video.js'].lineData[108]++;
+  _$jscoverage['/video.js'].lineData[111]++;
+  if (visit19_111_1(selectedEl)) {
+    _$jscoverage['/video.js'].lineData[112]++;
     flashControl.show(selectedEl);
   }
 }}});
-  _$jscoverage['/video.js'].lineData[114]++;
-  editor.addButton("video", {
-  tooltip: "\u63d2\u5165\u89c6\u9891", 
+  _$jscoverage['/video.js'].lineData[118]++;
+  editor.addButton('video', {
+  tooltip: '\u63d2\u5165\u89c6\u9891', 
   listeners: {
   click: function() {
   _$jscoverage['/video.js'].functionData[7]++;
-  _$jscoverage['/video.js'].lineData[118]++;
+  _$jscoverage['/video.js'].lineData[122]++;
   flashControl.show();
 }}, 
   mode: Editor.Mode.WYSIWYG_MODE});
 }});
-  _$jscoverage['/video.js'].lineData[127]++;
+  _$jscoverage['/video.js'].lineData[131]++;
   return video;
 });

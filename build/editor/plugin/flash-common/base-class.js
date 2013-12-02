@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:42
+build time: Dec 2 12:58
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -40,7 +40,7 @@ KISSY.add("editor/plugin/flash-common/base-class", ["./utils", "base", "editor",
         ev.halt()
       });
       tipRemoveEl.on("click", function(ev) {
-        if(S.UA["webkit"]) {
+        if(S.UA.webkit) {
           var r = editor.getSelection().getRanges(), r0 = r && r[0];
           if(r0) {
             r0.collapse(true);

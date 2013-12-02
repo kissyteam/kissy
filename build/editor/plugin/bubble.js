@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:40
+build time: Dec 2 12:56
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -13,13 +13,13 @@ KISSY.add("editor/plugin/bubble", ["overlay", "editor"], function(S, require) {
   var Overlay = require("overlay");
   var Editor = require("editor");
   var logger = S.getLogger("s/editor");
-  var undefined = {}["a"], BUBBLE_CFG = {zIndex:Editor.baseZIndex(Editor.ZIndexManager.BUBBLE_VIEW), elCls:"{prefixCls}editor-bubble", prefixCls:"{prefixCls}editor-", effect:{effect:"fade", duration:0.3}};
+  var BUBBLE_CFG = {zIndex:Editor.baseZIndex(Editor.ZIndexManager.BUBBLE_VIEW), elCls:"{prefixCls}editor-bubble", prefixCls:"{prefixCls}editor-", effect:{effect:"fade", duration:0.3}};
   function inRange(t, b, r) {
     return t <= r && b >= r
   }
   function overlap(b1, b2) {
-    var b1_top = b1.get("y"), b1_bottom = b1_top + b1.get("el").outerHeight(), b2_top = b2.get("y"), b2_bottom = b2_top + b2.get("el").outerHeight();
-    return inRange(b1_top, b1_bottom, b2_bottom) || inRange(b1_top, b1_bottom, b2_top)
+    var b1Top = b1.get("y"), b1Bottom = b1Top + b1.get("el").outerHeight(), b2Top = b2.get("y"), b2Bottom = b2Top + b2.get("el").outerHeight();
+    return inRange(b1Top, b1Bottom, b2Bottom) || inRange(b1Top, b1Bottom, b2Top)
   }
   function getTopPosition(self) {
     var archor = null, editor = self.get("editor"), myBubbles = editor.getControls();
@@ -45,7 +45,7 @@ KISSY.add("editor/plugin/bubble", ["overlay", "editor"], function(S, require) {
     var elXY = el.offset();
     elXY = Editor.Utils.getXY(elXY, editor);
     var elTop = elXY.top, elLeft = elXY.left, elRight = elLeft + el.width(), elBottom = elTop + el.height(), x, y;
-    if(S.UA.ie && el[0].nodeName.toLowerCase() == "img" && elBottom > bottom) {
+    if(S.UA.ie && el[0].nodeName.toLowerCase() === "img" && elBottom > bottom) {
       return undefined
     }
     if(elBottom > bottom && elTop < bottom) {
@@ -124,7 +124,6 @@ KISSY.add("editor/plugin/bubble", ["overlay", "editor"], function(S, require) {
       if(!bubble.get("editorSelectedEl")) {
         return
       }
-      var el = bubble.get("el");
       bubble.hide();
       bufferScroll()
     }

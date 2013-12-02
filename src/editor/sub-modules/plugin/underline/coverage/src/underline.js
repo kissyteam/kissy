@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ','src':' + jscoverage_quote(this.src)
+            + ',"src":' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -287,8 +287,8 @@ KISSY.add(function(S, require) {
   cmd.init(editor);
   _$jscoverage['/underline.js'].lineData[17]++;
   editor.addButton('underline', {
-  cmdType: 'underline',
-  tooltip: "\u4e0b\u5212\u7ebf "}, ui.Button);
+  cmdType: 'underline', 
+  tooltip: '\u4e0b\u5212\u7ebf'}, ui.Button);
   _$jscoverage['/underline.js'].lineData[22]++;
   editor.docReady(function() {
   _$jscoverage['/underline.js'].functionData[3]++;

@@ -38,7 +38,7 @@ KISSY.add(function (S, require) {
     ], {
         bindUI: function () {
             var self = this,
-                closeBtn = self.get("closeBtn");
+                closeBtn = self.get('closeBtn');
             if (closeBtn) {
                 closeBtn.on('click', function (ev) {
                     self.close();
@@ -52,7 +52,7 @@ KISSY.add(function (S, require) {
          */
         close: function () {
             var self = this;
-            self[actions[self.get("closeAction")] || HIDE]();
+            self[actions[self.get('closeAction')] || HIDE]();
             return self;
         }
     }, {

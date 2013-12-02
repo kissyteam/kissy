@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ','src':' + jscoverage_quote(this.src)
+            + ',"src":' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -236,33 +236,33 @@ if (! _$jscoverage['/resize.js']) {
   _$jscoverage['/resize.js'].lineData[11] = 0;
   _$jscoverage['/resize.js'].lineData[14] = 0;
   _$jscoverage['/resize.js'].lineData[16] = 0;
-  _$jscoverage['/resize.js'].lineData[22] = 0;
+  _$jscoverage['/resize.js'].lineData[21] = 0;
+  _$jscoverage['/resize.js'].lineData[23] = 0;
   _$jscoverage['/resize.js'].lineData[24] = 0;
   _$jscoverage['/resize.js'].lineData[25] = 0;
-  _$jscoverage['/resize.js'].lineData[26] = 0;
-  _$jscoverage['/resize.js'].lineData[28] = 0;
-  _$jscoverage['/resize.js'].lineData[32] = 0;
-  _$jscoverage['/resize.js'].lineData[38] = 0;
-  _$jscoverage['/resize.js'].lineData[39] = 0;
-  _$jscoverage['/resize.js'].lineData[42] = 0;
-  _$jscoverage['/resize.js'].lineData[43] = 0;
-  _$jscoverage['/resize.js'].lineData[46] = 0;
+  _$jscoverage['/resize.js'].lineData[27] = 0;
+  _$jscoverage['/resize.js'].lineData[31] = 0;
+  _$jscoverage['/resize.js'].lineData[36] = 0;
+  _$jscoverage['/resize.js'].lineData[37] = 0;
+  _$jscoverage['/resize.js'].lineData[40] = 0;
+  _$jscoverage['/resize.js'].lineData[41] = 0;
+  _$jscoverage['/resize.js'].lineData[44] = 0;
+  _$jscoverage['/resize.js'].lineData[54] = 0;
+  _$jscoverage['/resize.js'].lineData[55] = 0;
   _$jscoverage['/resize.js'].lineData[56] = 0;
   _$jscoverage['/resize.js'].lineData[57] = 0;
   _$jscoverage['/resize.js'].lineData[58] = 0;
-  _$jscoverage['/resize.js'].lineData[59] = 0;
-  _$jscoverage['/resize.js'].lineData[60] = 0;
-  _$jscoverage['/resize.js'].lineData[63] = 0;
+  _$jscoverage['/resize.js'].lineData[61] = 0;
+  _$jscoverage['/resize.js'].lineData[62] = 0;
   _$jscoverage['/resize.js'].lineData[64] = 0;
-  _$jscoverage['/resize.js'].lineData[66] = 0;
+  _$jscoverage['/resize.js'].lineData[65] = 0;
   _$jscoverage['/resize.js'].lineData[67] = 0;
-  _$jscoverage['/resize.js'].lineData[69] = 0;
+  _$jscoverage['/resize.js'].lineData[68] = 0;
   _$jscoverage['/resize.js'].lineData[70] = 0;
-  _$jscoverage['/resize.js'].lineData[72] = 0;
+  _$jscoverage['/resize.js'].lineData[73] = 0;
+  _$jscoverage['/resize.js'].lineData[74] = 0;
   _$jscoverage['/resize.js'].lineData[75] = 0;
-  _$jscoverage['/resize.js'].lineData[76] = 0;
-  _$jscoverage['/resize.js'].lineData[77] = 0;
-  _$jscoverage['/resize.js'].lineData[82] = 0;
+  _$jscoverage['/resize.js'].lineData[80] = 0;
 }
 if (! _$jscoverage['/resize.js'].functionData) {
   _$jscoverage['/resize.js'].functionData = [];
@@ -279,36 +279,36 @@ if (! _$jscoverage['/resize.js'].branchData) {
   _$jscoverage['/resize.js'].branchData = {};
   _$jscoverage['/resize.js'].branchData['11'] = [];
   _$jscoverage['/resize.js'].branchData['11'][1] = new BranchData();
-  _$jscoverage['/resize.js'].branchData['20'] = [];
-  _$jscoverage['/resize.js'].branchData['20'][1] = new BranchData();
+  _$jscoverage['/resize.js'].branchData['19'] = [];
+  _$jscoverage['/resize.js'].branchData['19'][1] = new BranchData();
+  _$jscoverage['/resize.js'].branchData['23'] = [];
+  _$jscoverage['/resize.js'].branchData['23'][1] = new BranchData();
   _$jscoverage['/resize.js'].branchData['24'] = [];
   _$jscoverage['/resize.js'].branchData['24'][1] = new BranchData();
-  _$jscoverage['/resize.js'].branchData['25'] = [];
-  _$jscoverage['/resize.js'].branchData['25'][1] = new BranchData();
-  _$jscoverage['/resize.js'].branchData['66'] = [];
-  _$jscoverage['/resize.js'].branchData['66'][1] = new BranchData();
-  _$jscoverage['/resize.js'].branchData['69'] = [];
-  _$jscoverage['/resize.js'].branchData['69'][1] = new BranchData();
+  _$jscoverage['/resize.js'].branchData['64'] = [];
+  _$jscoverage['/resize.js'].branchData['64'][1] = new BranchData();
+  _$jscoverage['/resize.js'].branchData['67'] = [];
+  _$jscoverage['/resize.js'].branchData['67'][1] = new BranchData();
 }
-_$jscoverage['/resize.js'].branchData['69'][1].init(271, 25, 'S.inArray('x', direction)');
-function visit6_69_1(result) {
-  _$jscoverage['/resize.js'].branchData['69'][1].ranCondition(result);
+_$jscoverage['/resize.js'].branchData['67'][1].init(271, 25, 'S.inArray(\'x\', direction)');
+function visit6_67_1(result) {
+  _$jscoverage['/resize.js'].branchData['67'][1].ranCondition(result);
   return result;
-}_$jscoverage['/resize.js'].branchData['66'][1].init(146, 25, 'S.inArray('y', direction)');
-function visit5_66_1(result) {
-  _$jscoverage['/resize.js'].branchData['66'][1].ranCondition(result);
+}_$jscoverage['/resize.js'].branchData['64'][1].init(146, 25, 'S.inArray(\'y\', direction)');
+function visit5_64_1(result) {
+  _$jscoverage['/resize.js'].branchData['64'][1].ranCondition(result);
   return result;
-}_$jscoverage['/resize.js'].branchData['25'][1].init(21, 19, 'direction[0] == 'x'');
-function visit4_25_1(result) {
-  _$jscoverage['/resize.js'].branchData['25'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/resize.js'].branchData['24'][1].init(305, 21, 'direction.length == 1');
-function visit3_24_1(result) {
+}_$jscoverage['/resize.js'].branchData['24'][1].init(21, 20, 'direction[0] === \'x\'');
+function visit4_24_1(result) {
   _$jscoverage['/resize.js'].branchData['24'][1].ranCondition(result);
   return result;
-}_$jscoverage['/resize.js'].branchData['20'][1].init(203, 30, 'cfg["direction"] || ['x', 'y']');
-function visit2_20_1(result) {
-  _$jscoverage['/resize.js'].branchData['20'][1].ranCondition(result);
+}_$jscoverage['/resize.js'].branchData['23'][1].init(248, 22, 'direction.length === 1');
+function visit3_23_1(result) {
+  _$jscoverage['/resize.js'].branchData['23'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/resize.js'].branchData['19'][1].init(149, 27, 'cfg.direction || [\'x\', \'y\']');
+function visit2_19_1(result) {
+  _$jscoverage['/resize.js'].branchData['19'][1].ranCondition(result);
   return result;
 }_$jscoverage['/resize.js'].branchData['11'][1].init(23, 12, 'config || {}');
 function visit1_11_1(result) {
@@ -332,77 +332,77 @@ KISSY.add(function(S, require) {
   pluginRenderUI: function(editor) {
   _$jscoverage['/resize.js'].functionData[2]++;
   _$jscoverage['/resize.js'].lineData[16]++;
-  var Draggable = DD['Draggable'], statusBarEl = editor.get('statusBarEl'), textarea = editor.get('textarea'), cfg = this.config, direction = visit2_20_1(cfg["direction"] || ['x', 'y']);
-  _$jscoverage['/resize.js'].lineData[22]++;
+  var Draggable = DD.Draggable, statusBarEl = editor.get('statusBarEl'), cfg = this.config, direction = visit2_19_1(cfg.direction || ['x', 'y']);
+  _$jscoverage['/resize.js'].lineData[21]++;
   var cursor = 'se-resize';
-  _$jscoverage['/resize.js'].lineData[24]++;
-  if (visit3_24_1(direction.length == 1)) {
-    _$jscoverage['/resize.js'].lineData[25]++;
-    if (visit4_25_1(direction[0] == 'x')) {
-      _$jscoverage['/resize.js'].lineData[26]++;
-      cursor = "e-resize";
+  _$jscoverage['/resize.js'].lineData[23]++;
+  if (visit3_23_1(direction.length === 1)) {
+    _$jscoverage['/resize.js'].lineData[24]++;
+    if (visit4_24_1(direction[0] === 'x')) {
+      _$jscoverage['/resize.js'].lineData[25]++;
+      cursor = 'e-resize';
     } else {
-      _$jscoverage['/resize.js'].lineData[28]++;
-      cursor = "s-resize";
+      _$jscoverage['/resize.js'].lineData[27]++;
+      cursor = 's-resize';
     }
   }
-  _$jscoverage['/resize.js'].lineData[32]++;
-  var resizer = new Node("<div class='" + editor.get('prefixCls') + "editor-resizer' style='cursor: " + cursor + "'></div>").appendTo(statusBarEl);
-  _$jscoverage['/resize.js'].lineData[38]++;
+  _$jscoverage['/resize.js'].lineData[31]++;
+  var resizer = new Node('<div class="' + editor.get('prefixCls') + 'editor-resizer" style="cursor: ' + cursor + '"></div>').appendTo(statusBarEl);
+  _$jscoverage['/resize.js'].lineData[36]++;
   editor.on('maximizeWindow', function() {
   _$jscoverage['/resize.js'].functionData[3]++;
-  _$jscoverage['/resize.js'].lineData[39]++;
-  resizer.css("display", "none");
+  _$jscoverage['/resize.js'].lineData[37]++;
+  resizer.css('display', 'none');
 });
-  _$jscoverage['/resize.js'].lineData[42]++;
+  _$jscoverage['/resize.js'].lineData[40]++;
   editor.on('restoreWindow', function() {
   _$jscoverage['/resize.js'].functionData[4]++;
-  _$jscoverage['/resize.js'].lineData[43]++;
-  resizer.css("display", "");
+  _$jscoverage['/resize.js'].lineData[41]++;
+  resizer.css('display', '');
 });
-  _$jscoverage['/resize.js'].lineData[46]++;
+  _$jscoverage['/resize.js'].lineData[44]++;
   var d = new Draggable({
   node: resizer, 
   groups: false}), height = 0, width = 0, dragStartMousePos, heightEl = editor.get('el'), widthEl = editor.get('el');
-  _$jscoverage['/resize.js'].lineData[56]++;
-  d.on("dragstart", function() {
+  _$jscoverage['/resize.js'].lineData[54]++;
+  d.on('dragstart', function() {
   _$jscoverage['/resize.js'].functionData[5]++;
-  _$jscoverage['/resize.js'].lineData[57]++;
+  _$jscoverage['/resize.js'].lineData[55]++;
   height = heightEl.height();
-  _$jscoverage['/resize.js'].lineData[58]++;
+  _$jscoverage['/resize.js'].lineData[56]++;
   width = widthEl.width();
-  _$jscoverage['/resize.js'].lineData[59]++;
-  editor.fire("resizeStart");
-  _$jscoverage['/resize.js'].lineData[60]++;
+  _$jscoverage['/resize.js'].lineData[57]++;
+  editor.fire('resizeStart');
+  _$jscoverage['/resize.js'].lineData[58]++;
   dragStartMousePos = d.get('dragStartMousePos');
 });
-  _$jscoverage['/resize.js'].lineData[63]++;
-  d.on("drag", function(ev) {
+  _$jscoverage['/resize.js'].lineData[61]++;
+  d.on('drag', function(ev) {
   _$jscoverage['/resize.js'].functionData[6]++;
-  _$jscoverage['/resize.js'].lineData[64]++;
+  _$jscoverage['/resize.js'].lineData[62]++;
   var diffX = ev.pageX - dragStartMousePos.left, diffY = ev.pageY - dragStartMousePos.top;
-  _$jscoverage['/resize.js'].lineData[66]++;
-  if (visit5_66_1(S.inArray('y', direction))) {
-    _$jscoverage['/resize.js'].lineData[67]++;
+  _$jscoverage['/resize.js'].lineData[64]++;
+  if (visit5_64_1(S.inArray('y', direction))) {
+    _$jscoverage['/resize.js'].lineData[65]++;
     editor.set('height', height + diffY);
   }
-  _$jscoverage['/resize.js'].lineData[69]++;
-  if (visit6_69_1(S.inArray('x', direction))) {
-    _$jscoverage['/resize.js'].lineData[70]++;
+  _$jscoverage['/resize.js'].lineData[67]++;
+  if (visit6_67_1(S.inArray('x', direction))) {
+    _$jscoverage['/resize.js'].lineData[68]++;
     editor.set('width', width + diffX);
   }
-  _$jscoverage['/resize.js'].lineData[72]++;
-  editor.fire("resize");
+  _$jscoverage['/resize.js'].lineData[70]++;
+  editor.fire('resize');
 });
-  _$jscoverage['/resize.js'].lineData[75]++;
+  _$jscoverage['/resize.js'].lineData[73]++;
   editor.on('destroy', function() {
   _$jscoverage['/resize.js'].functionData[7]++;
-  _$jscoverage['/resize.js'].lineData[76]++;
+  _$jscoverage['/resize.js'].lineData[74]++;
   d.destroy();
-  _$jscoverage['/resize.js'].lineData[77]++;
+  _$jscoverage['/resize.js'].lineData[75]++;
   resizer.remove();
 });
 }});
-  _$jscoverage['/resize.js'].lineData[82]++;
+  _$jscoverage['/resize.js'].lineData[80]++;
   return Resize;
 });

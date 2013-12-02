@@ -83,7 +83,7 @@ KISSY.add(function (S, require) {
 
             if (snap) {
                 var elOffset = $contentEl.offset();
-                var pages = control.pages = typeof snap == 'string' ?
+                var pages = control.pages = typeof snap === 'string' ?
                         $contentEl.all(snap) :
                         $contentEl.children(),
                     pageIndex = control.get('pageIndex'),

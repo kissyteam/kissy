@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:43
+build time: Dec 2 12:59
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -27,12 +27,12 @@ KISSY.add("editor/plugin/heading", ["./menubutton", "editor", "./heading/cmd"], 
     }, afterSyncUI:function() {
       var self = this;
       editor.on("selectionChange", function() {
-        if(editor.get("mode") == Editor.Mode.SOURCE_MODE) {
+        if(editor.get("mode") === Editor.Mode.SOURCE_MODE) {
           return
         }
         var headingValue = editor.queryCommandValue("heading"), value;
         for(value in FORMAT_SIZES) {
-          if(value == headingValue) {
+          if(value === headingValue) {
             self.set("value", value);
             return
           }

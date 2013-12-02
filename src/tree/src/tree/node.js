@@ -34,10 +34,10 @@ KISSY.add(function (S, require) {
         handleKeyDownInternal: function (e) {
             var self = this,
                 processed = true,
-                tree = self.get("tree"),
-                expanded = self.get("expanded"),
+                tree = self.get('tree'),
+                expanded = self.get('expanded'),
                 nodeToBeSelected,
-                isLeaf = self.get("isLeaf"),
+                isLeaf = self.get('isLeaf'),
                 children = self.get('children'),
                 keyCode = e.keyCode;
 
@@ -75,7 +75,7 @@ KISSY.add(function (S, require) {
                 // 选择父节点或 collapse 当前节点
                 case KeyCode.LEFT:
                     if (expanded && (children.length || isLeaf === false)) {
-                        self.set("expanded", false);
+                        self.set('expanded', false);
                     } else {
                         nodeToBeSelected = self.get('parent');
                     }
@@ -86,7 +86,7 @@ KISSY.add(function (S, require) {
                 case KeyCode.RIGHT:
                     if (children.length || isLeaf === false) {
                         if (!expanded) {
-                            self.set("expanded", true);
+                            self.set('expanded', true);
                         } else {
                             nodeToBeSelected = children[0];
                         }
@@ -115,7 +115,7 @@ KISSY.add(function (S, require) {
             }
             siblings = parent.get('children');
             index = S.indexOf(self, siblings);
-            if (index == siblings.length - 1) {
+            if (index === siblings.length - 1) {
                 return null;
             }
             return siblings[index + 1];
@@ -147,12 +147,12 @@ KISSY.add(function (S, require) {
         handleClickInternal: function (e) {
             var self = this,
                 target = $(e.target),
-                expanded = self.get("expanded"),
-                tree = self.get("tree");
+                expanded = self.get('expanded'),
+                tree = self.get('tree');
             tree.focus();
             self.callSuper(e);
-            if (target.equals(self.get("expandIconEl"))) {
-                self.set("expanded", !expanded);
+            if (target.equals(self.get('expandIconEl'))) {
+                self.set('expanded', !expanded);
             } else {
                 self.select();
                 self.fire('click');
@@ -175,13 +175,12 @@ KISSY.add(function (S, require) {
         _onSetExpanded: function (v) {
             var self = this;
             refreshCss(self);
-            self.fire(v ? "expand" : "collapse");
+            self.fire(v ? 'expand' : 'collapse');
         },
 
         _onSetSelected: function (v, e) {
-            var tree = this.get("tree");
-            if (e && e.byPassSetTreeSelectedItem) {
-            } else {
+            var tree = this.get('tree');
+            if (!(e && e.byPassSetTreeSelectedItem)) {
                 tree.set('selectedItem', v ? this : null);
             }
         },
@@ -191,7 +190,7 @@ KISSY.add(function (S, require) {
          */
         expandAll: function () {
             var self = this;
-            self.set("expanded", true);
+            self.set('expanded', true);
             S.each(self.get('children'), function (c) {
                 c.expandAll();
             });
@@ -202,7 +201,7 @@ KISSY.add(function (S, require) {
          */
         collapseAll: function () {
             var self = this;
-            self.set("expanded", false);
+            self.set('expanded', false);
             S.each(self.get('children'), function (c) {
                 c.collapseAll();
             });
@@ -314,14 +313,14 @@ KISSY.add(function (S, require) {
 
     function onAddChild(e) {
         var self = this;
-        if (e.target == self) {
+        if (e.target === self) {
             updateSubTreeStatus(self, e.component, self.get('depth'), e.index);
         }
     }
 
     function onRemoveChild(e) {
         var self = this;
-        if (e.target == self) {
+        if (e.target === self) {
             recursiveSetDepth(self.get('tree'), e.component);
             refreshCssForSelfAndChildren(self, e.index);
         }
@@ -342,11 +341,11 @@ KISSY.add(function (S, require) {
         // 根节点
         // or
         // 父亲的最后一个子节点
-        return !lastChild || lastChild == self;
+        return !lastChild || lastChild === self;
     }
 
     function isNodeLeaf(self) {
-        var isLeaf = self.get("isLeaf");
+        var isLeaf = self.get('isLeaf');
         // 强制指定了 isLeaf，否则根据儿子节点集合自动判断
         return !(isLeaf === false || (isLeaf === undefined && self.get('children').length));
     }
@@ -354,7 +353,7 @@ KISSY.add(function (S, require) {
     function getLastVisibleDescendant(self) {
         var children = self.get('children');
         // 没有展开或者根本没有儿子节点，可视的只有自己
-        if (!self.get("expanded") || !children.length) {
+        if (!self.get('expanded') || !children.length) {
             return self;
         }
         // 可视的最后一个子孙
@@ -377,7 +376,7 @@ KISSY.add(function (S, require) {
         var children = self.get('children'),
             n,
             parent;
-        if (self.get("expanded") && children.length) {
+        if (self.get('expanded') && children.length) {
             return children[0];
         }
         // 没有展开或者根本没有儿子节点
@@ -401,7 +400,7 @@ KISSY.add(function (S, require) {
     }
 
     function updateSubTreeStatus(self, c, depth, index) {
-        var tree = self.get("tree");
+        var tree = self.get('tree');
         if (tree) {
             recursiveSetDepth(tree, c, depth + 1);
             refreshCssForSelfAndChildren(self, index);
@@ -410,10 +409,10 @@ KISSY.add(function (S, require) {
 
     function recursiveSetDepth(tree, c, setDepth) {
         if (setDepth !== undefined) {
-            c.set("depth", setDepth);
+            c.set('depth', setDepth);
         }
         S.each(c.get('children'), function (child) {
-            if (typeof setDepth == 'number') {
+            if (typeof setDepth === 'number') {
                 recursiveSetDepth(tree, child, setDepth + 1);
             } else {
                 recursiveSetDepth(tree, child);
@@ -430,7 +429,7 @@ KISSY.add(function (S, require) {
         for (; index < len; index++) {
             c = children[index];
             refreshCss(c);
-            c.el.setAttribute("aria-posinset", index + 1);
+            c.el.setAttribute('aria-posinset', index + 1);
         }
     }
 

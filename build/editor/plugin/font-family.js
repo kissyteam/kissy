@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:42
+build time: Dec 2 12:58
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -21,7 +21,7 @@ KISSY.add("editor/plugin/font-family", ["editor", "./font/ui", "./font-family/cm
     cmd.init(editor);
     var fontFamilies = this.config;
     var menu = {};
-    S.mix(menu, {children:[{content:"\u5b8b\u4f53", value:"SimSun"}, {content:"\u9ed1\u4f53", value:"SimHei"}, {content:"\u96b6\u4e66", value:"LiSu"}, {content:"\u6977\u4f53", value:"KaiTi_GB2312"}, {content:"\u5fae\u8f6f\u96c5\u9ed1", value:"'Microsoft YaHei'"}, {content:"Georgia", value:"Georgia"}, {content:"Times New Roman", value:"'Times New Roman'"}, {content:"Impact", value:"Impact"}, {content:"Courier New", value:"'Courier New'"}, {content:"Arial", value:"Arial"}, {content:"Verdana", value:"Verdana"}, 
+    S.mix(menu, {children:[{content:"\u5b8b\u4f53", value:"SimSun"}, {content:"\u9ed1\u4f53", value:"SimHei"}, {content:"\u96b6\u4e66", value:"LiSu"}, {content:"\u6977\u4f53", value:"KaiTi_GB2312"}, {content:"\u5fae\u8f6f\u96c5\u9ed1", value:'"Microsoft YaHei"'}, {content:"Georgia", value:"Georgia"}, {content:"Times New Roman", value:'"Times New Roman"'}, {content:"Impact", value:"Impact"}, {content:"Courier New", value:'"Courier New"'}, {content:"Arial", value:"Arial"}, {content:"Verdana", value:"Verdana"}, 
     {content:"Tahoma", value:"Tahoma"}], width:"130px"});
     S.each(menu.children, function(item) {
       var attrs = item.elAttrs || {}, value = item.value;

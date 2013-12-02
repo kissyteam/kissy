@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ','src':' + jscoverage_quote(this.src)
+            + ',"src":' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -245,19 +245,20 @@ if (! _$jscoverage['/focus-fix.js']) {
   _$jscoverage['/focus-fix.js'].lineData[36] = 0;
   _$jscoverage['/focus-fix.js'].lineData[38] = 0;
   _$jscoverage['/focus-fix.js'].lineData[39] = 0;
+  _$jscoverage['/focus-fix.js'].lineData[46] = 0;
   _$jscoverage['/focus-fix.js'].lineData[47] = 0;
   _$jscoverage['/focus-fix.js'].lineData[48] = 0;
   _$jscoverage['/focus-fix.js'].lineData[49] = 0;
-  _$jscoverage['/focus-fix.js'].lineData[50] = 0;
+  _$jscoverage['/focus-fix.js'].lineData[55] = 0;
   _$jscoverage['/focus-fix.js'].lineData[56] = 0;
   _$jscoverage['/focus-fix.js'].lineData[57] = 0;
   _$jscoverage['/focus-fix.js'].lineData[58] = 0;
-  _$jscoverage['/focus-fix.js'].lineData[61] = 0;
-  _$jscoverage['/focus-fix.js'].lineData[63] = 0;
+  _$jscoverage['/focus-fix.js'].lineData[62] = 0;
   _$jscoverage['/focus-fix.js'].lineData[64] = 0;
   _$jscoverage['/focus-fix.js'].lineData[65] = 0;
-  _$jscoverage['/focus-fix.js'].lineData[68] = 0;
+  _$jscoverage['/focus-fix.js'].lineData[66] = 0;
   _$jscoverage['/focus-fix.js'].lineData[69] = 0;
+  _$jscoverage['/focus-fix.js'].lineData[70] = 0;
 }
 if (! _$jscoverage['/focus-fix.js'].functionData) {
   _$jscoverage['/focus-fix.js'].functionData = [];
@@ -276,34 +277,33 @@ if (! _$jscoverage['/focus-fix.js'].branchData) {
   _$jscoverage['/focus-fix.js'].branchData['38'][1] = new BranchData();
   _$jscoverage['/focus-fix.js'].branchData['45'] = [];
   _$jscoverage['/focus-fix.js'].branchData['45'][1] = new BranchData();
-  _$jscoverage['/focus-fix.js'].branchData['46'] = [];
-  _$jscoverage['/focus-fix.js'].branchData['46'][1] = new BranchData();
-  _$jscoverage['/focus-fix.js'].branchData['58'] = [];
-  _$jscoverage['/focus-fix.js'].branchData['58'][1] = new BranchData();
-  _$jscoverage['/focus-fix.js'].branchData['64'] = [];
-  _$jscoverage['/focus-fix.js'].branchData['64'][1] = new BranchData();
+  _$jscoverage['/focus-fix.js'].branchData['45'][2] = new BranchData();
+  _$jscoverage['/focus-fix.js'].branchData['57'] = [];
+  _$jscoverage['/focus-fix.js'].branchData['57'][1] = new BranchData();
+  _$jscoverage['/focus-fix.js'].branchData['65'] = [];
+  _$jscoverage['/focus-fix.js'].branchData['65'][1] = new BranchData();
 }
-_$jscoverage['/focus-fix.js'].branchData['64'][1].init(21, 8, 'e.newVal');
-function visit6_64_1(result) {
-  _$jscoverage['/focus-fix.js'].branchData['64'][1].ranCondition(result);
+_$jscoverage['/focus-fix.js'].branchData['65'][1].init(21, 8, 'e.newVal');
+function visit6_65_1(result) {
+  _$jscoverage['/focus-fix.js'].branchData['65'][1].ranCondition(result);
   return result;
-}_$jscoverage['/focus-fix.js'].branchData['58'][1].init(49, 24, 'editor && editor.focus()');
-function visit5_58_1(result) {
-  _$jscoverage['/focus-fix.js'].branchData['58'][1].ranCondition(result);
+}_$jscoverage['/focus-fix.js'].branchData['57'][1].init(52, 6, 'editor');
+function visit5_57_1(result) {
+  _$jscoverage['/focus-fix.js'].branchData['57'][1].ranCondition(result);
   return result;
-}_$jscoverage['/focus-fix.js'].branchData['46'][1].init(38, 57, '$range.item(0).ownerDocument == editor.get('document')[0]');
-function visit4_46_1(result) {
-  _$jscoverage['/focus-fix.js'].branchData['46'][1].ranCondition(result);
+}_$jscoverage['/focus-fix.js'].branchData['45'][2].init(268, 58, '$range.item(0).ownerDocument === editor.get(\'document\')[0]');
+function visit4_45_2(result) {
+  _$jscoverage['/focus-fix.js'].branchData['45'][2].ranCondition(result);
   return result;
-}_$jscoverage['/focus-fix.js'].branchData['45'][1].init(235, 96, '$range.item && $range.item(0).ownerDocument == editor.get('document')[0]');
+}_$jscoverage['/focus-fix.js'].branchData['45'][1].init(235, 72, '$range.item && $range.item(0).ownerDocument === editor.get(\'document\')[0]');
 function visit3_45_1(result) {
   _$jscoverage['/focus-fix.js'].branchData['45'][1].ranCondition(result);
   return result;
-}_$jscoverage['/focus-fix.js'].branchData['38'][1].init(474, 6, '$range');
+}_$jscoverage['/focus-fix.js'].branchData['38'][1].init(471, 6, '$range');
 function visit2_38_1(result) {
   _$jscoverage['/focus-fix.js'].branchData['38'][1].ranCondition(result);
   return result;
-}_$jscoverage['/focus-fix.js'].branchData['22'][1].init(379, 18, 'UA[\'ie\'] && editor');
+}_$jscoverage['/focus-fix.js'].branchData['22'][1].init(379, 15, 'UA.ie && editor');
 function visit1_22_1(result) {
   _$jscoverage['/focus-fix.js'].branchData['22'][1].ranCondition(result);
   return result;
@@ -342,44 +342,47 @@ KISSY.add(function(S, require) {
       _$jscoverage['/focus-fix.js'].lineData[38]++;
       if (visit2_38_1($range)) {
         _$jscoverage['/focus-fix.js'].lineData[39]++;
-        if (visit3_45_1($range.item && visit4_46_1($range.item(0).ownerDocument == editor.get('document')[0]))) {
-          _$jscoverage['/focus-fix.js'].lineData[47]++;
+        if (visit3_45_1($range.item && visit4_45_2($range.item(0).ownerDocument === editor.get('document')[0]))) {
+          _$jscoverage['/focus-fix.js'].lineData[46]++;
           var $myRange = document.body.createTextRange();
-          _$jscoverage['/focus-fix.js'].lineData[48]++;
+          _$jscoverage['/focus-fix.js'].lineData[47]++;
           $myRange.moveToElementText(self.get('el').first()[0]);
-          _$jscoverage['/focus-fix.js'].lineData[49]++;
+          _$jscoverage['/focus-fix.js'].lineData[48]++;
           $myRange.collapse(true);
-          _$jscoverage['/focus-fix.js'].lineData[50]++;
+          _$jscoverage['/focus-fix.js'].lineData[49]++;
           $myRange.select();
         }
       }
     }
   }
-  _$jscoverage['/focus-fix.js'].lineData[56]++;
+  _$jscoverage['/focus-fix.js'].lineData[55]++;
   function _hide4FocusExt() {
     _$jscoverage['/focus-fix.js'].functionData[2]++;
-    _$jscoverage['/focus-fix.js'].lineData[57]++;
+    _$jscoverage['/focus-fix.js'].lineData[56]++;
     var editor = this._focusEditor;
-    _$jscoverage['/focus-fix.js'].lineData[58]++;
-    visit5_58_1(editor && editor.focus());
+    _$jscoverage['/focus-fix.js'].lineData[57]++;
+    if (visit5_57_1(editor)) {
+      _$jscoverage['/focus-fix.js'].lineData[58]++;
+      editor.focus();
+    }
   }
-  _$jscoverage['/focus-fix.js'].lineData[61]++;
+  _$jscoverage['/focus-fix.js'].lineData[62]++;
   return {
   init: function(self) {
   _$jscoverage['/focus-fix.js'].functionData[3]++;
-  _$jscoverage['/focus-fix.js'].lineData[63]++;
+  _$jscoverage['/focus-fix.js'].lineData[64]++;
   self.on('beforeVisibleChange', function(e) {
   _$jscoverage['/focus-fix.js'].functionData[4]++;
-  _$jscoverage['/focus-fix.js'].lineData[64]++;
-  if (visit6_64_1(e.newVal)) {
-    _$jscoverage['/focus-fix.js'].lineData[65]++;
+  _$jscoverage['/focus-fix.js'].lineData[65]++;
+  if (visit6_65_1(e.newVal)) {
+    _$jscoverage['/focus-fix.js'].lineData[66]++;
     _show4FocusExt.call(self);
   }
 });
-  _$jscoverage['/focus-fix.js'].lineData[68]++;
+  _$jscoverage['/focus-fix.js'].lineData[69]++;
   self.on('hide', function() {
   _$jscoverage['/focus-fix.js'].functionData[5]++;
-  _$jscoverage['/focus-fix.js'].lineData[69]++;
+  _$jscoverage['/focus-fix.js'].lineData[70]++;
   _hide4FocusExt.call(self);
 });
 }};

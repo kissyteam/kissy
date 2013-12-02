@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:42
+build time: Dec 2 12:59
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -14,7 +14,7 @@ KISSY.add("editor/plugin/font/cmd", ["editor"], function(S, require) {
   var getQueryCmd = Editor.Utils.getQueryCmd;
   function getValueFromSingle(element, styleObj) {
     var nodeName = element.nodeName();
-    if(styleObj.element != nodeName) {
+    if(styleObj.element !== nodeName) {
       return false
     }
     var styles = styleObj.styles, v;
@@ -26,7 +26,7 @@ KISSY.add("editor/plugin/font/cmd", ["editor"], function(S, require) {
     var overrides = styleObj.overrides;
     for(var i = 0;i < overrides.length;i++) {
       var override = overrides[i];
-      if(override.element != nodeName) {
+      if(override.element !== nodeName) {
         continue
       }
       var attributes = override.attributes;
@@ -42,7 +42,7 @@ KISSY.add("editor/plugin/font/cmd", ["editor"], function(S, require) {
     var elements = elementPath.elements, element, i, v;
     for(i = 0;i < elements.length;i++) {
       element = elements[i];
-      if(elementPath.block && element[0] == elementPath.block[0] || elementPath.blockLimit && element[0] == elementPath.blockLimit[0]) {
+      if(elementPath.block && element[0] === elementPath.block[0] || elementPath.blockLimit && element[0] === elementPath.blockLimit[0]) {
         continue
       }
       v = getValueFromSingle(element, styleObj);
@@ -55,7 +55,7 @@ KISSY.add("editor/plugin/font/cmd", ["editor"], function(S, require) {
   return{addButtonCmd:function(editor, cmdType, style) {
     var queryCmd = getQueryCmd(cmdType);
     if(!editor.hasCommand(cmdType)) {
-      editor.addCommand(cmdType, {exec:function(editor, effect) {
+      editor.addCommand(cmdType, {exec:function(editor) {
         var doc = editor.get("document")[0];
         editor.execCommand("save");
         var checked = editor.queryCommandValue(cmdType);
@@ -83,7 +83,7 @@ KISSY.add("editor/plugin/font/cmd", ["editor"], function(S, require) {
         var currentValue = editor.queryCommandValue(cmdType) || "";
         var style = new Editor.Style(styleObj, {value:value}), doc = editor.get("document")[0];
         editor.execCommand("save");
-        if(value.toLowerCase() == currentValue.toLowerCase()) {
+        if(value.toLowerCase() === currentValue.toLowerCase()) {
           style.remove(doc)
         }else {
           style.apply(doc)

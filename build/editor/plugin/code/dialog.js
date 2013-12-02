@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:41
+build time: Dec 2 12:57
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -12,7 +12,7 @@ build time: Nov 27 00:41
 KISSY.add("editor/plugin/code/dialog", ["editor", "menubutton", "../dialog"], function(S, require) {
   var Editor = require("editor");
   var MenuButton = require("menubutton");
-  var xhtml_dtd = Editor.XHTML_DTD;
+  var xhtmlDtd = Editor.XHTML_DTD;
   var NodeType = S.DOM.NodeType;
   var notWhitespaceEval = Editor.Walker.whitespaces(true);
   var Dialog4E = require("../dialog");
@@ -47,12 +47,11 @@ KISSY.add("editor/plugin/code/dialog", ["editor", "menubutton", "../dialog"], fu
     editor.insertElement(codeEl);
     var range = editor.getSelection().getRanges()[0];
     var next = codeEl.next(notWhitespaceEval, 1);
-    var nextName = next && next[0].nodeType == NodeType.ELEMENT_NODE && next.nodeName();
-    if(nextName && xhtml_dtd.$block[nextName] && xhtml_dtd[nextName]["#text"]) {
-    }else {
+    var nextName = next && next[0].nodeType === NodeType.ELEMENT_NODE && next.nodeName();
+    if(!(nextName && xhtmlDtd.$block[nextName] && xhtmlDtd[nextName]["#text"])) {
       next = S.all("<p></p>", editor.get("document")[0]);
       if(!S.UA.ie) {
-        next._4e_appendBogus()
+        next._4eAppendBogus()
       }
       codeEl.after(next)
     }

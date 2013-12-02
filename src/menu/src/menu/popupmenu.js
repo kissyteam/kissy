@@ -45,7 +45,7 @@ KISSY.add(function (S, require) {
                     clearTimeout(rootMenu._popupAutoHideTimer);
                     rootMenu._popupAutoHideTimer = setTimeout(function () {
                         var item;
-                        if (item = rootMenu.get('highlightedItem')) {
+                        if ((item = rootMenu.get('highlightedItem'))) {
                             item.set('highlighted', false);
                         }
                     }, this.get('parent').get('menuDelay') * 1000);

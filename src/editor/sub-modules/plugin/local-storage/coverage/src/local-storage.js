@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ','src':' + jscoverage_quote(this.src)
+            + ',"src":' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -314,7 +314,7 @@ KISSY.add(function(S, require) {
     return window.localStorage;
   }
   _$jscoverage['/local-storage.js'].lineData[21]++;
-  var swfSrc = Editor.Utils.debugUrl("plugin/local-storage/assets/swfstore.swf?t=" + (+new Date()));
+  var swfSrc = Editor.Utils.debugUrl('plugin/local-storage/assets/swfstore.swf?t=' + (+new Date()));
   _$jscoverage['/local-storage.js'].lineData[23]++;
   var css = {
   width: 215, 
@@ -326,8 +326,8 @@ KISSY.add(function(S, require) {
   prefixCls: 'ks-editor-', 
   elStyle: {
   background: 'white'}, 
-  width: '0px',
-  content: "<h1 style='" + "text-align:center;'>\u8bf7\u70b9\u51fb\u5141\u8bb8</h1>" + "<div class='storage-container'></div>", 
+  width: '0px', 
+  content: '<h1 style="' + 'text-align:center;">\u8bf7\u70b9\u51fb\u5141\u8bb8</h1>' + '<div class="storage-container"></div>', 
   zIndex: Editor.baseZIndex(Editor.ZIndexManager.STORE_FLASH_SHOW)});
   _$jscoverage['/local-storage.js'].lineData[42]++;
   o.render();
@@ -336,14 +336,14 @@ KISSY.add(function(S, require) {
   _$jscoverage['/local-storage.js'].lineData[45]++;
   var store = new FlashBridge({
   src: swfSrc, 
-  render: o.get('contentEl').one('.storage-container'),
+  render: o.get('contentEl').one('.storage-container'), 
   params: {
   flashVars: {
   useCompression: true}}, 
   attrs: {
   height: 138, 
   width: '100%'}, 
-  methods: ["setItem", "removeItem", "getItem", "setMinDiskSpace", "getValueOf"]});
+  methods: ['setItem', 'removeItem', 'getItem', 'setMinDiskSpace', 'getValueOf']});
   _$jscoverage['/local-storage.js'].lineData[61]++;
   S.ready(function() {
   _$jscoverage['/local-storage.js'].functionData[1]++;
@@ -355,7 +355,7 @@ KISSY.add(function(S, require) {
 }, 0);
 });
   _$jscoverage['/local-storage.js'].lineData[67]++;
-  store.on("pending", function() {
+  store.on('pending', function() {
   _$jscoverage['/local-storage.js'].functionData[3]++;
   _$jscoverage['/local-storage.js'].lineData[68]++;
   o.get('el').css(css);
@@ -384,7 +384,7 @@ KISSY.add(function(S, require) {
   getItem: function(k) {
   _$jscoverage['/local-storage.js'].functionData[6]++;
   _$jscoverage['/local-storage.js'].lineData[86]++;
-  return this['getValueOf'](k);
+  return this.getValueOf(k);
 }, 
   retrySave: function() {
   _$jscoverage['/local-storage.js'].functionData[7]++;
@@ -405,7 +405,7 @@ KISSY.add(function(S, require) {
   oldSet.call(self, k, v);
 }});
   _$jscoverage['/local-storage.js'].lineData[100]++;
-  store.on("contentReady", function() {
+  store.on('contentReady', function() {
   _$jscoverage['/local-storage.js'].functionData[9]++;
   _$jscoverage['/local-storage.js'].lineData[101]++;
   store._ready = 1;

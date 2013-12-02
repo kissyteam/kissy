@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:42
+build time: Dec 2 12:59
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -12,7 +12,7 @@ build time: Nov 27 00:42
 KISSY.add("editor/plugin/fore-color/cmd", ["../color/cmd"], function(S, require) {
   var cmd = require("../color/cmd");
   var COLOR_STYLES = {element:"span", styles:{color:"#(color)"}, overrides:[{element:"font", attributes:{color:null}}], childRule:function(el) {
-    return!(el.nodeName() == "a" || el.all("a").length)
+    return!(el.nodeName() === "a" || el.all("a").length)
   }};
   return{init:function(editor) {
     if(!editor.hasCommand("foreColor")) {

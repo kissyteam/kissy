@@ -20,7 +20,7 @@ KISSY.add(function (S, require) {
      */
     return TreeNode.extend([TreeManager], {
         handleKeyDownInternal: function (e) {
-            var current = this.get("selectedItem");
+            var current = this.get('selectedItem');
             if (current === this) {
                 return this.callSuper(e);
             }
@@ -32,7 +32,7 @@ KISSY.add(function (S, require) {
             self.callSuper(v);
             // 得到焦点时没有选择节点
             // 默认选择自己
-            if (v && !self.get("selectedItem")) {
+            if (v && !self.get('selectedItem')) {
                 self.select();
             }
         }

@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:44
+build time: Dec 2 13:01
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -25,7 +25,7 @@ KISSY.add("editor/plugin/list-utils/cmd", ["editor", "../list-utils"], function(
         continue
       }
       selectedListItems.push(itemNode);
-      itemNode._4e_setMarker(database, "list_item_processed", true, undefined)
+      itemNode._4eSetMarker(database, "list_item_processed", true, undefined)
     }
     var fakeParent = new Node(groupObj.root[0].ownerDocument.createElement(this.type));
     fakeParent.css("list-style-type", listStyleType);
@@ -36,7 +36,7 @@ KISSY.add("editor/plugin/list-utils/cmd", ["editor", "../list-utils"], function(
     var newList = ListUtils.arrayToList(listArray, database, null, "p");
     var child, length = newList.listNode.childNodes.length;
     for(i = 0;i < length && (child = new Node(newList.listNode.childNodes[i]));i++) {
-      if(child.nodeName() == this.type) {
+      if(child.nodeName() === this.type) {
         listsCreated.push(child)
       }
     }
@@ -44,15 +44,17 @@ KISSY.add("editor/plugin/list-utils/cmd", ["editor", "../list-utils"], function(
     groupObj.root.remove()
   }, createList:function(editor, groupObj, listsCreated, listStyleType) {
     var contents = groupObj.contents, doc = groupObj.root[0].ownerDocument, listContents = [];
-    if(contents.length == 1 && contents[0][0] === groupObj.root[0]) {
+    if(contents.length === 1 && contents[0][0] === groupObj.root[0]) {
       var divBlock = new Node(doc.createElement("div"));
-      contents[0][0].nodeType != Dom.NodeType.TEXT_NODE && contents[0]._4e_moveChildren(divBlock, undefined, undefined);
+      if(contents[0][0].nodeType !== Dom.NodeType.TEXT_NODE) {
+        contents[0]._4eMoveChildren(divBlock, undefined, undefined)
+      }
       contents[0][0].appendChild(divBlock[0]);
       contents[0] = divBlock
     }
     var commonParent = groupObj.contents[0].parent();
     for(var i = 0;i < contents.length;i++) {
-      commonParent = commonParent._4e_commonAncestor(contents[i].parent(), undefined)
+      commonParent = commonParent._4eCommonAncestor(contents[i].parent(), undefined)
     }
     for(i = 0;i < contents.length;i++) {
       var contentNode = contents[i], parentNode;
@@ -75,13 +77,13 @@ KISSY.add("editor/plugin/list-utils/cmd", ["editor", "../list-utils"], function(
       if(headerTagRegex.test(contentBlock.nodeName())) {
         listItem[0].appendChild(contentBlock[0])
       }else {
-        contentBlock._4e_copyAttributes(listItem, undefined, undefined);
-        contentBlock._4e_moveChildren(listItem, undefined, undefined);
+        contentBlock._4eCopyAttributes(listItem, undefined, undefined);
+        contentBlock._4eMoveChildren(listItem, undefined, undefined);
         contentBlock.remove()
       }
       listNode[0].appendChild(listItem[0]);
-      if(!UA["ie"]) {
-        listItem._4e_appendBogus(undefined)
+      if(!UA.ie) {
+        listItem._4eAppendBogus(undefined)
       }
     }
     if(insertAnchor[0]) {
@@ -98,7 +100,7 @@ KISSY.add("editor/plugin/list-utils/cmd", ["editor", "../list-utils"], function(
         continue
       }
       selectedListItems.push(itemNode);
-      itemNode._4e_setMarker(database, "list_item_processed", true, undefined)
+      itemNode._4eSetMarker(database, "list_item_processed", true, undefined)
     }
     var lastListIndex = null;
     for(i = 0;i < selectedListItems.length;i++) {
@@ -120,7 +122,7 @@ KISSY.add("editor/plugin/list-utils/cmd", ["editor", "../list-utils"], function(
     var newList = ListUtils.arrayToList(listArray, database, null, "p");
     var docFragment = newList.listNode, boundaryNode, siblingNode;
     function compensateBrs(isStart) {
-      if((boundaryNode = new Node(docFragment[isStart ? "firstChild" : "lastChild"])) && !(boundaryNode[0].nodeType == Dom.NodeType.ELEMENT_NODE && boundaryNode._4e_isBlockBoundary(undefined, undefined)) && (siblingNode = groupObj.root[isStart ? "prev" : "next"](Walker.whitespaces(true), 1)) && !(boundaryNode[0].nodeType == Dom.NodeType.ELEMENT_NODE && siblingNode._4e_isBlockBoundary({br:1}, undefined))) {
+      if((boundaryNode = new Node(docFragment[isStart ? "firstChild" : "lastChild"])) && !(boundaryNode[0].nodeType === Dom.NodeType.ELEMENT_NODE && boundaryNode._4eIsBlockBoundary(undefined, undefined)) && (siblingNode = groupObj.root[isStart ? "prev" : "next"](Walker.whitespaces(true), 1)) && !(boundaryNode[0].nodeType === Dom.NodeType.ELEMENT_NODE && siblingNode._4eIsBlockBoundary({br:1}, undefined))) {
         boundaryNode[isStart ? "before" : "after"](editor.get("document")[0].createElement("br"))
       }
     }
@@ -133,17 +135,17 @@ KISSY.add("editor/plugin/list-utils/cmd", ["editor", "../list-utils"], function(
     if(!ranges || ranges.length < 1) {
       return
     }
-    var startElement = selection.getStartElement(), currentPath = new Editor.ElementPath(startElement);
+    var startElement = selection.getStartElement(), groupObj, i, currentPath = new Editor.ElementPath(startElement);
     var state = queryActive(this.type, currentPath);
     var bookmarks = selection.createBookmarks(true);
     var listGroups = [], database = {};
     while(ranges.length > 0) {
       var range = ranges.shift();
       var boundaryNodes = range.getBoundaryNodes(), startNode = boundaryNodes.startNode, endNode = boundaryNodes.endNode;
-      if(startNode[0].nodeType == Dom.NodeType.ELEMENT_NODE && startNode.nodeName() == "td") {
+      if(startNode[0].nodeType === Dom.NodeType.ELEMENT_NODE && startNode.nodeName() === "td") {
         range.setStartAt(boundaryNodes.startNode, KER.POSITION_AFTER_START)
       }
-      if(endNode[0].nodeType == Dom.NodeType.ELEMENT_NODE && endNode.nodeName() == "td") {
+      if(endNode[0].nodeType === Dom.NodeType.ELEMENT_NODE && endNode.nodeName() === "td") {
         range.setEndAt(boundaryNodes.endNode, KER.POSITION_BEFORE_END)
       }
       var iterator = range.createIterator(), block;
@@ -152,19 +154,19 @@ KISSY.add("editor/plugin/list-utils/cmd", ["editor", "../list-utils"], function(
         if(block.data("list_block")) {
           continue
         }else {
-          block._4e_setMarker(database, "list_block", 1, undefined)
+          block._4eSetMarker(database, "list_block", 1, undefined)
         }
-        var path = new ElementPath(block), pathElements = path.elements, pathElementsCount = pathElements.length, listNode = null, processedFlag = false, blockLimit = path.blockLimit, element;
-        for(var i = pathElementsCount - 1;i >= 0 && (element = pathElements[i]);i--) {
+        var path = new ElementPath(block), pathElements = path.elements, pathElementsCount = pathElements.length, processedFlag = false, blockLimit = path.blockLimit, element;
+        for(i = pathElementsCount - 1;i >= 0 && (element = pathElements[i]);i--) {
           if(listNodeNames[element.nodeName()] && blockLimit.contains(element)) {
             blockLimit.removeData("list_group_object");
-            var groupObj = element.data("list_group_object");
+            groupObj = element.data("list_group_object");
             if(groupObj) {
               groupObj.contents.push(block)
             }else {
               groupObj = {root:element, contents:[block]};
               listGroups.push(groupObj);
-              element._4e_setMarker(database, "list_group_object", groupObj, undefined)
+              element._4eSetMarker(database, "list_group_object", groupObj, undefined)
             }
             processedFlag = true;
             break
@@ -178,7 +180,7 @@ KISSY.add("editor/plugin/list-utils/cmd", ["editor", "../list-utils"], function(
           root.data("list_group_object").contents.push(block)
         }else {
           groupObj = {root:root, contents:[block]};
-          root._4e_setMarker(database, "list_group_object", groupObj, undefined);
+          root._4eSetMarker(database, "list_group_object", groupObj, undefined);
           listGroups.push(groupObj)
         }
       }
@@ -195,7 +197,7 @@ KISSY.add("editor/plugin/list-utils/cmd", ["editor", "../list-utils"], function(
         }
       }else {
         if(listNodeNames[groupObj.root.nodeName()]) {
-          if(groupObj.root.css("list-style-type") == listStyleType) {
+          if(groupObj.root.css("list-style-type") === listStyleType) {
             this.removeList(editor, groupObj, database)
           }else {
             groupObj.root.css("list-style-type", listStyleType)
@@ -205,14 +207,14 @@ KISSY.add("editor/plugin/list-utils/cmd", ["editor", "../list-utils"], function(
     }
     var self = this;
     for(i = 0;i < listsCreated.length;i++) {
-      listNode = listsCreated[i];
-      function mergeSibling(rtl, listNode) {
+      var listNode = listsCreated[i];
+      var mergeSibling = function(rtl, listNode) {
         var sibling = listNode[rtl ? "prev" : "next"](Walker.whitespaces(true), 1);
-        if(sibling && sibling[0] && sibling.nodeName() == self.type && sibling.css("list-style-type") == listStyleType) {
+        if(sibling && sibling[0] && sibling.nodeName() === self.type && sibling.css("list-style-type") === listStyleType) {
           sibling.remove();
-          sibling._4e_moveChildren(listNode, rtl ? true : false, undefined)
+          sibling._4eMoveChildren(listNode, rtl ? true : false, undefined)
         }
-      }
+      };
       mergeSibling(undefined, listNode);
       mergeSibling(true, listNode)
     }
@@ -227,7 +229,7 @@ KISSY.add("editor/plugin/list-utils/cmd", ["editor", "../list-utils"], function(
     if(elements) {
       for(i = 0;i < elements.length && (element = elements[i]) && element[0] !== blockLimit[0];i++) {
         if(listNodeNames[name = element.nodeName()]) {
-          if(name == type) {
+          if(name === type) {
             return element.css("list-style-type")
           }
         }

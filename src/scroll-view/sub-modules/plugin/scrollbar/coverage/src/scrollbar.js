@@ -302,11 +302,11 @@ function visit33_59_1(result) {
 function visit32_50_1(result) {
   _$jscoverage['/scrollbar.js'].branchData['50'][1].ranCondition(result);
   return result;
-}_$jscoverage['/scrollbar.js'].branchData['46'][1].init(995, 29, 'scrollView.allowScroll[\'top\']');
+}_$jscoverage['/scrollbar.js'].branchData['46'][1].init(992, 26, 'scrollView.allowScroll.top');
 function visit31_46_1(result) {
   _$jscoverage['/scrollbar.js'].branchData['46'][1].ranCondition(result);
   return result;
-}_$jscoverage['/scrollbar.js'].branchData['44'][1].init(912, 15, 'self.scrollBarY');
+}_$jscoverage['/scrollbar.js'].branchData['44'][1].init(909, 15, 'self.scrollBarY');
 function visit30_44_1(result) {
   _$jscoverage['/scrollbar.js'].branchData['44'][1].ranCondition(result);
   return result;
@@ -314,7 +314,7 @@ function visit30_44_1(result) {
 function visit29_38_1(result) {
   _$jscoverage['/scrollbar.js'].branchData['38'][1].ranCondition(result);
   return result;
-}_$jscoverage['/scrollbar.js'].branchData['34'][1].init(589, 30, 'scrollView.allowScroll[\'left\']');
+}_$jscoverage['/scrollbar.js'].branchData['34'][1].init(589, 27, 'scrollView.allowScroll.left');
 function visit28_34_1(result) {
   _$jscoverage['/scrollbar.js'].branchData['34'][1].ranCondition(result);
   return result;
@@ -363,7 +363,7 @@ KISSY.add(function(S, require) {
     self.scrollBarX.sync();
   } else {
     _$jscoverage['/scrollbar.js'].lineData[34]++;
-    if (visit28_34_1(scrollView.allowScroll['left'])) {
+    if (visit28_34_1(scrollView.allowScroll.left)) {
       _$jscoverage['/scrollbar.js'].lineData[35]++;
       my = {
   axis: 'x'};
@@ -382,7 +382,7 @@ KISSY.add(function(S, require) {
     self.scrollBarY.sync();
   } else {
     _$jscoverage['/scrollbar.js'].lineData[46]++;
-    if (visit31_46_1(scrollView.allowScroll['top'])) {
+    if (visit31_46_1(scrollView.allowScroll.top)) {
       _$jscoverage['/scrollbar.js'].lineData[47]++;
       my = {
   axis: 'y'};

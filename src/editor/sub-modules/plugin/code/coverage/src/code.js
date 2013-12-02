@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ','src':' + jscoverage_quote(this.src)
+            + ',"src":' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -268,12 +268,12 @@ KISSY.add(function(S, require) {
   _$jscoverage['/code.js'].functionData[2]++;
   _$jscoverage['/code.js'].lineData[17]++;
   editor.addButton('code', {
-  tooltip: "\u63d2\u5165\u4ee3\u7801", 
+  tooltip: '\u63d2\u5165\u4ee3\u7801', 
   listeners: {
   click: function() {
   _$jscoverage['/code.js'].functionData[3]++;
   _$jscoverage['/code.js'].lineData[21]++;
-  DialogLoader.useDialog(editor, "code");
+  DialogLoader.useDialog(editor, 'code');
 }}, 
   mode: Editor.Mode.WYSIWYG_MODE});
 }});

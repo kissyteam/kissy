@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:40
+build time: Dec 2 12:56
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -28,7 +28,7 @@ KISSY.add("editor/plugin/button", ["editor", "button"], function(S, require) {
         contentEl[0].className = prefixCls + "item " + prefixCls + e.newVal
       })
     }
-    if(b.get("mode") == Editor.Mode.WYSIWYG_MODE) {
+    if(b.get("mode") === Editor.Mode.WYSIWYG_MODE) {
       self.on("wysiwygMode", function() {
         b.set("disabled", false)
       });

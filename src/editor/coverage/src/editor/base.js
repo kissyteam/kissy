@@ -254,7 +254,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/editor/base.js'].lineData[15]++;
   return Control.extend({}, {
   Config: {}, 
-  XHTML_DTD: HtmlParser['DTD'], 
+  XHTML_DTD: HtmlParser.DTD, 
   ATTRS: {
   textarea: {}, 
   textareaAttrs: {
@@ -274,7 +274,7 @@ KISSY.add(function(S, require) {
   data: {
   view: 1}, 
   customStyle: {
-  value: ""}, 
+  value: ''}, 
   customLink: {
   value: []}, 
   xrender: {

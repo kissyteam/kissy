@@ -21,9 +21,9 @@ KISSY.add(function (S, require) {
         handleClickInternal: function (e) {
             var self = this,
                 checkState,
-                expanded = self.get("expanded"),
-                expandIconEl = self.get("expandIconEl"),
-                tree = self.get("tree"),
+                expanded = self.get('expanded'),
+                expandIconEl = self.get('expandIconEl'),
+                tree = self.get('tree'),
                 target = $(e.target);
 
             // 需要通知 tree 获得焦点
@@ -31,20 +31,20 @@ KISSY.add(function (S, require) {
             self.callSuper(e);
             // 点击在 +- 号，切换状态
             if (target.equals(expandIconEl)) {
-                self.set("expanded", !expanded);
+                self.set('expanded', !expanded);
                 return;
             }
 
             // 单击任何其他地方都切换 check 状态
-            checkState = self.get("checkState");
+            checkState = self.get('checkState');
 
-            if (checkState == CHECK) {
+            if (checkState === CHECK) {
                 checkState = EMPTY;
             } else {
                 checkState = CHECK;
             }
 
-            self.set("checkState", checkState);
+            self.set('checkState', checkState);
 
             self.fire('click');
             return true;
@@ -59,9 +59,9 @@ KISSY.add(function (S, require) {
                 cState,
                 cs;
 
-            if (s == CHECK || s == EMPTY) {
+            if (s === CHECK || s === EMPTY) {
                 S.each(self.get('children'), function (c) {
-                    c.set("checkState", s);
+                    c.set('checkState', s);
                 });
             }
 
@@ -72,27 +72,27 @@ KISSY.add(function (S, require) {
                 cs = parent.get('children');
                 for (i = 0; i < cs.length; i++) {
                     c = cs[i];
-                    cState = c.get("checkState");
+                    cState = c.get('checkState');
                     // 一个是部分选，父亲必定是部分选，立即结束
-                    if (cState == PARTIAL_CHECK) {
-                        parent.set("checkState", PARTIAL_CHECK);
+                    if (cState === PARTIAL_CHECK) {
+                        parent.set('checkState', PARTIAL_CHECK);
                         return;
-                    } else if (cState == CHECK) {
+                    } else if (cState === CHECK) {
                         checkCount++;
                     }
                 }
 
                 // 儿子都没选，父亲也不选
                 if (checkCount === 0) {
-                    parent.set("checkState", EMPTY);
+                    parent.set('checkState', EMPTY);
                 } else
                 // 儿子全都选了，父亲也全选
-                if (checkCount == cs.length) {
-                    parent.set("checkState", CHECK);
+                if (checkCount === cs.length) {
+                    parent.set('checkState', CHECK);
                 }
                 // 有的儿子选了，有的没选，父亲部分选
                 else {
-                    parent.set("checkState", PARTIAL_CHECK);
+                    parent.set('checkState', PARTIAL_CHECK);
                 }
             }
         }
@@ -129,7 +129,7 @@ KISSY.add(function (S, require) {
                 }
             }
         },
-        xclass: "check-tree-node"
+        xclass: 'check-tree-node'
     });
 
     /**

@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:41
+build time: Dec 2 12:57
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -18,30 +18,32 @@ KISSY.add("editor/plugin/color/btn", ["editor", "../button", "../overlay", "../d
   var COLORS = [["000", "444", "666", "999", "CCC", "EEE", "F3F3F3", "FFF"], ["F00", "F90", "FF0", "0F0", "0FF", "00F", "90F", "F0F"], ["F4CC" + "CC", "FCE5CD", "FFF2CC", "D9EAD3", "D0E0E3", "CFE2F3", "D9D2E9", "EAD1DC", "EA9999", "F9CB9C", "FFE599", "B6D7A8", "A2C4C9", "9FC5E8", "B4A7D6", "D5A6BD", "E06666", "F6B26B", "FFD966", "93C47D", "76A5AF", "6FA8DC", "8E7CC3", "C27BAD", "CC0000", "E69138", "F1C232", "6AA84F", "45818E", "3D85C6", "674EA7", "A64D79", "990000", "B45F06", "BF9000", "38761D", 
   "134F5C", "0B5394", "351C75", "741B47", "660000", "783F04", "7F6000", "274E13", "0C343D", "073763", "20124D", "4C1130"]], html;
   function initHTML() {
-    html = "<div class='{prefixCls}editor-color-panel'>" + "<a class='{prefixCls}editor-color-remove' " + "href=\"javascript:void('\u6e05\u9664');\">" + "\u6e05\u9664" + "</a>";
+    html = '<div class="{prefixCls}editor-color-panel">' + '<a class="{prefixCls}editor-color-remove" ' + "href=\"javascript:void('\u6e05\u9664');\">" + "\u6e05\u9664" + "</a>";
     for(var i = 0;i < 3;i++) {
-      html += "<div class='{prefixCls}editor-color-palette'><table>";
+      html += '<div class="{prefixCls}editor-color-palette"><table>';
       var c = COLORS[i], l = c.length / 8;
       for(var k = 0;k < l;k++) {
         html += "<tr>";
         for(var j = 0;j < 8;j++) {
           var currentColor = "#" + c[8 * k + j];
           html += "<td>";
-          html += "<a href='javascript:void(0);' " + "class='{prefixCls}editor-color-a' " + "style='background-color:" + currentColor + "'" + "></a>";
+          html += '<a href="javascript:void(0);" ' + 'class="{prefixCls}editor-color-a" ' + 'style="background-color:' + currentColor + '"' + "></a>";
           html += "</td>"
         }
         html += "</tr>"
       }
       html += "</table></div>"
     }
-    html += "" + "<div>" + "<a class='{prefixCls}editor-button {prefixCls}editor-color-others ks-inline-block'>\u5176\u4ed6\u989c\u8272</a>" + "</div>" + "</div>"
+    html += "" + "<div>" + '<a class="{prefixCls}editor-button {prefixCls}editor-color-others ks-inline-block">\u5176\u4ed6\u989c\u8272</a>' + "</div>" + "</div>"
   }
   initHTML();
   var ColorButton = Button.extend({initializer:function() {
     var self = this;
     self.on("blur", function() {
       setTimeout(function() {
-        self.colorWin && self.colorWin.hide()
+        if(self.colorWin) {
+          self.colorWin.hide()
+        }
       }, 150)
     });
     self.on("click", function() {
@@ -49,7 +51,9 @@ KISSY.add("editor/plugin/color/btn", ["editor", "../button", "../overlay", "../d
       if(checked) {
         self._prepare()
       }else {
-        self.colorWin && self.colorWin.hide()
+        if(self.colorWin) {
+          self.colorWin.hide()
+        }
       }
     })
   }, _prepare:function() {

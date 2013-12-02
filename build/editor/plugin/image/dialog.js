@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 17:28
+build time: Dec 2 12:59
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -18,13 +18,13 @@ KISSY.add("editor/plugin/image/dialog", ["editor", "io", "../dialog", "tabs", ".
   var Tabs = require("tabs");
   var MenuButton = require("../menubutton");
   var bodyTpl = require("./dialog/dialog-tpl");
-  var dtd = Editor.XHTML_DTD, UA = S.UA, Node = KISSY.NodeList, HTTP_TIP = "http://", AUTOMATIC_TIP = "\u81ea\u52a8", MARGIN_DEFAULT = 10, IMAGE_DIALOG_BODY_HTML = bodyTpl, IMAGE_DIALOG_FOOT_HTML = "<div style='padding:5px 20px 20px;'>" + "<a " + "href='javascript:void('\u786e\u5b9a')' " + "class='{prefixCls}img-insert {prefixCls}button ks-inline-block' " + "style='margin-right:30px;'>\u786e\u5b9a</a> " + "<a  " + "href='javascript:void('\u53d6\u6d88')' " + "class='{prefixCls}img-cancel {prefixCls}button ks-inline-block'>\u53d6\u6d88</a></div>", 
+  var dtd = Editor.XHTML_DTD, UA = S.UA, Node = KISSY.NodeList, HTTP_TIP = "http://", AUTOMATIC_TIP = "\u81ea\u52a8", MARGIN_DEFAULT = 10, IMAGE_DIALOG_BODY_HTML = bodyTpl, IMAGE_DIALOG_FOOT_HTML = '<div style="padding:5px 20px 20px;">' + "<a " + "href=\"javascript:void('\u786e\u5b9a')\" " + 'class="{prefixCls}img-insert {prefixCls}button ks-inline-block" ' + 'style="margin-right:30px;">\u786e\u5b9a</a> ' + "<a  " + "href=\"javascript:void('\u53d6\u6d88')\" " + 'class="{prefixCls}img-cancel {prefixCls}button ks-inline-block">\u53d6\u6d88</a></div>', 
   warning = "\u8bf7\u70b9\u51fb\u6d4f\u89c8\u4e0a\u4f20\u56fe\u7247", valInput = Editor.Utils.valInput;
   function findAWithImg(img) {
     var ret = img;
     while(ret) {
       var name = ret.nodeName();
-      if(name == "a") {
+      if(name === "a") {
         return ret
       }
       if(dtd.$block[name] || dtd.$blockLimit[name]) {
@@ -38,10 +38,10 @@ KISSY.add("editor/plugin/image/dialog", ["editor", "io", "../dialog", "tabs", ".
     var self = this;
     self.editor = editor;
     self.imageCfg = config || {};
-    self.cfg = self.imageCfg["upload"] || null;
-    self.suffix = self.cfg && self.cfg["suffix"] || "png,jpg,jpeg,gif";
-    self.suffix_reg = new RegExp(self.suffix.split(/,/).join("|") + "$", "i");
-    self.suffix_warning = "\u53ea\u5141\u8bb8\u540e\u7f00\u540d\u4e3a" + self.suffix + "\u7684\u56fe\u7247"
+    self.cfg = self.imageCfg.upload || null;
+    self.suffix = self.cfg && self.cfg.suffix || "png,jpg,jpeg,gif";
+    self.suffixReg = new RegExp(self.suffix.split(/,/).join("|") + "$", "i");
+    self.suffixWarning = "\u53ea\u5141\u8bb8\u540e\u7f00\u540d\u4e3a" + self.suffix + "\u7684\u56fe\u7247"
   }
   S.augment(ImageDialog, {_prepare:function() {
     var self = this;
@@ -83,15 +83,15 @@ KISSY.add("editor/plugin/image/dialog", ["editor", "io", "../dialog", "tabs", ".
       self.d.hide();
       ev.halt()
     });
-    var loadingCancel = (new Node("<a class='" + prefixCls + "button ks-inline-block' " + "style='position:absolute;" + "z-index:" + Editor.baseZIndex(Editor.ZIndexManager.LOADING_CANCEL) + ";" + "left:-9999px;" + "top:-9999px;" + "'>\u53d6\u6d88\u4e0a\u4f20</a>")).appendTo(document.body, undefined);
+    var loadingCancel = (new Node('<a class="' + prefixCls + 'button ks-inline-block" ' + 'style="position:absolute;' + "z-index:" + Editor.baseZIndex(Editor.ZIndexManager.LOADING_CANCEL) + ";" + "left:-9999px;" + "top:-9999px;" + '">\u53d6\u6d88\u4e0a\u4f20</a>')).appendTo(document.body, undefined);
     self.loadingCancel = loadingCancel;
     function getFileSize(file) {
-      if(file["files"]) {
-        return file["files"][0].size
+      if(file.files) {
+        return file.files[0].size
       }else {
         if(1 > 2) {
           try {
-            var fso = new ActiveXObject("Scripting.FileSystemObject"), file2 = fso["GetFile"](file.value);
+            var fso = new window.ActiveXObject("Scripting.FileSystemObject"), file2 = fso.GetFile(file.value);
             return file2.size
           }catch(e) {
           }
@@ -101,16 +101,16 @@ KISSY.add("editor/plugin/image/dialog", ["editor", "io", "../dialog", "tabs", ".
     }
     ok.on("click", function(ev) {
       ev.halt();
-      if((self.imageCfg["remote"] === false || S.indexOf(self.tab.getSelectedTab(), self.tab.getTabs()) == 1) && self.cfg) {
+      if((self.imageCfg.remote === false || S.indexOf(self.tab.getSelectedTab(), self.tab.getTabs()) === 1) && self.cfg) {
         if(!verifyInputs(commonSettingTable.all("input"))) {
           return
         }
-        if(self.imgLocalUrl.val() == warning) {
+        if(self.imgLocalUrl.val() === warning) {
           alert("\u8bf7\u5148\u9009\u62e9\u6587\u4ef6!");
           return
         }
-        if(!self.suffix_reg.test(self.imgLocalUrl.val())) {
-          alert(self.suffix_warning);
+        if(!self.suffixReg.test(self.imgLocalUrl.val())) {
+          alert(self.suffixWarning);
           self.uploadForm[0].reset();
           self.imgLocalUrl.val(warning);
           return
@@ -125,12 +125,12 @@ KISSY.add("editor/plugin/image/dialog", ["editor", "io", "../dialog", "tabs", ".
           ev.halt();
           uploadIO.abort()
         });
-        var serverParams = Editor.Utils.normParams(self.cfg["serverParams"]) || {};
+        var serverParams = Editor.Utils.normParams(self.cfg.serverParams) || {};
         serverParams["document-domain"] = document.domain;
-        var uploadIO = IO({data:serverParams, url:self.cfg["serverUrl"], form:self.uploadForm[0], dataType:"json", type:"post", complete:function(data, status) {
+        var uploadIO = IO({data:serverParams, url:self.cfg.serverUrl, form:self.uploadForm[0], dataType:"json", type:"post", complete:function(data, status) {
           loadingCancel.css({left:-9999, top:-9999});
           self.d.unloading();
-          if(status == "abort") {
+          if(status === "abort") {
             return
           }
           if(!data) {
@@ -140,8 +140,8 @@ KISSY.add("editor/plugin/image/dialog", ["editor", "io", "../dialog", "tabs", ".
             alert(data.error);
             return
           }
-          valInput(self.imgUrl, data["imgUrl"]);
-          (new Image).src = data["imgUrl"];
+          valInput(self.imgUrl, data.imgUrl);
+          (new Image).src = data.imgUrl;
           self._insert()
         }});
         var loadingMaskEl = self.d.get("el"), offset = loadingMaskEl.offset(), width = loadingMaskEl[0].offsetWidth, height = loadingMaskEl[0].offsetHeight;
@@ -154,27 +154,27 @@ KISSY.add("editor/plugin/image/dialog", ["editor", "io", "../dialog", "tabs", ".
       }
     });
     if(self.cfg) {
-      if(self.cfg["extraHTML"]) {
-        content.one("." + prefixCls + "img-up-extraHTML").html(self.cfg["extraHTML"])
+      if(self.cfg.extraHTML) {
+        content.one("." + prefixCls + "img-up-extraHTML").html(self.cfg.extraHTML)
       }
-      var ke_image_up = content.one("." + prefixCls + "image-up"), sizeLimit = self.cfg && self.cfg["sizeLimit"];
-      self.fileInput = (new Node("<input " + "type='file' " + "style='position:absolute;" + "cursor:pointer;" + "left:" + (UA["ie"] ? "360" : UA["chrome"] ? "319" : "369") + "px;" + "z-index:2;" + "top:0px;" + "height:26px;' " + "size='1' " + "name='" + (self.cfg["fileInput"] || "Filedata") + "'/>")).insertAfter(self.imgLocalUrl);
+      var imageUp = content.one("." + prefixCls + "image-up"), sizeLimit = self.cfg && self.cfg.sizeLimit;
+      self.fileInput = (new Node("<input " + 'type="file" ' + 'style="position:absolute;' + "cursor:pointer;" + "left:" + (UA.ie ? "360" : UA.chrome ? "319" : "369") + "px;" + "z-index:2;" + "top:0px;" + 'height:26px;" ' + 'size="1" ' + 'name="' + (self.cfg.fileInput || "Filedata") + '"/>')).insertAfter(self.imgLocalUrl);
       if(sizeLimit) {
         warning = "\u5355\u5f20\u56fe\u7247\u5bb9\u91cf\u4e0d\u8d85\u8fc7 " + sizeLimit / 1E3 + " M"
       }
       self.imgLocalUrl.val(warning);
       self.fileInput.css("opacity", 0);
       self.fileInput.on("mouseenter", function() {
-        ke_image_up.addClass("" + prefixCls + "button-hover")
+        imageUp.addClass("" + prefixCls + "button-hover")
       });
       self.fileInput.on("mouseleave", function() {
-        ke_image_up.removeClass("" + prefixCls + "button-hover")
+        imageUp.removeClass("" + prefixCls + "button-hover")
       });
       self.fileInput.on("change", function() {
         var file = self.fileInput.val();
         self.imgLocalUrl.val(file.replace(/.+[\/\\]/, ""))
       });
-      if(self.imageCfg["remote"] === false) {
+      if(self.imageCfg.remote === false) {
         self.tab.removeItemAt(0, 1)
       }
     }else {
@@ -189,31 +189,31 @@ KISSY.add("editor/plugin/image/dialog", ["editor", "io", "../dialog", "tabs", ".
     if(width) {
       style += "width:" + width + "px;"
     }
-    if(align != "none") {
+    if(align !== "none") {
       style += "float:" + align + ";"
     }
-    if(!isNaN(margin) && margin != 0) {
+    if(!isNaN(margin) && margin !== 0) {
       style += "margin:" + margin + "px;"
     }
     self.d.hide();
     if(self.selectedEl) {
       img = self.selectedEl;
       self.editor.execCommand("save");
-      self.selectedEl.attr({src:url, _ke_saved_src:url, style:style})
+      self.selectedEl.attr({src:url, _keSaved_src:url, style:style})
     }else {
-      img = new Node("<img " + (style ? "style='" + style + "'" : "") + " src='" + url + "' " + "_ke_saved_src='" + url + "' alt='' />", null, self.editor.get("document")[0]);
+      img = new Node("<img " + (style ? 'style="' + style + '"' : "") + ' src="' + url + '" ' + '_keSaved_src="' + url + '" alt="" />', null, self.editor.get("document")[0]);
       self.editor.insertElement(img)
     }
     setTimeout(function() {
       var link = findAWithImg(img), linkVal = S.trim(valInput(self.imgLink)), sel = self.editor.getSelection(), target = self.imgLinkBlank.attr("checked") ? "_blank" : "_self", linkTarget, skip = 0, prev, next, bs;
       if(link) {
         linkTarget = link.attr("target") || "_self";
-        if(linkVal != link.attr("href") || linkTarget != target) {
-          img._4e_breakParent(link);
-          if((prev = img.prev()) && prev.nodeName() == "a" && !prev[0].childNodes.length) {
+        if(linkVal !== link.attr("href") || linkTarget !== target) {
+          img._4eBreakParent(link);
+          if((prev = img.prev()) && prev.nodeName() === "a" && !prev[0].childNodes.length) {
             prev.remove()
           }
-          if((next = img.next()) && next.nodeName() == "a" && !next[0].childNodes.length) {
+          if((next = img.next()) && next.nodeName() === "a" && !next[0].childNodes.length) {
             next.remove()
           }
         }else {
@@ -225,7 +225,7 @@ KISSY.add("editor/plugin/image/dialog", ["editor", "io", "../dialog", "tabs", ".
           bs = sel.createBookmarks()
         }
         link = new Node("<a></a>");
-        link.attr("_ke_saved_href", linkVal).attr("href", linkVal).attr("target", target);
+        link.attr("_keSavedHref", linkVal).attr("href", linkVal).attr("target", target);
         var t = img[0];
         t.parentNode.replaceChild(link[0], t);
         link.append(t)
@@ -244,7 +244,7 @@ KISSY.add("editor/plugin/image/dialog", ["editor", "io", "../dialog", "tabs", ".
   }, _update:function(selectedEl) {
     var self = this, active = 0, link, resetInput = Editor.Utils.resetInput;
     self.selectedEl = selectedEl;
-    if(selectedEl && self.imageCfg["remote"] !== false) {
+    if(selectedEl && self.imageCfg.remote !== false) {
       valInput(self.imgUrl, selectedEl.attr("src"));
       var w = parseInt(selectedEl.style("width")), h = parseInt(selectedEl.style("height"));
       if(h) {
@@ -270,11 +270,11 @@ KISSY.add("editor/plugin/image/dialog", ["editor", "io", "../dialog", "tabs", ".
       if(inElement) {
         link = findAWithImg(inElement)
       }
-      var defaultMargin = self.imageCfg["defaultMargin"];
-      if(defaultMargin == undefined) {
+      var defaultMargin = self.imageCfg.defaultMargin;
+      if(defaultMargin === undefined) {
         defaultMargin = MARGIN_DEFAULT
       }
-      if(self.tab.get("bar").get("children").length == 2) {
+      if(self.tab.get("bar").get("children").length === 2) {
         active = 1
       }
       self.imgLinkBlank.attr("checked", true);
@@ -288,8 +288,8 @@ KISSY.add("editor/plugin/image/dialog", ["editor", "io", "../dialog", "tabs", ".
       self.imgRatioValue = null
     }
     if(link) {
-      valInput(self.imgLink, link.attr("_ke_saved_href") || link.attr("href"));
-      self.imgLinkBlank.attr("checked", link.attr("target") == "_blank")
+      valInput(self.imgLink, link.attr("_keSavedHref") || link.attr("href"));
+      self.imgLinkBlank.attr("checked", link.attr("target") === "_blank")
     }else {
       resetInput(self.imgLink);
       self.imgLinkBlank.attr("checked", true)

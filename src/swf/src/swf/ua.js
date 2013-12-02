@@ -22,9 +22,9 @@ KISSY.add(function (S) {
             ver = (navigator.plugins['Shockwave Flash'] || 0).description;
         }
         // for ActiveX see:	http://en.wikipedia.org/wiki/ActiveX
-        else if (win['ActiveXObject']) {
+        else if (win.ActiveXObject) {
             try {
-                ver = new ActiveXObject(SF + '.' + SF)['GetVariable']('$version');
+                ver = new win.ActiveXObject(SF + '.' + SF).GetVariable('$version');
             } catch (ex) {
                 // S.log('getFlashVersion failed via ActiveXObject');
                 // nothing to do, just return undefined
@@ -55,7 +55,7 @@ KISSY.add(function (S) {
      getNumberVersion(12.2) => 12.2
      */
     function getNumberVersion(ver) {
-        var arr = typeof ver == 'string' ?
+        var arr = typeof ver === 'string' ?
                 getArrayVersion(ver) :
                 ver,
             ret = ver;

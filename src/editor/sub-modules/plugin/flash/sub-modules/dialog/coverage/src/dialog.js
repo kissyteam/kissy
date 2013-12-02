@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ','src':' + jscoverage_quote(this.src)
+            + ',"src":' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -404,11 +404,11 @@ function visit8_152_1(result) {
 function visit7_149_1(result) {
   _$jscoverage['/dialog.js'].branchData['149'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['144'][1].init(266, 15, 'f.css('height')');
+}_$jscoverage['/dialog.js'].branchData['144'][1].init(266, 15, 'f.css(\'height\')');
 function visit6_144_1(result) {
   _$jscoverage['/dialog.js'].branchData['144'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['141'][1].init(147, 14, 'f.css('width')');
+}_$jscoverage['/dialog.js'].branchData['141'][1].init(147, 14, 'f.css(\'width\')');
 function visit5_141_1(result) {
   _$jscoverage['/dialog.js'].branchData['141'][1].ranCondition(result);
   return result;

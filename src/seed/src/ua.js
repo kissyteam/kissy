@@ -3,6 +3,8 @@
  * ua
  */
 (function (S, undefined) {
+    /*global process*/
+
     var win = S.Env.host,
         doc = win.document,
         navigator = win.navigator,
@@ -350,7 +352,7 @@
     // nodejs
     if (typeof process === 'object') {
         var versions, nodeVersion;
-        /*global process*/
+
         if ((versions = process.versions) && (nodeVersion = versions.node)) {
             UA.os = process.platform;
             UA.nodejs = numberify(nodeVersion);

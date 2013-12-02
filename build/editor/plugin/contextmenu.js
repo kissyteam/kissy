@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:41
+build time: Dec 2 12:57
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -29,7 +29,7 @@ KISSY.add("editor/plugin/contextmenu", ["editor", "menu", "./focus-fix", "event"
     focusFix.init(menu);
     menu.on("afterRenderUI", function() {
       menu.get("el").on("keydown", function(e) {
-        if(e.keyCode == Event.KeyCode.ESC) {
+        if(e.keyCode === Event.KeyCode.ESC) {
           menu.hide()
         }
       })
@@ -37,7 +37,7 @@ KISSY.add("editor/plugin/contextmenu", ["editor", "menu", "./focus-fix", "event"
     self.docReady(function() {
       var doc = self.get("document");
       doc.on("mousedown", function(e) {
-        if(e.which == 1) {
+        if(e.which === 1) {
           menu.hide()
         }
       });

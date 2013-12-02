@@ -22,6 +22,7 @@
  * @class KISSY
  */
 /* exported KISSY */
+/*jshint -W079 */
 var KISSY = (function (undefined) {
     var host = this,
         S,
@@ -240,7 +241,7 @@ var KISSY = (function (undefined) {
                         msg = logger + ': ' + msg;
                     }
                 }
-                var console = host.console;
+               /*global console*/
                 if (console !== undefined && console.log && matched) {
                     console[cat && console[cat] ? cat : 'log'](msg);
                     return msg;

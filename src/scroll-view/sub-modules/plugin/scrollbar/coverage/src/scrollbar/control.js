@@ -410,11 +410,11 @@ function visit14_182_1(result) {
 function visit13_172_1(result) {
   _$jscoverage['/scrollbar/control.js'].branchData['172'][1].ranCondition(result);
   return result;
-}_$jscoverage['/scrollbar/control.js'].branchData['148'][2].init(237, 16, 'dragEl == target');
+}_$jscoverage['/scrollbar/control.js'].branchData['148'][2].init(237, 17, 'dragEl === target');
 function visit12_148_2(result) {
   _$jscoverage['/scrollbar/control.js'].branchData['148'][2].ranCondition(result);
   return result;
-}_$jscoverage['/scrollbar/control.js'].branchData['148'][1].init(237, 44, 'dragEl == target || $dragEl.contains(target)');
+}_$jscoverage['/scrollbar/control.js'].branchData['148'][1].init(237, 45, 'dragEl === target || $dragEl.contains(target)');
 function visit11_148_1(result) {
   _$jscoverage['/scrollbar/control.js'].branchData['148'][1].ranCondition(result);
   return result;
@@ -422,11 +422,11 @@ function visit11_148_1(result) {
 function visit10_142_1(result) {
   _$jscoverage['/scrollbar/control.js'].branchData['142'][1].ranCondition(result);
   return result;
-}_$jscoverage['/scrollbar/control.js'].branchData['128'][2].init(294, 22, 'target == self.downBtn');
+}_$jscoverage['/scrollbar/control.js'].branchData['128'][2].init(294, 23, 'target === self.downBtn');
 function visit9_128_2(result) {
   _$jscoverage['/scrollbar/control.js'].branchData['128'][2].ranCondition(result);
   return result;
-}_$jscoverage['/scrollbar/control.js'].branchData['128'][1].init(294, 56, 'target == self.downBtn || self.$downBtn.contains(target)');
+}_$jscoverage['/scrollbar/control.js'].branchData['128'][1].init(294, 57, 'target === self.downBtn || self.$downBtn.contains(target)');
 function visit8_128_1(result) {
   _$jscoverage['/scrollbar/control.js'].branchData['128'][1].ranCondition(result);
   return result;
@@ -446,15 +446,15 @@ function visit5_56_1(result) {
 function visit4_48_1(result) {
   _$jscoverage['/scrollbar/control.js'].branchData['48'][1].ranCondition(result);
   return result;
-}_$jscoverage['/scrollbar/control.js'].branchData['32'][1].init(288, 20, 'scrollType == \'left\'');
+}_$jscoverage['/scrollbar/control.js'].branchData['32'][1].init(290, 21, 'scrollType === \'left\'');
 function visit3_32_1(result) {
   _$jscoverage['/scrollbar/control.js'].branchData['32'][1].ranCondition(result);
   return result;
-}_$jscoverage['/scrollbar/control.js'].branchData['31'][1].init(207, 20, 'scrollType == \'left\'');
+}_$jscoverage['/scrollbar/control.js'].branchData['31'][1].init(208, 21, 'scrollType === \'left\'');
 function visit2_31_1(result) {
   _$jscoverage['/scrollbar/control.js'].branchData['31'][1].ranCondition(result);
   return result;
-}_$jscoverage['/scrollbar/control.js'].branchData['29'][1].init(77, 23, 'self.get(\'axis\') == \'x\'');
+}_$jscoverage['/scrollbar/control.js'].branchData['29'][1].init(77, 24, 'self.get(\'axis\') === \'x\'');
 function visit1_29_1(result) {
   _$jscoverage['/scrollbar/control.js'].branchData['29'][1].ranCondition(result);
   return result;
@@ -484,13 +484,13 @@ KISSY.add(function(S, require) {
   _$jscoverage['/scrollbar/control.js'].lineData[28]++;
   var self = this;
   _$jscoverage['/scrollbar/control.js'].lineData[29]++;
-  var scrollType = self.scrollType = visit1_29_1(self.get('axis') == 'x') ? 'left' : 'top';
+  var scrollType = self.scrollType = visit1_29_1(self.get('axis') === 'x') ? 'left' : 'top';
   _$jscoverage['/scrollbar/control.js'].lineData[30]++;
   var ucScrollType = S.ucfirst(scrollType);
   _$jscoverage['/scrollbar/control.js'].lineData[31]++;
-  self.pageXyProperty = visit2_31_1(scrollType == 'left') ? 'pageX' : 'pageY';
+  self.pageXyProperty = visit2_31_1(scrollType === 'left') ? 'pageX' : 'pageY';
   _$jscoverage['/scrollbar/control.js'].lineData[32]++;
-  var wh = self.whProperty = visit3_32_1(scrollType == 'left') ? 'width' : 'height';
+  var wh = self.whProperty = visit3_32_1(scrollType === 'left') ? 'width' : 'height';
   _$jscoverage['/scrollbar/control.js'].lineData[33]++;
   var ucWH = S.ucfirst(wh);
   _$jscoverage['/scrollbar/control.js'].lineData[34]++;
@@ -601,7 +601,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/scrollbar/control.js'].lineData[121]++;
   e.halt();
   _$jscoverage['/scrollbar/control.js'].lineData[122]++;
-  var self = this, scrollView = self.scrollView, scrollProperty = self.scrollProperty, scrollType = self.scrollType, step = scrollView.getScrollStep()[self.scrollType], target = e.target, direction = (visit8_128_1(visit9_128_2(target == self.downBtn) || self.$downBtn.contains(target))) ? 1 : -1;
+  var self = this, scrollView = self.scrollView, scrollProperty = self.scrollProperty, scrollType = self.scrollType, step = scrollView.getScrollStep()[self.scrollType], target = e.target, direction = (visit8_128_1(visit9_128_2(target === self.downBtn) || self.$downBtn.contains(target))) ? 1 : -1;
   _$jscoverage['/scrollbar/control.js'].lineData[129]++;
   clearInterval(self.mouseInterval);
   _$jscoverage['/scrollbar/control.js'].lineData[130]++;
@@ -635,7 +635,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/scrollbar/control.js'].lineData[147]++;
   var $dragEl = self.$dragEl;
   _$jscoverage['/scrollbar/control.js'].lineData[148]++;
-  if (visit11_148_1(visit12_148_2(dragEl == target) || $dragEl.contains(target))) {
+  if (visit11_148_1(visit12_148_2(dragEl === target) || $dragEl.contains(target))) {
     _$jscoverage['/scrollbar/control.js'].lineData[149]++;
     return;
   }

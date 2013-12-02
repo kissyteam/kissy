@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:45
+build time: Dec 2 13:02
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -16,8 +16,8 @@ KISSY.add("editor/plugin/progressbar", ["base"], function(S, require) {
     self.detach();
     self.el.remove()
   }, initializer:function() {
-    var self = this, h = self.get("height"), prefixCls = self.get("prefixCls"), el = new Node(S.substitute("<div" + " class='{prefixCls}editor-progressbar' " + " style='width:" + self.get("width") + ";" + "height:" + h + ";'" + "></div>", {prefixCls:prefixCls})), container = self.get("container"), p = (new Node(S.substitute("<div style='overflow:hidden;'>" + "<div class='{prefixCls}editor-progressbar-inner' style='height:" + (parseInt(h) - 4) + "px'>" + "<div class='{prefixCls}editor-progressbar-inner-bg'></div>" + 
-    "</div>" + "</div>", {prefixCls:prefixCls}))).appendTo(el), title = (new Node("<span class='" + prefixCls + "editor-progressbar-title'></span>")).appendTo(el);
+    var self = this, h = self.get("height"), prefixCls = self.get("prefixCls"), el = new Node(S.substitute("<div" + ' class="{prefixCls}editor-progressbar" ' + ' style="width:' + self.get("width") + ";" + "height:" + h + ';"' + "></div>", {prefixCls:prefixCls})), container = self.get("container"), p = (new Node(S.substitute('<div style="overflow:hidden;">' + '<div class="{prefixCls}editor-progressbar-inner" style="height:' + (parseInt(h) - 4) + 'px">' + '<div class="{prefixCls}editor-progressbar-inner-bg"></div>' + 
+    "</div>" + "</div>", {prefixCls:prefixCls}))).appendTo(el), title = (new Node('<span class="' + prefixCls + 'editor-progressbar-title"></span>')).appendTo(el);
     if(container) {
       el.appendTo(container)
     }

@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ','src':' + jscoverage_quote(this.src)
+            + ',"src":' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -302,11 +302,11 @@ if (! _$jscoverage['/ui.js'].branchData) {
   _$jscoverage['/ui.js'].branchData['75'] = [];
   _$jscoverage['/ui.js'].branchData['75'][1] = new BranchData();
 }
-_$jscoverage['/ui.js'].branchData['75'][1].init(188, 33, 'editor.queryCommandValue(cmdType)');
+_$jscoverage['/ui.js'].branchData['75'][1].init(189, 33, 'editor.queryCommandValue(cmdType)');
 function visit9_75_1(result) {
   _$jscoverage['/ui.js'].branchData['75'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ui.js'].branchData['71'][1].init(22, 45, 'editor.get('mode') == Editor.Mode.SOURCE_MODE');
+}_$jscoverage['/ui.js'].branchData['71'][1].init(22, 46, 'editor.get(\'mode\') === Editor.Mode.SOURCE_MODE');
 function visit8_71_1(result) {
   _$jscoverage['/ui.js'].branchData['71'][1].ranCondition(result);
   return result;
@@ -314,7 +314,7 @@ function visit8_71_1(result) {
 function visit7_61_1(result) {
   _$jscoverage['/ui.js'].branchData['61'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ui.js'].branchData['40'][1].init(144, 35, 'currentValue == value.toLowerCase()');
+}_$jscoverage['/ui.js'].branchData['40'][1].init(144, 36, 'currentValue === value.toLowerCase()');
 function visit6_40_1(result) {
   _$jscoverage['/ui.js'].branchData['40'][1].ranCondition(result);
   return result;
@@ -326,15 +326,15 @@ function visit5_37_1(result) {
 function visit4_35_1(result) {
   _$jscoverage['/ui.js'].branchData['35'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ui.js'].branchData['31'][1].init(299, 8, 'children');
+}_$jscoverage['/ui.js'].branchData['31'][1].init(300, 8, 'children');
 function visit3_31_1(result) {
   _$jscoverage['/ui.js'].branchData['31'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ui.js'].branchData['29'][1].init(110, 32, 'menu.get && menu.get('children')');
+}_$jscoverage['/ui.js'].branchData['29'][1].init(110, 32, 'menu.get && menu.get(\'children\')');
 function visit2_29_1(result) {
   _$jscoverage['/ui.js'].branchData['29'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ui.js'].branchData['23'][1].init(21, 45, 'editor.get('mode') == Editor.Mode.SOURCE_MODE');
+}_$jscoverage['/ui.js'].branchData['23'][1].init(21, 46, 'editor.get(\'mode\') === Editor.Mode.SOURCE_MODE');
 function visit1_23_1(result) {
   _$jscoverage['/ui.js'].branchData['23'][1].ranCondition(result);
   return result;
@@ -365,7 +365,7 @@ KISSY.add(function(S, require) {
   editor.on('selectionChange', function() {
   _$jscoverage['/ui.js'].functionData[3]++;
   _$jscoverage['/ui.js'].lineData[23]++;
-  if (visit1_23_1(editor.get('mode') == Editor.Mode.SOURCE_MODE)) {
+  if (visit1_23_1(editor.get('mode') === Editor.Mode.SOURCE_MODE)) {
     _$jscoverage['/ui.js'].lineData[24]++;
     return;
   }
@@ -378,7 +378,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/ui.js'].lineData[35]++;
     if (visit4_35_1(currentValue !== false)) {
       _$jscoverage['/ui.js'].lineData[36]++;
-      currentValue = (currentValue + "").toLowerCase();
+      currentValue = (currentValue + '').toLowerCase();
       _$jscoverage['/ui.js'].lineData[37]++;
       for (var j = 0; visit5_37_1(j < children.length); j++) {
         _$jscoverage['/ui.js'].lineData[38]++;
@@ -386,7 +386,7 @@ KISSY.add(function(S, require) {
         _$jscoverage['/ui.js'].lineData[39]++;
         var value = item.get('value');
         _$jscoverage['/ui.js'].lineData[40]++;
-        if (visit6_40_1(currentValue == value.toLowerCase())) {
+        if (visit6_40_1(currentValue === value.toLowerCase())) {
           _$jscoverage['/ui.js'].lineData[41]++;
           self.set('value', value);
           _$jscoverage['/ui.js'].lineData[42]++;
@@ -427,7 +427,7 @@ KISSY.add(function(S, require) {
   editor.on('selectionChange', function() {
   _$jscoverage['/ui.js'].functionData[6]++;
   _$jscoverage['/ui.js'].lineData[71]++;
-  if (visit8_71_1(editor.get('mode') == Editor.Mode.SOURCE_MODE)) {
+  if (visit8_71_1(editor.get('mode') === Editor.Mode.SOURCE_MODE)) {
     _$jscoverage['/ui.js'].lineData[72]++;
     return;
   }

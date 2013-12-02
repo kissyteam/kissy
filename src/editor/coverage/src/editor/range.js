@@ -238,605 +238,605 @@ if (! _$jscoverage['/editor/range.js']) {
   _$jscoverage['/editor/range.js'].lineData[16] = 0;
   _$jscoverage['/editor/range.js'].lineData[21] = 0;
   _$jscoverage['/editor/range.js'].lineData[35] = 0;
-  _$jscoverage['/editor/range.js'].lineData[54] = 0;
-  _$jscoverage['/editor/range.js'].lineData[59] = 0;
-  _$jscoverage['/editor/range.js'].lineData[70] = 0;
-  _$jscoverage['/editor/range.js'].lineData[74] = 0;
-  _$jscoverage['/editor/range.js'].lineData[80] = 0;
-  _$jscoverage['/editor/range.js'].lineData[83] = 0;
-  _$jscoverage['/editor/range.js'].lineData[85] = 0;
-  _$jscoverage['/editor/range.js'].lineData[88] = 0;
-  _$jscoverage['/editor/range.js'].lineData[89] = 0;
-  _$jscoverage['/editor/range.js'].lineData[90] = 0;
-  _$jscoverage['/editor/range.js'].lineData[92] = 0;
-  _$jscoverage['/editor/range.js'].lineData[93] = 0;
-  _$jscoverage['/editor/range.js'].lineData[95] = 0;
-  _$jscoverage['/editor/range.js'].lineData[97] = 0;
-  _$jscoverage['/editor/range.js'].lineData[98] = 0;
+  _$jscoverage['/editor/range.js'].lineData[60] = 0;
+  _$jscoverage['/editor/range.js'].lineData[65] = 0;
+  _$jscoverage['/editor/range.js'].lineData[96] = 0;
   _$jscoverage['/editor/range.js'].lineData[100] = 0;
-  _$jscoverage['/editor/range.js'].lineData[101] = 0;
-  _$jscoverage['/editor/range.js'].lineData[104] = 0;
-  _$jscoverage['/editor/range.js'].lineData[107] = 0;
-  _$jscoverage['/editor/range.js'].lineData[108] = 0;
-  _$jscoverage['/editor/range.js'].lineData[110] = 0;
+  _$jscoverage['/editor/range.js'].lineData[106] = 0;
+  _$jscoverage['/editor/range.js'].lineData[109] = 0;
+  _$jscoverage['/editor/range.js'].lineData[111] = 0;
   _$jscoverage['/editor/range.js'].lineData[114] = 0;
+  _$jscoverage['/editor/range.js'].lineData[115] = 0;
+  _$jscoverage['/editor/range.js'].lineData[116] = 0;
+  _$jscoverage['/editor/range.js'].lineData[118] = 0;
+  _$jscoverage['/editor/range.js'].lineData[119] = 0;
+  _$jscoverage['/editor/range.js'].lineData[122] = 0;
+  _$jscoverage['/editor/range.js'].lineData[124] = 0;
   _$jscoverage['/editor/range.js'].lineData[125] = 0;
-  _$jscoverage['/editor/range.js'].lineData[126] = 0;
-  _$jscoverage['/editor/range.js'].lineData[138] = 0;
-  _$jscoverage['/editor/range.js'].lineData[139] = 0;
-  _$jscoverage['/editor/range.js'].lineData[142] = 0;
-  _$jscoverage['/editor/range.js'].lineData[143] = 0;
-  _$jscoverage['/editor/range.js'].lineData[147] = 0;
-  _$jscoverage['/editor/range.js'].lineData[155] = 0;
-  _$jscoverage['/editor/range.js'].lineData[156] = 0;
-  _$jscoverage['/editor/range.js'].lineData[157] = 0;
-  _$jscoverage['/editor/range.js'].lineData[161] = 0;
-  _$jscoverage['/editor/range.js'].lineData[163] = 0;
+  _$jscoverage['/editor/range.js'].lineData[127] = 0;
+  _$jscoverage['/editor/range.js'].lineData[128] = 0;
+  _$jscoverage['/editor/range.js'].lineData[131] = 0;
+  _$jscoverage['/editor/range.js'].lineData[134] = 0;
+  _$jscoverage['/editor/range.js'].lineData[135] = 0;
+  _$jscoverage['/editor/range.js'].lineData[137] = 0;
+  _$jscoverage['/editor/range.js'].lineData[141] = 0;
+  _$jscoverage['/editor/range.js'].lineData[152] = 0;
+  _$jscoverage['/editor/range.js'].lineData[153] = 0;
   _$jscoverage['/editor/range.js'].lineData[165] = 0;
-  _$jscoverage['/editor/range.js'].lineData[168] = 0;
+  _$jscoverage['/editor/range.js'].lineData[166] = 0;
+  _$jscoverage['/editor/range.js'].lineData[169] = 0;
   _$jscoverage['/editor/range.js'].lineData[170] = 0;
-  _$jscoverage['/editor/range.js'].lineData[179] = 0;
-  _$jscoverage['/editor/range.js'].lineData[180] = 0;
-  _$jscoverage['/editor/range.js'].lineData[181] = 0;
+  _$jscoverage['/editor/range.js'].lineData[174] = 0;
+  _$jscoverage['/editor/range.js'].lineData[182] = 0;
+  _$jscoverage['/editor/range.js'].lineData[183] = 0;
+  _$jscoverage['/editor/range.js'].lineData[184] = 0;
   _$jscoverage['/editor/range.js'].lineData[188] = 0;
   _$jscoverage['/editor/range.js'].lineData[190] = 0;
-  _$jscoverage['/editor/range.js'].lineData[191] = 0;
   _$jscoverage['/editor/range.js'].lineData[192] = 0;
-  _$jscoverage['/editor/range.js'].lineData[193] = 0;
   _$jscoverage['/editor/range.js'].lineData[195] = 0;
   _$jscoverage['/editor/range.js'].lineData[197] = 0;
-  _$jscoverage['/editor/range.js'].lineData[199] = 0;
-  _$jscoverage['/editor/range.js'].lineData[201] = 0;
+  _$jscoverage['/editor/range.js'].lineData[206] = 0;
+  _$jscoverage['/editor/range.js'].lineData[207] = 0;
   _$jscoverage['/editor/range.js'].lineData[208] = 0;
-  _$jscoverage['/editor/range.js'].lineData[211] = 0;
-  _$jscoverage['/editor/range.js'].lineData[212] = 0;
   _$jscoverage['/editor/range.js'].lineData[215] = 0;
-  _$jscoverage['/editor/range.js'].lineData[216] = 0;
-  _$jscoverage['/editor/range.js'].lineData[221] = 0;
-  _$jscoverage['/editor/range.js'].lineData[223] = 0;
+  _$jscoverage['/editor/range.js'].lineData[217] = 0;
+  _$jscoverage['/editor/range.js'].lineData[218] = 0;
+  _$jscoverage['/editor/range.js'].lineData[219] = 0;
+  _$jscoverage['/editor/range.js'].lineData[220] = 0;
+  _$jscoverage['/editor/range.js'].lineData[222] = 0;
   _$jscoverage['/editor/range.js'].lineData[224] = 0;
-  _$jscoverage['/editor/range.js'].lineData[225] = 0;
-  _$jscoverage['/editor/range.js'].lineData[231] = 0;
-  _$jscoverage['/editor/range.js'].lineData[232] = 0;
+  _$jscoverage['/editor/range.js'].lineData[226] = 0;
+  _$jscoverage['/editor/range.js'].lineData[228] = 0;
   _$jscoverage['/editor/range.js'].lineData[236] = 0;
+  _$jscoverage['/editor/range.js'].lineData[239] = 0;
+  _$jscoverage['/editor/range.js'].lineData[240] = 0;
+  _$jscoverage['/editor/range.js'].lineData[243] = 0;
   _$jscoverage['/editor/range.js'].lineData[244] = 0;
-  _$jscoverage['/editor/range.js'].lineData[245] = 0;
-  _$jscoverage['/editor/range.js'].lineData[248] = 0;
-  _$jscoverage['/editor/range.js'].lineData[250] = 0;
+  _$jscoverage['/editor/range.js'].lineData[249] = 0;
+  _$jscoverage['/editor/range.js'].lineData[251] = 0;
   _$jscoverage['/editor/range.js'].lineData[252] = 0;
-  _$jscoverage['/editor/range.js'].lineData[256] = 0;
-  _$jscoverage['/editor/range.js'].lineData[258] = 0;
-  _$jscoverage['/editor/range.js'].lineData[262] = 0;
-  _$jscoverage['/editor/range.js'].lineData[265] = 0;
-  _$jscoverage['/editor/range.js'].lineData[266] = 0;
-  _$jscoverage['/editor/range.js'].lineData[270] = 0;
+  _$jscoverage['/editor/range.js'].lineData[253] = 0;
+  _$jscoverage['/editor/range.js'].lineData[259] = 0;
+  _$jscoverage['/editor/range.js'].lineData[260] = 0;
+  _$jscoverage['/editor/range.js'].lineData[264] = 0;
+  _$jscoverage['/editor/range.js'].lineData[272] = 0;
   _$jscoverage['/editor/range.js'].lineData[273] = 0;
-  _$jscoverage['/editor/range.js'].lineData[275] = 0;
+  _$jscoverage['/editor/range.js'].lineData[276] = 0;
+  _$jscoverage['/editor/range.js'].lineData[278] = 0;
   _$jscoverage['/editor/range.js'].lineData[280] = 0;
-  _$jscoverage['/editor/range.js'].lineData[281] = 0;
-  _$jscoverage['/editor/range.js'].lineData[282] = 0;
-  _$jscoverage['/editor/range.js'].lineData[283] = 0;
+  _$jscoverage['/editor/range.js'].lineData[284] = 0;
   _$jscoverage['/editor/range.js'].lineData[286] = 0;
   _$jscoverage['/editor/range.js'].lineData[290] = 0;
-  _$jscoverage['/editor/range.js'].lineData[292] = 0;
-  _$jscoverage['/editor/range.js'].lineData[296] = 0;
-  _$jscoverage['/editor/range.js'].lineData[299] = 0;
-  _$jscoverage['/editor/range.js'].lineData[300] = 0;
-  _$jscoverage['/editor/range.js'].lineData[304] = 0;
+  _$jscoverage['/editor/range.js'].lineData[293] = 0;
+  _$jscoverage['/editor/range.js'].lineData[294] = 0;
+  _$jscoverage['/editor/range.js'].lineData[298] = 0;
+  _$jscoverage['/editor/range.js'].lineData[301] = 0;
+  _$jscoverage['/editor/range.js'].lineData[303] = 0;
   _$jscoverage['/editor/range.js'].lineData[308] = 0;
   _$jscoverage['/editor/range.js'].lineData[309] = 0;
-  _$jscoverage['/editor/range.js'].lineData[312] = 0;
-  _$jscoverage['/editor/range.js'].lineData[315] = 0;
-  _$jscoverage['/editor/range.js'].lineData[317] = 0;
-  _$jscoverage['/editor/range.js'].lineData[321] = 0;
-  _$jscoverage['/editor/range.js'].lineData[326] = 0;
+  _$jscoverage['/editor/range.js'].lineData[310] = 0;
+  _$jscoverage['/editor/range.js'].lineData[311] = 0;
+  _$jscoverage['/editor/range.js'].lineData[314] = 0;
+  _$jscoverage['/editor/range.js'].lineData[318] = 0;
+  _$jscoverage['/editor/range.js'].lineData[320] = 0;
+  _$jscoverage['/editor/range.js'].lineData[324] = 0;
   _$jscoverage['/editor/range.js'].lineData[327] = 0;
-  _$jscoverage['/editor/range.js'].lineData[329] = 0;
+  _$jscoverage['/editor/range.js'].lineData[328] = 0;
   _$jscoverage['/editor/range.js'].lineData[332] = 0;
-  _$jscoverage['/editor/range.js'].lineData[333] = 0;
+  _$jscoverage['/editor/range.js'].lineData[336] = 0;
   _$jscoverage['/editor/range.js'].lineData[337] = 0;
   _$jscoverage['/editor/range.js'].lineData[340] = 0;
-  _$jscoverage['/editor/range.js'].lineData[342] = 0;
-  _$jscoverage['/editor/range.js'].lineData[346] = 0;
-  _$jscoverage['/editor/range.js'].lineData[350] = 0;
-  _$jscoverage['/editor/range.js'].lineData[351] = 0;
+  _$jscoverage['/editor/range.js'].lineData[343] = 0;
+  _$jscoverage['/editor/range.js'].lineData[345] = 0;
+  _$jscoverage['/editor/range.js'].lineData[349] = 0;
+  _$jscoverage['/editor/range.js'].lineData[354] = 0;
   _$jscoverage['/editor/range.js'].lineData[355] = 0;
-  _$jscoverage['/editor/range.js'].lineData[359] = 0;
+  _$jscoverage['/editor/range.js'].lineData[357] = 0;
   _$jscoverage['/editor/range.js'].lineData[360] = 0;
   _$jscoverage['/editor/range.js'].lineData[361] = 0;
   _$jscoverage['/editor/range.js'].lineData[365] = 0;
-  _$jscoverage['/editor/range.js'].lineData[366] = 0;
+  _$jscoverage['/editor/range.js'].lineData[368] = 0;
   _$jscoverage['/editor/range.js'].lineData[370] = 0;
-  _$jscoverage['/editor/range.js'].lineData[371] = 0;
-  _$jscoverage['/editor/range.js'].lineData[372] = 0;
-  _$jscoverage['/editor/range.js'].lineData[375] = 0;
-  _$jscoverage['/editor/range.js'].lineData[376] = 0;
-  _$jscoverage['/editor/range.js'].lineData[386] = 0;
+  _$jscoverage['/editor/range.js'].lineData[374] = 0;
+  _$jscoverage['/editor/range.js'].lineData[378] = 0;
+  _$jscoverage['/editor/range.js'].lineData[379] = 0;
+  _$jscoverage['/editor/range.js'].lineData[383] = 0;
+  _$jscoverage['/editor/range.js'].lineData[387] = 0;
+  _$jscoverage['/editor/range.js'].lineData[388] = 0;
+  _$jscoverage['/editor/range.js'].lineData[389] = 0;
+  _$jscoverage['/editor/range.js'].lineData[392] = 0;
   _$jscoverage['/editor/range.js'].lineData[393] = 0;
   _$jscoverage['/editor/range.js'].lineData[397] = 0;
-  _$jscoverage['/editor/range.js'].lineData[400] = 0;
+  _$jscoverage['/editor/range.js'].lineData[398] = 0;
+  _$jscoverage['/editor/range.js'].lineData[399] = 0;
+  _$jscoverage['/editor/range.js'].lineData[402] = 0;
   _$jscoverage['/editor/range.js'].lineData[403] = 0;
-  _$jscoverage['/editor/range.js'].lineData[407] = 0;
-  _$jscoverage['/editor/range.js'].lineData[412] = 0;
   _$jscoverage['/editor/range.js'].lineData[413] = 0;
-  _$jscoverage['/editor/range.js'].lineData[416] = 0;
-  _$jscoverage['/editor/range.js'].lineData[417] = 0;
-  _$jscoverage['/editor/range.js'].lineData[420] = 0;
+  _$jscoverage['/editor/range.js'].lineData[419] = 0;
   _$jscoverage['/editor/range.js'].lineData[423] = 0;
-  _$jscoverage['/editor/range.js'].lineData[424] = 0;
-  _$jscoverage['/editor/range.js'].lineData[437] = 0;
+  _$jscoverage['/editor/range.js'].lineData[426] = 0;
+  _$jscoverage['/editor/range.js'].lineData[429] = 0;
+  _$jscoverage['/editor/range.js'].lineData[433] = 0;
   _$jscoverage['/editor/range.js'].lineData[438] = 0;
   _$jscoverage['/editor/range.js'].lineData[439] = 0;
-  _$jscoverage['/editor/range.js'].lineData[440] = 0;
-  _$jscoverage['/editor/range.js'].lineData[441] = 0;
   _$jscoverage['/editor/range.js'].lineData[442] = 0;
   _$jscoverage['/editor/range.js'].lineData[443] = 0;
-  _$jscoverage['/editor/range.js'].lineData[444] = 0;
-  _$jscoverage['/editor/range.js'].lineData[447] = 0;
-  _$jscoverage['/editor/range.js'].lineData[453] = 0;
-  _$jscoverage['/editor/range.js'].lineData[457] = 0;
-  _$jscoverage['/editor/range.js'].lineData[458] = 0;
-  _$jscoverage['/editor/range.js'].lineData[459] = 0;
+  _$jscoverage['/editor/range.js'].lineData[446] = 0;
+  _$jscoverage['/editor/range.js'].lineData[449] = 0;
+  _$jscoverage['/editor/range.js'].lineData[450] = 0;
+  _$jscoverage['/editor/range.js'].lineData[463] = 0;
+  _$jscoverage['/editor/range.js'].lineData[464] = 0;
+  _$jscoverage['/editor/range.js'].lineData[465] = 0;
+  _$jscoverage['/editor/range.js'].lineData[466] = 0;
+  _$jscoverage['/editor/range.js'].lineData[467] = 0;
+  _$jscoverage['/editor/range.js'].lineData[468] = 0;
   _$jscoverage['/editor/range.js'].lineData[469] = 0;
+  _$jscoverage['/editor/range.js'].lineData[470] = 0;
   _$jscoverage['/editor/range.js'].lineData[473] = 0;
-  _$jscoverage['/editor/range.js'].lineData[474] = 0;
-  _$jscoverage['/editor/range.js'].lineData[475] = 0;
-  _$jscoverage['/editor/range.js'].lineData[476] = 0;
-  _$jscoverage['/editor/range.js'].lineData[477] = 0;
-  _$jscoverage['/editor/range.js'].lineData[481] = 0;
-  _$jscoverage['/editor/range.js'].lineData[482] = 0;
+  _$jscoverage['/editor/range.js'].lineData[479] = 0;
+  _$jscoverage['/editor/range.js'].lineData[483] = 0;
   _$jscoverage['/editor/range.js'].lineData[484] = 0;
   _$jscoverage['/editor/range.js'].lineData[485] = 0;
-  _$jscoverage['/editor/range.js'].lineData[486] = 0;
-  _$jscoverage['/editor/range.js'].lineData[487] = 0;
-  _$jscoverage['/editor/range.js'].lineData[488] = 0;
-  _$jscoverage['/editor/range.js'].lineData[498] = 0;
-  _$jscoverage['/editor/range.js'].lineData[505] = 0;
+  _$jscoverage['/editor/range.js'].lineData[495] = 0;
+  _$jscoverage['/editor/range.js'].lineData[499] = 0;
+  _$jscoverage['/editor/range.js'].lineData[500] = 0;
+  _$jscoverage['/editor/range.js'].lineData[501] = 0;
+  _$jscoverage['/editor/range.js'].lineData[502] = 0;
+  _$jscoverage['/editor/range.js'].lineData[503] = 0;
+  _$jscoverage['/editor/range.js'].lineData[507] = 0;
+  _$jscoverage['/editor/range.js'].lineData[508] = 0;
+  _$jscoverage['/editor/range.js'].lineData[510] = 0;
+  _$jscoverage['/editor/range.js'].lineData[511] = 0;
   _$jscoverage['/editor/range.js'].lineData[512] = 0;
-  _$jscoverage['/editor/range.js'].lineData[519] = 0;
-  _$jscoverage['/editor/range.js'].lineData[526] = 0;
-  _$jscoverage['/editor/range.js'].lineData[530] = 0;
-  _$jscoverage['/editor/range.js'].lineData[533] = 0;
-  _$jscoverage['/editor/range.js'].lineData[535] = 0;
+  _$jscoverage['/editor/range.js'].lineData[513] = 0;
+  _$jscoverage['/editor/range.js'].lineData[514] = 0;
+  _$jscoverage['/editor/range.js'].lineData[524] = 0;
+  _$jscoverage['/editor/range.js'].lineData[531] = 0;
   _$jscoverage['/editor/range.js'].lineData[538] = 0;
+  _$jscoverage['/editor/range.js'].lineData[545] = 0;
+  _$jscoverage['/editor/range.js'].lineData[552] = 0;
   _$jscoverage['/editor/range.js'].lineData[556] = 0;
-  _$jscoverage['/editor/range.js'].lineData[557] = 0;
-  _$jscoverage['/editor/range.js'].lineData[558] = 0;
   _$jscoverage['/editor/range.js'].lineData[559] = 0;
-  _$jscoverage['/editor/range.js'].lineData[562] = 0;
-  _$jscoverage['/editor/range.js'].lineData[563] = 0;
-  _$jscoverage['/editor/range.js'].lineData[565] = 0;
-  _$jscoverage['/editor/range.js'].lineData[566] = 0;
-  _$jscoverage['/editor/range.js'].lineData[567] = 0;
-  _$jscoverage['/editor/range.js'].lineData[570] = 0;
-  _$jscoverage['/editor/range.js'].lineData[587] = 0;
+  _$jscoverage['/editor/range.js'].lineData[561] = 0;
+  _$jscoverage['/editor/range.js'].lineData[564] = 0;
+  _$jscoverage['/editor/range.js'].lineData[582] = 0;
+  _$jscoverage['/editor/range.js'].lineData[583] = 0;
+  _$jscoverage['/editor/range.js'].lineData[584] = 0;
+  _$jscoverage['/editor/range.js'].lineData[585] = 0;
   _$jscoverage['/editor/range.js'].lineData[588] = 0;
   _$jscoverage['/editor/range.js'].lineData[589] = 0;
-  _$jscoverage['/editor/range.js'].lineData[590] = 0;
+  _$jscoverage['/editor/range.js'].lineData[591] = 0;
+  _$jscoverage['/editor/range.js'].lineData[592] = 0;
   _$jscoverage['/editor/range.js'].lineData[593] = 0;
-  _$jscoverage['/editor/range.js'].lineData[594] = 0;
   _$jscoverage['/editor/range.js'].lineData[596] = 0;
-  _$jscoverage['/editor/range.js'].lineData[597] = 0;
-  _$jscoverage['/editor/range.js'].lineData[598] = 0;
-  _$jscoverage['/editor/range.js'].lineData[601] = 0;
-  _$jscoverage['/editor/range.js'].lineData[610] = 0;
-  _$jscoverage['/editor/range.js'].lineData[611] = 0;
   _$jscoverage['/editor/range.js'].lineData[613] = 0;
   _$jscoverage['/editor/range.js'].lineData[614] = 0;
-  _$jscoverage['/editor/range.js'].lineData[617] = 0;
-  _$jscoverage['/editor/range.js'].lineData[618] = 0;
+  _$jscoverage['/editor/range.js'].lineData[615] = 0;
+  _$jscoverage['/editor/range.js'].lineData[616] = 0;
+  _$jscoverage['/editor/range.js'].lineData[619] = 0;
   _$jscoverage['/editor/range.js'].lineData[620] = 0;
   _$jscoverage['/editor/range.js'].lineData[622] = 0;
-  _$jscoverage['/editor/range.js'].lineData[625] = 0;
-  _$jscoverage['/editor/range.js'].lineData[626] = 0;
-  _$jscoverage['/editor/range.js'].lineData[629] = 0;
-  _$jscoverage['/editor/range.js'].lineData[632] = 0;
-  _$jscoverage['/editor/range.js'].lineData[641] = 0;
-  _$jscoverage['/editor/range.js'].lineData[642] = 0;
+  _$jscoverage['/editor/range.js'].lineData[623] = 0;
+  _$jscoverage['/editor/range.js'].lineData[624] = 0;
+  _$jscoverage['/editor/range.js'].lineData[627] = 0;
+  _$jscoverage['/editor/range.js'].lineData[636] = 0;
+  _$jscoverage['/editor/range.js'].lineData[637] = 0;
+  _$jscoverage['/editor/range.js'].lineData[639] = 0;
+  _$jscoverage['/editor/range.js'].lineData[640] = 0;
+  _$jscoverage['/editor/range.js'].lineData[643] = 0;
   _$jscoverage['/editor/range.js'].lineData[644] = 0;
-  _$jscoverage['/editor/range.js'].lineData[645] = 0;
+  _$jscoverage['/editor/range.js'].lineData[646] = 0;
   _$jscoverage['/editor/range.js'].lineData[648] = 0;
-  _$jscoverage['/editor/range.js'].lineData[649] = 0;
   _$jscoverage['/editor/range.js'].lineData[651] = 0;
-  _$jscoverage['/editor/range.js'].lineData[653] = 0;
-  _$jscoverage['/editor/range.js'].lineData[656] = 0;
-  _$jscoverage['/editor/range.js'].lineData[657] = 0;
-  _$jscoverage['/editor/range.js'].lineData[660] = 0;
-  _$jscoverage['/editor/range.js'].lineData[663] = 0;
+  _$jscoverage['/editor/range.js'].lineData[652] = 0;
+  _$jscoverage['/editor/range.js'].lineData[655] = 0;
+  _$jscoverage['/editor/range.js'].lineData[658] = 0;
+  _$jscoverage['/editor/range.js'].lineData[667] = 0;
+  _$jscoverage['/editor/range.js'].lineData[668] = 0;
   _$jscoverage['/editor/range.js'].lineData[670] = 0;
+  _$jscoverage['/editor/range.js'].lineData[671] = 0;
+  _$jscoverage['/editor/range.js'].lineData[674] = 0;
+  _$jscoverage['/editor/range.js'].lineData[675] = 0;
   _$jscoverage['/editor/range.js'].lineData[677] = 0;
-  _$jscoverage['/editor/range.js'].lineData[684] = 0;
-  _$jscoverage['/editor/range.js'].lineData[692] = 0;
-  _$jscoverage['/editor/range.js'].lineData[693] = 0;
-  _$jscoverage['/editor/range.js'].lineData[694] = 0;
-  _$jscoverage['/editor/range.js'].lineData[695] = 0;
-  _$jscoverage['/editor/range.js'].lineData[697] = 0;
-  _$jscoverage['/editor/range.js'].lineData[698] = 0;
-  _$jscoverage['/editor/range.js'].lineData[700] = 0;
-  _$jscoverage['/editor/range.js'].lineData[708] = 0;
-  _$jscoverage['/editor/range.js'].lineData[711] = 0;
-  _$jscoverage['/editor/range.js'].lineData[712] = 0;
-  _$jscoverage['/editor/range.js'].lineData[713] = 0;
-  _$jscoverage['/editor/range.js'].lineData[714] = 0;
-  _$jscoverage['/editor/range.js'].lineData[715] = 0;
-  _$jscoverage['/editor/range.js'].lineData[717] = 0;
-  _$jscoverage['/editor/range.js'].lineData[729] = 0;
-  _$jscoverage['/editor/range.js'].lineData[732] = 0;
+  _$jscoverage['/editor/range.js'].lineData[679] = 0;
+  _$jscoverage['/editor/range.js'].lineData[682] = 0;
+  _$jscoverage['/editor/range.js'].lineData[683] = 0;
+  _$jscoverage['/editor/range.js'].lineData[686] = 0;
+  _$jscoverage['/editor/range.js'].lineData[689] = 0;
+  _$jscoverage['/editor/range.js'].lineData[696] = 0;
+  _$jscoverage['/editor/range.js'].lineData[703] = 0;
+  _$jscoverage['/editor/range.js'].lineData[710] = 0;
+  _$jscoverage['/editor/range.js'].lineData[718] = 0;
+  _$jscoverage['/editor/range.js'].lineData[719] = 0;
+  _$jscoverage['/editor/range.js'].lineData[720] = 0;
+  _$jscoverage['/editor/range.js'].lineData[721] = 0;
+  _$jscoverage['/editor/range.js'].lineData[723] = 0;
+  _$jscoverage['/editor/range.js'].lineData[724] = 0;
+  _$jscoverage['/editor/range.js'].lineData[726] = 0;
   _$jscoverage['/editor/range.js'].lineData[734] = 0;
-  _$jscoverage['/editor/range.js'].lineData[736] = 0;
+  _$jscoverage['/editor/range.js'].lineData[737] = 0;
+  _$jscoverage['/editor/range.js'].lineData[738] = 0;
   _$jscoverage['/editor/range.js'].lineData[739] = 0;
-  _$jscoverage['/editor/range.js'].lineData[742] = 0;
+  _$jscoverage['/editor/range.js'].lineData[740] = 0;
+  _$jscoverage['/editor/range.js'].lineData[741] = 0;
   _$jscoverage['/editor/range.js'].lineData[743] = 0;
-  _$jscoverage['/editor/range.js'].lineData[750] = 0;
-  _$jscoverage['/editor/range.js'].lineData[751] = 0;
-  _$jscoverage['/editor/range.js'].lineData[752] = 0;
-  _$jscoverage['/editor/range.js'].lineData[754] = 0;
-  _$jscoverage['/editor/range.js'].lineData[764] = 0;
+  _$jscoverage['/editor/range.js'].lineData[755] = 0;
+  _$jscoverage['/editor/range.js'].lineData[758] = 0;
+  _$jscoverage['/editor/range.js'].lineData[760] = 0;
+  _$jscoverage['/editor/range.js'].lineData[762] = 0;
   _$jscoverage['/editor/range.js'].lineData[765] = 0;
-  _$jscoverage['/editor/range.js'].lineData[766] = 0;
   _$jscoverage['/editor/range.js'].lineData[768] = 0;
-  _$jscoverage['/editor/range.js'].lineData[779] = 0;
-  _$jscoverage['/editor/range.js'].lineData[781] = 0;
-  _$jscoverage['/editor/range.js'].lineData[782] = 0;
-  _$jscoverage['/editor/range.js'].lineData[783] = 0;
-  _$jscoverage['/editor/range.js'].lineData[784] = 0;
-  _$jscoverage['/editor/range.js'].lineData[788] = 0;
-  _$jscoverage['/editor/range.js'].lineData[789] = 0;
-  _$jscoverage['/editor/range.js'].lineData[793] = 0;
-  _$jscoverage['/editor/range.js'].lineData[795] = 0;
-  _$jscoverage['/editor/range.js'].lineData[796] = 0;
-  _$jscoverage['/editor/range.js'].lineData[797] = 0;
-  _$jscoverage['/editor/range.js'].lineData[798] = 0;
-  _$jscoverage['/editor/range.js'].lineData[800] = 0;
-  _$jscoverage['/editor/range.js'].lineData[801] = 0;
+  _$jscoverage['/editor/range.js'].lineData[769] = 0;
+  _$jscoverage['/editor/range.js'].lineData[776] = 0;
+  _$jscoverage['/editor/range.js'].lineData[777] = 0;
+  _$jscoverage['/editor/range.js'].lineData[778] = 0;
+  _$jscoverage['/editor/range.js'].lineData[780] = 0;
+  _$jscoverage['/editor/range.js'].lineData[790] = 0;
+  _$jscoverage['/editor/range.js'].lineData[791] = 0;
+  _$jscoverage['/editor/range.js'].lineData[792] = 0;
+  _$jscoverage['/editor/range.js'].lineData[794] = 0;
   _$jscoverage['/editor/range.js'].lineData[805] = 0;
   _$jscoverage['/editor/range.js'].lineData[807] = 0;
+  _$jscoverage['/editor/range.js'].lineData[808] = 0;
   _$jscoverage['/editor/range.js'].lineData[809] = 0;
   _$jscoverage['/editor/range.js'].lineData[810] = 0;
   _$jscoverage['/editor/range.js'].lineData[814] = 0;
-  _$jscoverage['/editor/range.js'].lineData[816] = 0;
-  _$jscoverage['/editor/range.js'].lineData[818] = 0;
+  _$jscoverage['/editor/range.js'].lineData[815] = 0;
+  _$jscoverage['/editor/range.js'].lineData[819] = 0;
   _$jscoverage['/editor/range.js'].lineData[821] = 0;
   _$jscoverage['/editor/range.js'].lineData[822] = 0;
+  _$jscoverage['/editor/range.js'].lineData[823] = 0;
   _$jscoverage['/editor/range.js'].lineData[824] = 0;
-  _$jscoverage['/editor/range.js'].lineData[825] = 0;
+  _$jscoverage['/editor/range.js'].lineData[826] = 0;
   _$jscoverage['/editor/range.js'].lineData[827] = 0;
-  _$jscoverage['/editor/range.js'].lineData[832] = 0;
+  _$jscoverage['/editor/range.js'].lineData[831] = 0;
   _$jscoverage['/editor/range.js'].lineData[833] = 0;
-  _$jscoverage['/editor/range.js'].lineData[834] = 0;
   _$jscoverage['/editor/range.js'].lineData[835] = 0;
-  _$jscoverage['/editor/range.js'].lineData[839] = 0;
+  _$jscoverage['/editor/range.js'].lineData[836] = 0;
   _$jscoverage['/editor/range.js'].lineData[840] = 0;
-  _$jscoverage['/editor/range.js'].lineData[841] = 0;
   _$jscoverage['/editor/range.js'].lineData[842] = 0;
-  _$jscoverage['/editor/range.js'].lineData[843] = 0;
+  _$jscoverage['/editor/range.js'].lineData[844] = 0;
   _$jscoverage['/editor/range.js'].lineData[847] = 0;
-  _$jscoverage['/editor/range.js'].lineData[857] = 0;
+  _$jscoverage['/editor/range.js'].lineData[848] = 0;
+  _$jscoverage['/editor/range.js'].lineData[850] = 0;
+  _$jscoverage['/editor/range.js'].lineData[851] = 0;
+  _$jscoverage['/editor/range.js'].lineData[853] = 0;
+  _$jscoverage['/editor/range.js'].lineData[858] = 0;
+  _$jscoverage['/editor/range.js'].lineData[859] = 0;
+  _$jscoverage['/editor/range.js'].lineData[860] = 0;
+  _$jscoverage['/editor/range.js'].lineData[861] = 0;
+  _$jscoverage['/editor/range.js'].lineData[865] = 0;
+  _$jscoverage['/editor/range.js'].lineData[866] = 0;
   _$jscoverage['/editor/range.js'].lineData[867] = 0;
   _$jscoverage['/editor/range.js'].lineData[868] = 0;
-  _$jscoverage['/editor/range.js'].lineData[874] = 0;
-  _$jscoverage['/editor/range.js'].lineData[877] = 0;
-  _$jscoverage['/editor/range.js'].lineData[878] = 0;
-  _$jscoverage['/editor/range.js'].lineData[882] = 0;
-  _$jscoverage['/editor/range.js'].lineData[884] = 0;
-  _$jscoverage['/editor/range.js'].lineData[885] = 0;
-  _$jscoverage['/editor/range.js'].lineData[891] = 0;
+  _$jscoverage['/editor/range.js'].lineData[869] = 0;
+  _$jscoverage['/editor/range.js'].lineData[873] = 0;
+  _$jscoverage['/editor/range.js'].lineData[883] = 0;
+  _$jscoverage['/editor/range.js'].lineData[893] = 0;
   _$jscoverage['/editor/range.js'].lineData[894] = 0;
-  _$jscoverage['/editor/range.js'].lineData[895] = 0;
-  _$jscoverage['/editor/range.js'].lineData[899] = 0;
-  _$jscoverage['/editor/range.js'].lineData[902] = 0;
+  _$jscoverage['/editor/range.js'].lineData[900] = 0;
   _$jscoverage['/editor/range.js'].lineData[903] = 0;
-  _$jscoverage['/editor/range.js'].lineData[907] = 0;
+  _$jscoverage['/editor/range.js'].lineData[904] = 0;
+  _$jscoverage['/editor/range.js'].lineData[908] = 0;
   _$jscoverage['/editor/range.js'].lineData[910] = 0;
   _$jscoverage['/editor/range.js'].lineData[911] = 0;
-  _$jscoverage['/editor/range.js'].lineData[916] = 0;
-  _$jscoverage['/editor/range.js'].lineData[919] = 0;
+  _$jscoverage['/editor/range.js'].lineData[917] = 0;
   _$jscoverage['/editor/range.js'].lineData[920] = 0;
+  _$jscoverage['/editor/range.js'].lineData[921] = 0;
   _$jscoverage['/editor/range.js'].lineData[925] = 0;
-  _$jscoverage['/editor/range.js'].lineData[939] = 0;
+  _$jscoverage['/editor/range.js'].lineData[928] = 0;
+  _$jscoverage['/editor/range.js'].lineData[929] = 0;
+  _$jscoverage['/editor/range.js'].lineData[933] = 0;
+  _$jscoverage['/editor/range.js'].lineData[936] = 0;
+  _$jscoverage['/editor/range.js'].lineData[937] = 0;
+  _$jscoverage['/editor/range.js'].lineData[942] = 0;
   _$jscoverage['/editor/range.js'].lineData[945] = 0;
   _$jscoverage['/editor/range.js'].lineData[946] = 0;
-  _$jscoverage['/editor/range.js'].lineData[947] = 0;
   _$jscoverage['/editor/range.js'].lineData[951] = 0;
-  _$jscoverage['/editor/range.js'].lineData[953] = 0;
-  _$jscoverage['/editor/range.js'].lineData[954] = 0;
-  _$jscoverage['/editor/range.js'].lineData[955] = 0;
-  _$jscoverage['/editor/range.js'].lineData[959] = 0;
-  _$jscoverage['/editor/range.js'].lineData[960] = 0;
-  _$jscoverage['/editor/range.js'].lineData[961] = 0;
-  _$jscoverage['/editor/range.js'].lineData[963] = 0;
-  _$jscoverage['/editor/range.js'].lineData[964] = 0;
-  _$jscoverage['/editor/range.js'].lineData[967] = 0;
-  _$jscoverage['/editor/range.js'].lineData[968] = 0;
-  _$jscoverage['/editor/range.js'].lineData[969] = 0;
+  _$jscoverage['/editor/range.js'].lineData[965] = 0;
+  _$jscoverage['/editor/range.js'].lineData[971] = 0;
   _$jscoverage['/editor/range.js'].lineData[972] = 0;
   _$jscoverage['/editor/range.js'].lineData[973] = 0;
-  _$jscoverage['/editor/range.js'].lineData[974] = 0;
   _$jscoverage['/editor/range.js'].lineData[977] = 0;
-  _$jscoverage['/editor/range.js'].lineData[978] = 0;
   _$jscoverage['/editor/range.js'].lineData[979] = 0;
+  _$jscoverage['/editor/range.js'].lineData[980] = 0;
   _$jscoverage['/editor/range.js'].lineData[981] = 0;
-  _$jscoverage['/editor/range.js'].lineData[984] = 0;
+  _$jscoverage['/editor/range.js'].lineData[985] = 0;
+  _$jscoverage['/editor/range.js'].lineData[986] = 0;
+  _$jscoverage['/editor/range.js'].lineData[987] = 0;
+  _$jscoverage['/editor/range.js'].lineData[989] = 0;
+  _$jscoverage['/editor/range.js'].lineData[990] = 0;
+  _$jscoverage['/editor/range.js'].lineData[993] = 0;
+  _$jscoverage['/editor/range.js'].lineData[994] = 0;
+  _$jscoverage['/editor/range.js'].lineData[995] = 0;
   _$jscoverage['/editor/range.js'].lineData[998] = 0;
   _$jscoverage['/editor/range.js'].lineData[999] = 0;
   _$jscoverage['/editor/range.js'].lineData[1000] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1009] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1014] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1019] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1020] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1021] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1003] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1004] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1005] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1007] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1010] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1024] = 0;
   _$jscoverage['/editor/range.js'].lineData[1025] = 0;
   _$jscoverage['/editor/range.js'].lineData[1026] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1027] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1032] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1034] = 0;
   _$jscoverage['/editor/range.js'].lineData[1035] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1038] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1039] = 0;
   _$jscoverage['/editor/range.js'].lineData[1040] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1041] = 0;
   _$jscoverage['/editor/range.js'].lineData[1045] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1046] = 0;
   _$jscoverage['/editor/range.js'].lineData[1047] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1048] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1049] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1051] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1052] = 0;
   _$jscoverage['/editor/range.js'].lineData[1053] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1056] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1058] = 0;
   _$jscoverage['/editor/range.js'].lineData[1060] = 0;
   _$jscoverage['/editor/range.js'].lineData[1061] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1062] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1064] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1065] = 0;
   _$jscoverage['/editor/range.js'].lineData[1066] = 0;
   _$jscoverage['/editor/range.js'].lineData[1067] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1068] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1071] = 0;
   _$jscoverage['/editor/range.js'].lineData[1073] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1074] = 0;
   _$jscoverage['/editor/range.js'].lineData[1075] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1076] = 0;
   _$jscoverage['/editor/range.js'].lineData[1079] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1082] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1086] = 0;
   _$jscoverage['/editor/range.js'].lineData[1087] = 0;
   _$jscoverage['/editor/range.js'].lineData[1088] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1089] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1090] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1092] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1093] = 0;
   _$jscoverage['/editor/range.js'].lineData[1094] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1096] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1097] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1100] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1108] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1110] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1112] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1118] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1121] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1099] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1101] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1102] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1105] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1113] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1114] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1115] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1116] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1120] = 0;
   _$jscoverage['/editor/range.js'].lineData[1122] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1124] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1128] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1135] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1123] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1126] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1134] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1136] = 0;
   _$jscoverage['/editor/range.js'].lineData[1138] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1142] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1143] = 0;
   _$jscoverage['/editor/range.js'].lineData[1144] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1146] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1157] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1162] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1163] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1166] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1147] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1148] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1150] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1154] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1161] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1164] = 0;
   _$jscoverage['/editor/range.js'].lineData[1168] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1171] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1174] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1169] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1170] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1172] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1183] = 0;
   _$jscoverage['/editor/range.js'].lineData[1188] = 0;
   _$jscoverage['/editor/range.js'].lineData[1189] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1192] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1194] = 0;
   _$jscoverage['/editor/range.js'].lineData[1197] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1198] = 0;
   _$jscoverage['/editor/range.js'].lineData[1200] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1201] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1204] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1205] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1210] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1212] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1215] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1217] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1220] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1213] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1214] = 0;
   _$jscoverage['/editor/range.js'].lineData[1222] = 0;
   _$jscoverage['/editor/range.js'].lineData[1223] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1224] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1225] = 0;
   _$jscoverage['/editor/range.js'].lineData[1226] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1231] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1233] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1229] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1230] = 0;
   _$jscoverage['/editor/range.js'].lineData[1235] = 0;
   _$jscoverage['/editor/range.js'].lineData[1237] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1244] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1246] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1240] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1242] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1245] = 0;
   _$jscoverage['/editor/range.js'].lineData[1247] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1250] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1248] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1249] = 0;
   _$jscoverage['/editor/range.js'].lineData[1251] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1252] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1255] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1256] = 0;
   _$jscoverage['/editor/range.js'].lineData[1258] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1259] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1264] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1265] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1266] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1260] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1262] = 0;
   _$jscoverage['/editor/range.js'].lineData[1269] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1270] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1273] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1271] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1272] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1275] = 0;
   _$jscoverage['/editor/range.js'].lineData[1276] = 0;
   _$jscoverage['/editor/range.js'].lineData[1277] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1279] = 0;
   _$jscoverage['/editor/range.js'].lineData[1280] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1281] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1282] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1285] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1283] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1284] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1289] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1290] = 0;
   _$jscoverage['/editor/range.js'].lineData[1291] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1292] = 0;
   _$jscoverage['/editor/range.js'].lineData[1294] = 0;
   _$jscoverage['/editor/range.js'].lineData[1295] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1297] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1298] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1301] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1302] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1304] = 0;
   _$jscoverage['/editor/range.js'].lineData[1305] = 0;
   _$jscoverage['/editor/range.js'].lineData[1306] = 0;
   _$jscoverage['/editor/range.js'].lineData[1307] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1309] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1313] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1314] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1315] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1310] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1316] = 0;
   _$jscoverage['/editor/range.js'].lineData[1317] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1319] = 0;
   _$jscoverage['/editor/range.js'].lineData[1320] = 0;
   _$jscoverage['/editor/range.js'].lineData[1322] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1325] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1329] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1330] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1331] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1332] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1334] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1338] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1339] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1340] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1342] = 0;
   _$jscoverage['/editor/range.js'].lineData[1345] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1346] = 0;
   _$jscoverage['/editor/range.js'].lineData[1347] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1348] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1351] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1353] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1356] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1359] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1363] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1350] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1354] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1369] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1370] = 0;
   _$jscoverage['/editor/range.js'].lineData[1371] = 0;
   _$jscoverage['/editor/range.js'].lineData[1372] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1375] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1377] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1380] = 0;
   _$jscoverage['/editor/range.js'].lineData[1383] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1389] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1390] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1391] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1392] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1399] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1403] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1387] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1394] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1395] = 0;
   _$jscoverage['/editor/range.js'].lineData[1406] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1407] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1408] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1410] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1411] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1412] = 0;
   _$jscoverage['/editor/range.js'].lineData[1413] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1421] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1414] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1415] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1422] = 0;
   _$jscoverage['/editor/range.js'].lineData[1426] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1427] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1428] = 0;
   _$jscoverage['/editor/range.js'].lineData[1429] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1430] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1431] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1433] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1434] = 0;
   _$jscoverage['/editor/range.js'].lineData[1436] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1440] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1443] = 0;
   _$jscoverage['/editor/range.js'].lineData[1444] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1445] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1447] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1448] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1449] = 0;
   _$jscoverage['/editor/range.js'].lineData[1450] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1451] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1452] = 0;
   _$jscoverage['/editor/range.js'].lineData[1459] = 0;
   _$jscoverage['/editor/range.js'].lineData[1463] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1466] = 0;
   _$jscoverage['/editor/range.js'].lineData[1467] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1469] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1468] = 0;
   _$jscoverage['/editor/range.js'].lineData[1470] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1479] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1471] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1473] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1482] = 0;
   _$jscoverage['/editor/range.js'].lineData[1486] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1487] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1488] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1489] = 0;
   _$jscoverage['/editor/range.js'].lineData[1490] = 0;
   _$jscoverage['/editor/range.js'].lineData[1492] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1496] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1497] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1498] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1501] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1506] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1493] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1502] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1509] = 0;
   _$jscoverage['/editor/range.js'].lineData[1510] = 0;
   _$jscoverage['/editor/range.js'].lineData[1511] = 0;
   _$jscoverage['/editor/range.js'].lineData[1512] = 0;
   _$jscoverage['/editor/range.js'].lineData[1513] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1516] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1517] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1515] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1519] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1520] = 0;
   _$jscoverage['/editor/range.js'].lineData[1521] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1522] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1523] = 0;
   _$jscoverage['/editor/range.js'].lineData[1524] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1530] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1531] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1529] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1533] = 0;
   _$jscoverage['/editor/range.js'].lineData[1534] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1535] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1536] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1539] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1540] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1544] = 0;
   _$jscoverage['/editor/range.js'].lineData[1545] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1546] = 0;
   _$jscoverage['/editor/range.js'].lineData[1548] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1549] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1550] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1551] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1552] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1553] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1554] = 0;
   _$jscoverage['/editor/range.js'].lineData[1555] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1556] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1557] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1566] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1558] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1569] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1572] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1573] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1574] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1575] = 0;
   _$jscoverage['/editor/range.js'].lineData[1576] = 0;
   _$jscoverage['/editor/range.js'].lineData[1577] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1579] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1580] = 0;
   _$jscoverage['/editor/range.js'].lineData[1581] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1582] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1583] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1584] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1587] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1588] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1593] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1597] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1599] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1590] = 0;
   _$jscoverage['/editor/range.js'].lineData[1600] = 0;
   _$jscoverage['/editor/range.js'].lineData[1601] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1602] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1603] = 0;
   _$jscoverage['/editor/range.js'].lineData[1605] = 0;
   _$jscoverage['/editor/range.js'].lineData[1606] = 0;
   _$jscoverage['/editor/range.js'].lineData[1607] = 0;
   _$jscoverage['/editor/range.js'].lineData[1608] = 0;
   _$jscoverage['/editor/range.js'].lineData[1611] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1615] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1616] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1612] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1617] = 0;
   _$jscoverage['/editor/range.js'].lineData[1621] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1636] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1637] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1638] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1642] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1643] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1648] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1650] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1651] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1652] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1664] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1665] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1623] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1624] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1625] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1626] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1627] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1629] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1630] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1631] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1632] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1635] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1639] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1640] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1645] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1660] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1661] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1662] = 0;
   _$jscoverage['/editor/range.js'].lineData[1667] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1669] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1672] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1668] = 0;
   _$jscoverage['/editor/range.js'].lineData[1673] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1675] = 0;
   _$jscoverage['/editor/range.js'].lineData[1676] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1679] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1681] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1683] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1684] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1687] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1688] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1677] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1689] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1690] = 0;
   _$jscoverage['/editor/range.js'].lineData[1692] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1693] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1696] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1699] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1702] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1710] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1711] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1694] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1697] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1698] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1701] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1704] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1706] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1708] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1709] = 0;
   _$jscoverage['/editor/range.js'].lineData[1712] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1722] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1728] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1729] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1730] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1731] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1732] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1713] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1717] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1718] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1721] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1724] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1727] = 0;
   _$jscoverage['/editor/range.js'].lineData[1735] = 0;
   _$jscoverage['/editor/range.js'].lineData[1736] = 0;
   _$jscoverage['/editor/range.js'].lineData[1737] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1738] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1740] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1742] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1745] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1746] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1750] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1747] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1753] = 0;
   _$jscoverage['/editor/range.js'].lineData[1754] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1755] = 0;
   _$jscoverage['/editor/range.js'].lineData[1756] = 0;
   _$jscoverage['/editor/range.js'].lineData[1757] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1759] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1760] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1761] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1762] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1763] = 0;
   _$jscoverage['/editor/range.js'].lineData[1765] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1766] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1769] = 0;
-  _$jscoverage['/editor/range.js'].lineData[1772] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1767] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1770] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1771] = 0;
   _$jscoverage['/editor/range.js'].lineData[1775] = 0;
   _$jscoverage['/editor/range.js'].lineData[1779] = 0;
   _$jscoverage['/editor/range.js'].lineData[1781] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1782] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1784] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1790] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1791] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1794] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1797] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1800] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1804] = 0;
+  _$jscoverage['/editor/range.js'].lineData[1806] = 0;
 }
 if (! _$jscoverage['/editor/range.js'].functionData) {
   _$jscoverage['/editor/range.js'].functionData = [];
@@ -898,254 +898,230 @@ if (! _$jscoverage['/editor/range.js'].functionData) {
 }
 if (! _$jscoverage['/editor/range.js'].branchData) {
   _$jscoverage['/editor/range.js'].branchData = {};
-  _$jscoverage['/editor/range.js'].branchData['74'] = [];
-  _$jscoverage['/editor/range.js'].branchData['74'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['74'][2] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['77'] = [];
-  _$jscoverage['/editor/range.js'].branchData['77'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['77'][2] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['80'] = [];
-  _$jscoverage['/editor/range.js'].branchData['80'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['80'][2] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['85'] = [];
-  _$jscoverage['/editor/range.js'].branchData['85'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['92'] = [];
-  _$jscoverage['/editor/range.js'].branchData['92'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['95'] = [];
-  _$jscoverage['/editor/range.js'].branchData['95'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['97'] = [];
-  _$jscoverage['/editor/range.js'].branchData['97'][1] = new BranchData();
   _$jscoverage['/editor/range.js'].branchData['100'] = [];
   _$jscoverage['/editor/range.js'].branchData['100'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['104'] = [];
-  _$jscoverage['/editor/range.js'].branchData['104'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['107'] = [];
-  _$jscoverage['/editor/range.js'].branchData['107'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['107'][2] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['107'][3] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['107'][4] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['138'] = [];
-  _$jscoverage['/editor/range.js'].branchData['138'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['142'] = [];
-  _$jscoverage['/editor/range.js'].branchData['142'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['155'] = [];
-  _$jscoverage['/editor/range.js'].branchData['155'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['161'] = [];
-  _$jscoverage['/editor/range.js'].branchData['161'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['163'] = [];
-  _$jscoverage['/editor/range.js'].branchData['163'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['179'] = [];
-  _$jscoverage['/editor/range.js'].branchData['179'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['100'][2] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['103'] = [];
+  _$jscoverage['/editor/range.js'].branchData['103'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['103'][2] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['106'] = [];
+  _$jscoverage['/editor/range.js'].branchData['106'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['106'][2] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['111'] = [];
+  _$jscoverage['/editor/range.js'].branchData['111'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['118'] = [];
+  _$jscoverage['/editor/range.js'].branchData['118'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['122'] = [];
+  _$jscoverage['/editor/range.js'].branchData['122'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['124'] = [];
+  _$jscoverage['/editor/range.js'].branchData['124'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['127'] = [];
+  _$jscoverage['/editor/range.js'].branchData['127'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['131'] = [];
+  _$jscoverage['/editor/range.js'].branchData['131'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['134'] = [];
+  _$jscoverage['/editor/range.js'].branchData['134'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['134'][2] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['134'][3] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['134'][4] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['165'] = [];
+  _$jscoverage['/editor/range.js'].branchData['165'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['169'] = [];
+  _$jscoverage['/editor/range.js'].branchData['169'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['182'] = [];
+  _$jscoverage['/editor/range.js'].branchData['182'][1] = new BranchData();
   _$jscoverage['/editor/range.js'].branchData['188'] = [];
   _$jscoverage['/editor/range.js'].branchData['188'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['195'] = [];
-  _$jscoverage['/editor/range.js'].branchData['195'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['223'] = [];
-  _$jscoverage['/editor/range.js'].branchData['223'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['231'] = [];
-  _$jscoverage['/editor/range.js'].branchData['231'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['244'] = [];
-  _$jscoverage['/editor/range.js'].branchData['244'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['248'] = [];
-  _$jscoverage['/editor/range.js'].branchData['248'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['248'][2] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['260'] = [];
-  _$jscoverage['/editor/range.js'].branchData['260'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['265'] = [];
-  _$jscoverage['/editor/range.js'].branchData['265'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['265'][2] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['265'][3] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['273'] = [];
-  _$jscoverage['/editor/range.js'].branchData['273'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['280'] = [];
-  _$jscoverage['/editor/range.js'].branchData['280'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['290'] = [];
-  _$jscoverage['/editor/range.js'].branchData['290'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['299'] = [];
-  _$jscoverage['/editor/range.js'].branchData['299'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['190'] = [];
+  _$jscoverage['/editor/range.js'].branchData['190'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['206'] = [];
+  _$jscoverage['/editor/range.js'].branchData['206'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['215'] = [];
+  _$jscoverage['/editor/range.js'].branchData['215'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['222'] = [];
+  _$jscoverage['/editor/range.js'].branchData['222'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['251'] = [];
+  _$jscoverage['/editor/range.js'].branchData['251'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['259'] = [];
+  _$jscoverage['/editor/range.js'].branchData['259'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['272'] = [];
+  _$jscoverage['/editor/range.js'].branchData['272'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['276'] = [];
+  _$jscoverage['/editor/range.js'].branchData['276'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['276'][2] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['288'] = [];
+  _$jscoverage['/editor/range.js'].branchData['288'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['293'] = [];
+  _$jscoverage['/editor/range.js'].branchData['293'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['293'][2] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['293'][3] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['301'] = [];
+  _$jscoverage['/editor/range.js'].branchData['301'][1] = new BranchData();
   _$jscoverage['/editor/range.js'].branchData['308'] = [];
   _$jscoverage['/editor/range.js'].branchData['308'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['312'] = [];
-  _$jscoverage['/editor/range.js'].branchData['312'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['312'][2] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['322'] = [];
-  _$jscoverage['/editor/range.js'].branchData['322'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['332'] = [];
-  _$jscoverage['/editor/range.js'].branchData['332'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['318'] = [];
+  _$jscoverage['/editor/range.js'].branchData['318'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['327'] = [];
+  _$jscoverage['/editor/range.js'].branchData['327'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['336'] = [];
+  _$jscoverage['/editor/range.js'].branchData['336'][1] = new BranchData();
   _$jscoverage['/editor/range.js'].branchData['340'] = [];
   _$jscoverage['/editor/range.js'].branchData['340'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['340'][2] = new BranchData();
   _$jscoverage['/editor/range.js'].branchData['350'] = [];
   _$jscoverage['/editor/range.js'].branchData['350'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['355'] = [];
-  _$jscoverage['/editor/range.js'].branchData['355'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['359'] = [];
-  _$jscoverage['/editor/range.js'].branchData['359'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['361'] = [];
-  _$jscoverage['/editor/range.js'].branchData['361'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['361'][2] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['362'] = [];
-  _$jscoverage['/editor/range.js'].branchData['362'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['364'] = [];
-  _$jscoverage['/editor/range.js'].branchData['364'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['370'] = [];
-  _$jscoverage['/editor/range.js'].branchData['370'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['372'] = [];
-  _$jscoverage['/editor/range.js'].branchData['372'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['372'][2] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['373'] = [];
-  _$jscoverage['/editor/range.js'].branchData['373'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['374'] = [];
-  _$jscoverage['/editor/range.js'].branchData['374'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['360'] = [];
+  _$jscoverage['/editor/range.js'].branchData['360'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['368'] = [];
+  _$jscoverage['/editor/range.js'].branchData['368'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['378'] = [];
+  _$jscoverage['/editor/range.js'].branchData['378'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['383'] = [];
+  _$jscoverage['/editor/range.js'].branchData['383'][1] = new BranchData();
   _$jscoverage['/editor/range.js'].branchData['387'] = [];
   _$jscoverage['/editor/range.js'].branchData['387'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['387'][2] = new BranchData();
   _$jscoverage['/editor/range.js'].branchData['389'] = [];
   _$jscoverage['/editor/range.js'].branchData['389'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['389'][2] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['389'][3] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['391'] = [];
+  _$jscoverage['/editor/range.js'].branchData['391'][1] = new BranchData();
   _$jscoverage['/editor/range.js'].branchData['397'] = [];
   _$jscoverage['/editor/range.js'].branchData['397'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['412'] = [];
-  _$jscoverage['/editor/range.js'].branchData['412'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['399'] = [];
+  _$jscoverage['/editor/range.js'].branchData['399'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['399'][2] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['400'] = [];
+  _$jscoverage['/editor/range.js'].branchData['400'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['401'] = [];
+  _$jscoverage['/editor/range.js'].branchData['401'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['414'] = [];
+  _$jscoverage['/editor/range.js'].branchData['414'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['414'][2] = new BranchData();
   _$jscoverage['/editor/range.js'].branchData['416'] = [];
   _$jscoverage['/editor/range.js'].branchData['416'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['425'] = [];
-  _$jscoverage['/editor/range.js'].branchData['425'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['426'] = [];
-  _$jscoverage['/editor/range.js'].branchData['426'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['427'] = [];
-  _$jscoverage['/editor/range.js'].branchData['427'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['427'][2] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['428'] = [];
-  _$jscoverage['/editor/range.js'].branchData['428'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['457'] = [];
-  _$jscoverage['/editor/range.js'].branchData['457'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['458'] = [];
-  _$jscoverage['/editor/range.js'].branchData['458'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['473'] = [];
-  _$jscoverage['/editor/range.js'].branchData['473'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['474'] = [];
-  _$jscoverage['/editor/range.js'].branchData['474'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['476'] = [];
-  _$jscoverage['/editor/range.js'].branchData['476'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['423'] = [];
+  _$jscoverage['/editor/range.js'].branchData['423'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['438'] = [];
+  _$jscoverage['/editor/range.js'].branchData['438'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['442'] = [];
+  _$jscoverage['/editor/range.js'].branchData['442'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['451'] = [];
+  _$jscoverage['/editor/range.js'].branchData['451'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['452'] = [];
+  _$jscoverage['/editor/range.js'].branchData['452'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['453'] = [];
+  _$jscoverage['/editor/range.js'].branchData['453'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['453'][2] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['454'] = [];
+  _$jscoverage['/editor/range.js'].branchData['454'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['483'] = [];
+  _$jscoverage['/editor/range.js'].branchData['483'][1] = new BranchData();
   _$jscoverage['/editor/range.js'].branchData['484'] = [];
   _$jscoverage['/editor/range.js'].branchData['484'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['485'] = [];
-  _$jscoverage['/editor/range.js'].branchData['485'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['487'] = [];
-  _$jscoverage['/editor/range.js'].branchData['487'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['530'] = [];
-  _$jscoverage['/editor/range.js'].branchData['530'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['531'] = [];
-  _$jscoverage['/editor/range.js'].branchData['531'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['531'][2] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['535'] = [];
-  _$jscoverage['/editor/range.js'].branchData['535'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['536'] = [];
-  _$jscoverage['/editor/range.js'].branchData['536'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['536'][2] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['499'] = [];
+  _$jscoverage['/editor/range.js'].branchData['499'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['500'] = [];
+  _$jscoverage['/editor/range.js'].branchData['500'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['502'] = [];
+  _$jscoverage['/editor/range.js'].branchData['502'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['510'] = [];
+  _$jscoverage['/editor/range.js'].branchData['510'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['511'] = [];
+  _$jscoverage['/editor/range.js'].branchData['511'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['513'] = [];
+  _$jscoverage['/editor/range.js'].branchData['513'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['556'] = [];
+  _$jscoverage['/editor/range.js'].branchData['556'][1] = new BranchData();
   _$jscoverage['/editor/range.js'].branchData['557'] = [];
   _$jscoverage['/editor/range.js'].branchData['557'][1] = new BranchData();
   _$jscoverage['/editor/range.js'].branchData['557'][2] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['565'] = [];
-  _$jscoverage['/editor/range.js'].branchData['565'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['588'] = [];
-  _$jscoverage['/editor/range.js'].branchData['588'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['588'][2] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['596'] = [];
-  _$jscoverage['/editor/range.js'].branchData['596'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['617'] = [];
-  _$jscoverage['/editor/range.js'].branchData['617'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['648'] = [];
-  _$jscoverage['/editor/range.js'].branchData['648'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['693'] = [];
-  _$jscoverage['/editor/range.js'].branchData['693'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['734'] = [];
-  _$jscoverage['/editor/range.js'].branchData['734'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['734'][2] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['735'] = [];
-  _$jscoverage['/editor/range.js'].branchData['735'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['743'] = [];
-  _$jscoverage['/editor/range.js'].branchData['743'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['754'] = [];
-  _$jscoverage['/editor/range.js'].branchData['754'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['765'] = [];
-  _$jscoverage['/editor/range.js'].branchData['765'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['766'] = [];
-  _$jscoverage['/editor/range.js'].branchData['766'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['779'] = [];
-  _$jscoverage['/editor/range.js'].branchData['779'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['561'] = [];
+  _$jscoverage['/editor/range.js'].branchData['561'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['562'] = [];
+  _$jscoverage['/editor/range.js'].branchData['562'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['562'][2] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['583'] = [];
+  _$jscoverage['/editor/range.js'].branchData['583'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['583'][2] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['591'] = [];
+  _$jscoverage['/editor/range.js'].branchData['591'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['614'] = [];
+  _$jscoverage['/editor/range.js'].branchData['614'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['614'][2] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['622'] = [];
+  _$jscoverage['/editor/range.js'].branchData['622'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['643'] = [];
+  _$jscoverage['/editor/range.js'].branchData['643'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['674'] = [];
+  _$jscoverage['/editor/range.js'].branchData['674'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['719'] = [];
+  _$jscoverage['/editor/range.js'].branchData['719'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['760'] = [];
+  _$jscoverage['/editor/range.js'].branchData['760'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['760'][2] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['761'] = [];
+  _$jscoverage['/editor/range.js'].branchData['761'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['769'] = [];
+  _$jscoverage['/editor/range.js'].branchData['769'][1] = new BranchData();
   _$jscoverage['/editor/range.js'].branchData['780'] = [];
   _$jscoverage['/editor/range.js'].branchData['780'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['781'] = [];
-  _$jscoverage['/editor/range.js'].branchData['781'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['783'] = [];
-  _$jscoverage['/editor/range.js'].branchData['783'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['793'] = [];
-  _$jscoverage['/editor/range.js'].branchData['793'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['794'] = [];
-  _$jscoverage['/editor/range.js'].branchData['794'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['795'] = [];
-  _$jscoverage['/editor/range.js'].branchData['795'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['797'] = [];
-  _$jscoverage['/editor/range.js'].branchData['797'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['791'] = [];
+  _$jscoverage['/editor/range.js'].branchData['791'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['792'] = [];
+  _$jscoverage['/editor/range.js'].branchData['792'][1] = new BranchData();
   _$jscoverage['/editor/range.js'].branchData['805'] = [];
   _$jscoverage['/editor/range.js'].branchData['805'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['810'] = [];
-  _$jscoverage['/editor/range.js'].branchData['810'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['810'][2] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['816'] = [];
-  _$jscoverage['/editor/range.js'].branchData['816'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['816'][2] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['817'] = [];
-  _$jscoverage['/editor/range.js'].branchData['817'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['806'] = [];
+  _$jscoverage['/editor/range.js'].branchData['806'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['807'] = [];
+  _$jscoverage['/editor/range.js'].branchData['807'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['809'] = [];
+  _$jscoverage['/editor/range.js'].branchData['809'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['819'] = [];
+  _$jscoverage['/editor/range.js'].branchData['819'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['820'] = [];
+  _$jscoverage['/editor/range.js'].branchData['820'][1] = new BranchData();
   _$jscoverage['/editor/range.js'].branchData['821'] = [];
   _$jscoverage['/editor/range.js'].branchData['821'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['821'][2] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['824'] = [];
-  _$jscoverage['/editor/range.js'].branchData['824'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['824'][2] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['832'] = [];
-  _$jscoverage['/editor/range.js'].branchData['832'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['833'] = [];
-  _$jscoverage['/editor/range.js'].branchData['833'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['834'] = [];
-  _$jscoverage['/editor/range.js'].branchData['834'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['839'] = [];
-  _$jscoverage['/editor/range.js'].branchData['839'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['841'] = [];
-  _$jscoverage['/editor/range.js'].branchData['841'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['823'] = [];
+  _$jscoverage['/editor/range.js'].branchData['823'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['831'] = [];
+  _$jscoverage['/editor/range.js'].branchData['831'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['836'] = [];
+  _$jscoverage['/editor/range.js'].branchData['836'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['836'][2] = new BranchData();
   _$jscoverage['/editor/range.js'].branchData['842'] = [];
   _$jscoverage['/editor/range.js'].branchData['842'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['842'][2] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['843'] = [];
+  _$jscoverage['/editor/range.js'].branchData['843'][1] = new BranchData();
   _$jscoverage['/editor/range.js'].branchData['847'] = [];
   _$jscoverage['/editor/range.js'].branchData['847'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['847'][2] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['850'] = [];
+  _$jscoverage['/editor/range.js'].branchData['850'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['850'][2] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['858'] = [];
+  _$jscoverage['/editor/range.js'].branchData['858'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['859'] = [];
+  _$jscoverage['/editor/range.js'].branchData['859'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['860'] = [];
+  _$jscoverage['/editor/range.js'].branchData['860'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['865'] = [];
+  _$jscoverage['/editor/range.js'].branchData['865'][1] = new BranchData();
   _$jscoverage['/editor/range.js'].branchData['867'] = [];
   _$jscoverage['/editor/range.js'].branchData['867'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['874'] = [];
-  _$jscoverage['/editor/range.js'].branchData['874'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['877'] = [];
-  _$jscoverage['/editor/range.js'].branchData['877'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['882'] = [];
-  _$jscoverage['/editor/range.js'].branchData['882'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['882'][2] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['882'][3] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['882'][4] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['883'] = [];
-  _$jscoverage['/editor/range.js'].branchData['883'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['883'][2] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['883'][3] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['891'] = [];
-  _$jscoverage['/editor/range.js'].branchData['891'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['891'][2] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['892'] = [];
-  _$jscoverage['/editor/range.js'].branchData['892'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['868'] = [];
+  _$jscoverage['/editor/range.js'].branchData['868'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['873'] = [];
+  _$jscoverage['/editor/range.js'].branchData['873'][1] = new BranchData();
   _$jscoverage['/editor/range.js'].branchData['893'] = [];
   _$jscoverage['/editor/range.js'].branchData['893'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['899'] = [];
-  _$jscoverage['/editor/range.js'].branchData['899'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['902'] = [];
-  _$jscoverage['/editor/range.js'].branchData['902'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['907'] = [];
-  _$jscoverage['/editor/range.js'].branchData['907'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['907'][2] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['900'] = [];
+  _$jscoverage['/editor/range.js'].branchData['900'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['903'] = [];
+  _$jscoverage['/editor/range.js'].branchData['903'][1] = new BranchData();
   _$jscoverage['/editor/range.js'].branchData['908'] = [];
   _$jscoverage['/editor/range.js'].branchData['908'][1] = new BranchData();
   _$jscoverage['/editor/range.js'].branchData['908'][2] = new BranchData();
@@ -1153,1209 +1129,1230 @@ if (! _$jscoverage['/editor/range.js'].branchData) {
   _$jscoverage['/editor/range.js'].branchData['908'][4] = new BranchData();
   _$jscoverage['/editor/range.js'].branchData['909'] = [];
   _$jscoverage['/editor/range.js'].branchData['909'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['916'] = [];
-  _$jscoverage['/editor/range.js'].branchData['916'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['916'][2] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['909'][2] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['909'][3] = new BranchData();
   _$jscoverage['/editor/range.js'].branchData['917'] = [];
   _$jscoverage['/editor/range.js'].branchData['917'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['917'][2] = new BranchData();
   _$jscoverage['/editor/range.js'].branchData['918'] = [];
   _$jscoverage['/editor/range.js'].branchData['918'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['953'] = [];
-  _$jscoverage['/editor/range.js'].branchData['953'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['959'] = [];
-  _$jscoverage['/editor/range.js'].branchData['959'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['963'] = [];
-  _$jscoverage['/editor/range.js'].branchData['963'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['977'] = [];
-  _$jscoverage['/editor/range.js'].branchData['977'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['1014'] = [];
-  _$jscoverage['/editor/range.js'].branchData['1014'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['1014'][2] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['1015'] = [];
-  _$jscoverage['/editor/range.js'].branchData['1015'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['1016'] = [];
-  _$jscoverage['/editor/range.js'].branchData['1016'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['1019'] = [];
-  _$jscoverage['/editor/range.js'].branchData['1019'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['1025'] = [];
-  _$jscoverage['/editor/range.js'].branchData['1025'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['1038'] = [];
-  _$jscoverage['/editor/range.js'].branchData['1038'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['919'] = [];
+  _$jscoverage['/editor/range.js'].branchData['919'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['925'] = [];
+  _$jscoverage['/editor/range.js'].branchData['925'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['928'] = [];
+  _$jscoverage['/editor/range.js'].branchData['928'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['933'] = [];
+  _$jscoverage['/editor/range.js'].branchData['933'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['933'][2] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['934'] = [];
+  _$jscoverage['/editor/range.js'].branchData['934'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['934'][2] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['934'][3] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['934'][4] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['935'] = [];
+  _$jscoverage['/editor/range.js'].branchData['935'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['942'] = [];
+  _$jscoverage['/editor/range.js'].branchData['942'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['942'][2] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['943'] = [];
+  _$jscoverage['/editor/range.js'].branchData['943'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['944'] = [];
+  _$jscoverage['/editor/range.js'].branchData['944'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['979'] = [];
+  _$jscoverage['/editor/range.js'].branchData['979'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['985'] = [];
+  _$jscoverage['/editor/range.js'].branchData['985'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['989'] = [];
+  _$jscoverage['/editor/range.js'].branchData['989'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['1003'] = [];
+  _$jscoverage['/editor/range.js'].branchData['1003'][1] = new BranchData();
   _$jscoverage['/editor/range.js'].branchData['1040'] = [];
   _$jscoverage['/editor/range.js'].branchData['1040'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['1047'] = [];
-  _$jscoverage['/editor/range.js'].branchData['1047'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['1056'] = [];
-  _$jscoverage['/editor/range.js'].branchData['1056'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['1056'][2] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['1057'] = [];
-  _$jscoverage['/editor/range.js'].branchData['1057'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['1057'][2] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['1060'] = [];
-  _$jscoverage['/editor/range.js'].branchData['1060'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['1040'][2] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['1041'] = [];
+  _$jscoverage['/editor/range.js'].branchData['1041'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['1042'] = [];
+  _$jscoverage['/editor/range.js'].branchData['1042'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['1045'] = [];
+  _$jscoverage['/editor/range.js'].branchData['1045'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['1051'] = [];
+  _$jscoverage['/editor/range.js'].branchData['1051'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['1064'] = [];
+  _$jscoverage['/editor/range.js'].branchData['1064'][1] = new BranchData();
   _$jscoverage['/editor/range.js'].branchData['1066'] = [];
   _$jscoverage['/editor/range.js'].branchData['1066'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['1073'] = [];
+  _$jscoverage['/editor/range.js'].branchData['1073'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['1082'] = [];
+  _$jscoverage['/editor/range.js'].branchData['1082'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['1082'][2] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['1083'] = [];
+  _$jscoverage['/editor/range.js'].branchData['1083'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['1083'][2] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['1086'] = [];
+  _$jscoverage['/editor/range.js'].branchData['1086'][1] = new BranchData();
   _$jscoverage['/editor/range.js'].branchData['1092'] = [];
   _$jscoverage['/editor/range.js'].branchData['1092'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['1096'] = [];
-  _$jscoverage['/editor/range.js'].branchData['1096'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['1110'] = [];
-  _$jscoverage['/editor/range.js'].branchData['1110'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['1114'] = [];
-  _$jscoverage['/editor/range.js'].branchData['1114'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['1121'] = [];
-  _$jscoverage['/editor/range.js'].branchData['1121'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['1142'] = [];
-  _$jscoverage['/editor/range.js'].branchData['1142'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['1162'] = [];
-  _$jscoverage['/editor/range.js'].branchData['1162'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['1163'] = [];
-  _$jscoverage['/editor/range.js'].branchData['1163'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['1164'] = [];
-  _$jscoverage['/editor/range.js'].branchData['1164'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['1164'][2] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['1165'] = [];
-  _$jscoverage['/editor/range.js'].branchData['1165'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['1174'] = [];
-  _$jscoverage['/editor/range.js'].branchData['1174'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['1174'][2] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['1197'] = [];
-  _$jscoverage['/editor/range.js'].branchData['1197'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['1198'] = [];
-  _$jscoverage['/editor/range.js'].branchData['1198'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['1118'] = [];
+  _$jscoverage['/editor/range.js'].branchData['1118'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['1122'] = [];
+  _$jscoverage['/editor/range.js'].branchData['1122'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['1136'] = [];
+  _$jscoverage['/editor/range.js'].branchData['1136'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['1140'] = [];
+  _$jscoverage['/editor/range.js'].branchData['1140'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['1147'] = [];
+  _$jscoverage['/editor/range.js'].branchData['1147'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['1168'] = [];
+  _$jscoverage['/editor/range.js'].branchData['1168'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['1188'] = [];
+  _$jscoverage['/editor/range.js'].branchData['1188'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['1189'] = [];
+  _$jscoverage['/editor/range.js'].branchData['1189'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['1190'] = [];
+  _$jscoverage['/editor/range.js'].branchData['1190'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['1190'][2] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['1191'] = [];
+  _$jscoverage['/editor/range.js'].branchData['1191'][1] = new BranchData();
   _$jscoverage['/editor/range.js'].branchData['1200'] = [];
   _$jscoverage['/editor/range.js'].branchData['1200'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['1204'] = [];
-  _$jscoverage['/editor/range.js'].branchData['1204'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['1215'] = [];
-  _$jscoverage['/editor/range.js'].branchData['1215'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['1200'][2] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['1222'] = [];
+  _$jscoverage['/editor/range.js'].branchData['1222'][1] = new BranchData();
   _$jscoverage['/editor/range.js'].branchData['1223'] = [];
   _$jscoverage['/editor/range.js'].branchData['1223'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['1231'] = [];
-  _$jscoverage['/editor/range.js'].branchData['1231'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['1233'] = [];
-  _$jscoverage['/editor/range.js'].branchData['1233'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['1246'] = [];
-  _$jscoverage['/editor/range.js'].branchData['1246'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['1250'] = [];
-  _$jscoverage['/editor/range.js'].branchData['1250'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['1269'] = [];
-  _$jscoverage['/editor/range.js'].branchData['1269'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['1279'] = [];
-  _$jscoverage['/editor/range.js'].branchData['1279'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['1301'] = [];
-  _$jscoverage['/editor/range.js'].branchData['1301'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['1306'] = [];
-  _$jscoverage['/editor/range.js'].branchData['1306'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['1314'] = [];
-  _$jscoverage['/editor/range.js'].branchData['1314'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['1314'][2] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['1325'] = [];
-  _$jscoverage['/editor/range.js'].branchData['1325'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['1225'] = [];
+  _$jscoverage['/editor/range.js'].branchData['1225'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['1229'] = [];
+  _$jscoverage['/editor/range.js'].branchData['1229'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['1240'] = [];
+  _$jscoverage['/editor/range.js'].branchData['1240'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['1248'] = [];
+  _$jscoverage['/editor/range.js'].branchData['1248'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['1256'] = [];
+  _$jscoverage['/editor/range.js'].branchData['1256'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['1258'] = [];
+  _$jscoverage['/editor/range.js'].branchData['1258'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['1271'] = [];
+  _$jscoverage['/editor/range.js'].branchData['1271'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['1275'] = [];
+  _$jscoverage['/editor/range.js'].branchData['1275'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['1294'] = [];
+  _$jscoverage['/editor/range.js'].branchData['1294'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['1304'] = [];
+  _$jscoverage['/editor/range.js'].branchData['1304'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['1326'] = [];
+  _$jscoverage['/editor/range.js'].branchData['1326'][1] = new BranchData();
   _$jscoverage['/editor/range.js'].branchData['1331'] = [];
   _$jscoverage['/editor/range.js'].branchData['1331'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['1331'][2] = new BranchData();
   _$jscoverage['/editor/range.js'].branchData['1339'] = [];
   _$jscoverage['/editor/range.js'].branchData['1339'][1] = new BranchData();
   _$jscoverage['/editor/range.js'].branchData['1339'][2] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['1340'] = [];
-  _$jscoverage['/editor/range.js'].branchData['1340'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['1351'] = [];
-  _$jscoverage['/editor/range.js'].branchData['1351'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['1359'] = [];
-  _$jscoverage['/editor/range.js'].branchData['1359'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['1365'] = [];
-  _$jscoverage['/editor/range.js'].branchData['1365'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['1365'][2] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['1366'] = [];
-  _$jscoverage['/editor/range.js'].branchData['1366'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['1371'] = [];
-  _$jscoverage['/editor/range.js'].branchData['1371'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['1350'] = [];
+  _$jscoverage['/editor/range.js'].branchData['1350'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['1356'] = [];
+  _$jscoverage['/editor/range.js'].branchData['1356'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['1356'][2] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['1364'] = [];
+  _$jscoverage['/editor/range.js'].branchData['1364'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['1364'][2] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['1364'][3] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['1375'] = [];
+  _$jscoverage['/editor/range.js'].branchData['1375'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['1383'] = [];
+  _$jscoverage['/editor/range.js'].branchData['1383'][1] = new BranchData();
   _$jscoverage['/editor/range.js'].branchData['1389'] = [];
   _$jscoverage['/editor/range.js'].branchData['1389'][1] = new BranchData();
   _$jscoverage['/editor/range.js'].branchData['1389'][2] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['1391'] = [];
-  _$jscoverage['/editor/range.js'].branchData['1391'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['1408'] = [];
-  _$jscoverage['/editor/range.js'].branchData['1408'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['1426'] = [];
-  _$jscoverage['/editor/range.js'].branchData['1426'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['1428'] = [];
-  _$jscoverage['/editor/range.js'].branchData['1428'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['1445'] = [];
-  _$jscoverage['/editor/range.js'].branchData['1445'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['1461'] = [];
-  _$jscoverage['/editor/range.js'].branchData['1461'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['1463'] = [];
-  _$jscoverage['/editor/range.js'].branchData['1463'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['1470'] = [];
-  _$jscoverage['/editor/range.js'].branchData['1470'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['1389'][3] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['1394'] = [];
+  _$jscoverage['/editor/range.js'].branchData['1394'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['1412'] = [];
+  _$jscoverage['/editor/range.js'].branchData['1412'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['1412'][2] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['1414'] = [];
+  _$jscoverage['/editor/range.js'].branchData['1414'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['1431'] = [];
+  _$jscoverage['/editor/range.js'].branchData['1431'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['1449'] = [];
+  _$jscoverage['/editor/range.js'].branchData['1449'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['1451'] = [];
+  _$jscoverage['/editor/range.js'].branchData['1451'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['1468'] = [];
+  _$jscoverage['/editor/range.js'].branchData['1468'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['1484'] = [];
+  _$jscoverage['/editor/range.js'].branchData['1484'][1] = new BranchData();
   _$jscoverage['/editor/range.js'].branchData['1486'] = [];
   _$jscoverage['/editor/range.js'].branchData['1486'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['1488'] = [];
-  _$jscoverage['/editor/range.js'].branchData['1488'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['1490'] = [];
-  _$jscoverage['/editor/range.js'].branchData['1490'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['1506'] = [];
-  _$jscoverage['/editor/range.js'].branchData['1506'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['1510'] = [];
-  _$jscoverage['/editor/range.js'].branchData['1510'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['1512'] = [];
-  _$jscoverage['/editor/range.js'].branchData['1512'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['1516'] = [];
-  _$jscoverage['/editor/range.js'].branchData['1516'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['1530'] = [];
-  _$jscoverage['/editor/range.js'].branchData['1530'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['1552'] = [];
-  _$jscoverage['/editor/range.js'].branchData['1552'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['1493'] = [];
+  _$jscoverage['/editor/range.js'].branchData['1493'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['1509'] = [];
+  _$jscoverage['/editor/range.js'].branchData['1509'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['1511'] = [];
+  _$jscoverage['/editor/range.js'].branchData['1511'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['1513'] = [];
+  _$jscoverage['/editor/range.js'].branchData['1513'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['1529'] = [];
+  _$jscoverage['/editor/range.js'].branchData['1529'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['1533'] = [];
+  _$jscoverage['/editor/range.js'].branchData['1533'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['1535'] = [];
+  _$jscoverage['/editor/range.js'].branchData['1535'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['1539'] = [];
+  _$jscoverage['/editor/range.js'].branchData['1539'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['1554'] = [];
+  _$jscoverage['/editor/range.js'].branchData['1554'][1] = new BranchData();
   _$jscoverage['/editor/range.js'].branchData['1576'] = [];
   _$jscoverage['/editor/range.js'].branchData['1576'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['1581'] = [];
-  _$jscoverage['/editor/range.js'].branchData['1581'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['1582'] = [];
-  _$jscoverage['/editor/range.js'].branchData['1582'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['1587'] = [];
-  _$jscoverage['/editor/range.js'].branchData['1587'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['1593'] = [];
-  _$jscoverage['/editor/range.js'].branchData['1593'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['1594'] = [];
-  _$jscoverage['/editor/range.js'].branchData['1594'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['1599'] = [];
-  _$jscoverage['/editor/range.js'].branchData['1599'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['1599'][2] = new BranchData();
   _$jscoverage['/editor/range.js'].branchData['1600'] = [];
   _$jscoverage['/editor/range.js'].branchData['1600'][1] = new BranchData();
   _$jscoverage['/editor/range.js'].branchData['1605'] = [];
   _$jscoverage['/editor/range.js'].branchData['1605'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['1615'] = [];
-  _$jscoverage['/editor/range.js'].branchData['1615'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['1637'] = [];
-  _$jscoverage['/editor/range.js'].branchData['1637'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['1667'] = [];
-  _$jscoverage['/editor/range.js'].branchData['1667'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['1667'][2] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['1672'] = [];
-  _$jscoverage['/editor/range.js'].branchData['1672'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['1683'] = [];
-  _$jscoverage['/editor/range.js'].branchData['1683'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['1606'] = [];
+  _$jscoverage['/editor/range.js'].branchData['1606'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['1611'] = [];
+  _$jscoverage['/editor/range.js'].branchData['1611'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['1617'] = [];
+  _$jscoverage['/editor/range.js'].branchData['1617'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['1618'] = [];
+  _$jscoverage['/editor/range.js'].branchData['1618'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['1623'] = [];
+  _$jscoverage['/editor/range.js'].branchData['1623'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['1623'][2] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['1624'] = [];
+  _$jscoverage['/editor/range.js'].branchData['1624'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['1629'] = [];
+  _$jscoverage['/editor/range.js'].branchData['1629'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['1639'] = [];
+  _$jscoverage['/editor/range.js'].branchData['1639'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['1661'] = [];
+  _$jscoverage['/editor/range.js'].branchData['1661'][1] = new BranchData();
   _$jscoverage['/editor/range.js'].branchData['1692'] = [];
   _$jscoverage['/editor/range.js'].branchData['1692'][1] = new BranchData();
   _$jscoverage['/editor/range.js'].branchData['1692'][2] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['1712'] = [];
-  _$jscoverage['/editor/range.js'].branchData['1712'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['1729'] = [];
-  _$jscoverage['/editor/range.js'].branchData['1729'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['1731'] = [];
-  _$jscoverage['/editor/range.js'].branchData['1731'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['1731'][2] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['1735'] = [];
-  _$jscoverage['/editor/range.js'].branchData['1735'][1] = new BranchData();
-  _$jscoverage['/editor/range.js'].branchData['1745'] = [];
-  _$jscoverage['/editor/range.js'].branchData['1745'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['1697'] = [];
+  _$jscoverage['/editor/range.js'].branchData['1697'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['1708'] = [];
+  _$jscoverage['/editor/range.js'].branchData['1708'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['1717'] = [];
+  _$jscoverage['/editor/range.js'].branchData['1717'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['1717'][2] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['1737'] = [];
+  _$jscoverage['/editor/range.js'].branchData['1737'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['1754'] = [];
+  _$jscoverage['/editor/range.js'].branchData['1754'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['1756'] = [];
+  _$jscoverage['/editor/range.js'].branchData['1756'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['1756'][2] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['1760'] = [];
+  _$jscoverage['/editor/range.js'].branchData['1760'][1] = new BranchData();
+  _$jscoverage['/editor/range.js'].branchData['1770'] = [];
+  _$jscoverage['/editor/range.js'].branchData['1770'][1] = new BranchData();
 }
-_$jscoverage['/editor/range.js'].branchData['1745'][1].init(764, 4, 'last');
-function visit622_1745_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['1745'][1].ranCondition(result);
+_$jscoverage['/editor/range.js'].branchData['1770'][1].init(764, 4, 'last');
+function visit625_1770_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['1770'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['1735'][1].init(232, 50, 'self.checkStartOfBlock() && self.checkEndOfBlock()');
-function visit621_1735_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['1735'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['1760'][1].init(232, 50, 'self.checkStartOfBlock() && self.checkEndOfBlock()');
+function visit624_1760_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['1760'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['1731'][2].init(132, 32, 'tmpDtd && tmpDtd[elementName]');
-function visit620_1731_2(result) {
-  _$jscoverage['/editor/range.js'].branchData['1731'][2].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['1756'][2].init(132, 32, 'tmpDtd && tmpDtd[elementName]');
+function visit623_1756_2(result) {
+  _$jscoverage['/editor/range.js'].branchData['1756'][2].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['1731'][1].init(89, 77, '(tmpDtd = dtd[current.nodeName()]) && !(tmpDtd && tmpDtd[elementName])');
-function visit619_1731_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['1731'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['1756'][1].init(89, 77, '(tmpDtd = dtd[current.nodeName()]) && !(tmpDtd && tmpDtd[elementName])');
+function visit622_1756_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['1756'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['1729'][1].init(261, 7, 'isBlock');
-function visit618_1729_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['1729'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['1754'][1].init(255, 7, 'isBlock');
+function visit621_1754_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['1754'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['1712'][1].init(115, 42, 'domNode.nodeType == Dom.NodeType.TEXT_NODE');
-function visit617_1712_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['1712'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['1737'][1].init(115, 43, 'domNode.nodeType === Dom.NodeType.TEXT_NODE');
+function visit620_1737_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['1737'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['1692'][2].init(481, 43, 'el[0].nodeType == Dom.NodeType.ELEMENT_NODE');
-function visit616_1692_2(result) {
+}_$jscoverage['/editor/range.js'].branchData['1717'][2].init(482, 44, 'el[0].nodeType === Dom.NodeType.ELEMENT_NODE');
+function visit619_1717_2(result) {
+  _$jscoverage['/editor/range.js'].branchData['1717'][2].ranCondition(result);
+  return result;
+}_$jscoverage['/editor/range.js'].branchData['1717'][1].init(482, 66, 'el[0].nodeType === Dom.NodeType.ELEMENT_NODE && el._4eIsEditable()');
+function visit618_1717_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['1717'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/editor/range.js'].branchData['1708'][1].init(85, 41, 'el[0].nodeType === Dom.NodeType.TEXT_NODE');
+function visit617_1708_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['1708'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/editor/range.js'].branchData['1697'][1].init(278, 19, '!childOnly && !next');
+function visit616_1697_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['1697'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/editor/range.js'].branchData['1692'][2].init(48, 46, 'node[0].nodeType === Dom.NodeType.ELEMENT_NODE');
+function visit615_1692_2(result) {
   _$jscoverage['/editor/range.js'].branchData['1692'][2].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['1692'][1].init(481, 66, 'el[0].nodeType == Dom.NodeType.ELEMENT_NODE && el._4e_isEditable()');
-function visit615_1692_1(result) {
+}_$jscoverage['/editor/range.js'].branchData['1692'][1].init(48, 90, 'node[0].nodeType === Dom.NodeType.ELEMENT_NODE && node._4eIsEditable()');
+function visit614_1692_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1692'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['1683'][1].init(85, 40, 'el[0].nodeType == Dom.NodeType.TEXT_NODE');
-function visit614_1683_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['1683'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['1661'][1].init(46, 15, '!self.collapsed');
+function visit613_1661_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['1661'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['1672'][1].init(278, 19, '!childOnly && !next');
-function visit613_1672_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['1672'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['1639'][1].init(296, 57, '!UA.ie && !S.inArray(startBlock.nodeName(), [\'ul\', \'ol\'])');
+function visit612_1639_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['1639'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['1667'][2].init(48, 45, 'node[0].nodeType == Dom.NodeType.ELEMENT_NODE');
-function visit612_1667_2(result) {
-  _$jscoverage['/editor/range.js'].branchData['1667'][2].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['1629'][1].init(265, 14, 'isStartOfBlock');
+function visit611_1629_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['1629'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['1667'][1].init(48, 90, 'node[0].nodeType == Dom.NodeType.ELEMENT_NODE && node._4e_isEditable()');
-function visit611_1667_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['1667'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['1624'][1].init(21, 12, 'isEndOfBlock');
+function visit610_1624_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['1624'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['1637'][1].init(46, 15, '!self.collapsed');
-function visit610_1637_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['1637'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['1623'][2].init(1257, 29, 'startBlock[0] === endBlock[0]');
+function visit609_1623_2(result) {
+  _$jscoverage['/editor/range.js'].branchData['1623'][2].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['1615'][1].init(296, 60, '!UA[\'ie\'] && !S.inArray(startBlock.nodeName(), [\'ul\', \'ol\'])');
-function visit609_1615_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['1615'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['1623'][1].init(1243, 43, 'startBlock && startBlock[0] === endBlock[0]');
+function visit608_1623_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['1623'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['1605'][1].init(265, 14, 'isStartOfBlock');
-function visit608_1605_1(result) {
+}_$jscoverage['/editor/range.js'].branchData['1618'][1].init(91, 34, 'endBlock && self.checkEndOfBlock()');
+function visit607_1618_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['1618'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/editor/range.js'].branchData['1617'][1].init(1039, 38, 'startBlock && self.checkStartOfBlock()');
+function visit606_1617_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['1617'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/editor/range.js'].branchData['1611'][1].init(212, 9, '!endBlock');
+function visit605_1611_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['1611'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/editor/range.js'].branchData['1606'][1].init(21, 11, '!startBlock');
+function visit604_1606_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['1606'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/editor/range.js'].branchData['1605'][1].init(626, 17, 'blockTag !== \'br\'');
+function visit603_1605_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1605'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['1600'][1].init(21, 12, 'isEndOfBlock');
-function visit607_1600_1(result) {
+}_$jscoverage['/editor/range.js'].branchData['1600'][1].init(482, 38, '!startBlockLimit.equals(endBlockLimit)');
+function visit602_1600_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1600'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['1599'][2].init(1256, 28, 'startBlock[0] == endBlock[0]');
-function visit606_1599_2(result) {
-  _$jscoverage['/editor/range.js'].branchData['1599'][2].ranCondition(result);
-  return result;
-}_$jscoverage['/editor/range.js'].branchData['1599'][1].init(1242, 42, 'startBlock && startBlock[0] == endBlock[0]');
-function visit605_1599_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['1599'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/editor/range.js'].branchData['1594'][1].init(91, 34, 'endBlock && self.checkEndOfBlock()');
-function visit604_1594_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['1594'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/editor/range.js'].branchData['1593'][1].init(1038, 38, 'startBlock && self.checkStartOfBlock()');
-function visit603_1593_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['1593'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/editor/range.js'].branchData['1587'][1].init(212, 9, '!endBlock');
-function visit602_1587_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['1587'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/editor/range.js'].branchData['1582'][1].init(21, 11, '!startBlock');
-function visit601_1582_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['1582'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/editor/range.js'].branchData['1581'][1].init(626, 16, 'blockTag != \'br\'');
-function visit600_1581_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['1581'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/editor/range.js'].branchData['1576'][1].init(482, 38, '!startBlockLimit.equals(endBlockLimit)');
-function visit599_1576_1(result) {
+}_$jscoverage['/editor/range.js'].branchData['1576'][1].init(354, 6, '!UA.ie');
+function visit601_1576_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1576'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['1552'][1].init(355, 9, '!UA[\'ie\']');
-function visit598_1552_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['1552'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['1554'][1].init(2355, 55, 'startNode._4ePosition(endNode) & KEP.POSITION_FOLLOWING');
+function visit600_1554_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['1554'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['1530'][1].init(2330, 56, 'startNode._4e_position(endNode) & KEP.POSITION_FOLLOWING');
-function visit597_1530_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['1530'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['1539'][1].init(305, 16, 'childCount === 0');
+function visit599_1539_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['1539'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['1516'][1].init(305, 15, 'childCount == 0');
-function visit596_1516_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['1516'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['1535'][1].init(80, 22, 'childCount > endOffset');
+function visit598_1535_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['1535'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['1512'][1].init(80, 22, 'childCount > endOffset');
-function visit595_1512_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['1512'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['1533'][1].init(1364, 49, 'endNode[0].nodeType === Dom.NodeType.ELEMENT_NODE');
+function visit597_1533_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['1533'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['1510'][1].init(1364, 48, 'endNode[0].nodeType == Dom.NodeType.ELEMENT_NODE');
-function visit594_1510_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['1510'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['1529'][1].init(599, 42, 'startNode._4eNextSourceNode() || startNode');
+function visit596_1529_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['1529'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['1506'][1].init(599, 43, 'startNode._4e_nextSourceNode() || startNode');
-function visit593_1506_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['1506'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['1513'][1].init(211, 16, 'childCount === 0');
+function visit595_1513_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['1513'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['1490'][1].init(211, 15, 'childCount == 0');
-function visit592_1490_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['1490'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['1511'][1].init(82, 24, 'childCount > startOffset');
+function visit594_1511_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['1511'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['1488'][1].init(82, 24, 'childCount > startOffset');
-function visit591_1488_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['1488'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['1509'][1].init(261, 51, 'startNode[0].nodeType === Dom.NodeType.ELEMENT_NODE');
+function visit593_1509_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['1509'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['1486'][1].init(261, 50, 'startNode[0].nodeType == Dom.NodeType.ELEMENT_NODE');
-function visit590_1486_1(result) {
+}_$jscoverage['/editor/range.js'].branchData['1493'][1].init(7, 23, 'checkType === KER.START');
+function visit592_1493_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['1493'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/editor/range.js'].branchData['1486'][1].init(219, 23, 'checkType === KER.START');
+function visit591_1486_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1486'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['1470'][1].init(7, 22, 'checkType == KER.START');
-function visit589_1470_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['1470'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['1484'][1].init(12, 23, 'checkType === KER.START');
+function visit590_1484_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['1484'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['1463'][1].init(218, 22, 'checkType == KER.START');
-function visit588_1463_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['1463'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['1468'][1].init(1113, 29, 'path.block || path.blockLimit');
+function visit589_1468_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['1468'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['1461'][1].init(12, 22, 'checkType == KER.START');
-function visit587_1461_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['1461'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['1451'][1].init(109, 16, 'textAfter.length');
+function visit588_1451_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['1451'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['1445'][1].init(1112, 29, 'path.block || path.blockLimit');
-function visit586_1445_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['1445'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['1449'][1].init(265, 51, 'endContainer[0].nodeType === Dom.NodeType.TEXT_NODE');
+function visit587_1449_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['1449'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['1428'][1].init(109, 16, 'textAfter.length');
-function visit585_1428_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['1428'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['1431'][1].init(1171, 29, 'path.block || path.blockLimit');
+function visit586_1431_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['1431'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['1426'][1].init(265, 50, 'endContainer[0].nodeType == Dom.NodeType.TEXT_NODE');
-function visit584_1426_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['1426'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['1414'][1].init(117, 17, 'textBefore.length');
+function visit585_1414_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['1414'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['1408'][1].init(1170, 29, 'path.block || path.blockLimit');
-function visit583_1408_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['1408'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['1412'][2].init(309, 53, 'startContainer[0].nodeType === Dom.NodeType.TEXT_NODE');
+function visit584_1412_2(result) {
+  _$jscoverage['/editor/range.js'].branchData['1412'][2].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['1391'][1].init(117, 17, 'textBefore.length');
-function visit582_1391_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['1391'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['1412'][1].init(294, 68, 'startOffset && startContainer[0].nodeType === Dom.NodeType.TEXT_NODE');
+function visit583_1412_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['1412'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['1389'][2].init(309, 52, 'startContainer[0].nodeType == Dom.NodeType.TEXT_NODE');
-function visit581_1389_2(result) {
+}_$jscoverage['/editor/range.js'].branchData['1394'][1].init(4385, 6, 'tailBr');
+function visit582_1394_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['1394'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/editor/range.js'].branchData['1389'][3].init(129, 50, 'enlargeable && blockBoundary.contains(enlargeable)');
+function visit581_1389_3(result) {
+  _$jscoverage['/editor/range.js'].branchData['1389'][3].ranCondition(result);
+  return result;
+}_$jscoverage['/editor/range.js'].branchData['1389'][2].init(87, 38, '!enlargeable && self.checkEndOfBlock()');
+function visit580_1389_2(result) {
   _$jscoverage['/editor/range.js'].branchData['1389'][2].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['1389'][1].init(294, 67, 'startOffset && startContainer[0].nodeType == Dom.NodeType.TEXT_NODE');
-function visit580_1389_1(result) {
+}_$jscoverage['/editor/range.js'].branchData['1389'][1].init(87, 92, '!enlargeable && self.checkEndOfBlock() || enlargeable && blockBoundary.contains(enlargeable)');
+function visit579_1389_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1389'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['1371'][1].init(4449, 6, 'tailBr');
-function visit579_1371_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['1371'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['1383'][1].init(3695, 21, 'blockBoundary || body');
+function visit578_1383_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['1383'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['1366'][1].init(73, 50, 'enlargeable && blockBoundary.contains(enlargeable)');
-function visit578_1366_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['1366'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['1375'][1].init(3269, 39, 'unit === KER.ENLARGE_LIST_ITEM_CONTENTS');
+function visit577_1375_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['1375'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['1365'][2].init(-1, 38, '!enlargeable && self.checkEndOfBlock()');
-function visit577_1365_2(result) {
-  _$jscoverage['/editor/range.js'].branchData['1365'][2].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['1364'][3].init(587, 50, 'enlargeable && blockBoundary.contains(enlargeable)');
+function visit576_1364_3(result) {
+  _$jscoverage['/editor/range.js'].branchData['1364'][3].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['1365'][1].init(-1, 124, '!enlargeable && self.checkEndOfBlock() || enlargeable && blockBoundary.contains(enlargeable)');
-function visit576_1365_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['1365'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['1364'][2].init(543, 40, '!enlargeable && self.checkStartOfBlock()');
+function visit575_1364_2(result) {
+  _$jscoverage['/editor/range.js'].branchData['1364'][2].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['1359'][1].init(3727, 21, 'blockBoundary || body');
-function visit575_1359_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['1359'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['1364'][1].init(543, 94, '!enlargeable && self.checkStartOfBlock() || enlargeable && blockBoundary.contains(enlargeable)');
+function visit574_1364_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['1364'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['1351'][1].init(3302, 38, 'unit == KER.ENLARGE_LIST_ITEM_CONTENTS');
-function visit574_1351_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['1351'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['1356'][2].init(88, 33, 'blockBoundary.nodeName() !== \'br\'');
+function visit573_1356_2(result) {
+  _$jscoverage['/editor/range.js'].branchData['1356'][2].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['1340'][1].init(79, 50, 'enlargeable && blockBoundary.contains(enlargeable)');
-function visit573_1340_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['1340'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['1356'][1].init(-1, 552, 'blockBoundary.nodeName() !== \'br\' && (!enlargeable && self.checkStartOfBlock() || enlargeable && blockBoundary.contains(enlargeable))');
+function visit572_1356_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['1356'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['1339'][2].init(454, 40, '!enlargeable && self.checkStartOfBlock()');
-function visit572_1339_2(result) {
+}_$jscoverage['/editor/range.js'].branchData['1350'][1].init(1904, 21, 'blockBoundary || body');
+function visit571_1350_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['1350'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/editor/range.js'].branchData['1339'][2].init(114, 27, 'Dom.nodeName(node) === \'br\'');
+function visit570_1339_2(result) {
   _$jscoverage['/editor/range.js'].branchData['1339'][2].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['1339'][1].init(454, 130, '!enlargeable && self.checkStartOfBlock() || enlargeable && blockBoundary.contains(enlargeable)');
-function visit571_1339_1(result) {
+}_$jscoverage['/editor/range.js'].branchData['1339'][1].init(103, 38, '!retVal && Dom.nodeName(node) === \'br\'');
+function visit569_1339_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1339'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['1331'][2].init(88, 32, 'blockBoundary.nodeName() != \'br\'');
-function visit570_1331_2(result) {
-  _$jscoverage['/editor/range.js'].branchData['1331'][2].ranCondition(result);
-  return result;
-}_$jscoverage['/editor/range.js'].branchData['1331'][1].init(-1, 587, 'blockBoundary.nodeName() != \'br\' && (!enlargeable && self.checkStartOfBlock() || enlargeable && blockBoundary.contains(enlargeable))');
-function visit569_1331_1(result) {
+}_$jscoverage['/editor/range.js'].branchData['1331'][1].init(102, 7, '!retVal');
+function visit568_1331_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1331'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['1325'][1].init(1902, 21, 'blockBoundary || body');
-function visit568_1325_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['1325'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['1326'][1].init(55, 39, 'unit === KER.ENLARGE_LIST_ITEM_CONTENTS');
+function visit567_1326_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['1326'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['1314'][2].init(114, 26, 'Dom.nodeName(node) == \'br\'');
-function visit567_1314_2(result) {
-  _$jscoverage['/editor/range.js'].branchData['1314'][2].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['1304'][1].init(418, 18, 'stop[0] && stop[1]');
+function visit566_1304_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['1304'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['1314'][1].init(103, 37, '!retVal && Dom.nodeName(node) == \'br\'');
-function visit566_1314_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['1314'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['1294'][1].init(55, 14, 'self.collapsed');
+function visit565_1294_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['1294'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['1306'][1].init(102, 7, '!retVal');
-function visit565_1306_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['1306'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['1275'][1].init(961, 47, 'commonReached || enlarge.equals(commonAncestor)');
+function visit564_1275_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['1275'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['1301'][1].init(55, 38, 'unit == KER.ENLARGE_LIST_ITEM_CONTENTS');
-function visit564_1301_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['1301'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['1271'][1].init(849, 29, 'enlarge.nodeName() === \'body\'');
+function visit563_1271_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['1271'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['1279'][1].init(418, 18, 'stop[0] && stop[1]');
-function visit563_1279_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['1279'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['1258'][1].init(67, 14, '!commonReached');
+function visit562_1258_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['1258'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['1269'][1].init(55, 14, 'self.collapsed');
-function visit562_1269_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['1269'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['1256'][1].init(385, 7, 'sibling');
+function visit561_1256_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['1256'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['1250'][1].init(960, 47, 'commonReached || enlarge.equals(commonAncestor)');
-function visit561_1250_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['1250'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['1248'][1].init(29, 44, 'isWhitespace(sibling) || isBookmark(sibling)');
+function visit560_1248_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['1248'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['1246'][1].init(849, 28, 'enlarge.nodeName() == "body"');
-function visit560_1246_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['1246'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['1240'][1].init(64, 57, 'container[0].childNodes[offset + (left ? -1 : 1)] || null');
+function visit559_1240_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['1240'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['1233'][1].init(67, 14, '!commonReached');
-function visit559_1233_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['1233'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['1229'][1].init(29, 38, 'offset < container[0].nodeValue.length');
+function visit558_1229_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['1229'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['1231'][1].init(385, 7, 'sibling');
-function visit558_1231_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['1231'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['1225'][1].init(68, 6, 'offset');
+function visit557_1225_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['1225'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['1223'][1].init(29, 44, 'isWhitespace(sibling) || isBookmark(sibling)');
-function visit557_1223_1(result) {
+}_$jscoverage['/editor/range.js'].branchData['1223'][1].init(25, 4, 'left');
+function visit556_1223_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1223'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['1215'][1].init(64, 57, 'container[0].childNodes[offset + (left ? -1 : 1)] || null');
-function visit556_1215_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['1215'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['1222'][1].init(386, 48, 'container[0].nodeType === Dom.NodeType.TEXT_NODE');
+function visit555_1222_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['1222'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['1204'][1].init(29, 38, 'offset < container[0].nodeValue.length');
-function visit555_1204_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['1204'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['1200'][2].init(642, 47, 'ancestor[0].nodeType === Dom.NodeType.TEXT_NODE');
+function visit554_1200_2(result) {
+  _$jscoverage['/editor/range.js'].branchData['1200'][2].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['1200'][1].init(68, 6, 'offset');
-function visit554_1200_1(result) {
+}_$jscoverage['/editor/range.js'].branchData['1200'][1].init(624, 65, 'ignoreTextNode && ancestor[0].nodeType === Dom.NodeType.TEXT_NODE');
+function visit553_1200_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1200'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['1198'][1].init(25, 4, 'left');
-function visit553_1198_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['1198'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['1191'][1].init(70, 39, 'self.startOffset === self.endOffset - 1');
+function visit552_1191_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['1191'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['1197'][1].init(386, 47, 'container[0].nodeType == Dom.NodeType.TEXT_NODE');
-function visit552_1197_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['1197'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['1190'][2].init(58, 47, 'start[0].nodeType === Dom.NodeType.ELEMENT_NODE');
+function visit551_1190_2(result) {
+  _$jscoverage['/editor/range.js'].branchData['1190'][2].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['1174'][2].init(25, 46, 'ancestor[0].nodeType == Dom.NodeType.TEXT_NODE');
-function visit551_1174_2(result) {
-  _$jscoverage['/editor/range.js'].branchData['1174'][2].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['1190'][1].init(34, 110, 'start[0].nodeType === Dom.NodeType.ELEMENT_NODE && self.startOffset === self.endOffset - 1');
+function visit550_1190_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['1190'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['1174'][1].init(-1, 64, 'ignoreTextNode && ancestor[0].nodeType == Dom.NodeType.TEXT_NODE');
-function visit550_1174_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['1174'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['1189'][1].init(21, 145, 'includeSelf && start[0].nodeType === Dom.NodeType.ELEMENT_NODE && self.startOffset === self.endOffset - 1');
+function visit549_1189_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['1189'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['1165'][1].init(69, 38, 'self.startOffset == self.endOffset - 1');
-function visit549_1165_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['1165'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['1188'][1].init(159, 19, 'start[0] === end[0]');
+function visit548_1188_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['1188'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['1164'][2].init(58, 46, 'start[0].nodeType == Dom.NodeType.ELEMENT_NODE');
-function visit548_1164_2(result) {
-  _$jscoverage['/editor/range.js'].branchData['1164'][2].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['1168'][1].init(767, 21, 'endNode && endNode[0]');
+function visit547_1168_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['1168'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['1164'][1].init(34, 108, 'start[0].nodeType == Dom.NodeType.ELEMENT_NODE && self.startOffset == self.endOffset - 1');
-function visit547_1164_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['1164'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['1147'][1].init(554, 12, 'endContainer');
+function visit546_1147_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['1147'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['1163'][1].init(21, 143, 'includeSelf && start[0].nodeType == Dom.NodeType.ELEMENT_NODE && self.startOffset == self.endOffset - 1');
-function visit546_1163_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['1163'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['1140'][1].init(169, 70, 'bookmark.end && doc._4eGetByAddress(bookmark.end, bookmark.normalized)');
+function visit545_1140_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['1140'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['1162'][1].init(159, 18, 'start[0] == end[0]');
-function visit545_1162_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['1162'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['1136'][1].init(86, 12, 'bookmark.is2');
+function visit544_1136_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['1136'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['1142'][1].init(768, 21, 'endNode && endNode[0]');
-function visit544_1142_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['1142'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['1122'][1].init(423, 42, 'startContainer[0] === self.endContainer[0]');
+function visit543_1122_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['1122'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['1121'][1].init(556, 12, 'endContainer');
-function visit543_1121_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['1121'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['1118'][1].init(116, 49, 'startContainer[0].childNodes[startOffset] || null');
+function visit542_1118_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['1118'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['1114'][1].init(170, 71, 'bookmark.end && doc._4e_getByAddress(bookmark.end, bookmark.normalized)');
-function visit542_1114_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['1114'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/editor/range.js'].branchData['1110'][1].init(86, 12, 'bookmark.is2');
-function visit541_1110_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['1110'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/editor/range.js'].branchData['1096'][1].init(423, 41, 'startContainer[0] == self.endContainer[0]');
-function visit540_1096_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['1096'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/editor/range.js'].branchData['1092'][1].init(116, 49, 'startContainer[0].childNodes[startOffset] || null');
-function visit539_1092_1(result) {
+}_$jscoverage['/editor/range.js'].branchData['1092'][1].init(405, 45, 'endOffset >= endContainer[0].nodeValue.length');
+function visit541_1092_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1092'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['1066'][1].init(406, 45, 'endOffset >= endContainer[0].nodeValue.length');
-function visit538_1066_1(result) {
+}_$jscoverage['/editor/range.js'].branchData['1086'][1].init(128, 10, '!endOffset');
+function visit540_1086_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['1086'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/editor/range.js'].branchData['1083'][2].init(2070, 51, 'endContainer[0].nodeType === Dom.NodeType.TEXT_NODE');
+function visit539_1083_2(result) {
+  _$jscoverage['/editor/range.js'].branchData['1083'][2].ranCondition(result);
+  return result;
+}_$jscoverage['/editor/range.js'].branchData['1083'][1].init(46, 70, 'endContainer[0] && endContainer[0].nodeType === Dom.NodeType.TEXT_NODE');
+function visit538_1083_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['1083'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/editor/range.js'].branchData['1082'][2].init(2005, 22, 'ignoreEnd || collapsed');
+function visit537_1082_2(result) {
+  _$jscoverage['/editor/range.js'].branchData['1082'][2].ranCondition(result);
+  return result;
+}_$jscoverage['/editor/range.js'].branchData['1082'][1].init(2002, 117, '!(ignoreEnd || collapsed) && endContainer[0] && endContainer[0].nodeType === Dom.NodeType.TEXT_NODE');
+function visit536_1082_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['1082'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/editor/range.js'].branchData['1073'][1].init(1441, 9, 'collapsed');
+function visit535_1073_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['1073'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/editor/range.js'].branchData['1066'][1].init(472, 45, 'Dom.equals(startContainer, self.endContainer)');
+function visit534_1066_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1066'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['1060'][1].init(128, 10, '!endOffset');
-function visit537_1060_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['1060'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['1064'][1].init(304, 50, 'Dom.equals(self.startContainer, self.endContainer)');
+function visit533_1064_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['1064'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['1057'][2].init(2073, 50, 'endContainer[0].nodeType == Dom.NodeType.TEXT_NODE');
-function visit536_1057_2(result) {
-  _$jscoverage['/editor/range.js'].branchData['1057'][2].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['1051'][1].init(415, 49, 'startOffset >= startContainer[0].nodeValue.length');
+function visit532_1051_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['1051'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['1057'][1].init(46, 69, 'endContainer[0] && endContainer[0].nodeType == Dom.NodeType.TEXT_NODE');
-function visit535_1057_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['1057'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['1045'][1].init(128, 12, '!startOffset');
+function visit531_1045_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['1045'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['1056'][2].init(2008, 22, 'ignoreEnd || collapsed');
-function visit534_1056_2(result) {
-  _$jscoverage['/editor/range.js'].branchData['1056'][2].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['1042'][1].init(36, 53, 'startContainer[0].nodeType === Dom.NodeType.TEXT_NODE');
+function visit530_1042_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['1042'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['1056'][1].init(2005, 116, '!(ignoreEnd || collapsed) && endContainer[0] && endContainer[0].nodeType == Dom.NodeType.TEXT_NODE');
-function visit533_1056_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['1056'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['1041'][1].init(46, 90, 'startContainer[0] && startContainer[0].nodeType === Dom.NodeType.TEXT_NODE');
+function visit529_1041_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['1041'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['1047'][1].init(1445, 9, 'collapsed');
-function visit532_1047_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['1047'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['1040'][2].init(195, 25, '!ignoreStart || collapsed');
+function visit528_1040_2(result) {
+  _$jscoverage['/editor/range.js'].branchData['1040'][2].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['1040'][1].init(474, 45, 'Dom.equals(startContainer, self.endContainer)');
-function visit531_1040_1(result) {
+}_$jscoverage['/editor/range.js'].branchData['1040'][1].init(195, 137, '(!ignoreStart || collapsed) && startContainer[0] && startContainer[0].nodeType === Dom.NodeType.TEXT_NODE');
+function visit527_1040_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1040'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['1038'][1].init(306, 50, 'Dom.equals(self.startContainer, self.endContainer)');
-function visit530_1038_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['1038'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['1003'][1].init(1218, 7, 'endNode');
+function visit526_1003_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['1003'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['1025'][1].init(416, 49, 'startOffset >= startContainer[0].nodeValue.length');
-function visit529_1025_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['1025'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['989'][1].init(107, 12, 'serializable');
+function visit525_989_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['989'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['1019'][1].init(128, 12, '!startOffset');
-function visit528_1019_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['1019'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['985'][1].init(711, 10, '!collapsed');
+function visit524_985_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['985'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['1016'][1].init(36, 52, 'startContainer[0].nodeType == Dom.NodeType.TEXT_NODE');
-function visit527_1016_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['1016'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['979'][1].init(507, 12, 'serializable');
+function visit523_979_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['979'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['1015'][1].init(46, 89, 'startContainer[0] && startContainer[0].nodeType == Dom.NodeType.TEXT_NODE');
-function visit526_1015_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['1015'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['944'][1].init(71, 47, 'previous[0].nodeType === Dom.NodeType.TEXT_NODE');
+function visit522_944_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['944'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['1014'][2].init(195, 25, '!ignoreStart || collapsed');
-function visit525_1014_2(result) {
-  _$jscoverage['/editor/range.js'].branchData['1014'][2].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['943'][1].init(80, 119, '(previous = endContainer.prev(undefined, 1)) && previous[0].nodeType === Dom.NodeType.TEXT_NODE');
+function visit521_943_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['943'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['1014'][1].init(195, 136, '(!ignoreStart || collapsed) && startContainer[0] && startContainer[0].nodeType == Dom.NodeType.TEXT_NODE');
-function visit524_1014_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['1014'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['942'][2].init(844, 51, 'endContainer[0].nodeType === Dom.NodeType.TEXT_NODE');
+function visit520_942_2(result) {
+  _$jscoverage['/editor/range.js'].branchData['942'][2].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['977'][1].init(1218, 7, 'endNode');
-function visit523_977_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['977'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['942'][1].init(844, 200, 'endContainer[0].nodeType === Dom.NodeType.TEXT_NODE && (previous = endContainer.prev(undefined, 1)) && previous[0].nodeType === Dom.NodeType.TEXT_NODE');
+function visit519_942_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['942'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['963'][1].init(107, 12, 'serializable');
-function visit522_963_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['963'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['935'][1].init(44, 60, 'child[0].previousSibling.nodeType === Dom.NodeType.TEXT_NODE');
+function visit518_935_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['935'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['959'][1].init(711, 10, '!collapsed');
-function visit521_959_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['959'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['934'][4].init(326, 13, 'endOffset > 0');
+function visit517_934_4(result) {
+  _$jscoverage['/editor/range.js'].branchData['934'][4].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['953'][1].init(507, 12, 'serializable');
-function visit520_953_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['953'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['934'][3].init(47, 105, 'endOffset > 0 && child[0].previousSibling.nodeType === Dom.NodeType.TEXT_NODE');
+function visit516_934_3(result) {
+  _$jscoverage['/editor/range.js'].branchData['934'][3].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['918'][1].init(71, 46, 'previous[0].nodeType == Dom.NodeType.TEXT_NODE');
-function visit519_918_1(result) {
+}_$jscoverage['/editor/range.js'].branchData['934'][2].init(277, 44, 'child[0].nodeType === Dom.NodeType.TEXT_NODE');
+function visit515_934_2(result) {
+  _$jscoverage['/editor/range.js'].branchData['934'][2].ranCondition(result);
+  return result;
+}_$jscoverage['/editor/range.js'].branchData['934'][1].init(39, 153, 'child[0].nodeType === Dom.NodeType.TEXT_NODE && endOffset > 0 && child[0].previousSibling.nodeType === Dom.NodeType.TEXT_NODE');
+function visit514_934_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['934'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/editor/range.js'].branchData['933'][2].init(234, 193, 'child[0] && child[0].nodeType === Dom.NodeType.TEXT_NODE && endOffset > 0 && child[0].previousSibling.nodeType === Dom.NodeType.TEXT_NODE');
+function visit513_933_2(result) {
+  _$jscoverage['/editor/range.js'].branchData['933'][2].ranCondition(result);
+  return result;
+}_$jscoverage['/editor/range.js'].branchData['933'][1].init(225, 202, 'child && child[0] && child[0].nodeType === Dom.NodeType.TEXT_NODE && endOffset > 0 && child[0].previousSibling.nodeType === Dom.NodeType.TEXT_NODE');
+function visit512_933_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['933'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/editor/range.js'].branchData['928'][1].init(145, 54, 'endContainer[0].nodeType === Dom.NodeType.ELEMENT_NODE');
+function visit511_928_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['928'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/editor/range.js'].branchData['925'][1].init(1185, 15, '!self.collapsed');
+function visit510_925_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['925'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/editor/range.js'].branchData['919'][1].init(69, 47, 'previous[0].nodeType === Dom.NodeType.TEXT_NODE');
+function visit509_919_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['919'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/editor/range.js'].branchData['918'][1].init(78, 117, '(previous = startContainer.prev(undefined, 1)) && previous[0].nodeType === Dom.NodeType.TEXT_NODE');
+function visit508_918_1(result) {
   _$jscoverage['/editor/range.js'].branchData['918'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['917'][1].init(79, 118, '(previous = endContainer.prev(undefined, 1)) && previous[0].nodeType == Dom.NodeType.TEXT_NODE');
-function visit518_917_1(result) {
+}_$jscoverage['/editor/range.js'].branchData['917'][2].init(775, 53, 'startContainer[0].nodeType === Dom.NodeType.TEXT_NODE');
+function visit507_917_2(result) {
+  _$jscoverage['/editor/range.js'].branchData['917'][2].ranCondition(result);
+  return result;
+}_$jscoverage['/editor/range.js'].branchData['917'][1].init(775, 196, 'startContainer[0].nodeType === Dom.NodeType.TEXT_NODE && (previous = startContainer.prev(undefined, 1)) && previous[0].nodeType === Dom.NodeType.TEXT_NODE');
+function visit506_917_1(result) {
   _$jscoverage['/editor/range.js'].branchData['917'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['916'][2].init(841, 50, 'endContainer[0].nodeType == Dom.NodeType.TEXT_NODE');
-function visit517_916_2(result) {
-  _$jscoverage['/editor/range.js'].branchData['916'][2].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['909'][3].init(18, 60, 'child[0].previousSibling.nodeType === Dom.NodeType.TEXT_NODE');
+function visit505_909_3(result) {
+  _$jscoverage['/editor/range.js'].branchData['909'][3].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['916'][1].init(841, 198, 'endContainer[0].nodeType == Dom.NodeType.TEXT_NODE && (previous = endContainer.prev(undefined, 1)) && previous[0].nodeType == Dom.NodeType.TEXT_NODE');
-function visit516_916_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['916'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['909'][2].init(310, 15, 'startOffset > 0');
+function visit504_909_2(result) {
+  _$jscoverage['/editor/range.js'].branchData['909'][2].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['909'][1].init(44, 59, 'child[0].previousSibling.nodeType == Dom.NodeType.TEXT_NODE');
-function visit515_909_1(result) {
+}_$jscoverage['/editor/range.js'].branchData['909'][1].init(71, 79, 'startOffset > 0 && child[0].previousSibling.nodeType === Dom.NodeType.TEXT_NODE');
+function visit503_909_1(result) {
   _$jscoverage['/editor/range.js'].branchData['909'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['908'][4].init(325, 13, 'endOffset > 0');
-function visit514_908_4(result) {
+}_$jscoverage['/editor/range.js'].branchData['908'][4].init(234, 44, 'child[0].nodeType === Dom.NodeType.TEXT_NODE');
+function visit502_908_4(result) {
   _$jscoverage['/editor/range.js'].branchData['908'][4].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['908'][3].init(46, 104, 'endOffset > 0 && child[0].previousSibling.nodeType == Dom.NodeType.TEXT_NODE');
-function visit513_908_3(result) {
+}_$jscoverage['/editor/range.js'].branchData['908'][3].init(234, 151, 'child[0].nodeType === Dom.NodeType.TEXT_NODE && startOffset > 0 && child[0].previousSibling.nodeType === Dom.NodeType.TEXT_NODE');
+function visit501_908_3(result) {
   _$jscoverage['/editor/range.js'].branchData['908'][3].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['908'][2].init(277, 43, 'child[0].nodeType == Dom.NodeType.TEXT_NODE');
-function visit512_908_2(result) {
+}_$jscoverage['/editor/range.js'].branchData['908'][2].init(222, 163, 'child[0] && child[0].nodeType === Dom.NodeType.TEXT_NODE && startOffset > 0 && child[0].previousSibling.nodeType === Dom.NodeType.TEXT_NODE');
+function visit500_908_2(result) {
   _$jscoverage['/editor/range.js'].branchData['908'][2].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['908'][1].init(39, 151, 'child[0].nodeType == Dom.NodeType.TEXT_NODE && endOffset > 0 && child[0].previousSibling.nodeType == Dom.NodeType.TEXT_NODE');
-function visit511_908_1(result) {
+}_$jscoverage['/editor/range.js'].branchData['908'][1].init(213, 172, 'child && child[0] && child[0].nodeType === Dom.NodeType.TEXT_NODE && startOffset > 0 && child[0].previousSibling.nodeType === Dom.NodeType.TEXT_NODE');
+function visit499_908_1(result) {
   _$jscoverage['/editor/range.js'].branchData['908'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['907'][2].init(234, 191, 'child[0] && child[0].nodeType == Dom.NodeType.TEXT_NODE && endOffset > 0 && child[0].previousSibling.nodeType == Dom.NodeType.TEXT_NODE');
-function visit510_907_2(result) {
-  _$jscoverage['/editor/range.js'].branchData['907'][2].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['903'][1].init(133, 56, 'startContainer[0].nodeType === Dom.NodeType.ELEMENT_NODE');
+function visit498_903_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['903'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['907'][1].init(225, 200, 'child && child[0] && child[0].nodeType == Dom.NodeType.TEXT_NODE && endOffset > 0 && child[0].previousSibling.nodeType == Dom.NodeType.TEXT_NODE');
-function visit509_907_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['907'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['900'][1].init(621, 10, 'normalized');
+function visit497_900_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['900'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['902'][1].init(145, 53, 'endContainer[0].nodeType == Dom.NodeType.ELEMENT_NODE');
-function visit508_902_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['902'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/editor/range.js'].branchData['899'][1].init(1180, 15, '!self.collapsed');
-function visit507_899_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['899'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/editor/range.js'].branchData['893'][1].init(69, 46, 'previous[0].nodeType == Dom.NodeType.TEXT_NODE');
-function visit506_893_1(result) {
+}_$jscoverage['/editor/range.js'].branchData['893'][1].init(453, 32, '!startContainer || !endContainer');
+function visit496_893_1(result) {
   _$jscoverage['/editor/range.js'].branchData['893'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['892'][1].init(77, 116, '(previous = startContainer.prev(undefined, 1)) && previous[0].nodeType == Dom.NodeType.TEXT_NODE');
-function visit505_892_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['892'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['873'][1].init(3638, 20, 'moveStart || moveEnd');
+function visit495_873_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['873'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['891'][2].init(772, 52, 'startContainer[0].nodeType == Dom.NodeType.TEXT_NODE');
-function visit504_891_2(result) {
-  _$jscoverage['/editor/range.js'].branchData['891'][2].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['868'][1].init(164, 7, 'textEnd');
+function visit494_868_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['868'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['891'][1].init(772, 194, 'startContainer[0].nodeType == Dom.NodeType.TEXT_NODE && (previous = startContainer.prev(undefined, 1)) && previous[0].nodeType == Dom.NodeType.TEXT_NODE');
-function visit503_891_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['891'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/editor/range.js'].branchData['883'][3].init(18, 59, 'child[0].previousSibling.nodeType == Dom.NodeType.TEXT_NODE');
-function visit502_883_3(result) {
-  _$jscoverage['/editor/range.js'].branchData['883'][3].ranCondition(result);
-  return result;
-}_$jscoverage['/editor/range.js'].branchData['883'][2].init(309, 15, 'startOffset > 0');
-function visit501_883_2(result) {
-  _$jscoverage['/editor/range.js'].branchData['883'][2].ranCondition(result);
-  return result;
-}_$jscoverage['/editor/range.js'].branchData['883'][1].init(70, 78, 'startOffset > 0 && child[0].previousSibling.nodeType == Dom.NodeType.TEXT_NODE');
-function visit500_883_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['883'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/editor/range.js'].branchData['882'][4].init(234, 43, 'child[0].nodeType == Dom.NodeType.TEXT_NODE');
-function visit499_882_4(result) {
-  _$jscoverage['/editor/range.js'].branchData['882'][4].ranCondition(result);
-  return result;
-}_$jscoverage['/editor/range.js'].branchData['882'][3].init(234, 149, 'child[0].nodeType == Dom.NodeType.TEXT_NODE && startOffset > 0 && child[0].previousSibling.nodeType == Dom.NodeType.TEXT_NODE');
-function visit498_882_3(result) {
-  _$jscoverage['/editor/range.js'].branchData['882'][3].ranCondition(result);
-  return result;
-}_$jscoverage['/editor/range.js'].branchData['882'][2].init(222, 161, 'child[0] && child[0].nodeType == Dom.NodeType.TEXT_NODE && startOffset > 0 && child[0].previousSibling.nodeType == Dom.NodeType.TEXT_NODE');
-function visit497_882_2(result) {
-  _$jscoverage['/editor/range.js'].branchData['882'][2].ranCondition(result);
-  return result;
-}_$jscoverage['/editor/range.js'].branchData['882'][1].init(213, 170, 'child && child[0] && child[0].nodeType == Dom.NodeType.TEXT_NODE && startOffset > 0 && child[0].previousSibling.nodeType == Dom.NodeType.TEXT_NODE');
-function visit496_882_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['882'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/editor/range.js'].branchData['877'][1].init(133, 55, 'startContainer[0].nodeType == Dom.NodeType.ELEMENT_NODE');
-function visit495_877_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['877'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/editor/range.js'].branchData['874'][1].init(621, 10, 'normalized');
-function visit494_874_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['874'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/editor/range.js'].branchData['867'][1].init(453, 32, '!startContainer || !endContainer');
+}_$jscoverage['/editor/range.js'].branchData['867'][1].init(78, 27, 'mode === KER.SHRINK_ELEMENT');
 function visit493_867_1(result) {
   _$jscoverage['/editor/range.js'].branchData['867'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['847'][1].init(3628, 20, 'moveStart || moveEnd');
-function visit492_847_1(result) {
+}_$jscoverage['/editor/range.js'].branchData['865'][1].init(3274, 7, 'moveEnd');
+function visit492_865_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['865'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/editor/range.js'].branchData['860'][1].init(125, 9, 'textStart');
+function visit491_860_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['860'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/editor/range.js'].branchData['859'][1].init(44, 27, 'mode === KER.SHRINK_ELEMENT');
+function visit490_859_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['859'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/editor/range.js'].branchData['858'][1].init(2940, 9, 'moveStart');
+function visit489_858_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['858'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/editor/range.js'].branchData['850'][2].init(556, 43, 'node.nodeType === Dom.NodeType.ELEMENT_NODE');
+function visit488_850_2(result) {
+  _$jscoverage['/editor/range.js'].branchData['850'][2].ranCondition(result);
+  return result;
+}_$jscoverage['/editor/range.js'].branchData['850'][1].init(542, 57, '!movingOut && node.nodeType === Dom.NodeType.ELEMENT_NODE');
+function visit487_850_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['850'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/editor/range.js'].branchData['847'][2].init(419, 23, 'node === currentElement');
+function visit486_847_2(result) {
+  _$jscoverage['/editor/range.js'].branchData['847'][2].ranCondition(result);
+  return result;
+}_$jscoverage['/editor/range.js'].branchData['847'][1].init(406, 36, 'movingOut && node === currentElement');
+function visit485_847_1(result) {
   _$jscoverage['/editor/range.js'].branchData['847'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['842'][1].init(163, 7, 'textEnd');
-function visit491_842_1(result) {
+}_$jscoverage['/editor/range.js'].branchData['843'][1].init(58, 40, 'node.nodeType === Dom.NodeType.TEXT_NODE');
+function visit484_843_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['843'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/editor/range.js'].branchData['842'][2].init(127, 27, 'mode === KER.SHRINK_ELEMENT');
+function visit483_842_2(result) {
+  _$jscoverage['/editor/range.js'].branchData['842'][2].ranCondition(result);
+  return result;
+}_$jscoverage['/editor/range.js'].branchData['842'][1].init(127, 99, 'mode === KER.SHRINK_ELEMENT && node.nodeType === Dom.NodeType.TEXT_NODE');
+function visit482_842_1(result) {
   _$jscoverage['/editor/range.js'].branchData['842'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['841'][1].init(78, 26, 'mode == KER.SHRINK_ELEMENT');
-function visit490_841_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['841'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['836'][2].init(52, 27, 'mode === KER.SHRINK_ELEMENT');
+function visit481_836_2(result) {
+  _$jscoverage['/editor/range.js'].branchData['836'][2].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['839'][1].init(3265, 7, 'moveEnd');
-function visit489_839_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['839'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['836'][1].init(32, 130, 'node.nodeType === (mode === KER.SHRINK_ELEMENT ? Dom.NodeType.ELEMENT_NODE : Dom.NodeType.TEXT_NODE)');
+function visit480_836_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['836'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['834'][1].init(124, 9, 'textStart');
-function visit488_834_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['834'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['831'][1].init(1773, 20, 'moveStart || moveEnd');
+function visit479_831_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['831'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['833'][1].init(44, 26, 'mode == KER.SHRINK_ELEMENT');
-function visit487_833_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['833'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['823'][1].init(135, 45, 'endOffset >= endContainer[0].nodeValue.length');
+function visit478_823_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['823'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['832'][1].init(2932, 9, 'moveStart');
-function visit486_832_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['832'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/editor/range.js'].branchData['824'][2].init(553, 42, 'node.nodeType == Dom.NodeType.ELEMENT_NODE');
-function visit485_824_2(result) {
-  _$jscoverage['/editor/range.js'].branchData['824'][2].ranCondition(result);
-  return result;
-}_$jscoverage['/editor/range.js'].branchData['824'][1].init(539, 56, '!movingOut && node.nodeType == Dom.NodeType.ELEMENT_NODE');
-function visit484_824_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['824'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/editor/range.js'].branchData['821'][2].init(417, 22, 'node == currentElement');
-function visit483_821_2(result) {
-  _$jscoverage['/editor/range.js'].branchData['821'][2].ranCondition(result);
-  return result;
-}_$jscoverage['/editor/range.js'].branchData['821'][1].init(404, 35, 'movingOut && node == currentElement');
-function visit482_821_1(result) {
+}_$jscoverage['/editor/range.js'].branchData['821'][1].init(25, 10, '!endOffset');
+function visit477_821_1(result) {
   _$jscoverage['/editor/range.js'].branchData['821'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['817'][1].init(57, 39, 'node.nodeType == Dom.NodeType.TEXT_NODE');
-function visit481_817_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['817'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['820'][1].init(35, 51, 'endContainer[0].nodeType === Dom.NodeType.TEXT_NODE');
+function visit476_820_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['820'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['816'][2].init(127, 26, 'mode == KER.SHRINK_ELEMENT');
-function visit480_816_2(result) {
-  _$jscoverage['/editor/range.js'].branchData['816'][2].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['819'][1].init(1243, 87, 'endContainer && endContainer[0].nodeType === Dom.NodeType.TEXT_NODE');
+function visit475_819_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['819'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['816'][1].init(127, 97, 'mode == KER.SHRINK_ELEMENT && node.nodeType == Dom.NodeType.TEXT_NODE');
-function visit479_816_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['816'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['809'][1].init(141, 49, 'startOffset >= startContainer[0].nodeValue.length');
+function visit474_809_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['809'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['810'][2].init(51, 26, 'mode == KER.SHRINK_ELEMENT');
-function visit478_810_2(result) {
-  _$jscoverage['/editor/range.js'].branchData['810'][2].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['807'][1].init(25, 12, '!startOffset');
+function visit473_807_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['807'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['810'][1].init(32, 128, 'node.nodeType == (mode == KER.SHRINK_ELEMENT ? Dom.NodeType.ELEMENT_NODE : Dom.NodeType.TEXT_NODE)');
-function visit477_810_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['810'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['806'][1].init(37, 53, 'startContainer[0].nodeType === Dom.NodeType.TEXT_NODE');
+function visit472_806_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['806'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['805'][1].init(1771, 20, 'moveStart || moveEnd');
-function visit476_805_1(result) {
+}_$jscoverage['/editor/range.js'].branchData['805'][1].init(531, 91, 'startContainer && startContainer[0].nodeType === Dom.NodeType.TEXT_NODE');
+function visit471_805_1(result) {
   _$jscoverage['/editor/range.js'].branchData['805'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['797'][1].init(135, 45, 'endOffset >= endContainer[0].nodeValue.length');
-function visit475_797_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['797'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['792'][1].init(24, 23, 'mode || KER.SHRINK_TEXT');
+function visit470_792_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['792'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['795'][1].init(25, 10, '!endOffset');
-function visit474_795_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['795'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['791'][1].init(97, 15, '!self.collapsed');
+function visit469_791_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['791'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['794'][1].init(35, 50, 'endContainer[0].nodeType == Dom.NodeType.TEXT_NODE');
-function visit473_794_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['794'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/editor/range.js'].branchData['793'][1].init(1242, 86, 'endContainer && endContainer[0].nodeType == Dom.NodeType.TEXT_NODE');
-function visit472_793_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['793'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/editor/range.js'].branchData['783'][1].init(141, 49, 'startOffset >= startContainer[0].nodeValue.length');
-function visit471_783_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['783'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/editor/range.js'].branchData['781'][1].init(25, 12, '!startOffset');
-function visit470_781_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['781'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/editor/range.js'].branchData['780'][1].init(37, 52, 'startContainer[0].nodeType == Dom.NodeType.TEXT_NODE');
-function visit469_780_1(result) {
+}_$jscoverage['/editor/range.js'].branchData['780'][1].init(858, 24, 'node && node.equals(pre)');
+function visit468_780_1(result) {
   _$jscoverage['/editor/range.js'].branchData['780'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['779'][1].init(531, 90, 'startContainer && startContainer[0].nodeType == Dom.NodeType.TEXT_NODE');
-function visit468_779_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['779'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['769'][1].init(24, 46, 'isNotWhitespaces(node) && isNotBookmarks(node)');
+function visit467_769_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['769'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['766'][1].init(24, 23, 'mode || KER.SHRINK_TEXT');
-function visit467_766_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['766'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['761'][1].init(87, 66, 'walkerRange.endContainer[0].nodeType !== Dom.NodeType.ELEMENT_NODE');
+function visit466_761_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['761'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['765'][1].init(97, 15, '!self.collapsed');
-function visit466_765_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['765'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['760'][2].init(188, 68, 'walkerRange.startContainer[0].nodeType !== Dom.NodeType.ELEMENT_NODE');
+function visit465_760_2(result) {
+  _$jscoverage['/editor/range.js'].branchData['760'][2].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['754'][1].init(856, 24, 'node && node.equals(pre)');
-function visit465_754_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['754'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['760'][1].init(188, 154, 'walkerRange.startContainer[0].nodeType !== Dom.NodeType.ELEMENT_NODE || walkerRange.endContainer[0].nodeType !== Dom.NodeType.ELEMENT_NODE');
+function visit464_760_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['760'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['743'][1].init(24, 46, 'isNotWhitespaces(node) && isNotBookmarks(node)');
-function visit464_743_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['743'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['719'][1].init(46, 7, 'toStart');
+function visit463_719_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['719'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['735'][1].init(86, 65, 'walkerRange.endContainer[0].nodeType != Dom.NodeType.ELEMENT_NODE');
-function visit463_735_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['735'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['674'][1].init(54, 43, 'node[0].nodeType === Dom.NodeType.TEXT_NODE');
+function visit462_674_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['674'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['734'][2].init(188, 67, 'walkerRange.startContainer[0].nodeType != Dom.NodeType.ELEMENT_NODE');
-function visit462_734_2(result) {
-  _$jscoverage['/editor/range.js'].branchData['734'][2].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['643'][1].init(54, 43, 'node[0].nodeType === Dom.NodeType.TEXT_NODE');
+function visit461_643_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['643'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['734'][1].init(188, 152, 'walkerRange.startContainer[0].nodeType != Dom.NodeType.ELEMENT_NODE || walkerRange.endContainer[0].nodeType != Dom.NodeType.ELEMENT_NODE');
-function visit461_734_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['734'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['622'][1].init(684, 20, '!self.startContainer');
+function visit460_622_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['622'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['693'][1].init(46, 7, 'toStart');
-function visit460_693_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['693'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['614'][2].init(391, 49, 'endNode[0].nodeType === Dom.NodeType.ELEMENT_NODE');
+function visit459_614_2(result) {
+  _$jscoverage['/editor/range.js'].branchData['614'][2].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['648'][1].init(54, 42, 'node[0].nodeType == Dom.NodeType.TEXT_NODE');
-function visit459_648_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['648'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['614'][1].init(391, 80, 'endNode[0].nodeType === Dom.NodeType.ELEMENT_NODE && EMPTY[endNode.nodeName()]');
+function visit458_614_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['614'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['617'][1].init(54, 42, 'node[0].nodeType == Dom.NodeType.TEXT_NODE');
-function visit458_617_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['617'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['591'][1].init(701, 18, '!self.endContainer');
+function visit457_591_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['591'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['596'][1].init(684, 20, '!self.startContainer');
-function visit457_596_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['596'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['583'][2].init(392, 51, 'startNode[0].nodeType === Dom.NodeType.ELEMENT_NODE');
+function visit456_583_2(result) {
+  _$jscoverage['/editor/range.js'].branchData['583'][2].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['588'][2].init(391, 48, 'endNode[0].nodeType == Dom.NodeType.ELEMENT_NODE');
-function visit456_588_2(result) {
-  _$jscoverage['/editor/range.js'].branchData['588'][2].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['583'][1].init(392, 84, 'startNode[0].nodeType === Dom.NodeType.ELEMENT_NODE && EMPTY[startNode.nodeName()]');
+function visit455_583_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['583'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['588'][1].init(391, 79, 'endNode[0].nodeType == Dom.NodeType.ELEMENT_NODE && EMPTY[endNode.nodeName()]');
-function visit455_588_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['588'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['562'][2].init(362, 29, 'endNode.nodeName() === \'span\'');
+function visit454_562_2(result) {
+  _$jscoverage['/editor/range.js'].branchData['562'][2].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['565'][1].init(701, 18, '!self.endContainer');
-function visit454_565_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['565'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['562'][1].init(26, 77, 'endNode.nodeName() === \'span\' && endNode.attr(\'_ke_bookmark\')');
+function visit453_562_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['562'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['557'][2].init(392, 50, 'startNode[0].nodeType == Dom.NodeType.ELEMENT_NODE');
-function visit453_557_2(result) {
+}_$jscoverage['/editor/range.js'].branchData['561'][1].init(333, 104, 'endNode && endNode.nodeName() === \'span\' && endNode.attr(\'_ke_bookmark\')');
+function visit452_561_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['561'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/editor/range.js'].branchData['557'][2].init(172, 31, 'startNode.nodeName() === \'span\'');
+function visit451_557_2(result) {
   _$jscoverage['/editor/range.js'].branchData['557'][2].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['557'][1].init(392, 83, 'startNode[0].nodeType == Dom.NodeType.ELEMENT_NODE && EMPTY[startNode.nodeName()]');
-function visit452_557_1(result) {
+}_$jscoverage['/editor/range.js'].branchData['557'][1].init(28, 81, 'startNode.nodeName() === \'span\' && startNode.attr(\'_ke_bookmark\')');
+function visit450_557_1(result) {
   _$jscoverage['/editor/range.js'].branchData['557'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['536'][2].init(361, 28, 'endNode.nodeName() == \'span\'');
-function visit451_536_2(result) {
-  _$jscoverage['/editor/range.js'].branchData['536'][2].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['556'][1].init(141, 110, 'startNode && startNode.nodeName() === \'span\' && startNode.attr(\'_ke_bookmark\')');
+function visit449_556_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['556'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['536'][1].init(26, 76, 'endNode.nodeName() == \'span\' && endNode.attr(\'_ke_bookmark\')');
-function visit450_536_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['536'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['513'][1].init(110, 39, 'offset >= container[0].nodeValue.length');
+function visit448_513_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['513'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['535'][1].init(332, 103, 'endNode && endNode.nodeName() == \'span\' && endNode.attr(\'_ke_bookmark\')');
-function visit449_535_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['535'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['511'][1].init(21, 7, '!offset');
+function visit447_511_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['511'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['531'][2].init(172, 30, 'startNode.nodeName() == \'span\'');
-function visit448_531_2(result) {
-  _$jscoverage['/editor/range.js'].branchData['531'][2].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['510'][1].init(528, 51, 'container[0].nodeType !== Dom.NodeType.ELEMENT_NODE');
+function visit446_510_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['510'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['531'][1].init(28, 80, 'startNode.nodeName() == \'span\' && startNode.attr(\'_ke_bookmark\')');
-function visit447_531_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['531'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['502'][1].init(112, 39, 'offset >= container[0].nodeValue.length');
+function visit445_502_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['502'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['530'][1].init(141, 109, 'startNode && startNode.nodeName() == \'span\' && startNode.attr(\'_ke_bookmark\')');
-function visit446_530_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['530'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['500'][1].init(21, 7, '!offset');
+function visit444_500_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['500'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['487'][1].init(110, 39, 'offset >= container[0].nodeValue.length');
-function visit445_487_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['487'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['499'][1].init(139, 51, 'container[0].nodeType !== Dom.NodeType.ELEMENT_NODE');
+function visit443_499_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['499'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['485'][1].init(21, 7, '!offset');
-function visit444_485_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['485'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/editor/range.js'].branchData['484'][1].init(527, 50, 'container[0].nodeType != Dom.NodeType.ELEMENT_NODE');
-function visit443_484_1(result) {
+}_$jscoverage['/editor/range.js'].branchData['484'][1].init(277, 40, 'endContainer.id || endContainer.nodeName');
+function visit442_484_1(result) {
   _$jscoverage['/editor/range.js'].branchData['484'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['476'][1].init(112, 39, 'offset >= container[0].nodeValue.length');
-function visit442_476_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['476'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['483'][1].init(184, 44, 'startContainer.id || startContainer.nodeName');
+function visit441_483_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['483'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['474'][1].init(21, 7, '!offset');
-function visit441_474_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['474'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['454'][1].init(66, 35, 'self.startOffset === self.endOffset');
+function visit440_454_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['454'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['473'][1].init(139, 50, 'container[0].nodeType != Dom.NodeType.ELEMENT_NODE');
-function visit440_473_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['473'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['453'][2].init(109, 47, 'self.startContainer[0] === self.endContainer[0]');
+function visit439_453_2(result) {
+  _$jscoverage['/editor/range.js'].branchData['453'][2].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['458'][1].init(277, 40, 'endContainer.id || endContainer.nodeName');
-function visit439_458_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['458'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['453'][1].init(36, 102, 'self.startContainer[0] === self.endContainer[0] && self.startOffset === self.endOffset');
+function visit438_453_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['453'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['457'][1].init(184, 44, 'startContainer.id || startContainer.nodeName');
-function visit438_457_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['457'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['452'][1].init(38, 139, 'self.endContainer && self.startContainer[0] === self.endContainer[0] && self.startOffset === self.endOffset');
+function visit437_452_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['452'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['428'][1].init(65, 34, 'self.startOffset == self.endOffset');
-function visit437_428_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['428'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['451'][1].init(-1, 178, 'self.startContainer && self.endContainer && self.startContainer[0] === self.endContainer[0] && self.startOffset === self.endOffset');
+function visit436_451_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['451'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['427'][2].init(109, 46, 'self.startContainer[0] == self.endContainer[0]');
-function visit436_427_2(result) {
-  _$jscoverage['/editor/range.js'].branchData['427'][2].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['442'][1].init(10746, 13, 'removeEndNode');
+function visit435_442_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['442'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['427'][1].init(36, 100, 'self.startContainer[0] == self.endContainer[0] && self.startOffset == self.endOffset');
-function visit435_427_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['427'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['438'][1].init(10672, 15, 'removeStartNode');
+function visit434_438_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['438'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['426'][1].init(38, 137, 'self.endContainer && self.startContainer[0] == self.endContainer[0] && self.startOffset == self.endOffset');
-function visit434_426_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['426'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['423'][1].init(200, 120, 'removeStartNode && (topStart._4eSameLevel(startNode))');
+function visit433_423_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['423'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['425'][1].init(-1, 176, 'self.startContainer && self.endContainer && self.startContainer[0] == self.endContainer[0] && self.startOffset == self.endOffset');
-function visit433_425_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['425'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/editor/range.js'].branchData['416'][1].init(10786, 13, 'removeEndNode');
+}_$jscoverage['/editor/range.js'].branchData['416'][1].init(-1, 66, '!startNode._4eSameLevel(topStart) || !endNode._4eSameLevel(topEnd)');
 function visit432_416_1(result) {
   _$jscoverage['/editor/range.js'].branchData['416'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['412'][1].init(10712, 15, 'removeStartNode');
-function visit431_412_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['412'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['414'][2].init(272, 148, 'topEnd && (!startNode._4eSameLevel(topStart) || !endNode._4eSameLevel(topEnd))');
+function visit431_414_2(result) {
+  _$jscoverage['/editor/range.js'].branchData['414'][2].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['397'][1].init(201, 121, 'removeStartNode && (topStart._4e_sameLevel(startNode))');
-function visit430_397_1(result) {
+}_$jscoverage['/editor/range.js'].branchData['414'][1].init(20, 160, 'topStart && topEnd && (!startNode._4eSameLevel(topStart) || !endNode._4eSameLevel(topEnd))');
+function visit430_414_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['414'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/editor/range.js'].branchData['401'][1].init(50, 63, 'endTextNode.previousSibling.nodeType === Dom.NodeType.TEXT_NODE');
+function visit429_401_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['401'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/editor/range.js'].branchData['400'][1].init(70, 114, 'endTextNode.previousSibling && endTextNode.previousSibling.nodeType === Dom.NodeType.TEXT_NODE');
+function visit428_400_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['400'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/editor/range.js'].branchData['399'][2].init(67, 47, 'endTextNode.nodeType === Dom.NodeType.TEXT_NODE');
+function visit427_399_2(result) {
+  _$jscoverage['/editor/range.js'].branchData['399'][2].ranCondition(result);
+  return result;
+}_$jscoverage['/editor/range.js'].branchData['399'][1].init(67, 185, 'endTextNode.nodeType === Dom.NodeType.TEXT_NODE && endTextNode.previousSibling && endTextNode.previousSibling.nodeType === Dom.NodeType.TEXT_NODE');
+function visit426_399_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['399'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/editor/range.js'].branchData['397'][1].init(631, 11, 'hasSplitEnd');
+function visit425_397_1(result) {
   _$jscoverage['/editor/range.js'].branchData['397'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['389'][1].init(-1, 96, '!startNode._4e_sameLevel(topStart) || !endNode._4e_sameLevel(topEnd)');
-function visit429_389_1(result) {
+}_$jscoverage['/editor/range.js'].branchData['391'][1].init(113, 61, 'startTextNode.nextSibling.nodeType === Dom.NodeType.TEXT_NODE');
+function visit424_391_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['391'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/editor/range.js'].branchData['389'][3].init(124, 175, 'startTextNode.nextSibling && startTextNode.nextSibling.nodeType === Dom.NodeType.TEXT_NODE');
+function visit423_389_3(result) {
+  _$jscoverage['/editor/range.js'].branchData['389'][3].ranCondition(result);
+  return result;
+}_$jscoverage['/editor/range.js'].branchData['389'][2].init(71, 49, 'startTextNode.nodeType === Dom.NodeType.TEXT_NODE');
+function visit422_389_2(result) {
+  _$jscoverage['/editor/range.js'].branchData['389'][2].ranCondition(result);
+  return result;
+}_$jscoverage['/editor/range.js'].branchData['389'][1].init(71, 228, 'startTextNode.nodeType === Dom.NodeType.TEXT_NODE && startTextNode.nextSibling && startTextNode.nextSibling.nodeType === Dom.NodeType.TEXT_NODE');
+function visit421_389_1(result) {
   _$jscoverage['/editor/range.js'].branchData['389'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['387'][2].init(272, 178, 'topEnd && (!startNode._4e_sameLevel(topStart) || !endNode._4e_sameLevel(topEnd))');
-function visit428_387_2(result) {
-  _$jscoverage['/editor/range.js'].branchData['387'][2].ranCondition(result);
-  return result;
-}_$jscoverage['/editor/range.js'].branchData['387'][1].init(20, 190, 'topStart && topEnd && (!startNode._4e_sameLevel(topStart) || !endNode._4e_sameLevel(topEnd))');
-function visit427_387_1(result) {
+}_$jscoverage['/editor/range.js'].branchData['387'][1].init(104, 13, 'hasSplitStart');
+function visit420_387_1(result) {
   _$jscoverage['/editor/range.js'].branchData['387'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['374'][1].init(50, 62, 'endTextNode.previousSibling.nodeType == Dom.NodeType.TEXT_NODE');
-function visit426_374_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['374'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['383'][1].init(8533, 12, 'action === 2');
+function visit419_383_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['383'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['373'][1].init(69, 113, 'endTextNode.previousSibling && endTextNode.previousSibling.nodeType == Dom.NodeType.TEXT_NODE');
-function visit425_373_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['373'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['378'][1].init(1653, 10, 'levelClone');
+function visit418_378_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['378'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['372'][2].init(67, 46, 'endTextNode.nodeType == Dom.NodeType.TEXT_NODE');
-function visit424_372_2(result) {
-  _$jscoverage['/editor/range.js'].branchData['372'][2].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['368'][1].init(237, 12, 'action === 1');
+function visit417_368_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['368'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['372'][1].init(67, 183, 'endTextNode.nodeType == Dom.NodeType.TEXT_NODE && endTextNode.previousSibling && endTextNode.previousSibling.nodeType == Dom.NodeType.TEXT_NODE');
-function visit423_372_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['372'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['360'][1].init(189, 12, 'action === 2');
+function visit416_360_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['360'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['370'][1].init(649, 11, 'hasSplitEnd');
-function visit422_370_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['370'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/editor/range.js'].branchData['364'][1].init(113, 60, 'startTextNode.nextSibling.nodeType == Dom.NodeType.TEXT_NODE');
-function visit421_364_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['364'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/editor/range.js'].branchData['362'][1].init(71, 174, 'startTextNode.nextSibling && startTextNode.nextSibling.nodeType == Dom.NodeType.TEXT_NODE');
-function visit420_362_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['362'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/editor/range.js'].branchData['361'][2].init(71, 48, 'startTextNode.nodeType == Dom.NodeType.TEXT_NODE');
-function visit419_361_2(result) {
-  _$jscoverage['/editor/range.js'].branchData['361'][2].ranCondition(result);
-  return result;
-}_$jscoverage['/editor/range.js'].branchData['361'][1].init(71, 246, 'startTextNode.nodeType == Dom.NodeType.TEXT_NODE && startTextNode.nextSibling && startTextNode.nextSibling.nodeType == Dom.NodeType.TEXT_NODE');
-function visit418_361_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['361'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/editor/range.js'].branchData['359'][1].init(104, 13, 'hasSplitStart');
-function visit417_359_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['359'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/editor/range.js'].branchData['355'][1].init(8526, 11, 'action == 2');
-function visit416_355_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['355'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/editor/range.js'].branchData['350'][1].init(1653, 10, 'levelClone');
+}_$jscoverage['/editor/range.js'].branchData['350'][1].init(20, 137, '!startParents[k] || !levelStartNode._4eSameLevel(startParents[k])');
 function visit415_350_1(result) {
   _$jscoverage['/editor/range.js'].branchData['350'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['340'][1].init(238, 11, 'action == 1');
-function visit414_340_1(result) {
+}_$jscoverage['/editor/range.js'].branchData['340'][2].init(128, 10, 'action > 0');
+function visit414_340_2(result) {
+  _$jscoverage['/editor/range.js'].branchData['340'][2].ranCondition(result);
+  return result;
+}_$jscoverage['/editor/range.js'].branchData['340'][1].init(128, 45, 'action > 0 && !levelStartNode.equals(endNode)');
+function visit413_340_1(result) {
   _$jscoverage['/editor/range.js'].branchData['340'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['332'][1].init(189, 11, 'action == 2');
-function visit413_332_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['332'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['336'][1].init(6743, 21, 'k < endParents.length');
+function visit412_336_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['336'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['322'][1].init(20, 138, '!startParents[k] || !levelStartNode._4e_sameLevel(startParents[k])');
-function visit412_322_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['322'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['327'][1].init(2184, 10, 'levelClone');
+function visit411_327_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['327'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['312'][2].init(128, 10, 'action > 0');
-function visit411_312_2(result) {
-  _$jscoverage['/editor/range.js'].branchData['312'][2].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['318'][1].init(644, 12, 'action === 1');
+function visit410_318_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['318'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['312'][1].init(128, 45, 'action > 0 && !levelStartNode.equals(endNode)');
-function visit410_312_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['312'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/editor/range.js'].branchData['308'][1].init(6736, 21, 'k < endParents.length');
+}_$jscoverage['/editor/range.js'].branchData['308'][1].init(155, 48, 'UN_REMOVABLE[currentNode.nodeName.toLowerCase()]');
 function visit409_308_1(result) {
   _$jscoverage['/editor/range.js'].branchData['308'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['299'][1].init(2179, 10, 'levelClone');
-function visit408_299_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['299'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['301'][1].init(437, 12, 'action === 2');
+function visit408_301_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['301'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['290'][1].init(643, 11, 'action == 1');
-function visit407_290_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['290'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['293'][3].init(193, 26, 'domEndNode === currentNode');
+function visit407_293_3(result) {
+  _$jscoverage['/editor/range.js'].branchData['293'][3].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['280'][1].init(155, 48, 'UN_REMOVABLE[currentNode.nodeName.toLowerCase()]');
-function visit406_280_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['280'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['293'][2].init(160, 29, 'domEndParentJ === currentNode');
+function visit406_293_2(result) {
+  _$jscoverage['/editor/range.js'].branchData['293'][2].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['273'][1].init(435, 11, 'action == 2');
-function visit405_273_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['273'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['293'][1].init(160, 59, 'domEndParentJ === currentNode || domEndNode === currentNode');
+function visit405_293_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['293'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['265'][3].init(192, 25, 'domEndNode == currentNode');
-function visit404_265_3(result) {
-  _$jscoverage['/editor/range.js'].branchData['265'][3].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['288'][1].init(106, 27, 'endParentJ && endParentJ[0]');
+function visit404_288_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['288'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['265'][2].init(160, 28, 'domEndParentJ == currentNode');
-function visit403_265_2(result) {
-  _$jscoverage['/editor/range.js'].branchData['265'][2].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['276'][2].init(128, 10, 'action > 0');
+function visit403_276_2(result) {
+  _$jscoverage['/editor/range.js'].branchData['276'][2].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['265'][1].init(160, 57, 'domEndParentJ == currentNode || domEndNode == currentNode');
-function visit402_265_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['265'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['276'][1].init(128, 47, 'action > 0 && !levelStartNode.equals(startNode)');
+function visit402_276_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['276'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['260'][1].init(106, 27, 'endParentJ && endParentJ[0]');
-function visit401_260_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['260'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['272'][1].init(4308, 23, 'j < startParents.length');
+function visit401_272_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['272'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['248'][2].init(128, 10, 'action > 0');
-function visit400_248_2(result) {
-  _$jscoverage['/editor/range.js'].branchData['248'][2].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['259'][1].init(340, 24, '!topStart.equals(topEnd)');
+function visit400_259_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['259'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['248'][1].init(128, 47, 'action > 0 && !levelStartNode.equals(startNode)');
-function visit399_248_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['248'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['251'][1].init(3603, 23, 'i < startParents.length');
+function visit399_251_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['251'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['244'][1].init(4306, 23, 'j < startParents.length');
-function visit398_244_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['244'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['222'][1].init(608, 45, 'startOffset >= startNode[0].childNodes.length');
+function visit398_222_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['222'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['231'][1].init(340, 24, '!topStart.equals(topEnd)');
-function visit397_231_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['231'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['215'][1].init(319, 12, '!startOffset');
+function visit397_215_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['215'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['223'][1].init(3601, 23, 'i < startParents.length');
-function visit396_223_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['223'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['206'][1].init(1924, 48, 'startNode[0].nodeType === Dom.NodeType.TEXT_NODE');
+function visit396_206_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['206'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['195'][1].init(608, 45, 'startOffset >= startNode[0].childNodes.length');
-function visit395_195_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['195'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['190'][1].init(82, 41, 'endOffset >= endNode[0].childNodes.length');
+function visit395_190_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['190'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['188'][1].init(319, 12, '!startOffset');
+}_$jscoverage['/editor/range.js'].branchData['188'][1].init(150, 32, 'endNode[0].childNodes.length > 0');
 function visit394_188_1(result) {
   _$jscoverage['/editor/range.js'].branchData['188'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['179'][1].init(1936, 47, 'startNode[0].nodeType == Dom.NodeType.TEXT_NODE');
-function visit393_179_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['179'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['182'][1].init(862, 46, 'endNode[0].nodeType === Dom.NodeType.TEXT_NODE');
+function visit393_182_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['182'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['163'][1].init(82, 41, 'endOffset >= endNode[0].childNodes.length');
-function visit392_163_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['163'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['169'][1].init(466, 14, 'self.collapsed');
+function visit392_169_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['169'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['161'][1].init(150, 32, 'endNode[0].childNodes.length > 0');
-function visit391_161_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['161'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['165'][1].init(377, 10, 'action > 0');
+function visit391_165_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['165'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['155'][1].init(874, 45, 'endNode[0].nodeType == Dom.NodeType.TEXT_NODE');
-function visit390_155_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['155'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['134'][4].init(176, 17, 'nodeName === \'br\'');
+function visit390_134_4(result) {
+  _$jscoverage['/editor/range.js'].branchData['134'][4].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['142'][1].init(478, 14, 'self.collapsed');
-function visit389_142_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['142'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['134'][3].init(176, 27, 'nodeName === \'br\' && !hadBr');
+function visit389_134_3(result) {
+  _$jscoverage['/editor/range.js'].branchData['134'][3].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['138'][1].init(389, 10, 'action > 0');
-function visit388_138_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['138'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['134'][2].init(166, 37, '!UA.ie && nodeName === \'br\' && !hadBr');
+function visit388_134_2(result) {
+  _$jscoverage['/editor/range.js'].branchData['134'][2].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['107'][4].init(179, 16, 'nodeName == \'br\'');
-function visit387_107_4(result) {
-  _$jscoverage['/editor/range.js'].branchData['107'][4].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['134'][1].init(154, 49, '!isStart && !UA.ie && nodeName === \'br\' && !hadBr');
+function visit387_134_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['134'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['107'][3].init(179, 26, 'nodeName == \'br\' && !hadBr');
-function visit386_107_3(result) {
-  _$jscoverage['/editor/range.js'].branchData['107'][3].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['131'][1].init(194, 35, '!inlineChildReqElements[nodeName]');
+function visit386_131_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['131'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['107'][2].init(166, 39, '!UA[\'ie\'] && nodeName == \'br\' && !hadBr');
-function visit385_107_2(result) {
-  _$jscoverage['/editor/range.js'].branchData['107'][2].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['127'][1].init(391, 43, 'node.nodeType === Dom.NodeType.ELEMENT_NODE');
+function visit385_127_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['127'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['107'][1].init(154, 51, '!isStart && !UA[\'ie\'] && nodeName == \'br\' && !hadBr');
-function visit384_107_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['107'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['124'][1].init(98, 29, 'S.trim(node.nodeValue).length');
+function visit384_124_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['124'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['104'][1].init(194, 35, '!inlineChildReqElements[nodeName]');
-function visit383_104_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['104'][1].ranCondition(result);
+}_$jscoverage['/editor/range.js'].branchData['122'][1].init(141, 40, 'node.nodeType === Dom.NodeType.TEXT_NODE');
+function visit383_122_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['122'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['100'][1].init(374, 42, 'node.nodeType == Dom.NodeType.ELEMENT_NODE');
-function visit382_100_1(result) {
+}_$jscoverage['/editor/range.js'].branchData['118'][1].init(61, 16, 'isBookmark(node)');
+function visit382_118_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['118'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/editor/range.js'].branchData['111'][1].init(77, 40, '!isWhitespace(node) && !isBookmark(node)');
+function visit381_111_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['111'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/editor/range.js'].branchData['106'][2].init(483, 8, 'c2 || c3');
+function visit380_106_2(result) {
+  _$jscoverage['/editor/range.js'].branchData['106'][2].ranCondition(result);
+  return result;
+}_$jscoverage['/editor/range.js'].branchData['106'][1].init(477, 14, 'c1 || c2 || c3');
+function visit379_106_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['106'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/editor/range.js'].branchData['103'][2].init(154, 40, 'node.nodeType === Dom.NodeType.TEXT_NODE');
+function visit378_103_2(result) {
+  _$jscoverage['/editor/range.js'].branchData['103'][2].ranCondition(result);
+  return result;
+}_$jscoverage['/editor/range.js'].branchData['103'][1].init(154, 67, 'node.nodeType === Dom.NodeType.TEXT_NODE && !S.trim(node.nodeValue)');
+function visit377_103_1(result) {
+  _$jscoverage['/editor/range.js'].branchData['103'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/editor/range.js'].branchData['100'][2].init(150, 40, 'node.nodeType !== Dom.NodeType.TEXT_NODE');
+function visit376_100_2(result) {
+  _$jscoverage['/editor/range.js'].branchData['100'][2].ranCondition(result);
+  return result;
+}_$jscoverage['/editor/range.js'].branchData['100'][1].init(150, 98, 'node.nodeType !== Dom.NodeType.TEXT_NODE && Dom.nodeName(node) in dtd.$removeEmpty');
+function visit375_100_1(result) {
   _$jscoverage['/editor/range.js'].branchData['100'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/editor/range.js'].branchData['97'][1].init(98, 29, 'S.trim(node.nodeValue).length');
-function visit381_97_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['97'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/editor/range.js'].branchData['95'][1].init(125, 39, 'node.nodeType == Dom.NodeType.TEXT_NODE');
-function visit380_95_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['95'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/editor/range.js'].branchData['92'][1].init(61, 16, 'isBookmark(node)');
-function visit379_92_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['92'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/editor/range.js'].branchData['85'][1].init(77, 40, '!isWhitespace(node) && !isBookmark(node)');
-function visit378_85_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['85'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/editor/range.js'].branchData['80'][2].init(481, 8, 'c2 || c3');
-function visit377_80_2(result) {
-  _$jscoverage['/editor/range.js'].branchData['80'][2].ranCondition(result);
-  return result;
-}_$jscoverage['/editor/range.js'].branchData['80'][1].init(475, 14, 'c1 || c2 || c3');
-function visit376_80_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['80'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/editor/range.js'].branchData['77'][2].init(153, 39, 'node.nodeType == Dom.NodeType.TEXT_NODE');
-function visit375_77_2(result) {
-  _$jscoverage['/editor/range.js'].branchData['77'][2].ranCondition(result);
-  return result;
-}_$jscoverage['/editor/range.js'].branchData['77'][1].init(153, 66, 'node.nodeType == Dom.NodeType.TEXT_NODE && !S.trim(node.nodeValue)');
-function visit374_77_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['77'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/editor/range.js'].branchData['74'][2].init(150, 39, 'node.nodeType != Dom.NodeType.TEXT_NODE');
-function visit373_74_2(result) {
-  _$jscoverage['/editor/range.js'].branchData['74'][2].ranCondition(result);
-  return result;
-}_$jscoverage['/editor/range.js'].branchData['74'][1].init(150, 97, 'node.nodeType != Dom.NodeType.TEXT_NODE && Dom.nodeName(node) in dtd.$removeEmpty');
-function visit372_74_1(result) {
-  _$jscoverage['/editor/range.js'].branchData['74'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/range.js'].lineData[10]++;
 KISSY.add(function(S, require) {
@@ -2388,426 +2385,426 @@ KISSY.add(function(S, require) {
   _$jscoverage['/editor/range.js'].lineData[35]++;
   var TRUE = true, FALSE = false, NULL = null, KER = Editor.RangeType, KEP = Editor.PositionType, Dom = S.DOM, UA = S.UA, dtd = Editor.XHTML_DTD, $ = Node.all, UN_REMOVABLE = {
   'td': 1}, EMPTY = {
-  "area": 1, 
-  "base": 1, 
-  "br": 1, 
-  "col": 1, 
-  "hr": 1, 
-  "img": 1, 
-  "input": 1, 
-  "link": 1, 
-  "meta": 1, 
-  "param": 1};
-  _$jscoverage['/editor/range.js'].lineData[54]++;
+  'area': 1, 
+  'base': 1, 
+  'br': 1, 
+  'col': 1, 
+  'hr': 1, 
+  'img': 1, 
+  'input': 1, 
+  'link': 1, 
+  'meta': 1, 
+  'param': 1};
+  _$jscoverage['/editor/range.js'].lineData[60]++;
   var isWhitespace = new Walker.whitespaces(), isBookmark = new Walker.bookmark(), isNotWhitespaces = Walker.whitespaces(TRUE), isNotBookmarks = Walker.bookmark(false, true);
-  _$jscoverage['/editor/range.js'].lineData[59]++;
+  _$jscoverage['/editor/range.js'].lineData[65]++;
   var inlineChildReqElements = {
-  "abbr": 1, 
-  "acronym": 1, 
-  "b": 1, 
-  "bdo": 1, 
-  "big": 1, 
-  "cite": 1, 
-  "code": 1, 
-  "del": 1, 
-  "dfn": 1, 
-  "em": 1, 
-  "font": 1, 
-  "i": 1, 
-  "ins": 1, 
-  "label": 1, 
-  "kbd": 1, 
-  "q": 1, 
-  "samp": 1, 
-  "small": 1, 
-  "span": 1, 
-  "strike": 1, 
-  "strong": 1, 
-  "sub": 1, 
-  "sup": 1, 
-  "tt": 1, 
-  "u": 1, 
+  'abbr': 1, 
+  'acronym': 1, 
+  'b': 1, 
+  'bdo': 1, 
+  'big': 1, 
+  'cite': 1, 
+  'code': 1, 
+  'del': 1, 
+  'dfn': 1, 
+  'em': 1, 
+  'font': 1, 
+  'i': 1, 
+  'ins': 1, 
+  'label': 1, 
+  'kbd': 1, 
+  'q': 1, 
+  'samp': 1, 
+  'small': 1, 
+  'span': 1, 
+  'strike': 1, 
+  'strong': 1, 
+  'sub': 1, 
+  'sup': 1, 
+  'tt': 1, 
+  'u': 1, 
   'var': 1};
-  _$jscoverage['/editor/range.js'].lineData[70]++;
+  _$jscoverage['/editor/range.js'].lineData[96]++;
   function elementBoundaryEval(node) {
     _$jscoverage['/editor/range.js'].functionData[1]++;
-    _$jscoverage['/editor/range.js'].lineData[74]++;
-    var c1 = visit372_74_1(visit373_74_2(node.nodeType != Dom.NodeType.TEXT_NODE) && Dom.nodeName(node) in dtd.$removeEmpty), c2 = visit374_77_1(visit375_77_2(node.nodeType == Dom.NodeType.TEXT_NODE) && !S.trim(node.nodeValue)), c3 = !!node.parentNode.getAttribute('_ke_bookmark');
-    _$jscoverage['/editor/range.js'].lineData[80]++;
-    return visit376_80_1(c1 || visit377_80_2(c2 || c3));
+    _$jscoverage['/editor/range.js'].lineData[100]++;
+    var c1 = visit375_100_1(visit376_100_2(node.nodeType !== Dom.NodeType.TEXT_NODE) && Dom.nodeName(node) in dtd.$removeEmpty), c2 = visit377_103_1(visit378_103_2(node.nodeType === Dom.NodeType.TEXT_NODE) && !S.trim(node.nodeValue)), c3 = !!node.parentNode.getAttribute('_ke_bookmark');
+    _$jscoverage['/editor/range.js'].lineData[106]++;
+    return visit379_106_1(c1 || visit380_106_2(c2 || c3));
   }
-  _$jscoverage['/editor/range.js'].lineData[83]++;
+  _$jscoverage['/editor/range.js'].lineData[109]++;
   function nonWhitespaceOrIsBookmark(node) {
     _$jscoverage['/editor/range.js'].functionData[2]++;
-    _$jscoverage['/editor/range.js'].lineData[85]++;
-    return visit378_85_1(!isWhitespace(node) && !isBookmark(node));
+    _$jscoverage['/editor/range.js'].lineData[111]++;
+    return visit381_111_1(!isWhitespace(node) && !isBookmark(node));
   }
-  _$jscoverage['/editor/range.js'].lineData[88]++;
+  _$jscoverage['/editor/range.js'].lineData[114]++;
   function getCheckStartEndBlockEvalFunction(isStart) {
     _$jscoverage['/editor/range.js'].functionData[3]++;
-    _$jscoverage['/editor/range.js'].lineData[89]++;
+    _$jscoverage['/editor/range.js'].lineData[115]++;
     var hadBr = FALSE;
-    _$jscoverage['/editor/range.js'].lineData[90]++;
+    _$jscoverage['/editor/range.js'].lineData[116]++;
     return function(node) {
   _$jscoverage['/editor/range.js'].functionData[4]++;
-  _$jscoverage['/editor/range.js'].lineData[92]++;
-  if (visit379_92_1(isBookmark(node))) {
-    _$jscoverage['/editor/range.js'].lineData[93]++;
+  _$jscoverage['/editor/range.js'].lineData[118]++;
+  if (visit382_118_1(isBookmark(node))) {
+    _$jscoverage['/editor/range.js'].lineData[119]++;
     return TRUE;
   }
-  _$jscoverage['/editor/range.js'].lineData[95]++;
-  if (visit380_95_1(node.nodeType == Dom.NodeType.TEXT_NODE)) {
-    _$jscoverage['/editor/range.js'].lineData[97]++;
-    if (visit381_97_1(S.trim(node.nodeValue).length)) {
-      _$jscoverage['/editor/range.js'].lineData[98]++;
+  _$jscoverage['/editor/range.js'].lineData[122]++;
+  if (visit383_122_1(node.nodeType === Dom.NodeType.TEXT_NODE)) {
+    _$jscoverage['/editor/range.js'].lineData[124]++;
+    if (visit384_124_1(S.trim(node.nodeValue).length)) {
+      _$jscoverage['/editor/range.js'].lineData[125]++;
       return FALSE;
     }
   } else {
-    _$jscoverage['/editor/range.js'].lineData[100]++;
-    if (visit382_100_1(node.nodeType == Dom.NodeType.ELEMENT_NODE)) {
-      _$jscoverage['/editor/range.js'].lineData[101]++;
+    _$jscoverage['/editor/range.js'].lineData[127]++;
+    if (visit385_127_1(node.nodeType === Dom.NodeType.ELEMENT_NODE)) {
+      _$jscoverage['/editor/range.js'].lineData[128]++;
       var nodeName = Dom.nodeName(node);
-      _$jscoverage['/editor/range.js'].lineData[104]++;
-      if (visit383_104_1(!inlineChildReqElements[nodeName])) {
-        _$jscoverage['/editor/range.js'].lineData[107]++;
-        if (visit384_107_1(!isStart && visit385_107_2(!UA['ie'] && visit386_107_3(visit387_107_4(nodeName == 'br') && !hadBr)))) {
-          _$jscoverage['/editor/range.js'].lineData[108]++;
+      _$jscoverage['/editor/range.js'].lineData[131]++;
+      if (visit386_131_1(!inlineChildReqElements[nodeName])) {
+        _$jscoverage['/editor/range.js'].lineData[134]++;
+        if (visit387_134_1(!isStart && visit388_134_2(!UA.ie && visit389_134_3(visit390_134_4(nodeName === 'br') && !hadBr)))) {
+          _$jscoverage['/editor/range.js'].lineData[135]++;
           hadBr = TRUE;
         } else {
-          _$jscoverage['/editor/range.js'].lineData[110]++;
+          _$jscoverage['/editor/range.js'].lineData[137]++;
           return FALSE;
         }
       }
     }
   }
-  _$jscoverage['/editor/range.js'].lineData[114]++;
+  _$jscoverage['/editor/range.js'].lineData[141]++;
   return TRUE;
 };
   }
-  _$jscoverage['/editor/range.js'].lineData[125]++;
+  _$jscoverage['/editor/range.js'].lineData[152]++;
   function execContentsAction(self, action) {
     _$jscoverage['/editor/range.js'].functionData[5]++;
-    _$jscoverage['/editor/range.js'].lineData[126]++;
-    var startNode = self.startContainer, endNode = self.endContainer, startOffset = self.startOffset, endOffset = self.endOffset, removeStartNode, hasSplitStart = FALSE, hasSplitEnd = FALSE, t, docFrag = undefined, doc = self.document, removeEndNode;
-    _$jscoverage['/editor/range.js'].lineData[138]++;
-    if (visit388_138_1(action > 0)) {
-      _$jscoverage['/editor/range.js'].lineData[139]++;
+    _$jscoverage['/editor/range.js'].lineData[153]++;
+    var startNode = self.startContainer, endNode = self.endContainer, startOffset = self.startOffset, endOffset = self.endOffset, removeStartNode, hasSplitStart = FALSE, hasSplitEnd = FALSE, t, docFrag, doc = self.document, removeEndNode;
+    _$jscoverage['/editor/range.js'].lineData[165]++;
+    if (visit391_165_1(action > 0)) {
+      _$jscoverage['/editor/range.js'].lineData[166]++;
       docFrag = doc.createDocumentFragment();
     }
-    _$jscoverage['/editor/range.js'].lineData[142]++;
-    if (visit389_142_1(self.collapsed)) {
-      _$jscoverage['/editor/range.js'].lineData[143]++;
+    _$jscoverage['/editor/range.js'].lineData[169]++;
+    if (visit392_169_1(self.collapsed)) {
+      _$jscoverage['/editor/range.js'].lineData[170]++;
       return docFrag;
     }
-    _$jscoverage['/editor/range.js'].lineData[147]++;
+    _$jscoverage['/editor/range.js'].lineData[174]++;
     self.optimizeBookmark();
-    _$jscoverage['/editor/range.js'].lineData[155]++;
-    if (visit390_155_1(endNode[0].nodeType == Dom.NodeType.TEXT_NODE)) {
-      _$jscoverage['/editor/range.js'].lineData[156]++;
+    _$jscoverage['/editor/range.js'].lineData[182]++;
+    if (visit393_182_1(endNode[0].nodeType === Dom.NodeType.TEXT_NODE)) {
+      _$jscoverage['/editor/range.js'].lineData[183]++;
       hasSplitEnd = TRUE;
-      _$jscoverage['/editor/range.js'].lineData[157]++;
-      endNode = endNode._4e_splitText(endOffset);
+      _$jscoverage['/editor/range.js'].lineData[184]++;
+      endNode = endNode._4eSplitText(endOffset);
     } else {
-      _$jscoverage['/editor/range.js'].lineData[161]++;
-      if (visit391_161_1(endNode[0].childNodes.length > 0)) {
-        _$jscoverage['/editor/range.js'].lineData[163]++;
-        if (visit392_163_1(endOffset >= endNode[0].childNodes.length)) {
-          _$jscoverage['/editor/range.js'].lineData[165]++;
-          endNode = new Node(endNode[0].appendChild(doc.createTextNode("")));
-          _$jscoverage['/editor/range.js'].lineData[168]++;
+      _$jscoverage['/editor/range.js'].lineData[188]++;
+      if (visit394_188_1(endNode[0].childNodes.length > 0)) {
+        _$jscoverage['/editor/range.js'].lineData[190]++;
+        if (visit395_190_1(endOffset >= endNode[0].childNodes.length)) {
+          _$jscoverage['/editor/range.js'].lineData[192]++;
+          endNode = new Node(endNode[0].appendChild(doc.createTextNode('')));
+          _$jscoverage['/editor/range.js'].lineData[195]++;
           removeEndNode = TRUE;
         } else {
-          _$jscoverage['/editor/range.js'].lineData[170]++;
+          _$jscoverage['/editor/range.js'].lineData[197]++;
           endNode = new Node(endNode[0].childNodes[endOffset]);
         }
       }
     }
-    _$jscoverage['/editor/range.js'].lineData[179]++;
-    if (visit393_179_1(startNode[0].nodeType == Dom.NodeType.TEXT_NODE)) {
-      _$jscoverage['/editor/range.js'].lineData[180]++;
+    _$jscoverage['/editor/range.js'].lineData[206]++;
+    if (visit396_206_1(startNode[0].nodeType === Dom.NodeType.TEXT_NODE)) {
+      _$jscoverage['/editor/range.js'].lineData[207]++;
       hasSplitStart = TRUE;
-      _$jscoverage['/editor/range.js'].lineData[181]++;
-      startNode._4e_splitText(startOffset);
+      _$jscoverage['/editor/range.js'].lineData[208]++;
+      startNode._4eSplitText(startOffset);
     } else {
-      _$jscoverage['/editor/range.js'].lineData[188]++;
-      if (visit394_188_1(!startOffset)) {
-        _$jscoverage['/editor/range.js'].lineData[190]++;
-        t = new Node(doc.createTextNode(""));
-        _$jscoverage['/editor/range.js'].lineData[191]++;
+      _$jscoverage['/editor/range.js'].lineData[215]++;
+      if (visit397_215_1(!startOffset)) {
+        _$jscoverage['/editor/range.js'].lineData[217]++;
+        t = new Node(doc.createTextNode(''));
+        _$jscoverage['/editor/range.js'].lineData[218]++;
         startNode.prepend(t);
-        _$jscoverage['/editor/range.js'].lineData[192]++;
+        _$jscoverage['/editor/range.js'].lineData[219]++;
         startNode = t;
-        _$jscoverage['/editor/range.js'].lineData[193]++;
+        _$jscoverage['/editor/range.js'].lineData[220]++;
         removeStartNode = TRUE;
       } else {
-        _$jscoverage['/editor/range.js'].lineData[195]++;
-        if (visit395_195_1(startOffset >= startNode[0].childNodes.length)) {
-          _$jscoverage['/editor/range.js'].lineData[197]++;
+        _$jscoverage['/editor/range.js'].lineData[222]++;
+        if (visit398_222_1(startOffset >= startNode[0].childNodes.length)) {
+          _$jscoverage['/editor/range.js'].lineData[224]++;
           startNode = new Node(startNode[0].appendChild(doc.createTextNode('')));
-          _$jscoverage['/editor/range.js'].lineData[199]++;
+          _$jscoverage['/editor/range.js'].lineData[226]++;
           removeStartNode = TRUE;
         } else {
-          _$jscoverage['/editor/range.js'].lineData[201]++;
+          _$jscoverage['/editor/range.js'].lineData[228]++;
           startNode = new Node(startNode[0].childNodes[startOffset].previousSibling);
         }
       }
     }
-    _$jscoverage['/editor/range.js'].lineData[208]++;
-    var startParents = startNode._4e_parents(), endParents = endNode._4e_parents();
-    _$jscoverage['/editor/range.js'].lineData[211]++;
+    _$jscoverage['/editor/range.js'].lineData[236]++;
+    var startParents = startNode._4eParents(), endParents = endNode._4eParents();
+    _$jscoverage['/editor/range.js'].lineData[239]++;
     startParents.each(function(n, i) {
   _$jscoverage['/editor/range.js'].functionData[6]++;
-  _$jscoverage['/editor/range.js'].lineData[212]++;
+  _$jscoverage['/editor/range.js'].lineData[240]++;
   startParents[i] = n;
 });
-    _$jscoverage['/editor/range.js'].lineData[215]++;
+    _$jscoverage['/editor/range.js'].lineData[243]++;
     endParents.each(function(n, i) {
   _$jscoverage['/editor/range.js'].functionData[7]++;
-  _$jscoverage['/editor/range.js'].lineData[216]++;
+  _$jscoverage['/editor/range.js'].lineData[244]++;
   endParents[i] = n;
 });
-    _$jscoverage['/editor/range.js'].lineData[221]++;
+    _$jscoverage['/editor/range.js'].lineData[249]++;
     var i, topStart, topEnd;
-    _$jscoverage['/editor/range.js'].lineData[223]++;
-    for (i = 0; visit396_223_1(i < startParents.length); i++) {
-      _$jscoverage['/editor/range.js'].lineData[224]++;
+    _$jscoverage['/editor/range.js'].lineData[251]++;
+    for (i = 0; visit399_251_1(i < startParents.length); i++) {
+      _$jscoverage['/editor/range.js'].lineData[252]++;
       topStart = startParents[i];
-      _$jscoverage['/editor/range.js'].lineData[225]++;
+      _$jscoverage['/editor/range.js'].lineData[253]++;
       topEnd = endParents[i];
-      _$jscoverage['/editor/range.js'].lineData[231]++;
-      if (visit397_231_1(!topStart.equals(topEnd))) {
-        _$jscoverage['/editor/range.js'].lineData[232]++;
+      _$jscoverage['/editor/range.js'].lineData[259]++;
+      if (visit400_259_1(!topStart.equals(topEnd))) {
+        _$jscoverage['/editor/range.js'].lineData[260]++;
         break;
       }
     }
-    _$jscoverage['/editor/range.js'].lineData[236]++;
+    _$jscoverage['/editor/range.js'].lineData[264]++;
     var clone = docFrag, levelStartNode, levelClone, currentNode, currentSibling;
-    _$jscoverage['/editor/range.js'].lineData[244]++;
-    for (var j = i; visit398_244_1(j < startParents.length); j++) {
-      _$jscoverage['/editor/range.js'].lineData[245]++;
+    _$jscoverage['/editor/range.js'].lineData[272]++;
+    for (var j = i; visit401_272_1(j < startParents.length); j++) {
+      _$jscoverage['/editor/range.js'].lineData[273]++;
       levelStartNode = startParents[j];
-      _$jscoverage['/editor/range.js'].lineData[248]++;
-      if (visit399_248_1(visit400_248_2(action > 0) && !levelStartNode.equals(startNode))) {
-        _$jscoverage['/editor/range.js'].lineData[250]++;
+      _$jscoverage['/editor/range.js'].lineData[276]++;
+      if (visit402_276_1(visit403_276_2(action > 0) && !levelStartNode.equals(startNode))) {
+        _$jscoverage['/editor/range.js'].lineData[278]++;
         levelClone = clone.appendChild(levelStartNode.clone()[0]);
       } else {
-        _$jscoverage['/editor/range.js'].lineData[252]++;
+        _$jscoverage['/editor/range.js'].lineData[280]++;
         levelClone = null;
       }
-      _$jscoverage['/editor/range.js'].lineData[256]++;
+      _$jscoverage['/editor/range.js'].lineData[284]++;
       currentNode = levelStartNode[0].nextSibling;
-      _$jscoverage['/editor/range.js'].lineData[258]++;
-      var endParentJ = endParents[j], domEndNode = endNode[0], domEndParentJ = visit401_260_1(endParentJ && endParentJ[0]);
-      _$jscoverage['/editor/range.js'].lineData[262]++;
+      _$jscoverage['/editor/range.js'].lineData[286]++;
+      var endParentJ = endParents[j], domEndNode = endNode[0], domEndParentJ = visit404_288_1(endParentJ && endParentJ[0]);
+      _$jscoverage['/editor/range.js'].lineData[290]++;
       while (currentNode) {
-        _$jscoverage['/editor/range.js'].lineData[265]++;
-        if (visit402_265_1(visit403_265_2(domEndParentJ == currentNode) || visit404_265_3(domEndNode == currentNode))) {
-          _$jscoverage['/editor/range.js'].lineData[266]++;
+        _$jscoverage['/editor/range.js'].lineData[293]++;
+        if (visit405_293_1(visit406_293_2(domEndParentJ === currentNode) || visit407_293_3(domEndNode === currentNode))) {
+          _$jscoverage['/editor/range.js'].lineData[294]++;
           break;
         }
-        _$jscoverage['/editor/range.js'].lineData[270]++;
+        _$jscoverage['/editor/range.js'].lineData[298]++;
         currentSibling = currentNode.nextSibling;
-        _$jscoverage['/editor/range.js'].lineData[273]++;
-        if (visit405_273_1(action == 2)) {
-          _$jscoverage['/editor/range.js'].lineData[275]++;
+        _$jscoverage['/editor/range.js'].lineData[301]++;
+        if (visit408_301_1(action === 2)) {
+          _$jscoverage['/editor/range.js'].lineData[303]++;
           clone.appendChild(currentNode.cloneNode(TRUE));
         } else {
-          _$jscoverage['/editor/range.js'].lineData[280]++;
-          if (visit406_280_1(UN_REMOVABLE[currentNode.nodeName.toLowerCase()])) {
-            _$jscoverage['/editor/range.js'].lineData[281]++;
+          _$jscoverage['/editor/range.js'].lineData[308]++;
+          if (visit409_308_1(UN_REMOVABLE[currentNode.nodeName.toLowerCase()])) {
+            _$jscoverage['/editor/range.js'].lineData[309]++;
             var tmp = currentNode.cloneNode(TRUE);
-            _$jscoverage['/editor/range.js'].lineData[282]++;
+            _$jscoverage['/editor/range.js'].lineData[310]++;
             currentNode.innerHTML = '';
-            _$jscoverage['/editor/range.js'].lineData[283]++;
+            _$jscoverage['/editor/range.js'].lineData[311]++;
             currentNode = tmp;
           } else {
-            _$jscoverage['/editor/range.js'].lineData[286]++;
-            Dom._4e_remove(currentNode);
+            _$jscoverage['/editor/range.js'].lineData[314]++;
+            Dom._4eRemove(currentNode);
           }
-          _$jscoverage['/editor/range.js'].lineData[290]++;
-          if (visit407_290_1(action == 1)) {
-            _$jscoverage['/editor/range.js'].lineData[292]++;
+          _$jscoverage['/editor/range.js'].lineData[318]++;
+          if (visit410_318_1(action === 1)) {
+            _$jscoverage['/editor/range.js'].lineData[320]++;
             clone.appendChild(currentNode);
           }
         }
-        _$jscoverage['/editor/range.js'].lineData[296]++;
+        _$jscoverage['/editor/range.js'].lineData[324]++;
         currentNode = currentSibling;
       }
-      _$jscoverage['/editor/range.js'].lineData[299]++;
-      if (visit408_299_1(levelClone)) {
-        _$jscoverage['/editor/range.js'].lineData[300]++;
+      _$jscoverage['/editor/range.js'].lineData[327]++;
+      if (visit411_327_1(levelClone)) {
+        _$jscoverage['/editor/range.js'].lineData[328]++;
         clone = levelClone;
       }
     }
-    _$jscoverage['/editor/range.js'].lineData[304]++;
+    _$jscoverage['/editor/range.js'].lineData[332]++;
     clone = docFrag;
-    _$jscoverage['/editor/range.js'].lineData[308]++;
-    for (var k = i; visit409_308_1(k < endParents.length); k++) {
-      _$jscoverage['/editor/range.js'].lineData[309]++;
+    _$jscoverage['/editor/range.js'].lineData[336]++;
+    for (var k = i; visit412_336_1(k < endParents.length); k++) {
+      _$jscoverage['/editor/range.js'].lineData[337]++;
       levelStartNode = endParents[k];
-      _$jscoverage['/editor/range.js'].lineData[312]++;
-      if (visit410_312_1(visit411_312_2(action > 0) && !levelStartNode.equals(endNode))) {
-        _$jscoverage['/editor/range.js'].lineData[315]++;
+      _$jscoverage['/editor/range.js'].lineData[340]++;
+      if (visit413_340_1(visit414_340_2(action > 0) && !levelStartNode.equals(endNode))) {
+        _$jscoverage['/editor/range.js'].lineData[343]++;
         levelClone = clone.appendChild(levelStartNode.clone()[0]);
       } else {
-        _$jscoverage['/editor/range.js'].lineData[317]++;
+        _$jscoverage['/editor/range.js'].lineData[345]++;
         levelClone = null;
       }
-      _$jscoverage['/editor/range.js'].lineData[321]++;
-      if (visit412_322_1(!startParents[k] || !levelStartNode._4e_sameLevel(startParents[k]))) {
-        _$jscoverage['/editor/range.js'].lineData[326]++;
+      _$jscoverage['/editor/range.js'].lineData[349]++;
+      if (visit415_350_1(!startParents[k] || !levelStartNode._4eSameLevel(startParents[k]))) {
+        _$jscoverage['/editor/range.js'].lineData[354]++;
         currentNode = levelStartNode[0].previousSibling;
-        _$jscoverage['/editor/range.js'].lineData[327]++;
+        _$jscoverage['/editor/range.js'].lineData[355]++;
         while (currentNode) {
-          _$jscoverage['/editor/range.js'].lineData[329]++;
+          _$jscoverage['/editor/range.js'].lineData[357]++;
           currentSibling = currentNode.previousSibling;
-          _$jscoverage['/editor/range.js'].lineData[332]++;
-          if (visit413_332_1(action == 2)) {
-            _$jscoverage['/editor/range.js'].lineData[333]++;
+          _$jscoverage['/editor/range.js'].lineData[360]++;
+          if (visit416_360_1(action === 2)) {
+            _$jscoverage['/editor/range.js'].lineData[361]++;
             clone.insertBefore(currentNode.cloneNode(TRUE), clone.firstChild);
           } else {
-            _$jscoverage['/editor/range.js'].lineData[337]++;
-            Dom._4e_remove(currentNode);
-            _$jscoverage['/editor/range.js'].lineData[340]++;
-            if (visit414_340_1(action == 1)) {
-              _$jscoverage['/editor/range.js'].lineData[342]++;
+            _$jscoverage['/editor/range.js'].lineData[365]++;
+            Dom._4eRemove(currentNode);
+            _$jscoverage['/editor/range.js'].lineData[368]++;
+            if (visit417_368_1(action === 1)) {
+              _$jscoverage['/editor/range.js'].lineData[370]++;
               clone.insertBefore(currentNode, clone.firstChild);
             }
           }
-          _$jscoverage['/editor/range.js'].lineData[346]++;
+          _$jscoverage['/editor/range.js'].lineData[374]++;
           currentNode = currentSibling;
         }
       }
-      _$jscoverage['/editor/range.js'].lineData[350]++;
-      if (visit415_350_1(levelClone)) {
-        _$jscoverage['/editor/range.js'].lineData[351]++;
+      _$jscoverage['/editor/range.js'].lineData[378]++;
+      if (visit418_378_1(levelClone)) {
+        _$jscoverage['/editor/range.js'].lineData[379]++;
         clone = levelClone;
       }
     }
-    _$jscoverage['/editor/range.js'].lineData[355]++;
-    if (visit416_355_1(action == 2)) {
-      _$jscoverage['/editor/range.js'].lineData[359]++;
-      if (visit417_359_1(hasSplitStart)) {
-        _$jscoverage['/editor/range.js'].lineData[360]++;
+    _$jscoverage['/editor/range.js'].lineData[383]++;
+    if (visit419_383_1(action === 2)) {
+      _$jscoverage['/editor/range.js'].lineData[387]++;
+      if (visit420_387_1(hasSplitStart)) {
+        _$jscoverage['/editor/range.js'].lineData[388]++;
         var startTextNode = startNode[0];
-        _$jscoverage['/editor/range.js'].lineData[361]++;
-        if (visit418_361_1(visit419_361_2(startTextNode.nodeType == Dom.NodeType.TEXT_NODE) && visit420_362_1(startTextNode.nextSibling && visit421_364_1(startTextNode.nextSibling.nodeType == Dom.NodeType.TEXT_NODE)))) {
-          _$jscoverage['/editor/range.js'].lineData[365]++;
+        _$jscoverage['/editor/range.js'].lineData[389]++;
+        if (visit421_389_1(visit422_389_2(startTextNode.nodeType === Dom.NodeType.TEXT_NODE) && visit423_389_3(startTextNode.nextSibling && visit424_391_1(startTextNode.nextSibling.nodeType === Dom.NodeType.TEXT_NODE)))) {
+          _$jscoverage['/editor/range.js'].lineData[392]++;
           startTextNode.data += startTextNode.nextSibling.data;
-          _$jscoverage['/editor/range.js'].lineData[366]++;
+          _$jscoverage['/editor/range.js'].lineData[393]++;
           startTextNode.parentNode.removeChild(startTextNode.nextSibling);
         }
       }
-      _$jscoverage['/editor/range.js'].lineData[370]++;
-      if (visit422_370_1(hasSplitEnd)) {
-        _$jscoverage['/editor/range.js'].lineData[371]++;
+      _$jscoverage['/editor/range.js'].lineData[397]++;
+      if (visit425_397_1(hasSplitEnd)) {
+        _$jscoverage['/editor/range.js'].lineData[398]++;
         var endTextNode = endNode[0];
-        _$jscoverage['/editor/range.js'].lineData[372]++;
-        if (visit423_372_1(visit424_372_2(endTextNode.nodeType == Dom.NodeType.TEXT_NODE) && visit425_373_1(endTextNode.previousSibling && visit426_374_1(endTextNode.previousSibling.nodeType == Dom.NodeType.TEXT_NODE)))) {
-          _$jscoverage['/editor/range.js'].lineData[375]++;
+        _$jscoverage['/editor/range.js'].lineData[399]++;
+        if (visit426_399_1(visit427_399_2(endTextNode.nodeType === Dom.NodeType.TEXT_NODE) && visit428_400_1(endTextNode.previousSibling && visit429_401_1(endTextNode.previousSibling.nodeType === Dom.NodeType.TEXT_NODE)))) {
+          _$jscoverage['/editor/range.js'].lineData[402]++;
           endTextNode.previousSibling.data += endTextNode.data;
-          _$jscoverage['/editor/range.js'].lineData[376]++;
+          _$jscoverage['/editor/range.js'].lineData[403]++;
           endTextNode.parentNode.removeChild(endTextNode);
         }
       }
     } else {
-      _$jscoverage['/editor/range.js'].lineData[386]++;
-      if (visit427_387_1(topStart && visit428_387_2(topEnd && (visit429_389_1(!startNode._4e_sameLevel(topStart) || !endNode._4e_sameLevel(topEnd)))))) {
-        _$jscoverage['/editor/range.js'].lineData[393]++;
-        var startIndex = topStart._4e_index();
-        _$jscoverage['/editor/range.js'].lineData[397]++;
-        if (visit430_397_1(removeStartNode && (topStart._4e_sameLevel(startNode)))) {
-          _$jscoverage['/editor/range.js'].lineData[400]++;
+      _$jscoverage['/editor/range.js'].lineData[413]++;
+      if (visit430_414_1(topStart && visit431_414_2(topEnd && (visit432_416_1(!startNode._4eSameLevel(topStart) || !endNode._4eSameLevel(topEnd)))))) {
+        _$jscoverage['/editor/range.js'].lineData[419]++;
+        var startIndex = topStart._4eIndex();
+        _$jscoverage['/editor/range.js'].lineData[423]++;
+        if (visit433_423_1(removeStartNode && (topStart._4eSameLevel(startNode)))) {
+          _$jscoverage['/editor/range.js'].lineData[426]++;
           startIndex--;
         }
-        _$jscoverage['/editor/range.js'].lineData[403]++;
+        _$jscoverage['/editor/range.js'].lineData[429]++;
         self.setStart(topStart.parent(), startIndex + 1);
       }
-      _$jscoverage['/editor/range.js'].lineData[407]++;
+      _$jscoverage['/editor/range.js'].lineData[433]++;
       self.collapse(TRUE);
     }
-    _$jscoverage['/editor/range.js'].lineData[412]++;
-    if (visit431_412_1(removeStartNode)) {
-      _$jscoverage['/editor/range.js'].lineData[413]++;
+    _$jscoverage['/editor/range.js'].lineData[438]++;
+    if (visit434_438_1(removeStartNode)) {
+      _$jscoverage['/editor/range.js'].lineData[439]++;
       startNode.remove();
     }
-    _$jscoverage['/editor/range.js'].lineData[416]++;
-    if (visit432_416_1(removeEndNode)) {
-      _$jscoverage['/editor/range.js'].lineData[417]++;
+    _$jscoverage['/editor/range.js'].lineData[442]++;
+    if (visit435_442_1(removeEndNode)) {
+      _$jscoverage['/editor/range.js'].lineData[443]++;
       endNode.remove();
     }
-    _$jscoverage['/editor/range.js'].lineData[420]++;
+    _$jscoverage['/editor/range.js'].lineData[446]++;
     return docFrag;
   }
-  _$jscoverage['/editor/range.js'].lineData[423]++;
+  _$jscoverage['/editor/range.js'].lineData[449]++;
   function updateCollapsed(self) {
     _$jscoverage['/editor/range.js'].functionData[8]++;
-    _$jscoverage['/editor/range.js'].lineData[424]++;
-    self.collapsed = (visit433_425_1(self.startContainer && visit434_426_1(self.endContainer && visit435_427_1(visit436_427_2(self.startContainer[0] == self.endContainer[0]) && visit437_428_1(self.startOffset == self.endOffset)))));
+    _$jscoverage['/editor/range.js'].lineData[450]++;
+    self.collapsed = (visit436_451_1(self.startContainer && visit437_452_1(self.endContainer && visit438_453_1(visit439_453_2(self.startContainer[0] === self.endContainer[0]) && visit440_454_1(self.startOffset === self.endOffset)))));
   }
-  _$jscoverage['/editor/range.js'].lineData[437]++;
+  _$jscoverage['/editor/range.js'].lineData[463]++;
   function KERange(document) {
     _$jscoverage['/editor/range.js'].functionData[9]++;
-    _$jscoverage['/editor/range.js'].lineData[438]++;
+    _$jscoverage['/editor/range.js'].lineData[464]++;
     var self = this;
-    _$jscoverage['/editor/range.js'].lineData[439]++;
+    _$jscoverage['/editor/range.js'].lineData[465]++;
     self.startContainer = NULL;
-    _$jscoverage['/editor/range.js'].lineData[440]++;
+    _$jscoverage['/editor/range.js'].lineData[466]++;
     self.startOffset = NULL;
-    _$jscoverage['/editor/range.js'].lineData[441]++;
+    _$jscoverage['/editor/range.js'].lineData[467]++;
     self.endContainer = NULL;
-    _$jscoverage['/editor/range.js'].lineData[442]++;
+    _$jscoverage['/editor/range.js'].lineData[468]++;
     self.endOffset = NULL;
-    _$jscoverage['/editor/range.js'].lineData[443]++;
+    _$jscoverage['/editor/range.js'].lineData[469]++;
     self.collapsed = TRUE;
-    _$jscoverage['/editor/range.js'].lineData[444]++;
+    _$jscoverage['/editor/range.js'].lineData[470]++;
     self.document = document;
   }
-  _$jscoverage['/editor/range.js'].lineData[447]++;
+  _$jscoverage['/editor/range.js'].lineData[473]++;
   S.augment(KERange, {
   toString: function() {
   _$jscoverage['/editor/range.js'].functionData[10]++;
-  _$jscoverage['/editor/range.js'].lineData[453]++;
+  _$jscoverage['/editor/range.js'].lineData[479]++;
   var s = [], self = this, startContainer = self.startContainer[0], endContainer = self.endContainer[0];
-  _$jscoverage['/editor/range.js'].lineData[457]++;
-  s.push((visit438_457_1(startContainer.id || startContainer.nodeName)) + ":" + self.startOffset);
-  _$jscoverage['/editor/range.js'].lineData[458]++;
-  s.push((visit439_458_1(endContainer.id || endContainer.nodeName)) + ":" + self.endOffset);
-  _$jscoverage['/editor/range.js'].lineData[459]++;
-  return s.join("<br/>");
+  _$jscoverage['/editor/range.js'].lineData[483]++;
+  s.push((visit441_483_1(startContainer.id || startContainer.nodeName)) + ':' + self.startOffset);
+  _$jscoverage['/editor/range.js'].lineData[484]++;
+  s.push((visit442_484_1(endContainer.id || endContainer.nodeName)) + ':' + self.endOffset);
+  _$jscoverage['/editor/range.js'].lineData[485]++;
+  return s.join('<br/>');
 }, 
   optimize: function() {
   _$jscoverage['/editor/range.js'].functionData[11]++;
-  _$jscoverage['/editor/range.js'].lineData[469]++;
+  _$jscoverage['/editor/range.js'].lineData[495]++;
   var self = this, container = self.startContainer, offset = self.startOffset;
-  _$jscoverage['/editor/range.js'].lineData[473]++;
-  if (visit440_473_1(container[0].nodeType != Dom.NodeType.ELEMENT_NODE)) {
-    _$jscoverage['/editor/range.js'].lineData[474]++;
-    if (visit441_474_1(!offset)) {
-      _$jscoverage['/editor/range.js'].lineData[475]++;
+  _$jscoverage['/editor/range.js'].lineData[499]++;
+  if (visit443_499_1(container[0].nodeType !== Dom.NodeType.ELEMENT_NODE)) {
+    _$jscoverage['/editor/range.js'].lineData[500]++;
+    if (visit444_500_1(!offset)) {
+      _$jscoverage['/editor/range.js'].lineData[501]++;
       self.setStartBefore(container);
     } else {
-      _$jscoverage['/editor/range.js'].lineData[476]++;
-      if (visit442_476_1(offset >= container[0].nodeValue.length)) {
-        _$jscoverage['/editor/range.js'].lineData[477]++;
+      _$jscoverage['/editor/range.js'].lineData[502]++;
+      if (visit445_502_1(offset >= container[0].nodeValue.length)) {
+        _$jscoverage['/editor/range.js'].lineData[503]++;
         self.setStartAfter(container);
       }
     }
   }
-  _$jscoverage['/editor/range.js'].lineData[481]++;
+  _$jscoverage['/editor/range.js'].lineData[507]++;
   container = self.endContainer;
-  _$jscoverage['/editor/range.js'].lineData[482]++;
+  _$jscoverage['/editor/range.js'].lineData[508]++;
   offset = self.endOffset;
-  _$jscoverage['/editor/range.js'].lineData[484]++;
-  if (visit443_484_1(container[0].nodeType != Dom.NodeType.ELEMENT_NODE)) {
-    _$jscoverage['/editor/range.js'].lineData[485]++;
-    if (visit444_485_1(!offset)) {
-      _$jscoverage['/editor/range.js'].lineData[486]++;
+  _$jscoverage['/editor/range.js'].lineData[510]++;
+  if (visit446_510_1(container[0].nodeType !== Dom.NodeType.ELEMENT_NODE)) {
+    _$jscoverage['/editor/range.js'].lineData[511]++;
+    if (visit447_511_1(!offset)) {
+      _$jscoverage['/editor/range.js'].lineData[512]++;
       self.setEndBefore(container);
     } else {
-      _$jscoverage['/editor/range.js'].lineData[487]++;
-      if (visit445_487_1(offset >= container[0].nodeValue.length)) {
-        _$jscoverage['/editor/range.js'].lineData[488]++;
+      _$jscoverage['/editor/range.js'].lineData[513]++;
+      if (visit448_513_1(offset >= container[0].nodeValue.length)) {
+        _$jscoverage['/editor/range.js'].lineData[514]++;
         self.setEndAfter(container);
       }
     }
@@ -2815,401 +2812,401 @@ KISSY.add(function(S, require) {
 }, 
   setStartAfter: function(node) {
   _$jscoverage['/editor/range.js'].functionData[12]++;
-  _$jscoverage['/editor/range.js'].lineData[498]++;
-  this.setStart(node.parent(), node._4e_index() + 1);
+  _$jscoverage['/editor/range.js'].lineData[524]++;
+  this.setStart(node.parent(), node._4eIndex() + 1);
 }, 
   setStartBefore: function(node) {
   _$jscoverage['/editor/range.js'].functionData[13]++;
-  _$jscoverage['/editor/range.js'].lineData[505]++;
-  this.setStart(node.parent(), node._4e_index());
+  _$jscoverage['/editor/range.js'].lineData[531]++;
+  this.setStart(node.parent(), node._4eIndex());
 }, 
   setEndAfter: function(node) {
   _$jscoverage['/editor/range.js'].functionData[14]++;
-  _$jscoverage['/editor/range.js'].lineData[512]++;
-  this.setEnd(node.parent(), node._4e_index() + 1);
+  _$jscoverage['/editor/range.js'].lineData[538]++;
+  this.setEnd(node.parent(), node._4eIndex() + 1);
 }, 
   setEndBefore: function(node) {
   _$jscoverage['/editor/range.js'].functionData[15]++;
-  _$jscoverage['/editor/range.js'].lineData[519]++;
-  this.setEnd(node.parent(), node._4e_index());
+  _$jscoverage['/editor/range.js'].lineData[545]++;
+  this.setEnd(node.parent(), node._4eIndex());
 }, 
   optimizeBookmark: function() {
   _$jscoverage['/editor/range.js'].functionData[16]++;
-  _$jscoverage['/editor/range.js'].lineData[526]++;
+  _$jscoverage['/editor/range.js'].lineData[552]++;
   var self = this, startNode = self.startContainer, endNode = self.endContainer;
-  _$jscoverage['/editor/range.js'].lineData[530]++;
-  if (visit446_530_1(startNode && visit447_531_1(visit448_531_2(startNode.nodeName() == 'span') && startNode.attr('_ke_bookmark')))) {
-    _$jscoverage['/editor/range.js'].lineData[533]++;
+  _$jscoverage['/editor/range.js'].lineData[556]++;
+  if (visit449_556_1(startNode && visit450_557_1(visit451_557_2(startNode.nodeName() === 'span') && startNode.attr('_ke_bookmark')))) {
+    _$jscoverage['/editor/range.js'].lineData[559]++;
     self.setStartBefore(startNode);
   }
-  _$jscoverage['/editor/range.js'].lineData[535]++;
-  if (visit449_535_1(endNode && visit450_536_1(visit451_536_2(endNode.nodeName() == 'span') && endNode.attr('_ke_bookmark')))) {
-    _$jscoverage['/editor/range.js'].lineData[538]++;
+  _$jscoverage['/editor/range.js'].lineData[561]++;
+  if (visit452_561_1(endNode && visit453_562_1(visit454_562_2(endNode.nodeName() === 'span') && endNode.attr('_ke_bookmark')))) {
+    _$jscoverage['/editor/range.js'].lineData[564]++;
     self.setEndAfter(endNode);
   }
 }, 
   setStart: function(startNode, startOffset) {
   _$jscoverage['/editor/range.js'].functionData[17]++;
-  _$jscoverage['/editor/range.js'].lineData[556]++;
+  _$jscoverage['/editor/range.js'].lineData[582]++;
   var self = this;
-  _$jscoverage['/editor/range.js'].lineData[557]++;
-  if (visit452_557_1(visit453_557_2(startNode[0].nodeType == Dom.NodeType.ELEMENT_NODE) && EMPTY[startNode.nodeName()])) {
-    _$jscoverage['/editor/range.js'].lineData[558]++;
+  _$jscoverage['/editor/range.js'].lineData[583]++;
+  if (visit455_583_1(visit456_583_2(startNode[0].nodeType === Dom.NodeType.ELEMENT_NODE) && EMPTY[startNode.nodeName()])) {
+    _$jscoverage['/editor/range.js'].lineData[584]++;
     startNode = startNode.parent();
-    _$jscoverage['/editor/range.js'].lineData[559]++;
-    startOffset = startNode._4e_index();
+    _$jscoverage['/editor/range.js'].lineData[585]++;
+    startOffset = startNode._4eIndex();
   }
-  _$jscoverage['/editor/range.js'].lineData[562]++;
+  _$jscoverage['/editor/range.js'].lineData[588]++;
   self.startContainer = startNode;
-  _$jscoverage['/editor/range.js'].lineData[563]++;
+  _$jscoverage['/editor/range.js'].lineData[589]++;
   self.startOffset = startOffset;
-  _$jscoverage['/editor/range.js'].lineData[565]++;
-  if (visit454_565_1(!self.endContainer)) {
-    _$jscoverage['/editor/range.js'].lineData[566]++;
+  _$jscoverage['/editor/range.js'].lineData[591]++;
+  if (visit457_591_1(!self.endContainer)) {
+    _$jscoverage['/editor/range.js'].lineData[592]++;
     self.endContainer = startNode;
-    _$jscoverage['/editor/range.js'].lineData[567]++;
+    _$jscoverage['/editor/range.js'].lineData[593]++;
     self.endOffset = startOffset;
   }
-  _$jscoverage['/editor/range.js'].lineData[570]++;
+  _$jscoverage['/editor/range.js'].lineData[596]++;
   updateCollapsed(self);
 }, 
   setEnd: function(endNode, endOffset) {
   _$jscoverage['/editor/range.js'].functionData[18]++;
-  _$jscoverage['/editor/range.js'].lineData[587]++;
+  _$jscoverage['/editor/range.js'].lineData[613]++;
   var self = this;
-  _$jscoverage['/editor/range.js'].lineData[588]++;
-  if (visit455_588_1(visit456_588_2(endNode[0].nodeType == Dom.NodeType.ELEMENT_NODE) && EMPTY[endNode.nodeName()])) {
-    _$jscoverage['/editor/range.js'].lineData[589]++;
+  _$jscoverage['/editor/range.js'].lineData[614]++;
+  if (visit458_614_1(visit459_614_2(endNode[0].nodeType === Dom.NodeType.ELEMENT_NODE) && EMPTY[endNode.nodeName()])) {
+    _$jscoverage['/editor/range.js'].lineData[615]++;
     endNode = endNode.parent();
-    _$jscoverage['/editor/range.js'].lineData[590]++;
-    endOffset = endNode._4e_index() + 1;
+    _$jscoverage['/editor/range.js'].lineData[616]++;
+    endOffset = endNode._4eIndex() + 1;
   }
-  _$jscoverage['/editor/range.js'].lineData[593]++;
+  _$jscoverage['/editor/range.js'].lineData[619]++;
   self.endContainer = endNode;
-  _$jscoverage['/editor/range.js'].lineData[594]++;
+  _$jscoverage['/editor/range.js'].lineData[620]++;
   self.endOffset = endOffset;
-  _$jscoverage['/editor/range.js'].lineData[596]++;
-  if (visit457_596_1(!self.startContainer)) {
-    _$jscoverage['/editor/range.js'].lineData[597]++;
+  _$jscoverage['/editor/range.js'].lineData[622]++;
+  if (visit460_622_1(!self.startContainer)) {
+    _$jscoverage['/editor/range.js'].lineData[623]++;
     self.startContainer = endNode;
-    _$jscoverage['/editor/range.js'].lineData[598]++;
+    _$jscoverage['/editor/range.js'].lineData[624]++;
     self.startOffset = endOffset;
   }
-  _$jscoverage['/editor/range.js'].lineData[601]++;
+  _$jscoverage['/editor/range.js'].lineData[627]++;
   updateCollapsed(self);
 }, 
   setStartAt: function(node, position) {
   _$jscoverage['/editor/range.js'].functionData[19]++;
-  _$jscoverage['/editor/range.js'].lineData[610]++;
+  _$jscoverage['/editor/range.js'].lineData[636]++;
   var self = this;
-  _$jscoverage['/editor/range.js'].lineData[611]++;
+  _$jscoverage['/editor/range.js'].lineData[637]++;
   switch (position) {
     case KER.POSITION_AFTER_START:
-      _$jscoverage['/editor/range.js'].lineData[613]++;
+      _$jscoverage['/editor/range.js'].lineData[639]++;
       self.setStart(node, 0);
-      _$jscoverage['/editor/range.js'].lineData[614]++;
+      _$jscoverage['/editor/range.js'].lineData[640]++;
       break;
     case KER.POSITION_BEFORE_END:
-      _$jscoverage['/editor/range.js'].lineData[617]++;
-      if (visit458_617_1(node[0].nodeType == Dom.NodeType.TEXT_NODE)) {
-        _$jscoverage['/editor/range.js'].lineData[618]++;
+      _$jscoverage['/editor/range.js'].lineData[643]++;
+      if (visit461_643_1(node[0].nodeType === Dom.NodeType.TEXT_NODE)) {
+        _$jscoverage['/editor/range.js'].lineData[644]++;
         self.setStart(node, node[0].nodeValue.length);
       } else {
-        _$jscoverage['/editor/range.js'].lineData[620]++;
+        _$jscoverage['/editor/range.js'].lineData[646]++;
         self.setStart(node, node[0].childNodes.length);
       }
-      _$jscoverage['/editor/range.js'].lineData[622]++;
+      _$jscoverage['/editor/range.js'].lineData[648]++;
       break;
     case KER.POSITION_BEFORE_START:
-      _$jscoverage['/editor/range.js'].lineData[625]++;
+      _$jscoverage['/editor/range.js'].lineData[651]++;
       self.setStartBefore(node);
-      _$jscoverage['/editor/range.js'].lineData[626]++;
+      _$jscoverage['/editor/range.js'].lineData[652]++;
       break;
     case KER.POSITION_AFTER_END:
-      _$jscoverage['/editor/range.js'].lineData[629]++;
+      _$jscoverage['/editor/range.js'].lineData[655]++;
       self.setStartAfter(node);
   }
-  _$jscoverage['/editor/range.js'].lineData[632]++;
+  _$jscoverage['/editor/range.js'].lineData[658]++;
   updateCollapsed(self);
 }, 
   setEndAt: function(node, position) {
   _$jscoverage['/editor/range.js'].functionData[20]++;
-  _$jscoverage['/editor/range.js'].lineData[641]++;
+  _$jscoverage['/editor/range.js'].lineData[667]++;
   var self = this;
-  _$jscoverage['/editor/range.js'].lineData[642]++;
+  _$jscoverage['/editor/range.js'].lineData[668]++;
   switch (position) {
     case KER.POSITION_AFTER_START:
-      _$jscoverage['/editor/range.js'].lineData[644]++;
+      _$jscoverage['/editor/range.js'].lineData[670]++;
       self.setEnd(node, 0);
-      _$jscoverage['/editor/range.js'].lineData[645]++;
+      _$jscoverage['/editor/range.js'].lineData[671]++;
       break;
     case KER.POSITION_BEFORE_END:
-      _$jscoverage['/editor/range.js'].lineData[648]++;
-      if (visit459_648_1(node[0].nodeType == Dom.NodeType.TEXT_NODE)) {
-        _$jscoverage['/editor/range.js'].lineData[649]++;
+      _$jscoverage['/editor/range.js'].lineData[674]++;
+      if (visit462_674_1(node[0].nodeType === Dom.NodeType.TEXT_NODE)) {
+        _$jscoverage['/editor/range.js'].lineData[675]++;
         self.setEnd(node, node[0].nodeValue.length);
       } else {
-        _$jscoverage['/editor/range.js'].lineData[651]++;
+        _$jscoverage['/editor/range.js'].lineData[677]++;
         self.setEnd(node, node[0].childNodes.length);
       }
-      _$jscoverage['/editor/range.js'].lineData[653]++;
+      _$jscoverage['/editor/range.js'].lineData[679]++;
       break;
     case KER.POSITION_BEFORE_START:
-      _$jscoverage['/editor/range.js'].lineData[656]++;
+      _$jscoverage['/editor/range.js'].lineData[682]++;
       self.setEndBefore(node);
-      _$jscoverage['/editor/range.js'].lineData[657]++;
+      _$jscoverage['/editor/range.js'].lineData[683]++;
       break;
     case KER.POSITION_AFTER_END:
-      _$jscoverage['/editor/range.js'].lineData[660]++;
+      _$jscoverage['/editor/range.js'].lineData[686]++;
       self.setEndAfter(node);
   }
-  _$jscoverage['/editor/range.js'].lineData[663]++;
+  _$jscoverage['/editor/range.js'].lineData[689]++;
   updateCollapsed(self);
 }, 
   cloneContents: function() {
   _$jscoverage['/editor/range.js'].functionData[21]++;
-  _$jscoverage['/editor/range.js'].lineData[670]++;
+  _$jscoverage['/editor/range.js'].lineData[696]++;
   return execContentsAction(this, 2);
 }, 
   deleteContents: function() {
   _$jscoverage['/editor/range.js'].functionData[22]++;
-  _$jscoverage['/editor/range.js'].lineData[677]++;
+  _$jscoverage['/editor/range.js'].lineData[703]++;
   return execContentsAction(this, 0);
 }, 
   extractContents: function() {
   _$jscoverage['/editor/range.js'].functionData[23]++;
-  _$jscoverage['/editor/range.js'].lineData[684]++;
+  _$jscoverage['/editor/range.js'].lineData[710]++;
   return execContentsAction(this, 1);
 }, 
   collapse: function(toStart) {
   _$jscoverage['/editor/range.js'].functionData[24]++;
-  _$jscoverage['/editor/range.js'].lineData[692]++;
+  _$jscoverage['/editor/range.js'].lineData[718]++;
   var self = this;
-  _$jscoverage['/editor/range.js'].lineData[693]++;
-  if (visit460_693_1(toStart)) {
-    _$jscoverage['/editor/range.js'].lineData[694]++;
+  _$jscoverage['/editor/range.js'].lineData[719]++;
+  if (visit463_719_1(toStart)) {
+    _$jscoverage['/editor/range.js'].lineData[720]++;
     self.endContainer = self.startContainer;
-    _$jscoverage['/editor/range.js'].lineData[695]++;
+    _$jscoverage['/editor/range.js'].lineData[721]++;
     self.endOffset = self.startOffset;
   } else {
-    _$jscoverage['/editor/range.js'].lineData[697]++;
+    _$jscoverage['/editor/range.js'].lineData[723]++;
     self.startContainer = self.endContainer;
-    _$jscoverage['/editor/range.js'].lineData[698]++;
+    _$jscoverage['/editor/range.js'].lineData[724]++;
     self.startOffset = self.endOffset;
   }
-  _$jscoverage['/editor/range.js'].lineData[700]++;
+  _$jscoverage['/editor/range.js'].lineData[726]++;
   self.collapsed = TRUE;
 }, 
   clone: function() {
   _$jscoverage['/editor/range.js'].functionData[25]++;
-  _$jscoverage['/editor/range.js'].lineData[708]++;
+  _$jscoverage['/editor/range.js'].lineData[734]++;
   var self = this, clone = new KERange(self.document);
-  _$jscoverage['/editor/range.js'].lineData[711]++;
+  _$jscoverage['/editor/range.js'].lineData[737]++;
   clone.startContainer = self.startContainer;
-  _$jscoverage['/editor/range.js'].lineData[712]++;
+  _$jscoverage['/editor/range.js'].lineData[738]++;
   clone.startOffset = self.startOffset;
-  _$jscoverage['/editor/range.js'].lineData[713]++;
+  _$jscoverage['/editor/range.js'].lineData[739]++;
   clone.endContainer = self.endContainer;
-  _$jscoverage['/editor/range.js'].lineData[714]++;
+  _$jscoverage['/editor/range.js'].lineData[740]++;
   clone.endOffset = self.endOffset;
-  _$jscoverage['/editor/range.js'].lineData[715]++;
+  _$jscoverage['/editor/range.js'].lineData[741]++;
   clone.collapsed = self.collapsed;
-  _$jscoverage['/editor/range.js'].lineData[717]++;
+  _$jscoverage['/editor/range.js'].lineData[743]++;
   return clone;
 }, 
   getEnclosedNode: function() {
   _$jscoverage['/editor/range.js'].functionData[26]++;
-  _$jscoverage['/editor/range.js'].lineData[729]++;
+  _$jscoverage['/editor/range.js'].lineData[755]++;
   var walkerRange = this.clone();
-  _$jscoverage['/editor/range.js'].lineData[732]++;
+  _$jscoverage['/editor/range.js'].lineData[758]++;
   walkerRange.optimize();
-  _$jscoverage['/editor/range.js'].lineData[734]++;
-  if (visit461_734_1(visit462_734_2(walkerRange.startContainer[0].nodeType != Dom.NodeType.ELEMENT_NODE) || visit463_735_1(walkerRange.endContainer[0].nodeType != Dom.NodeType.ELEMENT_NODE))) {
-    _$jscoverage['/editor/range.js'].lineData[736]++;
+  _$jscoverage['/editor/range.js'].lineData[760]++;
+  if (visit464_760_1(visit465_760_2(walkerRange.startContainer[0].nodeType !== Dom.NodeType.ELEMENT_NODE) || visit466_761_1(walkerRange.endContainer[0].nodeType !== Dom.NodeType.ELEMENT_NODE))) {
+    _$jscoverage['/editor/range.js'].lineData[762]++;
     return NULL;
   }
-  _$jscoverage['/editor/range.js'].lineData[739]++;
+  _$jscoverage['/editor/range.js'].lineData[765]++;
   var walker = new Walker(walkerRange), node, pre;
-  _$jscoverage['/editor/range.js'].lineData[742]++;
+  _$jscoverage['/editor/range.js'].lineData[768]++;
   walker.evaluator = function(node) {
   _$jscoverage['/editor/range.js'].functionData[27]++;
-  _$jscoverage['/editor/range.js'].lineData[743]++;
-  return visit464_743_1(isNotWhitespaces(node) && isNotBookmarks(node));
+  _$jscoverage['/editor/range.js'].lineData[769]++;
+  return visit467_769_1(isNotWhitespaces(node) && isNotBookmarks(node));
 };
-  _$jscoverage['/editor/range.js'].lineData[750]++;
+  _$jscoverage['/editor/range.js'].lineData[776]++;
   node = walker.next();
-  _$jscoverage['/editor/range.js'].lineData[751]++;
+  _$jscoverage['/editor/range.js'].lineData[777]++;
   walker.reset();
-  _$jscoverage['/editor/range.js'].lineData[752]++;
+  _$jscoverage['/editor/range.js'].lineData[778]++;
   pre = walker.previous();
-  _$jscoverage['/editor/range.js'].lineData[754]++;
-  return visit465_754_1(node && node.equals(pre)) ? node : NULL;
+  _$jscoverage['/editor/range.js'].lineData[780]++;
+  return visit468_780_1(node && node.equals(pre)) ? node : NULL;
 }, 
   shrink: function(mode, selectContents) {
   _$jscoverage['/editor/range.js'].functionData[28]++;
-  _$jscoverage['/editor/range.js'].lineData[764]++;
+  _$jscoverage['/editor/range.js'].lineData[790]++;
   var self = this;
-  _$jscoverage['/editor/range.js'].lineData[765]++;
-  if (visit466_765_1(!self.collapsed)) {
-    _$jscoverage['/editor/range.js'].lineData[766]++;
-    mode = visit467_766_1(mode || KER.SHRINK_TEXT);
-    _$jscoverage['/editor/range.js'].lineData[768]++;
+  _$jscoverage['/editor/range.js'].lineData[791]++;
+  if (visit469_791_1(!self.collapsed)) {
+    _$jscoverage['/editor/range.js'].lineData[792]++;
+    mode = visit470_792_1(mode || KER.SHRINK_TEXT);
+    _$jscoverage['/editor/range.js'].lineData[794]++;
     var walkerRange = self.clone(), startContainer = self.startContainer, endContainer = self.endContainer, startOffset = self.startOffset, endOffset = self.endOffset, moveStart = TRUE, currentElement, walker, moveEnd = TRUE;
-    _$jscoverage['/editor/range.js'].lineData[779]++;
-    if (visit468_779_1(startContainer && visit469_780_1(startContainer[0].nodeType == Dom.NodeType.TEXT_NODE))) {
-      _$jscoverage['/editor/range.js'].lineData[781]++;
-      if (visit470_781_1(!startOffset)) {
-        _$jscoverage['/editor/range.js'].lineData[782]++;
+    _$jscoverage['/editor/range.js'].lineData[805]++;
+    if (visit471_805_1(startContainer && visit472_806_1(startContainer[0].nodeType === Dom.NodeType.TEXT_NODE))) {
+      _$jscoverage['/editor/range.js'].lineData[807]++;
+      if (visit473_807_1(!startOffset)) {
+        _$jscoverage['/editor/range.js'].lineData[808]++;
         walkerRange.setStartBefore(startContainer);
       } else {
-        _$jscoverage['/editor/range.js'].lineData[783]++;
-        if (visit471_783_1(startOffset >= startContainer[0].nodeValue.length)) {
-          _$jscoverage['/editor/range.js'].lineData[784]++;
+        _$jscoverage['/editor/range.js'].lineData[809]++;
+        if (visit474_809_1(startOffset >= startContainer[0].nodeValue.length)) {
+          _$jscoverage['/editor/range.js'].lineData[810]++;
           walkerRange.setStartAfter(startContainer);
         } else {
-          _$jscoverage['/editor/range.js'].lineData[788]++;
+          _$jscoverage['/editor/range.js'].lineData[814]++;
           walkerRange.setStartBefore(startContainer);
-          _$jscoverage['/editor/range.js'].lineData[789]++;
+          _$jscoverage['/editor/range.js'].lineData[815]++;
           moveStart = FALSE;
         }
       }
     }
-    _$jscoverage['/editor/range.js'].lineData[793]++;
-    if (visit472_793_1(endContainer && visit473_794_1(endContainer[0].nodeType == Dom.NodeType.TEXT_NODE))) {
-      _$jscoverage['/editor/range.js'].lineData[795]++;
-      if (visit474_795_1(!endOffset)) {
-        _$jscoverage['/editor/range.js'].lineData[796]++;
+    _$jscoverage['/editor/range.js'].lineData[819]++;
+    if (visit475_819_1(endContainer && visit476_820_1(endContainer[0].nodeType === Dom.NodeType.TEXT_NODE))) {
+      _$jscoverage['/editor/range.js'].lineData[821]++;
+      if (visit477_821_1(!endOffset)) {
+        _$jscoverage['/editor/range.js'].lineData[822]++;
         walkerRange.setEndBefore(endContainer);
       } else {
-        _$jscoverage['/editor/range.js'].lineData[797]++;
-        if (visit475_797_1(endOffset >= endContainer[0].nodeValue.length)) {
-          _$jscoverage['/editor/range.js'].lineData[798]++;
+        _$jscoverage['/editor/range.js'].lineData[823]++;
+        if (visit478_823_1(endOffset >= endContainer[0].nodeValue.length)) {
+          _$jscoverage['/editor/range.js'].lineData[824]++;
           walkerRange.setEndAfter(endContainer);
         } else {
-          _$jscoverage['/editor/range.js'].lineData[800]++;
+          _$jscoverage['/editor/range.js'].lineData[826]++;
           walkerRange.setEndAfter(endContainer);
-          _$jscoverage['/editor/range.js'].lineData[801]++;
+          _$jscoverage['/editor/range.js'].lineData[827]++;
           moveEnd = FALSE;
         }
       }
     }
-    _$jscoverage['/editor/range.js'].lineData[805]++;
-    if (visit476_805_1(moveStart || moveEnd)) {
-      _$jscoverage['/editor/range.js'].lineData[807]++;
+    _$jscoverage['/editor/range.js'].lineData[831]++;
+    if (visit479_831_1(moveStart || moveEnd)) {
+      _$jscoverage['/editor/range.js'].lineData[833]++;
       walker = new Walker(walkerRange);
-      _$jscoverage['/editor/range.js'].lineData[809]++;
+      _$jscoverage['/editor/range.js'].lineData[835]++;
       walker.evaluator = function(node) {
   _$jscoverage['/editor/range.js'].functionData[29]++;
-  _$jscoverage['/editor/range.js'].lineData[810]++;
-  return visit477_810_1(node.nodeType == (visit478_810_2(mode == KER.SHRINK_ELEMENT) ? Dom.NodeType.ELEMENT_NODE : Dom.NodeType.TEXT_NODE));
+  _$jscoverage['/editor/range.js'].lineData[836]++;
+  return visit480_836_1(node.nodeType === (visit481_836_2(mode === KER.SHRINK_ELEMENT) ? Dom.NodeType.ELEMENT_NODE : Dom.NodeType.TEXT_NODE));
 };
-      _$jscoverage['/editor/range.js'].lineData[814]++;
+      _$jscoverage['/editor/range.js'].lineData[840]++;
       walker.guard = function(node, movingOut) {
   _$jscoverage['/editor/range.js'].functionData[30]++;
-  _$jscoverage['/editor/range.js'].lineData[816]++;
-  if (visit479_816_1(visit480_816_2(mode == KER.SHRINK_ELEMENT) && visit481_817_1(node.nodeType == Dom.NodeType.TEXT_NODE))) {
-    _$jscoverage['/editor/range.js'].lineData[818]++;
+  _$jscoverage['/editor/range.js'].lineData[842]++;
+  if (visit482_842_1(visit483_842_2(mode === KER.SHRINK_ELEMENT) && visit484_843_1(node.nodeType === Dom.NodeType.TEXT_NODE))) {
+    _$jscoverage['/editor/range.js'].lineData[844]++;
     return FALSE;
   }
-  _$jscoverage['/editor/range.js'].lineData[821]++;
-  if (visit482_821_1(movingOut && visit483_821_2(node == currentElement))) {
-    _$jscoverage['/editor/range.js'].lineData[822]++;
+  _$jscoverage['/editor/range.js'].lineData[847]++;
+  if (visit485_847_1(movingOut && visit486_847_2(node === currentElement))) {
+    _$jscoverage['/editor/range.js'].lineData[848]++;
     return FALSE;
   }
-  _$jscoverage['/editor/range.js'].lineData[824]++;
-  if (visit484_824_1(!movingOut && visit485_824_2(node.nodeType == Dom.NodeType.ELEMENT_NODE))) {
-    _$jscoverage['/editor/range.js'].lineData[825]++;
+  _$jscoverage['/editor/range.js'].lineData[850]++;
+  if (visit487_850_1(!movingOut && visit488_850_2(node.nodeType === Dom.NodeType.ELEMENT_NODE))) {
+    _$jscoverage['/editor/range.js'].lineData[851]++;
     currentElement = node;
   }
-  _$jscoverage['/editor/range.js'].lineData[827]++;
+  _$jscoverage['/editor/range.js'].lineData[853]++;
   return TRUE;
 };
     }
-    _$jscoverage['/editor/range.js'].lineData[832]++;
-    if (visit486_832_1(moveStart)) {
-      _$jscoverage['/editor/range.js'].lineData[833]++;
-      var textStart = walker[visit487_833_1(mode == KER.SHRINK_ELEMENT) ? 'lastForward' : 'next']();
-      _$jscoverage['/editor/range.js'].lineData[834]++;
-      if (visit488_834_1(textStart)) {
-        _$jscoverage['/editor/range.js'].lineData[835]++;
+    _$jscoverage['/editor/range.js'].lineData[858]++;
+    if (visit489_858_1(moveStart)) {
+      _$jscoverage['/editor/range.js'].lineData[859]++;
+      var textStart = walker[visit490_859_1(mode === KER.SHRINK_ELEMENT) ? 'lastForward' : 'next']();
+      _$jscoverage['/editor/range.js'].lineData[860]++;
+      if (visit491_860_1(textStart)) {
+        _$jscoverage['/editor/range.js'].lineData[861]++;
         self.setStartAt(textStart, selectContents ? KER.POSITION_AFTER_START : KER.POSITION_BEFORE_START);
       }
     }
-    _$jscoverage['/editor/range.js'].lineData[839]++;
-    if (visit489_839_1(moveEnd)) {
-      _$jscoverage['/editor/range.js'].lineData[840]++;
+    _$jscoverage['/editor/range.js'].lineData[865]++;
+    if (visit492_865_1(moveEnd)) {
+      _$jscoverage['/editor/range.js'].lineData[866]++;
       walker.reset();
-      _$jscoverage['/editor/range.js'].lineData[841]++;
-      var textEnd = walker[visit490_841_1(mode == KER.SHRINK_ELEMENT) ? 'lastBackward' : 'previous']();
-      _$jscoverage['/editor/range.js'].lineData[842]++;
-      if (visit491_842_1(textEnd)) {
-        _$jscoverage['/editor/range.js'].lineData[843]++;
+      _$jscoverage['/editor/range.js'].lineData[867]++;
+      var textEnd = walker[visit493_867_1(mode === KER.SHRINK_ELEMENT) ? 'lastBackward' : 'previous']();
+      _$jscoverage['/editor/range.js'].lineData[868]++;
+      if (visit494_868_1(textEnd)) {
+        _$jscoverage['/editor/range.js'].lineData[869]++;
         self.setEndAt(textEnd, selectContents ? KER.POSITION_BEFORE_END : KER.POSITION_AFTER_END);
       }
     }
-    _$jscoverage['/editor/range.js'].lineData[847]++;
-    return visit492_847_1(moveStart || moveEnd);
+    _$jscoverage['/editor/range.js'].lineData[873]++;
+    return visit495_873_1(moveStart || moveEnd);
   }
 }, 
   createBookmark2: function(normalized) {
   _$jscoverage['/editor/range.js'].functionData[31]++;
-  _$jscoverage['/editor/range.js'].lineData[857]++;
+  _$jscoverage['/editor/range.js'].lineData[883]++;
   var self = this, startContainer = self.startContainer, endContainer = self.endContainer, startOffset = self.startOffset, endOffset = self.endOffset, child, previous;
-  _$jscoverage['/editor/range.js'].lineData[867]++;
-  if (visit493_867_1(!startContainer || !endContainer)) {
-    _$jscoverage['/editor/range.js'].lineData[868]++;
+  _$jscoverage['/editor/range.js'].lineData[893]++;
+  if (visit496_893_1(!startContainer || !endContainer)) {
+    _$jscoverage['/editor/range.js'].lineData[894]++;
     return {
   start: 0, 
   end: 0};
   }
-  _$jscoverage['/editor/range.js'].lineData[874]++;
-  if (visit494_874_1(normalized)) {
-    _$jscoverage['/editor/range.js'].lineData[877]++;
-    if (visit495_877_1(startContainer[0].nodeType == Dom.NodeType.ELEMENT_NODE)) {
-      _$jscoverage['/editor/range.js'].lineData[878]++;
+  _$jscoverage['/editor/range.js'].lineData[900]++;
+  if (visit497_900_1(normalized)) {
+    _$jscoverage['/editor/range.js'].lineData[903]++;
+    if (visit498_903_1(startContainer[0].nodeType === Dom.NodeType.ELEMENT_NODE)) {
+      _$jscoverage['/editor/range.js'].lineData[904]++;
       child = new Node(startContainer[0].childNodes[startOffset]);
-      _$jscoverage['/editor/range.js'].lineData[882]++;
-      if (visit496_882_1(child && visit497_882_2(child[0] && visit498_882_3(visit499_882_4(child[0].nodeType == Dom.NodeType.TEXT_NODE) && visit500_883_1(visit501_883_2(startOffset > 0) && visit502_883_3(child[0].previousSibling.nodeType == Dom.NodeType.TEXT_NODE)))))) {
-        _$jscoverage['/editor/range.js'].lineData[884]++;
+      _$jscoverage['/editor/range.js'].lineData[908]++;
+      if (visit499_908_1(child && visit500_908_2(child[0] && visit501_908_3(visit502_908_4(child[0].nodeType === Dom.NodeType.TEXT_NODE) && visit503_909_1(visit504_909_2(startOffset > 0) && visit505_909_3(child[0].previousSibling.nodeType === Dom.NodeType.TEXT_NODE)))))) {
+        _$jscoverage['/editor/range.js'].lineData[910]++;
         startContainer = child;
-        _$jscoverage['/editor/range.js'].lineData[885]++;
+        _$jscoverage['/editor/range.js'].lineData[911]++;
         startOffset = 0;
       }
     }
-    _$jscoverage['/editor/range.js'].lineData[891]++;
-    while (visit503_891_1(visit504_891_2(startContainer[0].nodeType == Dom.NodeType.TEXT_NODE) && visit505_892_1((previous = startContainer.prev(undefined, 1)) && visit506_893_1(previous[0].nodeType == Dom.NodeType.TEXT_NODE)))) {
-      _$jscoverage['/editor/range.js'].lineData[894]++;
+    _$jscoverage['/editor/range.js'].lineData[917]++;
+    while (visit506_917_1(visit507_917_2(startContainer[0].nodeType === Dom.NodeType.TEXT_NODE) && visit508_918_1((previous = startContainer.prev(undefined, 1)) && visit509_919_1(previous[0].nodeType === Dom.NodeType.TEXT_NODE)))) {
+      _$jscoverage['/editor/range.js'].lineData[920]++;
       startContainer = previous;
-      _$jscoverage['/editor/range.js'].lineData[895]++;
+      _$jscoverage['/editor/range.js'].lineData[921]++;
       startOffset += previous[0].nodeValue.length;
     }
-    _$jscoverage['/editor/range.js'].lineData[899]++;
-    if (visit507_899_1(!self.collapsed)) {
-      _$jscoverage['/editor/range.js'].lineData[902]++;
-      if (visit508_902_1(endContainer[0].nodeType == Dom.NodeType.ELEMENT_NODE)) {
-        _$jscoverage['/editor/range.js'].lineData[903]++;
+    _$jscoverage['/editor/range.js'].lineData[925]++;
+    if (visit510_925_1(!self.collapsed)) {
+      _$jscoverage['/editor/range.js'].lineData[928]++;
+      if (visit511_928_1(endContainer[0].nodeType === Dom.NodeType.ELEMENT_NODE)) {
+        _$jscoverage['/editor/range.js'].lineData[929]++;
         child = new Node(endContainer[0].childNodes[endOffset]);
-        _$jscoverage['/editor/range.js'].lineData[907]++;
-        if (visit509_907_1(child && visit510_907_2(child[0] && visit511_908_1(visit512_908_2(child[0].nodeType == Dom.NodeType.TEXT_NODE) && visit513_908_3(visit514_908_4(endOffset > 0) && visit515_909_1(child[0].previousSibling.nodeType == Dom.NodeType.TEXT_NODE)))))) {
-          _$jscoverage['/editor/range.js'].lineData[910]++;
+        _$jscoverage['/editor/range.js'].lineData[933]++;
+        if (visit512_933_1(child && visit513_933_2(child[0] && visit514_934_1(visit515_934_2(child[0].nodeType === Dom.NodeType.TEXT_NODE) && visit516_934_3(visit517_934_4(endOffset > 0) && visit518_935_1(child[0].previousSibling.nodeType === Dom.NodeType.TEXT_NODE)))))) {
+          _$jscoverage['/editor/range.js'].lineData[936]++;
           endContainer = child;
-          _$jscoverage['/editor/range.js'].lineData[911]++;
+          _$jscoverage['/editor/range.js'].lineData[937]++;
           endOffset = 0;
         }
       }
-      _$jscoverage['/editor/range.js'].lineData[916]++;
-      while (visit516_916_1(visit517_916_2(endContainer[0].nodeType == Dom.NodeType.TEXT_NODE) && visit518_917_1((previous = endContainer.prev(undefined, 1)) && visit519_918_1(previous[0].nodeType == Dom.NodeType.TEXT_NODE)))) {
-        _$jscoverage['/editor/range.js'].lineData[919]++;
+      _$jscoverage['/editor/range.js'].lineData[942]++;
+      while (visit519_942_1(visit520_942_2(endContainer[0].nodeType === Dom.NodeType.TEXT_NODE) && visit521_943_1((previous = endContainer.prev(undefined, 1)) && visit522_944_1(previous[0].nodeType === Dom.NodeType.TEXT_NODE)))) {
+        _$jscoverage['/editor/range.js'].lineData[945]++;
         endContainer = previous;
-        _$jscoverage['/editor/range.js'].lineData[920]++;
+        _$jscoverage['/editor/range.js'].lineData[946]++;
         endOffset += previous[0].nodeValue.length;
       }
     }
   }
-  _$jscoverage['/editor/range.js'].lineData[925]++;
+  _$jscoverage['/editor/range.js'].lineData[951]++;
   return {
-  start: startContainer._4e_address(normalized), 
-  end: self.collapsed ? NULL : endContainer._4e_address(normalized), 
+  start: startContainer._4eAddress(normalized), 
+  end: self.collapsed ? NULL : endContainer._4eAddress(normalized), 
   startOffset: startOffset, 
   endOffset: endOffset, 
   normalized: normalized, 
@@ -3217,58 +3214,58 @@ KISSY.add(function(S, require) {
 }, 
   createBookmark: function(serializable) {
   _$jscoverage['/editor/range.js'].functionData[32]++;
-  _$jscoverage['/editor/range.js'].lineData[939]++;
+  _$jscoverage['/editor/range.js'].lineData[965]++;
   var startNode, endNode, baseId, clone, self = this, collapsed = self.collapsed;
-  _$jscoverage['/editor/range.js'].lineData[945]++;
-  startNode = new Node("<span>", NULL, self.document);
-  _$jscoverage['/editor/range.js'].lineData[946]++;
+  _$jscoverage['/editor/range.js'].lineData[971]++;
+  startNode = new Node('<span>', NULL, self.document);
+  _$jscoverage['/editor/range.js'].lineData[972]++;
   startNode.attr('_ke_bookmark', 1);
-  _$jscoverage['/editor/range.js'].lineData[947]++;
+  _$jscoverage['/editor/range.js'].lineData[973]++;
   startNode.css('display', 'none');
-  _$jscoverage['/editor/range.js'].lineData[951]++;
+  _$jscoverage['/editor/range.js'].lineData[977]++;
   startNode.html('&nbsp;');
-  _$jscoverage['/editor/range.js'].lineData[953]++;
-  if (visit520_953_1(serializable)) {
-    _$jscoverage['/editor/range.js'].lineData[954]++;
+  _$jscoverage['/editor/range.js'].lineData[979]++;
+  if (visit523_979_1(serializable)) {
+    _$jscoverage['/editor/range.js'].lineData[980]++;
     baseId = S.guid('ke_bm_');
-    _$jscoverage['/editor/range.js'].lineData[955]++;
+    _$jscoverage['/editor/range.js'].lineData[981]++;
     startNode.attr('id', baseId + 'S');
   }
-  _$jscoverage['/editor/range.js'].lineData[959]++;
-  if (visit521_959_1(!collapsed)) {
-    _$jscoverage['/editor/range.js'].lineData[960]++;
+  _$jscoverage['/editor/range.js'].lineData[985]++;
+  if (visit524_985_1(!collapsed)) {
+    _$jscoverage['/editor/range.js'].lineData[986]++;
     endNode = startNode.clone();
-    _$jscoverage['/editor/range.js'].lineData[961]++;
+    _$jscoverage['/editor/range.js'].lineData[987]++;
     endNode.html('&nbsp;');
-    _$jscoverage['/editor/range.js'].lineData[963]++;
-    if (visit522_963_1(serializable)) {
-      _$jscoverage['/editor/range.js'].lineData[964]++;
+    _$jscoverage['/editor/range.js'].lineData[989]++;
+    if (visit525_989_1(serializable)) {
+      _$jscoverage['/editor/range.js'].lineData[990]++;
       endNode.attr('id', baseId + 'E');
     }
-    _$jscoverage['/editor/range.js'].lineData[967]++;
+    _$jscoverage['/editor/range.js'].lineData[993]++;
     clone = self.clone();
-    _$jscoverage['/editor/range.js'].lineData[968]++;
+    _$jscoverage['/editor/range.js'].lineData[994]++;
     clone.collapse();
-    _$jscoverage['/editor/range.js'].lineData[969]++;
+    _$jscoverage['/editor/range.js'].lineData[995]++;
     clone.insertNode(endNode);
   }
-  _$jscoverage['/editor/range.js'].lineData[972]++;
+  _$jscoverage['/editor/range.js'].lineData[998]++;
   clone = self.clone();
-  _$jscoverage['/editor/range.js'].lineData[973]++;
+  _$jscoverage['/editor/range.js'].lineData[999]++;
   clone.collapse(TRUE);
-  _$jscoverage['/editor/range.js'].lineData[974]++;
+  _$jscoverage['/editor/range.js'].lineData[1000]++;
   clone.insertNode(startNode);
-  _$jscoverage['/editor/range.js'].lineData[977]++;
-  if (visit523_977_1(endNode)) {
-    _$jscoverage['/editor/range.js'].lineData[978]++;
+  _$jscoverage['/editor/range.js'].lineData[1003]++;
+  if (visit526_1003_1(endNode)) {
+    _$jscoverage['/editor/range.js'].lineData[1004]++;
     self.setStartAfter(startNode);
-    _$jscoverage['/editor/range.js'].lineData[979]++;
+    _$jscoverage['/editor/range.js'].lineData[1005]++;
     self.setEndBefore(endNode);
   } else {
-    _$jscoverage['/editor/range.js'].lineData[981]++;
+    _$jscoverage['/editor/range.js'].lineData[1007]++;
     self.moveToPosition(startNode, KER.POSITION_AFTER_END);
   }
-  _$jscoverage['/editor/range.js'].lineData[984]++;
+  _$jscoverage['/editor/range.js'].lineData[1010]++;
   return {
   startNode: serializable ? baseId + 'S' : startNode, 
   endNode: serializable ? baseId + 'E' : endNode, 
@@ -3277,343 +3274,343 @@ KISSY.add(function(S, require) {
 }, 
   moveToPosition: function(node, position) {
   _$jscoverage['/editor/range.js'].functionData[33]++;
-  _$jscoverage['/editor/range.js'].lineData[998]++;
+  _$jscoverage['/editor/range.js'].lineData[1024]++;
   var self = this;
-  _$jscoverage['/editor/range.js'].lineData[999]++;
+  _$jscoverage['/editor/range.js'].lineData[1025]++;
   self.setStartAt(node, position);
-  _$jscoverage['/editor/range.js'].lineData[1000]++;
+  _$jscoverage['/editor/range.js'].lineData[1026]++;
   self.collapse(TRUE);
 }, 
   trim: function(ignoreStart, ignoreEnd) {
   _$jscoverage['/editor/range.js'].functionData[34]++;
-  _$jscoverage['/editor/range.js'].lineData[1009]++;
+  _$jscoverage['/editor/range.js'].lineData[1035]++;
   var self = this, startContainer = self.startContainer, startOffset = self.startOffset, collapsed = self.collapsed;
-  _$jscoverage['/editor/range.js'].lineData[1014]++;
-  if (visit524_1014_1((visit525_1014_2(!ignoreStart || collapsed)) && visit526_1015_1(startContainer[0] && visit527_1016_1(startContainer[0].nodeType == Dom.NodeType.TEXT_NODE)))) {
-    _$jscoverage['/editor/range.js'].lineData[1019]++;
-    if (visit528_1019_1(!startOffset)) {
-      _$jscoverage['/editor/range.js'].lineData[1020]++;
-      startOffset = startContainer._4e_index();
-      _$jscoverage['/editor/range.js'].lineData[1021]++;
+  _$jscoverage['/editor/range.js'].lineData[1040]++;
+  if (visit527_1040_1((visit528_1040_2(!ignoreStart || collapsed)) && visit529_1041_1(startContainer[0] && visit530_1042_1(startContainer[0].nodeType === Dom.NodeType.TEXT_NODE)))) {
+    _$jscoverage['/editor/range.js'].lineData[1045]++;
+    if (visit531_1045_1(!startOffset)) {
+      _$jscoverage['/editor/range.js'].lineData[1046]++;
+      startOffset = startContainer._4eIndex();
+      _$jscoverage['/editor/range.js'].lineData[1047]++;
       startContainer = startContainer.parent();
     } else {
-      _$jscoverage['/editor/range.js'].lineData[1025]++;
-      if (visit529_1025_1(startOffset >= startContainer[0].nodeValue.length)) {
-        _$jscoverage['/editor/range.js'].lineData[1026]++;
-        startOffset = startContainer._4e_index() + 1;
-        _$jscoverage['/editor/range.js'].lineData[1027]++;
+      _$jscoverage['/editor/range.js'].lineData[1051]++;
+      if (visit532_1051_1(startOffset >= startContainer[0].nodeValue.length)) {
+        _$jscoverage['/editor/range.js'].lineData[1052]++;
+        startOffset = startContainer._4eIndex() + 1;
+        _$jscoverage['/editor/range.js'].lineData[1053]++;
         startContainer = startContainer.parent();
       } else {
-        _$jscoverage['/editor/range.js'].lineData[1032]++;
-        var nextText = startContainer._4e_splitText(startOffset);
-        _$jscoverage['/editor/range.js'].lineData[1034]++;
-        startOffset = startContainer._4e_index() + 1;
-        _$jscoverage['/editor/range.js'].lineData[1035]++;
+        _$jscoverage['/editor/range.js'].lineData[1058]++;
+        var nextText = startContainer._4eSplitText(startOffset);
+        _$jscoverage['/editor/range.js'].lineData[1060]++;
+        startOffset = startContainer._4eIndex() + 1;
+        _$jscoverage['/editor/range.js'].lineData[1061]++;
         startContainer = startContainer.parent();
-        _$jscoverage['/editor/range.js'].lineData[1038]++;
-        if (visit530_1038_1(Dom.equals(self.startContainer, self.endContainer))) {
-          _$jscoverage['/editor/range.js'].lineData[1039]++;
+        _$jscoverage['/editor/range.js'].lineData[1064]++;
+        if (visit533_1064_1(Dom.equals(self.startContainer, self.endContainer))) {
+          _$jscoverage['/editor/range.js'].lineData[1065]++;
           self.setEnd(nextText, self.endOffset - self.startOffset);
         } else {
-          _$jscoverage['/editor/range.js'].lineData[1040]++;
-          if (visit531_1040_1(Dom.equals(startContainer, self.endContainer))) {
-            _$jscoverage['/editor/range.js'].lineData[1041]++;
+          _$jscoverage['/editor/range.js'].lineData[1066]++;
+          if (visit534_1066_1(Dom.equals(startContainer, self.endContainer))) {
+            _$jscoverage['/editor/range.js'].lineData[1067]++;
             self.endOffset += 1;
           }
         }
       }
     }
-    _$jscoverage['/editor/range.js'].lineData[1045]++;
+    _$jscoverage['/editor/range.js'].lineData[1071]++;
     self.setStart(startContainer, startOffset);
-    _$jscoverage['/editor/range.js'].lineData[1047]++;
-    if (visit532_1047_1(collapsed)) {
-      _$jscoverage['/editor/range.js'].lineData[1048]++;
+    _$jscoverage['/editor/range.js'].lineData[1073]++;
+    if (visit535_1073_1(collapsed)) {
+      _$jscoverage['/editor/range.js'].lineData[1074]++;
       self.collapse(TRUE);
-      _$jscoverage['/editor/range.js'].lineData[1049]++;
+      _$jscoverage['/editor/range.js'].lineData[1075]++;
       return;
     }
   }
-  _$jscoverage['/editor/range.js'].lineData[1053]++;
+  _$jscoverage['/editor/range.js'].lineData[1079]++;
   var endContainer = self.endContainer, endOffset = self.endOffset;
-  _$jscoverage['/editor/range.js'].lineData[1056]++;
-  if (visit533_1056_1(!(visit534_1056_2(ignoreEnd || collapsed)) && visit535_1057_1(endContainer[0] && visit536_1057_2(endContainer[0].nodeType == Dom.NodeType.TEXT_NODE)))) {
-    _$jscoverage['/editor/range.js'].lineData[1060]++;
-    if (visit537_1060_1(!endOffset)) {
-      _$jscoverage['/editor/range.js'].lineData[1061]++;
-      endOffset = endContainer._4e_index();
-      _$jscoverage['/editor/range.js'].lineData[1062]++;
+  _$jscoverage['/editor/range.js'].lineData[1082]++;
+  if (visit536_1082_1(!(visit537_1082_2(ignoreEnd || collapsed)) && visit538_1083_1(endContainer[0] && visit539_1083_2(endContainer[0].nodeType === Dom.NodeType.TEXT_NODE)))) {
+    _$jscoverage['/editor/range.js'].lineData[1086]++;
+    if (visit540_1086_1(!endOffset)) {
+      _$jscoverage['/editor/range.js'].lineData[1087]++;
+      endOffset = endContainer._4eIndex();
+      _$jscoverage['/editor/range.js'].lineData[1088]++;
       endContainer = endContainer.parent();
     } else {
-      _$jscoverage['/editor/range.js'].lineData[1066]++;
-      if (visit538_1066_1(endOffset >= endContainer[0].nodeValue.length)) {
-        _$jscoverage['/editor/range.js'].lineData[1067]++;
-        endOffset = endContainer._4e_index() + 1;
-        _$jscoverage['/editor/range.js'].lineData[1068]++;
+      _$jscoverage['/editor/range.js'].lineData[1092]++;
+      if (visit541_1092_1(endOffset >= endContainer[0].nodeValue.length)) {
+        _$jscoverage['/editor/range.js'].lineData[1093]++;
+        endOffset = endContainer._4eIndex() + 1;
+        _$jscoverage['/editor/range.js'].lineData[1094]++;
         endContainer = endContainer.parent();
       } else {
-        _$jscoverage['/editor/range.js'].lineData[1073]++;
-        endContainer._4e_splitText(endOffset);
-        _$jscoverage['/editor/range.js'].lineData[1075]++;
-        endOffset = endContainer._4e_index() + 1;
-        _$jscoverage['/editor/range.js'].lineData[1076]++;
+        _$jscoverage['/editor/range.js'].lineData[1099]++;
+        endContainer._4eSplitText(endOffset);
+        _$jscoverage['/editor/range.js'].lineData[1101]++;
+        endOffset = endContainer._4eIndex() + 1;
+        _$jscoverage['/editor/range.js'].lineData[1102]++;
         endContainer = endContainer.parent();
       }
     }
-    _$jscoverage['/editor/range.js'].lineData[1079]++;
+    _$jscoverage['/editor/range.js'].lineData[1105]++;
     self.setEnd(endContainer, endOffset);
   }
 }, 
   insertNode: function(node) {
   _$jscoverage['/editor/range.js'].functionData[35]++;
-  _$jscoverage['/editor/range.js'].lineData[1087]++;
+  _$jscoverage['/editor/range.js'].lineData[1113]++;
   var self = this;
-  _$jscoverage['/editor/range.js'].lineData[1088]++;
+  _$jscoverage['/editor/range.js'].lineData[1114]++;
   self.optimizeBookmark();
-  _$jscoverage['/editor/range.js'].lineData[1089]++;
+  _$jscoverage['/editor/range.js'].lineData[1115]++;
   self.trim(FALSE, TRUE);
-  _$jscoverage['/editor/range.js'].lineData[1090]++;
-  var startContainer = self.startContainer, startOffset = self.startOffset, nextNode = visit539_1092_1(startContainer[0].childNodes[startOffset] || null);
-  _$jscoverage['/editor/range.js'].lineData[1094]++;
+  _$jscoverage['/editor/range.js'].lineData[1116]++;
+  var startContainer = self.startContainer, startOffset = self.startOffset, nextNode = visit542_1118_1(startContainer[0].childNodes[startOffset] || null);
+  _$jscoverage['/editor/range.js'].lineData[1120]++;
   startContainer[0].insertBefore(node[0], nextNode);
-  _$jscoverage['/editor/range.js'].lineData[1096]++;
-  if (visit540_1096_1(startContainer[0] == self.endContainer[0])) {
-    _$jscoverage['/editor/range.js'].lineData[1097]++;
+  _$jscoverage['/editor/range.js'].lineData[1122]++;
+  if (visit543_1122_1(startContainer[0] === self.endContainer[0])) {
+    _$jscoverage['/editor/range.js'].lineData[1123]++;
     self.endOffset++;
   }
-  _$jscoverage['/editor/range.js'].lineData[1100]++;
+  _$jscoverage['/editor/range.js'].lineData[1126]++;
   self.setStartBefore(node);
 }, 
   moveToBookmark: function(bookmark) {
   _$jscoverage['/editor/range.js'].functionData[36]++;
-  _$jscoverage['/editor/range.js'].lineData[1108]++;
+  _$jscoverage['/editor/range.js'].lineData[1134]++;
   var self = this, doc = $(self.document);
-  _$jscoverage['/editor/range.js'].lineData[1110]++;
-  if (visit541_1110_1(bookmark.is2)) {
-    _$jscoverage['/editor/range.js'].lineData[1112]++;
-    var startContainer = doc._4e_getByAddress(bookmark.start, bookmark.normalized), startOffset = bookmark.startOffset, endContainer = visit542_1114_1(bookmark.end && doc._4e_getByAddress(bookmark.end, bookmark.normalized)), endOffset = bookmark.endOffset;
-    _$jscoverage['/editor/range.js'].lineData[1118]++;
+  _$jscoverage['/editor/range.js'].lineData[1136]++;
+  if (visit544_1136_1(bookmark.is2)) {
+    _$jscoverage['/editor/range.js'].lineData[1138]++;
+    var startContainer = doc._4eGetByAddress(bookmark.start, bookmark.normalized), startOffset = bookmark.startOffset, endContainer = visit545_1140_1(bookmark.end && doc._4eGetByAddress(bookmark.end, bookmark.normalized)), endOffset = bookmark.endOffset;
+    _$jscoverage['/editor/range.js'].lineData[1144]++;
     self.setStart(startContainer, startOffset);
-    _$jscoverage['/editor/range.js'].lineData[1121]++;
-    if (visit543_1121_1(endContainer)) {
-      _$jscoverage['/editor/range.js'].lineData[1122]++;
+    _$jscoverage['/editor/range.js'].lineData[1147]++;
+    if (visit546_1147_1(endContainer)) {
+      _$jscoverage['/editor/range.js'].lineData[1148]++;
       self.setEnd(endContainer, endOffset);
     } else {
-      _$jscoverage['/editor/range.js'].lineData[1124]++;
+      _$jscoverage['/editor/range.js'].lineData[1150]++;
       self.collapse(TRUE);
     }
   } else {
-    _$jscoverage['/editor/range.js'].lineData[1128]++;
-    var serializable = bookmark.serializable, startNode = serializable ? S.one("#" + bookmark.startNode, doc) : bookmark.startNode, endNode = serializable ? S.one("#" + bookmark.endNode, doc) : bookmark.endNode;
-    _$jscoverage['/editor/range.js'].lineData[1135]++;
+    _$jscoverage['/editor/range.js'].lineData[1154]++;
+    var serializable = bookmark.serializable, startNode = serializable ? S.one('#' + bookmark.startNode, doc) : bookmark.startNode, endNode = serializable ? S.one('#' + bookmark.endNode, doc) : bookmark.endNode;
+    _$jscoverage['/editor/range.js'].lineData[1161]++;
     self.setStartBefore(startNode);
-    _$jscoverage['/editor/range.js'].lineData[1138]++;
-    startNode._4e_remove();
-    _$jscoverage['/editor/range.js'].lineData[1142]++;
-    if (visit544_1142_1(endNode && endNode[0])) {
-      _$jscoverage['/editor/range.js'].lineData[1143]++;
+    _$jscoverage['/editor/range.js'].lineData[1164]++;
+    startNode._4eRemove();
+    _$jscoverage['/editor/range.js'].lineData[1168]++;
+    if (visit547_1168_1(endNode && endNode[0])) {
+      _$jscoverage['/editor/range.js'].lineData[1169]++;
       self.setEndBefore(endNode);
-      _$jscoverage['/editor/range.js'].lineData[1144]++;
-      endNode._4e_remove();
+      _$jscoverage['/editor/range.js'].lineData[1170]++;
+      endNode._4eRemove();
     } else {
-      _$jscoverage['/editor/range.js'].lineData[1146]++;
+      _$jscoverage['/editor/range.js'].lineData[1172]++;
       self.collapse(TRUE);
     }
   }
 }, 
   getCommonAncestor: function(includeSelf, ignoreTextNode) {
   _$jscoverage['/editor/range.js'].functionData[37]++;
-  _$jscoverage['/editor/range.js'].lineData[1157]++;
+  _$jscoverage['/editor/range.js'].lineData[1183]++;
   var self = this, start = self.startContainer, end = self.endContainer, ancestor;
-  _$jscoverage['/editor/range.js'].lineData[1162]++;
-  if (visit545_1162_1(start[0] == end[0])) {
-    _$jscoverage['/editor/range.js'].lineData[1163]++;
-    if (visit546_1163_1(includeSelf && visit547_1164_1(visit548_1164_2(start[0].nodeType == Dom.NodeType.ELEMENT_NODE) && visit549_1165_1(self.startOffset == self.endOffset - 1)))) {
-      _$jscoverage['/editor/range.js'].lineData[1166]++;
+  _$jscoverage['/editor/range.js'].lineData[1188]++;
+  if (visit548_1188_1(start[0] === end[0])) {
+    _$jscoverage['/editor/range.js'].lineData[1189]++;
+    if (visit549_1189_1(includeSelf && visit550_1190_1(visit551_1190_2(start[0].nodeType === Dom.NodeType.ELEMENT_NODE) && visit552_1191_1(self.startOffset === self.endOffset - 1)))) {
+      _$jscoverage['/editor/range.js'].lineData[1192]++;
       ancestor = new Node(start[0].childNodes[self.startOffset]);
     } else {
-      _$jscoverage['/editor/range.js'].lineData[1168]++;
+      _$jscoverage['/editor/range.js'].lineData[1194]++;
       ancestor = start;
     }
   } else {
-    _$jscoverage['/editor/range.js'].lineData[1171]++;
-    ancestor = start._4e_commonAncestor(end);
+    _$jscoverage['/editor/range.js'].lineData[1197]++;
+    ancestor = start._4eCommonAncestor(end);
   }
-  _$jscoverage['/editor/range.js'].lineData[1174]++;
-  return visit550_1174_1(ignoreTextNode && visit551_1174_2(ancestor[0].nodeType == Dom.NodeType.TEXT_NODE)) ? ancestor.parent() : ancestor;
+  _$jscoverage['/editor/range.js'].lineData[1200]++;
+  return visit553_1200_1(ignoreTextNode && visit554_1200_2(ancestor[0].nodeType === Dom.NodeType.TEXT_NODE)) ? ancestor.parent() : ancestor;
 }, 
   enlarge: (function() {
   _$jscoverage['/editor/range.js'].functionData[38]++;
-  _$jscoverage['/editor/range.js'].lineData[1188]++;
+  _$jscoverage['/editor/range.js'].lineData[1213]++;
   function enlargeElement(self, left, stop, commonAncestor) {
     _$jscoverage['/editor/range.js'].functionData[39]++;
-    _$jscoverage['/editor/range.js'].lineData[1189]++;
-    var container = self[left ? 'startContainer' : 'endContainer'], enlarge, sibling, index = left ? 0 : 1, commonReached = 0, direction = left ? "previousSibling" : "nextSibling", offset = self[left ? 'startOffset' : 'endOffset'];
-    _$jscoverage['/editor/range.js'].lineData[1197]++;
-    if (visit552_1197_1(container[0].nodeType == Dom.NodeType.TEXT_NODE)) {
-      _$jscoverage['/editor/range.js'].lineData[1198]++;
-      if (visit553_1198_1(left)) {
-        _$jscoverage['/editor/range.js'].lineData[1200]++;
-        if (visit554_1200_1(offset)) {
-          _$jscoverage['/editor/range.js'].lineData[1201]++;
+    _$jscoverage['/editor/range.js'].lineData[1214]++;
+    var container = self[left ? 'startContainer' : 'endContainer'], enlarge, sibling, index = left ? 0 : 1, commonReached = 0, direction = left ? 'previousSibling' : 'nextSibling', offset = self[left ? 'startOffset' : 'endOffset'];
+    _$jscoverage['/editor/range.js'].lineData[1222]++;
+    if (visit555_1222_1(container[0].nodeType === Dom.NodeType.TEXT_NODE)) {
+      _$jscoverage['/editor/range.js'].lineData[1223]++;
+      if (visit556_1223_1(left)) {
+        _$jscoverage['/editor/range.js'].lineData[1225]++;
+        if (visit557_1225_1(offset)) {
+          _$jscoverage['/editor/range.js'].lineData[1226]++;
           return;
         }
       } else {
-        _$jscoverage['/editor/range.js'].lineData[1204]++;
-        if (visit555_1204_1(offset < container[0].nodeValue.length)) {
-          _$jscoverage['/editor/range.js'].lineData[1205]++;
+        _$jscoverage['/editor/range.js'].lineData[1229]++;
+        if (visit558_1229_1(offset < container[0].nodeValue.length)) {
+          _$jscoverage['/editor/range.js'].lineData[1230]++;
           return;
         }
       }
-      _$jscoverage['/editor/range.js'].lineData[1210]++;
+      _$jscoverage['/editor/range.js'].lineData[1235]++;
       sibling = container[0][direction];
-      _$jscoverage['/editor/range.js'].lineData[1212]++;
+      _$jscoverage['/editor/range.js'].lineData[1237]++;
       enlarge = container[0].parentNode;
     } else {
-      _$jscoverage['/editor/range.js'].lineData[1215]++;
-      sibling = visit556_1215_1(container[0].childNodes[offset + (left ? -1 : 1)] || null);
-      _$jscoverage['/editor/range.js'].lineData[1217]++;
+      _$jscoverage['/editor/range.js'].lineData[1240]++;
+      sibling = visit559_1240_1(container[0].childNodes[offset + (left ? -1 : 1)] || null);
+      _$jscoverage['/editor/range.js'].lineData[1242]++;
       enlarge = container[0];
     }
-    _$jscoverage['/editor/range.js'].lineData[1220]++;
+    _$jscoverage['/editor/range.js'].lineData[1245]++;
     while (enlarge) {
-      _$jscoverage['/editor/range.js'].lineData[1222]++;
+      _$jscoverage['/editor/range.js'].lineData[1247]++;
       while (sibling) {
-        _$jscoverage['/editor/range.js'].lineData[1223]++;
-        if (visit557_1223_1(isWhitespace(sibling) || isBookmark(sibling))) {
-          _$jscoverage['/editor/range.js'].lineData[1224]++;
+        _$jscoverage['/editor/range.js'].lineData[1248]++;
+        if (visit560_1248_1(isWhitespace(sibling) || isBookmark(sibling))) {
+          _$jscoverage['/editor/range.js'].lineData[1249]++;
           sibling = sibling[direction];
         } else {
-          _$jscoverage['/editor/range.js'].lineData[1226]++;
+          _$jscoverage['/editor/range.js'].lineData[1251]++;
           break;
         }
       }
-      _$jscoverage['/editor/range.js'].lineData[1231]++;
-      if (visit558_1231_1(sibling)) {
-        _$jscoverage['/editor/range.js'].lineData[1233]++;
-        if (visit559_1233_1(!commonReached)) {
-          _$jscoverage['/editor/range.js'].lineData[1235]++;
+      _$jscoverage['/editor/range.js'].lineData[1256]++;
+      if (visit561_1256_1(sibling)) {
+        _$jscoverage['/editor/range.js'].lineData[1258]++;
+        if (visit562_1258_1(!commonReached)) {
+          _$jscoverage['/editor/range.js'].lineData[1260]++;
           self[left ? 'setStartAfter' : 'setEndBefore']($(sibling));
         }
-        _$jscoverage['/editor/range.js'].lineData[1237]++;
+        _$jscoverage['/editor/range.js'].lineData[1262]++;
         return;
       }
-      _$jscoverage['/editor/range.js'].lineData[1244]++;
+      _$jscoverage['/editor/range.js'].lineData[1269]++;
       enlarge = $(enlarge);
-      _$jscoverage['/editor/range.js'].lineData[1246]++;
-      if (visit560_1246_1(enlarge.nodeName() == "body")) {
-        _$jscoverage['/editor/range.js'].lineData[1247]++;
+      _$jscoverage['/editor/range.js'].lineData[1271]++;
+      if (visit563_1271_1(enlarge.nodeName() === 'body')) {
+        _$jscoverage['/editor/range.js'].lineData[1272]++;
         return;
       }
-      _$jscoverage['/editor/range.js'].lineData[1250]++;
-      if (visit561_1250_1(commonReached || enlarge.equals(commonAncestor))) {
-        _$jscoverage['/editor/range.js'].lineData[1251]++;
+      _$jscoverage['/editor/range.js'].lineData[1275]++;
+      if (visit564_1275_1(commonReached || enlarge.equals(commonAncestor))) {
+        _$jscoverage['/editor/range.js'].lineData[1276]++;
         stop[index] = enlarge;
-        _$jscoverage['/editor/range.js'].lineData[1252]++;
+        _$jscoverage['/editor/range.js'].lineData[1277]++;
         commonReached = 1;
       } else {
-        _$jscoverage['/editor/range.js'].lineData[1255]++;
+        _$jscoverage['/editor/range.js'].lineData[1280]++;
         self[left ? 'setStartBefore' : 'setEndAfter'](enlarge);
       }
-      _$jscoverage['/editor/range.js'].lineData[1258]++;
+      _$jscoverage['/editor/range.js'].lineData[1283]++;
       sibling = enlarge[0][direction];
-      _$jscoverage['/editor/range.js'].lineData[1259]++;
+      _$jscoverage['/editor/range.js'].lineData[1284]++;
       enlarge = enlarge[0].parentNode;
     }
   }
-  _$jscoverage['/editor/range.js'].lineData[1264]++;
+  _$jscoverage['/editor/range.js'].lineData[1289]++;
   return function(unit) {
   _$jscoverage['/editor/range.js'].functionData[40]++;
-  _$jscoverage['/editor/range.js'].lineData[1265]++;
+  _$jscoverage['/editor/range.js'].lineData[1290]++;
   var self = this;
-  _$jscoverage['/editor/range.js'].lineData[1266]++;
+  _$jscoverage['/editor/range.js'].lineData[1291]++;
   switch (unit) {
     case KER.ENLARGE_ELEMENT:
-      _$jscoverage['/editor/range.js'].lineData[1269]++;
-      if (visit562_1269_1(self.collapsed)) {
-        _$jscoverage['/editor/range.js'].lineData[1270]++;
+      _$jscoverage['/editor/range.js'].lineData[1294]++;
+      if (visit565_1294_1(self.collapsed)) {
+        _$jscoverage['/editor/range.js'].lineData[1295]++;
         return;
       }
-      _$jscoverage['/editor/range.js'].lineData[1273]++;
+      _$jscoverage['/editor/range.js'].lineData[1298]++;
       var commonAncestor = self.getCommonAncestor(), stop = [];
-      _$jscoverage['/editor/range.js'].lineData[1276]++;
+      _$jscoverage['/editor/range.js'].lineData[1301]++;
       enlargeElement(self, 1, stop, commonAncestor);
-      _$jscoverage['/editor/range.js'].lineData[1277]++;
+      _$jscoverage['/editor/range.js'].lineData[1302]++;
       enlargeElement(self, 0, stop, commonAncestor);
-      _$jscoverage['/editor/range.js'].lineData[1279]++;
-      if (visit563_1279_1(stop[0] && stop[1])) {
-        _$jscoverage['/editor/range.js'].lineData[1280]++;
+      _$jscoverage['/editor/range.js'].lineData[1304]++;
+      if (visit566_1304_1(stop[0] && stop[1])) {
+        _$jscoverage['/editor/range.js'].lineData[1305]++;
         var commonStop = stop[0].contains(stop[1]) ? stop[1] : stop[0];
-        _$jscoverage['/editor/range.js'].lineData[1281]++;
+        _$jscoverage['/editor/range.js'].lineData[1306]++;
         self.setStartBefore(commonStop);
-        _$jscoverage['/editor/range.js'].lineData[1282]++;
+        _$jscoverage['/editor/range.js'].lineData[1307]++;
         self.setEndAfter(commonStop);
       }
-      _$jscoverage['/editor/range.js'].lineData[1285]++;
+      _$jscoverage['/editor/range.js'].lineData[1310]++;
       break;
     case KER.ENLARGE_BLOCK_CONTENTS:
     case KER.ENLARGE_LIST_ITEM_CONTENTS:
-      _$jscoverage['/editor/range.js'].lineData[1291]++;
+      _$jscoverage['/editor/range.js'].lineData[1316]++;
       var walkerRange = new KERange(self.document);
-      _$jscoverage['/editor/range.js'].lineData[1292]++;
+      _$jscoverage['/editor/range.js'].lineData[1317]++;
       var body = new Node(self.document.body);
-      _$jscoverage['/editor/range.js'].lineData[1294]++;
+      _$jscoverage['/editor/range.js'].lineData[1319]++;
       walkerRange.setStartAt(body, KER.POSITION_AFTER_START);
-      _$jscoverage['/editor/range.js'].lineData[1295]++;
+      _$jscoverage['/editor/range.js'].lineData[1320]++;
       walkerRange.setEnd(self.startContainer, self.startOffset);
-      _$jscoverage['/editor/range.js'].lineData[1297]++;
-      var walker = new Walker(walkerRange), blockBoundary, tailBr, defaultGuard = Walker.blockBoundary((visit564_1301_1(unit == KER.ENLARGE_LIST_ITEM_CONTENTS)) ? {
+      _$jscoverage['/editor/range.js'].lineData[1322]++;
+      var walker = new Walker(walkerRange), blockBoundary, tailBr, defaultGuard = Walker.blockBoundary((visit567_1326_1(unit === KER.ENLARGE_LIST_ITEM_CONTENTS)) ? {
   br: 1} : NULL), boundaryGuard = function(node) {
   _$jscoverage['/editor/range.js'].functionData[41]++;
-  _$jscoverage['/editor/range.js'].lineData[1305]++;
+  _$jscoverage['/editor/range.js'].lineData[1330]++;
   var retVal = defaultGuard(node);
-  _$jscoverage['/editor/range.js'].lineData[1306]++;
-  if (visit565_1306_1(!retVal)) {
-    _$jscoverage['/editor/range.js'].lineData[1307]++;
+  _$jscoverage['/editor/range.js'].lineData[1331]++;
+  if (visit568_1331_1(!retVal)) {
+    _$jscoverage['/editor/range.js'].lineData[1332]++;
     blockBoundary = $(node);
   }
-  _$jscoverage['/editor/range.js'].lineData[1309]++;
+  _$jscoverage['/editor/range.js'].lineData[1334]++;
   return retVal;
 }, tailBrGuard = function(node) {
   _$jscoverage['/editor/range.js'].functionData[42]++;
-  _$jscoverage['/editor/range.js'].lineData[1313]++;
+  _$jscoverage['/editor/range.js'].lineData[1338]++;
   var retVal = boundaryGuard(node);
-  _$jscoverage['/editor/range.js'].lineData[1314]++;
-  if (visit566_1314_1(!retVal && visit567_1314_2(Dom.nodeName(node) == 'br'))) {
-    _$jscoverage['/editor/range.js'].lineData[1315]++;
+  _$jscoverage['/editor/range.js'].lineData[1339]++;
+  if (visit569_1339_1(!retVal && visit570_1339_2(Dom.nodeName(node) === 'br'))) {
+    _$jscoverage['/editor/range.js'].lineData[1340]++;
     tailBr = $(node);
   }
-  _$jscoverage['/editor/range.js'].lineData[1317]++;
+  _$jscoverage['/editor/range.js'].lineData[1342]++;
   return retVal;
 };
-      _$jscoverage['/editor/range.js'].lineData[1320]++;
-      walker.guard = boundaryGuard;
-      _$jscoverage['/editor/range.js'].lineData[1322]++;
-      enlargeable = walker.lastBackward();
-      _$jscoverage['/editor/range.js'].lineData[1325]++;
-      blockBoundary = visit568_1325_1(blockBoundary || body);
-      _$jscoverage['/editor/range.js'].lineData[1329]++;
-      self.setStartAt(blockBoundary, visit569_1331_1(visit570_1331_2(blockBoundary.nodeName() != 'br') && (visit571_1339_1(visit572_1339_2(!enlargeable && self.checkStartOfBlock()) || visit573_1340_1(enlargeable && blockBoundary.contains(enlargeable))))) ? KER.POSITION_AFTER_START : KER.POSITION_AFTER_END);
       _$jscoverage['/editor/range.js'].lineData[1345]++;
-      walkerRange = self.clone();
-      _$jscoverage['/editor/range.js'].lineData[1346]++;
-      walkerRange.collapse();
+      walker.guard = boundaryGuard;
       _$jscoverage['/editor/range.js'].lineData[1347]++;
-      walkerRange.setEndAt(body, KER.POSITION_BEFORE_END);
-      _$jscoverage['/editor/range.js'].lineData[1348]++;
-      walker = new Walker(walkerRange);
-      _$jscoverage['/editor/range.js'].lineData[1351]++;
-      walker.guard = (visit574_1351_1(unit == KER.ENLARGE_LIST_ITEM_CONTENTS)) ? tailBrGuard : boundaryGuard;
-      _$jscoverage['/editor/range.js'].lineData[1353]++;
-      blockBoundary = NULL;
-      _$jscoverage['/editor/range.js'].lineData[1356]++;
-      var enlargeable = walker.lastForward();
-      _$jscoverage['/editor/range.js'].lineData[1359]++;
-      blockBoundary = visit575_1359_1(blockBoundary || body);
-      _$jscoverage['/editor/range.js'].lineData[1363]++;
-      self.setEndAt(blockBoundary, (visit576_1365_1(visit577_1365_2(!enlargeable && self.checkEndOfBlock()) || visit578_1366_1(enlargeable && blockBoundary.contains(enlargeable)))) ? KER.POSITION_BEFORE_END : KER.POSITION_BEFORE_START);
+      enlargeable = walker.lastBackward();
+      _$jscoverage['/editor/range.js'].lineData[1350]++;
+      blockBoundary = visit571_1350_1(blockBoundary || body);
+      _$jscoverage['/editor/range.js'].lineData[1354]++;
+      self.setStartAt(blockBoundary, visit572_1356_1(visit573_1356_2(blockBoundary.nodeName() !== 'br') && (visit574_1364_1(visit575_1364_2(!enlargeable && self.checkStartOfBlock()) || visit576_1364_3(enlargeable && blockBoundary.contains(enlargeable))))) ? KER.POSITION_AFTER_START : KER.POSITION_AFTER_END);
+      _$jscoverage['/editor/range.js'].lineData[1369]++;
+      walkerRange = self.clone();
+      _$jscoverage['/editor/range.js'].lineData[1370]++;
+      walkerRange.collapse();
       _$jscoverage['/editor/range.js'].lineData[1371]++;
-      if (visit579_1371_1(tailBr)) {
-        _$jscoverage['/editor/range.js'].lineData[1372]++;
+      walkerRange.setEndAt(body, KER.POSITION_BEFORE_END);
+      _$jscoverage['/editor/range.js'].lineData[1372]++;
+      walker = new Walker(walkerRange);
+      _$jscoverage['/editor/range.js'].lineData[1375]++;
+      walker.guard = (visit577_1375_1(unit === KER.ENLARGE_LIST_ITEM_CONTENTS)) ? tailBrGuard : boundaryGuard;
+      _$jscoverage['/editor/range.js'].lineData[1377]++;
+      blockBoundary = NULL;
+      _$jscoverage['/editor/range.js'].lineData[1380]++;
+      var enlargeable = walker.lastForward();
+      _$jscoverage['/editor/range.js'].lineData[1383]++;
+      blockBoundary = visit578_1383_1(blockBoundary || body);
+      _$jscoverage['/editor/range.js'].lineData[1387]++;
+      self.setEndAt(blockBoundary, (visit579_1389_1(visit580_1389_2(!enlargeable && self.checkEndOfBlock()) || visit581_1389_3(enlargeable && blockBoundary.contains(enlargeable)))) ? KER.POSITION_BEFORE_END : KER.POSITION_BEFORE_START);
+      _$jscoverage['/editor/range.js'].lineData[1394]++;
+      if (visit582_1394_1(tailBr)) {
+        _$jscoverage['/editor/range.js'].lineData[1395]++;
         self.setEndAfter(tailBr);
       }
   }
@@ -3621,230 +3618,230 @@ KISSY.add(function(S, require) {
 })(), 
   checkStartOfBlock: function() {
   _$jscoverage['/editor/range.js'].functionData[43]++;
-  _$jscoverage['/editor/range.js'].lineData[1383]++;
+  _$jscoverage['/editor/range.js'].lineData[1406]++;
   var self = this, startContainer = self.startContainer, startOffset = self.startOffset;
-  _$jscoverage['/editor/range.js'].lineData[1389]++;
-  if (visit580_1389_1(startOffset && visit581_1389_2(startContainer[0].nodeType == Dom.NodeType.TEXT_NODE))) {
-    _$jscoverage['/editor/range.js'].lineData[1390]++;
+  _$jscoverage['/editor/range.js'].lineData[1412]++;
+  if (visit583_1412_1(startOffset && visit584_1412_2(startContainer[0].nodeType === Dom.NodeType.TEXT_NODE))) {
+    _$jscoverage['/editor/range.js'].lineData[1413]++;
     var textBefore = S.trim(startContainer[0].nodeValue.substring(0, startOffset));
-    _$jscoverage['/editor/range.js'].lineData[1391]++;
-    if (visit582_1391_1(textBefore.length)) {
-      _$jscoverage['/editor/range.js'].lineData[1392]++;
+    _$jscoverage['/editor/range.js'].lineData[1414]++;
+    if (visit585_1414_1(textBefore.length)) {
+      _$jscoverage['/editor/range.js'].lineData[1415]++;
       return FALSE;
     }
   }
-  _$jscoverage['/editor/range.js'].lineData[1399]++;
+  _$jscoverage['/editor/range.js'].lineData[1422]++;
   self.trim();
-  _$jscoverage['/editor/range.js'].lineData[1403]++;
+  _$jscoverage['/editor/range.js'].lineData[1426]++;
   var path = new ElementPath(self.startContainer);
-  _$jscoverage['/editor/range.js'].lineData[1406]++;
+  _$jscoverage['/editor/range.js'].lineData[1429]++;
   var walkerRange = self.clone();
-  _$jscoverage['/editor/range.js'].lineData[1407]++;
+  _$jscoverage['/editor/range.js'].lineData[1430]++;
   walkerRange.collapse(TRUE);
-  _$jscoverage['/editor/range.js'].lineData[1408]++;
-  walkerRange.setStartAt(visit583_1408_1(path.block || path.blockLimit), KER.POSITION_AFTER_START);
-  _$jscoverage['/editor/range.js'].lineData[1410]++;
+  _$jscoverage['/editor/range.js'].lineData[1431]++;
+  walkerRange.setStartAt(visit586_1431_1(path.block || path.blockLimit), KER.POSITION_AFTER_START);
+  _$jscoverage['/editor/range.js'].lineData[1433]++;
   var walker = new Walker(walkerRange);
-  _$jscoverage['/editor/range.js'].lineData[1411]++;
+  _$jscoverage['/editor/range.js'].lineData[1434]++;
   walker.evaluator = getCheckStartEndBlockEvalFunction(TRUE);
-  _$jscoverage['/editor/range.js'].lineData[1413]++;
+  _$jscoverage['/editor/range.js'].lineData[1436]++;
   return walker.checkBackward();
 }, 
   checkEndOfBlock: function() {
   _$jscoverage['/editor/range.js'].functionData[44]++;
-  _$jscoverage['/editor/range.js'].lineData[1421]++;
+  _$jscoverage['/editor/range.js'].lineData[1444]++;
   var self = this, endContainer = self.endContainer, endOffset = self.endOffset;
-  _$jscoverage['/editor/range.js'].lineData[1426]++;
-  if (visit584_1426_1(endContainer[0].nodeType == Dom.NodeType.TEXT_NODE)) {
-    _$jscoverage['/editor/range.js'].lineData[1427]++;
+  _$jscoverage['/editor/range.js'].lineData[1449]++;
+  if (visit587_1449_1(endContainer[0].nodeType === Dom.NodeType.TEXT_NODE)) {
+    _$jscoverage['/editor/range.js'].lineData[1450]++;
     var textAfter = S.trim(endContainer[0].nodeValue.substring(endOffset));
-    _$jscoverage['/editor/range.js'].lineData[1428]++;
-    if (visit585_1428_1(textAfter.length)) {
-      _$jscoverage['/editor/range.js'].lineData[1429]++;
+    _$jscoverage['/editor/range.js'].lineData[1451]++;
+    if (visit588_1451_1(textAfter.length)) {
+      _$jscoverage['/editor/range.js'].lineData[1452]++;
       return FALSE;
     }
   }
-  _$jscoverage['/editor/range.js'].lineData[1436]++;
+  _$jscoverage['/editor/range.js'].lineData[1459]++;
   self.trim();
-  _$jscoverage['/editor/range.js'].lineData[1440]++;
+  _$jscoverage['/editor/range.js'].lineData[1463]++;
   var path = new ElementPath(self.endContainer);
-  _$jscoverage['/editor/range.js'].lineData[1443]++;
+  _$jscoverage['/editor/range.js'].lineData[1466]++;
   var walkerRange = self.clone();
-  _$jscoverage['/editor/range.js'].lineData[1444]++;
+  _$jscoverage['/editor/range.js'].lineData[1467]++;
   walkerRange.collapse(FALSE);
-  _$jscoverage['/editor/range.js'].lineData[1445]++;
-  walkerRange.setEndAt(visit586_1445_1(path.block || path.blockLimit), KER.POSITION_BEFORE_END);
-  _$jscoverage['/editor/range.js'].lineData[1447]++;
+  _$jscoverage['/editor/range.js'].lineData[1468]++;
+  walkerRange.setEndAt(visit589_1468_1(path.block || path.blockLimit), KER.POSITION_BEFORE_END);
+  _$jscoverage['/editor/range.js'].lineData[1470]++;
   var walker = new Walker(walkerRange);
-  _$jscoverage['/editor/range.js'].lineData[1448]++;
+  _$jscoverage['/editor/range.js'].lineData[1471]++;
   walker.evaluator = getCheckStartEndBlockEvalFunction(FALSE);
-  _$jscoverage['/editor/range.js'].lineData[1450]++;
+  _$jscoverage['/editor/range.js'].lineData[1473]++;
   return walker.checkForward();
 }, 
   checkBoundaryOfElement: function(element, checkType) {
   _$jscoverage['/editor/range.js'].functionData[45]++;
-  _$jscoverage['/editor/range.js'].lineData[1459]++;
+  _$jscoverage['/editor/range.js'].lineData[1482]++;
   var walkerRange = this.clone();
-  _$jscoverage['/editor/range.js'].lineData[1463]++;
-  walkerRange[visit587_1461_1(checkType == KER.START) ? 'setStartAt' : 'setEndAt'](element, visit588_1463_1(checkType == KER.START) ? KER.POSITION_AFTER_START : KER.POSITION_BEFORE_END);
-  _$jscoverage['/editor/range.js'].lineData[1467]++;
+  _$jscoverage['/editor/range.js'].lineData[1486]++;
+  walkerRange[visit590_1484_1(checkType === KER.START) ? 'setStartAt' : 'setEndAt'](element, visit591_1486_1(checkType === KER.START) ? KER.POSITION_AFTER_START : KER.POSITION_BEFORE_END);
+  _$jscoverage['/editor/range.js'].lineData[1490]++;
   var walker = new Walker(walkerRange);
-  _$jscoverage['/editor/range.js'].lineData[1469]++;
+  _$jscoverage['/editor/range.js'].lineData[1492]++;
   walker.evaluator = elementBoundaryEval;
-  _$jscoverage['/editor/range.js'].lineData[1470]++;
-  return walker[visit589_1470_1(checkType == KER.START) ? 'checkBackward' : 'checkForward']();
+  _$jscoverage['/editor/range.js'].lineData[1493]++;
+  return walker[visit592_1493_1(checkType === KER.START) ? 'checkBackward' : 'checkForward']();
 }, 
   getBoundaryNodes: function() {
   _$jscoverage['/editor/range.js'].functionData[46]++;
-  _$jscoverage['/editor/range.js'].lineData[1479]++;
+  _$jscoverage['/editor/range.js'].lineData[1502]++;
   var self = this, startNode = self.startContainer, endNode = self.endContainer, startOffset = self.startOffset, endOffset = self.endOffset, childCount;
-  _$jscoverage['/editor/range.js'].lineData[1486]++;
-  if (visit590_1486_1(startNode[0].nodeType == Dom.NodeType.ELEMENT_NODE)) {
-    _$jscoverage['/editor/range.js'].lineData[1487]++;
+  _$jscoverage['/editor/range.js'].lineData[1509]++;
+  if (visit593_1509_1(startNode[0].nodeType === Dom.NodeType.ELEMENT_NODE)) {
+    _$jscoverage['/editor/range.js'].lineData[1510]++;
     childCount = startNode[0].childNodes.length;
-    _$jscoverage['/editor/range.js'].lineData[1488]++;
-    if (visit591_1488_1(childCount > startOffset)) {
-      _$jscoverage['/editor/range.js'].lineData[1489]++;
+    _$jscoverage['/editor/range.js'].lineData[1511]++;
+    if (visit594_1511_1(childCount > startOffset)) {
+      _$jscoverage['/editor/range.js'].lineData[1512]++;
       startNode = $(startNode[0].childNodes[startOffset]);
     } else {
-      _$jscoverage['/editor/range.js'].lineData[1490]++;
-      if (visit592_1490_1(childCount == 0)) {
-        _$jscoverage['/editor/range.js'].lineData[1492]++;
-        startNode = startNode._4e_previousSourceNode();
+      _$jscoverage['/editor/range.js'].lineData[1513]++;
+      if (visit595_1513_1(childCount === 0)) {
+        _$jscoverage['/editor/range.js'].lineData[1515]++;
+        startNode = startNode._4ePreviousSourceNode();
       } else {
-        _$jscoverage['/editor/range.js'].lineData[1496]++;
+        _$jscoverage['/editor/range.js'].lineData[1519]++;
         startNode = startNode[0];
-        _$jscoverage['/editor/range.js'].lineData[1497]++;
+        _$jscoverage['/editor/range.js'].lineData[1520]++;
         while (startNode.lastChild) {
-          _$jscoverage['/editor/range.js'].lineData[1498]++;
+          _$jscoverage['/editor/range.js'].lineData[1521]++;
           startNode = startNode.lastChild;
         }
-        _$jscoverage['/editor/range.js'].lineData[1501]++;
+        _$jscoverage['/editor/range.js'].lineData[1524]++;
         startNode = $(startNode);
-        _$jscoverage['/editor/range.js'].lineData[1506]++;
-        startNode = visit593_1506_1(startNode._4e_nextSourceNode() || startNode);
+        _$jscoverage['/editor/range.js'].lineData[1529]++;
+        startNode = visit596_1529_1(startNode._4eNextSourceNode() || startNode);
       }
     }
   }
-  _$jscoverage['/editor/range.js'].lineData[1510]++;
-  if (visit594_1510_1(endNode[0].nodeType == Dom.NodeType.ELEMENT_NODE)) {
-    _$jscoverage['/editor/range.js'].lineData[1511]++;
+  _$jscoverage['/editor/range.js'].lineData[1533]++;
+  if (visit597_1533_1(endNode[0].nodeType === Dom.NodeType.ELEMENT_NODE)) {
+    _$jscoverage['/editor/range.js'].lineData[1534]++;
     childCount = endNode[0].childNodes.length;
-    _$jscoverage['/editor/range.js'].lineData[1512]++;
-    if (visit595_1512_1(childCount > endOffset)) {
-      _$jscoverage['/editor/range.js'].lineData[1513]++;
-      endNode = $(endNode[0].childNodes[endOffset])._4e_previousSourceNode(TRUE);
+    _$jscoverage['/editor/range.js'].lineData[1535]++;
+    if (visit598_1535_1(childCount > endOffset)) {
+      _$jscoverage['/editor/range.js'].lineData[1536]++;
+      endNode = $(endNode[0].childNodes[endOffset])._4ePreviousSourceNode(TRUE);
     } else {
-      _$jscoverage['/editor/range.js'].lineData[1516]++;
-      if (visit596_1516_1(childCount == 0)) {
-        _$jscoverage['/editor/range.js'].lineData[1517]++;
-        endNode = endNode._4e_previousSourceNode();
+      _$jscoverage['/editor/range.js'].lineData[1539]++;
+      if (visit599_1539_1(childCount === 0)) {
+        _$jscoverage['/editor/range.js'].lineData[1540]++;
+        endNode = endNode._4ePreviousSourceNode();
       } else {
-        _$jscoverage['/editor/range.js'].lineData[1521]++;
+        _$jscoverage['/editor/range.js'].lineData[1544]++;
         endNode = endNode[0];
-        _$jscoverage['/editor/range.js'].lineData[1522]++;
+        _$jscoverage['/editor/range.js'].lineData[1545]++;
         while (endNode.lastChild) {
-          _$jscoverage['/editor/range.js'].lineData[1523]++;
+          _$jscoverage['/editor/range.js'].lineData[1546]++;
           endNode = endNode.lastChild;
         }
-        _$jscoverage['/editor/range.js'].lineData[1524]++;
+        _$jscoverage['/editor/range.js'].lineData[1548]++;
         endNode = $(endNode);
       }
     }
   }
-  _$jscoverage['/editor/range.js'].lineData[1530]++;
-  if (visit597_1530_1(startNode._4e_position(endNode) & KEP.POSITION_FOLLOWING)) {
-    _$jscoverage['/editor/range.js'].lineData[1531]++;
+  _$jscoverage['/editor/range.js'].lineData[1554]++;
+  if (visit600_1554_1(startNode._4ePosition(endNode) & KEP.POSITION_FOLLOWING)) {
+    _$jscoverage['/editor/range.js'].lineData[1555]++;
     startNode = endNode;
   }
-  _$jscoverage['/editor/range.js'].lineData[1534]++;
+  _$jscoverage['/editor/range.js'].lineData[1558]++;
   return {
   startNode: startNode, 
   endNode: endNode};
 }, 
   fixBlock: function(isStart, blockTag) {
   _$jscoverage['/editor/range.js'].functionData[47]++;
-  _$jscoverage['/editor/range.js'].lineData[1545]++;
+  _$jscoverage['/editor/range.js'].lineData[1569]++;
   var self = this, bookmark = self.createBookmark(), fixedBlock = $(self.document.createElement(blockTag));
-  _$jscoverage['/editor/range.js'].lineData[1548]++;
+  _$jscoverage['/editor/range.js'].lineData[1572]++;
   self.collapse(isStart);
-  _$jscoverage['/editor/range.js'].lineData[1549]++;
+  _$jscoverage['/editor/range.js'].lineData[1573]++;
   self.enlarge(KER.ENLARGE_BLOCK_CONTENTS);
-  _$jscoverage['/editor/range.js'].lineData[1550]++;
+  _$jscoverage['/editor/range.js'].lineData[1574]++;
   fixedBlock[0].appendChild(self.extractContents());
-  _$jscoverage['/editor/range.js'].lineData[1551]++;
-  fixedBlock._4e_trim();
-  _$jscoverage['/editor/range.js'].lineData[1552]++;
-  if (visit598_1552_1(!UA['ie'])) {
-    _$jscoverage['/editor/range.js'].lineData[1553]++;
-    fixedBlock._4e_appendBogus();
+  _$jscoverage['/editor/range.js'].lineData[1575]++;
+  fixedBlock._4eTrim();
+  _$jscoverage['/editor/range.js'].lineData[1576]++;
+  if (visit601_1576_1(!UA.ie)) {
+    _$jscoverage['/editor/range.js'].lineData[1577]++;
+    fixedBlock._4eAppendBogus();
   }
-  _$jscoverage['/editor/range.js'].lineData[1555]++;
+  _$jscoverage['/editor/range.js'].lineData[1579]++;
   self.insertNode(fixedBlock);
-  _$jscoverage['/editor/range.js'].lineData[1556]++;
+  _$jscoverage['/editor/range.js'].lineData[1580]++;
   self.moveToBookmark(bookmark);
-  _$jscoverage['/editor/range.js'].lineData[1557]++;
+  _$jscoverage['/editor/range.js'].lineData[1581]++;
   return fixedBlock;
 }, 
   splitBlock: function(blockTag) {
   _$jscoverage['/editor/range.js'].functionData[48]++;
-  _$jscoverage['/editor/range.js'].lineData[1566]++;
+  _$jscoverage['/editor/range.js'].lineData[1590]++;
   var self = this, startPath = new ElementPath(self.startContainer), endPath = new ElementPath(self.endContainer), startBlockLimit = startPath.blockLimit, endBlockLimit = endPath.blockLimit, startBlock = startPath.block, endBlock = endPath.block, elementPath = NULL;
-  _$jscoverage['/editor/range.js'].lineData[1576]++;
-  if (visit599_1576_1(!startBlockLimit.equals(endBlockLimit))) {
-    _$jscoverage['/editor/range.js'].lineData[1577]++;
+  _$jscoverage['/editor/range.js'].lineData[1600]++;
+  if (visit602_1600_1(!startBlockLimit.equals(endBlockLimit))) {
+    _$jscoverage['/editor/range.js'].lineData[1601]++;
     return NULL;
   }
-  _$jscoverage['/editor/range.js'].lineData[1581]++;
-  if (visit600_1581_1(blockTag != 'br')) {
-    _$jscoverage['/editor/range.js'].lineData[1582]++;
-    if (visit601_1582_1(!startBlock)) {
-      _$jscoverage['/editor/range.js'].lineData[1583]++;
+  _$jscoverage['/editor/range.js'].lineData[1605]++;
+  if (visit603_1605_1(blockTag !== 'br')) {
+    _$jscoverage['/editor/range.js'].lineData[1606]++;
+    if (visit604_1606_1(!startBlock)) {
+      _$jscoverage['/editor/range.js'].lineData[1607]++;
       startBlock = self.fixBlock(TRUE, blockTag);
-      _$jscoverage['/editor/range.js'].lineData[1584]++;
+      _$jscoverage['/editor/range.js'].lineData[1608]++;
       endBlock = new ElementPath(self.endContainer).block;
     }
-    _$jscoverage['/editor/range.js'].lineData[1587]++;
-    if (visit602_1587_1(!endBlock)) {
-      _$jscoverage['/editor/range.js'].lineData[1588]++;
+    _$jscoverage['/editor/range.js'].lineData[1611]++;
+    if (visit605_1611_1(!endBlock)) {
+      _$jscoverage['/editor/range.js'].lineData[1612]++;
       endBlock = self.fixBlock(FALSE, blockTag);
     }
   }
-  _$jscoverage['/editor/range.js'].lineData[1593]++;
-  var isStartOfBlock = visit603_1593_1(startBlock && self.checkStartOfBlock()), isEndOfBlock = visit604_1594_1(endBlock && self.checkEndOfBlock());
-  _$jscoverage['/editor/range.js'].lineData[1597]++;
+  _$jscoverage['/editor/range.js'].lineData[1617]++;
+  var isStartOfBlock = visit606_1617_1(startBlock && self.checkStartOfBlock()), isEndOfBlock = visit607_1618_1(endBlock && self.checkEndOfBlock());
+  _$jscoverage['/editor/range.js'].lineData[1621]++;
   self.deleteContents();
-  _$jscoverage['/editor/range.js'].lineData[1599]++;
-  if (visit605_1599_1(startBlock && visit606_1599_2(startBlock[0] == endBlock[0]))) {
-    _$jscoverage['/editor/range.js'].lineData[1600]++;
-    if (visit607_1600_1(isEndOfBlock)) {
-      _$jscoverage['/editor/range.js'].lineData[1601]++;
+  _$jscoverage['/editor/range.js'].lineData[1623]++;
+  if (visit608_1623_1(startBlock && visit609_1623_2(startBlock[0] === endBlock[0]))) {
+    _$jscoverage['/editor/range.js'].lineData[1624]++;
+    if (visit610_1624_1(isEndOfBlock)) {
+      _$jscoverage['/editor/range.js'].lineData[1625]++;
       elementPath = new ElementPath(self.startContainer);
-      _$jscoverage['/editor/range.js'].lineData[1602]++;
+      _$jscoverage['/editor/range.js'].lineData[1626]++;
       self.moveToPosition(endBlock, KER.POSITION_AFTER_END);
-      _$jscoverage['/editor/range.js'].lineData[1603]++;
+      _$jscoverage['/editor/range.js'].lineData[1627]++;
       endBlock = NULL;
     } else {
-      _$jscoverage['/editor/range.js'].lineData[1605]++;
-      if (visit608_1605_1(isStartOfBlock)) {
-        _$jscoverage['/editor/range.js'].lineData[1606]++;
+      _$jscoverage['/editor/range.js'].lineData[1629]++;
+      if (visit611_1629_1(isStartOfBlock)) {
+        _$jscoverage['/editor/range.js'].lineData[1630]++;
         elementPath = new ElementPath(self.startContainer);
-        _$jscoverage['/editor/range.js'].lineData[1607]++;
+        _$jscoverage['/editor/range.js'].lineData[1631]++;
         self.moveToPosition(startBlock, KER.POSITION_BEFORE_START);
-        _$jscoverage['/editor/range.js'].lineData[1608]++;
+        _$jscoverage['/editor/range.js'].lineData[1632]++;
         startBlock = NULL;
       } else {
-        _$jscoverage['/editor/range.js'].lineData[1611]++;
+        _$jscoverage['/editor/range.js'].lineData[1635]++;
         endBlock = self.splitElement(startBlock);
-        _$jscoverage['/editor/range.js'].lineData[1615]++;
-        if (visit609_1615_1(!UA['ie'] && !S.inArray(startBlock.nodeName(), ['ul', 'ol']))) {
-          _$jscoverage['/editor/range.js'].lineData[1616]++;
-          startBlock._4e_appendBogus();
+        _$jscoverage['/editor/range.js'].lineData[1639]++;
+        if (visit612_1639_1(!UA.ie && !S.inArray(startBlock.nodeName(), ['ul', 'ol']))) {
+          _$jscoverage['/editor/range.js'].lineData[1640]++;
+          startBlock._4eAppendBogus();
         }
       }
     }
   }
-  _$jscoverage['/editor/range.js'].lineData[1621]++;
+  _$jscoverage['/editor/range.js'].lineData[1645]++;
   return {
   previousBlock: startBlock, 
   nextBlock: endBlock, 
@@ -3854,142 +3851,142 @@ KISSY.add(function(S, require) {
 }, 
   splitElement: function(toSplit) {
   _$jscoverage['/editor/range.js'].functionData[49]++;
-  _$jscoverage['/editor/range.js'].lineData[1636]++;
+  _$jscoverage['/editor/range.js'].lineData[1660]++;
   var self = this;
-  _$jscoverage['/editor/range.js'].lineData[1637]++;
-  if (visit610_1637_1(!self.collapsed)) {
-    _$jscoverage['/editor/range.js'].lineData[1638]++;
+  _$jscoverage['/editor/range.js'].lineData[1661]++;
+  if (visit613_1661_1(!self.collapsed)) {
+    _$jscoverage['/editor/range.js'].lineData[1662]++;
     return NULL;
   }
-  _$jscoverage['/editor/range.js'].lineData[1642]++;
+  _$jscoverage['/editor/range.js'].lineData[1667]++;
   self.setEndAt(toSplit, KER.POSITION_BEFORE_END);
-  _$jscoverage['/editor/range.js'].lineData[1643]++;
+  _$jscoverage['/editor/range.js'].lineData[1668]++;
   var documentFragment = self.extractContents(), clone = toSplit.clone(FALSE);
-  _$jscoverage['/editor/range.js'].lineData[1648]++;
+  _$jscoverage['/editor/range.js'].lineData[1673]++;
   clone[0].appendChild(documentFragment);
-  _$jscoverage['/editor/range.js'].lineData[1650]++;
+  _$jscoverage['/editor/range.js'].lineData[1675]++;
   clone.insertAfter(toSplit);
-  _$jscoverage['/editor/range.js'].lineData[1651]++;
+  _$jscoverage['/editor/range.js'].lineData[1676]++;
   self.moveToPosition(toSplit, KER.POSITION_AFTER_END);
-  _$jscoverage['/editor/range.js'].lineData[1652]++;
+  _$jscoverage['/editor/range.js'].lineData[1677]++;
   return clone;
 }, 
   moveToElementEditablePosition: function(el, isMoveToEnd) {
   _$jscoverage['/editor/range.js'].functionData[50]++;
-  _$jscoverage['/editor/range.js'].lineData[1664]++;
+  _$jscoverage['/editor/range.js'].lineData[1689]++;
   function nextDFS(node, childOnly) {
     _$jscoverage['/editor/range.js'].functionData[51]++;
-    _$jscoverage['/editor/range.js'].lineData[1665]++;
+    _$jscoverage['/editor/range.js'].lineData[1690]++;
     var next;
-    _$jscoverage['/editor/range.js'].lineData[1667]++;
-    if (visit611_1667_1(visit612_1667_2(node[0].nodeType == Dom.NodeType.ELEMENT_NODE) && node._4e_isEditable())) {
-      _$jscoverage['/editor/range.js'].lineData[1669]++;
+    _$jscoverage['/editor/range.js'].lineData[1692]++;
+    if (visit614_1692_1(visit615_1692_2(node[0].nodeType === Dom.NodeType.ELEMENT_NODE) && node._4eIsEditable())) {
+      _$jscoverage['/editor/range.js'].lineData[1694]++;
       next = node[isMoveToEnd ? 'last' : 'first'](nonWhitespaceOrIsBookmark, 1);
     }
-    _$jscoverage['/editor/range.js'].lineData[1672]++;
-    if (visit613_1672_1(!childOnly && !next)) {
-      _$jscoverage['/editor/range.js'].lineData[1673]++;
+    _$jscoverage['/editor/range.js'].lineData[1697]++;
+    if (visit616_1697_1(!childOnly && !next)) {
+      _$jscoverage['/editor/range.js'].lineData[1698]++;
       next = node[isMoveToEnd ? 'prev' : 'next'](nonWhitespaceOrIsBookmark, 1);
     }
-    _$jscoverage['/editor/range.js'].lineData[1676]++;
+    _$jscoverage['/editor/range.js'].lineData[1701]++;
     return next;
   }
-  _$jscoverage['/editor/range.js'].lineData[1679]++;
+  _$jscoverage['/editor/range.js'].lineData[1704]++;
   var found = 0, self = this;
-  _$jscoverage['/editor/range.js'].lineData[1681]++;
+  _$jscoverage['/editor/range.js'].lineData[1706]++;
   while (el) {
-    _$jscoverage['/editor/range.js'].lineData[1683]++;
-    if (visit614_1683_1(el[0].nodeType == Dom.NodeType.TEXT_NODE)) {
-      _$jscoverage['/editor/range.js'].lineData[1684]++;
+    _$jscoverage['/editor/range.js'].lineData[1708]++;
+    if (visit617_1708_1(el[0].nodeType === Dom.NodeType.TEXT_NODE)) {
+      _$jscoverage['/editor/range.js'].lineData[1709]++;
       self.moveToPosition(el, isMoveToEnd ? KER.POSITION_AFTER_END : KER.POSITION_BEFORE_START);
-      _$jscoverage['/editor/range.js'].lineData[1687]++;
+      _$jscoverage['/editor/range.js'].lineData[1712]++;
       found = 1;
-      _$jscoverage['/editor/range.js'].lineData[1688]++;
+      _$jscoverage['/editor/range.js'].lineData[1713]++;
       break;
     }
-    _$jscoverage['/editor/range.js'].lineData[1692]++;
-    if (visit615_1692_1(visit616_1692_2(el[0].nodeType == Dom.NodeType.ELEMENT_NODE) && el._4e_isEditable())) {
-      _$jscoverage['/editor/range.js'].lineData[1693]++;
+    _$jscoverage['/editor/range.js'].lineData[1717]++;
+    if (visit618_1717_1(visit619_1717_2(el[0].nodeType === Dom.NodeType.ELEMENT_NODE) && el._4eIsEditable())) {
+      _$jscoverage['/editor/range.js'].lineData[1718]++;
       self.moveToPosition(el, isMoveToEnd ? KER.POSITION_BEFORE_END : KER.POSITION_AFTER_START);
-      _$jscoverage['/editor/range.js'].lineData[1696]++;
+      _$jscoverage['/editor/range.js'].lineData[1721]++;
       found = 1;
     }
-    _$jscoverage['/editor/range.js'].lineData[1699]++;
+    _$jscoverage['/editor/range.js'].lineData[1724]++;
     el = nextDFS(el, found);
   }
-  _$jscoverage['/editor/range.js'].lineData[1702]++;
+  _$jscoverage['/editor/range.js'].lineData[1727]++;
   return !!found;
 }, 
   selectNodeContents: function(node) {
   _$jscoverage['/editor/range.js'].functionData[52]++;
-  _$jscoverage['/editor/range.js'].lineData[1710]++;
+  _$jscoverage['/editor/range.js'].lineData[1735]++;
   var self = this, domNode = node[0];
-  _$jscoverage['/editor/range.js'].lineData[1711]++;
+  _$jscoverage['/editor/range.js'].lineData[1736]++;
   self.setStart(node, 0);
-  _$jscoverage['/editor/range.js'].lineData[1712]++;
-  self.setEnd(node, visit617_1712_1(domNode.nodeType == Dom.NodeType.TEXT_NODE) ? domNode.nodeValue.length : domNode.childNodes.length);
+  _$jscoverage['/editor/range.js'].lineData[1737]++;
+  self.setEnd(node, visit620_1737_1(domNode.nodeType === Dom.NodeType.TEXT_NODE) ? domNode.nodeValue.length : domNode.childNodes.length);
 }, 
   insertNodeByDtd: function(element) {
   _$jscoverage['/editor/range.js'].functionData[53]++;
-  _$jscoverage['/editor/range.js'].lineData[1722]++;
-  var current, self = this, tmpDtd, last, elementName = element['nodeName'](), isBlock = dtd['$block'][elementName];
-  _$jscoverage['/editor/range.js'].lineData[1728]++;
+  _$jscoverage['/editor/range.js'].lineData[1747]++;
+  var current, self = this, tmpDtd, last, elementName = element.nodeName(), isBlock = dtd.$block[elementName];
+  _$jscoverage['/editor/range.js'].lineData[1753]++;
   self.deleteContents();
-  _$jscoverage['/editor/range.js'].lineData[1729]++;
-  if (visit618_1729_1(isBlock)) {
-    _$jscoverage['/editor/range.js'].lineData[1730]++;
+  _$jscoverage['/editor/range.js'].lineData[1754]++;
+  if (visit621_1754_1(isBlock)) {
+    _$jscoverage['/editor/range.js'].lineData[1755]++;
     current = self.getCommonAncestor(FALSE, TRUE);
-    _$jscoverage['/editor/range.js'].lineData[1731]++;
-    while (visit619_1731_1((tmpDtd = dtd[current.nodeName()]) && !(visit620_1731_2(tmpDtd && tmpDtd[elementName])))) {
-      _$jscoverage['/editor/range.js'].lineData[1732]++;
+    _$jscoverage['/editor/range.js'].lineData[1756]++;
+    while (visit622_1756_1((tmpDtd = dtd[current.nodeName()]) && !(visit623_1756_2(tmpDtd && tmpDtd[elementName])))) {
+      _$jscoverage['/editor/range.js'].lineData[1757]++;
       var parent = current.parent();
-      _$jscoverage['/editor/range.js'].lineData[1735]++;
-      if (visit621_1735_1(self.checkStartOfBlock() && self.checkEndOfBlock())) {
-        _$jscoverage['/editor/range.js'].lineData[1736]++;
+      _$jscoverage['/editor/range.js'].lineData[1760]++;
+      if (visit624_1760_1(self.checkStartOfBlock() && self.checkEndOfBlock())) {
+        _$jscoverage['/editor/range.js'].lineData[1761]++;
         self.setStartBefore(current);
-        _$jscoverage['/editor/range.js'].lineData[1737]++;
+        _$jscoverage['/editor/range.js'].lineData[1762]++;
         self.collapse(TRUE);
-        _$jscoverage['/editor/range.js'].lineData[1738]++;
+        _$jscoverage['/editor/range.js'].lineData[1763]++;
         current.remove();
       } else {
-        _$jscoverage['/editor/range.js'].lineData[1740]++;
+        _$jscoverage['/editor/range.js'].lineData[1765]++;
         last = current;
       }
-      _$jscoverage['/editor/range.js'].lineData[1742]++;
+      _$jscoverage['/editor/range.js'].lineData[1767]++;
       current = parent;
     }
-    _$jscoverage['/editor/range.js'].lineData[1745]++;
-    if (visit622_1745_1(last)) {
-      _$jscoverage['/editor/range.js'].lineData[1746]++;
+    _$jscoverage['/editor/range.js'].lineData[1770]++;
+    if (visit625_1770_1(last)) {
+      _$jscoverage['/editor/range.js'].lineData[1771]++;
       self.splitElement(last);
     }
   }
-  _$jscoverage['/editor/range.js'].lineData[1750]++;
+  _$jscoverage['/editor/range.js'].lineData[1775]++;
   self.insertNode(element);
 }});
-  _$jscoverage['/editor/range.js'].lineData[1754]++;
+  _$jscoverage['/editor/range.js'].lineData[1779]++;
   Utils.injectDom({
-  _4e_breakParent: function(el, parent) {
+  _4eBreakParent: function(el, parent) {
   _$jscoverage['/editor/range.js'].functionData[54]++;
-  _$jscoverage['/editor/range.js'].lineData[1756]++;
+  _$jscoverage['/editor/range.js'].lineData[1781]++;
   parent = $(parent);
-  _$jscoverage['/editor/range.js'].lineData[1757]++;
+  _$jscoverage['/editor/range.js'].lineData[1782]++;
   el = $(el);
-  _$jscoverage['/editor/range.js'].lineData[1759]++;
+  _$jscoverage['/editor/range.js'].lineData[1784]++;
   var KERange = Editor.Range, docFrag, range = new KERange(el[0].ownerDocument);
-  _$jscoverage['/editor/range.js'].lineData[1765]++;
+  _$jscoverage['/editor/range.js'].lineData[1790]++;
   range.setStartAfter(el);
-  _$jscoverage['/editor/range.js'].lineData[1766]++;
+  _$jscoverage['/editor/range.js'].lineData[1791]++;
   range.setEndAfter(parent);
-  _$jscoverage['/editor/range.js'].lineData[1769]++;
+  _$jscoverage['/editor/range.js'].lineData[1794]++;
   docFrag = range.extractContents();
-  _$jscoverage['/editor/range.js'].lineData[1772]++;
+  _$jscoverage['/editor/range.js'].lineData[1797]++;
   range.insertNode(el.remove());
-  _$jscoverage['/editor/range.js'].lineData[1775]++;
+  _$jscoverage['/editor/range.js'].lineData[1800]++;
   el.after(docFrag);
 }});
-  _$jscoverage['/editor/range.js'].lineData[1779]++;
+  _$jscoverage['/editor/range.js'].lineData[1804]++;
   Editor.Range = KERange;
-  _$jscoverage['/editor/range.js'].lineData[1781]++;
+  _$jscoverage['/editor/range.js'].lineData[1806]++;
   return KERange;
 });

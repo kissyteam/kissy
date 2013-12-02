@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ','src':' + jscoverage_quote(this.src)
+            + ',"src":' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -270,11 +270,11 @@ if (! _$jscoverage['/dialog-loader.js'].branchData) {
   _$jscoverage['/dialog-loader.js'].branchData['38'] = [];
   _$jscoverage['/dialog-loader.js'].branchData['38'][1] = new BranchData();
 }
-_$jscoverage['/dialog-loader.js'].branchData['38'][1].init(173, 35, 'editor.getControl(name + "/dialog")');
+_$jscoverage['/dialog-loader.js'].branchData['38'][1].init(173, 35, 'editor.getControl(name + \'/dialog\')');
 function visit3_38_1(result) {
   _$jscoverage['/dialog-loader.js'].branchData['38'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog-loader.js'].branchData['15'][1].init(62, 15, 'S.UA[\'ie\'] == 6');
+}_$jscoverage['/dialog-loader.js'].branchData['15'][1].init(62, 13, 'S.UA.ie === 6');
 function visit2_15_1(result) {
   _$jscoverage['/dialog-loader.js'].branchData['15'][1].ranCondition(result);
   return result;
@@ -298,11 +298,11 @@ KISSY.add(function(S, require) {
     _$jscoverage['/dialog-loader.js'].lineData[13]++;
     globalMask = new Overlay({
   x: 0, 
-  width: visit2_15_1(S.UA.ie == 6) ? S.DOM.docWidth() : "100%",
+  width: visit2_15_1(S.UA.ie === 6) ? S.DOM.docWidth() : '100%', 
   y: 0, 
-  'zIndex': Editor.baseZIndex(Editor.ZIndexManager.LOADING),
+  'zIndex': Editor.baseZIndex(Editor.ZIndexManager.LOADING), 
   prefixCls: prefixCls + 'editor-', 
-  elCls: prefixCls + "editor-global-loading"});
+  elCls: prefixCls + 'editor-global-loading'});
   }
   _$jscoverage['/dialog-loader.js'].lineData[23]++;
   globalMask.set('height', S.DOM.docHeight());
@@ -325,7 +325,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/dialog-loader.js'].lineData[37]++;
   var prefixCls = editor.get('prefixCls');
   _$jscoverage['/dialog-loader.js'].lineData[38]++;
-  if (visit3_38_1(editor.getControl(name + "/dialog"))) {
+  if (visit3_38_1(editor.getControl(name + '/dialog'))) {
     _$jscoverage['/dialog-loader.js'].lineData[39]++;
     setTimeout(function() {
   _$jscoverage['/dialog-loader.js'].functionData[4]++;
@@ -338,12 +338,12 @@ KISSY.add(function(S, require) {
   _$jscoverage['/dialog-loader.js'].lineData[44]++;
   loadMask.loading(prefixCls);
   _$jscoverage['/dialog-loader.js'].lineData[45]++;
-  S.use("editor/plugin/" + name + "/dialog", function(S, Dialog) {
+  S.use('editor/plugin/' + name + '/dialog', function(S, Dialog) {
   _$jscoverage['/dialog-loader.js'].functionData[5]++;
   _$jscoverage['/dialog-loader.js'].lineData[46]++;
   loadMask.unloading();
   _$jscoverage['/dialog-loader.js'].lineData[47]++;
-  editor.addControl(name + "/dialog", new Dialog(editor, config));
+  editor.addControl(name + '/dialog', new Dialog(editor, config));
   _$jscoverage['/dialog-loader.js'].lineData[48]++;
   editor.showDialog(name, args);
 });

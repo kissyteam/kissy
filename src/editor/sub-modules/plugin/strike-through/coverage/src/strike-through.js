@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ','src':' + jscoverage_quote(this.src)
+            + ',"src":' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -268,9 +268,9 @@ KISSY.add(function(S, require) {
   _$jscoverage['/strike-through.js'].lineData[15]++;
   cmd.init(editor);
   _$jscoverage['/strike-through.js'].lineData[16]++;
-  editor.addButton("strikeThrough", {
-  cmdType: "strikeThrough", 
-  tooltip: "\u5220\u9664\u7ebf "}, ui.Button);
+  editor.addButton('strikeThrough', {
+  cmdType: 'strikeThrough', 
+  tooltip: '\u5220\u9664\u7ebf'}, ui.Button);
 }});
   _$jscoverage['/strike-through.js'].lineData[23]++;
   return StrikeThrough;

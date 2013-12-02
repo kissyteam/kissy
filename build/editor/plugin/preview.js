@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:45
+build time: Dec 2 13:02
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -16,8 +16,12 @@ KISSY.add("editor/plugin/preview", ["./button"], function(S, require) {
   }
   S.augment(Preview, {pluginRenderUI:function(editor) {
     editor.addButton("preview", {tooltip:"\u9884\u89c8", listeners:{click:function() {
+      var iWidth, iHeight, iLeft;
       try {
-        var screen = win.screen, iWidth = Math.round(screen.width * 0.8), iHeight = Math.round(screen.height * 0.7), iLeft = Math.round(screen.width * 0.1)
+        var screen = win.screen;
+        iHeight = Math.round(screen.height * 0.7);
+        iLeft = Math.round(screen.width * 0.1);
+        iWidth = Math.round(screen.width * 0.8)
       }catch(e) {
         iWidth = 640;
         iHeight = 420;

@@ -3,7 +3,8 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, Dom, Node) {
-
+    /*jshint quotmark:false*/
+    /*global jQuery*/
     return {
         run:function(){
             var jq = jQuery;
@@ -13,12 +14,12 @@ KISSY.add(function (S, Dom, Node) {
             describe("node", function () {
 
                 it('support filter', function () {
-                    var nodes = new Node('<div class='x' id='x'></div>' +
-                        '<div class='y' id='y'></div>' +
+                    var nodes = new Node('<div class="x" id="x"></div>' +
+                        '<div class="y" id="y"></div>' +
                         '<div class="z" id="z"></div>');
 
                     var ret = nodes.filter(function (n, i) {
-                        return $(n).hasClass('z') && i == 2;
+                        return $(n).hasClass('z') && i === 2;
                     });
 
                     expect(ret.length).toBe(1);
@@ -426,8 +427,7 @@ KISSY.add(function (S, Dom, Node) {
             });
 
         }
-    }
-
+    };
 },{
     requires:['dom','node']
 });

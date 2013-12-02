@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:47
+build time: Dec 2 13:04
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -35,36 +35,38 @@ KISSY.add("editor/plugin/xiami-music", ["editor", "./flash-common/base-class", "
     function checkXiami(url) {
       return/xiami\.com/i.test(url)
     }
-    dataFilter && dataFilter.addRules({tags:{object:function(element) {
-      var title = element.getAttribute("title"), i, c, classId = element.getAttribute("classid");
-      var childNodes = element.childNodes;
-      if(!classId) {
+    if(dataFilter) {
+      dataFilter.addRules({tags:{object:function(element) {
+        var title = element.getAttribute("title"), i, c, classId = element.getAttribute("classid");
+        var childNodes = element.childNodes;
+        if(!classId) {
+          for(i = 0;i < childNodes.length;i++) {
+            c = childNodes[i];
+            if(c.nodeName === "embed") {
+              if(!flashUtils.isFlashEmbed(c)) {
+                return null
+              }
+              if(checkXiami(c.attributes.src)) {
+                return dataProcessor.createFakeParserElement(element, CLS_XIAMI, TYPE_XIAMI, true, {title:title})
+              }
+            }
+          }
+          return null
+        }
         for(i = 0;i < childNodes.length;i++) {
           c = childNodes[i];
-          if(c.nodeName == "embed") {
-            if(!flashUtils.isFlashEmbed(c)) {
-              return null
-            }
-            if(checkXiami(c.attributes.src)) {
+          if(c.nodeName === "param" && c.getAttribute("name").toLowerCase() === "movie") {
+            if(checkXiami(c.getAttribute("value") || c.getAttribute("VALUE"))) {
               return dataProcessor.createFakeParserElement(element, CLS_XIAMI, TYPE_XIAMI, true, {title:title})
             }
           }
         }
-        return null
-      }
-      for(i = 0;i < childNodes.length;i++) {
-        c = childNodes[i];
-        if(c.nodeName == "param" && c.getAttribute("name").toLowerCase() == "movie") {
-          if(checkXiami(c.getAttribute("value") || c.getAttribute("VALUE"))) {
-            return dataProcessor.createFakeParserElement(element, CLS_XIAMI, TYPE_XIAMI, true, {title:title})
-          }
+      }, embed:function(element) {
+        if(flashUtils.isFlashEmbed(element) && checkXiami(element.getAttribute("src"))) {
+          return dataProcessor.createFakeParserElement(element, CLS_XIAMI, TYPE_XIAMI, true, {title:element.getAttribute("title")})
         }
-      }
-    }, embed:function(element) {
-      if(flashUtils.isFlashEmbed(element) && checkXiami(element.getAttribute("src"))) {
-        return dataProcessor.createFakeParserElement(element, CLS_XIAMI, TYPE_XIAMI, true, {title:element.getAttribute("title")})
-      }
-    }}}, 4);
+      }}}, 4)
+    }
     var xiamiMusic = new XiamiMusic({editor:editor, cls:CLS_XIAMI, type:TYPE_XIAMI, bubbleId:"xiami", pluginConfig:this.config, contextMenuId:"xiami", contextMenuHandlers:{"\u867e\u7c73\u5c5e\u6027":function() {
       var selectedEl = this.get("editorSelectedEl");
       if(selectedEl) {

@@ -16,6 +16,7 @@
     "undef": true,
     "unused": true,
     "browser": true,
+    "node":true,
     "globals": {
         "KISSY": false,
         "describe": false,
@@ -23,6 +24,7 @@
         "runs": false,
         "waitsFor": false,
         "it": false,
-        "requireNode": false
+        "waits":false,
+        "jasmine":false
     }
 }

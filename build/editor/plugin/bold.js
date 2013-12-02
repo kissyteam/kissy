@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:40
+build time: Dec 2 12:56
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -17,10 +17,10 @@ KISSY.add("editor/plugin/bold", ["./font/ui", "./bold/cmd", "./button"], functio
   }
   S.augment(bold, {pluginRenderUI:function(editor) {
     cmd.init(editor);
-    editor.addButton("bold", {cmdType:"bold", tooltip:"\u7c97\u4f53 "}, ui.Button);
+    editor.addButton("bold", {cmdType:"bold", tooltip:"\u7c97\u4f53"}, ui.Button);
     editor.docReady(function() {
       editor.get("document").on("keydown", function(e) {
-        if(e.ctrlKey && e.keyCode == S.Node.KeyCode.B) {
+        if(e.ctrlKey && e.keyCode === S.Node.KeyCode.B) {
           editor.execCommand("bold");
           e.preventDefault()
         }

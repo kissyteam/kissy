@@ -20,8 +20,8 @@ KISSY.add(function (S, require) {
         _onSetSelected: function (v) {
             var el = this.$el;
             var selectedCls = this.getBaseCssClasses('selected');
-            el[v ? "addClass" : "removeClass"](selectedCls)
-                .attr("aria-hidden", !v);
+            el[v ? 'addClass' : 'removeClass'](selectedCls)
+                .attr('aria-hidden', !v);
         }
 
     }, {

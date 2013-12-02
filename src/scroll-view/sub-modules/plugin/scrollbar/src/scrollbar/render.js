@@ -44,15 +44,14 @@ KISSY.add(function (S, require) {
                 dragWHProperty = control.dragWHProperty,
                 ratio,
                 trackElSize,
-                barSize,
-                rendered = control.get('rendered');
+                barSize;
 
             control.scrollView = scrollView;
 
             if (scrollView.allowScroll[control.scrollType]) {
                 control.scrollLength = scrollView[scrollWHProperty];
                 trackElSize = control.trackElSize =
-                    whProperty == 'width' ? trackEl.offsetWidth : trackEl.offsetHeight;
+                    whProperty === 'width' ? trackEl.offsetWidth : trackEl.offsetHeight;
                 ratio = scrollView[clientWHProperty] / control.scrollLength;
                 barSize = ratio * trackElSize;
                 control.set(dragWHProperty, barSize);

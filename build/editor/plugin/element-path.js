@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:41
+build time: Dec 2 12:58
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -37,7 +37,7 @@ KISSY.add("editor/plugin/element-path", ["editor"], function(S, require) {
     self._cache = [];
     for(i = 0;i < elements.length;i++) {
       element = elements[i];
-      var type = element.attr("_ke_real_element_type") || element.nodeName(), a = new Node("<a " + "href='javascript(\"" + type + "\")' " + "class='" + prefixCls + CLASS + "'>" + type + "</a>");
+      var type = element.attr("_keRealElementType") || element.nodeName(), a = new Node("<a " + "href=\"javascript('" + type + "')\" " + 'class="' + prefixCls + CLASS + '">' + type + "</a>");
       self._cache.push(a);
       (function(element) {
         a.on("click", function(ev2) {

@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:42
+build time: Dec 2 12:59
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -20,7 +20,7 @@ KISSY.add("editor/plugin/font/ui", ["editor", "../button", "../menubutton"], fun
       editor.execCommand(cmdType, v)
     });
     editor.on("selectionChange", function() {
-      if(editor.get("mode") == Editor.Mode.SOURCE_MODE) {
+      if(editor.get("mode") === Editor.Mode.SOURCE_MODE) {
         return
       }
       var cmdType = self.get("cmdType"), menu = self.get("menu"), children = menu.get && menu.get("children");
@@ -31,7 +31,7 @@ KISSY.add("editor/plugin/font/ui", ["editor", "../button", "../menubutton"], fun
           for(var j = 0;j < children.length;j++) {
             var item = children[j];
             var value = item.get("value");
-            if(currentValue == value.toLowerCase()) {
+            if(currentValue === value.toLowerCase()) {
               self.set("value", value);
               return
             }
@@ -54,7 +54,7 @@ KISSY.add("editor/plugin/font/ui", ["editor", "../button", "../menubutton"], fun
       }
     });
     editor.on("selectionChange", function() {
-      if(editor.get("mode") == Editor.Mode.SOURCE_MODE) {
+      if(editor.get("mode") === Editor.Mode.SOURCE_MODE) {
         return
       }
       var cmdType = self.get("cmdType");

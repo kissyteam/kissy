@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:42
+build time: Dec 2 12:58
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -16,7 +16,7 @@ KISSY.add("editor/plugin/flash-common/utils", ["swf"], function(S, require) {
     editor.insertElement(substitute);
     return substitute
   }, isFlashEmbed:function(element) {
-    return Dom.attr(element, "type") == "application/x-shockwave-flash" || /\.swf(?:$|\?)/i.test(Dom.attr(element, "src") || "")
+    return Dom.attr(element, "type") === "application/x-shockwave-flash" || /\.swf(?:$|\?)/i.test(Dom.attr(element, "src") || "")
   }, getUrl:function(r) {
     return SWF.getSrc(r)
   }, createSWF:function(cfg) {

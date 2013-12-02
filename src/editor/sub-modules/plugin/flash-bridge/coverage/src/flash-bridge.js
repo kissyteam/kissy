@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ','src':' + jscoverage_quote(this.src)
+            + ',"src":' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -257,29 +257,29 @@ if (! _$jscoverage['/flash-bridge.js']) {
   _$jscoverage['/flash-bridge.js'].lineData[63] = 0;
   _$jscoverage['/flash-bridge.js'].lineData[64] = 0;
   _$jscoverage['/flash-bridge.js'].lineData[65] = 0;
-  _$jscoverage['/flash-bridge.js'].lineData[66] = 0;
   _$jscoverage['/flash-bridge.js'].lineData[67] = 0;
   _$jscoverage['/flash-bridge.js'].lineData[68] = 0;
-  _$jscoverage['/flash-bridge.js'].lineData[74] = 0;
-  _$jscoverage['/flash-bridge.js'].lineData[77] = 0;
-  _$jscoverage['/flash-bridge.js'].lineData[79] = 0;
+  _$jscoverage['/flash-bridge.js'].lineData[69] = 0;
+  _$jscoverage['/flash-bridge.js'].lineData[75] = 0;
+  _$jscoverage['/flash-bridge.js'].lineData[78] = 0;
   _$jscoverage['/flash-bridge.js'].lineData[80] = 0;
   _$jscoverage['/flash-bridge.js'].lineData[81] = 0;
   _$jscoverage['/flash-bridge.js'].lineData[82] = 0;
-  _$jscoverage['/flash-bridge.js'].lineData[86] = 0;
+  _$jscoverage['/flash-bridge.js'].lineData[83] = 0;
   _$jscoverage['/flash-bridge.js'].lineData[87] = 0;
   _$jscoverage['/flash-bridge.js'].lineData[88] = 0;
-  _$jscoverage['/flash-bridge.js'].lineData[90] = 0;
-  _$jscoverage['/flash-bridge.js'].lineData[94] = 0;
+  _$jscoverage['/flash-bridge.js'].lineData[89] = 0;
+  _$jscoverage['/flash-bridge.js'].lineData[91] = 0;
   _$jscoverage['/flash-bridge.js'].lineData[95] = 0;
-  _$jscoverage['/flash-bridge.js'].lineData[99] = 0;
+  _$jscoverage['/flash-bridge.js'].lineData[96] = 0;
   _$jscoverage['/flash-bridge.js'].lineData[100] = 0;
   _$jscoverage['/flash-bridge.js'].lineData[101] = 0;
   _$jscoverage['/flash-bridge.js'].lineData[102] = 0;
-  _$jscoverage['/flash-bridge.js'].lineData[105] = 0;
+  _$jscoverage['/flash-bridge.js'].lineData[103] = 0;
   _$jscoverage['/flash-bridge.js'].lineData[106] = 0;
-  _$jscoverage['/flash-bridge.js'].lineData[111] = 0;
-  _$jscoverage['/flash-bridge.js'].lineData[113] = 0;
+  _$jscoverage['/flash-bridge.js'].lineData[107] = 0;
+  _$jscoverage['/flash-bridge.js'].lineData[112] = 0;
+  _$jscoverage['/flash-bridge.js'].lineData[114] = 0;
 }
 if (! _$jscoverage['/flash-bridge.js'].functionData) {
   _$jscoverage['/flash-bridge.js'].functionData = [];
@@ -308,36 +308,36 @@ if (! _$jscoverage['/flash-bridge.js'].branchData) {
   _$jscoverage['/flash-bridge.js'].branchData['50'][1] = new BranchData();
   _$jscoverage['/flash-bridge.js'].branchData['64'] = [];
   _$jscoverage['/flash-bridge.js'].branchData['64'][1] = new BranchData();
-  _$jscoverage['/flash-bridge.js'].branchData['79'] = [];
-  _$jscoverage['/flash-bridge.js'].branchData['79'][1] = new BranchData();
-  _$jscoverage['/flash-bridge.js'].branchData['81'] = [];
-  _$jscoverage['/flash-bridge.js'].branchData['81'][1] = new BranchData();
-  _$jscoverage['/flash-bridge.js'].branchData['87'] = [];
-  _$jscoverage['/flash-bridge.js'].branchData['87'][1] = new BranchData();
-  _$jscoverage['/flash-bridge.js'].branchData['102'] = [];
-  _$jscoverage['/flash-bridge.js'].branchData['102'][1] = new BranchData();
+  _$jscoverage['/flash-bridge.js'].branchData['80'] = [];
+  _$jscoverage['/flash-bridge.js'].branchData['80'][1] = new BranchData();
+  _$jscoverage['/flash-bridge.js'].branchData['82'] = [];
+  _$jscoverage['/flash-bridge.js'].branchData['82'][1] = new BranchData();
+  _$jscoverage['/flash-bridge.js'].branchData['88'] = [];
+  _$jscoverage['/flash-bridge.js'].branchData['88'][1] = new BranchData();
+  _$jscoverage['/flash-bridge.js'].branchData['103'] = [];
+  _$jscoverage['/flash-bridge.js'].branchData['103'][1] = new BranchData();
 }
-_$jscoverage['/flash-bridge.js'].branchData['102'][1].init(102, 8, 'instance');
-function visit9_102_1(result) {
-  _$jscoverage['/flash-bridge.js'].branchData['102'][1].ranCondition(result);
+_$jscoverage['/flash-bridge.js'].branchData['103'][1].init(102, 8, 'instance');
+function visit9_103_1(result) {
+  _$jscoverage['/flash-bridge.js'].branchData['103'][1].ranCondition(result);
   return result;
-}_$jscoverage['/flash-bridge.js'].branchData['87'][1].init(46, 11, 'self._ready');
-function visit8_87_1(result) {
-  _$jscoverage['/flash-bridge.js'].branchData['87'][1].ranCondition(result);
+}_$jscoverage['/flash-bridge.js'].branchData['88'][1].init(46, 11, 'self._ready');
+function visit8_88_1(result) {
+  _$jscoverage['/flash-bridge.js'].branchData['88'][1].ranCondition(result);
   return result;
-}_$jscoverage['/flash-bridge.js'].branchData['81'][1].init(168, 4, 'type');
-function visit7_81_1(result) {
-  _$jscoverage['/flash-bridge.js'].branchData['81'][1].ranCondition(result);
+}_$jscoverage['/flash-bridge.js'].branchData['82'][1].init(168, 4, 'type');
+function visit7_82_1(result) {
+  _$jscoverage['/flash-bridge.js'].branchData['82'][1].ranCondition(result);
   return result;
-}_$jscoverage['/flash-bridge.js'].branchData['79'][1].init(81, 14, 'type === \'log\'');
-function visit6_79_1(result) {
-  _$jscoverage['/flash-bridge.js'].branchData['79'][1].ranCondition(result);
+}_$jscoverage['/flash-bridge.js'].branchData['80'][1].init(81, 14, 'type === \'log\'');
+function visit6_80_1(result) {
+  _$jscoverage['/flash-bridge.js'].branchData['80'][1].ranCondition(result);
   return result;
 }_$jscoverage['/flash-bridge.js'].branchData['64'][1].init(58, 18, 'i < methods.length');
 function visit5_64_1(result) {
   _$jscoverage['/flash-bridge.js'].branchData['64'][1].ranCondition(result);
   return result;
-}_$jscoverage['/flash-bridge.js'].branchData['50'][1].init(1147, 12, 'cfg.ajbridge');
+}_$jscoverage['/flash-bridge.js'].branchData['50'][1].init(1149, 12, 'cfg.ajbridge');
 function visit4_50_1(result) {
   _$jscoverage['/flash-bridge.js'].branchData['50'][1].ranCondition(result);
   return result;
@@ -345,11 +345,11 @@ function visit4_50_1(result) {
 function visit3_28_1(result) {
   _$jscoverage['/flash-bridge.js'].branchData['28'][1].ranCondition(result);
   return result;
-}_$jscoverage['/flash-bridge.js'].branchData['25'][1].init(246, 16, 'cfg.params || {}');
+}_$jscoverage['/flash-bridge.js'].branchData['25'][1].init(248, 16, 'cfg.params || {}');
 function visit2_25_1(result) {
   _$jscoverage['/flash-bridge.js'].branchData['25'][1].ranCondition(result);
   return result;
-}_$jscoverage['/flash-bridge.js'].branchData['24'][1].init(204, 15, 'cfg.attrs || {}');
+}_$jscoverage['/flash-bridge.js'].branchData['24'][1].init(206, 15, 'cfg.attrs || {}');
 function visit1_24_1(result) {
   _$jscoverage['/flash-bridge.js'].branchData['24'][1].ranCondition(result);
   return result;
@@ -377,7 +377,7 @@ KISSY.add(function(S, require) {
   _init: function(cfg) {
   _$jscoverage['/flash-bridge.js'].functionData[2]++;
   _$jscoverage['/flash-bridge.js'].lineData[20]++;
-  var self = this, id = S.guid("flash-bridge-"), callback = "KISSY.require('editor').FlashBridge.EventHandler";
+  var self = this, id = S.guid('flash-bridge-'), callback = 'KISSY.require(\'editor\').FlashBridge.EventHandler';
   _$jscoverage['/flash-bridge.js'].lineData[23]++;
   cfg.id = id;
   _$jscoverage['/flash-bridge.js'].lineData[24]++;
@@ -429,13 +429,13 @@ KISSY.add(function(S, require) {
   for (var i = 0; visit5_64_1(i < methods.length); i++) {
     _$jscoverage['/flash-bridge.js'].lineData[65]++;
     var m = methods[i];
-    _$jscoverage['/flash-bridge.js'].lineData[66]++;
+    _$jscoverage['/flash-bridge.js'].lineData[67]++;
     (function(m) {
   _$jscoverage['/flash-bridge.js'].functionData[4]++;
-  _$jscoverage['/flash-bridge.js'].lineData[67]++;
+  _$jscoverage['/flash-bridge.js'].lineData[68]++;
   self[m] = function() {
   _$jscoverage['/flash-bridge.js'].functionData[5]++;
-  _$jscoverage['/flash-bridge.js'].lineData[68]++;
+  _$jscoverage['/flash-bridge.js'].lineData[69]++;
   return self._callSWF(m, S.makeArray(arguments));
 };
 })(m);
@@ -443,64 +443,64 @@ KISSY.add(function(S, require) {
 }, 
   _callSWF: function(func, args) {
   _$jscoverage['/flash-bridge.js'].functionData[6]++;
-  _$jscoverage['/flash-bridge.js'].lineData[74]++;
+  _$jscoverage['/flash-bridge.js'].lineData[75]++;
   return this.swf.callSWF(func, args);
 }, 
   _eventHandler: function(event) {
   _$jscoverage['/flash-bridge.js'].functionData[7]++;
-  _$jscoverage['/flash-bridge.js'].lineData[77]++;
+  _$jscoverage['/flash-bridge.js'].lineData[78]++;
   var self = this, type = event.type;
-  _$jscoverage['/flash-bridge.js'].lineData[79]++;
-  if (visit6_79_1(type === 'log')) {
-    _$jscoverage['/flash-bridge.js'].lineData[80]++;
+  _$jscoverage['/flash-bridge.js'].lineData[80]++;
+  if (visit6_80_1(type === 'log')) {
+    _$jscoverage['/flash-bridge.js'].lineData[81]++;
     logger.debug(event.message);
   } else {
-    _$jscoverage['/flash-bridge.js'].lineData[81]++;
-    if (visit7_81_1(type)) {
-      _$jscoverage['/flash-bridge.js'].lineData[82]++;
+    _$jscoverage['/flash-bridge.js'].lineData[82]++;
+    if (visit7_82_1(type)) {
+      _$jscoverage['/flash-bridge.js'].lineData[83]++;
       self.fire(type, event);
     }
   }
 }, 
   ready: function(fn) {
   _$jscoverage['/flash-bridge.js'].functionData[8]++;
-  _$jscoverage['/flash-bridge.js'].lineData[86]++;
-  var self = this;
   _$jscoverage['/flash-bridge.js'].lineData[87]++;
-  if (visit8_87_1(self._ready)) {
-    _$jscoverage['/flash-bridge.js'].lineData[88]++;
+  var self = this;
+  _$jscoverage['/flash-bridge.js'].lineData[88]++;
+  if (visit8_88_1(self._ready)) {
+    _$jscoverage['/flash-bridge.js'].lineData[89]++;
     fn.call(this);
   } else {
-    _$jscoverage['/flash-bridge.js'].lineData[90]++;
-    self.on("contentReady", fn);
+    _$jscoverage['/flash-bridge.js'].lineData[91]++;
+    self.on('contentReady', fn);
   }
 }, 
   destroy: function() {
   _$jscoverage['/flash-bridge.js'].functionData[9]++;
-  _$jscoverage['/flash-bridge.js'].lineData[94]++;
-  this.swf.destroy();
   _$jscoverage['/flash-bridge.js'].lineData[95]++;
+  this.swf.destroy();
+  _$jscoverage['/flash-bridge.js'].lineData[96]++;
   delete instances[this.id];
 }});
-  _$jscoverage['/flash-bridge.js'].lineData[99]++;
+  _$jscoverage['/flash-bridge.js'].lineData[100]++;
   FlashBridge.EventHandler = function(id, event) {
   _$jscoverage['/flash-bridge.js'].functionData[10]++;
-  _$jscoverage['/flash-bridge.js'].lineData[100]++;
-  logger.debug("fire event: " + event.type);
   _$jscoverage['/flash-bridge.js'].lineData[101]++;
-  var instance = instances[id];
+  logger.debug('fire event: ' + event.type);
   _$jscoverage['/flash-bridge.js'].lineData[102]++;
-  if (visit9_102_1(instance)) {
-    _$jscoverage['/flash-bridge.js'].lineData[105]++;
+  var instance = instances[id];
+  _$jscoverage['/flash-bridge.js'].lineData[103]++;
+  if (visit9_103_1(instance)) {
+    _$jscoverage['/flash-bridge.js'].lineData[106]++;
     setTimeout(function() {
   _$jscoverage['/flash-bridge.js'].functionData[11]++;
-  _$jscoverage['/flash-bridge.js'].lineData[106]++;
+  _$jscoverage['/flash-bridge.js'].lineData[107]++;
   instance._eventHandler.call(instance, event);
 }, 100);
   }
 };
-  _$jscoverage['/flash-bridge.js'].lineData[111]++;
+  _$jscoverage['/flash-bridge.js'].lineData[112]++;
   Editor.FlashBridge = FlashBridge;
-  _$jscoverage['/flash-bridge.js'].lineData[113]++;
+  _$jscoverage['/flash-bridge.js'].lineData[114]++;
   return FlashBridge;
 });

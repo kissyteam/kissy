@@ -63,7 +63,7 @@ KISSY.add(function (S, require) {
                 events = Gesture.tap;
 
             if (!isTouchEventSupported) {
-                events += (ie && ie < 9 ? " dblclick " : "");
+                events += (ie && ie < 9 ? ' dblclick ' : '');
             }
 
             self.$el.delegate(events, '.' + delegateCls,
@@ -74,7 +74,7 @@ KISSY.add(function (S, require) {
         '_onSetSelectedItem': function (n, ev) {
             // 仅用于排他性
             if (n && ev.prevVal) {
-                ev.prevVal.set("selected", false, {
+                ev.prevVal.set('selected', false, {
                     data: {
                         byPassSetTreeSelectedItem: 1
                     }
@@ -83,7 +83,7 @@ KISSY.add(function (S, require) {
         },
 
         '_onSetShowRootNode': function (v) {
-            this.get("rowEl")[v ? 'show' : 'hide']();
+            this.get('rowEl')[v ? 'show' : 'hide']();
         }
     });
 

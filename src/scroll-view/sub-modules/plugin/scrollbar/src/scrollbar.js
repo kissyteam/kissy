@@ -31,7 +31,7 @@ KISSY.add(function (S, require) {
 
             if (self.scrollBarX) {
                 self.scrollBarX.sync();
-            } else if (scrollView.allowScroll['left']) {
+            } else if (scrollView.allowScroll.left) {
                 my = {
                     axis: 'x'
                 };
@@ -43,7 +43,7 @@ KISSY.add(function (S, require) {
 
             if (self.scrollBarY) {
                 self.scrollBarY.sync();
-            } else if (scrollView.allowScroll['top']) {
+            } else if (scrollView.allowScroll.top) {
                 my = {
                     axis: 'y'
                 };

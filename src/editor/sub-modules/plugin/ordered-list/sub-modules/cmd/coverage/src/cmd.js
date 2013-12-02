@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ','src':' + jscoverage_quote(this.src)
+            + ',"src":' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -267,7 +267,7 @@ _$jscoverage['/cmd.js'].branchData['32'][1].init(92, 33, 'selection && !selectio
 function visit3_32_1(result) {
   _$jscoverage['/cmd.js'].branchData['32'][1].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['28'][1].init(415, 27, '!editor.hasCommand(queryOl)');
+}_$jscoverage['/cmd.js'].branchData['28'][1].init(418, 27, '!editor.hasCommand(queryOl)');
 function visit2_28_1(result) {
   _$jscoverage['/cmd.js'].branchData['28'][1].ranCondition(result);
   return result;

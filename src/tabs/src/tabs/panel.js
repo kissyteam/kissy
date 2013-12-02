@@ -4,8 +4,8 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
-        var Container = require('component/container');
-        var PanelRender = require('./panel-render');
+    var Container = require('component/container');
+    var PanelRender = require('./panel-render');
     /**
      * KISSY.Tabs.Panel.xclass: 'tabs-panel'.
      * @class  KISSY.Tabs.Panel
@@ -36,5 +36,5 @@ KISSY.add(function (S, require) {
             }
         },
         xclass: 'tabs-panel'
-    })
+    });
 });

@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ','src':' + jscoverage_quote(this.src)
+            + ',"src":' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -236,16 +236,16 @@ if (! _$jscoverage['/progressbar.js']) {
   _$jscoverage['/progressbar.js'].lineData[12] = 0;
   _$jscoverage['/progressbar.js'].lineData[13] = 0;
   _$jscoverage['/progressbar.js'].lineData[16] = 0;
-  _$jscoverage['/progressbar.js'].lineData[44] = 0;
+  _$jscoverage['/progressbar.js'].lineData[42] = 0;
+  _$jscoverage['/progressbar.js'].lineData[43] = 0;
   _$jscoverage['/progressbar.js'].lineData[45] = 0;
   _$jscoverage['/progressbar.js'].lineData[46] = 0;
   _$jscoverage['/progressbar.js'].lineData[47] = 0;
   _$jscoverage['/progressbar.js'].lineData[48] = 0;
   _$jscoverage['/progressbar.js'].lineData[49] = 0;
-  _$jscoverage['/progressbar.js'].lineData[50] = 0;
-  _$jscoverage['/progressbar.js'].lineData[54] = 0;
+  _$jscoverage['/progressbar.js'].lineData[53] = 0;
+  _$jscoverage['/progressbar.js'].lineData[55] = 0;
   _$jscoverage['/progressbar.js'].lineData[56] = 0;
-  _$jscoverage['/progressbar.js'].lineData[57] = 0;
 }
 if (! _$jscoverage['/progressbar.js'].functionData) {
   _$jscoverage['/progressbar.js'].functionData = [];
@@ -256,12 +256,12 @@ if (! _$jscoverage['/progressbar.js'].functionData) {
 }
 if (! _$jscoverage['/progressbar.js'].branchData) {
   _$jscoverage['/progressbar.js'].branchData = {};
-  _$jscoverage['/progressbar.js'].branchData['44'] = [];
-  _$jscoverage['/progressbar.js'].branchData['44'][1] = new BranchData();
+  _$jscoverage['/progressbar.js'].branchData['42'] = [];
+  _$jscoverage['/progressbar.js'].branchData['42'][1] = new BranchData();
 }
-_$jscoverage['/progressbar.js'].branchData['44'][1].init(1219, 9, 'container');
-function visit1_44_1(result) {
-  _$jscoverage['/progressbar.js'].branchData['44'][1].ranCondition(result);
+_$jscoverage['/progressbar.js'].branchData['42'][1].init(1213, 9, 'container');
+function visit1_42_1(result) {
+  _$jscoverage['/progressbar.js'].branchData['42'][1].ranCondition(result);
   return result;
 }_$jscoverage['/progressbar.js'].lineData[6]++;
 KISSY.add(function(S, require) {
@@ -282,34 +282,34 @@ KISSY.add(function(S, require) {
   initializer: function() {
   _$jscoverage['/progressbar.js'].functionData[2]++;
   _$jscoverage['/progressbar.js'].lineData[16]++;
-  var self = this, h = self.get('height'), prefixCls = self.get('prefixCls'), el = new Node(S.substitute("<div" + " class='{prefixCls}editor-progressbar' " + " style='width:" + self.get('width') + ";" + "height:" + h + ";'" + "></div>", {
-  prefixCls: prefixCls})), container = self.get("container"), p = new Node(S.substitute("<div style='overflow:hidden;'>" + "<div class='{prefixCls}editor-progressbar-inner' style='height:" + (parseInt(h) - 4) + "px'>" + "<div class='{prefixCls}editor-progressbar-inner-bg'></div>" + "</div>" + "</div>", {
-  prefixCls: prefixCls})).appendTo(el), title = new Node("<span class='" + prefixCls + "editor-progressbar-title'></span>").appendTo(el);
-  _$jscoverage['/progressbar.js'].lineData[44]++;
-  if (visit1_44_1(container)) {
-    _$jscoverage['/progressbar.js'].lineData[45]++;
+  var self = this, h = self.get('height'), prefixCls = self.get('prefixCls'), el = new Node(S.substitute('<div' + ' class="{prefixCls}editor-progressbar" ' + ' style="width:' + self.get('width') + ';' + 'height:' + h + ';"' + '></div>', {
+  prefixCls: prefixCls})), container = self.get('container'), p = new Node(S.substitute('<div style="overflow:hidden;">' + '<div class="{prefixCls}editor-progressbar-inner" style="height:' + (parseInt(h) - 4) + 'px">' + '<div class="{prefixCls}editor-progressbar-inner-bg"></div>' + '</div>' + '</div>', {
+  prefixCls: prefixCls})).appendTo(el), title = new Node('<span class="' + prefixCls + 'editor-progressbar-title"></span>').appendTo(el);
+  _$jscoverage['/progressbar.js'].lineData[42]++;
+  if (visit1_42_1(container)) {
+    _$jscoverage['/progressbar.js'].lineData[43]++;
     el.appendTo(container);
   }
-  _$jscoverage['/progressbar.js'].lineData[46]++;
+  _$jscoverage['/progressbar.js'].lineData[45]++;
   self.el = el;
-  _$jscoverage['/progressbar.js'].lineData[47]++;
+  _$jscoverage['/progressbar.js'].lineData[46]++;
   self._title = title;
-  _$jscoverage['/progressbar.js'].lineData[48]++;
+  _$jscoverage['/progressbar.js'].lineData[47]++;
   self._p = p;
+  _$jscoverage['/progressbar.js'].lineData[48]++;
+  self.on('afterProgressChange', self._progressChange, self);
   _$jscoverage['/progressbar.js'].lineData[49]++;
-  self.on("afterProgressChange", self._progressChange, self);
-  _$jscoverage['/progressbar.js'].lineData[50]++;
   self._progressChange({
-  newVal: self.get("progress")});
+  newVal: self.get('progress')});
 }, 
   _progressChange: function(ev) {
   _$jscoverage['/progressbar.js'].functionData[3]++;
-  _$jscoverage['/progressbar.js'].lineData[54]++;
+  _$jscoverage['/progressbar.js'].lineData[53]++;
   var self = this, v = ev.newVal;
+  _$jscoverage['/progressbar.js'].lineData[55]++;
+  self._p.css('width', v + '%');
   _$jscoverage['/progressbar.js'].lineData[56]++;
-  self._p.css('width', v + "%");
-  _$jscoverage['/progressbar.js'].lineData[57]++;
-  self._title.html(v + "%");
+  self._title.html(v + '%');
 }}, {
   ATTRS: {
   container: {}, 

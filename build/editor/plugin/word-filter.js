@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:47
+build time: Dec 2 13:03
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -17,7 +17,7 @@ KISSY.add("editor/plugin/word-filter", ["html-parser"], function(S, require) {
     str = str.toUpperCase();
     var l = romans.length, retVal = 0;
     for(var i = 0;i < l;++i) {
-      for(var j = romans[i], k = j[1].length;str.substr(0, k) == j[1];str = str.substr(k)) {
+      for(var j = romans[i], k = j[1].length;str.substr(0, k) === j[1];str = str.substr(k)) {
         retVal += j[0]
       }
     }
@@ -43,7 +43,7 @@ KISSY.add("editor/plugin/word-filter", ["html-parser"], function(S, require) {
     var calculator;
     return function(cssLength) {
       if(!calculator) {
-        calculator = $('<div style="position:absolute;left:-9999px;' + 'top:-9999px;margin:0px;padding:0px;border:0px;"' + "></div>")["prependTo"]("body")
+        calculator = $('<div style="position:absolute;left:-9999px;' + 'top:-9999px;margin:0px;padding:0px;border:0px;"' + "></div>").prependTo("body")
       }
       if(!/%$/.test(cssLength)) {
         calculator.css("width", cssLength);
@@ -54,7 +54,7 @@ KISSY.add("editor/plugin/word-filter", ["html-parser"], function(S, require) {
   }();
   var listBaseIndent = 0, previousListItemMargin = null, previousListId;
   function onlyChild(elem) {
-    var childNodes = elem.childNodes || [], count = childNodes.length, firstChild = count == 1 && childNodes[0];
+    var childNodes = elem.childNodes || [], count = childNodes.length, firstChild = count === 1 && childNodes[0];
     return firstChild || null
   }
   function removeAnyChildWithName(elem, tagName) {
@@ -64,7 +64,7 @@ KISSY.add("editor/plugin/word-filter", ["html-parser"], function(S, require) {
       if(!child.nodeName) {
         continue
       }
-      if(child.nodeName == tagName) {
+      if(child.nodeName === tagName) {
         ret.push(child);
         children.splice(i--, 1)
       }
@@ -98,10 +98,10 @@ KISSY.add("editor/plugin/word-filter", ["html-parser"], function(S, require) {
   }
   function addStyle(elem, name, value, isPrepend) {
     var styleText, addingStyleText = "", style;
-    if(typeof value == "string") {
+    if(typeof value === "string") {
       addingStyleText += name + ":" + value + ";"
     }else {
-      if(typeof name == "object") {
+      if(typeof name === "object") {
         for(style in name) {
           addingStyleText += style + ":" + name[style] + ";"
         }
@@ -117,14 +117,14 @@ KISSY.add("editor/plugin/word-filter", ["html-parser"], function(S, require) {
   function parentOf(tagName) {
     var result = {}, tag;
     for(tag in dtd) {
-      if(tag.indexOf("$") == -1 && dtd[tag][tagName]) {
+      if(tag.indexOf("$") === -1 && dtd[tag][tagName]) {
         result[tag] = 1
       }
     }
     return result
   }
   var filters = {flattenList:function(element, level) {
-    level = typeof level == "number" ? level : 1;
+    level = typeof level === "number" ? level : 1;
     var listStyleType;
     switch(element.getAttribute("type")) {
       case "a":
@@ -146,11 +146,15 @@ KISSY.add("editor/plugin/word-filter", ["html-parser"], function(S, require) {
           }
         }
         child.setTagName("ke:li");
-        element.getAttribute("start") && !i && element.setAttribute("value", element.getAttribute("start"));
+        if(element.getAttribute("start") && !i) {
+          element.setAttribute("value", element.getAttribute("start"))
+        }
         filters.stylesFilter([["tab-stops", null, function(val) {
           var margin = val.split(" ")[1].match(cssLengthRelativeUnit);
-          margin && (previousListItemMargin = convertToPx(margin[0]))
-        }], level == 1 ? ["mso-list", null, function(val) {
+          if(margin) {
+            previousListItemMargin = convertToPx(margin[0])
+          }
+        }], level === 1 ? ["mso-list", null, function(val) {
           val = val.split(" ");
           var listId = Number(val[0].match(/\d+/));
           if(listId !== previousListId) {
@@ -179,7 +183,7 @@ KISSY.add("editor/plugin/word-filter", ["html-parser"], function(S, require) {
     var bullet, listType, listStyleType, itemNumeric;
     for(var i = 0;i < children.length;i++) {
       child = children[i];
-      if("ke:li" == child.nodeName) {
+      if("ke:li" === child.nodeName) {
         child.setTagName("li");
         listItem = child;
         bullet = listItem.getAttribute("ke:listsymbol");
@@ -189,9 +193,11 @@ KISSY.add("editor/plugin/word-filter", ["html-parser"], function(S, require) {
           children.splice(i--, 1);
           continue
         }
-        listItem.getAttribute("ke:reset") && (list = lastIndent = lastListItem = null);
+        if(listItem.getAttribute("ke:reset")) {
+          list = lastIndent = lastListItem = null
+        }
         listItemIndent = Number(listItem.getAttribute("ke:indent"));
-        if(listItemIndent != lastIndent) {
+        if(listItemIndent !== lastIndent) {
           previousListType = previousListStyleType = null
         }
         if(!bullet) {
@@ -205,7 +211,7 @@ KISSY.add("editor/plugin/word-filter", ["html-parser"], function(S, require) {
             for(var type in listMarkerPatterns) {
               for(var style in listMarkerPatterns[type]) {
                 if(listMarkerPatterns[type][style].test(bullet[1])) {
-                  if(type == "ol" && /alpha|roman/.test(style)) {
+                  if(type === "ol" && /alpha|roman/.test(style)) {
                     var num = /roman/.test(style) ? fromRoman(bullet[1]) : fromAlphabet(bullet[1]);
                     if(!itemNumeric || num < itemNumeric) {
                       itemNumeric = num;
@@ -221,14 +227,16 @@ KISSY.add("editor/plugin/word-filter", ["html-parser"], function(S, require) {
               }
             }
           }
-          !listType && (listType = bullet[2] ? "ol" : "ul")
+          if(!listType) {
+            listType = bullet[2] ? "ol" : "ul"
+          }
         }
         previousListType = listType;
-        previousListStyleType = listStyleType || (listType == "ol" ? "decimal" : "disc");
-        if(listStyleType && listStyleType != (listType == "ol" ? "decimal" : "disc")) {
+        previousListStyleType = listStyleType || (listType === "ol" ? "decimal" : "disc");
+        if(listStyleType && listStyleType !== (listType === "ol" ? "decimal" : "disc")) {
           addStyle(listItem, "list-style-type", listStyleType)
         }
-        if(listType == "ol" && bullet) {
+        if(listType === "ol" && bullet) {
           switch(listStyleType) {
             case "decimal":
               itemNumeric = Number(bullet[1]);
@@ -271,11 +279,8 @@ KISSY.add("editor/plugin/word-filter", ["html-parser"], function(S, require) {
         lastListItem = listItem;
         lastIndent = listItemIndent
       }else {
-        if(child.nodeType == 3 && !S.trim(child.nodeValue)) {
-        }else {
-          if(list) {
-            list = lastIndent = lastListItem = null
-          }
+        if(list && !(child.nodeType === 3 && !S.trim(child.nodeValue))) {
+          list = lastIndent = lastListItem = null
         }
       }
     }
@@ -289,7 +294,9 @@ KISSY.add("editor/plugin/word-filter", ["html-parser"], function(S, require) {
       var rules = [];
       (styleText || "").replace(/&quot;/g, '"').replace(/\s*([^ :;]+)\s*:\s*([^;]+)\s*(?=;|$)/g, function(match, name, value) {
         name = name.toLowerCase();
-        name == "font-family" && (value = value.replace(/["']/g, ""));
+        if(name === "font-family") {
+          value = value.replace(/['']/g, "")
+        }
         var namePattern, valuePattern, newValue, newName;
         for(var i = 0;i < styles.length;i++) {
           if(styles[i]) {
@@ -299,22 +306,26 @@ KISSY.add("editor/plugin/word-filter", ["html-parser"], function(S, require) {
             newName = styles[i][3];
             if(name.match(namePattern) && (!valuePattern || value.match(valuePattern))) {
               name = newName || name;
-              whitelist && (newValue = newValue || value);
-              if(typeof newValue == "function") {
+              if(whitelist) {
+                newValue = newValue || value
+              }
+              if(typeof newValue === "function") {
                 newValue = newValue(value, element, name)
               }
               if(newValue && newValue.push) {
                 name = newValue[0];
                 newValue = newValue[1]
               }
-              if(typeof newValue == "string") {
+              if(typeof newValue === "string") {
                 rules.push([name, newValue])
               }
               return
             }
           }
         }
-        !whitelist && rules.push([name, value])
+        if(!whitelist) {
+          rules.push([name, value])
+        }
       });
       for(var i = 0;i < rules.length;i++) {
         rules[i] = rules[i].join(":")
@@ -329,12 +340,12 @@ KISSY.add("editor/plugin/word-filter", ["html-parser"], function(S, require) {
     }
     for(var i = 0;i < count;i++) {
       child = children[i];
-      if(child.getAttribute("value") && Number(child.getAttribute("value")) == i + 1) {
+      if(child.getAttribute("value") && Number(child.getAttribute("value")) === i + 1) {
         child.removeAttribute("value")
       }
       match = styleTypeRegexp.exec(child.getAttribute("style"));
       if(match) {
-        if(match[1] == mergeStyle || !mergeStyle) {
+        if(match[1] === mergeStyle || !mergeStyle) {
           mergeStyle = match[1]
         }else {
           mergeStyle = null;
@@ -384,8 +395,10 @@ KISSY.add("editor/plugin/word-filter", ["html-parser"], function(S, require) {
         }], [/^mso-list$/, null, function(val) {
           val = val.split(" ");
           var listId = Number(val[0].match(/\d+/)), indent = Number(val[1].match(/\d+/));
-          if(indent == 1) {
-            listId !== previousListId && element.setAttribute("ke:reset", 1);
+          if(indent === 1) {
+            if(listId !== previousListId) {
+              element.setAttribute("ke:reset", 1)
+            }
             previousListId = listId
           }
           element.setAttribute("ke:indent", indent)
@@ -445,9 +458,9 @@ KISSY.add("editor/plugin/word-filter", ["html-parser"], function(S, require) {
             element.setTagName(null)
           }
         }else {
-          if(tagName.indexOf(":") != -1 && tagName.indexOf("ke") == -1) {
+          if(tagName.indexOf(":") !== -1 && tagName.indexOf("ke") === -1) {
             element.filterChildren();
-            if(tagName == "v:imagedata") {
+            if(tagName === "v:imagedata") {
               var href = element.getAttribute("o:href");
               if(href) {
                 element.setAttribute("src", href)
@@ -492,10 +505,12 @@ KISSY.add("editor/plugin/word-filter", ["html-parser"], function(S, require) {
             var name = rules["*"] ? "*" : element.nodeName, className = element.getAttribute("class"), style;
             if(name in rules) {
               style = rules[name];
-              if(typeof style == "object") {
+              if(typeof style === "object") {
                 style = style[className]
               }
-              style && addStyle(element, style, true)
+              if(style) {
+                addStyle(element, style, true)
+              }
             }
           }
         }
@@ -504,16 +519,18 @@ KISSY.add("editor/plugin/word-filter", ["html-parser"], function(S, require) {
     }, p:function(element) {
       if(/MsoListParagraph/.exec(element.getAttribute("class"))) {
         var bulletText = firstChild(element, function(node) {
-          return node.nodeType == 3 && !containsNothingButSpaces(node.parentNode)
+          return node.nodeType === 3 && !containsNothingButSpaces(node.parentNode)
         });
         var bullet = bulletText && bulletText.parentNode;
-        !bullet.getAttribute("style") && bullet.setAttribute("style", "mso-list: Ignore;")
+        if(!bullet.getAttribute("style")) {
+          bullet.setAttribute("style", "mso-list: Ignore;")
+        }
       }
       element.filterChildren();
       resolveListItem(element)
     }, div:function(element) {
       var singleChild = onlyChild(element);
-      if(singleChild && singleChild.nodeName == "table") {
+      if(singleChild && singleChild.nodeName === "table") {
         var attrs = element.attributes;
         S.each(attrs, function(attr) {
           singleChild.setAttribute(attr.name, attr.value)
@@ -537,16 +554,20 @@ KISSY.add("editor/plugin/word-filter", ["html-parser"], function(S, require) {
       }
       element.filterChildren();
       var styleText = element.getAttribute("style"), parent = element.parentNode;
-      if("font" == parent.name) {
+      if("font" === parent.name) {
         S.each(element.attributes, function(attr) {
           parent.setAttribute(attr.name, attr.value)
         });
-        styleText && addStyle(parent, styleText);
+        if(styleText) {
+          addStyle(parent, styleText)
+        }
         element.setTagName(null)
       }else {
         styleText = styleText || "";
         if(element.getAttribute("color")) {
-          element.getAttribute("color") != "#000000" && (styleText += "color:" + element.getAttribute("color") + ";");
+          if(element.getAttribute("color") !== "#000000") {
+            styleText += "color:" + element.getAttribute("color") + ";"
+          }
           element.removeAttribute("color")
         }
         if(element.getAttribute("face")) {
@@ -572,7 +593,7 @@ KISSY.add("editor/plugin/word-filter", ["html-parser"], function(S, require) {
       }
       if(isListBulletIndicator(element)) {
         var listSymbolNode = firstChild(element, function(node) {
-          return node.nodeValue || node.nodeName == "img"
+          return node.nodeValue || node.nodeName === "img"
         });
         var listSymbol = listSymbolNode && (listSymbolNode.nodeValue || "l."), listType = listSymbol && listSymbol.match(/^(?:[(]?)([^\s]+?)([.)]?)$/);
         if(listType) {
@@ -604,10 +625,10 @@ KISSY.add("editor/plugin/word-filter", ["html-parser"], function(S, require) {
     }}, attributeNames:[[/^onmouse(:?out|over)/, ""], [/^onload$/, ""], [/(?:v|o):\w+/, ""], [/^lang/, ""]], attributes:{style:stylesFilter([[/^list-style-type$/], [/^margin$|^margin-(?!bottom|top)/, null, function(value, element, name) {
       if(element.nodeName in {p:1, div:1}) {
         var indentStyleName = "margin-left";
-        if(name == "margin") {
+        if(name === "margin") {
           value = getStyleComponents(name, value, [indentStyleName])[indentStyleName]
         }else {
-          if(name != indentStyleName) {
+          if(name !== indentStyleName) {
             return null
           }
         }
@@ -617,7 +638,7 @@ KISSY.add("editor/plugin/word-filter", ["html-parser"], function(S, require) {
       }
       return null
     }], [/^clear$/], [/^border.*|margin.*|vertical-align|float$/, null, function(value, element) {
-      if(element.nodeName == "img") {
+      if(element.nodeName === "img") {
         return value
       }
     }], [/^width|height$/, null, function(value, element) {
@@ -642,8 +663,10 @@ KISSY.add("editor/plugin/word-filter", ["html-parser"], function(S, require) {
         return createListBulletMarker(listType, listSymbol)
       }
       if(UA.gecko && imageInfo) {
-        var img = (new HtmlParser.Parser(imageInfo[0])).parse().childNodes[0], previousComment = node.previousSibling, imgSrcInfo = previousComment && previousComment.toHtml().match(/<v:imagedata[^>]*o:href=['"](.*?)['"]/), imgSrc = imgSrcInfo && imgSrcInfo[1];
-        imgSrc && img.setAttribute("src", imgSrc);
+        var img = (new HtmlParser.Parser(imageInfo[0])).parse().childNodes[0], previousComment = node.previousSibling, imgSrcInfo = previousComment && previousComment.toHtml().match(/<v:imagedata[^>]*o:href=[''](.*?)['']/), imgSrc = imgSrcInfo && imgSrcInfo[1];
+        if(imgSrc) {
+          img.setAttribute("src", imgSrc)
+        }
         return img
       }
       return false
@@ -653,7 +676,7 @@ KISSY.add("editor/plugin/word-filter", ["html-parser"], function(S, require) {
     if(UA.gecko) {
       html = html.replace(/(<!--\[if[^<]*?\])--\>([\S\s]*?)<!--(\[endif\]--\>)/gi, "$1$2$3")
     }
-    html = editor["htmlDataProcessor"].toDataFormat(html, wordFilter);
+    html = editor.htmlDataProcessor.toDataFormat(html, wordFilter);
     return html
   }}
 });

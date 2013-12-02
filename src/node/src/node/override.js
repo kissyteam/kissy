@@ -34,7 +34,7 @@ KISSY.add(function (S, require) {
         NLP[insertType] = function (html) {
             var newNode = html, self = this;
             // create
-            if (typeof newNode == 'string') {
+            if (typeof newNode === 'string') {
                 newNode = Dom.create(newNode);
             }
             if (newNode) {
@@ -48,12 +48,12 @@ KISSY.add(function (S, require) {
         var orig = NLP[fixType];
         NLP[fixType] = function (others) {
             var self = this;
-            if (typeof others == 'string') {
+            if (typeof others === 'string') {
                 others = NodeList.all(others, self[0].ownerDocument);
             }
             return orig.call(self, others);
         };
-    })
+    });
 });
 
 /*

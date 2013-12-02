@@ -24,7 +24,7 @@ KISSY.add(function (S, require) {
         },
         HTML_PARSER: {
             closeBtn: function (el) {
-                return el.one("." + this.getBaseCssClass('close'));
+                return el.one('.' + this.getBaseCssClass('close'));
             }
         }
     });
@@ -32,5 +32,5 @@ KISSY.add(function (S, require) {
 
 /**
  * @ignore
- * 2010-11-09 2010-11-10 yiminghe@gmail.com重构，attribute-base-uibase-Overlay ，采用 UIBase.create
+ * 2010-11-09 2010-11-10 yiminghe@gmail.com 重构，attribute-base-uibase-Overlay ，采用 UIBase.create
  */

@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ','src':' + jscoverage_quote(this.src)
+            + ',"src":' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -270,13 +270,13 @@ KISSY.add(function(S, require) {
   _$jscoverage['/remove-format.js'].lineData[16]++;
   formatCmd.init(editor);
   _$jscoverage['/remove-format.js'].lineData[17]++;
-  editor.addButton("removeFormat", {
-  tooltip: "\u6e05\u9664\u683c\u5f0f", 
+  editor.addButton('removeFormat', {
+  tooltip: '\u6e05\u9664\u683c\u5f0f', 
   listeners: {
   click: function() {
   _$jscoverage['/remove-format.js'].functionData[3]++;
   _$jscoverage['/remove-format.js'].lineData[21]++;
-  editor.execCommand("removeFormat");
+  editor.execCommand('removeFormat');
 }}, 
   mode: Editor.Mode.WYSIWYG_MODE});
 }});

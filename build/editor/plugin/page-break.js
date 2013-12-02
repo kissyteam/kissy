@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:45
+build time: Dec 2 13:02
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -24,12 +24,12 @@ KISSY.add("editor/plugin/page-break", ["editor", "./fake-objects", "./button"], 
       if(style) {
         var childNodes = element.childNodes;
         for(var i = 0;i < childNodes.length;i++) {
-          if(childNodes[i].nodeType == 1) {
+          if(childNodes[i].nodeType === 1) {
             child = childNodes[i]
           }
         }
       }
-      var childStyle = child && child.nodeName == "span" && child.getAttribute("style");
+      var childStyle = child && child.nodeName === "span" && child.getAttribute("style");
       if(childStyle && /page-break-after\s*:\s*always/i.test(style) && /display\s*:\s*none/i.test(childStyle)) {
         return dataProcessor.createFakeParserElement(element, CLS, TYPE)
       }

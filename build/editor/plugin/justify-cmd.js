@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:43
+build time: Dec 2 13:00
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -11,7 +11,7 @@ build time: Nov 27 00:43
 
 KISSY.add("editor/plugin/justify-cmd", ["editor"], function(S, require) {
   var Editor = require("editor");
-  var alignRemoveRegex = /(-moz-|-webkit-|start|auto)/gi, default_align = "left";
+  var alignRemoveRegex = /(-moz-|-webkit-|start|auto)/gi, defaultAlign = "left";
   function exec(editor, textAlign) {
     editor.focus();
     editor.execCommand("save");
@@ -33,8 +33,8 @@ KISSY.add("editor/plugin/justify-cmd", ["editor"], function(S, require) {
     editor.notifySelectionChange()
   }
   function isAlign(block, textAlign) {
-    var align = block.css("text-align").replace(alignRemoveRegex, "") || default_align;
-    return align == textAlign
+    var align = block.css("text-align").replace(alignRemoveRegex, "") || defaultAlign;
+    return align === textAlign
   }
   return{addCommand:function(editor, command, textAlign) {
     if(!editor.hasCommand(command)) {

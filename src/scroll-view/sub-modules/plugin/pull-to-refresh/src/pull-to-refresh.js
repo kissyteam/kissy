@@ -51,7 +51,8 @@ KISSY.add(function (S, require) {
                 scrollView.minScroll.top = -self.elHeight;
                 var loadFn = self.get('loadFn');
                 self.set('state', 'loading');
-                function callback() {
+
+                var callback = function () {
                     // will animate to restore
                     scrollView.scrollTo({
                         top: -self.elHeight
@@ -63,7 +64,7 @@ KISSY.add(function (S, require) {
                         easing: scrollView.get('snapEasing')
                     });
                     self.set('state', 'pulling');
-                }
+                };
 
                 if (loadFn) {
                     loadFn.call(self, callback);

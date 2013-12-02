@@ -35,11 +35,10 @@ KISSY.add(function (S, require) {
     S.augment(Node, {
         /**
          * animate for current node list.
-         * @param var_args see {@link KISSY.Anim}
          * @chainable
          * @member KISSY.NodeList
          */
-        animate: function (var_args) {
+        animate: function () {
             var self = this,
                 originArgs = S.makeArray(arguments);
             S.each(self, function (elem) {
@@ -47,7 +46,7 @@ KISSY.add(function (S, require) {
                     arg0 = args[0];
                 if (arg0.to) {
                     arg0.node = elem;
-                    Anim(arg0).run();
+                    new Anim(arg0).run();
                 } else {
                     Anim.apply(undefined, [elem].concat(args)).run();
                 }
@@ -246,7 +245,7 @@ KISSY.add(function (S, require) {
                     Dom[k](self);
                 } else {
                     S.each(self, function (elem) {
-                        Anim(elem, v, duration, easing, complete).run();
+                        new Anim(elem, v, duration, easing, complete).run();
                     });
                 }
                 return self;

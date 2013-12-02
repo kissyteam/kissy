@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:45
+build time: Dec 2 13:01
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -17,7 +17,7 @@ KISSY.add("editor/plugin/outdent", ["editor", "./button", "./outdent/cmd"], func
   }
   S.augment(outdent, {pluginRenderUI:function(editor) {
     indexCmd.init(editor);
-    editor.addButton("outdent", {tooltip:"\u51cf\u5c11\u7f29\u8fdb\u91cf ", listeners:{click:function() {
+    editor.addButton("outdent", {tooltip:"\u51cf\u5c11\u7f29\u8fdb\u91cf", listeners:{click:function() {
       editor.execCommand("outdent");
       editor.focus()
     }, afterSyncUI:function() {

@@ -58,34 +58,34 @@ KISSY.add(function (S, require) {
                 $target = $(target),
                 nodeName = $target.nodeName();
             // editable element
-            if (nodeName == 'input' ||
-                nodeName == 'textarea' ||
-                nodeName == 'select' ||
+            if (nodeName === 'input' ||
+                nodeName === 'textarea' ||
+                nodeName === 'select' ||
                 $target.hasAttr('contenteditable')) {
                 return undefined;
             }
             var self = this,
                 keyCode = e.keyCode,
                 scrollStep = self.getScrollStep(),
-                ok = undefined;
-            var allowX = self.allowScroll['left'];
-            var allowY = self.allowScroll['top'];
+                ok;
+            var allowX = self.allowScroll.left;
+            var allowY = self.allowScroll.top;
             if (allowY) {
                 var scrollStepY = scrollStep.top,
                     clientHeight = self.clientHeight,
                     scrollTop = self.get('scrollTop');
-                if (keyCode == KeyCode.DOWN) {
+                if (keyCode === KeyCode.DOWN) {
                     self.scrollToWithBounds({
                         top: scrollTop + scrollStepY
                     });
                     ok = true;
-                } else if (keyCode == KeyCode.UP) {
+                } else if (keyCode === KeyCode.UP) {
                     self.scrollToWithBounds({top: scrollTop - scrollStepY});
                     ok = true;
-                } else if (keyCode == KeyCode.PAGE_DOWN) {
+                } else if (keyCode === KeyCode.PAGE_DOWN) {
                     self.scrollToWithBounds({top: scrollTop + clientHeight});
                     ok = true;
-                } else if (keyCode == KeyCode.PAGE_UP) {
+                } else if (keyCode === KeyCode.PAGE_UP) {
                     self.scrollToWithBounds({top: scrollTop - clientHeight});
                     ok = true;
                 }
@@ -93,10 +93,10 @@ KISSY.add(function (S, require) {
             if (allowX) {
                 var scrollStepX = scrollStep.left;
                 var scrollLeft = self.get('scrollLeft');
-                if (keyCode == KeyCode.RIGHT) {
+                if (keyCode === KeyCode.RIGHT) {
                     self.scrollToWithBounds({left: scrollLeft + scrollStepX});
                     ok = true;
-                } else if (keyCode == KeyCode.LEFT) {
+                } else if (keyCode === KeyCode.LEFT) {
                     self.scrollToWithBounds({left: scrollLeft - scrollStepX});
                     ok = true;
                 }
@@ -112,10 +112,11 @@ KISSY.add(function (S, require) {
             var elDoc = $(this.get('el')[0].ownerDocument);
             var clientHeight = control.clientHeight;
             var clientWidth = control.clientWidth;
-            return control.scrollStep = {
+            control.scrollStep = {
                 top: Math.max(clientHeight * clientHeight * 0.7 / elDoc.height(), 20),
                 left: Math.max(clientWidth * clientWidth * 0.7 / elDoc.width(), 20)
             };
+            return control.scrollStep;
         },
 
         handleMouseWheel: function (e) {
@@ -131,31 +132,29 @@ KISSY.add(function (S, require) {
                 maxScroll = self.maxScroll,
                 minScroll = self.minScroll;
 
-            if ((deltaY = e.deltaY) && self.allowScroll['top']) {
+            if ((deltaY = e.deltaY) && self.allowScroll.top) {
                 var scrollTop = self.get('scrollTop');
                 max = maxScroll.top;
                 min = minScroll.top;
-                if (scrollTop <= min && deltaY > 0 || scrollTop >= max && deltaY < 0) {
-                } else {
-                    self.scrollToWithBounds({top: scrollTop - e.deltaY * scrollStep['top']});
+                if (!(scrollTop <= min && deltaY > 0 || scrollTop >= max && deltaY < 0)) {
+                    self.scrollToWithBounds({top: scrollTop - e.deltaY * scrollStep.top});
                     e.preventDefault();
                 }
             }
 
-            if ((deltaX = e.deltaX) && self.allowScroll['left']) {
+            if ((deltaX = e.deltaX) && self.allowScroll.left) {
                 var scrollLeft = self.get('scrollLeft');
                 max = maxScroll.left;
                 min = minScroll.left;
-                if (scrollLeft <= min && deltaX > 0 || scrollLeft >= max && deltaX < 0) {
-                } else {
-                    self.scrollToWithBounds({left: scrollLeft - e.deltaX * scrollStep['left']});
+                if (!(scrollLeft <= min && deltaX > 0 || scrollLeft >= max && deltaX < 0)) {
+                    self.scrollToWithBounds({left: scrollLeft - e.deltaX * scrollStep.left});
                     e.preventDefault();
                 }
             }
         },
 
         'isAxisEnabled': function (axis) {
-            return this.allowScroll[axis == 'x' ? 'left' : 'top'];
+            return this.allowScroll[axis === 'x' ? 'left' : 'top'];
         },
 
         stopAnimation: function () {

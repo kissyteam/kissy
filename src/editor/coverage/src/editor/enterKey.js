@@ -236,27 +236,27 @@ if (! _$jscoverage['/editor/enterKey.js']) {
   _$jscoverage['/editor/enterKey.js'].lineData[14] = 0;
   _$jscoverage['/editor/enterKey.js'].lineData[15] = 0;
   _$jscoverage['/editor/enterKey.js'].lineData[16] = 0;
-  _$jscoverage['/editor/enterKey.js'].lineData[20] = 0;
-  _$jscoverage['/editor/enterKey.js'].lineData[22] = 0;
+  _$jscoverage['/editor/enterKey.js'].lineData[19] = 0;
+  _$jscoverage['/editor/enterKey.js'].lineData[21] = 0;
+  _$jscoverage['/editor/enterKey.js'].lineData[23] = 0;
   _$jscoverage['/editor/enterKey.js'].lineData[24] = 0;
-  _$jscoverage['/editor/enterKey.js'].lineData[25] = 0;
-  _$jscoverage['/editor/enterKey.js'].lineData[28] = 0;
-  _$jscoverage['/editor/enterKey.js'].lineData[31] = 0;
+  _$jscoverage['/editor/enterKey.js'].lineData[27] = 0;
+  _$jscoverage['/editor/enterKey.js'].lineData[30] = 0;
+  _$jscoverage['/editor/enterKey.js'].lineData[32] = 0;
   _$jscoverage['/editor/enterKey.js'].lineData[33] = 0;
-  _$jscoverage['/editor/enterKey.js'].lineData[34] = 0;
+  _$jscoverage['/editor/enterKey.js'].lineData[35] = 0;
   _$jscoverage['/editor/enterKey.js'].lineData[36] = 0;
-  _$jscoverage['/editor/enterKey.js'].lineData[37] = 0;
-  _$jscoverage['/editor/enterKey.js'].lineData[40] = 0;
+  _$jscoverage['/editor/enterKey.js'].lineData[39] = 0;
+  _$jscoverage['/editor/enterKey.js'].lineData[43] = 0;
   _$jscoverage['/editor/enterKey.js'].lineData[44] = 0;
   _$jscoverage['/editor/enterKey.js'].lineData[45] = 0;
   _$jscoverage['/editor/enterKey.js'].lineData[46] = 0;
   _$jscoverage['/editor/enterKey.js'].lineData[47] = 0;
-  _$jscoverage['/editor/enterKey.js'].lineData[48] = 0;
-  _$jscoverage['/editor/enterKey.js'].lineData[50] = 0;
-  _$jscoverage['/editor/enterKey.js'].lineData[56] = 0;
-  _$jscoverage['/editor/enterKey.js'].lineData[59] = 0;
+  _$jscoverage['/editor/enterKey.js'].lineData[49] = 0;
+  _$jscoverage['/editor/enterKey.js'].lineData[55] = 0;
+  _$jscoverage['/editor/enterKey.js'].lineData[58] = 0;
+  _$jscoverage['/editor/enterKey.js'].lineData[60] = 0;
   _$jscoverage['/editor/enterKey.js'].lineData[61] = 0;
-  _$jscoverage['/editor/enterKey.js'].lineData[62] = 0;
   _$jscoverage['/editor/enterKey.js'].lineData[65] = 0;
   _$jscoverage['/editor/enterKey.js'].lineData[68] = 0;
   _$jscoverage['/editor/enterKey.js'].lineData[71] = 0;
@@ -269,61 +269,61 @@ if (! _$jscoverage['/editor/enterKey.js']) {
   _$jscoverage['/editor/enterKey.js'].lineData[82] = 0;
   _$jscoverage['/editor/enterKey.js'].lineData[83] = 0;
   _$jscoverage['/editor/enterKey.js'].lineData[84] = 0;
-  _$jscoverage['/editor/enterKey.js'].lineData[90] = 0;
-  _$jscoverage['/editor/enterKey.js'].lineData[94] = 0;
-  _$jscoverage['/editor/enterKey.js'].lineData[97] = 0;
-  _$jscoverage['/editor/enterKey.js'].lineData[101] = 0;
-  _$jscoverage['/editor/enterKey.js'].lineData[102] = 0;
+  _$jscoverage['/editor/enterKey.js'].lineData[87] = 0;
+  _$jscoverage['/editor/enterKey.js'].lineData[92] = 0;
+  _$jscoverage['/editor/enterKey.js'].lineData[96] = 0;
+  _$jscoverage['/editor/enterKey.js'].lineData[99] = 0;
+  _$jscoverage['/editor/enterKey.js'].lineData[104] = 0;
   _$jscoverage['/editor/enterKey.js'].lineData[105] = 0;
-  _$jscoverage['/editor/enterKey.js'].lineData[107] = 0;
   _$jscoverage['/editor/enterKey.js'].lineData[111] = 0;
-  _$jscoverage['/editor/enterKey.js'].lineData[113] = 0;
-  _$jscoverage['/editor/enterKey.js'].lineData[116] = 0;
+  _$jscoverage['/editor/enterKey.js'].lineData[115] = 0;
   _$jscoverage['/editor/enterKey.js'].lineData[117] = 0;
-  _$jscoverage['/editor/enterKey.js'].lineData[119] = 0;
   _$jscoverage['/editor/enterKey.js'].lineData[120] = 0;
+  _$jscoverage['/editor/enterKey.js'].lineData[121] = 0;
+  _$jscoverage['/editor/enterKey.js'].lineData[124] = 0;
   _$jscoverage['/editor/enterKey.js'].lineData[125] = 0;
-  _$jscoverage['/editor/enterKey.js'].lineData[126] = 0;
-  _$jscoverage['/editor/enterKey.js'].lineData[127] = 0;
-  _$jscoverage['/editor/enterKey.js'].lineData[128] = 0;
-  _$jscoverage['/editor/enterKey.js'].lineData[130] = 0;
   _$jscoverage['/editor/enterKey.js'].lineData[131] = 0;
+  _$jscoverage['/editor/enterKey.js'].lineData[132] = 0;
   _$jscoverage['/editor/enterKey.js'].lineData[133] = 0;
   _$jscoverage['/editor/enterKey.js'].lineData[134] = 0;
-  _$jscoverage['/editor/enterKey.js'].lineData[135] = 0;
   _$jscoverage['/editor/enterKey.js'].lineData[136] = 0;
+  _$jscoverage['/editor/enterKey.js'].lineData[138] = 0;
   _$jscoverage['/editor/enterKey.js'].lineData[141] = 0;
   _$jscoverage['/editor/enterKey.js'].lineData[142] = 0;
+  _$jscoverage['/editor/enterKey.js'].lineData[143] = 0;
   _$jscoverage['/editor/enterKey.js'].lineData[144] = 0;
-  _$jscoverage['/editor/enterKey.js'].lineData[151] = 0;
+  _$jscoverage['/editor/enterKey.js'].lineData[149] = 0;
+  _$jscoverage['/editor/enterKey.js'].lineData[150] = 0;
   _$jscoverage['/editor/enterKey.js'].lineData[153] = 0;
-  _$jscoverage['/editor/enterKey.js'].lineData[154] = 0;
-  _$jscoverage['/editor/enterKey.js'].lineData[158] = 0;
-  _$jscoverage['/editor/enterKey.js'].lineData[161] = 0;
+  _$jscoverage['/editor/enterKey.js'].lineData[160] = 0;
   _$jscoverage['/editor/enterKey.js'].lineData[162] = 0;
-  _$jscoverage['/editor/enterKey.js'].lineData[165] = 0;
-  _$jscoverage['/editor/enterKey.js'].lineData[168] = 0;
+  _$jscoverage['/editor/enterKey.js'].lineData[163] = 0;
+  _$jscoverage['/editor/enterKey.js'].lineData[167] = 0;
   _$jscoverage['/editor/enterKey.js'].lineData[170] = 0;
   _$jscoverage['/editor/enterKey.js'].lineData[171] = 0;
-  _$jscoverage['/editor/enterKey.js'].lineData[176] = 0;
-  _$jscoverage['/editor/enterKey.js'].lineData[181] = 0;
-  _$jscoverage['/editor/enterKey.js'].lineData[188] = 0;
-  _$jscoverage['/editor/enterKey.js'].lineData[189] = 0;
-  _$jscoverage['/editor/enterKey.js'].lineData[192] = 0;
-  _$jscoverage['/editor/enterKey.js'].lineData[193] = 0;
-  _$jscoverage['/editor/enterKey.js'].lineData[194] = 0;
-  _$jscoverage['/editor/enterKey.js'].lineData[195] = 0;
-  _$jscoverage['/editor/enterKey.js'].lineData[196] = 0;
+  _$jscoverage['/editor/enterKey.js'].lineData[174] = 0;
+  _$jscoverage['/editor/enterKey.js'].lineData[177] = 0;
+  _$jscoverage['/editor/enterKey.js'].lineData[179] = 0;
+  _$jscoverage['/editor/enterKey.js'].lineData[180] = 0;
+  _$jscoverage['/editor/enterKey.js'].lineData[185] = 0;
+  _$jscoverage['/editor/enterKey.js'].lineData[190] = 0;
   _$jscoverage['/editor/enterKey.js'].lineData[197] = 0;
-  _$jscoverage['/editor/enterKey.js'].lineData[199] = 0;
-  _$jscoverage['/editor/enterKey.js'].lineData[200] = 0;
+  _$jscoverage['/editor/enterKey.js'].lineData[198] = 0;
   _$jscoverage['/editor/enterKey.js'].lineData[201] = 0;
   _$jscoverage['/editor/enterKey.js'].lineData[202] = 0;
   _$jscoverage['/editor/enterKey.js'].lineData[203] = 0;
+  _$jscoverage['/editor/enterKey.js'].lineData[204] = 0;
+  _$jscoverage['/editor/enterKey.js'].lineData[205] = 0;
+  _$jscoverage['/editor/enterKey.js'].lineData[206] = 0;
+  _$jscoverage['/editor/enterKey.js'].lineData[207] = 0;
+  _$jscoverage['/editor/enterKey.js'].lineData[208] = 0;
+  _$jscoverage['/editor/enterKey.js'].lineData[209] = 0;
   _$jscoverage['/editor/enterKey.js'].lineData[210] = 0;
-  _$jscoverage['/editor/enterKey.js'].lineData[212] = 0;
-  _$jscoverage['/editor/enterKey.js'].lineData[215] = 0;
-  _$jscoverage['/editor/enterKey.js'].lineData[216] = 0;
+  _$jscoverage['/editor/enterKey.js'].lineData[211] = 0;
+  _$jscoverage['/editor/enterKey.js'].lineData[218] = 0;
+  _$jscoverage['/editor/enterKey.js'].lineData[220] = 0;
+  _$jscoverage['/editor/enterKey.js'].lineData[223] = 0;
+  _$jscoverage['/editor/enterKey.js'].lineData[224] = 0;
 }
 if (! _$jscoverage['/editor/enterKey.js'].functionData) {
   _$jscoverage['/editor/enterKey.js'].functionData = [];
@@ -339,20 +339,20 @@ if (! _$jscoverage['/editor/enterKey.js'].branchData) {
   _$jscoverage['/editor/enterKey.js'].branchData = {};
   _$jscoverage['/editor/enterKey.js'].branchData['15'] = [];
   _$jscoverage['/editor/enterKey.js'].branchData['15'][1] = new BranchData();
-  _$jscoverage['/editor/enterKey.js'].branchData['24'] = [];
-  _$jscoverage['/editor/enterKey.js'].branchData['24'][1] = new BranchData();
-  _$jscoverage['/editor/enterKey.js'].branchData['36'] = [];
-  _$jscoverage['/editor/enterKey.js'].branchData['36'][1] = new BranchData();
+  _$jscoverage['/editor/enterKey.js'].branchData['23'] = [];
+  _$jscoverage['/editor/enterKey.js'].branchData['23'][1] = new BranchData();
+  _$jscoverage['/editor/enterKey.js'].branchData['35'] = [];
+  _$jscoverage['/editor/enterKey.js'].branchData['35'][1] = new BranchData();
+  _$jscoverage['/editor/enterKey.js'].branchData['39'] = [];
+  _$jscoverage['/editor/enterKey.js'].branchData['39'][1] = new BranchData();
   _$jscoverage['/editor/enterKey.js'].branchData['40'] = [];
   _$jscoverage['/editor/enterKey.js'].branchData['40'][1] = new BranchData();
-  _$jscoverage['/editor/enterKey.js'].branchData['41'] = [];
-  _$jscoverage['/editor/enterKey.js'].branchData['41'][1] = new BranchData();
-  _$jscoverage['/editor/enterKey.js'].branchData['41'][2] = new BranchData();
-  _$jscoverage['/editor/enterKey.js'].branchData['41'][3] = new BranchData();
-  _$jscoverage['/editor/enterKey.js'].branchData['44'] = [];
-  _$jscoverage['/editor/enterKey.js'].branchData['44'][1] = new BranchData();
-  _$jscoverage['/editor/enterKey.js'].branchData['61'] = [];
-  _$jscoverage['/editor/enterKey.js'].branchData['61'][1] = new BranchData();
+  _$jscoverage['/editor/enterKey.js'].branchData['40'][2] = new BranchData();
+  _$jscoverage['/editor/enterKey.js'].branchData['40'][3] = new BranchData();
+  _$jscoverage['/editor/enterKey.js'].branchData['43'] = [];
+  _$jscoverage['/editor/enterKey.js'].branchData['43'][1] = new BranchData();
+  _$jscoverage['/editor/enterKey.js'].branchData['60'] = [];
+  _$jscoverage['/editor/enterKey.js'].branchData['60'][1] = new BranchData();
   _$jscoverage['/editor/enterKey.js'].branchData['74'] = [];
   _$jscoverage['/editor/enterKey.js'].branchData['74'][1] = new BranchData();
   _$jscoverage['/editor/enterKey.js'].branchData['76'] = [];
@@ -361,206 +361,211 @@ if (! _$jscoverage['/editor/enterKey.js'].branchData) {
   _$jscoverage['/editor/enterKey.js'].branchData['81'][1] = new BranchData();
   _$jscoverage['/editor/enterKey.js'].branchData['81'][2] = new BranchData();
   _$jscoverage['/editor/enterKey.js'].branchData['81'][3] = new BranchData();
-  _$jscoverage['/editor/enterKey.js'].branchData['90'] = [];
-  _$jscoverage['/editor/enterKey.js'].branchData['90'][1] = new BranchData();
-  _$jscoverage['/editor/enterKey.js'].branchData['94'] = [];
-  _$jscoverage['/editor/enterKey.js'].branchData['94'][1] = new BranchData();
-  _$jscoverage['/editor/enterKey.js'].branchData['94'][2] = new BranchData();
-  _$jscoverage['/editor/enterKey.js'].branchData['95'] = [];
-  _$jscoverage['/editor/enterKey.js'].branchData['95'][1] = new BranchData();
-  _$jscoverage['/editor/enterKey.js'].branchData['101'] = [];
-  _$jscoverage['/editor/enterKey.js'].branchData['101'][1] = new BranchData();
-  _$jscoverage['/editor/enterKey.js'].branchData['107'] = [];
-  _$jscoverage['/editor/enterKey.js'].branchData['107'][1] = new BranchData();
+  _$jscoverage['/editor/enterKey.js'].branchData['92'] = [];
+  _$jscoverage['/editor/enterKey.js'].branchData['92'][1] = new BranchData();
+  _$jscoverage['/editor/enterKey.js'].branchData['96'] = [];
+  _$jscoverage['/editor/enterKey.js'].branchData['96'][1] = new BranchData();
+  _$jscoverage['/editor/enterKey.js'].branchData['96'][2] = new BranchData();
+  _$jscoverage['/editor/enterKey.js'].branchData['97'] = [];
+  _$jscoverage['/editor/enterKey.js'].branchData['97'][1] = new BranchData();
+  _$jscoverage['/editor/enterKey.js'].branchData['104'] = [];
+  _$jscoverage['/editor/enterKey.js'].branchData['104'][1] = new BranchData();
   _$jscoverage['/editor/enterKey.js'].branchData['111'] = [];
   _$jscoverage['/editor/enterKey.js'].branchData['111'][1] = new BranchData();
-  _$jscoverage['/editor/enterKey.js'].branchData['111'][2] = new BranchData();
-  _$jscoverage['/editor/enterKey.js'].branchData['116'] = [];
-  _$jscoverage['/editor/enterKey.js'].branchData['116'][1] = new BranchData();
-  _$jscoverage['/editor/enterKey.js'].branchData['119'] = [];
-  _$jscoverage['/editor/enterKey.js'].branchData['119'][1] = new BranchData();
-  _$jscoverage['/editor/enterKey.js'].branchData['126'] = [];
-  _$jscoverage['/editor/enterKey.js'].branchData['126'][1] = new BranchData();
-  _$jscoverage['/editor/enterKey.js'].branchData['127'] = [];
-  _$jscoverage['/editor/enterKey.js'].branchData['127'][1] = new BranchData();
-  _$jscoverage['/editor/enterKey.js'].branchData['130'] = [];
-  _$jscoverage['/editor/enterKey.js'].branchData['130'][1] = new BranchData();
+  _$jscoverage['/editor/enterKey.js'].branchData['115'] = [];
+  _$jscoverage['/editor/enterKey.js'].branchData['115'][1] = new BranchData();
+  _$jscoverage['/editor/enterKey.js'].branchData['115'][2] = new BranchData();
+  _$jscoverage['/editor/enterKey.js'].branchData['120'] = [];
+  _$jscoverage['/editor/enterKey.js'].branchData['120'][1] = new BranchData();
+  _$jscoverage['/editor/enterKey.js'].branchData['124'] = [];
+  _$jscoverage['/editor/enterKey.js'].branchData['124'][1] = new BranchData();
+  _$jscoverage['/editor/enterKey.js'].branchData['132'] = [];
+  _$jscoverage['/editor/enterKey.js'].branchData['132'][1] = new BranchData();
   _$jscoverage['/editor/enterKey.js'].branchData['133'] = [];
   _$jscoverage['/editor/enterKey.js'].branchData['133'][1] = new BranchData();
+  _$jscoverage['/editor/enterKey.js'].branchData['136'] = [];
+  _$jscoverage['/editor/enterKey.js'].branchData['136'][1] = new BranchData();
   _$jscoverage['/editor/enterKey.js'].branchData['141'] = [];
   _$jscoverage['/editor/enterKey.js'].branchData['141'][1] = new BranchData();
-  _$jscoverage['/editor/enterKey.js'].branchData['151'] = [];
-  _$jscoverage['/editor/enterKey.js'].branchData['151'][1] = new BranchData();
-  _$jscoverage['/editor/enterKey.js'].branchData['151'][2] = new BranchData();
-  _$jscoverage['/editor/enterKey.js'].branchData['151'][3] = new BranchData();
-  _$jscoverage['/editor/enterKey.js'].branchData['158'] = [];
-  _$jscoverage['/editor/enterKey.js'].branchData['158'][1] = new BranchData();
-  _$jscoverage['/editor/enterKey.js'].branchData['161'] = [];
-  _$jscoverage['/editor/enterKey.js'].branchData['161'][1] = new BranchData();
-  _$jscoverage['/editor/enterKey.js'].branchData['162'] = [];
-  _$jscoverage['/editor/enterKey.js'].branchData['162'][1] = new BranchData();
-  _$jscoverage['/editor/enterKey.js'].branchData['196'] = [];
-  _$jscoverage['/editor/enterKey.js'].branchData['196'][1] = new BranchData();
-  _$jscoverage['/editor/enterKey.js'].branchData['197'] = [];
-  _$jscoverage['/editor/enterKey.js'].branchData['197'][1] = new BranchData();
-  _$jscoverage['/editor/enterKey.js'].branchData['197'][2] = new BranchData();
-  _$jscoverage['/editor/enterKey.js'].branchData['202'] = [];
-  _$jscoverage['/editor/enterKey.js'].branchData['202'][1] = new BranchData();
+  _$jscoverage['/editor/enterKey.js'].branchData['149'] = [];
+  _$jscoverage['/editor/enterKey.js'].branchData['149'][1] = new BranchData();
+  _$jscoverage['/editor/enterKey.js'].branchData['160'] = [];
+  _$jscoverage['/editor/enterKey.js'].branchData['160'][1] = new BranchData();
+  _$jscoverage['/editor/enterKey.js'].branchData['160'][2] = new BranchData();
+  _$jscoverage['/editor/enterKey.js'].branchData['160'][3] = new BranchData();
+  _$jscoverage['/editor/enterKey.js'].branchData['167'] = [];
+  _$jscoverage['/editor/enterKey.js'].branchData['167'][1] = new BranchData();
+  _$jscoverage['/editor/enterKey.js'].branchData['170'] = [];
+  _$jscoverage['/editor/enterKey.js'].branchData['170'][1] = new BranchData();
+  _$jscoverage['/editor/enterKey.js'].branchData['171'] = [];
+  _$jscoverage['/editor/enterKey.js'].branchData['171'][1] = new BranchData();
+  _$jscoverage['/editor/enterKey.js'].branchData['205'] = [];
+  _$jscoverage['/editor/enterKey.js'].branchData['205'][1] = new BranchData();
+  _$jscoverage['/editor/enterKey.js'].branchData['206'] = [];
+  _$jscoverage['/editor/enterKey.js'].branchData['206'][1] = new BranchData();
+  _$jscoverage['/editor/enterKey.js'].branchData['206'][2] = new BranchData();
+  _$jscoverage['/editor/enterKey.js'].branchData['206'][3] = new BranchData();
+  _$jscoverage['/editor/enterKey.js'].branchData['210'] = [];
+  _$jscoverage['/editor/enterKey.js'].branchData['210'][1] = new BranchData();
 }
-_$jscoverage['/editor/enterKey.js'].branchData['202'][1].init(184, 12, 're !== false');
-function visit333_202_1(result) {
-  _$jscoverage['/editor/enterKey.js'].branchData['202'][1].ranCondition(result);
+_$jscoverage['/editor/enterKey.js'].branchData['210'][1].init(184, 12, 're !== false');
+function visit335_210_1(result) {
+  _$jscoverage['/editor/enterKey.js'].branchData['210'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/enterKey.js'].branchData['197'][2].init(36, 24, 'ev.ctrlKey || ev.metaKey');
-function visit332_197_2(result) {
-  _$jscoverage['/editor/enterKey.js'].branchData['197'][2].ranCondition(result);
+}_$jscoverage['/editor/enterKey.js'].branchData['206'][3].init(38, 24, 'ev.ctrlKey || ev.metaKey');
+function visit334_206_3(result) {
+  _$jscoverage['/editor/enterKey.js'].branchData['206'][3].ranCondition(result);
   return result;
-}_$jscoverage['/editor/enterKey.js'].branchData['197'][1].init(21, 39, 'ev.shiftKey || ev.ctrlKey || ev.metaKey');
-function visit331_197_1(result) {
-  _$jscoverage['/editor/enterKey.js'].branchData['197'][1].ranCondition(result);
+}_$jscoverage['/editor/enterKey.js'].branchData['206'][2].init(23, 39, 'ev.shiftKey || ev.ctrlKey || ev.metaKey');
+function visit333_206_2(result) {
+  _$jscoverage['/editor/enterKey.js'].branchData['206'][2].ranCondition(result);
   return result;
-}_$jscoverage['/editor/enterKey.js'].branchData['196'][1].init(55, 14, 'keyCode === 13');
-function visit330_196_1(result) {
-  _$jscoverage['/editor/enterKey.js'].branchData['196'][1].ranCondition(result);
+}_$jscoverage['/editor/enterKey.js'].branchData['206'][1].init(21, 42, '!(ev.shiftKey || ev.ctrlKey || ev.metaKey)');
+function visit332_206_1(result) {
+  _$jscoverage['/editor/enterKey.js'].branchData['206'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/enterKey.js'].branchData['162'][1].init(17, 9, 'nextBlock');
-function visit329_162_1(result) {
-  _$jscoverage['/editor/enterKey.js'].branchData['162'][1].ranCondition(result);
+}_$jscoverage['/editor/enterKey.js'].branchData['205'][1].init(55, 14, 'keyCode === 13');
+function visit331_205_1(result) {
+  _$jscoverage['/editor/enterKey.js'].branchData['205'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/enterKey.js'].branchData['161'][1].init(5296, 7, '!OLD_IE');
-function visit328_161_1(result) {
-  _$jscoverage['/editor/enterKey.js'].branchData['161'][1].ranCondition(result);
+}_$jscoverage['/editor/enterKey.js'].branchData['171'][1].init(17, 9, 'nextBlock');
+function visit330_171_1(result) {
+  _$jscoverage['/editor/enterKey.js'].branchData['171'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/enterKey.js'].branchData['158'][1].init(2364, 31, 'isStartOfBlock && !isEndOfBlock');
-function visit327_158_1(result) {
-  _$jscoverage['/editor/enterKey.js'].branchData['158'][1].ranCondition(result);
+}_$jscoverage['/editor/enterKey.js'].branchData['170'][1].init(5446, 7, '!OLD_IE');
+function visit329_170_1(result) {
+  _$jscoverage['/editor/enterKey.js'].branchData['170'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/enterKey.js'].branchData['151'][3].init(2009, 52, '!isEndOfBlock || !previousBlock[0].childNodes.length');
-function visit326_151_3(result) {
-  _$jscoverage['/editor/enterKey.js'].branchData['151'][3].ranCondition(result);
+}_$jscoverage['/editor/enterKey.js'].branchData['167'][1].init(2441, 31, 'isStartOfBlock && !isEndOfBlock');
+function visit328_167_1(result) {
+  _$jscoverage['/editor/enterKey.js'].branchData['167'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/enterKey.js'].branchData['151'][2].init(1989, 74, 'isStartOfBlock && (!isEndOfBlock || !previousBlock[0].childNodes.length)');
-function visit325_151_2(result) {
-  _$jscoverage['/editor/enterKey.js'].branchData['151'][2].ranCondition(result);
+}_$jscoverage['/editor/enterKey.js'].branchData['160'][3].init(2086, 52, '!isEndOfBlock || !previousBlock[0].childNodes.length');
+function visit327_160_3(result) {
+  _$jscoverage['/editor/enterKey.js'].branchData['160'][3].ranCondition(result);
   return result;
-}_$jscoverage['/editor/enterKey.js'].branchData['151'][1].init(1979, 84, 'OLD_IE && isStartOfBlock && (!isEndOfBlock || !previousBlock[0].childNodes.length)');
-function visit324_151_1(result) {
-  _$jscoverage['/editor/enterKey.js'].branchData['151'][1].ranCondition(result);
+}_$jscoverage['/editor/enterKey.js'].branchData['160'][2].init(2066, 74, 'isStartOfBlock && (!isEndOfBlock || !previousBlock[0].childNodes.length)');
+function visit326_160_2(result) {
+  _$jscoverage['/editor/enterKey.js'].branchData['160'][2].ranCondition(result);
   return result;
-}_$jscoverage['/editor/enterKey.js'].branchData['141'][1].init(1573, 7, '!OLD_IE');
+}_$jscoverage['/editor/enterKey.js'].branchData['160'][1].init(2056, 84, 'OLD_IE && isStartOfBlock && (!isEndOfBlock || !previousBlock[0].childNodes.length)');
+function visit325_160_1(result) {
+  _$jscoverage['/editor/enterKey.js'].branchData['160'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/editor/enterKey.js'].branchData['149'][1].init(1636, 7, '!OLD_IE');
+function visit324_149_1(result) {
+  _$jscoverage['/editor/enterKey.js'].branchData['149'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/editor/enterKey.js'].branchData['141'][1].init(316, 38, 'dtd.$removeEmpty[element.nodeName()]');
 function visit323_141_1(result) {
   _$jscoverage['/editor/enterKey.js'].branchData['141'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/enterKey.js'].branchData['133'][1].init(269, 38, 'dtd.$removeEmpty[element.nodeName()]');
-function visit322_133_1(result) {
+}_$jscoverage['/editor/enterKey.js'].branchData['136'][1].init(87, 99, 'element.equals(elementPath.block) || element.equals(elementPath.blockLimit)');
+function visit322_136_1(result) {
+  _$jscoverage['/editor/enterKey.js'].branchData['136'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/editor/enterKey.js'].branchData['133'][1].init(68, 7, 'i < len');
+function visit321_133_1(result) {
   _$jscoverage['/editor/enterKey.js'].branchData['133'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/enterKey.js'].branchData['130'][1].init(87, 75, 'element.equals(elementPath.block) || element.equals(elementPath.blockLimit)');
-function visit321_130_1(result) {
-  _$jscoverage['/editor/enterKey.js'].branchData['130'][1].ranCondition(result);
+}_$jscoverage['/editor/enterKey.js'].branchData['132'][1].init(950, 11, 'elementPath');
+function visit320_132_1(result) {
+  _$jscoverage['/editor/enterKey.js'].branchData['132'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/enterKey.js'].branchData['127'][1].init(68, 7, 'i < len');
-function visit320_127_1(result) {
-  _$jscoverage['/editor/enterKey.js'].branchData['127'][1].ranCondition(result);
+}_$jscoverage['/editor/enterKey.js'].branchData['124'][1].init(607, 9, '!newBlock');
+function visit319_124_1(result) {
+  _$jscoverage['/editor/enterKey.js'].branchData['124'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/enterKey.js'].branchData['126'][1].init(933, 11, 'elementPath');
-function visit319_126_1(result) {
-  _$jscoverage['/editor/enterKey.js'].branchData['126'][1].ranCondition(result);
+}_$jscoverage['/editor/enterKey.js'].branchData['120'][1].init(519, 9, 'nextBlock');
+function visit318_120_1(result) {
+  _$jscoverage['/editor/enterKey.js'].branchData['120'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/enterKey.js'].branchData['119'][1].init(605, 9, '!newBlock');
-function visit318_119_1(result) {
-  _$jscoverage['/editor/enterKey.js'].branchData['119'][1].ranCondition(result);
+}_$jscoverage['/editor/enterKey.js'].branchData['115'][2].init(214, 33, 'previousBlock.nodeName() === \'li\'');
+function visit317_115_2(result) {
+  _$jscoverage['/editor/enterKey.js'].branchData['115'][2].ranCondition(result);
   return result;
-}_$jscoverage['/editor/enterKey.js'].branchData['116'][1].init(532, 9, 'nextBlock');
-function visit317_116_1(result) {
-  _$jscoverage['/editor/enterKey.js'].branchData['116'][1].ranCondition(result);
+}_$jscoverage['/editor/enterKey.js'].branchData['115'][1].init(214, 83, 'previousBlock.nodeName() === \'li\' || !headerTagRegex.test(previousBlock.nodeName())');
+function visit316_115_1(result) {
+  _$jscoverage['/editor/enterKey.js'].branchData['115'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/enterKey.js'].branchData['111'][2].init(214, 32, 'previousBlock.nodeName() == \'li\'');
-function visit316_111_2(result) {
-  _$jscoverage['/editor/enterKey.js'].branchData['111'][2].ranCondition(result);
-  return result;
-}_$jscoverage['/editor/enterKey.js'].branchData['111'][1].init(214, 82, 'previousBlock.nodeName() == \'li\' || !headerTagRegex.test(previousBlock.nodeName())');
+}_$jscoverage['/editor/enterKey.js'].branchData['111'][1].init(30, 13, 'previousBlock');
 function visit315_111_1(result) {
   _$jscoverage['/editor/enterKey.js'].branchData['111'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/enterKey.js'].branchData['107'][1].init(44, 13, 'previousBlock');
-function visit314_107_1(result) {
-  _$jscoverage['/editor/enterKey.js'].branchData['107'][1].ranCondition(result);
+}_$jscoverage['/editor/enterKey.js'].branchData['104'][1].init(608, 9, 'nextBlock');
+function visit314_104_1(result) {
+  _$jscoverage['/editor/enterKey.js'].branchData['104'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/enterKey.js'].branchData['101'][1].init(592, 9, 'nextBlock');
-function visit313_101_1(result) {
-  _$jscoverage['/editor/enterKey.js'].branchData['101'][1].ranCondition(result);
+}_$jscoverage['/editor/enterKey.js'].branchData['97'][1].init(50, 108, '(node = nextBlock.first(Walker.invisible(true))) && S.inArray(node.nodeName(), [\'ul\', \'ol\'])');
+function visit313_97_1(result) {
+  _$jscoverage['/editor/enterKey.js'].branchData['97'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/enterKey.js'].branchData['95'][1].init(49, 108, '(node = nextBlock.first(Walker.invisible(true))) && S.inArray(node.nodeName(), [\'ul\', \'ol\'])');
-function visit312_95_1(result) {
-  _$jscoverage['/editor/enterKey.js'].branchData['95'][1].ranCondition(result);
+}_$jscoverage['/editor/enterKey.js'].branchData['96'][2].init(223, 29, 'nextBlock.nodeName() === \'li\'');
+function visit312_96_2(result) {
+  _$jscoverage['/editor/enterKey.js'].branchData['96'][2].ranCondition(result);
   return result;
-}_$jscoverage['/editor/enterKey.js'].branchData['94'][2].init(223, 28, 'nextBlock.nodeName() == \'li\'');
-function visit311_94_2(result) {
-  _$jscoverage['/editor/enterKey.js'].branchData['94'][2].ranCondition(result);
+}_$jscoverage['/editor/enterKey.js'].branchData['96'][1].init(223, 159, 'nextBlock.nodeName() === \'li\' && (node = nextBlock.first(Walker.invisible(true))) && S.inArray(node.nodeName(), [\'ul\', \'ol\'])');
+function visit311_96_1(result) {
+  _$jscoverage['/editor/enterKey.js'].branchData['96'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/enterKey.js'].branchData['94'][1].init(223, 158, 'nextBlock.nodeName() == \'li\' && (node = nextBlock.first(Walker.invisible(true))) && S.inArray(node.nodeName(), [\'ul\', \'ol\'])');
-function visit310_94_1(result) {
-  _$jscoverage['/editor/enterKey.js'].branchData['94'][1].ranCondition(result);
+}_$jscoverage['/editor/enterKey.js'].branchData['92'][1].init(2168, 32, '!isStartOfBlock && !isEndOfBlock');
+function visit310_92_1(result) {
+  _$jscoverage['/editor/enterKey.js'].branchData['92'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/enterKey.js'].branchData['90'][1].init(2126, 32, '!isStartOfBlock && !isEndOfBlock');
-function visit309_90_1(result) {
-  _$jscoverage['/editor/enterKey.js'].branchData['90'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/editor/enterKey.js'].branchData['81'][3].init(1710, 23, 'node.nodeName() == \'li\'');
-function visit308_81_3(result) {
+}_$jscoverage['/editor/enterKey.js'].branchData['81'][3].init(1722, 24, 'node.nodeName() === \'li\'');
+function visit309_81_3(result) {
   _$jscoverage['/editor/enterKey.js'].branchData['81'][3].ranCondition(result);
   return result;
-}_$jscoverage['/editor/enterKey.js'].branchData['81'][2].init(1675, 58, '(node = previousBlock.parent()) && node.nodeName() == \'li\'');
-function visit307_81_2(result) {
+}_$jscoverage['/editor/enterKey.js'].branchData['81'][2].init(1687, 59, '(node = previousBlock.parent()) && node.nodeName() === \'li\'');
+function visit308_81_2(result) {
   _$jscoverage['/editor/enterKey.js'].branchData['81'][2].ranCondition(result);
   return result;
-}_$jscoverage['/editor/enterKey.js'].branchData['81'][1].init(1656, 77, 'previousBlock && (node = previousBlock.parent()) && node.nodeName() == \'li\'');
-function visit306_81_1(result) {
+}_$jscoverage['/editor/enterKey.js'].branchData['81'][1].init(1668, 78, 'previousBlock && (node = previousBlock.parent()) && node.nodeName() === \'li\'');
+function visit307_81_1(result) {
   _$jscoverage['/editor/enterKey.js'].branchData['81'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/enterKey.js'].branchData['76'][1].init(56, 23, 'node.nodeName() == \'li\'');
-function visit305_76_1(result) {
+}_$jscoverage['/editor/enterKey.js'].branchData['76'][1].init(56, 24, 'node.nodeName() === \'li\'');
+function visit306_76_1(result) {
   _$jscoverage['/editor/enterKey.js'].branchData['76'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/enterKey.js'].branchData['74'][1].init(1410, 9, 'nextBlock');
-function visit304_74_1(result) {
+}_$jscoverage['/editor/enterKey.js'].branchData['74'][1].init(1423, 9, 'nextBlock');
+function visit305_74_1(result) {
   _$jscoverage['/editor/enterKey.js'].branchData['74'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/enterKey.js'].branchData['61'][1].init(1023, 10, '!splitInfo');
-function visit303_61_1(result) {
-  _$jscoverage['/editor/enterKey.js'].branchData['61'][1].ranCondition(result);
+}_$jscoverage['/editor/enterKey.js'].branchData['60'][1].init(1025, 10, '!splitInfo');
+function visit304_60_1(result) {
+  _$jscoverage['/editor/enterKey.js'].branchData['60'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/enterKey.js'].branchData['44'][1].init(21, 28, 'editor.hasCommand(\'outdent\')');
-function visit302_44_1(result) {
-  _$jscoverage['/editor/enterKey.js'].branchData['44'][1].ranCondition(result);
+}_$jscoverage['/editor/enterKey.js'].branchData['43'][1].init(21, 28, 'editor.hasCommand(\'outdent\')');
+function visit303_43_1(result) {
+  _$jscoverage['/editor/enterKey.js'].branchData['43'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/enterKey.js'].branchData['41'][3].init(54, 33, 'block.parent().nodeName() == \'li\'');
-function visit301_41_3(result) {
-  _$jscoverage['/editor/enterKey.js'].branchData['41'][3].ranCondition(result);
+}_$jscoverage['/editor/enterKey.js'].branchData['40'][3].init(55, 34, 'block.parent().nodeName() === \'li\'');
+function visit302_40_3(result) {
+  _$jscoverage['/editor/enterKey.js'].branchData['40'][3].ranCondition(result);
   return result;
-}_$jscoverage['/editor/enterKey.js'].branchData['41'][2].init(26, 24, 'block.nodeName() == \'li\'');
-function visit300_41_2(result) {
-  _$jscoverage['/editor/enterKey.js'].branchData['41'][2].ranCondition(result);
+}_$jscoverage['/editor/enterKey.js'].branchData['40'][2].init(26, 25, 'block.nodeName() === \'li\'');
+function visit301_40_2(result) {
+  _$jscoverage['/editor/enterKey.js'].branchData['40'][2].ranCondition(result);
   return result;
-}_$jscoverage['/editor/enterKey.js'].branchData['41'][1].init(26, 61, 'block.nodeName() == \'li\' || block.parent().nodeName() == \'li\'');
-function visit299_41_1(result) {
-  _$jscoverage['/editor/enterKey.js'].branchData['41'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/editor/enterKey.js'].branchData['40'][1].init(135, 90, 'block && (block.nodeName() == \'li\' || block.parent().nodeName() == \'li\')');
-function visit298_40_1(result) {
+}_$jscoverage['/editor/enterKey.js'].branchData['40'][1].init(26, 63, 'block.nodeName() === \'li\' || block.parent().nodeName() === \'li\'');
+function visit300_40_1(result) {
   _$jscoverage['/editor/enterKey.js'].branchData['40'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/enterKey.js'].branchData['36'][1].init(214, 52, 'range.checkStartOfBlock() && range.checkEndOfBlock()');
-function visit297_36_1(result) {
-  _$jscoverage['/editor/enterKey.js'].branchData['36'][1].ranCondition(result);
+}_$jscoverage['/editor/enterKey.js'].branchData['39'][1].init(135, 92, 'block && (block.nodeName() === \'li\' || block.parent().nodeName() === \'li\')');
+function visit299_39_1(result) {
+  _$jscoverage['/editor/enterKey.js'].branchData['39'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/enterKey.js'].branchData['24'][1].init(201, 5, 'i > 0');
-function visit296_24_1(result) {
-  _$jscoverage['/editor/enterKey.js'].branchData['24'][1].ranCondition(result);
+}_$jscoverage['/editor/enterKey.js'].branchData['35'][1].init(214, 52, 'range.checkStartOfBlock() && range.checkEndOfBlock()');
+function visit298_35_1(result) {
+  _$jscoverage['/editor/enterKey.js'].branchData['35'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/editor/enterKey.js'].branchData['23'][1].init(201, 5, 'i > 0');
+function visit297_23_1(result) {
+  _$jscoverage['/editor/enterKey.js'].branchData['23'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/enterKey.js'].branchData['15'][1].init(172, 16, 'S.UA.ieMode < 11');
-function visit295_15_1(result) {
+function visit296_15_1(result) {
   _$jscoverage['/editor/enterKey.js'].branchData['15'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/enterKey.js'].lineData[10]++;
@@ -575,58 +580,58 @@ KISSY.add(function(S, require) {
   _$jscoverage['/editor/enterKey.js'].lineData[14]++;
   var ElementPath = require('./elementPath');
   _$jscoverage['/editor/enterKey.js'].lineData[15]++;
-  var OLD_IE = visit295_15_1(S.UA.ieMode < 11);
+  var OLD_IE = visit296_15_1(S.UA.ieMode < 11);
   _$jscoverage['/editor/enterKey.js'].lineData[16]++;
-  var UA = S.UA, headerTagRegex = /^h[1-6]$/, dtd = Editor.XHTML_DTD;
-  _$jscoverage['/editor/enterKey.js'].lineData[20]++;
+  var headerTagRegex = /^h[1-6]$/, dtd = Editor.XHTML_DTD;
+  _$jscoverage['/editor/enterKey.js'].lineData[19]++;
   function getRange(editor) {
     _$jscoverage['/editor/enterKey.js'].functionData[1]++;
-    _$jscoverage['/editor/enterKey.js'].lineData[22]++;
+    _$jscoverage['/editor/enterKey.js'].lineData[21]++;
     var ranges = editor.getSelection().getRanges();
-    _$jscoverage['/editor/enterKey.js'].lineData[24]++;
-    for (var i = ranges.length - 1; visit296_24_1(i > 0); i--) {
-      _$jscoverage['/editor/enterKey.js'].lineData[25]++;
+    _$jscoverage['/editor/enterKey.js'].lineData[23]++;
+    for (var i = ranges.length - 1; visit297_23_1(i > 0); i--) {
+      _$jscoverage['/editor/enterKey.js'].lineData[24]++;
       ranges[i].deleteContents();
     }
-    _$jscoverage['/editor/enterKey.js'].lineData[28]++;
+    _$jscoverage['/editor/enterKey.js'].lineData[27]++;
     return ranges[0];
   }
-  _$jscoverage['/editor/enterKey.js'].lineData[31]++;
+  _$jscoverage['/editor/enterKey.js'].lineData[30]++;
   function enterBlock(editor) {
     _$jscoverage['/editor/enterKey.js'].functionData[2]++;
-    _$jscoverage['/editor/enterKey.js'].lineData[33]++;
+    _$jscoverage['/editor/enterKey.js'].lineData[32]++;
     var range = getRange(editor);
-    _$jscoverage['/editor/enterKey.js'].lineData[34]++;
+    _$jscoverage['/editor/enterKey.js'].lineData[33]++;
     var doc = range.document;
-    _$jscoverage['/editor/enterKey.js'].lineData[36]++;
-    if (visit297_36_1(range.checkStartOfBlock() && range.checkEndOfBlock())) {
-      _$jscoverage['/editor/enterKey.js'].lineData[37]++;
+    _$jscoverage['/editor/enterKey.js'].lineData[35]++;
+    if (visit298_35_1(range.checkStartOfBlock() && range.checkEndOfBlock())) {
+      _$jscoverage['/editor/enterKey.js'].lineData[36]++;
       var path = new ElementPath(range.startContainer), block = path.block;
-      _$jscoverage['/editor/enterKey.js'].lineData[40]++;
-      if (visit298_40_1(block && (visit299_41_1(visit300_41_2(block.nodeName() == 'li') || visit301_41_3(block.parent().nodeName() == 'li'))))) {
-        _$jscoverage['/editor/enterKey.js'].lineData[44]++;
-        if (visit302_44_1(editor.hasCommand('outdent'))) {
+      _$jscoverage['/editor/enterKey.js'].lineData[39]++;
+      if (visit299_39_1(block && (visit300_40_1(visit301_40_2(block.nodeName() === 'li') || visit302_40_3(block.parent().nodeName() === 'li'))))) {
+        _$jscoverage['/editor/enterKey.js'].lineData[43]++;
+        if (visit303_43_1(editor.hasCommand('outdent'))) {
+          _$jscoverage['/editor/enterKey.js'].lineData[44]++;
+          editor.execCommand('save');
           _$jscoverage['/editor/enterKey.js'].lineData[45]++;
-          editor.execCommand("save");
-          _$jscoverage['/editor/enterKey.js'].lineData[46]++;
           editor.execCommand('outdent');
+          _$jscoverage['/editor/enterKey.js'].lineData[46]++;
+          editor.execCommand('save');
           _$jscoverage['/editor/enterKey.js'].lineData[47]++;
-          editor.execCommand("save");
-          _$jscoverage['/editor/enterKey.js'].lineData[48]++;
           return true;
         } else {
-          _$jscoverage['/editor/enterKey.js'].lineData[50]++;
+          _$jscoverage['/editor/enterKey.js'].lineData[49]++;
           return false;
         }
       }
     }
-    _$jscoverage['/editor/enterKey.js'].lineData[56]++;
-    var blockTag = "p";
-    _$jscoverage['/editor/enterKey.js'].lineData[59]++;
+    _$jscoverage['/editor/enterKey.js'].lineData[55]++;
+    var blockTag = 'p';
+    _$jscoverage['/editor/enterKey.js'].lineData[58]++;
     var splitInfo = range.splitBlock(blockTag);
-    _$jscoverage['/editor/enterKey.js'].lineData[61]++;
-    if (visit303_61_1(!splitInfo)) {
-      _$jscoverage['/editor/enterKey.js'].lineData[62]++;
+    _$jscoverage['/editor/enterKey.js'].lineData[60]++;
+    if (visit304_60_1(!splitInfo)) {
+      _$jscoverage['/editor/enterKey.js'].lineData[61]++;
       return true;
     }
     _$jscoverage['/editor/enterKey.js'].lineData[65]++;
@@ -636,174 +641,173 @@ KISSY.add(function(S, require) {
     _$jscoverage['/editor/enterKey.js'].lineData[71]++;
     var node;
     _$jscoverage['/editor/enterKey.js'].lineData[74]++;
-    if (visit304_74_1(nextBlock)) {
+    if (visit305_74_1(nextBlock)) {
       _$jscoverage['/editor/enterKey.js'].lineData[75]++;
       node = nextBlock.parent();
       _$jscoverage['/editor/enterKey.js'].lineData[76]++;
-      if (visit305_76_1(node.nodeName() == 'li')) {
+      if (visit306_76_1(node.nodeName() === 'li')) {
         _$jscoverage['/editor/enterKey.js'].lineData[77]++;
-        nextBlock._4e_breakParent(node);
+        nextBlock._4eBreakParent(node);
         _$jscoverage['/editor/enterKey.js'].lineData[78]++;
-        nextBlock._4e_move(nextBlock.next(), true);
+        nextBlock._4eMove(nextBlock.next(), true);
       }
     } else {
       _$jscoverage['/editor/enterKey.js'].lineData[81]++;
-      if (visit306_81_1(previousBlock && visit307_81_2((node = previousBlock.parent()) && visit308_81_3(node.nodeName() == 'li')))) {
+      if (visit307_81_1(previousBlock && visit308_81_2((node = previousBlock.parent()) && visit309_81_3(node.nodeName() === 'li')))) {
         _$jscoverage['/editor/enterKey.js'].lineData[82]++;
-        previousBlock._4e_breakParent(node);
+        previousBlock._4eBreakParent(node);
         _$jscoverage['/editor/enterKey.js'].lineData[83]++;
         range.moveToElementEditablePosition(previousBlock.next());
         _$jscoverage['/editor/enterKey.js'].lineData[84]++;
-        previousBlock._4e_move(previousBlock.prev());
+        previousBlock._4eMove(previousBlock.prev());
       }
     }
-    _$jscoverage['/editor/enterKey.js'].lineData[90]++;
-    if (visit309_90_1(!isStartOfBlock && !isEndOfBlock)) {
-      _$jscoverage['/editor/enterKey.js'].lineData[94]++;
-      if (visit310_94_1(visit311_94_2(nextBlock.nodeName() == 'li') && visit312_95_1((node = nextBlock.first(Walker.invisible(true))) && S.inArray(node.nodeName(), ['ul', 'ol'])))) {
-        _$jscoverage['/editor/enterKey.js'].lineData[97]++;
+    _$jscoverage['/editor/enterKey.js'].lineData[87]++;
+    var newBlock;
+    _$jscoverage['/editor/enterKey.js'].lineData[92]++;
+    if (visit310_92_1(!isStartOfBlock && !isEndOfBlock)) {
+      _$jscoverage['/editor/enterKey.js'].lineData[96]++;
+      if (visit311_96_1(visit312_96_2(nextBlock.nodeName() === 'li') && visit313_97_1((node = nextBlock.first(Walker.invisible(true))) && S.inArray(node.nodeName(), ['ul', 'ol'])))) {
+        _$jscoverage['/editor/enterKey.js'].lineData[99]++;
         (OLD_IE ? new Node(doc.createTextNode('\xa0')) : new Node(doc.createElement('br'))).insertBefore(node);
       }
-      _$jscoverage['/editor/enterKey.js'].lineData[101]++;
-      if (visit313_101_1(nextBlock)) {
-        _$jscoverage['/editor/enterKey.js'].lineData[102]++;
+      _$jscoverage['/editor/enterKey.js'].lineData[104]++;
+      if (visit314_104_1(nextBlock)) {
+        _$jscoverage['/editor/enterKey.js'].lineData[105]++;
         range.moveToElementEditablePosition(nextBlock);
       }
     } else {
-      _$jscoverage['/editor/enterKey.js'].lineData[105]++;
-      var newBlock;
-      _$jscoverage['/editor/enterKey.js'].lineData[107]++;
-      if (visit314_107_1(previousBlock)) {
-        _$jscoverage['/editor/enterKey.js'].lineData[111]++;
-        if (visit315_111_1(visit316_111_2(previousBlock.nodeName() == 'li') || !headerTagRegex.test(previousBlock.nodeName()))) {
-          _$jscoverage['/editor/enterKey.js'].lineData[113]++;
+      _$jscoverage['/editor/enterKey.js'].lineData[111]++;
+      if (visit315_111_1(previousBlock)) {
+        _$jscoverage['/editor/enterKey.js'].lineData[115]++;
+        if (visit316_115_1(visit317_115_2(previousBlock.nodeName() === 'li') || !headerTagRegex.test(previousBlock.nodeName()))) {
+          _$jscoverage['/editor/enterKey.js'].lineData[117]++;
           newBlock = previousBlock.clone();
         }
       } else {
-        _$jscoverage['/editor/enterKey.js'].lineData[116]++;
-        if (visit317_116_1(nextBlock)) {
-          _$jscoverage['/editor/enterKey.js'].lineData[117]++;
+        _$jscoverage['/editor/enterKey.js'].lineData[120]++;
+        if (visit318_120_1(nextBlock)) {
+          _$jscoverage['/editor/enterKey.js'].lineData[121]++;
           newBlock = nextBlock.clone();
         }
       }
-      _$jscoverage['/editor/enterKey.js'].lineData[119]++;
-      if (visit318_119_1(!newBlock)) {
-        _$jscoverage['/editor/enterKey.js'].lineData[120]++;
-        newBlock = new Node("<" + blockTag + ">", null, doc);
+      _$jscoverage['/editor/enterKey.js'].lineData[124]++;
+      if (visit319_124_1(!newBlock)) {
+        _$jscoverage['/editor/enterKey.js'].lineData[125]++;
+        newBlock = new Node('<' + blockTag + '>', null, doc);
       }
-      _$jscoverage['/editor/enterKey.js'].lineData[125]++;
+      _$jscoverage['/editor/enterKey.js'].lineData[131]++;
       var elementPath = splitInfo.elementPath;
-      _$jscoverage['/editor/enterKey.js'].lineData[126]++;
-      if (visit319_126_1(elementPath)) {
-        _$jscoverage['/editor/enterKey.js'].lineData[127]++;
-        for (var i = 0, len = elementPath.elements.length; visit320_127_1(i < len); i++) {
-          _$jscoverage['/editor/enterKey.js'].lineData[128]++;
+      _$jscoverage['/editor/enterKey.js'].lineData[132]++;
+      if (visit320_132_1(elementPath)) {
+        _$jscoverage['/editor/enterKey.js'].lineData[133]++;
+        for (var i = 0, len = elementPath.elements.length; visit321_133_1(i < len); i++) {
+          _$jscoverage['/editor/enterKey.js'].lineData[134]++;
           var element = elementPath.elements[i];
-          _$jscoverage['/editor/enterKey.js'].lineData[130]++;
-          if (visit321_130_1(element.equals(elementPath.block) || element.equals(elementPath.blockLimit))) {
-            _$jscoverage['/editor/enterKey.js'].lineData[131]++;
+          _$jscoverage['/editor/enterKey.js'].lineData[136]++;
+          if (visit322_136_1(element.equals(elementPath.block) || element.equals(elementPath.blockLimit))) {
+            _$jscoverage['/editor/enterKey.js'].lineData[138]++;
             break;
           }
-          _$jscoverage['/editor/enterKey.js'].lineData[133]++;
-          if (visit322_133_1(dtd.$removeEmpty[element.nodeName()])) {
-            _$jscoverage['/editor/enterKey.js'].lineData[134]++;
+          _$jscoverage['/editor/enterKey.js'].lineData[141]++;
+          if (visit323_141_1(dtd.$removeEmpty[element.nodeName()])) {
+            _$jscoverage['/editor/enterKey.js'].lineData[142]++;
             element = element.clone();
-            _$jscoverage['/editor/enterKey.js'].lineData[135]++;
-            newBlock._4e_moveChildren(element);
-            _$jscoverage['/editor/enterKey.js'].lineData[136]++;
+            _$jscoverage['/editor/enterKey.js'].lineData[143]++;
+            newBlock._4eMoveChildren(element);
+            _$jscoverage['/editor/enterKey.js'].lineData[144]++;
             newBlock.append(element);
           }
         }
       }
-      _$jscoverage['/editor/enterKey.js'].lineData[141]++;
-      if (visit323_141_1(!OLD_IE)) {
-        _$jscoverage['/editor/enterKey.js'].lineData[142]++;
-        newBlock._4e_appendBogus();
+      _$jscoverage['/editor/enterKey.js'].lineData[149]++;
+      if (visit324_149_1(!OLD_IE)) {
+        _$jscoverage['/editor/enterKey.js'].lineData[150]++;
+        newBlock._4eAppendBogus();
       }
-      _$jscoverage['/editor/enterKey.js'].lineData[144]++;
+      _$jscoverage['/editor/enterKey.js'].lineData[153]++;
       range.insertNode(newBlock);
-      _$jscoverage['/editor/enterKey.js'].lineData[151]++;
-      if (visit324_151_1(OLD_IE && visit325_151_2(isStartOfBlock && (visit326_151_3(!isEndOfBlock || !previousBlock[0].childNodes.length))))) {
-        _$jscoverage['/editor/enterKey.js'].lineData[153]++;
+      _$jscoverage['/editor/enterKey.js'].lineData[160]++;
+      if (visit325_160_1(OLD_IE && visit326_160_2(isStartOfBlock && (visit327_160_3(!isEndOfBlock || !previousBlock[0].childNodes.length))))) {
+        _$jscoverage['/editor/enterKey.js'].lineData[162]++;
         range.moveToElementEditablePosition(isEndOfBlock ? previousBlock : newBlock);
-        _$jscoverage['/editor/enterKey.js'].lineData[154]++;
+        _$jscoverage['/editor/enterKey.js'].lineData[163]++;
         range.select();
       }
-      _$jscoverage['/editor/enterKey.js'].lineData[158]++;
-      range.moveToElementEditablePosition(visit327_158_1(isStartOfBlock && !isEndOfBlock) ? nextBlock : newBlock);
+      _$jscoverage['/editor/enterKey.js'].lineData[167]++;
+      range.moveToElementEditablePosition(visit328_167_1(isStartOfBlock && !isEndOfBlock) ? nextBlock : newBlock);
     }
-    _$jscoverage['/editor/enterKey.js'].lineData[161]++;
-    if (visit328_161_1(!OLD_IE)) {
-      _$jscoverage['/editor/enterKey.js'].lineData[162]++;
-      if (visit329_162_1(nextBlock)) {
-        _$jscoverage['/editor/enterKey.js'].lineData[165]++;
+    _$jscoverage['/editor/enterKey.js'].lineData[170]++;
+    if (visit329_170_1(!OLD_IE)) {
+      _$jscoverage['/editor/enterKey.js'].lineData[171]++;
+      if (visit330_171_1(nextBlock)) {
+        _$jscoverage['/editor/enterKey.js'].lineData[174]++;
         var tmpNode = new Node(doc.createElement('span'));
-        _$jscoverage['/editor/enterKey.js'].lineData[168]++;
+        _$jscoverage['/editor/enterKey.js'].lineData[177]++;
         tmpNode.html('&nbsp;');
-        _$jscoverage['/editor/enterKey.js'].lineData[170]++;
+        _$jscoverage['/editor/enterKey.js'].lineData[179]++;
         range.insertNode(tmpNode);
-        _$jscoverage['/editor/enterKey.js'].lineData[171]++;
+        _$jscoverage['/editor/enterKey.js'].lineData[180]++;
         tmpNode.scrollIntoView(undefined, {
   alignWithTop: false, 
   allowHorizontalScroll: true, 
   onlyScrollIfNeeded: true});
-        _$jscoverage['/editor/enterKey.js'].lineData[176]++;
+        _$jscoverage['/editor/enterKey.js'].lineData[185]++;
         range.deleteContents();
       } else {
-        _$jscoverage['/editor/enterKey.js'].lineData[181]++;
+        _$jscoverage['/editor/enterKey.js'].lineData[190]++;
         newBlock.scrollIntoView(undefined, {
   alignWithTop: false, 
   allowHorizontalScroll: true, 
   onlyScrollIfNeeded: true});
       }
     }
-    _$jscoverage['/editor/enterKey.js'].lineData[188]++;
+    _$jscoverage['/editor/enterKey.js'].lineData[197]++;
     range.select();
-    _$jscoverage['/editor/enterKey.js'].lineData[189]++;
+    _$jscoverage['/editor/enterKey.js'].lineData[198]++;
     return true;
   }
-  _$jscoverage['/editor/enterKey.js'].lineData[192]++;
-  function EnterKey(editor) {
+  _$jscoverage['/editor/enterKey.js'].lineData[201]++;
+  function enterKey(editor) {
     _$jscoverage['/editor/enterKey.js'].functionData[3]++;
-    _$jscoverage['/editor/enterKey.js'].lineData[193]++;
-    var doc = editor.get("document");
-    _$jscoverage['/editor/enterKey.js'].lineData[194]++;
-    doc.on("keydown", function(ev) {
+    _$jscoverage['/editor/enterKey.js'].lineData[202]++;
+    var doc = editor.get('document');
+    _$jscoverage['/editor/enterKey.js'].lineData[203]++;
+    doc.on('keydown', function(ev) {
   _$jscoverage['/editor/enterKey.js'].functionData[4]++;
-  _$jscoverage['/editor/enterKey.js'].lineData[195]++;
+  _$jscoverage['/editor/enterKey.js'].lineData[204]++;
   var keyCode = ev.keyCode;
-  _$jscoverage['/editor/enterKey.js'].lineData[196]++;
-  if (visit330_196_1(keyCode === 13)) {
-    _$jscoverage['/editor/enterKey.js'].lineData[197]++;
-    if (visit331_197_1(ev.shiftKey || visit332_197_2(ev.ctrlKey || ev.metaKey))) {
-    } else {
-      _$jscoverage['/editor/enterKey.js'].lineData[199]++;
-      editor.execCommand("save");
-      _$jscoverage['/editor/enterKey.js'].lineData[200]++;
-      var re = editor.execCommand("enterBlock");
-      _$jscoverage['/editor/enterKey.js'].lineData[201]++;
-      editor.execCommand("save");
-      _$jscoverage['/editor/enterKey.js'].lineData[202]++;
-      if (visit333_202_1(re !== false)) {
-        _$jscoverage['/editor/enterKey.js'].lineData[203]++;
+  _$jscoverage['/editor/enterKey.js'].lineData[205]++;
+  if (visit331_205_1(keyCode === 13)) {
+    _$jscoverage['/editor/enterKey.js'].lineData[206]++;
+    if (visit332_206_1(!(visit333_206_2(ev.shiftKey || visit334_206_3(ev.ctrlKey || ev.metaKey))))) {
+      _$jscoverage['/editor/enterKey.js'].lineData[207]++;
+      editor.execCommand('save');
+      _$jscoverage['/editor/enterKey.js'].lineData[208]++;
+      var re = editor.execCommand('enterBlock');
+      _$jscoverage['/editor/enterKey.js'].lineData[209]++;
+      editor.execCommand('save');
+      _$jscoverage['/editor/enterKey.js'].lineData[210]++;
+      if (visit335_210_1(re !== false)) {
+        _$jscoverage['/editor/enterKey.js'].lineData[211]++;
         ev.preventDefault();
       }
     }
   }
 });
   }
-  _$jscoverage['/editor/enterKey.js'].lineData[210]++;
+  _$jscoverage['/editor/enterKey.js'].lineData[218]++;
   return {
   init: function(editor) {
   _$jscoverage['/editor/enterKey.js'].functionData[5]++;
-  _$jscoverage['/editor/enterKey.js'].lineData[212]++;
-  editor.addCommand("enterBlock", {
+  _$jscoverage['/editor/enterKey.js'].lineData[220]++;
+  editor.addCommand('enterBlock', {
   exec: enterBlock});
-  _$jscoverage['/editor/enterKey.js'].lineData[215]++;
+  _$jscoverage['/editor/enterKey.js'].lineData[223]++;
   editor.docReady(function() {
   _$jscoverage['/editor/enterKey.js'].functionData[6]++;
-  _$jscoverage['/editor/enterKey.js'].lineData[216]++;
-  EnterKey(editor);
+  _$jscoverage['/editor/enterKey.js'].lineData[224]++;
+  enterKey(editor);
 });
 }};
 });

@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ','src':' + jscoverage_quote(this.src)
+            + ',"src":' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -255,14 +255,14 @@ if (! _$jscoverage['/flash.js']) {
   _$jscoverage['/flash.js'].lineData[52] = 0;
   _$jscoverage['/flash.js'].lineData[53] = 0;
   _$jscoverage['/flash.js'].lineData[56] = 0;
-  _$jscoverage['/flash.js'].lineData[63] = 0;
-  _$jscoverage['/flash.js'].lineData[72] = 0;
+  _$jscoverage['/flash.js'].lineData[64] = 0;
   _$jscoverage['/flash.js'].lineData[73] = 0;
   _$jscoverage['/flash.js'].lineData[74] = 0;
-  _$jscoverage['/flash.js'].lineData[80] = 0;
-  _$jscoverage['/flash.js'].lineData[82] = 0;
-  _$jscoverage['/flash.js'].lineData[86] = 0;
-  _$jscoverage['/flash.js'].lineData[94] = 0;
+  _$jscoverage['/flash.js'].lineData[75] = 0;
+  _$jscoverage['/flash.js'].lineData[81] = 0;
+  _$jscoverage['/flash.js'].lineData[83] = 0;
+  _$jscoverage['/flash.js'].lineData[87] = 0;
+  _$jscoverage['/flash.js'].lineData[95] = 0;
 }
 if (! _$jscoverage['/flash.js'].functionData) {
   _$jscoverage['/flash.js'].functionData = [];
@@ -288,12 +288,12 @@ if (! _$jscoverage['/flash.js'].branchData) {
   _$jscoverage['/flash.js'].branchData['37'][1] = new BranchData();
   _$jscoverage['/flash.js'].branchData['52'] = [];
   _$jscoverage['/flash.js'].branchData['52'][1] = new BranchData();
-  _$jscoverage['/flash.js'].branchData['73'] = [];
-  _$jscoverage['/flash.js'].branchData['73'][1] = new BranchData();
+  _$jscoverage['/flash.js'].branchData['74'] = [];
+  _$jscoverage['/flash.js'].branchData['74'][1] = new BranchData();
 }
-_$jscoverage['/flash.js'].branchData['73'][1].init(100, 10, 'selectedEl');
-function visit7_73_1(result) {
-  _$jscoverage['/flash.js'].branchData['73'][1].ranCondition(result);
+_$jscoverage['/flash.js'].branchData['74'][1].init(100, 10, 'selectedEl');
+function visit7_74_1(result) {
+  _$jscoverage['/flash.js'].branchData['74'][1].ranCondition(result);
   return result;
 }_$jscoverage['/flash.js'].branchData['52'][1].init(33, 32, 'flashUtils.isFlashEmbed(element)');
 function visit6_52_1(result) {
@@ -303,7 +303,7 @@ function visit6_52_1(result) {
 function visit5_37_1(result) {
   _$jscoverage['/flash.js'].branchData['37'][1].ranCondition(result);
   return result;
-}_$jscoverage['/flash.js'].branchData['36'][1].init(41, 33, 'childNodes[i].nodeName == \'embed\'');
+}_$jscoverage['/flash.js'].branchData['36'][1].init(41, 34, 'childNodes[i].nodeName === \'embed\'');
 function visit4_36_1(result) {
   _$jscoverage['/flash.js'].branchData['36'][1].ranCondition(result);
   return result;
@@ -362,7 +362,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/flash.js'].lineData[35]++;
     for (i = 0; visit3_35_1(i < childNodes.length); i++) {
       _$jscoverage['/flash.js'].lineData[36]++;
-      if (visit4_36_1(childNodes[i].nodeName == 'embed')) {
+      if (visit4_36_1(childNodes[i].nodeName === 'embed')) {
         _$jscoverage['/flash.js'].lineData[37]++;
         if (visit5_37_1(!flashUtils.isFlashEmbed(childNodes[i][i]))) {
           _$jscoverage['/flash.js'].lineData[38]++;
@@ -390,38 +390,38 @@ KISSY.add(function(S, require) {
     return null;
   }
 }}}, 5);
-  _$jscoverage['/flash.js'].lineData[63]++;
+  _$jscoverage['/flash.js'].lineData[64]++;
   var flashControl = new FlashBaseClass({
   editor: editor, 
   cls: CLS_FLASH, 
   type: TYPE_FLASH, 
   pluginConfig: this.config, 
-  bubbleId: 'flash',
+  bubbleId: 'flash', 
   contextMenuId: 'flash', 
   contextMenuHandlers: {
-  "Flash\u5c5e\u6027": function() {
+  'Flash\u5c5e\u6027': function() {
   _$jscoverage['/flash.js'].functionData[5]++;
-  _$jscoverage['/flash.js'].lineData[72]++;
-  var selectedEl = this.get('editorSelectedEl');
   _$jscoverage['/flash.js'].lineData[73]++;
-  if (visit7_73_1(selectedEl)) {
-    _$jscoverage['/flash.js'].lineData[74]++;
+  var selectedEl = this.get('editorSelectedEl');
+  _$jscoverage['/flash.js'].lineData[74]++;
+  if (visit7_74_1(selectedEl)) {
+    _$jscoverage['/flash.js'].lineData[75]++;
     flashControl.show(selectedEl);
   }
 }}});
-  _$jscoverage['/flash.js'].lineData[80]++;
+  _$jscoverage['/flash.js'].lineData[81]++;
   this.flashControl = flashControl;
-  _$jscoverage['/flash.js'].lineData[82]++;
+  _$jscoverage['/flash.js'].lineData[83]++;
   editor.addButton('flash', {
-  tooltip: "\u63d2\u5165Flash", 
+  tooltip: '\u63d2\u5165Flash', 
   listeners: {
   click: function() {
   _$jscoverage['/flash.js'].functionData[6]++;
-  _$jscoverage['/flash.js'].lineData[86]++;
+  _$jscoverage['/flash.js'].lineData[87]++;
   flashControl.show();
 }}, 
   mode: Editor.Mode.WYSIWYG_MODE});
 }});
-  _$jscoverage['/flash.js'].lineData[94]++;
+  _$jscoverage['/flash.js'].lineData[95]++;
   return FlashPlugin;
 });

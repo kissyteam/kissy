@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:41
+build time: Dec 2 12:57
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -14,7 +14,7 @@ KISSY.add("editor/plugin/dent-cmd", ["editor", "./list-utils"], function(S, requ
   var ListUtils = require("./list-utils");
   var listNodeNames = {ol:1, ul:1}, Walker = Editor.Walker, Dom = S.DOM, Node = S.Node, UA = S.UA, isNotWhitespaces = Walker.whitespaces(true), INDENT_CSS_PROPERTY = "margin-left", INDENT_OFFSET = 40, INDENT_UNIT = "px", isNotBookmark = Walker.bookmark(false, true);
   function isListItem(node) {
-    return node.nodeType == Dom.NodeType.ELEMENT_NODE && Dom.nodeName(node) == "li"
+    return node.nodeType === Dom.NodeType.ELEMENT_NODE && Dom.nodeName(node) === "li"
   }
   function indentList(range, listNode, type) {
     var startContainer = range.startContainer, endContainer = range.endContainer;
@@ -38,7 +38,7 @@ KISSY.add("editor/plugin/dent-cmd", ["editor", "./list-utils"], function(S, requ
     if(itemsToMove.length < 1) {
       return
     }
-    var listParents = listNode._4e_parents(true, undefined);
+    var listParents = listNode._4eParents(true, undefined);
     listParents.each(function(n, i) {
       listParents[i] = n
     });
@@ -48,7 +48,7 @@ KISSY.add("editor/plugin/dent-cmd", ["editor", "./list-utils"], function(S, requ
         break
       }
     }
-    var indentOffset = type == "indent" ? 1 : -1, startItem = itemsToMove[0], lastItem = itemsToMove[itemsToMove.length - 1], database = {};
+    var indentOffset = type === "indent" ? 1 : -1, startItem = itemsToMove[0], lastItem = itemsToMove[itemsToMove.length - 1], database = {};
     var listArray = ListUtils.listToArray(listNode, database);
     var baseIndent = listArray[lastItem.data("listarray_index")].indent;
     for(i = startItem.data("listarray_index");i <= lastItem.data("listarray_index");i++) {
@@ -61,12 +61,12 @@ KISSY.add("editor/plugin/dent-cmd", ["editor", "./list-utils"], function(S, requ
     }
     var newList = ListUtils.arrayToList(listArray, database, null, "p");
     var pendingList = [];
-    if(type == "outdent") {
-      var parentLiElement;
-      if((parentLiElement = listNode.parent()) && parentLiElement.nodeName() == "li") {
+    var parentLiElement;
+    if(type === "outdent") {
+      if((parentLiElement = listNode.parent()) && parentLiElement.nodeName() === "li") {
         var children = newList.listNode.childNodes, count = children.length, child;
         for(i = count - 1;i >= 0;i--) {
-          if((child = new Node(children[i])) && child.nodeName() == "li") {
+          if((child = new Node(children[i])) && child.nodeName() === "li") {
             pendingList.push(child)
           }
         }
@@ -80,7 +80,7 @@ KISSY.add("editor/plugin/dent-cmd", ["editor", "./list-utils"], function(S, requ
       for(i = 0;i < pendingList.length;i++) {
         var li = pendingList[i], followingList = li;
         while((followingList = followingList.next()) && followingList.nodeName() in listNodeNames) {
-          if(UA["ie"] && !li.first(function(node) {
+          if(UA.ie && !li.first(function(node) {
             return isNotWhitespaces(node) && isNotBookmark(node)
           }, 1)) {
             li[0].appendChild(range.document.createTextNode("\u00a0"))
@@ -105,7 +105,7 @@ KISSY.add("editor/plugin/dent-cmd", ["editor", "./list-utils"], function(S, requ
     if(isNaN(currentOffset)) {
       currentOffset = 0
     }
-    currentOffset += (type == "indent" ? 1 : -1) * INDENT_OFFSET;
+    currentOffset += (type === "indent" ? 1 : -1) * INDENT_OFFSET;
     if(currentOffset < 0) {
       return false
     }
@@ -123,15 +123,16 @@ KISSY.add("editor/plugin/dent-cmd", ["editor", "./list-utils"], function(S, requ
       return
     }
     var startContainer = range.startContainer, endContainer = range.endContainer, rangeRoot = range.getCommonAncestor(), nearestListBlock = rangeRoot;
-    while(nearestListBlock && !(nearestListBlock[0].nodeType == Dom.NodeType.ELEMENT_NODE && listNodeNames[nearestListBlock.nodeName()])) {
+    while(nearestListBlock && !(nearestListBlock[0].nodeType === Dom.NodeType.ELEMENT_NODE && listNodeNames[nearestListBlock.nodeName()])) {
       nearestListBlock = nearestListBlock.parent()
     }
-    if(nearestListBlock && startContainer[0].nodeType == Dom.NodeType.ELEMENT_NODE && startContainer.nodeName() in listNodeNames) {
-      var walker = new Walker(range);
+    var walker;
+    if(nearestListBlock && startContainer[0].nodeType === Dom.NodeType.ELEMENT_NODE && startContainer.nodeName() in listNodeNames) {
+      walker = new Walker(range);
       walker.evaluator = isListItem;
       range.startContainer = walker.next()
     }
-    if(nearestListBlock && endContainer[0].nodeType == Dom.NodeType.ELEMENT_NODE && endContainer.nodeName() in listNodeNames) {
+    if(nearestListBlock && endContainer[0].nodeType === Dom.NodeType.ELEMENT_NODE && endContainer.nodeName() in listNodeNames) {
       walker = new Walker(range);
       walker.evaluator = isListItem;
       range.endContainer = walker.previous()
@@ -139,10 +140,10 @@ KISSY.add("editor/plugin/dent-cmd", ["editor", "./list-utils"], function(S, requ
     var bookmarks = selection.createBookmarks(true);
     if(nearestListBlock) {
       var firstListItem = nearestListBlock.first();
-      while(firstListItem && firstListItem.nodeName() != "li") {
+      while(firstListItem && firstListItem.nodeName() !== "li") {
         firstListItem = firstListItem.next()
       }
-      var rangeStart = range.startContainer, indentWholeList = firstListItem[0] == rangeStart[0] || firstListItem.contains(rangeStart);
+      var rangeStart = range.startContainer, indentWholeList = firstListItem[0] === rangeStart[0] || firstListItem.contains(rangeStart);
       if(!(indentWholeList && indentElement(nearestListBlock, type))) {
         indentList(range, nearestListBlock, type)
       }

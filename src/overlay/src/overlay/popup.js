@@ -16,9 +16,9 @@ KISSY.add(function (S, require) {
         initializer: function () {
             var self = this,
             // 获取相关联的 Dom 节点
-                trigger = self.get("trigger");
+                trigger = self.get('trigger');
             if (trigger) {
-                if (self.get("triggerType") === 'mouse') {
+                if (self.get('triggerType') === 'mouse') {
                     self._bindTriggerMouse();
                     self.on('afterRenderUI', function () {
                         self._bindContainerMouse();
@@ -31,7 +31,7 @@ KISSY.add(function (S, require) {
 
         _bindTriggerMouse: function () {
             var self = this,
-                trigger = self.get("trigger"),
+                trigger = self.get('trigger'),
                 timer;
 
             self.__mouseEnterPopup = function (ev) {
@@ -88,7 +88,7 @@ KISSY.add(function (S, require) {
                 }
             };
 
-            self.get("trigger").on('click', self.__clickPopup);
+            self.get('trigger').on('click', self.__clickPopup);
         },
 
         _showing: function (ev) {
@@ -105,7 +105,7 @@ KISSY.add(function (S, require) {
         destructor: function () {
             var self = this,
                 $el = self.$el,
-                t = self.get("trigger");
+                t = self.get('trigger');
 
             if (t) {
                 if (self.__clickPopup) {
@@ -138,7 +138,7 @@ KISSY.add(function (S, require) {
                 }
             },
             /**
-             * How to activate trigger element, 'click' or "mouse".
+             * How to activate trigger element, 'click' or 'mouse'.
              *
              * Defaults to: 'click'.
              *

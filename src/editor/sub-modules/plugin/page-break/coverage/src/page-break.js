@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ','src':' + jscoverage_quote(this.src)
+            + ',"src":' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -300,7 +300,7 @@ if (! _$jscoverage['/page-break.js'].branchData) {
   _$jscoverage['/page-break.js'].branchData['83'] = [];
   _$jscoverage['/page-break.js'].branchData['83'][1] = new BranchData();
 }
-_$jscoverage['/page-break.js'].branchData['83'][1].init(827, 27, 'start.nodeName() !== 'body'');
+_$jscoverage['/page-break.js'].branchData['83'][1].init(827, 27, 'start.nodeName() !== \'body\'');
 function visit12_83_1(result) {
   _$jscoverage['/page-break.js'].branchData['83'][1].ranCondition(result);
   return result;
@@ -316,23 +316,23 @@ function visit10_72_1(result) {
 function visit9_48_1(result) {
   _$jscoverage['/page-break.js'].branchData['48'][1].ranCondition(result);
   return result;
-}_$jscoverage['/page-break.js'].branchData['47'][1].init(693, 164, 'childStyle && (/page-break-after\\s*:\\s*always/i).test(style) && (/display\\s*:\\s*none/i).test(childStyle)');
+}_$jscoverage['/page-break.js'].branchData['47'][1].init(695, 164, 'childStyle && (/page-break-after\\s*:\\s*always/i).test(style) && (/display\\s*:\\s*none/i).test(childStyle)');
 function visit8_47_1(result) {
   _$jscoverage['/page-break.js'].branchData['47'][1].ranCondition(result);
   return result;
-}_$jscoverage['/page-break.js'].branchData['44'][2].init(57, 24, 'child.nodeName == \'span\'');
+}_$jscoverage['/page-break.js'].branchData['44'][2].init(57, 25, 'child.nodeName === \'span\'');
 function visit7_44_2(result) {
   _$jscoverage['/page-break.js'].branchData['44'][2].ranCondition(result);
   return result;
-}_$jscoverage['/page-break.js'].branchData['44'][1].init(38, 85, '(child.nodeName == \'span\') && child.getAttribute('style')');
+}_$jscoverage['/page-break.js'].branchData['44'][1].init(38, 86, '(child.nodeName === \'span\') && child.getAttribute(\'style\')');
 function visit6_44_1(result) {
   _$jscoverage['/page-break.js'].branchData['44'][1].ranCondition(result);
   return result;
-}_$jscoverage['/page-break.js'].branchData['43'][1].init(538, 124, 'child && (child.nodeName == \'span\') && child.getAttribute('style')');
+}_$jscoverage['/page-break.js'].branchData['43'][1].init(539, 125, 'child && (child.nodeName === \'span\') && child.getAttribute(\'style\')');
 function visit5_43_1(result) {
   _$jscoverage['/page-break.js'].branchData['43'][1].ranCondition(result);
   return result;
-}_$jscoverage['/page-break.js'].branchData['37'][1].init(37, 27, 'childNodes[i].nodeType == 1');
+}_$jscoverage['/page-break.js'].branchData['37'][1].init(37, 28, 'childNodes[i].nodeType === 1');
 function visit4_37_1(result) {
   _$jscoverage['/page-break.js'].branchData['37'][1].ranCondition(result);
   return result;
@@ -358,7 +358,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/page-break.js'].lineData[9]++;
   require('./button');
   _$jscoverage['/page-break.js'].lineData[10]++;
-  var Node = S.Node, CLS = "ke_pagebreak", TYPE = 'div', PAGE_BREAK_MARKUP = '<div' + ' style="page-break-after: always; ">' + '<span style="DISPLAY:none">&nbsp;</span>' + '</div>';
+  var Node = S.Node, CLS = 'ke_pagebreak', TYPE = 'div', PAGE_BREAK_MARKUP = '<div' + ' style="page-break-after: always; ">' + '<span style="DISPLAY:none">&nbsp;</span>' + '</div>';
   _$jscoverage['/page-break.js'].lineData[18]++;
   function pageBreak() {
     _$jscoverage['/page-break.js'].functionData[1]++;
@@ -385,14 +385,14 @@ KISSY.add(function(S, require) {
     _$jscoverage['/page-break.js'].lineData[36]++;
     for (var i = 0; visit3_36_1(i < childNodes.length); i++) {
       _$jscoverage['/page-break.js'].lineData[37]++;
-      if (visit4_37_1(childNodes[i].nodeType == 1)) {
+      if (visit4_37_1(childNodes[i].nodeType === 1)) {
         _$jscoverage['/page-break.js'].lineData[38]++;
         child = childNodes[i];
       }
     }
   }
   _$jscoverage['/page-break.js'].lineData[43]++;
-  var childStyle = visit5_43_1(child && visit6_44_1((visit7_44_2(child.nodeName == 'span')) && child.getAttribute('style')));
+  var childStyle = visit5_43_1(child && visit6_44_1((visit7_44_2(child.nodeName === 'span')) && child.getAttribute('style')));
   _$jscoverage['/page-break.js'].lineData[47]++;
   if (visit8_47_1(childStyle && visit9_48_1((/page-break-after\s*:\s*always/i).test(style) && (/display\s*:\s*none/i).test(childStyle)))) {
     _$jscoverage['/page-break.js'].lineData[50]++;
@@ -402,8 +402,8 @@ KISSY.add(function(S, require) {
   return undefined;
 }}});
   _$jscoverage['/page-break.js'].lineData[57]++;
-  editor.addButton("pageBreak", {
-  tooltip: "\u5206\u9875", 
+  editor.addButton('pageBreak', {
+  tooltip: '\u5206\u9875', 
   listeners: {
   click: function() {
   _$jscoverage['/page-break.js'].functionData[4]++;

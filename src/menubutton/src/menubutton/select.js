@@ -15,7 +15,7 @@ KISSY.add(function (S, require) {
             i;
         for (i = 0; i < cs.length; i++) {
             c = cs[i];
-            if (getItemValue(c) == value) {
+            if (getItemValue(c) === value) {
                 return c;
             }
         }
@@ -48,7 +48,7 @@ KISSY.add(function (S, require) {
             cs = menu && menu.get && menu.get('children');
         S.each(cs, function (c) {
             if (c && c.set) {
-                c.set("selected", getItemValue(c) == value)
+                c.set('selected', getItemValue(c) === value);
             }
         });
     }
@@ -66,7 +66,7 @@ KISSY.add(function (S, require) {
             }
             // 初始化选中
             if (selectedItem) {
-                selectedItem.set("selected", true);
+                selectedItem.set('selected', true);
             }
         }
     }
@@ -76,7 +76,7 @@ KISSY.add(function (S, require) {
             textContent = item && ( item.textContent || item.get && item.get('textContent')),
             content = item && (item.content || item.get && item.get('content'));
         // 可能设置到 select content 的内容并不和 menuitem 的内容完全一致
-        self.set('content', textContent || content || self.get("defaultCaption"));
+        self.set('content', textContent || content || self.get('defaultCaption'));
     }
 
 
@@ -92,8 +92,8 @@ KISSY.add(function (S, require) {
             var newValue = getItemValue(target),
                 oldValue = self.get('value');
             self.set('value', newValue);
-            if (newValue != oldValue) {
-                self.fire("change", {
+            if (newValue !== oldValue) {
+                self.fire('change', {
                     prevVal: oldValue,
                     newVal: newValue
                 });
@@ -134,7 +134,7 @@ KISSY.add(function (S, require) {
             removeItem: function (c, destroy) {
                 var self = this;
                 self.callSuper(c, destroy);
-                if (c.get('value') == self.get('value')) {
+                if (c.get('value') === self.get('value')) {
                     self.set('value', null);
                 }
             },
@@ -163,7 +163,7 @@ KISSY.add(function (S, require) {
                  * @type {String}
                  */
                 defaultCaption: {
-                    value: ""
+                    value: ''
                 },
 
                 collapseOnClick: {
@@ -187,16 +187,16 @@ KISSY.add(function (S, require) {
                     select,
                     selectedItem = null,
                     curValue = element.val(),
-                    options = element.all("option");
+                    options = element.all('option');
 
                 options.each(function (option) {
                     var item = {
                         xclass: 'option',
                         content: option.text(),
-                        elCls: option.attr("class"),
+                        elCls: option.attr('class'),
                         value: option.val()
                     };
-                    if (curValue == option.val()) {
+                    if (curValue === option.val()) {
                         selectedItem = {
                             content: item.content,
                             value: item.value
@@ -215,15 +215,14 @@ KISSY.add(function (S, require) {
 
                 select = new Select(S.mix(cfg, selectedItem)).render();
 
-                if (name = element.attr("name")) {
-                    var input = new Node("<input" +
-                        " type='hidden'" +
-                        " name='" + name
-                        + "' value='" + curValue + "'>")
+                if ((name = element.attr('name'))) {
+                    var input = new Node('<input' +
+                        ' type="hidden"' +
+                        ' name="' + name + '" value="' + curValue + '">')
                         .insertBefore(element, undefined);
 
-                    select.on("afterValueChange", function (e) {
-                        input.val(e.newVal || "");
+                    select.on('afterValueChange', function (e) {
+                        input.val(e.newVal || '');
                     });
                 }
 

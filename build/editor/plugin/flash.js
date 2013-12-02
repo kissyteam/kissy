@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:42
+build time: Dec 2 12:58
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -27,7 +27,7 @@ KISSY.add("editor/plugin/flash", ["editor", "./flash-common/base-class", "./flas
       if(!classId) {
         var childNodes = element.childNodes;
         for(i = 0;i < childNodes.length;i++) {
-          if(childNodes[i].nodeName == "embed") {
+          if(childNodes[i].nodeName === "embed") {
             if(!flashUtils.isFlashEmbed(childNodes[i][i])) {
               return dataProcessor.createFakeParserElement(element, CLS_FLASH, TYPE_FLASH, true)
             }else {

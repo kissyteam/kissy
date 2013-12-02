@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ','src':' + jscoverage_quote(this.src)
+            + ',"src":' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -276,8 +276,8 @@ KISSY.add(function(S, require) {
   _$jscoverage['/back-color.js'].lineData[16]++;
   Button.init(editor, {
   defaultColor: 'rgb(255, 217, 102)', 
-  cmdType: 'backColor',
-  tooltip: "\u80cc\u666f\u989c\u8272"});
+  cmdType: 'backColor', 
+  tooltip: '\u80cc\u666f\u989c\u8272'});
 }});
   _$jscoverage['/back-color.js'].lineData[24]++;
   return backColor;

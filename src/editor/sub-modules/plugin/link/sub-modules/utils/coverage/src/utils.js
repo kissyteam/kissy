@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ','src':' + jscoverage_quote(this.src)
+            + ',"src":' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -267,7 +267,7 @@ if (! _$jscoverage['/utils.js']) {
   _$jscoverage['/utils.js'].lineData[77] = 0;
   _$jscoverage['/utils.js'].lineData[80] = 0;
   _$jscoverage['/utils.js'].lineData[81] = 0;
-  _$jscoverage['/utils.js'].lineData[85] = 0;
+  _$jscoverage['/utils.js'].lineData[84] = 0;
 }
 if (! _$jscoverage['/utils.js'].functionData) {
   _$jscoverage['/utils.js'].functionData = [];
@@ -303,11 +303,11 @@ function visit8_70_1(result) {
 function visit7_68_1(result) {
   _$jscoverage['/utils.js'].branchData['68'][1].ranCondition(result);
   return result;
-}_$jscoverage['/utils.js'].branchData['63'][1].init(115, 11, '_selectedEl');
+}_$jscoverage['/utils.js'].branchData['63'][1].init(111, 11, '_selectedEl');
 function visit6_63_1(result) {
   _$jscoverage['/utils.js'].branchData['63'][1].ranCondition(result);
   return result;
-}_$jscoverage['/utils.js'].branchData['51'][1].init(332, 5, 'range');
+}_$jscoverage['/utils.js'].branchData['51'][1].init(331, 5, 'range');
 function visit5_51_1(result) {
   _$jscoverage['/utils.js'].branchData['51'][1].ranCondition(result);
   return result;
@@ -333,13 +333,13 @@ KISSY.add(function(S, require) {
   _$jscoverage['/utils.js'].lineData[7]++;
   var Editor = require('editor');
   _$jscoverage['/utils.js'].lineData[8]++;
-  var Node = S.Node, KEStyle = Editor.Style, _keSavedHref = '_keSavedHref', link_Style = {
+  var Node = S.Node, KEStyle = Editor.Style, _keSavedHref = '_keSavedHref', linkStyle = {
   element: 'a', 
   attributes: {
-  'href': "#(href)",
-  'title': "#(title)",
-  '_keSavedHref': "#(_keSavedHref)",
-  target: "#(target)"}};
+  'href': '#(href)', 
+  'title': '#(title)', 
+  '_keSavedHref': '#(_keSavedHref)', 
+  target: '#(target)'}};
   _$jscoverage['/utils.js'].lineData[26]++;
   function getAttributes(el) {
     _$jscoverage['/utils.js'].functionData[1]++;
@@ -384,7 +384,7 @@ KISSY.add(function(S, require) {
         _$jscoverage['/utils.js'].lineData[52]++;
         var attrs = getAttributes(a[0]);
         _$jscoverage['/utils.js'].lineData[53]++;
-        new KEStyle(link_Style, attrs).remove(editor.get('document')[0]);
+        new KEStyle(linkStyle, attrs).remove(editor.get('document')[0]);
       }
     }
     _$jscoverage['/utils.js'].lineData[55]++;
@@ -409,14 +409,14 @@ KISSY.add(function(S, require) {
       _$jscoverage['/utils.js'].lineData[70]++;
       if (visit8_70_1(!range || range.collapsed)) {
         _$jscoverage['/utils.js'].lineData[71]++;
-        var a = new Node("<a>" + attr.href + "</a>", attr, editor.get('document')[0]);
+        var a = new Node('<a>' + attr.href + '</a>', attr, editor.get('document')[0]);
         _$jscoverage['/utils.js'].lineData[73]++;
         editor.insertElement(a);
       } else {
         _$jscoverage['/utils.js'].lineData[75]++;
         editor.execCommand('save');
         _$jscoverage['/utils.js'].lineData[76]++;
-        var linkStyle = new KEStyle(link_Style, attr);
+        var linkStyle = new KEStyle(linkStyle, attr);
         _$jscoverage['/utils.js'].lineData[77]++;
         linkStyle.apply(editor.get('document')[0]);
       }
@@ -426,7 +426,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/utils.js'].lineData[81]++;
     editor.notifySelectionChange();
   }
-  _$jscoverage['/utils.js'].lineData[85]++;
+  _$jscoverage['/utils.js'].lineData[84]++;
   return {
   removeLink: removeLink, 
   applyLink: applyLink, 

@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ','src':' + jscoverage_quote(this.src)
+            + ',"src":' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -318,7 +318,7 @@ KISSY.add(function(S, require) {
   editor.execCommand('undo');
 });
   _$jscoverage['/btn.js'].lineData[20]++;
-  editor.on("afterUndo afterRedo afterSave", function(ev) {
+  editor.on('afterUndo afterRedo afterSave', function(ev) {
   _$jscoverage['/btn.js'].functionData[3]++;
   _$jscoverage['/btn.js'].lineData[21]++;
   var index = ev.index;
@@ -361,7 +361,7 @@ KISSY.add(function(S, require) {
   editor.execCommand('redo');
 });
   _$jscoverage['/btn.js'].lineData[60]++;
-  editor.on("afterUndo afterRedo afterSave", function(ev) {
+  editor.on('afterUndo afterRedo afterSave', function(ev) {
   _$jscoverage['/btn.js'].functionData[7]++;
   _$jscoverage['/btn.js'].lineData[61]++;
   var history = ev.history, index = ev.index;

@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:46
+build time: Dec 2 13:02
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -12,6 +12,7 @@ build time: Nov 27 00:46
 KISSY.add("editor/plugin/table", ["editor", "./dialog-loader", "./contextmenu", "./button"], function(S, require) {
   var Editor = require("editor");
   var OLD_IE = S.UA.ieMode < 11;
+  var Walker = Editor.Walker;
   var DialogLoader = require("./dialog-loader");
   require("./contextmenu");
   require("./button");
@@ -22,8 +23,8 @@ KISSY.add("editor/plugin/table", ["editor", "./dialog-loader", "./contextmenu", 
       if(retval.length > 0) {
         return
       }
-      if(node[0].nodeType == Dom.NodeType.ELEMENT_NODE && cellNodeRegex.test(node.nodeName()) && !node.data("selected_cell")) {
-        node._4e_setMarker(database, "selected_cell", true, undefined);
+      if(node[0].nodeType === Dom.NodeType.ELEMENT_NODE && cellNodeRegex.test(node.nodeName()) && !node.data("selected_cell")) {
+        node._4eSetMarker(database, "selected_cell", true, undefined);
         retval.push(node)
       }
     }
@@ -40,7 +41,7 @@ KISSY.add("editor/plugin/table", ["editor", "./dialog-loader", "./contextmenu", 
         while(node = walker.next()) {
           var parent = node.parent();
           if(parent && cellNodeRegex.test(parent.nodeName()) && !parent.data("selected_cell")) {
-            parent._4e_setMarker(database, "selected_cell", true, undefined);
+            parent._4eSetMarker(database, "selected_cell", true, undefined);
             retval.push(parent)
           }
         }
@@ -55,7 +56,7 @@ KISSY.add("editor/plugin/table", ["editor", "./dialog-loader", "./contextmenu", 
     for(var i = 0;i < $cells.length;i++) {
       $cells[i].innerHTML = "";
       if(!OLD_IE) {
-        (new Node($cells[i]))._4e_appendBogus(undefined)
+        (new Node($cells[i]))._4eAppendBogus(undefined)
       }
     }
   }
@@ -69,15 +70,22 @@ KISSY.add("editor/plugin/table", ["editor", "./dialog-loader", "./contextmenu", 
     clearRow(insertBefore ? newRow[0] : row[0])
   }
   function deleteRows(selectionOrRow) {
+    var table;
     if(selectionOrRow instanceof Editor.Selection) {
-      var cells = getSelectedCells(selectionOrRow), cellsCount = cells.length, rowsToDelete = [], cursorPosition, previousRowIndex, nextRowIndex;
+      var cells = getSelectedCells(selectionOrRow), cellsCount = cells.length, rowsToDelete = [], cursorPosition, previousRowIndex, row, nextRowIndex;
       for(var i = 0;i < cellsCount;i++) {
-        var row = cells[i].parent(), rowIndex = row[0].rowIndex;
-        !i && (previousRowIndex = rowIndex - 1);
+        row = cells[i].parent();
+        var rowIndex = row[0].rowIndex;
+        if(!i) {
+          previousRowIndex = rowIndex - 1
+        }
         rowsToDelete[rowIndex] = row;
-        i == cellsCount - 1 && (nextRowIndex = rowIndex + 1)
+        if(i === cellsCount - 1) {
+          nextRowIndex = rowIndex + 1
+        }
       }
-      var table = row.parent("table"), rows = table[0].rows, rowCount = rows.length;
+      table = row.parent("table");
+      var rows = table[0].rows, rowCount = rows.length;
       cursorPosition = new Node(nextRowIndex < rowCount && table[0].rows[nextRowIndex] || previousRowIndex > 0 && table[0].rows[previousRowIndex] || table[0].parentNode);
       for(i = rowsToDelete.length;i >= 0;i--) {
         if(rowsToDelete[i]) {
@@ -88,7 +96,7 @@ KISSY.add("editor/plugin/table", ["editor", "./dialog-loader", "./contextmenu", 
     }else {
       if(selectionOrRow instanceof Node) {
         table = selectionOrRow.parent("table");
-        if(table[0].rows.length == 1) {
+        if(table[0].rows.length === 1) {
           table.remove()
         }else {
           selectionOrRow.remove()
@@ -110,7 +118,7 @@ KISSY.add("editor/plugin/table", ["editor", "./dialog-loader", "./contextmenu", 
       }
       cell = new Node($row.cells[cellIndex].cloneNode(undefined));
       if(!OLD_IE) {
-        cell._4e_appendBogus(undefined)
+        cell._4eAppendBogus(undefined)
       }
       var baseCell = new Node($row.cells[cellIndex]);
       if(insertBefore) {
@@ -145,9 +153,10 @@ KISSY.add("editor/plugin/table", ["editor", "./dialog-loader", "./contextmenu", 
     return targetCell ? new Node(targetCell) : table.prev()
   }
   function deleteColumns(selectionOrCell) {
+    var i;
     if(selectionOrCell instanceof Editor.Selection) {
       var colsToDelete = getSelectedCells(selectionOrCell), elementToFocus = getFocusElementAfterDelCols(colsToDelete);
-      for(var i = colsToDelete.length - 1;i >= 0;i--) {
+      for(i = colsToDelete.length - 1;i >= 0;i--) {
         if(colsToDelete[i]) {
           deleteColumns(colsToDelete[i])
         }
@@ -162,7 +171,7 @@ KISSY.add("editor/plugin/table", ["editor", "./dialog-loader", "./contextmenu", 
         var cellIndex = selectionOrCell[0].cellIndex;
         for(i = table[0].rows.length - 1;i >= 0;i--) {
           var row = new Node(table[0].rows[i]);
-          if(!cellIndex && row[0].cells.length == 1) {
+          if(!cellIndex && row[0].cells.length === 1) {
             deleteRows(row);
             continue
           }
@@ -176,7 +185,7 @@ KISSY.add("editor/plugin/table", ["editor", "./dialog-loader", "./contextmenu", 
   }
   function placeCursorInCell(cell, placeAtEnd) {
     var range = new Editor.Range(cell[0].ownerDocument);
-    if(!range["moveToElementEditablePosition"](cell, placeAtEnd ? true : undefined)) {
+    if(!range.moveToElementEditablePosition(cell, placeAtEnd ? true : undefined)) {
       range.selectNodeContents(cell);
       range.collapse(placeAtEnd ? false : true)
     }
@@ -189,11 +198,11 @@ KISSY.add("editor/plugin/table", ["editor", "./dialog-loader", "./contextmenu", 
     }
     var td = startElement.closest(function(n) {
       var name = Dom.nodeName(n);
-      return table.contains(n) && (name == "td" || name == "th")
+      return table.contains(n) && (name === "td" || name === "th")
     }, undefined);
     var tr = startElement.closest(function(n) {
       var name = Dom.nodeName(n);
-      return table.contains(n) && name == "tr"
+      return table.contains(n) && name === "tr"
     }, undefined);
     return{table:table, td:td, tr:tr}
   }
@@ -206,8 +215,8 @@ KISSY.add("editor/plugin/table", ["editor", "./dialog-loader", "./contextmenu", 
     return info && info.tr
   }
   var statusChecker = {"\u8868\u683c\u5c5e\u6027":getSel, "\u5220\u9664\u8868\u683c":ensureTd, "\u5220\u9664\u5217":ensureTd, "\u5220\u9664\u884c":ensureTr, "\u5728\u4e0a\u65b9\u63d2\u5165\u884c":ensureTr, "\u5728\u4e0b\u65b9\u63d2\u5165\u884c":ensureTr, "\u5728\u5de6\u4fa7\u63d2\u5165\u5217":ensureTd, "\u5728\u53f3\u4fa7\u63d2\u5165\u5217":ensureTd};
-  var showBorderClassName = "ke_show_border", cssTemplate = (UA["ie"] === 6 ? ["table.%2,", "table.%2 td, table.%2 th,", "{", "border : #d3d3d3 1px dotted", "}"] : [" table.%2,", " table.%2 > tr > td,  table.%2 > tr > th,", " table.%2 > tbody > tr > td,  table.%2 > tbody > tr > th,", " table.%2 > thead > tr > td,  table.%2 > thead > tr > th,", " table.%2 > tfoot > tr > td,  table.%2 > tfoot > tr > th", "{", "border : #d3d3d3 1px dotted", "}"]).join(""), cssStyleText = cssTemplate.replace(/%2/g, showBorderClassName), 
-  extraDataFilter = {tags:{table:function(element) {
+  var showBorderClassName = "ke_show_border", cssTemplate = (UA.ie === 6 ? ["table.%2,", "table.%2 td, table.%2 th,", "{", "border : #d3d3d3 1px dotted", "}"] : [" table.%2,", " table.%2 > tr > td,  table.%2 > tr > th,", " table.%2 > tbody > tr > td, " + " table.%2 > tbody > tr > th,", " table.%2 > thead > tr > td,  table.%2 > thead > tr > th,", " table.%2 > tfoot > tr > td,  table.%2 > tfoot > tr > th", "{", "border : #d3d3d3 1px dotted", "}"]).join(""), cssStyleText = cssTemplate.replace(/%2/g, 
+  showBorderClassName), extraDataFilter = {tags:{table:function(element) {
     var cssClass = element.getAttribute("class"), border = parseInt(element.getAttribute("border"), 10);
     if(!border || border <= 0) {
       element.setAttribute("class", S.trim((cssClass || "") + " " + showBorderClassName))
@@ -249,7 +258,7 @@ KISSY.add("editor/plugin/table", ["editor", "./dialog-loader", "./contextmenu", 
       range.collapse();
       selection.selectRanges([range]);
       var parent = table.parent();
-      if(parent[0].childNodes.length == 1 && parent.nodeName() != "body" && parent.nodeName() != "td") {
+      if(parent[0].childNodes.length === 1 && parent.nodeName() !== "body" && parent.nodeName() !== "td") {
         parent.remove()
       }else {
         table.remove()
@@ -265,7 +274,9 @@ KISSY.add("editor/plugin/table", ["editor", "./dialog-loader", "./contextmenu", 
       this.hide();
       editor.execCommand("save");
       var selection = editor.getSelection(), element = deleteColumns(selection);
-      element && placeCursorInCell(element, true);
+      if(element) {
+        placeCursorInCell(element, true)
+      }
       editor.execCommand("save")
     }, "\u5728\u4e0a\u65b9\u63d2\u5165\u884c":function() {
       this.hide();

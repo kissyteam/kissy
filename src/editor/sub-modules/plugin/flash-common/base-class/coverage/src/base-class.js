@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ','src':' + jscoverage_quote(this.src)
+            + ',"src":' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -320,11 +320,11 @@ if (! _$jscoverage['/base-class.js'].branchData) {
   _$jscoverage['/base-class.js'].branchData['132'][1] = new BranchData();
   _$jscoverage['/base-class.js'].branchData['132'][2] = new BranchData();
 }
-_$jscoverage['/base-class.js'].branchData['132'][2].init(87, 22, 't.nodeName() === "img"');
+_$jscoverage['/base-class.js'].branchData['132'][2].init(87, 22, 't.nodeName() === \'img\'');
 function visit9_132_2(result) {
   _$jscoverage['/base-class.js'].branchData['132'][2].ranCondition(result);
   return result;
-}_$jscoverage['/base-class.js'].branchData['132'][1].init(87, 64, 't.nodeName() === "img" && t.hasClass(self.get('cls'), undefined)');
+}_$jscoverage['/base-class.js'].branchData['132'][1].init(87, 64, 't.nodeName() === \'img\' && t.hasClass(self.get(\'cls\'), undefined)');
 function visit8_132_1(result) {
   _$jscoverage['/base-class.js'].branchData['132'][1].ranCondition(result);
   return result;
@@ -344,7 +344,7 @@ function visit5_81_1(result) {
 function visit4_80_1(result) {
   _$jscoverage['/base-class.js'].branchData['80'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base-class.js'].branchData['78'][1].init(93, 14, 'S.UA[\'webkit\']');
+}_$jscoverage['/base-class.js'].branchData['78'][1].init(93, 11, 'S.UA.webkit');
 function visit3_78_1(result) {
   _$jscoverage['/base-class.js'].branchData['78'][1].ranCondition(result);
   return result;
@@ -378,7 +378,7 @@ KISSY.add(function(S, require) {
   initializer: function() {
   _$jscoverage['/base-class.js'].functionData[1]++;
   _$jscoverage['/base-class.js'].lineData[23]++;
-  var self = this, cls = self.get('cls'), editor = self.get('editor'), prefixCls = editor.get('prefixCls'), children = [], bubbleId = self.get("bubbleId"), contextMenuId = self.get("contextMenuId"), contextMenuHandlers = self.get("contextMenuHandlers");
+  var self = this, cls = self.get('cls'), editor = self.get('editor'), prefixCls = editor.get('prefixCls'), children = [], bubbleId = self.get('bubbleId'), contextMenuId = self.get('contextMenuId'), contextMenuHandlers = self.get('contextMenuHandlers');
   _$jscoverage['/base-class.js'].lineData[32]++;
   S.each(contextMenuHandlers, function(h, content) {
   _$jscoverage['/base-class.js'].functionData[2]++;
@@ -387,8 +387,8 @@ KISSY.add(function(S, require) {
   content: content});
 });
   _$jscoverage['/base-class.js'].lineData[38]++;
-  editor.addContextMenu(contextMenuId, "." + cls, {
-  width: "120px", 
+  editor.addContextMenu(contextMenuId, '.' + cls, {
+  width: '120px', 
   children: children, 
   listeners: {
   click: function(e) {
@@ -414,10 +414,10 @@ KISSY.add(function(S, require) {
   var bubble = this, el = bubble.get('contentEl');
   _$jscoverage['/base-class.js'].lineData[59]++;
   el.html(S.substitute(tipHTML, {
-  label: self.get('label'),
+  label: self.get('label'), 
   prefixCls: prefixCls}));
   _$jscoverage['/base-class.js'].lineData[63]++;
-  var tipUrlEl = el.one("." + prefixCls + 'editor-bubble-url'), tipChangeEl = el.one("." + prefixCls + 'editor-bubble-change'), tipRemoveEl = el.one("." + prefixCls + 'editor-bubble-remove');
+  var tipUrlEl = el.one('.' + prefixCls + 'editor-bubble-url'), tipChangeEl = el.one('.' + prefixCls + 'editor-bubble-change'), tipRemoveEl = el.one('.' + prefixCls + 'editor-bubble-remove');
   _$jscoverage['/base-class.js'].lineData[68]++;
   Editor.Utils.preventFocus(el);
   _$jscoverage['/base-class.js'].lineData[70]++;
@@ -495,7 +495,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/base-class.js'].lineData[130]++;
   var self = this, t = new Node(ev.target);
   _$jscoverage['/base-class.js'].lineData[132]++;
-  if (visit8_132_1(visit9_132_2(t.nodeName() === "img") && t.hasClass(self.get('cls'), undefined))) {
+  if (visit8_132_1(visit9_132_2(t.nodeName() === 'img') && t.hasClass(self.get('cls'), undefined))) {
     _$jscoverage['/base-class.js'].lineData[133]++;
     self.show(t);
     _$jscoverage['/base-class.js'].lineData[134]++;
@@ -507,13 +507,13 @@ KISSY.add(function(S, require) {
   _$jscoverage['/base-class.js'].lineData[139]++;
   var self = this, editor = self.get('editor');
   _$jscoverage['/base-class.js'].lineData[141]++;
-  DialogLoader.useDialog(editor, self.get('type'), self.get("pluginConfig"), selectedEl);
+  DialogLoader.useDialog(editor, self.get('type'), self.get('pluginConfig'), selectedEl);
 }}, {
   ATTRS: {
   cls: {}, 
   type: {}, 
   label: {
-  value: "\u5728\u65b0\u7a97\u53e3\u67e5\u770b"}, 
+  value: '\u5728\u65b0\u7a97\u53e3\u67e5\u770b'}, 
   bubbleId: {}, 
   contextMenuId: {}, 
   contextMenuHandlers: {}}});

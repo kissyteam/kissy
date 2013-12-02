@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ','src':' + jscoverage_quote(this.src)
+            + ',"src":' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -265,18 +265,12 @@ if (! _$jscoverage['/btn.js'].functionData) {
 }
 if (! _$jscoverage['/btn.js'].branchData) {
   _$jscoverage['/btn.js'].branchData = {};
-  _$jscoverage['/btn.js'].branchData['25'] = [];
-  _$jscoverage['/btn.js'].branchData['25'][1] = new BranchData();
   _$jscoverage['/btn.js'].branchData['51'] = [];
   _$jscoverage['/btn.js'].branchData['51'][1] = new BranchData();
 }
 _$jscoverage['/btn.js'].branchData['51'][1].init(111, 21, 'button.get(\'checked\')');
-function visit2_51_1(result) {
+function visit1_51_1(result) {
   _$jscoverage['/btn.js'].branchData['51'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/btn.js'].branchData['25'][1].init(44, 37, 'v = editor.queryCommandValue(cmdType)');
-function visit1_25_1(result) {
-  _$jscoverage['/btn.js'].branchData['25'][1].ranCondition(result);
   return result;
 }_$jscoverage['/btn.js'].lineData[6]++;
 KISSY.add(function(S, require) {
@@ -297,14 +291,14 @@ KISSY.add(function(S, require) {
   var button = editor.addButton(buttonId, {
   elCls: buttonId + 'Btn', 
   mode: Editor.Mode.WYSIWYG_MODE, 
-  tooltip: "\u8bbe\u7f6e" + tooltip});
+  tooltip: '\u8bbe\u7f6e' + tooltip});
   _$jscoverage['/btn.js'].lineData[23]++;
   editor.on('selectionChange', function() {
   _$jscoverage['/btn.js'].functionData[2]++;
   _$jscoverage['/btn.js'].lineData[24]++;
   var v;
   _$jscoverage['/btn.js'].lineData[25]++;
-  if (visit1_25_1(v = editor.queryCommandValue(cmdType))) {
+  if ((v = editor.queryCommandValue(cmdType))) {
     _$jscoverage['/btn.js'].lineData[26]++;
     button.set('checked', true);
     _$jscoverage['/btn.js'].lineData[27]++;
@@ -316,7 +310,7 @@ KISSY.add(function(S, require) {
 });
   _$jscoverage['/btn.js'].lineData[33]++;
   var arrow = editor.addSelect(buttonId + 'Arrow', {
-  tooltip: "\u9009\u62e9\u5e76\u8bbe\u7f6e" + tooltip, 
+  tooltip: '\u9009\u62e9\u5e76\u8bbe\u7f6e' + tooltip, 
   mode: Editor.Mode.WYSIWYG_MODE, 
   menu: cfg.menu, 
   matchElWidth: false, 
@@ -339,7 +333,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/btn.js'].lineData[49]++;
   var v = button.listValue;
   _$jscoverage['/btn.js'].lineData[51]++;
-  if (visit2_51_1(button.get('checked'))) {
+  if (visit1_51_1(button.get('checked'))) {
     _$jscoverage['/btn.js'].lineData[52]++;
     v = arrow.get('value');
   }

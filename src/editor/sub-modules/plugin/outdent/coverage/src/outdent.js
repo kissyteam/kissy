@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ','src':' + jscoverage_quote(this.src)
+            + ',"src":' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -233,20 +233,20 @@ if (! _$jscoverage['/outdent.js']) {
   _$jscoverage['/outdent.js'].lineData[7] = 0;
   _$jscoverage['/outdent.js'].lineData[8] = 0;
   _$jscoverage['/outdent.js'].lineData[9] = 0;
-  _$jscoverage['/outdent.js'].lineData[10] = 0;
-  _$jscoverage['/outdent.js'].lineData[14] = 0;
-  _$jscoverage['/outdent.js'].lineData[17] = 0;
-  _$jscoverage['/outdent.js'].lineData[19] = 0;
-  _$jscoverage['/outdent.js'].lineData[23] = 0;
+  _$jscoverage['/outdent.js'].lineData[11] = 0;
+  _$jscoverage['/outdent.js'].lineData[15] = 0;
+  _$jscoverage['/outdent.js'].lineData[18] = 0;
+  _$jscoverage['/outdent.js'].lineData[20] = 0;
   _$jscoverage['/outdent.js'].lineData[24] = 0;
-  _$jscoverage['/outdent.js'].lineData[28] = 0;
+  _$jscoverage['/outdent.js'].lineData[25] = 0;
   _$jscoverage['/outdent.js'].lineData[29] = 0;
   _$jscoverage['/outdent.js'].lineData[30] = 0;
   _$jscoverage['/outdent.js'].lineData[31] = 0;
-  _$jscoverage['/outdent.js'].lineData[33] = 0;
+  _$jscoverage['/outdent.js'].lineData[32] = 0;
   _$jscoverage['/outdent.js'].lineData[34] = 0;
-  _$jscoverage['/outdent.js'].lineData[36] = 0;
-  _$jscoverage['/outdent.js'].lineData[47] = 0;
+  _$jscoverage['/outdent.js'].lineData[35] = 0;
+  _$jscoverage['/outdent.js'].lineData[37] = 0;
+  _$jscoverage['/outdent.js'].lineData[48] = 0;
 }
 if (! _$jscoverage['/outdent.js'].functionData) {
   _$jscoverage['/outdent.js'].functionData = [];
@@ -259,18 +259,18 @@ if (! _$jscoverage['/outdent.js'].functionData) {
 }
 if (! _$jscoverage['/outdent.js'].branchData) {
   _$jscoverage['/outdent.js'].branchData = {};
-  _$jscoverage['/outdent.js'].branchData['30'] = [];
-  _$jscoverage['/outdent.js'].branchData['30'][1] = new BranchData();
-  _$jscoverage['/outdent.js'].branchData['33'] = [];
-  _$jscoverage['/outdent.js'].branchData['33'][1] = new BranchData();
+  _$jscoverage['/outdent.js'].branchData['31'] = [];
+  _$jscoverage['/outdent.js'].branchData['31'][1] = new BranchData();
+  _$jscoverage['/outdent.js'].branchData['34'] = [];
+  _$jscoverage['/outdent.js'].branchData['34'][1] = new BranchData();
 }
-_$jscoverage['/outdent.js'].branchData['33'][1].init(184, 35, 'editor.queryCommandValue("outdent")');
-function visit2_33_1(result) {
-  _$jscoverage['/outdent.js'].branchData['33'][1].ranCondition(result);
+_$jscoverage['/outdent.js'].branchData['34'][1].init(184, 35, 'editor.queryCommandValue("outdent")');
+function visit2_34_1(result) {
+  _$jscoverage['/outdent.js'].branchData['34'][1].ranCondition(result);
   return result;
-}_$jscoverage['/outdent.js'].branchData['30'][1].init(33, 45, 'editor.get('mode') == Editor.Mode.SOURCE_MODE');
-function visit1_30_1(result) {
-  _$jscoverage['/outdent.js'].branchData['30'][1].ranCondition(result);
+}_$jscoverage['/outdent.js'].branchData['31'][1].init(33, 45, 'editor.get(\'mode\') == Editor.Mode.SOURCE_MODE');
+function visit1_31_1(result) {
+  _$jscoverage['/outdent.js'].branchData['31'][1].ranCondition(result);
   return result;
 }_$jscoverage['/outdent.js'].lineData[6]++;
 KISSY.add(function(S, require) {
@@ -281,51 +281,51 @@ KISSY.add(function(S, require) {
   require('./button');
   _$jscoverage['/outdent.js'].lineData[9]++;
   var indexCmd = require('./outdent/cmd');
-  _$jscoverage['/outdent.js'].lineData[10]++;
+  _$jscoverage['/outdent.js'].lineData[11]++;
   function outdent() {
     _$jscoverage['/outdent.js'].functionData[1]++;
   }
-  _$jscoverage['/outdent.js'].lineData[14]++;
+  _$jscoverage['/outdent.js'].lineData[15]++;
   S.augment(outdent, {
   pluginRenderUI: function(editor) {
   _$jscoverage['/outdent.js'].functionData[2]++;
-  _$jscoverage['/outdent.js'].lineData[17]++;
+  _$jscoverage['/outdent.js'].lineData[18]++;
   indexCmd.init(editor);
-  _$jscoverage['/outdent.js'].lineData[19]++;
-  editor.addButton("outdent", {
-  tooltip: "\u51cf\u5c11\u7f29\u8fdb\u91cf ", 
+  _$jscoverage['/outdent.js'].lineData[20]++;
+  editor.addButton('outdent', {
+  tooltip: '\u51cf\u5c11\u7f29\u8fdb\u91cf', 
   listeners: {
   click: function() {
   _$jscoverage['/outdent.js'].functionData[3]++;
-  _$jscoverage['/outdent.js'].lineData[23]++;
-  editor.execCommand("outdent");
   _$jscoverage['/outdent.js'].lineData[24]++;
+  editor.execCommand("outdent");
+  _$jscoverage['/outdent.js'].lineData[25]++;
   editor.focus();
 }, 
   afterSyncUI: function() {
   _$jscoverage['/outdent.js'].functionData[4]++;
-  _$jscoverage['/outdent.js'].lineData[28]++;
-  var self = this;
   _$jscoverage['/outdent.js'].lineData[29]++;
+  var self = this;
+  _$jscoverage['/outdent.js'].lineData[30]++;
   editor.on('selectionChange', function() {
   _$jscoverage['/outdent.js'].functionData[5]++;
-  _$jscoverage['/outdent.js'].lineData[30]++;
-  if (visit1_30_1(editor.get('mode') == Editor.Mode.SOURCE_MODE)) {
-    _$jscoverage['/outdent.js'].lineData[31]++;
+  _$jscoverage['/outdent.js'].lineData[31]++;
+  if (visit1_31_1(editor.get('mode') == Editor.Mode.SOURCE_MODE)) {
+    _$jscoverage['/outdent.js'].lineData[32]++;
     return;
   }
-  _$jscoverage['/outdent.js'].lineData[33]++;
-  if (visit2_33_1(editor.queryCommandValue("outdent"))) {
-    _$jscoverage['/outdent.js'].lineData[34]++;
+  _$jscoverage['/outdent.js'].lineData[34]++;
+  if (visit2_34_1(editor.queryCommandValue("outdent"))) {
+    _$jscoverage['/outdent.js'].lineData[35]++;
     self.set('disabled', false);
   } else {
-    _$jscoverage['/outdent.js'].lineData[36]++;
+    _$jscoverage['/outdent.js'].lineData[37]++;
     self.set('disabled', true);
   }
 });
 }}, 
   mode: Editor.Mode.WYSIWYG_MODE});
 }});
-  _$jscoverage['/outdent.js'].lineData[47]++;
+  _$jscoverage['/outdent.js'].lineData[48]++;
   return outdent;
 });

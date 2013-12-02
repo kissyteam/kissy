@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:47
+build time: Dec 2 13:04
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -30,80 +30,80 @@ build time: Nov 27 00:47
 
 KISSY.add("editor/iframe-content-tpl", [], '<!doctype html>\n<html>\n<head>{doctype}\n    <title>{title}</title>\n    {style}\n    {links}\n    </head> \n<body class="ks-editor">\n{data}\n{script}\n</body> \n</html>');
 KISSY.add("editor/render-xtpl", [], function(S, require, exports, module) {
-  return function(scopes, S, undefined) {
+  return function(scope, S, undefined) {
     var buffer = "", config = this.config, engine = this, moduleWrap, utils = config.utils;
-    if(typeof module != "undefined" && module.kissy) {
+    if(typeof module !== "undefined" && module.kissy) {
       moduleWrap = module
     }
-    var runBlockCommandUtil = utils["runBlockCommand"], getExpressionUtil = utils["getExpression"], getPropertyOrRunCommandUtil = utils["getPropertyOrRunCommand"];
+    var runBlockCommandUtil = utils.runBlockCommand, getExpressionUtil = utils.getExpression, getPropertyOrRunCommandUtil = utils.getPropertyOrRunCommand;
     buffer += '<div class="';
-    var id0 = getPropertyOrRunCommandUtil(engine, scopes, {}, "prefixCls", 0, 1, undefined, false);
+    var id0 = getPropertyOrRunCommandUtil(engine, scope, {}, "prefixCls", 0, 1, undefined, false);
     buffer += getExpressionUtil(id0, true);
     buffer += 'editor-tools"\n     id="ks-editor-tools-';
-    var id1 = getPropertyOrRunCommandUtil(engine, scopes, {}, "id", 0, 2, undefined, false);
+    var id1 = getPropertyOrRunCommandUtil(engine, scope, {}, "id", 0, 2, undefined, false);
     buffer += getExpressionUtil(id1, true);
     buffer += '">\n\n</div>\n\n<!--\nhttp://johanbrook.com/browsers/native-momentum-scrolling-ios-5/\nios \u4e0d\u80fd\u653e\u5728 iframe \u4e0a\uff01\n--\>\n\n<div class="';
-    var id2 = getPropertyOrRunCommandUtil(engine, scopes, {}, "prefixCls", 0, 11, undefined, false);
+    var id2 = getPropertyOrRunCommandUtil(engine, scope, {}, "prefixCls", 0, 11, undefined, false);
     buffer += getExpressionUtil(id2, true);
     buffer += 'editor-textarea-wrap"\n\n';
     var config3 = {};
     var params4 = [];
-    var id5 = getPropertyOrRunCommandUtil(engine, scopes, {}, "mobile", 0, 13, undefined, true);
+    var id5 = getPropertyOrRunCommandUtil(engine, scope, {}, "mobile", 0, 13, undefined, true);
     params4.push(id5);
     config3.params = params4;
-    config3.fn = function(scopes) {
+    config3.fn = function(scope) {
       var buffer = "";
       buffer += '\nstyle="overflow:scroll;-webkit-overflow-scrolling:touch;"\n';
       return buffer
     };
-    buffer += runBlockCommandUtil(engine, scopes, config3, "if", 13);
+    buffer += runBlockCommandUtil(engine, scope, config3, "if", 13);
     buffer += '\n\nid="ks-editor-textarea-wrap-';
-    var id6 = getPropertyOrRunCommandUtil(engine, scopes, {}, "id", 0, 17, undefined, false);
+    var id6 = getPropertyOrRunCommandUtil(engine, scope, {}, "id", 0, 17, undefined, false);
     buffer += getExpressionUtil(id6, true);
     buffer += '"\n>\n\n<textarea\n        id="ks-editor-textarea-';
-    var id7 = getPropertyOrRunCommandUtil(engine, scopes, {}, "id", 0, 21, undefined, false);
+    var id7 = getPropertyOrRunCommandUtil(engine, scope, {}, "id", 0, 21, undefined, false);
     buffer += getExpressionUtil(id7, true);
     buffer += '"\n        class="';
-    var id8 = getPropertyOrRunCommandUtil(engine, scopes, {}, "prefixCls", 0, 22, undefined, false);
+    var id8 = getPropertyOrRunCommandUtil(engine, scope, {}, "prefixCls", 0, 22, undefined, false);
     buffer += getExpressionUtil(id8, true);
     buffer += 'editor-textarea"\n\n';
     var config9 = {};
     var params10 = [];
-    var id11 = getPropertyOrRunCommandUtil(engine, scopes, {}, "textareaAttrs", 0, 24, undefined, true);
+    var id11 = getPropertyOrRunCommandUtil(engine, scope, {}, "textareaAttrs", 0, 24, undefined, true);
     params10.push(id11);
     config9.params = params10;
-    config9.fn = function(scopes) {
+    config9.fn = function(scope) {
       var buffer = "";
       buffer += "\n";
-      var id12 = getPropertyOrRunCommandUtil(engine, scopes, {}, "xindex", 0, 25, undefined, false);
+      var id12 = getPropertyOrRunCommandUtil(engine, scope, {}, "xindex", 0, 25, undefined, false);
       buffer += getExpressionUtil(id12, true);
       buffer += '="';
-      var id13 = getPropertyOrRunCommandUtil(engine, scopes, {}, ".", 0, 25, undefined, false);
+      var id13 = getPropertyOrRunCommandUtil(engine, scope, {}, ".", 0, 25, undefined, false);
       buffer += getExpressionUtil(id13, true);
       buffer += '"\n';
       return buffer
     };
-    buffer += runBlockCommandUtil(engine, scopes, config9, "each", 24);
+    buffer += runBlockCommandUtil(engine, scope, config9, "each", 24);
     buffer += "\n\n";
     var config14 = {};
     var params15 = [];
-    var id16 = getPropertyOrRunCommandUtil(engine, scopes, {}, "mode", 0, 28, undefined, true);
+    var id16 = getPropertyOrRunCommandUtil(engine, scope, {}, "mode", 0, 28, undefined, true);
     params15.push(id16);
     config14.params = params15;
-    config14.fn = function(scopes) {
+    config14.fn = function(scope) {
       var buffer = "";
       buffer += '\nstyle="display:none"\n';
       return buffer
     };
-    buffer += runBlockCommandUtil(engine, scopes, config14, "if", 28);
+    buffer += runBlockCommandUtil(engine, scope, config14, "if", 28);
     buffer += "\n\n>";
-    var id17 = getPropertyOrRunCommandUtil(engine, scopes, {}, "data", 0, 32, undefined, false);
+    var id17 = getPropertyOrRunCommandUtil(engine, scope, {}, "data", 0, 32, undefined, false);
     buffer += getExpressionUtil(id17, true);
     buffer += '</textarea>\n\n</div>\n\n<div class="';
-    var id18 = getPropertyOrRunCommandUtil(engine, scopes, {}, "prefixCls", 0, 36, undefined, false);
+    var id18 = getPropertyOrRunCommandUtil(engine, scope, {}, "prefixCls", 0, 36, undefined, false);
     buffer += getExpressionUtil(id18, true);
     buffer += 'editor-status"\n     id="ks-editor-status-';
-    var id19 = getPropertyOrRunCommandUtil(engine, scopes, {}, "id", 0, 37, undefined, false);
+    var id19 = getPropertyOrRunCommandUtil(engine, scope, {}, "id", 0, 37, undefined, false);
     buffer += getExpressionUtil(id19, true);
     buffer += '">\n\n</div>';
     return buffer
@@ -121,7 +121,7 @@ KISSY.add("editor/base", ["html-parser", "component/control", "./render"], funct
   var HtmlParser = require("html-parser");
   var Control = require("component/control");
   var EditorRender = require("./render");
-  return Control.extend({}, {Config:{}, XHTML_DTD:HtmlParser["DTD"], ATTRS:{textarea:{}, textareaAttrs:{view:1}, iframe:{}, window:{}, document:{}, toolBarEl:{}, statusBarEl:{}, handleMouseEvents:{value:false}, focusable:{value:false}, mode:{view:1, value:1}, data:{view:1}, customStyle:{value:""}, customLink:{value:[]}, xrender:{value:EditorRender}}, xclass:"editor"})
+  return Control.extend({}, {Config:{}, XHTML_DTD:HtmlParser.DTD, ATTRS:{textarea:{}, textareaAttrs:{view:1}, iframe:{}, window:{}, document:{}, toolBarEl:{}, statusBarEl:{}, handleMouseEvents:{value:false}, focusable:{value:false}, mode:{view:1, value:1}, data:{view:1}, customStyle:{value:""}, customLink:{value:[]}, xrender:{value:EditorRender}}, xclass:"editor"})
 });
 KISSY.add("editor/utils", ["node", "./base"], function(S, require) {
   var Node = require("node");
@@ -131,8 +131,8 @@ KISSY.add("editor/utils", ["node", "./base"], function(S, require) {
     if(!Config.debug) {
       url = url.replace(/\.(js|css)/i, "-min.$1")
     }
-    if(url.indexOf("?t") == -1) {
-      if(url.indexOf("?") != -1) {
+    if(url.indexOf("?t") === -1) {
+      if(url.indexOf("?") !== -1) {
         url += "&"
       }else {
         url += "?"
@@ -155,7 +155,7 @@ KISSY.add("editor/utils", ["node", "./base"], function(S, require) {
     x += iframePosition.left;
     y += iframePosition.top;
     return{left:x, top:y}
-  }, tryThese:function(var_args) {
+  }, tryThese:function() {
     var returnValue;
     for(var i = 0, length = arguments.length;i < length;i++) {
       var lambda = arguments[i];
@@ -168,7 +168,7 @@ KISSY.add("editor/utils", ["node", "./base"], function(S, require) {
     return returnValue
   }, clearAllMarkers:function(database) {
     for(var i in database) {
-      database[i]._4e_clearMarkers(database, TRUE, undefined)
+      database[i]._4eClearMarkers(database, TRUE, undefined)
     }
   }, ltrim:function(str) {
     return str.replace(/^\s+/, "")
@@ -190,11 +190,11 @@ KISSY.add("editor/utils", ["node", "./base"], function(S, require) {
     editor.on("wysiwygMode", plugin.enable, plugin)
   }, resetInput:function(inp) {
     var placeholder = inp.attr("placeholder");
-    if(placeholder && UA["ie"]) {
+    if(placeholder && UA.ie) {
       inp.addClass("ks-editor-input-tip");
       inp.val(placeholder)
     }else {
-      if(!UA["ie"]) {
+      if(!UA.ie) {
         inp.val("")
       }
     }
@@ -212,7 +212,7 @@ KISSY.add("editor/utils", ["node", "./base"], function(S, require) {
     return undefined
   }, placeholder:function(inp, tip) {
     inp.attr("placeholder", tip);
-    if(!UA["ie"]) {
+    if(!UA.ie) {
       return
     }
     inp.on("blur", function() {
@@ -223,7 +223,7 @@ KISSY.add("editor/utils", ["node", "./base"], function(S, require) {
     });
     inp.on("focus", function() {
       inp.removeClass("ks-editor-input-tip");
-      if(S.trim(inp.val()) == tip) {
+      if(S.trim(inp.val()) === tip) {
         inp.val("")
       }
     })
@@ -237,7 +237,7 @@ KISSY.add("editor/utils", ["node", "./base"], function(S, require) {
     }
     return params
   }, preventFocus:function(el) {
-    if(UA["ie"]) {
+    if(UA.ie) {
       el.unselectable()
     }else {
       el.attr("onmousedown", "return false;")
@@ -294,19 +294,6 @@ KISSY.add("editor/utils", ["node", "./base"], function(S, require) {
 });
 KISSY.add("editor/focusManager", ["./base"], function(S, require) {
   var Editor = require("./base");
-  var INSTANCES = {}, timer, currentInstance, focusManager = {currentInstance:function() {
-    return currentInstance
-  }, getInstance:function(id) {
-    return INSTANCES[id]
-  }, register:function(editor) {
-    INSTANCES[editor.get("id")] = editor
-  }, add:function(editor) {
-    this.register(editor);
-    editor.get("window").on("focus", focus, editor).on("blur", blur, editor)
-  }, remove:function(editor) {
-    delete INSTANCES[editor.get("id")];
-    editor.get("window").detach("focus", focus, editor).detach("blur", blur, editor)
-  }}, TRUE = true, FALSE = false, NULL = null;
   function focus() {
     var editor = this;
     editor.__iframeFocus = TRUE;
@@ -329,6 +316,19 @@ KISSY.add("editor/focusManager", ["./base"], function(S, require) {
       editor.fire("blur")
     }, 30)
   }
+  var INSTANCES = {}, timer, currentInstance, focusManager = {currentInstance:function() {
+    return currentInstance
+  }, getInstance:function(id) {
+    return INSTANCES[id]
+  }, register:function(editor) {
+    INSTANCES[editor.get("id")] = editor
+  }, add:function(editor) {
+    this.register(editor);
+    editor.get("window").on("focus", focus, editor).on("blur", blur, editor)
+  }, remove:function(editor) {
+    delete INSTANCES[editor.get("id")];
+    editor.get("window").detach("focus", focus, editor).detach("blur", blur, editor)
+  }}, TRUE = true, FALSE = false, NULL = null;
   Editor.focusManager = focusManager;
   Editor.getInstances = function() {
     return INSTANCES
@@ -339,25 +339,25 @@ KISSY.add("editor/dom", ["node", "./base", "./utils"], function(S, require) {
   var Node = require("node");
   var Editor = require("./base");
   var Utils = require("./utils");
-  var TRUE = true, undefined = undefined, FALSE = false, NULL = null, xhtml_dtd = Editor.XHTML_DTD, Dom = S.DOM, NodeType = Dom.NodeType, UA = S.UA, REMOVE_EMPTY = {a:1, abbr:1, acronym:1, address:1, b:1, bdo:1, big:1, cite:1, code:1, del:1, dfn:1, em:1, font:1, i:1, ins:1, label:1, kbd:1, q:1, s:1, samp:1, small:1, span:1, strike:1, strong:1, sub:1, sup:1, tt:1, u:1, "var":1};
+  var TRUE = true, FALSE = false, NULL = null, xhtmlDtd = Editor.XHTML_DTD, Dom = S.DOM, NodeType = Dom.NodeType, UA = S.UA, REMOVE_EMPTY = {a:1, abbr:1, acronym:1, address:1, b:1, bdo:1, big:1, cite:1, code:1, del:1, dfn:1, em:1, font:1, i:1, ins:1, label:1, kbd:1, q:1, s:1, samp:1, small:1, span:1, strike:1, strong:1, sub:1, sup:1, tt:1, u:1, "var":1};
   Editor.PositionType = {POSITION_IDENTICAL:0, POSITION_DISCONNECTED:1, POSITION_FOLLOWING:2, POSITION_PRECEDING:4, POSITION_IS_CONTAINED:8, POSITION_CONTAINS:16};
   var KEP = Editor.PositionType;
   var blockBoundaryDisplayMatch = {block:1, "list-item":1, table:1, "table-row-group":1, "table-header-group":1, "table-footer-group":1, "table-row":1, "table-column-group":1, "table-column":1, "table-cell":1, "table-caption":1}, blockBoundaryNodeNameMatch = {hr:1}, normalElDom = function(el) {
     return el && (el[0] || el)
   }, normalEl = function(el) {
     return new Node(el)
-  }, editorDom = {_4e_sameLevel:function(el1, el2) {
+  }, editorDom = {_4eSameLevel:function(el1, el2) {
     el2 = normalElDom(el2);
     var e1p = el1.parentNode;
-    return e1p && e1p == el2.parentNode
-  }, _4e_isBlockBoundary:function(el, customNodeNames) {
+    return e1p && e1p === el2.parentNode
+  }, _4eIsBlockBoundary:function(el, customNodeNames) {
     var nodeNameMatches = S.merge(blockBoundaryNodeNameMatch, customNodeNames);
     return!!(blockBoundaryDisplayMatch[Dom.css(el, "display")] || nodeNameMatches[Dom.nodeName(el)])
-  }, _4e_index:function(el, normalized) {
+  }, _4eIndex:function(el, normalized) {
     var siblings = el.parentNode.childNodes, candidate, currentIndex = -1;
     for(var i = 0;i < siblings.length;i++) {
       candidate = siblings[i];
-      if(normalized && candidate.nodeType == 3 && candidate.previousSibling && candidate.previousSibling.nodeType == 3) {
+      if(normalized && candidate.nodeType === 3 && candidate.previousSibling && candidate.previousSibling.nodeType === 3) {
         continue
       }
       currentIndex++;
@@ -366,29 +366,30 @@ KISSY.add("editor/dom", ["node", "./base", "./utils"], function(S, require) {
       }
     }
     return-1
-  }, _4e_move:function(thisElement, target, toStart) {
+  }, _4eMove:function(thisElement, target, toStart) {
     target = normalElDom(target);
     if(toStart) {
       target.insertBefore(thisElement, target.firstChild)
     }else {
       target.appendChild(thisElement)
     }
-  }, _4e_isIdentical:function(thisElement, otherElement) {
+  }, _4eIsIdentical:function(thisElement, otherElement) {
     if(!otherElement) {
       return FALSE
     }
     otherElement = normalElDom(otherElement);
-    if(Dom.nodeName(thisElement) != Dom.nodeName(otherElement)) {
+    if(Dom.nodeName(thisElement) !== Dom.nodeName(otherElement)) {
       return FALSE
     }
-    var thisAttributes = thisElement.attributes, otherAttributes = otherElement.attributes;
+    var thisAttributes = thisElement.attributes, attribute, name, otherAttributes = otherElement.attributes;
     var thisLength = thisAttributes.length, otherLength = otherAttributes.length;
-    if(thisLength != otherLength) {
+    if(thisLength !== otherLength) {
       return FALSE
     }
     for(var i = 0;i < thisLength;i++) {
-      var attribute = thisAttributes[i], name = attribute.name;
-      if(attribute.specified && Dom.attr(thisElement, name) != Dom.attr(otherElement, name)) {
+      attribute = thisAttributes[i];
+      name = attribute.name;
+      if(attribute.specified && Dom.attr(thisElement, name) !== Dom.attr(otherElement, name)) {
         return FALSE
       }
     }
@@ -396,30 +397,30 @@ KISSY.add("editor/dom", ["node", "./base", "./utils"], function(S, require) {
       for(i = 0;i < otherLength;i++) {
         attribute = otherAttributes[i];
         name = attribute.name;
-        if(attribute.specified && Dom.attr(thisElement, name) != Dom.attr(otherElement, name)) {
+        if(attribute.specified && Dom.attr(thisElement, name) !== Dom.attr(otherElement, name)) {
           return FALSE
         }
       }
     }
     return TRUE
-  }, _4e_isEmptyInlineRemovable:function(thisElement) {
-    if(!xhtml_dtd.$removeEmpty[Dom.nodeName(thisElement)]) {
+  }, _4eIsEmptyInlineRemovable:function(thisElement) {
+    if(!xhtmlDtd.$removeEmpty[Dom.nodeName(thisElement)]) {
       return false
     }
     var children = thisElement.childNodes;
     for(var i = 0, count = children.length;i < count;i++) {
       var child = children[i], nodeType = child.nodeType;
-      if(nodeType == NodeType.ELEMENT_NODE && child.getAttribute("_ke_bookmark")) {
+      if(nodeType === NodeType.ELEMENT_NODE && child.getAttribute("_ke_bookmark")) {
         continue
       }
-      if(nodeType == NodeType.ELEMENT_NODE && !Dom._4e_isEmptyInlineRemovable(child) || nodeType == Dom.NodeType.TEXT_NODE && S.trim(child.nodeValue)) {
+      if(nodeType === NodeType.ELEMENT_NODE && !Dom._4eIsEmptyInlineRemovable(child) || nodeType === Dom.NodeType.TEXT_NODE && S.trim(child.nodeValue)) {
         return FALSE
       }
     }
     return TRUE
-  }, _4e_moveChildren:function(thisElement, target, toStart) {
+  }, _4eMoveChildren:function(thisElement, target, toStart) {
     target = normalElDom(target);
-    if(thisElement == target) {
+    if(thisElement === target) {
       return
     }
     var child;
@@ -432,18 +433,18 @@ KISSY.add("editor/dom", ["node", "./base", "./utils"], function(S, require) {
         target.appendChild(thisElement.removeChild(child))
       }
     }
-  }, _4e_mergeSiblings:function(thisElement) {
+  }, _4eMergeSiblings:function(thisElement) {
     thisElement = normalEl(thisElement);
     if(REMOVE_EMPTY[thisElement.nodeName()]) {
       mergeElements(thisElement, TRUE);
       mergeElements(thisElement)
     }
-  }, _4e_splitText:function(el, offset) {
+  }, _4eSplitText:function(el, offset) {
     var doc = el.ownerDocument;
-    if(el.nodeType != Dom.NodeType.TEXT_NODE) {
-      return
+    if(el.nodeType !== Dom.NodeType.TEXT_NODE) {
+      return undefined
     }
-    if(UA["ie"] && offset == el.nodeValue.length) {
+    if(UA.ie && offset === el.nodeValue.length) {
       var next = doc.createTextNode("");
       Dom.insertAfter(next, el);
       return next
@@ -455,14 +456,14 @@ KISSY.add("editor/dom", ["node", "./base", "./utils"], function(S, require) {
       Dom.remove(workaround)
     }
     return ret
-  }, _4e_parents:function(node, closerFirst) {
+  }, _4eParents:function(node, closerFirst) {
     var parents = [];
     parents.__IS_NODELIST = 1;
     do {
       parents[closerFirst ? "push" : "unshift"](node)
     }while(node = node.parentNode);
     return parents
-  }, _4e_nextSourceNode:function(el, startFromSibling, nodeType, guard) {
+  }, _4eNextSourceNode:function(el, startFromSibling, nodeType, guard) {
     if(guard && !guard.call) {
       var guardNode = normalElDom(guard);
       guard = function(node) {
@@ -471,7 +472,7 @@ KISSY.add("editor/dom", ["node", "./base", "./utils"], function(S, require) {
     }
     var node = !startFromSibling && el.firstChild, parent = el;
     if(!node) {
-      if(el.nodeType == NodeType.ELEMENT_NODE && guard && guard(el, TRUE) === FALSE) {
+      if(el.nodeType === NodeType.ELEMENT_NODE && guard && guard(el, TRUE) === FALSE) {
         return NULL
       }
       node = el.nextSibling
@@ -488,11 +489,11 @@ KISSY.add("editor/dom", ["node", "./base", "./utils"], function(S, require) {
     if(guard && guard(node) === FALSE) {
       return NULL
     }
-    if(nodeType && nodeType != node.nodeType) {
-      return Dom._4e_nextSourceNode(node, FALSE, nodeType, guard)
+    if(nodeType && nodeType !== node.nodeType) {
+      return Dom._4eNextSourceNode(node, FALSE, nodeType, guard)
     }
     return node
-  }, _4e_previousSourceNode:function(el, startFromSibling, nodeType, guard) {
+  }, _4ePreviousSourceNode:function(el, startFromSibling, nodeType, guard) {
     if(guard && !guard.call) {
       var guardNode = normalElDom(guard);
       guard = function(node) {
@@ -501,7 +502,7 @@ KISSY.add("editor/dom", ["node", "./base", "./utils"], function(S, require) {
     }
     var node = !startFromSibling && el.lastChild, parent = el;
     if(!node) {
-      if(el.nodeType == NodeType.ELEMENT_NODE && guard && guard(el, TRUE) === FALSE) {
+      if(el.nodeType === NodeType.ELEMENT_NODE && guard && guard(el, TRUE) === FALSE) {
         return NULL
       }
       node = el.previousSibling
@@ -518,11 +519,11 @@ KISSY.add("editor/dom", ["node", "./base", "./utils"], function(S, require) {
     if(guard && guard(node) === FALSE) {
       return NULL
     }
-    if(nodeType && node.nodeType != nodeType) {
-      return Dom._4e_previousSourceNode(node, FALSE, nodeType, guard)
+    if(nodeType && node.nodeType !== nodeType) {
+      return Dom._4ePreviousSourceNode(node, FALSE, nodeType, guard)
     }
     return node
-  }, _4e_commonAncestor:function(el, node) {
+  }, _4eCommonAncestor:function(el, node) {
     node = normalElDom(node);
     if(el === node) {
       return el
@@ -537,7 +538,7 @@ KISSY.add("editor/dom", ["node", "./base", "./utils"], function(S, require) {
       }
     }while(start = start.parentNode);
     return NULL
-  }, _4e_hasAttributes:UA.ieMode < 9 ? function(el) {
+  }, _4eHasAttributes:UA.ieMode < 9 ? function(el) {
     var attributes = el.attributes;
     for(var i = 0;i < attributes.length;i++) {
       var attribute = attributes[i];
@@ -559,15 +560,15 @@ KISSY.add("editor/dom", ["node", "./base", "./utils"], function(S, require) {
       el.removeAttribute("_moz_dirty")
     }
     return el.hasAttributes()
-  }, _4e_position:function(el, otherNode) {
+  }, _4ePosition:function(el, otherNode) {
     var $other = normalElDom(otherNode);
     if(el.compareDocumentPosition) {
       return el.compareDocumentPosition($other)
     }
-    if(el == $other) {
+    if(el === $other) {
       return KEP.POSITION_IDENTICAL
     }
-    if(el.nodeType == NodeType.ELEMENT_NODE && $other.nodeType == NodeType.ELEMENT_NODE) {
+    if(el.nodeType === NodeType.ELEMENT_NODE && $other.nodeType === NodeType.ELEMENT_NODE) {
       if(Dom.contains(el, $other)) {
         return KEP.POSITION_CONTAINS + KEP.POSITION_PRECEDING
       }
@@ -578,21 +579,21 @@ KISSY.add("editor/dom", ["node", "./base", "./utils"], function(S, require) {
         return el.sourceIndex < 0 || $other.sourceIndex < 0 ? KEP.POSITION_DISCONNECTED : el.sourceIndex < $other.sourceIndex ? KEP.POSITION_PRECEDING : KEP.POSITION_FOLLOWING
       }
     }
-    var addressOfThis = Dom._4e_address(el), addressOfOther = Dom._4e_address($other), minLevel = Math.min(addressOfThis.length, addressOfOther.length);
+    var addressOfThis = Dom._4eAddress(el), addressOfOther = Dom._4eAddress($other), minLevel = Math.min(addressOfThis.length, addressOfOther.length);
     for(var i = 0;i <= minLevel - 1;i++) {
-      if(addressOfThis[i] != addressOfOther[i]) {
+      if(addressOfThis[i] !== addressOfOther[i]) {
         return addressOfThis[i] < addressOfOther[i] ? KEP.POSITION_PRECEDING : KEP.POSITION_FOLLOWING
       }
     }
     return addressOfThis.length < addressOfOther.length ? KEP.POSITION_CONTAINS + KEP.POSITION_PRECEDING : KEP.POSITION_IS_CONTAINED + KEP.POSITION_FOLLOWING
-  }, _4e_address:function(el, normalized) {
+  }, _4eAddress:function(el, normalized) {
     var address = [], $documentElement = el.ownerDocument.documentElement, node = el;
-    while(node && node != $documentElement) {
-      address.unshift(Dom._4e_index(node, normalized));
+    while(node && node !== $documentElement) {
+      address.unshift(Dom._4eIndex(node, normalized));
       node = node.parentNode
     }
     return address
-  }, _4e_remove:function(el, preserveChildren) {
+  }, _4eRemove:function(el, preserveChildren) {
     var parent = el.parentNode;
     if(parent) {
       if(preserveChildren) {
@@ -603,65 +604,65 @@ KISSY.add("editor/dom", ["node", "./base", "./utils"], function(S, require) {
       parent.removeChild(el)
     }
     return el
-  }, _4e_trim:function(el) {
-    Dom._4e_ltrim(el);
-    Dom._4e_rtrim(el)
-  }, _4e_ltrim:function(el) {
+  }, _4eTrim:function(el) {
+    Dom._4eLtrim(el);
+    Dom._4eRtrim(el)
+  }, _4eLtrim:function(el) {
     var child;
     while(child = el.firstChild) {
-      if(child.nodeType == Dom.NodeType.TEXT_NODE) {
+      if(child.nodeType === Dom.NodeType.TEXT_NODE) {
         var trimmed = Utils.ltrim(child.nodeValue), originalLength = child.nodeValue.length;
         if(!trimmed) {
           el.removeChild(child);
           continue
         }else {
           if(trimmed.length < originalLength) {
-            Dom._4e_splitText(child, originalLength - trimmed.length);
+            Dom._4eSplitText(child, originalLength - trimmed.length);
             el.removeChild(el.firstChild)
           }
         }
       }
       break
     }
-  }, _4e_rtrim:function(el) {
+  }, _4eRtrim:function(el) {
     var child;
     while(child = el.lastChild) {
-      if(child.type == Dom.NodeType.TEXT_NODE) {
+      if(child.type === Dom.NodeType.TEXT_NODE) {
         var trimmed = Utils.rtrim(child.nodeValue), originalLength = child.nodeValue.length;
         if(!trimmed) {
           el.removeChild(child);
           continue
         }else {
           if(trimmed.length < originalLength) {
-            Dom._4e_splitText(child, trimmed.length);
+            Dom._4eSplitText(child, trimmed.length);
             el.removeChild(el.lastChild)
           }
         }
       }
       break
     }
-    if(!UA["ie"] && !UA.opera) {
+    if(!UA.ie && !UA.opera) {
       child = el.lastChild;
-      if(child && child.nodeType == 1 && Dom.nodeName(child) == "br") {
+      if(child && child.nodeType === 1 && Dom.nodeName(child) === "br") {
         el.removeChild(child)
       }
     }
-  }, _4e_appendBogus:function(el) {
+  }, _4eAppendBogus:function(el) {
     var lastChild = el.lastChild, bogus;
-    while(lastChild && lastChild.nodeType == Dom.NodeType.TEXT_NODE && !S.trim(lastChild.nodeValue)) {
+    while(lastChild && lastChild.nodeType === Dom.NodeType.TEXT_NODE && !S.trim(lastChild.nodeValue)) {
       lastChild = lastChild.previousSibling
     }
-    if(!lastChild || lastChild.nodeType == Dom.NodeType.TEXT_NODE || Dom.nodeName(lastChild) !== "br") {
+    if(!lastChild || lastChild.nodeType === Dom.NodeType.TEXT_NODE || Dom.nodeName(lastChild) !== "br") {
       bogus = UA.opera ? el.ownerDocument.createTextNode("") : el.ownerDocument.createElement("br");
       el.appendChild(bogus)
     }
-  }, _4e_setMarker:function(element, database, name, value) {
+  }, _4eSetMarker:function(element, database, name, value) {
     element = normalEl(element);
     var id = element.data("list_marker_id") || element.data("list_marker_id", S.guid()).data("list_marker_id"), markerNames = element.data("list_marker_names") || element.data("list_marker_names", {}).data("list_marker_names");
     database[id] = element;
     markerNames[name] = 1;
     return element.data(name, value)
-  }, _4e_clearMarkers:function(element, database, removeFromDatabase) {
+  }, _4eClearMarkers:function(element, database, removeFromDatabase) {
     element = normalEl(element);
     var names = element.data("list_marker_names"), id = element.data("list_marker_id");
     for(var i in names) {
@@ -672,7 +673,7 @@ KISSY.add("editor/dom", ["node", "./base", "./utils"], function(S, require) {
       element.removeData("list_marker_id");
       delete database[id]
     }
-  }, _4e_copyAttributes:function(el, target, skipAttributes) {
+  }, _4eCopyAttributes:function(el, target, skipAttributes) {
     target = normalEl(target);
     var attributes = el.attributes;
     skipAttributes = skipAttributes || {};
@@ -681,10 +682,10 @@ KISSY.add("editor/dom", ["node", "./base", "./utils"], function(S, require) {
       if(attrName in skipAttributes) {
         continue
       }
-      if(attrName == "checked" && (attrValue = Dom.attr(el, attrName))) {
+      if(attrName === "checked" && (attrValue = Dom.attr(el, attrName))) {
         target.attr(attrName, attrValue)
       }else {
-        if(attribute.specified || UA["ie"] && attribute.value && attrName == "value") {
+        if(attribute.specified || UA.ie && attribute.value && attrName === "value") {
           attrValue = Dom.attr(el, attrName);
           if(attrValue === NULL) {
             attrValue = attribute.nodeValue
@@ -696,10 +697,10 @@ KISSY.add("editor/dom", ["node", "./base", "./utils"], function(S, require) {
     if(el.style.cssText !== "") {
       target[0].style.cssText = el.style.cssText
     }
-  }, _4e_isEditable:function(el) {
-    var name = Dom.nodeName(el), dtd = !xhtml_dtd.$nonEditable[name] && (xhtml_dtd[name] || xhtml_dtd["span"]);
+  }, _4eIsEditable:function(el) {
+    var name = Dom.nodeName(el), dtd = !xhtmlDtd.$nonEditable[name] && (xhtmlDtd[name] || xhtmlDtd.span);
     return dtd && dtd["#text"]
-  }, _4e_getByAddress:function(doc, address, normalized) {
+  }, _4eGetByAddress:function(doc, address, normalized) {
     var $ = doc.documentElement;
     for(var i = 0;$ && i < address.length;i++) {
       var target = address[i];
@@ -710,11 +711,11 @@ KISSY.add("editor/dom", ["node", "./base", "./utils"], function(S, require) {
       var currentIndex = -1;
       for(var j = 0;j < $.childNodes.length;j++) {
         var candidate = $.childNodes[j];
-        if(normalized === TRUE && candidate.nodeType == 3 && candidate.previousSibling && candidate.previousSibling.nodeType == 3) {
+        if(normalized === TRUE && candidate.nodeType === 3 && candidate.previousSibling && candidate.previousSibling.nodeType === 3) {
           continue
         }
         currentIndex++;
-        if(currentIndex == target) {
+        if(currentIndex === target) {
           $ = candidate;
           break
         }
@@ -724,24 +725,24 @@ KISSY.add("editor/dom", ["node", "./base", "./utils"], function(S, require) {
   }};
   function mergeElements(element, isNext) {
     var sibling = element[isNext ? "next" : "prev"](undefined, 1);
-    if(sibling && sibling[0].nodeType == NodeType.ELEMENT_NODE) {
+    if(sibling && sibling[0].nodeType === NodeType.ELEMENT_NODE) {
       var pendingNodes = [];
-      while(sibling.attr("_ke_bookmark") || sibling._4e_isEmptyInlineRemovable(undefined)) {
+      while(sibling.attr("_ke_bookmark") || sibling._4eIsEmptyInlineRemovable(undefined)) {
         pendingNodes.push(sibling);
         sibling = isNext ? sibling.next(undefined, 1) : sibling.prev(undefined, 1);
         if(!sibling) {
           return
         }
       }
-      if(element._4e_isIdentical(sibling, undefined)) {
+      if(element._4eIsIdentical(sibling, undefined)) {
         var innerSibling = new Node(isNext ? element[0].lastChild : element[0].firstChild);
         while(pendingNodes.length) {
-          pendingNodes.shift()._4e_move(element, !isNext, undefined)
+          pendingNodes.shift()._4eMove(element, !isNext, undefined)
         }
-        sibling._4e_moveChildren(element, !isNext, undefined);
+        sibling._4eMoveChildren(element, !isNext, undefined);
         sibling.remove();
-        if(innerSibling[0] && innerSibling[0].nodeType == NodeType.ELEMENT_NODE) {
-          innerSibling._4e_mergeSiblings()
+        if(innerSibling[0] && innerSibling[0].nodeType === NodeType.ELEMENT_NODE) {
+          innerSibling._4eMergeSiblings()
         }
       }
     }
@@ -756,7 +757,7 @@ KISSY.add("editor/walker", ["./base", "node"], function(S, require) {
     if(self._.end) {
       return NULL
     }
-    var node, range = self.range, guard, userGuard = self.guard, type = self.type, getSourceNodeFn = rtl ? "_4e_previousSourceNode" : "_4e_nextSourceNode";
+    var node, range = self.range, guard, userGuard = self.guard, type = self.type, getSourceNodeFn = rtl ? "_4ePreviousSourceNode" : "_4eNextSourceNode";
     if(!self._.start) {
       self._.start = 1;
       range.trim();
@@ -768,19 +769,19 @@ KISSY.add("editor/walker", ["./base", "node"], function(S, require) {
     if(!rtl && !self._.guardLTR) {
       var limitLTR = range.endContainer[0], blockerLTR = limitLTR.childNodes[range.endOffset];
       this._.guardLTR = function(node, movingOut) {
-        if(movingOut && (limitLTR == node || Dom.nodeName(node) == "body")) {
+        if(movingOut && (limitLTR === node || Dom.nodeName(node) === "body")) {
           return false
         }
-        return node != blockerLTR
+        return node !== blockerLTR
       }
     }
     if(rtl && !self._.guardRTL) {
       var limitRTL = range.startContainer[0], blockerRTL = range.startOffset > 0 && limitRTL.childNodes[range.startOffset - 1] || null;
       self._.guardRTL = function(node, movingOut) {
-        if(movingOut && (limitRTL == node || Dom.nodeName(node) == "body")) {
+        if(movingOut && (limitRTL === node || Dom.nodeName(node) === "body")) {
           return false
         }
-        return node != blockerRTL
+        return node !== blockerRTL
       }
     }
     var stopGuard = rtl ? self._.guardRTL : self._.guardLTR;
@@ -805,7 +806,7 @@ KISSY.add("editor/walker", ["./base", "node"], function(S, require) {
             node = NULL
           }
         }else {
-          node = guard(node, TRUE) === FALSE ? NULL : node._4e_previousSourceNode(TRUE, type, guard, undefined)
+          node = guard(node, TRUE) === FALSE ? NULL : node._4ePreviousSourceNode(TRUE, type, guard, undefined)
         }
       }else {
         node = range.startContainer;
@@ -815,7 +816,7 @@ KISSY.add("editor/walker", ["./base", "node"], function(S, require) {
             node = NULL
           }
         }else {
-          node = guard(range.startContainer, TRUE) === FALSE ? NULL : range.startContainer._4e_nextSourceNode(TRUE, type, guard, undefined)
+          node = guard(range.startContainer, TRUE) === FALSE ? NULL : range.startContainer._4eNextSourceNode(TRUE, type, guard, undefined)
         }
       }
     }
@@ -833,7 +834,8 @@ KISSY.add("editor/walker", ["./base", "node"], function(S, require) {
       node = node[getSourceNodeFn](FALSE, type, guard)
     }
     self.end();
-    return self.current = NULL
+    self.current = NULL;
+    return NULL
   }
   function iterateToLast(rtl) {
     var node, last = NULL;
@@ -868,44 +870,44 @@ KISSY.add("editor/walker", ["./base", "node"], function(S, require) {
   }, _iterator:iterate});
   S.mix(Walker, {blockBoundary:function(customNodeNames) {
     return function(node) {
-      return!(node.nodeType == Dom.NodeType.ELEMENT_NODE && Dom._4e_isBlockBoundary(node, customNodeNames))
+      return!(node.nodeType === Dom.NodeType.ELEMENT_NODE && Dom._4eIsBlockBoundary(node, customNodeNames))
     }
   }, bookmark:function(contentOnly, isReject) {
     function isBookmarkNode(node) {
-      return Dom.nodeName(node) == "span" && Dom.attr(node, "_ke_bookmark")
+      return Dom.nodeName(node) === "span" && Dom.attr(node, "_ke_bookmark")
     }
     return function(node) {
       var isBookmark, parent;
-      isBookmark = node.nodeType == Dom.NodeType.TEXT_NODE && (parent = node.parentNode) && isBookmarkNode(parent);
+      isBookmark = node.nodeType === Dom.NodeType.TEXT_NODE && (parent = node.parentNode) && isBookmarkNode(parent);
       isBookmark = contentOnly ? isBookmark : isBookmark || isBookmarkNode(node);
       return!!(isReject ^ isBookmark)
     }
   }, whitespaces:function(isReject) {
     return function(node) {
-      var isWhitespace = node.nodeType == Dom.NodeType.TEXT_NODE && !S.trim(node.nodeValue);
+      var isWhitespace = node.nodeType === Dom.NodeType.TEXT_NODE && !S.trim(node.nodeValue);
       return!!(isReject ^ isWhitespace)
     }
   }, invisible:function(isReject) {
     var whitespace = Walker.whitespaces();
     return function(node) {
-      var isInvisible = whitespace(node) || node.nodeType == Dom.NodeType.ELEMENT_NODE && !node.offsetHeight;
+      var isInvisible = whitespace(node) || node.nodeType === Dom.NodeType.ELEMENT_NODE && !node.offsetHeight;
       return!!(isReject ^ isInvisible)
     }
   }});
   var tailNbspRegex = /^[\t\r\n ]*(?:&nbsp;|\xa0)$/, isWhitespaces = Walker.whitespaces(), isBookmark = Walker.bookmark(), toSkip = function(node) {
     var name = Dom.nodeName(node);
-    return isBookmark(node) || isWhitespaces(node) || node.nodeType == 1 && name in dtd.$inline && !(name in dtd.$empty)
+    return isBookmark(node) || isWhitespaces(node) || node.nodeType === 1 && name in dtd.$inline && !(name in dtd.$empty)
   };
   function getBogus(tail) {
     do {
-      tail = tail._4e_previousSourceNode()
+      tail = tail._4ePreviousSourceNode()
     }while(tail && toSkip(tail[0]));
-    if(tail && (!UA.ie ? tail.nodeName() == "br" : tail[0].nodeType == 3 && tailNbspRegex.test(tail.text()))) {
+    if(tail && (!UA.ie ? tail.nodeName() === "br" : tail[0].nodeType === 3 && tailNbspRegex.test(tail.text()))) {
       return tail[0]
     }
     return false
   }
-  Editor.Utils.injectDom({_4e_getBogus:function(el) {
+  Editor.Utils.injectDom({_4eGetBogus:function(el) {
     return getBogus(new Node(el))
   }});
   Editor.Walker = Walker;
@@ -919,7 +921,7 @@ KISSY.add("editor/elementPath", ["node", "./base", "./dom"], function(S, require
     var childNodes = element[0].childNodes;
     for(var i = 0, count = childNodes.length;i < count;i++) {
       var child = childNodes[i];
-      if(child.nodeType == Dom.NodeType.ELEMENT_NODE && dtd.$block[child.nodeName.toLowerCase()]) {
+      if(child.nodeType === Dom.NodeType.ELEMENT_NODE && dtd.$block[child.nodeName.toLowerCase()]) {
         return TRUE
       }
     }
@@ -928,7 +930,7 @@ KISSY.add("editor/elementPath", ["node", "./base", "./dom"], function(S, require
   function ElementPath(lastNode) {
     var self = this, block = NULL, blockLimit = NULL, elements = [], e = lastNode;
     while(e) {
-      if(e[0].nodeType == Dom.NodeType.ELEMENT_NODE) {
+      if(e[0].nodeType === Dom.NodeType.ELEMENT_NODE) {
         if(!this.lastElement) {
           this.lastElement = e
         }
@@ -938,7 +940,7 @@ KISSY.add("editor/elementPath", ["node", "./base", "./dom"], function(S, require
             block = e
           }
           if(pathBlockLimitElements[elementName]) {
-            if(!block && elementName == "div" && !checkHasBlock(e)) {
+            if(!block && elementName === "div" && !checkHasBlock(e)) {
               block = e
             }else {
               blockLimit = e
@@ -946,7 +948,7 @@ KISSY.add("editor/elementPath", ["node", "./base", "./dom"], function(S, require
           }
         }
         elements.push(e);
-        if(elementName == "body") {
+        if(elementName === "body") {
           break
         }
       }
@@ -959,7 +961,7 @@ KISSY.add("editor/elementPath", ["node", "./base", "./dom"], function(S, require
   ElementPath.prototype = {constructor:ElementPath, compare:function(otherPath) {
     var thisElements = this.elements;
     var otherElements = otherPath && otherPath.elements;
-    if(!otherElements || thisElements.length != otherElements.length) {
+    if(!otherElements || thisElements.length !== otherElements.length) {
       return FALSE
     }
     for(var i = 0;i < thisElements.length;i++) {
@@ -998,7 +1000,7 @@ KISSY.add("editor/range", ["./dom", "node", "./utils", "./walker", "./base", "./
   var isWhitespace = new Walker.whitespaces, isBookmark = new Walker.bookmark, isNotWhitespaces = Walker.whitespaces(TRUE), isNotBookmarks = Walker.bookmark(false, true);
   var inlineChildReqElements = {abbr:1, acronym:1, b:1, bdo:1, big:1, cite:1, code:1, del:1, dfn:1, em:1, font:1, i:1, ins:1, label:1, kbd:1, q:1, samp:1, small:1, span:1, strike:1, strong:1, sub:1, sup:1, tt:1, u:1, "var":1};
   function elementBoundaryEval(node) {
-    var c1 = node.nodeType != Dom.NodeType.TEXT_NODE && Dom.nodeName(node) in dtd.$removeEmpty, c2 = node.nodeType == Dom.NodeType.TEXT_NODE && !S.trim(node.nodeValue), c3 = !!node.parentNode.getAttribute("_ke_bookmark");
+    var c1 = node.nodeType !== Dom.NodeType.TEXT_NODE && Dom.nodeName(node) in dtd.$removeEmpty, c2 = node.nodeType === Dom.NodeType.TEXT_NODE && !S.trim(node.nodeValue), c3 = !!node.parentNode.getAttribute("_ke_bookmark");
     return c1 || c2 || c3
   }
   function nonWhitespaceOrIsBookmark(node) {
@@ -1010,15 +1012,15 @@ KISSY.add("editor/range", ["./dom", "node", "./utils", "./walker", "./base", "./
       if(isBookmark(node)) {
         return TRUE
       }
-      if(node.nodeType == Dom.NodeType.TEXT_NODE) {
+      if(node.nodeType === Dom.NodeType.TEXT_NODE) {
         if(S.trim(node.nodeValue).length) {
           return FALSE
         }
       }else {
-        if(node.nodeType == Dom.NodeType.ELEMENT_NODE) {
+        if(node.nodeType === Dom.NodeType.ELEMENT_NODE) {
           var nodeName = Dom.nodeName(node);
           if(!inlineChildReqElements[nodeName]) {
-            if(!isStart && !UA["ie"] && nodeName == "br" && !hadBr) {
+            if(!isStart && !UA.ie && nodeName === "br" && !hadBr) {
               hadBr = TRUE
             }else {
               return FALSE
@@ -1030,7 +1032,7 @@ KISSY.add("editor/range", ["./dom", "node", "./utils", "./walker", "./base", "./
     }
   }
   function execContentsAction(self, action) {
-    var startNode = self.startContainer, endNode = self.endContainer, startOffset = self.startOffset, endOffset = self.endOffset, removeStartNode, hasSplitStart = FALSE, hasSplitEnd = FALSE, t, docFrag = undefined, doc = self.document, removeEndNode;
+    var startNode = self.startContainer, endNode = self.endContainer, startOffset = self.startOffset, endOffset = self.endOffset, removeStartNode, hasSplitStart = FALSE, hasSplitEnd = FALSE, t, docFrag, doc = self.document, removeEndNode;
     if(action > 0) {
       docFrag = doc.createDocumentFragment()
     }
@@ -1038,9 +1040,9 @@ KISSY.add("editor/range", ["./dom", "node", "./utils", "./walker", "./base", "./
       return docFrag
     }
     self.optimizeBookmark();
-    if(endNode[0].nodeType == Dom.NodeType.TEXT_NODE) {
+    if(endNode[0].nodeType === Dom.NodeType.TEXT_NODE) {
       hasSplitEnd = TRUE;
-      endNode = endNode._4e_splitText(endOffset)
+      endNode = endNode._4eSplitText(endOffset)
     }else {
       if(endNode[0].childNodes.length > 0) {
         if(endOffset >= endNode[0].childNodes.length) {
@@ -1051,9 +1053,9 @@ KISSY.add("editor/range", ["./dom", "node", "./utils", "./walker", "./base", "./
         }
       }
     }
-    if(startNode[0].nodeType == Dom.NodeType.TEXT_NODE) {
+    if(startNode[0].nodeType === Dom.NodeType.TEXT_NODE) {
       hasSplitStart = TRUE;
-      startNode._4e_splitText(startOffset)
+      startNode._4eSplitText(startOffset)
     }else {
       if(!startOffset) {
         t = new Node(doc.createTextNode(""));
@@ -1069,7 +1071,7 @@ KISSY.add("editor/range", ["./dom", "node", "./utils", "./walker", "./base", "./
         }
       }
     }
-    var startParents = startNode._4e_parents(), endParents = endNode._4e_parents();
+    var startParents = startNode._4eParents(), endParents = endNode._4eParents();
     startParents.each(function(n, i) {
       startParents[i] = n
     });
@@ -1095,11 +1097,11 @@ KISSY.add("editor/range", ["./dom", "node", "./utils", "./walker", "./base", "./
       currentNode = levelStartNode[0].nextSibling;
       var endParentJ = endParents[j], domEndNode = endNode[0], domEndParentJ = endParentJ && endParentJ[0];
       while(currentNode) {
-        if(domEndParentJ == currentNode || domEndNode == currentNode) {
+        if(domEndParentJ === currentNode || domEndNode === currentNode) {
           break
         }
         currentSibling = currentNode.nextSibling;
-        if(action == 2) {
+        if(action === 2) {
           clone.appendChild(currentNode.cloneNode(TRUE))
         }else {
           if(UN_REMOVABLE[currentNode.nodeName.toLowerCase()]) {
@@ -1107,9 +1109,9 @@ KISSY.add("editor/range", ["./dom", "node", "./utils", "./walker", "./base", "./
             currentNode.innerHTML = "";
             currentNode = tmp
           }else {
-            Dom._4e_remove(currentNode)
+            Dom._4eRemove(currentNode)
           }
-          if(action == 1) {
+          if(action === 1) {
             clone.appendChild(currentNode)
           }
         }
@@ -1127,15 +1129,15 @@ KISSY.add("editor/range", ["./dom", "node", "./utils", "./walker", "./base", "./
       }else {
         levelClone = null
       }
-      if(!startParents[k] || !levelStartNode._4e_sameLevel(startParents[k])) {
+      if(!startParents[k] || !levelStartNode._4eSameLevel(startParents[k])) {
         currentNode = levelStartNode[0].previousSibling;
         while(currentNode) {
           currentSibling = currentNode.previousSibling;
-          if(action == 2) {
+          if(action === 2) {
             clone.insertBefore(currentNode.cloneNode(TRUE), clone.firstChild)
           }else {
-            Dom._4e_remove(currentNode);
-            if(action == 1) {
+            Dom._4eRemove(currentNode);
+            if(action === 1) {
               clone.insertBefore(currentNode, clone.firstChild)
             }
           }
@@ -1146,25 +1148,25 @@ KISSY.add("editor/range", ["./dom", "node", "./utils", "./walker", "./base", "./
         clone = levelClone
       }
     }
-    if(action == 2) {
+    if(action === 2) {
       if(hasSplitStart) {
         var startTextNode = startNode[0];
-        if(startTextNode.nodeType == Dom.NodeType.TEXT_NODE && startTextNode.nextSibling && startTextNode.nextSibling.nodeType == Dom.NodeType.TEXT_NODE) {
+        if(startTextNode.nodeType === Dom.NodeType.TEXT_NODE && startTextNode.nextSibling && startTextNode.nextSibling.nodeType === Dom.NodeType.TEXT_NODE) {
           startTextNode.data += startTextNode.nextSibling.data;
           startTextNode.parentNode.removeChild(startTextNode.nextSibling)
         }
       }
       if(hasSplitEnd) {
         var endTextNode = endNode[0];
-        if(endTextNode.nodeType == Dom.NodeType.TEXT_NODE && endTextNode.previousSibling && endTextNode.previousSibling.nodeType == Dom.NodeType.TEXT_NODE) {
+        if(endTextNode.nodeType === Dom.NodeType.TEXT_NODE && endTextNode.previousSibling && endTextNode.previousSibling.nodeType === Dom.NodeType.TEXT_NODE) {
           endTextNode.previousSibling.data += endTextNode.data;
           endTextNode.parentNode.removeChild(endTextNode)
         }
       }
     }else {
-      if(topStart && topEnd && (!startNode._4e_sameLevel(topStart) || !endNode._4e_sameLevel(topEnd))) {
-        var startIndex = topStart._4e_index();
-        if(removeStartNode && topStart._4e_sameLevel(startNode)) {
+      if(topStart && topEnd && (!startNode._4eSameLevel(topStart) || !endNode._4eSameLevel(topEnd))) {
+        var startIndex = topStart._4eIndex();
+        if(removeStartNode && topStart._4eSameLevel(startNode)) {
           startIndex--
         }
         self.setStart(topStart.parent(), startIndex + 1)
@@ -1180,7 +1182,7 @@ KISSY.add("editor/range", ["./dom", "node", "./utils", "./walker", "./base", "./
     return docFrag
   }
   function updateCollapsed(self) {
-    self.collapsed = self.startContainer && self.endContainer && self.startContainer[0] == self.endContainer[0] && self.startOffset == self.endOffset
+    self.collapsed = self.startContainer && self.endContainer && self.startContainer[0] === self.endContainer[0] && self.startOffset === self.endOffset
   }
   function KERange(document) {
     var self = this;
@@ -1198,7 +1200,7 @@ KISSY.add("editor/range", ["./dom", "node", "./utils", "./walker", "./base", "./
     return s.join("<br/>")
   }, optimize:function() {
     var self = this, container = self.startContainer, offset = self.startOffset;
-    if(container[0].nodeType != Dom.NodeType.ELEMENT_NODE) {
+    if(container[0].nodeType !== Dom.NodeType.ELEMENT_NODE) {
       if(!offset) {
         self.setStartBefore(container)
       }else {
@@ -1209,7 +1211,7 @@ KISSY.add("editor/range", ["./dom", "node", "./utils", "./walker", "./base", "./
     }
     container = self.endContainer;
     offset = self.endOffset;
-    if(container[0].nodeType != Dom.NodeType.ELEMENT_NODE) {
+    if(container[0].nodeType !== Dom.NodeType.ELEMENT_NODE) {
       if(!offset) {
         self.setEndBefore(container)
       }else {
@@ -1219,26 +1221,26 @@ KISSY.add("editor/range", ["./dom", "node", "./utils", "./walker", "./base", "./
       }
     }
   }, setStartAfter:function(node) {
-    this.setStart(node.parent(), node._4e_index() + 1)
+    this.setStart(node.parent(), node._4eIndex() + 1)
   }, setStartBefore:function(node) {
-    this.setStart(node.parent(), node._4e_index())
+    this.setStart(node.parent(), node._4eIndex())
   }, setEndAfter:function(node) {
-    this.setEnd(node.parent(), node._4e_index() + 1)
+    this.setEnd(node.parent(), node._4eIndex() + 1)
   }, setEndBefore:function(node) {
-    this.setEnd(node.parent(), node._4e_index())
+    this.setEnd(node.parent(), node._4eIndex())
   }, optimizeBookmark:function() {
     var self = this, startNode = self.startContainer, endNode = self.endContainer;
-    if(startNode && startNode.nodeName() == "span" && startNode.attr("_ke_bookmark")) {
+    if(startNode && startNode.nodeName() === "span" && startNode.attr("_ke_bookmark")) {
       self.setStartBefore(startNode)
     }
-    if(endNode && endNode.nodeName() == "span" && endNode.attr("_ke_bookmark")) {
+    if(endNode && endNode.nodeName() === "span" && endNode.attr("_ke_bookmark")) {
       self.setEndAfter(endNode)
     }
   }, setStart:function(startNode, startOffset) {
     var self = this;
-    if(startNode[0].nodeType == Dom.NodeType.ELEMENT_NODE && EMPTY[startNode.nodeName()]) {
+    if(startNode[0].nodeType === Dom.NodeType.ELEMENT_NODE && EMPTY[startNode.nodeName()]) {
       startNode = startNode.parent();
-      startOffset = startNode._4e_index()
+      startOffset = startNode._4eIndex()
     }
     self.startContainer = startNode;
     self.startOffset = startOffset;
@@ -1249,9 +1251,9 @@ KISSY.add("editor/range", ["./dom", "node", "./utils", "./walker", "./base", "./
     updateCollapsed(self)
   }, setEnd:function(endNode, endOffset) {
     var self = this;
-    if(endNode[0].nodeType == Dom.NodeType.ELEMENT_NODE && EMPTY[endNode.nodeName()]) {
+    if(endNode[0].nodeType === Dom.NodeType.ELEMENT_NODE && EMPTY[endNode.nodeName()]) {
       endNode = endNode.parent();
-      endOffset = endNode._4e_index() + 1
+      endOffset = endNode._4eIndex() + 1
     }
     self.endContainer = endNode;
     self.endOffset = endOffset;
@@ -1267,7 +1269,7 @@ KISSY.add("editor/range", ["./dom", "node", "./utils", "./walker", "./base", "./
         self.setStart(node, 0);
         break;
       case KER.POSITION_BEFORE_END:
-        if(node[0].nodeType == Dom.NodeType.TEXT_NODE) {
+        if(node[0].nodeType === Dom.NodeType.TEXT_NODE) {
           self.setStart(node, node[0].nodeValue.length)
         }else {
           self.setStart(node, node[0].childNodes.length)
@@ -1287,7 +1289,7 @@ KISSY.add("editor/range", ["./dom", "node", "./utils", "./walker", "./base", "./
         self.setEnd(node, 0);
         break;
       case KER.POSITION_BEFORE_END:
-        if(node[0].nodeType == Dom.NodeType.TEXT_NODE) {
+        if(node[0].nodeType === Dom.NodeType.TEXT_NODE) {
           self.setEnd(node, node[0].nodeValue.length)
         }else {
           self.setEnd(node, node[0].childNodes.length)
@@ -1327,7 +1329,7 @@ KISSY.add("editor/range", ["./dom", "node", "./utils", "./walker", "./base", "./
   }, getEnclosedNode:function() {
     var walkerRange = this.clone();
     walkerRange.optimize();
-    if(walkerRange.startContainer[0].nodeType != Dom.NodeType.ELEMENT_NODE || walkerRange.endContainer[0].nodeType != Dom.NodeType.ELEMENT_NODE) {
+    if(walkerRange.startContainer[0].nodeType !== Dom.NodeType.ELEMENT_NODE || walkerRange.endContainer[0].nodeType !== Dom.NodeType.ELEMENT_NODE) {
       return NULL
     }
     var walker = new Walker(walkerRange), node, pre;
@@ -1343,7 +1345,7 @@ KISSY.add("editor/range", ["./dom", "node", "./utils", "./walker", "./base", "./
     if(!self.collapsed) {
       mode = mode || KER.SHRINK_TEXT;
       var walkerRange = self.clone(), startContainer = self.startContainer, endContainer = self.endContainer, startOffset = self.startOffset, endOffset = self.endOffset, moveStart = TRUE, currentElement, walker, moveEnd = TRUE;
-      if(startContainer && startContainer[0].nodeType == Dom.NodeType.TEXT_NODE) {
+      if(startContainer && startContainer[0].nodeType === Dom.NodeType.TEXT_NODE) {
         if(!startOffset) {
           walkerRange.setStartBefore(startContainer)
         }else {
@@ -1355,7 +1357,7 @@ KISSY.add("editor/range", ["./dom", "node", "./utils", "./walker", "./base", "./
           }
         }
       }
-      if(endContainer && endContainer[0].nodeType == Dom.NodeType.TEXT_NODE) {
+      if(endContainer && endContainer[0].nodeType === Dom.NodeType.TEXT_NODE) {
         if(!endOffset) {
           walkerRange.setEndBefore(endContainer)
         }else {
@@ -1370,30 +1372,30 @@ KISSY.add("editor/range", ["./dom", "node", "./utils", "./walker", "./base", "./
       if(moveStart || moveEnd) {
         walker = new Walker(walkerRange);
         walker.evaluator = function(node) {
-          return node.nodeType == (mode == KER.SHRINK_ELEMENT ? Dom.NodeType.ELEMENT_NODE : Dom.NodeType.TEXT_NODE)
+          return node.nodeType === (mode === KER.SHRINK_ELEMENT ? Dom.NodeType.ELEMENT_NODE : Dom.NodeType.TEXT_NODE)
         };
         walker.guard = function(node, movingOut) {
-          if(mode == KER.SHRINK_ELEMENT && node.nodeType == Dom.NodeType.TEXT_NODE) {
+          if(mode === KER.SHRINK_ELEMENT && node.nodeType === Dom.NodeType.TEXT_NODE) {
             return FALSE
           }
-          if(movingOut && node == currentElement) {
+          if(movingOut && node === currentElement) {
             return FALSE
           }
-          if(!movingOut && node.nodeType == Dom.NodeType.ELEMENT_NODE) {
+          if(!movingOut && node.nodeType === Dom.NodeType.ELEMENT_NODE) {
             currentElement = node
           }
           return TRUE
         }
       }
       if(moveStart) {
-        var textStart = walker[mode == KER.SHRINK_ELEMENT ? "lastForward" : "next"]();
+        var textStart = walker[mode === KER.SHRINK_ELEMENT ? "lastForward" : "next"]();
         if(textStart) {
           self.setStartAt(textStart, selectContents ? KER.POSITION_AFTER_START : KER.POSITION_BEFORE_START)
         }
       }
       if(moveEnd) {
         walker.reset();
-        var textEnd = walker[mode == KER.SHRINK_ELEMENT ? "lastBackward" : "previous"]();
+        var textEnd = walker[mode === KER.SHRINK_ELEMENT ? "lastBackward" : "previous"]();
         if(textEnd) {
           self.setEndAt(textEnd, selectContents ? KER.POSITION_BEFORE_END : KER.POSITION_AFTER_END)
         }
@@ -1406,32 +1408,32 @@ KISSY.add("editor/range", ["./dom", "node", "./utils", "./walker", "./base", "./
       return{start:0, end:0}
     }
     if(normalized) {
-      if(startContainer[0].nodeType == Dom.NodeType.ELEMENT_NODE) {
+      if(startContainer[0].nodeType === Dom.NodeType.ELEMENT_NODE) {
         child = new Node(startContainer[0].childNodes[startOffset]);
-        if(child && child[0] && child[0].nodeType == Dom.NodeType.TEXT_NODE && startOffset > 0 && child[0].previousSibling.nodeType == Dom.NodeType.TEXT_NODE) {
+        if(child && child[0] && child[0].nodeType === Dom.NodeType.TEXT_NODE && startOffset > 0 && child[0].previousSibling.nodeType === Dom.NodeType.TEXT_NODE) {
           startContainer = child;
           startOffset = 0
         }
       }
-      while(startContainer[0].nodeType == Dom.NodeType.TEXT_NODE && (previous = startContainer.prev(undefined, 1)) && previous[0].nodeType == Dom.NodeType.TEXT_NODE) {
+      while(startContainer[0].nodeType === Dom.NodeType.TEXT_NODE && (previous = startContainer.prev(undefined, 1)) && previous[0].nodeType === Dom.NodeType.TEXT_NODE) {
         startContainer = previous;
         startOffset += previous[0].nodeValue.length
       }
       if(!self.collapsed) {
-        if(endContainer[0].nodeType == Dom.NodeType.ELEMENT_NODE) {
+        if(endContainer[0].nodeType === Dom.NodeType.ELEMENT_NODE) {
           child = new Node(endContainer[0].childNodes[endOffset]);
-          if(child && child[0] && child[0].nodeType == Dom.NodeType.TEXT_NODE && endOffset > 0 && child[0].previousSibling.nodeType == Dom.NodeType.TEXT_NODE) {
+          if(child && child[0] && child[0].nodeType === Dom.NodeType.TEXT_NODE && endOffset > 0 && child[0].previousSibling.nodeType === Dom.NodeType.TEXT_NODE) {
             endContainer = child;
             endOffset = 0
           }
         }
-        while(endContainer[0].nodeType == Dom.NodeType.TEXT_NODE && (previous = endContainer.prev(undefined, 1)) && previous[0].nodeType == Dom.NodeType.TEXT_NODE) {
+        while(endContainer[0].nodeType === Dom.NodeType.TEXT_NODE && (previous = endContainer.prev(undefined, 1)) && previous[0].nodeType === Dom.NodeType.TEXT_NODE) {
           endContainer = previous;
           endOffset += previous[0].nodeValue.length
         }
       }
     }
-    return{start:startContainer._4e_address(normalized), end:self.collapsed ? NULL : endContainer._4e_address(normalized), startOffset:startOffset, endOffset:endOffset, normalized:normalized, is2:TRUE}
+    return{start:startContainer._4eAddress(normalized), end:self.collapsed ? NULL : endContainer._4eAddress(normalized), startOffset:startOffset, endOffset:endOffset, normalized:normalized, is2:TRUE}
   }, createBookmark:function(serializable) {
     var startNode, endNode, baseId, clone, self = this, collapsed = self.collapsed;
     startNode = new Node("<span>", NULL, self.document);
@@ -1468,17 +1470,17 @@ KISSY.add("editor/range", ["./dom", "node", "./utils", "./walker", "./base", "./
     self.collapse(TRUE)
   }, trim:function(ignoreStart, ignoreEnd) {
     var self = this, startContainer = self.startContainer, startOffset = self.startOffset, collapsed = self.collapsed;
-    if((!ignoreStart || collapsed) && startContainer[0] && startContainer[0].nodeType == Dom.NodeType.TEXT_NODE) {
+    if((!ignoreStart || collapsed) && startContainer[0] && startContainer[0].nodeType === Dom.NodeType.TEXT_NODE) {
       if(!startOffset) {
-        startOffset = startContainer._4e_index();
+        startOffset = startContainer._4eIndex();
         startContainer = startContainer.parent()
       }else {
         if(startOffset >= startContainer[0].nodeValue.length) {
-          startOffset = startContainer._4e_index() + 1;
+          startOffset = startContainer._4eIndex() + 1;
           startContainer = startContainer.parent()
         }else {
-          var nextText = startContainer._4e_splitText(startOffset);
-          startOffset = startContainer._4e_index() + 1;
+          var nextText = startContainer._4eSplitText(startOffset);
+          startOffset = startContainer._4eIndex() + 1;
           startContainer = startContainer.parent();
           if(Dom.equals(self.startContainer, self.endContainer)) {
             self.setEnd(nextText, self.endOffset - self.startOffset)
@@ -1496,17 +1498,17 @@ KISSY.add("editor/range", ["./dom", "node", "./utils", "./walker", "./base", "./
       }
     }
     var endContainer = self.endContainer, endOffset = self.endOffset;
-    if(!(ignoreEnd || collapsed) && endContainer[0] && endContainer[0].nodeType == Dom.NodeType.TEXT_NODE) {
+    if(!(ignoreEnd || collapsed) && endContainer[0] && endContainer[0].nodeType === Dom.NodeType.TEXT_NODE) {
       if(!endOffset) {
-        endOffset = endContainer._4e_index();
+        endOffset = endContainer._4eIndex();
         endContainer = endContainer.parent()
       }else {
         if(endOffset >= endContainer[0].nodeValue.length) {
-          endOffset = endContainer._4e_index() + 1;
+          endOffset = endContainer._4eIndex() + 1;
           endContainer = endContainer.parent()
         }else {
-          endContainer._4e_splitText(endOffset);
-          endOffset = endContainer._4e_index() + 1;
+          endContainer._4eSplitText(endOffset);
+          endOffset = endContainer._4eIndex() + 1;
           endContainer = endContainer.parent()
         }
       }
@@ -1518,14 +1520,14 @@ KISSY.add("editor/range", ["./dom", "node", "./utils", "./walker", "./base", "./
     self.trim(FALSE, TRUE);
     var startContainer = self.startContainer, startOffset = self.startOffset, nextNode = startContainer[0].childNodes[startOffset] || null;
     startContainer[0].insertBefore(node[0], nextNode);
-    if(startContainer[0] == self.endContainer[0]) {
+    if(startContainer[0] === self.endContainer[0]) {
       self.endOffset++
     }
     self.setStartBefore(node)
   }, moveToBookmark:function(bookmark) {
     var self = this, doc = $(self.document);
     if(bookmark.is2) {
-      var startContainer = doc._4e_getByAddress(bookmark.start, bookmark.normalized), startOffset = bookmark.startOffset, endContainer = bookmark.end && doc._4e_getByAddress(bookmark.end, bookmark.normalized), endOffset = bookmark.endOffset;
+      var startContainer = doc._4eGetByAddress(bookmark.start, bookmark.normalized), startOffset = bookmark.startOffset, endContainer = bookmark.end && doc._4eGetByAddress(bookmark.end, bookmark.normalized), endOffset = bookmark.endOffset;
       self.setStart(startContainer, startOffset);
       if(endContainer) {
         self.setEnd(endContainer, endOffset)
@@ -1535,30 +1537,30 @@ KISSY.add("editor/range", ["./dom", "node", "./utils", "./walker", "./base", "./
     }else {
       var serializable = bookmark.serializable, startNode = serializable ? S.one("#" + bookmark.startNode, doc) : bookmark.startNode, endNode = serializable ? S.one("#" + bookmark.endNode, doc) : bookmark.endNode;
       self.setStartBefore(startNode);
-      startNode._4e_remove();
+      startNode._4eRemove();
       if(endNode && endNode[0]) {
         self.setEndBefore(endNode);
-        endNode._4e_remove()
+        endNode._4eRemove()
       }else {
         self.collapse(TRUE)
       }
     }
   }, getCommonAncestor:function(includeSelf, ignoreTextNode) {
     var self = this, start = self.startContainer, end = self.endContainer, ancestor;
-    if(start[0] == end[0]) {
-      if(includeSelf && start[0].nodeType == Dom.NodeType.ELEMENT_NODE && self.startOffset == self.endOffset - 1) {
+    if(start[0] === end[0]) {
+      if(includeSelf && start[0].nodeType === Dom.NodeType.ELEMENT_NODE && self.startOffset === self.endOffset - 1) {
         ancestor = new Node(start[0].childNodes[self.startOffset])
       }else {
         ancestor = start
       }
     }else {
-      ancestor = start._4e_commonAncestor(end)
+      ancestor = start._4eCommonAncestor(end)
     }
-    return ignoreTextNode && ancestor[0].nodeType == Dom.NodeType.TEXT_NODE ? ancestor.parent() : ancestor
+    return ignoreTextNode && ancestor[0].nodeType === Dom.NodeType.TEXT_NODE ? ancestor.parent() : ancestor
   }, enlarge:function() {
     function enlargeElement(self, left, stop, commonAncestor) {
       var container = self[left ? "startContainer" : "endContainer"], enlarge, sibling, index = left ? 0 : 1, commonReached = 0, direction = left ? "previousSibling" : "nextSibling", offset = self[left ? "startOffset" : "endOffset"];
-      if(container[0].nodeType == Dom.NodeType.TEXT_NODE) {
+      if(container[0].nodeType === Dom.NodeType.TEXT_NODE) {
         if(left) {
           if(offset) {
             return
@@ -1589,7 +1591,7 @@ KISSY.add("editor/range", ["./dom", "node", "./utils", "./walker", "./base", "./
           return
         }
         enlarge = $(enlarge);
-        if(enlarge.nodeName() == "body") {
+        if(enlarge.nodeName() === "body") {
           return
         }
         if(commonReached || enlarge.equals(commonAncestor)) {
@@ -1625,7 +1627,7 @@ KISSY.add("editor/range", ["./dom", "node", "./utils", "./walker", "./base", "./
           var body = new Node(self.document.body);
           walkerRange.setStartAt(body, KER.POSITION_AFTER_START);
           walkerRange.setEnd(self.startContainer, self.startOffset);
-          var walker = new Walker(walkerRange), blockBoundary, tailBr, defaultGuard = Walker.blockBoundary(unit == KER.ENLARGE_LIST_ITEM_CONTENTS ? {br:1} : NULL), boundaryGuard = function(node) {
+          var walker = new Walker(walkerRange), blockBoundary, tailBr, defaultGuard = Walker.blockBoundary(unit === KER.ENLARGE_LIST_ITEM_CONTENTS ? {br:1} : NULL), boundaryGuard = function(node) {
             var retVal = defaultGuard(node);
             if(!retVal) {
               blockBoundary = $(node)
@@ -1633,7 +1635,7 @@ KISSY.add("editor/range", ["./dom", "node", "./utils", "./walker", "./base", "./
             return retVal
           }, tailBrGuard = function(node) {
             var retVal = boundaryGuard(node);
-            if(!retVal && Dom.nodeName(node) == "br") {
+            if(!retVal && Dom.nodeName(node) === "br") {
               tailBr = $(node)
             }
             return retVal
@@ -1641,12 +1643,12 @@ KISSY.add("editor/range", ["./dom", "node", "./utils", "./walker", "./base", "./
           walker.guard = boundaryGuard;
           enlargeable = walker.lastBackward();
           blockBoundary = blockBoundary || body;
-          self.setStartAt(blockBoundary, blockBoundary.nodeName() != "br" && (!enlargeable && self.checkStartOfBlock() || enlargeable && blockBoundary.contains(enlargeable)) ? KER.POSITION_AFTER_START : KER.POSITION_AFTER_END);
+          self.setStartAt(blockBoundary, blockBoundary.nodeName() !== "br" && (!enlargeable && self.checkStartOfBlock() || enlargeable && blockBoundary.contains(enlargeable)) ? KER.POSITION_AFTER_START : KER.POSITION_AFTER_END);
           walkerRange = self.clone();
           walkerRange.collapse();
           walkerRange.setEndAt(body, KER.POSITION_BEFORE_END);
           walker = new Walker(walkerRange);
-          walker.guard = unit == KER.ENLARGE_LIST_ITEM_CONTENTS ? tailBrGuard : boundaryGuard;
+          walker.guard = unit === KER.ENLARGE_LIST_ITEM_CONTENTS ? tailBrGuard : boundaryGuard;
           blockBoundary = NULL;
           var enlargeable = walker.lastForward();
           blockBoundary = blockBoundary || body;
@@ -1658,7 +1660,7 @@ KISSY.add("editor/range", ["./dom", "node", "./utils", "./walker", "./base", "./
     }
   }(), checkStartOfBlock:function() {
     var self = this, startContainer = self.startContainer, startOffset = self.startOffset;
-    if(startOffset && startContainer[0].nodeType == Dom.NodeType.TEXT_NODE) {
+    if(startOffset && startContainer[0].nodeType === Dom.NodeType.TEXT_NODE) {
       var textBefore = S.trim(startContainer[0].nodeValue.substring(0, startOffset));
       if(textBefore.length) {
         return FALSE
@@ -1674,7 +1676,7 @@ KISSY.add("editor/range", ["./dom", "node", "./utils", "./walker", "./base", "./
     return walker.checkBackward()
   }, checkEndOfBlock:function() {
     var self = this, endContainer = self.endContainer, endOffset = self.endOffset;
-    if(endContainer[0].nodeType == Dom.NodeType.TEXT_NODE) {
+    if(endContainer[0].nodeType === Dom.NodeType.TEXT_NODE) {
       var textAfter = S.trim(endContainer[0].nodeValue.substring(endOffset));
       if(textAfter.length) {
         return FALSE
@@ -1690,36 +1692,36 @@ KISSY.add("editor/range", ["./dom", "node", "./utils", "./walker", "./base", "./
     return walker.checkForward()
   }, checkBoundaryOfElement:function(element, checkType) {
     var walkerRange = this.clone();
-    walkerRange[checkType == KER.START ? "setStartAt" : "setEndAt"](element, checkType == KER.START ? KER.POSITION_AFTER_START : KER.POSITION_BEFORE_END);
+    walkerRange[checkType === KER.START ? "setStartAt" : "setEndAt"](element, checkType === KER.START ? KER.POSITION_AFTER_START : KER.POSITION_BEFORE_END);
     var walker = new Walker(walkerRange);
     walker.evaluator = elementBoundaryEval;
-    return walker[checkType == KER.START ? "checkBackward" : "checkForward"]()
+    return walker[checkType === KER.START ? "checkBackward" : "checkForward"]()
   }, getBoundaryNodes:function() {
     var self = this, startNode = self.startContainer, endNode = self.endContainer, startOffset = self.startOffset, endOffset = self.endOffset, childCount;
-    if(startNode[0].nodeType == Dom.NodeType.ELEMENT_NODE) {
+    if(startNode[0].nodeType === Dom.NodeType.ELEMENT_NODE) {
       childCount = startNode[0].childNodes.length;
       if(childCount > startOffset) {
         startNode = $(startNode[0].childNodes[startOffset])
       }else {
-        if(childCount == 0) {
-          startNode = startNode._4e_previousSourceNode()
+        if(childCount === 0) {
+          startNode = startNode._4ePreviousSourceNode()
         }else {
           startNode = startNode[0];
           while(startNode.lastChild) {
             startNode = startNode.lastChild
           }
           startNode = $(startNode);
-          startNode = startNode._4e_nextSourceNode() || startNode
+          startNode = startNode._4eNextSourceNode() || startNode
         }
       }
     }
-    if(endNode[0].nodeType == Dom.NodeType.ELEMENT_NODE) {
+    if(endNode[0].nodeType === Dom.NodeType.ELEMENT_NODE) {
       childCount = endNode[0].childNodes.length;
       if(childCount > endOffset) {
-        endNode = $(endNode[0].childNodes[endOffset])._4e_previousSourceNode(TRUE)
+        endNode = $(endNode[0].childNodes[endOffset])._4ePreviousSourceNode(TRUE)
       }else {
-        if(childCount == 0) {
-          endNode = endNode._4e_previousSourceNode()
+        if(childCount === 0) {
+          endNode = endNode._4ePreviousSourceNode()
         }else {
           endNode = endNode[0];
           while(endNode.lastChild) {
@@ -1729,7 +1731,7 @@ KISSY.add("editor/range", ["./dom", "node", "./utils", "./walker", "./base", "./
         }
       }
     }
-    if(startNode._4e_position(endNode) & KEP.POSITION_FOLLOWING) {
+    if(startNode._4ePosition(endNode) & KEP.POSITION_FOLLOWING) {
       startNode = endNode
     }
     return{startNode:startNode, endNode:endNode}
@@ -1738,9 +1740,9 @@ KISSY.add("editor/range", ["./dom", "node", "./utils", "./walker", "./base", "./
     self.collapse(isStart);
     self.enlarge(KER.ENLARGE_BLOCK_CONTENTS);
     fixedBlock[0].appendChild(self.extractContents());
-    fixedBlock._4e_trim();
-    if(!UA["ie"]) {
-      fixedBlock._4e_appendBogus()
+    fixedBlock._4eTrim();
+    if(!UA.ie) {
+      fixedBlock._4eAppendBogus()
     }
     self.insertNode(fixedBlock);
     self.moveToBookmark(bookmark);
@@ -1750,7 +1752,7 @@ KISSY.add("editor/range", ["./dom", "node", "./utils", "./walker", "./base", "./
     if(!startBlockLimit.equals(endBlockLimit)) {
       return NULL
     }
-    if(blockTag != "br") {
+    if(blockTag !== "br") {
       if(!startBlock) {
         startBlock = self.fixBlock(TRUE, blockTag);
         endBlock = (new ElementPath(self.endContainer)).block
@@ -1761,7 +1763,7 @@ KISSY.add("editor/range", ["./dom", "node", "./utils", "./walker", "./base", "./
     }
     var isStartOfBlock = startBlock && self.checkStartOfBlock(), isEndOfBlock = endBlock && self.checkEndOfBlock();
     self.deleteContents();
-    if(startBlock && startBlock[0] == endBlock[0]) {
+    if(startBlock && startBlock[0] === endBlock[0]) {
       if(isEndOfBlock) {
         elementPath = new ElementPath(self.startContainer);
         self.moveToPosition(endBlock, KER.POSITION_AFTER_END);
@@ -1773,8 +1775,8 @@ KISSY.add("editor/range", ["./dom", "node", "./utils", "./walker", "./base", "./
           startBlock = NULL
         }else {
           endBlock = self.splitElement(startBlock);
-          if(!UA["ie"] && !S.inArray(startBlock.nodeName(), ["ul", "ol"])) {
-            startBlock._4e_appendBogus()
+          if(!UA.ie && !S.inArray(startBlock.nodeName(), ["ul", "ol"])) {
+            startBlock._4eAppendBogus()
           }
         }
       }
@@ -1794,7 +1796,7 @@ KISSY.add("editor/range", ["./dom", "node", "./utils", "./walker", "./base", "./
   }, moveToElementEditablePosition:function(el, isMoveToEnd) {
     function nextDFS(node, childOnly) {
       var next;
-      if(node[0].nodeType == Dom.NodeType.ELEMENT_NODE && node._4e_isEditable()) {
+      if(node[0].nodeType === Dom.NodeType.ELEMENT_NODE && node._4eIsEditable()) {
         next = node[isMoveToEnd ? "last" : "first"](nonWhitespaceOrIsBookmark, 1)
       }
       if(!childOnly && !next) {
@@ -1804,12 +1806,12 @@ KISSY.add("editor/range", ["./dom", "node", "./utils", "./walker", "./base", "./
     }
     var found = 0, self = this;
     while(el) {
-      if(el[0].nodeType == Dom.NodeType.TEXT_NODE) {
+      if(el[0].nodeType === Dom.NodeType.TEXT_NODE) {
         self.moveToPosition(el, isMoveToEnd ? KER.POSITION_AFTER_END : KER.POSITION_BEFORE_START);
         found = 1;
         break
       }
-      if(el[0].nodeType == Dom.NodeType.ELEMENT_NODE && el._4e_isEditable()) {
+      if(el[0].nodeType === Dom.NodeType.ELEMENT_NODE && el._4eIsEditable()) {
         self.moveToPosition(el, isMoveToEnd ? KER.POSITION_BEFORE_END : KER.POSITION_AFTER_START);
         found = 1
       }
@@ -1819,9 +1821,9 @@ KISSY.add("editor/range", ["./dom", "node", "./utils", "./walker", "./base", "./
   }, selectNodeContents:function(node) {
     var self = this, domNode = node[0];
     self.setStart(node, 0);
-    self.setEnd(node, domNode.nodeType == Dom.NodeType.TEXT_NODE ? domNode.nodeValue.length : domNode.childNodes.length)
+    self.setEnd(node, domNode.nodeType === Dom.NodeType.TEXT_NODE ? domNode.nodeValue.length : domNode.childNodes.length)
   }, insertNodeByDtd:function(element) {
-    var current, self = this, tmpDtd, last, elementName = element["nodeName"](), isBlock = dtd["$block"][elementName];
+    var current, self = this, tmpDtd, last, elementName = element.nodeName(), isBlock = dtd.$block[elementName];
     self.deleteContents();
     if(isBlock) {
       current = self.getCommonAncestor(FALSE, TRUE);
@@ -1842,7 +1844,7 @@ KISSY.add("editor/range", ["./dom", "node", "./utils", "./walker", "./base", "./
     }
     self.insertNode(element)
   }});
-  Utils.injectDom({_4e_breakParent:function(el, parent) {
+  Utils.injectDom({_4eBreakParent:function(el, parent) {
     parent = $(parent);
     el = $(el);
     var KERange = Editor.Range, docFrag, range = new KERange(el[0].ownerDocument);
@@ -1861,7 +1863,7 @@ KISSY.add("editor/selection", ["node", "./walker", "./range", "./base"], functio
   var KERange = require("./range");
   var Editor = require("./base");
   Editor.SelectionType = {SELECTION_NONE:1, SELECTION_TEXT:2, SELECTION_ELEMENT:3};
-  var TRUE = true, FALSE = false, NULL = null, UA = S.UA, Dom = S.DOM, KES = Editor.SelectionType, KER = Editor.RangeType, OLD_IE = UA.ieMode < 11;
+  var TRUE = true, FALSE = false, NULL = null, UA = S.UA, Dom = S.DOM, KES = Editor.SelectionType, KER = Editor.RangeType, OLD_IE = document.selection;
   function KESelection(document) {
     var self = this;
     self.document = document;
@@ -1869,7 +1871,7 @@ KISSY.add("editor/selection", ["node", "./walker", "./range", "./base"], functio
     if(OLD_IE) {
       try {
         var range = self.getNative().createRange();
-        if(!range || range.item && range.item(0).ownerDocument != document || range.parentElement && range.parentElement().ownerDocument != document) {
+        if(!range || range.item && range.item(0).ownerDocument !== document || range.parentElement && range.parentElement().ownerDocument !== document) {
           self.isInvalid = TRUE
         }
       }catch(e) {
@@ -1893,14 +1895,15 @@ KISSY.add("editor/selection", ["node", "./walker", "./range", "./base"], functio
     if(!sel) {
       type = KES.SELECTION_NONE
     }else {
-      if(sel.rangeCount == 1) {
+      if(sel.rangeCount === 1) {
         var range = sel.getRangeAt(0), startContainer = range.startContainer;
-        if(startContainer == range.endContainer && startContainer.nodeType == Dom.NodeType.ELEMENT_NODE && Number(range.endOffset - range.startOffset) == 1 && styleObjectElements[startContainer.childNodes[range.startOffset].nodeName.toLowerCase()]) {
+        if(startContainer === range.endContainer && startContainer.nodeType === Dom.NodeType.ELEMENT_NODE && Number(range.endOffset - range.startOffset) === 1 && styleObjectElements[startContainer.childNodes[range.startOffset].nodeName.toLowerCase()]) {
           type = KES.SELECTION_ELEMENT
         }
       }
     }
-    return cache.type = type
+    cache.type = type;
+    return type
   } : function() {
     var self = this, cache = self._.cache;
     if(cache.type) {
@@ -1909,10 +1912,10 @@ KISSY.add("editor/selection", ["node", "./walker", "./range", "./base"], functio
     var type = KES.SELECTION_NONE;
     try {
       var sel = self.getNative(), ieType = sel.type;
-      if(ieType == "Text") {
+      if(ieType === "Text") {
         type = KES.SELECTION_TEXT
       }
-      if(ieType == "Control") {
+      if(ieType === "Control") {
         type = KES.SELECTION_ELEMENT
       }
       if(sel.createRange().parentElement) {
@@ -1920,7 +1923,8 @@ KISSY.add("editor/selection", ["node", "./walker", "./range", "./base"], functio
       }
     }catch(e) {
     }
-    return cache.type = type
+    cache.type = type;
+    return type
   }, getRanges:OLD_IE ? function() {
     var getBoundaryInformation = function(range, start) {
       range = range.duplicate();
@@ -1928,7 +1932,7 @@ KISSY.add("editor/selection", ["node", "./walker", "./range", "./base"], functio
       var parent = range.parentElement(), siblings = parent.childNodes, testRange;
       for(var i = 0;i < siblings.length;i++) {
         var child = siblings[i];
-        if(child.nodeType == Dom.NodeType.ELEMENT_NODE) {
+        if(child.nodeType === Dom.NodeType.ELEMENT_NODE) {
           testRange = range.duplicate();
           testRange.moveToElementText(child);
           var comparisonStart = testRange.compareEndPoints("StartToStart", range), comparisonEnd = testRange.compareEndPoints("EndToStart", range);
@@ -1936,7 +1940,7 @@ KISSY.add("editor/selection", ["node", "./walker", "./range", "./base"], functio
           if(comparisonStart > 0) {
             break
           }else {
-            if(!comparisonStart || comparisonEnd == 1 && comparisonStart == -1) {
+            if(!comparisonStart || comparisonEnd === 1 && comparisonStart === -1) {
               return{container:parent, offset:i}
             }else {
               if(!comparisonEnd) {
@@ -1976,20 +1980,21 @@ KISSY.add("editor/selection", ["node", "./walker", "./range", "./base"], functio
       if(!sel) {
         return[]
       }
-      if(type == KES.SELECTION_TEXT) {
+      if(type === KES.SELECTION_TEXT) {
         range = new KERange(self.document);
         var boundaryInfo = getBoundaryInformation(nativeRange, TRUE);
         range.setStart(new Node(boundaryInfo.container), boundaryInfo.offset);
         boundaryInfo = getBoundaryInformation(nativeRange);
         range.setEnd(new Node(boundaryInfo.container), boundaryInfo.offset);
-        return cache.ranges = [range]
+        cache.ranges = [range];
+        return[range]
       }else {
-        if(type == KES.SELECTION_ELEMENT) {
+        if(type === KES.SELECTION_ELEMENT) {
           var retval = cache.ranges = [];
           for(var i = 0;i < nativeRange.length;i++) {
             var element = nativeRange.item(i), parentElement = element.parentNode, j = 0;
             range = new KERange(self.document);
-            for(;j < parentElement.childNodes.length && parentElement.childNodes[j] != element;j++) {
+            for(;j < parentElement.childNodes.length && parentElement.childNodes[j] !== element;j++) {
             }
             range.setStart(new Node(parentElement), j);
             range.setEnd(new Node(parentElement), j + 1);
@@ -1998,7 +2003,8 @@ KISSY.add("editor/selection", ["node", "./walker", "./range", "./base"], functio
           return retval
         }
       }
-      return cache.ranges = []
+      cache.ranges = [];
+      return[]
     }
   }() : function(force) {
     var self = this, cache = self._.cache;
@@ -2015,7 +2021,8 @@ KISSY.add("editor/selection", ["node", "./walker", "./range", "./base"], functio
       range.setEnd(new Node(nativeRange.endContainer), nativeRange.endOffset);
       ranges.push(range)
     }
-    return cache.ranges = ranges
+    cache.ranges = ranges;
+    return ranges
   }, getStartElement:function() {
     var self = this, cache = self._.cache;
     if(cache.startElement !== undefined) {
@@ -2032,22 +2039,22 @@ KISSY.add("editor/selection", ["node", "./walker", "./range", "./base"], functio
             range.optimize();
             while(TRUE) {
               var startContainer = range.startContainer, startOffset = range.startOffset;
-              if(startOffset == (startContainer[0].nodeType === Dom.NodeType.ELEMENT_NODE ? startContainer[0].childNodes.length : startContainer[0].nodeValue.length) && !startContainer._4e_isBlockBoundary()) {
+              if(startOffset === (startContainer[0].nodeType === Dom.NodeType.ELEMENT_NODE ? startContainer[0].childNodes.length : startContainer[0].nodeValue.length) && !startContainer._4eIsBlockBoundary()) {
                 range.setStartAfter(startContainer)
               }else {
                 break
               }
             }
             node = range.startContainer;
-            if(node[0].nodeType != Dom.NodeType.ELEMENT_NODE) {
+            if(node[0].nodeType !== Dom.NodeType.ELEMENT_NODE) {
               return node.parent()
             }
             node = new Node(node[0].childNodes[range.startOffset]);
-            if(!node[0] || node[0].nodeType != Dom.NodeType.ELEMENT_NODE) {
+            if(!node[0] || node[0].nodeType !== Dom.NodeType.ELEMENT_NODE) {
               return range.startContainer
             }
             var child = node[0].firstChild;
-            while(child && child.nodeType == Dom.NodeType.ELEMENT_NODE) {
+            while(child && child.nodeType === Dom.NodeType.ELEMENT_NODE) {
               node = new Node(child);
               child = child.firstChild
             }
@@ -2060,7 +2067,7 @@ KISSY.add("editor/selection", ["node", "./walker", "./range", "./base"], functio
           node = new Node(range.parentElement())
         }else {
           node = sel.anchorNode;
-          if(node && node.nodeType != Dom.NodeType.ELEMENT_NODE) {
+          if(node && node.nodeType !== Dom.NodeType.ELEMENT_NODE) {
             node = node.parentNode
           }
           if(node) {
@@ -2068,7 +2075,8 @@ KISSY.add("editor/selection", ["node", "./walker", "./range", "./base"], functio
           }
         }
     }
-    return cache.startElement = node
+    cache.startElement = node;
+    return node
   }, getSelectedElement:function() {
     var self = this, node, cache = self._.cache;
     if(cache.selectedElement !== undefined) {
@@ -2081,7 +2089,7 @@ KISSY.add("editor/selection", ["node", "./walker", "./range", "./base"], functio
     if(!node) {
       node = function() {
         var range = self.getRanges()[0], enclosed, selected;
-        for(var i = 2;i && !((enclosed = range.getEnclosedNode()) && enclosed[0].nodeType == Dom.NodeType.ELEMENT_NODE && styleObjectElements[enclosed.nodeName()] && (selected = enclosed));i--) {
+        for(var i = 2;i && !((enclosed = range.getEnclosedNode()) && enclosed[0].nodeType === Dom.NodeType.ELEMENT_NODE && styleObjectElements[enclosed.nodeName()] && (selected = enclosed));i--) {
           range.shrink(KER.SHRINK_ELEMENT)
         }
         return selected
@@ -2089,15 +2097,16 @@ KISSY.add("editor/selection", ["node", "./walker", "./range", "./base"], functio
     }else {
       node = new Node(node)
     }
-    return cache.selectedElement = node
+    cache.selectedElement = node;
+    return node
   }, reset:function() {
     this._.cache = {}
   }, selectElement:function(element) {
     var range, self = this, doc = self.document;
     if(OLD_IE) {
       try {
-        range = doc.body["createControlRange"]();
-        range["addElement"](element[0]);
+        range = doc.body.createControlRange();
+        range.addElement(element[0]);
         range.select()
       }catch(e) {
         range = doc.body.createTextRange();
@@ -2134,8 +2143,8 @@ KISSY.add("editor/selection", ["node", "./walker", "./range", "./base"], functio
       sel.removeAllRanges();
       for(var i = 0;i < ranges.length;i++) {
         var range = ranges[i], nativeRange = self.document.createRange(), startContainer = range.startContainer;
-        if(range.collapsed && (UA.gecko && UA.gecko < 1.09 || UA.opera || UA["webkit"]) && startContainer[0].nodeType == Dom.NodeType.ELEMENT_NODE && !startContainer[0].childNodes.length) {
-          startContainer[0].appendChild(self.document.createTextNode(UA["webkit"] ? "\u200b" : ""));
+        if(range.collapsed && (UA.gecko && UA.gecko < 1.09 || UA.opera || UA.webkit) && startContainer[0].nodeType === Dom.NodeType.ELEMENT_NODE && !startContainer[0].childNodes.length) {
+          startContainer[0].appendChild(self.document.createTextNode(UA.webkit ? "\u200b" : ""));
           range.startOffset++;
           range.endOffset++
         }
@@ -2161,10 +2170,18 @@ KISSY.add("editor/selection", ["node", "./walker", "./range", "./base"], functio
       var bookmarkStart = serializable ? S.one("#" + bookmark.startNode, doc) : bookmark.startNode, bookmarkEnd = serializable ? S.one("#" + bookmark.endNode, doc) : bookmark.endNode;
       for(var j = i + 1;j < length;j++) {
         var dirtyRange = ranges[j], rangeStart = dirtyRange.startContainer, rangeEnd = dirtyRange.endContainer;
-        Dom.equals(rangeStart, bookmarkStart.parent()) && dirtyRange.startOffset++;
-        Dom.equals(rangeStart, bookmarkEnd.parent()) && dirtyRange.startOffset++;
-        Dom.equals(rangeEnd, bookmarkStart.parent()) && dirtyRange.endOffset++;
-        Dom.equals(rangeEnd, bookmarkEnd.parent()) && dirtyRange.endOffset++
+        if(Dom.equals(rangeStart, bookmarkStart.parent())) {
+          dirtyRange.startOffset++
+        }
+        if(Dom.equals(rangeStart, bookmarkEnd.parent())) {
+          dirtyRange.startOffset++
+        }
+        if(Dom.equals(rangeEnd, bookmarkStart.parent())) {
+          dirtyRange.endOffset++
+        }
+        if(Dom.equals(rangeEnd, bookmarkEnd.parent())) {
+          dirtyRange.endOffset++
+        }
       }
     }
     return retval
@@ -2179,22 +2196,28 @@ KISSY.add("editor/selection", ["node", "./walker", "./range", "./base"], functio
     return self
   }, getCommonAncestor:function() {
     var ranges = this.getRanges(), startNode = ranges[0].startContainer, endNode = ranges[ranges.length - 1].endContainer;
-    return startNode._4e_commonAncestor(endNode)
+    return startNode._4eCommonAncestor(endNode)
   }, scrollIntoView:function() {
     var start = this.getStartElement();
-    start && start.scrollIntoView(undefined, {alignWithTop:false, allowHorizontalScroll:true, onlyScrollIfNeeded:true})
+    if(start) {
+      start.scrollIntoView(undefined, {alignWithTop:false, allowHorizontalScroll:true, onlyScrollIfNeeded:true})
+    }
   }, removeAllRanges:function() {
     var sel = this.getNative();
     if(!OLD_IE) {
-      sel && sel.removeAllRanges()
+      if(sel) {
+        sel.removeAllRanges()
+      }
     }else {
-      sel && sel.clear()
+      if(sel) {
+        sel.clear()
+      }
     }
   }});
   var nonCells = {table:1, tbody:1, tr:1}, notWhitespaces = Walker.whitespaces(TRUE), fillerTextRegex = /\ufeff|\u00a0/;
-  KERange.prototype["select"] = KERange.prototype.select = !OLD_IE ? function() {
+  KERange.prototype.select = !OLD_IE ? function() {
     var self = this, startContainer = self.startContainer;
-    if(self.collapsed && startContainer[0].nodeType == Dom.NodeType.ELEMENT_NODE && !startContainer[0].childNodes.length) {
+    if(self.collapsed && startContainer[0].nodeType === Dom.NodeType.ELEMENT_NODE && !startContainer[0].childNodes.length) {
       startContainer[0].appendChild(self.document.createTextNode(UA.webkit ? "\u200b" : ""));
       self.startOffset++;
       self.endOffset++
@@ -2216,14 +2239,14 @@ KISSY.add("editor/selection", ["node", "./walker", "./range", "./base"], functio
     selection.addRange(nativeRange)
   } : function(forceExpand) {
     var self = this, collapsed = self.collapsed, isStartMarkerAlone, dummySpan;
-    if(self.startContainer[0] === self.endContainer[0] && self.endOffset - self.startOffset == 1) {
+    if(self.startContainer[0] === self.endContainer[0] && self.endOffset - self.startOffset === 1) {
       var selEl = self.startContainer[0].childNodes[self.startOffset];
-      if(selEl.nodeType == Dom.NodeType.ELEMENT_NODE) {
+      if(selEl.nodeType === Dom.NodeType.ELEMENT_NODE) {
         (new KESelection(self.document)).selectElement(new Node(selEl));
         return
       }
     }
-    if(self.startContainer[0].nodeType == Dom.NodeType.ELEMENT_NODE && self.startContainer.nodeName() in nonCells || self.endContainer[0].nodeType == Dom.NodeType.ELEMENT_NODE && self.endContainer.nodeName() in nonCells) {
+    if(self.startContainer[0].nodeType === Dom.NodeType.ELEMENT_NODE && self.startContainer.nodeName() in nonCells || self.endContainer[0].nodeType === Dom.NodeType.ELEMENT_NODE && self.endContainer.nodeName() in nonCells) {
       self.shrink(KER.SHRINK_ELEMENT, TRUE)
     }
     var bookmark = self.createBookmark(), startNode = bookmark.startNode, endNode;
@@ -2243,7 +2266,7 @@ KISSY.add("editor/selection", ["node", "./walker", "./range", "./base"], functio
       while(next && !notWhitespaces(next)) {
         next = next.nextSibling
       }
-      isStartMarkerAlone = !(next && next.nodeValue && next.nodeValue.match(fillerTextRegex)) && (forceExpand || !startNode[0].previousSibling || startNode[0].previousSibling && Dom.nodeName(startNode[0].previousSibling) == "br");
+      isStartMarkerAlone = !(next && next.nodeValue && next.nodeValue.match(fillerTextRegex)) && (forceExpand || !startNode[0].previousSibling || startNode[0].previousSibling && Dom.nodeName(startNode[0].previousSibling) === "br");
       dummySpan = new Node(self.document.createElement("span"));
       dummySpan.html("&#65279;");
       dummySpan.insertBefore(startNode);
@@ -2252,7 +2275,7 @@ KISSY.add("editor/selection", ["node", "./walker", "./range", "./base"], functio
       }
     }
     self.setStartBefore(startNode);
-    startNode._4e_remove();
+    startNode._4eRemove();
     if(collapsed) {
       if(isStartMarkerAlone) {
         ieRange.moveStart("character", -1);
@@ -2263,11 +2286,11 @@ KISSY.add("editor/selection", ["node", "./walker", "./range", "./base"], functio
       }
       if(dummySpan) {
         self.moveToPosition(dummySpan, KER.POSITION_BEFORE_START);
-        dummySpan._4e_remove()
+        dummySpan._4eRemove()
       }
     }else {
       self.setEndBefore(endNode);
-      endNode._4e_remove();
+      endNode._4eRemove();
       ieRange.select()
     }
   };
@@ -2285,7 +2308,7 @@ KISSY.add("editor/clipboard", ["node", "./base", "./range", "./selection"], func
   var KERange = require("./range");
   var KES = require("./selection");
   var logger = S.getLogger("s/editor");
-  var $ = Node.all, UA = S.UA, pasteEvent = UA.ie ? "beforepaste" : "paste", KER = Editor.RangeType;
+  var $ = Node.all, UA = S.UA, OLD_IE = UA.ieMode < 11, pasteEvent = OLD_IE ? "beforepaste" : "paste", KER = Editor.RangeType;
   function Paste(editor) {
     var self = this;
     self.editor = editor;
@@ -2299,23 +2322,23 @@ KISSY.add("editor/clipboard", ["node", "./base", "./range", "./selection"], func
       var type = this.type;
       editor.focus();
       setTimeout(function() {
-        if(UA.ie) {
-          if(type == "cut") {
+        if(OLD_IE) {
+          if(type === "cut") {
             fixCut(editor)
           }else {
-            if(type == "paste") {
+            if(type === "paste") {
               self._preventPasteEvent();
               self._getClipboardDataFromPasteBin()
             }
           }
         }
         if(!tryToCutCopyPaste(editor, type)) {
-          alert(error_types[type])
+          alert(errorTypes[type])
         }
       }, 0)
     }};
     editorBody.on(pasteEvent, self._getClipboardDataFromPasteBin, self);
-    if(UA.ie) {
+    if(OLD_IE) {
       editorBody.on("paste", self._iePaste, self);
       editorDoc.on("keydown", self._onKeyDown, self);
       editorDoc.on("contextmenu", function() {
@@ -2330,17 +2353,17 @@ KISSY.add("editor/clipboard", ["node", "./base", "./range", "./selection"], func
     editor.addCommand("paste", new CutCopyPasteCmd("paste"))
   }, _onKeyDown:function(e) {
     var self = this, editor = self.editor;
-    if(editor.get("mode") != Editor.Mode.WYSIWYG_MODE) {
+    if(editor.get("mode") !== Editor.Mode.WYSIWYG_MODE) {
       return
     }
-    if(e.ctrlKey && e.keyCode == 86 || e.shiftKey && e.keyCode == 45) {
+    if(e.ctrlKey && e.keyCode === 86 || e.shiftKey && e.keyCode === 45) {
       self._preventPasteEvent()
     }
   }, _stateFromNamedCommand:function(command) {
     var ret;
     var self = this;
     var editor = self.editor;
-    if(command == "paste") {
+    if(command === "paste") {
       self._isPreventBeforePaste = 1;
       try {
         ret = editor.get("document")[0].queryCommandEnabled(command)
@@ -2349,7 +2372,7 @@ KISSY.add("editor/clipboard", ["node", "./base", "./range", "./selection"], func
       self._isPreventBeforePaste = 0
     }else {
       var sel = editor.getSelection(), ranges = sel && sel.getRanges();
-      ret = ranges && !(ranges.length == 1 && ranges[0].collapsed)
+      ret = ranges && !(ranges.length === 1 && ranges[0].collapsed)
     }
     return ret
   }, _preventPasteEvent:function() {
@@ -2379,9 +2402,9 @@ KISSY.add("editor/clipboard", ["node", "./base", "./range", "./selection"], func
       return
     }
     var sel = editor.getSelection(), range = new KERange(doc);
-    var pasteBin = $(UA["webkit"] ? "<body></body>" : "<div></div>", doc);
+    var pasteBin = $(UA.webkit ? "<body></body>" : "<div></div>", doc);
     pasteBin.attr("id", "ke-paste-bin");
-    if(UA["webkit"]) {
+    if(UA.webkit) {
       pasteBin[0].appendChild(doc.createTextNode("\u200b"))
     }
     doc.body.appendChild(pasteBin[0]);
@@ -2394,7 +2417,7 @@ KISSY.add("editor/clipboard", ["node", "./base", "./range", "./selection"], func
     setTimeout(function() {
       var bogusSpan;
       var oldPasteBin = pasteBin;
-      pasteBin = UA["webkit"] && (bogusSpan = pasteBin.first()) && bogusSpan.hasClass("Apple-style-span") ? bogusSpan : pasteBin;
+      pasteBin = UA.webkit && (bogusSpan = pasteBin.first()) && bogusSpan.hasClass("Apple-style-span") ? bogusSpan : pasteBin;
       sel.selectBookmarks(bms);
       var html = pasteBin.html();
       oldPasteBin.remove();
@@ -2423,11 +2446,11 @@ KISSY.add("editor/clipboard", ["node", "./base", "./range", "./selection"], func
       enabled = true
     };
     body.on(command, onExec);
-    (UA["ie"] > 7 ? doc : doc.selection.createRange())["execCommand"](command);
+    (UA.ieMode > 7 ? doc : doc.selection.createRange()).execCommand(command);
     body.detach(command, onExec);
     return enabled
   };
-  var tryToCutCopyPaste = UA["ie"] ? function(editor, type) {
+  var tryToCutCopyPaste = OLD_IE ? function(editor, type) {
     return execIECommand(editor, type)
   } : function(editor, type) {
     try {
@@ -2436,12 +2459,12 @@ KISSY.add("editor/clipboard", ["node", "./base", "./range", "./selection"], func
       return false
     }
   };
-  var error_types = {cut:"\u60a8\u7684\u6d4f\u89c8\u5668\u5b89\u5168\u8bbe\u7f6e\u4e0d\u5141\u8bb8\u7f16\u8f91\u5668\u81ea\u52a8\u6267\u884c\u526a\u5207\u64cd\u4f5c\uff0c\u8bf7\u4f7f\u7528\u952e\u76d8\u5feb\u6377\u952e(Ctrl/Cmd+X)\u6765\u5b8c\u6210", copy:"\u60a8\u7684\u6d4f\u89c8\u5668\u5b89\u5168\u8bbe\u7f6e\u4e0d\u5141\u8bb8\u7f16\u8f91\u5668\u81ea\u52a8\u6267\u884c\u590d\u5236\u64cd\u4f5c\uff0c\u8bf7\u4f7f\u7528\u952e\u76d8\u5feb\u6377\u952e(Ctrl/Cmd+C)\u6765\u5b8c\u6210", paste:"\u60a8\u7684\u6d4f\u89c8\u5668\u5b89\u5168\u8bbe\u7f6e\u4e0d\u5141\u8bb8\u7f16\u8f91\u5668\u81ea\u52a8\u6267\u884c\u7c98\u8d34\u64cd\u4f5c\uff0c\u8bf7\u4f7f\u7528\u952e\u76d8\u5feb\u6377\u952e(Ctrl/Cmd+V)\u6765\u5b8c\u6210"};
+  var errorTypes = {cut:"\u60a8\u7684\u6d4f\u89c8\u5668\u5b89\u5168\u8bbe\u7f6e\u4e0d\u5141\u8bb8\u7f16\u8f91\u5668\u81ea\u52a8\u6267\u884c\u526a\u5207\u64cd\u4f5c\uff0c\u8bf7\u4f7f\u7528\u952e\u76d8\u5feb\u6377\u952e(Ctrl/Cmd+X)\u6765\u5b8c\u6210", copy:"\u60a8\u7684\u6d4f\u89c8\u5668\u5b89\u5168\u8bbe\u7f6e\u4e0d\u5141\u8bb8\u7f16\u8f91\u5668\u81ea\u52a8\u6267\u884c\u590d\u5236\u64cd\u4f5c\uff0c\u8bf7\u4f7f\u7528\u952e\u76d8\u5feb\u6377\u952e(Ctrl/Cmd+C)\u6765\u5b8c\u6210", paste:"\u60a8\u7684\u6d4f\u89c8\u5668\u5b89\u5168\u8bbe\u7f6e\u4e0d\u5141\u8bb8\u7f16\u8f91\u5668\u81ea\u52a8\u6267\u884c\u7c98\u8d34\u64cd\u4f5c\uff0c\u8bf7\u4f7f\u7528\u952e\u76d8\u5feb\u6377\u952e(Ctrl/Cmd+V)\u6765\u5b8c\u6210"};
   function fixCut(editor) {
     var editorDoc = editor.get("document")[0];
     var sel = editor.getSelection();
     var control;
-    if(sel.getType() == KES.SELECTION_ELEMENT && (control = sel.getSelectedElement())) {
+    if(sel.getType() === KES.SELECTION_ELEMENT && (control = sel.getSelectedElement())) {
       var range = sel.getRanges()[0];
       var dummy = $(editorDoc.createTextNode(""));
       dummy.insertBefore(control);
@@ -2510,7 +2533,7 @@ KISSY.add("editor/clipboard", ["node", "./base", "./range", "./selection"], func
   function cleanPaste(html) {
     var htmlMode = 0;
     html = html.replace(/<span[^>]+_ke_bookmark[^<]*?<\/span>(&nbsp;)*/ig, "");
-    if(html.indexOf("Apple-") != -1) {
+    if(html.indexOf("Apple-") !== -1) {
       html = html.replace(/<span class="Apple-converted-space">&nbsp;<\/span>/gi, " ");
       html = html.replace(/<span class="Apple-tab-span"[^>]*>([^<]*)<\/span>/gi, function(all, spaces) {
         return spaces.replace(/\t/g, (new Array(5)).join("&nbsp;"))
@@ -2551,10 +2574,10 @@ KISSY.add("editor/clipboard", ["node", "./base", "./range", "./selection"], func
     var clipboardCommands = {copy:1, cut:1, paste:1};
     var clipboardCommandsList = ["copy", "cut", "paste"];
     editor.on("contextmenu", function(ev) {
-      var contextmenu = ev.contextmenu;
-      if(!contextmenu.__copy_fix) {
-        contextmenu.__copy_fix = 1;
-        var i = 0;
+      var contextmenu = ev.contextmenu, i;
+      if(!contextmenu.__copyFix) {
+        contextmenu.__copyFix = 1;
+        i = 0;
         for(;i < clipboardCommandsList.length;i++) {
           contextmenu.addChild({content:lang[clipboardCommandsList[i]], value:clipboardCommandsList[i]})
         }
@@ -2600,7 +2623,7 @@ KISSY.add("editor/enterKey", ["node", "./walker", "./base", "./elementPath"], fu
   var Editor = require("./base");
   var ElementPath = require("./elementPath");
   var OLD_IE = S.UA.ieMode < 11;
-  var UA = S.UA, headerTagRegex = /^h[1-6]$/, dtd = Editor.XHTML_DTD;
+  var headerTagRegex = /^h[1-6]$/, dtd = Editor.XHTML_DTD;
   function getRange(editor) {
     var ranges = editor.getSelection().getRanges();
     for(var i = ranges.length - 1;i > 0;i--) {
@@ -2613,7 +2636,7 @@ KISSY.add("editor/enterKey", ["node", "./walker", "./base", "./elementPath"], fu
     var doc = range.document;
     if(range.checkStartOfBlock() && range.checkEndOfBlock()) {
       var path = new ElementPath(range.startContainer), block = path.block;
-      if(block && (block.nodeName() == "li" || block.parent().nodeName() == "li")) {
+      if(block && (block.nodeName() === "li" || block.parent().nodeName() === "li")) {
         if(editor.hasCommand("outdent")) {
           editor.execCommand("save");
           editor.execCommand("outdent");
@@ -2634,28 +2657,28 @@ KISSY.add("editor/enterKey", ["node", "./walker", "./base", "./elementPath"], fu
     var node;
     if(nextBlock) {
       node = nextBlock.parent();
-      if(node.nodeName() == "li") {
-        nextBlock._4e_breakParent(node);
-        nextBlock._4e_move(nextBlock.next(), true)
+      if(node.nodeName() === "li") {
+        nextBlock._4eBreakParent(node);
+        nextBlock._4eMove(nextBlock.next(), true)
       }
     }else {
-      if(previousBlock && (node = previousBlock.parent()) && node.nodeName() == "li") {
-        previousBlock._4e_breakParent(node);
+      if(previousBlock && (node = previousBlock.parent()) && node.nodeName() === "li") {
+        previousBlock._4eBreakParent(node);
         range.moveToElementEditablePosition(previousBlock.next());
-        previousBlock._4e_move(previousBlock.prev())
+        previousBlock._4eMove(previousBlock.prev())
       }
     }
+    var newBlock;
     if(!isStartOfBlock && !isEndOfBlock) {
-      if(nextBlock.nodeName() == "li" && (node = nextBlock.first(Walker.invisible(true))) && S.inArray(node.nodeName(), ["ul", "ol"])) {
+      if(nextBlock.nodeName() === "li" && (node = nextBlock.first(Walker.invisible(true))) && S.inArray(node.nodeName(), ["ul", "ol"])) {
         (OLD_IE ? new Node(doc.createTextNode("\u00a0")) : new Node(doc.createElement("br"))).insertBefore(node)
       }
       if(nextBlock) {
         range.moveToElementEditablePosition(nextBlock)
       }
     }else {
-      var newBlock;
       if(previousBlock) {
-        if(previousBlock.nodeName() == "li" || !headerTagRegex.test(previousBlock.nodeName())) {
+        if(previousBlock.nodeName() === "li" || !headerTagRegex.test(previousBlock.nodeName())) {
           newBlock = previousBlock.clone()
         }
       }else {
@@ -2675,13 +2698,13 @@ KISSY.add("editor/enterKey", ["node", "./walker", "./base", "./elementPath"], fu
           }
           if(dtd.$removeEmpty[element.nodeName()]) {
             element = element.clone();
-            newBlock._4e_moveChildren(element);
+            newBlock._4eMoveChildren(element);
             newBlock.append(element)
           }
         }
       }
       if(!OLD_IE) {
-        newBlock._4e_appendBogus()
+        newBlock._4eAppendBogus()
       }
       range.insertNode(newBlock);
       if(OLD_IE && isStartOfBlock && (!isEndOfBlock || !previousBlock[0].childNodes.length)) {
@@ -2704,13 +2727,12 @@ KISSY.add("editor/enterKey", ["node", "./walker", "./base", "./elementPath"], fu
     range.select();
     return true
   }
-  function EnterKey(editor) {
+  function enterKey(editor) {
     var doc = editor.get("document");
     doc.on("keydown", function(ev) {
       var keyCode = ev.keyCode;
       if(keyCode === 13) {
-        if(ev.shiftKey || ev.ctrlKey || ev.metaKey) {
-        }else {
+        if(!(ev.shiftKey || ev.ctrlKey || ev.metaKey)) {
           editor.execCommand("save");
           var re = editor.execCommand("enterBlock");
           editor.execCommand("save");
@@ -2724,7 +2746,7 @@ KISSY.add("editor/enterKey", ["node", "./walker", "./base", "./elementPath"], fu
   return{init:function(editor) {
     editor.addCommand("enterBlock", {exec:enterBlock});
     editor.docReady(function() {
-      EnterKey(editor)
+      enterKey(editor)
     })
   }}
 });
@@ -2740,8 +2762,7 @@ KISSY.add("editor/htmlDataProcessor", ["./base", "html-parser"], function(S, req
         allEmpty = 1;
         for(i = 0;i < l;i++) {
           child = childNodes[i];
-          if(child.nodeType == S.DOM.NodeType.TEXT_NODE && !child.nodeValue) {
-          }else {
+          if(!(child.nodeType === S.DOM.NodeType.TEXT_NODE && !child.nodeValue)) {
             allEmpty = 0;
             break
           }
@@ -2762,7 +2783,7 @@ KISSY.add("editor/htmlDataProcessor", ["./base", "html-parser"], function(S, req
         if(attributes.length) {
           var attributeNames = ["name", "href", "src"], savedAttributeName;
           for(var i = 0;i < attributeNames.length;i++) {
-            savedAttributeName = "_ke_saved_" + attributeNames[i];
+            savedAttributeName = "_keSaved_" + attributeNames[i];
             if(element.getAttribute(savedAttributeName)) {
               element.removeAttribute(attributeNames[i])
             }
@@ -2771,7 +2792,7 @@ KISSY.add("editor/htmlDataProcessor", ["./base", "html-parser"], function(S, req
         return element
       }, embed:function(element) {
         var parent = element.parentNode;
-        if(parent && parent.nodeName == "object") {
+        if(parent && parent.nodeName === "object") {
           var parentWidth = parent.getAttribute("width"), parentHeight = parent.getAttribute("height");
           if(parentWidth) {
             element.setAttribute("width", parentWidth)
@@ -2790,8 +2811,8 @@ KISSY.add("editor/htmlDataProcessor", ["./base", "html-parser"], function(S, req
           return false
         }
         return undefined
-      }}, attributeNames:[[/^_ke_saved_/, ""], [/^ke_on/, "on"], [/^_ke.*/, ""], [/^ke:.*$/, ""], [/^_ks.*/, ""]], comment:function(contents) {
-        if(contents.substr(0, protectedSourceMarker.length) == protectedSourceMarker) {
+      }}, attributeNames:[[/^_keSaved_/, ""], [/^ke_on/, "on"], [/^_ke.*/, ""], [/^ke:.*$/, ""], [/^_ks.*/, ""]], comment:function(contents) {
+        if(contents.substr(0, protectedSourceMarker.length) === protectedSourceMarker) {
           contents = S.trim(S.urlDecode(contents.substr(protectedSourceMarker.length)));
           return HtmlParser.parse(contents).childNodes[0]
         }
@@ -2811,7 +2832,7 @@ KISSY.add("editor/htmlDataProcessor", ["./base", "html-parser"], function(S, req
       var tailNbspRegex = /^[\t\r\n ]*(?:&nbsp;|\xa0)[\t\r\n ]*$/;
       function lastNoneSpaceChild(block) {
         var childNodes = block.childNodes, lastIndex = childNodes.length, last = childNodes[lastIndex - 1];
-        while(last && last.nodeType == 3 && !S.trim(last.nodeValue)) {
+        while(last && last.nodeType === 3 && !S.trim(last.nodeValue)) {
           last = childNodes[--lastIndex]
         }
         return last
@@ -2819,10 +2840,10 @@ KISSY.add("editor/htmlDataProcessor", ["./base", "html-parser"], function(S, req
       function trimFillers(block) {
         var lastChild = lastNoneSpaceChild(block);
         if(lastChild) {
-          if(lastChild.nodeType == 1 && lastChild.nodeName == "br") {
+          if(lastChild.nodeType === 1 && lastChild.nodeName === "br") {
             block.removeChild(lastChild)
           }else {
-            if(lastChild.nodeType == 3 && tailNbspRegex.test(lastChild.nodeValue)) {
+            if(lastChild.nodeType === 3 && tailNbspRegex.test(lastChild.nodeValue)) {
               block.removeChild(lastChild)
             }
           }
@@ -2830,7 +2851,7 @@ KISSY.add("editor/htmlDataProcessor", ["./base", "html-parser"], function(S, req
       }
       function blockNeedsExtension(block) {
         var lastChild = lastNoneSpaceChild(block);
-        return!lastChild || block.nodeName == "form" && lastChild.nodeName == "input"
+        return!lastChild || block.nodeName === "form" && lastChild.nodeName === "input"
       }
       function extendBlockForDisplay(block) {
         trimFillers(block);
@@ -2870,8 +2891,8 @@ KISSY.add("editor/htmlDataProcessor", ["./base", "html-parser"], function(S, req
     function protectAttributes(html) {
       return html.replace(protectElementRegex, function(element, tag, attributes) {
         return"<" + tag + attributes.replace(protectAttributeRegex, function(fullAttr, attrName) {
-          if(attributes.indexOf("_ke_saved_" + attrName) == -1) {
-            return" _ke_saved_" + fullAttr + " " + fullAttr
+          if(attributes.indexOf("_keSaved_" + attrName) === -1) {
+            return" _keSaved_" + fullAttr + " " + fullAttr
           }
           return fullAttr
         }) + ">"
@@ -2941,7 +2962,7 @@ KISSY.add("editor/selectionFix", ["./base", "./selection", "./range", "node"], f
     function rngFromPoint(x, y) {
       var rng = doc.body.createTextRange();
       try {
-        rng["moveToPoint"](x, y)
+        rng.moveToPoint(x, y)
       }catch(ex) {
         rng = NULL
       }
@@ -3011,7 +3032,7 @@ KISSY.add("editor/selectionFix", ["./base", "./selection", "./range", "node"], f
     });
     body.on("focusin", function(evt) {
       var t = new Node(evt.target);
-      if(t.nodeName() != "body") {
+      if(t.nodeName() !== "body") {
         return
       }
       if(savedRange) {
@@ -3047,8 +3068,8 @@ KISSY.add("editor/selectionFix", ["./base", "./selection", "./range", "node"], f
     function saveSelection(testIt) {
       if(saveEnabled) {
         var sel = editor.getSelection(), type = sel && sel.getType(), nativeSel = sel && doc.selection;
-        if(testIt && nativeSel && type == KES.SELECTION_NONE) {
-          if(!doc["queryCommandEnabled"]("InsertImage")) {
+        if(testIt && nativeSel && type === KES.SELECTION_NONE) {
+          if(!doc.queryCommandEnabled("InsertImage")) {
             setTimeout(function() {
               saveSelection(TRUE)
             }, 50);
@@ -3056,7 +3077,7 @@ KISSY.add("editor/selectionFix", ["./base", "./selection", "./range", "node"], f
           }
         }
         var parentTag;
-        if(nativeSel && nativeSel.type && nativeSel.type != "Control" && (parentTag = nativeSel.createRange()) && (parentTag = parentTag.parentElement()) && (parentTag = parentTag.nodeName) && parentTag.toLowerCase() in {input:1, textarea:1}) {
+        if(nativeSel && nativeSel.type && nativeSel.type !== "Control" && (parentTag = nativeSel.createRange()) && (parentTag = parentTag.parentElement()) && (parentTag = parentTag.nodeName) && parentTag.toLowerCase() in {input:1, textarea:1}) {
           return
         }
         savedRange = nativeSel && sel.getRanges()[0];
@@ -3086,11 +3107,11 @@ KISSY.add("editor/selectionFix", ["./base", "./selection", "./range", "node"], f
     }
     var isNotWhitespace = Editor.Walker.whitespaces(TRUE), isNotBookmark = Editor.Walker.bookmark(FALSE, TRUE);
     var nextValidEl = function(node) {
-      return isNotWhitespace(node) && node.nodeType != 8
+      return isNotWhitespace(node) && node.nodeType !== 8
     };
     function cannotCursorPlaced(element) {
       var dtd = Editor.XHTML_DTD;
-      return element._4e_isBlockBoundary() && dtd.$empty[element.nodeName()]
+      return element._4eIsBlockBoundary() && dtd.$empty[element.nodeName()]
     }
     function isNotEmpty(node) {
       return isNotWhitespace(node) && isNotBookmark(node)
@@ -3106,32 +3127,31 @@ KISSY.add("editor/selectionFix", ["./base", "./selection", "./range", "node"], f
         }
       }
       blockLimit = blockLimit || body;
-      if(UA["gecko"]) {
+      if(UA.gecko) {
         var pathBlock = path.block || path.blockLimit, lastNode = pathBlock && pathBlock.last(isNotEmpty);
-        if(pathBlock && pathBlock._4e_isBlockBoundary() && !(lastNode && lastNode[0].nodeType == 1 && lastNode._4e_isBlockBoundary()) && pathBlock.nodeName() != "pre" && !pathBlock._4e_getBogus()) {
-          pathBlock._4e_appendBogus()
+        if(pathBlock && pathBlock._4eIsBlockBoundary() && !(lastNode && lastNode[0].nodeType === 1 && lastNode._4eIsBlockBoundary()) && pathBlock.nodeName() !== "pre" && !pathBlock._4eGetBogus()) {
+          pathBlock._4eAppendBogus()
         }
       }
       if(!range || !range.collapsed || path.block) {
         return
       }
-      if(blockLimit.nodeName() == "body") {
-        if(range.startContainer.nodeName() == "html") {
+      if(blockLimit.nodeName() === "body") {
+        if(range.startContainer.nodeName() === "html") {
           range.setStart(body, 0)
         }
         var fixedBlock = range.fixBlock(TRUE, "p");
-        if(fixedBlock && fixedBlock[0] != body[0].lastChild) {
+        if(fixedBlock && fixedBlock[0] !== body[0].lastChild) {
           if(isBlankParagraph(fixedBlock)) {
             var element = fixedBlock.next(nextValidEl, 1);
-            if(element && element[0].nodeType == Dom.NodeType.ELEMENT_NODE && !cannotCursorPlaced[element]) {
+            if(element && element[0].nodeType === Dom.NodeType.ELEMENT_NODE && !cannotCursorPlaced[element]) {
               range.moveToElementEditablePosition(element);
-              fixedBlock._4e_remove()
+              fixedBlock._4eRemove()
             }else {
               element = fixedBlock.prev(nextValidEl, 1);
-              if(element && element[0].nodeType == Dom.NodeType.ELEMENT_NODE && !cannotCursorPlaced[element]) {
+              if(element && element[0].nodeType === Dom.NodeType.ELEMENT_NODE && !cannotCursorPlaced[element]) {
                 range.moveToElementEditablePosition(element, isBlankParagraph(element) ? FALSE : TRUE);
-                fixedBlock._4e_remove()
-              }else {
+                fixedBlock._4eRemove()
               }
             }
           }
@@ -3144,20 +3164,20 @@ KISSY.add("editor/selectionFix", ["./base", "./selection", "./range", "node"], f
       lastPath = new Editor.ElementPath(lastRange.startContainer);
       if(lastPath.blockLimit.nodeName() !== "body") {
         editBlock = (new Node(doc.createElement("p"))).appendTo(body);
-        if(!UA["ie"]) {
-          editBlock._4e_appendBogus()
+        if(!UA.ie) {
+          editBlock._4eAppendBogus()
         }
       }
     })
   }
   return{init:function(editor) {
     editor.docReady(function() {
-      if(UA.ieMode < 11) {
+      if(document.selection) {
         fixCursorForIE(editor);
         fixSelectionForIEWhenDocReady(editor)
       }else {
         fireSelectionChangeForStandard(editor);
-        if(UA.ieMode == 11) {
+        if(UA.ieMode === 11) {
           editor.get("document").on("focusin", function(e) {
             var selection = editor.getSelection();
             var range = selection && selection.getRanges()[0];
@@ -3282,7 +3302,7 @@ KISSY.add("editor/styles", ["node", "./selection", "./range", "./base", "./eleme
   }
   function replaceVariables(list, variablesValues) {
     for(var item in list) {
-      if(typeof list[item] == "string") {
+      if(typeof list[item] === "string") {
         list[item] = list[item].replace(varRegex, function(match, varName) {
           return variablesValues[varName]
         })
@@ -3296,8 +3316,8 @@ KISSY.add("editor/styles", ["node", "./selection", "./range", "./base", "./eleme
       styleDefinition = S.clone(styleDefinition);
       replaceVariables(styleDefinition, variablesValues)
     }
-    var element = this["element"] = this.element = (styleDefinition["element"] || "*").toLowerCase();
-    this["type"] = this.type = element == "#text" || blockElements[element] ? KEST.STYLE_BLOCK : objectElements[element] ? KEST.STYLE_OBJECT : KEST.STYLE_INLINE;
+    var element = this.element = this.element = (styleDefinition.element || "*").toLowerCase();
+    this.type = this.type = element === "#text" || blockElements[element] ? KEST.STYLE_BLOCK : objectElements[element] ? KEST.STYLE_OBJECT : KEST.STYLE_INLINE;
     this._ = {definition:styleDefinition}
   }
   function applyStyle(document, remove) {
@@ -3316,27 +3336,28 @@ KISSY.add("editor/styles", ["node", "./selection", "./range", "./base", "./eleme
     applyStyle.call(this, document, TRUE)
   }, applyToRange:function(range) {
     var self = this;
-    return(self.applyToRange = this.type == KEST.STYLE_INLINE ? applyInlineStyle : self.type == KEST.STYLE_BLOCK ? applyBlockStyle : self.type == KEST.STYLE_OBJECT ? NULL : NULL).call(self, range)
+    return(self.applyToRange = this.type === KEST.STYLE_INLINE ? applyInlineStyle : self.type === KEST.STYLE_BLOCK ? applyBlockStyle : self.type === KEST.STYLE_OBJECT ? NULL : NULL).call(self, range)
   }, removeFromRange:function(range) {
     var self = this;
-    return(self.removeFromRange = self.type == KEST.STYLE_INLINE ? removeInlineStyle : NULL).call(self, range)
+    return(self.removeFromRange = self.type === KEST.STYLE_INLINE ? removeInlineStyle : NULL).call(self, range)
   }, checkElementRemovable:function(element, fullMatch) {
     if(!element) {
       return FALSE
     }
+    var attName;
     var def = this._.definition, attribs, styles;
-    if(element.nodeName() == this.element) {
-      if(!fullMatch && !element._4e_hasAttributes()) {
+    if(element.nodeName() === this.element) {
+      if(!fullMatch && !element._4eHasAttributes()) {
         return TRUE
       }
       attribs = getAttributesForComparison(def);
-      if(attribs["_length"]) {
-        for(var attName in attribs) {
-          if(attName == "_length") {
+      if(attribs._length) {
+        for(attName in attribs) {
+          if(attName === "_length") {
             continue
           }
           var elementAttr = element.attr(attName) || "";
-          if(attName == "style" ? compareCssText(attribs[attName], normalizeCssText(elementAttr, FALSE)) : attribs[attName] == elementAttr) {
+          if(attName === "style" ? compareCssText(attribs[attName], normalizeCssText(elementAttr, FALSE)) : attribs[attName] === elementAttr) {
             if(!fullMatch) {
               return TRUE
             }
@@ -3353,18 +3374,18 @@ KISSY.add("editor/styles", ["node", "./selection", "./range", "./base", "./eleme
         return TRUE
       }
     }
-    var overrides = getOverrides(this), override = overrides[element.nodeName()] || overrides["*"];
+    var overrides = getOverrides(this), i, override = overrides[element.nodeName()] || overrides["*"];
     if(override) {
       if(!(attribs = override.attributes) && !(styles = override.styles)) {
         return TRUE
       }
       if(attribs) {
-        for(var i = 0;i < attribs.length;i++) {
+        for(i = 0;i < attribs.length;i++) {
           attName = attribs[i][0];
           var actualAttrValue = element.attr(attName);
           if(actualAttrValue) {
             var attValue = attribs[i][1];
-            if(attValue === NULL || typeof attValue == "string" && actualAttrValue == attValue || attValue.test && attValue.test(actualAttrValue)) {
+            if(attValue === NULL || typeof attValue === "string" && actualAttrValue === attValue || attValue.test && attValue.test(actualAttrValue)) {
               return TRUE
             }
           }
@@ -3376,7 +3397,7 @@ KISSY.add("editor/styles", ["node", "./selection", "./range", "./base", "./eleme
           var actualStyleValue = element.css(styleName);
           if(actualStyleValue) {
             var styleValue = styles[i][1];
-            if(styleValue === NULL || typeof styleValue == "string" && actualStyleValue == styleValue || styleValue.test && styleValue.test(actualStyleValue)) {
+            if(styleValue === NULL || typeof styleValue === "string" && actualStyleValue === styleValue || styleValue.test && styleValue.test(actualStyleValue)) {
               return TRUE
             }
           }
@@ -3394,10 +3415,10 @@ KISSY.add("editor/styles", ["node", "./selection", "./range", "./base", "./eleme
         var elements = elementPath.elements;
         for(var i = 0, element;i < elements.length;i++) {
           element = elements[i];
-          if(this.type == KEST.STYLE_INLINE && (Dom.equals(element, elementPath.block) || Dom.equals(element, elementPath.blockLimit))) {
+          if(this.type === KEST.STYLE_INLINE && (Dom.equals(element, elementPath.block) || Dom.equals(element, elementPath.blockLimit))) {
             continue
           }
-          if(this.type == KEST.STYLE_OBJECT && !(element.nodeName() in objectElements)) {
+          if(this.type === KEST.STYLE_OBJECT && !(element.nodeName() in objectElements)) {
             continue
           }
           if(this.checkElementRemovable(element, TRUE)) {
@@ -3412,14 +3433,14 @@ KISSY.add("editor/styles", ["node", "./selection", "./range", "./base", "./eleme
     if(stylesDef) {
       return stylesDef
     }
-    stylesDef = styleDefinition["styles"];
-    var stylesText = styleDefinition["attributes"] && styleDefinition["attributes"]["style"] || "", specialStylesText = "";
+    stylesDef = styleDefinition.styles;
+    var stylesText = styleDefinition.attributes && styleDefinition.attributes.style || "", specialStylesText = "";
     if(stylesText.length) {
       stylesText = stylesText.replace(semicolonFixRegex, ";")
     }
     for(var style in stylesDef) {
       var styleVal = stylesDef[style], text = (style + ":" + styleVal).replace(semicolonFixRegex, ";");
-      if(styleVal == "inherit") {
+      if(styleVal === "inherit") {
         specialStylesText += text
       }else {
         stylesText += text
@@ -3429,21 +3450,22 @@ KISSY.add("editor/styles", ["node", "./selection", "./range", "./base", "./eleme
       stylesText = normalizeCssText(stylesText)
     }
     stylesText += specialStylesText;
-    return styleDefinition._ST = stylesText
+    styleDefinition._ST = stylesText;
+    return stylesText
   };
   function getElement(style, targetDocument, element) {
-    var el, elementName = style["element"];
-    if(elementName == "*") {
+    var el, elementName = style.element;
+    if(elementName === "*") {
       elementName = "span"
     }
     el = new Node(targetDocument.createElement(elementName));
     if(element) {
-      element._4e_copyAttributes(el)
+      element._4eCopyAttributes(el)
     }
     return setupElement(el, style)
   }
   function setupElement(el, style) {
-    var def = style._["definition"], attributes = def["attributes"], styles = KEStyle.getStyleText(def);
+    var def = style._.definition, attributes = def.attributes, styles = KEStyle.getStyleText(def);
     if(attributes) {
       for(var att in attributes) {
         el.attr(att, attributes[att])
@@ -3468,8 +3490,12 @@ KISSY.add("editor/styles", ["node", "./selection", "./range", "./base", "./eleme
   function replace(str, regexp, replacement) {
     var headBookmark = "", tailBookmark = "";
     str = str.replace(/(^<span[^>]+_ke_bookmark.*?\/span>)|(<span[^>]+_ke_bookmark.*?\/span>$)/gi, function(str, m1, m2) {
-      m1 && (headBookmark = m1);
-      m2 && (tailBookmark = m2);
+      if(m1) {
+        headBookmark = m1
+      }
+      if(m2) {
+        tailBookmark = m2
+      }
       return""
     });
     return headBookmark + str.replace(regexp, replacement) + tailBookmark
@@ -3480,12 +3506,12 @@ KISSY.add("editor/styles", ["node", "./selection", "./range", "./base", "./eleme
     preHTML = preHTML.replace(/[ \t\r\n]*(<br[^>]*>)[ \t\r\n]*/gi, "$1");
     preHTML = preHTML.replace(/([ \t\n\r]+|&nbsp;)/g, " ");
     preHTML = preHTML.replace(/<br\b[^>]*>/gi, "\n");
-    if(UA["ie"]) {
+    if(UA.ie) {
       var temp = block[0].ownerDocument.createElement("div");
       temp.appendChild(newBlock[0]);
       newBlock.outerHtml("<pre>" + preHTML + "</pre>");
       newBlock = new Node(temp.firstChild);
-      newBlock._4e_remove()
+      newBlock._4eRemove()
     }else {
       newBlock.html(preHTML)
     }
@@ -3502,14 +3528,14 @@ KISSY.add("editor/styles", ["node", "./selection", "./range", "./base", "./eleme
     return pres
   }
   function replaceBlock(block, newBlock) {
-    var newBlockIsPre = newBlock.nodeName == "pre", blockIsPre = block.nodeName == "pre", isToPre = newBlockIsPre && !blockIsPre, isFromPre = !newBlockIsPre && blockIsPre;
+    var newBlockIsPre = newBlock.nodeName === "pre", blockIsPre = block.nodeName === "pre", isToPre = newBlockIsPre && !blockIsPre, isFromPre = !newBlockIsPre && blockIsPre;
     if(isToPre) {
       newBlock = toPre(block, newBlock)
     }else {
       if(isFromPre) {
         newBlock = fromPres(splitIntoPres(block), newBlock)
       }else {
-        block._4e_moveChildren(newBlock)
+        block._4eMoveChildren(newBlock)
       }
     }
     block[0].parentNode.replaceChild(newBlock[0], block[0]);
@@ -3519,16 +3545,16 @@ KISSY.add("editor/styles", ["node", "./selection", "./range", "./base", "./eleme
   }
   function mergePre(preBlock) {
     var previousBlock;
-    if(!((previousBlock = preBlock._4e_previousSourceNode(TRUE, Dom.NodeType.ELEMENT_NODE)) && previousBlock.nodeName() == "pre")) {
+    if(!((previousBlock = preBlock._4ePreviousSourceNode(TRUE, Dom.NodeType.ELEMENT_NODE)) && previousBlock.nodeName() === "pre")) {
       return
     }
     var mergedHTML = replace(previousBlock.html(), /\n$/, "") + "\n\n" + replace(preBlock.html(), /^\n/, "");
-    if(UA["ie"]) {
+    if(UA.ie) {
       preBlock.outerHtml("<pre>" + mergedHTML + "</pre>")
     }else {
       preBlock.html(mergedHTML)
     }
-    previousBlock._4e_remove()
+    previousBlock._4eRemove()
   }
   function fromPres(preHTMLs, newBlock) {
     var docFrag = newBlock[0].ownerDocument.createDocumentFragment();
@@ -3538,7 +3564,7 @@ KISSY.add("editor/styles", ["node", "./selection", "./range", "./base", "./eleme
       blockHTML = replace(blockHTML, /^[ \t]*\n/, "");
       blockHTML = replace(blockHTML, /\n$/, "");
       blockHTML = replace(blockHTML, /^[ \t]+|[ \t]+$/g, function(match, offset) {
-        if(match.length == 1) {
+        if(match.length === 1) {
           return"&nbsp;"
         }else {
           if(!offset) {
@@ -3566,10 +3592,10 @@ KISSY.add("editor/styles", ["node", "./selection", "./range", "./base", "./eleme
       range.moveToPosition(collapsedElement, KER.POSITION_BEFORE_END);
       return
     }
-    var elementName = this["element"], def = this._["definition"], isUnknownElement, dtd = DTD[elementName];
+    var elementName = this.element, def = this._.definition, isUnknownElement, dtd = DTD[elementName];
     if(!dtd) {
       isUnknownElement = TRUE;
-      dtd = DTD["span"]
+      dtd = DTD.span
     }
     var bookmark = range.createBookmark();
     range.enlarge(KER.ENLARGE_ELEMENT);
@@ -3581,27 +3607,27 @@ KISSY.add("editor/styles", ["node", "./selection", "./range", "./base", "./eleme
         currentNode = NULL;
         applyStyle = TRUE
       }else {
-        var nodeType = currentNode[0].nodeType, nodeName = nodeType == Dom.NodeType.ELEMENT_NODE ? currentNode.nodeName() : NULL;
+        var nodeType = currentNode[0].nodeType, nodeName = nodeType === Dom.NodeType.ELEMENT_NODE ? currentNode.nodeName() : NULL;
         if(nodeName && currentNode.attr("_ke_bookmark")) {
-          currentNode = currentNode._4e_nextSourceNode(TRUE);
+          currentNode = currentNode._4eNextSourceNode(TRUE);
           continue
         }
-        if(!nodeName || dtd[nodeName] && (currentNode._4e_position(lastNode) | KEP.POSITION_PRECEDING | KEP.POSITION_IDENTICAL | KEP.POSITION_IS_CONTAINED) == KEP.POSITION_PRECEDING + KEP.POSITION_IDENTICAL + KEP.POSITION_IS_CONTAINED && (!def["childRule"] || def["childRule"](currentNode))) {
+        if(!nodeName || dtd[nodeName] && (currentNode._4ePosition(lastNode) | KEP.POSITION_PRECEDING | KEP.POSITION_IDENTICAL | KEP.POSITION_IS_CONTAINED) === KEP.POSITION_PRECEDING + KEP.POSITION_IDENTICAL + KEP.POSITION_IS_CONTAINED && (!def.childRule || def.childRule(currentNode))) {
           var currentParent = currentNode.parent();
-          if(currentParent && elementName == "a" && currentParent.nodeName() == elementName) {
+          if(currentParent && elementName === "a" && currentParent.nodeName() === elementName) {
             var tmpANode = getElement(self, document, undefined);
-            currentParent._4e_moveChildren(tmpANode);
+            currentParent._4eMoveChildren(tmpANode);
             currentParent[0].parentNode.replaceChild(tmpANode[0], currentParent[0]);
-            tmpANode._4e_mergeSiblings()
+            tmpANode._4eMergeSiblings()
           }else {
-            if(currentParent && currentParent[0] && ((DTD[currentParent.nodeName()] || DTD["span"])[elementName] || isUnknownElement) && (!def["parentRule"] || def["parentRule"](currentParent))) {
-              if(!styleRange && (!nodeName || !DTD.$removeEmpty[nodeName] || (currentNode._4e_position(lastNode) | KEP.POSITION_PRECEDING | KEP.POSITION_IDENTICAL | KEP.POSITION_IS_CONTAINED) == KEP.POSITION_PRECEDING + KEP.POSITION_IDENTICAL + KEP.POSITION_IS_CONTAINED)) {
+            if(currentParent && currentParent[0] && ((DTD[currentParent.nodeName()] || DTD.span)[elementName] || isUnknownElement) && (!def.parentRule || def.parentRule(currentParent))) {
+              if(!styleRange && (!nodeName || !DTD.$removeEmpty[nodeName] || (currentNode._4ePosition(lastNode) | KEP.POSITION_PRECEDING | KEP.POSITION_IDENTICAL | KEP.POSITION_IS_CONTAINED) === KEP.POSITION_PRECEDING + KEP.POSITION_IDENTICAL + KEP.POSITION_IS_CONTAINED)) {
                 styleRange = new KERange(document);
                 styleRange.setStartBefore(currentNode)
               }
-              if(nodeType == Dom.NodeType.TEXT_NODE || nodeType == Dom.NodeType.ELEMENT_NODE && !currentNode[0].childNodes.length) {
+              if(nodeType === Dom.NodeType.TEXT_NODE || nodeType === Dom.NodeType.ELEMENT_NODE && !currentNode[0].childNodes.length) {
                 var includedNode = currentNode, parentNode = null;
-                while((applyStyle = !includedNode.next(notBookmark, 1)) && (parentNode = includedNode.parent()) && dtd[parentNode.nodeName()] && (parentNode._4e_position(firstNode) | KEP.POSITION_FOLLOWING | KEP.POSITION_IDENTICAL | KEP.POSITION_IS_CONTAINED) == KEP.POSITION_FOLLOWING + KEP.POSITION_IDENTICAL + KEP.POSITION_IS_CONTAINED && (!def["childRule"] || def["childRule"](parentNode))) {
+                while((applyStyle = !includedNode.next(notBookmark, 1)) && (parentNode = includedNode.parent()) && dtd[parentNode.nodeName()] && (parentNode._4ePosition(firstNode) | KEP.POSITION_FOLLOWING | KEP.POSITION_IDENTICAL | KEP.POSITION_IS_CONTAINED) === KEP.POSITION_FOLLOWING + KEP.POSITION_IDENTICAL + KEP.POSITION_IS_CONTAINED && (!def.childRule || def.childRule(parentNode))) {
                   includedNode = parentNode
                 }
                 styleRange.setEndAfter(includedNode)
@@ -3613,19 +3639,19 @@ KISSY.add("editor/styles", ["node", "./selection", "./range", "./base", "./eleme
         }else {
           applyStyle = TRUE
         }
-        currentNode = currentNode._4e_nextSourceNode()
+        currentNode = currentNode._4eNextSourceNode()
       }
       if(applyStyle && styleRange && !styleRange.collapsed) {
         var styleNode = getElement(self, document, undefined), parent = styleRange.getCommonAncestor();
         var removeList = {styles:{}, attrs:{}, blockedStyles:{}, blockedAttrs:{}};
         var attName, styleName = null, value;
         while(styleNode && parent && styleNode[0] && parent[0]) {
-          if(parent.nodeName() == elementName) {
+          if(parent.nodeName() === elementName) {
             for(attName in def.attributes) {
               if(removeList.blockedAttrs[attName] || !(value = parent.attr(styleName))) {
                 continue
               }
-              if(styleNode.attr(attName) == value) {
+              if(styleNode.attr(attName) === value) {
                 styleNode.removeAttr(attName)
               }else {
                 removeList.blockedAttrs[attName] = 1
@@ -3635,13 +3661,13 @@ KISSY.add("editor/styles", ["node", "./selection", "./range", "./base", "./eleme
               if(removeList.blockedStyles[styleName] || !(value = parent.style(styleName))) {
                 continue
               }
-              if(styleNode.style(styleName) == value) {
+              if(styleNode.style(styleName) === value) {
                 styleNode.style(styleName, "")
               }else {
                 removeList.blockedStyles[styleName] = 1
               }
             }
-            if(!styleNode._4e_hasAttributes()) {
+            if(!styleNode._4eHasAttributes()) {
               styleNode = NULL;
               break
             }
@@ -3652,8 +3678,8 @@ KISSY.add("editor/styles", ["node", "./selection", "./range", "./base", "./eleme
           styleNode[0].appendChild(styleRange.extractContents());
           removeFromInsideElement(self, styleNode);
           styleRange.insertNode(styleNode);
-          styleNode._4e_mergeSiblings();
-          if(!UA["ie"]) {
+          styleNode._4eMergeSiblings();
+          if(!UA.ie) {
             styleNode[0].normalize()
           }
         }else {
@@ -3661,13 +3687,13 @@ KISSY.add("editor/styles", ["node", "./selection", "./range", "./base", "./eleme
           styleNode[0].appendChild(styleRange.extractContents());
           styleRange.insertNode(styleNode);
           removeFromInsideElement(self, styleNode);
-          styleNode._4e_remove(true)
+          styleNode._4eRemove(true)
         }
         styleRange = NULL
       }
     }
-    firstNode._4e_remove();
-    lastNode._4e_remove();
+    firstNode._4eRemove();
+    lastNode._4eRemove();
     range.moveToBookmark(bookmark);
     range.shrink(KER.SHRINK_TEXT)
   }
@@ -3677,7 +3703,7 @@ KISSY.add("editor/styles", ["node", "./selection", "./range", "./base", "./eleme
     if(range.collapsed) {
       var startPath = new ElementPath(startNode.parent()), boundaryElement;
       for(var i = 0, element;i < startPath.elements.length && (element = startPath.elements[i]);i++) {
-        if(element == startPath.block || element == startPath.blockLimit) {
+        if(element === startPath.block || element === startPath.blockLimit) {
           break
         }
         if(this.checkElementRemovable(element)) {
@@ -3686,8 +3712,8 @@ KISSY.add("editor/styles", ["node", "./selection", "./range", "./base", "./eleme
             boundaryElement = element;
             boundaryElement.match = startOfElement ? "start" : "end"
           }else {
-            element._4e_mergeSiblings();
-            if(element.nodeName() != this.element) {
+            element._4eMergeSiblings();
+            if(element.nodeName() !== this.element) {
               var _overrides = getOverrides(this);
               removeOverrides(element, _overrides[element.nodeName()] || _overrides["*"])
             }else {
@@ -3712,9 +3738,9 @@ KISSY.add("editor/styles", ["node", "./selection", "./range", "./base", "./eleme
           newElement[0].appendChild(clonedElement[0]);
           clonedElement = newElement
         }
-        clonedElement[boundaryElement.match == "start" ? "insertBefore" : "insertAfter"](boundaryElement);
+        clonedElement[boundaryElement.match === "start" ? "insertBefore" : "insertAfter"](boundaryElement);
         var tmp = boundaryElement.html();
-        if(!tmp || tmp == "\u200b") {
+        if(!tmp || tmp === "\u200b") {
           boundaryElement.remove()
         }else {
           if(UA.webkit) {
@@ -3724,11 +3750,11 @@ KISSY.add("editor/styles", ["node", "./selection", "./range", "./base", "./eleme
       }
     }else {
       var endNode = bookmark.endNode, me = this;
-      function breakNodes() {
-        var startPath = new ElementPath(startNode.parent()), endPath = new ElementPath(endNode.parent()), breakStart = NULL, breakEnd = NULL;
+      var breakNodes = function() {
+        var startPath = new ElementPath(startNode.parent()), endPath = new ElementPath(endNode.parent()), breakStart = NULL, element, breakEnd = NULL;
         for(var i = 0;i < startPath.elements.length;i++) {
-          var element = startPath.elements[i];
-          if(element == startPath.block || element == startPath.blockLimit) {
+          element = startPath.elements[i];
+          if(element === startPath.block || element === startPath.blockLimit) {
             break
           }
           if(me.checkElementRemovable(element)) {
@@ -3737,7 +3763,7 @@ KISSY.add("editor/styles", ["node", "./selection", "./range", "./base", "./eleme
         }
         for(i = 0;i < endPath.elements.length;i++) {
           element = endPath.elements[i];
-          if(element == endPath.block || element == endPath.blockLimit) {
+          if(element === endPath.block || element === endPath.blockLimit) {
             break
           }
           if(me.checkElementRemovable(element)) {
@@ -3745,24 +3771,24 @@ KISSY.add("editor/styles", ["node", "./selection", "./range", "./base", "./eleme
           }
         }
         if(breakEnd) {
-          endNode._4e_breakParent(breakEnd)
+          endNode._4eBreakParent(breakEnd)
         }
         if(breakStart) {
-          startNode._4e_breakParent(breakStart)
+          startNode._4eBreakParent(breakStart)
         }
-      }
+      };
       breakNodes();
       var currentNode = new Node(startNode[0].nextSibling);
       while(currentNode[0] !== endNode[0]) {
-        var nextNode = currentNode._4e_nextSourceNode();
-        if(currentNode[0] && currentNode[0].nodeType == Dom.NodeType.ELEMENT_NODE && this.checkElementRemovable(currentNode)) {
-          if(currentNode.nodeName() == this["element"]) {
+        var nextNode = currentNode._4eNextSourceNode();
+        if(currentNode[0] && currentNode[0].nodeType === Dom.NodeType.ELEMENT_NODE && this.checkElementRemovable(currentNode)) {
+          if(currentNode.nodeName() === this.element) {
             removeFromElement(this, currentNode)
           }else {
             var overrides = getOverrides(this);
             removeOverrides(currentNode, overrides[currentNode.nodeName()] || overrides["*"])
           }
-          if(nextNode[0].nodeType == Dom.NodeType.ELEMENT_NODE && nextNode.contains(startNode)) {
+          if(nextNode[0].nodeType === Dom.NodeType.ELEMENT_NODE && nextNode.contains(startNode)) {
             breakNodes();
             nextNode = new Node(startNode[0].nextSibling)
           }
@@ -3781,23 +3807,27 @@ KISSY.add("editor/styles", ["node", "./selection", "./range", "./base", "./eleme
     return retval
   }
   function compareCssText(source, target) {
-    typeof source == "string" && (source = parseStyleText(source));
-    typeof target == "string" && (target = parseStyleText(target));
+    if(typeof source === "string") {
+      source = parseStyleText(source)
+    }
+    if(target === "string") {
+      target = parseStyleText(target)
+    }
     for(var name in source) {
-      if(!(name in target && (target[name] == source[name] || source[name] == "inherit" || target[name] == "inherit"))) {
+      if(!(name in target && (target[name] === source[name] || source[name] === "inherit" || target[name] === "inherit"))) {
         return FALSE
       }
     }
     return TRUE
   }
-  function normalizeCssText(unparsedCssText, nativeNormalize) {
+  function normalizeCssText(unParsedCssText, nativeNormalize) {
     var styleText = "";
     if(nativeNormalize !== FALSE) {
       var temp = document.createElement("span");
-      temp.style.cssText = unparsedCssText;
+      temp.style.cssText = unParsedCssText;
       styleText = temp.style.cssText || ""
     }else {
-      styleText = unparsedCssText
+      styleText = unParsedCssText
     }
     return styleText.replace(/\s*([;:])\s*/, "$1").replace(/([^\s;])$/, "$1;").replace(/,\s+/g, ",").toLowerCase()
   }
@@ -3807,7 +3837,7 @@ KISSY.add("editor/styles", ["node", "./selection", "./range", "./base", "./eleme
       return attribs
     }
     attribs = {};
-    var length = 0, styleAttribs = styleDefinition["attributes"];
+    var length = 0, styleAttribs = styleDefinition.attributes;
     if(styleAttribs) {
       for(var styleAtt in styleAttribs) {
         length++;
@@ -3816,19 +3846,20 @@ KISSY.add("editor/styles", ["node", "./selection", "./range", "./base", "./eleme
     }
     var styleText = KEStyle.getStyleText(styleDefinition);
     if(styleText) {
-      if(!attribs["style"]) {
+      if(!attribs.style) {
         length++
       }
-      attribs["style"] = styleText
+      attribs.style = styleText
     }
-    attribs["_length"] = length;
-    return styleDefinition._AC = attribs
+    attribs._length = length;
+    styleDefinition._AC = attribs;
+    return attribs
   }
   function getOverrides(style) {
     if(style._.overrides) {
       return style._.overrides
     }
-    var overrides = style._.overrides = {}, definition = style._.definition["overrides"];
+    var overrides = style._.overrides = {}, definition = style._.definition.overrides;
     if(definition) {
       if(!S.isArray(definition)) {
         definition = [definition]
@@ -3838,22 +3869,22 @@ KISSY.add("editor/styles", ["node", "./selection", "./range", "./base", "./eleme
         var elementName;
         var overrideEl;
         var attrs, styles;
-        if(typeof override == "string") {
+        if(typeof override === "string") {
           elementName = override.toLowerCase()
         }else {
-          elementName = override["element"] ? override["element"].toLowerCase() : style.element;
-          attrs = override["attributes"];
-          styles = override["styles"]
+          elementName = override.element ? override.element.toLowerCase() : style.element;
+          attrs = override.attributes;
+          styles = override.styles
         }
         overrideEl = overrides[elementName] || (overrides[elementName] = {});
         if(attrs) {
-          var overrideAttrs = overrideEl["attributes"] = overrideEl["attributes"] || new Array;
+          var overrideAttrs = overrideEl.attributes = overrideEl.attributes || [];
           for(var attName in attrs) {
             overrideAttrs.push([attName.toLowerCase(), attrs[attName]])
           }
         }
         if(styles) {
-          var overrideStyles = overrideEl["styles"] = overrideEl["styles"] || new Array;
+          var overrideStyles = overrideEl.styles = overrideEl.styles || [];
           for(var styleName in styles) {
             overrideStyles.push([styleName.toLowerCase(), styles[styleName]])
           }
@@ -3863,16 +3894,16 @@ KISSY.add("editor/styles", ["node", "./selection", "./range", "./base", "./eleme
     return overrides
   }
   function removeFromElement(style, element) {
-    var def = style._.definition, overrides = getOverrides(style), attributes = S.merge(def["attributes"], (overrides[element.nodeName()] || overrides["*"] || {})["attributes"]), styles = S.merge(def["styles"], (overrides[element.nodeName()] || overrides["*"] || {})["styles"]), removeEmpty = S.isEmptyObject(attributes) && S.isEmptyObject(styles);
+    var def = style._.definition, overrides = getOverrides(style), attributes = S.merge(def.attributes, (overrides[element.nodeName()] || overrides["*"] || {}).attributes), styles = S.merge(def.styles, (overrides[element.nodeName()] || overrides["*"] || {}).styles), removeEmpty = S.isEmptyObject(attributes) && S.isEmptyObject(styles);
     for(var attName in attributes) {
-      if((attName == "class" || style._.definition["fullMatch"]) && element.attr(attName) != normalizeProperty(attName, attributes[attName])) {
+      if((attName === "class" || style._.definition.fullMatch) && element.attr(attName) !== normalizeProperty(attName, attributes[attName])) {
         continue
       }
       removeEmpty = removeEmpty || !!element.hasAttr(attName);
       element.removeAttr(attName)
     }
     for(var styleName in styles) {
-      if(style._.definition["fullMatch"] && element.style(styleName) != normalizeProperty(styleName, styles[styleName], TRUE)) {
+      if(style._.definition.fullMatch && element.style(styleName) !== normalizeProperty(styleName, styles[styleName], TRUE)) {
         continue
       }
       removeEmpty = removeEmpty || !!element.style(styleName);
@@ -3886,12 +3917,12 @@ KISSY.add("editor/styles", ["node", "./selection", "./range", "./base", "./eleme
     return temp[isStyle ? "style" : "attr"](name)
   }
   function removeFromInsideElement(style, element) {
-    var overrides = getOverrides(style), innerElements = element.all(style["element"]);
+    var overrides = getOverrides(style), innerElements = element.all(style.element);
     for(var i = innerElements.length;--i >= 0;) {
       removeFromElement(style, new Node(innerElements[i]))
     }
     for(var overrideElement in overrides) {
-      if(overrideElement != style["element"]) {
+      if(overrideElement !== style.element) {
         innerElements = element.all(overrideElement);
         for(i = innerElements.length - 1;i >= 0;i--) {
           var innerElement = new Node(innerElements[i]);
@@ -3901,25 +3932,25 @@ KISSY.add("editor/styles", ["node", "./selection", "./range", "./base", "./eleme
     }
   }
   function removeOverrides(element, overrides) {
-    var i, attributes = overrides && overrides["attributes"];
+    var i, actualAttrValue, attributes = overrides && overrides.attributes;
     if(attributes) {
       for(i = 0;i < attributes.length;i++) {
-        var attName = attributes[i][0], actualAttrValue;
+        var attName = attributes[i][0];
         if(actualAttrValue = element.attr(attName)) {
           var attValue = attributes[i][1];
-          if(attValue === NULL || attValue.test && attValue.test(actualAttrValue) || typeof attValue == "string" && actualAttrValue == attValue) {
+          if(attValue === NULL || attValue.test && attValue.test(actualAttrValue) || typeof attValue === "string" && actualAttrValue === attValue) {
             element[0].removeAttribute(attName)
           }
         }
       }
     }
-    var styles = overrides && overrides["styles"];
+    var styles = overrides && overrides.styles;
     if(styles) {
       for(i = 0;i < styles.length;i++) {
         var styleName = styles[i][0], actualStyleValue;
         if(actualStyleValue = element.css(styleName)) {
           var styleValue = styles[i][1];
-          if(styleValue === NULL || styleValue.test && styleValue.test(actualAttrValue) || typeof styleValue == "string" && actualStyleValue == styleValue) {
+          if(styleValue === NULL || styleValue.test && styleValue.test(actualAttrValue) || typeof styleValue === "string" && actualStyleValue === styleValue) {
             element.css(styleName, "")
           }
         }
@@ -3928,13 +3959,15 @@ KISSY.add("editor/styles", ["node", "./selection", "./range", "./base", "./eleme
     removeNoAttribsElement(element)
   }
   function removeNoAttribsElement(element) {
-    if(!element._4e_hasAttributes()) {
+    if(!element._4eHasAttributes()) {
       var firstChild = element[0].firstChild, lastChild = element[0].lastChild;
-      element._4e_remove(TRUE);
+      element._4eRemove(TRUE);
       if(firstChild) {
-        firstChild.nodeType == Dom.NodeType.ELEMENT_NODE && Dom._4e_mergeSiblings(firstChild);
-        if(lastChild && firstChild != lastChild && lastChild.nodeType == Dom.NodeType.ELEMENT_NODE) {
-          Dom._4e_mergeSiblings(lastChild)
+        if(firstChild.nodeType === Dom.NodeType.ELEMENT_NODE) {
+          Dom._4eMergeSiblings(firstChild)
+        }
+        if(lastChild && firstChild !== lastChild && lastChild.nodeType === Dom.NodeType.ELEMENT_NODE) {
+          Dom._4eMergeSiblings(lastChild)
         }
       }
     }
@@ -3958,11 +3991,11 @@ KISSY.add("editor/domIterator", ["node", "./walker", "./range", "./base", "./ele
     self.forceBrBreak = FALSE;
     self.enlargeBr = TRUE;
     self.enforceRealBlocks = FALSE;
-    self._ || (self._ = {})
+    self._ = self._ || {}
   }
   var beginWhitespaceRegex = /^[\r\n\t ]*$/;
   S.augment(Iterator, {getNextParagraph:function(blockTag) {
-    var block, self = this;
+    var block, lastNode, self = this;
     var range;
     var isLast;
     var removePreviousBr, removeLastBr;
@@ -3975,15 +4008,15 @@ KISSY.add("editor/domIterator", ["node", "./walker", "./range", "./base", "./ele
       self._.nextNode = walker.next();
       walker = new Walker(range);
       walker.evaluator = ignoreBookmarkTextEvaluator;
-      var lastNode = walker.previous();
-      self._.lastNode = lastNode._4e_nextSourceNode(TRUE);
-      if(self._.lastNode && self._.lastNode[0].nodeType == Dom.NodeType.TEXT_NODE && !S.trim(self._.lastNode[0].nodeValue) && self._.lastNode.parent()._4e_isBlockBoundary()) {
+      lastNode = walker.previous();
+      self._.lastNode = lastNode._4eNextSourceNode(TRUE);
+      if(self._.lastNode && self._.lastNode[0].nodeType === Dom.NodeType.TEXT_NODE && !S.trim(self._.lastNode[0].nodeValue) && self._.lastNode.parent()._4eIsBlockBoundary()) {
         var testRange = new KERange(range.document);
         testRange.moveToPosition(self._.lastNode, KER.POSITION_AFTER_END);
         if(testRange.checkEndOfBlock()) {
           var path = new ElementPath(testRange.endContainer);
           var lastBlock = path.block || path.blockLimit;
-          self._.lastNode = lastBlock._4e_nextSourceNode(TRUE)
+          self._.lastNode = lastBlock._4eNextSourceNode(TRUE)
         }
       }
       if(!self._.lastNode) {
@@ -3997,14 +4030,14 @@ KISSY.add("editor/domIterator", ["node", "./walker", "./range", "./base", "./ele
     self._.nextNode = NULL;
     while(currentNode) {
       var closeRange = FALSE;
-      var includeNode = currentNode[0].nodeType != Dom.NodeType.ELEMENT_NODE, continueFromSibling = FALSE;
+      var includeNode = currentNode[0].nodeType !== Dom.NodeType.ELEMENT_NODE, continueFromSibling = FALSE;
       if(!includeNode) {
         var nodeName = currentNode.nodeName();
-        if(currentNode._4e_isBlockBoundary(self.forceBrBreak && {br:1})) {
-          if(nodeName == "br") {
+        if(currentNode._4eIsBlockBoundary(self.forceBrBreak && {br:1})) {
+          if(nodeName === "br") {
             includeNode = TRUE
           }else {
-            if(!range && !currentNode[0].childNodes.length && nodeName != "hr") {
+            if(!range && !currentNode[0].childNodes.length && nodeName !== "hr") {
               block = currentNode;
               isLast = currentNode.equals(lastNode);
               break
@@ -4012,7 +4045,7 @@ KISSY.add("editor/domIterator", ["node", "./walker", "./range", "./base", "./ele
           }
           if(range) {
             range.setEndAt(currentNode, KER.POSITION_BEFORE_START);
-            if(nodeName != "br") {
+            if(nodeName !== "br") {
               self._.nextNode = currentNode
             }
           }
@@ -4029,7 +4062,7 @@ KISSY.add("editor/domIterator", ["node", "./walker", "./range", "./base", "./ele
           includeNode = TRUE
         }
       }else {
-        if(currentNode[0].nodeType == Dom.NodeType.TEXT_NODE) {
+        if(currentNode[0].nodeType === Dom.NodeType.TEXT_NODE) {
           if(beginWhitespaceRegex.test(currentNode[0].nodeValue)) {
             includeNode = FALSE
           }
@@ -4043,7 +4076,7 @@ KISSY.add("editor/domIterator", ["node", "./walker", "./range", "./base", "./ele
       if(range && !closeRange) {
         while(!currentNode[0].nextSibling && !isLast) {
           var parentNode = currentNode.parent();
-          if(parentNode._4e_isBlockBoundary(self.forceBrBreak && {br:1})) {
+          if(parentNode._4eIsBlockBoundary(self.forceBrBreak && {br:1})) {
             closeRange = TRUE;
             isLast = isLast || parentNode.equals(lastNode);
             break
@@ -4057,7 +4090,7 @@ KISSY.add("editor/domIterator", ["node", "./walker", "./range", "./base", "./ele
       if(includeNode) {
         range.setEndAt(currentNode, KER.POSITION_AFTER_END)
       }
-      currentNode = currentNode._4e_nextSourceNode(continueFromSibling, NULL, lastNode);
+      currentNode = currentNode._4eNextSourceNode(continueFromSibling, NULL, lastNode);
       isLast = !currentNode;
       if(isLast || closeRange && range) {
         break
@@ -4065,7 +4098,9 @@ KISSY.add("editor/domIterator", ["node", "./walker", "./range", "./base", "./ele
     }
     if(!block) {
       if(!range) {
-        self._.docEndMarker && self._.docEndMarker._4e_remove();
+        if(self._.docEndMarker) {
+          self._.docEndMarker._4eRemove()
+        }
         self._.nextNode = NULL;
         return NULL
       }
@@ -4075,18 +4110,18 @@ KISSY.add("editor/domIterator", ["node", "./walker", "./range", "./base", "./ele
       if((!block || !block[0]) && !self.enforceRealBlocks && checkLimits[startBlockLimit.nodeName()] && range.checkStartOfBlock() && range.checkEndOfBlock()) {
         block = startBlockLimit
       }else {
-        if(!block || self.enforceRealBlocks && block.nodeName() == "li") {
+        if(!block || self.enforceRealBlocks && block.nodeName() === "li") {
           block = new Node(self.range.document.createElement(blockTag || "p"));
           block[0].appendChild(range.extractContents());
-          block._4e_trim();
+          block._4eTrim();
           range.insertNode(block);
           removePreviousBr = removeLastBr = TRUE
         }else {
-          if(block.nodeName() != "li") {
+          if(block.nodeName() !== "li") {
             if(!range.checkStartOfBlock() || !range.checkEndOfBlock()) {
               block = block.clone(FALSE);
               block[0].appendChild(range.extractContents());
-              block._4e_trim();
+              block._4eTrim();
               var splitInfo = range.splitBlock();
               removePreviousBr = !splitInfo.wasStartOfBlock;
               removeLastBr = !splitInfo.wasEndOfBlock;
@@ -4094,7 +4129,7 @@ KISSY.add("editor/domIterator", ["node", "./walker", "./range", "./base", "./ele
             }
           }else {
             if(!isLast) {
-              self._.nextNode = block.equals(lastNode) ? NULL : range.getBoundaryNodes().endNode._4e_nextSourceNode(TRUE, NULL, lastNode)
+              self._.nextNode = block.equals(lastNode) ? NULL : range.getBoundaryNodes().endNode._4eNextSourceNode(TRUE, NULL, lastNode)
             }
           }
         }
@@ -4102,12 +4137,12 @@ KISSY.add("editor/domIterator", ["node", "./walker", "./range", "./base", "./ele
     }
     if(removePreviousBr) {
       var previousSibling = new Node(block[0].previousSibling);
-      if(previousSibling[0] && previousSibling[0].nodeType == Dom.NodeType.ELEMENT_NODE) {
-        if(previousSibling.nodeName() == "br") {
-          previousSibling._4e_remove()
+      if(previousSibling[0] && previousSibling[0].nodeType === Dom.NodeType.ELEMENT_NODE) {
+        if(previousSibling.nodeName() === "br") {
+          previousSibling._4eRemove()
         }else {
-          if(previousSibling[0].lastChild && Dom.nodeName(previousSibling[0].lastChild) == "br") {
-            Dom._4e_remove(previousSibling[0].lastChild)
+          if(previousSibling[0].lastChild && Dom.nodeName(previousSibling[0].lastChild) === "br") {
+            Dom._4eRemove(previousSibling[0].lastChild)
           }
         }
       }
@@ -4115,14 +4150,14 @@ KISSY.add("editor/domIterator", ["node", "./walker", "./range", "./base", "./ele
     if(removeLastBr) {
       var bookmarkGuard = Walker.bookmark(FALSE, TRUE);
       var lastChild = new Node(block[0].lastChild);
-      if(lastChild[0] && lastChild[0].nodeType == Dom.NodeType.ELEMENT_NODE && lastChild.nodeName() == "br") {
-        if(UA["ie"] || lastChild.prev(bookmarkGuard, 1) || lastChild.next(bookmarkGuard, 1)) {
+      if(lastChild[0] && lastChild[0].nodeType === Dom.NodeType.ELEMENT_NODE && lastChild.nodeName() === "br") {
+        if(UA.ie || lastChild.prev(bookmarkGuard, 1) || lastChild.next(bookmarkGuard, 1)) {
           lastChild.remove()
         }
       }
     }
     if(!self._.nextNode) {
-      self._.nextNode = isLast || block.equals(lastNode) ? NULL : block._4e_nextSourceNode(TRUE, NULL, lastNode)
+      self._.nextNode = isLast || block.equals(lastNode) ? NULL : block._4eNextSourceNode(TRUE, NULL, lastNode)
     }
     return block
   }});
@@ -4135,7 +4170,7 @@ KISSY.add("editor/z-index-manager", ["./base"], function(S, require) {
   var Editor = require("./base");
   var ZIndexManager = Editor.ZIndexManager = {BUBBLE_VIEW:1100, POPUP_MENU:1200, STORE_FLASH_SHOW:99999, MAXIMIZE:900, OVERLAY:9999, LOADING:11E3, LOADING_CANCEL:12E3, SELECT:1200};
   Editor.baseZIndex = function(z) {
-    return(Editor["Config"].baseZIndex || 1E4) + z
+    return(Editor.Config.baseZIndex || 1E4) + z
   };
   return ZIndexManager
 });
@@ -4155,7 +4190,7 @@ KISSY.add("editor", ["node", "editor/iframe-content-tpl", "editor/base", "editor
   require("editor/z-index-manager");
   module.exports = Editor;
   var logger = S.getLogger("s/editor");
-  var TRUE = true, undefined = undefined, FALSE = false, NULL = null, window = S.Env.host, document = window.document, UA = S.UA, IS_IE = UA.ieMode < 11, NodeType = Node.NodeType, $ = Node.all, HEIGHT = "height", tryThese = Utils.tryThese, IFRAME_TPL = "<iframe" + ' class="{prefixCls}editor-iframe"' + ' frameborder="0" ' + ' title="kissy-editor" ' + ' allowTransparency="true" ' + " {iframeSrc} " + ">" + "</iframe>", EMPTY_CONTENT_REG = /^(?:<(p)>)?(?:(?:&nbsp;)|\s|<br[^>]*>)*(?:<\/\1>)?$/i;
+  var TRUE = true, FALSE = false, NULL = null, window = S.Env.host, document = window.document, UA = S.UA, IS_IE = UA.ieMode < 11, NodeType = Node.NodeType, $ = Node.all, HEIGHT = "height", tryThese = Utils.tryThese, IFRAME_TPL = "<iframe" + ' class="{prefixCls}editor-iframe"' + ' frameborder="0" ' + ' title="kissy-editor" ' + ' allowTransparency="true" ' + " {iframeSrc} " + ">" + "</iframe>", EMPTY_CONTENT_REG = /^(?:<(p)>)?(?:(?:&nbsp;)|\s|<br[^>]*>)*(?:<\/\1>)?$/i;
   Editor.Mode = {SOURCE_MODE:0, WYSIWYG_MODE:1};
   var WYSIWYG_MODE = 1;
   Editor.addMembers({initializer:function() {
@@ -4180,7 +4215,9 @@ KISSY.add("editor", ["node", "editor/iframe-content-tpl", "editor/base", "editor
         self.focus()
       }else {
         var sel = self.getSelection();
-        sel && sel.removeAllRanges()
+        if(sel) {
+          sel.removeAllRanges()
+        }
       }
     }
     self.on("docReady", docReady);
@@ -4198,7 +4235,7 @@ KISSY.add("editor", ["node", "editor/iframe-content-tpl", "editor/base", "editor
     textareaEl.css(HEIGHT, v)
   }, _onSetMode:function(v) {
     var self = this, iframe = self.get("iframe"), textarea = self.get("textarea");
-    if(v == WYSIWYG_MODE) {
+    if(v === WYSIWYG_MODE) {
       self.setData(textarea.val());
       textarea.hide();
       self.fire("wysiwygMode")
@@ -4267,7 +4304,7 @@ KISSY.add("editor", ["node", "editor/iframe-content-tpl", "editor/base", "editor
     return this.execCommand(Utils.getQueryCmd(name))
   }, setData:function(data) {
     var self = this, htmlDataProcessor, afterData = data;
-    if(self.get("mode") != WYSIWYG_MODE) {
+    if(self.get("mode") !== WYSIWYG_MODE) {
       self.get("textarea").val(data);
       return
     }
@@ -4278,10 +4315,10 @@ KISSY.add("editor", ["node", "editor/iframe-content-tpl", "editor/base", "editor
     createIframe(self, afterData)
   }, getData:function(format, mode) {
     var self = this, htmlDataProcessor = self.htmlDataProcessor, html;
-    if(mode == undefined) {
+    if(mode === undefined) {
       mode = self.get("mode")
     }
-    if(mode == WYSIWYG_MODE && self.isDocReady()) {
+    if(mode === WYSIWYG_MODE && self.isDocReady()) {
       html = self.get("document")[0].body.innerHTML
     }else {
       html = htmlDataProcessor.toDataFormat(self.get("textarea").val())
@@ -4319,10 +4356,14 @@ KISSY.add("editor", ["node", "editor/iframe-content-tpl", "editor/base", "editor
     }
     var doc = self.get("document")[0];
     win = win[0];
-    if(!UA["ie"]) {
-      win && win.parent && win.parent.focus()
+    if(!UA.ie) {
+      if(win && win.parent) {
+        win.parent.focus()
+      }
     }
-    win && win.focus();
+    if(win) {
+      win.focus()
+    }
     try {
       doc.body.focus()
     }catch(e) {
@@ -4337,7 +4378,7 @@ KISSY.add("editor", ["node", "editor/iframe-content-tpl", "editor/base", "editor
     customStyle += "\n" + cssText;
     self.set("customStyle", customStyle);
     if(win) {
-      win["addStyleSheet"](cssText, id)
+      win.addStyleSheet(cssText, id)
     }
   }, removeCustomStyle:function(id) {
     this.get("document").on("#" + id).remove()
@@ -4352,12 +4393,12 @@ KISSY.add("editor", ["node", "editor/iframe-content-tpl", "editor/base", "editor
   }, removeCustomLink:function(link) {
     var self = this, doc = self.get("document"), links = doc.all("link");
     links.each(function(l) {
-      if(l.attr("href") == link) {
+      if(l.attr("href") === link) {
         l.remove()
       }
     });
     var cls = self.get("customLink"), ind = S.indexOf(link, cls);
-    if(ind != -1) {
+    if(ind !== -1) {
       cls.splice(ind, 1)
     }
   }, docReady:function(func) {
@@ -4393,14 +4434,14 @@ KISSY.add("editor", ["node", "editor/iframe-content-tpl", "editor/base", "editor
       return undefined
     }
     self.focus();
-    var clone, elementName = element["nodeName"](), xhtml_dtd = Editor.XHTML_DTD, isBlock = xhtml_dtd["$block"][elementName], KER = Editor.RangeType, selection = self.getSelection(), ranges = selection && selection.getRanges(), range, notWhitespaceEval, i, next, nextName, lastElement;
-    if(!ranges || ranges.length == 0) {
+    var clone, elementName = element.nodeName(), xhtmlDtd = Editor.XHTML_DTD, isBlock = xhtmlDtd.$block[elementName], KER = Editor.RangeType, selection = self.getSelection(), ranges = selection && selection.getRanges(), range, notWhitespaceEval, i, next, nextName, lastElement;
+    if(!ranges || ranges.length === 0) {
       return undefined
     }
     self.execCommand("save");
     for(i = ranges.length - 1;i >= 0;i--) {
       range = ranges[i];
-      clone = !i && element || element["clone"](TRUE);
+      clone = !i && element || element.clone(TRUE);
       range.insertNodeByDtd(clone);
       if(!lastElement) {
         lastElement = clone
@@ -4413,14 +4454,14 @@ KISSY.add("editor", ["node", "editor/iframe-content-tpl", "editor/base", "editor
     if(isBlock) {
       notWhitespaceEval = Editor.Walker.whitespaces(true);
       next = lastElement.next(notWhitespaceEval, 1);
-      nextName = next && next[0].nodeType == NodeType.ELEMENT_NODE && next.nodeName();
-      if(nextName && xhtml_dtd.$block[nextName] && xhtml_dtd[nextName]["#text"]) {
+      nextName = next && next[0].nodeType === NodeType.ELEMENT_NODE && next.nodeName();
+      if(nextName && xhtmlDtd.$block[nextName] && xhtmlDtd[nextName]["#text"]) {
         range.moveToElementEditablePosition(next)
       }
     }
     selection.selectRanges([range]);
     self.focus();
-    if(clone && clone[0].nodeType == 1) {
+    if(clone && clone[0].nodeType === 1) {
       clone.scrollIntoView(undefined, {alignWithTop:false, allowHorizontalScroll:true, onlyScrollIfNeeded:true})
     }
     saveLater.call(self);
@@ -4435,9 +4476,9 @@ KISSY.add("editor", ["node", "editor/iframe-content-tpl", "editor/base", "editor
     }
     self.focus();
     self.execCommand("save");
-    if(IS_IE) {
-      var $sel = editorDoc.selection;
-      if($sel.type == "Control") {
+    var $sel = editorDoc.selection;
+    if($sel) {
+      if($sel.type === "Control") {
         $sel.clear()
       }
       try {
@@ -4446,23 +4487,21 @@ KISSY.add("editor", ["node", "editor/iframe-content-tpl", "editor/base", "editor
         logger.error("insertHtml error in ie")
       }
     }else {
-      try {
-        editorDoc.execCommand("inserthtml", FALSE, data)
-      }catch(e) {
-        setTimeout(function() {
-          if(self.getSelection().getRanges().length == 0) {
-            var r = new Editor.Range(editorDoc), node = $(editorDoc.body).first(function(el) {
-              return el.nodeType == 1 && el.nodeName.toLowerCase() != "br"
-            });
-            if(!node) {
-              node = $(editorDoc.createElement("p"));
-              node._4e_appendBogus().appendTo(editorDoc.body)
-            }
-            r.setStartAt(node, Editor.RangeType.POSITION_AFTER_START);
-            r.select()
-          }
-          editorDoc.execCommand("inserthtml", FALSE, data)
-        }, 50)
+      var sel = self.get("iframe")[0].contentWindow.getSelection(), range = sel.getRangeAt(0);
+      range.deleteContents();
+      var el = editorDoc.createElement("div");
+      el.innerHTML = data;
+      var frag = editorDoc.createDocumentFragment(), node, lastNode;
+      while(node = el.firstChild) {
+        lastNode = frag.appendChild(node)
+      }
+      range.insertNode(frag);
+      if(lastNode) {
+        range = range.cloneRange();
+        range.setStartAfter(lastNode);
+        range.collapse(true);
+        sel.removeAllRanges();
+        sel.addRange(range)
       }
     }
     setTimeout(function() {
@@ -4492,36 +4531,36 @@ KISSY.add("editor", ["node", "editor/iframe-content-tpl", "editor/base", "editor
     textarea.remove();
     return editor
   };
-  Editor["_initIframe"] = function(id) {
+  Editor._initIframe = function(id) {
     var self = focusManager.getInstance(id), $doc = self.get("document"), doc = $doc[0], script = $doc.one("#ke_active_script");
     script.remove();
     fixByBindIframeDoc(self);
     var body = doc.body;
     var $body = $(body);
     if(IS_IE) {
-      body["hideFocus"] = TRUE;
+      body.hideFocus = TRUE;
       body.disabled = TRUE;
-      body["contentEditable"] = TRUE;
+      body.contentEditable = TRUE;
       body.removeAttribute("disabled")
     }else {
       setTimeout(function() {
-        if(UA["gecko"] || UA["opera"]) {
-          body["contentEditable"] = TRUE
+        if(UA.gecko || UA.opera) {
+          body.contentEditable = TRUE
         }else {
-          if(UA["webkit"]) {
-            body.parentNode["contentEditable"] = TRUE
+          if(UA.webkit) {
+            body.parentNode.contentEditable = TRUE
           }else {
-            doc["designMode"] = "on"
+            doc.designMode = "on"
           }
         }
       }, 0)
     }
-    if(UA["gecko"] || UA["opera"]) {
+    if(UA.gecko || UA.opera) {
       var htmlElement = doc.documentElement;
       $(htmlElement).on("mousedown", function(evt) {
         var t = evt.target;
-        if(t == htmlElement) {
-          if(UA["gecko"]) {
+        if(t === htmlElement) {
+          if(UA.gecko) {
             blinkCursor(doc, FALSE)
           }
           self.activateGecko()
@@ -4532,8 +4571,8 @@ KISSY.add("editor", ["node", "editor/iframe-content-tpl", "editor/base", "editor
       if(IS_IE) {
         setTimeout(function() {
           if(doc) {
-            body.runtimeStyle["marginBottom"] = "0px";
-            body.runtimeStyle["marginBottom"] = ""
+            body.runtimeStyle.marginBottom = "0px";
+            body.runtimeStyle.marginBottom = ""
           }
         }, 1E3)
       }
@@ -4560,24 +4599,26 @@ KISSY.add("editor", ["node", "editor/iframe-content-tpl", "editor/base", "editor
   function blinkCursor(doc, retry) {
     var body = doc.body;
     tryThese(function() {
-      doc["designMode"] = "on";
-      setTimeout(function() {
-        doc["designMode"] = "off";
+      doc.designMode = "on";
+      setTimeout(function go() {
+        doc.designMode = "off";
         body.focus();
-        if(!arguments.callee.retry) {
-          arguments.callee.retry = TRUE
+        if(!go.retry) {
+          go.retry = TRUE
         }
       }, 50)
     }, function() {
-      doc["designMode"] = "off";
+      doc.designMode = "off";
       body.setAttribute("contentEditable", false);
       body.setAttribute("contentEditable", true);
-      !retry && blinkCursor(doc, 1)
+      if(!retry) {
+        blinkCursor(doc, 1)
+      }
     })
   }
   function fixByBindIframeDoc(self) {
-    var iframe = self.get("iframe"), textarea = self.get("textarea")[0], $win = self.get("window"), $doc = self.get("document"), doc = $doc[0];
-    if(UA["webkit"]) {
+    var textarea = self.get("textarea")[0], $win = self.get("window"), $doc = self.get("document"), doc = $doc[0];
+    if(UA.webkit) {
       $doc.on("click", function(ev) {
         var control = new Node(ev.target);
         if(S.inArray(control.nodeName(), ["input", "select"])) {
@@ -4591,14 +4632,14 @@ KISSY.add("editor", ["node", "editor/iframe-content-tpl", "editor/base", "editor
         }
       })
     }
-    if(UA["gecko"] || UA.ie || UA["opera"]) {
+    if(UA.gecko || UA.ie || UA.opera) {
       var focusGrabber;
       focusGrabber = (new Node("<span " + 'tabindex="-1" ' + 'style="position:absolute; left:-10000"' + ' role="presentation"' + "></span>")).insertAfter(textarea);
       focusGrabber.on("focus", function() {
         self.focus()
       });
       self.activateGecko = function() {
-        if(UA["gecko"] && self.__iframeFocus) {
+        if(UA.gecko && self.__iframeFocus) {
           focusGrabber[0].focus()
         }
       };
@@ -4608,16 +4649,16 @@ KISSY.add("editor", ["node", "editor/iframe-content-tpl", "editor/base", "editor
       })
     }
     $win.on("focus", function() {
-      if(UA["gecko"]) {
+      if(UA.gecko) {
         blinkCursor(doc, FALSE)
       }else {
-        if(UA["opera"]) {
+        if(UA.opera) {
           doc.body.focus()
         }
       }
       self.notifySelectionChange()
     });
-    if(UA["gecko"]) {
+    if(UA.gecko) {
       $doc.on("mousedown", function() {
         if(!self.__iframeFocus) {
           blinkCursor(doc, FALSE)
@@ -4639,7 +4680,7 @@ KISSY.add("editor", ["node", "editor/iframe-content-tpl", "editor/base", "editor
           }
         }
       });
-      if(doc.compatMode == "CSS1Compat") {
+      if(doc.compatMode === "CSS1Compat") {
         var pageUpDownKeys = {33:1, 34:1};
         $doc.on("keydown", function(evt) {
           if(evt.keyCode in pageUpDownKeys) {
@@ -4650,7 +4691,7 @@ KISSY.add("editor", ["node", "editor/iframe-content-tpl", "editor/base", "editor
         })
       }
     }
-    if(UA["webkit"]) {
+    if(UA.webkit) {
       $doc.on("mousedown", function(ev) {
         var control = new Node(ev.target);
         if(S.inArray(control.nodeName(), ["img", "hr", "input", "textarea", "select"])) {
@@ -4658,7 +4699,7 @@ KISSY.add("editor", ["node", "editor/iframe-content-tpl", "editor/base", "editor
         }
       })
     }
-    if(UA["gecko"]) {
+    if(UA.gecko) {
       $doc.on("dragstart", function(ev) {
         var control = new Node(ev.target);
         if(control.nodeName() === "img" && /ke_/.test(control[0].className)) {
@@ -4675,7 +4716,7 @@ KISSY.add("editor", ["node", "editor/iframe-content-tpl", "editor/base", "editor
     for(i = 0;i < customLink.length;i++) {
       links += S.substitute('<link href="' + '{href}" rel="stylesheet" />', {href:customLink[i]})
     }
-    return S.substitute(iframeContentTpl, {doctype:S.UA.ieMode === 8 ? '<meta http-equiv="X-UA-Compatible" content="IE=7" />' : "", title:"{title}", links:links, style:"<style>" + customStyle + "</style>", data:data || "", script:id ? '<script id="ke_active_script">' + ($(window).isCustomDomain() ? 'document.domain="' + document.domain + '";' : "") + 'parent.KISSY.require("editor")._initIframe("' + id + '");' + "<\/script>" : ""})
+    return S.substitute(iframeContentTpl, {doctype:S.UA.ieMode === 8 ? '<meta http-equiv="X-UA-Compatible" content="IE=7" />' : "", title:"{title}", links:links, style:"<style>" + customStyle + "</style>", data:data || "", script:id ? '<script id="ke_active_script">' + ($(window).isCustomDomain() ? 'document.domain="' + document.domain + '";' : "") + "parent.KISSY.require('editor')._initIframe(\"" + id + '");' + "<\/script>" : ""})
   }
   var saveLater = S.buffer(function() {
     this.execCommand("save")
@@ -4698,7 +4739,7 @@ KISSY.add("editor", ["node", "editor/iframe-content-tpl", "editor/base", "editor
       self.setInternal("document", new Node(doc));
       self.setInternal("window", new Node(win));
       iframe.detach();
-      doc["open"]("text/html", "replace");
+      doc.open("text/html", "replace");
       doc.write(html);
       doc.close()
     }
@@ -4710,12 +4751,12 @@ KISSY.add("editor", ["node", "editor/iframe-content-tpl", "editor/base", "editor
     }
     var iframe = new Node(S.substitute(IFRAME_TPL, {iframeSrc:iframeSrc, prefixCls:self.get("prefixCls")})), textarea = self.get("textarea");
     if(textarea.hasAttr("tabindex")) {
-      iframe.attr("tabindex", UA["webkit"] ? -1 : textarea.attr("tabindex"))
+      iframe.attr("tabindex", UA.webkit ? -1 : textarea.attr("tabindex"))
     }
     textarea.parent().prepend(iframe);
     self.set("iframe", iframe);
     self.__docReady = 0;
-    if(UA["gecko"] && !iframe.__loaded) {
+    if(UA.gecko && !iframe.__loaded) {
       iframe.on("load", function() {
         setUpIFrame(self, afterData)
       }, self)

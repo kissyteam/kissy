@@ -37,7 +37,7 @@ KISSY.add(function (S, require) {
 
             clearShowPopupMenuTimers: function () {
                 var showTimer;
-                if (showTimer = this._showTimer) {
+                if ((showTimer = this._showTimer)) {
                     showTimer.cancel();
                     this._showTimer = null;
                 }
@@ -45,7 +45,7 @@ KISSY.add(function (S, require) {
 
             clearHidePopupMenuTimers: function () {
                 var dismissTimer;
-                if (dismissTimer = this._dismissTimer) {
+                if ((dismissTimer = this._dismissTimer)) {
                     dismissTimer.cancel();
                     this._dismissTimer = null;
                 }
@@ -73,7 +73,7 @@ KISSY.add(function (S, require) {
                 if (menu.get('visible')) {
                     // 延迟 highlighted
                     self._dismissTimer = S.later(hideMenu,
-                        self.get("menuDelay") * 1000, false, self);
+                        self.get('menuDelay') * 1000, false, self);
                 }
             },
 
@@ -87,7 +87,7 @@ KISSY.add(function (S, require) {
                 self.clearSubMenuTimers();
                 var menu = self.get('menu');
                 if (!menu.get('visible')) {
-                    self._showTimer = S.later(showMenu, self.get("menuDelay") * 1000, false, self);
+                    self._showTimer = S.later(showMenu, self.get('menuDelay') * 1000, false, self);
                 }
             },
 
@@ -141,10 +141,10 @@ KISSY.add(function (S, require) {
 
                 if (!hasKeyboardControl_) {
                     // right
-                    if (keyCode == KeyCode.RIGHT) {
+                    if (keyCode === KeyCode.RIGHT) {
                         showMenu.call(self);
                         menuChildren = menu.get('children');
-                        if (menuChild = menuChildren[0]) {
+                        if ((menuChild = menuChildren[0])) {
                             menuChild.set('highlighted', true, {
                                 data: {
                                     fromKeyboard: 1
@@ -153,27 +153,27 @@ KISSY.add(function (S, require) {
                         }
                     }
                     // enter as click
-                    else if (keyCode == KeyCode.ENTER) {
+                    else if (keyCode === KeyCode.ENTER) {
                         return self.handleClickInternal(e);
                     }
                     else {
                         return undefined;
                     }
-                } else if (menu.handleKeyDownInternal(e)) {
-                }
-                // The menu has control and the key hasn't yet been handled, on left arrow
-                // we turn off key control.
-                // left
-                else if (keyCode == KeyCode.LEFT) {
-                    // refresh highlightedItem of parent menu
-                    self.set('highlighted', false);
-                    self.set('highlighted', true, {
-                        data: {
-                            fromKeyboard: 1
-                        }
-                    });
-                } else {
-                    return undefined;
+                } else if (!menu.handleKeyDownInternal(e)) {
+                    // The menu has control and the key hasn't yet been handled, on left arrow
+                    // we turn off key control.
+                    // left
+                    if (keyCode === KeyCode.LEFT) {
+                        // refresh highlightedItem of parent menu
+                        self.set('highlighted', false);
+                        self.set('highlighted', true, {
+                            data: {
+                                fromKeyboard: 1
+                            }
+                        });
+                    } else {
+                        return undefined;
+                    }
                 }
                 return true;
             },
@@ -257,7 +257,7 @@ KISSY.add(function (S, require) {
         };
         S.mix(menu.get('align'), align, false);
         menu.show();
-        self.el.setAttribute("aria-haspopup", menu.get('el').attr('id'));
+        self.el.setAttribute('aria-haspopup', menu.get('el').attr('id'));
     }
 
     function hideMenu() {

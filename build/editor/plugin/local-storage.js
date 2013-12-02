@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:44
+build time: Dec 2 13:01
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -19,7 +19,7 @@ KISSY.add("editor/plugin/local-storage", ["editor", "overlay", "./flash-bridge"]
   }
   var swfSrc = Editor.Utils.debugUrl("plugin/local-storage/assets/swfstore.swf?t=" + +new Date);
   var css = {width:215, border:"1px solid red"}, reverseCss = {width:0, border:"none"};
-  var o = new Overlay({prefixCls:"ks-editor-", elStyle:{background:"white"}, width:"0px", content:"<h1 style='" + "text-align:center;'>\u8bf7\u70b9\u51fb\u5141\u8bb8</h1>" + "<div class='storage-container'></div>", zIndex:Editor.baseZIndex(Editor.ZIndexManager.STORE_FLASH_SHOW)});
+  var o = new Overlay({prefixCls:"ks-editor-", elStyle:{background:"white"}, width:"0px", content:'<h1 style="' + 'text-align:center;">\u8bf7\u70b9\u51fb\u5141\u8bb8</h1>' + '<div class="storage-container"></div>', zIndex:Editor.baseZIndex(Editor.ZIndexManager.STORE_FLASH_SHOW)});
   o.render();
   o.show();
   var store = new FlashBridge({src:swfSrc, render:o.get("contentEl").one(".storage-container"), params:{flashVars:{useCompression:true}}, attrs:{height:138, width:"100%"}, methods:["setItem", "removeItem", "getItem", "setMinDiskSpace", "getValueOf"]});
@@ -41,7 +41,7 @@ KISSY.add("editor/plugin/local-storage", ["editor", "overlay", "./flash-bridge"]
   });
   var oldSet = store.setItem;
   S.mix(store, {_ke:1, getItem:function(k) {
-    return this["getValueOf"](k)
+    return this.getValueOf(k)
   }, retrySave:function() {
     var self = this;
     self.setItem(self.lastSave.k, self.lastSave.v)

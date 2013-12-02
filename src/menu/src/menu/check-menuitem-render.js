@@ -11,7 +11,7 @@ KISSY.add(function (S, require) {
     return MenuItemRender.extend([ContentRenderExtension], {
         beforeCreateDom: function (renderData) {
             if (renderData.checked) {
-                renderData.elCls.push(self.getBaseCssClasses('checked'));
+                renderData.elCls.push(this.getBaseCssClasses('checked'));
             }
         },
 
@@ -26,5 +26,5 @@ KISSY.add(function (S, require) {
                 value: CheckMenuItemTpl
             }
         }
-    })
+    });
 });

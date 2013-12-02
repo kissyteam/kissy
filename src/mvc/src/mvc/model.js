@@ -6,15 +6,15 @@
 KISSY.add(function (S, require) {
     var Attribute = require('attribute');
     var blacklist = [
-        "idAttribute",
-        "destroyed",
-        "plugins",
-        "listeners",
-        "clientId",
-        "urlRoot",
-        "url",
+        'idAttribute',
+        'destroyed',
+        'plugins',
+        'listeners',
+        'clientId',
+        'urlRoot',
+        'url',
         'parse',
-        "sync"
+        'sync'
     ];
 
     /**
@@ -48,7 +48,7 @@ KISSY.add(function (S, require) {
          * Get current model 's id.
          */
         getId: function () {
-            return this.get(this.get("idAttribute"));
+            return this.get(this.get('idAttribute'));
         },
 
         /**
@@ -56,7 +56,7 @@ KISSY.add(function (S, require) {
          * @param id
          */
         'setId': function (id) {
-            return this.set(this.get("idAttribute"), id);
+            return this.set(this.get('idAttribute'), id);
         },
 
         setInternal: function () {
@@ -107,10 +107,12 @@ KISSY.add(function (S, require) {
                     lists[l].remove(self, opts);
                 }
                 self.fire('destroy');
-                success && success.apply(this, arguments);
+                if(success){
+                    success.apply(self, arguments);
+                }
             };
             if (!self.isNew() && opts['delete']) {
-                self.get("sync").call(self, self, 'delete', opts);
+                self.get('sync').call(self, self, 'delete', opts);
             } else {
                 opts.success();
                 if (opts.complete) {
@@ -144,9 +146,11 @@ KISSY.add(function (S, require) {
                     }
                 }
                 self.__isModified = 0;
-                success && success.apply(this, arguments);
+                if(success){
+                    success.apply(self, arguments);
+                }
             };
-            self.get("sync").call(self, self, 'read', opts);
+            self.get('sync').call(self, self, 'read', opts);
             return self;
         },
 
@@ -173,9 +177,11 @@ KISSY.add(function (S, require) {
                     }
                 }
                 self.__isModified = 0;
-                success && success.apply(this, arguments);
+                if(success){
+                    success.apply(self, arguments);
+                }
             };
-            self.get("sync").call(self, self, self.isNew() ? 'create' : 'update', opts);
+            self.get('sync').call(self, self, self.isNew() ? 'create' : 'update', opts);
             return self;
         },
 
@@ -209,7 +215,7 @@ KISSY.add(function (S, require) {
              */
             clientId: {
                 valueFn: function () {
-                    return S.guid("mvc-client");
+                    return S.guid('mvc-client');
                 }
             },
             /**
@@ -226,7 +232,7 @@ KISSY.add(function (S, require) {
              * @type {String}
              */
             urlRoot: {
-                value: ""
+                value: ''
             },
             /**
              * Sync model data with server.
@@ -235,7 +241,7 @@ KISSY.add(function (S, require) {
              */
             sync: {
                 value: function () {
-                    S.require("mvc").sync.apply(this, arguments);
+                    S.require('mvc').sync.apply(this, arguments);
                 }
             },
             /**
@@ -253,8 +259,8 @@ KISSY.add(function (S, require) {
 
     function getUrl(o) {
         var u;
-        if (o && (u = o.get("url"))) {
-            if (typeof u == 'string') {
+        if (o && (u = o.get('url'))) {
+            if (typeof u === 'string') {
                 return u;
             }
             return u.call(o);
@@ -272,13 +278,13 @@ KISSY.add(function (S, require) {
                 break;
             }
         }
-        var base = getUrl(cv) || this.get("urlRoot");
+        var base = getUrl(cv) || this.get('urlRoot');
 
         if (this.isNew()) {
             return base;
         }
 
-        base = base + (base.charAt(base.length - 1) == '/' ? '' : '/');
-        return base + encodeURIComponent(this.getId()) + "/";
+        base = base + (base.charAt(base.length - 1) === '/' ? '' : '/');
+        return base + encodeURIComponent(this.getId()) + '/';
     }
 });

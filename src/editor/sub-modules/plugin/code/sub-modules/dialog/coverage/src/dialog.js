@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ','src':' + jscoverage_quote(this.src)
+            + ',"src":' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -253,25 +253,25 @@ if (! _$jscoverage['/dialog.js']) {
   _$jscoverage['/dialog.js'].lineData[124] = 0;
   _$jscoverage['/dialog.js'].lineData[127] = 0;
   _$jscoverage['/dialog.js'].lineData[131] = 0;
-  _$jscoverage['/dialog.js'].lineData[132] = 0;
   _$jscoverage['/dialog.js'].lineData[133] = 0;
-  _$jscoverage['/dialog.js'].lineData[135] = 0;
-  _$jscoverage['/dialog.js'].lineData[139] = 0;
-  _$jscoverage['/dialog.js'].lineData[146] = 0;
+  _$jscoverage['/dialog.js'].lineData[134] = 0;
+  _$jscoverage['/dialog.js'].lineData[136] = 0;
+  _$jscoverage['/dialog.js'].lineData[140] = 0;
   _$jscoverage['/dialog.js'].lineData[147] = 0;
-  _$jscoverage['/dialog.js'].lineData[149] = 0;
+  _$jscoverage['/dialog.js'].lineData[148] = 0;
   _$jscoverage['/dialog.js'].lineData[150] = 0;
+  _$jscoverage['/dialog.js'].lineData[151] = 0;
   _$jscoverage['/dialog.js'].lineData[153] = 0;
+  _$jscoverage['/dialog.js'].lineData[156] = 0;
   _$jscoverage['/dialog.js'].lineData[157] = 0;
   _$jscoverage['/dialog.js'].lineData[158] = 0;
-  _$jscoverage['/dialog.js'].lineData[159] = 0;
-  _$jscoverage['/dialog.js'].lineData[161] = 0;
+  _$jscoverage['/dialog.js'].lineData[160] = 0;
+  _$jscoverage['/dialog.js'].lineData[162] = 0;
   _$jscoverage['/dialog.js'].lineData[163] = 0;
-  _$jscoverage['/dialog.js'].lineData[164] = 0;
+  _$jscoverage['/dialog.js'].lineData[166] = 0;
   _$jscoverage['/dialog.js'].lineData[167] = 0;
-  _$jscoverage['/dialog.js'].lineData[168] = 0;
-  _$jscoverage['/dialog.js'].lineData[170] = 0;
-  _$jscoverage['/dialog.js'].lineData[174] = 0;
+  _$jscoverage['/dialog.js'].lineData[169] = 0;
+  _$jscoverage['/dialog.js'].lineData[173] = 0;
 }
 if (! _$jscoverage['/dialog.js'].functionData) {
   _$jscoverage['/dialog.js'].functionData = [];
@@ -287,46 +287,51 @@ if (! _$jscoverage['/dialog.js'].branchData) {
   _$jscoverage['/dialog.js'].branchData = {};
   _$jscoverage['/dialog.js'].branchData['131'] = [];
   _$jscoverage['/dialog.js'].branchData['131'][1] = new BranchData();
-  _$jscoverage['/dialog.js'].branchData['150'] = [];
-  _$jscoverage['/dialog.js'].branchData['150'][1] = new BranchData();
-  _$jscoverage['/dialog.js'].branchData['150'][2] = new BranchData();
-  _$jscoverage['/dialog.js'].branchData['150'][3] = new BranchData();
+  _$jscoverage['/dialog.js'].branchData['151'] = [];
+  _$jscoverage['/dialog.js'].branchData['151'][1] = new BranchData();
+  _$jscoverage['/dialog.js'].branchData['151'][2] = new BranchData();
+  _$jscoverage['/dialog.js'].branchData['151'][3] = new BranchData();
   _$jscoverage['/dialog.js'].branchData['153'] = [];
   _$jscoverage['/dialog.js'].branchData['153'][1] = new BranchData();
+  _$jscoverage['/dialog.js'].branchData['153'][2] = new BranchData();
   _$jscoverage['/dialog.js'].branchData['154'] = [];
   _$jscoverage['/dialog.js'].branchData['154'][1] = new BranchData();
-  _$jscoverage['/dialog.js'].branchData['158'] = [];
-  _$jscoverage['/dialog.js'].branchData['158'][1] = new BranchData();
-  _$jscoverage['/dialog.js'].branchData['167'] = [];
-  _$jscoverage['/dialog.js'].branchData['167'][1] = new BranchData();
+  _$jscoverage['/dialog.js'].branchData['157'] = [];
+  _$jscoverage['/dialog.js'].branchData['157'][1] = new BranchData();
+  _$jscoverage['/dialog.js'].branchData['166'] = [];
+  _$jscoverage['/dialog.js'].branchData['166'][1] = new BranchData();
 }
-_$jscoverage['/dialog.js'].branchData['167'][1].init(17, 12, '!this.dialog');
-function visit8_167_1(result) {
-  _$jscoverage['/dialog.js'].branchData['167'][1].ranCondition(result);
+_$jscoverage['/dialog.js'].branchData['166'][1].init(17, 12, '!this.dialog');
+function visit9_166_1(result) {
+  _$jscoverage['/dialog.js'].branchData['166'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['158'][1].init(89, 8, '!S.UA.ie');
-function visit7_158_1(result) {
-  _$jscoverage['/dialog.js'].branchData['158'][1].ranCondition(result);
+}_$jscoverage['/dialog.js'].branchData['157'][1].init(89, 8, '!S.UA.ie');
+function visit8_157_1(result) {
+  _$jscoverage['/dialog.js'].branchData['157'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['154'][1].init(27, 78, 'xhtmlDtd.$block[nextName] && xhtmlDtd[nextName][\'#text\']');
-function visit6_154_1(result) {
+}_$jscoverage['/dialog.js'].branchData['154'][1].init(27, 76, 'xhtmlDtd.$block[nextName] && xhtmlDtd[nextName][\'#text\']');
+function visit7_154_1(result) {
   _$jscoverage['/dialog.js'].branchData['154'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['153'][1].init(987, 106, 'nextName && xhtmlDtd.$block[nextName] && xhtmlDtd[nextName][\'#text\']');
+}_$jscoverage['/dialog.js'].branchData['153'][2].init(1006, 104, 'nextName && xhtmlDtd.$block[nextName] && xhtmlDtd[nextName][\'#text\']');
+function visit6_153_2(result) {
+  _$jscoverage['/dialog.js'].branchData['153'][2].ranCondition(result);
+  return result;
+}_$jscoverage['/dialog.js'].branchData['153'][1].init(1004, 107, '!(nextName && xhtmlDtd.$block[nextName] && xhtmlDtd[nextName][\'#text\'])');
 function visit5_153_1(result) {
   _$jscoverage['/dialog.js'].branchData['153'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['150'][3].init(829, 41, 'next[0].nodeType == NodeType.ELEMENT_NODE');
-function visit4_150_3(result) {
-  _$jscoverage['/dialog.js'].branchData['150'][3].ranCondition(result);
+}_$jscoverage['/dialog.js'].branchData['151'][3].init(862, 42, 'next[0].nodeType === NodeType.ELEMENT_NODE');
+function visit4_151_3(result) {
+  _$jscoverage['/dialog.js'].branchData['151'][3].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['150'][2].init(829, 76, 'next[0].nodeType == NodeType.ELEMENT_NODE && next.nodeName()');
-function visit3_150_2(result) {
-  _$jscoverage['/dialog.js'].branchData['150'][2].ranCondition(result);
+}_$jscoverage['/dialog.js'].branchData['151'][2].init(862, 60, 'next[0].nodeType === NodeType.ELEMENT_NODE && next.nodeName()');
+function visit3_151_2(result) {
+  _$jscoverage['/dialog.js'].branchData['151'][2].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['150'][1].init(821, 84, 'next && next[0].nodeType == NodeType.ELEMENT_NODE && next.nodeName()');
-function visit2_150_1(result) {
-  _$jscoverage['/dialog.js'].branchData['150'][1].ranCondition(result);
+}_$jscoverage['/dialog.js'].branchData['151'][1].init(854, 68, 'next && next[0].nodeType === NodeType.ELEMENT_NODE && next.nodeName()');
+function visit2_151_1(result) {
+  _$jscoverage['/dialog.js'].branchData['151'][1].ranCondition(result);
   return result;
 }_$jscoverage['/dialog.js'].branchData['131'][1].init(139, 25, '!S.trim(val = code.val())');
 function visit1_131_1(result) {
@@ -406,53 +411,52 @@ KISSY.add(function(S, require) {
   var self = this, val, editor = self.editor, code = self.code;
   _$jscoverage['/dialog.js'].lineData[131]++;
   if (visit1_131_1(!S.trim(val = code.val()))) {
-    _$jscoverage['/dialog.js'].lineData[132]++;
-    alert('\u8bf7\u8f93\u5165\u4ee3\u7801!');
     _$jscoverage['/dialog.js'].lineData[133]++;
+    alert('\u8bf7\u8f93\u5165\u4ee3\u7801!');
+    _$jscoverage['/dialog.js'].lineData[134]++;
     return;
   }
-  _$jscoverage['/dialog.js'].lineData[135]++;
+  _$jscoverage['/dialog.js'].lineData[136]++;
   var codeEl = S.all(S.substitute(codeTpl, {
   type: self.type.get('value'), 
   code: S.escapeHtml(val)}), editor.get('document')[0]);
-  _$jscoverage['/dialog.js'].lineData[139]++;
+  _$jscoverage['/dialog.js'].lineData[140]++;
   self.dialog.hide();
-  _$jscoverage['/dialog.js'].lineData[146]++;
-  editor.insertElement(codeEl);
   _$jscoverage['/dialog.js'].lineData[147]++;
+  editor.insertElement(codeEl);
+  _$jscoverage['/dialog.js'].lineData[148]++;
   var range = editor.getSelection().getRanges()[0];
-  _$jscoverage['/dialog.js'].lineData[149]++;
-  var next = codeEl.next(notWhitespaceEval, 1);
   _$jscoverage['/dialog.js'].lineData[150]++;
-  var nextName = visit2_150_1(next && visit3_150_2(visit4_150_3(next[0].nodeType == NodeType.ELEMENT_NODE) && next.nodeName()));
+  var next = codeEl.next(notWhitespaceEval, 1);
+  _$jscoverage['/dialog.js'].lineData[151]++;
+  var nextName = visit2_151_1(next && visit3_151_2(visit4_151_3(next[0].nodeType === NodeType.ELEMENT_NODE) && next.nodeName()));
   _$jscoverage['/dialog.js'].lineData[153]++;
-  if (visit5_153_1(nextName && visit6_154_1(xhtmlDtd.$block[nextName] && xhtmlDtd[nextName]['#text']))) {
-  } else {
+  if (visit5_153_1(!(visit6_153_2(nextName && visit7_154_1(xhtmlDtd.$block[nextName] && xhtmlDtd[nextName]['#text']))))) {
+    _$jscoverage['/dialog.js'].lineData[156]++;
+    next = S.all('<p></p>', editor.get('document')[0]);
     _$jscoverage['/dialog.js'].lineData[157]++;
-    next = S.all("<p></p>", editor.get('document')[0]);
-    _$jscoverage['/dialog.js'].lineData[158]++;
-    if (visit7_158_1(!S.UA.ie)) {
-      _$jscoverage['/dialog.js'].lineData[159]++;
+    if (visit8_157_1(!S.UA.ie)) {
+      _$jscoverage['/dialog.js'].lineData[158]++;
       next._4eAppendBogus();
     }
-    _$jscoverage['/dialog.js'].lineData[161]++;
+    _$jscoverage['/dialog.js'].lineData[160]++;
     codeEl.after(next);
   }
-  _$jscoverage['/dialog.js'].lineData[163]++;
+  _$jscoverage['/dialog.js'].lineData[162]++;
   range.moveToElementEditablePosition(next);
-  _$jscoverage['/dialog.js'].lineData[164]++;
+  _$jscoverage['/dialog.js'].lineData[163]++;
   editor.getSelection().selectRanges([range]);
 }, 
   show: function() {
   _$jscoverage['/dialog.js'].functionData[6]++;
-  _$jscoverage['/dialog.js'].lineData[167]++;
-  if (visit8_167_1(!this.dialog)) {
-    _$jscoverage['/dialog.js'].lineData[168]++;
+  _$jscoverage['/dialog.js'].lineData[166]++;
+  if (visit9_166_1(!this.dialog)) {
+    _$jscoverage['/dialog.js'].lineData[167]++;
     this.initDialog();
   }
-  _$jscoverage['/dialog.js'].lineData[170]++;
+  _$jscoverage['/dialog.js'].lineData[169]++;
   this.dialog.show();
 }});
-  _$jscoverage['/dialog.js'].lineData[174]++;
+  _$jscoverage['/dialog.js'].lineData[173]++;
   return CodeDialog;
 });

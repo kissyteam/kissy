@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ','src':' + jscoverage_quote(this.src)
+            + ',"src":' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -237,15 +237,19 @@ if (! _$jscoverage['/preview.js']) {
   _$jscoverage['/preview.js'].lineData[14] = 0;
   _$jscoverage['/preview.js'].lineData[18] = 0;
   _$jscoverage['/preview.js'].lineData[19] = 0;
-  _$jscoverage['/preview.js'].lineData[24] = 0;
+  _$jscoverage['/preview.js'].lineData[20] = 0;
+  _$jscoverage['/preview.js'].lineData[21] = 0;
+  _$jscoverage['/preview.js'].lineData[22] = 0;
+  _$jscoverage['/preview.js'].lineData[23] = 0;
   _$jscoverage['/preview.js'].lineData[25] = 0;
   _$jscoverage['/preview.js'].lineData[26] = 0;
-  _$jscoverage['/preview.js'].lineData[28] = 0;
+  _$jscoverage['/preview.js'].lineData[27] = 0;
+  _$jscoverage['/preview.js'].lineData[29] = 0;
+  _$jscoverage['/preview.js'].lineData[45] = 0;
+  _$jscoverage['/preview.js'].lineData[46] = 0;
   _$jscoverage['/preview.js'].lineData[47] = 0;
-  _$jscoverage['/preview.js'].lineData[48] = 0;
   _$jscoverage['/preview.js'].lineData[49] = 0;
-  _$jscoverage['/preview.js'].lineData[51] = 0;
-  _$jscoverage['/preview.js'].lineData[58] = 0;
+  _$jscoverage['/preview.js'].lineData[57] = 0;
 }
 if (! _$jscoverage['/preview.js'].functionData) {
   _$jscoverage['/preview.js'].functionData = [];
@@ -273,36 +277,44 @@ KISSY.add(function(S, require) {
   pluginRenderUI: function(editor) {
   _$jscoverage['/preview.js'].functionData[2]++;
   _$jscoverage['/preview.js'].lineData[14]++;
-  editor.addButton("preview", {
-  tooltip: "\u9884\u89c8", 
+  editor.addButton('preview', {
+  tooltip: '\u9884\u89c8', 
   listeners: {
   click: function() {
   _$jscoverage['/preview.js'].functionData[3]++;
   _$jscoverage['/preview.js'].lineData[18]++;
+  var iWidth, iHeight, iLeft;
+  _$jscoverage['/preview.js'].lineData[19]++;
   try {
-    _$jscoverage['/preview.js'].lineData[19]++;
-    var screen = win.screen, iWidth = Math.round(screen.width * 0.8), iHeight = Math.round(screen.height * 0.7), iLeft = Math.round(screen.width * 0.1);
+    _$jscoverage['/preview.js'].lineData[20]++;
+    var screen = win.screen;
+    _$jscoverage['/preview.js'].lineData[21]++;
+    iHeight = Math.round(screen.height * 0.7);
+    _$jscoverage['/preview.js'].lineData[22]++;
+    iLeft = Math.round(screen.width * 0.1);
+    _$jscoverage['/preview.js'].lineData[23]++;
+    iWidth = Math.round(screen.width * 0.8);
   }  catch (e) {
-  _$jscoverage['/preview.js'].lineData[24]++;
-  iWidth = 640;
   _$jscoverage['/preview.js'].lineData[25]++;
-  iHeight = 420;
+  iWidth = 640;
   _$jscoverage['/preview.js'].lineData[26]++;
+  iHeight = 420;
+  _$jscoverage['/preview.js'].lineData[27]++;
   iLeft = 80;
 }
-  _$jscoverage['/preview.js'].lineData[28]++;
+  _$jscoverage['/preview.js'].lineData[29]++;
   var sHTML = S.substitute(editor.getDocHtml(), {
   title: '\u9884\u89c8'}), sOpenUrl = '', oWindow = win.open(sOpenUrl, '', 'toolbar=yes,' + 'location=no,' + 'status=yes,' + 'menubar=yes,' + 'scrollbars=yes,' + 'resizable=yes,' + 'width=' + iWidth + ',height=' + iHeight + ',left=' + iLeft), winDoc = oWindow.document;
-  _$jscoverage['/preview.js'].lineData[47]++;
+  _$jscoverage['/preview.js'].lineData[45]++;
   winDoc.open();
-  _$jscoverage['/preview.js'].lineData[48]++;
+  _$jscoverage['/preview.js'].lineData[46]++;
   winDoc.write(sHTML);
-  _$jscoverage['/preview.js'].lineData[49]++;
+  _$jscoverage['/preview.js'].lineData[47]++;
   winDoc.close();
-  _$jscoverage['/preview.js'].lineData[51]++;
+  _$jscoverage['/preview.js'].lineData[49]++;
   oWindow.focus();
 }}});
 }});
-  _$jscoverage['/preview.js'].lineData[58]++;
+  _$jscoverage['/preview.js'].lineData[57]++;
   return Preview;
 });

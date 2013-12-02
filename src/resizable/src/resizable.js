@@ -12,21 +12,21 @@ KISSY.add(function (S, require) {
         i,
         j,
         Draggable = DD.Draggable,
-        CLS_PREFIX = "resizable-handler",
-        horizontal = ["l", "r"],
-        vertical = ["t", "b"],
-        ATTRS_ORDER = ['width', 'height', "top", 'left'],
+        CLS_PREFIX = 'resizable-handler',
+        horizontal = ['l', 'r'],
+        vertical = ['t', 'b'],
+        ATTRS_ORDER = ['width', 'height', 'top', 'left'],
         hcNormal = {
-            "t": function (minW, maxW, minH, maxH, ot, ol, ow, oh, diffT, diffL, preserveRatio) {
+            't': function (minW, maxW, minH, maxH, ot, ol, ow, oh, diffT, diffL, preserveRatio) {
                 var h = getBoundValue(minH, maxH, oh - diffT),
                     t = ot + oh - h,
                     w = 0;
                 if (preserveRatio) {
                     w = h / oh * ow;
                 }
-                return [w, h, t, 0]
+                return [w, h, t, 0];
             },
-            "b": function (minW, maxW, minH, maxH, ot, ol, ow, oh, diffT, diffL, preserveRatio) {
+            'b': function (minW, maxW, minH, maxH, ot, ol, ow, oh, diffT, diffL, preserveRatio) {
                 var h = getBoundValue(minH, maxH, oh + diffT),
                     w = 0;
                 if (preserveRatio) {
@@ -34,7 +34,7 @@ KISSY.add(function (S, require) {
                 }
                 return [w, h, 0, 0];
             },
-            "r": function (minW, maxW, minH, maxH, ot, ol, ow, oh, diffT, diffL, preserveRatio) {
+            'r': function (minW, maxW, minH, maxH, ot, ol, ow, oh, diffT, diffL, preserveRatio) {
                 var w = getBoundValue(minW, maxW, ow + diffL),
                     h = 0;
                 if (preserveRatio) {
@@ -42,19 +42,20 @@ KISSY.add(function (S, require) {
                 }
                 return [w, h, 0, 0];
             },
-            "l": function (minW, maxW, minH, maxH, ot, ol, ow, oh, diffT, diffL, preserveRatio) {
+            'l': function (minW, maxW, minH, maxH, ot, ol, ow, oh, diffT, diffL, preserveRatio) {
                 var w = getBoundValue(minW, maxW, ow - diffL),
                     h = 0,
                     l = ol + ow - w;
                 if (preserveRatio) {
                     h = w / ow * oh;
                 }
-                return [w, h, 0, l]
+                return [w, h, 0, l];
             }
         };
 
     for (i = 0; i < horizontal.length; i++) {
         for (j = 0; j < vertical.length; j++) {
+            /*jshint loopfunc:true*/
             (function (h, v) {
                 hcNormal[ h + v] = hcNormal[ v + h] = function () {
                     return merge(hcNormal[h].apply(this, arguments),
@@ -76,7 +77,7 @@ KISSY.add(function (S, require) {
     }
 
     function createDD(self) {
-        var dds = self['dds'],
+        var dds = self.dds,
             node = self.get('node'),
             handlers = self.get('handlers'),
             preserveRatio,
@@ -85,11 +86,11 @@ KISSY.add(function (S, require) {
             prefix = prefixCls + CLS_PREFIX;
         for (i = 0; i < handlers.length; i++) {
             var hc = handlers[i],
-                el = $("<div class='" +
+                el = $('<div class="' +
                     prefix +
-                    " " + prefix +
-                    "-" + hc +
-                    "'></div>")
+                    ' ' + prefix +
+                    '-' + hc +
+                    '"></div>')
                     .prependTo(node, undefined),
                 dd = dds[hc] = new Draggable(S.mix({
                     node: el,
@@ -98,14 +99,14 @@ KISSY.add(function (S, require) {
                 }, dragConfig));
             (function (hc, dd) {
                 var startEdgePos;
-                dd.on("drag", function (ev) {
+                dd.on('drag', function (ev) {
                     var dd = ev.target,
                         ow = self._width,
                         oh = self._height,
-                        minW = self.get("minWidth"),
-                        maxW = self.get("maxWidth"),
-                        minH = self.get("minHeight"),
-                        maxH = self.get("maxHeight"),
+                        minW = self.get('minWidth'),
+                        maxW = self.get('maxWidth'),
+                        minH = self.get('minHeight'),
+                        maxH = self.get('maxHeight'),
                         diffT = ev.pageY - startEdgePos.top,
                         diffL = ev.pageX - startEdgePos.left,
                         ot = self._top,
@@ -124,11 +125,11 @@ KISSY.add(function (S, require) {
                         region: region
                     });
                 });
-                dd.on("dragstart", function () {
+                dd.on('dragstart', function () {
                     startEdgePos = dd.get('startMousePos');
                     preserveRatio = self.get('preserveRatio');
                     self._width = node.width();
-                    self._top = parseInt(node.css("top"));
+                    self._top = parseInt(node.css('top'));
                     self._left = parseInt(node.css('left'));
                     self._height = node.height();
                     self.fire('resizeStart', {
@@ -153,10 +154,10 @@ KISSY.add(function (S, require) {
      */
     var Resizable = Base.extend({
         initializer: function () {
-            this['dds'] = {};
+            this.dds = {};
             this.publish('beforeResize', {
                 defaultFn: this._onBeforeResize
-            })
+            });
         },
 
         _onBeforeResize: function (e) {
@@ -173,7 +174,7 @@ KISSY.add(function (S, require) {
         },
 
         _onSetDisabled: function (v) {
-            var dds = this['dds'];
+            var dds = this.dds;
             S.each(dds, function (d) {
                 d.set('disabled', v);
             });
@@ -182,10 +183,10 @@ KISSY.add(function (S, require) {
         destructor: function () {
             var self = this,
                 d,
-                dds = self['dds'];
+                dds = self.dds;
             for (d in dds) {
                 dds[d].destroy();
-                dds[d].get("node").remove();
+                dds[d].get('node').remove();
                 delete dds[d];
             }
         }
@@ -286,7 +287,7 @@ KISSY.add(function (S, require) {
              * @ignore
              */
             maxWidth: {
-                value: Number['MAX_VALUE']
+                value: Number.MAX_VALUE
             },
             /**
              * Maximum height can current node resize to.
@@ -301,7 +302,7 @@ KISSY.add(function (S, require) {
              * @ignore
              */
             maxHeight: {
-                value: Number['MAX_VALUE']
+                value: Number.MAX_VALUE
             },
             /**
              * Whether preserve width/height ratio when resizing

@@ -26,10 +26,10 @@ KISSY.add(function (S, require) {
     return Control.extend({
         initializer: function () {
             var self = this;
-            var scrollType = self.scrollType = self.get('axis') == 'x' ? 'left' : 'top';
+            var scrollType = self.scrollType = self.get('axis') === 'x' ? 'left' : 'top';
             var ucScrollType = S.ucfirst(scrollType);
-            self.pageXyProperty = scrollType == 'left' ? 'pageX' : 'pageY';
-            var wh = self.whProperty = scrollType == 'left' ? 'width' : 'height';
+            self.pageXyProperty = scrollType === 'left' ? 'pageX' : 'pageY';
+            var wh = self.whProperty = scrollType === 'left' ? 'width' : 'height';
             var ucWH = S.ucfirst(wh);
             self.afterScrollChangeEvent = 'afterScroll' + ucScrollType + 'Change';
             self.scrollProperty = 'scroll' + ucScrollType;
@@ -125,7 +125,7 @@ KISSY.add(function (S, require) {
                 scrollType = self.scrollType,
                 step = scrollView.getScrollStep()[self.scrollType],
                 target = e.target,
-                direction = (target == self.downBtn || self.$downBtn.contains(target)) ? 1 : -1;
+                direction = (target === self.downBtn || self.$downBtn.contains(target)) ? 1 : -1;
             clearInterval(self.mouseInterval);
             function doScroll() {
                 var scrollCfg = {};
@@ -145,7 +145,7 @@ KISSY.add(function (S, require) {
             var target = e.target;
             var dragEl = self.dragEl;
             var $dragEl = self.$dragEl;
-            if (dragEl == target || $dragEl.contains(target)) {
+            if (dragEl === target || $dragEl.contains(target)) {
                 return;
             }
             var scrollType = self.scrollType,

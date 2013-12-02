@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:44
+build time: Dec 2 13:01
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -25,7 +25,7 @@ KISSY.add("editor/plugin/menubutton", ["editor", "menubutton"], function(S, requ
       }
     }
     var s = (new SelectType(S.mix({render:self.get("toolBarEl"), prefixCls:prefixCls}, cfg))).render();
-    if(cfg.mode == Editor.Mode.WYSIWYG_MODE) {
+    if(cfg.mode === Editor.Mode.WYSIWYG_MODE) {
       self.on("wysiwygMode", function() {
         s.set("disabled", false)
       });

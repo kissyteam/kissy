@@ -129,9 +129,7 @@ KISSY.add(function (S, require) {
 
     function accessNormIf(fn, self, index, args) {
         // get
-        if (args[index] === undefined
-            // 并且第一个参数不是对象，否则可能是批量设置写
-            && !S.isObject(args[0])) {
+        if (args[index] === undefined && !S.isObject(args[0])) {
             args.unshift(self);
             return Dom[fn].apply(Dom, args);
         }
@@ -167,7 +165,7 @@ KISSY.add(function (S, require) {
             args.unshift(self);
             Event[k].apply(Event, args);
             return self;
-        }
+        };
     });
 
     S.each(EVENT_INCLUDES_RET, function (k) {
@@ -176,7 +174,7 @@ KISSY.add(function (S, require) {
                 args = makeArray(arguments);
             args.unshift(self);
             return Event[k].apply(Event, args);
-        }
+        };
     });
 });
 

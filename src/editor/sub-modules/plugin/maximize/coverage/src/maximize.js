@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ','src':' + jscoverage_quote(this.src)
+            + ',"src":' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -273,7 +273,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/maximize.js'].lineData[9]++;
   require('./button');
   _$jscoverage['/maximize.js'].lineData[11]++;
-  var MAXIMIZE_CLASS = 'maximize', RESTORE_CLASS = 'restore', MAXIMIZE_TIP = "\u5168\u5c4f", RESTORE_TIP = "\u53d6\u6d88\u5168\u5c4f";
+  var MAXIMIZE_CLASS = 'maximize', RESTORE_CLASS = 'restore', MAXIMIZE_TIP = '\u5168\u5c4f', RESTORE_TIP = '\u53d6\u6d88\u5168\u5c4f';
   _$jscoverage['/maximize.js'].lineData[16]++;
   function maximizePlugin() {
     _$jscoverage['/maximize.js'].functionData[1]++;

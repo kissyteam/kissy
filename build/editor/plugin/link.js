@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:44
+build time: Dec 2 13:00
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -50,7 +50,7 @@ KISSY.add("editor/plugin/link", ["./button", "./bubble", "editor", "./link/utils
         if(!a) {
           return
         }
-        var href = a.attr(Utils._ke_saved_href) || a.attr("href");
+        var href = a.attr(Utils._keSavedHref) || a.attr("href");
         tipUrl.html(href);
         tipUrl.attr("href", href)
       })

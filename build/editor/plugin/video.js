@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:46
+build time: Dec 2 13:03
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -26,49 +26,51 @@ KISSY.add("editor/plugin/video", ["editor", "./flash-common/utils", "./flash-com
     function getProvider(url) {
       for(var i = 0;i < provider.length;i++) {
         var p = provider[i];
-        if(p["reg"].test(url)) {
+        if(p.reg.test(url)) {
           return p
         }
       }
       return undefined
     }
     var videoCfg = this.config;
-    if(videoCfg["providers"]) {
-      provider.push.apply(provider, videoCfg["providers"])
+    if(videoCfg.providers) {
+      provider.push.apply(provider, videoCfg.providers)
     }
     videoCfg.getProvider = getProvider;
-    dataFilter && dataFilter.addRules({tags:{object:function(element) {
-      var classId = element.getAttribute("classid"), i;
-      var childNodes = element.childNodes;
-      if(!classId) {
-        for(i = 0;i < childNodes.length;i++) {
-          if(childNodes[i].nodeName == "embed") {
-            if(!flashUtils.isFlashEmbed(childNodes[i])) {
-              return null
+    if(dataFilter) {
+      dataFilter.addRules({tags:{object:function(element) {
+        var classId = element.getAttribute("classid"), i;
+        var childNodes = element.childNodes;
+        if(!classId) {
+          for(i = 0;i < childNodes.length;i++) {
+            if(childNodes[i].nodeName === "embed") {
+              if(!flashUtils.isFlashEmbed(childNodes[i])) {
+                return null
+              }
+              if(getProvider(childNodes[i].getAttribute("src"))) {
+                return dataProcessor.createFakeParserElement(element, CLS_VIDEO, TYPE_VIDEO, true)
+              }
             }
-            if(getProvider(childNodes[i].getAttribute("src"))) {
+          }
+          return null
+        }
+        for(i = 0;i < childNodes.length;i++) {
+          var c = childNodes[i];
+          if(c.nodeName === "param" && c.getAttribute("name").toLowerCase() === "movie") {
+            if(getProvider(c.getAttribute("value") || c.getAttribute("VALUE"))) {
               return dataProcessor.createFakeParserElement(element, CLS_VIDEO, TYPE_VIDEO, true)
             }
           }
         }
-        return null
-      }
-      for(i = 0;i < childNodes.length;i++) {
-        var c = childNodes[i];
-        if(c.nodeName == "param" && c.getAttribute("name").toLowerCase() == "movie") {
-          if(getProvider(c.getAttribute("value") || c.getAttribute("VALUE"))) {
-            return dataProcessor.createFakeParserElement(element, CLS_VIDEO, TYPE_VIDEO, true)
-          }
+      }, embed:function(element) {
+        if(!flashUtils.isFlashEmbed(element)) {
+          return null
         }
-      }
-    }, embed:function(element) {
-      if(!flashUtils.isFlashEmbed(element)) {
-        return null
-      }
-      if(getProvider(element.getAttribute("src"))) {
-        return dataProcessor.createFakeParserElement(element, CLS_VIDEO, TYPE_VIDEO, true)
-      }
-    }}}, 4);
+        if(getProvider(element.getAttribute("src"))) {
+          return dataProcessor.createFakeParserElement(element, CLS_VIDEO, TYPE_VIDEO, true)
+        }
+      }}}, 4)
+    }
     var flashControl = new FlashBaseClass({editor:editor, cls:CLS_VIDEO, type:TYPE_VIDEO, pluginConfig:this.config, bubbleId:"video", contextMenuId:"video", contextMenuHandlers:{"\u89c6\u9891\u5c5e\u6027":function() {
       var selectedEl = this.get("editorSelectedEl");
       if(selectedEl) {

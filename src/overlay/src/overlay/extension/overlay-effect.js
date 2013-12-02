@@ -4,7 +4,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S) {
-    var effects = {fade: ["Out", "In"], slide: ["Up", "Down"]};
+    var effects = {fade: ['Out', 'In'], slide: ['Up', 'Down']};
 
     function getGhost(self) {
         var el = self.$el,
@@ -25,7 +25,7 @@ KISSY.add(function (S) {
 
         var el = self.$el,
             $ = S.all,
-            effectCfg = self.get("effect"),
+            effectCfg = self.get('effect'),
             target = $(effectCfg.target),
             duration = effectCfg.duration,
             targetBox = S.mix(target.offset(), {
@@ -69,10 +69,10 @@ KISSY.add(function (S) {
 
     function processEffect(self, show, callback) {
         var el = self.$el,
-            effectCfg = self.get("effect"),
+            effectCfg = self.get('effect'),
             effect = effectCfg.effect || 'none',
             target = effectCfg.target;
-        if (effect == 'none' && !target) {
+        if (effect === 'none' && !target) {
             callback();
             return;
         }
@@ -88,17 +88,17 @@ KISSY.add(function (S) {
         el.stop(1, 1);
         el.css({
             // must show, override box-render _onSetVisible
-            "visibility": 'visible',
+            'visibility': 'visible',
             // fadeIn need display none, fadeOut need display block
-            "display": show ? 'none' : 'block'
+            'display': show ? 'none' : 'block'
         });
         var m = effect + effects[effect][index];
         el[m](duration, function () {
             el.css({
                 // need compute coordinates when show, so do not use display none for hide
-                "display": 'block',
+                'display': 'block',
                 // restore to box-render _onSetVisible
-                "visibility": ''
+                'visibility': ''
             });
             callback();
         }, easing);
@@ -117,7 +117,7 @@ KISSY.add(function (S) {
          * Set v as overlay 's show effect
          *
          * - v.effect (String): Default:none.
-         * can be set as "fade" or "slide"
+         * can be set as 'fade' or 'slide'
          *
          * - v.target (String|KISS.Node):
          * The target node from which overlay should animate from while showing.
@@ -143,7 +143,7 @@ KISSY.add(function (S) {
             },
             setter: function (v) {
                 var effect = v.effect;
-                if (typeof effect == 'string' && !effects[effect]) {
+                if (typeof effect === 'string' && !effects[effect]) {
                     v.effect = '';
                 }
             }

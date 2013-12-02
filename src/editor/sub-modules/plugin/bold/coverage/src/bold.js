@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ','src':' + jscoverage_quote(this.src)
+            + ',"src":' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -258,11 +258,11 @@ if (! _$jscoverage['/bold.js'].branchData) {
   _$jscoverage['/bold.js'].branchData['23'][1] = new BranchData();
   _$jscoverage['/bold.js'].branchData['23'][2] = new BranchData();
 }
-_$jscoverage['/bold.js'].branchData['23'][2].init(38, 29, 'e.keyCode == S.Node.KeyCode.B');
+_$jscoverage['/bold.js'].branchData['23'][2].init(38, 30, 'e.keyCode === S.Node.KeyCode.B');
 function visit2_23_2(result) {
   _$jscoverage['/bold.js'].branchData['23'][2].ranCondition(result);
   return result;
-}_$jscoverage['/bold.js'].branchData['23'][1].init(25, 42, 'e.ctrlKey && e.keyCode == S.Node.KeyCode.B');
+}_$jscoverage['/bold.js'].branchData['23'][1].init(25, 43, 'e.ctrlKey && e.keyCode === S.Node.KeyCode.B');
 function visit1_23_1(result) {
   _$jscoverage['/bold.js'].branchData['23'][1].ranCondition(result);
   return result;
@@ -286,9 +286,9 @@ KISSY.add(function(S, require) {
   _$jscoverage['/bold.js'].lineData[15]++;
   cmd.init(editor);
   _$jscoverage['/bold.js'].lineData[16]++;
-  editor.addButton("bold", {
+  editor.addButton('bold', {
   cmdType: 'bold', 
-  tooltip: "\u7c97\u4f53 "}, ui.Button);
+  tooltip: '\u7c97\u4f53'}, ui.Button);
   _$jscoverage['/bold.js'].lineData[21]++;
   editor.docReady(function() {
   _$jscoverage['/bold.js'].functionData[3]++;
@@ -296,9 +296,9 @@ KISSY.add(function(S, require) {
   editor.get('document').on('keydown', function(e) {
   _$jscoverage['/bold.js'].functionData[4]++;
   _$jscoverage['/bold.js'].lineData[23]++;
-  if (visit1_23_1(e.ctrlKey && visit2_23_2(e.keyCode == S.Node.KeyCode.B))) {
+  if (visit1_23_1(e.ctrlKey && visit2_23_2(e.keyCode === S.Node.KeyCode.B))) {
     _$jscoverage['/bold.js'].lineData[24]++;
-    editor.execCommand("bold");
+    editor.execCommand('bold');
     _$jscoverage['/bold.js'].lineData[25]++;
     e.preventDefault();
   }

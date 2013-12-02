@@ -8,31 +8,31 @@ KISSY.add(function (S, require) {
     var TreeNodeTpl = require('./node-xtpl');
     var ContentRenderExtension = require('component/extension/content-render');
 
-    var SELECTED_CLS = "selected",
-        COMMON_EXPAND_EL_CLS = "expand-icon-{t}",
+    var SELECTED_CLS = 'selected',
+        COMMON_EXPAND_EL_CLS = 'expand-icon-{t}',
         EXPAND_ICON_EL_FILE_CLS = [
             COMMON_EXPAND_EL_CLS
-        ].join(" "),
+        ].join(' '),
         EXPAND_ICON_EL_FOLDER_EXPAND_CLS = [
-            COMMON_EXPAND_EL_CLS + "minus"
-        ].join(" "),
+            COMMON_EXPAND_EL_CLS + 'minus'
+        ].join(' '),
         EXPAND_ICON_EL_FOLDER_COLLAPSE_CLS = [
-            COMMON_EXPAND_EL_CLS + "plus"
-        ].join(" "),
+            COMMON_EXPAND_EL_CLS + 'plus'
+        ].join(' '),
         ICON_EL_FILE_CLS = [
-            "file-icon"
-        ].join(" "),
+            'file-icon'
+        ].join(' '),
         ICON_EL_FOLDER_EXPAND_CLS = [
-            "expanded-folder-icon"
-        ].join(" "),
+            'expanded-folder-icon'
+        ].join(' '),
         ICON_EL_FOLDER_COLLAPSE_CLS = [
-            "collapsed-folder-icon"
-        ].join(" "),
+            'collapsed-folder-icon'
+        ].join(' '),
         ROW_EL_CLS = 'row',
         CHILDREN_CLS = 'children',
-        CHILDREN_CLS_L = "lchildren",
+        CHILDREN_CLS_L = 'lchildren',
         CHECK_CLS = 'checked',
-        ALL_STATES_CLS = "checked0 checked1 checked2";
+        ALL_STATES_CLS = 'checked0 checked1 checked2';
 
     return Container.getDefaultRender().extend([ContentRenderExtension], {
 
@@ -57,17 +57,17 @@ KISSY.add(function (S, require) {
         refreshCss: function (isNodeSingleOrLast, isNodeLeaf) {
             var self = this,
                 control = self.control,
-                iconEl = control.get("iconEl"),
+                iconEl = control.get('iconEl'),
                 iconElCss,
                 expandElCss,
-                expandIconEl = control.get("expandIconEl"),
-                childrenEl = control.get("childrenEl");
+                expandIconEl = control.get('expandIconEl'),
+                childrenEl = control.get('childrenEl');
 
             if (isNodeLeaf) {
                 iconElCss = ICON_EL_FILE_CLS;
                 expandElCss = EXPAND_ICON_EL_FILE_CLS;
             } else {
-                var expanded = control.get("expanded");
+                var expanded = control.get('expanded');
                 if (expanded) {
                     iconElCss = ICON_EL_FOLDER_EXPAND_CLS;
                     expandElCss = EXPAND_ICON_EL_FOLDER_EXPAND_CLS;
@@ -80,7 +80,7 @@ KISSY.add(function (S, require) {
             iconEl[0].className = self.getBaseCssClasses(iconElCss);
             expandIconEl[0].className = self.getBaseCssClasses(
                 S.substitute(expandElCss, {
-                    "t": isNodeSingleOrLast ? "l" : "t"
+                    't': isNodeSingleOrLast ? 'l' : 't'
                 })
             );
             childrenEl[0].className =
@@ -90,26 +90,26 @@ KISSY.add(function (S, require) {
 
         _onSetExpanded: function (v) {
             var self = this,
-                childrenEl = self.control.get("childrenEl");
+                childrenEl = self.control.get('childrenEl');
             childrenEl[v ? 'show' : 'hide']();
             self.el.setAttribute('aria-expanded', v);
         },
 
         _onSetSelected: function (v) {
             var self = this,
-                rowEl = self.control.get("rowEl");
-            rowEl[v ? "addClass" : "removeClass"](self.getBaseCssClasses(SELECTED_CLS));
-            self.el.setAttribute("aria-selected", v);
+                rowEl = self.control.get('rowEl');
+            rowEl[v ? 'addClass' : 'removeClass'](self.getBaseCssClasses(SELECTED_CLS));
+            self.el.setAttribute('aria-selected', v);
         },
 
         '_onSetDepth': function (v) {
-            this.el.setAttribute("aria-level", v);
+            this.el.setAttribute('aria-level', v);
         },
 
         _onSetCheckState: function (s) {
             var self = this,
                 checkCls = self.getBaseCssClasses(CHECK_CLS).split(/\s+/).join(s + ' ') + s,
-                checkIconEl = self.control.get("checkIconEl");
+                checkIconEl = self.control.get('checkIconEl');
             checkIconEl.removeClass(self.getBaseCssClasses(ALL_STATES_CLS))
                 .addClass(checkCls);
         },
@@ -126,23 +126,23 @@ KISSY.add(function (S, require) {
 
         HTML_PARSER: {
             rowEl: function (el) {
-                return el.one('.' + this.getBaseCssClass(ROW_EL_CLS))
+                return el.one('.' + this.getBaseCssClass(ROW_EL_CLS));
             },
             childrenEl: function (el) {
-                return el.one("." + this.getBaseCssClass(CHILDREN_CLS));
+                return el.one('.' + this.getBaseCssClass(CHILDREN_CLS));
             },
             isLeaf: function (el) {
                 var self = this;
-                if (el.hasClass(self.getBaseCssClass("leaf"))) {
+                if (el.hasClass(self.getBaseCssClass('leaf'))) {
                     return true;
-                } else if (el.hasClass(self.getBaseCssClass("folder"))) {
+                } else if (el.hasClass(self.getBaseCssClass('folder'))) {
                     return false;
                 }
                 return undefined;
             },
             expanded: function (el) {
-                return el.one("." + this.getBaseCssClass(CHILDREN_CLS))
-                    .css("display") != "none";
+                return el.one('.' + this.getBaseCssClass(CHILDREN_CLS))
+                    .css('display') !== 'none';
             },
             expandIconEl: function (el) {
                 return el.one('.' + this.getBaseCssClass('expand-icon'));

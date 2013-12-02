@@ -21,17 +21,17 @@ KISSY.add(function (S, require) {
         loading: function () {
             var self = this;
             if (!self._loadingExtEl) {
-                self._loadingExtEl = new Node("<div " +
-                    "class='" +
-                    self.get('prefixCls') + "ext-loading'" +
-                    " style='position: absolute;" +
-                    "border: none;" +
-                    "width: 100%;" +
-                    "top: 0;" +
-                    "left: 0;" +
-                    "z-index: 99999;" +
-                    "height:100%;" +
-                    "*height: expression(this.parentNode.offsetHeight);" + "'/>")
+                self._loadingExtEl = new Node('<div ' +
+                    'class="' +
+                    self.get('prefixCls') + 'ext-loading"' +
+                    ' style="position: absolute;' +
+                    'border: none;' +
+                    'width: 100%;' +
+                    'top: 0;' +
+                    'left: 0;' +
+                    'z-index: 99999;' +
+                    'height:100%;' +
+                    '*height: expression(this.parentNode.offsetHeight);' + '"/>')
                     .appendTo(self.$el);
             }
             self._loadingExtEl.show();
@@ -43,7 +43,9 @@ KISSY.add(function (S, require) {
          */
         unloading: function () {
             var lel = this._loadingExtEl;
-            lel && lel.hide();
+            if(lel){
+                lel.hide();
+            }
         }
     };
 

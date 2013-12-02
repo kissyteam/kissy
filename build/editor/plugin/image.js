@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:43
+build time: Dec 2 12:59
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -41,8 +41,8 @@ KISSY.add("editor/plugin/image", ["./button", "editor", "./bubble", "./dialog-lo
     }}, {content:"\u63d2\u5165\u65b0\u884c", fn:function() {
       this.hide();
       var doc = editor.get("document")[0], p = new Node(doc.createElement("p"));
-      if(!UA["ie"]) {
-        p._4e_appendBogus(undefined)
+      if(!UA.ie) {
+        p._4eAppendBogus(undefined)
       }
       var r = new Editor.Range(doc);
       r.setStartAfter(this.get("editorSelectedEl"));
@@ -58,7 +58,7 @@ KISSY.add("editor/plugin/image", ["./button", "editor", "./bubble", "./dialog-lo
     editor.addContextMenu("image", checkImg, {width:120, children:children, listeners:{click:function(e) {
       var self = this, content = e.target.get("content");
       S.each(handlers, function(h) {
-        if(h.content == content) {
+        if(h.content === content) {
           h.fn.call(self)
         }
       })
@@ -82,7 +82,7 @@ KISSY.add("editor/plugin/image", ["./button", "editor", "./bubble", "./dialog-lo
         ev.halt()
       });
       tipRemoveEl.on("click", function(ev) {
-        if(UA["webkit"]) {
+        if(UA.webkit) {
           var r = editor.getSelection().getRanges();
           if(r && r[0]) {
             r[0].collapse();
@@ -97,7 +97,7 @@ KISSY.add("editor/plugin/image", ["./button", "editor", "./bubble", "./dialog-lo
       bubble.on("show", function() {
         var a = bubble.get("editorSelectedEl");
         if(a) {
-          var src = a.attr("_ke_saved_src") || a.attr("src");
+          var src = a.attr("_keSaved_src") || a.attr("src");
           tipUrlEl.attr("href", src)
         }
       })

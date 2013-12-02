@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:43
+build time: Dec 2 12:59
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -14,11 +14,12 @@ KISSY.add("editor/plugin/heading/cmd", ["editor"], function(S, require) {
   return{init:function(editor) {
     if(!editor.hasCommand("heading")) {
       editor.addCommand("heading", {exec:function(editor, tag) {
+        var currentValue;
         editor.execCommand("save");
-        if(tag != "p") {
-          var currentValue = editor.queryCommandValue("heading")
+        if(tag !== "p") {
+          currentValue = editor.queryCommandValue("heading")
         }
-        if(tag == currentValue) {
+        if(tag === currentValue) {
           tag = "p"
         }
         (new Editor.Style({element:tag})).apply(editor.get("document")[0]);
@@ -32,7 +33,7 @@ KISSY.add("editor/plugin/heading/cmd", ["editor"], function(S, require) {
           var currentPath = new Editor.ElementPath(startElement);
           var block = currentPath.block || currentPath.blockLimit;
           var nodeName = block && block.nodeName() || "";
-          if(nodeName.match(/^h\d$/) || nodeName == "p") {
+          if(nodeName.match(/^h\d$/) || nodeName === "p") {
             return nodeName
           }
         }

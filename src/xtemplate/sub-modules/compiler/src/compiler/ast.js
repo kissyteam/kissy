@@ -24,15 +24,15 @@ KISSY.add(function (S) {
     ast.ProgramNode.prototype.type = 'program';
 
     ast.BlockNode = function (lineNumber, tpl, program, close) {
-        var closeParts = close['parts'], self = this, e;
+        var closeParts = close.parts, self = this, e;
         // no close tag
-        if (!S.equals(tpl.path['parts'], closeParts)) {
-            e = ("Syntax error at line " +
+        if (!S.equals(tpl.path.parts, closeParts)) {
+            e = ('Syntax error at line ' +
                 lineNumber +
-                ":\n" + "expect {{/" +
-                tpl.path['parts'] +
-                "}} not {{/" +
-                closeParts + "}}");
+                ':\n' + 'expect {{/' +
+                tpl.path.parts +
+                '}} not {{/' +
+                closeParts + '}}');
             S.error(e);
         }
         self.lineNumber = lineNumber;
@@ -179,7 +179,7 @@ KISSY.add(function (S) {
         var self = this, parts = [], depth = 0;
         self.lineNumber = lineNumber;
         S.each(raw, function (p) {
-            if (p == "..") {
+            if (p === '..') {
                 depth++;
             } else {
                 parts.push(p);

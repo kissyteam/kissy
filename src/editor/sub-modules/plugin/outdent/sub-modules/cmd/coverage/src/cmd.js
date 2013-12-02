@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ','src':' + jscoverage_quote(this.src)
+            + ',"src":' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -282,9 +282,9 @@ KISSY.add(function(S, require) {
   init: function(editor) {
   _$jscoverage['/cmd.js'].functionData[1]++;
   _$jscoverage['/cmd.js'].lineData[14]++;
-  addCommand(editor, "outdent");
+  addCommand(editor, 'outdent');
   _$jscoverage['/cmd.js'].lineData[15]++;
-  var queryCmd = Editor.Utils.getQueryCmd("outdent");
+  var queryCmd = Editor.Utils.getQueryCmd('outdent');
   _$jscoverage['/cmd.js'].lineData[16]++;
   if (visit1_16_1(!editor.hasCommand(queryCmd))) {
     _$jscoverage['/cmd.js'].lineData[17]++;

@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:43
+build time: Dec 2 12:59
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -17,10 +17,10 @@ KISSY.add("editor/plugin/italic", ["./font/ui", "./italic/cmd", "./button"], fun
   }
   S.augment(italic, {pluginRenderUI:function(editor) {
     cmd.init(editor);
-    editor.addButton("italic", {cmdType:"italic", tooltip:"\u659c\u4f53 "}, ui.Button);
+    editor.addButton("italic", {cmdType:"italic", tooltip:"\u659c\u4f53"}, ui.Button);
     editor.docReady(function() {
       editor.get("document").on("keydown", function(e) {
-        if(e.ctrlKey && e.keyCode == S.Node.KeyCode.I) {
+        if(e.ctrlKey && e.keyCode === S.Node.KeyCode.I) {
           editor.execCommand("italic");
           e.preventDefault()
         }

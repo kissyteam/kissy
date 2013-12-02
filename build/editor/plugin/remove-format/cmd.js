@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:45
+build time: Dec 2 13:02
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -37,21 +37,21 @@ KISSY.add("editor/plugin/remove-format/cmd", ["editor"], function(S, require) {
                 break
               }
               if(tagsRegex.test(pathElement.nodeName())) {
-                node._4e_breakParent(pathElement)
+                node._4eBreakParent(pathElement)
               }
             }
           };
           breakParent(startNode);
           breakParent(endNode);
-          var currentNode = startNode._4e_nextSourceNode(true, Dom.NodeType.ELEMENT_NODE, undefined, undefined);
+          var currentNode = startNode._4eNextSourceNode(true, Dom.NodeType.ELEMENT_NODE, undefined, undefined);
           while(currentNode) {
             if(currentNode.equals(endNode)) {
               break
             }
-            var nextNode = currentNode._4e_nextSourceNode(false, Dom.NodeType.ELEMENT_NODE, undefined, undefined);
-            if(!(currentNode.nodeName() == "img" && (currentNode.attr("_ke_realelement") || /\bke_/.test(currentNode[0].className)))) {
+            var nextNode = currentNode._4eNextSourceNode(false, Dom.NodeType.ELEMENT_NODE, undefined, undefined);
+            if(!(currentNode.nodeName() === "img" && (currentNode.attr("_keRealElement") || /\bke_/.test(currentNode[0].className)))) {
               if(tagsRegex.test(currentNode.nodeName())) {
-                currentNode._4e_remove(true)
+                currentNode._4eRemove(true)
               }else {
                 removeAttrs(currentNode, removeFormatAttributes)
               }

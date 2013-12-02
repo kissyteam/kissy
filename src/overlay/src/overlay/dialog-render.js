@@ -37,10 +37,10 @@ KISSY.add(function (S, require) {
         },
 
         '_onSetHeaderStyle': function (v) {
-            this.control.get("header").css(v);
+            this.control.get('header').css(v);
         },
         '_onSetFooterStyle': function (v) {
-            this.control.get("footer").css(v);
+            this.control.get('footer').css(v);
         },
 
         '_onSetBodyContent': function (v) {
@@ -48,11 +48,11 @@ KISSY.add(function (S, require) {
         },
 
         '_onSetHeaderContent': function (v) {
-            _setStdModRenderContent(this, "header", v);
+            _setStdModRenderContent(this, 'header', v);
         },
 
         '_onSetFooterContent': function (v) {
-            _setStdModRenderContent(this, "footer", v);
+            _setStdModRenderContent(this, 'footer', v);
         }
     }, {
         ATTRS: {
@@ -62,22 +62,22 @@ KISSY.add(function (S, require) {
         },
         HTML_PARSER: {
             header: function (el) {
-                return el.one("." + this.getBaseCssClass('header'));
+                return el.one('.' + this.getBaseCssClass('header'));
             },
             body: function (el) {
-                return el.one("." + this.getBaseCssClass('body'));
+                return el.one('.' + this.getBaseCssClass('body'));
             },
             footer: function (el) {
-                return el.one("." + this.getBaseCssClass('footer'));
+                return el.one('.' + this.getBaseCssClass('footer'));
             },
             headerContent: function (el) {
-                return el.one("." + this.getBaseCssClass('header')).html();
+                return el.one('.' + this.getBaseCssClass('header')).html();
             },
             bodyContent: function (el) {
-                return el.one("." + this.getBaseCssClass('body')).html();
+                return el.one('.' + this.getBaseCssClass('body')).html();
             },
             footerContent: function (el) {
-                var footer = el.one("." + this.getBaseCssClass('footer'));
+                var footer = el.one('.' + this.getBaseCssClass('footer'));
                 return footer && footer.html();
             }
         }

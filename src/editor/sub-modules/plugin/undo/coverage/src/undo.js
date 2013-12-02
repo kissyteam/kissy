@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ','src':' + jscoverage_quote(this.src)
+            + ',"src":' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -272,12 +272,12 @@ KISSY.add(function(S, require) {
   _$jscoverage['/undo.js'].lineData[17]++;
   editor.addButton('undo', {
   mode: Editor.Mode.WYSIWYG_MODE, 
-  tooltip: "\u64a4\u9500", 
+  tooltip: '\u64a4\u9500', 
   editor: editor}, Btn.UndoBtn);
   _$jscoverage['/undo.js'].lineData[23]++;
   editor.addButton('redo', {
   mode: Editor.Mode.WYSIWYG_MODE, 
-  tooltip: "\u91cd\u505a", 
+  tooltip: '\u91cd\u505a', 
   editor: editor}, Btn.RedoBtn);
   _$jscoverage['/undo.js'].lineData[28]++;
   cmd.init(editor);

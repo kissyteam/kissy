@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ','src':' + jscoverage_quote(this.src)
+            + ',"src":' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -284,11 +284,11 @@ function visit4_47_2(result) {
 function visit3_47_1(result) {
   _$jscoverage['/justify-center.js'].branchData['47'][1].ranCondition(result);
   return result;
-}_$jscoverage['/justify-center.js'].branchData['33'][1].init(184, 41, 'editor.queryCommandValue('justifyCenter')');
+}_$jscoverage['/justify-center.js'].branchData['33'][1].init(184, 41, 'editor.queryCommandValue(\'justifyCenter\')');
 function visit2_33_1(result) {
   _$jscoverage['/justify-center.js'].branchData['33'][1].ranCondition(result);
   return result;
-}_$jscoverage['/justify-center.js'].branchData['30'][1].init(33, 45, 'editor.get('mode') == Editor.Mode.SOURCE_MODE');
+}_$jscoverage['/justify-center.js'].branchData['30'][1].init(33, 45, 'editor.get(\'mode\') == Editor.Mode.SOURCE_MODE');
 function visit1_30_1(result) {
   _$jscoverage['/justify-center.js'].branchData['30'][1].ranCondition(result);
   return result;
@@ -323,7 +323,7 @@ KISSY.add(function(S, require) {
   justifyCenterCmd.init(editor);
   _$jscoverage['/justify-center.js'].lineData[22]++;
   editor.addButton('justifyCenter', {
-  tooltip: "\u5c45\u4e2d\u5bf9\u9f50", 
+  tooltip: '\u5c45\u4e2d\u5bf9\u9f50', 
   checkable: true, 
   listeners: {
   click: exec, 

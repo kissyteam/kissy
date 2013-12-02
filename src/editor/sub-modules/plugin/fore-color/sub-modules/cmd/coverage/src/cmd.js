@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ','src':' + jscoverage_quote(this.src)
+            + ',"src":' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -255,15 +255,15 @@ if (! _$jscoverage['/cmd.js'].branchData) {
   _$jscoverage['/cmd.js'].branchData['23'] = [];
   _$jscoverage['/cmd.js'].branchData['23'][1] = new BranchData();
 }
-_$jscoverage['/cmd.js'].branchData['23'][1].init(17, 31, '!editor.hasCommand('foreColor')');
+_$jscoverage['/cmd.js'].branchData['23'][1].init(17, 31, '!editor.hasCommand(\'foreColor\')');
 function visit3_23_1(result) {
   _$jscoverage['/cmd.js'].branchData['23'][1].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['17'][2].init(115, 20, 'el.nodeName() == "a"');
+}_$jscoverage['/cmd.js'].branchData['17'][2].init(115, 21, 'el.nodeName() === \'a\'');
 function visit2_17_2(result) {
   _$jscoverage['/cmd.js'].branchData['17'][2].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['17'][1].init(115, 42, 'el.nodeName() == "a" || el.all("a").length');
+}_$jscoverage['/cmd.js'].branchData['17'][1].init(115, 43, 'el.nodeName() === \'a\' || el.all(\'a\').length');
 function visit1_17_1(result) {
   _$jscoverage['/cmd.js'].branchData['17'][1].ranCondition(result);
   return result;
@@ -284,7 +284,7 @@ KISSY.add(function(S, require) {
   childRule: function(el) {
   _$jscoverage['/cmd.js'].functionData[1]++;
   _$jscoverage['/cmd.js'].lineData[17]++;
-  return !(visit1_17_1(visit2_17_2(el.nodeName() == "a") || el.all("a").length));
+  return !(visit1_17_1(visit2_17_2(el.nodeName() === 'a') || el.all('a').length));
 }};
   _$jscoverage['/cmd.js'].lineData[21]++;
   return {

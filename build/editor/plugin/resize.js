@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:45
+build time: Dec 2 13:02
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -16,16 +16,16 @@ KISSY.add("editor/plugin/resize", ["dd"], function(S, require) {
     this.config = config || {}
   }
   S.augment(Resize, {pluginRenderUI:function(editor) {
-    var Draggable = DD["Draggable"], statusBarEl = editor.get("statusBarEl"), textarea = editor.get("textarea"), cfg = this.config, direction = cfg["direction"] || ["x", "y"];
+    var Draggable = DD.Draggable, statusBarEl = editor.get("statusBarEl"), cfg = this.config, direction = cfg.direction || ["x", "y"];
     var cursor = "se-resize";
-    if(direction.length == 1) {
-      if(direction[0] == "x") {
+    if(direction.length === 1) {
+      if(direction[0] === "x") {
         cursor = "e-resize"
       }else {
         cursor = "s-resize"
       }
     }
-    var resizer = (new Node("<div class='" + editor.get("prefixCls") + "editor-resizer' style='cursor: " + cursor + "'></div>")).appendTo(statusBarEl);
+    var resizer = (new Node('<div class="' + editor.get("prefixCls") + 'editor-resizer" style="cursor: ' + cursor + '"></div>')).appendTo(statusBarEl);
     editor.on("maximizeWindow", function() {
       resizer.css("display", "none")
     });

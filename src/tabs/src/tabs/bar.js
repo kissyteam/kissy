@@ -14,9 +14,9 @@ KISSY.add(function (S, require) {
     var TabBar = Toolbar.extend({
         bindUI: function () {
             var self = this;
-            self.on("afterSelectedChange", function (e) {
+            self.on('afterSelectedChange', function (e) {
                 if (e.newVal && e.target.isTabsTab) {
-                    self.set("selectedTab", e.target);
+                    self.set('selectedTab', e.target);
                 }
             });
         },
@@ -25,8 +25,8 @@ KISSY.add(function (S, require) {
             var bar = this,
                 children = bar.get('children');
             S.each(children, function (c) {
-                if (c.get("selected")) {
-                    bar.setInternal("selectedTab", c);
+                if (c.get('selected')) {
+                    bar.setInternal('selectedTab', c);
                     return false;
                 }
                 return undefined;
@@ -49,16 +49,16 @@ KISSY.add(function (S, require) {
             var prev;
             if (v) {
                 if (e && (prev = e.prevVal)) {
-                    prev.set("selected", false);
+                    prev.set('selected', false);
                 }
-                v.set("selected", true);
+                v.set('selected', true);
             }
         },
 
         _onSetHighlightedItem: function (v, e) {
             var self = this;
             self.callSuper(v, e);
-            if (self.get('changeType') == 'mouse') {
+            if (self.get('changeType') === 'mouse') {
                 self._onSetSelectedTab.apply(self, arguments);
             }
         }
@@ -94,7 +94,7 @@ KISSY.add(function (S, require) {
         /**
          * mouse
          */
-        MOUSE: "mouse"
+        MOUSE: 'mouse'
     };
 
     return TabBar;

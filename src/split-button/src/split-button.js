@@ -15,11 +15,11 @@ KISSY.add(function (S, require) {
     return Container.extend({
         renderUI: function () {
             var self = this,
-                alignWithEl = self.get("alignWithEl"),
+                alignWithEl = self.get('alignWithEl'),
                 menuButton = self.get('children')[1],
                 menu = menuButton.get('menu');
             if (alignWithEl) {
-                menu.get("align").node = self.$el;
+                menu.get('align').node = self.$el;
             }
         }
     }, {

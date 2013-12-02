@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:41
+build time: Dec 2 12:57
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -14,7 +14,7 @@ KISSY.add("editor/plugin/dialog-loader", ["editor", "overlay"], function(S, requ
   var Overlay = require("overlay");
   var globalMask, loadMask = {loading:function(prefixCls) {
     if(!globalMask) {
-      globalMask = new Overlay({x:0, width:S.UA["ie"] == 6 ? S.DOM.docWidth() : "100%", y:0, zIndex:Editor.baseZIndex(Editor.ZIndexManager.LOADING), prefixCls:prefixCls + "editor-", elCls:prefixCls + "editor-global-loading"})
+      globalMask = new Overlay({x:0, width:S.UA.ie === 6 ? S.DOM.docWidth() : "100%", y:0, zIndex:Editor.baseZIndex(Editor.ZIndexManager.LOADING), prefixCls:prefixCls + "editor-", elCls:prefixCls + "editor-global-loading"})
     }
     globalMask.set("height", S.DOM.docHeight());
     globalMask.show();

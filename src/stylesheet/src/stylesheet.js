@@ -29,7 +29,7 @@ KISSY.add(function (S, require) {
             el = el.el;
         }
 
-        el = this['el'] = Dom.get(el);
+        el = this.el = Dom.get(el);
         // http://msdn.microsoft.com/en-us/library/ie/ms535871(v=vs.85).aspx
         // firefox 跨域时抛出异常
         var sheet = el.sheet || el.styleSheet;
@@ -52,8 +52,8 @@ KISSY.add(function (S, require) {
             rule = domCssRules[i];
             selectorText = rule.selectorText;
             // 去重
-            if (styleDeclaration = cssRules[selectorText]) {
-                styleDeclaration.style.cssText += ";" + styleDeclaration.style.cssText;
+            if ((styleDeclaration = cssRules[selectorText])) {
+                styleDeclaration.style.cssText += ';' + styleDeclaration.style.cssText;
                 deleteRule(sheet, i);
             } else {
                 cssRules[selectorText] = rule;
@@ -126,7 +126,7 @@ KISSY.add(function (S, require) {
                     // unset remove this rule
                     delete cssRules[selectorText];
                     for (i = sheet[rulesName].length - 1; i >= 0; i--) {
-                        if (sheet[rulesName][i] == rule) {
+                        if (sheet[rulesName][i] === rule) {
                             deleteRule(sheet, i);
                             break;
                         }
@@ -161,7 +161,7 @@ KISSY.add(function (S, require) {
                 for (selector in cssRules) {
 
                     rule = cssRules[selector];
-                    css.push(rule.selectorText + " {" + rule.style.cssText + "}");
+                    css.push(rule.selectorText + ' {' + rule.style.cssText + '}');
 
                 }
                 return css.join('\n');
@@ -176,7 +176,7 @@ KISSY.add(function (S, require) {
     var workerElement = document.createElement('p');
 
     function toCssText(css, base) {
-        workerElement.style.cssText = base || "";
+        workerElement.style.cssText = base || '';
         Dom.css(workerElement, css);
         return workerElement.style.cssText;
     }

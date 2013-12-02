@@ -54,6 +54,6 @@ KISSY.add(function (S, require) {
                 cached[subTplName] = tpl;
             }
             return tpl;
-        }
+        };
     }
 });

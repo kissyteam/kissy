@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ','src':' + jscoverage_quote(this.src)
+            + ',"src":' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -274,7 +274,7 @@ KISSY.add(function(S, require) {
     } else {
       _$jscoverage['/cmd.js'].lineData[20]++;
       new Editor.Style(styles, {
-  color: "inherit"}).remove(doc);
+  color: 'inherit'}).remove(doc);
     }
     _$jscoverage['/cmd.js'].lineData[24]++;
     editor.execCommand('save');

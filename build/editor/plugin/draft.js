@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:41
+build time: Dec 2 12:57
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -42,13 +42,13 @@ KISSY.add("editor/plugin/draft", ["editor", "json", "event", "./local-storage", 
   var addRes = Editor.Utils.addRes, destroyRes = Editor.Utils.destroyRes;
   S.augment(Draft, {_getSaveKey:function() {
     var self = this, cfg = self.config;
-    return cfg.draft && cfg.draft["saveKey"] || DRAFT_SAVE
+    return cfg.draft && cfg.draft.saveKey || DRAFT_SAVE
   }, _getDrafts:function() {
     var self = this;
     if(!self.drafts) {
       var str = localStorage.getItem(self._getSaveKey()), drafts = [];
       if(str) {
-        drafts = localStorage == window.localStorage ? Json.parse(S.urlDecode(str)) : str
+        drafts = localStorage === window.localStorage ? Json.parse(S.urlDecode(str)) : str
       }
       self.drafts = drafts
     }
@@ -58,14 +58,14 @@ KISSY.add("editor/plugin/draft", ["editor", "json", "event", "./local-storage", 
     cfg.draft = cfg.draft || {};
     self.draftInterval = cfg.draft.interval = cfg.draft.interval || INTERVAL;
     self.draftLimit = cfg.draft.limit = cfg.draft.limit || LIMIT;
-    var holder = (new Node("<div class='" + prefixCls + "editor-draft'>" + "<span class='" + prefixCls + "editor-draft-title'>" + "\u5185\u5bb9\u6b63\u6587\u6bcf" + cfg.draft.interval + "\u5206\u949f\u81ea\u52a8\u4fdd\u5b58\u4e00\u6b21\u3002" + "</span>" + "</div>")).appendTo(statusbar);
-    self.timeTip = (new Node("<span class='" + prefixCls + "editor-draft-time'/>")).appendTo(holder);
-    var save = (new Node(S.substitute("<a href='#' " + "onclick='return false;' " + "class='{prefixCls}editor-button " + "{prefixCls}editor-draft-save-btn ks-inline-block' " + "style='" + "vertical-align:middle;" + "padding:1px 9px;" + "'>" + "<span class='{prefixCls}editor-draft-save'>" + "</span>" + "<span>\u7acb\u5373\u4fdd\u5b58</span>" + "</a>", {prefixCls:prefixCls}))).unselectable(undefined).appendTo(holder), versions = (new MenuButton({render:holder, collapseOnClick:true, width:"100px", prefixCls:prefixCls + 
+    var holder = (new Node('<div class="' + prefixCls + 'editor-draft">' + '<span class="' + prefixCls + 'editor-draft-title">' + "\u5185\u5bb9\u6b63\u6587\u6bcf" + cfg.draft.interval + "\u5206\u949f\u81ea\u52a8\u4fdd\u5b58\u4e00\u6b21\u3002" + "</span>" + "</div>")).appendTo(statusbar);
+    self.timeTip = (new Node('<span class="' + prefixCls + 'editor-draft-time"/>')).appendTo(holder);
+    var save = (new Node(S.substitute('<a href="#" ' + 'onclick="return false;" ' + 'class="{prefixCls}editor-button ' + '{prefixCls}editor-draft-save-btn ks-inline-block" ' + 'style="' + "vertical-align:middle;" + "padding:1px 9px;" + '">' + '<span class="{prefixCls}editor-draft-save">' + "</span>" + "<span>\u7acb\u5373\u4fdd\u5b58</span>" + "</a>", {prefixCls:prefixCls}))).unselectable(undefined).appendTo(holder), versions = (new MenuButton({render:holder, collapseOnClick:true, width:"100px", prefixCls:prefixCls + 
     "editor-", menu:{width:"225px", align:{points:["tr", "br"]}}, matchElWidth:false, content:"\u6062\u590d\u7f16\u8f91\u5386\u53f2"})).render();
     self.versions = versions;
-    versions.on("beforeCollapsedChange", function(e) {
+    versions.on("beforeCollapsedChange", function beforeCollapsedChange(e) {
       if(!e.newValue) {
-        versions.detach("beforeCollapsedChange", arguments.callee);
+        versions.detach("beforeCollapsedChange", beforeCollapsedChange);
         self.sync()
       }
     });
@@ -95,7 +95,7 @@ KISSY.add("editor/plugin/draft", ["editor", "json", "event", "./local-storage", 
     versions.on("click", self.recover, self);
     addRes.call(self, versions);
     self.holder = holder;
-    if(cfg.draft["helpHTML"]) {
+    if(cfg.draft.helpHTML) {
       var help = (new Node("<a " + 'tabindex="0" ' + 'hidefocus="hidefocus" ' + 'class="' + prefixCls + 'editor-draft-help" ' + 'title="\u70b9\u51fb\u67e5\u770b\u5e2e\u52a9" ' + "href=\"javascript:void('\u70b9\u51fb\u67e5\u770b\u5e2e\u52a9 ')\">\u70b9\u51fb\u67e5\u770b\u5e2e\u52a9</a>")).unselectable(undefined).appendTo(holder);
       help.on("click", function() {
         help[0].focus();
@@ -106,7 +106,9 @@ KISSY.add("editor/plugin/draft", ["editor", "json", "event", "./local-storage", 
         }
       });
       help.on("blur", function() {
-        self.helpPopup && self.helpPopup.hide()
+        if(self.helpPopup) {
+          self.helpPopup.hide()
+        }
       });
       self.helpBtn = help;
       addRes.call(self, help);
@@ -114,9 +116,9 @@ KISSY.add("editor/plugin/draft", ["editor", "json", "event", "./local-storage", 
     }
     addRes.call(self, holder)
   }, _prepareHelp:function() {
-    var self = this, editor = self.editor, prefixCls = editor.get("prefixCls"), cfg = self.config, draftCfg = cfg.draft, help = new Node(draftCfg["helpHTML"] || "");
+    var self = this, editor = self.editor, prefixCls = editor.get("prefixCls"), cfg = self.config, draftCfg = cfg.draft, help = new Node(draftCfg.helpHTML || "");
     var arrowCss = "height:0;" + "position:absolute;" + "font-size:0;" + "width:0;" + "border:8px #000 solid;" + "border-color:#000 transparent transparent transparent;" + "border-style:solid dashed dashed dashed;";
-    var arrow = new Node("<div style='" + arrowCss + "border-top-color:#CED5E0;" + "'>" + "<div style='" + arrowCss + "left:-8px;" + "top:-10px;" + "border-top-color:white;" + "'>" + "</div>" + "</div>");
+    var arrow = new Node('<div style="' + arrowCss + "border-top-color:#CED5E0;" + '">' + '<div style="' + arrowCss + "left:-8px;" + "top:-10px;" + "border-top-color:white;" + '">' + "</div>" + "</div>");
     help.append(arrow);
     help.css({border:"1px solid #ACB4BE", "text-align":"left"});
     self.helpPopup = (new Overlay({content:help, prefixCls:prefixCls + "editor-", width:help.width() + "px", zIndex:Editor.baseZIndex(Editor.ZIndexManager.OVERLAY), mask:false})).render();
@@ -147,20 +149,20 @@ KISSY.add("editor/plugin/draft", ["editor", "json", "event", "./local-storage", 
       versions.addItem({disabled:true, content:"\u5c1a\u65e0\u5386\u53f2", value:""})
     }
     timeTip.html(tip);
-    localStorage.setItem(self._getSaveKey(), localStorage == window.localStorage ? encodeURIComponent(Json.stringify(drafts)) : drafts)
+    localStorage.setItem(self._getSaveKey(), localStorage === window.localStorage ? encodeURIComponent(Json.stringify(drafts)) : drafts)
   }, save:function(auto) {
     var self = this, drafts = self._getDrafts(), editor = self.editor, data = editor.getFormatData();
     if(!data) {
       return
     }
-    if(drafts[drafts.length - 1] && data == drafts[drafts.length - 1].content) {
+    if(drafts[drafts.length - 1] && data === drafts[drafts.length - 1].content) {
       drafts.length -= 1
     }
     self.drafts = drafts.concat({content:data, date:(new Date).getTime(), auto:auto});
     self.sync()
   }, recover:function(ev) {
     var self = this, editor = self.editor, drafts = self._getDrafts(), v = ev.target.get("value");
-    if(confirm("\u786e\u8ba4\u6062\u590d " + date(drafts[v].date) + " \u7684\u7f16\u8f91\u5386\u53f2\uff1f")) {
+    if(window.confirm("\u786e\u8ba4\u6062\u590d " + date(drafts[v].date) + " \u7684\u7f16\u8f91\u5386\u53f2\uff1f")) {
       editor.execCommand("save");
       editor.setData(drafts[v].content);
       editor.execCommand("save")

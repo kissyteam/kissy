@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ','src':' + jscoverage_quote(this.src)
+            + ',"src":' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -306,7 +306,7 @@ if (! _$jscoverage['/contextmenu.js'].branchData) {
   _$jscoverage['/contextmenu.js'].branchData['89'] = [];
   _$jscoverage['/contextmenu.js'].branchData['89'][1] = new BranchData();
 }
-_$jscoverage['/contextmenu.js'].branchData['89'][1].init(2101, 5, 'event');
+_$jscoverage['/contextmenu.js'].branchData['89'][1].init(2103, 5, 'event');
 function visit6_89_1(result) {
   _$jscoverage['/contextmenu.js'].branchData['89'][1].ranCondition(result);
   return result;
@@ -314,11 +314,11 @@ function visit6_89_1(result) {
 function visit5_63_1(result) {
   _$jscoverage['/contextmenu.js'].branchData['63'][1].ranCondition(result);
   return result;
-}_$jscoverage['/contextmenu.js'].branchData['44'][1].init(21, 12, 'e.which == 1');
+}_$jscoverage['/contextmenu.js'].branchData['44'][1].init(21, 13, 'e.which === 1');
 function visit4_44_1(result) {
   _$jscoverage['/contextmenu.js'].branchData['44'][1].ranCondition(result);
   return result;
-}_$jscoverage['/contextmenu.js'].branchData['34'][1].init(21, 30, 'e.keyCode == Event.KeyCode.ESC');
+}_$jscoverage['/contextmenu.js'].branchData['34'][1].init(21, 31, 'e.keyCode === Event.KeyCode.ESC');
 function visit3_34_1(result) {
   _$jscoverage['/contextmenu.js'].branchData['34'][1].ranCondition(result);
   return result;
@@ -374,7 +374,7 @@ KISSY.add(function(S, require) {
   menu.get('el').on('keydown', function(e) {
   _$jscoverage['/contextmenu.js'].functionData[3]++;
   _$jscoverage['/contextmenu.js'].lineData[34]++;
-  if (visit3_34_1(e.keyCode == Event.KeyCode.ESC)) {
+  if (visit3_34_1(e.keyCode === Event.KeyCode.ESC)) {
     _$jscoverage['/contextmenu.js'].lineData[35]++;
     menu.hide();
   }
@@ -389,7 +389,7 @@ KISSY.add(function(S, require) {
   doc.on('mousedown', function(e) {
   _$jscoverage['/contextmenu.js'].functionData[5]++;
   _$jscoverage['/contextmenu.js'].lineData[44]++;
-  if (visit4_44_1(e.which == 1)) {
+  if (visit4_44_1(e.which === 1)) {
     _$jscoverage['/contextmenu.js'].lineData[45]++;
     menu.hide();
   }
@@ -451,7 +451,7 @@ KISSY.add(function(S, require) {
     showNow(event);
   }
   _$jscoverage['/contextmenu.js'].lineData[93]++;
-  self.addControl(id + "/contextmenu", menu);
+  self.addControl(id + '/contextmenu', menu);
   _$jscoverage['/contextmenu.js'].lineData[95]++;
   return menu;
 };

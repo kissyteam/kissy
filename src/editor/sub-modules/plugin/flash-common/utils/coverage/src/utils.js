@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ','src':' + jscoverage_quote(this.src)
+            + ',"src":' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -266,15 +266,15 @@ if (! _$jscoverage['/utils.js'].branchData) {
   _$jscoverage['/utils.js'].branchData['32'] = [];
   _$jscoverage['/utils.js'].branchData['32'][1] = new BranchData();
 }
-_$jscoverage['/utils.js'].branchData['32'][1].init(109, 30, 'Dom.attr(element, 'src') || \'\'');
+_$jscoverage['/utils.js'].branchData['32'][1].init(110, 30, 'Dom.attr(element, \'src\') || \'\'');
 function visit5_32_1(result) {
   _$jscoverage['/utils.js'].branchData['32'][1].ranCondition(result);
   return result;
-}_$jscoverage['/utils.js'].branchData['31'][2].init(29, 60, 'Dom.attr(element, 'type') == \'application/x-shockwave-flash\'');
+}_$jscoverage['/utils.js'].branchData['31'][2].init(29, 61, 'Dom.attr(element, \'type\') === \'application/x-shockwave-flash\'');
 function visit4_31_2(result) {
   _$jscoverage['/utils.js'].branchData['31'][2].ranCondition(result);
   return result;
-}_$jscoverage['/utils.js'].branchData['31'][1].init(-1, 141, 'Dom.attr(element, 'type') == \'application/x-shockwave-flash\' || /\\.swf(?:$|\\?)/i.test(Dom.attr(element, 'src') || \'\')');
+}_$jscoverage['/utils.js'].branchData['31'][1].init(-1, 142, 'Dom.attr(element, \'type\') === \'application/x-shockwave-flash\' || /\\.swf(?:$|\\?)/i.test(Dom.attr(element, \'src\') || \'\')');
 function visit3_31_1(result) {
   _$jscoverage['/utils.js'].branchData['31'][1].ranCondition(result);
   return result;
@@ -308,7 +308,7 @@ KISSY.add(function(S, require) {
   isFlashEmbed: function(element) {
   _$jscoverage['/utils.js'].functionData[2]++;
   _$jscoverage['/utils.js'].lineData[30]++;
-  return (visit3_31_1(visit4_31_2(Dom.attr(element, 'type') == 'application/x-shockwave-flash') || /\.swf(?:$|\?)/i.test(visit5_32_1(Dom.attr(element, 'src') || ''))));
+  return (visit3_31_1(visit4_31_2(Dom.attr(element, 'type') === 'application/x-shockwave-flash') || /\.swf(?:$|\?)/i.test(visit5_32_1(Dom.attr(element, 'src') || ''))));
 }, 
   getUrl: function(r) {
   _$jscoverage['/utils.js'].functionData[3]++;
@@ -318,7 +318,7 @@ KISSY.add(function(S, require) {
   createSWF: function(cfg) {
   _$jscoverage['/utils.js'].functionData[4]++;
   _$jscoverage['/utils.js'].lineData[41]++;
-  var render = Dom.create('<div style="' + "position:absolute;left:-9999px;top:-9999px;" + '"></div>', undefined, cfg.document);
+  var render = Dom.create('<div style="' + 'position:absolute;left:-9999px;top:-9999px;' + '"></div>', undefined, cfg.document);
   _$jscoverage['/utils.js'].lineData[44]++;
   cfg.htmlMode = 'full';
   _$jscoverage['/utils.js'].lineData[45]++;

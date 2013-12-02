@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:44
+build time: Dec 2 13:00
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -25,7 +25,7 @@ KISSY.add("editor/plugin/justify-right", ["editor", "./justify-right/cmd", "./bu
     editor.addButton("justifyRight", {tooltip:"\u53f3\u5bf9\u9f50", checkable:true, listeners:{click:exec, afterSyncUI:function() {
       var self = this;
       editor.on("selectionChange", function() {
-        if(editor.get("mode") == Editor.Mode.SOURCE_MODE) {
+        if(editor.get("mode") === Editor.Mode.SOURCE_MODE) {
           return
         }
         if(editor.queryCommandValue("justifyRight")) {
@@ -37,7 +37,7 @@ KISSY.add("editor/plugin/justify-right", ["editor", "./justify-right/cmd", "./bu
     }}, mode:Editor.Mode.WYSIWYG_MODE});
     editor.docReady(function() {
       editor.get("document").on("keydown", function(e) {
-        if(e.ctrlKey && e.keyCode == S.Node.KeyCode.R) {
+        if(e.ctrlKey && e.keyCode === S.Node.KeyCode.R) {
           editor.execCommand("justifyRight");
           e.preventDefault()
         }

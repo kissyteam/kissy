@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ','src':' + jscoverage_quote(this.src)
+            + ',"src":' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -311,14 +311,10 @@ if (! _$jscoverage['/cmd.js'].branchData) {
   _$jscoverage['/cmd.js'].branchData = {};
   _$jscoverage['/cmd.js'].branchData['12'] = [];
   _$jscoverage['/cmd.js'].branchData['12'][1] = new BranchData();
-  _$jscoverage['/cmd.js'].branchData['17'] = [];
-  _$jscoverage['/cmd.js'].branchData['17'][1] = new BranchData();
   _$jscoverage['/cmd.js'].branchData['22'] = [];
   _$jscoverage['/cmd.js'].branchData['22'][1] = new BranchData();
   _$jscoverage['/cmd.js'].branchData['24'] = [];
   _$jscoverage['/cmd.js'].branchData['24'][1] = new BranchData();
-  _$jscoverage['/cmd.js'].branchData['29'] = [];
-  _$jscoverage['/cmd.js'].branchData['29'][1] = new BranchData();
   _$jscoverage['/cmd.js'].branchData['42'] = [];
   _$jscoverage['/cmd.js'].branchData['42'][1] = new BranchData();
   _$jscoverage['/cmd.js'].branchData['44'] = [];
@@ -346,78 +342,70 @@ if (! _$jscoverage['/cmd.js'].branchData) {
   _$jscoverage['/cmd.js'].branchData['111'][1] = new BranchData();
 }
 _$jscoverage['/cmd.js'].branchData['111'][1].init(92, 33, 'selection && !selection.isInvalid');
-function visit19_111_1(result) {
+function visit17_111_1(result) {
   _$jscoverage['/cmd.js'].branchData['111'][1].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['100'][1].init(408, 49, 'value.toLowerCase() == currentValue.toLowerCase()');
-function visit18_100_1(result) {
+}_$jscoverage['/cmd.js'].branchData['100'][1].init(408, 50, 'value.toLowerCase() === currentValue.toLowerCase()');
+function visit16_100_1(result) {
   _$jscoverage['/cmd.js'].branchData['100'][1].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['94'][1].init(84, 39, 'editor.queryCommandValue(cmdType) || ""');
-function visit17_94_1(result) {
+}_$jscoverage['/cmd.js'].branchData['94'][1].init(84, 39, 'editor.queryCommandValue(cmdType) || \'\'');
+function visit15_94_1(result) {
   _$jscoverage['/cmd.js'].branchData['94'][1].ranCondition(result);
   return result;
 }_$jscoverage['/cmd.js'].branchData['90'][1].init(66, 27, '!editor.hasCommand(cmdType)');
-function visit16_90_1(result) {
+function visit14_90_1(result) {
   _$jscoverage['/cmd.js'].branchData['90'][1].ranCondition(result);
   return result;
 }_$jscoverage['/cmd.js'].branchData['78'][1].init(92, 33, 'selection && !selection.isInvalid');
-function visit15_78_1(result) {
+function visit13_78_1(result) {
   _$jscoverage['/cmd.js'].branchData['78'][1].ranCondition(result);
   return result;
 }_$jscoverage['/cmd.js'].branchData['65'][1].init(215, 7, 'checked');
-function visit14_65_1(result) {
+function visit12_65_1(result) {
   _$jscoverage['/cmd.js'].branchData['65'][1].ranCondition(result);
   return result;
 }_$jscoverage['/cmd.js'].branchData['59'][1].init(66, 27, '!editor.hasCommand(cmdType)');
-function visit13_59_1(result) {
+function visit11_59_1(result) {
   _$jscoverage['/cmd.js'].branchData['59'][1].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['49'][1].init(309, 11, 'v !== false');
-function visit12_49_1(result) {
+}_$jscoverage['/cmd.js'].branchData['49'][1].init(311, 11, 'v !== false');
+function visit10_49_1(result) {
   _$jscoverage['/cmd.js'].branchData['49'][1].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['45'][2].init(157, 39, 'element[0] == elementPath.blockLimit[0]');
-function visit11_45_2(result) {
+}_$jscoverage['/cmd.js'].branchData['45'][2].init(158, 40, 'element[0] === elementPath.blockLimit[0]');
+function visit9_45_2(result) {
   _$jscoverage['/cmd.js'].branchData['45'][2].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['45'][1].init(74, 65, 'elementPath.blockLimit && element[0] == elementPath.blockLimit[0]');
-function visit10_45_1(result) {
+}_$jscoverage['/cmd.js'].branchData['45'][1].init(75, 66, 'elementPath.blockLimit && element[0] === elementPath.blockLimit[0]');
+function visit8_45_1(result) {
   _$jscoverage['/cmd.js'].branchData['45'][1].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['44'][3].init(75, 34, 'element[0] == elementPath.block[0]');
-function visit9_44_3(result) {
+}_$jscoverage['/cmd.js'].branchData['44'][3].init(75, 35, 'element[0] === elementPath.block[0]');
+function visit7_44_3(result) {
   _$jscoverage['/cmd.js'].branchData['44'][3].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['44'][2].init(54, 55, 'elementPath.block && element[0] == elementPath.block[0]');
-function visit8_44_2(result) {
+}_$jscoverage['/cmd.js'].branchData['44'][2].init(54, 56, 'elementPath.block && element[0] === elementPath.block[0]');
+function visit6_44_2(result) {
   _$jscoverage['/cmd.js'].branchData['44'][2].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['44'][1].init(54, 140, 'elementPath.block && element[0] == elementPath.block[0] || elementPath.blockLimit && element[0] == elementPath.blockLimit[0]');
-function visit7_44_1(result) {
+}_$jscoverage['/cmd.js'].branchData['44'][1].init(54, 142, 'elementPath.block && element[0] === elementPath.block[0] || elementPath.blockLimit && element[0] === elementPath.blockLimit[0]');
+function visit5_44_1(result) {
   _$jscoverage['/cmd.js'].branchData['44'][1].ranCondition(result);
   return result;
 }_$jscoverage['/cmd.js'].branchData['42'][1].init(117, 19, 'i < elements.length');
-function visit6_42_1(result) {
+function visit4_42_1(result) {
   _$jscoverage['/cmd.js'].branchData['42'][1].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['29'][1].init(21, 19, 'v = element.attr(a)');
-function visit5_29_1(result) {
-  _$jscoverage['/cmd.js'].branchData['29'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/cmd.js'].branchData['24'][1].init(58, 28, 'override.element != nodeName');
-function visit4_24_1(result) {
+}_$jscoverage['/cmd.js'].branchData['24'][1].init(59, 29, 'override.element !== nodeName');
+function visit3_24_1(result) {
   _$jscoverage['/cmd.js'].branchData['24'][1].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['22'][1].init(355, 20, 'i < overrides.length');
-function visit3_22_1(result) {
+}_$jscoverage['/cmd.js'].branchData['22'][1].init(358, 20, 'i < overrides.length');
+function visit2_22_1(result) {
   _$jscoverage['/cmd.js'].branchData['22'][1].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['17'][1].init(17, 20, 'v = element.style(s)');
-function visit2_17_1(result) {
-  _$jscoverage['/cmd.js'].branchData['17'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/cmd.js'].branchData['12'][1].init(56, 28, 'styleObj.element != nodeName');
+}_$jscoverage['/cmd.js'].branchData['12'][1].init(56, 29, 'styleObj.element !== nodeName');
 function visit1_12_1(result) {
   _$jscoverage['/cmd.js'].branchData['12'][1].ranCondition(result);
   return result;
@@ -434,7 +422,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/cmd.js'].lineData[11]++;
     var nodeName = element.nodeName();
     _$jscoverage['/cmd.js'].lineData[12]++;
-    if (visit1_12_1(styleObj.element != nodeName)) {
+    if (visit1_12_1(styleObj.element !== nodeName)) {
       _$jscoverage['/cmd.js'].lineData[13]++;
       return false;
     }
@@ -443,7 +431,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/cmd.js'].lineData[16]++;
     for (var s in styles) {
       _$jscoverage['/cmd.js'].lineData[17]++;
-      if (visit2_17_1(v = element.style(s))) {
+      if ((v = element.style(s))) {
         _$jscoverage['/cmd.js'].lineData[18]++;
         return v;
       }
@@ -451,11 +439,11 @@ KISSY.add(function(S, require) {
     _$jscoverage['/cmd.js'].lineData[21]++;
     var overrides = styleObj.overrides;
     _$jscoverage['/cmd.js'].lineData[22]++;
-    for (var i = 0; visit3_22_1(i < overrides.length); i++) {
+    for (var i = 0; visit2_22_1(i < overrides.length); i++) {
       _$jscoverage['/cmd.js'].lineData[23]++;
       var override = overrides[i];
       _$jscoverage['/cmd.js'].lineData[24]++;
-      if (visit4_24_1(override.element != nodeName)) {
+      if ((visit3_24_1(override.element !== nodeName))) {
         _$jscoverage['/cmd.js'].lineData[25]++;
         continue;
       }
@@ -464,7 +452,7 @@ KISSY.add(function(S, require) {
       _$jscoverage['/cmd.js'].lineData[28]++;
       for (var a in attributes) {
         _$jscoverage['/cmd.js'].lineData[29]++;
-        if (visit5_29_1(v = element.attr(a))) {
+        if ((v = element.attr(a))) {
           _$jscoverage['/cmd.js'].lineData[30]++;
           return v;
         }
@@ -479,18 +467,18 @@ KISSY.add(function(S, require) {
     _$jscoverage['/cmd.js'].lineData[38]++;
     var elements = elementPath.elements, element, i, v;
     _$jscoverage['/cmd.js'].lineData[42]++;
-    for (i = 0; visit6_42_1(i < elements.length); i++) {
+    for (i = 0; visit4_42_1(i < elements.length); i++) {
       _$jscoverage['/cmd.js'].lineData[43]++;
       element = elements[i];
       _$jscoverage['/cmd.js'].lineData[44]++;
-      if (visit7_44_1(visit8_44_2(elementPath.block && visit9_44_3(element[0] == elementPath.block[0])) || visit10_45_1(elementPath.blockLimit && visit11_45_2(element[0] == elementPath.blockLimit[0])))) {
+      if (visit5_44_1(visit6_44_2(elementPath.block && visit7_44_3(element[0] === elementPath.block[0])) || visit8_45_1(elementPath.blockLimit && visit9_45_2(element[0] === elementPath.blockLimit[0])))) {
         _$jscoverage['/cmd.js'].lineData[46]++;
         continue;
       }
       _$jscoverage['/cmd.js'].lineData[48]++;
       v = getValueFromSingle(element, styleObj);
       _$jscoverage['/cmd.js'].lineData[49]++;
-      if (visit12_49_1(v !== false)) {
+      if (visit10_49_1(v !== false)) {
         _$jscoverage['/cmd.js'].lineData[50]++;
         return v;
       }
@@ -505,10 +493,10 @@ KISSY.add(function(S, require) {
   _$jscoverage['/cmd.js'].lineData[58]++;
   var queryCmd = getQueryCmd(cmdType);
   _$jscoverage['/cmd.js'].lineData[59]++;
-  if (visit13_59_1(!editor.hasCommand(cmdType))) {
+  if (visit11_59_1(!editor.hasCommand(cmdType))) {
     _$jscoverage['/cmd.js'].lineData[60]++;
     editor.addCommand(cmdType, {
-  exec: function(editor, effect) {
+  exec: function(editor) {
   _$jscoverage['/cmd.js'].functionData[4]++;
   _$jscoverage['/cmd.js'].lineData[62]++;
   var doc = editor.get('document')[0];
@@ -517,7 +505,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/cmd.js'].lineData[64]++;
   var checked = editor.queryCommandValue(cmdType);
   _$jscoverage['/cmd.js'].lineData[65]++;
-  if (visit14_65_1(checked)) {
+  if (visit12_65_1(checked)) {
     _$jscoverage['/cmd.js'].lineData[66]++;
     style.remove(doc);
   } else {
@@ -536,7 +524,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/cmd.js'].lineData[77]++;
   var selection = editor.getSelection();
   _$jscoverage['/cmd.js'].lineData[78]++;
-  if (visit15_78_1(selection && !selection.isInvalid)) {
+  if (visit13_78_1(selection && !selection.isInvalid)) {
     _$jscoverage['/cmd.js'].lineData[79]++;
     var startElement = selection.getStartElement(), currentPath = new Editor.ElementPath(startElement);
     _$jscoverage['/cmd.js'].lineData[81]++;
@@ -550,7 +538,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/cmd.js'].lineData[89]++;
   var queryCmd = getQueryCmd(cmdType);
   _$jscoverage['/cmd.js'].lineData[90]++;
-  if (visit16_90_1(!editor.hasCommand(cmdType))) {
+  if (visit14_90_1(!editor.hasCommand(cmdType))) {
     _$jscoverage['/cmd.js'].lineData[91]++;
     editor.addCommand(cmdType, {
   exec: function(editor, value) {
@@ -558,14 +546,14 @@ KISSY.add(function(S, require) {
   _$jscoverage['/cmd.js'].lineData[93]++;
   editor.focus();
   _$jscoverage['/cmd.js'].lineData[94]++;
-  var currentValue = visit17_94_1(editor.queryCommandValue(cmdType) || "");
+  var currentValue = visit15_94_1(editor.queryCommandValue(cmdType) || '');
   _$jscoverage['/cmd.js'].lineData[95]++;
   var style = new Editor.Style(styleObj, {
   value: value}), doc = editor.get('document')[0];
   _$jscoverage['/cmd.js'].lineData[99]++;
   editor.execCommand('save');
   _$jscoverage['/cmd.js'].lineData[100]++;
-  if (visit18_100_1(value.toLowerCase() == currentValue.toLowerCase())) {
+  if (visit16_100_1(value.toLowerCase() === currentValue.toLowerCase())) {
     _$jscoverage['/cmd.js'].lineData[101]++;
     style.remove(doc);
   } else {
@@ -582,7 +570,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/cmd.js'].lineData[110]++;
   var selection = editor.getSelection();
   _$jscoverage['/cmd.js'].lineData[111]++;
-  if (visit19_111_1(selection && !selection.isInvalid)) {
+  if (visit17_111_1(selection && !selection.isInvalid)) {
     _$jscoverage['/cmd.js'].lineData[112]++;
     var startElement = selection.getStartElement();
     _$jscoverage['/cmd.js'].lineData[113]++;

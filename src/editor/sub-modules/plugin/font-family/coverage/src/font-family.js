@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ','src':' + jscoverage_quote(this.src)
+            + ',"src":' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -266,7 +266,7 @@ if (! _$jscoverage['/font-family.js'].branchData) {
   _$jscoverage['/font-family.js'].branchData['84'] = [];
   _$jscoverage['/font-family.js'].branchData['84'][1] = new BranchData();
 }
-_$jscoverage['/font-family.js'].branchData['84'][1].init(119, 17, 'attrs.style || ""');
+_$jscoverage['/font-family.js'].branchData['84'][1].init(119, 17, 'attrs.style || \'\'');
 function visit3_84_1(result) {
   _$jscoverage['/font-family.js'].branchData['84'][1].ranCondition(result);
   return result;
@@ -308,49 +308,49 @@ KISSY.add(function(S, require) {
   _$jscoverage['/font-family.js'].lineData[26]++;
   S.mix(menu, {
   children: [{
-  content: "\u5b8b\u4f53", 
-  value: "SimSun"}, {
-  content: "\u9ed1\u4f53", 
-  value: "SimHei"}, {
-  content: "\u96b6\u4e66", 
-  value: "LiSu"}, {
-  content: "\u6977\u4f53", 
-  value: "KaiTi_GB2312"}, {
-  content: "\u5fae\u8f6f\u96c5\u9ed1", 
-  value: "'Microsoft YaHei'"}, {
-  content: "Georgia", 
-  value: "Georgia"}, {
-  content: "Times New Roman", 
-  value: "'Times New Roman'"}, {
-  content: "Impact", 
-  value: "Impact"}, {
-  content: "Courier New", 
-  value: "'Courier New'"}, {
-  content: "Arial", 
-  value: "Arial"}, {
-  content: "Verdana", 
-  value: "Verdana"}, {
-  content: "Tahoma", 
-  value: "Tahoma"}], 
-  width: "130px"});
+  content: '\u5b8b\u4f53', 
+  value: 'SimSun'}, {
+  content: '\u9ed1\u4f53', 
+  value: 'SimHei'}, {
+  content: '\u96b6\u4e66', 
+  value: 'LiSu'}, {
+  content: '\u6977\u4f53', 
+  value: 'KaiTi_GB2312'}, {
+  content: '\u5fae\u8f6f\u96c5\u9ed1', 
+  value: '"Microsoft YaHei"'}, {
+  content: 'Georgia', 
+  value: 'Georgia'}, {
+  content: 'Times New Roman', 
+  value: '"Times New Roman"'}, {
+  content: 'Impact', 
+  value: 'Impact'}, {
+  content: 'Courier New', 
+  value: '"Courier New"'}, {
+  content: 'Arial', 
+  value: 'Arial'}, {
+  content: 'Verdana', 
+  value: 'Verdana'}, {
+  content: 'Tahoma', 
+  value: 'Tahoma'}], 
+  width: '130px'});
   _$jscoverage['/font-family.js'].lineData[81]++;
   S.each(menu.children, function(item) {
   _$jscoverage['/font-family.js'].functionData[3]++;
   _$jscoverage['/font-family.js'].lineData[82]++;
   var attrs = visit2_82_1(item.elAttrs || {}), value = item.value;
   _$jscoverage['/font-family.js'].lineData[84]++;
-  attrs.style = visit3_84_1(attrs.style || "");
+  attrs.style = visit3_84_1(attrs.style || '');
   _$jscoverage['/font-family.js'].lineData[85]++;
-  attrs.style += ";font-family:" + value;
+  attrs.style += ';font-family:' + value;
   _$jscoverage['/font-family.js'].lineData[86]++;
   item.elAttrs = attrs;
 });
   _$jscoverage['/font-family.js'].lineData[89]++;
   fontFamilies.menu = S.mix(menu, fontFamilies.menu);
   _$jscoverage['/font-family.js'].lineData[91]++;
-  editor.addSelect("fontFamily", S.mix({
-  cmdType: "fontFamily", 
-  defaultCaption: "\u5b57\u4f53", 
+  editor.addSelect('fontFamily', S.mix({
+  cmdType: 'fontFamily', 
+  defaultCaption: '\u5b57\u4f53', 
   width: 130, 
   mode: Editor.Mode.WYSIWYG_MODE}, fontFamilies), ui.Select);
 }});

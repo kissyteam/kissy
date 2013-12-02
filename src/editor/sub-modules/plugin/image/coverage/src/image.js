@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ','src':' + jscoverage_quote(this.src)
+            + ',"src":' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -238,68 +238,68 @@ if (! _$jscoverage['/image.js']) {
   _$jscoverage['/image.js'].lineData[16] = 0;
   _$jscoverage['/image.js'].lineData[17] = 0;
   _$jscoverage['/image.js'].lineData[20] = 0;
-  _$jscoverage['/image.js'].lineData[31] = 0;
-  _$jscoverage['/image.js'].lineData[32] = 0;
-  _$jscoverage['/image.js'].lineData[35] = 0;
+  _$jscoverage['/image.js'].lineData[29] = 0;
+  _$jscoverage['/image.js'].lineData[30] = 0;
+  _$jscoverage['/image.js'].lineData[33] = 0;
+  _$jscoverage['/image.js'].lineData[36] = 0;
   _$jscoverage['/image.js'].lineData[38] = 0;
   _$jscoverage['/image.js'].lineData[40] = 0;
-  _$jscoverage['/image.js'].lineData[42] = 0;
-  _$jscoverage['/image.js'].lineData[43] = 0;
-  _$jscoverage['/image.js'].lineData[49] = 0;
-  _$jscoverage['/image.js'].lineData[53] = 0;
-  _$jscoverage['/image.js'].lineData[60] = 0;
-  _$jscoverage['/image.js'].lineData[64] = 0;
+  _$jscoverage['/image.js'].lineData[41] = 0;
+  _$jscoverage['/image.js'].lineData[47] = 0;
+  _$jscoverage['/image.js'].lineData[51] = 0;
+  _$jscoverage['/image.js'].lineData[58] = 0;
+  _$jscoverage['/image.js'].lineData[62] = 0;
+  _$jscoverage['/image.js'].lineData[63] = 0;
   _$jscoverage['/image.js'].lineData[65] = 0;
-  _$jscoverage['/image.js'].lineData[67] = 0;
-  _$jscoverage['/image.js'].lineData[68] = 0;
-  _$jscoverage['/image.js'].lineData[75] = 0;
+  _$jscoverage['/image.js'].lineData[66] = 0;
+  _$jscoverage['/image.js'].lineData[73] = 0;
+  _$jscoverage['/image.js'].lineData[74] = 0;
   _$jscoverage['/image.js'].lineData[76] = 0;
-  _$jscoverage['/image.js'].lineData[78] = 0;
+  _$jscoverage['/image.js'].lineData[77] = 0;
   _$jscoverage['/image.js'].lineData[79] = 0;
+  _$jscoverage['/image.js'].lineData[80] = 0;
   _$jscoverage['/image.js'].lineData[81] = 0;
   _$jscoverage['/image.js'].lineData[82] = 0;
   _$jscoverage['/image.js'].lineData[83] = 0;
   _$jscoverage['/image.js'].lineData[84] = 0;
-  _$jscoverage['/image.js'].lineData[85] = 0;
-  _$jscoverage['/image.js'].lineData[86] = 0;
+  _$jscoverage['/image.js'].lineData[89] = 0;
   _$jscoverage['/image.js'].lineData[91] = 0;
-  _$jscoverage['/image.js'].lineData[93] = 0;
-  _$jscoverage['/image.js'].lineData[94] = 0;
-  _$jscoverage['/image.js'].lineData[99] = 0;
+  _$jscoverage['/image.js'].lineData[92] = 0;
+  _$jscoverage['/image.js'].lineData[97] = 0;
+  _$jscoverage['/image.js'].lineData[102] = 0;
+  _$jscoverage['/image.js'].lineData[103] = 0;
   _$jscoverage['/image.js'].lineData[104] = 0;
   _$jscoverage['/image.js'].lineData[105] = 0;
-  _$jscoverage['/image.js'].lineData[106] = 0;
-  _$jscoverage['/image.js'].lineData[107] = 0;
+  _$jscoverage['/image.js'].lineData[113] = 0;
+  _$jscoverage['/image.js'].lineData[114] = 0;
   _$jscoverage['/image.js'].lineData[115] = 0;
   _$jscoverage['/image.js'].lineData[116] = 0;
   _$jscoverage['/image.js'].lineData[117] = 0;
   _$jscoverage['/image.js'].lineData[118] = 0;
-  _$jscoverage['/image.js'].lineData[119] = 0;
-  _$jscoverage['/image.js'].lineData[120] = 0;
-  _$jscoverage['/image.js'].lineData[125] = 0;
+  _$jscoverage['/image.js'].lineData[123] = 0;
+  _$jscoverage['/image.js'].lineData[126] = 0;
   _$jscoverage['/image.js'].lineData[128] = 0;
-  _$jscoverage['/image.js'].lineData[130] = 0;
-  _$jscoverage['/image.js'].lineData[133] = 0;
+  _$jscoverage['/image.js'].lineData[131] = 0;
+  _$jscoverage['/image.js'].lineData[134] = 0;
+  _$jscoverage['/image.js'].lineData[135] = 0;
   _$jscoverage['/image.js'].lineData[136] = 0;
   _$jscoverage['/image.js'].lineData[137] = 0;
-  _$jscoverage['/image.js'].lineData[138] = 0;
   _$jscoverage['/image.js'].lineData[139] = 0;
+  _$jscoverage['/image.js'].lineData[140] = 0;
   _$jscoverage['/image.js'].lineData[141] = 0;
   _$jscoverage['/image.js'].lineData[142] = 0;
   _$jscoverage['/image.js'].lineData[143] = 0;
   _$jscoverage['/image.js'].lineData[144] = 0;
-  _$jscoverage['/image.js'].lineData[145] = 0;
-  _$jscoverage['/image.js'].lineData[146] = 0;
+  _$jscoverage['/image.js'].lineData[147] = 0;
+  _$jscoverage['/image.js'].lineData[148] = 0;
   _$jscoverage['/image.js'].lineData[149] = 0;
   _$jscoverage['/image.js'].lineData[150] = 0;
-  _$jscoverage['/image.js'].lineData[151] = 0;
   _$jscoverage['/image.js'].lineData[152] = 0;
+  _$jscoverage['/image.js'].lineData[153] = 0;
   _$jscoverage['/image.js'].lineData[154] = 0;
   _$jscoverage['/image.js'].lineData[155] = 0;
   _$jscoverage['/image.js'].lineData[156] = 0;
-  _$jscoverage['/image.js'].lineData[157] = 0;
-  _$jscoverage['/image.js'].lineData[158] = 0;
-  _$jscoverage['/image.js'].lineData[167] = 0;
+  _$jscoverage['/image.js'].lineData[165] = 0;
 }
 if (! _$jscoverage['/image.js'].functionData) {
   _$jscoverage['/image.js'].functionData = [];
@@ -326,60 +326,60 @@ if (! _$jscoverage['/image.js'].branchData) {
   _$jscoverage['/image.js'].branchData['17'] = [];
   _$jscoverage['/image.js'].branchData['17'][1] = new BranchData();
   _$jscoverage['/image.js'].branchData['17'][2] = new BranchData();
-  _$jscoverage['/image.js'].branchData['32'] = [];
-  _$jscoverage['/image.js'].branchData['32'][1] = new BranchData();
-  _$jscoverage['/image.js'].branchData['65'] = [];
-  _$jscoverage['/image.js'].branchData['65'][1] = new BranchData();
-  _$jscoverage['/image.js'].branchData['78'] = [];
-  _$jscoverage['/image.js'].branchData['78'][1] = new BranchData();
-  _$jscoverage['/image.js'].branchData['106'] = [];
-  _$jscoverage['/image.js'].branchData['106'][1] = new BranchData();
-  _$jscoverage['/image.js'].branchData['119'] = [];
-  _$jscoverage['/image.js'].branchData['119'][1] = new BranchData();
+  _$jscoverage['/image.js'].branchData['30'] = [];
+  _$jscoverage['/image.js'].branchData['30'][1] = new BranchData();
+  _$jscoverage['/image.js'].branchData['63'] = [];
+  _$jscoverage['/image.js'].branchData['63'][1] = new BranchData();
+  _$jscoverage['/image.js'].branchData['76'] = [];
+  _$jscoverage['/image.js'].branchData['76'][1] = new BranchData();
+  _$jscoverage['/image.js'].branchData['104'] = [];
+  _$jscoverage['/image.js'].branchData['104'][1] = new BranchData();
+  _$jscoverage['/image.js'].branchData['117'] = [];
+  _$jscoverage['/image.js'].branchData['117'][1] = new BranchData();
+  _$jscoverage['/image.js'].branchData['140'] = [];
+  _$jscoverage['/image.js'].branchData['140'][1] = new BranchData();
   _$jscoverage['/image.js'].branchData['142'] = [];
   _$jscoverage['/image.js'].branchData['142'][1] = new BranchData();
-  _$jscoverage['/image.js'].branchData['144'] = [];
-  _$jscoverage['/image.js'].branchData['144'][1] = new BranchData();
-  _$jscoverage['/image.js'].branchData['156'] = [];
-  _$jscoverage['/image.js'].branchData['156'][1] = new BranchData();
-  _$jscoverage['/image.js'].branchData['157'] = [];
-  _$jscoverage['/image.js'].branchData['157'][1] = new BranchData();
+  _$jscoverage['/image.js'].branchData['154'] = [];
+  _$jscoverage['/image.js'].branchData['154'][1] = new BranchData();
+  _$jscoverage['/image.js'].branchData['155'] = [];
+  _$jscoverage['/image.js'].branchData['155'][1] = new BranchData();
 }
-_$jscoverage['/image.js'].branchData['157'][1].init(43, 40, 'a.attr('_keSaved_src') || a.attr('src')');
-function visit11_157_1(result) {
-  _$jscoverage['/image.js'].branchData['157'][1].ranCondition(result);
+_$jscoverage['/image.js'].branchData['155'][1].init(43, 39, 'a.attr(\'_keSaved_src\') || a.attr(\'src\')');
+function visit11_155_1(result) {
+  _$jscoverage['/image.js'].branchData['155'][1].ranCondition(result);
   return result;
-}_$jscoverage['/image.js'].branchData['156'][1].init(101, 1, 'a');
-function visit10_156_1(result) {
-  _$jscoverage['/image.js'].branchData['156'][1].ranCondition(result);
+}_$jscoverage['/image.js'].branchData['154'][1].init(101, 1, 'a');
+function visit10_154_1(result) {
+  _$jscoverage['/image.js'].branchData['154'][1].ranCondition(result);
   return result;
-}_$jscoverage['/image.js'].branchData['144'][1].init(112, 9, 'r && r[0]');
-function visit9_144_1(result) {
-  _$jscoverage['/image.js'].branchData['144'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/image.js'].branchData['142'][1].init(33, 12, 'UA[\'webkit\']');
-function visit8_142_1(result) {
+}_$jscoverage['/image.js'].branchData['142'][1].init(112, 9, 'r && r[0]');
+function visit9_142_1(result) {
   _$jscoverage['/image.js'].branchData['142'][1].ranCondition(result);
   return result;
-}_$jscoverage['/image.js'].branchData['119'][1].init(98, 11, 'checkImg(t)');
-function visit7_119_1(result) {
-  _$jscoverage['/image.js'].branchData['119'][1].ranCondition(result);
+}_$jscoverage['/image.js'].branchData['140'][1].init(33, 9, 'UA.webkit');
+function visit8_140_1(result) {
+  _$jscoverage['/image.js'].branchData['140'][1].ranCondition(result);
   return result;
-}_$jscoverage['/image.js'].branchData['106'][1].init(33, 20, 'h.content == content');
-function visit6_106_1(result) {
-  _$jscoverage['/image.js'].branchData['106'][1].ranCondition(result);
+}_$jscoverage['/image.js'].branchData['117'][1].init(98, 11, 'checkImg(t)');
+function visit7_117_1(result) {
+  _$jscoverage['/image.js'].branchData['117'][1].ranCondition(result);
   return result;
-}_$jscoverage['/image.js'].branchData['78'][1].init(193, 9, '!UA[\'ie\']');
-function visit5_78_1(result) {
-  _$jscoverage['/image.js'].branchData['78'][1].ranCondition(result);
+}_$jscoverage['/image.js'].branchData['104'][1].init(33, 21, 'h.content === content');
+function visit6_104_1(result) {
+  _$jscoverage['/image.js'].branchData['104'][1].ranCondition(result);
   return result;
-}_$jscoverage['/image.js'].branchData['65'][1].init(103, 3, 'img');
-function visit4_65_1(result) {
-  _$jscoverage['/image.js'].branchData['65'][1].ranCondition(result);
+}_$jscoverage['/image.js'].branchData['76'][1].init(193, 6, '!UA.ie');
+function visit5_76_1(result) {
+  _$jscoverage['/image.js'].branchData['76'][1].ranCondition(result);
   return result;
-}_$jscoverage['/image.js'].branchData['32'][1].init(23, 12, 'config || {}');
-function visit3_32_1(result) {
-  _$jscoverage['/image.js'].branchData['32'][1].ranCondition(result);
+}_$jscoverage['/image.js'].branchData['63'][1].init(103, 3, 'img');
+function visit4_63_1(result) {
+  _$jscoverage['/image.js'].branchData['63'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/image.js'].branchData['30'][1].init(23, 12, 'config || {}');
+function visit3_30_1(result) {
+  _$jscoverage['/image.js'].branchData['30'][1].ranCondition(result);
   return result;
 }_$jscoverage['/image.js'].branchData['17'][2].init(45, 25, 'node.nodeName() === \'img\'');
 function visit2_17_2(result) {
@@ -411,182 +411,182 @@ KISSY.add(function(S, require) {
     return node;
   }
 }, tipHTML = '<a class="{prefixCls}editor-bubble-url" ' + 'target="_blank" href="#">\u5728\u65b0\u7a97\u53e3\u67e5\u770b</a>  |  ' + '<a class="{prefixCls}editor-bubble-link ' + '{prefixCls}editor-bubble-change" href="#">\u7f16\u8f91</a>  |  ' + '<a class="{prefixCls}editor-bubble-link ' + '{prefixCls}editor-bubble-remove" href="#">\u5220\u9664</a>';
-  _$jscoverage['/image.js'].lineData[31]++;
+  _$jscoverage['/image.js'].lineData[29]++;
   function ImagePlugin(config) {
     _$jscoverage['/image.js'].functionData[2]++;
-    _$jscoverage['/image.js'].lineData[32]++;
-    this.config = visit3_32_1(config || {});
+    _$jscoverage['/image.js'].lineData[30]++;
+    this.config = visit3_30_1(config || {});
   }
-  _$jscoverage['/image.js'].lineData[35]++;
+  _$jscoverage['/image.js'].lineData[33]++;
   S.augment(ImagePlugin, {
   pluginRenderUI: function(editor) {
   _$jscoverage['/image.js'].functionData[3]++;
-  _$jscoverage['/image.js'].lineData[38]++;
+  _$jscoverage['/image.js'].lineData[36]++;
   var self = this;
-  _$jscoverage['/image.js'].lineData[40]++;
+  _$jscoverage['/image.js'].lineData[38]++;
   var prefixCls = editor.get('prefixCls');
-  _$jscoverage['/image.js'].lineData[42]++;
+  _$jscoverage['/image.js'].lineData[40]++;
   function showImageEditor(selectedEl) {
     _$jscoverage['/image.js'].functionData[4]++;
-    _$jscoverage['/image.js'].lineData[43]++;
+    _$jscoverage['/image.js'].lineData[41]++;
     DialogLoader.useDialog(editor, 'image', self.config, selectedEl);
   }
-  _$jscoverage['/image.js'].lineData[49]++;
+  _$jscoverage['/image.js'].lineData[47]++;
   editor.addButton('image', {
-  tooltip: "\u63d2\u5165\u56fe\u7247", 
+  tooltip: '\u63d2\u5165\u56fe\u7247', 
   listeners: {
   click: function() {
   _$jscoverage['/image.js'].functionData[5]++;
-  _$jscoverage['/image.js'].lineData[53]++;
+  _$jscoverage['/image.js'].lineData[51]++;
   showImageEditor(null);
 }}, 
   mode: Editor.Mode.WYSIWYG_MODE});
-  _$jscoverage['/image.js'].lineData[60]++;
+  _$jscoverage['/image.js'].lineData[58]++;
   var handlers = [{
-  content: "\u56fe\u7247\u5c5e\u6027", 
+  content: '\u56fe\u7247\u5c5e\u6027', 
   fn: function() {
   _$jscoverage['/image.js'].functionData[6]++;
-  _$jscoverage['/image.js'].lineData[64]++;
+  _$jscoverage['/image.js'].lineData[62]++;
   var img = checkImg(this.get('editorSelectedEl'));
-  _$jscoverage['/image.js'].lineData[65]++;
-  if (visit4_65_1(img)) {
-    _$jscoverage['/image.js'].lineData[67]++;
+  _$jscoverage['/image.js'].lineData[63]++;
+  if (visit4_63_1(img)) {
+    _$jscoverage['/image.js'].lineData[65]++;
     this.hide();
-    _$jscoverage['/image.js'].lineData[68]++;
+    _$jscoverage['/image.js'].lineData[66]++;
     showImageEditor($(img));
   }
 }}, {
-  content: "\u63d2\u5165\u65b0\u884c", 
+  content: '\u63d2\u5165\u65b0\u884c', 
   fn: function() {
   _$jscoverage['/image.js'].functionData[7]++;
-  _$jscoverage['/image.js'].lineData[75]++;
+  _$jscoverage['/image.js'].lineData[73]++;
   this.hide();
-  _$jscoverage['/image.js'].lineData[76]++;
+  _$jscoverage['/image.js'].lineData[74]++;
   var doc = editor.get('document')[0], p = new Node(doc.createElement('p'));
-  _$jscoverage['/image.js'].lineData[78]++;
-  if (visit5_78_1(!UA.ie)) {
-    _$jscoverage['/image.js'].lineData[79]++;
+  _$jscoverage['/image.js'].lineData[76]++;
+  if (visit5_76_1(!UA.ie)) {
+    _$jscoverage['/image.js'].lineData[77]++;
     p._4eAppendBogus(undefined);
   }
-  _$jscoverage['/image.js'].lineData[81]++;
+  _$jscoverage['/image.js'].lineData[79]++;
   var r = new Editor.Range(doc);
-  _$jscoverage['/image.js'].lineData[82]++;
+  _$jscoverage['/image.js'].lineData[80]++;
   r.setStartAfter(this.get('editorSelectedEl'));
-  _$jscoverage['/image.js'].lineData[83]++;
+  _$jscoverage['/image.js'].lineData[81]++;
   r.select();
-  _$jscoverage['/image.js'].lineData[84]++;
+  _$jscoverage['/image.js'].lineData[82]++;
   editor.insertElement(p);
-  _$jscoverage['/image.js'].lineData[85]++;
+  _$jscoverage['/image.js'].lineData[83]++;
   r.moveToElementEditablePosition(p, 1);
-  _$jscoverage['/image.js'].lineData[86]++;
+  _$jscoverage['/image.js'].lineData[84]++;
   r.select();
 }}];
-  _$jscoverage['/image.js'].lineData[91]++;
+  _$jscoverage['/image.js'].lineData[89]++;
   var children = [];
-  _$jscoverage['/image.js'].lineData[93]++;
+  _$jscoverage['/image.js'].lineData[91]++;
   S.each(handlers, function(h) {
   _$jscoverage['/image.js'].functionData[8]++;
-  _$jscoverage['/image.js'].lineData[94]++;
+  _$jscoverage['/image.js'].lineData[92]++;
   children.push({
   content: h.content});
 });
-  _$jscoverage['/image.js'].lineData[99]++;
+  _$jscoverage['/image.js'].lineData[97]++;
   editor.addContextMenu('image', checkImg, {
   width: 120, 
   children: children, 
   listeners: {
   click: function(e) {
   _$jscoverage['/image.js'].functionData[9]++;
-  _$jscoverage['/image.js'].lineData[104]++;
+  _$jscoverage['/image.js'].lineData[102]++;
   var self = this, content = e.target.get('content');
-  _$jscoverage['/image.js'].lineData[105]++;
+  _$jscoverage['/image.js'].lineData[103]++;
   S.each(handlers, function(h) {
   _$jscoverage['/image.js'].functionData[10]++;
-  _$jscoverage['/image.js'].lineData[106]++;
-  if (visit6_106_1(h.content == content)) {
-    _$jscoverage['/image.js'].lineData[107]++;
+  _$jscoverage['/image.js'].lineData[104]++;
+  if (visit6_104_1(h.content === content)) {
+    _$jscoverage['/image.js'].lineData[105]++;
     h.fn.call(self);
   }
 });
 }}});
-  _$jscoverage['/image.js'].lineData[115]++;
+  _$jscoverage['/image.js'].lineData[113]++;
   editor.docReady(function() {
   _$jscoverage['/image.js'].functionData[11]++;
-  _$jscoverage['/image.js'].lineData[116]++;
+  _$jscoverage['/image.js'].lineData[114]++;
   editor.get('document').on('dblclick', function(ev) {
   _$jscoverage['/image.js'].functionData[12]++;
-  _$jscoverage['/image.js'].lineData[117]++;
+  _$jscoverage['/image.js'].lineData[115]++;
   ev.halt();
-  _$jscoverage['/image.js'].lineData[118]++;
+  _$jscoverage['/image.js'].lineData[116]++;
   var t = $(ev.target);
-  _$jscoverage['/image.js'].lineData[119]++;
-  if (visit7_119_1(checkImg(t))) {
-    _$jscoverage['/image.js'].lineData[120]++;
+  _$jscoverage['/image.js'].lineData[117]++;
+  if (visit7_117_1(checkImg(t))) {
+    _$jscoverage['/image.js'].lineData[118]++;
     showImageEditor(t);
   }
 });
 });
-  _$jscoverage['/image.js'].lineData[125]++;
+  _$jscoverage['/image.js'].lineData[123]++;
   editor.addBubble('image', checkImg, {
   listeners: {
   afterRenderUI: function() {
   _$jscoverage['/image.js'].functionData[13]++;
-  _$jscoverage['/image.js'].lineData[128]++;
+  _$jscoverage['/image.js'].lineData[126]++;
   var bubble = this, el = bubble.get('contentEl');
-  _$jscoverage['/image.js'].lineData[130]++;
+  _$jscoverage['/image.js'].lineData[128]++;
   el.html(S.substitute(tipHTML, {
   prefixCls: prefixCls}));
-  _$jscoverage['/image.js'].lineData[133]++;
-  var tipUrlEl = el.one("." + prefixCls + 'editor-bubble-url'), tipChangeEl = el.one("." + prefixCls + 'editor-bubble-change'), tipRemoveEl = el.one("." + prefixCls + 'editor-bubble-remove');
-  _$jscoverage['/image.js'].lineData[136]++;
+  _$jscoverage['/image.js'].lineData[131]++;
+  var tipUrlEl = el.one('.' + prefixCls + 'editor-bubble-url'), tipChangeEl = el.one('.' + prefixCls + 'editor-bubble-change'), tipRemoveEl = el.one('.' + prefixCls + 'editor-bubble-remove');
+  _$jscoverage['/image.js'].lineData[134]++;
   Editor.Utils.preventFocus(el);
-  _$jscoverage['/image.js'].lineData[137]++;
+  _$jscoverage['/image.js'].lineData[135]++;
   tipChangeEl.on('click', function(ev) {
   _$jscoverage['/image.js'].functionData[14]++;
-  _$jscoverage['/image.js'].lineData[138]++;
+  _$jscoverage['/image.js'].lineData[136]++;
   showImageEditor(bubble.get('editorSelectedEl'));
-  _$jscoverage['/image.js'].lineData[139]++;
+  _$jscoverage['/image.js'].lineData[137]++;
   ev.halt();
 });
-  _$jscoverage['/image.js'].lineData[141]++;
+  _$jscoverage['/image.js'].lineData[139]++;
   tipRemoveEl.on('click', function(ev) {
   _$jscoverage['/image.js'].functionData[15]++;
-  _$jscoverage['/image.js'].lineData[142]++;
-  if (visit8_142_1(UA.webkit)) {
-    _$jscoverage['/image.js'].lineData[143]++;
+  _$jscoverage['/image.js'].lineData[140]++;
+  if (visit8_140_1(UA.webkit)) {
+    _$jscoverage['/image.js'].lineData[141]++;
     var r = editor.getSelection().getRanges();
-    _$jscoverage['/image.js'].lineData[144]++;
-    if (visit9_144_1(r && r[0])) {
-      _$jscoverage['/image.js'].lineData[145]++;
+    _$jscoverage['/image.js'].lineData[142]++;
+    if (visit9_142_1(r && r[0])) {
+      _$jscoverage['/image.js'].lineData[143]++;
       r[0].collapse();
-      _$jscoverage['/image.js'].lineData[146]++;
+      _$jscoverage['/image.js'].lineData[144]++;
       r[0].select();
     }
   }
-  _$jscoverage['/image.js'].lineData[149]++;
+  _$jscoverage['/image.js'].lineData[147]++;
   bubble.get('editorSelectedEl').remove();
-  _$jscoverage['/image.js'].lineData[150]++;
+  _$jscoverage['/image.js'].lineData[148]++;
   bubble.hide();
-  _$jscoverage['/image.js'].lineData[151]++;
+  _$jscoverage['/image.js'].lineData[149]++;
   editor.notifySelectionChange();
-  _$jscoverage['/image.js'].lineData[152]++;
+  _$jscoverage['/image.js'].lineData[150]++;
   ev.halt();
 });
-  _$jscoverage['/image.js'].lineData[154]++;
+  _$jscoverage['/image.js'].lineData[152]++;
   bubble.on('show', function() {
   _$jscoverage['/image.js'].functionData[16]++;
-  _$jscoverage['/image.js'].lineData[155]++;
+  _$jscoverage['/image.js'].lineData[153]++;
   var a = bubble.get('editorSelectedEl');
-  _$jscoverage['/image.js'].lineData[156]++;
-  if (visit10_156_1(a)) {
-    _$jscoverage['/image.js'].lineData[157]++;
-    var src = visit11_157_1(a.attr('_keSaved_src') || a.attr('src'));
-    _$jscoverage['/image.js'].lineData[158]++;
+  _$jscoverage['/image.js'].lineData[154]++;
+  if (visit10_154_1(a)) {
+    _$jscoverage['/image.js'].lineData[155]++;
+    var src = visit11_155_1(a.attr('_keSaved_src') || a.attr('src'));
+    _$jscoverage['/image.js'].lineData[156]++;
     tipUrlEl.attr('href', src);
   }
 });
 }}});
 }});
-  _$jscoverage['/image.js'].lineData[167]++;
+  _$jscoverage['/image.js'].lineData[165]++;
   return ImagePlugin;
 });

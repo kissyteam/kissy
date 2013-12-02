@@ -17,21 +17,21 @@ KISSY.add(function (S, require) {
         $win = $(win),
         ie = S.UA.ieMode,
         history = win.history ,
-        supportNativeHistory = !!(history && history['pushState']),
-        ROUTER_MAP = "__routerMap";
+        supportNativeHistory = !!(history && history.pushState),
+        ROUTER_MAP = '__routerMap';
 
     function findFirstCaptureGroupIndex(regStr) {
         var r, i;
         for (i = 0; i < regStr.length; i++) {
             r = regStr.charAt(i);
             // skip escaped reg meta char
-            if (r == "\\") {
+            if (r === '\\') {
                 i++;
-            } else if (r == "(") {
+            } else if (r === '(') {
                 return i;
             }
         }
-        throw new Error("impossible to not to get capture group in kissy mvc route");
+        throw new Error('impossible to not to get capture group in kissy mvc route');
     }
 
     function getHash(url) {
@@ -44,7 +44,7 @@ KISSY.add(function (S, require) {
         // #!/home/q={%22thedate%22:%2220121010~20121010%22}
         // firefox 15 => #!/home/q={"thedate":"20121010~20121010"}
         // !! :(
-        return new S.Uri(url).getFragment().replace(/^!/, "");
+        return new S.Uri(url).getFragment().replace(/^!/, '');
     }
 
 
@@ -61,11 +61,11 @@ KISSY.add(function (S, require) {
     }
 
     function endWithSlash(str) {
-        return S.endsWith(str, "/");
+        return S.endsWith(str, '/');
     }
 
     function startWithSlash(str) {
-        return S.startsWith(str, "/");
+        return S.startsWith(str, '/');
     }
 
     function removeEndSlash(str) {
@@ -83,12 +83,12 @@ KISSY.add(function (S, require) {
     }
 
     function addEndSlash(str) {
-        return removeEndSlash(str) + "/";
+        return removeEndSlash(str) + '/';
     }
 
     function addStartSlash(str) {
         if (str) {
-            return "/" + removeStartSlash(str);
+            return '/' + removeStartSlash(str);
         } else {
             return str;
         }
@@ -97,14 +97,14 @@ KISSY.add(function (S, require) {
     function equalsIgnoreSlash(str1, str2) {
         str1 = removeEndSlash(str1);
         str2 = removeEndSlash(str2);
-        return str1 == str2;
+        return str1 === str2;
     }
 
 
     // get full path from fragment for html history
     function getFullPath(fragment) {
-        return location.protocol + "//" + location.host +
-            removeEndSlash(Router.urlRoot) + addStartSlash(fragment)
+        return location.protocol + '//' + location.host +
+            removeEndSlash(Router.urlRoot) + addStartSlash(fragment);
     }
 
 
@@ -115,10 +115,10 @@ KISSY.add(function (S, require) {
             arg,
             finalRoute = 0,
             finalMatchLength = -1,
-            finalRegStr = "",
+            finalRegStr = '',
             finalFirstCaptureGroupIndex = -1,
             finalCallback = 0,
-            finalRouteName = "",
+            finalRouteName = '',
             pathUri = new S.Uri(getFragment()),
             finalParam = 0;
 
@@ -139,11 +139,11 @@ KISSY.add(function (S, require) {
                         m,
                         name = desc.name,
                         callback = desc.callback;
-                    if (m = path.match(reg)) {
+                    if ((m = path.match(reg))) {
                         // match all result item shift out
                         m.shift();
 
-                        function genParam() {
+                        var genParam = function () {
                             if (paramNames) {
                                 var params = {};
                                 each(m, function (sm, i) {
@@ -155,9 +155,9 @@ KISSY.add(function (S, require) {
                                 // then call callback with match result array
                                 return [].concat(m);
                             }
-                        }
+                        };
 
-                        function upToFinal() {
+                        var upToFinal = function () {
                             finalRegStr = regStr;
                             finalFirstCaptureGroupIndex = firstCaptureGroupIndex;
                             finalCallback = callback;
@@ -165,7 +165,7 @@ KISSY.add(function (S, require) {
                             finalRoute = route;
                             finalRouteName = name;
                             finalMatchLength = m.length;
-                        }
+                        };
 
                         // route: /xx/yy/zz
                         if (!m.length) {
@@ -184,13 +184,13 @@ KISSY.add(function (S, require) {
                             }
 
                             else if (
-                                firstCaptureGroupIndex == finalFirstCaptureGroupIndex &&
+                                firstCaptureGroupIndex === finalFirstCaptureGroupIndex &&
                                     finalMatchLength >= m.length
                                 ) {
                                 // final route : /xx/:id/:id
                                 // now route :  /xx/:id/zz
                                 if (m.length < finalMatchLength) {
-                                    upToFinal()
+                                    upToFinal();
                                 } else if (regStr.length > finalRegStr.length) {
                                     upToFinal();
                                 }
@@ -229,7 +229,7 @@ KISSY.add(function (S, require) {
             }]);
             arg = {
                 name: finalRouteName,
-                "paths": finalParam,
+                'paths': finalParam,
                 path: path,
                 url: location.href,
                 query: query
@@ -257,11 +257,11 @@ KISSY.add(function (S, require) {
                 paramNames.push(g2 || g4);
                 // :name
                 if (g2) {
-                    return "([^/]+)";
+                    return '([^/]+)';
                 }
                 // *name
                 else if (g4) {
-                    return "(.*)";
+                    return '(.*)';
                 }
                 return undefined;
             });
@@ -269,7 +269,7 @@ KISSY.add(function (S, require) {
             return {
                 name: name,
                 paramNames: paramNames,
-                reg: new RegExp("^" + str + "$"),
+                reg: new RegExp('^' + str + '$'),
                 regStr: str,
                 callback: callback
             };
@@ -287,7 +287,7 @@ KISSY.add(function (S, require) {
     function normFn(self, callback) {
         if (typeof callback === 'function') {
             return callback;
-        } else if (typeof callback == 'string') {
+        } else if (typeof callback === 'string') {
             return self[callback];
         }
         return callback;
@@ -306,12 +306,12 @@ KISSY.add(function (S, require) {
      * @class KISSY.MVC.Router
      * @extends KISSY.Attribute
      */
-    return Router = Attribute.extend({
+    Router = Attribute.extend({
         constructor: function () {
             var self = this;
             self.callSuper.apply(self, arguments);
-            self.on("afterRoutesChange", _afterRoutesChange, self);
-            _afterRoutesChange.call(self, {newVal: self.get("routes")});
+            self.on('afterRoutesChange', _afterRoutesChange, self);
+            _afterRoutesChange.call(self, {newVal: self.get('routes')});
             allRoutes.push(self);
         },
         /**
@@ -320,9 +320,9 @@ KISSY.add(function (S, require) {
          *
          *
          *      {
-         *          "/search/:param":"callback"
+         *          '/search/:param':'callback'
          *          // or
-         *          "search":{
+         *          'search':{
          *              reg:/xx/,
          *              callback:fn
          *          }
@@ -343,9 +343,9 @@ KISSY.add(function (S, require) {
              *
              *
              *     {
-             *       "/search/:param":"callback"
+             *       '/search/:param':'callback'
              *       // or
-             *       "search":{
+             *       'search':{
              *         reg:/xx/,
              *         callback:fn
              *       }
@@ -412,7 +412,7 @@ KISSY.add(function (S, require) {
             if (getFragment() !== path) {
                 if (Router.nativeHistory && supportNativeHistory) {
                     history[replaceHistory ? 'replaceState' : 'pushState']({},
-                        "", getFullPath(path));
+                        '', getFullPath(path));
                     // pushState does not fire popstate event (unlike hashchange)
                     // so popstate is not statechange
                     // fire manually
@@ -448,7 +448,7 @@ KISSY.add(function (S, require) {
             }
 
             // remove backslash
-            opts.urlRoot = (opts.urlRoot || "").replace(/\/$/, '');
+            opts.urlRoot = (opts.urlRoot || '').replace(/\/$/, '');
 
             var urlRoot,
                 nativeHistory = opts.nativeHistory,
@@ -470,10 +470,10 @@ KISSY.add(function (S, require) {
                     if (hashIsValid) {
                         if (equalsIgnoreSlash(locPath, urlRoot)) {
                             // put hash to path
-                            history['replaceState']({}, "", getFullPath(hash));
+                            history.replaceState({}, '', getFullPath(hash));
                             opts.triggerRoute = 1;
                         } else {
-                            S.error("location path must be same with urlRoot!");
+                            S.error('location path must be same with urlRoot!');
                         }
                     }
                 }
@@ -483,7 +483,7 @@ KISSY.add(function (S, require) {
                 // =>
                 // refresh page without add history entry
                 else if (!equalsIgnoreSlash(locPath, urlRoot)) {
-                    location.replace(addEndSlash(urlRoot) + "#!" + hash);
+                    location.replace(addEndSlash(urlRoot) + '#!' + hash);
                     return undefined;
                 }
 
@@ -497,7 +497,7 @@ KISSY.add(function (S, require) {
                     // html5 triggerRoute is leaved to user decision
                     // if provide no #! hash
                 } else {
-                    $win.on("hashchange", dispatch);
+                    $win.on('hashchange', dispatch);
                     // hash-based browser is forced to trigger route
                     opts.triggerRoute = 1;
                 }
@@ -508,7 +508,9 @@ KISSY.add(function (S, require) {
                 if (opts.triggerRoute) {
                     dispatch();
                 }
-                opts.success && opts.success();
+                if(opts.success){
+                    opts.success();
+                }
 
             }, BREATH_INTERVAL);
 
@@ -524,10 +526,12 @@ KISSY.add(function (S, require) {
         stop: function () {
             Router.__started = 0;
             $win.detach('popstate', dispatch);
-            $win.detach("hashchange", dispatch);
+            $win.detach('hashchange', dispatch);
             allRoutes = [];
         }
     });
+
+    return Router;
 });
 
 /**

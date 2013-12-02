@@ -34,6 +34,6 @@ KISSY.add(function (S, require) {
                 value: CheckMenuItemRender
             }
         },
-        xclass: "check-menuitem"
-    })
+        xclass: 'check-menuitem'
+    });
 });

@@ -16,8 +16,8 @@ KISSY.add(function (S, require) {
             count = 0,
             childrenLength = children.length;
 
-        if (index == undefined) {
-            if (direction == 1) {
+        if (index === undefined) {
+            if (direction === 1) {
                 index = 0;
             } else {
                 index = childrenLength - 1;
@@ -32,7 +32,7 @@ KISSY.add(function (S, require) {
             index = (index + childrenLength + direction) % childrenLength;
         } while (count < childrenLength && children[index].get('disabled'));
 
-        if (count != childrenLength) {
+        if (count !== childrenLength) {
             return children[index];
         }
 
@@ -42,9 +42,9 @@ KISSY.add(function (S, require) {
     function afterCollapsedChange(e) {
         var self = this;
         if (e.newVal) {
-            self.set("expandedItem", null);
+            self.set('expandedItem', null);
         } else {
-            self.set("expandedItem", e.target);
+            self.set('expandedItem', e.target);
         }
     }
 
@@ -57,7 +57,7 @@ KISSY.add(function (S, require) {
 
             if (e.newVal) {
                 children = self.get('children');
-                if (expandedItem = self.get('expandedItem') && S.inArray(target, children)) {
+                if ((expandedItem = self.get('expandedItem')) && S.inArray(target, children)) {
                     // in case collapse false modify highlightedItem
                     self.set('expandedItem', target.isMenuButton ? target : null);
                 }
@@ -102,17 +102,17 @@ KISSY.add(function (S, require) {
                 });
             }
             if (item) {
-                if (el.ownerDocument.activeElement != el) {
+                if (el.ownerDocument.activeElement !== el) {
                     self.focus();
                 }
                 itemEl = item.el;
                 id = itemEl.id;
                 if (!id) {
-                    itemEl.id = id = S.guid("ks-toolbar-item");
+                    itemEl.id = id = S.guid('ks-toolbar-item');
                 }
-                el.setAttribute("aria-activedescendant", id);
+                el.setAttribute('aria-activedescendant', id);
             } else {
-                el.setAttribute("aria-activedescendant", "");
+                el.setAttribute('aria-activedescendant', '');
             }
         },
 
@@ -130,25 +130,23 @@ KISSY.add(function (S, require) {
          */
         bindUI: function () {
             var self = this;
-            self.on("afterCollapsedChange", afterCollapsedChange, self);
-            self.on("afterHighlightedChange", afterHighlightedChange, self);
+            self.on('afterCollapsedChange', afterCollapsedChange, self);
+            self.on('afterHighlightedChange', afterHighlightedChange, self);
         },
 
         handleBlurInternal: function (e) {
             var self = this,
-                highlightedItem,
-                expandedItem;
+                highlightedItem;
             self.callSuper(e);
-            self.set("expandedItem", null);
+            self.set('expandedItem', null);
             // clear for afterHighlightedChange
-            if (highlightedItem = self.get('highlightedItem')) {
+            if ((highlightedItem = self.get('highlightedItem'))) {
                 highlightedItem.set('highlighted', false);
             }
         },
 
         getNextItemByKeyDown: function (e, current) {
             var self = this,
-                orientation = self.get("orientation"),
                 children = self.get('children'),
                 childIndex = current && S.indexOf(current, children);
 
@@ -205,7 +203,7 @@ KISSY.add(function (S, require) {
                 currentChild = getChildByHighlightedItem(self),
                 nextHighlightedItem = self.getNextItemByKeyDown(e, currentChild);
 
-            if (typeof nextHighlightedItem == 'boolean') {
+            if (typeof nextHighlightedItem === 'boolean') {
                 return nextHighlightedItem;
             }
 

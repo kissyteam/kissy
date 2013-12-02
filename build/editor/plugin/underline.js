@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:46
+build time: Dec 2 13:03
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -17,7 +17,7 @@ KISSY.add("editor/plugin/underline", ["./font/ui", "./underline/cmd", "./button"
   }
   S.augment(Underline, {pluginRenderUI:function(editor) {
     cmd.init(editor);
-    editor.addButton("underline", {cmdType:"underline", tooltip:"\u4e0b\u5212\u7ebf "}, ui.Button);
+    editor.addButton("underline", {cmdType:"underline", tooltip:"\u4e0b\u5212\u7ebf"}, ui.Button);
     editor.docReady(function() {
       editor.get("document").on("keydown", function(e) {
         if(e.ctrlKey && e.keyCode == S.Node.KeyCode.U) {

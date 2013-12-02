@@ -9,7 +9,7 @@ KISSY.add(function (S, require) {
     var Attribute = require('attribute');
     var FlashUA = require('swf/ua');
 
-    var OLD_IE = !!S.Env.host['ActiveXObject'],
+    var OLD_IE = !!S.Env.host.ActiveXObject,
         TYPE = 'application/x-shockwave-flash',
         CID = 'clsid:d27cdb6e-ae6d-11cf-96b8-444553540000',
         FLASHVARS = 'flashvars',
@@ -57,7 +57,7 @@ KISSY.add(function (S, require) {
      * @class KISSY.SWF
      * @extends KISSY.Base
      */
-    return SWF = Attribute.extend({
+    SWF = Attribute.extend({
         constructor: function () {
             var self = this;
             self.callSuper.apply(self, arguments);
@@ -94,28 +94,28 @@ KISSY.add(function (S, require) {
                     // from swfobject
                     if (!('width' in attrs) ||
                         (!/%$/.test(attrs.width) && parseInt(attrs.width, 10) < 310)) {
-                        attrs.width = "310";
+                        attrs.width = '310';
                     }
 
                     if (!('height' in attrs) ||
                         (!/%$/.test(attrs.height) && parseInt(attrs.height, 10) < 137)) {
-                        attrs.height = "137";
+                        attrs.height = '137';
                     }
 
                     flashVars = params.flashVars = params.flashVars || {};
                     // location.toString() crash ie6
                     S.mix(flashVars, {
                         MMredirectURL: location.href,
-                        MMplayerType: OLD_IE ? "ActiveX" : "PlugIn",
-                        MMdoctitle: doc.title.slice(0, 47) + " - Flash Player Installation"
+                        MMplayerType: OLD_IE ? 'ActiveX' : 'PlugIn',
+                        MMdoctitle: doc.title.slice(0, 47) + ' - Flash Player Installation'
                     });
                 }
             }
 
-            if (htmlMode == 'full') {
-                html = _stringSWFFull(installedSrc, attrs, params)
+            if (htmlMode === 'full') {
+                html = _stringSWFFull(installedSrc, attrs, params);
             } else {
-                html = _stringSWFDefault(installedSrc, attrs, params)
+                html = _stringSWFDefault(installedSrc, attrs, params);
             }
 
             // ie 再取  target.innerHTML 属性大写，很多多与属性，等
@@ -137,7 +137,7 @@ KISSY.add(function (S, require) {
 
             self.set('swfObject', swf);
 
-            if (htmlMode == 'full') {
+            if (htmlMode === 'full') {
                 if (OLD_IE) {
                     self.set('swfObject', swf);
                 } else {
@@ -169,11 +169,12 @@ KISSY.add(function (S, require) {
                 }
             } catch (e) {
                 // some version flash function is odd in ie: property or method not supported by object
-                params = "";
+                params = '';
                 if (args.length !== 0) {
-                    params = "'" + args.join("', '") + "'";
+                    params = '"' + args.join('", "') + '"';
                 }
                 //avoid eval for compression
+                /*jshint evil:true*/
                 ret = (new Function('swf', 'return swf.' + func + '(' + params + ');'))(swf);
             }
             return ret;
@@ -191,12 +192,12 @@ KISSY.add(function (S, require) {
             if (OLD_IE) {
                 swfObject.style.display = 'none';
                 // from swfobject
-                (function () {
-                    if (swfObject.readyState == 4) {
+                (function remove() {
+                    if (swfObject.readyState === 4) {
                         removeObjectInIE(swfObject);
                     }
                     else {
-                        setTimeout(arguments.callee, 10);
+                        setTimeout(remove, 10);
                     }
                 })();
             } else {
@@ -230,15 +231,15 @@ KISSY.add(function (S, require) {
             },
 
             /**
-             * minimum flash version required. eg: "10.1.250"
-             * Defaults to "9".
+             * minimum flash version required. eg: '10.1.250'
+             * Defaults to '9'.
              * @cfg {String} version
              */
             /**
              * @ignore
              */
             version: {
-                value: "9"
+                value: '9'
             },
 
             /**
@@ -273,7 +274,7 @@ KISSY.add(function (S, require) {
              */
             render: {
                 setter: function (v) {
-                    if (typeof v == 'string') {
+                    if (typeof v === 'string') {
                         v = Dom.get(v, this.get('document'));
                     }
                     return v;
@@ -291,7 +292,7 @@ KISSY.add(function (S, require) {
              */
             elBefore: {
                 setter: function (v) {
-                    if (typeof v == 'string') {
+                    if (typeof v === 'string') {
                         v = Dom.get(v, this.get('document'));
                     }
                     return v;
@@ -376,13 +377,12 @@ KISSY.add(function (S, require) {
         getSrc: function (swf) {
             swf = Dom.get(swf);
             var srcElement = getSrcElements(swf)[0],
-                src,
                 nodeName = srcElement && Dom.nodeName(srcElement);
-            if (nodeName == 'embed') {
+            if (nodeName === 'embed') {
                 return Dom.attr(srcElement, 'src');
-            } else if (nodeName == 'object') {
+            } else if (nodeName === 'object') {
                 return Dom.attr(srcElement, 'data');
-            } else if (nodeName == 'param') {
+            } else if (nodeName === 'param') {
                 return Dom.attr(srcElement, 'value');
             }
             return null;
@@ -429,7 +429,7 @@ KISSY.add(function (S, require) {
 
     function removeObjectInIE(obj) {
         for (var i in obj) {
-            if (typeof obj[i] == 'function') {
+            if (typeof obj[i] === 'function') {
                 obj[i] = null;
             }
         }
@@ -437,11 +437,11 @@ KISSY.add(function (S, require) {
     }
 
     function getSrcElements(swf) {
-        var url = "",
+        var url = '',
             params, i, param,
             elements = [],
             nodeName = Dom.nodeName(swf);
-        if (nodeName == "object") {
+        if (nodeName === 'object') {
             url = Dom.attr(swf, 'data');
             if (url) {
                 elements.push(swf);
@@ -449,17 +449,17 @@ KISSY.add(function (S, require) {
             params = swf.childNodes;
             for (i = 0; i < params.length; i++) {
                 param = params[i];
-                if (param.nodeType == 1) {
-                    if ((Dom.attr(param, "name") || "").toLowerCase() == "movie") {
+                if (param.nodeType === 1) {
+                    if ((Dom.attr(param, 'name') || '').toLowerCase() === 'movie') {
                         elements.push(param);
-                    } else if (Dom.nodeName(param) == "embed") {
+                    } else if (Dom.nodeName(param) === 'embed') {
                         elements.push(param);
-                    } else if (Dom.nodeName(params[i]) == "object") {
+                    } else if (Dom.nodeName(params[i]) === 'object') {
                         elements.push(param);
                     }
                 }
             }
-        } else if (nodeName == "embed") {
+        } else if (nodeName === 'embed') {
             elements.push(swf);
         }
         return elements;
@@ -475,7 +475,7 @@ KISSY.add(function (S, require) {
                 par += stringParam(k, v);
             }
             // 特殊参数
-            else if (k == FLASHVARS) {
+            else if (k === FLASHVARS) {
                 par += stringParam(k, toFlashVars(v));
             }
         });
@@ -511,7 +511,7 @@ KISSY.add(function (S, require) {
 
         res = LT + OBJECT_TAG + attr + GT + par;
 
-        return res
+        return res;
     }
 
     // full oo 结构
@@ -533,14 +533,14 @@ KISSY.add(function (S, require) {
 
     /*
      将普通对象转换为 flashvars
-     eg: {a: 1, b: { x: 2, z: 's=1&c=2' }} => a=1&b=encode({'x':2,"z":"s%3D1%26c%3D2"})
+     eg: {a: 1, b: { x: 2, z: 's=1&c=2' }} => a=1&b=encode({'x':2,'z':'s%3D1%26c%3D2'})
      */
     function toFlashVars(obj) {
         var arr = [],
             ret;
 
         S.each(obj, function (data, prop) {
-            if (typeof data != 'string') {
+            if (typeof data !== 'string') {
                 data = Json.stringify(data);
             }
             if (data) {
@@ -558,4 +558,6 @@ KISSY.add(function (S, require) {
     function stringAttr(key, value) {
         return SPACE + key + EQUAL + DOUBLE_QUOTE + value + DOUBLE_QUOTE;
     }
+
+    return SWF;
 });

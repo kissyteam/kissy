@@ -17,7 +17,6 @@ KISSY.add(function (S, require) {
             // also simplify body
             __afterCreateEffectGhost: function (ghost) {
                 var self = this,
-                    body,
                     elBody = self.get('body');
 
                 ghost.all('.' + self.get('prefixCls') + 'stdmod-body')
@@ -33,9 +32,8 @@ KISSY.add(function (S, require) {
             handleKeyDownInternal: function (e) {
                 if (this.get('escapeToClose') &&
                     e.keyCode === Node.KeyCode.ESC) {
-                    if (e.target.nodeName.toLowerCase() == 'select' && !e.target.disabled) {
+                    if (!(e.target.nodeName.toLowerCase() === 'select' && !e.target.disabled)) {
                         // escape at select
-                    } else {
                         this.close();
                         e.halt();
                     }
@@ -54,12 +52,14 @@ KISSY.add(function (S, require) {
                     // async -> focus event -> handleFocusInternal
                     // -> set('focused') -> el.focus() -> ie error
                     // el[0].focus && el[0].focus();
-                    el.setAttribute("aria-hidden", "false");
+                    el.setAttribute('aria-hidden', 'false');
                 } else {
-                    el.setAttribute("aria-hidden", "true");
+                    el.setAttribute('aria-hidden', 'true');
                     try {
-                        self.__lastActive && self.__lastActive.focus();
-                    } catch (e) {
+                        if(self.__lastActive){
+                            self.__lastActive.focus();
+                        }
+                    } catch (ee) {
                         // ie can not be focused if lastActive is invisible
                     }
                 }
@@ -236,7 +236,7 @@ KISSY.add(function (S, require) {
         var self = this,
             keyCode = e.keyCode;
 
-        if (keyCode != KEY_TAB) {
+        if (keyCode !== KEY_TAB) {
             return;
         }
         var $el = self.$el;
@@ -253,7 +253,7 @@ KISSY.add(function (S, require) {
         // assumes el and lastFocusItem maintained by dialog object
 
         // see if we are shift-tabbing from first focusable item on dialog
-        if (node.equals(el) && e.shiftKey) {
+        if (node.equals($el) && e.shiftKey) {
             lastFocusItem[0].focus(); // send focus to last item in dialog
             e.halt(); //stop the tab keypress event
         }

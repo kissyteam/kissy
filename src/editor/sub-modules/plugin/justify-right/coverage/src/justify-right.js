@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ','src':' + jscoverage_quote(this.src)
+            + ',"src":' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -276,19 +276,19 @@ if (! _$jscoverage['/justify-right.js'].branchData) {
   _$jscoverage['/justify-right.js'].branchData['50'][1] = new BranchData();
   _$jscoverage['/justify-right.js'].branchData['50'][2] = new BranchData();
 }
-_$jscoverage['/justify-right.js'].branchData['50'][2].init(38, 29, 'e.keyCode == S.Node.KeyCode.R');
+_$jscoverage['/justify-right.js'].branchData['50'][2].init(38, 30, 'e.keyCode === S.Node.KeyCode.R');
 function visit4_50_2(result) {
   _$jscoverage['/justify-right.js'].branchData['50'][2].ranCondition(result);
   return result;
-}_$jscoverage['/justify-right.js'].branchData['50'][1].init(25, 42, 'e.ctrlKey && e.keyCode == S.Node.KeyCode.R');
+}_$jscoverage['/justify-right.js'].branchData['50'][1].init(25, 43, 'e.ctrlKey && e.keyCode === S.Node.KeyCode.R');
 function visit3_50_1(result) {
   _$jscoverage['/justify-right.js'].branchData['50'][1].ranCondition(result);
   return result;
-}_$jscoverage['/justify-right.js'].branchData['36'][1].init(184, 40, 'editor.queryCommandValue("justifyRight")');
+}_$jscoverage['/justify-right.js'].branchData['36'][1].init(185, 40, 'editor.queryCommandValue(\'justifyRight\')');
 function visit2_36_1(result) {
   _$jscoverage['/justify-right.js'].branchData['36'][1].ranCondition(result);
   return result;
-}_$jscoverage['/justify-right.js'].branchData['33'][1].init(33, 45, 'editor.get('mode') == Editor.Mode.SOURCE_MODE');
+}_$jscoverage['/justify-right.js'].branchData['33'][1].init(33, 46, 'editor.get(\'mode\') === Editor.Mode.SOURCE_MODE');
 function visit1_33_1(result) {
   _$jscoverage['/justify-right.js'].branchData['33'][1].ranCondition(result);
   return result;
@@ -307,7 +307,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/justify-right.js'].lineData[11]++;
     var editor = this.get('editor');
     _$jscoverage['/justify-right.js'].lineData[12]++;
-    editor.execCommand("justifyRight");
+    editor.execCommand('justifyRight');
     _$jscoverage['/justify-right.js'].lineData[13]++;
     editor.focus();
   }
@@ -322,8 +322,8 @@ KISSY.add(function(S, require) {
   _$jscoverage['/justify-right.js'].lineData[23]++;
   justifyCenterCmd.init(editor);
   _$jscoverage['/justify-right.js'].lineData[25]++;
-  editor.addButton("justifyRight", {
-  tooltip: "\u53f3\u5bf9\u9f50", 
+  editor.addButton('justifyRight', {
+  tooltip: '\u53f3\u5bf9\u9f50', 
   checkable: true, 
   listeners: {
   click: exec, 
@@ -335,12 +335,12 @@ KISSY.add(function(S, require) {
   editor.on('selectionChange', function() {
   _$jscoverage['/justify-right.js'].functionData[5]++;
   _$jscoverage['/justify-right.js'].lineData[33]++;
-  if (visit1_33_1(editor.get('mode') == Editor.Mode.SOURCE_MODE)) {
+  if (visit1_33_1(editor.get('mode') === Editor.Mode.SOURCE_MODE)) {
     _$jscoverage['/justify-right.js'].lineData[34]++;
     return;
   }
   _$jscoverage['/justify-right.js'].lineData[36]++;
-  if (visit2_36_1(editor.queryCommandValue("justifyRight"))) {
+  if (visit2_36_1(editor.queryCommandValue('justifyRight'))) {
     _$jscoverage['/justify-right.js'].lineData[37]++;
     self.set('checked', true);
   } else {
@@ -357,9 +357,9 @@ KISSY.add(function(S, require) {
   editor.get('document').on('keydown', function(e) {
   _$jscoverage['/justify-right.js'].functionData[7]++;
   _$jscoverage['/justify-right.js'].lineData[50]++;
-  if (visit3_50_1(e.ctrlKey && visit4_50_2(e.keyCode == S.Node.KeyCode.R))) {
+  if (visit3_50_1(e.ctrlKey && visit4_50_2(e.keyCode === S.Node.KeyCode.R))) {
     _$jscoverage['/justify-right.js'].lineData[51]++;
-    editor.execCommand("justifyRight");
+    editor.execCommand('justifyRight');
     _$jscoverage['/justify-right.js'].lineData[52]++;
     e.preventDefault();
   }

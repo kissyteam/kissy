@@ -41,7 +41,7 @@ KISSY.add(function (S, require) {
                     bar = {
                         prefixCls: prefixCls,
                         xclass: 'tabs-bar',
-                        changeType: self.get("changeType"),
+                        changeType: self.get('changeType'),
                         children: []
                     },
                     body = {
@@ -87,14 +87,14 @@ KISSY.add(function (S, require) {
          */
         addItem: function (item, index) {
             var self = this,
-                bar = self.get("bar"),
+                bar = self.get('bar'),
                 selectedTab,
                 tabItem,
                 panelItem,
                 barChildren = bar.get('children'),
                 body = self.get('body');
 
-            if (typeof index == 'undefined') {
+            if (typeof index === 'undefined') {
                 index = barChildren.length;
             }
 
@@ -112,7 +112,7 @@ KISSY.add(function (S, require) {
 
             body.addChild(panelItem, index);
 
-            if (item['selected']) {
+            if (item.selected) {
                 bar.set('selectedTab', selectedTab);
                 body.set('selectedPanelIndex', index);
             }
@@ -131,20 +131,20 @@ KISSY.add(function (S, require) {
                 bar = /**
                  @ignore
                  @type KISSY.Component.Control
-                 */tabs.get("bar"),
+                 */tabs.get('bar'),
                 barCs = bar.get('children'),
                 tab = bar.getChildAt(index),
                 body = /**
                  @ignore
                  @type KISSY.Component.Control
                  */tabs.get('body');
-            if (tab.get("selected")) {
-                if (barCs.length == 1) {
-                    bar.set("selectedTab", null);
-                } else if (index == 0) {
-                    bar.set("selectedTab", bar.getChildAt(index + 1));
+            if (tab.get('selected')) {
+                if (barCs.length === 1) {
+                    bar.set('selectedTab', null);
+                } else if (index === 0) {
+                    bar.set('selectedTab', bar.getChildAt(index + 1));
                 } else {
-                    bar.set("selectedTab", bar.getChildAt(index - 1));
+                    bar.set('selectedTab', bar.getChildAt(index - 1));
                 }
             }
             bar.removeChild(bar.getChildAt(index), destroy);
@@ -159,7 +159,7 @@ KISSY.add(function (S, require) {
          * @chainable
          */
         'removeItemByTab': function (tab, destroy) {
-            var index = S.indexOf(tab, this.get("bar").get('children'));
+            var index = S.indexOf(tab, this.get('bar').get('children'));
             return this.removeItemAt(index, destroy);
         },
 
@@ -180,11 +180,11 @@ KISSY.add(function (S, require) {
          */
         getSelectedTab: function () {
             var tabs = this,
-                bar = tabs.get("bar"),
+                bar = tabs.get('bar'),
                 child = null;
 
             S.each(bar.get('children'), function (c) {
-                if (c.get("selected")) {
+                if (c.get('selected')) {
                     child = c;
                     return false;
                 }
@@ -204,7 +204,7 @@ KISSY.add(function (S, require) {
                 child = null;
 
             S.each(body.get('children'), function (c) {
-                if (c.get("selected")) {
+                if (c.get('selected')) {
                     child = c;
                     return false;
                 }
@@ -219,7 +219,7 @@ KISSY.add(function (S, require) {
          * @return {KISSY.Tabs.Tab[]}
          */
         getTabs: function () {
-            return   this.get("bar").get('children');
+            return   this.get('bar').get('children');
         },
 
         /**
@@ -234,7 +234,7 @@ KISSY.add(function (S, require) {
          * @ignore
          */
         getTabAt: function (index) {
-            return this.get("bar").get('children')[index];
+            return this.get('bar').get('children')[index];
         },
 
         /**
@@ -251,7 +251,7 @@ KISSY.add(function (S, require) {
          */
         setSelectedTab: function (tab) {
             var tabs = this,
-                bar = tabs.get("bar"),
+                bar = tabs.get('bar'),
                 body = tabs.get('body');
             bar.set('selectedTab', tab);
             body.set('selectedPanelIndex', S.indexOf(tab, bar.get('children')));
@@ -265,7 +265,7 @@ KISSY.add(function (S, require) {
          */
         'setSelectedPanel': function (panel) {
             var tabs = this,
-                bar = tabs.get("bar"),
+                bar = tabs.get('bar'),
                 body = tabs.get('body'),
                 selectedPanelIndex = S.indexOf(panel, body.get('children'));
             body.set('selectedPanelIndex', selectedPanelIndex);
@@ -277,7 +277,7 @@ KISSY.add(function (S, require) {
          * @ignore
          */
         bindUI: function () {
-            this.on("afterSelectedTabChange", function (e) {
+            this.on('afterSelectedTabChange', function (e) {
                 this.setSelectedTab(e.newVal);
             });
 

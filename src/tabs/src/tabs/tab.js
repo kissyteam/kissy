@@ -16,7 +16,7 @@ KISSY.add(function (S, require) {
 
         bindUI: function () {
             this.on('click', function () {
-                this.set("selected", true);
+                this.set('selected', true);
             });
         }
     }, {

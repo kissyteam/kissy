@@ -43,10 +43,10 @@ KISSY.add(function (S, require) {
                         var borderWidth =
                             (parseInt(menuEl.css('borderLeftWidth')) || 0) +
                                 (parseInt(menuEl.css('borderRightWidth')) || 0);
-                        menu.set('width', menu.get("align").node[0].offsetWidth - borderWidth);
+                        menu.set('width', menu.get('align').node[0].offsetWidth - borderWidth);
                     }
                     menu.show();
-                    el.attr("aria-haspopup", menu.get('el').attr('id'));
+                    el.attr('aria-haspopup', menu.get('el').attr('id'));
                 }
             }
         },
@@ -74,31 +74,31 @@ KISSY.add(function (S, require) {
                 menu = self.get('menu');
 
             // space 只在 keyup 时处理
-            if (keyCode == KeyCode.SPACE) {
+            if (keyCode === KeyCode.SPACE) {
                 // Prevent page scrolling in Chrome.
                 e.preventDefault();
-                if (type != "keyup") {
+                if (type !== 'keyup') {
                     return undefined;
                 }
-            } else if (type != 'keydown') {
+            } else if (type !== 'keydown') {
                 return undefined;
             }
             //转发给 menu 处理
             if (menu.get('rendered') && menu.get('visible')) {
                 var handledByMenu = menu.handleKeyDownInternal(e);
                 // esc
-                if (keyCode == KeyCode.ESC) {
-                    self.set("collapsed", true);
+                if (keyCode === KeyCode.ESC) {
+                    self.set('collapsed', true);
                     return true;
                 }
                 return handledByMenu;
             }
 
             // Menu is closed, and the user hit the down/up/space key; open menu.
-            if (keyCode == KeyCode.SPACE ||
-                keyCode == KeyCode.DOWN ||
-                keyCode == KeyCode.UP) {
-                self.set("collapsed", false);
+            if (keyCode === KeyCode.SPACE ||
+                keyCode === KeyCode.DOWN ||
+                keyCode === KeyCode.UP) {
+                self.set('collapsed', false);
                 return true;
             }
             return undefined;
@@ -115,7 +115,7 @@ KISSY.add(function (S, require) {
             var self = this;
             // does not fire click from menubutton
             // self.callSuper(e);
-            self.set("collapsed", !self.get("collapsed"));
+            self.set('collapsed', !self.get('collapsed'));
         },
 
         /**
@@ -130,7 +130,7 @@ KISSY.add(function (S, require) {
             var self = this;
             self.callSuper(e);
             // such as : click the document
-            self.set("collapsed", true);
+            self.set('collapsed', true);
         },
 
 
@@ -174,14 +174,15 @@ KISSY.add(function (S, require) {
          * @param {Number} index 0-based index.
          */
         getItemAt: function (index) {
-            var menu = self.get('menu');
+            var menu = this.get('menu');
             return menu.get('rendered') && menu.getChildAt(index);
         },
 
         // 禁用时关闭已显示菜单
         _onSetDisabled: function (v) {
-            var self = this;
-            !v && self.set("collapsed", true);
+            if(!v){
+                this.set('collapsed', true);
+            }
         },
 
         destructor: function () {
@@ -267,7 +268,7 @@ KISSY.add(function (S, require) {
 
     function onMenuItemClick(e) {
         if (e.target.isMenuItem && this.get('collapseOnClick')) {
-            this.set("collapsed", true);
+            this.set('collapsed', true);
         }
     }
 
@@ -275,7 +276,7 @@ KISSY.add(function (S, require) {
         if (e.target.isMenu) {
             var el = this.el,
                 menuItem = e.newVal;
-            el.setAttribute("aria-activedescendant", menuItem && menuItem.el.id || '');
+            el.setAttribute('aria-activedescendant', menuItem && menuItem.el.id || '');
         }
     }
 });

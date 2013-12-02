@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:46
+build time: Dec 2 13:03
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -22,7 +22,7 @@ KISSY.add("editor/plugin/undo/cmd", ["editor"], function(S, require) {
   }
   S.augment(Snapshot, {equals:function(otherImage) {
     var self = this, thisContents = self.contents, otherContents = otherImage.contents;
-    return thisContents == otherContents
+    return thisContents === otherContents
   }});
   function UndoManager(editor) {
     var self = this;
@@ -64,20 +64,20 @@ KISSY.add("editor/plugin/undo/cmd", ["editor"], function(S, require) {
     var self = this, editor = self.editor;
     self._keyMonitor();
     setTimeout(function() {
-      if(editor.get("mode") == Editor.Mode.WYSIWYG_MODE) {
+      if(editor.get("mode") === Editor.Mode.WYSIWYG_MODE) {
         if(editor.isDocReady()) {
           self.save()
         }else {
-          editor.on("docReady", function() {
+          editor.on("docReady", function docReady() {
             self.save();
-            editor.detach("docReady", arguments.callee)
+            editor.detach("docReady", docReady)
           })
         }
       }
     }, 0)
   }, save:function(buffer) {
     var editor = this.editor;
-    if(editor.get("mode") != Editor.Mode.WYSIWYG_MODE) {
+    if(editor.get("mode") !== Editor.Mode.WYSIWYG_MODE) {
       return
     }
     if(!editor.get("document")) {
@@ -110,7 +110,7 @@ KISSY.add("editor/plugin/undo/cmd", ["editor"], function(S, require) {
       if(snapshot.bookmarks) {
         editor.getSelection().selectBookmarks(snapshot.bookmarks)
       }else {
-        if(UA["ie"]) {
+        if(UA.ie) {
           var $range = editorDomBody.createTextRange();
           $range.collapse(true);
           $range.select()

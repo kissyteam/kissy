@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ','src':' + jscoverage_quote(this.src)
+            + ',"src":' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -230,161 +230,163 @@ if (! _$jscoverage['/dialog.js']) {
   _$jscoverage['/dialog.js'] = {};
   _$jscoverage['/dialog.js'].lineData = [];
   _$jscoverage['/dialog.js'].lineData[6] = 0;
-  _$jscoverage['/dialog.js'].lineData[7] = 0;
   _$jscoverage['/dialog.js'].lineData[8] = 0;
   _$jscoverage['/dialog.js'].lineData[9] = 0;
   _$jscoverage['/dialog.js'].lineData[10] = 0;
   _$jscoverage['/dialog.js'].lineData[11] = 0;
-  _$jscoverage['/dialog.js'].lineData[157] = 0;
+  _$jscoverage['/dialog.js'].lineData[12] = 0;
   _$jscoverage['/dialog.js'].lineData[158] = 0;
-  _$jscoverage['/dialog.js'].lineData[163] = 0;
+  _$jscoverage['/dialog.js'].lineData[159] = 0;
   _$jscoverage['/dialog.js'].lineData[164] = 0;
-  _$jscoverage['/dialog.js'].lineData[167] = 0;
+  _$jscoverage['/dialog.js'].lineData[165] = 0;
   _$jscoverage['/dialog.js'].lineData[168] = 0;
   _$jscoverage['/dialog.js'].lineData[169] = 0;
   _$jscoverage['/dialog.js'].lineData[170] = 0;
-  _$jscoverage['/dialog.js'].lineData[173] = 0;
-  _$jscoverage['/dialog.js'].lineData[175] = 0;
-  _$jscoverage['/dialog.js'].lineData[186] = 0;
+  _$jscoverage['/dialog.js'].lineData[171] = 0;
+  _$jscoverage['/dialog.js'].lineData[174] = 0;
+  _$jscoverage['/dialog.js'].lineData[176] = 0;
   _$jscoverage['/dialog.js'].lineData[187] = 0;
   _$jscoverage['/dialog.js'].lineData[188] = 0;
   _$jscoverage['/dialog.js'].lineData[189] = 0;
   _$jscoverage['/dialog.js'].lineData[190] = 0;
-  _$jscoverage['/dialog.js'].lineData[198] = 0;
+  _$jscoverage['/dialog.js'].lineData[191] = 0;
   _$jscoverage['/dialog.js'].lineData[199] = 0;
   _$jscoverage['/dialog.js'].lineData[200] = 0;
-  _$jscoverage['/dialog.js'].lineData[208] = 0;
+  _$jscoverage['/dialog.js'].lineData[201] = 0;
   _$jscoverage['/dialog.js'].lineData[209] = 0;
   _$jscoverage['/dialog.js'].lineData[210] = 0;
   _$jscoverage['/dialog.js'].lineData[211] = 0;
-  _$jscoverage['/dialog.js'].lineData[213] = 0;
-  _$jscoverage['/dialog.js'].lineData[221] = 0;
+  _$jscoverage['/dialog.js'].lineData[212] = 0;
+  _$jscoverage['/dialog.js'].lineData[214] = 0;
   _$jscoverage['/dialog.js'].lineData[222] = 0;
-  _$jscoverage['/dialog.js'].lineData[224] = 0;
+  _$jscoverage['/dialog.js'].lineData[223] = 0;
   _$jscoverage['/dialog.js'].lineData[225] = 0;
   _$jscoverage['/dialog.js'].lineData[226] = 0;
-  _$jscoverage['/dialog.js'].lineData[228] = 0;
-  _$jscoverage['/dialog.js'].lineData[231] = 0;
+  _$jscoverage['/dialog.js'].lineData[227] = 0;
+  _$jscoverage['/dialog.js'].lineData[229] = 0;
   _$jscoverage['/dialog.js'].lineData[232] = 0;
-  _$jscoverage['/dialog.js'].lineData[236] = 0;
+  _$jscoverage['/dialog.js'].lineData[233] = 0;
   _$jscoverage['/dialog.js'].lineData[237] = 0;
   _$jscoverage['/dialog.js'].lineData[238] = 0;
-  _$jscoverage['/dialog.js'].lineData[244] = 0;
+  _$jscoverage['/dialog.js'].lineData[239] = 0;
   _$jscoverage['/dialog.js'].lineData[245] = 0;
-  _$jscoverage['/dialog.js'].lineData[248] = 0;
+  _$jscoverage['/dialog.js'].lineData[246] = 0;
   _$jscoverage['/dialog.js'].lineData[249] = 0;
   _$jscoverage['/dialog.js'].lineData[250] = 0;
   _$jscoverage['/dialog.js'].lineData[251] = 0;
-  _$jscoverage['/dialog.js'].lineData[252] = 0;
   _$jscoverage['/dialog.js'].lineData[253] = 0;
+  _$jscoverage['/dialog.js'].lineData[254] = 0;
   _$jscoverage['/dialog.js'].lineData[255] = 0;
-  _$jscoverage['/dialog.js'].lineData[260] = 0;
-  _$jscoverage['/dialog.js'].lineData[267] = 0;
-  _$jscoverage['/dialog.js'].lineData[268] = 0;
+  _$jscoverage['/dialog.js'].lineData[256] = 0;
+  _$jscoverage['/dialog.js'].lineData[258] = 0;
+  _$jscoverage['/dialog.js'].lineData[263] = 0;
   _$jscoverage['/dialog.js'].lineData[270] = 0;
-  _$jscoverage['/dialog.js'].lineData[272] = 0;
-  _$jscoverage['/dialog.js'].lineData[273] = 0;
-  _$jscoverage['/dialog.js'].lineData[275] = 0;
+  _$jscoverage['/dialog.js'].lineData[271] = 0;
+  _$jscoverage['/dialog.js'].lineData[274] = 0;
   _$jscoverage['/dialog.js'].lineData[277] = 0;
   _$jscoverage['/dialog.js'].lineData[278] = 0;
   _$jscoverage['/dialog.js'].lineData[280] = 0;
+  _$jscoverage['/dialog.js'].lineData[282] = 0;
   _$jscoverage['/dialog.js'].lineData[283] = 0;
-  _$jscoverage['/dialog.js'].lineData[284] = 0;
-  _$jscoverage['/dialog.js'].lineData[287] = 0;
+  _$jscoverage['/dialog.js'].lineData[285] = 0;
   _$jscoverage['/dialog.js'].lineData[288] = 0;
   _$jscoverage['/dialog.js'].lineData[289] = 0;
-  _$jscoverage['/dialog.js'].lineData[292] = 0;
-  _$jscoverage['/dialog.js'].lineData[294] = 0;
+  _$jscoverage['/dialog.js'].lineData[293] = 0;
   _$jscoverage['/dialog.js'].lineData[295] = 0;
-  _$jscoverage['/dialog.js'].lineData[297] = 0;
+  _$jscoverage['/dialog.js'].lineData[296] = 0;
   _$jscoverage['/dialog.js'].lineData[300] = 0;
-  _$jscoverage['/dialog.js'].lineData[301] = 0;
-  _$jscoverage['/dialog.js'].lineData[302] = 0;
   _$jscoverage['/dialog.js'].lineData[303] = 0;
   _$jscoverage['/dialog.js'].lineData[304] = 0;
-  _$jscoverage['/dialog.js'].lineData[305] = 0;
+  _$jscoverage['/dialog.js'].lineData[306] = 0;
   _$jscoverage['/dialog.js'].lineData[309] = 0;
   _$jscoverage['/dialog.js'].lineData[310] = 0;
+  _$jscoverage['/dialog.js'].lineData[311] = 0;
+  _$jscoverage['/dialog.js'].lineData[313] = 0;
+  _$jscoverage['/dialog.js'].lineData[314] = 0;
+  _$jscoverage['/dialog.js'].lineData[315] = 0;
   _$jscoverage['/dialog.js'].lineData[316] = 0;
-  _$jscoverage['/dialog.js'].lineData[317] = 0;
+  _$jscoverage['/dialog.js'].lineData[321] = 0;
   _$jscoverage['/dialog.js'].lineData[322] = 0;
-  _$jscoverage['/dialog.js'].lineData[333] = 0;
-  _$jscoverage['/dialog.js'].lineData[334] = 0;
-  _$jscoverage['/dialog.js'].lineData[336] = 0;
-  _$jscoverage['/dialog.js'].lineData[337] = 0;
-  _$jscoverage['/dialog.js'].lineData[339] = 0;
-  _$jscoverage['/dialog.js'].lineData[342] = 0;
+  _$jscoverage['/dialog.js'].lineData[326] = 0;
+  _$jscoverage['/dialog.js'].lineData[327] = 0;
+  _$jscoverage['/dialog.js'].lineData[332] = 0;
   _$jscoverage['/dialog.js'].lineData[343] = 0;
+  _$jscoverage['/dialog.js'].lineData[344] = 0;
   _$jscoverage['/dialog.js'].lineData[347] = 0;
   _$jscoverage['/dialog.js'].lineData[348] = 0;
   _$jscoverage['/dialog.js'].lineData[351] = 0;
-  _$jscoverage['/dialog.js'].lineData[352] = 0;
+  _$jscoverage['/dialog.js'].lineData[354] = 0;
   _$jscoverage['/dialog.js'].lineData[355] = 0;
-  _$jscoverage['/dialog.js'].lineData[357] = 0;
+  _$jscoverage['/dialog.js'].lineData[358] = 0;
   _$jscoverage['/dialog.js'].lineData[359] = 0;
   _$jscoverage['/dialog.js'].lineData[362] = 0;
   _$jscoverage['/dialog.js'].lineData[363] = 0;
-  _$jscoverage['/dialog.js'].lineData[365] = 0;
   _$jscoverage['/dialog.js'].lineData[366] = 0;
+  _$jscoverage['/dialog.js'].lineData[368] = 0;
   _$jscoverage['/dialog.js'].lineData[369] = 0;
-  _$jscoverage['/dialog.js'].lineData[370] = 0;
-  _$jscoverage['/dialog.js'].lineData[371] = 0;
-  _$jscoverage['/dialog.js'].lineData[374] = 0;
+  _$jscoverage['/dialog.js'].lineData[372] = 0;
+  _$jscoverage['/dialog.js'].lineData[373] = 0;
   _$jscoverage['/dialog.js'].lineData[375] = 0;
   _$jscoverage['/dialog.js'].lineData[376] = 0;
-  _$jscoverage['/dialog.js'].lineData[377] = 0;
-  _$jscoverage['/dialog.js'].lineData[378] = 0;
+  _$jscoverage['/dialog.js'].lineData[379] = 0;
   _$jscoverage['/dialog.js'].lineData[380] = 0;
   _$jscoverage['/dialog.js'].lineData[381] = 0;
-  _$jscoverage['/dialog.js'].lineData[382] = 0;
+  _$jscoverage['/dialog.js'].lineData[383] = 0;
+  _$jscoverage['/dialog.js'].lineData[384] = 0;
   _$jscoverage['/dialog.js'].lineData[385] = 0;
   _$jscoverage['/dialog.js'].lineData[386] = 0;
   _$jscoverage['/dialog.js'].lineData[387] = 0;
-  _$jscoverage['/dialog.js'].lineData[388] = 0;
   _$jscoverage['/dialog.js'].lineData[389] = 0;
+  _$jscoverage['/dialog.js'].lineData[390] = 0;
   _$jscoverage['/dialog.js'].lineData[391] = 0;
-  _$jscoverage['/dialog.js'].lineData[393] = 0;
   _$jscoverage['/dialog.js'].lineData[394] = 0;
+  _$jscoverage['/dialog.js'].lineData[395] = 0;
   _$jscoverage['/dialog.js'].lineData[396] = 0;
   _$jscoverage['/dialog.js'].lineData[397] = 0;
+  _$jscoverage['/dialog.js'].lineData[398] = 0;
   _$jscoverage['/dialog.js'].lineData[400] = 0;
-  _$jscoverage['/dialog.js'].lineData[404] = 0;
+  _$jscoverage['/dialog.js'].lineData[402] = 0;
+  _$jscoverage['/dialog.js'].lineData[403] = 0;
   _$jscoverage['/dialog.js'].lineData[405] = 0;
-  _$jscoverage['/dialog.js'].lineData[410] = 0;
+  _$jscoverage['/dialog.js'].lineData[406] = 0;
+  _$jscoverage['/dialog.js'].lineData[409] = 0;
+  _$jscoverage['/dialog.js'].lineData[413] = 0;
   _$jscoverage['/dialog.js'].lineData[414] = 0;
-  _$jscoverage['/dialog.js'].lineData[416] = 0;
-  _$jscoverage['/dialog.js'].lineData[419] = 0;
-  _$jscoverage['/dialog.js'].lineData[422] = 0;
+  _$jscoverage['/dialog.js'].lineData[418] = 0;
+  _$jscoverage['/dialog.js'].lineData[421] = 0;
   _$jscoverage['/dialog.js'].lineData[423] = 0;
-  _$jscoverage['/dialog.js'].lineData[424] = 0;
   _$jscoverage['/dialog.js'].lineData[426] = 0;
   _$jscoverage['/dialog.js'].lineData[429] = 0;
+  _$jscoverage['/dialog.js'].lineData[430] = 0;
   _$jscoverage['/dialog.js'].lineData[431] = 0;
-  _$jscoverage['/dialog.js'].lineData[432] = 0;
   _$jscoverage['/dialog.js'].lineData[433] = 0;
-  _$jscoverage['/dialog.js'].lineData[435] = 0;
   _$jscoverage['/dialog.js'].lineData[436] = 0;
+  _$jscoverage['/dialog.js'].lineData[438] = 0;
+  _$jscoverage['/dialog.js'].lineData[439] = 0;
   _$jscoverage['/dialog.js'].lineData[440] = 0;
-  _$jscoverage['/dialog.js'].lineData[441] = 0;
+  _$jscoverage['/dialog.js'].lineData[442] = 0;
   _$jscoverage['/dialog.js'].lineData[443] = 0;
   _$jscoverage['/dialog.js'].lineData[446] = 0;
-  _$jscoverage['/dialog.js'].lineData[450] = 0;
-  _$jscoverage['/dialog.js'].lineData[451] = 0;
-  _$jscoverage['/dialog.js'].lineData[454] = 0;
-  _$jscoverage['/dialog.js'].lineData[455] = 0;
-  _$jscoverage['/dialog.js'].lineData[458] = 0;
-  _$jscoverage['/dialog.js'].lineData[459] = 0;
+  _$jscoverage['/dialog.js'].lineData[447] = 0;
+  _$jscoverage['/dialog.js'].lineData[449] = 0;
+  _$jscoverage['/dialog.js'].lineData[452] = 0;
+  _$jscoverage['/dialog.js'].lineData[456] = 0;
+  _$jscoverage['/dialog.js'].lineData[457] = 0;
+  _$jscoverage['/dialog.js'].lineData[460] = 0;
   _$jscoverage['/dialog.js'].lineData[461] = 0;
-  _$jscoverage['/dialog.js'].lineData[462] = 0;
   _$jscoverage['/dialog.js'].lineData[464] = 0;
-  _$jscoverage['/dialog.js'].lineData[466] = 0;
-  _$jscoverage['/dialog.js'].lineData[469] = 0;
+  _$jscoverage['/dialog.js'].lineData[465] = 0;
+  _$jscoverage['/dialog.js'].lineData[467] = 0;
+  _$jscoverage['/dialog.js'].lineData[468] = 0;
   _$jscoverage['/dialog.js'].lineData[470] = 0;
-  _$jscoverage['/dialog.js'].lineData[473] = 0;
-  _$jscoverage['/dialog.js'].lineData[474] = 0;
+  _$jscoverage['/dialog.js'].lineData[472] = 0;
   _$jscoverage['/dialog.js'].lineData[475] = 0;
-  _$jscoverage['/dialog.js'].lineData[478] = 0;
-  _$jscoverage['/dialog.js'].lineData[482] = 0;
+  _$jscoverage['/dialog.js'].lineData[476] = 0;
+  _$jscoverage['/dialog.js'].lineData[479] = 0;
+  _$jscoverage['/dialog.js'].lineData[480] = 0;
+  _$jscoverage['/dialog.js'].lineData[481] = 0;
+  _$jscoverage['/dialog.js'].lineData[484] = 0;
+  _$jscoverage['/dialog.js'].lineData[488] = 0;
 }
 if (! _$jscoverage['/dialog.js'].functionData) {
   _$jscoverage['/dialog.js'].functionData = [];
@@ -406,712 +408,703 @@ if (! _$jscoverage['/dialog.js'].functionData) {
 }
 if (! _$jscoverage['/dialog.js'].branchData) {
   _$jscoverage['/dialog.js'].branchData = {};
-  _$jscoverage['/dialog.js'].branchData['10'] = [];
-  _$jscoverage['/dialog.js'].branchData['10'][1] = new BranchData();
-  _$jscoverage['/dialog.js'].branchData['164'] = [];
-  _$jscoverage['/dialog.js'].branchData['164'][1] = new BranchData();
-  _$jscoverage['/dialog.js'].branchData['225'] = [];
-  _$jscoverage['/dialog.js'].branchData['225'][1] = new BranchData();
-  _$jscoverage['/dialog.js'].branchData['231'] = [];
-  _$jscoverage['/dialog.js'].branchData['231'][1] = new BranchData();
-  _$jscoverage['/dialog.js'].branchData['236'] = [];
-  _$jscoverage['/dialog.js'].branchData['236'][1] = new BranchData();
-  _$jscoverage['/dialog.js'].branchData['239'] = [];
-  _$jscoverage['/dialog.js'].branchData['239'][1] = new BranchData();
+  _$jscoverage['/dialog.js'].branchData['11'] = [];
+  _$jscoverage['/dialog.js'].branchData['11'][1] = new BranchData();
+  _$jscoverage['/dialog.js'].branchData['165'] = [];
+  _$jscoverage['/dialog.js'].branchData['165'][1] = new BranchData();
+  _$jscoverage['/dialog.js'].branchData['237'] = [];
+  _$jscoverage['/dialog.js'].branchData['237'][1] = new BranchData();
   _$jscoverage['/dialog.js'].branchData['240'] = [];
   _$jscoverage['/dialog.js'].branchData['240'][1] = new BranchData();
-  _$jscoverage['/dialog.js'].branchData['240'][2] = new BranchData();
   _$jscoverage['/dialog.js'].branchData['241'] = [];
   _$jscoverage['/dialog.js'].branchData['241'][1] = new BranchData();
-  _$jscoverage['/dialog.js'].branchData['249'] = [];
-  _$jscoverage['/dialog.js'].branchData['249'][1] = new BranchData();
-  _$jscoverage['/dialog.js'].branchData['252'] = [];
-  _$jscoverage['/dialog.js'].branchData['252'][1] = new BranchData();
-  _$jscoverage['/dialog.js'].branchData['267'] = [];
-  _$jscoverage['/dialog.js'].branchData['267'][1] = new BranchData();
-  _$jscoverage['/dialog.js'].branchData['272'] = [];
-  _$jscoverage['/dialog.js'].branchData['272'][1] = new BranchData();
+  _$jscoverage['/dialog.js'].branchData['241'][2] = new BranchData();
+  _$jscoverage['/dialog.js'].branchData['242'] = [];
+  _$jscoverage['/dialog.js'].branchData['242'][1] = new BranchData();
+  _$jscoverage['/dialog.js'].branchData['250'] = [];
+  _$jscoverage['/dialog.js'].branchData['250'][1] = new BranchData();
+  _$jscoverage['/dialog.js'].branchData['255'] = [];
+  _$jscoverage['/dialog.js'].branchData['255'][1] = new BranchData();
+  _$jscoverage['/dialog.js'].branchData['270'] = [];
+  _$jscoverage['/dialog.js'].branchData['270'][1] = new BranchData();
   _$jscoverage['/dialog.js'].branchData['277'] = [];
   _$jscoverage['/dialog.js'].branchData['277'][1] = new BranchData();
-  _$jscoverage['/dialog.js'].branchData['277'][2] = new BranchData();
-  _$jscoverage['/dialog.js'].branchData['283'] = [];
-  _$jscoverage['/dialog.js'].branchData['283'][1] = new BranchData();
+  _$jscoverage['/dialog.js'].branchData['282'] = [];
+  _$jscoverage['/dialog.js'].branchData['282'][1] = new BranchData();
+  _$jscoverage['/dialog.js'].branchData['282'][2] = new BranchData();
   _$jscoverage['/dialog.js'].branchData['288'] = [];
   _$jscoverage['/dialog.js'].branchData['288'][1] = new BranchData();
-  _$jscoverage['/dialog.js'].branchData['294'] = [];
-  _$jscoverage['/dialog.js'].branchData['294'][1] = new BranchData();
-  _$jscoverage['/dialog.js'].branchData['300'] = [];
-  _$jscoverage['/dialog.js'].branchData['300'][1] = new BranchData();
-  _$jscoverage['/dialog.js'].branchData['301'] = [];
-  _$jscoverage['/dialog.js'].branchData['301'][1] = new BranchData();
-  _$jscoverage['/dialog.js'].branchData['302'] = [];
-  _$jscoverage['/dialog.js'].branchData['302'][1] = new BranchData();
-  _$jscoverage['/dialog.js'].branchData['304'] = [];
-  _$jscoverage['/dialog.js'].branchData['304'][1] = new BranchData();
-  _$jscoverage['/dialog.js'].branchData['316'] = [];
-  _$jscoverage['/dialog.js'].branchData['316'][1] = new BranchData();
+  _$jscoverage['/dialog.js'].branchData['295'] = [];
+  _$jscoverage['/dialog.js'].branchData['295'][1] = new BranchData();
+  _$jscoverage['/dialog.js'].branchData['303'] = [];
+  _$jscoverage['/dialog.js'].branchData['303'][1] = new BranchData();
+  _$jscoverage['/dialog.js'].branchData['309'] = [];
+  _$jscoverage['/dialog.js'].branchData['309'][1] = new BranchData();
+  _$jscoverage['/dialog.js'].branchData['310'] = [];
+  _$jscoverage['/dialog.js'].branchData['310'][1] = new BranchData();
+  _$jscoverage['/dialog.js'].branchData['313'] = [];
+  _$jscoverage['/dialog.js'].branchData['313'][1] = new BranchData();
+  _$jscoverage['/dialog.js'].branchData['315'] = [];
+  _$jscoverage['/dialog.js'].branchData['315'][1] = new BranchData();
   _$jscoverage['/dialog.js'].branchData['326'] = [];
   _$jscoverage['/dialog.js'].branchData['326'][1] = new BranchData();
-  _$jscoverage['/dialog.js'].branchData['327'] = [];
-  _$jscoverage['/dialog.js'].branchData['327'][1] = new BranchData();
-  _$jscoverage['/dialog.js'].branchData['333'] = [];
-  _$jscoverage['/dialog.js'].branchData['333'][1] = new BranchData();
   _$jscoverage['/dialog.js'].branchData['336'] = [];
   _$jscoverage['/dialog.js'].branchData['336'][1] = new BranchData();
-  _$jscoverage['/dialog.js'].branchData['342'] = [];
-  _$jscoverage['/dialog.js'].branchData['342'][1] = new BranchData();
+  _$jscoverage['/dialog.js'].branchData['337'] = [];
+  _$jscoverage['/dialog.js'].branchData['337'][1] = new BranchData();
+  _$jscoverage['/dialog.js'].branchData['343'] = [];
+  _$jscoverage['/dialog.js'].branchData['343'][1] = new BranchData();
   _$jscoverage['/dialog.js'].branchData['347'] = [];
   _$jscoverage['/dialog.js'].branchData['347'][1] = new BranchData();
-  _$jscoverage['/dialog.js'].branchData['351'] = [];
-  _$jscoverage['/dialog.js'].branchData['351'][1] = new BranchData();
-  _$jscoverage['/dialog.js'].branchData['357'] = [];
-  _$jscoverage['/dialog.js'].branchData['357'][1] = new BranchData();
+  _$jscoverage['/dialog.js'].branchData['354'] = [];
+  _$jscoverage['/dialog.js'].branchData['354'][1] = new BranchData();
   _$jscoverage['/dialog.js'].branchData['358'] = [];
   _$jscoverage['/dialog.js'].branchData['358'][1] = new BranchData();
   _$jscoverage['/dialog.js'].branchData['362'] = [];
   _$jscoverage['/dialog.js'].branchData['362'][1] = new BranchData();
-  _$jscoverage['/dialog.js'].branchData['365'] = [];
-  _$jscoverage['/dialog.js'].branchData['365'][1] = new BranchData();
-  _$jscoverage['/dialog.js'].branchData['370'] = [];
-  _$jscoverage['/dialog.js'].branchData['370'][1] = new BranchData();
-  _$jscoverage['/dialog.js'].branchData['374'] = [];
-  _$jscoverage['/dialog.js'].branchData['374'][1] = new BranchData();
-  _$jscoverage['/dialog.js'].branchData['377'] = [];
-  _$jscoverage['/dialog.js'].branchData['377'][1] = new BranchData();
+  _$jscoverage['/dialog.js'].branchData['368'] = [];
+  _$jscoverage['/dialog.js'].branchData['368'][1] = new BranchData();
+  _$jscoverage['/dialog.js'].branchData['368'][2] = new BranchData();
+  _$jscoverage['/dialog.js'].branchData['372'] = [];
+  _$jscoverage['/dialog.js'].branchData['372'][1] = new BranchData();
+  _$jscoverage['/dialog.js'].branchData['375'] = [];
+  _$jscoverage['/dialog.js'].branchData['375'][1] = new BranchData();
+  _$jscoverage['/dialog.js'].branchData['380'] = [];
+  _$jscoverage['/dialog.js'].branchData['380'][1] = new BranchData();
+  _$jscoverage['/dialog.js'].branchData['383'] = [];
+  _$jscoverage['/dialog.js'].branchData['383'][1] = new BranchData();
   _$jscoverage['/dialog.js'].branchData['386'] = [];
   _$jscoverage['/dialog.js'].branchData['386'][1] = new BranchData();
-  _$jscoverage['/dialog.js'].branchData['388'] = [];
-  _$jscoverage['/dialog.js'].branchData['388'][1] = new BranchData();
-  _$jscoverage['/dialog.js'].branchData['404'] = [];
-  _$jscoverage['/dialog.js'].branchData['404'][1] = new BranchData();
-  _$jscoverage['/dialog.js'].branchData['406'] = [];
-  _$jscoverage['/dialog.js'].branchData['406'][1] = new BranchData();
-  _$jscoverage['/dialog.js'].branchData['410'] = [];
-  _$jscoverage['/dialog.js'].branchData['410'][1] = new BranchData();
-  _$jscoverage['/dialog.js'].branchData['414'] = [];
-  _$jscoverage['/dialog.js'].branchData['414'][1] = new BranchData();
-  _$jscoverage['/dialog.js'].branchData['416'] = [];
-  _$jscoverage['/dialog.js'].branchData['416'][1] = new BranchData();
+  _$jscoverage['/dialog.js'].branchData['395'] = [];
+  _$jscoverage['/dialog.js'].branchData['395'][1] = new BranchData();
+  _$jscoverage['/dialog.js'].branchData['397'] = [];
+  _$jscoverage['/dialog.js'].branchData['397'][1] = new BranchData();
+  _$jscoverage['/dialog.js'].branchData['413'] = [];
+  _$jscoverage['/dialog.js'].branchData['413'][1] = new BranchData();
+  _$jscoverage['/dialog.js'].branchData['415'] = [];
+  _$jscoverage['/dialog.js'].branchData['415'][1] = new BranchData();
+  _$jscoverage['/dialog.js'].branchData['418'] = [];
+  _$jscoverage['/dialog.js'].branchData['418'][1] = new BranchData();
+  _$jscoverage['/dialog.js'].branchData['421'] = [];
+  _$jscoverage['/dialog.js'].branchData['421'][1] = new BranchData();
   _$jscoverage['/dialog.js'].branchData['423'] = [];
   _$jscoverage['/dialog.js'].branchData['423'][1] = new BranchData();
-  _$jscoverage['/dialog.js'].branchData['429'] = [];
-  _$jscoverage['/dialog.js'].branchData['429'][1] = new BranchData();
-  _$jscoverage['/dialog.js'].branchData['432'] = [];
-  _$jscoverage['/dialog.js'].branchData['432'][1] = new BranchData();
-  _$jscoverage['/dialog.js'].branchData['450'] = [];
-  _$jscoverage['/dialog.js'].branchData['450'][1] = new BranchData();
-  _$jscoverage['/dialog.js'].branchData['461'] = [];
-  _$jscoverage['/dialog.js'].branchData['461'][1] = new BranchData();
+  _$jscoverage['/dialog.js'].branchData['430'] = [];
+  _$jscoverage['/dialog.js'].branchData['430'][1] = new BranchData();
+  _$jscoverage['/dialog.js'].branchData['436'] = [];
+  _$jscoverage['/dialog.js'].branchData['436'][1] = new BranchData();
+  _$jscoverage['/dialog.js'].branchData['439'] = [];
+  _$jscoverage['/dialog.js'].branchData['439'][1] = new BranchData();
+  _$jscoverage['/dialog.js'].branchData['456'] = [];
+  _$jscoverage['/dialog.js'].branchData['456'][1] = new BranchData();
+  _$jscoverage['/dialog.js'].branchData['467'] = [];
+  _$jscoverage['/dialog.js'].branchData['467'][1] = new BranchData();
 }
-_$jscoverage['/dialog.js'].branchData['461'][1].init(660, 15, 'self.selectedTd');
-function visit49_461_1(result) {
-  _$jscoverage['/dialog.js'].branchData['461'][1].ranCondition(result);
+_$jscoverage['/dialog.js'].branchData['467'][1].init(660, 15, 'self.selectedTd');
+function visit47_467_1(result) {
+  _$jscoverage['/dialog.js'].branchData['467'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['450'][1].init(138, 18, 'self.selectedTable');
-function visit48_450_1(result) {
-  _$jscoverage['/dialog.js'].branchData['450'][1].ranCondition(result);
+}_$jscoverage['/dialog.js'].branchData['456'][1].init(138, 18, 'self.selectedTable');
+function visit46_456_1(result) {
+  _$jscoverage['/dialog.js'].branchData['456'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['432'][1].init(1105, 7, 'caption');
-function visit47_432_1(result) {
-  _$jscoverage['/dialog.js'].branchData['432'][1].ranCondition(result);
+}_$jscoverage['/dialog.js'].branchData['439'][1].init(1066, 7, 'caption');
+function visit45_439_1(result) {
+  _$jscoverage['/dialog.js'].branchData['439'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['429'][1].init(-1, 35, 'selectedTable.style('height') || ""');
-function visit46_429_1(result) {
-  _$jscoverage['/dialog.js'].branchData['429'][1].ranCondition(result);
+}_$jscoverage['/dialog.js'].branchData['436'][1].init(-1, 35, 'selectedTable.style(\'height\') || \'\'');
+function visit44_436_1(result) {
+  _$jscoverage['/dialog.js'].branchData['436'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['423'][1].init(804, 20, 'w.indexOf("%") != -1');
-function visit45_423_1(result) {
+}_$jscoverage['/dialog.js'].branchData['430'][1].init(764, 21, 'w.indexOf(\'%\') !== -1');
+function visit43_430_1(result) {
+  _$jscoverage['/dialog.js'].branchData['430'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/dialog.js'].branchData['423'][1].init(498, 76, 'selectedTable.style(\'width\') || (\'\' + selectedTable.width())');
+function visit42_423_1(result) {
   _$jscoverage['/dialog.js'].branchData['423'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['416'][1].init(538, 76, 'selectedTable.style('width') || ("" + selectedTable.width())');
-function visit44_416_1(result) {
-  _$jscoverage['/dialog.js'].branchData['416'][1].ranCondition(result);
+}_$jscoverage['/dialog.js'].branchData['421'][1].init(424, 51, 'selectedTable.attr(\'border\') || \'0\'');
+function visit41_421_1(result) {
+  _$jscoverage['/dialog.js'].branchData['421'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['414'][1].init(464, 51, 'selectedTable.attr("border") || "0"');
-function visit43_414_1(result) {
-  _$jscoverage['/dialog.js'].branchData['414'][1].ranCondition(result);
+}_$jscoverage['/dialog.js'].branchData['418'][1].init(360, 33, 'selectedTable.attr(\'align\') || \'\'');
+function visit40_418_1(result) {
+  _$jscoverage['/dialog.js'].branchData['418'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['410'][1].init(384, 49, 'selectedTable.attr("align") || ""');
-function visit42_410_1(result) {
-  _$jscoverage['/dialog.js'].branchData['410'][1].ranCondition(result);
+}_$jscoverage['/dialog.js'].branchData['415'][1].init(38, 47, 'parseInt(self.selectedTd.css(\'padding\')) || \'0\'');
+function visit39_415_1(result) {
+  _$jscoverage['/dialog.js'].branchData['415'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['406'][1].init(38, 71, 'parseInt(self.selectedTd.css("padding")) || "0"');
-function visit41_406_1(result) {
-  _$jscoverage['/dialog.js'].branchData['406'][1].ranCondition(result);
+}_$jscoverage['/dialog.js'].branchData['413'][1].init(187, 15, 'self.selectedTd');
+function visit38_413_1(result) {
+  _$jscoverage['/dialog.js'].branchData['413'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['404'][1].init(187, 15, 'self.selectedTd');
-function visit40_404_1(result) {
-  _$jscoverage['/dialog.js'].branchData['404'][1].ranCondition(result);
+}_$jscoverage['/dialog.js'].branchData['397'][1].init(61, 8, 'i < cols');
+function visit37_397_1(result) {
+  _$jscoverage['/dialog.js'].branchData['397'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['388'][1].init(61, 8, 'i < cols');
-function visit39_388_1(result) {
-  _$jscoverage['/dialog.js'].branchData['388'][1].ranCondition(result);
+}_$jscoverage['/dialog.js'].branchData['395'][1].init(2064, 8, 'r < rows');
+function visit36_395_1(result) {
+  _$jscoverage['/dialog.js'].branchData['395'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['386'][1].init(2090, 8, 'r < rows');
-function visit38_386_1(result) {
+}_$jscoverage['/dialog.js'].branchData['386'][1].init(96, 8, 'i < cols');
+function visit35_386_1(result) {
   _$jscoverage['/dialog.js'].branchData['386'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['377'][1].init(96, 8, 'i < cols');
-function visit37_377_1(result) {
-  _$jscoverage['/dialog.js'].branchData['377'][1].ranCondition(result);
+}_$jscoverage['/dialog.js'].branchData['383'][1].init(1684, 20, 'd.thead.get(\'value\')');
+function visit34_383_1(result) {
+  _$jscoverage['/dialog.js'].branchData['383'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['374'][1].init(1710, 20, 'd.thead.get('value')');
-function visit36_374_1(result) {
-  _$jscoverage['/dialog.js'].branchData['374'][1].ranCondition(result);
+}_$jscoverage['/dialog.js'].branchData['380'][1].init(1523, 23, 'valid(d.tcaption.val())');
+function visit33_380_1(result) {
+  _$jscoverage['/dialog.js'].branchData['380'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['370'][1].init(1529, 23, 'valid(d.tcaption.val())');
-function visit35_370_1(result) {
-  _$jscoverage['/dialog.js'].branchData['370'][1].ranCondition(result);
+}_$jscoverage['/dialog.js'].branchData['375'][1].init(1387, 14, 'classes.length');
+function visit32_375_1(result) {
+  _$jscoverage['/dialog.js'].branchData['375'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['365'][1].init(1393, 14, 'classes.length');
-function visit34_365_1(result) {
-  _$jscoverage['/dialog.js'].branchData['365'][1].ranCondition(result);
+}_$jscoverage['/dialog.js'].branchData['372'][1].init(1281, 22, 'd.tcollapse[0].checked');
+function visit31_372_1(result) {
+  _$jscoverage['/dialog.js'].branchData['372'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['362'][1].init(1287, 22, 'd.tcollapse[0].checked');
-function visit33_362_1(result) {
+}_$jscoverage['/dialog.js'].branchData['368'][2].init(1158, 37, 'String(trim(d.tborder.val())) === \'0\'');
+function visit30_368_2(result) {
+  _$jscoverage['/dialog.js'].branchData['368'][2].ranCondition(result);
+  return result;
+}_$jscoverage['/dialog.js'].branchData['368'][1].init(1131, 64, '!valid(d.tborder.val()) || String(trim(d.tborder.val())) === \'0\'');
+function visit29_368_1(result) {
+  _$jscoverage['/dialog.js'].branchData['368'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/dialog.js'].branchData['362'][1].init(992, 13, 'styles.length');
+function visit28_362_1(result) {
   _$jscoverage['/dialog.js'].branchData['362'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['358'][1].init(42, 36, 'String(trim(d.tborder.val())) == "0"');
-function visit32_358_1(result) {
+}_$jscoverage['/dialog.js'].branchData['358'][1].init(863, 22, 'valid(d.theight.val())');
+function visit27_358_1(result) {
   _$jscoverage['/dialog.js'].branchData['358'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['357'][1].init(1122, 79, '!valid(d.tborder.val()) || String(trim(d.tborder.val())) == "0"');
-function visit31_357_1(result) {
-  _$jscoverage['/dialog.js'].branchData['357'][1].ranCondition(result);
+}_$jscoverage['/dialog.js'].branchData['354'][1].init(711, 21, 'valid(d.twidth.val())');
+function visit26_354_1(result) {
+  _$jscoverage['/dialog.js'].branchData['354'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['351'][1].init(983, 13, 'styles.length');
-function visit30_351_1(result) {
-  _$jscoverage['/dialog.js'].branchData['351'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/dialog.js'].branchData['347'][1].init(854, 22, 'valid(d.theight.val())');
-function visit29_347_1(result) {
+}_$jscoverage['/dialog.js'].branchData['347'][1].init(556, 22, 'valid(d.tborder.val())');
+function visit25_347_1(result) {
   _$jscoverage['/dialog.js'].branchData['347'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['342'][1].init(682, 21, 'valid(d.twidth.val())');
-function visit28_342_1(result) {
-  _$jscoverage['/dialog.js'].branchData['342'][1].ranCondition(result);
+}_$jscoverage['/dialog.js'].branchData['343'][1].init(421, 28, 'valid(d.talign.get(\'value\'))');
+function visit24_343_1(result) {
+  _$jscoverage['/dialog.js'].branchData['343'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['336'][1].init(543, 22, 'valid(d.tborder.val())');
-function visit27_336_1(result) {
+}_$jscoverage['/dialog.js'].branchData['337'][1].init(178, 28, 'parseInt(d.trows.val()) || 1');
+function visit23_337_1(result) {
+  _$jscoverage['/dialog.js'].branchData['337'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/dialog.js'].branchData['336'][1].init(125, 28, 'parseInt(d.tcols.val()) || 1');
+function visit22_336_1(result) {
   _$jscoverage['/dialog.js'].branchData['336'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['333'][1].init(424, 28, 'valid(d.talign.get('value'))');
-function visit26_333_1(result) {
-  _$jscoverage['/dialog.js'].branchData['333'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/dialog.js'].branchData['327'][1].init(178, 28, 'parseInt(d.trows.val()) || 1');
-function visit25_327_1(result) {
-  _$jscoverage['/dialog.js'].branchData['327'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/dialog.js'].branchData['326'][1].init(125, 28, 'parseInt(d.tcols.val()) || 1');
-function visit24_326_1(result) {
+}_$jscoverage['/dialog.js'].branchData['326'][1].init(2456, 7, 'caption');
+function visit21_326_1(result) {
   _$jscoverage['/dialog.js'].branchData['326'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['316'][1].init(2354, 7, 'caption');
-function visit23_316_1(result) {
-  _$jscoverage['/dialog.js'].branchData['316'][1].ranCondition(result);
+}_$jscoverage['/dialog.js'].branchData['315'][1].init(85, 21, 'caption && caption[0]');
+function visit20_315_1(result) {
+  _$jscoverage['/dialog.js'].branchData['315'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['304'][1].init(85, 21, 'caption && caption[0]');
-function visit22_304_1(result) {
-  _$jscoverage['/dialog.js'].branchData['304'][1].ranCondition(result);
+}_$jscoverage['/dialog.js'].branchData['313'][1].init(1798, 23, 'valid(d.tcaption.val())');
+function visit19_313_1(result) {
+  _$jscoverage['/dialog.js'].branchData['313'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['302'][1].init(1668, 23, 'valid(d.tcaption.val())');
-function visit21_302_1(result) {
-  _$jscoverage['/dialog.js'].branchData['302'][1].ranCondition(result);
+}_$jscoverage['/dialog.js'].branchData['310'][1].init(1680, 15, 'self.selectedTd');
+function visit18_310_1(result) {
+  _$jscoverage['/dialog.js'].branchData['310'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['301'][1].init(1583, 15, 'self.selectedTd');
-function visit20_301_1(result) {
-  _$jscoverage['/dialog.js'].branchData['301'][1].ranCondition(result);
+}_$jscoverage['/dialog.js'].branchData['309'][1].init(1627, 34, 'parseInt(d.cellpadding.val()) || 0');
+function visit17_309_1(result) {
+  _$jscoverage['/dialog.js'].branchData['309'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['300'][1].init(1530, 34, 'parseInt(d.cellpadding.val()) || 0');
-function visit19_300_1(result) {
-  _$jscoverage['/dialog.js'].branchData['300'][1].ranCondition(result);
+}_$jscoverage['/dialog.js'].branchData['303'][1].init(1390, 22, 'd.tcollapse[0].checked');
+function visit16_303_1(result) {
+  _$jscoverage['/dialog.js'].branchData['303'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['294'][1].init(1293, 22, 'd.tcollapse[0].checked');
-function visit18_294_1(result) {
-  _$jscoverage['/dialog.js'].branchData['294'][1].ranCondition(result);
+}_$jscoverage['/dialog.js'].branchData['295'][1].init(1163, 22, 'valid(d.theight.val())');
+function visit15_295_1(result) {
+  _$jscoverage['/dialog.js'].branchData['295'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['288'][1].init(1098, 22, 'valid(d.theight.val())');
-function visit17_288_1(result) {
+}_$jscoverage['/dialog.js'].branchData['288'][1].init(913, 21, 'valid(d.twidth.val())');
+function visit14_288_1(result) {
   _$jscoverage['/dialog.js'].branchData['288'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['283'][1].init(880, 21, 'valid(d.twidth.val())');
-function visit16_283_1(result) {
-  _$jscoverage['/dialog.js'].branchData['283'][1].ranCondition(result);
+}_$jscoverage['/dialog.js'].branchData['282'][2].init(692, 18, 'tborderVal === \'0\'');
+function visit13_282_2(result) {
+  _$jscoverage['/dialog.js'].branchData['282'][2].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['277'][2].init(660, 17, 'tborderVal == "0"');
-function visit15_277_2(result) {
-  _$jscoverage['/dialog.js'].branchData['277'][2].ranCondition(result);
+}_$jscoverage['/dialog.js'].branchData['282'][1].init(670, 40, '!valid(tborderVal) || tborderVal === \'0\'');
+function visit12_282_1(result) {
+  _$jscoverage['/dialog.js'].branchData['282'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['277'][1].init(638, 39, '!valid(tborderVal) || tborderVal == "0"');
-function visit14_277_1(result) {
+}_$jscoverage['/dialog.js'].branchData['277'][1].init(482, 17, 'valid(tborderVal)');
+function visit11_277_1(result) {
   _$jscoverage['/dialog.js'].branchData['277'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['272'][1].init(450, 17, 'valid(tborderVal)');
-function visit13_272_1(result) {
-  _$jscoverage['/dialog.js'].branchData['272'][1].ranCondition(result);
+}_$jscoverage['/dialog.js'].branchData['270'][1].init(285, 16, 'valid(talignVal)');
+function visit10_270_1(result) {
+  _$jscoverage['/dialog.js'].branchData['270'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['267'][1].init(285, 16, 'valid(talignVal)');
-function visit12_267_1(result) {
-  _$jscoverage['/dialog.js'].branchData['267'][1].ranCondition(result);
+}_$jscoverage['/dialog.js'].branchData['255'][1].init(21, 19, '!self.selectedTable');
+function visit9_255_1(result) {
+  _$jscoverage['/dialog.js'].branchData['255'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['252'][1].init(21, 19, '!self.selectedTable');
-function visit11_252_1(result) {
-  _$jscoverage['/dialog.js'].branchData['252'][1].ranCondition(result);
+}_$jscoverage['/dialog.js'].branchData['250'][1].init(637, 3, '!re');
+function visit8_250_1(result) {
+  _$jscoverage['/dialog.js'].branchData['250'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['249'][1].init(642, 3, '!re');
-function visit10_249_1(result) {
-  _$jscoverage['/dialog.js'].branchData['249'][1].ranCondition(result);
+}_$jscoverage['/dialog.js'].branchData['242'][1].init(39, 6, 'tw < 0');
+function visit7_242_1(result) {
+  _$jscoverage['/dialog.js'].branchData['242'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['241'][1].init(39, 6, 'tw < 0');
-function visit9_241_1(result) {
+}_$jscoverage['/dialog.js'].branchData['241'][2].init(33, 8, 'tw > 100');
+function visit6_241_2(result) {
+  _$jscoverage['/dialog.js'].branchData['241'][2].ranCondition(result);
+  return result;
+}_$jscoverage['/dialog.js'].branchData['241'][1].init(-1, 46, 'tw > 100 || tw < 0');
+function visit5_241_1(result) {
   _$jscoverage['/dialog.js'].branchData['241'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['240'][2].init(33, 8, 'tw > 100');
-function visit8_240_2(result) {
-  _$jscoverage['/dialog.js'].branchData['240'][2].ranCondition(result);
-  return result;
-}_$jscoverage['/dialog.js'].branchData['240'][1].init(-1, 46, 'tw > 100 || tw < 0');
-function visit7_240_1(result) {
+}_$jscoverage['/dialog.js'].branchData['240'][1].init(24, 105, '!tw || (tw > 100 || tw < 0)');
+function visit4_240_1(result) {
   _$jscoverage['/dialog.js'].branchData['240'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['239'][1].init(24, 105, '!tw || (tw > 100 || tw < 0)');
-function visit6_239_1(result) {
-  _$jscoverage['/dialog.js'].branchData['239'][1].ranCondition(result);
+}_$jscoverage['/dialog.js'].branchData['237'][1].init(174, 43, 'tableDialog.twidthunit.get(\'value\') === \'%\'');
+function visit3_237_1(result) {
+  _$jscoverage['/dialog.js'].branchData['237'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['236'][1].init(180, 42, 'tableDialog.twidthunit.get('value') == "%"');
-function visit5_236_1(result) {
-  _$jscoverage['/dialog.js'].branchData['236'][1].ranCondition(result);
+}_$jscoverage['/dialog.js'].branchData['165'][1].init(16, 22, 'trim(str).length !== 0');
+function visit2_165_1(result) {
+  _$jscoverage['/dialog.js'].branchData['165'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['231'][1].init(13, 15, 'ev && ev.halt()');
-function visit4_231_1(result) {
-  _$jscoverage['/dialog.js'].branchData['231'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/dialog.js'].branchData['225'][1].init(17, 15, 'ev && ev.halt()');
-function visit3_225_1(result) {
-  _$jscoverage['/dialog.js'].branchData['225'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/dialog.js'].branchData['164'][1].init(16, 21, 'trim(str).length != 0');
-function visit2_164_1(result) {
-  _$jscoverage['/dialog.js'].branchData['164'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/dialog.js'].branchData['10'][1].init(142, 16, 'S.UA.ieMode < 11');
-function visit1_10_1(result) {
-  _$jscoverage['/dialog.js'].branchData['10'][1].ranCondition(result);
+}_$jscoverage['/dialog.js'].branchData['11'][1].init(163, 16, 'S.UA.ieMode < 11');
+function visit1_11_1(result) {
+  _$jscoverage['/dialog.js'].branchData['11'][1].ranCondition(result);
   return result;
 }_$jscoverage['/dialog.js'].lineData[6]++;
 KISSY.add(function(S, require) {
   _$jscoverage['/dialog.js'].functionData[0]++;
-  _$jscoverage['/dialog.js'].lineData[7]++;
-  var Editor = require('editor');
   _$jscoverage['/dialog.js'].lineData[8]++;
-  var Dialog4E = require('../dialog');
+  var Editor = require('editor');
   _$jscoverage['/dialog.js'].lineData[9]++;
-  var MenuButton = require('../menubutton');
+  var Dialog4E = require('../dialog');
   _$jscoverage['/dialog.js'].lineData[10]++;
-  var OLD_IE = visit1_10_1(S.UA.ieMode < 11);
+  var MenuButton = require('../menubutton');
   _$jscoverage['/dialog.js'].lineData[11]++;
-  var Node = S.Node, Dom = S.DOM, trim = S.trim, showBorderClassName = "ke_show_border", collapseTableClass = "k-e-collapse-table", IN_SIZE = 6, alignStyle = 'margin:0 5px 0 0;', TABLE_HTML = "<div style='padding:20px 20px 10px 20px;'>" + "<table class='{prefixCls}editor-table-config' style='width:100%'>" + "<tr>" + "<td>" + "<label>\u884c\u6570\uff1a " + "<input " + " data-verify='^(?!0$)\\d+$' " + " data-warning='\u884c\u6570\u8bf7\u8f93\u5165\u6b63\u6574\u6570' " + " value='2' " + " class='{prefixCls}editor-table-rows {prefixCls}editor-table-create-only {prefixCls}editor-input' " + "style='" + alignStyle + "'" + " size='" + IN_SIZE + "'" + " />" + "</label>" + "</td>" + "<td>" + "<label>\u5bbd&nbsp;&nbsp;&nbsp;\u5ea6\uff1a " + "</label> " + "<input " + " data-verify='^(?!0$)\\d+$' " + " data-warning='\u5bbd\u5ea6\u8bf7\u8f93\u5165\u6b63\u6574\u6570' " + "value='200' " + "style='" + alignStyle + "' " + "class='{prefixCls}editor-table-width {prefixCls}editor-input' " + "size='" + IN_SIZE + "'/>" + "<select class='{prefixCls}editor-table-width-unit' title='\u5bbd\u5ea6\u5355\u4f4d'>" + "<option value='px'>\u50cf\u7d20</option>" + "<option value='%'>\u767e\u5206\u6bd4</option>" + "</select>" + "</td>" + "</tr>" + "<tr>" + "<td>" + "<label>\u5217\u6570\uff1a " + "<input " + " data-verify='^(?!0$)\\d+$' " + " data-warning='\u5217\u6570\u8bf7\u8f93\u5165\u6b63\u6574\u6570' " + "class='{prefixCls}editor-table-cols {prefixCls}editor-table-create-only {prefixCls}editor-input' " + "style='" + alignStyle + "'" + "value='3' " + "size='" + IN_SIZE + "'/>" + "</label>" + "</td>" + "<td>" + "<label>" + "\u9ad8&nbsp;&nbsp;&nbsp;\u5ea6\uff1a " + "</label>" + "<input " + " data-verify='^((?!0$)\\d+)?$' " + " data-warning='\u9ad8\u5ea6\u8bf7\u8f93\u5165\u6b63\u6574\u6570' " + "value='' " + "style='" + alignStyle + "'" + "class='{prefixCls}editor-table-height {prefixCls}editor-input' " + "size='" + IN_SIZE + "'/>" + " &nbsp;\u50cf\u7d20" + "</td>" + "</tr>" + "<tr>" + "<td>" + "<label>\u5bf9\u9f50\uff1a </label>" + "<select class='{prefixCls}editor-table-align' title='\u5bf9\u9f50'>" + "<option value=''>\u65e0</option>" + "<option value='left'>\u5de6\u5bf9\u9f50</option>" + "<option value='right'>\u53f3\u5bf9\u9f50</option>" + "<option value='center'>\u4e2d\u95f4\u5bf9\u9f50</option>" + "</select>" + "</td>" + "<td>" + "<label>\u6807\u9898\u683c\uff1a</label> " + "<select class='{prefixCls}editor-table-head {prefixCls}editor-table-create-only' title='\u6807\u9898\u683c'>" + "<option value=''>\u65e0</option>" + "<option value='1'>\u6709</option>" + "</select>" + "</td>" + "</tr>" + "<tr>" + "<td>" + "<label>\u8fb9\u6846\uff1a " + "<input " + " data-verify='^\\d+$' " + " data-warning='\u8fb9\u6846\u8bf7\u8f93\u5165\u975e\u8d1f\u6574\u6570' " + "value='1' " + "style='" + alignStyle + "'" + "class='{prefixCls}editor-table-border {prefixCls}editor-input' " + "size='" + IN_SIZE + "'/>" + "</label> &nbsp;\u50cf\u7d20" + " " + '<label><input ' + 'type="checkbox" ' + 'style="vertical-align: middle; margin-left: 5px;" ' + 'class="{prefixCls}editor-table-collapse" ' + '/> \u5408\u5e76\u8fb9\u6846' + "</label>" + "</td>" + "<td>" + "<label " + "class='{prefixCls}editor-table-cellpadding-holder'" + ">\u8fb9&nbsp;&nbsp;&nbsp;\u8ddd\uff1a " + "<input " + " data-verify='^(\\d+)?$' " + " data-warning='\u8fb9\u6846\u8bf7\u8f93\u5165\u975e\u8d1f\u6574\u6570' " + "value='0' " + "style='" + alignStyle + "'" + "class='{prefixCls}editor-table-cellpadding {prefixCls}editor-input' " + "size='" + IN_SIZE + "'/>" + " &nbsp;\u50cf\u7d20</label>" + "</td>" + "</tr>" + "<tr>" + "<td colspan='2'>" + "<label>" + "\u6807\u9898\uff1a " + "<input " + "class='{prefixCls}editor-table-caption {prefixCls}editor-input' " + "style='width:380px;" + alignStyle + "'>" + "</label>" + "</td>" + "</tr>" + "</table>" + "</div>", footHTML = "<div style='padding:5px 20px 20px;'>" + "<a " + "class='{prefixCls}editor-table-ok {prefixCls}editor-button ks-inline-block' " + "style='margin-right:20px;'>\u786e\u5b9a</a> " + "<a " + "class='{prefixCls}editor-table-cancel {prefixCls}editor-button ks-inline-block'>\u53d6\u6d88</a>" + "</div>", addRes = Editor.Utils.addRes, destroyRes = Editor.Utils.destroyRes;
-  _$jscoverage['/dialog.js'].lineData[157]++;
+  var OLD_IE = visit1_11_1(S.UA.ieMode < 11);
+  _$jscoverage['/dialog.js'].lineData[12]++;
+  var Node = S.Node, Dom = S.DOM, trim = S.trim, showBorderClassName = 'ke_show_border', collapseTableClass = 'k-e-collapse-table', IN_SIZE = 6, alignStyle = 'margin:0 5px 0 0;', TABLE_HTML = '<div style="padding:20px 20px 10px 20px;">' + '<table class="{prefixCls}editor-table-config" style="width:100%">' + '<tr>' + '<td>' + '<label>\u884c\u6570\uff1a ' + '<input ' + ' data-verify="^(?!0$)\\d+$" ' + ' data-warning="\u884c\u6570\u8bf7\u8f93\u5165\u6b63\u6574\u6570" ' + ' value="2" ' + ' class="{prefixCls}editor-table-rows {prefixCls}editor-table-create-only {prefixCls}editor-input" ' + 'style="' + alignStyle + '"' + ' size="' + IN_SIZE + '"' + ' />' + '</label>' + '</td>' + '<td>' + '<label>\u5bbd&nbsp;&nbsp;&nbsp;\u5ea6\uff1a ' + '</label> ' + '<input ' + ' data-verify="^(?!0$)\\d+$" ' + ' data-warning="\u5bbd\u5ea6\u8bf7\u8f93\u5165\u6b63\u6574\u6570" ' + 'value="200" ' + 'style="' + alignStyle + '" ' + 'class="{prefixCls}editor-table-width {prefixCls}editor-input" ' + 'size="' + IN_SIZE + '"/>' + '<select class="{prefixCls}editor-table-width-unit" title="\u5bbd\u5ea6\u5355\u4f4d">' + '<option value="px">\u50cf\u7d20</option>' + '<option value="%">\u767e\u5206\u6bd4</option>' + '</select>' + '</td>' + '</tr>' + '<tr>' + '<td>' + '<label>\u5217\u6570\uff1a ' + '<input ' + ' data-verify="^(?!0$)\\d+$" ' + ' data-warning="\u5217\u6570\u8bf7\u8f93\u5165\u6b63\u6574\u6570" ' + 'class="{prefixCls}editor-table-cols {prefixCls}editor-table-create-only {prefixCls}editor-input" ' + 'style="' + alignStyle + '"' + 'value="3" ' + 'size="' + IN_SIZE + '"/>' + '</label>' + '</td>' + '<td>' + '<label>' + '\u9ad8&nbsp;&nbsp;&nbsp;\u5ea6\uff1a ' + '</label>' + '<input ' + ' data-verify="^((?!0$)\\d+)?$" ' + ' data-warning="\u9ad8\u5ea6\u8bf7\u8f93\u5165\u6b63\u6574\u6570" ' + 'value="" ' + 'style="' + alignStyle + '"' + 'class="{prefixCls}editor-table-height {prefixCls}editor-input" ' + 'size="' + IN_SIZE + '"/>' + ' &nbsp;\u50cf\u7d20' + '</td>' + '</tr>' + '<tr>' + '<td>' + '<label>\u5bf9\u9f50\uff1a </label>' + '<select class="{prefixCls}editor-table-align" title="\u5bf9\u9f50">' + '<option value="">\u65e0</option>' + '<option value="left">\u5de6\u5bf9\u9f50</option>' + '<option value="right">\u53f3\u5bf9\u9f50</option>' + '<option value="center">\u4e2d\u95f4\u5bf9\u9f50</option>' + '</select>' + '</td>' + '<td>' + '<label>\u6807\u9898\u683c\uff1a</label> ' + '<select class="{prefixCls}editor-table-head {prefixCls}editor-table-create-only" title="\u6807\u9898\u683c">' + '<option value="">\u65e0</option>' + '<option value="1">\u6709</option>' + '</select>' + '</td>' + '</tr>' + '<tr>' + '<td>' + '<label>\u8fb9\u6846\uff1a ' + '<input ' + ' data-verify="^\\d+$" ' + ' data-warning="\u8fb9\u6846\u8bf7\u8f93\u5165\u975e\u8d1f\u6574\u6570" ' + 'value="1" ' + 'style="' + alignStyle + '"' + 'class="{prefixCls}editor-table-border {prefixCls}editor-input" ' + 'size="' + IN_SIZE + '"/>' + '</label> &nbsp;\u50cf\u7d20' + ' ' + '<label><input ' + 'type="checkbox" ' + 'style="vertical-align: middle; margin-left: 5px;" ' + 'class="{prefixCls}editor-table-collapse" ' + '/> \u5408\u5e76\u8fb9\u6846' + '</label>' + '</td>' + '<td>' + '<label ' + 'class="{prefixCls}editor-table-cellpadding-holder"' + '>\u8fb9&nbsp;&nbsp;&nbsp;\u8ddd\uff1a ' + '<input ' + ' data-verify="^(\\d+)?$" ' + ' data-warning="\u8fb9\u6846\u8bf7\u8f93\u5165\u975e\u8d1f\u6574\u6570" ' + 'value="0" ' + 'style="' + alignStyle + '"' + 'class="{prefixCls}editor-table-cellpadding {prefixCls}editor-input" ' + 'size="' + IN_SIZE + '"/>' + ' &nbsp;\u50cf\u7d20</label>' + '</td>' + '</tr>' + '<tr>' + '<td colspan="2">' + '<label>' + '\u6807\u9898\uff1a ' + '<input ' + 'class="{prefixCls}editor-table-caption {prefixCls}editor-input" ' + 'style="width:380px;' + alignStyle + '">' + '</label>' + '</td>' + '</tr>' + '</table>' + '</div>', footHTML = '<div style="padding:5px 20px 20px;">' + '<a ' + 'class="{prefixCls}editor-table-ok {prefixCls}editor-button ks-inline-block" ' + 'style="margin-right:20px;">\u786e\u5b9a</a> ' + '<a ' + 'class="{prefixCls}editor-table-cancel {prefixCls}editor-button ks-inline-block">\u53d6\u6d88</a>' + '</div>', addRes = Editor.Utils.addRes, destroyRes = Editor.Utils.destroyRes;
+  _$jscoverage['/dialog.js'].lineData[158]++;
   function replacePrefix(str, prefix) {
     _$jscoverage['/dialog.js'].functionData[1]++;
-    _$jscoverage['/dialog.js'].lineData[158]++;
+    _$jscoverage['/dialog.js'].lineData[159]++;
     return S.substitute(str, {
   prefixCls: prefix});
   }
-  _$jscoverage['/dialog.js'].lineData[163]++;
+  _$jscoverage['/dialog.js'].lineData[164]++;
   function valid(str) {
     _$jscoverage['/dialog.js'].functionData[2]++;
-    _$jscoverage['/dialog.js'].lineData[164]++;
-    return visit2_164_1(trim(str).length != 0);
+    _$jscoverage['/dialog.js'].lineData[165]++;
+    return visit2_165_1(trim(str).length !== 0);
   }
-  _$jscoverage['/dialog.js'].lineData[167]++;
+  _$jscoverage['/dialog.js'].lineData[168]++;
   function TableDialog(editor) {
     _$jscoverage['/dialog.js'].functionData[3]++;
-    _$jscoverage['/dialog.js'].lineData[168]++;
-    var self = this;
     _$jscoverage['/dialog.js'].lineData[169]++;
-    self.editor = editor;
+    var self = this;
     _$jscoverage['/dialog.js'].lineData[170]++;
-    Editor.Utils.lazyRun(self, "_prepareTableShow", "_realTableShow");
+    self.editor = editor;
+    _$jscoverage['/dialog.js'].lineData[171]++;
+    Editor.Utils.lazyRun(self, '_prepareTableShow', '_realTableShow');
   }
-  _$jscoverage['/dialog.js'].lineData[173]++;
+  _$jscoverage['/dialog.js'].lineData[174]++;
   S.augment(TableDialog, {
   _tableInit: function() {
   _$jscoverage['/dialog.js'].functionData[4]++;
-  _$jscoverage['/dialog.js'].lineData[175]++;
+  _$jscoverage['/dialog.js'].lineData[176]++;
   var self = this, prefixCls = self.editor.get('prefixCls'), d = new Dialog4E({
-  width: "500px", 
+  width: '500px', 
   mask: true, 
-  headerContent: "\u8868\u683c", 
+  headerContent: '\u8868\u683c', 
   bodyContent: replacePrefix(TABLE_HTML, prefixCls), 
-  footerContent: replacePrefix(footHTML, prefixCls)}).render(), dbody = d.get('body'), foot = d.get("footer");
-  _$jscoverage['/dialog.js'].lineData[186]++;
-  d.twidth = dbody.one(replacePrefix(".{prefixCls}editor-table-width", prefixCls));
+  footerContent: replacePrefix(footHTML, prefixCls)}).render(), dbody = d.get('body'), foot = d.get('footer');
   _$jscoverage['/dialog.js'].lineData[187]++;
-  d.theight = dbody.one(replacePrefix(".{prefixCls}editor-table-height", prefixCls));
+  d.twidth = dbody.one(replacePrefix('.{prefixCls}editor-table-width', prefixCls));
   _$jscoverage['/dialog.js'].lineData[188]++;
-  d.tborder = dbody.one(replacePrefix(".{prefixCls}editor-table-border", prefixCls));
+  d.theight = dbody.one(replacePrefix('.{prefixCls}editor-table-height', prefixCls));
   _$jscoverage['/dialog.js'].lineData[189]++;
-  d.tcaption = dbody.one(replacePrefix(".{prefixCls}editor-table-caption", prefixCls));
+  d.tborder = dbody.one(replacePrefix('.{prefixCls}editor-table-border', prefixCls));
   _$jscoverage['/dialog.js'].lineData[190]++;
-  d.talign = MenuButton.Select.decorate(dbody.one(replacePrefix(".{prefixCls}editor-table-align", prefixCls)), {
+  d.tcaption = dbody.one(replacePrefix('.{prefixCls}editor-table-caption', prefixCls));
+  _$jscoverage['/dialog.js'].lineData[191]++;
+  d.talign = MenuButton.Select.decorate(dbody.one(replacePrefix('.{prefixCls}editor-table-align', prefixCls)), {
   prefixCls: replacePrefix('{prefixCls}editor-big-', prefixCls), 
   width: 80, 
   menuCfg: {
   prefixCls: replacePrefix('{prefixCls}editor-', prefixCls), 
   render: dbody}});
-  _$jscoverage['/dialog.js'].lineData[198]++;
-  d.trows = dbody.one(replacePrefix(".{prefixCls}editor-table-rows", prefixCls));
   _$jscoverage['/dialog.js'].lineData[199]++;
-  d.tcols = dbody.one(replacePrefix(".{prefixCls}editor-table-cols", prefixCls));
+  d.trows = dbody.one(replacePrefix('.{prefixCls}editor-table-rows', prefixCls));
   _$jscoverage['/dialog.js'].lineData[200]++;
-  d.thead = MenuButton.Select.decorate(dbody.one(replacePrefix(".{prefixCls}editor-table-head", prefixCls)), {
+  d.tcols = dbody.one(replacePrefix('.{prefixCls}editor-table-cols', prefixCls));
+  _$jscoverage['/dialog.js'].lineData[201]++;
+  d.thead = MenuButton.Select.decorate(dbody.one(replacePrefix('.{prefixCls}editor-table-head', prefixCls)), {
   prefixCls: replacePrefix('{prefixCls}editor-big-', prefixCls), 
   width: 80, 
   menuCfg: {
   prefixCls: replacePrefix('{prefixCls}editor-', prefixCls), 
   render: dbody}});
-  _$jscoverage['/dialog.js'].lineData[208]++;
-  d.cellpaddingHolder = dbody.one(replacePrefix(".{prefixCls}editor-table-cellpadding-holder", prefixCls));
   _$jscoverage['/dialog.js'].lineData[209]++;
-  d.cellpadding = dbody.one(replacePrefix(".{prefixCls}editor-table-cellpadding", prefixCls));
+  d.cellpaddingHolder = dbody.one(replacePrefix('.{prefixCls}editor-table-cellpadding-holder', prefixCls));
   _$jscoverage['/dialog.js'].lineData[210]++;
-  d.tcollapse = dbody.one(replacePrefix(".{prefixCls}editor-table-collapse", prefixCls));
+  d.cellpadding = dbody.one(replacePrefix('.{prefixCls}editor-table-cellpadding', prefixCls));
   _$jscoverage['/dialog.js'].lineData[211]++;
-  var tok = foot.one(replacePrefix(".{prefixCls}editor-table-ok", prefixCls)), tclose = foot.one(replacePrefix(".{prefixCls}editor-table-cancel", prefixCls));
-  _$jscoverage['/dialog.js'].lineData[213]++;
-  d.twidthunit = MenuButton.Select.decorate(dbody.one(replacePrefix(".{prefixCls}editor-table-width-unit", prefixCls)), {
+  d.tcollapse = dbody.one(replacePrefix('.{prefixCls}editor-table-collapse', prefixCls));
+  _$jscoverage['/dialog.js'].lineData[212]++;
+  var tok = foot.one(replacePrefix('.{prefixCls}editor-table-ok', prefixCls)), tclose = foot.one(replacePrefix('.{prefixCls}editor-table-cancel', prefixCls));
+  _$jscoverage['/dialog.js'].lineData[214]++;
+  d.twidthunit = MenuButton.Select.decorate(dbody.one(replacePrefix('.{prefixCls}editor-table-width-unit', prefixCls)), {
   prefixCls: replacePrefix('{prefixCls}editor-big-', prefixCls), 
   width: 80, 
   menuCfg: {
   prefixCls: replacePrefix('{prefixCls}editor-', prefixCls), 
   render: dbody}});
-  _$jscoverage['/dialog.js'].lineData[221]++;
-  self.dialog = d;
   _$jscoverage['/dialog.js'].lineData[222]++;
+  self.dialog = d;
+  _$jscoverage['/dialog.js'].lineData[223]++;
   tok.on('click', self._tableOk, self);
-  _$jscoverage['/dialog.js'].lineData[224]++;
+  _$jscoverage['/dialog.js'].lineData[225]++;
   tclose.on('click', function(ev) {
   _$jscoverage['/dialog.js'].functionData[5]++;
-  _$jscoverage['/dialog.js'].lineData[225]++;
-  visit3_225_1(ev && ev.halt());
   _$jscoverage['/dialog.js'].lineData[226]++;
+  ev.halt();
+  _$jscoverage['/dialog.js'].lineData[227]++;
   d.hide();
 });
-  _$jscoverage['/dialog.js'].lineData[228]++;
+  _$jscoverage['/dialog.js'].lineData[229]++;
   addRes.call(self, d, d.twidthunit, tok, tclose);
 }, 
   _tableOk: function(ev) {
   _$jscoverage['/dialog.js'].functionData[6]++;
-  _$jscoverage['/dialog.js'].lineData[231]++;
-  visit4_231_1(ev && ev.halt());
   _$jscoverage['/dialog.js'].lineData[232]++;
+  ev.halt();
+  _$jscoverage['/dialog.js'].lineData[233]++;
   var self = this, tableDialog = self.dialog, inputs = tableDialog.get('el').all('input');
-  _$jscoverage['/dialog.js'].lineData[236]++;
-  if (visit5_236_1(tableDialog.twidthunit.get('value') == "%")) {
-    _$jscoverage['/dialog.js'].lineData[237]++;
-    var tw = parseInt(tableDialog.twidth.val());
+  _$jscoverage['/dialog.js'].lineData[237]++;
+  if (visit3_237_1(tableDialog.twidthunit.get('value') === '%')) {
     _$jscoverage['/dialog.js'].lineData[238]++;
-    if (visit6_239_1(!tw || (visit7_240_1(visit8_240_2(tw > 100) || visit9_241_1(tw < 0))))) {
-      _$jscoverage['/dialog.js'].lineData[244]++;
-      alert("\u5bbd\u5ea6\u767e\u5206\u6bd4\uff1a" + "\u8bf7\u8f93\u51651-100\u4e4b\u95f4");
+    var tw = parseInt(tableDialog.twidth.val());
+    _$jscoverage['/dialog.js'].lineData[239]++;
+    if (visit4_240_1(!tw || (visit5_241_1(visit6_241_2(tw > 100) || visit7_242_1(tw < 0))))) {
       _$jscoverage['/dialog.js'].lineData[245]++;
+      alert('\u5bbd\u5ea6\u767e\u5206\u6bd4\uff1a' + '\u8bf7\u8f93\u51651-100\u4e4b\u95f4');
+      _$jscoverage['/dialog.js'].lineData[246]++;
       return;
     }
   }
-  _$jscoverage['/dialog.js'].lineData[248]++;
-  var re = Editor.Utils.verifyInputs(inputs);
   _$jscoverage['/dialog.js'].lineData[249]++;
-  if (visit10_249_1(!re)) 
-    return;
+  var re = Editor.Utils.verifyInputs(inputs);
   _$jscoverage['/dialog.js'].lineData[250]++;
+  if (visit8_250_1(!re)) {
+    _$jscoverage['/dialog.js'].lineData[251]++;
+    return;
+  }
+  _$jscoverage['/dialog.js'].lineData[253]++;
   self.dialog.hide();
-  _$jscoverage['/dialog.js'].lineData[251]++;
+  _$jscoverage['/dialog.js'].lineData[254]++;
   setTimeout(function() {
   _$jscoverage['/dialog.js'].functionData[7]++;
-  _$jscoverage['/dialog.js'].lineData[252]++;
-  if (visit11_252_1(!self.selectedTable)) {
-    _$jscoverage['/dialog.js'].lineData[253]++;
+  _$jscoverage['/dialog.js'].lineData[255]++;
+  if (visit9_255_1(!self.selectedTable)) {
+    _$jscoverage['/dialog.js'].lineData[256]++;
     self._genTable();
   } else {
-    _$jscoverage['/dialog.js'].lineData[255]++;
+    _$jscoverage['/dialog.js'].lineData[258]++;
     self._modifyTable();
   }
 }, 0);
 }, 
   _modifyTable: function() {
   _$jscoverage['/dialog.js'].functionData[8]++;
-  _$jscoverage['/dialog.js'].lineData[260]++;
-  var self = this, d = self.dialog, selectedTable = self.selectedTable, caption = selectedTable.one("caption"), talignVal = d.talign.get('value'), tborderVal = d.tborder.val();
-  _$jscoverage['/dialog.js'].lineData[267]++;
-  if (visit12_267_1(valid(talignVal))) {
-    _$jscoverage['/dialog.js'].lineData[268]++;
-    selectedTable.attr("align", trim(talignVal));
+  _$jscoverage['/dialog.js'].lineData[263]++;
+  var self = this, d = self.dialog, selectedTable = self.selectedTable, caption = selectedTable.one('caption'), talignVal = d.talign.get('value'), tborderVal = d.tborder.val();
+  _$jscoverage['/dialog.js'].lineData[270]++;
+  if (visit10_270_1(valid(talignVal))) {
+    _$jscoverage['/dialog.js'].lineData[271]++;
+    selectedTable.attr('align', trim(talignVal));
   } else {
-    _$jscoverage['/dialog.js'].lineData[270]++;
-    selectedTable.removeAttr("align");
-  }
-  _$jscoverage['/dialog.js'].lineData[272]++;
-  if (visit13_272_1(valid(tborderVal))) {
-    _$jscoverage['/dialog.js'].lineData[273]++;
-    selectedTable.attr("border", trim(tborderVal));
-  } else {
-    _$jscoverage['/dialog.js'].lineData[275]++;
-    selectedTable.removeAttr("border");
+    _$jscoverage['/dialog.js'].lineData[274]++;
+    selectedTable.removeAttr('align');
   }
   _$jscoverage['/dialog.js'].lineData[277]++;
-  if (visit14_277_1(!valid(tborderVal) || visit15_277_2(tborderVal == "0"))) {
+  if (visit11_277_1(valid(tborderVal))) {
     _$jscoverage['/dialog.js'].lineData[278]++;
-    selectedTable.addClass(showBorderClassName, undefined);
+    selectedTable.attr('border', trim(tborderVal));
   } else {
     _$jscoverage['/dialog.js'].lineData[280]++;
+    selectedTable.removeAttr('border');
+  }
+  _$jscoverage['/dialog.js'].lineData[282]++;
+  if (visit12_282_1(!valid(tborderVal) || visit13_282_2(tborderVal === '0'))) {
+    _$jscoverage['/dialog.js'].lineData[283]++;
+    selectedTable.addClass(showBorderClassName, undefined);
+  } else {
+    _$jscoverage['/dialog.js'].lineData[285]++;
     selectedTable.removeClass(showBorderClassName, undefined);
   }
-  _$jscoverage['/dialog.js'].lineData[283]++;
-  if (visit16_283_1(valid(d.twidth.val()))) {
-    _$jscoverage['/dialog.js'].lineData[284]++;
+  _$jscoverage['/dialog.js'].lineData[288]++;
+  if (visit14_288_1(valid(d.twidth.val()))) {
+    _$jscoverage['/dialog.js'].lineData[289]++;
     selectedTable.css('width', trim(d.twidth.val()) + d.twidthunit.get('value'));
   } else {
-    _$jscoverage['/dialog.js'].lineData[287]++;
-    selectedTable.css('width', "");
+    _$jscoverage['/dialog.js'].lineData[293]++;
+    selectedTable.css('width', '');
   }
-  _$jscoverage['/dialog.js'].lineData[288]++;
-  if (visit17_288_1(valid(d.theight.val()))) {
-    _$jscoverage['/dialog.js'].lineData[289]++;
+  _$jscoverage['/dialog.js'].lineData[295]++;
+  if (visit15_295_1(valid(d.theight.val()))) {
+    _$jscoverage['/dialog.js'].lineData[296]++;
     selectedTable.css('height', trim(d.theight.val()));
   } else {
-    _$jscoverage['/dialog.js'].lineData[292]++;
-    selectedTable.css('height', "");
+    _$jscoverage['/dialog.js'].lineData[300]++;
+    selectedTable.css('height', '');
   }
-  _$jscoverage['/dialog.js'].lineData[294]++;
-  if (visit18_294_1(d.tcollapse[0].checked)) {
-    _$jscoverage['/dialog.js'].lineData[295]++;
+  _$jscoverage['/dialog.js'].lineData[303]++;
+  if (visit16_303_1(d.tcollapse[0].checked)) {
+    _$jscoverage['/dialog.js'].lineData[304]++;
     selectedTable.addClass(collapseTableClass, undefined);
   } else {
-    _$jscoverage['/dialog.js'].lineData[297]++;
+    _$jscoverage['/dialog.js'].lineData[306]++;
     selectedTable.removeClass(collapseTableClass, undefined);
   }
-  _$jscoverage['/dialog.js'].lineData[300]++;
-  d.cellpadding.val(visit19_300_1(parseInt(d.cellpadding.val()) || 0));
-  _$jscoverage['/dialog.js'].lineData[301]++;
-  if (visit20_301_1(self.selectedTd)) 
-    self.selectedTd.css("padding", d.cellpadding.val());
-  _$jscoverage['/dialog.js'].lineData[302]++;
-  if (visit21_302_1(valid(d.tcaption.val()))) {
-    _$jscoverage['/dialog.js'].lineData[303]++;
+  _$jscoverage['/dialog.js'].lineData[309]++;
+  d.cellpadding.val(visit17_309_1(parseInt(d.cellpadding.val()) || 0));
+  _$jscoverage['/dialog.js'].lineData[310]++;
+  if (visit18_310_1(self.selectedTd)) {
+    _$jscoverage['/dialog.js'].lineData[311]++;
+    self.selectedTd.css('padding', d.cellpadding.val());
+  }
+  _$jscoverage['/dialog.js'].lineData[313]++;
+  if (visit19_313_1(valid(d.tcaption.val()))) {
+    _$jscoverage['/dialog.js'].lineData[314]++;
     var tcv = S.escapeHtml(trim(d.tcaption.val()));
-    _$jscoverage['/dialog.js'].lineData[304]++;
-    if (visit22_304_1(caption && caption[0])) {
-      _$jscoverage['/dialog.js'].lineData[305]++;
+    _$jscoverage['/dialog.js'].lineData[315]++;
+    if (visit20_315_1(caption && caption[0])) {
+      _$jscoverage['/dialog.js'].lineData[316]++;
       caption.html(tcv);
     } else {
-      _$jscoverage['/dialog.js'].lineData[309]++;
+      _$jscoverage['/dialog.js'].lineData[321]++;
       var c = selectedTable[0].createCaption();
-      _$jscoverage['/dialog.js'].lineData[310]++;
-      Dom.html(c, "<span>" + tcv + "</span>");
+      _$jscoverage['/dialog.js'].lineData[322]++;
+      Dom.html(c, '<span>' + tcv + '</span>');
     }
   } else {
-    _$jscoverage['/dialog.js'].lineData[316]++;
-    if (visit23_316_1(caption)) {
-      _$jscoverage['/dialog.js'].lineData[317]++;
+    _$jscoverage['/dialog.js'].lineData[326]++;
+    if (visit21_326_1(caption)) {
+      _$jscoverage['/dialog.js'].lineData[327]++;
       caption.remove();
     }
   }
 }, 
   _genTable: function() {
   _$jscoverage['/dialog.js'].functionData[9]++;
-  _$jscoverage['/dialog.js'].lineData[322]++;
-  var self = this, d = self.dialog, html = "<table ", i, cols = visit24_326_1(parseInt(d.tcols.val()) || 1), rows = visit25_327_1(parseInt(d.trows.val()) || 1), cellPad = OLD_IE ? '' : '<br/>', editor = self.editor;
-  _$jscoverage['/dialog.js'].lineData[333]++;
-  if (visit26_333_1(valid(d.talign.get('value')))) {
-    _$jscoverage['/dialog.js'].lineData[334]++;
-    html += "align='" + trim(d.talign.get('value')) + "' ";
-  }
-  _$jscoverage['/dialog.js'].lineData[336]++;
-  if (visit27_336_1(valid(d.tborder.val()))) {
-    _$jscoverage['/dialog.js'].lineData[337]++;
-    html += "border='" + trim(d.tborder.val()) + "' ";
-  }
-  _$jscoverage['/dialog.js'].lineData[339]++;
-  var styles = [];
-  _$jscoverage['/dialog.js'].lineData[342]++;
-  if (visit28_342_1(valid(d.twidth.val()))) {
-    _$jscoverage['/dialog.js'].lineData[343]++;
-    styles.push("width:" + trim(d.twidth.val()) + d.twidthunit.get('value') + ";");
+  _$jscoverage['/dialog.js'].lineData[332]++;
+  var self = this, d = self.dialog, html = '<table ', i, cols = visit22_336_1(parseInt(d.tcols.val()) || 1), rows = visit23_337_1(parseInt(d.trows.val()) || 1), cellPad = OLD_IE ? '' : '<br/>', editor = self.editor;
+  _$jscoverage['/dialog.js'].lineData[343]++;
+  if (visit24_343_1(valid(d.talign.get('value')))) {
+    _$jscoverage['/dialog.js'].lineData[344]++;
+    html += 'align="' + trim(d.talign.get('value')) + '" ';
   }
   _$jscoverage['/dialog.js'].lineData[347]++;
-  if (visit29_347_1(valid(d.theight.val()))) {
+  if (visit25_347_1(valid(d.tborder.val()))) {
     _$jscoverage['/dialog.js'].lineData[348]++;
-    styles.push("height:" + trim(d.theight.val()) + "px;");
+    html += 'border="' + trim(d.tborder.val()) + '" ';
   }
   _$jscoverage['/dialog.js'].lineData[351]++;
-  if (visit30_351_1(styles.length)) {
-    _$jscoverage['/dialog.js'].lineData[352]++;
-    html += "style='" + styles.join("") + "' ";
+  var styles = [];
+  _$jscoverage['/dialog.js'].lineData[354]++;
+  if (visit26_354_1(valid(d.twidth.val()))) {
+    _$jscoverage['/dialog.js'].lineData[355]++;
+    styles.push('width:' + trim(d.twidth.val()) + d.twidthunit.get('value') + ';');
   }
-  _$jscoverage['/dialog.js'].lineData[355]++;
-  var classes = [];
-  _$jscoverage['/dialog.js'].lineData[357]++;
-  if (visit31_357_1(!valid(d.tborder.val()) || visit32_358_1(String(trim(d.tborder.val())) == "0"))) {
+  _$jscoverage['/dialog.js'].lineData[358]++;
+  if (visit27_358_1(valid(d.theight.val()))) {
     _$jscoverage['/dialog.js'].lineData[359]++;
-    classes.push(showBorderClassName);
+    styles.push('height:' + trim(d.theight.val()) + 'px;');
   }
   _$jscoverage['/dialog.js'].lineData[362]++;
-  if (visit33_362_1(d.tcollapse[0].checked)) {
+  if (visit28_362_1(styles.length)) {
     _$jscoverage['/dialog.js'].lineData[363]++;
+    html += 'style="' + styles.join('') + '" ';
+  }
+  _$jscoverage['/dialog.js'].lineData[366]++;
+  var classes = [];
+  _$jscoverage['/dialog.js'].lineData[368]++;
+  if (visit29_368_1(!valid(d.tborder.val()) || visit30_368_2(String(trim(d.tborder.val())) === '0'))) {
+    _$jscoverage['/dialog.js'].lineData[369]++;
+    classes.push(showBorderClassName);
+  }
+  _$jscoverage['/dialog.js'].lineData[372]++;
+  if (visit31_372_1(d.tcollapse[0].checked)) {
+    _$jscoverage['/dialog.js'].lineData[373]++;
     classes.push(collapseTableClass);
   }
-  _$jscoverage['/dialog.js'].lineData[365]++;
-  if (visit34_365_1(classes.length)) {
-    _$jscoverage['/dialog.js'].lineData[366]++;
-    html += "class='" + classes.join(" ") + "' ";
-  }
-  _$jscoverage['/dialog.js'].lineData[369]++;
-  html += ">";
-  _$jscoverage['/dialog.js'].lineData[370]++;
-  if (visit35_370_1(valid(d.tcaption.val()))) {
-    _$jscoverage['/dialog.js'].lineData[371]++;
-    html += "<caption><span>" + S.escapeHtml(trim(d.tcaption.val())) + "</span></caption>";
-  }
-  _$jscoverage['/dialog.js'].lineData[374]++;
-  if (visit36_374_1(d.thead.get('value'))) {
-    _$jscoverage['/dialog.js'].lineData[375]++;
-    html += "<thead>";
+  _$jscoverage['/dialog.js'].lineData[375]++;
+  if (visit32_375_1(classes.length)) {
     _$jscoverage['/dialog.js'].lineData[376]++;
-    html += "<tr>";
-    _$jscoverage['/dialog.js'].lineData[377]++;
-    for (i = 0; visit37_377_1(i < cols); i++) {
-      _$jscoverage['/dialog.js'].lineData[378]++;
-      html += "<th>" + cellPad + "</th>";
-    }
-    _$jscoverage['/dialog.js'].lineData[380]++;
-    html += "</tr>";
+    html += 'class="' + classes.join(' ') + '" ';
+  }
+  _$jscoverage['/dialog.js'].lineData[379]++;
+  html += '>';
+  _$jscoverage['/dialog.js'].lineData[380]++;
+  if (visit33_380_1(valid(d.tcaption.val()))) {
     _$jscoverage['/dialog.js'].lineData[381]++;
-    html += "</thead>";
-    _$jscoverage['/dialog.js'].lineData[382]++;
+    html += '<caption><span>' + S.escapeHtml(trim(d.tcaption.val())) + '</span></caption>';
+  }
+  _$jscoverage['/dialog.js'].lineData[383]++;
+  if (visit34_383_1(d.thead.get('value'))) {
+    _$jscoverage['/dialog.js'].lineData[384]++;
+    html += '<thead>';
+    _$jscoverage['/dialog.js'].lineData[385]++;
+    html += '<tr>';
+    _$jscoverage['/dialog.js'].lineData[386]++;
+    for (i = 0; visit35_386_1(i < cols); i++) {
+      _$jscoverage['/dialog.js'].lineData[387]++;
+      html += '<th>' + cellPad + '</th>';
+    }
+    _$jscoverage['/dialog.js'].lineData[389]++;
+    html += '</tr>';
+    _$jscoverage['/dialog.js'].lineData[390]++;
+    html += '</thead>';
+    _$jscoverage['/dialog.js'].lineData[391]++;
     rows -= 1;
   }
-  _$jscoverage['/dialog.js'].lineData[385]++;
-  html += "<tbody>";
-  _$jscoverage['/dialog.js'].lineData[386]++;
-  for (var r = 0; visit38_386_1(r < rows); r++) {
-    _$jscoverage['/dialog.js'].lineData[387]++;
-    html += "<tr>";
-    _$jscoverage['/dialog.js'].lineData[388]++;
-    for (i = 0; visit39_388_1(i < cols); i++) {
-      _$jscoverage['/dialog.js'].lineData[389]++;
-      html += "<td>" + cellPad + "</td>";
-    }
-    _$jscoverage['/dialog.js'].lineData[391]++;
-    html += "</tr>";
-  }
-  _$jscoverage['/dialog.js'].lineData[393]++;
-  html += "</tbody>";
   _$jscoverage['/dialog.js'].lineData[394]++;
-  html += "</table>";
-  _$jscoverage['/dialog.js'].lineData[396]++;
+  html += '<tbody>';
+  _$jscoverage['/dialog.js'].lineData[395]++;
+  for (var r = 0; visit36_395_1(r < rows); r++) {
+    _$jscoverage['/dialog.js'].lineData[396]++;
+    html += '<tr>';
+    _$jscoverage['/dialog.js'].lineData[397]++;
+    for (i = 0; visit37_397_1(i < cols); i++) {
+      _$jscoverage['/dialog.js'].lineData[398]++;
+      html += '<td>' + cellPad + '</td>';
+    }
+    _$jscoverage['/dialog.js'].lineData[400]++;
+    html += '</tr>';
+  }
+  _$jscoverage['/dialog.js'].lineData[402]++;
+  html += '</tbody>';
+  _$jscoverage['/dialog.js'].lineData[403]++;
+  html += '</table>';
+  _$jscoverage['/dialog.js'].lineData[405]++;
   var table = new Node(html, null, editor.get('document')[0]);
-  _$jscoverage['/dialog.js'].lineData[397]++;
+  _$jscoverage['/dialog.js'].lineData[406]++;
   editor.insertElement(table);
 }, 
   _fillTableDialog: function() {
   _$jscoverage['/dialog.js'].functionData[10]++;
-  _$jscoverage['/dialog.js'].lineData[400]++;
-  var self = this, d = self.dialog, selectedTable = self.selectedTable, caption = selectedTable.one("caption");
-  _$jscoverage['/dialog.js'].lineData[404]++;
-  if (visit40_404_1(self.selectedTd)) {
-    _$jscoverage['/dialog.js'].lineData[405]++;
-    d.cellpadding.val(visit41_406_1(parseInt(self.selectedTd.css("padding")) || "0"));
+  _$jscoverage['/dialog.js'].lineData[409]++;
+  var self = this, d = self.dialog, selectedTable = self.selectedTable, caption = selectedTable.one('caption');
+  _$jscoverage['/dialog.js'].lineData[413]++;
+  if (visit38_413_1(self.selectedTd)) {
+    _$jscoverage['/dialog.js'].lineData[414]++;
+    d.cellpadding.val(visit39_415_1(parseInt(self.selectedTd.css('padding')) || '0'));
   }
-  _$jscoverage['/dialog.js'].lineData[410]++;
-  d.talign.set('value', visit42_410_1(selectedTable.attr("align") || ""));
-  _$jscoverage['/dialog.js'].lineData[414]++;
-  d.tborder.val(visit43_414_1(selectedTable.attr("border") || "0"));
-  _$jscoverage['/dialog.js'].lineData[416]++;
-  var w = visit44_416_1(selectedTable.style('width') || ("" + selectedTable.width()));
-  _$jscoverage['/dialog.js'].lineData[419]++;
-  d.tcollapse[0].checked = selectedTable.hasClass(collapseTableClass, undefined);
-  _$jscoverage['/dialog.js'].lineData[422]++;
-  d.twidth.val(w.replace(/px|%|(.*pt)/i, ""));
+  _$jscoverage['/dialog.js'].lineData[418]++;
+  d.talign.set('value', visit40_418_1(selectedTable.attr('align') || ''));
+  _$jscoverage['/dialog.js'].lineData[421]++;
+  d.tborder.val(visit41_421_1(selectedTable.attr('border') || '0'));
   _$jscoverage['/dialog.js'].lineData[423]++;
-  if (visit45_423_1(w.indexOf("%") != -1)) {
-    _$jscoverage['/dialog.js'].lineData[424]++;
-    d.twidthunit.set('value', "%");
+  var w = visit42_423_1(selectedTable.style('width') || ('' + selectedTable.width()));
+  _$jscoverage['/dialog.js'].lineData[426]++;
+  d.tcollapse[0].checked = selectedTable.hasClass(collapseTableClass, undefined);
+  _$jscoverage['/dialog.js'].lineData[429]++;
+  d.twidth.val(w.replace(/px|%|(.*pt)/i, ''));
+  _$jscoverage['/dialog.js'].lineData[430]++;
+  if (visit43_430_1(w.indexOf('%') !== -1)) {
+    _$jscoverage['/dialog.js'].lineData[431]++;
+    d.twidthunit.set('value', '%');
   } else {
-    _$jscoverage['/dialog.js'].lineData[426]++;
+    _$jscoverage['/dialog.js'].lineData[433]++;
     d.twidthunit.set('value', 'px');
   }
-  _$jscoverage['/dialog.js'].lineData[429]++;
-  d.theight.val((visit46_429_1(selectedTable.style('height') || "")).replace(/px|%/i, ""));
-  _$jscoverage['/dialog.js'].lineData[431]++;
-  var c = "";
-  _$jscoverage['/dialog.js'].lineData[432]++;
-  if (visit47_432_1(caption)) {
-    _$jscoverage['/dialog.js'].lineData[433]++;
+  _$jscoverage['/dialog.js'].lineData[436]++;
+  d.theight.val((visit44_436_1(selectedTable.style('height') || '')).replace(/px|%/i, ''));
+  _$jscoverage['/dialog.js'].lineData[438]++;
+  var c = '';
+  _$jscoverage['/dialog.js'].lineData[439]++;
+  if (visit45_439_1(caption)) {
+    _$jscoverage['/dialog.js'].lineData[440]++;
     c = caption.text();
   }
-  _$jscoverage['/dialog.js'].lineData[435]++;
+  _$jscoverage['/dialog.js'].lineData[442]++;
   d.tcaption.val(c);
-  _$jscoverage['/dialog.js'].lineData[436]++;
-  var head = selectedTable.first("thead"), rowLength = (selectedTable.one("tbody") ? selectedTable.one("tbody").children().length : 0) + (head ? head.children("tr").length : 0);
-  _$jscoverage['/dialog.js'].lineData[440]++;
-  d.trows.val(rowLength);
-  _$jscoverage['/dialog.js'].lineData[441]++;
-  d.tcols.val(selectedTable.one("tr") ? selectedTable.one("tr").children().length : 0);
   _$jscoverage['/dialog.js'].lineData[443]++;
+  var head = selectedTable.first('thead'), rowLength = (selectedTable.one('tbody') ? selectedTable.one('tbody').children().length : 0) + (head ? head.children('tr').length : 0);
+  _$jscoverage['/dialog.js'].lineData[446]++;
+  d.trows.val(rowLength);
+  _$jscoverage['/dialog.js'].lineData[447]++;
+  d.tcols.val(selectedTable.one('tr') ? selectedTable.one('tr').children().length : 0);
+  _$jscoverage['/dialog.js'].lineData[449]++;
   d.thead.set('value', head ? '1' : '');
 }, 
   _realTableShow: function() {
   _$jscoverage['/dialog.js'].functionData[11]++;
-  _$jscoverage['/dialog.js'].lineData[446]++;
+  _$jscoverage['/dialog.js'].lineData[452]++;
   var self = this, prefixCls = self.editor.get('prefixCls'), d = self.dialog;
-  _$jscoverage['/dialog.js'].lineData[450]++;
-  if (visit48_450_1(self.selectedTable)) {
-    _$jscoverage['/dialog.js'].lineData[451]++;
+  _$jscoverage['/dialog.js'].lineData[456]++;
+  if (visit46_456_1(self.selectedTable)) {
+    _$jscoverage['/dialog.js'].lineData[457]++;
     self._fillTableDialog();
-    _$jscoverage['/dialog.js'].lineData[454]++;
-    d.get('el').all(replacePrefix(".{prefixCls}editor-table-create-only", prefixCls)).attr('disabled', 'disabled');
-    _$jscoverage['/dialog.js'].lineData[455]++;
+    _$jscoverage['/dialog.js'].lineData[460]++;
+    d.get('el').all(replacePrefix('.{prefixCls}editor-table-create-only', prefixCls)).attr('disabled', 'disabled');
+    _$jscoverage['/dialog.js'].lineData[461]++;
     d.thead.set('disabled', true);
   } else {
-    _$jscoverage['/dialog.js'].lineData[458]++;
-    d.get('el').all(replacePrefix(".{prefixCls}editor-table-create-only", prefixCls)).removeAttr('disabled');
-    _$jscoverage['/dialog.js'].lineData[459]++;
+    _$jscoverage['/dialog.js'].lineData[464]++;
+    d.get('el').all(replacePrefix('.{prefixCls}editor-table-create-only', prefixCls)).removeAttr('disabled');
+    _$jscoverage['/dialog.js'].lineData[465]++;
     d.thead.set('disabled', false);
   }
-  _$jscoverage['/dialog.js'].lineData[461]++;
-  if (visit49_461_1(self.selectedTd)) {
-    _$jscoverage['/dialog.js'].lineData[462]++;
+  _$jscoverage['/dialog.js'].lineData[467]++;
+  if (visit47_467_1(self.selectedTd)) {
+    _$jscoverage['/dialog.js'].lineData[468]++;
     d.cellpaddingHolder.show();
   } else {
-    _$jscoverage['/dialog.js'].lineData[464]++;
+    _$jscoverage['/dialog.js'].lineData[470]++;
     d.cellpaddingHolder.hide();
   }
-  _$jscoverage['/dialog.js'].lineData[466]++;
+  _$jscoverage['/dialog.js'].lineData[472]++;
   self.dialog.show();
 }, 
   _prepareTableShow: function() {
   _$jscoverage['/dialog.js'].functionData[12]++;
-  _$jscoverage['/dialog.js'].lineData[469]++;
+  _$jscoverage['/dialog.js'].lineData[475]++;
   var self = this;
-  _$jscoverage['/dialog.js'].lineData[470]++;
+  _$jscoverage['/dialog.js'].lineData[476]++;
   self._tableInit();
 }, 
   show: function(cfg) {
   _$jscoverage['/dialog.js'].functionData[13]++;
-  _$jscoverage['/dialog.js'].lineData[473]++;
+  _$jscoverage['/dialog.js'].lineData[479]++;
   var self = this;
-  _$jscoverage['/dialog.js'].lineData[474]++;
+  _$jscoverage['/dialog.js'].lineData[480]++;
   S.mix(self, cfg);
-  _$jscoverage['/dialog.js'].lineData[475]++;
+  _$jscoverage['/dialog.js'].lineData[481]++;
   self._prepareTableShow();
 }, 
   destroy: function() {
   _$jscoverage['/dialog.js'].functionData[14]++;
-  _$jscoverage['/dialog.js'].lineData[478]++;
+  _$jscoverage['/dialog.js'].lineData[484]++;
   destroyRes.call(this);
 }});
-  _$jscoverage['/dialog.js'].lineData[482]++;
+  _$jscoverage['/dialog.js'].lineData[488]++;
   return TableDialog;
 });

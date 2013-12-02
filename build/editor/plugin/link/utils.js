@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:44
+build time: Dec 2 13:00
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -11,7 +11,7 @@ build time: Nov 27 00:44
 
 KISSY.add("editor/plugin/link/utils", ["editor"], function(S, require) {
   var Editor = require("editor");
-  var Node = S.Node, KEStyle = Editor.Style, _ke_saved_href = "_ke_saved_href", link_Style = {element:"a", attributes:{href:"#(href)", title:"#(title)", _ke_saved_href:"#(_ke_saved_href)", target:"#(target)"}};
+  var Node = S.Node, KEStyle = Editor.Style, _keSavedHref = "_keSavedHref", linkStyle = {element:"a", attributes:{href:"#(href)", title:"#(title)", _keSavedHref:"#(_keSavedHref)", target:"#(target)"}};
   function getAttributes(el) {
     var attributes = el.attributes, re = {};
     for(var i = 0;i < attributes.length;i++) {
@@ -30,19 +30,19 @@ KISSY.add("editor/plugin/link/utils", ["editor"], function(S, require) {
     var sel = editor.getSelection(), range = sel.getRanges()[0];
     if(range && range.collapsed) {
       var bs = sel.createBookmarks();
-      a._4e_remove(true);
+      a._4eRemove(true);
       sel.selectBookmarks(bs)
     }else {
       if(range) {
         var attrs = getAttributes(a[0]);
-        (new KEStyle(link_Style, attrs)).remove(editor.get("document")[0])
+        (new KEStyle(linkStyle, attrs)).remove(editor.get("document")[0])
       }
     }
     editor.execCommand("save");
     editor.notifySelectionChange()
   }
   function applyLink(editor, attr, _selectedEl) {
-    attr[_ke_saved_href] = attr.href;
+    attr[_keSavedHref] = attr.href;
     if(_selectedEl) {
       editor.execCommand("save");
       _selectedEl.attr(attr)
@@ -53,13 +53,13 @@ KISSY.add("editor/plugin/link/utils", ["editor"], function(S, require) {
         editor.insertElement(a)
       }else {
         editor.execCommand("save");
-        var linkStyle = new KEStyle(link_Style, attr);
+        var linkStyle = new KEStyle(linkStyle, attr);
         linkStyle.apply(editor.get("document")[0])
       }
     }
     editor.execCommand("save");
     editor.notifySelectionChange()
   }
-  return{removeLink:removeLink, applyLink:applyLink, _ke_saved_href:_ke_saved_href}
+  return{removeLink:removeLink, applyLink:applyLink, _keSavedHref:_keSavedHref}
 });
 

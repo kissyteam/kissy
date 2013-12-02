@@ -6,13 +6,13 @@
 KISSY.add(function (S, require) {
     var Container = require('component/container');
 
-    var CLS = "top bottom left right";
+    var CLS = 'top bottom left right';
 
     return Container.getDefaultRender().extend({
 
         beforeCreateDom: function (renderData) {
             renderData.elCls
-                .push(this.getBaseCssClass(this.control.get('barOrientation')))
+                .push(this.getBaseCssClass(this.control.get('barOrientation')));
         },
 
         decorateDom: function () {
@@ -32,7 +32,7 @@ KISSY.add(function (S, require) {
         HTML_PARSER: {
             barOrientation: function (el) {
                 var orientation = el[0].className.match(/(top|bottom|left|right)\b/);
-                return orientation && orientation[1] || "top";
+                return orientation && orientation[1] || 'top';
             }
         }
     });

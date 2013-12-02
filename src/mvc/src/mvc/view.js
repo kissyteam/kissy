@@ -10,7 +10,7 @@ KISSY.add(function (S, require) {
     var $ = Node.all;
 
     function normFn(self, f) {
-        if (typeof f == 'string') {
+        if (typeof f === 'string') {
             return self[f];
         }
         return f;
@@ -25,7 +25,7 @@ KISSY.add(function (S, require) {
         constructor: function () {
             this.callSuper.apply(this, arguments);
             var events;
-            if (events = this.get("events")) {
+            if ((events = this.get('events'))) {
                 this._afterEventsChange({
                     newVal: events
                 });
@@ -89,9 +89,9 @@ KISSY.add(function (S, require) {
              *      <div>my</div>
              */
             el: {
-                value: "<div />",
+                value: '<div />',
                 getter: function (s) {
-                    if (typeof s == 'string') {
+                    if (typeof s === 'string') {
                         s = $(s);
                         this.setInternal('el', s);
                     }

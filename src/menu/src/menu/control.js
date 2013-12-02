@@ -72,7 +72,7 @@ KISSY.add(function (S, require) {
         handleBlurInternal: function (e) {
             this.callSuper(e);
             var highlightedItem;
-            if (highlightedItem = this.get('highlightedItem')) {
+            if ((highlightedItem = this.get('highlightedItem'))) {
                 highlightedItem.set('highlighted', false);
             }
         },
@@ -89,7 +89,7 @@ KISSY.add(function (S, require) {
                     return children[index];
                 }
                 index = (index + dir + len) % len;
-            } while (index != o);
+            } while (index !== o);
             return undefined;
         },
 
@@ -132,7 +132,7 @@ KISSY.add(function (S, require) {
                 // esc
                 case KeyCode.ESC:
                     // 清除所有菜单
-                    if (highlightedItem = self.get('highlightedItem')) {
+                    if ((highlightedItem = self.get('highlightedItem'))) {
                         highlightedItem.set('highlighted', false);
                     }
                     break;
@@ -239,7 +239,7 @@ KISSY.add(function (S, require) {
         if (e.target.isMenu) {
             var el = this.el,
                 menuItem = e.newVal;
-            el.setAttribute("aria-activedescendant", menuItem && menuItem.el.id || '');
+            el.setAttribute('aria-activedescendant', menuItem && menuItem.el.id || '');
         }
     }
 });

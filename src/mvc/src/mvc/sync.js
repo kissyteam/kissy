@@ -32,16 +32,16 @@ KISSY.add(function (S, require) {
             url;
 
         data = ioParam.data = ioParam.data || {};
-        data['_method'] = method;
+        data._method = method;
 
         if (!ioParam.url) {
-            url = self.get("url");
-            ioParam.url = (typeof url == 'string') ?
+            url = self.get('url');
+            ioParam.url = (typeof url === 'string') ?
                 url :
                 url.call(self);
         }
 
-        if (method == 'create' || method == 'update') {
+        if (method === 'create' || method === 'update') {
             data.model = Json.stringify(self.toJSON());
         }
 

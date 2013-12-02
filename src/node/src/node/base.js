@@ -37,7 +37,7 @@ KISSY.add(function (S, require) {
             return self;
         }
 
-        else if (typeof html == 'string') {
+        else if (typeof html === 'string') {
             // create from html
             domNode = Dom.create(html, props, ownerDocument);
             // ('<p>1</p><p>2</p>') 转换为 NodeList
@@ -118,11 +118,10 @@ KISSY.add(function (S, require) {
 
         /**
          * Get part of node list.
-         * @param {Number} start Start position.
-         * @param {number} end End position.
+         * Arguments are same with Array.prototype.slice
          * @return {KISSY.NodeList}
          */
-        slice: function (start, end) {
+        slice: function () {
             // ie<9 : [1,2].slice(-2,undefined) => []
             // ie<9 : [1,2].slice(-2) => [1,2]
             // fix #85
@@ -227,16 +226,16 @@ KISSY.add(function (S, require) {
         all: function (selector, context) {
             // are we dealing with html string ?
             // TextNode 仍需要自己 new Node
-            if (typeof selector == 'string' &&
+            if (typeof selector === 'string' &&
                 (selector = S.trim(selector)) &&
                 selector.length >= 3 &&
                 S.startsWith(selector, '<') &&
                 S.endsWith(selector, '>')) {
                 if (context) {
-                    if (context['getDOMNode']) {
+                    if (context.getDOMNode) {
                         context = context[0];
                     }
-                    context = context['ownerDocument'] || context;
+                    context = context.ownerDocument || context;
                 }
                 return new NodeList(selector, undefined, context);
             }

@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ','src':' + jscoverage_quote(this.src)
+            + ',"src":' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -270,11 +270,11 @@ if (! _$jscoverage['/heading.js'].branchData) {
   _$jscoverage['/heading.js'].branchData['74'] = [];
   _$jscoverage['/heading.js'].branchData['74'][1] = new BranchData();
 }
-_$jscoverage['/heading.js'].branchData['74'][1].init(37, 21, 'value == headingValue');
+_$jscoverage['/heading.js'].branchData['74'][1].init(37, 22, 'value === headingValue');
 function visit2_74_1(result) {
   _$jscoverage['/heading.js'].branchData['74'][1].ranCondition(result);
   return result;
-}_$jscoverage['/heading.js'].branchData['66'][1].init(33, 45, 'editor.get('mode') == Editor.Mode.SOURCE_MODE');
+}_$jscoverage['/heading.js'].branchData['66'][1].init(33, 46, 'editor.get(\'mode\') === Editor.Mode.SOURCE_MODE');
 function visit1_66_1(result) {
   _$jscoverage['/heading.js'].branchData['66'][1].ranCondition(result);
   return result;
@@ -299,20 +299,20 @@ KISSY.add(function(S, require) {
   headingCmd.init(editor);
   _$jscoverage['/heading.js'].lineData[19]++;
   var FORMAT_SELECTION_ITEMS = [], FORMATS = {
-  "\u666e\u901a\u6587\u672c": 'p',
-  "\u6807\u98981": "h1", 
-  "\u6807\u98982": "h2", 
-  "\u6807\u98983": "h3", 
-  "\u6807\u98984": "h4", 
-  "\u6807\u98985": "h5", 
-  "\u6807\u98986": "h6"}, FORMAT_SIZES = {
-  p: "1em", 
-  h1: "2em", 
-  h2: "1.5em", 
-  h3: "1.17em", 
-  h4: "1em", 
-  h5: "0.83em", 
-  h6: "0.67em"};
+  '\u666e\u901a\u6587\u672c': 'p', 
+  '\u6807\u98981': 'h1', 
+  '\u6807\u98982': 'h2', 
+  '\u6807\u98983': 'h3', 
+  '\u6807\u98984': 'h4', 
+  '\u6807\u98985': 'h5', 
+  '\u6807\u98986': 'h6'}, FORMAT_SIZES = {
+  p: '1em', 
+  h1: '2em', 
+  h2: '1.5em', 
+  h3: '1.17em', 
+  h4: '1em', 
+  h5: '0.83em', 
+  h6: '0.67em'};
   _$jscoverage['/heading.js'].lineData[39]++;
   for (var p in FORMATS) {
     _$jscoverage['/heading.js'].lineData[41]++;
@@ -320,12 +320,12 @@ KISSY.add(function(S, require) {
   content: p, 
   value: FORMATS[p], 
   elAttrs: {
-  style: "font-size:" + FORMAT_SIZES[FORMATS[p]]}});
+  style: 'font-size:' + FORMAT_SIZES[FORMATS[p]]}});
   }
   _$jscoverage['/heading.js'].lineData[51]++;
   editor.addSelect('heading', {
-  defaultCaption: "\u6807\u9898", 
-  width: "120px", 
+  defaultCaption: '\u6807\u9898', 
+  width: '120px', 
   menu: {
   children: FORMAT_SELECTION_ITEMS}, 
   mode: Editor.Mode.WYSIWYG_MODE, 
@@ -345,7 +345,7 @@ KISSY.add(function(S, require) {
   editor.on('selectionChange', function() {
   _$jscoverage['/heading.js'].functionData[5]++;
   _$jscoverage['/heading.js'].lineData[66]++;
-  if (visit1_66_1(editor.get('mode') == Editor.Mode.SOURCE_MODE)) {
+  if (visit1_66_1(editor.get('mode') === Editor.Mode.SOURCE_MODE)) {
     _$jscoverage['/heading.js'].lineData[67]++;
     return;
   }
@@ -354,7 +354,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/heading.js'].lineData[73]++;
   for (value in FORMAT_SIZES) {
     _$jscoverage['/heading.js'].lineData[74]++;
-    if (visit2_74_1(value == headingValue)) {
+    if (visit2_74_1(value === headingValue)) {
       _$jscoverage['/heading.js'].lineData[75]++;
       self.set('value', value);
       _$jscoverage['/heading.js'].lineData[76]++;

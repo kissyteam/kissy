@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ','src':' + jscoverage_quote(this.src)
+            + ',"src":' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -285,8 +285,8 @@ KISSY.add(function(S, require) {
   pluginRenderUI: function(editor) {
   _$jscoverage['/source-area.js'].functionData[2]++;
   _$jscoverage['/source-area.js'].lineData[17]++;
-  editor.addButton("sourceArea", {
-  tooltip: "\u6e90\u7801", 
+  editor.addButton('sourceArea', {
+  tooltip: '\u6e90\u7801', 
   listeners: {
   afterSyncUI: function() {
   _$jscoverage['/source-area.js'].functionData[3]++;

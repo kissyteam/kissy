@@ -33,7 +33,7 @@ KISSY.add(function (S, require) {
         _onSetCollapsed: function (v) {
             var self = this,
                 el = self.$el,
-                cls = self.getBaseCssClass("open");
+                cls = self.getBaseCssClass('open');
             el[v ? 'removeClass' : 'addClass'](cls).attr('aria-expanded', !v);
         }
     }, {

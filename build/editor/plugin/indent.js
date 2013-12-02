@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:43
+build time: Dec 2 12:59
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -17,7 +17,7 @@ KISSY.add("editor/plugin/indent", ["editor", "./indent/cmd", "./button"], functi
   }
   S.augment(Indent, {pluginRenderUI:function(editor) {
     indexCmd.init(editor);
-    editor.addButton("indent", {tooltip:"\u589e\u52a0\u7f29\u8fdb\u91cf ", listeners:{click:function() {
+    editor.addButton("indent", {tooltip:"\u589e\u52a0\u7f29\u8fdb\u91cf", listeners:{click:function() {
       editor.execCommand("indent");
       editor.focus()
     }}, mode:Editor.Mode.WYSIWYG_MODE})

@@ -73,13 +73,13 @@ KISSY.add(function (S, require) {
                 }
             }
 
-            resizable['on']('resizeStart' + PROXY_EVENT, start)
-                ['on']('beforeResize' + PROXY_EVENT, beforeResize)
-                ['on']('resizeEnd' + PROXY_EVENT, end);
+            resizable.on('resizeStart' + PROXY_EVENT, start)
+                .on('beforeResize' + PROXY_EVENT, beforeResize)
+                .on('resizeEnd' + PROXY_EVENT, end);
         },
 
         pluginDestructor: function (resizable) {
-            resizable['detach'](PROXY_EVENT);
+            resizable.detach(PROXY_EVENT);
         }
     }, {
         ATTRS: {

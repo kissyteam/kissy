@@ -8,6 +8,6 @@ module.exports = function (req, res, utils) {
         res.set('Access-Control-Allow-Credentials', 'true');
         res.set('Access-Control-Allow-Origin', 'http://' + req.host + ':' + utils.config.ports[0]);
         res.set('Access-Control-Allow-Headers', 'origin, x-requested-with, yiminghe, content-type, accept, *');
-        res.send('{ 'x': 1 }')
+        res.send('{ "x": 1 }');
     }, 100);
 };

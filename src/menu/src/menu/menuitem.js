@@ -31,8 +31,8 @@ KISSY.add(function (S, require) {
             var self = this;
             self.callSuper();
             // 可选
-            if (self.get("selectable")) {
-                self.set("selected", true);
+            if (self.get('selectable')) {
+                self.set('selected', true);
             }
             self.fire('click');
             return true;
@@ -44,9 +44,7 @@ KISSY.add(function (S, require) {
             var self = this,
                 parent = self.get('parent');
 
-            if (e && e.byPassSetHighlightedItem) {
-
-            } else {
+            if (!(e && e.byPassSetHighlightedItem)) {
                 if (self.get('rendered')) {
                     parent.set('highlightedItem', v ? self : null);
                 } else {
@@ -62,7 +60,7 @@ KISSY.add(function (S, require) {
                 // 找到向上路径上第一个可以滚动的容器，直到父组件节点（包括）
                 // 找不到就放弃，为效率考虑不考虑 parent 的嵌套可滚动 div
                     p = el.parent(function (e) {
-                        return $(e).css("overflow") != 'visible';
+                        return $(e).css('overflow') !== 'visible';
                     }, parent.get('el').parent());
                 if (!p) {
                     return;
@@ -147,6 +145,6 @@ KISSY.add(function (S, require) {
                 value: MenuItemRender
             }
         },
-        xclass: "menuitem"
+        xclass: 'menuitem'
     });
 });

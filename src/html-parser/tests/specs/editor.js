@@ -3,7 +3,8 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, HtmlParser, UA) {
-    /*jshint quotmark:false*/
+    /*jshint quotmark:false, curly:false*/
+    /*global requireNode*/
     function getTextSync(path, callback) {
         if (S.UA.nodejs) {
             path = S.config('packages').src.baseUri
@@ -58,8 +59,8 @@ KISSY.add(function (S, HtmlParser, UA) {
                 tags: {
                     $: function (el) {
                         var tagName = el.tagName || "";
-                        if (tagName.indexOf(':') != -1 && !/^ke/.test(tagName)) {
-                            if (tagName == 'v:imagedata') {
+                        if (tagName.indexOf(':') !== -1 && !/^ke/.test(tagName)) {
+                            if (tagName === 'v:imagedata') {
                                 var href = el.getAttribute('o:href');
                                 if (href) {
                                     el.setAttribute('src', href);
@@ -93,7 +94,7 @@ KISSY.add(function (S, HtmlParser, UA) {
             var n = new HtmlParser.Parser(before).parse();
             n.writeHtml(writer, filter);
             // S.log(writer.getHtml());
-            expect(writer.getHtml().indexOf('<img src="xx.jpg" title="me" />') != -1).toBe(true);
+            expect(writer.getHtml().indexOf('<img src="xx.jpg" title="me" />') !== -1).toBe(true);
         });
 
         it('can filter attribute', function () {
@@ -108,7 +109,9 @@ KISSY.add(function (S, HtmlParser, UA) {
                         .replace(/\s*([^ :;]+)\s*:\s*([^;]+)\s*(?=;|$)/g,
                         function (match, name, value) {
                             name = name.toLowerCase();
-                            name == 'font-family' && ( value = value.replace(/["']/g, '') );
+                            if (name === 'font-family') {
+                                ( value = value.replace(/["']/g, ''));
+                            }
 
                             var namePattern,
                                 valuePattern,
@@ -121,12 +124,14 @@ KISSY.add(function (S, HtmlParser, UA) {
                                     newValue = styles[ i ][ 2 ];
                                     newName = styles[ i ][ 3 ];
 
-                                    if (name.match(namePattern)
-                                        && ( !valuePattern || value.match(valuePattern) )) {
+                                    if (name.match(namePattern) &&
+                                        ( !valuePattern || value.match(valuePattern) )) {
                                         name = newName || name;
-                                        whitelist && ( newValue = newValue || value );
+                                        if (whitelist) {
+                                            ( newValue = newValue || value );
+                                        }
 
-                                        if (typeof newValue == 'function')
+                                        if (typeof newValue === 'function')
                                             newValue = newValue(value, element, name);
 
                                         // Return an couple indicate both name and value
@@ -136,15 +141,16 @@ KISSY.add(function (S, HtmlParser, UA) {
                                             newValue = newValue[ 1 ];
                                         }
 
-                                        if (typeof newValue == 'string')
+                                        if (typeof newValue === 'string')
                                             rules.push([ name, newValue ]);
                                         return;
                                     }
                                 }
                             }
 
-                            !whitelist && rules.push([ name, value ]);
-
+                            if (!whitelist) {
+                                rules.push([ name, value ]);
+                            }
                         });
 
                     for (var i = 0; i < rules.length; i++) {
@@ -215,7 +221,7 @@ KISSY.add(function (S, HtmlParser, UA) {
                 var childNodes = block.childNodes,
                     lastIndex = childNodes.length,
                     last = childNodes[ lastIndex - 1 ];
-                while (last && last.nodeType == 3 && !S.trim(last.nodeValue)) {
+                while (last && last.nodeType === 3 && !S.trim(last.nodeValue)) {
                     last = childNodes[ --lastIndex ];
                 }
                 return last;
@@ -229,11 +235,11 @@ KISSY.add(function (S, HtmlParser, UA) {
                 var lastChild = lastNoneSpaceChild(block);
                 if (lastChild) {
                     if (( fromSource || !UA.ie ) &&
-                        lastChild.nodeType == 1 &&
-                        lastChild.nodeName == 'br') {
+                        lastChild.nodeType === 1 &&
+                        lastChild.nodeName === 'br') {
                         block.removeChild(lastChild);
                     }
-                    else if (lastChild.nodeType == 3 &&
+                    else if (lastChild.nodeType === 3 &&
                         tailNbspRegex.test(lastChild.nodeValue)) {
                         block.removeChild(lastChild);
                     }
@@ -243,13 +249,12 @@ KISSY.add(function (S, HtmlParser, UA) {
             function blockNeedsExtension(block) {
                 var lastChild = lastNoneSpaceChild(block);
 
-                return !lastChild
-                    || lastChild.nodeType == 1 &&
-                    lastChild.nodeName == 'br'
+                return !lastChild || lastChild.nodeType === 1 &&
+                    lastChild.nodeName === 'br' ||
                     // Some of the controls in form needs extension too,
                     // to move cursor at the end of the form. (#4791)
-                    || block.nodeName == 'form' &&
-                    lastChild.nodeName == 'input';
+                    block.nodeName === 'form' &&
+                        lastChild.nodeName === 'input';
             }
 
             function extendBlockForDisplay(block) {
