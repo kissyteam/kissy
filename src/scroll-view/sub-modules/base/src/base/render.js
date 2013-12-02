@@ -6,6 +6,8 @@
 KISSY.add(function (S, require) {
     var Container = require('component/container');
     var ContentRenderExtension = require('component/extension/content-render');
+    var translateTpl = S.Features.isTransform3dSupported() ?
+        'translate3d({translateX}px,{translateY}px,0)' : 'translate({translateX}px,{translateY}px)';
 
 
     // http://www.html5rocks.com/en/tutorials/speed/html5/
@@ -127,12 +129,18 @@ KISSY.add(function (S, require) {
 
         methods._onSetScrollLeft = function (v) {
             var control = this.control;
-            control.contentEl.style[transformProperty] = 'translate3d(' + -v + 'px,' + -control.get('scrollTop') + 'px,0)';
+            control.contentEl.style[transformProperty] = S.substitute(translateTpl, {
+                translateX: -v,
+                translateY: -control.get('scrollTop')
+            });
         };
 
         methods._onSetScrollTop = function (v) {
             var control = this.control;
-            control.contentEl.style[transformProperty] = 'translate3d(' + -control.get('scrollLeft') + 'px,' + -v + 'px,0)';
+            control.contentEl.style[transformProperty] = S.substitute(translateTpl, {
+                translateX: -control.get('scrollLeft'),
+                translateY: -v
+            });
         };
     }
 

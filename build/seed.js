@@ -1,7 +1,7 @@
 /*
-Copyright 2013, KISSY v1.50dev
+Copyright 2013, KISSY v1.50
 MIT Licensed
-build time: Dec 2 15:25
+build time: Dec 2 17:26
 */
 /**
  * @ignore
@@ -87,11 +87,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20131202152453' will replace with current timestamp when compressing.
+         * NOTICE: '20131202172641' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20131202152453',
+        __BUILD_TIME: '20131202172641',
 
         /**
          * KISSY Environment.
@@ -118,10 +118,10 @@ var KISSY = (function (undefined) {
 
         /**
          * The version of the library.
-         * NOTICE: '1.50dev' will replace with current version when compressing.
+         * NOTICE: '1.50' will replace with current version when compressing.
          * @type {String}
          */
-        version: '1.50dev',
+        version: '1.50',
 
         /**
          * set KISSY configuration
@@ -247,7 +247,7 @@ var KISSY = (function (undefined) {
                     }
                 }
                /*global console*/
-                if (console !== undefined && console.log && matched) {
+                if (typeof console !== 'undefined' && console.log && matched) {
                     console[cat && console[cat] ? cat : 'log'](msg);
                     return msg;
                 }
@@ -3357,6 +3357,7 @@ var KISSY = (function (undefined) {
         transformProperty,
         transitionPrefix,
         transformPrefix,
+        isTransform3dSupported,
         documentElement = doc.documentElement,
         documentElementStyle,
         isClassListSupportedState = true,
@@ -3392,6 +3393,17 @@ var KISSY = (function (undefined) {
         var navigator = (win.navigator || {});
         isMsPointerSupported = 'msPointerEnabled' in navigator;
         isPointerSupported = 'pointerEnabled' in navigator;
+
+        if (transformPrefix) {
+            // https://gist.github.com/lorenzopolidori/3794226
+            // ie9 does not support 3d transform
+            var el = document.createElement('p');
+            documentElement.insertBefore(el, documentElement.firstChild);
+            el.style[transformPrefix] = 'translate3d(1px,1px,1px)';
+            var has3d = window.getComputedStyle(el).getPropertyValue(transformPrefix);
+            documentElement.removeChild(el);
+            isTransform3dSupported = (has3d !== undefined && has3d.length > 0 && has3d !== 'none');
+        }
     }
 
     /**
@@ -3465,6 +3477,14 @@ var KISSY = (function (undefined) {
          */
         'isTransformSupported': function () {
             return transformPrefix !== undefined;
+        },
+
+        /**
+         * whether support css transform 3d
+         * @returns {boolean}
+         */
+        'isTransform3dSupported': function () {
+            return isTransform3dSupported;
         },
 
         /**
@@ -5520,7 +5540,7 @@ var KISSY = (function (undefined) {
     var doc = S.Env.host && S.Env.host.document;
     // var logger = S.getLogger('s/loader');
     var Utils = S.Loader.Utils;
-    var TIMESTAMP = '20131202152453';
+    var TIMESTAMP = '20131202172641';
     var defaultComboPrefix = '??';
     var defaultComboSep = ',';
 

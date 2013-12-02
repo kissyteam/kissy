@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title></title>
+    <script src="/kissy/build/seed.js"></script>
+    <script src="/kissy/src/package.js"></script>
+</head>
+<body>
+<style>
+    body {
+        font: 12px/1.5 tahoma, arial, 'Hiragino Sans GB', \5b8b\4f53, sans-serif;
+    }
+
+    p {
+        margin: 0;
+    }
+
+    #D12 {
+        width: 100%;
+        height: 500px;
+        background-color: #ffdb4a;
+        position: relative;
+    }
+
+    #D12_pre {
+        width: 1190px;
+        height: 500px;
+        position: relative;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .corner {
+        background: url('http://gtms01.alicdn.com/tps/i1/T1sCw7FkpeXXaaIwZy-656-78.png');
+    }
+
+    .tr {
+        width: 510px;
+        height: 39px;
+        background-position: 0 0;
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+
+    .bl {
+        height: 39px;
+        width: 655px;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        background-position: 0 -39px;
+    }
+
+    .tl_title {
+        position: absolute;
+        top: 90px;
+        left: 230px;
+        font-size: 24px;
+        color: #37220d;
+    }
+
+    .br_title {
+        position: absolute;
+        top: 340px;
+        left: 495px;
+        font-size: 24px;
+        color: #37220d;
+    }
+
+    .br_title strong {
+        color: #ff4400;
+    }
+
+    .bp {
+        position: absolute;
+        top: 15px;
+        left: 130px;
+        width: 771px;
+        height: 367px;
+        background: url('http://gtms01.alicdn.com/tps/i1/T11.zRXhhrXXbrpQo9-771-367.png') no-repeat;
+        _background-image: none;
+        _filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://gtms01.alicdn.com/tps/i1/T11.zRXhhrXXbrpQo9-771-367.png');
+        display: none;
+    }
+
+    .red_title {
+        width: 185px;
+        height: 20px;
+        background-color: #ff4400;
+        padding: 10px;
+        position: absolute;
+        border-radius: 10px;
+        font-size: 18px;
+        font-weight: bold;
+        color: #fff;
+        line-height: 20px;
+        text-align: center;
+        left: 270px;
+        top: 50px;
+    }
+
+    .downloadBtn {
+        display: block;
+        width: 177px;
+        height: 177px;
+        background-color: #ff4400;
+        border-radius: 177px;
+        position: absolute;
+        bottom: 145px;
+        right: 110px;
+        -webkit-box-shadow: 0 8px 0px #be3300;
+        -moz-box-shadow: 0 8px 0px #be3300;
+        -o-box-shadow: 0 8px 0px #be3300;
+        box-shadow: 0 8px 0px #be3300;
+        color: #ffffff;
+        text-decoration: none;
+    }
+
+    .downloadBtn i {
+        display: block;
+        width: 38px;
+        height: 144px;
+        background: url('http://gtms01.alicdn.com/tps/i1/T1CyXcFxFdXXXgrdvQ-38-144.png') no-repeat;
+        position: absolute;
+        top: 20px;
+        left: 72px;
+    }
+
+    .downloadBtn strong {
+        display: block;
+        font-size: 24px;
+        position: absolute;
+        z-index: 1;
+        top: 78px;
+        left: 27px;
+        font-weight: bold;
+    }
+
+    .downloadBtn span {
+        display: block;
+        font-size: 18px;
+        position: absolute;
+        top: 110px;
+        left: 27px;
+    }
+
+    .downloadBtn:active,
+    .downloadBtn.active {
+        -moz-transition: all 0.1s ease-out;
+        -webkit-transition: all 0.1s ease-out;
+        -o-transition: all 0.1s ease-out;
+        transition: all 0.1s ease-out;
+        -webkit-box-shadow: 0 0 0 #be3300;
+        -moz-box-shadow: 0 0 0 #be3300;
+        -o-box-shadow: 0 0 0 #be3300;
+        box-shadow: 0 0 0 #be3300;
+        bottom: 137px;
+    }
+
+        /*todo:ie9 添加active样式*/
+</style>
+<div id="D12">
+    <div id="D12_pre">
+        <div class="bp"></div>
+        <p class="red_title">双十二盛典揭幕礼！</p>
+
+        <p class="tl_title">
+            12月12日0点
+            <span>淘宝首页</span>
+        </p>
+
+        <p class="br_title">
+            一次可获<strong>百万元</strong>
+        </p>
+        <a href="javascript:void(0);" class="downloadBtn">
+            <i></i>
+            <strong>请提前安装</strong>
+            <span>淘宝手机客户端</span>
+        </a>
+        <!--[if lt IE 9]>
+        <style>
+            .red_title {
+                background: url('http://gtms01.alicdn.com/tps/i1/T1nNliFERbXXXUCqvj-206-40.png') no-repeat;
+            }
+
+            .downloadBtnIE {
+                width: 177px;
+                height: 183px;
+                display: block;
+                background: url('http://gtms01.alicdn.com/tps/i1/T1ClpdFAdaXXajFDwh-177-183.png') no-repeat;
+                position: absolute;
+                bottom: 145px;
+                right: 110px;
+            }
+
+            .downloadBtnIE i {
+                display: block;
+                width: 38px;
+                height: 144px;
+                background: url('http://gtms01.alicdn.com/tps/i1/T1CyXcFxFdXXXgrdvQ-38-144.png') no-repeat;
+                position: absolute;
+                top: 20px;
+                left: 72px;
+            }
+
+            .downloadBtnIE strong {
+                display: block;
+                font-size: 24px;
+                position: absolute;
+                z-index: 1;
+                top: 78px;
+                left: 27px;
+                font-weight: bold;
+            }
+
+            .downloadBtnIE span {
+                display: block;
+                font-size: 18px;
+                position: absolute;
+                top: 110px;
+                left: 27px;
+            }
+        </style>
+        <a href="javascript:void(0);" class="downloadBtnIE">
+            <i></i>
+            <strong>请提前安装</strong>
+            <span>淘宝手机客户端</span>
+        </a>
+        <![endif]-->
+    </div>
+    <div class="tr corner"></div>
+    <div class="bl corner"></div>
+</div>
+<script>
+    KISSY.use('node', function (S, Node) {
+        var $ = Node.all;
+        var bp = $('.bp');
+        bp.css('display', 'block')
+                .css('transform', 'scale(5)');
+        bp.animate({
+            transform: 'scale(1)'
+        }, {
+            duration: 0.5
+        });
+        bp.animate({opacity: 0.2});
+    });
+</script>
+</body>
+</html>

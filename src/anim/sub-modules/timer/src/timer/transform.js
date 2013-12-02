@@ -3,9 +3,11 @@
  * animation for transform property
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S,require) {
+KISSY.add(function (S, require) {
     var Dom = require('dom');
     var Fx = require('./fx');
+    var translateTpl = S.Features.isTransform3dSupported() ?
+        'translate3d({translateX}px,{translateY}px,0)' : 'translate({translateX}px,{translateY}px)';
 
     function toMatrixArray(matrix) {
         matrix = matrix.split(/,/);
@@ -164,7 +166,7 @@ KISSY.add(function (S,require) {
             ret.skewY = interpolate(from.skewY, to.skewY, pos);
             ret.scaleX = interpolate(from.scaleX, to.scaleX, pos);
             ret.scaleY = interpolate(from.scaleY, to.scaleY, pos);
-            return S.substitute('translate3d({translateX}px,{translateY}px,0) ' +
+            return S.substitute(translateTpl + ' ' +
                 'rotate({rotate}deg) ' +
                 'skewX({skewX}deg) ' +
                 'skewY({skewY}deg) ' +
