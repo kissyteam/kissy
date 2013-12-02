@@ -95,7 +95,11 @@ public class Module {
         if (extName.length() == 0) {
             path = path.substring(0, path.length() - 1);
         }
-        path += extName + ".js";
+        if (extName.endsWith(".js")) {
+            path += extName;
+        } else {
+            path += extName + ".js";
+        }
         return this.fullpath = path;
     }
 

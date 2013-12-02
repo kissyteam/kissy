@@ -259,7 +259,7 @@ public class Main {
             packages.initByPackageUrls(packageUrlStr);
         }
 
-        builder.setRequire(line.getOptionValue("require"));
+        builder.setRequire(ModuleUtils.addIndexAndRemoveJsExt(line.getOptionValue("require")));
 
         String excludeReg = line.getOptionValue("excludeReg");
         if (excludeReg != null) {

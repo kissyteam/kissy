@@ -61,11 +61,18 @@
             });
         }
 
-        return S.mix({
-            base: base,
-            // kissy 's tag will be determined by build time and user specified url
-            tag: Utils.getHash(TIMESTAMP + src)
-        }, baseInfo);
+        if (!('tag' in baseInfo)) {
+            var queryIndex = src.lastIndexOf('?');
+            if (queryIndex !== -1) {
+                var query = src.substring(queryIndex + 1);
+                // kissy 's tag will be determined by build time and user specified tag
+                baseInfo.tag = Utils.getHash(TIMESTAMP + query);
+            }
+        }
+
+        baseInfo.base = baseInfo.base || base;
+
+        return baseInfo;
     }
 
     /**

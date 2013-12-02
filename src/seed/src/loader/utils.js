@@ -27,26 +27,29 @@
 
     // http://wiki.commonjs.org/wiki/Packages/Mappings/A
     // 如果模块名以 / 结尾，自动加 index
-    function indexMap(s) {
+    function addIndexAndRemoveJsExt(s) {
         if (typeof s === 'string') {
-            return indexMapStr(s);
+            return addIndexAndRemoveJsExtFromName(s);
         } else {
             var ret = [],
                 i = 0,
                 l = s.length;
             for (; i < l; i++) {
-                ret[i] = indexMapStr(s[i]);
+                ret[i] = addIndexAndRemoveJsExtFromName(s[i]);
             }
             return ret;
         }
     }
 
-    function indexMapStr(s) {
+    function addIndexAndRemoveJsExtFromName(name) {
         // 'x/' 'x/y/z/'
-        if (s.charAt(s.length - 1) === '/') {
-            s += 'index';
+        if (name.charAt(name.length - 1) === '/') {
+            name += 'index';
         }
-        return s;
+        if (S.endsWith(name, '.js')) {
+            name = name.slice(0, -3);
+        }
+        return name;
     }
 
     function pluginAlias(runtime, name) {
@@ -123,7 +126,7 @@
          * @return {KISSY.Loader.Module}
          */
         createModuleInfo: function (runtime, modName, cfg) {
-            modName = indexMapStr(modName);
+            modName = addIndexAndRemoveJsExtFromName(modName);
 
             var mods = runtime.Env.mods,
                 module = mods[modName];
@@ -364,7 +367,7 @@
                                 alias.splice(j, 1);
                             }
                         }
-                        ret.splice.apply(ret, [i, 1].concat(indexMap(alias)));
+                        ret.splice.apply(ret, [i, 1].concat(addIndexAndRemoveJsExt(alias)));
                     }
                 }
             }
@@ -386,7 +389,7 @@
                     // conditional loader
                     // requires:[window.localStorage?"local-storage":""]
                     if (modNames[i]) {
-                        ret.push(pluginAlias(runtime, indexMap(modNames[i])));
+                        ret.push(pluginAlias(runtime, addIndexAndRemoveJsExt(modNames[i])));
                     }
                 }
             }
@@ -405,7 +408,7 @@
          * @param [config] module config, such as dependency
          */
         registerModule: function (runtime, name, factory, config) {
-            name = indexMapStr(name);
+            name = addIndexAndRemoveJsExtFromName(name);
 
             var mods = runtime.Env.mods,
                 module = mods[name];

@@ -5,7 +5,7 @@
  */
 KISSY.add(function (S, require) {
     var logger = S.getLogger('s/dom');
-    var parser = require('./selector/parser.js');
+    var parser = require('./selector/parser');
     var Dom = require('dom/basic');
     logger.info('use KISSY css3 selector');
 

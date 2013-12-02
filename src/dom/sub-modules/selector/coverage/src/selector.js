@@ -1085,7 +1085,7 @@ function visit141_418_1(result) {
 function visit140_415_1(result) {
   _$jscoverage['/selector.js'].branchData['415'][1].ranCondition(result);
   return result;
-}_$jscoverage['/selector.js'].branchData['402'][1].init(12650, 41, '\'sourceIndex\' in document.documentElement');
+}_$jscoverage['/selector.js'].branchData['402'][1].init(12647, 41, '\'sourceIndex\' in document.documentElement');
 function visit139_402_1(result) {
   _$jscoverage['/selector.js'].branchData['402'][1].ranCondition(result);
   return result;
@@ -1507,7 +1507,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/selector.js'].lineData[7]++;
   var logger = S.getLogger('s/dom');
   _$jscoverage['/selector.js'].lineData[8]++;
-  var parser = require('./selector/parser.js');
+  var parser = require('./selector/parser');
   _$jscoverage['/selector.js'].lineData[9]++;
   var Dom = require('dom/basic');
   _$jscoverage['/selector.js'].lineData[10]++;

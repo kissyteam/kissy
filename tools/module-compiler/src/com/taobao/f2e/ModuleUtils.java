@@ -22,12 +22,12 @@ public class ModuleUtils {
     public static String getDepModuleName(String moduleName, String relativeDepName) {
         relativeDepName = FileUtils.escapePath(relativeDepName);
         moduleName = FileUtils.escapePath(moduleName);
+        relativeDepName = addIndexAndRemoveJsExt(relativeDepName);
         String depModuleName;
         //no relative path
         if (!relativeDepName.contains("../") &&
                 !relativeDepName.contains("./")) {
             depModuleName = relativeDepName;
-
         } else {
             //at start,consider moduleName
             if (relativeDepName.indexOf("../") == 0
@@ -45,6 +45,17 @@ public class ModuleUtils {
             depModuleName = FileUtils.normPath(relativeDepName);
         }
         return depModuleName;
+    }
+
+    public static String addIndexAndRemoveJsExt(String name) {
+        if (name.endsWith("/")) {
+            name += "index";
+        } else {
+            if (name.endsWith(".js")) {
+                name = name.substring(0, name.length() - 3);
+            }
+        }
+        return name;
     }
 
 
@@ -68,7 +79,14 @@ public class ModuleUtils {
             ArrayList<Node> nodes = new ArrayList<Node>();
             findModuleRequire(astRoot, nodes);
             for (Node node : nodes) {
-                requireVal.addChildrenToBack(node.cloneTree());
+                Node newNode = node.cloneTree();
+                if (newNode.getType() == Token.STRING) {
+                    String modName = newNode.getString();
+                    if (modName.endsWith(".js")) {
+                        newNode.setString(modName.substring(0, modName.length() - 3));
+                    }
+                }
+                requireVal.addChildrenToBack(newNode);
             }
         }
         firstParameter.getParent().addChildBefore(requireVal, firstParameter);

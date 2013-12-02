@@ -57,13 +57,12 @@ public class AstUtils {
 
     public static void main(String[] args) {
         String kissyCjs = "KISSY.add(function(S,require){" +
-                "var t = require('my');" +
-                "var t2 = require(a+b);" +
+                "var t = require('my.js');" +
                 "require('z');" +
                 "require('z2');" +
                 "t.done();" +
                 "});";
-        kissyCjs = "KISSY.add('2342345');";
+        //kissyCjs = "KISSY.add('2342345');";
         Node k = parse(kissyCjs, "kissy");
         System.out.println(k.toStringTree());
         if (true) {

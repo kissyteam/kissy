@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 28 21:48
+build time: Dec 2 11:45
 */
 /**
  * @ignore
@@ -86,11 +86,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20131128214825' will replace with current timestamp when compressing.
+         * NOTICE: '20131202114454' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20131128214825',
+        __BUILD_TIME: '20131202114454',
 
         /**
          * KISSY Environment.
@@ -1940,11 +1940,10 @@ var KISSY = (function (undefined) {
  setImmediate polyfill inspired by Q
  @author yiminghe@gmail.com
  */
-/*global setImmediate*/
-/*global process */
-/*global MessageChannel */
 (function (S) {
-
+    /*global setImmediate*/
+    /*global process */
+    /*global MessageChannel */
 
     var queue = [];
 
@@ -3581,26 +3580,29 @@ var KISSY = (function (undefined) {
 
     // http://wiki.commonjs.org/wiki/Packages/Mappings/A
     // 如果模块名以 / 结尾，自动加 index
-    function indexMap(s) {
+    function addIndexAndRemoveJsExt(s) {
         if (typeof s === 'string') {
-            return indexMapStr(s);
+            return addIndexAndRemoveJsExtFromName(s);
         } else {
             var ret = [],
                 i = 0,
                 l = s.length;
             for (; i < l; i++) {
-                ret[i] = indexMapStr(s[i]);
+                ret[i] = addIndexAndRemoveJsExtFromName(s[i]);
             }
             return ret;
         }
     }
 
-    function indexMapStr(s) {
+    function addIndexAndRemoveJsExtFromName(name) {
         // 'x/' 'x/y/z/'
-        if (s.charAt(s.length - 1) === '/') {
-            s += 'index';
+        if (name.charAt(name.length - 1) === '/') {
+            name += 'index';
         }
-        return s;
+        if (S.endsWith(name, '.js')) {
+            name = name.slice(0, -3);
+        }
+        return name;
     }
 
     function pluginAlias(runtime, name) {
@@ -3677,7 +3679,7 @@ var KISSY = (function (undefined) {
          * @return {KISSY.Loader.Module}
          */
         createModuleInfo: function (runtime, modName, cfg) {
-            modName = indexMapStr(modName);
+            modName = addIndexAndRemoveJsExtFromName(modName);
 
             var mods = runtime.Env.mods,
                 module = mods[modName];
@@ -3918,7 +3920,7 @@ var KISSY = (function (undefined) {
                                 alias.splice(j, 1);
                             }
                         }
-                        ret.splice.apply(ret, [i, 1].concat(indexMap(alias)));
+                        ret.splice.apply(ret, [i, 1].concat(addIndexAndRemoveJsExt(alias)));
                     }
                 }
             }
@@ -3940,7 +3942,7 @@ var KISSY = (function (undefined) {
                     // conditional loader
                     // requires:[window.localStorage?"local-storage":""]
                     if (modNames[i]) {
-                        ret.push(pluginAlias(runtime, indexMap(modNames[i])));
+                        ret.push(pluginAlias(runtime, addIndexAndRemoveJsExt(modNames[i])));
                     }
                 }
             }
@@ -3959,7 +3961,7 @@ var KISSY = (function (undefined) {
          * @param [config] module config, such as dependency
          */
         registerModule: function (runtime, name, factory, config) {
-            name = indexMapStr(name);
+            name = addIndexAndRemoveJsExtFromName(name);
 
             var mods = runtime.Env.mods,
                 module = mods[name];
@@ -5515,7 +5517,7 @@ var KISSY = (function (undefined) {
     var doc = S.Env.host && S.Env.host.document;
     // var logger = S.getLogger('s/loader');
     var Utils = S.Loader.Utils;
-    var TIMESTAMP = '20131128214825';
+    var TIMESTAMP = '20131202114454';
     var defaultComboPrefix = '??';
     var defaultComboSep = ',';
 
@@ -5570,11 +5572,18 @@ var KISSY = (function (undefined) {
             });
         }
 
-        return S.mix({
-            base: base,
-            // kissy 's tag will be determined by build time and user specified url
-            tag: Utils.getHash(TIMESTAMP + src)
-        }, baseInfo);
+        if (!('tag' in baseInfo)) {
+            var queryIndex = src.lastIndexOf('?');
+            if (queryIndex !== -1) {
+                var query = src.substring(queryIndex + 1);
+                // kissy 's tag will be determined by build time and user specified tag
+                baseInfo.tag = Utils.getHash(TIMESTAMP + query);
+            }
+        }
+
+        baseInfo.base = baseInfo.base || base;
+
+        return baseInfo;
     }
 
     /**
