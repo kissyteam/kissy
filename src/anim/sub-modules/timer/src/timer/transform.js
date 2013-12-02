@@ -9,6 +9,7 @@ KISSY.add(function (S, require) {
     var translateTpl = S.Features.isTransform3dSupported() ?
         'translate3d({translateX}px,{translateY}px,0)' : 'translate({translateX}px,{translateY}px)';
 
+    // http://www.w3.org/TR/css3-transforms/#mathematical-description
     function toMatrixArray(matrix) {
         matrix = matrix.split(/,/);
         matrix = S.map(matrix, function (v) {
@@ -181,6 +182,7 @@ KISSY.add(function (S, require) {
 /**
  * @ignore
  * refer:
+ * - http://www.w3.org/TR/css3-transforms/#mathematical-description
  * - http://louisremi.github.io/jquery.transform.js/index.html
  * - http://hg.mozilla.org/mozilla-central/file/7cb3e9795d04/layout/style/nsStyleAnimation.cpp#l971
  */
