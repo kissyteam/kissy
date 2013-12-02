@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:49
+build time: Dec 2 15:24
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -38,11 +38,11 @@ KISSY.add("scroll-view/plugin/pull-to-refresh", ["base"], function(S, require) {
       scrollView.minScroll.top = -self.elHeight;
       var loadFn = self.get("loadFn");
       self.set("state", "loading");
-      function callback() {
+      var callback = function() {
         scrollView.scrollTo({top:-self.elHeight});
         scrollView.scrollTo({top:scrollView.minScroll.top}, {duration:scrollView.get("snapDuration"), easing:scrollView.get("snapEasing")});
         self.set("state", "pulling")
-      }
+      };
       if(loadFn) {
         loadFn.call(self, callback)
       }else {

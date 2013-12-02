@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:48
+build time: Dec 2 15:45
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -26,7 +26,7 @@ KISSY.add("io/form-serializer", ["dom"], function(S, require) {
   function normalizeCRLF(v) {
     return v.replace(rCRLF, "\r\n")
   }
-  return FormSerializer = {serialize:function(forms, serializeArray) {
+  FormSerializer = {serialize:function(forms, serializeArray) {
     return S.param(FormSerializer.getFormData(forms), undefined, undefined, serializeArray || false)
   }, getFormData:function(forms) {
     var elements = [], data = {};
@@ -58,10 +58,11 @@ KISSY.add("io/form-serializer", ["dom"], function(S, require) {
       vs.push.apply(vs, S.makeArray(val))
     });
     return data
-  }}
+  }};
+  return FormSerializer
 });
 KISSY.add("io/base", ["event/custom", "promise"], function(S, require) {
-  var undefined = undefined, CustomEvent = require("event/custom"), Promise = require("promise");
+  var CustomEvent = require("event/custom"), Promise = require("promise");
   var rlocalProtocol = /^(?:about|app|app\-storage|.+\-extension|file|widget)$/, rspace = /\s+/, mirror = function(s) {
     return s
   }, rnoContent = /^(?:GET|HEAD)$/, win = S.Env.host, location = win.location || {}, simulatedLocation = new S.Uri(location.href), isLocal = simulatedLocation && rlocalProtocol.test(simulatedLocation.getScheme()), transports = {}, defaultConfig = {type:"GET", contentType:"application/x-www-form-urlencoded; charset=UTF-8", async:true, serializeArray:true, processData:true, accepts:{xml:"application/xml, text/xml", html:"text/html", text:"text/plain", json:"application/json, text/javascript", "*":"*/*"}, 
@@ -80,7 +81,7 @@ KISSY.add("io/base", ["event/custom", "promise"], function(S, require) {
     }
     type = c.type = type.toUpperCase();
     c.hasContent = !rnoContent.test(type);
-    if(c.processData && (data = c.data) && typeof data != "string") {
+    if(c.processData && (data = c.data) && typeof data !== "string") {
       c.data = S.param(data, undefined, undefined, c.serializeArray)
     }
     dataType = c.dataType = S.trim(dataType || "*").split(rspace);
@@ -106,10 +107,10 @@ KISSY.add("io/base", ["event/custom", "promise"], function(S, require) {
     c = setUpConfig(c);
     S.mix(self, {responseData:null, config:c || {}, timeoutTimer:null, responseText:null, responseXML:null, responseHeadersString:"", responseHeaders:null, requestHeaders:{}, readyState:0, state:0, statusText:null, status:0, transport:null});
     Promise.Defer(self);
-    var transportConstructor, transport;
+    var TransportConstructor, transport;
     IO.fire("start", {ajaxConfig:c, io:self});
-    transportConstructor = transports[c.dataType[0]] || transports["*"];
-    transport = new transportConstructor(self);
+    TransportConstructor = transports[c.dataType[0]] || transports["*"];
+    transport = new TransportConstructor(self);
     self.transport = transport;
     if(c.contentType) {
       self.setRequestHeader("Content-Type", c.contentType)
@@ -160,33 +161,33 @@ KISSY.add("io/base", ["event/custom", "promise"], function(S, require) {
 KISSY.add("io/xhr-transport-base", ["./base"], function(S, require) {
   var IO = require("./base");
   var logger = S.getLogger("s/io");
-  var OK_CODE = 200, win = S.Env.host, _XDomainRequest = S.UA.ieMode > 7 && win["XDomainRequest"], NO_CONTENT_CODE = 204, NOT_FOUND_CODE = 404, NO_CONTENT_CODE2 = 1223, XhrTransportBase = {proto:{}}, lastModifiedCached = {}, eTagCached = {};
+  var OK_CODE = 200, win = S.Env.host, XDomainRequest_ = S.UA.ieMode > 7 && win.XDomainRequest, NO_CONTENT_CODE = 204, NOT_FOUND_CODE = 404, NO_CONTENT_CODE2 = 1223, XhrTransportBase = {proto:{}}, lastModifiedCached = {}, eTagCached = {};
   IO.__lastModifiedCached = lastModifiedCached;
   IO.__eTagCached = eTagCached;
   function createStandardXHR(_, refWin) {
     try {
-      return new (refWin || win)["XMLHttpRequest"]
+      return new (refWin || win).XMLHttpRequest
     }catch(e) {
     }
     return undefined
   }
   function createActiveXHR(_, refWin) {
     try {
-      return new (refWin || win)["ActiveXObject"]("Microsoft.XMLHTTP")
+      return new (refWin || win).ActiveXObject("Microsoft.XMLHTTP")
     }catch(e) {
     }
     return undefined
   }
-  XhrTransportBase.nativeXhr = win["ActiveXObject"] ? function(crossDomain, refWin) {
-    if(!supportCORS && crossDomain && _XDomainRequest) {
-      return new _XDomainRequest
+  XhrTransportBase.nativeXhr = win.ActiveXObject ? function(crossDomain, refWin) {
+    if(!supportCORS && crossDomain && XDomainRequest_) {
+      return new XDomainRequest_
     }
     return!IO.isLocal && createStandardXHR(crossDomain, refWin) || createActiveXHR(crossDomain, refWin)
   } : createStandardXHR;
-  XhrTransportBase._XDomainRequest = _XDomainRequest;
+  XhrTransportBase.XDomainRequest_ = XDomainRequest_;
   var supportCORS = XhrTransportBase.supportCORS = "withCredentials" in XhrTransportBase.nativeXhr();
   function isInstanceOfXDomainRequest(xhr) {
-    return _XDomainRequest && xhr instanceof _XDomainRequest
+    return XDomainRequest_ && xhr instanceof XDomainRequest_
   }
   function getIfModifiedKey(c) {
     var ifModified = c.ifModified, ifModifiedKey;
@@ -210,12 +211,12 @@ KISSY.add("io/xhr-transport-base", ["./base"], function(S, require) {
         requestHeaders["If-None-Match"] = cacheValue
       }
     }
-    if(username = c["username"]) {
+    if(username = c.username) {
       nativeXhr.open(type, url, async, username, c.password)
     }else {
       nativeXhr.open(type, url, async)
     }
-    xhrFields = c["xhrFields"] || {};
+    xhrFields = c.xhrFields || {};
     if("withCredentials" in xhrFields) {
       if(!supportCORS) {
         delete xhrFields.withCredentials
@@ -259,7 +260,7 @@ KISSY.add("io/xhr-transport-base", ["./base"], function(S, require) {
       })
     }
     nativeXhr.send(sendContent);
-    if(!async || nativeXhr.readyState == 4) {
+    if(!async || nativeXhr.readyState === 4) {
       self._callback()
     }else {
       if(isInstanceOfXDomainRequest(nativeXhr)) {
@@ -284,7 +285,7 @@ KISSY.add("io/xhr-transport-base", ["./base"], function(S, require) {
   }, _callback:function(event, abort) {
     var self = this, nativeXhr = self.nativeXhr, io = self.io, ifModifiedKey, lastModified, eTag, statusText, xml, c = io.config;
     try {
-      if(abort || nativeXhr.readyState == 4) {
+      if(abort || nativeXhr.readyState === 4) {
         if(isInstanceOfXDomainRequest(nativeXhr)) {
           nativeXhr.onerror = S.noop;
           nativeXhr.onload = S.noop
@@ -318,9 +319,9 @@ KISSY.add("io/xhr-transport-base", ["./base"], function(S, require) {
           var text = io.responseText = nativeXhr.responseText;
           if(c.files && text) {
             var bodyIndex, lastBodyIndex;
-            if((bodyIndex = text.indexOf("<body>")) != -1) {
+            if((bodyIndex = text.indexOf("<body>")) !== -1) {
               lastBodyIndex = text.lastIndexOf("</body>");
-              if(lastBodyIndex == -1) {
+              if(lastBodyIndex === -1) {
                 lastBodyIndex = text.length
               }
               text = text.slice(bodyIndex + 6, lastBodyIndex)
@@ -375,7 +376,7 @@ KISSY.add("io/xdr-flash-transport", ["./base", "dom"], function(S, require) {
     this.io = io
   }
   S.augment(XdrFlashTransport, {send:function() {
-    var self = this, io = self.io, c = io.config, xdr = c["xdr"] || {};
+    var self = this, io = self.io, c = io.config, xdr = c.xdr || {};
     _swf(xdr.src || S.Config.base + "io/assets/io.swf", 1, 1);
     if(!flash) {
       setTimeout(function() {
@@ -414,19 +415,21 @@ KISSY.add("io/xdr-flash-transport", ["./base", "dom"], function(S, require) {
       io._ioReady(ret.status, ret.statusText)
     }
   }});
-  IO["applyTo"] = function(_, cmd, args) {
+  IO.applyTo = function(_, cmd, args) {
     var cmds = cmd.split(".").slice(1), func = IO;
     S.each(cmds, function(c) {
       func = func[c]
     });
     func.apply(null, args)
   };
-  IO["xdrReady"] = function() {
+  IO.xdrReady = function() {
     flash = doc.getElementById(ID)
   };
-  IO["xdrResponse"] = function(e, o) {
+  IO.xdrResponse = function(e, o) {
     var xhr = maps[o.uid];
-    xhr && xhr._xdrResponse(e, o)
+    if(xhr) {
+      xhr._xdrResponse(e, o)
+    }
   };
   return XdrFlashTransport
 });
@@ -443,8 +446,8 @@ KISSY.add("io/sub-domain-transport", ["event/dom", "dom", "./xhr-transport-base"
   S.augment(SubDomainTransport, XhrTransportBase.proto, {send:function() {
     var self = this, c = self.io.config, uri = c.uri, hostname = uri.getHostname(), iframe, iframeUri, iframeDesc = iframeMap[hostname];
     var proxy = PROXY_PAGE;
-    if(c["xdr"] && c["xdr"]["subDomain"] && c["xdr"]["subDomain"].proxy) {
-      proxy = c["xdr"]["subDomain"].proxy
+    if(c.xdr && c.xdr.subDomain && c.xdr.subDomain.proxy) {
+      proxy = c.xdr.subDomain.proxy
     }
     if(iframeDesc && iframeDesc.ready) {
       self.nativeXhr = XhrTransportBase.nativeXhr(0, iframeDesc.iframe.contentWindow);
@@ -482,12 +485,12 @@ KISSY.add("io/sub-domain-transport", ["event/dom", "dom", "./xhr-transport-base"
 KISSY.add("io/xhr-transport", ["./base", "./xhr-transport-base", "./xdr-flash-transport", "./sub-domain-transport"], function(S, require) {
   var IO = require("./base"), XhrTransportBase = require("./xhr-transport-base"), XdrFlashTransport = require("./xdr-flash-transport"), SubDomainTransport = require("./sub-domain-transport");
   var logger = S.getLogger("s/io");
-  var win = S.Env.host, doc = win.document, _XDomainRequest = XhrTransportBase._XDomainRequest;
+  var win = S.Env.host, doc = win.document, XDomainRequest_ = XhrTransportBase.XDomainRequest_;
   function isSubDomain(hostname) {
     return doc.domain && S.endsWith(hostname, doc.domain)
   }
   function XhrTransport(io) {
-    var c = io.config, crossDomain = c.crossDomain, self = this, xhr, xdrCfg = c["xdr"] || {}, subDomain = xdrCfg.subDomain = xdrCfg.subDomain || {};
+    var c = io.config, crossDomain = c.crossDomain, self = this, xhr, xdrCfg = c.xdr || {}, subDomain = xdrCfg.subDomain = xdrCfg.subDomain || {};
     self.io = io;
     if(crossDomain && !XhrTransportBase.supportCORS) {
       if(isSubDomain(c.uri.getHostname())) {
@@ -495,23 +498,23 @@ KISSY.add("io/xhr-transport", ["./base", "./xhr-transport-base", "./xdr-flash-tr
           return new SubDomainTransport(io)
         }
       }
-      if(String(xdrCfg.use) === "flash" || !_XDomainRequest) {
+      if(String(xdrCfg.use) === "flash" || !XDomainRequest_) {
         return new XdrFlashTransport(io)
       }
     }
     xhr = self.nativeXhr = XhrTransportBase.nativeXhr(crossDomain);
-    var msg = "crossDomain: " + crossDomain + ", use " + (_XDomainRequest && xhr instanceof _XDomainRequest ? "XDomainRequest" : "XhrTransport") + " for: " + c.url;
+    var msg = "crossDomain: " + crossDomain + ", use " + (XDomainRequest_ && xhr instanceof XDomainRequest_ ? "XDomainRequest" : "XhrTransport") + " for: " + c.url;
     logger.debug(msg);
     return self
   }
   S.augment(XhrTransport, XhrTransportBase.proto, {send:function() {
     this.sendInternal()
   }});
-  IO["setupTransport"]("*", XhrTransport);
+  IO.setupTransport("*", XhrTransport);
   return IO
 });
 KISSY.add("io/script-transport", ["./base"], function(S, require) {
-  var undefined = undefined, IO = require("./base");
+  var IO = require("./base");
   var logger = S.getLogger("s/io");
   var win = S.Env.host, doc = win.document, OK_CODE = 200, ERROR_CODE = 500;
   IO.setupConfig({accepts:{script:"text/javascript, " + "application/javascript, " + "application/ecmascript, " + "application/x-ecmascript"}, contents:{script:/javascript|ecmascript/}, converters:{text:{script:function(text) {
@@ -521,20 +524,20 @@ KISSY.add("io/script-transport", ["./base"], function(S, require) {
   function ScriptTransport(io) {
     var config = io.config;
     if(!config.crossDomain) {
-      return new (IO["getTransport"]("*"))(io)
+      return new (IO.getTransport("*"))(io)
     }
     this.io = io;
     logger.info("use ScriptTransport for: " + config.url);
     return this
   }
   S.augment(ScriptTransport, {send:function() {
-    var self = this, script, io = self.io, c = io.config, head = doc["head"] || doc.getElementsByTagName("head")[0] || doc.documentElement;
+    var self = this, script, io = self.io, c = io.config, head = doc.head || doc.getElementsByTagName("head")[0] || doc.documentElement;
     self.head = head;
     script = doc.createElement("script");
     self.script = script;
     script.async = true;
-    if(c["scriptCharset"]) {
-      script.charset = c["scriptCharset"]
+    if(c.scriptCharset) {
+      script.charset = c.scriptCharset
     }
     script.src = io._getUrlForSend();
     script.onerror = script.onload = script.onreadystatechange = function(e) {
@@ -547,17 +550,17 @@ KISSY.add("io/script-transport", ["./base"], function(S, require) {
     if(!script) {
       return
     }
-    if(abort || !script.readyState || /loaded|complete/.test(script.readyState) || event == "error") {
-      script["onerror"] = script.onload = script.onreadystatechange = null;
+    if(abort || !script.readyState || /loaded|complete/.test(script.readyState) || event === "error") {
+      script.onerror = script.onload = script.onreadystatechange = null;
       if(head && script.parentNode) {
         head.removeChild(script)
       }
       self.script = undefined;
       self.head = undefined;
-      if(!abort && event != "error") {
+      if(!abort && event !== "error") {
         io._ioReady(OK_CODE, "success")
       }else {
-        if(event == "error") {
+        if(event === "error") {
           io._ioReady(ERROR_CODE, "script error")
         }
       }
@@ -565,7 +568,7 @@ KISSY.add("io/script-transport", ["./base"], function(S, require) {
   }, abort:function() {
     this._callback(0, 1)
   }});
-  IO["setupTransport"]("script", ScriptTransport);
+  IO.setupTransport("script", ScriptTransport);
   return IO
 });
 KISSY.add("io/jsonp", ["./base"], function(S, require) {
@@ -576,7 +579,7 @@ KISSY.add("io/jsonp", ["./base"], function(S, require) {
   }});
   IO.on("start", function(e) {
     var io = e.io, c = io.config, dataType = c.dataType;
-    if(dataType[0] == "jsonp") {
+    if(dataType[0] === "jsonp") {
       delete c.contentType;
       var response, cJsonpCallback = c.jsonpCallback, converters, jsonpCallback = typeof cJsonpCallback === "function" ? cJsonpCallback() : cJsonpCallback, previous = win[jsonpCallback];
       c.uri.query.set(c.jsonp, jsonpCallback);
@@ -618,10 +621,10 @@ KISSY.add("io/form", ["./base", "dom", "./form-serializer"], function(S, require
   var IO = require("./base");
   var Dom = require("dom");
   var FormSerializer = require("./form-serializer");
-  var win = S.Env.host, slice = Array.prototype.slice, FormData = win["FormData"];
+  var win = S.Env.host, slice = Array.prototype.slice, FormData = win.FormData;
   IO.on("start", function(e) {
-    var io = e.io, form, d, dataType, formParam, data, tmpForm, c = io.config;
-    if(tmpForm = c.form) {
+    var io = e.io, form, d, dataType, formParam, data, c = io.config, tmpForm = c.form;
+    if(tmpForm) {
       form = Dom.get(tmpForm);
       data = c.data;
       var isUpload = false;
@@ -629,7 +632,7 @@ KISSY.add("io/form", ["./base", "dom", "./form-serializer"], function(S, require
       var inputs = Dom.query("input", form);
       for(var i = 0, l = inputs.length;i < l;i++) {
         var input = inputs[i];
-        if(input.type.toLowerCase() == "file") {
+        if(input.type.toLowerCase() === "file") {
           isUpload = true;
           if(!FormData) {
             break
@@ -658,7 +661,7 @@ KISSY.add("io/form", ["./base", "dom", "./form-serializer"], function(S, require
       }else {
         dataType = c.dataType;
         d = dataType[0];
-        if(d == "*") {
+        if(d === "*") {
           d = "text"
         }
         dataType.length = 2;
@@ -727,7 +730,7 @@ KISSY.add("io/iframe-transport", ["dom", "./base", "event/dom"], function(S, req
       Event.on(iframe, "load error", self._callback, self);
       form.submit()
     }
-    if(S.UA.ie == 6) {
+    if(S.UA.ie === 6) {
       setTimeout(go, 0)
     }else {
       go()
@@ -737,7 +740,7 @@ KISSY.add("io/iframe-transport", ["dom", "./base", "event/dom"], function(S, req
     if(!iframe) {
       return
     }
-    if(eventType == "abort" && S.UA.ie == 6) {
+    if(eventType === "abort" && S.UA.ie === 6) {
       setTimeout(function() {
         Dom.attr(form, self.attrs)
       }, 0)
@@ -750,7 +753,7 @@ KISSY.add("io/iframe-transport", ["dom", "./base", "event/dom"], function(S, req
       Dom.remove(iframe)
     }, BREATH_INTERVAL);
     io.iframe = null;
-    if(eventType == "load") {
+    if(eventType === "load") {
       try {
         iframeDoc = iframe.contentWindow.document;
         if(iframeDoc && iframeDoc.body) {
@@ -759,8 +762,8 @@ KISSY.add("io/iframe-transport", ["dom", "./base", "event/dom"], function(S, req
             io.responseText = undefined
           }
         }
-        if(iframeDoc && iframeDoc["XMLDocument"]) {
-          io.responseXML = iframeDoc["XMLDocument"]
+        if(iframeDoc && iframeDoc.XMLDocument) {
+          io.responseXML = iframeDoc.XMLDocument
         }else {
           io.responseXML = iframeDoc
         }
@@ -773,31 +776,30 @@ KISSY.add("io/iframe-transport", ["dom", "./base", "event/dom"], function(S, req
         io._ioReady(ERROR_CODE, "parser error")
       }
     }else {
-      if(eventType == "error") {
+      if(eventType === "error") {
         io._ioReady(ERROR_CODE, "error")
       }
     }
   }, abort:function() {
     this._callback({type:"abort"})
   }});
-  IO["setupTransport"]("iframe", IframeTransport);
+  IO.setupTransport("iframe", IframeTransport);
   return IO
 });
 KISSY.add("io/methods", ["promise", "./base"], function(S, require) {
   var Promise = require("promise"), IO = require("./base");
-  var logger = S.getLogger("s/logger");
   var OK_CODE = 200, MULTIPLE_CHOICES = 300, NOT_MODIFIED = 304, rheaders = /^(.*?):[ \t]*([^\r\n]*)\r?$/mg;
   function handleResponseData(io) {
     var text = io.responseText, xml = io.responseXML, c = io.config, converts = c.converters, type, contentType, responseData, contents = c.contents, dataType = c.dataType;
     if(text || xml) {
       contentType = io.mimeType || io.getResponseHeader("Content-Type");
-      while(dataType[0] == "*") {
+      while(dataType[0] === "*") {
         dataType.shift()
       }
       if(!dataType.length) {
         for(type in contents) {
           if(contents[type].test(contentType)) {
-            if(dataType[0] != type) {
+            if(dataType[0] !== type) {
               dataType.unshift(type)
             }
             break
@@ -806,11 +808,11 @@ KISSY.add("io/methods", ["promise", "./base"], function(S, require) {
       }
       dataType[0] = dataType[0] || "text";
       for(var dataTypeIndex = 0;dataTypeIndex < dataType.length;dataTypeIndex++) {
-        if(dataType[dataTypeIndex] == "text" && text !== undefined) {
+        if(dataType[dataTypeIndex] === "text" && text !== undefined) {
           responseData = text;
           break
         }else {
-          if(dataType[dataTypeIndex] == "xml" && xml !== undefined) {
+          if(dataType[dataTypeIndex] === "xml" && xml !== undefined) {
             responseData = xml;
             break
           }
@@ -822,7 +824,7 @@ KISSY.add("io/methods", ["promise", "./base"], function(S, require) {
           var type = dataType[0], converter = converts[prevType] && converts[prevType][type];
           if(converter && rawData[prevType]) {
             dataType.unshift(prevType);
-            responseData = prevType == "text" ? text : xml;
+            responseData = prevType === "text" ? text : xml;
             return false
           }
           return undefined
@@ -876,21 +878,21 @@ KISSY.add("io/methods", ["promise", "./base"], function(S, require) {
     self._ioReady(0, statusText);
     return self
   }, getNativeXhr:function() {
-    var transport;
-    if(transport = this.transport) {
+    var transport = this.transport;
+    if(transport) {
       return transport.nativeXhr
     }
     return null
   }, _ioReady:function(status, statusText) {
     var self = this;
-    if(self.state == 2) {
+    if(self.state === 2) {
       return
     }
     self.state = 2;
     self.readyState = 4;
     var isSuccess;
-    if(status >= OK_CODE && status < MULTIPLE_CHOICES || status == NOT_MODIFIED) {
-      if(status == NOT_MODIFIED) {
+    if(status >= OK_CODE && status < MULTIPLE_CHOICES || status === NOT_MODIFIED) {
+      if(status === NOT_MODIFIED) {
         statusText = "not modified";
         isSuccess = true
       }else {
@@ -934,7 +936,6 @@ KISSY.add("io/methods", ["promise", "./base"], function(S, require) {
   }})
 });
 KISSY.add("io", ["io/form-serializer", "io/base", "io/xhr-transport", "io/script-transport", "io/jsonp", "io/form", "io/iframe-transport", "io/methods"], function(S, require) {
-  var undefined = undefined;
   var serializer = require("io/form-serializer"), IO = require("io/base");
   require("io/xhr-transport");
   require("io/script-transport");

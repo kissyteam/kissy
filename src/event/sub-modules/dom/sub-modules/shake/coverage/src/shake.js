@@ -295,11 +295,11 @@ function visit5_62_1(result) {
 function visit4_60_1(result) {
   _$jscoverage['/shake.js'].branchData['60'][1].ranCondition(result);
   return result;
-}_$jscoverage['/shake.js'].branchData['40'][1].init(17, 11, 'this != win');
+}_$jscoverage['/shake.js'].branchData['40'][1].init(17, 12, 'this !== win');
 function visit3_40_1(result) {
   _$jscoverage['/shake.js'].branchData['40'][1].ranCondition(result);
   return result;
-}_$jscoverage['/shake.js'].branchData['34'][1].init(17, 11, 'this != win');
+}_$jscoverage['/shake.js'].branchData['34'][1].init(17, 12, 'this !== win');
 function visit2_34_1(result) {
   _$jscoverage['/shake.js'].branchData['34'][1].ranCondition(result);
   return result;
@@ -328,11 +328,11 @@ KISSY.add(function(S, require) {
   }
 }, 250);
   _$jscoverage['/shake.js'].lineData[32]++;
-  Special['shake'] = {
+  Special.shake = {
   setup: function() {
   _$jscoverage['/shake.js'].functionData[2]++;
   _$jscoverage['/shake.js'].lineData[34]++;
-  if (visit2_34_1(this != win)) {
+  if (visit2_34_1(this !== win)) {
     _$jscoverage['/shake.js'].lineData[35]++;
     return;
   }
@@ -342,7 +342,7 @@ KISSY.add(function(S, require) {
   tearDown: function() {
   _$jscoverage['/shake.js'].functionData[3]++;
   _$jscoverage['/shake.js'].lineData[40]++;
-  if (visit3_40_1(this != win)) {
+  if (visit3_40_1(this !== win)) {
     _$jscoverage['/shake.js'].lineData[41]++;
     return;
   }

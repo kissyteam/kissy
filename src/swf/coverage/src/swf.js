@@ -281,27 +281,27 @@ if (! _$jscoverage['/swf.js']) {
   _$jscoverage['/swf.js'].lineData[172] = 0;
   _$jscoverage['/swf.js'].lineData[173] = 0;
   _$jscoverage['/swf.js'].lineData[174] = 0;
-  _$jscoverage['/swf.js'].lineData[177] = 0;
-  _$jscoverage['/swf.js'].lineData[179] = 0;
-  _$jscoverage['/swf.js'].lineData[185] = 0;
+  _$jscoverage['/swf.js'].lineData[178] = 0;
+  _$jscoverage['/swf.js'].lineData[180] = 0;
   _$jscoverage['/swf.js'].lineData[186] = 0;
   _$jscoverage['/swf.js'].lineData[187] = 0;
-  _$jscoverage['/swf.js'].lineData[191] = 0;
+  _$jscoverage['/swf.js'].lineData[188] = 0;
   _$jscoverage['/swf.js'].lineData[192] = 0;
-  _$jscoverage['/swf.js'].lineData[194] = 0;
+  _$jscoverage['/swf.js'].lineData[193] = 0;
   _$jscoverage['/swf.js'].lineData[195] = 0;
   _$jscoverage['/swf.js'].lineData[196] = 0;
-  _$jscoverage['/swf.js'].lineData[199] = 0;
-  _$jscoverage['/swf.js'].lineData[203] = 0;
-  _$jscoverage['/swf.js'].lineData[276] = 0;
+  _$jscoverage['/swf.js'].lineData[197] = 0;
+  _$jscoverage['/swf.js'].lineData[200] = 0;
+  _$jscoverage['/swf.js'].lineData[204] = 0;
   _$jscoverage['/swf.js'].lineData[277] = 0;
-  _$jscoverage['/swf.js'].lineData[279] = 0;
-  _$jscoverage['/swf.js'].lineData[282] = 0;
-  _$jscoverage['/swf.js'].lineData[294] = 0;
+  _$jscoverage['/swf.js'].lineData[278] = 0;
+  _$jscoverage['/swf.js'].lineData[280] = 0;
+  _$jscoverage['/swf.js'].lineData[283] = 0;
   _$jscoverage['/swf.js'].lineData[295] = 0;
-  _$jscoverage['/swf.js'].lineData[297] = 0;
-  _$jscoverage['/swf.js'].lineData[377] = 0;
+  _$jscoverage['/swf.js'].lineData[296] = 0;
+  _$jscoverage['/swf.js'].lineData[298] = 0;
   _$jscoverage['/swf.js'].lineData[378] = 0;
+  _$jscoverage['/swf.js'].lineData[379] = 0;
   _$jscoverage['/swf.js'].lineData[381] = 0;
   _$jscoverage['/swf.js'].lineData[382] = 0;
   _$jscoverage['/swf.js'].lineData[383] = 0;
@@ -381,6 +381,7 @@ if (! _$jscoverage['/swf.js']) {
   _$jscoverage['/swf.js'].lineData[555] = 0;
   _$jscoverage['/swf.js'].lineData[558] = 0;
   _$jscoverage['/swf.js'].lineData[559] = 0;
+  _$jscoverage['/swf.js'].lineData[562] = 0;
 }
 if (! _$jscoverage['/swf.js'].functionData) {
   _$jscoverage['/swf.js'].functionData = [];
@@ -446,14 +447,14 @@ if (! _$jscoverage['/swf.js'].branchData) {
   _$jscoverage['/swf.js'].branchData['167'][1] = new BranchData();
   _$jscoverage['/swf.js'].branchData['173'] = [];
   _$jscoverage['/swf.js'].branchData['173'][1] = new BranchData();
-  _$jscoverage['/swf.js'].branchData['191'] = [];
-  _$jscoverage['/swf.js'].branchData['191'][1] = new BranchData();
-  _$jscoverage['/swf.js'].branchData['195'] = [];
-  _$jscoverage['/swf.js'].branchData['195'][1] = new BranchData();
-  _$jscoverage['/swf.js'].branchData['276'] = [];
-  _$jscoverage['/swf.js'].branchData['276'][1] = new BranchData();
-  _$jscoverage['/swf.js'].branchData['294'] = [];
-  _$jscoverage['/swf.js'].branchData['294'][1] = new BranchData();
+  _$jscoverage['/swf.js'].branchData['192'] = [];
+  _$jscoverage['/swf.js'].branchData['192'][1] = new BranchData();
+  _$jscoverage['/swf.js'].branchData['196'] = [];
+  _$jscoverage['/swf.js'].branchData['196'][1] = new BranchData();
+  _$jscoverage['/swf.js'].branchData['277'] = [];
+  _$jscoverage['/swf.js'].branchData['277'][1] = new BranchData();
+  _$jscoverage['/swf.js'].branchData['295'] = [];
+  _$jscoverage['/swf.js'].branchData['295'][1] = new BranchData();
   _$jscoverage['/swf.js'].branchData['380'] = [];
   _$jscoverage['/swf.js'].branchData['380'][1] = new BranchData();
   _$jscoverage['/swf.js'].branchData['381'] = [];
@@ -494,11 +495,11 @@ if (! _$jscoverage['/swf.js'].branchData) {
   _$jscoverage['/swf.js'].branchData['546'] = [];
   _$jscoverage['/swf.js'].branchData['546'][1] = new BranchData();
 }
-_$jscoverage['/swf.js'].branchData['546'][1].init(119, 4, 'data');
+_$jscoverage['/swf.js'].branchData['546'][1].init(120, 4, 'data');
 function visit55_546_1(result) {
   _$jscoverage['/swf.js'].branchData['546'][1].ranCondition(result);
   return result;
-}_$jscoverage['/swf.js'].branchData['543'][1].init(17, 23, 'typeof data != \'string\'');
+}_$jscoverage['/swf.js'].branchData['543'][1].init(17, 24, 'typeof data !== \'string\'');
 function visit54_543_1(result) {
   _$jscoverage['/swf.js'].branchData['543'][1].ranCondition(result);
   return result;
@@ -510,7 +511,7 @@ function visit53_520_1(result) {
 function visit52_500_1(result) {
   _$jscoverage['/swf.js'].branchData['500'][1].ranCondition(result);
   return result;
-}_$jscoverage['/swf.js'].branchData['478'][1].init(163, 14, 'k == FLASHVARS');
+}_$jscoverage['/swf.js'].branchData['478'][1].init(163, 15, 'k === FLASHVARS');
 function visit51_478_1(result) {
   _$jscoverage['/swf.js'].branchData['478'][1].ranCondition(result);
   return result;
@@ -518,27 +519,27 @@ function visit51_478_1(result) {
 function visit50_474_1(result) {
   _$jscoverage['/swf.js'].branchData['474'][1].ranCondition(result);
   return result;
-}_$jscoverage['/swf.js'].branchData['462'][1].init(868, 19, 'nodeName == "embed"');
+}_$jscoverage['/swf.js'].branchData['462'][1].init(873, 20, 'nodeName === \'embed\'');
 function visit49_462_1(result) {
   _$jscoverage['/swf.js'].branchData['462'][1].ranCondition(result);
   return result;
-}_$jscoverage['/swf.js'].branchData['457'][1].init(275, 35, 'Dom.nodeName(params[i]) == "object"');
+}_$jscoverage['/swf.js'].branchData['457'][1].init(277, 36, 'Dom.nodeName(params[i]) === \'object\'');
 function visit48_457_1(result) {
   _$jscoverage['/swf.js'].branchData['457'][1].ranCondition(result);
   return result;
-}_$jscoverage['/swf.js'].branchData['455'][1].init(163, 30, 'Dom.nodeName(param) == "embed"');
+}_$jscoverage['/swf.js'].branchData['455'][1].init(164, 31, 'Dom.nodeName(param) === \'embed\'');
 function visit47_455_1(result) {
   _$jscoverage['/swf.js'].branchData['455'][1].ranCondition(result);
   return result;
-}_$jscoverage['/swf.js'].branchData['453'][2].init(26, 29, 'Dom.attr(param, "name") || ""');
+}_$jscoverage['/swf.js'].branchData['453'][2].init(26, 29, 'Dom.attr(param, \'name\') || \'\'');
 function visit46_453_2(result) {
   _$jscoverage['/swf.js'].branchData['453'][2].ranCondition(result);
   return result;
-}_$jscoverage['/swf.js'].branchData['453'][1].init(26, 55, '(Dom.attr(param, "name") || "").toLowerCase() == "movie"');
+}_$jscoverage['/swf.js'].branchData['453'][1].init(26, 56, '(Dom.attr(param, \'name\') || \'\').toLowerCase() === \'movie\'');
 function visit45_453_1(result) {
   _$jscoverage['/swf.js'].branchData['453'][1].ranCondition(result);
   return result;
-}_$jscoverage['/swf.js'].branchData['452'][1].init(56, 19, 'param.nodeType == 1');
+}_$jscoverage['/swf.js'].branchData['452'][1].init(56, 20, 'param.nodeType === 1');
 function visit44_452_1(result) {
   _$jscoverage['/swf.js'].branchData['452'][1].ranCondition(result);
   return result;
@@ -550,45 +551,45 @@ function visit43_450_1(result) {
 function visit42_446_1(result) {
   _$jscoverage['/swf.js'].branchData['446'][1].ranCondition(result);
   return result;
-}_$jscoverage['/swf.js'].branchData['444'][1].init(134, 20, 'nodeName == "object"');
+}_$jscoverage['/swf.js'].branchData['444'][1].init(134, 21, 'nodeName === \'object\'');
 function visit41_444_1(result) {
   _$jscoverage['/swf.js'].branchData['444'][1].ranCondition(result);
   return result;
-}_$jscoverage['/swf.js'].branchData['432'][1].init(17, 27, 'typeof obj[i] == "function"');
+}_$jscoverage['/swf.js'].branchData['432'][1].init(17, 28, 'typeof obj[i] === \'function\'');
 function visit40_432_1(result) {
   _$jscoverage['/swf.js'].branchData['432'][1].ranCondition(result);
   return result;
-}_$jscoverage['/swf.js'].branchData['385'][1].init(390, 19, 'nodeName == \'param\'');
+}_$jscoverage['/swf.js'].branchData['385'][1].init(371, 20, 'nodeName === \'param\'');
 function visit39_385_1(result) {
   _$jscoverage['/swf.js'].branchData['385'][1].ranCondition(result);
   return result;
-}_$jscoverage['/swf.js'].branchData['383'][1].init(289, 20, 'nodeName == \'object\'');
+}_$jscoverage['/swf.js'].branchData['383'][1].init(269, 21, 'nodeName === \'object\'');
 function visit38_383_1(result) {
   _$jscoverage['/swf.js'].branchData['383'][1].ranCondition(result);
   return result;
-}_$jscoverage['/swf.js'].branchData['381'][1].init(190, 19, 'nodeName == \'embed\'');
+}_$jscoverage['/swf.js'].branchData['381'][1].init(169, 20, 'nodeName === \'embed\'');
 function visit37_381_1(result) {
   _$jscoverage['/swf.js'].branchData['381'][1].ranCondition(result);
   return result;
-}_$jscoverage['/swf.js'].branchData['380'][1].init(88, 38, 'srcElement && Dom.nodeName(srcElement)');
+}_$jscoverage['/swf.js'].branchData['380'][1].init(67, 38, 'srcElement && Dom.nodeName(srcElement)');
 function visit36_380_1(result) {
   _$jscoverage['/swf.js'].branchData['380'][1].ranCondition(result);
   return result;
-}_$jscoverage['/swf.js'].branchData['294'][1].init(25, 20, 'typeof v == \'string\'');
-function visit35_294_1(result) {
-  _$jscoverage['/swf.js'].branchData['294'][1].ranCondition(result);
+}_$jscoverage['/swf.js'].branchData['295'][1].init(25, 21, 'typeof v === \'string\'');
+function visit35_295_1(result) {
+  _$jscoverage['/swf.js'].branchData['295'][1].ranCondition(result);
   return result;
-}_$jscoverage['/swf.js'].branchData['276'][1].init(25, 20, 'typeof v == \'string\'');
-function visit34_276_1(result) {
-  _$jscoverage['/swf.js'].branchData['276'][1].ranCondition(result);
+}_$jscoverage['/swf.js'].branchData['277'][1].init(25, 21, 'typeof v === \'string\'');
+function visit34_277_1(result) {
+  _$jscoverage['/swf.js'].branchData['277'][1].ranCondition(result);
   return result;
-}_$jscoverage['/swf.js'].branchData['195'][1].init(25, 25, 'swfObject.readyState == 4');
-function visit33_195_1(result) {
-  _$jscoverage['/swf.js'].branchData['195'][1].ranCondition(result);
+}_$jscoverage['/swf.js'].branchData['196'][1].init(25, 26, 'swfObject.readyState === 4');
+function visit33_196_1(result) {
+  _$jscoverage['/swf.js'].branchData['196'][1].ranCondition(result);
   return result;
-}_$jscoverage['/swf.js'].branchData['191'][1].init(273, 6, 'OLD_IE');
-function visit32_191_1(result) {
-  _$jscoverage['/swf.js'].branchData['191'][1].ranCondition(result);
+}_$jscoverage['/swf.js'].branchData['192'][1].init(273, 6, 'OLD_IE');
+function visit32_192_1(result) {
+  _$jscoverage['/swf.js'].branchData['192'][1].ranCondition(result);
   return result;
 }_$jscoverage['/swf.js'].branchData['173'][1].init(154, 17, 'args.length !== 0');
 function visit31_173_1(result) {
@@ -602,7 +603,7 @@ function visit30_167_1(result) {
 function visit29_165_1(result) {
   _$jscoverage['/swf.js'].branchData['165'][1].ranCondition(result);
   return result;
-}_$jscoverage['/swf.js'].branchData['152'][1].init(3178, 19, '!self.get(\'status\')');
+}_$jscoverage['/swf.js'].branchData['152'][1].init(3182, 19, '!self.get(\'status\')');
 function visit28_152_1(result) {
   _$jscoverage['/swf.js'].branchData['152'][1].ranCondition(result);
   return result;
@@ -610,19 +611,19 @@ function visit28_152_1(result) {
 function visit27_141_1(result) {
   _$jscoverage['/swf.js'].branchData['141'][1].ranCondition(result);
   return result;
-}_$jscoverage['/swf.js'].branchData['140'][1].init(2810, 18, 'htmlMode == \'full\'');
+}_$jscoverage['/swf.js'].branchData['140'][1].init(2813, 19, 'htmlMode === \'full\'');
 function visit26_140_1(result) {
   _$jscoverage['/swf.js'].branchData['140'][1].ranCondition(result);
   return result;
-}_$jscoverage['/swf.js'].branchData['130'][1].init(2514, 26, '\'outerHTML\' in placeHolder');
+}_$jscoverage['/swf.js'].branchData['130'][1].init(2517, 26, '\'outerHTML\' in placeHolder');
 function visit25_130_1(result) {
   _$jscoverage['/swf.js'].branchData['130'][1].ranCondition(result);
   return result;
-}_$jscoverage['/swf.js'].branchData['124'][1].init(2332, 8, 'elBefore');
+}_$jscoverage['/swf.js'].branchData['124'][1].init(2335, 8, 'elBefore');
 function visit24_124_1(result) {
   _$jscoverage['/swf.js'].branchData['124'][1].ranCondition(result);
   return result;
-}_$jscoverage['/swf.js'].branchData['115'][1].init(2031, 18, 'htmlMode == \'full\'');
+}_$jscoverage['/swf.js'].branchData['115'][1].init(2031, 19, 'htmlMode === \'full\'');
 function visit23_115_1(result) {
   _$jscoverage['/swf.js'].branchData['115'][1].ranCondition(result);
   return result;
@@ -682,7 +683,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/swf.js'].lineData[10]++;
   var FlashUA = require('swf/ua');
   _$jscoverage['/swf.js'].lineData[12]++;
-  var OLD_IE = !!S.Env.host['ActiveXObject'], TYPE = 'application/x-shockwave-flash', CID = 'clsid:d27cdb6e-ae6d-11cf-96b8-444553540000', FLASHVARS = 'flashvars', EMPTY = '', SPACE = ' ', EQUAL = '=', DOUBLE_QUOTE = '"', LT = '<', GT = '>', doc = S.Env.host.document, fpv = FlashUA.fpv, fpvGEQ = FlashUA.fpvGEQ, fpvGTE = FlashUA.fpvGTE, OBJECT_TAG = 'object', encode = encodeURIComponent, PARAMS = {
+  var OLD_IE = !!S.Env.host.ActiveXObject, TYPE = 'application/x-shockwave-flash', CID = 'clsid:d27cdb6e-ae6d-11cf-96b8-444553540000', FLASHVARS = 'flashvars', EMPTY = '', SPACE = ' ', EQUAL = '=', DOUBLE_QUOTE = '"', LT = '<', GT = '>', doc = S.Env.host.document, fpv = FlashUA.fpv, fpvGEQ = FlashUA.fpvGEQ, fpvGTE = FlashUA.fpvGTE, OBJECT_TAG = 'object', encode = encodeURIComponent, PARAMS = {
   wmode: EMPTY, 
   allowscriptaccess: EMPTY, 
   allownetworking: EMPTY, 
@@ -702,7 +703,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/swf.js'].lineData[54]++;
   var SWF;
   _$jscoverage['/swf.js'].lineData[60]++;
-  return SWF = Attribute.extend({
+  SWF = Attribute.extend({
   constructor: function() {
   _$jscoverage['/swf.js'].functionData[1]++;
   _$jscoverage['/swf.js'].lineData[62]++;
@@ -731,24 +732,24 @@ KISSY.add(function(S, require) {
       _$jscoverage['/swf.js'].lineData[95]++;
       if (visit16_95_1(!('width' in attrs) || (visit17_96_1(!/%$/.test(attrs.width) && visit18_96_2(parseInt(attrs.width, 10) < 310))))) {
         _$jscoverage['/swf.js'].lineData[97]++;
-        attrs.width = "310";
+        attrs.width = '310';
       }
       _$jscoverage['/swf.js'].lineData[100]++;
       if (visit19_100_1(!('height' in attrs) || (visit20_101_1(!/%$/.test(attrs.height) && visit21_101_2(parseInt(attrs.height, 10) < 137))))) {
         _$jscoverage['/swf.js'].lineData[102]++;
-        attrs.height = "137";
+        attrs.height = '137';
       }
       _$jscoverage['/swf.js'].lineData[105]++;
       flashVars = params.flashVars = visit22_105_1(params.flashVars || {});
       _$jscoverage['/swf.js'].lineData[107]++;
       S.mix(flashVars, {
   MMredirectURL: location.href, 
-  MMplayerType: OLD_IE ? "ActiveX" : "PlugIn", 
-  MMdoctitle: doc.title.slice(0, 47) + " - Flash Player Installation"});
+  MMplayerType: OLD_IE ? 'ActiveX' : 'PlugIn', 
+  MMdoctitle: doc.title.slice(0, 47) + ' - Flash Player Installation'});
     }
   }
   _$jscoverage['/swf.js'].lineData[115]++;
-  if (visit23_115_1(htmlMode == 'full')) {
+  if (visit23_115_1(htmlMode === 'full')) {
     _$jscoverage['/swf.js'].lineData[116]++;
     html = _stringSWFFull(installedSrc, attrs, params);
   } else {
@@ -778,7 +779,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/swf.js'].lineData[138]++;
   self.set('swfObject', swf);
   _$jscoverage['/swf.js'].lineData[140]++;
-  if (visit26_140_1(htmlMode == 'full')) {
+  if (visit26_140_1(htmlMode === 'full')) {
     _$jscoverage['/swf.js'].lineData[141]++;
     if (visit27_141_1(OLD_IE)) {
       _$jscoverage['/swf.js'].lineData[142]++;
@@ -811,44 +812,44 @@ KISSY.add(function(S, require) {
     }
   }  catch (e) {
   _$jscoverage['/swf.js'].lineData[172]++;
-  params = "";
+  params = '';
   _$jscoverage['/swf.js'].lineData[173]++;
   if (visit31_173_1(args.length !== 0)) {
     _$jscoverage['/swf.js'].lineData[174]++;
-    params = "'" + args.join("', '") + "'";
+    params = '"' + args.join('", "') + '"';
   }
-  _$jscoverage['/swf.js'].lineData[177]++;
+  _$jscoverage['/swf.js'].lineData[178]++;
   ret = (new Function('swf', 'return swf.' + func + '(' + params + ');'))(swf);
 }
-  _$jscoverage['/swf.js'].lineData[179]++;
+  _$jscoverage['/swf.js'].lineData[180]++;
   return ret;
 }, 
   destroy: function() {
   _$jscoverage['/swf.js'].functionData[3]++;
-  _$jscoverage['/swf.js'].lineData[185]++;
-  var self = this;
   _$jscoverage['/swf.js'].lineData[186]++;
-  self.detach();
+  var self = this;
   _$jscoverage['/swf.js'].lineData[187]++;
+  self.detach();
+  _$jscoverage['/swf.js'].lineData[188]++;
   var swfObject = self.get('swfObject');
-  _$jscoverage['/swf.js'].lineData[191]++;
-  if (visit32_191_1(OLD_IE)) {
-    _$jscoverage['/swf.js'].lineData[192]++;
+  _$jscoverage['/swf.js'].lineData[192]++;
+  if (visit32_192_1(OLD_IE)) {
+    _$jscoverage['/swf.js'].lineData[193]++;
     swfObject.style.display = 'none';
-    _$jscoverage['/swf.js'].lineData[194]++;
-    (function() {
+    _$jscoverage['/swf.js'].lineData[195]++;
+    (function remove() {
   _$jscoverage['/swf.js'].functionData[4]++;
-  _$jscoverage['/swf.js'].lineData[195]++;
-  if (visit33_195_1(swfObject.readyState == 4)) {
-    _$jscoverage['/swf.js'].lineData[196]++;
+  _$jscoverage['/swf.js'].lineData[196]++;
+  if (visit33_196_1(swfObject.readyState === 4)) {
+    _$jscoverage['/swf.js'].lineData[197]++;
     removeObjectInIE(swfObject);
   } else {
-    _$jscoverage['/swf.js'].lineData[199]++;
-    setTimeout(arguments.callee, 10);
+    _$jscoverage['/swf.js'].lineData[200]++;
+    setTimeout(remove, 10);
   }
 })();
   } else {
-    _$jscoverage['/swf.js'].lineData[203]++;
+    _$jscoverage['/swf.js'].lineData[204]++;
     swfObject.parentNode.removeChild(swfObject);
   }
 }}, {
@@ -857,7 +858,7 @@ KISSY.add(function(S, require) {
   value: S.config('base') + 'swf/assets/expressInstall.swf'}, 
   src: {}, 
   version: {
-  value: "9"}, 
+  value: '9'}, 
   params: {
   value: {}}, 
   attrs: {
@@ -865,28 +866,28 @@ KISSY.add(function(S, require) {
   render: {
   setter: function(v) {
   _$jscoverage['/swf.js'].functionData[5]++;
-  _$jscoverage['/swf.js'].lineData[276]++;
-  if (visit34_276_1(typeof v == 'string')) {
-    _$jscoverage['/swf.js'].lineData[277]++;
+  _$jscoverage['/swf.js'].lineData[277]++;
+  if (visit34_277_1(typeof v === 'string')) {
+    _$jscoverage['/swf.js'].lineData[278]++;
     v = Dom.get(v, this.get('document'));
   }
-  _$jscoverage['/swf.js'].lineData[279]++;
+  _$jscoverage['/swf.js'].lineData[280]++;
   return v;
 }, 
   valueFn: function() {
   _$jscoverage['/swf.js'].functionData[6]++;
-  _$jscoverage['/swf.js'].lineData[282]++;
+  _$jscoverage['/swf.js'].lineData[283]++;
   return document.body;
 }}, 
   elBefore: {
   setter: function(v) {
   _$jscoverage['/swf.js'].functionData[7]++;
-  _$jscoverage['/swf.js'].lineData[294]++;
-  if (visit35_294_1(typeof v == 'string')) {
-    _$jscoverage['/swf.js'].lineData[295]++;
+  _$jscoverage['/swf.js'].lineData[295]++;
+  if (visit35_295_1(typeof v === 'string')) {
+    _$jscoverage['/swf.js'].lineData[296]++;
     v = Dom.get(v, this.get('document'));
   }
-  _$jscoverage['/swf.js'].lineData[297]++;
+  _$jscoverage['/swf.js'].lineData[298]++;
   return v;
 }}, 
   document: {
@@ -899,22 +900,22 @@ KISSY.add(function(S, require) {
   value: 'default'}}, 
   getSrc: function(swf) {
   _$jscoverage['/swf.js'].functionData[8]++;
-  _$jscoverage['/swf.js'].lineData[377]++;
-  swf = Dom.get(swf);
   _$jscoverage['/swf.js'].lineData[378]++;
-  var srcElement = getSrcElements(swf)[0], src, nodeName = visit36_380_1(srcElement && Dom.nodeName(srcElement));
+  swf = Dom.get(swf);
+  _$jscoverage['/swf.js'].lineData[379]++;
+  var srcElement = getSrcElements(swf)[0], nodeName = visit36_380_1(srcElement && Dom.nodeName(srcElement));
   _$jscoverage['/swf.js'].lineData[381]++;
-  if (visit37_381_1(nodeName == 'embed')) {
+  if (visit37_381_1(nodeName === 'embed')) {
     _$jscoverage['/swf.js'].lineData[382]++;
     return Dom.attr(srcElement, 'src');
   } else {
     _$jscoverage['/swf.js'].lineData[383]++;
-    if (visit38_383_1(nodeName == 'object')) {
+    if (visit38_383_1(nodeName === 'object')) {
       _$jscoverage['/swf.js'].lineData[384]++;
       return Dom.attr(srcElement, 'data');
     } else {
       _$jscoverage['/swf.js'].lineData[385]++;
-      if (visit39_385_1(nodeName == 'param')) {
+      if (visit39_385_1(nodeName === 'param')) {
         _$jscoverage['/swf.js'].lineData[386]++;
         return Dom.attr(srcElement, 'value');
       }
@@ -939,7 +940,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/swf.js'].lineData[431]++;
     for (var i in obj) {
       _$jscoverage['/swf.js'].lineData[432]++;
-      if (visit40_432_1(typeof obj[i] == "function")) {
+      if (visit40_432_1(typeof obj[i] === 'function')) {
         _$jscoverage['/swf.js'].lineData[433]++;
         obj[i] = null;
       }
@@ -951,11 +952,11 @@ KISSY.add(function(S, require) {
   function getSrcElements(swf) {
     _$jscoverage['/swf.js'].functionData[10]++;
     _$jscoverage['/swf.js'].lineData[440]++;
-    var url = "", params, i, param, elements = [], nodeName = Dom.nodeName(swf);
+    var url = '', params, i, param, elements = [], nodeName = Dom.nodeName(swf);
     _$jscoverage['/swf.js'].lineData[444]++;
-    if (visit41_444_1(nodeName == "object")) {
+    if (visit41_444_1(nodeName === 'object')) {
       _$jscoverage['/swf.js'].lineData[445]++;
-      url = Dom.attr(swf, "data");
+      url = Dom.attr(swf, 'data');
       _$jscoverage['/swf.js'].lineData[446]++;
       if (visit42_446_1(url)) {
         _$jscoverage['/swf.js'].lineData[447]++;
@@ -968,19 +969,19 @@ KISSY.add(function(S, require) {
         _$jscoverage['/swf.js'].lineData[451]++;
         param = params[i];
         _$jscoverage['/swf.js'].lineData[452]++;
-        if (visit44_452_1(param.nodeType == 1)) {
+        if (visit44_452_1(param.nodeType === 1)) {
           _$jscoverage['/swf.js'].lineData[453]++;
-          if (visit45_453_1((visit46_453_2(Dom.attr(param, "name") || "")).toLowerCase() == "movie")) {
+          if (visit45_453_1((visit46_453_2(Dom.attr(param, 'name') || '')).toLowerCase() === 'movie')) {
             _$jscoverage['/swf.js'].lineData[454]++;
             elements.push(param);
           } else {
             _$jscoverage['/swf.js'].lineData[455]++;
-            if (visit47_455_1(Dom.nodeName(param) == "embed")) {
+            if (visit47_455_1(Dom.nodeName(param) === 'embed')) {
               _$jscoverage['/swf.js'].lineData[456]++;
               elements.push(param);
             } else {
               _$jscoverage['/swf.js'].lineData[457]++;
-              if (visit48_457_1(Dom.nodeName(params[i]) == "object")) {
+              if (visit48_457_1(Dom.nodeName(params[i]) === 'object')) {
                 _$jscoverage['/swf.js'].lineData[458]++;
                 elements.push(param);
               }
@@ -990,7 +991,7 @@ KISSY.add(function(S, require) {
       }
     } else {
       _$jscoverage['/swf.js'].lineData[462]++;
-      if (visit49_462_1(nodeName == "embed")) {
+      if (visit49_462_1(nodeName === 'embed')) {
         _$jscoverage['/swf.js'].lineData[463]++;
         elements.push(swf);
       }
@@ -1014,7 +1015,7 @@ KISSY.add(function(S, require) {
     par += stringParam(k, v);
   } else {
     _$jscoverage['/swf.js'].lineData[478]++;
-    if (visit51_478_1(k == FLASHVARS)) {
+    if (visit51_478_1(k === FLASHVARS)) {
       _$jscoverage['/swf.js'].lineData[479]++;
       par += stringParam(k, toFlashVars(v));
     }
@@ -1096,7 +1097,7 @@ KISSY.add(function(S, require) {
     S.each(obj, function(data, prop) {
   _$jscoverage['/swf.js'].functionData[18]++;
   _$jscoverage['/swf.js'].lineData[543]++;
-  if (visit54_543_1(typeof data != 'string')) {
+  if (visit54_543_1(typeof data !== 'string')) {
     _$jscoverage['/swf.js'].lineData[544]++;
     data = Json.stringify(data);
   }
@@ -1123,4 +1124,6 @@ KISSY.add(function(S, require) {
     _$jscoverage['/swf.js'].lineData[559]++;
     return SPACE + key + EQUAL + DOUBLE_QUOTE + value + DOUBLE_QUOTE;
   }
+  _$jscoverage['/swf.js'].lineData[562]++;
+  return SWF;
 });

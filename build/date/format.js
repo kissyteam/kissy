@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:39
+build time: Dec 2 15:12
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -12,7 +12,7 @@ build time: Nov 27 00:39
 KISSY.add("date/format", ["date/gregorian", "i18n!date"], function(S, require) {
   var GregorianCalendar = require("date/gregorian");
   var defaultLocale = require("i18n!date");
-  var MAX_VALUE = Number.MAX_VALUE, undefined = undefined, DateTimeStyle = {FULL:0, LONG:1, MEDIUM:2, SHORT:3};
+  var MAX_VALUE = Number.MAX_VALUE, DateTimeStyle = {FULL:0, LONG:1, MEDIUM:2, SHORT:3};
   var logger = S.getLogger("s/date/format");
   var patternChars = (new Array(GregorianCalendar.DAY_OF_WEEK_IN_MONTH + 2)).join("1");
   var ERA = 0;
@@ -46,12 +46,12 @@ KISSY.add("date/format", ["date/gregorian", "i18n!date"], function(S, require) {
     var lastField = -1;
     for(var i = 0;i < length;i++) {
       var c = pattern.charAt(i);
-      if(c == "'") {
+      if(c === "'") {
         if(i + 1 < length) {
           c = pattern.charAt(i + 1);
-          if(c == "'") {
+          if(c === "'") {
             i++;
-            if(count != 0) {
+            if(count !== 0) {
               encode(lastField, count, compiledPattern);
               lastField = -1;
               count = 0
@@ -63,7 +63,7 @@ KISSY.add("date/format", ["date/gregorian", "i18n!date"], function(S, require) {
           }
         }
         if(!inQuote) {
-          if(count != 0) {
+          if(count !== 0) {
             encode(lastField, count, compiledPattern);
             lastField = -1;
             count = 0
@@ -81,7 +81,7 @@ KISSY.add("date/format", ["date/gregorian", "i18n!date"], function(S, require) {
         continue
       }
       if(!(c >= "a" && c <= "z" || c >= "A" && c <= "Z")) {
-        if(count != 0) {
+        if(count !== 0) {
           encode(lastField, count, compiledPattern);
           lastField = -1;
           count = 0
@@ -89,10 +89,10 @@ KISSY.add("date/format", ["date/gregorian", "i18n!date"], function(S, require) {
         compiledPattern.push({text:c});
         continue
       }
-      if(patternChars.indexOf(c) == -1) {
-        throw new Error("Illegal pattern character " + "'" + c + "'");
+      if(patternChars.indexOf(c) === -1) {
+        throw new Error('Illegal pattern character "' + c + '"');
       }
-      if(lastField == -1 || lastField == c) {
+      if(lastField === -1 || lastField === c) {
         lastField = c;
         count++;
         continue
@@ -104,7 +104,7 @@ KISSY.add("date/format", ["date/gregorian", "i18n!date"], function(S, require) {
     if(inQuote) {
       throw new Error("Unterminated quote");
     }
-    if(count != 0) {
+    if(count !== 0) {
       encode(lastField, count, compiledPattern)
     }
     return compiledPattern
@@ -115,18 +115,18 @@ KISSY.add("date/format", ["date/gregorian", "i18n!date"], function(S, require) {
     maxDigits = maxDigits || MAX_VALUE;
     if(value >= 0) {
       if(value < 100 && minDigits >= 1 && minDigits <= 2) {
-        if(value < 10 && minDigits == 2) {
+        if(value < 10 && minDigits === 2) {
           buffer.push(zeroDigit)
         }
         buffer.push(value);
         return buffer.join("")
       }else {
         if(value >= 1E3 && value < 1E4) {
-          if(minDigits == 4) {
+          if(minDigits === 4) {
             buffer.push(value);
             return buffer.join("")
           }
-          if(minDigits == 2 && maxDigits == 2) {
+          if(minDigits === 2 && maxDigits === 2) {
             return zeroPaddingNumber(value % 100, 2, 2, buffer)
           }
         }
@@ -152,14 +152,14 @@ KISSY.add("date/format", ["date/gregorian", "i18n!date"], function(S, require) {
         if(value <= 0) {
           value = 1 - value
         }
-        current = zeroPaddingNumber(value, 2, count != 2 ? MAX_VALUE : 2);
+        current = zeroPaddingNumber(value, 2, count !== 2 ? MAX_VALUE : 2);
         break;
       case "M":
         value = calendar.getMonth();
         if(count >= 4) {
           current = locale.months[value]
         }else {
-          if(count == 3) {
+          if(count === 3) {
             current = locale.shortMonths[value]
           }else {
             current = zeroPaddingNumber(value + 1, count)
@@ -210,7 +210,7 @@ KISSY.add("date/format", ["date/gregorian", "i18n!date"], function(S, require) {
   }
   function matchPartString(dateStr, startIndex, match, mLen) {
     for(var i = 0;i < mLen;i++) {
-      if(dateStr.charAt(startIndex + i) != match.charAt(i)) {
+      if(dateStr.charAt(startIndex + i) !== match.charAt(i)) {
         return false
       }
     }
@@ -254,7 +254,7 @@ KISSY.add("date/format", ["date/gregorian", "i18n!date"], function(S, require) {
       case "G":
         if(match = matchField(dateStr, startIndex, locale.eras)) {
           if(calendar.isSetYear()) {
-            if(match.value == 0) {
+            if(match.value === 0) {
               year = calendar.getYear();
               calendar.setYear(1 - year)
             }
@@ -277,7 +277,7 @@ KISSY.add("date/format", ["date/gregorian", "i18n!date"], function(S, require) {
       case "M":
         var month;
         if(count >= 3) {
-          if(match = matchField(dateStr, startIndex, locale[count == 3 ? "shortMonths" : "months"])) {
+          if(match = matchField(dateStr, startIndex, locale[count === 3 ? "shortMonths" : "months"])) {
             month = match.value
           }
         }else {
@@ -332,14 +332,12 @@ KISSY.add("date/format", ["date/gregorian", "i18n!date"], function(S, require) {
         }
         break;
       case "Z":
-        if(dateStr) {
-          var sign = 1, zoneChar = dateStr.charAt(startIndex)
-        }
-        if(zoneChar == "-") {
+        var sign = 1, zoneChar = dateStr.charAt(startIndex);
+        if(zoneChar === "-") {
           sign = -1;
           startIndex++
         }else {
-          if(zoneChar == "+") {
+          if(zoneChar === "+") {
             startIndex++
           }else {
             break
@@ -393,7 +391,7 @@ KISSY.add("date/format", ["date/gregorian", "i18n!date"], function(S, require) {
             errorIndex = startIndex
           }else {
             for(j = 0;j < textLen;j++) {
-              if(text.charAt(j) != dateStr.charAt(j + startIndex)) {
+              if(text.charAt(j) !== dateStr.charAt(j + startIndex)) {
                 errorIndex = startIndex;
                 break loopPattern
               }
@@ -415,7 +413,7 @@ KISSY.add("date/format", ["date/gregorian", "i18n!date"], function(S, require) {
               }
             }
             startIndex = parseField(calendar, dateStr, startIndex, comp.field, comp.count, this.locale, obeyCount, tmp);
-            if(startIndex == oldStartIndex) {
+            if(startIndex === oldStartIndex) {
               errorIndex = startIndex
             }
           }

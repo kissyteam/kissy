@@ -268,39 +268,39 @@ if (! _$jscoverage['/button.js'].branchData) {
   _$jscoverage['/button.js'].branchData['40'] = [];
   _$jscoverage['/button.js'].branchData['40'][1] = new BranchData();
 }
-_$jscoverage['/button.js'].branchData['40'][1].init(76, 21, 'self.get("checkable")');
+_$jscoverage['/button.js'].branchData['40'][1].init(76, 21, 'self.get(\'checkable\')');
 function visit10_40_1(result) {
   _$jscoverage['/button.js'].branchData['40'][1].ranCondition(result);
   return result;
-}_$jscoverage['/button.js'].branchData['34'][1].init(460, 26, 'e.keyCode == KeyCode.SPACE');
+}_$jscoverage['/button.js'].branchData['34'][1].init(464, 27, 'e.keyCode === KeyCode.SPACE');
 function visit9_34_1(result) {
   _$jscoverage['/button.js'].branchData['34'][1].ranCondition(result);
   return result;
-}_$jscoverage['/button.js'].branchData['28'][1].init(49, 17, 'e.type == "keyup"');
+}_$jscoverage['/button.js'].branchData['28'][1].init(50, 18, 'e.type === \'keyup\'');
 function visit8_28_1(result) {
   _$jscoverage['/button.js'].branchData['28'][1].ranCondition(result);
   return result;
-}_$jscoverage['/button.js'].branchData['27'][2].init(104, 26, 'e.keyCode == KeyCode.SPACE');
+}_$jscoverage['/button.js'].branchData['27'][2].init(106, 27, 'e.keyCode === KeyCode.SPACE');
 function visit7_27_2(result) {
   _$jscoverage['/button.js'].branchData['27'][2].ranCondition(result);
   return result;
-}_$jscoverage['/button.js'].branchData['27'][1].init(84, 67, 'e.keyCode == KeyCode.SPACE && e.type == "keyup"');
+}_$jscoverage['/button.js'].branchData['27'][1].init(86, 69, 'e.keyCode === KeyCode.SPACE && e.type === \'keyup\'');
 function visit6_27_1(result) {
   _$jscoverage['/button.js'].branchData['27'][1].ranCondition(result);
   return result;
-}_$jscoverage['/button.js'].branchData['26'][1].init(45, 19, 'e.type == "keydown"');
+}_$jscoverage['/button.js'].branchData['26'][1].init(46, 20, 'e.type === \'keydown\'');
 function visit5_26_1(result) {
   _$jscoverage['/button.js'].branchData['26'][1].ranCondition(result);
   return result;
-}_$jscoverage['/button.js'].branchData['25'][3].init(17, 26, 'e.keyCode == KeyCode.ENTER');
+}_$jscoverage['/button.js'].branchData['25'][3].init(17, 27, 'e.keyCode === KeyCode.ENTER');
 function visit4_25_3(result) {
   _$jscoverage['/button.js'].branchData['25'][3].ranCondition(result);
   return result;
-}_$jscoverage['/button.js'].branchData['25'][2].init(17, 65, 'e.keyCode == KeyCode.ENTER && e.type == "keydown"');
+}_$jscoverage['/button.js'].branchData['25'][2].init(17, 67, 'e.keyCode === KeyCode.ENTER && e.type === \'keydown\'');
 function visit3_25_2(result) {
   _$jscoverage['/button.js'].branchData['25'][2].ranCondition(result);
   return result;
-}_$jscoverage['/button.js'].branchData['25'][1].init(17, 152, 'e.keyCode == KeyCode.ENTER && e.type == "keydown" || e.keyCode == KeyCode.SPACE && e.type == "keyup"');
+}_$jscoverage['/button.js'].branchData['25'][1].init(17, 156, 'e.keyCode === KeyCode.ENTER && e.type === \'keydown\' || e.keyCode === KeyCode.SPACE && e.type === \'keyup\'');
 function visit2_25_1(result) {
   _$jscoverage['/button.js'].branchData['25'][1].ranCondition(result);
   return result;
@@ -317,17 +317,17 @@ KISSY.add(function(S, require) {
   bindUI: function() {
   _$jscoverage['/button.js'].functionData[1]++;
   _$jscoverage['/button.js'].lineData[21]++;
-  this.$el.on("keyup", this.handleKeyDownInternal, this);
+  this.$el.on('keyup', this.handleKeyDownInternal, this);
 }, 
   handleKeyDownInternal: function(e) {
   _$jscoverage['/button.js'].functionData[2]++;
   _$jscoverage['/button.js'].lineData[25]++;
-  if (visit2_25_1(visit3_25_2(visit4_25_3(e.keyCode == KeyCode.ENTER) && visit5_26_1(e.type == "keydown")) || visit6_27_1(visit7_27_2(e.keyCode == KeyCode.SPACE) && visit8_28_1(e.type == "keyup")))) {
+  if (visit2_25_1(visit3_25_2(visit4_25_3(e.keyCode === KeyCode.ENTER) && visit5_26_1(e.type === 'keydown')) || visit6_27_1(visit7_27_2(e.keyCode === KeyCode.SPACE) && visit8_28_1(e.type === 'keyup')))) {
     _$jscoverage['/button.js'].lineData[29]++;
     return this.handleClickInternal(e);
   }
   _$jscoverage['/button.js'].lineData[34]++;
-  return visit9_34_1(e.keyCode == KeyCode.SPACE);
+  return visit9_34_1(e.keyCode === KeyCode.SPACE);
 }, 
   handleClickInternal: function() {
   _$jscoverage['/button.js'].functionData[3]++;
@@ -336,12 +336,12 @@ KISSY.add(function(S, require) {
   _$jscoverage['/button.js'].lineData[39]++;
   self.callSuper();
   _$jscoverage['/button.js'].lineData[40]++;
-  if (visit10_40_1(self.get("checkable"))) {
+  if (visit10_40_1(self.get('checkable'))) {
     _$jscoverage['/button.js'].lineData[41]++;
-    self.set("checked", !self.get("checked"));
+    self.set('checked', !self.get('checked'));
   }
   _$jscoverage['/button.js'].lineData[44]++;
-  self.fire("click");
+  self.fire('click');
 }}, {
   ATTRS: {
   value: {}, 

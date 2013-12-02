@@ -272,31 +272,25 @@ if (! _$jscoverage['/menu/popupmenu.js'].branchData) {
   _$jscoverage['/menu/popupmenu.js'].branchData['42'][1] = new BranchData();
   _$jscoverage['/menu/popupmenu.js'].branchData['44'] = [];
   _$jscoverage['/menu/popupmenu.js'].branchData['44'][1] = new BranchData();
-  _$jscoverage['/menu/popupmenu.js'].branchData['48'] = [];
-  _$jscoverage['/menu/popupmenu.js'].branchData['48'][1] = new BranchData();
 }
-_$jscoverage['/menu/popupmenu.js'].branchData['48'][1].init(63, 38, 'item = rootMenu.get(\'highlightedItem\')');
-function visit45_48_1(result) {
-  _$jscoverage['/menu/popupmenu.js'].branchData['48'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/menu/popupmenu.js'].branchData['44'][1].init(72, 8, 'rootMenu');
-function visit44_44_1(result) {
+_$jscoverage['/menu/popupmenu.js'].branchData['44'][1].init(72, 8, 'rootMenu');
+function visit43_44_1(result) {
   _$jscoverage['/menu/popupmenu.js'].branchData['44'][1].ranCondition(result);
   return result;
 }_$jscoverage['/menu/popupmenu.js'].branchData['42'][1].init(247, 32, 'this.get(\'autoHideOnMouseLeave\')');
-function visit43_42_1(result) {
+function visit42_42_1(result) {
   _$jscoverage['/menu/popupmenu.js'].branchData['42'][1].ranCondition(result);
   return result;
 }_$jscoverage['/menu/popupmenu.js'].branchData['32'][1].init(255, 13, 'last === this');
-function visit42_32_1(result) {
+function visit41_32_1(result) {
   _$jscoverage['/menu/popupmenu.js'].branchData['32'][1].ranCondition(result);
   return result;
 }_$jscoverage['/menu/popupmenu.js'].branchData['31'][2].init(205, 28, 'cur.isMenuItem || cur.isMenu');
-function visit41_31_2(result) {
+function visit40_31_2(result) {
   _$jscoverage['/menu/popupmenu.js'].branchData['31'][2].ranCondition(result);
   return result;
 }_$jscoverage['/menu/popupmenu.js'].branchData['31'][1].init(132, 37, 'cur && (cur.isMenuItem || cur.isMenu)');
-function visit40_31_1(result) {
+function visit39_31_1(result) {
   _$jscoverage['/menu/popupmenu.js'].branchData['31'][1].ranCondition(result);
   return result;
 }_$jscoverage['/menu/popupmenu.js'].lineData[6]++;
@@ -322,20 +316,20 @@ KISSY.add(function(S, require) {
     last = cur;
     _$jscoverage['/menu/popupmenu.js'].lineData[30]++;
     cur = cur.get('parent');
-  } while (visit40_31_1(cur && (visit41_31_2(cur.isMenuItem || cur.isMenu))));
+  } while (visit39_31_1(cur && (visit40_31_2(cur.isMenuItem || cur.isMenu))));
   _$jscoverage['/menu/popupmenu.js'].lineData[32]++;
-  return visit42_32_1(last === this) ? null : last;
+  return visit41_32_1(last === this) ? null : last;
 }, 
   handleMouseLeaveInternal: function(e) {
   _$jscoverage['/menu/popupmenu.js'].functionData[2]++;
   _$jscoverage['/menu/popupmenu.js'].lineData[36]++;
   this.callSuper(e);
   _$jscoverage['/menu/popupmenu.js'].lineData[42]++;
-  if (visit43_42_1(this.get('autoHideOnMouseLeave'))) {
+  if (visit42_42_1(this.get('autoHideOnMouseLeave'))) {
     _$jscoverage['/menu/popupmenu.js'].lineData[43]++;
     var rootMenu = this.getRootMenu();
     _$jscoverage['/menu/popupmenu.js'].lineData[44]++;
-    if (visit44_44_1(rootMenu)) {
+    if (visit43_44_1(rootMenu)) {
       _$jscoverage['/menu/popupmenu.js'].lineData[45]++;
       clearTimeout(rootMenu._popupAutoHideTimer);
       _$jscoverage['/menu/popupmenu.js'].lineData[46]++;
@@ -344,7 +338,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/menu/popupmenu.js'].lineData[47]++;
   var item;
   _$jscoverage['/menu/popupmenu.js'].lineData[48]++;
-  if (visit45_48_1(item = rootMenu.get('highlightedItem'))) {
+  if ((item = rootMenu.get('highlightedItem'))) {
     _$jscoverage['/menu/popupmenu.js'].lineData[49]++;
     item.set('highlighted', false);
   }

@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:47
+build time: Dec 2 15:22
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -35,7 +35,6 @@ KISSY.add("event/custom/observable", ["event/base", "./observer", "./object"], f
   var CustomEventObserver = require("./observer");
   var CustomEventObject = require("./object");
   var Utils = BaseEvent.Utils;
-  var undefined = undefined;
   function CustomEventObservable() {
     var self = this;
     CustomEventObservable.superclass.constructor.apply(self, arguments);
@@ -50,7 +49,7 @@ KISSY.add("event/custom/observable", ["event/base", "./observer", "./object"], f
         S.error("lack event handler for " + this.type)
       }
     }
-    if(this.findObserver(observer) == -1) {
+    if(this.findObserver(observer) === -1) {
       this.observers.push(observer)
     }
   }, fire:function(eventData) {
@@ -63,7 +62,7 @@ KISSY.add("event/custom/observable", ["event/base", "./observer", "./object"], f
     }
     customEventObject.currentTarget = currentTarget;
     ret = self.notify(customEventObject);
-    if(gRet !== false && ret != undefined) {
+    if(gRet !== false && ret !== undefined) {
       gRet = ret
     }
     if(bubbles && !customEventObject.isPropagationStopped()) {
@@ -78,7 +77,7 @@ KISSY.add("event/custom/observable", ["event/base", "./observer", "./object"], f
     }
     if(defaultFn && !customEventObject.isDefaultPrevented()) {
       var target = customEventObject.target, lowestCustomEventObservable = target.getCustomEventObservable(customEventObject.type);
-      if(!self.defaultTargetOnly && !lowestCustomEventObservable.defaultTargetOnly || currentTarget == target) {
+      if(!self.defaultTargetOnly && !lowestCustomEventObservable.defaultTargetOnly || currentTarget === target) {
         gRet = defaultFn.call(currentTarget, customEventObject)
       }
     }
@@ -106,7 +105,7 @@ KISSY.add("event/custom/observable", ["event/base", "./observer", "./object"], f
       for(i = 0, j = 0, t = [];i < len;++i) {
         observer = observers[i];
         observerContext = observer.context || currentTarget;
-        if(context != observerContext || fn && fn != observer.fn || groupsRe && !observer.groups.match(groupsRe)) {
+        if(context !== observerContext || fn && fn !== observer.fn || groupsRe && !observer.groups.match(groupsRe)) {
           t[j++] = observer
         }
       }
@@ -120,7 +119,7 @@ KISSY.add("event/custom/observable", ["event/base", "./observer", "./object"], f
 KISSY.add("event/custom/target", ["event/base", "./observable"], function(S, require) {
   var BaseEvent = require("event/base");
   var CustomEventObservable = require("./observable");
-  var Utils = BaseEvent.Utils, splitAndRun = Utils.splitAndRun, undefined = undefined, KS_BUBBLE_TARGETS = "__~ks_bubble_targets";
+  var Utils = BaseEvent.Utils, splitAndRun = Utils.splitAndRun, KS_BUBBLE_TARGETS = "__~ks_bubble_targets";
   var KS_CUSTOM_EVENTS = "__~ks_custom_events";
   return{isTarget:1, getCustomEventObservable:function(type, create) {
     var target = this, customEvent, customEventObservables = target.getCustomEvents();
@@ -130,7 +129,7 @@ KISSY.add("event/custom/target", ["event/base", "./observable"], function(S, req
     }
     return customEvent
   }, fire:function(type, eventData) {
-    var self = this, ret = undefined, targets = self.getTargets(), hasTargets = targets && targets.length;
+    var self = this, ret, targets = self.getTargets(), hasTargets = targets && targets.length;
     eventData = eventData || {};
     splitAndRun(type, function(type) {
       var r2, customEventObservable;
@@ -170,7 +169,7 @@ KISSY.add("event/custom/target", ["event/base", "./observable"], function(S, req
     return self
   }, removeTarget:function(anotherTarget) {
     var self = this, targets = self.getTargets(), index = S.indexOf(anotherTarget, targets);
-    if(index != -1) {
+    if(index !== -1) {
       targets.splice(index, 1)
     }
     return self

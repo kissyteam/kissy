@@ -312,7 +312,7 @@ function visit66_38_1(result) {
 function visit65_27_1(result) {
   _$jscoverage['/io/jsonp.js'].branchData['27'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/jsonp.js'].branchData['20'][1].init(98, 22, 'dataType[0] == \'jsonp\'');
+}_$jscoverage['/io/jsonp.js'].branchData['20'][1].init(98, 23, 'dataType[0] === \'jsonp\'');
 function visit64_20_1(result) {
   _$jscoverage['/io/jsonp.js'].branchData['20'][1].ranCondition(result);
   return result;
@@ -337,7 +337,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/io/jsonp.js'].lineData[17]++;
   var io = e.io, c = io.config, dataType = c.dataType;
   _$jscoverage['/io/jsonp.js'].lineData[20]++;
-  if (visit64_20_1(dataType[0] == 'jsonp')) {
+  if (visit64_20_1(dataType[0] === 'jsonp')) {
     _$jscoverage['/io/jsonp.js'].lineData[23]++;
     delete c.contentType;
     _$jscoverage['/io/jsonp.js'].lineData[24]++;

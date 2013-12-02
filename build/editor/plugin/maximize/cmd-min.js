@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Dec 2 13:01
+build time: Dec 2 15:19
 */
 KISSY.add("editor/plugin/maximize/cmd",["editor","event"],function(d,m){function n(a){this.editor=a}var k=m("editor"),f=m("event"),g=d.UA,l=g.ie,h=document,o=d.Node,i=d.DOM,j;d.augment(n,{restoreWindow:function(){var a=this,b=a.editor;!1!==b.fire("beforeRestoreWindow")&&a._resize&&(f.remove(window,"resize",a._resize),a._resize.stop(),a._resize=0,a._saveEditorStatus(),a._restoreState(),setTimeout(function(){a._restoreEditorStatus();b.notifySelectionChange();b.fire("afterRestoreWindow")},30))},_restoreState:function(){var a=
 this.editor,b=a.get("textarea"),c=this._savedParents;if(c){for(var e=0;e<c.length;e++){var d=c[e];d.el.css("position",d.position)}this._savedParents=null}b.parent().css({height:this.iframeHeight});b.css({height:this.iframeHeight});i.css(h.body,{width:"",height:"",overflow:""});h.documentElement.style.overflow="";b=a.get("el")[0].style;b.position="static";b.width=this.editorElWidth;j.css({left:"-99999px",top:"-99999px"});window.scrollTo(this.scrollLeft,this.scrollTop);8>l&&a.get("toolBarEl").removeClass(a.get("prefixCls")+

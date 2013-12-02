@@ -256,18 +256,15 @@ if (! _$jscoverage['/dd/draggable-delegate.js']) {
   _$jscoverage['/dd/draggable-delegate.js'].lineData[84] = 0;
   _$jscoverage['/dd/draggable-delegate.js'].lineData[87] = 0;
   _$jscoverage['/dd/draggable-delegate.js'].lineData[94] = 0;
+  _$jscoverage['/dd/draggable-delegate.js'].lineData[97] = 0;
   _$jscoverage['/dd/draggable-delegate.js'].lineData[98] = 0;
   _$jscoverage['/dd/draggable-delegate.js'].lineData[99] = 0;
   _$jscoverage['/dd/draggable-delegate.js'].lineData[100] = 0;
   _$jscoverage['/dd/draggable-delegate.js'].lineData[101] = 0;
-  _$jscoverage['/dd/draggable-delegate.js'].lineData[102] = 0;
   _$jscoverage['/dd/draggable-delegate.js'].lineData[104] = 0;
   _$jscoverage['/dd/draggable-delegate.js'].lineData[106] = 0;
-  _$jscoverage['/dd/draggable-delegate.js'].lineData[107] = 0;
-  _$jscoverage['/dd/draggable-delegate.js'].lineData[109] = 0;
-  _$jscoverage['/dd/draggable-delegate.js'].lineData[111] = 0;
-  _$jscoverage['/dd/draggable-delegate.js'].lineData[118] = 0;
-  _$jscoverage['/dd/draggable-delegate.js'].lineData[133] = 0;
+  _$jscoverage['/dd/draggable-delegate.js'].lineData[113] = 0;
+  _$jscoverage['/dd/draggable-delegate.js'].lineData[128] = 0;
 }
 if (! _$jscoverage['/dd/draggable-delegate.js'].functionData) {
   _$jscoverage['/dd/draggable-delegate.js'].functionData = [];
@@ -281,7 +278,6 @@ if (! _$jscoverage['/dd/draggable-delegate.js'].functionData) {
   _$jscoverage['/dd/draggable-delegate.js'].functionData[7] = 0;
   _$jscoverage['/dd/draggable-delegate.js'].functionData[8] = 0;
   _$jscoverage['/dd/draggable-delegate.js'].functionData[9] = 0;
-  _$jscoverage['/dd/draggable-delegate.js'].functionData[10] = 0;
 }
 if (! _$jscoverage['/dd/draggable-delegate.js'].branchData) {
   _$jscoverage['/dd/draggable-delegate.js'].branchData = {};
@@ -293,44 +289,44 @@ if (! _$jscoverage['/dd/draggable-delegate.js'].branchData) {
   _$jscoverage['/dd/draggable-delegate.js'].branchData['36'][1] = new BranchData();
   _$jscoverage['/dd/draggable-delegate.js'].branchData['42'] = [];
   _$jscoverage['/dd/draggable-delegate.js'].branchData['42'][1] = new BranchData();
+  _$jscoverage['/dd/draggable-delegate.js'].branchData['97'] = [];
+  _$jscoverage['/dd/draggable-delegate.js'].branchData['97'][1] = new BranchData();
+  _$jscoverage['/dd/draggable-delegate.js'].branchData['97'][2] = new BranchData();
   _$jscoverage['/dd/draggable-delegate.js'].branchData['98'] = [];
   _$jscoverage['/dd/draggable-delegate.js'].branchData['98'][1] = new BranchData();
-  _$jscoverage['/dd/draggable-delegate.js'].branchData['98'][2] = new BranchData();
   _$jscoverage['/dd/draggable-delegate.js'].branchData['100'] = [];
   _$jscoverage['/dd/draggable-delegate.js'].branchData['100'][1] = new BranchData();
-  _$jscoverage['/dd/draggable-delegate.js'].branchData['106'] = [];
-  _$jscoverage['/dd/draggable-delegate.js'].branchData['106'][1] = new BranchData();
 }
-_$jscoverage['/dd/draggable-delegate.js'].branchData['106'][1].init(299, 3, 'ret');
-function visit66_106_1(result) {
-  _$jscoverage['/dd/draggable-delegate.js'].branchData['106'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/dd/draggable-delegate.js'].branchData['100'][1].init(29, 14, 'target.test(h)');
-function visit65_100_1(result) {
+_$jscoverage['/dd/draggable-delegate.js'].branchData['100'][1].init(74, 14, 'target.test(h)');
+function visit64_100_1(result) {
   _$jscoverage['/dd/draggable-delegate.js'].branchData['100'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/draggable-delegate.js'].branchData['98'][2].init(207, 21, 'target[0] !== node[0]');
-function visit64_98_2(result) {
-  _$jscoverage['/dd/draggable-delegate.js'].branchData['98'][2].ranCondition(result);
-  return result;
-}_$jscoverage['/dd/draggable-delegate.js'].branchData['98'][1].init(197, 31, 'target && target[0] !== node[0]');
+}_$jscoverage['/dd/draggable-delegate.js'].branchData['98'][1].init(37, 19, 'i < handlers.length');
 function visit63_98_1(result) {
   _$jscoverage['/dd/draggable-delegate.js'].branchData['98'][1].ranCondition(result);
   return result;
+}_$jscoverage['/dd/draggable-delegate.js'].branchData['97'][2].init(170, 21, 'target[0] !== node[0]');
+function visit62_97_2(result) {
+  _$jscoverage['/dd/draggable-delegate.js'].branchData['97'][2].ranCondition(result);
+  return result;
+}_$jscoverage['/dd/draggable-delegate.js'].branchData['97'][1].init(160, 31, 'target && target[0] !== node[0]');
+function visit61_97_1(result) {
+  _$jscoverage['/dd/draggable-delegate.js'].branchData['97'][1].ranCondition(result);
+  return result;
 }_$jscoverage['/dd/draggable-delegate.js'].branchData['42'][1].init(642, 5, '!node');
-function visit62_42_1(result) {
+function visit60_42_1(result) {
   _$jscoverage['/dd/draggable-delegate.js'].branchData['42'][1].ranCondition(result);
   return result;
 }_$jscoverage['/dd/draggable-delegate.js'].branchData['36'][1].init(466, 7, 'handler');
-function visit61_36_1(result) {
+function visit59_36_1(result) {
   _$jscoverage['/dd/draggable-delegate.js'].branchData['36'][1].ranCondition(result);
   return result;
 }_$jscoverage['/dd/draggable-delegate.js'].branchData['30'][1].init(329, 15, 'handlers.length');
-function visit60_30_1(result) {
+function visit58_30_1(result) {
   _$jscoverage['/dd/draggable-delegate.js'].branchData['30'][1].ranCondition(result);
   return result;
 }_$jscoverage['/dd/draggable-delegate.js'].branchData['21'][1].init(78, 30, '!self._checkDragStartValid(ev)');
-function visit59_21_1(result) {
+function visit57_21_1(result) {
   _$jscoverage['/dd/draggable-delegate.js'].branchData['21'][1].ranCondition(result);
   return result;
 }_$jscoverage['/dd/draggable-delegate.js'].lineData[6]++;
@@ -346,14 +342,14 @@ KISSY.add(function(S, require) {
   _$jscoverage['/dd/draggable-delegate.js'].lineData[17]++;
   var self = this, handler, node;
   _$jscoverage['/dd/draggable-delegate.js'].lineData[21]++;
-  if (visit59_21_1(!self._checkDragStartValid(ev))) {
+  if (visit57_21_1(!self._checkDragStartValid(ev))) {
     _$jscoverage['/dd/draggable-delegate.js'].lineData[22]++;
     return;
   }
   _$jscoverage['/dd/draggable-delegate.js'].lineData[25]++;
   var handlers = self.get('handlers'), target = $(ev.target);
   _$jscoverage['/dd/draggable-delegate.js'].lineData[30]++;
-  if (visit60_30_1(handlers.length)) {
+  if (visit58_30_1(handlers.length)) {
     _$jscoverage['/dd/draggable-delegate.js'].lineData[31]++;
     handler = self._getHandler(target);
   } else {
@@ -361,12 +357,12 @@ KISSY.add(function(S, require) {
     handler = target;
   }
   _$jscoverage['/dd/draggable-delegate.js'].lineData[36]++;
-  if (visit61_36_1(handler)) {
+  if (visit59_36_1(handler)) {
     _$jscoverage['/dd/draggable-delegate.js'].lineData[37]++;
     node = self._getNode(handler);
   }
   _$jscoverage['/dd/draggable-delegate.js'].lineData[42]++;
-  if (visit62_42_1(!node)) {
+  if (visit60_42_1(!node)) {
     _$jscoverage['/dd/draggable-delegate.js'].lineData[43]++;
     return;
   }
@@ -411,43 +407,35 @@ KISSY.add(function(S, require) {
   _getHandler: function(target) {
   _$jscoverage['/dd/draggable-delegate.js'].functionData[7]++;
   _$jscoverage['/dd/draggable-delegate.js'].lineData[94]++;
-  var self = this, ret = undefined, node = self.get('container'), handlers = self.get('handlers');
-  _$jscoverage['/dd/draggable-delegate.js'].lineData[98]++;
-  while (visit63_98_1(target && visit64_98_2(target[0] !== node[0]))) {
-    _$jscoverage['/dd/draggable-delegate.js'].lineData[99]++;
-    S.each(handlers, function(h) {
-  _$jscoverage['/dd/draggable-delegate.js'].functionData[8]++;
-  _$jscoverage['/dd/draggable-delegate.js'].lineData[100]++;
-  if (visit65_100_1(target.test(h))) {
-    _$jscoverage['/dd/draggable-delegate.js'].lineData[101]++;
-    ret = target;
-    _$jscoverage['/dd/draggable-delegate.js'].lineData[102]++;
-    return false;
-  }
-  _$jscoverage['/dd/draggable-delegate.js'].lineData[104]++;
-  return undefined;
-});
-    _$jscoverage['/dd/draggable-delegate.js'].lineData[106]++;
-    if (visit66_106_1(ret)) {
-      _$jscoverage['/dd/draggable-delegate.js'].lineData[107]++;
-      break;
+  var self = this, node = self.get('container'), handlers = self.get('handlers');
+  _$jscoverage['/dd/draggable-delegate.js'].lineData[97]++;
+  while (visit61_97_1(target && visit62_97_2(target[0] !== node[0]))) {
+    _$jscoverage['/dd/draggable-delegate.js'].lineData[98]++;
+    for (var i = 0; visit63_98_1(i < handlers.length); i++) {
+      _$jscoverage['/dd/draggable-delegate.js'].lineData[99]++;
+      var h = handlers[i];
+      _$jscoverage['/dd/draggable-delegate.js'].lineData[100]++;
+      if (visit64_100_1(target.test(h))) {
+        _$jscoverage['/dd/draggable-delegate.js'].lineData[101]++;
+        return target;
+      }
     }
-    _$jscoverage['/dd/draggable-delegate.js'].lineData[109]++;
+    _$jscoverage['/dd/draggable-delegate.js'].lineData[104]++;
     target = target.parent();
   }
-  _$jscoverage['/dd/draggable-delegate.js'].lineData[111]++;
-  return ret;
+  _$jscoverage['/dd/draggable-delegate.js'].lineData[106]++;
+  return null;
 }, 
   _getNode: function(h) {
-  _$jscoverage['/dd/draggable-delegate.js'].functionData[9]++;
-  _$jscoverage['/dd/draggable-delegate.js'].lineData[118]++;
+  _$jscoverage['/dd/draggable-delegate.js'].functionData[8]++;
+  _$jscoverage['/dd/draggable-delegate.js'].lineData[113]++;
   return h.closest(this.get('selector'), this.get('container'));
 }}, {
   ATTRS: {
   container: {
   setter: function(v) {
-  _$jscoverage['/dd/draggable-delegate.js'].functionData[10]++;
-  _$jscoverage['/dd/draggable-delegate.js'].lineData[133]++;
+  _$jscoverage['/dd/draggable-delegate.js'].functionData[9]++;
+  _$jscoverage['/dd/draggable-delegate.js'].lineData[128]++;
   return $(v);
 }}, 
   selector: {}, 

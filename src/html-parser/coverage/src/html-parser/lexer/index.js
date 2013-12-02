@@ -329,7 +329,7 @@ function visit11_62_1(result) {
 function visit10_60_1(result) {
   _$jscoverage['/html-parser/lexer/index.js'].branchData['60'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/index.js'].branchData['51'][1].init(79, 51, 'lineCursor = this.lineCursors[this.row(cursor) - 1]');
+}_$jscoverage['/html-parser/lexer/index.js'].branchData['51'][1].init(120, 10, 'lineCursor');
 function visit9_51_1(result) {
   _$jscoverage['/html-parser/lexer/index.js'].branchData['51'][1].ranCondition(result);
   return result;
@@ -345,7 +345,7 @@ function visit7_40_1(result) {
 function visit6_29_1(result) {
   _$jscoverage['/html-parser/lexer/index.js'].branchData['29'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/index.js'].branchData['21'][1].init(91, 11, 'index != -1');
+}_$jscoverage['/html-parser/lexer/index.js'].branchData['21'][1].init(91, 12, 'index !== -1');
 function visit5_21_1(result) {
   _$jscoverage['/html-parser/lexer/index.js'].branchData['21'][1].ranCondition(result);
   return result;
@@ -366,7 +366,7 @@ KISSY.add(function() {
   _$jscoverage['/html-parser/lexer/index.js'].lineData[20]++;
   var index = indexOfCursorForInsert(this.lineCursors, cursor);
   _$jscoverage['/html-parser/lexer/index.js'].lineData[21]++;
-  if (visit5_21_1(index != -1)) {
+  if (visit5_21_1(index !== -1)) {
     _$jscoverage['/html-parser/lexer/index.js'].lineData[22]++;
     this.lineCursors.splice(index, 0, cursor.clone());
   }
@@ -401,9 +401,9 @@ KISSY.add(function() {
   col: function(cursor) {
   _$jscoverage['/html-parser/lexer/index.js'].functionData[5]++;
   _$jscoverage['/html-parser/lexer/index.js'].lineData[49]++;
-  var linePosition = 0, lineCursor;
+  var linePosition = 0, lineCursor = this.lineCursors[this.row(cursor) - 1];
   _$jscoverage['/html-parser/lexer/index.js'].lineData[51]++;
-  if (visit9_51_1(lineCursor = this.lineCursors[this.row(cursor) - 1])) {
+  if (visit9_51_1(lineCursor)) {
     _$jscoverage['/html-parser/lexer/index.js'].lineData[52]++;
     linePosition = lineCursor.position;
   }

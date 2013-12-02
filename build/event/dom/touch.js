@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:48
+build time: Dec 2 15:22
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -27,7 +27,7 @@ KISSY.add("event/dom/touch/single-touch", [], function(S) {
   }
   SingleTouch.prototype = {constructor:SingleTouch, requiredTouchCount:1, onTouchStart:function(e) {
     var self = this, touches;
-    if(e.touches.length != self.requiredTouchCount) {
+    if(e.touches.length !== self.requiredTouchCount) {
       return false
     }
     touches = self.lastTouches = e.touches;
@@ -73,7 +73,7 @@ KISSY.add("event/dom/touch/swipe", ["./handle-map", "event/dom/base", "./single-
   var eventHandleMap = require("./handle-map");
   var DomEvent = require("event/dom/base");
   var SingleTouch = require("./single-touch");
-  var event = "swipe", undefined = undefined, ingEvent = "swiping", MAX_DURATION = 1E3, MAX_OFFSET = 35, MIN_DISTANCE = 50;
+  var event = "swipe", ingEvent = "swiping", MAX_DURATION = 1E3, MAX_OFFSET = 35, MIN_DISTANCE = 50;
   function fire(self, e, ing) {
     var touches = e.changedTouches, touch = touches[0], x = touch.pageX, y = touch.pageY, deltaX = x - self.startX, deltaY = y - self.startY, absDeltaX = Math.abs(deltaX), absDeltaY = Math.abs(deltaY), distance, direction;
     if(ing) {
@@ -122,7 +122,7 @@ KISSY.add("event/dom/touch/swipe", ["./handle-map", "event/dom/base", "./single-
     self.isVertical = 1;
     self.startX = touch.pageX;
     this.startY = touch.pageY;
-    if(e.type.indexOf("mouse") != -1) {
+    if(e.type.indexOf("mouse") !== -1) {
       e.preventDefault()
     }
     return undefined
@@ -213,7 +213,7 @@ KISSY.add("event/dom/touch/multi-touch", ["dom"], function(S, require) {
     }
   }, fireEnd:S.noop, getCommonTarget:function(e) {
     var touches = e.touches, t1 = touches[0].target, t2 = touches[1].target;
-    if(t1 == t2) {
+    if(t1 === t2) {
       return t1
     }
     if(Dom.contains(t1, t2)) {
@@ -256,8 +256,7 @@ KISSY.add("event/dom/touch/pinch", ["./handle-map", "event/dom/base", "./multi-t
       return
     }
     var touches = e.touches;
-    if(touches[0].pageX > 0 && touches[0].pageY > 0 && touches[1].pageX > 0 && touches[1].pageY > 0) {
-    }else {
+    if(!(touches[0].pageX > 0 && touches[0].pageY > 0 && touches[1].pageX > 0 && touches[1].pageY > 0)) {
       return
     }
     var distance = getDistance(touches[0], touches[1]);
@@ -277,7 +276,7 @@ KISSY.add("event/dom/touch/pinch", ["./handle-map", "event/dom/base", "./multi-t
   var p = new Pinch;
   eventHandleMap[PINCH_START] = eventHandleMap[PINCH_END] = {handle:p};
   function prevent(e) {
-    if(e.touches.length == 2) {
+    if(e.touches.length === 2) {
       e.preventDefault()
     }
   }
@@ -359,7 +358,7 @@ KISSY.add("event/dom/touch/rotate", ["./handle-map", "event/dom/base", "./multi-
     DomEvent.fire(self.target, ROTATE_END, S.mix(e, {touches:self.lastTouches}))
   }});
   function prevent(e) {
-    if(e.touches.length == 2) {
+    if(e.touches.length === 2) {
       e.preventDefault()
     }
   }
@@ -437,22 +436,22 @@ KISSY.add("event/dom/touch/handle", ["dom", "./handle-map", "event/dom/base", ".
     }
     DomEvent.on(doc, gestureEndEvent, self.onTouchEnd, self)
   }, addTouch:function(originalEvent) {
-    originalEvent.identifier = originalEvent["pointerId"];
+    originalEvent.identifier = originalEvent.pointerId;
     this.touches.push(originalEvent)
   }, removeTouch:function(originalEvent) {
-    var i = 0, touch, pointerId = originalEvent["pointerId"], touches = this.touches, l = touches.length;
+    var i = 0, touch, pointerId = originalEvent.pointerId, touches = this.touches, l = touches.length;
     for(;i < l;i++) {
       touch = touches[i];
-      if(touch["pointerId"] === pointerId) {
+      if(touch.pointerId === pointerId) {
         touches.splice(i, 1);
         break
       }
     }
   }, updateTouch:function(originalEvent) {
-    var i = 0, touch, pointerId = originalEvent["pointerId"], touches = this.touches, l = touches.length;
+    var i = 0, touch, pointerId = originalEvent.pointerId, touches = this.touches, l = touches.length;
     for(;i < l;i++) {
       touch = touches[i];
-      if(touch["pointerId"] === pointerId) {
+      if(touch.pointerId === pointerId) {
         touches[i] = originalEvent
       }
     }
@@ -492,8 +491,8 @@ KISSY.add("event/dom/touch/handle", ["dom", "./handle-map", "event/dom/base", ".
   }, normalize:function(e) {
     var type = e.type, notUp, touchList;
     if(isTouchEvent(type)) {
-      touchList = type == "touchend" || type == "touchcancel" ? e.changedTouches : e.touches;
-      if(touchList.length == 1) {
+      touchList = type === "touchend" || type === "touchcancel" ? e.changedTouches : e.touches;
+      if(touchList.length === 1) {
         e.which = 1;
         e.pageX = touchList[0].pageX;
         e.pageY = touchList[0].pageY
@@ -521,7 +520,7 @@ KISSY.add("event/dom/touch/handle", ["dom", "./handle-map", "event/dom/base", ".
       }else {
         if(isPointerEvent(type)) {
           self.addTouch(event.originalEvent);
-          if(self.touches.length == 1) {
+          if(self.touches.length === 1) {
             DomEvent.on(self.doc, gestureMoveEvent, self.onTouchMove, self)
           }
         }else {
@@ -536,17 +535,16 @@ KISSY.add("event/dom/touch/handle", ["dom", "./handle-map", "event/dom/base", ".
     self.callEventHandle("onTouchStart", event)
   }, onTouchMove:function(event) {
     var self = this, type = event.type;
-    if(isTouchEvent(type)) {
+    if(isMouseEvent(type)) {
+      if(self.isEventSimulatedFromTouch(type)) {
+        return
+      }
+      self.touches = [event.originalEvent]
     }else {
-      if(isMouseEvent(type)) {
-        if(self.isEventSimulatedFromTouch(type)) {
-          return
-        }
-        self.touches = [event.originalEvent]
+      if(isPointerEvent(type)) {
+        self.updateTouch(event.originalEvent)
       }else {
-        if(isPointerEvent(type)) {
-          self.updateTouch(event.originalEvent)
-        }else {
+        if(!isTouchEvent()) {
           throw new Error("unrecognized touch event: " + event.type);
         }
       }

@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:39
+build time: Dec 2 15:12
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -40,16 +40,16 @@ KISSY.add("date/gregorian/utils", ["./const"], function(S, require) {
     d3 = mod(d2, DAYS_OF_4YEAR);
     n1 = floorDivide(d3 / DAYS_OF_YEAR);
     year = 400 * n400 + 100 * n100 + 4 * n4 + n1;
-    if(!(n100 == 4 || n1 == 4)) {
+    if(!(n100 === 4 || n1 === 4)) {
       ++year
     }
     return year
   }
   S.mix(Utils, {isLeapYear:function(year) {
-    if((year & 3) != 0) {
+    if((year & 3) !== 0) {
       return false
     }
-    return year % 100 != 0 || year % 400 == 0
+    return year % 100 !== 0 || year % 400 === 0
   }, mod:function(x, y) {
     return x - y * floorDivide(x / y)
   }, getFixedDate:function(year, month, dayOfMonth) {
@@ -81,7 +81,6 @@ KISSY.add("date/gregorian", ["./gregorian/utils", "i18n!date", "./gregorian/cons
   var Utils = require("./gregorian/utils");
   var defaultLocale = require("i18n!date");
   var Const = require("./gregorian/const");
-  var undefined = undefined;
   function GregorianCalendar(timezoneOffset, locale) {
     var args = S.makeArray(arguments);
     if(S.isObject(timezoneOffset)) {
@@ -156,7 +155,7 @@ KISSY.add("date/gregorian", ["./gregorian/utils", "i18n!date", "./gregorian/cons
       case WEEK_OF_YEAR:
         var endOfYear = new GregorianCalendar(fields[YEAR], GregorianCalendar.DECEMBER, 31);
         value = endOfYear.get(WEEK_OF_YEAR);
-        if(value == 1) {
+        if(value === 1) {
           value = 52
         }
         break;
@@ -201,7 +200,7 @@ KISSY.add("date/gregorian", ["./gregorian/utils", "i18n!date", "./gregorian/cons
     fields[MONTH] = date.month;
     fields[DAY_OF_MONTH] = date.dayOfMonth;
     fields[DAY_OF_WEEK] = date.dayOfWeek;
-    if(timeOfDay != 0) {
+    if(timeOfDay !== 0) {
       fields[HOUR_OF_DAY] = toInt(timeOfDay / ONE_HOUR);
       var r = timeOfDay % ONE_HOUR;
       fields[MINUTE] = toInt(r / ONE_MINUTE);
@@ -217,7 +216,7 @@ KISSY.add("date/gregorian", ["./gregorian/utils", "i18n!date", "./gregorian/cons
     fields[DAY_OF_YEAR] = dayOfYear;
     fields[DAY_OF_WEEK_IN_MONTH] = toInt((date.dayOfMonth - 1) / 7) + 1;
     var weekOfYear = getWeekNumber(this, fixedDateJan1, fixedDate);
-    if(weekOfYear == 0) {
+    if(weekOfYear === 0) {
       var fixedDec31 = fixedDateJan1 - 1;
       var prevJan1 = fixedDateJan1 - getYearLength(year - 1);
       weekOfYear = getWeekNumber(this, prevJan1, fixedDec31)
@@ -283,6 +282,7 @@ KISSY.add("date/gregorian", ["./gregorian/utils", "i18n!date", "./gregorian/cons
       }
     }
     var fixedDate = Utils.getFixedDate(year, month, 1);
+    var firstDayOfWeek;
     var dayOfWeek = self.firstDayOfWeek;
     if(self.isSet(DAY_OF_WEEK)) {
       dayOfWeek = fields[DAY_OF_WEEK]
@@ -292,11 +292,11 @@ KISSY.add("date/gregorian", ["./gregorian/utils", "i18n!date", "./gregorian/cons
         fixedDate += fields[DAY_OF_MONTH] - 1
       }else {
         if(self.isSet(WEEK_OF_MONTH)) {
-          var firstDayOfWeek = getDayOfWeekDateOnOrBefore(fixedDate + 6, firstDayOfWeekCfg);
+          firstDayOfWeek = getDayOfWeekDateOnOrBefore(fixedDate + 6, firstDayOfWeekCfg);
           if(firstDayOfWeek - fixedDate >= self.minimalDaysInFirstWeek) {
             firstDayOfWeek -= 7
           }
-          if(dayOfWeek != firstDayOfWeekCfg) {
+          if(dayOfWeek !== firstDayOfWeekCfg) {
             firstDayOfWeek = getDayOfWeekDateOnOrBefore(firstDayOfWeek + 6, dayOfWeek)
           }
           fixedDate = firstDayOfWeek + 7 * (fields[WEEK_OF_MONTH] - 1)
@@ -322,7 +322,7 @@ KISSY.add("date/gregorian", ["./gregorian/utils", "i18n!date", "./gregorian/cons
         if(firstDayOfWeek - fixedDate >= self.minimalDaysInFirstWeek) {
           firstDayOfWeek -= 7
         }
-        if(dayOfWeek != firstDayOfWeekCfg) {
+        if(dayOfWeek !== firstDayOfWeekCfg) {
           firstDayOfWeek = getDayOfWeekDateOnOrBefore(firstDayOfWeek + 6, dayOfWeek)
         }
         fixedDate = firstDayOfWeek + 7 * (fields[WEEK_OF_YEAR] - 1)
@@ -343,7 +343,7 @@ KISSY.add("date/gregorian", ["./gregorian/utils", "i18n!date", "./gregorian/cons
     return this.fields[field]
   }, set:function(field, v) {
     var len = arguments.length;
-    if(len == 2) {
+    if(len === 2) {
       this.fields[field] = v
     }else {
       if(len < MILLISECONDS + 1) {
@@ -404,7 +404,7 @@ KISSY.add("date/gregorian", ["./gregorian/utils", "i18n!date", "./gregorian/cons
             amount *= ONE_DAY;
             break;
           default:
-            throw new Error("illegal field for add");break
+            throw new Error("illegal field for add");
         }
         self.setTime(self.time + amount)
       }
@@ -452,19 +452,19 @@ KISSY.add("date/gregorian", ["./gregorian/utils", "i18n!date", "./gregorian/cons
   }, getTimezoneOffset:function() {
     return this.timezoneOffset
   }, setTimezoneOffset:function(timezoneOffset) {
-    if(this.timezoneOffset != timezoneOffset) {
+    if(this.timezoneOffset !== timezoneOffset) {
       this.fieldsComputed = undefined;
       this.timezoneOffset = timezoneOffset
     }
   }, setFirstDayOfWeek:function(firstDayOfWeek) {
-    if(this.firstDayOfWeek != firstDayOfWeek) {
+    if(this.firstDayOfWeek !== firstDayOfWeek) {
       this.firstDayOfWeek = firstDayOfWeek;
       this.fieldsComputed = false
     }
   }, getFirstDayOfWeek:function() {
     return this.firstDayOfWeek
   }, setMinimalDaysInFirstWeek:function(minimalDaysInFirstWeek) {
-    if(this.minimalDaysInFirstWeek != minimalDaysInFirstWeek) {
+    if(this.minimalDaysInFirstWeek !== minimalDaysInFirstWeek) {
       this.minimalDaysInFirstWeek = minimalDaysInFirstWeek;
       this.fieldsComputed = false
     }
@@ -472,7 +472,7 @@ KISSY.add("date/gregorian", ["./gregorian/utils", "i18n!date", "./gregorian/cons
     return this.minimalDaysInFirstWeek
   }, getWeeksInWeekYear:function() {
     var weekYear = this.getWeekYear();
-    if(weekYear == this.get(YEAR)) {
+    if(weekYear === this.get(YEAR)) {
       return this.getActualMaximum(WEEK_OF_YEAR)
     }
     var gc = this.clone();
@@ -482,13 +482,13 @@ KISSY.add("date/gregorian", ["./gregorian/utils", "i18n!date", "./gregorian/cons
     var year = this.get(YEAR);
     var weekOfYear = this.get(WEEK_OF_YEAR);
     var month = this.get(MONTH);
-    if(month == GregorianCalendar.JANUARY) {
+    if(month === GregorianCalendar.JANUARY) {
       if(weekOfYear >= 52) {
         --year
       }
     }else {
-      if(month == GregorianCalendar.DECEMBER) {
-        if(weekOfYear == 1) {
+      if(month === GregorianCalendar.DECEMBER) {
+        if(weekOfYear === 1) {
           ++year
         }
       }
@@ -510,7 +510,7 @@ KISSY.add("date/gregorian", ["./gregorian/utils", "i18n!date", "./gregorian/cons
       days += 7
     }
     days += 7 * (weekOfYear - 1);
-    if(days != 0) {
+    if(days !== 0) {
       gc.add(DAY_OF_YEAR, days)
     }else {
       gc.complete()
@@ -527,7 +527,7 @@ KISSY.add("date/gregorian", ["./gregorian/utils", "i18n!date", "./gregorian/cons
     cal.setTime(this.time);
     return cal
   }, equals:function(obj) {
-    return this.getTime() == obj.getTime() && this.firstDayOfWeek == obj.firstDayOfWeek && this.timezoneOffset == obj.timezoneOffset && this.minimalDaysInFirstWeek == obj.minimalDaysInFirstWeek
+    return this.getTime() === obj.getTime() && this.firstDayOfWeek === obj.firstDayOfWeek && this.timezoneOffset === obj.timezoneOffset && this.minimalDaysInFirstWeek === obj.minimalDaysInFirstWeek
   }, clear:function(field) {
     if(field === undefined) {
       this.field = []

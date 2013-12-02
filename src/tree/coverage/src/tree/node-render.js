@@ -330,15 +330,15 @@ function visit24_154_1(result) {
 function visit23_152_1(result) {
   _$jscoverage['/tree/node-render.js'].branchData['152'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tree/node-render.js'].branchData['145'][1].init(6, 94, 'el.one("." + this.getBaseCssClass(CHILDREN_CLS)).css("display") != "none"');
+}_$jscoverage['/tree/node-render.js'].branchData['145'][1].init(6, 95, 'el.one(\'.\' + this.getBaseCssClass(CHILDREN_CLS)).css(\'display\') !== \'none\'');
 function visit22_145_1(result) {
   _$jscoverage['/tree/node-render.js'].branchData['145'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tree/node-render.js'].branchData['138'][1].init(160, 43, 'el.hasClass(self.getBaseCssClass("folder"))');
+}_$jscoverage['/tree/node-render.js'].branchData['138'][1].init(160, 43, 'el.hasClass(self.getBaseCssClass(\'folder\'))');
 function visit21_138_1(result) {
   _$jscoverage['/tree/node-render.js'].branchData['138'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tree/node-render.js'].branchData['136'][1].init(54, 41, 'el.hasClass(self.getBaseCssClass("leaf"))');
+}_$jscoverage['/tree/node-render.js'].branchData['136'][1].init(54, 41, 'el.hasClass(self.getBaseCssClass(\'leaf\'))');
 function visit20_136_1(result) {
   _$jscoverage['/tree/node-render.js'].branchData['136'][1].ranCondition(result);
   return result;
@@ -360,7 +360,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/tree/node-render.js'].lineData[9]++;
   var ContentRenderExtension = require('component/extension/content-render');
   _$jscoverage['/tree/node-render.js'].lineData[11]++;
-  var SELECTED_CLS = "selected", COMMON_EXPAND_EL_CLS = "expand-icon-{t}", EXPAND_ICON_EL_FILE_CLS = [COMMON_EXPAND_EL_CLS].join(" "), EXPAND_ICON_EL_FOLDER_EXPAND_CLS = [COMMON_EXPAND_EL_CLS + "minus"].join(" "), EXPAND_ICON_EL_FOLDER_COLLAPSE_CLS = [COMMON_EXPAND_EL_CLS + "plus"].join(" "), ICON_EL_FILE_CLS = ["file-icon"].join(" "), ICON_EL_FOLDER_EXPAND_CLS = ["expanded-folder-icon"].join(" "), ICON_EL_FOLDER_COLLAPSE_CLS = ["collapsed-folder-icon"].join(" "), ROW_EL_CLS = 'row', CHILDREN_CLS = "children", CHILDREN_CLS_L = "lchildren", CHECK_CLS = "checked", ALL_STATES_CLS = "checked0 checked1 checked2";
+  var SELECTED_CLS = 'selected', COMMON_EXPAND_EL_CLS = 'expand-icon-{t}', EXPAND_ICON_EL_FILE_CLS = [COMMON_EXPAND_EL_CLS].join(' '), EXPAND_ICON_EL_FOLDER_EXPAND_CLS = [COMMON_EXPAND_EL_CLS + 'minus'].join(' '), EXPAND_ICON_EL_FOLDER_COLLAPSE_CLS = [COMMON_EXPAND_EL_CLS + 'plus'].join(' '), ICON_EL_FILE_CLS = ['file-icon'].join(' '), ICON_EL_FOLDER_EXPAND_CLS = ['expanded-folder-icon'].join(' '), ICON_EL_FOLDER_COLLAPSE_CLS = ['collapsed-folder-icon'].join(' '), ROW_EL_CLS = 'row', CHILDREN_CLS = 'children', CHILDREN_CLS_L = 'lchildren', CHECK_CLS = 'checked', ALL_STATES_CLS = 'checked0 checked1 checked2';
   _$jscoverage['/tree/node-render.js'].lineData[37]++;
   return Container.getDefaultRender().extend([ContentRenderExtension], {
   beforeCreateDom: function(renderData, childrenElSelectors) {
@@ -384,7 +384,7 @@ KISSY.add(function(S, require) {
   refreshCss: function(isNodeSingleOrLast, isNodeLeaf) {
   _$jscoverage['/tree/node-render.js'].functionData[2]++;
   _$jscoverage['/tree/node-render.js'].lineData[58]++;
-  var self = this, control = self.control, iconEl = control.get("iconEl"), iconElCss, expandElCss, expandIconEl = control.get("expandIconEl"), childrenEl = control.get("childrenEl");
+  var self = this, control = self.control, iconEl = control.get('iconEl'), iconElCss, expandElCss, expandIconEl = control.get('expandIconEl'), childrenEl = control.get('childrenEl');
   _$jscoverage['/tree/node-render.js'].lineData[66]++;
   if (visit18_66_1(isNodeLeaf)) {
     _$jscoverage['/tree/node-render.js'].lineData[67]++;
@@ -393,7 +393,7 @@ KISSY.add(function(S, require) {
     expandElCss = EXPAND_ICON_EL_FILE_CLS;
   } else {
     _$jscoverage['/tree/node-render.js'].lineData[70]++;
-    var expanded = control.get("expanded");
+    var expanded = control.get('expanded');
     _$jscoverage['/tree/node-render.js'].lineData[71]++;
     if (visit19_71_1(expanded)) {
       _$jscoverage['/tree/node-render.js'].lineData[72]++;
@@ -411,37 +411,37 @@ KISSY.add(function(S, require) {
   iconEl[0].className = self.getBaseCssClasses(iconElCss);
   _$jscoverage['/tree/node-render.js'].lineData[81]++;
   expandIconEl[0].className = self.getBaseCssClasses(S.substitute(expandElCss, {
-  "t": isNodeSingleOrLast ? "l" : "t"}));
+  't': isNodeSingleOrLast ? 'l' : 't'}));
   _$jscoverage['/tree/node-render.js'].lineData[86]++;
   childrenEl[0].className = self.getBaseCssClasses((isNodeSingleOrLast ? CHILDREN_CLS_L : CHILDREN_CLS));
 }, 
   _onSetExpanded: function(v) {
   _$jscoverage['/tree/node-render.js'].functionData[3]++;
   _$jscoverage['/tree/node-render.js'].lineData[92]++;
-  var self = this, childrenEl = self.control.get("childrenEl");
+  var self = this, childrenEl = self.control.get('childrenEl');
   _$jscoverage['/tree/node-render.js'].lineData[94]++;
-  childrenEl[v ? "show" : "hide"]();
+  childrenEl[v ? 'show' : 'hide']();
   _$jscoverage['/tree/node-render.js'].lineData[95]++;
-  self.el.setAttribute("aria-expanded", v);
+  self.el.setAttribute('aria-expanded', v);
 }, 
   _onSetSelected: function(v) {
   _$jscoverage['/tree/node-render.js'].functionData[4]++;
   _$jscoverage['/tree/node-render.js'].lineData[99]++;
-  var self = this, rowEl = self.control.get("rowEl");
+  var self = this, rowEl = self.control.get('rowEl');
   _$jscoverage['/tree/node-render.js'].lineData[101]++;
-  rowEl[v ? "addClass" : "removeClass"](self.getBaseCssClasses(SELECTED_CLS));
+  rowEl[v ? 'addClass' : 'removeClass'](self.getBaseCssClasses(SELECTED_CLS));
   _$jscoverage['/tree/node-render.js'].lineData[102]++;
-  self.el.setAttribute("aria-selected", v);
+  self.el.setAttribute('aria-selected', v);
 }, 
   '_onSetDepth': function(v) {
   _$jscoverage['/tree/node-render.js'].functionData[5]++;
   _$jscoverage['/tree/node-render.js'].lineData[106]++;
-  this.el.setAttribute("aria-level", v);
+  this.el.setAttribute('aria-level', v);
 }, 
   _onSetCheckState: function(s) {
   _$jscoverage['/tree/node-render.js'].functionData[6]++;
   _$jscoverage['/tree/node-render.js'].lineData[110]++;
-  var self = this, checkCls = self.getBaseCssClasses(CHECK_CLS).split(/\s+/).join(s + ' ') + s, checkIconEl = self.control.get("checkIconEl");
+  var self = this, checkCls = self.getBaseCssClasses(CHECK_CLS).split(/\s+/).join(s + ' ') + s, checkIconEl = self.control.get('checkIconEl');
   _$jscoverage['/tree/node-render.js'].lineData[114]++;
   checkIconEl.removeClass(self.getBaseCssClasses(ALL_STATES_CLS)).addClass(checkCls);
 }, 
@@ -462,19 +462,19 @@ KISSY.add(function(S, require) {
   childrenEl: function(el) {
   _$jscoverage['/tree/node-render.js'].functionData[9]++;
   _$jscoverage['/tree/node-render.js'].lineData[132]++;
-  return el.one("." + this.getBaseCssClass(CHILDREN_CLS));
+  return el.one('.' + this.getBaseCssClass(CHILDREN_CLS));
 }, 
   isLeaf: function(el) {
   _$jscoverage['/tree/node-render.js'].functionData[10]++;
   _$jscoverage['/tree/node-render.js'].lineData[135]++;
   var self = this;
   _$jscoverage['/tree/node-render.js'].lineData[136]++;
-  if (visit20_136_1(el.hasClass(self.getBaseCssClass("leaf")))) {
+  if (visit20_136_1(el.hasClass(self.getBaseCssClass('leaf')))) {
     _$jscoverage['/tree/node-render.js'].lineData[137]++;
     return true;
   } else {
     _$jscoverage['/tree/node-render.js'].lineData[138]++;
-    if (visit21_138_1(el.hasClass(self.getBaseCssClass("folder")))) {
+    if (visit21_138_1(el.hasClass(self.getBaseCssClass('folder')))) {
       _$jscoverage['/tree/node-render.js'].lineData[139]++;
       return false;
     }
@@ -485,7 +485,7 @@ KISSY.add(function(S, require) {
   expanded: function(el) {
   _$jscoverage['/tree/node-render.js'].functionData[11]++;
   _$jscoverage['/tree/node-render.js'].lineData[144]++;
-  return visit22_145_1(el.one("." + this.getBaseCssClass(CHILDREN_CLS)).css("display") != "none");
+  return visit22_145_1(el.one('.' + this.getBaseCssClass(CHILDREN_CLS)).css('display') !== 'none');
 }, 
   expandIconEl: function(el) {
   _$jscoverage['/tree/node-render.js'].functionData[12]++;

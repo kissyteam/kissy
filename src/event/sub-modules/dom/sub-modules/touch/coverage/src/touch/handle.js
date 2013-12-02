@@ -349,67 +349,67 @@ if (! _$jscoverage['/touch/handle.js']) {
   _$jscoverage['/touch/handle.js'].lineData[237] = 0;
   _$jscoverage['/touch/handle.js'].lineData[238] = 0;
   _$jscoverage['/touch/handle.js'].lineData[239] = 0;
-  _$jscoverage['/touch/handle.js'].lineData[240] = 0;
+  _$jscoverage['/touch/handle.js'].lineData[241] = 0;
   _$jscoverage['/touch/handle.js'].lineData[242] = 0;
   _$jscoverage['/touch/handle.js'].lineData[243] = 0;
   _$jscoverage['/touch/handle.js'].lineData[244] = 0;
-  _$jscoverage['/touch/handle.js'].lineData[246] = 0;
-  _$jscoverage['/touch/handle.js'].lineData[249] = 0;
-  _$jscoverage['/touch/handle.js'].lineData[253] = 0;
+  _$jscoverage['/touch/handle.js'].lineData[245] = 0;
+  _$jscoverage['/touch/handle.js'].lineData[248] = 0;
+  _$jscoverage['/touch/handle.js'].lineData[252] = 0;
+  _$jscoverage['/touch/handle.js'].lineData[254] = 0;
   _$jscoverage['/touch/handle.js'].lineData[255] = 0;
   _$jscoverage['/touch/handle.js'].lineData[256] = 0;
-  _$jscoverage['/touch/handle.js'].lineData[257] = 0;
+  _$jscoverage['/touch/handle.js'].lineData[260] = 0;
   _$jscoverage['/touch/handle.js'].lineData[261] = 0;
   _$jscoverage['/touch/handle.js'].lineData[262] = 0;
   _$jscoverage['/touch/handle.js'].lineData[263] = 0;
   _$jscoverage['/touch/handle.js'].lineData[264] = 0;
-  _$jscoverage['/touch/handle.js'].lineData[265] = 0;
+  _$jscoverage['/touch/handle.js'].lineData[266] = 0;
   _$jscoverage['/touch/handle.js'].lineData[267] = 0;
   _$jscoverage['/touch/handle.js'].lineData[268] = 0;
   _$jscoverage['/touch/handle.js'].lineData[269] = 0;
   _$jscoverage['/touch/handle.js'].lineData[270] = 0;
   _$jscoverage['/touch/handle.js'].lineData[271] = 0;
-  _$jscoverage['/touch/handle.js'].lineData[272] = 0;
-  _$jscoverage['/touch/handle.js'].lineData[278] = 0;
-  _$jscoverage['/touch/handle.js'].lineData[282] = 0;
+  _$jscoverage['/touch/handle.js'].lineData[277] = 0;
+  _$jscoverage['/touch/handle.js'].lineData[281] = 0;
+  _$jscoverage['/touch/handle.js'].lineData[283] = 0;
   _$jscoverage['/touch/handle.js'].lineData[284] = 0;
-  _$jscoverage['/touch/handle.js'].lineData[285] = 0;
-  _$jscoverage['/touch/handle.js'].lineData[287] = 0;
+  _$jscoverage['/touch/handle.js'].lineData[286] = 0;
+  _$jscoverage['/touch/handle.js'].lineData[288] = 0;
   _$jscoverage['/touch/handle.js'].lineData[289] = 0;
   _$jscoverage['/touch/handle.js'].lineData[290] = 0;
-  _$jscoverage['/touch/handle.js'].lineData[291] = 0;
-  _$jscoverage['/touch/handle.js'].lineData[293] = 0;
+  _$jscoverage['/touch/handle.js'].lineData[292] = 0;
+  _$jscoverage['/touch/handle.js'].lineData[294] = 0;
   _$jscoverage['/touch/handle.js'].lineData[295] = 0;
-  _$jscoverage['/touch/handle.js'].lineData[296] = 0;
+  _$jscoverage['/touch/handle.js'].lineData[299] = 0;
   _$jscoverage['/touch/handle.js'].lineData[300] = 0;
   _$jscoverage['/touch/handle.js'].lineData[301] = 0;
-  _$jscoverage['/touch/handle.js'].lineData[302] = 0;
-  _$jscoverage['/touch/handle.js'].lineData[307] = 0;
+  _$jscoverage['/touch/handle.js'].lineData[306] = 0;
+  _$jscoverage['/touch/handle.js'].lineData[309] = 0;
   _$jscoverage['/touch/handle.js'].lineData[310] = 0;
-  _$jscoverage['/touch/handle.js'].lineData[311] = 0;
-  _$jscoverage['/touch/handle.js'].lineData[313] = 0;
+  _$jscoverage['/touch/handle.js'].lineData[312] = 0;
+  _$jscoverage['/touch/handle.js'].lineData[320] = 0;
   _$jscoverage['/touch/handle.js'].lineData[321] = 0;
   _$jscoverage['/touch/handle.js'].lineData[322] = 0;
   _$jscoverage['/touch/handle.js'].lineData[323] = 0;
   _$jscoverage['/touch/handle.js'].lineData[324] = 0;
-  _$jscoverage['/touch/handle.js'].lineData[325] = 0;
-  _$jscoverage['/touch/handle.js'].lineData[331] = 0;
+  _$jscoverage['/touch/handle.js'].lineData[330] = 0;
+  _$jscoverage['/touch/handle.js'].lineData[332] = 0;
   _$jscoverage['/touch/handle.js'].lineData[333] = 0;
   _$jscoverage['/touch/handle.js'].lineData[334] = 0;
-  _$jscoverage['/touch/handle.js'].lineData[335] = 0;
-  _$jscoverage['/touch/handle.js'].lineData[339] = 0;
-  _$jscoverage['/touch/handle.js'].lineData[341] = 0;
+  _$jscoverage['/touch/handle.js'].lineData[338] = 0;
+  _$jscoverage['/touch/handle.js'].lineData[340] = 0;
+  _$jscoverage['/touch/handle.js'].lineData[342] = 0;
   _$jscoverage['/touch/handle.js'].lineData[343] = 0;
-  _$jscoverage['/touch/handle.js'].lineData[344] = 0;
+  _$jscoverage['/touch/handle.js'].lineData[345] = 0;
   _$jscoverage['/touch/handle.js'].lineData[346] = 0;
-  _$jscoverage['/touch/handle.js'].lineData[347] = 0;
-  _$jscoverage['/touch/handle.js'].lineData[352] = 0;
+  _$jscoverage['/touch/handle.js'].lineData[351] = 0;
+  _$jscoverage['/touch/handle.js'].lineData[353] = 0;
   _$jscoverage['/touch/handle.js'].lineData[354] = 0;
   _$jscoverage['/touch/handle.js'].lineData[355] = 0;
-  _$jscoverage['/touch/handle.js'].lineData[356] = 0;
+  _$jscoverage['/touch/handle.js'].lineData[357] = 0;
   _$jscoverage['/touch/handle.js'].lineData[358] = 0;
   _$jscoverage['/touch/handle.js'].lineData[359] = 0;
-  _$jscoverage['/touch/handle.js'].lineData[360] = 0;
 }
 if (! _$jscoverage['/touch/handle.js'].functionData) {
   _$jscoverage['/touch/handle.js'].functionData = [];
@@ -501,140 +501,140 @@ if (! _$jscoverage['/touch/handle.js'].branchData) {
   _$jscoverage['/touch/handle.js'].branchData['237'][1] = new BranchData();
   _$jscoverage['/touch/handle.js'].branchData['238'] = [];
   _$jscoverage['/touch/handle.js'].branchData['238'][1] = new BranchData();
-  _$jscoverage['/touch/handle.js'].branchData['239'] = [];
-  _$jscoverage['/touch/handle.js'].branchData['239'][1] = new BranchData();
-  _$jscoverage['/touch/handle.js'].branchData['243'] = [];
-  _$jscoverage['/touch/handle.js'].branchData['243'][1] = new BranchData();
+  _$jscoverage['/touch/handle.js'].branchData['242'] = [];
+  _$jscoverage['/touch/handle.js'].branchData['242'][1] = new BranchData();
+  _$jscoverage['/touch/handle.js'].branchData['244'] = [];
+  _$jscoverage['/touch/handle.js'].branchData['244'][1] = new BranchData();
+  _$jscoverage['/touch/handle.js'].branchData['254'] = [];
+  _$jscoverage['/touch/handle.js'].branchData['254'][1] = new BranchData();
   _$jscoverage['/touch/handle.js'].branchData['255'] = [];
   _$jscoverage['/touch/handle.js'].branchData['255'][1] = new BranchData();
-  _$jscoverage['/touch/handle.js'].branchData['256'] = [];
-  _$jscoverage['/touch/handle.js'].branchData['256'][1] = new BranchData();
-  _$jscoverage['/touch/handle.js'].branchData['262'] = [];
-  _$jscoverage['/touch/handle.js'].branchData['262'][1] = new BranchData();
-  _$jscoverage['/touch/handle.js'].branchData['267'] = [];
-  _$jscoverage['/touch/handle.js'].branchData['267'][1] = new BranchData();
-  _$jscoverage['/touch/handle.js'].branchData['269'] = [];
-  _$jscoverage['/touch/handle.js'].branchData['269'][1] = new BranchData();
-  _$jscoverage['/touch/handle.js'].branchData['271'] = [];
-  _$jscoverage['/touch/handle.js'].branchData['271'][1] = new BranchData();
-  _$jscoverage['/touch/handle.js'].branchData['284'] = [];
-  _$jscoverage['/touch/handle.js'].branchData['284'][1] = new BranchData();
-  _$jscoverage['/touch/handle.js'].branchData['290'] = [];
-  _$jscoverage['/touch/handle.js'].branchData['290'][1] = new BranchData();
-  _$jscoverage['/touch/handle.js'].branchData['295'] = [];
-  _$jscoverage['/touch/handle.js'].branchData['295'][1] = new BranchData();
-  _$jscoverage['/touch/handle.js'].branchData['295'][2] = new BranchData();
-  _$jscoverage['/touch/handle.js'].branchData['295'][3] = new BranchData();
-  _$jscoverage['/touch/handle.js'].branchData['310'] = [];
-  _$jscoverage['/touch/handle.js'].branchData['310'][1] = new BranchData();
-  _$jscoverage['/touch/handle.js'].branchData['322'] = [];
-  _$jscoverage['/touch/handle.js'].branchData['322'][1] = new BranchData();
-  _$jscoverage['/touch/handle.js'].branchData['324'] = [];
-  _$jscoverage['/touch/handle.js'].branchData['324'][1] = new BranchData();
-  _$jscoverage['/touch/handle.js'].branchData['343'] = [];
-  _$jscoverage['/touch/handle.js'].branchData['343'][1] = new BranchData();
-  _$jscoverage['/touch/handle.js'].branchData['346'] = [];
-  _$jscoverage['/touch/handle.js'].branchData['346'][1] = new BranchData();
+  _$jscoverage['/touch/handle.js'].branchData['261'] = [];
+  _$jscoverage['/touch/handle.js'].branchData['261'][1] = new BranchData();
+  _$jscoverage['/touch/handle.js'].branchData['266'] = [];
+  _$jscoverage['/touch/handle.js'].branchData['266'][1] = new BranchData();
+  _$jscoverage['/touch/handle.js'].branchData['268'] = [];
+  _$jscoverage['/touch/handle.js'].branchData['268'][1] = new BranchData();
+  _$jscoverage['/touch/handle.js'].branchData['270'] = [];
+  _$jscoverage['/touch/handle.js'].branchData['270'][1] = new BranchData();
+  _$jscoverage['/touch/handle.js'].branchData['283'] = [];
+  _$jscoverage['/touch/handle.js'].branchData['283'][1] = new BranchData();
+  _$jscoverage['/touch/handle.js'].branchData['289'] = [];
+  _$jscoverage['/touch/handle.js'].branchData['289'][1] = new BranchData();
+  _$jscoverage['/touch/handle.js'].branchData['294'] = [];
+  _$jscoverage['/touch/handle.js'].branchData['294'][1] = new BranchData();
+  _$jscoverage['/touch/handle.js'].branchData['294'][2] = new BranchData();
+  _$jscoverage['/touch/handle.js'].branchData['294'][3] = new BranchData();
+  _$jscoverage['/touch/handle.js'].branchData['309'] = [];
+  _$jscoverage['/touch/handle.js'].branchData['309'][1] = new BranchData();
+  _$jscoverage['/touch/handle.js'].branchData['321'] = [];
+  _$jscoverage['/touch/handle.js'].branchData['321'][1] = new BranchData();
+  _$jscoverage['/touch/handle.js'].branchData['323'] = [];
+  _$jscoverage['/touch/handle.js'].branchData['323'][1] = new BranchData();
+  _$jscoverage['/touch/handle.js'].branchData['342'] = [];
+  _$jscoverage['/touch/handle.js'].branchData['342'][1] = new BranchData();
+  _$jscoverage['/touch/handle.js'].branchData['345'] = [];
+  _$jscoverage['/touch/handle.js'].branchData['345'][1] = new BranchData();
+  _$jscoverage['/touch/handle.js'].branchData['353'] = [];
+  _$jscoverage['/touch/handle.js'].branchData['353'][1] = new BranchData();
   _$jscoverage['/touch/handle.js'].branchData['354'] = [];
   _$jscoverage['/touch/handle.js'].branchData['354'][1] = new BranchData();
-  _$jscoverage['/touch/handle.js'].branchData['355'] = [];
-  _$jscoverage['/touch/handle.js'].branchData['355'][1] = new BranchData();
-  _$jscoverage['/touch/handle.js'].branchData['358'] = [];
-  _$jscoverage['/touch/handle.js'].branchData['358'][1] = new BranchData();
+  _$jscoverage['/touch/handle.js'].branchData['357'] = [];
+  _$jscoverage['/touch/handle.js'].branchData['357'][1] = new BranchData();
 }
-_$jscoverage['/touch/handle.js'].branchData['358'][1].init(121, 35, 'S.isEmptyObject(handle.eventHandle)');
-function visit58_358_1(result) {
-  _$jscoverage['/touch/handle.js'].branchData['358'][1].ranCondition(result);
+_$jscoverage['/touch/handle.js'].branchData['357'][1].init(121, 35, 'S.isEmptyObject(handle.eventHandle)');
+function visit58_357_1(result) {
+  _$jscoverage['/touch/handle.js'].branchData['357'][1].ranCondition(result);
   return result;
-}_$jscoverage['/touch/handle.js'].branchData['355'][1].init(21, 5, 'event');
-function visit57_355_1(result) {
-  _$jscoverage['/touch/handle.js'].branchData['355'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/touch/handle.js'].branchData['354'][1].init(105, 6, 'handle');
-function visit56_354_1(result) {
+}_$jscoverage['/touch/handle.js'].branchData['354'][1].init(21, 5, 'event');
+function visit57_354_1(result) {
   _$jscoverage['/touch/handle.js'].branchData['354'][1].ranCondition(result);
   return result;
-}_$jscoverage['/touch/handle.js'].branchData['346'][1].init(217, 5, 'event');
-function visit55_346_1(result) {
-  _$jscoverage['/touch/handle.js'].branchData['346'][1].ranCondition(result);
+}_$jscoverage['/touch/handle.js'].branchData['353'][1].init(105, 6, 'handle');
+function visit56_353_1(result) {
+  _$jscoverage['/touch/handle.js'].branchData['353'][1].ranCondition(result);
   return result;
-}_$jscoverage['/touch/handle.js'].branchData['343'][1].init(105, 7, '!handle');
-function visit54_343_1(result) {
-  _$jscoverage['/touch/handle.js'].branchData['343'][1].ranCondition(result);
+}_$jscoverage['/touch/handle.js'].branchData['345'][1].init(217, 5, 'event');
+function visit55_345_1(result) {
+  _$jscoverage['/touch/handle.js'].branchData['345'][1].ranCondition(result);
   return result;
-}_$jscoverage['/touch/handle.js'].branchData['324'][1].init(65, 25, '!eventHandle[event].count');
-function visit53_324_1(result) {
-  _$jscoverage['/touch/handle.js'].branchData['324'][1].ranCondition(result);
+}_$jscoverage['/touch/handle.js'].branchData['342'][1].init(105, 7, '!handle');
+function visit54_342_1(result) {
+  _$jscoverage['/touch/handle.js'].branchData['342'][1].ranCondition(result);
   return result;
-}_$jscoverage['/touch/handle.js'].branchData['322'][1].init(65, 18, 'eventHandle[event]');
-function visit52_322_1(result) {
-  _$jscoverage['/touch/handle.js'].branchData['322'][1].ranCondition(result);
+}_$jscoverage['/touch/handle.js'].branchData['323'][1].init(65, 25, '!eventHandle[event].count');
+function visit53_323_1(result) {
+  _$jscoverage['/touch/handle.js'].branchData['323'][1].ranCondition(result);
   return result;
-}_$jscoverage['/touch/handle.js'].branchData['310'][1].init(149, 18, 'eventHandle[event]');
-function visit51_310_1(result) {
-  _$jscoverage['/touch/handle.js'].branchData['310'][1].ranCondition(result);
+}_$jscoverage['/touch/handle.js'].branchData['321'][1].init(65, 18, 'eventHandle[event]');
+function visit52_321_1(result) {
+  _$jscoverage['/touch/handle.js'].branchData['321'][1].ranCondition(result);
   return result;
-}_$jscoverage['/touch/handle.js'].branchData['295'][3].init(303, 26, 'h[method](event) === false');
-function visit50_295_3(result) {
-  _$jscoverage['/touch/handle.js'].branchData['295'][3].ranCondition(result);
+}_$jscoverage['/touch/handle.js'].branchData['309'][1].init(149, 18, 'eventHandle[event]');
+function visit51_309_1(result) {
+  _$jscoverage['/touch/handle.js'].branchData['309'][1].ranCondition(result);
   return result;
-}_$jscoverage['/touch/handle.js'].branchData['295'][2].init(290, 39, 'h[method] && h[method](event) === false');
-function visit49_295_2(result) {
-  _$jscoverage['/touch/handle.js'].branchData['295'][2].ranCondition(result);
+}_$jscoverage['/touch/handle.js'].branchData['294'][3].init(303, 26, 'h[method](event) === false');
+function visit50_294_3(result) {
+  _$jscoverage['/touch/handle.js'].branchData['294'][3].ranCondition(result);
   return result;
-}_$jscoverage['/touch/handle.js'].branchData['295'][1].init(276, 53, 'h.isActive && h[method] && h[method](event) === false');
-function visit48_295_1(result) {
-  _$jscoverage['/touch/handle.js'].branchData['295'][1].ranCondition(result);
+}_$jscoverage['/touch/handle.js'].branchData['294'][2].init(290, 39, 'h[method] && h[method](event) === false');
+function visit49_294_2(result) {
+  _$jscoverage['/touch/handle.js'].branchData['294'][2].ranCondition(result);
   return result;
-}_$jscoverage['/touch/handle.js'].branchData['290'][1].init(125, 11, 'h.processed');
-function visit47_290_1(result) {
-  _$jscoverage['/touch/handle.js'].branchData['290'][1].ranCondition(result);
+}_$jscoverage['/touch/handle.js'].branchData['294'][1].init(276, 53, 'h.isActive && h[method] && h[method](event) === false');
+function visit48_294_1(result) {
+  _$jscoverage['/touch/handle.js'].branchData['294'][1].ranCondition(result);
   return result;
-}_$jscoverage['/touch/handle.js'].branchData['284'][1].init(238, 28, '!event.changedTouches.length');
-function visit46_284_1(result) {
-  _$jscoverage['/touch/handle.js'].branchData['284'][1].ranCondition(result);
+}_$jscoverage['/touch/handle.js'].branchData['289'][1].init(125, 11, 'h.processed');
+function visit47_289_1(result) {
+  _$jscoverage['/touch/handle.js'].branchData['289'][1].ranCondition(result);
   return result;
-}_$jscoverage['/touch/handle.js'].branchData['271'][1].init(76, 20, '!self.touches.length');
-function visit45_271_1(result) {
-  _$jscoverage['/touch/handle.js'].branchData['271'][1].ranCondition(result);
+}_$jscoverage['/touch/handle.js'].branchData['283'][1].init(238, 28, '!event.changedTouches.length');
+function visit46_283_1(result) {
+  _$jscoverage['/touch/handle.js'].branchData['283'][1].ranCondition(result);
   return result;
-}_$jscoverage['/touch/handle.js'].branchData['269'][1].init(610, 20, 'isPointerEvent(type)');
-function visit44_269_1(result) {
-  _$jscoverage['/touch/handle.js'].branchData['269'][1].ranCondition(result);
+}_$jscoverage['/touch/handle.js'].branchData['270'][1].init(76, 20, '!self.touches.length');
+function visit45_270_1(result) {
+  _$jscoverage['/touch/handle.js'].branchData['270'][1].ranCondition(result);
   return result;
-}_$jscoverage['/touch/handle.js'].branchData['267'][1].init(529, 18, 'isMouseEvent(type)');
-function visit43_267_1(result) {
-  _$jscoverage['/touch/handle.js'].branchData['267'][1].ranCondition(result);
+}_$jscoverage['/touch/handle.js'].branchData['268'][1].init(610, 20, 'isPointerEvent(type)');
+function visit44_268_1(result) {
+  _$jscoverage['/touch/handle.js'].branchData['268'][1].ranCondition(result);
   return result;
-}_$jscoverage['/touch/handle.js'].branchData['262'][1].init(296, 18, 'isTouchEvent(type)');
-function visit42_262_1(result) {
-  _$jscoverage['/touch/handle.js'].branchData['262'][1].ranCondition(result);
+}_$jscoverage['/touch/handle.js'].branchData['266'][1].init(529, 18, 'isMouseEvent(type)');
+function visit43_266_1(result) {
+  _$jscoverage['/touch/handle.js'].branchData['266'][1].ranCondition(result);
   return result;
-}_$jscoverage['/touch/handle.js'].branchData['256'][1].init(21, 37, 'self.isEventSimulatedFromTouch(event)');
-function visit41_256_1(result) {
-  _$jscoverage['/touch/handle.js'].branchData['256'][1].ranCondition(result);
+}_$jscoverage['/touch/handle.js'].branchData['261'][1].init(296, 18, 'isTouchEvent(type)');
+function visit42_261_1(result) {
+  _$jscoverage['/touch/handle.js'].branchData['261'][1].ranCondition(result);
   return result;
-}_$jscoverage['/touch/handle.js'].branchData['255'][1].init(81, 18, 'isMouseEvent(type)');
-function visit40_255_1(result) {
+}_$jscoverage['/touch/handle.js'].branchData['255'][1].init(21, 37, 'self.isEventSimulatedFromTouch(event)');
+function visit41_255_1(result) {
   _$jscoverage['/touch/handle.js'].branchData['255'][1].ranCondition(result);
   return result;
-}_$jscoverage['/touch/handle.js'].branchData['243'][1].init(333, 20, 'isPointerEvent(type)');
-function visit39_243_1(result) {
-  _$jscoverage['/touch/handle.js'].branchData['243'][1].ranCondition(result);
+}_$jscoverage['/touch/handle.js'].branchData['254'][1].init(81, 18, 'isMouseEvent(type)');
+function visit40_254_1(result) {
+  _$jscoverage['/touch/handle.js'].branchData['254'][1].ranCondition(result);
   return result;
-}_$jscoverage['/touch/handle.js'].branchData['239'][1].init(21, 36, 'self.isEventSimulatedFromTouch(type)');
-function visit38_239_1(result) {
-  _$jscoverage['/touch/handle.js'].branchData['239'][1].ranCondition(result);
+}_$jscoverage['/touch/handle.js'].branchData['244'][1].init(390, 15, '!isTouchEvent()');
+function visit39_244_1(result) {
+  _$jscoverage['/touch/handle.js'].branchData['244'][1].ranCondition(result);
   return result;
-}_$jscoverage['/touch/handle.js'].branchData['238'][1].init(127, 18, 'isMouseEvent(type)');
+}_$jscoverage['/touch/handle.js'].branchData['242'][1].init(287, 20, 'isPointerEvent(type)');
+function visit38_242_1(result) {
+  _$jscoverage['/touch/handle.js'].branchData['242'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/touch/handle.js'].branchData['238'][1].init(21, 36, 'self.isEventSimulatedFromTouch(type)');
 function visit37_238_1(result) {
   _$jscoverage['/touch/handle.js'].branchData['238'][1].ranCondition(result);
   return result;
-}_$jscoverage['/touch/handle.js'].branchData['237'][1].init(81, 18, 'isTouchEvent(type)');
+}_$jscoverage['/touch/handle.js'].branchData['237'][1].init(81, 18, 'isMouseEvent(type)');
 function visit36_237_1(result) {
   _$jscoverage['/touch/handle.js'].branchData['237'][1].ranCondition(result);
   return result;
-}_$jscoverage['/touch/handle.js'].branchData['219'][1].init(73, 24, 'self.touches.length == 1');
+}_$jscoverage['/touch/handle.js'].branchData['219'][1].init(73, 25, 'self.touches.length === 1');
 function visit35_219_1(result) {
   _$jscoverage['/touch/handle.js'].branchData['219'][1].ranCondition(result);
   return result;
@@ -654,19 +654,19 @@ function visit32_212_1(result) {
 function visit31_209_1(result) {
   _$jscoverage['/touch/handle.js'].branchData['209'][1].ranCondition(result);
   return result;
-}_$jscoverage['/touch/handle.js'].branchData['188'][1].init(167, 21, 'touchList.length == 1');
+}_$jscoverage['/touch/handle.js'].branchData['188'][1].init(169, 22, 'touchList.length === 1');
 function visit30_188_1(result) {
   _$jscoverage['/touch/handle.js'].branchData['188'][1].ranCondition(result);
   return result;
-}_$jscoverage['/touch/handle.js'].branchData['185'][3].init(52, 21, 'type == \'touchcancel\'');
+}_$jscoverage['/touch/handle.js'].branchData['185'][3].init(53, 22, 'type === \'touchcancel\'');
 function visit29_185_3(result) {
   _$jscoverage['/touch/handle.js'].branchData['185'][3].ranCondition(result);
   return result;
-}_$jscoverage['/touch/handle.js'].branchData['185'][2].init(30, 18, 'type == \'touchend\'');
+}_$jscoverage['/touch/handle.js'].branchData['185'][2].init(30, 19, 'type === \'touchend\'');
 function visit28_185_2(result) {
   _$jscoverage['/touch/handle.js'].branchData['185'][2].ranCondition(result);
   return result;
-}_$jscoverage['/touch/handle.js'].branchData['185'][1].init(30, 43, 'type == \'touchend\' || type == \'touchcancel\'');
+}_$jscoverage['/touch/handle.js'].branchData['185'][1].init(30, 45, 'type === \'touchend\' || type === \'touchcancel\'');
 function visit27_185_1(result) {
   _$jscoverage['/touch/handle.js'].branchData['185'][1].ranCondition(result);
   return result;
@@ -714,19 +714,19 @@ function visit17_135_1(result) {
 function visit16_131_1(result) {
   _$jscoverage['/touch/handle.js'].branchData['131'][1].ranCondition(result);
   return result;
-}_$jscoverage['/touch/handle.js'].branchData['124'][1].init(57, 32, 'touch[\'pointerId\'] === pointerId');
+}_$jscoverage['/touch/handle.js'].branchData['124'][1].init(57, 29, 'touch.pointerId === pointerId');
 function visit15_124_1(result) {
   _$jscoverage['/touch/handle.js'].branchData['124'][1].ranCondition(result);
   return result;
-}_$jscoverage['/touch/handle.js'].branchData['122'][1].init(198, 5, 'i < l');
+}_$jscoverage['/touch/handle.js'].branchData['122'][1].init(195, 5, 'i < l');
 function visit14_122_1(result) {
   _$jscoverage['/touch/handle.js'].branchData['122'][1].ranCondition(result);
   return result;
-}_$jscoverage['/touch/handle.js'].branchData['109'][1].init(57, 32, 'touch[\'pointerId\'] === pointerId');
+}_$jscoverage['/touch/handle.js'].branchData['109'][1].init(57, 29, 'touch.pointerId === pointerId');
 function visit13_109_1(result) {
   _$jscoverage['/touch/handle.js'].branchData['109'][1].ranCondition(result);
   return result;
-}_$jscoverage['/touch/handle.js'].branchData['107'][1].init(198, 5, 'i < l');
+}_$jscoverage['/touch/handle.js'].branchData['107'][1].init(195, 5, 'i < l');
 function visit12_107_1(result) {
   _$jscoverage['/touch/handle.js'].branchData['107'][1].ranCondition(result);
   return result;
@@ -883,20 +883,20 @@ KISSY.add(function(S, require) {
   addTouch: function(originalEvent) {
   _$jscoverage['/touch/handle.js'].functionData[6]++;
   _$jscoverage['/touch/handle.js'].lineData[97]++;
-  originalEvent.identifier = originalEvent['pointerId'];
+  originalEvent.identifier = originalEvent.pointerId;
   _$jscoverage['/touch/handle.js'].lineData[98]++;
   this.touches.push(originalEvent);
 }, 
   removeTouch: function(originalEvent) {
   _$jscoverage['/touch/handle.js'].functionData[7]++;
   _$jscoverage['/touch/handle.js'].lineData[102]++;
-  var i = 0, touch, pointerId = originalEvent['pointerId'], touches = this.touches, l = touches.length;
+  var i = 0, touch, pointerId = originalEvent.pointerId, touches = this.touches, l = touches.length;
   _$jscoverage['/touch/handle.js'].lineData[107]++;
   for (; visit12_107_1(i < l); i++) {
     _$jscoverage['/touch/handle.js'].lineData[108]++;
     touch = touches[i];
     _$jscoverage['/touch/handle.js'].lineData[109]++;
-    if (visit13_109_1(touch['pointerId'] === pointerId)) {
+    if (visit13_109_1(touch.pointerId === pointerId)) {
       _$jscoverage['/touch/handle.js'].lineData[110]++;
       touches.splice(i, 1);
       _$jscoverage['/touch/handle.js'].lineData[111]++;
@@ -907,13 +907,13 @@ KISSY.add(function(S, require) {
   updateTouch: function(originalEvent) {
   _$jscoverage['/touch/handle.js'].functionData[8]++;
   _$jscoverage['/touch/handle.js'].lineData[117]++;
-  var i = 0, touch, pointerId = originalEvent['pointerId'], touches = this.touches, l = touches.length;
+  var i = 0, touch, pointerId = originalEvent.pointerId, touches = this.touches, l = touches.length;
   _$jscoverage['/touch/handle.js'].lineData[122]++;
   for (; visit14_122_1(i < l); i++) {
     _$jscoverage['/touch/handle.js'].lineData[123]++;
     touch = touches[i];
     _$jscoverage['/touch/handle.js'].lineData[124]++;
-    if (visit15_124_1(touch['pointerId'] === pointerId)) {
+    if (visit15_124_1(touch.pointerId === pointerId)) {
       _$jscoverage['/touch/handle.js'].lineData[125]++;
       touches[i] = originalEvent;
     }
@@ -993,9 +993,9 @@ KISSY.add(function(S, require) {
   _$jscoverage['/touch/handle.js'].lineData[184]++;
   if (visit26_184_1(isTouchEvent(type))) {
     _$jscoverage['/touch/handle.js'].lineData[185]++;
-    touchList = (visit27_185_1(visit28_185_2(type == 'touchend') || visit29_185_3(type == 'touchcancel'))) ? e.changedTouches : e.touches;
+    touchList = (visit27_185_1(visit28_185_2(type === 'touchend') || visit29_185_3(type === 'touchcancel'))) ? e.changedTouches : e.touches;
     _$jscoverage['/touch/handle.js'].lineData[188]++;
-    if (visit30_188_1(touchList.length == 1)) {
+    if (visit30_188_1(touchList.length === 1)) {
       _$jscoverage['/touch/handle.js'].lineData[189]++;
       e.which = 1;
       _$jscoverage['/touch/handle.js'].lineData[190]++;
@@ -1046,7 +1046,7 @@ KISSY.add(function(S, require) {
         _$jscoverage['/touch/handle.js'].lineData[218]++;
         self.addTouch(event.originalEvent);
         _$jscoverage['/touch/handle.js'].lineData[219]++;
-        if (visit35_219_1(self.touches.length == 1)) {
+        if (visit35_219_1(self.touches.length === 1)) {
           _$jscoverage['/touch/handle.js'].lineData[220]++;
           DomEvent.on(self.doc, gestureMoveEvent, self.onTouchMove, self);
         }
@@ -1071,68 +1071,67 @@ KISSY.add(function(S, require) {
   _$jscoverage['/touch/handle.js'].lineData[235]++;
   var self = this, type = event.type;
   _$jscoverage['/touch/handle.js'].lineData[237]++;
-  if (visit36_237_1(isTouchEvent(type))) {
-  } else {
+  if (visit36_237_1(isMouseEvent(type))) {
     _$jscoverage['/touch/handle.js'].lineData[238]++;
-    if (visit37_238_1(isMouseEvent(type))) {
+    if (visit37_238_1(self.isEventSimulatedFromTouch(type))) {
       _$jscoverage['/touch/handle.js'].lineData[239]++;
-      if (visit38_239_1(self.isEventSimulatedFromTouch(type))) {
-        _$jscoverage['/touch/handle.js'].lineData[240]++;
-        return;
-      }
-      _$jscoverage['/touch/handle.js'].lineData[242]++;
-      self.touches = [event.originalEvent];
-    } else {
+      return;
+    }
+    _$jscoverage['/touch/handle.js'].lineData[241]++;
+    self.touches = [event.originalEvent];
+  } else {
+    _$jscoverage['/touch/handle.js'].lineData[242]++;
+    if (visit38_242_1(isPointerEvent(type))) {
       _$jscoverage['/touch/handle.js'].lineData[243]++;
-      if (visit39_243_1(isPointerEvent(type))) {
-        _$jscoverage['/touch/handle.js'].lineData[244]++;
-        self.updateTouch(event.originalEvent);
-      } else {
-        _$jscoverage['/touch/handle.js'].lineData[246]++;
+      self.updateTouch(event.originalEvent);
+    } else {
+      _$jscoverage['/touch/handle.js'].lineData[244]++;
+      if (visit39_244_1(!isTouchEvent())) {
+        _$jscoverage['/touch/handle.js'].lineData[245]++;
         throw new Error('unrecognized touch event: ' + event.type);
       }
     }
   }
-  _$jscoverage['/touch/handle.js'].lineData[249]++;
+  _$jscoverage['/touch/handle.js'].lineData[248]++;
   self.callEventHandle('onTouchMove', event);
 }, 
   onTouchEnd: function(event) {
   _$jscoverage['/touch/handle.js'].functionData[18]++;
-  _$jscoverage['/touch/handle.js'].lineData[253]++;
+  _$jscoverage['/touch/handle.js'].lineData[252]++;
   var self = this, type = event.type;
-  _$jscoverage['/touch/handle.js'].lineData[255]++;
-  if (visit40_255_1(isMouseEvent(type))) {
-    _$jscoverage['/touch/handle.js'].lineData[256]++;
-    if (visit41_256_1(self.isEventSimulatedFromTouch(event))) {
-      _$jscoverage['/touch/handle.js'].lineData[257]++;
+  _$jscoverage['/touch/handle.js'].lineData[254]++;
+  if (visit40_254_1(isMouseEvent(type))) {
+    _$jscoverage['/touch/handle.js'].lineData[255]++;
+    if (visit41_255_1(self.isEventSimulatedFromTouch(event))) {
+      _$jscoverage['/touch/handle.js'].lineData[256]++;
       return;
     }
   }
-  _$jscoverage['/touch/handle.js'].lineData[261]++;
+  _$jscoverage['/touch/handle.js'].lineData[260]++;
   self.callEventHandle('onTouchEnd', event);
-  _$jscoverage['/touch/handle.js'].lineData[262]++;
-  if (visit42_262_1(isTouchEvent(type))) {
-    _$jscoverage['/touch/handle.js'].lineData[263]++;
+  _$jscoverage['/touch/handle.js'].lineData[261]++;
+  if (visit42_261_1(isTouchEvent(type))) {
+    _$jscoverage['/touch/handle.js'].lineData[262]++;
     self.dupMouse(event);
-    _$jscoverage['/touch/handle.js'].lineData[264]++;
+    _$jscoverage['/touch/handle.js'].lineData[263]++;
     S.makeArray(event.changedTouches).forEach(function(touch) {
   _$jscoverage['/touch/handle.js'].functionData[19]++;
-  _$jscoverage['/touch/handle.js'].lineData[265]++;
+  _$jscoverage['/touch/handle.js'].lineData[264]++;
   self.removePrimaryTouch(touch);
 });
   } else {
-    _$jscoverage['/touch/handle.js'].lineData[267]++;
-    if (visit43_267_1(isMouseEvent(type))) {
-      _$jscoverage['/touch/handle.js'].lineData[268]++;
+    _$jscoverage['/touch/handle.js'].lineData[266]++;
+    if (visit43_266_1(isMouseEvent(type))) {
+      _$jscoverage['/touch/handle.js'].lineData[267]++;
       self.touches = [];
     } else {
-      _$jscoverage['/touch/handle.js'].lineData[269]++;
-      if (visit44_269_1(isPointerEvent(type))) {
-        _$jscoverage['/touch/handle.js'].lineData[270]++;
+      _$jscoverage['/touch/handle.js'].lineData[268]++;
+      if (visit44_268_1(isPointerEvent(type))) {
+        _$jscoverage['/touch/handle.js'].lineData[269]++;
         self.removeTouch(event.originalEvent);
-        _$jscoverage['/touch/handle.js'].lineData[271]++;
-        if (visit45_271_1(!self.touches.length)) {
-          _$jscoverage['/touch/handle.js'].lineData[272]++;
+        _$jscoverage['/touch/handle.js'].lineData[270]++;
+        if (visit45_270_1(!self.touches.length)) {
+          _$jscoverage['/touch/handle.js'].lineData[271]++;
           DomEvent.detach(self.doc, gestureMoveEvent, self.onTouchMove, self);
         }
       }
@@ -1141,50 +1140,50 @@ KISSY.add(function(S, require) {
 }, 
   callEventHandle: function(method, event) {
   _$jscoverage['/touch/handle.js'].functionData[20]++;
-  _$jscoverage['/touch/handle.js'].lineData[278]++;
+  _$jscoverage['/touch/handle.js'].lineData[277]++;
   var self = this, eventHandle = self.eventHandle, e, h;
-  _$jscoverage['/touch/handle.js'].lineData[282]++;
+  _$jscoverage['/touch/handle.js'].lineData[281]++;
   event = self.normalize(event);
-  _$jscoverage['/touch/handle.js'].lineData[284]++;
-  if (visit46_284_1(!event.changedTouches.length)) {
-    _$jscoverage['/touch/handle.js'].lineData[285]++;
+  _$jscoverage['/touch/handle.js'].lineData[283]++;
+  if (visit46_283_1(!event.changedTouches.length)) {
+    _$jscoverage['/touch/handle.js'].lineData[284]++;
     return;
   }
-  _$jscoverage['/touch/handle.js'].lineData[287]++;
+  _$jscoverage['/touch/handle.js'].lineData[286]++;
   for (e in eventHandle) {
-    _$jscoverage['/touch/handle.js'].lineData[289]++;
+    _$jscoverage['/touch/handle.js'].lineData[288]++;
     h = eventHandle[e].handle;
-    _$jscoverage['/touch/handle.js'].lineData[290]++;
-    if (visit47_290_1(h.processed)) {
-      _$jscoverage['/touch/handle.js'].lineData[291]++;
+    _$jscoverage['/touch/handle.js'].lineData[289]++;
+    if (visit47_289_1(h.processed)) {
+      _$jscoverage['/touch/handle.js'].lineData[290]++;
       continue;
     }
-    _$jscoverage['/touch/handle.js'].lineData[293]++;
+    _$jscoverage['/touch/handle.js'].lineData[292]++;
     h.processed = 1;
-    _$jscoverage['/touch/handle.js'].lineData[295]++;
-    if (visit48_295_1(h.isActive && visit49_295_2(h[method] && visit50_295_3(h[method](event) === false)))) {
-      _$jscoverage['/touch/handle.js'].lineData[296]++;
+    _$jscoverage['/touch/handle.js'].lineData[294]++;
+    if (visit48_294_1(h.isActive && visit49_294_2(h[method] && visit50_294_3(h[method](event) === false)))) {
+      _$jscoverage['/touch/handle.js'].lineData[295]++;
       h.isActive = 0;
     }
   }
-  _$jscoverage['/touch/handle.js'].lineData[300]++;
+  _$jscoverage['/touch/handle.js'].lineData[299]++;
   for (e in eventHandle) {
-    _$jscoverage['/touch/handle.js'].lineData[301]++;
+    _$jscoverage['/touch/handle.js'].lineData[300]++;
     h = eventHandle[e].handle;
-    _$jscoverage['/touch/handle.js'].lineData[302]++;
+    _$jscoverage['/touch/handle.js'].lineData[301]++;
     h.processed = 0;
   }
 }, 
   addEventHandle: function(event) {
   _$jscoverage['/touch/handle.js'].functionData[21]++;
-  _$jscoverage['/touch/handle.js'].lineData[307]++;
+  _$jscoverage['/touch/handle.js'].lineData[306]++;
   var self = this, eventHandle = self.eventHandle, handle = eventHandleMap[event].handle;
-  _$jscoverage['/touch/handle.js'].lineData[310]++;
-  if (visit51_310_1(eventHandle[event])) {
-    _$jscoverage['/touch/handle.js'].lineData[311]++;
+  _$jscoverage['/touch/handle.js'].lineData[309]++;
+  if (visit51_309_1(eventHandle[event])) {
+    _$jscoverage['/touch/handle.js'].lineData[310]++;
     eventHandle[event].count++;
   } else {
-    _$jscoverage['/touch/handle.js'].lineData[313]++;
+    _$jscoverage['/touch/handle.js'].lineData[312]++;
     eventHandle[event] = {
   count: 1, 
   handle: handle};
@@ -1192,63 +1191,63 @@ KISSY.add(function(S, require) {
 }, 
   'removeEventHandle': function(event) {
   _$jscoverage['/touch/handle.js'].functionData[22]++;
-  _$jscoverage['/touch/handle.js'].lineData[321]++;
+  _$jscoverage['/touch/handle.js'].lineData[320]++;
   var eventHandle = this.eventHandle;
-  _$jscoverage['/touch/handle.js'].lineData[322]++;
-  if (visit52_322_1(eventHandle[event])) {
-    _$jscoverage['/touch/handle.js'].lineData[323]++;
+  _$jscoverage['/touch/handle.js'].lineData[321]++;
+  if (visit52_321_1(eventHandle[event])) {
+    _$jscoverage['/touch/handle.js'].lineData[322]++;
     eventHandle[event].count--;
-    _$jscoverage['/touch/handle.js'].lineData[324]++;
-    if (visit53_324_1(!eventHandle[event].count)) {
-      _$jscoverage['/touch/handle.js'].lineData[325]++;
+    _$jscoverage['/touch/handle.js'].lineData[323]++;
+    if (visit53_323_1(!eventHandle[event].count)) {
+      _$jscoverage['/touch/handle.js'].lineData[324]++;
       delete eventHandle[event];
     }
   }
 }, 
   destroy: function() {
   _$jscoverage['/touch/handle.js'].functionData[23]++;
-  _$jscoverage['/touch/handle.js'].lineData[331]++;
+  _$jscoverage['/touch/handle.js'].lineData[330]++;
   var self = this, doc = self.doc;
-  _$jscoverage['/touch/handle.js'].lineData[333]++;
+  _$jscoverage['/touch/handle.js'].lineData[332]++;
   DomEvent.detach(doc, gestureStartEvent, self.onTouchStart, self);
-  _$jscoverage['/touch/handle.js'].lineData[334]++;
+  _$jscoverage['/touch/handle.js'].lineData[333]++;
   DomEvent.detach(doc, gestureMoveEvent, self.onTouchMove, self);
-  _$jscoverage['/touch/handle.js'].lineData[335]++;
+  _$jscoverage['/touch/handle.js'].lineData[334]++;
   DomEvent.detach(doc, gestureEndEvent, self.onTouchEnd, self);
 }};
-  _$jscoverage['/touch/handle.js'].lineData[339]++;
+  _$jscoverage['/touch/handle.js'].lineData[338]++;
   return {
   addDocumentHandle: function(el, event) {
   _$jscoverage['/touch/handle.js'].functionData[24]++;
-  _$jscoverage['/touch/handle.js'].lineData[341]++;
+  _$jscoverage['/touch/handle.js'].lineData[340]++;
   var doc = Dom.getDocument(el), handle = Dom.data(doc, key);
-  _$jscoverage['/touch/handle.js'].lineData[343]++;
-  if (visit54_343_1(!handle)) {
-    _$jscoverage['/touch/handle.js'].lineData[344]++;
+  _$jscoverage['/touch/handle.js'].lineData[342]++;
+  if (visit54_342_1(!handle)) {
+    _$jscoverage['/touch/handle.js'].lineData[343]++;
     Dom.data(doc, key, handle = new DocumentHandler(doc));
   }
-  _$jscoverage['/touch/handle.js'].lineData[346]++;
-  if (visit55_346_1(event)) {
-    _$jscoverage['/touch/handle.js'].lineData[347]++;
+  _$jscoverage['/touch/handle.js'].lineData[345]++;
+  if (visit55_345_1(event)) {
+    _$jscoverage['/touch/handle.js'].lineData[346]++;
     handle.addEventHandle(event);
   }
 }, 
   removeDocumentHandle: function(el, event) {
   _$jscoverage['/touch/handle.js'].functionData[25]++;
-  _$jscoverage['/touch/handle.js'].lineData[352]++;
+  _$jscoverage['/touch/handle.js'].lineData[351]++;
   var doc = Dom.getDocument(el), handle = Dom.data(doc, key);
-  _$jscoverage['/touch/handle.js'].lineData[354]++;
-  if (visit56_354_1(handle)) {
-    _$jscoverage['/touch/handle.js'].lineData[355]++;
-    if (visit57_355_1(event)) {
-      _$jscoverage['/touch/handle.js'].lineData[356]++;
+  _$jscoverage['/touch/handle.js'].lineData[353]++;
+  if (visit56_353_1(handle)) {
+    _$jscoverage['/touch/handle.js'].lineData[354]++;
+    if (visit57_354_1(event)) {
+      _$jscoverage['/touch/handle.js'].lineData[355]++;
       handle.removeEventHandle(event);
     }
-    _$jscoverage['/touch/handle.js'].lineData[358]++;
-    if (visit58_358_1(S.isEmptyObject(handle.eventHandle))) {
-      _$jscoverage['/touch/handle.js'].lineData[359]++;
+    _$jscoverage['/touch/handle.js'].lineData[357]++;
+    if (visit58_357_1(S.isEmptyObject(handle.eventHandle))) {
+      _$jscoverage['/touch/handle.js'].lineData[358]++;
       handle.destroy();
-      _$jscoverage['/touch/handle.js'].lineData[360]++;
+      _$jscoverage['/touch/handle.js'].lineData[359]++;
       Dom.removeData(doc, key);
     }
   }

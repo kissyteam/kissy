@@ -327,12 +327,12 @@ KISSY.add(function(S, require) {
   '_onSetHeaderStyle': function(v) {
   _$jscoverage['/overlay/dialog-render.js'].functionData[6]++;
   _$jscoverage['/overlay/dialog-render.js'].lineData[40]++;
-  this.control.get("header").css(v);
+  this.control.get('header').css(v);
 }, 
   '_onSetFooterStyle': function(v) {
   _$jscoverage['/overlay/dialog-render.js'].functionData[7]++;
   _$jscoverage['/overlay/dialog-render.js'].lineData[43]++;
-  this.control.get("footer").css(v);
+  this.control.get('footer').css(v);
 }, 
   '_onSetBodyContent': function(v) {
   _$jscoverage['/overlay/dialog-render.js'].functionData[8]++;
@@ -342,12 +342,12 @@ KISSY.add(function(S, require) {
   '_onSetHeaderContent': function(v) {
   _$jscoverage['/overlay/dialog-render.js'].functionData[9]++;
   _$jscoverage['/overlay/dialog-render.js'].lineData[51]++;
-  _setStdModRenderContent(this, "header", v);
+  _setStdModRenderContent(this, 'header', v);
 }, 
   '_onSetFooterContent': function(v) {
   _$jscoverage['/overlay/dialog-render.js'].functionData[10]++;
   _$jscoverage['/overlay/dialog-render.js'].lineData[55]++;
-  _setStdModRenderContent(this, "footer", v);
+  _setStdModRenderContent(this, 'footer', v);
 }}, {
   ATTRS: {
   contentTpl: {
@@ -356,32 +356,32 @@ KISSY.add(function(S, require) {
   header: function(el) {
   _$jscoverage['/overlay/dialog-render.js'].functionData[11]++;
   _$jscoverage['/overlay/dialog-render.js'].lineData[65]++;
-  return el.one("." + this.getBaseCssClass('header'));
+  return el.one('.' + this.getBaseCssClass('header'));
 }, 
   body: function(el) {
   _$jscoverage['/overlay/dialog-render.js'].functionData[12]++;
   _$jscoverage['/overlay/dialog-render.js'].lineData[68]++;
-  return el.one("." + this.getBaseCssClass('body'));
+  return el.one('.' + this.getBaseCssClass('body'));
 }, 
   footer: function(el) {
   _$jscoverage['/overlay/dialog-render.js'].functionData[13]++;
   _$jscoverage['/overlay/dialog-render.js'].lineData[71]++;
-  return el.one("." + this.getBaseCssClass('footer'));
+  return el.one('.' + this.getBaseCssClass('footer'));
 }, 
   headerContent: function(el) {
   _$jscoverage['/overlay/dialog-render.js'].functionData[14]++;
   _$jscoverage['/overlay/dialog-render.js'].lineData[74]++;
-  return el.one("." + this.getBaseCssClass('header')).html();
+  return el.one('.' + this.getBaseCssClass('header')).html();
 }, 
   bodyContent: function(el) {
   _$jscoverage['/overlay/dialog-render.js'].functionData[15]++;
   _$jscoverage['/overlay/dialog-render.js'].lineData[77]++;
-  return el.one("." + this.getBaseCssClass('body')).html();
+  return el.one('.' + this.getBaseCssClass('body')).html();
 }, 
   footerContent: function(el) {
   _$jscoverage['/overlay/dialog-render.js'].functionData[16]++;
   _$jscoverage['/overlay/dialog-render.js'].lineData[80]++;
-  var footer = el.one("." + this.getBaseCssClass('footer'));
+  var footer = el.one('.' + this.getBaseCssClass('footer'));
   _$jscoverage['/overlay/dialog-render.js'].lineData[81]++;
   return visit5_81_1(footer && footer.html());
 }}});

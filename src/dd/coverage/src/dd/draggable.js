@@ -448,8 +448,6 @@ if (! _$jscoverage['/dd/draggable.js'].branchData) {
   _$jscoverage['/dd/draggable.js'].branchData['406'][1] = new BranchData();
   _$jscoverage['/dd/draggable.js'].branchData['410'] = [];
   _$jscoverage['/dd/draggable.js'].branchData['410'][1] = new BranchData();
-  _$jscoverage['/dd/draggable.js'].branchData['413'] = [];
-  _$jscoverage['/dd/draggable.js'].branchData['413'][1] = new BranchData();
   _$jscoverage['/dd/draggable.js'].branchData['501'] = [];
   _$jscoverage['/dd/draggable.js'].branchData['501'][1] = new BranchData();
   _$jscoverage['/dd/draggable.js'].branchData['580'] = [];
@@ -466,127 +464,123 @@ if (! _$jscoverage['/dd/draggable.js'].branchData) {
   _$jscoverage['/dd/draggable.js'].branchData['874'][1] = new BranchData();
 }
 _$jscoverage['/dd/draggable.js'].branchData['874'][1].init(17, 22, '!self._checkHandler(t)');
-function visit97_874_1(result) {
+function visit94_874_1(result) {
   _$jscoverage['/dd/draggable.js'].branchData['874'][1].ranCondition(result);
   return result;
 }_$jscoverage['/dd/draggable.js'].branchData['873'][1].init(65, 29, 'self._checkDragStartValid(ev)');
-function visit96_873_1(result) {
+function visit93_873_1(result) {
   _$jscoverage['/dd/draggable.js'].branchData['873'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/draggable.js'].branchData['591'][1].init(337, 10, 'v.nodeType');
-function visit95_591_1(result) {
+}_$jscoverage['/dd/draggable.js'].branchData['591'][1].init(338, 10, 'v.nodeType');
+function visit92_591_1(result) {
   _$jscoverage['/dd/draggable.js'].branchData['591'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/draggable.js'].branchData['588'][1].init(202, 20, 'typeof v == \'string\'');
-function visit94_588_1(result) {
+}_$jscoverage['/dd/draggable.js'].branchData['588'][1].init(202, 21, 'typeof v === \'string\'');
+function visit91_588_1(result) {
   _$jscoverage['/dd/draggable.js'].branchData['588'][1].ranCondition(result);
   return result;
 }_$jscoverage['/dd/draggable.js'].branchData['584'][1].init(29, 23, 'typeof v === \'function\'');
-function visit93_584_1(result) {
+function visit90_584_1(result) {
   _$jscoverage['/dd/draggable.js'].branchData['584'][1].ranCondition(result);
   return result;
 }_$jscoverage['/dd/draggable.js'].branchData['580'][1].init(62, 10, '!vs.length');
-function visit92_580_1(result) {
+function visit89_580_1(result) {
   _$jscoverage['/dd/draggable.js'].branchData['580'][1].ranCondition(result);
   return result;
 }_$jscoverage['/dd/draggable.js'].branchData['501'][1].init(25, 20, '!(v instanceof Node)');
-function visit91_501_1(result) {
+function visit88_501_1(result) {
   _$jscoverage['/dd/draggable.js'].branchData['501'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/draggable.js'].branchData['413'][1].init(114, 34, 'activeDrop = DDM.get(\'activeDrop\')');
-function visit90_413_1(result) {
-  _$jscoverage['/dd/draggable.js'].branchData['413'][1].ranCondition(result);
-  return result;
 }_$jscoverage['/dd/draggable.js'].branchData['410'][1].init(259, 20, 'self.get(\'dragging\')');
-function visit89_410_1(result) {
+function visit87_410_1(result) {
   _$jscoverage['/dd/draggable.js'].branchData['410'][1].ranCondition(result);
   return result;
 }_$jscoverage['/dd/draggable.js'].branchData['406'][1].init(164, 2, 'ie');
-function visit88_406_1(result) {
+function visit86_406_1(result) {
   _$jscoverage['/dd/draggable.js'].branchData['406'][1].ranCondition(result);
   return result;
 }_$jscoverage['/dd/draggable.js'].branchData['399'][1].init(17, 7, 'e || {}');
-function visit87_399_1(result) {
+function visit85_399_1(result) {
   _$jscoverage['/dd/draggable.js'].branchData['399'][1].ranCondition(result);
   return result;
 }_$jscoverage['/dd/draggable.js'].branchData['384'][1].init(1729, 11, 'def && move');
-function visit86_384_1(result) {
+function visit84_384_1(result) {
   _$jscoverage['/dd/draggable.js'].branchData['384'][1].ranCondition(result);
   return result;
 }_$jscoverage['/dd/draggable.js'].branchData['380'][1].init(1629, 40, 'self.fire(\'drag\', customEvent) === false');
-function visit85_380_1(result) {
+function visit83_380_1(result) {
   _$jscoverage['/dd/draggable.js'].branchData['380'][1].ranCondition(result);
   return result;
 }_$jscoverage['/dd/draggable.js'].branchData['364'][1].init(1110, 4, 'move');
-function visit84_364_1(result) {
+function visit82_364_1(result) {
   _$jscoverage['/dd/draggable.js'].branchData['364'][1].ranCondition(result);
   return result;
 }_$jscoverage['/dd/draggable.js'].branchData['343'][1].init(519, 6, '!start');
-function visit83_343_1(result) {
+function visit81_343_1(result) {
   _$jscoverage['/dd/draggable.js'].branchData['343'][1].ranCondition(result);
   return result;
 }_$jscoverage['/dd/draggable.js'].branchData['338'][1].init(79, 55, 'Math.abs(pageY - startMousePos.top) >= clickPixelThresh');
-function visit82_338_1(result) {
+function visit80_338_1(result) {
   _$jscoverage['/dd/draggable.js'].branchData['338'][1].ranCondition(result);
   return result;
 }_$jscoverage['/dd/draggable.js'].branchData['337'][2].init(218, 56, 'Math.abs(pageX - startMousePos.left) >= clickPixelThresh');
-function visit81_337_2(result) {
+function visit79_337_2(result) {
   _$jscoverage['/dd/draggable.js'].branchData['337'][2].ranCondition(result);
   return result;
 }_$jscoverage['/dd/draggable.js'].branchData['337'][1].init(218, 135, 'Math.abs(pageX - startMousePos.left) >= clickPixelThresh || Math.abs(pageY - startMousePos.top) >= clickPixelThresh');
-function visit80_337_1(result) {
+function visit78_337_1(result) {
   _$jscoverage['/dd/draggable.js'].branchData['337'][1].ranCondition(result);
   return result;
 }_$jscoverage['/dd/draggable.js'].branchData['332'][1].init(115, 21, '!self.get(\'dragging\')');
-function visit79_332_1(result) {
+function visit77_332_1(result) {
   _$jscoverage['/dd/draggable.js'].branchData['332'][1].ranCondition(result);
   return result;
 }_$jscoverage['/dd/draggable.js'].branchData['321'][1].init(46, 17, 'self._bufferTimer');
-function visit78_321_1(result) {
+function visit76_321_1(result) {
   _$jscoverage['/dd/draggable.js'].branchData['321'][1].ranCondition(result);
   return result;
 }_$jscoverage['/dd/draggable.js'].branchData['311'][1].init(1626, 10, 'bufferTime');
-function visit77_311_1(result) {
+function visit75_311_1(result) {
   _$jscoverage['/dd/draggable.js'].branchData['311'][1].ranCondition(result);
   return result;
 }_$jscoverage['/dd/draggable.js'].branchData['296'][1].init(1169, 15, 'self._allowMove');
-function visit76_296_1(result) {
+function visit74_296_1(result) {
   _$jscoverage['/dd/draggable.js'].branchData['296'][1].ranCondition(result);
   return result;
 }_$jscoverage['/dd/draggable.js'].branchData['284'][1].init(870, 33, '!Features.isTouchEventSupported()');
-function visit75_284_1(result) {
+function visit73_284_1(result) {
   _$jscoverage['/dd/draggable.js'].branchData['284'][1].ranCondition(result);
   return result;
 }_$jscoverage['/dd/draggable.js'].branchData['276'][1].init(579, 16, 'self.get(\'halt\')');
-function visit74_276_1(result) {
+function visit72_276_1(result) {
   _$jscoverage['/dd/draggable.js'].branchData['276'][1].ranCondition(result);
   return result;
 }_$jscoverage['/dd/draggable.js'].branchData['264'][1].init(109, 2, 'ie');
-function visit73_264_1(result) {
+function visit71_264_1(result) {
   _$jscoverage['/dd/draggable.js'].branchData['264'][1].ranCondition(result);
   return result;
 }_$jscoverage['/dd/draggable.js'].branchData['258'][1].init(17, 3, '!ev');
-function visit72_258_1(result) {
+function visit70_258_1(result) {
   _$jscoverage['/dd/draggable.js'].branchData['258'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/draggable.js'].branchData['250'][3].init(79, 13, 'ev.which != 1');
-function visit71_250_3(result) {
+}_$jscoverage['/dd/draggable.js'].branchData['250'][3].init(79, 14, 'ev.which !== 1');
+function visit69_250_3(result) {
   _$jscoverage['/dd/draggable.js'].branchData['250'][3].ranCondition(result);
   return result;
-}_$jscoverage['/dd/draggable.js'].branchData['250'][2].init(46, 46, 'self.get(\'primaryButtonOnly\') && ev.which != 1');
-function visit70_250_2(result) {
+}_$jscoverage['/dd/draggable.js'].branchData['250'][2].init(46, 47, 'self.get(\'primaryButtonOnly\') && ev.which !== 1');
+function visit68_250_2(result) {
   _$jscoverage['/dd/draggable.js'].branchData['250'][2].ranCondition(result);
   return result;
-}_$jscoverage['/dd/draggable.js'].branchData['250'][1].init(46, 86, 'self.get(\'primaryButtonOnly\') && ev.which != 1 || self.get(\'disabled\')');
-function visit69_250_1(result) {
+}_$jscoverage['/dd/draggable.js'].branchData['250'][1].init(46, 87, 'self.get(\'primaryButtonOnly\') && ev.which !== 1 || self.get(\'disabled\')');
+function visit67_250_1(result) {
   _$jscoverage['/dd/draggable.js'].branchData['250'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/draggable.js'].branchData['238'][2].init(51, 15, 'handler[0] == t');
-function visit68_238_2(result) {
+}_$jscoverage['/dd/draggable.js'].branchData['238'][2].init(51, 16, 'handler[0] === t');
+function visit66_238_2(result) {
   _$jscoverage['/dd/draggable.js'].branchData['238'][2].ranCondition(result);
   return result;
-}_$jscoverage['/dd/draggable.js'].branchData['238'][1].init(51, 38, 'handler[0] == t || handler.contains(t)');
-function visit67_238_1(result) {
+}_$jscoverage['/dd/draggable.js'].branchData['238'][1].init(51, 39, 'handler[0] === t || handler.contains(t)');
+function visit65_238_1(result) {
   _$jscoverage['/dd/draggable.js'].branchData['238'][1].ranCondition(result);
   return result;
 }_$jscoverage['/dd/draggable.js'].lineData[6]++;
@@ -595,7 +589,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/dd/draggable.js'].lineData[7]++;
   var Node = require('node'), DDM = require('./ddm'), Base = require('base');
   _$jscoverage['/dd/draggable.js'].lineData[10]++;
-  var UA = S.UA, $ = Node.all, each = S.each, Features = S.Features, ie = UA['ie'], NULL = null, PREFIX_CLS = DDM.PREFIX_CLS, doc = S.Env.host.document;
+  var UA = S.UA, $ = Node.all, each = S.each, Features = S.Features, ie = UA.ie, NULL = null, PREFIX_CLS = DDM.PREFIX_CLS, doc = S.Env.host.document;
   _$jscoverage['/dd/draggable.js'].lineData[24]++;
   var Draggable = Base.extend({
   initializer: function() {
@@ -647,7 +641,7 @@ KISSY.add(function(S, require) {
   each(handlers, function(handler) {
   _$jscoverage['/dd/draggable.js'].functionData[7]++;
   _$jscoverage['/dd/draggable.js'].lineData[238]++;
-  if (visit67_238_1(visit68_238_2(handler[0] == t) || handler.contains(t))) {
+  if (visit65_238_1(visit66_238_2(handler[0] === t) || handler.contains(t))) {
     _$jscoverage['/dd/draggable.js'].lineData[239]++;
     ret = 1;
     _$jscoverage['/dd/draggable.js'].lineData[240]++;
@@ -666,7 +660,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/dd/draggable.js'].lineData[249]++;
   var self = this;
   _$jscoverage['/dd/draggable.js'].lineData[250]++;
-  if (visit69_250_1(visit70_250_2(self.get('primaryButtonOnly') && visit71_250_3(ev.which != 1)) || self.get('disabled'))) {
+  if (visit67_250_1(visit68_250_2(self.get('primaryButtonOnly') && visit69_250_3(ev.which !== 1)) || self.get('disabled'))) {
     _$jscoverage['/dd/draggable.js'].lineData[252]++;
     return 0;
   }
@@ -676,24 +670,24 @@ KISSY.add(function(S, require) {
   _prepare: function(ev) {
   _$jscoverage['/dd/draggable.js'].functionData[9]++;
   _$jscoverage['/dd/draggable.js'].lineData[258]++;
-  if (visit72_258_1(!ev)) {
+  if (visit70_258_1(!ev)) {
     _$jscoverage['/dd/draggable.js'].lineData[259]++;
     return;
   }
   _$jscoverage['/dd/draggable.js'].lineData[262]++;
   var self = this;
   _$jscoverage['/dd/draggable.js'].lineData[264]++;
-  if (visit73_264_1(ie)) {
+  if (visit71_264_1(ie)) {
     _$jscoverage['/dd/draggable.js'].lineData[265]++;
     fixIEMouseDown();
   }
   _$jscoverage['/dd/draggable.js'].lineData[276]++;
-  if (visit74_276_1(self.get('halt'))) {
+  if (visit72_276_1(self.get('halt'))) {
     _$jscoverage['/dd/draggable.js'].lineData[277]++;
     ev.stopPropagation();
   }
   _$jscoverage['/dd/draggable.js'].lineData[284]++;
-  if (visit75_284_1(!Features.isTouchEventSupported())) {
+  if (visit73_284_1(!Features.isTouchEventSupported())) {
     _$jscoverage['/dd/draggable.js'].lineData[285]++;
     ev.preventDefault();
   }
@@ -704,7 +698,7 @@ KISSY.add(function(S, require) {
   left: mx, 
   top: my});
   _$jscoverage['/dd/draggable.js'].lineData[296]++;
-  if (visit76_296_1(self._allowMove)) {
+  if (visit74_296_1(self._allowMove)) {
     _$jscoverage['/dd/draggable.js'].lineData[297]++;
     var node = self.get('node'), nxy = node.offset();
     _$jscoverage['/dd/draggable.js'].lineData[299]++;
@@ -719,7 +713,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/dd/draggable.js'].lineData[308]++;
   var bufferTime = self.get('bufferTime');
   _$jscoverage['/dd/draggable.js'].lineData[311]++;
-  if (visit77_311_1(bufferTime)) {
+  if (visit75_311_1(bufferTime)) {
     _$jscoverage['/dd/draggable.js'].lineData[312]++;
     self._bufferTimer = setTimeout(function() {
   _$jscoverage['/dd/draggable.js'].functionData[10]++;
@@ -733,7 +727,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/dd/draggable.js'].lineData[320]++;
   var self = this;
   _$jscoverage['/dd/draggable.js'].lineData[321]++;
-  if (visit78_321_1(self._bufferTimer)) {
+  if (visit76_321_1(self._bufferTimer)) {
     _$jscoverage['/dd/draggable.js'].lineData[322]++;
     clearTimeout(self._bufferTimer);
     _$jscoverage['/dd/draggable.js'].lineData[323]++;
@@ -745,18 +739,18 @@ KISSY.add(function(S, require) {
   _$jscoverage['/dd/draggable.js'].lineData[328]++;
   var self = this, pageX = ev.pageX, pageY = ev.pageY;
   _$jscoverage['/dd/draggable.js'].lineData[332]++;
-  if (visit79_332_1(!self.get('dragging'))) {
+  if (visit77_332_1(!self.get('dragging'))) {
     _$jscoverage['/dd/draggable.js'].lineData[333]++;
     var startMousePos = self.get('startMousePos'), start = 0, clickPixelThresh = self.get('clickPixelThresh');
     _$jscoverage['/dd/draggable.js'].lineData[337]++;
-    if (visit80_337_1(visit81_337_2(Math.abs(pageX - startMousePos.left) >= clickPixelThresh) || visit82_338_1(Math.abs(pageY - startMousePos.top) >= clickPixelThresh))) {
+    if (visit78_337_1(visit79_337_2(Math.abs(pageX - startMousePos.left) >= clickPixelThresh) || visit80_338_1(Math.abs(pageY - startMousePos.top) >= clickPixelThresh))) {
       _$jscoverage['/dd/draggable.js'].lineData[339]++;
       self._start(ev);
       _$jscoverage['/dd/draggable.js'].lineData[340]++;
       start = 1;
     }
     _$jscoverage['/dd/draggable.js'].lineData[343]++;
-    if (visit83_343_1(!start)) {
+    if (visit81_343_1(!start)) {
       _$jscoverage['/dd/draggable.js'].lineData[344]++;
       return;
     }
@@ -776,7 +770,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/dd/draggable.js'].lineData[362]++;
   var move = self._allowMove;
   _$jscoverage['/dd/draggable.js'].lineData[364]++;
-  if (visit84_364_1(move)) {
+  if (visit82_364_1(move)) {
     _$jscoverage['/dd/draggable.js'].lineData[365]++;
     var diff = self.get('deltaPos'), left = pageX - diff.left, top = pageY - diff.top;
     _$jscoverage['/dd/draggable.js'].lineData[368]++;
@@ -793,12 +787,12 @@ KISSY.add(function(S, require) {
   _$jscoverage['/dd/draggable.js'].lineData[377]++;
   var def = 1;
   _$jscoverage['/dd/draggable.js'].lineData[380]++;
-  if (visit85_380_1(self.fire('drag', customEvent) === false)) {
+  if (visit83_380_1(self.fire('drag', customEvent) === false)) {
     _$jscoverage['/dd/draggable.js'].lineData[381]++;
     def = 0;
   }
   _$jscoverage['/dd/draggable.js'].lineData[384]++;
-  if (visit86_384_1(def && move)) {
+  if (visit84_384_1(def && move)) {
     _$jscoverage['/dd/draggable.js'].lineData[386]++;
     self.get('node').offset(self.get('actualPos'));
   }
@@ -811,22 +805,22 @@ KISSY.add(function(S, require) {
   _end: function(e) {
   _$jscoverage['/dd/draggable.js'].functionData[14]++;
   _$jscoverage['/dd/draggable.js'].lineData[399]++;
-  e = visit87_399_1(e || {});
+  e = visit85_399_1(e || {});
   _$jscoverage['/dd/draggable.js'].lineData[401]++;
   var self = this, activeDrop;
   _$jscoverage['/dd/draggable.js'].lineData[405]++;
   self._clearBufferTimer();
   _$jscoverage['/dd/draggable.js'].lineData[406]++;
-  if (visit88_406_1(ie)) {
+  if (visit86_406_1(ie)) {
     _$jscoverage['/dd/draggable.js'].lineData[407]++;
     fixIEMouseUp();
   }
   _$jscoverage['/dd/draggable.js'].lineData[410]++;
-  if (visit89_410_1(self.get('dragging'))) {
+  if (visit87_410_1(self.get('dragging'))) {
     _$jscoverage['/dd/draggable.js'].lineData[412]++;
     self.get('node').removeClass(PREFIX_CLS + 'drag-over');
     _$jscoverage['/dd/draggable.js'].lineData[413]++;
-    if (visit90_413_1(activeDrop = DDM.get('activeDrop'))) {
+    if ((activeDrop = DDM.get('activeDrop'))) {
       _$jscoverage['/dd/draggable.js'].lineData[414]++;
       self.fire('dragdrophit', {
   drag: self, 
@@ -905,7 +899,7 @@ KISSY.add(function(S, require) {
   setter: function(v) {
   _$jscoverage['/dd/draggable.js'].functionData[20]++;
   _$jscoverage['/dd/draggable.js'].lineData[501]++;
-  if (visit91_501_1(!(v instanceof Node))) {
+  if (visit88_501_1(!(v instanceof Node))) {
     _$jscoverage['/dd/draggable.js'].lineData[502]++;
     return $(v);
   }
@@ -934,7 +928,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/dd/draggable.js'].lineData[579]++;
   var self = this;
   _$jscoverage['/dd/draggable.js'].lineData[580]++;
-  if (visit92_580_1(!vs.length)) {
+  if (visit89_580_1(!vs.length)) {
     _$jscoverage['/dd/draggable.js'].lineData[581]++;
     vs[0] = self.get('node');
   }
@@ -942,17 +936,17 @@ KISSY.add(function(S, require) {
   each(vs, function(v, i) {
   _$jscoverage['/dd/draggable.js'].functionData[24]++;
   _$jscoverage['/dd/draggable.js'].lineData[584]++;
-  if (visit93_584_1(typeof v === 'function')) {
+  if (visit90_584_1(typeof v === 'function')) {
     _$jscoverage['/dd/draggable.js'].lineData[585]++;
     v = v.call(self);
   }
   _$jscoverage['/dd/draggable.js'].lineData[588]++;
-  if (visit94_588_1(typeof v == 'string')) {
+  if (visit91_588_1(typeof v === 'string')) {
     _$jscoverage['/dd/draggable.js'].lineData[589]++;
     v = self.get('node').one(v);
   }
   _$jscoverage['/dd/draggable.js'].lineData[591]++;
-  if (visit95_591_1(v.nodeType)) {
+  if (visit92_591_1(v.nodeType)) {
     _$jscoverage['/dd/draggable.js'].lineData[592]++;
     v = $(v);
   }
@@ -1032,9 +1026,9 @@ KISSY.add(function(S, require) {
   _$jscoverage['/dd/draggable.js'].lineData[871]++;
   var self = this, t = ev.target;
   _$jscoverage['/dd/draggable.js'].lineData[873]++;
-  if (visit96_873_1(self._checkDragStartValid(ev))) {
+  if (visit93_873_1(self._checkDragStartValid(ev))) {
     _$jscoverage['/dd/draggable.js'].lineData[874]++;
-    if (visit97_874_1(!self._checkHandler(t))) {
+    if (visit94_874_1(!self._checkHandler(t))) {
       _$jscoverage['/dd/draggable.js'].lineData[875]++;
       return;
     }

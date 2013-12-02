@@ -266,7 +266,7 @@ KISSY.add(function(S) {
   _$jscoverage['/shim.js'].lineData[7]++;
   var ie6 = visit1_7_1(S.UA.ie === 6);
   _$jscoverage['/shim.js'].lineData[9]++;
-  var shimTpl = "<" + "iframe style='position: absolute;" + "border: none;" + "width: " + (ie6 ? "expression(this.parentNode.clientWidth)" : "100%") + ";" + "top: 0;" + "opacity: 0;" + "filter: alpha(opacity=0);" + "left: 0;" + "z-index: -1;" + "height: " + (ie6 ? "expression(this.parentNode.clientHeight)" : "100%") + ";" + "'/>";
+  var shimTpl = '<' + 'iframe style="position: absolute;' + 'border: none;' + 'width: ' + (ie6 ? 'expression(this.parentNode.clientWidth)' : '100%') + ';' + 'top: 0;' + 'opacity: 0;' + 'filter: alpha(opacity=0);' + 'left: 0;' + 'z-index: -1;' + 'height: ' + (ie6 ? 'expression(this.parentNode.clientHeight)' : '100%') + ';' + '"/>';
   _$jscoverage['/shim.js'].lineData[25]++;
   function Shim() {
     _$jscoverage['/shim.js'].functionData[1]++;

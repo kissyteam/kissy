@@ -281,7 +281,7 @@ function visit5_87_1(result) {
 function visit4_79_1(result) {
   _$jscoverage['/base/observable.js'].branchData['79'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/observable.js'].branchData['55'][1].init(21, 24, 'observers[i] == observer');
+}_$jscoverage['/base/observable.js'].branchData['55'][1].init(21, 25, 'observers[i] === observer');
 function visit3_55_1(result) {
   _$jscoverage['/base/observable.js'].branchData['55'][1].ranCondition(result);
   return result;
@@ -326,7 +326,7 @@ KISSY.add(function(S) {
   _$jscoverage['/base/observable.js'].lineData[54]++;
   for (i = 0; visit2_54_1(i < len); i++) {
     _$jscoverage['/base/observable.js'].lineData[55]++;
-    if (visit3_55_1(observers[i] == observer)) {
+    if (visit3_55_1(observers[i] === observer)) {
       _$jscoverage['/base/observable.js'].lineData[56]++;
       observers.splice(i, 1);
       _$jscoverage['/base/observable.js'].lineData[57]++;

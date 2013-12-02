@@ -308,7 +308,7 @@ function visit192_37_1(result) {
   _$jscoverage['/html-parser/nodes/node.js'].branchData['37'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/nodes/node.js'].lineData[6]++;
-KISSY.add(function(S) {
+KISSY.add(function() {
   _$jscoverage['/html-parser/nodes/node.js'].functionData[0]++;
   _$jscoverage['/html-parser/nodes/node.js'].lineData[7]++;
   function lineCount(str) {
@@ -390,11 +390,11 @@ KISSY.add(function(S) {
   _$jscoverage['/html-parser/nodes/node.js'].lineData[68]++;
   var ret = [], self = this;
   _$jscoverage['/html-parser/nodes/node.js'].lineData[70]++;
-  ret.push(self.nodeName + "  [ " + self.startPosition + "|" + self.getStartLine() + " : " + self.endPosition + "|" + self.getEndLine() + " ]\n");
+  ret.push(self.nodeName + '  [ ' + self.startPosition + '|' + self.getStartLine() + ' : ' + self.endPosition + '|' + self.getEndLine() + ' ]\n');
   _$jscoverage['/html-parser/nodes/node.js'].lineData[76]++;
   ret.push(self.toHtml());
   _$jscoverage['/html-parser/nodes/node.js'].lineData[77]++;
-  return ret.join("");
+  return ret.join('');
 }};
   _$jscoverage['/html-parser/nodes/node.js'].lineData[81]++;
   return Node;

@@ -256,11 +256,11 @@ if (! _$jscoverage['/tabs/render.js'].branchData) {
   _$jscoverage['/tabs/render.js'].branchData['35'][2] = new BranchData();
 }
 _$jscoverage['/tabs/render.js'].branchData['35'][2].init(110, 29, 'orientation && orientation[1]');
-function visit15_35_2(result) {
+function visit14_35_2(result) {
   _$jscoverage['/tabs/render.js'].branchData['35'][2].ranCondition(result);
   return result;
-}_$jscoverage['/tabs/render.js'].branchData['35'][1].init(110, 38, 'orientation && orientation[1] || "top"');
-function visit14_35_1(result) {
+}_$jscoverage['/tabs/render.js'].branchData['35'][1].init(110, 38, 'orientation && orientation[1] || \'top\'');
+function visit13_35_1(result) {
   _$jscoverage['/tabs/render.js'].branchData['35'][1].ranCondition(result);
   return result;
 }_$jscoverage['/tabs/render.js'].lineData[6]++;
@@ -269,7 +269,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/tabs/render.js'].lineData[7]++;
   var Container = require('component/container');
   _$jscoverage['/tabs/render.js'].lineData[9]++;
-  var CLS = "top bottom left right";
+  var CLS = 'top bottom left right';
   _$jscoverage['/tabs/render.js'].lineData[11]++;
   return Container.getDefaultRender().extend({
   beforeCreateDom: function(renderData) {
@@ -298,6 +298,6 @@ KISSY.add(function(S, require) {
   _$jscoverage['/tabs/render.js'].lineData[34]++;
   var orientation = el[0].className.match(/(top|bottom|left|right)\b/);
   _$jscoverage['/tabs/render.js'].lineData[35]++;
-  return visit14_35_1(visit15_35_2(orientation && orientation[1]) || "top");
+  return visit13_35_1(visit14_35_2(orientation && orientation[1]) || 'top');
 }}});
 });

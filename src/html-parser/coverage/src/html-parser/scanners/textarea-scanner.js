@@ -235,6 +235,7 @@ if (! _$jscoverage['/html-parser/scanners/textarea-scanner.js']) {
   _$jscoverage['/html-parser/scanners/textarea-scanner.js'].lineData[9] = 0;
   _$jscoverage['/html-parser/scanners/textarea-scanner.js'].lineData[11] = 0;
   _$jscoverage['/html-parser/scanners/textarea-scanner.js'].lineData[12] = 0;
+  _$jscoverage['/html-parser/scanners/textarea-scanner.js'].lineData[15] = 0;
 }
 if (! _$jscoverage['/html-parser/scanners/textarea-scanner.js'].functionData) {
   _$jscoverage['/html-parser/scanners/textarea-scanner.js'].functionData = [];
@@ -247,7 +248,7 @@ if (! _$jscoverage['/html-parser/scanners/textarea-scanner.js'].branchData) {
   _$jscoverage['/html-parser/scanners/textarea-scanner.js'].branchData['11'][1] = new BranchData();
 }
 _$jscoverage['/html-parser/scanners/textarea-scanner.js'].branchData['11'][1].init(20, 10, 'opts || {}');
-function visit326_11_1(result) {
+function visit323_11_1(result) {
   _$jscoverage['/html-parser/scanners/textarea-scanner.js'].branchData['11'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/scanners/textarea-scanner.js'].lineData[6]++;
@@ -258,12 +259,14 @@ KISSY.add(function(S, require) {
   _$jscoverage['/html-parser/scanners/textarea-scanner.js'].lineData[8]++;
   var SpecialScanners = require('./special-scanners');
   _$jscoverage['/html-parser/scanners/textarea-scanner.js'].lineData[9]++;
-  return SpecialScanners["textarea"] = {
+  SpecialScanners.textarea = {
   scan: function(tag, lexer, opts) {
   _$jscoverage['/html-parser/scanners/textarea-scanner.js'].functionData[1]++;
   _$jscoverage['/html-parser/scanners/textarea-scanner.js'].lineData[11]++;
-  opts = visit326_11_1(opts || {});
+  opts = visit323_11_1(opts || {});
   _$jscoverage['/html-parser/scanners/textarea-scanner.js'].lineData[12]++;
   CDataScanner.scan(tag, lexer, opts);
 }};
+  _$jscoverage['/html-parser/scanners/textarea-scanner.js'].lineData[15]++;
+  return SpecialScanners.textarea;
 });

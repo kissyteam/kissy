@@ -305,11 +305,11 @@ if (! _$jscoverage['/ie/create.js'].branchData) {
   _$jscoverage['/ie/create.js'].branchData['83'][1] = new BranchData();
   _$jscoverage['/ie/create.js'].branchData['83'][2] = new BranchData();
 }
-_$jscoverage['/ie/create.js'].branchData['83'][2].init(21, 26, 'Dom.nodeName(c) == \'tbody\'');
+_$jscoverage['/ie/create.js'].branchData['83'][2].init(21, 27, 'Dom.nodeName(c) === \'tbody\'');
 function visit37_83_2(result) {
   _$jscoverage['/ie/create.js'].branchData['83'][2].ranCondition(result);
   return result;
-}_$jscoverage['/ie/create.js'].branchData['83'][1].init(21, 50, 'Dom.nodeName(c) == \'tbody\' && !c.childNodes.length');
+}_$jscoverage['/ie/create.js'].branchData['83'][1].init(21, 51, 'Dom.nodeName(c) === \'tbody\' && !c.childNodes.length');
 function visit36_83_1(result) {
   _$jscoverage['/ie/create.js'].branchData['83'][1].ranCondition(result);
   return result;
@@ -317,27 +317,27 @@ function visit36_83_1(result) {
 function visit35_77_1(result) {
   _$jscoverage['/ie/create.js'].branchData['77'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/create.js'].branchData['71'][1].init(2766, 15, 'S.UA.ieMode < 8');
+}_$jscoverage['/ie/create.js'].branchData['71'][1].init(2763, 15, 'S.UA.ieMode < 8');
 function visit34_71_1(result) {
   _$jscoverage['/ie/create.js'].branchData['71'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/create.js'].branchData['54'][3].init(2061, 23, 'nodeName === \'textarea\'');
+}_$jscoverage['/ie/create.js'].branchData['54'][3].init(2058, 23, 'nodeName === \'textarea\'');
 function visit33_54_3(result) {
   _$jscoverage['/ie/create.js'].branchData['54'][3].ranCondition(result);
   return result;
-}_$jscoverage['/ie/create.js'].branchData['54'][2].init(2037, 20, 'nodeName === \'input\'');
+}_$jscoverage['/ie/create.js'].branchData['54'][2].init(2034, 20, 'nodeName === \'input\'');
 function visit32_54_2(result) {
   _$jscoverage['/ie/create.js'].branchData['54'][2].ranCondition(result);
   return result;
-}_$jscoverage['/ie/create.js'].branchData['54'][1].init(2037, 47, 'nodeName === \'input\' || nodeName === \'textarea\'');
+}_$jscoverage['/ie/create.js'].branchData['54'][1].init(2034, 47, 'nodeName === \'input\' || nodeName === \'textarea\'');
 function visit31_54_1(result) {
   _$jscoverage['/ie/create.js'].branchData['54'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/create.js'].branchData['50'][1].init(1815, 21, 'nodeName === \'option\'');
+}_$jscoverage['/ie/create.js'].branchData['50'][1].init(1812, 21, 'nodeName === \'option\'');
 function visit30_50_1(result) {
   _$jscoverage['/ie/create.js'].branchData['50'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/create.js'].branchData['44'][1].init(512, 24, 'dest.value !== src.value');
+}_$jscoverage['/ie/create.js'].branchData['44'][1].init(509, 24, 'dest.value !== src.value');
 function visit29_44_1(result) {
   _$jscoverage['/ie/create.js'].branchData['44'][1].ranCondition(result);
   return result;
@@ -418,7 +418,7 @@ KISSY.add(function(S, require) {
       _$jscoverage['/ie/create.js'].lineData[38]++;
       if (visit28_38_1(src.checked)) {
         _$jscoverage['/ie/create.js'].lineData[39]++;
-        dest['defaultChecked'] = dest.checked = src.checked;
+        dest.defaultChecked = dest.checked = src.checked;
       }
       _$jscoverage['/ie/create.js'].lineData[44]++;
       if (visit29_44_1(dest.value !== src.value)) {
@@ -464,7 +464,7 @@ KISSY.add(function(S, require) {
   S.each(tableChildren, function(c) {
   _$jscoverage['/ie/create.js'].functionData[3]++;
   _$jscoverage['/ie/create.js'].lineData[83]++;
-  if (visit36_83_1(visit37_83_2(Dom.nodeName(c) == 'tbody') && !c.childNodes.length)) {
+  if (visit36_83_1(visit37_83_2(Dom.nodeName(c) === 'tbody') && !c.childNodes.length)) {
     _$jscoverage['/ie/create.js'].lineData[84]++;
     table.removeChild(c);
   }

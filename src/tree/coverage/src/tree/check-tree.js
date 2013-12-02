@@ -257,7 +257,7 @@ if (! _$jscoverage['/tree/check-tree.js'].branchData) {
   _$jscoverage['/tree/check-tree.js'].branchData['29'] = [];
   _$jscoverage['/tree/check-tree.js'].branchData['29'][1] = new BranchData();
 }
-_$jscoverage['/tree/check-tree.js'].branchData['29'][1].init(129, 30, 'v && !self.get("selectedItem")');
+_$jscoverage['/tree/check-tree.js'].branchData['29'][1].init(129, 30, 'v && !self.get(\'selectedItem\')');
 function visit14_29_1(result) {
   _$jscoverage['/tree/check-tree.js'].branchData['29'][1].ranCondition(result);
   return result;
@@ -281,7 +281,7 @@ KISSY.add(function(S, require) {
   handleKeyDownInternal: function(e) {
   _$jscoverage['/tree/check-tree.js'].functionData[1]++;
   _$jscoverage['/tree/check-tree.js'].lineData[17]++;
-  var current = this.get("selectedItem");
+  var current = this.get('selectedItem');
   _$jscoverage['/tree/check-tree.js'].lineData[18]++;
   if (visit12_18_1(current === this)) {
     _$jscoverage['/tree/check-tree.js'].lineData[19]++;
@@ -297,7 +297,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/tree/check-tree.js'].lineData[26]++;
   self.callSuper(v, e);
   _$jscoverage['/tree/check-tree.js'].lineData[29]++;
-  if (visit14_29_1(v && !self.get("selectedItem"))) {
+  if (visit14_29_1(v && !self.get('selectedItem'))) {
     _$jscoverage['/tree/check-tree.js'].lineData[30]++;
     self.select();
   }

@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:39
+build time: Dec 2 15:13
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -30,7 +30,7 @@ KISSY.add("dd/plugin/scroll", ["node", "dd", "base"], function(S, require) {
     node.scrollLeft(r.left);
     node.scrollTop(r.top)
   }, pluginDestructor:function(drag) {
-    drag["detach"](SCROLL_EVENT)
+    drag.detach(SCROLL_EVENT)
   }, pluginInitializer:function(drag) {
     var self = this, node = self.get("node");
     var rate = self.get("rate"), diff = self.get("diff"), event, dxy, timer = null;

@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:40
+build time: Dec 2 15:14
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -62,10 +62,10 @@ KISSY.add("dom/class-list", ["dom/base"], function(S, require) {
       className = classNames[j];
       result = self._hasClass(elem, [className]);
       method = result ? force !== true && "remove" : force !== false && "add";
-      if(method == "remove") {
+      if(method === "remove") {
         removed.push(className)
       }else {
-        if(method == "add") {
+        if(method === "add") {
           added.push(className)
         }
       }

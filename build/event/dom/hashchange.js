@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:48
+build time: Dec 2 15:22
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -12,7 +12,7 @@ build time: Nov 27 00:48
 KISSY.add("event/dom/hashchange", ["event/dom/base", "dom"], function(S, require) {
   var DomEvent = require("event/dom/base");
   var Dom = require("dom");
-  var UA = S.UA, Special = DomEvent.Special, win = S.Env.host, doc = win.document, docMode = UA.ieMode, REPLACE_HISTORY = "__replace_history_" + S.now(), ie = docMode || UA["ie"], HASH_CHANGE = "hashchange";
+  var UA = S.UA, Special = DomEvent.Special, win = S.Env.host, doc = win.document, docMode = UA.ieMode, REPLACE_HISTORY = "__replace_history_" + S.now(), ie = docMode || UA.ie, HASH_CHANGE = "hashchange";
   DomEvent.REPLACE_HISTORY = REPLACE_HISTORY;
   function getIframeDoc(iframe) {
     return iframe.contentWindow.document
@@ -32,7 +32,7 @@ KISSY.add("event/dom/hashchange", ["event/dom/base", "dom"], function(S, require
     }
     timer = setTimeout(poll, POLL_INTERVAL)
   }, hashChange = ie && ie < 8 ? function(hash, replaceHistory) {
-    var html = S.substitute(IFRAME_TEMPLATE, {hash:S.escapeHtml(hash), head:Dom.isCustomDomain() ? "<script>" + "document." + "domain = '" + doc.domain + "';<\/script>" : ""}), iframeDoc = getIframeDoc(iframe);
+    var html = S.substitute(IFRAME_TEMPLATE, {hash:S.escapeHtml(hash), head:Dom.isCustomDomain() ? "<script>" + "document." + 'domain = "' + doc.domain + '";<\/script>' : ""}), iframeDoc = getIframeDoc(iframe);
     try {
       if(replaceHistory) {
         iframeDoc.open("text/html", "replace")
@@ -52,7 +52,9 @@ KISSY.add("event/dom/hashchange", ["event/dom/base", "dom"], function(S, require
       poll()
     }
   }, tearDown = function() {
-    timer && clearTimeout(timer);
+    if(timer) {
+      clearTimeout(timer)
+    }
     timer = 0
   }, iframe;
   if(ie && ie < 8) {
@@ -75,9 +77,9 @@ KISSY.add("event/dom/hashchange", ["event/dom/base", "dom"], function(S, require
           }catch(e) {
           }
         };
-        function onIframeLoad() {
+        var onIframeLoad = function() {
           var c = S.trim(getIframeDoc(iframe).body.innerText), ch = getHash();
-          if(c != ch) {
+          if(c !== ch) {
             location.hash = c;
             lastHash = c
           }
@@ -86,7 +88,9 @@ KISSY.add("event/dom/hashchange", ["event/dom/base", "dom"], function(S, require
       }
     };
     tearDown = function() {
-      timer && clearTimeout(timer);
+      if(timer) {
+        clearTimeout(timer)
+      }
       timer = 0;
       DomEvent.detach(iframe);
       Dom.remove(iframe);

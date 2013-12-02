@@ -375,75 +375,75 @@ if (! _$jscoverage['/timer.js'].branchData) {
   _$jscoverage['/timer.js'].branchData['188'][1] = new BranchData();
 }
 _$jscoverage['/timer.js'].branchData['188'][1].init(159, 2, 'fx');
-function visit107_188_1(result) {
+function visit102_188_1(result) {
   _$jscoverage['/timer.js'].branchData['188'][1].ranCondition(result);
   return result;
 }_$jscoverage['/timer.js'].branchData['183'][1].init(188, 6, 'finish');
-function visit106_183_1(result) {
+function visit101_183_1(result) {
   _$jscoverage['/timer.js'].branchData['183'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer.js'].branchData['170'][1].init(880, 3, 'end');
-function visit105_170_1(result) {
+}_$jscoverage['/timer.js'].branchData['170'][1].init(881, 3, 'end');
+function visit100_170_1(result) {
   _$jscoverage['/timer.js'].branchData['170'][1].ranCondition(result);
   return result;
 }_$jscoverage['/timer.js'].branchData['167'][1].init(207, 25, 'remaining / duration || 0');
-function visit104_167_1(result) {
+function visit99_167_1(result) {
   _$jscoverage['/timer.js'].branchData['167'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer.js'].branchData['161'][1].init(287, 11, 'fx.pos == 1');
-function visit103_161_1(result) {
+}_$jscoverage['/timer.js'].branchData['161'][1].init(287, 12, 'fx.pos === 1');
+function visit98_161_1(result) {
   _$jscoverage['/timer.js'].branchData['161'][1].ranCondition(result);
   return result;
 }_$jscoverage['/timer.js'].branchData['158'][1].init(176, 38, 'self.isRejected() || self.isResolved()');
-function visit102_158_1(result) {
+function visit97_158_1(result) {
   _$jscoverage['/timer.js'].branchData['158'][1].ranCondition(result);
   return result;
 }_$jscoverage['/timer.js'].branchData['133'][1].init(33, 19, 'parts[1] === \'-=\'');
-function visit101_133_1(result) {
+function visit96_133_1(result) {
   _$jscoverage['/timer.js'].branchData['133'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer.js'].branchData['132'][1].init(709, 8, 'parts[1]');
-function visit100_132_1(result) {
+}_$jscoverage['/timer.js'].branchData['132'][1].init(710, 8, 'parts[1]');
+function visit95_132_1(result) {
   _$jscoverage['/timer.js'].branchData['132'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer.js'].branchData['126'][1].init(229, 11, 'tmpCur == 0');
-function visit99_126_1(result) {
+}_$jscoverage['/timer.js'].branchData['126'][1].init(229, 12, 'tmpCur === 0');
+function visit94_126_1(result) {
   _$jscoverage['/timer.js'].branchData['126'][1].ranCondition(result);
   return result;
 }_$jscoverage['/timer.js'].branchData['118'][3].init(153, 13, 'unit !== \'px\'');
-function visit98_118_3(result) {
+function visit93_118_3(result) {
   _$jscoverage['/timer.js'].branchData['118'][3].ranCondition(result);
   return result;
 }_$jscoverage['/timer.js'].branchData['118'][2].init(153, 21, 'unit !== \'px\' && from');
-function visit97_118_2(result) {
+function visit92_118_2(result) {
   _$jscoverage['/timer.js'].branchData['118'][2].ranCondition(result);
   return result;
 }_$jscoverage['/timer.js'].branchData['118'][1].init(145, 29, 'unit && unit !== \'px\' && from');
-function visit96_118_1(result) {
+function visit91_118_1(result) {
   _$jscoverage['/timer.js'].branchData['118'][1].ranCondition(result);
   return result;
 }_$jscoverage['/timer.js'].branchData['113'][1].init(593, 5, 'parts');
-function visit95_113_1(result) {
+function visit90_113_1(result) {
   _$jscoverage['/timer.js'].branchData['113'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer.js'].branchData['87'][1].init(1741, 21, 'S.isPlainObject(node)');
-function visit94_87_1(result) {
+}_$jscoverage['/timer.js'].branchData['87'][1].init(1742, 21, 'S.isPlainObject(node)');
+function visit89_87_1(result) {
   _$jscoverage['/timer.js'].branchData['87'][1].ranCondition(result);
   return result;
 }_$jscoverage['/timer.js'].branchData['63'][1].init(81, 19, '!(sh in _propsData)');
-function visit93_63_1(result) {
+function visit88_63_1(result) {
   _$jscoverage['/timer.js'].branchData['63'][1].ranCondition(result);
   return result;
 }_$jscoverage['/timer.js'].branchData['53'][1].init(121, 9, '_propData');
-function visit92_53_1(result) {
+function visit87_53_1(result) {
   _$jscoverage['/timer.js'].branchData['53'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer.js'].branchData['43'][1].init(128, 35, 'typeof _propData.easing == \'string\'');
-function visit91_43_1(result) {
+}_$jscoverage['/timer.js'].branchData['43'][1].init(128, 36, 'typeof _propData.easing === \'string\'');
+function visit86_43_1(result) {
   _$jscoverage['/timer.js'].branchData['43'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer.js'].branchData['26'][1].init(62, 17, 'prop != camelProp');
-function visit90_26_1(result) {
+}_$jscoverage['/timer.js'].branchData['26'][1].init(62, 18, 'prop !== camelProp');
+function visit85_26_1(result) {
   _$jscoverage['/timer.js'].branchData['26'][1].ranCondition(result);
   return result;
 }_$jscoverage['/timer.js'].lineData[6]++;
@@ -480,7 +480,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/timer.js'].lineData[25]++;
   var camelProp = camelCase(prop);
   _$jscoverage['/timer.js'].lineData[26]++;
-  if (visit90_26_1(prop != camelProp)) {
+  if (visit85_26_1(prop !== camelProp)) {
     _$jscoverage['/timer.js'].lineData[27]++;
     to[camelProp] = to[prop];
     _$jscoverage['/timer.js'].lineData[28]++;
@@ -502,7 +502,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/timer.js'].lineData[42]++;
   _propData.delay *= 1000;
   _$jscoverage['/timer.js'].lineData[43]++;
-  if (visit91_43_1(typeof _propData.easing == 'string')) {
+  if (visit86_43_1(typeof _propData.easing === 'string')) {
     _$jscoverage['/timer.js'].lineData[44]++;
     _propData.easing = Easing.toFn(_propData.easing);
   }
@@ -513,7 +513,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/timer.js'].lineData[50]++;
   var origin, _propData = _propsData[p], val;
   _$jscoverage['/timer.js'].lineData[53]++;
-  if (visit92_53_1(_propData)) {
+  if (visit87_53_1(_propData)) {
     _$jscoverage['/timer.js'].lineData[54]++;
     val = _propData.value;
     _$jscoverage['/timer.js'].lineData[55]++;
@@ -530,7 +530,7 @@ KISSY.add(function(S, require) {
     S.each(origin, function(val, sh) {
   _$jscoverage['/timer.js'].functionData[7]++;
   _$jscoverage['/timer.js'].lineData[63]++;
-  if (visit93_63_1(!(sh in _propsData))) {
+  if (visit88_63_1(!(sh in _propsData))) {
     _$jscoverage['/timer.js'].lineData[64]++;
     _propsData[sh] = S.merge(_propData, {
   value: Dom.css(node, sh)});
@@ -545,7 +545,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/timer.js'].lineData[76]++;
   var prop, _propData, val, to, from, propCfg, fx, isCustomFx = 0, unit, parts;
   _$jscoverage['/timer.js'].lineData[87]++;
-  if (visit94_87_1(S.isPlainObject(node))) {
+  if (visit89_87_1(S.isPlainObject(node))) {
     _$jscoverage['/timer.js'].lineData[88]++;
     isCustomFx = 1;
   }
@@ -576,13 +576,13 @@ KISSY.add(function(S, require) {
     _$jscoverage['/timer.js'].lineData[111]++;
     parts = val.match(NUMBER_REG);
     _$jscoverage['/timer.js'].lineData[113]++;
-    if (visit95_113_1(parts)) {
+    if (visit90_113_1(parts)) {
       _$jscoverage['/timer.js'].lineData[114]++;
       to = parseFloat(parts[2]);
       _$jscoverage['/timer.js'].lineData[115]++;
       unit = parts[3];
       _$jscoverage['/timer.js'].lineData[118]++;
-      if (visit96_118_1(unit && visit97_118_2(visit98_118_3(unit !== 'px') && from))) {
+      if (visit91_118_1(unit && visit92_118_2(visit93_118_3(unit !== 'px') && from))) {
         _$jscoverage['/timer.js'].lineData[119]++;
         var tmpCur = 0, to2 = to;
         _$jscoverage['/timer.js'].lineData[121]++;
@@ -593,16 +593,16 @@ KISSY.add(function(S, require) {
           Dom.css(node, prop, to2 + unit);
           _$jscoverage['/timer.js'].lineData[125]++;
           tmpCur = fx.cur();
-        } while (visit99_126_1(tmpCur == 0));
+        } while (visit94_126_1(tmpCur === 0));
         _$jscoverage['/timer.js'].lineData[127]++;
         from = (to2 / tmpCur) * from;
         _$jscoverage['/timer.js'].lineData[128]++;
         Dom.css(node, prop, from + unit);
       }
       _$jscoverage['/timer.js'].lineData[132]++;
-      if (visit100_132_1(parts[1])) {
+      if (visit95_132_1(parts[1])) {
         _$jscoverage['/timer.js'].lineData[133]++;
-        to = ((visit101_133_1(parts[1] === '-=') ? -1 : 1) * to) + from;
+        to = ((visit96_133_1(parts[1] === '-=') ? -1 : 1) * to) + from;
       }
     }
     _$jscoverage['/timer.js'].lineData[137]++;
@@ -630,21 +630,21 @@ KISSY.add(function(S, require) {
     _$jscoverage['/timer.js'].lineData[156]++;
     fx.frame();
     _$jscoverage['/timer.js'].lineData[158]++;
-    if (visit102_158_1(self.isRejected() || self.isResolved())) {
+    if (visit97_158_1(self.isRejected() || self.isResolved())) {
       _$jscoverage['/timer.js'].lineData[159]++;
       return;
     }
     _$jscoverage['/timer.js'].lineData[161]++;
-    end &= visit103_161_1(fx.pos == 1);
+    end &= visit98_161_1(fx.pos === 1);
   }
   _$jscoverage['/timer.js'].lineData[163]++;
-  var currentTime = S.now(), duration = self.config.duration * 1000, remaining = Math.max(0, self.startTime + duration - currentTime), temp = visit104_167_1(remaining / duration || 0), percent = 1 - temp;
+  var currentTime = S.now(), duration = self.config.duration * 1000, remaining = Math.max(0, self.startTime + duration - currentTime), temp = visit99_167_1(remaining / duration || 0), percent = 1 - temp;
   _$jscoverage['/timer.js'].lineData[169]++;
   self.defer.notify([self, percent, remaining]);
   _$jscoverage['/timer.js'].lineData[170]++;
-  if (visit105_170_1(end)) {
+  if (visit100_170_1(end)) {
     _$jscoverage['/timer.js'].lineData[172]++;
-    self['stop'](end);
+    self.stop(end);
   }
 }, 
   doStop: function(finish) {
@@ -654,7 +654,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/timer.js'].lineData[182]++;
   AM.stop(self);
   _$jscoverage['/timer.js'].lineData[183]++;
-  if (visit106_183_1(finish)) {
+  if (visit101_183_1(finish)) {
     _$jscoverage['/timer.js'].lineData[184]++;
     for (prop in _propsData) {
       _$jscoverage['/timer.js'].lineData[185]++;
@@ -662,7 +662,7 @@ KISSY.add(function(S, require) {
       _$jscoverage['/timer.js'].lineData[186]++;
       fx = _propData.fx;
       _$jscoverage['/timer.js'].lineData[188]++;
-      if (visit107_188_1(fx)) {
+      if (visit102_188_1(fx)) {
         _$jscoverage['/timer.js'].lineData[189]++;
         fx.frame(1);
       }

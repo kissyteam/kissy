@@ -330,8 +330,6 @@ if (! _$jscoverage['/stylesheet.js'].branchData) {
   _$jscoverage['/stylesheet.js'].branchData['43'][1] = new BranchData();
   _$jscoverage['/stylesheet.js'].branchData['51'] = [];
   _$jscoverage['/stylesheet.js'].branchData['51'][1] = new BranchData();
-  _$jscoverage['/stylesheet.js'].branchData['55'] = [];
-  _$jscoverage['/stylesheet.js'].branchData['55'][1] = new BranchData();
   _$jscoverage['/stylesheet.js'].branchData['114'] = [];
   _$jscoverage['/stylesheet.js'].branchData['114'][1] = new BranchData();
   _$jscoverage['/stylesheet.js'].branchData['115'] = [];
@@ -360,70 +358,66 @@ if (! _$jscoverage['/stylesheet.js'].branchData) {
   _$jscoverage['/stylesheet.js'].branchData['195'][1] = new BranchData();
 }
 _$jscoverage['/stylesheet.js'].branchData['195'][1].init(110, 13, 'sheet.addRule');
-function visit18_195_1(result) {
+function visit17_195_1(result) {
   _$jscoverage['/stylesheet.js'].branchData['195'][1].ranCondition(result);
   return result;
 }_$jscoverage['/stylesheet.js'].branchData['193'][1].init(13, 16, 'sheet.insertRule');
-function visit17_193_1(result) {
+function visit16_193_1(result) {
   _$jscoverage['/stylesheet.js'].branchData['193'][1].ranCondition(result);
   return result;
 }_$jscoverage['/stylesheet.js'].branchData['187'][1].init(86, 16, 'sheet.removeRule');
-function visit16_187_1(result) {
+function visit15_187_1(result) {
   _$jscoverage['/stylesheet.js'].branchData['187'][1].ranCondition(result);
   return result;
 }_$jscoverage['/stylesheet.js'].branchData['185'][1].init(13, 16, 'sheet.deleteRule');
-function visit15_185_1(result) {
+function visit14_185_1(result) {
   _$jscoverage['/stylesheet.js'].branchData['185'][1].ranCondition(result);
   return result;
-}_$jscoverage['/stylesheet.js'].branchData['179'][1].init(39, 10, 'base || ""');
-function visit14_179_1(result) {
+}_$jscoverage['/stylesheet.js'].branchData['179'][1].init(39, 10, 'base || \'\'');
+function visit13_179_1(result) {
   _$jscoverage['/stylesheet.js'].branchData['179'][1].ranCondition(result);
   return result;
 }_$jscoverage['/stylesheet.js'].branchData['155'][1].init(81, 12, 'selectorText');
-function visit13_155_1(result) {
+function visit12_155_1(result) {
   _$jscoverage['/stylesheet.js'].branchData['155'][1].ranCondition(result);
   return result;
 }_$jscoverage['/stylesheet.js'].branchData['138'][1].init(110, 3, 'css');
-function visit12_138_1(result) {
+function visit11_138_1(result) {
   _$jscoverage['/stylesheet.js'].branchData['138'][1].ranCondition(result);
   return result;
-}_$jscoverage['/stylesheet.js'].branchData['129'][1].init(29, 27, 'sheet[rulesName][i] == rule');
-function visit11_129_1(result) {
+}_$jscoverage['/stylesheet.js'].branchData['129'][1].init(29, 28, 'sheet[rulesName][i] === rule');
+function visit10_129_1(result) {
   _$jscoverage['/stylesheet.js'].branchData['129'][1].ranCondition(result);
   return result;
 }_$jscoverage['/stylesheet.js'].branchData['128'][1].init(156, 6, 'i >= 0');
-function visit10_128_1(result) {
+function visit9_128_1(result) {
   _$jscoverage['/stylesheet.js'].branchData['128'][1].ranCondition(result);
   return result;
 }_$jscoverage['/stylesheet.js'].branchData['123'][1].init(79, 3, 'css');
-function visit9_123_1(result) {
+function visit8_123_1(result) {
   _$jscoverage['/stylesheet.js'].branchData['123'][1].ranCondition(result);
   return result;
 }_$jscoverage['/stylesheet.js'].branchData['121'][1].init(493, 4, 'rule');
-function visit8_121_1(result) {
+function visit7_121_1(result) {
   _$jscoverage['/stylesheet.js'].branchData['121'][1].ranCondition(result);
   return result;
 }_$jscoverage['/stylesheet.js'].branchData['115'][1].init(29, 28, 'i < multiSelector.length - 1');
-function visit7_115_1(result) {
+function visit6_115_1(result) {
   _$jscoverage['/stylesheet.js'].branchData['115'][1].ranCondition(result);
   return result;
 }_$jscoverage['/stylesheet.js'].branchData['114'][1].init(269, 24, 'multiSelector.length > 1');
-function visit6_114_1(result) {
+function visit5_114_1(result) {
   _$jscoverage['/stylesheet.js'].branchData['114'][1].ranCondition(result);
   return result;
-}_$jscoverage['/stylesheet.js'].branchData['55'][1].init(116, 41, 'styleDeclaration = cssRules[selectorText]');
-function visit5_55_1(result) {
-  _$jscoverage['/stylesheet.js'].branchData['55'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/stylesheet.js'].branchData['51'][1].init(816, 6, 'i >= 0');
+}_$jscoverage['/stylesheet.js'].branchData['51'][1].init(813, 6, 'i >= 0');
 function visit4_51_1(result) {
   _$jscoverage['/stylesheet.js'].branchData['51'][1].ranCondition(result);
   return result;
-}_$jscoverage['/stylesheet.js'].branchData['43'][1].init(583, 30, 'sheet && (\'cssRules\' in sheet)');
+}_$jscoverage['/stylesheet.js'].branchData['43'][1].init(580, 30, 'sheet && (\'cssRules\' in sheet)');
 function visit3_43_1(result) {
   _$jscoverage['/stylesheet.js'].branchData['43'][1].ranCondition(result);
   return result;
-}_$jscoverage['/stylesheet.js'].branchData['35'][1].init(439, 25, 'el.sheet || el.styleSheet');
+}_$jscoverage['/stylesheet.js'].branchData['35'][1].init(436, 25, 'el.sheet || el.styleSheet');
 function visit2_35_1(result) {
   _$jscoverage['/stylesheet.js'].branchData['35'][1].ranCondition(result);
   return result;
@@ -445,7 +439,7 @@ KISSY.add(function(S, require) {
       el = el.el;
     }
     _$jscoverage['/stylesheet.js'].lineData[32]++;
-    el = this['el'] = Dom.get(el);
+    el = this.el = Dom.get(el);
     _$jscoverage['/stylesheet.js'].lineData[35]++;
     var sheet = visit2_35_1(el.sheet || el.styleSheet);
     _$jscoverage['/stylesheet.js'].lineData[37]++;
@@ -469,9 +463,9 @@ KISSY.add(function(S, require) {
       _$jscoverage['/stylesheet.js'].lineData[53]++;
       selectorText = rule.selectorText;
       _$jscoverage['/stylesheet.js'].lineData[55]++;
-      if (visit5_55_1(styleDeclaration = cssRules[selectorText])) {
+      if ((styleDeclaration = cssRules[selectorText])) {
         _$jscoverage['/stylesheet.js'].lineData[56]++;
-        styleDeclaration.style.cssText += ";" + styleDeclaration.style.cssText;
+        styleDeclaration.style.cssText += ';' + styleDeclaration.style.cssText;
         _$jscoverage['/stylesheet.js'].lineData[57]++;
         deleteRule(sheet, i);
       } else {
@@ -517,9 +511,9 @@ KISSY.add(function(S, require) {
   _$jscoverage['/stylesheet.js'].lineData[112]++;
   var i;
   _$jscoverage['/stylesheet.js'].lineData[114]++;
-  if (visit6_114_1(multiSelector.length > 1)) {
+  if (visit5_114_1(multiSelector.length > 1)) {
     _$jscoverage['/stylesheet.js'].lineData[115]++;
-    for (i = 0; visit7_115_1(i < multiSelector.length - 1); i++) {
+    for (i = 0; visit6_115_1(i < multiSelector.length - 1); i++) {
       _$jscoverage['/stylesheet.js'].lineData[116]++;
       this.set(multiSelector[i], css);
     }
@@ -527,20 +521,20 @@ KISSY.add(function(S, require) {
     return this;
   }
   _$jscoverage['/stylesheet.js'].lineData[121]++;
-  if (visit8_121_1(rule)) {
+  if (visit7_121_1(rule)) {
     _$jscoverage['/stylesheet.js'].lineData[122]++;
     css = toCssText(css, rule.style.cssText);
     _$jscoverage['/stylesheet.js'].lineData[123]++;
-    if (visit9_123_1(css)) {
+    if (visit8_123_1(css)) {
       _$jscoverage['/stylesheet.js'].lineData[124]++;
       rule.style.cssText = css;
     } else {
       _$jscoverage['/stylesheet.js'].lineData[127]++;
       delete cssRules[selectorText];
       _$jscoverage['/stylesheet.js'].lineData[128]++;
-      for (i = sheet[rulesName].length - 1; visit10_128_1(i >= 0); i--) {
+      for (i = sheet[rulesName].length - 1; visit9_128_1(i >= 0); i--) {
         _$jscoverage['/stylesheet.js'].lineData[129]++;
-        if (visit11_129_1(sheet[rulesName][i] == rule)) {
+        if (visit10_129_1(sheet[rulesName][i] === rule)) {
           _$jscoverage['/stylesheet.js'].lineData[130]++;
           deleteRule(sheet, i);
           _$jscoverage['/stylesheet.js'].lineData[131]++;
@@ -554,7 +548,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/stylesheet.js'].lineData[137]++;
     css = toCssText(css);
     _$jscoverage['/stylesheet.js'].lineData[138]++;
-    if (visit12_138_1(css)) {
+    if (visit11_138_1(css)) {
       _$jscoverage['/stylesheet.js'].lineData[139]++;
       insertRule(sheet, selectorText, css, len);
       _$jscoverage['/stylesheet.js'].lineData[140]++;
@@ -569,7 +563,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/stylesheet.js'].lineData[153]++;
   var rule, css, selector, cssRules = this.cssRules;
   _$jscoverage['/stylesheet.js'].lineData[155]++;
-  if (visit13_155_1(selectorText)) {
+  if (visit12_155_1(selectorText)) {
     _$jscoverage['/stylesheet.js'].lineData[156]++;
     rule = cssRules[selectorText];
     _$jscoverage['/stylesheet.js'].lineData[158]++;
@@ -582,19 +576,19 @@ KISSY.add(function(S, require) {
       _$jscoverage['/stylesheet.js'].lineData[163]++;
       rule = cssRules[selector];
       _$jscoverage['/stylesheet.js'].lineData[164]++;
-      css.push(rule.selectorText + " {" + rule.style.cssText + "}");
+      css.push(rule.selectorText + ' {' + rule.style.cssText + '}');
     }
     _$jscoverage['/stylesheet.js'].lineData[167]++;
-    return css.join("\n");
+    return css.join('\n');
   }
 }};
   _$jscoverage['/stylesheet.js'].lineData[176]++;
-  var workerElement = document.createElement("p");
+  var workerElement = document.createElement('p');
   _$jscoverage['/stylesheet.js'].lineData[178]++;
   function toCssText(css, base) {
     _$jscoverage['/stylesheet.js'].functionData[7]++;
     _$jscoverage['/stylesheet.js'].lineData[179]++;
-    workerElement.style.cssText = visit14_179_1(base || "");
+    workerElement.style.cssText = visit13_179_1(base || '');
     _$jscoverage['/stylesheet.js'].lineData[180]++;
     Dom.css(workerElement, css);
     _$jscoverage['/stylesheet.js'].lineData[181]++;
@@ -604,12 +598,12 @@ KISSY.add(function(S, require) {
   function deleteRule(sheet, i) {
     _$jscoverage['/stylesheet.js'].functionData[8]++;
     _$jscoverage['/stylesheet.js'].lineData[185]++;
-    if (visit15_185_1(sheet.deleteRule)) {
+    if (visit14_185_1(sheet.deleteRule)) {
       _$jscoverage['/stylesheet.js'].lineData[186]++;
       sheet.deleteRule(i);
     } else {
       _$jscoverage['/stylesheet.js'].lineData[187]++;
-      if (visit16_187_1(sheet.removeRule)) {
+      if (visit15_187_1(sheet.removeRule)) {
         _$jscoverage['/stylesheet.js'].lineData[188]++;
         sheet.removeRule(i);
       }
@@ -619,12 +613,12 @@ KISSY.add(function(S, require) {
   function insertRule(sheet, sel, css, i) {
     _$jscoverage['/stylesheet.js'].functionData[9]++;
     _$jscoverage['/stylesheet.js'].lineData[193]++;
-    if (visit17_193_1(sheet.insertRule)) {
+    if (visit16_193_1(sheet.insertRule)) {
       _$jscoverage['/stylesheet.js'].lineData[194]++;
       sheet.insertRule(sel + ' {' + css + '}', i);
     } else {
       _$jscoverage['/stylesheet.js'].lineData[195]++;
-      if (visit18_195_1(sheet.addRule)) {
+      if (visit17_195_1(sheet.addRule)) {
         _$jscoverage['/stylesheet.js'].lineData[196]++;
         sheet.addRule(sel, css, i);
       }

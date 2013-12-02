@@ -425,7 +425,7 @@ _$jscoverage['/meta/modules.js'].lineData[3]++;
   _$jscoverage['/meta/modules.js'].lineData[127]++;
   config({
   'dom/selector': {
-  requires: ['dom/selector/parser.js', 'dom/basic']}});
+  requires: ['dom/basic']}});
   _$jscoverage['/meta/modules.js'].lineData[131]++;
   config({
   'editor': {

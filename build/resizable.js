@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:49
+build time: Dec 2 15:24
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -58,9 +58,9 @@ KISSY.add("resizable", ["node", "base", "dd"], function(S, require) {
     return Math.min(Math.max(min, v), max)
   }
   function createDD(self) {
-    var dds = self["dds"], node = self.get("node"), handlers = self.get("handlers"), preserveRatio, dragConfig = self.get("dragConfig"), prefixCls = self.get("prefixCls"), prefix = prefixCls + CLS_PREFIX;
+    var dds = self.dds, node = self.get("node"), handlers = self.get("handlers"), preserveRatio, dragConfig = self.get("dragConfig"), prefixCls = self.get("prefixCls"), prefix = prefixCls + CLS_PREFIX;
     for(i = 0;i < handlers.length;i++) {
-      var hc = handlers[i], el = $("<div class='" + prefix + " " + prefix + "-" + hc + "'></div>").prependTo(node, undefined), dd = dds[hc] = new Draggable(S.mix({node:el, cursor:null, groups:false}, dragConfig));
+      var hc = handlers[i], el = $('<div class="' + prefix + " " + prefix + "-" + hc + '"></div>').prependTo(node, undefined), dd = dds[hc] = new Draggable(S.mix({node:el, cursor:null, groups:false}, dragConfig));
       (function(hc, dd) {
         var startEdgePos;
         dd.on("drag", function(ev) {
@@ -88,7 +88,7 @@ KISSY.add("resizable", ["node", "base", "dd"], function(S, require) {
     }
   }
   var Resizable = Base.extend({initializer:function() {
-    this["dds"] = {};
+    this.dds = {};
     this.publish("beforeResize", {defaultFn:this._onBeforeResize})
   }, _onBeforeResize:function(e) {
     this.get("node").css(e.region);
@@ -96,12 +96,12 @@ KISSY.add("resizable", ["node", "base", "dd"], function(S, require) {
   }, _onSetNode:function() {
     createDD(this)
   }, _onSetDisabled:function(v) {
-    var dds = this["dds"];
+    var dds = this.dds;
     S.each(dds, function(d) {
       d.set("disabled", v)
     })
   }, destructor:function() {
-    var self = this, d, dds = self["dds"];
+    var self = this, d, dds = self.dds;
     for(d in dds) {
       dds[d].destroy();
       dds[d].get("node").remove();
@@ -109,7 +109,7 @@ KISSY.add("resizable", ["node", "base", "dd"], function(S, require) {
     }
   }}, {name:"Resizable", ATTRS:{node:{setter:function(v) {
     return $(v)
-  }}, dragConfig:{}, prefixCls:{value:"ks-"}, disabled:{}, minWidth:{value:0}, minHeight:{value:0}, maxWidth:{value:Number["MAX_VALUE"]}, maxHeight:{value:Number["MAX_VALUE"]}, preserveRatio:{value:false}, handlers:{value:[]}}});
+  }}, dragConfig:{}, prefixCls:{value:"ks-"}, disabled:{}, minWidth:{value:0}, minHeight:{value:0}, maxWidth:{value:Number.MAX_VALUE}, maxHeight:{value:Number.MAX_VALUE}, preserveRatio:{value:false}, handlers:{value:[]}}});
   Resizable.Handler = {B:"b", T:"t", L:"l", R:"r", BL:"bl", TL:"tl", BR:"br", TR:"tr"};
   return Resizable
 });

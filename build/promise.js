@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:49
+build time: Dec 2 15:24
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -11,7 +11,7 @@ build time: Nov 27 00:49
 
 KISSY.add("promise", [], function(S) {
   var logger = S.getLogger("s/promise");
-  var PROMISE_VALUE = "__promise_value", undefined = undefined, processImmediate = S.setImmediate, PROMISE_PROGRESS_LISTENERS = "__promise_progress_listeners", PROMISE_PENDINGS = "__promise_pendings";
+  var PROMISE_VALUE = "__promise_value", processImmediate = S.setImmediate, PROMISE_PROGRESS_LISTENERS = "__promise_progress_listeners", PROMISE_PENDINGS = "__promise_pendings";
   function logError(str) {
     if(typeof console !== "undefined" && console.error) {
       console.error(str)
@@ -181,7 +181,7 @@ KISSY.add("promise", [], function(S) {
     if(!count) {
       return null
     }
-    var defer = Defer();
+    var defer = new Defer;
     for(var i = 0;i < promises.length;i++) {
       (function(promise, i) {
         when(promise, function(value) {

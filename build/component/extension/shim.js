@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:38
+build time: Dec 2 15:12
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -11,7 +11,7 @@ build time: Nov 27 00:38
 
 KISSY.add("component/extension/shim", [], function(S) {
   var ie6 = S.UA.ie === 6;
-  var shimTpl = "<" + "iframe style='position: absolute;" + "border: none;" + "width: " + (ie6 ? "expression(this.parentNode.clientWidth)" : "100%") + ";" + "top: 0;" + "opacity: 0;" + "filter: alpha(opacity=0);" + "left: 0;" + "z-index: -1;" + "height: " + (ie6 ? "expression(this.parentNode.clientHeight)" : "100%") + ";" + "'/>";
+  var shimTpl = "<" + 'iframe style="position: absolute;' + "border: none;" + "width: " + (ie6 ? "expression(this.parentNode.clientWidth)" : "100%") + ";" + "top: 0;" + "opacity: 0;" + "filter: alpha(opacity=0);" + "left: 0;" + "z-index: -1;" + "height: " + (ie6 ? "expression(this.parentNode.clientHeight)" : "100%") + ";" + '"/>';
   function Shim() {
   }
   Shim.ATTRS = {shim:{value:ie6}};

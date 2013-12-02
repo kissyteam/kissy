@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:38
+build time: Dec 2 15:12
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -10,17 +10,16 @@ build time: Nov 27 00:38
 */
 
 KISSY.add("component/extension/align", ["node"], function(S, require) {
-  var module = this;
   var Node = require("node");
   var win = S.Env.host, $ = Node.all, UA = S.UA;
   function getOffsetParent(element) {
-    var doc = element.ownerDocument, body = doc.body, parent, positionStyle = $(element).css("position"), skipStatic = positionStyle == "fixed" || positionStyle == "absolute";
+    var doc = element.ownerDocument, body = doc.body, parent, positionStyle = $(element).css("position"), skipStatic = positionStyle === "fixed" || positionStyle === "absolute";
     if(!skipStatic) {
-      return element.nodeName.toLowerCase() == "html" ? null : element.parentNode
+      return element.nodeName.toLowerCase() === "html" ? null : element.parentNode
     }
-    for(parent = element.parentNode;parent && parent != body;parent = parent.parentNode) {
+    for(parent = element.parentNode;parent && parent !== body;parent = parent.parentNode) {
       positionStyle = $(parent).css("position");
-      if(positionStyle != "static") {
+      if(positionStyle !== "static") {
         return parent
       }
     }
@@ -29,7 +28,7 @@ KISSY.add("component/extension/align", ["node"], function(S, require) {
   function getVisibleRectForElement(element) {
     var visibleRect = {left:0, right:Infinity, top:0, bottom:Infinity}, el, scrollX, scrollY, winSize, doc = element.ownerDocument, $win = $(doc).getWindow(), body = doc.body, documentElement = doc.documentElement;
     for(el = element;el = getOffsetParent(el);) {
-      if((!UA.ie || el.clientWidth != 0) && el != body && el != documentElement && $(el).css("overflow") != "visible") {
+      if((!UA.ie || el.clientWidth !== 0) && el !== body && el !== documentElement && $(el).css("overflow") !== "visible") {
         var pos = $(el).offset();
         pos.left += el.clientLeft;
         pos.top += el.clientTop;
@@ -67,7 +66,7 @@ KISSY.add("component/extension/align", ["node"], function(S, require) {
     if(overflow.adjustX && pos.left < visibleRect.left) {
       pos.left = visibleRect.left
     }
-    if(overflow["resizeWidth"] && pos.left >= visibleRect.left && pos.left + size.width > visibleRect.right) {
+    if(overflow.resizeWidth && pos.left >= visibleRect.left && pos.left + size.width > visibleRect.right) {
       size.width -= pos.left + size.width - visibleRect.right
     }
     if(overflow.adjustX && pos.left + size.width > visibleRect.right) {
@@ -76,7 +75,7 @@ KISSY.add("component/extension/align", ["node"], function(S, require) {
     if(overflow.adjustY && pos.top < visibleRect.top) {
       pos.top = visibleRect.top
     }
-    if(overflow["resizeHeight"] && pos.top >= visibleRect.top && pos.top + size.height > visibleRect.bottom) {
+    if(overflow.resizeHeight && pos.top >= visibleRect.top && pos.top + size.height > visibleRect.bottom) {
       size.height -= pos.top + size.height - visibleRect.bottom
     }
     if(overflow.adjustY && pos.top + size.height > visibleRect.bottom) {
@@ -139,7 +138,7 @@ KISSY.add("component/extension/align", ["node"], function(S, require) {
     return{left:x, top:y}
   }
   function beforeVisibleChange(e) {
-    if(e.target == this && e.newVal) {
+    if(e.target === this && e.newVal) {
       realign.call(this)
     }
   }
@@ -192,10 +191,10 @@ KISSY.add("component/extension/align", ["node"], function(S, require) {
       }
     }
     self.set({x:newElRegion.left, y:newElRegion.top}, {force:1});
-    if(newElRegion.width != elRegion.width) {
+    if(newElRegion.width !== elRegion.width) {
       self.set("width", el.width() + newElRegion.width - elRegion.width)
     }
-    if(newElRegion.height != elRegion.height) {
+    if(newElRegion.height !== elRegion.height) {
       self.set("height", el.height() + newElRegion.height - elRegion.height)
     }
     return self

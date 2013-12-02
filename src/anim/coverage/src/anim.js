@@ -311,15 +311,15 @@ if (! _$jscoverage['/anim.js'].branchData) {
   _$jscoverage['/anim.js'].branchData['166'] = [];
   _$jscoverage['/anim.js'].branchData['166'][1] = new BranchData();
 }
-_$jscoverage['/anim.js'].branchData['166'][1].init(100, 15, 'queue === false');
+_$jscoverage['/anim.js'].branchData['166'][1].init(101, 15, 'queue === false');
 function visit14_166_1(result) {
   _$jscoverage['/anim.js'].branchData['166'][1].ranCondition(result);
   return result;
-}_$jscoverage['/anim.js'].branchData['164'][2].init(150, 24, 'typeof queue == \'string\'');
+}_$jscoverage['/anim.js'].branchData['164'][2].init(150, 25, 'typeof queue === \'string\'');
 function visit13_164_2(result) {
   _$jscoverage['/anim.js'].branchData['164'][2].ranCondition(result);
   return result;
-}_$jscoverage['/anim.js'].branchData['164'][1].init(84, 116, 'typeof queue == \'string\' || queue === false');
+}_$jscoverage['/anim.js'].branchData['164'][1].init(84, 117, 'typeof queue === \'string\' || queue === false');
 function visit12_164_1(result) {
   _$jscoverage['/anim.js'].branchData['164'][1].ranCondition(result);
   return result;
@@ -327,11 +327,11 @@ function visit12_164_1(result) {
 function visit11_162_2(result) {
   _$jscoverage['/anim.js'].branchData['162'][2].ranCondition(result);
   return result;
-}_$jscoverage['/anim.js'].branchData['162'][1].init(49, 201, 'queue === null || typeof queue == \'string\' || queue === false');
+}_$jscoverage['/anim.js'].branchData['162'][1].init(49, 202, 'queue === null || typeof queue === \'string\' || queue === false');
 function visit10_162_1(result) {
   _$jscoverage['/anim.js'].branchData['162'][1].ranCondition(result);
   return result;
-}_$jscoverage['/anim.js'].branchData['85'][1].init(1413, 41, 'config[\'useTransition\'] && TransitionAnim');
+}_$jscoverage['/anim.js'].branchData['85'][1].init(1415, 38, 'config.useTransition && TransitionAnim');
 function visit9_85_1(result) {
   _$jscoverage['/anim.js'].branchData['85'][1].ranCondition(result);
   return result;
@@ -343,15 +343,15 @@ function visit8_74_1(result) {
 function visit7_71_1(result) {
   _$jscoverage['/anim.js'].branchData['71'][1].ranCondition(result);
   return result;
-}_$jscoverage['/anim.js'].branchData['65'][1].init(678, 25, 'S.isPlainObject(duration)');
+}_$jscoverage['/anim.js'].branchData['65'][1].init(680, 25, 'S.isPlainObject(duration)');
 function visit6_65_1(result) {
   _$jscoverage['/anim.js'].branchData['65'][1].ranCondition(result);
   return result;
-}_$jscoverage['/anim.js'].branchData['56'][2].init(199, 16, 'trimProp != prop');
+}_$jscoverage['/anim.js'].branchData['56'][2].init(199, 17, 'trimProp !== prop');
 function visit5_56_2(result) {
   _$jscoverage['/anim.js'].branchData['56'][2].ranCondition(result);
   return result;
-}_$jscoverage['/anim.js'].branchData['56'][1].init(186, 29, '!trimProp || trimProp != prop');
+}_$jscoverage['/anim.js'].branchData['56'][1].init(186, 30, '!trimProp || trimProp !== prop');
 function visit4_56_1(result) {
   _$jscoverage['/anim.js'].branchData['56'][1].ranCondition(result);
   return result;
@@ -359,7 +359,7 @@ function visit4_56_1(result) {
 function visit3_53_1(result) {
   _$jscoverage['/anim.js'].branchData['53'][1].ranCondition(result);
   return result;
-}_$jscoverage['/anim.js'].branchData['49'][1].init(58, 21, 'typeof to == \'string\'');
+}_$jscoverage['/anim.js'].branchData['49'][1].init(58, 22, 'typeof to === \'string\'');
 function visit2_49_1(result) {
   _$jscoverage['/anim.js'].branchData['49'][1].ranCondition(result);
   return result;
@@ -391,7 +391,7 @@ KISSY.add(function(S, require) {
       config = node;
     } else {
       _$jscoverage['/anim.js'].lineData[49]++;
-      if (visit2_49_1(typeof to == 'string')) {
+      if (visit2_49_1(typeof to === 'string')) {
         _$jscoverage['/anim.js'].lineData[50]++;
         to = S.unparam(String(to), ';', ':');
         _$jscoverage['/anim.js'].lineData[51]++;
@@ -405,7 +405,7 @@ KISSY.add(function(S, require) {
     to[trimProp] = S.trim(value);
   }
   _$jscoverage['/anim.js'].lineData[56]++;
-  if (visit4_56_1(!trimProp || visit5_56_2(trimProp != prop))) {
+  if (visit4_56_1(!trimProp || visit5_56_2(trimProp !== prop))) {
     _$jscoverage['/anim.js'].lineData[57]++;
     delete to[prop];
   }
@@ -442,7 +442,7 @@ KISSY.add(function(S, require) {
     config = S.merge(defaultConfig, config, {
   useTransition: S.config('anim/useTransition')});
     _$jscoverage['/anim.js'].lineData[85]++;
-    if (visit9_85_1(config['useTransition'] && TransitionAnim)) {
+    if (visit9_85_1(config.useTransition && TransitionAnim)) {
       _$jscoverage['/anim.js'].lineData[86]++;
       logger.info('use transition anim');
       _$jscoverage['/anim.js'].lineData[87]++;
@@ -461,7 +461,7 @@ KISSY.add(function(S, require) {
   Anim[action] = function(node, queue) {
   _$jscoverage['/anim.js'].functionData[4]++;
   _$jscoverage['/anim.js'].lineData[160]++;
-  if (visit10_162_1(visit11_162_2(queue === null) || visit12_164_1(visit13_164_2(typeof queue == 'string') || visit14_166_1(queue === false)))) {
+  if (visit10_162_1(visit11_162_2(queue === null) || visit12_164_1(visit13_164_2(typeof queue === 'string') || visit14_166_1(queue === false)))) {
     _$jscoverage['/anim.js'].lineData[168]++;
     return Utils.pauseOrResumeQueue(node, queue, action);
   }

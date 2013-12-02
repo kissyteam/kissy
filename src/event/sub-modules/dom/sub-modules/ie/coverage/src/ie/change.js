@@ -314,14 +314,8 @@ if (! _$jscoverage['/ie/change.js'].branchData) {
   _$jscoverage['/ie/change.js'].branchData['84'][1] = new BranchData();
   _$jscoverage['/ie/change.js'].branchData['98'] = [];
   _$jscoverage['/ie/change.js'].branchData['98'][1] = new BranchData();
-  _$jscoverage['/ie/change.js'].branchData['104'] = [];
-  _$jscoverage['/ie/change.js'].branchData['104'][1] = new BranchData();
 }
-_$jscoverage['/ie/change.js'].branchData['104'][1].init(402, 18, 'p = fel.parentNode');
-function visit13_104_1(result) {
-  _$jscoverage['/ie/change.js'].branchData['104'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/ie/change.js'].branchData['98'][1].init(167, 139, 'e.isPropagationStopped() || isCheckBoxOrRadio(fel)');
+_$jscoverage['/ie/change.js'].branchData['98'][1].init(167, 139, 'e.isPropagationStopped() || isCheckBoxOrRadio(fel)');
 function visit12_98_1(result) {
   _$jscoverage['/ie/change.js'].branchData['98'][1].ranCondition(result);
   return result;
@@ -333,7 +327,7 @@ function visit11_84_1(result) {
 function visit10_75_1(result) {
   _$jscoverage['/ie/change.js'].branchData['75'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/change.js'].branchData['67'][1].init(69, 41, 'e.originalEvent.propertyName == \'checked\'');
+}_$jscoverage['/ie/change.js'].branchData['67'][1].init(69, 42, 'e.originalEvent.propertyName === \'checked\'');
 function visit9_67_1(result) {
   _$jscoverage['/ie/change.js'].branchData['67'][1].ranCondition(result);
   return result;
@@ -357,15 +351,15 @@ function visit5_27_1(result) {
 function visit4_24_1(result) {
   _$jscoverage['/ie/change.js'].branchData['24'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/change.js'].branchData['18'][3].init(66, 15, 'type == \'radio\'');
+}_$jscoverage['/ie/change.js'].branchData['18'][3].init(67, 16, 'type === \'radio\'');
 function visit3_18_3(result) {
   _$jscoverage['/ie/change.js'].branchData['18'][3].ranCondition(result);
   return result;
-}_$jscoverage['/ie/change.js'].branchData['18'][2].init(44, 18, 'type == \'checkbox\'');
+}_$jscoverage['/ie/change.js'].branchData['18'][2].init(44, 19, 'type === \'checkbox\'');
 function visit2_18_2(result) {
   _$jscoverage['/ie/change.js'].branchData['18'][2].ranCondition(result);
   return result;
-}_$jscoverage['/ie/change.js'].branchData['18'][1].init(44, 37, 'type == \'checkbox\' || type == \'radio\'');
+}_$jscoverage['/ie/change.js'].branchData['18'][1].init(44, 39, 'type === \'checkbox\' || type === \'radio\'');
 function visit1_18_1(result) {
   _$jscoverage['/ie/change.js'].branchData['18'][1].ranCondition(result);
   return result;
@@ -390,10 +384,10 @@ KISSY.add(function(S, require) {
     _$jscoverage['/ie/change.js'].lineData[17]++;
     var type = el.type;
     _$jscoverage['/ie/change.js'].lineData[18]++;
-    return visit1_18_1(visit2_18_2(type == 'checkbox') || visit3_18_3(type == 'radio'));
+    return visit1_18_1(visit2_18_2(type === 'checkbox') || visit3_18_3(type === 'radio'));
   }
   _$jscoverage['/ie/change.js'].lineData[21]++;
-  Special['change'] = {
+  Special.change = {
   setup: function() {
   _$jscoverage['/ie/change.js'].functionData[3]++;
   _$jscoverage['/ie/change.js'].lineData[23]++;
@@ -453,7 +447,7 @@ KISSY.add(function(S, require) {
   function propertyChange(e) {
     _$jscoverage['/ie/change.js'].functionData[6]++;
     _$jscoverage['/ie/change.js'].lineData[67]++;
-    if (visit9_67_1(e.originalEvent.propertyName == 'checked')) {
+    if (visit9_67_1(e.originalEvent.propertyName === 'checked')) {
       _$jscoverage['/ie/change.js'].lineData[68]++;
       this.__changed = 1;
     }
@@ -497,7 +491,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/ie/change.js'].lineData[103]++;
     var p;
     _$jscoverage['/ie/change.js'].lineData[104]++;
-    if (visit13_104_1(p = fel.parentNode)) {
+    if ((p = fel.parentNode)) {
       _$jscoverage['/ie/change.js'].lineData[106]++;
       DomEvent.fire(p, 'change', e);
     }

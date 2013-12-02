@@ -255,7 +255,7 @@ if (! _$jscoverage['/tabs/panel-render.js'].branchData) {
   _$jscoverage['/tabs/panel-render.js'].branchData['13'][1] = new BranchData();
 }
 _$jscoverage['/tabs/panel-render.js'].branchData['13'][1].init(96, 19, 'renderData.selected');
-function visit13_13_1(result) {
+function visit12_13_1(result) {
   _$jscoverage['/tabs/panel-render.js'].branchData['13'][1].ranCondition(result);
   return result;
 }_$jscoverage['/tabs/panel-render.js'].lineData[6]++;
@@ -272,7 +272,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/tabs/panel-render.js'].lineData[12]++;
   renderData.elAttrs.role = 'tabpanel';
   _$jscoverage['/tabs/panel-render.js'].lineData[13]++;
-  if (visit13_13_1(renderData.selected)) {
+  if (visit12_13_1(renderData.selected)) {
     _$jscoverage['/tabs/panel-render.js'].lineData[14]++;
     renderData.elCls.push(self.getBaseCssClasses('selected'));
   } else {
@@ -287,7 +287,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/tabs/panel-render.js'].lineData[22]++;
   var selectedCls = this.getBaseCssClasses('selected');
   _$jscoverage['/tabs/panel-render.js'].lineData[24]++;
-  el[v ? "addClass" : "removeClass"](selectedCls).attr("aria-hidden", !v);
+  el[v ? 'addClass' : 'removeClass'](selectedCls).attr('aria-hidden', !v);
 }}, {
   name: 'TabsPanelRender', 
   HTML_PARSER: {

@@ -270,13 +270,13 @@ KISSY.add(function(S, require) {
   _$jscoverage['/menu/check-menuitem-render.js'].lineData[13]++;
   if (visit1_13_1(renderData.checked)) {
     _$jscoverage['/menu/check-menuitem-render.js'].lineData[14]++;
-    renderData.elCls.push(self.getBaseCssClasses("checked"));
+    renderData.elCls.push(this.getBaseCssClasses('checked'));
   }
 }, 
   _onSetChecked: function(v) {
   _$jscoverage['/menu/check-menuitem-render.js'].functionData[2]++;
   _$jscoverage['/menu/check-menuitem-render.js'].lineData[19]++;
-  var self = this, cls = self.getBaseCssClasses("checked");
+  var self = this, cls = self.getBaseCssClasses('checked');
   _$jscoverage['/menu/check-menuitem-render.js'].lineData[21]++;
   self.$el[v ? 'addClass' : 'removeClass'](cls);
 }}, {

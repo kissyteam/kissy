@@ -414,12 +414,14 @@ if (! _$jscoverage['/mvc/router.js']) {
   _$jscoverage['/mvc/router.js'].lineData[508] = 0;
   _$jscoverage['/mvc/router.js'].lineData[509] = 0;
   _$jscoverage['/mvc/router.js'].lineData[511] = 0;
-  _$jscoverage['/mvc/router.js'].lineData[515] = 0;
-  _$jscoverage['/mvc/router.js'].lineData[516] = 0;
-  _$jscoverage['/mvc/router.js'].lineData[525] = 0;
-  _$jscoverage['/mvc/router.js'].lineData[526] = 0;
+  _$jscoverage['/mvc/router.js'].lineData[512] = 0;
+  _$jscoverage['/mvc/router.js'].lineData[517] = 0;
+  _$jscoverage['/mvc/router.js'].lineData[518] = 0;
   _$jscoverage['/mvc/router.js'].lineData[527] = 0;
   _$jscoverage['/mvc/router.js'].lineData[528] = 0;
+  _$jscoverage['/mvc/router.js'].lineData[529] = 0;
+  _$jscoverage['/mvc/router.js'].lineData[530] = 0;
+  _$jscoverage['/mvc/router.js'].lineData[534] = 0;
 }
 if (! _$jscoverage['/mvc/router.js'].functionData) {
   _$jscoverage['/mvc/router.js'].functionData = [];
@@ -479,8 +481,6 @@ if (! _$jscoverage['/mvc/router.js'].branchData) {
   _$jscoverage['/mvc/router.js'].branchData['90'][1] = new BranchData();
   _$jscoverage['/mvc/router.js'].branchData['100'] = [];
   _$jscoverage['/mvc/router.js'].branchData['100'][1] = new BranchData();
-  _$jscoverage['/mvc/router.js'].branchData['142'] = [];
-  _$jscoverage['/mvc/router.js'].branchData['142'][1] = new BranchData();
   _$jscoverage['/mvc/router.js'].branchData['147'] = [];
   _$jscoverage['/mvc/router.js'].branchData['147'][1] = new BranchData();
   _$jscoverage['/mvc/router.js'].branchData['171'] = [];
@@ -558,167 +558,163 @@ if (! _$jscoverage['/mvc/router.js'].branchData) {
   _$jscoverage['/mvc/router.js'].branchData['511'] = [];
   _$jscoverage['/mvc/router.js'].branchData['511'][1] = new BranchData();
 }
-_$jscoverage['/mvc/router.js'].branchData['511'][1].init(767, 30, 'opts.success && opts.success()');
-function visit99_511_1(result) {
+_$jscoverage['/mvc/router.js'].branchData['511'][1].init(770, 12, 'opts.success');
+function visit98_511_1(result) {
   _$jscoverage['/mvc/router.js'].branchData['511'][1].ranCondition(result);
   return result;
 }_$jscoverage['/mvc/router.js'].branchData['508'][1].init(680, 17, 'opts.triggerRoute');
-function visit98_508_1(result) {
+function visit97_508_1(result) {
   _$jscoverage['/mvc/router.js'].branchData['508'][1].ranCondition(result);
   return result;
 }_$jscoverage['/mvc/router.js'].branchData['495'][1].init(22, 37, 'nativeHistory && supportNativeHistory');
-function visit97_495_1(result) {
+function visit96_495_1(result) {
   _$jscoverage['/mvc/router.js'].branchData['495'][1].ranCondition(result);
   return result;
-}_$jscoverage['/mvc/router.js'].branchData['485'][1].init(923, 36, '!equalsIgnoreSlash(locPath, urlRoot)');
-function visit96_485_1(result) {
+}_$jscoverage['/mvc/router.js'].branchData['485'][1].init(920, 36, '!equalsIgnoreSlash(locPath, urlRoot)');
+function visit95_485_1(result) {
   _$jscoverage['/mvc/router.js'].branchData['485'][1].ranCondition(result);
   return result;
 }_$jscoverage['/mvc/router.js'].branchData['471'][1].init(29, 35, 'equalsIgnoreSlash(locPath, urlRoot)');
-function visit95_471_1(result) {
+function visit94_471_1(result) {
   _$jscoverage['/mvc/router.js'].branchData['471'][1].ranCondition(result);
   return result;
 }_$jscoverage['/mvc/router.js'].branchData['470'][1].init(234, 11, 'hashIsValid');
-function visit94_470_1(result) {
+function visit93_470_1(result) {
   _$jscoverage['/mvc/router.js'].branchData['470'][1].ranCondition(result);
   return result;
 }_$jscoverage['/mvc/router.js'].branchData['464'][1].init(22, 20, 'supportNativeHistory');
-function visit93_464_1(result) {
+function visit92_464_1(result) {
   _$jscoverage['/mvc/router.js'].branchData['464'][1].ranCondition(result);
   return result;
 }_$jscoverage['/mvc/router.js'].branchData['462'][1].init(580, 13, 'nativeHistory');
-function visit92_462_1(result) {
+function visit91_462_1(result) {
   _$jscoverage['/mvc/router.js'].branchData['462'][1].ranCondition(result);
   return result;
-}_$jscoverage['/mvc/router.js'].branchData['451'][1].init(199, 18, 'opts.urlRoot || ""');
-function visit91_451_1(result) {
+}_$jscoverage['/mvc/router.js'].branchData['451'][1].init(199, 18, 'opts.urlRoot || \'\'');
+function visit90_451_1(result) {
   _$jscoverage['/mvc/router.js'].branchData['451'][1].ranCondition(result);
   return result;
 }_$jscoverage['/mvc/router.js'].branchData['447'][1].init(24, 30, 'opts.success && opts.success()');
-function visit90_447_1(result) {
+function visit89_447_1(result) {
   _$jscoverage['/mvc/router.js'].branchData['447'][1].ranCondition(result);
   return result;
 }_$jscoverage['/mvc/router.js'].branchData['446'][1].init(49, 16, 'Router.__started');
-function visit89_446_1(result) {
+function visit88_446_1(result) {
   _$jscoverage['/mvc/router.js'].branchData['446'][1].ranCondition(result);
   return result;
 }_$jscoverage['/mvc/router.js'].branchData['444'][1].init(20, 10, 'opts || {}');
-function visit88_444_1(result) {
+function visit87_444_1(result) {
   _$jscoverage['/mvc/router.js'].branchData['444'][1].ranCondition(result);
   return result;
 }_$jscoverage['/mvc/router.js'].branchData['430'][1].init(985, 25, 'opts && opts.triggerRoute');
-function visit87_430_1(result) {
+function visit86_430_1(result) {
   _$jscoverage['/mvc/router.js'].branchData['430'][1].ranCondition(result);
   return result;
 }_$jscoverage['/mvc/router.js'].branchData['425'][2].init(51, 6, 'ie < 8');
-function visit86_425_2(result) {
+function visit85_425_2(result) {
   _$jscoverage['/mvc/router.js'].branchData['425'][2].ranCondition(result);
   return result;
 }_$jscoverage['/mvc/router.js'].branchData['425'][1].init(45, 12, 'ie && ie < 8');
-function visit85_425_1(result) {
+function visit84_425_1(result) {
   _$jscoverage['/mvc/router.js'].branchData['425'][1].ranCondition(result);
   return result;
 }_$jscoverage['/mvc/router.js'].branchData['422'][1].init(75, 14, 'replaceHistory');
-function visit84_422_1(result) {
+function visit83_422_1(result) {
   _$jscoverage['/mvc/router.js'].branchData['422'][1].ranCondition(result);
   return result;
 }_$jscoverage['/mvc/router.js'].branchData['413'][1].init(21, 44, 'Router.nativeHistory && supportNativeHistory');
-function visit83_413_1(result) {
+function visit82_413_1(result) {
   _$jscoverage['/mvc/router.js'].branchData['413'][1].ranCondition(result);
   return result;
 }_$jscoverage['/mvc/router.js'].branchData['412'][1].init(118, 22, 'getFragment() !== path');
-function visit82_412_1(result) {
+function visit81_412_1(result) {
   _$jscoverage['/mvc/router.js'].branchData['412'][1].ranCondition(result);
   return result;
 }_$jscoverage['/mvc/router.js'].branchData['410'][1].init(20, 10, 'opts || {}');
-function visit81_410_1(result) {
+function visit80_410_1(result) {
   _$jscoverage['/mvc/router.js'].branchData['410'][1].ranCondition(result);
   return result;
 }_$jscoverage['/mvc/router.js'].branchData['380'][1].init(358, 5, 'match');
-function visit80_380_1(result) {
+function visit79_380_1(result) {
   _$jscoverage['/mvc/router.js'].branchData['380'][1].ranCondition(result);
   return result;
 }_$jscoverage['/mvc/router.js'].branchData['374'][1].init(65, 15, 'path.match(reg)');
-function visit79_374_1(result) {
+function visit78_374_1(result) {
   _$jscoverage['/mvc/router.js'].branchData['374'][1].ranCondition(result);
   return result;
-}_$jscoverage['/mvc/router.js'].branchData['290'][1].init(96, 27, 'typeof callback == \'string\'');
-function visit78_290_1(result) {
+}_$jscoverage['/mvc/router.js'].branchData['290'][1].init(96, 28, 'typeof callback === \'string\'');
+function visit77_290_1(result) {
   _$jscoverage['/mvc/router.js'].branchData['290'][1].ranCondition(result);
   return result;
 }_$jscoverage['/mvc/router.js'].branchData['288'][1].init(13, 30, 'typeof callback === \'function\'');
-function visit77_288_1(result) {
+function visit76_288_1(result) {
   _$jscoverage['/mvc/router.js'].branchData['288'][1].ranCondition(result);
   return result;
 }_$jscoverage['/mvc/router.js'].branchData['263'][1].init(202, 2, 'g4');
-function visit76_263_1(result) {
+function visit75_263_1(result) {
   _$jscoverage['/mvc/router.js'].branchData['263'][1].ranCondition(result);
   return result;
 }_$jscoverage['/mvc/router.js'].branchData['259'][1].init(89, 2, 'g2');
-function visit75_259_1(result) {
+function visit74_259_1(result) {
   _$jscoverage['/mvc/router.js'].branchData['259'][1].ranCondition(result);
   return result;
 }_$jscoverage['/mvc/router.js'].branchData['257'][1].init(33, 8, 'g2 || g4');
-function visit74_257_1(result) {
+function visit73_257_1(result) {
   _$jscoverage['/mvc/router.js'].branchData['257'][1].ranCondition(result);
   return result;
 }_$jscoverage['/mvc/router.js'].branchData['252'][1].init(67, 30, 'typeof callback === \'function\'');
-function visit73_252_1(result) {
+function visit72_252_1(result) {
   _$jscoverage['/mvc/router.js'].branchData['252'][1].ranCondition(result);
   return result;
-}_$jscoverage['/mvc/router.js'].branchData['224'][1].init(4318, 10, 'finalParam');
-function visit72_224_1(result) {
+}_$jscoverage['/mvc/router.js'].branchData['224'][1].init(4338, 10, 'finalParam');
+function visit71_224_1(result) {
   _$jscoverage['/mvc/router.js'].branchData['224'][1].ranCondition(result);
   return result;
-}_$jscoverage['/mvc/router.js'].branchData['217'][1].init(3698, 12, 'exactlyMatch');
-function visit71_217_1(result) {
+}_$jscoverage['/mvc/router.js'].branchData['217'][1].init(3718, 12, 'exactlyMatch');
+function visit70_217_1(result) {
   _$jscoverage['/mvc/router.js'].branchData['217'][1].ranCondition(result);
   return result;
-}_$jscoverage['/mvc/router.js'].branchData['200'][1].init(1106, 11, '!finalRoute');
-function visit70_200_1(result) {
+}_$jscoverage['/mvc/router.js'].branchData['200'][1].init(1108, 11, '!finalRoute');
+function visit69_200_1(result) {
   _$jscoverage['/mvc/router.js'].branchData['200'][1].ranCondition(result);
   return result;
-}_$jscoverage['/mvc/router.js'].branchData['194'][1].init(280, 34, 'regStr.length > finalRegStr.length');
-function visit69_194_1(result) {
+}_$jscoverage['/mvc/router.js'].branchData['194'][1].init(281, 34, 'regStr.length > finalRegStr.length');
+function visit68_194_1(result) {
   _$jscoverage['/mvc/router.js'].branchData['194'][1].ranCondition(result);
   return result;
 }_$jscoverage['/mvc/router.js'].branchData['192'][1].init(157, 27, 'm.length < finalMatchLength');
-function visit68_192_1(result) {
+function visit67_192_1(result) {
   _$jscoverage['/mvc/router.js'].branchData['192'][1].ranCondition(result);
   return result;
-}_$jscoverage['/mvc/router.js'].branchData['188'][1].init(92, 28, 'finalMatchLength >= m.length');
-function visit67_188_1(result) {
+}_$jscoverage['/mvc/router.js'].branchData['188'][1].init(93, 28, 'finalMatchLength >= m.length');
+function visit66_188_1(result) {
   _$jscoverage['/mvc/router.js'].branchData['188'][1].ranCondition(result);
   return result;
-}_$jscoverage['/mvc/router.js'].branchData['187'][2].init(425, 53, 'firstCaptureGroupIndex == finalFirstCaptureGroupIndex');
-function visit66_187_2(result) {
+}_$jscoverage['/mvc/router.js'].branchData['187'][2].init(425, 54, 'firstCaptureGroupIndex === finalFirstCaptureGroupIndex');
+function visit65_187_2(result) {
   _$jscoverage['/mvc/router.js'].branchData['187'][2].ranCondition(result);
   return result;
-}_$jscoverage['/mvc/router.js'].branchData['187'][1].init(36, 121, 'firstCaptureGroupIndex == finalFirstCaptureGroupIndex && finalMatchLength >= m.length');
-function visit65_187_1(result) {
+}_$jscoverage['/mvc/router.js'].branchData['187'][1].init(36, 122, 'firstCaptureGroupIndex === finalFirstCaptureGroupIndex && finalMatchLength >= m.length');
+function visit64_187_1(result) {
   _$jscoverage['/mvc/router.js'].branchData['187'][1].ranCondition(result);
   return result;
 }_$jscoverage['/mvc/router.js'].branchData['182'][1].init(221, 52, 'firstCaptureGroupIndex > finalFirstCaptureGroupIndex');
-function visit64_182_1(result) {
+function visit63_182_1(result) {
   _$jscoverage['/mvc/router.js'].branchData['182'][1].ranCondition(result);
   return result;
-}_$jscoverage['/mvc/router.js'].branchData['176'][1].init(1472, 6, 'regStr');
-function visit63_176_1(result) {
+}_$jscoverage['/mvc/router.js'].branchData['176'][1].init(1488, 6, 'regStr');
+function visit62_176_1(result) {
   _$jscoverage['/mvc/router.js'].branchData['176'][1].ranCondition(result);
   return result;
-}_$jscoverage['/mvc/router.js'].branchData['171'][1].init(1270, 9, '!m.length');
-function visit62_171_1(result) {
+}_$jscoverage['/mvc/router.js'].branchData['171'][1].init(1286, 9, '!m.length');
+function visit61_171_1(result) {
   _$jscoverage['/mvc/router.js'].branchData['171'][1].ranCondition(result);
   return result;
 }_$jscoverage['/mvc/router.js'].branchData['147'][1].init(33, 10, 'paramNames');
-function visit61_147_1(result) {
+function visit60_147_1(result) {
   _$jscoverage['/mvc/router.js'].branchData['147'][1].ranCondition(result);
   return result;
-}_$jscoverage['/mvc/router.js'].branchData['142'][1].init(337, 19, 'm = path.match(reg)');
-function visit60_142_1(result) {
-  _$jscoverage['/mvc/router.js'].branchData['142'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/mvc/router.js'].branchData['100'][1].init(90, 12, 'str1 == str2');
+}_$jscoverage['/mvc/router.js'].branchData['100'][1].init(90, 13, 'str1 === str2');
 function visit59_100_1(result) {
   _$jscoverage['/mvc/router.js'].branchData['100'][1].ranCondition(result);
   return result;
@@ -742,11 +738,11 @@ function visit55_54_1(result) {
 function visit54_53_1(result) {
   _$jscoverage['/mvc/router.js'].branchData['53'][1].ranCondition(result);
   return result;
-}_$jscoverage['/mvc/router.js'].branchData['30'][1].init(151, 8, 'r == "("');
+}_$jscoverage['/mvc/router.js'].branchData['30'][1].init(152, 9, 'r === \'(\'');
 function visit53_30_1(result) {
   _$jscoverage['/mvc/router.js'].branchData['30'][1].ranCondition(result);
   return result;
-}_$jscoverage['/mvc/router.js'].branchData['28'][1].init(93, 9, 'r == "\\\\"');
+}_$jscoverage['/mvc/router.js'].branchData['28'][1].init(93, 10, 'r === \'\\\\\'');
 function visit52_28_1(result) {
   _$jscoverage['/mvc/router.js'].branchData['28'][1].ranCondition(result);
   return result;
@@ -754,7 +750,7 @@ function visit52_28_1(result) {
 function visit51_25_1(result) {
   _$jscoverage['/mvc/router.js'].branchData['25'][1].ranCondition(result);
   return result;
-}_$jscoverage['/mvc/router.js'].branchData['20'][1].init(375, 31, 'history && history[\'pushState\']');
+}_$jscoverage['/mvc/router.js'].branchData['20'][1].init(375, 28, 'history && history.pushState');
 function visit50_20_1(result) {
   _$jscoverage['/mvc/router.js'].branchData['20'][1].ranCondition(result);
   return result;
@@ -766,7 +762,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/mvc/router.js'].lineData[8]++;
   var Node = require('node');
   _$jscoverage['/mvc/router.js'].lineData[9]++;
-  var each = S.each, BREATH_INTERVAL = 100, grammar = /(:([\w\d]+))|(\\\*([\w\d]+))/g, allRoutes = [], win = S.Env.host, $ = Node.all, $win = $(win), ie = S.UA.ieMode, history = win.history, supportNativeHistory = !!(visit50_20_1(history && history['pushState'])), ROUTER_MAP = "__routerMap";
+  var each = S.each, BREATH_INTERVAL = 100, grammar = /(:([\w\d]+))|(\\\*([\w\d]+))/g, allRoutes = [], win = S.Env.host, $ = Node.all, $win = $(win), ie = S.UA.ieMode, history = win.history, supportNativeHistory = !!(visit50_20_1(history && history.pushState)), ROUTER_MAP = '__routerMap';
   _$jscoverage['/mvc/router.js'].lineData[23]++;
   function findFirstCaptureGroupIndex(regStr) {
     _$jscoverage['/mvc/router.js'].functionData[1]++;
@@ -777,25 +773,25 @@ KISSY.add(function(S, require) {
       _$jscoverage['/mvc/router.js'].lineData[26]++;
       r = regStr.charAt(i);
       _$jscoverage['/mvc/router.js'].lineData[28]++;
-      if (visit52_28_1(r == "\\")) {
+      if (visit52_28_1(r === '\\')) {
         _$jscoverage['/mvc/router.js'].lineData[29]++;
         i++;
       } else {
         _$jscoverage['/mvc/router.js'].lineData[30]++;
-        if (visit53_30_1(r == "(")) {
+        if (visit53_30_1(r === '(')) {
           _$jscoverage['/mvc/router.js'].lineData[31]++;
           return i;
         }
       }
     }
     _$jscoverage['/mvc/router.js'].lineData[34]++;
-    throw new Error("impossible to not to get capture group in kissy mvc route");
+    throw new Error('impossible to not to get capture group in kissy mvc route');
   }
   _$jscoverage['/mvc/router.js'].lineData[37]++;
   function getHash(url) {
     _$jscoverage['/mvc/router.js'].functionData[2]++;
     _$jscoverage['/mvc/router.js'].lineData[47]++;
-    return new S.Uri(url).getFragment().replace(/^!/, "");
+    return new S.Uri(url).getFragment().replace(/^!/, '');
   }
   _$jscoverage['/mvc/router.js'].lineData[52]++;
   function getFragment(url) {
@@ -819,13 +815,13 @@ KISSY.add(function(S, require) {
   function endWithSlash(str) {
     _$jscoverage['/mvc/router.js'].functionData[4]++;
     _$jscoverage['/mvc/router.js'].lineData[64]++;
-    return S.endsWith(str, "/");
+    return S.endsWith(str, '/');
   }
   _$jscoverage['/mvc/router.js'].lineData[67]++;
   function startWithSlash(str) {
     _$jscoverage['/mvc/router.js'].functionData[5]++;
     _$jscoverage['/mvc/router.js'].lineData[68]++;
-    return S.startsWith(str, "/");
+    return S.startsWith(str, '/');
   }
   _$jscoverage['/mvc/router.js'].lineData[71]++;
   function removeEndSlash(str) {
@@ -853,7 +849,7 @@ KISSY.add(function(S, require) {
   function addEndSlash(str) {
     _$jscoverage['/mvc/router.js'].functionData[8]++;
     _$jscoverage['/mvc/router.js'].lineData[86]++;
-    return removeEndSlash(str) + "/";
+    return removeEndSlash(str) + '/';
   }
   _$jscoverage['/mvc/router.js'].lineData[89]++;
   function addStartSlash(str) {
@@ -861,7 +857,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/mvc/router.js'].lineData[90]++;
     if (visit58_90_1(str)) {
       _$jscoverage['/mvc/router.js'].lineData[91]++;
-      return "/" + removeStartSlash(str);
+      return '/' + removeStartSlash(str);
     } else {
       _$jscoverage['/mvc/router.js'].lineData[93]++;
       return str;
@@ -875,19 +871,19 @@ KISSY.add(function(S, require) {
     _$jscoverage['/mvc/router.js'].lineData[99]++;
     str2 = removeEndSlash(str2);
     _$jscoverage['/mvc/router.js'].lineData[100]++;
-    return visit59_100_1(str1 == str2);
+    return visit59_100_1(str1 === str2);
   }
   _$jscoverage['/mvc/router.js'].lineData[105]++;
   function getFullPath(fragment) {
     _$jscoverage['/mvc/router.js'].functionData[11]++;
     _$jscoverage['/mvc/router.js'].lineData[106]++;
-    return location.protocol + "//" + location.host + removeEndSlash(Router.urlRoot) + addStartSlash(fragment);
+    return location.protocol + '//' + location.host + removeEndSlash(Router.urlRoot) + addStartSlash(fragment);
   }
   _$jscoverage['/mvc/router.js'].lineData[112]++;
   function dispatch() {
     _$jscoverage['/mvc/router.js'].functionData[12]++;
     _$jscoverage['/mvc/router.js'].lineData[113]++;
-    var query, path, arg, finalRoute = 0, finalMatchLength = -1, finalRegStr = "", finalFirstCaptureGroupIndex = -1, finalCallback = 0, finalRouteName = "", pathUri = new S.Uri(getFragment()), finalParam = 0;
+    var query, path, arg, finalRoute = 0, finalMatchLength = -1, finalRegStr = '', finalFirstCaptureGroupIndex = -1, finalCallback = 0, finalRouteName = '', pathUri = new S.Uri(getFragment()), finalParam = 0;
     _$jscoverage['/mvc/router.js'].lineData[125]++;
     path = pathUri.clone();
     _$jscoverage['/mvc/router.js'].lineData[126]++;
@@ -905,47 +901,49 @@ KISSY.add(function(S, require) {
   _$jscoverage['/mvc/router.js'].lineData[135]++;
   var reg = desc.reg, regStr = desc.regStr, paramNames = desc.paramNames, firstCaptureGroupIndex = -1, m, name = desc.name, callback = desc.callback;
   _$jscoverage['/mvc/router.js'].lineData[142]++;
-  if (visit60_142_1(m = path.match(reg))) {
+  if ((m = path.match(reg))) {
     _$jscoverage['/mvc/router.js'].lineData[144]++;
     m.shift();
     _$jscoverage['/mvc/router.js'].lineData[146]++;
-    function genParam() {
-      _$jscoverage['/mvc/router.js'].functionData[15]++;
-      _$jscoverage['/mvc/router.js'].lineData[147]++;
-      if (visit61_147_1(paramNames)) {
-        _$jscoverage['/mvc/router.js'].lineData[148]++;
-        var params = {};
-        _$jscoverage['/mvc/router.js'].lineData[149]++;
-        each(m, function(sm, i) {
+    var genParam = function() {
+  _$jscoverage['/mvc/router.js'].functionData[15]++;
+  _$jscoverage['/mvc/router.js'].lineData[147]++;
+  if (visit60_147_1(paramNames)) {
+    _$jscoverage['/mvc/router.js'].lineData[148]++;
+    var params = {};
+    _$jscoverage['/mvc/router.js'].lineData[149]++;
+    each(m, function(sm, i) {
   _$jscoverage['/mvc/router.js'].functionData[16]++;
   _$jscoverage['/mvc/router.js'].lineData[150]++;
   params[paramNames[i]] = sm;
 });
-        _$jscoverage['/mvc/router.js'].lineData[152]++;
-        return params;
-      } else {
-        _$jscoverage['/mvc/router.js'].lineData[156]++;
-        return [].concat(m);
-      }
-    }    _$jscoverage['/mvc/router.js'].lineData[160]++;
-    function upToFinal() {
-      _$jscoverage['/mvc/router.js'].functionData[17]++;
-      _$jscoverage['/mvc/router.js'].lineData[161]++;
-      finalRegStr = regStr;
-      _$jscoverage['/mvc/router.js'].lineData[162]++;
-      finalFirstCaptureGroupIndex = firstCaptureGroupIndex;
-      _$jscoverage['/mvc/router.js'].lineData[163]++;
-      finalCallback = callback;
-      _$jscoverage['/mvc/router.js'].lineData[164]++;
-      finalParam = genParam();
-      _$jscoverage['/mvc/router.js'].lineData[165]++;
-      finalRoute = route;
-      _$jscoverage['/mvc/router.js'].lineData[166]++;
-      finalRouteName = name;
-      _$jscoverage['/mvc/router.js'].lineData[167]++;
-      finalMatchLength = m.length;
-    }    _$jscoverage['/mvc/router.js'].lineData[171]++;
-    if (visit62_171_1(!m.length)) {
+    _$jscoverage['/mvc/router.js'].lineData[152]++;
+    return params;
+  } else {
+    _$jscoverage['/mvc/router.js'].lineData[156]++;
+    return [].concat(m);
+  }
+};
+    _$jscoverage['/mvc/router.js'].lineData[160]++;
+    var upToFinal = function() {
+  _$jscoverage['/mvc/router.js'].functionData[17]++;
+  _$jscoverage['/mvc/router.js'].lineData[161]++;
+  finalRegStr = regStr;
+  _$jscoverage['/mvc/router.js'].lineData[162]++;
+  finalFirstCaptureGroupIndex = firstCaptureGroupIndex;
+  _$jscoverage['/mvc/router.js'].lineData[163]++;
+  finalCallback = callback;
+  _$jscoverage['/mvc/router.js'].lineData[164]++;
+  finalParam = genParam();
+  _$jscoverage['/mvc/router.js'].lineData[165]++;
+  finalRoute = route;
+  _$jscoverage['/mvc/router.js'].lineData[166]++;
+  finalRouteName = name;
+  _$jscoverage['/mvc/router.js'].lineData[167]++;
+  finalMatchLength = m.length;
+};
+    _$jscoverage['/mvc/router.js'].lineData[171]++;
+    if (visit61_171_1(!m.length)) {
       _$jscoverage['/mvc/router.js'].lineData[172]++;
       upToFinal();
       _$jscoverage['/mvc/router.js'].lineData[173]++;
@@ -954,30 +952,30 @@ KISSY.add(function(S, require) {
       return false;
     } else {
       _$jscoverage['/mvc/router.js'].lineData[176]++;
-      if (visit63_176_1(regStr)) {
+      if (visit62_176_1(regStr)) {
         _$jscoverage['/mvc/router.js'].lineData[178]++;
         firstCaptureGroupIndex = findFirstCaptureGroupIndex(regStr);
         _$jscoverage['/mvc/router.js'].lineData[182]++;
-        if (visit64_182_1(firstCaptureGroupIndex > finalFirstCaptureGroupIndex)) {
+        if (visit63_182_1(firstCaptureGroupIndex > finalFirstCaptureGroupIndex)) {
           _$jscoverage['/mvc/router.js'].lineData[183]++;
           upToFinal();
         } else {
           _$jscoverage['/mvc/router.js'].lineData[186]++;
-          if (visit65_187_1(visit66_187_2(firstCaptureGroupIndex == finalFirstCaptureGroupIndex) && visit67_188_1(finalMatchLength >= m.length))) {
+          if (visit64_187_1(visit65_187_2(firstCaptureGroupIndex === finalFirstCaptureGroupIndex) && visit66_188_1(finalMatchLength >= m.length))) {
             _$jscoverage['/mvc/router.js'].lineData[192]++;
-            if (visit68_192_1(m.length < finalMatchLength)) {
+            if (visit67_192_1(m.length < finalMatchLength)) {
               _$jscoverage['/mvc/router.js'].lineData[193]++;
               upToFinal();
             } else {
               _$jscoverage['/mvc/router.js'].lineData[194]++;
-              if (visit69_194_1(regStr.length > finalRegStr.length)) {
+              if (visit68_194_1(regStr.length > finalRegStr.length)) {
                 _$jscoverage['/mvc/router.js'].lineData[195]++;
                 upToFinal();
               }
             }
           } else {
             _$jscoverage['/mvc/router.js'].lineData[200]++;
-            if (visit70_200_1(!finalRoute)) {
+            if (visit69_200_1(!finalRoute)) {
               _$jscoverage['/mvc/router.js'].lineData[201]++;
               upToFinal();
             }
@@ -997,7 +995,7 @@ KISSY.add(function(S, require) {
   return undefined;
 });
   _$jscoverage['/mvc/router.js'].lineData[217]++;
-  if (visit71_217_1(exactlyMatch)) {
+  if (visit70_217_1(exactlyMatch)) {
     _$jscoverage['/mvc/router.js'].lineData[218]++;
     return false;
   }
@@ -1005,7 +1003,7 @@ KISSY.add(function(S, require) {
   return undefined;
 });
     _$jscoverage['/mvc/router.js'].lineData[224]++;
-    if (visit72_224_1(finalParam)) {
+    if (visit71_224_1(finalParam)) {
       _$jscoverage['/mvc/router.js'].lineData[225]++;
       query = pathUri.query.get();
       _$jscoverage['/mvc/router.js'].lineData[226]++;
@@ -1015,7 +1013,7 @@ KISSY.add(function(S, require) {
       _$jscoverage['/mvc/router.js'].lineData[230]++;
       arg = {
   name: finalRouteName, 
-  "paths": finalParam, 
+  'paths': finalParam, 
   path: path, 
   url: location.href, 
   query: query};
@@ -1031,23 +1029,23 @@ KISSY.add(function(S, require) {
     _$jscoverage['/mvc/router.js'].lineData[249]++;
     var name = str, paramNames = [];
     _$jscoverage['/mvc/router.js'].lineData[252]++;
-    if (visit73_252_1(typeof callback === 'function')) {
+    if (visit72_252_1(typeof callback === 'function')) {
       _$jscoverage['/mvc/router.js'].lineData[254]++;
       str = S.escapeRegExp(str);
       _$jscoverage['/mvc/router.js'].lineData[256]++;
       str = str.replace(grammar, function(m, g1, g2, g3, g4) {
   _$jscoverage['/mvc/router.js'].functionData[19]++;
   _$jscoverage['/mvc/router.js'].lineData[257]++;
-  paramNames.push(visit74_257_1(g2 || g4));
+  paramNames.push(visit73_257_1(g2 || g4));
   _$jscoverage['/mvc/router.js'].lineData[259]++;
-  if (visit75_259_1(g2)) {
+  if (visit74_259_1(g2)) {
     _$jscoverage['/mvc/router.js'].lineData[260]++;
-    return "([^/]+)";
+    return '([^/]+)';
   } else {
     _$jscoverage['/mvc/router.js'].lineData[263]++;
-    if (visit76_263_1(g4)) {
+    if (visit75_263_1(g4)) {
       _$jscoverage['/mvc/router.js'].lineData[264]++;
-      return "(.*)";
+      return '(.*)';
     }
   }
   _$jscoverage['/mvc/router.js'].lineData[266]++;
@@ -1057,7 +1055,7 @@ KISSY.add(function(S, require) {
       return {
   name: name, 
   paramNames: paramNames, 
-  reg: new RegExp("^" + str + "$"), 
+  reg: new RegExp('^' + str + '$'), 
   regStr: str, 
   callback: callback};
     } else {
@@ -1072,12 +1070,12 @@ KISSY.add(function(S, require) {
   function normFn(self, callback) {
     _$jscoverage['/mvc/router.js'].functionData[20]++;
     _$jscoverage['/mvc/router.js'].lineData[288]++;
-    if (visit77_288_1(typeof callback === 'function')) {
+    if (visit76_288_1(typeof callback === 'function')) {
       _$jscoverage['/mvc/router.js'].lineData[289]++;
       return callback;
     } else {
       _$jscoverage['/mvc/router.js'].lineData[290]++;
-      if (visit78_290_1(typeof callback == 'string')) {
+      if (visit77_290_1(typeof callback === 'string')) {
         _$jscoverage['/mvc/router.js'].lineData[291]++;
         return self[callback];
       }
@@ -1098,7 +1096,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/mvc/router.js'].lineData[302]++;
   var Router;
   _$jscoverage['/mvc/router.js'].lineData[309]++;
-  return Router = Attribute.extend({
+  Router = Attribute.extend({
   constructor: function() {
   _$jscoverage['/mvc/router.js'].functionData[22]++;
   _$jscoverage['/mvc/router.js'].lineData[311]++;
@@ -1106,10 +1104,10 @@ KISSY.add(function(S, require) {
   _$jscoverage['/mvc/router.js'].lineData[312]++;
   self.callSuper.apply(self, arguments);
   _$jscoverage['/mvc/router.js'].lineData[313]++;
-  self.on("afterRoutesChange", _afterRoutesChange, self);
+  self.on('afterRoutesChange', _afterRoutesChange, self);
   _$jscoverage['/mvc/router.js'].lineData[314]++;
   _afterRoutesChange.call(self, {
-  newVal: self.get("routes")});
+  newVal: self.get('routes')});
   _$jscoverage['/mvc/router.js'].lineData[315]++;
   allRoutes.push(self);
 }, 
@@ -1141,7 +1139,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/mvc/router.js'].lineData[373]++;
   var reg = desc.reg;
   _$jscoverage['/mvc/router.js'].lineData[374]++;
-  if (visit79_374_1(path.match(reg))) {
+  if (visit78_374_1(path.match(reg))) {
     _$jscoverage['/mvc/router.js'].lineData[375]++;
     match = 1;
     _$jscoverage['/mvc/router.js'].lineData[376]++;
@@ -1151,7 +1149,7 @@ KISSY.add(function(S, require) {
   return undefined;
 });
   _$jscoverage['/mvc/router.js'].lineData[380]++;
-  if (visit80_380_1(match)) {
+  if (visit79_380_1(match)) {
     _$jscoverage['/mvc/router.js'].lineData[381]++;
     return false;
   }
@@ -1171,24 +1169,24 @@ KISSY.add(function(S, require) {
   navigate: function(path, opts) {
   _$jscoverage['/mvc/router.js'].functionData[29]++;
   _$jscoverage['/mvc/router.js'].lineData[410]++;
-  opts = visit81_410_1(opts || {});
+  opts = visit80_410_1(opts || {});
   _$jscoverage['/mvc/router.js'].lineData[411]++;
   var replaceHistory = opts.replaceHistory, normalizedPath;
   _$jscoverage['/mvc/router.js'].lineData[412]++;
-  if (visit82_412_1(getFragment() !== path)) {
+  if (visit81_412_1(getFragment() !== path)) {
     _$jscoverage['/mvc/router.js'].lineData[413]++;
-    if (visit83_413_1(Router.nativeHistory && supportNativeHistory)) {
+    if (visit82_413_1(Router.nativeHistory && supportNativeHistory)) {
       _$jscoverage['/mvc/router.js'].lineData[414]++;
-      history[replaceHistory ? 'replaceState' : 'pushState']({}, "", getFullPath(path));
+      history[replaceHistory ? 'replaceState' : 'pushState']({}, '', getFullPath(path));
       _$jscoverage['/mvc/router.js'].lineData[419]++;
       dispatch();
     } else {
       _$jscoverage['/mvc/router.js'].lineData[421]++;
       normalizedPath = '#!' + path;
       _$jscoverage['/mvc/router.js'].lineData[422]++;
-      if (visit84_422_1(replaceHistory)) {
+      if (visit83_422_1(replaceHistory)) {
         _$jscoverage['/mvc/router.js'].lineData[424]++;
-        location.replace(normalizedPath + (visit85_425_1(ie && visit86_425_2(ie < 8)) ? Node.REPLACE_HISTORY : ''));
+        location.replace(normalizedPath + (visit84_425_1(ie && visit85_425_2(ie < 8)) ? Node.REPLACE_HISTORY : ''));
       } else {
         _$jscoverage['/mvc/router.js'].lineData[427]++;
         location.hash = normalizedPath;
@@ -1196,7 +1194,7 @@ KISSY.add(function(S, require) {
     }
   } else {
     _$jscoverage['/mvc/router.js'].lineData[430]++;
-    if (visit87_430_1(opts && opts.triggerRoute)) {
+    if (visit86_430_1(opts && opts.triggerRoute)) {
       _$jscoverage['/mvc/router.js'].lineData[431]++;
       dispatch();
     }
@@ -1205,14 +1203,14 @@ KISSY.add(function(S, require) {
   start: function(opts) {
   _$jscoverage['/mvc/router.js'].functionData[30]++;
   _$jscoverage['/mvc/router.js'].lineData[444]++;
-  opts = visit88_444_1(opts || {});
+  opts = visit87_444_1(opts || {});
   _$jscoverage['/mvc/router.js'].lineData[446]++;
-  if (visit89_446_1(Router.__started)) {
+  if (visit88_446_1(Router.__started)) {
     _$jscoverage['/mvc/router.js'].lineData[447]++;
-    return visit90_447_1(opts.success && opts.success());
+    return visit89_447_1(opts.success && opts.success());
   }
   _$jscoverage['/mvc/router.js'].lineData[451]++;
-  opts.urlRoot = (visit91_451_1(opts.urlRoot || "")).replace(/\/$/, '');
+  opts.urlRoot = (visit90_451_1(opts.urlRoot || '')).replace(/\/$/, '');
   _$jscoverage['/mvc/router.js'].lineData[453]++;
   var urlRoot, nativeHistory = opts.nativeHistory, locPath = location.pathname, hash = getFragment(), hashIsValid = location.hash.match(/#!.+/);
   _$jscoverage['/mvc/router.js'].lineData[459]++;
@@ -1220,27 +1218,27 @@ KISSY.add(function(S, require) {
   _$jscoverage['/mvc/router.js'].lineData[460]++;
   Router.nativeHistory = nativeHistory;
   _$jscoverage['/mvc/router.js'].lineData[462]++;
-  if (visit92_462_1(nativeHistory)) {
+  if (visit91_462_1(nativeHistory)) {
     _$jscoverage['/mvc/router.js'].lineData[464]++;
-    if (visit93_464_1(supportNativeHistory)) {
+    if (visit92_464_1(supportNativeHistory)) {
       _$jscoverage['/mvc/router.js'].lineData[470]++;
-      if (visit94_470_1(hashIsValid)) {
+      if (visit93_470_1(hashIsValid)) {
         _$jscoverage['/mvc/router.js'].lineData[471]++;
-        if (visit95_471_1(equalsIgnoreSlash(locPath, urlRoot))) {
+        if (visit94_471_1(equalsIgnoreSlash(locPath, urlRoot))) {
           _$jscoverage['/mvc/router.js'].lineData[473]++;
-          history['replaceState']({}, "", getFullPath(hash));
+          history.replaceState({}, '', getFullPath(hash));
           _$jscoverage['/mvc/router.js'].lineData[474]++;
           opts.triggerRoute = 1;
         } else {
           _$jscoverage['/mvc/router.js'].lineData[476]++;
-          S.error("location path must be same with urlRoot!");
+          S.error('location path must be same with urlRoot!');
         }
       }
     } else {
       _$jscoverage['/mvc/router.js'].lineData[485]++;
-      if (visit96_485_1(!equalsIgnoreSlash(locPath, urlRoot))) {
+      if (visit95_485_1(!equalsIgnoreSlash(locPath, urlRoot))) {
         _$jscoverage['/mvc/router.js'].lineData[486]++;
-        location.replace(addEndSlash(urlRoot) + "#!" + hash);
+        location.replace(addEndSlash(urlRoot) + '#!' + hash);
         _$jscoverage['/mvc/router.js'].lineData[487]++;
         return undefined;
       }
@@ -1250,37 +1248,42 @@ KISSY.add(function(S, require) {
   setTimeout(function() {
   _$jscoverage['/mvc/router.js'].functionData[31]++;
   _$jscoverage['/mvc/router.js'].lineData[495]++;
-  if (visit97_495_1(nativeHistory && supportNativeHistory)) {
+  if (visit96_495_1(nativeHistory && supportNativeHistory)) {
     _$jscoverage['/mvc/router.js'].lineData[496]++;
     $win.on('popstate', dispatch);
   } else {
     _$jscoverage['/mvc/router.js'].lineData[500]++;
-    $win.on("hashchange", dispatch);
+    $win.on('hashchange', dispatch);
     _$jscoverage['/mvc/router.js'].lineData[502]++;
     opts.triggerRoute = 1;
   }
   _$jscoverage['/mvc/router.js'].lineData[508]++;
-  if (visit98_508_1(opts.triggerRoute)) {
+  if (visit97_508_1(opts.triggerRoute)) {
     _$jscoverage['/mvc/router.js'].lineData[509]++;
     dispatch();
   }
   _$jscoverage['/mvc/router.js'].lineData[511]++;
-  visit99_511_1(opts.success && opts.success());
+  if (visit98_511_1(opts.success)) {
+    _$jscoverage['/mvc/router.js'].lineData[512]++;
+    opts.success();
+  }
 }, BREATH_INTERVAL);
-  _$jscoverage['/mvc/router.js'].lineData[515]++;
+  _$jscoverage['/mvc/router.js'].lineData[517]++;
   Router.__started = 1;
-  _$jscoverage['/mvc/router.js'].lineData[516]++;
+  _$jscoverage['/mvc/router.js'].lineData[518]++;
   return undefined;
 }, 
   stop: function() {
   _$jscoverage['/mvc/router.js'].functionData[32]++;
-  _$jscoverage['/mvc/router.js'].lineData[525]++;
-  Router.__started = 0;
-  _$jscoverage['/mvc/router.js'].lineData[526]++;
-  $win.detach('popstate', dispatch);
   _$jscoverage['/mvc/router.js'].lineData[527]++;
-  $win.detach("hashchange", dispatch);
+  Router.__started = 0;
   _$jscoverage['/mvc/router.js'].lineData[528]++;
+  $win.detach('popstate', dispatch);
+  _$jscoverage['/mvc/router.js'].lineData[529]++;
+  $win.detach('hashchange', dispatch);
+  _$jscoverage['/mvc/router.js'].lineData[530]++;
   allRoutes = [];
 }});
+  _$jscoverage['/mvc/router.js'].lineData[534]++;
+  return Router;
 });

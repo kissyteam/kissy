@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:37
+build time: Dec 2 15:11
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -18,122 +18,122 @@ build time: Nov 27 00:37
 */
 
 KISSY.add("combobox/combobox-xtpl", [], function(S, require, exports, module) {
-  return function(scopes, S, undefined) {
+  return function(scope, S, undefined) {
     var buffer = "", config = this.config, engine = this, moduleWrap, utils = config.utils;
-    if(typeof module != "undefined" && module.kissy) {
+    if(typeof module !== "undefined" && module.kissy) {
       moduleWrap = module
     }
-    var runBlockCommandUtil = utils["runBlockCommand"], getExpressionUtil = utils["getExpression"], getPropertyOrRunCommandUtil = utils["getPropertyOrRunCommand"];
+    var runBlockCommandUtil = utils.runBlockCommand, getExpressionUtil = utils.getExpression, getPropertyOrRunCommandUtil = utils.getPropertyOrRunCommand;
     buffer += '<div id="ks-combobox-invalid-el-';
-    var id0 = getPropertyOrRunCommandUtil(engine, scopes, {}, "id", 0, 1, undefined, false);
+    var id0 = getPropertyOrRunCommandUtil(engine, scope, {}, "id", 0, 1, undefined, false);
     buffer += getExpressionUtil(id0, true);
     buffer += '"\n     class="';
     var config2 = {};
     var params3 = [];
     params3.push("invalid-el");
     config2.params = params3;
-    var id1 = getPropertyOrRunCommandUtil(engine, scopes, config2, "getBaseCssClasses", 0, 2, true, undefined);
+    var id1 = getPropertyOrRunCommandUtil(engine, scope, config2, "getBaseCssClasses", 0, 2, true, undefined);
     buffer += id1;
     buffer += '">\n    <div class="';
     var config5 = {};
     var params6 = [];
     params6.push("invalid-inner");
     config5.params = params6;
-    var id4 = getPropertyOrRunCommandUtil(engine, scopes, config5, "getBaseCssClasses", 0, 3, true, undefined);
+    var id4 = getPropertyOrRunCommandUtil(engine, scope, config5, "getBaseCssClasses", 0, 3, true, undefined);
     buffer += id4;
     buffer += '"></div>\n</div>\n\n';
     var config7 = {};
     var params8 = [];
-    var id9 = getPropertyOrRunCommandUtil(engine, scopes, {}, "hasTrigger", 0, 6, undefined, true);
+    var id9 = getPropertyOrRunCommandUtil(engine, scope, {}, "hasTrigger", 0, 6, undefined, true);
     params8.push(id9);
     config7.params = params8;
-    config7.fn = function(scopes) {
+    config7.fn = function(scope) {
       var buffer = "";
       buffer += '\n<div id="ks-combobox-trigger-';
-      var id10 = getPropertyOrRunCommandUtil(engine, scopes, {}, "id", 0, 7, undefined, false);
+      var id10 = getPropertyOrRunCommandUtil(engine, scope, {}, "id", 0, 7, undefined, false);
       buffer += getExpressionUtil(id10, true);
       buffer += '"\n     class="';
       var config12 = {};
       var params13 = [];
       params13.push("trigger");
       config12.params = params13;
-      var id11 = getPropertyOrRunCommandUtil(engine, scopes, config12, "getBaseCssClasses", 0, 8, true, undefined);
+      var id11 = getPropertyOrRunCommandUtil(engine, scope, config12, "getBaseCssClasses", 0, 8, true, undefined);
       buffer += id11;
       buffer += '">\n    <div class="';
       var config15 = {};
       var params16 = [];
       params16.push("trigger-inner");
       config15.params = params16;
-      var id14 = getPropertyOrRunCommandUtil(engine, scopes, config15, "getBaseCssClasses", 0, 9, true, undefined);
+      var id14 = getPropertyOrRunCommandUtil(engine, scope, config15, "getBaseCssClasses", 0, 9, true, undefined);
       buffer += id14;
       buffer += '">&#x25BC;</div>\n</div>\n';
       return buffer
     };
-    buffer += runBlockCommandUtil(engine, scopes, config7, "if", 6);
+    buffer += runBlockCommandUtil(engine, scope, config7, "if", 6);
     buffer += '\n\n<div class="';
     var config18 = {};
     var params19 = [];
     params19.push("input-wrap");
     config18.params = params19;
-    var id17 = getPropertyOrRunCommandUtil(engine, scopes, config18, "getBaseCssClasses", 0, 13, true, undefined);
+    var id17 = getPropertyOrRunCommandUtil(engine, scope, config18, "getBaseCssClasses", 0, 13, true, undefined);
     buffer += id17;
     buffer += '">\n\n    <input id="ks-combobox-input-';
-    var id20 = getPropertyOrRunCommandUtil(engine, scopes, {}, "id", 0, 15, undefined, false);
+    var id20 = getPropertyOrRunCommandUtil(engine, scope, {}, "id", 0, 15, undefined, false);
     buffer += getExpressionUtil(id20, true);
     buffer += '"\n           aria-haspopup="true"\n           aria-autocomplete="list"\n           aria-haspopup="true"\n           role="autocomplete"\n           aria-expanded="false"\n\n    ';
     var config21 = {};
     var params22 = [];
-    var id23 = getPropertyOrRunCommandUtil(engine, scopes, {}, "disabled", 0, 22, undefined, true);
+    var id23 = getPropertyOrRunCommandUtil(engine, scope, {}, "disabled", 0, 22, undefined, true);
     params22.push(id23);
     config21.params = params22;
-    config21.fn = function(scopes) {
+    config21.fn = function(scope) {
       var buffer = "";
       buffer += "\n    disabled\n    ";
       return buffer
     };
-    buffer += runBlockCommandUtil(engine, scopes, config21, "if", 22);
+    buffer += runBlockCommandUtil(engine, scope, config21, "if", 22);
     buffer += '\n\n    autocomplete="off"\n    class="';
     var config25 = {};
     var params26 = [];
     params26.push("input");
     config25.params = params26;
-    var id24 = getPropertyOrRunCommandUtil(engine, scopes, config25, "getBaseCssClasses", 0, 27, true, undefined);
+    var id24 = getPropertyOrRunCommandUtil(engine, scope, config25, "getBaseCssClasses", 0, 27, true, undefined);
     buffer += id24;
     buffer += '"\n\n    value="';
-    var id27 = getPropertyOrRunCommandUtil(engine, scopes, {}, "value", 0, 29, undefined, false);
+    var id27 = getPropertyOrRunCommandUtil(engine, scope, {}, "value", 0, 29, undefined, false);
     buffer += getExpressionUtil(id27, true);
     buffer += '"\n    />\n\n\n    <label id="ks-combobox-placeholder-';
-    var id28 = getPropertyOrRunCommandUtil(engine, scopes, {}, "id", 0, 33, undefined, false);
+    var id28 = getPropertyOrRunCommandUtil(engine, scope, {}, "id", 0, 33, undefined, false);
     buffer += getExpressionUtil(id28, true);
     buffer += '"\n           for="ks-combobox-input-';
-    var id29 = getPropertyOrRunCommandUtil(engine, scopes, {}, "id", 0, 34, undefined, false);
+    var id29 = getPropertyOrRunCommandUtil(engine, scope, {}, "id", 0, 34, undefined, false);
     buffer += getExpressionUtil(id29, true);
     buffer += "\"\n            style='display:";
     var config30 = {};
     var params31 = [];
-    var id32 = getPropertyOrRunCommandUtil(engine, scopes, {}, "value", 0, 35, undefined, true);
+    var id32 = getPropertyOrRunCommandUtil(engine, scope, {}, "value", 0, 35, undefined, true);
     params31.push(id32);
     config30.params = params31;
-    config30.fn = function(scopes) {
+    config30.fn = function(scope) {
       var buffer = "";
       buffer += "none";
       return buffer
     };
-    config30.inverse = function(scopes) {
+    config30.inverse = function(scope) {
       var buffer = "";
       buffer += "block";
       return buffer
     };
-    buffer += runBlockCommandUtil(engine, scopes, config30, "if", 35);
+    buffer += runBlockCommandUtil(engine, scope, config30, "if", 35);
     buffer += ";'\n    class=\"";
     var config34 = {};
     var params35 = [];
     params35.push("placeholder");
     config34.params = params35;
-    var id33 = getPropertyOrRunCommandUtil(engine, scopes, config34, "getBaseCssClasses", 0, 36, true, undefined);
+    var id33 = getPropertyOrRunCommandUtil(engine, scope, config34, "getBaseCssClasses", 0, 36, true, undefined);
     buffer += id33;
     buffer += '">\n    ';
-    var id36 = getPropertyOrRunCommandUtil(engine, scopes, {}, "placeholder", 0, 37, undefined, false);
+    var id36 = getPropertyOrRunCommandUtil(engine, scope, {}, "placeholder", 0, 37, undefined, false);
     buffer += getExpressionUtil(id36, true);
     buffer += "\n    </label>\n</div>\n";
     return buffer
@@ -168,7 +168,7 @@ KISSY.add("combobox/control", ["node", "component/control", "./render", "menu"],
   var Control = require("component/control");
   var ComboBoxRender = require("./render");
   require("menu");
-  var ComboBox, undefined = undefined, KeyCode = Node.KeyCode;
+  var ComboBox, KeyCode = Node.KeyCode;
   ComboBox = Control.extend([], {initializer:function() {
     this.publish("afterRenderData", {bubbles:false})
   }, _savedValue:null, normalizeData:function(data) {
@@ -203,7 +203,7 @@ KISSY.add("combobox/control", ["node", "component/control", "./render", "menu"],
   }, _onSetValue:function(v, e) {
     var self = this, value;
     if(e.causedByTimer) {
-      value = self["getValueForAutocomplete"]();
+      value = self.getValueForAutocomplete();
       if(value === undefined) {
         self.set("collapsed", true);
         return
@@ -228,7 +228,7 @@ KISSY.add("combobox/control", ["node", "component/control", "./render", "menu"],
     if(self.get("invalidEl")) {
       self.validate(function(error, val) {
         if(error) {
-          if(!self.get("focused") && val == self.get("value")) {
+          if(!self.get("focused") && val === self.get("value")) {
             setInvalid(self, error)
           }
         }else {
@@ -244,7 +244,7 @@ KISSY.add("combobox/control", ["node", "component/control", "./render", "menu"],
     self.callSuper(e);
     target = e.target;
     trigger = self.get("trigger");
-    if(trigger && (trigger[0] == target || trigger.contains(target))) {
+    if(trigger && (trigger[0] === target || trigger.contains(target))) {
       if(self.get("collapsed")) {
         self.focus();
         self.sendRequest("")
@@ -261,7 +261,7 @@ KISSY.add("combobox/control", ["node", "component/control", "./render", "menu"],
       highlightedItem = menu.get("highlightedItem");
       if(updateInputOnDownUp && highlightedItem) {
         var menuChildren = menu.get("children");
-        if(keyCode == KeyCode.DOWN && highlightedItem == getFirstEnabledItem(menuChildren.concat().reverse()) || keyCode == KeyCode.UP && highlightedItem == getFirstEnabledItem(menuChildren)) {
+        if(keyCode === KeyCode.DOWN && highlightedItem === getFirstEnabledItem(menuChildren.concat().reverse()) || keyCode === KeyCode.UP && highlightedItem === getFirstEnabledItem(menuChildren)) {
           self.setValueFromAutocomplete(self._savedValue);
           highlightedItem.set("highlighted", false);
           return true
@@ -269,7 +269,7 @@ KISSY.add("combobox/control", ["node", "component/control", "./render", "menu"],
       }
       handledByMenu = menu.handleKeyDownInternal(e);
       highlightedItem = menu.get("highlightedItem");
-      if(keyCode == KeyCode.ESC) {
+      if(keyCode === KeyCode.ESC) {
         self.set("collapsed", true);
         if(updateInputOnDownUp) {
           self.setValueFromAutocomplete(self._savedValue)
@@ -279,7 +279,7 @@ KISSY.add("combobox/control", ["node", "component/control", "./render", "menu"],
       if(updateInputOnDownUp && S.inArray(keyCode, [KeyCode.DOWN, KeyCode.UP])) {
         self.setValueFromAutocomplete(highlightedItem.get("textContent"))
       }
-      if(keyCode == KeyCode.TAB && highlightedItem) {
+      if(keyCode === KeyCode.TAB && highlightedItem) {
         highlightedItem.handleClickInternal(e);
         if(self.get("multiple")) {
           return true
@@ -287,7 +287,7 @@ KISSY.add("combobox/control", ["node", "component/control", "./render", "menu"],
       }
       return handledByMenu
     }else {
-      if(keyCode == KeyCode.DOWN || keyCode == KeyCode.UP) {
+      if(keyCode === KeyCode.DOWN || keyCode === KeyCode.UP) {
         var v = self.getValueForAutocomplete();
         if(v !== undefined) {
           self.sendRequest(v);
@@ -407,8 +407,8 @@ KISSY.add("combobox/control", ["node", "component/control", "./render", "menu"],
     }, 50)
   }
   function clearDismissTimer(self) {
-    var t;
-    if(t = self._focusoutDismissTimer) {
+    var t = self._focusoutDismissTimer;
+    if(t) {
       clearTimeout(t);
       self._focusoutDismissTimer = null
     }
@@ -418,7 +418,7 @@ KISSY.add("combobox/control", ["node", "component/control", "./render", "menu"],
   }
   function renderData(data) {
     var self = this, v, children = [], val, matchVal, highlightedItem, i, menu = self.get("menu");
-    data = self["normalizeData"](data);
+    data = self.normalizeData(data);
     menu.removeChildren(true);
     if(highlightedItem = menu.get("highlightedItem")) {
       highlightedItem.set("highlighted", false)
@@ -429,10 +429,10 @@ KISSY.add("combobox/control", ["node", "component/control", "./render", "menu"],
         menu.addChild(v)
       }
       children = menu.get("children");
-      val = self["getValueForAutocomplete"]();
+      val = self.getValueForAutocomplete();
       if(self.get("highlightMatchItem")) {
         for(i = 0;i < children.length;i++) {
-          if(children[i].get("textContent") == val) {
+          if(children[i].get("textContent") === val) {
             children[i].set("highlighted", true);
             matchVal = true;
             break
@@ -457,14 +457,14 @@ KISSY.add("combobox/control", ["node", "component/control", "./render", "menu"],
 });
 KISSY.add("combobox/cursor", ["node"], function(S, require) {
   var Node = require("node");
-  var $ = Node.all, FAKE_DIV_HTML = "<div style='" + "z-index:-9999;" + "overflow:hidden;" + "position: fixed;" + "left:-9999px;" + "top:-9999px;" + "opacity:0;" + "white-space:pre-wrap;" + "word-wrap:break-word;" + "'></div>", FAKE_DIV, MARKER = "<span>" + "x" + "</span>", STYLES = ["paddingLeft", "paddingTop", "paddingBottom", "paddingRight", "marginLeft", "marginTop", "marginBottom", "marginRight", "borderLeftStyle", "borderTopStyle", "borderBottomStyle", "borderRightStyle", "borderLeftWidth", 
+  var $ = Node.all, FAKE_DIV_HTML = '<div style="' + "z-index:-9999;" + "overflow:hidden;" + "position: fixed;" + "left:-9999px;" + "top:-9999px;" + "opacity:0;" + "white-space:pre-wrap;" + "word-wrap:break-word;" + '"></div>', FAKE_DIV, MARKER = "<span>" + "x" + "</span>", STYLES = ["paddingLeft", "paddingTop", "paddingBottom", "paddingRight", "marginLeft", "marginTop", "marginBottom", "marginRight", "borderLeftStyle", "borderTopStyle", "borderBottomStyle", "borderRightStyle", "borderLeftWidth", 
   "borderTopWidth", "borderBottomWidth", "borderRightWidth", "line-height", "outline", "height", "fontFamily", "fontSize", "fontWeight", "fontVariant", "fontStyle"], supportInputScrollLeft, findSupportInputScrollLeft;
   function getFakeDiv(elem) {
     var fake = FAKE_DIV;
     if(!fake) {
       fake = $(FAKE_DIV_HTML)
     }
-    if(String(elem[0].type.toLowerCase()) == "textarea") {
+    if(String(elem[0].type.toLowerCase()) === "textarea") {
       fake.css("width", elem.css("width"))
     }else {
       fake.css("width", 9999)
@@ -484,7 +484,7 @@ KISSY.add("combobox/cursor", ["node"], function(S, require) {
     input.val("123456789");
     input.appendTo(doc.body);
     input[0].focus();
-    supportInputScrollLeft = !!(input[0].scrollLeft > 0);
+    supportInputScrollLeft = input[0].scrollLeft > 0;
     input.remove();
     findSupportInputScrollLeft = S.noop
   };
@@ -498,7 +498,7 @@ KISSY.add("combobox/cursor", ["node"], function(S, require) {
       return{left:range.boundingLeft + elemScrollLeft + $doc.scrollLeft(), top:range.boundingTop + elemScrollTop + range.boundingHeight + $doc.scrollTop()}
     }
     elemOffset = $elem.offset();
-    if(!supportInputScrollLeft && elem.type != "textarea") {
+    if(!supportInputScrollLeft && elem.type !== "textarea") {
       elemOffset.top += elem.offsetHeight;
       return elemOffset
     }
@@ -523,10 +523,10 @@ KISSY.add("combobox/multi-value-combobox", ["./cursor", "./control"], function(S
   var getCursor = require("./cursor");
   var ComboBox = require("./control");
   function strContainsChar(str, c) {
-    return c && str.indexOf(c) != -1
+    return c && str.indexOf(c) !== -1
   }
   function beforeVisibleChange(e) {
-    if(e.newVal && e.target == this.get("menu")) {
+    if(e.newVal && e.target === this.get("menu")) {
       this.alignWithCursor()
     }
   }
@@ -539,27 +539,24 @@ KISSY.add("combobox/multi-value-combobox", ["./cursor", "./control"], function(S
     }
   }, getValueForAutocomplete:function() {
     var self = this, inputDesc = getInputDesc(self), tokens = inputDesc.tokens, tokenIndex = inputDesc.tokenIndex, separator = self.get("separator"), separatorType = self.get("separatorType"), token = tokens[tokenIndex], l = token.length - 1;
-    if(separatorType != SUFFIX) {
+    if(separatorType !== SUFFIX) {
       if(strContainsChar(separator, token.charAt(0))) {
         token = token.slice(1)
       }else {
         return undefined
       }
     }else {
-      if(separatorType == SUFFIX && strContainsChar(separator, token.charAt(l))) {
+      if(separatorType === SUFFIX && strContainsChar(separator, token.charAt(l))) {
         token = token.slice(0, l)
       }
     }
     return token
   }, setValueFromAutocomplete:function(value, setCfg) {
     var self = this, input = self.get("input"), inputDesc = getInputDesc(self), tokens = inputDesc.tokens, tokenIndex = Math.max(0, inputDesc.tokenIndex), separator = self.get("separator"), cursorPosition, l, separatorType = self.get("separatorType"), nextToken = tokens[tokenIndex + 1] || "", token = tokens[tokenIndex];
-    if(separatorType != SUFFIX) {
+    if(separatorType !== SUFFIX) {
       tokens[tokenIndex] = token.charAt(0) + value;
-      if(nextToken && rWhitespace.test(nextToken.charAt(0))) {
-      }else {
-        if(value) {
-          tokens[tokenIndex] += " "
-        }
+      if(value && !(nextToken && rWhitespace.test(nextToken.charAt(0)))) {
+        tokens[tokenIndex] += " "
       }
     }else {
       tokens[tokenIndex] = value;
@@ -567,7 +564,7 @@ KISSY.add("combobox/multi-value-combobox", ["./cursor", "./control"], function(S
       if(strContainsChar(separator, token.charAt(l))) {
         tokens[tokenIndex] += token.charAt(l)
       }else {
-        if(separator.length == 1) {
+        if(separator.length === 1) {
           tokens[tokenIndex] += separator
         }
       }
@@ -583,11 +580,11 @@ KISSY.add("combobox/multi-value-combobox", ["./cursor", "./control"], function(S
     menu.move(cursorOffset.left, cursorOffset.top)
   }}, {ATTRS:{separator:{value:",;"}, separatorType:{value:SUFFIX}, literal:{value:'"'}, alignWithCursor:{}}, xclass:"multi-value-combobox"});
   function getInputDesc(self) {
-    var input = self.get("input"), inputVal = self.get("value"), tokens = [], cache = [], literal = self.get("literal"), separator = self.get("separator"), separatorType = self.get("separatorType"), inLiteral = false, allowWhitespaceAsStandaloneToken = separatorType != SUFFIX, cursorPosition = input.prop("selectionStart"), i, c, tokenIndex = -1;
+    var input = self.get("input"), inputVal = self.get("value"), tokens = [], cache = [], literal = self.get("literal"), separator = self.get("separator"), separatorType = self.get("separatorType"), inLiteral = false, allowWhitespaceAsStandaloneToken = separatorType !== SUFFIX, cursorPosition = input.prop("selectionStart"), i, c, tokenIndex = -1;
     for(i = 0;i < inputVal.length;i++) {
       c = inputVal.charAt(i);
       if(literal) {
-        if(c == literal) {
+        if(c === literal) {
           inLiteral = !inLiteral
         }
       }
@@ -595,7 +592,7 @@ KISSY.add("combobox/multi-value-combobox", ["./cursor", "./control"], function(S
         cache.push(c);
         continue
       }
-      if(i == cursorPosition) {
+      if(i === cursorPosition) {
         tokenIndex = tokens.length
       }
       if(allowWhitespaceAsStandaloneToken && rWhitespace.test(c)) {
@@ -606,7 +603,7 @@ KISSY.add("combobox/multi-value-combobox", ["./cursor", "./control"], function(S
         cache.push(c)
       }else {
         if(strContainsChar(separator, c)) {
-          if(separatorType == SUFFIX) {
+          if(separatorType === SUFFIX) {
             cache.push(c);
             if(cache.length) {
               tokens.push(cache.join(""))
@@ -630,8 +627,8 @@ KISSY.add("combobox/multi-value-combobox", ["./cursor", "./control"], function(S
     if(!tokens.length) {
       tokens.push("")
     }
-    if(tokenIndex == -1) {
-      if(separatorType == SUFFIX && strContainsChar(separator, c)) {
+    if(tokenIndex === -1) {
+      if(separatorType === SUFFIX && strContainsChar(separator, c)) {
         tokens.push("")
       }
       tokenIndex = tokens.length - 1
@@ -645,7 +642,7 @@ KISSY.add("combobox/filter-select", ["./control"], function(S, require, exports,
     var valid = false;
     if(_saveData) {
       for(var i = 0;i < _saveData.length;i++) {
-        if(_saveData[i].textContent == inputVal) {
+        if(_saveData[i].textContent === inputVal) {
           return _saveData[i]
         }
       }
@@ -679,7 +676,7 @@ KISSY.add("combobox/local-data-source", ["attribute"], function(S, require) {
       return data
     }
     S.each(data, function(d) {
-      if(d.indexOf(inputVal) != -1) {
+      if(d.indexOf(inputVal) !== -1) {
         ret.push(d)
       }
       count++
@@ -688,7 +685,6 @@ KISSY.add("combobox/local-data-source", ["attribute"], function(S, require) {
   }
 });
 KISSY.add("combobox/remote-data-source", ["io", "attribute"], function(S, require) {
-  var undefined = undefined;
   var IO = require("io");
   var Attribute = require("attribute");
   return Attribute.extend({fetchData:function(inputVal, callback, context) {

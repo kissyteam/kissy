@@ -257,6 +257,7 @@ if (! _$jscoverage['/io/form-serializer.js']) {
   _$jscoverage['/io/form-serializer.js'].lineData[81] = 0;
   _$jscoverage['/io/form-serializer.js'].lineData[83] = 0;
   _$jscoverage['/io/form-serializer.js'].lineData[85] = 0;
+  _$jscoverage['/io/form-serializer.js'].lineData[88] = 0;
 }
 if (! _$jscoverage['/io/form-serializer.js'].functionData) {
   _$jscoverage['/io/form-serializer.js'].functionData = [];
@@ -339,7 +340,7 @@ KISSY.add(function(S, require) {
     return v.replace(rCRLF, '\r\n');
   }
   _$jscoverage['/io/form-serializer.js'].lineData[17]++;
-  return FormSerializer = {
+  FormSerializer = {
   serialize: function(forms, serializeArray) {
   _$jscoverage['/io/form-serializer.js'].functionData[2]++;
   _$jscoverage['/io/form-serializer.js'].lineData[29]++;
@@ -401,4 +402,6 @@ KISSY.add(function(S, require) {
   _$jscoverage['/io/form-serializer.js'].lineData[85]++;
   return data;
 }};
+  _$jscoverage['/io/form-serializer.js'].lineData[88]++;
+  return FormSerializer;
 });

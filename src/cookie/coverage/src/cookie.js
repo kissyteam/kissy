@@ -253,6 +253,7 @@ if (! _$jscoverage['/cookie.js']) {
   _$jscoverage['/cookie.js'].lineData[75] = 0;
   _$jscoverage['/cookie.js'].lineData[78] = 0;
   _$jscoverage['/cookie.js'].lineData[89] = 0;
+  _$jscoverage['/cookie.js'].lineData[93] = 0;
 }
 if (! _$jscoverage['/cookie.js'].functionData) {
   _$jscoverage['/cookie.js'].functionData = [];
@@ -305,15 +306,15 @@ function visit5_54_1(result) {
 function visit4_31_1(result) {
   _$jscoverage['/cookie.js'].branchData['31'][1].ranCondition(result);
   return result;
-}_$jscoverage['/cookie.js'].branchData['14'][3].init(44, 10, 'val !== \'\'');
+}_$jscoverage['/cookie.js'].branchData['14'][3].init(45, 10, 'val !== \'\'');
 function visit3_14_3(result) {
   _$jscoverage['/cookie.js'].branchData['14'][3].ranCondition(result);
   return result;
-}_$jscoverage['/cookie.js'].branchData['14'][2].init(17, 22, 'typeof val == \'string\'');
+}_$jscoverage['/cookie.js'].branchData['14'][2].init(17, 23, 'typeof val === \'string\'');
 function visit2_14_2(result) {
   _$jscoverage['/cookie.js'].branchData['14'][2].ranCondition(result);
   return result;
-}_$jscoverage['/cookie.js'].branchData['14'][1].init(17, 37, '(typeof val == \'string\') && val !== \'\'');
+}_$jscoverage['/cookie.js'].branchData['14'][1].init(17, 38, '(typeof val === \'string\') && val !== \'\'');
 function visit1_14_1(result) {
   _$jscoverage['/cookie.js'].branchData['14'][1].ranCondition(result);
   return result;
@@ -326,10 +327,10 @@ KISSY.add(function(S) {
   function isNotEmptyString(val) {
     _$jscoverage['/cookie.js'].functionData[1]++;
     _$jscoverage['/cookie.js'].lineData[14]++;
-    return visit1_14_1((visit2_14_2(typeof val == 'string')) && visit3_14_3(val !== ''));
+    return visit1_14_1((visit2_14_2(typeof val === 'string')) && visit3_14_3(val !== ''));
   }
   _$jscoverage['/cookie.js'].lineData[22]++;
-  return S.Cookie = {
+  S.Cookie = {
   get: function(name) {
   _$jscoverage['/cookie.js'].functionData[2]++;
   _$jscoverage['/cookie.js'].lineData[29]++;
@@ -384,4 +385,6 @@ KISSY.add(function(S) {
   _$jscoverage['/cookie.js'].lineData[89]++;
   this.set(name, '', -1, domain, path, secure);
 }};
+  _$jscoverage['/cookie.js'].lineData[93]++;
+  return S.Cookie;
 });

@@ -274,8 +274,8 @@ if (! _$jscoverage['/class-list.js']) {
   _$jscoverage['/class-list.js'].lineData[91] = 0;
   _$jscoverage['/class-list.js'].lineData[94] = 0;
   _$jscoverage['/class-list.js'].lineData[95] = 0;
-  _$jscoverage['/class-list.js'].lineData[96] = 0;
   _$jscoverage['/class-list.js'].lineData[97] = 0;
+  _$jscoverage['/class-list.js'].lineData[98] = 0;
 }
 if (! _$jscoverage['/class-list.js'].functionData) {
   _$jscoverage['/class-list.js'].functionData = [];
@@ -320,22 +320,22 @@ if (! _$jscoverage['/class-list.js'].branchData) {
   _$jscoverage['/class-list.js'].branchData['90'][1] = new BranchData();
   _$jscoverage['/class-list.js'].branchData['94'] = [];
   _$jscoverage['/class-list.js'].branchData['94'][1] = new BranchData();
-  _$jscoverage['/class-list.js'].branchData['96'] = [];
-  _$jscoverage['/class-list.js'].branchData['96'][1] = new BranchData();
+  _$jscoverage['/class-list.js'].branchData['97'] = [];
+  _$jscoverage['/class-list.js'].branchData['97'][1] = new BranchData();
 }
-_$jscoverage['/class-list.js'].branchData['96'][1].init(755, 14, 'removed.length');
-function visit18_96_1(result) {
-  _$jscoverage['/class-list.js'].branchData['96'][1].ranCondition(result);
+_$jscoverage['/class-list.js'].branchData['97'][1].init(774, 14, 'removed.length');
+function visit18_97_1(result) {
+  _$jscoverage['/class-list.js'].branchData['97'][1].ranCondition(result);
   return result;
-}_$jscoverage['/class-list.js'].branchData['94'][1].init(680, 12, 'added.length');
+}_$jscoverage['/class-list.js'].branchData['94'][1].init(683, 12, 'added.length');
 function visit17_94_1(result) {
   _$jscoverage['/class-list.js'].branchData['94'][1].ranCondition(result);
   return result;
-}_$jscoverage['/class-list.js'].branchData['90'][1].init(327, 15, 'method == \'add\'');
+}_$jscoverage['/class-list.js'].branchData['90'][1].init(329, 16, 'method === \'add\'');
 function visit16_90_1(result) {
   _$jscoverage['/class-list.js'].branchData['90'][1].ranCondition(result);
   return result;
-}_$jscoverage['/class-list.js'].branchData['88'][1].init(233, 18, 'method == \'remove\'');
+}_$jscoverage['/class-list.js'].branchData['88'][1].init(233, 19, 'method === \'remove\'');
 function visit15_88_1(result) {
   _$jscoverage['/class-list.js'].branchData['88'][1].ranCondition(result);
   return result;
@@ -343,7 +343,7 @@ function visit15_88_1(result) {
 function visit14_87_2(result) {
   _$jscoverage['/class-list.js'].branchData['87'][2].ranCondition(result);
   return result;
-}_$jscoverage['/class-list.js'].branchData['87'][1].init(57, 24, 'force !== false && "add"');
+}_$jscoverage['/class-list.js'].branchData['87'][1].init(57, 24, 'force !== false && \'add\'');
 function visit13_87_1(result) {
   _$jscoverage['/class-list.js'].branchData['87'][1].ranCondition(result);
   return result;
@@ -351,7 +351,7 @@ function visit13_87_1(result) {
 function visit12_86_2(result) {
   _$jscoverage['/class-list.js'].branchData['86'][2].ranCondition(result);
   return result;
-}_$jscoverage['/class-list.js'].branchData['86'][1].init(138, 26, 'force !== true && "remove"');
+}_$jscoverage['/class-list.js'].branchData['86'][1].init(138, 26, 'force !== true && \'remove\'');
 function visit11_86_1(result) {
   _$jscoverage['/class-list.js'].branchData['86'][1].ranCondition(result);
   return result;
@@ -496,14 +496,14 @@ KISSY.add(function(S, require) {
     _$jscoverage['/class-list.js'].lineData[85]++;
     result = self._hasClass(elem, [className]);
     _$jscoverage['/class-list.js'].lineData[86]++;
-    method = result ? visit11_86_1(visit12_86_2(force !== true) && "remove") : visit13_87_1(visit14_87_2(force !== false) && "add");
+    method = result ? visit11_86_1(visit12_86_2(force !== true) && 'remove') : visit13_87_1(visit14_87_2(force !== false) && 'add');
     _$jscoverage['/class-list.js'].lineData[88]++;
-    if (visit15_88_1(method == 'remove')) {
+    if (visit15_88_1(method === 'remove')) {
       _$jscoverage['/class-list.js'].lineData[89]++;
       removed.push(className);
     } else {
       _$jscoverage['/class-list.js'].lineData[90]++;
-      if (visit16_90_1(method == 'add')) {
+      if (visit16_90_1(method === 'add')) {
         _$jscoverage['/class-list.js'].lineData[91]++;
         added.push(className);
       }
@@ -514,9 +514,9 @@ KISSY.add(function(S, require) {
     _$jscoverage['/class-list.js'].lineData[95]++;
     self._addClass(elem, added);
   }
-  _$jscoverage['/class-list.js'].lineData[96]++;
-  if (visit18_96_1(removed.length)) {
-    _$jscoverage['/class-list.js'].lineData[97]++;
+  _$jscoverage['/class-list.js'].lineData[97]++;
+  if (visit18_97_1(removed.length)) {
+    _$jscoverage['/class-list.js'].lineData[98]++;
     self._removeClass(elem, removed);
   }
 }});

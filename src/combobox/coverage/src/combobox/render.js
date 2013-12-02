@@ -281,19 +281,19 @@ KISSY.add(function(S, require) {
   getKeyEventTarget: function() {
   _$jscoverage['/combobox/render.js'].functionData[2]++;
   _$jscoverage['/combobox/render.js'].lineData[22]++;
-  return this.control.get("input");
+  return this.control.get('input');
 }, 
   _onSetCollapsed: function(v) {
   _$jscoverage['/combobox/render.js'].functionData[3]++;
   _$jscoverage['/combobox/render.js'].lineData[26]++;
-  this.control.get("input").attr("aria-expanded", !v);
+  this.control.get('input').attr('aria-expanded', !v);
 }, 
   _onSetDisabled: function(v, e) {
   _$jscoverage['/combobox/render.js'].functionData[4]++;
   _$jscoverage['/combobox/render.js'].lineData[30]++;
   this.callSuper(v, e);
   _$jscoverage['/combobox/render.js'].lineData[31]++;
-  this.control.get("input").attr("disabled", v);
+  this.control.get('input').attr('disabled', v);
 }}, {
   ATTRS: {
   contentTpl: {
@@ -302,26 +302,26 @@ KISSY.add(function(S, require) {
   value: function(el) {
   _$jscoverage['/combobox/render.js'].functionData[5]++;
   _$jscoverage['/combobox/render.js'].lineData[42]++;
-  return el.one("." + this.getBaseCssClass('input')).val();
+  return el.one('.' + this.getBaseCssClass('input')).val();
 }, 
   input: function(el) {
   _$jscoverage['/combobox/render.js'].functionData[6]++;
   _$jscoverage['/combobox/render.js'].lineData[45]++;
-  return el.one("." + this.getBaseCssClass('input'));
+  return el.one('.' + this.getBaseCssClass('input'));
 }, 
   trigger: function(el) {
   _$jscoverage['/combobox/render.js'].functionData[7]++;
   _$jscoverage['/combobox/render.js'].lineData[48]++;
-  return el.one("." + this.getBaseCssClass('trigger'));
+  return el.one('.' + this.getBaseCssClass('trigger'));
 }, 
   invalidEl: function(el) {
   _$jscoverage['/combobox/render.js'].functionData[8]++;
   _$jscoverage['/combobox/render.js'].lineData[51]++;
-  return el.one("." + this.getBaseCssClass('invalid-el'));
+  return el.one('.' + this.getBaseCssClass('invalid-el'));
 }, 
   placeholderEl: function(el) {
   _$jscoverage['/combobox/render.js'].functionData[9]++;
   _$jscoverage['/combobox/render.js'].lineData[54]++;
-  return el.one("." + this.getBaseCssClass('placeholder'));
+  return el.one('.' + this.getBaseCssClass('placeholder'));
 }}});
 });

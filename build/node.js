@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:49
+build time: Dec 2 15:24
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -25,7 +25,7 @@ KISSY.add("node/base", ["dom", "event/dom"], function(S, require) {
     if(!html) {
       return self
     }else {
-      if(typeof html == "string") {
+      if(typeof html === "string") {
         domNode = Dom.create(html, props, ownerDocument);
         if(domNode.nodeType === NodeType.DOCUMENT_FRAGMENT_NODE) {
           push.apply(this, makeArray(domNode.childNodes));
@@ -69,7 +69,7 @@ KISSY.add("node/base", ["dom", "event/dom"], function(S, require) {
       AP.splice.apply(ret, args)
     }
     return ret
-  }, slice:function(start, end) {
+  }, slice:function() {
     return new NodeList(slice.apply(this, arguments))
   }, getDOMNodes:function() {
     return slice.call(this)
@@ -104,12 +104,12 @@ KISSY.add("node/base", ["dom", "event/dom"], function(S, require) {
     return ret
   }};
   S.mix(NodeList, {all:function(selector, context) {
-    if(typeof selector == "string" && (selector = S.trim(selector)) && selector.length >= 3 && S.startsWith(selector, "<") && S.endsWith(selector, ">")) {
+    if(typeof selector === "string" && (selector = S.trim(selector)) && selector.length >= 3 && S.startsWith(selector, "<") && S.endsWith(selector, ">")) {
       if(context) {
-        if(context["getDOMNode"]) {
+        if(context.getDOMNode) {
           context = context[0]
         }
-        context = context["ownerDocument"] || context
+        context = context.ownerDocument || context
       }
       return new NodeList(selector, undefined, context)
     }
@@ -200,7 +200,7 @@ KISSY.add("node/override", ["dom", "./base", "./attach"], function(S, require) {
   S.each(["append", "prepend", "before", "after"], function(insertType) {
     NLP[insertType] = function(html) {
       var newNode = html, self = this;
-      if(typeof newNode == "string") {
+      if(typeof newNode === "string") {
         newNode = Dom.create(newNode)
       }
       if(newNode) {
@@ -213,7 +213,7 @@ KISSY.add("node/override", ["dom", "./base", "./attach"], function(S, require) {
     var orig = NLP[fixType];
     NLP[fixType] = function(others) {
       var self = this;
-      if(typeof others == "string") {
+      if(typeof others === "string") {
         others = NodeList.all(others, self[0].ownerDocument)
       }
       return orig.call(self, others)
@@ -235,13 +235,13 @@ KISSY.add("node/anim", ["./base", "dom", "anim"], function(S, require) {
     }
     return obj
   }
-  S.augment(Node, {animate:function(var_args) {
+  S.augment(Node, {animate:function() {
     var self = this, originArgs = S.makeArray(arguments);
     S.each(self, function(elem) {
       var args = S.clone(originArgs), arg0 = args[0];
       if(arg0.to) {
         arg0.node = elem;
-        Anim(arg0).run()
+        (new Anim(arg0)).run()
       }else {
         Anim.apply(undefined, [elem].concat(args)).run()
       }
@@ -289,7 +289,7 @@ KISSY.add("node/anim", ["./base", "dom", "anim"], function(S, require) {
         Dom[k](self)
       }else {
         S.each(self, function(elem) {
-          Anim(elem, v, duration, easing, complete).run()
+          (new Anim(elem, v, duration, easing, complete)).run()
         })
       }
       return self

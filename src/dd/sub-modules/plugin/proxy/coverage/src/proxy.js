@@ -289,7 +289,7 @@ if (! _$jscoverage['/proxy.js'].branchData) {
   _$jscoverage['/proxy.js'].branchData['69'] = [];
   _$jscoverage['/proxy.js'].branchData['69'][1] = new BranchData();
 }
-_$jscoverage['/proxy.js'].branchData['69'][1].init(499, 14, 'hideNodeOnDrag');
+_$jscoverage['/proxy.js'].branchData['69'][1].init(496, 14, 'hideNodeOnDrag');
 function visit6_69_1(result) {
   _$jscoverage['/proxy.js'].branchData['69'][1].ranCondition(result);
   return result;
@@ -386,7 +386,7 @@ KISSY.add(function(S, require) {
       node.hide();
     }
     _$jscoverage['/proxy.js'].lineData[68]++;
-    drag['setInternal']('node', dragNode);
+    drag.setInternal('node', dragNode);
     _$jscoverage['/proxy.js'].lineData[69]++;
     if (visit6_69_1(hideNodeOnDrag)) {
       _$jscoverage['/proxy.js'].lineData[70]++;
@@ -394,12 +394,12 @@ KISSY.add(function(S, require) {
     }
   }
   _$jscoverage['/proxy.js'].lineData[75]++;
-  drag['on']('dragstart' + PROXY_EVENT, start)['on']('dragend' + PROXY_EVENT, end);
+  drag.on('dragstart' + PROXY_EVENT, start).on('dragend' + PROXY_EVENT, end);
 }, 
   pluginDestructor: function(drag) {
   _$jscoverage['/proxy.js'].functionData[4]++;
   _$jscoverage['/proxy.js'].lineData[83]++;
-  drag['detach'](PROXY_EVENT);
+  drag.detach(PROXY_EVENT);
 }}, {
   ATTRS: {
   node: {

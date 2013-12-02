@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:39
+build time: Dec 2 15:13
 */
 /**
  * i18n resources for date-picker
@@ -16,6 +16,7 @@ KISSY.add('date/picker/i18n/zh-cn', {
     monthSelect: '选择月份',
     yearSelect: '选择年份',
     decadeSelect: '选择年代',
+    /*jshint quotmark: false*/
     yearFormat: "yyyy'年'",
     monthYearFormat: "yyyy'年'M'月'",
     dateFormat: "yyyy'年'M'月'd'日'",

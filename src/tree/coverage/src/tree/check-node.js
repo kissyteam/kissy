@@ -300,19 +300,19 @@ if (! _$jscoverage['/tree/check-node.js'].branchData) {
   _$jscoverage['/tree/check-node.js'].branchData['90'] = [];
   _$jscoverage['/tree/check-node.js'].branchData['90'][1] = new BranchData();
 }
-_$jscoverage['/tree/check-node.js'].branchData['90'][1].init(730, 23, 'checkCount == cs.length');
+_$jscoverage['/tree/check-node.js'].branchData['90'][1].init(732, 24, 'checkCount === cs.length');
 function visit11_90_1(result) {
   _$jscoverage['/tree/check-node.js'].branchData['90'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tree/check-node.js'].branchData['86'][1].init(581, 16, 'checkCount === 0');
+}_$jscoverage['/tree/check-node.js'].branchData['86'][1].init(583, 16, 'checkCount === 0');
 function visit10_86_1(result) {
   _$jscoverage['/tree/check-node.js'].branchData['86'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tree/check-node.js'].branchData['80'][1].init(306, 15, 'cState == CHECK');
+}_$jscoverage['/tree/check-node.js'].branchData['80'][1].init(307, 16, 'cState === CHECK');
 function visit9_80_1(result) {
   _$jscoverage['/tree/check-node.js'].branchData['80'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tree/check-node.js'].branchData['77'][1].init(150, 23, 'cState == PARTIAL_CHECK');
+}_$jscoverage['/tree/check-node.js'].branchData['77'][1].init(150, 24, 'cState === PARTIAL_CHECK');
 function visit8_77_1(result) {
   _$jscoverage['/tree/check-node.js'].branchData['77'][1].ranCondition(result);
   return result;
@@ -320,23 +320,23 @@ function visit8_77_1(result) {
 function visit7_73_1(result) {
   _$jscoverage['/tree/check-node.js'].branchData['73'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tree/check-node.js'].branchData['70'][1].init(457, 6, 'parent');
+}_$jscoverage['/tree/check-node.js'].branchData['70'][1].init(459, 6, 'parent');
 function visit6_70_1(result) {
   _$jscoverage['/tree/check-node.js'].branchData['70'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tree/check-node.js'].branchData['62'][3].init(216, 10, 's == EMPTY');
+}_$jscoverage['/tree/check-node.js'].branchData['62'][3].init(217, 11, 's === EMPTY');
 function visit5_62_3(result) {
   _$jscoverage['/tree/check-node.js'].branchData['62'][3].ranCondition(result);
   return result;
-}_$jscoverage['/tree/check-node.js'].branchData['62'][2].init(202, 10, 's == CHECK');
+}_$jscoverage['/tree/check-node.js'].branchData['62'][2].init(202, 11, 's === CHECK');
 function visit4_62_2(result) {
   _$jscoverage['/tree/check-node.js'].branchData['62'][2].ranCondition(result);
   return result;
-}_$jscoverage['/tree/check-node.js'].branchData['62'][1].init(202, 24, 's == CHECK || s == EMPTY');
+}_$jscoverage['/tree/check-node.js'].branchData['62'][1].init(202, 26, 's === CHECK || s === EMPTY');
 function visit3_62_1(result) {
   _$jscoverage['/tree/check-node.js'].branchData['62'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tree/check-node.js'].branchData['41'][1].init(597, 19, 'checkState == CHECK');
+}_$jscoverage['/tree/check-node.js'].branchData['41'][1].init(597, 20, 'checkState === CHECK');
 function visit2_41_1(result) {
   _$jscoverage['/tree/check-node.js'].branchData['41'][1].ranCondition(result);
   return result;
@@ -358,7 +358,7 @@ KISSY.add(function(S, require) {
   handleClickInternal: function(e) {
   _$jscoverage['/tree/check-node.js'].functionData[1]++;
   _$jscoverage['/tree/check-node.js'].lineData[22]++;
-  var self = this, checkState, expanded = self.get("expanded"), expandIconEl = self.get("expandIconEl"), tree = self.get("tree"), target = $(e.target);
+  var self = this, checkState, expanded = self.get('expanded'), expandIconEl = self.get('expandIconEl'), tree = self.get('tree'), target = $(e.target);
   _$jscoverage['/tree/check-node.js'].lineData[30]++;
   tree.focus();
   _$jscoverage['/tree/check-node.js'].lineData[31]++;
@@ -366,14 +366,14 @@ KISSY.add(function(S, require) {
   _$jscoverage['/tree/check-node.js'].lineData[33]++;
   if (visit1_33_1(target.equals(expandIconEl))) {
     _$jscoverage['/tree/check-node.js'].lineData[34]++;
-    self.set("expanded", !expanded);
+    self.set('expanded', !expanded);
     _$jscoverage['/tree/check-node.js'].lineData[35]++;
     return;
   }
   _$jscoverage['/tree/check-node.js'].lineData[39]++;
-  checkState = self.get("checkState");
+  checkState = self.get('checkState');
   _$jscoverage['/tree/check-node.js'].lineData[41]++;
-  if (visit2_41_1(checkState == CHECK)) {
+  if (visit2_41_1(checkState === CHECK)) {
     _$jscoverage['/tree/check-node.js'].lineData[42]++;
     checkState = EMPTY;
   } else {
@@ -381,9 +381,9 @@ KISSY.add(function(S, require) {
     checkState = CHECK;
   }
   _$jscoverage['/tree/check-node.js'].lineData[47]++;
-  self.set("checkState", checkState);
+  self.set('checkState', checkState);
   _$jscoverage['/tree/check-node.js'].lineData[49]++;
-  self.fire("click");
+  self.fire('click');
   _$jscoverage['/tree/check-node.js'].lineData[50]++;
   return true;
 }, 
@@ -392,12 +392,12 @@ KISSY.add(function(S, require) {
   _$jscoverage['/tree/check-node.js'].lineData[54]++;
   var self = this, parent = self.get('parent'), checkCount, i, c, cState, cs;
   _$jscoverage['/tree/check-node.js'].lineData[62]++;
-  if (visit3_62_1(visit4_62_2(s == CHECK) || visit5_62_3(s == EMPTY))) {
+  if (visit3_62_1(visit4_62_2(s === CHECK) || visit5_62_3(s === EMPTY))) {
     _$jscoverage['/tree/check-node.js'].lineData[63]++;
-    S.each(self.get("children"), function(c) {
+    S.each(self.get('children'), function(c) {
   _$jscoverage['/tree/check-node.js'].functionData[3]++;
   _$jscoverage['/tree/check-node.js'].lineData[64]++;
-  c.set("checkState", s);
+  c.set('checkState', s);
 });
   }
   _$jscoverage['/tree/check-node.js'].lineData[70]++;
@@ -405,22 +405,22 @@ KISSY.add(function(S, require) {
     _$jscoverage['/tree/check-node.js'].lineData[71]++;
     checkCount = 0;
     _$jscoverage['/tree/check-node.js'].lineData[72]++;
-    cs = parent.get("children");
+    cs = parent.get('children');
     _$jscoverage['/tree/check-node.js'].lineData[73]++;
     for (i = 0; visit7_73_1(i < cs.length); i++) {
       _$jscoverage['/tree/check-node.js'].lineData[74]++;
       c = cs[i];
       _$jscoverage['/tree/check-node.js'].lineData[75]++;
-      cState = c.get("checkState");
+      cState = c.get('checkState');
       _$jscoverage['/tree/check-node.js'].lineData[77]++;
-      if (visit8_77_1(cState == PARTIAL_CHECK)) {
+      if (visit8_77_1(cState === PARTIAL_CHECK)) {
         _$jscoverage['/tree/check-node.js'].lineData[78]++;
-        parent.set("checkState", PARTIAL_CHECK);
+        parent.set('checkState', PARTIAL_CHECK);
         _$jscoverage['/tree/check-node.js'].lineData[79]++;
         return;
       } else {
         _$jscoverage['/tree/check-node.js'].lineData[80]++;
-        if (visit9_80_1(cState == CHECK)) {
+        if (visit9_80_1(cState === CHECK)) {
           _$jscoverage['/tree/check-node.js'].lineData[81]++;
           checkCount++;
         }
@@ -429,15 +429,15 @@ KISSY.add(function(S, require) {
     _$jscoverage['/tree/check-node.js'].lineData[86]++;
     if (visit10_86_1(checkCount === 0)) {
       _$jscoverage['/tree/check-node.js'].lineData[87]++;
-      parent.set("checkState", EMPTY);
+      parent.set('checkState', EMPTY);
     } else {
       _$jscoverage['/tree/check-node.js'].lineData[90]++;
-      if (visit11_90_1(checkCount == cs.length)) {
+      if (visit11_90_1(checkCount === cs.length)) {
         _$jscoverage['/tree/check-node.js'].lineData[91]++;
-        parent.set("checkState", CHECK);
+        parent.set('checkState', CHECK);
       } else {
         _$jscoverage['/tree/check-node.js'].lineData[95]++;
-        parent.set("checkState", PARTIAL_CHECK);
+        parent.set('checkState', PARTIAL_CHECK);
       }
     }
   }
@@ -454,7 +454,7 @@ KISSY.add(function(S, require) {
   defaultChildCfg: {
   value: {
   xclass: 'check-tree-node'}}}, 
-  xclass: "check-tree-node"});
+  xclass: 'check-tree-node'});
   _$jscoverage['/tree/check-node.js'].lineData[139]++;
   CheckNode.CheckState = {
   PARTIAL_CHECK: PARTIAL_CHECK, 

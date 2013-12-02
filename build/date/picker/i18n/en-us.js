@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:39
+build time: Dec 2 15:13
 */
 /**
  * i18n resources for date-picker
@@ -16,9 +16,9 @@ KISSY.add('date/picker/i18n/en-us', {
     monthSelect:'Choose a month',
     yearSelect: 'Choose a year',
     decadeSelect: 'Choose a decade',
-    yearFormat: "yyyy",
-    dateFormat: "M/d/yyyy",
-    monthYearFormat: "MMMM yyyy",
+    yearFormat: 'yyyy',
+    dateFormat: 'M/d/yyyy',
+    monthYearFormat: 'MMMM yyyy',
     previousYear: 'Last year (Control + left)',
     nextYear: 'Next year (Control + right)',
     previousDecade: 'Last decade',

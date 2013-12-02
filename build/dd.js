@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:39
+build time: Dec 2 15:13
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -17,13 +17,13 @@ build time: Nov 27 00:39
 KISSY.add("dd/ddm", ["node", "base"], function(S, require) {
   var Node = require("node"), Base = require("base");
   var logger = S.getLogger("dd/ddm");
-  var UA = S.UA, undefined = undefined, $ = Node.all, win = S.Env.host, doc = win.document, $doc = $(doc), $win = $(win), ie6 = UA["ie"] === 6, PIXEL_THRESH = 3, BUFFER_TIME = 1, MOVE_DELAY = 30, SHIM_Z_INDEX = 999999;
+  var UA = S.UA, $ = Node.all, win = S.Env.host, doc = win.document, $doc = $(doc), $win = $(win), ie6 = UA.ie === 6, PIXEL_THRESH = 3, BUFFER_TIME = 1, MOVE_DELAY = 30, SHIM_Z_INDEX = 999999;
   var Gesture = Node.Gesture, DRAG_MOVE_EVENT = Gesture.move, DRAG_END_EVENT = Gesture.end;
   var DDM = Base.extend({__activeToDrag:0, _regDrop:function(d) {
     this.get("drops").push(d)
   }, _unRegDrop:function(d) {
     var self = this, drops = self.get("drops"), index = S.indexOf(d, drops);
-    if(index != -1) {
+    if(index !== -1) {
       drops.splice(index, 1)
     }
   }, _regToDrag:function(drag) {
@@ -31,7 +31,7 @@ KISSY.add("dd/ddm", ["node", "base"], function(S, require) {
     self.__activeToDrag = drag;
     registerEvent(self)
   }, _start:function() {
-    var self = this, drops = self.get("drops"), drag = self.__activeToDrag;
+    var self = this, drag = self.__activeToDrag;
     if(!drag) {
       return
     }
@@ -107,11 +107,11 @@ KISSY.add("dd/ddm", ["node", "base"], function(S, require) {
       if(drop.get("disabled")) {
         return undefined
       }
-      var a, node = drop["getNodeFromTarget"](ev, activeDrag.get("dragNode")[0], activeDrag.get("node")[0]);
+      var a, node = drop.getNodeFromTarget(ev, activeDrag.get("dragNode")[0], activeDrag.get("node")[0]);
       if(!node) {
         return undefined
       }
-      if(mode == "point") {
+      if(mode === "point") {
         if(inNodeByPointer(node, activeDrag.mousePos)) {
           a = area(region(node));
           if(!activeDrop) {
@@ -125,16 +125,16 @@ KISSY.add("dd/ddm", ["node", "base"], function(S, require) {
           }
         }
       }else {
-        if(mode == "intersect") {
+        if(mode === "intersect") {
           a = area(intersect(dragRegion, region(node)));
           if(a > vArea) {
             vArea = a;
             activeDrop = drop
           }
         }else {
-          if(mode == "strict") {
+          if(mode === "strict") {
             a = area(intersect(dragRegion, region(node)));
-            if(a == dragArea) {
+            if(a === dragArea) {
               activeDrop = drop;
               return false
             }
@@ -144,27 +144,27 @@ KISSY.add("dd/ddm", ["node", "base"], function(S, require) {
       return undefined
     });
     oldDrop = self.get("activeDrop");
-    if(oldDrop && oldDrop != activeDrop) {
+    if(oldDrop && oldDrop !== activeDrop) {
       oldDrop._handleOut(ev);
       activeDrag._handleOut(ev)
     }
     self.setInternal("activeDrop", activeDrop);
     if(activeDrop) {
-      if(oldDrop != activeDrop) {
+      if(oldDrop !== activeDrop) {
         activeDrop._handleEnter(ev)
       }else {
         activeDrop._handleOver(ev)
       }
     }
   }
-  function activeShim(self) {
+  var activeShim = function(self) {
     self._shim = $("<div " + 'style="' + "background-color:red;" + "position:" + (ie6 ? "absolute" : "fixed") + ";" + "left:0;" + "width:100%;" + "height:100%;" + "top:0;" + "cursor:" + ddm.get("dragCursor") + ";" + "z-index:" + SHIM_Z_INDEX + ";" + '"><' + "/div>").prependTo(doc.body || doc.documentElement).css("opacity", 0);
     activeShim = showShim;
     if(ie6) {
       $win.on("resize scroll", adjustShimSize, self)
     }
     showShim(self)
-  }
+  };
   var adjustShimSize = S.throttle(function() {
     var self = this, activeDrag;
     if((activeDrag = self.get("activeDrag")) && activeDrag.get("shim")) {
@@ -176,7 +176,7 @@ KISSY.add("dd/ddm", ["node", "base"], function(S, require) {
     if(ah) {
       cur = ah.css("cursor")
     }
-    if(cur == "auto") {
+    if(cur === "auto") {
       cur = self.get("dragCursor")
     }
     self._shim.css({cursor:cur, display:"block"});
@@ -218,11 +218,11 @@ KISSY.add("dd/ddm", ["node", "base"], function(S, require) {
   }
   function region(node) {
     var offset = node.offset();
-    if(!node.__dd_cached_width) {
+    if(!node.__ddCachedWidth) {
       logger.debug("no cache in dd!");
       logger.debug(node[0])
     }
-    return{left:offset.left, right:offset.left + (node.__dd_cached_width || node.outerWidth()), top:offset.top, bottom:offset.top + (node.__dd_cached_height || node.outerHeight())}
+    return{left:offset.left, right:offset.left + (node.__ddCachedWidth || node.outerWidth()), top:offset.top, bottom:offset.top + (node.__ddCachedHeight || node.outerHeight())}
   }
   function inRegion(region, pointer) {
     return region.left <= pointer.left && region.right >= pointer.left && region.top <= pointer.top && region.bottom >= pointer.top
@@ -234,7 +234,7 @@ KISSY.add("dd/ddm", ["node", "base"], function(S, require) {
     return(region.right - region.left) * (region.bottom - region.top)
   }
   function intersect(r1, r2) {
-    var t = Math.max(r1["top"], r2.top), r = Math.min(r1.right, r2.right), b = Math.min(r1["bottom"], r2.bottom), l = Math.max(r1.left, r2.left);
+    var t = Math.max(r1.top, r2.top), r = Math.min(r1.right, r2.right), b = Math.min(r1.bottom, r2.bottom), l = Math.max(r1.left, r2.left);
     return{left:l, right:r, top:t, bottom:b}
   }
   function inNodeByPointer(node, point) {
@@ -242,8 +242,8 @@ KISSY.add("dd/ddm", ["node", "base"], function(S, require) {
   }
   function cacheWH(node) {
     if(node) {
-      node.__dd_cached_width = node.outerWidth();
-      node.__dd_cached_height = node.outerHeight()
+      node.__ddCachedWidth = node.outerWidth();
+      node.__ddCachedHeight = node.outerHeight()
     }
   }
   var ddm = new DDM;
@@ -256,7 +256,7 @@ KISSY.add("dd/ddm", ["node", "base"], function(S, require) {
 });
 KISSY.add("dd/draggable", ["node", "./ddm", "base"], function(S, require) {
   var Node = require("node"), DDM = require("./ddm"), Base = require("base");
-  var UA = S.UA, $ = Node.all, each = S.each, Features = S.Features, ie = UA["ie"], NULL = null, PREFIX_CLS = DDM.PREFIX_CLS, doc = S.Env.host.document;
+  var UA = S.UA, $ = Node.all, each = S.each, Features = S.Features, ie = UA.ie, NULL = null, PREFIX_CLS = DDM.PREFIX_CLS, doc = S.Env.host.document;
   var Draggable = Base.extend({initializer:function() {
     var self = this;
     self.addTarget(DDM);
@@ -277,7 +277,7 @@ KISSY.add("dd/draggable", ["node", "./ddm", "base"], function(S, require) {
   }, _fixDragStart:fixDragStart, _checkHandler:function(t) {
     var self = this, handlers = self.get("handlers"), ret = 0;
     each(handlers, function(handler) {
-      if(handler[0] == t || handler.contains(t)) {
+      if(handler[0] === t || handler.contains(t)) {
         ret = 1;
         self.setInternal("activeHandler", handler);
         return false
@@ -287,7 +287,7 @@ KISSY.add("dd/draggable", ["node", "./ddm", "base"], function(S, require) {
     return ret
   }, _checkDragStartValid:function(ev) {
     var self = this;
-    if(self.get("primaryButtonOnly") && ev.which != 1 || self.get("disabled")) {
+    if(self.get("primaryButtonOnly") && ev.which !== 1 || self.get("disabled")) {
       return 0
     }
     return 1
@@ -412,7 +412,7 @@ KISSY.add("dd/draggable", ["node", "./ddm", "base"], function(S, require) {
       if(typeof v === "function") {
         v = v.call(self)
       }
-      if(typeof v == "string") {
+      if(typeof v === "string") {
         v = self.get("node").one(v)
       }
       if(v.nodeType) {
@@ -488,21 +488,17 @@ KISSY.add("dd/draggable-delegate", ["node", "./ddm", "./draggable"], function(S,
     var self = this;
     self.get("container").detach(Node.Gesture.start, handlePreDragStart, self).detach("dragstart", self._fixDragStart)
   }, _getHandler:function(target) {
-    var self = this, ret = undefined, node = self.get("container"), handlers = self.get("handlers");
+    var self = this, node = self.get("container"), handlers = self.get("handlers");
     while(target && target[0] !== node[0]) {
-      S.each(handlers, function(h) {
+      for(var i = 0;i < handlers.length;i++) {
+        var h = handlers[i];
         if(target.test(h)) {
-          ret = target;
-          return false
+          return target
         }
-        return undefined
-      });
-      if(ret) {
-        break
       }
       target = target.parent()
     }
-    return ret
+    return null
   }, _getNode:function(h) {
     return h.closest(this.get("selector"), this.get("container"))
   }}, {ATTRS:{container:{setter:function(v) {
@@ -529,7 +525,7 @@ KISSY.add("dd/droppable", ["node", "./ddm", "base"], function(S, require) {
     DDM._regDrop(this)
   }, getNodeFromTarget:function(ev, dragNode, proxyNode) {
     var node = this.get("node"), domNode = node[0];
-    return domNode == dragNode || domNode == proxyNode ? null : node
+    return domNode === dragNode || domNode === proxyNode ? null : node
   }, _active:function() {
     var self = this, drag = DDM.get("activeDrag"), node = self.get("node"), dropGroups = self.get("groups"), dragGroups = drag.get("groups");
     if(validDrop(dropGroups, dragGroups)) {

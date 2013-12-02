@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:50
+build time: Dec 2 15:25
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -63,7 +63,7 @@ KISSY.add("tabs/bar", ["toolbar", "./bar-render"], function(S, require) {
   }, _onSetHighlightedItem:function(v, e) {
     var self = this;
     self.callSuper(v, e);
-    if(self.get("changeType") == "mouse") {
+    if(self.get("changeType") === "mouse") {
       self._onSetSelectedTab.apply(self, arguments)
     }
   }}, {ATTRS:{selectedTab:{}, changeType:{value:"click"}, defaultChildCfg:{value:{xclass:"tabs-tab"}}, xrender:{value:BarRender}}, xclass:"tabs-bar"});
@@ -209,7 +209,7 @@ KISSY.add("tabs", ["component/container", "tabs/bar", "tabs/body", "tabs/tab", "
     }
   }, addItem:function(item, index) {
     var self = this, bar = self.get("bar"), selectedTab, tabItem, panelItem, barChildren = bar.get("children"), body = self.get("body");
-    if(typeof index == "undefined") {
+    if(typeof index === "undefined") {
       index = barChildren.length
     }
     tabItem = {content:item.title};
@@ -217,7 +217,7 @@ KISSY.add("tabs", ["component/container", "tabs/bar", "tabs/body", "tabs/tab", "
     bar.addChild(tabItem, index);
     selectedTab = barChildren[index];
     body.addChild(panelItem, index);
-    if(item["selected"]) {
+    if(item.selected) {
       bar.set("selectedTab", selectedTab);
       body.set("selectedPanelIndex", index)
     }
@@ -225,10 +225,10 @@ KISSY.add("tabs", ["component/container", "tabs/bar", "tabs/body", "tabs/tab", "
   }, removeItemAt:function(index, destroy) {
     var tabs = this, bar = tabs.get("bar"), barCs = bar.get("children"), tab = bar.getChildAt(index), body = tabs.get("body");
     if(tab.get("selected")) {
-      if(barCs.length == 1) {
+      if(barCs.length === 1) {
         bar.set("selectedTab", null)
       }else {
-        if(index == 0) {
+        if(index === 0) {
           bar.set("selectedTab", bar.getChildAt(index + 1))
         }else {
           bar.set("selectedTab", bar.getChildAt(index - 1))

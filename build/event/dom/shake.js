@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:48
+build time: Dec 2 15:22
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -17,13 +17,13 @@ KISSY.add("event/dom/shake", ["event/dom/base"], function(S, require) {
       clear()
     }
   }, 250);
-  Special["shake"] = {setup:function() {
-    if(this != win) {
+  Special.shake = {setup:function() {
+    if(this !== win) {
       return
     }
     win.addEventListener(devicemotion, shake, false)
   }, tearDown:function() {
-    if(this != win) {
+    if(this !== win) {
       return
     }
     checkShake.stop();

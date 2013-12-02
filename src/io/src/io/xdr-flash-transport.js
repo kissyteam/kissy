@@ -3,10 +3,10 @@
  * use flash to accomplish cross domain request, usage scenario ? why not jsonp ?
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S,require) {
+KISSY.add(function (S, require) {
     var IO = require('./base'),
         Dom = require('dom');
-    var  logger= S.getLogger('s/io');
+    var logger = S.getLogger('s/io');
     var // current running request instances
         maps = {},
 
@@ -50,7 +50,7 @@ KISSY.add(function (S,require) {
             var self = this,
                 io = self.io,
                 c = io.config,
-                xdr = c['xdr'] || {};
+                xdr = c.xdr || {};
             // 不提供则使用 cdn 默认的 flash
             _swf(xdr.src || (S.Config.base + 'io/assets/io.swf'), 1, 1);
             // 简便起见，用轮训
@@ -114,7 +114,7 @@ KISSY.add(function (S,require) {
     });
 
     /*called by flash*/
-    IO['applyTo'] = function (_, cmd, args) {
+    IO.applyTo = function (_, cmd, args) {
         var cmds = cmd.split('.').slice(1),
             func = IO;
         S.each(cmds, function (c) {
@@ -124,7 +124,7 @@ KISSY.add(function (S,require) {
     };
 
     // when flash is loaded
-    IO['xdrReady'] = function () {
+    IO.xdrReady = function () {
         flash = doc.getElementById(ID);
     };
 
@@ -133,9 +133,11 @@ KISSY.add(function (S,require) {
      @param e response status
      @param o internal data
      */
-    IO['xdrResponse'] = function (e, o) {
+    IO.xdrResponse = function (e, o) {
         var xhr = maps[o.uid];
-        xhr && xhr._xdrResponse(e, o);
+        if (xhr) {
+            xhr._xdrResponse(e, o);
+        }
     };
 
     return XdrFlashTransport;

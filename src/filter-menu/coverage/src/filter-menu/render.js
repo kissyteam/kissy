@@ -276,12 +276,12 @@ KISSY.add(function(S, require) {
   getKeyEventTarget: function() {
   _$jscoverage['/filter-menu/render.js'].functionData[2]++;
   _$jscoverage['/filter-menu/render.js'].lineData[24]++;
-  return this.control.get("filterInput");
+  return this.control.get('filterInput');
 }, 
   '_onSetPlaceholder': function(v) {
   _$jscoverage['/filter-menu/render.js'].functionData[3]++;
   _$jscoverage['/filter-menu/render.js'].lineData[28]++;
-  this.control.get("placeholderEl").html(v);
+  this.control.get('placeholderEl').html(v);
 }}, {
   ATTRS: {
   contentTpl: {
@@ -290,16 +290,16 @@ KISSY.add(function(S, require) {
   placeholderEl: function(el) {
   _$jscoverage['/filter-menu/render.js'].functionData[4]++;
   _$jscoverage['/filter-menu/render.js'].lineData[39]++;
-  return el.one("." + this.getBaseCssClass('placeholder'));
+  return el.one('.' + this.getBaseCssClass('placeholder'));
 }, 
   'filterInputWrap': function(el) {
   _$jscoverage['/filter-menu/render.js'].functionData[5]++;
   _$jscoverage['/filter-menu/render.js'].lineData[42]++;
-  return el.one("." + this.getBaseCssClass('input-wrap'));
+  return el.one('.' + this.getBaseCssClass('input-wrap'));
 }, 
   filterInput: function(el) {
   _$jscoverage['/filter-menu/render.js'].functionData[6]++;
   _$jscoverage['/filter-menu/render.js'].lineData[45]++;
-  return el.one("." + this.getBaseCssClass('input'));
+  return el.one('.' + this.getBaseCssClass('input'));
 }}});
 });

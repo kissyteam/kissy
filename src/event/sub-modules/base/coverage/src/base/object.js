@@ -275,11 +275,11 @@ function visit1_102_1(result) {
 KISSY.add(function(S, undefined) {
   _$jscoverage['/base/object.js'].functionData[0]++;
   _$jscoverage['/base/object.js'].lineData[7]++;
-  var FALSE_FN = function f_f() {
+  var returnFalse = function() {
   _$jscoverage['/base/object.js'].functionData[1]++;
   _$jscoverage['/base/object.js'].lineData[8]++;
   return false;
-}, TRUE_FN = function t_f() {
+}, returnTrue = function() {
   _$jscoverage['/base/object.js'].functionData[2]++;
   _$jscoverage['/base/object.js'].lineData[10]++;
   return true;
@@ -299,25 +299,25 @@ KISSY.add(function(S, undefined) {
   _$jscoverage['/base/object.js'].lineData[43]++;
   EventObject.prototype = {
   constructor: EventObject, 
-  isDefaultPrevented: FALSE_FN, 
-  isPropagationStopped: FALSE_FN, 
-  isImmediatePropagationStopped: FALSE_FN, 
+  isDefaultPrevented: returnFalse, 
+  isPropagationStopped: returnFalse, 
+  isImmediatePropagationStopped: returnFalse, 
   preventDefault: function() {
   _$jscoverage['/base/object.js'].functionData[4]++;
   _$jscoverage['/base/object.js'].lineData[69]++;
-  this.isDefaultPrevented = TRUE_FN;
+  this.isDefaultPrevented = returnTrue;
 }, 
   stopPropagation: function() {
   _$jscoverage['/base/object.js'].functionData[5]++;
   _$jscoverage['/base/object.js'].lineData[77]++;
-  this.isPropagationStopped = TRUE_FN;
+  this.isPropagationStopped = returnTrue;
 }, 
   stopImmediatePropagation: function() {
   _$jscoverage['/base/object.js'].functionData[6]++;
   _$jscoverage['/base/object.js'].lineData[87]++;
   var self = this;
   _$jscoverage['/base/object.js'].lineData[88]++;
-  self.isImmediatePropagationStopped = TRUE_FN;
+  self.isImmediatePropagationStopped = returnTrue;
   _$jscoverage['/base/object.js'].lineData[91]++;
   self.stopPropagation();
 }, 

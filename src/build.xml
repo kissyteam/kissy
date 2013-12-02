@@ -5,17 +5,27 @@
 <project name="all.build" xmlns:ac="antlib:net.sf.antcontrib">
 
     <import file="config.xml"/>
-    
+
     <target name="build">
         <!--
           各个组件构建
           https://issues.apache.org/bugzilla/show_bug.cgi?id=33061 oom
         -->
+        <subant target="" failonerror="true"
+                buildpath="${kissy.src.dir}/seed"
+                inheritall="false"/>
+
+        <subant target="" failonerror="true"
+                buildpath="${kissy.src.dir}/xtemplate"
+                inheritall="false"/>
+
         <subant target="" failonerror="true" inheritall="false">
-            <fileset dir="${kissy.src.dir}" includes="*/build.xml"/>
+            <fileset dir="${kissy.src.dir}"
+                     excludesfile="${kissy.src.dir}/xtemplate/build.xml"
+                     includes="*/build.xml"/>
         </subant>
     </target>
-    
+
     <target name="sync">
         <input addproperty="git.commit.message">
             git commit message :

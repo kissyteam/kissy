@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:50
+build time: Dec 2 15:25
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -17,9 +17,9 @@ KISSY.add("swf/ua", [], function(S) {
     if(navigator.plugins && navigator.mimeTypes.length) {
       ver = (navigator.plugins["Shockwave Flash"] || 0).description
     }else {
-      if(win["ActiveXObject"]) {
+      if(win.ActiveXObject) {
         try {
-          ver = (new ActiveXObject(SF + "." + SF))["GetVariable"]("$version")
+          ver = (new win.ActiveXObject(SF + "." + SF)).GetVariable("$version")
         }catch(ex) {
         }
       }
@@ -33,7 +33,7 @@ KISSY.add("swf/ua", [], function(S) {
     return ver.match(/\d+/g).splice(0, 3)
   }
   function getNumberVersion(ver) {
-    var arr = typeof ver == "string" ? getArrayVersion(ver) : ver, ret = ver;
+    var arr = typeof ver === "string" ? getArrayVersion(ver) : ver, ret = ver;
     if(S.isArray(arr)) {
       ret = parseFloat(arr[0] + "." + pad(arr[1], 3) + pad(arr[2], 5))
     }
@@ -62,10 +62,10 @@ KISSY.add("swf", ["dom", "json", "attribute", "swf/ua"], function(S, require) {
   var Json = require("json");
   var Attribute = require("attribute");
   var FlashUA = require("swf/ua");
-  var OLD_IE = !!S.Env.host["ActiveXObject"], TYPE = "application/x-shockwave-flash", CID = "clsid:d27cdb6e-ae6d-11cf-96b8-444553540000", FLASHVARS = "flashvars", EMPTY = "", SPACE = " ", EQUAL = "=", DOUBLE_QUOTE = '"', LT = "<", GT = ">", doc = S.Env.host.document, fpv = FlashUA.fpv, fpvGEQ = FlashUA.fpvGEQ, fpvGTE = FlashUA.fpvGTE, OBJECT_TAG = "object", encode = encodeURIComponent, PARAMS = {wmode:EMPTY, allowscriptaccess:EMPTY, allownetworking:EMPTY, allowfullscreen:EMPTY, play:"false", loop:EMPTY, 
+  var OLD_IE = !!S.Env.host.ActiveXObject, TYPE = "application/x-shockwave-flash", CID = "clsid:d27cdb6e-ae6d-11cf-96b8-444553540000", FLASHVARS = "flashvars", EMPTY = "", SPACE = " ", EQUAL = "=", DOUBLE_QUOTE = '"', LT = "<", GT = ">", doc = S.Env.host.document, fpv = FlashUA.fpv, fpvGEQ = FlashUA.fpvGEQ, fpvGTE = FlashUA.fpvGTE, OBJECT_TAG = "object", encode = encodeURIComponent, PARAMS = {wmode:EMPTY, allowscriptaccess:EMPTY, allownetworking:EMPTY, allowfullscreen:EMPTY, play:"false", loop:EMPTY, 
   menu:EMPTY, quality:EMPTY, scale:EMPTY, salign:EMPTY, bgcolor:EMPTY, devicefont:EMPTY, hasPriority:EMPTY, base:EMPTY, swliveconnect:EMPTY, seamlesstabbing:EMPTY};
   var SWF;
-  return SWF = Attribute.extend({constructor:function() {
+  SWF = Attribute.extend({constructor:function() {
     var self = this;
     self.callSuper.apply(self, arguments);
     var expressInstall = self.get("expressInstall"), swf, html, id, htmlMode = self.get("htmlMode"), flashVars, params = self.get("params"), attrs = self.get("attrs"), doc = self.get("document"), placeHolder = Dom.create("<span>", undefined, doc), elBefore = self.get("elBefore"), installedSrc = self.get("src"), version = self.get("version");
@@ -88,7 +88,7 @@ KISSY.add("swf", ["dom", "json", "attribute", "swf/ua"], function(S, require) {
         S.mix(flashVars, {MMredirectURL:location.href, MMplayerType:OLD_IE ? "ActiveX" : "PlugIn", MMdoctitle:doc.title.slice(0, 47) + " - Flash Player Installation"})
       }
     }
-    if(htmlMode == "full") {
+    if(htmlMode === "full") {
       html = _stringSWFFull(installedSrc, attrs, params)
     }else {
       html = _stringSWFDefault(installedSrc, attrs, params)
@@ -106,7 +106,7 @@ KISSY.add("swf", ["dom", "json", "attribute", "swf/ua"], function(S, require) {
     }
     swf = Dom.get("#" + id, doc);
     self.set("swfObject", swf);
-    if(htmlMode == "full") {
+    if(htmlMode === "full") {
       if(OLD_IE) {
         self.set("swfObject", swf)
       }else {
@@ -127,7 +127,7 @@ KISSY.add("swf", ["dom", "json", "attribute", "swf/ua"], function(S, require) {
     }catch(e) {
       params = "";
       if(args.length !== 0) {
-        params = "'" + args.join("', '") + "'"
+        params = '"' + args.join('", "') + '"'
       }
       ret = (new Function("swf", "return swf." + func + "(" + params + ");"))(swf)
     }
@@ -138,38 +138,38 @@ KISSY.add("swf", ["dom", "json", "attribute", "swf/ua"], function(S, require) {
     var swfObject = self.get("swfObject");
     if(OLD_IE) {
       swfObject.style.display = "none";
-      (function() {
-        if(swfObject.readyState == 4) {
+      (function remove() {
+        if(swfObject.readyState === 4) {
           removeObjectInIE(swfObject)
         }else {
-          setTimeout(arguments.callee, 10)
+          setTimeout(remove, 10)
         }
       })()
     }else {
       swfObject.parentNode.removeChild(swfObject)
     }
   }}, {ATTRS:{expressInstall:{value:S.config("base") + "swf/assets/expressInstall.swf"}, src:{}, version:{value:"9"}, params:{value:{}}, attrs:{value:{}}, render:{setter:function(v) {
-    if(typeof v == "string") {
+    if(typeof v === "string") {
       v = Dom.get(v, this.get("document"))
     }
     return v
   }, valueFn:function() {
     return document.body
   }}, elBefore:{setter:function(v) {
-    if(typeof v == "string") {
+    if(typeof v === "string") {
       v = Dom.get(v, this.get("document"))
     }
     return v
   }}, document:{value:doc}, status:{}, el:{}, swfObject:{}, html:{}, htmlMode:{value:"default"}}, getSrc:function(swf) {
     swf = Dom.get(swf);
-    var srcElement = getSrcElements(swf)[0], src, nodeName = srcElement && Dom.nodeName(srcElement);
-    if(nodeName == "embed") {
+    var srcElement = getSrcElements(swf)[0], nodeName = srcElement && Dom.nodeName(srcElement);
+    if(nodeName === "embed") {
       return Dom.attr(srcElement, "src")
     }else {
-      if(nodeName == "object") {
+      if(nodeName === "object") {
         return Dom.attr(srcElement, "data")
       }else {
-        if(nodeName == "param") {
+        if(nodeName === "param") {
           return Dom.attr(srcElement, "value")
         }
       }
@@ -178,7 +178,7 @@ KISSY.add("swf", ["dom", "json", "attribute", "swf/ua"], function(S, require) {
   }, Status:{TOO_LOW:"flash version is too low", NOT_INSTALLED:"flash is not installed", SUCCESS:"success"}, HtmlMode:{DEFAULT:"default", FULL:"full"}, fpv:fpv, fpvGEQ:fpvGEQ, fpvGTE:fpvGTE});
   function removeObjectInIE(obj) {
     for(var i in obj) {
-      if(typeof obj[i] == "function") {
+      if(typeof obj[i] === "function") {
         obj[i] = null
       }
     }
@@ -186,7 +186,7 @@ KISSY.add("swf", ["dom", "json", "attribute", "swf/ua"], function(S, require) {
   }
   function getSrcElements(swf) {
     var url = "", params, i, param, elements = [], nodeName = Dom.nodeName(swf);
-    if(nodeName == "object") {
+    if(nodeName === "object") {
       url = Dom.attr(swf, "data");
       if(url) {
         elements.push(swf)
@@ -194,14 +194,14 @@ KISSY.add("swf", ["dom", "json", "attribute", "swf/ua"], function(S, require) {
       params = swf.childNodes;
       for(i = 0;i < params.length;i++) {
         param = params[i];
-        if(param.nodeType == 1) {
-          if((Dom.attr(param, "name") || "").toLowerCase() == "movie") {
+        if(param.nodeType === 1) {
+          if((Dom.attr(param, "name") || "").toLowerCase() === "movie") {
             elements.push(param)
           }else {
-            if(Dom.nodeName(param) == "embed") {
+            if(Dom.nodeName(param) === "embed") {
               elements.push(param)
             }else {
-              if(Dom.nodeName(params[i]) == "object") {
+              if(Dom.nodeName(params[i]) === "object") {
                 elements.push(param)
               }
             }
@@ -209,7 +209,7 @@ KISSY.add("swf", ["dom", "json", "attribute", "swf/ua"], function(S, require) {
         }
       }
     }else {
-      if(nodeName == "embed") {
+      if(nodeName === "embed") {
         elements.push(swf)
       }
     }
@@ -222,7 +222,7 @@ KISSY.add("swf", ["dom", "json", "attribute", "swf/ua"], function(S, require) {
       if(k in PARAMS) {
         par += stringParam(k, v)
       }else {
-        if(k == FLASHVARS) {
+        if(k === FLASHVARS) {
           par += stringParam(k, toFlashVars(v))
         }
       }
@@ -266,7 +266,7 @@ KISSY.add("swf", ["dom", "json", "attribute", "swf/ua"], function(S, require) {
   function toFlashVars(obj) {
     var arr = [], ret;
     S.each(obj, function(data, prop) {
-      if(typeof data != "string") {
+      if(typeof data !== "string") {
         data = Json.stringify(data)
       }
       if(data) {
@@ -282,5 +282,6 @@ KISSY.add("swf", ["dom", "json", "attribute", "swf/ua"], function(S, require) {
   function stringAttr(key, value) {
     return SPACE + key + EQUAL + DOUBLE_QUOTE + value + DOUBLE_QUOTE
   }
+  return SWF
 });
 

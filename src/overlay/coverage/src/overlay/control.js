@@ -262,7 +262,7 @@ if (! _$jscoverage['/overlay/control.js'].branchData) {
   _$jscoverage['/overlay/control.js'].branchData['55'] = [];
   _$jscoverage['/overlay/control.js'].branchData['55'][1] = new BranchData();
 }
-_$jscoverage['/overlay/control.js'].branchData['55'][1].init(47, 40, 'actions[self.get("closeAction")] || HIDE');
+_$jscoverage['/overlay/control.js'].branchData['55'][1].init(47, 40, 'actions[self.get(\'closeAction\')] || HIDE');
 function visit4_55_1(result) {
   _$jscoverage['/overlay/control.js'].branchData['55'][1].ranCondition(result);
   return result;
@@ -296,7 +296,7 @@ KISSY.add(function(S, require) {
   bindUI: function() {
   _$jscoverage['/overlay/control.js'].functionData[1]++;
   _$jscoverage['/overlay/control.js'].lineData[40]++;
-  var self = this, closeBtn = self.get("closeBtn");
+  var self = this, closeBtn = self.get('closeBtn');
   _$jscoverage['/overlay/control.js'].lineData[42]++;
   if (visit3_42_1(closeBtn)) {
     _$jscoverage['/overlay/control.js'].lineData[43]++;
@@ -314,7 +314,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/overlay/control.js'].lineData[54]++;
   var self = this;
   _$jscoverage['/overlay/control.js'].lineData[55]++;
-  self[visit4_55_1(actions[self.get("closeAction")] || HIDE)]();
+  self[visit4_55_1(actions[self.get('closeAction')] || HIDE)]();
   _$jscoverage['/overlay/control.js'].lineData[56]++;
   return self;
 }}, {

@@ -311,32 +311,32 @@ if (! _$jscoverage['/base/valuechange.js'].branchData) {
   _$jscoverage['/base/valuechange.js'].branchData['99'][2] = new BranchData();
   _$jscoverage['/base/valuechange.js'].branchData['99'][3] = new BranchData();
 }
-_$jscoverage['/base/valuechange.js'].branchData['99'][3].init(103, 22, 'nodeName == \'textarea\'');
-function visit214_99_3(result) {
+_$jscoverage['/base/valuechange.js'].branchData['99'][3].init(104, 23, 'nodeName === \'textarea\'');
+function visit213_99_3(result) {
   _$jscoverage['/base/valuechange.js'].branchData['99'][3].ranCondition(result);
   return result;
-}_$jscoverage['/base/valuechange.js'].branchData['99'][2].init(80, 19, 'nodeName == \'input\'');
-function visit213_99_2(result) {
+}_$jscoverage['/base/valuechange.js'].branchData['99'][2].init(80, 20, 'nodeName === \'input\'');
+function visit212_99_2(result) {
   _$jscoverage['/base/valuechange.js'].branchData['99'][2].ranCondition(result);
   return result;
-}_$jscoverage['/base/valuechange.js'].branchData['99'][1].init(80, 45, 'nodeName == \'input\' || nodeName == \'textarea\'');
-function visit212_99_1(result) {
+}_$jscoverage['/base/valuechange.js'].branchData['99'][1].init(80, 47, 'nodeName === \'input\' || nodeName === \'textarea\'');
+function visit211_99_1(result) {
   _$jscoverage['/base/valuechange.js'].branchData['99'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/valuechange.js'].branchData['70'][1].init(105, 18, 'ev.type == \'focus\'');
-function visit211_70_1(result) {
+}_$jscoverage['/base/valuechange.js'].branchData['70'][1].init(105, 19, 'ev.type === \'focus\'');
+function visit210_70_1(result) {
   _$jscoverage['/base/valuechange.js'].branchData['70'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/valuechange.js'].branchData['58'][1].init(13, 29, 'Dom.hasData(target, POLL_KEY)');
-function visit210_58_1(result) {
+function visit209_58_1(result) {
   _$jscoverage['/base/valuechange.js'].branchData['58'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/valuechange.js'].branchData['47'][1].init(90, 7, 'v !== h');
-function visit209_47_1(result) {
+function visit208_47_1(result) {
   _$jscoverage['/base/valuechange.js'].branchData['47'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/valuechange.js'].branchData['28'][1].init(13, 29, 'Dom.hasData(target, POLL_KEY)');
-function visit208_28_1(result) {
+function visit207_28_1(result) {
   _$jscoverage['/base/valuechange.js'].branchData['28'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/valuechange.js'].lineData[15]++;
@@ -354,7 +354,7 @@ KISSY.add(function(S, require) {
   function clearPollTimer(target) {
     _$jscoverage['/base/valuechange.js'].functionData[1]++;
     _$jscoverage['/base/valuechange.js'].lineData[28]++;
-    if (visit208_28_1(Dom.hasData(target, POLL_KEY))) {
+    if (visit207_28_1(Dom.hasData(target, POLL_KEY))) {
       _$jscoverage['/base/valuechange.js'].lineData[29]++;
       var poll = Dom.data(target, POLL_KEY);
       _$jscoverage['/base/valuechange.js'].lineData[30]++;
@@ -383,7 +383,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/base/valuechange.js'].lineData[45]++;
     var v = target.value, h = Dom.data(target, HISTORY_KEY);
     _$jscoverage['/base/valuechange.js'].lineData[47]++;
-    if (visit209_47_1(v !== h)) {
+    if (visit208_47_1(v !== h)) {
       _$jscoverage['/base/valuechange.js'].lineData[49]++;
       DomEvent.fireHandler(target, VALUE_CHANGE, {
   prevVal: h, 
@@ -396,17 +396,17 @@ KISSY.add(function(S, require) {
   function startPoll(target) {
     _$jscoverage['/base/valuechange.js'].functionData[5]++;
     _$jscoverage['/base/valuechange.js'].lineData[58]++;
-    if (visit210_58_1(Dom.hasData(target, POLL_KEY))) {
+    if (visit209_58_1(Dom.hasData(target, POLL_KEY))) {
       _$jscoverage['/base/valuechange.js'].lineData[59]++;
       return;
     }
     _$jscoverage['/base/valuechange.js'].lineData[61]++;
-    Dom.data(target, POLL_KEY, setTimeout(function() {
+    Dom.data(target, POLL_KEY, setTimeout(function check() {
   _$jscoverage['/base/valuechange.js'].functionData[6]++;
   _$jscoverage['/base/valuechange.js'].lineData[62]++;
   checkChange(target);
   _$jscoverage['/base/valuechange.js'].lineData[63]++;
-  Dom.data(target, POLL_KEY, setTimeout(arguments.callee, interval));
+  Dom.data(target, POLL_KEY, setTimeout(check, interval));
 }, interval));
   }
   _$jscoverage['/base/valuechange.js'].lineData[67]++;
@@ -415,7 +415,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/base/valuechange.js'].lineData[68]++;
     var target = ev.target;
     _$jscoverage['/base/valuechange.js'].lineData[70]++;
-    if (visit211_70_1(ev.type == 'focus')) {
+    if (visit210_70_1(ev.type === 'focus')) {
       _$jscoverage['/base/valuechange.js'].lineData[71]++;
       Dom.data(target, HISTORY_KEY, target.value);
     }
@@ -459,7 +459,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/base/valuechange.js'].lineData[98]++;
   var target = this, nodeName = getNodeName(target);
   _$jscoverage['/base/valuechange.js'].lineData[99]++;
-  if (visit212_99_1(visit213_99_2(nodeName == 'input') || visit214_99_3(nodeName == 'textarea'))) {
+  if (visit211_99_1(visit212_99_2(nodeName === 'input') || visit213_99_3(nodeName === 'textarea'))) {
     _$jscoverage['/base/valuechange.js'].lineData[100]++;
     monitor(target);
   }

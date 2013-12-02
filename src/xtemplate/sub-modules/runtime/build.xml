@@ -2,4 +2,8 @@
     <property name="component.name" value="xtemplate/runtime"/>
 
     <import file="../../../common.xml"/>
+
+    <target name="compress-css"/>
+
+    <target name="tpl2mod"/>
 </project>

@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:50
+build time: Dec 2 15:25
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -15,7 +15,7 @@ KISSY.add("stylesheet", ["dom"], function(S, require) {
     if(el.el) {
       el = el.el
     }
-    el = this["el"] = Dom.get(el);
+    el = this.el = Dom.get(el);
     var sheet = el.sheet || el.styleSheet;
     this.sheet = sheet;
     var cssRules = {};
@@ -63,7 +63,7 @@ KISSY.add("stylesheet", ["dom"], function(S, require) {
       }else {
         delete cssRules[selectorText];
         for(i = sheet[rulesName].length - 1;i >= 0;i--) {
-          if(sheet[rulesName][i] == rule) {
+          if(sheet[rulesName][i] === rule) {
             deleteRule(sheet, i);
             break
           }

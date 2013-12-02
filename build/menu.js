@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:49
+build time: Dec 2 15:23
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -74,7 +74,7 @@ KISSY.add("menu/control", ["node", "component/container", "component/extension/d
         return children[index]
       }
       index = (index + dir + len) % len
-    }while(index != o);
+    }while(index !== o);
     return undefined
   }, handleKeyDownInternal:function(e) {
     var self = this;
@@ -160,7 +160,7 @@ KISSY.add("menu/menuitem-render", ["component/control"], function(S, require) {
     self.$el[v ? "addClass" : "removeClass"](cls)
   }, containsElement:function(element) {
     var $el = this.$el;
-    return $el && ($el[0] == element || $el.contains(element))
+    return $el && ($el[0] === element || $el.contains(element))
   }}, {HTML_PARSER:{selectable:function(el) {
     return el.hasClass(this.getBaseCssClass("selectable"))
   }}})
@@ -179,8 +179,7 @@ KISSY.add("menu/menuitem", ["component/control", "./menuitem-render", "node"], f
     return true
   }, _onSetHighlighted:function(v, e) {
     var self = this, parent = self.get("parent");
-    if(e && e.byPassSetHighlightedItem) {
-    }else {
+    if(!(e && e.byPassSetHighlightedItem)) {
       if(self.get("rendered")) {
         parent.set("highlightedItem", v ? self : null)
       }else {
@@ -191,7 +190,7 @@ KISSY.add("menu/menuitem", ["component/control", "./menuitem-render", "node"], f
     }
     if(v) {
       var el = self.$el, p = el.parent(function(e) {
-        return $(e).css("overflow") != "visible"
+        return $(e).css("overflow") !== "visible"
       }, parent.get("el").parent());
       if(!p) {
         return
@@ -203,18 +202,18 @@ KISSY.add("menu/menuitem", ["component/control", "./menuitem-render", "node"], f
   }}, {ATTRS:{focusable:{value:false}, handleMouseEvents:{value:false}, selectable:{view:1}, value:{}, selected:{view:1}, xrender:{value:MenuItemRender}}, xclass:"menuitem"})
 });
 KISSY.add("menu/check-menuitem-xtpl", ["component/extension/content-xtpl"], function(S, require, exports, module) {
-  return function(scopes, S, undefined) {
+  return function(scope, S, undefined) {
     var buffer = "", config = this.config, engine = this, moduleWrap, utils = config.utils;
-    if(typeof module != "undefined" && module.kissy) {
+    if(typeof module !== "undefined" && module.kissy) {
       moduleWrap = module
     }
-    var runBlockCommandUtil = utils["runBlockCommand"], getExpressionUtil = utils["getExpression"], getPropertyOrRunCommandUtil = utils["getPropertyOrRunCommand"];
+    var runBlockCommandUtil = utils.runBlockCommand, getExpressionUtil = utils.getExpression, getPropertyOrRunCommandUtil = utils.getPropertyOrRunCommand;
     buffer += '<div class="';
     var config1 = {};
     var params2 = [];
     params2.push("checkbox");
     config1.params = params2;
-    var id0 = getPropertyOrRunCommandUtil(engine, scopes, config1, "getBaseCssClasses", 0, 1, true, undefined);
+    var id0 = getPropertyOrRunCommandUtil(engine, scope, config1, "getBaseCssClasses", 0, 1, true, undefined);
     buffer += id0;
     buffer += '">\n</div>\n';
     var config4 = {};
@@ -225,7 +224,7 @@ KISSY.add("menu/check-menuitem-xtpl", ["component/extension/content-xtpl"], func
       require("component/extension/content-xtpl");
       config4.params[0] = moduleWrap.resolveByName(config4.params[0])
     }
-    var id3 = getPropertyOrRunCommandUtil(engine, scopes, config4, "include", 0, 3, false, undefined);
+    var id3 = getPropertyOrRunCommandUtil(engine, scope, config4, "include", 0, 3, false, undefined);
     buffer += id3;
     return buffer
   }
@@ -236,7 +235,7 @@ KISSY.add("menu/check-menuitem-render", ["./menuitem-render", "component/extensi
   var CheckMenuItemTpl = require("./check-menuitem-xtpl");
   return MenuItemRender.extend([ContentRenderExtension], {beforeCreateDom:function(renderData) {
     if(renderData.checked) {
-      renderData.elCls.push(self.getBaseCssClasses("checked"))
+      renderData.elCls.push(this.getBaseCssClasses("checked"))
     }
   }, _onSetChecked:function(v) {
     var self = this, cls = self.getBaseCssClasses("checked");
@@ -255,27 +254,27 @@ KISSY.add("menu/check-menuitem", ["./menuitem", "./check-menuitem-render"], func
   }}, {ATTRS:{checked:{view:1}, xrender:{value:CheckMenuItemRender}}, xclass:"check-menuitem"})
 });
 KISSY.add("menu/submenu-xtpl", [], function(S, require, exports, module) {
-  return function(scopes, S, undefined) {
+  return function(scope, S, undefined) {
     var buffer = "", config = this.config, engine = this, moduleWrap, utils = config.utils;
-    if(typeof module != "undefined" && module.kissy) {
+    if(typeof module !== "undefined" && module.kissy) {
       moduleWrap = module
     }
-    var runBlockCommandUtil = utils["runBlockCommand"], getExpressionUtil = utils["getExpression"], getPropertyOrRunCommandUtil = utils["getPropertyOrRunCommand"];
+    var runBlockCommandUtil = utils.runBlockCommand, getExpressionUtil = utils.getExpression, getPropertyOrRunCommandUtil = utils.getPropertyOrRunCommand;
     buffer += '<div id="ks-content-';
-    var id0 = getPropertyOrRunCommandUtil(engine, scopes, {}, "id", 0, 1, undefined, false);
+    var id0 = getPropertyOrRunCommandUtil(engine, scope, {}, "id", 0, 1, undefined, false);
     buffer += getExpressionUtil(id0, true);
     buffer += '"\n     class="';
     var config2 = {};
     var params3 = [];
     params3.push("content");
     config2.params = params3;
-    var id1 = getPropertyOrRunCommandUtil(engine, scopes, config2, "getBaseCssClasses", 0, 2, true, undefined);
+    var id1 = getPropertyOrRunCommandUtil(engine, scope, config2, "getBaseCssClasses", 0, 2, true, undefined);
     buffer += id1;
     buffer += '">';
-    var id4 = getPropertyOrRunCommandUtil(engine, scopes, {}, "content", 0, 2, undefined, false);
+    var id4 = getPropertyOrRunCommandUtil(engine, scope, {}, "content", 0, 2, undefined, false);
     buffer += getExpressionUtil(id4, false);
     buffer += '</div>\n<span class="';
-    var id5 = getPropertyOrRunCommandUtil(engine, scopes, {}, "prefixCls", 0, 3, undefined, false);
+    var id5 = getPropertyOrRunCommandUtil(engine, scope, {}, "prefixCls", 0, 3, undefined, false);
     buffer += getExpressionUtil(id5, true);
     buffer += 'submenu-arrow">\u25ba</span>';
     return buffer
@@ -367,23 +366,22 @@ KISSY.add("menu/submenu", ["node", "./menuitem", "./submenu-render"], function(S
   }, handleKeyDownInternal:function(e) {
     var self = this, menu = self.get("menu"), menuChildren, menuChild, hasKeyboardControl_ = menu.get("visible"), keyCode = e.keyCode;
     if(!hasKeyboardControl_) {
-      if(keyCode == KeyCode.RIGHT) {
+      if(keyCode === KeyCode.RIGHT) {
         showMenu.call(self);
         menuChildren = menu.get("children");
         if(menuChild = menuChildren[0]) {
           menuChild.set("highlighted", true, {data:{fromKeyboard:1}})
         }
       }else {
-        if(keyCode == KeyCode.ENTER) {
+        if(keyCode === KeyCode.ENTER) {
           return self.handleClickInternal(e)
         }else {
           return undefined
         }
       }
     }else {
-      if(menu.handleKeyDownInternal(e)) {
-      }else {
-        if(keyCode == KeyCode.LEFT) {
+      if(!menu.handleKeyDownInternal(e)) {
+        if(keyCode === KeyCode.LEFT) {
           self.set("highlighted", false);
           self.set("highlighted", true, {data:{fromKeyboard:1}})
         }else {

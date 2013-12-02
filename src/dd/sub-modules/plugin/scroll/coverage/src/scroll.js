@@ -472,7 +472,7 @@ KISSY.add(function(S, require) {
   pluginDestructor: function(drag) {
   _$jscoverage['/scroll.js'].functionData[5]++;
   _$jscoverage['/scroll.js'].lineData[86]++;
-  drag['detach'](SCROLL_EVENT);
+  drag.detach(SCROLL_EVENT);
 }, 
   pluginInitializer: function(drag) {
   _$jscoverage['/scroll.js'].functionData[6]++;

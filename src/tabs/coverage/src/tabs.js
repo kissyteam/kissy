@@ -366,44 +366,44 @@ if (! _$jscoverage['/tabs.js'].branchData) {
   _$jscoverage['/tabs.js'].branchData['207'] = [];
   _$jscoverage['/tabs.js'].branchData['207'][1] = new BranchData();
 }
-_$jscoverage['/tabs.js'].branchData['207'][1].init(21, 17, 'c.get("selected")');
-function visit26_207_1(result) {
+_$jscoverage['/tabs.js'].branchData['207'][1].init(21, 17, 'c.get(\'selected\')');
+function visit25_207_1(result) {
   _$jscoverage['/tabs.js'].branchData['207'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tabs.js'].branchData['187'][1].init(21, 17, 'c.get("selected")');
-function visit25_187_1(result) {
+}_$jscoverage['/tabs.js'].branchData['187'][1].init(21, 17, 'c.get(\'selected\')');
+function visit24_187_1(result) {
   _$jscoverage['/tabs.js'].branchData['187'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tabs.js'].branchData['144'][1].init(120, 10, 'index == 0');
-function visit24_144_1(result) {
+}_$jscoverage['/tabs.js'].branchData['144'][1].init(121, 11, 'index === 0');
+function visit23_144_1(result) {
   _$jscoverage['/tabs.js'].branchData['144'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tabs.js'].branchData['142'][1].init(21, 17, 'barCs.length == 1');
-function visit23_142_1(result) {
+}_$jscoverage['/tabs.js'].branchData['142'][1].init(21, 18, 'barCs.length === 1');
+function visit22_142_1(result) {
   _$jscoverage['/tabs.js'].branchData['142'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tabs.js'].branchData['141'][1].init(406, 19, 'tab.get("selected")');
-function visit22_141_1(result) {
+}_$jscoverage['/tabs.js'].branchData['141'][1].init(406, 19, 'tab.get(\'selected\')');
+function visit21_141_1(result) {
   _$jscoverage['/tabs.js'].branchData['141'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tabs.js'].branchData['115'][1].init(657, 16, 'item[\'selected\']');
-function visit21_115_1(result) {
+}_$jscoverage['/tabs.js'].branchData['115'][1].init(658, 13, 'item.selected');
+function visit20_115_1(result) {
   _$jscoverage['/tabs.js'].branchData['115'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tabs.js'].branchData['97'][1].init(259, 27, 'typeof index == \'undefined\'');
-function visit20_97_1(result) {
+}_$jscoverage['/tabs.js'].branchData['97'][1].init(259, 28, 'typeof index === \'undefined\'');
+function visit19_97_1(result) {
   _$jscoverage['/tabs.js'].branchData['97'][1].ranCondition(result);
   return result;
 }_$jscoverage['/tabs.js'].branchData['69'][1].init(1314, 31, '!selected && barChildren.length');
-function visit19_69_1(result) {
+function visit18_69_1(result) {
   _$jscoverage['/tabs.js'].branchData['69'][1].ranCondition(result);
   return result;
 }_$jscoverage['/tabs.js'].branchData['57'][1].init(32, 25, 'selected || item.selected');
-function visit18_57_1(result) {
+function visit17_57_1(result) {
   _$jscoverage['/tabs.js'].branchData['57'][1].ranCondition(result);
   return result;
 }_$jscoverage['/tabs.js'].branchData['34'][1].init(117, 5, 'items');
-function visit17_34_1(result) {
+function visit16_34_1(result) {
   _$jscoverage['/tabs.js'].branchData['34'][1].ranCondition(result);
   return result;
 }_$jscoverage['/tabs.js'].lineData[6]++;
@@ -440,12 +440,12 @@ KISSY.add(function(S, require) {
   _$jscoverage['/tabs.js'].lineData[30]++;
   var self = this, items = self.get('items');
   _$jscoverage['/tabs.js'].lineData[34]++;
-  if (visit17_34_1(items)) {
+  if (visit16_34_1(items)) {
     _$jscoverage['/tabs.js'].lineData[35]++;
     var children = self.get('children'), barOrientation = self.get('barOrientation'), selected, prefixCls = self.get('prefixCls'), tabItem, panelItem, bar = {
   prefixCls: prefixCls, 
   xclass: 'tabs-bar', 
-  changeType: self.get("changeType"), 
+  changeType: self.get('changeType'), 
   children: []}, body = {
   prefixCls: prefixCls, 
   xclass: 'tabs-body', 
@@ -455,7 +455,7 @@ KISSY.add(function(S, require) {
     S.each(items, function(item) {
   _$jscoverage['/tabs.js'].functionData[4]++;
   _$jscoverage['/tabs.js'].lineData[57]++;
-  selected = visit18_57_1(selected || item.selected);
+  selected = visit17_57_1(selected || item.selected);
   _$jscoverage['/tabs.js'].lineData[58]++;
   barChildren.push(tabItem = {
   content: item.title, 
@@ -466,7 +466,7 @@ KISSY.add(function(S, require) {
   selected: item.selected});
 });
     _$jscoverage['/tabs.js'].lineData[69]++;
-    if (visit19_69_1(!selected && barChildren.length)) {
+    if (visit18_69_1(!selected && barChildren.length)) {
       _$jscoverage['/tabs.js'].lineData[70]++;
       barChildren[0].selected = true;
       _$jscoverage['/tabs.js'].lineData[71]++;
@@ -481,9 +481,9 @@ KISSY.add(function(S, require) {
   addItem: function(item, index) {
   _$jscoverage['/tabs.js'].functionData[5]++;
   _$jscoverage['/tabs.js'].lineData[89]++;
-  var self = this, bar = self.get("bar"), selectedTab, tabItem, panelItem, barChildren = bar.get('children'), body = self.get("body");
+  var self = this, bar = self.get('bar'), selectedTab, tabItem, panelItem, barChildren = bar.get('children'), body = self.get('body');
   _$jscoverage['/tabs.js'].lineData[97]++;
-  if (visit20_97_1(typeof index == 'undefined')) {
+  if (visit19_97_1(typeof index === 'undefined')) {
     _$jscoverage['/tabs.js'].lineData[98]++;
     index = barChildren.length;
   }
@@ -500,7 +500,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/tabs.js'].lineData[113]++;
   body.addChild(panelItem, index);
   _$jscoverage['/tabs.js'].lineData[115]++;
-  if (visit21_115_1(item['selected'])) {
+  if (visit20_115_1(item.selected)) {
     _$jscoverage['/tabs.js'].lineData[116]++;
     bar.set('selectedTab', selectedTab);
     _$jscoverage['/tabs.js'].lineData[117]++;
@@ -512,21 +512,21 @@ KISSY.add(function(S, require) {
   removeItemAt: function(index, destroy) {
   _$jscoverage['/tabs.js'].functionData[6]++;
   _$jscoverage['/tabs.js'].lineData[130]++;
-  var tabs = this, bar = tabs.get("bar"), barCs = bar.get("children"), tab = bar.getChildAt(index), body = tabs.get("body");
+  var tabs = this, bar = tabs.get('bar'), barCs = bar.get('children'), tab = bar.getChildAt(index), body = tabs.get('body');
   _$jscoverage['/tabs.js'].lineData[141]++;
-  if (visit22_141_1(tab.get("selected"))) {
+  if (visit21_141_1(tab.get('selected'))) {
     _$jscoverage['/tabs.js'].lineData[142]++;
-    if (visit23_142_1(barCs.length == 1)) {
+    if (visit22_142_1(barCs.length === 1)) {
       _$jscoverage['/tabs.js'].lineData[143]++;
-      bar.set("selectedTab", null);
+      bar.set('selectedTab', null);
     } else {
       _$jscoverage['/tabs.js'].lineData[144]++;
-      if (visit24_144_1(index == 0)) {
+      if (visit23_144_1(index === 0)) {
         _$jscoverage['/tabs.js'].lineData[145]++;
-        bar.set("selectedTab", bar.getChildAt(index + 1));
+        bar.set('selectedTab', bar.getChildAt(index + 1));
       } else {
         _$jscoverage['/tabs.js'].lineData[147]++;
-        bar.set("selectedTab", bar.getChildAt(index - 1));
+        bar.set('selectedTab', bar.getChildAt(index - 1));
       }
     }
   }
@@ -540,26 +540,26 @@ KISSY.add(function(S, require) {
   'removeItemByTab': function(tab, destroy) {
   _$jscoverage['/tabs.js'].functionData[7]++;
   _$jscoverage['/tabs.js'].lineData[162]++;
-  var index = S.indexOf(tab, this.get("bar").get("children"));
+  var index = S.indexOf(tab, this.get('bar').get('children'));
   _$jscoverage['/tabs.js'].lineData[163]++;
   return this.removeItemAt(index, destroy);
 }, 
   'removeItemByPanel': function(panel, destroy) {
   _$jscoverage['/tabs.js'].functionData[8]++;
   _$jscoverage['/tabs.js'].lineData[173]++;
-  var index = S.indexOf(panel, this.get("body").get("children"));
+  var index = S.indexOf(panel, this.get('body').get('children'));
   _$jscoverage['/tabs.js'].lineData[174]++;
   return this.removeItemAt(index, destroy);
 }, 
   getSelectedTab: function() {
   _$jscoverage['/tabs.js'].functionData[9]++;
   _$jscoverage['/tabs.js'].lineData[182]++;
-  var tabs = this, bar = tabs.get("bar"), child = null;
+  var tabs = this, bar = tabs.get('bar'), child = null;
   _$jscoverage['/tabs.js'].lineData[186]++;
-  S.each(bar.get("children"), function(c) {
+  S.each(bar.get('children'), function(c) {
   _$jscoverage['/tabs.js'].functionData[10]++;
   _$jscoverage['/tabs.js'].lineData[187]++;
-  if (visit25_187_1(c.get("selected"))) {
+  if (visit24_187_1(c.get('selected'))) {
     _$jscoverage['/tabs.js'].lineData[188]++;
     child = c;
     _$jscoverage['/tabs.js'].lineData[189]++;
@@ -574,12 +574,12 @@ KISSY.add(function(S, require) {
   getSelectedPanel: function() {
   _$jscoverage['/tabs.js'].functionData[11]++;
   _$jscoverage['/tabs.js'].lineData[202]++;
-  var tabs = this, body = tabs.get("body"), child = null;
+  var tabs = this, body = tabs.get('body'), child = null;
   _$jscoverage['/tabs.js'].lineData[206]++;
-  S.each(body.get("children"), function(c) {
+  S.each(body.get('children'), function(c) {
   _$jscoverage['/tabs.js'].functionData[12]++;
   _$jscoverage['/tabs.js'].lineData[207]++;
-  if (visit26_207_1(c.get("selected"))) {
+  if (visit25_207_1(c.get('selected'))) {
     _$jscoverage['/tabs.js'].lineData[208]++;
     child = c;
     _$jscoverage['/tabs.js'].lineData[209]++;
@@ -594,27 +594,27 @@ KISSY.add(function(S, require) {
   getTabs: function() {
   _$jscoverage['/tabs.js'].functionData[13]++;
   _$jscoverage['/tabs.js'].lineData[222]++;
-  return this.get("bar").get("children");
+  return this.get('bar').get('children');
 }, 
   getPanels: function() {
   _$jscoverage['/tabs.js'].functionData[14]++;
   _$jscoverage['/tabs.js'].lineData[230]++;
-  return this.get("body").get("children");
+  return this.get('body').get('children');
 }, 
   getTabAt: function(index) {
   _$jscoverage['/tabs.js'].functionData[15]++;
   _$jscoverage['/tabs.js'].lineData[237]++;
-  return this.get("bar").get("children")[index];
+  return this.get('bar').get('children')[index];
 }, 
   'getPanelAt': function(index) {
   _$jscoverage['/tabs.js'].functionData[16]++;
   _$jscoverage['/tabs.js'].lineData[244]++;
-  return this.get("body").get("children")[index];
+  return this.get('body').get('children')[index];
 }, 
   setSelectedTab: function(tab) {
   _$jscoverage['/tabs.js'].functionData[17]++;
   _$jscoverage['/tabs.js'].lineData[253]++;
-  var tabs = this, bar = tabs.get("bar"), body = tabs.get("body");
+  var tabs = this, bar = tabs.get('bar'), body = tabs.get('body');
   _$jscoverage['/tabs.js'].lineData[256]++;
   bar.set('selectedTab', tab);
   _$jscoverage['/tabs.js'].lineData[257]++;
@@ -625,7 +625,7 @@ KISSY.add(function(S, require) {
   'setSelectedPanel': function(panel) {
   _$jscoverage['/tabs.js'].functionData[18]++;
   _$jscoverage['/tabs.js'].lineData[267]++;
-  var tabs = this, bar = tabs.get("bar"), body = tabs.get("body"), selectedPanelIndex = S.indexOf(panel, body.get('children'));
+  var tabs = this, bar = tabs.get('bar'), body = tabs.get('body'), selectedPanelIndex = S.indexOf(panel, body.get('children'));
   _$jscoverage['/tabs.js'].lineData[271]++;
   body.set('selectedPanelIndex', selectedPanelIndex);
   _$jscoverage['/tabs.js'].lineData[272]++;
@@ -636,7 +636,7 @@ KISSY.add(function(S, require) {
   bindUI: function() {
   _$jscoverage['/tabs.js'].functionData[19]++;
   _$jscoverage['/tabs.js'].lineData[280]++;
-  this.on("afterSelectedTabChange", function(e) {
+  this.on('afterSelectedTabChange', function(e) {
   _$jscoverage['/tabs.js'].functionData[20]++;
   _$jscoverage['/tabs.js'].lineData[281]++;
   this.setSelectedTab(e.newVal);

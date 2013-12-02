@@ -5,10 +5,9 @@
  * add abort ability
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S,require) {
-    var undefined=undefined,
-        IO=require('./base');
-    var  logger= S.getLogger('s/io');
+KISSY.add(function (S, require) {
+    var IO = require('./base');
+    var logger = S.getLogger('s/io');
     var win = S.Env.host,
         doc = win.document,
 
@@ -43,7 +42,7 @@ KISSY.add(function (S,require) {
         var config = io.config;
         // 优先使用 xhr+eval 来执行脚本, ie 下可以探测到（更多）失败状态
         if (!config.crossDomain) {
-            return new (IO['getTransport']('*'))(io);
+            return new (IO.getTransport('*'))(io);
         }
         this.io = io;
         logger.info('use ScriptTransport for: ' + config.url);
@@ -56,7 +55,7 @@ KISSY.add(function (S,require) {
                 script,
                 io = self.io,
                 c = io.config,
-                head = doc['head'] ||
+                head = doc.head ||
                     doc.getElementsByTagName('head')[0] ||
                     doc.documentElement;
 
@@ -65,8 +64,8 @@ KISSY.add(function (S,require) {
             self.script = script;
             script.async = true;
 
-            if (c['scriptCharset']) {
-                script.charset = c['scriptCharset'];
+            if (c.scriptCharset) {
+                script.charset = c.scriptCharset;
             }
 
             script.src = io._getUrlForSend();
@@ -94,13 +93,12 @@ KISSY.add(function (S,require) {
             }
 
             if (
-                abort ||
-                    !script.readyState ||
+                abort || !script.readyState ||
                     /loaded|complete/.test(script.readyState) ||
-                    event == 'error'
+                    event === 'error'
                 ) {
 
-                script['onerror'] = script.onload = script.onreadystatechange = null;
+                script.onerror = script.onload = script.onreadystatechange = null;
 
                 // Remove the script
                 if (head && script.parentNode) {
@@ -114,11 +112,11 @@ KISSY.add(function (S,require) {
                 self.head = undefined;
 
                 // Callback if not abort
-                if (!abort && event != 'error') {
+                if (!abort && event !== 'error') {
                     io._ioReady(OK_CODE, 'success');
                 }
                 // 非 ie<9 可以判断出来
-                else if (event == 'error') {
+                else if (event === 'error') {
                     io._ioReady(ERROR_CODE, 'script error');
                 }
             }
@@ -129,7 +127,7 @@ KISSY.add(function (S,require) {
         }
     });
 
-    IO['setupTransport']('script', ScriptTransport);
+    IO.setupTransport('script', ScriptTransport);
 
     return IO;
 });

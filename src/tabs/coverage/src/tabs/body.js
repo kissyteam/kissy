@@ -274,8 +274,6 @@ if (! _$jscoverage['/tabs/body.js'].branchData) {
   _$jscoverage['/tabs/body.js'].branchData = {};
   _$jscoverage['/tabs/body.js'].branchData['20'] = [];
   _$jscoverage['/tabs/body.js'].branchData['20'][1] = new BranchData();
-  _$jscoverage['/tabs/body.js'].branchData['21'] = [];
-  _$jscoverage['/tabs/body.js'].branchData['21'][1] = new BranchData();
   _$jscoverage['/tabs/body.js'].branchData['33'] = [];
   _$jscoverage['/tabs/body.js'].branchData['33'][1] = new BranchData();
   _$jscoverage['/tabs/body.js'].branchData['51'] = [];
@@ -286,24 +284,20 @@ if (! _$jscoverage['/tabs/body.js'].branchData) {
   _$jscoverage['/tabs/body.js'].branchData['83'][1] = new BranchData();
 }
 _$jscoverage['/tabs/body.js'].branchData['83'][1].init(66, 18, '!c.get(\'selected\')');
-function visit12_83_1(result) {
+function visit11_83_1(result) {
   _$jscoverage['/tabs/body.js'].branchData['83'][1].ranCondition(result);
   return result;
 }_$jscoverage['/tabs/body.js'].branchData['81'][1].init(13, 22, 'self.get(\'lazyRender\')');
-function visit11_81_1(result) {
+function visit10_81_1(result) {
   _$jscoverage['/tabs/body.js'].branchData['81'][1].ranCondition(result);
   return result;
 }_$jscoverage['/tabs/body.js'].branchData['51'][1].init(83, 22, 'this.get(\'lazyRender\')');
-function visit10_51_1(result) {
+function visit9_51_1(result) {
   _$jscoverage['/tabs/body.js'].branchData['51'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tabs/body.js'].branchData['33'][1].init(21, 17, 'c.get("selected")');
-function visit9_33_1(result) {
+}_$jscoverage['/tabs/body.js'].branchData['33'][1].init(21, 17, 'c.get(\'selected\')');
+function visit8_33_1(result) {
   _$jscoverage['/tabs/body.js'].branchData['33'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/tabs/body.js'].branchData['21'][1].init(25, 31, 'hidePanel = children[e.prevVal]');
-function visit8_21_1(result) {
-  _$jscoverage['/tabs/body.js'].branchData['21'][1].ranCondition(result);
   return result;
 }_$jscoverage['/tabs/body.js'].branchData['20'][1].init(146, 18, 'children[newIndex]');
 function visit7_20_1(result) {
@@ -321,16 +315,16 @@ KISSY.add(function(S, require) {
   _$jscoverage['/tabs/body.js'].lineData[15]++;
   var self = this;
   _$jscoverage['/tabs/body.js'].lineData[16]++;
-  self.on("afterSelectedPanelIndexChange", function(e) {
+  self.on('afterSelectedPanelIndexChange', function(e) {
   _$jscoverage['/tabs/body.js'].functionData[2]++;
   _$jscoverage['/tabs/body.js'].lineData[17]++;
   var children = self.get('children'), newIndex = e.newVal, hidePanel;
   _$jscoverage['/tabs/body.js'].lineData[20]++;
   if (visit7_20_1(children[newIndex])) {
     _$jscoverage['/tabs/body.js'].lineData[21]++;
-    if (visit8_21_1(hidePanel = children[e.prevVal])) {
+    if ((hidePanel = children[e.prevVal])) {
       _$jscoverage['/tabs/body.js'].lineData[22]++;
-      hidePanel.set("selected", false);
+      hidePanel.set('selected', false);
     }
     _$jscoverage['/tabs/body.js'].lineData[24]++;
     self.selectPanelByIndex(newIndex);
@@ -340,14 +334,14 @@ KISSY.add(function(S, require) {
   syncUI: function() {
   _$jscoverage['/tabs/body.js'].functionData[3]++;
   _$jscoverage['/tabs/body.js'].lineData[30]++;
-  var self = this, children = self.get("children");
+  var self = this, children = self.get('children');
   _$jscoverage['/tabs/body.js'].lineData[32]++;
   S.each(children, function(c, i) {
   _$jscoverage['/tabs/body.js'].functionData[4]++;
   _$jscoverage['/tabs/body.js'].lineData[33]++;
-  if (visit9_33_1(c.get("selected"))) {
+  if (visit8_33_1(c.get('selected'))) {
     _$jscoverage['/tabs/body.js'].lineData[34]++;
-    self.set("selectedPanelIndex", i);
+    self.set('selectedPanelIndex', i);
     _$jscoverage['/tabs/body.js'].lineData[35]++;
     return false;
   }
@@ -368,9 +362,9 @@ KISSY.add(function(S, require) {
   selectPanelByIndex: function(newIndex) {
   _$jscoverage['/tabs/body.js'].functionData[7]++;
   _$jscoverage['/tabs/body.js'].lineData[50]++;
-  this.get('children')[newIndex].set("selected", true);
+  this.get('children')[newIndex].set('selected', true);
   _$jscoverage['/tabs/body.js'].lineData[51]++;
-  if (visit10_51_1(this.get('lazyRender'))) {
+  if (visit9_51_1(this.get('lazyRender'))) {
     _$jscoverage['/tabs/body.js'].lineData[53]++;
     this.renderChild(newIndex);
   }
@@ -392,11 +386,11 @@ KISSY.add(function(S, require) {
   function checkLazy(self, method, index) {
     _$jscoverage['/tabs/body.js'].functionData[8]++;
     _$jscoverage['/tabs/body.js'].lineData[81]++;
-    if (visit11_81_1(self.get('lazyRender'))) {
+    if (visit10_81_1(self.get('lazyRender'))) {
       _$jscoverage['/tabs/body.js'].lineData[82]++;
       var c = self.get('children')[index];
       _$jscoverage['/tabs/body.js'].lineData[83]++;
-      if (visit12_83_1(!c.get('selected'))) {
+      if (visit11_83_1(!c.get('selected'))) {
         _$jscoverage['/tabs/body.js'].lineData[84]++;
         return c;
       }

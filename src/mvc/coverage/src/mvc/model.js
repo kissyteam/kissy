@@ -257,61 +257,64 @@ if (! _$jscoverage['/mvc/model.js']) {
   _$jscoverage['/mvc/model.js'].lineData[107] = 0;
   _$jscoverage['/mvc/model.js'].lineData[109] = 0;
   _$jscoverage['/mvc/model.js'].lineData[110] = 0;
-  _$jscoverage['/mvc/model.js'].lineData[112] = 0;
-  _$jscoverage['/mvc/model.js'].lineData[113] = 0;
+  _$jscoverage['/mvc/model.js'].lineData[111] = 0;
+  _$jscoverage['/mvc/model.js'].lineData[114] = 0;
   _$jscoverage['/mvc/model.js'].lineData[115] = 0;
-  _$jscoverage['/mvc/model.js'].lineData[116] = 0;
   _$jscoverage['/mvc/model.js'].lineData[117] = 0;
-  _$jscoverage['/mvc/model.js'].lineData[121] = 0;
-  _$jscoverage['/mvc/model.js'].lineData[133] = 0;
-  _$jscoverage['/mvc/model.js'].lineData[134] = 0;
+  _$jscoverage['/mvc/model.js'].lineData[118] = 0;
+  _$jscoverage['/mvc/model.js'].lineData[119] = 0;
+  _$jscoverage['/mvc/model.js'].lineData[123] = 0;
   _$jscoverage['/mvc/model.js'].lineData[135] = 0;
-  _$jscoverage['/mvc/model.js'].lineData[139] = 0;
-  _$jscoverage['/mvc/model.js'].lineData[140] = 0;
+  _$jscoverage['/mvc/model.js'].lineData[136] = 0;
+  _$jscoverage['/mvc/model.js'].lineData[137] = 0;
   _$jscoverage['/mvc/model.js'].lineData[141] = 0;
   _$jscoverage['/mvc/model.js'].lineData[142] = 0;
   _$jscoverage['/mvc/model.js'].lineData[143] = 0;
-  _$jscoverage['/mvc/model.js'].lineData[146] = 0;
-  _$jscoverage['/mvc/model.js'].lineData[147] = 0;
+  _$jscoverage['/mvc/model.js'].lineData[144] = 0;
+  _$jscoverage['/mvc/model.js'].lineData[145] = 0;
+  _$jscoverage['/mvc/model.js'].lineData[148] = 0;
   _$jscoverage['/mvc/model.js'].lineData[149] = 0;
   _$jscoverage['/mvc/model.js'].lineData[150] = 0;
-  _$jscoverage['/mvc/model.js'].lineData[162] = 0;
-  _$jscoverage['/mvc/model.js'].lineData[163] = 0;
-  _$jscoverage['/mvc/model.js'].lineData[164] = 0;
+  _$jscoverage['/mvc/model.js'].lineData[153] = 0;
+  _$jscoverage['/mvc/model.js'].lineData[154] = 0;
+  _$jscoverage['/mvc/model.js'].lineData[166] = 0;
+  _$jscoverage['/mvc/model.js'].lineData[167] = 0;
   _$jscoverage['/mvc/model.js'].lineData[168] = 0;
-  _$jscoverage['/mvc/model.js'].lineData[169] = 0;
-  _$jscoverage['/mvc/model.js'].lineData[170] = 0;
-  _$jscoverage['/mvc/model.js'].lineData[171] = 0;
   _$jscoverage['/mvc/model.js'].lineData[172] = 0;
+  _$jscoverage['/mvc/model.js'].lineData[173] = 0;
+  _$jscoverage['/mvc/model.js'].lineData[174] = 0;
   _$jscoverage['/mvc/model.js'].lineData[175] = 0;
   _$jscoverage['/mvc/model.js'].lineData[176] = 0;
-  _$jscoverage['/mvc/model.js'].lineData[178] = 0;
   _$jscoverage['/mvc/model.js'].lineData[179] = 0;
-  _$jscoverage['/mvc/model.js'].lineData[187] = 0;
-  _$jscoverage['/mvc/model.js'].lineData[188] = 0;
-  _$jscoverage['/mvc/model.js'].lineData[189] = 0;
-  _$jscoverage['/mvc/model.js'].lineData[191] = 0;
-  _$jscoverage['/mvc/model.js'].lineData[212] = 0;
-  _$jscoverage['/mvc/model.js'].lineData[238] = 0;
-  _$jscoverage['/mvc/model.js'].lineData[248] = 0;
+  _$jscoverage['/mvc/model.js'].lineData[180] = 0;
+  _$jscoverage['/mvc/model.js'].lineData[181] = 0;
+  _$jscoverage['/mvc/model.js'].lineData[184] = 0;
+  _$jscoverage['/mvc/model.js'].lineData[185] = 0;
+  _$jscoverage['/mvc/model.js'].lineData[193] = 0;
+  _$jscoverage['/mvc/model.js'].lineData[194] = 0;
+  _$jscoverage['/mvc/model.js'].lineData[195] = 0;
+  _$jscoverage['/mvc/model.js'].lineData[197] = 0;
+  _$jscoverage['/mvc/model.js'].lineData[218] = 0;
+  _$jscoverage['/mvc/model.js'].lineData[244] = 0;
   _$jscoverage['/mvc/model.js'].lineData[254] = 0;
-  _$jscoverage['/mvc/model.js'].lineData[255] = 0;
-  _$jscoverage['/mvc/model.js'].lineData[256] = 0;
-  _$jscoverage['/mvc/model.js'].lineData[257] = 0;
-  _$jscoverage['/mvc/model.js'].lineData[258] = 0;
   _$jscoverage['/mvc/model.js'].lineData[260] = 0;
+  _$jscoverage['/mvc/model.js'].lineData[261] = 0;
   _$jscoverage['/mvc/model.js'].lineData[262] = 0;
-  _$jscoverage['/mvc/model.js'].lineData[265] = 0;
+  _$jscoverage['/mvc/model.js'].lineData[263] = 0;
+  _$jscoverage['/mvc/model.js'].lineData[264] = 0;
   _$jscoverage['/mvc/model.js'].lineData[266] = 0;
-  _$jscoverage['/mvc/model.js'].lineData[269] = 0;
-  _$jscoverage['/mvc/model.js'].lineData[270] = 0;
+  _$jscoverage['/mvc/model.js'].lineData[268] = 0;
   _$jscoverage['/mvc/model.js'].lineData[271] = 0;
   _$jscoverage['/mvc/model.js'].lineData[272] = 0;
   _$jscoverage['/mvc/model.js'].lineData[275] = 0;
+  _$jscoverage['/mvc/model.js'].lineData[276] = 0;
   _$jscoverage['/mvc/model.js'].lineData[277] = 0;
   _$jscoverage['/mvc/model.js'].lineData[278] = 0;
   _$jscoverage['/mvc/model.js'].lineData[281] = 0;
-  _$jscoverage['/mvc/model.js'].lineData[282] = 0;
+  _$jscoverage['/mvc/model.js'].lineData[283] = 0;
+  _$jscoverage['/mvc/model.js'].lineData[284] = 0;
+  _$jscoverage['/mvc/model.js'].lineData[287] = 0;
+  _$jscoverage['/mvc/model.js'].lineData[288] = 0;
 }
 if (! _$jscoverage['/mvc/model.js'].functionData) {
   _$jscoverage['/mvc/model.js'].functionData = [];
@@ -352,104 +355,104 @@ if (! _$jscoverage['/mvc/model.js'].branchData) {
   _$jscoverage['/mvc/model.js'].branchData['102'][1] = new BranchData();
   _$jscoverage['/mvc/model.js'].branchData['110'] = [];
   _$jscoverage['/mvc/model.js'].branchData['110'][1] = new BranchData();
-  _$jscoverage['/mvc/model.js'].branchData['112'] = [];
-  _$jscoverage['/mvc/model.js'].branchData['112'][1] = new BranchData();
-  _$jscoverage['/mvc/model.js'].branchData['116'] = [];
-  _$jscoverage['/mvc/model.js'].branchData['116'][1] = new BranchData();
-  _$jscoverage['/mvc/model.js'].branchData['134'] = [];
-  _$jscoverage['/mvc/model.js'].branchData['134'][1] = new BranchData();
-  _$jscoverage['/mvc/model.js'].branchData['140'] = [];
-  _$jscoverage['/mvc/model.js'].branchData['140'][1] = new BranchData();
+  _$jscoverage['/mvc/model.js'].branchData['114'] = [];
+  _$jscoverage['/mvc/model.js'].branchData['114'][1] = new BranchData();
+  _$jscoverage['/mvc/model.js'].branchData['118'] = [];
+  _$jscoverage['/mvc/model.js'].branchData['118'][1] = new BranchData();
+  _$jscoverage['/mvc/model.js'].branchData['136'] = [];
+  _$jscoverage['/mvc/model.js'].branchData['136'][1] = new BranchData();
   _$jscoverage['/mvc/model.js'].branchData['142'] = [];
   _$jscoverage['/mvc/model.js'].branchData['142'][1] = new BranchData();
-  _$jscoverage['/mvc/model.js'].branchData['147'] = [];
-  _$jscoverage['/mvc/model.js'].branchData['147'][1] = new BranchData();
-  _$jscoverage['/mvc/model.js'].branchData['163'] = [];
-  _$jscoverage['/mvc/model.js'].branchData['163'][1] = new BranchData();
-  _$jscoverage['/mvc/model.js'].branchData['169'] = [];
-  _$jscoverage['/mvc/model.js'].branchData['169'][1] = new BranchData();
-  _$jscoverage['/mvc/model.js'].branchData['171'] = [];
-  _$jscoverage['/mvc/model.js'].branchData['171'][1] = new BranchData();
-  _$jscoverage['/mvc/model.js'].branchData['176'] = [];
-  _$jscoverage['/mvc/model.js'].branchData['176'][1] = new BranchData();
-  _$jscoverage['/mvc/model.js'].branchData['256'] = [];
-  _$jscoverage['/mvc/model.js'].branchData['256'][1] = new BranchData();
-  _$jscoverage['/mvc/model.js'].branchData['257'] = [];
-  _$jscoverage['/mvc/model.js'].branchData['257'][1] = new BranchData();
-  _$jscoverage['/mvc/model.js'].branchData['270'] = [];
-  _$jscoverage['/mvc/model.js'].branchData['270'][1] = new BranchData();
-  _$jscoverage['/mvc/model.js'].branchData['275'] = [];
-  _$jscoverage['/mvc/model.js'].branchData['275'][1] = new BranchData();
-  _$jscoverage['/mvc/model.js'].branchData['277'] = [];
-  _$jscoverage['/mvc/model.js'].branchData['277'][1] = new BranchData();
+  _$jscoverage['/mvc/model.js'].branchData['144'] = [];
+  _$jscoverage['/mvc/model.js'].branchData['144'][1] = new BranchData();
+  _$jscoverage['/mvc/model.js'].branchData['149'] = [];
+  _$jscoverage['/mvc/model.js'].branchData['149'][1] = new BranchData();
+  _$jscoverage['/mvc/model.js'].branchData['167'] = [];
+  _$jscoverage['/mvc/model.js'].branchData['167'][1] = new BranchData();
+  _$jscoverage['/mvc/model.js'].branchData['173'] = [];
+  _$jscoverage['/mvc/model.js'].branchData['173'][1] = new BranchData();
+  _$jscoverage['/mvc/model.js'].branchData['175'] = [];
+  _$jscoverage['/mvc/model.js'].branchData['175'][1] = new BranchData();
+  _$jscoverage['/mvc/model.js'].branchData['180'] = [];
+  _$jscoverage['/mvc/model.js'].branchData['180'][1] = new BranchData();
+  _$jscoverage['/mvc/model.js'].branchData['262'] = [];
+  _$jscoverage['/mvc/model.js'].branchData['262'][1] = new BranchData();
+  _$jscoverage['/mvc/model.js'].branchData['263'] = [];
+  _$jscoverage['/mvc/model.js'].branchData['263'][1] = new BranchData();
+  _$jscoverage['/mvc/model.js'].branchData['276'] = [];
+  _$jscoverage['/mvc/model.js'].branchData['276'][1] = new BranchData();
   _$jscoverage['/mvc/model.js'].branchData['281'] = [];
   _$jscoverage['/mvc/model.js'].branchData['281'][1] = new BranchData();
+  _$jscoverage['/mvc/model.js'].branchData['283'] = [];
+  _$jscoverage['/mvc/model.js'].branchData['283'][1] = new BranchData();
+  _$jscoverage['/mvc/model.js'].branchData['287'] = [];
+  _$jscoverage['/mvc/model.js'].branchData['287'][1] = new BranchData();
 }
-_$jscoverage['/mvc/model.js'].branchData['281'][1].init(389, 35, 'base.charAt(base.length - 1) == \'/\'');
-function visit49_281_1(result) {
+_$jscoverage['/mvc/model.js'].branchData['287'][1].init(389, 36, 'base.charAt(base.length - 1) === \'/\'');
+function visit49_287_1(result) {
+  _$jscoverage['/mvc/model.js'].branchData['287'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/mvc/model.js'].branchData['283'][1].init(314, 12, 'this.isNew()');
+function visit48_283_1(result) {
+  _$jscoverage['/mvc/model.js'].branchData['283'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/mvc/model.js'].branchData['281'][1].init(266, 33, 'getUrl(cv) || this.get(\'urlRoot\')');
+function visit47_281_1(result) {
   _$jscoverage['/mvc/model.js'].branchData['281'][1].ranCondition(result);
   return result;
-}_$jscoverage['/mvc/model.js'].branchData['277'][1].init(314, 12, 'this.isNew()');
-function visit48_277_1(result) {
-  _$jscoverage['/mvc/model.js'].branchData['277'][1].ranCondition(result);
+}_$jscoverage['/mvc/model.js'].branchData['276'][1].init(17, 29, 'collections.hasOwnProperty(c)');
+function visit46_276_1(result) {
+  _$jscoverage['/mvc/model.js'].branchData['276'][1].ranCondition(result);
   return result;
-}_$jscoverage['/mvc/model.js'].branchData['275'][1].init(266, 33, 'getUrl(cv) || this.get("urlRoot")');
-function visit47_275_1(result) {
-  _$jscoverage['/mvc/model.js'].branchData['275'][1].ranCondition(result);
+}_$jscoverage['/mvc/model.js'].branchData['263'][1].init(17, 21, 'typeof u === \'string\'');
+function visit45_263_1(result) {
+  _$jscoverage['/mvc/model.js'].branchData['263'][1].ranCondition(result);
   return result;
-}_$jscoverage['/mvc/model.js'].branchData['270'][1].init(17, 29, 'collections.hasOwnProperty(c)');
-function visit46_270_1(result) {
-  _$jscoverage['/mvc/model.js'].branchData['270'][1].ranCondition(result);
+}_$jscoverage['/mvc/model.js'].branchData['262'][1].init(28, 23, 'o && (u = o.get(\'url\'))');
+function visit44_262_1(result) {
+  _$jscoverage['/mvc/model.js'].branchData['262'][1].ranCondition(result);
   return result;
-}_$jscoverage['/mvc/model.js'].branchData['257'][1].init(17, 20, 'typeof u == \'string\'');
-function visit45_257_1(result) {
-  _$jscoverage['/mvc/model.js'].branchData['257'][1].ranCondition(result);
+}_$jscoverage['/mvc/model.js'].branchData['180'][1].init(263, 7, 'success');
+function visit43_180_1(result) {
+  _$jscoverage['/mvc/model.js'].branchData['180'][1].ranCondition(result);
   return result;
-}_$jscoverage['/mvc/model.js'].branchData['256'][1].init(28, 23, 'o && (u = o.get("url"))');
-function visit44_256_1(result) {
-  _$jscoverage['/mvc/model.js'].branchData['256'][1].ranCondition(result);
+}_$jscoverage['/mvc/model.js'].branchData['175'][1].init(89, 1, 'v');
+function visit42_175_1(result) {
+  _$jscoverage['/mvc/model.js'].branchData['175'][1].ranCondition(result);
   return result;
-}_$jscoverage['/mvc/model.js'].branchData['176'][1].init(260, 41, 'success && success.apply(this, arguments)');
-function visit43_176_1(result) {
-  _$jscoverage['/mvc/model.js'].branchData['176'][1].ranCondition(result);
+}_$jscoverage['/mvc/model.js'].branchData['173'][1].init(21, 4, 'resp');
+function visit41_173_1(result) {
+  _$jscoverage['/mvc/model.js'].branchData['173'][1].ranCondition(result);
   return result;
-}_$jscoverage['/mvc/model.js'].branchData['171'][1].init(89, 1, 'v');
-function visit42_171_1(result) {
-  _$jscoverage['/mvc/model.js'].branchData['171'][1].ranCondition(result);
+}_$jscoverage['/mvc/model.js'].branchData['167'][1].init(49, 10, 'opts || {}');
+function visit40_167_1(result) {
+  _$jscoverage['/mvc/model.js'].branchData['167'][1].ranCondition(result);
   return result;
-}_$jscoverage['/mvc/model.js'].branchData['169'][1].init(21, 4, 'resp');
-function visit41_169_1(result) {
-  _$jscoverage['/mvc/model.js'].branchData['169'][1].ranCondition(result);
+}_$jscoverage['/mvc/model.js'].branchData['149'][1].init(263, 7, 'success');
+function visit39_149_1(result) {
+  _$jscoverage['/mvc/model.js'].branchData['149'][1].ranCondition(result);
   return result;
-}_$jscoverage['/mvc/model.js'].branchData['163'][1].init(49, 10, 'opts || {}');
-function visit40_163_1(result) {
-  _$jscoverage['/mvc/model.js'].branchData['163'][1].ranCondition(result);
+}_$jscoverage['/mvc/model.js'].branchData['144'][1].init(89, 1, 'v');
+function visit38_144_1(result) {
+  _$jscoverage['/mvc/model.js'].branchData['144'][1].ranCondition(result);
   return result;
-}_$jscoverage['/mvc/model.js'].branchData['147'][1].init(260, 41, 'success && success.apply(this, arguments)');
-function visit39_147_1(result) {
-  _$jscoverage['/mvc/model.js'].branchData['147'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/mvc/model.js'].branchData['142'][1].init(89, 1, 'v');
-function visit38_142_1(result) {
+}_$jscoverage['/mvc/model.js'].branchData['142'][1].init(21, 4, 'resp');
+function visit37_142_1(result) {
   _$jscoverage['/mvc/model.js'].branchData['142'][1].ranCondition(result);
   return result;
-}_$jscoverage['/mvc/model.js'].branchData['140'][1].init(21, 4, 'resp');
-function visit37_140_1(result) {
-  _$jscoverage['/mvc/model.js'].branchData['140'][1].ranCondition(result);
+}_$jscoverage['/mvc/model.js'].branchData['136'][1].init(49, 10, 'opts || {}');
+function visit36_136_1(result) {
+  _$jscoverage['/mvc/model.js'].branchData['136'][1].ranCondition(result);
   return result;
-}_$jscoverage['/mvc/model.js'].branchData['134'][1].init(49, 10, 'opts || {}');
-function visit36_134_1(result) {
-  _$jscoverage['/mvc/model.js'].branchData['134'][1].ranCondition(result);
+}_$jscoverage['/mvc/model.js'].branchData['118'][1].init(53, 13, 'opts.complete');
+function visit35_118_1(result) {
+  _$jscoverage['/mvc/model.js'].branchData['118'][1].ranCondition(result);
   return result;
-}_$jscoverage['/mvc/model.js'].branchData['116'][1].init(53, 13, 'opts.complete');
-function visit35_116_1(result) {
-  _$jscoverage['/mvc/model.js'].branchData['116'][1].ranCondition(result);
+}_$jscoverage['/mvc/model.js'].branchData['114'][1].init(730, 31, '!self.isNew() && opts[\'delete\']');
+function visit34_114_1(result) {
+  _$jscoverage['/mvc/model.js'].branchData['114'][1].ranCondition(result);
   return result;
-}_$jscoverage['/mvc/model.js'].branchData['112'][1].init(690, 31, '!self.isNew() && opts[\'delete\']');
-function visit34_112_1(result) {
-  _$jscoverage['/mvc/model.js'].branchData['112'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/mvc/model.js'].branchData['110'][1].init(416, 41, 'success && success.apply(this, arguments)');
+}_$jscoverage['/mvc/model.js'].branchData['110'][1].init(419, 7, 'success');
 function visit33_110_1(result) {
   _$jscoverage['/mvc/model.js'].branchData['110'][1].ranCondition(result);
   return result;
@@ -479,7 +482,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/mvc/model.js'].lineData[7]++;
   var Attribute = require('attribute');
   _$jscoverage['/mvc/model.js'].lineData[8]++;
-  var blacklist = ["idAttribute", "destroyed", "plugins", "listeners", "clientId", "urlRoot", "url", "parse", "sync"];
+  var blacklist = ['idAttribute', 'destroyed', 'plugins', 'listeners', 'clientId', 'urlRoot', 'url', 'parse', 'sync'];
   _$jscoverage['/mvc/model.js'].lineData[25]++;
   return Attribute.extend({
   getCollections: function() {
@@ -504,12 +507,12 @@ KISSY.add(function(S, require) {
   getId: function() {
   _$jscoverage['/mvc/model.js'].functionData[4]++;
   _$jscoverage['/mvc/model.js'].lineData[51]++;
-  return this.get(this.get("idAttribute"));
+  return this.get(this.get('idAttribute'));
 }, 
   'setId': function(id) {
   _$jscoverage['/mvc/model.js'].functionData[5]++;
   _$jscoverage['/mvc/model.js'].lineData[59]++;
-  return this.set(this.get("idAttribute"), id);
+  return this.set(this.get('idAttribute'), id);
 }, 
   setInternal: function() {
   _$jscoverage['/mvc/model.js'].functionData[6]++;
@@ -544,7 +547,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/mvc/model.js'].lineData[100]++;
   if (visit31_100_1(resp)) {
     _$jscoverage['/mvc/model.js'].lineData[101]++;
-    var v = self.get("parse").call(self, resp);
+    var v = self.get('parse').call(self, resp);
     _$jscoverage['/mvc/model.js'].lineData[102]++;
     if (visit32_102_1(v)) {
       _$jscoverage['/mvc/model.js'].lineData[103]++;
@@ -557,99 +560,108 @@ KISSY.add(function(S, require) {
     lists[l].remove(self, opts);
   }
   _$jscoverage['/mvc/model.js'].lineData[109]++;
-  self.fire("destroy");
+  self.fire('destroy');
   _$jscoverage['/mvc/model.js'].lineData[110]++;
-  visit33_110_1(success && success.apply(this, arguments));
+  if (visit33_110_1(success)) {
+    _$jscoverage['/mvc/model.js'].lineData[111]++;
+    success.apply(self, arguments);
+  }
 };
-  _$jscoverage['/mvc/model.js'].lineData[112]++;
-  if (visit34_112_1(!self.isNew() && opts['delete'])) {
-    _$jscoverage['/mvc/model.js'].lineData[113]++;
-    self.get("sync").call(self, self, 'delete', opts);
-  } else {
+  _$jscoverage['/mvc/model.js'].lineData[114]++;
+  if (visit34_114_1(!self.isNew() && opts['delete'])) {
     _$jscoverage['/mvc/model.js'].lineData[115]++;
+    self.get('sync').call(self, self, 'delete', opts);
+  } else {
+    _$jscoverage['/mvc/model.js'].lineData[117]++;
     opts.success();
-    _$jscoverage['/mvc/model.js'].lineData[116]++;
-    if (visit35_116_1(opts.complete)) {
-      _$jscoverage['/mvc/model.js'].lineData[117]++;
+    _$jscoverage['/mvc/model.js'].lineData[118]++;
+    if (visit35_118_1(opts.complete)) {
+      _$jscoverage['/mvc/model.js'].lineData[119]++;
       opts.complete();
     }
   }
-  _$jscoverage['/mvc/model.js'].lineData[121]++;
+  _$jscoverage['/mvc/model.js'].lineData[123]++;
   return self;
 }, 
   load: function(opts) {
   _$jscoverage['/mvc/model.js'].functionData[11]++;
-  _$jscoverage['/mvc/model.js'].lineData[133]++;
-  var self = this;
-  _$jscoverage['/mvc/model.js'].lineData[134]++;
-  opts = visit36_134_1(opts || {});
   _$jscoverage['/mvc/model.js'].lineData[135]++;
+  var self = this;
+  _$jscoverage['/mvc/model.js'].lineData[136]++;
+  opts = visit36_136_1(opts || {});
+  _$jscoverage['/mvc/model.js'].lineData[137]++;
   var success = opts.success;
-  _$jscoverage['/mvc/model.js'].lineData[139]++;
+  _$jscoverage['/mvc/model.js'].lineData[141]++;
   opts.success = function(resp) {
   _$jscoverage['/mvc/model.js'].functionData[12]++;
-  _$jscoverage['/mvc/model.js'].lineData[140]++;
-  if (visit37_140_1(resp)) {
-    _$jscoverage['/mvc/model.js'].lineData[141]++;
-    var v = self.get("parse").call(self, resp);
-    _$jscoverage['/mvc/model.js'].lineData[142]++;
-    if (visit38_142_1(v)) {
-      _$jscoverage['/mvc/model.js'].lineData[143]++;
+  _$jscoverage['/mvc/model.js'].lineData[142]++;
+  if (visit37_142_1(resp)) {
+    _$jscoverage['/mvc/model.js'].lineData[143]++;
+    var v = self.get('parse').call(self, resp);
+    _$jscoverage['/mvc/model.js'].lineData[144]++;
+    if (visit38_144_1(v)) {
+      _$jscoverage['/mvc/model.js'].lineData[145]++;
       self.set(v, opts);
     }
   }
-  _$jscoverage['/mvc/model.js'].lineData[146]++;
+  _$jscoverage['/mvc/model.js'].lineData[148]++;
   self.__isModified = 0;
-  _$jscoverage['/mvc/model.js'].lineData[147]++;
-  visit39_147_1(success && success.apply(this, arguments));
-};
   _$jscoverage['/mvc/model.js'].lineData[149]++;
-  self.get("sync").call(self, self, 'read', opts);
-  _$jscoverage['/mvc/model.js'].lineData[150]++;
+  if (visit39_149_1(success)) {
+    _$jscoverage['/mvc/model.js'].lineData[150]++;
+    success.apply(self, arguments);
+  }
+};
+  _$jscoverage['/mvc/model.js'].lineData[153]++;
+  self.get('sync').call(self, self, 'read', opts);
+  _$jscoverage['/mvc/model.js'].lineData[154]++;
   return self;
 }, 
   save: function(opts) {
   _$jscoverage['/mvc/model.js'].functionData[13]++;
-  _$jscoverage['/mvc/model.js'].lineData[162]++;
+  _$jscoverage['/mvc/model.js'].lineData[166]++;
   var self = this;
-  _$jscoverage['/mvc/model.js'].lineData[163]++;
-  opts = visit40_163_1(opts || {});
-  _$jscoverage['/mvc/model.js'].lineData[164]++;
-  var success = opts.success;
+  _$jscoverage['/mvc/model.js'].lineData[167]++;
+  opts = visit40_167_1(opts || {});
   _$jscoverage['/mvc/model.js'].lineData[168]++;
+  var success = opts.success;
+  _$jscoverage['/mvc/model.js'].lineData[172]++;
   opts.success = function(resp) {
   _$jscoverage['/mvc/model.js'].functionData[14]++;
-  _$jscoverage['/mvc/model.js'].lineData[169]++;
-  if (visit41_169_1(resp)) {
-    _$jscoverage['/mvc/model.js'].lineData[170]++;
-    var v = self.get("parse").call(self, resp);
-    _$jscoverage['/mvc/model.js'].lineData[171]++;
-    if (visit42_171_1(v)) {
-      _$jscoverage['/mvc/model.js'].lineData[172]++;
+  _$jscoverage['/mvc/model.js'].lineData[173]++;
+  if (visit41_173_1(resp)) {
+    _$jscoverage['/mvc/model.js'].lineData[174]++;
+    var v = self.get('parse').call(self, resp);
+    _$jscoverage['/mvc/model.js'].lineData[175]++;
+    if (visit42_175_1(v)) {
+      _$jscoverage['/mvc/model.js'].lineData[176]++;
       self.set(v, opts);
     }
   }
-  _$jscoverage['/mvc/model.js'].lineData[175]++;
-  self.__isModified = 0;
-  _$jscoverage['/mvc/model.js'].lineData[176]++;
-  visit43_176_1(success && success.apply(this, arguments));
-};
-  _$jscoverage['/mvc/model.js'].lineData[178]++;
-  self.get("sync").call(self, self, self.isNew() ? 'create' : 'update', opts);
   _$jscoverage['/mvc/model.js'].lineData[179]++;
+  self.__isModified = 0;
+  _$jscoverage['/mvc/model.js'].lineData[180]++;
+  if (visit43_180_1(success)) {
+    _$jscoverage['/mvc/model.js'].lineData[181]++;
+    success.apply(self, arguments);
+  }
+};
+  _$jscoverage['/mvc/model.js'].lineData[184]++;
+  self.get('sync').call(self, self, self.isNew() ? 'create' : 'update', opts);
+  _$jscoverage['/mvc/model.js'].lineData[185]++;
   return self;
 }, 
   toJSON: function() {
   _$jscoverage['/mvc/model.js'].functionData[15]++;
-  _$jscoverage['/mvc/model.js'].lineData[187]++;
+  _$jscoverage['/mvc/model.js'].lineData[193]++;
   var ret = this.getAttrVals();
-  _$jscoverage['/mvc/model.js'].lineData[188]++;
+  _$jscoverage['/mvc/model.js'].lineData[194]++;
   S.each(blacklist, function(b) {
   _$jscoverage['/mvc/model.js'].functionData[16]++;
-  _$jscoverage['/mvc/model.js'].lineData[189]++;
+  _$jscoverage['/mvc/model.js'].lineData[195]++;
   delete ret[b];
 });
-  _$jscoverage['/mvc/model.js'].lineData[191]++;
+  _$jscoverage['/mvc/model.js'].lineData[197]++;
   return ret;
 }}, {
   ATTRS: {
@@ -658,68 +670,68 @@ KISSY.add(function(S, require) {
   clientId: {
   valueFn: function() {
   _$jscoverage['/mvc/model.js'].functionData[17]++;
-  _$jscoverage['/mvc/model.js'].lineData[212]++;
-  return S.guid("mvc-client");
+  _$jscoverage['/mvc/model.js'].lineData[218]++;
+  return S.guid('mvc-client');
 }}, 
   url: {
   value: url}, 
   urlRoot: {
-  value: ""}, 
+  value: ''}, 
   sync: {
   value: function() {
   _$jscoverage['/mvc/model.js'].functionData[18]++;
-  _$jscoverage['/mvc/model.js'].lineData[238]++;
-  S.require("mvc").sync.apply(this, arguments);
+  _$jscoverage['/mvc/model.js'].lineData[244]++;
+  S.require('mvc').sync.apply(this, arguments);
 }}, 
   parse: {
   value: function(resp) {
   _$jscoverage['/mvc/model.js'].functionData[19]++;
-  _$jscoverage['/mvc/model.js'].lineData[248]++;
+  _$jscoverage['/mvc/model.js'].lineData[254]++;
   return resp;
 }}}});
-  _$jscoverage['/mvc/model.js'].lineData[254]++;
+  _$jscoverage['/mvc/model.js'].lineData[260]++;
   function getUrl(o) {
     _$jscoverage['/mvc/model.js'].functionData[20]++;
-    _$jscoverage['/mvc/model.js'].lineData[255]++;
+    _$jscoverage['/mvc/model.js'].lineData[261]++;
     var u;
-    _$jscoverage['/mvc/model.js'].lineData[256]++;
-    if (visit44_256_1(o && (u = o.get("url")))) {
-      _$jscoverage['/mvc/model.js'].lineData[257]++;
-      if (visit45_257_1(typeof u == 'string')) {
-        _$jscoverage['/mvc/model.js'].lineData[258]++;
+    _$jscoverage['/mvc/model.js'].lineData[262]++;
+    if (visit44_262_1(o && (u = o.get('url')))) {
+      _$jscoverage['/mvc/model.js'].lineData[263]++;
+      if (visit45_263_1(typeof u === 'string')) {
+        _$jscoverage['/mvc/model.js'].lineData[264]++;
         return u;
       }
-      _$jscoverage['/mvc/model.js'].lineData[260]++;
+      _$jscoverage['/mvc/model.js'].lineData[266]++;
       return u.call(o);
     }
-    _$jscoverage['/mvc/model.js'].lineData[262]++;
+    _$jscoverage['/mvc/model.js'].lineData[268]++;
     return u;
   }
-  _$jscoverage['/mvc/model.js'].lineData[265]++;
+  _$jscoverage['/mvc/model.js'].lineData[271]++;
   function url() {
     _$jscoverage['/mvc/model.js'].functionData[21]++;
-    _$jscoverage['/mvc/model.js'].lineData[266]++;
+    _$jscoverage['/mvc/model.js'].lineData[272]++;
     var c, cv, collections = this.getCollections();
-    _$jscoverage['/mvc/model.js'].lineData[269]++;
+    _$jscoverage['/mvc/model.js'].lineData[275]++;
     for (c in collections) {
-      _$jscoverage['/mvc/model.js'].lineData[270]++;
-      if (visit46_270_1(collections.hasOwnProperty(c))) {
-        _$jscoverage['/mvc/model.js'].lineData[271]++;
+      _$jscoverage['/mvc/model.js'].lineData[276]++;
+      if (visit46_276_1(collections.hasOwnProperty(c))) {
+        _$jscoverage['/mvc/model.js'].lineData[277]++;
         cv = collections[c];
-        _$jscoverage['/mvc/model.js'].lineData[272]++;
+        _$jscoverage['/mvc/model.js'].lineData[278]++;
         break;
       }
     }
-    _$jscoverage['/mvc/model.js'].lineData[275]++;
-    var base = visit47_275_1(getUrl(cv) || this.get("urlRoot"));
-    _$jscoverage['/mvc/model.js'].lineData[277]++;
-    if (visit48_277_1(this.isNew())) {
-      _$jscoverage['/mvc/model.js'].lineData[278]++;
+    _$jscoverage['/mvc/model.js'].lineData[281]++;
+    var base = visit47_281_1(getUrl(cv) || this.get('urlRoot'));
+    _$jscoverage['/mvc/model.js'].lineData[283]++;
+    if (visit48_283_1(this.isNew())) {
+      _$jscoverage['/mvc/model.js'].lineData[284]++;
       return base;
     }
-    _$jscoverage['/mvc/model.js'].lineData[281]++;
-    base = base + (visit49_281_1(base.charAt(base.length - 1) == '/') ? '' : '/');
-    _$jscoverage['/mvc/model.js'].lineData[282]++;
-    return base + encodeURIComponent(this.getId()) + "/";
+    _$jscoverage['/mvc/model.js'].lineData[287]++;
+    base = base + (visit49_287_1(base.charAt(base.length - 1) === '/') ? '' : '/');
+    _$jscoverage['/mvc/model.js'].lineData[288]++;
+    return base + encodeURIComponent(this.getId()) + '/';
   }
 });

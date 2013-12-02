@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:39
+build time: Dec 2 15:13
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -46,14 +46,14 @@ KISSY.add("dd/plugin/proxy", ["node", "dd", "base"], function(S, require) {
       }else {
         node.hide()
       }
-      drag["setInternal"]("node", dragNode);
+      drag.setInternal("node", dragNode);
       if(hideNodeOnDrag) {
         dragNode.css("visibility", "")
       }
     }
-    drag["on"]("dragstart" + PROXY_EVENT, start)["on"]("dragend" + PROXY_EVENT, end)
+    drag.on("dragstart" + PROXY_EVENT, start).on("dragend" + PROXY_EVENT, end)
   }, pluginDestructor:function(drag) {
-    drag["detach"](PROXY_EVENT)
+    drag.detach(PROXY_EVENT)
   }}, {ATTRS:{node:{value:function(drag) {
     return new Node(drag.get("node").clone(true))
   }}, hideNodeOnDrag:{value:false}, destroyOnEnd:{value:false}, moveOnEnd:{value:true}, proxyNode:{}}})

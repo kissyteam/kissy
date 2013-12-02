@@ -3,17 +3,15 @@
  * solve io between sub domains using proxy page
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S,require) {
-    var  Event =require('event/dom'),
+KISSY.add(function (S, require) {
+    var Event = require('event/dom'),
         Dom = require('dom'),
         XhrTransportBase = require('./xhr-transport-base');
-    var  logger = S.getLogger('s/io');
+    var logger = S.getLogger('s/io');
     var PROXY_PAGE = '/sub_domain_proxy.html',
-
         doc = S.Env.host.document,
-        iframeMap = {
-            // hostname:{iframe: , ready:}
-        };
+    // hostname:{iframe: , ready:}
+        iframeMap = {};
 
     function SubDomainTransport(io) {
         var self = this,
@@ -37,8 +35,8 @@ KISSY.add(function (S,require) {
 
             var proxy = PROXY_PAGE;
 
-            if (c['xdr'] && c['xdr']['subDomain'] && c['xdr']['subDomain'].proxy) {
-                proxy = c['xdr']['subDomain'].proxy;
+            if (c.xdr && c.xdr.subDomain && c.xdr.subDomain.proxy) {
+                proxy = c.xdr.subDomain.proxy;
             }
 
             if (iframeDesc && iframeDesc.ready) {

@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:37
+build time: Dec 2 15:11
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -33,10 +33,10 @@ KISSY.add("button", ["node", "component/control", "button/render"], function(S, 
   return Control.extend({isButton:1, bindUI:function() {
     this.$el.on("keyup", this.handleKeyDownInternal, this)
   }, handleKeyDownInternal:function(e) {
-    if(e.keyCode == KeyCode.ENTER && e.type == "keydown" || e.keyCode == KeyCode.SPACE && e.type == "keyup") {
+    if(e.keyCode === KeyCode.ENTER && e.type === "keydown" || e.keyCode === KeyCode.SPACE && e.type === "keyup") {
       return this.handleClickInternal(e)
     }
-    return e.keyCode == KeyCode.SPACE
+    return e.keyCode === KeyCode.SPACE
   }, handleClickInternal:function() {
     var self = this;
     self.callSuper();

@@ -341,11 +341,11 @@ if (! _$jscoverage['/import-style.js'].branchData) {
   _$jscoverage['/import-style.js'].branchData['114'] = [];
   _$jscoverage['/import-style.js'].branchData['114'][1] = new BranchData();
 }
-_$jscoverage['/import-style.js'].branchData['114'][1].init(763, 7, 'isDebug');
+_$jscoverage['/import-style.js'].branchData['114'][1].init(764, 7, 'isDebug');
 function visit17_114_1(result) {
   _$jscoverage['/import-style.js'].branchData['114'][1].ranCondition(result);
   return result;
-}_$jscoverage['/import-style.js'].branchData['107'][1].init(538, 7, 'isDebug');
+}_$jscoverage['/import-style.js'].branchData['107'][1].init(539, 7, 'isDebug');
 function visit16_107_1(result) {
   _$jscoverage['/import-style.js'].branchData['107'][1].ranCondition(result);
   return result;
@@ -353,7 +353,7 @@ function visit16_107_1(result) {
 function visit15_99_1(result) {
   _$jscoverage['/import-style.js'].branchData['99'][1].ranCondition(result);
   return result;
-}_$jscoverage['/import-style.js'].branchData['98'][1].init(272, 22, 'mod.getType() == \'css\'');
+}_$jscoverage['/import-style.js'].branchData['98'][1].init(272, 23, 'mod.getType() === \'css\'');
 function visit14_98_1(result) {
   _$jscoverage['/import-style.js'].branchData['98'][1].ranCondition(result);
   return result;
@@ -365,11 +365,11 @@ function visit13_94_1(result) {
 function visit12_90_1(result) {
   _$jscoverage['/import-style.js'].branchData['90'][1].ranCondition(result);
   return result;
-}_$jscoverage['/import-style.js'].branchData['75'][1].init(2160, 18, 'combinedUrl.length');
+}_$jscoverage['/import-style.js'].branchData['75'][1].init(2151, 18, 'combinedUrl.length');
 function visit11_75_1(result) {
   _$jscoverage['/import-style.js'].branchData['75'][1].ranCondition(result);
   return result;
-}_$jscoverage['/import-style.js'].branchData['63'][1].init(144, 42, 'combined[0].getPackage() != currentPackage');
+}_$jscoverage['/import-style.js'].branchData['63'][1].init(144, 43, 'combined[0].getPackage() !== currentPackage');
 function visit10_63_1(result) {
   _$jscoverage['/import-style.js'].branchData['63'][1].ranCondition(result);
   return result;
@@ -377,7 +377,7 @@ function visit10_63_1(result) {
 function visit9_61_2(result) {
   _$jscoverage['/import-style.js'].branchData['61'][2].ranCondition(result);
   return result;
-}_$jscoverage['/import-style.js'].branchData['61'][1].init(64, 187, '(prefix.length + combinedUrl.join(comboSep).length + suffix.length > maxUrlLength) || combined[0].getPackage() != currentPackage');
+}_$jscoverage['/import-style.js'].branchData['61'][1].init(64, 188, '(prefix.length + combinedUrl.join(comboSep).length + suffix.length > maxUrlLength) || combined[0].getPackage() !== currentPackage');
 function visit8_61_1(result) {
   _$jscoverage['/import-style.js'].branchData['61'][1].ranCondition(result);
   return result;
@@ -385,11 +385,11 @@ function visit8_61_1(result) {
 function visit7_60_2(result) {
   _$jscoverage['/import-style.js'].branchData['60'][2].ranCondition(result);
   return result;
-}_$jscoverage['/import-style.js'].branchData['60'][1].init(30, 252, '(combinedUrl.length > maxFileNum) || (prefix.length + combinedUrl.join(comboSep).length + suffix.length > maxUrlLength) || combined[0].getPackage() != currentPackage');
+}_$jscoverage['/import-style.js'].branchData['60'][1].init(30, 253, '(combinedUrl.length > maxFileNum) || (prefix.length + combinedUrl.join(comboSep).length + suffix.length > maxUrlLength) || combined[0].getPackage() !== currentPackage');
 function visit6_60_1(result) {
   _$jscoverage['/import-style.js'].branchData['60'][1].ranCondition(result);
   return result;
-}_$jscoverage['/import-style.js'].branchData['56'][1].init(748, 21, 'combined.length === 1');
+}_$jscoverage['/import-style.js'].branchData['56'][1].init(743, 21, 'combined.length === 1');
 function visit5_56_1(result) {
   _$jscoverage['/import-style.js'].branchData['56'][1].ranCondition(result);
   return result;
@@ -462,7 +462,7 @@ function visit1_33_1(result) {
           _$jscoverage['/import-style.js'].lineData[49]++;
           if (visit4_49_1(!currentPackage.isCombine() || !S.startsWith(fullpath, packagePath))) {
             _$jscoverage['/import-style.js'].lineData[50]++;
-            document.writeln('<link href="' + fullpath + '"  rel="stylesheet"/>');
+            doc.writeln('<link href="' + fullpath + '"  rel="stylesheet"/>');
             _$jscoverage['/import-style.js'].lineData[51]++;
             continue;
           }
@@ -480,13 +480,13 @@ function visit1_33_1(result) {
             suffix = '?t=' + encodeURIComponent(currentPackage.getTag()) + '.css';
           } else {
             _$jscoverage['/import-style.js'].lineData[60]++;
-            if (visit6_60_1((visit7_60_2(combinedUrl.length > maxFileNum)) || visit8_61_1((visit9_61_2(prefix.length + combinedUrl.join(comboSep).length + suffix.length > maxUrlLength)) || visit10_63_1(combined[0].getPackage() != currentPackage)))) {
+            if (visit6_60_1((visit7_60_2(combinedUrl.length > maxFileNum)) || visit8_61_1((visit9_61_2(prefix.length + combinedUrl.join(comboSep).length + suffix.length > maxUrlLength)) || visit10_63_1(combined[0].getPackage() !== currentPackage)))) {
               _$jscoverage['/import-style.js'].lineData[64]++;
               combined.pop();
               _$jscoverage['/import-style.js'].lineData[65]++;
               combinedUrl.pop();
               _$jscoverage['/import-style.js'].lineData[66]++;
-              document.writeln('<link href="' + (prefix + combinedUrl.join(comboSep) + suffix) + '"  rel="stylesheet"/>');
+              doc.writeln('<link href="' + (prefix + combinedUrl.join(comboSep) + suffix) + '"  rel="stylesheet"/>');
               _$jscoverage['/import-style.js'].lineData[69]++;
               combined = [];
               _$jscoverage['/import-style.js'].lineData[70]++;
@@ -531,7 +531,7 @@ function visit1_33_1(result) {
     _$jscoverage['/import-style.js'].lineData[97]++;
     processed[name] = 1;
     _$jscoverage['/import-style.js'].lineData[98]++;
-    if (visit14_98_1(mod.getType() == 'css')) {
+    if (visit14_98_1(mod.getType() === 'css')) {
       _$jscoverage['/import-style.js'].lineData[99]++;
       if (visit15_99_1(!cssCache[name])) {
         _$jscoverage['/import-style.js'].lineData[100]++;

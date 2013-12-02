@@ -248,7 +248,7 @@ if (! _$jscoverage['/html-parser/scanner.js'].branchData) {
   _$jscoverage['/html-parser/scanner.js'].branchData['14'][1] = new BranchData();
 }
 _$jscoverage['/html-parser/scanner.js'].branchData['14'][1].init(20, 39, 'SpecialScanners[nodeName] || TagScanner');
-function visit277_14_1(result) {
+function visit276_14_1(result) {
   _$jscoverage['/html-parser/scanner.js'].branchData['14'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/scanner.js'].lineData[6]++;
@@ -267,6 +267,6 @@ KISSY.add(function(S, require) {
   getScanner: function(nodeName) {
   _$jscoverage['/html-parser/scanner.js'].functionData[1]++;
   _$jscoverage['/html-parser/scanner.js'].lineData[14]++;
-  return visit277_14_1(SpecialScanners[nodeName] || TagScanner);
+  return visit276_14_1(SpecialScanners[nodeName] || TagScanner);
 }};
 });

@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:38
+build time: Dec 2 15:12
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -11,7 +11,7 @@ build time: Nov 27 00:38
 
 KISSY.add("component/manager", [], function(S) {
   var basePriority = 0, Manager, uis = {}, componentInstances = {};
-  return Manager = {__instances:componentInstances, addComponent:function(id, component) {
+  Manager = {__instances:componentInstances, addComponent:function(id, component) {
     componentInstances[id] = component
   }, removeComponent:function(id) {
     delete componentInstances[id]
@@ -55,6 +55,7 @@ KISSY.add("component/manager", [], function(S) {
     return ui
   }, setConstructorByXClass:function(className, ComponentConstructor) {
     uis[className] = {constructor:ComponentConstructor, priority:basePriority++}
-  }}
+  }};
+  return Manager
 });
 

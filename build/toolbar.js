@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:50
+build time: Dec 2 15:25
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -24,8 +24,8 @@ KISSY.add("toolbar", ["component/container", "component/extension/delegate-child
   var KeyCode = Node.KeyCode;
   function getNextEnabledItem(index, direction, self) {
     var children = self.get("children"), count = 0, childrenLength = children.length;
-    if(index == undefined) {
-      if(direction == 1) {
+    if(index === undefined) {
+      if(direction === 1) {
         index = 0
       }else {
         index = childrenLength - 1
@@ -38,7 +38,7 @@ KISSY.add("toolbar", ["component/container", "component/extension/delegate-child
       count++;
       index = (index + childrenLength + direction) % childrenLength
     }while(count < childrenLength && children[index].get("disabled"));
-    if(count != childrenLength) {
+    if(count !== childrenLength) {
       return children[index]
     }
     return null
@@ -56,7 +56,7 @@ KISSY.add("toolbar", ["component/container", "component/extension/delegate-child
     if(self !== target && (target.isMenuItem || target.isButton)) {
       if(e.newVal) {
         children = self.get("children");
-        if(expandedItem = self.get("expandedItem") && S.inArray(target, children)) {
+        if((expandedItem = self.get("expandedItem")) && S.inArray(target, children)) {
           self.set("expandedItem", target.isMenuButton ? target : null)
         }
         self.set("highlightedItem", target)
@@ -83,7 +83,7 @@ KISSY.add("toolbar", ["component/container", "component/extension/delegate-child
       prevVal.set("highlighted", false, {data:{byPassSetToolbarHighlightedItem:1}})
     }
     if(item) {
-      if(el.ownerDocument.activeElement != el) {
+      if(el.ownerDocument.activeElement !== el) {
         self.focus()
       }
       itemEl = item.el;
@@ -107,14 +107,14 @@ KISSY.add("toolbar", ["component/container", "component/extension/delegate-child
     self.on("afterCollapsedChange", afterCollapsedChange, self);
     self.on("afterHighlightedChange", afterHighlightedChange, self)
   }, handleBlurInternal:function(e) {
-    var self = this, highlightedItem, expandedItem;
+    var self = this, highlightedItem;
     self.callSuper(e);
     self.set("expandedItem", null);
     if(highlightedItem = self.get("highlightedItem")) {
       highlightedItem.set("highlighted", false)
     }
   }, getNextItemByKeyDown:function(e, current) {
-    var self = this, orientation = self.get("orientation"), children = self.get("children"), childIndex = current && S.indexOf(current, children);
+    var self = this, children = self.get("children"), childIndex = current && S.indexOf(current, children);
     if(current) {
       if(current.handleKeyDownInternal(e)) {
         return true
@@ -151,7 +151,7 @@ KISSY.add("toolbar", ["component/container", "component/extension/delegate-child
     return current
   }, handleKeyDownInternal:function(e) {
     var self = this, currentChild = getChildByHighlightedItem(self), nextHighlightedItem = self.getNextItemByKeyDown(e, currentChild);
-    if(typeof nextHighlightedItem == "boolean") {
+    if(typeof nextHighlightedItem === "boolean") {
       return nextHighlightedItem
     }
     if(nextHighlightedItem) {

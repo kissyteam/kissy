@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:37
+build time: Dec 2 15:11
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -47,7 +47,7 @@ KISSY.add("base", ["attribute"], function(S, require) {
     self.bindInternal();
     self.syncInternal()
   }, initializer:noop, __getHook:__getHook, __callPluginsMethod:callPluginsMethod, bindInternal:function() {
-    var self = this, attrs = self["getAttrs"](), attr, m;
+    var self = this, attrs = self.getAttrs(), attr, m;
     for(attr in attrs) {
       m = ON_SET + ucfirst(attr);
       if(self[m]) {
@@ -76,26 +76,27 @@ KISSY.add("base", ["attribute"], function(S, require) {
   }, plug:function(plugin) {
     var self = this;
     if(typeof plugin === "function") {
-      plugin = new plugin
+      var Plugin = plugin;
+      plugin = new Plugin
     }
-    if(plugin["pluginInitializer"]) {
-      plugin["pluginInitializer"](self)
+    if(plugin.pluginInitializer) {
+      plugin.pluginInitializer(self)
     }
     self.get("plugins").push(plugin);
     return self
   }, unplug:function(plugin) {
-    var plugins = [], self = this, isString = typeof plugin == "string";
+    var plugins = [], self = this, isString = typeof plugin === "string";
     S.each(self.get("plugins"), function(p) {
       var keep = 0, pluginId;
       if(plugin) {
         if(isString) {
           pluginId = p.get && p.get("pluginId") || p.pluginId;
-          if(pluginId != plugin) {
+          if(pluginId !== plugin) {
             plugins.push(p);
             keep = 1
           }
         }else {
-          if(p != plugin) {
+          if(p !== plugin) {
             plugins.push(p);
             keep = 1
           }
@@ -111,7 +112,7 @@ KISSY.add("base", ["attribute"], function(S, require) {
     var plugin = null;
     S.each(this.get("plugins"), function(p) {
       var pluginId = p.get && p.get("pluginId") || p.pluginId;
-      if(pluginId == id) {
+      if(pluginId === id) {
         plugin = p;
         return false
       }
@@ -141,7 +142,7 @@ KISSY.add("base", ["attribute"], function(S, require) {
     baseAddMembers.call(SubClass, {});
     if(extensions.length) {
       var attrs = {}, prototype = {};
-      S.each(extensions["concat"](SubClass), function(ext) {
+      S.each(extensions.concat(SubClass), function(ext) {
         if(ext) {
           S.each(ext.ATTRS, function(v, name) {
             var av = attrs[name] = attrs[name] || {};
@@ -179,16 +180,17 @@ KISSY.add("base", ["attribute"], function(S, require) {
   }
   function onSetAttrChange(e) {
     var self = this, method;
-    if(e.target == self) {
+    if(e.target === self) {
       method = self[ON_SET + e.type.slice(5).slice(0, -6)];
       method.call(self, e.newVal, e)
     }
   }
   function constructPlugins(self) {
-    var plugins = self.get("plugins");
+    var plugins = self.get("plugins"), Plugin;
     S.each(plugins, function(plugin, i) {
       if(typeof plugin === "function") {
-        plugins[i] = new plugin
+        Plugin = plugin;
+        plugins[i] = new Plugin
       }
     })
   }
@@ -196,7 +198,9 @@ KISSY.add("base", ["attribute"], function(S, require) {
     var len, self = this, plugins = self.get("plugins");
     if(len = plugins.length) {
       for(var i = 0;i < len;i++) {
-        plugins[i][method] && plugins[i][method](self)
+        if(plugins[i][method]) {
+          plugins[i][method](self)
+        }
       }
     }
   }

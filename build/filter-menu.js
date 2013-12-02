@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:48
+build time: Dec 2 15:23
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -12,44 +12,44 @@ build time: Nov 27 00:48
 */
 
 KISSY.add("filter-menu/render-xtpl", ["component/extension/content-xtpl"], function(S, require, exports, module) {
-  return function(scopes, S, undefined) {
+  return function(scope, S, undefined) {
     var buffer = "", config = this.config, engine = this, moduleWrap, utils = config.utils;
-    if(typeof module != "undefined" && module.kissy) {
+    if(typeof module !== "undefined" && module.kissy) {
       moduleWrap = module
     }
-    var runBlockCommandUtil = utils["runBlockCommand"], getExpressionUtil = utils["getExpression"], getPropertyOrRunCommandUtil = utils["getPropertyOrRunCommand"];
+    var runBlockCommandUtil = utils.runBlockCommand, getExpressionUtil = utils.getExpression, getPropertyOrRunCommandUtil = utils.getPropertyOrRunCommand;
     buffer += '<div id="ks-filter-menu-input-wrap-';
-    var id0 = getPropertyOrRunCommandUtil(engine, scopes, {}, "id", 0, 1, undefined, false);
+    var id0 = getPropertyOrRunCommandUtil(engine, scope, {}, "id", 0, 1, undefined, false);
     buffer += getExpressionUtil(id0, true);
     buffer += '"\n     class="';
     var config2 = {};
     var params3 = [];
     params3.push("input-wrap");
     config2.params = params3;
-    var id1 = getPropertyOrRunCommandUtil(engine, scopes, config2, "getBaseCssClasses", 0, 2, true, undefined);
+    var id1 = getPropertyOrRunCommandUtil(engine, scope, config2, "getBaseCssClasses", 0, 2, true, undefined);
     buffer += id1;
     buffer += '">\n    <div id="ks-filter-menu-placeholder-';
-    var id4 = getPropertyOrRunCommandUtil(engine, scopes, {}, "id", 0, 3, undefined, false);
+    var id4 = getPropertyOrRunCommandUtil(engine, scope, {}, "id", 0, 3, undefined, false);
     buffer += getExpressionUtil(id4, true);
     buffer += '"\n         class="';
     var config6 = {};
     var params7 = [];
     params7.push("placeholder");
     config6.params = params7;
-    var id5 = getPropertyOrRunCommandUtil(engine, scopes, config6, "getBaseCssClasses", 0, 4, true, undefined);
+    var id5 = getPropertyOrRunCommandUtil(engine, scope, config6, "getBaseCssClasses", 0, 4, true, undefined);
     buffer += id5;
     buffer += '">\n        ';
-    var id8 = getPropertyOrRunCommandUtil(engine, scopes, {}, "placeholder", 0, 5, undefined, false);
+    var id8 = getPropertyOrRunCommandUtil(engine, scope, {}, "placeholder", 0, 5, undefined, false);
     buffer += getExpressionUtil(id8, true);
     buffer += '\n    </div>\n    <input id="ks-filter-menu-input-';
-    var id9 = getPropertyOrRunCommandUtil(engine, scopes, {}, "id", 0, 7, undefined, false);
+    var id9 = getPropertyOrRunCommandUtil(engine, scope, {}, "id", 0, 7, undefined, false);
     buffer += getExpressionUtil(id9, true);
     buffer += '"\n           class="';
     var config11 = {};
     var params12 = [];
     params12.push("input");
     config11.params = params12;
-    var id10 = getPropertyOrRunCommandUtil(engine, scopes, config11, "getBaseCssClasses", 0, 8, true, undefined);
+    var id10 = getPropertyOrRunCommandUtil(engine, scope, config11, "getBaseCssClasses", 0, 8, true, undefined);
     buffer += id10;
     buffer += '"\n            autocomplete="off"/>\n</div>\n';
     var config14 = {};
@@ -60,7 +60,7 @@ KISSY.add("filter-menu/render-xtpl", ["component/extension/content-xtpl"], funct
       require("component/extension/content-xtpl");
       config14.params[0] = moduleWrap.resolveByName(config14.params[0])
     }
-    var id13 = getPropertyOrRunCommandUtil(engine, scopes, config14, "include", 0, 11, false, undefined);
+    var id13 = getPropertyOrRunCommandUtil(engine, scope, config14, "include", 0, 11, false, undefined);
     buffer += id13;
     return buffer
   }
@@ -142,7 +142,7 @@ KISSY.add("filter-menu", ["menu", "filter-menu/render"], function(S, require) {
         enteredItems = items
       }
       var oldEnteredItems = self.get("enteredItems");
-      if(oldEnteredItems.length != enteredItems.length) {
+      if(oldEnteredItems.length !== enteredItems.length) {
         self.set("enteredItems", enteredItems)
       }
     }
@@ -156,7 +156,7 @@ KISSY.add("filter-menu", ["menu", "filter-menu/render"], function(S, require) {
         if(content.indexOf(str) > -1) {
           c.set("visible", true);
           c.get("el").html(content.replace(strExp, function(m) {
-            return"<span class='" + prefixCls + HIT_CLS + "'>" + m + "<" + "/span>"
+            return'<span class="' + prefixCls + HIT_CLS + '">' + m + "<" + "/span>"
           }))
         }else {
           c.set("visible", false)

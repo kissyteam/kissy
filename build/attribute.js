@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:37
+build time: Dec 2 15:11
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -17,13 +17,13 @@ KISSY.add("attribute", ["event/custom"], function(S, require, exports, module) {
   function replaceToUpper() {
     return arguments[1].toUpperCase()
   }
-  function CamelCase(name) {
+  function camelCase(name) {
     return name.replace(RE_DASH, replaceToUpper)
   }
   var INVALID = {};
   var FALSE = false;
   function normalFn(host, method) {
-    if(typeof method == "string") {
+    if(typeof method === "string") {
       return host[method]
     }
     return method
@@ -46,7 +46,7 @@ KISSY.add("attribute", ["event/custom"], function(S, require, exports, module) {
     return ret || {}
   }
   function getValueByPath(o, path) {
-    for(var i = 0, len = path.length;o != undefined && i < len;i++) {
+    for(var i = 0, len = path.length;o !== undefined && i < len;i++) {
       o = o[path[i]]
     }
     return o
@@ -57,7 +57,7 @@ KISSY.add("attribute", ["event/custom"], function(S, require, exports, module) {
       for(var i = 0;i < len;i++) {
         o = o[path[i]]
       }
-      if(o != undefined) {
+      if(o !== undefined) {
         o[path[i]] = val
       }else {
         s = undefined
@@ -114,7 +114,7 @@ KISSY.add("attribute", ["event/custom"], function(S, require, exports, module) {
     }
     value = getValueBySubValue(prevVal, path, value);
     var beforeEventObject = S.mix({attrName:name, subAttrName:fullName, prevVal:prevVal, newVal:value, _opts:opts, _attrs:attrs, target:self}, opts.data);
-    if(opts["silent"]) {
+    if(opts.silent) {
       if(FALSE === defaultSetFn.call(self, beforeEventObject)) {
         return FALSE
       }
@@ -134,7 +134,7 @@ KISSY.add("attribute", ["event/custom"], function(S, require, exports, module) {
     if(ret === FALSE) {
       return ret
     }
-    if(!opts["silent"]) {
+    if(!opts.silent) {
       value = getAttrVals(self)[name];
       __fireAttrChange(self, "after", name, prevVal, value, fullName, null, opts.data);
       if(attrs) {
@@ -162,7 +162,7 @@ KISSY.add("attribute", ["event/custom"], function(S, require, exports, module) {
       }
     }
     S.each(px, function(v, p) {
-      if(typeof v == "function") {
+      if(typeof v === "function") {
         var wrapped = 0;
         if(v.__owner__) {
           var originalOwner = v.__owner__;
@@ -205,7 +205,7 @@ KISSY.add("attribute", ["event/custom"], function(S, require, exports, module) {
       SubClass = px.constructor
     }else {
       if("@DEBUG@") {
-        eval("SubClass = function " + CamelCase(name) + "(){ " + "this.callSuper.apply(this, arguments);" + "}")
+        SubClass = (new Function("return function " + camelCase(name) + "(){ " + "this.callSuper.apply(this, arguments);" + "}"))()
       }else {
         SubClass = function() {
           this.callSuper.apply(this, arguments)
@@ -244,7 +244,7 @@ KISSY.add("attribute", ["event/custom"], function(S, require, exports, module) {
   }
   S.augment(Attribute, CustomEvent.Target, {INVALID:INVALID, callSuper:function() {
     var method, obj, self = this, args = arguments;
-    if(typeof self == "function" && self.__name__) {
+    if(typeof self === "function" && self.__name__) {
       method = self;
       obj = args[0];
       args = Array.prototype.slice.call(args, 1)
@@ -301,19 +301,19 @@ KISSY.add("attribute", ["event/custom"], function(S, require, exports, module) {
     }
     return self
   }, set:function(name, value, opts) {
-    var self = this;
+    var self = this, e;
     if(S.isPlainObject(name)) {
       opts = value;
       opts = opts || {};
-      var all = Object(name), attrs = [], e, errors = [];
+      var all = Object(name), attrs = [], errors = [];
       for(name in all) {
         if((e = validate(self, name, all[name], all)) !== undefined) {
           errors.push(e)
         }
       }
       if(errors.length) {
-        if(opts["error"]) {
-          opts["error"](errors)
+        if(opts.error) {
+          opts.error(errors)
         }
         return FALSE
       }
@@ -335,14 +335,14 @@ KISSY.add("attribute", ["event/custom"], function(S, require, exports, module) {
     opts = opts || {};
     e = validate(self, name, value);
     if(e !== undefined) {
-      if(opts["error"]) {
-        opts["error"](e)
+      if(opts.error) {
+        opts.error(e)
       }
       return FALSE
     }
     return setInternal(self, name, value, opts)
   }, setInternal:function(name, value) {
-    var self = this, setValue = undefined, attrConfig = ensureNonEmpty(self.getAttrs(), name), setter = attrConfig["setter"];
+    var self = this, setValue, attrConfig = ensureNonEmpty(self.getAttrs(), name), setter = attrConfig.setter;
     if(setter && (setter = normalFn(self, setter))) {
       setValue = setter.call(self, value, name)
     }
@@ -361,7 +361,7 @@ KISSY.add("attribute", ["event/custom"], function(S, require, exports, module) {
       name = path.shift()
     }
     attrConfig = ensureNonEmpty(self.getAttrs(), name, 1);
-    getter = attrConfig["getter"];
+    getter = attrConfig.getter;
     ret = name in attrVals ? attrVals[name] : getDefAttrVal(self, name);
     if(getter && (getter = normalFn(self, getter))) {
       ret = getter.call(self, ret, name)
@@ -375,7 +375,7 @@ KISSY.add("attribute", ["event/custom"], function(S, require, exports, module) {
     return ret
   }, reset:function(name, opts) {
     var self = this;
-    if(typeof name == "string") {
+    if(typeof name === "string") {
       if(self.hasAttr(name)) {
         return self.set(name, getDefAttrVal(self, name), opts)
       }else {
@@ -411,7 +411,7 @@ KISSY.add("attribute", ["event/custom"], function(S, require, exports, module) {
       prevVal = self.get(name);
       value = getValueBySubValue(prevVal, path, value)
     }
-    var attrConfig = ensureNonEmpty(self.getAttrs(), name), e, validator = attrConfig["validator"];
+    var attrConfig = ensureNonEmpty(self.getAttrs(), name), e, validator = attrConfig.validator;
     if(validator && (validator = normalFn(self, validator))) {
       e = validator.call(self, value, name, all);
       if(e !== undefined && e !== true) {

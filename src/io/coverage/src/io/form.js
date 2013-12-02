@@ -302,7 +302,7 @@ if (! _$jscoverage['/io/form.js'].branchData) {
   _$jscoverage['/io/form.js'].branchData['71'] = [];
   _$jscoverage['/io/form.js'].branchData['71'][1] = new BranchData();
 }
-_$jscoverage['/io/form.js'].branchData['71'][1].init(123, 8, 'd == \'*\'');
+_$jscoverage['/io/form.js'].branchData['71'][1].init(123, 9, 'd === \'*\'');
 function visit45_71_1(result) {
   _$jscoverage['/io/form.js'].branchData['71'][1].ranCondition(result);
   return result;
@@ -314,7 +314,7 @@ function visit44_58_1(result) {
 function visit43_56_1(result) {
   _$jscoverage['/io/form.js'].branchData['56'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/form.js'].branchData['52'][1].init(951, 21, '!isUpload || FormData');
+}_$jscoverage['/io/form.js'].branchData['52'][1].init(952, 21, '!isUpload || FormData');
 function visit42_52_1(result) {
   _$jscoverage['/io/form.js'].branchData['52'][1].ranCondition(result);
   return result;
@@ -322,7 +322,7 @@ function visit42_52_1(result) {
 function visit41_45_1(result) {
   _$jscoverage['/io/form.js'].branchData['45'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/form.js'].branchData['44'][1].init(685, 20, 'isUpload && FormData');
+}_$jscoverage['/io/form.js'].branchData['44'][1].init(686, 20, 'isUpload && FormData');
 function visit40_44_1(result) {
   _$jscoverage['/io/form.js'].branchData['44'][1].ranCondition(result);
   return result;
@@ -338,7 +338,7 @@ function visit38_40_1(result) {
 function visit37_36_1(result) {
   _$jscoverage['/io/form.js'].branchData['36'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/form.js'].branchData['34'][1].init(60, 34, 'input.type.toLowerCase() == \'file\'');
+}_$jscoverage['/io/form.js'].branchData['34'][1].init(60, 35, 'input.type.toLowerCase() === \'file\'');
 function visit36_34_1(result) {
   _$jscoverage['/io/form.js'].branchData['34'][1].ranCondition(result);
   return result;
@@ -346,7 +346,7 @@ function visit36_34_1(result) {
 function visit35_32_1(result) {
   _$jscoverage['/io/form.js'].branchData['32'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/form.js'].branchData['25'][1].init(217, 16, 'tmpForm = c.form');
+}_$jscoverage['/io/form.js'].branchData['25'][1].init(226, 7, 'tmpForm');
 function visit34_25_1(result) {
   _$jscoverage['/io/form.js'].branchData['25'][1].ranCondition(result);
   return result;
@@ -360,14 +360,14 @@ KISSY.add(function(S, require) {
   _$jscoverage['/io/form.js'].lineData[9]++;
   var FormSerializer = require('./form-serializer');
   _$jscoverage['/io/form.js'].lineData[10]++;
-  var win = S.Env.host, slice = Array.prototype.slice, FormData = win['FormData'];
+  var win = S.Env.host, slice = Array.prototype.slice, FormData = win.FormData;
   _$jscoverage['/io/form.js'].lineData[14]++;
   IO.on('start', function(e) {
   _$jscoverage['/io/form.js'].functionData[1]++;
   _$jscoverage['/io/form.js'].lineData[15]++;
-  var io = e.io, form, d, dataType, formParam, data, tmpForm, c = io.config;
+  var io = e.io, form, d, dataType, formParam, data, c = io.config, tmpForm = c.form;
   _$jscoverage['/io/form.js'].lineData[25]++;
-  if (visit34_25_1(tmpForm = c.form)) {
+  if (visit34_25_1(tmpForm)) {
     _$jscoverage['/io/form.js'].lineData[26]++;
     form = Dom.get(tmpForm);
     _$jscoverage['/io/form.js'].lineData[27]++;
@@ -383,7 +383,7 @@ KISSY.add(function(S, require) {
       _$jscoverage['/io/form.js'].lineData[33]++;
       var input = inputs[i];
       _$jscoverage['/io/form.js'].lineData[34]++;
-      if (visit36_34_1(input.type.toLowerCase() == 'file')) {
+      if (visit36_34_1(input.type.toLowerCase() === 'file')) {
         _$jscoverage['/io/form.js'].lineData[35]++;
         isUpload = true;
         _$jscoverage['/io/form.js'].lineData[36]++;
@@ -432,7 +432,7 @@ KISSY.add(function(S, require) {
       _$jscoverage['/io/form.js'].lineData[70]++;
       d = dataType[0];
       _$jscoverage['/io/form.js'].lineData[71]++;
-      if (visit45_71_1(d == '*')) {
+      if (visit45_71_1(d === '*')) {
         _$jscoverage['/io/form.js'].lineData[72]++;
         d = 'text';
       }

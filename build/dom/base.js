@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:40
+build time: Dec 2 15:13
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -24,12 +24,12 @@ KISSY.add("dom/base/api", [], function(S) {
     win = win || WINDOW;
     win = Dom.get(win);
     var domain = win.document.domain, hostname = win.location.hostname;
-    return domain != hostname && domain != "[" + hostname + "]"
+    return domain !== hostname && domain !== "[" + hostname + "]"
   }, getEmptyIframeSrc:function(win) {
     win = win || WINDOW;
     win = Dom.get(win);
-    if(UA["ie"] && Dom.isCustomDomain(win)) {
-      return"javascript:void(function(){" + encodeURIComponent("document.open();" + "document.domain='" + win.document.domain + "';" + "document.close();") + "}())"
+    if(UA.ie && Dom.isCustomDomain(win)) {
+      return"javascript:void(function(){" + encodeURIComponent("document.open();" + 'document.domain="' + win.document.domain + '";' + "document.close();") + "}())"
     }
     return""
   }, NodeType:NodeType, getWindow:function(elem) {
@@ -50,14 +50,14 @@ KISSY.add("dom/base/api", [], function(S) {
       return DOCUMENT
     }
     elem = Dom.get(elem);
-    return S.isWindow(elem) ? elem["document"] : elem.nodeType == NodeType.DOCUMENT_NODE ? elem : elem.ownerDocument
+    return S.isWindow(elem) ? elem.document : elem.nodeType === NodeType.DOCUMENT_NODE ? elem : elem.ownerDocument
   }, isDomNodeList:function(o) {
     return o && !o.nodeType && o.item && !o.setTimeout
   }, nodeName:function(selector) {
     var el = Dom.get(selector), nodeName = el.nodeName.toLowerCase();
-    if(UA["ie"]) {
-      var scopeName = el["scopeName"];
-      if(scopeName && scopeName != "HTML") {
+    if(UA.ie) {
+      var scopeName = el.scopeName;
+      if(scopeName && scopeName !== "HTML") {
         nodeName = scopeName.toLowerCase() + ":" + nodeName
       }
     }
@@ -68,8 +68,8 @@ KISSY.add("dom/base/api", [], function(S) {
 });
 KISSY.add("dom/base/attr", ["./api"], function(S, require) {
   var Dom = require("./api");
-  var doc = S.Env.host.document, undefined = undefined, NodeType = Dom.NodeType, docElement = doc && doc.documentElement, EMPTY = "", nodeName = Dom.nodeName, R_BOOLEAN = /^(?:autofocus|autoplay|async|checked|controls|defer|disabled|hidden|loop|multiple|open|readonly|required|scoped|selected)$/i, R_FOCUSABLE = /^(?:button|input|object|select|textarea)$/i, R_CLICKABLE = /^a(?:rea)?$/i, R_INVALID_CHAR = /:|^on/, R_RETURN = /\r/g, attrFix = {}, attrFn = {val:1, css:1, html:1, text:1, data:1, width:1, 
-  height:1, offset:1, scrollTop:1, scrollLeft:1}, attrHooks = {tabindex:{get:function(el) {
+  var doc = S.Env.host.document, NodeType = Dom.NodeType, docElement = doc && doc.documentElement, EMPTY = "", nodeName = Dom.nodeName, R_BOOLEAN = /^(?:autofocus|autoplay|async|checked|controls|defer|disabled|hidden|loop|multiple|open|readonly|required|scoped|selected)$/i, R_FOCUSABLE = /^(?:button|input|object|select|textarea)$/i, R_CLICKABLE = /^a(?:rea)?$/i, R_INVALID_CHAR = /:|^on/, R_RETURN = /\r/g, attrFix = {}, attrFn = {val:1, css:1, html:1, text:1, data:1, width:1, height:1, offset:1, scrollTop:1, 
+  scrollLeft:1}, attrHooks = {tabindex:{get:function(el) {
     var attributeNode = el.getAttributeNode("tabindex");
     return attributeNode && attributeNode.specified ? parseInt(attributeNode.value, 10) : R_FOCUSABLE.test(el.nodeName) || R_CLICKABLE.test(el.nodeName) && el.href ? 0 : undefined
   }}}, propFix = {hidefocus:"hideFocus", tabindex:"tabIndex", readonly:"readOnly", "for":"htmlFor", "class":"className", maxlength:"maxLength", cellspacing:"cellSpacing", cellpadding:"cellPadding", rowspan:"rowSpan", colspan:"colSpan", usemap:"useMap", frameborder:"frameBorder", contenteditable:"contentEditable"}, boolHook = {get:function(elem, name) {
@@ -119,14 +119,18 @@ KISSY.add("dom/base/attr", ["./api"], function(S, require) {
       return elem.getAttribute("value") === null ? "on" : elem.value
     }, set:function(elem, value) {
       if(S.isArray(value)) {
-        return elem.checked = S.inArray(Dom.val(elem), value)
+        elem.checked = S.inArray(Dom.val(elem), value);
+        return 1
       }
       return undefined
     }}
   });
-  attrHooks["style"] = {get:function(el) {
+  attrHooks.style = {get:function(el) {
     return el.style.cssText
   }};
+  function toStr(value) {
+    return value == null ? "" : value + ""
+  }
   function getProp(elem, name) {
     name = propFix[name] || name;
     var hook = propHooks[name];
@@ -209,7 +213,7 @@ KISSY.add("dom/base/attr", ["./api"], function(S, require) {
     }
     if(val === undefined) {
       if(el && el.nodeType === NodeType.ELEMENT_NODE) {
-        if(nodeName(el) == "form") {
+        if(nodeName(el) === "form") {
           attrNormalizer = attrNodeHook
         }
         if(attrNormalizer && attrNormalizer.get) {
@@ -228,7 +232,7 @@ KISSY.add("dom/base/attr", ["./api"], function(S, require) {
       for(i = els.length - 1;i >= 0;i--) {
         el = els[i];
         if(el && el.nodeType === NodeType.ELEMENT_NODE) {
-          if(nodeName(el) == "form") {
+          if(nodeName(el) === "form") {
             attrNormalizer = attrNodeHook
           }
           if(attrNormalizer && attrNormalizer.set) {
@@ -246,7 +250,7 @@ KISSY.add("dom/base/attr", ["./api"], function(S, require) {
     var els = Dom.query(selector), propName, el, i;
     for(i = els.length - 1;i >= 0;i--) {
       el = els[i];
-      if(el.nodeType == NodeType.ELEMENT_NODE) {
+      if(el.nodeType === NodeType.ELEMENT_NODE) {
         el.removeAttribute(name);
         if(R_BOOLEAN.test(name) && (propName = propFix[name] || name) in el) {
           el[propName] = false
@@ -300,9 +304,7 @@ KISSY.add("dom/base/attr", ["./api"], function(S, require) {
           val += ""
         }else {
           if(S.isArray(val)) {
-            val = S.map(val, function(value) {
-              return value == null ? "" : value + ""
-            })
+            val = S.map(val, toStr)
           }
         }
       }
@@ -322,7 +324,7 @@ KISSY.add("dom/base/attr", ["./api"], function(S, require) {
       for(i = els.length - 1;i >= 0;i--) {
         el = els[i];
         nodeType = el.nodeType;
-        if(nodeType == NodeType.ELEMENT_NODE) {
+        if(nodeType === NodeType.ELEMENT_NODE) {
           Dom.cleanData(el.getElementsByTagName("*"));
           if("textContent" in el) {
             el.textContent = val
@@ -330,7 +332,7 @@ KISSY.add("dom/base/attr", ["./api"], function(S, require) {
             el.innerText = val
           }
         }else {
-          if(nodeType == NodeType.TEXT_NODE || nodeType == NodeType.CDATA_SECTION_NODE) {
+          if(nodeType === NodeType.TEXT_NODE || nodeType === NodeType.CDATA_SECTION_NODE) {
             el.nodeValue = val
           }
         }
@@ -369,7 +371,7 @@ KISSY.add("dom/base/class", ["./api"], function(S, require) {
     return function(selector, className) {
       var classNames = strToArray(className), extraArgs = slice.call(arguments, 2);
       Dom.query(selector).each(function(elem) {
-        if(elem.nodeType == NodeType.ELEMENT_NODE) {
+        if(elem.nodeType === NodeType.ELEMENT_NODE) {
           Dom[method].apply(Dom, [elem, classNames].concat(extraArgs))
         }
       })
@@ -389,7 +391,7 @@ KISSY.add("dom/base/class", ["./api"], function(S, require) {
     return false
   }, _addClass:batchClassList("add"), _removeClass:batchClassList("remove"), _toggleClass:batchClassList("toggle"), hasClass:function(selector, className) {
     var elem = Dom.get(selector);
-    return elem && elem.nodeType == NodeType.ELEMENT_NODE && Dom._hasClass(elem, strToArray(className))
+    return elem && elem.nodeType === NodeType.ELEMENT_NODE && Dom._hasClass(elem, strToArray(className))
   }, replaceClass:function(selector, oldClassName, newClassName) {
     Dom.removeClass(selector, oldClassName);
     Dom.addClass(selector, newClassName)
@@ -405,7 +407,7 @@ KISSY.add("dom/base/create", ["./api"], function(S, require) {
     return el.getElementsByTagName(tag)
   }
   function getHolderDiv(ownerDoc) {
-    var holder = ownerDoc && ownerDoc != doc ? ownerDoc.createElement(DIV) : DEFAULT_DIV;
+    var holder = ownerDoc && ownerDoc !== doc ? ownerDoc.createElement(DIV) : DEFAULT_DIV;
     if(holder === DEFAULT_DIV) {
       holder.innerHTML = ""
     }
@@ -428,11 +430,11 @@ KISSY.add("dom/base/create", ["./api"], function(S, require) {
   }
   function _destroy(node, parent) {
     if(parent) {
-      if(oldIE && parent["canHaveChildren"] && "removeNode" in node) {
+      if(oldIE && parent.canHaveChildren && "removeNode" in node) {
         if(node.firstChild) {
           _empty(node)
         }
-        node["removeNode"](false)
+        node.removeNode(false)
       }else {
         parent.removeChild(node)
       }
@@ -446,7 +448,7 @@ KISSY.add("dom/base/create", ["./api"], function(S, require) {
     if(html.nodeType) {
       return Dom.clone(html)
     }
-    if(typeof html != "string") {
+    if(typeof html !== "string") {
       return ret
     }
     if(_trim === undefined) {
@@ -497,10 +499,10 @@ KISSY.add("dom/base/create", ["./api"], function(S, require) {
       return null
     }
     if(htmlString === undefined) {
-      if(el.nodeType == NodeType.ELEMENT_NODE) {
+      if(el.nodeType === NodeType.ELEMENT_NODE) {
         return el.innerHTML
       }else {
-        if(el.nodeType == NodeType.DOCUMENT_FRAGMENT_NODE) {
+        if(el.nodeType === NodeType.DOCUMENT_FRAGMENT_NODE) {
           var holder = getHolderDiv(el.ownerDocument);
           holder.appendChild(el);
           return holder.innerHTML
@@ -514,7 +516,7 @@ KISSY.add("dom/base/create", ["./api"], function(S, require) {
         try {
           for(i = els.length - 1;i >= 0;i--) {
             elem = els[i];
-            if(elem.nodeType == NodeType.ELEMENT_NODE) {
+            if(elem.nodeType === NodeType.ELEMENT_NODE) {
               Dom.cleanData(getElementsByTagName(elem, "*"));
               elem.innerHTML = htmlString
             }
@@ -536,7 +538,7 @@ KISSY.add("dom/base/create", ["./api"], function(S, require) {
       return null
     }
     if(htmlString === undefined) {
-      if(supportOuterHTML && el.nodeType != Dom.DOCUMENT_FRAGMENT_NODE) {
+      if(supportOuterHTML && el.nodeType !== Dom.DOCUMENT_FRAGMENT_NODE) {
         return el.outerHTML
       }else {
         holder = getHolderDiv(el.ownerDocument);
@@ -548,7 +550,7 @@ KISSY.add("dom/base/create", ["./api"], function(S, require) {
       if(!htmlString.match(/<(?:script|style|link)/i) && supportOuterHTML) {
         for(i = length - 1;i >= 0;i--) {
           el = els[i];
-          if(el.nodeType == NodeType.ELEMENT_NODE) {
+          if(el.nodeType === NodeType.ELEMENT_NODE) {
             Dom.cleanData(el, 1);
             el.outerHTML = htmlString
           }
@@ -564,7 +566,7 @@ KISSY.add("dom/base/create", ["./api"], function(S, require) {
     var el, els = Dom.query(selector), all, DOMEvent = S.require("event/dom"), i;
     for(i = els.length - 1;i >= 0;i--) {
       el = els[i];
-      if(!keepData && el.nodeType == NodeType.ELEMENT_NODE) {
+      if(!keepData && el.nodeType === NodeType.ELEMENT_NODE) {
         all = S.makeArray(getElementsByTagName(el, "*"));
         all.push(el);
         Dom.removeData(all);
@@ -576,9 +578,9 @@ KISSY.add("dom/base/create", ["./api"], function(S, require) {
     }
   }, clone:function(selector, deep, withDataAndEvent, deepWithDataAndEvent) {
     if(typeof deep === "object") {
-      deepWithDataAndEvent = deep["deepWithDataAndEvent"];
-      withDataAndEvent = deep["withDataAndEvent"];
-      deep = deep["deep"]
+      deepWithDataAndEvent = deep.deepWithDataAndEvent;
+      withDataAndEvent = deep.withDataAndEvent;
+      deep = deep.deep
     }
     var elem = Dom.get(selector), clone, _fixCloneAttributes = Dom._fixCloneAttributes, elemNodeType;
     if(!elem) {
@@ -586,8 +588,8 @@ KISSY.add("dom/base/create", ["./api"], function(S, require) {
     }
     elemNodeType = elem.nodeType;
     clone = elem.cloneNode(deep);
-    if(elemNodeType == NodeType.ELEMENT_NODE || elemNodeType == NodeType.DOCUMENT_FRAGMENT_NODE) {
-      if(_fixCloneAttributes && elemNodeType == NodeType.ELEMENT_NODE) {
+    if(elemNodeType === NodeType.ELEMENT_NODE || elemNodeType === NodeType.DOCUMENT_FRAGMENT_NODE) {
+      if(_fixCloneAttributes && elemNodeType === NodeType.ELEMENT_NODE) {
         _fixCloneAttributes(elem, clone)
       }
       if(deep && _fixCloneAttributes) {
@@ -611,7 +613,7 @@ KISSY.add("dom/base/create", ["./api"], function(S, require) {
   Dom.outerHTML = Dom.outerHtml;
   function processAll(fn, elem, clone) {
     var elemNodeType = elem.nodeType;
-    if(elemNodeType == NodeType.DOCUMENT_FRAGMENT_NODE) {
+    if(elemNodeType === NodeType.DOCUMENT_FRAGMENT_NODE) {
       var eCs = elem.childNodes, cloneCs = clone.childNodes, fIndex = 0;
       while(eCs[fIndex]) {
         if(cloneCs[fIndex]) {
@@ -620,7 +622,7 @@ KISSY.add("dom/base/create", ["./api"], function(S, require) {
         fIndex++
       }
     }else {
-      if(elemNodeType == NodeType.ELEMENT_NODE) {
+      if(elemNodeType === NodeType.ELEMENT_NODE) {
         var elemChildren = getElementsByTagName(elem, "*"), cloneChildren = getElementsByTagName(clone, "*"), cIndex = 0;
         while(elemChildren[cIndex]) {
           if(cloneChildren[cIndex]) {
@@ -633,7 +635,7 @@ KISSY.add("dom/base/create", ["./api"], function(S, require) {
   }
   function cloneWithDataAndEvent(src, dest) {
     var DOMEvent = S.require("event/dom"), srcData, d;
-    if(dest.nodeType == NodeType.ELEMENT_NODE && !Dom.hasData(src)) {
+    if(dest.nodeType === NodeType.ELEMENT_NODE && !Dom.hasData(src)) {
       return
     }
     srcData = Dom.data(src);
@@ -646,10 +648,10 @@ KISSY.add("dom/base/create", ["./api"], function(S, require) {
   }
   function attachProps(elem, props) {
     if(S.isPlainObject(props)) {
-      if(elem.nodeType == NodeType.ELEMENT_NODE) {
+      if(elem.nodeType === NodeType.ELEMENT_NODE) {
         Dom.attr(elem, props, true)
       }else {
-        if(elem.nodeType == NodeType.DOCUMENT_FRAGMENT_NODE) {
+        if(elem.nodeType === NodeType.DOCUMENT_FRAGMENT_NODE) {
           Dom.attr(elem.childNodes, props, true)
         }
       }
@@ -678,17 +680,14 @@ KISSY.add("dom/base/create", ["./api"], function(S, require) {
       }
     })(creatorsMap[p])
   }
-  creatorsMap["option"] = creatorsMap["optgroup"] = function(html, ownerDoc) {
+  creatorsMap.option = creatorsMap.optgroup = function(html, ownerDoc) {
     return create('<select multiple="multiple">' + html + "</select>", undefined, ownerDoc)
   };
   return Dom
 });
 KISSY.add("dom/base/data", ["./api"], function(S, require) {
   var Dom = require("./api");
-  var win = S.Env.host, EXPANDO = "_ks_data_" + S.now(), dataCache = {}, winDataCache = {}, noData = {};
-  noData["applet"] = 1;
-  noData["object"] = 1;
-  noData["embed"] = 1;
+  var win = S.Env.host, EXPANDO = "_ks_data_" + S.now(), dataCache = {}, winDataCache = {}, noData = {applet:1, object:1, embed:1};
   var commonOps = {hasData:function(cache, name) {
     if(cache) {
       if(name !== undefined) {
@@ -704,13 +703,13 @@ KISSY.add("dom/base/data", ["./api"], function(S, require) {
     return false
   }};
   var objectOps = {hasData:function(ob, name) {
-    if(ob == win) {
+    if(ob === win) {
       return objectOps.hasData(winDataCache, name)
     }
     var thisCache = ob[EXPANDO];
     return commonOps.hasData(thisCache, name)
   }, data:function(ob, name, value) {
-    if(ob == win) {
+    if(ob === win) {
       return objectOps.data(winDataCache, name, value)
     }
     var cache = ob[EXPANDO];
@@ -726,7 +725,7 @@ KISSY.add("dom/base/data", ["./api"], function(S, require) {
       }
     }
   }, removeData:function(ob, name) {
-    if(ob == win) {
+    if(ob === win) {
       return objectOps.removeData(winDataCache, name)
     }
     var cache = ob[EXPANDO];
@@ -879,7 +878,7 @@ KISSY.add("dom/base/insertion", ["./api"], function(S, require) {
     for(i = 0;nodes[i];i++) {
       el = nodes[i];
       nodeName = getNodeName(el);
-      if(el.nodeType == NodeType.DOCUMENT_FRAGMENT_NODE) {
+      if(el.nodeType === NodeType.DOCUMENT_FRAGMENT_NODE) {
         ret.push.apply(ret, filterScripts(makeArray(el.childNodes), scripts))
       }else {
         if(nodeName === "script" && isJs(el)) {
@@ -890,7 +889,7 @@ KISSY.add("dom/base/insertion", ["./api"], function(S, require) {
             scripts.push(el)
           }
         }else {
-          if(el.nodeType == NodeType.ELEMENT_NODE && !RE_FORM_EL.test(nodeName)) {
+          if(el.nodeType === NodeType.ELEMENT_NODE && !RE_FORM_EL.test(nodeName)) {
             var tmp = [], s, j, ss = el.getElementsByTagName("script");
             for(j = 0;j < ss.length;j++) {
               s = ss[j];
@@ -973,7 +972,7 @@ KISSY.add("dom/base/insertion", ["./api"], function(S, require) {
       Dom.insertBefore(wrapperNode, wrappedNodes[0])
     }
     var c;
-    while((c = wrapperNode.firstChild) && c.nodeType == 1) {
+    while((c = wrapperNode.firstChild) && c.nodeType === 1) {
       wrapperNode = c
     }
     Dom.appendTo(wrappedNodes, wrapperNode)
@@ -1016,8 +1015,10 @@ KISSY.add("dom/base/offset", ["./api"], function(S, require) {
   var Dom = require("./api");
   var win = S.Env.host, UA = S.UA, doc = win.document, NodeType = Dom.NodeType, docElem = doc && doc.documentElement, getWindow = Dom.getWindow, CSS1Compat = "CSS1Compat", compatMode = "compatMode", MAX = Math.max, POSITION = "position", RELATIVE = "relative", DOCUMENT = "document", BODY = "body", DOC_ELEMENT = "documentElement", VIEWPORT = "viewport", SCROLL = "scroll", CLIENT = "client", LEFT = "left", TOP = "top", SCROLL_LEFT = SCROLL + "Left", SCROLL_TOP = SCROLL + "Top";
   S.mix(Dom, {offset:function(selector, coordinates, relativeWin) {
+    var elem;
     if(coordinates === undefined) {
-      var elem = Dom.get(selector), ret;
+      elem = Dom.get(selector);
+      var ret;
       if(elem) {
         ret = getOffset(elem, relativeWin)
       }
@@ -1040,7 +1041,7 @@ KISSY.add("dom/base/offset", ["./api"], function(S, require) {
     if(!container) {
       container = elem.ownerDocument
     }
-    if(container.nodeType == NodeType.DOCUMENT_NODE) {
+    if(container.nodeType === NodeType.DOCUMENT_NODE) {
       container = getWindow(container)
     }
     if(S.isPlainObject(alignWithTop)) {
@@ -1125,7 +1126,7 @@ KISSY.add("dom/base/offset", ["./api"], function(S, require) {
       }
       elem = Dom.get(elem);
       var ret, left, top, w, d;
-      if(elem && elem.nodeType == NodeType.ELEMENT_NODE) {
+      if(elem && elem.nodeType === NodeType.ELEMENT_NODE) {
         if(v !== undefined) {
           elem[method] = parseFloat(v)
         }else {
@@ -1135,9 +1136,9 @@ KISSY.add("dom/base/offset", ["./api"], function(S, require) {
         w = getWindow(elem);
         if(v !== undefined) {
           v = parseFloat(v);
-          left = name == "Left" ? v : Dom.scrollLeft(w);
-          top = name == "Top" ? v : Dom.scrollTop(w);
-          w["scrollTo"](left, top)
+          left = name === "Left" ? v : Dom.scrollLeft(w);
+          top = name === "Top" ? v : Dom.scrollTop(w);
+          w.scrollTo(left, top)
         }else {
           ret = w["page" + (i ? "Y" : "X") + "Offset"];
           if(typeof ret !== "number") {
@@ -1191,10 +1192,10 @@ KISSY.add("dom/base/offset", ["./api"], function(S, require) {
     var position = {left:0, top:0}, currentWin = getWindow(el), offset, currentEl = el;
     relativeWin = relativeWin || currentWin;
     do {
-      offset = currentWin == relativeWin ? getPageOffset(currentEl) : getClientPosition(currentEl);
+      offset = currentWin === relativeWin ? getPageOffset(currentEl) : getClientPosition(currentEl);
       position.left += offset.left;
       position.top += offset.top
-    }while(currentWin && currentWin != relativeWin && (currentEl = currentWin["frameElement"]) && (currentWin = currentWin.parent));
+    }while(currentWin && currentWin !== relativeWin && (currentEl = currentWin.frameElement) && (currentWin = currentWin.parent));
     return position
   }
   function setOffset(elem, offset) {
@@ -1213,8 +1214,8 @@ KISSY.add("dom/base/offset", ["./api"], function(S, require) {
 KISSY.add("dom/base/style", ["./api"], function(S, require) {
   var Dom = require("./api");
   var logger = S.getLogger("s/dom");
-  var globalWindow = S.Env.host, UA = S.UA, undefined = undefined, Features = S.Features, getNodeName = Dom.nodeName, doc = globalWindow.document, RE_MARGIN = /^margin/, WIDTH = "width", HEIGHT = "height", DISPLAY = "display", OLD_DISPLAY = DISPLAY + S.now(), NONE = "none", cssNumber = {fillOpacity:1, fontWeight:1, lineHeight:1, opacity:1, orphans:1, widows:1, zIndex:1, zoom:1}, rmsPrefix = /^-ms-/, EMPTY = "", DEFAULT_UNIT = "px", NO_PX_REG = /\d(?!px)[a-z%]+$/i, cssHooks = {}, cssProps = {"float":"cssFloat"}, 
-  defaultDisplay = {}, RE_DASH = /-([a-z])/ig;
+  var globalWindow = S.Env.host, UA = S.UA, Features = S.Features, getNodeName = Dom.nodeName, doc = globalWindow.document, RE_MARGIN = /^margin/, WIDTH = "width", HEIGHT = "height", DISPLAY = "display", OLD_DISPLAY = DISPLAY + S.now(), NONE = "none", cssNumber = {fillOpacity:1, fontWeight:1, lineHeight:1, opacity:1, orphans:1, widows:1, zIndex:1, zoom:1}, rmsPrefix = /^-ms-/, EMPTY = "", DEFAULT_UNIT = "px", NO_PX_REG = /\d(?!px)[a-z%]+$/i, cssHooks = {}, cssProps = {"float":"cssFloat"}, defaultDisplay = 
+  {}, RE_DASH = /-([a-z])/ig;
   var VENDORS = ["", "Webkit", "Moz", "O", "ms"];
   var documentElementStyle = doc && doc.documentElement.style || {};
   var userSelectProperty;
@@ -1308,12 +1309,11 @@ KISSY.add("dom/base/style", ["./api"], function(S, require) {
     if(val === undefined) {
       ret = "";
       if(elem) {
-        if(hook && "get" in hook && (ret = hook.get(elem, true)) !== undefined) {
-        }else {
+        if(!(hook && "get" in hook && (ret = hook.get(elem, true)) !== undefined)) {
           ret = Dom._getComputedStyle(elem, name)
         }
       }
-      return typeof ret == "undefined" ? "" : ret
+      return typeof ret === "undefined" ? "" : ret
     }else {
       for(i = els.length - 1;i >= 0;i--) {
         style(els[i], name, val)
@@ -1355,7 +1355,7 @@ KISSY.add("dom/base/style", ["./api"], function(S, require) {
       }
     }
   }, addStyleSheet:function(refWin, cssText, id) {
-    if(typeof refWin == "string") {
+    if(typeof refWin === "string") {
       id = cssText;
       cssText = refWin;
       refWin = globalWindow
@@ -1452,8 +1452,8 @@ KISSY.add("dom/base/style", ["./api"], function(S, require) {
     }
   }
   function style(elem, name, val) {
-    var style, ret, hook;
-    if(elem.nodeType === 3 || elem.nodeType === 8 || !(style = elem.style)) {
+    var elStyle, ret, hook;
+    if(elem.nodeType === 3 || elem.nodeType === 8 || !(elStyle = elem.style)) {
       return undefined
     }
     name = camelCase(name);
@@ -1472,23 +1472,24 @@ KISSY.add("dom/base/style", ["./api"], function(S, require) {
       }
       if(val !== undefined) {
         try {
-          style[name] = val
+          elStyle[name] = val
         }catch(e) {
           logger.warn("css set error:" + e)
         }
-        if(val === EMPTY && style.removeAttribute) {
-          style.removeAttribute(name)
+        if(val === EMPTY && elStyle.removeAttribute) {
+          elStyle.removeAttribute(name)
         }
       }
-      if(!style.cssText) {
-        UA.webkit && (style = elem.outerHTML);
+      if(!elStyle.cssText) {
+        if(UA.webkit) {
+          elStyle = elem.outerHTML
+        }
         elem.removeAttribute("style")
       }
       return undefined
     }else {
-      if(hook && "get" in hook && (ret = hook.get(elem, false)) !== undefined) {
-      }else {
-        ret = style[name]
+      if(!(hook && "get" in hook && (ret = hook.get(elem, false)) !== undefined)) {
+        ret = elStyle[name]
       }
       return ret === undefined ? "" : ret
     }
@@ -1506,10 +1507,10 @@ KISSY.add("dom/base/style", ["./api"], function(S, require) {
   }
   function getWH(elem, name, extra) {
     if(S.isWindow(elem)) {
-      return name == WIDTH ? Dom.viewportWidth(elem) : Dom.viewportHeight(elem)
+      return name === WIDTH ? Dom.viewportWidth(elem) : Dom.viewportHeight(elem)
     }else {
-      if(elem.nodeType == 9) {
-        return name == WIDTH ? Dom.docWidth(elem) : Dom.docHeight(elem)
+      if(elem.nodeType === 9) {
+        return name === WIDTH ? Dom.docWidth(elem) : Dom.docHeight(elem)
       }
     }
     var which = name === WIDTH ? ["Left", "Right"] : ["Top", "Bottom"], val = name === WIDTH ? elem.offsetWidth : elem.offsetHeight;
@@ -1529,7 +1530,7 @@ KISSY.add("dom/base/style", ["./api"], function(S, require) {
       return val
     }
     val = Dom._getComputedStyle(elem, name);
-    if(val == null || Number(val) < 0) {
+    if(val === null || Number(val) < 0) {
       val = elem.style[name] || 0
     }
     val = parseFloat(val) || 0;
@@ -1549,7 +1550,7 @@ KISSY.add("dom/base/style", ["./api"], function(S, require) {
   var ROOT_REG = /^(?:body|html)$/i;
   function getPosition(el) {
     var offsetParent, offset, parentOffset = {top:0, left:0};
-    if(Dom.css(el, "position") == "fixed") {
+    if(Dom.css(el, "position") === "fixed") {
       offset = el.getBoundingClientRect()
     }else {
       offsetParent = getOffsetParent(el);
@@ -1573,9 +1574,9 @@ KISSY.add("dom/base/style", ["./api"], function(S, require) {
 });
 KISSY.add("dom/base/selector", ["./api"], function(S, require) {
   var Dom = require("./api");
-  var doc = S.Env.host.document, docElem = doc.documentElement, matches = docElem.matches || docElem["webkitMatchesSelector"] || docElem["mozMatchesSelector"] || docElem["oMatchesSelector"] || docElem["msMatchesSelector"], supportGetElementsByClassName = "getElementsByClassName" in doc, isArray = S.isArray, makeArray = S.makeArray, isDomNodeList = Dom.isDomNodeList, SPACE = " ", push = Array.prototype.push, rClassSelector = /^\.([\w-]+)$/, rIdSelector = /^#([\w-]+)$/, rTagSelector = /^([\w-])+$/, 
-  rTagIdSelector = /^([\w-]+)#([\w-]+)$/, rSimpleSelector = /^(?:#([\w-]+))?\s*([\w-]+|\*)?\.?([\w-]+)?$/, trim = S.trim;
-  function query_each(f) {
+  var doc = S.Env.host.document, docElem = doc.documentElement, matches = docElem.matches || docElem.webkitMatchesSelector || docElem.mozMatchesSelector || docElem.oMatchesSelector || docElem.msMatchesSelector, supportGetElementsByClassName = "getElementsByClassName" in doc, isArray = S.isArray, makeArray = S.makeArray, isDomNodeList = Dom.isDomNodeList, SPACE = " ", push = Array.prototype.push, rClassSelector = /^\.([\w-]+)$/, rIdSelector = /^#([\w-]+)$/, rTagSelector = /^([\w-])+$/, rTagIdSelector = 
+  /^([\w-]+)#([\w-]+)$/, rSimpleSelector = /^(?:#([\w-]+))?\s*([\w-]+|\*)?\.?([\w-]+)?$/, trim = S.trim;
+  function queryEach(f) {
     var els = this, l = els.length, i;
     for(i = 0;i < l;i++) {
       if(f(els[i], i) === false) {
@@ -1592,10 +1593,10 @@ KISSY.add("dom/base/selector", ["./api"], function(S, require) {
   }
   function makeMatch(selector) {
     var s = selector.charAt(0);
-    if(s == "#") {
+    if(s === "#") {
       return makeIdMatch(checkSelectorAndReturn(selector))
     }else {
-      if(s == ".") {
+      if(s === ".") {
         return makeClassMatch(checkSelectorAndReturn(selector))
       }else {
         return makeTagMatch(selector)
@@ -1623,14 +1624,14 @@ KISSY.add("dom/base/selector", ["./api"], function(S, require) {
     return!selector.match(complexReg)
   }
   function query(selector, context) {
-    var ret, i, el, simpleContext, isSelectorString = typeof selector == "string", contexts = context !== undefined ? query(context) : (simpleContext = 1) && [doc], contextsLen = contexts.length;
+    var ret, i, el, simpleContext, isSelectorString = typeof selector === "string", contexts = context !== undefined ? query(context) : (simpleContext = 1) && [doc], contextsLen = contexts.length;
     if(!selector) {
       ret = []
     }else {
       if(isSelectorString) {
         selector = trim(selector);
         if(simpleContext) {
-          if(selector == "body") {
+          if(selector === "body") {
             ret = [doc.body]
           }else {
             if(rClassSelector.test(selector) && supportGetElementsByClassName) {
@@ -1638,7 +1639,7 @@ KISSY.add("dom/base/selector", ["./api"], function(S, require) {
             }else {
               if(rTagIdSelector.test(selector)) {
                 el = Dom._getElementById(RegExp.$2, doc);
-                ret = el && el.nodeName.toLowerCase() == RegExp.$1 ? [el] : []
+                ret = el && el.nodeName.toLowerCase() === RegExp.$1 ? [el] : []
               }else {
                 if(rIdSelector.test(selector)) {
                   el = Dom._getElementById(selector.substr(1), doc);
@@ -1681,11 +1682,11 @@ KISSY.add("dom/base/selector", ["./api"], function(S, require) {
           }
         }
       }else {
-        if(selector["nodeType"] || selector["setTimeout"]) {
+        if(selector.nodeType || selector.setTimeout) {
           ret = [selector]
         }else {
-          if(selector["getDOMNodes"]) {
-            ret = selector["getDOMNodes"]()
+          if(selector.getDOMNodes) {
+            ret = selector.getDOMNodes()
           }else {
             if(isArray(selector)) {
               ret = selector
@@ -1712,7 +1713,7 @@ KISSY.add("dom/base/selector", ["./api"], function(S, require) {
         }
       }
     }
-    ret.each = query_each;
+    ret.each = queryEach;
     return ret
   }
   function hasSingleClass(el, cls) {
@@ -1727,7 +1728,7 @@ KISSY.add("dom/base/selector", ["./api"], function(S, require) {
     return undefined
   }
   function isTag(el, value) {
-    return value == "*" || el.nodeName.toLowerCase() === value.toLowerCase()
+    return value === "*" || el.nodeName.toLowerCase() === value.toLowerCase()
   }
   S.mix(Dom, {_compareNodeOrder:function(a, b) {
     if(!a.compareDocumentPosition || !b.compareDocumentPosition) {
@@ -1759,7 +1760,7 @@ KISSY.add("dom/base/selector", ["./api"], function(S, require) {
       return 0
     });
     function sortOrder(a, b) {
-      if(a == b) {
+      if(a === b) {
         hasDuplicate = true;
         return 0
       }
@@ -1783,7 +1784,7 @@ KISSY.add("dom/base/selector", ["./api"], function(S, require) {
     }
   }(), filter:function(selector, filter, context) {
     var elems = query(selector, context), id, tag, match, cls, ret = [];
-    if(typeof filter == "string" && (filter = trim(filter)) && (match = rSimpleSelector.exec(filter))) {
+    if(typeof filter === "string" && (filter = trim(filter)) && (match = rSimpleSelector.exec(filter))) {
       id = match[1];
       tag = match[2];
       cls = match[3];
@@ -1801,7 +1802,7 @@ KISSY.add("dom/base/selector", ["./api"], function(S, require) {
       }else {
         if(id && !tag && !cls) {
           filter = function(elem) {
-            return getAttr(elem, "id") == id
+            return getAttr(elem, "id") === id
           }
         }
       }
@@ -1825,11 +1826,11 @@ KISSY.add("dom/base/traversal", ["./api"], function(S, require) {
     return!!(a.compareDocumentPosition(b) & CONTAIN_MASK)
   }, closest:function(selector, filter, context, allowTextNode) {
     return nth(selector, filter, "parentNode", function(elem) {
-      return elem.nodeType != NodeType.DOCUMENT_FRAGMENT_NODE
+      return elem.nodeType !== NodeType.DOCUMENT_FRAGMENT_NODE
     }, context, true, allowTextNode)
   }, parent:function(selector, filter, context) {
     return nth(selector, filter, "parentNode", function(elem) {
-      return elem.nodeType != NodeType.DOCUMENT_FRAGMENT_NODE
+      return elem.nodeType !== NodeType.DOCUMENT_FRAGMENT_NODE
     }, context, undefined)
   }, first:function(selector, filter, allowTextNode) {
     var elem = Dom.get(selector);
@@ -1863,7 +1864,7 @@ KISSY.add("dom/base/traversal", ["./api"], function(S, require) {
       }
       c = el;
       while(c = c.previousSibling) {
-        if(c.nodeType == NodeType.ELEMENT_NODE) {
+        if(c.nodeType === NodeType.ELEMENT_NODE) {
           n++
         }
       }
@@ -1877,11 +1878,11 @@ KISSY.add("dom/base/traversal", ["./api"], function(S, require) {
   }, equals:function(n1, n2) {
     n1 = Dom.query(n1);
     n2 = Dom.query(n2);
-    if(n1.length != n2.length) {
+    if(n1.length !== n2.length) {
       return false
     }
     for(var i = n1.length;i >= 0;i--) {
-      if(n1[i] != n2[i]) {
+      if(n1[i] !== n2[i]) {
         return false
       }
     }
@@ -1912,8 +1913,8 @@ KISSY.add("dom/base/traversal", ["./api"], function(S, require) {
         return++fi === filterLength
       }
     }
-    while(elem && elem != context) {
-      if((elem.nodeType == NodeType.ELEMENT_NODE || elem.nodeType == NodeType.TEXT_NODE && allowTextNode) && testFilter(elem, filter) && (!extraFilter || extraFilter(elem))) {
+    while(elem && elem !== context) {
+      if((elem.nodeType === NodeType.ELEMENT_NODE || elem.nodeType === NodeType.TEXT_NODE && allowTextNode) && testFilter(elem, filter) && (!extraFilter || extraFilter(elem))) {
         ret.push(elem);
         if(!isArray) {
           break
@@ -1953,10 +1954,10 @@ KISSY.add("dom/base/traversal", ["./api"], function(S, require) {
       tmp = S.makeArray(parentNode.childNodes);
       for(i = 0;i < tmp.length;i++) {
         el = tmp[i];
-        if(!allowText && el.nodeType != NodeType.ELEMENT_NODE) {
+        if(!allowText && el.nodeType !== NodeType.ELEMENT_NODE) {
           continue
         }
-        if(el == elem) {
+        if(el === elem) {
           continue
         }
         ret.push(el)

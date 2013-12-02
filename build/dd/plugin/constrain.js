@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:39
+build time: Dec 2 15:13
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -9,7 +9,7 @@ build time: Nov 27 00:39
  dd/plugin/constrain
 */
 
-KISSY.add("dd/plugin/constrain", ["node", "base"], function(S, require) {
+KISSY.add("dd/plugin/constrain", ["node", "base"], function(S, require, exports, module) {
   var Node = require("node"), Base = require("base");
   var $ = Node.all, CONSTRAIN_EVENT = ".-ks-constrain" + S.now(), WIN = S.Env.host;
   function onDragStart(e) {
@@ -44,17 +44,17 @@ KISSY.add("dd/plugin/constrain", ["node", "base"], function(S, require) {
   function onDragEnd() {
     this.__constrainRegion = null
   }
-  return Base.extend({pluginId:"dd/plugin/constrain", __constrainRegion:null, pluginInitializer:function(drag) {
+  module.exports = Base.extend({pluginId:"dd/plugin/constrain", __constrainRegion:null, pluginInitializer:function(drag) {
     var self = this;
-    drag["on"]("dragstart" + CONSTRAIN_EVENT, onDragStart, self).on("dragend" + CONSTRAIN_EVENT, onDragEnd, self).on("dragalign" + CONSTRAIN_EVENT, onDragAlign, self)
+    drag.on("dragstart" + CONSTRAIN_EVENT, onDragStart, self).on("dragend" + CONSTRAIN_EVENT, onDragEnd, self).on("dragalign" + CONSTRAIN_EVENT, onDragAlign, self)
   }, pluginDestructor:function(drag) {
-    drag["detach"](CONSTRAIN_EVENT, {context:this})
+    drag.detach(CONSTRAIN_EVENT, {context:this})
   }}, {ATTRS:{constrain:{value:$(WIN), setter:function(v) {
     if(v) {
       if(v === true) {
         return $(WIN)
       }else {
-        if(v.nodeType || S.isWindow(v) || typeof v == "string") {
+        if(v.nodeType || S.isWindow(v) || typeof v === "string") {
           return $(v)
         }
       }

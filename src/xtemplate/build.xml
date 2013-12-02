@@ -4,6 +4,10 @@
 
     <import file="../common.xml"/>
 
+    <target name="compress-css"/>
+
+    <target name="tpl2mod"/>
+
     <target name="build-all">
         <subant target="" failonerror="true" inheritall="false">
             <fileset dir="./sub-modules" includes="**/build.xml"/>
@@ -12,5 +16,4 @@
                 buildpath="."
                 inheritall="false"/>
     </target>
-
 </project>

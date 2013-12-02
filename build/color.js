@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:37
+build time: Dec 2 15:11
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -31,12 +31,12 @@ KISSY.add("color", ["attribute"], function(S, require, exports, module) {
     return this.toRGBA()
   }, getHSL:function() {
     var self = this, r = self.get("r") / 255, g = self.get("g") / 255, b = self.get("b") / 255, max = Math.max(r, g, b), min = Math.min(r, g, b), delta = max - min, h, s = 0, l = 0.5 * (max + min);
-    if(min != max) {
+    if(min !== max) {
       s = l < 0.5 ? delta / (max + min) : delta / (2 - max - min);
-      if(r == max) {
+      if(r === max) {
         h = 60 * (g - b) / delta
       }else {
-        if(g == max) {
+        if(g === max) {
           h = 120 + 60 * (b - r) / delta
         }else {
           h = 240 + 60 * (r - g) / delta
@@ -49,8 +49,7 @@ KISSY.add("color", ["attribute"], function(S, require, exports, module) {
     return rgb2hsv({r:this.get("r"), g:this.get("g"), b:this.get("b")})
   }, setHSV:function(cfg) {
     var self = this, current;
-    if("h" in cfg && "s" in cfg && "v" in cfg) {
-    }else {
+    if(!("h" in cfg && "s" in cfg && "v" in cfg)) {
       current = self.getHSV();
       S.each(["h", "s", "v"], function(x) {
         if(x in cfg) {
@@ -62,8 +61,7 @@ KISSY.add("color", ["attribute"], function(S, require, exports, module) {
     self.set(hsv2rgb(cfg))
   }, setHSL:function(cfg) {
     var self = this, current;
-    if("h" in cfg && "s" in cfg && "l" in cfg) {
-    }else {
+    if(!("h" in cfg && "s" in cfg && "l" in cfg)) {
       current = self.getHSL();
       S.each(["h", "s", "l"], function(x) {
         if(x in cfg) {
@@ -90,13 +88,13 @@ KISSY.add("color", ["attribute"], function(S, require, exports, module) {
     return constrain1(v)
   }}}, parse:function(str) {
     var values, r, g, b, a = 1;
-    if((str.length == 4 || str.length == 7) && str.substr(0, 1) === "#") {
+    if((str.length === 4 || str.length === 7) && str.substr(0, 1) === "#") {
       values = str.match(hexRe);
       if(values) {
         r = parseHex(values[1]);
         g = parseHex(values[2]);
         b = parseHex(values[3]);
-        if(str.length == 4) {
+        if(str.length === 4) {
           r = paddingHex(r);
           g = paddingHex(g);
           b = paddingHex(b)
@@ -111,7 +109,7 @@ KISSY.add("color", ["attribute"], function(S, require, exports, module) {
         a = parseFloat(values[4]) || 1
       }
     }
-    return typeof r == "undefined" ? undefined : new Color({r:r, g:g, b:b, a:a})
+    return typeof r === "undefined" ? undefined : new Color({r:r, g:g, b:b, a:a})
   }, fromHSL:function(cfg) {
     var rgb = hsl2rgb(cfg);
     rgb.a = cfg.a;
@@ -186,7 +184,7 @@ KISSY.add("color", ["attribute"], function(S, require, exports, module) {
   }
   function hsl2rgb(cfg) {
     var h = Math.min(Math.round(cfg.h), 359), s = Math.max(0, Math.min(1, cfg.s)), l = Math.max(0, Math.min(1, cfg.l)), C, X, m, rgb = [], abs = Math.abs, floor = Math.floor;
-    if(s == 0 || h == null) {
+    if(s === 0 || h == null) {
       rgb = [l, l, l]
     }else {
       h /= 60;
@@ -227,7 +225,7 @@ KISSY.add("color", ["attribute"], function(S, require, exports, module) {
     return v + v * 16
   }
   function padding2(v) {
-    if(v.length != 2) {
+    if(v.length !== 2) {
       v = "0" + v
     }
     return v

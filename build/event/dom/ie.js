@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:48
+build time: Dec 2 15:22
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -20,9 +20,9 @@ KISSY.add("event/dom/ie/change", ["event/dom/base", "dom"], function(S, require)
   }
   function isCheckBoxOrRadio(el) {
     var type = el.type;
-    return type == "checkbox" || type == "radio"
+    return type === "checkbox" || type === "radio"
   }
-  Special["change"] = {setup:function() {
+  Special.change = {setup:function() {
     var el = this;
     if(isFormElement(el)) {
       if(isCheckBoxOrRadio(el)) {
@@ -54,7 +54,7 @@ KISSY.add("event/dom/ie/change", ["event/dom/base", "dom"], function(S, require)
     }
   }};
   function propertyChange(e) {
-    if(e.originalEvent.propertyName == "checked") {
+    if(e.originalEvent.propertyName === "checked") {
       this.__changed = 1
     }
   }
@@ -86,29 +86,29 @@ KISSY.add("event/dom/ie/submit", ["event/dom/base", "dom"], function(S, require)
   var DomEvent = require("event/dom/base");
   var Dom = require("dom");
   var Special = DomEvent.Special, getNodeName = Dom.nodeName;
-  Special["submit"] = {setup:function() {
+  Special.submit = {setup:function() {
     var el = this;
-    if(getNodeName(el) == "form") {
+    if(getNodeName(el) === "form") {
       return false
     }
     DomEvent.on(el, "click keypress", detector)
   }, tearDown:function() {
     var el = this;
-    if(getNodeName(el) == "form") {
+    if(getNodeName(el) === "form") {
       return false
     }
     DomEvent.remove(el, "click keypress", detector);
     S.each(Dom.query("form", el), function(form) {
-      if(form.__submit__fix) {
-        form.__submit__fix = 0;
+      if(form.__submitFix) {
+        form.__submitFix = 0;
         DomEvent.remove(form, "submit", {fn:submitBubble, last:1})
       }
     })
   }};
   function detector(e) {
-    var t = e.target, nodeName = getNodeName(t), form = nodeName == "input" || nodeName == "button" ? t.form : null;
-    if(form && !form.__submit__fix) {
-      form.__submit__fix = 1;
+    var t = e.target, nodeName = getNodeName(t), form = nodeName === "input" || nodeName === "button" ? t.form : null;
+    if(form && !form.__submitFix) {
+      form.__submitFix = 1;
       DomEvent.on(form, "submit", {fn:submitBubble, last:1})
     }
   }

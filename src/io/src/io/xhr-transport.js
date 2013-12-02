@@ -12,7 +12,7 @@ KISSY.add(function (S, require) {
     var win = S.Env.host,
         doc = win.document,
 
-        _XDomainRequest = XhrTransportBase._XDomainRequest;
+        XDomainRequest_ = XhrTransportBase.XDomainRequest_;
 
     // express: subdomain offset
     function isSubDomain(hostname) {
@@ -29,7 +29,7 @@ KISSY.add(function (S, require) {
             crossDomain = c.crossDomain,
             self = this,
             xhr,
-            xdrCfg = c['xdr'] || {},
+            xdrCfg = c.xdr || {},
             subDomain = xdrCfg.subDomain = xdrCfg.subDomain || {};
 
         self.io = io;
@@ -48,7 +48,7 @@ KISSY.add(function (S, require) {
              使用 withCredentials 检测是否支持 CORS
              http://hacks.mozilla.org/2009/07/cross-site-xmlhttprequest-with-cors/
              */
-            if ((String(xdrCfg.use) === 'flash' || !_XDomainRequest)) {
+            if ((String(xdrCfg.use) === 'flash' || !XDomainRequest_)) {
                 return new XdrFlashTransport(io);
             }
         }
@@ -56,7 +56,7 @@ KISSY.add(function (S, require) {
         xhr = self.nativeXhr = XhrTransportBase.nativeXhr(crossDomain);
 
         var msg = 'crossDomain: ' + crossDomain + ', use ' +
-            (_XDomainRequest && (xhr instanceof _XDomainRequest) ?
+            (XDomainRequest_ && (xhr instanceof XDomainRequest_) ?
                 'XDomainRequest' :
                 'XhrTransport') + ' for: ' + c.url;
         logger.debug(msg);
@@ -70,7 +70,7 @@ KISSY.add(function (S, require) {
         }
     });
 
-    IO['setupTransport']('*', XhrTransport);
+    IO.setupTransport('*', XhrTransport);
 
     return IO;
 });

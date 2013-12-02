@@ -267,6 +267,7 @@ if (! _$jscoverage['/base/queue.js']) {
   _$jscoverage['/base/queue.js'].lineData[77] = 0;
   _$jscoverage['/base/queue.js'].lineData[79] = 0;
   _$jscoverage['/base/queue.js'].lineData[82] = 0;
+  _$jscoverage['/base/queue.js'].lineData[86] = 0;
 }
 if (! _$jscoverage['/base/queue.js'].functionData) {
   _$jscoverage['/base/queue.js'].functionData = [];
@@ -386,7 +387,7 @@ KISSY.add(function(S, require) {
     return qu;
   }
   _$jscoverage['/base/queue.js'].lineData[33]++;
-  return Q = {
+  Q = {
   queueCollectionKey: queueCollectionKey, 
   queue: function(node, queue, item) {
   _$jscoverage['/base/queue.js'].functionData[2]++;
@@ -458,4 +459,6 @@ KISSY.add(function(S, require) {
   _$jscoverage['/base/queue.js'].lineData[82]++;
   return qu;
 }};
+  _$jscoverage['/base/queue.js'].lineData[86]++;
+  return Q;
 });

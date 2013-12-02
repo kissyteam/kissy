@@ -368,11 +368,11 @@ if (! _$jscoverage['/compiler/ast.js'].branchData) {
   _$jscoverage['/compiler/ast.js'].branchData['182'] = [];
   _$jscoverage['/compiler/ast.js'].branchData['182'][1] = new BranchData();
 }
-_$jscoverage['/compiler/ast.js'].branchData['182'][1].init(17, 9, 'p == ".."');
+_$jscoverage['/compiler/ast.js'].branchData['182'][1].init(17, 10, 'p === \'..\'');
 function visit2_182_1(result) {
   _$jscoverage['/compiler/ast.js'].branchData['182'][1].ranCondition(result);
   return result;
-}_$jscoverage['/compiler/ast.js'].branchData['29'][1].init(94, 40, '!S.equals(tpl.path[\'parts\'], closeParts)');
+}_$jscoverage['/compiler/ast.js'].branchData['29'][1].init(91, 37, '!S.equals(tpl.path.parts, closeParts)');
 function visit1_29_1(result) {
   _$jscoverage['/compiler/ast.js'].branchData['29'][1].ranCondition(result);
   return result;
@@ -399,11 +399,11 @@ KISSY.add(function(S) {
   ast.BlockNode = function(lineNumber, tpl, program, close) {
   _$jscoverage['/compiler/ast.js'].functionData[2]++;
   _$jscoverage['/compiler/ast.js'].lineData[27]++;
-  var closeParts = close['parts'], self = this, e;
+  var closeParts = close.parts, self = this, e;
   _$jscoverage['/compiler/ast.js'].lineData[29]++;
-  if (visit1_29_1(!S.equals(tpl.path['parts'], closeParts))) {
+  if (visit1_29_1(!S.equals(tpl.path.parts, closeParts))) {
     _$jscoverage['/compiler/ast.js'].lineData[30]++;
-    e = ("Syntax error at line " + lineNumber + ":\n" + "expect {{/" + tpl.path['parts'] + "}} not {{/" + closeParts + "}}");
+    e = ('Syntax error at line ' + lineNumber + ':\n' + 'expect {{/' + tpl.path.parts + '}} not {{/' + closeParts + '}}');
     _$jscoverage['/compiler/ast.js'].lineData[36]++;
     S.error(e);
   }
@@ -615,7 +615,7 @@ KISSY.add(function(S) {
   S.each(raw, function(p) {
   _$jscoverage['/compiler/ast.js'].functionData[19]++;
   _$jscoverage['/compiler/ast.js'].lineData[182]++;
-  if (visit2_182_1(p == "..")) {
+  if (visit2_182_1(p === '..')) {
     _$jscoverage['/compiler/ast.js'].lineData[183]++;
     depth++;
   } else {

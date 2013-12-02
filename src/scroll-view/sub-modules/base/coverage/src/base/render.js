@@ -303,11 +303,11 @@ if (! _$jscoverage['/base/render.js'].branchData) {
   _$jscoverage['/base/render.js'].branchData['125'] = [];
   _$jscoverage['/base/render.js'].branchData['125'][1] = new BranchData();
 }
-_$jscoverage['/base/render.js'].branchData['125'][1].init(3945, 11, 'supportCss3');
+_$jscoverage['/base/render.js'].branchData['125'][1].init(3946, 11, 'supportCss3');
 function visit9_125_1(result) {
   _$jscoverage['/base/render.js'].branchData['125'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/render.js'].branchData['103'][1].init(861, 9, 'pageIndex');
+}_$jscoverage['/base/render.js'].branchData['103'][1].init(862, 9, 'pageIndex');
 function visit8_103_1(result) {
   _$jscoverage['/base/render.js'].branchData['103'][1].ranCondition(result);
   return result;
@@ -323,7 +323,7 @@ function visit6_95_2(result) {
 function visit5_95_1(result) {
   _$jscoverage['/base/render.js'].branchData['95'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/render.js'].branchData['86'][1].init(97, 23, 'typeof snap == \'string\'');
+}_$jscoverage['/base/render.js'].branchData['86'][1].init(97, 24, 'typeof snap === \'string\'');
 function visit4_86_1(result) {
   _$jscoverage['/base/render.js'].branchData['86'][1].ranCondition(result);
   return result;
@@ -397,7 +397,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/base/render.js'].lineData[85]++;
     var elOffset = $contentEl.offset();
     _$jscoverage['/base/render.js'].lineData[86]++;
-    var pages = control.pages = visit4_86_1(typeof snap == 'string') ? $contentEl.all(snap) : $contentEl.children(), pageIndex = control.get('pageIndex'), pagesOffset = control.pagesOffset = [];
+    var pages = control.pages = visit4_86_1(typeof snap === 'string') ? $contentEl.all(snap) : $contentEl.children(), pageIndex = control.get('pageIndex'), pagesOffset = control.pagesOffset = [];
     _$jscoverage['/base/render.js'].lineData[91]++;
     pages.each(function(p, i) {
   _$jscoverage['/base/render.js'].functionData[2]++;

@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 29 12:45
+build time: Dec 2 15:24
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -27,12 +27,14 @@ KISSY.add("overlay/extension/loading", ["node"], function(S, require) {
   Loading.prototype = {loading:function() {
     var self = this;
     if(!self._loadingExtEl) {
-      self._loadingExtEl = (new Node("<div " + "class='" + self.get("prefixCls") + "ext-loading'" + " style='position: absolute;" + "border: none;" + "width: 100%;" + "top: 0;" + "left: 0;" + "z-index: 99999;" + "height:100%;" + "*height: expression(this.parentNode.offsetHeight);" + "'/>")).appendTo(self.$el)
+      self._loadingExtEl = (new Node("<div " + 'class="' + self.get("prefixCls") + 'ext-loading"' + ' style="position: absolute;' + "border: none;" + "width: 100%;" + "top: 0;" + "left: 0;" + "z-index: 99999;" + "height:100%;" + "*height: expression(this.parentNode.offsetHeight);" + '"/>')).appendTo(self.$el)
     }
     self._loadingExtEl.show()
   }, unloading:function() {
     var lel = this._loadingExtEl;
-    lel && lel.hide()
+    if(lel) {
+      lel.hide()
+    }
   }};
   return Loading
 });
@@ -225,7 +227,7 @@ KISSY.add("overlay/extension/overlay-effect", [], function(S) {
   }
   function processEffect(self, show, callback) {
     var el = self.$el, effectCfg = self.get("effect"), effect = effectCfg.effect || "none", target = effectCfg.target;
-    if(effect == "none" && !target) {
+    if(effect === "none" && !target) {
       callback();
       return
     }
@@ -246,7 +248,7 @@ KISSY.add("overlay/extension/overlay-effect", [], function(S) {
   }
   OverlayEffect.ATTRS = {effect:{value:{effect:"", target:null, duration:0.5, easing:"easeOut"}, setter:function(v) {
     var effect = v.effect;
-    if(typeof effect == "string" && !effects[effect]) {
+    if(typeof effect === "string" && !effects[effect]) {
       v.effect = ""
     }
   }}};
@@ -453,13 +455,12 @@ KISSY.add("overlay/dialog", ["./control", "./dialog-render", "node"], function(S
   var DialogRender = require("./dialog-render");
   var Node = require("node");
   var Dialog = Overlay.extend({__afterCreateEffectGhost:function(ghost) {
-    var self = this, body, elBody = self.get("body");
+    var self = this, elBody = self.get("body");
     ghost.all("." + self.get("prefixCls") + "stdmod-body").css({height:elBody.height(), width:elBody.width()}).html("");
     return ghost
   }, handleKeyDownInternal:function(e) {
     if(this.get("escapeToClose") && e.keyCode === Node.KeyCode.ESC) {
-      if(e.target.nodeName.toLowerCase() == "select" && !e.target.disabled) {
-      }else {
+      if(!(e.target.nodeName.toLowerCase() === "select" && !e.target.disabled)) {
         this.close();
         e.halt()
       }
@@ -475,8 +476,10 @@ KISSY.add("overlay/dialog", ["./control", "./dialog-render", "node"], function(S
     }else {
       el.setAttribute("aria-hidden", "true");
       try {
-        self.__lastActive && self.__lastActive.focus()
-      }catch(e) {
+        if(self.__lastActive) {
+          self.__lastActive.focus()
+        }
+      }catch(ee) {
       }
     }
     self.callSuper(v, e)
@@ -484,13 +487,13 @@ KISSY.add("overlay/dialog", ["./control", "./dialog-render", "node"], function(S
   var KEY_TAB = Node.KeyCode.TAB;
   function trapFocus(e) {
     var self = this, keyCode = e.keyCode;
-    if(keyCode != KEY_TAB) {
+    if(keyCode !== KEY_TAB) {
       return
     }
     var $el = self.$el;
     var node = Node.all(e.target);
     var lastFocusItem = $el.last();
-    if(node.equals(el) && e.shiftKey) {
+    if(node.equals($el) && e.shiftKey) {
       lastFocusItem[0].focus();
       e.halt()
     }else {

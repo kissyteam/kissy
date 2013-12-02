@@ -265,7 +265,7 @@ if (! _$jscoverage['/touch/tap-hold.js'].branchData) {
   _$jscoverage['/touch/tap-hold.js'].branchData['20'][1] = new BranchData();
 }
 _$jscoverage['/touch/tap-hold.js'].branchData['20'][1].init(46, 55, 'TapHold.superclass.onTouchStart.call(self, e) === false');
-function visit104_20_1(result) {
+function visit105_20_1(result) {
   _$jscoverage['/touch/tap-hold.js'].branchData['20'][1].ranCondition(result);
   return result;
 }_$jscoverage['/touch/tap-hold.js'].lineData[6]++;
@@ -292,7 +292,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/touch/tap-hold.js'].lineData[19]++;
   var self = this;
   _$jscoverage['/touch/tap-hold.js'].lineData[20]++;
-  if (visit104_20_1(TapHold.superclass.onTouchStart.call(self, e) === false)) {
+  if (visit105_20_1(TapHold.superclass.onTouchStart.call(self, e) === false)) {
     _$jscoverage['/touch/tap-hold.js'].lineData[21]++;
     return false;
   }

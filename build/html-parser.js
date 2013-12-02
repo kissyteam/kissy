@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:48
+build time: Dec 2 15:23
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -44,18 +44,18 @@ KISSY.add("html-parser/dtd", [], function(S) {
   center:P, kbd:L, button:merge(I, E), basefont:{}, h5:L, h4:L, samp:L, h6:L, ol:Q, h1:L, h3:L, option:N, h2:L, form:merge(A, D, E, I), select:{optgroup:1, option:1}, font:L, ins:L, menu:Q, abbr:L, label:L, table:{thead:1, col:1, tbody:1, tr:1, colgroup:1, caption:1, tfoot:1}, code:L, script:N, tfoot:M, cite:L, li:P, input:{}, iframe:P, strong:L, textarea:N, noframes:P, big:L, small:L, span:L, hr:{}, dt:L, sub:L, optgroup:{option:1}, param:{}, bdo:L, "var":L, div:P, object:O, sup:L, dd:P, strike:L, 
   area:{}, dir:Q, map:merge({area:1, form:1, p:1}, A, F, E), applet:O, dl:{dt:1, dd:1}, del:L, isindex:{}, fieldset:merge({legend:1}, K), thead:M, ul:Q, acronym:L, b:L, a:J, blockquote:P, caption:L, i:L, u:L, tbody:M, s:L, address:merge(D, I), tt:L, legend:L, q:L, pre:merge(G, C), p:L, em:L, dfn:L};
   (function() {
-    var i, html_tags = ["article", "figure", "nav", "aside", "section", "footer"];
+    var i, html5Tags = ["article", "figure", "nav", "aside", "section", "footer"];
     for(var p in dtd) {
       for(var p2 in dtd[p]) {
         if(p2 === "div") {
-          for(i = 0;i < html_tags.length;i++) {
-            dtd[p][html_tags[i]] = dtd[p][p2]
+          for(i = 0;i < html5Tags.length;i++) {
+            dtd[p][html5Tags[i]] = dtd[p][p2]
           }
         }
       }
     }
-    for(i = 0;i < html_tags.length;i++) {
-      dtd[html_tags[i]] = dtd["div"]
+    for(i = 0;i < html5Tags.length;i++) {
+      dtd[html5Tags[i]] = dtd.div
     }
     dtd.$empty["!doctype"] = 1
   })();
@@ -82,7 +82,7 @@ KISSY.add("html-parser/lexer/index", [], function() {
   }
   Index.prototype = {constructor:Index, add:function(cursor) {
     var index = indexOfCursorForInsert(this.lineCursors, cursor);
-    if(index != -1) {
+    if(index !== -1) {
       this.lineCursors.splice(index, 0, cursor.clone())
     }
   }, remove:function(cursor) {
@@ -100,8 +100,8 @@ KISSY.add("html-parser/lexer/index", [], function() {
     }
     return i
   }, col:function(cursor) {
-    var linePosition = 0, lineCursor;
-    if(lineCursor = this.lineCursors[this.row(cursor) - 1]) {
+    var linePosition = 0, lineCursor = this.lineCursors[this.row(cursor) - 1];
+    if(lineCursor) {
       linePosition = lineCursor.position
     }
     return cursor.position - linePosition
@@ -181,7 +181,7 @@ KISSY.add("html-parser/lexer/page", ["./index"], function(S, require) {
   }};
   return Page
 });
-KISSY.add("html-parser/nodes/node", [], function(S) {
+KISSY.add("html-parser/nodes/node", [], function() {
   function lineCount(str) {
     var i = 0;
     str.replace(/\n/g, function() {
@@ -230,7 +230,7 @@ KISSY.add("html-parser/nodes/node", [], function(S) {
 KISSY.add("html-parser/nodes/text", ["./node"], function(S, require) {
   var Node = require("./node");
   function Text(v) {
-    if(typeof v == "string") {
+    if(typeof v === "string") {
       this.nodeValue = v;
       Text.superclass.constructor.apply(this, [null, -1, -1])
     }else {
@@ -289,16 +289,16 @@ KISSY.add("html-parser/utils", [], function() {
   }, isLetter:function(ch) {
     return"a" <= ch && "z" >= ch || "A" <= ch && "Z" >= ch
   }, isValidAttributeNameStartChar:function(ch) {
-    return!this.isWhitespace(ch) && ch !== '"' && ch !== "'" && ch !== ">" && ch !== "<" && ch !== "/" && ch !== "="
+    return!this.isWhitespace(ch) && ch !== '"' && ch !== "'" && ch !== ">" && ch !== "" < "" && ch !== "/" && ch !== "="
   }, isWhitespace:function(ch) {
     return/^[\s\xa0]$/.test(ch)
   }}
 });
 KISSY.add("html-parser/nodes/attribute", [], function(S) {
-  function Attribute(name, assignMent, value, quote) {
+  function Attribute(name, assignment, value, quote) {
     this.nodeType = 2;
     this.name = name;
-    this["assignMent"] = assignMent;
+    this.assignment = assignment;
     this.value = value;
     this.quote = quote
   }
@@ -307,7 +307,7 @@ KISSY.add("html-parser/nodes/attribute", [], function(S) {
     S.mix(ret, this);
     return ret
   }, equals:function(other) {
-    return this.name == other.name && this.value == other.value && this.nodeType == other.nodeType
+    return this.name === other.name && this.value === other.value && this.nodeType === other.nodeType
   }});
   Attribute.prototype.clone = function() {
     var ret = new Attribute;
@@ -334,7 +334,7 @@ KISSY.add("html-parser/nodes/tag", ["./node", "./attribute", "../dtd"], function
     self.lastChild = null;
     self.attributes = attributes || [];
     self.nodeType = 1;
-    if(typeof page == "string") {
+    if(typeof page === "string") {
       createTag.apply(null, [self].concat(S.makeArray(arguments)))
     }else {
       Tag.superclass.constructor.apply(self, arguments);
@@ -350,10 +350,10 @@ KISSY.add("html-parser/nodes/tag", ["./node", "./attribute", "../dtd"], function
         attributes.length = attributes.length - 1
       }
       self.isSelfClosed = self.isSelfClosed || lastSlash;
-      self["closed"] = self.isSelfClosed
+      self.closed = self.isSelfClosed
     }
-    self["closedStartPosition"] = -1;
-    self["closedEndPosition"] = -1
+    self.closedStartPosition = -1;
+    self.closedEndPosition = -1
   }
   function refreshChildNodes(self) {
     var c = self.childNodes;
@@ -378,7 +378,7 @@ KISSY.add("html-parser/nodes/tag", ["./node", "./attribute", "../dtd"], function
     if(!self.isSelfClosed) {
       self.isSelfClosed = /\/$/.test(self.nodeName)
     }
-    self["closed"] = self.isSelfClosed
+    self.closed = self.isSelfClosed
   }, clone:function() {
     var ret = new Tag, attrs = [];
     S.each(this.attributes, function(a) {
@@ -431,7 +431,7 @@ KISSY.add("html-parser/nodes/tag", ["./node", "./attribute", "../dtd"], function
     refreshChildNodes(ref.parentNode)
   }, insertAfter:function(ref) {
     var silbing = ref.parentNode.childNodes, index = S.indexOf(ref, silbing);
-    if(index == silbing.length - 1) {
+    if(index === silbing.length - 1) {
       ref.parentNode.appendChild(this)
     }else {
       this.insertBefore(ref.parentNode.childNodes[[index + 1]])
@@ -473,7 +473,7 @@ KISSY.add("html-parser/nodes/tag", ["./node", "./attribute", "../dtd"], function
     }
   }, writeHtml:function(writer, filter) {
     var el = this, tmp, attrName, tagName = el.tagName;
-    if(tagName == "!doctype") {
+    if(tagName === "!doctype") {
       writer.append(this.toHtml() + "\n");
       return
     }
@@ -530,7 +530,7 @@ KISSY.add("html-parser/nodes/tag", ["./node", "./attribute", "../dtd"], function
   function findAttributeByName(attributes, name) {
     if(attributes && attributes.length) {
       for(var i = 0;i < attributes.length;i++) {
-        if(attributes[i].name == name) {
+        if(attributes[i].name === name) {
           return attributes[i]
         }
       }
@@ -597,23 +597,23 @@ KISSY.add("html-parser/lexer/lexer", ["./cursor", "./page", "../nodes/text", "..
         break;
       case "<":
         ch = page.getChar(cursor);
-        if(ch == -1) {
+        if(ch === -1) {
           ret = this.makeString(start, cursor.position)
         }else {
-          if(ch == "/" || Utils.isLetter(ch)) {
+          if(ch === "/" || Utils.isLetter(ch)) {
             page.ungetChar(cursor);
             ret = this.parseTag(start)
           }else {
-            if("!" == ch || "?" == ch) {
+            if("!" === ch || "?" === ch) {
               ch = page.getChar(cursor);
-              if(ch == -1) {
+              if(ch === -1) {
                 ret = this.makeString(start, cursor.position)
               }else {
-                if(">" == ch) {
+                if(">" === ch) {
                   ret = this.makeComment(start, cursor.position)
                 }else {
                   page.ungetChar(cursor);
-                  if("-" == ch) {
+                  if("-" === ch) {
                     ret = this.parseComment(start, quoteSmart)
                   }else {
                     page.ungetChar(cursor);
@@ -695,27 +695,27 @@ KISSY.add("html-parser/lexer/lexer", ["./cursor", "./page", "../nodes/text", "..
       ch = page.getChar(cursor);
       switch(state) {
         case 0:
-          if(ch == -1 || ">" == ch || "<" == ch) {
-            if("<" == ch) {
+          if(ch === -1 || ">" === ch || "<" === ch) {
+            if("<" === ch) {
               page.ungetChar(cursor);
               bookmarks[state + 1] = cursor.position
             }
             done = true
           }else {
             if(!attributes.length) {
-              if(ch == "/" || Utils.isValidAttributeNameStartChar(ch)) {
+              if(ch === "/" || Utils.isValidAttributeNameStartChar(ch)) {
                 state = 1
               }
             }else {
-              if(ch == "/" || Utils.isValidAttributeNameStartChar(ch)) {
+              if(ch === "/" || Utils.isValidAttributeNameStartChar(ch)) {
                 state = 1
               }
             }
           }
           break;
         case 1:
-          if(-1 == ch || ">" == ch || "<" == ch) {
-            if("<" == ch) {
+          if(-1 === ch || ">" === ch || "<" === ch) {
+            if("<" === ch) {
               page.ungetChar(cursor);
               bookmarks[state + 1] = cursor.getPosition
             }
@@ -726,27 +726,26 @@ KISSY.add("html-parser/lexer/lexer", ["./cursor", "./page", "../nodes/text", "..
               bookmarks[6] = bookmarks[2];
               state = 6
             }else {
-              if("=" == ch) {
+              if("=" === ch) {
                 state = 2
               }
             }
           }
           break;
         case 2:
-          if(-1 == ch || ">" == ch) {
+          if(-1 === ch || ">" === ch) {
             this.standalone(attributes, bookmarks);
             done = true
           }else {
-            if("'" == ch) {
+            if("'" === ch) {
               state = 4;
               bookmarks[4] = bookmarks[3]
             }else {
-              if('"' == ch) {
+              if('"' === ch) {
                 state = 5;
                 bookmarks[5] = bookmarks[3]
               }else {
-                if(Utils.isWhitespace(ch)) {
-                }else {
+                if(!Utils.isWhitespace(ch)) {
                   state = 3
                 }
               }
@@ -754,7 +753,7 @@ KISSY.add("html-parser/lexer/lexer", ["./cursor", "./page", "../nodes/text", "..
           }
           break;
         case 3:
-          if(-1 == ch || ">" == ch) {
+          if(-1 === ch || ">" === ch) {
             this.naked(attributes, bookmarks);
             done = true
           }else {
@@ -766,43 +765,42 @@ KISSY.add("html-parser/lexer/lexer", ["./cursor", "./page", "../nodes/text", "..
           }
           break;
         case 4:
-          if(-1 == ch) {
-            this.single_quote(attributes, bookmarks);
+          if(-1 === ch) {
+            this.singleQuote(attributes, bookmarks);
             done = true
           }else {
-            if("'" == ch) {
-              this.single_quote(attributes, bookmarks);
+            if("'" === ch) {
+              this.singleQuote(attributes, bookmarks);
               bookmarks[0] = bookmarks[5] + 1;
               state = 0
             }
           }
           break;
         case 5:
-          if(-1 == ch) {
-            this.double_quote(attributes, bookmarks);
+          if(-1 === ch) {
+            this.doubleQuote(attributes, bookmarks);
             done = true
           }else {
-            if('"' == ch) {
-              this.double_quote(attributes, bookmarks);
+            if('"' === ch) {
+              this.doubleQuote(attributes, bookmarks);
               bookmarks[0] = bookmarks[6] + 1;
               state = 0
             }
           }
           break;
         case 6:
-          if(-1 == ch) {
+          if(-1 === ch) {
             this.standalone(attributes, bookmarks);
             bookmarks[0] = bookmarks[6];
             page.ungetChar(cursor);
             state = 0
           }else {
-            if(Utils.isWhitespace(ch)) {
+            if("=" === ch) {
+              bookmarks[2] = bookmarks[6];
+              bookmarks[3] = bookmarks[7];
+              state = 2
             }else {
-              if("=" == ch) {
-                bookmarks[2] = bookmarks[6];
-                bookmarks[3] = bookmarks[7];
-                state = 2
-              }else {
+              if(!Utils.isWhitespace(ch)) {
                 this.standalone(attributes, bookmarks);
                 bookmarks[0] = bookmarks[6];
                 page.ungetChar(cursor);
@@ -823,27 +821,28 @@ KISSY.add("html-parser/lexer/lexer", ["./cursor", "./page", "../nodes/text", "..
     state = 0;
     while(!done) {
       ch = page.getChar(cursor);
-      if(-1 == ch) {
+      if(-1 === ch) {
         done = true
       }else {
         switch(state) {
           case 0:
-            if(">" == ch) {
+            if(">" === ch) {
               done = true
-            }
-            if("-" == ch) {
-              state = 1
             }else {
-              return this.parseString(start, quoteSmart)
+              if("-" === ch) {
+                state = 1
+              }else {
+                return this.parseString(start, quoteSmart)
+              }
             }
             break;
           case 1:
-            if("-" == ch) {
+            if("-" === ch) {
               ch = page.getChar(cursor);
-              if(-1 == ch) {
+              if(-1 === ch) {
                 done = true
               }else {
-                if(">" == ch) {
+                if(">" === ch) {
                   done = true
                 }else {
                   page.ungetChar(cursor);
@@ -855,27 +854,26 @@ KISSY.add("html-parser/lexer/lexer", ["./cursor", "./page", "../nodes/text", "..
             }
             break;
           case 2:
-            if("-" == ch) {
+            if("-" === ch) {
               state = 3
             }else {
-              if(-1 == ch) {
+              if(-1 === ch) {
                 return this.parseString(start, quoteSmart)
               }
             }
             break;
           case 3:
-            if("-" == ch) {
+            if("-" === ch) {
               state = 4
             }else {
               state = 2
             }
             break;
           case 4:
-            if(">" == ch) {
+            if(">" === ch) {
               done = true
             }else {
-              if(Utils.isWhitespace(ch)) {
-              }else {
+              if(!Utils.isWhitespace(ch)) {
                 state = 2
               }
             }
@@ -890,10 +888,10 @@ KISSY.add("html-parser/lexer/lexer", ["./cursor", "./page", "../nodes/text", "..
     var done = 0, ch, page = this.page, cursor = this.cursor, quote = 0;
     while(!done) {
       ch = page.getChar(cursor);
-      if(-1 == ch) {
+      if(-1 === ch) {
         done = 1
       }else {
-        if(quoteSmart && 0 == quote && ("'" == ch || '"' == ch)) {
+        if(quoteSmart && 0 === quote && ('"' === ch || "'" === ch)) {
           quote = ch
         }else {
           if(quoteSmart && 0 !== quote && "\\" === ch) {
@@ -902,26 +900,26 @@ KISSY.add("html-parser/lexer/lexer", ["./cursor", "./page", "../nodes/text", "..
               page.ungetChar(cursor)
             }
           }else {
-            if(quoteSmart && ch == quote) {
+            if(quoteSmart && ch === quote) {
               quote = 0
             }else {
-              if(quoteSmart && 0 == quote && ch == "/") {
+              if(quoteSmart && 0 === quote && ch === "/") {
                 ch = page.getChar(cursor);
-                if(-1 == ch) {
+                if(-1 === ch) {
                   done = 1
                 }else {
-                  if("/" == ch) {
+                  if("/" === ch) {
                     do {
                       ch = page.getChar(cursor)
                     }while(-1 !== ch && "\n" !== ch)
                   }else {
-                    if("*" == ch) {
+                    if("*" === ch) {
                       do {
                         do {
                           ch = page.getChar(cursor)
                         }while(-1 !== ch && "*" !== ch);
                         ch = page.getChar(cursor);
-                        if(ch == "*") {
+                        if(ch === "*") {
                           page.ungetChar(cursor)
                         }
                       }while(-1 !== ch && "/" !== ch)
@@ -931,12 +929,12 @@ KISSY.add("html-parser/lexer/lexer", ["./cursor", "./page", "../nodes/text", "..
                   }
                 }
               }else {
-                if(0 == quote && "<" == ch) {
+                if(0 === quote && "<" === ch) {
                   ch = page.getChar(cursor);
-                  if(-1 == ch) {
+                  if(-1 === ch) {
                     done = 1
                   }else {
-                    if("/" == ch || Utils.isLetter(ch) || "!" == ch || "?" == ch) {
+                    if("/" === ch || Utils.isLetter(ch) || "!" === ch || "?" === ch) {
                       done = 1;
                       page.ungetChar(cursor);
                       page.ungetChar(cursor)
@@ -969,10 +967,10 @@ KISSY.add("html-parser/lexer/lexer", ["./cursor", "./page", "../nodes/text", "..
               break;
             case "'":
               if(quoteSmart && !comment) {
-                if("" == quote) {
+                if("" === quote) {
                   quote = "'"
                 }else {
-                  if("'" == quote) {
+                  if("'" === quote) {
                     quote = ""
                   }
                 }
@@ -980,10 +978,10 @@ KISSY.add("html-parser/lexer/lexer", ["./cursor", "./page", "../nodes/text", "..
               break;
             case '"':
               if(quoteSmart && !comment) {
-                if("" == quote) {
+                if("" === quote) {
                   quote = '"'
                 }else {
-                  if('"' == quote) {
+                  if('"' === quote) {
                     quote = ""
                   }
                 }
@@ -993,7 +991,7 @@ KISSY.add("html-parser/lexer/lexer", ["./cursor", "./page", "../nodes/text", "..
               if(quoteSmart) {
                 if("" !== quote) {
                   ch = mPage.getChar(mCursor);
-                  if(-1 == ch) {
+                  if(-1 === ch) {
                     done = true
                   }else {
                     if(ch !== "\\" && ch !== quote) {
@@ -1005,21 +1003,21 @@ KISSY.add("html-parser/lexer/lexer", ["./cursor", "./page", "../nodes/text", "..
               break;
             case "/":
               if(quoteSmart) {
-                if("" == quote) {
+                if("" === quote) {
                   ch = mPage.getChar(mCursor);
-                  if(-1 == ch) {
+                  if(-1 === ch) {
                     done = true
                   }else {
-                    if("/" == ch) {
+                    if("/" === ch) {
                       comment = true
                     }else {
-                      if("*" == ch) {
+                      if("*" === ch) {
                         do {
                           do {
                             ch = mPage.getChar(mCursor)
                           }while(-1 !== ch && "*" !== ch);
                           ch = mPage.getChar(mCursor);
-                          if(ch == "*") {
+                          if(ch === "*") {
                             mPage.ungetChar(mCursor)
                           }
                         }while(-1 !== ch && "/" !== ch)
@@ -1036,7 +1034,7 @@ KISSY.add("html-parser/lexer/lexer", ["./cursor", "./page", "../nodes/text", "..
               break;
             case "<":
               if(quoteSmart) {
-                if("" == quote) {
+                if("" === quote) {
                   state = 1
                 }
               }else {
@@ -1061,15 +1059,15 @@ KISSY.add("html-parser/lexer/lexer", ["./cursor", "./page", "../nodes/text", "..
               break;
             case "!":
               ch = mPage.getChar(mCursor);
-              if(-1 == ch) {
+              if(-1 === ch) {
                 done = true
               }else {
-                if("-" == ch) {
+                if("-" === ch) {
                   ch = mPage.getChar(mCursor);
-                  if(-1 == ch) {
+                  if(-1 === ch) {
                     done = true
                   }else {
-                    if("-" == ch) {
+                    if("-" === ch) {
                       state = 3
                     }else {
                       state = 0
@@ -1087,7 +1085,7 @@ KISSY.add("html-parser/lexer/lexer", ["./cursor", "./page", "../nodes/text", "..
           break;
         case 2:
           comment = false;
-          if(-1 == ch) {
+          if(-1 === ch) {
             done = true
           }else {
             if(Utils.isLetter(ch)) {
@@ -1102,20 +1100,20 @@ KISSY.add("html-parser/lexer/lexer", ["./cursor", "./page", "../nodes/text", "..
           break;
         case 3:
           comment = false;
-          if(-1 == ch) {
+          if(-1 === ch) {
             done = true
           }else {
-            if("-" == ch) {
+            if("-" === ch) {
               ch = mPage.getChar(mCursor);
-              if(-1 == ch) {
+              if(-1 === ch) {
                 done = true
               }else {
-                if("-" == ch) {
+                if("-" === ch) {
                   ch = mPage.getChar(mCursor);
-                  if(-1 == ch) {
+                  if(-1 === ch) {
                     done = true
                   }else {
-                    if(">" == ch) {
+                    if(">" === ch) {
                       state = 0
                     }else {
                       mPage.ungetChar(mCursor);
@@ -1126,7 +1124,6 @@ KISSY.add("html-parser/lexer/lexer", ["./cursor", "./page", "../nodes/text", "..
                   mPage.ungetChar(mCursor)
                 }
               }
-            }else {
             }
           }
           break;
@@ -1136,10 +1133,10 @@ KISSY.add("html-parser/lexer/lexer", ["./cursor", "./page", "../nodes/text", "..
     }
     end = mCursor.position;
     return this.makeCData(start, end)
-  }, single_quote:function(attributes, bookmarks) {
+  }, singleQuote:function(attributes, bookmarks) {
     var page = this.page;
     attributes.push(new Attribute(page.getText(bookmarks[1], bookmarks[2]), "=", page.getText(bookmarks[4] + 1, bookmarks[5]), "'"))
-  }, double_quote:function(attributes, bookmarks) {
+  }, doubleQuote:function(attributes, bookmarks) {
     var page = this.page;
     attributes.push(new Attribute(page.getText(bookmarks[1], bookmarks[2]), "=", page.getText(bookmarks[5] + 1, bookmarks[6]), '"'))
   }, standalone:function(attributes, bookmarks) {
@@ -1191,8 +1188,8 @@ KISSY.add("html-parser/scanners/tag-scanner", ["../dtd", "../nodes/tag", "./spec
   var wrapper = {li:"ul", dt:"dl", dd:"dl"};
   var impliedEndTag = {dd:{dl:1}, dt:{dl:1}, li:{ul:1, ol:1}, option:{select:1}, optgroup:{select:1}};
   function fixCloseTagByDtd(tag, opts) {
-    tag["closed"] = 1;
-    if(!opts["fixByDtd"]) {
+    tag.closed = 1;
+    if(!opts.fixByDtd) {
       return 0
     }
     var valid = 1, childNodes = [].concat(tag.childNodes);
@@ -1227,14 +1224,11 @@ KISSY.add("html-parser/scanners/tag-scanner", ["../dtd", "../nodes/tag", "./spec
           var pTagName = wrapper[c.tagName], pTag = new Tag;
           pTag.nodeName = pTag.tagName = pTagName;
           while(i < childNodes.length) {
-            if(childNodes[i].tagName == currentChildName) {
+            if(childNodes[i].tagName === currentChildName) {
               pTag.appendChild(childNodes[i])
             }else {
-              if(childNodes[i].nodeType == 3 && !S.trim(childNodes[i].toHtml())) {
-              }else {
-                if(childNodes[i].nodeType == 3) {
-                  break
-                }
+              if(childNodes[i].nodeType === 3 && S.trim(childNodes[i].toHtml())) {
+                break
               }
             }
             i++
@@ -1277,13 +1271,13 @@ KISSY.add("html-parser/scanners/tag-scanner", ["../dtd", "../nodes/tag", "./spec
     return 1
   }
   function canHasNodeAsChild(tag, node) {
-    if(tag.nodeType == 9) {
+    if(tag.nodeType === 9) {
       return 1
     }
     if(!dtd[tag.tagName]) {
       S.error("dtd[" + tag.tagName + "] === undefined!")
     }
-    if(node.nodeType == 8) {
+    if(node.nodeType === 8) {
       return 1
     }
     var nodeName = node.tagName || node.nodeName;
@@ -1304,7 +1298,7 @@ KISSY.add("html-parser/scanners/tag-scanner", ["../dtd", "../nodes/tag", "./spec
       if(endParentTagName = impliedEndTag[node.tagName]) {
         var from = stack.length - 1, parent = stack[from];
         while(parent && !(parent.tagName in endParentTagName)) {
-          if(parent.tagName == node.tagName) {
+          if(parent.tagName === node.tagName) {
             needFix = 1;
             break
           }
@@ -1323,7 +1317,7 @@ KISSY.add("html-parser/scanners/tag-scanner", ["../dtd", "../nodes/tag", "./spec
       node = lexer.nextNode();
       if(node) {
         if(node.nodeType === 1) {
-          if(node.isEndTag() && node.tagName == tag.tagName) {
+          if(node.isEndTag() && node.tagName === tag.tagName) {
             node = null
           }else {
             if(!node.isEndTag()) {
@@ -1356,7 +1350,6 @@ KISSY.add("html-parser/scanners/tag-scanner", ["../dtd", "../nodes/tag", "./spec
                   fixCloseTagByDtd(tag, opts);
                   closeStackOpenTag(stack.length - 1, index);
                   node = null
-                }else {
                 }
               }
             }
@@ -1365,7 +1358,7 @@ KISSY.add("html-parser/scanners/tag-scanner", ["../dtd", "../nodes/tag", "./spec
           tag.appendChild(node)
         }
       }
-      if(node == null) {
+      if(node === null) {
         if(stack.length > 0) {
           node = stack[stack.length - 1];
           if(!SpecialScanners[node.tagName]) {
@@ -1386,7 +1379,7 @@ KISSY.add("html-parser/scanners/cdata-scanner", [], function() {
   return{scan:function(tag, lexer, opts) {
     var content = lexer.parseCDATA(opts.quoteSmart, tag.nodeName), position = lexer.getPosition(), node = lexer.nextNode();
     if(node) {
-      if(node.nodeType !== 1 || !(node.isEndTag() && node.tagName == tag.tagName)) {
+      if(node.nodeType !== 1 || !(node.isEndTag() && node.tagName === tag.tagName)) {
         lexer.setPosition(position);
         node = null
       }
@@ -1415,10 +1408,11 @@ KISSY.add("html-parser/scanners/quote-cdata-scanner", ["./cdata-scanner", "../dt
 KISSY.add("html-parser/scanners/textarea-scanner", ["./cdata-scanner", "./special-scanners"], function(S, require) {
   var CDataScanner = require("./cdata-scanner");
   var SpecialScanners = require("./special-scanners");
-  return SpecialScanners["textarea"] = {scan:function(tag, lexer, opts) {
+  SpecialScanners.textarea = {scan:function(tag, lexer, opts) {
     opts = opts || {};
     CDataScanner.scan(tag, lexer, opts)
-  }}
+  }};
+  return SpecialScanners.textarea
 });
 KISSY.add("html-parser/scanner", ["./scanners/tag-scanner", "./scanners/special-scanners", "./scanners/quote-cdata-scanner", "./scanners/textarea-scanner"], function(S, require) {
   var TagScanner = require("./scanners/tag-scanner");
@@ -1457,10 +1451,10 @@ KISSY.add("html-parser/parser", ["./dtd", "./nodes/tag", "./nodes/fragment", "./
     doc.nodeType = 9;
     Scanner.getScanner("div").scan(root, lexer, opts);
     var body = fixBody(doc);
-    if(body && opts["autoParagraph"]) {
+    if(body && opts.autoParagraph) {
       autoParagraph(body)
     }
-    post_process(doc);
+    postProcess(doc);
     var originalHTML = this.originalHTML, fragment = new Fragment, cs;
     if(/^(<!doctype|<html|<body)/i.test(originalHTML)) {
       cs = doc.childNodes
@@ -1495,10 +1489,10 @@ KISSY.add("html-parser/parser", ["./dtd", "./nodes/tag", "./nodes/fragment", "./
     return body
   }
   function autoParagraph(doc) {
-    var childNodes = doc.childNodes, c, i, pDtd = dtd["p"], needFix = 0;
+    var childNodes = doc.childNodes, c, i, pDtd = dtd.p, needFix = 0;
     for(i = 0;i < childNodes.length;i++) {
       c = childNodes[i];
-      if(c.nodeType == 3 || c.nodeType == 1 && pDtd[c.nodeName]) {
+      if(c.nodeType === 3 || c.nodeType === 1 && pDtd[c.nodeName]) {
         needFix = 1;
         break
       }
@@ -1508,7 +1502,7 @@ KISSY.add("html-parser/parser", ["./dtd", "./nodes/tag", "./nodes/fragment", "./
       holder.nodeName = holder.tagName = "p";
       for(i = 0;i < childNodes.length;i++) {
         c = childNodes[i];
-        if(c.nodeType == 3 || c.nodeType == 1 && pDtd[c.nodeName]) {
+        if(c.nodeType === 3 || c.nodeType === 1 && pDtd[c.nodeName]) {
           holder.appendChild(c)
         }else {
           if(holder.childNodes.length) {
@@ -1547,17 +1541,17 @@ KISSY.add("html-parser/parser", ["./dtd", "./nodes/tag", "./nodes/fragment", "./
     }
     return 0
   }
-  function post_process(doc) {
+  function postProcess(doc) {
     var childNodes = [].concat(doc.childNodes);
     for(var i = 0;i < childNodes.length;i++) {
-      if(childNodes[i].nodeName == "html") {
+      if(childNodes[i].nodeName === "html") {
         var html = childNodes[i];
         for(var j = 0;j < i;j++) {
-          if(childNodes[j].nodeType == 3 && !S.trim(childNodes[j].toHtml())) {
+          if(childNodes[j].nodeType === 3 && !S.trim(childNodes[j].toHtml())) {
             doc.removeChild(childNodes[j])
           }
         }
-        while(html.firstChild && html.firstChild.nodeType == 3 && !S.trim(html.firstChild.toHtml())) {
+        while(html.firstChild && html.firstChild.nodeType === 3 && !S.trim(html.firstChild.toHtml())) {
           html.removeChild(html.firstChild)
         }
         break
@@ -1570,7 +1564,7 @@ KISSY.add("html-parser/writer/basic", ["../utils"], function(S, require) {
   var Utils = require("../utils");
   var isBooleanAttribute = Utils.isBooleanAttribute;
   function escapeAttrValue(str) {
-    return String(str).replace(/"/g, "&quote;")
+    return String(str).replace(/'/g, "&quote;")
   }
   function BasicWriter() {
     this.output = []
@@ -1626,7 +1620,8 @@ KISSY.add("html-parser/writer/beautify", ["./basic", "../dtd", "../utils"], func
     self.indentLevel = 0;
     self.allowIndent = 0;
     self.rules = {};
-    for(var e in S.merge(dtd.$nonBodyContent, dtd.$block, dtd.$listItem, dtd.$tableContent, {select:1, script:1, style:1})) {
+    var beauty = S.merge(dtd.$nonBodyContent, dtd.$block, dtd.$listItem, dtd.$tableContent, {select:1, script:1, style:1});
+    for(var e in beauty) {
       self.setRules(e, {allowIndent:1, breakBeforeOpen:1, breakAfterOpen:1, breakBeforeClose:1, breakAfterClose:1})
     }
     S.each(["p", "h1", "h2", "h3", "h4", "h5", "h6"], function(e) {
@@ -1762,7 +1757,7 @@ KISSY.add("html-parser/writer/minify", ["./basic", "../utils"], function(S, requ
     tag === "script" && (attrName === "src" || attrName === "for")
   }
   function isNumberTypeAttribute(attrName, tag) {
-    return/^(?:a|area|object|button)$/.test(tag) && attrName === "tabindex" || tag === "input" && (attrName === "maxlength" || attrName === "tabindex") || tag === "select" && (attrName === "size" || attrName === "tabindex") || tag === "textarea" && /^(?:rows|cols|tabindex)$/.test(attrName) || tag === "colgroup" && attrName === "span" || tag === "col" && attrName === "span" || (tag === "th" || tag == "td") && (attrName === "rowspan" || attrName === "colspan")
+    return/^(?:a|area|object|button)$/.test(tag) && attrName === "tabindex" || tag === "input" && (attrName === "maxlength" || attrName === "tabindex") || tag === "select" && (attrName === "size" || attrName === "tabindex") || tag === "textarea" && /^(?:rows|cols|tabindex)$/.test(attrName) || tag === "colgroup" && attrName === "span" || tag === "col" && attrName === "span" || (tag === "th" || tag === "td") && (attrName === "rowspan" || attrName === "colspan")
   }
   function cleanAttributeValue(el, attr) {
     var tag = el.nodeName, attrName = attr.name, attrValue = attr.value || "";
@@ -1801,13 +1796,13 @@ KISSY.add("html-parser/writer/minify", ["./basic", "../utils"], function(S, requ
     }
   }, openTag:function(el) {
     var self = this;
-    if(el.tagName == "pre") {
+    if(el.tagName === "pre") {
       self.inPre = 1
     }
     MinifyWriter.superclass.openTag.apply(self, arguments)
   }, closeTag:function(el) {
     var self = this;
-    if(el.tagName == "pre") {
+    if(el.tagName === "pre") {
       self.inPre = 0
     }
     MinifyWriter.superclass.closeTag.apply(self, arguments)
@@ -1824,8 +1819,7 @@ KISSY.add("html-parser/writer/minify", ["./basic", "../utils"], function(S, requ
       return
     }
     normalizedValue = escapeAttrValue(cleanAttributeValue(el, attr));
-    if(value && canRemoveAttributeQuotes(value)) {
-    }else {
+    if(!(value && canRemoveAttributeQuotes(value))) {
       normalizedValue = '"' + normalizedValue + '"'
     }
     self.append(" ", name, "=", normalizedValue)
@@ -1874,7 +1868,7 @@ KISSY.add("html-parser/writer/filter", [], function(S) {
         return false
       }
       if(el && ret && ret !== el) {
-        if(typeof ret == "string") {
+        if(typeof ret === "string") {
           if(el.toHtml() === ret) {
             return el
           }
@@ -1892,7 +1886,7 @@ KISSY.add("html-parser/writer/filter", [], function(S) {
       if(item[name] && (ret = item[name].call(null, attrNode.value, el)) === false) {
         return ret
       }
-      if(typeof ret == "string") {
+      if(typeof ret === "string") {
         attrNode.value = ret
       }
     }

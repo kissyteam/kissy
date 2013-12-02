@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:49
+build time: Dec 2 15:24
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -21,12 +21,12 @@ KISSY.add("mvc/sync", ["io", "json"], function(S, require) {
   function sync(self, method, options) {
     var type = methodMap[method], ioParam = S.merge({type:type, dataType:"json"}, options), data, url;
     data = ioParam.data = ioParam.data || {};
-    data["_method"] = method;
+    data._method = method;
     if(!ioParam.url) {
       url = self.get("url");
-      ioParam.url = typeof url == "string" ? url : url.call(self)
+      ioParam.url = typeof url === "string" ? url : url.call(self)
     }
-    if(method == "create" || method == "update") {
+    if(method === "create" || method === "update") {
       data.model = Json.stringify(self.toJSON())
     }
     return io(ioParam)
@@ -71,7 +71,9 @@ KISSY.add("mvc/model", ["attribute"], function(S, require) {
         lists[l].remove(self, opts)
       }
       self.fire("destroy");
-      success && success.apply(this, arguments)
+      if(success) {
+        success.apply(self, arguments)
+      }
     };
     if(!self.isNew() && opts["delete"]) {
       self.get("sync").call(self, self, "delete", opts)
@@ -94,7 +96,9 @@ KISSY.add("mvc/model", ["attribute"], function(S, require) {
         }
       }
       self.__isModified = 0;
-      success && success.apply(this, arguments)
+      if(success) {
+        success.apply(self, arguments)
+      }
     };
     self.get("sync").call(self, self, "read", opts);
     return self
@@ -110,7 +114,9 @@ KISSY.add("mvc/model", ["attribute"], function(S, require) {
         }
       }
       self.__isModified = 0;
-      success && success.apply(this, arguments)
+      if(success) {
+        success.apply(self, arguments)
+      }
     };
     self.get("sync").call(self, self, self.isNew() ? "create" : "update", opts);
     return self
@@ -130,7 +136,7 @@ KISSY.add("mvc/model", ["attribute"], function(S, require) {
   function getUrl(o) {
     var u;
     if(o && (u = o.get("url"))) {
-      if(typeof u == "string") {
+      if(typeof u === "string") {
         return u
       }
       return u.call(o)
@@ -149,7 +155,7 @@ KISSY.add("mvc/model", ["attribute"], function(S, require) {
     if(this.isNew()) {
       return base
     }
-    base = base + (base.charAt(base.length - 1) == "/" ? "" : "/");
+    base = base + (base.charAt(base.length - 1) === "/" ? "" : "/");
     return base + encodeURIComponent(this.getId()) + "/"
   }
 });
@@ -158,7 +164,7 @@ KISSY.add("mvc/view", ["node", "attribute"], function(S, require) {
   var Attribute = require("attribute");
   var $ = Node.all;
   function normFn(self, f) {
-    if(typeof f == "string") {
+    if(typeof f === "string") {
       return self[f]
     }
     return f
@@ -198,7 +204,7 @@ KISSY.add("mvc/view", ["node", "attribute"], function(S, require) {
   }, destroy:function() {
     this.get("el").remove()
   }}, {ATTRS:{el:{value:"<div />", getter:function(s) {
-    if(typeof s == "string") {
+    if(typeof s === "string") {
       s = $(s);
       this.setInternal("el", s)
     }
@@ -261,8 +267,8 @@ KISSY.add("mvc/collection", ["./model", "attribute"], function(S, require) {
   }, _normModel:function(model) {
     var ret = true;
     if(!(model instanceof Model)) {
-      var data = model, modelConstructor = this.get("model");
-      model = new modelConstructor;
+      var data = model, ModelConstructor = this.get("model");
+      model = new ModelConstructor;
       ret = model.set(data, {silent:1})
     }
     return ret && model
@@ -280,7 +286,9 @@ KISSY.add("mvc/collection", ["./model", "attribute"], function(S, require) {
       S.each(self.get("models"), function(m) {
         m.__isModified = 0
       });
-      success && success.apply(this, arguments)
+      if(success) {
+        success.apply(self, arguments)
+      }
     };
     self.get("sync").call(self, self, "read", opts);
     return self
@@ -293,7 +301,9 @@ KISSY.add("mvc/collection", ["./model", "attribute"], function(S, require) {
       var success = opts.success;
       opts.success = function() {
         self.add(model, opts);
-        success && success()
+        if(success) {
+          success()
+        }
       };
       model.save(opts)
     }
@@ -305,7 +315,7 @@ KISSY.add("mvc/collection", ["./model", "attribute"], function(S, require) {
       var index = findModelIndex(this.get("models"), model, this.get("comparator"));
       this.get("models").splice(index, 0, model);
       model.addToCollection(this);
-      if(!opts["silent"]) {
+      if(!opts.silent) {
         this.fire("add", {model:model})
       }
     }
@@ -313,11 +323,11 @@ KISSY.add("mvc/collection", ["./model", "attribute"], function(S, require) {
   }, _remove:function(model, opts) {
     opts = opts || {};
     var index = S.indexOf(model, this.get("models"));
-    if(index != -1) {
+    if(index !== -1) {
       this.get("models").splice(index, 1);
       model.removeFromCollection(this)
     }
-    if(!opts["silent"]) {
+    if(!opts.silent) {
       this.fire("remove", {model:model})
     }
   }, getById:function(id) {
@@ -352,15 +362,15 @@ KISSY.add("mvc/collection", ["./model", "attribute"], function(S, require) {
 KISSY.add("mvc/router", ["attribute", "node"], function(S, require) {
   var Attribute = require("attribute");
   var Node = require("node");
-  var each = S.each, BREATH_INTERVAL = 100, grammar = /(:([\w\d]+))|(\\\*([\w\d]+))/g, allRoutes = [], win = S.Env.host, $ = Node.all, $win = $(win), ie = S.UA.ieMode, history = win.history, supportNativeHistory = !!(history && history["pushState"]), ROUTER_MAP = "__routerMap";
+  var each = S.each, BREATH_INTERVAL = 100, grammar = /(:([\w\d]+))|(\\\*([\w\d]+))/g, allRoutes = [], win = S.Env.host, $ = Node.all, $win = $(win), ie = S.UA.ieMode, history = win.history, supportNativeHistory = !!(history && history.pushState), ROUTER_MAP = "__routerMap";
   function findFirstCaptureGroupIndex(regStr) {
     var r, i;
     for(i = 0;i < regStr.length;i++) {
       r = regStr.charAt(i);
-      if(r == "\\") {
+      if(r === "\\") {
         i++
       }else {
-        if(r == "(") {
+        if(r === "(") {
           return i
         }
       }
@@ -411,7 +421,7 @@ KISSY.add("mvc/router", ["attribute", "node"], function(S, require) {
   function equalsIgnoreSlash(str1, str2) {
     str1 = removeEndSlash(str1);
     str2 = removeEndSlash(str2);
-    return str1 == str2
+    return str1 === str2
   }
   function getFullPath(fragment) {
     return location.protocol + "//" + location.host + removeEndSlash(Router.urlRoot) + addStartSlash(fragment)
@@ -427,7 +437,7 @@ KISSY.add("mvc/router", ["attribute", "node"], function(S, require) {
         var reg = desc.reg, regStr = desc.regStr, paramNames = desc.paramNames, firstCaptureGroupIndex = -1, m, name = desc.name, callback = desc.callback;
         if(m = path.match(reg)) {
           m.shift();
-          function genParam() {
+          var genParam = function() {
             if(paramNames) {
               var params = {};
               each(m, function(sm, i) {
@@ -437,8 +447,8 @@ KISSY.add("mvc/router", ["attribute", "node"], function(S, require) {
             }else {
               return[].concat(m)
             }
-          }
-          function upToFinal() {
+          };
+          var upToFinal = function() {
             finalRegStr = regStr;
             finalFirstCaptureGroupIndex = firstCaptureGroupIndex;
             finalCallback = callback;
@@ -446,7 +456,7 @@ KISSY.add("mvc/router", ["attribute", "node"], function(S, require) {
             finalRoute = route;
             finalRouteName = name;
             finalMatchLength = m.length
-          }
+          };
           if(!m.length) {
             upToFinal();
             exactlyMatch = 1;
@@ -457,7 +467,7 @@ KISSY.add("mvc/router", ["attribute", "node"], function(S, require) {
               if(firstCaptureGroupIndex > finalFirstCaptureGroupIndex) {
                 upToFinal()
               }else {
-                if(firstCaptureGroupIndex == finalFirstCaptureGroupIndex && finalMatchLength >= m.length) {
+                if(firstCaptureGroupIndex === finalFirstCaptureGroupIndex && finalMatchLength >= m.length) {
                   if(m.length < finalMatchLength) {
                     upToFinal()
                   }else {
@@ -517,7 +527,7 @@ KISSY.add("mvc/router", ["attribute", "node"], function(S, require) {
     if(typeof callback === "function") {
       return callback
     }else {
-      if(typeof callback == "string") {
+      if(typeof callback === "string") {
         return self[callback]
       }
     }
@@ -529,7 +539,7 @@ KISSY.add("mvc/router", ["attribute", "node"], function(S, require) {
     self.addRoutes(e.newVal)
   }
   var Router;
-  return Router = Attribute.extend({constructor:function() {
+  Router = Attribute.extend({constructor:function() {
     var self = this;
     self.callSuper.apply(self, arguments);
     self.on("afterRoutesChange", _afterRoutesChange, self);
@@ -594,7 +604,7 @@ KISSY.add("mvc/router", ["attribute", "node"], function(S, require) {
       if(supportNativeHistory) {
         if(hashIsValid) {
           if(equalsIgnoreSlash(locPath, urlRoot)) {
-            history["replaceState"]({}, "", getFullPath(hash));
+            history.replaceState({}, "", getFullPath(hash));
             opts.triggerRoute = 1
           }else {
             S.error("location path must be same with urlRoot!")
@@ -617,7 +627,9 @@ KISSY.add("mvc/router", ["attribute", "node"], function(S, require) {
       if(opts.triggerRoute) {
         dispatch()
       }
-      opts.success && opts.success()
+      if(opts.success) {
+        opts.success()
+      }
     }, BREATH_INTERVAL);
     Router.__started = 1;
     return undefined
@@ -626,7 +638,8 @@ KISSY.add("mvc/router", ["attribute", "node"], function(S, require) {
     $win.detach("popstate", dispatch);
     $win.detach("hashchange", dispatch);
     allRoutes = []
-  }})
+  }});
+  return Router
 });
 KISSY.add("mvc", ["mvc/sync", "mvc/model", "mvc/view", "mvc/collection", "mvc/router"], function(S, require) {
   return{sync:require("mvc/sync"), Model:require("mvc/model"), View:require("mvc/view"), Collection:require("mvc/collection"), Router:require("mvc/router")}

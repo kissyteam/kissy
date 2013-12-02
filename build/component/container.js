@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:38
+build time: Dec 2 15:11
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -50,7 +50,7 @@ KISSY.add("component/container", ["component/control", "./container/render"], fu
       return
     }
     var c = e.component, cDOMParentEl, cDOMEl, destroy = e.destroy, children = self.get("children"), index = e.index;
-    if(index != -1) {
+    if(index !== -1) {
       children.splice(index, 1)
     }
     c.setInternal("parent", null);
@@ -104,7 +104,7 @@ KISSY.add("component/container", ["component/control", "./container/render"], fu
     elBefore = domContentEl.children[childIndex] || null;
     if(c.get("rendered")) {
       cEl = c.el;
-      if(cEl.parentNode != domContentEl) {
+      if(cEl.parentNode !== domContentEl) {
         domContentEl.insertBefore(cEl, elBefore)
       }
     }else {
@@ -134,7 +134,9 @@ KISSY.add("component/container", ["component/control", "./container/render"], fu
   }, destructor:function() {
     var i, children = this.get("children");
     for(i = 0;i < children.length;i++) {
-      children[i].destroy && children[i].destroy()
+      if(children[i].destroy) {
+        children[i].destroy()
+      }
     }
   }}, {ATTRS:{children:{value:[], getter:function(v) {
     var defaultChildCfg = null, i, c, self = this;

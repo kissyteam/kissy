@@ -306,36 +306,36 @@ if (! _$jscoverage['/combobox/cursor.js'].branchData) {
   _$jscoverage['/combobox/cursor.js'].branchData['149'] = [];
   _$jscoverage['/combobox/cursor.js'].branchData['149'][1] = new BranchData();
 }
-_$jscoverage['/combobox/cursor.js'].branchData['149'][1].init(1824, 18, 'selectionStart > 0');
-function visit70_149_1(result) {
+_$jscoverage['/combobox/cursor.js'].branchData['149'][1].init(1825, 18, 'selectionStart > 0');
+function visit68_149_1(result) {
   _$jscoverage['/combobox/cursor.js'].branchData['149'][1].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/cursor.js'].branchData['124'][2].init(1004, 23, 'elem.type != \'textarea\'');
-function visit69_124_2(result) {
+}_$jscoverage['/combobox/cursor.js'].branchData['124'][2].init(1004, 24, 'elem.type !== \'textarea\'');
+function visit67_124_2(result) {
   _$jscoverage['/combobox/cursor.js'].branchData['124'][2].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/cursor.js'].branchData['124'][1].init(977, 50, '!supportInputScrollLeft && elem.type != \'textarea\'');
-function visit68_124_1(result) {
+}_$jscoverage['/combobox/cursor.js'].branchData['124'][1].init(977, 51, '!supportInputScrollLeft && elem.type !== \'textarea\'');
+function visit66_124_1(result) {
   _$jscoverage['/combobox/cursor.js'].branchData['124'][1].ranCondition(result);
   return result;
 }_$jscoverage['/combobox/cursor.js'].branchData['108'][1].init(351, 13, 'doc.selection');
-function visit67_108_1(result) {
+function visit65_108_1(result) {
   _$jscoverage['/combobox/cursor.js'].branchData['108'][1].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/cursor.js'].branchData['87'][1].init(327, 23, 'input[0].scrollLeft > 0');
-function visit66_87_1(result) {
+}_$jscoverage['/combobox/cursor.js'].branchData['87'][1].init(325, 23, 'input[0].scrollLeft > 0');
+function visit64_87_1(result) {
   _$jscoverage['/combobox/cursor.js'].branchData['87'][1].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/cursor.js'].branchData['68'][1].init(418, 9, '!FAKE_DIV');
-function visit65_68_1(result) {
+}_$jscoverage['/combobox/cursor.js'].branchData['68'][1].init(419, 9, '!FAKE_DIV');
+function visit63_68_1(result) {
   _$jscoverage['/combobox/cursor.js'].branchData['68'][1].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/cursor.js'].branchData['59'][1].init(110, 48, 'String(elem[0].type.toLowerCase()) == \'textarea\'');
-function visit64_59_1(result) {
+}_$jscoverage['/combobox/cursor.js'].branchData['59'][1].init(110, 49, 'String(elem[0].type.toLowerCase()) === \'textarea\'');
+function visit62_59_1(result) {
   _$jscoverage['/combobox/cursor.js'].branchData['59'][1].ranCondition(result);
   return result;
 }_$jscoverage['/combobox/cursor.js'].branchData['56'][1].init(42, 5, '!fake');
-function visit63_56_1(result) {
+function visit61_56_1(result) {
   _$jscoverage['/combobox/cursor.js'].branchData['56'][1].ranCondition(result);
   return result;
 }_$jscoverage['/combobox/cursor.js'].lineData[6]++;
@@ -344,24 +344,24 @@ KISSY.add(function(S, require) {
   _$jscoverage['/combobox/cursor.js'].lineData[7]++;
   var Node = require('node');
   _$jscoverage['/combobox/cursor.js'].lineData[8]++;
-  var $ = Node.all, FAKE_DIV_HTML = "<div style='" + "z-index:-9999;" + "overflow:hidden;" + "position: fixed;" + "left:-9999px;" + "top:-9999px;" + "opacity:0;" + "white-space:pre-wrap;" + "word-wrap:break-word;" + "'></div>", FAKE_DIV, MARKER = "<span>" + "x" + "</span>", STYLES = ['paddingLeft', 'paddingTop', 'paddingBottom', 'paddingRight', 'marginLeft', 'marginTop', 'marginBottom', 'marginRight', 'borderLeftStyle', 'borderTopStyle', 'borderBottomStyle', 'borderRightStyle', 'borderLeftWidth', 'borderTopWidth', 'borderBottomWidth', 'borderRightWidth', 'line-height', 'outline', 'height', 'fontFamily', 'fontSize', 'fontWeight', 'fontVariant', 'fontStyle'], supportInputScrollLeft, findSupportInputScrollLeft;
+  var $ = Node.all, FAKE_DIV_HTML = '<div style="' + 'z-index:-9999;' + 'overflow:hidden;' + 'position: fixed;' + 'left:-9999px;' + 'top:-9999px;' + 'opacity:0;' + 'white-space:pre-wrap;' + 'word-wrap:break-word;' + '"></div>', FAKE_DIV, MARKER = '<span>' + 'x' + '</span>', STYLES = ['paddingLeft', 'paddingTop', 'paddingBottom', 'paddingRight', 'marginLeft', 'marginTop', 'marginBottom', 'marginRight', 'borderLeftStyle', 'borderTopStyle', 'borderBottomStyle', 'borderRightStyle', 'borderLeftWidth', 'borderTopWidth', 'borderBottomWidth', 'borderRightWidth', 'line-height', 'outline', 'height', 'fontFamily', 'fontSize', 'fontWeight', 'fontVariant', 'fontStyle'], supportInputScrollLeft, findSupportInputScrollLeft;
   _$jscoverage['/combobox/cursor.js'].lineData[54]++;
   function getFakeDiv(elem) {
     _$jscoverage['/combobox/cursor.js'].functionData[1]++;
     _$jscoverage['/combobox/cursor.js'].lineData[55]++;
     var fake = FAKE_DIV;
     _$jscoverage['/combobox/cursor.js'].lineData[56]++;
-    if (visit63_56_1(!fake)) {
+    if (visit61_56_1(!fake)) {
       _$jscoverage['/combobox/cursor.js'].lineData[57]++;
       fake = $(FAKE_DIV_HTML);
     }
     _$jscoverage['/combobox/cursor.js'].lineData[59]++;
-    if (visit64_59_1(String(elem[0].type.toLowerCase()) == 'textarea')) {
+    if (visit62_59_1(String(elem[0].type.toLowerCase()) === 'textarea')) {
       _$jscoverage['/combobox/cursor.js'].lineData[60]++;
-      fake.css("width", elem.css("width"));
+      fake.css('width', elem.css('width'));
     } else {
       _$jscoverage['/combobox/cursor.js'].lineData[63]++;
-      fake.css("width", 9999);
+      fake.css('width', 9999);
     }
     _$jscoverage['/combobox/cursor.js'].lineData[65]++;
     S.each(STYLES, function(s) {
@@ -370,7 +370,7 @@ KISSY.add(function(S, require) {
   fake.css(s, elem.css(s));
 });
     _$jscoverage['/combobox/cursor.js'].lineData[68]++;
-    if (visit65_68_1(!FAKE_DIV)) {
+    if (visit63_68_1(!FAKE_DIV)) {
       _$jscoverage['/combobox/cursor.js'].lineData[69]++;
       fake.insertBefore(elem[0].ownerDocument.body.firstChild);
     }
@@ -383,21 +383,21 @@ KISSY.add(function(S, require) {
   findSupportInputScrollLeft = function() {
   _$jscoverage['/combobox/cursor.js'].functionData[3]++;
   _$jscoverage['/combobox/cursor.js'].lineData[76]++;
-  var doc = document, input = $("<input>");
+  var doc = document, input = $('<input>');
   _$jscoverage['/combobox/cursor.js'].lineData[78]++;
   input.css({
   width: 1, 
-  position: "absolute", 
+  position: 'absolute', 
   left: -9999, 
   top: -9999});
   _$jscoverage['/combobox/cursor.js'].lineData[84]++;
-  input.val("123456789");
+  input.val('123456789');
   _$jscoverage['/combobox/cursor.js'].lineData[85]++;
   input.appendTo(doc.body);
   _$jscoverage['/combobox/cursor.js'].lineData[86]++;
   input[0].focus();
   _$jscoverage['/combobox/cursor.js'].lineData[87]++;
-  supportInputScrollLeft = !!(visit66_87_1(input[0].scrollLeft > 0));
+  supportInputScrollLeft = (visit64_87_1(input[0].scrollLeft > 0));
   _$jscoverage['/combobox/cursor.js'].lineData[88]++;
   input.remove();
   _$jscoverage['/combobox/cursor.js'].lineData[89]++;
@@ -415,7 +415,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/combobox/cursor.js'].lineData[98]++;
   var doc = elem.ownerDocument, $doc = $(doc), elemOffset, range, fake, selectionStart, offset, marker, elemScrollTop = elem.scrollTop, elemScrollLeft = elem.scrollLeft;
   _$jscoverage['/combobox/cursor.js'].lineData[108]++;
-  if (visit67_108_1(doc.selection)) {
+  if (visit65_108_1(doc.selection)) {
     _$jscoverage['/combobox/cursor.js'].lineData[109]++;
     range = doc.selection.createRange();
     _$jscoverage['/combobox/cursor.js'].lineData[110]++;
@@ -426,7 +426,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/combobox/cursor.js'].lineData[120]++;
   elemOffset = $elem.offset();
   _$jscoverage['/combobox/cursor.js'].lineData[124]++;
-  if (visit68_124_1(!supportInputScrollLeft && visit69_124_2(elem.type != 'textarea'))) {
+  if (visit66_124_1(!supportInputScrollLeft && visit67_124_2(elem.type !== 'textarea'))) {
     _$jscoverage['/combobox/cursor.js'].lineData[125]++;
     elemOffset.top += elem.offsetHeight;
     _$jscoverage['/combobox/cursor.js'].lineData[126]++;
@@ -449,7 +449,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/combobox/cursor.js'].lineData[147]++;
   offset.top += marker.height();
   _$jscoverage['/combobox/cursor.js'].lineData[149]++;
-  if (visit70_149_1(selectionStart > 0)) {
+  if (visit68_149_1(selectionStart > 0)) {
     _$jscoverage['/combobox/cursor.js'].lineData[150]++;
     offset.left += marker.width();
   }

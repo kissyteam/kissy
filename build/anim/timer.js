@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:37
+build time: Dec 2 15:11
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -151,8 +151,8 @@ KISSY.add("anim/timer/easing", [], function() {
 KISSY.add("anim/timer/manager", [], function(S) {
   var stamp = S.stamp, win = S.Env.host, INTERVAL = 15, requestAnimationFrameFn, cancelAnimationFrameFn;
   if(0) {
-    requestAnimationFrameFn = win["requestAnimationFrame"];
-    cancelAnimationFrameFn = win["cancelAnimationFrame"];
+    requestAnimationFrameFn = win.requestAnimationFrame;
+    cancelAnimationFrameFn = win.cancelAnimationFrame;
     var vendors = ["ms", "moz", "webkit", "o"];
     for(var x = 0;x < vendors.length && !requestAnimationFrameFn;++x) {
       requestAnimationFrameFn = win[vendors[x] + "RequestAnimationFrame"];
@@ -253,7 +253,7 @@ KISSY.add("anim/timer/fx", ["dom"], function(S, require) {
           val += self.unit
         }
         self.val = val;
-        if(self.type == "attr") {
+        if(self.type === "attr") {
           Dom.attr(node, prop, val, 1)
         }else {
           Dom.css(node, prop, val)
@@ -274,7 +274,7 @@ KISSY.add("anim/timer/fx", ["dom"], function(S, require) {
     if(!(type = self.type)) {
       type = self.type = isAttr(node, prop) ? "attr" : "css"
     }
-    if(type == "attr") {
+    if(type === "attr") {
       r = Dom.attr(node, prop, undefined, 1)
     }else {
       r = Dom.css(node, prop)
@@ -322,25 +322,25 @@ KISSY.add("anim/timer/color", ["./fx", "./short-hand"], function(S, require) {
   var Fx = require("./fx");
   var SHORT_HANDS = require("./short-hand");
   var logger = S.getLogger("s/anim/timer/color");
-  var HEX_BASE = 16, floor = Math.floor, KEYWORDS = {black:[0, 0, 0], silver:[192, 192, 192], gray:[128, 128, 128], white:[255, 255, 255], maroon:[128, 0, 0], red:[255, 0, 0], purple:[128, 0, 128], fuchsia:[255, 0, 255], green:[0, 128, 0], lime:[0, 255, 0], olive:[128, 128, 0], yellow:[255, 255, 0], navy:[0, 0, 128], blue:[0, 0, 255], teal:[0, 128, 128], aqua:[0, 255, 255]}, re_RGB = /^rgb\(([0-9]+)\s*,\s*([0-9]+)\s*,\s*([0-9]+)\)$/i, re_RGBA = /^rgba\(([0-9]+)\s*,\s*([0-9]+)\s*,\s*([0-9]+),\s*([0-9]+)\)$/i, 
-  re_hex = /^#?([0-9A-F]{1,2})([0-9A-F]{1,2})([0-9A-F]{1,2})$/i, COLORS = ["backgroundColor", "borderBottomColor", "borderLeftColor", "borderRightColor", "borderTopColor", "color", "outlineColor"];
-  SHORT_HANDS["background"].push("backgroundColor");
-  SHORT_HANDS["borderColor"] = ["borderBottomColor", "borderLeftColor", "borderRightColor", "borderTopColor"];
-  SHORT_HANDS["border"].push("borderBottomColor", "borderLeftColor", "borderRightColor", "borderTopColor");
-  SHORT_HANDS["borderBottom"].push("borderBottomColor");
-  SHORT_HANDS["borderLeft"].push("borderLeftColor");
-  SHORT_HANDS["borderRight"].push("borderRightColor");
-  SHORT_HANDS["borderTop"].push("borderTopColor");
+  var HEX_BASE = 16, floor = Math.floor, KEYWORDS = {black:[0, 0, 0], silver:[192, 192, 192], gray:[128, 128, 128], white:[255, 255, 255], maroon:[128, 0, 0], red:[255, 0, 0], purple:[128, 0, 128], fuchsia:[255, 0, 255], green:[0, 128, 0], lime:[0, 255, 0], olive:[128, 128, 0], yellow:[255, 255, 0], navy:[0, 0, 128], blue:[0, 0, 255], teal:[0, 128, 128], aqua:[0, 255, 255]}, RE_RGB = /^rgb\(([0-9]+)\s*,\s*([0-9]+)\s*,\s*([0-9]+)\)$/i, RE_RGBA = /^rgba\(([0-9]+)\s*,\s*([0-9]+)\s*,\s*([0-9]+),\s*([0-9]+)\)$/i, 
+  RE_HEX = /^#?([0-9A-F]{1,2})([0-9A-F]{1,2})([0-9A-F]{1,2})$/i, COLORS = ["backgroundColor", "borderBottomColor", "borderLeftColor", "borderRightColor", "borderTopColor", "color", "outlineColor"];
+  SHORT_HANDS.background.push("backgroundColor");
+  SHORT_HANDS.borderColor = ["borderBottomColor", "borderLeftColor", "borderRightColor", "borderTopColor"];
+  SHORT_HANDS.border.push("borderBottomColor", "borderLeftColor", "borderRightColor", "borderTopColor");
+  SHORT_HANDS.borderBottom.push("borderBottomColor");
+  SHORT_HANDS.borderLeft.push("borderLeftColor");
+  SHORT_HANDS.borderRight.push("borderRightColor");
+  SHORT_HANDS.borderTop.push("borderTopColor");
   function numericColor(val) {
     val = val + "";
     var match;
-    if(match = val.match(re_RGB)) {
+    if(match = val.match(RE_RGB)) {
       return[parseInt(match[1]), parseInt(match[2]), parseInt(match[3])]
     }else {
-      if(match = val.match(re_RGBA)) {
+      if(match = val.match(RE_RGBA)) {
         return[parseInt(match[1]), parseInt(match[2]), parseInt(match[3]), parseInt(match[4])]
       }else {
-        if(match = val.match(re_hex)) {
+        if(match = val.match(RE_HEX)) {
           for(var i = 1;i < match.length;i++) {
             if(match[i].length < 2) {
               match[i] += match[i]
@@ -370,10 +370,10 @@ KISSY.add("anim/timer/color", ["./fx", "./short-hand"], function(S, require) {
     }
   }, interpolate:function(from, to, pos) {
     var interpolate = ColorFx.superclass.interpolate;
-    if(from.length == 3 && to.length == 3) {
+    if(from.length === 3 && to.length === 3) {
       return"rgb(" + [floor(interpolate(from[0], to[0], pos)), floor(interpolate(from[1], to[1], pos)), floor(interpolate(from[2], to[2], pos))].join(", ") + ")"
     }else {
-      if(from.length == 4 || to.length == 4) {
+      if(from.length === 4 || to.length === 4) {
         return"rgba(" + [floor(interpolate(from[0], to[0], pos)), floor(interpolate(from[1], to[1], pos)), floor(interpolate(from[2], to[2], pos)), floor(interpolate(from[3] || 1, to[3] || 1, pos))].join(", ") + ")"
       }else {
         logger.warn("unknown value : " + from);
@@ -469,8 +469,7 @@ KISSY.add("anim/timer/transform", ["dom", "./fx"], function(S, require) {
           ret.scaleY = myParse(val[1] || val[0]);
           break;
         case "matrix":
-          return decomposeMatrix(val);
-          break
+          return decomposeMatrix(val)
       }
     }
     return ret
@@ -482,7 +481,7 @@ KISSY.add("anim/timer/transform", ["dom", "./fx"], function(S, require) {
     var self = this;
     TransformFx.superclass.load.apply(self, arguments);
     self.from = Dom.style(self.anim.node, "transform") || self.from;
-    if(self.from && self.from != "none") {
+    if(self.from && self.from !== "none") {
       self.from = getTransformInfo(self.from)
     }else {
       self.from = defaultDecompose()
@@ -522,7 +521,7 @@ KISSY.add("anim/timer", ["dom", "./base", "./timer/easing", "./timer/manager", "
     Anim.superclass.constructor.apply(self, arguments);
     S.each(to = self.to, function(v, prop) {
       var camelProp = camelCase(prop);
-      if(prop != camelProp) {
+      if(prop !== camelProp) {
         to[camelProp] = to[prop];
         delete to[prop]
       }
@@ -533,7 +532,7 @@ KISSY.add("anim/timer", ["dom", "./base", "./timer/easing", "./timer/manager", "
     S.each(_propsData, function(_propData) {
       _propData.duration *= 1E3;
       _propData.delay *= 1E3;
-      if(typeof _propData.easing == "string") {
+      if(typeof _propData.easing === "string") {
         _propData.easing = Easing.toFn(_propData.easing)
       }
     });
@@ -578,7 +577,7 @@ KISSY.add("anim/timer", ["dom", "./base", "./timer/easing", "./timer/manager", "
             ++to2;
             Dom.css(node, prop, to2 + unit);
             tmpCur = fx.cur()
-          }while(tmpCur == 0);
+          }while(tmpCur === 0);
           from = to2 / tmpCur * from;
           Dom.css(node, prop, from + unit)
         }
@@ -601,12 +600,12 @@ KISSY.add("anim/timer", ["dom", "./base", "./timer/easing", "./timer/manager", "
       if(self.isRejected() || self.isResolved()) {
         return
       }
-      end &= fx.pos == 1
+      end &= fx.pos === 1
     }
     var currentTime = S.now(), duration = self.config.duration * 1E3, remaining = Math.max(0, self.startTime + duration - currentTime), temp = remaining / duration || 0, percent = 1 - temp;
     self.defer.notify([self, percent, remaining]);
     if(end) {
-      self["stop"](end)
+      self.stop(end)
     }
   }, doStop:function(finish) {
     var self = this, prop, fx, _propData, _propsData = self._propsData;

@@ -258,10 +258,10 @@ KISSY.add(function(S, require) {
   bindUI: function() {
   _$jscoverage['/tabs/tab.js'].functionData[1]++;
   _$jscoverage['/tabs/tab.js'].lineData[18]++;
-  this.on("click", function() {
+  this.on('click', function() {
   _$jscoverage['/tabs/tab.js'].functionData[2]++;
   _$jscoverage['/tabs/tab.js'].lineData[19]++;
-  this.set("selected", true);
+  this.set('selected', true);
 });
 }}, {
   ATTRS: {

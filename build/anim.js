@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:37
+build time: Dec 2 15:11
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -19,14 +19,14 @@ KISSY.add("anim", ["anim/base", "anim/timer", "anim/transition?"], function(S, r
     if(node.node) {
       config = node
     }else {
-      if(typeof to == "string") {
+      if(typeof to === "string") {
         to = S.unparam(String(to), ";", ":");
         S.each(to, function(value, prop) {
           var trimProp = S.trim(prop);
           if(trimProp) {
             to[trimProp] = S.trim(value)
           }
-          if(!trimProp || trimProp != prop) {
+          if(!trimProp || trimProp !== prop) {
             delete to[prop]
           }
         })
@@ -48,7 +48,7 @@ KISSY.add("anim", ["anim/base", "anim/timer", "anim/transition?"], function(S, r
       config.to = to
     }
     config = S.merge(defaultConfig, config, {useTransition:S.config("anim/useTransition")});
-    if(config["useTransition"] && TransitionAnim) {
+    if(config.useTransition && TransitionAnim) {
       logger.info("use transition anim");
       return new TransitionAnim(config)
     }else {
@@ -58,7 +58,7 @@ KISSY.add("anim", ["anim/base", "anim/timer", "anim/transition?"], function(S, r
   }
   S.each(["pause", "resume"], function(action) {
     Anim[action] = function(node, queue) {
-      if(queue === null || typeof queue == "string" || queue === false) {
+      if(queue === null || typeof queue === "string" || queue === false) {
         return Utils.pauseOrResumeQueue(node, queue, action)
       }
       return Utils.pauseOrResumeQueue(node, undefined, action)

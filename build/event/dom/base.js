@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:47
+build time: Dec 2 15:22
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -52,7 +52,7 @@ KISSY.add("event/dom/base/observer", ["event/base", "./special"], function(S, re
   var BaseEvent = require("event/base");
   var Special = require("./special");
   function DomEventObserver(cfg) {
-    DomEventObserver.superclass.constructor.apply(this, arguments)
+    DomEventObserver.superclass.constructor.call(this, cfg)
   }
   S.extend(DomEventObserver, BaseEvent.Observer, {keys:["fn", "filter", "data", "context", "originalType", "groups", "last"], notifyInternal:function(event, ce) {
     var self = this, s, t, ret, type = event.type, originalType;
@@ -87,19 +87,19 @@ KISSY.add("event/dom/base/object", ["event/base"], function(S, require) {
       event.metaKey = event.ctrlKey
     }
   }}, {reg:/^touch/, props:["touches", "changedTouches", "targetTouches"]}, {reg:/^gesturechange$/i, props:["rotation", "scale"]}, {reg:/^(mousewheel|DOMMouseScroll)$/, props:[], fix:function(event, originalEvent) {
-    var deltaX, deltaY, delta, wheelDelta = originalEvent.wheelDelta, axis = originalEvent.axis, wheelDeltaY = originalEvent["wheelDeltaY"], wheelDeltaX = originalEvent["wheelDeltaX"], detail = originalEvent.detail;
+    var deltaX, deltaY, delta, wheelDelta = originalEvent.wheelDelta, axis = originalEvent.axis, wheelDeltaY = originalEvent.wheelDeltaY, wheelDeltaX = originalEvent.wheelDeltaX, detail = originalEvent.detail;
     if(wheelDelta) {
       delta = wheelDelta / 120
     }
     if(detail) {
-      delta = -(detail % 3 == 0 ? detail / 3 : detail)
+      delta = -(detail % 3 === 0 ? detail / 3 : detail)
     }
     if(axis !== undefined) {
-      if(axis === event["HORIZONTAL_AXIS"]) {
+      if(axis === event.HORIZONTAL_AXIS) {
         deltaY = 0;
         deltaX = -1 * delta
       }else {
-        if(axis === event["VERTICAL_AXIS"]) {
+        if(axis === event.VERTICAL_AXIS) {
           deltaX = 0;
           deltaY = delta
         }
@@ -152,10 +152,10 @@ KISSY.add("event/dom/base/object", ["event/base"], function(S, require) {
     self.originalEvent = originalEvent;
     var isDefaultPrevented = retFalse;
     if("defaultPrevented" in originalEvent) {
-      isDefaultPrevented = originalEvent["defaultPrevented"] ? retTrue : retFalse
+      isDefaultPrevented = originalEvent.defaultPrevented ? retTrue : retFalse
     }else {
       if("getPreventDefault" in originalEvent) {
-        isDefaultPrevented = originalEvent["getPreventDefault"]() ? retTrue : retFalse
+        isDefaultPrevented = originalEvent.getPreventDefault() ? retTrue : retFalse
       }else {
         if("returnValue" in originalEvent) {
           isDefaultPrevented = originalEvent.returnValue === FALSE ? retTrue : retFalse
@@ -234,9 +234,9 @@ KISSY.add("event/dom/base/observable", ["event/base", "dom", "./special", "./uti
     self.delegateCount = 0;
     self.lastCount = 0
   }, notify:function(event) {
-    var target = event.target, eventType = event["type"], self = this, currentTarget = self.currentTarget, observers = self.observers, currentTarget0, allObservers = [], ret, gRet, observerObj, i, j, delegateCount = self.delegateCount || 0, len, currentTargetObservers, currentTargetObserver, observer;
+    var target = event.target, eventType = event.type, self = this, currentTarget = self.currentTarget, observers = self.observers, currentTarget0, allObservers = [], ret, gRet, observerObj, i, j, delegateCount = self.delegateCount || 0, len, currentTargetObservers, currentTargetObserver, observer;
     if(delegateCount && target.nodeType) {
-      while(target != currentTarget) {
+      while(target !== currentTarget) {
         if(target.disabled !== true || eventType !== "click") {
           var cachedMatch = {}, matched, key, filter;
           currentTargetObservers = [];
@@ -297,7 +297,7 @@ KISSY.add("event/dom/base/observable", ["event/base", "dom", "./special", "./uti
     }while(!onlyHandlers && cur && bubbles);
     cur = eventPath[eventPathIndex];
     do {
-      event["currentTarget"] = cur;
+      event.currentTarget = cur;
       domEventObservable = DomEventObservable.getDomEventObservable(cur, eventType);
       if(domEventObservable) {
         ret = domEventObservable.notify(event);
@@ -329,7 +329,7 @@ KISSY.add("event/dom/base/observable", ["event/base", "dom", "./special", "./uti
         S.error("lack event handler for " + self.type)
       }
     }
-    if(self.findObserver(observer) == -1) {
+    if(self.findObserver(observer) === -1) {
       if(observer.filter) {
         observers.splice(self.delegateCount, 0, observer);
         self.delegateCount++
@@ -359,7 +359,7 @@ KISSY.add("event/dom/base/observable", ["event/base", "dom", "./special", "./uti
       for(i = 0, j = 0, t = [];i < len;++i) {
         observer = observers[i];
         observerContext = observer.context || currentTarget;
-        if(context != observerContext || fn && fn != observer.fn || hasFilter && (filter && filter != observer.filter || !filter && !observer.filter) || groupsRe && !observer.groups.match(groupsRe)) {
+        if(context !== observerContext || fn && fn !== observer.fn || hasFilter && (filter && filter !== observer.filter || !filter && !observer.filter) || groupsRe && !observer.groups.match(groupsRe)) {
           t[j++] = observer
         }else {
           if(observer.filter && self.delegateCount) {
@@ -384,7 +384,7 @@ KISSY.add("event/dom/base/observable", ["event/base", "dom", "./special", "./uti
       domEventObservables = eventDesc.observables;
       if(!self.hasObserver()) {
         handle = eventDesc.handle;
-        if(!s["tearDown"] || s["tearDown"].call(currentTarget, type) === false) {
+        if(!s.tearDown || s.tearDown.call(currentTarget, type) === false) {
           DomEventUtils.simpleRemove(currentTarget, type, handle)
         }
         delete domEventObservables[type]
@@ -423,7 +423,6 @@ KISSY.add("event/dom/base/dom-event", ["event/base", "./utils", "dom", "./specia
   var DomEventObservable = require("./observable");
   var DomEventObject = require("./object");
   var BaseUtils = BaseEvent.Utils;
-  var undefined = undefined;
   function fixType(cfg, type) {
     var s = Special[type] || {}, typeFix;
     if(!cfg.originalType && (typeFix = s.typeFix)) {
@@ -440,7 +439,7 @@ KISSY.add("event/dom/base/dom-event", ["event/base", "./utils", "dom", "./specia
     if(!(handle = domEventObservablesHolder.handle)) {
       handle = domEventObservablesHolder.handle = function(event) {
         var type = event.type, domEventObservable, currentTarget = handle.currentTarget;
-        if(DomEventObservable.triggeredEvent == type || typeof KISSY == "undefined") {
+        if(DomEventObservable.triggeredEvent === type || typeof KISSY === "undefined") {
           return undefined
         }
         domEventObservable = DomEventObservable.getDomEventObservable(currentTarget, type);
@@ -516,7 +515,7 @@ KISSY.add("event/dom/base/dom-event", ["event/base", "./utils", "dom", "./specia
   }, undelegate:function(targets, eventType, filter, fn, context) {
     return DomEvent.detach(targets, eventType, {fn:fn, context:context, filter:filter})
   }, fire:function(targets, eventType, eventData, onlyHandlers) {
-    var ret = undefined;
+    var ret;
     eventData = eventData || {};
     eventData.synthetic = 1;
     BaseUtils.splitAndRun(eventType, function(eventType) {
@@ -634,7 +633,7 @@ KISSY.add("event/dom/base/key-codes", [], function(S) {
     if(keyCode >= KeyCode.A && keyCode <= KeyCode.Z) {
       return true
     }
-    if(UA.webkit && keyCode == 0) {
+    if(UA.webkit && keyCode === 0) {
       return true
     }
     switch(keyCode) {
@@ -684,10 +683,10 @@ KISSY.add("event/dom/base/gesture", [], function() {
 KISSY.add("event/dom/base/special-events", ["./dom-event", "./special"], function(S, require) {
   var DomEvent = require("./dom-event");
   var Special = require("./special");
-  var undefined = undefined, UA = S.UA, MOUSE_WHEEL = UA.gecko ? "DOMMouseScroll" : "mousewheel";
+  var UA = S.UA, MOUSE_WHEEL = UA.gecko ? "DOMMouseScroll" : "mousewheel";
   return S.mix(Special, {mousewheel:{typeFix:MOUSE_WHEEL}, load:{bubbles:false}, click:{fire:function(onlyHandlers) {
     var target = this;
-    if(!onlyHandlers && String(target.type) === "checkbox" && target.click && target.nodeName.toLowerCase() == "input") {
+    if(!onlyHandlers && String(target.type) === "checkbox" && target.click && target.nodeName.toLowerCase() === "input") {
       target.click();
       return false
     }
@@ -762,14 +761,14 @@ KISSY.add("event/dom/base/valuechange", ["dom", "./dom-event", "./special"], fun
     if(Dom.hasData(target, POLL_KEY)) {
       return
     }
-    Dom.data(target, POLL_KEY, setTimeout(function() {
+    Dom.data(target, POLL_KEY, setTimeout(function check() {
       checkChange(target);
-      Dom.data(target, POLL_KEY, setTimeout(arguments.callee, interval))
+      Dom.data(target, POLL_KEY, setTimeout(check, interval))
     }, interval))
   }
   function startPollHandler(ev) {
     var target = ev.target;
-    if(ev.type == "focus") {
+    if(ev.type === "focus") {
       Dom.data(target, HISTORY_KEY, target.value)
     }
     startPoll(target)
@@ -791,7 +790,7 @@ KISSY.add("event/dom/base/valuechange", ["dom", "./dom-event", "./special"], fun
   }
   Special[VALUE_CHANGE] = {setup:function() {
     var target = this, nodeName = getNodeName(target);
-    if(nodeName == "input" || nodeName == "textarea") {
+    if(nodeName === "input" || nodeName === "textarea") {
       monitor(target)
     }
   }, tearDown:function() {

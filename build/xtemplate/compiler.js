@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 28 19:32
+build time: Dec 2 15:25
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -11,7 +11,7 @@ build time: Nov 28 19:32
  xtemplate/compiler
 */
 
-KISSY.add("xtemplate/compiler/parser", [], function() {
+KISSY.add("xtemplate/compiler/parser", [], function(_, undefined) {
   var parser = {}, S = KISSY, GrammarConst = {SHIFT_TYPE:1, REDUCE_TYPE:2, ACCEPT_TYPE:0, TYPE_INDEX:0, PRODUCTION_INDEX:1, TO_INDEX:2};
   var Lexer = function(cfg) {
     var self = this;
@@ -322,6 +322,7 @@ KISSY.add("xtemplate/compiler/parser", [], function() {
         case GrammarConst.REDUCE_TYPE:
           var production = productions[action[GrammarConst.PRODUCTION_INDEX]], reducedSymbol = production.symbol || production[0], reducedAction = production.action || production[2], reducedRhs = production.rhs || production[1], len = reducedRhs.length, i = 0, ret, $$ = valueStack[valueStack.length - len];
           self.$$ = $$;
+          ret = undefined;
           for(;i < len;i++) {
             self["$" + (len - i)] = valueStack[valueStack.length - 1 - i]
           }
@@ -360,9 +361,9 @@ KISSY.add("xtemplate/compiler/ast", [], function(S) {
   };
   ast.ProgramNode.prototype.type = "program";
   ast.BlockNode = function(lineNumber, tpl, program, close) {
-    var closeParts = close["parts"], self = this, e;
-    if(!S.equals(tpl.path["parts"], closeParts)) {
-      e = "Syntax error at line " + lineNumber + ":\n" + "expect {{/" + tpl.path["parts"] + "}} not {{/" + closeParts + "}}";
+    var closeParts = close.parts, self = this, e;
+    if(!S.equals(tpl.path.parts, closeParts)) {
+      e = "Syntax error at line " + lineNumber + ":\n" + "expect {{/" + tpl.path.parts + "}} not {{/" + closeParts + "}}";
       S.error(e)
     }
     self.lineNumber = lineNumber;
@@ -468,7 +469,7 @@ KISSY.add("xtemplate/compiler/ast", [], function(S) {
     var self = this, parts = [], depth = 0;
     self.lineNumber = lineNumber;
     S.each(raw, function(p) {
-      if(p == "..") {
+      if(p === "..") {
         depth++
       }else {
         parts.push(p)

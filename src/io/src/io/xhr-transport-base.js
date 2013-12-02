@@ -5,12 +5,11 @@
  */
 KISSY.add(function (S, require) {
     var IO = require('./base');
-    var  logger = S.getLogger('s/io');
+    var logger = S.getLogger('s/io');
     var OK_CODE = 200,
         win = S.Env.host,
-
     // http://msdn.microsoft.com/en-us/library/cc288060(v=vs.85).aspx
-        _XDomainRequest = S.UA.ieMode > 7 && win['XDomainRequest'],
+        XDomainRequest_ = S.UA.ieMode > 7 && win.XDomainRequest,
         NO_CONTENT_CODE = 204,
         NOT_FOUND_CODE = 404,
         NO_CONTENT_CODE2 = 1223,
@@ -24,7 +23,7 @@ KISSY.add(function (S, require) {
 
     function createStandardXHR(_, refWin) {
         try {
-            return new (refWin || win)['XMLHttpRequest']();
+            return new (refWin || win).XMLHttpRequest();
         } catch (e) {
         }
         return undefined;
@@ -32,29 +31,29 @@ KISSY.add(function (S, require) {
 
     function createActiveXHR(_, refWin) {
         try {
-            return new (refWin || win)['ActiveXObject']('Microsoft.XMLHTTP');
+            return new (refWin || win).ActiveXObject('Microsoft.XMLHTTP');
         } catch (e) {
         }
         return undefined;
     }
 
-    XhrTransportBase.nativeXhr = win['ActiveXObject'] ? function (crossDomain, refWin) {
+    XhrTransportBase.nativeXhr = win.ActiveXObject ? function (crossDomain, refWin) {
         // consider ie10
-        if (!supportCORS && crossDomain && _XDomainRequest) {
-            return new _XDomainRequest();
+        if (!supportCORS && crossDomain && XDomainRequest_) {
+            return new XDomainRequest_();
         }
         // ie7 XMLHttpRequest 不能访问本地文件
         return !IO.isLocal && createStandardXHR(crossDomain, refWin) ||
             createActiveXHR(crossDomain, refWin);
     } : createStandardXHR;
 
-    XhrTransportBase._XDomainRequest = _XDomainRequest;
+    XhrTransportBase.XDomainRequest_ = XDomainRequest_;
 
     var supportCORS = XhrTransportBase.supportCORS =
         ('withCredentials' in XhrTransportBase.nativeXhr());
 
     function isInstanceOfXDomainRequest(xhr) {
-        return _XDomainRequest && (xhr instanceof _XDomainRequest);
+        return XDomainRequest_ && (xhr instanceof XDomainRequest_);
     }
 
     function getIfModifiedKey(c) {
@@ -98,21 +97,21 @@ KISSY.add(function (S, require) {
                 // or else
                 // u will always get response status 200 and full responseText
                 // which is also conditional load but process transparently by browser
-                if (cacheValue = lastModifiedCached[ifModifiedKey]) {
+                if ((cacheValue = lastModifiedCached[ifModifiedKey])) {
                     requestHeaders['If-Modified-Since'] = cacheValue;
                 }
-                if (cacheValue = eTagCached[ifModifiedKey]) {
+                if ((cacheValue = eTagCached[ifModifiedKey])) {
                     requestHeaders['If-None-Match'] = cacheValue;
                 }
             }
 
-            if (username = c['username']) {
-                nativeXhr.open(type, url, async, username, c.password)
+            if ((username = c.username)) {
+                nativeXhr.open(type, url, async, username, c.password);
             } else {
                 nativeXhr.open(type, url, async);
             }
 
-            xhrFields = c['xhrFields'] || {};
+            xhrFields = c.xhrFields || {};
 
             if ('withCredentials' in xhrFields) {
                 if (!supportCORS) {
@@ -170,10 +169,10 @@ KISSY.add(function (S, require) {
 
             nativeXhr.send(sendContent);
 
-            if (!async || nativeXhr.readyState == 4) {
+            if (!async || nativeXhr.readyState === 4) {
                 self._callback();
             } else {
-                // _XDomainRequest 单独的回调机制
+                // XDomainRequest_ 单独的回调机制
                 if (isInstanceOfXDomainRequest(nativeXhr)) {
                     nativeXhr.onload = function () {
                         nativeXhr.readyState = 4;
@@ -212,7 +211,7 @@ KISSY.add(function (S, require) {
                 c = io.config;
             try {
                 //abort or complete
-                if (abort || nativeXhr.readyState == 4) {
+                if (abort || nativeXhr.readyState === 4) {
                     // ie6 ActiveObject 设置不恰当属性导致出错
                     if (isInstanceOfXDomainRequest(nativeXhr)) {
                         nativeXhr.onerror = S.noop;
@@ -232,7 +231,7 @@ KISSY.add(function (S, require) {
 
                         var status = nativeXhr.status;
 
-                        // _XDomainRequest 不能获取响应头
+                        // XDomainRequest_ 不能获取响应头
                         if (!isInstanceOfXDomainRequest(nativeXhr)) {
                             io.responseHeadersString = nativeXhr.getAllResponseHeaders();
                         }
@@ -262,9 +261,9 @@ KISSY.add(function (S, require) {
                         // same with old-ie iframe-upload
                         if (c.files && text) {
                             var bodyIndex, lastBodyIndex;
-                            if ((bodyIndex = text.indexOf('<body>')) != -1) {
+                            if ((bodyIndex = text.indexOf('<body>')) !== -1) {
                                 lastBodyIndex = text.lastIndexOf('</body>');
-                                if (lastBodyIndex == -1) {
+                                if (lastBodyIndex === -1) {
                                     lastBodyIndex = text.length;
                                 }
                                 text = text.slice(bodyIndex + 6, lastBodyIndex);

@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:37
+build time: Dec 2 15:11
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -28,7 +28,7 @@ KISSY.add("anim/transition", ["dom", "event/dom", "./base"], function(S, require
     });
     return str
   }
-  function TransitionAnim(config) {
+  function TransitionAnim() {
     TransitionAnim.superclass.constructor.apply(this, arguments)
   }
   S.extend(TransitionAnim, AnimBase, {doStart:function() {
@@ -39,17 +39,17 @@ KISSY.add("anim/transition", ["dom", "event/dom", "./base"], function(S, require
     }
     S.each(_propsData, function(propData, prop) {
       var v = propData.value, currentValue = Dom.css(node, prop);
-      if(typeof v == "number") {
+      if(typeof v === "number") {
         currentValue = parseFloat(currentValue)
       }
-      if(currentValue == v) {
+      if(currentValue === v) {
         setTimeout(function() {
           self._onTransitionEnd({originalEvent:{propertyName:prop}})
         }, 0)
       }
       propsCss[prop] = v
     });
-    if(original.indexOf("none") != -1) {
+    if(original.indexOf("none") !== -1) {
       original = ""
     }else {
       if(original) {

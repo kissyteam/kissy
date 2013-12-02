@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:49
+build time: Dec 2 15:23
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -15,12 +15,12 @@ build time: Nov 27 00:49
 */
 
 KISSY.add("menubutton/menubutton-xtpl", ["component/extension/content-xtpl"], function(S, require, exports, module) {
-  return function(scopes, S, undefined) {
+  return function(scope, S, undefined) {
     var buffer = "", config = this.config, engine = this, moduleWrap, utils = config.utils;
-    if(typeof module != "undefined" && module.kissy) {
+    if(typeof module !== "undefined" && module.kissy) {
       moduleWrap = module
     }
-    var runBlockCommandUtil = utils["runBlockCommand"], getExpressionUtil = utils["getExpression"], getPropertyOrRunCommandUtil = utils["getPropertyOrRunCommand"];
+    var runBlockCommandUtil = utils.runBlockCommand, getExpressionUtil = utils.getExpression, getPropertyOrRunCommandUtil = utils.getPropertyOrRunCommand;
     buffer += "";
     var config1 = {};
     var params2 = [];
@@ -30,21 +30,21 @@ KISSY.add("menubutton/menubutton-xtpl", ["component/extension/content-xtpl"], fu
       require("component/extension/content-xtpl");
       config1.params[0] = moduleWrap.resolveByName(config1.params[0])
     }
-    var id0 = getPropertyOrRunCommandUtil(engine, scopes, config1, "include", 0, 1, false, undefined);
+    var id0 = getPropertyOrRunCommandUtil(engine, scope, config1, "include", 0, 1, false, undefined);
     buffer += id0;
     buffer += '\n<div class="';
     var config4 = {};
     var params5 = [];
     params5.push("dropdown");
     config4.params = params5;
-    var id3 = getPropertyOrRunCommandUtil(engine, scopes, config4, "getBaseCssClasses", 0, 2, true, undefined);
+    var id3 = getPropertyOrRunCommandUtil(engine, scope, config4, "getBaseCssClasses", 0, 2, true, undefined);
     buffer += id3;
     buffer += '">\n    <div class="';
     var config7 = {};
     var params8 = [];
     params8.push("dropdown-inner");
     config7.params = params8;
-    var id6 = getPropertyOrRunCommandUtil(engine, scopes, config7, "getBaseCssClasses", 0, 3, true, undefined);
+    var id6 = getPropertyOrRunCommandUtil(engine, scope, config7, "getBaseCssClasses", 0, 3, true, undefined);
     buffer += id6;
     buffer += '">\n    </div>\n</div>';
     return buffer
@@ -98,25 +98,25 @@ KISSY.add("menubutton/control", ["node", "button", "./render"], function(S, requ
     self.on("click", onMenuItemClick, self)
   }, handleKeyDownInternal:function(e) {
     var self = this, keyCode = e.keyCode, type = String(e.type), menu = self.get("menu");
-    if(keyCode == KeyCode.SPACE) {
+    if(keyCode === KeyCode.SPACE) {
       e.preventDefault();
-      if(type != "keyup") {
+      if(type !== "keyup") {
         return undefined
       }
     }else {
-      if(type != "keydown") {
+      if(type !== "keydown") {
         return undefined
       }
     }
     if(menu.get("rendered") && menu.get("visible")) {
       var handledByMenu = menu.handleKeyDownInternal(e);
-      if(keyCode == KeyCode.ESC) {
+      if(keyCode === KeyCode.ESC) {
         self.set("collapsed", true);
         return true
       }
       return handledByMenu
     }
-    if(keyCode == KeyCode.SPACE || keyCode == KeyCode.DOWN || keyCode == KeyCode.UP) {
+    if(keyCode === KeyCode.SPACE || keyCode === KeyCode.DOWN || keyCode === KeyCode.UP) {
       self.set("collapsed", false);
       return true
     }
@@ -146,11 +146,12 @@ KISSY.add("menubutton/control", ["node", "button", "./render"], function(S, requ
       }
     }
   }, getItemAt:function(index) {
-    var menu = self.get("menu");
+    var menu = this.get("menu");
     return menu.get("rendered") && menu.getChildAt(index)
   }, _onSetDisabled:function(v) {
-    var self = this;
-    !v && self.set("collapsed", true)
+    if(!v) {
+      this.set("collapsed", true)
+    }
   }, destructor:function() {
     this.get("menu").destroy()
   }}, {ATTRS:{matchElWidth:{value:true}, collapseOnClick:{value:false}, menu:{value:{}, getter:function(v) {
@@ -184,7 +185,7 @@ KISSY.add("menubutton/select", ["node", "./control"], function(S, require) {
     var menu = self.get("menu"), cs = menu.children || menu.get && menu.get("children") || [], value = self.get("value"), c, i;
     for(i = 0;i < cs.length;i++) {
       c = cs[i];
-      if(getItemValue(c) == value) {
+      if(getItemValue(c) === value) {
         return c
       }
     }
@@ -209,7 +210,7 @@ KISSY.add("menubutton/select", ["node", "./control"], function(S, require) {
     var menu = self.get("menu"), value = self.get("value"), cs = menu && menu.get && menu.get("children");
     S.each(cs, function(c) {
       if(c && c.set) {
-        c.set("selected", getItemValue(c) == value)
+        c.set("selected", getItemValue(c) === value)
       }
     })
   }
@@ -234,7 +235,7 @@ KISSY.add("menubutton/select", ["node", "./control"], function(S, require) {
     if(target.isMenuItem) {
       var newValue = getItemValue(target), oldValue = self.get("value");
       self.set("value", newValue);
-      if(newValue != oldValue) {
+      if(newValue !== oldValue) {
         self.fire("change", {prevVal:oldValue, newVal:newValue})
       }
     }
@@ -249,7 +250,7 @@ KISSY.add("menubutton/select", ["node", "./control"], function(S, require) {
   }, removeItem:function(c, destroy) {
     var self = this;
     self.callSuper(c, destroy);
-    if(c.get("value") == self.get("value")) {
+    if(c.get("value") === self.get("value")) {
       self.set("value", null)
     }
   }, _onSetValue:function() {
@@ -265,7 +266,7 @@ KISSY.add("menubutton/select", ["node", "./control"], function(S, require) {
     var name, allItems = [], select, selectedItem = null, curValue = element.val(), options = element.all("option");
     options.each(function(option) {
       var item = {xclass:"option", content:option.text(), elCls:option.attr("class"), value:option.val()};
-      if(curValue == option.val()) {
+      if(curValue === option.val()) {
         selectedItem = {content:item.content, value:item.value}
       }
       allItems.push(item)
@@ -274,7 +275,7 @@ KISSY.add("menubutton/select", ["node", "./control"], function(S, require) {
     delete cfg.menuCfg;
     select = (new Select(S.mix(cfg, selectedItem))).render();
     if(name = element.attr("name")) {
-      var input = (new Node("<input" + " type='hidden'" + " name='" + name + "' value='" + curValue + "'>")).insertBefore(element, undefined);
+      var input = (new Node("<input" + ' type="hidden"' + ' name="' + name + '" value="' + curValue + '">')).insertBefore(element, undefined);
       select.on("afterValueChange", function(e) {
         input.val(e.newVal || "")
       })

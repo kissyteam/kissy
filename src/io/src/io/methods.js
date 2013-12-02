@@ -221,7 +221,7 @@ KISSY.add(function (S, require) {
                 var defer = self.defer,
                     config = self.config,
                     timeoutTimer;
-                if (timeoutTimer = self.timeoutTimer) {
+                if ((timeoutTimer = self.timeoutTimer)) {
                     clearTimeout(timeoutTimer);
                     self.timeoutTimer = 0;
                 }
@@ -260,10 +260,10 @@ KISSY.add(function (S, require) {
                         ajaxConfig: config,
                         io: self
                     };
-                if (h = config[handler]) {
+                if ((h = config[handler])) {
                     h.apply(context, v);
                 }
-                if (h = config.complete) {
+                if ((h = config.complete)) {
                     h.apply(context, v);
                 }
                 IO.fire(handler, eventObject);
@@ -281,7 +281,7 @@ KISSY.add(function (S, require) {
                 // and append when send
                 var c = this.config,
                     uri = c.uri,
-                    originalQuery = S.Uri.getComponents(c.url).query || "",
+                    originalQuery = S.Uri.getComponents(c.url).query || '',
                     url = uri.toString.call(uri, c.serializeArray);
 
                 return url + (originalQuery ?

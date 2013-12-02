@@ -288,7 +288,7 @@ if (! _$jscoverage['/tabs/bar.js'].branchData) {
   _$jscoverage['/tabs/bar.js'].branchData['61'] = [];
   _$jscoverage['/tabs/bar.js'].branchData['61'][1] = new BranchData();
 }
-_$jscoverage['/tabs/bar.js'].branchData['61'][1].init(80, 33, 'self.get(\'changeType\') == \'mouse\'');
+_$jscoverage['/tabs/bar.js'].branchData['61'][1].init(80, 34, 'self.get(\'changeType\') === \'mouse\'');
 function visit6_61_1(result) {
   _$jscoverage['/tabs/bar.js'].branchData['61'][1].ranCondition(result);
   return result;
@@ -304,7 +304,7 @@ function visit4_50_1(result) {
 function visit3_40_1(result) {
   _$jscoverage['/tabs/bar.js'].branchData['40'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tabs/bar.js'].branchData['28'][1].init(21, 17, 'c.get("selected")');
+}_$jscoverage['/tabs/bar.js'].branchData['28'][1].init(21, 17, 'c.get(\'selected\')');
 function visit2_28_1(result) {
   _$jscoverage['/tabs/bar.js'].branchData['28'][1].ranCondition(result);
   return result;
@@ -326,26 +326,26 @@ KISSY.add(function(S, require) {
   _$jscoverage['/tabs/bar.js'].lineData[16]++;
   var self = this;
   _$jscoverage['/tabs/bar.js'].lineData[17]++;
-  self.on("afterSelectedChange", function(e) {
+  self.on('afterSelectedChange', function(e) {
   _$jscoverage['/tabs/bar.js'].functionData[2]++;
   _$jscoverage['/tabs/bar.js'].lineData[18]++;
   if (visit1_18_1(e.newVal && e.target.isTabsTab)) {
     _$jscoverage['/tabs/bar.js'].lineData[19]++;
-    self.set("selectedTab", e.target);
+    self.set('selectedTab', e.target);
   }
 });
 }, 
   syncUI: function() {
   _$jscoverage['/tabs/bar.js'].functionData[3]++;
   _$jscoverage['/tabs/bar.js'].lineData[25]++;
-  var bar = this, children = bar.get("children");
+  var bar = this, children = bar.get('children');
   _$jscoverage['/tabs/bar.js'].lineData[27]++;
   S.each(children, function(c) {
   _$jscoverage['/tabs/bar.js'].functionData[4]++;
   _$jscoverage['/tabs/bar.js'].lineData[28]++;
-  if (visit2_28_1(c.get("selected"))) {
+  if (visit2_28_1(c.get('selected'))) {
     _$jscoverage['/tabs/bar.js'].lineData[29]++;
-    bar.setInternal("selectedTab", c);
+    bar.setInternal('selectedTab', c);
     _$jscoverage['/tabs/bar.js'].lineData[30]++;
     return false;
   }
@@ -381,10 +381,10 @@ KISSY.add(function(S, require) {
     _$jscoverage['/tabs/bar.js'].lineData[51]++;
     if (visit5_51_1(e && (prev = e.prevVal))) {
       _$jscoverage['/tabs/bar.js'].lineData[52]++;
-      prev.set("selected", false);
+      prev.set('selected', false);
     }
     _$jscoverage['/tabs/bar.js'].lineData[54]++;
-    v.set("selected", true);
+    v.set('selected', true);
   }
 }, 
   _onSetHighlightedItem: function(v, e) {
@@ -394,7 +394,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/tabs/bar.js'].lineData[60]++;
   self.callSuper(v, e);
   _$jscoverage['/tabs/bar.js'].lineData[61]++;
-  if (visit6_61_1(self.get('changeType') == 'mouse')) {
+  if (visit6_61_1(self.get('changeType') === 'mouse')) {
     _$jscoverage['/tabs/bar.js'].lineData[62]++;
     self._onSetSelectedTab.apply(self, arguments);
   }
@@ -402,7 +402,7 @@ KISSY.add(function(S, require) {
   ATTRS: {
   selectedTab: {}, 
   changeType: {
-  value: "click"}, 
+  value: 'click'}, 
   defaultChildCfg: {
   value: {
   xclass: 'tabs-tab'}}, 
@@ -411,8 +411,8 @@ KISSY.add(function(S, require) {
   xclass: 'tabs-bar'});
   _$jscoverage['/tabs/bar.js'].lineData[89]++;
   TabBar.ChangeType = {
-  CLICK: "click", 
-  MOUSE: "mouse"};
+  CLICK: 'click', 
+  MOUSE: 'mouse'};
   _$jscoverage['/tabs/bar.js'].lineData[100]++;
   return TabBar;
 });

@@ -270,6 +270,6 @@ KISSY.add(function(S, require) {
   closeBtn: function(el) {
   _$jscoverage['/overlay/overlay-render.js'].functionData[2]++;
   _$jscoverage['/overlay/overlay-render.js'].lineData[27]++;
-  return el.one("." + this.getBaseCssClass('close'));
+  return el.one('.' + this.getBaseCssClass('close'));
 }}});
 });

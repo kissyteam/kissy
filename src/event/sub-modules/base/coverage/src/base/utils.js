@@ -309,15 +309,15 @@ if (! _$jscoverage['/base/utils.js'].branchData) {
   _$jscoverage['/base/utils.js'].branchData['90'] = [];
   _$jscoverage['/base/utils.js'].branchData['90'][1] = new BranchData();
 }
-_$jscoverage['/base/utils.js'].branchData['90'][1].init(115, 10, '_ks_groups');
+_$jscoverage['/base/utils.js'].branchData['90'][1].init(114, 9, '_ksGroups');
 function visit21_90_1(result) {
   _$jscoverage['/base/utils.js'].branchData['90'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/utils.js'].branchData['68'][2].init(140, 24, 'typeof types == \'object\'');
+}_$jscoverage['/base/utils.js'].branchData['68'][2].init(140, 25, 'typeof types === \'object\'');
 function visit20_68_2(result) {
   _$jscoverage['/base/utils.js'].branchData['68'][2].ranCondition(result);
   return result;
-}_$jscoverage['/base/utils.js'].branchData['68'][1].init(131, 33, 'types && typeof types == \'object\'');
+}_$jscoverage['/base/utils.js'].branchData['68'][1].init(131, 34, 'types && typeof types === \'object\'');
 function visit19_68_1(result) {
   _$jscoverage['/base/utils.js'].branchData['68'][1].ranCondition(result);
   return result;
@@ -329,7 +329,7 @@ function visit18_43_1(result) {
 function visit17_41_1(result) {
   _$jscoverage['/base/utils.js'].branchData['41'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/utils.js'].branchData['33'][1].init(157, 23, 'type.indexOf(\' \') == -1');
+}_$jscoverage['/base/utils.js'].branchData['33'][1].init(157, 24, 'type.indexOf(\' \') === -1');
 function visit16_33_1(result) {
   _$jscoverage['/base/utils.js'].branchData['33'][1].ranCondition(result);
   return result;
@@ -387,7 +387,7 @@ KISSY.add(function(S) {
   _$jscoverage['/base/utils.js'].lineData[32]++;
   type = S.trim(type);
   _$jscoverage['/base/utils.js'].lineData[33]++;
-  if (visit16_33_1(type.indexOf(' ') == -1)) {
+  if (visit16_33_1(type.indexOf(' ') === -1)) {
     _$jscoverage['/base/utils.js'].lineData[34]++;
     fn(type);
   } else {
@@ -425,7 +425,7 @@ KISSY.add(function(S) {
   _$jscoverage['/base/utils.js'].lineData[65]++;
   var args = S.makeArray(arguments), types = args[2 + num];
   _$jscoverage['/base/utils.js'].lineData[68]++;
-  if (visit19_68_1(types && visit20_68_2(typeof types == 'object'))) {
+  if (visit19_68_1(types && visit20_68_2(typeof types === 'object'))) {
     _$jscoverage['/base/utils.js'].lineData[69]++;
     S.each(types, function(value, type) {
   _$jscoverage['/base/utils.js'].functionData[5]++;
@@ -458,13 +458,13 @@ KISSY.add(function(S) {
   fillGroupsForEvent: function(type, eventData) {
   _$jscoverage['/base/utils.js'].functionData[7]++;
   _$jscoverage['/base/utils.js'].lineData[87]++;
-  var typedGroups = getTypedGroups(type), _ks_groups = typedGroups[1];
+  var typedGroups = getTypedGroups(type), _ksGroups = typedGroups[1];
   _$jscoverage['/base/utils.js'].lineData[90]++;
-  if (visit21_90_1(_ks_groups)) {
+  if (visit21_90_1(_ksGroups)) {
     _$jscoverage['/base/utils.js'].lineData[91]++;
-    _ks_groups = getGroupsRe(_ks_groups);
+    _ksGroups = getGroupsRe(_ksGroups);
     _$jscoverage['/base/utils.js'].lineData[92]++;
-    eventData._ks_groups = _ks_groups;
+    eventData._ksGroups = _ksGroups;
   }
   _$jscoverage['/base/utils.js'].lineData[95]++;
   eventData.type = typedGroups[0];

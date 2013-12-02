@@ -264,7 +264,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/drag.js'].lineData[39]++;
   self.set('node', $el);
   _$jscoverage['/drag.js'].lineData[41]++;
-  self.on("dragend", function() {
+  self.on('dragend', function() {
   _$jscoverage['/drag.js'].functionData[2]++;
   _$jscoverage['/drag.js'].lineData[42]++;
   var offset = $el.offset();

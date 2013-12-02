@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:48
+build time: Dec 2 15:23
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -186,7 +186,7 @@ KISSY.add("json/stringify", ["./quote"], function(S, require) {
   }
   return stringify
 });
-KISSY.add("json/parser", [], function() {
+KISSY.add("json/parser", [], function(_, undefined) {
   var parser = {}, S = KISSY, GrammarConst = {SHIFT_TYPE:1, REDUCE_TYPE:2, ACCEPT_TYPE:0, TYPE_INDEX:0, PRODUCTION_INDEX:1, TO_INDEX:2};
   var Lexer = function(cfg) {
     var self = this;
@@ -275,7 +275,7 @@ KISSY.add("json/parser", [], function() {
         self.text = match;
         self.matched += match;
         ret = action && action.call(self);
-        if(ret == undefined) {
+        if(ret === undefined) {
           ret = token
         }else {
           ret = self.mapSymbol(ret)
@@ -369,8 +369,9 @@ KISSY.add("json/parser", [], function() {
           symbol = null;
           break;
         case GrammarConst.REDUCE_TYPE:
-          var production = productions[action[GrammarConst.PRODUCTION_INDEX]], reducedSymbol = production.symbol || production[0], reducedAction = production.action || production[2], reducedRhs = production.rhs || production[1], len = reducedRhs.length, i = 0, ret = undefined, $$ = valueStack[valueStack.length - len];
+          var production = productions[action[GrammarConst.PRODUCTION_INDEX]], reducedSymbol = production.symbol || production[0], reducedAction = production.action || production[2], reducedRhs = production.rhs || production[1], len = reducedRhs.length, i = 0, ret, $$ = valueStack[valueStack.length - len];
           self.$$ = $$;
+          ret = undefined;
           for(;i < len;i++) {
             self["$" + (len - i)] = valueStack[valueStack.length - 1 - i]
           }

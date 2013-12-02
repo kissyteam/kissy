@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:48
+build time: Dec 2 15:23
 */
 /**
  * use document.write to load external css files in block loading ways.
@@ -52,7 +52,7 @@ build time: Nov 27 00:48
                     // map individual module
                     var fullpath = currentCss.getFullPath();
                     if (!currentPackage.isCombine() || !S.startsWith(fullpath, packagePath)) {
-                        document.writeln('<link href="' + fullpath + '"  rel="stylesheet"/>');
+                        doc.writeln('<link href="' + fullpath + '"  rel="stylesheet"/>');
                         continue;
                     }
                     var path = fullpath.slice(packagePath.length).replace(/\?.*$/, '');
@@ -65,10 +65,10 @@ build time: Nov 27 00:48
                         if ((combinedUrl.length > maxFileNum) ||
                             (prefix.length + combinedUrl.join(comboSep).length +
                                 suffix.length > maxUrlLength) ||
-                            combined[0].getPackage() != currentPackage) {
+                            combined[0].getPackage() !== currentPackage) {
                             combined.pop();
                             combinedUrl.pop();
-                            document.writeln('<link href="' +
+                            doc.writeln('<link href="' +
                                 (prefix + combinedUrl.join(comboSep) + suffix) +
                                 '"  rel="stylesheet"/>');
                             combined = [];
@@ -84,7 +84,7 @@ build time: Nov 27 00:48
                 }
             } else {
                 S.each(cssList, function (css) {
-                    doc.writeln('<link href="' + css.getFullPath() + '"  rel="stylesheet"/>')
+                    doc.writeln('<link href="' + css.getFullPath() + '"  rel="stylesheet"/>');
                 });
             }
         }
@@ -100,7 +100,7 @@ build time: Nov 27 00:48
             return;
         }
         processed[name] = 1;
-        if (mod.getType() == 'css') {
+        if (mod.getType() === 'css') {
             if (!cssCache[name]) {
                 mod.status = 4;
                 cssList.push(mod);

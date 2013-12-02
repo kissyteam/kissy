@@ -261,8 +261,8 @@ if (! _$jscoverage['/constrain.js']) {
   _$jscoverage['/constrain.js'].lineData[117] = 0;
   _$jscoverage['/constrain.js'].lineData[118] = 0;
   _$jscoverage['/constrain.js'].lineData[119] = 0;
-  _$jscoverage['/constrain.js'].lineData[120] = 0;
-  _$jscoverage['/constrain.js'].lineData[123] = 0;
+  _$jscoverage['/constrain.js'].lineData[121] = 0;
+  _$jscoverage['/constrain.js'].lineData[124] = 0;
 }
 if (! _$jscoverage['/constrain.js'].functionData) {
   _$jscoverage['/constrain.js'].functionData = [];
@@ -295,17 +295,18 @@ if (! _$jscoverage['/constrain.js'].branchData) {
   _$jscoverage['/constrain.js'].branchData['119'] = [];
   _$jscoverage['/constrain.js'].branchData['119'][1] = new BranchData();
   _$jscoverage['/constrain.js'].branchData['119'][2] = new BranchData();
-  _$jscoverage['/constrain.js'].branchData['119'][3] = new BranchData();
+  _$jscoverage['/constrain.js'].branchData['120'] = [];
+  _$jscoverage['/constrain.js'].branchData['120'][1] = new BranchData();
 }
-_$jscoverage['/constrain.js'].branchData['119'][3].init(153, 20, 'typeof v == \'string\'');
-function visit11_119_3(result) {
-  _$jscoverage['/constrain.js'].branchData['119'][3].ranCondition(result);
+_$jscoverage['/constrain.js'].branchData['120'][1].init(44, 21, 'typeof v === \'string\'');
+function visit11_120_1(result) {
+  _$jscoverage['/constrain.js'].branchData['120'][1].ranCondition(result);
   return result;
-}_$jscoverage['/constrain.js'].branchData['119'][2].init(136, 37, 'S.isWindow(v) || typeof v == \'string\'');
+}_$jscoverage['/constrain.js'].branchData['119'][2].init(136, 66, 'S.isWindow(v) || typeof v === \'string\'');
 function visit10_119_2(result) {
   _$jscoverage['/constrain.js'].branchData['119'][2].ranCondition(result);
   return result;
-}_$jscoverage['/constrain.js'].branchData['119'][1].init(122, 51, 'v.nodeType || S.isWindow(v) || typeof v == \'string\'');
+}_$jscoverage['/constrain.js'].branchData['119'][1].init(122, 80, 'v.nodeType || S.isWindow(v) || typeof v === \'string\'');
 function visit9_119_1(result) {
   _$jscoverage['/constrain.js'].branchData['119'][1].ranCondition(result);
   return result;
@@ -342,7 +343,7 @@ function visit1_19_1(result) {
   _$jscoverage['/constrain.js'].branchData['19'][1].ranCondition(result);
   return result;
 }_$jscoverage['/constrain.js'].lineData[6]++;
-KISSY.add(function(S, require) {
+KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/constrain.js'].functionData[0]++;
   _$jscoverage['/constrain.js'].lineData[7]++;
   var Node = require('node'), Base = require('base');
@@ -413,7 +414,7 @@ KISSY.add(function(S, require) {
     this.__constrainRegion = null;
   }
   _$jscoverage['/constrain.js'].lineData[68]++;
-  return Base.extend({
+  module.exports = Base.extend({
   pluginId: 'dd/plugin/constrain', 
   __constrainRegion: null, 
   pluginInitializer: function(drag) {
@@ -421,12 +422,12 @@ KISSY.add(function(S, require) {
   _$jscoverage['/constrain.js'].lineData[80]++;
   var self = this;
   _$jscoverage['/constrain.js'].lineData[83]++;
-  drag['on']('dragstart' + CONSTRAIN_EVENT, onDragStart, self).on('dragend' + CONSTRAIN_EVENT, onDragEnd, self).on('dragalign' + CONSTRAIN_EVENT, onDragAlign, self);
+  drag.on('dragstart' + CONSTRAIN_EVENT, onDragStart, self).on('dragend' + CONSTRAIN_EVENT, onDragEnd, self).on('dragalign' + CONSTRAIN_EVENT, onDragAlign, self);
 }, 
   pluginDestructor: function(drag) {
   _$jscoverage['/constrain.js'].functionData[5]++;
   _$jscoverage['/constrain.js'].lineData[92]++;
-  drag['detach'](CONSTRAIN_EVENT, {
+  drag.detach(CONSTRAIN_EVENT, {
   context: this});
 }}, {
   ATTRS: {
@@ -442,13 +443,13 @@ KISSY.add(function(S, require) {
       return $(WIN);
     } else {
       _$jscoverage['/constrain.js'].lineData[119]++;
-      if (visit9_119_1(v.nodeType || visit10_119_2(S.isWindow(v) || visit11_119_3(typeof v == 'string')))) {
-        _$jscoverage['/constrain.js'].lineData[120]++;
+      if (visit9_119_1(v.nodeType || visit10_119_2(S.isWindow(v) || visit11_120_1(typeof v === 'string')))) {
+        _$jscoverage['/constrain.js'].lineData[121]++;
         return $(v);
       }
     }
   }
-  _$jscoverage['/constrain.js'].lineData[123]++;
+  _$jscoverage['/constrain.js'].lineData[124]++;
   return v;
 }}}});
 });

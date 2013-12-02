@@ -313,19 +313,19 @@ function visit9_92_2(result) {
 function visit8_92_1(result) {
   _$jscoverage['/delegate-children.js'].branchData['92'][1].ranCondition(result);
   return result;
-}_$jscoverage['/delegate-children.js'].branchData['90'][1].init(264, 22, '!isTouchEventSupported');
+}_$jscoverage['/delegate-children.js'].branchData['90'][1].init(263, 22, '!isTouchEventSupported');
 function visit7_90_1(result) {
   _$jscoverage['/delegate-children.js'].branchData['90'][1].ranCondition(result);
   return result;
-}_$jscoverage['/delegate-children.js'].branchData['86'][1].init(167, 14, 'Gesture.cancel');
+}_$jscoverage['/delegate-children.js'].branchData['86'][1].init(166, 14, 'Gesture.cancel');
 function visit6_86_1(result) {
   _$jscoverage['/delegate-children.js'].branchData['86'][1].ranCondition(result);
   return result;
-}_$jscoverage['/delegate-children.js'].branchData['48'][1].init(76, 35, 'control && !control.get("disabled")');
+}_$jscoverage['/delegate-children.js'].branchData['48'][1].init(76, 35, 'control && !control.get(\'disabled\')');
 function visit5_48_1(result) {
   _$jscoverage['/delegate-children.js'].branchData['48'][1].ranCondition(result);
   return result;
-}_$jscoverage['/delegate-children.js'].branchData['46'][1].init(17, 21, '!this.get("disabled")');
+}_$jscoverage['/delegate-children.js'].branchData['46'][1].init(17, 21, '!this.get(\'disabled\')');
 function visit4_46_1(result) {
   _$jscoverage['/delegate-children.js'].branchData['46'][1].ranCondition(result);
   return result;
@@ -333,11 +333,11 @@ function visit4_46_1(result) {
 function visit3_27_1(result) {
   _$jscoverage['/delegate-children.js'].branchData['27'][1].ranCondition(result);
   return result;
-}_$jscoverage['/delegate-children.js'].branchData['24'][1].init(13, 16, 'e.target == this');
+}_$jscoverage['/delegate-children.js'].branchData['24'][1].init(13, 17, 'e.target === this');
 function visit2_24_1(result) {
   _$jscoverage['/delegate-children.js'].branchData['24'][1].ranCondition(result);
   return result;
-}_$jscoverage['/delegate-children.js'].branchData['16'][1].init(13, 16, 'e.target == this');
+}_$jscoverage['/delegate-children.js'].branchData['16'][1].init(13, 17, 'e.target === this');
 function visit1_16_1(result) {
   _$jscoverage['/delegate-children.js'].branchData['16'][1].ranCondition(result);
   return result;
@@ -352,7 +352,7 @@ KISSY.add(function(S, require) {
   function onRenderChild(e) {
     _$jscoverage['/delegate-children.js'].functionData[1]++;
     _$jscoverage['/delegate-children.js'].lineData[16]++;
-    if (visit1_16_1(e.target == this)) {
+    if (visit1_16_1(e.target === this)) {
       _$jscoverage['/delegate-children.js'].lineData[17]++;
       var child = e.component, el = child.$el;
       _$jscoverage['/delegate-children.js'].lineData[19]++;
@@ -363,7 +363,7 @@ KISSY.add(function(S, require) {
   function onRemoveChild(e) {
     _$jscoverage['/delegate-children.js'].functionData[2]++;
     _$jscoverage['/delegate-children.js'].lineData[24]++;
-    if (visit2_24_1(e.target == this)) {
+    if (visit2_24_1(e.target === this)) {
       _$jscoverage['/delegate-children.js'].lineData[25]++;
       var child = e.component, el = child.$el;
       _$jscoverage['/delegate-children.js'].lineData[27]++;
@@ -388,11 +388,11 @@ KISSY.add(function(S, require) {
   handleChildrenEvents: function(e) {
   _$jscoverage['/delegate-children.js'].functionData[4]++;
   _$jscoverage['/delegate-children.js'].lineData[46]++;
-  if (visit4_46_1(!this.get("disabled"))) {
+  if (visit4_46_1(!this.get('disabled'))) {
     _$jscoverage['/delegate-children.js'].lineData[47]++;
     var control = this.getOwnerControl(e);
     _$jscoverage['/delegate-children.js'].lineData[48]++;
-    if (visit5_48_1(control && !control.get("disabled"))) {
+    if (visit5_48_1(control && !control.get('disabled'))) {
       _$jscoverage['/delegate-children.js'].lineData[49]++;
       e.stopPropagation();
       _$jscoverage['/delegate-children.js'].lineData[51]++;
@@ -412,29 +412,29 @@ KISSY.add(function(S, require) {
           control.handleClick(e);
           _$jscoverage['/delegate-children.js'].lineData[60]++;
           break;
-        case "mouseenter":
+        case 'mouseenter':
           _$jscoverage['/delegate-children.js'].lineData[62]++;
           control.handleMouseEnter(e);
           _$jscoverage['/delegate-children.js'].lineData[63]++;
           break;
-        case "mouseleave":
+        case 'mouseleave':
           _$jscoverage['/delegate-children.js'].lineData[65]++;
           control.handleMouseLeave(e);
           _$jscoverage['/delegate-children.js'].lineData[66]++;
           break;
-        case "contextmenu":
+        case 'contextmenu':
           _$jscoverage['/delegate-children.js'].lineData[68]++;
           control.handleContextMenu(e);
           _$jscoverage['/delegate-children.js'].lineData[69]++;
           break;
-        case "dblclick":
+        case 'dblclick':
           _$jscoverage['/delegate-children.js'].lineData[71]++;
           control.handleDblClick(e);
           _$jscoverage['/delegate-children.js'].lineData[72]++;
           break;
         default:
           _$jscoverage['/delegate-children.js'].lineData[74]++;
-          S.error(e.type + " unhandled!");
+          S.error(e.type + ' unhandled!');
       }
     }
   }
@@ -442,7 +442,7 @@ KISSY.add(function(S, require) {
   __bindUI: function() {
   _$jscoverage['/delegate-children.js'].functionData[5]++;
   _$jscoverage['/delegate-children.js'].lineData[81]++;
-  var self = this, events = Gesture.start + " " + Gesture.end + " " + Gesture.tap;
+  var self = this, events = Gesture.start + ' ' + Gesture.end + ' ' + Gesture.tap;
   _$jscoverage['/delegate-children.js'].lineData[86]++;
   if (visit6_86_1(Gesture.cancel)) {
     _$jscoverage['/delegate-children.js'].lineData[87]++;
@@ -451,7 +451,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/delegate-children.js'].lineData[90]++;
   if (visit7_90_1(!isTouchEventSupported)) {
     _$jscoverage['/delegate-children.js'].lineData[91]++;
-    events += " mouseenter mouseleave contextmenu " + (visit8_92_1(ie && visit9_92_2(ie < 9)) ? "dblclick " : "");
+    events += ' mouseenter mouseleave contextmenu ' + (visit8_92_1(ie && visit9_92_2(ie < 9)) ? 'dblclick ' : '');
   }
   _$jscoverage['/delegate-children.js'].lineData[95]++;
   self.$el.delegate(events, '.' + self.__childClsTag, self.handleChildrenEvents, self);

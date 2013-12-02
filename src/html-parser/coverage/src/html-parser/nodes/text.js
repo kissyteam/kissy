@@ -293,7 +293,7 @@ function visit236_24_2(result) {
 function visit235_24_1(result) {
   _$jscoverage['/html-parser/nodes/text.js'].branchData['24'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/nodes/text.js'].branchData['10'][1].init(13, 20, 'typeof v == \'string\'');
+}_$jscoverage['/html-parser/nodes/text.js'].branchData['10'][1].init(13, 21, 'typeof v === \'string\'');
 function visit234_10_1(result) {
   _$jscoverage['/html-parser/nodes/text.js'].branchData['10'][1].ranCondition(result);
   return result;
@@ -306,7 +306,7 @@ KISSY.add(function(S, require) {
   function Text(v) {
     _$jscoverage['/html-parser/nodes/text.js'].functionData[1]++;
     _$jscoverage['/html-parser/nodes/text.js'].lineData[10]++;
-    if (visit234_10_1(typeof v == 'string')) {
+    if (visit234_10_1(typeof v === 'string')) {
       _$jscoverage['/html-parser/nodes/text.js'].lineData[11]++;
       this.nodeValue = v;
       _$jscoverage['/html-parser/nodes/text.js'].lineData[12]++;
@@ -320,7 +320,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/html-parser/nodes/text.js'].lineData[17]++;
     this.nodeType = 3;
     _$jscoverage['/html-parser/nodes/text.js'].lineData[18]++;
-    this.nodeName = "#text";
+    this.nodeName = '#text';
   }
   _$jscoverage['/html-parser/nodes/text.js'].lineData[21]++;
   S.extend(Text, Node, {

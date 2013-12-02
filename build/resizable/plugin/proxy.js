@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:49
+build time: Dec 2 15:24
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -49,9 +49,9 @@ KISSY.add("resizable/plugin/proxy", ["node", "base"], function(S, require) {
         dragNode.css("visibility", "")
       }
     }
-    resizable["on"]("resizeStart" + PROXY_EVENT, start)["on"]("beforeResize" + PROXY_EVENT, beforeResize)["on"]("resizeEnd" + PROXY_EVENT, end)
+    resizable.on("resizeStart" + PROXY_EVENT, start).on("beforeResize" + PROXY_EVENT, beforeResize).on("resizeEnd" + PROXY_EVENT, end)
   }, pluginDestructor:function(resizable) {
-    resizable["detach"](PROXY_EVENT)
+    resizable.detach(PROXY_EVENT)
   }}, {ATTRS:{node:{value:function(resizable) {
     return $('<div class="' + resizable.get("prefixCls") + 'resizable-proxy"></div>')
   }}, proxyNode:{}, hideNodeOnResize:{value:false}, destroyOnEnd:{value:false}}})

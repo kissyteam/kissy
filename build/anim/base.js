@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:37
+build time: Dec 2 15:10
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -28,7 +28,7 @@ KISSY.add("anim/base/queue", ["dom"], function(S, require) {
     }
     return qu
   }
-  return Q = {queueCollectionKey:queueCollectionKey, queue:function(node, queue, item) {
+  Q = {queueCollectionKey:queueCollectionKey, queue:function(node, queue, item) {
     var qu = getQueue(node, queue);
     qu.push(item);
     return qu
@@ -64,10 +64,11 @@ KISSY.add("anim/base/queue", ["dom"], function(S, require) {
       }
     }
     return qu
-  }}
+  }};
+  return Q
 });
 KISSY.add("anim/base/utils", ["./queue", "dom"], function(S, require) {
-  var undefined = undefined, Q = require("./queue"), Dom = require("dom");
+  var Q = require("./queue"), Dom = require("dom");
   var runningKey = S.guid("ks-anim-unqueued-" + S.now() + "-");
   function saveRunningAnim(anim) {
     var node = anim.node, allRunning = Dom.data(node, runningKey);
@@ -117,9 +118,9 @@ KISSY.add("anim/base/utils", ["./queue", "dom"], function(S, require) {
     return 0
   }
   function pauseOrResumeQueue(node, queue, action) {
-    var allAnims = Dom.data(node, action == "resume" ? pausedKey : runningKey), anims = S.merge(allAnims);
+    var allAnims = Dom.data(node, action === "resume" ? pausedKey : runningKey), anims = S.merge(allAnims);
     S.each(anims, function(anim) {
-      if(queue === undefined || anim.config.queue == queue) {
+      if(queue === undefined || anim.config.queue === queue) {
         anim[action]()
       }
     })
@@ -142,7 +143,7 @@ KISSY.add("anim/base/utils", ["./queue", "dom"], function(S, require) {
     }
     var allRunning = Dom.data(node, runningKey), anims = S.merge(allRunning);
     S.each(anims, function(anim) {
-      if(queue === undefined || anim.config.queue == queue) {
+      if(queue === undefined || anim.config.queue === queue) {
         anim.stop(end)
       }
     })
@@ -166,24 +167,24 @@ KISSY.add("anim/base", ["dom", "./base/utils", "./base/queue", "promise"], funct
     self._propsData = {}
   }
   function syncComplete(self) {
-    var _backupProps, complete;
+    var _backupProps, complete = self.config.complete;
     if(!S.isEmptyObject(_backupProps = self._backupProps)) {
       Dom.css(self.node, _backupProps)
     }
-    if(complete = self.config.complete) {
+    if(complete) {
       complete.call(self)
     }
   }
   S.extend(AnimBase, Promise, {on:function(name, fn) {
     var self = this;
     logger.warn("please use promise api of anim instead");
-    if(name == "complete") {
+    if(name === "complete") {
       self.then(fn)
     }else {
-      if(name == "end") {
+      if(name === "end") {
         self.fin(fn)
       }else {
-        if(name == "step") {
+        if(name === "step") {
           self.progress(fn)
         }else {
           logger.error("not supported event for anim: " + name)
@@ -200,13 +201,13 @@ KISSY.add("anim/base", ["dom", "./base/utils", "./base/queue", "promise"], funct
       }
       _propsData[prop] = S.mix({delay:defaultDelay, easing:config.easing, frame:config.frame, duration:defaultDuration}, val)
     });
-    if(node.nodeType == NodeType.ELEMENT_NODE) {
+    if(node.nodeType === NodeType.ELEMENT_NODE) {
       if(to.width || to.height) {
         var elStyle = node.style;
         S.mix(_backupProps, {overflow:elStyle.overflow, "overflow-x":elStyle.overflowX, "overflow-y":elStyle.overflowY});
         elStyle.overflow = "hidden";
         if(Dom.css(node, "display") === "inline" && Dom.css(node, "float") === "none") {
-          if(S.UA["ie"]) {
+          if(S.UA.ieMode < 10) {
             elStyle.zoom = 1
           }else {
             elStyle.display = "inline-block"
@@ -218,15 +219,16 @@ KISSY.add("anim/base", ["dom", "./base/utils", "./base/queue", "promise"], funct
       S.each(_propsData, function(_propData, prop) {
         val = _propData.value;
         if(specialVals[val]) {
-          if(val == "hide" && hidden || val == "show" && !hidden) {
+          if(val === "hide" && hidden || val === "show" && !hidden) {
             self.stop(true);
-            return exit = false
+            exit = false;
+            return exit
           }
           _backupProps[prop] = Dom.style(node, prop);
-          if(val == "toggle") {
+          if(val === "toggle") {
             val = hidden ? "show" : "hide"
           }else {
-            if(val == "hide") {
+            if(val === "hide") {
               _propData.value = 0;
               _backupProps.display = "none"
             }else {
@@ -281,7 +283,7 @@ KISSY.add("anim/base", ["dom", "./base/utils", "./base/queue", "promise"], funct
           self.stop(true)
         }, self.__totalTime)
       }else {
-        self["beforeResume"]();
+        self.beforeResume();
         self.doStart()
       }
     }
@@ -292,7 +294,7 @@ KISSY.add("anim/base", ["dom", "./base/utils", "./base/queue", "promise"], funct
       self.runInternal()
     }else {
       q = Q.queue(self.node, queue, self);
-      if(q.length == 1) {
+      if(q.length === 1) {
         self.runInternal()
       }
     }

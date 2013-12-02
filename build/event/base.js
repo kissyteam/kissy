@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:47
+build time: Dec 2 15:22
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -34,7 +34,7 @@ KISSY.add("event/base/utils", [], function(S) {
       return
     }
     type = S.trim(type);
-    if(type.indexOf(" ") == -1) {
+    if(type.indexOf(" ") === -1) {
       fn(type)
     }else {
       S.each(type.split(/\s+/), fn)
@@ -53,7 +53,7 @@ KISSY.add("event/base/utils", [], function(S) {
     return cfg
   }, batchForType:function(fn, num) {
     var args = S.makeArray(arguments), types = args[2 + num];
-    if(types && typeof types == "object") {
+    if(types && typeof types === "object") {
       S.each(types, function(value, type) {
         var args2 = [].concat(args);
         args2.splice(0, 2);
@@ -70,10 +70,10 @@ KISSY.add("event/base/utils", [], function(S) {
       })
     }
   }, fillGroupsForEvent:function(type, eventData) {
-    var typedGroups = getTypedGroups(type), _ks_groups = typedGroups[1];
-    if(_ks_groups) {
-      _ks_groups = getGroupsRe(_ks_groups);
-      eventData._ks_groups = _ks_groups
+    var typedGroups = getTypedGroups(type), _ksGroups = typedGroups[1];
+    if(_ksGroups) {
+      _ksGroups = getGroupsRe(_ksGroups);
+      eventData._ksGroups = _ksGroups
     }
     eventData.type = typedGroups[0]
   }, getGroupsRe:getGroupsRe = function(groups) {
@@ -81,9 +81,9 @@ KISSY.add("event/base/utils", [], function(S) {
   }}
 });
 KISSY.add("event/base/object", [], function(S, undefined) {
-  var FALSE_FN = function f_f() {
+  var returnFalse = function() {
     return false
-  }, TRUE_FN = function t_f() {
+  }, returnTrue = function() {
     return true
   };
   function EventObject() {
@@ -92,13 +92,13 @@ KISSY.add("event/base/object", [], function(S, undefined) {
     self.target = undefined;
     self.currentTarget = undefined
   }
-  EventObject.prototype = {constructor:EventObject, isDefaultPrevented:FALSE_FN, isPropagationStopped:FALSE_FN, isImmediatePropagationStopped:FALSE_FN, preventDefault:function() {
-    this.isDefaultPrevented = TRUE_FN
+  EventObject.prototype = {constructor:EventObject, isDefaultPrevented:returnFalse, isPropagationStopped:returnFalse, isImmediatePropagationStopped:returnFalse, preventDefault:function() {
+    this.isDefaultPrevented = returnTrue
   }, stopPropagation:function() {
-    this.isPropagationStopped = TRUE_FN
+    this.isPropagationStopped = returnTrue
   }, stopImmediatePropagation:function() {
     var self = this;
-    self.isImmediatePropagationStopped = TRUE_FN;
+    self.isImmediatePropagationStopped = returnTrue;
     self.stopPropagation()
   }, halt:function(immediate) {
     var self = this;
@@ -134,8 +134,8 @@ KISSY.add("event/base/observer", [], function(S, undefined) {
     }
     return ret
   }, notify:function(event, ce) {
-    var self = this, _ks_groups = event._ks_groups;
-    if(_ks_groups && (!self.groups || !self.groups.match(_ks_groups))) {
+    var self = this, _ksGroups = event._ksGroups;
+    if(_ksGroups && (!self.groups || !self.groups.match(_ksGroups))) {
       return undefined
     }
     return self.notifyInternal(event, ce)
@@ -157,7 +157,7 @@ KISSY.add("event/base/observable", [], function(S) {
   }, removeObserver:function(observer) {
     var self = this, i, observers = self.observers, len = observers.length;
     for(i = 0;i < len;i++) {
-      if(observers[i] == observer) {
+      if(observers[i] === observer) {
         observers.splice(i, 1);
         break
       }

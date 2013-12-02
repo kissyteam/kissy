@@ -263,7 +263,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/menu/check-menuitem.js'].lineData[16]++;
   self.callSuper();
   _$jscoverage['/menu/check-menuitem.js'].lineData[17]++;
-  self.set("checked", !self.get("checked"));
+  self.set('checked', !self.get('checked'));
   _$jscoverage['/menu/check-menuitem.js'].lineData[18]++;
   self.fire('click');
   _$jscoverage['/menu/check-menuitem.js'].lineData[19]++;
@@ -274,5 +274,5 @@ KISSY.add(function(S, require) {
   view: 1}, 
   xrender: {
   value: CheckMenuItemRender}}, 
-  xclass: "check-menuitem"});
+  xclass: 'check-menuitem'});
 });

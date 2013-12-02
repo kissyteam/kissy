@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:49
+build time: Dec 2 15:24
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -36,7 +36,7 @@ KISSY.add("scroll-view/base/render", ["component/container", "component/extensio
     var snap = control.get("snap"), scrollLeft = control.get("scrollLeft"), scrollTop = control.get("scrollTop");
     if(snap) {
       var elOffset = $contentEl.offset();
-      var pages = control.pages = typeof snap == "string" ? $contentEl.all(snap) : $contentEl.children(), pageIndex = control.get("pageIndex"), pagesOffset = control.pagesOffset = [];
+      var pages = control.pages = typeof snap === "string" ? $contentEl.all(snap) : $contentEl.children(), pageIndex = control.get("pageIndex"), pagesOffset = control.pagesOffset = [];
       pages.each(function(p, i) {
         var offset = p.offset(), left = offset.left - elOffset.left, top = offset.top - elOffset.top;
         if(left <= maxScrollLeft && top <= maxScrollTop) {
@@ -93,27 +93,27 @@ KISSY.add("scroll-view/base", ["node", "anim", "component/container", "./base/re
     $el.on("mousewheel", self.handleMouseWheel, self).on("scroll", onElScroll, self)
   }, handleKeyDownInternal:function(e) {
     var target = e.target, $target = $(target), nodeName = $target.nodeName();
-    if(nodeName == "input" || nodeName == "textarea" || nodeName == "select" || $target.hasAttr("contenteditable")) {
+    if(nodeName === "input" || nodeName === "textarea" || nodeName === "select" || $target.hasAttr("contenteditable")) {
       return undefined
     }
-    var self = this, keyCode = e.keyCode, scrollStep = self.getScrollStep(), ok = undefined;
-    var allowX = self.allowScroll["left"];
-    var allowY = self.allowScroll["top"];
+    var self = this, keyCode = e.keyCode, scrollStep = self.getScrollStep(), ok;
+    var allowX = self.allowScroll.left;
+    var allowY = self.allowScroll.top;
     if(allowY) {
       var scrollStepY = scrollStep.top, clientHeight = self.clientHeight, scrollTop = self.get("scrollTop");
-      if(keyCode == KeyCode.DOWN) {
+      if(keyCode === KeyCode.DOWN) {
         self.scrollToWithBounds({top:scrollTop + scrollStepY});
         ok = true
       }else {
-        if(keyCode == KeyCode.UP) {
+        if(keyCode === KeyCode.UP) {
           self.scrollToWithBounds({top:scrollTop - scrollStepY});
           ok = true
         }else {
-          if(keyCode == KeyCode.PAGE_DOWN) {
+          if(keyCode === KeyCode.PAGE_DOWN) {
             self.scrollToWithBounds({top:scrollTop + clientHeight});
             ok = true
           }else {
-            if(keyCode == KeyCode.PAGE_UP) {
+            if(keyCode === KeyCode.PAGE_UP) {
               self.scrollToWithBounds({top:scrollTop - clientHeight});
               ok = true
             }
@@ -124,11 +124,11 @@ KISSY.add("scroll-view/base", ["node", "anim", "component/container", "./base/re
     if(allowX) {
       var scrollStepX = scrollStep.left;
       var scrollLeft = self.get("scrollLeft");
-      if(keyCode == KeyCode.RIGHT) {
+      if(keyCode === KeyCode.RIGHT) {
         self.scrollToWithBounds({left:scrollLeft + scrollStepX});
         ok = true
       }else {
-        if(keyCode == KeyCode.LEFT) {
+        if(keyCode === KeyCode.LEFT) {
           self.scrollToWithBounds({left:scrollLeft - scrollStepX});
           ok = true
         }
@@ -143,34 +143,33 @@ KISSY.add("scroll-view/base", ["node", "anim", "component/container", "./base/re
     var elDoc = $(this.get("el")[0].ownerDocument);
     var clientHeight = control.clientHeight;
     var clientWidth = control.clientWidth;
-    return control.scrollStep = {top:Math.max(clientHeight * clientHeight * 0.7 / elDoc.height(), 20), left:Math.max(clientWidth * clientWidth * 0.7 / elDoc.width(), 20)}
+    control.scrollStep = {top:Math.max(clientHeight * clientHeight * 0.7 / elDoc.height(), 20), left:Math.max(clientWidth * clientWidth * 0.7 / elDoc.width(), 20)};
+    return control.scrollStep
   }, handleMouseWheel:function(e) {
     if(this.get("disabled")) {
       return
     }
     var max, min, self = this, scrollStep = self.getScrollStep(), deltaY, deltaX, maxScroll = self.maxScroll, minScroll = self.minScroll;
-    if((deltaY = e.deltaY) && self.allowScroll["top"]) {
+    if((deltaY = e.deltaY) && self.allowScroll.top) {
       var scrollTop = self.get("scrollTop");
       max = maxScroll.top;
       min = minScroll.top;
-      if(scrollTop <= min && deltaY > 0 || scrollTop >= max && deltaY < 0) {
-      }else {
-        self.scrollToWithBounds({top:scrollTop - e.deltaY * scrollStep["top"]});
+      if(!(scrollTop <= min && deltaY > 0 || scrollTop >= max && deltaY < 0)) {
+        self.scrollToWithBounds({top:scrollTop - e.deltaY * scrollStep.top});
         e.preventDefault()
       }
     }
-    if((deltaX = e.deltaX) && self.allowScroll["left"]) {
+    if((deltaX = e.deltaX) && self.allowScroll.left) {
       var scrollLeft = self.get("scrollLeft");
       max = maxScroll.left;
       min = minScroll.left;
-      if(scrollLeft <= min && deltaX > 0 || scrollLeft >= max && deltaX < 0) {
-      }else {
-        self.scrollToWithBounds({left:scrollLeft - e.deltaX * scrollStep["left"]});
+      if(!(scrollLeft <= min && deltaX > 0 || scrollLeft >= max && deltaX < 0)) {
+        self.scrollToWithBounds({left:scrollLeft - e.deltaX * scrollStep.left});
         e.preventDefault()
       }
     }
   }, isAxisEnabled:function(axis) {
-    return this.allowScroll[axis == "x" ? "left" : "top"]
+    return this.allowScroll[axis === "x" ? "left" : "top"]
   }, stopAnimation:function() {
     var self = this;
     if(self.scrollAnims.length) {

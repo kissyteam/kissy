@@ -4,6 +4,10 @@
 
     <import file="../common.xml"/>
 
+    <target name="compress-css"/>
+
+    <target name="tpl2mod"/>
+
     <target name="merge-dependency">
         <concat destfile="${component.src.dir}/meta/modules.js" encoding="${charset}" outputencoding="${charset}">
             <header filtering="no" trimleading="yes">
@@ -102,5 +106,5 @@
         </concat>
     </target>
 
-    <target name="compress-css"/>
+
 </project>

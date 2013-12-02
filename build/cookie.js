@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:38
+build time: Dec 2 15:12
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -12,9 +12,9 @@ build time: Nov 27 00:38
 KISSY.add("cookie", [], function(S) {
   var doc = S.Env.host.document, MILLISECONDS_OF_DAY = 24 * 60 * 60 * 1E3, encode = encodeURIComponent, decode = S.urlDecode;
   function isNotEmptyString(val) {
-    return typeof val == "string" && val !== ""
+    return typeof val === "string" && val !== ""
   }
-  return S.Cookie = {get:function(name) {
+  S.Cookie = {get:function(name) {
     var ret, m;
     if(isNotEmptyString(name)) {
       if(m = String(doc.cookie).match(new RegExp("(?:^| )" + name + "(?:(?:=([^;]*))|;|$)"))) {
@@ -43,6 +43,7 @@ KISSY.add("cookie", [], function(S) {
     doc.cookie = name + "=" + text
   }, remove:function(name, domain, path, secure) {
     this.set(name, "", -1, domain, path, secure)
-  }}
+  }};
+  return S.Cookie
 });
 

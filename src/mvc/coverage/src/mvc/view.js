@@ -281,27 +281,21 @@ if (! _$jscoverage['/mvc/view.js'].branchData) {
   _$jscoverage['/mvc/view.js'].branchData = {};
   _$jscoverage['/mvc/view.js'].branchData['13'] = [];
   _$jscoverage['/mvc/view.js'].branchData['13'][1] = new BranchData();
-  _$jscoverage['/mvc/view.js'].branchData['28'] = [];
-  _$jscoverage['/mvc/view.js'].branchData['28'][1] = new BranchData();
   _$jscoverage['/mvc/view.js'].branchData['37'] = [];
   _$jscoverage['/mvc/view.js'].branchData['37'][1] = new BranchData();
   _$jscoverage['/mvc/view.js'].branchData['94'] = [];
   _$jscoverage['/mvc/view.js'].branchData['94'][1] = new BranchData();
 }
-_$jscoverage['/mvc/view.js'].branchData['94'][1].init(25, 20, 'typeof s == \'string\'');
-function visit109_94_1(result) {
+_$jscoverage['/mvc/view.js'].branchData['94'][1].init(25, 21, 'typeof s === \'string\'');
+function visit107_94_1(result) {
   _$jscoverage['/mvc/view.js'].branchData['94'][1].ranCondition(result);
   return result;
 }_$jscoverage['/mvc/view.js'].branchData['37'][1].init(54, 7, 'prevVal');
-function visit108_37_1(result) {
+function visit106_37_1(result) {
   _$jscoverage['/mvc/view.js'].branchData['37'][1].ranCondition(result);
   return result;
-}_$jscoverage['/mvc/view.js'].branchData['28'][1].init(92, 27, 'events = this.get("events")');
-function visit107_28_1(result) {
-  _$jscoverage['/mvc/view.js'].branchData['28'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/mvc/view.js'].branchData['13'][1].init(13, 20, 'typeof f == \'string\'');
-function visit106_13_1(result) {
+}_$jscoverage['/mvc/view.js'].branchData['13'][1].init(13, 21, 'typeof f === \'string\'');
+function visit105_13_1(result) {
   _$jscoverage['/mvc/view.js'].branchData['13'][1].ranCondition(result);
   return result;
 }_$jscoverage['/mvc/view.js'].lineData[6]++;
@@ -317,7 +311,7 @@ KISSY.add(function(S, require) {
   function normFn(self, f) {
     _$jscoverage['/mvc/view.js'].functionData[1]++;
     _$jscoverage['/mvc/view.js'].lineData[13]++;
-    if (visit106_13_1(typeof f == 'string')) {
+    if (visit105_13_1(typeof f === 'string')) {
       _$jscoverage['/mvc/view.js'].lineData[14]++;
       return self[f];
     }
@@ -333,7 +327,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/mvc/view.js'].lineData[27]++;
   var events;
   _$jscoverage['/mvc/view.js'].lineData[28]++;
-  if (visit107_28_1(events = this.get("events"))) {
+  if ((events = this.get('events'))) {
     _$jscoverage['/mvc/view.js'].lineData[29]++;
     this._afterEventsChange({
   newVal: events});
@@ -344,7 +338,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/mvc/view.js'].lineData[36]++;
   var prevVal = e.prevVal;
   _$jscoverage['/mvc/view.js'].lineData[37]++;
-  if (visit108_37_1(prevVal)) {
+  if (visit106_37_1(prevVal)) {
     _$jscoverage['/mvc/view.js'].lineData[38]++;
     this._removeEvents(prevVal);
   }
@@ -354,7 +348,7 @@ KISSY.add(function(S, require) {
   _removeEvents: function(events) {
   _$jscoverage['/mvc/view.js'].functionData[4]++;
   _$jscoverage['/mvc/view.js'].lineData[44]++;
-  var el = this.get("el");
+  var el = this.get('el');
   _$jscoverage['/mvc/view.js'].lineData[45]++;
   for (var selector in events) {
     _$jscoverage['/mvc/view.js'].lineData[46]++;
@@ -371,7 +365,7 @@ KISSY.add(function(S, require) {
   _addEvents: function(events) {
   _$jscoverage['/mvc/view.js'].functionData[5]++;
   _$jscoverage['/mvc/view.js'].lineData[55]++;
-  var el = this.get("el");
+  var el = this.get('el');
   _$jscoverage['/mvc/view.js'].lineData[56]++;
   for (var selector in events) {
     _$jscoverage['/mvc/view.js'].lineData[57]++;
@@ -393,19 +387,19 @@ KISSY.add(function(S, require) {
   destroy: function() {
   _$jscoverage['/mvc/view.js'].functionData[7]++;
   _$jscoverage['/mvc/view.js'].lineData[76]++;
-  this.get("el").remove();
+  this.get('el').remove();
 }}, {
   ATTRS: {
   el: {
-  value: "<div />", 
+  value: '<div />', 
   getter: function(s) {
   _$jscoverage['/mvc/view.js'].functionData[8]++;
   _$jscoverage['/mvc/view.js'].lineData[94]++;
-  if (visit109_94_1(typeof s == 'string')) {
+  if (visit107_94_1(typeof s === 'string')) {
     _$jscoverage['/mvc/view.js'].lineData[95]++;
     s = $(s);
     _$jscoverage['/mvc/view.js'].lineData[96]++;
-    this.setInternal("el", s);
+    this.setInternal('el', s);
   }
   _$jscoverage['/mvc/view.js'].lineData[98]++;
   return s;

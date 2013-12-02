@@ -290,7 +290,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/html-parser/nodes/cdata.js'].lineData[11]++;
     this.nodeType = 4;
     _$jscoverage['/html-parser/nodes/cdata.js'].lineData[12]++;
-    this.nodeName = "#cdata";
+    this.nodeName = '#cdata';
   }
   _$jscoverage['/html-parser/nodes/cdata.js'].lineData[15]++;
   S.extend(CData, Text, {

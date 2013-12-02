@@ -1,14 +1,13 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 27 00:40
+build time: Dec 2 15:14
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
 
  dom/ie/create
  dom/ie/insertion
- dom/ie/style
  dom/ie/traversal
  dom/ie/transform
  dom/ie/input-selection
@@ -33,7 +32,7 @@ KISSY.add("dom/ie/create", ["dom/base"], function(S, require) {
     }else {
       if(nodeName === "input" && (src.type === "checkbox" || src.type === "radio")) {
         if(src.checked) {
-          dest["defaultChecked"] = dest.checked = src.checked
+          dest.defaultChecked = dest.checked = src.checked
         }
         if(dest.value !== src.value) {
           dest.value = src.value
@@ -60,7 +59,7 @@ KISSY.add("dom/ie/create", ["dom/base"], function(S, require) {
       }
       var table = frag.firstChild, tableChildren = S.makeArray(table.childNodes);
       S.each(tableChildren, function(c) {
-        if(Dom.nodeName(c) == "tbody" && !c.childNodes.length) {
+        if(Dom.nodeName(c) === "tbody" && !c.childNodes.length) {
           table.removeChild(c)
         }
       });
@@ -75,13 +74,13 @@ KISSY.add("dom/ie/insertion", ["dom/base"], function(S, require) {
     Dom._fixInsertionChecked = function fixChecked(ret) {
       for(var i = 0;i < ret.length;i++) {
         var el = ret[i];
-        if(el.nodeType == Dom.NodeType.DOCUMENT_FRAGMENT_NODE) {
+        if(el.nodeType === Dom.NodeType.DOCUMENT_FRAGMENT_NODE) {
           fixChecked(el.childNodes)
         }else {
-          if(Dom.nodeName(el) == "input") {
+          if(Dom.nodeName(el) === "input") {
             fixCheckedInternal(el)
           }else {
-            if(el.nodeType == Dom.NodeType.ELEMENT_NODE) {
+            if(el.nodeType === Dom.NodeType.ELEMENT_NODE) {
               var cs = el.getElementsByTagName("input");
               for(var j = 0;j < cs.length;j++) {
                 fixChecked(cs[j])
@@ -90,89 +89,25 @@ KISSY.add("dom/ie/insertion", ["dom/base"], function(S, require) {
           }
         }
       }
-    };
-    function fixCheckedInternal(el) {
-      if(el.type === "checkbox" || el.type === "radio") {
-        el.defaultChecked = el.checked
-      }
     }
   }
-});
-KISSY.add("dom/ie/style", ["dom/base"], function(S, require) {
-  var Dom = require("dom/base");
-  var logger = S.getLogger("s/dom");
-  var cssProps = Dom._cssProps, UA = S.UA, HUNDRED = 100, doc = S.Env.host.document, docElem = doc && doc.documentElement, OPACITY = "opacity", STYLE = "style", RE_POS = /^(top|right|bottom|left)$/, FILTER = "filter", CURRENT_STYLE = "currentStyle", RUNTIME_STYLE = "runtimeStyle", LEFT = "left", PX = "px", cssHooks = Dom._cssHooks, backgroundPosition = "backgroundPosition", R_OPACITY = /opacity\s*=\s*([^)]*)/, R_ALPHA = /alpha\([^)]*\)/i;
-  cssProps["float"] = "styleFloat";
-  cssHooks[backgroundPosition] = {get:function(elem, computed) {
-    if(computed) {
-      return elem[CURRENT_STYLE][backgroundPosition + "X"] + " " + elem[CURRENT_STYLE][backgroundPosition + "Y"]
-    }else {
-      return elem[STYLE][backgroundPosition]
+  function fixCheckedInternal(el) {
+    if(el.type === "checkbox" || el.type === "radio") {
+      el.defaultChecked = el.checked
     }
-  }};
-  try {
-    if(docElem.style[OPACITY] == null) {
-      cssHooks[OPACITY] = {get:function(elem, computed) {
-        return R_OPACITY.test((computed && elem[CURRENT_STYLE] ? elem[CURRENT_STYLE][FILTER] : elem[STYLE][FILTER]) || "") ? parseFloat(RegExp.$1) / HUNDRED + "" : computed ? "1" : ""
-      }, set:function(elem, val) {
-        val = parseFloat(val);
-        var style = elem[STYLE], currentStyle = elem[CURRENT_STYLE], opacity = isNaN(val) ? "" : "alpha(" + OPACITY + "=" + val * HUNDRED + ")", filter = S.trim(currentStyle && currentStyle[FILTER] || style[FILTER] || "");
-        style.zoom = 1;
-        if((val >= 1 || !opacity) && !S.trim(filter.replace(R_ALPHA, ""))) {
-          style.removeAttribute(FILTER);
-          if(!opacity || currentStyle && !currentStyle[FILTER]) {
-            return
-          }
-        }
-        style.filter = R_ALPHA.test(filter) ? filter.replace(R_ALPHA, opacity) : filter + (filter ? ", " : "") + opacity
-      }}
-    }
-  }catch(ex) {
-    logger.debug("IE filters ActiveX is disabled. ex = " + ex)
-  }
-  var IE8 = UA["ie"] == 8, BORDER_MAP = {}, BORDERS = ["", "Top", "Left", "Right", "Bottom"];
-  BORDER_MAP["thin"] = IE8 ? "1px" : "2px";
-  BORDER_MAP["medium"] = IE8 ? "3px" : "4px";
-  BORDER_MAP["thick"] = IE8 ? "5px" : "6px";
-  S.each(BORDERS, function(b) {
-    var name = "border" + b + "Width", styleName = "border" + b + "Style";
-    cssHooks[name] = {get:function(elem, computed) {
-      var currentStyle = computed ? elem[CURRENT_STYLE] : 0, current = currentStyle && String(currentStyle[name]) || undefined;
-      if(current && current.indexOf("px") < 0) {
-        if(BORDER_MAP[current] && currentStyle[styleName] !== "none") {
-          current = BORDER_MAP[current]
-        }else {
-          current = 0
-        }
-      }
-      return current
-    }}
-  });
-  Dom._getComputedStyle = function(elem, name) {
-    name = cssProps[name] || name;
-    var ret = elem[CURRENT_STYLE] && elem[CURRENT_STYLE][name];
-    if(Dom._RE_NUM_NO_PX.test(ret) && !RE_POS.test(name)) {
-      var style = elem[STYLE], left = style[LEFT], rsLeft = elem[RUNTIME_STYLE][LEFT];
-      elem[RUNTIME_STYLE][LEFT] = elem[CURRENT_STYLE][LEFT];
-      style[LEFT] = name === "fontSize" ? "1em" : ret || 0;
-      ret = style["pixelLeft"] + PX;
-      style[LEFT] = left;
-      elem[RUNTIME_STYLE][LEFT] = rsLeft
-    }
-    return ret === "" ? "auto" : ret
   }
 });
 KISSY.add("dom/ie/traversal", ["dom/base"], function(S, require) {
   var Dom = require("dom/base");
   Dom._contains = function(a, b) {
-    if(a.nodeType == Dom.NodeType.DOCUMENT_NODE) {
+    if(a.nodeType === Dom.NodeType.DOCUMENT_NODE) {
       a = a.documentElement
     }
     b = b.parentNode;
-    if(a == b) {
+    if(a === b) {
       return true
     }
-    if(b && b.nodeType == Dom.NodeType.ELEMENT_NODE) {
+    if(b && b.nodeType === Dom.NodeType.ELEMENT_NODE) {
       return a.contains && a.contains(b)
     }else {
       return false
@@ -183,8 +118,8 @@ KISSY.add("dom/ie/traversal", ["dom/base"], function(S, require) {
   var getElementsByTagName;
   if(div.getElementsByTagName("*").length) {
     getElementsByTagName = function(name, context) {
-      var nodes = context.getElementsByTagName(name), needsFilter = name == "*";
-      if(needsFilter || typeof nodes.length != "number") {
+      var nodes = context.getElementsByTagName(name), needsFilter = name === "*";
+      if(needsFilter || typeof nodes.length !== "number") {
         var ret = [], i = 0, el;
         while(el = nodes[i++]) {
           if(!needsFilter || el.nodeType === 1) {
@@ -208,7 +143,7 @@ KISSY.add("dom/ie/traversal", ["dom/base"], function(S, require) {
     if(el && getAttr(el, "id") !== id) {
       var children = getElementsByTagName("*", doc);
       for(var i = 0, l = children.length;i < l;i++) {
-        if(getAttr(children[i], "id") == id) {
+        if(getAttr(children[i], "id") === id) {
           return children[i]
         }
       }
@@ -227,10 +162,10 @@ KISSY.add("dom/ie/transform", ["dom/base"], function(S, require) {
       var dx = 0, dy = 0;
       var dxs = matrix[4] && matrix[4].split("=");
       var dys = matrix[5] && matrix[5].split("=");
-      if(dxs && dxs[0].toLowerCase() == "dx") {
+      if(dxs && dxs[0].toLowerCase() === "dx") {
         dx = parseFloat(dxs[1])
       }
-      if(dys && dys[0].toLowerCase() == "dy") {
+      if(dys && dys[0].toLowerCase() === "dy") {
         dy = parseFloat(dys[1])
       }
       matrix = [matrix[0].split("=")[1], matrix[2].split("=")[1], matrix[1].split("=")[1], matrix[3].split("=")[1], dx, dy]
@@ -239,11 +174,11 @@ KISSY.add("dom/ie/transform", ["dom/base"], function(S, require) {
     }
     return"matrix(" + matrix.join(",") + ")"
   }, set:function(elem, value) {
-    var elemStyle = elem.style, currentStyle = elem.currentStyle, matrixVal, region = {width:elem.clientWidth, height:elem.clientHeight}, center = {x:region.width / 2, y:region.height / 2}, origin = parseOrigin(elem.style["transformOrigin"], region), filter;
+    var elemStyle = elem.style, afterCenter, currentStyle = elem.currentStyle, matrixVal, region = {width:elem.clientWidth, height:elem.clientHeight}, center = {x:region.width / 2, y:region.height / 2}, origin = parseOrigin(elem.style.transformOrigin, region), filter;
     elemStyle.zoom = 1;
     if(value) {
       value = matrix(value);
-      var afterCenter = getCenterByOrigin(value, origin, center);
+      afterCenter = getCenterByOrigin(value, origin, center);
       afterCenter.x = afterCenter[0][0];
       afterCenter.y = afterCenter[1][0];
       matrixVal = ["progid:DXImageTransform.Microsoft.Matrix(" + "M11=" + value[0][0], "M12=" + value[0][1], "M21=" + value[1][0], "M22=" + value[1][1], "Dx=" + value[0][2], "Dy=" + value[1][2], 'SizingMethod="auto expand"'].join(",") + ")"
@@ -273,7 +208,7 @@ KISSY.add("dom/ie/transform", ["dom/base"], function(S, require) {
   function parseOrigin(origin, region) {
     origin = origin || "50% 50%";
     origin = origin.split(/\s+/);
-    if(origin.length == 1) {
+    if(origin.length === 1) {
       origin[1] = origin[0]
     }
     for(var i = 0;i < origin.length;i++) {
@@ -354,9 +289,10 @@ KISSY.add("dom/ie/transform", ["dom/base"], function(S, require) {
     m[x][y] = v
   }
   function multipleMatrix(m1, m2) {
+    var i;
     if(arguments.length > 2) {
       var ret = m1;
-      for(var i = 1;i < arguments.length;i++) {
+      for(i = 1;i < arguments.length;i++) {
         ret = multipleMatrix(ret, arguments[i])
       }
       return ret
@@ -423,7 +359,7 @@ KISSY.add("dom/ie/input-selection", ["dom/base"], function(S, require) {
     return elem.ownerDocument.selection.createRange()
   }
   function getInputRange(elem) {
-    if(elem.type == "textarea") {
+    if(elem.type === "textarea") {
       var range = elem.document.body.createTextRange();
       range.moveToElementText(elem);
       return range
@@ -434,10 +370,10 @@ KISSY.add("dom/ie/input-selection", ["dom/base"], function(S, require) {
   function getMovedDistance(elem, s, e) {
     var start = Math.min(s, e);
     var end = Math.max(s, e);
-    if(start == end) {
+    if(start === end) {
       return 0
     }
-    if(elem.type == "textarea") {
+    if(elem.type === "textarea") {
       var l = elem.value.substring(start, end).replace(/\r\n/g, "\n").length;
       if(s > e) {
         l = -l
@@ -448,13 +384,13 @@ KISSY.add("dom/ie/input-selection", ["dom/base"], function(S, require) {
     }
   }
   function getRangeText(elem, range) {
-    if(elem.type == "textarea") {
+    if(elem.type === "textarea") {
       var ret = range.text, testRange = range.duplicate();
-      if(testRange.compareEndPoints("StartToEnd", testRange) == 0) {
+      if(testRange.compareEndPoints("StartToEnd", testRange) === 0) {
         return ret
       }
       testRange.moveEnd("character", -1);
-      if(testRange.text == ret) {
+      if(testRange.text === ret) {
         ret += "\r\n"
       }
       return ret
@@ -467,7 +403,7 @@ KISSY.add("dom/ie/attr", ["dom/base"], function(S, require) {
   var Dom = require("dom/base");
   var attrHooks = Dom._attrHooks, attrNodeHook = Dom._attrNodeHook, NodeType = Dom.NodeType, valHooks = Dom._valHooks, propFix = Dom._propFix, HREF = "href", hrefFix, IE_VERSION = S.UA.ieMode;
   if(IE_VERSION < 8) {
-    attrHooks["style"].set = function(el, val) {
+    attrHooks.style.set = function(el, val) {
       el.style.cssText = val
     };
     S.mix(attrNodeHook, {get:function(elem, name) {
@@ -499,7 +435,7 @@ KISSY.add("dom/ie/attr", ["dom/base"], function(S, require) {
     attrHooks.placeholder = {get:function(elem, name) {
       return elem[name] || attrNodeHook.get(elem, name)
     }};
-    valHooks["option"] = {get:function(elem) {
+    valHooks.option = {get:function(elem) {
       var val = elem.attributes.value;
       return!val || val.specified ? elem.value : elem.text
     }}
@@ -508,7 +444,7 @@ KISSY.add("dom/ie/attr", ["dom/base"], function(S, require) {
   hrefFix.set = function(el, val, name) {
     var childNodes = el.childNodes, b, len = childNodes.length, allText = len > 0;
     for(len = len - 1;len >= 0;len--) {
-      if(childNodes[len].nodeType != NodeType.TEXT_NODE) {
+      if(childNodes[len].nodeType !== NodeType.TEXT_NODE) {
         allText = 0
       }
     }
@@ -529,7 +465,7 @@ KISSY.add("dom/ie/attr", ["dom/base"], function(S, require) {
         ret += getText(el)
       }
     }else {
-      if(nodeType == NodeType.TEXT_NODE || nodeType == NodeType.CDATA_SECTION_NODE) {
+      if(nodeType === NodeType.TEXT_NODE || nodeType === NodeType.CDATA_SECTION_NODE) {
         ret += el.nodeValue
       }
     }

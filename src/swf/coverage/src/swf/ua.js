@@ -313,23 +313,23 @@ function visit9_75_1(result) {
 function visit8_72_1(result) {
   _$jscoverage['/swf/ua.js'].branchData['72'][1].ranCondition(result);
   return result;
-}_$jscoverage['/swf/ua.js'].branchData['65'][1].init(260, 8, 'ret || 0');
+}_$jscoverage['/swf/ua.js'].branchData['65'][1].init(261, 8, 'ret || 0');
 function visit7_65_1(result) {
   _$jscoverage['/swf/ua.js'].branchData['65'][1].ranCondition(result);
   return result;
-}_$jscoverage['/swf/ua.js'].branchData['62'][1].init(139, 14, 'S.isArray(arr)');
+}_$jscoverage['/swf/ua.js'].branchData['62'][1].init(140, 14, 'S.isArray(arr)');
 function visit6_62_1(result) {
   _$jscoverage['/swf/ua.js'].branchData['62'][1].ranCondition(result);
   return result;
-}_$jscoverage['/swf/ua.js'].branchData['58'][1].init(19, 22, 'typeof ver == \'string\'');
+}_$jscoverage['/swf/ua.js'].branchData['58'][1].init(19, 23, 'typeof ver === \'string\'');
 function visit5_58_1(result) {
   _$jscoverage['/swf/ua.js'].branchData['58'][1].ranCondition(result);
   return result;
-}_$jscoverage['/swf/ua.js'].branchData['35'][1].init(698, 4, '!ver');
+}_$jscoverage['/swf/ua.js'].branchData['35'][1].init(696, 4, '!ver');
 function visit4_35_1(result) {
   _$jscoverage['/swf/ua.js'].branchData['35'][1].ranCondition(result);
   return result;
-}_$jscoverage['/swf/ua.js'].branchData['25'][1].init(346, 20, 'win[\'ActiveXObject\']');
+}_$jscoverage['/swf/ua.js'].branchData['25'][1].init(346, 17, 'win.ActiveXObject');
 function visit3_25_1(result) {
   _$jscoverage['/swf/ua.js'].branchData['25'][1].ranCondition(result);
   return result;
@@ -357,11 +357,11 @@ KISSY.add(function(S) {
       ver = (visit2_22_1(navigator.plugins['Shockwave Flash'] || 0)).description;
     } else {
       _$jscoverage['/swf/ua.js'].lineData[25]++;
-      if (visit3_25_1(win['ActiveXObject'])) {
+      if (visit3_25_1(win.ActiveXObject)) {
         _$jscoverage['/swf/ua.js'].lineData[26]++;
         try {
           _$jscoverage['/swf/ua.js'].lineData[27]++;
-          ver = new ActiveXObject(SF + '.' + SF)['GetVariable']('$version');
+          ver = new win.ActiveXObject(SF + '.' + SF).GetVariable('$version');
         }        catch (ex) {
 }
       }
@@ -384,7 +384,7 @@ KISSY.add(function(S) {
   function getNumberVersion(ver) {
     _$jscoverage['/swf/ua.js'].functionData[3]++;
     _$jscoverage['/swf/ua.js'].lineData[58]++;
-    var arr = visit5_58_1(typeof ver == 'string') ? getArrayVersion(ver) : ver, ret = ver;
+    var arr = visit5_58_1(typeof ver === 'string') ? getArrayVersion(ver) : ver, ret = ver;
     _$jscoverage['/swf/ua.js'].lineData[62]++;
     if (visit6_62_1(S.isArray(arr))) {
       _$jscoverage['/swf/ua.js'].lineData[63]++;

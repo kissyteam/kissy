@@ -276,11 +276,11 @@ if (! _$jscoverage['/base/observer.js'].branchData) {
   _$jscoverage['/base/observer.js'].branchData['93'][1] = new BranchData();
   _$jscoverage['/base/observer.js'].branchData['93'][2] = new BranchData();
 }
-_$jscoverage['/base/observer.js'].branchData['93'][2].init(187, 48, '!self.groups || !(self.groups.match(_ks_groups))');
+_$jscoverage['/base/observer.js'].branchData['93'][2].init(184, 47, '!self.groups || !(self.groups.match(_ksGroups))');
 function visit12_93_2(result) {
   _$jscoverage['/base/observer.js'].branchData['93'][2].ranCondition(result);
   return result;
-}_$jscoverage['/base/observer.js'].branchData['93'][1].init(172, 64, '_ks_groups && (!self.groups || !(self.groups.match(_ks_groups)))');
+}_$jscoverage['/base/observer.js'].branchData['93'][1].init(170, 62, '_ksGroups && (!self.groups || !(self.groups.match(_ksGroups)))');
 function visit11_93_1(result) {
   _$jscoverage['/base/observer.js'].branchData['93'][1].ranCondition(result);
   return result;
@@ -356,9 +356,9 @@ KISSY.add(function(S, undefined) {
   notify: function(event, ce) {
   _$jscoverage['/base/observer.js'].functionData[6]++;
   _$jscoverage['/base/observer.js'].lineData[89]++;
-  var self = this, _ks_groups = event._ks_groups;
+  var self = this, _ksGroups = event._ksGroups;
   _$jscoverage['/base/observer.js'].lineData[93]++;
-  if (visit11_93_1(_ks_groups && (visit12_93_2(!self.groups || !(self.groups.match(_ks_groups)))))) {
+  if (visit11_93_1(_ksGroups && (visit12_93_2(!self.groups || !(self.groups.match(_ksGroups)))))) {
     _$jscoverage['/base/observer.js'].lineData[94]++;
     return undefined;
   }

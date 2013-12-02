@@ -274,11 +274,11 @@ KISSY.add(function(S, require) {
   renderUI: function() {
   _$jscoverage['/split-button.js'].functionData[1]++;
   _$jscoverage['/split-button.js'].lineData[17]++;
-  var self = this, alignWithEl = self.get("alignWithEl"), menuButton = self.get("children")[1], menu = menuButton.get("menu");
+  var self = this, alignWithEl = self.get('alignWithEl'), menuButton = self.get('children')[1], menu = menuButton.get('menu');
   _$jscoverage['/split-button.js'].lineData[21]++;
   if (visit1_21_1(alignWithEl)) {
     _$jscoverage['/split-button.js'].lineData[22]++;
-    menu.get("align").node = self.$el;
+    menu.get('align').node = self.$el;
   }
 }}, {
   ATTRS: {

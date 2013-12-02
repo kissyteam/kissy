@@ -292,9 +292,9 @@ KISSY.add(function(S, require) {
   _onSetCollapsed: function(v) {
   _$jscoverage['/menubutton/render.js'].functionData[3]++;
   _$jscoverage['/menubutton/render.js'].lineData[34]++;
-  var self = this, el = self.$el, cls = self.getBaseCssClass("open");
+  var self = this, el = self.$el, cls = self.getBaseCssClass('open');
   _$jscoverage['/menubutton/render.js'].lineData[37]++;
-  el[v ? 'removeClass' : 'addClass'](cls).attr("aria-expanded", !v);
+  el[v ? 'removeClass' : 'addClass'](cls).attr('aria-expanded', !v);
 }}, {
   ATTRS: {
   contentTpl: {

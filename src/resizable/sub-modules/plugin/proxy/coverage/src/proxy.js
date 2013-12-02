@@ -35,7 +35,7 @@ function BranchData() {
     this.toJSON = function() {
         return '{"position":' + this.position
             + ',"nodeLength":' + this.nodeLength
-            + ','src':' + jscoverage_quote(this.src)
+            + ',"src":' + jscoverage_quote(this.src)
             + ',"evalFalse":' + this.evalFalse
             + ',"evalTrue":' + this.evalTrue + '}';
     };
@@ -392,12 +392,12 @@ KISSY.add(function(S, require) {
     }
   }
   _$jscoverage['/proxy.js'].lineData[78]++;
-  resizable['on']('resizeStart' + PROXY_EVENT, start)['on']('beforeResize' + PROXY_EVENT, beforeResize)['on']('resizeEnd' + PROXY_EVENT, end);
+  resizable.on('resizeStart' + PROXY_EVENT, start).on('beforeResize' + PROXY_EVENT, beforeResize).on('resizeEnd' + PROXY_EVENT, end);
 }, 
   pluginDestructor: function(resizable) {
   _$jscoverage['/proxy.js'].functionData[5]++;
   _$jscoverage['/proxy.js'].lineData[82]++;
-  resizable['detach'](PROXY_EVENT);
+  resizable.detach(PROXY_EVENT);
 }}, {
   ATTRS: {
   node: {

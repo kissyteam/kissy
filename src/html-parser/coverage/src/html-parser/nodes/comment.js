@@ -301,7 +301,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/html-parser/nodes/comment.js'].lineData[11]++;
     this.nodeType = 8;
     _$jscoverage['/html-parser/nodes/comment.js'].lineData[12]++;
-    this.nodeName = "#comment";
+    this.nodeName = '#comment';
   }
   _$jscoverage['/html-parser/nodes/comment.js'].lineData[15]++;
   S.extend(Comment, Text, {
