@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.41
 MIT Licensed
-build time: Dec 2 17:47
+build time: Dec 2 18:19
 */
 /**
  * @ignore
@@ -87,11 +87,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20131202174707' will replace with current timestamp when compressing.
+         * NOTICE: '20131202181924' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20131202174707',
+        __BUILD_TIME: '20131202181924',
 
         /**
          * KISSY Environment.
@@ -4949,7 +4949,8 @@ var KISSY = (function (undefined) {
 
     function checkKISSYRequire(config, factory) {
         // use require primitive statement
-        if (!config && typeof factory === 'function') {
+        // function(S,require){require('node')}
+        if (!config && typeof factory === 'function' && factory.length > 1) {
             var requires = Utils.getRequiresFromFn(factory);
             if (requires.length) {
                 config = config || {};
@@ -5542,7 +5543,7 @@ var KISSY = (function (undefined) {
     var doc = S.Env.host && S.Env.host.document;
     // var logger = S.getLogger('s/loader');
     var Utils = S.Loader.Utils;
-    var TIMESTAMP = '20131202174707';
+    var TIMESTAMP = '20131202181924';
     var defaultComboPrefix = '??';
     var defaultComboSep = ',';
 

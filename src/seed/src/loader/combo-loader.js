@@ -89,7 +89,8 @@
 
     function checkKISSYRequire(config, factory) {
         // use require primitive statement
-        if (!config && typeof factory === 'function') {
+        // function(S,require){require('node')}
+        if (!config && typeof factory === 'function' && factory.length > 1) {
             var requires = Utils.getRequiresFromFn(factory);
             if (requires.length) {
                 config = config || {};
