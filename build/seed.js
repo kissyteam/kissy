@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50
 MIT Licensed
-build time: Dec 2 17:46
+build time: Dec 2 18:19
 */
 /**
  * @ignore
@@ -87,11 +87,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20131202174602' will replace with current timestamp when compressing.
+         * NOTICE: '20131202181900' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20131202174602',
+        __BUILD_TIME: '20131202181900',
 
         /**
          * KISSY Environment.
@@ -3397,6 +3397,7 @@ var KISSY = (function (undefined) {
         if (transformProperty) {
             // https://gist.github.com/lorenzopolidori/3794226
             // ie9 does not support 3d transform
+            // http://msdn.microsoft.com/en-us/ie/ff468705
             var el = doc.createElement('p');
             documentElement.insertBefore(el, documentElement.firstChild);
             el.style[transformProperty] = 'translate3d(1px,1px,1px)';
@@ -4948,7 +4949,8 @@ var KISSY = (function (undefined) {
 
     function checkKISSYRequire(config, factory) {
         // use require primitive statement
-        if (!config && typeof factory === 'function') {
+        // function(S,require){require('node')}
+        if (!config && typeof factory === 'function' && factory.length > 1) {
             var requires = Utils.getRequiresFromFn(factory);
             if (requires.length) {
                 config = config || {};
@@ -5541,7 +5543,7 @@ var KISSY = (function (undefined) {
     var doc = S.Env.host && S.Env.host.document;
     // var logger = S.getLogger('s/loader');
     var Utils = S.Loader.Utils;
-    var TIMESTAMP = '20131202174602';
+    var TIMESTAMP = '20131202181900';
     var defaultComboPrefix = '??';
     var defaultComboSep = ',';
 
