@@ -77,6 +77,7 @@ KISSY.add(function (S, require) {
         _onSetScrollTop: function (v) {
             v = v.newVal;
             if (v < 0) {
+                // does not care ie9 and non 3d browser
                 this.el.style[transformProperty] = 'translate3d(0,' + -v + 'px,0)';
             }
         },

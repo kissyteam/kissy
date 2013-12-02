@@ -261,22 +261,22 @@ if (! _$jscoverage['/pull-to-refresh.js']) {
   _$jscoverage['/pull-to-refresh.js'].lineData[72] = 0;
   _$jscoverage['/pull-to-refresh.js'].lineData[78] = 0;
   _$jscoverage['/pull-to-refresh.js'].lineData[79] = 0;
-  _$jscoverage['/pull-to-refresh.js'].lineData[80] = 0;
-  _$jscoverage['/pull-to-refresh.js'].lineData[85] = 0;
+  _$jscoverage['/pull-to-refresh.js'].lineData[81] = 0;
   _$jscoverage['/pull-to-refresh.js'].lineData[86] = 0;
   _$jscoverage['/pull-to-refresh.js'].lineData[87] = 0;
   _$jscoverage['/pull-to-refresh.js'].lineData[88] = 0;
-  _$jscoverage['/pull-to-refresh.js'].lineData[96] = 0;
+  _$jscoverage['/pull-to-refresh.js'].lineData[89] = 0;
   _$jscoverage['/pull-to-refresh.js'].lineData[97] = 0;
   _$jscoverage['/pull-to-refresh.js'].lineData[98] = 0;
   _$jscoverage['/pull-to-refresh.js'].lineData[99] = 0;
   _$jscoverage['/pull-to-refresh.js'].lineData[100] = 0;
-  _$jscoverage['/pull-to-refresh.js'].lineData[106] = 0;
+  _$jscoverage['/pull-to-refresh.js'].lineData[101] = 0;
   _$jscoverage['/pull-to-refresh.js'].lineData[107] = 0;
   _$jscoverage['/pull-to-refresh.js'].lineData[108] = 0;
   _$jscoverage['/pull-to-refresh.js'].lineData[109] = 0;
   _$jscoverage['/pull-to-refresh.js'].lineData[110] = 0;
-  _$jscoverage['/pull-to-refresh.js'].lineData[114] = 0;
+  _$jscoverage['/pull-to-refresh.js'].lineData[111] = 0;
+  _$jscoverage['/pull-to-refresh.js'].lineData[115] = 0;
 }
 if (! _$jscoverage['/pull-to-refresh.js'].functionData) {
   _$jscoverage['/pull-to-refresh.js'].functionData = [];
@@ -419,49 +419,49 @@ KISSY.add(function(S, require) {
   v = v.newVal;
   _$jscoverage['/pull-to-refresh.js'].lineData[79]++;
   if (visit6_79_1(v < 0)) {
-    _$jscoverage['/pull-to-refresh.js'].lineData[80]++;
+    _$jscoverage['/pull-to-refresh.js'].lineData[81]++;
     this.el.style[transformProperty] = 'translate3d(0,' + -v + 'px,0)';
   }
 }, 
   pluginRenderUI: function(scrollView) {
   _$jscoverage['/pull-to-refresh.js'].functionData[6]++;
-  _$jscoverage['/pull-to-refresh.js'].lineData[85]++;
-  var self = this;
   _$jscoverage['/pull-to-refresh.js'].lineData[86]++;
-  self.scrollView = scrollView;
+  var self = this;
   _$jscoverage['/pull-to-refresh.js'].lineData[87]++;
-  var prefixCls = scrollView.get('prefixCls');
+  self.scrollView = scrollView;
   _$jscoverage['/pull-to-refresh.js'].lineData[88]++;
+  var prefixCls = scrollView.get('prefixCls');
+  _$jscoverage['/pull-to-refresh.js'].lineData[89]++;
   var el = S.all(substitute('<div class="{prefixCls}scroll-view-pull-to-refresh">' + '<div class="{prefixCls}scroll-view-pull-to-refresh-content">' + '<span class="{prefixCls}scroll-view-pull-icon"></span>' + '<span class="{prefixCls}scroll-view-pull-label"></span>' + '</div>' + '</div>', {
   prefixCls: prefixCls}));
-  _$jscoverage['/pull-to-refresh.js'].lineData[96]++;
-  self.labelEl = el.one('.' + prefixCls + 'scroll-view-pull-label');
   _$jscoverage['/pull-to-refresh.js'].lineData[97]++;
-  scrollView.get('el').prepend(el);
+  self.labelEl = el.one('.' + prefixCls + 'scroll-view-pull-label');
   _$jscoverage['/pull-to-refresh.js'].lineData[98]++;
-  self.$el = el;
+  scrollView.get('el').prepend(el);
   _$jscoverage['/pull-to-refresh.js'].lineData[99]++;
-  self.el = el[0];
+  self.$el = el;
   _$jscoverage['/pull-to-refresh.js'].lineData[100]++;
+  self.el = el[0];
+  _$jscoverage['/pull-to-refresh.js'].lineData[101]++;
   self._onSetState({
   newValue: 'pulling'});
 }, 
   pluginBindUI: function(scrollView) {
   _$jscoverage['/pull-to-refresh.js'].functionData[7]++;
-  _$jscoverage['/pull-to-refresh.js'].lineData[106]++;
-  var self = this;
   _$jscoverage['/pull-to-refresh.js'].lineData[107]++;
-  scrollView.on('scrollMove', self._onScrollMove, self);
+  var self = this;
   _$jscoverage['/pull-to-refresh.js'].lineData[108]++;
-  scrollView.on('dragend', self._onDragEnd, self);
+  scrollView.on('scrollMove', self._onScrollMove, self);
   _$jscoverage['/pull-to-refresh.js'].lineData[109]++;
-  self.on('afterStateChange', self._onSetState, self);
+  scrollView.on('dragend', self._onDragEnd, self);
   _$jscoverage['/pull-to-refresh.js'].lineData[110]++;
+  self.on('afterStateChange', self._onSetState, self);
+  _$jscoverage['/pull-to-refresh.js'].lineData[111]++;
   scrollView.on('afterScrollTopChange', self._onSetScrollTop, self);
 }, 
   pluginDestructor: function() {
   _$jscoverage['/pull-to-refresh.js'].functionData[8]++;
-  _$jscoverage['/pull-to-refresh.js'].lineData[114]++;
+  _$jscoverage['/pull-to-refresh.js'].lineData[115]++;
   this.$el.remove();
 }}, {
   ATTRS: {

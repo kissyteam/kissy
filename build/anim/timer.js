@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.41
 MIT Licensed
-build time: Dec 2 15:11
+build time: Dec 2 17:30
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -390,6 +390,7 @@ KISSY.add("anim/timer/color", ["./fx", "./short-hand"], function(S, require) {
 KISSY.add("anim/timer/transform", ["dom", "./fx"], function(S, require) {
   var Dom = require("dom");
   var Fx = require("./fx");
+  var translateTpl = S.Features.isTransform3dSupported() ? "translate3d({translateX}px,{translateY}px,0)" : "translate({translateX}px,{translateY}px)";
   function toMatrixArray(matrix) {
     matrix = matrix.split(/,/);
     matrix = S.map(matrix, function(v) {
@@ -501,7 +502,7 @@ KISSY.add("anim/timer/transform", ["dom", "./fx"], function(S, require) {
     ret.skewY = interpolate(from.skewY, to.skewY, pos);
     ret.scaleX = interpolate(from.scaleX, to.scaleX, pos);
     ret.scaleY = interpolate(from.scaleY, to.scaleY, pos);
-    return S.substitute("translate3d({translateX}px,{translateY}px,0) " + "rotate({rotate}deg) " + "skewX({skewX}deg) " + "skewY({skewY}deg) " + "scale({scaleX},{scaleY})", ret)
+    return S.substitute(translateTpl + " " + "rotate({rotate}deg) " + "skewX({skewX}deg) " + "skewY({skewY}deg) " + "scale({scaleX},{scaleY})", ret)
   }});
   Fx.Factories.transform = TransformFx;
   return TransformFx

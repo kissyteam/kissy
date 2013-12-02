@@ -24,6 +24,7 @@
         transformProperty,
         transitionPrefix,
         transformPrefix,
+        isTransform3dSupported,
         documentElement = doc.documentElement,
         documentElementStyle,
         isClassListSupportedState = true,
@@ -59,6 +60,17 @@
         var navigator = (win.navigator || {});
         isMsPointerSupported = 'msPointerEnabled' in navigator;
         isPointerSupported = 'pointerEnabled' in navigator;
+
+        if (transformPrefix) {
+            // https://gist.github.com/lorenzopolidori/3794226
+            // ie9 does not support 3d transform
+            var el = document.createElement('p');
+            documentElement.insertBefore(el, documentElement.firstChild);
+            el.style[transformPrefix] = 'translate3d(1px,1px,1px)';
+            var has3d = window.getComputedStyle(el).getPropertyValue(transformPrefix);
+            documentElement.removeChild(el);
+            isTransform3dSupported = (has3d !== undefined && has3d.length > 0 && has3d !== 'none');
+        }
     }
 
     /**
@@ -132,6 +144,14 @@
          */
         'isTransformSupported': function () {
             return transformPrefix !== undefined;
+        },
+
+        /**
+         * whether support css transform 3d
+         * @returns {boolean}
+         */
+        'isTransform3dSupported': function () {
+            return isTransform3dSupported;
         },
 
         /**

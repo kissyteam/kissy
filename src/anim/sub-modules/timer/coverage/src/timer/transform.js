@@ -232,75 +232,74 @@ if (! _$jscoverage['/timer/transform.js']) {
   _$jscoverage['/timer/transform.js'].lineData[6] = 0;
   _$jscoverage['/timer/transform.js'].lineData[7] = 0;
   _$jscoverage['/timer/transform.js'].lineData[8] = 0;
-  _$jscoverage['/timer/transform.js'].lineData[10] = 0;
-  _$jscoverage['/timer/transform.js'].lineData[11] = 0;
+  _$jscoverage['/timer/transform.js'].lineData[9] = 0;
   _$jscoverage['/timer/transform.js'].lineData[12] = 0;
   _$jscoverage['/timer/transform.js'].lineData[13] = 0;
+  _$jscoverage['/timer/transform.js'].lineData[14] = 0;
   _$jscoverage['/timer/transform.js'].lineData[15] = 0;
-  _$jscoverage['/timer/transform.js'].lineData[18] = 0;
-  _$jscoverage['/timer/transform.js'].lineData[19] = 0;
+  _$jscoverage['/timer/transform.js'].lineData[17] = 0;
   _$jscoverage['/timer/transform.js'].lineData[20] = 0;
-  _$jscoverage['/timer/transform.js'].lineData[27] = 0;
+  _$jscoverage['/timer/transform.js'].lineData[21] = 0;
+  _$jscoverage['/timer/transform.js'].lineData[22] = 0;
   _$jscoverage['/timer/transform.js'].lineData[29] = 0;
-  _$jscoverage['/timer/transform.js'].lineData[30] = 0;
   _$jscoverage['/timer/transform.js'].lineData[31] = 0;
+  _$jscoverage['/timer/transform.js'].lineData[32] = 0;
   _$jscoverage['/timer/transform.js'].lineData[33] = 0;
-  _$jscoverage['/timer/transform.js'].lineData[34] = 0;
   _$jscoverage['/timer/transform.js'].lineData[35] = 0;
+  _$jscoverage['/timer/transform.js'].lineData[36] = 0;
   _$jscoverage['/timer/transform.js'].lineData[37] = 0;
-  _$jscoverage['/timer/transform.js'].lineData[38] = 0;
   _$jscoverage['/timer/transform.js'].lineData[39] = 0;
   _$jscoverage['/timer/transform.js'].lineData[40] = 0;
+  _$jscoverage['/timer/transform.js'].lineData[41] = 0;
   _$jscoverage['/timer/transform.js'].lineData[42] = 0;
-  _$jscoverage['/timer/transform.js'].lineData[43] = 0;
   _$jscoverage['/timer/transform.js'].lineData[44] = 0;
   _$jscoverage['/timer/transform.js'].lineData[45] = 0;
   _$jscoverage['/timer/transform.js'].lineData[46] = 0;
-  _$jscoverage['/timer/transform.js'].lineData[51] = 0;
-  _$jscoverage['/timer/transform.js'].lineData[56] = 0;
-  _$jscoverage['/timer/transform.js'].lineData[67] = 0;
-  _$jscoverage['/timer/transform.js'].lineData[68] = 0;
-  _$jscoverage['/timer/transform.js'].lineData[79] = 0;
-  _$jscoverage['/timer/transform.js'].lineData[80] = 0;
-  _$jscoverage['/timer/transform.js'].lineData[83] = 0;
-  _$jscoverage['/timer/transform.js'].lineData[84] = 0;
+  _$jscoverage['/timer/transform.js'].lineData[47] = 0;
+  _$jscoverage['/timer/transform.js'].lineData[48] = 0;
+  _$jscoverage['/timer/transform.js'].lineData[53] = 0;
+  _$jscoverage['/timer/transform.js'].lineData[58] = 0;
+  _$jscoverage['/timer/transform.js'].lineData[69] = 0;
+  _$jscoverage['/timer/transform.js'].lineData[70] = 0;
+  _$jscoverage['/timer/transform.js'].lineData[81] = 0;
+  _$jscoverage['/timer/transform.js'].lineData[82] = 0;
   _$jscoverage['/timer/transform.js'].lineData[85] = 0;
-  _$jscoverage['/timer/transform.js'].lineData[92] = 0;
-  _$jscoverage['/timer/transform.js'].lineData[93] = 0;
+  _$jscoverage['/timer/transform.js'].lineData[86] = 0;
+  _$jscoverage['/timer/transform.js'].lineData[87] = 0;
   _$jscoverage['/timer/transform.js'].lineData[94] = 0;
   _$jscoverage['/timer/transform.js'].lineData[95] = 0;
   _$jscoverage['/timer/transform.js'].lineData[96] = 0;
-  _$jscoverage['/timer/transform.js'].lineData[101] = 0;
-  _$jscoverage['/timer/transform.js'].lineData[102] = 0;
-  _$jscoverage['/timer/transform.js'].lineData[107] = 0;
-  _$jscoverage['/timer/transform.js'].lineData[108] = 0;
+  _$jscoverage['/timer/transform.js'].lineData[97] = 0;
+  _$jscoverage['/timer/transform.js'].lineData[98] = 0;
+  _$jscoverage['/timer/transform.js'].lineData[103] = 0;
+  _$jscoverage['/timer/transform.js'].lineData[104] = 0;
   _$jscoverage['/timer/transform.js'].lineData[109] = 0;
+  _$jscoverage['/timer/transform.js'].lineData[110] = 0;
   _$jscoverage['/timer/transform.js'].lineData[111] = 0;
-  _$jscoverage['/timer/transform.js'].lineData[112] = 0;
-  _$jscoverage['/timer/transform.js'].lineData[116] = 0;
-  _$jscoverage['/timer/transform.js'].lineData[117] = 0;
+  _$jscoverage['/timer/transform.js'].lineData[113] = 0;
+  _$jscoverage['/timer/transform.js'].lineData[114] = 0;
   _$jscoverage['/timer/transform.js'].lineData[118] = 0;
   _$jscoverage['/timer/transform.js'].lineData[119] = 0;
-  _$jscoverage['/timer/transform.js'].lineData[122] = 0;
-  _$jscoverage['/timer/transform.js'].lineData[123] = 0;
+  _$jscoverage['/timer/transform.js'].lineData[120] = 0;
+  _$jscoverage['/timer/transform.js'].lineData[121] = 0;
   _$jscoverage['/timer/transform.js'].lineData[124] = 0;
   _$jscoverage['/timer/transform.js'].lineData[125] = 0;
-  _$jscoverage['/timer/transform.js'].lineData[128] = 0;
-  _$jscoverage['/timer/transform.js'].lineData[132] = 0;
-  _$jscoverage['/timer/transform.js'].lineData[135] = 0;
-  _$jscoverage['/timer/transform.js'].lineData[136] = 0;
-  _$jscoverage['/timer/transform.js'].lineData[139] = 0;
+  _$jscoverage['/timer/transform.js'].lineData[126] = 0;
+  _$jscoverage['/timer/transform.js'].lineData[127] = 0;
+  _$jscoverage['/timer/transform.js'].lineData[130] = 0;
+  _$jscoverage['/timer/transform.js'].lineData[134] = 0;
+  _$jscoverage['/timer/transform.js'].lineData[137] = 0;
+  _$jscoverage['/timer/transform.js'].lineData[138] = 0;
   _$jscoverage['/timer/transform.js'].lineData[141] = 0;
-  _$jscoverage['/timer/transform.js'].lineData[142] = 0;
+  _$jscoverage['/timer/transform.js'].lineData[143] = 0;
   _$jscoverage['/timer/transform.js'].lineData[144] = 0;
-  _$jscoverage['/timer/transform.js'].lineData[145] = 0;
   _$jscoverage['/timer/transform.js'].lineData[146] = 0;
+  _$jscoverage['/timer/transform.js'].lineData[147] = 0;
   _$jscoverage['/timer/transform.js'].lineData[148] = 0;
   _$jscoverage['/timer/transform.js'].lineData[150] = 0;
-  _$jscoverage['/timer/transform.js'].lineData[151] = 0;
+  _$jscoverage['/timer/transform.js'].lineData[152] = 0;
   _$jscoverage['/timer/transform.js'].lineData[153] = 0;
-  _$jscoverage['/timer/transform.js'].lineData[158] = 0;
-  _$jscoverage['/timer/transform.js'].lineData[159] = 0;
+  _$jscoverage['/timer/transform.js'].lineData[155] = 0;
   _$jscoverage['/timer/transform.js'].lineData[160] = 0;
   _$jscoverage['/timer/transform.js'].lineData[161] = 0;
   _$jscoverage['/timer/transform.js'].lineData[162] = 0;
@@ -309,8 +308,10 @@ if (! _$jscoverage['/timer/transform.js']) {
   _$jscoverage['/timer/transform.js'].lineData[165] = 0;
   _$jscoverage['/timer/transform.js'].lineData[166] = 0;
   _$jscoverage['/timer/transform.js'].lineData[167] = 0;
-  _$jscoverage['/timer/transform.js'].lineData[175] = 0;
+  _$jscoverage['/timer/transform.js'].lineData[168] = 0;
+  _$jscoverage['/timer/transform.js'].lineData[169] = 0;
   _$jscoverage['/timer/transform.js'].lineData[177] = 0;
+  _$jscoverage['/timer/transform.js'].lineData[179] = 0;
 }
 if (! _$jscoverage['/timer/transform.js'].functionData) {
   _$jscoverage['/timer/transform.js'].functionData = [];
@@ -327,65 +328,65 @@ if (! _$jscoverage['/timer/transform.js'].functionData) {
 }
 if (! _$jscoverage['/timer/transform.js'].branchData) {
   _$jscoverage['/timer/transform.js'].branchData = {};
-  _$jscoverage['/timer/transform.js'].branchData['27'] = [];
-  _$jscoverage['/timer/transform.js'].branchData['27'][1] = new BranchData();
-  _$jscoverage['/timer/transform.js'].branchData['42'] = [];
-  _$jscoverage['/timer/transform.js'].branchData['42'][1] = new BranchData();
-  _$jscoverage['/timer/transform.js'].branchData['92'] = [];
-  _$jscoverage['/timer/transform.js'].branchData['92'][1] = new BranchData();
-  _$jscoverage['/timer/transform.js'].branchData['108'] = [];
-  _$jscoverage['/timer/transform.js'].branchData['108'][1] = new BranchData();
-  _$jscoverage['/timer/transform.js'].branchData['118'] = [];
-  _$jscoverage['/timer/transform.js'].branchData['118'][1] = new BranchData();
-  _$jscoverage['/timer/transform.js'].branchData['124'] = [];
-  _$jscoverage['/timer/transform.js'].branchData['124'][1] = new BranchData();
-  _$jscoverage['/timer/transform.js'].branchData['144'] = [];
-  _$jscoverage['/timer/transform.js'].branchData['144'][1] = new BranchData();
-  _$jscoverage['/timer/transform.js'].branchData['145'] = [];
-  _$jscoverage['/timer/transform.js'].branchData['145'][1] = new BranchData();
-  _$jscoverage['/timer/transform.js'].branchData['145'][2] = new BranchData();
-  _$jscoverage['/timer/transform.js'].branchData['150'] = [];
-  _$jscoverage['/timer/transform.js'].branchData['150'][1] = new BranchData();
+  _$jscoverage['/timer/transform.js'].branchData['29'] = [];
+  _$jscoverage['/timer/transform.js'].branchData['29'][1] = new BranchData();
+  _$jscoverage['/timer/transform.js'].branchData['44'] = [];
+  _$jscoverage['/timer/transform.js'].branchData['44'][1] = new BranchData();
+  _$jscoverage['/timer/transform.js'].branchData['94'] = [];
+  _$jscoverage['/timer/transform.js'].branchData['94'][1] = new BranchData();
+  _$jscoverage['/timer/transform.js'].branchData['110'] = [];
+  _$jscoverage['/timer/transform.js'].branchData['110'][1] = new BranchData();
+  _$jscoverage['/timer/transform.js'].branchData['120'] = [];
+  _$jscoverage['/timer/transform.js'].branchData['120'][1] = new BranchData();
+  _$jscoverage['/timer/transform.js'].branchData['126'] = [];
+  _$jscoverage['/timer/transform.js'].branchData['126'][1] = new BranchData();
+  _$jscoverage['/timer/transform.js'].branchData['146'] = [];
+  _$jscoverage['/timer/transform.js'].branchData['146'][1] = new BranchData();
+  _$jscoverage['/timer/transform.js'].branchData['147'] = [];
+  _$jscoverage['/timer/transform.js'].branchData['147'][1] = new BranchData();
+  _$jscoverage['/timer/transform.js'].branchData['147'][2] = new BranchData();
+  _$jscoverage['/timer/transform.js'].branchData['152'] = [];
+  _$jscoverage['/timer/transform.js'].branchData['152'][1] = new BranchData();
 }
-_$jscoverage['/timer/transform.js'].branchData['150'][1].init(439, 7, 'self.to');
-function visit84_150_1(result) {
-  _$jscoverage['/timer/transform.js'].branchData['150'][1].ranCondition(result);
+_$jscoverage['/timer/transform.js'].branchData['152'][1].init(439, 7, 'self.to');
+function visit84_152_1(result) {
+  _$jscoverage['/timer/transform.js'].branchData['152'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer/transform.js'].branchData['145'][2].init(259, 20, 'self.from !== \'none\'');
-function visit83_145_2(result) {
-  _$jscoverage['/timer/transform.js'].branchData['145'][2].ranCondition(result);
+}_$jscoverage['/timer/transform.js'].branchData['147'][2].init(259, 20, 'self.from !== \'none\'');
+function visit83_147_2(result) {
+  _$jscoverage['/timer/transform.js'].branchData['147'][2].ranCondition(result);
   return result;
-}_$jscoverage['/timer/transform.js'].branchData['145'][1].init(246, 33, 'self.from && self.from !== \'none\'');
-function visit82_145_1(result) {
-  _$jscoverage['/timer/transform.js'].branchData['145'][1].ranCondition(result);
+}_$jscoverage['/timer/transform.js'].branchData['147'][1].init(246, 33, 'self.from && self.from !== \'none\'');
+function visit82_147_1(result) {
+  _$jscoverage['/timer/transform.js'].branchData['147'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer/transform.js'].branchData['144'][1].init(177, 51, 'Dom.style(self.anim.node, \'transform\') || self.from');
-function visit81_144_1(result) {
-  _$jscoverage['/timer/transform.js'].branchData['144'][1].ranCondition(result);
+}_$jscoverage['/timer/transform.js'].branchData['146'][1].init(177, 51, 'Dom.style(self.anim.node, \'transform\') || self.from');
+function visit81_146_1(result) {
+  _$jscoverage['/timer/transform.js'].branchData['146'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer/transform.js'].branchData['124'][1].init(146, 16, 'val[1] || val[0]');
-function visit80_124_1(result) {
-  _$jscoverage['/timer/transform.js'].branchData['124'][1].ranCondition(result);
+}_$jscoverage['/timer/transform.js'].branchData['126'][1].init(146, 16, 'val[1] || val[0]');
+function visit80_126_1(result) {
+  _$jscoverage['/timer/transform.js'].branchData['126'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer/transform.js'].branchData['118'][1].init(160, 11, 'val[1] || 0');
-function visit79_118_1(result) {
-  _$jscoverage['/timer/transform.js'].branchData['118'][1].ranCondition(result);
+}_$jscoverage['/timer/transform.js'].branchData['120'][1].init(160, 11, 'val[1] || 0');
+function visit79_120_1(result) {
+  _$jscoverage['/timer/transform.js'].branchData['120'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer/transform.js'].branchData['108'][1].init(79, 23, '!S.endsWith(val, \'deg\')');
-function visit78_108_1(result) {
-  _$jscoverage['/timer/transform.js'].branchData['108'][1].ranCondition(result);
+}_$jscoverage['/timer/transform.js'].branchData['110'][1].init(79, 23, '!S.endsWith(val, \'deg\')');
+function visit78_110_1(result) {
+  _$jscoverage['/timer/transform.js'].branchData['110'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer/transform.js'].branchData['92'][1].init(286, 7, '++i < l');
-function visit77_92_1(result) {
-  _$jscoverage['/timer/transform.js'].branchData['92'][1].ranCondition(result);
+}_$jscoverage['/timer/transform.js'].branchData['94'][1].init(286, 7, '++i < l');
+function visit77_94_1(result) {
+  _$jscoverage['/timer/transform.js'].branchData['94'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer/transform.js'].branchData['42'][1].init(423, 13, 'A * D < B * C');
-function visit76_42_1(result) {
-  _$jscoverage['/timer/transform.js'].branchData['42'][1].ranCondition(result);
+}_$jscoverage['/timer/transform.js'].branchData['44'][1].init(423, 13, 'A * D < B * C');
+function visit76_44_1(result) {
+  _$jscoverage['/timer/transform.js'].branchData['44'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer/transform.js'].branchData['27'][1].init(243, 13, 'A * D - B * C');
-function visit75_27_1(result) {
-  _$jscoverage['/timer/transform.js'].branchData['27'][1].ranCondition(result);
+}_$jscoverage['/timer/transform.js'].branchData['29'][1].init(243, 13, 'A * D - B * C');
+function visit75_29_1(result) {
+  _$jscoverage['/timer/transform.js'].branchData['29'][1].ranCondition(result);
   return result;
 }_$jscoverage['/timer/transform.js'].lineData[6]++;
 KISSY.add(function(S, require) {
@@ -394,65 +395,67 @@ KISSY.add(function(S, require) {
   var Dom = require('dom');
   _$jscoverage['/timer/transform.js'].lineData[8]++;
   var Fx = require('./fx');
-  _$jscoverage['/timer/transform.js'].lineData[10]++;
+  _$jscoverage['/timer/transform.js'].lineData[9]++;
+  var translateTpl = S.Features.isTransform3dSupported() ? 'translate3d({translateX}px,{translateY}px,0)' : 'translate({translateX}px,{translateY}px)';
+  _$jscoverage['/timer/transform.js'].lineData[12]++;
   function toMatrixArray(matrix) {
     _$jscoverage['/timer/transform.js'].functionData[1]++;
-    _$jscoverage['/timer/transform.js'].lineData[11]++;
+    _$jscoverage['/timer/transform.js'].lineData[13]++;
     matrix = matrix.split(/,/);
-    _$jscoverage['/timer/transform.js'].lineData[12]++;
+    _$jscoverage['/timer/transform.js'].lineData[14]++;
     matrix = S.map(matrix, function(v) {
   _$jscoverage['/timer/transform.js'].functionData[2]++;
-  _$jscoverage['/timer/transform.js'].lineData[13]++;
+  _$jscoverage['/timer/transform.js'].lineData[15]++;
   return myParse(v);
 });
-    _$jscoverage['/timer/transform.js'].lineData[15]++;
+    _$jscoverage['/timer/transform.js'].lineData[17]++;
     return matrix;
   }
-  _$jscoverage['/timer/transform.js'].lineData[18]++;
+  _$jscoverage['/timer/transform.js'].lineData[20]++;
   function decomposeMatrix(matrix) {
     _$jscoverage['/timer/transform.js'].functionData[3]++;
-    _$jscoverage['/timer/transform.js'].lineData[19]++;
+    _$jscoverage['/timer/transform.js'].lineData[21]++;
     matrix = toMatrixArray(matrix);
-    _$jscoverage['/timer/transform.js'].lineData[20]++;
+    _$jscoverage['/timer/transform.js'].lineData[22]++;
     var scaleX, scaleY, skew, A = matrix[0], B = matrix[1], C = matrix[2], D = matrix[3];
-    _$jscoverage['/timer/transform.js'].lineData[27]++;
-    if (visit75_27_1(A * D - B * C)) {
-      _$jscoverage['/timer/transform.js'].lineData[29]++;
-      scaleX = Math.sqrt(A * A + B * B);
-      _$jscoverage['/timer/transform.js'].lineData[30]++;
-      A /= scaleX;
+    _$jscoverage['/timer/transform.js'].lineData[29]++;
+    if (visit75_29_1(A * D - B * C)) {
       _$jscoverage['/timer/transform.js'].lineData[31]++;
-      B /= scaleX;
+      scaleX = Math.sqrt(A * A + B * B);
+      _$jscoverage['/timer/transform.js'].lineData[32]++;
+      A /= scaleX;
       _$jscoverage['/timer/transform.js'].lineData[33]++;
-      skew = A * C + B * D;
-      _$jscoverage['/timer/transform.js'].lineData[34]++;
-      C -= A * skew;
+      B /= scaleX;
       _$jscoverage['/timer/transform.js'].lineData[35]++;
-      D -= B * skew;
+      skew = A * C + B * D;
+      _$jscoverage['/timer/transform.js'].lineData[36]++;
+      C -= A * skew;
       _$jscoverage['/timer/transform.js'].lineData[37]++;
-      scaleY = Math.sqrt(C * C + D * D);
-      _$jscoverage['/timer/transform.js'].lineData[38]++;
-      C /= scaleY;
+      D -= B * skew;
       _$jscoverage['/timer/transform.js'].lineData[39]++;
-      D /= scaleY;
+      scaleY = Math.sqrt(C * C + D * D);
       _$jscoverage['/timer/transform.js'].lineData[40]++;
-      skew /= scaleY;
+      C /= scaleY;
+      _$jscoverage['/timer/transform.js'].lineData[41]++;
+      D /= scaleY;
       _$jscoverage['/timer/transform.js'].lineData[42]++;
-      if (visit76_42_1(A * D < B * C)) {
-        _$jscoverage['/timer/transform.js'].lineData[43]++;
-        A = -A;
-        _$jscoverage['/timer/transform.js'].lineData[44]++;
-        B = -B;
+      skew /= scaleY;
+      _$jscoverage['/timer/transform.js'].lineData[44]++;
+      if (visit76_44_1(A * D < B * C)) {
         _$jscoverage['/timer/transform.js'].lineData[45]++;
-        skew = -skew;
+        A = -A;
         _$jscoverage['/timer/transform.js'].lineData[46]++;
+        B = -B;
+        _$jscoverage['/timer/transform.js'].lineData[47]++;
+        skew = -skew;
+        _$jscoverage['/timer/transform.js'].lineData[48]++;
         scaleX = -scaleX;
       }
     } else {
-      _$jscoverage['/timer/transform.js'].lineData[51]++;
+      _$jscoverage['/timer/transform.js'].lineData[53]++;
       scaleX = scaleY = skew = 0;
     }
-    _$jscoverage['/timer/transform.js'].lineData[56]++;
+    _$jscoverage['/timer/transform.js'].lineData[58]++;
     return {
   'translateX': myParse(matrix[4]), 
   'translateY': myParse(matrix[5]), 
@@ -462,10 +465,10 @@ KISSY.add(function(S, require) {
   'scaleX': myParse(scaleX), 
   'scaleY': myParse(scaleY)};
   }
-  _$jscoverage['/timer/transform.js'].lineData[67]++;
+  _$jscoverage['/timer/transform.js'].lineData[69]++;
   function defaultDecompose() {
     _$jscoverage['/timer/transform.js'].functionData[4]++;
-    _$jscoverage['/timer/transform.js'].lineData[68]++;
+    _$jscoverage['/timer/transform.js'].lineData[70]++;
     return {
   'translateX': 0, 
   'translateY': 0, 
@@ -475,136 +478,136 @@ KISSY.add(function(S, require) {
   'scaleX': 1, 
   'scaleY': 1};
   }
-  _$jscoverage['/timer/transform.js'].lineData[79]++;
+  _$jscoverage['/timer/transform.js'].lineData[81]++;
   function myParse(v) {
     _$jscoverage['/timer/transform.js'].functionData[5]++;
-    _$jscoverage['/timer/transform.js'].lineData[80]++;
+    _$jscoverage['/timer/transform.js'].lineData[82]++;
     return Math.round(parseFloat(v) * 1e5) / 1e5;
   }
-  _$jscoverage['/timer/transform.js'].lineData[83]++;
+  _$jscoverage['/timer/transform.js'].lineData[85]++;
   function getTransformInfo(transform) {
     _$jscoverage['/timer/transform.js'].functionData[6]++;
-    _$jscoverage['/timer/transform.js'].lineData[84]++;
+    _$jscoverage['/timer/transform.js'].lineData[86]++;
     transform = transform.split(')');
-    _$jscoverage['/timer/transform.js'].lineData[85]++;
+    _$jscoverage['/timer/transform.js'].lineData[87]++;
     var trim = S.trim, i = -1, l = transform.length - 1, split, prop, val, ret = defaultDecompose();
-    _$jscoverage['/timer/transform.js'].lineData[92]++;
-    while (visit77_92_1(++i < l)) {
-      _$jscoverage['/timer/transform.js'].lineData[93]++;
-      split = transform[i].split('(');
-      _$jscoverage['/timer/transform.js'].lineData[94]++;
-      prop = trim(split[0]);
+    _$jscoverage['/timer/transform.js'].lineData[94]++;
+    while (visit77_94_1(++i < l)) {
       _$jscoverage['/timer/transform.js'].lineData[95]++;
-      val = split[1];
+      split = transform[i].split('(');
       _$jscoverage['/timer/transform.js'].lineData[96]++;
+      prop = trim(split[0]);
+      _$jscoverage['/timer/transform.js'].lineData[97]++;
+      val = split[1];
+      _$jscoverage['/timer/transform.js'].lineData[98]++;
       switch (prop) {
         case 'translateX':
         case 'translateY':
         case 'scaleX':
         case 'scaleY':
-          _$jscoverage['/timer/transform.js'].lineData[101]++;
+          _$jscoverage['/timer/transform.js'].lineData[103]++;
           ret[prop] = myParse(val);
-          _$jscoverage['/timer/transform.js'].lineData[102]++;
+          _$jscoverage['/timer/transform.js'].lineData[104]++;
           break;
         case 'rotate':
         case 'skewX':
         case 'skewY':
-          _$jscoverage['/timer/transform.js'].lineData[107]++;
+          _$jscoverage['/timer/transform.js'].lineData[109]++;
           var v = myParse(val);
-          _$jscoverage['/timer/transform.js'].lineData[108]++;
-          if (visit78_108_1(!S.endsWith(val, 'deg'))) {
-            _$jscoverage['/timer/transform.js'].lineData[109]++;
+          _$jscoverage['/timer/transform.js'].lineData[110]++;
+          if (visit78_110_1(!S.endsWith(val, 'deg'))) {
+            _$jscoverage['/timer/transform.js'].lineData[111]++;
             v = v * 180 / Math.PI;
           }
-          _$jscoverage['/timer/transform.js'].lineData[111]++;
+          _$jscoverage['/timer/transform.js'].lineData[113]++;
           ret[prop] = v;
-          _$jscoverage['/timer/transform.js'].lineData[112]++;
+          _$jscoverage['/timer/transform.js'].lineData[114]++;
           break;
         case 'translate':
         case 'translate3d':
-          _$jscoverage['/timer/transform.js'].lineData[116]++;
-          val = val.split(',');
-          _$jscoverage['/timer/transform.js'].lineData[117]++;
-          ret.translateX = myParse(val[0]);
           _$jscoverage['/timer/transform.js'].lineData[118]++;
-          ret.translateY = myParse(visit79_118_1(val[1] || 0));
+          val = val.split(',');
           _$jscoverage['/timer/transform.js'].lineData[119]++;
+          ret.translateX = myParse(val[0]);
+          _$jscoverage['/timer/transform.js'].lineData[120]++;
+          ret.translateY = myParse(visit79_120_1(val[1] || 0));
+          _$jscoverage['/timer/transform.js'].lineData[121]++;
           break;
         case 'scale':
-          _$jscoverage['/timer/transform.js'].lineData[122]++;
-          val = val.split(',');
-          _$jscoverage['/timer/transform.js'].lineData[123]++;
-          ret.scaleX = myParse(val[0]);
           _$jscoverage['/timer/transform.js'].lineData[124]++;
-          ret.scaleY = myParse(visit80_124_1(val[1] || val[0]));
+          val = val.split(',');
           _$jscoverage['/timer/transform.js'].lineData[125]++;
+          ret.scaleX = myParse(val[0]);
+          _$jscoverage['/timer/transform.js'].lineData[126]++;
+          ret.scaleY = myParse(visit80_126_1(val[1] || val[0]));
+          _$jscoverage['/timer/transform.js'].lineData[127]++;
           break;
         case 'matrix':
-          _$jscoverage['/timer/transform.js'].lineData[128]++;
+          _$jscoverage['/timer/transform.js'].lineData[130]++;
           return decomposeMatrix(val);
       }
     }
-    _$jscoverage['/timer/transform.js'].lineData[132]++;
+    _$jscoverage['/timer/transform.js'].lineData[134]++;
     return ret;
   }
-  _$jscoverage['/timer/transform.js'].lineData[135]++;
+  _$jscoverage['/timer/transform.js'].lineData[137]++;
   function TransformFx() {
     _$jscoverage['/timer/transform.js'].functionData[7]++;
-    _$jscoverage['/timer/transform.js'].lineData[136]++;
+    _$jscoverage['/timer/transform.js'].lineData[138]++;
     TransformFx.superclass.constructor.apply(this, arguments);
   }
-  _$jscoverage['/timer/transform.js'].lineData[139]++;
+  _$jscoverage['/timer/transform.js'].lineData[141]++;
   S.extend(TransformFx, Fx, {
   load: function() {
   _$jscoverage['/timer/transform.js'].functionData[8]++;
-  _$jscoverage['/timer/transform.js'].lineData[141]++;
+  _$jscoverage['/timer/transform.js'].lineData[143]++;
   var self = this;
-  _$jscoverage['/timer/transform.js'].lineData[142]++;
-  TransformFx.superclass.load.apply(self, arguments);
   _$jscoverage['/timer/transform.js'].lineData[144]++;
-  self.from = visit81_144_1(Dom.style(self.anim.node, 'transform') || self.from);
-  _$jscoverage['/timer/transform.js'].lineData[145]++;
-  if (visit82_145_1(self.from && visit83_145_2(self.from !== 'none'))) {
-    _$jscoverage['/timer/transform.js'].lineData[146]++;
+  TransformFx.superclass.load.apply(self, arguments);
+  _$jscoverage['/timer/transform.js'].lineData[146]++;
+  self.from = visit81_146_1(Dom.style(self.anim.node, 'transform') || self.from);
+  _$jscoverage['/timer/transform.js'].lineData[147]++;
+  if (visit82_147_1(self.from && visit83_147_2(self.from !== 'none'))) {
+    _$jscoverage['/timer/transform.js'].lineData[148]++;
     self.from = getTransformInfo(self.from);
   } else {
-    _$jscoverage['/timer/transform.js'].lineData[148]++;
+    _$jscoverage['/timer/transform.js'].lineData[150]++;
     self.from = defaultDecompose();
   }
-  _$jscoverage['/timer/transform.js'].lineData[150]++;
-  if (visit84_150_1(self.to)) {
-    _$jscoverage['/timer/transform.js'].lineData[151]++;
+  _$jscoverage['/timer/transform.js'].lineData[152]++;
+  if (visit84_152_1(self.to)) {
+    _$jscoverage['/timer/transform.js'].lineData[153]++;
     self.to = getTransformInfo(self.to);
   } else {
-    _$jscoverage['/timer/transform.js'].lineData[153]++;
+    _$jscoverage['/timer/transform.js'].lineData[155]++;
     self.to = defaultDecompose();
   }
 }, 
   interpolate: function(from, to, pos) {
   _$jscoverage['/timer/transform.js'].functionData[9]++;
-  _$jscoverage['/timer/transform.js'].lineData[158]++;
-  var interpolate = TransformFx.superclass.interpolate;
-  _$jscoverage['/timer/transform.js'].lineData[159]++;
-  var ret = {};
   _$jscoverage['/timer/transform.js'].lineData[160]++;
-  ret.translateX = interpolate(from.translateX, to.translateX, pos);
+  var interpolate = TransformFx.superclass.interpolate;
   _$jscoverage['/timer/transform.js'].lineData[161]++;
-  ret.translateY = interpolate(from.translateY, to.translateY, pos);
+  var ret = {};
   _$jscoverage['/timer/transform.js'].lineData[162]++;
-  ret.rotate = interpolate(from.rotate, to.rotate, pos);
+  ret.translateX = interpolate(from.translateX, to.translateX, pos);
   _$jscoverage['/timer/transform.js'].lineData[163]++;
-  ret.skewX = interpolate(from.skewX, to.skewX, pos);
+  ret.translateY = interpolate(from.translateY, to.translateY, pos);
   _$jscoverage['/timer/transform.js'].lineData[164]++;
-  ret.skewY = interpolate(from.skewY, to.skewY, pos);
+  ret.rotate = interpolate(from.rotate, to.rotate, pos);
   _$jscoverage['/timer/transform.js'].lineData[165]++;
-  ret.scaleX = interpolate(from.scaleX, to.scaleX, pos);
+  ret.skewX = interpolate(from.skewX, to.skewX, pos);
   _$jscoverage['/timer/transform.js'].lineData[166]++;
-  ret.scaleY = interpolate(from.scaleY, to.scaleY, pos);
+  ret.skewY = interpolate(from.skewY, to.skewY, pos);
   _$jscoverage['/timer/transform.js'].lineData[167]++;
-  return S.substitute('translate3d({translateX}px,{translateY}px,0) ' + 'rotate({rotate}deg) ' + 'skewX({skewX}deg) ' + 'skewY({skewY}deg) ' + 'scale({scaleX},{scaleY})', ret);
+  ret.scaleX = interpolate(from.scaleX, to.scaleX, pos);
+  _$jscoverage['/timer/transform.js'].lineData[168]++;
+  ret.scaleY = interpolate(from.scaleY, to.scaleY, pos);
+  _$jscoverage['/timer/transform.js'].lineData[169]++;
+  return S.substitute(translateTpl + ' ' + 'rotate({rotate}deg) ' + 'skewX({skewX}deg) ' + 'skewY({skewY}deg) ' + 'scale({scaleX},{scaleY})', ret);
 }});
-  _$jscoverage['/timer/transform.js'].lineData[175]++;
-  Fx.Factories.transform = TransformFx;
   _$jscoverage['/timer/transform.js'].lineData[177]++;
+  Fx.Factories.transform = TransformFx;
+  _$jscoverage['/timer/transform.js'].lineData[179]++;
   return TransformFx;
 });

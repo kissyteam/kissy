@@ -242,7 +242,7 @@ var KISSY = (function (undefined) {
                     }
                 }
                /*global console*/
-                if (console !== undefined && console.log && matched) {
+                if (typeof console !== 'undefined' && console.log && matched) {
                     console[cat && console[cat] ? cat : 'log'](msg);
                     return msg;
                 }

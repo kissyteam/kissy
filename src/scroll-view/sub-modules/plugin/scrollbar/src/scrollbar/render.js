@@ -6,6 +6,7 @@
 KISSY.add(function (S, require) {
     var Control = require('component/control');
     var ScrollBarTpl = require('./scrollbar-xtpl');
+    var isTransform3dSupported = S.Features.isTransform3dSupported();
 
     // http://www.html5rocks.com/en/tutorials/speed/html5/
     var supportCss3 = S.Features.isTransformSupported();
@@ -116,11 +117,13 @@ KISSY.add(function (S, require) {
 
     if (supportCss3) {
         methods._onSetDragLeft = function (v) {
-            this.control.dragEl.style[transformProperty] = 'translateX(' + v + 'px) translateZ(0)';
+            this.control.dragEl.style[transformProperty] = 'translateX(' + v + 'px)' +
+                (isTransform3dSupported ? ' translateZ(0)' : '');
         };
 
         methods._onSetDragTop = function (v) {
-            this.control.dragEl.style[transformProperty] = 'translateY(' + v + 'px) translateZ(0)';
+            this.control.dragEl.style[transformProperty] = 'translateY(' + v + 'px)' +
+                (isTransform3dSupported ? ' translateZ(0)' : '');
         };
     }
 
