@@ -207,6 +207,14 @@ KISSY.add(function (S, require) {
                     curr[1] = Math.tan(toRadian(val));
                     break;
 
+                case 'skew':
+                    val = val.split(',');
+                    curr[2] = Math.tan(toRadian(val[0]));
+                    if (val.length > 1) {
+                        curr[1] = Math.tan(toRadian(val[1]));
+                    }
+                    break;
+
                 case 'matrix':
                     val = val.split(',');
                     curr[0] = +val[0];

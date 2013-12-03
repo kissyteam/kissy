@@ -1,7 +1,7 @@
 /*
-Copyright 2013, KISSY v1.50dev
+Copyright 2013, KISSY v1.50
 MIT Licensed
-build time: Dec 2 15:14
+build time: Dec 3 22:55
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -264,6 +264,13 @@ KISSY.add("dom/ie/transform", ["dom/base"], function(S, require) {
           break;
         case "skewY":
           curr[1] = Math.tan(toRadian(val));
+          break;
+        case "skew":
+          val = val.split(",");
+          curr[2] = Math.tan(toRadian(val[0]));
+          if(val.length > 1) {
+            curr[1] = Math.tan(toRadian(val[1]))
+          }
           break;
         case "matrix":
           val = val.split(",");

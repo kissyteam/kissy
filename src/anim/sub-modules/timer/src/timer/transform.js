@@ -18,6 +18,7 @@ KISSY.add(function (S, require) {
         return matrix;
     }
 
+    // http://blog.yiminghe.me/2013/12/03/decomposing-css-2d-transform-matrix-into-simple-transformations/
     function decomposeMatrix(matrix) {
         matrix = toMatrixArray(matrix);
         var scaleX, scaleY , skew ,
@@ -91,6 +92,12 @@ KISSY.add(function (S, require) {
             split, prop, val,
             ret = defaultDecompose();
 
+        function toRadian(value) {
+            return value.indexOf('deg') > -1 ?
+                parseInt(value, 10) * (Math.PI * 2 / 360) :
+                parseFloat(value);
+        }
+
         // Loop through the transform properties, parse and multiply them
         while (++i < l) {
             split = transform[i].split('(');
@@ -107,11 +114,15 @@ KISSY.add(function (S, require) {
                 case 'rotate':
                 case 'skewX':
                 case 'skewY':
-                    var v = myParse(val);
-                    if (!S.endsWith(val, 'deg')) {
-                        v = v * 180 / Math.PI;
+                    ret[prop] = myParse(toRadian(val));
+                    break;
+
+                case 'skew':
+                    val = val.split(',');
+                    ret.skewX = myParse(toRadian(val[0]));
+                    if (val.length > 1) {
+                        ret.skewY = myParse(toRadian(val[1]));
                     }
-                    ret[prop] = v;
                     break;
 
                 case 'translate':
