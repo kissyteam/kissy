@@ -29,6 +29,7 @@ KISSY.add(function (S, require) {
 
         // Make sure matrix is not singular
         if (A * D - B * C) {
+            // 行列式变换
             // step (3)
             scaleX = Math.sqrt(A * A + B * B);
             A /= scaleX;
