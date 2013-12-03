@@ -45,14 +45,15 @@
 
 ### 最简用例
 
-当出现问题时，请精简出错代码到最简，避免和具体业务相关联，避免其他无关的代码执行
+当出现问题时，请精简出错代码到最简，避免和具体业务相关联，避免其他无关的代码执行，并提交到 jsfidder.
 
 
 ## 如何提交 patch
 
 ### 代码规范
 
-patch 代码格式请参考 [KISSY 源码规范](http://docs.kissyui.com/docs/html/tutorials/style-guide/kissy-source-style.html)
+patch 代码格式请参考 [KISSY 源码规范](http://docs.kissyui.com/1.4/docs/html/tutorials/style-guide/kissy-source-style.html)，
+并在提交前对代码执行 jshint，确保 pass.
 
 ### 环境： Node/Ant/Java
 
