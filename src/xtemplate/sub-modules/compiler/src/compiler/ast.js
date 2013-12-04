@@ -4,7 +4,6 @@
  * @ignore
  */
 KISSY.add(function (S) {
-
     var ast = {};
 
     /**
@@ -82,8 +81,9 @@ KISSY.add(function (S) {
 
     ast.ContentNode.prototype.type = 'content';
 
-    ast.UnaryExpression = function (v) {
+    ast.UnaryExpression = function (unaryType, v) {
         this.value = v;
+        this.unaryType = unaryType;
     };
 
     ast.UnaryExpression.prototype.type = 'unaryExpression';

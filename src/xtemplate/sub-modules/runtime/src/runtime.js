@@ -6,7 +6,6 @@
 KISSY.add(function (S, require) {
     var commands = require('./runtime/commands');
     var Scope = require('./runtime/scope');
-
     var escapeHtml = S.escapeHtml;
     var logger = S.getLogger('s/xtemplate');
 
@@ -27,8 +26,42 @@ KISSY.add(function (S, require) {
         return cmd;
     }
 
-    function getProperty(name, scope, depth) {
-        return scope.resolve(name, depth);
+    function runInlineCommand(engine, scope, options, name, line, onlyCommand) {
+        var id0;
+        var config = engine.config;
+        var commands = config.commands;
+        var command1 = findCommand(commands, name);
+        if (command1) {
+            try {
+                id0 = command1.call(engine, scope, options);
+            } catch (e) {
+                S.error(e.message + ': "' + name + '" at line ' + line);
+            }
+            return {
+                find: true,
+                value: id0
+            };
+        } else if (onlyCommand) {
+            S.error('can not find command: ' + name + '" at line ' + line);
+        }
+        return {
+            find: false
+        };
+    }
+
+    function getProperty(engine, scope, name, depth, line) {
+        var id0;
+        var config = engine.config;
+        var logFn = config.silent ? info : S.error;
+        var tmp2 = scope.resolve(name, depth);
+        if (tmp2 === false) {
+            logFn('can not find property: "' + name + '" at line ' + line, 'warn');
+            // undefined for expression
+            // {{n+2}}
+        } else {
+            id0 = tmp2[0];
+        }
+        return id0;
     }
 
     var utils = {
@@ -39,7 +72,7 @@ KISSY.add(function (S, require) {
                 var command = findCommand(commands, name);
                 if (!command) {
                     if (!options.params && !options.hash) {
-                        var property = getProperty(name, scope);
+                        var property = scope.resolve(name);
                         if (property === false) {
                             logFn('can not find property: "' + name + '" at line ' + line);
                             property = '';
@@ -55,58 +88,59 @@ KISSY.add(function (S, require) {
                         }
                         options.params = [property];
                     } else {
-                        S.error('can not find command module: ' + name + '" at line ' + line);
+                        S.error('can not find command: ' + name + '" at line ' + line);
                         return '';
                     }
                 }
-                var ret = '';
+                var ret;
                 try {
                     ret = command.call(engine, scope, options);
                 } catch (e) {
                     S.error(e.message + ': "' + name + '" at line ' + line);
                 }
-                if (ret === undefined) {
-                    ret = '';
-                }
                 return ret;
             },
 
-            'getExpression': function (exp, escaped) {
+            'renderOutput': function (exp, escaped) {
                 if (exp === undefined) {
                     exp = '';
                 }
                 return escaped && exp ? escapeHtml(exp) : exp;
             },
 
-            'getPropertyOrRunCommand': function (engine, scope, options, name, depth, line, escape, preserveUndefined) {
-                var id0;
-                var config = engine.config;
-                var commands = config.commands;
-                var command1 = findCommand(commands, name);
-                var logFn = config.silent ? info : S.error;
-                if (command1) {
-                    try {
-                        id0 = command1.call(engine, scope, options);
-                    } catch (e) {
-                        S.error(e.message + ': "' + name + '" at line ' + line);
-                        return '';
-                    }
+            'getProperty': function (engine, scope, name, depth, line) {
+                return getProperty(engine, scope, name, depth, line);
+            },
+
+            'runInlineCommand': function (engine, scope, options, name, line) {
+                var id0 = '',
+                    ret;
+                // command first
+                ret = runInlineCommand(engine, scope, options, name, line);
+                if (ret.find) {
+                    id0 = ret.value;
                 }
-                else {
-                    var tmp2 = getProperty(name, scope, depth);
-                    if (tmp2 === false) {
-                        logFn('can not find property: "' + name + '" at line ' + line, 'warn');
-                        // undefined for expression
-                        // {{n+2}}
-                        return preserveUndefined ? undefined : '';
-                    } else {
-                        id0 = tmp2[0];
-                    }
+                return id0;
+            },
+
+            'getPropertyOrRunCommand': function (engine, scope, options, name, depth, line) {
+                var id0, ret;
+
+                var onlyCommand = options.hash || options.params;
+                // {{this.xx}}
+
+                // command first
+                ret = runInlineCommand(engine, scope, options, name, line, onlyCommand);
+
+                if (ret.find) {
+                    id0 = ret.value;
                 }
-                if (!preserveUndefined && id0 === undefined) {
-                    id0 = '';
+                // if without hash or parameter, it may be property
+                else if (!onlyCommand) {
+                    id0 = getProperty(engine, scope, name, depth, line);
                 }
-                return escape && id0 ? escapeHtml(id0) : id0;
+
+                return id0;
             }
         },
 

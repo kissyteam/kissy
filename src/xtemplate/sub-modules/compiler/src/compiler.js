@@ -97,7 +97,7 @@ KISSY.add(function (S, require) {
             }
         },
 
-        genId: function (idNode, tplNode, preserveUndefined) {
+        genIdOrInlineCommand: function (idNode, tplNode) {
             var source = [],
                 depth = idNode.depth,
                 configName,
@@ -118,22 +118,32 @@ KISSY.add(function (S, require) {
             // variable {{variable.subVariable}}
             var idString = self.getIdStringFromIdParts(source, idParts);
 
-            // require include modules
-            if (idString === 'include') {
-                // prevent require parse...
-                source.push('if(moduleWrap) {re' + 'quire("' + tplNode.params[0].value + '");' +
-                    configName + '.params[0]=moduleWrap.resolveByName(' + configName + '.params[0]);' +
-                    '}');
+            // {{../x}}
+            // {{this.x}}
+            // {{command x}}
+            if (depth || S.startsWith(idString, 'this.')) {
+                source.push('var ' + idName +
+                    ' = getPropertyUtil(engine,scope' +
+                    ',"' + idString + '",' +
+                    depth + ',' + idNode.lineNumber + ');');
+            } else if (configName) {
+                // require include modules
+                if (idString === 'include') {
+                    // prevent require parse...
+                    source.push('if(moduleWrap) {re' + 'quire("' + tplNode.params[0].value + '");' +
+                        configName + '.params[0] = moduleWrap.resolveByName(' + configName + '.params[0]);' +
+                        '}');
+                }
+                source.push('var ' + idName +
+                    ' = runInlineCommandUtil(engine,scope,' +
+                    configName + ',"' + idString + '",' +
+                    idNode.lineNumber + ');');
+            } else {
+                source.push('var ' + idName +
+                    ' = getPropertyOrRunCommandUtil(engine,scope,' +
+                    (configName || '{}') + ',"' + idString + '",' + depth +
+                    ',' + idNode.lineNumber + ');');
             }
-
-            source.push('var ' + idName +
-                ' = getPropertyOrRunCommandUtil(engine,scope,' +
-                (configName || '{}') + ',"' +
-                idString +
-                '",' + depth + ',' + idNode.lineNumber +
-                ',' + (tplNode && tplNode.escaped) +
-                ',' + preserveUndefined + ');');
-
             return [idName, source];
         },
 
@@ -268,12 +278,13 @@ KISSY.add(function (S, require) {
         unaryExpression: function (e) {
             var source = [],
                 name,
+                unaryType = e.unaryType,
                 code = this[e.value.type](e.value);
             arrayPush.apply(source, code[1]);
             if ((name = code[0])) {
-                source.push(name + '=!' + name + ';');
+                source.push(name + '=' + unaryType + name + ';');
             } else {
-                source[source.length - 1] = '!' + lastOfArray(source);
+                source[source.length - 1] = '' + unaryType + lastOfArray(source);
             }
             return [name, source];
         },
@@ -292,9 +303,19 @@ KISSY.add(function (S, require) {
             return ['', [e.value]];
         },
 
-        'id': function (e, topLevel) {
-            // topLevel: {{n}}
-            return this.genId(e, undefined, !topLevel);
+        'id': function (idNode) {
+            var source = [],
+                depth = idNode.depth,
+                idParts = idNode.parts,
+                idName = guid('id'),
+                self = this;
+            // variable {{variable.subVariable}}
+            var idString = self.getIdStringFromIdParts(source, idParts);
+            source.push('var ' + idName +
+                ' = getPropertyUtil(engine,scope' +
+                ',"' + idString + '",' +
+                depth + ',' + idNode.lineNumber + ');');
+            return [idName, source];
         },
 
         'block': function (block) {
@@ -356,17 +377,25 @@ KISSY.add(function (S, require) {
 
         'tpl': function (tplNode) {
             var source = [],
-                genIdCode = this.genId(tplNode.path, tplNode);
-            pushToArray(source, genIdCode[1]);
-            source.push('buffer += ' + genIdCode[0] + ';');
+                genIdOrInlineCommandCode = this.genIdOrInlineCommand(tplNode.path, tplNode);
+            pushToArray(source, genIdOrInlineCommandCode[1]);
+            source.push('buffer += renderOutputUtil(' + genIdOrInlineCommandCode[0] + ',' + tplNode.escaped + ');');
             return source;
         },
 
         'tplExpression': function (e) {
             var source = [],
                 escaped = e.escaped,
+                code,
+                expression = e.expression,
+                type = e.expression.type,
                 expressionOrVariable;
-            var code = this[e.expression.type](e.expression, 1);
+            if (type === 'id') {
+                code = this.genIdOrInlineCommand(expression);
+            } else {
+                // {{x+y}}
+                code = this[type](expression);
+            }
             if (code[0]) {
                 pushToArray(source, code[1]);
                 expressionOrVariable = code[0];
@@ -374,7 +403,7 @@ KISSY.add(function (S, require) {
                 pushToArray(source, code[1].slice(0, -1));
                 expressionOrVariable = lastOfArray(code[1]);
             }
-            source.push('buffer += getExpressionUtil(' + expressionOrVariable + ',' + escaped + ');');
+            source.push('buffer += renderOutputUtil(' + expressionOrVariable + ',' + escaped + ');');
             return source;
         },
 

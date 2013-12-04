@@ -58,6 +58,20 @@ KISSY.add(function (S, require) {
                 expect(render).toBe('1');
             });
 
+            it('will render empty instead of undefined', function () {
+                var tpl = '{{data.x}}';
+
+                var data = {
+                    data: {
+                        p: 1
+                    }
+                };
+
+                var render = new XTemplate(tpl).render(data);
+
+                expect(render).toBe('');
+            });
+
             it('support array index', function () {
                 var tpl = '{{data.1.1}}';
 
@@ -88,10 +102,8 @@ KISSY.add(function (S, require) {
 
         it('support cache', function () {
             var tpl = '{{title}}';
-
             expect(new XTemplate(tpl).tpl).toBe(new XTemplate(tpl).tpl);
         });
-
 
         it('support {{#if}} {{@', function () {
             var tpl = '{{#if title}}has title{{/if}}\n' +
@@ -108,32 +120,54 @@ KISSY.add(function (S, require) {
                 'not has title2');
         });
 
-        it('does not support negative number', function () {
-            var tpl = '{{#if n===0-1}}-1{{else}}1{{/if}}';
+        describe('negative number and minus', function () {
+            it('support 0-1', function () {
+                var tpl = '{{#if n===0-1}}-1{{else}}1{{/if}}';
 
-            var data = {
-                n: -1
-            };
+                var data = {
+                    n: -1
+                };
 
-            var render = new XTemplate(tpl).render(data);
+                var render = new XTemplate(tpl).render(data);
 
-            expect(render).toBe('-1');
+                expect(render).toBe('-1');
 
-            tpl = '{{#if n===1}}-1{{else}}1{{/if}}';
+                tpl = '{{#if n===1}}-1{{else}}1{{/if}}';
 
-            data = {
-                n: 1
-            };
+                data = {
+                    n: 1
+                };
 
-            try {
-                new XTemplate(tpl).render(data);
-            } catch (e) {
-                expect(e.message.indexOf('Syntax error') > -1).toBeTruthy();
-            }
+                try {
+                    new XTemplate(tpl).render(data);
+                } catch (e) {
+                    expect(e.message.indexOf('Syntax error') > -1).toBeTruthy();
+                }
+            });
+
+            it('support simple -1',function(){
+                var tpl = '{{-1}}';
+
+                var render = new XTemplate(tpl).render();
+
+                expect(render).toBe('-1');
+            });
+
+            it('support -1', function () {
+                var tpl = '{{#if n===-1}}-1{{else}}1{{/if}}';
+
+                var data = {
+                    n: -1
+                };
+
+                var render = new XTemplate(tpl).render(data);
+
+                expect(render).toBe('-1');
+            });
         });
 
         describe('each', function () {
-            it('support xindex name',function(){
+            it('support xindex name', function () {
                 var tpl = '{{#each data "v" "i"}}{{i}}: {{v}}{{/each}}';
                 var data = {
                     data: [1, 2]
@@ -142,7 +176,7 @@ KISSY.add(function (S, require) {
                 expect(render).toBe('0: 11: 2');
             });
 
-            it('support value name',function(){
+            it('support value name', function () {
                 var tpl = '{{#each data "v"}}{{xindex}}: {{v}}{{/each}}';
                 var data = {
                     data: [1, 2]
@@ -240,7 +274,7 @@ KISSY.add(function (S, require) {
 
             it('support {{^', function () {
                 var tpl = '{{^each x}}wrong{{else}}{{title}}{{/each}}' +
-                    '{{#if y === 0}}0{{/if}}' +
+                    '{{#if y===0}}0{{/if}}' +
                     '{{^if z===0}}1{{/if}}' +
                     '{{^if a!==1}}1{{/if}}' +
                     '{{#if a!==0}}1{{/if}}';
@@ -517,6 +551,34 @@ KISSY.add(function (S, require) {
                 expect(render).toBe('my &lt;a&gt; is <a>');
             });
 
+            it('escape in inline command', function () {
+                var tpl = 'my {{title}} is {{{title}}}';
+
+                var render = new XTemplate(tpl, {
+                    commands: {
+                        title: function () {
+                            return '<a>';
+                        }
+                    }
+                }).render();
+
+                expect(render).toBe('my &lt;a&gt; is <a>');
+            });
+
+            it('escape in inline command', function () {
+                var tpl = 'my {{title 2}} is {{{title 2}}}';
+
+                var render = new XTemplate(tpl, {
+                    commands: {
+                        title: function () {
+                            return '<a>';
+                        }
+                    }
+                }).render();
+
+                expect(render).toBe('my &lt;a&gt; is <a>');
+            });
+
             it('support escape " in tpl', function () {
                 var tpl = '{{{"haha \\""}}}';
 
@@ -557,11 +619,90 @@ KISSY.add(function (S, require) {
 
         });
 
-
         describe('command', function () {
+            it('../ or this can skip command finding', function () {
+                var tpl = '{{this.title}}{{#with d}}{{../title}}{{/with}}';
+
+                var data = {
+                    title: '1',
+                    d: {
+
+                    }
+                };
+
+                var render = new XTemplate(tpl, {
+                    commands: {
+                        title: function () {
+                            return '2';
+                        }
+                    }
+                }).render(data);
+
+                expect(render).toBe('11');
+            });
+
+            it('skip command in expression',function(){
+                var tpl = '{{title+3}}';
+
+                var data = {
+                    title: '1'
+                };
+
+                var render = new XTemplate(tpl, {
+                    commands: {
+                        title: function () {
+                            return '2';
+                        }
+                    }
+                }).render(data);
+
+                expect(render).toBe('13');
+            });
+
+            it('can skip property finding', function () {
+                var tpl = '{{title 1}}{{#with d}}{{title 2}}{{/with}}';
+
+                var data = {
+                    title: '1',
+                    d: {
+
+                    }
+                };
+
+                var render = new XTemplate(tpl, {
+                    commands: {
+                        title: function () {
+                            return '2';
+                        }
+                    }
+                }).render(data);
+
+                expect(render).toBe('22');
+            });
+
+            it('will only find property for param', function () {
+                var tpl = '{{#with title}}{{c}}{{/with}}';
+
+                var data = {
+                    title: {
+                        c: 1
+                    }
+                };
+
+                var render = new XTemplate(tpl, {
+                    commands: {
+                        title: function () {
+                            return {
+                                c: 2
+                            };
+                        }
+                    }
+                }).render(data);
+
+                expect(render).toBe('1');
+            });
 
             it('support global command for variable', function () {
-
                 XTemplate.addCommand('globalXcmd', function (scope, config) {
                     return 'global-' + config.params[0];
                 });
@@ -724,6 +865,16 @@ KISSY.add(function (S, require) {
         });
 
         describe('expression', function () {
+            it('support unary expression', function () {
+                var tpl = '{{#if !n}}1{{/if}}';
+                expect(new XTemplate(tpl).render({
+                    n: 1
+                })).toBe('');
+                expect(new XTemplate(tpl).render({
+                    n: 0
+                })).toBe('1');
+            });
+
             it('support escapeHtml', function () {
                 var tpl = '{{{"2<\\\\"+1}}} {{{"2<\\\\"+1}}}';
                 expect(new XTemplate(tpl).render()).toBe('2<\\1 2<\\1');
@@ -787,20 +938,20 @@ KISSY.add(function (S, require) {
 
             it('support relational expression', function () {
 
-                var tpl = '{{#if n > n2+4/2}}' +
+                var tpl = '{{#if n>n2+4/2}}' +
                     '{{n+1}}' +
                     '{{else}}' +
                     '{{n2+1}}' +
                     '{{/if}}';
 
-                var tpl3 = '{{#if n === n2+4/2}}' +
+                var tpl3 = '{{#if n===n2+4/2}}' +
                     '{{n+1}}' +
                     '{{else}}' +
                     '{{n2+1}}' +
                     '{{/if}}';
 
 
-                var tpl4 = '{{#if n !== n2+4/2}}' +
+                var tpl4 = '{{#if n!==n2+4/2}}' +
                     '{{n+1}}' +
                     '{{else}}' +
                     '{{n2+1}}' +
@@ -837,9 +988,8 @@ KISSY.add(function (S, require) {
 
 
             it('support relational expression in each', function () {
-
                 var tpl = '{{#each data}}' +
-                    '{{#if this > ../limit+1}}' +
+                    '{{#if this>../limit+1}}' +
                     '{{this+1}}-{{xindex+1}}-{{xcount}}|' +
                     '{{/if}}' +
                     '{{/each}}' +
@@ -854,16 +1004,12 @@ KISSY.add(function (S, require) {
 
             });
 
-
             it('support relational expression in with', function () {
-
                 var tpl = '{{#with data}}' +
-                    '{{#if n > ../limit/5}}' +
+                    '{{#if n>../limit/5}}' +
                     '{{n+1}}' +
                     '{{/if}}' +
-                    '{{/with}}' +
-
-                    '';
+                    '{{/with}}';
 
                 var data = {
                     data: {
@@ -877,8 +1023,8 @@ KISSY.add(function (S, require) {
             });
 
             it('support conditional expression', function () {
-                var tpl = '{{#if x>1 && x<10}}1{{else}}0{{/if}}' +
-                    '{{#if q && q.x<10}}1{{else}}0{{/if}}';
+                var tpl = '{{#if x>1&&x<10}}1{{else}}0{{/if}}' +
+                    '{{#if q&&q.x<10}}1{{else}}0{{/if}}';
 
                 expect(new XTemplate(tpl, {
                     name: 'conditional-expression'
@@ -1110,6 +1256,5 @@ KISSY.add(function (S, require) {
             });
 
         });
-
     });
 });

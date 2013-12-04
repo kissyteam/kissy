@@ -1,7 +1,7 @@
 /*
-Copyright 2013, KISSY v1.50dev
+Copyright 2013, KISSY v1.50
 MIT Licensed
-build time: Dec 2 15:23
+build time: Dec 4 19:09
 */
 KISSY.add("kison/utils",[],function(S){var doubleReg=/"/g,single=/'/g,escapeString;return{escapeString:escapeString=function(str,quote){var regexp=single;if(quote==='"')regexp=doubleReg;else quote="'";return str.replace(/\\/g,"\\\\").replace(/\r/g,"\\r").replace(/\n/g,"\\n").replace(/\t/g,"\\t").replace(regexp,"\\"+quote)},serializeObject:function serializeObject(obj,excludeReg){var r;if(excludeReg&&typeof excludeReg==="function"&&(r=excludeReg(obj))===false)return false;if(r!==undefined)obj=r;var ret=
 [];if(typeof obj==="string")return"'"+escapeString(obj)+"'";else if(typeof obj==="number")return obj+"";else if(S.isRegExp(obj))return"/"+obj.source+"/"+(obj.global?"g":"")+(obj.ignoreCase?"i":"")+(obj.multiline?"m":"");else if(S.isArray(obj)){ret.push("[");var sub=[];S.each(obj,function(v){var t=serializeObject(v,excludeReg);if(t!==false)sub.push(t)});ret.push(sub.join(", "));ret.push("]");return ret.join("")}else if(S.isObject(obj)){ret=[];ret[0]="{";var start=1;for(var i in obj){var v=obj[i];if(excludeReg&&

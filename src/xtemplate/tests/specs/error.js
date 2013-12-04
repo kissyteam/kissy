@@ -92,7 +92,7 @@ KISSY.add(function (S, require) {
             if (!KISSY.config('debug')) {
                 return;
             }
-            var tpl = '{{#if n === n1}}\n' +
+            var tpl = '{{#if n===n1}}\n' +
                 'n eq n1\n' +
                 '{{/with}}';
 

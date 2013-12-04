@@ -54,7 +54,6 @@ KISSY.add(function (S, require) {
             expect(render).toBe('1');
         });
 
-
         it('support unescape sub template name', function () {
             var tpl = '{{{include "./sub-tpl-3-1"}}}';
 
@@ -145,14 +144,17 @@ KISSY.add(function (S, require) {
             KISSY.use('xtpls/a-xtpl', function (S, A) {
                 ret = new XTemplate(A).render({
                     a: 1,
-                    b: 2
+                    d:3,
+                    b: {
+                        c:2
+                    }
                 });
             });
             waitsFor(function () {
                 return !!ret;
             });
             runs(function () {
-                expect(ret).toBe('12');
+                expect(ret).toBe('123');
             });
         });
     });
