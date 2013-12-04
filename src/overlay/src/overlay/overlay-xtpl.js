@@ -1,6 +1,6 @@
 /** Compiled By kissy-xtemplate */
 KISSY.add(function (S, require, exports, module) {
-        /*jshint quotmark: false, unused:false, indent:false*/
+        /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true*/
         return function (scope, S, undefined) {
             var buffer = "",
                 config = this.config,
@@ -10,7 +10,9 @@ KISSY.add(function (S, require, exports, module) {
                 moduleWrap = module;
             }
             var runBlockCommandUtil = utils.runBlockCommand,
-                getExpressionUtil = utils.getExpression,
+                renderOutputUtil = utils.renderOutput,
+                getPropertyUtil = utils.getProperty,
+                runInlineCommandUtil = utils.runInlineCommand,
                 getPropertyOrRunCommandUtil = utils.getPropertyOrRunCommand;
             buffer += '';
             var config1 = {};
@@ -21,8 +23,8 @@ KISSY.add(function (S, require, exports, module) {
                 require("overlay/close-xtpl");
                 config1.params[0] = moduleWrap.resolveByName(config1.params[0]);
             }
-            var id0 = getPropertyOrRunCommandUtil(engine, scope, config1, "include", 0, 1, false, undefined);
-            buffer += id0;
+            var id0 = runInlineCommandUtil(engine, scope, config1, "include", 1);
+            buffer += renderOutputUtil(id0, false);
             buffer += '\n';
             var config4 = {};
             var params5 = [];
@@ -32,8 +34,8 @@ KISSY.add(function (S, require, exports, module) {
                 require("component/extension/content-xtpl");
                 config4.params[0] = moduleWrap.resolveByName(config4.params[0]);
             }
-            var id3 = getPropertyOrRunCommandUtil(engine, scope, config4, "include", 0, 2, false, undefined);
-            buffer += id3;
+            var id3 = runInlineCommandUtil(engine, scope, config4, "include", 2);
+            buffer += renderOutputUtil(id3, false);
             return buffer;
         };
 });

@@ -1,7 +1,7 @@
 /*
-Copyright 2013, KISSY v1.50dev
+Copyright 2013, KISSY v1.50
 MIT Licensed
-build time: Dec 2 15:23
+build time: Dec 4 22:17
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -20,7 +20,7 @@ KISSY.add("menubutton/menubutton-xtpl", ["component/extension/content-xtpl"], fu
     if(typeof module !== "undefined" && module.kissy) {
       moduleWrap = module
     }
-    var runBlockCommandUtil = utils.runBlockCommand, getExpressionUtil = utils.getExpression, getPropertyOrRunCommandUtil = utils.getPropertyOrRunCommand;
+    var runBlockCommandUtil = utils.runBlockCommand, renderOutputUtil = utils.renderOutput, getPropertyUtil = utils.getProperty, runInlineCommandUtil = utils.runInlineCommand, getPropertyOrRunCommandUtil = utils.getPropertyOrRunCommand;
     buffer += "";
     var config1 = {};
     var params2 = [];
@@ -30,22 +30,22 @@ KISSY.add("menubutton/menubutton-xtpl", ["component/extension/content-xtpl"], fu
       require("component/extension/content-xtpl");
       config1.params[0] = moduleWrap.resolveByName(config1.params[0])
     }
-    var id0 = getPropertyOrRunCommandUtil(engine, scope, config1, "include", 0, 1, false, undefined);
-    buffer += id0;
+    var id0 = runInlineCommandUtil(engine, scope, config1, "include", 1);
+    buffer += renderOutputUtil(id0, false);
     buffer += '\n<div class="';
     var config4 = {};
     var params5 = [];
     params5.push("dropdown");
     config4.params = params5;
-    var id3 = getPropertyOrRunCommandUtil(engine, scope, config4, "getBaseCssClasses", 0, 2, true, undefined);
-    buffer += id3;
+    var id3 = runInlineCommandUtil(engine, scope, config4, "getBaseCssClasses", 2);
+    buffer += renderOutputUtil(id3, true);
     buffer += '">\n    <div class="';
     var config7 = {};
     var params8 = [];
     params8.push("dropdown-inner");
     config7.params = params8;
-    var id6 = getPropertyOrRunCommandUtil(engine, scope, config7, "getBaseCssClasses", 0, 3, true, undefined);
-    buffer += id6;
+    var id6 = runInlineCommandUtil(engine, scope, config7, "getBaseCssClasses", 3);
+    buffer += renderOutputUtil(id6, true);
     buffer += '">\n    </div>\n</div>';
     return buffer
   }

@@ -1,7 +1,7 @@
 /*
-Copyright 2013, KISSY v1.50dev
+Copyright 2013, KISSY v1.50
 MIT Licensed
-build time: Dec 2 15:22
+build time: Dec 4 22:15
 */
 KISSY.add("event/dom/base/utils",["dom"],function(i,b){var a=b("dom"),c="ksEventTargetId_"+i.now(),d=i.Env.host.document;return{simpleAdd:d&&d.addEventListener?function(a,b,d,c){a.addEventListener&&a.addEventListener(b,d,!!c)}:function(a,b,d){a.attachEvent&&a.attachEvent("on"+b,d)},simpleRemove:d&&d.removeEventListener?function(a,b,d,c){a.removeEventListener&&a.removeEventListener(b,d,!!c)}:function(a,b,d){a.detachEvent&&a.detachEvent("on"+b,d)},data:function(b,d){return a.data(b,c,d)},removeData:function(b){return a.removeData(b,
 c)}}});KISSY.add("event/dom/base/special",[],function(){return{}});

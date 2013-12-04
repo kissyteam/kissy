@@ -1,7 +1,7 @@
 /*
-Copyright 2013, KISSY v1.50dev
+Copyright 2013, KISSY v1.50
 MIT Licensed
-build time: Dec 2 15:17
+build time: Dec 4 22:10
 */
 KISSY.add("editor/plugin/image",["./button","editor","./bubble","./dialog-loader"],function(e,d){function f(b){this.config=b||{}}d("./button");var j=d("editor");d("./bubble");var n=d("./dialog-loader"),k=e.UA,o=KISSY.NodeList,h=e.all,g=function(b){b=h(b);if("img"===b.nodeName()&&!/(^|\s+)ke_/.test(b[0].className))return b};e.augment(f,{pluginRenderUI:function(b){function d(a){n.useDialog(b,"image",f.config,a)}var f=this,i=b.get("prefixCls");b.addButton("image",{tooltip:"\u63d2\u5165\u56fe\u7247",listeners:{click:function(){d(null)}},
 mode:j.Mode.WYSIWYG_MODE});var l=[{content:"\u56fe\u7247\u5c5e\u6027",fn:function(){var a=g(this.get("editorSelectedEl"));a&&(this.hide(),d(h(a)))}},{content:"\u63d2\u5165\u65b0\u884c",fn:function(){this.hide();var a=b.get("document")[0],c=new o(a.createElement("p"));k.ie||c._4eAppendBogus(void 0);a=new j.Range(a);a.setStartAfter(this.get("editorSelectedEl"));a.select();b.insertElement(c);a.moveToElementEditablePosition(c,1);a.select()}}],m=[];e.each(l,function(a){m.push({content:a.content})});b.addContextMenu("image",g,{width:120,children:m,

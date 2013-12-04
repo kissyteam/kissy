@@ -1,7 +1,7 @@
 /*
-Copyright 2013, KISSY v1.50dev
+Copyright 2013, KISSY v1.50
 MIT Licensed
-build time: Dec 2 15:12
+build time: Dec 4 22:06
 */
 KISSY.add("date/format",["date/gregorian","i18n!date"],function(y,B){function s(b,a,e){e.push({field:b,count:a})}function r(b,a,e,d){d=d||[];e=e||C;if(0<=b){if(100>b&&1<=a&&2>=a)return 10>b&&2===a&&d.push(E),d.push(b),d.join("");if(1E3<=b&&1E4>b){if(4===a)return d.push(b),d.join("");if(2===a&&2===e)return r(b%100,2,2,d)}}d.push(b+"");return d.join("")}function w(b,a,e){this.locale=a||D;for(var a=b.length,d=!1,g=[],c=null,p=0,j=-1,f=0;f<a;f++){var i=b.charAt(f);if("'"===i){if(f+1<a&&(i=b.charAt(f+
 1),"'"===i)){f++;0!==p&&(s(j,p,g),j=-1,p=0);d&&(c+=i);continue}d?(g.push({text:c}),d=!1):(0!==p&&(s(j,p,g),j=-1,p=0),c="",d=!0)}else if(d)c+=i;else if("a"<=i&&"z">=i||"A"<=i&&"Z">=i){if(-1===k.indexOf(i))throw Error('Illegal pattern character "'+i+'"');-1===j||j===i?(j=i,p++):(s(j,p,g),j=i,p=1)}else 0!==p&&(s(j,p,g),j=-1,p=0),g.push({text:i})}if(d)throw Error("Unterminated quote");0!==p&&s(j,p,g);this.pattern=g;this.timezoneOffset=e}function F(b,a,e,d){switch(b){case "G":b=0<d.getYear()?1:0;a=e.eras[b];

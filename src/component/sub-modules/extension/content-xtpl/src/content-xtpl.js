@@ -1,6 +1,6 @@
 /** Compiled By kissy-xtemplate */
 KISSY.add(function (S, require, exports, module) {
-        /*jshint quotmark: false, unused:false, indent:false*/
+        /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true*/
         return function (scope, S, undefined) {
             var buffer = "",
                 config = this.config,
@@ -10,21 +10,23 @@ KISSY.add(function (S, require, exports, module) {
                 moduleWrap = module;
             }
             var runBlockCommandUtil = utils.runBlockCommand,
-                getExpressionUtil = utils.getExpression,
+                renderOutputUtil = utils.renderOutput,
+                getPropertyUtil = utils.getProperty,
+                runInlineCommandUtil = utils.runInlineCommand,
                 getPropertyOrRunCommandUtil = utils.getPropertyOrRunCommand;
             buffer += '<div id="ks-content-';
-            var id0 = getPropertyOrRunCommandUtil(engine, scope, {}, "id", 0, 1, undefined, false);
-            buffer += getExpressionUtil(id0, true);
+            var id0 = getPropertyOrRunCommandUtil(engine, scope, {}, "id", 0, 1);
+            buffer += renderOutputUtil(id0, true);
             buffer += '"\n           class="';
             var config2 = {};
             var params3 = [];
             params3.push('content');
             config2.params = params3;
-            var id1 = getPropertyOrRunCommandUtil(engine, scope, config2, "getBaseCssClasses", 0, 2, true, undefined);
-            buffer += id1;
+            var id1 = runInlineCommandUtil(engine, scope, config2, "getBaseCssClasses", 2);
+            buffer += renderOutputUtil(id1, true);
             buffer += '">';
-            var id4 = getPropertyOrRunCommandUtil(engine, scope, {}, "content", 0, 2, undefined, false);
-            buffer += getExpressionUtil(id4, false);
+            var id4 = getPropertyOrRunCommandUtil(engine, scope, {}, "content", 0, 2);
+            buffer += renderOutputUtil(id4, false);
             buffer += '</div>';
             return buffer;
         };

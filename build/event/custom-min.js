@@ -1,7 +1,7 @@
 /*
-Copyright 2013, KISSY v1.50dev
+Copyright 2013, KISSY v1.50
 MIT Licensed
-build time: Dec 2 15:22
+build time: Dec 4 22:15
 */
 KISSY.add("event/custom/observer",["event/base"],function(g,c){function a(){a.superclass.constructor.apply(this,arguments)}var i=c("event/base");g.extend(a,i.Observer,{keys:["fn","context","groups"]});return a});KISSY.add("event/custom/object",["event/base"],function(g,c){function a(c){a.superclass.constructor.call(this);g.mix(this,c)}var i=c("event/base");g.extend(a,i.Object);return a});
 KISSY.add("event/custom/observable",["event/base","./observer","./object"],function(g,c){function a(){a.superclass.constructor.apply(this,arguments);this.defaultFn=null;this.defaultTargetOnly=!1;this.bubbles=!0}var i=c("event/base"),j=c("./observer"),n=c("./object"),k=i.Utils;g.extend(a,i.Observable,{on:function(b){b=new j(b);g.Config.debug&&(b.fn||"lack event handler for "+this.type);-1===this.findObserver(b)&&this.observers.push(b)},fire:function(b){var b=b||{},f=this.bubbles,d=this.currentTarget,

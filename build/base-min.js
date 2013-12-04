@@ -1,7 +1,7 @@
 /*
-Copyright 2013, KISSY v1.50dev
+Copyright 2013, KISSY v1.50
 MIT Licensed
-build time: Dec 2 15:11
+build time: Dec 4 22:04
 */
 KISSY.add("base",["attribute"],function(f,q){function i(b,a){return function(d){return function(){a?d.apply(this,arguments):this.callSuper.apply(this,arguments);var c=arguments.callee.__owner__.__extensions__||[];a&&c.reverse();var e=arguments,h;if(h=c&&c.length)for(var g=0;g<h;g++){var f=c[g]&&(!b?c[g]:c[g].prototype[b]);f&&f.apply(this,e||[])}a?this.callSuper.apply(this,arguments):d.apply(this,arguments)}}}function n(b){var a=this.__hooks__,d=this.prototype;if(this.__extensions__.length&&a)for(var c in a)if(!d.hasOwnProperty(c)||
 b.hasOwnProperty(c))b[c]=b[c]||o;return r.call(this,b)}function s(b){var a;b.target===this&&(a=this[j+b.type.slice(5).slice(0,-6)],a.call(this,b.newVal,b))}function t(b){var a=b.get("plugins"),d;f.each(a,function(b,e){"function"===typeof b&&(d=b,a[e]=new d)})}function k(b){var a,d=this.get("plugins");if(a=d.length)for(var c=0;c<a;c++)if(d[c][b])d[c][b](this)}var p=q("attribute"),l=f.ucfirst,j="_onSet",o=f.noop,m=p.extend({constructor:function(){this.callSuper.apply(this,arguments);var b=this.get("listeners"),
