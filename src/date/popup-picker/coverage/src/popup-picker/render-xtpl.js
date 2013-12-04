@@ -235,8 +235,6 @@ if (! _$jscoverage['/popup-picker/render-xtpl.js']) {
   _$jscoverage['/popup-picker/render-xtpl.js'].lineData[9] = 0;
   _$jscoverage['/popup-picker/render-xtpl.js'].lineData[10] = 0;
   _$jscoverage['/popup-picker/render-xtpl.js'].lineData[12] = 0;
-  _$jscoverage['/popup-picker/render-xtpl.js'].lineData[15] = 0;
-  _$jscoverage['/popup-picker/render-xtpl.js'].lineData[16] = 0;
   _$jscoverage['/popup-picker/render-xtpl.js'].lineData[17] = 0;
   _$jscoverage['/popup-picker/render-xtpl.js'].lineData[18] = 0;
   _$jscoverage['/popup-picker/render-xtpl.js'].lineData[19] = 0;
@@ -250,10 +248,12 @@ if (! _$jscoverage['/popup-picker/render-xtpl.js']) {
   _$jscoverage['/popup-picker/render-xtpl.js'].lineData[27] = 0;
   _$jscoverage['/popup-picker/render-xtpl.js'].lineData[28] = 0;
   _$jscoverage['/popup-picker/render-xtpl.js'].lineData[29] = 0;
+  _$jscoverage['/popup-picker/render-xtpl.js'].lineData[30] = 0;
   _$jscoverage['/popup-picker/render-xtpl.js'].lineData[31] = 0;
-  _$jscoverage['/popup-picker/render-xtpl.js'].lineData[32] = 0;
   _$jscoverage['/popup-picker/render-xtpl.js'].lineData[33] = 0;
   _$jscoverage['/popup-picker/render-xtpl.js'].lineData[34] = 0;
+  _$jscoverage['/popup-picker/render-xtpl.js'].lineData[35] = 0;
+  _$jscoverage['/popup-picker/render-xtpl.js'].lineData[36] = 0;
 }
 if (! _$jscoverage['/popup-picker/render-xtpl.js'].functionData) {
   _$jscoverage['/popup-picker/render-xtpl.js'].functionData = [];
@@ -265,12 +265,12 @@ if (! _$jscoverage['/popup-picker/render-xtpl.js'].branchData) {
   _$jscoverage['/popup-picker/render-xtpl.js'].branchData['9'] = [];
   _$jscoverage['/popup-picker/render-xtpl.js'].branchData['9'][1] = new BranchData();
   _$jscoverage['/popup-picker/render-xtpl.js'].branchData['9'][2] = new BranchData();
-  _$jscoverage['/popup-picker/render-xtpl.js'].branchData['27'] = [];
-  _$jscoverage['/popup-picker/render-xtpl.js'].branchData['27'][1] = new BranchData();
+  _$jscoverage['/popup-picker/render-xtpl.js'].branchData['29'] = [];
+  _$jscoverage['/popup-picker/render-xtpl.js'].branchData['29'][1] = new BranchData();
 }
-_$jscoverage['/popup-picker/render-xtpl.js'].branchData['27'][1].init(980, 10, 'moduleWrap');
-function visit3_27_1(result) {
-  _$jscoverage['/popup-picker/render-xtpl.js'].branchData['27'][1].ranCondition(result);
+_$jscoverage['/popup-picker/render-xtpl.js'].branchData['29'][1].init(1091, 10, 'moduleWrap');
+function visit3_29_1(result) {
+  _$jscoverage['/popup-picker/render-xtpl.js'].branchData['29'][1].ranCondition(result);
   return result;
 }_$jscoverage['/popup-picker/render-xtpl.js'].branchData['9'][2].init(165, 29, 'typeof module !== "undefined"');
 function visit2_9_2(result) {
@@ -294,45 +294,45 @@ KISSY.add(function(S, require, exports, module) {
     moduleWrap = module;
   }
   _$jscoverage['/popup-picker/render-xtpl.js'].lineData[12]++;
-  var runBlockCommandUtil = utils.runBlockCommand, getExpressionUtil = utils.getExpression, getPropertyOrRunCommandUtil = utils.getPropertyOrRunCommand;
-  _$jscoverage['/popup-picker/render-xtpl.js'].lineData[15]++;
-  buffer += '<div class="';
-  _$jscoverage['/popup-picker/render-xtpl.js'].lineData[16]++;
-  var config1 = {};
+  var runBlockCommandUtil = utils.runBlockCommand, renderOutputUtil = utils.renderOutput, getPropertyUtil = utils.getProperty, runInlineCommandUtil = utils.runInlineCommand, getPropertyOrRunCommandUtil = utils.getPropertyOrRunCommand;
   _$jscoverage['/popup-picker/render-xtpl.js'].lineData[17]++;
-  var params2 = [];
+  buffer += '<div class="';
   _$jscoverage['/popup-picker/render-xtpl.js'].lineData[18]++;
-  params2.push('content');
+  var config1 = {};
   _$jscoverage['/popup-picker/render-xtpl.js'].lineData[19]++;
-  config1.params = params2;
+  var params2 = [];
   _$jscoverage['/popup-picker/render-xtpl.js'].lineData[20]++;
-  var id0 = getPropertyOrRunCommandUtil(engine, scope, config1, "getBaseCssClasses", 0, 1, true, undefined);
+  params2.push('content');
   _$jscoverage['/popup-picker/render-xtpl.js'].lineData[21]++;
-  buffer += id0;
+  config1.params = params2;
   _$jscoverage['/popup-picker/render-xtpl.js'].lineData[22]++;
-  buffer += '">\n    ';
+  var id0 = runInlineCommandUtil(engine, scope, config1, "getBaseCssClasses", 1);
   _$jscoverage['/popup-picker/render-xtpl.js'].lineData[23]++;
-  var config4 = {};
+  buffer += renderOutputUtil(id0, true);
   _$jscoverage['/popup-picker/render-xtpl.js'].lineData[24]++;
-  var params5 = [];
+  buffer += '">\n    ';
   _$jscoverage['/popup-picker/render-xtpl.js'].lineData[25]++;
-  params5.push('date/picker/picker-xtpl');
+  var config4 = {};
   _$jscoverage['/popup-picker/render-xtpl.js'].lineData[26]++;
-  config4.params = params5;
+  var params5 = [];
   _$jscoverage['/popup-picker/render-xtpl.js'].lineData[27]++;
-  if (visit3_27_1(moduleWrap)) {
-    _$jscoverage['/popup-picker/render-xtpl.js'].lineData[28]++;
+  params5.push('date/picker/picker-xtpl');
+  _$jscoverage['/popup-picker/render-xtpl.js'].lineData[28]++;
+  config4.params = params5;
+  _$jscoverage['/popup-picker/render-xtpl.js'].lineData[29]++;
+  if (visit3_29_1(moduleWrap)) {
+    _$jscoverage['/popup-picker/render-xtpl.js'].lineData[30]++;
     require("date/picker/picker-xtpl");
-    _$jscoverage['/popup-picker/render-xtpl.js'].lineData[29]++;
+    _$jscoverage['/popup-picker/render-xtpl.js'].lineData[31]++;
     config4.params[0] = moduleWrap.resolveByName(config4.params[0]);
   }
-  _$jscoverage['/popup-picker/render-xtpl.js'].lineData[31]++;
-  var id3 = getPropertyOrRunCommandUtil(engine, scope, config4, "include", 0, 2, false, undefined);
-  _$jscoverage['/popup-picker/render-xtpl.js'].lineData[32]++;
-  buffer += id3;
   _$jscoverage['/popup-picker/render-xtpl.js'].lineData[33]++;
-  buffer += '\n</div>';
+  var id3 = runInlineCommandUtil(engine, scope, config4, "include", 2);
   _$jscoverage['/popup-picker/render-xtpl.js'].lineData[34]++;
+  buffer += renderOutputUtil(id3, false);
+  _$jscoverage['/popup-picker/render-xtpl.js'].lineData[35]++;
+  buffer += '\n</div>';
+  _$jscoverage['/popup-picker/render-xtpl.js'].lineData[36]++;
   return buffer;
 };
 });

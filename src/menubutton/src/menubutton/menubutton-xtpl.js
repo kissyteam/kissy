@@ -1,6 +1,6 @@
 /** Compiled By kissy-xtemplate */
 KISSY.add(function (S, require, exports, module) {
-        /*jshint quotmark: false, unused:false, indent:false*/
+        /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true*/
         return function (scope, S, undefined) {
             var buffer = "",
                 config = this.config,
@@ -10,7 +10,9 @@ KISSY.add(function (S, require, exports, module) {
                 moduleWrap = module;
             }
             var runBlockCommandUtil = utils.runBlockCommand,
-                getExpressionUtil = utils.getExpression,
+                renderOutputUtil = utils.renderOutput,
+                getPropertyUtil = utils.getProperty,
+                runInlineCommandUtil = utils.runInlineCommand,
                 getPropertyOrRunCommandUtil = utils.getPropertyOrRunCommand;
             buffer += '';
             var config1 = {};
@@ -21,22 +23,22 @@ KISSY.add(function (S, require, exports, module) {
                 require("component/extension/content-xtpl");
                 config1.params[0] = moduleWrap.resolveByName(config1.params[0]);
             }
-            var id0 = getPropertyOrRunCommandUtil(engine, scope, config1, "include", 0, 1, false, undefined);
-            buffer += id0;
+            var id0 = runInlineCommandUtil(engine, scope, config1, "include", 1);
+            buffer += renderOutputUtil(id0, false);
             buffer += '\n<div class="';
             var config4 = {};
             var params5 = [];
             params5.push('dropdown');
             config4.params = params5;
-            var id3 = getPropertyOrRunCommandUtil(engine, scope, config4, "getBaseCssClasses", 0, 2, true, undefined);
-            buffer += id3;
+            var id3 = runInlineCommandUtil(engine, scope, config4, "getBaseCssClasses", 2);
+            buffer += renderOutputUtil(id3, true);
             buffer += '">\n    <div class="';
             var config7 = {};
             var params8 = [];
             params8.push('dropdown-inner');
             config7.params = params8;
-            var id6 = getPropertyOrRunCommandUtil(engine, scope, config7, "getBaseCssClasses", 0, 3, true, undefined);
-            buffer += id6;
+            var id6 = runInlineCommandUtil(engine, scope, config7, "getBaseCssClasses", 3);
+            buffer += renderOutputUtil(id6, true);
             buffer += '">\n    </div>\n</div>';
             return buffer;
         };

@@ -17,6 +17,7 @@ KISSY.add(function (S, require) {
         return matrix;
     }
 
+    // blog.yiminghe.me/2013/12/03/decomposing-css-2d-transform-matrix-into-simple-transformations
     function decomposeMatrix(matrix) {
         matrix = toMatrixArray(matrix);
         var scaleX, scaleY , skew ,
@@ -27,23 +28,11 @@ KISSY.add(function (S, require) {
 
         // Make sure matrix is not singular
         if (A * D - B * C) {
-            // step (3)
             scaleX = Math.sqrt(A * A + B * B);
-            A /= scaleX;
-            B /= scaleX;
-            // step (4)
-            skew = A * C + B * D;
-            C -= A * skew;
-            D -= B * skew;
-            // step (5)
-            scaleY = Math.sqrt(C * C + D * D);
-            C /= scaleY;
-            D /= scaleY;
-            skew /= scaleY;
+            skew = (A * C + B * D) / (A * D - C * B);
+            scaleY = (A * D - B * C) / scaleX;
             // step (6)
             if (A * D < B * C) {
-                A = -A;
-                B = -B;
                 skew = -skew;
                 scaleX = -scaleX;
             }

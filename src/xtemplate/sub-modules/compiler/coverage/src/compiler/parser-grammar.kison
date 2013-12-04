@@ -117,23 +117,23 @@
             },
             {
                 symbol: 'inTpl',
-                rhs: ['path', 'params', 'hash'],
+                rhs: ['path', 'SPACE', 'params', 'SPACE', 'hash'],
                 action: function () {
-                    return new this.yy.TplNode(this.lexer.lineNumber, this.$1, this.$2, this.$3);
+                    return new this.yy.TplNode(this.lexer.lineNumber, this.$1, this.$3, this.$5);
                 }
             },
             {
                 symbol: 'inTpl',
-                rhs: ['path', 'params'],
+                rhs: ['path', 'SPACE', 'params'],
                 action: function () {
-                    return new this.yy.TplNode(this.lexer.lineNumber, this.$1, this.$2);
+                    return new this.yy.TplNode(this.lexer.lineNumber, this.$1, this.$3);
                 }
             },
             {
                 symbol: 'inTpl',
-                rhs: ['path', 'hash'],
+                rhs: ['path', 'SPACE', 'hash'],
                 action: function () {
-                    return new this.yy.TplNode(this.lexer.lineNumber, this.$1, null, this.$2);
+                    return new this.yy.TplNode(this.lexer.lineNumber, this.$1, null, this.$3);
                 }
             },
             // inline tpl end
@@ -142,9 +142,9 @@
             // params start
             {
                 symbol: 'params',
-                rhs: ['params', 'param'],
+                rhs: ['params', 'SPACE', 'param'],
                 action: function () {
-                    this.$1.push(this.$2);
+                    this.$1.push(this.$3);
                 }
             },
             {
@@ -285,7 +285,14 @@
                 symbol: 'UnaryExpression',
                 rhs: ['NOT', 'UnaryExpression'],
                 action: function () {
-                    return new this.yy.UnaryExpression(this.$1);
+                    return new this.yy.UnaryExpression(this.$1, this.$2);
+                }
+            },
+            {
+                symbol: 'UnaryExpression',
+                rhs: ['MINUS', 'UnaryExpression'],
+                action: function () {
+                    return new this.yy.UnaryExpression(this.$1, this.$2);
                 }
             },
             {
@@ -337,9 +344,9 @@
             },
             {
                 symbol: 'hashSegments',
-                rhs: ['hashSegments', 'hashSegment'],
+                rhs: ['hashSegments', 'SPACE', 'hashSegment'],
                 action: function () {
-                    this.$1.push(this.$2);
+                    this.$1.push(this.$3);
                 }
             },
             {
@@ -418,7 +425,7 @@
                         } else {
                             self.pushState('t');
                         }
-                        if(n){
+                        if (n) {
                             text = text.slice(0, -1);
                         }
                         // https://github.com/kissyteam/kissy/issues/330
@@ -480,7 +487,8 @@
                 {
                     // ignore white space
                     state: ['t'],
-                    regexp: /^\s+/
+                    regexp: /^\s+/,
+                    token: 'SPACE'
                 },
                 {
                     state: ['t'],

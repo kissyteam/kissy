@@ -1,2 +1,2 @@
-call kissy-kison -g parser-grammar.kison -m xtemplate/compiler/parser
+node ../../../../../../bin/kissy-kison -g parser-grammar.kison
 pause

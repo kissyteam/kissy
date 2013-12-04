@@ -1,0 +1,1 @@
+node ../../../../../bin/kissy-xtemplate -p ./

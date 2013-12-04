@@ -56,17 +56,77 @@
         </ac:if>
 
         <exec executable="cmd" failonerror="true">
-            <arg line="/c git push ${git.origin} ${git.master}:${git.master}"/>
+            <arg line="/c git push ${git.origin} ${git.dev}:${git.dev}"/>
         </exec>
 
         <exec executable="cmd" failonerror="true">
-            <arg line="/c git push ${git.remote} ${git.master}:${git.master}"/>
+            <arg line="/c git push ${git.origin} ${git.dev}:${git.master}"/>
         </exec>
+
+        <exec executable="cmd" failonerror="true">
+            <arg line="/c git push ${git.origin} ${git.dev}:${git.gh-pages}"/>
+        </exec>
+
+        <exec executable="cmd" failonerror="true">
+            <arg line="/c git push ${git.remote} ${git.dev}:${git.dev}"/>
+        </exec>
+
+        <!--push master to gh-pages also-->
+        <exec executable="cmd" failonerror="true">
+            <arg line="/c git push ${git.remote} ${git.dev}:${git.master}"/>
+        </exec>
+
+        <exec executable="cmd" failonerror="true">
+            <arg line="/c git push ${git.remote} ${git.dev}:${git.gh-pages}"/>
+        </exec>
+    </target>
+
+
+    <target name="sync-dev">
+        <input addproperty="git.commit.message">
+            git commit message :
+        </input>
+        <ac:if>
+
+            <ac:not>
+                <equals arg1="${git.commit.message}" arg2="">
+                </equals>
+            </ac:not>
+
+            <ac:then>
+
+                <exec executable="cmd"
+                      failonerror="true">
+                    <arg line="/c git add ."/>
+                </exec>
+                <exec executable="cmd" failonerror="true">
+                    <arg line="/c git commit -am '${git.commit.message}'"/>
+                </exec>
+
+            </ac:then>
+        </ac:if>
+
+        <exec executable="cmd" failonerror="true">
+            <arg line="/c git push ${git.origin} ${git.dev}:${git.dev}"/>
+        </exec>
+
+        <exec executable="cmd" failonerror="true">
+            <arg line="/c git push ${git.remote} ${git.dev}:${git.dev}"/>
+        </exec>
+
     </target>
 
     <target name="update-version">
         <replaceregexp match="v\d.\d\d"
                        replace="v${version}"
+                       flags="g"
+                       encoding="${charset}"
+                       byline="true">
+            <fileset dir="${kissy.build.dir}" includes="${js-css.files}"/>
+        </replaceregexp>
+
+        <replaceregexp match="kissy/k/\d.\d.\d/"
+                       replace="kissy/k/${cdn.version}/"
                        flags="g"
                        encoding="${charset}"
                        byline="true">

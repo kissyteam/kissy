@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.41
 MIT Licensed
-build time: Dec 2 15:22
+build time: Dec 4 22:15
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -35,20 +35,20 @@ KISSY.add("editor/render-xtpl", [], function(S, require, exports, module) {
     if(typeof module !== "undefined" && module.kissy) {
       moduleWrap = module
     }
-    var runBlockCommandUtil = utils.runBlockCommand, getExpressionUtil = utils.getExpression, getPropertyOrRunCommandUtil = utils.getPropertyOrRunCommand;
+    var runBlockCommandUtil = utils.runBlockCommand, renderOutputUtil = utils.renderOutput, getPropertyUtil = utils.getProperty, runInlineCommandUtil = utils.runInlineCommand, getPropertyOrRunCommandUtil = utils.getPropertyOrRunCommand;
     buffer += '<div class="';
-    var id0 = getPropertyOrRunCommandUtil(engine, scope, {}, "prefixCls", 0, 1, undefined, false);
-    buffer += getExpressionUtil(id0, true);
+    var id0 = getPropertyOrRunCommandUtil(engine, scope, {}, "prefixCls", 0, 1);
+    buffer += renderOutputUtil(id0, true);
     buffer += 'editor-tools"\n     id="ks-editor-tools-';
-    var id1 = getPropertyOrRunCommandUtil(engine, scope, {}, "id", 0, 2, undefined, false);
-    buffer += getExpressionUtil(id1, true);
+    var id1 = getPropertyOrRunCommandUtil(engine, scope, {}, "id", 0, 2);
+    buffer += renderOutputUtil(id1, true);
     buffer += '">\n\n</div>\n\n<!--\nhttp://johanbrook.com/browsers/native-momentum-scrolling-ios-5/\nios \u4e0d\u80fd\u653e\u5728 iframe \u4e0a\uff01\n--\>\n\n<div class="';
-    var id2 = getPropertyOrRunCommandUtil(engine, scope, {}, "prefixCls", 0, 11, undefined, false);
-    buffer += getExpressionUtil(id2, true);
+    var id2 = getPropertyOrRunCommandUtil(engine, scope, {}, "prefixCls", 0, 11);
+    buffer += renderOutputUtil(id2, true);
     buffer += 'editor-textarea-wrap"\n\n';
     var config3 = {};
     var params4 = [];
-    var id5 = getPropertyOrRunCommandUtil(engine, scope, {}, "mobile", 0, 13, undefined, true);
+    var id5 = getPropertyUtil(engine, scope, "mobile", 0, 13);
     params4.push(id5);
     config3.params = params4;
     config3.fn = function(scope) {
@@ -58,28 +58,28 @@ KISSY.add("editor/render-xtpl", [], function(S, require, exports, module) {
     };
     buffer += runBlockCommandUtil(engine, scope, config3, "if", 13);
     buffer += '\n\nid="ks-editor-textarea-wrap-';
-    var id6 = getPropertyOrRunCommandUtil(engine, scope, {}, "id", 0, 17, undefined, false);
-    buffer += getExpressionUtil(id6, true);
+    var id6 = getPropertyOrRunCommandUtil(engine, scope, {}, "id", 0, 17);
+    buffer += renderOutputUtil(id6, true);
     buffer += '"\n>\n\n<textarea\n        id="ks-editor-textarea-';
-    var id7 = getPropertyOrRunCommandUtil(engine, scope, {}, "id", 0, 21, undefined, false);
-    buffer += getExpressionUtil(id7, true);
+    var id7 = getPropertyOrRunCommandUtil(engine, scope, {}, "id", 0, 21);
+    buffer += renderOutputUtil(id7, true);
     buffer += '"\n        class="';
-    var id8 = getPropertyOrRunCommandUtil(engine, scope, {}, "prefixCls", 0, 22, undefined, false);
-    buffer += getExpressionUtil(id8, true);
+    var id8 = getPropertyOrRunCommandUtil(engine, scope, {}, "prefixCls", 0, 22);
+    buffer += renderOutputUtil(id8, true);
     buffer += 'editor-textarea"\n\n';
     var config9 = {};
     var params10 = [];
-    var id11 = getPropertyOrRunCommandUtil(engine, scope, {}, "textareaAttrs", 0, 24, undefined, true);
+    var id11 = getPropertyUtil(engine, scope, "textareaAttrs", 0, 24);
     params10.push(id11);
     config9.params = params10;
     config9.fn = function(scope) {
       var buffer = "";
       buffer += "\n";
-      var id12 = getPropertyOrRunCommandUtil(engine, scope, {}, "xindex", 0, 25, undefined, false);
-      buffer += getExpressionUtil(id12, true);
+      var id12 = getPropertyOrRunCommandUtil(engine, scope, {}, "xindex", 0, 25);
+      buffer += renderOutputUtil(id12, true);
       buffer += '="';
-      var id13 = getPropertyOrRunCommandUtil(engine, scope, {}, ".", 0, 25, undefined, false);
-      buffer += getExpressionUtil(id13, true);
+      var id13 = getPropertyOrRunCommandUtil(engine, scope, {}, ".", 0, 25);
+      buffer += renderOutputUtil(id13, true);
       buffer += '"\n';
       return buffer
     };
@@ -87,7 +87,7 @@ KISSY.add("editor/render-xtpl", [], function(S, require, exports, module) {
     buffer += "\n\n";
     var config14 = {};
     var params15 = [];
-    var id16 = getPropertyOrRunCommandUtil(engine, scope, {}, "mode", 0, 28, undefined, true);
+    var id16 = getPropertyUtil(engine, scope, "mode", 0, 28);
     params15.push(id16);
     config14.params = params15;
     config14.fn = function(scope) {
@@ -97,14 +97,14 @@ KISSY.add("editor/render-xtpl", [], function(S, require, exports, module) {
     };
     buffer += runBlockCommandUtil(engine, scope, config14, "if", 28);
     buffer += "\n\n>";
-    var id17 = getPropertyOrRunCommandUtil(engine, scope, {}, "data", 0, 32, undefined, false);
-    buffer += getExpressionUtil(id17, true);
+    var id17 = getPropertyOrRunCommandUtil(engine, scope, {}, "data", 0, 32);
+    buffer += renderOutputUtil(id17, true);
     buffer += '</textarea>\n\n</div>\n\n<div class="';
-    var id18 = getPropertyOrRunCommandUtil(engine, scope, {}, "prefixCls", 0, 36, undefined, false);
-    buffer += getExpressionUtil(id18, true);
+    var id18 = getPropertyOrRunCommandUtil(engine, scope, {}, "prefixCls", 0, 36);
+    buffer += renderOutputUtil(id18, true);
     buffer += 'editor-status"\n     id="ks-editor-status-';
-    var id19 = getPropertyOrRunCommandUtil(engine, scope, {}, "id", 0, 37, undefined, false);
-    buffer += getExpressionUtil(id19, true);
+    var id19 = getPropertyOrRunCommandUtil(engine, scope, {}, "id", 0, 37);
+    buffer += renderOutputUtil(id19, true);
     buffer += '">\n\n</div>';
     return buffer
   }

@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.41
 MIT Licensed
-build time: Dec 2 15:23
+build time: Dec 4 22:16
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -207,14 +207,14 @@ KISSY.add("menu/check-menuitem-xtpl", ["component/extension/content-xtpl"], func
     if(typeof module !== "undefined" && module.kissy) {
       moduleWrap = module
     }
-    var runBlockCommandUtil = utils.runBlockCommand, getExpressionUtil = utils.getExpression, getPropertyOrRunCommandUtil = utils.getPropertyOrRunCommand;
+    var runBlockCommandUtil = utils.runBlockCommand, renderOutputUtil = utils.renderOutput, getPropertyUtil = utils.getProperty, runInlineCommandUtil = utils.runInlineCommand, getPropertyOrRunCommandUtil = utils.getPropertyOrRunCommand;
     buffer += '<div class="';
     var config1 = {};
     var params2 = [];
     params2.push("checkbox");
     config1.params = params2;
-    var id0 = getPropertyOrRunCommandUtil(engine, scope, config1, "getBaseCssClasses", 0, 1, true, undefined);
-    buffer += id0;
+    var id0 = runInlineCommandUtil(engine, scope, config1, "getBaseCssClasses", 1);
+    buffer += renderOutputUtil(id0, true);
     buffer += '">\n</div>\n';
     var config4 = {};
     var params5 = [];
@@ -224,8 +224,8 @@ KISSY.add("menu/check-menuitem-xtpl", ["component/extension/content-xtpl"], func
       require("component/extension/content-xtpl");
       config4.params[0] = moduleWrap.resolveByName(config4.params[0])
     }
-    var id3 = getPropertyOrRunCommandUtil(engine, scope, config4, "include", 0, 3, false, undefined);
-    buffer += id3;
+    var id3 = runInlineCommandUtil(engine, scope, config4, "include", 3);
+    buffer += renderOutputUtil(id3, false);
     return buffer
   }
 });
@@ -259,23 +259,23 @@ KISSY.add("menu/submenu-xtpl", [], function(S, require, exports, module) {
     if(typeof module !== "undefined" && module.kissy) {
       moduleWrap = module
     }
-    var runBlockCommandUtil = utils.runBlockCommand, getExpressionUtil = utils.getExpression, getPropertyOrRunCommandUtil = utils.getPropertyOrRunCommand;
+    var runBlockCommandUtil = utils.runBlockCommand, renderOutputUtil = utils.renderOutput, getPropertyUtil = utils.getProperty, runInlineCommandUtil = utils.runInlineCommand, getPropertyOrRunCommandUtil = utils.getPropertyOrRunCommand;
     buffer += '<div id="ks-content-';
-    var id0 = getPropertyOrRunCommandUtil(engine, scope, {}, "id", 0, 1, undefined, false);
-    buffer += getExpressionUtil(id0, true);
+    var id0 = getPropertyOrRunCommandUtil(engine, scope, {}, "id", 0, 1);
+    buffer += renderOutputUtil(id0, true);
     buffer += '"\n     class="';
     var config2 = {};
     var params3 = [];
     params3.push("content");
     config2.params = params3;
-    var id1 = getPropertyOrRunCommandUtil(engine, scope, config2, "getBaseCssClasses", 0, 2, true, undefined);
-    buffer += id1;
+    var id1 = runInlineCommandUtil(engine, scope, config2, "getBaseCssClasses", 2);
+    buffer += renderOutputUtil(id1, true);
     buffer += '">';
-    var id4 = getPropertyOrRunCommandUtil(engine, scope, {}, "content", 0, 2, undefined, false);
-    buffer += getExpressionUtil(id4, false);
+    var id4 = getPropertyOrRunCommandUtil(engine, scope, {}, "content", 0, 2);
+    buffer += renderOutputUtil(id4, false);
     buffer += '</div>\n<span class="';
-    var id5 = getPropertyOrRunCommandUtil(engine, scope, {}, "prefixCls", 0, 3, undefined, false);
-    buffer += getExpressionUtil(id5, true);
+    var id5 = getPropertyOrRunCommandUtil(engine, scope, {}, "prefixCls", 0, 3);
+    buffer += renderOutputUtil(id5, true);
     buffer += 'submenu-arrow">\u25ba</span>';
     return buffer
   }

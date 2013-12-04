@@ -6,14 +6,12 @@
 KISSY.add(function (S, require) {
     var Container = require('component/container');
     var ContentRenderExtension = require('component/extension/content-render');
-    var translateTpl = S.Features.isTransform3dSupported() ?
-        'translate3d({translateX}px,{translateY}px,0)' : 'translate({translateX}px,{translateY}px)';
-
+    var translateTpl = 'translate3d({translateX}px,{translateY}px,0)';
 
     // http://www.html5rocks.com/en/tutorials/speed/html5/
     var Features = S.Features,
 //        MARKER_CLS = 'ks-scrollview-marker',
-        supportCss3 = Features.isTransformSupported(),
+        supportTransform3d = Features.isTransform3dSupported(),
         transformProperty;
 
 //    function createMarker(contentEl) {
@@ -124,7 +122,7 @@ KISSY.add(function (S, require) {
         }
     };
 
-    if (supportCss3) {
+    if (supportTransform3d) {
         transformProperty = Features.getTransformProperty();
 
         methods._onSetScrollLeft = function (v) {

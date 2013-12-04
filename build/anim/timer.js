@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.41
 MIT Licensed
-build time: Dec 2 17:30
+build time: Dec 4 22:04
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -403,18 +403,9 @@ KISSY.add("anim/timer/transform", ["dom", "./fx"], function(S, require) {
     var scaleX, scaleY, skew, A = matrix[0], B = matrix[1], C = matrix[2], D = matrix[3];
     if(A * D - B * C) {
       scaleX = Math.sqrt(A * A + B * B);
-      A /= scaleX;
-      B /= scaleX;
-      skew = A * C + B * D;
-      C -= A * skew;
-      D -= B * skew;
-      scaleY = Math.sqrt(C * C + D * D);
-      C /= scaleY;
-      D /= scaleY;
-      skew /= scaleY;
+      skew = (A * C + B * D) / (A * D - C * B);
+      scaleY = (A * D - B * C) / scaleX;
       if(A * D < B * C) {
-        A = -A;
-        B = -B;
         skew = -skew;
         scaleX = -scaleX
       }

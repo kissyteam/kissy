@@ -1,6 +1,6 @@
 /** Compiled By kissy-xtemplate */
 KISSY.add(function (S, require, exports, module) {
-        /*jshint quotmark: false, unused:false, indent:false*/
+        /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true*/
         return function (scope, S, undefined) {
             var buffer = "",
                 config = this.config,
@@ -10,15 +10,17 @@ KISSY.add(function (S, require, exports, module) {
                 moduleWrap = module;
             }
             var runBlockCommandUtil = utils.runBlockCommand,
-                getExpressionUtil = utils.getExpression,
+                renderOutputUtil = utils.renderOutput,
+                getPropertyUtil = utils.getProperty,
+                runInlineCommandUtil = utils.runInlineCommand,
                 getPropertyOrRunCommandUtil = utils.getPropertyOrRunCommand;
             buffer += '<div class="';
             var config1 = {};
             var params2 = [];
             params2.push('content');
             config1.params = params2;
-            var id0 = getPropertyOrRunCommandUtil(engine, scope, config1, "getBaseCssClasses", 0, 1, true, undefined);
-            buffer += id0;
+            var id0 = runInlineCommandUtil(engine, scope, config1, "getBaseCssClasses", 1);
+            buffer += renderOutputUtil(id0, true);
             buffer += '">\n    ';
             var config4 = {};
             var params5 = [];
@@ -28,8 +30,8 @@ KISSY.add(function (S, require, exports, module) {
                 require("date/picker/picker-xtpl");
                 config4.params[0] = moduleWrap.resolveByName(config4.params[0]);
             }
-            var id3 = getPropertyOrRunCommandUtil(engine, scope, config4, "include", 0, 2, false, undefined);
-            buffer += id3;
+            var id3 = runInlineCommandUtil(engine, scope, config4, "include", 2);
+            buffer += renderOutputUtil(id3, false);
             buffer += '\n</div>';
             return buffer;
         };

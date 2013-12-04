@@ -51,7 +51,7 @@ S.use('xtemplate/compiler', function (S, XTemplateCompiler) {
         var moduleCode = myJsBeautify(
             '/** Compiled By kissy-xtemplate */\n' +
                 'KISSY.add(function(S,require,exports,module){\n' +
-                '/*jshint quotmark: false, unused:false, indent:false*/\n' +
+                '/*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true*/\n' +
                 'return ' + XTemplateCompiler.compileToStr(tplContent)) + ';\n' +
             '});';
         fs.writeFileSync(modulePath, moduleCode, encoding);
