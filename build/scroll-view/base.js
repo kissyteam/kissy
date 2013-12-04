@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50
 MIT Licensed
-build time: Dec 2 17:27
+build time: Dec 4 11:43
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -13,8 +13,8 @@ build time: Dec 2 17:27
 KISSY.add("scroll-view/base/render", ["component/container", "component/extension/content-render"], function(S, require) {
   var Container = require("component/container");
   var ContentRenderExtension = require("component/extension/content-render");
-  var translateTpl = S.Features.isTransform3dSupported() ? "translate3d({translateX}px,{translateY}px,0)" : "translate({translateX}px,{translateY}px)";
-  var Features = S.Features, supportCss3 = Features.isTransformSupported(), transformProperty;
+  var translateTpl = "translate3d({translateX}px,{translateY}px,0)";
+  var Features = S.Features, supportTransform3d = Features.isTransform3dSupported(), transformProperty;
   var methods = {syncUI:function() {
     var self = this, control = self.control, el = control.el, contentEl = control.contentEl, $contentEl = control.$contentEl;
     var scrollHeight = contentEl.offsetHeight, scrollWidth = contentEl.offsetWidth;
@@ -55,7 +55,7 @@ KISSY.add("scroll-view/base/render", ["component/container", "component/extensio
   }, _onSetScrollTop:function(v) {
     this.control.contentEl.style.top = -v + "px"
   }};
-  if(supportCss3) {
+  if(supportTransform3d) {
     transformProperty = Features.getTransformProperty();
     methods._onSetScrollLeft = function(v) {
       var control = this.control;
