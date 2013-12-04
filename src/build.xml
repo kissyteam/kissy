@@ -125,6 +125,14 @@
             <fileset dir="${kissy.build.dir}" includes="${js-css.files}"/>
         </replaceregexp>
 
+        <replaceregexp match="kissy/k/\d.\d.\d/"
+                       replace="kissy/k/${cdn.version}/"
+                       flags="g"
+                       encoding="${charset}"
+                       byline="true">
+            <fileset dir="${kissy.build.dir}" includes="${js-css.files}"/>
+        </replaceregexp>
+
         <replaceregexp match="version:\s*['&quot;]\d.\d\d['&quot;]"
                        replace="version:'${version}'"
                        flags="g"
