@@ -9,7 +9,6 @@ KISSY.add(function (S, require) {
     var translateTpl = S.Features.isTransform3dSupported() ?
         'translate3d({translateX}px,{translateY}px,0)' : 'translate({translateX}px,{translateY}px)';
 
-    // http://www.w3.org/TR/css3-transforms/#mathematical-description
     function toMatrixArray(matrix) {
         matrix = matrix.split(/,/);
         matrix = S.map(matrix, function (v) {
@@ -18,7 +17,7 @@ KISSY.add(function (S, require) {
         return matrix;
     }
 
-    // http://blog.yiminghe.me/2013/12/03/decomposing-css-2d-transform-matrix-into-simple-transformations/
+    // blog.yiminghe.me/2013/12/03/decomposing-css-2d-transform-matrix-into-simple-transformations
     function decomposeMatrix(matrix) {
         matrix = toMatrixArray(matrix);
         var scaleX, scaleY , skew ,
@@ -29,24 +28,11 @@ KISSY.add(function (S, require) {
 
         // Make sure matrix is not singular
         if (A * D - B * C) {
-            // 行列式变换
-            // step (3)
             scaleX = Math.sqrt(A * A + B * B);
-            A /= scaleX;
-            B /= scaleX;
-            // step (4)
-            skew = A * C + B * D;
-            C -= A * skew;
-            D -= B * skew;
-            // step (5)
-            scaleY = Math.sqrt(C * C + D * D);
-            C /= scaleY;
-            D /= scaleY;
-            skew /= scaleY;
+            skew = (A * C + B * D) / (A * D - C * B);
+            scaleY = (A * D - B * C) / scaleX;
             // step (6)
             if (A * D < B * C) {
-                A = -A;
-                B = -B;
                 skew = -skew;
                 scaleX = -scaleX;
             }
@@ -93,12 +79,6 @@ KISSY.add(function (S, require) {
             split, prop, val,
             ret = defaultDecompose();
 
-        function toRadian(value) {
-            return value.indexOf('deg') > -1 ?
-                parseInt(value, 10) * (Math.PI * 2 / 360) :
-                parseFloat(value);
-        }
-
         // Loop through the transform properties, parse and multiply them
         while (++i < l) {
             split = transform[i].split('(');
@@ -115,15 +95,11 @@ KISSY.add(function (S, require) {
                 case 'rotate':
                 case 'skewX':
                 case 'skewY':
-                    ret[prop] = myParse(toRadian(val));
-                    break;
-
-                case 'skew':
-                    val = val.split(',');
-                    ret.skewX = myParse(toRadian(val[0]));
-                    if (val.length > 1) {
-                        ret.skewY = myParse(toRadian(val[1]));
+                    var v = myParse(val);
+                    if (!S.endsWith(val, 'deg')) {
+                        v = v * 180 / Math.PI;
                     }
+                    ret[prop] = v;
                     break;
 
                 case 'translate':
@@ -194,7 +170,6 @@ KISSY.add(function (S, require) {
 /**
  * @ignore
  * refer:
- * - http://www.w3.org/TR/css3-transforms/#mathematical-description
  * - http://louisremi.github.io/jquery.transform.js/index.html
  * - http://hg.mozilla.org/mozilla-central/file/7cb3e9795d04/layout/style/nsStyleAnimation.cpp#l971
  */

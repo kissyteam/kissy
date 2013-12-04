@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50
 MIT Licensed
-build time: Dec 3 23:12
+build time: Dec 4 21:51
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -403,18 +403,9 @@ KISSY.add("anim/timer/transform", ["dom", "./fx"], function(S, require) {
     var scaleX, scaleY, skew, A = matrix[0], B = matrix[1], C = matrix[2], D = matrix[3];
     if(A * D - B * C) {
       scaleX = Math.sqrt(A * A + B * B);
-      A /= scaleX;
-      B /= scaleX;
-      skew = A * C + B * D;
-      C -= A * skew;
-      D -= B * skew;
-      scaleY = Math.sqrt(C * C + D * D);
-      C /= scaleY;
-      D /= scaleY;
-      skew /= scaleY;
+      skew = (A * C + B * D) / (A * D - C * B);
+      scaleY = (A * D - B * C) / scaleX;
       if(A * D < B * C) {
-        A = -A;
-        B = -B;
         skew = -skew;
         scaleX = -scaleX
       }
@@ -432,9 +423,6 @@ KISSY.add("anim/timer/transform", ["dom", "./fx"], function(S, require) {
   function getTransformInfo(transform) {
     transform = transform.split(")");
     var trim = S.trim, i = -1, l = transform.length - 1, split, prop, val, ret = defaultDecompose();
-    function toRadian(value) {
-      return value.indexOf("deg") > -1 ? parseInt(value, 10) * (Math.PI * 2 / 360) : parseFloat(value)
-    }
     while(++i < l) {
       split = transform[i].split("(");
       prop = trim(split[0]);
@@ -454,14 +442,11 @@ KISSY.add("anim/timer/transform", ["dom", "./fx"], function(S, require) {
         case "skewX":
         ;
         case "skewY":
-          ret[prop] = myParse(toRadian(val));
-          break;
-        case "skew":
-          val = val.split(",");
-          ret.skewX = myParse(toRadian(val[0]));
-          if(val.length > 1) {
-            ret.skewY = myParse(toRadian(val[1]))
+          var v = myParse(val);
+          if(!S.endsWith(val, "deg")) {
+            v = v * 180 / Math.PI
           }
+          ret[prop] = v;
           break;
         case "translate":
         ;
