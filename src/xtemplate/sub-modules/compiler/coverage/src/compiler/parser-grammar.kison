@@ -417,16 +417,20 @@
                             text = self.text,
                             m,
                             n = 0;
+
                         if ((m = text.match(/\\+$/))) {
                             n = m[0].length;
                         }
                         if (n % 2) {
                             self.pushState('et');
+                            text = text.slice(0, -1);
                         } else {
                             self.pushState('t');
                         }
                         if (n) {
-                            text = text.slice(0, -1);
+                            text = text.replace(/\\+$/g, function (m) {
+                                return new Array(m.length / 2 + 1).join('\\');
+                            });
                         }
                         // https://github.com/kissyteam/kissy/issues/330
                         // return even empty

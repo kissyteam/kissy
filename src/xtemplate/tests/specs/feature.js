@@ -614,6 +614,15 @@ KISSY.add(function (S, require) {
 
                 render = new XTemplate(tpl).render(data);
 
+                expect(render).toBe('haha \\{{title}}');
+
+                tpl = 'haha \\\\\\\\\\{{title}}';
+                data = {
+                    title: 'a'
+                };
+
+                render = new XTemplate(tpl).render(data);
+
                 expect(render).toBe('haha \\\\{{title}}');
             });
 
