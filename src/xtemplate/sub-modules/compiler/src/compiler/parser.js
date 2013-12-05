@@ -200,9 +200,11 @@ KISSY.add(function (_, undefined) {
                     } else {
                         self.pushState('t');
                     }
-                    text = text.replace(/\\+$/g, function (m) {
-                        return new Array(m.length / 2 + 1).join('\\');
-                    });
+                    if (n) {
+                        text = text.replace(/\\+$/g, function (m) {
+                            return new Array(m.length / 2 + 1).join('\\');
+                        });
+                    }
                     // https://github.com/kissyteam/kissy/issues/330
                     // return even empty
                     self.text = text;
