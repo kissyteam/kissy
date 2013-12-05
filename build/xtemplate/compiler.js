@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50
 MIT Licensed
-build time: Dec 4 22:19
+build time: Dec 5 14:08
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -138,13 +138,14 @@ KISSY.add("xtemplate/compiler/parser", [], function(_, undefined) {
       n = m[0].length
     }
     if(n % 2) {
-      self.pushState("et")
+      self.pushState("et");
+      text = text.slice(0, -1)
     }else {
       self.pushState("t")
     }
-    if(n) {
-      text = text.slice(0, -1)
-    }
+    text = text.replace(/\\+$/g, function(m) {
+      return(new Array(m.length / 2 + 1)).join("\\")
+    });
     self.text = text;
     return"CONTENT"
   }], ["b", /^[\s\S]+/, 0], ["b", /^[\s\S]{2,}?(?:(?={{)|$)/, function popState() {
