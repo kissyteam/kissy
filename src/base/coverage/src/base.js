@@ -376,6 +376,7 @@ if (! _$jscoverage['/base.js']) {
   _$jscoverage['/base.js'].lineData[436] = 0;
   _$jscoverage['/base.js'].lineData[437] = 0;
   _$jscoverage['/base.js'].lineData[443] = 0;
+  _$jscoverage['/base.js'].lineData[445] = 0;
 }
 if (! _$jscoverage['/base.js'].functionData) {
   _$jscoverage['/base.js'].functionData = [];
@@ -1081,5 +1082,7 @@ KISSY.add(function(S, require) {
     }
   }
   _$jscoverage['/base.js'].lineData[443]++;
+  S.Base = Base;
+  _$jscoverage['/base.js'].lineData[445]++;
   return Base;
 });

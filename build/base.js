@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50
 MIT Licensed
-build time: Dec 4 22:04
+build time: Dec 6 15:30
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -215,6 +215,7 @@ KISSY.add("base", ["attribute"], function(S, require) {
       }
     }
   }
+  S.Base = Base;
   return Base
 });
 
