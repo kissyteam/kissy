@@ -440,6 +440,8 @@ KISSY.add(function (S, require) {
         }
     }
 
+    S.Base = Base;
+
     return Base;
 });
 /**
