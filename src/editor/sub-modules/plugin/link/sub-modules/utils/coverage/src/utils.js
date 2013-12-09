@@ -303,7 +303,7 @@ function visit8_70_1(result) {
 function visit7_68_1(result) {
   _$jscoverage['/utils.js'].branchData['68'][1].ranCondition(result);
   return result;
-}_$jscoverage['/utils.js'].branchData['63'][1].init(111, 11, '_selectedEl');
+}_$jscoverage['/utils.js'].branchData['63'][1].init(110, 11, '_selectedEl');
 function visit6_63_1(result) {
   _$jscoverage['/utils.js'].branchData['63'][1].ranCondition(result);
   return result;
@@ -333,12 +333,12 @@ KISSY.add(function(S, require) {
   _$jscoverage['/utils.js'].lineData[7]++;
   var Editor = require('editor');
   _$jscoverage['/utils.js'].lineData[8]++;
-  var Node = S.Node, KEStyle = Editor.Style, _keSavedHref = '_keSavedHref', linkStyle = {
+  var Node = S.Node, KEStyle = Editor.Style, savedHref = '_ke_saved_href', linkStyle = {
   element: 'a', 
   attributes: {
   'href': '#(href)', 
   'title': '#(title)', 
-  '_keSavedHref': '#(_keSavedHref)', 
+  '_ke_saved_href': '#(_ke_saved_href)', 
   target: '#(target)'}};
   _$jscoverage['/utils.js'].lineData[26]++;
   function getAttributes(el) {
@@ -396,7 +396,7 @@ KISSY.add(function(S, require) {
   function applyLink(editor, attr, _selectedEl) {
     _$jscoverage['/utils.js'].functionData[3]++;
     _$jscoverage['/utils.js'].lineData[61]++;
-    attr[_keSavedHref] = attr.href;
+    attr[savedHref] = attr.href;
     _$jscoverage['/utils.js'].lineData[63]++;
     if (visit6_63_1(_selectedEl)) {
       _$jscoverage['/utils.js'].lineData[64]++;
@@ -416,9 +416,9 @@ KISSY.add(function(S, require) {
         _$jscoverage['/utils.js'].lineData[75]++;
         editor.execCommand('save');
         _$jscoverage['/utils.js'].lineData[76]++;
-        var linkStyle = new KEStyle(linkStyle, attr);
+        var linkStyleObj = new KEStyle(linkStyle, attr);
         _$jscoverage['/utils.js'].lineData[77]++;
-        linkStyle.apply(editor.get('document')[0]);
+        linkStyleObj.apply(editor.get('document')[0]);
       }
     }
     _$jscoverage['/utils.js'].lineData[80]++;
@@ -430,5 +430,5 @@ KISSY.add(function(S, require) {
   return {
   removeLink: removeLink, 
   applyLink: applyLink, 
-  _keSavedHref: _keSavedHref};
+  savedHref: savedHref};
 });

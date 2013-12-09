@@ -43,12 +43,8 @@ KISSY.add(function (S, Dom) {
                 expect(Dom.css(elem, 'backgroundColor')).toBe('transparent');
             }
 
-            // expect($(elem).css("backgroundPosition")).toBe('0% 0%');
-            if (UA.webkit) {
-                expect(Dom.css(elem, "backgroundPosition")).toBe('0% 0%');
-            } else {
-                expect(Dom.style(elem, 'backgroundPosition')).toBe('0% 0%');
-            }
+            expect(S.indexOf(Dom.css(elem, "backgroundPosition"), ['left 0% top 0%', '0% 0%']))
+                .not.toBe(-1);
 
             expect(Dom.css(elem, 'fontSize')).toBeEqual('16px');
 
@@ -167,7 +163,7 @@ KISSY.add(function (S, Dom) {
             Dom.show(elem);
             expect(Dom.css(elem, 'display')).toBe('block');
             Dom.remove(elem);
-            Dom.remove('#'+'xx-style' + id);
+            Dom.remove('#' + 'xx-style' + id);
         });
 
         it("toggle works", function () {
@@ -200,7 +196,7 @@ KISSY.add(function (S, Dom) {
 
         it("float works inline or from stylehsheet", function () {
             var tag = S.guid("float");
-            Dom.addStyleSheet("." + tag + " {float:left}",tag+'style');
+            Dom.addStyleSheet("." + tag + " {float:left}", tag + 'style');
             var d = Dom.create("<div class='" + tag + "' style='float:right'><" + "/div>")
             Dom.append(d, document.body);
             expect(Dom.css(d, "float")).toBe('right');
@@ -211,13 +207,13 @@ KISSY.add(function (S, Dom) {
             expect(Dom.style(d, "float")).toBe("");
 
             Dom.remove(d);
-            Dom.remove('#'+tag+'style');
+            Dom.remove('#' + tag + 'style');
         });
 
         // also test prop api
         it("float works inline or from stylehsheet", function () {
             var tag = S.guid("float");
-            Dom.addStyleSheet("." + tag + " {float:left}",tag+'style');
+            Dom.addStyleSheet("." + tag + " {float:left}", tag + 'style');
 
             var d = Dom.create("<div class='" + tag + "' style='float:right'><" + "/div>")
             Dom.append(d, document.body);
@@ -237,12 +233,12 @@ KISSY.add(function (S, Dom) {
             expect(Dom.style(d, "float")).toBe('right');
 
             Dom.remove(d);
-            Dom.remove('#'+tag+'style');
+            Dom.remove('#' + tag + 'style');
         });
 
         it("opacity works inline or from stylesheet", function () {
             var tag = S.guid("opacity");
-            Dom.addStyleSheet("." + tag + " {opacity:0.55;filter:alpha(opacity=55); }",tag+'style');
+            Dom.addStyleSheet("." + tag + " {opacity:0.55;filter:alpha(opacity=55); }", tag + 'style');
 
             var d = Dom.create("<div class='" + tag + "' style='" +
                 "opacity:0.66;filter:Alpha(opacity=66); '>" +
@@ -263,7 +259,7 @@ KISSY.add(function (S, Dom) {
             expect(Dom.css(d, "opacity")).toBeExactEqual("0.66");
             expect(Dom.style(d, "opacity")).toBeExactEqual("0.66");
             Dom.remove(d);
-            Dom.remove('#'+tag+'style');
+            Dom.remove('#' + tag + 'style');
         });
 
         it('does not leave empty style', function () {
@@ -307,16 +303,16 @@ KISSY.add(function (S, Dom) {
             });
 
             it("outerWidth should works for display:none !important", function () {
-                var id= S.guid('test-id');
-                var div = Dom.create("<div style='width:100px;' id='"+id+"' style='display:none;'>" +
+                var id = S.guid('test-id');
+                var div = Dom.create("<div style='width:100px;' id='" + id + "' style='display:none;'>" +
                     "</div>");
-                Dom.addStyleSheet('#'+id+'{display:none !important;}',id+'style');
+                Dom.addStyleSheet('#' + id + '{display:none !important;}', id + 'style');
                 Dom.append(div, document.body);
                 expect(Dom.innerWidth(div)).toBe(100);
                 expect(Dom.outerWidth(div)).toBe(100);
                 expect(Dom.width(div)).toBe(100);
                 Dom.remove(div);
-                Dom.remove('#'+id+'style');
+                Dom.remove('#' + id + 'style');
             });
 
             it("inner/outer width/height works", function () {

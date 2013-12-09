@@ -17,7 +17,6 @@ KISSY.add(function (S, Event, UA, Node, Overlay, ResizePlugin) {
 
     describe("overlay", function () {
         describe("从页面中取得已渲染元素", function () {
-
             var o;
 
             beforeEach(function () {
@@ -54,7 +53,6 @@ KISSY.add(function (S, Event, UA, Node, Overlay, ResizePlugin) {
             });
 
             it("对齐居中有效", function () {
-
                 o.set("align", {
                     points: ['cc', 'cc']
                 });
@@ -102,7 +100,6 @@ KISSY.add(function (S, Event, UA, Node, Overlay, ResizePlugin) {
                 expect(showCall).toBe(0);
             });
 
-
             it("应该能够设置坐标", function () {
 
                 o.move(100, 150);
@@ -113,11 +110,9 @@ KISSY.add(function (S, Event, UA, Node, Overlay, ResizePlugin) {
                 expect(Math.ceil(parseFloat(o.get('el').css("top")))).toBeEqual(150);
 
             });
-
         });
 
         describe("完全由 javascript 渲染弹层", function () {
-
             var o = new Overlay({
                 width: 400,
                 elCls: "popup",

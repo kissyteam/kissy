@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.41
 MIT Licensed
-build time: Dec 4 22:07
+build time: Dec 10 00:43
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -703,13 +703,13 @@ KISSY.add("dom/base/data", ["./api"], function(S, require) {
     return false
   }};
   var objectOps = {hasData:function(ob, name) {
-    if(ob === win) {
+    if(ob == win) {
       return objectOps.hasData(winDataCache, name)
     }
     var thisCache = ob[EXPANDO];
     return commonOps.hasData(thisCache, name)
   }, data:function(ob, name, value) {
-    if(ob === win) {
+    if(ob == win) {
       return objectOps.data(winDataCache, name, value)
     }
     var cache = ob[EXPANDO];
@@ -725,7 +725,7 @@ KISSY.add("dom/base/data", ["./api"], function(S, require) {
       }
     }
   }, removeData:function(ob, name) {
-    if(ob === win) {
+    if(ob == win) {
       return objectOps.removeData(winDataCache, name)
     }
     var cache = ob[EXPANDO];
@@ -1192,10 +1192,10 @@ KISSY.add("dom/base/offset", ["./api"], function(S, require) {
     var position = {left:0, top:0}, currentWin = getWindow(el), offset, currentEl = el;
     relativeWin = relativeWin || currentWin;
     do {
-      offset = currentWin === relativeWin ? getPageOffset(currentEl) : getClientPosition(currentEl);
+      offset = currentWin == relativeWin ? getPageOffset(currentEl) : getClientPosition(currentEl);
       position.left += offset.left;
       position.top += offset.top
-    }while(currentWin && currentWin !== relativeWin && (currentEl = currentWin.frameElement) && (currentWin = currentWin.parent));
+    }while(currentWin && currentWin != relativeWin && (currentEl = currentWin.frameElement) && (currentWin = currentWin.parent));
     return position
   }
   function setOffset(elem, offset) {

@@ -226,51 +226,13 @@ catch (e) {}
 if (! this._$jscoverage) {
   this._$jscoverage = {};
 }
-if (! _$jscoverage['/editor/z-index-manager.js']) {
-  _$jscoverage['/editor/z-index-manager.js'] = {};
-  _$jscoverage['/editor/z-index-manager.js'].lineData = [];
-  _$jscoverage['/editor/z-index-manager.js'].lineData[6] = 0;
-  _$jscoverage['/editor/z-index-manager.js'].lineData[7] = 0;
-  _$jscoverage['/editor/z-index-manager.js'].lineData[12] = 0;
-  _$jscoverage['/editor/z-index-manager.js'].lineData[47] = 0;
-  _$jscoverage['/editor/z-index-manager.js'].lineData[48] = 0;
-  _$jscoverage['/editor/z-index-manager.js'].lineData[51] = 0;
+if (! _$jscoverage['/ie/style-min.js']) {
+  _$jscoverage['/ie/style-min.js'] = {};
+  _$jscoverage['/ie/style-min.js'].lineData = [];
 }
-if (! _$jscoverage['/editor/z-index-manager.js'].functionData) {
-  _$jscoverage['/editor/z-index-manager.js'].functionData = [];
-  _$jscoverage['/editor/z-index-manager.js'].functionData[0] = 0;
-  _$jscoverage['/editor/z-index-manager.js'].functionData[1] = 0;
+if (! _$jscoverage['/ie/style-min.js'].functionData) {
+  _$jscoverage['/ie/style-min.js'].functionData = [];
 }
-if (! _$jscoverage['/editor/z-index-manager.js'].branchData) {
-  _$jscoverage['/editor/z-index-manager.js'].branchData = {};
-  _$jscoverage['/editor/z-index-manager.js'].branchData['48'] = [];
-  _$jscoverage['/editor/z-index-manager.js'].branchData['48'][1] = new BranchData();
+if (! _$jscoverage['/ie/style-min.js'].branchData) {
+  _$jscoverage['/ie/style-min.js'].branchData = {};
 }
-_$jscoverage['/editor/z-index-manager.js'].branchData['48'][1].init(17, 33, 'Editor.Config.baseZIndex || 10000');
-function visit1139_48_1(result) {
-  _$jscoverage['/editor/z-index-manager.js'].branchData['48'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/editor/z-index-manager.js'].lineData[6]++;
-KISSY.add(function(S, require) {
-  _$jscoverage['/editor/z-index-manager.js'].functionData[0]++;
-  _$jscoverage['/editor/z-index-manager.js'].lineData[7]++;
-  var Editor = require('./base');
-  _$jscoverage['/editor/z-index-manager.js'].lineData[12]++;
-  var ZIndexManager = Editor.ZIndexManager = {
-  BUBBLE_VIEW: (1100), 
-  POPUP_MENU: (1200), 
-  STORE_FLASH_SHOW: (99999), 
-  MAXIMIZE: (900), 
-  OVERLAY: (9999), 
-  LOADING: (11000), 
-  LOADING_CANCEL: 12000, 
-  SELECT: (1200)};
-  _$jscoverage['/editor/z-index-manager.js'].lineData[47]++;
-  Editor.baseZIndex = function(z) {
-  _$jscoverage['/editor/z-index-manager.js'].functionData[1]++;
-  _$jscoverage['/editor/z-index-manager.js'].lineData[48]++;
-  return (visit1139_48_1(Editor.Config.baseZIndex || 10000)) + z;
-};
-  _$jscoverage['/editor/z-index-manager.js'].lineData[51]++;
-  return ZIndexManager;
-});

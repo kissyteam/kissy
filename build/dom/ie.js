@@ -1,13 +1,14 @@
 /*
 Copyright 2013, KISSY v1.41
 MIT Licensed
-build time: Dec 4 22:07
+build time: Dec 9 22:39
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
 
  dom/ie/create
  dom/ie/insertion
+ dom/ie/style
  dom/ie/traversal
  dom/ie/transform
  dom/ie/input-selection
@@ -95,6 +96,70 @@ KISSY.add("dom/ie/insertion", ["dom/base"], function(S, require) {
     if(el.type === "checkbox" || el.type === "radio") {
       el.defaultChecked = el.checked
     }
+  }
+});
+KISSY.add("dom/ie/style", ["dom/base"], function(S, require) {
+  var Dom = require("dom/base");
+  var logger = S.getLogger("s/dom");
+  var cssProps = Dom._cssProps, UA = S.UA, FLOAT = "float", HUNDRED = 100, doc = S.Env.host.document, docElem = doc && doc.documentElement, OPACITY = "opacity", STYLE = "style", RE_POS = /^(top|right|bottom|left)$/, FILTER = "filter", CURRENT_STYLE = "currentStyle", RUNTIME_STYLE = "runtimeStyle", LEFT = "left", PX = "px", cssHooks = Dom._cssHooks, backgroundPosition = "backgroundPosition", R_OPACITY = /opacity\s*=\s*([^)]*)/, R_ALPHA = /alpha\([^)]*\)/i;
+  cssProps[FLOAT] = "styleFloat";
+  cssHooks[backgroundPosition] = {get:function(elem, computed) {
+    if(computed) {
+      return elem[CURRENT_STYLE][backgroundPosition + "X"] + " " + elem[CURRENT_STYLE][backgroundPosition + "Y"]
+    }else {
+      return elem[STYLE][backgroundPosition]
+    }
+  }};
+  try {
+    if(docElem.style[OPACITY] == null) {
+      cssHooks[OPACITY] = {get:function(elem, computed) {
+        return R_OPACITY.test((computed && elem[CURRENT_STYLE] ? elem[CURRENT_STYLE][FILTER] : elem[STYLE][FILTER]) || "") ? parseFloat(RegExp.$1) / HUNDRED + "" : computed ? "1" : ""
+      }, set:function(elem, val) {
+        val = parseFloat(val);
+        var style = elem[STYLE], currentStyle = elem[CURRENT_STYLE], opacity = isNaN(val) ? "" : "alpha(" + OPACITY + "=" + val * HUNDRED + ")", filter = S.trim(currentStyle && currentStyle[FILTER] || style[FILTER] || "");
+        style.zoom = 1;
+        if((val >= 1 || !opacity) && !S.trim(filter.replace(R_ALPHA, ""))) {
+          style.removeAttribute(FILTER);
+          if(!opacity || currentStyle && !currentStyle[FILTER]) {
+            return
+          }
+        }
+        style.filter = R_ALPHA.test(filter) ? filter.replace(R_ALPHA, opacity) : filter + (filter ? ", " : "") + opacity
+      }}
+    }
+  }catch(ex) {
+    logger.debug("IE filters ActiveX is disabled. ex = " + ex)
+  }
+  var IE8 = UA.ie === 8, BORDER_MAP = {}, BORDERS = ["", "Top", "Left", "Right", "Bottom"];
+  BORDER_MAP.thin = IE8 ? "1px" : "2px";
+  BORDER_MAP.medium = IE8 ? "3px" : "4px";
+  BORDER_MAP.thick = IE8 ? "5px" : "6px";
+  S.each(BORDERS, function(b) {
+    var name = "border" + b + "Width", styleName = "border" + b + "Style";
+    cssHooks[name] = {get:function(elem, computed) {
+      var currentStyle = computed ? elem[CURRENT_STYLE] : 0, current = currentStyle && String(currentStyle[name]) || undefined;
+      if(current && current.indexOf("px") < 0) {
+        if(BORDER_MAP[current] && currentStyle[styleName] !== "none") {
+          current = BORDER_MAP[current]
+        }else {
+          current = 0
+        }
+      }
+      return current
+    }}
+  });
+  Dom._getComputedStyle = function(elem, name) {
+    name = cssProps[name] || name;
+    var ret = elem[CURRENT_STYLE] && elem[CURRENT_STYLE][name];
+    if(Dom._RE_NUM_NO_PX.test(ret) && !RE_POS.test(name)) {
+      var style = elem[STYLE], left = style[LEFT], rsLeft = elem[RUNTIME_STYLE][LEFT];
+      elem[RUNTIME_STYLE][LEFT] = elem[CURRENT_STYLE][LEFT];
+      style[LEFT] = name === "fontSize" ? "1em" : ret || 0;
+      ret = style.pixelLeft + PX;
+      style[LEFT] = left;
+      elem[RUNTIME_STYLE][LEFT] = rsLeft
+    }
+    return ret === "" ? "auto" : ret
   }
 });
 KISSY.add("dom/ie/traversal", ["dom/base"], function(S, require) {

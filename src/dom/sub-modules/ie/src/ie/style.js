@@ -3,12 +3,12 @@
  * style hack for ie
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S,require) {
+KISSY.add(function (S, require) {
     var Dom = require('dom/base');
-    var   logger = S.getLogger('s/dom');
+    var logger = S.getLogger('s/dom');
     var cssProps = Dom._cssProps,
         UA = S.UA,
-
+        FLOAT = 'float',
         HUNDRED = 100,
         doc = S.Env.host.document,
         docElem = doc && doc.documentElement,
@@ -25,7 +25,8 @@ KISSY.add(function (S,require) {
         R_OPACITY = /opacity\s*=\s*([^)]*)/,
         R_ALPHA = /alpha\([^)]*\)/i;
 
-    cssProps.float = 'styleFloat';
+    // float is keyword
+    cssProps[FLOAT] = 'styleFloat';
 
     // odd backgroundPosition
     cssHooks[backgroundPosition] = {

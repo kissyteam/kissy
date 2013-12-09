@@ -719,15 +719,15 @@ if (! _$jscoverage['/base/style.js'].branchData) {
   _$jscoverage['/base/style.js'].branchData['670'] = [];
   _$jscoverage['/base/style.js'].branchData['670'][1] = new BranchData();
 }
-_$jscoverage['/base/style.js'].branchData['670'][1].init(52, 46, 'Dom.css(offsetParent, "position") === \'static\'');
+_$jscoverage['/base/style.js'].branchData['670'][1].init(52, 46, 'Dom.css(offsetParent, \'position\') === \'static\'');
 function visit506_670_1(result) {
   _$jscoverage['/base/style.js'].branchData['670'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/style.js'].branchData['669'][2].init(111, 99, '!ROOT_REG.test(offsetParent.nodeName) && Dom.css(offsetParent, "position") === \'static\'');
+}_$jscoverage['/base/style.js'].branchData['669'][2].init(111, 99, '!ROOT_REG.test(offsetParent.nodeName) && Dom.css(offsetParent, \'position\') === \'static\'');
 function visit505_669_2(result) {
   _$jscoverage['/base/style.js'].branchData['669'][2].ranCondition(result);
   return result;
-}_$jscoverage['/base/style.js'].branchData['669'][1].init(95, 115, 'offsetParent && !ROOT_REG.test(offsetParent.nodeName) && Dom.css(offsetParent, "position") === \'static\'');
+}_$jscoverage['/base/style.js'].branchData['669'][1].init(95, 115, 'offsetParent && !ROOT_REG.test(offsetParent.nodeName) && Dom.css(offsetParent, \'position\') === \'static\'');
 function visit504_669_1(result) {
   _$jscoverage['/base/style.js'].branchData['669'][1].ranCondition(result);
   return result;
@@ -739,19 +739,19 @@ function visit503_668_2(result) {
 function visit502_668_1(result) {
   _$jscoverage['/base/style.js'].branchData['668'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/style.js'].branchData['657'][1].init(808, 42, 'parseFloat(Dom.css(el, "marginLeft")) || 0');
+}_$jscoverage['/base/style.js'].branchData['657'][1].init(808, 42, 'parseFloat(Dom.css(el, \'marginLeft\')) || 0');
 function visit501_657_1(result) {
   _$jscoverage['/base/style.js'].branchData['657'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/style.js'].branchData['656'][1].init(742, 41, 'parseFloat(Dom.css(el, "marginTop")) || 0');
+}_$jscoverage['/base/style.js'].branchData['656'][1].init(742, 41, 'parseFloat(Dom.css(el, \'marginTop\')) || 0');
 function visit500_656_1(result) {
   _$jscoverage['/base/style.js'].branchData['656'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/style.js'].branchData['653'][1].init(438, 57, 'parseFloat(Dom.css(offsetParent, "borderLeftWidth")) || 0');
+}_$jscoverage['/base/style.js'].branchData['653'][1].init(438, 57, 'parseFloat(Dom.css(offsetParent, \'borderLeftWidth\')) || 0');
 function visit499_653_1(result) {
   _$jscoverage['/base/style.js'].branchData['653'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/style.js'].branchData['652'][1].init(347, 56, 'parseFloat(Dom.css(offsetParent, "borderTopWidth")) || 0');
+}_$jscoverage['/base/style.js'].branchData['652'][1].init(347, 56, 'parseFloat(Dom.css(offsetParent, \'borderTopWidth\')) || 0');
 function visit498_652_1(result) {
   _$jscoverage['/base/style.js'].branchData['652'][1].ranCondition(result);
   return result;
@@ -1806,14 +1806,14 @@ KISSY.add(function(S, require) {
       _$jscoverage['/base/style.js'].lineData[651]++;
       parentOffset = Dom.offset(offsetParent);
       _$jscoverage['/base/style.js'].lineData[652]++;
-      parentOffset.top += visit498_652_1(parseFloat(Dom.css(offsetParent, "borderTopWidth")) || 0);
+      parentOffset.top += visit498_652_1(parseFloat(Dom.css(offsetParent, 'borderTopWidth')) || 0);
       _$jscoverage['/base/style.js'].lineData[653]++;
-      parentOffset.left += visit499_653_1(parseFloat(Dom.css(offsetParent, "borderLeftWidth")) || 0);
+      parentOffset.left += visit499_653_1(parseFloat(Dom.css(offsetParent, 'borderLeftWidth')) || 0);
     }
     _$jscoverage['/base/style.js'].lineData[656]++;
-    offset.top -= visit500_656_1(parseFloat(Dom.css(el, "marginTop")) || 0);
+    offset.top -= visit500_656_1(parseFloat(Dom.css(el, 'marginTop')) || 0);
     _$jscoverage['/base/style.js'].lineData[657]++;
-    offset.left -= visit501_657_1(parseFloat(Dom.css(el, "marginLeft")) || 0);
+    offset.left -= visit501_657_1(parseFloat(Dom.css(el, 'marginLeft')) || 0);
     _$jscoverage['/base/style.js'].lineData[661]++;
     return {
   top: offset.top - parentOffset.top, 
@@ -1825,7 +1825,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/base/style.js'].lineData[668]++;
     var offsetParent = visit502_668_1(el.offsetParent || (visit503_668_2(el.ownerDocument || doc)).body);
     _$jscoverage['/base/style.js'].lineData[669]++;
-    while (visit504_669_1(offsetParent && visit505_669_2(!ROOT_REG.test(offsetParent.nodeName) && visit506_670_1(Dom.css(offsetParent, "position") === 'static')))) {
+    while (visit504_669_1(offsetParent && visit505_669_2(!ROOT_REG.test(offsetParent.nodeName) && visit506_670_1(Dom.css(offsetParent, 'position') === 'static')))) {
       _$jscoverage['/base/style.js'].lineData[671]++;
       offsetParent = offsetParent.offsetParent;
     }

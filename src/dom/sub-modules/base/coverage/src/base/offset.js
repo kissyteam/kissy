@@ -357,19 +357,19 @@ if (! _$jscoverage['/base/offset.js']) {
   _$jscoverage['/base/offset.js'].lineData[417] = 0;
   _$jscoverage['/base/offset.js'].lineData[424] = 0;
   _$jscoverage['/base/offset.js'].lineData[426] = 0;
-  _$jscoverage['/base/offset.js'].lineData[431] = 0;
-  _$jscoverage['/base/offset.js'].lineData[434] = 0;
-  _$jscoverage['/base/offset.js'].lineData[435] = 0;
-  _$jscoverage['/base/offset.js'].lineData[441] = 0;
-  _$jscoverage['/base/offset.js'].lineData[445] = 0;
+  _$jscoverage['/base/offset.js'].lineData[433] = 0;
+  _$jscoverage['/base/offset.js'].lineData[436] = 0;
+  _$jscoverage['/base/offset.js'].lineData[437] = 0;
+  _$jscoverage['/base/offset.js'].lineData[443] = 0;
   _$jscoverage['/base/offset.js'].lineData[447] = 0;
-  _$jscoverage['/base/offset.js'].lineData[448] = 0;
-  _$jscoverage['/base/offset.js'].lineData[451] = 0;
-  _$jscoverage['/base/offset.js'].lineData[455] = 0;
-  _$jscoverage['/base/offset.js'].lineData[456] = 0;
+  _$jscoverage['/base/offset.js'].lineData[449] = 0;
+  _$jscoverage['/base/offset.js'].lineData[450] = 0;
+  _$jscoverage['/base/offset.js'].lineData[453] = 0;
   _$jscoverage['/base/offset.js'].lineData[457] = 0;
+  _$jscoverage['/base/offset.js'].lineData[458] = 0;
   _$jscoverage['/base/offset.js'].lineData[459] = 0;
-  _$jscoverage['/base/offset.js'].lineData[462] = 0;
+  _$jscoverage['/base/offset.js'].lineData[461] = 0;
+  _$jscoverage['/base/offset.js'].lineData[464] = 0;
 }
 if (! _$jscoverage['/base/offset.js'].functionData) {
   _$jscoverage['/base/offset.js'].functionData = [];
@@ -488,47 +488,47 @@ if (! _$jscoverage['/base/offset.js'].branchData) {
   _$jscoverage['/base/offset.js'].branchData['401'][2] = new BranchData();
   _$jscoverage['/base/offset.js'].branchData['424'] = [];
   _$jscoverage['/base/offset.js'].branchData['424'][1] = new BranchData();
-  _$jscoverage['/base/offset.js'].branchData['431'] = [];
-  _$jscoverage['/base/offset.js'].branchData['431'][1] = new BranchData();
-  _$jscoverage['/base/offset.js'].branchData['436'] = [];
-  _$jscoverage['/base/offset.js'].branchData['436'][1] = new BranchData();
-  _$jscoverage['/base/offset.js'].branchData['437'] = [];
-  _$jscoverage['/base/offset.js'].branchData['437'][1] = new BranchData();
-  _$jscoverage['/base/offset.js'].branchData['437'][2] = new BranchData();
+  _$jscoverage['/base/offset.js'].branchData['433'] = [];
+  _$jscoverage['/base/offset.js'].branchData['433'][1] = new BranchData();
   _$jscoverage['/base/offset.js'].branchData['438'] = [];
   _$jscoverage['/base/offset.js'].branchData['438'][1] = new BranchData();
-  _$jscoverage['/base/offset.js'].branchData['447'] = [];
-  _$jscoverage['/base/offset.js'].branchData['447'][1] = new BranchData();
-  _$jscoverage['/base/offset.js'].branchData['456'] = [];
-  _$jscoverage['/base/offset.js'].branchData['456'][1] = new BranchData();
+  _$jscoverage['/base/offset.js'].branchData['439'] = [];
+  _$jscoverage['/base/offset.js'].branchData['439'][1] = new BranchData();
+  _$jscoverage['/base/offset.js'].branchData['439'][2] = new BranchData();
+  _$jscoverage['/base/offset.js'].branchData['440'] = [];
+  _$jscoverage['/base/offset.js'].branchData['440'][1] = new BranchData();
+  _$jscoverage['/base/offset.js'].branchData['449'] = [];
+  _$jscoverage['/base/offset.js'].branchData['449'][1] = new BranchData();
+  _$jscoverage['/base/offset.js'].branchData['458'] = [];
+  _$jscoverage['/base/offset.js'].branchData['458'][1] = new BranchData();
 }
-_$jscoverage['/base/offset.js'].branchData['456'][1].init(23, 35, 'parseFloat(Dom.css(elem, key)) || 0');
-function visit322_456_1(result) {
-  _$jscoverage['/base/offset.js'].branchData['456'][1].ranCondition(result);
+_$jscoverage['/base/offset.js'].branchData['458'][1].init(23, 35, 'parseFloat(Dom.css(elem, key)) || 0');
+function visit322_458_1(result) {
+  _$jscoverage['/base/offset.js'].branchData['458'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/offset.js'].branchData['447'][1].init(89, 36, 'Dom.css(elem, POSITION) === \'static\'');
-function visit321_447_1(result) {
-  _$jscoverage['/base/offset.js'].branchData['447'][1].ranCondition(result);
+}_$jscoverage['/base/offset.js'].branchData['449'][1].init(89, 36, 'Dom.css(elem, POSITION) === \'static\'');
+function visit321_449_1(result) {
+  _$jscoverage['/base/offset.js'].branchData['449'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/offset.js'].branchData['438'][1].init(42, 84, '(currentEl = currentWin.frameElement) && (currentWin = currentWin.parent)');
-function visit320_438_1(result) {
+}_$jscoverage['/base/offset.js'].branchData['440'][1].init(41, 84, '(currentEl = currentWin.frameElement) && (currentWin = currentWin.parent)');
+function visit320_440_1(result) {
+  _$jscoverage['/base/offset.js'].branchData['440'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/base/offset.js'].branchData['439'][2].init(938, 25, 'currentWin != relativeWin');
+function visit319_439_2(result) {
+  _$jscoverage['/base/offset.js'].branchData['439'][2].ranCondition(result);
+  return result;
+}_$jscoverage['/base/offset.js'].branchData['439'][1].init(25, 126, 'currentWin != relativeWin && (currentEl = currentWin.frameElement) && (currentWin = currentWin.parent)');
+function visit318_439_1(result) {
+  _$jscoverage['/base/offset.js'].branchData['439'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/base/offset.js'].branchData['438'][1].init(584, 152, 'currentWin && currentWin != relativeWin && (currentEl = currentWin.frameElement) && (currentWin = currentWin.parent)');
+function visit317_438_1(result) {
   _$jscoverage['/base/offset.js'].branchData['438'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/offset.js'].branchData['437'][2].init(868, 26, 'currentWin !== relativeWin');
-function visit319_437_2(result) {
-  _$jscoverage['/base/offset.js'].branchData['437'][2].ranCondition(result);
-  return result;
-}_$jscoverage['/base/offset.js'].branchData['437'][1].init(25, 127, 'currentWin !== relativeWin && (currentEl = currentWin.frameElement) && (currentWin = currentWin.parent)');
-function visit318_437_1(result) {
-  _$jscoverage['/base/offset.js'].branchData['437'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/base/offset.js'].branchData['436'][1].init(514, 153, 'currentWin && currentWin !== relativeWin && (currentEl = currentWin.frameElement) && (currentWin = currentWin.parent)');
-function visit317_436_1(result) {
-  _$jscoverage['/base/offset.js'].branchData['436'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/base/offset.js'].branchData['431'][1].init(294, 26, 'currentWin === relativeWin');
-function visit316_431_1(result) {
-  _$jscoverage['/base/offset.js'].branchData['431'][1].ranCondition(result);
+}_$jscoverage['/base/offset.js'].branchData['433'][1].init(365, 25, 'currentWin == relativeWin');
+function visit316_433_1(result) {
+  _$jscoverage['/base/offset.js'].branchData['433'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/offset.js'].branchData['424'][1].init(289, 25, 'relativeWin || currentWin');
 function visit315_424_1(result) {
@@ -1096,36 +1096,36 @@ KISSY.add(function(S, require) {
     relativeWin = visit315_424_1(relativeWin || currentWin);
     _$jscoverage['/base/offset.js'].lineData[426]++;
     do {
-      _$jscoverage['/base/offset.js'].lineData[431]++;
-      offset = visit316_431_1(currentWin === relativeWin) ? getPageOffset(currentEl) : getClientPosition(currentEl);
-      _$jscoverage['/base/offset.js'].lineData[434]++;
+      _$jscoverage['/base/offset.js'].lineData[433]++;
+      offset = visit316_433_1(currentWin == relativeWin) ? getPageOffset(currentEl) : getClientPosition(currentEl);
+      _$jscoverage['/base/offset.js'].lineData[436]++;
       position.left += offset.left;
-      _$jscoverage['/base/offset.js'].lineData[435]++;
+      _$jscoverage['/base/offset.js'].lineData[437]++;
       position.top += offset.top;
-    } while (visit317_436_1(currentWin && visit318_437_1(visit319_437_2(currentWin !== relativeWin) && visit320_438_1((currentEl = currentWin.frameElement) && (currentWin = currentWin.parent)))));
-    _$jscoverage['/base/offset.js'].lineData[441]++;
+    } while (visit317_438_1(currentWin && visit318_439_1(visit319_439_2(currentWin != relativeWin) && visit320_440_1((currentEl = currentWin.frameElement) && (currentWin = currentWin.parent)))));
+    _$jscoverage['/base/offset.js'].lineData[443]++;
     return position;
   }
-  _$jscoverage['/base/offset.js'].lineData[445]++;
+  _$jscoverage['/base/offset.js'].lineData[447]++;
   function setOffset(elem, offset) {
     _$jscoverage['/base/offset.js'].functionData[11]++;
-    _$jscoverage['/base/offset.js'].lineData[447]++;
-    if (visit321_447_1(Dom.css(elem, POSITION) === 'static')) {
-      _$jscoverage['/base/offset.js'].lineData[448]++;
+    _$jscoverage['/base/offset.js'].lineData[449]++;
+    if (visit321_449_1(Dom.css(elem, POSITION) === 'static')) {
+      _$jscoverage['/base/offset.js'].lineData[450]++;
       elem.style[POSITION] = RELATIVE;
     }
-    _$jscoverage['/base/offset.js'].lineData[451]++;
+    _$jscoverage['/base/offset.js'].lineData[453]++;
     var old = getOffset(elem), ret = {}, current, key;
-    _$jscoverage['/base/offset.js'].lineData[455]++;
+    _$jscoverage['/base/offset.js'].lineData[457]++;
     for (key in offset) {
-      _$jscoverage['/base/offset.js'].lineData[456]++;
-      current = visit322_456_1(parseFloat(Dom.css(elem, key)) || 0);
-      _$jscoverage['/base/offset.js'].lineData[457]++;
+      _$jscoverage['/base/offset.js'].lineData[458]++;
+      current = visit322_458_1(parseFloat(Dom.css(elem, key)) || 0);
+      _$jscoverage['/base/offset.js'].lineData[459]++;
       ret[key] = current + offset[key] - old[key];
     }
-    _$jscoverage['/base/offset.js'].lineData[459]++;
+    _$jscoverage['/base/offset.js'].lineData[461]++;
     Dom.css(elem, ret);
   }
-  _$jscoverage['/base/offset.js'].lineData[462]++;
+  _$jscoverage['/base/offset.js'].lineData[464]++;
   return Dom;
 });

@@ -48,6 +48,7 @@
     window.onload = function () {
         testIframe = document.createElement('iframe');
         testIframe.height = 600;
+        testIframe.frameborder = 'none';
         testIframe.style.cssText = 'width:100%;' +
             'height:600px;' +
             '-webkit-overflow-scrolling: touch;' +

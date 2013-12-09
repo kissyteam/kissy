@@ -36,7 +36,6 @@ KISSY.add(function (S, require) {
     }
 
     S.extend(DomEventObservable, BaseEvent.Observable, {
-
         setup: function () {
             var self = this,
                 type = self.type,

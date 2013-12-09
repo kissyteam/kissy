@@ -43,7 +43,9 @@
          * @member KISSY
          */
         isWindow: function (obj) {
-            return obj != null && obj === obj.window;
+            // must use == for ie8
+            /*jshint eqeqeq:false*/
+            return obj != null && obj == obj.window;
         },
 
         /**
@@ -86,8 +88,8 @@
             if (data && RE_NOT_WHITESPACE.test(data)) {
                 // http://weblogs.java.net/blog/driscoll/archive/2009/09/08/eval-javascript-global-context
                 // http://msdn.microsoft.com/en-us/library/ie/ms536420(v=vs.85).aspx always return null
-                if (win.exeScript) {
-                    /*jshint evil:true*/
+                /*jshint evil:true*/
+                if (win.execScript) {
                     win.execScript(data);
                 } else {
                     (function (data) {

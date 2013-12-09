@@ -30,6 +30,10 @@ KISSY.add( function (S, Dom, Event) {
             if(KISSY.UA.ie===10){
                 return;
             }
+
+            window.focus();
+            document.body.focus();
+
             var outer = Dom.create("<div class='outer'>" +
                 "<div class='inner'>" +
                 "<input type='input'/>" +

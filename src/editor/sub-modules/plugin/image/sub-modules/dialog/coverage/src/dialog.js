@@ -621,11 +621,11 @@ function visit71_482_1(result) {
 function visit70_479_1(result) {
   _$jscoverage['/dialog.js'].branchData['479'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['459'][1].init(139, 32, 'link.attr(\'target\') === \'_blank\'');
+}_$jscoverage['/dialog.js'].branchData['459'][1].init(141, 32, 'link.attr(\'target\') === \'_blank\'');
 function visit69_459_1(result) {
   _$jscoverage['/dialog.js'].branchData['459'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['458'][1].init(40, 46, 'link.attr(\'_keSavedHref\') || link.attr(\'href\')');
+}_$jscoverage['/dialog.js'].branchData['458'][1].init(40, 48, 'link.attr(\'_ke_saved_href\') || link.attr(\'href\')');
 function visit68_458_1(result) {
   _$jscoverage['/dialog.js'].branchData['458'][1].ranCondition(result);
   return result;
@@ -673,15 +673,15 @@ function visit58_413_2(result) {
 function visit57_413_1(result) {
   _$jscoverage['/dialog.js'].branchData['413'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['401'][1].init(1876, 5, '!skip');
+}_$jscoverage['/dialog.js'].branchData['401'][1].init(1878, 5, '!skip');
 function visit56_401_1(result) {
   _$jscoverage['/dialog.js'].branchData['401'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['398'][1].init(1741, 15, 'self.selectedEl');
+}_$jscoverage['/dialog.js'].branchData['398'][1].init(1743, 15, 'self.selectedEl');
 function visit55_398_1(result) {
   _$jscoverage['/dialog.js'].branchData['398'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['395'][1].init(1646, 2, 'bs');
+}_$jscoverage['/dialog.js'].branchData['395'][1].init(1648, 2, 'bs');
 function visit54_395_1(result) {
   _$jscoverage['/dialog.js'].branchData['395'][1].ranCondition(result);
   return result;
@@ -1320,7 +1320,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/dialog.js'].lineData[386]++;
     link = new Node('<a></a>');
     _$jscoverage['/dialog.js'].lineData[389]++;
-    link.attr('_keSavedHref', linkVal).attr('href', linkVal).attr('target', target);
+    link.attr('_ke_saved_href', linkVal).attr('href', linkVal).attr('target', target);
     _$jscoverage['/dialog.js'].lineData[390]++;
     var t = img[0];
     _$jscoverage['/dialog.js'].lineData[391]++;
@@ -1432,7 +1432,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/dialog.js'].lineData[457]++;
   if (visit67_457_1(link)) {
     _$jscoverage['/dialog.js'].lineData[458]++;
-    valInput(self.imgLink, visit68_458_1(link.attr('_keSavedHref') || link.attr('href')));
+    valInput(self.imgLink, visit68_458_1(link.attr('_ke_saved_href') || link.attr('href')));
     _$jscoverage['/dialog.js'].lineData[459]++;
     self.imgLinkBlank.attr('checked', visit69_459_1(link.attr('target') === '_blank'));
   } else {

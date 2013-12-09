@@ -3,7 +3,7 @@
  * Component.Extension.Align
  * @author yiminghe@gmail.com, qiaohua@taobao.com
  */
-KISSY.add(function (S,require) {
+KISSY.add(function (S, require) {
     var Node = require('node');
     var win = S.Env.host,
         $ = Node.all,
@@ -461,8 +461,9 @@ KISSY.add(function (S,require) {
         },
 
         __destructor: function () {
-            if (this.$el) {
-                this.$el.getWindow().detach('resize', realign, this);
+            var self = this;
+            if (self.$el) {
+                self.$el.getWindow().detach('resize', onResize, self);
             }
         }
     };

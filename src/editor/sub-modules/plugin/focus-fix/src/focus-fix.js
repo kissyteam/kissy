@@ -19,6 +19,7 @@ KISSY.add(function (S, require) {
          * then IE would still leave the caret inside the editing area.
          */
         // ie9 图片resize框，仍然会突出
+        // ie11 still lose selection when editor is blurred
         if (UA.ie && editor) {
             // 聚焦到当前窗口
             // 使得编辑器失去焦点，促使ie保存当前选择区域（位置）
@@ -42,7 +43,7 @@ KISSY.add(function (S, require) {
                 // $range.parentElement().ownerDocument == editor.document
                 // ||
                 // 缩放图片那个框在ie下会突出浮动层来
-                    $range.item&& $range.item(0).ownerDocument === editor.get('document')[0]) {
+                    $range.item && $range.item(0).ownerDocument === editor.get('document')[0]) {
                     var $myRange = document.body.createTextRange();
                     $myRange.moveToElementText(self.get('el').first()[0]);
                     $myRange.collapse(true);
@@ -53,8 +54,9 @@ KISSY.add(function (S, require) {
     }
 
     function _hide4FocusExt() {
-        var editor = this._focusEditor;
-        if(editor){
+        var self = this,
+            editor = self._focusEditor;
+        if (editor) {
             editor.focus();
         }
     }

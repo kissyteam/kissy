@@ -1167,939 +1167,939 @@ if (! _$jscoverage['/editor/styles.js'].branchData) {
   _$jscoverage['/editor/styles.js'].branchData['1377'][4] = new BranchData();
 }
 _$jscoverage['/editor/styles.js'].branchData['1377'][4].init(261, 48, 'lastChild.nodeType === Dom.NodeType.ELEMENT_NODE');
-function visit1055_1377_4(result) {
+function visit1054_1377_4(result) {
   _$jscoverage['/editor/styles.js'].branchData['1377'][4].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['1377'][3].init(233, 24, 'firstChild !== lastChild');
-function visit1054_1377_3(result) {
+function visit1053_1377_3(result) {
   _$jscoverage['/editor/styles.js'].branchData['1377'][3].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['1377'][2].init(233, 76, 'firstChild !== lastChild && lastChild.nodeType === Dom.NodeType.ELEMENT_NODE');
-function visit1053_1377_2(result) {
+function visit1052_1377_2(result) {
   _$jscoverage['/editor/styles.js'].branchData['1377'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['1377'][1].init(220, 89, 'lastChild && firstChild !== lastChild && lastChild.nodeType === Dom.NodeType.ELEMENT_NODE');
-function visit1052_1377_1(result) {
+function visit1051_1377_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['1377'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['1373'][1].init(75, 49, 'firstChild.nodeType === Dom.NodeType.ELEMENT_NODE');
-function visit1051_1373_1(result) {
+function visit1050_1373_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['1373'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['1371'][1].init(309, 10, 'firstChild');
-function visit1050_1371_1(result) {
+function visit1049_1371_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['1371'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['1363'][1].init(115, 27, '!element._4eHasAttributes()');
-function visit1049_1363_1(result) {
+function visit1048_1363_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['1363'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['1349'][3].init(116, 31, 'actualStyleValue === styleValue');
-function visit1048_1349_3(result) {
+function visit1047_1349_3(result) {
   _$jscoverage['/editor/styles.js'].branchData['1349'][3].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['1349'][2].init(82, 30, 'typeof styleValue === \'string\'');
-function visit1047_1349_2(result) {
+function visit1046_1349_2(result) {
   _$jscoverage['/editor/styles.js'].branchData['1349'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['1349'][1].init(82, 65, 'typeof styleValue === \'string\' && actualStyleValue === styleValue');
-function visit1046_1349_1(result) {
+function visit1045_1349_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['1349'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['1348'][2].init(181, 51, 'styleValue.test && styleValue.test(actualAttrValue)');
-function visit1045_1348_2(result) {
+function visit1044_1348_2(result) {
   _$jscoverage['/editor/styles.js'].branchData['1348'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['1348'][1].init(102, 150, '(styleValue.test && styleValue.test(actualAttrValue)) || (typeof styleValue === \'string\' && actualStyleValue === styleValue)');
-function visit1044_1348_1(result) {
+function visit1043_1348_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['1348'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['1346'][2].init(76, 19, 'styleValue === NULL');
-function visit1043_1346_2(result) {
+function visit1042_1346_2(result) {
   _$jscoverage['/editor/styles.js'].branchData['1346'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['1346'][1].init(76, 253, 'styleValue === NULL || (styleValue.test && styleValue.test(actualAttrValue)) || (typeof styleValue === \'string\' && actualStyleValue === styleValue)');
-function visit1042_1346_1(result) {
+function visit1041_1346_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['1346'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['1341'][1].init(25, 17, 'i < styles.length');
-function visit1041_1341_1(result) {
+function visit1040_1341_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['1341'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['1340'][1].init(1145, 6, 'styles');
-function visit1040_1340_1(result) {
+function visit1039_1340_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['1340'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['1338'][1].init(1101, 29, 'overrides && overrides.styles');
-function visit1039_1338_1(result) {
+function visit1038_1338_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['1338'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['1331'][3].init(110, 28, 'actualAttrValue === attValue');
-function visit1038_1331_3(result) {
+function visit1037_1331_3(result) {
   _$jscoverage['/editor/styles.js'].branchData['1331'][3].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['1331'][2].init(78, 28, 'typeof attValue === \'string\'');
-function visit1037_1331_2(result) {
+function visit1036_1331_2(result) {
   _$jscoverage['/editor/styles.js'].branchData['1331'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['1331'][1].init(78, 60, 'typeof attValue === \'string\' && actualAttrValue === attValue');
-function visit1036_1331_1(result) {
+function visit1035_1331_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['1331'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['1330'][2].init(522, 47, 'attValue.test && attValue.test(actualAttrValue)');
-function visit1035_1330_2(result) {
+function visit1034_1330_2(result) {
   _$jscoverage['/editor/styles.js'].branchData['1330'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['1330'][1].init(46, 141, '(attValue.test && attValue.test(actualAttrValue)) || (typeof attValue === \'string\' && actualAttrValue === attValue)');
-function visit1034_1330_1(result) {
+function visit1033_1330_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['1330'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['1329'][2].init(473, 17, 'attValue === NULL');
-function visit1033_1329_2(result) {
+function visit1032_1329_2(result) {
   _$jscoverage['/editor/styles.js'].branchData['1329'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['1329'][1].init(473, 188, 'attValue === NULL || (attValue.test && attValue.test(actualAttrValue)) || (typeof attValue === \'string\' && actualAttrValue === attValue)');
-function visit1032_1329_1(result) {
+function visit1031_1329_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['1329'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['1317'][1].init(25, 21, 'i < attributes.length');
-function visit1031_1317_1(result) {
+function visit1030_1317_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['1317'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['1316'][1].init(106, 10, 'attributes');
-function visit1030_1316_1(result) {
+function visit1029_1316_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['1316'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['1314'][1].init(48, 33, 'overrides && overrides.attributes');
-function visit1029_1314_1(result) {
+function visit1028_1314_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['1314'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['1297'][1].init(114, 6, 'i >= 0');
-function visit1028_1297_1(result) {
+function visit1027_1297_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['1297'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['1295'][1].init(18, 33, 'overrideElement !== style.element');
-function visit1027_1295_1(result) {
+function visit1026_1295_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['1295'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['1287'][1].init(253, 8, '--i >= 0');
-function visit1026_1287_1(result) {
+function visit1025_1287_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['1287'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['1262'][1].init(297, 41, 'removeEmpty || !!element.style(styleName)');
-function visit1025_1262_1(result) {
+function visit1024_1262_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['1262'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['1258'][1].init(47, 84, 'element.style(styleName) !== normalizeProperty(styleName, styles[styleName], TRUE)');
-function visit1024_1258_1(result) {
+function visit1023_1258_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['1258'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['1257'][1].init(94, 132, 'style._.definition.fullMatch && element.style(styleName) !== normalizeProperty(styleName, styles[styleName], TRUE)');
-function visit1023_1257_1(result) {
+function visit1022_1257_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['1257'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['1249'][1].init(299, 41, 'removeEmpty || !!element.hasAttr(attName)');
-function visit1022_1249_1(result) {
+function visit1021_1249_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['1249'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['1245'][4].init(138, 91, 'element.attr(attName) !== normalizeProperty(attName, attributes[attName])');
-function visit1021_1245_4(result) {
+function visit1020_1245_4(result) {
   _$jscoverage['/editor/styles.js'].branchData['1245'][4].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['1245'][3].init(81, 19, 'attName === \'class\'');
-function visit1020_1245_3(result) {
+function visit1019_1245_3(result) {
   _$jscoverage['/editor/styles.js'].branchData['1245'][3].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['1245'][2].init(81, 51, 'attName === \'class\' || style._.definition.fullMatch');
-function visit1019_1245_2(result) {
+function visit1018_1245_2(result) {
   _$jscoverage['/editor/styles.js'].branchData['1245'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['1245'][1].init(81, 148, '(attName === \'class\' || style._.definition.fullMatch) && element.attr(attName) !== normalizeProperty(attName, attributes[attName])');
-function visit1018_1245_1(result) {
+function visit1017_1245_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['1245'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['1238'][1].init(447, 70, 'S.isEmptyObject(attributes) && S.isEmptyObject(styles)');
-function visit1017_1238_1(result) {
+function visit1016_1238_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['1238'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['1236'][2].init(70, 20, 'overrides[\'*\'] || {}');
-function visit1016_1236_2(result) {
+function visit1015_1236_2(result) {
   _$jscoverage['/editor/styles.js'].branchData['1236'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['1236'][1].init(36, 54, 'overrides[element.nodeName()] || overrides[\'*\'] || {}');
-function visit1015_1236_1(result) {
+function visit1014_1236_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['1236'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['1234'][2].init(74, 20, 'overrides[\'*\'] || {}');
-function visit1014_1234_2(result) {
+function visit1013_1234_2(result) {
   _$jscoverage['/editor/styles.js'].branchData['1234'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['1234'][1].init(40, 54, 'overrides[element.nodeName()] || overrides[\'*\'] || {}');
-function visit1013_1234_1(result) {
+function visit1012_1234_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['1234'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['1215'][1].init(43, 23, 'overrideEl.styles || []');
-function visit1012_1215_1(result) {
+function visit1011_1215_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['1215'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['1210'][1].init(1710, 6, 'styles');
-function visit1011_1210_1(result) {
+function visit1010_1210_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['1210'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['1200'][1].init(47, 27, 'overrideEl.attributes || []');
-function visit1010_1200_1(result) {
+function visit1009_1200_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['1200'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['1195'][1].init(990, 5, 'attrs');
-function visit1009_1195_1(result) {
+function visit1008_1195_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['1195'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['1192'][1].init(886, 81, 'overrides[elementName] || (overrides[elementName] = {})');
-function visit1008_1192_1(result) {
+function visit1007_1192_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['1192'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['1177'][1].init(229, 28, 'typeof override === \'string\'');
-function visit1007_1177_1(result) {
+function visit1006_1177_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['1177'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['1170'][1].init(338, 21, 'i < definition.length');
-function visit1006_1170_1(result) {
+function visit1005_1170_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['1170'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['1165'][1].init(170, 22, '!S.isArray(definition)');
-function visit1005_1165_1(result) {
+function visit1004_1165_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['1165'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['1162'][1].init(203, 10, 'definition');
-function visit1004_1162_1(result) {
+function visit1003_1162_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['1162'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['1155'][1].init(13, 17, 'style._.overrides');
-function visit1003_1155_1(result) {
+function visit1002_1155_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['1155'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['1133'][1].init(17, 14, '!attribs.style');
-function visit1002_1133_1(result) {
+function visit1001_1133_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['1133'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['1132'][1].init(627, 9, 'styleText');
-function visit1001_1132_1(result) {
+function visit1000_1132_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['1132'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['1121'][1].init(327, 12, 'styleAttribs');
-function visit1000_1121_1(result) {
+function visit999_1121_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['1121'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['1112'][1].init(115, 7, 'attribs');
-function visit999_1112_1(result) {
+function visit998_1112_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['1112'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['1091'][1].init(320, 24, 'temp.style.cssText || \'\'');
-function visit998_1091_1(result) {
+function visit997_1091_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['1091'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['1085'][1].init(41, 25, 'nativeNormalize !== FALSE');
-function visit997_1085_1(result) {
+function visit996_1085_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['1085'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['1075'][3].init(31, 28, 'target[name] === \'inherit\'');
-function visit996_1075_3(result) {
+function visit995_1075_3(result) {
   _$jscoverage['/editor/styles.js'].branchData['1075'][3].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['1075'][2].init(94, 28, 'source[name] === \'inherit\'');
-function visit995_1075_2(result) {
+function visit994_1075_2(result) {
   _$jscoverage['/editor/styles.js'].branchData['1075'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['1075'][1].init(56, 60, 'source[name] === \'inherit\' || target[name] === \'inherit\'');
-function visit994_1075_1(result) {
+function visit993_1075_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['1075'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['1074'][2].init(35, 33, 'target[name] === source[name]');
-function visit993_1074_2(result) {
+function visit992_1074_2(result) {
   _$jscoverage['/editor/styles.js'].branchData['1074'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['1074'][1].init(35, 117, 'target[name] === source[name] || source[name] === \'inherit\' || target[name] === \'inherit\'');
-function visit992_1074_1(result) {
+function visit991_1074_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['1074'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['1073'][2].init(122, 155, 'name in target && (target[name] === source[name] || source[name] === \'inherit\' || target[name] === \'inherit\')');
-function visit991_1073_2(result) {
+function visit990_1073_2(result) {
   _$jscoverage['/editor/styles.js'].branchData['1073'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['1073'][1].init(119, 160, '!(name in target && (target[name] === source[name] || source[name] === \'inherit\' || target[name] === \'inherit\'))');
-function visit990_1073_1(result) {
+function visit989_1073_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['1073'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['1066'][1].init(110, 19, 'target === \'string\'');
-function visit989_1066_1(result) {
+function visit988_1066_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['1066'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['1063'][1].init(13, 26, 'typeof source === \'string\'');
-function visit988_1063_1(result) {
+function visit987_1063_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['1063'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['1038'][2].init(896, 50, 'nextNode[0].nodeType === Dom.NodeType.ELEMENT_NODE');
-function visit987_1038_2(result) {
+function visit986_1038_2(result) {
   _$jscoverage['/editor/styles.js'].branchData['1038'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['1038'][1].init(896, 106, 'nextNode[0].nodeType === Dom.NodeType.ELEMENT_NODE && nextNode.contains(startNode)');
-function visit986_1038_1(result) {
+function visit985_1038_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['1038'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['1028'][1].init(56, 53, 'overrides[currentNode.nodeName()] || overrides[\'*\']');
-function visit985_1028_1(result) {
+function visit984_1028_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['1028'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['1022'][1].init(97, 39, 'currentNode.nodeName() === this.element');
-function visit984_1022_1(result) {
+function visit983_1022_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['1022'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['1019'][2].init(305, 53, 'currentNode[0].nodeType === Dom.NodeType.ELEMENT_NODE');
-function visit983_1019_2(result) {
+function visit982_1019_2(result) {
   _$jscoverage['/editor/styles.js'].branchData['1019'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['1019'][1].init(37, 116, 'currentNode[0].nodeType === Dom.NodeType.ELEMENT_NODE && this.checkElementRemovable(currentNode)');
-function visit982_1019_1(result) {
+function visit981_1019_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['1019'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['1018'][1].init(265, 154, 'currentNode[0] && currentNode[0].nodeType === Dom.NodeType.ELEMENT_NODE && this.checkElementRemovable(currentNode)');
-function visit981_1018_1(result) {
+function visit980_1018_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['1018'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['1012'][1].init(1929, 29, 'currentNode[0] !== endNode[0]');
-function visit980_1012_1(result) {
+function visit979_1012_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['1012'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['1003'][1].init(1235, 10, 'breakStart');
-function visit979_1003_1(result) {
+function visit978_1003_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['1003'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['1000'][1].init(1131, 8, 'breakEnd');
-function visit978_1000_1(result) {
+function visit977_1000_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['1000'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['995'][1].init(244, 33, 'me.checkElementRemovable(element)');
-function visit977_995_1(result) {
+function visit976_995_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['995'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['991'][1].init(52, 30, 'element === endPath.blockLimit');
-function visit976_991_1(result) {
+function visit975_991_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['991'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['990'][2].init(79, 25, 'element === endPath.block');
-function visit975_990_2(result) {
+function visit974_990_2(result) {
   _$jscoverage['/editor/styles.js'].branchData['990'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['990'][1].init(79, 83, 'element === endPath.block || element === endPath.blockLimit');
-function visit974_990_1(result) {
+function visit973_990_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['990'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['987'][1].init(710, 27, 'i < endPath.elements.length');
-function visit973_987_1(result) {
+function visit972_987_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['987'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['983'][1].init(250, 33, 'me.checkElementRemovable(element)');
-function visit972_983_1(result) {
+function visit971_983_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['983'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['979'][1].init(54, 32, 'element === startPath.blockLimit');
-function visit971_979_1(result) {
+function visit970_979_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['979'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['978'][2].init(81, 27, 'element === startPath.block');
-function visit970_978_2(result) {
+function visit969_978_2(result) {
   _$jscoverage['/editor/styles.js'].branchData['978'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['978'][1].init(81, 87, 'element === startPath.block || element === startPath.blockLimit');
-function visit969_978_1(result) {
+function visit968_978_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['978'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['975'][1].init(272, 29, 'i < startPath.elements.length');
-function visit968_975_1(result) {
+function visit967_975_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['975'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['953'][1].init(1330, 9, 'UA.webkit');
-function visit967_953_1(result) {
+function visit966_953_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['953'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['949'][1].init(63, 16, 'tmp === \'\\u200b\'');
-function visit966_949_1(result) {
+function visit965_949_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['949'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['947'][1].init(1079, 80, '!tmp || tmp === \'\\u200b\'');
-function visit965_947_1(result) {
+function visit964_947_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['947'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['942'][1].init(14, 33, 'boundaryElement.match === \'start\'');
-function visit964_942_1(result) {
+function visit963_942_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['942'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['930'][1].init(266, 16, 'newElement.match');
-function visit963_930_1(result) {
+function visit962_930_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['930'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['926'][1].init(87, 34, 'newElement.equals(boundaryElement)');
-function visit962_926_1(result) {
+function visit961_926_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['926'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['922'][1].init(2574, 15, 'boundaryElement');
-function visit961_922_1(result) {
+function visit960_922_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['922'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['910'][1].init(56, 51, '_overrides[element.nodeName()] || _overrides[\'*\']');
-function visit960_910_1(result) {
+function visit959_910_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['910'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['907'][1].init(644, 35, 'element.nodeName() !== this.element');
-function visit959_907_1(result) {
+function visit958_907_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['907'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['893'][1].init(248, 30, 'startOfElement || endOfElement');
-function visit958_893_1(result) {
+function visit957_893_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['893'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['891'][1].init(107, 93, '!endOfElement && range.checkBoundaryOfElement(element, KER.START)');
-function visit957_891_1(result) {
+function visit956_891_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['891'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['889'][1].init(540, 35, 'this.checkElementRemovable(element)');
-function visit956_889_1(result) {
+function visit955_889_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['889'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['886'][3].init(439, 32, 'element === startPath.blockLimit');
-function visit955_886_3(result) {
+function visit954_886_3(result) {
   _$jscoverage['/editor/styles.js'].branchData['886'][3].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['886'][2].init(408, 27, 'element === startPath.block');
-function visit954_886_2(result) {
+function visit953_886_2(result) {
   _$jscoverage['/editor/styles.js'].branchData['886'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['886'][1].init(408, 63, 'element === startPath.block || element === startPath.blockLimit');
-function visit953_886_1(result) {
+function visit952_886_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['886'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['878'][2].init(220, 29, 'i < startPath.elements.length');
-function visit952_878_2(result) {
+function visit951_878_2(result) {
   _$jscoverage['/editor/styles.js'].branchData['878'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['878'][1].init(220, 68, 'i < startPath.elements.length && (element = startPath.elements[i])');
-function visit951_878_1(result) {
+function visit950_878_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['878'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['871'][1].init(304, 15, 'range.collapsed');
-function visit950_871_1(result) {
+function visit949_871_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['871'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['825'][1].init(1163, 6, '!UA.ie');
-function visit949_825_1(result) {
+function visit948_825_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['825'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['804'][1].init(2646, 9, 'styleNode');
-function visit948_804_1(result) {
+function visit947_804_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['804'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['795'][1].init(1505, 29, '!styleNode._4eHasAttributes()');
-function visit947_795_1(result) {
+function visit946_795_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['795'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['786'][1].init(220, 36, 'styleNode.style(styleName) === value');
-function visit946_786_1(result) {
+function visit945_786_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['786'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['782'][1].init(34, 77, 'removeList.blockedStyles[styleName] || !(value = parent.style(styleName))');
-function visit945_782_1(result) {
+function visit944_782_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['782'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['768'][1].init(216, 33, 'styleNode.attr(attName) === value');
-function visit944_768_1(result) {
+function visit943_768_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['768'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['764'][1].init(34, 73, 'removeList.blockedAttrs[attName] || !(value = parent.attr(styleName))');
-function visit943_764_1(result) {
+function visit942_764_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['764'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['761'][1].init(25, 33, 'parent.nodeName() === elementName');
-function visit942_761_1(result) {
+function visit941_761_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['761'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['760'][3].init(804, 25, 'styleNode[0] && parent[0]');
-function visit941_760_3(result) {
+function visit940_760_3(result) {
   _$jscoverage['/editor/styles.js'].branchData['760'][3].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['760'][2].init(794, 35, 'parent && styleNode[0] && parent[0]');
-function visit940_760_2(result) {
+function visit939_760_2(result) {
   _$jscoverage['/editor/styles.js'].branchData['760'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['760'][1].init(781, 48, 'styleNode && parent && styleNode[0] && parent[0]');
-function visit939_760_1(result) {
+function visit938_760_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['760'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['739'][2].init(6216, 35, 'styleRange && !styleRange.collapsed');
-function visit938_739_2(result) {
+function visit937_739_2(result) {
   _$jscoverage['/editor/styles.js'].branchData['739'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['739'][1].init(6202, 49, 'applyStyle && styleRange && !styleRange.collapsed');
-function visit937_739_1(result) {
+function visit936_739_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['739'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['718'][1].init(401, 43, '!def.childRule || def.childRule(parentNode)');
-function visit936_718_1(result) {
+function visit935_718_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['718'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['713'][2].init(1128, 396, '(parentNode._4ePosition(firstNode) | KEP.POSITION_FOLLOWING | KEP.POSITION_IDENTICAL | KEP.POSITION_IS_CONTAINED) === (KEP.POSITION_FOLLOWING + KEP.POSITION_IDENTICAL + KEP.POSITION_IS_CONTAINED)');
-function visit935_713_2(result) {
+function visit934_713_2(result) {
   _$jscoverage['/editor/styles.js'].branchData['713'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['713'][1].init(150, 447, '(parentNode._4ePosition(firstNode) | KEP.POSITION_FOLLOWING | KEP.POSITION_IDENTICAL | KEP.POSITION_IS_CONTAINED) === (KEP.POSITION_FOLLOWING + KEP.POSITION_IDENTICAL + KEP.POSITION_IS_CONTAINED) && (!def.childRule || def.childRule(parentNode))');
-function visit934_713_1(result) {
+function visit933_713_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['713'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['711'][2].init(976, 107, '(parentNode = includedNode.parent()) && dtd[parentNode.nodeName()]');
-function visit933_711_2(result) {
+function visit932_711_2(result) {
   _$jscoverage['/editor/styles.js'].branchData['711'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['711'][1].init(90, 598, '((parentNode = includedNode.parent()) && dtd[parentNode.nodeName()]) && (parentNode._4ePosition(firstNode) | KEP.POSITION_FOLLOWING | KEP.POSITION_IDENTICAL | KEP.POSITION_IS_CONTAINED) === (KEP.POSITION_FOLLOWING + KEP.POSITION_IDENTICAL + KEP.POSITION_IS_CONTAINED) && (!def.childRule || def.childRule(parentNode))');
-function visit932_711_1(result) {
+function visit931_711_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['711'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['710'][1].init(40, 689, '(applyStyle = !includedNode.next(notBookmark, 1)) && ((parentNode = includedNode.parent()) && dtd[parentNode.nodeName()]) && (parentNode._4ePosition(firstNode) | KEP.POSITION_FOLLOWING | KEP.POSITION_IDENTICAL | KEP.POSITION_IS_CONTAINED) === (KEP.POSITION_FOLLOWING + KEP.POSITION_IDENTICAL + KEP.POSITION_IS_CONTAINED) && (!def.childRule || def.childRule(parentNode))');
-function visit931_710_1(result) {
+function visit930_710_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['710'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['695'][2].init(68, 38, 'nodeType === Dom.NodeType.ELEMENT_NODE');
-function visit930_695_2(result) {
+function visit929_695_2(result) {
   _$jscoverage['/editor/styles.js'].branchData['695'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['695'][1].init(68, 75, 'nodeType === Dom.NodeType.ELEMENT_NODE && !currentNode[0].childNodes.length');
-function visit929_695_1(result) {
+function visit928_695_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['695'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['694'][2].init(1192, 35, 'nodeType === Dom.NodeType.TEXT_NODE');
-function visit928_694_2(result) {
+function visit927_694_2(result) {
   _$jscoverage['/editor/styles.js'].branchData['694'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['694'][1].init(1192, 146, 'nodeType === Dom.NodeType.TEXT_NODE || (nodeType === Dom.NodeType.ELEMENT_NODE && !currentNode[0].childNodes.length)');
-function visit927_694_1(result) {
+function visit926_694_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['694'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['680'][3].init(92, 408, '(currentNode._4ePosition(lastNode) | (KEP.POSITION_PRECEDING | KEP.POSITION_IDENTICAL | KEP.POSITION_IS_CONTAINED)) === (KEP.POSITION_PRECEDING + KEP.POSITION_IDENTICAL + KEP.POSITION_IS_CONTAINED)');
-function visit926_680_3(result) {
+function visit925_680_3(result) {
   _$jscoverage['/editor/styles.js'].branchData['680'][3].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['680'][2].init(57, 443, '!DTD.$removeEmpty[nodeName] || (currentNode._4ePosition(lastNode) | (KEP.POSITION_PRECEDING | KEP.POSITION_IDENTICAL | KEP.POSITION_IS_CONTAINED)) === (KEP.POSITION_PRECEDING + KEP.POSITION_IDENTICAL + KEP.POSITION_IS_CONTAINED)');
-function visit925_680_2(result) {
+function visit924_680_2(result) {
   _$jscoverage['/editor/styles.js'].branchData['680'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['680'][1].init(44, 456, '!nodeName || !DTD.$removeEmpty[nodeName] || (currentNode._4ePosition(lastNode) | (KEP.POSITION_PRECEDING | KEP.POSITION_IDENTICAL | KEP.POSITION_IS_CONTAINED)) === (KEP.POSITION_PRECEDING + KEP.POSITION_IDENTICAL + KEP.POSITION_IS_CONTAINED)');
-function visit924_680_1(result) {
+function visit923_680_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['680'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['679'][1].init(337, 535, '!styleRange && (!nodeName || !DTD.$removeEmpty[nodeName] || (currentNode._4ePosition(lastNode) | (KEP.POSITION_PRECEDING | KEP.POSITION_IDENTICAL | KEP.POSITION_IS_CONTAINED)) === (KEP.POSITION_PRECEDING + KEP.POSITION_IDENTICAL + KEP.POSITION_IS_CONTAINED))');
-function visit923_679_1(result) {
+function visit922_679_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['679'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['674'][1].init(133, 48, '!def.parentRule || def.parentRule(currentParent)');
-function visit922_674_1(result) {
+function visit921_674_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['674'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['672'][4].init(-1, 65, 'DTD[currentParent.nodeName()] || DTD.span');
-function visit921_672_4(result) {
+function visit920_672_4(result) {
   _$jscoverage['/editor/styles.js'].branchData['672'][4].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['673'][1].init(-1, 126, '(DTD[currentParent.nodeName()] || DTD.span)[elementName] || isUnknownElement');
-function visit920_673_1(result) {
+function visit919_673_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['673'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['672'][3].init(1286, 184, '((DTD[currentParent.nodeName()] || DTD.span)[elementName] || isUnknownElement) && (!def.parentRule || def.parentRule(currentParent))');
-function visit919_672_3(result) {
+function visit918_672_3(result) {
   _$jscoverage['/editor/styles.js'].branchData['672'][3].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['672'][2].init(1262, 208, 'currentParent[0] && ((DTD[currentParent.nodeName()] || DTD.span)[elementName] || isUnknownElement) && (!def.parentRule || def.parentRule(currentParent))');
-function visit918_672_2(result) {
+function visit917_672_2(result) {
   _$jscoverage['/editor/styles.js'].branchData['672'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['672'][1].init(1245, 225, 'currentParent && currentParent[0] && ((DTD[currentParent.nodeName()] || DTD.span)[elementName] || isUnknownElement) && (!def.parentRule || def.parentRule(currentParent))');
-function visit917_672_1(result) {
+function visit916_672_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['672'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['663'][1].init(46, 40, 'currentParent.nodeName() === elementName');
-function visit916_663_1(result) {
+function visit915_663_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['663'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['662'][2].init(650, 19, 'elementName === \'a\'');
-function visit915_662_2(result) {
+function visit914_662_2(result) {
   _$jscoverage['/editor/styles.js'].branchData['662'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['662'][1].init(40, 87, 'elementName === \'a\' && currentParent.nodeName() === elementName');
-function visit914_662_1(result) {
+function visit913_662_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['662'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['661'][1].init(607, 128, 'currentParent && elementName === \'a\' && currentParent.nodeName() === elementName');
-function visit913_661_1(result) {
+function visit912_661_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['661'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['648'][1].init(377, 44, '!def.childRule || def.childRule(currentNode)');
-function visit912_648_1(result) {
+function visit911_648_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['648'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['642'][2].init(81, 348, '(currentNode._4ePosition(lastNode) | (KEP.POSITION_PRECEDING | KEP.POSITION_IDENTICAL | KEP.POSITION_IS_CONTAINED)) === (KEP.POSITION_PRECEDING + KEP.POSITION_IDENTICAL + KEP.POSITION_IS_CONTAINED)');
-function visit911_642_2(result) {
+function visit910_642_2(result) {
   _$jscoverage['/editor/styles.js'].branchData['642'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['642'][1].init(44, 424, '(currentNode._4ePosition(lastNode) | (KEP.POSITION_PRECEDING | KEP.POSITION_IDENTICAL | KEP.POSITION_IS_CONTAINED)) === (KEP.POSITION_PRECEDING + KEP.POSITION_IDENTICAL + KEP.POSITION_IS_CONTAINED) && (!def.childRule || def.childRule(currentNode))');
-function visit910_642_1(result) {
+function visit909_642_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['642'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['641'][1].init(-1, 469, 'dtd[nodeName] && (currentNode._4ePosition(lastNode) | (KEP.POSITION_PRECEDING | KEP.POSITION_IDENTICAL | KEP.POSITION_IS_CONTAINED)) === (KEP.POSITION_PRECEDING + KEP.POSITION_IDENTICAL + KEP.POSITION_IS_CONTAINED) && (!def.childRule || def.childRule(currentNode))');
-function visit909_641_1(result) {
+function visit908_641_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['641'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['640'][1].init(475, 526, '!nodeName || (dtd[nodeName] && (currentNode._4ePosition(lastNode) | (KEP.POSITION_PRECEDING | KEP.POSITION_IDENTICAL | KEP.POSITION_IS_CONTAINED)) === (KEP.POSITION_PRECEDING + KEP.POSITION_IDENTICAL + KEP.POSITION_IS_CONTAINED) && (!def.childRule || def.childRule(currentNode)))');
-function visit908_640_1(result) {
+function visit907_640_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['640'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['634'][1].init(205, 44, 'nodeName && currentNode.attr(\'_ke_bookmark\')');
-function visit907_634_1(result) {
+function visit906_634_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['634'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['631'][1].init(70, 38, 'nodeType === Dom.NodeType.ELEMENT_NODE');
-function visit906_631_1(result) {
+function visit905_631_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['631'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['625'][1].init(54, 33, 'Dom.equals(currentNode, lastNode)');
-function visit905_625_1(result) {
+function visit904_625_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['625'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['622'][1].init(1384, 29, 'currentNode && currentNode[0]');
-function visit904_622_1(result) {
+function visit903_622_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['622'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['602'][1].init(758, 4, '!dtd');
-function visit903_602_1(result) {
+function visit902_602_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['602'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['588'][1].init(78, 15, 'range.collapsed');
-function visit902_588_1(result) {
+function visit901_588_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['588'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['561'][1].init(149, 7, '!offset');
-function visit901_561_1(result) {
+function visit900_561_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['561'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['558'][1].init(21, 18, 'match.length === 1');
-function visit900_558_1(result) {
+function visit899_558_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['558'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['547'][1].init(99, 19, 'i < preHTMLs.length');
-function visit899_547_1(result) {
+function visit898_547_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['547'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['533'][1].init(807, 5, 'UA.ie');
-function visit898_533_1(result) {
+function visit897_533_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['533'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['518'][1].init(96, 34, 'previousBlock.nodeName() === \'pre\'');
-function visit897_518_1(result) {
+function visit896_518_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['518'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['517'][2].init(45, 131, '(previousBlock = preBlock._4ePreviousSourceNode(TRUE, Dom.NodeType.ELEMENT_NODE)) && previousBlock.nodeName() === \'pre\'');
-function visit896_517_2(result) {
+function visit895_517_2(result) {
   _$jscoverage['/editor/styles.js'].branchData['517'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['517'][1].init(40, 138, '!((previousBlock = preBlock._4ePreviousSourceNode(TRUE, Dom.NodeType.ELEMENT_NODE)) && previousBlock.nodeName() === \'pre\')');
-function visit895_517_1(result) {
+function visit894_517_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['517'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['508'][1].init(621, 13, 'newBlockIsPre');
-function visit894_508_1(result) {
+function visit893_508_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['508'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['499'][1].init(318, 9, 'isFromPre');
-function visit893_499_1(result) {
+function visit892_499_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['499'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['496'][1].init(232, 7, 'isToPre');
-function visit892_496_1(result) {
+function visit891_496_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['496'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['494'][1].init(179, 28, '!newBlockIsPre && blockIsPre');
-function visit891_494_1(result) {
+function visit890_494_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['494'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['493'][1].init(125, 28, 'newBlockIsPre && !blockIsPre');
-function visit890_493_1(result) {
+function visit889_493_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['493'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['492'][1].init(75, 26, 'block.nodeName === (\'pre\')');
-function visit889_492_1(result) {
+function visit888_492_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['492'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['491'][1].init(29, 29, 'newBlock.nodeName === (\'pre\')');
-function visit888_491_1(result) {
+function visit887_491_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['491'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['452'][1].init(944, 5, 'UA.ie');
-function visit887_452_1(result) {
+function visit886_452_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['452'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['423'][1].init(104, 2, 'm2');
-function visit886_423_1(result) {
+function visit885_423_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['423'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['420'][1].init(21, 2, 'm1');
-function visit885_420_1(result) {
+function visit884_420_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['420'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['386'][1].init(364, 6, 'styles');
-function visit884_386_1(result) {
+function visit883_386_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['386'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['378'][1].init(183, 10, 'attributes');
-function visit883_378_1(result) {
+function visit882_378_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['378'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['365'][1].init(436, 7, 'element');
-function visit882_365_1(result) {
+function visit881_365_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['365'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['357'][1].init(180, 19, 'elementName === \'*\'');
-function visit881_357_1(result) {
+function visit880_357_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['357'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['340'][1].init(1087, 17, 'stylesText.length');
-function visit880_340_1(result) {
+function visit879_340_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['340'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['329'][1].init(245, 22, 'styleVal === \'inherit\'');
-function visit879_329_1(result) {
+function visit878_329_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['329'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['319'][1].init(397, 17, 'stylesText.length');
-function visit878_319_1(result) {
+function visit877_319_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['319'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['316'][2].init(276, 62, 'styleDefinition.attributes && styleDefinition.attributes.style');
-function visit877_316_2(result) {
+function visit876_316_2(result) {
   _$jscoverage['/editor/styles.js'].branchData['316'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['316'][1].init(276, 70, '(styleDefinition.attributes && styleDefinition.attributes.style) || \'\'');
-function visit876_316_1(result) {
+function visit875_316_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['316'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['309'][1].init(117, 9, 'stylesDef');
-function visit875_309_1(result) {
+function visit874_309_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['309'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['296'][1].init(501, 41, 'this.checkElementRemovable(element, TRUE)');
-function visit874_296_1(result) {
+function visit873_296_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['296'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['292'][2].init(328, 31, 'this.type === KEST.STYLE_OBJECT');
-function visit873_292_2(result) {
+function visit872_292_2(result) {
   _$jscoverage['/editor/styles.js'].branchData['292'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['292'][1].init(328, 76, 'this.type === KEST.STYLE_OBJECT && !(element.nodeName() in objectElements)');
-function visit872_292_1(result) {
+function visit871_292_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['292'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['287'][3].init(116, 113, 'Dom.equals(element, elementPath.block) || Dom.equals(element, elementPath.blockLimit)');
-function visit871_287_3(result) {
+function visit870_287_3(result) {
   _$jscoverage['/editor/styles.js'].branchData['287'][3].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['287'][2].init(79, 31, 'this.type === KEST.STYLE_INLINE');
-function visit870_287_2(result) {
+function visit869_287_2(result) {
   _$jscoverage['/editor/styles.js'].branchData['287'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['287'][1].init(79, 152, 'this.type === KEST.STYLE_INLINE && (Dom.equals(element, elementPath.block) || Dom.equals(element, elementPath.blockLimit))');
-function visit869_287_1(result) {
+function visit868_287_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['287'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['284'][1].init(128, 19, 'i < elements.length');
-function visit868_284_1(result) {
+function visit867_284_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['284'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['277'][1].init(77, 43, 'elementPath.block || elementPath.blockLimit');
-function visit867_277_1(result) {
+function visit866_277_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['277'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['260'][1].init(102, 52, 'styleValue.test && styleValue.test(actualStyleValue)');
-function visit866_260_1(result) {
+function visit865_260_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['260'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['259'][6].init(151, 31, 'actualStyleValue === styleValue');
-function visit865_259_6(result) {
+function visit864_259_6(result) {
   _$jscoverage['/editor/styles.js'].branchData['259'][6].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['259'][5].init(117, 30, 'typeof styleValue === \'string\'');
-function visit864_259_5(result) {
+function visit863_259_5(result) {
   _$jscoverage['/editor/styles.js'].branchData['259'][5].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['259'][4].init(117, 65, 'typeof styleValue === \'string\' && actualStyleValue === styleValue');
-function visit863_259_4(result) {
+function visit862_259_4(result) {
   _$jscoverage['/editor/styles.js'].branchData['259'][4].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['259'][3].init(117, 155, '(typeof styleValue === \'string\' && actualStyleValue === styleValue) || styleValue.test && styleValue.test(actualStyleValue)');
-function visit862_259_3(result) {
+function visit861_259_3(result) {
   _$jscoverage['/editor/styles.js'].branchData['259'][3].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['259'][2].init(92, 19, 'styleValue === NULL');
-function visit861_259_2(result) {
+function visit860_259_2(result) {
   _$jscoverage['/editor/styles.js'].branchData['259'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['259'][1].init(92, 180, 'styleValue === NULL || (typeof styleValue === \'string\' && actualStyleValue === styleValue) || styleValue.test && styleValue.test(actualStyleValue)');
-function visit860_259_1(result) {
+function visit859_259_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['259'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['257'][1].init(154, 16, 'actualStyleValue');
-function visit859_257_1(result) {
+function visit858_257_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['257'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['254'][1].init(33, 17, 'i < styles.length');
-function visit858_254_1(result) {
+function visit857_254_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['254'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['253'][1].init(1368, 6, 'styles');
-function visit857_253_1(result) {
+function visit856_253_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['253'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['247'][1].init(97, 47, 'attValue.test && attValue.test(actualAttrValue)');
-function visit856_247_1(result) {
+function visit855_247_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['247'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['246'][4].init(621, 28, 'actualAttrValue === attValue');
-function visit855_246_4(result) {
+function visit854_246_4(result) {
   _$jscoverage['/editor/styles.js'].branchData['246'][4].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['246'][3].init(589, 28, 'typeof attValue === \'string\'');
-function visit854_246_3(result) {
+function visit853_246_3(result) {
   _$jscoverage['/editor/styles.js'].branchData['246'][3].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['246'][2].init(589, 60, 'typeof attValue === \'string\' && actualAttrValue === attValue');
-function visit853_246_2(result) {
+function visit852_246_2(result) {
   _$jscoverage['/editor/styles.js'].branchData['246'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['246'][1].init(54, 145, '(typeof attValue === \'string\' && actualAttrValue === attValue) || attValue.test && attValue.test(actualAttrValue)');
-function visit852_246_1(result) {
+function visit851_246_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['246'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['245'][2].init(532, 17, 'attValue === NULL');
-function visit851_245_2(result) {
+function visit850_245_2(result) {
   _$jscoverage['/editor/styles.js'].branchData['245'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['245'][1].init(532, 200, 'attValue === NULL || (typeof attValue === \'string\' && actualAttrValue === attValue) || attValue.test && attValue.test(actualAttrValue)');
-function visit850_245_1(result) {
+function visit849_245_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['245'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['237'][1].init(147, 15, 'actualAttrValue');
-function visit849_237_1(result) {
+function visit848_237_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['237'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['234'][1].init(33, 18, 'i < attribs.length');
-function visit848_234_1(result) {
+function visit847_234_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['234'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['233'][1].init(237, 7, 'attribs');
-function visit847_233_1(result) {
+function visit846_233_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['233'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['230'][1].init(96, 66, '!(attribs = override.attributes) && !(styles = override.styles)');
-function visit846_230_1(result) {
+function visit845_230_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['230'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['228'][1].init(1773, 8, 'override');
-function visit845_228_1(result) {
+function visit844_228_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['228'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['226'][1].init(81, 49, 'overrides[element.nodeName()] || overrides[\'*\']');
-function visit844_226_1(result) {
+function visit843_226_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['226'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['214'][1].init(797, 9, 'fullMatch');
-function visit843_214_1(result) {
+function visit842_214_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['214'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['209'][1].init(623, 9, 'fullMatch');
-function visit842_209_1(result) {
+function visit841_209_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['209'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['205'][1].init(33, 10, '!fullMatch');
-function visit841_205_1(result) {
+function visit840_205_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['205'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['204'][1].init(184, 34, 'attribs[attName] === elementAttr');
-function visit840_204_1(result) {
+function visit839_204_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['204'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['201'][2].init(219, 19, 'attName === \'style\'');
-function visit839_201_2(result) {
+function visit838_201_2(result) {
   _$jscoverage['/editor/styles.js'].branchData['201'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['201'][1].init(219, 219, 'attName === \'style\' ? compareCssText(attribs[attName], normalizeCssText(elementAttr, FALSE)) : attribs[attName] === elementAttr');
-function visit838_201_1(result) {
+function visit837_201_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['201'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['200'][1].init(162, 27, 'element.attr(attName) || \'\'');
-function visit837_200_1(result) {
+function visit836_200_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['200'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['196'][1].init(30, 21, 'attName === \'_length\'');
-function visit836_196_1(result) {
+function visit835_196_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['196'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['193'][1].init(262, 15, 'attribs._length');
-function visit835_193_1(result) {
+function visit834_193_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['193'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['187'][1].init(85, 41, '!fullMatch && !element._4eHasAttributes()');
-function visit834_187_1(result) {
+function visit833_187_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['187'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['185'][1].init(255, 35, 'element.nodeName() === this.element');
-function visit833_185_1(result) {
+function visit832_185_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['185'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['177'][1].init(17, 8, '!element');
-function visit832_177_1(result) {
+function visit831_177_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['177'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['169'][1].init(38, 31, 'self.type === KEST.STYLE_INLINE');
-function visit831_169_1(result) {
+function visit830_169_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['169'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['159'][1].init(90, 31, 'self.type === KEST.STYLE_OBJECT');
-function visit830_159_1(result) {
+function visit829_159_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['159'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['157'][1].init(92, 30, 'self.type === KEST.STYLE_BLOCK');
-function visit829_157_1(result) {
+function visit828_157_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['157'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['155'][1].init(35, 31, 'this.type === KEST.STYLE_INLINE');
-function visit828_155_1(result) {
+function visit827_155_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['155'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['134'][1].init(447, 17, 'i < ranges.length');
-function visit827_134_1(result) {
+function visit826_134_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['134'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['113'][2].init(300, 19, 'element === \'#text\'');
-function visit826_113_2(result) {
+function visit825_113_2(result) {
   _$jscoverage['/editor/styles.js'].branchData['113'][2].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['113'][1].init(300, 47, 'element === \'#text\' || blockElements[element]');
-function visit825_113_1(result) {
+function visit824_113_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['113'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['111'][1].init(217, 30, 'styleDefinition.element || \'*\'');
-function visit824_111_1(result) {
+function visit823_111_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['111'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['106'][1].init(13, 15, 'variablesValues');
-function visit823_106_1(result) {
+function visit822_106_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['106'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].branchData['88'][1].init(17, 34, 'typeof (list[item]) === \'string\'');
-function visit822_88_1(result) {
+function visit821_88_1(result) {
   _$jscoverage['/editor/styles.js'].branchData['88'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor/styles.js'].lineData[10]++;
@@ -2159,7 +2159,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/editor/styles.js'].lineData[87]++;
     for (var item in list) {
       _$jscoverage['/editor/styles.js'].lineData[88]++;
-      if (visit822_88_1(typeof (list[item]) === 'string')) {
+      if (visit821_88_1(typeof (list[item]) === 'string')) {
         _$jscoverage['/editor/styles.js'].lineData[90]++;
         list[item] = list[item].replace(varRegex, function(match, varName) {
   _$jscoverage['/editor/styles.js'].functionData[3]++;
@@ -2176,16 +2176,16 @@ KISSY.add(function(S, require) {
   function KEStyle(styleDefinition, variablesValues) {
     _$jscoverage['/editor/styles.js'].functionData[4]++;
     _$jscoverage['/editor/styles.js'].lineData[106]++;
-    if (visit823_106_1(variablesValues)) {
+    if (visit822_106_1(variablesValues)) {
       _$jscoverage['/editor/styles.js'].lineData[107]++;
       styleDefinition = S.clone(styleDefinition);
       _$jscoverage['/editor/styles.js'].lineData[108]++;
       replaceVariables(styleDefinition, variablesValues);
     }
     _$jscoverage['/editor/styles.js'].lineData[111]++;
-    var element = this.element = this.element = (visit824_111_1(styleDefinition.element || '*')).toLowerCase();
+    var element = this.element = this.element = (visit823_111_1(styleDefinition.element || '*')).toLowerCase();
     _$jscoverage['/editor/styles.js'].lineData[113]++;
-    this.type = this.type = (visit825_113_1(visit826_113_2(element === '#text') || blockElements[element])) ? KEST.STYLE_BLOCK : objectElements[element] ? KEST.STYLE_OBJECT : KEST.STYLE_INLINE;
+    this.type = this.type = (visit824_113_1(visit825_113_2(element === '#text') || blockElements[element])) ? KEST.STYLE_BLOCK : objectElements[element] ? KEST.STYLE_OBJECT : KEST.STYLE_INLINE;
     _$jscoverage['/editor/styles.js'].lineData[118]++;
     this._ = {
   'definition': styleDefinition};
@@ -2202,7 +2202,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/editor/styles.js'].lineData[133]++;
     var ranges = selection.getRanges();
     _$jscoverage['/editor/styles.js'].lineData[134]++;
-    for (var i = 0; visit827_134_1(i < ranges.length); i++) {
+    for (var i = 0; visit826_134_1(i < ranges.length); i++) {
       _$jscoverage['/editor/styles.js'].lineData[136]++;
       func.call(self, ranges[i]);
     }
@@ -2227,19 +2227,19 @@ KISSY.add(function(S, require) {
   _$jscoverage['/editor/styles.js'].lineData[153]++;
   var self = this;
   _$jscoverage['/editor/styles.js'].lineData[154]++;
-  return (self.applyToRange = visit828_155_1(this.type === KEST.STYLE_INLINE) ? applyInlineStyle : visit829_157_1(self.type === KEST.STYLE_BLOCK) ? applyBlockStyle : visit830_159_1(self.type === KEST.STYLE_OBJECT) ? NULL : NULL).call(self, range);
+  return (self.applyToRange = visit827_155_1(this.type === KEST.STYLE_INLINE) ? applyInlineStyle : visit828_157_1(self.type === KEST.STYLE_BLOCK) ? applyBlockStyle : visit829_159_1(self.type === KEST.STYLE_OBJECT) ? NULL : NULL).call(self, range);
 }, 
   removeFromRange: function(range) {
   _$jscoverage['/editor/styles.js'].functionData[9]++;
   _$jscoverage['/editor/styles.js'].lineData[167]++;
   var self = this;
   _$jscoverage['/editor/styles.js'].lineData[168]++;
-  return (self.removeFromRange = visit831_169_1(self.type === KEST.STYLE_INLINE) ? removeInlineStyle : NULL).call(self, range);
+  return (self.removeFromRange = visit830_169_1(self.type === KEST.STYLE_INLINE) ? removeInlineStyle : NULL).call(self, range);
 }, 
   checkElementRemovable: function(element, fullMatch) {
   _$jscoverage['/editor/styles.js'].functionData[10]++;
   _$jscoverage['/editor/styles.js'].lineData[177]++;
-  if (visit832_177_1(!element)) {
+  if (visit831_177_1(!element)) {
     _$jscoverage['/editor/styles.js'].lineData[178]++;
     return FALSE;
   }
@@ -2248,42 +2248,42 @@ KISSY.add(function(S, require) {
   _$jscoverage['/editor/styles.js'].lineData[181]++;
   var def = this._.definition, attribs, styles;
   _$jscoverage['/editor/styles.js'].lineData[185]++;
-  if (visit833_185_1(element.nodeName() === this.element)) {
+  if (visit832_185_1(element.nodeName() === this.element)) {
     _$jscoverage['/editor/styles.js'].lineData[187]++;
-    if (visit834_187_1(!fullMatch && !element._4eHasAttributes())) {
+    if (visit833_187_1(!fullMatch && !element._4eHasAttributes())) {
       _$jscoverage['/editor/styles.js'].lineData[188]++;
       return TRUE;
     }
     _$jscoverage['/editor/styles.js'].lineData[191]++;
     attribs = getAttributesForComparison(def);
     _$jscoverage['/editor/styles.js'].lineData[193]++;
-    if (visit835_193_1(attribs._length)) {
+    if (visit834_193_1(attribs._length)) {
       _$jscoverage['/editor/styles.js'].lineData[194]++;
       for (attName in attribs) {
         _$jscoverage['/editor/styles.js'].lineData[196]++;
-        if (visit836_196_1(attName === '_length')) {
+        if (visit835_196_1(attName === '_length')) {
           _$jscoverage['/editor/styles.js'].lineData[197]++;
           continue;
         }
         _$jscoverage['/editor/styles.js'].lineData[200]++;
-        var elementAttr = visit837_200_1(element.attr(attName) || '');
+        var elementAttr = visit836_200_1(element.attr(attName) || '');
         _$jscoverage['/editor/styles.js'].lineData[201]++;
-        if (visit838_201_1(visit839_201_2(attName === 'style') ? compareCssText(attribs[attName], normalizeCssText(elementAttr, FALSE)) : visit840_204_1(attribs[attName] === elementAttr))) {
+        if (visit837_201_1(visit838_201_2(attName === 'style') ? compareCssText(attribs[attName], normalizeCssText(elementAttr, FALSE)) : visit839_204_1(attribs[attName] === elementAttr))) {
           _$jscoverage['/editor/styles.js'].lineData[205]++;
-          if (visit841_205_1(!fullMatch)) {
+          if (visit840_205_1(!fullMatch)) {
             _$jscoverage['/editor/styles.js'].lineData[206]++;
             return TRUE;
           }
         } else {
           _$jscoverage['/editor/styles.js'].lineData[209]++;
-          if (visit842_209_1(fullMatch)) {
+          if (visit841_209_1(fullMatch)) {
             _$jscoverage['/editor/styles.js'].lineData[210]++;
             return FALSE;
           }
         }
       }
       _$jscoverage['/editor/styles.js'].lineData[214]++;
-      if (visit843_214_1(fullMatch)) {
+      if (visit842_214_1(fullMatch)) {
         _$jscoverage['/editor/styles.js'].lineData[215]++;
         return TRUE;
       }
@@ -2293,28 +2293,28 @@ KISSY.add(function(S, require) {
     }
   }
   _$jscoverage['/editor/styles.js'].lineData[224]++;
-  var overrides = getOverrides(this), i, override = visit844_226_1(overrides[element.nodeName()] || overrides['*']);
+  var overrides = getOverrides(this), i, override = visit843_226_1(overrides[element.nodeName()] || overrides['*']);
   _$jscoverage['/editor/styles.js'].lineData[228]++;
-  if (visit845_228_1(override)) {
+  if (visit844_228_1(override)) {
     _$jscoverage['/editor/styles.js'].lineData[230]++;
-    if (visit846_230_1(!(attribs = override.attributes) && !(styles = override.styles))) {
+    if (visit845_230_1(!(attribs = override.attributes) && !(styles = override.styles))) {
       _$jscoverage['/editor/styles.js'].lineData[231]++;
       return TRUE;
     }
     _$jscoverage['/editor/styles.js'].lineData[233]++;
-    if (visit847_233_1(attribs)) {
+    if (visit846_233_1(attribs)) {
       _$jscoverage['/editor/styles.js'].lineData[234]++;
-      for (i = 0; visit848_234_1(i < attribs.length); i++) {
+      for (i = 0; visit847_234_1(i < attribs.length); i++) {
         _$jscoverage['/editor/styles.js'].lineData[235]++;
         attName = attribs[i][0];
         _$jscoverage['/editor/styles.js'].lineData[236]++;
         var actualAttrValue = element.attr(attName);
         _$jscoverage['/editor/styles.js'].lineData[237]++;
-        if (visit849_237_1(actualAttrValue)) {
+        if (visit848_237_1(actualAttrValue)) {
           _$jscoverage['/editor/styles.js'].lineData[238]++;
           var attValue = attribs[i][1];
           _$jscoverage['/editor/styles.js'].lineData[245]++;
-          if (visit850_245_1(visit851_245_2(attValue === NULL) || visit852_246_1((visit853_246_2(visit854_246_3(typeof attValue === 'string') && visit855_246_4(actualAttrValue === attValue))) || visit856_247_1(attValue.test && attValue.test(actualAttrValue))))) {
+          if (visit849_245_1(visit850_245_2(attValue === NULL) || visit851_246_1((visit852_246_2(visit853_246_3(typeof attValue === 'string') && visit854_246_4(actualAttrValue === attValue))) || visit855_247_1(attValue.test && attValue.test(actualAttrValue))))) {
             _$jscoverage['/editor/styles.js'].lineData[248]++;
             return TRUE;
           }
@@ -2322,19 +2322,19 @@ KISSY.add(function(S, require) {
       }
     }
     _$jscoverage['/editor/styles.js'].lineData[253]++;
-    if (visit857_253_1(styles)) {
+    if (visit856_253_1(styles)) {
       _$jscoverage['/editor/styles.js'].lineData[254]++;
-      for (i = 0; visit858_254_1(i < styles.length); i++) {
+      for (i = 0; visit857_254_1(i < styles.length); i++) {
         _$jscoverage['/editor/styles.js'].lineData[255]++;
         var styleName = styles[i][0];
         _$jscoverage['/editor/styles.js'].lineData[256]++;
         var actualStyleValue = element.css(styleName);
         _$jscoverage['/editor/styles.js'].lineData[257]++;
-        if (visit859_257_1(actualStyleValue)) {
+        if (visit858_257_1(actualStyleValue)) {
           _$jscoverage['/editor/styles.js'].lineData[258]++;
           var styleValue = styles[i][1];
           _$jscoverage['/editor/styles.js'].lineData[259]++;
-          if (visit860_259_1(visit861_259_2(styleValue === NULL) || visit862_259_3((visit863_259_4(visit864_259_5(typeof styleValue === 'string') && visit865_259_6(actualStyleValue === styleValue))) || visit866_260_1(styleValue.test && styleValue.test(actualStyleValue))))) {
+          if (visit859_259_1(visit860_259_2(styleValue === NULL) || visit861_259_3((visit862_259_4(visit863_259_5(typeof styleValue === 'string') && visit864_259_6(actualStyleValue === styleValue))) || visit865_260_1(styleValue.test && styleValue.test(actualStyleValue))))) {
             _$jscoverage['/editor/styles.js'].lineData[261]++;
             return TRUE;
           }
@@ -2351,27 +2351,27 @@ KISSY.add(function(S, require) {
   switch (this.type) {
     case KEST.STYLE_BLOCK:
       _$jscoverage['/editor/styles.js'].lineData[277]++;
-      return this.checkElementRemovable(visit867_277_1(elementPath.block || elementPath.blockLimit), TRUE);
+      return this.checkElementRemovable(visit866_277_1(elementPath.block || elementPath.blockLimit), TRUE);
     case KEST.STYLE_OBJECT:
     case KEST.STYLE_INLINE:
       _$jscoverage['/editor/styles.js'].lineData[282]++;
       var elements = elementPath.elements;
       _$jscoverage['/editor/styles.js'].lineData[284]++;
-      for (var i = 0, element; visit868_284_1(i < elements.length); i++) {
+      for (var i = 0, element; visit867_284_1(i < elements.length); i++) {
         _$jscoverage['/editor/styles.js'].lineData[285]++;
         element = elements[i];
         _$jscoverage['/editor/styles.js'].lineData[287]++;
-        if (visit869_287_1(visit870_287_2(this.type === KEST.STYLE_INLINE) && (visit871_287_3(Dom.equals(element, elementPath.block) || Dom.equals(element, elementPath.blockLimit))))) {
+        if (visit868_287_1(visit869_287_2(this.type === KEST.STYLE_INLINE) && (visit870_287_3(Dom.equals(element, elementPath.block) || Dom.equals(element, elementPath.blockLimit))))) {
           _$jscoverage['/editor/styles.js'].lineData[289]++;
           continue;
         }
         _$jscoverage['/editor/styles.js'].lineData[292]++;
-        if (visit872_292_1(visit873_292_2(this.type === KEST.STYLE_OBJECT) && !(element.nodeName() in objectElements))) {
+        if (visit871_292_1(visit872_292_2(this.type === KEST.STYLE_OBJECT) && !(element.nodeName() in objectElements))) {
           _$jscoverage['/editor/styles.js'].lineData[293]++;
           continue;
         }
         _$jscoverage['/editor/styles.js'].lineData[296]++;
-        if (visit874_296_1(this.checkElementRemovable(element, TRUE))) {
+        if (visit873_296_1(this.checkElementRemovable(element, TRUE))) {
           _$jscoverage['/editor/styles.js'].lineData[297]++;
           return TRUE;
         }
@@ -2386,16 +2386,16 @@ KISSY.add(function(S, require) {
   _$jscoverage['/editor/styles.js'].lineData[308]++;
   var stylesDef = styleDefinition._ST;
   _$jscoverage['/editor/styles.js'].lineData[309]++;
-  if (visit875_309_1(stylesDef)) {
+  if (visit874_309_1(stylesDef)) {
     _$jscoverage['/editor/styles.js'].lineData[310]++;
     return stylesDef;
   }
   _$jscoverage['/editor/styles.js'].lineData[313]++;
   stylesDef = styleDefinition.styles;
   _$jscoverage['/editor/styles.js'].lineData[316]++;
-  var stylesText = visit876_316_1((visit877_316_2(styleDefinition.attributes && styleDefinition.attributes.style)) || ''), specialStylesText = '';
+  var stylesText = visit875_316_1((visit876_316_2(styleDefinition.attributes && styleDefinition.attributes.style)) || ''), specialStylesText = '';
   _$jscoverage['/editor/styles.js'].lineData[319]++;
-  if (visit878_319_1(stylesText.length)) {
+  if (visit877_319_1(stylesText.length)) {
     _$jscoverage['/editor/styles.js'].lineData[320]++;
     stylesText = stylesText.replace(semicolonFixRegex, ';');
   }
@@ -2404,7 +2404,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/editor/styles.js'].lineData[325]++;
     var styleVal = stylesDef[style], text = (style + ':' + styleVal).replace(semicolonFixRegex, ';');
     _$jscoverage['/editor/styles.js'].lineData[329]++;
-    if (visit879_329_1(styleVal === 'inherit')) {
+    if (visit878_329_1(styleVal === 'inherit')) {
       _$jscoverage['/editor/styles.js'].lineData[330]++;
       specialStylesText += text;
     } else {
@@ -2413,7 +2413,7 @@ KISSY.add(function(S, require) {
     }
   }
   _$jscoverage['/editor/styles.js'].lineData[340]++;
-  if (visit880_340_1(stylesText.length)) {
+  if (visit879_340_1(stylesText.length)) {
     _$jscoverage['/editor/styles.js'].lineData[341]++;
     stylesText = normalizeCssText(stylesText);
   }
@@ -2430,14 +2430,14 @@ KISSY.add(function(S, require) {
     _$jscoverage['/editor/styles.js'].lineData[352]++;
     var el, elementName = style.element;
     _$jscoverage['/editor/styles.js'].lineData[357]++;
-    if (visit881_357_1(elementName === '*')) {
+    if (visit880_357_1(elementName === '*')) {
       _$jscoverage['/editor/styles.js'].lineData[358]++;
       elementName = 'span';
     }
     _$jscoverage['/editor/styles.js'].lineData[362]++;
     el = new Node(targetDocument.createElement(elementName));
     _$jscoverage['/editor/styles.js'].lineData[365]++;
-    if (visit882_365_1(element)) {
+    if (visit881_365_1(element)) {
       _$jscoverage['/editor/styles.js'].lineData[366]++;
       element._4eCopyAttributes(el);
     }
@@ -2450,7 +2450,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/editor/styles.js'].lineData[373]++;
     var def = style._.definition, attributes = def.attributes, styles = KEStyle.getStyleText(def);
     _$jscoverage['/editor/styles.js'].lineData[378]++;
-    if (visit883_378_1(attributes)) {
+    if (visit882_378_1(attributes)) {
       _$jscoverage['/editor/styles.js'].lineData[379]++;
       for (var att in attributes) {
         _$jscoverage['/editor/styles.js'].lineData[380]++;
@@ -2458,7 +2458,7 @@ KISSY.add(function(S, require) {
       }
     }
     _$jscoverage['/editor/styles.js'].lineData[386]++;
-    if (visit884_386_1(styles)) {
+    if (visit883_386_1(styles)) {
       _$jscoverage['/editor/styles.js'].lineData[387]++;
       el[0].style.cssText = styles;
     }
@@ -2495,12 +2495,12 @@ KISSY.add(function(S, require) {
     str = str.replace(/(^<span[^>]+_ke_bookmark.*?\/span>)|(<span[^>]+_ke_bookmark.*?\/span>$)/gi, function(str, m1, m2) {
   _$jscoverage['/editor/styles.js'].functionData[17]++;
   _$jscoverage['/editor/styles.js'].lineData[420]++;
-  if (visit885_420_1(m1)) {
+  if (visit884_420_1(m1)) {
     _$jscoverage['/editor/styles.js'].lineData[421]++;
     headBookmark = m1;
   }
   _$jscoverage['/editor/styles.js'].lineData[423]++;
-  if (visit886_423_1(m2)) {
+  if (visit885_423_1(m2)) {
     _$jscoverage['/editor/styles.js'].lineData[424]++;
     tailBookmark = m2;
   }
@@ -2524,7 +2524,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/editor/styles.js'].lineData[449]++;
     preHTML = preHTML.replace(/<br\b[^>]*>/gi, '\n');
     _$jscoverage['/editor/styles.js'].lineData[452]++;
-    if (visit887_452_1(UA.ie)) {
+    if (visit886_452_1(UA.ie)) {
       _$jscoverage['/editor/styles.js'].lineData[453]++;
       var temp = block[0].ownerDocument.createElement('div');
       _$jscoverage['/editor/styles.js'].lineData[454]++;
@@ -2566,14 +2566,14 @@ KISSY.add(function(S, require) {
   function replaceBlock(block, newBlock) {
     _$jscoverage['/editor/styles.js'].functionData[22]++;
     _$jscoverage['/editor/styles.js'].lineData[491]++;
-    var newBlockIsPre = visit888_491_1(newBlock.nodeName === ('pre')), blockIsPre = visit889_492_1(block.nodeName === ('pre')), isToPre = visit890_493_1(newBlockIsPre && !blockIsPre), isFromPre = visit891_494_1(!newBlockIsPre && blockIsPre);
+    var newBlockIsPre = visit887_491_1(newBlock.nodeName === ('pre')), blockIsPre = visit888_492_1(block.nodeName === ('pre')), isToPre = visit889_493_1(newBlockIsPre && !blockIsPre), isFromPre = visit890_494_1(!newBlockIsPre && blockIsPre);
     _$jscoverage['/editor/styles.js'].lineData[496]++;
-    if (visit892_496_1(isToPre)) {
+    if (visit891_496_1(isToPre)) {
       _$jscoverage['/editor/styles.js'].lineData[497]++;
       newBlock = toPre(block, newBlock);
     } else {
       _$jscoverage['/editor/styles.js'].lineData[499]++;
-      if (visit893_499_1(isFromPre)) {
+      if (visit892_499_1(isFromPre)) {
         _$jscoverage['/editor/styles.js'].lineData[501]++;
         newBlock = fromPres(splitIntoPres(block), newBlock);
       } else {
@@ -2584,7 +2584,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/editor/styles.js'].lineData[507]++;
     block[0].parentNode.replaceChild(newBlock[0], block[0]);
     _$jscoverage['/editor/styles.js'].lineData[508]++;
-    if (visit894_508_1(newBlockIsPre)) {
+    if (visit893_508_1(newBlockIsPre)) {
       _$jscoverage['/editor/styles.js'].lineData[510]++;
       mergePre(newBlock);
     }
@@ -2595,14 +2595,14 @@ KISSY.add(function(S, require) {
     _$jscoverage['/editor/styles.js'].lineData[516]++;
     var previousBlock;
     _$jscoverage['/editor/styles.js'].lineData[517]++;
-    if (visit895_517_1(!(visit896_517_2((previousBlock = preBlock._4ePreviousSourceNode(TRUE, Dom.NodeType.ELEMENT_NODE)) && visit897_518_1(previousBlock.nodeName() === 'pre'))))) {
+    if (visit894_517_1(!(visit895_517_2((previousBlock = preBlock._4ePreviousSourceNode(TRUE, Dom.NodeType.ELEMENT_NODE)) && visit896_518_1(previousBlock.nodeName() === 'pre'))))) {
       _$jscoverage['/editor/styles.js'].lineData[519]++;
       return;
     }
     _$jscoverage['/editor/styles.js'].lineData[529]++;
     var mergedHTML = replace(previousBlock.html(), /\n$/, '') + '\n\n' + replace(preBlock.html(), /^\n/, '');
     _$jscoverage['/editor/styles.js'].lineData[533]++;
-    if (visit898_533_1(UA.ie)) {
+    if (visit897_533_1(UA.ie)) {
       _$jscoverage['/editor/styles.js'].lineData[534]++;
       preBlock.outerHtml('<pre>' + mergedHTML + '</pre>');
     } else {
@@ -2618,7 +2618,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/editor/styles.js'].lineData[546]++;
     var docFrag = newBlock[0].ownerDocument.createDocumentFragment();
     _$jscoverage['/editor/styles.js'].lineData[547]++;
-    for (var i = 0; visit899_547_1(i < preHTMLs.length); i++) {
+    for (var i = 0; visit898_547_1(i < preHTMLs.length); i++) {
       _$jscoverage['/editor/styles.js'].lineData[548]++;
       var blockHTML = preHTMLs[i];
       _$jscoverage['/editor/styles.js'].lineData[552]++;
@@ -2631,12 +2631,12 @@ KISSY.add(function(S, require) {
       blockHTML = replace(blockHTML, /^[ \t]+|[ \t]+$/g, function(match, offset) {
   _$jscoverage['/editor/styles.js'].functionData[25]++;
   _$jscoverage['/editor/styles.js'].lineData[558]++;
-  if (visit900_558_1(match.length === 1)) {
+  if (visit899_558_1(match.length === 1)) {
     _$jscoverage['/editor/styles.js'].lineData[559]++;
     return '&nbsp;';
   } else {
     _$jscoverage['/editor/styles.js'].lineData[561]++;
-    if (visit901_561_1(!offset)) {
+    if (visit900_561_1(!offset)) {
       _$jscoverage['/editor/styles.js'].lineData[562]++;
       return new Array(match.length).join('&nbsp;') + ' ';
     } else {
@@ -2669,7 +2669,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/editor/styles.js'].lineData[585]++;
     var self = this, document = range.document;
     _$jscoverage['/editor/styles.js'].lineData[588]++;
-    if (visit902_588_1(range.collapsed)) {
+    if (visit901_588_1(range.collapsed)) {
       _$jscoverage['/editor/styles.js'].lineData[590]++;
       var collapsedElement = getElement(this, document, undefined);
       _$jscoverage['/editor/styles.js'].lineData[592]++;
@@ -2682,7 +2682,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/editor/styles.js'].lineData[597]++;
     var elementName = this.element, def = this._.definition, isUnknownElement, dtd = DTD[elementName];
     _$jscoverage['/editor/styles.js'].lineData[602]++;
-    if (visit903_602_1(!dtd)) {
+    if (visit902_602_1(!dtd)) {
       _$jscoverage['/editor/styles.js'].lineData[603]++;
       isUnknownElement = TRUE;
       _$jscoverage['/editor/styles.js'].lineData[604]++;
@@ -2697,31 +2697,31 @@ KISSY.add(function(S, require) {
     _$jscoverage['/editor/styles.js'].lineData[616]++;
     var boundaryNodes = range.createBookmark(), firstNode = boundaryNodes.startNode, lastNode = boundaryNodes.endNode, currentNode = firstNode, styleRange;
     _$jscoverage['/editor/styles.js'].lineData[622]++;
-    while (visit904_622_1(currentNode && currentNode[0])) {
+    while (visit903_622_1(currentNode && currentNode[0])) {
       _$jscoverage['/editor/styles.js'].lineData[623]++;
       var applyStyle = FALSE;
       _$jscoverage['/editor/styles.js'].lineData[625]++;
-      if (visit905_625_1(Dom.equals(currentNode, lastNode))) {
+      if (visit904_625_1(Dom.equals(currentNode, lastNode))) {
         _$jscoverage['/editor/styles.js'].lineData[626]++;
         currentNode = NULL;
         _$jscoverage['/editor/styles.js'].lineData[627]++;
         applyStyle = TRUE;
       } else {
         _$jscoverage['/editor/styles.js'].lineData[630]++;
-        var nodeType = currentNode[0].nodeType, nodeName = visit906_631_1(nodeType === Dom.NodeType.ELEMENT_NODE) ? currentNode.nodeName() : NULL;
+        var nodeType = currentNode[0].nodeType, nodeName = visit905_631_1(nodeType === Dom.NodeType.ELEMENT_NODE) ? currentNode.nodeName() : NULL;
         _$jscoverage['/editor/styles.js'].lineData[634]++;
-        if (visit907_634_1(nodeName && currentNode.attr('_ke_bookmark'))) {
+        if (visit906_634_1(nodeName && currentNode.attr('_ke_bookmark'))) {
           _$jscoverage['/editor/styles.js'].lineData[635]++;
           currentNode = currentNode._4eNextSourceNode(TRUE);
           _$jscoverage['/editor/styles.js'].lineData[636]++;
           continue;
         }
         _$jscoverage['/editor/styles.js'].lineData[640]++;
-        if (visit908_640_1(!nodeName || (visit909_641_1(dtd[nodeName] && visit910_642_1(visit911_642_2((currentNode._4ePosition(lastNode) | (KEP.POSITION_PRECEDING | KEP.POSITION_IDENTICAL | KEP.POSITION_IS_CONTAINED)) === (KEP.POSITION_PRECEDING + KEP.POSITION_IDENTICAL + KEP.POSITION_IS_CONTAINED)) && (visit912_648_1(!def.childRule || def.childRule(currentNode)))))))) {
+        if (visit907_640_1(!nodeName || (visit908_641_1(dtd[nodeName] && visit909_642_1(visit910_642_2((currentNode._4ePosition(lastNode) | (KEP.POSITION_PRECEDING | KEP.POSITION_IDENTICAL | KEP.POSITION_IS_CONTAINED)) === (KEP.POSITION_PRECEDING + KEP.POSITION_IDENTICAL + KEP.POSITION_IS_CONTAINED)) && (visit911_648_1(!def.childRule || def.childRule(currentNode)))))))) {
           _$jscoverage['/editor/styles.js'].lineData[650]++;
           var currentParent = currentNode.parent();
           _$jscoverage['/editor/styles.js'].lineData[661]++;
-          if (visit913_661_1(currentParent && visit914_662_1(visit915_662_2(elementName === 'a') && visit916_663_1(currentParent.nodeName() === elementName)))) {
+          if (visit912_661_1(currentParent && visit913_662_1(visit914_662_2(elementName === 'a') && visit915_663_1(currentParent.nodeName() === elementName)))) {
             _$jscoverage['/editor/styles.js'].lineData[664]++;
             var tmpANode = getElement(self, document, undefined);
             _$jscoverage['/editor/styles.js'].lineData[665]++;
@@ -2732,20 +2732,20 @@ KISSY.add(function(S, require) {
             tmpANode._4eMergeSiblings();
           } else {
             _$jscoverage['/editor/styles.js'].lineData[672]++;
-            if (visit917_672_1(currentParent && visit918_672_2(currentParent[0] && visit919_672_3((visit920_673_1((visit921_672_4(DTD[currentParent.nodeName()] || DTD.span))[elementName] || isUnknownElement)) && (visit922_674_1(!def.parentRule || def.parentRule(currentParent))))))) {
+            if (visit916_672_1(currentParent && visit917_672_2(currentParent[0] && visit918_672_3((visit919_673_1((visit920_672_4(DTD[currentParent.nodeName()] || DTD.span))[elementName] || isUnknownElement)) && (visit921_674_1(!def.parentRule || def.parentRule(currentParent))))))) {
               _$jscoverage['/editor/styles.js'].lineData[679]++;
-              if (visit923_679_1(!styleRange && (visit924_680_1(!nodeName || visit925_680_2(!DTD.$removeEmpty[nodeName] || visit926_680_3((currentNode._4ePosition(lastNode) | (KEP.POSITION_PRECEDING | KEP.POSITION_IDENTICAL | KEP.POSITION_IS_CONTAINED)) === (KEP.POSITION_PRECEDING + KEP.POSITION_IDENTICAL + KEP.POSITION_IS_CONTAINED))))))) {
+              if (visit922_679_1(!styleRange && (visit923_680_1(!nodeName || visit924_680_2(!DTD.$removeEmpty[nodeName] || visit925_680_3((currentNode._4ePosition(lastNode) | (KEP.POSITION_PRECEDING | KEP.POSITION_IDENTICAL | KEP.POSITION_IS_CONTAINED)) === (KEP.POSITION_PRECEDING + KEP.POSITION_IDENTICAL + KEP.POSITION_IS_CONTAINED))))))) {
                 _$jscoverage['/editor/styles.js'].lineData[688]++;
                 styleRange = new KERange(document);
                 _$jscoverage['/editor/styles.js'].lineData[689]++;
                 styleRange.setStartBefore(currentNode);
               }
               _$jscoverage['/editor/styles.js'].lineData[694]++;
-              if (visit927_694_1(visit928_694_2(nodeType === Dom.NodeType.TEXT_NODE) || (visit929_695_1(visit930_695_2(nodeType === Dom.NodeType.ELEMENT_NODE) && !currentNode[0].childNodes.length)))) {
+              if (visit926_694_1(visit927_694_2(nodeType === Dom.NodeType.TEXT_NODE) || (visit928_695_1(visit929_695_2(nodeType === Dom.NodeType.ELEMENT_NODE) && !currentNode[0].childNodes.length)))) {
                 _$jscoverage['/editor/styles.js'].lineData[696]++;
                 var includedNode = currentNode, parentNode = null;
                 _$jscoverage['/editor/styles.js'].lineData[709]++;
-                while (visit931_710_1((applyStyle = !includedNode.next(notBookmark, 1)) && visit932_711_1((visit933_711_2((parentNode = includedNode.parent()) && dtd[parentNode.nodeName()])) && visit934_713_1(visit935_713_2((parentNode._4ePosition(firstNode) | KEP.POSITION_FOLLOWING | KEP.POSITION_IDENTICAL | KEP.POSITION_IS_CONTAINED) === (KEP.POSITION_FOLLOWING + KEP.POSITION_IDENTICAL + KEP.POSITION_IS_CONTAINED)) && (visit936_718_1(!def.childRule || def.childRule(parentNode))))))) {
+                while (visit930_710_1((applyStyle = !includedNode.next(notBookmark, 1)) && visit931_711_1((visit932_711_2((parentNode = includedNode.parent()) && dtd[parentNode.nodeName()])) && visit933_713_1(visit934_713_2((parentNode._4ePosition(firstNode) | KEP.POSITION_FOLLOWING | KEP.POSITION_IDENTICAL | KEP.POSITION_IS_CONTAINED) === (KEP.POSITION_FOLLOWING + KEP.POSITION_IDENTICAL + KEP.POSITION_IS_CONTAINED)) && (visit935_718_1(!def.childRule || def.childRule(parentNode))))))) {
                   _$jscoverage['/editor/styles.js'].lineData[719]++;
                   includedNode = parentNode;
                 }
@@ -2765,7 +2765,7 @@ KISSY.add(function(S, require) {
         currentNode = currentNode._4eNextSourceNode();
       }
       _$jscoverage['/editor/styles.js'].lineData[739]++;
-      if (visit937_739_1(applyStyle && visit938_739_2(styleRange && !styleRange.collapsed))) {
+      if (visit936_739_1(applyStyle && visit937_739_2(styleRange && !styleRange.collapsed))) {
         _$jscoverage['/editor/styles.js'].lineData[741]++;
         var styleNode = getElement(self, document, undefined), parent = styleRange.getCommonAncestor();
         _$jscoverage['/editor/styles.js'].lineData[747]++;
@@ -2777,18 +2777,18 @@ KISSY.add(function(S, require) {
         _$jscoverage['/editor/styles.js'].lineData[756]++;
         var attName, styleName = null, value;
         _$jscoverage['/editor/styles.js'].lineData[760]++;
-        while (visit939_760_1(styleNode && visit940_760_2(parent && visit941_760_3(styleNode[0] && parent[0])))) {
+        while (visit938_760_1(styleNode && visit939_760_2(parent && visit940_760_3(styleNode[0] && parent[0])))) {
           _$jscoverage['/editor/styles.js'].lineData[761]++;
-          if (visit942_761_1(parent.nodeName() === elementName)) {
+          if (visit941_761_1(parent.nodeName() === elementName)) {
             _$jscoverage['/editor/styles.js'].lineData[762]++;
             for (attName in def.attributes) {
               _$jscoverage['/editor/styles.js'].lineData[764]++;
-              if (visit943_764_1(removeList.blockedAttrs[attName] || !(value = parent.attr(styleName)))) {
+              if (visit942_764_1(removeList.blockedAttrs[attName] || !(value = parent.attr(styleName)))) {
                 _$jscoverage['/editor/styles.js'].lineData[765]++;
                 continue;
               }
               _$jscoverage['/editor/styles.js'].lineData[768]++;
-              if (visit944_768_1(styleNode.attr(attName) === value)) {
+              if (visit943_768_1(styleNode.attr(attName) === value)) {
                 _$jscoverage['/editor/styles.js'].lineData[770]++;
                 styleNode.removeAttr(attName);
               } else {
@@ -2799,12 +2799,12 @@ KISSY.add(function(S, require) {
             _$jscoverage['/editor/styles.js'].lineData[780]++;
             for (styleName in def.styles) {
               _$jscoverage['/editor/styles.js'].lineData[782]++;
-              if (visit945_782_1(removeList.blockedStyles[styleName] || !(value = parent.style(styleName)))) {
+              if (visit944_782_1(removeList.blockedStyles[styleName] || !(value = parent.style(styleName)))) {
                 _$jscoverage['/editor/styles.js'].lineData[783]++;
                 continue;
               }
               _$jscoverage['/editor/styles.js'].lineData[786]++;
-              if (visit946_786_1(styleNode.style(styleName) === value)) {
+              if (visit945_786_1(styleNode.style(styleName) === value)) {
                 _$jscoverage['/editor/styles.js'].lineData[788]++;
                 styleNode.style(styleName, '');
               } else {
@@ -2813,7 +2813,7 @@ KISSY.add(function(S, require) {
               }
             }
             _$jscoverage['/editor/styles.js'].lineData[795]++;
-            if (visit947_795_1(!styleNode._4eHasAttributes())) {
+            if (visit946_795_1(!styleNode._4eHasAttributes())) {
               _$jscoverage['/editor/styles.js'].lineData[796]++;
               styleNode = NULL;
               _$jscoverage['/editor/styles.js'].lineData[797]++;
@@ -2824,7 +2824,7 @@ KISSY.add(function(S, require) {
           parent = parent.parent();
         }
         _$jscoverage['/editor/styles.js'].lineData[804]++;
-        if (visit948_804_1(styleNode)) {
+        if (visit947_804_1(styleNode)) {
           _$jscoverage['/editor/styles.js'].lineData[806]++;
           styleNode[0].appendChild(styleRange.extractContents());
           _$jscoverage['/editor/styles.js'].lineData[810]++;
@@ -2834,7 +2834,7 @@ KISSY.add(function(S, require) {
           _$jscoverage['/editor/styles.js'].lineData[817]++;
           styleNode._4eMergeSiblings();
           _$jscoverage['/editor/styles.js'].lineData[825]++;
-          if (visit949_825_1(!UA.ie)) {
+          if (visit948_825_1(!UA.ie)) {
             _$jscoverage['/editor/styles.js'].lineData[826]++;
             styleNode[0].normalize();
           }
@@ -2871,22 +2871,22 @@ KISSY.add(function(S, require) {
     _$jscoverage['/editor/styles.js'].lineData[868]++;
     var bookmark = range.createBookmark(), startNode = bookmark.startNode;
     _$jscoverage['/editor/styles.js'].lineData[871]++;
-    if (visit950_871_1(range.collapsed)) {
+    if (visit949_871_1(range.collapsed)) {
       _$jscoverage['/editor/styles.js'].lineData[873]++;
       var startPath = new ElementPath(startNode.parent()), boundaryElement;
       _$jscoverage['/editor/styles.js'].lineData[878]++;
-      for (var i = 0, element; visit951_878_1(visit952_878_2(i < startPath.elements.length) && (element = startPath.elements[i])); i++) {
+      for (var i = 0, element; visit950_878_1(visit951_878_2(i < startPath.elements.length) && (element = startPath.elements[i])); i++) {
         _$jscoverage['/editor/styles.js'].lineData[886]++;
-        if (visit953_886_1(visit954_886_2(element === startPath.block) || visit955_886_3(element === startPath.blockLimit))) {
+        if (visit952_886_1(visit953_886_2(element === startPath.block) || visit954_886_3(element === startPath.blockLimit))) {
           _$jscoverage['/editor/styles.js'].lineData[887]++;
           break;
         }
         _$jscoverage['/editor/styles.js'].lineData[889]++;
-        if (visit956_889_1(this.checkElementRemovable(element))) {
+        if (visit955_889_1(this.checkElementRemovable(element))) {
           _$jscoverage['/editor/styles.js'].lineData[890]++;
-          var endOfElement = range.checkBoundaryOfElement(element, KER.END), startOfElement = visit957_891_1(!endOfElement && range.checkBoundaryOfElement(element, KER.START));
+          var endOfElement = range.checkBoundaryOfElement(element, KER.END), startOfElement = visit956_891_1(!endOfElement && range.checkBoundaryOfElement(element, KER.START));
           _$jscoverage['/editor/styles.js'].lineData[893]++;
-          if (visit958_893_1(startOfElement || endOfElement)) {
+          if (visit957_893_1(startOfElement || endOfElement)) {
             _$jscoverage['/editor/styles.js'].lineData[894]++;
             boundaryElement = element;
             _$jscoverage['/editor/styles.js'].lineData[895]++;
@@ -2895,11 +2895,11 @@ KISSY.add(function(S, require) {
             _$jscoverage['/editor/styles.js'].lineData[903]++;
             element._4eMergeSiblings();
             _$jscoverage['/editor/styles.js'].lineData[907]++;
-            if (visit959_907_1(element.nodeName() !== this.element)) {
+            if (visit958_907_1(element.nodeName() !== this.element)) {
               _$jscoverage['/editor/styles.js'].lineData[908]++;
               var _overrides = getOverrides(this);
               _$jscoverage['/editor/styles.js'].lineData[909]++;
-              removeOverrides(element, visit960_910_1(_overrides[element.nodeName()] || _overrides['*']));
+              removeOverrides(element, visit959_910_1(_overrides[element.nodeName()] || _overrides['*']));
             } else {
               _$jscoverage['/editor/styles.js'].lineData[912]++;
               removeFromElement(this, element);
@@ -2908,7 +2908,7 @@ KISSY.add(function(S, require) {
         }
       }
       _$jscoverage['/editor/styles.js'].lineData[922]++;
-      if (visit961_922_1(boundaryElement)) {
+      if (visit960_922_1(boundaryElement)) {
         _$jscoverage['/editor/styles.js'].lineData[923]++;
         var clonedElement = startNode;
         _$jscoverage['/editor/styles.js'].lineData[924]++;
@@ -2916,12 +2916,12 @@ KISSY.add(function(S, require) {
           _$jscoverage['/editor/styles.js'].lineData[925]++;
           var newElement = startPath.elements[i];
           _$jscoverage['/editor/styles.js'].lineData[926]++;
-          if (visit962_926_1(newElement.equals(boundaryElement))) {
+          if (visit961_926_1(newElement.equals(boundaryElement))) {
             _$jscoverage['/editor/styles.js'].lineData[927]++;
             break;
           } else {
             _$jscoverage['/editor/styles.js'].lineData[930]++;
-            if (visit963_930_1(newElement.match)) {
+            if (visit962_930_1(newElement.match)) {
               _$jscoverage['/editor/styles.js'].lineData[931]++;
               continue;
             } else {
@@ -2935,16 +2935,16 @@ KISSY.add(function(S, require) {
           clonedElement = newElement;
         }
         _$jscoverage['/editor/styles.js'].lineData[943]++;
-        clonedElement[visit964_942_1(boundaryElement.match === 'start') ? 'insertBefore' : 'insertAfter'](boundaryElement);
+        clonedElement[visit963_942_1(boundaryElement.match === 'start') ? 'insertBefore' : 'insertAfter'](boundaryElement);
         _$jscoverage['/editor/styles.js'].lineData[946]++;
         var tmp = boundaryElement.html();
         _$jscoverage['/editor/styles.js'].lineData[947]++;
-        if (visit965_947_1(!tmp || visit966_949_1(tmp === '\u200b'))) {
+        if (visit964_947_1(!tmp || visit965_949_1(tmp === '\u200b'))) {
           _$jscoverage['/editor/styles.js'].lineData[950]++;
           boundaryElement.remove();
         } else {
           _$jscoverage['/editor/styles.js'].lineData[953]++;
-          if (visit967_953_1(UA.webkit)) {
+          if (visit966_953_1(UA.webkit)) {
             _$jscoverage['/editor/styles.js'].lineData[954]++;
             $(range.document.createTextNode('\u200b')).insertBefore(clonedElement);
           }
@@ -2959,42 +2959,42 @@ KISSY.add(function(S, require) {
   _$jscoverage['/editor/styles.js'].lineData[970]++;
   var startPath = new ElementPath(startNode.parent()), endPath = new ElementPath(endNode.parent()), breakStart = NULL, element, breakEnd = NULL;
   _$jscoverage['/editor/styles.js'].lineData[975]++;
-  for (var i = 0; visit968_975_1(i < startPath.elements.length); i++) {
+  for (var i = 0; visit967_975_1(i < startPath.elements.length); i++) {
     _$jscoverage['/editor/styles.js'].lineData[976]++;
     element = startPath.elements[i];
     _$jscoverage['/editor/styles.js'].lineData[978]++;
-    if (visit969_978_1(visit970_978_2(element === startPath.block) || visit971_979_1(element === startPath.blockLimit))) {
+    if (visit968_978_1(visit969_978_2(element === startPath.block) || visit970_979_1(element === startPath.blockLimit))) {
       _$jscoverage['/editor/styles.js'].lineData[980]++;
       break;
     }
     _$jscoverage['/editor/styles.js'].lineData[983]++;
-    if (visit972_983_1(me.checkElementRemovable(element))) {
+    if (visit971_983_1(me.checkElementRemovable(element))) {
       _$jscoverage['/editor/styles.js'].lineData[984]++;
       breakStart = element;
     }
   }
   _$jscoverage['/editor/styles.js'].lineData[987]++;
-  for (i = 0; visit973_987_1(i < endPath.elements.length); i++) {
+  for (i = 0; visit972_987_1(i < endPath.elements.length); i++) {
     _$jscoverage['/editor/styles.js'].lineData[988]++;
     element = endPath.elements[i];
     _$jscoverage['/editor/styles.js'].lineData[990]++;
-    if (visit974_990_1(visit975_990_2(element === endPath.block) || visit976_991_1(element === endPath.blockLimit))) {
+    if (visit973_990_1(visit974_990_2(element === endPath.block) || visit975_991_1(element === endPath.blockLimit))) {
       _$jscoverage['/editor/styles.js'].lineData[992]++;
       break;
     }
     _$jscoverage['/editor/styles.js'].lineData[995]++;
-    if (visit977_995_1(me.checkElementRemovable(element))) {
+    if (visit976_995_1(me.checkElementRemovable(element))) {
       _$jscoverage['/editor/styles.js'].lineData[996]++;
       breakEnd = element;
     }
   }
   _$jscoverage['/editor/styles.js'].lineData[1000]++;
-  if (visit978_1000_1(breakEnd)) {
+  if (visit977_1000_1(breakEnd)) {
     _$jscoverage['/editor/styles.js'].lineData[1001]++;
     endNode._4eBreakParent(breakEnd);
   }
   _$jscoverage['/editor/styles.js'].lineData[1003]++;
-  if (visit979_1003_1(breakStart)) {
+  if (visit978_1003_1(breakStart)) {
     _$jscoverage['/editor/styles.js'].lineData[1004]++;
     startNode._4eBreakParent(breakStart);
   }
@@ -3004,23 +3004,23 @@ KISSY.add(function(S, require) {
       _$jscoverage['/editor/styles.js'].lineData[1011]++;
       var currentNode = new Node(startNode[0].nextSibling);
       _$jscoverage['/editor/styles.js'].lineData[1012]++;
-      while (visit980_1012_1(currentNode[0] !== endNode[0])) {
+      while (visit979_1012_1(currentNode[0] !== endNode[0])) {
         _$jscoverage['/editor/styles.js'].lineData[1017]++;
         var nextNode = currentNode._4eNextSourceNode();
         _$jscoverage['/editor/styles.js'].lineData[1018]++;
-        if (visit981_1018_1(currentNode[0] && visit982_1019_1(visit983_1019_2(currentNode[0].nodeType === Dom.NodeType.ELEMENT_NODE) && this.checkElementRemovable(currentNode)))) {
+        if (visit980_1018_1(currentNode[0] && visit981_1019_1(visit982_1019_2(currentNode[0].nodeType === Dom.NodeType.ELEMENT_NODE) && this.checkElementRemovable(currentNode)))) {
           _$jscoverage['/editor/styles.js'].lineData[1022]++;
-          if (visit984_1022_1(currentNode.nodeName() === this.element)) {
+          if (visit983_1022_1(currentNode.nodeName() === this.element)) {
             _$jscoverage['/editor/styles.js'].lineData[1023]++;
             removeFromElement(this, currentNode);
           } else {
             _$jscoverage['/editor/styles.js'].lineData[1026]++;
             var overrides = getOverrides(this);
             _$jscoverage['/editor/styles.js'].lineData[1027]++;
-            removeOverrides(currentNode, visit985_1028_1(overrides[currentNode.nodeName()] || overrides['*']));
+            removeOverrides(currentNode, visit984_1028_1(overrides[currentNode.nodeName()] || overrides['*']));
           }
           _$jscoverage['/editor/styles.js'].lineData[1038]++;
-          if (visit986_1038_1(visit987_1038_2(nextNode[0].nodeType === Dom.NodeType.ELEMENT_NODE) && nextNode.contains(startNode))) {
+          if (visit985_1038_1(visit986_1038_2(nextNode[0].nodeType === Dom.NodeType.ELEMENT_NODE) && nextNode.contains(startNode))) {
             _$jscoverage['/editor/styles.js'].lineData[1040]++;
             breakNodes();
             _$jscoverage['/editor/styles.js'].lineData[1041]++;
@@ -3054,19 +3054,19 @@ KISSY.add(function(S, require) {
   function compareCssText(source, target) {
     _$jscoverage['/editor/styles.js'].functionData[32]++;
     _$jscoverage['/editor/styles.js'].lineData[1063]++;
-    if (visit988_1063_1(typeof source === 'string')) {
+    if (visit987_1063_1(typeof source === 'string')) {
       _$jscoverage['/editor/styles.js'].lineData[1064]++;
       source = parseStyleText(source);
     }
     _$jscoverage['/editor/styles.js'].lineData[1066]++;
-    if (visit989_1066_1(target === 'string')) {
+    if (visit988_1066_1(target === 'string')) {
       _$jscoverage['/editor/styles.js'].lineData[1067]++;
       target = parseStyleText(target);
     }
     _$jscoverage['/editor/styles.js'].lineData[1069]++;
     for (var name in source) {
       _$jscoverage['/editor/styles.js'].lineData[1073]++;
-      if (visit990_1073_1(!(visit991_1073_2(name in target && (visit992_1074_1(visit993_1074_2(target[name] === source[name]) || visit994_1075_1(visit995_1075_2(source[name] === 'inherit') || visit996_1075_3(target[name] === 'inherit')))))))) {
+      if (visit989_1073_1(!(visit990_1073_2(name in target && (visit991_1074_1(visit992_1074_2(target[name] === source[name]) || visit993_1075_1(visit994_1075_2(source[name] === 'inherit') || visit995_1075_3(target[name] === 'inherit')))))))) {
         _$jscoverage['/editor/styles.js'].lineData[1076]++;
         return FALSE;
       }
@@ -3080,13 +3080,13 @@ KISSY.add(function(S, require) {
     _$jscoverage['/editor/styles.js'].lineData[1084]++;
     var styleText = '';
     _$jscoverage['/editor/styles.js'].lineData[1085]++;
-    if (visit997_1085_1(nativeNormalize !== FALSE)) {
+    if (visit996_1085_1(nativeNormalize !== FALSE)) {
       _$jscoverage['/editor/styles.js'].lineData[1088]++;
       var temp = document.createElement('span');
       _$jscoverage['/editor/styles.js'].lineData[1089]++;
       temp.style.cssText = unParsedCssText;
       _$jscoverage['/editor/styles.js'].lineData[1091]++;
-      styleText = visit998_1091_1(temp.style.cssText || '');
+      styleText = visit997_1091_1(temp.style.cssText || '');
     } else {
       _$jscoverage['/editor/styles.js'].lineData[1094]++;
       styleText = unParsedCssText;
@@ -3100,7 +3100,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/editor/styles.js'].lineData[1111]++;
     var attribs = styleDefinition._AC;
     _$jscoverage['/editor/styles.js'].lineData[1112]++;
-    if (visit999_1112_1(attribs)) {
+    if (visit998_1112_1(attribs)) {
       _$jscoverage['/editor/styles.js'].lineData[1113]++;
       return attribs;
     }
@@ -3109,7 +3109,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/editor/styles.js'].lineData[1117]++;
     var length = 0, styleAttribs = styleDefinition.attributes;
     _$jscoverage['/editor/styles.js'].lineData[1121]++;
-    if (visit1000_1121_1(styleAttribs)) {
+    if (visit999_1121_1(styleAttribs)) {
       _$jscoverage['/editor/styles.js'].lineData[1122]++;
       for (var styleAtt in styleAttribs) {
         _$jscoverage['/editor/styles.js'].lineData[1124]++;
@@ -3121,9 +3121,9 @@ KISSY.add(function(S, require) {
     _$jscoverage['/editor/styles.js'].lineData[1131]++;
     var styleText = KEStyle.getStyleText(styleDefinition);
     _$jscoverage['/editor/styles.js'].lineData[1132]++;
-    if (visit1001_1132_1(styleText)) {
+    if (visit1000_1132_1(styleText)) {
       _$jscoverage['/editor/styles.js'].lineData[1133]++;
-      if (visit1002_1133_1(!attribs.style)) {
+      if (visit1001_1133_1(!attribs.style)) {
         _$jscoverage['/editor/styles.js'].lineData[1134]++;
         length++;
       }
@@ -3141,21 +3141,21 @@ KISSY.add(function(S, require) {
   function getOverrides(style) {
     _$jscoverage['/editor/styles.js'].functionData[35]++;
     _$jscoverage['/editor/styles.js'].lineData[1155]++;
-    if (visit1003_1155_1(style._.overrides)) {
+    if (visit1002_1155_1(style._.overrides)) {
       _$jscoverage['/editor/styles.js'].lineData[1156]++;
       return style._.overrides;
     }
     _$jscoverage['/editor/styles.js'].lineData[1159]++;
     var overrides = (style._.overrides = {}), definition = style._.definition.overrides;
     _$jscoverage['/editor/styles.js'].lineData[1162]++;
-    if (visit1004_1162_1(definition)) {
+    if (visit1003_1162_1(definition)) {
       _$jscoverage['/editor/styles.js'].lineData[1165]++;
-      if (visit1005_1165_1(!S.isArray(definition))) {
+      if (visit1004_1165_1(!S.isArray(definition))) {
         _$jscoverage['/editor/styles.js'].lineData[1166]++;
         definition = [definition];
       }
       _$jscoverage['/editor/styles.js'].lineData[1170]++;
-      for (var i = 0; visit1006_1170_1(i < definition.length); i++) {
+      for (var i = 0; visit1005_1170_1(i < definition.length); i++) {
         _$jscoverage['/editor/styles.js'].lineData[1171]++;
         var override = definition[i];
         _$jscoverage['/editor/styles.js'].lineData[1172]++;
@@ -3165,7 +3165,7 @@ KISSY.add(function(S, require) {
         _$jscoverage['/editor/styles.js'].lineData[1174]++;
         var attrs, styles;
         _$jscoverage['/editor/styles.js'].lineData[1177]++;
-        if (visit1007_1177_1(typeof override === 'string')) {
+        if (visit1006_1177_1(typeof override === 'string')) {
           _$jscoverage['/editor/styles.js'].lineData[1178]++;
           elementName = override.toLowerCase();
         } else {
@@ -3177,11 +3177,11 @@ KISSY.add(function(S, require) {
           styles = override.styles;
         }
         _$jscoverage['/editor/styles.js'].lineData[1192]++;
-        overrideEl = visit1008_1192_1(overrides[elementName] || (overrides[elementName] = {}));
+        overrideEl = visit1007_1192_1(overrides[elementName] || (overrides[elementName] = {}));
         _$jscoverage['/editor/styles.js'].lineData[1195]++;
-        if (visit1009_1195_1(attrs)) {
+        if (visit1008_1195_1(attrs)) {
           _$jscoverage['/editor/styles.js'].lineData[1199]++;
-          var overrideAttrs = (overrideEl.attributes = visit1010_1200_1(overrideEl.attributes || []));
+          var overrideAttrs = (overrideEl.attributes = visit1009_1200_1(overrideEl.attributes || []));
           _$jscoverage['/editor/styles.js'].lineData[1201]++;
           for (var attName in attrs) {
             _$jscoverage['/editor/styles.js'].lineData[1205]++;
@@ -3189,9 +3189,9 @@ KISSY.add(function(S, require) {
           }
         }
         _$jscoverage['/editor/styles.js'].lineData[1210]++;
-        if (visit1011_1210_1(styles)) {
+        if (visit1010_1210_1(styles)) {
           _$jscoverage['/editor/styles.js'].lineData[1214]++;
-          var overrideStyles = (overrideEl.styles = visit1012_1215_1(overrideEl.styles || []));
+          var overrideStyles = (overrideEl.styles = visit1011_1215_1(overrideEl.styles || []));
           _$jscoverage['/editor/styles.js'].lineData[1216]++;
           for (var styleName in styles) {
             _$jscoverage['/editor/styles.js'].lineData[1220]++;
@@ -3207,28 +3207,28 @@ KISSY.add(function(S, require) {
   function removeFromElement(style, element) {
     _$jscoverage['/editor/styles.js'].functionData[36]++;
     _$jscoverage['/editor/styles.js'].lineData[1231]++;
-    var def = style._.definition, overrides = getOverrides(style), attributes = S.merge(def.attributes, (visit1013_1234_1(overrides[element.nodeName()] || visit1014_1234_2(overrides['*'] || {}))).attributes), styles = S.merge(def.styles, (visit1015_1236_1(overrides[element.nodeName()] || visit1016_1236_2(overrides['*'] || {}))).styles), removeEmpty = visit1017_1238_1(S.isEmptyObject(attributes) && S.isEmptyObject(styles));
+    var def = style._.definition, overrides = getOverrides(style), attributes = S.merge(def.attributes, (visit1012_1234_1(overrides[element.nodeName()] || visit1013_1234_2(overrides['*'] || {}))).attributes), styles = S.merge(def.styles, (visit1014_1236_1(overrides[element.nodeName()] || visit1015_1236_2(overrides['*'] || {}))).styles), removeEmpty = visit1016_1238_1(S.isEmptyObject(attributes) && S.isEmptyObject(styles));
     _$jscoverage['/editor/styles.js'].lineData[1242]++;
     for (var attName in attributes) {
       _$jscoverage['/editor/styles.js'].lineData[1245]++;
-      if (visit1018_1245_1((visit1019_1245_2(visit1020_1245_3(attName === 'class') || style._.definition.fullMatch)) && visit1021_1245_4(element.attr(attName) !== normalizeProperty(attName, attributes[attName])))) {
+      if (visit1017_1245_1((visit1018_1245_2(visit1019_1245_3(attName === 'class') || style._.definition.fullMatch)) && visit1020_1245_4(element.attr(attName) !== normalizeProperty(attName, attributes[attName])))) {
         _$jscoverage['/editor/styles.js'].lineData[1247]++;
         continue;
       }
       _$jscoverage['/editor/styles.js'].lineData[1249]++;
-      removeEmpty = visit1022_1249_1(removeEmpty || !!element.hasAttr(attName));
+      removeEmpty = visit1021_1249_1(removeEmpty || !!element.hasAttr(attName));
       _$jscoverage['/editor/styles.js'].lineData[1250]++;
       element.removeAttr(attName);
     }
     _$jscoverage['/editor/styles.js'].lineData[1254]++;
     for (var styleName in styles) {
       _$jscoverage['/editor/styles.js'].lineData[1257]++;
-      if (visit1023_1257_1(style._.definition.fullMatch && visit1024_1258_1(element.style(styleName) !== normalizeProperty(styleName, styles[styleName], TRUE)))) {
+      if (visit1022_1257_1(style._.definition.fullMatch && visit1023_1258_1(element.style(styleName) !== normalizeProperty(styleName, styles[styleName], TRUE)))) {
         _$jscoverage['/editor/styles.js'].lineData[1259]++;
         continue;
       }
       _$jscoverage['/editor/styles.js'].lineData[1262]++;
-      removeEmpty = visit1025_1262_1(removeEmpty || !!element.style(styleName));
+      removeEmpty = visit1024_1262_1(removeEmpty || !!element.style(styleName));
       _$jscoverage['/editor/styles.js'].lineData[1264]++;
       element.style(styleName, '');
     }
@@ -3251,18 +3251,18 @@ KISSY.add(function(S, require) {
     _$jscoverage['/editor/styles.js'].lineData[1281]++;
     var overrides = getOverrides(style), innerElements = element.all(style.element);
     _$jscoverage['/editor/styles.js'].lineData[1287]++;
-    for (var i = innerElements.length; visit1026_1287_1(--i >= 0); ) {
+    for (var i = innerElements.length; visit1025_1287_1(--i >= 0); ) {
       _$jscoverage['/editor/styles.js'].lineData[1288]++;
       removeFromElement(style, new Node(innerElements[i]));
     }
     _$jscoverage['/editor/styles.js'].lineData[1293]++;
     for (var overrideElement in overrides) {
       _$jscoverage['/editor/styles.js'].lineData[1295]++;
-      if (visit1027_1295_1(overrideElement !== style.element)) {
+      if (visit1026_1295_1(overrideElement !== style.element)) {
         _$jscoverage['/editor/styles.js'].lineData[1296]++;
         innerElements = element.all(overrideElement);
         _$jscoverage['/editor/styles.js'].lineData[1297]++;
-        for (i = innerElements.length - 1; visit1028_1297_1(i >= 0); i--) {
+        for (i = innerElements.length - 1; visit1027_1297_1(i >= 0); i--) {
           _$jscoverage['/editor/styles.js'].lineData[1298]++;
           var innerElement = new Node(innerElements[i]);
           _$jscoverage['/editor/styles.js'].lineData[1299]++;
@@ -3275,11 +3275,11 @@ KISSY.add(function(S, require) {
   function removeOverrides(element, overrides) {
     _$jscoverage['/editor/styles.js'].functionData[39]++;
     _$jscoverage['/editor/styles.js'].lineData[1313]++;
-    var i, actualAttrValue, attributes = visit1029_1314_1(overrides && overrides.attributes);
+    var i, actualAttrValue, attributes = visit1028_1314_1(overrides && overrides.attributes);
     _$jscoverage['/editor/styles.js'].lineData[1316]++;
-    if (visit1030_1316_1(attributes)) {
+    if (visit1029_1316_1(attributes)) {
       _$jscoverage['/editor/styles.js'].lineData[1317]++;
-      for (i = 0; visit1031_1317_1(i < attributes.length); i++) {
+      for (i = 0; visit1030_1317_1(i < attributes.length); i++) {
         _$jscoverage['/editor/styles.js'].lineData[1318]++;
         var attName = attributes[i][0];
         _$jscoverage['/editor/styles.js'].lineData[1320]++;
@@ -3287,7 +3287,7 @@ KISSY.add(function(S, require) {
           _$jscoverage['/editor/styles.js'].lineData[1321]++;
           var attValue = attributes[i][1];
           _$jscoverage['/editor/styles.js'].lineData[1329]++;
-          if (visit1032_1329_1(visit1033_1329_2(attValue === NULL) || visit1034_1330_1((visit1035_1330_2(attValue.test && attValue.test(actualAttrValue))) || (visit1036_1331_1(visit1037_1331_2(typeof attValue === 'string') && visit1038_1331_3(actualAttrValue === attValue)))))) {
+          if (visit1031_1329_1(visit1032_1329_2(attValue === NULL) || visit1033_1330_1((visit1034_1330_2(attValue.test && attValue.test(actualAttrValue))) || (visit1035_1331_1(visit1036_1331_2(typeof attValue === 'string') && visit1037_1331_3(actualAttrValue === attValue)))))) {
             _$jscoverage['/editor/styles.js'].lineData[1332]++;
             element[0].removeAttribute(attName);
           }
@@ -3295,11 +3295,11 @@ KISSY.add(function(S, require) {
       }
     }
     _$jscoverage['/editor/styles.js'].lineData[1338]++;
-    var styles = visit1039_1338_1(overrides && overrides.styles);
+    var styles = visit1038_1338_1(overrides && overrides.styles);
     _$jscoverage['/editor/styles.js'].lineData[1340]++;
-    if (visit1040_1340_1(styles)) {
+    if (visit1039_1340_1(styles)) {
       _$jscoverage['/editor/styles.js'].lineData[1341]++;
-      for (i = 0; visit1041_1341_1(i < styles.length); i++) {
+      for (i = 0; visit1040_1341_1(i < styles.length); i++) {
         _$jscoverage['/editor/styles.js'].lineData[1342]++;
         var styleName = styles[i][0], actualStyleValue;
         _$jscoverage['/editor/styles.js'].lineData[1344]++;
@@ -3307,7 +3307,7 @@ KISSY.add(function(S, require) {
           _$jscoverage['/editor/styles.js'].lineData[1345]++;
           var styleValue = styles[i][1];
           _$jscoverage['/editor/styles.js'].lineData[1346]++;
-          if (visit1042_1346_1(visit1043_1346_2(styleValue === NULL) || visit1044_1348_1((visit1045_1348_2(styleValue.test && styleValue.test(actualAttrValue))) || (visit1046_1349_1(visit1047_1349_2(typeof styleValue === 'string') && visit1048_1349_3(actualStyleValue === styleValue)))))) {
+          if (visit1041_1346_1(visit1042_1346_2(styleValue === NULL) || visit1043_1348_1((visit1044_1348_2(styleValue.test && styleValue.test(actualAttrValue))) || (visit1045_1349_1(visit1046_1349_2(typeof styleValue === 'string') && visit1047_1349_3(actualStyleValue === styleValue)))))) {
             _$jscoverage['/editor/styles.js'].lineData[1350]++;
             element.css(styleName, '');
           }
@@ -3321,20 +3321,20 @@ KISSY.add(function(S, require) {
   function removeNoAttribsElement(element) {
     _$jscoverage['/editor/styles.js'].functionData[40]++;
     _$jscoverage['/editor/styles.js'].lineData[1363]++;
-    if (visit1049_1363_1(!element._4eHasAttributes())) {
+    if (visit1048_1363_1(!element._4eHasAttributes())) {
       _$jscoverage['/editor/styles.js'].lineData[1366]++;
       var firstChild = element[0].firstChild, lastChild = element[0].lastChild;
       _$jscoverage['/editor/styles.js'].lineData[1369]++;
       element._4eRemove(TRUE);
       _$jscoverage['/editor/styles.js'].lineData[1371]++;
-      if (visit1050_1371_1(firstChild)) {
+      if (visit1049_1371_1(firstChild)) {
         _$jscoverage['/editor/styles.js'].lineData[1373]++;
-        if (visit1051_1373_1(firstChild.nodeType === Dom.NodeType.ELEMENT_NODE)) {
+        if (visit1050_1373_1(firstChild.nodeType === Dom.NodeType.ELEMENT_NODE)) {
           _$jscoverage['/editor/styles.js'].lineData[1374]++;
           Dom._4eMergeSiblings(firstChild);
         }
         _$jscoverage['/editor/styles.js'].lineData[1377]++;
-        if (visit1052_1377_1(lastChild && visit1053_1377_2(visit1054_1377_3(firstChild !== lastChild) && visit1055_1377_4(lastChild.nodeType === Dom.NodeType.ELEMENT_NODE)))) {
+        if (visit1051_1377_1(lastChild && visit1052_1377_2(visit1053_1377_3(firstChild !== lastChild) && visit1054_1377_4(lastChild.nodeType === Dom.NodeType.ELEMENT_NODE)))) {
           _$jscoverage['/editor/styles.js'].lineData[1378]++;
           Dom._4eMergeSiblings(lastChild);
         }

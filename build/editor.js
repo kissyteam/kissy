@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.41
 MIT Licensed
-build time: Dec 4 22:15
+build time: Dec 9 22:41
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -2951,10 +2951,9 @@ KISSY.add("editor/htmlDataProcessor", ["./base", "html-parser"], function(S, req
     }}
   }}
 });
-KISSY.add("editor/selectionFix", ["./base", "./selection", "./range", "node"], function(S, require) {
+KISSY.add("editor/selectionFix", ["./base", "./selection", "node"], function(S, require) {
   var Editor = require("./base");
   require("./selection");
-  var KERange = require("./range");
   var Node = require("node");
   var TRUE = true, FALSE = false, NULL = null, UA = S.UA, Dom = S.DOM, KES = Editor.SelectionType;
   function fixCursorForIE(editor) {
@@ -3177,15 +3176,16 @@ KISSY.add("editor/selectionFix", ["./base", "./selection", "./range", "node"], f
         fixSelectionForIEWhenDocReady(editor)
       }else {
         fireSelectionChangeForStandard(editor);
-        if(UA.ieMode === 11) {
-          editor.get("document").on("focusin", function(e) {
-            var selection = editor.getSelection();
-            var range = selection && selection.getRanges()[0];
-            if(!range) {
-              range = new KERange(this);
-              range.setStart(Node.all(e.target), 0);
-              range.collapse(1);
-              range.select()
+        if(UA.ie) {
+          var savedRanges, doc = editor.get("document");
+          doc.on("focusout", function() {
+            savedRanges = editor.getSelection().getRanges()
+          });
+          doc.on("focusin", function() {
+            if(savedRanges) {
+              var selection = editor.getSelection();
+              selection.selectRanges(savedRanges);
+              savedRanges = null
             }
           })
         }

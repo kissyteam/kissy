@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.41
 MIT Licensed
-build time: Dec 4 22:05
+build time: Dec 10 01:46
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -203,8 +203,9 @@ KISSY.add("component/extension/align", ["node"], function(S, require) {
     self.set("align", {node:node, points:["cc", "cc"], offset:[0, 0]});
     return self
   }, __destructor:function() {
-    if(this.$el) {
-      this.$el.getWindow().detach("resize", realign, this)
+    var self = this;
+    if(self.$el) {
+      self.$el.getWindow().detach("resize", onResize, self)
     }
   }};
   return Align

@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.41
 MIT Licensed
-build time: Dec 4 22:05
+build time: Dec 10 01:30
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -607,9 +607,14 @@ KISSY.add("component/control", ["node", "./control/process", "component/manager"
       self.focus()
     }
   }, destructor:function() {
-    Manager.removeComponent(this.get("id"));
-    if(this.view) {
-      this.view.destroy()
+    var self = this;
+    Manager.removeComponent(self.get("id"));
+    if(self.view) {
+      self.view.destroy()
+    }else {
+      if(self.get("srcNode")) {
+        self.get("srcNode").remove()
+      }
     }
   }}, {name:"control", ATTRS:{id:{view:1, valueFn:function() {
     return S.guid("ks-component")

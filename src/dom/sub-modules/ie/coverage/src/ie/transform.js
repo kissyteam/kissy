@@ -427,123 +427,123 @@ if (! _$jscoverage['/ie/transform.js'].branchData) {
   _$jscoverage['/ie/transform.js'].branchData['279'] = [];
   _$jscoverage['/ie/transform.js'].branchData['279'][1] = new BranchData();
 }
-_$jscoverage['/ie/transform.js'].branchData['279'][1].init(16, 25, 'value.indexOf(\'deg\') > -1');
+_$jscoverage['/ie/transform.js'].branchData['279'][1].init(17, 25, 'value.indexOf(\'deg\') > -1');
 function visit115_279_1(result) {
   _$jscoverage['/ie/transform.js'].branchData['279'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/transform.js'].branchData['267'][1].init(62, 6, 'j < r2');
+}_$jscoverage['/ie/transform.js'].branchData['267'][1].init(64, 6, 'j < r2');
 function visit114_267_1(result) {
   _$jscoverage['/ie/transform.js'].branchData['267'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/transform.js'].branchData['265'][1].init(29, 6, 'k < c2');
+}_$jscoverage['/ie/transform.js'].branchData['265'][1].init(30, 6, 'k < c2');
 function visit113_265_1(result) {
   _$jscoverage['/ie/transform.js'].branchData['265'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/transform.js'].branchData['264'][1].init(365, 6, 'i < r1');
+}_$jscoverage['/ie/transform.js'].branchData['264'][1].init(380, 6, 'i < r1');
 function visit112_264_1(result) {
   _$jscoverage['/ie/transform.js'].branchData['264'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/transform.js'].branchData['253'][1].init(51, 20, 'i < arguments.length');
+}_$jscoverage['/ie/transform.js'].branchData['253'][1].init(53, 20, 'i < arguments.length');
 function visit111_253_1(result) {
   _$jscoverage['/ie/transform.js'].branchData['253'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/transform.js'].branchData['251'][1].init(28, 20, 'arguments.length > 2');
+}_$jscoverage['/ie/transform.js'].branchData['251'][1].init(30, 20, 'arguments.length > 2');
 function visit110_251_1(result) {
   _$jscoverage['/ie/transform.js'].branchData['251'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/transform.js'].branchData['243'][1].init(13, 5, '!m[x]');
+}_$jscoverage['/ie/transform.js'].branchData['243'][1].init(14, 5, '!m[x]');
 function visit109_243_1(result) {
   _$jscoverage['/ie/transform.js'].branchData['243'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/transform.js'].branchData['213'][1].init(136, 14, 'val.length > 1');
+}_$jscoverage['/ie/transform.js'].branchData['213'][1].init(139, 14, 'val.length > 1');
 function visit108_213_1(result) {
   _$jscoverage['/ie/transform.js'].branchData['213'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/transform.js'].branchData['199'][1].init(124, 14, 'val.length > 1');
+}_$jscoverage['/ie/transform.js'].branchData['199'][1].init(127, 14, 'val.length > 1');
 function visit107_199_1(result) {
   _$jscoverage['/ie/transform.js'].branchData['199'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/transform.js'].branchData['177'][1].init(150, 11, 'val[1] || 0');
+}_$jscoverage['/ie/transform.js'].branchData['177'][1].init(153, 11, 'val[1] || 0');
 function visit106_177_1(result) {
   _$jscoverage['/ie/transform.js'].branchData['177'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/transform.js'].branchData['160'][1].init(333, 7, '++i < l');
+}_$jscoverage['/ie/transform.js'].branchData['160'][1].init(343, 7, '++i < l');
 function visit105_160_1(result) {
   _$jscoverage['/ie/transform.js'].branchData['160'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/transform.js'].branchData['140'][1].init(62, 26, 'S.endsWith(origin[i], \'%\')');
+}_$jscoverage['/ie/transform.js'].branchData['140'][1].init(64, 26, 'S.endsWith(origin[i], \'%\')');
 function visit104_140_1(result) {
   _$jscoverage['/ie/transform.js'].branchData['140'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/transform.js'].branchData['138'][1].init(181, 17, 'i < origin.length');
+}_$jscoverage['/ie/transform.js'].branchData['138'][1].init(187, 17, 'i < origin.length');
 function visit103_138_1(result) {
   _$jscoverage['/ie/transform.js'].branchData['138'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/transform.js'].branchData['135'][1].init(89, 19, 'origin.length === 1');
+}_$jscoverage['/ie/transform.js'].branchData['135'][1].init(92, 19, 'origin.length === 1');
 function visit102_135_1(result) {
   _$jscoverage['/ie/transform.js'].branchData['135'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/transform.js'].branchData['133'][1].init(18, 19, 'origin || \'50% 50%\'');
+}_$jscoverage['/ie/transform.js'].branchData['133'][1].init(19, 19, 'origin || \'50% 50%\'');
 function visit101_133_1(result) {
   _$jscoverage['/ie/transform.js'].branchData['133'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/transform.js'].branchData['100'][1].init(2550, 9, 'matrixVal');
+}_$jscoverage['/ie/transform.js'].branchData['100'][1].init(2609, 9, 'matrixVal');
 function visit100_100_1(result) {
   _$jscoverage['/ie/transform.js'].branchData['100'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/transform.js'].branchData['89'][1].init(127, 36, 'currentStyle && !currentStyle.filter');
+}_$jscoverage['/ie/transform.js'].branchData['89'][1].init(129, 36, 'currentStyle && !currentStyle.filter');
 function visit99_89_1(result) {
   _$jscoverage['/ie/transform.js'].branchData['89'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/transform.js'].branchData['87'][1].init(47, 164, '!matrixVal || currentStyle && !currentStyle.filter');
+}_$jscoverage['/ie/transform.js'].branchData['87'][1].init(48, 166, '!matrixVal || currentStyle && !currentStyle.filter');
 function visit98_87_1(result) {
   _$jscoverage['/ie/transform.js'].branchData['87'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/transform.js'].branchData['81'][1].init(1595, 50, '!matrixVal && !S.trim(filter.replace(rMatrix, \'\'))');
+}_$jscoverage['/ie/transform.js'].branchData['81'][1].init(1635, 50, '!matrixVal && !S.trim(filter.replace(rMatrix, \'\'))');
 function visit97_81_1(result) {
   _$jscoverage['/ie/transform.js'].branchData['81'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/transform.js'].branchData['79'][3].init(1554, 22, 'elemStyle.filter || \'\'');
+}_$jscoverage['/ie/transform.js'].branchData['79'][3].init(1592, 22, 'elemStyle.filter || \'\'');
 function visit96_79_3(result) {
   _$jscoverage['/ie/transform.js'].branchData['79'][3].ranCondition(result);
   return result;
-}_$jscoverage['/ie/transform.js'].branchData['79'][2].init(1515, 35, 'currentStyle && currentStyle.filter');
+}_$jscoverage['/ie/transform.js'].branchData['79'][2].init(1553, 35, 'currentStyle && currentStyle.filter');
 function visit95_79_2(result) {
   _$jscoverage['/ie/transform.js'].branchData['79'][2].ranCondition(result);
   return result;
-}_$jscoverage['/ie/transform.js'].branchData['79'][1].init(1515, 61, 'currentStyle && currentStyle.filter || elemStyle.filter || \'\'');
+}_$jscoverage['/ie/transform.js'].branchData['79'][1].init(1553, 61, 'currentStyle && currentStyle.filter || elemStyle.filter || \'\'');
 function visit94_79_1(result) {
   _$jscoverage['/ie/transform.js'].branchData['79'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/transform.js'].branchData['58'][1].init(595, 5, 'value');
+}_$jscoverage['/ie/transform.js'].branchData['58'][1].init(612, 5, 'value');
 function visit93_58_1(result) {
   _$jscoverage['/ie/transform.js'].branchData['58'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/transform.js'].branchData['24'][2].init(377, 29, 'dys[0].toLowerCase() === \'dy\'');
+}_$jscoverage['/ie/transform.js'].branchData['24'][2].init(386, 29, 'dys[0].toLowerCase() === \'dy\'');
 function visit92_24_2(result) {
   _$jscoverage['/ie/transform.js'].branchData['24'][2].ranCondition(result);
   return result;
-}_$jscoverage['/ie/transform.js'].branchData['24'][1].init(370, 36, 'dys && dys[0].toLowerCase() === \'dy\'');
+}_$jscoverage['/ie/transform.js'].branchData['24'][1].init(379, 36, 'dys && dys[0].toLowerCase() === \'dy\'');
 function visit91_24_1(result) {
   _$jscoverage['/ie/transform.js'].branchData['24'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/transform.js'].branchData['21'][2].init(254, 29, 'dxs[0].toLowerCase() === \'dx\'');
+}_$jscoverage['/ie/transform.js'].branchData['21'][2].init(260, 29, 'dxs[0].toLowerCase() === \'dx\'');
 function visit90_21_2(result) {
   _$jscoverage['/ie/transform.js'].branchData['21'][2].ranCondition(result);
   return result;
-}_$jscoverage['/ie/transform.js'].branchData['21'][1].init(247, 36, 'dxs && dxs[0].toLowerCase() === \'dx\'');
+}_$jscoverage['/ie/transform.js'].branchData['21'][1].init(253, 36, 'dxs && dxs[0].toLowerCase() === \'dx\'');
 function visit89_21_1(result) {
   _$jscoverage['/ie/transform.js'].branchData['21'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/transform.js'].branchData['20'][1].init(192, 33, 'matrix[5] && matrix[5].split(\'=\')');
+}_$jscoverage['/ie/transform.js'].branchData['20'][1].init(197, 33, 'matrix[5] && matrix[5].split(\'=\')');
 function visit88_20_1(result) {
   _$jscoverage['/ie/transform.js'].branchData['20'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/transform.js'].branchData['19'][1].init(131, 33, 'matrix[4] && matrix[4].split(\'=\')');
+}_$jscoverage['/ie/transform.js'].branchData['19'][1].init(135, 33, 'matrix[4] && matrix[4].split(\'=\')');
 function visit87_19_1(result) {
   _$jscoverage['/ie/transform.js'].branchData['19'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/transform.js'].branchData['15'][1].init(112, 43, 'elemStyle && rMatrix.test(elemStyle.filter)');
+}_$jscoverage['/ie/transform.js'].branchData['15'][1].init(115, 43, 'elemStyle && rMatrix.test(elemStyle.filter)');
 function visit86_15_1(result) {
   _$jscoverage['/ie/transform.js'].branchData['15'][1].ranCondition(result);
   return result;

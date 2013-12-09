@@ -428,13 +428,15 @@ KISSY.add(function (S, require) {
             // if we're at an inner frame, we only want to get the window position
             // so that we can determine the actual page offset in the context of
             // the outer window.
-            offset = currentWin === relativeWin ?
+            // must use == for ie8
+            /*jshint eqeqeq:false*/
+            offset = currentWin == relativeWin ?
                 getPageOffset(currentEl) :
                 getClientPosition(currentEl);
             position.left += offset.left;
             position.top += offset.top;
         } while (currentWin &&
-            currentWin !== relativeWin &&
+            currentWin != relativeWin &&
             (currentEl = currentWin.frameElement) &&
             (currentWin = currentWin.parent));
 

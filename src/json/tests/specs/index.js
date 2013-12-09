@@ -10,14 +10,13 @@ KISSY.add(function (S, Json) {
                 expect(Json.stringify({'a': true})).toBe('{"a":true}');
                 expect(Json.stringify(true)).toBe('true');
                 expect(Json.stringify(null)).toBe('null');
+                // ie8 native json will be 'undefined'
                 expect(Json.stringify(undefined)).toBe(undefined);
                 expect(Json.stringify(NaN)).toBe('null');
-
                 if (JSON) {
                     expect(Json.stringify({'a': true})).toBe(JSON.stringify({'a': true}));
                     expect(Json.stringify(true)).toBe(JSON.stringify(true));
                     expect(Json.stringify(null)).toBe(JSON.stringify(null));
-                    expect(Json.stringify(undefined)).toBe(JSON.stringify(undefined));
                     // special number
                     expect(Json.stringify(NaN)).toBe(JSON.stringify(NaN));
                     expect(Json.stringify(Infinity)).toBe(JSON.stringify(Infinity));
@@ -196,7 +195,8 @@ KISSY.add(function (S, Json) {
                                 }
                             ]
                         }, function (key, value) {
-                            if (key === '0') {
+                            // ie8 will be int
+                            if (String(key) === '0') {
                                 expect(value.z).toBe(1);
                                 return 1;
                             }
