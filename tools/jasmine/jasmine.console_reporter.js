@@ -8,10 +8,7 @@
  jasmine.getEnv().execute();
  */
 
-(function (jasmine, console) {
-    if (!console) {
-        return;
-    }
+(function (jasmine) {
     if (!jasmine) {
         throw "jasmine library isn't loaded!";
     }
@@ -28,9 +25,6 @@
     };
 
     var ConsoleReporter = function () {
-        if (!console || !console.log) {
-            throw "console isn't present!";
-        }
         this.status = this.statuses.stopped;
     };
 
@@ -107,8 +101,10 @@
 
     proto.log = function (str, color) {
         var text = (color != undefined) ? ANSI.colorize_text(str, color) : str;
-        console.log(text)
+        if(window.console){
+            console.log(text)
+        }
     };
 
     jasmine.ConsoleReporter = ConsoleReporter;
-})(jasmine, window.console);
+})(jasmine);

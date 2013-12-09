@@ -7,8 +7,6 @@ KISSY.add(function (S, require) {
     var Editor = require('editor');
     var FlashDialog = require('../flash/dialog');
     var MenuButton = require('../menubutton');
-
-
     var Dom = S.DOM,
         Node = S.Node,
         Utils = Editor.Utils,
@@ -341,7 +339,6 @@ KISSY.add(function (S, require) {
         }
 
     });
-
 
     function getXiamiPaging(page, i, s) {
         return '<a class="{prefixCls}editor-xiami-page-item {prefixCls}editor-button ks-inline-block' +

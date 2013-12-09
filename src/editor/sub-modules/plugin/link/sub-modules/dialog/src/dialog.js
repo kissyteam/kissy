@@ -7,7 +7,7 @@ KISSY.add(function (S, require) {
     var Editor = require('editor');
     var Dialog4E = require('../dialog');
     var Utils = require('./utils');
-    var _keSavedHref = Utils._keSavedHref,
+    var savedHref = Utils.savedHref,
         bodyHTML = '<div style="padding:20px 20px 0 20px">' +
             '<p>' +
             '<label>' +
@@ -113,7 +113,7 @@ KISSY.add(function (S, require) {
                 _selectedEl = self._selectedEl;
             //是修改行为
             if (_selectedEl) {
-                var url = _selectedEl.attr(_keSavedHref) || _selectedEl.attr('href');
+                var url = _selectedEl.attr(savedHref) || _selectedEl.attr('href');
                 Editor.Utils.valInput(d.urlEl, url);
                 d.urlTitle.val(_selectedEl.attr('title') || '');
                 d.targetEl[0].checked = (_selectedEl.attr('target') === '_blank');

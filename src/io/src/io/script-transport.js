@@ -8,10 +8,7 @@
 KISSY.add(function (S, require) {
     var IO = require('./base');
     var logger = S.getLogger('s/io');
-    var win = S.Env.host,
-        doc = win.document,
-
-        OK_CODE = 200,
+    var OK_CODE = 200,
         ERROR_CODE = 500;
 
     IO.setupConfig({
@@ -39,86 +36,52 @@ KISSY.add(function (S, require) {
     });
 
     function ScriptTransport(io) {
-        var config = io.config;
+        var config = io.config,
+            self = this;
         // 优先使用 xhr+eval 来执行脚本, ie 下可以探测到（更多）失败状态
         if (!config.crossDomain) {
             return new (IO.getTransport('*'))(io);
         }
-        this.io = io;
+        self.io = io;
         logger.info('use ScriptTransport for: ' + config.url);
-        return this;
+        return self;
     }
 
     S.augment(ScriptTransport, {
         send: function () {
             var self = this,
-                script,
                 io = self.io,
-                c = io.config,
-                head = doc.head ||
-                    doc.getElementsByTagName('head')[0] ||
-                    doc.documentElement;
-
-            self.head = head;
-            script = doc.createElement('script');
-            self.script = script;
-            script.async = true;
-
-            if (c.scriptCharset) {
-                script.charset = c.scriptCharset;
-            }
-
-            script.src = io._getUrlForSend();
-
-            script.onerror =
-                script.onload =
-                    script.onreadystatechange = function (e) {
-                        e = e || win.event;
-                        // firefox onerror 没有 type ?!
-                        self._callback((e.type || 'error').toLowerCase());
-                    };
-
-            head.insertBefore(script, head.firstChild);
+                c = io.config;
+            self.script = S.getScript(io._getUrlForSend(), {
+                charset: c.scriptCharset,
+                success: function () {
+                    self._callback('success');
+                },
+                error: function () {
+                    self._callback('error');
+                }
+            });
         },
 
         _callback: function (event, abort) {
             var self = this,
                 script = self.script,
-                io = self.io,
-                head = self.head;
-
+                io = self.io;
             // 防止重复调用,成功后 abort
             if (!script) {
                 return;
             }
-
-            if (
-                abort || !script.readyState ||
-                    /loaded|complete/.test(script.readyState) ||
-                    event === 'error'
-                ) {
-
-                script.onerror = script.onload = script.onreadystatechange = null;
-
-                // Remove the script
-                if (head && script.parentNode) {
-                    // ie 报错载入无效 js
-                    // 怎么 abort ??
-                    // script.src = '#';
-                    head.removeChild(script);
-                }
-
-                self.script = undefined;
-                self.head = undefined;
-
-                // Callback if not abort
-                if (!abort && event !== 'error') {
-                    io._ioReady(OK_CODE, 'success');
-                }
-                // 非 ie<9 可以判断出来
-                else if (event === 'error') {
-                    io._ioReady(ERROR_CODE, 'script error');
-                }
+            self.script = undefined;
+            if (abort) {
+                return;
+            }
+            // Callback if not abort
+            if (event !== 'error') {
+                io._ioReady(OK_CODE, 'success');
+            }
+            // 非 ie<9 可以判断出来
+            else if (event === 'error') {
+                io._ioReady(ERROR_CODE, 'script error');
             }
         },
 

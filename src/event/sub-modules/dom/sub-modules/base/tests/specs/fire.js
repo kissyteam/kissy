@@ -107,7 +107,6 @@ KISSY.add(function (S, Dom, Event) {
         });
 
         it('bubble event remove element/fn in the middle', function () {
-
             var n = Dom.create("<div>" +
                 "<div class='l1'><div class='l2'></div></div>" +
                 "</div>"), ret = [], dfn, winFn;
@@ -156,7 +155,6 @@ KISSY.add(function (S, Dom, Event) {
 
             Dom.remove(n);
         });
-
 
         it('fireHandler does not bubble', function () {
 
@@ -213,7 +211,6 @@ KISSY.add(function (S, Dom, Event) {
             Dom.remove(n);
         });
     });
-
 }, {
     requires: ['dom', 'event/dom/base']
 });

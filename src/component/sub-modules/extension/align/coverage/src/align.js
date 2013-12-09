@@ -376,7 +376,8 @@ if (! _$jscoverage['/align.js']) {
   _$jscoverage['/align.js'].lineData[460] = 0;
   _$jscoverage['/align.js'].lineData[464] = 0;
   _$jscoverage['/align.js'].lineData[465] = 0;
-  _$jscoverage['/align.js'].lineData[470] = 0;
+  _$jscoverage['/align.js'].lineData[466] = 0;
+  _$jscoverage['/align.js'].lineData[471] = 0;
 }
 if (! _$jscoverage['/align.js'].functionData) {
   _$jscoverage['/align.js'].functionData = [];
@@ -519,12 +520,12 @@ if (! _$jscoverage['/align.js'].branchData) {
   _$jscoverage['/align.js'].branchData['436'][1] = new BranchData();
   _$jscoverage['/align.js'].branchData['440'] = [];
   _$jscoverage['/align.js'].branchData['440'][1] = new BranchData();
-  _$jscoverage['/align.js'].branchData['464'] = [];
-  _$jscoverage['/align.js'].branchData['464'][1] = new BranchData();
+  _$jscoverage['/align.js'].branchData['465'] = [];
+  _$jscoverage['/align.js'].branchData['465'][1] = new BranchData();
 }
-_$jscoverage['/align.js'].branchData['464'][1].init(17, 8, 'this.$el');
-function visit69_464_1(result) {
-  _$jscoverage['/align.js'].branchData['464'][1].ranCondition(result);
+_$jscoverage['/align.js'].branchData['465'][1].init(46, 8, 'self.$el');
+function visit69_465_1(result) {
+  _$jscoverage['/align.js'].branchData['465'][1].ranCondition(result);
   return result;
 }_$jscoverage['/align.js'].branchData['440'][1].init(3179, 38, 'newElRegion.height !== elRegion.height');
 function visit68_440_1(result) {
@@ -1193,11 +1194,13 @@ KISSY.add(function(S, require) {
   __destructor: function() {
   _$jscoverage['/align.js'].functionData[21]++;
   _$jscoverage['/align.js'].lineData[464]++;
-  if (visit69_464_1(this.$el)) {
-    _$jscoverage['/align.js'].lineData[465]++;
-    this.$el.getWindow().detach('resize', realign, this);
+  var self = this;
+  _$jscoverage['/align.js'].lineData[465]++;
+  if (visit69_465_1(self.$el)) {
+    _$jscoverage['/align.js'].lineData[466]++;
+    self.$el.getWindow().detach('resize', onResize, self);
   }
 }};
-  _$jscoverage['/align.js'].lineData[470]++;
+  _$jscoverage['/align.js'].lineData[471]++;
   return Align;
 });

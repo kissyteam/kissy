@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50
 MIT Licensed
-build time: Dec 4 22:16
+build time: Dec 9 22:41
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -516,53 +516,41 @@ KISSY.add("io/xhr-transport", ["./base", "./xhr-transport-base", "./xdr-flash-tr
 KISSY.add("io/script-transport", ["./base"], function(S, require) {
   var IO = require("./base");
   var logger = S.getLogger("s/io");
-  var win = S.Env.host, doc = win.document, OK_CODE = 200, ERROR_CODE = 500;
+  var OK_CODE = 200, ERROR_CODE = 500;
   IO.setupConfig({accepts:{script:"text/javascript, " + "application/javascript, " + "application/ecmascript, " + "application/x-ecmascript"}, contents:{script:/javascript|ecmascript/}, converters:{text:{script:function(text) {
     S.globalEval(text);
     return text
   }}}});
   function ScriptTransport(io) {
-    var config = io.config;
+    var config = io.config, self = this;
     if(!config.crossDomain) {
       return new (IO.getTransport("*"))(io)
     }
-    this.io = io;
+    self.io = io;
     logger.info("use ScriptTransport for: " + config.url);
-    return this
+    return self
   }
   S.augment(ScriptTransport, {send:function() {
-    var self = this, script, io = self.io, c = io.config, head = doc.head || doc.getElementsByTagName("head")[0] || doc.documentElement;
-    self.head = head;
-    script = doc.createElement("script");
-    self.script = script;
-    script.async = true;
-    if(c.scriptCharset) {
-      script.charset = c.scriptCharset
-    }
-    script.src = io._getUrlForSend();
-    script.onerror = script.onload = script.onreadystatechange = function(e) {
-      e = e || win.event;
-      self._callback((e.type || "error").toLowerCase())
-    };
-    head.insertBefore(script, head.firstChild)
+    var self = this, io = self.io, c = io.config;
+    self.script = S.getScript(io._getUrlForSend(), {charset:c.scriptCharset, success:function() {
+      self._callback("success")
+    }, error:function() {
+      self._callback("error")
+    }})
   }, _callback:function(event, abort) {
-    var self = this, script = self.script, io = self.io, head = self.head;
+    var self = this, script = self.script, io = self.io;
     if(!script) {
       return
     }
-    if(abort || !script.readyState || /loaded|complete/.test(script.readyState) || event === "error") {
-      script.onerror = script.onload = script.onreadystatechange = null;
-      if(head && script.parentNode) {
-        head.removeChild(script)
-      }
-      self.script = undefined;
-      self.head = undefined;
-      if(!abort && event !== "error") {
-        io._ioReady(OK_CODE, "success")
-      }else {
-        if(event === "error") {
-          io._ioReady(ERROR_CODE, "script error")
-        }
+    self.script = undefined;
+    if(abort) {
+      return
+    }
+    if(event !== "error") {
+      io._ioReady(OK_CODE, "success")
+    }else {
+      if(event === "error") {
+        io._ioReady(ERROR_CODE, "script error")
       }
     }
   }, abort:function() {

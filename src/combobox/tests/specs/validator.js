@@ -10,7 +10,6 @@ KISSY.add(function (S, ComboBox) {
     var $ = S.all;
 
     describe("validator", function () {
-
         beforeEach(function () {
             this.addMatchers({
                 toBeNearEqual: function (expected) {
@@ -19,9 +18,7 @@ KISSY.add(function (S, ComboBox) {
             });
         });
 
-
         it("validator works", function () {
-
             var data = ["1", "21", "31"];
 
             var ERROR = "太大了";
@@ -61,12 +58,15 @@ KISSY.add(function (S, ComboBox) {
             runs(function () {
                 t.value = "11";
             });
-            waits(100);
+            // longer for ie8
+            waits(500);
 
             runs(function () {
                 jasmine.simulate(t, "keyup");
             });
 
+            // longer for ie8
+            waits(500);
 
             runs(function () {
                 // firefox will not trigger blur event??
@@ -74,7 +74,8 @@ KISSY.add(function (S, ComboBox) {
                 t.blur();
             });
 
-            waits(100);
+            // longer for ie8
+            waits(500);
 
             runs(function () {
                 var error = "";

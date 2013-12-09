@@ -72,7 +72,7 @@ KISSY.add(function (S, Dom) {
 
             var ok = 0;
 
-            $(iframe).on('load',function () {
+            $(iframe).on('load', function () {
                 var win = iframe.contentWindow;
                 var inner = Dom.get("#test-inner", win.document);
                 var innerOffsetTop = Dom.offset(inner).top - Dom.scrollTop(win);
@@ -101,6 +101,6 @@ KISSY.add(function (S, Dom) {
             window.scrollTo(0, scrollTop);
         });
     });
-},{
-    requires:['dom']
+}, {
+    requires: ['dom']
 });

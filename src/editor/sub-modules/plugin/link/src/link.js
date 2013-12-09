@@ -86,7 +86,7 @@ KISSY.add(function (S, require) {
                             if (!a) {
                                 return;
                             }
-                            var href = a.attr(Utils._keSavedHref) ||
+                            var href = a.attr(Utils.savedHref) ||
                                 a.attr('href');
                             tipUrl.html(href);
                             tipUrl.attr('href', href);

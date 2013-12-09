@@ -7,7 +7,7 @@ KISSY.add(function (S, require) {
     var Editor = require('editor');
     var Node = S.Node,
         KEStyle = Editor.Style,
-        _keSavedHref = '_keSavedHref',
+        savedHref = '_ke_saved_href',
         linkStyle = {
             element: 'a',
             attributes: {
@@ -18,7 +18,7 @@ KISSY.add(function (S, require) {
                 // 2. 用户输入 ./a.htm
                 // 3. 生成为 <a href='http://x.com/a.htm'>
                 // 另一个问题 refer: http://stackoverflow.com/questions/687552/prevent-tinymce-internet-explorer-from-converting-urls-to-links
-                '_keSavedHref': '#(_keSavedHref)',
+                '_ke_saved_href': '#(_ke_saved_href)',
                 target: '#(target)'
             }
         };
@@ -57,8 +57,8 @@ KISSY.add(function (S, require) {
     }
 
     function applyLink(editor, attr, _selectedEl) {
-        // 注意同步，取的话要从 _keSavedHref 取原始值的
-        attr[_keSavedHref] = attr.href;
+        // 注意同步，取的话要从 _ke_saved_href 取原始值的
+        attr[savedHref] = attr.href;
         // 是修改行为
         if (_selectedEl) {
             editor.execCommand('save');
@@ -73,8 +73,8 @@ KISSY.add(function (S, require) {
                 editor.insertElement(a);
             } else {
                 editor.execCommand('save');
-                var linkStyle = new KEStyle(linkStyle, attr);
-                linkStyle.apply(editor.get('document')[0]);
+                var linkStyleObj = new KEStyle(linkStyle, attr);
+                linkStyleObj.apply(editor.get('document')[0]);
             }
         }
         editor.execCommand('save');
@@ -84,6 +84,6 @@ KISSY.add(function (S, require) {
     return {
         removeLink: removeLink,
         applyLink: applyLink,
-        _keSavedHref: _keSavedHref
+        savedHref: savedHref
     };
 });

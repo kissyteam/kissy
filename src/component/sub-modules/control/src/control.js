@@ -385,10 +385,13 @@ KISSY.add(function (S, require) {
              * @protected
              */
             destructor: function () {
+                var self = this;
                 // remove instance from manager
-                Manager.removeComponent(this.get('id'));
-                if (this.view) {
-                    this.view.destroy();
+                Manager.removeComponent(self.get('id'));
+                if (self.view) {
+                    self.view.destroy();
+                } else if (self.get('srcNode')) {
+                    self.get('srcNode').remove();
                 }
             }
         },

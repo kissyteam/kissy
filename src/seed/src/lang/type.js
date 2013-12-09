@@ -67,7 +67,10 @@
             // Must be an Object.
             // Because of IE, we also have to check the presence of the constructor property.
             // Make sure that Dom nodes and window objects don't pass through, as well
-            if (!obj || S.type(obj) !== 'object' || obj.nodeType || obj.window === obj) {
+            if (!obj || S.type(obj) !== 'object' || obj.nodeType ||
+                /*jshint eqeqeq:false*/
+                // must == for ie8
+                obj.window == obj) {
                 return FALSE;
             }
 

@@ -290,7 +290,7 @@ if (! _$jscoverage['/link.js'].branchData) {
   _$jscoverage['/link.js'].branchData['89'] = [];
   _$jscoverage['/link.js'].branchData['89'][1] = new BranchData();
 }
-_$jscoverage['/link.js'].branchData['89'][1].init(216, 76, 'a.attr(Utils._keSavedHref) || a.attr(\'href\')');
+_$jscoverage['/link.js'].branchData['89'][1].init(216, 73, 'a.attr(Utils.savedHref) || a.attr(\'href\')');
 function visit3_89_1(result) {
   _$jscoverage['/link.js'].branchData['89'][1].ranCondition(result);
   return result;
@@ -396,7 +396,7 @@ KISSY.add(function(S, require) {
     return;
   }
   _$jscoverage['/link.js'].lineData[89]++;
-  var href = visit3_89_1(a.attr(Utils._keSavedHref) || a.attr('href'));
+  var href = visit3_89_1(a.attr(Utils.savedHref) || a.attr('href'));
   _$jscoverage['/link.js'].lineData[91]++;
   tipUrl.html(href);
   _$jscoverage['/link.js'].lineData[92]++;

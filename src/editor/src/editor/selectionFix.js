@@ -10,7 +10,6 @@
 KISSY.add(function (S, require) {
     var Editor = require('./base');
     require('./selection');
-    var KERange = require('./range');
     var Node = require('node');
 
     var TRUE = true,
@@ -110,7 +109,6 @@ KISSY.add(function (S, require) {
             }
         });
     }
-
 
     function fixSelectionForIEWhenDocReady(editor) {
         var doc = editor.get('document')[0],
@@ -479,16 +477,18 @@ KISSY.add(function (S, require) {
                     fixSelectionForIEWhenDocReady(editor);
                 } else {
                     fireSelectionChangeForStandard(editor);
-                    // ie buggy, will not show cursor sometimes
-                    if (UA.ieMode === 11) {
-                        editor.get('document').on('focusin', function (e) {
-                            var selection = editor.getSelection();
-                            var range = selection && selection.getRanges()[0];
-                            if (!range) {
-                                range = new KERange(this);
-                                range.setStart(Node.all(e.target), 0);
-                                range.collapse(1);
-                                range.select();
+                    //  ie11,9,10 still lose selection when editor is blurred
+                    if (UA.ie) {
+                        var savedRanges,
+                            doc = editor.get('document');
+                        doc.on('focusout', function () {
+                            savedRanges = editor.getSelection().getRanges();
+                        });
+                        doc.on('focusin', function () {
+                            if (savedRanges) {
+                                var selection = editor.getSelection();
+                                selection.selectRanges(savedRanges);
+                                savedRanges = null;
                             }
                         });
                     }

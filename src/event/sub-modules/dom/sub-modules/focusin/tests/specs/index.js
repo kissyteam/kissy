@@ -16,6 +16,8 @@ KISSY.add(function (S, Event, Dom) {
 
         beforeEach(function () {
             Dom.prepend(Dom.create(tpl), 'body');
+            window.focus();
+            document.body.focus();
         });
 
         afterEach(function () {

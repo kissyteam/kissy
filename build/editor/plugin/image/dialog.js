@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50
 MIT Licensed
-build time: Dec 4 22:10
+build time: Dec 9 22:42
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -225,7 +225,7 @@ KISSY.add("editor/plugin/image/dialog", ["editor", "io", "../dialog", "tabs", ".
           bs = sel.createBookmarks()
         }
         link = new Node("<a></a>");
-        link.attr("_keSavedHref", linkVal).attr("href", linkVal).attr("target", target);
+        link.attr("_ke_saved_href", linkVal).attr("href", linkVal).attr("target", target);
         var t = img[0];
         t.parentNode.replaceChild(link[0], t);
         link.append(t)
@@ -288,7 +288,7 @@ KISSY.add("editor/plugin/image/dialog", ["editor", "io", "../dialog", "tabs", ".
       self.imgRatioValue = null
     }
     if(link) {
-      valInput(self.imgLink, link.attr("_keSavedHref") || link.attr("href"));
+      valInput(self.imgLink, link.attr("_ke_saved_href") || link.attr("href"));
       self.imgLinkBlank.attr("checked", link.attr("target") === "_blank")
     }else {
       resetInput(self.imgLink);

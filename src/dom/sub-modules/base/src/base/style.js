@@ -649,12 +649,12 @@ KISSY.add(function (S, require) {
             offsetParent = getOffsetParent(el);
             offset = Dom.offset(el);
             parentOffset = Dom.offset(offsetParent);
-            parentOffset.top += parseFloat(Dom.css(offsetParent, "borderTopWidth")) || 0;
-            parentOffset.left += parseFloat(Dom.css(offsetParent, "borderLeftWidth")) || 0;
+            parentOffset.top += parseFloat(Dom.css(offsetParent, 'borderTopWidth')) || 0;
+            parentOffset.left += parseFloat(Dom.css(offsetParent, 'borderLeftWidth')) || 0;
         }
 
-        offset.top -= parseFloat(Dom.css(el, "marginTop")) || 0;
-        offset.left -= parseFloat(Dom.css(el, "marginLeft")) || 0;
+        offset.top -= parseFloat(Dom.css(el, 'marginTop')) || 0;
+        offset.left -= parseFloat(Dom.css(el, 'marginLeft')) || 0;
 
         // known bug: if el is relative && offsetParent is document.body, left %
         // should - document.body.paddingLeft
@@ -667,7 +667,7 @@ KISSY.add(function (S, require) {
     function getOffsetParent(el) {
         var offsetParent = el.offsetParent || ( el.ownerDocument || doc).body;
         while (offsetParent && !ROOT_REG.test(offsetParent.nodeName) &&
-            Dom.css(offsetParent, "position") === 'static') {
+            Dom.css(offsetParent, 'position') === 'static') {
             offsetParent = offsetParent.offsetParent;
         }
         return offsetParent;

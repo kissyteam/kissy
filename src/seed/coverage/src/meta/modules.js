@@ -421,7 +421,7 @@ _$jscoverage['/meta/modules.js'].lineData[3]++;
   _$jscoverage['/meta/modules.js'].lineData[123]++;
   config({
   'dom/ie': {
-  requires: ['dom/base', 'dom/ie/style']}});
+  requires: ['dom/base']}});
   _$jscoverage['/meta/modules.js'].lineData[127]++;
   config({
   'dom/selector': {

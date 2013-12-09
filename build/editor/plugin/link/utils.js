@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50
 MIT Licensed
-build time: Dec 4 22:11
+build time: Dec 9 22:43
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -11,7 +11,7 @@ build time: Dec 4 22:11
 
 KISSY.add("editor/plugin/link/utils", ["editor"], function(S, require) {
   var Editor = require("editor");
-  var Node = S.Node, KEStyle = Editor.Style, _keSavedHref = "_keSavedHref", linkStyle = {element:"a", attributes:{href:"#(href)", title:"#(title)", _keSavedHref:"#(_keSavedHref)", target:"#(target)"}};
+  var Node = S.Node, KEStyle = Editor.Style, savedHref = "_ke_saved_href", linkStyle = {element:"a", attributes:{href:"#(href)", title:"#(title)", _ke_saved_href:"#(_ke_saved_href)", target:"#(target)"}};
   function getAttributes(el) {
     var attributes = el.attributes, re = {};
     for(var i = 0;i < attributes.length;i++) {
@@ -42,7 +42,7 @@ KISSY.add("editor/plugin/link/utils", ["editor"], function(S, require) {
     editor.notifySelectionChange()
   }
   function applyLink(editor, attr, _selectedEl) {
-    attr[_keSavedHref] = attr.href;
+    attr[savedHref] = attr.href;
     if(_selectedEl) {
       editor.execCommand("save");
       _selectedEl.attr(attr)
@@ -53,13 +53,13 @@ KISSY.add("editor/plugin/link/utils", ["editor"], function(S, require) {
         editor.insertElement(a)
       }else {
         editor.execCommand("save");
-        var linkStyle = new KEStyle(linkStyle, attr);
-        linkStyle.apply(editor.get("document")[0])
+        var linkStyleObj = new KEStyle(linkStyle, attr);
+        linkStyleObj.apply(editor.get("document")[0])
       }
     }
     editor.execCommand("save");
     editor.notifySelectionChange()
   }
-  return{removeLink:removeLink, applyLink:applyLink, _keSavedHref:_keSavedHref}
+  return{removeLink:removeLink, applyLink:applyLink, savedHref:savedHref}
 });
 

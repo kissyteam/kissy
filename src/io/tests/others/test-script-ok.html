@@ -1,0 +1,16 @@
+<script src="/kissy/build/seed.js" charset="utf-8"></script>
+<script src="/kissy/src/package.js"></script>
+<script>
+    KISSY.ready(function (S) {
+        S.use("io", function (S, io) {
+            io({
+                url: '../data/interface.jss?type=post&dataType=script',
+                dataType: 'script',
+                success: function (data) {
+                    alert(data);
+                    alert(global_script_test)
+                }
+            });
+        });
+    });
+</script>
