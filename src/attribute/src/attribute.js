@@ -8,8 +8,6 @@ KISSY.add(function (S, require, exports, module) {
     var CustomEvent = require('event/custom');
     module.exports = Attribute;
 
-    x.float=1;
-
     var bind = S.bind;
 
     function replaceToUpper() {
