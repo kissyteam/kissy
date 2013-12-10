@@ -83,7 +83,7 @@
         <ac:if>
             <ac:isset property="component.src.dir.exists"/>
             <ac:then>
-                <java classname="com.taobao.f2e.Main" fork="true">
+                <java classname="com.taobao.f2e.Main" fork="true" failonerror="true">
                     <arg value="-packageUrls"/>
 
                     <arg value="${component.name}=${component.src.dir}/${component.basename}"/>
@@ -173,7 +173,10 @@
         </replaceregexp>
 
         <!-- 用 Closure Compiler 压缩 JS -->
-        <apply executable="java" verbose="true" dest="${component.build.dir}">
+        <apply executable="java"
+               verbose="true"
+               failonerror="true"
+               dest="${component.build.dir}">
             <fileset dir="${component.build.dir}"
                      excludes="**/*-min.js" includes="**/*.js"/>
             <arg line="-jar"/>

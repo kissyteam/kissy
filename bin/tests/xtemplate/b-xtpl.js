@@ -1,14 +1,20 @@
 /** Compiled By kissy-xtemplate */
 KISSY.add(function (S, require, exports, module) {
-        return function (scopes, S, undefined) {
+        /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true*/
+        return function (scope, S, undefined) {
             var buffer = "",
                 config = this.config,
                 engine = this,
-                utils = config.utils;
-            var runBlockCommandUtil = utils["runBlockCommand"],
-                getExpressionUtil = utils["getExpression"],
-                getPropertyOrRunCommandUtil = utils["getPropertyOrRunCommand"];
+                moduleWrap, utils = config.utils;
+            if (typeof module !== "undefined" && module.kissy) {
+                moduleWrap = module;
+            }
+            var runBlockCommandUtil = utils.runBlockCommand,
+                renderOutputUtil = utils.renderOutput,
+                getPropertyUtil = utils.getProperty,
+                runInlineCommandUtil = utils.runInlineCommand,
+                getPropertyOrRunCommandUtil = utils.getPropertyOrRunCommand;
             buffer += '2';
             return buffer;
-        }
+        };
 });
