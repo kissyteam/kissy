@@ -12,7 +12,7 @@ KISSY.add(function (S, require) {
      * @class KISSY.JSON
      * @singleton
      */
-    return S.JSON = {
+    S.JSON = {
         /**
          * Convert a value to Json, optionally replacing values if a replacer function is specified,
          * or optionally including only the specified properties if a replacer array is specified.
@@ -44,4 +44,6 @@ KISSY.add(function (S, require) {
          */
         parse: parse
     };
+
+    return S.JSON;
 });

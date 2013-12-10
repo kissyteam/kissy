@@ -32,7 +32,7 @@ public class Packages {
         Module module = new Module();
         module.setPck(p);
         module.setName(moduleName);
-        return module.isValidFormat()?module:null;
+        return module;
     }
 
     public void initByBaseUrls(String baseUrlStr) {
@@ -88,7 +88,6 @@ public class Packages {
     }
 
     public Module getModuleFromName(String moduleName) {
-
         Module m = moduleCache.get(moduleName);
 
         if (moduleCache.containsKey(moduleName)) {
@@ -115,10 +114,6 @@ public class Packages {
         this.setModuleToCache(moduleName, m);
 
         return m;
-    }
-
-    public boolean isModuleExists(String moduleName) {
-        return getModuleFromName(moduleName) != null;
     }
 
     public boolean isPackageNameAlone(String packagePath,String modulePath){

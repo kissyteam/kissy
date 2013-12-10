@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50
 MIT Licensed
-build time: Dec 4 22:06
+build time: Dec 10 21:02
 */
 /**
  * i18n resources for date-picker

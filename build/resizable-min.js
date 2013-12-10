@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50
 MIT Licensed
-build time: Dec 4 22:17
+build time: Dec 10 21:13
 */
 KISSY.add("resizable",["node","base","dd"],function(q,p){function u(a){var b=a.dds,l=a.get("node"),h=a.get("handlers"),m,o=a.get("dragConfig"),e=a.get("prefixCls")+v;for(d=0;d<h.length;d++){var c=h[d],i=r('<div class="'+e+" "+e+"-"+c+'"></div>').prependTo(l,void 0),i=b[c]=new w(q.mix({node:i,cursor:null,groups:!1},o));(function(b,c){var e;c.on("drag",function(c){var l=c.target,h=a._width,i=a._height,j=a.get("minWidth"),o=a.get("maxWidth"),g=a.get("minHeight"),k=a.get("maxHeight"),f={},c=n[b](j,o,
 g,k,a._top,a._left,h,i,c.pageY-e.top,c.pageX-e.left,m);for(d=0;d<s.length;d++)c[d]&&(f[s[d]]=c[d]);a.fire("beforeResize",{handler:b,dd:l,region:f})});c.on("dragstart",function(){e=c.get("startMousePos");m=a.get("preserveRatio");a._width=l.width();a._top=parseInt(l.css("top"));a._left=parseInt(l.css("left"));a._height=l.height();a.fire("resizeStart",{handler:b,dd:c})});c.on("dragend",function(){a.fire("resizeEnd",{handler:b,dd:c})})})(c,i)}}var g=p("node"),k=p("base"),f=p("dd"),r=g.all,d,w=f.Draggable,

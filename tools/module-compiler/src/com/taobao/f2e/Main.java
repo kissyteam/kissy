@@ -145,7 +145,6 @@ public class Main {
      * @param requiredModuleName module name required
      */
     private void combineRequire(String requiredModuleName) {
-
         // if css file, do not combine with js files
         if (requiredModuleName.endsWith(".css")) {
             this.addDependency(requiredModuleName);
@@ -159,19 +158,19 @@ public class Main {
             return;
         }
 
-        if (!packages.isModuleExists(requiredModuleName)) {
+        Module requiredModule = packages.getModuleFromName(requiredModuleName);
+
+        if (requiredModule == null || !requiredModule.exists()) {
             if (!warned.containsKey(requiredModuleName)) {
-                System.out.println("warning: module not found: " + requiredModuleName);
+                System.out.println("Warning: module not found: " + requiredModuleName);
                 this.addDependency(requiredModuleName);
                 warned.put(requiredModuleName, "");
             }
             return;
         }
 
-        Module requiredModule = packages.getModuleFromName(requiredModuleName);
-
-        if (requiredModule == null) {
-            System.err.println("error: invalid module: " + requiredModuleName);
+        if (!requiredModule.isValidFormat()) {
+            System.err.println("Error: invalid module: " + requiredModuleName);
             System.exit(1);
         }
 

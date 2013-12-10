@@ -27,7 +27,7 @@ KISSY.add(function (S, require) {
                     afterSyncUI: function () {
                         var self = this;
                         editor.on('selectionChange', function () {
-                            if (editor.get('mode') == Editor.Mode.SOURCE_MODE) {
+                            if (editor.get('mode') === Editor.Mode.SOURCE_MODE) {
                                 return;
                             }
                             if (editor.queryCommandValue('justifyCenter')) {
@@ -44,7 +44,7 @@ KISSY.add(function (S, require) {
 
             editor.docReady(function () {
                 editor.get('document').on('keydown', function (e) {
-                    if (e.ctrlKey && e.keyCode == S.Node.KeyCode.E) {
+                    if (e.ctrlKey && e.keyCode === S.Node.KeyCode.E) {
                         editor.execCommand('justifyCenter');
                         e.preventDefault();
                     }

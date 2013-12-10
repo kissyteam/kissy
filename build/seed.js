@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50
 MIT Licensed
-build time: Dec 9 23:53
+build time: Dec 10 21:14
 */
 /**
  * @ignore
@@ -87,11 +87,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20131209235315' will replace with current timestamp when compressing.
+         * NOTICE: '20131210211422' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20131209235315',
+        __BUILD_TIME: '20131210211422',
 
         /**
          * KISSY Environment.
@@ -1477,12 +1477,11 @@ var KISSY = (function (undefined) {
     });
 })(KISSY);/**
  * @ignore
- *   lang
- * @author  yiminghe@gmail.com, lifesinger@gmail.com
+ * lang
+ * @author  yiminghe@gmail.com
  *
  */
 (function (S, undefined) {
-
     var TRUE = true,
         FALSE = false,
         CLONE_MARKER = '__~ks_cloned',
@@ -1677,7 +1676,6 @@ var KISSY = (function (undefined) {
         delete b[COMPARE_MARKER];
         return (mismatchKeys.length === 0 && mismatchValues.length === 0);
     }
-
 })(KISSY);
 /**
  * @ignore
@@ -5546,7 +5544,7 @@ var KISSY = (function (undefined) {
     var doc = S.Env.host && S.Env.host.document;
     // var logger = S.getLogger('s/loader');
     var Utils = S.Loader.Utils;
-    var TIMESTAMP = '20131209235315';
+    var TIMESTAMP = '20131210211422';
     var defaultComboPrefix = '??';
     var defaultComboSep = ',';
 

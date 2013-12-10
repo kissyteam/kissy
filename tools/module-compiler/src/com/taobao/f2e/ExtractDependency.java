@@ -66,8 +66,8 @@ public class ExtractDependency {
     private boolean processSingle(String path) {
         Module m = this.getPackages().getModuleFromPath(path);
 
-        if (m == null) {
-            System.err.println("error: invalid module: " + path);
+        if (!m.isValidFormat()) {
+            System.err.println("Error: invalid module: " + path);
             return false;
         }
 

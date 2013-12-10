@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50
 MIT Licensed
-build time: Dec 4 22:19
+build time: Dec 10 21:15
 */
 KISSY.add("xtemplate/runtime/scope",[],function(g){function l(e,f){this.data=e||{};this.affix=f;this.root=this}l.prototype={isScope:1,setParent:function(e){this.parent=e;this.root=e.root},getParent:function(){return this.parent},getRoot:function(){return this.root},set:function(e,f){this.affix||(this.affix={});this.affix[e]=f},setData:function(e){this.data=e},getData:function(){return this.data},mix:function(e){this.affix||(this.affix={});g.mix(this.affix,e)},has:function(e){var f=this.data,h=this.affix;
 return h&&e in h?!0:"object"===typeof f&&e in f},get:function(e){var f=this.data,h=this.affix;if(h&&e in h)return h[e];if("object"===typeof f&&e in f)return f[e]},resolve:function(e,f){"."===e&&(e="this");var h=e.split("."),d=this,a,b,c,g,k;if("root"===h[0])h.shift(),d=d.root;else if(f)for(;d&&f--;)d=d.parent;var i=0;for(a=h.length;d;){k=1;c=d;for(b=0;b<a;b++)if(g=h[b],"this"===g)i=1;else if(c===d){if(!d.has(g)){k=0;break}c=d.get(g)}else{if("object"!==typeof c||!(g in c)){k=0;break}c=c[g]}if(k)return c&&

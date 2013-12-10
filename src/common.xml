@@ -31,8 +31,9 @@
         <ac:if>
             <ac:isset property="component.src.dir.exists"/>
             <ac:then>
+                <echo>jshint ${component.src.dir}</echo>
                 <exec executable="node" failonerror="true">
-                    <arg value="${kissy.dir}/node_modules/jshint/bin/jshint"/>
+                    <arg value="${tools.dir}/jshint/bin/jshint"/>
                     <arg value="${component.src.dir}"/>
                 </exec>
             </ac:then>
@@ -139,7 +140,9 @@
     <!-- 压缩 css -->
     <target name="compress-css">
         <!-- 用 YUICompressor 压缩 CSS -->
-        <apply executable="java" verbose="true"
+        <apply executable="java"
+               failonerror="true"
+               verbose="true"
                dest="${component.build.dir}">
             <fileset dir="${component.build.dir}"
                      excludes="**/*-min.css" includes="**/*.css"/>
@@ -154,7 +157,7 @@
     </target>
 
     <!-- 压缩 js -->
-    <target name="compress-js">
+    <target name="compress-js" depends="create-build.dir">
         <replaceregexp
                 match="^(\s*(S|KISSY|logger)\.(log|error|info|warn|debug))|(.*logger\s*=\s*(S|KISSY)\.getLogger)\s*\(.+$"
                 replace=""

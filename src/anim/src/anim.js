@@ -4,16 +4,15 @@
  * @ignore
  */
 KISSY.add(function (S, require) {
-    var AnimBase = require('anim/base'),
-        TimerAnim = require('anim/timer');
+    var AnimBase = require('anim/base');
+    var TimerAnim = require('anim/timer');
     var TransitionAnim = require('anim/transition?');
-    var  logger = S.getLogger('s/anim');
-    var Utils = AnimBase.Utils,
-
-        defaultConfig = {
-            duration: 1,
-            easing: 'linear'
-        };
+    var logger = S.getLogger('s/anim');
+    var Utils = AnimBase.Utils;
+    var defaultConfig = {
+        duration: 1,
+        easing: 'linear'
+    };
 
     /**
      * @class KISSY.Anim

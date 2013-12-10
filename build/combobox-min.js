@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50
 MIT Licensed
-build time: Dec 4 22:04
+build time: Dec 10 21:00
 */
 KISSY.add("combobox/combobox-xtpl",[],function(){return function(f){var a,d=this;a=this.config.utils;var j=a.runBlockCommand,k=a.renderOutput,g=a.getProperty,h=a.runInlineCommand,e=a.getPropertyOrRunCommand;a='<div id="ks-combobox-invalid-el-';var b=e(d,f,{},"id",0,1);a+=k(b,!0);a+='"\n     class="';var b={},c=[];c.push("invalid-el");b.params=c;b=h(d,f,b,"getBaseCssClasses",2);a+=k(b,!0);a+='">\n    <div class="';b={};c=[];c.push("invalid-inner");b.params=c;b=h(d,f,b,"getBaseCssClasses",3);a+=k(b,
 !0);a+='"></div>\n</div>\n\n';var b={},c=[],m=g(d,f,"hasTrigger",0,6);c.push(m);b.params=c;b.fn=function(b){var a;a='\n<div id="ks-combobox-trigger-';var c=e(d,b,{},"id",0,7);a+=k(c,!0);a+='"\n     class="';var c={},g=[];g.push("trigger");c.params=g;c=h(d,b,c,"getBaseCssClasses",8);a+=k(c,!0);a+='">\n    <div class="';c={};g=[];g.push("trigger-inner");c.params=g;b=h(d,b,c,"getBaseCssClasses",9);a+=k(b,!0);return a+'">&#x25BC;</div>\n</div>\n'};a+=j(d,f,b,"if",6);a+='\n\n<div class="';b={};c=[];c.push("input-wrap");

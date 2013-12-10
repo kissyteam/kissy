@@ -607,7 +607,7 @@ KISSY.add(function (S, require) {
         return startIndex;
     }
 
-    DateTimeFormat.prototype = {
+    S.augment(DateTimeFormat, {
         /**
          * format a GregorianDate instance according to specified pattern
          * @param {KISSY.Date.Gregorian} calendar GregorianDate instance
@@ -705,7 +705,7 @@ KISSY.add(function (S, require) {
             }
             return calendar;
         }
-    };
+    });
 
     S.mix(DateTimeFormat, {
         Style: DateTimeStyle,

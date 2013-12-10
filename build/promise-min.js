@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50
 MIT Licensed
-build time: Dec 4 22:17
+build time: Dec 10 21:13
 */
 KISSY.add("promise",[],function(k){function t(a){"undefined"!==typeof console&&console.error&&console.error(a)}function o(a,b,d){if(a instanceof g)p(function(){d.call(a,a[e])});else{var l=a[e],c=a[i];c?c.push([b,d]):m(l)?o(l,b,d):b&&p(function(){b.call(a,l)})}}function f(a){if(!(this instanceof f))return new f(a);this.promise=a||new c;this.promise.defer=this}function m(a){return a&&a instanceof c}function c(a){this[e]=a;void 0===a&&(this[i]=[],this[n]=[])}function g(a){if(a instanceof g)return a;
 c.apply(this,arguments);this[e]instanceof c&&"assert.not(this.__promise_value instanceof promise) in Reject constructor";return this}function j(a,b,d){function l(a){try{return b?b.call(this,a):a}catch(d){return t(d.stack||d),new g(d)}}function e(a){try{return d?d.call(this,a):new g(a)}catch(b){return t(b.stack||b),new g(b)}}function u(a){h?"already done at fulfilled":a instanceof c?"assert.not(value instanceof Promise) in when":(h=1,q.resolve(l.call(this,a)))}var q=new f,h=0;a instanceof c?o(a,u,

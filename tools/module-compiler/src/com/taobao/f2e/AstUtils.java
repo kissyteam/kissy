@@ -29,7 +29,12 @@ public class AstUtils {
         JSSourceFile input = JSSourceFile.fromCode(name, code);
         CompilerInput ci = new CompilerInput(input);
         //here we go , finally get root node of ast
-        return ci.getAstRoot(compiler);
+        Node root = ci.getAstRoot(compiler);
+        // syntax error, dummy block
+        if (root.getNext() == null && root.getFirstChild() == null) {
+            root = null;
+        }
+        return root;
     }
 
     /**
@@ -57,6 +62,7 @@ public class AstUtils {
 
     public static void main(String[] args) {
         String kissyCjs = "KISSY.add(function(S,require){" +
+                "x.float=1" +
                 "var t = require('my.js');" +
                 "require('z');" +
                 "require('z2');" +

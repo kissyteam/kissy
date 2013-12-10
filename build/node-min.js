@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50
 MIT Licensed
-build time: Dec 4 22:17
+build time: Dec 10 21:13
 */
 KISSY.add("node/base",["dom","event/dom"],function(b,e){function c(f,m,g){if(!(this instanceof c))return new c(f,m,g);if(f)if("string"===typeof f){if(f=h.create(f,m,g),f.nodeType===k.DOCUMENT_FRAGMENT_NODE)return d.apply(this,a(f.childNodes)),this}else{if(b.isArray(f)||j(f))return d.apply(this,a(f)),this}else return this;this[0]=f;this.length=1;return this}var h=e("dom"),i=e("event/dom"),g=Array.prototype,l=g.slice,k=h.NodeType,d=g.push,a=b.makeArray,j=h.isDomNodeList;c.prototype={constructor:c,isNodeList:!0,
 length:0,item:function(f){return"number"===typeof f?f>=this.length?null:new c(this[f]):new c(f)},add:function(f,a,b){"number"===typeof a&&(b=a,a=void 0);f=c.all(f,a).getDOMNodes();a=new c(this);void 0===b?d.apply(a,f):(b=[b,0],b.push.apply(b,f),g.splice.apply(a,b));return a},slice:function(){return new c(l.apply(this,arguments))},getDOMNodes:function(){return l.call(this)},each:function(a,d){var k=this;b.each(k,function(b,j){b=new c(b);return a.call(d||b,b,j,k)});return k},getDOMNode:function(){return this[0]},

@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50
 MIT Licensed
-build time: Dec 4 22:17
+build time: Dec 10 21:13
 */
 KISSY.add("overlay/extension/loading",["node"],function(h,e){function c(){}var g=e("node");c.prototype={loading:function(){this._loadingExtEl||(this._loadingExtEl=(new g('<div class="'+this.get("prefixCls")+'ext-loading" style="position: absolute;border: none;width: 100%;top: 0;left: 0;z-index: 99999;height:100%;*height: expression(this.parentNode.offsetHeight);"/>')).appendTo(this.$el));this._loadingExtEl.show()},unloading:function(){var b=this._loadingExtEl;b&&b.hide()}};return c});
 KISSY.add("overlay/extension/mask",["node"],function(h,e){function c(a,b){var i=a.view.getBaseCssClasses("mask"),i=m('<div  style="width:'+(f?"expression(KISSY.DOM.docWidth())":"100%")+";left:0;top:0;height:"+(f?"expression(KISSY.DOM.docHeight())":"100%")+";position:"+(f?"absolute":"fixed")+';" class="'+i+" "+b+'">'+(f?'<iframe style="position:absolute;left:0;top:0;background:red;width: expression(this.parentNode.offsetWidth);height: expression(this.parentNode.offsetHeight);filter:alpha(opacity=0);z-index:-1;"></iframe>':

@@ -402,11 +402,11 @@ if (! _$jscoverage['/json/stringify.js'].branchData) {
   _$jscoverage['/json/stringify.js'].branchData['157'] = [];
   _$jscoverage['/json/stringify.js'].branchData['157'][1] = new BranchData();
 }
-_$jscoverage['/json/stringify.js'].branchData['157'][1].init(449, 25, 'typeof space === \'string\'');
+_$jscoverage['/json/stringify.js'].branchData['157'][1].init(450, 25, 'typeof space === \'string\'');
 function visit76_157_1(result) {
   _$jscoverage['/json/stringify.js'].branchData['157'][1].ranCondition(result);
   return result;
-}_$jscoverage['/json/stringify.js'].branchData['154'][1].init(309, 25, 'typeof space === \'number\'');
+}_$jscoverage['/json/stringify.js'].branchData['154'][1].init(310, 25, 'typeof space === \'number\'');
 function visit75_154_1(result) {
   _$jscoverage['/json/stringify.js'].branchData['154'][1].ranCondition(result);
   return result;
@@ -660,7 +660,7 @@ KISSY.add(function(S, require) {
         ret = '{' + partial.join(',') + '}';
       } else {
         _$jscoverage['/json/stringify.js'].lineData[92]++;
-        var separator = ",\n" + indent;
+        var separator = ',\n' + indent;
         _$jscoverage['/json/stringify.js'].lineData[93]++;
         var properties = partial.join(separator);
         _$jscoverage['/json/stringify.js'].lineData[94]++;

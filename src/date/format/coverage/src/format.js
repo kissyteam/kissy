@@ -1805,7 +1805,7 @@ KISSY.add(function(S, require) {
     return startIndex;
   }
   _$jscoverage['/format.js'].lineData[610]++;
-  DateTimeFormat.prototype = {
+  S.augment(DateTimeFormat, {
   format: function(calendar) {
   _$jscoverage['/format.js'].functionData[12]++;
   _$jscoverage['/format.js'].lineData[617]++;
@@ -1917,7 +1917,7 @@ KISSY.add(function(S, require) {
   }
   _$jscoverage['/format.js'].lineData[706]++;
   return calendar;
-}};
+}});
   _$jscoverage['/format.js'].lineData[710]++;
   S.mix(DateTimeFormat, {
   Style: DateTimeStyle, 

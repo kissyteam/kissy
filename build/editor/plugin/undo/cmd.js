@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50
 MIT Licensed
-build time: Dec 4 22:14
+build time: Dec 10 21:10
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -101,7 +101,7 @@ KISSY.add("editor/plugin/undo/cmd", ["editor"], function(S, require) {
       editor.fire("afterSave", {history:history, index:index})
     }
   }, restore:function(d) {
-    if(this.editor.get("mode") != Editor.Mode.WYSIWYG_MODE) {
+    if(this.editor.get("mode") !== Editor.Mode.WYSIWYG_MODE) {
       return undefined
     }
     var self = this, history = self.history, editor = self.editor, editorDomBody = editor.get("document")[0].body, snapshot = history[self.index + d];

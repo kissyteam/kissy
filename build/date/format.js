@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50
 MIT Licensed
-build time: Dec 4 22:06
+build time: Dec 10 21:02
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -363,7 +363,7 @@ KISSY.add("date/format", ["date/gregorian", "i18n!date"], function(S, require) {
     }
     return startIndex
   }
-  DateTimeFormat.prototype = {format:function(calendar) {
+  S.augment(DateTimeFormat, {format:function(calendar) {
     var time = calendar.getTime();
     calendar = new GregorianCalendar(this.timezoneOffset, this.locale);
     calendar.setTime(time);
@@ -427,7 +427,7 @@ KISSY.add("date/format", ["date/gregorian", "i18n!date"], function(S, require) {
       return undefined
     }
     return calendar
-  }};
+  }});
   S.mix(DateTimeFormat, {Style:DateTimeStyle, getInstance:function(locale, timeZoneOffset) {
     return this.getDateTimeInstance(DateTimeStyle.SHORT, DateTimeStyle.SHORT, locale, timeZoneOffset)
   }, getDateInstance:function(dateStyle, locale, timeZoneOffset) {

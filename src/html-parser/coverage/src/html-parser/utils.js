@@ -385,6 +385,6 @@ KISSY.add(function() {
   isWhitespace: function(ch) {
   _$jscoverage['/html-parser/utils.js'].functionData[5]++;
   _$jscoverage['/html-parser/utils.js'].lineData[41]++;
-  return /^[\s\xa0]$/.test(ch);
+  return (/^[\s\xa0]$/).test(ch);
 }};
 });

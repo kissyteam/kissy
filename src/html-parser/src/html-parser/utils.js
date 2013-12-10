@@ -38,7 +38,7 @@ KISSY.add(function () {
             // &nbsp; => 160
             // /\s/.test(String.fromCharCode(160))
             // ie return false, others return true
-            return /^[\s\xa0]$/.test(ch);
+            return (/^[\s\xa0]$/).test(ch);
         }
     };
 });

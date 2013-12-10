@@ -3,6 +3,8 @@ package com.taobao.f2e;
 import com.google.javascript.rhino.Node;
 import com.google.javascript.rhino.Token;
 
+import java.io.File;
+
 /**
  * KISSY Module Format.
  *
@@ -13,6 +15,10 @@ public class Module {
      * module 's full file path.
      */
     private String fullpath = null;
+
+    // valid 1
+    // invalid 2
+    private int invalid = 0;
 
     private Package pck;
     /**
@@ -126,30 +132,48 @@ public class Module {
         return getProp.getNext();
     }
 
+    public boolean exists() {
+        return new File(this.getFullpath()).exists();
+    }
+
     public boolean isValidFormat() {
-        Node t,
-                root = this.getAstRoot();
+        if (this.invalid != 0) {
+            return this.invalid == 1;
+        }
+        if (!this.exists()) {
+            this.invalid = 2;
+            return false;
+        }
+        Node t, root = this.getAstRoot();
         if (root == null) {
+            this.invalid = 2;
             return false;
         } else if (root.getType() != Token.SCRIPT) {
+            this.invalid = 2;
             return false;
         }
         t = root.getFirstChild();
         if (t == null) {
+            this.invalid = 2;
             return false;
         } else if (t.getType() != Token.EXPR_RESULT) {
+            this.invalid = 2;
             return false;
         }
         t = t.getFirstChild();
         if (t == null) {
+            this.invalid = 2;
             return false;
         } else if (t.getType() != Token.CALL) {
+            this.invalid = 2;
             return false;
         }
         t = t.getFirstChild();
         if (t == null) {
+            this.invalid = 2;
             return false;
         } else if (t.getType() != Token.GETPROP) {
+            this.invalid = 2;
             return false;
         }
 
@@ -158,23 +182,39 @@ public class Module {
         t = t.getFirstChild();
 
         if (t == null) {
+            this.invalid = 2;
             return false;
         } else if (t.getType() != Token.NAME) {
+            this.invalid = 2;
             return false;
         } else if (!t.getString().equals("KISSY")) {
+            this.invalid = 2;
             return false;
         }
 
         t = t.getNext();
 
         if (t == null) {
+            this.invalid = 2;
             return false;
         } else if (t.getType() != Token.STRING) {
+            this.invalid = 2;
             return false;
         } else if (!t.getString().equals("add")) {
+            this.invalid = 2;
             return false;
         }
 
+        this.invalid = 1;
         return true;
+    }
+
+    public static void main(String[] args) {
+        String kissyCjs = "KISSY.add(function(S,require){\n" +
+                "x.float=1;\n" +
+                "});";
+        Module m = new Module();
+        m.content = kissyCjs;
+        System.out.println(m.getAstRoot());
     }
 }

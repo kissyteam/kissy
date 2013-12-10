@@ -45,7 +45,6 @@ KISSY.add(function (S, require) {
             switch (keyCode) {
                 case KeyCode.ENTER:
                     return self.handleClickInternal(e);
-                    break;
 
                 // home
                 // 移到树的顶层节点

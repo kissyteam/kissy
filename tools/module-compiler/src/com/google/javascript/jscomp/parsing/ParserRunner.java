@@ -33,88 +33,93 @@ import java.util.logging.Logger;
 
 public class ParserRunner {
 
-  private static final String configResource =
-      "com.google.javascript.jscomp.parsing.ParserConfig";
+    private static final String configResource =
+            "com.google.javascript.jscomp.parsing.ParserConfig";
 
-  private static Set<String> annotationNames = null;
+    private static Set<String> annotationNames = null;
 
-  private static Set<String> suppressionNames = null;
+    private static Set<String> suppressionNames = null;
 
-  // Should never need to instantiate class of static methods.
-  private ParserRunner() {}
-
-  @Deprecated
-  public static Config createConfig(boolean isIdeMode) {
-    return createConfig(isIdeMode, false);
-  }
-
-  public static Config createConfig(boolean isIdeMode, boolean isES5Mode) {
-    initResourceConfig();
-    return new Config(annotationNames, suppressionNames, isIdeMode, isES5Mode);
-  }
-
-  private static synchronized void initResourceConfig() {
-    if (annotationNames != null) {
-      return;
+    // Should never need to instantiate class of static methods.
+    private ParserRunner() {
     }
 
-    ResourceBundle config = ResourceBundle.getBundle(configResource);
-    annotationNames = extractList(config.getString("jsdoc.annotations"));
-    suppressionNames = extractList(config.getString("jsdoc.suppressions"));
-  }
-
-  private static Set<String> extractList(String configProp) {
-    String[] names = configProp.split(",");
-    Set<String> trimmedNames = Sets.newHashSet();
-    for (String name : names) {
-      trimmedNames.add(name.trim());
-    }
-    return ImmutableSet.copyOf(trimmedNames);
-  }
-
-  /**
-   * Parses the JavaScript text given by a reader.
-   *
-   * @param sourceName The filename.
-   * @param sourceString Source code from the file.
-   * @param errorReporter An error.
-   * @param logger A logger.
-   * @return The AST of the given text.
-   * @throws IOException
-   */
-  public static Node parse(String sourceName,
-                           String sourceString,
-                           Config config,
-                           ErrorReporter errorReporter,
-                           Logger logger) throws IOException {
-    Context cx = Context.enter();
-    cx.setErrorReporter(errorReporter);
-    cx.setLanguageVersion(Context.VERSION_1_5);
-    CompilerEnvirons compilerEnv = new CompilerEnvirons();
-    compilerEnv.initFromContext(cx);
-    compilerEnv.setRecordingComments(true);
-    compilerEnv.setRecordingLocalJsDocComments(true);
-    compilerEnv.setWarnTrailingComma(true);
-    if (config.isIdeMode) {
-      compilerEnv.setReservedKeywordAsIdentifier(true);
-      compilerEnv.setAllowMemberExprAsFunctionName(true);
+    @Deprecated
+    public static Config createConfig(boolean isIdeMode) {
+        return createConfig(isIdeMode, false);
     }
 
-    Parser p = new Parser(compilerEnv, errorReporter);
-    AstRoot astRoot = null;
-    try {
-      astRoot = p.parse(sourceString, sourceName, 1);
-    } catch (EvaluatorException e) {
-      logger.info("Error parsing " + sourceName + ": " + e.getMessage());
-    } finally {
-      Context.exit();
+    public static Config createConfig(boolean isIdeMode, boolean isES5Mode) {
+        initResourceConfig();
+        return new Config(annotationNames, suppressionNames, isIdeMode, isES5Mode);
     }
-    Node root = null;
-    if (astRoot != null) {
-      root = IRFactory.transformTree(
-          astRoot, sourceString, config, errorReporter);
-      root.setIsSyntheticBlock(true);
+
+    private static synchronized void initResourceConfig() {
+        if (annotationNames != null) {
+            return;
+        }
+
+        ResourceBundle config = ResourceBundle.getBundle(configResource);
+        annotationNames = extractList(config.getString("jsdoc.annotations"));
+        suppressionNames = extractList(config.getString("jsdoc.suppressions"));
     }
-    return root;
-  }
+
+    private static Set<String> extractList(String configProp) {
+        String[] names = configProp.split(",");
+        Set<String> trimmedNames = Sets.newHashSet();
+        for (String name : names) {
+            trimmedNames.add(name.trim());
+        }
+        return ImmutableSet.copyOf(trimmedNames);
+    }
+
+    /**
+     * Parses the JavaScript text given by a reader.
+     *
+     * @param sourceName    The filename.
+     * @param sourceString  Source code from the file.
+     * @param errorReporter An error.
+     * @param logger        A logger.
+     * @return The AST of the given text.
+     * @throws IOException
+     */
+    public static Node parse(String sourceName,
+                             String sourceString,
+                             Config config,
+                             ErrorReporter errorReporter,
+                             Logger logger) throws IOException {
+        Context cx = Context.enter();
+        cx.setErrorReporter(errorReporter);
+        cx.setLanguageVersion(Context.VERSION_1_5);
+        CompilerEnvirons compilerEnv = new CompilerEnvirons();
+        compilerEnv.initFromContext(cx);
+        compilerEnv.setRecordingComments(true);
+        compilerEnv.setRecordingLocalJsDocComments(true);
+        compilerEnv.setWarnTrailingComma(true);
+        if (config.isIdeMode) {
+            compilerEnv.setReservedKeywordAsIdentifier(true);
+            compilerEnv.setAllowMemberExprAsFunctionName(true);
+        }
+
+        Parser p = new Parser(compilerEnv, errorReporter);
+        AstRoot astRoot = null;
+        try {
+            astRoot = p.parse(sourceString, sourceName, 1);
+        } catch (EvaluatorException e) {
+            String msg = "Error parsing " + sourceName + " at line " + e.lineNumber()
+                    + " column " + e.columnNumber() +
+                    ": " + e.getMessage();
+            // logger.info(msg);
+            System.err.println(msg);
+        } finally {
+            Context.exit();
+        }
+        Node root = null;
+        if (astRoot != null) {
+            root = IRFactory.transformTree(
+                    astRoot, sourceString, config, errorReporter);
+            root.setIsSyntheticBlock(true);
+        }
+        return root;
+    }
 }

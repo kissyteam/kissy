@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50
 MIT Licensed
-build time: Dec 9 22:41
+build time: Dec 10 21:11
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -1605,7 +1605,7 @@ KISSY.add("editor/range", ["./dom", "node", "./utils", "./walker", "./base", "./
       }
     }
     return function(unit) {
-      var self = this;
+      var self = this, enlargeable;
       switch(unit) {
         case KER.ENLARGE_ELEMENT:
           if(self.collapsed) {
@@ -1650,7 +1650,7 @@ KISSY.add("editor/range", ["./dom", "node", "./utils", "./walker", "./base", "./
           walker = new Walker(walkerRange);
           walker.guard = unit === KER.ENLARGE_LIST_ITEM_CONTENTS ? tailBrGuard : boundaryGuard;
           blockBoundary = NULL;
-          var enlargeable = walker.lastForward();
+          enlargeable = walker.lastForward();
           blockBoundary = blockBoundary || body;
           self.setEndAt(blockBoundary, !enlargeable && self.checkEndOfBlock() || enlargeable && blockBoundary.contains(enlargeable) ? KER.POSITION_BEFORE_END : KER.POSITION_BEFORE_START);
           if(tailBr) {

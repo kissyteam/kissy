@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50
 MIT Licensed
-build time: Dec 4 22:17
+build time: Dec 10 21:13
 */
 KISSY.add("mvc/sync",["io","json"],function(d,h){var j=h("io"),a=h("json"),b={create:"POST",update:"POST","delete":"POST",read:"GET"};return function(c,e,f){var f=d.merge({type:b[e],dataType:"json"},f),k,g;k=f.data=f.data||{};k._method=e;f.url||(g=c.get("url"),f.url="string"===typeof g?g:g.call(c));if("create"===e||"update"===e)k.model=a.stringify(c.toJSON());return j(f)}});
 KISSY.add("mvc/model",["attribute"],function(d,h){var j="idAttribute,destroyed,plugins,listeners,clientId,urlRoot,url,parse,sync".split(",");return h("attribute").extend({getCollections:function(){return this.collections||(this.collections={})},addToCollection:function(a){this.getCollections()[d.stamp(a)]=a;this.addTarget(a)},removeFromCollection:function(a){delete this.getCollections()[d.stamp(a)];this.removeTarget(a)},getId:function(){return this.get(this.get("idAttribute"))},setId:function(a){return this.set(this.get("idAttribute"),

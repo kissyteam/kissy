@@ -1,11 +1,10 @@
 /**
  * @ignore
- *   lang
- * @author  yiminghe@gmail.com, lifesinger@gmail.com
+ * lang
+ * @author  yiminghe@gmail.com
  *
  */
 (function (S, undefined) {
-
     var TRUE = true,
         FALSE = false,
         CLONE_MARKER = '__~ks_cloned',
@@ -200,5 +199,4 @@
         delete b[COMPARE_MARKER];
         return (mismatchKeys.length === 0 && mismatchValues.length === 0);
     }
-
 })(KISSY);

@@ -169,7 +169,7 @@ KISSY.add(function (S, require) {
         restore: function (d) {
 
             // 代码模式下不和可视模式下混在一起
-            if (this.editor.get('mode') != Editor.Mode.WYSIWYG_MODE) {
+            if (this.editor.get('mode') !== Editor.Mode.WYSIWYG_MODE) {
                 return undefined;
             }
 
@@ -197,7 +197,7 @@ KISSY.add(function (S, require) {
                     selection.scrollIntoView();
                 }
                 self.index += d;
-                editor.fire(d < 0 ? "afterUndo" : "afterRedo", {
+                editor.fire(d < 0 ? 'afterUndo' : 'afterRedo', {
                     history: history,
                     index: self.index
                 });

@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50
 MIT Licensed
-build time: Dec 4 22:16
+build time: Dec 10 21:13
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -443,6 +443,7 @@ KISSY.add("json/parse", ["./parser", "./quote"], function(S, require) {
 });
 KISSY.add("json", ["./json/stringify", "./json/parse"], function(S, require) {
   var stringify = require("./json/stringify"), parse = require("./json/parse");
-  return S.JSON = {stringify:stringify, parse:parse}
+  S.JSON = {stringify:stringify, parse:parse};
+  return S.JSON
 });
 

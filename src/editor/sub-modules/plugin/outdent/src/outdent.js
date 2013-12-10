@@ -21,17 +21,17 @@ KISSY.add(function (S, require) {
                 tooltip: '减少缩进量',
                 listeners: {
                     click: function () {
-                        editor.execCommand("outdent");
+                        editor.execCommand('outdent');
                         editor.focus();
 
                     },
                     afterSyncUI: function () {
                         var self = this;
                         editor.on('selectionChange', function () {
-                            if (editor.get('mode') == Editor.Mode.SOURCE_MODE) {
+                            if (editor.get('mode') === Editor.Mode.SOURCE_MODE) {
                                 return;
                             }
-                            if (editor.queryCommandValue("outdent")) {
+                            if (editor.queryCommandValue('outdent')) {
                                 self.set('disabled', false);
                             } else {
                                 self.set('disabled', true);

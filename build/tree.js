@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50
 MIT Licensed
-build time: Dec 4 22:18
+build time: Dec 10 21:15
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -229,7 +229,6 @@ KISSY.add("tree/node", ["node", "component/container", "./node-render"], functio
     switch(keyCode) {
       case KeyCode.ENTER:
         return self.handleClickInternal(e);
-        break;
       case KeyCode.HOME:
         nodeToBeSelected = tree;
         break;

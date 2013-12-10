@@ -3,7 +3,6 @@
   @author yiminghe@gmail.com
 -->
 <project name="all.build" xmlns:ac="antlib:net.sf.antcontrib">
-
     <import file="config.xml"/>
 
     <target name="build">
@@ -23,6 +22,15 @@
             <fileset dir="${kissy.src.dir}"
                      excludesfile="${kissy.src.dir}/xtemplate/build.xml"
                      includes="*/build.xml"/>
+        </subant>
+    </target>
+
+    <!--jshint all js-->
+    <target name="jshint">
+        <subant target="jshint" failonerror="true" inheritall="false">
+            <fileset dir="${kissy.src.dir}"
+                     excludes="build.xml"
+                     includes="**/build.xml"/>
         </subant>
     </target>
 
@@ -145,5 +153,4 @@
     <target name="clean">
         <delete dir="${kissy.build.dir}"/>
     </target>
-
 </project>

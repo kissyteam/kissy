@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50
 MIT Licensed
-build time: Dec 4 22:04
+build time: Dec 10 21:00
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -10,10 +10,12 @@ build time: Dec 4 22:04
 */
 
 KISSY.add("anim", ["anim/base", "anim/timer", "anim/transition?"], function(S, require) {
-  var AnimBase = require("anim/base"), TimerAnim = require("anim/timer");
+  var AnimBase = require("anim/base");
+  var TimerAnim = require("anim/timer");
   var TransitionAnim = require("anim/transition?");
   var logger = S.getLogger("s/anim");
-  var Utils = AnimBase.Utils, defaultConfig = {duration:1, easing:"linear"};
+  var Utils = AnimBase.Utils;
+  var defaultConfig = {duration:1, easing:"linear"};
   function Anim(node, to, duration, easing, complete) {
     var config;
     if(node.node) {

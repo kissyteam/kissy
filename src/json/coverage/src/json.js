@@ -232,6 +232,7 @@ if (! _$jscoverage['/json.js']) {
   _$jscoverage['/json.js'].lineData[6] = 0;
   _$jscoverage['/json.js'].lineData[7] = 0;
   _$jscoverage['/json.js'].lineData[15] = 0;
+  _$jscoverage['/json.js'].lineData[48] = 0;
 }
 if (! _$jscoverage['/json.js'].functionData) {
   _$jscoverage['/json.js'].functionData = [];
@@ -246,7 +247,9 @@ KISSY.add(function(S, require) {
   _$jscoverage['/json.js'].lineData[7]++;
   var stringify = require('./json/stringify'), parse = require('./json/parse');
   _$jscoverage['/json.js'].lineData[15]++;
-  return S.JSON = {
+  S.JSON = {
   stringify: stringify, 
   parse: parse};
+  _$jscoverage['/json.js'].lineData[48]++;
+  return S.JSON;
 });

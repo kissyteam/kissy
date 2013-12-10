@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50
 MIT Licensed
-build time: Dec 4 22:06
+build time: Dec 10 21:03
 */
 KISSY.add("dd/ddm",["node","base"],function(g,c){function j(e){var a,b;if(e.touches&&1<e.touches.length)p._end();else{if(a=this.__activeToDrag)a._move(e);else if(b=this.get("activeDrag"))b._move(e),this.__needDropCheck&&f(this,e,b);(a=a||b)&&a.get("preventDefaultOnMove")&&e.preventDefault()}}function f(e,a,b){var i=e.get("validDrops"),m=b.get("mode"),c=0,d=0,f=h(b.get("node")),o=q(f);g.each(i,function(e){if(!e.get("disabled")){var i;if(i=e.getNodeFromTarget(a,b.get("dragNode")[0],b.get("node")[0]))if("point"===
 m)k(h(i),b.mousePos)&&(i=q(h(i)),c?i<d&&(c=e,d=i):(c=e,d=i));else if("intersect"===m)i=q(r(f,h(i))),i>d&&(d=i,c=e);else if("strict"===m&&(i=q(r(f,h(i))),i===o))return c=e,!1}});if((i=e.get("activeDrop"))&&i!==c)i._handleOut(a),b._handleOut(a);e.setInternal("activeDrop",c);c&&(i!==c?c._handleEnter(a):c._handleOver(a))}function d(e){var a=e.get("activeDrag").get("activeHandler"),b="auto";a&&(b=a.css("cursor"));"auto"===b&&(b=e.get("dragCursor"));e._shim.css({cursor:b,display:"block"});v&&w.call(e)}

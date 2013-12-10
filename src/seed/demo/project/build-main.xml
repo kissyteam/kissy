@@ -5,7 +5,7 @@ build example for kissy loader
 <project name="compressor.build" default="build" basedir="." xmlns:ac="antlib:net.sf.antcontrib">
 
     <!--入口文件模块所在目录-->
-    <dirname property="current.dir" file="${ant.file.compressor.build}"/>
+    <dirname property="current.dir" file="/kissy/src/seed/demo/project/build-main.xml"/>
     <property name="assets.dir" location="${current.dir}/source/"/>
     <property name="page.dir" location="${assets.dir}/biz/page/"/>
     <property name="page.dir.tmp" location="${current.dir}/tmp/"/>

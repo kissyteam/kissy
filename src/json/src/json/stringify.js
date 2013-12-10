@@ -89,7 +89,7 @@ KISSY.add(function (S, require) {
             if (!gap) {
                 ret = '{' + partial.join(',') + '}';
             } else {
-                var separator = ",\n" + indent;
+                var separator = ',\n' + indent;
                 var properties = partial.join(separator);
                 ret = '{\n' + indent + properties + '\n' + stepBack + '}';
             }
@@ -147,7 +147,7 @@ KISSY.add(function (S, require) {
             if (typeof replacer === 'function') {
                 replacerFunction = replacer;
             } else if (S.isArray(replacer)) {
-                propertyList = replacer
+                propertyList = replacer;
             }
         }
 

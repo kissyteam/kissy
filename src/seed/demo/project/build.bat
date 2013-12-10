@@ -1,2 +1,2 @@
-call ant
+call ant -buildfile build-main.xml
 pause

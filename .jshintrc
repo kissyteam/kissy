@@ -22,6 +22,7 @@
         "describe": false,
         "expect": false,
         "runs": false,
+        "expect": false,
         "waitsFor": false,
         "it": false,
         "waits":false,
