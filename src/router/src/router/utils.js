@@ -2,8 +2,7 @@
  * utils for router
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, require) {
-    var Uri = require('uri');
+KISSY.add(function (S) {
     return {
         endWithSlash: function (str) {
             return S.endsWith(str, '/');
@@ -40,7 +39,7 @@ KISSY.add(function (S, require) {
         },
 
         // get full path from fragment for html history
-        getFullPath: function (fragment,urlRoot) {
+        getFullPath: function (fragment, urlRoot) {
             return location.protocol + '//' + location.host +
                 this.removeEndSlash(urlRoot) + this.addStartSlash(fragment);
         },
