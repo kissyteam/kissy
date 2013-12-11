@@ -597,6 +597,10 @@ if (!loc.getQuery().has('build') && !loc.getQuery().has('min')) {
             "base": "/kissy/src/resizable/sub-modules/plugin/proxy/src/proxy",
             "ignorePackageNameInUri": 1
         },
+        "router": {
+            "base": "/kissy/src/router/src/router",
+            "ignorePackageNameInUri": 1
+        },
         "scroll-view/base": {
             "base": "/kissy/src/scroll-view/sub-modules/base/src/base",
             "ignorePackageNameInUri": 1

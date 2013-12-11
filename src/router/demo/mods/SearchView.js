@@ -1,32 +1,37 @@
-KISSY.add(function (S, Node, mvc, Template) {
+KISSY.add(function (S, require) {
+    var Node = require('node');
+    var mvc = require('../mvc/');
+    var Template = require('xtemplate');
+    var router=require('router');
 
     var $ = Node.all,
-        tmpl = new Template($("#searchTpl").html());
+        tmpl = new Template($('#searchTpl').html());
 
     return mvc.View.extend({
-        initializer: function () {
+        constructor: function () {
+            this.callSuper.apply(this,arguments);
             var self = this;
-            this.searchInput = this.get('el').one(".searchInput");
-            this.searchList = this.get('el').one(".searchList");
-            this.get("notes").on("afterModelsChange", function () {
-                self.searchList.html(tmpl.render({list: self.get("notes").toJSON()}));
+            this.searchInput = this.get('el').one('.searchInput');
+            this.searchList = this.get('el').one('.searchList');
+            this.get('notes').on('afterModelsChange', function () {
+                self.searchList.html(tmpl.render({list: self.get('notes').toJSON()}));
             });
         },
         search: function () {
             if (S.trim(this.searchInput.val())) {
-                mvc.Router.navigate("/search/?q=" + encodeURIComponent(this.searchInput.val()));
+                router.navigate('/search/?q=' + encodeURIComponent(this.searchInput.val()));
             }
         },
         keyup: function (e) {
-            if (e.keyCode == 13) {
+            if (e.keyCode === 13) {
                 e.halt();
                 this.searchInput[0].focus();
                 this.search();
             }
         },
         back: function () {
-            this.searchInput.val("");
-            mvc.Router.navigate("/");
+            this.searchInput.val('');
+            router.navigate('/');
         }
     }, {
         ATTRS: {
@@ -48,6 +53,4 @@ KISSY.add(function (S, Node, mvc, Template) {
             }
         }
     });
-}, {
-    requires: ['node', 'mvc', 'xtemplate']
 });

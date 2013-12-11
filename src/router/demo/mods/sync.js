@@ -2,7 +2,9 @@
  * 全局同步函数
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, mvc, Json) {
+KISSY.add(function (S, require) {
+    var mvc = require('../mvc/');
+    var Json = require('json');
     var KEY = 'KISSY_Note';
 
     function isModel(m) {
@@ -11,7 +13,7 @@ KISSY.add(function (S, mvc, Json) {
 
     function findById(store, id) {
         for (var i = 0; i < store.length; i++) {
-            if (store[i].id == id) {
+            if (store[i].id === id) {
                 return i;
             }
         }
@@ -22,7 +24,7 @@ KISSY.add(function (S, mvc, Json) {
     /*
      覆盖全局的同步函数
      */
-    sync = mvc.sync = function (self, method, options) {
+    sync = function (self, method, options) {
         options = options || {};
         S.log(method);
         // 模拟异步请求
@@ -60,7 +62,7 @@ KISSY.add(function (S, mvc, Json) {
                     break;
                 case 'create':
                     ret = self.toJSON();
-                    ret.id = S.guid("note");
+                    ret.id = S.guid('note');
                     ret.time = new Date().toLocaleTimeString();
                     store.push(ret);
                     break;
@@ -80,12 +82,12 @@ KISSY.add(function (S, mvc, Json) {
                     break;
             }
 
-            if (method != 'read' && window.localStorage) {
+            if (method !== 'read' && window.localStorage) {
                 try {
                     window.localStorage.setItem(KEY, Json.stringify(store));
                 } catch (e) {
                     // QUOTA_EXCEEDED_ERR
-                    KISSY.log(e,'error');
+                    S.log(e, 'error');
                 }
             }
 
@@ -108,6 +110,4 @@ KISSY.add(function (S, mvc, Json) {
     };
 
     return sync;
-}, {
-    requires: ['mvc', 'json']
 });
