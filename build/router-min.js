@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50
 MIT Licensed
-build time: Dec 11 23:40
+build time: Dec 12 22:20
 */
 KISSY.add("router/utils",[],function(c){return{endWithSlash:function(a){return c.endsWith(a,"/")},startWithSlash:function(a){return c.startsWith(a,"/")},removeEndSlash:function(a){this.endWithSlash(a)&&(a=a.substring(0,a.length-1));return a},removeStartSlash:function(a){this.startWithSlash(a)&&(a=a.substring(1));return a},addEndSlash:function(a){return this.removeEndSlash(a)+"/"},addStartSlash:function(a){return a?"/"+this.removeStartSlash(a):a},getFullPath:function(a,b){return location.protocol+
 "//"+location.host+this.removeEndSlash(b)+this.addStartSlash(a)},equalsIgnoreSlash:function(a,b){a=this.removeEndSlash(a);b=this.removeEndSlash(b);return a===b},getHash:function(a){return a.getFragment().replace(/^!/,"")}}});

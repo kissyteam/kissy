@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50
 MIT Licensed
-build time: Dec 10 21:05
+build time: Dec 12 22:12
 */
 KISSY.add("editor/plugin/flash-common/base-class",["./utils","base","editor","../dialog-loader","../bubble"],function(i,b){var e=b("./utils"),f=b("base"),k=b("editor"),l=i.Node,m=b("../dialog-loader");b("../bubble");return f.extend({initializer:function(){var a=this,d=a.get("cls"),c=a.get("editor"),b=c.get("prefixCls"),j=[],e=a.get("bubbleId"),f=a.get("contextMenuId"),g=a.get("contextMenuHandlers");i.each(g,function(a,c){j.push({content:c})});c.addContextMenu(f,"."+d,{width:"120px",children:j,listeners:{click:function(a){a=
 a.target.get("content");g[a]&&g[a].call(this)}}});c.addBubble(e,function(a){return a.hasClass(d,void 0)&&a},{listeners:{afterRenderUI:function(){var d=this,h=d.get("contentEl");h.html(i.substitute(' <a class="{prefixCls}editor-bubble-url" target="_blank" href="#">{label}</a>   |    <span class="{prefixCls}editor-bubble-link {prefixCls}editor-bubble-change">\u7f16\u8f91</span>   |    <span class="{prefixCls}editor-bubble-link {prefixCls}editor-bubble-remove">\u5220\u9664</span>',{label:a.get("label"),prefixCls:b}));var e=

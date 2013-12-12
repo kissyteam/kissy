@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50
 MIT Licensed
-build time: Dec 10 21:14
+build time: Dec 12 22:21
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -12,7 +12,7 @@ build time: Dec 10 21:14
 KISSY.add("scroll-view/plugin/pull-to-refresh", ["base"], function(S, require) {
   var Base = require("base");
   var substitute = S.substitute;
-  var transformProperty = S.Features.getTransformProperty();
+  var transformProperty = S.Features.getVendorCssPropName("transform");
   return Base.extend({pluginId:this.getName(), _onSetState:function(e) {
     if(!this.scrollView) {
       return

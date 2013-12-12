@@ -123,7 +123,7 @@ KISSY.add(function (S, require) {
     };
 
     if (supportTransform3d) {
-        transformProperty = Features.getTransformProperty();
+        transformProperty = Features.getVendorCssPropName('transform');
 
         methods._onSetScrollLeft = function (v) {
             var control = this.control;

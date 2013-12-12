@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50
 MIT Licensed
-build time: Dec 10 21:14
+build time: Dec 12 22:21
 */
 /**
  * @ignore
@@ -87,11 +87,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20131210211422' will replace with current timestamp when compressing.
+         * NOTICE: '20131212222115' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20131210211422',
+        __BUILD_TIME: '20131212222115',
 
         /**
          * KISSY Environment.
@@ -3338,75 +3338,76 @@ var KISSY = (function (undefined) {
  * @author yiminghe@gmail.com
  */
 (function (S, undefined) {
-    var Env = S.Env,
-        win = Env.host,
+    var win = S.Env.host,
         UA = S.UA,
         VENDORS = [
-            '',
             'Webkit',
             'Moz',
             'O',
             // ms is special .... !
             'ms'
         ],
-    // nodejs
-        doc = win.document || {},
+        // for nodejs
+        doc = win.document||{},
         isMsPointerSupported,
     // ie11
         isPointerSupported,
-        transitionProperty,
-        transformProperty,
-        transitionPrefix,
-        transformPrefix,
         isTransform3dSupported,
-        documentElement = doc.documentElement,
+    // nodejs
+        documentElement = doc && doc.documentElement,
+        navigator,
         documentElementStyle,
         isClassListSupportedState = true,
         isQuerySelectorSupportedState = false,
     // phantomjs issue: http://code.google.com/p/phantomjs/issues/detail?id=375
         isTouchEventSupportedState = ('ontouchstart' in doc) && !(UA.phantomjs),
+        vendorInfos = {},
         ie = UA.ieMode;
 
     if (documentElement) {
-        if (documentElement.querySelector &&
-            // broken ie8
-            ie !== 8) {
+        // broken ie8
+        if (documentElement.querySelector && ie !== 8) {
             isQuerySelectorSupportedState = true;
         }
         documentElementStyle = documentElement.style;
-
-        S.each(VENDORS, function (val) {
-            var transition = val ? val + 'Transition' : 'transition',
-                transform = val ? val + 'Transform' : 'transform';
-            if (transitionPrefix === undefined &&
-                transition in documentElementStyle) {
-                transitionPrefix = val;
-                transitionProperty = transition;
-            }
-            if (transformPrefix === undefined &&
-                transform in documentElementStyle) {
-                transformPrefix = val;
-                transformProperty = transform;
-            }
-        });
-
         isClassListSupportedState = 'classList' in documentElement;
-        var navigator = (win.navigator || {});
+        navigator = win.navigator || {};
         isMsPointerSupported = 'msPointerEnabled' in navigator;
         isPointerSupported = 'pointerEnabled' in navigator;
+    }
 
-        if (transformProperty) {
-            // https://gist.github.com/lorenzopolidori/3794226
-            // ie9 does not support 3d transform
-            // http://msdn.microsoft.com/en-us/ie/ff468705
-            var el = doc.createElement('p');
-            documentElement.insertBefore(el, documentElement.firstChild);
-            el.style[transformProperty] = 'translate3d(1px,1px,1px)';
-            var computedStyle = win.getComputedStyle(el);
-            var has3d = computedStyle.getPropertyValue(transformProperty) || computedStyle[transformProperty];
-            documentElement.removeChild(el);
-            isTransform3dSupported = (has3d !== undefined && has3d.length > 0 && has3d !== 'none');
+    // return prefixed css prefix name
+    function getVendorInfo(name) {
+        if (vendorInfos[name]) {
+            return vendorInfos[name];
         }
+        // if already prefixed or need not to prefix
+        if (!documentElementStyle || name in documentElementStyle) {
+            vendorInfos[name] = {
+                name: name,
+                prefix: ''
+            };
+        } else {
+            var upperFirstName = name.charAt(0).toUpperCase() + name.slice(1),
+                vendorName,
+                i = VENDORS.length;
+
+            while (i--) {
+                vendorName = VENDORS[i] + upperFirstName;
+                if (vendorName in documentElementStyle) {
+                    vendorInfos[name] = {
+                        name: vendorName,
+                        prefix: VENDORS[i]
+                    };
+                }
+            }
+
+            vendorInfos[name] = vendorInfos[name] || {
+                name: name,
+                prefix: false
+            };
+        }
+        return  vendorInfos[name];
     }
 
     /**
@@ -3459,34 +3460,37 @@ var KISSY = (function (undefined) {
          * whether support hashchange event
          * @returns {boolean}
          */
-        'isHashChangeSupported': function () {
+        isHashChangeSupported: function () {
             // ie8 支持 hashchange
             // 但 ie8 以上切换浏览器模式到 ie7（兼容模式），
             // 会导致 'onhashchange' in window === true，但是不触发事件
-            return ( 'onhashchange' in win) && (!ie || ie > 7);
-        },
-
-        /**
-         * whether support css transition
-         * @returns {boolean}
-         */
-        'isTransitionSupported': function () {
-            return transitionPrefix !== undefined;
-        },
-
-        /**
-         * whether support css transform
-         * @returns {boolean}
-         */
-        'isTransformSupported': function () {
-            return transformPrefix !== undefined;
+            return ('onhashchange' in win) && (!ie || ie > 7);
         },
 
         /**
          * whether support css transform 3d
          * @returns {boolean}
          */
-        'isTransform3dSupported': function () {
+        isTransform3dSupported: function () {
+            if (isTransform3dSupported !== undefined) {
+                return isTransform3dSupported;
+            }
+            if (!documentElement || getVendorInfo('transform').prefix === false) {
+                isTransform3dSupported = false;
+            } else {
+                // https://gist.github.com/lorenzopolidori/3794226
+                // ie9 does not support 3d transform
+                // http://msdn.microsoft.com/en-us/ie/ff468705
+                var el = doc.createElement('p');
+                var transformProperty = getVendorInfo('transform').name;
+                documentElement.insertBefore(el, documentElement.firstChild);
+                el.style[transformProperty] = 'translate3d(1px,1px,1px)';
+                var computedStyle = win.getComputedStyle(el);
+                var has3d = computedStyle.getPropertyValue(transformProperty) || computedStyle[transformProperty];
+                documentElement.removeChild(el);
+                isTransform3dSupported = (has3d !== undefined && has3d.length > 0 && has3d !== 'none');
+            }
+
             return isTransform3dSupported;
         },
 
@@ -3494,7 +3498,7 @@ var KISSY = (function (undefined) {
          * whether support class list api
          * @returns {boolean}
          */
-        'isClassListSupported': function () {
+        isClassListSupported: function () {
             return isClassListSupportedState;
         },
 
@@ -3502,51 +3506,17 @@ var KISSY = (function (undefined) {
          * whether support querySelectorAll
          * @returns {boolean}
          */
-        'isQuerySelectorSupported': function () {
+        isQuerySelectorSupported: function () {
             // force to use js selector engine
-            return !S.config('dom/selector') &&
-                isQuerySelectorSupportedState;
+            return !S.config('dom/selector') && isQuerySelectorSupportedState;
         },
 
-        /**
-         * whether is ie and ie version is less than specified version
-         * @param {Number} v specified ie version to be compared
-         * @returns {boolean}
-         */
-        'isIELessThan': function (v) {
-            return !!(ie && ie < v);
+        getVendorCssPropPrefix: function (name) {
+            return getVendorInfo(name).prefix;
         },
 
-        /**
-         * get css transition browser prefix if support css transition
-         * @returns {String}
-         */
-        'getTransitionPrefix': function () {
-            return transitionPrefix;
-        },
-
-        /**
-         * get css transform browser prefix if support css transform
-         * @returns {String}
-         */
-        'getTransformPrefix': function () {
-            return transformPrefix;
-        },
-
-        /**
-         * get css transition property if support css transition
-         * @returns {String}
-         */
-        'getTransitionProperty': function () {
-            return transitionProperty;
-        },
-
-        /**
-         * get css transform property if support css transform
-         * @returns {String}
-         */
-        'getTransformProperty': function () {
-            return transformProperty;
+        getVendorCssPropName: function (name) {
+            return getVendorInfo(name).name;
         }
     };
 })(KISSY);/**
@@ -5544,7 +5514,7 @@ var KISSY = (function (undefined) {
     var doc = S.Env.host && S.Env.host.document;
     // var logger = S.getLogger('s/loader');
     var Utils = S.Loader.Utils;
-    var TIMESTAMP = '20131210211422';
+    var TIMESTAMP = '20131212222115';
     var defaultComboPrefix = '??';
     var defaultComboSep = ',';
 
@@ -5962,8 +5932,8 @@ KISSY.add('i18n', {
 /*jshint indent:false*/
 (function(config,Features,UA){
 config({
-    'anim/transition?':{
-        alias:KISSY.Features.isTransitionSupported() ? 'anim/transition' : ''
+    'anim/transition?': {
+        alias: KISSY.Features.getVendorCssPropPrefix('transition') !== false ? 'anim/transition' : ''
     }
 });/*Generated By KISSY Module Compiler*/
 config({
@@ -6065,7 +6035,7 @@ config({
     'dom/basic': {
         'alias': [
             'dom/base',
-            Features.isIELessThan(9) ? 'dom/ie' : '',
+            UA.ieMode < 9 ? 'dom/ie' : '',
             Features.isClassListSupported() ? '' : 'dom/class-list'
         ]
     },
@@ -6109,7 +6079,7 @@ config({
                 'event/dom/shake' : '',
             Features.isHashChangeSupported() ?
                 '' : 'event/dom/hashchange',
-            Features.isIELessThan(9) ?
+            UA.ieMode < 9 ?
                 'event/dom/ie' : '',
             UA.ie ? '' : 'event/dom/focusin'
         ]
@@ -6177,6 +6147,10 @@ config({
 /*Generated By KISSY Module Compiler*/
 config({
 'resizable/plugin/proxy': {requires: ['node','base']}
+});
+/*Generated By KISSY Module Compiler*/
+config({
+'router': {requires: ['uri','event/dom']}
 });
 config({
     'scroll-view': {

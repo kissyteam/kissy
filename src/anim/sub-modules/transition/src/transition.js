@@ -9,13 +9,13 @@ KISSY.add(function (S, require) {
     var AnimBase = require('./base');
 
     var Features = S.Features;
-    var vendorPrefix = Features.getTransitionPrefix();
+    var vendorPrefix = Features.getVendorCssPropPrefix('transition');
     var R_UPPER = /([A-Z]|^ms)/g;
     var TRANSITION_END_EVENT = vendorPrefix ?
         // webkitTransitionEnd !
         (vendorPrefix.toLowerCase() + 'TransitionEnd') :
         'transitionend';
-    var TRANSITION = Features.getTransitionProperty();
+    var TRANSITION = Features.getVendorCssPropName('transition');
 
     function genTransition(propsData) {
         var str = '';
@@ -46,7 +46,7 @@ KISSY.add(function (S, require) {
                 propsCss = {};
             if ((transform = _propsData.transform)) {
                 delete _propsData.transform;
-                _propsData[Features.getTransformProperty()
+                _propsData[Features.getVendorCssPropName('transform')
                     .replace(R_UPPER, '-$1').toLowerCase()] = transform;
             }
             S.each(_propsData, function (propData, prop) {

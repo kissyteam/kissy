@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50
 MIT Licensed
-build time: Dec 10 21:14
+build time: Dec 12 22:20
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -56,7 +56,7 @@ KISSY.add("scroll-view/base/render", ["component/container", "component/extensio
     this.control.contentEl.style.top = -v + "px"
   }};
   if(supportTransform3d) {
-    transformProperty = Features.getTransformProperty();
+    transformProperty = Features.getVendorCssPropName("transform");
     methods._onSetScrollLeft = function(v) {
       var control = this.control;
       control.contentEl.style[transformProperty] = S.substitute(translateTpl, {translateX:-v, translateY:-control.get("scrollTop")})

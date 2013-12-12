@@ -27,7 +27,6 @@
 <div style="height: 900px;"></div>
 <script>
     KISSY.use('event,dom', function (S, Event) {
-        var transform = S.Features.getTransformProperty();
 
         Event.on('#detach', 'click', function () {
             Event.detach('#t');
@@ -48,13 +47,11 @@
         var t = document.getElementById('t');
         var o;
         Event.on('#t', 'rotateStart', function () {
-            o = 0;
-            if (t.style[transform]) {
-                o = parseInt(t.style[transform].replace(/rotate\(/, ''));
-            }
+            o = parseInt(Dom.style(t, 'transform').replace(/rotate\(/, ''))||0;
+
         });
         Event.on('#t', 'rotate', function (e) {
-            t.style[transform] = 'rotate(' + (o + parseInt(e.rotation)) % 360 + 'deg)';
+            Dom.css(t, 'transform', 'rotate(' + (o + parseInt(e.rotation)) % 360 + 'deg)');
         });
 
         alert('ok');

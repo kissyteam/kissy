@@ -371,11 +371,11 @@ function visit7_101_1(result) {
 function visit6_96_1(result) {
   _$jscoverage['/transition.js'].branchData['96'][1].ranCondition(result);
   return result;
-}_$jscoverage['/transition.js'].branchData['74'][1].init(1425, 8, 'original');
+}_$jscoverage['/transition.js'].branchData['74'][1].init(1436, 8, 'original');
 function visit5_74_1(result) {
   _$jscoverage['/transition.js'].branchData['74'][1].ranCondition(result);
   return result;
-}_$jscoverage['/transition.js'].branchData['72'][1].init(1335, 31, 'original.indexOf(\'none\') !== -1');
+}_$jscoverage['/transition.js'].branchData['72'][1].init(1346, 31, 'original.indexOf(\'none\') !== -1');
 function visit4_72_1(result) {
   _$jscoverage['/transition.js'].branchData['72'][1].ranCondition(result);
   return result;
@@ -403,13 +403,13 @@ KISSY.add(function(S, require) {
   _$jscoverage['/transition.js'].lineData[11]++;
   var Features = S.Features;
   _$jscoverage['/transition.js'].lineData[12]++;
-  var vendorPrefix = Features.getTransitionPrefix();
+  var vendorPrefix = Features.getVendorCssPropPrefix('transition');
   _$jscoverage['/transition.js'].lineData[13]++;
   var R_UPPER = /([A-Z]|^ms)/g;
   _$jscoverage['/transition.js'].lineData[14]++;
   var TRANSITION_END_EVENT = vendorPrefix ? (vendorPrefix.toLowerCase() + 'TransitionEnd') : 'transitionend';
   _$jscoverage['/transition.js'].lineData[18]++;
-  var TRANSITION = Features.getTransitionProperty();
+  var TRANSITION = Features.getVendorCssPropName('transition');
   _$jscoverage['/transition.js'].lineData[20]++;
   function genTransition(propsData) {
     _$jscoverage['/transition.js'].functionData[1]++;
@@ -446,7 +446,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/transition.js'].lineData[48]++;
     delete _propsData.transform;
     _$jscoverage['/transition.js'].lineData[49]++;
-    _propsData[Features.getTransformProperty().replace(R_UPPER, '-$1').toLowerCase()] = transform;
+    _propsData[Features.getVendorCssPropName('transform').replace(R_UPPER, '-$1').toLowerCase()] = transform;
   }
   _$jscoverage['/transition.js'].lineData[52]++;
   S.each(_propsData, function(propData, prop) {

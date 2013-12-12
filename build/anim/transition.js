@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50
 MIT Licensed
-build time: Dec 10 21:00
+build time: Dec 12 22:07
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -14,10 +14,10 @@ KISSY.add("anim/transition", ["dom", "event/dom", "./base"], function(S, require
   var Event = require("event/dom");
   var AnimBase = require("./base");
   var Features = S.Features;
-  var vendorPrefix = Features.getTransitionPrefix();
+  var vendorPrefix = Features.getVendorCssPropPrefix("transition");
   var R_UPPER = /([A-Z]|^ms)/g;
   var TRANSITION_END_EVENT = vendorPrefix ? vendorPrefix.toLowerCase() + "TransitionEnd" : "transitionend";
-  var TRANSITION = Features.getTransitionProperty();
+  var TRANSITION = Features.getVendorCssPropName("transition");
   function genTransition(propsData) {
     var str = "";
     S.each(propsData, function(propData, prop) {
@@ -35,7 +35,7 @@ KISSY.add("anim/transition", ["dom", "event/dom", "./base"], function(S, require
     var self = this, node = self.node, elStyle = node.style, _propsData = self._propsData, original = elStyle[TRANSITION], transform, propsCss = {};
     if(transform = _propsData.transform) {
       delete _propsData.transform;
-      _propsData[Features.getTransformProperty().replace(R_UPPER, "-$1").toLowerCase()] = transform
+      _propsData[Features.getVendorCssPropName("transform").replace(R_UPPER, "-$1").toLowerCase()] = transform
     }
     S.each(_propsData, function(propData, prop) {
       var v = propData.value, currentValue = Dom.css(node, prop);

@@ -9,7 +9,7 @@ KISSY.add(function (S, require) {
     var isTransform3dSupported = S.Features.isTransform3dSupported();
 
     // http://www.html5rocks.com/en/tutorials/speed/html5/
-    var supportCss3 = S.Features.isTransformSupported();
+    var supportCss3 = S.Features.getVendorCssPropPrefix('transform')!==false;
 
     var methods = {
         beforeCreateDom: function (renderData, childrenElSelectors) {
@@ -113,7 +113,7 @@ KISSY.add(function (S, require) {
         }
     };
 
-    var transformProperty = S.Features.getTransformProperty();
+    var transformProperty = S.Features.getVendorCssPropName('transform');
 
     if (supportCss3) {
         methods._onSetDragLeft = function (v) {

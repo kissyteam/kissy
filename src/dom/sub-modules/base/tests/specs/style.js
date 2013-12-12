@@ -3,6 +3,8 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, Dom) {
+    /*jshint quotmark:false*/
+    /*global $*/
     var UA = S.UA;
 
     describe('style', function () {
@@ -86,30 +88,32 @@ KISSY.add(function (S, Dom) {
             });
             expect(Dom.css(elem, 'opacity')).toBeExactEqual('0.8');
 
-            Dom.addStyleSheet(".shadow {\
-                background-color: #fff;\
-                -moz-box-shadow: rgba(0, 0, 0, 0.2) 2px 3px 3px;\
-                -webkit-box-shadow: rgba(0, 0, 0, 0.2) 2px 3px 3px;\
-                filter: progid:DXImageTransform.Microsoft.Shadow(direction = 155, Color = #dadada, Strength = 3)," +
-                " progid:DXImageTransform.Microsoft.DropShadow(Color = #22aaaaaa, OffX = -2, OffY = -2);\
-                }");
+            Dom.addStyleSheet(".shadow {" +
+                "background-color: #fff;" +
+                "-moz-box-shadow: rgba(0, 0, 0, 0.2) 2px 3px 3px;" +
+                "-webkit-box-shadow: rgba(0, 0, 0, 0.2) 2px 3px 3px;" +
+                "filter: progid:DXImageTransform.Microsoft.Shadow(direction = 155, Color = #dadada, Strength = 3)," +
+                " progid:DXImageTransform.Microsoft.DropShadow(Color = #22aaaaaa, OffX = -2, OffY = -2);" +
+                "}");
 
-            var test_filter = Dom.create(' <div ' +
+            var testFilter = Dom.create(' <div ' +
                 'id="test-filter"' +
                 ' class="shadow" ' +
                 'style="height: 80px; ' +
                 'width: 120px; ' +
                 'border:1px solid #ccc;"></div>');
-            document.body.appendChild(test_filter);
+            document.body.appendChild(testFilter);
             // test filter  #issue5
 
-            Dom.css(test_filter, 'opacity', .5);
+            Dom.css(testFilter, 'opacity', 0.5);
             if (UA.ieMode < 9) {
                 // 不加入 dom 节点取不到 class 定义的样式
-                expect(test_filter.currentStyle.filter).toBe("progid:DXImageTransform.Microsoft.Shadow(direction = 155, Color = #dadada, Strength = 3), progid:DXImageTransform.Microsoft.DropShadow(Color = #22aaaaaa, OffX = -2, OffY = -2), alpha(opacity=50)");
+                expect(testFilter.currentStyle.filter).toBe("progid:DXImageTransform.Microsoft.Shadow(direction = 155," +
+                    " Color = #dadada, Strength = 3), progid:DXImageTransform.Microsoft.DropShadow(Color = #22aaaaaa," +
+                    " OffX = -2, OffY = -2), alpha(opacity=50)");
             }
 
-            Dom.remove([elem, test_filter]);
+            Dom.remove([elem, testFilter]);
         });
 
         it("width/height works", function () {
@@ -166,7 +170,7 @@ KISSY.add(function (S, Dom) {
             Dom.remove('#' + 'xx-style' + id);
         });
 
-        it("toggle works", function () {
+        it('toggle works', function () {
             var elem = Dom.create('<div id="test-div" ' +
                 'style="padding-left: 2pt; ' +
                 'background: transparent; ' +
@@ -186,7 +190,7 @@ KISSY.add(function (S, Dom) {
             Dom.remove(elem);
         });
 
-        it("addStyleSheet works", function () {
+        it('addStyleSheet works', function () {
             var elem = Dom.create("<div class='addStyleSheet'>12</div>");
             document.body.appendChild(elem);
             Dom.addStyleSheet(".addStyleSheet {width:100px}");
@@ -197,7 +201,7 @@ KISSY.add(function (S, Dom) {
         it("float works inline or from stylehsheet", function () {
             var tag = S.guid("float");
             Dom.addStyleSheet("." + tag + " {float:left}", tag + 'style');
-            var d = Dom.create("<div class='" + tag + "' style='float:right'><" + "/div>")
+            var d = Dom.create("<div class='" + tag + "' style='float:right'><" + "/div>");
             Dom.append(d, document.body);
             expect(Dom.css(d, "float")).toBe('right');
             expect(Dom.style(d, "float")).toBe('right');
@@ -215,7 +219,7 @@ KISSY.add(function (S, Dom) {
             var tag = S.guid("float");
             Dom.addStyleSheet("." + tag + " {float:left}", tag + 'style');
 
-            var d = Dom.create("<div class='" + tag + "' style='float:right'><" + "/div>")
+            var d = Dom.create("<div class='" + tag + "' style='float:right'><" + "/div>");
             Dom.append(d, document.body);
             expect(Dom.css(d, "float")).toBe('right');
             expect(Dom.style(d, "float")).toBe('right');
@@ -299,17 +303,25 @@ KISSY.add(function (S, Dom) {
                 expect(Dom.innerWidth(div)).toBe(100);
                 expect(Dom.outerWidth(div)).toBe(100);
                 expect(Dom.width(div)).toBe(100);
+                Dom.width(div,100);
+                expect(Dom.width(div)).toBe(100);
                 Dom.remove(div);
             });
 
             it("outerWidth should works for display:none !important", function () {
                 var id = S.guid('test-id');
-                var div = Dom.create("<div style='width:100px;' id='" + id + "' style='display:none;'>" +
+                var div = Dom.create("<div style='width:100px;" +
+                    "margin:20px;" +
+                    "padding:10px;" +
+                    "border:5px solid black;' id='" +
+                    id + "' style='display:none;'>" +
                     "</div>");
-                Dom.addStyleSheet('#' + id + '{display:none !important;}', id + 'style');
+                Dom.addStyleSheet('#' + id + '{display:none !important;}',
+                    id + 'style');
                 Dom.append(div, document.body);
-                expect(Dom.innerWidth(div)).toBe(100);
-                expect(Dom.outerWidth(div)).toBe(100);
+                expect(Dom.innerWidth(div)).toBe(120);
+                expect(Dom.outerWidth(div)).toBe(130);
+                expect(Dom.outerWidth(div,true)).toBe(170);
                 expect(Dom.width(div)).toBe(100);
                 Dom.remove(div);
                 Dom.remove('#' + id + 'style');
@@ -330,6 +342,7 @@ KISSY.add(function (S, Dom) {
                 document.body.appendChild(elem);
 
                 expect(Math.round(Dom.width(elem))).toBeEqual(44);
+                Dom.height(elem,44);
                 expect(Math.round(Dom.height(elem))).toBeEqual(44);
 
                 expect(Math.round(Dom.innerWidth(elem))).toBeEqual(44 + 3 * 2);
@@ -366,9 +379,51 @@ KISSY.add(function (S, Dom) {
 //            t.style.left='10%';
 //            alert(t.style.pixelLeft);
             // ie6 not pass! see above
-            if (UA.ie != 6) {
+            if (UA.ie !== 6) {
                 expect(Dom.css(div.firstChild, 'margin-left')).toBe('10px');
             }
+            Dom.remove(div);
+        });
+
+        it('support box-sizing border-box', function () {
+            var div = Dom.create('<div style="' +
+                'width:100px;height:101px;' +
+                'margin: 10px 11px;padding: 7px 8px;' +
+                'border: 3px solid #000000;' +
+                'border-left-width:4px;"></div>');
+            Dom.css(div, 'box-sizing', 'border-box');
+            Dom.append(div, document.body);
+            if (div.offsetWidth !== 100) {
+                return;
+            }
+
+            var $div=$(div);
+
+            expect(Dom.css(div, 'width')).toBe($div.css('width'));
+            expect(Dom.css(div, 'height')).toBe($div.css('height'));
+            expect(Dom.width(div)).toBe($div.width());
+            expect(Dom.height(div)).toBe($div.height());
+            expect(Dom.innerWidth(div)).toBe($div.innerWidth());
+            expect(Dom.innerHeight(div)).toBe($div.innerHeight());
+            expect(Dom.outerWidth(div)).toBe($div.outerWidth());
+            expect(Dom.outerHeight(div)).toBe($div.outerHeight());
+            expect(Dom.outerWidth(div, true)).toBe($div.outerWidth(true));
+            expect(Dom.outerHeight(div, true)).toBe($div.outerHeight(true));
+
+            Dom.width(div,100);
+            Dom.height(div,104);
+
+            expect(Dom.css(div, 'width')).toBe($div.css('width'));
+            expect(Dom.css(div, 'height')).toBe($div.css('height'));
+            expect(Dom.width(div)).toBe($div.width());
+            expect(Dom.height(div)).toBe($div.height());
+            expect(Dom.innerWidth(div)).toBe($div.innerWidth());
+            expect(Dom.innerHeight(div)).toBe($div.innerHeight());
+            expect(Dom.outerWidth(div)).toBe($div.outerWidth());
+            expect(Dom.outerHeight(div)).toBe($div.outerHeight());
+            expect(Dom.outerWidth(div, true)).toBe($div.outerWidth(true));
+            expect(Dom.outerHeight(div, true)).toBe($div.outerHeight(true));
+
             Dom.remove(div);
         });
     });

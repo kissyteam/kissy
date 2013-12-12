@@ -52,7 +52,7 @@
 <script src="/kissy/build/seed.js"></script>
 <script>
     (function (S) {
-        if (!S.Features.isTransformSupported()) {
+        if (S.Features.getVendorCssPropPrefix('transform')===false) {
             alert('your browser does not support this');
             return;
         }

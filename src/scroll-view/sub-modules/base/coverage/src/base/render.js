@@ -441,7 +441,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/base/render.js'].lineData[125]++;
   if (visit9_125_1(supportTransform3d)) {
     _$jscoverage['/base/render.js'].lineData[126]++;
-    transformProperty = Features.getTransformProperty();
+    transformProperty = Features.getVendorCssPropName('transform');
     _$jscoverage['/base/render.js'].lineData[128]++;
     methods._onSetScrollLeft = function(v) {
   _$jscoverage['/base/render.js'].functionData[5]++;

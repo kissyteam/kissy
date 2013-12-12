@@ -50,7 +50,7 @@
         <ac:if>
             <ac:isset property="component.src.dir.exists"/>
             <ac:then>
-                <exec executable="node">
+                <exec executable="node" failonerror="true">
                     <arg value="${bin.dir}/kissy-xtemplate"/>
                     <arg value="-p"/>
                     <arg value="${component.src.dir}"/>
@@ -122,7 +122,7 @@
             <ac:isset property="component.src.dir.exists"/>
             <ac:then>
                 <delete dir="${component.coverage.dir}"/>
-                <exec executable="java">
+                <exec executable="java" failonerror="true">
                     <!--use exec to change file encoding-->
                     <arg value="-Dfile.encoding=${charset}"/>
                     <arg value="-jar"/>

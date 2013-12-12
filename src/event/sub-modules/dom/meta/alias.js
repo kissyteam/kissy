@@ -8,7 +8,7 @@ config({
                 'event/dom/shake' : '',
             Features.isHashChangeSupported() ?
                 '' : 'event/dom/hashchange',
-            Features.isIELessThan(9) ?
+            UA.ieMode < 9 ?
                 'event/dom/ie' : '',
             UA.ie ? '' : 'event/dom/focusin'
         ]

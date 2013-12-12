@@ -27,11 +27,7 @@
 <div style="height: 900px;">sd</div>
 <div style="height: 900px;">sd</div>
 <script>
-
-    KISSY.use('event', function (S, Event) {
-
-        var transform = S.Features.getTransformProperty();
-
+    KISSY.use('dom,event', function (S, Dom, Event) {
         Event.on('#t', "pinch pinchStart pinchEnd", function (e) {
             console.log(e.originalEvent && e.originalEvent.type);
             log(e.type + ' : ' + e.scale);
@@ -43,18 +39,13 @@
         var t = document.getElementById('t');
 
         Event.on('#t', 'pinchStart', function () {
-            o = 1;
-            if (t.style[transform]) {
-                o = parseFloat(t.style[transform].replace(/scale\(/, ''));
-            }
+            o = parseFloat(Dom.style(t, 'transform').replace(/scale\(/, '')) || 1;
         });
 
         Event.on('#t', 'pinch', function (e) {
-            t.style[transform] = 'scale(' + (o * e.scale) + ')';
+            Dom.css(t, 'transform', 'scale(' + (o * e.scale) + ')');
         });
-
     });
-
 </script>
 </body>
 </html>

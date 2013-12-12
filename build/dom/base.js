@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50
 MIT Licensed
-build time: Dec 10 21:03
+build time: Dec 12 22:10
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -1214,24 +1214,10 @@ KISSY.add("dom/base/offset", ["./api"], function(S, require) {
 KISSY.add("dom/base/style", ["./api"], function(S, require) {
   var Dom = require("./api");
   var logger = S.getLogger("s/dom");
-  var globalWindow = S.Env.host, UA = S.UA, Features = S.Features, getNodeName = Dom.nodeName, doc = globalWindow.document, RE_MARGIN = /^margin/, WIDTH = "width", HEIGHT = "height", DISPLAY = "display", OLD_DISPLAY = DISPLAY + S.now(), NONE = "none", cssNumber = {fillOpacity:1, fontWeight:1, lineHeight:1, opacity:1, orphans:1, widows:1, zIndex:1, zoom:1}, rmsPrefix = /^-ms-/, EMPTY = "", DEFAULT_UNIT = "px", NO_PX_REG = /\d(?!px)[a-z%]+$/i, cssHooks = {}, cssProps = {"float":"cssFloat"}, defaultDisplay = 
-  {}, RE_DASH = /-([a-z])/ig;
-  var VENDORS = ["", "Webkit", "Moz", "O", "ms"];
-  var documentElementStyle = doc && doc.documentElement.style || {};
-  var userSelectProperty;
-  S.each(VENDORS, function(val) {
-    var userSelect = val ? val + "UserSelect" : "userSelect";
-    if(userSelectProperty === undefined && userSelect in documentElementStyle) {
-      userSelectProperty = userSelect
-    }
-  });
-  if(Features.isTransformSupported()) {
-    var transform;
-    transform = cssProps.transform = Features.getTransformProperty();
-    cssProps.transformOrigin = transform + "Origin"
-  }
-  if(Features.isTransitionSupported()) {
-    cssProps.transition = Features.getTransitionProperty()
+  var globalWindow = S.Env.host, UA = S.UA, BOX_MODELS = ["margin", "border", "padding"], CONTENT_INDEX = -1, PADDING_INDEX = 2, BORDER_INDEX = 1, MARGIN_INDEX = 0, getNodeName = Dom.nodeName, doc = globalWindow.document || {}, RE_MARGIN = /^margin/, WIDTH = "width", HEIGHT = "height", DISPLAY = "display", OLD_DISPLAY = DISPLAY + S.now(), NONE = "none", cssNumber = {fillOpacity:1, fontWeight:1, lineHeight:1, opacity:1, orphans:1, widows:1, zIndex:1, zoom:1}, rmsPrefix = /^-ms-/, EMPTY = "", DEFAULT_UNIT = 
+  "px", NO_PX_REG = /\d(?!px)[a-z%]+$/i, cssHooks = {}, cssProps = {"float":"cssFloat"}, userSelectProperty, defaultDisplay = {}, RE_DASH = /-([a-z])/ig;
+  function normalizeCssPropName(name) {
+    return cssProps[name] || S.Features.getVendorCssPropName(name)
   }
   function upperCase() {
     return arguments[1].toUpperCase()
@@ -1251,10 +1237,10 @@ KISSY.add("dom/base/style", ["./api"], function(S, require) {
     }
     return oldDisplay
   }
-  S.mix(Dom, {_camelCase:camelCase, _cssHooks:cssHooks, _cssProps:cssProps, _getComputedStyle:function(elem, name) {
-    var val = "", computedStyle, width, minWidth, maxWidth, style, d = elem.ownerDocument;
-    name = cssProps[name] || name;
-    if(computedStyle = d.defaultView.getComputedStyle(elem, null)) {
+  S.mix(Dom, {_camelCase:camelCase, _cssHooks:cssHooks, _cssProps:cssProps, _getComputedStyle:function(elem, name, computedStyle) {
+    var val = "", width, minWidth, maxWidth, style, d = elem.ownerDocument;
+    name = normalizeCssPropName(name);
+    if(computedStyle = computedStyle || d.defaultView.getComputedStyle(elem, null)) {
       val = computedStyle.getPropertyValue(name) || computedStyle[name]
     }
     if(val === "" && !Dom.contains(d, elem)) {
@@ -1376,10 +1362,13 @@ KISSY.add("dom/base/style", ["./api"], function(S, require) {
     }
   }, unselectable:function(selector) {
     var _els = Dom.query(selector), elem, j, e, i = 0, excludes, style, els;
+    if(userSelectProperty === undefined) {
+      userSelectProperty = S.Features.getVendorCssPropName("userSelect")
+    }
     for(j = _els.length - 1;j >= 0;j--) {
       elem = _els[j];
       style = elem.style;
-      if(userSelectProperty !== undefined) {
+      if(userSelectProperty in style) {
         style[userSelectProperty] = "none"
       }else {
         if(UA.ie) {
@@ -1398,18 +1387,27 @@ KISSY.add("dom/base/style", ["./api"], function(S, require) {
   S.each([WIDTH, HEIGHT], function(name) {
     Dom["inner" + S.ucfirst(name)] = function(selector) {
       var el = Dom.get(selector);
-      return el && getWHIgnoreDisplay(el, name, "padding")
+      return el && getWHIgnoreDisplay(el, name, PADDING_INDEX)
     };
     Dom["outer" + S.ucfirst(name)] = function(selector, includeMargin) {
       var el = Dom.get(selector);
-      return el && getWHIgnoreDisplay(el, name, includeMargin ? "margin" : "border")
+      return el && getWHIgnoreDisplay(el, name, includeMargin ? MARGIN_INDEX : BORDER_INDEX)
     };
+    var which = name === WIDTH ? ["Left", "Right"] : ["Top", "Bottom"];
     Dom[name] = function(selector, val) {
-      var ret = Dom.css(selector, name, val);
-      if(ret) {
-        ret = parseFloat(ret)
+      var elem = Dom.get(selector);
+      if(val !== undefined) {
+        if(elem) {
+          var computedStyle = getComputedStyle(elem);
+          var isBorderBox = isBorderBoxFn(elem, computedStyle);
+          if(isBorderBox) {
+            val += getPBMWidth(elem, ["padding", "border"], which, computedStyle)
+          }
+          return Dom.css(elem, name, val)
+        }
+        return undefined
       }
-      return ret
+      return elem && getWHIgnoreDisplay(elem, name, CONTENT_INDEX)
     };
     cssHooks[name] = {get:function(elem, computed) {
       var val;
@@ -1458,7 +1456,7 @@ KISSY.add("dom/base/style", ["./api"], function(S, require) {
     }
     name = camelCase(name);
     hook = cssHooks[name];
-    name = cssProps[name] || name;
+    name = normalizeCssPropName(name);
     if(val !== undefined) {
       if(val === null || val === EMPTY) {
         val = EMPTY
@@ -1505,6 +1503,34 @@ KISSY.add("dom/base/style", ["./api"], function(S, require) {
     }
     return val
   }
+  function getPBMWidth(elem, props, which, computedStyle) {
+    var value = 0, prop, j, i;
+    for(j = 0;j < props.length;j++) {
+      prop = props[j];
+      if(prop) {
+        for(i = 0;i < which.length;i++) {
+          var cssProp;
+          if(prop === "border") {
+            cssProp = prop + which[i] + "Width"
+          }else {
+            cssProp = prop + which[i]
+          }
+          value += parseFloat(Dom._getComputedStyle(elem, cssProp, computedStyle)) || 0
+        }
+      }
+    }
+    return value
+  }
+  function isBorderBoxFn(elem, computedStyle) {
+    return Dom._getComputedStyle(elem, "boxSizing", computedStyle) === "border-box"
+  }
+  function getComputedStyle(elem) {
+    var doc = elem.ownerDocument, computedStyle;
+    if(doc.defaultView) {
+      computedStyle = doc.defaultView.getComputedStyle(elem, null)
+    }
+    return computedStyle
+  }
   function getWH(elem, name, extra) {
     if(S.isWindow(elem)) {
       return name === WIDTH ? Dom.viewportWidth(elem) : Dom.viewportHeight(elem)
@@ -1513,39 +1539,36 @@ KISSY.add("dom/base/style", ["./api"], function(S, require) {
         return name === WIDTH ? Dom.docWidth(elem) : Dom.docHeight(elem)
       }
     }
-    var which = name === WIDTH ? ["Left", "Right"] : ["Top", "Bottom"], val = name === WIDTH ? elem.offsetWidth : elem.offsetHeight;
-    if(val > 0) {
-      if(extra !== "border") {
-        S.each(which, function(w) {
-          if(!extra) {
-            val -= parseFloat(Dom.css(elem, "padding" + w)) || 0
-          }
-          if(extra === "margin") {
-            val += parseFloat(Dom.css(elem, extra + w)) || 0
-          }else {
-            val -= parseFloat(Dom.css(elem, "border" + w + "Width")) || 0
-          }
-        })
+    var which = name === WIDTH ? ["Left", "Right"] : ["Top", "Bottom"], borderBoxValue = name === WIDTH ? elem.offsetWidth : elem.offsetHeight;
+    var computedStyle = getComputedStyle(elem);
+    var isBorderBox = isBorderBoxFn(elem, computedStyle);
+    var cssBoxValue = 0;
+    if(borderBoxValue == null || borderBoxValue <= 0) {
+      borderBoxValue = undefined;
+      cssBoxValue = Dom._getComputedStyle(elem, name, computedStyle);
+      if(cssBoxValue == null || Number(cssBoxValue) < 0) {
+        cssBoxValue = elem.style[name] || 0
       }
-      return val
+      cssBoxValue = parseFloat(cssBoxValue) || 0
     }
-    val = Dom._getComputedStyle(elem, name);
-    if(val === null || Number(val) < 0) {
-      val = elem.style[name] || 0
+    if(extra === undefined) {
+      extra = isBorderBox ? BORDER_INDEX : CONTENT_INDEX
     }
-    val = parseFloat(val) || 0;
-    if(extra) {
-      S.each(which, function(w) {
-        val += parseFloat(Dom.css(elem, "padding" + w)) || 0;
-        if(extra !== "padding") {
-          val += parseFloat(Dom.css(elem, "border" + w + "Width")) || 0
-        }
-        if(extra === "margin") {
-          val += parseFloat(Dom.css(elem, extra + w)) || 0
-        }
-      })
+    var borderBoxValueOrIsBorderBox = borderBoxValue !== undefined || isBorderBox;
+    var val = borderBoxValue || cssBoxValue;
+    if(extra === CONTENT_INDEX) {
+      if(borderBoxValueOrIsBorderBox) {
+        return val - getPBMWidth(elem, ["border", "padding"], which, computedStyle)
+      }else {
+        return cssBoxValue
+      }
+    }else {
+      if(borderBoxValueOrIsBorderBox) {
+        return val + (extra === BORDER_INDEX ? 0 : extra === PADDING_INDEX ? -getPBMWidth(elem, ["border"], which, computedStyle) : getPBMWidth(elem, ["margin"], which, computedStyle))
+      }else {
+        return cssBoxValue + getPBMWidth(elem, BOX_MODELS.slice(extra), which, computedStyle)
+      }
     }
-    return val
   }
   var ROOT_REG = /^(?:body|html)$/i;
   function getPosition(el) {

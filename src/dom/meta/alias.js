@@ -2,7 +2,7 @@ config({
     'dom/basic': {
         'alias': [
             'dom/base',
-            Features.isIELessThan(9) ? 'dom/ie' : '',
+            UA.ieMode < 9 ? 'dom/ie' : '',
             Features.isClassListSupported() ? '' : 'dom/class-list'
         ]
     },

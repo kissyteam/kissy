@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50
 MIT Licensed
-build time: Dec 10 21:15
+build time: Dec 12 22:22
 */
 KISSY.add("tree/node-xtpl",["component/extension/content-xtpl"],function(i,f,g,k){return function(d){var a,h=this,b;a=this.config.utils;"undefined"!==typeof k&&k.kissy&&(b=k);var n=a.runBlockCommand,e=a.renderOutput,g=a.getProperty,i=a.runInlineCommand,o=a.getPropertyOrRunCommand;a='<div id="ks-tree-node-row-';var c=o(h,d,{},"id",0,1);a+=e(c,!0);a+='"\n     class="';var c={},j=[];j.push("row");c.params=j;c=i(h,d,c,"getBaseCssClasses",2);a+=e(c,!0);a+="\n     ";var c={},j=[],m=g(h,d,"selected",0,3);
 j.push(m);c.params=j;c.fn=function(a){var l;l="\n        ";var b={},c=[];c.push("selected");b.params=c;a=i(h,a,b,"getBaseCssClasses",4);l+=e(a,!0);return l+"\n     "};a+=n(h,d,c,"if",3);a+='\n     ">\n    <div id="ks-tree-node-expand-icon-';c=o(h,d,{},"id",0,7);a+=e(c,!0);a+='"\n         class="';c={};j=[];j.push("expand-icon");c.params=j;c=i(h,d,c,"getBaseCssClasses",8);a+=e(c,!0);a+='">\n    </div>\n    ';c={};j=[];m=g(h,d,"checkable",0,10);j.push(m);c.params=j;c.fn=function(a){var l;l='\n    <div id="ks-tree-node-checked-';

@@ -15,18 +15,18 @@ KISSY.add(function (S, Node, ScrollView, ScrollbarPlugin) {
         setScale = function (imgStyle, scale) {
             imgStyle[transformProperty] = 'translate3d(0,0,0) scaleX(' +
                 scale + ')' + ' ' + 'scaleY(' + scale + ')';
-        }
+        };
     } else {
         setScale = function (imgStyle, scale) {
             imgStyle[transformProperty] = 'scale(' + scale + ')';
-        }
+        };
     }
 
 
     var $ = Node.all;
     var win = $(window);
 
-    var transformProperty = S.Features.getTransformProperty();
+    var transformProperty = S.Features.getVendorCssPropName('transform');
     var transformOriginProperty = transformProperty + 'Origin';
     var tap = Node.Gesture.tap;
 
