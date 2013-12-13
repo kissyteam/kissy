@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.41
 MIT Licensed
-build time: Dec 10 00:43
+build time: Dec 13 16:43
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -1717,7 +1717,7 @@ KISSY.add("dom/base/selector", ["./api"], function(S, require) {
     return ret
   }
   function hasSingleClass(el, cls) {
-    var className = el && (el.className || getAttr(el, "class"));
+    var className = el && getAttr(el, "class");
     return className && (className = className.replace(/[\r\t\n]/g, SPACE)) && (SPACE + className + SPACE).indexOf(SPACE + cls + SPACE) > -1
   }
   function getAttr(el, name) {

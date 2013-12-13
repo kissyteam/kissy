@@ -505,7 +505,6 @@ if (! _$jscoverage['/base/selector.js'].branchData) {
   _$jscoverage['/base/selector.js'].branchData['200'][1] = new BranchData();
   _$jscoverage['/base/selector.js'].branchData['217'] = [];
   _$jscoverage['/base/selector.js'].branchData['217'][1] = new BranchData();
-  _$jscoverage['/base/selector.js'].branchData['217'][2] = new BranchData();
   _$jscoverage['/base/selector.js'].branchData['218'] = [];
   _$jscoverage['/base/selector.js'].branchData['218'][1] = new BranchData();
   _$jscoverage['/base/selector.js'].branchData['219'] = [];
@@ -561,126 +560,122 @@ if (! _$jscoverage['/base/selector.js'].branchData) {
   _$jscoverage['/base/selector.js'].branchData['425'][2] = new BranchData();
 }
 _$jscoverage['/base/selector.js'].branchData['425'][2].init(101, 64, 'Dom.filter(elements, filter, context).length === elements.length');
-function visit396_425_2(result) {
+function visit395_425_2(result) {
   _$jscoverage['/base/selector.js'].branchData['425'][2].ranCondition(result);
   return result;
 }_$jscoverage['/base/selector.js'].branchData['425'][1].init(81, 85, 'elements.length && (Dom.filter(elements, filter, context).length === elements.length)');
-function visit395_425_1(result) {
+function visit394_425_1(result) {
   _$jscoverage['/base/selector.js'].branchData['425'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/selector.js'].branchData['406'][1].init(1314, 28, 'typeof filter === \'function\'');
-function visit394_406_1(result) {
+function visit393_406_1(result) {
   _$jscoverage['/base/selector.js'].branchData['406'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/selector.js'].branchData['401'][1].init(36, 26, 'getAttr(elem, \'id\') === id');
-function visit393_401_1(result) {
+function visit392_401_1(result) {
   _$jscoverage['/base/selector.js'].branchData['401'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/selector.js'].branchData['399'][2].init(752, 12, '!tag && !cls');
-function visit392_399_2(result) {
+function visit391_399_2(result) {
   _$jscoverage['/base/selector.js'].branchData['399'][2].ranCondition(result);
   return result;
 }_$jscoverage['/base/selector.js'].branchData['399'][1].init(746, 18, 'id && !tag && !cls');
-function visit391_399_1(result) {
+function visit390_399_1(result) {
   _$jscoverage['/base/selector.js'].branchData['399'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/selector.js'].branchData['397'][1].init(482, 14, 'clsRe && tagRe');
-function visit390_397_1(result) {
+function visit389_397_1(result) {
   _$jscoverage['/base/selector.js'].branchData['397'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/selector.js'].branchData['393'][1].init(342, 3, 'cls');
-function visit389_393_1(result) {
+function visit388_393_1(result) {
   _$jscoverage['/base/selector.js'].branchData['393'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/selector.js'].branchData['388'][1].init(170, 3, 'tag');
-function visit388_388_1(result) {
+function visit387_388_1(result) {
   _$jscoverage['/base/selector.js'].branchData['388'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/selector.js'].branchData['382'][1].init(132, 3, '!id');
-function visit387_382_1(result) {
+function visit386_382_1(result) {
   _$jscoverage['/base/selector.js'].branchData['382'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/selector.js'].branchData['377'][1].init(50, 84, '(filter = trim(filter)) && (match = rSimpleSelector.exec(filter))');
-function visit386_377_1(result) {
+function visit385_377_1(result) {
   _$jscoverage['/base/selector.js'].branchData['377'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/selector.js'].branchData['376'][2].init(207, 26, 'typeof filter === \'string\'');
-function visit385_376_2(result) {
+function visit384_376_2(result) {
   _$jscoverage['/base/selector.js'].branchData['376'][2].ranCondition(result);
   return result;
 }_$jscoverage['/base/selector.js'].branchData['376'][1].init(207, 135, 'typeof filter === \'string\' && (filter = trim(filter)) && (match = rSimpleSelector.exec(filter))');
-function visit384_376_1(result) {
+function visit383_376_1(result) {
   _$jscoverage['/base/selector.js'].branchData['376'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/selector.js'].branchData['347'][1].init(33, 33, 'elements[i] === elements[i - 1]');
-function visit383_347_1(result) {
+function visit382_347_1(result) {
   _$jscoverage['/base/selector.js'].branchData['347'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/selector.js'].branchData['346'][1].init(90, 7, 'i < len');
-function visit382_346_1(result) {
+function visit381_346_1(result) {
   _$jscoverage['/base/selector.js'].branchData['346'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/selector.js'].branchData['344'][1].init(126, 12, 'hasDuplicate');
-function visit381_344_1(result) {
+function visit380_344_1(result) {
   _$jscoverage['/base/selector.js'].branchData['344'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/selector.js'].branchData['330'][1].init(25, 7, 'a === b');
-function visit380_330_1(result) {
+function visit379_330_1(result) {
   _$jscoverage['/base/selector.js'].branchData['330'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/selector.js'].branchData['305'][1].init(24, 35, 'query(selector, context)[0] || null');
-function visit379_305_1(result) {
+function visit378_305_1(result) {
   _$jscoverage['/base/selector.js'].branchData['305'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/selector.js'].branchData['272'][1].init(59, 20, 'matches.call(n, str)');
-function visit378_272_1(result) {
+function visit377_272_1(result) {
   _$jscoverage['/base/selector.js'].branchData['272'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/selector.js'].branchData['270'][1].init(144, 7, 'i < len');
-function visit377_270_1(result) {
+function visit376_270_1(result) {
   _$jscoverage['/base/selector.js'].branchData['270'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/selector.js'].branchData['243'][1].init(21, 56, '!a.compareDocumentPosition || !b.compareDocumentPosition');
-function visit376_243_1(result) {
+function visit375_243_1(result) {
   _$jscoverage['/base/selector.js'].branchData['243'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/selector.js'].branchData['232'][3].init(33, 49, 'el.nodeName.toLowerCase() === value.toLowerCase()');
-function visit375_232_3(result) {
+function visit374_232_3(result) {
   _$jscoverage['/base/selector.js'].branchData['232'][3].ranCondition(result);
   return result;
 }_$jscoverage['/base/selector.js'].branchData['232'][2].init(16, 13, 'value === \'*\'');
-function visit374_232_2(result) {
+function visit373_232_2(result) {
   _$jscoverage['/base/selector.js'].branchData['232'][2].ranCondition(result);
   return result;
 }_$jscoverage['/base/selector.js'].branchData['232'][1].init(16, 66, 'value === \'*\' || el.nodeName.toLowerCase() === value.toLowerCase()');
-function visit373_232_1(result) {
+function visit372_232_1(result) {
   _$jscoverage['/base/selector.js'].branchData['232'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/selector.js'].branchData['225'][1].init(64, 20, 'ret && ret.specified');
-function visit372_225_1(result) {
+function visit371_225_1(result) {
   _$jscoverage['/base/selector.js'].branchData['225'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/selector.js'].branchData['224'][1].init(19, 31, 'el && el.getAttributeNode(name)');
-function visit371_224_1(result) {
+function visit370_224_1(result) {
   _$jscoverage['/base/selector.js'].branchData['224'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/selector.js'].branchData['220'][1].init(66, 60, '(SPACE + className + SPACE).indexOf(SPACE + cls + SPACE) > -1');
-function visit370_220_1(result) {
+function visit369_220_1(result) {
   _$jscoverage['/base/selector.js'].branchData['220'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/selector.js'].branchData['219'][1].init(25, 127, '(className = className.replace(/[\\r\\t\\n]/g, SPACE)) && (SPACE + className + SPACE).indexOf(SPACE + cls + SPACE) > -1');
-function visit369_219_1(result) {
+function visit368_219_1(result) {
   _$jscoverage['/base/selector.js'].branchData['219'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/selector.js'].branchData['218'][1].init(110, 153, 'className && (className = className.replace(/[\\r\\t\\n]/g, SPACE)) && (SPACE + className + SPACE).indexOf(SPACE + cls + SPACE) > -1');
-function visit368_218_1(result) {
+}_$jscoverage['/base/selector.js'].branchData['218'][1].init(92, 153, 'className && (className = className.replace(/[\\r\\t\\n]/g, SPACE)) && (SPACE + className + SPACE).indexOf(SPACE + cls + SPACE) > -1');
+function visit367_218_1(result) {
   _$jscoverage['/base/selector.js'].branchData['218'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/selector.js'].branchData['217'][2].init(56, 36, 'el.className || getAttr(el, \'class\')');
-function visit367_217_2(result) {
-  _$jscoverage['/base/selector.js'].branchData['217'][2].ranCondition(result);
-  return result;
-}_$jscoverage['/base/selector.js'].branchData['217'][1].init(49, 44, 'el && (el.className || getAttr(el, \'class\'))');
+}_$jscoverage['/base/selector.js'].branchData['217'][1].init(49, 26, 'el && getAttr(el, \'class\')');
 function visit366_217_1(result) {
   _$jscoverage['/base/selector.js'].branchData['217'][1].ranCondition(result);
   return result;
@@ -1105,17 +1100,17 @@ KISSY.add(function(S, require) {
   function hasSingleClass(el, cls) {
     _$jscoverage['/base/selector.js'].functionData[12]++;
     _$jscoverage['/base/selector.js'].lineData[217]++;
-    var className = visit366_217_1(el && (visit367_217_2(el.className || getAttr(el, 'class'))));
+    var className = visit366_217_1(el && getAttr(el, 'class'));
     _$jscoverage['/base/selector.js'].lineData[218]++;
-    return visit368_218_1(className && visit369_219_1((className = className.replace(/[\r\t\n]/g, SPACE)) && visit370_220_1((SPACE + className + SPACE).indexOf(SPACE + cls + SPACE) > -1)));
+    return visit367_218_1(className && visit368_219_1((className = className.replace(/[\r\t\n]/g, SPACE)) && visit369_220_1((SPACE + className + SPACE).indexOf(SPACE + cls + SPACE) > -1)));
   }
   _$jscoverage['/base/selector.js'].lineData[223]++;
   function getAttr(el, name) {
     _$jscoverage['/base/selector.js'].functionData[13]++;
     _$jscoverage['/base/selector.js'].lineData[224]++;
-    var ret = visit371_224_1(el && el.getAttributeNode(name));
+    var ret = visit370_224_1(el && el.getAttributeNode(name));
     _$jscoverage['/base/selector.js'].lineData[225]++;
-    if (visit372_225_1(ret && ret.specified)) {
+    if (visit371_225_1(ret && ret.specified)) {
       _$jscoverage['/base/selector.js'].lineData[226]++;
       return ret.nodeValue;
     }
@@ -1126,14 +1121,14 @@ KISSY.add(function(S, require) {
   function isTag(el, value) {
     _$jscoverage['/base/selector.js'].functionData[14]++;
     _$jscoverage['/base/selector.js'].lineData[232]++;
-    return visit373_232_1(visit374_232_2(value === '*') || visit375_232_3(el.nodeName.toLowerCase() === value.toLowerCase()));
+    return visit372_232_1(visit373_232_2(value === '*') || visit374_232_3(el.nodeName.toLowerCase() === value.toLowerCase()));
   }
   _$jscoverage['/base/selector.js'].lineData[235]++;
   S.mix(Dom, {
   _compareNodeOrder: function(a, b) {
   _$jscoverage['/base/selector.js'].functionData[15]++;
   _$jscoverage['/base/selector.js'].lineData[243]++;
-  if (visit376_243_1(!a.compareDocumentPosition || !b.compareDocumentPosition)) {
+  if (visit375_243_1(!a.compareDocumentPosition || !b.compareDocumentPosition)) {
     _$jscoverage['/base/selector.js'].lineData[244]++;
     return a.compareDocumentPosition ? -1 : 1;
   }
@@ -1160,11 +1155,11 @@ KISSY.add(function(S, require) {
   _$jscoverage['/base/selector.js'].lineData[266]++;
   var ret = [], i = 0, n, len = seeds.length;
   _$jscoverage['/base/selector.js'].lineData[270]++;
-  for (; visit377_270_1(i < len); i++) {
+  for (; visit376_270_1(i < len); i++) {
     _$jscoverage['/base/selector.js'].lineData[271]++;
     n = seeds[i];
     _$jscoverage['/base/selector.js'].lineData[272]++;
-    if (visit378_272_1(matches.call(n, str))) {
+    if (visit377_272_1(matches.call(n, str))) {
       _$jscoverage['/base/selector.js'].lineData[273]++;
       ret.push(n);
     }
@@ -1181,7 +1176,7 @@ KISSY.add(function(S, require) {
   get: function(selector, context) {
   _$jscoverage['/base/selector.js'].functionData[20]++;
   _$jscoverage['/base/selector.js'].lineData[305]++;
-  return visit379_305_1(query(selector, context)[0] || null);
+  return visit378_305_1(query(selector, context)[0] || null);
 }, 
   unique: (function() {
   _$jscoverage['/base/selector.js'].functionData[21]++;
@@ -1199,7 +1194,7 @@ KISSY.add(function(S, require) {
   function sortOrder(a, b) {
     _$jscoverage['/base/selector.js'].functionData[23]++;
     _$jscoverage['/base/selector.js'].lineData[330]++;
-    if (visit380_330_1(a === b)) {
+    if (visit379_330_1(a === b)) {
       _$jscoverage['/base/selector.js'].lineData[331]++;
       hasDuplicate = true;
       _$jscoverage['/base/selector.js'].lineData[332]++;
@@ -1216,13 +1211,13 @@ KISSY.add(function(S, require) {
   _$jscoverage['/base/selector.js'].lineData[342]++;
   elements.sort(sortOrder);
   _$jscoverage['/base/selector.js'].lineData[344]++;
-  if (visit381_344_1(hasDuplicate)) {
+  if (visit380_344_1(hasDuplicate)) {
     _$jscoverage['/base/selector.js'].lineData[345]++;
     var i = 1, len = elements.length;
     _$jscoverage['/base/selector.js'].lineData[346]++;
-    while (visit382_346_1(i < len)) {
+    while (visit381_346_1(i < len)) {
       _$jscoverage['/base/selector.js'].lineData[347]++;
-      if (visit383_347_1(elements[i] === elements[i - 1])) {
+      if (visit382_347_1(elements[i] === elements[i - 1])) {
         _$jscoverage['/base/selector.js'].lineData[348]++;
         elements.splice(i, 1);
         _$jscoverage['/base/selector.js'].lineData[349]++;
@@ -1242,7 +1237,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/base/selector.js'].lineData[369]++;
   var elems = query(selector, context), id, tag, match, cls, ret = [];
   _$jscoverage['/base/selector.js'].lineData[376]++;
-  if (visit384_376_1(visit385_376_2(typeof filter === 'string') && visit386_377_1((filter = trim(filter)) && (match = rSimpleSelector.exec(filter))))) {
+  if (visit383_376_1(visit384_376_2(typeof filter === 'string') && visit385_377_1((filter = trim(filter)) && (match = rSimpleSelector.exec(filter))))) {
     _$jscoverage['/base/selector.js'].lineData[379]++;
     id = match[1];
     _$jscoverage['/base/selector.js'].lineData[380]++;
@@ -1250,39 +1245,39 @@ KISSY.add(function(S, require) {
     _$jscoverage['/base/selector.js'].lineData[381]++;
     cls = match[3];
     _$jscoverage['/base/selector.js'].lineData[382]++;
-    if (visit387_382_1(!id)) {
+    if (visit386_382_1(!id)) {
       _$jscoverage['/base/selector.js'].lineData[383]++;
       filter = function(elem) {
   _$jscoverage['/base/selector.js'].functionData[26]++;
   _$jscoverage['/base/selector.js'].lineData[384]++;
   var tagRe = true, clsRe = true;
   _$jscoverage['/base/selector.js'].lineData[388]++;
-  if (visit388_388_1(tag)) {
+  if (visit387_388_1(tag)) {
     _$jscoverage['/base/selector.js'].lineData[389]++;
     tagRe = isTag(elem, tag);
   }
   _$jscoverage['/base/selector.js'].lineData[393]++;
-  if (visit389_393_1(cls)) {
+  if (visit388_393_1(cls)) {
     _$jscoverage['/base/selector.js'].lineData[394]++;
     clsRe = hasSingleClass(elem, cls);
   }
   _$jscoverage['/base/selector.js'].lineData[397]++;
-  return visit390_397_1(clsRe && tagRe);
+  return visit389_397_1(clsRe && tagRe);
 };
     } else {
       _$jscoverage['/base/selector.js'].lineData[399]++;
-      if (visit391_399_1(id && visit392_399_2(!tag && !cls))) {
+      if (visit390_399_1(id && visit391_399_2(!tag && !cls))) {
         _$jscoverage['/base/selector.js'].lineData[400]++;
         filter = function(elem) {
   _$jscoverage['/base/selector.js'].functionData[27]++;
   _$jscoverage['/base/selector.js'].lineData[401]++;
-  return visit393_401_1(getAttr(elem, 'id') === id);
+  return visit392_401_1(getAttr(elem, 'id') === id);
 };
       }
     }
   }
   _$jscoverage['/base/selector.js'].lineData[406]++;
-  if (visit394_406_1(typeof filter === 'function')) {
+  if (visit393_406_1(typeof filter === 'function')) {
     _$jscoverage['/base/selector.js'].lineData[407]++;
     ret = S.filter(elems, filter);
   } else {
@@ -1297,7 +1292,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/base/selector.js'].lineData[424]++;
   var elements = query(selector, context);
   _$jscoverage['/base/selector.js'].lineData[425]++;
-  return visit395_425_1(elements.length && (visit396_425_2(Dom.filter(elements, filter, context).length === elements.length)));
+  return visit394_425_1(elements.length && (visit395_425_2(Dom.filter(elements, filter, context).length === elements.length)));
 }});
   _$jscoverage['/base/selector.js'].lineData[429]++;
   return Dom;
