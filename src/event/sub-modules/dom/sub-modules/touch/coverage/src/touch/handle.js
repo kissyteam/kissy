@@ -618,7 +618,7 @@ function visit41_255_1(result) {
 function visit40_254_1(result) {
   _$jscoverage['/touch/handle.js'].branchData['254'][1].ranCondition(result);
   return result;
-}_$jscoverage['/touch/handle.js'].branchData['244'][1].init(390, 15, '!isTouchEvent()');
+}_$jscoverage['/touch/handle.js'].branchData['244'][1].init(390, 19, '!isTouchEvent(type)');
 function visit39_244_1(result) {
   _$jscoverage['/touch/handle.js'].branchData['244'][1].ranCondition(result);
   return result;
@@ -1086,7 +1086,7 @@ KISSY.add(function(S, require) {
       self.updateTouch(event.originalEvent);
     } else {
       _$jscoverage['/touch/handle.js'].lineData[244]++;
-      if (visit39_244_1(!isTouchEvent())) {
+      if (visit39_244_1(!isTouchEvent(type))) {
         _$jscoverage['/touch/handle.js'].lineData[245]++;
         throw new Error('unrecognized touch event: ' + event.type);
       }

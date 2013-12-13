@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.41
 MIT Licensed
-build time: Dec 4 22:16
+build time: Dec 13 19:28
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -60,7 +60,7 @@ KISSY.add("event/dom/touch/tap", ["./handle-map", "event/dom/base", "./single-to
     var touch = e.changedTouches[0];
     var target = e.target;
     var eventObject = new DomEventObject({type:event, target:target, currentTarget:target});
-    S.mix(eventObject, {pageX:touch.pageX, pageY:touch.pageY, which:1, touch:touch});
+    S.mix(eventObject, {pageX:touch.pageX, pageY:touch.pageY, originalEvent:e.originalEvent, which:1, touch:touch});
     DomEvent.fire(target, event, eventObject);
     if(eventObject.isDefaultPrevented()) {
       DomEvent.on(target, "click", {fn:preventDefault, once:1})
@@ -544,7 +544,7 @@ KISSY.add("event/dom/touch/handle", ["dom", "./handle-map", "event/dom/base", ".
       if(isPointerEvent(type)) {
         self.updateTouch(event.originalEvent)
       }else {
-        if(!isTouchEvent()) {
+        if(!isTouchEvent(type)) {
           throw new Error("unrecognized touch event: " + event.type);
         }
       }

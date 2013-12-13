@@ -46,6 +46,8 @@ KISSY.add(function (S, require) {
             S.mix(eventObject, {
                 pageX: touch.pageX,
                 pageY: touch.pageY,
+                // call e.preventDefault on tap event to prevent tap penetration
+                originalEvent: e.originalEvent,
                 which: 1,
                 touch: touch
             });

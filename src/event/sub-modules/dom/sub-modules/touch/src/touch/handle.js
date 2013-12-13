@@ -241,7 +241,7 @@ KISSY.add(function (S, require) {
                 self.touches = [event.originalEvent];
             } else if (isPointerEvent(type)) {
                 self.updateTouch(event.originalEvent);
-            } else if (!isTouchEvent()) {
+            } else if (!isTouchEvent(type)) {
                 throw new Error('unrecognized touch event: ' + event.type);
             }
             // no throttle! to allow preventDefault
