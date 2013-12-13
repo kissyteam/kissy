@@ -3,7 +3,7 @@
  * simple selector for dom
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
-KISSY.add(function (S,require) {
+KISSY.add(function (S, require) {
     var Dom = require('./api');
     var doc = S.Env.host.document,
         docElem = doc.documentElement,
@@ -214,7 +214,8 @@ KISSY.add(function (S,require) {
 
     function hasSingleClass(el, cls) {
         // consider xml
-        var className = el && (el.className || getAttr(el, 'class'));
+        // https://github.com/kissyteam/kissy/issues/532
+        var className = el && getAttr(el, 'class');
         return className &&
             (className = className.replace(/[\r\t\n]/g, SPACE)) &&
             (SPACE + className + SPACE).indexOf(SPACE + cls + SPACE) > -1;
