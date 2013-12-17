@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50
 MIT Licensed
-build time: Dec 12 22:21
+build time: Dec 17 18:00
 */
 /**
  * @ignore
@@ -87,11 +87,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20131212222115' will replace with current timestamp when compressing.
+         * NOTICE: '20131217180019' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20131212222115',
+        __BUILD_TIME: '20131217180019',
 
         /**
          * KISSY Environment.
@@ -591,7 +591,7 @@ var KISSY = (function (undefined) {
                 p = (EMPTY + args[i]).split('.');
                 o = global ? host : this;
                 for (j = (host[p[0]] === o) ? 1 : 0; j < p.length; ++j) {
-                    o = o[p[j]] = o[p[j]] || { };
+                    o = o[p[j]] = o[p[j]] || {};
                 }
             }
             return o;
@@ -3297,7 +3297,7 @@ var KISSY = (function (undefined) {
         S.each(browsers, function (key) {
             var v = UA[key];
             if (v) {
-                className += ' ks-' + key + (parseInt(v) + '');
+                className += ' ks-' + key + (parseInt(v,10) + '');
                 className += ' ks-' + key;
             }
         });
@@ -5382,7 +5382,7 @@ var KISSY = (function (undefined) {
     var doc = S.Env.host && S.Env.host.document;
     // var logger = S.getLogger('s/loader');
     var Utils = S.Loader.Utils;
-    var TIMESTAMP = '20131212222115';
+    var TIMESTAMP = '20131217180019';
     var defaultComboPrefix = '??';
     var defaultComboSep = ',';
 
@@ -5609,7 +5609,7 @@ KISSY.add('i18n', {
                     win.execScript(data);
                 } else {
                     (function (data) {
-                        win.eval.call(win, data);
+                        win['eval'].call(win, data);
                     })(data);
                 }
             }

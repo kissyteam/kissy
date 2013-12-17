@@ -400,19 +400,19 @@ if (! _$jscoverage['/web.js'].branchData) {
   _$jscoverage['/web.js'].branchData['241'] = [];
   _$jscoverage['/web.js'].branchData['241'][1] = new BranchData();
 }
-_$jscoverage['/web.js'].branchData['241'][1].init(7665, 5, 'UA.ie');
+_$jscoverage['/web.js'].branchData['241'][1].init(7668, 5, 'UA.ie');
 function visit664_241_1(result) {
   _$jscoverage['/web.js'].branchData['241'][1].ranCondition(result);
   return result;
-}_$jscoverage['/web.js'].branchData['231'][3].init(7384, 24, 'location.search || EMPTY');
+}_$jscoverage['/web.js'].branchData['231'][3].init(7387, 24, 'location.search || EMPTY');
 function visit663_231_3(result) {
   _$jscoverage['/web.js'].branchData['231'][3].ranCondition(result);
   return result;
-}_$jscoverage['/web.js'].branchData['231'][2].init(7384, 52, '(location.search || EMPTY).indexOf(\'ks-debug\') !== -1');
+}_$jscoverage['/web.js'].branchData['231'][2].init(7387, 52, '(location.search || EMPTY).indexOf(\'ks-debug\') !== -1');
 function visit662_231_2(result) {
   _$jscoverage['/web.js'].branchData['231'][2].ranCondition(result);
   return result;
-}_$jscoverage['/web.js'].branchData['231'][1].init(7371, 65, 'location && (location.search || EMPTY).indexOf(\'ks-debug\') !== -1');
+}_$jscoverage['/web.js'].branchData['231'][1].init(7374, 65, 'location && (location.search || EMPTY).indexOf(\'ks-debug\') !== -1');
 function visit661_231_1(result) {
   _$jscoverage['/web.js'].branchData['231'][1].ranCondition(result);
   return result;
@@ -602,7 +602,7 @@ function visit635_12_1(result) {
       (function(data) {
   _$jscoverage['/web.js'].functionData[8]++;
   _$jscoverage['/web.js'].lineData[96]++;
-  win.eval.call(win, data);
+  win['eval'].call(win, data);
 })(data);
     }
   }

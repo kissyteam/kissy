@@ -538,7 +538,7 @@ function visit255_300_1(result) {
 function visit254_283_1(result) {
   _$jscoverage['/lang/object.js'].branchData['283'][1].ranCondition(result);
   return result;
-}_$jscoverage['/lang/object.js'].branchData['270'][1].init(35, 14, 'o[p[j]] || {}');
+}_$jscoverage['/lang/object.js'].branchData['270'][1].init(35, 13, 'o[p[j]] || {}');
 function visit253_270_1(result) {
   _$jscoverage['/lang/object.js'].branchData['270'][1].ranCondition(result);
   return result;

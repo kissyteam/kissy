@@ -381,7 +381,7 @@
         S.each(browsers, function (key) {
             var v = UA[key];
             if (v) {
-                className += ' ks-' + key + (parseInt(v) + '');
+                className += ' ks-' + key + (parseInt(v,10) + '');
                 className += ' ks-' + key;
             }
         });

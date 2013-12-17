@@ -93,7 +93,7 @@
                     win.execScript(data);
                 } else {
                     (function (data) {
-                        win.eval.call(win, data);
+                        win['eval'].call(win, data);
                     })(data);
                 }
             }

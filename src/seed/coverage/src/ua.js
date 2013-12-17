@@ -441,7 +441,7 @@ if (! _$jscoverage['/ua.js'].branchData) {
   _$jscoverage['/ua.js'].branchData['388'] = [];
   _$jscoverage['/ua.js'].branchData['388'][1] = new BranchData();
 }
-_$jscoverage['/ua.js'].branchData['388'][1].init(238, 17, 'S.trim(className)');
+_$jscoverage['/ua.js'].branchData['388'][1].init(241, 17, 'S.trim(className)');
 function visit598_388_1(result) {
   _$jscoverage['/ua.js'].branchData['388'][1].ranCondition(result);
   return result;
@@ -915,7 +915,7 @@ function visit554_11_1(result) {
   _$jscoverage['/ua.js'].lineData[383]++;
   if (visit597_383_1(v)) {
     _$jscoverage['/ua.js'].lineData[384]++;
-    className += ' ks-' + key + (parseInt(v) + '');
+    className += ' ks-' + key + (parseInt(v, 10) + '');
     _$jscoverage['/ua.js'].lineData[385]++;
     className += ' ks-' + key;
   }
