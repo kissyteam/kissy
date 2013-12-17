@@ -20,7 +20,7 @@ KISSY.add(function (S) {
             /**
              * attribute node type
              */
-            'ATTRIBUTE_NODE': 2,
+            ATTRIBUTE_NODE: 2,
             /**
              * text node type
              */
@@ -28,19 +28,19 @@ KISSY.add(function (S) {
             /**
              * cdata node type
              */
-            'CDATA_SECTION_NODE': 4,
+            CDATA_SECTION_NODE: 4,
             /**
              * entity reference node type
              */
-            'ENTITY_REFERENCE_NODE': 5,
+            ENTITY_REFERENCE_NODE: 5,
             /**
              * entity node type
              */
-            'ENTITY_NODE': 6,
+            ENTITY_NODE: 6,
             /**
              * processing instruction node type
              */
-            'PROCESSING_INSTRUCTION_NODE': 7,
+            PROCESSING_INSTRUCTION_NODE: 7,
             /**
              * comment node type
              */
@@ -52,7 +52,7 @@ KISSY.add(function (S) {
             /**
              * document type
              */
-            'DOCUMENT_TYPE_NODE': 10,
+            DOCUMENT_TYPE_NODE: 10,
             /**
              * document fragment type
              */
@@ -60,7 +60,7 @@ KISSY.add(function (S) {
             /**
              * notation type
              */
-            'NOTATION_NODE': 12
+            NOTATION_NODE: 12
         },
         /**
          * KISSY Dom Utils.
@@ -82,7 +82,7 @@ KISSY.add(function (S) {
                 var domain = win.document.domain,
                     hostname = win.location.hostname;
                 return domain !== hostname &&
-                    domain !== ( '[' + hostname + ']' );	// IPv6 IP support
+                    domain !== ('[' + hostname + ']');	// IPv6 IP support
             },
 
             /**
@@ -133,7 +133,6 @@ KISSY.add(function (S) {
 
                 return doc.defaultView || doc.parentWindow;
             },
-
 
             /**
              * Return corresponding document of this element.

@@ -262,10 +262,10 @@ KISSY.add(function (S,require) {
             }
         });
     S.each({
-        'prepend': 'prependTo',
-        'append': 'appendTo',
-        'before': 'insertBefore',
-        'after': 'insertAfter'
+        prepend: 'prependTo',
+        append: 'appendTo',
+        before: 'insertBefore',
+        after: 'insertAfter'
     }, function (value, key) {
         Dom[key] = Dom[value];
     });

@@ -267,7 +267,7 @@
                 p = (EMPTY + args[i]).split('.');
                 o = global ? host : this;
                 for (j = (host[p[0]] === o) ? 1 : 0; j < p.length; ++j) {
-                    o = o[p[j]] = o[p[j]] || { };
+                    o = o[p[j]] = o[p[j]] || {};
                 }
             }
             return o;

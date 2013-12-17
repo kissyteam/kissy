@@ -18,7 +18,7 @@ KISSY.add(function (S,require) {
 
     S.mix(S, {
         // compatibility
-        DOM:Dom,
+        DOM: Dom,
         get: Dom.get,
         query: Dom.query
     });

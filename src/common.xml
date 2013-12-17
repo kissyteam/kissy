@@ -40,6 +40,22 @@
         </ac:if>
     </target>
 
+    <target name="jscs" depends="check-src">
+        <ac:if>
+            <ac:isset property="component.src.dir.exists"/>
+            <ac:then>
+                <echo>jscs ${component.src.dir}</echo>
+                <exec executable="node" failonerror="true">
+                    <arg value="${kissy.dir}/node_modules/jscs/bin/jscs"/>
+                    <arg value="${component.src.dir}"/>
+                    <arg value="-c"/>
+                    <arg value="${kissy.dir}/.jscs.json"/>
+                    <arg value="-n"/>
+                </exec>
+            </ac:then>
+        </ac:if>
+    </target>
+
     <target name="check-src">
         <condition property="component.src.dir.exists">
             <available file="${component.src.dir}" type="dir"/>

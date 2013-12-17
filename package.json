@@ -47,7 +47,8 @@
     "chokidar": "~0.7.0",
     "js-beautify": "~1.4.0",
     "fs-extra": "~0.8.0",
-    "walk": "~2.2.1"
+    "walk": "~2.2.1",
+    "jscs": "~1.0.15"
   },
   "notes": [
     "express 3.3.8-3.4.0 cors bug"

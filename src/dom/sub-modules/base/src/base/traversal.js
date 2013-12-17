@@ -3,7 +3,7 @@
  * dom-traversal
  * @author lifesinger@gmail.com, yiminghe@gmail.com
  */
-KISSY.add(function (S,require) {
+KISSY.add(function (S, require) {
     var Dom = require('./api');
     var NodeType = Dom.NodeType,
         CONTAIN_MASK = 16;
@@ -232,7 +232,7 @@ KISSY.add(function (S,require) {
             fi,
             filterLength;
 
-        if (typeof filter==='number') {
+        if (typeof filter === 'number') {
             fi = 0;
             filterLength = filter;
             filter = function () {

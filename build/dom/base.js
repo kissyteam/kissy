@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50
 MIT Licensed
-build time: Dec 12 22:10
+build time: Dec 17 16:14
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -309,7 +309,8 @@ KISSY.add("dom/base/attr", ["./api"], function(S, require) {
         }
       }
       hook = valHooks[nodeName(elem)] || valHooks[elem.type];
-      if(!hook || !("set" in hook) || hook.set(elem, val, "value") === undefined) {
+      var hookHasSet = hook && "set" in hook;
+      if(!hookHasSet || hook.set(elem, val, "value") === undefined) {
         elem.value = val
       }
     }
@@ -1740,7 +1741,7 @@ KISSY.add("dom/base/selector", ["./api"], function(S, require) {
     return ret
   }
   function hasSingleClass(el, cls) {
-    var className = el && (el.className || getAttr(el, "class"));
+    var className = el && getAttr(el, "class");
     return className && (className = className.replace(/[\r\t\n]/g, SPACE)) && (SPACE + className + SPACE).indexOf(SPACE + cls + SPACE) > -1
   }
   function getAttr(el, name) {

@@ -17,6 +17,7 @@
     "unused": true,
     "browser": true,
     "node":true,
+    "es3":true,
     "globals": {
         "KISSY": false,
         "describe": false,

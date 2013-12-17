@@ -93,10 +93,10 @@ KISSY.add(function (S, require) {
              * Note that this parses HTML, not XML.
              * @param {Object} [props] An map of attributes on the newly-created element.
              * @param {HTMLDocument} [ownerDoc] A document in which the new elements will be created
-             * @param {Boolean} [_trim]
+             * @param {Boolean} [_trim] internal usage
              * @return {DocumentFragment|HTMLElement}
              */
-            create: function (html, props, ownerDoc, _trim/*internal*/) {
+            create: function (html, props, ownerDoc, _trim) {
                 var ret = null;
 
                 if (!html) {
@@ -106,7 +106,6 @@ KISSY.add(function (S, require) {
                 if (html.nodeType) {
                     return Dom.clone(html);
                 }
-
 
                 if (typeof html !== 'string') {
                     return ret;
@@ -131,13 +130,11 @@ KISSY.add(function (S, require) {
 
                 if (!R_HTML.test(html)) {
                     ret = context.createTextNode(html);
-                }
-                // 简单 tag, 比如 Dom.create('<p>')
-                else if ((m = RE_SIMPLE_TAG.exec(html))) {
+                } else if ((m = RE_SIMPLE_TAG.exec(html))) {
+                    // 简单 tag, 比如 Dom.create('<p>')
                     ret = context.createElement(m[1]);
-                }
-                // 复杂情况，比如 Dom.create('<img src='sprite.png' />')
-                else {
+                } else {
+                    // 复杂情况，比如 Dom.create('<img src='sprite.png' />')
                     // Fix 'XHTML'-style tags in all browsers
                     html = html.replace(R_XHTML_TAG, '<$1><' + '/$2>');
 
@@ -217,9 +214,7 @@ KISSY.add(function (S, require) {
                     } else {
                         return null;
                     }
-                }
-                // setter
-                else {
+                } else {
                     htmlString += '';
 
                     // faster
@@ -471,9 +466,8 @@ KISSY.add(function (S, require) {
         if (S.isPlainObject(props)) {
             if (elem.nodeType === NodeType.ELEMENT_NODE) {
                 Dom.attr(elem, props, true);
-            }
-            // document fragment
-            else if (elem.nodeType === NodeType.DOCUMENT_FRAGMENT_NODE) {
+            } else if (elem.nodeType === NodeType.DOCUMENT_FRAGMENT_NODE) {
+                // document fragment
                 Dom.attr(elem.childNodes, props, true);
             }
         }

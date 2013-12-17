@@ -26,11 +26,11 @@ KISSY.add(function (S, require) {
         trim = S.trim;
 
     function queryEach(f) {
-        var els = this,
-            l = els.length,
+        var self = this,
+            l = self.length,
             i;
         for (i = 0; i < l; i++) {
-            if (f(els[i], i) === false) {
+            if (f(self[i], i) === false) {
                 break;
             }
         }
@@ -58,7 +58,7 @@ KISSY.add(function (S, require) {
     function makeIdMatch(id) {
         return function (elem) {
             var match = Dom._getElementById(id, doc);
-            return match && Dom._contains(elem, match) ? [ match ] : [ ];
+            return match && Dom._contains(elem, match) ? [match] : [];
         };
     }
 
@@ -98,28 +98,23 @@ KISSY.add(function (S, require) {
             if (simpleContext) {
                 // shortcut
                 if (selector === 'body') {
-                    ret = [ doc.body ];
-                }
-                // .cls
-                else if (rClassSelector.test(selector) && supportGetElementsByClassName) {
+                    ret = [doc.body];
+                } else if (rClassSelector.test(selector) && supportGetElementsByClassName) {
+                    // .cls
                     ret = doc.getElementsByClassName(RegExp.$1);
-                }
-                // tag#id
-                else if (rTagIdSelector.test(selector)) {
+                } else if (rTagIdSelector.test(selector)) {
+                    // tag#id
                     el = Dom._getElementById(RegExp.$2, doc);
                     ret = el && el.nodeName.toLowerCase() === RegExp.$1 ? [el] : [];
-                }
-                // #id
-                else if (rIdSelector.test(selector)) {
+                } else if (rIdSelector.test(selector)) {
+                    // #id
                     el = Dom._getElementById(selector.substr(1), doc);
                     ret = el ? [el] : [];
-                }
-                // tag
-                else if (rTagSelector.test(selector)) {
+                } else if (rTagSelector.test(selector)) {
+                    // tag
                     ret = doc.getElementsByTagName(selector);
-                }
-                // #id tag, #id .cls...
-                else if (isSimpleSelector(selector) && supportGetElementsByClassName) {
+                } else if (isSimpleSelector(selector) && supportGetElementsByClassName) {
+                    // #id tag, #id .cls...
                     var parts = selector.split(/\s+/),
                         partsLen,
                         parents = contexts,
@@ -132,7 +127,7 @@ KISSY.add(function (S, require) {
 
                     for (i = 0, partsLen = parts.length; i < partsLen; i++) {
                         var part = parts[i],
-                            newParents = [ ],
+                            newParents = [],
                             matches;
 
                         for (parentIndex = 0, parentsLen = parents.length;
@@ -161,33 +156,29 @@ KISSY.add(function (S, require) {
                     Dom.unique(ret);
                 }
             }
-        }
-        // 不写 context，就是包装一下
-        else {
+        } else {
+            // 不写 context，就是包装一下
             // 1.常见的单个元素
             // Dom.query(document.getElementById('xx'))
             if (selector.nodeType || selector.setTimeout) {
                 ret = [selector];
-            }
-            // 2.KISSY NodeList 特殊点直接返回，提高性能
-            else if (selector.getDOMNodes) {
+            } else if (selector.getDOMNodes) {
+                // 2.KISSY NodeList 特殊点直接返回，提高性能
                 ret = selector.getDOMNodes();
-            }
-            // 3.常见的数组
-            // var x=Dom.query('.l');
-            // Dom.css(x,'color','red');
-            else if (isArray(selector)) {
+            } else if (isArray(selector)) {
+                // 3.常见的数组
+                // var x=Dom.query('.l');
+                // Dom.css(x,'color','red');
                 ret = selector;
-            }
-            // 4.selector.item
-            // Dom.query(document.getElementsByTagName('a'))
-            // note:
-            // document.createElement('select').item 已经在 1 处理了
-            // S.all().item 已经在 2 处理了
-            else if (isDomNodeList(selector)) {
+            } else if (isDomNodeList(selector)) {
+                // 4.selector.item
+                // Dom.query(document.getElementsByTagName('a'))
+                // note:
+                // document.createElement('select').item 已经在 1 处理了
+                // S.all().item 已经在 2 处理了
                 ret = makeArray(selector);
             } else {
-                ret = [ selector ];
+                ret = [selector];
             }
 
             if (!simpleContext) {
@@ -436,4 +427,3 @@ KISSY.add(function (S, require) {
  * yiminghe@gmail.com - 2013-03-26
  * - refactor to use own css3 selector engine
  */
-

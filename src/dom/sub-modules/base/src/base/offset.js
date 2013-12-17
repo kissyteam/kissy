@@ -145,8 +145,7 @@ KISSY.add(function (S, require) {
                         top: elemOffset[TOP] + eh - (winScroll[TOP] + wh)
                     };
                     containerScroll = winScroll;
-                }
-                else {
+                } else {
                     containerOffset = Dom.offset(container);
                     ch = container.clientHeight;
                     cw = container.clientWidth;
@@ -356,7 +355,7 @@ KISSY.add(function (S, require) {
     });
 
     function getClientPosition(elem) {
-        var box, x , y ,
+        var box, x, y,
             doc = elem.ownerDocument,
             body = doc.body;
 
@@ -400,9 +399,8 @@ KISSY.add(function (S, require) {
         x -= docElem.clientLeft || body.clientLeft || 0;
         y -= docElem.clientTop || body.clientTop || 0;
 
-        return { left: x, top: y };
+        return {left: x, top: y};
     }
-
 
     function getPageOffset(el) {
         var pos = getClientPosition(el),
@@ -451,7 +449,7 @@ KISSY.add(function (S, require) {
         }
 
         var old = getOffset(elem),
-            ret = { },
+            ret = {},
             current, key;
 
         for (key in offset) {
@@ -477,7 +475,6 @@ KISSY.add(function (S, require) {
  - 调整 docWidth , docHeight ,
  - viewportHeight , viewportWidth ,scrollLeft,scrollTop 参数，
  便于放置到 Node 中去，可以完全摆脱 Dom，完全使用 Node
-
 
  TODO:
  - 考虑是否实现 jQuery 的 position, offsetParent 等功能

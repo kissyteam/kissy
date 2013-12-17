@@ -22,26 +22,26 @@ KISSY.add(function (S, require) {
         OLD_DISPLAY = DISPLAY + S.now(),
         NONE = 'none',
         cssNumber = {
-            'fillOpacity': 1,
-            'fontWeight': 1,
-            'lineHeight': 1,
-            'opacity': 1,
-            'orphans': 1,
-            'widows': 1,
-            'zIndex': 1,
-            'zoom': 1
+            fillOpacity: 1,
+            fontWeight: 1,
+            lineHeight: 1,
+            opacity: 1,
+            orphans: 1,
+            widows: 1,
+            zIndex: 1,
+            zoom: 1
         },
         rmsPrefix = /^-ms-/,
         EMPTY = '',
         DEFAULT_UNIT = 'px',
         NO_PX_REG = /\d(?!px)[a-z%]+$/i,
         cssHooks = {},
-        cssProps = {
-            'float': 'cssFloat'
-        },
+        cssProps = {},
         userSelectProperty,
         defaultDisplay = {},
         RE_DASH = /-([a-z])/ig;
+
+    cssProps['float'] = 'cssFloat';
 
     function normalizeCssPropName(name) {
         return cssProps[name] || S.Features.getVendorCssPropName(name);
@@ -202,9 +202,7 @@ KISSY.add(function (S, require) {
                         }
                     }
                     return (typeof ret === 'undefined') ? '' : ret;
-                }
-                // setter
-                else {
+                } else {
                     for (i = els.length - 1; i >= 0; i--) {
                         style(els[i], name, val);
                     }
@@ -299,7 +297,7 @@ KISSY.add(function (S, require) {
                     return;
                 }
 
-                elem = Dom.create('<style>', { id: id }, doc);
+                elem = Dom.create('<style>', {id: id}, doc);
 
                 // 先添加到 Dom 树中，再给 cssText 赋值，否则 css hack 会失效
                 Dom.get('head', doc).appendChild(elem);
@@ -444,7 +442,7 @@ KISSY.add(function (S, require) {
         };
     });
 
-    var cssShow = { position: 'absolute', visibility: 'hidden', display: 'block' };
+    var cssShow = {position: 'absolute', visibility: 'hidden', display: 'block'};
 
     S.each(['left', 'top'], function (name) {
         cssHooks[ name ] = {
@@ -507,9 +505,8 @@ KISSY.add(function (S, require) {
             // normalize unset
             if (val === null || val === EMPTY) {
                 val = EMPTY;
-            }
-            // number values may need a unit
-            else if (!isNaN(Number(val)) && !cssNumber[name]) {
+            } else if (!isNaN(Number(val)) && !cssNumber[name]) {
+                // number values may need a unit
                 val += DEFAULT_UNIT;
             }
             if (hook && hook.set) {
@@ -537,9 +534,7 @@ KISSY.add(function (S, require) {
                 elem.removeAttribute('style');
             }
             return undefined;
-        }
-        //getter
-        else {
+        } else {
             // If a hook was provided get the non-computed value from there
             if (!(hook && 'get' in hook &&
                 (ret = hook.get(elem, false)) !== undefined)) {
@@ -653,8 +648,8 @@ KISSY.add(function (S, require) {
     var ROOT_REG = /^(?:body|html)$/i;
 
     function getPosition(el) {
-        var offsetParent ,
-            offset ,
+        var offsetParent,
+            offset,
             parentOffset = {top: 0, left: 0};
 
         if (Dom.css(el, 'position') === 'fixed') {
@@ -682,7 +677,7 @@ KISSY.add(function (S, require) {
     }
 
     function getOffsetParent(el) {
-        var offsetParent = el.offsetParent || ( el.ownerDocument || doc).body;
+        var offsetParent = el.offsetParent || (el.ownerDocument || doc).body;
         while (offsetParent && !ROOT_REG.test(offsetParent.nodeName) &&
             Dom.css(offsetParent, 'position') === 'static') {
             offsetParent = offsetParent.offsetParent;
@@ -698,21 +693,7 @@ KISSY.add(function (S, require) {
  - backgroundPositionX, backgroundPositionY firefox/w3c 不支持
  - w3c 为准，这里不 fix 了
 
-
  2011-08-19
  - 调整结构，减少耦合
  - fix css('height') === auto
-
- NOTES:
- - Opera 下，color 默认返回 #XXYYZZ, 非 rgb(). 目前 jQuery 等类库均忽略此差异，KISSY 也忽略。
- - Safari 低版本，transparent 会返回为 rgba(0, 0, 0, 0), 考虑低版本才有此 bug, 亦忽略。
-
-
- - getComputedStyle 在 webkit 下，会舍弃小数部分，ie 下会四舍五入，gecko 下直接输出 float 值。
-
- - color: blue 继承值，getComputedStyle, 在 ie 下返回 blue, opera 返回 #0000ff, 其它浏览器
- 返回 rgb(0, 0, 255)
-
- - 总之：要使得返回值完全一致是不大可能的，jQuery/ExtJS/KISSY 未“追求完美”。YUI3 做了部分完美处理，但
- 依旧存在浏览器差异。
  */

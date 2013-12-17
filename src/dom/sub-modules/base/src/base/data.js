@@ -9,8 +9,8 @@ KISSY.add(function (S, require) {
     var Dom = require('./api');
     var win = S.Env.host,
         EXPANDO = '_ks_data_' + S.now(), // 让每一份 kissy 的 expando 都不同
-        dataCache = { }, // 存储 node 节点的 data
-        winDataCache = { }, // 避免污染全局
+        dataCache = {}, // 存储 node 节点的 data
+        winDataCache = {}, // 避免污染全局
     // The following elements throw uncatchable exceptions if you
     // attempt to add expando properties to them.
         noData = {
@@ -148,7 +148,6 @@ KISSY.add(function (S, require) {
         }
     };
 
-
     S.mix(Dom,
         /**
          * @override KISSY.DOM
@@ -191,7 +190,7 @@ KISSY.add(function (S, require) {
              * If name unset and data unset returns the full data store for the element.
              * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
              * @param {String} [name] A string naming the piece of data to set.
-             * @param [data] The new data value.
+             * @param {*} [data] The new data value.
              * @return {Object|undefined}
              */
             data: function (selector, name, data) {
@@ -215,9 +214,7 @@ KISSY.add(function (S, require) {
                             return objectOps.data(elem, name);
                         }
                     }
-                }
-                // setter
-                else {
+                } else {
                     for (var i = elems.length - 1; i >= 0; i--) {
                         elem = elems[i];
                         if (elem.nodeType) {

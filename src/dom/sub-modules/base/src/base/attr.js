@@ -48,19 +48,19 @@ KISSY.add(function (S, require) {
         },
 
         propFix = {
-            'hidefocus': 'hideFocus',
+            hidefocus: 'hideFocus',
             tabindex: 'tabIndex',
             readonly: 'readOnly',
             'for': 'htmlFor',
             'class': 'className',
             maxlength: 'maxLength',
-            'cellspacing': 'cellSpacing',
-            'cellpadding': 'cellPadding',
+            cellspacing: 'cellSpacing',
+            cellpadding: 'cellPadding',
             rowspan: 'rowSpan',
             colspan: 'colSpan',
             usemap: 'useMap',
-            'frameborder': 'frameBorder',
-            'contenteditable': 'contentEditable'
+            frameborder: 'frameBorder',
+            contenteditable: 'contentEditable'
         },
 
     // Hook for boolean attributes
@@ -215,11 +215,8 @@ KISSY.add(function (S, require) {
              * or
              * Set one or more properties for the set of matched elements.
              * @param {HTMLElement[]|String|HTMLElement} selector matched elements
-             * @param {String|Object} name
-             * The name of the property to set.
-             * or
-             * A map of property-value pairs to set.
-             * @param [value] A value to set for the property.
+             * @param {String|Object} name The name of the property to set or A map of property-value pairs to set.
+             * @param {*} [value] A value to set for the property.
              * @return {String|undefined|Boolean}
              */
             prop: function (selector, name, value) {
@@ -302,8 +299,8 @@ KISSY.add(function (S, require) {
              * Set one or more attributes for the set of matched elements.
              * @param {HTMLElement[]|HTMLElement|String} selector matched elements
              * @param {String|Object} name The name of the attribute to set. or A map of attribute-value pairs to set.
-             * @param [val] A value to set for the attribute.
-             * @param [pass] internal use by anim
+             * @param {*} [val] A value to set for the attribute.
+             * @param {Boolean} [pass] internal use by anim
              * @return {String|undefined}
              */
             attr: function (selector, name, val, /*internal use by anim/fx*/pass) {
@@ -370,9 +367,8 @@ KISSY.add(function (S, require) {
 
                 if (R_BOOLEAN.test(name)) {
                     attrNormalizer = boolHook;
-                }
-                // only old ie?
-                else if (R_INVALID_CHAR.test(name)) {
+                } else if (R_INVALID_CHAR.test(name)) {
+                    // only old ie?
                     attrNormalizer = attrNodeHook;
                 } else {
                     attrNormalizer = attrHooks[name];
@@ -535,10 +531,10 @@ KISSY.add(function (S, require) {
                         val = S.map(val, toStr);
                     }
 
-                    hook = valHooks[ nodeName(elem)] || valHooks[ elem.type ];
-
+                    hook = valHooks[nodeName(elem)] || valHooks[elem.type];
+                    var hookHasSet = hook && ('set' in hook);
                     // If set returns undefined, fall back to normal setting
-                    if (!hook || !('set' in hook) || hook.set(elem, val, 'value') === undefined) {
+                    if (!hookHasSet || (hook.set(elem, val, 'value') === undefined)) {
                         elem.value = val;
                     }
                 }
@@ -572,8 +568,7 @@ KISSY.add(function (S, require) {
                             } else {
                                 el.innerText = val;
                             }
-                        }
-                        else if (nodeType === NodeType.TEXT_NODE || nodeType === NodeType.CDATA_SECTION_NODE) {
+                        } else if (nodeType === NodeType.TEXT_NODE || nodeType === NodeType.CDATA_SECTION_NODE) {
                             el.nodeValue = val;
                         }
                     }
