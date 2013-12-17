@@ -114,9 +114,8 @@
             var Constructor = input.constructor;
             if (S.inArray(Constructor, [Boolean, String, Number, Date, RegExp])) {
                 destination = new Constructor(input.valueOf());
-            }
-            // ImageData , File, Blob , FileList .. etc
-            else if ((isArray = S.isArray(input))) {
+            } else if ((isArray = S.isArray(input))) {
+                // ImageData , File, Blob , FileList .. etc
                 destination = f ? S.filter(input, f) : input.concat();
             } else if ((isPlainObject = S.isPlainObject(input))) {
                 destination = {};

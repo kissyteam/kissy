@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50
 MIT Licensed
-build time: Dec 17 18:00
+build time: Dec 17 18:32
 */
 /**
  * @ignore
@@ -29,7 +29,7 @@ build time: Dec 17 18:00
 /* exported KISSY */
 /*jshint -W079 */
 var KISSY = (function (undefined) {
-    var host = this,
+    var self = this,
         S,
         guid = 0,
         EMPTY = '';
@@ -78,20 +78,20 @@ var KISSY = (function (undefined) {
     }
 
     var loggerLevel = {
-        'debug': 10,
-        'info': 20,
-        'warn': 30,
-        'error': 40
+        debug: 10,
+        info: 20,
+        warn: 30,
+        error: 40
     };
 
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20131217180019' will replace with current timestamp when compressing.
+         * NOTICE: '20131217183227' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20131217180019',
+        __BUILD_TIME: '20131217183227',
 
         /**
          * KISSY Environment.
@@ -99,7 +99,7 @@ var KISSY = (function (undefined) {
          * @type {Object}
          */
         Env: {
-            host: host
+            host: self
         },
 
         /**
@@ -246,7 +246,7 @@ var KISSY = (function (undefined) {
                         msg = logger + ': ' + msg;
                     }
                 }
-               /*global console*/
+                /*global console*/
                 if (typeof console !== 'undefined' && console.log && matched) {
                     console[cat && console[cat] ? cat : 'log'](msg);
                     return msg;
@@ -260,7 +260,7 @@ var KISSY = (function (undefined) {
          * @param {String} logger logger name
          * @returns {KISSY.Logger} log instance
          */
-        'getLogger': function (logger) {
+        getLogger: function (logger) {
             return getLogger(logger);
         },
 
@@ -306,7 +306,7 @@ var KISSY = (function (undefined) {
         /**
          * debug level
          */
-        'DEBUG': 'debug',
+        DEBUG: 'debug',
         /**
          * info level
          */
@@ -332,7 +332,7 @@ var KISSY = (function (undefined) {
     var logger = S.getLogger('s/lang');
     var MIX_CIRCULAR_DETECTION = '__MIX_CIRCULAR',
         STAMP_MARKER = '__~ks_stamped',
-        host = this,
+        self = this,
         TRUE = true,
         EMPTY = '',
         Obj = Object,
@@ -375,7 +375,6 @@ var KISSY = (function (undefined) {
             return guid;
         },
 
-
         /**
          * Get all the property names of o as array
          * @param {Object} o
@@ -403,7 +402,6 @@ var KISSY = (function (undefined) {
 
             return result;
         },
-
 
         /**
          * Copies all the properties of s to r.
@@ -567,7 +565,6 @@ var KISSY = (function (undefined) {
             return r;
         },
 
-
         /**
          * Returns the namespace specified and creates it if it doesn't exist. Be careful
          * when naming packages. Reserved words may work in some browsers and not others.
@@ -589,14 +586,13 @@ var KISSY = (function (undefined) {
 
             for (i = 0; i < l; i++) {
                 p = (EMPTY + args[i]).split('.');
-                o = global ? host : this;
-                for (j = (host[p[0]] === o) ? 1 : 0; j < p.length; ++j) {
+                o = global ? self : this;
+                for (j = (self[p[0]] === o) ? 1 : 0; j < p.length; ++j) {
                     o = o[p[j]] = o[p[j]] || {};
                 }
             }
             return o;
         }
-
     });
 
     function Empty() {
@@ -693,7 +689,6 @@ var KISSY = (function (undefined) {
  *
  */
 (function (S, undefined) {
-
     var TRUE = true,
         AP = Array.prototype,
         indexOf = AP.indexOf,
@@ -858,7 +853,6 @@ var KISSY = (function (undefined) {
                 return ret;
             },
 
-
         /**
          * Executes the supplied function on each item in the array.
          * Returns a new array containing the items that the supplied
@@ -889,7 +883,6 @@ var KISSY = (function (undefined) {
                 return res;
             },
 
-
         /**
          * Executes the supplied function on each item in the array.
          * Returns a value which is accumulation of the value that the supplied
@@ -917,8 +910,7 @@ var KISSY = (function (undefined) {
             var accumulator;
             if (arguments.length >= 3) {
                 accumulator = initialValue;
-            }
-            else {
+            } else {
                 do {
                     if (k in arr) {
                         accumulator = arr[k++];
@@ -1013,7 +1005,7 @@ var KISSY = (function (undefined) {
                 o.alert ||
                 oType === 'string' ||
                 // https://github.com/ariya/phantomjs/issues/11478
-                (oType === 'function' && !( 'item' in o && lengthType === 'number'))) {
+                (oType === 'function' && !('item' in o && lengthType === 'number'))) {
                 return [o];
             }
             var ret = [];
@@ -1023,7 +1015,6 @@ var KISSY = (function (undefined) {
             return ret;
         }
     });
-
 })(KISSY);/**
  * @ignore
  * escape of lang
@@ -1210,9 +1201,8 @@ var KISSY = (function (undefined) {
                         buf.push(eq, encode(val + EMPTY));
                     }
                     buf.push(sep);
-                }
-                // val is not empty array
-                else if (S.isArray(val) && val.length) {
+                } else if (S.isArray(val) && val.length) {
+                    // val is not empty array
                     for (i = 0, len = val.length; i < len; ++i) {
                         v = val[i];
                         if (isValidParamValue(v)) {
@@ -1412,7 +1402,6 @@ var KISSY = (function (undefined) {
             };
         },
 
-
         /**
          * Throttles a call to a method based on the time between calls.
          * @param {Function} fn The function call to throttle.
@@ -1591,9 +1580,8 @@ var KISSY = (function (undefined) {
             var Constructor = input.constructor;
             if (S.inArray(Constructor, [Boolean, String, Number, Date, RegExp])) {
                 destination = new Constructor(input.valueOf());
-            }
-            // ImageData , File, Blob , FileList .. etc
-            else if ((isArray = S.isArray(input))) {
+            } else if ((isArray = S.isArray(input))) {
+                // ImageData , File, Blob , FileList .. etc
                 destination = f ? S.filter(input, f) : input.concat();
             } else if ((isPlainObject = S.isPlainObject(input))) {
                 destination = {};
@@ -2030,7 +2018,6 @@ var KISSY = (function (undefined) {
     // [root, dir, basename, ext]
     var splitPathRe = /^(\/?)([\s\S]+\/(?!$)|\/)?((?:\.{1,2}$|[\s\S]+?)?(\.[^.\/]*)?)$/;
 
-
     // Remove .. and . in path array
     function normalizeArray(parts, allowAboveRoot) {
         // level above root
@@ -2112,7 +2099,7 @@ var KISSY = (function (undefined) {
          */
         normalize: function (path) {
             var absolute = path.charAt(0) === '/',
-                trailingSlash = path.slice(-1) === '/';
+                trailingSlash = path.slice(0 - 1) === '/';
 
             path = normalizeArray(S.filter(path.split('/'), function (p) {
                 return !!p;
@@ -2125,7 +2112,6 @@ var KISSY = (function (undefined) {
             if (path && trailingSlash) {
                 path += '/';
             }
-
 
             return (absolute ? '/' : '') + path;
         },
@@ -2196,7 +2182,7 @@ var KISSY = (function (undefined) {
             var result = path.match(splitPathRe) || [],
                 basename;
             basename = result[3] || '';
-            if (ext && basename && basename.slice(-1 * ext.length) === ext) {
+            if (ext && basename && basename.slice(ext.length * -1) === ext) {
                 basename = basename.slice(0, -1 * ext.length);
             }
             return basename;
@@ -2244,7 +2230,7 @@ var KISSY = (function (undefined) {
  * @author yiminghe@gmail.com
  */
 (function (S, undefined) {
-    var  logger= S.getLogger('s/uri');
+    var logger = S.getLogger('s/uri');
     var reDisallowedInSchemeOrUserInfo = /[#\/\?@]/g,
         reDisallowedInPathName = /[#\?]/g,
 
@@ -2340,7 +2326,6 @@ var KISSY = (function (undefined) {
         clone: function () {
             return new Query(this.toString());
         },
-
 
         /**
          * reset to a new query string
@@ -2611,7 +2596,6 @@ var KISSY = (function (undefined) {
             return uri;
         },
 
-
         /**
          * The reference resolution algorithm.rfc 5.2
          * return a resolved uri corresponding to current uri
@@ -2722,7 +2706,7 @@ var KISSY = (function (undefined) {
          * @param {String} userInfo
          * @chainable
          */
-        'setUserInfo': function (userInfo) {
+        setUserInfo: function (userInfo) {
             this.userInfo = userInfo;
             return this;
         },
@@ -2740,7 +2724,7 @@ var KISSY = (function (undefined) {
          * @param {String} port
          * @chainable
          */
-        'setPort': function (port) {
+        setPort: function (port) {
             this.port = port;
             return this;
         },
@@ -2749,7 +2733,7 @@ var KISSY = (function (undefined) {
          * Get port
          * @return {String}
          */
-        'getPort': function () {
+        getPort: function () {
             return this.port;
         },
 
@@ -2776,7 +2760,7 @@ var KISSY = (function (undefined) {
          * @param {String|KISSY.Uri.Query} query
          * @chainable
          */
-        'setQuery': function (query) {
+        setQuery: function (query) {
             if (typeof query === 'string') {
                 if (S.startsWith(query, '?')) {
                     query = query.slice(1);
@@ -2808,7 +2792,7 @@ var KISSY = (function (undefined) {
          * @param {String} fragment
          * @chainable
          */
-        'setFragment': function (fragment) {
+        setFragment: function (fragment) {
             var self = this;
             if (S.startsWith(fragment, '#')) {
                 fragment = fragment.slice(1);
@@ -2878,7 +2862,7 @@ var KISSY = (function (undefined) {
                 out.push(encodeSpecialChars(path, reDisallowedInPathName));
             }
 
-            if ((query = ( self.query.toString.call(self.query, serializeArray)))) {
+            if ((query = (self.query.toString.call(self.query, serializeArray)))) {
                 out.push('?');
                 out.push(query);
             }
@@ -3146,13 +3130,9 @@ var KISSY = (function (undefined) {
 
                 if ((m = ua.match(/OPR\/(\d+\.\d+)/)) && m[1]) {
                     UA[shell = 'opera'] = numberify(m[1]);
-                }
-                // Chrome
-                else if ((m = ua.match(/Chrome\/([\d.]*)/)) && m[1]) {
+                } else if ((m = ua.match(/Chrome\/([\d.]*)/)) && m[1]) {
                     UA[shell = 'chrome'] = numberify(m[1]);
-                }
-                // Safari
-                else if ((m = ua.match(/\/([\d.]*) Safari/)) && m[1]) {
+                } else if ((m = ua.match(/\/([\d.]*) Safari/)) && m[1]) {
                     UA[shell = 'safari'] = numberify(m[1]);
                 }
 
@@ -3177,18 +3157,14 @@ var KISSY = (function (undefined) {
                     if (m && m[1]) {
                         UA.android = numberify(m[1]);
                     }
-                }
-                // Other WebKit Mobile Browsers
-                else if ((m = ua.match(/NokiaN[^\/]*|Android \d\.\d|webOS\/\d\.\d/))) {
+                } else if ((m = ua.match(/NokiaN[^\/]*|Android \d\.\d|webOS\/\d\.\d/))) {
                     UA.mobile = m[0].toLowerCase(); // Nokia N-series, Android, webOS, ex: NokiaN95
                 }
 
                 if ((m = ua.match(/PhantomJS\/([^\s]*)/)) && m[1]) {
                     UA.phantomjs = numberify(m[1]);
                 }
-            }
-            // NOT WebKit
-            else {
+            } else {
                 // Presto
                 // ref: http://www.useragentstring.com/pages/useragentstring.php
                 if ((m = ua.match(/Presto\/([\d.]*)/)) && m[1]) {
@@ -3205,15 +3181,13 @@ var KISSY = (function (undefined) {
                         // Opera Mini
                         if ((m = ua.match(/Opera Mini[^;]*/)) && m) {
                             UA.mobile = m[0].toLowerCase(); // ex: Opera Mini/2.0.4509/1316
-                        }
-                        // Opera Mobile
-                        // ex: Opera/9.80 (Windows NT 6.1; Opera Mobi/49; U; en) Presto/2.4.18 Version/10.00
-                        // issue: 由于 Opera Mobile 有 Version/ 字段，可能会与 Opera 混淆，同时对于 Opera Mobile 的版本号也比较混乱
-                        else if ((m = ua.match(/Opera Mobi[^;]*/)) && m) {
+                        } else if ((m = ua.match(/Opera Mobi[^;]*/)) && m) {
+                            // Opera Mobile
+                            // ex: Opera/9.80 (Windows NT 6.1; Opera Mobi/49; U; en) Presto/2.4.18 Version/10.00
+                            // issue: 由于 Opera Mobile 有 Version/ 字段，可能会与 Opera 混淆，同时对于 Opera Mobile 的版本号也比较混乱
                             UA.mobile = m[0];
                         }
                     }
-
                     // NOT WebKit or Presto
                 } else {
                     // MSIE
@@ -3533,19 +3507,19 @@ var KISSY = (function (undefined) {
      */
     Loader.Status = {
         /** error */
-        'ERROR': -1,
+        ERROR: -1,
         /** init */
-        'INIT': 0,
+        INIT: 0,
         /** loading */
-        'LOADING': 1,
+        LOADING: 1,
         /** loaded */
-        'LOADED': 2,
+        LOADED: 2,
         /**dependencies are loaded or attached*/
-        'READY_TO_ATTACH': 3,
+        READY_TO_ATTACH: 3,
         /** attaching */
-        'ATTACHING': 4,
+        ATTACHING: 4,
         /** attached */
-        'ATTACHED': 5
+        ATTACHED: 5
     };
 })(KISSY);/**
  * @ignore
@@ -4077,7 +4051,7 @@ var KISSY = (function (undefined) {
          * Get package base.
          * @return {String}
          */
-        'getBase': function () {
+        getBase: function () {
             return forwardSystemPackage(this, 'base');
         },
 
@@ -4159,29 +4133,29 @@ var KISSY = (function (undefined) {
      * This class should not be instantiated manually.
      */
     function Module(cfg) {
-        var module = this;
+        var self = this;
         /**
          * exports of this module
          */
-        module.exports = {};
+        self.exports = {};
 
         /**
          * status of current modules
          */
-        module.status = Loader.Status.INIT;
+        self.status = Loader.Status.INIT;
 
         /**
          * name of this module
          */
-        module.name = undefined;
+        self.name = undefined;
         /**
          * factory of this module
          */
-        module.factory = undefined;
+        self.factory = undefined;
         // lazy initialize and commonjs module format
-        module.cjs = 1;
-        S.mix(module, cfg);
-        module.waitedCallbacks = [];
+        self.cjs = 1;
+        S.mix(self, cfg);
+        self.waitedCallbacks = [];
     }
 
     Module.prototype = {
@@ -4195,7 +4169,7 @@ var KISSY = (function (undefined) {
          * @param {Function|Object} fn KISSY.use callback
          * @returns {String} resolved module name
          */
-        'use': function (relativeName, fn) {
+        use: function (relativeName, fn) {
             relativeName = Utils.getModNamesAsArray(relativeName);
             return KISSY.use(Utils.normalDepModuleName(this.name, relativeName), fn);
         },
@@ -4205,12 +4179,12 @@ var KISSY = (function (undefined) {
          * @param {String} relativePath relative path
          * @returns {KISSY.Uri} resolve uri
          */
-        'resolve': function (relativePath) {
+        resolve: function (relativePath) {
             return this.getFullPathUri().resolve(relativePath);
         },
 
         // use by xtemplate include
-        'resolveByName': function (relativeName) {
+        resolveByName: function (relativeName) {
             return Utils.normalDepModuleName(this.name, relativeName);
         },
 
@@ -4741,8 +4715,7 @@ var KISSY = (function (undefined) {
                 mod = rs.mods[0];
                 if (mod.getType() === 'css') {
                     mod = undefined;
-                }
-                else if (oldIE) {
+                } else if (oldIE) {
                     startLoadModName = mod.name;
                     startLoadModTime = S.now();
                     config.attrs = {
@@ -4756,7 +4729,6 @@ var KISSY = (function (undefined) {
 
     var logger = S.getLogger('s/loader');
     var Loader = S.Loader,
-
         Status = Loader.Status,
         Utils = Loader.Utils,
         getHash = Utils.getHash,
@@ -5382,7 +5354,7 @@ var KISSY = (function (undefined) {
     var doc = S.Env.host && S.Env.host.document;
     // var logger = S.getLogger('s/loader');
     var Utils = S.Loader.Utils;
-    var TIMESTAMP = '20131217180019';
+    var TIMESTAMP = '20131217183227';
     var defaultComboPrefix = '??';
     var defaultComboSep = ',';
 
@@ -5413,7 +5385,7 @@ var KISSY = (function (undefined) {
         var comboPrefix = baseInfo.comboPrefix || defaultComboPrefix;
         var comboSep = baseInfo.comboSep || defaultComboSep;
 
-        var parts ,
+        var parts,
             base,
             index = src.indexOf(comboPrefix);
 
@@ -5702,9 +5674,7 @@ KISSY.add('i18n', {
             };
 
             addEventListener(doc, DOM_READY_EVENT, domReady);
-        }
-        // IE event model is used
-        else {
+        } else {
             var stateChange = function () {
                 if (doc.readyState === COMPLETE) {
                     removeEventListener(doc, READY_STATE_CHANGE_EVENT, stateChange);
@@ -5798,14 +5768,14 @@ KISSY.add('i18n', {
 })(KISSY);
 
 /*jshint indent:false*/
-(function(config,Features,UA){
+(function (config, Features, UA) {
 config({
     'anim/transition?': {
         alias: KISSY.Features.getVendorCssPropPrefix('transition') !== false ? 'anim/transition' : ''
     }
 });/*Generated By KISSY Module Compiler*/
 config({
-'anim': {requires: ['anim/base','anim/timer','anim/transition?']}
+anim: {requires: ['anim/base','anim/timer','anim/transition?']}
 });
 /*Generated By KISSY Module Compiler*/
 config({
@@ -5821,23 +5791,23 @@ config({
 });
 /*Generated By KISSY Module Compiler*/
 config({
-'attribute': {requires: ['event/custom']}
+attribute: {requires: ['event/custom']}
 });
 /*Generated By KISSY Module Compiler*/
 config({
-'base': {requires: ['attribute']}
+base: {requires: ['attribute']}
 });
 /*Generated By KISSY Module Compiler*/
 config({
-'button': {requires: ['node','component/control']}
+button: {requires: ['node','component/control']}
 });
 /*Generated By KISSY Module Compiler*/
 config({
-'color': {requires: ['attribute']}
+color: {requires: ['attribute']}
 });
 /*Generated By KISSY Module Compiler*/
 config({
-'combobox': {requires: ['node','component/control','menu','attribute','io']}
+combobox: {requires: ['node','component/control','menu','attribute','io']}
 });
 /*Generated By KISSY Module Compiler*/
 config({
@@ -5885,7 +5855,7 @@ config({
 });
 /*Generated By KISSY Module Compiler*/
 config({
-'dd': {requires: ['node','base']}
+dd: {requires: ['node','base']}
 });
 /*Generated By KISSY Module Compiler*/
 config({
@@ -5901,14 +5871,14 @@ config({
 });
 config({
     'dom/basic': {
-        'alias': [
+        alias: [
             'dom/base',
             UA.ieMode < 9 ? 'dom/ie' : '',
             Features.isClassListSupported() ? '' : 'dom/class-list'
         ]
     },
-    'dom': {
-        'alias': [
+    dom: {
+        alias: [
             'dom/basic',
             !Features.isQuerySelectorSupported() ? 'dom/selector' : ''
         ]
@@ -5927,11 +5897,11 @@ config({
 });
 /*Generated By KISSY Module Compiler*/
 config({
-'editor': {requires: ['node','html-parser','component/control']}
+editor: {requires: ['node','html-parser','component/control']}
 });
 /*Generated By KISSY Module Compiler*/
 config({
-'event': {requires: ['event/dom','event/custom']}
+event: {requires: ['event/dom','event/custom']}
 });
 /*Generated By KISSY Module Compiler*/
 config({
@@ -5939,7 +5909,7 @@ config({
 });
 config({
     'event/dom': {
-        'alias': [
+        alias: [
             'event/dom/base',
             Features.isTouchGestureSupported() ?
                 'event/dom/touch' : '',
@@ -5982,35 +5952,31 @@ config({
 });
 /*Generated By KISSY Module Compiler*/
 config({
-'io': {requires: ['dom','event/custom','promise','event/dom']}
+io: {requires: ['dom','event/custom','promise','event/dom']}
 });
 /*Generated By KISSY Module Compiler*/
 config({
-'kison': {requires: ['base']}
+menu: {requires: ['node','component/container','component/extension/delegate-children','component/control','component/extension/content-render','component/extension/content-xtpl','component/extension/align','component/extension/shim']}
 });
 /*Generated By KISSY Module Compiler*/
 config({
-'menu': {requires: ['node','component/container','component/extension/delegate-children','component/control','component/extension/content-render','component/extension/content-xtpl','component/extension/align','component/extension/shim']}
+menubutton: {requires: ['node','button','component/extension/content-xtpl','component/extension/content-render','menu']}
 });
 /*Generated By KISSY Module Compiler*/
 config({
-'menubutton': {requires: ['node','button','component/extension/content-xtpl','component/extension/content-render','menu']}
+mvc: {requires: ['io','json','attribute','node']}
 });
 /*Generated By KISSY Module Compiler*/
 config({
-'mvc': {requires: ['io','json','attribute','node']}
+node: {requires: ['dom','event/dom','anim']}
 });
 /*Generated By KISSY Module Compiler*/
 config({
-'node': {requires: ['dom','event/dom','anim']}
+overlay: {requires: ['component/container','component/extension/shim','component/extension/align','node','component/extension/content-xtpl','component/extension/content-render']}
 });
 /*Generated By KISSY Module Compiler*/
 config({
-'overlay': {requires: ['component/container','component/extension/shim','component/extension/align','node','component/extension/content-xtpl','component/extension/content-render']}
-});
-/*Generated By KISSY Module Compiler*/
-config({
-'resizable': {requires: ['node','base','dd']}
+resizable: {requires: ['node','base','dd']}
 });
 /*Generated By KISSY Module Compiler*/
 config({
@@ -6018,7 +5984,7 @@ config({
 });
 /*Generated By KISSY Module Compiler*/
 config({
-'router': {requires: ['uri','event/dom']}
+router: {requires: ['uri','event/dom']}
 });
 config({
     'scroll-view': {
@@ -6042,7 +6008,7 @@ config({
 });
 /*Generated By KISSY Module Compiler*/
 config({
-'separator': {requires: ['component/control']}
+separator: {requires: ['component/control']}
 });
 /*Generated By KISSY Module Compiler*/
 config({
@@ -6050,27 +6016,27 @@ config({
 });
 /*Generated By KISSY Module Compiler*/
 config({
-'stylesheet': {requires: ['dom']}
+stylesheet: {requires: ['dom']}
 });
 /*Generated By KISSY Module Compiler*/
 config({
-'swf': {requires: ['dom','json','attribute']}
+swf: {requires: ['dom','json','attribute']}
 });
 /*Generated By KISSY Module Compiler*/
 config({
-'tabs': {requires: ['component/container','toolbar','button']}
+tabs: {requires: ['component/container','toolbar','button']}
 });
 /*Generated By KISSY Module Compiler*/
 config({
-'toolbar': {requires: ['component/container','component/extension/delegate-children','node']}
+toolbar: {requires: ['component/container','component/extension/delegate-children','node']}
 });
 /*Generated By KISSY Module Compiler*/
 config({
-'tree': {requires: ['node','component/container','component/extension/content-xtpl','component/extension/content-render','component/extension/delegate-children']}
+tree: {requires: ['node','component/container','component/extension/content-xtpl','component/extension/content-render','component/extension/delegate-children']}
 });
 /*Generated By KISSY Module Compiler*/
 config({
-'xtemplate': {requires: ['xtemplate/runtime','xtemplate/compiler']}
+xtemplate: {requires: ['xtemplate/runtime','xtemplate/compiler']}
 });
 /*Generated By KISSY Module Compiler*/
 config({
@@ -6085,7 +6051,7 @@ config({
 'xtemplate/runtime': {requires: ['path']}
 });
 
-                })(function(c){
+                })(function (c) {
                 KISSY.config('modules', c);
                 },KISSY.Features,KISSY.UA);
             /**
@@ -6145,7 +6111,7 @@ config({
                         .replace(INVALID_TOKENS_REG, ']')
                         .replace(INVALID_BRACES_REG, ''))) {
                         /*jshint evil:true*/
-                        return ( new Function('return ' + data) )();
+                        return (new Function('return ' + data))();
                     }
                 }
             }

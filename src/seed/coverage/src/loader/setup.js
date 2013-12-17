@@ -247,11 +247,11 @@ _$jscoverage['/loader/setup.js'].lineData[6]++;
   var Loader = S.Loader = {};
   _$jscoverage['/loader/setup.js'].lineData[13]++;
   Loader.Status = {
-  'ERROR': -1, 
-  'INIT': 0, 
-  'LOADING': 1, 
-  'LOADED': 2, 
-  'READY_TO_ATTACH': 3, 
-  'ATTACHING': 4, 
-  'ATTACHED': 5};
+  ERROR: -1, 
+  INIT: 0, 
+  LOADING: 1, 
+  LOADED: 2, 
+  READY_TO_ATTACH: 3, 
+  ATTACHING: 4, 
+  ATTACHED: 5};
 })(KISSY);

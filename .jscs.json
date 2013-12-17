@@ -20,5 +20,6 @@
     "requireSpaceAfterBinaryOperators": ["+", "-", "/", "*", "=", "==", "===", "!=", "!=="],
     "disallowMultipleLineBreaks": true,
     "disallowKeywordsOnNewLine": ["else"],
-    "safeContextKeyword": "self"
+    "safeContextKeyword": "self",
+    "excludeFiles": ["**/*-tpl.js","**/*-xtpl.js"]
 }

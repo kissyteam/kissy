@@ -186,9 +186,7 @@
             };
 
             addEventListener(doc, DOM_READY_EVENT, domReady);
-        }
-        // IE event model is used
-        else {
+        } else {
             var stateChange = function () {
                 if (doc.readyState === COMPLETE) {
                     removeEventListener(doc, READY_STATE_CHANGE_EVENT, stateChange);

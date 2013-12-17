@@ -55,7 +55,7 @@
                         .replace(INVALID_TOKENS_REG, ']')
                         .replace(INVALID_BRACES_REG, ''))) {
                         /*jshint evil:true*/
-                        return ( new Function('return ' + data) )();
+                        return (new Function('return ' + data))();
                     }
                 }
             }

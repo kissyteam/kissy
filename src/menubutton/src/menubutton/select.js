@@ -53,7 +53,6 @@ KISSY.add(function (S, require) {
         });
     }
 
-
     // different from menubutton by highlighting the currently selected option on open menu.
     function _handleMenuShow(e) {
         var self = this,
@@ -73,12 +72,11 @@ KISSY.add(function (S, require) {
 
     function _updateCaption(self) {
         var item = getSelectedItem(self),
-            textContent = item && ( item.textContent || item.get && item.get('textContent')),
+            textContent = item && (item.textContent || item.get && item.get('textContent')),
             content = item && (item.content || item.get && item.get('content'));
         // 可能设置到 select content 的内容并不和 menuitem 的内容完全一致
         self.set('content', textContent || content || self.get('defaultCaption'));
     }
-
 
     /*
      Handle click on drop down menu.
@@ -100,7 +98,6 @@ KISSY.add(function (S, require) {
             }
         }
     }
-
 
     /**
      * Select component which supports single selection from a drop down menu
@@ -145,7 +142,7 @@ KISSY.add(function (S, require) {
                 _updateCaption(self);
             },
 
-            '_onSetDefaultCaption': function () {
+            _onSetDefaultCaption: function () {
                 _updateCaption(this);
             }
         },

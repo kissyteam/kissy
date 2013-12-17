@@ -41,8 +41,8 @@ KISSY.add(function (S, require) {
                         menu.render();
                         var menuEl = menu.get('el');
                         var borderWidth =
-                            (parseInt(menuEl.css('borderLeftWidth')) || 0) +
-                                (parseInt(menuEl.css('borderRightWidth')) || 0);
+                            (parseInt(menuEl.css('borderLeftWidth'), 10) || 0) +
+                                (parseInt(menuEl.css('borderRightWidth'), 10) || 0);
                         menu.set('width', menu.get('align').node[0].offsetWidth - borderWidth);
                     }
                     menu.show();
@@ -133,7 +133,6 @@ KISSY.add(function (S, require) {
             self.set('collapsed', true);
         },
 
-
         /**
          * Adds a new menu item at the end of the menu.
          * @param {KISSY.Menu.Item} item Menu item to add to the menu.
@@ -180,7 +179,7 @@ KISSY.add(function (S, require) {
 
         // 禁用时关闭已显示菜单
         _onSetDisabled: function (v) {
-            if(!v){
+            if (!v) {
                 this.set('collapsed', true);
             }
         },
@@ -225,7 +224,6 @@ KISSY.add(function (S, require) {
              * Drop down menu associated with this menubutton.
              * @property {KISSY.Menu} menu
              */
-
 
             /**
              * @ignore

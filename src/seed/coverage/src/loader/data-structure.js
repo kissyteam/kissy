@@ -584,7 +584,7 @@ function visit389_63_1(result) {
   _$jscoverage['/loader/data-structure.js'].lineData[48]++;
   return this.name;
 }, 
-  'getBase': function() {
+  getBase: function() {
   _$jscoverage['/loader/data-structure.js'].functionData[6]++;
   _$jscoverage['/loader/data-structure.js'].lineData[56]++;
   return forwardSystemPackage(this, 'base');
@@ -644,39 +644,39 @@ function visit389_63_1(result) {
   function Module(cfg) {
     _$jscoverage['/loader/data-structure.js'].functionData[15]++;
     _$jscoverage['/loader/data-structure.js'].lineData[137]++;
-    var module = this;
+    var self = this;
     _$jscoverage['/loader/data-structure.js'].lineData[141]++;
-    module.exports = {};
+    self.exports = {};
     _$jscoverage['/loader/data-structure.js'].lineData[146]++;
-    module.status = Loader.Status.INIT;
+    self.status = Loader.Status.INIT;
     _$jscoverage['/loader/data-structure.js'].lineData[151]++;
-    module.name = undefined;
+    self.name = undefined;
     _$jscoverage['/loader/data-structure.js'].lineData[155]++;
-    module.factory = undefined;
+    self.factory = undefined;
     _$jscoverage['/loader/data-structure.js'].lineData[157]++;
-    module.cjs = 1;
+    self.cjs = 1;
     _$jscoverage['/loader/data-structure.js'].lineData[158]++;
-    S.mix(module, cfg);
+    S.mix(self, cfg);
     _$jscoverage['/loader/data-structure.js'].lineData[159]++;
-    module.waitedCallbacks = [];
+    self.waitedCallbacks = [];
   }
   _$jscoverage['/loader/data-structure.js'].lineData[162]++;
   Module.prototype = {
   kissy: 1, 
   constructor: Module, 
-  'use': function(relativeName, fn) {
+  use: function(relativeName, fn) {
   _$jscoverage['/loader/data-structure.js'].functionData[16]++;
   _$jscoverage['/loader/data-structure.js'].lineData[174]++;
   relativeName = Utils.getModNamesAsArray(relativeName);
   _$jscoverage['/loader/data-structure.js'].lineData[175]++;
   return KISSY.use(Utils.normalDepModuleName(this.name, relativeName), fn);
 }, 
-  'resolve': function(relativePath) {
+  resolve: function(relativePath) {
   _$jscoverage['/loader/data-structure.js'].functionData[17]++;
   _$jscoverage['/loader/data-structure.js'].lineData[184]++;
   return this.getFullPathUri().resolve(relativePath);
 }, 
-  'resolveByName': function(relativeName) {
+  resolveByName: function(relativeName) {
   _$jscoverage['/loader/data-structure.js'].functionData[18]++;
   _$jscoverage['/loader/data-structure.js'].lineData[189]++;
   return Utils.normalDepModuleName(this.name, relativeName);

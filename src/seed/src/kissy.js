@@ -24,7 +24,7 @@
 /* exported KISSY */
 /*jshint -W079 */
 var KISSY = (function (undefined) {
-    var host = this,
+    var self = this,
         S,
         guid = 0,
         EMPTY = '';
@@ -73,10 +73,10 @@ var KISSY = (function (undefined) {
     }
 
     var loggerLevel = {
-        'debug': 10,
-        'info': 20,
-        'warn': 30,
-        'error': 40
+        debug: 10,
+        info: 20,
+        warn: 30,
+        error: 40
     };
 
     S = {
@@ -94,7 +94,7 @@ var KISSY = (function (undefined) {
          * @type {Object}
          */
         Env: {
-            host: host
+            host: self
         },
 
         /**
@@ -241,7 +241,7 @@ var KISSY = (function (undefined) {
                         msg = logger + ': ' + msg;
                     }
                 }
-               /*global console*/
+                /*global console*/
                 if (typeof console !== 'undefined' && console.log && matched) {
                     console[cat && console[cat] ? cat : 'log'](msg);
                     return msg;
@@ -255,7 +255,7 @@ var KISSY = (function (undefined) {
          * @param {String} logger logger name
          * @returns {KISSY.Logger} log instance
          */
-        'getLogger': function (logger) {
+        getLogger: function (logger) {
             return getLogger(logger);
         },
 
@@ -301,7 +301,7 @@ var KISSY = (function (undefined) {
         /**
          * debug level
          */
-        'DEBUG': 'debug',
+        DEBUG: 'debug',
         /**
          * info level
          */

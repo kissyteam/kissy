@@ -4,7 +4,7 @@
  * @author yiminghe@gmail.com
  */
 (function (S, undefined) {
-    var  logger= S.getLogger('s/uri');
+    var logger = S.getLogger('s/uri');
     var reDisallowedInSchemeOrUserInfo = /[#\/\?@]/g,
         reDisallowedInPathName = /[#\?]/g,
 
@@ -100,7 +100,6 @@
         clone: function () {
             return new Query(this.toString());
         },
-
 
         /**
          * reset to a new query string
@@ -371,7 +370,6 @@
             return uri;
         },
 
-
         /**
          * The reference resolution algorithm.rfc 5.2
          * return a resolved uri corresponding to current uri
@@ -482,7 +480,7 @@
          * @param {String} userInfo
          * @chainable
          */
-        'setUserInfo': function (userInfo) {
+        setUserInfo: function (userInfo) {
             this.userInfo = userInfo;
             return this;
         },
@@ -500,7 +498,7 @@
          * @param {String} port
          * @chainable
          */
-        'setPort': function (port) {
+        setPort: function (port) {
             this.port = port;
             return this;
         },
@@ -509,7 +507,7 @@
          * Get port
          * @return {String}
          */
-        'getPort': function () {
+        getPort: function () {
             return this.port;
         },
 
@@ -536,7 +534,7 @@
          * @param {String|KISSY.Uri.Query} query
          * @chainable
          */
-        'setQuery': function (query) {
+        setQuery: function (query) {
             if (typeof query === 'string') {
                 if (S.startsWith(query, '?')) {
                     query = query.slice(1);
@@ -568,7 +566,7 @@
          * @param {String} fragment
          * @chainable
          */
-        'setFragment': function (fragment) {
+        setFragment: function (fragment) {
             var self = this;
             if (S.startsWith(fragment, '#')) {
                 fragment = fragment.slice(1);
@@ -638,7 +636,7 @@
                 out.push(encodeSpecialChars(path, reDisallowedInPathName));
             }
 
-            if ((query = ( self.query.toString.call(self.query, serializeArray)))) {
+            if ((query = (self.query.toString.call(self.query, serializeArray)))) {
                 out.push('?');
                 out.push(query);
             }

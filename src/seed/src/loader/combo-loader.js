@@ -42,8 +42,7 @@
                 mod = rs.mods[0];
                 if (mod.getType() === 'css') {
                     mod = undefined;
-                }
-                else if (oldIE) {
+                } else if (oldIE) {
                     startLoadModName = mod.name;
                     startLoadModTime = S.now();
                     config.attrs = {
@@ -57,7 +56,6 @@
 
     var logger = S.getLogger('s/loader');
     var Loader = S.Loader,
-
         Status = Loader.Status,
         Utils = Loader.Utils,
         getHash = Utils.getHash,

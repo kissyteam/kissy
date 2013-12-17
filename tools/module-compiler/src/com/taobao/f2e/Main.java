@@ -123,7 +123,10 @@ public class Main {
             for (String r : dependencies) {
                 allRs += ",'" + r + "'";
             }
-            re = (compact ? COMPACT_DEP_PREFIX : DEP_PREFIX) + "'" + require + "': {requires: [" +
+            if (require.contains("-") || require.contains("/")) {
+                require = "'" + require + "'";
+            }
+            re = (compact ? COMPACT_DEP_PREFIX : DEP_PREFIX) + require + ": {requires: [" +
                     allRs.substring(1) + "]}" + DEP_SUFFIX;
             FileUtils.outputContent(re, outputDependency, outputEncoding);
             System.out.println("success generated: " + outputDependency);

@@ -230,13 +230,9 @@
 
                 if ((m = ua.match(/OPR\/(\d+\.\d+)/)) && m[1]) {
                     UA[shell = 'opera'] = numberify(m[1]);
-                }
-                // Chrome
-                else if ((m = ua.match(/Chrome\/([\d.]*)/)) && m[1]) {
+                } else if ((m = ua.match(/Chrome\/([\d.]*)/)) && m[1]) {
                     UA[shell = 'chrome'] = numberify(m[1]);
-                }
-                // Safari
-                else if ((m = ua.match(/\/([\d.]*) Safari/)) && m[1]) {
+                } else if ((m = ua.match(/\/([\d.]*) Safari/)) && m[1]) {
                     UA[shell = 'safari'] = numberify(m[1]);
                 }
 
@@ -261,18 +257,14 @@
                     if (m && m[1]) {
                         UA.android = numberify(m[1]);
                     }
-                }
-                // Other WebKit Mobile Browsers
-                else if ((m = ua.match(/NokiaN[^\/]*|Android \d\.\d|webOS\/\d\.\d/))) {
+                } else if ((m = ua.match(/NokiaN[^\/]*|Android \d\.\d|webOS\/\d\.\d/))) {
                     UA.mobile = m[0].toLowerCase(); // Nokia N-series, Android, webOS, ex: NokiaN95
                 }
 
                 if ((m = ua.match(/PhantomJS\/([^\s]*)/)) && m[1]) {
                     UA.phantomjs = numberify(m[1]);
                 }
-            }
-            // NOT WebKit
-            else {
+            } else {
                 // Presto
                 // ref: http://www.useragentstring.com/pages/useragentstring.php
                 if ((m = ua.match(/Presto\/([\d.]*)/)) && m[1]) {
@@ -289,15 +281,13 @@
                         // Opera Mini
                         if ((m = ua.match(/Opera Mini[^;]*/)) && m) {
                             UA.mobile = m[0].toLowerCase(); // ex: Opera Mini/2.0.4509/1316
-                        }
-                        // Opera Mobile
-                        // ex: Opera/9.80 (Windows NT 6.1; Opera Mobi/49; U; en) Presto/2.4.18 Version/10.00
-                        // issue: 由于 Opera Mobile 有 Version/ 字段，可能会与 Opera 混淆，同时对于 Opera Mobile 的版本号也比较混乱
-                        else if ((m = ua.match(/Opera Mobi[^;]*/)) && m) {
+                        } else if ((m = ua.match(/Opera Mobi[^;]*/)) && m) {
+                            // Opera Mobile
+                            // ex: Opera/9.80 (Windows NT 6.1; Opera Mobi/49; U; en) Presto/2.4.18 Version/10.00
+                            // issue: 由于 Opera Mobile 有 Version/ 字段，可能会与 Opera 混淆，同时对于 Opera Mobile 的版本号也比较混乱
                             UA.mobile = m[0];
                         }
                     }
-
                     // NOT WebKit or Presto
                 } else {
                     // MSIE

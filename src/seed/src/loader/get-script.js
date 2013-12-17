@@ -140,9 +140,8 @@
                 node.onerror = null;
                 end(1);
             };
-        }
-        // old chrome/firefox for css
-        else if (css) {
+        } else if (css) {
+            // old chrome/firefox for css
             Utils.pollCss(node, function () {
                 end(0);
             });

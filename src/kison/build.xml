@@ -1,4 +1,4 @@
-<project name="kison.build" default="build" basedir=".">
+<project name="kison.build" default="kison-build" basedir=".">
     <property name="component.name" value="kison"/>
 
     <!-- kison can not rename variables -->
@@ -22,4 +22,8 @@
     </target>
 
     <import file="../common.xml"/>
+
+    <target name="kison-build" depends="build">
+        <delete dir="${component.meta.dir}"/>
+    </target>
 </project>

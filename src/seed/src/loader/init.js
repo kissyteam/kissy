@@ -37,7 +37,7 @@
         var comboPrefix = baseInfo.comboPrefix || defaultComboPrefix;
         var comboSep = baseInfo.comboSep || defaultComboSep;
 
-        var parts ,
+        var parts,
             base,
             index = src.indexOf(comboPrefix);
 

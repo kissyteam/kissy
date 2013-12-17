@@ -52,7 +52,7 @@
          * Get package base.
          * @return {String}
          */
-        'getBase': function () {
+        getBase: function () {
             return forwardSystemPackage(this, 'base');
         },
 
@@ -134,29 +134,29 @@
      * This class should not be instantiated manually.
      */
     function Module(cfg) {
-        var module = this;
+        var self = this;
         /**
          * exports of this module
          */
-        module.exports = {};
+        self.exports = {};
 
         /**
          * status of current modules
          */
-        module.status = Loader.Status.INIT;
+        self.status = Loader.Status.INIT;
 
         /**
          * name of this module
          */
-        module.name = undefined;
+        self.name = undefined;
         /**
          * factory of this module
          */
-        module.factory = undefined;
+        self.factory = undefined;
         // lazy initialize and commonjs module format
-        module.cjs = 1;
-        S.mix(module, cfg);
-        module.waitedCallbacks = [];
+        self.cjs = 1;
+        S.mix(self, cfg);
+        self.waitedCallbacks = [];
     }
 
     Module.prototype = {
@@ -170,7 +170,7 @@
          * @param {Function|Object} fn KISSY.use callback
          * @returns {String} resolved module name
          */
-        'use': function (relativeName, fn) {
+        use: function (relativeName, fn) {
             relativeName = Utils.getModNamesAsArray(relativeName);
             return KISSY.use(Utils.normalDepModuleName(this.name, relativeName), fn);
         },
@@ -180,12 +180,12 @@
          * @param {String} relativePath relative path
          * @returns {KISSY.Uri} resolve uri
          */
-        'resolve': function (relativePath) {
+        resolve: function (relativePath) {
             return this.getFullPathUri().resolve(relativePath);
         },
 
         // use by xtemplate include
-        'resolveByName': function (relativeName) {
+        resolveByName: function (relativeName) {
             return Utils.normalDepModuleName(this.name, relativeName);
         },
 

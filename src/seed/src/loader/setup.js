@@ -12,18 +12,18 @@
      */
     Loader.Status = {
         /** error */
-        'ERROR': -1,
+        ERROR: -1,
         /** init */
-        'INIT': 0,
+        INIT: 0,
         /** loading */
-        'LOADING': 1,
+        LOADING: 1,
         /** loaded */
-        'LOADED': 2,
+        LOADED: 2,
         /**dependencies are loaded or attached*/
-        'READY_TO_ATTACH': 3,
+        READY_TO_ATTACH: 3,
         /** attaching */
-        'ATTACHING': 4,
+        ATTACHING: 4,
         /** attached */
-        'ATTACHED': 5
+        ATTACHED: 5
     };
 })(KISSY);

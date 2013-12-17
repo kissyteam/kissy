@@ -5,7 +5,6 @@
  *
  */
 (function (S, undefined) {
-
     var TRUE = true,
         AP = Array.prototype,
         indexOf = AP.indexOf,
@@ -170,7 +169,6 @@
                 return ret;
             },
 
-
         /**
          * Executes the supplied function on each item in the array.
          * Returns a new array containing the items that the supplied
@@ -201,7 +199,6 @@
                 return res;
             },
 
-
         /**
          * Executes the supplied function on each item in the array.
          * Returns a value which is accumulation of the value that the supplied
@@ -229,8 +226,7 @@
             var accumulator;
             if (arguments.length >= 3) {
                 accumulator = initialValue;
-            }
-            else {
+            } else {
                 do {
                     if (k in arr) {
                         accumulator = arr[k++];
@@ -325,7 +321,7 @@
                 o.alert ||
                 oType === 'string' ||
                 // https://github.com/ariya/phantomjs/issues/11478
-                (oType === 'function' && !( 'item' in o && lengthType === 'number'))) {
+                (oType === 'function' && !('item' in o && lengthType === 'number'))) {
                 return [o];
             }
             var ret = [];
@@ -335,5 +331,4 @@
             return ret;
         }
     });
-
 })(KISSY);

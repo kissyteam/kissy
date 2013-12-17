@@ -1,6 +1,6 @@
 config({
     'event/dom': {
-        'alias': [
+        alias: [
             'event/dom/base',
             Features.isTouchGestureSupported() ?
                 'event/dom/touch' : '',

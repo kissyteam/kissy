@@ -8,7 +8,7 @@
     var logger = S.getLogger('s/lang');
     var MIX_CIRCULAR_DETECTION = '__MIX_CIRCULAR',
         STAMP_MARKER = '__~ks_stamped',
-        host = this,
+        self = this,
         TRUE = true,
         EMPTY = '',
         Obj = Object,
@@ -51,7 +51,6 @@
             return guid;
         },
 
-
         /**
          * Get all the property names of o as array
          * @param {Object} o
@@ -79,7 +78,6 @@
 
             return result;
         },
-
 
         /**
          * Copies all the properties of s to r.
@@ -243,7 +241,6 @@
             return r;
         },
 
-
         /**
          * Returns the namespace specified and creates it if it doesn't exist. Be careful
          * when naming packages. Reserved words may work in some browsers and not others.
@@ -265,14 +262,13 @@
 
             for (i = 0; i < l; i++) {
                 p = (EMPTY + args[i]).split('.');
-                o = global ? host : this;
-                for (j = (host[p[0]] === o) ? 1 : 0; j < p.length; ++j) {
+                o = global ? self : this;
+                for (j = (self[p[0]] === o) ? 1 : 0; j < p.length; ++j) {
                     o = o[p[j]] = o[p[j]] || {};
                 }
             }
             return o;
         }
-
     });
 
     function Empty() {

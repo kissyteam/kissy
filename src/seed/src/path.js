@@ -8,7 +8,6 @@
     // [root, dir, basename, ext]
     var splitPathRe = /^(\/?)([\s\S]+\/(?!$)|\/)?((?:\.{1,2}$|[\s\S]+?)?(\.[^.\/]*)?)$/;
 
-
     // Remove .. and . in path array
     function normalizeArray(parts, allowAboveRoot) {
         // level above root
@@ -90,7 +89,7 @@
          */
         normalize: function (path) {
             var absolute = path.charAt(0) === '/',
-                trailingSlash = path.slice(-1) === '/';
+                trailingSlash = path.slice(0 - 1) === '/';
 
             path = normalizeArray(S.filter(path.split('/'), function (p) {
                 return !!p;
@@ -103,7 +102,6 @@
             if (path && trailingSlash) {
                 path += '/';
             }
-
 
             return (absolute ? '/' : '') + path;
         },
@@ -174,7 +172,7 @@
             var result = path.match(splitPathRe) || [],
                 basename;
             basename = result[3] || '';
-            if (ext && basename && basename.slice(-1 * ext.length) === ext) {
+            if (ext && basename && basename.slice(ext.length * -1) === ext) {
                 basename = basename.slice(0, -1 * ext.length);
             }
             return basename;

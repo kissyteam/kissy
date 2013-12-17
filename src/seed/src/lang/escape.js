@@ -184,9 +184,8 @@
                         buf.push(eq, encode(val + EMPTY));
                     }
                     buf.push(sep);
-                }
-                // val is not empty array
-                else if (S.isArray(val) && val.length) {
+                } else if (S.isArray(val) && val.length) {
+                    // val is not empty array
                     for (i = 0, len = val.length; i < len; ++i) {
                         v = val[i];
                         if (isValidParamValue(v)) {

@@ -116,7 +116,6 @@
             };
         },
 
-
         /**
          * Throttles a call to a method based on the time between calls.
          * @param {Function} fn The function call to throttle.
