@@ -261,7 +261,10 @@ if (! _$jscoverage['/touch/pinch.js']) {
   _$jscoverage['/touch/pinch.js'].lineData[77] = 0;
   _$jscoverage['/touch/pinch.js'].lineData[78] = 0;
   _$jscoverage['/touch/pinch.js'].lineData[82] = 0;
+  _$jscoverage['/touch/pinch.js'].lineData[85] = 0;
+  _$jscoverage['/touch/pinch.js'].lineData[86] = 0;
   _$jscoverage['/touch/pinch.js'].lineData[87] = 0;
+  _$jscoverage['/touch/pinch.js'].lineData[89] = 0;
   _$jscoverage['/touch/pinch.js'].lineData[90] = 0;
   _$jscoverage['/touch/pinch.js'].lineData[94] = 0;
 }
@@ -293,8 +296,14 @@ if (! _$jscoverage['/touch/pinch.js'].branchData) {
   _$jscoverage['/touch/pinch.js'].branchData['43'][1] = new BranchData();
   _$jscoverage['/touch/pinch.js'].branchData['77'] = [];
   _$jscoverage['/touch/pinch.js'].branchData['77'][1] = new BranchData();
+  _$jscoverage['/touch/pinch.js'].branchData['85'] = [];
+  _$jscoverage['/touch/pinch.js'].branchData['85'][1] = new BranchData();
 }
-_$jscoverage['/touch/pinch.js'].branchData['77'][1].init(13, 22, 'e.touches.length === 2');
+_$jscoverage['/touch/pinch.js'].branchData['85'][1].init(2130, 34, 'S.Features.isTouchEventSupported()');
+function visit78_85_1(result) {
+  _$jscoverage['/touch/pinch.js'].branchData['85'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/touch/pinch.js'].branchData['77'][1].init(13, 28, 'e.targetTouches.length === 2');
 function visit77_77_1(result) {
   _$jscoverage['/touch/pinch.js'].branchData['77'][1].ranCondition(result);
   return result;
@@ -419,24 +428,29 @@ KISSY.add(function(S, require) {
   function prevent(e) {
     _$jscoverage['/touch/pinch.js'].functionData[5]++;
     _$jscoverage['/touch/pinch.js'].lineData[77]++;
-    if (visit77_77_1(e.touches.length === 2)) {
+    if (visit77_77_1(e.targetTouches.length === 2)) {
       _$jscoverage['/touch/pinch.js'].lineData[78]++;
       e.preventDefault();
     }
   }
   _$jscoverage['/touch/pinch.js'].lineData[82]++;
-  eventHandleMap[PINCH] = {
-  handle: p, 
-  setup: function() {
+  var config = eventHandleMap[PINCH] = {
+  handle: p};
+  _$jscoverage['/touch/pinch.js'].lineData[85]++;
+  if (visit78_85_1(S.Features.isTouchEventSupported())) {
+    _$jscoverage['/touch/pinch.js'].lineData[86]++;
+    config.set = function() {
   _$jscoverage['/touch/pinch.js'].functionData[6]++;
   _$jscoverage['/touch/pinch.js'].lineData[87]++;
-  DomEvent.on(this, 'touchmove', prevent);
-}, 
-  tearDown: function() {
+  this.addEventListener('touchmove', prevent, false);
+};
+    _$jscoverage['/touch/pinch.js'].lineData[89]++;
+    config.tearDown = function() {
   _$jscoverage['/touch/pinch.js'].functionData[7]++;
   _$jscoverage['/touch/pinch.js'].lineData[90]++;
-  DomEvent.detach(this, 'touchmove', prevent);
-}};
+  this.removeEventListener('touchmove', prevent, false);
+};
+  }
   _$jscoverage['/touch/pinch.js'].lineData[94]++;
   return Pinch;
 });

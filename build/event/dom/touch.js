@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50
 MIT Licensed
-build time: Dec 13 19:43
+build time: Dec 17 20:28
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -276,15 +276,19 @@ KISSY.add("event/dom/touch/pinch", ["./handle-map", "event/dom/base", "./multi-t
   var p = new Pinch;
   eventHandleMap[PINCH_START] = eventHandleMap[PINCH_END] = {handle:p};
   function prevent(e) {
-    if(e.touches.length === 2) {
+    if(e.targetTouches.length === 2) {
       e.preventDefault()
     }
   }
-  eventHandleMap[PINCH] = {handle:p, setup:function() {
-    DomEvent.on(this, "touchmove", prevent)
-  }, tearDown:function() {
-    DomEvent.detach(this, "touchmove", prevent)
-  }};
+  var config = eventHandleMap[PINCH] = {handle:p};
+  if(S.Features.isTouchEventSupported()) {
+    config.set = function() {
+      this.addEventListener("touchmove", prevent, false)
+    };
+    config.tearDown = function() {
+      this.removeEventListener("touchmove", prevent, false)
+    }
+  }
   return Pinch
 });
 KISSY.add("event/dom/touch/tap-hold", ["./handle-map", "event/dom/base", "./single-touch"], function(S, require) {
@@ -358,17 +362,21 @@ KISSY.add("event/dom/touch/rotate", ["./handle-map", "event/dom/base", "./multi-
     DomEvent.fire(self.target, ROTATE_END, S.mix(e, {touches:self.lastTouches}))
   }});
   function prevent(e) {
-    if(e.touches.length === 2) {
+    if(e.targetTouches.length === 2) {
       e.preventDefault()
     }
   }
   var r = new Rotate;
   eventHandleMap[ROTATE_END] = eventHandleMap[ROTATE_START] = {handle:r};
-  eventHandleMap[ROTATE] = {handle:r, setup:function() {
-    DomEvent.on(this, "touchmove", prevent)
-  }, tearDown:function() {
-    DomEvent.detach(this, "touchmove", prevent)
-  }};
+  var config = eventHandleMap[ROTATE] = {handle:r};
+  if(S.Features.isTouchEventSupported()) {
+    config.set = function() {
+      this.addEventListener("touchmove", prevent, false)
+    };
+    config.tearDown = function() {
+      this.removeEventListener("touchmove", prevent, false)
+    }
+  }
   return Rotate
 });
 KISSY.add("event/dom/touch/handle", ["dom", "./handle-map", "event/dom/base", "./tap", "./swipe", "./double-tap", "./pinch", "./tap-hold", "./rotate"], function(S, require) {

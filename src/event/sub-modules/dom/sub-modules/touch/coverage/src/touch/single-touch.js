@@ -252,7 +252,7 @@ if (! _$jscoverage['/touch/single-touch.js'].branchData) {
   _$jscoverage['/touch/single-touch.js'].branchData['16'][1] = new BranchData();
 }
 _$jscoverage['/touch/single-touch.js'].branchData['16'][1].init(71, 44, 'e.touches.length !== self.requiredTouchCount');
-function visit84_16_1(result) {
+function visit86_16_1(result) {
   _$jscoverage['/touch/single-touch.js'].branchData['16'][1].ranCondition(result);
   return result;
 }_$jscoverage['/touch/single-touch.js'].lineData[6]++;
@@ -271,7 +271,7 @@ KISSY.add(function(S) {
   _$jscoverage['/touch/single-touch.js'].lineData[14]++;
   var self = this, touches;
   _$jscoverage['/touch/single-touch.js'].lineData[16]++;
-  if (visit84_16_1(e.touches.length !== self.requiredTouchCount)) {
+  if (visit86_16_1(e.touches.length !== self.requiredTouchCount)) {
     _$jscoverage['/touch/single-touch.js'].lineData[17]++;
     return false;
   }

@@ -88,7 +88,7 @@ KISSY.add(function (S, require) {
     function prevent(e) {
         // android can not throttle
         // need preventDefault always
-        if (e.touches.length === 2) {
+        if (e.targetTouches.length === 2) {
             e.preventDefault();
         }
     }
@@ -100,15 +100,17 @@ KISSY.add(function (S, require) {
             handle: r
         };
 
-    eventHandleMap[ROTATE] = {
-        handle: r,
-        setup: function () {
-            DomEvent.on(this, 'touchmove', prevent);
-        },
-        tearDown: function () {
-            DomEvent.detach(this, 'touchmove', prevent);
-        }
+    var config = eventHandleMap[ROTATE] = {
+        handle: r
     };
+    if (S.Features.isTouchEventSupported()) {
+        config.set = function () {
+            this.addEventListener('touchmove', prevent, false);
+        };
+        config.tearDown = function () {
+            this.removeEventListener('touchmove', prevent, false);
+        };
+    }
 
     return Rotate;
 });
