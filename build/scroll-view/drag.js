@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50
 MIT Licensed
-build time: Dec 12 22:21
+build time: Dec 19 00:19
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -116,7 +116,7 @@ KISSY.add("scroll-view/drag", ["./base", "node", "anim"], function(S, require) {
       if(inertia) {
         deltaTime = now - anim.startTime;
         var frictionFactor = Math.exp(deltaTime * ALPHA);
-        value = parseInt(startScroll + velocity * (1 - frictionFactor) / -THETA);
+        value = parseInt(startScroll + velocity * (1 - frictionFactor) / -THETA, 10);
         if(value > minScroll && value < maxScroll) {
           if(fx.lastValue === value) {
             fx.pos = 1;
@@ -133,7 +133,7 @@ KISSY.add("scroll-view/drag", ["./base", "node", "anim"], function(S, require) {
       }else {
         deltaTime = now - bounceStartTime;
         var theta = deltaTime / ACCELERATION, powTime = theta * Math.exp(-SPRING_TENSION * theta);
-        value = parseInt(velocity * powTime);
+        value = parseInt(velocity * powTime, 10);
         if(value === 0) {
           fx.pos = 1
         }
@@ -216,19 +216,24 @@ KISSY.add("scroll-view/drag", ["./base", "node", "anim"], function(S, require) {
     if(!startMousePos || !self.isScrolling) {
       return
     }
-    var count = 0;
     var offsetX = startMousePos.pageX - e.pageX;
     var offsetY = startMousePos.pageY - e.pageY;
+    self.fire("dragend", {pageX:e.pageX, deltaX:-offsetX, deltaY:-offsetY, pageY:e.pageY})
+  }
+  function defaultDragEndFn(e) {
+    var self = this;
+    var count = 0;
+    var offsetX = -e.deltaX;
+    var offsetY = -e.deltaY;
     var snapThreshold = self._snapThresholdCfg;
     var allowX = self.allowScroll.left && Math.abs(offsetX) > snapThreshold;
     var allowY = self.allowScroll.top && Math.abs(offsetY) > snapThreshold;
-    self.fire("dragend", {pageX:e.pageX, pageY:e.pageY});
     function endCallback() {
       count++;
       if(count === 2) {
         var scrollEnd = function() {
           self.isScrolling = 0;
-          self.fire("scrollEnd", {pageX:e.pageX, pageY:e.pageY, fromPageIndex:pageIndex, pageIndex:self.get("pageIndex")})
+          self.fire("scrollEnd", {pageX:e.pageX, pageY:e.pageY, deltaX:-offsetX, deltaY:-offsetY, fromPageIndex:pageIndex, pageIndex:self.get("pageIndex")})
         };
         if(!self.pagesOffset) {
           scrollEnd();
@@ -325,7 +330,8 @@ KISSY.add("scroll-view/drag", ["./base", "node", "anim"], function(S, require) {
     var self = this;
     self._snapThresholdCfg = self.get("snapThreshold");
     self._snapDurationCfg = self.get("snapDuration");
-    self._snapEasingCfg = self.get("snapEasing")
+    self._snapEasingCfg = self.get("snapEasing");
+    self.publish("dragend", {defaultFn:defaultDragEndFn})
   }, bindUI:function() {
     var self = this;
     self.$contentEl.on("dragstart", preventDefault).on(Gesture.start, onDragStartHandler, self)
@@ -336,6 +342,6 @@ KISSY.add("scroll-view/drag", ["./base", "node", "anim"], function(S, require) {
   }, stopAnimation:function() {
     this.callSuper();
     this.isScrolling = 0
-  }}, {ATTRS:{lockX:{value:true}, preventDefaultX:{value:true}, lockY:{value:false}, preventDefaultY:{value:false}, snapDuration:{value:0.3}, snapEasing:{value:"easeOut"}, snapThreshold:{value:5}, bounce:{value:true}, bounceDuration:{value:0.4}, bounceEasing:{value:"easeOut"}}, xclass:"scroll-view"})
+  }}, {ATTRS:{lockX:{value:true}, preventDefaultX:{value:true}, lockY:{value:false}, preventDefaultY:{value:false}, snapDuration:{value:0.3}, snapEasing:{value:"easeOut"}, snapThreshold:{value:5}, bounce:{value:true}, bounceDuration:{value:0.4}, bounceEasing:{value:"easeOut"}}})
 });
 

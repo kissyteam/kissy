@@ -52,6 +52,9 @@ KISSY.add(function (S, require) {
 
                     DomEvent.fire(target, DOUBLE_TAP, {
                         touch: touch,
+                        pageX: touch.pageX,
+                        pageY: touch.pageY,
+                        which: 1,
                         duration: duration / 1000
                     });
                     return;

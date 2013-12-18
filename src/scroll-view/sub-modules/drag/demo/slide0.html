@@ -115,10 +115,12 @@
         .ks-image-zoomer {
             left: 0;
             top: 0;
-            position: fixed;
+            /*support android 2.3*/
+            position: absolute;
             width: 100%;
             height: 100%;
             z-index: 10;
+            /*background-color: #ffff00;*/
         }
 
         .ks-image-zoomer-close {
@@ -135,57 +137,20 @@
         .ks-image-zoomer-mask {
             left: 0;
             top: 0;
-            position: fixed;
+            position: absolute;
             width: 100%;
             height: 100%;
             z-index: 9;
             background-color: #333;
             opacity: 0.6;
-            user-select: none;
-        }
-
-        .ks-image-zoomer-wrap {
-            position: absolute;
-            display: -webkit-box;
-            -webkit-box-align: center;
-            -webkit-box-pack: center;
-            -webkit-transform-origin: 0 0;
-            left: 0;
-            top: 0;
+            user-select:none;
         }
 
         .ks-image-zoomer img {
-            user-select: none;
-            max-height: 100%;
-            max-width: 100%;
-        }
-
-        .ks-image-zoomer-nav {
-            margin: 0;
-            padding: 0;
-            position: fixed;
-            bottom: 10px;
+            position: absolute;
+            user-select:none;
             left: 0;
-            right: 0;
-            text-align: center;
-            z-index: 90;
-        }
-
-        .ks-image-zoomer-trigger {
-            padding: 0;
-            height: 6px;
-            width: 6px;
-            -webkit-border-radius: 6px;
-            border-radius: 6px;
-            margin: 0 3px;
-            font-size: 0;
-            overflow: hidden;
-            display: inline-block;
-            background-color: #000000;
-        }
-
-        .ks-image-zoomer-trigger-active {
-            background-color: #b10000;
+            top: 0;
         }
     </style>
 </head>
@@ -269,14 +234,12 @@
         slide: {
             base: './'
         },
-        'image-zoomer': {
+        'image-zoomer0': {
             base: '/kissy/src/scroll-view/sub-modules/plugin/scrollbar/demo/'
         }
     });
-    KISSY.use('node,slide,image-zoomer', function (S, Node, Slide, ImageZoomer) {
+    KISSY.use('node,slide,image-zoomer0', function (S, Node, Slide, imageZoomer) {
         var $ = Node.all;
-
-        var zoomer = new ImageZoomer();
 
         function init(selector) {
             var slide = new Slide({
@@ -284,17 +247,15 @@
                 hasTrigger: true,
                 direction: 'x'
             }).render();
-            slide.triggers.each(function (t, i) {
+            slide0.triggers.each(function (t, i) {
                 t.html(i + 1);
             });
-
-            var urls = S.map($(selector + ' img'), function (img) {
-                return img.src.replace(/_540x540\.jpg/, '');
-            });
-
             $(selector).delegate(Node.Gesture.tap, 'img', function (e) {
-                zoomer.set('images', urls);
-                zoomer.show($(e.currentTarget).parent(1).index());
+                imageZoomer.showImage({
+                    src: e.currentTarget.src,
+                    width: 1200,
+                    height: 1200
+                });
             });
         }
 

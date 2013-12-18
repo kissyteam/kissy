@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50
 MIT Licensed
-build time: Dec 17 20:28
+build time: Dec 19 00:19
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -174,7 +174,7 @@ KISSY.add("event/dom/touch/double-tap", ["./handle-map", "event/dom/base", "./si
       duration = time - lastEndTime;
       if(duration < MAX_DURATION) {
         self.lastEndTime = 0;
-        DomEvent.fire(target, DOUBLE_TAP, {touch:touch, duration:duration / 1E3});
+        DomEvent.fire(target, DOUBLE_TAP, {touch:touch, pageX:touch.pageX, pageY:touch.pageY, which:1, duration:duration / 1E3});
         return
       }
     }
@@ -654,6 +654,7 @@ KISSY.add("event/dom/touch", ["event/dom/base", "./touch/handle-map", "./touch/h
   var moveEvent = Gesture.move = "KSPointerMove";
   var endEvent = Gesture.end = "KSPointerUp";
   Gesture.tap = "tap";
+  Gesture.singleTap = "singleTap";
   Gesture.doubleTap = "doubleTap";
   eventHandleMap[startEvent] = {handle:{isActive:1, onTouchStart:function(e) {
     DomEvent.fire(e.target, startEvent, e)
