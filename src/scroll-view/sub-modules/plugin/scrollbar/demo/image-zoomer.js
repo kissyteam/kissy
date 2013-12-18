@@ -1,3 +1,7 @@
+/**
+ * simple image-zoomer using scroll-view and touch gesture
+ * @author yiminghe@gmail.com
+ */
 KISSY.add(function (S, require) {
     var Base = require('base');
     var ScrollView = require('scroll-view');

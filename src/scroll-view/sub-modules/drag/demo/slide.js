@@ -1,16 +1,22 @@
-KISSY.add(function (S, Node, Base, ScrollView, XTemplate) {
+/**
+ * simple slide using scroll-view
+ * @author yiminghe@gmail.com
+ */
+KISSY.add(function (S, Node, Base, ScrollView) {
     var $ = Node.all;
-    var TRIGGER_TPL = '<div class="ks-scroll-view-slide-nav">' +
-        '{{#each count}}' +
-        '<div class="ks-scroll-view-slide-trigger' +
-        '{{#if xindex===0}}' +
-        ' ks-scroll-view-slide-trigger-active' +
-        '{{/if}}' +
-        '"></div>' +
-        '{{/each}}' +
-        '</div>';
 
     var ACTIVE_CLASS = 'ks-scroll-view-slide-trigger-active';
+
+    function buildTriggerTpl(count) {
+        var tpl = '<div class="ks-scroll-view-slide-nav">';
+        for (var i = 0; i < count; i++) {
+            tpl += '<div class="ks-scroll-view-slide-trigger' +
+                (i === 0 ? ' ks-scroll-view-slide-trigger-active' : '') +
+                '"></div>';
+        }
+        tpl += '</div>';
+        return tpl;
+    }
 
     return Base.extend({
         render: function () {
@@ -20,21 +26,19 @@ KISSY.add(function (S, Node, Base, ScrollView, XTemplate) {
             self.scrollView = new ScrollView({
                 srcNode: srcNode,
                 snap: true,
-                lockX: direction == 'y',
-                lockY: direction == 'x',
+                lockX: direction === 'y',
+                lockY: direction === 'x',
                 bounce: self.get('bounce')
             }).render();
             self.content = self.scrollView.get('contentEl');
             if (self.get('hasTrigger')) {
                 var childrenCount = self.content.children().length;
-                self.nav = $(new XTemplate(TRIGGER_TPL).render({
-                    count: new Array(childrenCount)
-                })).appendTo(srcNode);
+                self.nav = $(buildTriggerTpl(childrenCount)).appendTo(srcNode);
                 self.triggers = self.nav.children();
                 self.nav.delegate(Node.Gesture.tap,
                     '.ks-scroll-view-slide-trigger',
                     self._onTriggerAction, self);
-                if (self.get('triggerType') == 'mouse') {
+                if (self.get('triggerType') === 'mouse') {
                     self.nav.delegate('mouseenter',
                         '.ks-scroll-view-slide-trigger',
                         self._onTriggerAction, self);
@@ -79,5 +83,5 @@ KISSY.add(function (S, Node, Base, ScrollView, XTemplate) {
         }
     });
 }, {
-    requires: ['node', 'base', 'scroll-view', 'xtemplate']
+    requires: ['node', 'base', 'scroll-view']
 });
