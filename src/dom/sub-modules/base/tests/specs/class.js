@@ -91,7 +91,6 @@ KISSY.add(function (S, Dom) {
             expect(Dom.hasClass(a, 'link link3')).toBe(true);
             expect(Dom.hasClass(a, '.link .link3')).toBe(true);
             expect(Dom.hasClass(a, 'link link4')).toBe(false);
-            expect(Dom.hasClass(a, 'link link4')).toBe(false);
             expect(Dom.hasClass(a, '.link .link4')).toBe(false);
             expect(Dom.hasClass(a, 'link9')).toBe(true);
 
