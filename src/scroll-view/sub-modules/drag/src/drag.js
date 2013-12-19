@@ -185,7 +185,7 @@ KISSY.add(function (S, require) {
                 // 1 -> 0
                 var frictionFactor = Math.exp(deltaTime * ALPHA);
                 // 1 - e^-t
-                value = parseInt(startScroll + velocity * (1 - frictionFactor) / (-THETA));
+                value = parseInt(startScroll + velocity * (1 - frictionFactor) / (-THETA), 10);
                 if (value > minScroll && value < maxScroll) {
                     // inertia
                     if (fx.lastValue === value) {
@@ -213,7 +213,7 @@ KISSY.add(function (S, require) {
                 // long tail hump
                 // t * e^-t
                     powTime = theta * Math.exp(-SPRING_TENSION * theta);
-                value = parseInt(velocity * powTime);
+                value = parseInt(velocity * powTime, 10);
                 if (value === 0) {
                     fx.pos = 1;
                 }
@@ -332,16 +332,26 @@ KISSY.add(function (S, require) {
         if (!startMousePos || !self.isScrolling) {
             return;
         }
-        var count = 0;
         var offsetX = startMousePos.pageX - e.pageX;
         var offsetY = startMousePos.pageY - e.pageY;
+        self.fire('dragend', {
+            pageX: e.pageX,
+            deltaX: -offsetX,
+            deltaY: -offsetY,
+            pageY: e.pageY
+        });
+
+    }
+
+    function defaultDragEndFn(e) {
+        var self = this;
+        var count = 0;
+        var offsetX = -e.deltaX;
+        var offsetY = -e.deltaY;
         var snapThreshold = self._snapThresholdCfg;
         var allowX = self.allowScroll.left && Math.abs(offsetX) > snapThreshold;
         var allowY = self.allowScroll.top && Math.abs(offsetY) > snapThreshold;
-        self.fire('dragend', {
-            pageX: e.pageX,
-            pageY: e.pageY
-        });
+
         function endCallback() {
             count++;
             if (count === 2) {
@@ -350,6 +360,8 @@ KISSY.add(function (S, require) {
                     self.fire('scrollEnd', {
                         pageX: e.pageX,
                         pageY: e.pageY,
+                        deltaX: -offsetX,
+                        deltaY: -offsetY,
                         fromPageIndex: pageIndex,
                         pageIndex: self.get('pageIndex')
                     });
@@ -479,6 +491,9 @@ KISSY.add(function (S, require) {
                 self._snapThresholdCfg = self.get('snapThreshold');
                 self._snapDurationCfg = self.get('snapDuration');
                 self._snapEasingCfg = self.get('snapEasing');
+                self.publish('dragend', {
+                    defaultFn: defaultDragEndFn
+                });
             },
 
             bindUI: function () {
@@ -609,8 +624,7 @@ KISSY.add(function (S, require) {
                 bounceEasing: {
                     value: 'easeOut'
                 }
-            },
-            xclass: 'scroll-view'
+            }
         }
     );
 });

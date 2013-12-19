@@ -580,295 +580,295 @@ if (! _$jscoverage['/base/create.js'].branchData) {
   _$jscoverage['/base/create.js'].branchData['493'][1] = new BranchData();
 }
 _$jscoverage['/base/create.js'].branchData['493'][1].init(185, 7, 'i < len');
-function visit183_493_1(result) {
+function visit182_493_1(result) {
   _$jscoverage['/base/create.js'].branchData['493'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/create.js'].branchData['489'][3].init(101, 24, 'nodes.push || nodes.item');
-function visit182_489_3(result) {
+function visit181_489_3(result) {
   _$jscoverage['/base/create.js'].branchData['489'][3].ranCondition(result);
   return result;
 }_$jscoverage['/base/create.js'].branchData['489'][2].init(101, 37, '(nodes.push || nodes.item) && nodes[0]');
-function visit181_489_2(result) {
+function visit180_489_2(result) {
   _$jscoverage['/base/create.js'].branchData['489'][2].ranCondition(result);
   return result;
 }_$jscoverage['/base/create.js'].branchData['489'][1].init(91, 47, 'nodes && (nodes.push || nodes.item) && nodes[0]');
-function visit180_489_1(result) {
+function visit179_489_1(result) {
   _$jscoverage['/base/create.js'].branchData['489'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/create.js'].branchData['476'][1].init(174, 49, 'elem.nodeType === NodeType.DOCUMENT_FRAGMENT_NODE');
-function visit179_476_1(result) {
+function visit178_476_1(result) {
   _$jscoverage['/base/create.js'].branchData['476'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/create.js'].branchData['472'][1].init(17, 39, 'elem.nodeType === NodeType.ELEMENT_NODE');
-function visit178_472_1(result) {
+function visit177_472_1(result) {
   _$jscoverage['/base/create.js'].branchData['472'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/create.js'].branchData['471'][1].init(13, 22, 'S.isPlainObject(props)');
-function visit177_471_1(result) {
+function visit176_471_1(result) {
   _$jscoverage['/base/create.js'].branchData['471'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/create.js'].branchData['463'][1].init(368, 8, 'DOMEvent');
-function visit176_463_1(result) {
+function visit175_463_1(result) {
   _$jscoverage['/base/create.js'].branchData['463'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/create.js'].branchData['451'][2].init(97, 39, 'dest.nodeType === NodeType.ELEMENT_NODE');
-function visit175_451_2(result) {
+function visit174_451_2(result) {
   _$jscoverage['/base/create.js'].branchData['451'][2].ranCondition(result);
   return result;
 }_$jscoverage['/base/create.js'].branchData['451'][1].init(97, 60, 'dest.nodeType === NodeType.ELEMENT_NODE && !Dom.hasData(src)');
-function visit174_451_1(result) {
+function visit173_451_1(result) {
   _$jscoverage['/base/create.js'].branchData['451'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/create.js'].branchData['437'][1].init(21, 21, 'cloneChildren[cIndex]');
-function visit173_437_1(result) {
+function visit172_437_1(result) {
   _$jscoverage['/base/create.js'].branchData['437'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/create.js'].branchData['432'][1].init(435, 38, 'elemNodeType === NodeType.ELEMENT_NODE');
-function visit172_432_1(result) {
+function visit171_432_1(result) {
   _$jscoverage['/base/create.js'].branchData['432'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/create.js'].branchData['427'][1].init(21, 15, 'cloneCs[fIndex]');
-function visit171_427_1(result) {
+function visit170_427_1(result) {
   _$jscoverage['/base/create.js'].branchData['427'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/create.js'].branchData['422'][1].init(55, 48, 'elemNodeType === NodeType.DOCUMENT_FRAGMENT_NODE');
-function visit170_422_1(result) {
+function visit169_422_1(result) {
   _$jscoverage['/base/create.js'].branchData['422'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/create.js'].branchData['408'][1].init(116, 6, 'i >= 0');
-function visit169_408_1(result) {
+function visit168_408_1(result) {
   _$jscoverage['/base/create.js'].branchData['408'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/create.js'].branchData['394'][1].init(81, 28, 'deep && deepWithDataAndEvent');
-function visit168_394_1(result) {
+function visit167_394_1(result) {
   _$jscoverage['/base/create.js'].branchData['394'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/create.js'].branchData['392'][1].init(1730, 16, 'withDataAndEvent');
-function visit167_392_1(result) {
+function visit166_392_1(result) {
   _$jscoverage['/base/create.js'].branchData['392'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/create.js'].branchData['387'][1].init(575, 27, 'deep && _fixCloneAttributes');
-function visit166_387_1(result) {
+function visit165_387_1(result) {
   _$jscoverage['/base/create.js'].branchData['387'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/create.js'].branchData['383'][2].init(428, 38, 'elemNodeType === NodeType.ELEMENT_NODE');
-function visit165_383_2(result) {
+function visit164_383_2(result) {
   _$jscoverage['/base/create.js'].branchData['383'][2].ranCondition(result);
   return result;
 }_$jscoverage['/base/create.js'].branchData['383'][1].init(405, 61, '_fixCloneAttributes && elemNodeType === NodeType.ELEMENT_NODE');
-function visit164_383_1(result) {
+function visit163_383_1(result) {
   _$jscoverage['/base/create.js'].branchData['383'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/create.js'].branchData['377'][1].init(61, 48, 'elemNodeType === NodeType.DOCUMENT_FRAGMENT_NODE');
-function visit163_377_1(result) {
+function visit162_377_1(result) {
   _$jscoverage['/base/create.js'].branchData['377'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/create.js'].branchData['376'][2].init(847, 38, 'elemNodeType === NodeType.ELEMENT_NODE');
-function visit162_376_2(result) {
+function visit161_376_2(result) {
   _$jscoverage['/base/create.js'].branchData['376'][2].ranCondition(result);
   return result;
 }_$jscoverage['/base/create.js'].branchData['376'][1].init(847, 110, 'elemNodeType === NodeType.ELEMENT_NODE || elemNodeType === NodeType.DOCUMENT_FRAGMENT_NODE');
-function visit161_376_1(result) {
+function visit160_376_1(result) {
   _$jscoverage['/base/create.js'].branchData['376'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/create.js'].branchData['362'][1].init(433, 5, '!elem');
-function visit160_362_1(result) {
+function visit159_362_1(result) {
   _$jscoverage['/base/create.js'].branchData['362'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/create.js'].branchData['351'][1].init(21, 24, 'typeof deep === \'object\'');
-function visit159_351_1(result) {
+function visit158_351_1(result) {
   _$jscoverage['/base/create.js'].branchData['351'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/create.js'].branchData['318'][1].init(186, 8, 'DOMEvent');
-function visit158_318_1(result) {
+function visit157_318_1(result) {
   _$jscoverage['/base/create.js'].branchData['318'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/create.js'].branchData['314'][2].init(71, 37, 'el.nodeType === NodeType.ELEMENT_NODE');
-function visit157_314_2(result) {
+function visit156_314_2(result) {
   _$jscoverage['/base/create.js'].branchData['314'][2].ranCondition(result);
   return result;
 }_$jscoverage['/base/create.js'].branchData['314'][1].init(58, 50, '!keepData && el.nodeType === NodeType.ELEMENT_NODE');
-function visit156_314_1(result) {
+function visit155_314_1(result) {
   _$jscoverage['/base/create.js'].branchData['314'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/create.js'].branchData['312'][1].init(216, 6, 'i >= 0');
-function visit155_312_1(result) {
+function visit154_312_1(result) {
   _$jscoverage['/base/create.js'].branchData['312'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/create.js'].branchData['287'][1].init(74, 37, 'el.nodeType === NodeType.ELEMENT_NODE');
-function visit154_287_1(result) {
+function visit153_287_1(result) {
   _$jscoverage['/base/create.js'].branchData['287'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/create.js'].branchData['285'][1].init(46, 6, 'i >= 0');
-function visit153_285_1(result) {
+function visit152_285_1(result) {
   _$jscoverage['/base/create.js'].branchData['285'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/create.js'].branchData['284'][1].init(63, 64, '!htmlString.match(/<(?:script|style|link)/i) && supportOuterHTML');
-function visit152_284_1(result) {
+function visit151_284_1(result) {
   _$jscoverage['/base/create.js'].branchData['284'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/create.js'].branchData['275'][2].init(45, 42, 'el.nodeType !== Dom.DOCUMENT_FRAGMENT_NODE');
-function visit151_275_2(result) {
+function visit150_275_2(result) {
   _$jscoverage['/base/create.js'].branchData['275'][2].ranCondition(result);
   return result;
 }_$jscoverage['/base/create.js'].branchData['275'][1].init(25, 62, 'supportOuterHTML && el.nodeType !== Dom.DOCUMENT_FRAGMENT_NODE');
-function visit150_275_1(result) {
+function visit149_275_1(result) {
   _$jscoverage['/base/create.js'].branchData['275'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/create.js'].branchData['274'][1].init(326, 24, 'htmlString === undefined');
-function visit149_274_1(result) {
+function visit148_274_1(result) {
   _$jscoverage['/base/create.js'].branchData['274'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/create.js'].branchData['270'][1].init(222, 3, '!el');
-function visit148_270_1(result) {
+function visit147_270_1(result) {
   _$jscoverage['/base/create.js'].branchData['270'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/create.js'].branchData['246'][1].init(1090, 8, '!success');
-function visit147_246_1(result) {
+function visit146_246_1(result) {
   _$jscoverage['/base/create.js'].branchData['246'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/create.js'].branchData['233'][1].init(84, 39, 'elem.nodeType === NodeType.ELEMENT_NODE');
-function visit146_233_1(result) {
+function visit145_233_1(result) {
   _$jscoverage['/base/create.js'].branchData['233'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/create.js'].branchData['231'][1].init(54, 6, 'i >= 0');
-function visit145_231_1(result) {
+function visit144_231_1(result) {
   _$jscoverage['/base/create.js'].branchData['231'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/create.js'].branchData['228'][3].init(341, 36, 'htmlString.match(RE_TAG) || [\'\', \'\']');
-function visit144_228_3(result) {
+function visit143_228_3(result) {
   _$jscoverage['/base/create.js'].branchData['228'][3].ranCondition(result);
   return result;
 }_$jscoverage['/base/create.js'].branchData['228'][2].init(252, 69, '!lostLeadingTailWhitespace || !htmlString.match(R_LEADING_WHITESPACE)');
-function visit143_228_2(result) {
+function visit142_228_2(result) {
   _$jscoverage['/base/create.js'].branchData['228'][2].ranCondition(result);
   return result;
 }_$jscoverage['/base/create.js'].branchData['228'][1].init(72, 145, '(!lostLeadingTailWhitespace || !htmlString.match(R_LEADING_WHITESPACE)) && !creatorsMap[(htmlString.match(RE_TAG) || [\'\', \'\'])[1].toLowerCase()]');
-function visit142_228_1(result) {
+function visit141_228_1(result) {
   _$jscoverage['/base/create.js'].branchData['228'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/create.js'].branchData['227'][1].init(177, 218, '!htmlString.match(/<(?:script|style|link)/i) && (!lostLeadingTailWhitespace || !htmlString.match(R_LEADING_WHITESPACE)) && !creatorsMap[(htmlString.match(RE_TAG) || [\'\', \'\'])[1].toLowerCase()]');
-function visit141_227_1(result) {
+function visit140_227_1(result) {
   _$jscoverage['/base/create.js'].branchData['227'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/create.js'].branchData['213'][1].init(212, 47, 'el.nodeType === NodeType.DOCUMENT_FRAGMENT_NODE');
-function visit140_213_1(result) {
+function visit139_213_1(result) {
   _$jscoverage['/base/create.js'].branchData['213'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/create.js'].branchData['211'][1].init(94, 37, 'el.nodeType === NodeType.ELEMENT_NODE');
-function visit139_211_1(result) {
+function visit138_211_1(result) {
   _$jscoverage['/base/create.js'].branchData['211'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/create.js'].branchData['209'][1].init(355, 24, 'htmlString === undefined');
-function visit138_209_1(result) {
+function visit137_209_1(result) {
   _$jscoverage['/base/create.js'].branchData['209'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/create.js'].branchData['205'][1].init(251, 3, '!el');
-function visit137_205_1(result) {
+function visit136_205_1(result) {
   _$jscoverage['/base/create.js'].branchData['205'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/create.js'].branchData['178'][1].init(95, 32, 'Dom.nodeName(src) === \'textarea\'');
-function visit136_178_1(result) {
+function visit135_178_1(result) {
   _$jscoverage['/base/create.js'].branchData['178'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/create.js'].branchData['165'][1].init(1224, 12, 'nodes.length');
-function visit135_165_1(result) {
+function visit134_165_1(result) {
   _$jscoverage['/base/create.js'].branchData['165'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/create.js'].branchData['162'][1].init(1008, 18, 'nodes.length === 1');
-function visit134_162_1(result) {
+function visit133_162_1(result) {
   _$jscoverage['/base/create.js'].branchData['162'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/create.js'].branchData['155'][2].init(729, 92, '/\\S/.test(html) && (whitespaceMatch = html.match(R_TAIL_WHITESPACE))');
-function visit133_155_2(result) {
+function visit132_155_2(result) {
   _$jscoverage['/base/create.js'].branchData['155'][2].ranCondition(result);
   return result;
 }_$jscoverage['/base/create.js'].branchData['155'][1].init(700, 121, 'lostLeadingTailWhitespace && /\\S/.test(html) && (whitespaceMatch = html.match(R_TAIL_WHITESPACE))');
-function visit132_155_1(result) {
+function visit131_155_1(result) {
   _$jscoverage['/base/create.js'].branchData['155'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/create.js'].branchData['150'][1].init(409, 105, 'lostLeadingTailWhitespace && (whitespaceMatch = html.match(R_LEADING_WHITESPACE))');
-function visit131_150_1(result) {
+function visit130_150_1(result) {
   _$jscoverage['/base/create.js'].branchData['150'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/create.js'].branchData['148'][1].init(301, 31, 'creators[tag] || defaultCreator');
-function visit130_148_1(result) {
+function visit129_148_1(result) {
   _$jscoverage['/base/create.js'].branchData['148'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/create.js'].branchData['144'][1].init(161, 36, '(m = RE_TAG.exec(html)) && (k = m[1])');
-function visit129_144_1(result) {
+function visit128_144_1(result) {
   _$jscoverage['/base/create.js'].branchData['144'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/create.js'].branchData['132'][1].init(782, 18, '!R_HTML.test(html)');
-function visit128_132_1(result) {
+function visit127_132_1(result) {
   _$jscoverage['/base/create.js'].branchData['132'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/create.js'].branchData['126'][1].init(124, 15, 'ownerDoc || doc');
-function visit127_126_1(result) {
+function visit126_126_1(result) {
   _$jscoverage['/base/create.js'].branchData['126'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/create.js'].branchData['119'][1].init(430, 5, '_trim');
-function visit126_119_1(result) {
+function visit125_119_1(result) {
   _$jscoverage['/base/create.js'].branchData['119'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/create.js'].branchData['115'][1].init(334, 19, '_trim === undefined');
-function visit125_115_1(result) {
+function visit124_115_1(result) {
   _$jscoverage['/base/create.js'].branchData['115'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/create.js'].branchData['111'][1].init(235, 24, 'typeof html !== \'string\'');
-function visit124_111_1(result) {
+function visit123_111_1(result) {
   _$jscoverage['/base/create.js'].branchData['111'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/create.js'].branchData['106'][1].init(134, 13, 'html.nodeType');
-function visit123_106_1(result) {
+function visit122_106_1(result) {
   _$jscoverage['/base/create.js'].branchData['106'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/create.js'].branchData['102'][1].init(54, 5, '!html');
-function visit122_102_1(result) {
+function visit121_102_1(result) {
   _$jscoverage['/base/create.js'].branchData['102'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/create.js'].branchData['72'][1].init(135, 15, 'node.firstChild');
-function visit121_72_1(result) {
+function visit120_72_1(result) {
   _$jscoverage['/base/create.js'].branchData['72'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/create.js'].branchData['70'][2].init(516, 46, 'parent.canHaveChildren && \'removeNode\' in node');
-function visit120_70_2(result) {
+function visit119_70_2(result) {
   _$jscoverage['/base/create.js'].branchData['70'][2].ranCondition(result);
   return result;
 }_$jscoverage['/base/create.js'].branchData['70'][1].init(507, 55, 'oldIE && parent.canHaveChildren && \'removeNode\' in node');
-function visit119_70_1(result) {
+function visit118_70_1(result) {
   _$jscoverage['/base/create.js'].branchData['70'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/create.js'].branchData['65'][1].init(13, 6, 'parent');
-function visit118_65_1(result) {
+function visit117_65_1(result) {
   _$jscoverage['/base/create.js'].branchData['65'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/create.js'].branchData['36'][1].init(132, 22, 'holder === DEFAULT_DIV');
-function visit117_36_1(result) {
+function visit116_36_1(result) {
   _$jscoverage['/base/create.js'].branchData['36'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/create.js'].branchData['33'][2].init(34, 16, 'ownerDoc !== doc');
-function visit116_33_2(result) {
+function visit115_33_2(result) {
   _$jscoverage['/base/create.js'].branchData['33'][2].ranCondition(result);
   return result;
 }_$jscoverage['/base/create.js'].branchData['33'][1].init(22, 28, 'ownerDoc && ownerDoc !== doc');
-function visit115_33_1(result) {
+function visit114_33_1(result) {
   _$jscoverage['/base/create.js'].branchData['33'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/create.js'].branchData['24'][1].init(553, 41, 'doc && \'outerHTML\' in doc.documentElement');
-function visit114_24_1(result) {
+function visit113_24_1(result) {
   _$jscoverage['/base/create.js'].branchData['24'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/create.js'].branchData['21'][2].init(444, 6, 'ie < 9');
-function visit113_21_2(result) {
+function visit112_21_2(result) {
   _$jscoverage['/base/create.js'].branchData['21'][2].ranCondition(result);
   return result;
 }_$jscoverage['/base/create.js'].branchData['21'][1].init(438, 12, 'ie && ie < 9');
-function visit112_21_1(result) {
+function visit111_21_1(result) {
   _$jscoverage['/base/create.js'].branchData['21'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/create.js'].branchData['16'][1].init(186, 29, 'doc && doc.createElement(DIV)');
-function visit111_16_1(result) {
+function visit110_16_1(result) {
   _$jscoverage['/base/create.js'].branchData['16'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/create.js'].lineData[6]++;
@@ -879,7 +879,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/base/create.js'].lineData[8]++;
   var logger = S.getLogger('s/dom');
   _$jscoverage['/base/create.js'].lineData[9]++;
-  var doc = S.Env.host.document, NodeType = Dom.NodeType, UA = S.UA, ie = UA.ieMode, DIV = 'div', PARENT_NODE = 'parentNode', DEFAULT_DIV = visit111_16_1(doc && doc.createElement(DIV)), R_XHTML_TAG = /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:]+)[^>]*)\/>/ig, RE_TAG = /<([\w:]+)/, R_LEADING_WHITESPACE = /^\s+/, R_TAIL_WHITESPACE = /\s+$/, oldIE = !!(visit112_21_1(ie && visit113_21_2(ie < 9))), lostLeadingTailWhitespace = oldIE, R_HTML = /<|&#?\w+;/, supportOuterHTML = visit114_24_1(doc && 'outerHTML' in doc.documentElement), RE_SIMPLE_TAG = /^<(\w+)\s*\/?>(?:<\/\1>)?$/;
+  var doc = S.Env.host.document, NodeType = Dom.NodeType, UA = S.UA, ie = UA.ieMode, DIV = 'div', PARENT_NODE = 'parentNode', DEFAULT_DIV = visit110_16_1(doc && doc.createElement(DIV)), R_XHTML_TAG = /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:]+)[^>]*)\/>/ig, RE_TAG = /<([\w:]+)/, R_LEADING_WHITESPACE = /^\s+/, R_TAIL_WHITESPACE = /\s+$/, oldIE = !!(visit111_21_1(ie && visit112_21_2(ie < 9))), lostLeadingTailWhitespace = oldIE, R_HTML = /<|&#?\w+;/, supportOuterHTML = visit113_24_1(doc && 'outerHTML' in doc.documentElement), RE_SIMPLE_TAG = /^<(\w+)\s*\/?>(?:<\/\1>)?$/;
   _$jscoverage['/base/create.js'].lineData[28]++;
   function getElementsByTagName(el, tag) {
     _$jscoverage['/base/create.js'].functionData[1]++;
@@ -890,9 +890,9 @@ KISSY.add(function(S, require) {
   function getHolderDiv(ownerDoc) {
     _$jscoverage['/base/create.js'].functionData[2]++;
     _$jscoverage['/base/create.js'].lineData[33]++;
-    var holder = visit115_33_1(ownerDoc && visit116_33_2(ownerDoc !== doc)) ? ownerDoc.createElement(DIV) : DEFAULT_DIV;
+    var holder = visit114_33_1(ownerDoc && visit115_33_2(ownerDoc !== doc)) ? ownerDoc.createElement(DIV) : DEFAULT_DIV;
     _$jscoverage['/base/create.js'].lineData[36]++;
-    if (visit117_36_1(holder === DEFAULT_DIV)) {
+    if (visit116_36_1(holder === DEFAULT_DIV)) {
       _$jscoverage['/base/create.js'].lineData[37]++;
       holder.innerHTML = '';
     }
@@ -930,11 +930,11 @@ KISSY.add(function(S, require) {
   function _destroy(node, parent) {
     _$jscoverage['/base/create.js'].functionData[5]++;
     _$jscoverage['/base/create.js'].lineData[65]++;
-    if (visit118_65_1(parent)) {
+    if (visit117_65_1(parent)) {
       _$jscoverage['/base/create.js'].lineData[70]++;
-      if (visit119_70_1(oldIE && visit120_70_2(parent.canHaveChildren && 'removeNode' in node))) {
+      if (visit118_70_1(oldIE && visit119_70_2(parent.canHaveChildren && 'removeNode' in node))) {
         _$jscoverage['/base/create.js'].lineData[72]++;
-        if (visit121_72_1(node.firstChild)) {
+        if (visit120_72_1(node.firstChild)) {
           _$jscoverage['/base/create.js'].lineData[73]++;
           _empty(node);
         }
@@ -953,34 +953,34 @@ KISSY.add(function(S, require) {
   _$jscoverage['/base/create.js'].lineData[100]++;
   var ret = null;
   _$jscoverage['/base/create.js'].lineData[102]++;
-  if (visit122_102_1(!html)) {
+  if (visit121_102_1(!html)) {
     _$jscoverage['/base/create.js'].lineData[103]++;
     return ret;
   }
   _$jscoverage['/base/create.js'].lineData[106]++;
-  if (visit123_106_1(html.nodeType)) {
+  if (visit122_106_1(html.nodeType)) {
     _$jscoverage['/base/create.js'].lineData[107]++;
     return Dom.clone(html);
   }
   _$jscoverage['/base/create.js'].lineData[111]++;
-  if (visit124_111_1(typeof html !== 'string')) {
+  if (visit123_111_1(typeof html !== 'string')) {
     _$jscoverage['/base/create.js'].lineData[112]++;
     return ret;
   }
   _$jscoverage['/base/create.js'].lineData[115]++;
-  if (visit125_115_1(_trim === undefined)) {
+  if (visit124_115_1(_trim === undefined)) {
     _$jscoverage['/base/create.js'].lineData[116]++;
     _trim = true;
   }
   _$jscoverage['/base/create.js'].lineData[119]++;
-  if (visit126_119_1(_trim)) {
+  if (visit125_119_1(_trim)) {
     _$jscoverage['/base/create.js'].lineData[120]++;
     html = S.trim(html);
   }
   _$jscoverage['/base/create.js'].lineData[123]++;
-  var creators = Dom._creators, holder, whitespaceMatch, context = visit127_126_1(ownerDoc || doc), m, tag = DIV, k, nodes;
+  var creators = Dom._creators, holder, whitespaceMatch, context = visit126_126_1(ownerDoc || doc), m, tag = DIV, k, nodes;
   _$jscoverage['/base/create.js'].lineData[132]++;
-  if (visit128_132_1(!R_HTML.test(html))) {
+  if (visit127_132_1(!R_HTML.test(html))) {
     _$jscoverage['/base/create.js'].lineData[133]++;
     ret = context.createTextNode(html);
   } else {
@@ -992,31 +992,31 @@ KISSY.add(function(S, require) {
       _$jscoverage['/base/create.js'].lineData[142]++;
       html = html.replace(R_XHTML_TAG, '<$1><' + '/$2>');
       _$jscoverage['/base/create.js'].lineData[144]++;
-      if (visit129_144_1((m = RE_TAG.exec(html)) && (k = m[1]))) {
+      if (visit128_144_1((m = RE_TAG.exec(html)) && (k = m[1]))) {
         _$jscoverage['/base/create.js'].lineData[145]++;
         tag = k.toLowerCase();
       }
       _$jscoverage['/base/create.js'].lineData[148]++;
-      holder = (visit130_148_1(creators[tag] || defaultCreator))(html, context);
+      holder = (visit129_148_1(creators[tag] || defaultCreator))(html, context);
       _$jscoverage['/base/create.js'].lineData[150]++;
-      if (visit131_150_1(lostLeadingTailWhitespace && (whitespaceMatch = html.match(R_LEADING_WHITESPACE)))) {
+      if (visit130_150_1(lostLeadingTailWhitespace && (whitespaceMatch = html.match(R_LEADING_WHITESPACE)))) {
         _$jscoverage['/base/create.js'].lineData[152]++;
         holder.insertBefore(context.createTextNode(whitespaceMatch[0]), holder.firstChild);
       }
       _$jscoverage['/base/create.js'].lineData[155]++;
-      if (visit132_155_1(lostLeadingTailWhitespace && visit133_155_2(/\S/.test(html) && (whitespaceMatch = html.match(R_TAIL_WHITESPACE))))) {
+      if (visit131_155_1(lostLeadingTailWhitespace && visit132_155_2(/\S/.test(html) && (whitespaceMatch = html.match(R_TAIL_WHITESPACE))))) {
         _$jscoverage['/base/create.js'].lineData[157]++;
         holder.appendChild(context.createTextNode(whitespaceMatch[0]));
       }
       _$jscoverage['/base/create.js'].lineData[160]++;
       nodes = holder.childNodes;
       _$jscoverage['/base/create.js'].lineData[162]++;
-      if (visit134_162_1(nodes.length === 1)) {
+      if (visit133_162_1(nodes.length === 1)) {
         _$jscoverage['/base/create.js'].lineData[164]++;
         ret = nodes[0][PARENT_NODE].removeChild(nodes[0]);
       } else {
         _$jscoverage['/base/create.js'].lineData[165]++;
-        if (visit135_165_1(nodes.length)) {
+        if (visit134_165_1(nodes.length)) {
           _$jscoverage['/base/create.js'].lineData[167]++;
           ret = nodeListToFragment(nodes);
         } else {
@@ -1032,7 +1032,7 @@ KISSY.add(function(S, require) {
   _fixCloneAttributes: function(src, dest) {
   _$jscoverage['/base/create.js'].functionData[7]++;
   _$jscoverage['/base/create.js'].lineData[178]++;
-  if (visit136_178_1(Dom.nodeName(src) === 'textarea')) {
+  if (visit135_178_1(Dom.nodeName(src) === 'textarea')) {
     _$jscoverage['/base/create.js'].lineData[179]++;
     dest.defaultValue = src.defaultValue;
     _$jscoverage['/base/create.js'].lineData[180]++;
@@ -1047,19 +1047,19 @@ KISSY.add(function(S, require) {
   _$jscoverage['/base/create.js'].lineData[200]++;
   var els = Dom.query(selector), el = els[0], success = false, valNode, i, elem;
   _$jscoverage['/base/create.js'].lineData[205]++;
-  if (visit137_205_1(!el)) {
+  if (visit136_205_1(!el)) {
     _$jscoverage['/base/create.js'].lineData[206]++;
     return null;
   }
   _$jscoverage['/base/create.js'].lineData[209]++;
-  if (visit138_209_1(htmlString === undefined)) {
+  if (visit137_209_1(htmlString === undefined)) {
     _$jscoverage['/base/create.js'].lineData[211]++;
-    if (visit139_211_1(el.nodeType === NodeType.ELEMENT_NODE)) {
+    if (visit138_211_1(el.nodeType === NodeType.ELEMENT_NODE)) {
       _$jscoverage['/base/create.js'].lineData[212]++;
       return el.innerHTML;
     } else {
       _$jscoverage['/base/create.js'].lineData[213]++;
-      if (visit140_213_1(el.nodeType === NodeType.DOCUMENT_FRAGMENT_NODE)) {
+      if (visit139_213_1(el.nodeType === NodeType.DOCUMENT_FRAGMENT_NODE)) {
         _$jscoverage['/base/create.js'].lineData[214]++;
         var holder = getHolderDiv(el.ownerDocument);
         _$jscoverage['/base/create.js'].lineData[215]++;
@@ -1075,15 +1075,15 @@ KISSY.add(function(S, require) {
     _$jscoverage['/base/create.js'].lineData[223]++;
     htmlString += '';
     _$jscoverage['/base/create.js'].lineData[227]++;
-    if (visit141_227_1(!htmlString.match(/<(?:script|style|link)/i) && visit142_228_1((visit143_228_2(!lostLeadingTailWhitespace || !htmlString.match(R_LEADING_WHITESPACE))) && !creatorsMap[(visit144_228_3(htmlString.match(RE_TAG) || ['', '']))[1].toLowerCase()]))) {
+    if (visit140_227_1(!htmlString.match(/<(?:script|style|link)/i) && visit141_228_1((visit142_228_2(!lostLeadingTailWhitespace || !htmlString.match(R_LEADING_WHITESPACE))) && !creatorsMap[(visit143_228_3(htmlString.match(RE_TAG) || ['', '']))[1].toLowerCase()]))) {
       _$jscoverage['/base/create.js'].lineData[230]++;
       try {
         _$jscoverage['/base/create.js'].lineData[231]++;
-        for (i = els.length - 1; visit145_231_1(i >= 0); i--) {
+        for (i = els.length - 1; visit144_231_1(i >= 0); i--) {
           _$jscoverage['/base/create.js'].lineData[232]++;
           elem = els[i];
           _$jscoverage['/base/create.js'].lineData[233]++;
-          if (visit146_233_1(elem.nodeType === NodeType.ELEMENT_NODE)) {
+          if (visit145_233_1(elem.nodeType === NodeType.ELEMENT_NODE)) {
             _$jscoverage['/base/create.js'].lineData[234]++;
             Dom.cleanData(getElementsByTagName(elem, '*'));
             _$jscoverage['/base/create.js'].lineData[235]++;
@@ -1096,7 +1096,7 @@ KISSY.add(function(S, require) {
 }
     }
     _$jscoverage['/base/create.js'].lineData[246]++;
-    if (visit147_246_1(!success)) {
+    if (visit146_246_1(!success)) {
       _$jscoverage['/base/create.js'].lineData[247]++;
       valNode = Dom.create(htmlString, 0, el.ownerDocument, 0);
       _$jscoverage['/base/create.js'].lineData[248]++;
@@ -1113,14 +1113,14 @@ KISSY.add(function(S, require) {
   _$jscoverage['/base/create.js'].lineData[264]++;
   var els = Dom.query(selector), holder, i, valNode, length = els.length, el = els[0];
   _$jscoverage['/base/create.js'].lineData[270]++;
-  if (visit148_270_1(!el)) {
+  if (visit147_270_1(!el)) {
     _$jscoverage['/base/create.js'].lineData[271]++;
     return null;
   }
   _$jscoverage['/base/create.js'].lineData[274]++;
-  if (visit149_274_1(htmlString === undefined)) {
+  if (visit148_274_1(htmlString === undefined)) {
     _$jscoverage['/base/create.js'].lineData[275]++;
-    if (visit150_275_1(supportOuterHTML && visit151_275_2(el.nodeType !== Dom.DOCUMENT_FRAGMENT_NODE))) {
+    if (visit149_275_1(supportOuterHTML && visit150_275_2(el.nodeType !== Dom.DOCUMENT_FRAGMENT_NODE))) {
       _$jscoverage['/base/create.js'].lineData[276]++;
       return el.outerHTML;
     } else {
@@ -1135,13 +1135,13 @@ KISSY.add(function(S, require) {
     _$jscoverage['/base/create.js'].lineData[283]++;
     htmlString += '';
     _$jscoverage['/base/create.js'].lineData[284]++;
-    if (visit152_284_1(!htmlString.match(/<(?:script|style|link)/i) && supportOuterHTML)) {
+    if (visit151_284_1(!htmlString.match(/<(?:script|style|link)/i) && supportOuterHTML)) {
       _$jscoverage['/base/create.js'].lineData[285]++;
-      for (i = length - 1; visit153_285_1(i >= 0); i--) {
+      for (i = length - 1; visit152_285_1(i >= 0); i--) {
         _$jscoverage['/base/create.js'].lineData[286]++;
         el = els[i];
         _$jscoverage['/base/create.js'].lineData[287]++;
-        if (visit154_287_1(el.nodeType === NodeType.ELEMENT_NODE)) {
+        if (visit153_287_1(el.nodeType === NodeType.ELEMENT_NODE)) {
           _$jscoverage['/base/create.js'].lineData[288]++;
           Dom.cleanData(el, 1);
           _$jscoverage['/base/create.js'].lineData[289]++;
@@ -1165,11 +1165,11 @@ KISSY.add(function(S, require) {
   _$jscoverage['/base/create.js'].lineData[307]++;
   var el, els = Dom.query(selector), all, DOMEvent = S.require('event/dom'), i;
   _$jscoverage['/base/create.js'].lineData[312]++;
-  for (i = els.length - 1; visit155_312_1(i >= 0); i--) {
+  for (i = els.length - 1; visit154_312_1(i >= 0); i--) {
     _$jscoverage['/base/create.js'].lineData[313]++;
     el = els[i];
     _$jscoverage['/base/create.js'].lineData[314]++;
-    if (visit156_314_1(!keepData && visit157_314_2(el.nodeType === NodeType.ELEMENT_NODE))) {
+    if (visit155_314_1(!keepData && visit156_314_2(el.nodeType === NodeType.ELEMENT_NODE))) {
       _$jscoverage['/base/create.js'].lineData[315]++;
       all = S.makeArray(getElementsByTagName(el, '*'));
       _$jscoverage['/base/create.js'].lineData[316]++;
@@ -1177,7 +1177,7 @@ KISSY.add(function(S, require) {
       _$jscoverage['/base/create.js'].lineData[317]++;
       Dom.removeData(all);
       _$jscoverage['/base/create.js'].lineData[318]++;
-      if (visit158_318_1(DOMEvent)) {
+      if (visit157_318_1(DOMEvent)) {
         _$jscoverage['/base/create.js'].lineData[319]++;
         DOMEvent.detach(all);
       }
@@ -1189,7 +1189,7 @@ KISSY.add(function(S, require) {
   clone: function(selector, deep, withDataAndEvent, deepWithDataAndEvent) {
   _$jscoverage['/base/create.js'].functionData[11]++;
   _$jscoverage['/base/create.js'].lineData[351]++;
-  if (visit159_351_1(typeof deep === 'object')) {
+  if (visit158_351_1(typeof deep === 'object')) {
     _$jscoverage['/base/create.js'].lineData[352]++;
     deepWithDataAndEvent = deep.deepWithDataAndEvent;
     _$jscoverage['/base/create.js'].lineData[353]++;
@@ -1200,7 +1200,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/base/create.js'].lineData[357]++;
   var elem = Dom.get(selector), clone, _fixCloneAttributes = Dom._fixCloneAttributes, elemNodeType;
   _$jscoverage['/base/create.js'].lineData[362]++;
-  if (visit160_362_1(!elem)) {
+  if (visit159_362_1(!elem)) {
     _$jscoverage['/base/create.js'].lineData[363]++;
     return null;
   }
@@ -1209,24 +1209,24 @@ KISSY.add(function(S, require) {
   _$jscoverage['/base/create.js'].lineData[372]++;
   clone = elem.cloneNode(deep);
   _$jscoverage['/base/create.js'].lineData[376]++;
-  if (visit161_376_1(visit162_376_2(elemNodeType === NodeType.ELEMENT_NODE) || visit163_377_1(elemNodeType === NodeType.DOCUMENT_FRAGMENT_NODE))) {
+  if (visit160_376_1(visit161_376_2(elemNodeType === NodeType.ELEMENT_NODE) || visit162_377_1(elemNodeType === NodeType.DOCUMENT_FRAGMENT_NODE))) {
     _$jscoverage['/base/create.js'].lineData[383]++;
-    if (visit164_383_1(_fixCloneAttributes && visit165_383_2(elemNodeType === NodeType.ELEMENT_NODE))) {
+    if (visit163_383_1(_fixCloneAttributes && visit164_383_2(elemNodeType === NodeType.ELEMENT_NODE))) {
       _$jscoverage['/base/create.js'].lineData[384]++;
       _fixCloneAttributes(elem, clone);
     }
     _$jscoverage['/base/create.js'].lineData[387]++;
-    if (visit166_387_1(deep && _fixCloneAttributes)) {
+    if (visit165_387_1(deep && _fixCloneAttributes)) {
       _$jscoverage['/base/create.js'].lineData[388]++;
       processAll(_fixCloneAttributes, elem, clone);
     }
   }
   _$jscoverage['/base/create.js'].lineData[392]++;
-  if (visit167_392_1(withDataAndEvent)) {
+  if (visit166_392_1(withDataAndEvent)) {
     _$jscoverage['/base/create.js'].lineData[393]++;
     cloneWithDataAndEvent(elem, clone);
     _$jscoverage['/base/create.js'].lineData[394]++;
-    if (visit168_394_1(deep && deepWithDataAndEvent)) {
+    if (visit167_394_1(deep && deepWithDataAndEvent)) {
       _$jscoverage['/base/create.js'].lineData[395]++;
       processAll(cloneWithDataAndEvent, elem, clone);
     }
@@ -1239,7 +1239,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/base/create.js'].lineData[406]++;
   var els = Dom.query(selector), el, i;
   _$jscoverage['/base/create.js'].lineData[408]++;
-  for (i = els.length - 1; visit169_408_1(i >= 0); i--) {
+  for (i = els.length - 1; visit168_408_1(i >= 0); i--) {
     _$jscoverage['/base/create.js'].lineData[409]++;
     el = els[i];
     _$jscoverage['/base/create.js'].lineData[410]++;
@@ -1255,13 +1255,13 @@ KISSY.add(function(S, require) {
     _$jscoverage['/base/create.js'].lineData[421]++;
     var elemNodeType = elem.nodeType;
     _$jscoverage['/base/create.js'].lineData[422]++;
-    if (visit170_422_1(elemNodeType === NodeType.DOCUMENT_FRAGMENT_NODE)) {
+    if (visit169_422_1(elemNodeType === NodeType.DOCUMENT_FRAGMENT_NODE)) {
       _$jscoverage['/base/create.js'].lineData[423]++;
       var eCs = elem.childNodes, cloneCs = clone.childNodes, fIndex = 0;
       _$jscoverage['/base/create.js'].lineData[426]++;
       while (eCs[fIndex]) {
         _$jscoverage['/base/create.js'].lineData[427]++;
-        if (visit171_427_1(cloneCs[fIndex])) {
+        if (visit170_427_1(cloneCs[fIndex])) {
           _$jscoverage['/base/create.js'].lineData[428]++;
           processAll(fn, eCs[fIndex], cloneCs[fIndex]);
         }
@@ -1270,13 +1270,13 @@ KISSY.add(function(S, require) {
       }
     } else {
       _$jscoverage['/base/create.js'].lineData[432]++;
-      if (visit172_432_1(elemNodeType === NodeType.ELEMENT_NODE)) {
+      if (visit171_432_1(elemNodeType === NodeType.ELEMENT_NODE)) {
         _$jscoverage['/base/create.js'].lineData[433]++;
         var elemChildren = getElementsByTagName(elem, '*'), cloneChildren = getElementsByTagName(clone, '*'), cIndex = 0;
         _$jscoverage['/base/create.js'].lineData[436]++;
         while (elemChildren[cIndex]) {
           _$jscoverage['/base/create.js'].lineData[437]++;
-          if (visit173_437_1(cloneChildren[cIndex])) {
+          if (visit172_437_1(cloneChildren[cIndex])) {
             _$jscoverage['/base/create.js'].lineData[438]++;
             fn(elemChildren[cIndex], cloneChildren[cIndex]);
           }
@@ -1292,7 +1292,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/base/create.js'].lineData[447]++;
     var DOMEvent = S.require('event/dom'), srcData, d;
     _$jscoverage['/base/create.js'].lineData[451]++;
-    if (visit174_451_1(visit175_451_2(dest.nodeType === NodeType.ELEMENT_NODE) && !Dom.hasData(src))) {
+    if (visit173_451_1(visit174_451_2(dest.nodeType === NodeType.ELEMENT_NODE) && !Dom.hasData(src))) {
       _$jscoverage['/base/create.js'].lineData[452]++;
       return;
     }
@@ -1304,7 +1304,7 @@ KISSY.add(function(S, require) {
       Dom.data(dest, d, srcData[d]);
     }
     _$jscoverage['/base/create.js'].lineData[463]++;
-    if (visit176_463_1(DOMEvent)) {
+    if (visit175_463_1(DOMEvent)) {
       _$jscoverage['/base/create.js'].lineData[465]++;
       DOMEvent.clone(src, dest);
     }
@@ -1313,14 +1313,14 @@ KISSY.add(function(S, require) {
   function attachProps(elem, props) {
     _$jscoverage['/base/create.js'].functionData[15]++;
     _$jscoverage['/base/create.js'].lineData[471]++;
-    if (visit177_471_1(S.isPlainObject(props))) {
+    if (visit176_471_1(S.isPlainObject(props))) {
       _$jscoverage['/base/create.js'].lineData[472]++;
-      if (visit178_472_1(elem.nodeType === NodeType.ELEMENT_NODE)) {
+      if (visit177_472_1(elem.nodeType === NodeType.ELEMENT_NODE)) {
         _$jscoverage['/base/create.js'].lineData[473]++;
         Dom.attr(elem, props, true);
       } else {
         _$jscoverage['/base/create.js'].lineData[476]++;
-        if (visit179_476_1(elem.nodeType === NodeType.DOCUMENT_FRAGMENT_NODE)) {
+        if (visit178_476_1(elem.nodeType === NodeType.DOCUMENT_FRAGMENT_NODE)) {
           _$jscoverage['/base/create.js'].lineData[477]++;
           Dom.attr(elem.childNodes, props, true);
         }
@@ -1335,7 +1335,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/base/create.js'].lineData[485]++;
     var ret = null, i, ownerDoc, len;
     _$jscoverage['/base/create.js'].lineData[489]++;
-    if (visit180_489_1(nodes && visit181_489_2((visit182_489_3(nodes.push || nodes.item)) && nodes[0]))) {
+    if (visit179_489_1(nodes && visit180_489_2((visit181_489_3(nodes.push || nodes.item)) && nodes[0]))) {
       _$jscoverage['/base/create.js'].lineData[490]++;
       ownerDoc = nodes[0].ownerDocument;
       _$jscoverage['/base/create.js'].lineData[491]++;
@@ -1343,7 +1343,7 @@ KISSY.add(function(S, require) {
       _$jscoverage['/base/create.js'].lineData[492]++;
       nodes = S.makeArray(nodes);
       _$jscoverage['/base/create.js'].lineData[493]++;
-      for (i = 0 , len = nodes.length; visit183_493_1(i < len); i++) {
+      for (i = 0 , len = nodes.length; visit182_493_1(i < len); i++) {
         _$jscoverage['/base/create.js'].lineData[494]++;
         ret.appendChild(nodes[i]);
       }

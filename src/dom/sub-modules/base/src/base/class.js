@@ -85,8 +85,17 @@ KISSY.add(function (S, require) {
              * @return {Boolean}
              */
             hasClass: function (selector, className) {
-                var elem = Dom.get(selector);
-                return elem && elem.nodeType === NodeType.ELEMENT_NODE && Dom._hasClass(elem, strToArray(className));
+                var ret = false;
+                className = strToArray(className);
+                Dom.query(selector).each(function (elem) {
+                    if (elem.nodeType === NodeType.ELEMENT_NODE &&
+                        Dom._hasClass(elem, className)) {
+                        ret = true;
+                        return false;
+                    }
+                    return undefined;
+                });
+                return ret;
             },
 
             /**

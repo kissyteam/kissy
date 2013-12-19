@@ -107,8 +107,7 @@
         comboPrefix: defaultComboPrefix,
         comboSep: defaultComboSep,
         charset: 'utf-8',
-        lang: 'zh-cn',
-        tag: TIMESTAMP
+        lang: 'zh-cn'
     });
 
     if (S.UA.nodejs) {
