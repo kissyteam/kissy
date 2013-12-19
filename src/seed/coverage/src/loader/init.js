@@ -321,11 +321,11 @@ if (! _$jscoverage['/loader/init.js'].branchData) {
   _$jscoverage['/loader/init.js'].branchData['122'] = [];
   _$jscoverage['/loader/init.js'].branchData['122'][1] = new BranchData();
 }
-_$jscoverage['/loader/init.js'].branchData['122'][1].init(3506, 31, 'doc && doc.getElementsByTagName');
+_$jscoverage['/loader/init.js'].branchData['122'][1].init(3508, 31, 'doc && doc.getElementsByTagName');
 function visit457_122_1(result) {
   _$jscoverage['/loader/init.js'].branchData['122'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/init.js'].branchData['113'][1].init(3219, 11, 'S.UA.nodejs');
+}_$jscoverage['/loader/init.js'].branchData['113'][1].init(3221, 11, 'S.UA.nodejs');
 function visit456_113_1(result) {
   _$jscoverage['/loader/init.js'].branchData['113'][1].ranCondition(result);
   return result;
@@ -333,11 +333,11 @@ function visit456_113_1(result) {
 function visit455_96_1(result) {
   _$jscoverage['/loader/init.js'].branchData['96'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/init.js'].branchData['73'][1].init(1676, 21, 'baseInfo.base || base');
+}_$jscoverage['/loader/init.js'].branchData['73'][1].init(1678, 21, 'baseInfo.base || base');
 function visit454_73_1(result) {
   _$jscoverage['/loader/init.js'].branchData['73'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/init.js'].branchData['66'][1].init(68, 17, 'queryIndex !== -1');
+}_$jscoverage['/loader/init.js'].branchData['66'][1].init(70, 17, 'queryIndex !== -1');
 function visit453_66_1(result) {
   _$jscoverage['/loader/init.js'].branchData['66'][1].ranCondition(result);
   return result;
@@ -459,7 +459,7 @@ function visit443_6_1(result) {
     _$jscoverage['/loader/init.js'].lineData[64]++;
     if (visit452_64_1(!('tag' in baseInfo))) {
       _$jscoverage['/loader/init.js'].lineData[65]++;
-      var queryIndex = src.lastIndexOf('?');
+      var queryIndex = src.lastIndexOf('?t=');
       _$jscoverage['/loader/init.js'].lineData[66]++;
       if (visit453_66_1(queryIndex !== -1)) {
         _$jscoverage['/loader/init.js'].lineData[67]++;

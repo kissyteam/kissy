@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50
 MIT Licensed
-build time: Dec 19 16:42
+build time: Dec 19 18:30
 */
 /**
  * @ignore
@@ -87,11 +87,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20131219164205' will replace with current timestamp when compressing.
+         * NOTICE: '20131219183000' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20131219164205',
+        __BUILD_TIME: '20131219183000',
 
         /**
          * KISSY Environment.
@@ -3134,6 +3134,9 @@ var KISSY = (function (undefined) {
                     UA[shell = 'chrome'] = numberify(m[1]);
                 } else if ((m = ua.match(/\/([\d.]*) Safari/)) && m[1]) {
                     UA[shell = 'safari'] = numberify(m[1]);
+                } else {
+                    // default to mobile safari
+                    UA.safari = UA.webkit;
                 }
 
                 // Apple Mobile
@@ -3271,7 +3274,7 @@ var KISSY = (function (undefined) {
         S.each(browsers, function (key) {
             var v = UA[key];
             if (v) {
-                className += ' ks-' + key + (parseInt(v,10) + '');
+                className += ' ks-' + key + (parseInt(v, 10) + '');
                 className += ' ks-' + key;
             }
         });
@@ -5485,7 +5488,7 @@ var KISSY = (function (undefined) {
     var doc = S.Env.host && S.Env.host.document;
     // var logger = S.getLogger('s/loader');
     var Utils = S.Loader.Utils;
-    var TIMESTAMP = '20131219164205';
+    var TIMESTAMP = '20131219183000';
     var defaultComboPrefix = '??';
     var defaultComboSep = ',';
 
@@ -5541,7 +5544,7 @@ var KISSY = (function (undefined) {
         }
 
         if (!('tag' in baseInfo)) {
-            var queryIndex = src.lastIndexOf('?');
+            var queryIndex = src.lastIndexOf('?t=');
             if (queryIndex !== -1) {
                 var query = src.substring(queryIndex + 1);
                 // kissy 's tag will be determined by build time and user specified tag
