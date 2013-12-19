@@ -262,9 +262,15 @@ if (! _$jscoverage['/base/class.js']) {
   _$jscoverage['/base/class.js'].lineData[70] = 0;
   _$jscoverage['/base/class.js'].lineData[88] = 0;
   _$jscoverage['/base/class.js'].lineData[89] = 0;
-  _$jscoverage['/base/class.js'].lineData[103] = 0;
-  _$jscoverage['/base/class.js'].lineData[104] = 0;
-  _$jscoverage['/base/class.js'].lineData[140] = 0;
+  _$jscoverage['/base/class.js'].lineData[90] = 0;
+  _$jscoverage['/base/class.js'].lineData[91] = 0;
+  _$jscoverage['/base/class.js'].lineData[93] = 0;
+  _$jscoverage['/base/class.js'].lineData[94] = 0;
+  _$jscoverage['/base/class.js'].lineData[96] = 0;
+  _$jscoverage['/base/class.js'].lineData[98] = 0;
+  _$jscoverage['/base/class.js'].lineData[112] = 0;
+  _$jscoverage['/base/class.js'].lineData[113] = 0;
+  _$jscoverage['/base/class.js'].lineData[149] = 0;
 }
 if (! _$jscoverage['/base/class.js'].functionData) {
   _$jscoverage['/base/class.js'].functionData = [];
@@ -278,6 +284,7 @@ if (! _$jscoverage['/base/class.js'].functionData) {
   _$jscoverage['/base/class.js'].functionData[7] = 0;
   _$jscoverage['/base/class.js'].functionData[8] = 0;
   _$jscoverage['/base/class.js'].functionData[9] = 0;
+  _$jscoverage['/base/class.js'].functionData[10] = 0;
 }
 if (! _$jscoverage['/base/class.js'].branchData) {
   _$jscoverage['/base/class.js'].branchData = {};
@@ -295,22 +302,17 @@ if (! _$jscoverage['/base/class.js'].branchData) {
   _$jscoverage['/base/class.js'].branchData['62'][1] = new BranchData();
   _$jscoverage['/base/class.js'].branchData['64'] = [];
   _$jscoverage['/base/class.js'].branchData['64'][1] = new BranchData();
-  _$jscoverage['/base/class.js'].branchData['89'] = [];
-  _$jscoverage['/base/class.js'].branchData['89'][1] = new BranchData();
-  _$jscoverage['/base/class.js'].branchData['89'][2] = new BranchData();
-  _$jscoverage['/base/class.js'].branchData['89'][3] = new BranchData();
+  _$jscoverage['/base/class.js'].branchData['91'] = [];
+  _$jscoverage['/base/class.js'].branchData['91'][1] = new BranchData();
+  _$jscoverage['/base/class.js'].branchData['91'][2] = new BranchData();
 }
-_$jscoverage['/base/class.js'].branchData['89'][3].init(78, 39, 'elem.nodeType === NodeType.ELEMENT_NODE');
-function visit110_89_3(result) {
-  _$jscoverage['/base/class.js'].branchData['89'][3].ranCondition(result);
+_$jscoverage['/base/class.js'].branchData['91'][2].init(25, 39, 'elem.nodeType === NodeType.ELEMENT_NODE');
+function visit109_91_2(result) {
+  _$jscoverage['/base/class.js'].branchData['91'][2].ranCondition(result);
   return result;
-}_$jscoverage['/base/class.js'].branchData['89'][2].init(78, 85, 'elem.nodeType === NodeType.ELEMENT_NODE && Dom._hasClass(elem, strToArray(className))');
-function visit109_89_2(result) {
-  _$jscoverage['/base/class.js'].branchData['89'][2].ranCondition(result);
-  return result;
-}_$jscoverage['/base/class.js'].branchData['89'][1].init(70, 93, 'elem && elem.nodeType === NodeType.ELEMENT_NODE && Dom._hasClass(elem, strToArray(className))');
-function visit108_89_1(result) {
-  _$jscoverage['/base/class.js'].branchData['89'][1].ranCondition(result);
+}_$jscoverage['/base/class.js'].branchData['91'][1].init(25, 97, 'elem.nodeType === NodeType.ELEMENT_NODE && Dom._hasClass(elem, className)');
+function visit108_91_1(result) {
+  _$jscoverage['/base/class.js'].branchData['91'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/class.js'].branchData['64'][1].init(80, 43, 'className && !classList.contains(className)');
 function visit107_64_1(result) {
@@ -432,20 +434,35 @@ KISSY.add(function(S, require) {
   hasClass: function(selector, className) {
   _$jscoverage['/base/class.js'].functionData[8]++;
   _$jscoverage['/base/class.js'].lineData[88]++;
-  var elem = Dom.get(selector);
+  var ret = false;
   _$jscoverage['/base/class.js'].lineData[89]++;
-  return visit108_89_1(elem && visit109_89_2(visit110_89_3(elem.nodeType === NodeType.ELEMENT_NODE) && Dom._hasClass(elem, strToArray(className))));
+  className = strToArray(className);
+  _$jscoverage['/base/class.js'].lineData[90]++;
+  Dom.query(selector).each(function(elem) {
+  _$jscoverage['/base/class.js'].functionData[9]++;
+  _$jscoverage['/base/class.js'].lineData[91]++;
+  if (visit108_91_1(visit109_91_2(elem.nodeType === NodeType.ELEMENT_NODE) && Dom._hasClass(elem, className))) {
+    _$jscoverage['/base/class.js'].lineData[93]++;
+    ret = true;
+    _$jscoverage['/base/class.js'].lineData[94]++;
+    return false;
+  }
+  _$jscoverage['/base/class.js'].lineData[96]++;
+  return undefined;
+});
+  _$jscoverage['/base/class.js'].lineData[98]++;
+  return ret;
 }, 
   replaceClass: function(selector, oldClassName, newClassName) {
-  _$jscoverage['/base/class.js'].functionData[9]++;
-  _$jscoverage['/base/class.js'].lineData[103]++;
+  _$jscoverage['/base/class.js'].functionData[10]++;
+  _$jscoverage['/base/class.js'].lineData[112]++;
   Dom.removeClass(selector, oldClassName);
-  _$jscoverage['/base/class.js'].lineData[104]++;
+  _$jscoverage['/base/class.js'].lineData[113]++;
   Dom.addClass(selector, newClassName);
 }, 
   addClass: batchEls('_addClass'), 
   removeClass: batchEls('_removeClass'), 
   toggleClass: batchEls('_toggleClass')});
-  _$jscoverage['/base/class.js'].lineData[140]++;
+  _$jscoverage['/base/class.js'].lineData[149]++;
   return Dom;
 });

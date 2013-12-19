@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50
 MIT Licensed
-build time: Dec 17 16:14
+build time: Dec 19 17:16
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -391,8 +391,16 @@ KISSY.add("dom/base/class", ["./api"], function(S, require) {
     }
     return false
   }, _addClass:batchClassList("add"), _removeClass:batchClassList("remove"), _toggleClass:batchClassList("toggle"), hasClass:function(selector, className) {
-    var elem = Dom.get(selector);
-    return elem && elem.nodeType === NodeType.ELEMENT_NODE && Dom._hasClass(elem, strToArray(className))
+    var ret = false;
+    className = strToArray(className);
+    Dom.query(selector).each(function(elem) {
+      if(elem.nodeType === NodeType.ELEMENT_NODE && Dom._hasClass(elem, className)) {
+        ret = true;
+        return false
+      }
+      return undefined
+    });
+    return ret
   }, replaceClass:function(selector, oldClassName, newClassName) {
     Dom.removeClass(selector, oldClassName);
     Dom.addClass(selector, newClassName)
@@ -1216,7 +1224,8 @@ KISSY.add("dom/base/style", ["./api"], function(S, require) {
   var Dom = require("./api");
   var logger = S.getLogger("s/dom");
   var globalWindow = S.Env.host, UA = S.UA, BOX_MODELS = ["margin", "border", "padding"], CONTENT_INDEX = -1, PADDING_INDEX = 2, BORDER_INDEX = 1, MARGIN_INDEX = 0, getNodeName = Dom.nodeName, doc = globalWindow.document || {}, RE_MARGIN = /^margin/, WIDTH = "width", HEIGHT = "height", DISPLAY = "display", OLD_DISPLAY = DISPLAY + S.now(), NONE = "none", cssNumber = {fillOpacity:1, fontWeight:1, lineHeight:1, opacity:1, orphans:1, widows:1, zIndex:1, zoom:1}, rmsPrefix = /^-ms-/, EMPTY = "", DEFAULT_UNIT = 
-  "px", NO_PX_REG = /\d(?!px)[a-z%]+$/i, cssHooks = {}, cssProps = {"float":"cssFloat"}, userSelectProperty, defaultDisplay = {}, RE_DASH = /-([a-z])/ig;
+  "px", NO_PX_REG = /\d(?!px)[a-z%]+$/i, cssHooks = {}, cssProps = {}, userSelectProperty, defaultDisplay = {}, RE_DASH = /-([a-z])/ig;
+  cssProps["float"] = "cssFloat";
   function normalizeCssPropName(name) {
     return cssProps[name] || S.Features.getVendorCssPropName(name)
   }
@@ -1601,9 +1610,9 @@ KISSY.add("dom/base/selector", ["./api"], function(S, require) {
   var doc = S.Env.host.document, docElem = doc.documentElement, matches = docElem.matches || docElem.webkitMatchesSelector || docElem.mozMatchesSelector || docElem.oMatchesSelector || docElem.msMatchesSelector, supportGetElementsByClassName = "getElementsByClassName" in doc, isArray = S.isArray, makeArray = S.makeArray, isDomNodeList = Dom.isDomNodeList, SPACE = " ", push = Array.prototype.push, rClassSelector = /^\.([\w-]+)$/, rIdSelector = /^#([\w-]+)$/, rTagSelector = /^([\w-])+$/, rTagIdSelector = 
   /^([\w-]+)#([\w-]+)$/, rSimpleSelector = /^(?:#([\w-]+))?\s*([\w-]+|\*)?\.?([\w-]+)?$/, trim = S.trim;
   function queryEach(f) {
-    var els = this, l = els.length, i;
+    var self = this, l = self.length, i;
     for(i = 0;i < l;i++) {
-      if(f(els[i], i) === false) {
+      if(f(self[i], i) === false) {
         break
       }
     }

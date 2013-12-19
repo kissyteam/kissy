@@ -234,6 +234,9 @@
                     UA[shell = 'chrome'] = numberify(m[1]);
                 } else if ((m = ua.match(/\/([\d.]*) Safari/)) && m[1]) {
                     UA[shell = 'safari'] = numberify(m[1]);
+                } else {
+                    // default to mobile safari
+                    UA.safari = UA.webkit;
                 }
 
                 // Apple Mobile
@@ -371,7 +374,7 @@
         S.each(browsers, function (key) {
             var v = UA[key];
             if (v) {
-                className += ' ks-' + key + (parseInt(v,10) + '');
+                className += ' ks-' + key + (parseInt(v, 10) + '');
                 className += ' ks-' + key;
             }
         });

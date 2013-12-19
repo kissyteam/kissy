@@ -94,6 +94,17 @@ KISSY.add(function (S, Dom) {
             expect(Dom.hasClass(a, 'link link4')).toBe(false);
             expect(Dom.hasClass(a, '.link .link4')).toBe(false);
             expect(Dom.hasClass(a, 'link9')).toBe(true);
+
+            var test = '<div><a></a><a class="a"></a></div>';
+            var n;
+            Dom.append(n = Dom.create(test), document.body);
+            expect(Dom.hasClass(Dom.query('a', n), '.a')).toBeTruthy();
+            Dom.remove(n);
+
+            test = '<div><a></a><a></a></div>';
+            Dom.append(n = Dom.create(test), document.body);
+            expect(Dom.hasClass(Dom.query('a', n), '.a')).toBeFalsy();
+            Dom.remove(n);
         });
 
         it("addClass works", function () {
@@ -136,6 +147,6 @@ KISSY.add(function (S, Dom) {
             // expect(Dom.hasClass(a, 'link2')).toBe(true);
         });
     });
-},{
-    requires:['dom']
+}, {
+    requires: ['dom']
 });
