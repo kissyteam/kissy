@@ -62,7 +62,7 @@
         }
 
         if (!('tag' in baseInfo)) {
-            var queryIndex = src.lastIndexOf('?');
+            var queryIndex = src.lastIndexOf('?t=');
             if (queryIndex !== -1) {
                 var query = src.substring(queryIndex + 1);
                 // kissy 's tag will be determined by build time and user specified tag

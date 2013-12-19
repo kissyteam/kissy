@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.41
 MIT Licensed
-build time: Dec 19 17:25
+build time: Dec 19 18:31
 */
 /**
  * @ignore
@@ -87,11 +87,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20131219172509' will replace with current timestamp when compressing.
+         * NOTICE: '20131219183058' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20131219172509',
+        __BUILD_TIME: '20131219183058',
 
         /**
          * KISSY Environment.
@@ -5414,7 +5414,7 @@ var KISSY = (function (undefined) {
     var doc = S.Env.host && S.Env.host.document;
     // var logger = S.getLogger('s/loader');
     var Utils = S.Loader.Utils;
-    var TIMESTAMP = '20131219172509';
+    var TIMESTAMP = '20131219183058';
     var defaultComboPrefix = '??';
     var defaultComboSep = ',';
 
@@ -5470,7 +5470,7 @@ var KISSY = (function (undefined) {
         }
 
         if (!('tag' in baseInfo)) {
-            var queryIndex = src.lastIndexOf('?');
+            var queryIndex = src.lastIndexOf('?t=');
             if (queryIndex !== -1) {
                 var query = src.substring(queryIndex + 1);
                 // kissy 's tag will be determined by build time and user specified tag
