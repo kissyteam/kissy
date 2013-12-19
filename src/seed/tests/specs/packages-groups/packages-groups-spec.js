@@ -80,11 +80,11 @@ describe("modules and groups", function () {
         var js = c.js[comboName];
         expect(js.length).toBe(1);
         expect(js[0].fullpath.substring(js[0].fullpath.indexOf('??')))
-            .toBe("??pkg-a/a.js,pkg-b/b.js?t=" + S.Config.tag + ".js");
+            .toBe("??pkg-a/a.js,pkg-b/b.js");
         js = c.js['pkg-c'];
         expect(js.length).toBe(1);
         expect(js[0].fullpath.substring(js[0].fullpath.indexOf('??')))
-            .toBe("??c.js?t=" + S.Config.tag + ".js");
+            .toBe("??c.js");
     });
 
     it("combo packages which have no combo prefix", function () {
@@ -117,11 +117,10 @@ describe("modules and groups", function () {
         var js = c.js[comboName];
         expect(js.length).toBe(1);
         expect(js[0].fullpath.substring(js[0].fullpath.indexOf('??')))
-            .toBe("??a.js?t=" + S.Config.tag + ".js");
+            .toBe("??a.js");
         js = c.js['test'];
         expect(js.length).toBe(1);
-        expect(js[0].fullpath).toBe("http://g.tbcdn.cn/test/??x.js?t=" +
-            S.Config.tag + ".js");
+        expect(js[0].fullpath).toBe("http://g.tbcdn.cn/test/??x.js");
     });
 
     it("combo packages with different charset", function () {
@@ -157,12 +156,12 @@ describe("modules and groups", function () {
         var js = c.js[comboName];
         expect(js.length).toBe(1);
         expect(js[0].fullpath.substring(js[0].fullpath.indexOf('??')))
-            .toBe("??a.js?t=" + S.Config.tag + ".js");
+            .toBe("??a.js");
         comboName = 'my_gbk_' + groupTag;
         js = c.js[comboName];
         expect(js.length).toBe(1);
         expect(js[0].fullpath.substring(js[0].fullpath.indexOf('??')))
-            .toBe("??b.js?t=" + S.Config.tag + ".js");
+            .toBe("??b.js");
     });
 
     it('can perform global combo',function(){
@@ -209,8 +208,7 @@ describe("modules and groups", function () {
             .toBe("??src/seed/tests/specs/packages-groups/pkg-a/a.js," +
                 "src/seed/tests/specs/packages-groups/pkg-b/b.js," +
                 "build/dom/base.js," +
-                "src/seed/tests/specs/packages-groups/pkg-c/c.js?t=" +
-                S.Config.tag + ".js");
+                "src/seed/tests/specs/packages-groups/pkg-c/c.js");
 
     });
 });
