@@ -138,7 +138,7 @@ describe("S ComboLoader", function () {
             S.Loader.Utils.createModulesInfo(S, r);
             var c = l.getComboUrls(r);
             expect(c.js[''][0].fullpath).toBe(S.Config.base +
-                "??a.js,b.js,d.js,f.js,g.js,e.js,c.js,h.js,m.js?t=" + S.Config.tag + '.js');
+                "??a.js,b.js,d.js,f.js,g.js,e.js,c.js,h.js,m.js");
 
         });
 
@@ -173,9 +173,9 @@ describe("S ComboLoader", function () {
             var c = l.getComboUrls(r);
             var js = c.js[''];
             expect(js.length).toBe(3);
-            expect(js[0].fullpath).toBe(S.Config.base + "??a.js,b.js?t=" + S.Config.tag + '.js');
-            expect(js[1].fullpath).toBe(S.Config.base + "??d.js,e.js?t=" + S.Config.tag + '.js');
-            expect(js[2].fullpath).toBe(S.Config.base + "??c.js?t=" + S.Config.tag + '.js');
+            expect(js[0].fullpath).toBe(S.Config.base + "??a.js,b.js");
+            expect(js[1].fullpath).toBe(S.Config.base + "??d.js,e.js");
+            expect(js[2].fullpath).toBe(S.Config.base + "??c.js");
 
             S.config('comboMaxFileNum', comboMaxFileNum);
         });
@@ -270,7 +270,7 @@ describe("S ComboLoader", function () {
 
             expect(urls['js']['tests'][0].fullpath)
                 .toBe("http://" + host + "/kissy/src/seed/tests/specs/combo/" +
-                    "tests/??a.js,b.js,c.js?t=" + S.Config.tag + '.js');
+                    "tests/??a.js,b.js,c.js");
 
             S.DOM = null;
 
