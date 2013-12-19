@@ -439,7 +439,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/touch/pinch.js'].lineData[85]++;
   if (visit78_85_1(S.Features.isTouchEventSupported())) {
     _$jscoverage['/touch/pinch.js'].lineData[86]++;
-    config.set = function() {
+    config.setup = function() {
   _$jscoverage['/touch/pinch.js'].functionData[6]++;
   _$jscoverage['/touch/pinch.js'].lineData[87]++;
   this.addEventListener('touchmove', prevent, false);

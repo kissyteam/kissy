@@ -104,7 +104,7 @@ KISSY.add(function (S, require) {
         handle: r
     };
     if (S.Features.isTouchEventSupported()) {
-        config.set = function () {
+        config.setup = function () {
             this.addEventListener('touchmove', prevent, false);
         };
         config.tearDown = function () {

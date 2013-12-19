@@ -89,7 +89,11 @@ KISSY.add(function (S, require) {
         var scrollLeft = scrollView.get('scrollLeft');
         var images = self.get('images');
         var activeIndex = self.get('activeIndex');
-        if (e.deltaX < 0 && scrollLeft >= scrollView.scrollWidth - scrollView.clientWidth) {
+        var isX = Math.abs(e.deltaX) > Math.abs(e.deltaY);
+        if (!isX) {
+            return;
+        }
+        if (e.deltaX < -30 && scrollLeft >= scrollView.scrollWidth - scrollView.clientWidth) {
             activeIndex++;
             if (activeIndex < images.length) {
                 // do not bounce
@@ -97,7 +101,7 @@ KISSY.add(function (S, require) {
                 scrollView.stopAnimation();
                 self.set('activeIndex', activeIndex);
             }
-        } else if (e.deltaX > 0 && scrollLeft <= 0 && activeIndex > 0) {
+        } else if (e.deltaX > 30 && scrollLeft <= 0 && activeIndex > 0) {
             activeIndex--;
             scrollView.stopAnimation();
             e.preventDefault();

@@ -247,7 +247,7 @@
                 hasTrigger: true,
                 direction: 'x'
             }).render();
-            slide0.triggers.each(function (t, i) {
+            slide.triggers.each(function (t, i) {
                 t.html(i + 1);
             });
             $(selector).delegate(Node.Gesture.tap, 'img', function (e) {

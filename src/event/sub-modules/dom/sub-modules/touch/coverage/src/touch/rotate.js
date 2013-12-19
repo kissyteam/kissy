@@ -438,7 +438,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/touch/rotate.js'].lineData[106]++;
   if (visit85_106_1(S.Features.isTouchEventSupported())) {
     _$jscoverage['/touch/rotate.js'].lineData[107]++;
-    config.set = function() {
+    config.setup = function() {
   _$jscoverage['/touch/rotate.js'].functionData[6]++;
   _$jscoverage['/touch/rotate.js'].lineData[108]++;
   this.addEventListener('touchmove', prevent, false);

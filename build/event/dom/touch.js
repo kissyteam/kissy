@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50
 MIT Licensed
-build time: Dec 19 00:19
+build time: Dec 19 16:31
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -282,7 +282,7 @@ KISSY.add("event/dom/touch/pinch", ["./handle-map", "event/dom/base", "./multi-t
   }
   var config = eventHandleMap[PINCH] = {handle:p};
   if(S.Features.isTouchEventSupported()) {
-    config.set = function() {
+    config.setup = function() {
       this.addEventListener("touchmove", prevent, false)
     };
     config.tearDown = function() {
@@ -370,7 +370,7 @@ KISSY.add("event/dom/touch/rotate", ["./handle-map", "event/dom/base", "./multi-
   eventHandleMap[ROTATE_END] = eventHandleMap[ROTATE_START] = {handle:r};
   var config = eventHandleMap[ROTATE] = {handle:r};
   if(S.Features.isTouchEventSupported()) {
-    config.set = function() {
+    config.setup = function() {
       this.addEventListener("touchmove", prevent, false)
     };
     config.tearDown = function() {
