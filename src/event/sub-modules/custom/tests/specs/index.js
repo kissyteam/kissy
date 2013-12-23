@@ -3,12 +3,14 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, Event) {
+    /*jshint quotmark:false*/
     var EventTarget = Event.Target;
 
-    var FIRST = '1', SECOND = '2', SEP = '=';
+    var FIRST = '1',
+        SECOND = '2',
+        SEP = '=';
 
     describe("custom_event", function () {
-
         it("works for any object", function () {
             var r = 0;
 
@@ -18,7 +20,7 @@ KISSY.add(function (S, Event) {
             }, EventTarget);
 
             x.on("my", function () {
-                r = 1
+                r = 1;
             });
             x.fire("my");
             expect(r).toBe(1);
@@ -48,7 +50,7 @@ KISSY.add(function (S, Event) {
 
             expect(ret).toEqual([1, 2]);
 
-            expect(t.getCustomEvents()['click'].hasObserver())
+            expect(t.getCustomEvents().click.hasObserver())
                 .toBeFalsy();
         });
 
@@ -125,7 +127,6 @@ KISSY.add(function (S, Event) {
                 t2.id = 2;
 
                 t2.addTarget(t);
-
 
                 t2.fire("test", {
                     a: 1
@@ -229,7 +230,6 @@ KISSY.add(function (S, Event) {
                 expect(ret).toEqual([2]);
             });
 
-
             it("can bubble more than one level", function () {
 
                 var r1 = S.mix({}, EventTarget);
@@ -252,7 +252,6 @@ KISSY.add(function (S, Event) {
                 expect(ret).toBe(1);
 
             });
-
 
             it("can not bubble if middle level does not allow", function () {
 
@@ -282,17 +281,19 @@ KISSY.add(function (S, Event) {
             });
         });
 
-
         it('should no memory leak for custom event', function () {
+            var eventTarget = S.mix({}, EventTarget);
 
-            var eventTarget = S.mix({}, EventTarget),
-                i,
-                noop = function () {
-                },
-                noop2 = function () {
-                },
-                noop3 = function () {
-                };
+            function noop() {
+            }
+
+            function noop2() {
+            }
+
+            function noop3() {
+            }
+
+
             eventTarget.on('click', noop);
             eventTarget.on('click', noop2);
             eventTarget.on('click', noop3);
@@ -301,13 +302,13 @@ KISSY.add(function (S, Event) {
                 var customEventObservables = eventTarget.getCustomEvents();
 
                 var num = 0;
-                for (i in customEventObservables) {
+                for (var i in customEventObservables) {
                     expect(S.inArray(i, ['click', 'keydown']))
                         .toBe(true);
                     num++;
                 }
                 expect(num).toBe(2);
-                var clickObserver = customEventObservables['click'];
+                var clickObserver = customEventObservables.click;
                 expect(clickObserver.observers.length).toBe(3);
             })();
 
@@ -317,15 +318,14 @@ KISSY.add(function (S, Event) {
                 var customEventObservables = eventTarget.getCustomEvents();
                 var num = 0;
 
-                for (i in customEventObservables) {
-
+                for (var i in customEventObservables) {
                     expect(S.inArray(i, ['click', 'keydown']))
                         .toBe(true);
                     num++;
-
                 }
+
                 expect(num).toBe(2);
-                var clickObserver = customEventObservables['click'];
+                var clickObserver = customEventObservables.click;
                 expect(clickObserver.observers.length).toBe(2);
             })();
 
@@ -334,8 +334,8 @@ KISSY.add(function (S, Event) {
             (function () {
                 var customEventObservables = eventTarget.getCustomEvents();
 
-                expect(customEventObservables['keydown'].hasObserver()).toBeTruthy();
-                var clickObserver = customEventObservables['click'];
+                expect(customEventObservables.keydown.hasObserver()).toBeTruthy();
+                var clickObserver = customEventObservables.click;
                 expect(clickObserver.hasObserver()).toBeFalsy();
             })();
 
@@ -350,10 +350,7 @@ KISSY.add(function (S, Event) {
             })();
         });
 
-
         describe('fire', function () {
-
-
             it('get fire value', function () {
 
                 var SPEED = '70 km/h', NAME = 'Lady Gogo', dog;
@@ -589,6 +586,64 @@ KISSY.add(function (S, Event) {
             });
 
             describe("defaultFn", function () {
+                it('call parent defaultFn first', function () {
+                    var ret = [],
+                        t = S.mix({
+                            id: 't'
+                        }, EventTarget);
+
+                    t.publish('click', {
+                        defaultFn: function () {
+                            ret.push(this.id);
+                        }
+                    });
+
+                    var t2 = S.mix({
+                        id: 't2'
+                    }, EventTarget);
+
+                    t2.publish('click', {
+                        defaultFn: function () {
+                            ret.push(this.id);
+                        }
+                    });
+
+                    t2.addTarget(t);
+
+                    t2.fire('click');
+
+                    expect(ret).toEqual(['t', 't2']);
+                });
+
+                it('can disable parent defaultFn', function () {
+                    var ret = [],
+                        t = S.mix({
+                            id: 't'
+                        }, EventTarget);
+
+                    t.publish('click', {
+                        defaultFn: function () {
+                            ret.push(this.id);
+                        }
+                    });
+
+                    var t2 = S.mix({
+                        id: 't2'
+                    }, EventTarget);
+
+                    t2.publish('click', {
+                        defaultTargetOnly: true,
+                        defaultFn: function () {
+                            ret.push(this.id);
+                        }
+                    });
+
+                    t2.addTarget(t);
+
+                    t2.fire('click');
+
+                    expect(ret).toEqual(['t2']);
+                });
 
                 it('support simple defaultFn', function () {
                     var ret = [],
@@ -606,7 +661,6 @@ KISSY.add(function (S, Event) {
 
                     expect(ret).toEqual([1]);
                 });
-
 
                 it('support simple defaultFn with listeners', function () {
                     var ret = [],
@@ -642,13 +696,9 @@ KISSY.add(function (S, Event) {
                         data: 2
                     });
 
-                    expect(ret).toEqual(['3:1', '4:2', '2'])
+                    expect(ret).toEqual(['3:1', '4:2', '2']);
                 });
-
-
             });
-
-
         });
     });
 }, {

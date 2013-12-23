@@ -101,6 +101,7 @@
             <!--kissy loader end-->
 
             <path location="${component.src.dir}/web.js"/>
+            <path location="${component.src.dir}/web.js"/>
             <path location="${component.src.dir}/exports.js"/>
         </concat>
     </target>

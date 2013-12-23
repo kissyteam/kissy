@@ -156,7 +156,9 @@ KISSY.add(function (S, require) {
         initializer: function () {
             this.dds = {};
             this.publish('beforeResize', {
-                defaultFn: this._onBeforeResize
+                defaultFn: this._onBeforeResize,
+                // only process its own default function
+                defaultTargetOnly: true
             });
         },
 

@@ -492,7 +492,9 @@ KISSY.add(function (S, require) {
                 self._snapDurationCfg = self.get('snapDuration');
                 self._snapEasingCfg = self.get('snapEasing');
                 self.publish('dragend', {
-                    defaultFn: defaultDragEndFn
+                    defaultFn: defaultDragEndFn,
+                    // only process its own default function
+                    defaultTargetOnly: true
                 });
             },
 

@@ -9,9 +9,6 @@ KISSY.add(function (S, require) {
 
     function defAddChild(e) {
         var self = this;
-        if (e.target !== self) {
-            return;
-        }
         var c = e.component,
             children = self.get('children'),
             index = e.index;
@@ -36,11 +33,6 @@ KISSY.add(function (S, require) {
 
     function defRemoveChild(e) {
         var self = this;
-
-        if (e.target !== self) {
-            return;
-        }
-
         var c = e.component,
             cDOMParentEl,
             cDOMEl,
@@ -87,11 +79,15 @@ KISSY.add(function (S, require) {
                 defaultChildCfg = self.get('defaultChildCfg');
 
             self.publish('beforeAddChild', {
-                defaultFn: defAddChild
+                defaultFn: defAddChild,
+                // only process its own default function
+                defaultTargetOnly: true
             });
 
             self.publish('beforeRemoveChild', {
-                defaultFn: defRemoveChild
+                defaultFn: defRemoveChild,
+                // only process its own default function
+                defaultTargetOnly: true
             });
 
             defaultChildCfg.prefixCls = defaultChildCfg.prefixCls || prefixCls;

@@ -123,7 +123,9 @@ KISSY.add(function (S, require, exports, module) {
         defaultBeforeFns[name] = 1;
         var beforeChangeEventName = whenAttrChangeEventName('before', name);
         self.publish(beforeChangeEventName, {
-            defaultFn: defaultSetFn
+            defaultFn: defaultSetFn,
+            // only process its own default function
+            defaultTargetOnly: true
         });
     }
 
@@ -181,10 +183,6 @@ KISSY.add(function (S, require, exports, module) {
     }
 
     function defaultSetFn(e) {
-        // only consider itself, not bubbling!
-        if (e.target !== this) {
-            return undefined;
-        }
         var self = this,
             value = e.newVal,
             prevVal = e.prevVal,
