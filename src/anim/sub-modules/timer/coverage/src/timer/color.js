@@ -351,7 +351,7 @@ function visit5_128_1(result) {
 function visit4_125_1(result) {
   _$jscoverage['/timer/color.js'].branchData['125'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer/color.js'].branchData['108'][1].init(893, 33, 'KEYWORDS[val = val.toLowerCase()]');
+}_$jscoverage['/timer/color.js'].branchData['108'][1].init(914, 33, 'KEYWORDS[val = val.toLowerCase()]');
 function visit3_108_1(result) {
   _$jscoverage['/timer/color.js'].branchData['108'][1].ranCondition(result);
   return result;
@@ -414,12 +414,12 @@ KISSY.add(function(S, require) {
     _$jscoverage['/timer/color.js'].lineData[81]++;
     if ((match = val.match(RE_RGB))) {
       _$jscoverage['/timer/color.js'].lineData[82]++;
-      return [parseInt(match[1]), parseInt(match[2]), parseInt(match[3])];
+      return [parseInt(match[1], 10), parseInt(match[2], 10), parseInt(match[3], 10)];
     } else {
       _$jscoverage['/timer/color.js'].lineData[88]++;
       if ((match = val.match(RE_RGBA))) {
         _$jscoverage['/timer/color.js'].lineData[89]++;
-        return [parseInt(match[1]), parseInt(match[2]), parseInt(match[3]), parseInt(match[4])];
+        return [parseInt(match[1], 10), parseInt(match[2], 10), parseInt(match[3], 10), parseInt(match[4], 10)];
       } else {
         _$jscoverage['/timer/color.js'].lineData[96]++;
         if ((match = val.match(RE_HEX))) {

@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50
 MIT Licensed
-build time: Dec 12 22:07
+build time: Dec 23 18:50
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -227,15 +227,14 @@ KISSY.add("anim/base", ["dom", "./base/utils", "./base/queue", "promise"], funct
           _backupProps[prop] = Dom.style(node, prop);
           if(val === "toggle") {
             val = hidden ? "show" : "hide"
+          }
+          if(val === "hide") {
+            _propData.value = 0;
+            _backupProps.display = "none"
           }else {
-            if(val === "hide") {
-              _propData.value = 0;
-              _backupProps.display = "none"
-            }else {
-              _propData.value = Dom.css(node, prop);
-              Dom.css(node, prop, 0);
-              Dom.show(node)
-            }
+            _propData.value = Dom.css(node, prop);
+            Dom.css(node, prop, 0);
+            Dom.show(node)
           }
         }
         return undefined

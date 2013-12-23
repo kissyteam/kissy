@@ -80,17 +80,17 @@ KISSY.add(function (S,require) {
         var match;
         if ((match = val.match(RE_RGB))) {
             return [
-                parseInt(match[1]),
-                parseInt(match[2]),
-                parseInt(match[3])
+                parseInt(match[1],10),
+                parseInt(match[2],10),
+                parseInt(match[3],10)
             ];
         }
         else if ((match = val.match(RE_RGBA))) {
             return [
-                parseInt(match[1]),
-                parseInt(match[2]),
-                parseInt(match[3]),
-                parseInt(match[4])
+                parseInt(match[1],10),
+                parseInt(match[2],10),
+                parseInt(match[3],10),
+                parseInt(match[4],10)
             ];
         }
         else if ((match = val.match(RE_HEX))) {

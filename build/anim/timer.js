@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50
 MIT Licensed
-build time: Dec 12 22:07
+build time: Dec 23 18:50
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -335,10 +335,10 @@ KISSY.add("anim/timer/color", ["./fx", "./short-hand"], function(S, require) {
     val = val + "";
     var match;
     if(match = val.match(RE_RGB)) {
-      return[parseInt(match[1]), parseInt(match[2]), parseInt(match[3])]
+      return[parseInt(match[1], 10), parseInt(match[2], 10), parseInt(match[3], 10)]
     }else {
       if(match = val.match(RE_RGBA)) {
-        return[parseInt(match[1]), parseInt(match[2]), parseInt(match[3]), parseInt(match[4])]
+        return[parseInt(match[1], 10), parseInt(match[2], 10), parseInt(match[3], 10), parseInt(match[4], 10)]
       }else {
         if(match = val.match(RE_HEX)) {
           for(var i = 1;i < match.length;i++) {
