@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50
 MIT Licensed
-build time: Dec 23 17:14
+build time: Dec 23 17:45
 */
 /**
  * @ignore
@@ -87,11 +87,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20131223171355' will replace with current timestamp when compressing.
+         * NOTICE: '20131223174541' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20131223171355',
+        __BUILD_TIME: '20131223174541',
 
         /**
          * KISSY Environment.
@@ -5359,7 +5359,7 @@ var KISSY = (function (undefined) {
     var doc = S.Env.host && S.Env.host.document;
     // var logger = S.getLogger('s/loader');
     var Utils = S.Loader.Utils;
-    var TIMESTAMP = '20131223171355';
+    var TIMESTAMP = '20131223174541';
     var defaultComboPrefix = '??';
     var defaultComboSep = ',';
 
@@ -5735,250 +5735,329 @@ KISSY.add('i18n', {
     }
 })(KISSY, undefined);
 /**
- * this code can only run at browser environment
  * @ignore
- * @author lifesinger@gmail.com, yiminghe@gmail.com
+ * Default KISSY Gallery and core alias.
+ * @author yiminghe@gmail.com
  */
-(function (S, undefined) {
-    var logger = S.getLogger('s/web');
-    var win = S.Env.host,
-        UA = S.UA,
-        doc = win.document,
-        docElem = doc && doc.documentElement,
-        location = win.location,
-        EMPTY = '',
-        domReady = 0,
-        callbacks = [],
-    // The number of poll times.
-        POLL_RETIRES = 500,
-    // The poll interval in milliseconds.
-        POLL_INTERVAL = 40,
-    // #id or id
-        RE_ID_STR = /^#?([\w-]+)$/,
-        RE_NOT_WHITESPACE = /\S/,
-        standardEventModel = !!(doc && doc.addEventListener),
-        DOM_READY_EVENT = 'DOMContentLoaded',
-        READY_STATE_CHANGE_EVENT = 'readystatechange',
-        LOAD_EVENT = 'load',
-        COMPLETE = 'complete',
-        addEventListener = standardEventModel ? function (el, type, fn) {
-            el.addEventListener(type, fn, false);
-        } : function (el, type, fn) {
-            el.attachEvent('on' + type, fn);
-        },
-        removeEventListener = standardEventModel ? function (el, type, fn) {
-            el.removeEventListener(type, fn, false);
-        } : function (el, type, fn) {
-            el.detachEvent('on' + type, fn);
-        };
-
-    S.mix(S, {
-        /**
-         * A crude way of determining if an object is a window
-         * @member KISSY
-         */
-        isWindow: function (obj) {
-            // must use == for ie8
-            /*jshint eqeqeq:false*/
-            return obj != null && obj == obj.window;
-        },
-
-        /**
-         * get xml representation of data
-         * @param {String} data
-         * @member KISSY
-         */
-        parseXML: function (data) {
-            // already a xml
-            if (data.documentElement) {
-                return data;
+(function (S) {
+    // compatibility
+    S.config({
+        modules: {
+            core: {
+                alias: ['dom', 'event', 'io', 'anim', 'base', 'node', 'json', 'ua', 'cookie']
+            },
+            ajax: {
+                alias: 'io'
+            },
+            'rich-base': {
+                alias: 'base'
             }
-            var xml;
-            try {
-                // Standard
-                if (win.DOMParser) {
-                    xml = new DOMParser().parseFromString(data, 'text/xml');
-                } else { // IE
-                    /*global ActiveXObject*/
-                    xml = new ActiveXObject('Microsoft.XMLDOM');
-                    xml.async = false;
-                    xml.loadXML(data);
-                }
-            } catch (e) {
-                logger.error('parseXML error :');
-                logger.error(e);
-                xml = undefined;
-            }
-            if (!xml || !xml.documentElement || xml.getElementsByTagName('parsererror').length) {
-                S.error('Invalid XML: ' + data);
-            }
-            return xml;
-        },
-
-        /**
-         * Evaluates a script in a global context.
-         * @member KISSY
-         */
-        globalEval: function (data) {
-            if (data && RE_NOT_WHITESPACE.test(data)) {
-                // http://weblogs.java.net/blog/driscoll/archive/2009/09/08/eval-javascript-global-context
-                // http://msdn.microsoft.com/en-us/library/ie/ms536420(v=vs.85).aspx always return null
-                /*jshint evil:true*/
-                if (win.execScript) {
-                    win.execScript(data);
-                } else {
-                    (function (data) {
-                        win['eval'].call(win, data);
-                    })(data);
-                }
-            }
-        },
-
-        /**
-         * Specify a function to execute when the Dom is fully loaded.
-         * @param fn {Function} A function to execute after the Dom is ready
-         * @chainable
-         * @member KISSY
-         */
-        ready: function (fn) {
-            if (domReady) {
-                try {
-                    fn(S);
-                } catch (e) {
-                    S.log(e.stack || e, 'error');
-                    setTimeout(function () {
-                        throw e;
-                    }, 0);
-                }
-            } else {
-                callbacks.push(fn);
-            }
-            return this;
-        },
-
-        /**
-         * Executes the supplied callback when the item with the supplied id is found.
-         * @param id {String} The id of the element, or an array of ids to look for.
-         * @param fn {Function} What to execute when the element is found.
-         * @member KISSY
-         */
-        available: function (id, fn) {
-            id = (id + EMPTY).match(RE_ID_STR)[1];
-            var retryCount = 1;
-            var timer = S.later(function () {
-                if (++retryCount > POLL_RETIRES) {
-                    timer.cancel();
-                    return;
-                }
-                var node = doc.getElementById(id);
-                if (node) {
-                    fn(node);
-                    timer.cancel();
-                }
-            }, POLL_INTERVAL, true);
         }
     });
-
-    function fireReady() {
-        if (domReady) {
-            return;
-        }
-        // nodejs
-        if (doc && !UA.nodejs) {
-            removeEventListener(win, LOAD_EVENT, fireReady);
-        }
-        domReady = 1;
-        for (var i = 0; i < callbacks.length; i++) {
-            try {
-                callbacks[i](S);
-            } catch (e) {
-                S.log(e.stack || e, 'error');
-                /*jshint loopfunc:true*/
-                setTimeout(function () {
-                    throw e;
-                }, 0);
-            }
-        }
-    }
-
-    //  Binds ready events.
-    function bindReady() {
-        // Catch cases where ready() is called after the
-        // browser event has already occurred.
-        if (!doc || doc.readyState === COMPLETE) {
-            fireReady();
-            return;
-        }
-
-        // A fallback to window.onload, that will always work
-        addEventListener(win, LOAD_EVENT, fireReady);
-
-        // w3c mode
-        if (standardEventModel) {
-            var domReady = function () {
-                removeEventListener(doc, DOM_READY_EVENT, domReady);
-                fireReady();
-            };
-
-            addEventListener(doc, DOM_READY_EVENT, domReady);
-        } else {
-            var stateChange = function () {
-                if (doc.readyState === COMPLETE) {
-                    removeEventListener(doc, READY_STATE_CHANGE_EVENT, stateChange);
-                    fireReady();
+    if (typeof location !== 'undefined') {
+        var https = S.startsWith(location.href, 'https');
+        var prefix = https ? 'https://s.tbcdn.cn/s/kissy/' : 'http://a.tbcdn.cn/s/kissy/';
+        S.config({
+            packages: {
+                gallery: {
+                    base: prefix
+                },
+                mobile: {
+                    base: prefix
                 }
-            };
-
-            // ensure firing before onload (but completed after all inner iframes is loaded)
-            // maybe late but safe also for iframes
-            addEventListener(doc, READY_STATE_CHANGE_EVENT, stateChange);
-
-            // If IE and not a frame
-            // continually check to see if the document is ready
-            var notframe,
-                doScroll = docElem && docElem.doScroll;
-
-            try {
-                notframe = (win.frameElement === null);
-            } catch (e) {
-                notframe = false;
             }
-
-            // can not use in iframe,parent window is dom ready so doScroll is ready too
-            if (doScroll && notframe) {
-                var readyScroll = function () {
-                    try {
-                        // Ref: http://javascript.nwbox.com/IEContentLoaded/
-                        doScroll('left');
-                        fireReady();
-                    } catch (ex) {
-                        setTimeout(readyScroll, POLL_INTERVAL);
-                    }
-                };
-                readyScroll();
-            }
-        }
+        });
     }
+})(KISSY);
 
-    // If url contains '?ks-debug', debug mode will turn on automatically.
-    if (location && (location.search || EMPTY).indexOf('ks-debug') !== -1) {
-        S.Config.debug = true;
+/*jshint indent:false*/
+(function (config, Features, UA) {
+config({
+    'anim/transition?': {
+        alias: KISSY.Features.getVendorCssPropPrefix('transition') !== false ? 'anim/transition' : ''
     }
-
-    // bind on start
-    // in case when you bind but the DOMContentLoaded has triggered
-    // then you has to wait onload
-    // worst case no callback at all
-    bindReady();
-
-    if (UA.ie) {
-        try {
-            doc.execCommand('BackgroundImageCache', false, true);
-        } catch (e) {
-        }
+});/*Generated By KISSY Module Compiler*/
+config({
+anim: {requires: ['anim/base','anim/timer','anim/transition?']}
+});
+/*Generated By KISSY Module Compiler*/
+config({
+'anim/base': {requires: ['dom','promise']}
+});
+/*Generated By KISSY Module Compiler*/
+config({
+'anim/timer': {requires: ['dom','anim/base']}
+});
+/*Generated By KISSY Module Compiler*/
+config({
+'anim/transition': {requires: ['dom','event/dom','anim/base']}
+});
+/*Generated By KISSY Module Compiler*/
+config({
+attribute: {requires: ['event/custom']}
+});
+/*Generated By KISSY Module Compiler*/
+config({
+base: {requires: ['attribute']}
+});
+/*Generated By KISSY Module Compiler*/
+config({
+button: {requires: ['node','component/control']}
+});
+/*Generated By KISSY Module Compiler*/
+config({
+color: {requires: ['attribute']}
+});
+/*Generated By KISSY Module Compiler*/
+config({
+combobox: {requires: ['node','component/control','menu','attribute','io']}
+});
+/*Generated By KISSY Module Compiler*/
+config({
+'component/container': {requires: ['component/control','component/manager']}
+});
+/*Generated By KISSY Module Compiler*/
+config({
+'component/control': {requires: ['node','base','promise','component/manager','xtemplate/runtime']}
+});
+/*Generated By KISSY Module Compiler*/
+config({
+'component/extension/align': {requires: ['node']}
+});
+/*Generated By KISSY Module Compiler*/
+config({
+'component/extension/content-render': {requires: ['component/extension/content-xtpl']}
+});
+/*Generated By KISSY Module Compiler*/
+config({
+'component/extension/delegate-children': {requires: ['node','component/manager']}
+});
+/*Generated By KISSY Module Compiler*/
+config({
+'component/plugin/drag': {requires: ['dd']}
+});
+/*Generated By KISSY Module Compiler*/
+config({
+'component/plugin/resize': {requires: ['resizable']}
+});
+/*Generated By KISSY Module Compiler*/
+config({
+'date/format': {requires: ['date/gregorian','i18n!date']}
+});
+/*Generated By KISSY Module Compiler*/
+config({
+'date/gregorian': {requires: ['i18n!date']}
+});
+/*Generated By KISSY Module Compiler*/
+config({
+'date/picker': {requires: ['node','date/gregorian','i18n!date/picker','component/control','date/format']}
+});
+/*Generated By KISSY Module Compiler*/
+config({
+'date/popup-picker': {requires: ['date/picker/picker-xtpl','date/picker','component/extension/shim','component/extension/align']}
+});
+/*Generated By KISSY Module Compiler*/
+config({
+dd: {requires: ['node','base']}
+});
+/*Generated By KISSY Module Compiler*/
+config({
+'dd/plugin/constrain': {requires: ['node','base']}
+});
+/*Generated By KISSY Module Compiler*/
+config({
+'dd/plugin/proxy': {requires: ['node','dd','base']}
+});
+/*Generated By KISSY Module Compiler*/
+config({
+'dd/plugin/scroll': {requires: ['node','dd','base']}
+});
+config({
+    'dom/basic': {
+        alias: [
+            'dom/base',
+            UA.ieMode < 9 ? 'dom/ie' : '',
+            Features.isClassListSupported() ? '' : 'dom/class-list'
+        ]
+    },
+    dom: {
+        alias: [
+            'dom/basic',
+            !Features.isQuerySelectorSupported() ? 'dom/selector' : ''
+        ]
     }
-})(KISSY, undefined);
-/**
+});/*Generated By KISSY Module Compiler*/
+config({
+'dom/class-list': {requires: ['dom/base']}
+});
+/*Generated By KISSY Module Compiler*/
+config({
+'dom/ie': {requires: ['dom/base']}
+});
+/*Generated By KISSY Module Compiler*/
+config({
+'dom/selector': {requires: ['dom/basic']}
+});
+/*Generated By KISSY Module Compiler*/
+config({
+editor: {requires: ['node','html-parser','component/control']}
+});
+/*Generated By KISSY Module Compiler*/
+config({
+event: {requires: ['event/dom','event/custom']}
+});
+/*Generated By KISSY Module Compiler*/
+config({
+'event/custom': {requires: ['event/base']}
+});
+config({
+    'event/dom': {
+        alias: [
+            'event/dom/base',
+            Features.isTouchGestureSupported() ?
+                'event/dom/touch' : '',
+            Features.isDeviceMotionSupported() ?
+                'event/dom/shake' : '',
+            Features.isHashChangeSupported() ?
+                '' : 'event/dom/hashchange',
+            UA.ieMode < 9 ?
+                'event/dom/ie' : '',
+            UA.ie ? '' : 'event/dom/focusin'
+        ]
+    }
+});/*Generated By KISSY Module Compiler*/
+config({
+'event/dom/base': {requires: ['event/base','dom']}
+});
+/*Generated By KISSY Module Compiler*/
+config({
+'event/dom/focusin': {requires: ['event/dom/base']}
+});
+/*Generated By KISSY Module Compiler*/
+config({
+'event/dom/hashchange': {requires: ['event/dom/base','dom']}
+});
+/*Generated By KISSY Module Compiler*/
+config({
+'event/dom/ie': {requires: ['event/dom/base','dom']}
+});
+/*Generated By KISSY Module Compiler*/
+config({
+'event/dom/shake': {requires: ['event/dom/base']}
+});
+/*Generated By KISSY Module Compiler*/
+config({
+'event/dom/touch': {requires: ['event/dom/base','dom']}
+});
+/*Generated By KISSY Module Compiler*/
+config({
+'filter-menu': {requires: ['menu','component/extension/content-xtpl','component/extension/content-render']}
+});
+/*Generated By KISSY Module Compiler*/
+config({
+io: {requires: ['dom','event/custom','promise','event/dom']}
+});
+/*Generated By KISSY Module Compiler*/
+config({
+menu: {requires: ['node','component/container','component/extension/delegate-children','component/control','component/extension/content-render','component/extension/content-xtpl','component/extension/align','component/extension/shim']}
+});
+/*Generated By KISSY Module Compiler*/
+config({
+menubutton: {requires: ['node','button','component/extension/content-xtpl','component/extension/content-render','menu']}
+});
+/*Generated By KISSY Module Compiler*/
+config({
+mvc: {requires: ['io','json','attribute','node']}
+});
+/*Generated By KISSY Module Compiler*/
+config({
+node: {requires: ['dom','event/dom','anim']}
+});
+/*Generated By KISSY Module Compiler*/
+config({
+overlay: {requires: ['component/container','component/extension/shim','component/extension/align','node','component/extension/content-xtpl','component/extension/content-render']}
+});
+/*Generated By KISSY Module Compiler*/
+config({
+resizable: {requires: ['node','base','dd']}
+});
+/*Generated By KISSY Module Compiler*/
+config({
+'resizable/plugin/proxy': {requires: ['node','base']}
+});
+/*Generated By KISSY Module Compiler*/
+config({
+router: {requires: ['uri','event/dom']}
+});
+config({
+    'scroll-view': {
+        alias: Features.isTouchGestureSupported() ? 'scroll-view/drag' : 'scroll-view/base'
+    }
+});/*Generated By KISSY Module Compiler*/
+config({
+'scroll-view/base': {requires: ['node','anim','component/container','component/extension/content-render']}
+});
+/*Generated By KISSY Module Compiler*/
+config({
+'scroll-view/drag': {requires: ['scroll-view/base','node','anim']}
+});
+/*Generated By KISSY Module Compiler*/
+config({
+'scroll-view/plugin/pull-to-refresh': {requires: ['base']}
+});
+/*Generated By KISSY Module Compiler*/
+config({
+'scroll-view/plugin/scrollbar': {requires: ['base','node','component/control']}
+});
+/*Generated By KISSY Module Compiler*/
+config({
+separator: {requires: ['component/control']}
+});
+/*Generated By KISSY Module Compiler*/
+config({
+'split-button': {requires: ['component/container','button','menubutton']}
+});
+/*Generated By KISSY Module Compiler*/
+config({
+stylesheet: {requires: ['dom']}
+});
+/*Generated By KISSY Module Compiler*/
+config({
+swf: {requires: ['dom','json','attribute']}
+});
+/*Generated By KISSY Module Compiler*/
+config({
+tabs: {requires: ['component/container','toolbar','button']}
+});
+/*Generated By KISSY Module Compiler*/
+config({
+toolbar: {requires: ['component/container','component/extension/delegate-children','node']}
+});
+/*Generated By KISSY Module Compiler*/
+config({
+tree: {requires: ['node','component/container','component/extension/content-xtpl','component/extension/content-render','component/extension/delegate-children']}
+});
+/*Generated By KISSY Module Compiler*/
+config({
+xtemplate: {requires: ['xtemplate/runtime','xtemplate/compiler']}
+});
+/*Generated By KISSY Module Compiler*/
+config({
+'xtemplate/compiler': {requires: ['xtemplate/runtime']}
+});
+/*Generated By KISSY Module Compiler*/
+config({
+'xtemplate/nodejs': {requires: ['xtemplate']}
+});
+/*Generated By KISSY Module Compiler*/
+config({
+'xtemplate/runtime': {requires: ['path']}
+});
+
+                })(function (c) {
+                KISSY.config('modules', c);
+                },KISSY.Features,KISSY.UA);
+            /**
  * @ignore
  * 1. export KISSY 's functionality to module system
  * 2. export light-weighted json parse
