@@ -299,6 +299,7 @@
             },
         /**
          * Converts object to a TRUE array.
+         * // do not pass form.elements to this function ie678 bug
          * @param o {object|Array} array like object or array
          * @return {Array} native Array
          * @member KISSY
@@ -314,11 +315,11 @@
                 oType = typeof o;
             // The strings and functions also have 'length'
             if (lengthType !== 'number' ||
-                // form.elements in ie78 has nodeName 'form'
-                // then caution select
-                // o.nodeName
+                // select element
+                // https://github.com/kissyteam/kissy/issues/537
+                o.nodeName ||
                 // window
-                o.alert ||
+                S.isWindow(o) ||
                 oType === 'string' ||
                 // https://github.com/ariya/phantomjs/issues/11478
                 (oType === 'function' && !('item' in o && lengthType === 'number'))) {

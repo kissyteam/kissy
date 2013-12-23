@@ -160,7 +160,8 @@ KISSY.add(function (S, require) {
             // 不写 context，就是包装一下
             // 1.常见的单个元素
             // Dom.query(document.getElementById('xx'))
-            if (selector.nodeType || selector.setTimeout) {
+            // do not pass form.elements to this function ie678 bug
+            if (selector.nodeType || S.isWindow(selector)) {
                 ret = [selector];
             } else if (selector.getDOMNodes) {
                 // 2.KISSY NodeList 特殊点直接返回，提高性能
@@ -274,6 +275,7 @@ KISSY.add(function (S, require) {
 
             /**
              * Accepts a string containing a CSS selector which is then used to match a set of elements.
+             * Note: do not pass form.elements to this function
              * @param {String|HTMLElement[]} selector
              * A string containing a selector expression.
              * or

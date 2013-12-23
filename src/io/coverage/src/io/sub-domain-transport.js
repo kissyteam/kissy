@@ -291,27 +291,27 @@ if (! _$jscoverage['/io/sub-domain-transport.js'].branchData) {
   _$jscoverage['/io/sub-domain-transport.js'].branchData['60'][1] = new BranchData();
 }
 _$jscoverage['/io/sub-domain-transport.js'].branchData['60'][1].init(334, 31, 'doc.body || doc.documentElement');
-function visit120_60_1(result) {
+function visit121_60_1(result) {
   _$jscoverage['/io/sub-domain-transport.js'].branchData['60'][1].ranCondition(result);
   return result;
 }_$jscoverage['/io/sub-domain-transport.js'].branchData['52'][1].init(802, 11, '!iframeDesc');
-function visit119_52_1(result) {
+function visit120_52_1(result) {
   _$jscoverage['/io/sub-domain-transport.js'].branchData['52'][1].ranCondition(result);
   return result;
 }_$jscoverage['/io/sub-domain-transport.js'].branchData['44'][1].init(118, 14, 'self.nativeXhr');
-function visit118_44_1(result) {
+function visit119_44_1(result) {
   _$jscoverage['/io/sub-domain-transport.js'].branchData['44'][1].ranCondition(result);
   return result;
 }_$jscoverage['/io/sub-domain-transport.js'].branchData['42'][1].init(427, 30, 'iframeDesc && iframeDesc.ready');
-function visit117_42_1(result) {
+function visit118_42_1(result) {
   _$jscoverage['/io/sub-domain-transport.js'].branchData['42'][1].ranCondition(result);
   return result;
 }_$jscoverage['/io/sub-domain-transport.js'].branchData['38'][2].init(305, 40, 'c.xdr.subDomain && c.xdr.subDomain.proxy');
-function visit116_38_2(result) {
+function visit117_38_2(result) {
   _$jscoverage['/io/sub-domain-transport.js'].branchData['38'][2].ranCondition(result);
   return result;
 }_$jscoverage['/io/sub-domain-transport.js'].branchData['38'][1].init(296, 49, 'c.xdr && c.xdr.subDomain && c.xdr.subDomain.proxy');
-function visit115_38_1(result) {
+function visit116_38_1(result) {
   _$jscoverage['/io/sub-domain-transport.js'].branchData['38'][1].ranCondition(result);
   return result;
 }_$jscoverage['/io/sub-domain-transport.js'].lineData[6]++;
@@ -344,16 +344,16 @@ KISSY.add(function(S, require) {
   _$jscoverage['/io/sub-domain-transport.js'].lineData[36]++;
   var proxy = PROXY_PAGE;
   _$jscoverage['/io/sub-domain-transport.js'].lineData[38]++;
-  if (visit115_38_1(c.xdr && visit116_38_2(c.xdr.subDomain && c.xdr.subDomain.proxy))) {
+  if (visit116_38_1(c.xdr && visit117_38_2(c.xdr.subDomain && c.xdr.subDomain.proxy))) {
     _$jscoverage['/io/sub-domain-transport.js'].lineData[39]++;
     proxy = c.xdr.subDomain.proxy;
   }
   _$jscoverage['/io/sub-domain-transport.js'].lineData[42]++;
-  if (visit117_42_1(iframeDesc && iframeDesc.ready)) {
+  if (visit118_42_1(iframeDesc && iframeDesc.ready)) {
     _$jscoverage['/io/sub-domain-transport.js'].lineData[43]++;
     self.nativeXhr = XhrTransportBase.nativeXhr(0, iframeDesc.iframe.contentWindow);
     _$jscoverage['/io/sub-domain-transport.js'].lineData[44]++;
-    if (visit118_44_1(self.nativeXhr)) {
+    if (visit119_44_1(self.nativeXhr)) {
       _$jscoverage['/io/sub-domain-transport.js'].lineData[45]++;
       self.sendInternal();
     } else {
@@ -364,7 +364,7 @@ KISSY.add(function(S, require) {
     return;
   }
   _$jscoverage['/io/sub-domain-transport.js'].lineData[52]++;
-  if (visit119_52_1(!iframeDesc)) {
+  if (visit120_52_1(!iframeDesc)) {
     _$jscoverage['/io/sub-domain-transport.js'].lineData[53]++;
     iframeDesc = iframeMap[hostname] = {};
     _$jscoverage['/io/sub-domain-transport.js'].lineData[54]++;
@@ -375,7 +375,7 @@ KISSY.add(function(S, require) {
   left: '-9999px', 
   top: '-9999px'});
     _$jscoverage['/io/sub-domain-transport.js'].lineData[60]++;
-    Dom.prepend(iframe, visit120_60_1(doc.body || doc.documentElement));
+    Dom.prepend(iframe, visit121_60_1(doc.body || doc.documentElement));
     _$jscoverage['/io/sub-domain-transport.js'].lineData[61]++;
     iframeUri = new S.Uri();
     _$jscoverage['/io/sub-domain-transport.js'].lineData[62]++;

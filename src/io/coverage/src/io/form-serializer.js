@@ -257,7 +257,12 @@ if (! _$jscoverage['/io/form-serializer.js']) {
   _$jscoverage['/io/form-serializer.js'].lineData[81] = 0;
   _$jscoverage['/io/form-serializer.js'].lineData[83] = 0;
   _$jscoverage['/io/form-serializer.js'].lineData[85] = 0;
-  _$jscoverage['/io/form-serializer.js'].lineData[88] = 0;
+  _$jscoverage['/io/form-serializer.js'].lineData[89] = 0;
+  _$jscoverage['/io/form-serializer.js'].lineData[90] = 0;
+  _$jscoverage['/io/form-serializer.js'].lineData[91] = 0;
+  _$jscoverage['/io/form-serializer.js'].lineData[92] = 0;
+  _$jscoverage['/io/form-serializer.js'].lineData[94] = 0;
+  _$jscoverage['/io/form-serializer.js'].lineData[97] = 0;
 }
 if (! _$jscoverage['/io/form-serializer.js'].functionData) {
   _$jscoverage['/io/form-serializer.js'].functionData = [];
@@ -268,6 +273,7 @@ if (! _$jscoverage['/io/form-serializer.js'].functionData) {
   _$jscoverage['/io/form-serializer.js'].functionData[4] = 0;
   _$jscoverage['/io/form-serializer.js'].functionData[5] = 0;
   _$jscoverage['/io/form-serializer.js'].functionData[6] = 0;
+  _$jscoverage['/io/form-serializer.js'].functionData[7] = 0;
 }
 if (! _$jscoverage['/io/form-serializer.js'].branchData) {
   _$jscoverage['/io/form-serializer.js'].branchData = {};
@@ -289,8 +295,14 @@ if (! _$jscoverage['/io/form-serializer.js'].branchData) {
   _$jscoverage['/io/form-serializer.js'].branchData['75'][1] = new BranchData();
   _$jscoverage['/io/form-serializer.js'].branchData['79'] = [];
   _$jscoverage['/io/form-serializer.js'].branchData['79'][1] = new BranchData();
+  _$jscoverage['/io/form-serializer.js'].branchData['91'] = [];
+  _$jscoverage['/io/form-serializer.js'].branchData['91'][1] = new BranchData();
 }
-_$jscoverage['/io/form-serializer.js'].branchData['79'][1].init(586, 20, 'vs && !S.isArray(vs)');
+_$jscoverage['/io/form-serializer.js'].branchData['91'][1].init(47, 19, 'i < elements.length');
+function visit34_91_1(result) {
+  _$jscoverage['/io/form-serializer.js'].branchData['91'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/io/form-serializer.js'].branchData['79'][1].init(586, 20, 'vs && !S.isArray(vs)');
 function visit33_79_1(result) {
   _$jscoverage['/io/form-serializer.js'].branchData['79'][1].ranCondition(result);
   return result;
@@ -354,7 +366,7 @@ KISSY.add(function(S, require) {
   S.each(Dom.query(forms), function(el) {
   _$jscoverage['/io/form-serializer.js'].functionData[4]++;
   _$jscoverage['/io/form-serializer.js'].lineData[38]++;
-  var subs = el.elements ? S.makeArray(el.elements) : [el];
+  var subs = el.elements ? elementsToArray(el.elements) : [el];
   _$jscoverage['/io/form-serializer.js'].lineData[39]++;
   elements.push.apply(elements, subs);
 });
@@ -402,6 +414,19 @@ KISSY.add(function(S, require) {
   _$jscoverage['/io/form-serializer.js'].lineData[85]++;
   return data;
 }};
-  _$jscoverage['/io/form-serializer.js'].lineData[88]++;
+  _$jscoverage['/io/form-serializer.js'].lineData[89]++;
+  function elementsToArray(elements) {
+    _$jscoverage['/io/form-serializer.js'].functionData[7]++;
+    _$jscoverage['/io/form-serializer.js'].lineData[90]++;
+    var ret = [];
+    _$jscoverage['/io/form-serializer.js'].lineData[91]++;
+    for (var i = 0; visit34_91_1(i < elements.length); i++) {
+      _$jscoverage['/io/form-serializer.js'].lineData[92]++;
+      ret.push(elements[i]);
+    }
+    _$jscoverage['/io/form-serializer.js'].lineData[94]++;
+    return ret;
+  }
+  _$jscoverage['/io/form-serializer.js'].lineData[97]++;
   return FormSerializer;
 });

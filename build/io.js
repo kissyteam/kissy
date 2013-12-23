@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50
 MIT Licensed
-build time: Dec 12 22:19
+build time: Dec 23 16:19
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -31,7 +31,7 @@ KISSY.add("io/form-serializer", ["dom"], function(S, require) {
   }, getFormData:function(forms) {
     var elements = [], data = {};
     S.each(Dom.query(forms), function(el) {
-      var subs = el.elements ? S.makeArray(el.elements) : [el];
+      var subs = el.elements ? elementsToArray(el.elements) : [el];
       elements.push.apply(elements, subs)
     });
     elements = S.filter(elements, function(el) {
@@ -59,6 +59,13 @@ KISSY.add("io/form-serializer", ["dom"], function(S, require) {
     });
     return data
   }};
+  function elementsToArray(elements) {
+    var ret = [];
+    for(var i = 0;i < elements.length;i++) {
+      ret.push(elements[i])
+    }
+    return ret
+  }
   return FormSerializer
 });
 KISSY.add("io/base", ["event/custom", "promise"], function(S, require) {

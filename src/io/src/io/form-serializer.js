@@ -35,7 +35,7 @@ KISSY.add(function (S, require) {
             S.each(Dom.query(forms), function (el) {
                 // form 取其表单元素集合
                 // 其他直接取自身
-                var subs = el.elements ? S.makeArray(el.elements) : [el];
+                var subs = el.elements ? elementsToArray(el.elements) : [el];
                 elements.push.apply(elements, subs);
             });
             // 对表单元素进行过滤，具备有效值的才保留
@@ -85,5 +85,15 @@ KISSY.add(function (S, require) {
             return data;
         }
     };
+
+    // do not pass form.elements to S.makeArray ie678 bug
+    function elementsToArray(elements) {
+        var ret = [];
+        for (var i = 0; i < elements.length; i++) {
+            ret.push(elements[i]);
+        }
+        return ret;
+    }
+
     return FormSerializer;
 });

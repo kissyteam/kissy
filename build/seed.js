@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50
 MIT Licensed
-build time: Dec 19 18:30
+build time: Dec 23 16:19
 */
 /**
  * @ignore
@@ -87,11 +87,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20131219183000' will replace with current timestamp when compressing.
+         * NOTICE: '20131223161913' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20131219183000',
+        __BUILD_TIME: '20131223161913',
 
         /**
          * KISSY Environment.
@@ -983,6 +983,7 @@ var KISSY = (function (undefined) {
             },
         /**
          * Converts object to a TRUE array.
+         * Note: do not pass form.elements to this function
          * @param o {object|Array} array like object or array
          * @return {Array} native Array
          * @member KISSY
@@ -998,11 +999,11 @@ var KISSY = (function (undefined) {
                 oType = typeof o;
             // The strings and functions also have 'length'
             if (lengthType !== 'number' ||
-                // form.elements in ie78 has nodeName 'form'
-                // then caution select
-                // o.nodeName
+                // select element
+                // https://github.com/kissyteam/kissy/issues/537
+                o.nodeName ||
                 // window
-                o.alert ||
+                S.isWindow(o) ||
                 oType === 'string' ||
                 // https://github.com/ariya/phantomjs/issues/11478
                 (oType === 'function' && !('item' in o && lengthType === 'number'))) {
@@ -5488,7 +5489,7 @@ var KISSY = (function (undefined) {
     var doc = S.Env.host && S.Env.host.document;
     // var logger = S.getLogger('s/loader');
     var Utils = S.Loader.Utils;
-    var TIMESTAMP = '20131219183000';
+    var TIMESTAMP = '20131223161913';
     var defaultComboPrefix = '??';
     var defaultComboSep = ',';
 

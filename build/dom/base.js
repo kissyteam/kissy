@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50
 MIT Licensed
-build time: Dec 19 17:16
+build time: Dec 23 16:19
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -1715,7 +1715,7 @@ KISSY.add("dom/base/selector", ["./api"], function(S, require) {
           }
         }
       }else {
-        if(selector.nodeType || selector.setTimeout) {
+        if(selector.nodeType || S.isWindow(selector)) {
           ret = [selector]
         }else {
           if(selector.getDOMNodes) {
