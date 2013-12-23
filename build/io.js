@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50
 MIT Licensed
-build time: Dec 23 16:19
+build time: Dec 23 16:50
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -111,6 +111,7 @@ KISSY.add("io/base", ["event/custom", "promise"], function(S, require) {
       return new IO(c)
     }
     Promise.call(self);
+    self.userConfig = c;
     c = setUpConfig(c);
     S.mix(self, {responseData:null, config:c || {}, timeoutTimer:null, responseText:null, responseXML:null, responseHeadersString:"", responseHeaders:null, requestHeaders:{}, readyState:0, state:0, statusText:null, status:0, transport:null});
     Promise.Defer(self);

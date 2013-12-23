@@ -101,7 +101,6 @@
             <!--kissy loader end-->
 
             <path location="${component.src.dir}/web.js"/>
-            <fileset dir="${component.src.dir}/meta/" includes="**/*.js"/>
             <path location="${component.src.dir}/exports.js"/>
         </concat>
     </target>

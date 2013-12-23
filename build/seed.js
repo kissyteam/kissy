@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50
 MIT Licensed
-build time: Dec 23 16:19
+build time: Dec 23 16:49
 */
 /**
  * @ignore
@@ -87,11 +87,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20131223161913' will replace with current timestamp when compressing.
+         * NOTICE: '20131223164935' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20131223161913',
+        __BUILD_TIME: '20131223164935',
 
         /**
          * KISSY Environment.
@@ -983,7 +983,7 @@ var KISSY = (function (undefined) {
             },
         /**
          * Converts object to a TRUE array.
-         * Note: do not pass form.elements to this function
+         * // do not pass form.elements to this function ie678 bug
          * @param o {object|Array} array like object or array
          * @return {Array} native Array
          * @member KISSY
@@ -1003,7 +1003,8 @@ var KISSY = (function (undefined) {
                 // https://github.com/kissyteam/kissy/issues/537
                 o.nodeName ||
                 // window
-                S.isWindow(o) ||
+                /*jshint eqeqeq:false*/
+                (o != null && o == o.window) ||
                 oType === 'string' ||
                 // https://github.com/ariya/phantomjs/issues/11478
                 (oType === 'function' && !('item' in o && lengthType === 'number'))) {
@@ -5489,7 +5490,7 @@ var KISSY = (function (undefined) {
     var doc = S.Env.host && S.Env.host.document;
     // var logger = S.getLogger('s/loader');
     var Utils = S.Loader.Utils;
-    var TIMESTAMP = '20131223161913';
+    var TIMESTAMP = '20131223164935';
     var defaultComboPrefix = '??';
     var defaultComboSep = ',';
 
@@ -5628,7 +5629,6 @@ KISSY.add('i18n', {
 (function (S, undefined) {
     var logger = S.getLogger('s/web');
     var win = S.Env.host,
-
         UA = S.UA,
         doc = win.document,
         docElem = doc && doc.documentElement,

@@ -319,7 +319,8 @@
                 // https://github.com/kissyteam/kissy/issues/537
                 o.nodeName ||
                 // window
-                S.isWindow(o) ||
+                /*jshint eqeqeq:false*/
+                (o != null && o == o.window) ||
                 oType === 'string' ||
                 // https://github.com/ariya/phantomjs/issues/11478
                 (oType === 'function' && !('item' in o && lengthType === 'number'))) {

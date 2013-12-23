@@ -257,12 +257,12 @@ if (! _$jscoverage['/io/form-serializer.js']) {
   _$jscoverage['/io/form-serializer.js'].lineData[81] = 0;
   _$jscoverage['/io/form-serializer.js'].lineData[83] = 0;
   _$jscoverage['/io/form-serializer.js'].lineData[85] = 0;
-  _$jscoverage['/io/form-serializer.js'].lineData[89] = 0;
   _$jscoverage['/io/form-serializer.js'].lineData[90] = 0;
   _$jscoverage['/io/form-serializer.js'].lineData[91] = 0;
   _$jscoverage['/io/form-serializer.js'].lineData[92] = 0;
-  _$jscoverage['/io/form-serializer.js'].lineData[94] = 0;
-  _$jscoverage['/io/form-serializer.js'].lineData[97] = 0;
+  _$jscoverage['/io/form-serializer.js'].lineData[93] = 0;
+  _$jscoverage['/io/form-serializer.js'].lineData[95] = 0;
+  _$jscoverage['/io/form-serializer.js'].lineData[98] = 0;
 }
 if (! _$jscoverage['/io/form-serializer.js'].functionData) {
   _$jscoverage['/io/form-serializer.js'].functionData = [];
@@ -295,12 +295,12 @@ if (! _$jscoverage['/io/form-serializer.js'].branchData) {
   _$jscoverage['/io/form-serializer.js'].branchData['75'][1] = new BranchData();
   _$jscoverage['/io/form-serializer.js'].branchData['79'] = [];
   _$jscoverage['/io/form-serializer.js'].branchData['79'][1] = new BranchData();
-  _$jscoverage['/io/form-serializer.js'].branchData['91'] = [];
-  _$jscoverage['/io/form-serializer.js'].branchData['91'][1] = new BranchData();
+  _$jscoverage['/io/form-serializer.js'].branchData['92'] = [];
+  _$jscoverage['/io/form-serializer.js'].branchData['92'][1] = new BranchData();
 }
-_$jscoverage['/io/form-serializer.js'].branchData['91'][1].init(47, 19, 'i < elements.length');
-function visit34_91_1(result) {
-  _$jscoverage['/io/form-serializer.js'].branchData['91'][1].ranCondition(result);
+_$jscoverage['/io/form-serializer.js'].branchData['92'][1].init(47, 19, 'i < elements.length');
+function visit34_92_1(result) {
+  _$jscoverage['/io/form-serializer.js'].branchData['92'][1].ranCondition(result);
   return result;
 }_$jscoverage['/io/form-serializer.js'].branchData['79'][1].init(586, 20, 'vs && !S.isArray(vs)');
 function visit33_79_1(result) {
@@ -414,19 +414,19 @@ KISSY.add(function(S, require) {
   _$jscoverage['/io/form-serializer.js'].lineData[85]++;
   return data;
 }};
-  _$jscoverage['/io/form-serializer.js'].lineData[89]++;
+  _$jscoverage['/io/form-serializer.js'].lineData[90]++;
   function elementsToArray(elements) {
     _$jscoverage['/io/form-serializer.js'].functionData[7]++;
-    _$jscoverage['/io/form-serializer.js'].lineData[90]++;
-    var ret = [];
     _$jscoverage['/io/form-serializer.js'].lineData[91]++;
-    for (var i = 0; visit34_91_1(i < elements.length); i++) {
-      _$jscoverage['/io/form-serializer.js'].lineData[92]++;
+    var ret = [];
+    _$jscoverage['/io/form-serializer.js'].lineData[92]++;
+    for (var i = 0; visit34_92_1(i < elements.length); i++) {
+      _$jscoverage['/io/form-serializer.js'].lineData[93]++;
       ret.push(elements[i]);
     }
-    _$jscoverage['/io/form-serializer.js'].lineData[94]++;
+    _$jscoverage['/io/form-serializer.js'].lineData[95]++;
     return ret;
   }
-  _$jscoverage['/io/form-serializer.js'].lineData[97]++;
+  _$jscoverage['/io/form-serializer.js'].lineData[98]++;
   return FormSerializer;
 });

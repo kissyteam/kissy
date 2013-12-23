@@ -3,7 +3,7 @@
  * a scalable client io framework
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S,require) {
+KISSY.add(function (S, require) {
     var CustomEvent = require('event/custom'),
         Promise = require('promise');
     var rlocalProtocol = /^(?:about|app|app\-storage|.+\-extension|file|widget)$/,
@@ -263,7 +263,7 @@ KISSY.add(function (S,require) {
      * cross sub domain request config object
      *
      * xdr.subDomain.proxy
-     * proxy page,eg:     *
+     * proxy page, eg:
      * a.t.cn/a.htm send request to b.t.cn/b.htm:
      *
      * 1. a.htm set <code> document.domain='t.cn' </code>
@@ -281,6 +281,8 @@ KISSY.add(function (S,require) {
         }
 
         Promise.call(self);
+
+        self.userConfig = c;
 
         c = setUpConfig(c);
 

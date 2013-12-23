@@ -6,7 +6,6 @@
 (function (S, undefined) {
     var logger = S.getLogger('s/web');
     var win = S.Env.host,
-
         UA = S.UA,
         doc = win.document,
         docElem = doc && doc.documentElement,
