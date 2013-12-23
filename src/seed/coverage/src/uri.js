@@ -538,147 +538,147 @@ if (! _$jscoverage['/uri.js'].branchData) {
   _$jscoverage['/uri.js'].branchData['657'][1] = new BranchData();
 }
 _$jscoverage['/uri.js'].branchData['657'][1].init(42, 30, 'url.match(URI_SPLIT_REG) || []');
-function visit638_657_1(result) {
+function visit639_657_1(result) {
   _$jscoverage['/uri.js'].branchData['657'][1].ranCondition(result);
   return result;
 }_$jscoverage['/uri.js'].branchData['656'][1].init(15, 9, 'url || \'\'');
-function visit637_656_1(result) {
+function visit638_656_1(result) {
   _$jscoverage['/uri.js'].branchData['656'][1].ranCondition(result);
   return result;
 }_$jscoverage['/uri.js'].branchData['632'][1].init(21, 36, 'hostname && !S.startsWith(path, \'/\')');
-function visit636_632_1(result) {
+function visit637_632_1(result) {
   _$jscoverage['/uri.js'].branchData['632'][1].ranCondition(result);
   return result;
 }_$jscoverage['/uri.js'].branchData['587'][1].init(66, 102, 'equalsIgnoreCase(self.scheme, other.scheme) && equalsIgnoreCase(self.port, other.port)');
-function visit635_587_1(result) {
+function visit636_587_1(result) {
   _$jscoverage['/uri.js'].branchData['587'][1].ranCondition(result);
   return result;
 }_$jscoverage['/uri.js'].branchData['586'][1].init(97, 169, 'equalsIgnoreCase(self.hostname, other.hostname) && equalsIgnoreCase(self.scheme, other.scheme) && equalsIgnoreCase(self.port, other.port)');
-function visit634_586_1(result) {
+function visit635_586_1(result) {
   _$jscoverage['/uri.js'].branchData['586'][1].ranCondition(result);
   return result;
 }_$jscoverage['/uri.js'].branchData['571'][1].init(46, 27, 'S.startsWith(fragment, \'#\')');
-function visit633_571_1(result) {
+function visit634_571_1(result) {
   _$jscoverage['/uri.js'].branchData['571'][1].ranCondition(result);
   return result;
 }_$jscoverage['/uri.js'].branchData['539'][1].init(21, 24, 'S.startsWith(query, \'?\')');
-function visit632_539_1(result) {
+function visit633_539_1(result) {
   _$jscoverage['/uri.js'].branchData['539'][1].ranCondition(result);
   return result;
 }_$jscoverage['/uri.js'].branchData['538'][1].init(17, 25, 'typeof query === \'string\'');
-function visit631_538_1(result) {
+function visit632_538_1(result) {
   _$jscoverage['/uri.js'].branchData['538'][1].ranCondition(result);
   return result;
 }_$jscoverage['/uri.js'].branchData['433'][1].init(1637, 26, 'override || relativeUri[o]');
-function visit630_433_1(result) {
+function visit631_433_1(result) {
   _$jscoverage['/uri.js'].branchData['433'][1].ranCondition(result);
   return result;
 }_$jscoverage['/uri.js'].branchData['429'][1].init(25, 40, 'override || relativeUri.query.toString()');
-function visit629_429_1(result) {
+function visit630_429_1(result) {
   _$jscoverage['/uri.js'].branchData['429'][1].ranCondition(result);
   return result;
 }_$jscoverage['/uri.js'].branchData['428'][1].init(1398, 13, 'o === \'query\'');
-function visit628_428_1(result) {
+function visit629_428_1(result) {
   _$jscoverage['/uri.js'].branchData['428'][1].ranCondition(result);
   return result;
 }_$jscoverage['/uri.js'].branchData['419'][1].init(195, 21, 'lastSlashIndex !== -1');
-function visit627_419_1(result) {
+function visit628_419_1(result) {
   _$jscoverage['/uri.js'].branchData['419'][1].ranCondition(result);
   return result;
 }_$jscoverage['/uri.js'].branchData['416'][1].init(242, 11, 'target.path');
-function visit626_416_1(result) {
+function visit627_416_1(result) {
   _$jscoverage['/uri.js'].branchData['416'][1].ranCondition(result);
   return result;
 }_$jscoverage['/uri.js'].branchData['413'][1].init(37, 31, 'target.hostname && !target.path');
-function visit625_413_1(result) {
+function visit626_413_1(result) {
   _$jscoverage['/uri.js'].branchData['413'][1].ranCondition(result);
   return result;
 }_$jscoverage['/uri.js'].branchData['412'][1].init(154, 24, '!S.startsWith(path, \'/\')');
-function visit624_412_1(result) {
+function visit625_412_1(result) {
   _$jscoverage['/uri.js'].branchData['412'][1].ranCondition(result);
   return result;
 }_$jscoverage['/uri.js'].branchData['409'][1].init(82, 4, 'path');
-function visit623_409_1(result) {
+function visit624_409_1(result) {
   _$jscoverage['/uri.js'].branchData['409'][1].ranCondition(result);
   return result;
 }_$jscoverage['/uri.js'].branchData['405'][1].init(107, 8, 'override');
-function visit622_405_1(result) {
+function visit623_405_1(result) {
   _$jscoverage['/uri.js'].branchData['405'][1].ranCondition(result);
   return result;
 }_$jscoverage['/uri.js'].branchData['403'][1].init(21, 12, 'o === \'path\'');
-function visit621_403_1(result) {
+function visit622_403_1(result) {
   _$jscoverage['/uri.js'].branchData['403'][1].ranCondition(result);
   return result;
 }_$jscoverage['/uri.js'].branchData['392'][1].init(18, 31, 'typeof relativeUri === \'string\'');
-function visit620_392_1(result) {
+function visit621_392_1(result) {
   _$jscoverage['/uri.js'].branchData['392'][1].ranCondition(result);
   return result;
 }_$jscoverage['/uri.js'].branchData['339'][1].init(42, 15, 'key === \'query\'');
-function visit619_339_1(result) {
+function visit620_339_1(result) {
   _$jscoverage['/uri.js'].branchData['339'][1].ranCondition(result);
   return result;
 }_$jscoverage['/uri.js'].branchData['338'][1].init(17, 7, 'v || \'\'');
-function visit618_338_1(result) {
+function visit619_338_1(result) {
   _$jscoverage['/uri.js'].branchData['338'][1].ranCondition(result);
   return result;
 }_$jscoverage['/uri.js'].branchData['291'][1].init(14, 22, 'uriStr instanceof Uri');
-function visit617_291_1(result) {
+function visit618_291_1(result) {
   _$jscoverage['/uri.js'].branchData['291'][1].ranCondition(result);
   return result;
 }_$jscoverage['/uri.js'].branchData['267'][1].init(16, 41, 'str1.toLowerCase() === str2.toLowerCase()');
-function visit616_267_1(result) {
+function visit617_267_1(result) {
   _$jscoverage['/uri.js'].branchData['267'][1].ranCondition(result);
   return result;
 }_$jscoverage['/uri.js'].branchData['263'][1].init(16, 16, 'str.length === 1');
-function visit615_263_1(result) {
+function visit616_263_1(result) {
   _$jscoverage['/uri.js'].branchData['263'][1].ranCondition(result);
   return result;
 }_$jscoverage['/uri.js'].branchData['240'][1].init(21, 20, 'key instanceof Query');
-function visit614_240_1(result) {
+function visit615_240_1(result) {
   _$jscoverage['/uri.js'].branchData['240'][1].ranCondition(result);
   return result;
 }_$jscoverage['/uri.js'].branchData['233'][1].init(146, 26, 'currentValue === undefined');
-function visit613_233_1(result) {
+function visit614_233_1(result) {
   _$jscoverage['/uri.js'].branchData['233'][1].ranCondition(result);
   return result;
 }_$jscoverage['/uri.js'].branchData['229'][1].init(103, 23, 'typeof key === \'string\'');
-function visit612_229_1(result) {
+function visit613_229_1(result) {
   _$jscoverage['/uri.js'].branchData['229'][1].ranCondition(result);
   return result;
 }_$jscoverage['/uri.js'].branchData['210'][1].init(76, 3, 'key');
-function visit611_210_1(result) {
+function visit612_210_1(result) {
   _$jscoverage['/uri.js'].branchData['210'][1].ranCondition(result);
   return result;
 }_$jscoverage['/uri.js'].branchData['192'][1].init(21, 20, 'key instanceof Query');
-function visit610_192_1(result) {
+function visit611_192_1(result) {
   _$jscoverage['/uri.js'].branchData['192'][1].ranCondition(result);
   return result;
 }_$jscoverage['/uri.js'].branchData['189'][1].init(127, 23, 'typeof key === \'string\'');
-function visit609_189_1(result) {
+function visit610_189_1(result) {
   _$jscoverage['/uri.js'].branchData['189'][1].ranCondition(result);
   return result;
 }_$jscoverage['/uri.js'].branchData['162'][1].init(127, 3, 'key');
-function visit608_162_1(result) {
+function visit609_162_1(result) {
   _$jscoverage['/uri.js'].branchData['162'][1].ranCondition(result);
   return result;
 }_$jscoverage['/uri.js'].branchData['147'][1].init(127, 3, 'key');
-function visit607_147_1(result) {
+function visit608_147_1(result) {
   _$jscoverage['/uri.js'].branchData['147'][1].ranCondition(result);
   return result;
 }_$jscoverage['/uri.js'].branchData['129'][1].init(22, 23, 'S.isArray(_queryMap[k])');
-function visit606_129_1(result) {
+function visit607_129_1(result) {
   _$jscoverage['/uri.js'].branchData['129'][1].ranCondition(result);
   return result;
 }_$jscoverage['/uri.js'].branchData['111'][1].init(56, 11, 'query || \'\'');
-function visit605_111_1(result) {
+function visit606_111_1(result) {
   _$jscoverage['/uri.js'].branchData['111'][1].ranCondition(result);
   return result;
 }_$jscoverage['/uri.js'].branchData['90'][1].init(23, 11, 'query || \'\'');
-function visit604_90_1(result) {
+function visit605_90_1(result) {
   _$jscoverage['/uri.js'].branchData['90'][1].ranCondition(result);
   return result;
 }_$jscoverage['/uri.js'].branchData['79'][1].init(13, 15, '!self._queryMap');
-function visit603_79_1(result) {
+function visit604_79_1(result) {
   _$jscoverage['/uri.js'].branchData['79'][1].ranCondition(result);
   return result;
 }_$jscoverage['/uri.js'].lineData[6]++;
@@ -699,7 +699,7 @@ function visit603_79_1(result) {
   function parseQuery(self) {
     _$jscoverage['/uri.js'].functionData[1]++;
     _$jscoverage['/uri.js'].lineData[79]++;
-    if (visit603_79_1(!self._queryMap)) {
+    if (visit604_79_1(!self._queryMap)) {
       _$jscoverage['/uri.js'].lineData[80]++;
       self._queryMap = S.unparam(self._query);
     }
@@ -708,7 +708,7 @@ function visit603_79_1(result) {
   function Query(query) {
     _$jscoverage['/uri.js'].functionData[2]++;
     _$jscoverage['/uri.js'].lineData[90]++;
-    this._query = visit604_90_1(query || '');
+    this._query = visit605_90_1(query || '');
   }
   _$jscoverage['/uri.js'].lineData[93]++;
   Query.prototype = {
@@ -723,7 +723,7 @@ function visit603_79_1(result) {
   _$jscoverage['/uri.js'].lineData[110]++;
   var self = this;
   _$jscoverage['/uri.js'].lineData[111]++;
-  self._query = visit605_111_1(query || '');
+  self._query = visit606_111_1(query || '');
   _$jscoverage['/uri.js'].lineData[112]++;
   self._queryMap = null;
   _$jscoverage['/uri.js'].lineData[113]++;
@@ -740,7 +740,7 @@ function visit603_79_1(result) {
   _$jscoverage['/uri.js'].lineData[127]++;
   for (k in _queryMap) {
     _$jscoverage['/uri.js'].lineData[129]++;
-    if (visit606_129_1(S.isArray(_queryMap[k]))) {
+    if (visit607_129_1(S.isArray(_queryMap[k]))) {
       _$jscoverage['/uri.js'].lineData[130]++;
       count += _queryMap[k].length;
     } else {
@@ -760,7 +760,7 @@ function visit603_79_1(result) {
   _$jscoverage['/uri.js'].lineData[146]++;
   _queryMap = self._queryMap;
   _$jscoverage['/uri.js'].lineData[147]++;
-  if (visit607_147_1(key)) {
+  if (visit608_147_1(key)) {
     _$jscoverage['/uri.js'].lineData[148]++;
     return key in _queryMap;
   } else {
@@ -777,7 +777,7 @@ function visit603_79_1(result) {
   _$jscoverage['/uri.js'].lineData[161]++;
   _queryMap = self._queryMap;
   _$jscoverage['/uri.js'].lineData[162]++;
-  if (visit608_162_1(key)) {
+  if (visit609_162_1(key)) {
     _$jscoverage['/uri.js'].lineData[163]++;
     return _queryMap[key];
   } else {
@@ -803,12 +803,12 @@ function visit603_79_1(result) {
   _$jscoverage['/uri.js'].lineData[188]++;
   _queryMap = self._queryMap;
   _$jscoverage['/uri.js'].lineData[189]++;
-  if (visit609_189_1(typeof key === 'string')) {
+  if (visit610_189_1(typeof key === 'string')) {
     _$jscoverage['/uri.js'].lineData[190]++;
     self._queryMap[key] = value;
   } else {
     _$jscoverage['/uri.js'].lineData[192]++;
-    if (visit610_192_1(key instanceof Query)) {
+    if (visit611_192_1(key instanceof Query)) {
       _$jscoverage['/uri.js'].lineData[193]++;
       key = key.get();
     }
@@ -829,7 +829,7 @@ function visit603_79_1(result) {
   _$jscoverage['/uri.js'].lineData[209]++;
   parseQuery(self);
   _$jscoverage['/uri.js'].lineData[210]++;
-  if (visit611_210_1(key)) {
+  if (visit612_210_1(key)) {
     _$jscoverage['/uri.js'].lineData[211]++;
     delete self._queryMap[key];
   } else {
@@ -844,7 +844,7 @@ function visit603_79_1(result) {
   _$jscoverage['/uri.js'].lineData[226]++;
   var self = this, _queryMap, currentValue;
   _$jscoverage['/uri.js'].lineData[229]++;
-  if (visit612_229_1(typeof key === 'string')) {
+  if (visit613_229_1(typeof key === 'string')) {
     _$jscoverage['/uri.js'].lineData[230]++;
     parseQuery(self);
     _$jscoverage['/uri.js'].lineData[231]++;
@@ -852,7 +852,7 @@ function visit603_79_1(result) {
     _$jscoverage['/uri.js'].lineData[232]++;
     currentValue = _queryMap[key];
     _$jscoverage['/uri.js'].lineData[233]++;
-    if (visit613_233_1(currentValue === undefined)) {
+    if (visit614_233_1(currentValue === undefined)) {
       _$jscoverage['/uri.js'].lineData[234]++;
       currentValue = value;
     } else {
@@ -863,7 +863,7 @@ function visit603_79_1(result) {
     _queryMap[key] = currentValue;
   } else {
     _$jscoverage['/uri.js'].lineData[240]++;
-    if (visit614_240_1(key instanceof Query)) {
+    if (visit615_240_1(key instanceof Query)) {
       _$jscoverage['/uri.js'].lineData[241]++;
       key = key.get();
     }
@@ -889,13 +889,13 @@ function visit603_79_1(result) {
   function padding2(str) {
     _$jscoverage['/uri.js'].functionData[14]++;
     _$jscoverage['/uri.js'].lineData[263]++;
-    return visit615_263_1(str.length === 1) ? '0' + str : str;
+    return visit616_263_1(str.length === 1) ? '0' + str : str;
   }
   _$jscoverage['/uri.js'].lineData[266]++;
   function equalsIgnoreCase(str1, str2) {
     _$jscoverage['/uri.js'].functionData[15]++;
     _$jscoverage['/uri.js'].lineData[267]++;
-    return visit616_267_1(str1.toLowerCase() === str2.toLowerCase());
+    return visit617_267_1(str1.toLowerCase() === str2.toLowerCase());
   }
   _$jscoverage['/uri.js'].lineData[273]++;
   function encodeSpecialChars(str, specialCharsReg) {
@@ -911,7 +911,7 @@ function visit603_79_1(result) {
   function Uri(uriStr) {
     _$jscoverage['/uri.js'].functionData[18]++;
     _$jscoverage['/uri.js'].lineData[291]++;
-    if (visit617_291_1(uriStr instanceof Uri)) {
+    if (visit618_291_1(uriStr instanceof Uri)) {
       _$jscoverage['/uri.js'].lineData[292]++;
       return uriStr.clone();
     }
@@ -932,9 +932,9 @@ function visit603_79_1(result) {
     S.each(components, function(v, key) {
   _$jscoverage['/uri.js'].functionData[19]++;
   _$jscoverage['/uri.js'].lineData[338]++;
-  v = visit618_338_1(v || '');
+  v = visit619_338_1(v || '');
   _$jscoverage['/uri.js'].lineData[339]++;
-  if (visit619_339_1(key === 'query')) {
+  if (visit620_339_1(key === 'query')) {
     _$jscoverage['/uri.js'].lineData[341]++;
     self.query = new Query(v);
   } else {
@@ -974,7 +974,7 @@ function visit603_79_1(result) {
   resolve: function(relativeUri) {
   _$jscoverage['/uri.js'].functionData[22]++;
   _$jscoverage['/uri.js'].lineData[392]++;
-  if (visit620_392_1(typeof relativeUri === 'string')) {
+  if (visit621_392_1(typeof relativeUri === 'string')) {
     _$jscoverage['/uri.js'].lineData[393]++;
     relativeUri = new Uri(relativeUri);
   }
@@ -984,31 +984,31 @@ function visit603_79_1(result) {
   S.each(order, function(o) {
   _$jscoverage['/uri.js'].functionData[23]++;
   _$jscoverage['/uri.js'].lineData[403]++;
-  if (visit621_403_1(o === 'path')) {
+  if (visit622_403_1(o === 'path')) {
     _$jscoverage['/uri.js'].lineData[405]++;
-    if (visit622_405_1(override)) {
+    if (visit623_405_1(override)) {
       _$jscoverage['/uri.js'].lineData[406]++;
       target[o] = relativeUri[o];
     } else {
       _$jscoverage['/uri.js'].lineData[408]++;
       var path = relativeUri.path;
       _$jscoverage['/uri.js'].lineData[409]++;
-      if (visit623_409_1(path)) {
+      if (visit624_409_1(path)) {
         _$jscoverage['/uri.js'].lineData[411]++;
         override = 1;
         _$jscoverage['/uri.js'].lineData[412]++;
-        if (visit624_412_1(!S.startsWith(path, '/'))) {
+        if (visit625_412_1(!S.startsWith(path, '/'))) {
           _$jscoverage['/uri.js'].lineData[413]++;
-          if (visit625_413_1(target.hostname && !target.path)) {
+          if (visit626_413_1(target.hostname && !target.path)) {
             _$jscoverage['/uri.js'].lineData[415]++;
             path = '/' + path;
           } else {
             _$jscoverage['/uri.js'].lineData[416]++;
-            if (visit626_416_1(target.path)) {
+            if (visit627_416_1(target.path)) {
               _$jscoverage['/uri.js'].lineData[418]++;
               lastSlashIndex = target.path.lastIndexOf('/');
               _$jscoverage['/uri.js'].lineData[419]++;
-              if (visit627_419_1(lastSlashIndex !== -1)) {
+              if (visit628_419_1(lastSlashIndex !== -1)) {
                 _$jscoverage['/uri.js'].lineData[420]++;
                 path = target.path.slice(0, lastSlashIndex + 1) + path;
               }
@@ -1021,9 +1021,9 @@ function visit603_79_1(result) {
     }
   } else {
     _$jscoverage['/uri.js'].lineData[428]++;
-    if (visit628_428_1(o === 'query')) {
+    if (visit629_428_1(o === 'query')) {
       _$jscoverage['/uri.js'].lineData[429]++;
-      if (visit629_429_1(override || relativeUri.query.toString())) {
+      if (visit630_429_1(override || relativeUri.query.toString())) {
         _$jscoverage['/uri.js'].lineData[430]++;
         target.query = relativeUri.query.clone();
         _$jscoverage['/uri.js'].lineData[431]++;
@@ -1031,7 +1031,7 @@ function visit603_79_1(result) {
       }
     } else {
       _$jscoverage['/uri.js'].lineData[433]++;
-      if (visit630_433_1(override || relativeUri[o])) {
+      if (visit631_433_1(override || relativeUri[o])) {
         _$jscoverage['/uri.js'].lineData[434]++;
         target[o] = relativeUri[o];
         _$jscoverage['/uri.js'].lineData[435]++;
@@ -1106,9 +1106,9 @@ function visit603_79_1(result) {
   setQuery: function(query) {
   _$jscoverage['/uri.js'].functionData[34]++;
   _$jscoverage['/uri.js'].lineData[538]++;
-  if (visit631_538_1(typeof query === 'string')) {
+  if (visit632_538_1(typeof query === 'string')) {
     _$jscoverage['/uri.js'].lineData[539]++;
-    if (visit632_539_1(S.startsWith(query, '?'))) {
+    if (visit633_539_1(S.startsWith(query, '?'))) {
       _$jscoverage['/uri.js'].lineData[540]++;
       query = query.slice(1);
     }
@@ -1135,7 +1135,7 @@ function visit603_79_1(result) {
   _$jscoverage['/uri.js'].lineData[570]++;
   var self = this;
   _$jscoverage['/uri.js'].lineData[571]++;
-  if (visit633_571_1(S.startsWith(fragment, '#'))) {
+  if (visit634_571_1(S.startsWith(fragment, '#'))) {
     _$jscoverage['/uri.js'].lineData[572]++;
     fragment = fragment.slice(1);
   }
@@ -1149,7 +1149,7 @@ function visit603_79_1(result) {
   _$jscoverage['/uri.js'].lineData[584]++;
   var self = this;
   _$jscoverage['/uri.js'].lineData[586]++;
-  return visit634_586_1(equalsIgnoreCase(self.hostname, other.hostname) && visit635_587_1(equalsIgnoreCase(self.scheme, other.scheme) && equalsIgnoreCase(self.port, other.port)));
+  return visit635_586_1(equalsIgnoreCase(self.hostname, other.hostname) && visit636_587_1(equalsIgnoreCase(self.scheme, other.scheme) && equalsIgnoreCase(self.port, other.port)));
 }, 
   toString: function(serializeArray) {
   _$jscoverage['/uri.js'].functionData[39]++;
@@ -1186,7 +1186,7 @@ function visit603_79_1(result) {
   _$jscoverage['/uri.js'].lineData[631]++;
   if ((path = self.path)) {
     _$jscoverage['/uri.js'].lineData[632]++;
-    if (visit636_632_1(hostname && !S.startsWith(path, '/'))) {
+    if (visit637_632_1(hostname && !S.startsWith(path, '/'))) {
       _$jscoverage['/uri.js'].lineData[633]++;
       path = '/' + path;
     }
@@ -1218,9 +1218,9 @@ function visit603_79_1(result) {
   Uri.getComponents = function(url) {
   _$jscoverage['/uri.js'].functionData[40]++;
   _$jscoverage['/uri.js'].lineData[656]++;
-  url = visit637_656_1(url || '');
+  url = visit638_656_1(url || '');
   _$jscoverage['/uri.js'].lineData[657]++;
-  var m = visit638_657_1(url.match(URI_SPLIT_REG) || []), ret = {};
+  var m = visit639_657_1(url.match(URI_SPLIT_REG) || []), ret = {};
   _$jscoverage['/uri.js'].lineData[659]++;
   S.each(REG_INFO, function(index, key) {
   _$jscoverage['/uri.js'].functionData[41]++;

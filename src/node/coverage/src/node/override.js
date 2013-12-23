@@ -268,15 +268,15 @@ if (! _$jscoverage['/node/override.js'].branchData) {
   _$jscoverage['/node/override.js'].branchData['51'][1] = new BranchData();
 }
 _$jscoverage['/node/override.js'].branchData['51'][1].init(46, 26, 'typeof others === \'string\'');
-function visit39_51_1(result) {
+function visit40_51_1(result) {
   _$jscoverage['/node/override.js'].branchData['51'][1].ranCondition(result);
   return result;
 }_$jscoverage['/node/override.js'].branchData['40'][1].init(192, 7, 'newNode');
-function visit38_40_1(result) {
+function visit39_40_1(result) {
   _$jscoverage['/node/override.js'].branchData['40'][1].ranCondition(result);
   return result;
 }_$jscoverage['/node/override.js'].branchData['37'][1].init(84, 27, 'typeof newNode === \'string\'');
-function visit37_37_1(result) {
+function visit38_37_1(result) {
   _$jscoverage['/node/override.js'].branchData['37'][1].ranCondition(result);
   return result;
 }_$jscoverage['/node/override.js'].lineData[6]++;
@@ -299,12 +299,12 @@ KISSY.add(function(S, require) {
   _$jscoverage['/node/override.js'].lineData[35]++;
   var newNode = html, self = this;
   _$jscoverage['/node/override.js'].lineData[37]++;
-  if (visit37_37_1(typeof newNode === 'string')) {
+  if (visit38_37_1(typeof newNode === 'string')) {
     _$jscoverage['/node/override.js'].lineData[38]++;
     newNode = Dom.create(newNode);
   }
   _$jscoverage['/node/override.js'].lineData[40]++;
-  if (visit38_40_1(newNode)) {
+  if (visit39_40_1(newNode)) {
     _$jscoverage['/node/override.js'].lineData[41]++;
     Dom[insertType](newNode, self);
   }
@@ -323,7 +323,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/node/override.js'].lineData[50]++;
   var self = this;
   _$jscoverage['/node/override.js'].lineData[51]++;
-  if (visit39_51_1(typeof others === 'string')) {
+  if (visit40_51_1(typeof others === 'string')) {
     _$jscoverage['/node/override.js'].lineData[52]++;
     others = NodeList.all(others, self[0].ownerDocument);
   }

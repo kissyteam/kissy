@@ -28,6 +28,10 @@ KISSY.add(function (S, require) {
         var self = this,
             domNode;
 
+        if (html instanceof NodeList) {
+            return html.slice();
+        }
+
         if (!(self instanceof NodeList)) {
             return new NodeList(html, props, ownerDocument);
         }

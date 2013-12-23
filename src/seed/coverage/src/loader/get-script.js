@@ -352,91 +352,91 @@ if (! _$jscoverage['/loader/get-script.js'].branchData) {
   _$jscoverage['/loader/get-script.js'].branchData['160'][1] = new BranchData();
 }
 _$jscoverage['/loader/get-script.js'].branchData['160'][1].init(3301, 3, 'css');
-function visit446_160_1(result) {
+function visit447_160_1(result) {
   _$jscoverage['/loader/get-script.js'].branchData['160'][1].ranCondition(result);
   return result;
 }_$jscoverage['/loader/get-script.js'].branchData['157'][1].init(3226, 9, '!headNode');
-function visit445_157_1(result) {
+function visit446_157_1(result) {
   _$jscoverage['/loader/get-script.js'].branchData['157'][1].ranCondition(result);
   return result;
 }_$jscoverage['/loader/get-script.js'].branchData['152'][1].init(3077, 7, 'timeout');
-function visit444_152_1(result) {
+function visit445_152_1(result) {
   _$jscoverage['/loader/get-script.js'].branchData['152'][1].ranCondition(result);
   return result;
 }_$jscoverage['/loader/get-script.js'].branchData['143'][1].init(2857, 3, 'css');
-function visit443_143_1(result) {
+function visit444_143_1(result) {
   _$jscoverage['/loader/get-script.js'].branchData['143'][1].ranCondition(result);
   return result;
 }_$jscoverage['/loader/get-script.js'].branchData['137'][1].init(2673, 9, 'useNative');
-function visit442_137_1(result) {
+function visit443_137_1(result) {
   _$jscoverage['/loader/get-script.js'].branchData['137'][1].ranCondition(result);
   return result;
 }_$jscoverage['/loader/get-script.js'].branchData['130'][1].init(42, 25, 'readyState === \'complete\'');
-function visit441_130_1(result) {
+function visit442_130_1(result) {
   _$jscoverage['/loader/get-script.js'].branchData['130'][1].ranCondition(result);
   return result;
 }_$jscoverage['/loader/get-script.js'].branchData['129'][2].init(96, 23, 'readyState === \'loaded\'');
-function visit440_129_2(result) {
+function visit441_129_2(result) {
   _$jscoverage['/loader/get-script.js'].branchData['129'][2].ranCondition(result);
   return result;
 }_$jscoverage['/loader/get-script.js'].branchData['129'][1].init(30, 68, 'readyState === \'loaded\' || readyState === \'complete\'');
-function visit439_129_1(result) {
+function visit440_129_1(result) {
   _$jscoverage['/loader/get-script.js'].branchData['129'][1].ranCondition(result);
   return result;
 }_$jscoverage['/loader/get-script.js'].branchData['128'][1].init(63, 99, '!readyState || readyState === \'loaded\' || readyState === \'complete\'');
-function visit438_128_1(result) {
+function visit439_128_1(result) {
   _$jscoverage['/loader/get-script.js'].branchData['128'][1].ranCondition(result);
   return result;
 }_$jscoverage['/loader/get-script.js'].branchData['122'][2].init(2251, 25, 'forceCssPoll && useNative');
-function visit437_122_2(result) {
+function visit438_122_2(result) {
   _$jscoverage['/loader/get-script.js'].branchData['122'][2].ranCondition(result);
   return result;
 }_$jscoverage['/loader/get-script.js'].branchData['122'][1].init(2244, 32, 'css && forceCssPoll && useNative');
-function visit436_122_1(result) {
+function visit437_122_1(result) {
   _$jscoverage['/loader/get-script.js'].branchData['122'][1].ranCondition(result);
   return result;
 }_$jscoverage['/loader/get-script.js'].branchData['120'][3].init(2213, 15, 'UA.webkit < 536');
-function visit435_120_3(result) {
+function visit436_120_3(result) {
   _$jscoverage['/loader/get-script.js'].branchData['120'][3].ranCondition(result);
   return result;
 }_$jscoverage['/loader/get-script.js'].branchData['120'][2].init(2200, 28, 'UA.webkit && UA.webkit < 536');
-function visit434_120_2(result) {
+function visit435_120_2(result) {
   _$jscoverage['/loader/get-script.js'].branchData['120'][2].ranCondition(result);
   return result;
 }_$jscoverage['/loader/get-script.js'].branchData['120'][1].init(2174, 55, 'S.Config.forceCssPoll || (UA.webkit && UA.webkit < 536)');
-function visit433_120_1(result) {
+function visit434_120_1(result) {
   _$jscoverage['/loader/get-script.js'].branchData['120'][1].ranCondition(result);
   return result;
 }_$jscoverage['/loader/get-script.js'].branchData['92'][1].init(1269, 3, 'css');
-function visit432_92_1(result) {
+function visit433_92_1(result) {
   _$jscoverage['/loader/get-script.js'].branchData['92'][1].ranCondition(result);
   return result;
 }_$jscoverage['/loader/get-script.js'].branchData['88'][1].init(1199, 7, 'charset');
-function visit431_88_1(result) {
+function visit432_88_1(result) {
   _$jscoverage['/loader/get-script.js'].branchData['88'][1].ranCondition(result);
   return result;
 }_$jscoverage['/loader/get-script.js'].branchData['82'][1].init(1066, 5, 'attrs');
-function visit430_82_1(result) {
+function visit431_82_1(result) {
   _$jscoverage['/loader/get-script.js'].branchData['82'][1].ranCondition(result);
   return result;
 }_$jscoverage['/loader/get-script.js'].branchData['76'][1].init(21, 5, 'timer');
-function visit429_76_1(result) {
+function visit430_76_1(result) {
   _$jscoverage['/loader/get-script.js'].branchData['76'][1].ranCondition(result);
   return result;
 }_$jscoverage['/loader/get-script.js'].branchData['70'][1].init(744, 20, 'callbacks.length > 1');
-function visit428_70_1(result) {
+function visit429_70_1(result) {
   _$jscoverage['/loader/get-script.js'].branchData['70'][1].ranCondition(result);
   return result;
 }_$jscoverage['/loader/get-script.js'].branchData['66'][1].init(661, 25, 'jsCssCallbacks[url] || []');
-function visit427_66_1(result) {
+function visit428_66_1(result) {
   _$jscoverage['/loader/get-script.js'].branchData['66'][1].ranCondition(result);
   return result;
 }_$jscoverage['/loader/get-script.js'].branchData['58'][1].init(399, 23, 'S.isPlainObject(config)');
-function visit426_58_1(result) {
+function visit427_58_1(result) {
   _$jscoverage['/loader/get-script.js'].branchData['58'][1].ranCondition(result);
   return result;
 }_$jscoverage['/loader/get-script.js'].branchData['54'][1].init(298, 53, 'S.startsWith(Path.extname(url).toLowerCase(), \'.css\')');
-function visit425_54_1(result) {
+function visit426_54_1(result) {
   _$jscoverage['/loader/get-script.js'].branchData['54'][1].ranCondition(result);
   return result;
 }_$jscoverage['/loader/get-script.js'].lineData[6]++;
@@ -450,12 +450,12 @@ function visit425_54_1(result) {
   _$jscoverage['/loader/get-script.js'].lineData[46]++;
   var config = success, css = 0, error, timeout, attrs, callbacks, timer;
   _$jscoverage['/loader/get-script.js'].lineData[54]++;
-  if (visit425_54_1(S.startsWith(Path.extname(url).toLowerCase(), '.css'))) {
+  if (visit426_54_1(S.startsWith(Path.extname(url).toLowerCase(), '.css'))) {
     _$jscoverage['/loader/get-script.js'].lineData[55]++;
     css = 1;
   }
   _$jscoverage['/loader/get-script.js'].lineData[58]++;
-  if (visit426_58_1(S.isPlainObject(config))) {
+  if (visit427_58_1(S.isPlainObject(config))) {
     _$jscoverage['/loader/get-script.js'].lineData[59]++;
     success = config.success;
     _$jscoverage['/loader/get-script.js'].lineData[60]++;
@@ -468,11 +468,11 @@ function visit425_54_1(result) {
     attrs = config.attrs;
   }
   _$jscoverage['/loader/get-script.js'].lineData[66]++;
-  callbacks = jsCssCallbacks[url] = visit427_66_1(jsCssCallbacks[url] || []);
+  callbacks = jsCssCallbacks[url] = visit428_66_1(jsCssCallbacks[url] || []);
   _$jscoverage['/loader/get-script.js'].lineData[68]++;
   callbacks.push([success, error]);
   _$jscoverage['/loader/get-script.js'].lineData[70]++;
-  if (visit428_70_1(callbacks.length > 1)) {
+  if (visit429_70_1(callbacks.length > 1)) {
     _$jscoverage['/loader/get-script.js'].lineData[71]++;
     return callbacks.node;
   }
@@ -480,7 +480,7 @@ function visit425_54_1(result) {
   var node = doc.createElement(css ? 'link' : 'script'), clearTimer = function() {
   _$jscoverage['/loader/get-script.js'].functionData[2]++;
   _$jscoverage['/loader/get-script.js'].lineData[76]++;
-  if (visit429_76_1(timer)) {
+  if (visit430_76_1(timer)) {
     _$jscoverage['/loader/get-script.js'].lineData[77]++;
     timer.cancel();
     _$jscoverage['/loader/get-script.js'].lineData[78]++;
@@ -488,7 +488,7 @@ function visit425_54_1(result) {
   }
 };
   _$jscoverage['/loader/get-script.js'].lineData[82]++;
-  if (visit430_82_1(attrs)) {
+  if (visit431_82_1(attrs)) {
     _$jscoverage['/loader/get-script.js'].lineData[83]++;
     S.each(attrs, function(v, n) {
   _$jscoverage['/loader/get-script.js'].functionData[3]++;
@@ -497,12 +497,12 @@ function visit425_54_1(result) {
 });
   }
   _$jscoverage['/loader/get-script.js'].lineData[88]++;
-  if (visit431_88_1(charset)) {
+  if (visit432_88_1(charset)) {
     _$jscoverage['/loader/get-script.js'].lineData[89]++;
     node.charset = charset;
   }
   _$jscoverage['/loader/get-script.js'].lineData[92]++;
-  if (visit432_92_1(css)) {
+  if (visit433_92_1(css)) {
     _$jscoverage['/loader/get-script.js'].lineData[93]++;
     node.href = url;
     _$jscoverage['/loader/get-script.js'].lineData[94]++;
@@ -537,9 +537,9 @@ function visit425_54_1(result) {
   _$jscoverage['/loader/get-script.js'].lineData[114]++;
   var useNative = 'onload' in node;
   _$jscoverage['/loader/get-script.js'].lineData[120]++;
-  var forceCssPoll = visit433_120_1(S.Config.forceCssPoll || (visit434_120_2(UA.webkit && visit435_120_3(UA.webkit < 536))));
+  var forceCssPoll = visit434_120_1(S.Config.forceCssPoll || (visit435_120_2(UA.webkit && visit436_120_3(UA.webkit < 536))));
   _$jscoverage['/loader/get-script.js'].lineData[122]++;
-  if (visit436_122_1(css && visit437_122_2(forceCssPoll && useNative))) {
+  if (visit437_122_1(css && visit438_122_2(forceCssPoll && useNative))) {
     _$jscoverage['/loader/get-script.js'].lineData[123]++;
     useNative = false;
   }
@@ -549,7 +549,7 @@ function visit425_54_1(result) {
     _$jscoverage['/loader/get-script.js'].lineData[127]++;
     var readyState = node.readyState;
     _$jscoverage['/loader/get-script.js'].lineData[128]++;
-    if (visit438_128_1(!readyState || visit439_129_1(visit440_129_2(readyState === 'loaded') || visit441_130_1(readyState === 'complete')))) {
+    if (visit439_128_1(!readyState || visit440_129_1(visit441_129_2(readyState === 'loaded') || visit442_130_1(readyState === 'complete')))) {
       _$jscoverage['/loader/get-script.js'].lineData[131]++;
       node.onreadystatechange = node.onload = null;
       _$jscoverage['/loader/get-script.js'].lineData[132]++;
@@ -557,7 +557,7 @@ function visit425_54_1(result) {
     }
   }
   _$jscoverage['/loader/get-script.js'].lineData[137]++;
-  if (visit442_137_1(useNative)) {
+  if (visit443_137_1(useNative)) {
     _$jscoverage['/loader/get-script.js'].lineData[138]++;
     node.onload = onload;
     _$jscoverage['/loader/get-script.js'].lineData[139]++;
@@ -570,7 +570,7 @@ function visit425_54_1(result) {
 };
   } else {
     _$jscoverage['/loader/get-script.js'].lineData[143]++;
-    if (visit443_143_1(css)) {
+    if (visit444_143_1(css)) {
       _$jscoverage['/loader/get-script.js'].lineData[145]++;
       Utils.pollCss(node, function() {
   _$jscoverage['/loader/get-script.js'].functionData[8]++;
@@ -583,7 +583,7 @@ function visit425_54_1(result) {
     }
   }
   _$jscoverage['/loader/get-script.js'].lineData[152]++;
-  if (visit444_152_1(timeout)) {
+  if (visit445_152_1(timeout)) {
     _$jscoverage['/loader/get-script.js'].lineData[153]++;
     timer = S.later(function() {
   _$jscoverage['/loader/get-script.js'].functionData[9]++;
@@ -592,12 +592,12 @@ function visit425_54_1(result) {
 }, timeout * MILLISECONDS_OF_SECOND);
   }
   _$jscoverage['/loader/get-script.js'].lineData[157]++;
-  if (visit445_157_1(!headNode)) {
+  if (visit446_157_1(!headNode)) {
     _$jscoverage['/loader/get-script.js'].lineData[158]++;
     headNode = Utils.docHead();
   }
   _$jscoverage['/loader/get-script.js'].lineData[160]++;
-  if (visit446_160_1(css)) {
+  if (visit447_160_1(css)) {
     _$jscoverage['/loader/get-script.js'].lineData[163]++;
     headNode.appendChild(node);
   } else {

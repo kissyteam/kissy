@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50
 MIT Licensed
-build time: Dec 23 17:45
+build time: Dec 23 19:56
 */
 /**
  * @ignore
@@ -87,11 +87,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20131223174541' will replace with current timestamp when compressing.
+         * NOTICE: '20131223195546' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20131223174541',
+        __BUILD_TIME: '20131223195546',
 
         /**
          * KISSY Environment.
@@ -1001,7 +1001,7 @@ var KISSY = (function (undefined) {
             if (lengthType !== 'number' ||
                 // select element
                 // https://github.com/kissyteam/kissy/issues/537
-                o.nodeName ||
+                typeof o.nodeName === 'string' ||
                 // window
                 /*jshint eqeqeq:false*/
                 (o != null && o == o.window) ||
@@ -5359,7 +5359,7 @@ var KISSY = (function (undefined) {
     var doc = S.Env.host && S.Env.host.document;
     // var logger = S.getLogger('s/loader');
     var Utils = S.Loader.Utils;
-    var TIMESTAMP = '20131223174541';
+    var TIMESTAMP = '20131223195546';
     var defaultComboPrefix = '??';
     var defaultComboSep = ',';
 

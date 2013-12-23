@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50
 MIT Licensed
-build time: Dec 12 22:20
+build time: Dec 23 19:56
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -19,6 +19,9 @@ KISSY.add("node/base", ["dom", "event/dom"], function(S, require) {
   var AP = Array.prototype, slice = AP.slice, NodeType = Dom.NodeType, push = AP.push, makeArray = S.makeArray, isNodeList = Dom.isDomNodeList;
   function NodeList(html, props, ownerDocument) {
     var self = this, domNode;
+    if(html instanceof NodeList) {
+      return html.slice()
+    }
     if(!(self instanceof NodeList)) {
       return new NodeList(html, props, ownerDocument)
     }

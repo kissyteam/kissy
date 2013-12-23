@@ -317,7 +317,7 @@
             if (lengthType !== 'number' ||
                 // select element
                 // https://github.com/kissyteam/kissy/issues/537
-                o.nodeName ||
+                typeof o.nodeName === 'string' ||
                 // window
                 /*jshint eqeqeq:false*/
                 (o != null && o == o.window) ||
