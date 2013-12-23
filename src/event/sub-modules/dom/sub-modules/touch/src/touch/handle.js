@@ -9,9 +9,7 @@ KISSY.add(function (S, require) {
     var DomEvent = require('event/dom/base');
     require('./tap');
     require('./swipe');
-    require('./double-tap');
     require('./pinch');
-    require('./tap-hold');
     require('./rotate');
 
     var key = S.guid('touch-handle'),

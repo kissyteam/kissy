@@ -12,56 +12,157 @@ KISSY.add(function (S, require) {
         e.preventDefault();
     }
 
-    var sensitivity = 5;
-    var event = 'tap';
-    var DomEventObject = DomEvent.Object;
+    var SINGLE_TAP_EVENT = 'singleTap',
+        DOUBLE_TAP_EVENT = 'doubleTap',
+        TAP_HOLD_EVENT = 'tapHold',
+        TAP_EVENT = 'tap',
+        TAP_HOLD_DELAY = 1000,
+    // same with native click delay
+        SINGLE_TAP_DELAY = 300,
+        TOUCH_MOVE_SENSITIVITY = 5,
+        DomEventObject = DomEvent.Object;
 
     function Tap() {
         Tap.superclass.constructor.apply(this, arguments);
     }
 
     S.extend(Tap, SingleTouch, {
+        onTouchStart: function (e) {
+            var self = this;
+            if (Tap.superclass.onTouchStart.call(self, e) === false) {
+                return false;
+            }
+
+            // tapHold
+            if (self.tapHoldTimer) {
+                clearTimeout(self.tapHoldTimer);
+            }
+            self.tapHoldTimer = setTimeout(function () {
+                var eventObj = S.mix({
+                    touch: e.touches[0],
+                    which: 1,
+                    TAP_HOLD_DELAY: (S.now() - e.timeStamp) / 1000
+                }, self.lastXY);
+                self.tapHoldTimer = 0;
+                self.lastXY = 0;
+                DomEvent.fire(e.target, TAP_HOLD_EVENT, eventObj);
+            }, TAP_HOLD_DELAY);
+
+            // doubleTap and singleTap
+            self.startTime = e.timeStamp;
+            if (self.singleTapTimer) {
+                clearTimeout(self.singleTapTimer);
+                self.singleTapTimer = 0;
+            }
+
+            return undefined;
+        },
         onTouchMove: function (e) {
-            var firstTouchXY = this.lastXY;
+            var self = this, lastXY;
+            if (!(lastXY = self.lastXY)) {
+                return false;
+            }
             var currentTouch = e.changedTouches[0];
-            // some sensitivity
+            // some TOUCH_MOVE_SENSITIVITY
             // android browser will trigger touchmove event finger is not moved ...
             // ie10 will has no touch when mouse
             if (!currentTouch ||
-                Math.abs(currentTouch.pageX - firstTouchXY.pageX) > sensitivity ||
-                Math.abs(currentTouch.pageY - firstTouchXY.pageY) > sensitivity) {
+                Math.abs(currentTouch.pageX - lastXY.pageX) > TOUCH_MOVE_SENSITIVITY ||
+                Math.abs(currentTouch.pageY - lastXY.pageY) > TOUCH_MOVE_SENSITIVITY) {
                 return false;
             }
             return undefined;
         },
 
         onTouchEnd: function (e) {
-            var touch = e.changedTouches[0];
+            var self = this, lastXY;
+            // tapHold fired
+            if (!(lastXY = self.lastXY)) {
+                return;
+            }
             var target = e.target;
+            var touch = e.changedTouches[0];
+
+            // cancel tapHold
+            if (self.tapHoldTimer) {
+                clearTimeout(self.tapHoldTimer);
+                self.tapHoldTimer = 0;
+            }
+
+            // fire tap
             var eventObject = new DomEventObject({
-                type: event,
+                type: TAP_EVENT,
+                which: 1,
+                pageX: lastXY.pageX,
+                pageY: lastXY.pageY,
                 target: target,
                 currentTarget: target
             });
-            S.mix(eventObject, {
-                pageX: touch.pageX,
-                pageY: touch.pageY,
-                // call e.preventDefault on tap event to prevent tap penetration
-                originalEvent: e.originalEvent,
-                which: 1,
-                touch: touch
-            });
-            DomEvent.fire(target, event, eventObject);
+            eventObject.touch = touch;
+            // call e.preventDefault on tap event to prevent tap penetration
+            eventObject.originalEvent = e.originalEvent;
+            DomEvent.fire(target, TAP_EVENT, eventObject);
+            // preventDefault on tap cause preventDefault click
             if (eventObject.isDefaultPrevented()) {
                 DomEvent.on(target, 'click', {
                     fn: preventDefault,
                     once: 1
                 });
             }
+
+            // fire singleTap or doubleTap
+            var lastEndTime = self.lastEndTime,
+                time = e.timeStamp,
+                duration;
+            self.lastEndTime = time;
+            // second touch end
+            if (lastEndTime) {
+                // time between current up and last up
+                duration = time - lastEndTime;
+                // a double tap
+                if (duration < SINGLE_TAP_DELAY) {
+                    // a new double tap cycle
+                    self.lastEndTime = 0;
+                    DomEvent.fire(target, DOUBLE_TAP_EVENT, {
+                        touch: touch,
+                        pageX: lastXY.pageX,
+                        pageY: lastXY.pageY,
+                        which: 1,
+                        duration: duration / 1000
+                    });
+                    return;
+                }
+                // else treat as the first tap cycle
+            }
+
+            // time between down and up is long enough
+            // then a singleTap
+            duration = time - self.startTime;
+            if (duration > SINGLE_TAP_DELAY) {
+                DomEvent.fire(target, SINGLE_TAP_EVENT, {
+                    touch: touch,
+                    pageX: lastXY.pageX,
+                    pageY: lastXY.pageY,
+                    which: 1,
+                    duration: duration / 1000
+                });
+            } else {
+                // buffer singleTap
+                // wait for a second tap
+                self.singleTapTimer = setTimeout(function () {
+                    DomEvent.fire(target, SINGLE_TAP_EVENT, {
+                        touch: touch,
+                        pageX: lastXY.pageX,
+                        pageY: lastXY.pageY,
+                        which: 1,
+                        duration: duration / 1000
+                    });
+                }, SINGLE_TAP_DELAY);
+            }
         }
     });
 
-    eventHandleMap[event] = {
+    eventHandleMap[TAP_EVENT] = eventHandleMap[DOUBLE_TAP_EVENT] = eventHandleMap[SINGLE_TAP_EVENT] = eventHandleMap[TAP_HOLD_EVENT] = {
         handle: new Tap()
     };
 
