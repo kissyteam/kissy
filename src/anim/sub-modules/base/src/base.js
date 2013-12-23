@@ -155,7 +155,7 @@ KISSY.add(function (S, require) {
                         if (val === 'toggle') {
                             val = hidden ? 'show' : 'hide';
                         }
-                        else if (val === 'hide') {
+                        if (val === 'hide') {
                             _propData.value = 0;
                             // 执行完后隐藏
                             _backupProps.display = 'none';

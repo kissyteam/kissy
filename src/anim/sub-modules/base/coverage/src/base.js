@@ -505,15 +505,15 @@ function visit59_218_1(result) {
 function visit58_212_1(result) {
   _$jscoverage['/base.js'].branchData['212'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base.js'].branchData['178'][1].init(3831, 27, 'S.isEmptyObject(_propsData)');
+}_$jscoverage['/base.js'].branchData['178'][1].init(3826, 27, 'S.isEmptyObject(_propsData)');
 function visit57_178_1(result) {
   _$jscoverage['/base.js'].branchData['178'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base.js'].branchData['172'][1].init(2649, 14, 'exit === false');
+}_$jscoverage['/base.js'].branchData['172'][1].init(2644, 14, 'exit === false');
 function visit56_172_1(result) {
   _$jscoverage['/base.js'].branchData['172'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base.js'].branchData['158'][1].init(591, 14, 'val === \'hide\'');
+}_$jscoverage['/base.js'].branchData['158'][1].init(585, 14, 'val === \'hide\'');
 function visit55_158_1(result) {
   _$jscoverage['/base.js'].branchData['158'][1].ranCondition(result);
   return result;
@@ -763,21 +763,20 @@ KISSY.add(function(S, require) {
     if (visit54_155_1(val === 'toggle')) {
       _$jscoverage['/base.js'].lineData[156]++;
       val = hidden ? 'show' : 'hide';
+    }
+    _$jscoverage['/base.js'].lineData[158]++;
+    if (visit55_158_1(val === 'hide')) {
+      _$jscoverage['/base.js'].lineData[159]++;
+      _propData.value = 0;
+      _$jscoverage['/base.js'].lineData[161]++;
+      _backupProps.display = 'none';
     } else {
-      _$jscoverage['/base.js'].lineData[158]++;
-      if (visit55_158_1(val === 'hide')) {
-        _$jscoverage['/base.js'].lineData[159]++;
-        _propData.value = 0;
-        _$jscoverage['/base.js'].lineData[161]++;
-        _backupProps.display = 'none';
-      } else {
-        _$jscoverage['/base.js'].lineData[163]++;
-        _propData.value = Dom.css(node, prop);
-        _$jscoverage['/base.js'].lineData[165]++;
-        Dom.css(node, prop, 0);
-        _$jscoverage['/base.js'].lineData[166]++;
-        Dom.show(node);
-      }
+      _$jscoverage['/base.js'].lineData[163]++;
+      _propData.value = Dom.css(node, prop);
+      _$jscoverage['/base.js'].lineData[165]++;
+      Dom.css(node, prop, 0);
+      _$jscoverage['/base.js'].lineData[166]++;
+      Dom.show(node);
     }
   }
   _$jscoverage['/base.js'].lineData[169]++;
