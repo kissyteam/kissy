@@ -111,6 +111,18 @@ KISSY.add(function (S, require, exports) {
         fireMiddleWare(request, response, fireRoutes);
     }
 
+    /**
+     * Router using hash or html5 history
+     * @class KISSY.Router
+     * @singleton
+     */
+
+
+    /**
+     * config middleware for router
+     * @param {String} prefix config prefix to decide which path is processed
+     * @param {Function} callback middleware logic function
+     */
     exports.use = function (prefix, callback) {
         if (typeof prefix !== 'string') {
             callback = prefix;
@@ -122,7 +134,7 @@ KISSY.add(function (S, require, exports) {
     /**
      * Navigate to specified path.
      * @static
-     * @member KISSY.MVC.Router
+     * @member KISSY.Router
      * @param {String} path Destination path.
      * @param {Object} [opts] Config for current navigation.
      * @param {Boolean} opts.triggerRoute Whether to trigger responding action
@@ -143,7 +155,7 @@ KISSY.add(function (S, require, exports) {
                 normalizedPath = '#!' + path;
                 if (replaceHistory) {
                     // add history hack for ie67
-                    location.replace(normalizedPath + (supportNativeHashChange ? Node.REPLACE_HISTORY : ''));
+                    location.replace(normalizedPath + (supportNativeHashChange ? '' : DomEvent.REPLACE_HISTORY));
                 } else {
                     location.hash = normalizedPath;
                 }
@@ -153,9 +165,59 @@ KISSY.add(function (S, require, exports) {
         }
     };
 
-    exports.get = function (path) {
+    /**
+     * add route and its callbacks
+     * @param {String|RegExp} routePath route string or regexp
+     */
+    exports.get = function (routePath) {
         var callbacks = S.makeArray(arguments).slice(1);
-        routes.push(new Route(path, callbacks));
+        routes.push(new Route(routePath, callbacks));
+    };
+
+    /**
+     * whether url path match config routes
+     * @param {String} path url path
+     * @returns {Boolean}
+     */
+    exports.matchRoute = function (path) {
+        for (var i = 0, l = routes.length; i < l; i++) {
+            if (routes[i].match(path)) {
+                return routes[i];
+            }
+        }
+        return false;
+    };
+
+    /**
+     * remove specified route
+     * @param {String|RegExp} routePath route string or regexp
+     */
+    exports.removeRoute = function (routePath) {
+        for (var i = routes.length - 1; i >= 0; i--) {
+            if (routes[i].path === routePath) {
+                routes.splice(i, 1);
+            }
+        }
+    };
+
+    // private
+    exports.clearRoutes = function () {
+        middlewares = [];
+        routes = [];
+    };
+
+    /**
+     * whether has specified route
+     * @param {String|RegExp} routePath route string or regexp
+     * @returns {Boolean}
+     */
+    exports.hasRoute = function (routePath) {
+        for (var i = 0, l = routes.length; i < l; i++) {
+            if (routes[i].path === routePath) {
+                return routes[i];
+            }
+        }
+        return false;
     };
 
     /**
@@ -235,5 +297,11 @@ KISSY.add(function (S, require, exports) {
 
         started = true;
         return exports;
+    };
+
+    // private
+    exports.stop = function () {
+        started = false;
+        DomEvent.detach(win, 'popstate hashchange', dispatch);
     };
 });

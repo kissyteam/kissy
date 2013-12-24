@@ -1,5 +1,0 @@
-<project name="mvc.build" default="build" basedir=".">
-    <property name="component.name" value="mvc"/>
-
-    <import file="../common.xml"/>
-</project>

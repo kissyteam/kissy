@@ -288,6 +288,8 @@ if (! _$jscoverage['/router/route.js'].branchData) {
   _$jscoverage['/router/route.js'].branchData['47'][1] = new BranchData();
   _$jscoverage['/router/route.js'].branchData['59'] = [];
   _$jscoverage['/router/route.js'].branchData['59'][1] = new BranchData();
+  _$jscoverage['/router/route.js'].branchData['63'] = [];
+  _$jscoverage['/router/route.js'].branchData['63'][1] = new BranchData();
   _$jscoverage['/router/route.js'].branchData['66'] = [];
   _$jscoverage['/router/route.js'].branchData['66'][1] = new BranchData();
   _$jscoverage['/router/route.js'].branchData['69'] = [];
@@ -296,16 +298,20 @@ if (! _$jscoverage['/router/route.js'].branchData) {
   _$jscoverage['/router/route.js'].branchData['71'][1] = new BranchData();
 }
 _$jscoverage['/router/route.js'].branchData['71'][1].init(146, 3, 'key');
-function visit10_71_1(result) {
+function visit11_71_1(result) {
   _$jscoverage['/router/route.js'].branchData['71'][1].ranCondition(result);
   return result;
 }_$jscoverage['/router/route.js'].branchData['69'][1].init(70, 24, '\'string\' === typeof m[i]');
-function visit9_69_1(result) {
+function visit10_69_1(result) {
   _$jscoverage['/router/route.js'].branchData['69'][1].ranCondition(result);
   return result;
-}_$jscoverage['/router/route.js'].branchData['66'][1].init(263, 7, 'i < len');
-function visit8_66_1(result) {
+}_$jscoverage['/router/route.js'].branchData['66'][1].init(269, 7, 'i < len');
+function visit9_66_1(result) {
   _$jscoverage['/router/route.js'].branchData['66'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/router/route.js'].branchData['63'][1].init(174, 15, 'self.keys || []');
+function visit8_63_1(result) {
+  _$jscoverage['/router/route.js'].branchData['63'][1].ranCondition(result);
   return result;
 }_$jscoverage['/router/route.js'].branchData['59'][1].init(96, 2, '!m');
 function visit7_59_1(result) {
@@ -315,19 +321,19 @@ function visit7_59_1(result) {
 function visit6_47_1(result) {
   _$jscoverage['/router/route.js'].branchData['47'][1].ranCondition(result);
   return result;
-}_$jscoverage['/router/route.js'].branchData['33'][1].init(363, 2, 'g4');
+}_$jscoverage['/router/route.js'].branchData['33'][1].init(369, 2, 'g4');
 function visit5_33_1(result) {
   _$jscoverage['/router/route.js'].branchData['33'][1].ranCondition(result);
   return result;
-}_$jscoverage['/router/route.js'].branchData['29'][1].init(262, 2, 'g2');
+}_$jscoverage['/router/route.js'].branchData['29'][1].init(268, 2, 'g2');
 function visit4_29_1(result) {
   _$jscoverage['/router/route.js'].branchData['29'][1].ranCondition(result);
   return result;
-}_$jscoverage['/router/route.js'].branchData['26'][1].init(184, 8, 'g2 || g4');
+}_$jscoverage['/router/route.js'].branchData['26'][1].init(190, 8, 'g2 || g4');
 function visit3_26_1(result) {
   _$jscoverage['/router/route.js'].branchData['26'][1].ranCondition(result);
   return result;
-}_$jscoverage['/router/route.js'].branchData['22'][1].init(45, 19, 'S.endsWith(g2, \'?\')');
+}_$jscoverage['/router/route.js'].branchData['22'][1].init(45, 25, 'g2 && S.endsWith(g2, \'?\')');
 function visit2_22_1(result) {
   _$jscoverage['/router/route.js'].branchData['22'][1].ranCondition(result);
   return result;
@@ -349,7 +355,7 @@ KISSY.add(function(S) {
   _$jscoverage['/router/route.js'].lineData[21]++;
   var key = {};
   _$jscoverage['/router/route.js'].lineData[22]++;
-  if (visit2_22_1(S.endsWith(g2, '?'))) {
+  if (visit2_22_1(g2 && S.endsWith(g2, '?'))) {
     _$jscoverage['/router/route.js'].lineData[23]++;
     key.optional = true;
     _$jscoverage['/router/route.js'].lineData[24]++;
@@ -404,15 +410,15 @@ KISSY.add(function(S) {
     return false;
   }
   _$jscoverage['/router/route.js'].lineData[63]++;
-  var keys = self.keys, params = [];
+  var keys = visit8_63_1(self.keys || []), params = [];
   _$jscoverage['/router/route.js'].lineData[66]++;
-  for (var i = 1, len = m.length; visit8_66_1(i < len); ++i) {
+  for (var i = 1, len = m.length; visit9_66_1(i < len); ++i) {
     _$jscoverage['/router/route.js'].lineData[67]++;
     var key = keys[i - 1];
     _$jscoverage['/router/route.js'].lineData[69]++;
-    var val = visit9_69_1('string' === typeof m[i]) ? S.urlDecode(m[i]) : m[i];
+    var val = visit10_69_1('string' === typeof m[i]) ? S.urlDecode(m[i]) : m[i];
     _$jscoverage['/router/route.js'].lineData[71]++;
-    if (visit10_71_1(key)) {
+    if (visit11_71_1(key)) {
       _$jscoverage['/router/route.js'].lineData[72]++;
       params[key.name] = val;
     } else {

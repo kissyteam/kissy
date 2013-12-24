@@ -1,4 +1,0 @@
-# MVC Framework
-
-MVC Framework
-

@@ -2,15 +2,13 @@
  * Router spec for mvc html5 history
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, MVC, Event) {
-
+KISSY.add(function (S, Router) {
+    /*jshint quotmark:false*/
     if (!window.history.pushState) {
         return;
     }
 
     var original;
-
-    var Router = MVC.Router;
 
     var urlRoot;
 
@@ -27,63 +25,59 @@ KISSY.add(function (S, MVC, Event) {
 
         afterEach(function () {
             Router.stop();
+            Router.clearRoutes();
         });
 
         it("works", function () {
-
             original = location.href;
 
-
             urlRoot = new S.Uri(location.href).resolve('./').getPath().replace(/\/$/, '');
-
 
             var ok = 0,
                 ok3 = 0,
                 ok4 = 0,
                 ok2 = 0;
 
-            var r = new Router({
-                routes: {
-                    "/*path": function (paths) {
-                        expect(paths.path).toBe("haha/hah2/hah3");
-                        ok3++;
-                    },
-                    "/list/*path": function (paths, query, more) {
-                        expect(paths.path).toBe("what/item");
-                        expect(query.item1).toBe("1");
-                        expect(query.item2).toBe("2");
-                        expect(more.path).toBe('/list/what/item');
-                        expect(more.url).toBe(location.href);
-                        ok++;
-                    },
-                    "/detail/:id": function (paths, query) {
-                        expect(paths.id).toBe("9999");
-                        expect(query.item1).toBe("1");
-                        expect(query.item2).toBe("2");
-                        ok2++;
-                    },
-                    "reg_test": {
-                        reg: '^/list-(\\w)$',
-                        callback: function (paths) {
-                            expect(arguments.length).toBe(3);
-                            expect(paths[0]).toBe('t');
-                            ok4++;
-                        }
-                    }
+            Router.get("/detail/:id", function (req) {
+                var paths = req.params;
+                var query = req.query;
+                expect(paths.id).toBe("9999");
+                expect(query.item1).toBe("1");
+                expect(query.item2).toBe("2");
+                ok2++;
+            });
 
+            Router.get("/list/*path", function (req) {
+                var paths = req.params;
+                var query = req.query;
+                expect(paths.path).toBe("what/item");
+                expect(query.item1).toBe("1");
+                expect(query.item2).toBe("2");
+                expect(req.path).toBe('/list/what/item');
+                expect(req.url).toBe('/list/what/item?item1=1&item2=2');
+                ok++;
+            });
+
+            Router.get(/^\/list-(\w)$/, function (req) {
+                expect(req.params[0]).toBe('t');
+                ok4++;
+            });
+
+            Router.get("/*path", function (req) {
+                // chrome will trigger on load
+                if (req.params.path) {
+                    expect(req.params.path).toBe("haha/hah2/hah3");
+                    ok3++;
                 }
             });
 
+            expect(Router.matchRoute('/list/what/item')).toBeTruthy();
 
-            expect(Router.hasRoute('/list/what/item')).toBe(true);
-
-            expect(Router.hasRoute('/list2/what/item')).toBe(true);
+            expect(Router.matchRoute('/list2/what/item')).toBeTruthy();
 
             Router.start({
                 urlRoot: new S.Uri(location.href).resolve('./').getPath(),
-                nativeHistory: 1,
-                success: function () {
-                }
+                useNativeHistory: 1
             });
 
             waits(200);
@@ -130,26 +124,24 @@ KISSY.add(function (S, MVC, Event) {
             originalPath = getPath();
             waits(200);
 
-            var r;
-
             runs(function () {
-                r = new Router({
-                    routes: {
-                        "/go/": function () {
-                            go++;
-                        },
-                        "/list/": function () {
-                            list++;
-                        },
-                        "/detail/": function () {
-                            detail++;
-                        }
+                S.each({
+                    "/go/": function () {
+                        go++;
+                    },
+                    "/list/": function () {
+                        list++;
+                    },
+                    "/detail/": function () {
+                        detail++;
                     }
+                }, function (func, route) {
+                    Router.get(route, func);
                 });
 
                 Router.start({
-                    urlRoot:urlRoot,
-                    nativeHistory: 1,
+                    urlRoot: urlRoot,
+                    useNativeHistory: 1,
                     success: function () {
                         Router.navigate("/list/");
                         ok = 1;
@@ -162,8 +154,6 @@ KISSY.add(function (S, MVC, Event) {
             });
 
             waits(200);
-
-
 
             runs(function () {
                 // 取代上个记录
@@ -187,7 +177,7 @@ KISSY.add(function (S, MVC, Event) {
             waits(200);
 
             runs(function () {
-                expect(getPath()).toBe('/detail/')
+                expect(getPath()).toBe('/detail/');
             });
 
             waits(200);
@@ -199,7 +189,7 @@ KISSY.add(function (S, MVC, Event) {
             waits(200);
 
             runs(function () {
-                expect(getPath()).toBe(originalPath)
+                expect(getPath()).toBe(originalPath);
             });
 
             runs(function () {
@@ -209,9 +199,7 @@ KISSY.add(function (S, MVC, Event) {
                 window.history.pushState({}, '', original);
             });
         });
-
     });
-
 }, {
-    requires: ['mvc', 'event']
+    requires: ['router']
 });

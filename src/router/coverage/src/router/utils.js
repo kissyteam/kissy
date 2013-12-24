@@ -274,19 +274,19 @@ if (! _$jscoverage['/router/utils.js'].branchData) {
   _$jscoverage['/router/utils.js'].branchData['50'][1] = new BranchData();
 }
 _$jscoverage['/router/utils.js'].branchData['50'][1].init(115, 13, 'str1 === str2');
-function visit14_50_1(result) {
+function visit15_50_1(result) {
   _$jscoverage['/router/utils.js'].branchData['50'][1].ranCondition(result);
   return result;
 }_$jscoverage['/router/utils.js'].branchData['34'][1].init(18, 3, 'str');
-function visit13_34_1(result) {
+function visit14_34_1(result) {
   _$jscoverage['/router/utils.js'].branchData['34'][1].ranCondition(result);
   return result;
 }_$jscoverage['/router/utils.js'].branchData['23'][1].init(18, 24, 'this.startWithSlash(str)');
-function visit12_23_1(result) {
+function visit13_23_1(result) {
   _$jscoverage['/router/utils.js'].branchData['23'][1].ranCondition(result);
   return result;
 }_$jscoverage['/router/utils.js'].branchData['16'][1].init(18, 22, 'this.endWithSlash(str)');
-function visit11_16_1(result) {
+function visit12_16_1(result) {
   _$jscoverage['/router/utils.js'].branchData['16'][1].ranCondition(result);
   return result;
 }_$jscoverage['/router/utils.js'].lineData[5]++;
@@ -307,7 +307,7 @@ KISSY.add(function(S) {
   removeEndSlash: function(str) {
   _$jscoverage['/router/utils.js'].functionData[3]++;
   _$jscoverage['/router/utils.js'].lineData[16]++;
-  if (visit11_16_1(this.endWithSlash(str))) {
+  if (visit12_16_1(this.endWithSlash(str))) {
     _$jscoverage['/router/utils.js'].lineData[17]++;
     str = str.substring(0, str.length - 1);
   }
@@ -317,7 +317,7 @@ KISSY.add(function(S) {
   removeStartSlash: function(str) {
   _$jscoverage['/router/utils.js'].functionData[4]++;
   _$jscoverage['/router/utils.js'].lineData[23]++;
-  if (visit12_23_1(this.startWithSlash(str))) {
+  if (visit13_23_1(this.startWithSlash(str))) {
     _$jscoverage['/router/utils.js'].lineData[24]++;
     str = str.substring(1);
   }
@@ -332,7 +332,7 @@ KISSY.add(function(S) {
   addStartSlash: function(str) {
   _$jscoverage['/router/utils.js'].functionData[6]++;
   _$jscoverage['/router/utils.js'].lineData[34]++;
-  if (visit13_34_1(str)) {
+  if (visit14_34_1(str)) {
     _$jscoverage['/router/utils.js'].lineData[35]++;
     return '/' + this.removeStartSlash(str);
   } else {
@@ -352,7 +352,7 @@ KISSY.add(function(S) {
   _$jscoverage['/router/utils.js'].lineData[49]++;
   str2 = this.removeEndSlash(str2);
   _$jscoverage['/router/utils.js'].lineData[50]++;
-  return visit14_50_1(str1 === str2);
+  return visit15_50_1(str1 === str2);
 }, 
   getHash: function(uri) {
   _$jscoverage['/router/utils.js'].functionData[9]++;

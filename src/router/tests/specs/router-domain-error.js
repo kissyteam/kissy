@@ -2,9 +2,9 @@
  * Domain error spec for mvc
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, MVC, Event, UA) {
-    var ie = UA.ieMode,
-        Router = MVC.Router;
+KISSY.add(function (S, Router, Event, UA) {
+    /*jshint quotmark:false*/
+    var ie = UA.ieMode;
 
     describe("domain in router error", function () {
         beforeEach(function () {
@@ -14,21 +14,20 @@ KISSY.add(function (S, MVC, Event, UA) {
 
         afterEach(function () {
             Router.stop();
+            Router.clearRoutes();
         });
 
         it("change domain in middle of code does not work for ie<8", function () {
-            if (ie == 6) {
+            if (ie === 6) {
                 return;
             }
 
             var ok = 0;
-
-            var r = new Router({
-                routes: {
-                    "/*path": function (paths) {
-                        expect(paths.path).toBe("haha/hah2/hah3");
-                        ok = 1;
-                    }
+            
+            Router.get("/*path",function (req) {
+                if (req.params.path) {
+                    expect(req.params.path).toBe("haha/hah2/hah3");
+                    ok = 1;
                 }
             });
 
@@ -54,5 +53,5 @@ KISSY.add(function (S, MVC, Event, UA) {
         });
     });
 }, {
-    requires: ['mvc', 'event', 'ua']
+    requires: ['router', 'event', 'ua']
 });

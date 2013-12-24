@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50
 MIT Licensed
-build time: Dec 12 22:20
+build time: Dec 24 17:53
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -52,7 +52,7 @@ KISSY.add("router/route", [], function(S) {
     path = S.escapeRegExp(path);
     path = path.replace(grammar, function(m, g1, g2, g3, g4) {
       var key = {};
-      if(S.endsWith(g2, "?")) {
+      if(g2 && S.endsWith(g2, "?")) {
         key.optional = true;
         g2 = g2.slice(0, -1)
       }
@@ -82,7 +82,7 @@ KISSY.add("router/route", [], function(S) {
     if(!m) {
       return false
     }
-    var keys = self.keys, params = [];
+    var keys = self.keys || [], params = [];
     for(var i = 1, len = m.length;i < len;++i) {
       var key = keys[i - 1];
       var val = "string" === typeof m[i] ? S.urlDecode(m[i]) : m[i];
@@ -216,7 +216,7 @@ KISSY.add("router", ["./router/utils", "./router/route", "uri", "./router/reques
       }else {
         normalizedPath = "#!" + path;
         if(replaceHistory) {
-          location.replace(normalizedPath + (supportNativeHashChange ? Node.REPLACE_HISTORY : ""))
+          location.replace(normalizedPath + (supportNativeHashChange ? "" : DomEvent.REPLACE_HISTORY))
         }else {
           location.hash = normalizedPath
         }
@@ -230,6 +230,33 @@ KISSY.add("router", ["./router/utils", "./router/route", "uri", "./router/reques
   exports.get = function(path) {
     var callbacks = S.makeArray(arguments).slice(1);
     routes.push(new Route(path, callbacks))
+  };
+  exports.matchRoute = function(path) {
+    for(var i = 0, l = routes.length;i < l;i++) {
+      if(routes[i].match(path)) {
+        return routes[i]
+      }
+    }
+    return false
+  };
+  exports.removeRoute = function(path) {
+    for(var i = routes.length - 1;i >= 0;i--) {
+      if(routes[i].path === path) {
+        routes.splice(i, 1)
+      }
+    }
+  };
+  exports.clearRoutes = function() {
+    middlewares = [];
+    routes = []
+  };
+  exports.hasRoute = function(path) {
+    for(var i = 0, l = routes.length;i < l;i++) {
+      if(routes[i].path === path) {
+        return routes[i]
+      }
+    }
+    return false
   };
   exports.start = function(opts) {
     opts = opts || {};
@@ -273,6 +300,10 @@ KISSY.add("router", ["./router/utils", "./router/route", "uri", "./router/reques
     }, BREATH_INTERVAL);
     started = true;
     return exports
+  };
+  exports.stop = function() {
+    started = false;
+    DomEvent.detach(win, "popstate hashchange", dispatch)
   }
 });
 

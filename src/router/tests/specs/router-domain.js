@@ -2,14 +2,11 @@
  * Domain spec for mvc
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, Dom, MVC) {
-
+KISSY.add(function (S, Dom, Router) {
+    /*jshint quotmark:false*/
     return {
         run: function () {
-            var Router = MVC.Router;
-
             describe("domain in router", function () {
-
                 beforeEach(function () {
                     location.hash = '';
                     waits(900);
@@ -17,27 +14,26 @@ KISSY.add(function (S, Dom, MVC) {
 
                 afterEach(function () {
                     Router.stop();
+                    Router.clearRoutes();
                 });
 
                 it("change domain works for router", function () {
 
-                    if (S.UA.ie == 6) {
+                    if (S.UA.ie === 6) {
                         return;
                     }
 
                     var ok = 0;
 
-
-                    var r = new Router({
-                        routes: {
-                            "/*path": function (paths) {
-                                expect(paths.path).toBe("haha/hah2/hah3");
-                                ok = 1;
-                            }
+                    Router.get("/*path", function (req) {
+                        if (req.params.path) {
+                            expect(req.params.path).toBe("haha/hah2/hah3");
+                            ok = 1;
                         }
                     });
 
                     document.domain = location.hostname;
+
                     Dom.isCustomDomain = function () {
                         return true;
                     };
@@ -59,11 +55,8 @@ KISSY.add(function (S, Dom, MVC) {
                 });
 
             });
-
         }
     };
-
-
 }, {
-    requires: ['dom', 'mvc']
+    requires: ['dom', 'router']
 });

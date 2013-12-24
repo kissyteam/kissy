@@ -4,7 +4,6 @@
     "eqeqeq": true,
     "freeze": true,
     "indent":4,
-    "noempty":true,
     "latedef":"nofunc",
     "quotmark":"single",
     "nonew":true,

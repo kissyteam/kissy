@@ -19,7 +19,7 @@ KISSY.add(function (S) {
 
         path = path.replace(grammar, function (m, g1, g2, g3, g4) {
             var key = {};
-            if (S.endsWith(g2, '?')) {
+            if (g2 && S.endsWith(g2, '?')) {
                 key.optional = true;
                 g2 = g2.slice(0, -1);
             }
@@ -60,7 +60,7 @@ KISSY.add(function (S) {
                 return false;
             }
 
-            var keys = self.keys ,
+            var keys = self.keys || [] ,
                 params = [];
 
             for (var i = 1, len = m.length; i < len; ++i) {
