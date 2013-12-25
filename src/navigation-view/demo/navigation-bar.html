@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="data-spm" content="1" data-spm-protocol="i"/>
+    <meta name="viewport"
+          content="width=device-width,
+           initial-scale=1.0,
+          maximum-scale=1.0,
+           minimum-scale=1.0,
+           user-scalable=no">
+    <link href="/kissy/build/css/dpl/base.css" rel="stylesheet"/>
+    <link href="/kissy/src/navigation-view/assets/dpl.css" rel="stylesheet"/>
+</head>
+<body>
+<button id="go">go</button>
+<button id="back">back</button>
+<br><br><br><br>
+<script src="/kissy/build/seed.js"></script>
+<script src="/kissy/src/package.js"></script>
+<script>
+    KISSY.use('navigation-view,node', function (S, NavigationView, Node) {
+        var view = new NavigationView.Bar({
+            title: 'Navigation bar',
+            render: 'body'
+        }).render();
+        var $ = Node.all;
+
+        var stack = ['Navigation bar'];
+
+        $('#go').on('click', S.throttle(function () {
+            stack.push('forward' + stack.length);
+            view.forward(stack[stack.length - 1]);
+        }, 300));
+
+        $('#back').on('click', S.throttle(function () {
+            if (stack.length > 1) {
+                S.log('back');
+                stack.pop();
+                view.back(stack[stack.length - 1], stack.length > 1);
+            }
+        }, 300));
+    });
+</script>
+</body>
+</html>
