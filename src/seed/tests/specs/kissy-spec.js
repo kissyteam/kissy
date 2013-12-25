@@ -3,6 +3,12 @@ describe('kissy.js', function () {
         host = S.Env.host;
 
     describe("S.mix", function () {
+        it('can be tolerant',function(){
+            S.mix({},false);
+            S.mix({},null);
+            S.mix({},undefined);
+        });
+
         it("works simply", function () {
             var o1 = { a: 1, b: 2 },
                 o2 = { a: 1, b: 2 },
