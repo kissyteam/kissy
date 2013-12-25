@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50
 MIT Licensed
-build time: Dec 23 18:51
+build time: Dec 25 16:51
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -16,7 +16,7 @@ KISSY.add("anim/transition", ["dom", "event/dom", "./base"], function(S, require
   var Features = S.Features;
   var vendorPrefix = Features.getVendorCssPropPrefix("transition");
   var R_UPPER = /([A-Z]|^ms)/g;
-  var TRANSITION_END_EVENT = vendorPrefix ? vendorPrefix.toLowerCase() + "TransitionEnd" : "transitionend";
+  var TRANSITION_END_EVENT = vendorPrefix ? vendorPrefix.toLowerCase() + "TransitionEnd" : "transitionend webkitTransitionEnd";
   var TRANSITION = Features.getVendorCssPropName("transition");
   function genTransition(propsData) {
     var str = "";
@@ -79,6 +79,9 @@ KISSY.add("anim/transition", ["dom", "event/dom", "./base"], function(S, require
     e = e.originalEvent;
     var self = this, allCompleted = 1, propsData = self._propsData;
     if(!propsData[e.propertyName]) {
+      return
+    }
+    if(propsData[e.propertyName].pos === 1) {
       return
     }
     propsData[e.propertyName].pos = 1;

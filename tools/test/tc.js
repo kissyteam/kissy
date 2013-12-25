@@ -176,18 +176,6 @@ tests.push('/kissy/src/menu/tests/runner/test.jss?build');
 
 tests.push('/kissy/src/menu/tests/runner/test.jss?coverage');
 
-tests.push('/kissy/src/mvc/tests/runner/test-middle-set-domain.jss');
-
-tests.push('/kissy/src/mvc/tests/runner/test-middle-set-domain.jss?build');
-
-tests.push('/kissy/src/mvc/tests/runner/test-middle-set-domain.jss?coverage');
-
-tests.push('/kissy/src/mvc/tests/runner/test.jss');
-
-tests.push('/kissy/src/mvc/tests/runner/test.jss?build');
-
-tests.push('/kissy/src/mvc/tests/runner/test.jss?coverage');
-
 tests.push('/kissy/src/node/tests/runner/test.jss');
 
 tests.push('/kissy/src/node/tests/runner/test.jss?build');

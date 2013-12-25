@@ -14,7 +14,8 @@ KISSY.add(function (S, require) {
     var TRANSITION_END_EVENT = vendorPrefix ?
         // webkitTransitionEnd !
         (vendorPrefix.toLowerCase() + 'TransitionEnd') :
-        'transitionend';
+        // https://github.com/kissyteam/kissy/issues/538
+        'transitionend webkitTransitionEnd';
     var TRANSITION = Features.getVendorCssPropName('transition');
 
     function genTransition(propsData) {
@@ -114,6 +115,11 @@ KISSY.add(function (S, require) {
                 propsData = self._propsData;
             // other anim on the same element
             if (!propsData[e.propertyName]) {
+                return;
+            }
+            // webkitTransitionEnd transitionend are both bind for
+            // https://github.com/kissyteam/kissy/issues/538
+            if (propsData[e.propertyName].pos === 1) {
                 return;
             }
             propsData[e.propertyName].pos = 1;
