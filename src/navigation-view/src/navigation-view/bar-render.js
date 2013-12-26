@@ -9,15 +9,14 @@ KISSY.add(function (S, require) {
         createDom: function () {
             this.fillChildrenElsBySelectors({
                 titleEl: '#ks-navigation-bar-title-{id}',
-                contentEl: '#ks-navigation-bar-content-{id}',
-                backEl: '#ks-navigation-bar-back-{id}'
+                contentEl: '#ks-navigation-bar-content-{id}'
             });
         },
         _onSetTitle: function (v) {
             this.control.get('titleEl').html(v);
         },
         _onSetBackText: function (v) {
-            this.control.get('backEl').html(v);
+            this.control.get('backButton').set('content',v);
         }
     }, {
         ATTRS: {

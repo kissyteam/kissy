@@ -5,6 +5,7 @@
 KISSY.add(function (S, require) {
     var Control = require('component/control');
     var BarRender = require('./bar-render');
+    var Button = require('button');
 
     function createGhost(elem) {
         var ghost, width;
@@ -35,9 +36,8 @@ KISSY.add(function (S, require) {
         });
     }
 
-    function getAnimProps(self, backElProps, reverse) {
+    function getAnimProps(self, backEl, backElProps, reverse) {
         var barElement = self.get('el'),
-            backEl = self.get('backEl'),
             titleElement = self.get('titleEl'),
             minOffset = Math.min(barElement[0].offsetWidth / 3, 200),
             newLeftWidth = backEl[0].offsetWidth,
@@ -126,13 +126,23 @@ KISSY.add(function (S, require) {
     }
 
     return Control.extend({
+        renderUI: function () {
+            var prefixCls = this.get('prefixCls');
+            var backBtn;
+            this.set('backBtn', backBtn = new Button({
+                prefixCls: prefixCls + 'navigation-bar-back-',
+                elBefore: this.get('contentEl')[0].firstChild,
+                visible: false,
+                content: this.get('backText')
+            }).render());
+        },
         forward: function (title) {
             this.go(title, true);
         },
 
         go: function (title, hasPrevious, reverse) {
             var self = this;
-            var backEl = this.get('backEl');
+            var backEl = this.get('backBtn').get('el');
             var backElProps = {
                 width: backEl[0].offsetWidth
             };
@@ -143,7 +153,7 @@ KISSY.add(function (S, require) {
             var ghostTitleEl = createGhost(titleEl.parent());
             titleEl.css('opacity', 0);
             this.set('title', title);
-            var anims = getAnimProps(self, backElProps, reverse);
+            var anims = getAnimProps(self, backEl, backElProps, reverse);
             backEl.css(anims.back.element.from);
             if (backEl.css('display') !== 'none') {
                 anim(backEl, anims.back.element.to);
@@ -169,13 +179,16 @@ KISSY.add(function (S, require) {
     }, {
         xclass: 'navigation-bar',
         ATTRS: {
+            handleMouseEvents: {
+                value: false
+            },
+            focusable: {
+                value: false
+            },
             xrender: {
                 value: BarRender
             },
             contentEl: {
-                view: 1
-            },
-            backEl: {
                 view: 1
             },
             titleEl: {

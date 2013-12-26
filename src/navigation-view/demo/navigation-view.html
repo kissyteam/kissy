@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="data-spm" content="1" data-spm-protocol="i"/>
+    <meta name="viewport"
+          content="width=device-width,
+           initial-scale=1.0,
+          maximum-scale=1.0,
+           minimum-scale=1.0,
+           user-scalable=no">
+    <link href="/kissy/build/css/dpl/base.css" rel="stylesheet"/>
+    <link href="/kissy/src/navigation-view/assets/dpl.css" rel="stylesheet"/>
+</head>
+<body>
+<script src="/kissy/build/seed.js"></script>
+<script src="/kissy/src/package.js"></script>
+<script>
+    KISSY.use('navigation-view,node,promise', function (S, NavigationView, Node, Promise) {
+        var Defer = Promise.Defer;
+        var navigationView = new NavigationView({
+            barTitle: 'Navigation bar',
+            render: 'body'
+        }).render();
+        var SubView = NavigationView.SubView;
+
+        var Detail = SubView.extend({
+            renderUI: function () {
+                var el = this.get('el');
+                el.html('<div style="margin: 40px"><button>pop</button></div>');
+                el.one('button').on('click', function () {
+                    navigationView.pop();
+                });
+                var defer = new Defer();
+                setTimeout(function () {
+                    defer.resolve(1);
+                }, 1000);
+                this.set('promise', defer.promise);
+            },
+            resume:function(){
+                var defer = new Defer();
+                setTimeout(function () {
+                    defer.resolve(1);
+                }, 1000);
+                this.set('promise', defer.promise);
+            }
+        });
+
+        var Index = SubView.extend({
+            renderUI: function () {
+                var el = this.get('el');
+                el.html('<div style="margin: 40px"><button>push</button></div>');
+                el.one('button').on('click', function () {
+                    navigationView.push(detail);
+                });
+                var defer = new Defer();
+                setTimeout(function () {
+                    defer.resolve(1);
+                }, 1000);
+                this.set('promise', defer.promise);
+            },
+            resume:function(){
+                var defer = new Defer();
+                setTimeout(function () {
+                    defer.resolve(1);
+                }, 1000);
+                this.set('promise', defer.promise);
+            }
+        });
+        var index = new Index({
+            title:'index'
+        });
+        var detail = new Detail({
+            title:'detail'
+        });
+        navigationView.push(index);
+    });
+</script>
+</body>
+</html>

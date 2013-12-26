@@ -19,8 +19,8 @@ navigation-view style
     position: absolute;
     width: 100%;
     height: 100%;
-    text-shadow:0 1px 0 rgba(0,0,0,0.8);
-    color:white;
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.8);
+    color: white;
     line-height: 2.1em;
     font-size: 1.2em;
     margin: 0 0.3em;
@@ -44,7 +44,8 @@ navigation-view style
     -webkit-box-flex: 1;
 }
 
-.ks-navigation-bar-back {
+.ks-navigation-bar-back-button {
+    outline: none;
     margin: 6px 0.2em;
     -webkit-border-radius: 0.4em;
     padding: 0 0.6em;
@@ -63,7 +64,11 @@ navigation-view style
     z-index: 1;
 }
 
-.ks-navigation-bar-back:before, .ks-navigation-bar-back:after {
+.ks-navigation-bar-back-button-hidden {
+    display: none;
+}
+
+.ks-navigation-bar-back-button:before, .ks-navigation-bar-back-button:after {
     content: '';
     position: absolute;
     width: 15px;
@@ -77,13 +82,80 @@ navigation-view style
     overflow: hidden;
 }
 
-.ks-navigation-bar-back:before {
+.ks-navigation-bar-back-button:before {
     background: #000304;
     left: -15px;
 }
 
-.ks-navigation-bar-back:after {
+.ks-navigation-bar-back-button:after {
     background-color: #054166;
     background-image: -webkit-linear-gradient(top, #0870af, #06517e 3%, #04324d);
     left: -14px;
+}
+
+.ks-navigation-bar-back-button-active, .ks-navigation-bar-back-button-active:after {
+    background-color: #043857;
+    background-image: -webkit-linear-gradient(top, #021926, #03283f 10%, #043857 65%, #043a59);
+}
+
+.ks-navigation-view {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+}
+
+.ks-navigation-view-content {
+    position: relative;
+    overflow: hidden;
+    -webkit-box-flex: 1;
+}
+
+.ks-navigation-sub-view {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.ks-navigation-view-loading {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, .8);
+    display: -webkit-box;
+    -webkit-box-pack: center;
+    -webkit-box-align: center;
+}
+
+.ks-navigation-view-loading-outer, .ks-navigation-view-loading-inner {
+    width: 48px;
+    height: 48px;
+    background: url(http://gtms03.alicdn.com/tps/i3/T1uPOOFfVaXXbLNxnk-96-192.png) no-repeat center center;
+    background-size: 48px;
+}
+
+.ks-navigation-view-loading-outer {
+    background-position: 0 -48px;
+}
+
+.ks-navigation-view-loading-inner {
+    -webkit-animation: spin 1s infinite linear;
+    background-position: 0 0;
+}
+
+@-webkit-keyframes spin {
+    0% {
+        -webkit-transform: rotate(0deg)
+    }
+
+    100% {
+        -webkit-transform: rotate(359deg)
+    }
 }
