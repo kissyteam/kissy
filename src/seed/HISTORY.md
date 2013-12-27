@@ -1,4 +1,7 @@
 # seed
+## latest
+
+ [!] 不支持模块的 path/fullpath 配置
 
 ## 1.4
 

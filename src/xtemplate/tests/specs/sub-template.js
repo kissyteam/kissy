@@ -123,8 +123,8 @@ KISSY.add(function (S, require) {
         it('support compiled xtemplate module', function () {
             var path;
             if (S.UA.nodejs) {
-                path = S.config('packages').src.baseUri
-                    .resolve('src/xtemplate/tests/specs/')
+                path = S.config('packages').src.uri
+                    .resolve('../src/xtemplate/tests/specs/')
                     .getPath();
 
                 S.config('packages', {

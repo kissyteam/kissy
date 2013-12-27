@@ -3,8 +3,8 @@ KISSY.add(function (S, require) {
 
     describe('xtemplate on nodejs', function () {
         it('can load from file', function () {
-            var path = S.config('packages').src.baseUri
-                .resolve('src/xtemplate/tests/other/nodejs/')
+            var path = S.config('packages').src.uri
+                .resolve('../src/xtemplate/tests/other/nodejs/')
                 .getPath();
 
             S.config('packages', {

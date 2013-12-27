@@ -232,20 +232,21 @@ if (! _$jscoverage['/navigation-view/bar.js']) {
   _$jscoverage['/navigation-view/bar.js'].lineData[5] = 0;
   _$jscoverage['/navigation-view/bar.js'].lineData[6] = 0;
   _$jscoverage['/navigation-view/bar.js'].lineData[7] = 0;
-  _$jscoverage['/navigation-view/bar.js'].lineData[9] = 0;
+  _$jscoverage['/navigation-view/bar.js'].lineData[8] = 0;
   _$jscoverage['/navigation-view/bar.js'].lineData[10] = 0;
-  _$jscoverage['/navigation-view/bar.js'].lineData[12] = 0;
+  _$jscoverage['/navigation-view/bar.js'].lineData[11] = 0;
   _$jscoverage['/navigation-view/bar.js'].lineData[13] = 0;
-  _$jscoverage['/navigation-view/bar.js'].lineData[15] = 0;
-  _$jscoverage['/navigation-view/bar.js'].lineData[17] = 0;
-  _$jscoverage['/navigation-view/bar.js'].lineData[19] = 0;
+  _$jscoverage['/navigation-view/bar.js'].lineData[14] = 0;
+  _$jscoverage['/navigation-view/bar.js'].lineData[16] = 0;
+  _$jscoverage['/navigation-view/bar.js'].lineData[18] = 0;
   _$jscoverage['/navigation-view/bar.js'].lineData[20] = 0;
   _$jscoverage['/navigation-view/bar.js'].lineData[21] = 0;
-  _$jscoverage['/navigation-view/bar.js'].lineData[26] = 0;
-  _$jscoverage['/navigation-view/bar.js'].lineData[29] = 0;
+  _$jscoverage['/navigation-view/bar.js'].lineData[22] = 0;
+  _$jscoverage['/navigation-view/bar.js'].lineData[27] = 0;
   _$jscoverage['/navigation-view/bar.js'].lineData[30] = 0;
-  _$jscoverage['/navigation-view/bar.js'].lineData[38] = 0;
+  _$jscoverage['/navigation-view/bar.js'].lineData[31] = 0;
   _$jscoverage['/navigation-view/bar.js'].lineData[39] = 0;
+  _$jscoverage['/navigation-view/bar.js'].lineData[40] = 0;
   _$jscoverage['/navigation-view/bar.js'].lineData[50] = 0;
   _$jscoverage['/navigation-view/bar.js'].lineData[51] = 0;
   _$jscoverage['/navigation-view/bar.js'].lineData[52] = 0;
@@ -269,29 +270,32 @@ if (! _$jscoverage['/navigation-view/bar.js']) {
   _$jscoverage['/navigation-view/bar.js'].lineData[122] = 0;
   _$jscoverage['/navigation-view/bar.js'].lineData[128] = 0;
   _$jscoverage['/navigation-view/bar.js'].lineData[130] = 0;
-  _$jscoverage['/navigation-view/bar.js'].lineData[134] = 0;
-  _$jscoverage['/navigation-view/bar.js'].lineData[135] = 0;
-  _$jscoverage['/navigation-view/bar.js'].lineData[136] = 0;
-  _$jscoverage['/navigation-view/bar.js'].lineData[139] = 0;
+  _$jscoverage['/navigation-view/bar.js'].lineData[131] = 0;
+  _$jscoverage['/navigation-view/bar.js'].lineData[132] = 0;
   _$jscoverage['/navigation-view/bar.js'].lineData[140] = 0;
-  _$jscoverage['/navigation-view/bar.js'].lineData[141] = 0;
-  _$jscoverage['/navigation-view/bar.js'].lineData[142] = 0;
-  _$jscoverage['/navigation-view/bar.js'].lineData[143] = 0;
   _$jscoverage['/navigation-view/bar.js'].lineData[144] = 0;
   _$jscoverage['/navigation-view/bar.js'].lineData[145] = 0;
   _$jscoverage['/navigation-view/bar.js'].lineData[146] = 0;
-  _$jscoverage['/navigation-view/bar.js'].lineData[147] = 0;
-  _$jscoverage['/navigation-view/bar.js'].lineData[148] = 0;
   _$jscoverage['/navigation-view/bar.js'].lineData[149] = 0;
+  _$jscoverage['/navigation-view/bar.js'].lineData[150] = 0;
   _$jscoverage['/navigation-view/bar.js'].lineData[151] = 0;
   _$jscoverage['/navigation-view/bar.js'].lineData[152] = 0;
+  _$jscoverage['/navigation-view/bar.js'].lineData[153] = 0;
   _$jscoverage['/navigation-view/bar.js'].lineData[154] = 0;
   _$jscoverage['/navigation-view/bar.js'].lineData[155] = 0;
   _$jscoverage['/navigation-view/bar.js'].lineData[156] = 0;
+  _$jscoverage['/navigation-view/bar.js'].lineData[157] = 0;
+  _$jscoverage['/navigation-view/bar.js'].lineData[158] = 0;
   _$jscoverage['/navigation-view/bar.js'].lineData[159] = 0;
   _$jscoverage['/navigation-view/bar.js'].lineData[161] = 0;
   _$jscoverage['/navigation-view/bar.js'].lineData[162] = 0;
-  _$jscoverage['/navigation-view/bar.js'].lineData[167] = 0;
+  _$jscoverage['/navigation-view/bar.js'].lineData[164] = 0;
+  _$jscoverage['/navigation-view/bar.js'].lineData[165] = 0;
+  _$jscoverage['/navigation-view/bar.js'].lineData[166] = 0;
+  _$jscoverage['/navigation-view/bar.js'].lineData[169] = 0;
+  _$jscoverage['/navigation-view/bar.js'].lineData[171] = 0;
+  _$jscoverage['/navigation-view/bar.js'].lineData[172] = 0;
+  _$jscoverage['/navigation-view/bar.js'].lineData[177] = 0;
 }
 if (! _$jscoverage['/navigation-view/bar.js'].functionData) {
   _$jscoverage['/navigation-view/bar.js'].functionData = [];
@@ -304,6 +308,7 @@ if (! _$jscoverage['/navigation-view/bar.js'].functionData) {
   _$jscoverage['/navigation-view/bar.js'].functionData[6] = 0;
   _$jscoverage['/navigation-view/bar.js'].functionData[7] = 0;
   _$jscoverage['/navigation-view/bar.js'].functionData[8] = 0;
+  _$jscoverage['/navigation-view/bar.js'].functionData[9] = 0;
 }
 if (! _$jscoverage['/navigation-view/bar.js'].branchData) {
   _$jscoverage['/navigation-view/bar.js'].branchData = {};
@@ -317,18 +322,18 @@ if (! _$jscoverage['/navigation-view/bar.js'].branchData) {
   _$jscoverage['/navigation-view/bar.js'].branchData['86'][1] = new BranchData();
   _$jscoverage['/navigation-view/bar.js'].branchData['95'] = [];
   _$jscoverage['/navigation-view/bar.js'].branchData['95'][1] = new BranchData();
-  _$jscoverage['/navigation-view/bar.js'].branchData['148'] = [];
-  _$jscoverage['/navigation-view/bar.js'].branchData['148'][1] = new BranchData();
-  _$jscoverage['/navigation-view/bar.js'].branchData['154'] = [];
-  _$jscoverage['/navigation-view/bar.js'].branchData['154'][1] = new BranchData();
+  _$jscoverage['/navigation-view/bar.js'].branchData['158'] = [];
+  _$jscoverage['/navigation-view/bar.js'].branchData['158'][1] = new BranchData();
+  _$jscoverage['/navigation-view/bar.js'].branchData['164'] = [];
+  _$jscoverage['/navigation-view/bar.js'].branchData['164'][1] = new BranchData();
 }
-_$jscoverage['/navigation-view/bar.js'].branchData['154'][1].init(869, 37, 'ghostBackEl.css(\'display\') !== \'none\'');
-function visit9_154_1(result) {
-  _$jscoverage['/navigation-view/bar.js'].branchData['154'][1].ranCondition(result);
+_$jscoverage['/navigation-view/bar.js'].branchData['164'][1].init(888, 37, 'ghostBackEl.css(\'display\') !== \'none\'');
+function visit9_164_1(result) {
+  _$jscoverage['/navigation-view/bar.js'].branchData['164'][1].ranCondition(result);
   return result;
-}_$jscoverage['/navigation-view/bar.js'].branchData['148'][1].init(641, 32, 'backEl.css(\'display\') !== \'none\'');
-function visit8_148_1(result) {
-  _$jscoverage['/navigation-view/bar.js'].branchData['148'][1].ranCondition(result);
+}_$jscoverage['/navigation-view/bar.js'].branchData['158'][1].init(660, 32, 'backEl.css(\'display\') !== \'none\'');
+function visit8_158_1(result) {
+  _$jscoverage['/navigation-view/bar.js'].branchData['158'][1].ranCondition(result);
   return result;
 }_$jscoverage['/navigation-view/bar.js'].branchData['95'][1].init(77, 19, 'omega !== undefined');
 function visit7_95_1(result) {
@@ -338,15 +343,15 @@ function visit7_95_1(result) {
 function visit6_86_1(result) {
   _$jscoverage['/navigation-view/bar.js'].branchData['86'][1].ranCondition(result);
   return result;
-}_$jscoverage['/navigation-view/bar.js'].branchData['83'][1].init(1510, 7, 'reverse');
+}_$jscoverage['/navigation-view/bar.js'].branchData['83'][1].init(1468, 7, 'reverse');
 function visit5_83_1(result) {
   _$jscoverage['/navigation-view/bar.js'].branchData['83'][1].ranCondition(result);
   return result;
-}_$jscoverage['/navigation-view/bar.js'].branchData['79'][1].init(1418, 19, 'titleWidth > titleX');
+}_$jscoverage['/navigation-view/bar.js'].branchData['79'][1].init(1376, 19, 'titleWidth > titleX');
 function visit4_79_1(result) {
   _$jscoverage['/navigation-view/bar.js'].branchData['79'][1].ranCondition(result);
   return result;
-}_$jscoverage['/navigation-view/bar.js'].branchData['50'][1].init(575, 7, 'reverse');
+}_$jscoverage['/navigation-view/bar.js'].branchData['50'][1].init(533, 7, 'reverse');
 function visit3_50_1(result) {
   _$jscoverage['/navigation-view/bar.js'].branchData['50'][1].ranCondition(result);
   return result;
@@ -357,45 +362,47 @@ KISSY.add(function(S, require) {
   var Control = require('component/control');
   _$jscoverage['/navigation-view/bar.js'].lineData[7]++;
   var BarRender = require('./bar-render');
-  _$jscoverage['/navigation-view/bar.js'].lineData[9]++;
+  _$jscoverage['/navigation-view/bar.js'].lineData[8]++;
+  var Button = require('button');
+  _$jscoverage['/navigation-view/bar.js'].lineData[10]++;
   function createGhost(elem) {
     _$jscoverage['/navigation-view/bar.js'].functionData[1]++;
-    _$jscoverage['/navigation-view/bar.js'].lineData[10]++;
+    _$jscoverage['/navigation-view/bar.js'].lineData[11]++;
     var ghost, width;
-    _$jscoverage['/navigation-view/bar.js'].lineData[12]++;
-    ghost = elem.clone(true);
     _$jscoverage['/navigation-view/bar.js'].lineData[13]++;
+    ghost = elem.clone(true);
+    _$jscoverage['/navigation-view/bar.js'].lineData[14]++;
     ghost[0].id = elem[0].id + '-proxy';
-    _$jscoverage['/navigation-view/bar.js'].lineData[15]++;
+    _$jscoverage['/navigation-view/bar.js'].lineData[16]++;
     elem.parent().append(ghost);
-    _$jscoverage['/navigation-view/bar.js'].lineData[17]++;
+    _$jscoverage['/navigation-view/bar.js'].lineData[18]++;
     var offset = elem.offset();
-    _$jscoverage['/navigation-view/bar.js'].lineData[19]++;
-    ghost.css('position', 'absolute');
     _$jscoverage['/navigation-view/bar.js'].lineData[20]++;
-    ghost.offset(offset);
+    ghost.css('position', 'absolute');
     _$jscoverage['/navigation-view/bar.js'].lineData[21]++;
+    ghost.offset(offset);
+    _$jscoverage['/navigation-view/bar.js'].lineData[22]++;
     ghost.css({
   width: width = elem.css('width'), 
   height: elem.css('height')});
-    _$jscoverage['/navigation-view/bar.js'].lineData[26]++;
+    _$jscoverage['/navigation-view/bar.js'].lineData[27]++;
     return ghost;
   }
-  _$jscoverage['/navigation-view/bar.js'].lineData[29]++;
+  _$jscoverage['/navigation-view/bar.js'].lineData[30]++;
   function anim(el, props, complete) {
     _$jscoverage['/navigation-view/bar.js'].functionData[2]++;
-    _$jscoverage['/navigation-view/bar.js'].lineData[30]++;
+    _$jscoverage['/navigation-view/bar.js'].lineData[31]++;
     el.animate(props, {
   duration: 0.25, 
   useTransition: true, 
   easing: 'ease-in-out', 
   complete: complete});
   }
-  _$jscoverage['/navigation-view/bar.js'].lineData[38]++;
-  function getAnimProps(self, backElProps, reverse) {
+  _$jscoverage['/navigation-view/bar.js'].lineData[39]++;
+  function getAnimProps(self, backEl, backElProps, reverse) {
     _$jscoverage['/navigation-view/bar.js'].functionData[3]++;
-    _$jscoverage['/navigation-view/bar.js'].lineData[39]++;
-    var barElement = self.get('el'), backEl = self.get('backEl'), titleElement = self.get('titleEl'), minOffset = Math.min(barElement[0].offsetWidth / 3, 200), newLeftWidth = backEl[0].offsetWidth, barWidth = barElement[0].offsetWidth, titleX = titleElement.offset().left - barElement.offset().left, titleWidth = titleElement[0].offsetWidth, oldBackWidth = backElProps.width, newOffset, oldOffset, backElAnims, titleAnims, omega, theta;
+    _$jscoverage['/navigation-view/bar.js'].lineData[40]++;
+    var barElement = self.get('el'), titleElement = self.get('titleEl'), minOffset = Math.min(barElement[0].offsetWidth / 3, 200), newLeftWidth = backEl[0].offsetWidth, barWidth = barElement[0].offsetWidth, titleX = titleElement.offset().left - barElement.offset().left, titleWidth = titleElement[0].offsetWidth, oldBackWidth = backElProps.width, newOffset, oldOffset, backElAnims, titleAnims, omega, theta;
     _$jscoverage['/navigation-view/bar.js'].lineData[50]++;
     if (visit3_50_1(reverse)) {
       _$jscoverage['/navigation-view/bar.js'].lineData[51]++;
@@ -472,78 +479,93 @@ KISSY.add(function(S, require) {
   }
   _$jscoverage['/navigation-view/bar.js'].lineData[128]++;
   return Control.extend({
-  forward: function(title) {
+  renderUI: function() {
   _$jscoverage['/navigation-view/bar.js'].functionData[4]++;
   _$jscoverage['/navigation-view/bar.js'].lineData[130]++;
+  var prefixCls = this.get('prefixCls');
+  _$jscoverage['/navigation-view/bar.js'].lineData[131]++;
+  var backBtn;
+  _$jscoverage['/navigation-view/bar.js'].lineData[132]++;
+  this.set('backBtn', backBtn = new Button({
+  prefixCls: prefixCls + 'navigation-bar-back-', 
+  elBefore: this.get('contentEl')[0].firstChild, 
+  visible: false, 
+  content: this.get('backText')}).render());
+}, 
+  forward: function(title) {
+  _$jscoverage['/navigation-view/bar.js'].functionData[5]++;
+  _$jscoverage['/navigation-view/bar.js'].lineData[140]++;
   this.go(title, true);
 }, 
   go: function(title, hasPrevious, reverse) {
-  _$jscoverage['/navigation-view/bar.js'].functionData[5]++;
-  _$jscoverage['/navigation-view/bar.js'].lineData[134]++;
+  _$jscoverage['/navigation-view/bar.js'].functionData[6]++;
+  _$jscoverage['/navigation-view/bar.js'].lineData[144]++;
   var self = this;
-  _$jscoverage['/navigation-view/bar.js'].lineData[135]++;
-  var backEl = this.get('backEl');
-  _$jscoverage['/navigation-view/bar.js'].lineData[136]++;
+  _$jscoverage['/navigation-view/bar.js'].lineData[145]++;
+  var backEl = this.get('backBtn').get('el');
+  _$jscoverage['/navigation-view/bar.js'].lineData[146]++;
   var backElProps = {
   width: backEl[0].offsetWidth};
-  _$jscoverage['/navigation-view/bar.js'].lineData[139]++;
+  _$jscoverage['/navigation-view/bar.js'].lineData[149]++;
   var ghostBackEl = createGhost(backEl);
-  _$jscoverage['/navigation-view/bar.js'].lineData[140]++;
+  _$jscoverage['/navigation-view/bar.js'].lineData[150]++;
   backEl.css('opacity', 0);
-  _$jscoverage['/navigation-view/bar.js'].lineData[141]++;
+  _$jscoverage['/navigation-view/bar.js'].lineData[151]++;
   backEl[hasPrevious ? 'show' : 'hide']();
-  _$jscoverage['/navigation-view/bar.js'].lineData[142]++;
+  _$jscoverage['/navigation-view/bar.js'].lineData[152]++;
   var titleEl = this.get('titleEl');
-  _$jscoverage['/navigation-view/bar.js'].lineData[143]++;
+  _$jscoverage['/navigation-view/bar.js'].lineData[153]++;
   var ghostTitleEl = createGhost(titleEl.parent());
-  _$jscoverage['/navigation-view/bar.js'].lineData[144]++;
+  _$jscoverage['/navigation-view/bar.js'].lineData[154]++;
   titleEl.css('opacity', 0);
-  _$jscoverage['/navigation-view/bar.js'].lineData[145]++;
+  _$jscoverage['/navigation-view/bar.js'].lineData[155]++;
   this.set('title', title);
-  _$jscoverage['/navigation-view/bar.js'].lineData[146]++;
-  var anims = getAnimProps(self, backElProps, reverse);
-  _$jscoverage['/navigation-view/bar.js'].lineData[147]++;
+  _$jscoverage['/navigation-view/bar.js'].lineData[156]++;
+  var anims = getAnimProps(self, backEl, backElProps, reverse);
+  _$jscoverage['/navigation-view/bar.js'].lineData[157]++;
   backEl.css(anims.back.element.from);
-  _$jscoverage['/navigation-view/bar.js'].lineData[148]++;
-  if (visit8_148_1(backEl.css('display') !== 'none')) {
-    _$jscoverage['/navigation-view/bar.js'].lineData[149]++;
+  _$jscoverage['/navigation-view/bar.js'].lineData[158]++;
+  if (visit8_158_1(backEl.css('display') !== 'none')) {
+    _$jscoverage['/navigation-view/bar.js'].lineData[159]++;
     anim(backEl, anims.back.element.to);
   }
-  _$jscoverage['/navigation-view/bar.js'].lineData[151]++;
+  _$jscoverage['/navigation-view/bar.js'].lineData[161]++;
   titleEl.css(anims.title.element.from);
-  _$jscoverage['/navigation-view/bar.js'].lineData[152]++;
+  _$jscoverage['/navigation-view/bar.js'].lineData[162]++;
   anim(titleEl, anims.title.element.to);
-  _$jscoverage['/navigation-view/bar.js'].lineData[154]++;
-  if (visit9_154_1(ghostBackEl.css('display') !== 'none')) {
-    _$jscoverage['/navigation-view/bar.js'].lineData[155]++;
+  _$jscoverage['/navigation-view/bar.js'].lineData[164]++;
+  if (visit9_164_1(ghostBackEl.css('display') !== 'none')) {
+    _$jscoverage['/navigation-view/bar.js'].lineData[165]++;
     anim(ghostBackEl, anims.back.ghost.to, function() {
-  _$jscoverage['/navigation-view/bar.js'].functionData[6]++;
-  _$jscoverage['/navigation-view/bar.js'].lineData[156]++;
+  _$jscoverage['/navigation-view/bar.js'].functionData[7]++;
+  _$jscoverage['/navigation-view/bar.js'].lineData[166]++;
   ghostBackEl.remove();
 });
   } else {
-    _$jscoverage['/navigation-view/bar.js'].lineData[159]++;
+    _$jscoverage['/navigation-view/bar.js'].lineData[169]++;
     ghostBackEl.remove();
   }
-  _$jscoverage['/navigation-view/bar.js'].lineData[161]++;
+  _$jscoverage['/navigation-view/bar.js'].lineData[171]++;
   anim(ghostTitleEl, anims.title.ghost.to, function() {
-  _$jscoverage['/navigation-view/bar.js'].functionData[7]++;
-  _$jscoverage['/navigation-view/bar.js'].lineData[162]++;
+  _$jscoverage['/navigation-view/bar.js'].functionData[8]++;
+  _$jscoverage['/navigation-view/bar.js'].lineData[172]++;
   ghostTitleEl.remove();
 });
 }, 
   back: function(title, hasPrevious) {
-  _$jscoverage['/navigation-view/bar.js'].functionData[8]++;
-  _$jscoverage['/navigation-view/bar.js'].lineData[167]++;
+  _$jscoverage['/navigation-view/bar.js'].functionData[9]++;
+  _$jscoverage['/navigation-view/bar.js'].lineData[177]++;
   this.go(title, hasPrevious, true);
 }}, {
   xclass: 'navigation-bar', 
   ATTRS: {
+  handleMouseEvents: {
+  value: false}, 
+  focusable: {
+  value: false}, 
   xrender: {
   value: BarRender}, 
   contentEl: {
-  view: 1}, 
-  backEl: {
   view: 1}, 
   titleEl: {
   view: 1}, 
