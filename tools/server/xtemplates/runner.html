@@ -25,18 +25,23 @@
     {{else}}
         <script src="/kissy/build/seed.js"></script>
     {{/if}}
-    <script>
-        var loc=new KISSY.Uri(location.href);
-        var component= '{{{component}}}';
-        if(loc.getQuery().has('coverage')){
-            KISSY.config('map',[[/kissy\/src\/(.+)\/src\//g,function(m,m1){
-                var mm=m1.replace(/sub-modules\//g,'');
-                if(mm!=component) return m;
-                return m.slice(0,-5)+'/coverage/src/';
-            }]]);
-        }
-    </script>
+
     <script src="/kissy/src/package.js"></script>
+    <script>
+        (function(){
+            var loc=new KISSY.Uri(location.href);
+            if(loc.getQuery().has('coverage')){
+                var lastPart;
+                var component=lastPart= '{{{component}}}';
+                var lastSlashIndex=component.lastIndexOf('/');
+                if(lastSlashIndex!=-1){
+                    lastPart=lastPart.slice(lastSlashIndex+1);
+                }
+                var packages=KISSY.config('packages');
+                packages[component].uri= packages[component].uri.resolve('../../coverage/src/'+lastPart+'/');
+            }
+        })();
+    </script>
     <script src="/kissy/tools/jasmine/jasmine.js"></script>
     <script src="/kissy/tools/jasmine/jasmine-html.js"></script>
     <script src="/kissy/tools/jasmine/jasmine.console_reporter.js"></script>

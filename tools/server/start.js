@@ -307,7 +307,7 @@ S.use('xtemplate/nodejs', function (S, XTemplateNodeJs) {
             var url = 'https://coveralls.io/api/v1/jobs';
             request.post({url: url, form: { json: str}}, function () {
                 res.send(S.substitute(ok, {
-                    content: 'var data=' + str + ';console.log(data);',
+                    //content: 'var data=' + str + ';console.log(data);',
                     time: (Date.now() - start)
                 }));
             });

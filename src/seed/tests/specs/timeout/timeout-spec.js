@@ -18,7 +18,7 @@ describe('timeout', function () {
         S.config({
             modules: {
                 'timeout/use': {
-                    fullpath: 'http://' + location.host +
+                    path: 'http://' + location.host +
                         '/kissy/src/seed/tests/specs/timeout/use.jss?' + S.now()
                 }
             }
@@ -58,7 +58,7 @@ describe('timeout', function () {
             },
             modules: {
                 'timeout/r2': {
-                    fullpath: 'http://' + location.host +
+                    path: 'http://' + location.host +
                         '/kissy/src/seed/tests/specs/timeout/r2.jss?' + S.now()
                 }
             }

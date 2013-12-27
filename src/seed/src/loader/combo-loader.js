@@ -176,18 +176,22 @@
         return name;
     }
 
-    function debugRemoteModules(rss) {
-        S.each(rss, function (rs) {
-            var ms = [];
-            S.each(rs.mods, function (m) {
-                if (m.status === LOADED) {
-                    ms.push(m.name);
+    var debugRemoteModules;
+
+    if ('@DEBUG@') {
+        debugRemoteModules = function (rss) {
+            S.each(rss, function (rs) {
+                var ms = [];
+                S.each(rs.mods, function (m) {
+                    if (m.status === LOADED) {
+                        ms.push(m.name);
+                    }
+                });
+                if (ms.length) {
+                    logger.info('load remote modules: "' + ms.join(', ') + '" from: "' + rs.modPath + '"');
                 }
             });
-            if (ms.length) {
-                logger.info('load remote modules: "' + ms.join(', ') + '" from: "' + rs.fullpath + '"');
-            }
-        });
+        };
     }
 
     function getCommonPrefix(str1, str2) {
@@ -238,7 +242,7 @@
                         S.each(one.mods, function (mod) {
                             var msg = mod.name +
                                 ' is not loaded! can not find module in path : ' +
-                                one.fullpath;
+                                one.path;
                             S.log(msg, 'error');
                             mod.status = ERROR;
                             // notify all loader instance
@@ -262,7 +266,7 @@
                             if (!mod.factory) {
                                 var msg = mod.name +
                                     ' is not loaded! can not find module in path : ' +
-                                    one.fullpath;
+                                    one.path;
                                 S.log(msg, 'error');
                                 mod.status = ERROR;
                             }
@@ -333,34 +337,32 @@
                 i = 0,
                 l = modNames.length,
                 modName, mod, packageInfo, type, typedCombos, mods,
-                tag, charset, packagePath,
-                packageName, group, fullpath;
+                tag, charset, packagePath, groupPrefixUri, comboName,
+                packageName, group, modPath;
 
             for (; i < l; ++i) {
                 modName = modNames[i];
                 mod = Utils.createModuleInfo(runtime, modName);
                 type = mod.getType();
-                fullpath = mod.getFullPath();
+                modPath = mod.getPath();
                 packageInfo = mod.getPackage();
                 packageName = packageInfo.name;
                 charset = packageInfo.getCharset();
                 tag = packageInfo.getTag();
                 group = packageInfo.getGroup();
-                packagePath = packageInfo.getPrefixUriForCombo();
-                packageUri = packageInfo.getPackageUri();
-
-                var comboName = packageName;
+                packagePath = packageInfo.getPath();
+                packageUri = packageInfo.getUri();
+                comboName = packageName;
                 // whether group packages can be combined (except default package and non-combo modules)
                 if ((mod.canBeCombined = packageInfo.isCombine() &&
-                    S.startsWith(fullpath, packagePath)) && group) {
+                    S.startsWith(modPath, packagePath)) && group) {
                     // combined package name
                     comboName = group + '_' + charset + '_' + groupTag;
-
-                    var groupPrefixUri;
                     if ((groupPrefixUri = comboPrefixes[comboName])) {
                         if (groupPrefixUri.isSameOriginAs(packageUri)) {
-                            groupPrefixUri.setPath(getCommonPrefix(groupPrefixUri.getPath(),
-                                packageUri.getPath()));
+                            groupPrefixUri.setPath(
+                                getCommonPrefix(groupPrefixUri.getPath(), packageUri.getPath())
+                            );
                         } else {
                             comboName = packageName;
                             comboPrefixes[packageName] = packageUri;
@@ -431,7 +433,7 @@
                         //noinspection JSReferencingMutableVariableFromClosure
                         res.push({
                             combine: 1,
-                            fullpath: prefix + currentComboUrls.join(comboSep) + suffix,
+                            path: prefix + currentComboUrls.join(comboSep) + suffix,
                             mods: currentComboMods
                         });
                     };
@@ -439,18 +441,18 @@
                     for (var i = 0; i < mods.length; i++) {
                         var currentMod = mods[i];
                         res.mods.push(currentMod);
-                        var fullpath = currentMod.getFullPath();
+                        var path = currentMod.getPath();
                         if (!currentMod.canBeCombined) {
                             res.push({
                                 combine: 0,
-                                fullpath: fullpath,
+                                path: path,
                                 mods: [currentMod]
                             });
                             continue;
                         }
                         // ignore query parameter
-                        var path = fullpath.slice(baseLen).replace(/\?.*$/, '');
-                        currentComboUrls.push(path);
+                        var subPath = path.slice(baseLen).replace(/\?.*$/, '');
+                        currentComboUrls.push(subPath);
                         currentComboMods.push(currentMod);
 
                         if (currentComboUrls.length > maxFileNum ||

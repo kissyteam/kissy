@@ -6,7 +6,6 @@
 (function (S) {
     var Loader = S.Loader,
         Path = S.Path,
-        IGNORE_PACKAGE_NAME_IN_URI = 'ignorePackageNameInUri',
         Utils = Loader.Utils;
 
     function forwardSystemPackage(self, property) {
@@ -48,41 +47,15 @@
             return this.name;
         },
 
-        /**
-         * Get package base.
-         * @return {String}
-         */
-        getBase: function () {
-            return forwardSystemPackage(this, 'base');
-        },
-
-        getPrefixUriForCombo: function () {
-            var self = this,
-                packageName = self.name;
-            return self.getBase() + (
-                packageName && !self.isIgnorePackageNameInUri() ?
-                    (packageName + '/') :
-                    ''
-                );
+        getPath: function () {
+            return this.path || (this.path = this.getUri().toString());
         },
 
         /**
          * get package uri
          */
-        getPackageUri: function () {
-            var self = this;
-            if (!self.packageUri) {
-                self.packageUri = new S.Uri(this.getPrefixUriForCombo());
-            }
-            return self.packageUri;
-        },
-
-        /**
-         * Get package baseUri
-         * @return {KISSY.Uri}
-         */
-        getBaseUri: function () {
-            return forwardSystemPackage(this, 'baseUri');
+        getUri: function () {
+            return this.uri;
         },
 
         /**
@@ -91,14 +64,6 @@
          */
         isDebug: function () {
             return forwardSystemPackage(this, 'debug');
-        },
-
-        /**
-         *  whether request mod file without insert package name into package base
-         *  @return {Boolean}
-         */
-        isIgnorePackageNameInUri: function () {
-            return forwardSystemPackage(this, IGNORE_PACKAGE_NAME_IN_URI);
         },
 
         /**
@@ -149,10 +114,12 @@
          * name of this module
          */
         self.name = undefined;
+
         /**
          * factory of this module
          */
         self.factory = undefined;
+
         // lazy initialize and commonjs module format
         self.cjs = 1;
         S.mix(self, cfg);
@@ -181,7 +148,7 @@
          * @returns {KISSY.Uri} resolve uri
          */
         resolve: function (relativePath) {
-            return this.getFullPathUri().resolve(relativePath);
+            return this.getUri().resolve(relativePath);
         },
 
         // use by xtemplate include
@@ -239,64 +206,67 @@
             return v;
         },
 
+        getAlias: function () {
+            var self = this,
+                name = self.name,
+                aliasFn,
+                packageInfo,
+                alias = self.alias;
+            if (!alias) {
+                packageInfo = self.getPackage();
+                if (packageInfo.alias) {
+                    alias = packageInfo.alias(name);
+                }
+                if (!alias && (aliasFn = self.runtime.Config.alias)) {
+                    alias = aliasFn(name);
+                }
+            }
+            return alias;
+        },
+
         /**
-         * Get the fullpath uri of current module if load dynamically
+         * Get the path uri of current module if load dynamically
          * @return {KISSY.Uri}
          */
-        getFullPathUri: function () {
-            var self = this,
-                t,
-                fullPathUri,
-                packageBaseUri,
-                packageInfo,
-                packageName,
-                path;
-            if (!self.fullPathUri) {
-                // fullpath can be specified
-                if (self.fullpath) {
-                    fullPathUri = new S.Uri(self.fullpath);
+        getUri: function () {
+            var self = this, uri;
+            if (!self.uri) {
+                // path can be specified
+                if (self.path) {
+                    uri = new S.Uri(self.path);
                 } else {
-                    packageInfo = self.getPackage();
-                    packageBaseUri = packageInfo.getBaseUri();
-                    path = self.getPath();
-                    // #262
-                    if (packageInfo.isIgnorePackageNameInUri() &&
-                        // native mod does not allow ignore package name
-                        (packageName = packageInfo.name)) {
-                        path = Path.relative(packageName, path);
+                    var name = self.name, t, subPath,
+                        packageInfo = self.getPackage(),
+                        packageUri = packageInfo.getUri(),
+                        packageName = packageInfo.getName(),
+                        extname = '.' + self.getType(),
+                        min = '-min';
+                    name = Path.join(Path.dirname(name), Path.basename(name, extname));
+                    if (packageInfo.isDebug()) {
+                        min = '';
                     }
-                    fullPathUri = packageBaseUri.resolve(path);
+                    subPath = name + min + extname;
+                    if (packageName) {
+                        subPath = Path.relative(packageName, subPath);
+                    }
+                    uri = packageUri.resolve(subPath);
                     if ((t = self.getTag())) {
                         t += '.' + self.getType();
-                        fullPathUri.query.set('t', t);
+                        uri.query.set('t', t);
                     }
                 }
-                self.fullPathUri = fullPathUri;
+                self.uri = uri;
             }
-            return self.fullPathUri;
+            return self.uri;
         },
 
         /**
-         * Get the fullpath of current module if load dynamically
-         * @return {String}
-         */
-        getFullPath: function () {
-            var self = this,
-                fullPathUri;
-            if (!self.fullpath) {
-                fullPathUri = self.getFullPathUri();
-                self.fullpath = fullPathUri.toString();
-            }
-            return self.fullpath;
-        },
-
-        /**
-         * Get the path (without package base)
+         * Get the path of current module if load dynamically
          * @return {String}
          */
         getPath: function () {
             var self = this;
-            return self.path || (self.path = defaultComponentJsName(self));
+            return self.path || (self.path = self.getUri().toString());
         },
 
         /**
@@ -391,27 +361,17 @@
 
     Loader.Module = Module;
 
-    function defaultComponentJsName(m) {
-        var name = m.name,
-            extname = '.' + m.getType(),
-            min = '-min';
-
-        name = Path.join(Path.dirname(name), Path.basename(name, extname));
-
-        if (m.getPackage().isDebug()) {
-            min = '';
-        }
-
-        return name + min + extname;
-    }
-
     var systemPackage = new Package({
         name: '',
         runtime: S
     });
 
+    systemPackage.getUri = function () {
+        return this.runtime.Config.baseUri;
+    };
+
     function getPackage(self, modName) {
-        var packages = self.config('packages'),
+        var packages = self.Config.packages || {},
             modNameSlash = modName + '/',
             pName = '',
             p;

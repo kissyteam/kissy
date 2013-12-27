@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50
 MIT Licensed
-build time: Dec 24 17:53
+build time: Dec 27 21:43
 */
 /**
  * @ignore
@@ -87,11 +87,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20131224175316' will replace with current timestamp when compressing.
+         * NOTICE: '20131227214319' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20131224175316',
+        __BUILD_TIME: '20131227214319',
 
         /**
          * KISSY Environment.
@@ -3879,14 +3879,12 @@ var KISSY = (function (undefined) {
                 m,
                 alias,
                 ok = 0,
-                j,
-                mods = runtime.Env.mods;
+                j;
             while (!ok) {
                 ok = 1;
                 for (i = ret.length - 1; i >= 0; i--) {
-                    if ((m = mods[ret[i]]) && ('alias' in m)) {
+                    if ((m = Utils.createModuleInfo(runtime, ret[i])) && (alias = m.getAlias())) {
                         ok = 0;
-                        alias = m.alias;
                         if (typeof alias === 'string') {
                             alias = [alias];
                         }
@@ -4010,7 +4008,6 @@ var KISSY = (function (undefined) {
 (function (S) {
     var Loader = S.Loader,
         Path = S.Path,
-        IGNORE_PACKAGE_NAME_IN_URI = 'ignorePackageNameInUri',
         Utils = Loader.Utils;
 
     function forwardSystemPackage(self, property) {
@@ -4052,41 +4049,15 @@ var KISSY = (function (undefined) {
             return this.name;
         },
 
-        /**
-         * Get package base.
-         * @return {String}
-         */
-        getBase: function () {
-            return forwardSystemPackage(this, 'base');
-        },
-
-        getPrefixUriForCombo: function () {
-            var self = this,
-                packageName = self.name;
-            return self.getBase() + (
-                packageName && !self.isIgnorePackageNameInUri() ?
-                    (packageName + '/') :
-                    ''
-                );
+        getPath: function () {
+            return this.path || (this.path = this.getUri().toString());
         },
 
         /**
          * get package uri
          */
-        getPackageUri: function () {
-            var self = this;
-            if (!self.packageUri) {
-                self.packageUri = new S.Uri(this.getPrefixUriForCombo());
-            }
-            return self.packageUri;
-        },
-
-        /**
-         * Get package baseUri
-         * @return {KISSY.Uri}
-         */
-        getBaseUri: function () {
-            return forwardSystemPackage(this, 'baseUri');
+        getUri: function () {
+            return this.uri;
         },
 
         /**
@@ -4095,14 +4066,6 @@ var KISSY = (function (undefined) {
          */
         isDebug: function () {
             return forwardSystemPackage(this, 'debug');
-        },
-
-        /**
-         *  whether request mod file without insert package name into package base
-         *  @return {Boolean}
-         */
-        isIgnorePackageNameInUri: function () {
-            return forwardSystemPackage(this, IGNORE_PACKAGE_NAME_IN_URI);
         },
 
         /**
@@ -4153,10 +4116,12 @@ var KISSY = (function (undefined) {
          * name of this module
          */
         self.name = undefined;
+
         /**
          * factory of this module
          */
         self.factory = undefined;
+
         // lazy initialize and commonjs module format
         self.cjs = 1;
         S.mix(self, cfg);
@@ -4185,7 +4150,7 @@ var KISSY = (function (undefined) {
          * @returns {KISSY.Uri} resolve uri
          */
         resolve: function (relativePath) {
-            return this.getFullPathUri().resolve(relativePath);
+            return this.getUri().resolve(relativePath);
         },
 
         // use by xtemplate include
@@ -4243,64 +4208,67 @@ var KISSY = (function (undefined) {
             return v;
         },
 
+        getAlias: function () {
+            var self = this,
+                name = self.name,
+                aliasFn,
+                packageInfo,
+                alias = self.alias;
+            if (!alias) {
+                packageInfo = self.getPackage();
+                if (packageInfo.alias) {
+                    alias = packageInfo.alias(name);
+                }
+                if (!alias && (aliasFn = self.runtime.Config.alias)) {
+                    alias = aliasFn(name);
+                }
+            }
+            return alias;
+        },
+
         /**
-         * Get the fullpath uri of current module if load dynamically
+         * Get the path uri of current module if load dynamically
          * @return {KISSY.Uri}
          */
-        getFullPathUri: function () {
-            var self = this,
-                t,
-                fullPathUri,
-                packageBaseUri,
-                packageInfo,
-                packageName,
-                path;
-            if (!self.fullPathUri) {
-                // fullpath can be specified
-                if (self.fullpath) {
-                    fullPathUri = new S.Uri(self.fullpath);
+        getUri: function () {
+            var self = this, uri;
+            if (!self.uri) {
+                // path can be specified
+                if (self.path) {
+                    uri = new S.Uri(self.path);
                 } else {
-                    packageInfo = self.getPackage();
-                    packageBaseUri = packageInfo.getBaseUri();
-                    path = self.getPath();
-                    // #262
-                    if (packageInfo.isIgnorePackageNameInUri() &&
-                        // native mod does not allow ignore package name
-                        (packageName = packageInfo.name)) {
-                        path = Path.relative(packageName, path);
+                    var name = self.name, t, subPath,
+                        packageInfo = self.getPackage(),
+                        packageUri = packageInfo.getUri(),
+                        packageName = packageInfo.getName(),
+                        extname = '.' + self.getType(),
+                        min = '-min';
+                    name = Path.join(Path.dirname(name), Path.basename(name, extname));
+                    if (packageInfo.isDebug()) {
+                        min = '';
                     }
-                    fullPathUri = packageBaseUri.resolve(path);
+                    subPath = name + min + extname;
+                    if (packageName) {
+                        subPath = Path.relative(packageName, subPath);
+                    }
+                    uri = packageUri.resolve(subPath);
                     if ((t = self.getTag())) {
                         t += '.' + self.getType();
-                        fullPathUri.query.set('t', t);
+                        uri.query.set('t', t);
                     }
                 }
-                self.fullPathUri = fullPathUri;
+                self.uri = uri;
             }
-            return self.fullPathUri;
+            return self.uri;
         },
 
         /**
-         * Get the fullpath of current module if load dynamically
-         * @return {String}
-         */
-        getFullPath: function () {
-            var self = this,
-                fullPathUri;
-            if (!self.fullpath) {
-                fullPathUri = self.getFullPathUri();
-                self.fullpath = fullPathUri.toString();
-            }
-            return self.fullpath;
-        },
-
-        /**
-         * Get the path (without package base)
+         * Get the path of current module if load dynamically
          * @return {String}
          */
         getPath: function () {
             var self = this;
-            return self.path || (self.path = defaultComponentJsName(self));
+            return self.path || (self.path = self.getUri().toString());
         },
 
         /**
@@ -4395,27 +4363,17 @@ var KISSY = (function (undefined) {
 
     Loader.Module = Module;
 
-    function defaultComponentJsName(m) {
-        var name = m.name,
-            extname = '.' + m.getType(),
-            min = '-min';
-
-        name = Path.join(Path.dirname(name), Path.basename(name, extname));
-
-        if (m.getPackage().isDebug()) {
-            min = '';
-        }
-
-        return name + min + extname;
-    }
-
     var systemPackage = new Package({
         name: '',
         runtime: S
     });
 
+    systemPackage.getUri = function () {
+        return this.runtime.Config.baseUri;
+    };
+
     function getPackage(self, modName) {
-        var packages = self.config('packages'),
+        var packages = self.Config.packages || {},
             modNameSlash = modName + '/',
             pName = '',
             p;
@@ -4597,9 +4555,10 @@ var KISSY = (function (undefined) {
     }
 
     S.Config.loadModsFn = function (rs, config) {
-        S.getScript(rs.fullpath, config);
+        S.getScript(rs.path, config);
     };
 
+    var PACKAGE_MEMBERS = ['alias', 'debug', 'tag', 'group', 'combine', 'charset'];
     configFns.packages = function (config) {
         var name,
             Config = this.Config,
@@ -4608,18 +4567,27 @@ var KISSY = (function (undefined) {
             S.each(config, function (cfg, key) {
                 // 兼容数组方式
                 name = cfg.name || key;
-                // 兼容 path
-                var baseUri = normalizeBase(cfg.base || cfg.path);
-
-                cfg.name = name;
-                cfg.base = baseUri.toString();
-                cfg.baseUri = baseUri;
-                cfg.runtime = S;
-                delete cfg.path;
+                var path = cfg.base || cfg.path;
+                var newConfig = {
+                    runtime: S,
+                    name: name
+                };
+                S.each(PACKAGE_MEMBERS, function (m) {
+                    if (m in cfg) {
+                        newConfig[m] = cfg[m];
+                    }
+                });
+                if (path) {
+                    path += '/';
+                    if (!cfg.ignorePackageNameInUri) {
+                        path += name + '/';
+                    }
+                    newConfig.uri = normalizeBase(path);
+                }
                 if (ps[name]) {
-                    ps[name].reset(cfg);
+                    ps[name].reset(newConfig);
                 } else {
-                    ps[name] = new Loader.Package(cfg);
+                    ps[name] = new Loader.Package(newConfig);
                 }
             });
             return undefined;
@@ -4649,10 +4617,9 @@ var KISSY = (function (undefined) {
             Config = self.Config,
             baseUri;
         if (!base) {
-            return Config.base;
+            return Config.baseUri.toString();
         }
         baseUri = normalizeBase(base);
-        Config.base = baseUri.toString();
         Config.baseUri = baseUri;
         return undefined;
     };
@@ -4854,18 +4821,22 @@ var KISSY = (function (undefined) {
         return name;
     }
 
-    function debugRemoteModules(rss) {
-        S.each(rss, function (rs) {
-            var ms = [];
-            S.each(rs.mods, function (m) {
-                if (m.status === LOADED) {
-                    ms.push(m.name);
+    var debugRemoteModules;
+
+    if ('@DEBUG@') {
+        debugRemoteModules = function (rss) {
+            S.each(rss, function (rs) {
+                var ms = [];
+                S.each(rs.mods, function (m) {
+                    if (m.status === LOADED) {
+                        ms.push(m.name);
+                    }
+                });
+                if (ms.length) {
+                    logger.info('load remote modules: "' + ms.join(', ') + '" from: "' + rs.modPath + '"');
                 }
             });
-            if (ms.length) {
-                logger.info('load remote modules: "' + ms.join(', ') + '" from: "' + rs.fullpath + '"');
-            }
-        });
+        };
     }
 
     function getCommonPrefix(str1, str2) {
@@ -4916,7 +4887,7 @@ var KISSY = (function (undefined) {
                         S.each(one.mods, function (mod) {
                             var msg = mod.name +
                                 ' is not loaded! can not find module in path : ' +
-                                one.fullpath;
+                                one.path;
                             S.log(msg, 'error');
                             mod.status = ERROR;
                             // notify all loader instance
@@ -4940,7 +4911,7 @@ var KISSY = (function (undefined) {
                             if (!mod.factory) {
                                 var msg = mod.name +
                                     ' is not loaded! can not find module in path : ' +
-                                    one.fullpath;
+                                    one.path;
                                 S.log(msg, 'error');
                                 mod.status = ERROR;
                             }
@@ -5011,34 +4982,32 @@ var KISSY = (function (undefined) {
                 i = 0,
                 l = modNames.length,
                 modName, mod, packageInfo, type, typedCombos, mods,
-                tag, charset, packagePath,
-                packageName, group, fullpath;
+                tag, charset, packagePath, groupPrefixUri, comboName,
+                packageName, group, modPath;
 
             for (; i < l; ++i) {
                 modName = modNames[i];
                 mod = Utils.createModuleInfo(runtime, modName);
                 type = mod.getType();
-                fullpath = mod.getFullPath();
+                modPath = mod.getPath();
                 packageInfo = mod.getPackage();
                 packageName = packageInfo.name;
                 charset = packageInfo.getCharset();
                 tag = packageInfo.getTag();
                 group = packageInfo.getGroup();
-                packagePath = packageInfo.getPrefixUriForCombo();
-                packageUri = packageInfo.getPackageUri();
-
-                var comboName = packageName;
+                packagePath = packageInfo.getPath();
+                packageUri = packageInfo.getUri();
+                comboName = packageName;
                 // whether group packages can be combined (except default package and non-combo modules)
                 if ((mod.canBeCombined = packageInfo.isCombine() &&
-                    S.startsWith(fullpath, packagePath)) && group) {
+                    S.startsWith(modPath, packagePath)) && group) {
                     // combined package name
                     comboName = group + '_' + charset + '_' + groupTag;
-
-                    var groupPrefixUri;
                     if ((groupPrefixUri = comboPrefixes[comboName])) {
                         if (groupPrefixUri.isSameOriginAs(packageUri)) {
-                            groupPrefixUri.setPath(getCommonPrefix(groupPrefixUri.getPath(),
-                                packageUri.getPath()));
+                            groupPrefixUri.setPath(
+                                getCommonPrefix(groupPrefixUri.getPath(), packageUri.getPath())
+                            );
                         } else {
                             comboName = packageName;
                             comboPrefixes[packageName] = packageUri;
@@ -5109,7 +5078,7 @@ var KISSY = (function (undefined) {
                         //noinspection JSReferencingMutableVariableFromClosure
                         res.push({
                             combine: 1,
-                            fullpath: prefix + currentComboUrls.join(comboSep) + suffix,
+                            path: prefix + currentComboUrls.join(comboSep) + suffix,
                             mods: currentComboMods
                         });
                     };
@@ -5117,18 +5086,18 @@ var KISSY = (function (undefined) {
                     for (var i = 0; i < mods.length; i++) {
                         var currentMod = mods[i];
                         res.mods.push(currentMod);
-                        var fullpath = currentMod.getFullPath();
+                        var path = currentMod.getPath();
                         if (!currentMod.canBeCombined) {
                             res.push({
                                 combine: 0,
-                                fullpath: fullpath,
+                                path: path,
                                 mods: [currentMod]
                             });
                             continue;
                         }
                         // ignore query parameter
-                        var path = fullpath.slice(baseLen).replace(/\?.*$/, '');
-                        currentComboUrls.push(path);
+                        var subPath = path.slice(baseLen).replace(/\?.*$/, '');
+                        currentComboUrls.push(subPath);
                         currentComboMods.push(currentMod);
 
                         if (currentComboUrls.length > maxFileNum ||
@@ -5174,10 +5143,9 @@ var KISSY = (function (undefined) {
  * @author yiminghe@gmail.com
  */
 (function (S, undefined) {
-    var    logger = S.getLogger('s/loader');
+    var logger = S.getLogger('s/loader');
     var Loader = S.Loader,
         Env = S.Env,
-
         Utils = Loader.Utils,
         processImmediate = S.setImmediate,
         ComboLoader = Loader.ComboLoader;
@@ -5359,7 +5327,7 @@ var KISSY = (function (undefined) {
     var doc = S.Env.host && S.Env.host.document;
     // var logger = S.getLogger('s/loader');
     var Utils = S.Loader.Utils;
-    var TIMESTAMP = '20131224175316';
+    var TIMESTAMP = '20131227214319';
     var defaultComboPrefix = '??';
     var defaultComboSep = ',';
 
@@ -5964,6 +5932,10 @@ menu: {requires: ['node','component/container','component/extension/delegate-chi
 /*Generated By KISSY Module Compiler*/
 config({
 menubutton: {requires: ['node','button','component/extension/content-xtpl','component/extension/content-render','menu']}
+});
+/*Generated By KISSY Module Compiler*/
+config({
+'navigation-view': {requires: ['component/control']}
 });
 /*Generated By KISSY Module Compiler*/
 config({

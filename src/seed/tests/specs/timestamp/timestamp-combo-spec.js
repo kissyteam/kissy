@@ -46,7 +46,7 @@ describe("loader", function () {
 
             var comboUrls = loader.getComboUrls(allModNames);
 
-            expect(comboUrls.js['timestamp'][0].fullpath)
+            expect(comboUrls.js['timestamp'][0].path)
                 .toBe("http://" + host +
                     "/kissy/src/seed/tests/specs/timestamp/??y.js,x.js,z.js?t=a.js");
 
@@ -142,9 +142,9 @@ describe("loader", function () {
 
             var jss = comboUrls.js[key];
 
-            expect(jss[0].fullpath).toBe("http://" + host + "/kissy/src/seed/tests/specs/timestamp/y.js?t=a.js");
-            expect(jss[1].fullpath).toBe("http://" + host + "/kissy/src/seed/tests/specs/timestamp/x.js?t=b.js");
-            expect(jss[2].fullpath).toBe("http://" + host + "/kissy/src/seed/tests/specs/timestamp/z.js?t=z.js");
+            expect(jss[0].path).toBe("http://" + host + "/kissy/src/seed/tests/specs/timestamp/y.js?t=a.js");
+            expect(jss[1].path).toBe("http://" + host + "/kissy/src/seed/tests/specs/timestamp/x.js?t=b.js");
+            expect(jss[2].path).toBe("http://" + host + "/kissy/src/seed/tests/specs/timestamp/z.js?t=z.js");
 
 
         });

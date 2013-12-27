@@ -4,10 +4,9 @@
  * @author yiminghe@gmail.com
  */
 (function (S, undefined) {
-    var    logger = S.getLogger('s/loader');
+    var logger = S.getLogger('s/loader');
     var Loader = S.Loader,
         Env = S.Env,
-
         Utils = Loader.Utils,
         processImmediate = S.setImmediate,
         ComboLoader = Loader.ComboLoader;

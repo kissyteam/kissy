@@ -43,9 +43,9 @@
                 for (var i = 0; i < cssList.length; i++) {
                     var currentCss = cssList[i];
                     var currentPackage = currentCss.getPackage();
-                    var packagePath = currentPackage.getPrefixUriForCombo();
+                    var packagePath = currentPackage.getUri().toString();
                     // map individual module
-                    var fullpath = currentCss.getFullPath();
+                    var fullpath = currentCss.getPath();
                     if (!currentPackage.isCombine() || !S.startsWith(fullpath, packagePath)) {
                         doc.writeln('<link href="' + fullpath + '"  rel="stylesheet"/>');
                         continue;
@@ -79,7 +79,7 @@
                 }
             } else {
                 S.each(cssList, function (css) {
-                    doc.writeln('<link href="' + css.getFullPath() + '"  rel="stylesheet"/>');
+                    doc.writeln('<link href="' + css.Path() + '"  rel="stylesheet"/>');
                 });
             }
         }

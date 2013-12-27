@@ -48,7 +48,7 @@ KISSY.add(function (S, require) {
                 runtime: S
             });
 
-            var tpl = fs.readFileSync(new S.Uri(module.getFullPath()).getPath(), {
+            var tpl = fs.readFileSync(new S.Uri(module.getPath()).getPath(), {
                 encoding: 'utf-8'
             });
             if (cacheFile) {

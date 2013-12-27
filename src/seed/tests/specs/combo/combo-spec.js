@@ -1,5 +1,6 @@
 describe("S ComboLoader", function () {
     var S = KISSY,
+        kBase= S.config('base'),
         host = location.host;
 
     it("can combo test and not combo kissy", function () {
@@ -137,7 +138,7 @@ describe("S ComboLoader", function () {
             r = S.keys(l.calculate(["a", "h"]));
             S.Loader.Utils.createModulesInfo(S, r);
             var c = l.getComboUrls(r);
-            expect(c.js[''][0].fullpath).toBe(S.Config.base +
+            expect(c.js[''][0].path).toBe(kBase +
                 "??a.js,b.js,d.js,f.js,g.js,e.js,c.js,h.js,m.js");
 
         });
@@ -173,9 +174,9 @@ describe("S ComboLoader", function () {
             var c = l.getComboUrls(r);
             var js = c.js[''];
             expect(js.length).toBe(3);
-            expect(js[0].fullpath).toBe(S.Config.base + "??a.js,b.js");
-            expect(js[1].fullpath).toBe(S.Config.base + "??d.js,e.js");
-            expect(js[2].fullpath).toBe(S.Config.base + "??c.js");
+            expect(js[0].path).toBe(kBase + "??a.js,b.js");
+            expect(js[1].path).toBe(kBase + "??d.js,e.js");
+            expect(js[2].path).toBe(kBase + "??c.js");
 
             S.config('comboMaxFileNum', comboMaxFileNum);
         });
@@ -218,7 +219,7 @@ describe("S ComboLoader", function () {
             expect(cjs.length).toBe(3);
 
             S.each(cjs, function (j) {
-                expect(j.fullpath.length).not.toBeGreaterThan(S.Config.comboMaxUrlLength)
+                expect(j.path.length).not.toBeGreaterThan(S.Config.comboMaxUrlLength)
             });
         });
     });
@@ -268,7 +269,7 @@ describe("S ComboLoader", function () {
             var urls = loader.getComboUrls(mods);
             var host = location.host;
 
-            expect(urls['js']['tests'][0].fullpath)
+            expect(urls['js']['tests'][0].path)
                 .toBe("http://" + host + "/kissy/src/seed/tests/specs/combo/" +
                     "tests/??a.js,b.js,c.js");
 
@@ -388,9 +389,9 @@ describe("S ComboLoader", function () {
 
             var jss = comboUrls.js[key];
 
-            expect(jss[0].fullpath).toBe("http://" + host + "/kissy/src/seed/tests/specs/timestamp/y.js");
-            expect(jss[1].fullpath).toBe("http://" + host + "/kissy/src/seed/tests/specs/timestamp/x.js");
-            expect(jss[2].fullpath).toBe("http://" + host + "/kissy/src/seed/tests/specs/timestamp/z.js");
+            expect(jss[0].path).toBe("http://" + host + "/kissy/src/seed/tests/specs/timestamp/y.js");
+            expect(jss[1].path).toBe("http://" + host + "/kissy/src/seed/tests/specs/timestamp/x.js");
+            expect(jss[2].path).toBe("http://" + host + "/kissy/src/seed/tests/specs/timestamp/z.js");
 
         });
     });

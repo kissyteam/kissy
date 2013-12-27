@@ -3,7 +3,7 @@ self.onmessage = function (e) {
     KISSY.config('base', 'http://' + e.data.host + '/kissy/build/');
     //KISSY.config('combine',true);
     KISSY.config('loadModsFn', function (rs, config) {
-        importScripts(rs.fullpath);
+        importScripts(rs.path);
         config.success();
     });
     KISSY.use('color',function(S,Color){

@@ -17,9 +17,10 @@
     }
 
     S.Config.loadModsFn = function (rs, config) {
-        S.getScript(rs.fullpath, config);
+        S.getScript(rs.path, config);
     };
 
+    var PACKAGE_MEMBERS = ['alias', 'debug', 'tag', 'group', 'combine', 'charset'];
     configFns.packages = function (config) {
         var name,
             Config = this.Config,
@@ -28,18 +29,27 @@
             S.each(config, function (cfg, key) {
                 // 兼容数组方式
                 name = cfg.name || key;
-                // 兼容 path
-                var baseUri = normalizeBase(cfg.base || cfg.path);
-
-                cfg.name = name;
-                cfg.base = baseUri.toString();
-                cfg.baseUri = baseUri;
-                cfg.runtime = S;
-                delete cfg.path;
+                var path = cfg.base || cfg.path;
+                var newConfig = {
+                    runtime: S,
+                    name: name
+                };
+                S.each(PACKAGE_MEMBERS, function (m) {
+                    if (m in cfg) {
+                        newConfig[m] = cfg[m];
+                    }
+                });
+                if (path) {
+                    path += '/';
+                    if (!cfg.ignorePackageNameInUri) {
+                        path += name + '/';
+                    }
+                    newConfig.uri = normalizeBase(path);
+                }
                 if (ps[name]) {
-                    ps[name].reset(cfg);
+                    ps[name].reset(newConfig);
                 } else {
-                    ps[name] = new Loader.Package(cfg);
+                    ps[name] = new Loader.Package(newConfig);
                 }
             });
             return undefined;
@@ -69,10 +79,9 @@
             Config = self.Config,
             baseUri;
         if (!base) {
-            return Config.base;
+            return Config.baseUri.toString();
         }
         baseUri = normalizeBase(base);
-        Config.base = baseUri.toString();
         Config.baseUri = baseUri;
         return undefined;
     };

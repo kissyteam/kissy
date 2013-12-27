@@ -12,14 +12,14 @@
         }
 
         KISSY.config('loadModsFn', function (rs, config) {
-            var fullpath = rs.fullpath, code;
-            if (code = localStorage.getItem(fullpath)) {
+            var path = rs.path, code;
+            if (code = localStorage.getItem(path)) {
                 eval(code);
                 config.success();
             } else {
-                xhr(fullpath, function (code) {
+                xhr(path, function (code) {
                         try{
-                    localStorage.setItem(fullpath, code);
+                    localStorage.setItem(path, code);
                     }catch (e){
                         // QUOTA_EXCEEDED_ERR
                         KISSY.log(e,'error');

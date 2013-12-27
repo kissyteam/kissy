@@ -312,15 +312,15 @@ if (! _$jscoverage['/meta/modules.js'].branchData) {
   _$jscoverage['/meta/modules.js'].branchData['152'][1] = new BranchData();
 }
 _$jscoverage['/meta/modules.js'].branchData['152'][1].init(313, 13, 'UA.ieMode < 9');
-function visit526_152_1(result) {
+function visit532_152_1(result) {
   _$jscoverage['/meta/modules.js'].branchData['152'][1].ranCondition(result);
   return result;
 }_$jscoverage['/meta/modules.js'].branchData['108'][1].init(37, 13, 'UA.ieMode < 9');
-function visit525_108_1(result) {
+function visit531_108_1(result) {
   _$jscoverage['/meta/modules.js'].branchData['108'][1].ranCondition(result);
   return result;
 }_$jscoverage['/meta/modules.js'].branchData['6'][1].init(17, 61, 'KISSY.Features.getVendorCssPropPrefix(\'transition\') !== false');
-function visit524_6_1(result) {
+function visit530_6_1(result) {
   _$jscoverage['/meta/modules.js'].branchData['6'][1].ranCondition(result);
   return result;
 }_$jscoverage['/meta/modules.js'].lineData[3]++;
@@ -329,7 +329,7 @@ function visit524_6_1(result) {
   _$jscoverage['/meta/modules.js'].lineData[4]++;
   config({
   'anim/transition?': {
-  alias: visit524_6_1(KISSY.Features.getVendorCssPropPrefix('transition') !== false) ? 'anim/transition' : ''}});
+  alias: visit530_6_1(KISSY.Features.getVendorCssPropPrefix('transition') !== false) ? 'anim/transition' : ''}});
   _$jscoverage['/meta/modules.js'].lineData[9]++;
   config({
   anim: {
@@ -429,7 +429,7 @@ function visit524_6_1(result) {
   _$jscoverage['/meta/modules.js'].lineData[104]++;
   config({
   'dom/basic': {
-  alias: ['dom/base', visit525_108_1(UA.ieMode < 9) ? 'dom/ie' : '', Features.isClassListSupported() ? '' : 'dom/class-list']}, 
+  alias: ['dom/base', visit531_108_1(UA.ieMode < 9) ? 'dom/ie' : '', Features.isClassListSupported() ? '' : 'dom/class-list']}, 
   dom: {
   alias: ['dom/basic', !Features.isQuerySelectorSupported() ? 'dom/selector' : '']}});
   _$jscoverage['/meta/modules.js'].lineData[119]++;
@@ -459,7 +459,7 @@ function visit524_6_1(result) {
   _$jscoverage['/meta/modules.js'].lineData[142]++;
   config({
   'event/dom': {
-  alias: ['event/dom/base', Features.isTouchGestureSupported() ? 'event/dom/touch' : '', Features.isDeviceMotionSupported() ? 'event/dom/shake' : '', Features.isHashChangeSupported() ? '' : 'event/dom/hashchange', visit526_152_1(UA.ieMode < 9) ? 'event/dom/ie' : '', UA.ie ? '' : 'event/dom/focusin']}});
+  alias: ['event/dom/base', Features.isTouchGestureSupported() ? 'event/dom/touch' : '', Features.isDeviceMotionSupported() ? 'event/dom/shake' : '', Features.isHashChangeSupported() ? '' : 'event/dom/hashchange', visit532_152_1(UA.ieMode < 9) ? 'event/dom/ie' : '', UA.ie ? '' : 'event/dom/focusin']}});
   _$jscoverage['/meta/modules.js'].lineData[158]++;
   config({
   'event/dom/base': {
@@ -502,8 +502,8 @@ function visit524_6_1(result) {
   requires: ['node', 'button', 'component/extension/content-xtpl', 'component/extension/content-render', 'menu']}});
   _$jscoverage['/meta/modules.js'].lineData[198]++;
   config({
-  mvc: {
-  requires: ['io', 'json', 'attribute', 'node']}});
+  'navigation-view': {
+  requires: ['component/control']}});
   _$jscoverage['/meta/modules.js'].lineData[202]++;
   config({
   node: {

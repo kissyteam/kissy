@@ -1,10 +1,10 @@
 /*
 Copyright 2013, KISSY v1.50
 MIT Licensed
-build time: Dec 12 22:22
+build time: Dec 27 21:46
 */
 /*
- Combined processedModules by KISSY Module Compiler: 
+ Combined modules by KISSY Module Compiler: 
 
  xtemplate/nodejs
 */
@@ -31,7 +31,7 @@ KISSY.add("xtemplate/nodejs", ["xtemplate"], function(S, require) {
         return cached[subTplName]
       }
       var module = new S.Loader.Module({name:subTplName, type:extname, runtime:S});
-      var tpl = fs.readFileSync((new S.Uri(module.getFullPath())).getPath(), {encoding:"utf-8"});
+      var tpl = fs.readFileSync((new S.Uri(module.getPath())).getPath(), {encoding:"utf-8"});
       if(cacheFile) {
         cached[subTplName] = tpl
       }

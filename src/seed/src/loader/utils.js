@@ -351,14 +351,12 @@
                 m,
                 alias,
                 ok = 0,
-                j,
-                mods = runtime.Env.mods;
+                j;
             while (!ok) {
                 ok = 1;
                 for (i = ret.length - 1; i >= 0; i--) {
-                    if ((m = mods[ret[i]]) && ('alias' in m)) {
+                    if ((m = Utils.createModuleInfo(runtime, ret[i])) && (alias = m.getAlias())) {
                         ok = 0;
-                        alias = m.alias;
                         if (typeof alias === 'string') {
                             alias = [alias];
                         }

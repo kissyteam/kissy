@@ -270,7 +270,7 @@ if (! _$jscoverage['/nodejs.js'].branchData) {
   _$jscoverage['/nodejs.js'].branchData['54'] = [];
   _$jscoverage['/nodejs.js'].branchData['54'][1] = new BranchData();
 }
-_$jscoverage['/nodejs.js'].branchData['54'][1].init(414, 9, 'cacheFile');
+_$jscoverage['/nodejs.js'].branchData['54'][1].init(410, 9, 'cacheFile');
 function visit3_54_1(result) {
   _$jscoverage['/nodejs.js'].branchData['54'][1].ranCondition(result);
   return result;
@@ -334,7 +334,7 @@ KISSY.add(function(S, require) {
   type: extname, 
   runtime: S});
   _$jscoverage['/nodejs.js'].lineData[51]++;
-  var tpl = fs.readFileSync(new S.Uri(module.getFullPath()).getPath(), {
+  var tpl = fs.readFileSync(new S.Uri(module.getPath()).getPath(), {
   encoding: 'utf-8'});
   _$jscoverage['/nodejs.js'].lineData[54]++;
   if (visit3_54_1(cacheFile)) {

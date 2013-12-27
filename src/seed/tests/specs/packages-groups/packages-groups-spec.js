@@ -79,11 +79,11 @@ describe("modules and groups", function () {
         var comboName = 'my_utf-8_' + groupTag;
         var js = c.js[comboName];
         expect(js.length).toBe(1);
-        expect(js[0].fullpath.substring(js[0].fullpath.indexOf('??')))
+        expect(js[0].path.substring(js[0].path.indexOf('??')))
             .toBe("??pkg-a/a.js,pkg-b/b.js");
         js = c.js['pkg-c'];
         expect(js.length).toBe(1);
-        expect(js[0].fullpath.substring(js[0].fullpath.indexOf('??')))
+        expect(js[0].path.substring(js[0].path.indexOf('??')))
             .toBe("??c.js");
     });
 
@@ -116,11 +116,11 @@ describe("modules and groups", function () {
         var c = l.getComboUrls(r);
         var js = c.js[comboName];
         expect(js.length).toBe(1);
-        expect(js[0].fullpath.substring(js[0].fullpath.indexOf('??')))
+        expect(js[0].path.substring(js[0].path.indexOf('??')))
             .toBe("??a.js");
         js = c.js['test'];
         expect(js.length).toBe(1);
-        expect(js[0].fullpath).toBe("http://g.tbcdn.cn/test/??x.js");
+        expect(js[0].path).toBe("http://g.tbcdn.cn/test/??x.js");
     });
 
     it("combo packages with different charset", function () {
@@ -155,12 +155,12 @@ describe("modules and groups", function () {
         var comboName = 'my_utf-8_' + groupTag;
         var js = c.js[comboName];
         expect(js.length).toBe(1);
-        expect(js[0].fullpath.substring(js[0].fullpath.indexOf('??')))
+        expect(js[0].path.substring(js[0].path.indexOf('??')))
             .toBe("??a.js");
         comboName = 'my_gbk_' + groupTag;
         js = c.js[comboName];
         expect(js.length).toBe(1);
-        expect(js[0].fullpath.substring(js[0].fullpath.indexOf('??')))
+        expect(js[0].path.substring(js[0].path.indexOf('??')))
             .toBe("??b.js");
     });
 
@@ -204,7 +204,7 @@ describe("modules and groups", function () {
         var comboName = 'my_utf-8_' + groupTag;
         var js = c.js[comboName];
         expect(js.length).toBe(1);
-        expect(js[0].fullpath.substring(js[0].fullpath.indexOf('??')))
+        expect(js[0].path.substring(js[0].path.indexOf('??')))
             .toBe("??src/seed/tests/specs/packages-groups/pkg-a/a.js," +
                 "src/seed/tests/specs/packages-groups/pkg-b/b.js," +
                 "build/dom/base.js," +

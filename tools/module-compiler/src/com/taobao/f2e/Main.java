@@ -103,7 +103,7 @@ public class Main {
             finalCodes.append(m.getCode());
         }
 
-        String re = "/*\n Combined processedModules by KISSY Module Compiler: \n\n " +
+        String re = "/*\n Combined modules by KISSY Module Compiler: \n\n " +
                 ArrayUtils.join(combinedFiles.toArray(new String[combinedFiles.size()]), "\n ")
                 + "\n*/\n\n" + finalCodes.toString();
 
