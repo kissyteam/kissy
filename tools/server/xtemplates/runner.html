@@ -28,11 +28,11 @@
 
     <script src="/kissy/src/package.js"></script>
     <script>
+        var component = '{{{component}}}';
         (function(){
             var loc=new KISSY.Uri(location.href);
             if(loc.getQuery().has('coverage')){
-                var lastPart;
-                var component=lastPart= '{{{component}}}';
+                var lastPart = component;
                 var lastSlashIndex=component.lastIndexOf('/');
                 if(lastSlashIndex!=-1){
                     lastPart=lastPart.slice(lastSlashIndex+1);
