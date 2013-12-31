@@ -503,7 +503,7 @@ function visit530_6_1(result) {
   _$jscoverage['/meta/modules.js'].lineData[198]++;
   config({
   'navigation-view': {
-  requires: ['component/control']}});
+  requires: ['node', 'component/container', 'component/control', 'button', 'component/extension/content-xtpl', 'component/extension/content-render']}});
   _$jscoverage['/meta/modules.js'].lineData[202]++;
   config({
   node: {

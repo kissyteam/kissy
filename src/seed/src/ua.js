@@ -225,7 +225,8 @@
 
         } else {
             // WebKit
-            if ((m = ua.match(/AppleWebKit\/([\d.]*)/)) && m[1]) {
+            // https://github.com/kissyteam/kissy/issues/545
+            if (((m = ua.match(/AppleWebKit\/([\d.]*)/)) || (m = ua.match(/Safari\/([\d.]*)/))) && m[1]) {
                 UA[core = 'webkit'] = numberify(m[1]);
 
                 if ((m = ua.match(/OPR\/(\d+\.\d+)/)) && m[1]) {
