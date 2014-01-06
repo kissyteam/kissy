@@ -5,7 +5,7 @@
  */
 KISSY.add(function (S, require) {
     var DateTimeFormat = require('date/format'),
-        PickerTpl = require('./picker-xtpl'),
+        PickerTpl = require('date/picker-xtpl'),
         Control = require('component/control');
     var dateRowTplStart = '<tr role="row">';
     var dateRowTplEnd = '</tr>';

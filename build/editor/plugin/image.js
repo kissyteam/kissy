@@ -1,7 +1,7 @@
 /*
-Copyright 2013, KISSY v1.41
+Copyright 2014, KISSY v1.41
 MIT Licensed
-build time: Dec 4 22:10
+build time: Jan 6 12:47
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -97,7 +97,7 @@ KISSY.add("editor/plugin/image", ["./button", "editor", "./bubble", "./dialog-lo
       bubble.on("show", function() {
         var a = bubble.get("editorSelectedEl");
         if(a) {
-          var src = a.attr("_keSaved_src") || a.attr("src");
+          var src = a.attr("_ke_saved_src") || a.attr("src");
           tipUrlEl.attr("href", src)
         }
       })

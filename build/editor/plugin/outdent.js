@@ -1,7 +1,7 @@
 /*
-Copyright 2013, KISSY v1.41
+Copyright 2014, KISSY v1.41
 MIT Licensed
-build time: Dec 4 22:12
+build time: Jan 6 12:50
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -23,7 +23,7 @@ KISSY.add("editor/plugin/outdent", ["editor", "./button", "./outdent/cmd"], func
     }, afterSyncUI:function() {
       var self = this;
       editor.on("selectionChange", function() {
-        if(editor.get("mode") == Editor.Mode.SOURCE_MODE) {
+        if(editor.get("mode") === Editor.Mode.SOURCE_MODE) {
           return
         }
         if(editor.queryCommandValue("outdent")) {

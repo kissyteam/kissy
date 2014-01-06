@@ -31,7 +31,7 @@ KISSY.add(function (S, require) {
                 container = self.get('container'),
                 p = new Node(
                     S.substitute('<div style="overflow:hidden;">' +
-                        '<div class="{prefixCls}editor-progressbar-inner" style="height:' + (parseInt(h) - 4) + 'px">' +
+                        '<div class="{prefixCls}editor-progressbar-inner" style="height:' + (parseInt(h,10) - 4) + 'px">' +
                         '<div class="{prefixCls}editor-progressbar-inner-bg"></div>' +
                         '</div>' +
                         '</div>', {  prefixCls: prefixCls

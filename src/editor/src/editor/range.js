@@ -1287,7 +1287,7 @@ KISSY.add(function (S, require) {
             }
 
             return function (unit) {
-                var self = this;
+                var self = this, enlargeable;
                 switch (unit) {
                     case KER.ENLARGE_ELEMENT :
 
@@ -1377,7 +1377,7 @@ KISSY.add(function (S, require) {
                         blockBoundary = NULL;
                         // End the range right before the block boundary node.
 
-                        var enlargeable = walker.lastForward();
+                        enlargeable = walker.lastForward();
 
                         // It's the body which stop the enlarging if no block boundary found.
                         blockBoundary = blockBoundary || body;

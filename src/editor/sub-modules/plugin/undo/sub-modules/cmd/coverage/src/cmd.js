@@ -419,11 +419,11 @@ function visit24_186_1(result) {
 function visit23_184_1(result) {
   _$jscoverage['/cmd.js'].branchData['184'][1].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['182'][1].init(394, 8, 'snapshot');
+}_$jscoverage['/cmd.js'].branchData['182'][1].init(395, 8, 'snapshot');
 function visit22_182_1(result) {
   _$jscoverage['/cmd.js'].branchData['182'][1].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['172'][1].init(50, 51, 'this.editor.get(\'mode\') != Editor.Mode.WYSIWYG_MODE');
+}_$jscoverage['/cmd.js'].branchData['172'][1].init(50, 52, 'this.editor.get(\'mode\') !== Editor.Mode.WYSIWYG_MODE');
 function visit21_172_1(result) {
   _$jscoverage['/cmd.js'].branchData['172'][1].ranCondition(result);
   return result;
@@ -696,7 +696,7 @@ KISSY.add(function(S, require) {
   restore: function(d) {
   _$jscoverage['/cmd.js'].functionData[11]++;
   _$jscoverage['/cmd.js'].lineData[172]++;
-  if (visit21_172_1(this.editor.get('mode') != Editor.Mode.WYSIWYG_MODE)) {
+  if (visit21_172_1(this.editor.get('mode') !== Editor.Mode.WYSIWYG_MODE)) {
     _$jscoverage['/cmd.js'].lineData[173]++;
     return undefined;
   }
@@ -731,7 +731,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/cmd.js'].lineData[199]++;
     self.index += d;
     _$jscoverage['/cmd.js'].lineData[200]++;
-    editor.fire(visit26_200_1(d < 0) ? "afterUndo" : "afterRedo", {
+    editor.fire(visit26_200_1(d < 0) ? 'afterUndo' : 'afterRedo', {
   history: history, 
   index: self.index});
     _$jscoverage['/cmd.js'].lineData[204]++;

@@ -110,7 +110,7 @@ KISSY.add(function (S, require) {
                                 // This node must not be a fake element.
                                 if (!( currentNode.nodeName() === 'img' &&
                                     (
-                                        currentNode.attr('_keRealElement') ||
+                                        currentNode.attr('_ke_real_element') ||
                                             // 占位符
                                             /\bke_/.test(currentNode[0].className)
                                         ) )) {

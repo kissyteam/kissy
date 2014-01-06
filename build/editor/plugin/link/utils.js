@@ -1,7 +1,7 @@
 /*
-Copyright 2013, KISSY v1.41
+Copyright 2014, KISSY v1.41
 MIT Licensed
-build time: Dec 9 22:43
+build time: Jan 6 12:49
 */
 /*
  Combined processedModules by KISSY Module Compiler: 

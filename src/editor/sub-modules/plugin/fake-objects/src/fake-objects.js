@@ -4,6 +4,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
+    /*jshint camelcase:false*/
     var Editor = require('editor');
     var HtmlParser = require('html-parser');
 
@@ -28,8 +29,8 @@ KISSY.add(function (S, require) {
                 attributes = {
                     'class': className + ' ' + existClass,
                     src: SPACER_GIF,
-                    _keRealElement: encodeURIComponent(outerHTML || realElement.outerHtml()),
-                    _keRealNodeType: realElement[0].nodeType,
+                    _ke_real_element: encodeURIComponent(outerHTML || realElement.outerHtml()),
+                    _ke_real_node_type: realElement[0].nodeType,
                     style: style
                 };
 
@@ -39,22 +40,22 @@ KISSY.add(function (S, require) {
                 S.mix(attributes, attrs, false);
             }
 
-            if (realElementType){
-                attributes._keRealElementType = realElementType;
+            if (realElementType) {
+                attributes._ke_real_element_type = realElementType;
             }
 
-            if (isResizable){
-                attributes._keResizable = isResizable;
+            if (isResizable) {
+                attributes._ke_resizable = isResizable;
             }
             return new Node('<img/>', attributes, self.get('document')[0]);
         },
 
         restoreRealElement: function (fakeElement) {
-            if (fakeElement.attr('_keRealNodeType') !== Dom.NodeType.ELEMENT_NODE) {
+            if (parseInt(fakeElement.attr('_ke_real_node_type'), 10) !== Dom.NodeType.ELEMENT_NODE) {
                 return null;
             }
 
-            var html = (S.urlDecode(fakeElement.attr('_keRealElement')));
+            var html = (S.urlDecode(fakeElement.attr('_ke_real_element')));
 
             var temp = new Node('<div>', null, this.get('document')[0]);
             temp.html(html);
@@ -67,7 +68,7 @@ KISSY.add(function (S, require) {
         tags: {
             // 生成最终html时，从编辑器html转化把fake替换为真实，并将style的width,height搞到属性上去
             $: function (element) {
-                var realHTML = element.getAttribute('_keRealElement');
+                var realHTML = element.getAttribute('_ke_real_element');
 
                 var realFragment;
 
@@ -120,11 +121,11 @@ KISSY.add(function (S, require) {
 
             S.mix(dataProcessor, {
                 restoreRealElement: function (fakeElement) {
-                    if (fakeElement.attr('_keRealNodeType') !== Dom.NodeType.ELEMENT_NODE) {
+                    if (parseInt(fakeElement.attr('_ke_real_node_type'), 10) !== Dom.NodeType.ELEMENT_NODE) {
                         return null;
                     }
 
-                    var html = (S.urlDecode(fakeElement.attr('_keRealElement')));
+                    var html = (S.urlDecode(fakeElement.attr('_ke_real_element')));
 
                     var temp = new Node('<div>', null, editor.get('document')[0]);
                     temp.html(html);
@@ -148,8 +149,8 @@ KISSY.add(function (S, require) {
                         attributes = {
                             'class': className + ' ' + existClass,
                             src: SPACER_GIF,
-                            _keRealElement: encodeURIComponent(html),
-                            _keRealNodeType: realElement.nodeType + '',
+                            _ke_real_element: encodeURIComponent(html),
+                            _ke_real_node_type: realElement.nodeType + '',
                             style: style,
                             align: realElement.getAttribute('align') || ''
                         };
@@ -161,10 +162,10 @@ KISSY.add(function (S, require) {
                     }
 
                     if (realElementType) {
-                        attributes._keRealElementType = realElementType;
+                        attributes._ke_real_element_type = realElementType;
                     }
                     if (isResizable) {
-                        attributes._keResizable = '_keResizable';
+                        attributes._ke_resizable = '_ke_resizable';
                     }
                     return new HtmlParser.Tag('img', attributes);
                 }

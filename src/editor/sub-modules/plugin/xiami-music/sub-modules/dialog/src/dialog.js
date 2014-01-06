@@ -141,7 +141,7 @@ KISSY.add(function (S, require) {
                         title: f.attr('title'),
                         //align:self.dAlign.val(),
                         style: 'margin:' +
-                            (parseInt(self.dMargin.val()) || 0) + 'px;' +
+                            (parseInt(self.dMargin.val(),10) || 0) + 'px;' +
                             'float:' + self.dAlign.get('value') + ';'
                     }
                 };
@@ -212,13 +212,13 @@ KISSY.add(function (S, require) {
                             title: add.attr('title'),
                             //align:self.dAlign.val(),
                             style: 'margin:' +
-                                (parseInt(self.dMargin.val()) || 0) + 'px;' +
+                                (parseInt(self.dMargin.val(),10) || 0) + 'px;' +
                                 'float:' + self.dAlign.get('value') + ';'
                         }
                     };
                     self._gen();
                 } else if (paging) {
-                    loadRecordsByPage(parseInt(paging.attr('data-value')));
+                    loadRecordsByPage(parseInt(paging.attr('data-value'),10));
                 }
                 ev.halt();
             });
@@ -312,7 +312,7 @@ KISSY.add(function (S, require) {
                 self._xiamiInput.val(f.attr('title'));
                 self._xiamiTitle.html(f.attr('title'));
                 self.dAlign.set('value', f.css('float'));
-                self.dMargin.val(parseInt(f.style('margin')) || 0);
+                self.dMargin.val(parseInt(f.style('margin'),10) || 0);
                 self._xiamiUrlWrap.hide();
                 self.dialog.get('footer').show();
                 self._xiamiTitle.show();

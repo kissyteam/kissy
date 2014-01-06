@@ -305,7 +305,7 @@ _$jscoverage['/cmd.js'].branchData['118'][1].init(136, 38, 'tagsRegex.test(curre
 function visit11_118_1(result) {
   _$jscoverage['/cmd.js'].branchData['118'][1].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['113'][1].init(-1, 171, 'currentNode.attr(\'_keRealElement\') || /\\bke_/.test(currentNode[0].className)');
+}_$jscoverage['/cmd.js'].branchData['113'][1].init(-1, 173, 'currentNode.attr(\'_ke_real_element\') || /\\bke_/.test(currentNode[0].className)');
 function visit10_113_1(result) {
   _$jscoverage['/cmd.js'].branchData['113'][1].ranCondition(result);
   return result;
@@ -313,11 +313,11 @@ function visit10_113_1(result) {
 function visit9_111_3(result) {
   _$jscoverage['/cmd.js'].branchData['111'][3].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['111'][2].init(678, 327, 'currentNode.nodeName() === \'img\' && (currentNode.attr(\'_keRealElement\') || /\\bke_/.test(currentNode[0].className))');
+}_$jscoverage['/cmd.js'].branchData['111'][2].init(678, 329, 'currentNode.nodeName() === \'img\' && (currentNode.attr(\'_ke_real_element\') || /\\bke_/.test(currentNode[0].className))');
 function visit8_111_2(result) {
   _$jscoverage['/cmd.js'].branchData['111'][2].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['111'][1].init(675, 332, '!(currentNode.nodeName() === \'img\' && (currentNode.attr(\'_keRealElement\') || /\\bke_/.test(currentNode[0].className)))');
+}_$jscoverage['/cmd.js'].branchData['111'][1].init(675, 334, '!(currentNode.nodeName() === \'img\' && (currentNode.attr(\'_ke_real_element\') || /\\bke_/.test(currentNode[0].className)))');
 function visit7_111_1(result) {
   _$jscoverage['/cmd.js'].branchData['111'][1].ranCondition(result);
   return result;
@@ -425,7 +425,7 @@ KISSY.add(function(S, require) {
       _$jscoverage['/cmd.js'].lineData[107]++;
       var nextNode = currentNode._4eNextSourceNode(false, Dom.NodeType.ELEMENT_NODE, undefined, undefined);
       _$jscoverage['/cmd.js'].lineData[111]++;
-      if (visit7_111_1(!(visit8_111_2(visit9_111_3(currentNode.nodeName() === 'img') && (visit10_113_1(currentNode.attr('_keRealElement') || /\bke_/.test(currentNode[0].className))))))) {
+      if (visit7_111_1(!(visit8_111_2(visit9_111_3(currentNode.nodeName() === 'img') && (visit10_113_1(currentNode.attr('_ke_real_element') || /\bke_/.test(currentNode[0].className))))))) {
         _$jscoverage['/cmd.js'].lineData[118]++;
         if (visit11_118_1(tagsRegex.test(currentNode.nodeName()))) {
           _$jscoverage['/cmd.js'].lineData[119]++;

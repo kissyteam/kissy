@@ -235,7 +235,7 @@ KISSY.add(function (S, require) {
                 inputs = tableDialog.get('el').all('input');
 
             if (tableDialog.twidthunit.get('value') === '%') {
-                var tw = parseInt(tableDialog.twidth.val());
+                var tw = parseInt(tableDialog.twidth.val(),10);
                 if (
                     !tw || (
                         tw > 100 ||
@@ -306,7 +306,7 @@ KISSY.add(function (S, require) {
                 selectedTable.removeClass(collapseTableClass, undefined);
             }
 
-            d.cellpadding.val(parseInt(d.cellpadding.val()) || 0);
+            d.cellpadding.val(parseInt(d.cellpadding.val(),10) || 0);
             if (self.selectedTd) {
                 self.selectedTd.css('padding', d.cellpadding.val());
             }
@@ -333,8 +333,8 @@ KISSY.add(function (S, require) {
                 d = self.dialog,
                 html = '<table ',
                 i,
-                cols = parseInt(d.tcols.val()) || 1,
-                rows = parseInt(d.trows.val()) || 1,
+                cols = parseInt(d.tcols.val(),10) || 1,
+                rows = parseInt(d.trows.val(),10) || 1,
             //firefox 需要 br 才能得以放置焦点
             //cellPad = UA.ie ? '&nbsp;' : '&nbsp;<br/>',
                 cellPad = OLD_IE ? '' : '<br/>',
@@ -412,7 +412,7 @@ KISSY.add(function (S, require) {
                 caption = selectedTable.one('caption');
             if (self.selectedTd) {
                 d.cellpadding.val(
-                    parseInt(self.selectedTd.css('padding')) || '0');
+                    parseInt(self.selectedTd.css('padding'),10) || '0');
             }
 
             d.talign.set('value', selectedTable.attr('align') || '');

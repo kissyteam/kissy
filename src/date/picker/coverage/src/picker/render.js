@@ -586,7 +586,7 @@ function visit31_33_1(result) {
 KISSY.add(function(S, require) {
   _$jscoverage['/picker/render.js'].functionData[0]++;
   _$jscoverage['/picker/render.js'].lineData[7]++;
-  var DateTimeFormat = require('date/format'), PickerTpl = require('./picker-xtpl'), Control = require('component/control');
+  var DateTimeFormat = require('date/format'), PickerTpl = require('date/picker-xtpl'), Control = require('component/control');
   _$jscoverage['/picker/render.js'].lineData[10]++;
   var dateRowTplStart = '<tr role="row">';
   _$jscoverage['/picker/render.js'].lineData[11]++;

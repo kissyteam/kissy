@@ -31,7 +31,7 @@ KISSY.add(function (S, require) {
                     }
                     url += 't=' + encodeURIComponent(Config.tag);
                 }
-                return Config.base + 'editor/' + url;
+                return S.config('base') + 'editor/' + url;
             },
 
             lazyRun: function (obj, before, after) {

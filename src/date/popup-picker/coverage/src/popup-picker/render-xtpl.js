@@ -268,7 +268,7 @@ if (! _$jscoverage['/popup-picker/render-xtpl.js'].branchData) {
   _$jscoverage['/popup-picker/render-xtpl.js'].branchData['29'] = [];
   _$jscoverage['/popup-picker/render-xtpl.js'].branchData['29'][1] = new BranchData();
 }
-_$jscoverage['/popup-picker/render-xtpl.js'].branchData['29'][1].init(1091, 10, 'moduleWrap');
+_$jscoverage['/popup-picker/render-xtpl.js'].branchData['29'][1].init(1084, 10, 'moduleWrap');
 function visit3_29_1(result) {
   _$jscoverage['/popup-picker/render-xtpl.js'].branchData['29'][1].ranCondition(result);
   return result;
@@ -316,13 +316,13 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/popup-picker/render-xtpl.js'].lineData[26]++;
   var params5 = [];
   _$jscoverage['/popup-picker/render-xtpl.js'].lineData[27]++;
-  params5.push('date/picker/picker-xtpl');
+  params5.push('date/picker-xtpl');
   _$jscoverage['/popup-picker/render-xtpl.js'].lineData[28]++;
   config4.params = params5;
   _$jscoverage['/popup-picker/render-xtpl.js'].lineData[29]++;
   if (visit3_29_1(moduleWrap)) {
     _$jscoverage['/popup-picker/render-xtpl.js'].lineData[30]++;
-    require("date/picker/picker-xtpl");
+    require("date/picker-xtpl");
     _$jscoverage['/popup-picker/render-xtpl.js'].lineData[31]++;
     config4.params[0] = moduleWrap.resolveByName(config4.params[0]);
   }

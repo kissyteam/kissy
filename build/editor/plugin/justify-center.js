@@ -1,7 +1,7 @@
 /*
-Copyright 2013, KISSY v1.41
+Copyright 2014, KISSY v1.41
 MIT Licensed
-build time: Dec 4 22:11
+build time: Jan 6 12:48
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -25,7 +25,7 @@ KISSY.add("editor/plugin/justify-center", ["editor", "./justify-center/cmd", "./
     editor.addButton("justifyCenter", {tooltip:"\u5c45\u4e2d\u5bf9\u9f50", checkable:true, listeners:{click:exec, afterSyncUI:function() {
       var self = this;
       editor.on("selectionChange", function() {
-        if(editor.get("mode") == Editor.Mode.SOURCE_MODE) {
+        if(editor.get("mode") === Editor.Mode.SOURCE_MODE) {
           return
         }
         if(editor.queryCommandValue("justifyCenter")) {
@@ -37,7 +37,7 @@ KISSY.add("editor/plugin/justify-center", ["editor", "./justify-center/cmd", "./
     }}, mode:Editor.Mode.WYSIWYG_MODE});
     editor.docReady(function() {
       editor.get("document").on("keydown", function(e) {
-        if(e.ctrlKey && e.keyCode == S.Node.KeyCode.E) {
+        if(e.ctrlKey && e.keyCode === S.Node.KeyCode.E) {
           editor.execCommand("justifyCenter");
           e.preventDefault()
         }

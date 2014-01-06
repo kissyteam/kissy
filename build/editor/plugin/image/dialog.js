@@ -1,7 +1,7 @@
 /*
-Copyright 2013, KISSY v1.41
+Copyright 2014, KISSY v1.41
 MIT Licensed
-build time: Dec 9 22:42
+build time: Jan 6 12:47
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -66,14 +66,14 @@ KISSY.add("editor/plugin/image/dialog", ["editor", "io", "../dialog", "tabs", ".
     placeholder(self.imgWidth, AUTOMATIC_TIP);
     placeholder(self.imgLink, "http://");
     self.imgHeight.on("keyup", function() {
-      var v = parseInt(valInput(self.imgHeight));
+      var v = parseInt(valInput(self.imgHeight), 10);
       if(!v || !self.imgRatio[0].checked || self.imgRatio[0].disabled || !self.imgRatioValue) {
         return
       }
       valInput(self.imgWidth, Math.floor(v * self.imgRatioValue))
     });
     self.imgWidth.on("keyup", function() {
-      var v = parseInt(valInput(self.imgWidth));
+      var v = parseInt(valInput(self.imgWidth), 10);
       if(!v || !self.imgRatio[0].checked || self.imgRatio[0].disabled || !self.imgRatioValue) {
         return
       }
@@ -182,7 +182,7 @@ KISSY.add("editor/plugin/image/dialog", ["editor", "io", "../dialog", "tabs", ".
     }
     self._prepare = S.noop
   }, _insert:function() {
-    var self = this, url = valInput(self.imgUrl), img, height = parseInt(valInput(self.imgHeight)), width = parseInt(valInput(self.imgWidth)), align = self.imgAlign.get("value"), margin = parseInt(self.imgMargin.val()), style = "";
+    var self = this, url = valInput(self.imgUrl), img, height = parseInt(valInput(self.imgHeight), 10), width = parseInt(valInput(self.imgWidth), 10), align = self.imgAlign.get("value"), margin = parseInt(self.imgMargin.val(), 10), style = "";
     if(height) {
       style += "height:" + height + "px;"
     }
@@ -199,9 +199,9 @@ KISSY.add("editor/plugin/image/dialog", ["editor", "io", "../dialog", "tabs", ".
     if(self.selectedEl) {
       img = self.selectedEl;
       self.editor.execCommand("save");
-      self.selectedEl.attr({src:url, _keSaved_src:url, style:style})
+      self.selectedEl.attr({src:url, _ke_saved_src:url, style:style})
     }else {
-      img = new Node("<img " + (style ? 'style="' + style + '"' : "") + ' src="' + url + '" ' + '_keSaved_src="' + url + '" alt="" />', null, self.editor.get("document")[0]);
+      img = new Node("<img " + (style ? 'style="' + style + '"' : "") + ' src="' + url + '" ' + '_ke_saved_src="' + url + '" alt="" />', null, self.editor.get("document")[0]);
       self.editor.insertElement(img)
     }
     setTimeout(function() {
@@ -246,7 +246,7 @@ KISSY.add("editor/plugin/image/dialog", ["editor", "io", "../dialog", "tabs", ".
     self.selectedEl = selectedEl;
     if(selectedEl && self.imageCfg.remote !== false) {
       valInput(self.imgUrl, selectedEl.attr("src"));
-      var w = parseInt(selectedEl.style("width")), h = parseInt(selectedEl.style("height"));
+      var w = parseInt(selectedEl.style("width"), 10), h = parseInt(selectedEl.style("height"), 10);
       if(h) {
         valInput(self.imgHeight, h)
       }else {
@@ -258,7 +258,7 @@ KISSY.add("editor/plugin/image/dialog", ["editor", "io", "../dialog", "tabs", ".
         resetInput(self.imgWidth)
       }
       self.imgAlign.set("value", selectedEl.style("float") || "none");
-      var margin = parseInt(selectedEl.style("margin")) || 0;
+      var margin = parseInt(selectedEl.style("margin"), 10) || 0;
       self.imgMargin.val(margin);
       self.imgRatio[0].disabled = false;
       self.imgRatioValue = w / h;

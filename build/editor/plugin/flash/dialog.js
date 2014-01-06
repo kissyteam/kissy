@@ -1,7 +1,7 @@
 /*
-Copyright 2013, KISSY v1.41
+Copyright 2014, KISSY v1.41
 MIT Licensed
-build time: Dec 4 22:09
+build time: Jan 6 12:46
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -52,14 +52,14 @@ KISSY.add("editor/plugin/flash/dialog", ["editor", "../flash-common/utils", "../
         return
       }
       if(f.css("width")) {
-        self.dWidth.val(parseInt(f.css("width")))
+        self.dWidth.val(parseInt(f.css("width"), 10))
       }
       if(f.css("height")) {
-        self.dHeight.val(parseInt(f.css("height")))
+        self.dHeight.val(parseInt(f.css("height"), 10))
       }
       self.dAlign.set("value", f.css("float"));
       Editor.Utils.valInput(self.dUrl, self._getFlashUrl(r));
-      self.dMargin.val(parseInt(r.style("margin")) || 0)
+      self.dMargin.val(parseInt(r.style("margin"), 10) || 0)
     }else {
       Editor.Utils.resetInput(self.dUrl);
       self.dWidth.val(cfg.defaultWidth || "");
@@ -88,7 +88,7 @@ KISSY.add("editor/plugin/flash/dialog", ["editor", "../flash-common/utils", "../
     self.addRes(self.dAlign)
   }, _getDInfo:function() {
     var self = this;
-    return{url:self.dUrl.val(), attrs:{width:self.dWidth.val(), height:self.dHeight.val(), style:"margin:" + (parseInt(self.dMargin.val()) || 0) + "px;" + "float:" + self.dAlign.get("value") + ";"}}
+    return{url:self.dUrl.val(), attrs:{width:self.dWidth.val(), height:self.dHeight.val(), style:"margin:" + (parseInt(self.dMargin.val(), 10) || 0) + "px;" + "float:" + self.dAlign.get("value") + ";"}}
   }, _gen:function(ev) {
     if(ev) {
       ev.halt()

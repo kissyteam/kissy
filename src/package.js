@@ -109,6 +109,10 @@ if (!loc.getQuery().has('build') && !loc.getQuery().has('min')) {
             "base": "/kissy/src/date/picker/src/picker",
             "ignorePackageNameInUri": 1
         },
+        "date/picker-xtpl": {
+            "base": "/kissy/src/date/picker-xtpl/src/picker-xtpl",
+            "ignorePackageNameInUri": 1
+        },
         "date/popup-picker": {
             "base": "/kissy/src/date/popup-picker/src/popup-picker",
             "ignorePackageNameInUri": 1

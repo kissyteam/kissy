@@ -258,11 +258,11 @@ if (! _$jscoverage['/underline.js'].branchData) {
   _$jscoverage['/underline.js'].branchData['24'][1] = new BranchData();
   _$jscoverage['/underline.js'].branchData['24'][2] = new BranchData();
 }
-_$jscoverage['/underline.js'].branchData['24'][2].init(38, 29, 'e.keyCode == S.Node.KeyCode.U');
+_$jscoverage['/underline.js'].branchData['24'][2].init(38, 30, 'e.keyCode === S.Node.KeyCode.U');
 function visit2_24_2(result) {
   _$jscoverage['/underline.js'].branchData['24'][2].ranCondition(result);
   return result;
-}_$jscoverage['/underline.js'].branchData['24'][1].init(25, 42, 'e.ctrlKey && e.keyCode == S.Node.KeyCode.U');
+}_$jscoverage['/underline.js'].branchData['24'][1].init(25, 43, 'e.ctrlKey && e.keyCode === S.Node.KeyCode.U');
 function visit1_24_1(result) {
   _$jscoverage['/underline.js'].branchData['24'][1].ranCondition(result);
   return result;
@@ -296,7 +296,7 @@ KISSY.add(function(S, require) {
   editor.get('document').on('keydown', function(e) {
   _$jscoverage['/underline.js'].functionData[4]++;
   _$jscoverage['/underline.js'].lineData[24]++;
-  if (visit1_24_1(e.ctrlKey && visit2_24_2(e.keyCode == S.Node.KeyCode.U))) {
+  if (visit1_24_1(e.ctrlKey && visit2_24_2(e.keyCode === S.Node.KeyCode.U))) {
     _$jscoverage['/underline.js'].lineData[25]++;
     editor.execCommand('underline');
     _$jscoverage['/underline.js'].lineData[26]++;

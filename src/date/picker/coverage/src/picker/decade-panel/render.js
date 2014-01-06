@@ -277,7 +277,7 @@ _$jscoverage['/picker/decade-panel/render.js'].branchData['21'][1].init(58, 5, '
 function visit19_21_1(result) {
   _$jscoverage['/picker/decade-panel/render.js'].branchData['21'][1].ranCondition(result);
   return result;
-}_$jscoverage['/picker/decade-panel/render.js'].branchData['19'][1].init(294, 5, 'i < 3');
+}_$jscoverage['/picker/decade-panel/render.js'].branchData['19'][1].init(297, 5, 'i < 3');
 function visit18_19_1(result) {
   _$jscoverage['/picker/decade-panel/render.js'].branchData['19'][1].ranCondition(result);
   return result;
@@ -294,7 +294,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/picker/decade-panel/render.js'].lineData[13]++;
     var currentYear = value.getYear();
     _$jscoverage['/picker/decade-panel/render.js'].lineData[14]++;
-    var startYear = parseInt(currentYear / 100) * 100;
+    var startYear = parseInt(currentYear / 100, 10) * 100;
     _$jscoverage['/picker/decade-panel/render.js'].lineData[15]++;
     var preYear = startYear - 10;
     _$jscoverage['/picker/decade-panel/render.js'].lineData[16]++;

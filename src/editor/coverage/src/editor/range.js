@@ -1522,7 +1522,7 @@ function visit584_1412_2(result) {
 function visit583_1412_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1412'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['1394'][1].init(4385, 6, 'tailBr');
+}_$jscoverage['/editor/range.js'].branchData['1394'][1].init(4381, 6, 'tailBr');
 function visit582_1394_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1394'][1].ranCondition(result);
   return result;
@@ -1538,7 +1538,7 @@ function visit580_1389_2(result) {
 function visit579_1389_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1389'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/range.js'].branchData['1383'][1].init(3695, 21, 'blockBoundary || body');
+}_$jscoverage['/editor/range.js'].branchData['1383'][1].init(3691, 21, 'blockBoundary || body');
 function visit578_1383_1(result) {
   _$jscoverage['/editor/range.js'].branchData['1383'][1].ranCondition(result);
   return result;
@@ -3521,7 +3521,7 @@ KISSY.add(function(S, require) {
   return function(unit) {
   _$jscoverage['/editor/range.js'].functionData[40]++;
   _$jscoverage['/editor/range.js'].lineData[1290]++;
-  var self = this;
+  var self = this, enlargeable;
   _$jscoverage['/editor/range.js'].lineData[1291]++;
   switch (unit) {
     case KER.ENLARGE_ELEMENT:
@@ -3603,7 +3603,7 @@ KISSY.add(function(S, require) {
       _$jscoverage['/editor/range.js'].lineData[1377]++;
       blockBoundary = NULL;
       _$jscoverage['/editor/range.js'].lineData[1380]++;
-      var enlargeable = walker.lastForward();
+      enlargeable = walker.lastForward();
       _$jscoverage['/editor/range.js'].lineData[1383]++;
       blockBoundary = visit578_1383_1(blockBoundary || body);
       _$jscoverage['/editor/range.js'].lineData[1387]++;

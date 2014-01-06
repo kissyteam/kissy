@@ -1071,8 +1071,8 @@ KISSY.add(function (S, require, exports, module) {
 
     function prepareIFrameHTML(id, customStyle, customLink, data) {
         var links = '',
-            i,
-            innerCssFile = Utils.debugUrl('theme/editor-iframe.css');
+            i;
+        var innerCssFile = Utils.debugUrl('theme/editor-iframe.css');
         customLink = customLink.concat([]);
         customLink.unshift(innerCssFile);
         for (i = 0; i < customLink.length; i++) {
@@ -1106,6 +1106,7 @@ KISSY.add(function (S, require, exports, module) {
                 ''
         });
     }
+
     var saveLater = S.buffer(function () {
         this.execCommand('save');
     }, 50);
@@ -1198,6 +1199,7 @@ KISSY.add(function (S, require, exports, module) {
         });
         iframe.remove();
     }
+
     // ------------------------------------------------------------------- end private
 });
 /**
