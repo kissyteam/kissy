@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Jan 6 12:05
+build time: Jan 6 13:32
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -1104,8 +1104,10 @@ KISSY.add("date/picker/control", ["node", "date/gregorian", "i18n!date/picker", 
     if(disabledDate && disabledDate(value, self.get("value"))) {
       return
     }
-    self.set("value", value);
-    self.fire("select", {value:value})
+    setTimeout(function() {
+      self.set("value", value);
+      self.fire("select", {value:value})
+    }, 0)
   }
   function showMonthPanel(e) {
     e.preventDefault();
