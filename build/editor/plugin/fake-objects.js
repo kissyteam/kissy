@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Jan 6 12:36
+build time: Jan 6 13:38
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -35,7 +35,7 @@ KISSY.add("editor/plugin/fake-objects", ["editor", "html-parser"], function(S, r
     }
     return new Node("<img/>", attributes, self.get("document")[0])
   }, restoreRealElement:function(fakeElement) {
-    if(fakeElement.attr("_ke_real_node_type") !== Dom.NodeType.ELEMENT_NODE) {
+    if(parseInt(fakeElement.attr("_ke_real_node_type"), 10) !== Dom.NodeType.ELEMENT_NODE) {
       return null
     }
     var html = S.urlDecode(fakeElement.attr("_ke_real_element"));
@@ -75,7 +75,7 @@ KISSY.add("editor/plugin/fake-objects", ["editor", "html-parser"], function(S, r
       htmlFilter.addRules(htmlFilterRules)
     }
     S.mix(dataProcessor, {restoreRealElement:function(fakeElement) {
-      if(fakeElement.attr("_ke_real_node_type") !== Dom.NodeType.ELEMENT_NODE) {
+      if(parseInt(fakeElement.attr("_ke_real_node_type"), 10) !== Dom.NodeType.ELEMENT_NODE) {
         return null
       }
       var html = S.urlDecode(fakeElement.attr("_ke_real_element"));

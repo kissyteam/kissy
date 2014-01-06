@@ -40,18 +40,18 @@ KISSY.add(function (S, require) {
                 S.mix(attributes, attrs, false);
             }
 
-            if (realElementType){
+            if (realElementType) {
                 attributes._ke_real_element_type = realElementType;
             }
 
-            if (isResizable){
+            if (isResizable) {
                 attributes._ke_resizable = isResizable;
             }
             return new Node('<img/>', attributes, self.get('document')[0]);
         },
 
         restoreRealElement: function (fakeElement) {
-            if (fakeElement.attr('_ke_real_node_type') !== Dom.NodeType.ELEMENT_NODE) {
+            if (parseInt(fakeElement.attr('_ke_real_node_type'), 10) !== Dom.NodeType.ELEMENT_NODE) {
                 return null;
             }
 
@@ -121,7 +121,7 @@ KISSY.add(function (S, require) {
 
             S.mix(dataProcessor, {
                 restoreRealElement: function (fakeElement) {
-                    if (fakeElement.attr('_ke_real_node_type') !== Dom.NodeType.ELEMENT_NODE) {
+                    if (parseInt(fakeElement.attr('_ke_real_node_type'), 10) !== Dom.NodeType.ELEMENT_NODE) {
                         return null;
                     }
 

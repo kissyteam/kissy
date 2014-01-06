@@ -397,7 +397,7 @@ function visit22_141_1(result) {
 function visit21_140_1(result) {
   _$jscoverage['/fake-objects.js'].branchData['140'][1].ranCondition(result);
   return result;
-}_$jscoverage['/fake-objects.js'].branchData['124'][1].init(25, 68, 'fakeElement.attr(\'_ke_real_node_type\') !== Dom.NodeType.ELEMENT_NODE');
+}_$jscoverage['/fake-objects.js'].branchData['124'][1].init(25, 82, 'parseInt(fakeElement.attr(\'_ke_real_node_type\'), 10) !== Dom.NodeType.ELEMENT_NODE');
 function visit20_124_1(result) {
   _$jscoverage['/fake-objects.js'].branchData['124'][1].ranCondition(result);
   return result;
@@ -445,11 +445,11 @@ function visit10_79_1(result) {
 function visit9_75_1(result) {
   _$jscoverage['/fake-objects.js'].branchData['75'][1].ranCondition(result);
   return result;
-}_$jscoverage['/fake-objects.js'].branchData['54'][1].init(17, 68, 'fakeElement.attr(\'_ke_real_node_type\') !== Dom.NodeType.ELEMENT_NODE');
+}_$jscoverage['/fake-objects.js'].branchData['54'][1].init(17, 82, 'parseInt(fakeElement.attr(\'_ke_real_node_type\'), 10) !== Dom.NodeType.ELEMENT_NODE');
 function visit8_54_1(result) {
   _$jscoverage['/fake-objects.js'].branchData['54'][1].ranCondition(result);
   return result;
-}_$jscoverage['/fake-objects.js'].branchData['47'][1].init(1113, 11, 'isResizable');
+}_$jscoverage['/fake-objects.js'].branchData['47'][1].init(1114, 11, 'isResizable');
 function visit7_47_1(result) {
   _$jscoverage['/fake-objects.js'].branchData['47'][1].ranCondition(result);
   return result;
@@ -534,7 +534,7 @@ KISSY.add(function(S, require) {
   restoreRealElement: function(fakeElement) {
   _$jscoverage['/fake-objects.js'].functionData[2]++;
   _$jscoverage['/fake-objects.js'].lineData[54]++;
-  if (visit8_54_1(fakeElement.attr('_ke_real_node_type') !== Dom.NodeType.ELEMENT_NODE)) {
+  if (visit8_54_1(parseInt(fakeElement.attr('_ke_real_node_type'), 10) !== Dom.NodeType.ELEMENT_NODE)) {
     _$jscoverage['/fake-objects.js'].lineData[55]++;
     return null;
   }
@@ -611,7 +611,7 @@ KISSY.add(function(S, require) {
   restoreRealElement: function(fakeElement) {
   _$jscoverage['/fake-objects.js'].functionData[5]++;
   _$jscoverage['/fake-objects.js'].lineData[124]++;
-  if (visit20_124_1(fakeElement.attr('_ke_real_node_type') !== Dom.NodeType.ELEMENT_NODE)) {
+  if (visit20_124_1(parseInt(fakeElement.attr('_ke_real_node_type'), 10) !== Dom.NodeType.ELEMENT_NODE)) {
     _$jscoverage['/fake-objects.js'].lineData[125]++;
     return null;
   }
