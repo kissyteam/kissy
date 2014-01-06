@@ -101,7 +101,7 @@ KISSY.add(function (S, require) {
                     ret = [doc.body];
                 } else if (rClassSelector.test(selector) && supportGetElementsByClassName) {
                     // .cls
-                    ret = doc.getElementsByClassName(RegExp.$1);
+                    ret = makeArray(doc.getElementsByClassName(RegExp.$1));
                 } else if (rTagIdSelector.test(selector)) {
                     // tag#id
                     el = Dom._getElementById(RegExp.$2, doc);
@@ -112,7 +112,7 @@ KISSY.add(function (S, require) {
                     ret = el ? [el] : [];
                 } else if (rTagSelector.test(selector)) {
                     // tag
-                    ret = doc.getElementsByTagName(selector);
+                    ret = makeArray(doc.getElementsByTagName(selector));
                 } else if (isSimpleSelector(selector) && supportGetElementsByClassName) {
                     // #id tag, #id .cls...
                     var parts = selector.split(/\s+/),
@@ -134,7 +134,7 @@ KISSY.add(function (S, require) {
                              parentIndex < parentsLen;
                              parentIndex++) {
                             matches = part(parents[parentIndex]);
-                            newParents.push.apply(newParents, S.makeArray(matches));
+                            newParents.push.apply(newParents, makeArray(matches));
                         }
 
                         parents = newParents;
@@ -208,8 +208,7 @@ KISSY.add(function (S, require) {
         // consider xml
         // https://github.com/kissyteam/kissy/issues/532
         var className = el && getAttr(el, 'class');
-        return className &&
-            (className = className.replace(/[\r\t\n]/g, SPACE)) &&
+        return className && (className = className.replace(/[\r\t\n]/g, SPACE)) &&
             (SPACE + className + SPACE).indexOf(SPACE + cls + SPACE) > -1;
     }
 
@@ -242,7 +241,7 @@ KISSY.add(function (S, require) {
 
             _getElementsByTagName: function (name, context) {
                 // can not use getElementsByTagName for fragment
-                return S.makeArray(context.querySelectorAll(name));
+                return makeArray(context.querySelectorAll(name));
             },
 
             _getElementById: function (id, doc) {

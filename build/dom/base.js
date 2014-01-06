@@ -1,10 +1,10 @@
 /*
-Copyright 2013, KISSY v1.50
+Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Dec 23 16:19
+build time: Jan 6 17:52
 */
 /*
- Combined processedModules by KISSY Module Compiler: 
+ Combined modules by KISSY Module Compiler: 
 
  dom/base/api
  dom/base/attr
@@ -1668,7 +1668,7 @@ KISSY.add("dom/base/selector", ["./api"], function(S, require) {
             ret = [doc.body]
           }else {
             if(rClassSelector.test(selector) && supportGetElementsByClassName) {
-              ret = doc.getElementsByClassName(RegExp.$1)
+              ret = makeArray(doc.getElementsByClassName(RegExp.$1))
             }else {
               if(rTagIdSelector.test(selector)) {
                 el = Dom._getElementById(RegExp.$2, doc);
@@ -1679,7 +1679,7 @@ KISSY.add("dom/base/selector", ["./api"], function(S, require) {
                   ret = el ? [el] : []
                 }else {
                   if(rTagSelector.test(selector)) {
-                    ret = doc.getElementsByTagName(selector)
+                    ret = makeArray(doc.getElementsByTagName(selector))
                   }else {
                     if(isSimpleSelector(selector) && supportGetElementsByClassName) {
                       var parts = selector.split(/\s+/), partsLen, parents = contexts, parentIndex, parentsLen;
@@ -1690,7 +1690,7 @@ KISSY.add("dom/base/selector", ["./api"], function(S, require) {
                         var part = parts[i], newParents = [], matches;
                         for(parentIndex = 0, parentsLen = parents.length;parentIndex < parentsLen;parentIndex++) {
                           matches = part(parents[parentIndex]);
-                          newParents.push.apply(newParents, S.makeArray(matches))
+                          newParents.push.apply(newParents, makeArray(matches))
                         }
                         parents = newParents;
                         if(!parents.length) {
@@ -1770,7 +1770,7 @@ KISSY.add("dom/base/selector", ["./api"], function(S, require) {
     var bit = a.compareDocumentPosition(b) & 4;
     return bit ? -1 : 1
   }, _getElementsByTagName:function(name, context) {
-    return S.makeArray(context.querySelectorAll(name))
+    return makeArray(context.querySelectorAll(name))
   }, _getElementById:function(id, doc) {
     return doc.getElementById(id)
   }, _getSimpleAttr:getAttr, _isTag:isTag, _hasSingleClass:hasSingleClass, _matchesInternal:function(str, seeds) {

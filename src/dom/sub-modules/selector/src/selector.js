@@ -79,7 +79,7 @@ KISSY.add(function (S, require) {
             b = 0;
         } else if ((match = param.replace(/\s/g, '').match(aNPlusB))) {
             if (match[1]) {
-                a = parseInt(match[2]);
+                a = parseInt(match[2],10);
                 if (isNaN(a)) {
                     if (match[2] === '-') {
                         a = -1;
@@ -90,7 +90,7 @@ KISSY.add(function (S, require) {
             } else {
                 a = 0;
             }
-            b = parseInt(match[3]) || 0;
+            b = parseInt(match[3],10) || 0;
         }
         return {
             a: a,
