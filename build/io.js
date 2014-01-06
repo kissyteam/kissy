@@ -1,10 +1,10 @@
 /*
-Copyright 2013, KISSY v1.50
+Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Dec 23 16:50
+build time: Jan 6 12:22
 */
 /*
- Combined processedModules by KISSY Module Compiler: 
+ Combined modules by KISSY Module Compiler: 
 
  io/form-serializer
  io/base
@@ -385,7 +385,7 @@ KISSY.add("io/xdr-flash-transport", ["./base", "dom"], function(S, require) {
   }
   S.augment(XdrFlashTransport, {send:function() {
     var self = this, io = self.io, c = io.config, xdr = c.xdr || {};
-    _swf(xdr.src || S.Config.base + "io/assets/io.swf", 1, 1);
+    _swf(xdr.src || S.config("base") + "io/assets/io.swf", 1, 1);
     if(!flash) {
       setTimeout(function() {
         self.send()

@@ -19,7 +19,6 @@ KISSY.add(function (S, require) {
 
     S.augment(FlashPlugin, {
         pluginRenderUI: function (editor) {
-
             fakeObjects.init(editor);
 
             var dataProcessor = editor.htmlDataProcessor,

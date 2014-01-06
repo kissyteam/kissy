@@ -138,14 +138,14 @@ KISSY.add(function (S, require) {
                     return;
                 }
                 if (f.css('width')) {
-                    self.dWidth.val(parseInt(f.css('width')));
+                    self.dWidth.val(parseInt(f.css('width'),10));
                 }
                 if (f.css('height')) {
-                    self.dHeight.val(parseInt(f.css('height')));
+                    self.dHeight.val(parseInt(f.css('height'),10));
                 }
                 self.dAlign.set('value', f.css('float'));
                 Editor.Utils.valInput(self.dUrl, self._getFlashUrl(r));
-                self.dMargin.val(parseInt(r.style('margin')) || 0);
+                self.dMargin.val(parseInt(r.style('margin'),10) || 0);
             } else {
                 Editor.Utils.resetInput(self.dUrl);
                 self.dWidth.val(cfg.defaultWidth || '');
@@ -203,7 +203,7 @@ KISSY.add(function (S, require) {
                     width: self.dWidth.val(),
                     height: self.dHeight.val(),
                     style: 'margin:' +
-                        (parseInt(self.dMargin.val()) || 0) +
+                        (parseInt(self.dMargin.val(),10) || 0) +
                         'px;' +
                         'float:' + self.dAlign.get('value') + ';'
                 }

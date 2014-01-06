@@ -1,10 +1,10 @@
 /*
-Copyright 2013, KISSY v1.50
+Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Dec 12 22:16
+build time: Jan 6 12:40
 */
 /*
- Combined processedModules by KISSY Module Compiler: 
+ Combined modules by KISSY Module Compiler: 
 
  editor/plugin/remove-format/cmd
 */
@@ -49,7 +49,7 @@ KISSY.add("editor/plugin/remove-format/cmd", ["editor"], function(S, require) {
               break
             }
             var nextNode = currentNode._4eNextSourceNode(false, Dom.NodeType.ELEMENT_NODE, undefined, undefined);
-            if(!(currentNode.nodeName() === "img" && (currentNode.attr("_keRealElement") || /\bke_/.test(currentNode[0].className)))) {
+            if(!(currentNode.nodeName() === "img" && (currentNode.attr("_ke_real_element") || /\bke_/.test(currentNode[0].className)))) {
               if(tagsRegex.test(currentNode.nodeName())) {
                 currentNode._4eRemove(true)
               }else {

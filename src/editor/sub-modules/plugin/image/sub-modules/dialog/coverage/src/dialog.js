@@ -629,7 +629,7 @@ function visit69_459_1(result) {
 function visit68_458_1(result) {
   _$jscoverage['/dialog.js'].branchData['458'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['457'][1].init(2171, 4, 'link');
+}_$jscoverage['/dialog.js'].branchData['457'][1].init(2180, 4, 'link');
 function visit67_457_1(result) {
   _$jscoverage['/dialog.js'].branchData['457'][1].ranCondition(result);
   return result;
@@ -649,19 +649,19 @@ function visit64_437_1(result) {
 function visit63_436_1(result) {
   _$jscoverage['/dialog.js'].branchData['436'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['428'][1].init(625, 41, 'parseInt(selectedEl.style(\'margin\')) || 0');
+}_$jscoverage['/dialog.js'].branchData['428'][1].init(631, 44, 'parseInt(selectedEl.style(\'margin\'), 10) || 0');
 function visit62_428_1(result) {
   _$jscoverage['/dialog.js'].branchData['428'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['427'][1].init(558, 35, 'selectedEl.style(\'float\') || \'none\'');
+}_$jscoverage['/dialog.js'].branchData['427'][1].init(564, 35, 'selectedEl.style(\'float\') || \'none\'');
 function visit61_427_1(result) {
   _$jscoverage['/dialog.js'].branchData['427'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['422'][1].init(372, 1, 'w');
+}_$jscoverage['/dialog.js'].branchData['422'][1].init(378, 1, 'w');
 function visit60_422_1(result) {
   _$jscoverage['/dialog.js'].branchData['422'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['417'][1].init(207, 1, 'h');
+}_$jscoverage['/dialog.js'].branchData['417'][1].init(213, 1, 'h');
 function visit59_417_1(result) {
   _$jscoverage['/dialog.js'].branchData['417'][1].ranCondition(result);
   return result;
@@ -737,27 +737,27 @@ function visit42_366_1(result) {
 function visit41_365_1(result) {
   _$jscoverage['/dialog.js'].branchData['365'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['329'][1].init(987, 15, 'self.selectedEl');
+}_$jscoverage['/dialog.js'].branchData['329'][1].init(996, 15, 'self.selectedEl');
 function visit40_329_1(result) {
   _$jscoverage['/dialog.js'].branchData['329'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['318'][2].init(670, 12, 'margin !== 0');
+}_$jscoverage['/dialog.js'].branchData['318'][2].init(679, 12, 'margin !== 0');
 function visit39_318_2(result) {
   _$jscoverage['/dialog.js'].branchData['318'][2].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['318'][1].init(652, 30, '!isNaN(margin) && margin !== 0');
+}_$jscoverage['/dialog.js'].branchData['318'][1].init(661, 30, '!isNaN(margin) && margin !== 0');
 function visit38_318_1(result) {
   _$jscoverage['/dialog.js'].branchData['318'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['315'][1].init(553, 16, 'align !== \'none\'');
+}_$jscoverage['/dialog.js'].branchData['315'][1].init(562, 16, 'align !== \'none\'');
 function visit37_315_1(result) {
   _$jscoverage['/dialog.js'].branchData['315'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['312'][1].init(463, 5, 'width');
+}_$jscoverage['/dialog.js'].branchData['312'][1].init(472, 5, 'width');
 function visit36_312_1(result) {
   _$jscoverage['/dialog.js'].branchData['312'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['309'][1].init(370, 6, 'height');
+}_$jscoverage['/dialog.js'].branchData['309'][1].init(379, 6, 'height');
 function visit35_309_1(result) {
   _$jscoverage['/dialog.js'].branchData['309'][1].ranCondition(result);
   return result;
@@ -781,7 +781,7 @@ function visit31_256_1(result) {
 function visit30_251_1(result) {
   _$jscoverage['/dialog.js'].branchData['251'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['250'][1].init(7756, 8, 'self.cfg');
+}_$jscoverage['/dialog.js'].branchData['250'][1].init(7762, 8, 'self.cfg');
 function visit29_250_1(result) {
   _$jscoverage['/dialog.js'].branchData['250'][1].ranCondition(result);
   return result;
@@ -853,11 +853,11 @@ function visit13_145_1(result) {
 function visit12_123_1(result) {
   _$jscoverage['/dialog.js'].branchData['123'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['122'][2].init(86, 97, '!self.imgRatio[0].checked || self.imgRatio[0].disabled || !self.imgRatioValue');
+}_$jscoverage['/dialog.js'].branchData['122'][2].init(89, 97, '!self.imgRatio[0].checked || self.imgRatio[0].disabled || !self.imgRatioValue');
 function visit11_122_2(result) {
   _$jscoverage['/dialog.js'].branchData['122'][2].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['122'][1].init(80, 103, '!v || !self.imgRatio[0].checked || self.imgRatio[0].disabled || !self.imgRatioValue');
+}_$jscoverage['/dialog.js'].branchData['122'][1].init(83, 103, '!v || !self.imgRatio[0].checked || self.imgRatio[0].disabled || !self.imgRatioValue');
 function visit10_122_1(result) {
   _$jscoverage['/dialog.js'].branchData['122'][1].ranCondition(result);
   return result;
@@ -865,11 +865,11 @@ function visit10_122_1(result) {
 function visit9_114_1(result) {
   _$jscoverage['/dialog.js'].branchData['114'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['113'][2].init(87, 97, '!self.imgRatio[0].checked || self.imgRatio[0].disabled || !self.imgRatioValue');
+}_$jscoverage['/dialog.js'].branchData['113'][2].init(90, 97, '!self.imgRatio[0].checked || self.imgRatio[0].disabled || !self.imgRatioValue');
 function visit8_113_2(result) {
   _$jscoverage['/dialog.js'].branchData['113'][2].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['113'][1].init(81, 103, '!v || !self.imgRatio[0].checked || self.imgRatio[0].disabled || !self.imgRatioValue');
+}_$jscoverage['/dialog.js'].branchData['113'][1].init(84, 103, '!v || !self.imgRatio[0].checked || self.imgRatio[0].disabled || !self.imgRatioValue');
 function visit7_113_1(result) {
   _$jscoverage['/dialog.js'].branchData['113'][1].ranCondition(result);
   return result;
@@ -1021,7 +1021,7 @@ KISSY.add(function(S, require) {
   self.imgHeight.on('keyup', function() {
   _$jscoverage['/dialog.js'].functionData[4]++;
   _$jscoverage['/dialog.js'].lineData[112]++;
-  var v = parseInt(valInput(self.imgHeight));
+  var v = parseInt(valInput(self.imgHeight), 10);
   _$jscoverage['/dialog.js'].lineData[113]++;
   if (visit7_113_1(!v || visit8_113_2(!self.imgRatio[0].checked || visit9_114_1(self.imgRatio[0].disabled || !self.imgRatioValue)))) {
     _$jscoverage['/dialog.js'].lineData[115]++;
@@ -1034,7 +1034,7 @@ KISSY.add(function(S, require) {
   self.imgWidth.on('keyup', function() {
   _$jscoverage['/dialog.js'].functionData[5]++;
   _$jscoverage['/dialog.js'].lineData[121]++;
-  var v = parseInt(valInput(self.imgWidth));
+  var v = parseInt(valInput(self.imgWidth), 10);
   _$jscoverage['/dialog.js'].lineData[122]++;
   if (visit10_122_1(!v || visit11_122_2(!self.imgRatio[0].checked || visit12_123_1(self.imgRatio[0].disabled || !self.imgRatioValue)))) {
     _$jscoverage['/dialog.js'].lineData[124]++;
@@ -1242,7 +1242,7 @@ KISSY.add(function(S, require) {
   _insert: function() {
   _$jscoverage['/dialog.js'].functionData[14]++;
   _$jscoverage['/dialog.js'].lineData[300]++;
-  var self = this, url = valInput(self.imgUrl), img, height = parseInt(valInput(self.imgHeight)), width = parseInt(valInput(self.imgWidth)), align = self.imgAlign.get('value'), margin = parseInt(self.imgMargin.val()), style = '';
+  var self = this, url = valInput(self.imgUrl), img, height = parseInt(valInput(self.imgHeight), 10), width = parseInt(valInput(self.imgWidth), 10), align = self.imgAlign.get('value'), margin = parseInt(self.imgMargin.val(), 10), style = '';
   _$jscoverage['/dialog.js'].lineData[309]++;
   if (visit35_309_1(height)) {
     _$jscoverage['/dialog.js'].lineData[310]++;
@@ -1274,11 +1274,11 @@ KISSY.add(function(S, require) {
     _$jscoverage['/dialog.js'].lineData[332]++;
     self.selectedEl.attr({
   'src': url, 
-  '_keSaved_src': url, 
+  '_ke_saved_src': url, 
   'style': style});
   } else {
     _$jscoverage['/dialog.js'].lineData[339]++;
-    img = new Node('<img ' + (style ? ('style="' + style + '"') : '') + ' src="' + url + '" ' + '_keSaved_src="' + url + '" alt="" />', null, self.editor.get('document')[0]);
+    img = new Node('<img ' + (style ? ('style="' + style + '"') : '') + ' src="' + url + '" ' + '_ke_saved_src="' + url + '" alt="" />', null, self.editor.get('document')[0]);
     _$jscoverage['/dialog.js'].lineData[349]++;
     self.editor.insertElement(img);
   }
@@ -1357,7 +1357,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/dialog.js'].lineData[414]++;
     valInput(self.imgUrl, selectedEl.attr('src'));
     _$jscoverage['/dialog.js'].lineData[415]++;
-    var w = parseInt(selectedEl.style('width')), h = parseInt(selectedEl.style('height'));
+    var w = parseInt(selectedEl.style('width'), 10), h = parseInt(selectedEl.style('height'), 10);
     _$jscoverage['/dialog.js'].lineData[417]++;
     if (visit59_417_1(h)) {
       _$jscoverage['/dialog.js'].lineData[418]++;
@@ -1377,7 +1377,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/dialog.js'].lineData[427]++;
     self.imgAlign.set('value', visit61_427_1(selectedEl.style('float') || 'none'));
     _$jscoverage['/dialog.js'].lineData[428]++;
-    var margin = visit62_428_1(parseInt(selectedEl.style('margin')) || 0);
+    var margin = visit62_428_1(parseInt(selectedEl.style('margin'), 10) || 0);
     _$jscoverage['/dialog.js'].lineData[429]++;
     self.imgMargin.val(margin);
     _$jscoverage['/dialog.js'].lineData[430]++;

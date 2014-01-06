@@ -109,7 +109,7 @@ KISSY.add(function (S, require) {
             placeholder(self.imgLink, 'http://');
 
             self.imgHeight.on('keyup', function () {
-                var v = parseInt(valInput(self.imgHeight));
+                var v = parseInt(valInput(self.imgHeight),10);
                 if (!v || !self.imgRatio[0].checked ||
                     self.imgRatio[0].disabled || !self.imgRatioValue) {
                     return;
@@ -118,7 +118,7 @@ KISSY.add(function (S, require) {
             });
 
             self.imgWidth.on('keyup', function () {
-                var v = parseInt(valInput(self.imgWidth));
+                var v = parseInt(valInput(self.imgWidth),10);
                 if (!v || !self.imgRatio[0].checked ||
                     self.imgRatio[0].disabled || !self.imgRatioValue) {
                     return;
@@ -300,10 +300,10 @@ KISSY.add(function (S, require) {
             var self = this,
                 url = valInput(self.imgUrl),
                 img,
-                height = parseInt(valInput(self.imgHeight)),
-                width = parseInt(valInput(self.imgWidth)),
+                height = parseInt(valInput(self.imgHeight),10),
+                width = parseInt(valInput(self.imgWidth),10),
                 align = self.imgAlign.get('value'),
-                margin = parseInt(self.imgMargin.val()),
+                margin = parseInt(self.imgMargin.val(),10),
                 style = '';
 
             if (height) {
@@ -331,8 +331,8 @@ KISSY.add(function (S, require) {
                 self.editor.execCommand('save');
                 self.selectedEl.attr({
                     'src': url,
-                    //注意设置，取的话要从 _keSaved_src 里取
-                    '_keSaved_src': url,
+                    //注意设置，取的话要从 _ke_saved_src 里取
+                    '_ke_saved_src': url,
                     'style': style
                 });
             } else {
@@ -343,7 +343,7 @@ KISSY.add(function (S, require) {
                     ' src="' +
                     url +
                     '" ' +
-                    '_keSaved_src="' +
+                    '_ke_saved_src="' +
                     url +
                     '" alt="" />', null, self.editor.get('document')[0]);
                 self.editor.insertElement(img);
@@ -412,8 +412,8 @@ KISSY.add(function (S, require) {
             self.selectedEl = selectedEl;
             if (selectedEl && self.imageCfg.remote !== false) {
                 valInput(self.imgUrl, selectedEl.attr('src'));
-                var w = parseInt(selectedEl.style('width')),
-                    h = parseInt(selectedEl.style('height'));
+                var w = parseInt(selectedEl.style('width'),10),
+                    h = parseInt(selectedEl.style('height'),10);
                 if (h) {
                     valInput(self.imgHeight, h);
                 } else {
@@ -425,7 +425,7 @@ KISSY.add(function (S, require) {
                     resetInput(self.imgWidth);
                 }
                 self.imgAlign.set('value', selectedEl.style('float') || 'none');
-                var margin = parseInt(selectedEl.style('margin')) || 0;
+                var margin = parseInt(selectedEl.style('margin'),10) || 0;
                 self.imgMargin.val(margin);
                 self.imgRatio[0].disabled = false;
                 self.imgRatioValue = w / h;

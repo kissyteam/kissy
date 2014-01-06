@@ -5,6 +5,7 @@
  */
 KISSY.add(function (S, require) {
     var Editor = require('editor');
+    var io = require('io');
     var FlashDialog = require('../flash/dialog');
     var MenuButton = require('../menubutton');
 
@@ -94,6 +95,7 @@ KISSY.add(function (S, require) {
             self.urlCfg = cfg.urlCfg;
             self._urlTip = cfg.urlTip || '请输入视频播放链接...';
         },
+
         _initD: function () {
             var self = this,
                 d = self.dialog,
@@ -141,9 +143,9 @@ KISSY.add(function (S, require) {
                 return {
                     url: re,
                     attrs: {
-                        height: parseInt(self.dHeight.val()) || p.height,
-                        width: parseInt(self.dWidth.val()) || p.width,
-                        style: 'margin:' + (parseInt(self.dMargin.val()) || 0) + 'px;' +
+                        height: parseInt(self.dHeight.val(), 10) || p.height,
+                        width: parseInt(self.dWidth.val(), 10) || p.width,
+                        style: 'margin:' + (parseInt(self.dMargin.val(), 10) || 0) + 'px;' +
                             'float:' + self.dAlign.get('value') + ';'
                     }
                 };
@@ -165,7 +167,7 @@ KISSY.add(function (S, require) {
 
                         data[c.paramName || 'url'] = url;
 
-                        S.io({
+                        io({
                             url: c.url,
                             data: data,
                             dataType: 'jsonp',
@@ -179,8 +181,8 @@ KISSY.add(function (S, require) {
                     }
                 }
             }
-            VideoDialog.superclass._gen.call(self,ev);
-            if(ev){
+            VideoDialog.superclass._gen.call(self, ev);
+            if (ev) {
                 ev.halt();
             }
         },
@@ -200,9 +202,9 @@ KISSY.add(function (S, require) {
                 var r = editor.restoreRealElement(f);
                 Editor.Utils.valInput(self.dUrl, self._getFlashUrl(r));
                 self.dAlign.set('value', f.css('float'));
-                self.dMargin.val(parseInt(r.style('margin')) || 0);
-                Editor.Utils.valInput(self.dWidth, parseInt(f.css('width')));
-                Editor.Utils.valInput(self.dHeight, parseInt(f.css('height')));
+                self.dMargin.val(parseInt(r.style('margin'), 10) || 0);
+                Editor.Utils.valInput(self.dWidth, parseInt(f.css('width'), 10));
+                Editor.Utils.valInput(self.dHeight, parseInt(f.css('height'), 10));
             } else {
                 Editor.Utils.resetInput(self.dUrl);
                 self.dAlign.set('value', 'none');

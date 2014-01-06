@@ -1,16 +1,17 @@
 /*
-Copyright 2013, KISSY v1.50
+Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Dec 12 22:17
+build time: Jan 6 12:42
 */
 /*
- Combined processedModules by KISSY Module Compiler: 
+ Combined modules by KISSY Module Compiler: 
 
  editor/plugin/video/dialog
 */
 
-KISSY.add("editor/plugin/video/dialog", ["editor", "../flash/dialog", "../menubutton"], function(S, require) {
+KISSY.add("editor/plugin/video/dialog", ["editor", "io", "../flash/dialog", "../menubutton"], function(S, require) {
   var Editor = require("editor");
+  var io = require("io");
   var FlashDialog = require("../flash/dialog");
   var MenuButton = require("../menubutton");
   var CLS_VIDEO = "ke_video", TYPE_VIDEO = "video", DTIP = "\u81ea\u52a8", MARGIN_DEFAULT = 0, bodyHTML = '<div style="padding:20px 20px 0 20px">' + "<p>" + "<label>" + "\u94fe\u63a5\uff1a " + "" + "<input " + 'class="{prefixCls}editor-video-url {prefixCls}editor-input" style="width:410px;' + '"/>' + "</label>" + "</p>" + "<table " + 'style="margin:10px 0 5px  40px;width:400px;">' + "<tr><td>" + "<label>\u5bbd\u5ea6\uff1a " + " " + "<input " + ' data-verify="^(' + DTIP + '|((?!0$)\\d+))?$" ' + ' data-warning="\u5bbd\u5ea6\u8bf7\u8f93\u5165\u6b63\u6574\u6570" ' + 
@@ -57,7 +58,7 @@ KISSY.add("editor/plugin/video/dialog", ["editor", "../flash/dialog", "../menubu
         window.alert("\u4e0d\u652f\u6301\u8be5\u94fe\u63a5\uff0c\u8bf7\u76f4\u63a5\u8f93\u5165\u8be5\u89c6\u9891\u63d0\u4f9b\u7684\u5206\u4eab\u94fe\u63a5");
         return undefined
       }
-      return{url:re, attrs:{height:parseInt(self.dHeight.val()) || p.height, width:parseInt(self.dWidth.val()) || p.width, style:"margin:" + (parseInt(self.dMargin.val()) || 0) + "px;" + "float:" + self.dAlign.get("value") + ";"}}
+      return{url:re, attrs:{height:parseInt(self.dHeight.val(), 10) || p.height, width:parseInt(self.dWidth.val(), 10) || p.width, style:"margin:" + (parseInt(self.dMargin.val(), 10) || 0) + "px;" + "float:" + self.dAlign.get("value") + ";"}}
     }
     return undefined
   }, _gen:function(ev) {
@@ -69,7 +70,7 @@ KISSY.add("editor/plugin/video/dialog", ["editor", "../flash/dialog", "../menubu
           self.dialog.loading();
           var data = {};
           data[c.paramName || "url"] = url;
-          S.io({url:c.url, data:data, dataType:"jsonp", success:function(data) {
+          io({url:c.url, data:data, dataType:"jsonp", success:function(data) {
             self._dynamicUrlPrepare(data[1])
           }});
           return
@@ -91,9 +92,9 @@ KISSY.add("editor/plugin/video/dialog", ["editor", "../flash/dialog", "../menubu
       var r = editor.restoreRealElement(f);
       Editor.Utils.valInput(self.dUrl, self._getFlashUrl(r));
       self.dAlign.set("value", f.css("float"));
-      self.dMargin.val(parseInt(r.style("margin")) || 0);
-      Editor.Utils.valInput(self.dWidth, parseInt(f.css("width")));
-      Editor.Utils.valInput(self.dHeight, parseInt(f.css("height")))
+      self.dMargin.val(parseInt(r.style("margin"), 10) || 0);
+      Editor.Utils.valInput(self.dWidth, parseInt(f.css("width"), 10));
+      Editor.Utils.valInput(self.dHeight, parseInt(f.css("height"), 10))
     }else {
       Editor.Utils.resetInput(self.dUrl);
       self.dAlign.set("value", "none");

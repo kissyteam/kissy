@@ -76,7 +76,7 @@ KISSY.add(function (S, require) {
         var disabledDate = self.get('disabledDate');
         e.preventDefault();
         var td = $(e.currentTarget);
-        var value = self.dateTable[parseInt(td.attr('data-index'))];
+        var value = self.dateTable[parseInt(td.attr('data-index'),10)];
         if (disabledDate && disabledDate(value, self.get('value'))) {
             return;
         }

@@ -230,77 +230,77 @@ if (! _$jscoverage['/fake-objects.js']) {
   _$jscoverage['/fake-objects.js'] = {};
   _$jscoverage['/fake-objects.js'].lineData = [];
   _$jscoverage['/fake-objects.js'].lineData[6] = 0;
-  _$jscoverage['/fake-objects.js'].lineData[7] = 0;
   _$jscoverage['/fake-objects.js'].lineData[8] = 0;
-  _$jscoverage['/fake-objects.js'].lineData[10] = 0;
-  _$jscoverage['/fake-objects.js'].lineData[15] = 0;
-  _$jscoverage['/fake-objects.js'].lineData[18] = 0;
+  _$jscoverage['/fake-objects.js'].lineData[9] = 0;
+  _$jscoverage['/fake-objects.js'].lineData[11] = 0;
+  _$jscoverage['/fake-objects.js'].lineData[16] = 0;
   _$jscoverage['/fake-objects.js'].lineData[19] = 0;
   _$jscoverage['/fake-objects.js'].lineData[20] = 0;
-  _$jscoverage['/fake-objects.js'].lineData[22] = 0;
+  _$jscoverage['/fake-objects.js'].lineData[21] = 0;
   _$jscoverage['/fake-objects.js'].lineData[23] = 0;
-  _$jscoverage['/fake-objects.js'].lineData[25] = 0;
-  _$jscoverage['/fake-objects.js'].lineData[36] = 0;
+  _$jscoverage['/fake-objects.js'].lineData[24] = 0;
+  _$jscoverage['/fake-objects.js'].lineData[26] = 0;
   _$jscoverage['/fake-objects.js'].lineData[37] = 0;
   _$jscoverage['/fake-objects.js'].lineData[38] = 0;
   _$jscoverage['/fake-objects.js'].lineData[39] = 0;
-  _$jscoverage['/fake-objects.js'].lineData[42] = 0;
+  _$jscoverage['/fake-objects.js'].lineData[40] = 0;
   _$jscoverage['/fake-objects.js'].lineData[43] = 0;
-  _$jscoverage['/fake-objects.js'].lineData[46] = 0;
+  _$jscoverage['/fake-objects.js'].lineData[44] = 0;
   _$jscoverage['/fake-objects.js'].lineData[47] = 0;
-  _$jscoverage['/fake-objects.js'].lineData[49] = 0;
-  _$jscoverage['/fake-objects.js'].lineData[53] = 0;
+  _$jscoverage['/fake-objects.js'].lineData[48] = 0;
+  _$jscoverage['/fake-objects.js'].lineData[50] = 0;
   _$jscoverage['/fake-objects.js'].lineData[54] = 0;
-  _$jscoverage['/fake-objects.js'].lineData[57] = 0;
-  _$jscoverage['/fake-objects.js'].lineData[59] = 0;
+  _$jscoverage['/fake-objects.js'].lineData[55] = 0;
+  _$jscoverage['/fake-objects.js'].lineData[58] = 0;
   _$jscoverage['/fake-objects.js'].lineData[60] = 0;
-  _$jscoverage['/fake-objects.js'].lineData[62] = 0;
-  _$jscoverage['/fake-objects.js'].lineData[66] = 0;
-  _$jscoverage['/fake-objects.js'].lineData[70] = 0;
-  _$jscoverage['/fake-objects.js'].lineData[72] = 0;
-  _$jscoverage['/fake-objects.js'].lineData[74] = 0;
+  _$jscoverage['/fake-objects.js'].lineData[61] = 0;
+  _$jscoverage['/fake-objects.js'].lineData[63] = 0;
+  _$jscoverage['/fake-objects.js'].lineData[67] = 0;
+  _$jscoverage['/fake-objects.js'].lineData[71] = 0;
+  _$jscoverage['/fake-objects.js'].lineData[73] = 0;
   _$jscoverage['/fake-objects.js'].lineData[75] = 0;
-  _$jscoverage['/fake-objects.js'].lineData[78] = 0;
-  _$jscoverage['/fake-objects.js'].lineData[82] = 0;
+  _$jscoverage['/fake-objects.js'].lineData[76] = 0;
+  _$jscoverage['/fake-objects.js'].lineData[79] = 0;
   _$jscoverage['/fake-objects.js'].lineData[83] = 0;
   _$jscoverage['/fake-objects.js'].lineData[84] = 0;
-  _$jscoverage['/fake-objects.js'].lineData[86] = 0;
-  _$jscoverage['/fake-objects.js'].lineData[90] = 0;
-  _$jscoverage['/fake-objects.js'].lineData[92] = 0;
-  _$jscoverage['/fake-objects.js'].lineData[94] = 0;
+  _$jscoverage['/fake-objects.js'].lineData[85] = 0;
+  _$jscoverage['/fake-objects.js'].lineData[87] = 0;
+  _$jscoverage['/fake-objects.js'].lineData[91] = 0;
+  _$jscoverage['/fake-objects.js'].lineData[93] = 0;
   _$jscoverage['/fake-objects.js'].lineData[95] = 0;
-  _$jscoverage['/fake-objects.js'].lineData[97] = 0;
+  _$jscoverage['/fake-objects.js'].lineData[96] = 0;
   _$jscoverage['/fake-objects.js'].lineData[98] = 0;
-  _$jscoverage['/fake-objects.js'].lineData[101] = 0;
-  _$jscoverage['/fake-objects.js'].lineData[108] = 0;
-  _$jscoverage['/fake-objects.js'].lineData[110] = 0;
-  _$jscoverage['/fake-objects.js'].lineData[113] = 0;
+  _$jscoverage['/fake-objects.js'].lineData[99] = 0;
+  _$jscoverage['/fake-objects.js'].lineData[102] = 0;
+  _$jscoverage['/fake-objects.js'].lineData[109] = 0;
+  _$jscoverage['/fake-objects.js'].lineData[111] = 0;
   _$jscoverage['/fake-objects.js'].lineData[114] = 0;
-  _$jscoverage['/fake-objects.js'].lineData[117] = 0;
+  _$jscoverage['/fake-objects.js'].lineData[115] = 0;
   _$jscoverage['/fake-objects.js'].lineData[118] = 0;
-  _$jscoverage['/fake-objects.js'].lineData[121] = 0;
-  _$jscoverage['/fake-objects.js'].lineData[123] = 0;
+  _$jscoverage['/fake-objects.js'].lineData[119] = 0;
+  _$jscoverage['/fake-objects.js'].lineData[122] = 0;
   _$jscoverage['/fake-objects.js'].lineData[124] = 0;
-  _$jscoverage['/fake-objects.js'].lineData[127] = 0;
-  _$jscoverage['/fake-objects.js'].lineData[129] = 0;
+  _$jscoverage['/fake-objects.js'].lineData[125] = 0;
+  _$jscoverage['/fake-objects.js'].lineData[128] = 0;
   _$jscoverage['/fake-objects.js'].lineData[130] = 0;
-  _$jscoverage['/fake-objects.js'].lineData[132] = 0;
-  _$jscoverage['/fake-objects.js'].lineData[138] = 0;
+  _$jscoverage['/fake-objects.js'].lineData[131] = 0;
+  _$jscoverage['/fake-objects.js'].lineData[133] = 0;
   _$jscoverage['/fake-objects.js'].lineData[139] = 0;
   _$jscoverage['/fake-objects.js'].lineData[140] = 0;
   _$jscoverage['/fake-objects.js'].lineData[141] = 0;
-  _$jscoverage['/fake-objects.js'].lineData[143] = 0;
+  _$jscoverage['/fake-objects.js'].lineData[142] = 0;
   _$jscoverage['/fake-objects.js'].lineData[144] = 0;
-  _$jscoverage['/fake-objects.js'].lineData[147] = 0;
-  _$jscoverage['/fake-objects.js'].lineData[157] = 0;
+  _$jscoverage['/fake-objects.js'].lineData[145] = 0;
+  _$jscoverage['/fake-objects.js'].lineData[148] = 0;
   _$jscoverage['/fake-objects.js'].lineData[158] = 0;
   _$jscoverage['/fake-objects.js'].lineData[159] = 0;
   _$jscoverage['/fake-objects.js'].lineData[160] = 0;
-  _$jscoverage['/fake-objects.js'].lineData[163] = 0;
+  _$jscoverage['/fake-objects.js'].lineData[161] = 0;
   _$jscoverage['/fake-objects.js'].lineData[164] = 0;
-  _$jscoverage['/fake-objects.js'].lineData[166] = 0;
+  _$jscoverage['/fake-objects.js'].lineData[165] = 0;
   _$jscoverage['/fake-objects.js'].lineData[167] = 0;
-  _$jscoverage['/fake-objects.js'].lineData[169] = 0;
+  _$jscoverage['/fake-objects.js'].lineData[168] = 0;
+  _$jscoverage['/fake-objects.js'].lineData[170] = 0;
 }
 if (! _$jscoverage['/fake-objects.js'].functionData) {
   _$jscoverage['/fake-objects.js'].functionData = [];
@@ -314,360 +314,360 @@ if (! _$jscoverage['/fake-objects.js'].functionData) {
 }
 if (! _$jscoverage['/fake-objects.js'].branchData) {
   _$jscoverage['/fake-objects.js'].branchData = {};
-  _$jscoverage['/fake-objects.js'].branchData['18'] = [];
-  _$jscoverage['/fake-objects.js'].branchData['18'][1] = new BranchData();
   _$jscoverage['/fake-objects.js'].branchData['19'] = [];
   _$jscoverage['/fake-objects.js'].branchData['19'][1] = new BranchData();
-  _$jscoverage['/fake-objects.js'].branchData['22'] = [];
-  _$jscoverage['/fake-objects.js'].branchData['22'][1] = new BranchData();
-  _$jscoverage['/fake-objects.js'].branchData['31'] = [];
-  _$jscoverage['/fake-objects.js'].branchData['31'][1] = new BranchData();
-  _$jscoverage['/fake-objects.js'].branchData['36'] = [];
-  _$jscoverage['/fake-objects.js'].branchData['36'][1] = new BranchData();
-  _$jscoverage['/fake-objects.js'].branchData['42'] = [];
-  _$jscoverage['/fake-objects.js'].branchData['42'][1] = new BranchData();
-  _$jscoverage['/fake-objects.js'].branchData['46'] = [];
-  _$jscoverage['/fake-objects.js'].branchData['46'][1] = new BranchData();
-  _$jscoverage['/fake-objects.js'].branchData['53'] = [];
-  _$jscoverage['/fake-objects.js'].branchData['53'][1] = new BranchData();
-  _$jscoverage['/fake-objects.js'].branchData['74'] = [];
-  _$jscoverage['/fake-objects.js'].branchData['74'][1] = new BranchData();
-  _$jscoverage['/fake-objects.js'].branchData['78'] = [];
-  _$jscoverage['/fake-objects.js'].branchData['78'][1] = new BranchData();
-  _$jscoverage['/fake-objects.js'].branchData['82'] = [];
-  _$jscoverage['/fake-objects.js'].branchData['82'][1] = new BranchData();
-  _$jscoverage['/fake-objects.js'].branchData['84'] = [];
-  _$jscoverage['/fake-objects.js'].branchData['84'][1] = new BranchData();
-  _$jscoverage['/fake-objects.js'].branchData['87'] = [];
-  _$jscoverage['/fake-objects.js'].branchData['87'][1] = new BranchData();
-  _$jscoverage['/fake-objects.js'].branchData['92'] = [];
-  _$jscoverage['/fake-objects.js'].branchData['92'][1] = new BranchData();
-  _$jscoverage['/fake-objects.js'].branchData['94'] = [];
-  _$jscoverage['/fake-objects.js'].branchData['94'][1] = new BranchData();
-  _$jscoverage['/fake-objects.js'].branchData['97'] = [];
-  _$jscoverage['/fake-objects.js'].branchData['97'][1] = new BranchData();
-  _$jscoverage['/fake-objects.js'].branchData['111'] = [];
-  _$jscoverage['/fake-objects.js'].branchData['111'][1] = new BranchData();
-  _$jscoverage['/fake-objects.js'].branchData['113'] = [];
-  _$jscoverage['/fake-objects.js'].branchData['113'][1] = new BranchData();
-  _$jscoverage['/fake-objects.js'].branchData['117'] = [];
-  _$jscoverage['/fake-objects.js'].branchData['117'][1] = new BranchData();
-  _$jscoverage['/fake-objects.js'].branchData['123'] = [];
-  _$jscoverage['/fake-objects.js'].branchData['123'][1] = new BranchData();
-  _$jscoverage['/fake-objects.js'].branchData['139'] = [];
-  _$jscoverage['/fake-objects.js'].branchData['139'][1] = new BranchData();
+  _$jscoverage['/fake-objects.js'].branchData['20'] = [];
+  _$jscoverage['/fake-objects.js'].branchData['20'][1] = new BranchData();
+  _$jscoverage['/fake-objects.js'].branchData['23'] = [];
+  _$jscoverage['/fake-objects.js'].branchData['23'][1] = new BranchData();
+  _$jscoverage['/fake-objects.js'].branchData['32'] = [];
+  _$jscoverage['/fake-objects.js'].branchData['32'][1] = new BranchData();
+  _$jscoverage['/fake-objects.js'].branchData['37'] = [];
+  _$jscoverage['/fake-objects.js'].branchData['37'][1] = new BranchData();
+  _$jscoverage['/fake-objects.js'].branchData['43'] = [];
+  _$jscoverage['/fake-objects.js'].branchData['43'][1] = new BranchData();
+  _$jscoverage['/fake-objects.js'].branchData['47'] = [];
+  _$jscoverage['/fake-objects.js'].branchData['47'][1] = new BranchData();
+  _$jscoverage['/fake-objects.js'].branchData['54'] = [];
+  _$jscoverage['/fake-objects.js'].branchData['54'][1] = new BranchData();
+  _$jscoverage['/fake-objects.js'].branchData['75'] = [];
+  _$jscoverage['/fake-objects.js'].branchData['75'][1] = new BranchData();
+  _$jscoverage['/fake-objects.js'].branchData['79'] = [];
+  _$jscoverage['/fake-objects.js'].branchData['79'][1] = new BranchData();
+  _$jscoverage['/fake-objects.js'].branchData['83'] = [];
+  _$jscoverage['/fake-objects.js'].branchData['83'][1] = new BranchData();
+  _$jscoverage['/fake-objects.js'].branchData['85'] = [];
+  _$jscoverage['/fake-objects.js'].branchData['85'][1] = new BranchData();
+  _$jscoverage['/fake-objects.js'].branchData['88'] = [];
+  _$jscoverage['/fake-objects.js'].branchData['88'][1] = new BranchData();
+  _$jscoverage['/fake-objects.js'].branchData['93'] = [];
+  _$jscoverage['/fake-objects.js'].branchData['93'][1] = new BranchData();
+  _$jscoverage['/fake-objects.js'].branchData['95'] = [];
+  _$jscoverage['/fake-objects.js'].branchData['95'][1] = new BranchData();
+  _$jscoverage['/fake-objects.js'].branchData['98'] = [];
+  _$jscoverage['/fake-objects.js'].branchData['98'][1] = new BranchData();
+  _$jscoverage['/fake-objects.js'].branchData['112'] = [];
+  _$jscoverage['/fake-objects.js'].branchData['112'][1] = new BranchData();
+  _$jscoverage['/fake-objects.js'].branchData['114'] = [];
+  _$jscoverage['/fake-objects.js'].branchData['114'][1] = new BranchData();
+  _$jscoverage['/fake-objects.js'].branchData['118'] = [];
+  _$jscoverage['/fake-objects.js'].branchData['118'][1] = new BranchData();
+  _$jscoverage['/fake-objects.js'].branchData['124'] = [];
+  _$jscoverage['/fake-objects.js'].branchData['124'][1] = new BranchData();
   _$jscoverage['/fake-objects.js'].branchData['140'] = [];
   _$jscoverage['/fake-objects.js'].branchData['140'][1] = new BranchData();
-  _$jscoverage['/fake-objects.js'].branchData['143'] = [];
-  _$jscoverage['/fake-objects.js'].branchData['143'][1] = new BranchData();
-  _$jscoverage['/fake-objects.js'].branchData['154'] = [];
-  _$jscoverage['/fake-objects.js'].branchData['154'][1] = new BranchData();
-  _$jscoverage['/fake-objects.js'].branchData['157'] = [];
-  _$jscoverage['/fake-objects.js'].branchData['157'][1] = new BranchData();
-  _$jscoverage['/fake-objects.js'].branchData['163'] = [];
-  _$jscoverage['/fake-objects.js'].branchData['163'][1] = new BranchData();
-  _$jscoverage['/fake-objects.js'].branchData['166'] = [];
-  _$jscoverage['/fake-objects.js'].branchData['166'][1] = new BranchData();
+  _$jscoverage['/fake-objects.js'].branchData['141'] = [];
+  _$jscoverage['/fake-objects.js'].branchData['141'][1] = new BranchData();
+  _$jscoverage['/fake-objects.js'].branchData['144'] = [];
+  _$jscoverage['/fake-objects.js'].branchData['144'][1] = new BranchData();
+  _$jscoverage['/fake-objects.js'].branchData['155'] = [];
+  _$jscoverage['/fake-objects.js'].branchData['155'][1] = new BranchData();
+  _$jscoverage['/fake-objects.js'].branchData['158'] = [];
+  _$jscoverage['/fake-objects.js'].branchData['158'][1] = new BranchData();
+  _$jscoverage['/fake-objects.js'].branchData['164'] = [];
+  _$jscoverage['/fake-objects.js'].branchData['164'][1] = new BranchData();
+  _$jscoverage['/fake-objects.js'].branchData['167'] = [];
+  _$jscoverage['/fake-objects.js'].branchData['167'][1] = new BranchData();
 }
-_$jscoverage['/fake-objects.js'].branchData['166'][1].init(1436, 11, 'isResizable');
-function visit27_166_1(result) {
-  _$jscoverage['/fake-objects.js'].branchData['166'][1].ranCondition(result);
+_$jscoverage['/fake-objects.js'].branchData['167'][1].init(1444, 11, 'isResizable');
+function visit27_167_1(result) {
+  _$jscoverage['/fake-objects.js'].branchData['167'][1].ranCondition(result);
   return result;
-}_$jscoverage['/fake-objects.js'].branchData['163'][1].init(1298, 15, 'realElementType');
-function visit26_163_1(result) {
-  _$jscoverage['/fake-objects.js'].branchData['163'][1].ranCondition(result);
+}_$jscoverage['/fake-objects.js'].branchData['164'][1].init(1303, 15, 'realElementType');
+function visit26_164_1(result) {
+  _$jscoverage['/fake-objects.js'].branchData['164'][1].ranCondition(result);
   return result;
-}_$jscoverage['/fake-objects.js'].branchData['157'][1].init(1096, 5, 'attrs');
-function visit25_157_1(result) {
-  _$jscoverage['/fake-objects.js'].branchData['157'][1].ranCondition(result);
+}_$jscoverage['/fake-objects.js'].branchData['158'][1].init(1101, 5, 'attrs');
+function visit25_158_1(result) {
+  _$jscoverage['/fake-objects.js'].branchData['158'][1].ranCondition(result);
   return result;
-}_$jscoverage['/fake-objects.js'].branchData['154'][1].init(332, 39, 'realElement.getAttribute(\'align\') || \'\'');
-function visit24_154_1(result) {
-  _$jscoverage['/fake-objects.js'].branchData['154'][1].ranCondition(result);
+}_$jscoverage['/fake-objects.js'].branchData['155'][1].init(337, 39, 'realElement.getAttribute(\'align\') || \'\'');
+function visit24_155_1(result) {
+  _$jscoverage['/fake-objects.js'].branchData['155'][1].ranCondition(result);
   return result;
-}_$jscoverage['/fake-objects.js'].branchData['143'][1].init(341, 34, 'realElement.getAttribute(\'height\')');
-function visit23_143_1(result) {
-  _$jscoverage['/fake-objects.js'].branchData['143'][1].ranCondition(result);
+}_$jscoverage['/fake-objects.js'].branchData['144'][1].init(341, 34, 'realElement.getAttribute(\'height\')');
+function visit23_144_1(result) {
+  _$jscoverage['/fake-objects.js'].branchData['144'][1].ranCondition(result);
   return result;
-}_$jscoverage['/fake-objects.js'].branchData['140'][1].init(164, 33, 'realElement.getAttribute(\'width\')');
-function visit22_140_1(result) {
+}_$jscoverage['/fake-objects.js'].branchData['141'][1].init(164, 33, 'realElement.getAttribute(\'width\')');
+function visit22_141_1(result) {
+  _$jscoverage['/fake-objects.js'].branchData['141'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/fake-objects.js'].branchData['140'][1].init(99, 39, 'realElement.getAttribute(\'style\') || \'\'');
+function visit21_140_1(result) {
   _$jscoverage['/fake-objects.js'].branchData['140'][1].ranCondition(result);
   return result;
-}_$jscoverage['/fake-objects.js'].branchData['139'][1].init(99, 39, 'realElement.getAttribute(\'style\') || \'\'');
-function visit21_139_1(result) {
-  _$jscoverage['/fake-objects.js'].branchData['139'][1].ranCondition(result);
+}_$jscoverage['/fake-objects.js'].branchData['124'][1].init(25, 68, 'fakeElement.attr(\'_ke_real_node_type\') !== Dom.NodeType.ELEMENT_NODE');
+function visit20_124_1(result) {
+  _$jscoverage['/fake-objects.js'].branchData['124'][1].ranCondition(result);
   return result;
-}_$jscoverage['/fake-objects.js'].branchData['123'][1].init(25, 65, 'fakeElement.attr(\'_keRealNodeType\') !== Dom.NodeType.ELEMENT_NODE');
-function visit20_123_1(result) {
-  _$jscoverage['/fake-objects.js'].branchData['123'][1].ranCondition(result);
+}_$jscoverage['/fake-objects.js'].branchData['118'][1].init(244, 10, 'htmlFilter');
+function visit19_118_1(result) {
+  _$jscoverage['/fake-objects.js'].branchData['118'][1].ranCondition(result);
   return result;
-}_$jscoverage['/fake-objects.js'].branchData['117'][1].init(244, 10, 'htmlFilter');
-function visit19_117_1(result) {
-  _$jscoverage['/fake-objects.js'].branchData['117'][1].ranCondition(result);
+}_$jscoverage['/fake-objects.js'].branchData['114'][1].init(148, 37, 'dataProcessor.createFakeParserElement');
+function visit18_114_1(result) {
+  _$jscoverage['/fake-objects.js'].branchData['114'][1].ranCondition(result);
   return result;
-}_$jscoverage['/fake-objects.js'].branchData['113'][1].init(148, 37, 'dataProcessor.createFakeParserElement');
-function visit18_113_1(result) {
-  _$jscoverage['/fake-objects.js'].branchData['113'][1].ranCondition(result);
+}_$jscoverage['/fake-objects.js'].branchData['112'][1].init(74, 41, 'dataProcessor && dataProcessor.htmlFilter');
+function visit17_112_1(result) {
+  _$jscoverage['/fake-objects.js'].branchData['112'][1].ranCondition(result);
   return result;
-}_$jscoverage['/fake-objects.js'].branchData['111'][1].init(74, 41, 'dataProcessor && dataProcessor.htmlFilter');
-function visit17_111_1(result) {
-  _$jscoverage['/fake-objects.js'].branchData['111'][1].ranCondition(result);
+}_$jscoverage['/fake-objects.js'].branchData['98'][1].init(544, 6, 'height');
+function visit16_98_1(result) {
+  _$jscoverage['/fake-objects.js'].branchData['98'][1].ranCondition(result);
   return result;
-}_$jscoverage['/fake-objects.js'].branchData['97'][1].init(544, 6, 'height');
-function visit16_97_1(result) {
-  _$jscoverage['/fake-objects.js'].branchData['97'][1].ranCondition(result);
+}_$jscoverage['/fake-objects.js'].branchData['95'][1].init(411, 5, 'width');
+function visit15_95_1(result) {
+  _$jscoverage['/fake-objects.js'].branchData['95'][1].ranCondition(result);
   return result;
-}_$jscoverage['/fake-objects.js'].branchData['94'][1].init(411, 5, 'width');
-function visit15_94_1(result) {
-  _$jscoverage['/fake-objects.js'].branchData['94'][1].ranCondition(result);
+}_$jscoverage['/fake-objects.js'].branchData['93'][1].init(363, 17, 'match && match[1]');
+function visit14_93_1(result) {
+  _$jscoverage['/fake-objects.js'].branchData['93'][1].ranCondition(result);
   return result;
-}_$jscoverage['/fake-objects.js'].branchData['92'][1].init(363, 17, 'match && match[1]');
-function visit14_92_1(result) {
-  _$jscoverage['/fake-objects.js'].branchData['92'][1].ranCondition(result);
+}_$jscoverage['/fake-objects.js'].branchData['88'][1].init(89, 17, 'match && match[1]');
+function visit13_88_1(result) {
+  _$jscoverage['/fake-objects.js'].branchData['88'][1].ranCondition(result);
   return result;
-}_$jscoverage['/fake-objects.js'].branchData['87'][1].init(89, 17, 'match && match[1]');
-function visit13_87_1(result) {
-  _$jscoverage['/fake-objects.js'].branchData['87'][1].ranCondition(result);
+}_$jscoverage['/fake-objects.js'].branchData['85'][1].init(88, 5, 'style');
+function visit12_85_1(result) {
+  _$jscoverage['/fake-objects.js'].branchData['85'][1].ranCondition(result);
   return result;
-}_$jscoverage['/fake-objects.js'].branchData['84'][1].init(88, 5, 'style');
-function visit12_84_1(result) {
-  _$jscoverage['/fake-objects.js'].branchData['84'][1].ranCondition(result);
+}_$jscoverage['/fake-objects.js'].branchData['83'][1].init(468, 11, 'realElement');
+function visit11_83_1(result) {
+  _$jscoverage['/fake-objects.js'].branchData['83'][1].ranCondition(result);
   return result;
-}_$jscoverage['/fake-objects.js'].branchData['82'][1].init(466, 11, 'realElement');
-function visit11_82_1(result) {
-  _$jscoverage['/fake-objects.js'].branchData['82'][1].ranCondition(result);
+}_$jscoverage['/fake-objects.js'].branchData['79'][1].init(284, 44, 'realFragment && realFragment.childNodes[0]');
+function visit10_79_1(result) {
+  _$jscoverage['/fake-objects.js'].branchData['79'][1].ranCondition(result);
   return result;
-}_$jscoverage['/fake-objects.js'].branchData['78'][1].init(282, 44, 'realFragment && realFragment.childNodes[0]');
-function visit10_78_1(result) {
-  _$jscoverage['/fake-objects.js'].branchData['78'][1].ranCondition(result);
+}_$jscoverage['/fake-objects.js'].branchData['75'][1].init(130, 8, 'realHTML');
+function visit9_75_1(result) {
+  _$jscoverage['/fake-objects.js'].branchData['75'][1].ranCondition(result);
   return result;
-}_$jscoverage['/fake-objects.js'].branchData['74'][1].init(128, 8, 'realHTML');
-function visit9_74_1(result) {
-  _$jscoverage['/fake-objects.js'].branchData['74'][1].ranCondition(result);
+}_$jscoverage['/fake-objects.js'].branchData['54'][1].init(17, 68, 'fakeElement.attr(\'_ke_real_node_type\') !== Dom.NodeType.ELEMENT_NODE');
+function visit8_54_1(result) {
+  _$jscoverage['/fake-objects.js'].branchData['54'][1].ranCondition(result);
   return result;
-}_$jscoverage['/fake-objects.js'].branchData['53'][1].init(17, 65, 'fakeElement.attr(\'_keRealNodeType\') !== Dom.NodeType.ELEMENT_NODE');
-function visit8_53_1(result) {
-  _$jscoverage['/fake-objects.js'].branchData['53'][1].ranCondition(result);
+}_$jscoverage['/fake-objects.js'].branchData['47'][1].init(1113, 11, 'isResizable');
+function visit7_47_1(result) {
+  _$jscoverage['/fake-objects.js'].branchData['47'][1].ranCondition(result);
   return result;
-}_$jscoverage['/fake-objects.js'].branchData['46'][1].init(1105, 11, 'isResizable');
-function visit7_46_1(result) {
-  _$jscoverage['/fake-objects.js'].branchData['46'][1].ranCondition(result);
+}_$jscoverage['/fake-objects.js'].branchData['43'][1].init(996, 15, 'realElementType');
+function visit6_43_1(result) {
+  _$jscoverage['/fake-objects.js'].branchData['43'][1].ranCondition(result);
   return result;
-}_$jscoverage['/fake-objects.js'].branchData['42'][1].init(991, 15, 'realElementType');
-function visit6_42_1(result) {
-  _$jscoverage['/fake-objects.js'].branchData['42'][1].ranCondition(result);
+}_$jscoverage['/fake-objects.js'].branchData['37'][1].init(834, 5, 'attrs');
+function visit5_37_1(result) {
+  _$jscoverage['/fake-objects.js'].branchData['37'][1].ranCondition(result);
   return result;
-}_$jscoverage['/fake-objects.js'].branchData['36'][1].init(829, 5, 'attrs');
-function visit5_36_1(result) {
-  _$jscoverage['/fake-objects.js'].branchData['36'][1].ranCondition(result);
+}_$jscoverage['/fake-objects.js'].branchData['32'][1].init(154, 36, 'outerHTML || realElement.outerHtml()');
+function visit4_32_1(result) {
+  _$jscoverage['/fake-objects.js'].branchData['32'][1].ranCondition(result);
   return result;
-}_$jscoverage['/fake-objects.js'].branchData['31'][1].init(152, 36, 'outerHTML || realElement.outerHtml()');
-function visit4_31_1(result) {
-  _$jscoverage['/fake-objects.js'].branchData['31'][1].ranCondition(result);
+}_$jscoverage['/fake-objects.js'].branchData['23'][1].init(211, 26, 'realElement.attr(\'height\')');
+function visit3_23_1(result) {
+  _$jscoverage['/fake-objects.js'].branchData['23'][1].ranCondition(result);
   return result;
-}_$jscoverage['/fake-objects.js'].branchData['22'][1].init(211, 26, 'realElement.attr(\'height\')');
-function visit3_22_1(result) {
-  _$jscoverage['/fake-objects.js'].branchData['22'][1].ranCondition(result);
+}_$jscoverage['/fake-objects.js'].branchData['20'][1].init(74, 25, 'realElement.attr(\'width\')');
+function visit2_20_1(result) {
+  _$jscoverage['/fake-objects.js'].branchData['20'][1].ranCondition(result);
   return result;
-}_$jscoverage['/fake-objects.js'].branchData['19'][1].init(74, 25, 'realElement.attr(\'width\')');
-function visit2_19_1(result) {
+}_$jscoverage['/fake-objects.js'].branchData['19'][1].init(25, 31, 'realElement.attr(\'style\') || \'\'');
+function visit1_19_1(result) {
   _$jscoverage['/fake-objects.js'].branchData['19'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/fake-objects.js'].branchData['18'][1].init(25, 31, 'realElement.attr(\'style\') || \'\'');
-function visit1_18_1(result) {
-  _$jscoverage['/fake-objects.js'].branchData['18'][1].ranCondition(result);
   return result;
 }_$jscoverage['/fake-objects.js'].lineData[6]++;
 KISSY.add(function(S, require) {
   _$jscoverage['/fake-objects.js'].functionData[0]++;
-  _$jscoverage['/fake-objects.js'].lineData[7]++;
-  var Editor = require('editor');
   _$jscoverage['/fake-objects.js'].lineData[8]++;
+  var Editor = require('editor');
+  _$jscoverage['/fake-objects.js'].lineData[9]++;
   var HtmlParser = require('html-parser');
-  _$jscoverage['/fake-objects.js'].lineData[10]++;
+  _$jscoverage['/fake-objects.js'].lineData[11]++;
   var Node = S.Node, Dom = S.DOM, Utils = Editor.Utils, SPACER_GIF = Utils.debugUrl('theme/spacer.gif');
-  _$jscoverage['/fake-objects.js'].lineData[15]++;
+  _$jscoverage['/fake-objects.js'].lineData[16]++;
   Editor.addMembers({
   createFakeElement: function(realElement, className, realElementType, isResizable, outerHTML, attrs) {
   _$jscoverage['/fake-objects.js'].functionData[1]++;
-  _$jscoverage['/fake-objects.js'].lineData[18]++;
-  var style = visit1_18_1(realElement.attr('style') || '');
   _$jscoverage['/fake-objects.js'].lineData[19]++;
-  if (visit2_19_1(realElement.attr('width'))) {
-    _$jscoverage['/fake-objects.js'].lineData[20]++;
+  var style = visit1_19_1(realElement.attr('style') || '');
+  _$jscoverage['/fake-objects.js'].lineData[20]++;
+  if (visit2_20_1(realElement.attr('width'))) {
+    _$jscoverage['/fake-objects.js'].lineData[21]++;
     style = 'width:' + realElement.attr('width') + 'px;' + style;
   }
-  _$jscoverage['/fake-objects.js'].lineData[22]++;
-  if (visit3_22_1(realElement.attr('height'))) {
-    _$jscoverage['/fake-objects.js'].lineData[23]++;
+  _$jscoverage['/fake-objects.js'].lineData[23]++;
+  if (visit3_23_1(realElement.attr('height'))) {
+    _$jscoverage['/fake-objects.js'].lineData[24]++;
     style = 'height:' + realElement.attr('height') + 'px;' + style;
   }
-  _$jscoverage['/fake-objects.js'].lineData[25]++;
+  _$jscoverage['/fake-objects.js'].lineData[26]++;
   var self = this, existClass = S.trim(realElement.attr('class')), attributes = {
   'class': className + ' ' + existClass, 
   src: SPACER_GIF, 
-  _keRealElement: encodeURIComponent(visit4_31_1(outerHTML || realElement.outerHtml())), 
-  _keRealNodeType: realElement[0].nodeType, 
+  _ke_real_element: encodeURIComponent(visit4_32_1(outerHTML || realElement.outerHtml())), 
+  _ke_real_node_type: realElement[0].nodeType, 
   style: style};
-  _$jscoverage['/fake-objects.js'].lineData[36]++;
-  if (visit5_36_1(attrs)) {
-    _$jscoverage['/fake-objects.js'].lineData[37]++;
-    delete attrs.width;
+  _$jscoverage['/fake-objects.js'].lineData[37]++;
+  if (visit5_37_1(attrs)) {
     _$jscoverage['/fake-objects.js'].lineData[38]++;
-    delete attrs.height;
+    delete attrs.width;
     _$jscoverage['/fake-objects.js'].lineData[39]++;
+    delete attrs.height;
+    _$jscoverage['/fake-objects.js'].lineData[40]++;
     S.mix(attributes, attrs, false);
   }
-  _$jscoverage['/fake-objects.js'].lineData[42]++;
-  if (visit6_42_1(realElementType)) {
-    _$jscoverage['/fake-objects.js'].lineData[43]++;
-    attributes._keRealElementType = realElementType;
+  _$jscoverage['/fake-objects.js'].lineData[43]++;
+  if (visit6_43_1(realElementType)) {
+    _$jscoverage['/fake-objects.js'].lineData[44]++;
+    attributes._ke_real_element_type = realElementType;
   }
-  _$jscoverage['/fake-objects.js'].lineData[46]++;
-  if (visit7_46_1(isResizable)) {
-    _$jscoverage['/fake-objects.js'].lineData[47]++;
-    attributes._keResizable = isResizable;
+  _$jscoverage['/fake-objects.js'].lineData[47]++;
+  if (visit7_47_1(isResizable)) {
+    _$jscoverage['/fake-objects.js'].lineData[48]++;
+    attributes._ke_resizable = isResizable;
   }
-  _$jscoverage['/fake-objects.js'].lineData[49]++;
+  _$jscoverage['/fake-objects.js'].lineData[50]++;
   return new Node('<img/>', attributes, self.get('document')[0]);
 }, 
   restoreRealElement: function(fakeElement) {
   _$jscoverage['/fake-objects.js'].functionData[2]++;
-  _$jscoverage['/fake-objects.js'].lineData[53]++;
-  if (visit8_53_1(fakeElement.attr('_keRealNodeType') !== Dom.NodeType.ELEMENT_NODE)) {
-    _$jscoverage['/fake-objects.js'].lineData[54]++;
+  _$jscoverage['/fake-objects.js'].lineData[54]++;
+  if (visit8_54_1(fakeElement.attr('_ke_real_node_type') !== Dom.NodeType.ELEMENT_NODE)) {
+    _$jscoverage['/fake-objects.js'].lineData[55]++;
     return null;
   }
-  _$jscoverage['/fake-objects.js'].lineData[57]++;
-  var html = (S.urlDecode(fakeElement.attr('_keRealElement')));
-  _$jscoverage['/fake-objects.js'].lineData[59]++;
-  var temp = new Node('<div>', null, this.get('document')[0]);
+  _$jscoverage['/fake-objects.js'].lineData[58]++;
+  var html = (S.urlDecode(fakeElement.attr('_ke_real_element')));
   _$jscoverage['/fake-objects.js'].lineData[60]++;
+  var temp = new Node('<div>', null, this.get('document')[0]);
+  _$jscoverage['/fake-objects.js'].lineData[61]++;
   temp.html(html);
-  _$jscoverage['/fake-objects.js'].lineData[62]++;
+  _$jscoverage['/fake-objects.js'].lineData[63]++;
   return temp.first().remove();
 }});
-  _$jscoverage['/fake-objects.js'].lineData[66]++;
+  _$jscoverage['/fake-objects.js'].lineData[67]++;
   var htmlFilterRules = {
   tags: {
   $: function(element) {
   _$jscoverage['/fake-objects.js'].functionData[3]++;
-  _$jscoverage['/fake-objects.js'].lineData[70]++;
-  var realHTML = element.getAttribute('_keRealElement');
-  _$jscoverage['/fake-objects.js'].lineData[72]++;
+  _$jscoverage['/fake-objects.js'].lineData[71]++;
+  var realHTML = element.getAttribute('_ke_real_element');
+  _$jscoverage['/fake-objects.js'].lineData[73]++;
   var realFragment;
-  _$jscoverage['/fake-objects.js'].lineData[74]++;
-  if (visit9_74_1(realHTML)) {
-    _$jscoverage['/fake-objects.js'].lineData[75]++;
+  _$jscoverage['/fake-objects.js'].lineData[75]++;
+  if (visit9_75_1(realHTML)) {
+    _$jscoverage['/fake-objects.js'].lineData[76]++;
     realFragment = new HtmlParser.Parser(S.urlDecode(realHTML)).parse();
   }
-  _$jscoverage['/fake-objects.js'].lineData[78]++;
-  var realElement = visit10_78_1(realFragment && realFragment.childNodes[0]);
-  _$jscoverage['/fake-objects.js'].lineData[82]++;
-  if (visit11_82_1(realElement)) {
-    _$jscoverage['/fake-objects.js'].lineData[83]++;
-    var style = element.getAttribute('style');
+  _$jscoverage['/fake-objects.js'].lineData[79]++;
+  var realElement = visit10_79_1(realFragment && realFragment.childNodes[0]);
+  _$jscoverage['/fake-objects.js'].lineData[83]++;
+  if (visit11_83_1(realElement)) {
     _$jscoverage['/fake-objects.js'].lineData[84]++;
-    if (visit12_84_1(style)) {
-      _$jscoverage['/fake-objects.js'].lineData[86]++;
-      var match = /(?:^|\s)width\s*:\s*(\d+)/i.exec(style), width = visit13_87_1(match && match[1]);
-      _$jscoverage['/fake-objects.js'].lineData[90]++;
+    var style = element.getAttribute('style');
+    _$jscoverage['/fake-objects.js'].lineData[85]++;
+    if (visit12_85_1(style)) {
+      _$jscoverage['/fake-objects.js'].lineData[87]++;
+      var match = /(?:^|\s)width\s*:\s*(\d+)/i.exec(style), width = visit13_88_1(match && match[1]);
+      _$jscoverage['/fake-objects.js'].lineData[91]++;
       match = /(?:^|\s)height\s*:\s*(\d+)/i.exec(style);
-      _$jscoverage['/fake-objects.js'].lineData[92]++;
-      var height = visit14_92_1(match && match[1]);
-      _$jscoverage['/fake-objects.js'].lineData[94]++;
-      if (visit15_94_1(width)) {
-        _$jscoverage['/fake-objects.js'].lineData[95]++;
+      _$jscoverage['/fake-objects.js'].lineData[93]++;
+      var height = visit14_93_1(match && match[1]);
+      _$jscoverage['/fake-objects.js'].lineData[95]++;
+      if (visit15_95_1(width)) {
+        _$jscoverage['/fake-objects.js'].lineData[96]++;
         realElement.setAttribute('width', width);
       }
-      _$jscoverage['/fake-objects.js'].lineData[97]++;
-      if (visit16_97_1(height)) {
-        _$jscoverage['/fake-objects.js'].lineData[98]++;
+      _$jscoverage['/fake-objects.js'].lineData[98]++;
+      if (visit16_98_1(height)) {
+        _$jscoverage['/fake-objects.js'].lineData[99]++;
         realElement.setAttribute('height', height);
       }
     }
-    _$jscoverage['/fake-objects.js'].lineData[101]++;
+    _$jscoverage['/fake-objects.js'].lineData[102]++;
     return realElement;
   }
 }}};
-  _$jscoverage['/fake-objects.js'].lineData[108]++;
+  _$jscoverage['/fake-objects.js'].lineData[109]++;
   return {
   init: function(editor) {
   _$jscoverage['/fake-objects.js'].functionData[4]++;
-  _$jscoverage['/fake-objects.js'].lineData[110]++;
-  var dataProcessor = editor.htmlDataProcessor, htmlFilter = visit17_111_1(dataProcessor && dataProcessor.htmlFilter);
-  _$jscoverage['/fake-objects.js'].lineData[113]++;
-  if (visit18_113_1(dataProcessor.createFakeParserElement)) {
-    _$jscoverage['/fake-objects.js'].lineData[114]++;
+  _$jscoverage['/fake-objects.js'].lineData[111]++;
+  var dataProcessor = editor.htmlDataProcessor, htmlFilter = visit17_112_1(dataProcessor && dataProcessor.htmlFilter);
+  _$jscoverage['/fake-objects.js'].lineData[114]++;
+  if (visit18_114_1(dataProcessor.createFakeParserElement)) {
+    _$jscoverage['/fake-objects.js'].lineData[115]++;
     return;
   }
-  _$jscoverage['/fake-objects.js'].lineData[117]++;
-  if (visit19_117_1(htmlFilter)) {
-    _$jscoverage['/fake-objects.js'].lineData[118]++;
+  _$jscoverage['/fake-objects.js'].lineData[118]++;
+  if (visit19_118_1(htmlFilter)) {
+    _$jscoverage['/fake-objects.js'].lineData[119]++;
     htmlFilter.addRules(htmlFilterRules);
   }
-  _$jscoverage['/fake-objects.js'].lineData[121]++;
+  _$jscoverage['/fake-objects.js'].lineData[122]++;
   S.mix(dataProcessor, {
   restoreRealElement: function(fakeElement) {
   _$jscoverage['/fake-objects.js'].functionData[5]++;
-  _$jscoverage['/fake-objects.js'].lineData[123]++;
-  if (visit20_123_1(fakeElement.attr('_keRealNodeType') !== Dom.NodeType.ELEMENT_NODE)) {
-    _$jscoverage['/fake-objects.js'].lineData[124]++;
+  _$jscoverage['/fake-objects.js'].lineData[124]++;
+  if (visit20_124_1(fakeElement.attr('_ke_real_node_type') !== Dom.NodeType.ELEMENT_NODE)) {
+    _$jscoverage['/fake-objects.js'].lineData[125]++;
     return null;
   }
-  _$jscoverage['/fake-objects.js'].lineData[127]++;
-  var html = (S.urlDecode(fakeElement.attr('_keRealElement')));
-  _$jscoverage['/fake-objects.js'].lineData[129]++;
-  var temp = new Node('<div>', null, editor.get('document')[0]);
+  _$jscoverage['/fake-objects.js'].lineData[128]++;
+  var html = (S.urlDecode(fakeElement.attr('_ke_real_element')));
   _$jscoverage['/fake-objects.js'].lineData[130]++;
+  var temp = new Node('<div>', null, editor.get('document')[0]);
+  _$jscoverage['/fake-objects.js'].lineData[131]++;
   temp.html(html);
-  _$jscoverage['/fake-objects.js'].lineData[132]++;
+  _$jscoverage['/fake-objects.js'].lineData[133]++;
   return temp.first().remove();
 }, 
   createFakeParserElement: function(realElement, className, realElementType, isResizable, attrs) {
   _$jscoverage['/fake-objects.js'].functionData[6]++;
-  _$jscoverage['/fake-objects.js'].lineData[138]++;
-  var html = HtmlParser.serialize(realElement);
   _$jscoverage['/fake-objects.js'].lineData[139]++;
-  var style = visit21_139_1(realElement.getAttribute('style') || '');
+  var html = HtmlParser.serialize(realElement);
   _$jscoverage['/fake-objects.js'].lineData[140]++;
-  if (visit22_140_1(realElement.getAttribute('width'))) {
-    _$jscoverage['/fake-objects.js'].lineData[141]++;
+  var style = visit21_140_1(realElement.getAttribute('style') || '');
+  _$jscoverage['/fake-objects.js'].lineData[141]++;
+  if (visit22_141_1(realElement.getAttribute('width'))) {
+    _$jscoverage['/fake-objects.js'].lineData[142]++;
     style = 'width:' + realElement.getAttribute('width') + 'px;' + style;
   }
-  _$jscoverage['/fake-objects.js'].lineData[143]++;
-  if (visit23_143_1(realElement.getAttribute('height'))) {
-    _$jscoverage['/fake-objects.js'].lineData[144]++;
+  _$jscoverage['/fake-objects.js'].lineData[144]++;
+  if (visit23_144_1(realElement.getAttribute('height'))) {
+    _$jscoverage['/fake-objects.js'].lineData[145]++;
     style = 'height:' + realElement.getAttribute('height') + 'px;' + style;
   }
-  _$jscoverage['/fake-objects.js'].lineData[147]++;
+  _$jscoverage['/fake-objects.js'].lineData[148]++;
   var existClass = S.trim(realElement.getAttribute('class')), attributes = {
   'class': className + ' ' + existClass, 
   src: SPACER_GIF, 
-  _keRealElement: encodeURIComponent(html), 
-  _keRealNodeType: realElement.nodeType + '', 
+  _ke_real_element: encodeURIComponent(html), 
+  _ke_real_node_type: realElement.nodeType + '', 
   style: style, 
-  align: visit24_154_1(realElement.getAttribute('align') || '')};
-  _$jscoverage['/fake-objects.js'].lineData[157]++;
-  if (visit25_157_1(attrs)) {
-    _$jscoverage['/fake-objects.js'].lineData[158]++;
-    delete attrs.width;
+  align: visit24_155_1(realElement.getAttribute('align') || '')};
+  _$jscoverage['/fake-objects.js'].lineData[158]++;
+  if (visit25_158_1(attrs)) {
     _$jscoverage['/fake-objects.js'].lineData[159]++;
-    delete attrs.height;
+    delete attrs.width;
     _$jscoverage['/fake-objects.js'].lineData[160]++;
+    delete attrs.height;
+    _$jscoverage['/fake-objects.js'].lineData[161]++;
     S.mix(attributes, attrs, false);
   }
-  _$jscoverage['/fake-objects.js'].lineData[163]++;
-  if (visit26_163_1(realElementType)) {
-    _$jscoverage['/fake-objects.js'].lineData[164]++;
-    attributes._keRealElementType = realElementType;
+  _$jscoverage['/fake-objects.js'].lineData[164]++;
+  if (visit26_164_1(realElementType)) {
+    _$jscoverage['/fake-objects.js'].lineData[165]++;
+    attributes._ke_real_element_type = realElementType;
   }
-  _$jscoverage['/fake-objects.js'].lineData[166]++;
-  if (visit27_166_1(isResizable)) {
-    _$jscoverage['/fake-objects.js'].lineData[167]++;
-    attributes._keResizable = '_keResizable';
+  _$jscoverage['/fake-objects.js'].lineData[167]++;
+  if (visit27_167_1(isResizable)) {
+    _$jscoverage['/fake-objects.js'].lineData[168]++;
+    attributes._ke_resizable = '_ke_resizable';
   }
-  _$jscoverage['/fake-objects.js'].lineData[169]++;
+  _$jscoverage['/fake-objects.js'].lineData[170]++;
   return new HtmlParser.Tag('img', attributes);
 }});
 }};

@@ -383,7 +383,7 @@ function visit12_222_1(result) {
 function visit11_216_1(result) {
   _$jscoverage['/dialog.js'].branchData['216'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['206'][1].init(36, 33, 'parseInt(self.dMargin.val()) || 0');
+}_$jscoverage['/dialog.js'].branchData['206'][1].init(36, 36, 'parseInt(self.dMargin.val(), 10) || 0');
 function visit10_206_1(result) {
   _$jscoverage['/dialog.js'].branchData['206'][1].ranCondition(result);
   return result;
@@ -395,11 +395,11 @@ function visit9_152_1(result) {
 function visit8_151_1(result) {
   _$jscoverage['/dialog.js'].branchData['151'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['148'][1].init(531, 32, 'parseInt(r.style(\'margin\')) || 0');
+}_$jscoverage['/dialog.js'].branchData['148'][1].init(537, 35, 'parseInt(r.style(\'margin\'), 10) || 0');
 function visit7_148_1(result) {
   _$jscoverage['/dialog.js'].branchData['148'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['143'][1].init(266, 15, 'f.css(\'height\')');
+}_$jscoverage['/dialog.js'].branchData['143'][1].init(269, 15, 'f.css(\'height\')');
 function visit6_143_1(result) {
   _$jscoverage['/dialog.js'].branchData['143'][1].ranCondition(result);
   return result;
@@ -519,19 +519,19 @@ KISSY.add(function(S, require) {
     _$jscoverage['/dialog.js'].lineData[140]++;
     if (visit5_140_1(f.css('width'))) {
       _$jscoverage['/dialog.js'].lineData[141]++;
-      self.dWidth.val(parseInt(f.css('width')));
+      self.dWidth.val(parseInt(f.css('width'), 10));
     }
     _$jscoverage['/dialog.js'].lineData[143]++;
     if (visit6_143_1(f.css('height'))) {
       _$jscoverage['/dialog.js'].lineData[144]++;
-      self.dHeight.val(parseInt(f.css('height')));
+      self.dHeight.val(parseInt(f.css('height'), 10));
     }
     _$jscoverage['/dialog.js'].lineData[146]++;
     self.dAlign.set('value', f.css('float'));
     _$jscoverage['/dialog.js'].lineData[147]++;
     Editor.Utils.valInput(self.dUrl, self._getFlashUrl(r));
     _$jscoverage['/dialog.js'].lineData[148]++;
-    self.dMargin.val(visit7_148_1(parseInt(r.style('margin')) || 0));
+    self.dMargin.val(visit7_148_1(parseInt(r.style('margin'), 10) || 0));
   } else {
     _$jscoverage['/dialog.js'].lineData[150]++;
     Editor.Utils.resetInput(self.dUrl);
@@ -600,7 +600,7 @@ KISSY.add(function(S, require) {
   attrs: {
   width: self.dWidth.val(), 
   height: self.dHeight.val(), 
-  style: 'margin:' + (visit10_206_1(parseInt(self.dMargin.val()) || 0)) + 'px;' + 'float:' + self.dAlign.get('value') + ';'}};
+  style: 'margin:' + (visit10_206_1(parseInt(self.dMargin.val(), 10) || 0)) + 'px;' + 'float:' + self.dAlign.get('value') + ';'}};
 }, 
   _gen: function(ev) {
   _$jscoverage['/dialog.js'].functionData[11]++;

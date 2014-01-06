@@ -434,7 +434,7 @@ function visit3_133_1(result) {
 function visit2_122_1(result) {
   _$jscoverage['/picker/control.js'].branchData['122'][1].ranCondition(result);
   return result;
-}_$jscoverage['/picker/control.js'].branchData['80'][1].init(259, 54, 'disabledDate && disabledDate(value, self.get(\'value\'))');
+}_$jscoverage['/picker/control.js'].branchData['80'][1].init(262, 54, 'disabledDate && disabledDate(value, self.get(\'value\'))');
 function visit1_80_1(result) {
   _$jscoverage['/picker/control.js'].branchData['80'][1].ranCondition(result);
   return result;
@@ -555,7 +555,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/picker/control.js'].lineData[78]++;
     var td = $(e.currentTarget);
     _$jscoverage['/picker/control.js'].lineData[79]++;
-    var value = self.dateTable[parseInt(td.attr('data-index'))];
+    var value = self.dateTable[parseInt(td.attr('data-index'), 10)];
     _$jscoverage['/picker/control.js'].lineData[80]++;
     if (visit1_80_1(disabledDate && disabledDate(value, self.get('value')))) {
       _$jscoverage['/picker/control.js'].lineData[81]++;

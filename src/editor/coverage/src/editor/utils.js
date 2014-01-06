@@ -556,7 +556,7 @@ KISSY.add(function(S, require) {
     url += 't=' + encodeURIComponent(Config.tag);
   }
   _$jscoverage['/editor/utils.js'].lineData[34]++;
-  return Config.base + 'editor/' + url;
+  return S.config('base') + 'editor/' + url;
 }, 
   lazyRun: function(obj, before, after) {
   _$jscoverage['/editor/utils.js'].functionData[2]++;

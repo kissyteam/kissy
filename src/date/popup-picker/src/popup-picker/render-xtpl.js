@@ -24,10 +24,10 @@ KISSY.add(function (S, require, exports, module) {
             buffer += '">\n    ';
             var config4 = {};
             var params5 = [];
-            params5.push('date/picker/picker-xtpl');
+            params5.push('date/picker-xtpl');
             config4.params = params5;
             if (moduleWrap) {
-                require("date/picker/picker-xtpl");
+                require("date/picker-xtpl");
                 config4.params[0] = moduleWrap.resolveByName(config4.params[0]);
             }
             var id3 = runInlineCommandUtil(engine, scope, config4, "include", 2);

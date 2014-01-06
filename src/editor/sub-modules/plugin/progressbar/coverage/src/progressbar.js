@@ -259,7 +259,7 @@ if (! _$jscoverage['/progressbar.js'].branchData) {
   _$jscoverage['/progressbar.js'].branchData['42'] = [];
   _$jscoverage['/progressbar.js'].branchData['42'][1] = new BranchData();
 }
-_$jscoverage['/progressbar.js'].branchData['42'][1].init(1213, 9, 'container');
+_$jscoverage['/progressbar.js'].branchData['42'][1].init(1216, 9, 'container');
 function visit1_42_1(result) {
   _$jscoverage['/progressbar.js'].branchData['42'][1].ranCondition(result);
   return result;
@@ -283,7 +283,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/progressbar.js'].functionData[2]++;
   _$jscoverage['/progressbar.js'].lineData[16]++;
   var self = this, h = self.get('height'), prefixCls = self.get('prefixCls'), el = new Node(S.substitute('<div' + ' class="{prefixCls}editor-progressbar" ' + ' style="width:' + self.get('width') + ';' + 'height:' + h + ';"' + '></div>', {
-  prefixCls: prefixCls})), container = self.get('container'), p = new Node(S.substitute('<div style="overflow:hidden;">' + '<div class="{prefixCls}editor-progressbar-inner" style="height:' + (parseInt(h) - 4) + 'px">' + '<div class="{prefixCls}editor-progressbar-inner-bg"></div>' + '</div>' + '</div>', {
+  prefixCls: prefixCls})), container = self.get('container'), p = new Node(S.substitute('<div style="overflow:hidden;">' + '<div class="{prefixCls}editor-progressbar-inner" style="height:' + (parseInt(h, 10) - 4) + 'px">' + '<div class="{prefixCls}editor-progressbar-inner-bg"></div>' + '</div>' + '</div>', {
   prefixCls: prefixCls})).appendTo(el), title = new Node('<span class="' + prefixCls + 'editor-progressbar-title"></span>').appendTo(el);
   _$jscoverage['/progressbar.js'].lineData[42]++;
   if (visit1_42_1(container)) {

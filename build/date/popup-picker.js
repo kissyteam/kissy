@@ -1,16 +1,16 @@
 /*
-Copyright 2013, KISSY v1.50
+Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Dec 12 22:09
+build time: Jan 6 12:03
 */
 /*
- Combined processedModules by KISSY Module Compiler: 
+ Combined modules by KISSY Module Compiler: 
 
  date/popup-picker/render-xtpl
  date/popup-picker
 */
 
-KISSY.add("date/popup-picker/render-xtpl", ["date/picker/picker-xtpl"], function(S, require, exports, module) {
+KISSY.add("date/popup-picker/render-xtpl", ["date/picker-xtpl"], function(S, require, exports, module) {
   return function(scope, S, undefined) {
     var buffer = "", config = this.config, engine = this, moduleWrap, utils = config.utils;
     if(typeof module !== "undefined" && module.kissy) {
@@ -27,10 +27,10 @@ KISSY.add("date/popup-picker/render-xtpl", ["date/picker/picker-xtpl"], function
     buffer += '">\n    ';
     var config4 = {};
     var params5 = [];
-    params5.push("date/picker/picker-xtpl");
+    params5.push("date/picker-xtpl");
     config4.params = params5;
     if(moduleWrap) {
-      require("date/picker/picker-xtpl");
+      require("date/picker-xtpl");
       config4.params[0] = moduleWrap.resolveByName(config4.params[0])
     }
     var id3 = runInlineCommandUtil(engine, scope, config4, "include", 2);

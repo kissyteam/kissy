@@ -1,10 +1,10 @@
 /*
-Copyright 2013, KISSY v1.50
+Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Dec 12 22:18
+build time: Jan 6 12:42
 */
 /*
- Combined processedModules by KISSY Module Compiler: 
+ Combined modules by KISSY Module Compiler: 
 
  editor/plugin/xiami-music/dialog
 */
@@ -65,7 +65,7 @@ KISSY.add("editor/plugin/xiami-music/dialog", ["editor", "../flash/dialog", "../
     self.addRes(dfoot);
     xiamiOk.on("click", function(ev) {
       var f = self.selectedFlash, r = editor.restoreRealElement(f);
-      self._dinfo = {url:self._getFlashUrl(r), attrs:{title:f.attr("title"), style:"margin:" + (parseInt(self.dMargin.val()) || 0) + "px;" + "float:" + self.dAlign.get("value") + ";"}};
+      self._dinfo = {url:self._getFlashUrl(r), attrs:{title:f.attr("title"), style:"margin:" + (parseInt(self.dMargin.val(), 10) || 0) + "px;" + "float:" + self.dAlign.get("value") + ";"}};
       self._gen();
       ev.halt()
     }, self);
@@ -104,11 +104,11 @@ KISSY.add("editor/plugin/xiami-music/dialog", ["editor", "../flash/dialog", "../
         return self._xiamiaList.contains(node) && Dom.hasClass(node, prefixCls + "editor-xiami-page-item")
       }, undefined);
       if(add) {
-        self._dinfo = {url:"http://www.xiami.com/widget/" + add.attr("data-value") + "/singlePlayer.swf", attrs:{title:add.attr("title"), style:"margin:" + (parseInt(self.dMargin.val()) || 0) + "px;" + "float:" + self.dAlign.get("value") + ";"}};
+        self._dinfo = {url:"http://www.xiami.com/widget/" + add.attr("data-value") + "/singlePlayer.swf", attrs:{title:add.attr("title"), style:"margin:" + (parseInt(self.dMargin.val(), 10) || 0) + "px;" + "float:" + self.dAlign.get("value") + ";"}};
         self._gen()
       }else {
         if(paging) {
-          loadRecordsByPage(parseInt(paging.attr("data-value")))
+          loadRecordsByPage(parseInt(paging.attr("data-value"), 10))
         }
       }
       ev.halt()
@@ -168,7 +168,7 @@ KISSY.add("editor/plugin/xiami-music/dialog", ["editor", "../flash/dialog", "../
       self._xiamiInput.val(f.attr("title"));
       self._xiamiTitle.html(f.attr("title"));
       self.dAlign.set("value", f.css("float"));
-      self.dMargin.val(parseInt(f.style("margin")) || 0);
+      self.dMargin.val(parseInt(f.style("margin"), 10) || 0);
       self._xiamiUrlWrap.hide();
       self.dialog.get("footer").show();
       self._xiamiTitle.show()

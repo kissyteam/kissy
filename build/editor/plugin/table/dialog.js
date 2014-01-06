@@ -1,10 +1,10 @@
 /*
-Copyright 2013, KISSY v1.50
+Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Dec 12 22:17
+build time: Jan 6 12:41
 */
 /*
- Combined processedModules by KISSY Module Compiler: 
+ Combined modules by KISSY Module Compiler: 
 
  editor/plugin/table/dialog
 */
@@ -60,7 +60,7 @@ KISSY.add("editor/plugin/table/dialog", ["editor", "../dialog", "../menubutton"]
     ev.halt();
     var self = this, tableDialog = self.dialog, inputs = tableDialog.get("el").all("input");
     if(tableDialog.twidthunit.get("value") === "%") {
-      var tw = parseInt(tableDialog.twidth.val());
+      var tw = parseInt(tableDialog.twidth.val(), 10);
       if(!tw || tw > 100 || tw < 0) {
         alert("\u5bbd\u5ea6\u767e\u5206\u6bd4\uff1a" + "\u8bf7\u8f93\u51651-100\u4e4b\u95f4");
         return
@@ -110,7 +110,7 @@ KISSY.add("editor/plugin/table/dialog", ["editor", "../dialog", "../menubutton"]
     }else {
       selectedTable.removeClass(collapseTableClass, undefined)
     }
-    d.cellpadding.val(parseInt(d.cellpadding.val()) || 0);
+    d.cellpadding.val(parseInt(d.cellpadding.val(), 10) || 0);
     if(self.selectedTd) {
       self.selectedTd.css("padding", d.cellpadding.val())
     }
@@ -128,7 +128,7 @@ KISSY.add("editor/plugin/table/dialog", ["editor", "../dialog", "../menubutton"]
       }
     }
   }, _genTable:function() {
-    var self = this, d = self.dialog, html = "<table ", i, cols = parseInt(d.tcols.val()) || 1, rows = parseInt(d.trows.val()) || 1, cellPad = OLD_IE ? "" : "<br/>", editor = self.editor;
+    var self = this, d = self.dialog, html = "<table ", i, cols = parseInt(d.tcols.val(), 10) || 1, rows = parseInt(d.trows.val(), 10) || 1, cellPad = OLD_IE ? "" : "<br/>", editor = self.editor;
     if(valid(d.talign.get("value"))) {
       html += 'align="' + trim(d.talign.get("value")) + '" '
     }
@@ -184,7 +184,7 @@ KISSY.add("editor/plugin/table/dialog", ["editor", "../dialog", "../menubutton"]
   }, _fillTableDialog:function() {
     var self = this, d = self.dialog, selectedTable = self.selectedTable, caption = selectedTable.one("caption");
     if(self.selectedTd) {
-      d.cellpadding.val(parseInt(self.selectedTd.css("padding")) || "0")
+      d.cellpadding.val(parseInt(self.selectedTd.css("padding"), 10) || "0")
     }
     d.talign.set("value", selectedTable.attr("align") || "");
     d.tborder.val(selectedTable.attr("border") || "0");

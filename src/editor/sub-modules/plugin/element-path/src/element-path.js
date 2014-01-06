@@ -49,7 +49,7 @@ KISSY.add(function (S, require) {
             for (i = 0; i < elements.length; i++) {
                 element = elements[i];
                 // 考虑 fake objects
-                var type = element.attr('_keRealElementType') || element.nodeName(),
+                var type = element.attr('_ke_real_element_type') || element.nodeName(),
                     a = new Node('<a ' +
                         'href="javascript(\'' +
                         type + '\')" ' +

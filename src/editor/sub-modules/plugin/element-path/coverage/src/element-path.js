@@ -294,7 +294,7 @@ if (! _$jscoverage['/element-path.js'].branchData) {
   _$jscoverage['/element-path.js'].branchData['52'] = [];
   _$jscoverage['/element-path.js'].branchData['52'][1] = new BranchData();
 }
-_$jscoverage['/element-path.js'].branchData['52'][1].init(102, 56, 'element.attr(\'_keRealElementType\') || element.nodeName()');
+_$jscoverage['/element-path.js'].branchData['52'][1].init(102, 59, 'element.attr(\'_ke_real_element_type\') || element.nodeName()');
 function visit3_52_1(result) {
   _$jscoverage['/element-path.js'].branchData['52'][1].ranCondition(result);
   return result;
@@ -368,7 +368,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/element-path.js'].lineData[50]++;
     element = elements[i];
     _$jscoverage['/element-path.js'].lineData[52]++;
-    var type = visit3_52_1(element.attr('_keRealElementType') || element.nodeName()), a = new Node('<a ' + 'href="javascript(\'' + type + '\')" ' + 'class="' + prefixCls + CLASS + '">' + type + '</a>');
+    var type = visit3_52_1(element.attr('_ke_real_element_type') || element.nodeName()), a = new Node('<a ' + 'href="javascript(\'' + type + '\')" ' + 'class="' + prefixCls + CLASS + '">' + type + '</a>');
     _$jscoverage['/element-path.js'].lineData[60]++;
     self._cache.push(a);
     _$jscoverage['/element-path.js'].lineData[62]++;

@@ -1,10 +1,10 @@
 /*
-Copyright 2013, KISSY v1.50
+Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Dec 12 22:12
+build time: Jan 6 12:36
 */
 /*
- Combined processedModules by KISSY Module Compiler: 
+ Combined modules by KISSY Module Compiler: 
 
  editor/plugin/fake-objects
 */
@@ -21,30 +21,30 @@ KISSY.add("editor/plugin/fake-objects", ["editor", "html-parser"], function(S, r
     if(realElement.attr("height")) {
       style = "height:" + realElement.attr("height") + "px;" + style
     }
-    var self = this, existClass = S.trim(realElement.attr("class")), attributes = {"class":className + " " + existClass, src:SPACER_GIF, _keRealElement:encodeURIComponent(outerHTML || realElement.outerHtml()), _keRealNodeType:realElement[0].nodeType, style:style};
+    var self = this, existClass = S.trim(realElement.attr("class")), attributes = {"class":className + " " + existClass, src:SPACER_GIF, _ke_real_element:encodeURIComponent(outerHTML || realElement.outerHtml()), _ke_real_node_type:realElement[0].nodeType, style:style};
     if(attrs) {
       delete attrs.width;
       delete attrs.height;
       S.mix(attributes, attrs, false)
     }
     if(realElementType) {
-      attributes._keRealElementType = realElementType
+      attributes._ke_real_element_type = realElementType
     }
     if(isResizable) {
-      attributes._keResizable = isResizable
+      attributes._ke_resizable = isResizable
     }
     return new Node("<img/>", attributes, self.get("document")[0])
   }, restoreRealElement:function(fakeElement) {
-    if(fakeElement.attr("_keRealNodeType") !== Dom.NodeType.ELEMENT_NODE) {
+    if(fakeElement.attr("_ke_real_node_type") !== Dom.NodeType.ELEMENT_NODE) {
       return null
     }
-    var html = S.urlDecode(fakeElement.attr("_keRealElement"));
+    var html = S.urlDecode(fakeElement.attr("_ke_real_element"));
     var temp = new Node("<div>", null, this.get("document")[0]);
     temp.html(html);
     return temp.first().remove()
   }});
   var htmlFilterRules = {tags:{$:function(element) {
-    var realHTML = element.getAttribute("_keRealElement");
+    var realHTML = element.getAttribute("_ke_real_element");
     var realFragment;
     if(realHTML) {
       realFragment = (new HtmlParser.Parser(S.urlDecode(realHTML))).parse()
@@ -75,10 +75,10 @@ KISSY.add("editor/plugin/fake-objects", ["editor", "html-parser"], function(S, r
       htmlFilter.addRules(htmlFilterRules)
     }
     S.mix(dataProcessor, {restoreRealElement:function(fakeElement) {
-      if(fakeElement.attr("_keRealNodeType") !== Dom.NodeType.ELEMENT_NODE) {
+      if(fakeElement.attr("_ke_real_node_type") !== Dom.NodeType.ELEMENT_NODE) {
         return null
       }
-      var html = S.urlDecode(fakeElement.attr("_keRealElement"));
+      var html = S.urlDecode(fakeElement.attr("_ke_real_element"));
       var temp = new Node("<div>", null, editor.get("document")[0]);
       temp.html(html);
       return temp.first().remove()
@@ -91,17 +91,17 @@ KISSY.add("editor/plugin/fake-objects", ["editor", "html-parser"], function(S, r
       if(realElement.getAttribute("height")) {
         style = "height:" + realElement.getAttribute("height") + "px;" + style
       }
-      var existClass = S.trim(realElement.getAttribute("class")), attributes = {"class":className + " " + existClass, src:SPACER_GIF, _keRealElement:encodeURIComponent(html), _keRealNodeType:realElement.nodeType + "", style:style, align:realElement.getAttribute("align") || ""};
+      var existClass = S.trim(realElement.getAttribute("class")), attributes = {"class":className + " " + existClass, src:SPACER_GIF, _ke_real_element:encodeURIComponent(html), _ke_real_node_type:realElement.nodeType + "", style:style, align:realElement.getAttribute("align") || ""};
       if(attrs) {
         delete attrs.width;
         delete attrs.height;
         S.mix(attributes, attrs, false)
       }
       if(realElementType) {
-        attributes._keRealElementType = realElementType
+        attributes._ke_real_element_type = realElementType
       }
       if(isResizable) {
-        attributes._keResizable = "_keResizable"
+        attributes._ke_resizable = "_ke_resizable"
       }
       return new HtmlParser.Tag("img", attributes)
     }})

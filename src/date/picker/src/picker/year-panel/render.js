@@ -12,7 +12,7 @@ KISSY.add(function (S, require) {
     function prepareYears(control) {
         var value = control.get('value');
         var currentYear = value.getYear();
-        var startYear = parseInt(currentYear / 10) * 10;
+        var startYear = parseInt(currentYear / 10,10) * 10;
         var preYear = startYear - 1;
         var current = value.clone();
         var locale = control.get('locale');
@@ -41,7 +41,7 @@ KISSY.add(function (S, require) {
             var control = this.control;
             var value = control.get('value');
             var currentYear = value.getYear();
-            var startYear = parseInt(currentYear / 10) * 10;
+            var startYear = parseInt(currentYear / 10,10) * 10;
             var endYear = startYear + 9;
             var locale = control.get('locale');
             S.mix(renderData, {
@@ -65,7 +65,7 @@ KISSY.add(function (S, require) {
         _onSetValue: function (value) {
             var control = this.control;
             var currentYear = value.getYear();
-            var startYear = parseInt(currentYear / 10) * 10;
+            var startYear = parseInt(currentYear / 10,10) * 10;
             var endYear = startYear + 9;
             S.mix(this.renderData, {
                 startYear: startYear,

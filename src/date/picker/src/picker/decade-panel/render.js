@@ -11,7 +11,7 @@ KISSY.add(function (S,require) {
     function prepareYears(control, view) {
         var value = control.get('value');
         var currentYear = value.getYear();
-        var startYear = parseInt(currentYear / 100) * 100;
+        var startYear = parseInt(currentYear / 100,10) * 100;
         var preYear = startYear - 10;
         var endYear = startYear + 99;
         var decades = [];

@@ -152,7 +152,7 @@ KISSY.add(function (S,require) {
                         bubble.on('show', function () {
                             var a = bubble.get('editorSelectedEl');
                             if (a) {
-                                var src = a.attr('_keSaved_src') || a.attr('src');
+                                var src = a.attr('_ke_saved_src') || a.attr('src');
                                 tipUrlEl.attr('href', src);
                             }
                         });

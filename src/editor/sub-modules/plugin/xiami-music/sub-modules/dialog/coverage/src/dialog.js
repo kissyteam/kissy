@@ -460,7 +460,7 @@ function visit28_346_1(result) {
 function visit27_345_1(result) {
   _$jscoverage['/dialog.js'].branchData['345'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['315'][1].init(203, 32, 'parseInt(f.style(\'margin\')) || 0');
+}_$jscoverage['/dialog.js'].branchData['315'][1].init(203, 35, 'parseInt(f.style(\'margin\'), 10) || 0');
 function visit26_315_1(result) {
   _$jscoverage['/dialog.js'].branchData['315'][1].ranCondition(result);
   return result;
@@ -516,11 +516,11 @@ function visit14_237_1(result) {
 function visit13_235_1(result) {
   _$jscoverage['/dialog.js'].branchData['235'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['220'][1].init(1214, 6, 'paging');
+}_$jscoverage['/dialog.js'].branchData['220'][1].init(1217, 6, 'paging');
 function visit12_220_1(result) {
   _$jscoverage['/dialog.js'].branchData['220'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['215'][1].init(44, 33, 'parseInt(self.dMargin.val()) || 0');
+}_$jscoverage['/dialog.js'].branchData['215'][1].init(44, 36, 'parseInt(self.dMargin.val(), 10) || 0');
 function visit11_215_1(result) {
   _$jscoverage['/dialog.js'].branchData['215'][1].ranCondition(result);
   return result;
@@ -548,7 +548,7 @@ function visit6_158_1(result) {
 function visit5_155_1(result) {
   _$jscoverage['/dialog.js'].branchData['155'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['144'][1].init(40, 33, 'parseInt(self.dMargin.val()) || 0');
+}_$jscoverage['/dialog.js'].branchData['144'][1].init(40, 36, 'parseInt(self.dMargin.val(), 10) || 0');
 function visit4_144_1(result) {
   _$jscoverage['/dialog.js'].branchData['144'][1].ranCondition(result);
   return result;
@@ -686,7 +686,7 @@ KISSY.add(function(S, require) {
   url: self._getFlashUrl(r), 
   attrs: {
   title: f.attr('title'), 
-  style: 'margin:' + (visit4_144_1(parseInt(self.dMargin.val()) || 0)) + 'px;' + 'float:' + self.dAlign.get('value') + ';'}};
+  style: 'margin:' + (visit4_144_1(parseInt(self.dMargin.val(), 10) || 0)) + 'px;' + 'float:' + self.dAlign.get('value') + ';'}};
   _$jscoverage['/dialog.js'].lineData[148]++;
   self._gen();
   _$jscoverage['/dialog.js'].lineData[149]++;
@@ -772,14 +772,14 @@ KISSY.add(function(S, require) {
   url: ('http://www.xiami.com/widget/' + add.attr('data-value') + '/singlePlayer.swf'), 
   attrs: {
   title: add.attr('title'), 
-  style: 'margin:' + (visit11_215_1(parseInt(self.dMargin.val()) || 0)) + 'px;' + 'float:' + self.dAlign.get('value') + ';'}};
+  style: 'margin:' + (visit11_215_1(parseInt(self.dMargin.val(), 10) || 0)) + 'px;' + 'float:' + self.dAlign.get('value') + ';'}};
     _$jscoverage['/dialog.js'].lineData[219]++;
     self._gen();
   } else {
     _$jscoverage['/dialog.js'].lineData[220]++;
     if (visit12_220_1(paging)) {
       _$jscoverage['/dialog.js'].lineData[221]++;
-      loadRecordsByPage(parseInt(paging.attr('data-value')));
+      loadRecordsByPage(parseInt(paging.attr('data-value'), 10));
     }
   }
   _$jscoverage['/dialog.js'].lineData[223]++;
@@ -886,7 +886,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/dialog.js'].lineData[314]++;
     self.dAlign.set('value', f.css('float'));
     _$jscoverage['/dialog.js'].lineData[315]++;
-    self.dMargin.val(visit26_315_1(parseInt(f.style('margin')) || 0));
+    self.dMargin.val(visit26_315_1(parseInt(f.style('margin'), 10) || 0));
     _$jscoverage['/dialog.js'].lineData[316]++;
     self._xiamiUrlWrap.hide();
     _$jscoverage['/dialog.js'].lineData[317]++;

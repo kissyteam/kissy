@@ -345,7 +345,7 @@ if (! _$jscoverage['/image.js'].branchData) {
   _$jscoverage['/image.js'].branchData['155'] = [];
   _$jscoverage['/image.js'].branchData['155'][1] = new BranchData();
 }
-_$jscoverage['/image.js'].branchData['155'][1].init(43, 39, 'a.attr(\'_keSaved_src\') || a.attr(\'src\')');
+_$jscoverage['/image.js'].branchData['155'][1].init(43, 40, 'a.attr(\'_ke_saved_src\') || a.attr(\'src\')');
 function visit11_155_1(result) {
   _$jscoverage['/image.js'].branchData['155'][1].ranCondition(result);
   return result;
@@ -580,7 +580,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/image.js'].lineData[154]++;
   if (visit10_154_1(a)) {
     _$jscoverage['/image.js'].lineData[155]++;
-    var src = visit11_155_1(a.attr('_keSaved_src') || a.attr('src'));
+    var src = visit11_155_1(a.attr('_ke_saved_src') || a.attr('src'));
     _$jscoverage['/image.js'].lineData[156]++;
     tipUrlEl.attr('href', src);
   }

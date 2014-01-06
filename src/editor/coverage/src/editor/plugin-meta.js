@@ -680,7 +680,7 @@ KISSY.add(function() {
   _$jscoverage['/editor/plugin-meta.js'].lineData[346]++;
   config({
   'editor/plugin/video/dialog': {
-  requires: ['editor', 'editor/plugin/flash/dialog', 'editor/plugin/menubutton']}});
+  requires: ['editor', 'io', 'editor/plugin/flash/dialog', 'editor/plugin/menubutton']}});
   _$jscoverage['/editor/plugin-meta.js'].lineData[350]++;
   config({
   'editor/plugin/word-filter': {
