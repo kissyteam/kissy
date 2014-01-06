@@ -528,7 +528,7 @@ function visit405_220_1(result) {
 function visit404_217_1(result) {
   _$jscoverage['/loader/data-structure.js'].branchData['217'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/data-structure.js'].branchData['215'][1].init(170, 6, '!alias');
+}_$jscoverage['/loader/data-structure.js'].branchData['215'][1].init(170, 18, '!(\'alias\' in self)');
 function visit403_215_1(result) {
   _$jscoverage['/loader/data-structure.js'].branchData['215'][1].ranCondition(result);
   return result;
@@ -723,7 +723,7 @@ function visit398_51_1(result) {
   _$jscoverage['/loader/data-structure.js'].lineData[210]++;
   var self = this, name = self.name, aliasFn, packageInfo, alias = self.alias;
   _$jscoverage['/loader/data-structure.js'].lineData[215]++;
-  if (visit403_215_1(!alias)) {
+  if (visit403_215_1(!('alias' in self))) {
     _$jscoverage['/loader/data-structure.js'].lineData[216]++;
     packageInfo = self.getPackage();
     _$jscoverage['/loader/data-structure.js'].lineData[217]++;

@@ -10,7 +10,6 @@ KISSY.add(function (S, require) {
     var Gesture = require('./base/gesture');
     var Special = require('./base/special-events');
     require('./base/mouseenter');
-    require('./base/valuechange');
     return S.merge({
         add: DomEvent.on,
         remove: DomEvent.detach,

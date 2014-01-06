@@ -20,7 +20,7 @@ KISSY.add(function (S, require) {
                 var self = this,
                     filterInput = self.get('filterInput');
                 /*监控键盘事件*/
-                filterInput.on('valuechange', self.handleFilterEvent, self);
+                filterInput.on('input', self.handleFilterEvent, self);
             },
 
             handleMouseEnterInternal: function (e) {

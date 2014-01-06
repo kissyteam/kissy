@@ -63,6 +63,7 @@
 
     // HTML events supported
         uiEvents = {
+            input: 1,
             submit: 1,
             blur: 1,
             change: 1,
@@ -82,6 +83,7 @@
 
     // events that bubble by default
         bubbleEvents = {
+            input: 1,
             scroll: 1,
             resize: 1,
             //reset: 1,
@@ -943,6 +945,9 @@
      */
     jasmine.simulate = function (target, type, options) {
         var UA = window.KISSY && window.KISSY.UA || {};
+        if (UA.ie && UA.ieMode < 10 && type == 'input') {
+            return;
+        }
         options = options || {};
         if (type == 'click') {
             jasmine.simulate(target, 'mousedown', options);

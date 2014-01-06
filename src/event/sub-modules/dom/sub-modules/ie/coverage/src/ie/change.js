@@ -260,22 +260,28 @@ if (! _$jscoverage['/ie/change.js']) {
   _$jscoverage['/ie/change.js'].lineData[65] = 0;
   _$jscoverage['/ie/change.js'].lineData[67] = 0;
   _$jscoverage['/ie/change.js'].lineData[68] = 0;
-  _$jscoverage['/ie/change.js'].lineData[72] = 0;
+  _$jscoverage['/ie/change.js'].lineData[69] = 0;
+  _$jscoverage['/ie/change.js'].lineData[70] = 0;
+  _$jscoverage['/ie/change.js'].lineData[71] = 0;
+  _$jscoverage['/ie/change.js'].lineData[74] = 0;
   _$jscoverage['/ie/change.js'].lineData[75] = 0;
   _$jscoverage['/ie/change.js'].lineData[76] = 0;
-  _$jscoverage['/ie/change.js'].lineData[78] = 0;
-  _$jscoverage['/ie/change.js'].lineData[82] = 0;
+  _$jscoverage['/ie/change.js'].lineData[81] = 0;
   _$jscoverage['/ie/change.js'].lineData[83] = 0;
   _$jscoverage['/ie/change.js'].lineData[84] = 0;
-  _$jscoverage['/ie/change.js'].lineData[85] = 0;
-  _$jscoverage['/ie/change.js'].lineData[87] = 0;
+  _$jscoverage['/ie/change.js'].lineData[86] = 0;
+  _$jscoverage['/ie/change.js'].lineData[90] = 0;
   _$jscoverage['/ie/change.js'].lineData[91] = 0;
   _$jscoverage['/ie/change.js'].lineData[92] = 0;
-  _$jscoverage['/ie/change.js'].lineData[94] = 0;
-  _$jscoverage['/ie/change.js'].lineData[101] = 0;
-  _$jscoverage['/ie/change.js'].lineData[103] = 0;
-  _$jscoverage['/ie/change.js'].lineData[104] = 0;
-  _$jscoverage['/ie/change.js'].lineData[106] = 0;
+  _$jscoverage['/ie/change.js'].lineData[93] = 0;
+  _$jscoverage['/ie/change.js'].lineData[95] = 0;
+  _$jscoverage['/ie/change.js'].lineData[99] = 0;
+  _$jscoverage['/ie/change.js'].lineData[100] = 0;
+  _$jscoverage['/ie/change.js'].lineData[102] = 0;
+  _$jscoverage['/ie/change.js'].lineData[109] = 0;
+  _$jscoverage['/ie/change.js'].lineData[111] = 0;
+  _$jscoverage['/ie/change.js'].lineData[112] = 0;
+  _$jscoverage['/ie/change.js'].lineData[114] = 0;
 }
 if (! _$jscoverage['/ie/change.js'].functionData) {
   _$jscoverage['/ie/change.js'].functionData = [];
@@ -289,6 +295,7 @@ if (! _$jscoverage['/ie/change.js'].functionData) {
   _$jscoverage['/ie/change.js'].functionData[7] = 0;
   _$jscoverage['/ie/change.js'].functionData[8] = 0;
   _$jscoverage['/ie/change.js'].functionData[9] = 0;
+  _$jscoverage['/ie/change.js'].functionData[10] = 0;
 }
 if (! _$jscoverage['/ie/change.js'].branchData) {
   _$jscoverage['/ie/change.js'].branchData = {};
@@ -308,24 +315,30 @@ if (! _$jscoverage['/ie/change.js'].branchData) {
   _$jscoverage['/ie/change.js'].branchData['56'][1] = new BranchData();
   _$jscoverage['/ie/change.js'].branchData['67'] = [];
   _$jscoverage['/ie/change.js'].branchData['67'][1] = new BranchData();
-  _$jscoverage['/ie/change.js'].branchData['75'] = [];
-  _$jscoverage['/ie/change.js'].branchData['75'][1] = new BranchData();
-  _$jscoverage['/ie/change.js'].branchData['84'] = [];
-  _$jscoverage['/ie/change.js'].branchData['84'][1] = new BranchData();
-  _$jscoverage['/ie/change.js'].branchData['98'] = [];
-  _$jscoverage['/ie/change.js'].branchData['98'][1] = new BranchData();
+  _$jscoverage['/ie/change.js'].branchData['70'] = [];
+  _$jscoverage['/ie/change.js'].branchData['70'][1] = new BranchData();
+  _$jscoverage['/ie/change.js'].branchData['83'] = [];
+  _$jscoverage['/ie/change.js'].branchData['83'][1] = new BranchData();
+  _$jscoverage['/ie/change.js'].branchData['92'] = [];
+  _$jscoverage['/ie/change.js'].branchData['92'][1] = new BranchData();
+  _$jscoverage['/ie/change.js'].branchData['106'] = [];
+  _$jscoverage['/ie/change.js'].branchData['106'][1] = new BranchData();
 }
-_$jscoverage['/ie/change.js'].branchData['98'][1].init(167, 139, 'e.isPropagationStopped() || isCheckBoxOrRadio(fel)');
-function visit12_98_1(result) {
-  _$jscoverage['/ie/change.js'].branchData['98'][1].ranCondition(result);
+_$jscoverage['/ie/change.js'].branchData['106'][1].init(167, 139, 'e.isPropagationStopped() || isCheckBoxOrRadio(fel)');
+function visit13_106_1(result) {
+  _$jscoverage['/ie/change.js'].branchData['106'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/change.js'].branchData['84'][1].init(39, 38, 'isFormElement(t) && !t.__changeHandler');
-function visit11_84_1(result) {
-  _$jscoverage['/ie/change.js'].branchData['84'][1].ranCondition(result);
+}_$jscoverage['/ie/change.js'].branchData['92'][1].init(39, 38, 'isFormElement(t) && !t.__changeHandler');
+function visit12_92_1(result) {
+  _$jscoverage['/ie/change.js'].branchData['92'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/change.js'].branchData['75'][1].init(146, 14, 'this.__changed');
-function visit10_75_1(result) {
-  _$jscoverage['/ie/change.js'].branchData['75'][1].ranCondition(result);
+}_$jscoverage['/ie/change.js'].branchData['83'][1].init(83, 14, 'this.__changed');
+function visit11_83_1(result) {
+  _$jscoverage['/ie/change.js'].branchData['83'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/ie/change.js'].branchData['70'][1].init(78, 18, 'self.__changeTimer');
+function visit10_70_1(result) {
+  _$jscoverage['/ie/change.js'].branchData['70'][1].ranCondition(result);
   return result;
 }_$jscoverage['/ie/change.js'].branchData['67'][1].init(69, 42, 'e.originalEvent.propertyName === \'checked\'');
 function visit9_67_1(result) {
@@ -429,7 +442,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/ie/change.js'].lineData[54]++;
     DomEvent.remove(el, 'beforeactivate', beforeActivate);
     _$jscoverage['/ie/change.js'].lineData[55]++;
-    S.each(Dom.query('textarea,input,select', el), function(fel) {
+    Dom.query('textarea,input,select', el).each(function(fel) {
   _$jscoverage['/ie/change.js'].functionData[5]++;
   _$jscoverage['/ie/change.js'].lineData[56]++;
   if (visit8_56_1(fel.__changeHandler)) {
@@ -449,50 +462,65 @@ KISSY.add(function(S, require) {
     _$jscoverage['/ie/change.js'].lineData[67]++;
     if (visit9_67_1(e.originalEvent.propertyName === 'checked')) {
       _$jscoverage['/ie/change.js'].lineData[68]++;
-      this.__changed = 1;
+      var self = this;
+      _$jscoverage['/ie/change.js'].lineData[69]++;
+      self.__changed = 1;
+      _$jscoverage['/ie/change.js'].lineData[70]++;
+      if (visit10_70_1(self.__changeTimer)) {
+        _$jscoverage['/ie/change.js'].lineData[71]++;
+        clearTimeout(self.__changeTimer);
+      }
+      _$jscoverage['/ie/change.js'].lineData[74]++;
+      self.__changeTimer = setTimeout(function() {
+  _$jscoverage['/ie/change.js'].functionData[7]++;
+  _$jscoverage['/ie/change.js'].lineData[75]++;
+  self.__changed = 0;
+  _$jscoverage['/ie/change.js'].lineData[76]++;
+  self.__changeTimer = null;
+}, 50);
     }
   }
-  _$jscoverage['/ie/change.js'].lineData[72]++;
+  _$jscoverage['/ie/change.js'].lineData[81]++;
   function onClick(e) {
-    _$jscoverage['/ie/change.js'].functionData[7]++;
-    _$jscoverage['/ie/change.js'].lineData[75]++;
-    if (visit10_75_1(this.__changed)) {
-      _$jscoverage['/ie/change.js'].lineData[76]++;
+    _$jscoverage['/ie/change.js'].functionData[8]++;
+    _$jscoverage['/ie/change.js'].lineData[83]++;
+    if (visit11_83_1(this.__changed)) {
+      _$jscoverage['/ie/change.js'].lineData[84]++;
       this.__changed = 0;
-      _$jscoverage['/ie/change.js'].lineData[78]++;
+      _$jscoverage['/ie/change.js'].lineData[86]++;
       DomEvent.fire(this, 'change', e);
     }
   }
-  _$jscoverage['/ie/change.js'].lineData[82]++;
+  _$jscoverage['/ie/change.js'].lineData[90]++;
   function beforeActivate(e) {
-    _$jscoverage['/ie/change.js'].functionData[8]++;
-    _$jscoverage['/ie/change.js'].lineData[83]++;
+    _$jscoverage['/ie/change.js'].functionData[9]++;
+    _$jscoverage['/ie/change.js'].lineData[91]++;
     var t = e.target;
-    _$jscoverage['/ie/change.js'].lineData[84]++;
-    if (visit11_84_1(isFormElement(t) && !t.__changeHandler)) {
-      _$jscoverage['/ie/change.js'].lineData[85]++;
+    _$jscoverage['/ie/change.js'].lineData[92]++;
+    if (visit12_92_1(isFormElement(t) && !t.__changeHandler)) {
+      _$jscoverage['/ie/change.js'].lineData[93]++;
       t.__changeHandler = 1;
-      _$jscoverage['/ie/change.js'].lineData[87]++;
+      _$jscoverage['/ie/change.js'].lineData[95]++;
       DomEvent.on(t, 'change', {
   fn: changeHandler, 
   last: 1});
     }
   }
-  _$jscoverage['/ie/change.js'].lineData[91]++;
+  _$jscoverage['/ie/change.js'].lineData[99]++;
   function changeHandler(e) {
-    _$jscoverage['/ie/change.js'].functionData[9]++;
-    _$jscoverage['/ie/change.js'].lineData[92]++;
+    _$jscoverage['/ie/change.js'].functionData[10]++;
+    _$jscoverage['/ie/change.js'].lineData[100]++;
     var fel = this;
-    _$jscoverage['/ie/change.js'].lineData[94]++;
-    if (visit12_98_1(e.isPropagationStopped() || isCheckBoxOrRadio(fel))) {
-      _$jscoverage['/ie/change.js'].lineData[101]++;
+    _$jscoverage['/ie/change.js'].lineData[102]++;
+    if (visit13_106_1(e.isPropagationStopped() || isCheckBoxOrRadio(fel))) {
+      _$jscoverage['/ie/change.js'].lineData[109]++;
       return;
     }
-    _$jscoverage['/ie/change.js'].lineData[103]++;
+    _$jscoverage['/ie/change.js'].lineData[111]++;
     var p;
-    _$jscoverage['/ie/change.js'].lineData[104]++;
+    _$jscoverage['/ie/change.js'].lineData[112]++;
     if ((p = fel.parentNode)) {
-      _$jscoverage['/ie/change.js'].lineData[106]++;
+      _$jscoverage['/ie/change.js'].lineData[114]++;
       DomEvent.fire(p, 'change', e);
     }
   }

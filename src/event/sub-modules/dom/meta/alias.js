@@ -10,6 +10,8 @@ config({
                 '' : 'event/dom/hashchange',
             UA.ieMode < 9 ?
                 'event/dom/ie' : '',
+            (!UA.ie || UA.ieMode > 9) ?
+                '' : 'event/dom/input',
             UA.ie ? '' : 'event/dom/focusin'
         ]
     }

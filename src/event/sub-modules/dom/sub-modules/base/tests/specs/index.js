@@ -6,7 +6,6 @@ KISSY.add(KISSY.noop,{
         './fire',
         './focus',
         './group',
-        './mouse',
-        './valuechange'
+        './mouse'
     ]
 });

@@ -68,7 +68,7 @@ KISSY.add(function (S, require) {
                 var self = this,
                     input = self.get('input');
 
-                input.on('valuechange', onValueChange, self);
+                input.on('input', onValueChange, self);
 
                 /**
                  * fired after combobox 's collapsed attribute is changed.
@@ -112,7 +112,7 @@ KISSY.add(function (S, require) {
                 var self = this,
                     value;
                 // only trigger menu when timer cause change
-                if (e.causedByTimer) {
+                if (e.causedByInputEvent) {
                     value = self.getValueForAutocomplete();
                     // undefined means invalid input value
                     if (value === undefined) {
@@ -199,7 +199,7 @@ KISSY.add(function (S, require) {
                     if (updateInputOnDownUp && highlightedItem) {
                         var menuChildren = menu.get('children');
                         if (keyCode === KeyCode.DOWN &&
-                            highlightedItem === getFirstEnabledItem(menuChildren.concat().reverse())||
+                            highlightedItem === getFirstEnabledItem(menuChildren.concat().reverse()) ||
                             keyCode === KeyCode.UP &&
                                 highlightedItem === getFirstEnabledItem(menuChildren)
                             ) {
@@ -292,8 +292,8 @@ KISSY.add(function (S, require) {
                             menu.render();
                             var menuEl = menu.get('el');
                             var borderWidth =
-                                (parseInt(menuEl.css('borderLeftWidth')) || 0) +
-                                    (parseInt(menuEl.css('borderRightWidth')) || 0);
+                                (parseInt(menuEl.css('borderLeftWidth'), 10) || 0) +
+                                    (parseInt(menuEl.css('borderRightWidth'), 10) || 0);
                             menu.set('width', el[0].offsetWidth - borderWidth);
                         }
                         menu.show();
@@ -629,7 +629,7 @@ KISSY.add(function (S, require) {
     }
 
     function clearDismissTimer(self) {
-        var t= self._focusoutDismissTimer;
+        var t = self._focusoutDismissTimer;
         if (t) {
             clearTimeout(t);
             self._focusoutDismissTimer = null;
@@ -637,9 +637,9 @@ KISSY.add(function (S, require) {
     }
 
     function onValueChange(e) {
-        this.set('value', e.newVal, {
+        this.set('value', e.target.value, {
             data: {
-                causedByTimer: 1
+                causedByInputEvent: 1
             }
         });
     }
@@ -684,7 +684,7 @@ KISSY.add(function (S, require) {
             }
 
             // Whether or not the first row should be highlighted by default.
-            if (!matchVal &&( self.get('autoHighlightFirst'))) {
+            if (!matchVal && ( self.get('autoHighlightFirst'))) {
                 for (i = 0; i < children.length; i++) {
                     if (!children[i].get('disabled')) {
                         children[i].set('highlighted', true);

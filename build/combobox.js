@@ -1,10 +1,10 @@
 /*
-Copyright 2013, KISSY v1.50
+Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Dec 12 22:07
+build time: Jan 6 22:54
 */
 /*
- Combined processedModules by KISSY Module Compiler: 
+ Combined modules by KISSY Module Compiler: 
 
  combobox/combobox-xtpl
  combobox/render
@@ -189,7 +189,7 @@ KISSY.add("combobox/control", ["node", "component/control", "./render", "menu"],
     return contents
   }, bindUI:function() {
     var self = this, input = self.get("input");
-    input.on("valuechange", onValueChange, self);
+    input.on("input", onValueChange, self);
     self.on("click", onMenuItemClick, self);
     self.get("menu").onRendered(function(menu) {
       onMenuAfterRenderUI(self, menu)
@@ -202,7 +202,7 @@ KISSY.add("combobox/control", ["node", "component/control", "./render", "menu"],
     this.set("value", value, setCfg)
   }, _onSetValue:function(v, e) {
     var self = this, value;
-    if(e.causedByTimer) {
+    if(e.causedByInputEvent) {
       value = self.getValueForAutocomplete();
       if(value === undefined) {
         self.set("collapsed", true);
@@ -318,7 +318,7 @@ KISSY.add("combobox/control", ["node", "component/control", "./render", "menu"],
         if(self.get("matchElWidth")) {
           menu.render();
           var menuEl = menu.get("el");
-          var borderWidth = (parseInt(menuEl.css("borderLeftWidth")) || 0) + (parseInt(menuEl.css("borderRightWidth")) || 0);
+          var borderWidth = (parseInt(menuEl.css("borderLeftWidth"), 10) || 0) + (parseInt(menuEl.css("borderRightWidth"), 10) || 0);
           menu.set("width", el[0].offsetWidth - borderWidth)
         }
         menu.show()
@@ -414,7 +414,7 @@ KISSY.add("combobox/control", ["node", "component/control", "./render", "menu"],
     }
   }
   function onValueChange(e) {
-    this.set("value", e.newVal, {data:{causedByTimer:1}})
+    this.set("value", e.target.value, {data:{causedByInputEvent:1}})
   }
   function renderData(data) {
     var self = this, v, children = [], val, matchVal, highlightedItem, i, menu = self.get("menu");

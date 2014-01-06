@@ -1,10 +1,10 @@
 /*
-Copyright 2013, KISSY v1.50
+Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Dec 12 22:19
+build time: Jan 6 22:56
 */
 /*
- Combined processedModules by KISSY Module Compiler: 
+ Combined modules by KISSY Module Compiler: 
 
  event/dom/ie/change
  event/dom/ie/submit
@@ -45,7 +45,7 @@ KISSY.add("event/dom/ie/change", ["event/dom/base", "dom"], function(S, require)
       }
     }else {
       DomEvent.remove(el, "beforeactivate", beforeActivate);
-      S.each(Dom.query("textarea,input,select", el), function(fel) {
+      Dom.query("textarea,input,select", el).each(function(fel) {
         if(fel.__changeHandler) {
           fel.__changeHandler = 0;
           DomEvent.remove(fel, "change", {fn:changeHandler, last:1})
@@ -55,7 +55,15 @@ KISSY.add("event/dom/ie/change", ["event/dom/base", "dom"], function(S, require)
   }};
   function propertyChange(e) {
     if(e.originalEvent.propertyName === "checked") {
-      this.__changed = 1
+      var self = this;
+      self.__changed = 1;
+      if(self.__changeTimer) {
+        clearTimeout(self.__changeTimer)
+      }
+      self.__changeTimer = setTimeout(function() {
+        self.__changed = 0;
+        self.__changeTimer = null
+      }, 50)
     }
   }
   function onClick(e) {
@@ -98,7 +106,7 @@ KISSY.add("event/dom/ie/submit", ["event/dom/base", "dom"], function(S, require)
       return false
     }
     DomEvent.remove(el, "click keypress", detector);
-    S.each(Dom.query("form", el), function(form) {
+    Dom.query("form", el).each(function(form) {
       if(form.__submitFix) {
         form.__submitFix = 0;
         DomEvent.remove(form, "submit", {fn:submitBubble, last:1})

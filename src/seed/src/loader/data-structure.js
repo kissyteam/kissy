@@ -212,7 +212,7 @@
                 aliasFn,
                 packageInfo,
                 alias = self.alias;
-            if (!alias) {
+            if (!('alias' in self)) {
                 packageInfo = self.getPackage();
                 if (packageInfo.alias) {
                     alias = packageInfo.alias(name);

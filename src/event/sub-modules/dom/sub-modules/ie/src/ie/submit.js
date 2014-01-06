@@ -28,7 +28,7 @@ KISSY.add(function (S, require) {
                 return false;
             }
             DomEvent.remove(el, 'click keypress', detector);
-            S.each(Dom.query('form', el), function (form) {
+            Dom.query('form', el).each(function (form) {
                 if (form.__submitFix) {
                     form.__submitFix = 0;
                     DomEvent.remove(form, 'submit', {

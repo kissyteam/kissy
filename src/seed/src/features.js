@@ -5,6 +5,7 @@
  */
 (function (S, undefined) {
     var win = S.Env.host,
+        Config = S.Config,
         UA = S.UA,
         VENDORS = [
             'Webkit',
@@ -13,8 +14,8 @@
             // ms is special .... !
             'ms'
         ],
-        // for nodejs
-        doc = win.document||{},
+    // for nodejs
+        doc = win.document || {},
         isMsPointerSupported,
     // ie11
         isPointerSupported,
@@ -174,7 +175,7 @@
          */
         isQuerySelectorSupported: function () {
             // force to use js selector engine
-            return !S.config('dom/selector') && isQuerySelectorSupportedState;
+            return !Config.simulateCss3Selector && isQuerySelectorSupportedState;
         },
 
         getVendorCssPropPrefix: function (name) {

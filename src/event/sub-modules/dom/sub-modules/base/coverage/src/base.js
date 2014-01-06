@@ -237,7 +237,6 @@ if (! _$jscoverage['/base.js']) {
   _$jscoverage['/base.js'].lineData[11] = 0;
   _$jscoverage['/base.js'].lineData[12] = 0;
   _$jscoverage['/base.js'].lineData[13] = 0;
-  _$jscoverage['/base.js'].lineData[14] = 0;
 }
 if (! _$jscoverage['/base.js'].functionData) {
   _$jscoverage['/base.js'].functionData = [];
@@ -262,8 +261,6 @@ KISSY.add(function(S, require) {
   _$jscoverage['/base.js'].lineData[12]++;
   require('./base/mouseenter');
   _$jscoverage['/base.js'].lineData[13]++;
-  require('./base/valuechange');
-  _$jscoverage['/base.js'].lineData[14]++;
   return S.merge({
   add: DomEvent.on, 
   remove: DomEvent.detach, 

@@ -537,6 +537,10 @@ if (!loc.getQuery().has('build') && !loc.getQuery().has('min')) {
             "base": "/kissy/src/event/sub-modules/dom/sub-modules/ie/src/ie",
             "ignorePackageNameInUri": 1
         },
+        "event/dom/input": {
+            "base": "/kissy/src/event/sub-modules/dom/sub-modules/input/src/input",
+            "ignorePackageNameInUri": 1
+        },
         "event/dom/shake": {
             "base": "/kissy/src/event/sub-modules/dom/sub-modules/shake/src/shake",
             "ignorePackageNameInUri": 1

@@ -355,7 +355,7 @@
             while (!ok) {
                 ok = 1;
                 for (i = ret.length - 1; i >= 0; i--) {
-                    if ((m = Utils.createModuleInfo(runtime, ret[i])) && (alias = m.getAlias())) {
+                    if ((m = Utils.createModuleInfo(runtime, ret[i])) && ((alias = m.getAlias()) !== undefined)) {
                         ok = 0;
                         if (typeof alias === 'string') {
                             alias = [alias];

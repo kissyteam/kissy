@@ -1,10 +1,10 @@
 /*
-Copyright 2013, KISSY v1.50
+Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Dec 12 22:18
+build time: Jan 6 22:54
 */
 /*
- Combined processedModules by KISSY Module Compiler: 
+ Combined modules by KISSY Module Compiler: 
 
  event/dom/base/utils
  event/dom/base/special
@@ -16,7 +16,6 @@ build time: Dec 12 22:18
  event/dom/base/gesture
  event/dom/base/special-events
  event/dom/base/mouseenter
- event/dom/base/valuechange
  event/dom/base
 */
 
@@ -731,82 +730,13 @@ KISSY.add("event/dom/base/mouseenter", ["dom", "./special"], function(S, require
     }}
   })
 });
-KISSY.add("event/dom/base/valuechange", ["dom", "./dom-event", "./special"], function(S, require) {
-  var Dom = require("dom");
-  var DomEvent = require("./dom-event");
-  var Special = require("./special");
-  var VALUE_CHANGE = "valuechange", getNodeName = Dom.nodeName, KEY = "event/valuechange", HISTORY_KEY = KEY + "/history", POLL_KEY = KEY + "/poll", interval = 50;
-  function clearPollTimer(target) {
-    if(Dom.hasData(target, POLL_KEY)) {
-      var poll = Dom.data(target, POLL_KEY);
-      clearTimeout(poll);
-      Dom.removeData(target, POLL_KEY)
-    }
-  }
-  function stopPoll(target) {
-    Dom.removeData(target, HISTORY_KEY);
-    clearPollTimer(target)
-  }
-  function stopPollHandler(ev) {
-    clearPollTimer(ev.target)
-  }
-  function checkChange(target) {
-    var v = target.value, h = Dom.data(target, HISTORY_KEY);
-    if(v !== h) {
-      DomEvent.fireHandler(target, VALUE_CHANGE, {prevVal:h, newVal:v});
-      Dom.data(target, HISTORY_KEY, v)
-    }
-  }
-  function startPoll(target) {
-    if(Dom.hasData(target, POLL_KEY)) {
-      return
-    }
-    Dom.data(target, POLL_KEY, setTimeout(function check() {
-      checkChange(target);
-      Dom.data(target, POLL_KEY, setTimeout(check, interval))
-    }, interval))
-  }
-  function startPollHandler(ev) {
-    var target = ev.target;
-    if(ev.type === "focus") {
-      Dom.data(target, HISTORY_KEY, target.value)
-    }
-    startPoll(target)
-  }
-  function webkitSpeechChangeHandler(e) {
-    checkChange(e.target)
-  }
-  function monitor(target) {
-    unmonitored(target);
-    DomEvent.on(target, "blur", stopPollHandler);
-    DomEvent.on(target, "webkitspeechchange", webkitSpeechChangeHandler);
-    DomEvent.on(target, "mousedown keyup keydown focus", startPollHandler)
-  }
-  function unmonitored(target) {
-    stopPoll(target);
-    DomEvent.detach(target, "blur", stopPollHandler);
-    DomEvent.detach(target, "webkitspeechchange", webkitSpeechChangeHandler);
-    DomEvent.detach(target, "mousedown keyup keydown focus", startPollHandler)
-  }
-  Special[VALUE_CHANGE] = {setup:function() {
-    var target = this, nodeName = getNodeName(target);
-    if(nodeName === "input" || nodeName === "textarea") {
-      monitor(target)
-    }
-  }, tearDown:function() {
-    var target = this;
-    unmonitored(target)
-  }};
-  return DomEvent
-});
-KISSY.add("event/dom/base", ["./base/dom-event", "./base/object", "./base/key-codes", "./base/gesture", "./base/special-events", "./base/mouseenter", "./base/valuechange"], function(S, require) {
+KISSY.add("event/dom/base", ["./base/dom-event", "./base/object", "./base/key-codes", "./base/gesture", "./base/special-events", "./base/mouseenter"], function(S, require) {
   var DomEvent = require("./base/dom-event");
   var DomEventObject = require("./base/object");
   var KeyCode = require("./base/key-codes");
   var Gesture = require("./base/gesture");
   var Special = require("./base/special-events");
   require("./base/mouseenter");
-  require("./base/valuechange");
   return S.merge({add:DomEvent.on, remove:DomEvent.detach, KeyCode:KeyCode, Gesture:Gesture, Special:Special, Object:DomEventObject}, DomEvent)
 });
 

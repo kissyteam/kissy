@@ -138,6 +138,10 @@ tests.push('/kissy/src/event/sub-modules/dom/sub-modules/ie/tests/runner/test.js
 
 tests.push('/kissy/src/event/sub-modules/dom/sub-modules/ie/tests/runner/test.jss?build');
 
+tests.push('/kissy/src/event/sub-modules/dom/sub-modules/input/tests/runner/test.jss');
+
+tests.push('/kissy/src/event/sub-modules/dom/sub-modules/input/tests/runner/test.jss?build');
+
 tests.push('/kissy/src/event/sub-modules/dom/sub-modules/shake/tests/runner/test.jss');
 
 tests.push('/kissy/src/event/sub-modules/dom/sub-modules/shake/tests/runner/test.jss?build');

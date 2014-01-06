@@ -1,10 +1,10 @@
 /*
-Copyright 2013, KISSY v1.50
+Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Dec 12 22:19
+build time: Jan 6 22:55
 */
 /*
- Combined processedModules by KISSY Module Compiler: 
+ Combined modules by KISSY Module Compiler: 
 
  filter-menu/render-xtpl
  filter-menu/render
@@ -89,7 +89,7 @@ KISSY.add("filter-menu", ["menu", "filter-menu/render"], function(S, require) {
   var HIT_CLS = "menuitem-hit";
   return Menu.extend({bindUI:function() {
     var self = this, filterInput = self.get("filterInput");
-    filterInput.on("valuechange", self.handleFilterEvent, self)
+    filterInput.on("input", self.handleFilterEvent, self)
   }, handleMouseEnterInternal:function(e) {
     var self = this;
     self.callSuper(e);

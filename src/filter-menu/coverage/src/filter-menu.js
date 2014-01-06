@@ -433,7 +433,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/filter-menu.js'].lineData[20]++;
   var self = this, filterInput = self.get('filterInput');
   _$jscoverage['/filter-menu.js'].lineData[23]++;
-  filterInput.on('valuechange', self.handleFilterEvent, self);
+  filterInput.on('input', self.handleFilterEvent, self);
 }, 
   handleMouseEnterInternal: function(e) {
   _$jscoverage['/filter-menu.js'].functionData[2]++;

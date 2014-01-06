@@ -35,7 +35,7 @@ KISSY.add(function (S, require) {
                     return false;
                 }
             } else {
-                // if bind on parentNode ,lazy bind change event to its form elements
+                // if bind on parentNode, lazy bind change event to its form elements
                 // note event order : beforeactivate -> change
                 // note 2: checkbox/radio is exceptional
                 DomEvent.on(el, 'beforeactivate', beforeActivate);
@@ -52,7 +52,7 @@ KISSY.add(function (S, require) {
                 }
             } else {
                 DomEvent.remove(el, 'beforeactivate', beforeActivate);
-                S.each(Dom.query('textarea,input,select', el), function (fel) {
+                Dom.query('textarea,input,select', el).each(function (fel) {
                     if (fel.__changeHandler) {
                         fel.__changeHandler = 0;
                         DomEvent.remove(fel, 'change', {fn: changeHandler, last: 1});
@@ -65,12 +65,20 @@ KISSY.add(function (S, require) {
     function propertyChange(e) {
         // if only checked property 's value is changed
         if (e.originalEvent.propertyName === 'checked') {
-            this.__changed = 1;
+            var self = this;
+            self.__changed = 1;
+            if (self.__changeTimer) {
+                clearTimeout(self.__changeTimer);
+            }
+            // in case program set cause property change
+            self.__changeTimer = setTimeout(function () {
+                self.__changed = 0;
+                self.__changeTimer = null;
+            }, 50);
         }
     }
 
     function onClick(e) {
-        // only fire change after click and checked is changed
         // (only fire change after click on previous unchecked radio)
         if (this.__changed) {
             this.__changed = 0;
@@ -83,7 +91,7 @@ KISSY.add(function (S, require) {
         var t = e.target;
         if (isFormElement(t) && !t.__changeHandler) {
             t.__changeHandler = 1;
-            // lazy bind change , always as last handler among user's handlers
+            // lazy bind change, always as last handler among user's handlers
             DomEvent.on(t, 'change', {fn: changeHandler, last: 1});
         }
     }
