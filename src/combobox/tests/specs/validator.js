@@ -57,6 +57,7 @@ KISSY.add(function (S, ComboBox) {
 
             runs(function () {
                 t.value = "11";
+                jasmine.simulate(t,'input');
             });
             // longer for ie8
             waits(500);
@@ -102,6 +103,7 @@ KISSY.add(function (S, ComboBox) {
 
             runs(function () {
                 t.value = "3";
+                jasmine.simulate(t,'input');
             });
 
             waits(100);
@@ -174,6 +176,7 @@ KISSY.add(function (S, ComboBox) {
 
             runs(function () {
                 t.value = "11";
+                jasmine.simulate(t,'input');
             });
 
             waits(100);
@@ -216,6 +219,7 @@ KISSY.add(function (S, ComboBox) {
 
             runs(function () {
                 t.value = "21";
+                jasmine.simulate(t,'input');
             });
 
             waits(100);

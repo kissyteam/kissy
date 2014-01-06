@@ -78,6 +78,7 @@ KISSY.add(function (S, Event,ComboBox) {
             waits(100);
             runs(function () {
                 t.value = "1";
+                jasmine.simulate(t,'input');
             });
             waits(100);
 
@@ -129,6 +130,7 @@ KISSY.add(function (S, Event,ComboBox) {
             waits(100);
             runs(function () {
                 t.value = "2";
+                jasmine.simulate(t,'input');
             });
             waits(100);
 
@@ -161,6 +163,7 @@ KISSY.add(function (S, Event,ComboBox) {
             waits(100);
             runs(function () {
                 t.value = "1";
+                jasmine.simulate(t,'input');
             });
             waits(100);
 
@@ -201,7 +204,6 @@ KISSY.add(function (S, Event,ComboBox) {
         });
 
         it("should response to keyboard and update input", function () {
-
             var originalValue = '1';
 
             t.focus();
@@ -212,12 +214,14 @@ KISSY.add(function (S, Event,ComboBox) {
 
             runs(function () {
                 t.value = "";
+                jasmine.simulate(t,'input');
             });
 
             waits(200);
 
             runs(function () {
                 t.value = originalValue;
+                jasmine.simulate(t,'input');
             });
 
             waits(200);
@@ -295,8 +299,6 @@ KISSY.add(function (S, Event,ComboBox) {
 
         if (!S.UA.ios && !S.UA.android) {
             it("should response to mouse", function () {
-
-
                 t.focus();
 
                 waits(100);
@@ -304,11 +306,13 @@ KISSY.add(function (S, Event,ComboBox) {
                 runs(function () {
                     jasmine.simulate(t, 'keydown');
                     t.value = "";
+                    jasmine.simulate(t,'input');
                 });
 
                 waits(100);
                 runs(function () {
                     t.value = "1";
+                    jasmine.simulate(t,'input');
                 });
                 waits(100);
 
@@ -345,10 +349,12 @@ KISSY.add(function (S, Event,ComboBox) {
             runs(function () {
                 jasmine.simulate(t, 'keydown');
                 t.value = "";
+                jasmine.simulate(t,'input');
             });
             waits(100);
             runs(function () {
                 t.value = "1";
+                jasmine.simulate(t,'input');
             });
             waits(100);
 
@@ -395,10 +401,12 @@ KISSY.add(function (S, Event,ComboBox) {
             jasmine.simulate(t, 'keydown');
             runs(function () {
                 t.value = "";
+                jasmine.simulate(t,'input');
             });
             waits(100);
             runs(function () {
                 t.value = "1";
+                jasmine.simulate(t,'input');
             });
             waits(100);
 
