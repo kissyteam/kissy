@@ -19,22 +19,86 @@ KISSY.add(function (S, require) {
         return false;
     }
 
+    var INPUT_CHANGE = 'input',
+        KEY = 'event/input',
+        HISTORY_KEY = KEY + '/history',
+        POLL_KEY = KEY + '/poll',
+        interval = 50;
+
+    function clearPollTimer(target) {
+        if (Dom.hasData(target, POLL_KEY)) {
+            var poll = Dom.data(target, POLL_KEY);
+            clearTimeout(poll);
+            Dom.removeData(target, POLL_KEY);
+        }
+    }
+
+    function stopPoll(target) {
+        Dom.removeData(target, HISTORY_KEY);
+        clearPollTimer(target);
+    }
+
+    function stopPollHandler(ev) {
+        clearPollTimer(ev.target);
+    }
+
+    function checkChange(target) {
+        var v = target.value,
+            h = Dom.data(target, HISTORY_KEY);
+        if (v !== h) {
+            // allow delegate
+            DomEvent.fire(target, INPUT_CHANGE);
+            Dom.data(target, HISTORY_KEY, v);
+        }
+    }
+
+    function startPoll(target) {
+        if (Dom.hasData(target, POLL_KEY)) {
+            return;
+        }
+        Dom.data(target, POLL_KEY, setTimeout(function check() {
+            checkChange(target);
+            Dom.data(target, POLL_KEY, setTimeout(check, interval));
+        }, interval));
+    }
+
+    function startPollHandler(ev) {
+        var target = ev.target;
+        // when focus, record its current value immediately
+        if (ev.type === 'focus') {
+            Dom.data(target, HISTORY_KEY, target.value);
+        }
+        startPoll(target);
+    }
+
+    function monitor(target) {
+        unmonitored(target);
+        DomEvent.on(target, 'blur', stopPollHandler);
+        DomEvent.on(target, 'mousedown keyup keydown focus', startPollHandler);
+    }
+
+    function unmonitored(target) {
+        stopPoll(target);
+        DomEvent.detach(target, 'blur', stopPollHandler);
+        DomEvent.detach(target, 'mousedown keyup keydown focus', startPollHandler);
+    }
+
     Special.input = {
         setup: function () {
             var el = this;
             if (canFireInput(el)) {
-                DomEvent.on(el, 'propertychange', propertyChange);
+                monitor(el);
             } else {
                 // if bind on parentNode, lazy bind event to its form elements
-                DomEvent.on(el, 'beforeactivate', beforeActivate);
+                DomEvent.on(el, 'focusin', beforeActivate);
             }
         },
         tearDown: function () {
             var el = this;
             if (canFireInput(el)) {
-                DomEvent.remove(el, 'propertychange', propertyChange);
+                unmonitored(el);
             } else {
-                DomEvent.remove(el, 'beforeactivate', beforeActivate);
+                DomEvent.remove(el, 'focusin', beforeActivate);
                 Dom.query('textarea,input', el).each(function (fel) {
                     if (fel.__inputHandler) {
                         fel.__inputHandler = 0;
@@ -45,16 +109,7 @@ KISSY.add(function (S, require) {
         }
     };
 
-    function propertyChange(e) {
-        if (e.originalEvent.propertyName === 'value' &&
-            /*jshint eqeqeq:false*/
-            this.ownerDocument.activeElement == this) {
-            DomEvent.fire(this, 'input');
-        }
-    }
-
     function beforeActivate(e) {
-        debugger
         var t = e.target;
         if (canFireInput(t) && !t.__inputHandler) {
             t.__inputHandler = 1;
@@ -63,3 +118,7 @@ KISSY.add(function (S, require) {
         }
     }
 });
+/*
+ 2014-01-06
+ - native propertychange/input is buggy in ie9
+ */

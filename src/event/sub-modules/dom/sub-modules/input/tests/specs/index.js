@@ -59,7 +59,7 @@ KISSY.add(function (S, Dom, Event) {
         });
 
         it('support bubble', function () {
-            if (UA.ie && UA.ieMode < 10) {
+            if(UA.ie && UA.ieMode<9){
                 return;
             }
 

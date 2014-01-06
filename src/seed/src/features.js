@@ -134,6 +134,10 @@
             return ('onhashchange' in win) && (!ie || ie > 7);
         },
 
+        isInputEventSupported: function () {
+            return !Config.simulateInputEvent && ('oninput' in win) && (!ie || ie > 9);
+        },
+
         /**
          * whether support css transform 3d
          * @returns {boolean}

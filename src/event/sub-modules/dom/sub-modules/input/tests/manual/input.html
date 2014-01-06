@@ -26,6 +26,8 @@ value ： <input id="test"/>
             var test = Node.one("#test");
             var doc = Node.one(document);
 
+
+
             test.on("input", function (e) {
                 log("newVal : " + e.target.value);
             });

@@ -316,23 +316,23 @@ if (! _$jscoverage['/meta/modules.js'].branchData) {
   _$jscoverage['/meta/modules.js'].branchData['154'][2] = new BranchData();
 }
 _$jscoverage['/meta/modules.js'].branchData['154'][2].init(389, 13, 'UA.ieMode > 9');
-function visit535_154_2(result) {
+function visit539_154_2(result) {
   _$jscoverage['/meta/modules.js'].branchData['154'][2].ranCondition(result);
   return result;
 }_$jscoverage['/meta/modules.js'].branchData['154'][1].init(379, 23, '!UA.ie || UA.ieMode > 9');
-function visit534_154_1(result) {
+function visit538_154_1(result) {
   _$jscoverage['/meta/modules.js'].branchData['154'][1].ranCondition(result);
   return result;
 }_$jscoverage['/meta/modules.js'].branchData['152'][1].init(313, 13, 'UA.ieMode < 9');
-function visit533_152_1(result) {
+function visit537_152_1(result) {
   _$jscoverage['/meta/modules.js'].branchData['152'][1].ranCondition(result);
   return result;
 }_$jscoverage['/meta/modules.js'].branchData['108'][1].init(37, 13, 'UA.ieMode < 9');
-function visit532_108_1(result) {
+function visit536_108_1(result) {
   _$jscoverage['/meta/modules.js'].branchData['108'][1].ranCondition(result);
   return result;
 }_$jscoverage['/meta/modules.js'].branchData['6'][1].init(17, 61, 'KISSY.Features.getVendorCssPropPrefix(\'transition\') !== false');
-function visit531_6_1(result) {
+function visit535_6_1(result) {
   _$jscoverage['/meta/modules.js'].branchData['6'][1].ranCondition(result);
   return result;
 }_$jscoverage['/meta/modules.js'].lineData[3]++;
@@ -341,7 +341,7 @@ function visit531_6_1(result) {
   _$jscoverage['/meta/modules.js'].lineData[4]++;
   config({
   'anim/transition?': {
-  alias: visit531_6_1(KISSY.Features.getVendorCssPropPrefix('transition') !== false) ? 'anim/transition' : ''}});
+  alias: visit535_6_1(KISSY.Features.getVendorCssPropPrefix('transition') !== false) ? 'anim/transition' : ''}});
   _$jscoverage['/meta/modules.js'].lineData[9]++;
   config({
   anim: {
@@ -441,7 +441,7 @@ function visit531_6_1(result) {
   _$jscoverage['/meta/modules.js'].lineData[104]++;
   config({
   'dom/basic': {
-  alias: ['dom/base', visit532_108_1(UA.ieMode < 9) ? 'dom/ie' : '', Features.isClassListSupported() ? '' : 'dom/class-list']}, 
+  alias: ['dom/base', visit536_108_1(UA.ieMode < 9) ? 'dom/ie' : '', Features.isClassListSupported() ? '' : 'dom/class-list']}, 
   dom: {
   alias: ['dom/basic', !Features.isQuerySelectorSupported() ? 'dom/selector' : '']}});
   _$jscoverage['/meta/modules.js'].lineData[119]++;
@@ -471,7 +471,7 @@ function visit531_6_1(result) {
   _$jscoverage['/meta/modules.js'].lineData[142]++;
   config({
   'event/dom': {
-  alias: ['event/dom/base', Features.isTouchGestureSupported() ? 'event/dom/touch' : '', Features.isDeviceMotionSupported() ? 'event/dom/shake' : '', Features.isHashChangeSupported() ? '' : 'event/dom/hashchange', visit533_152_1(UA.ieMode < 9) ? 'event/dom/ie' : '', (visit534_154_1(!UA.ie || visit535_154_2(UA.ieMode > 9))) ? '' : 'event/dom/input', UA.ie ? '' : 'event/dom/focusin']}});
+  alias: ['event/dom/base', Features.isTouchGestureSupported() ? 'event/dom/touch' : '', Features.isDeviceMotionSupported() ? 'event/dom/shake' : '', Features.isHashChangeSupported() ? '' : 'event/dom/hashchange', visit537_152_1(UA.ieMode < 9) ? 'event/dom/ie' : '', (visit538_154_1(!UA.ie || visit539_154_2(UA.ieMode > 9))) ? '' : 'event/dom/input', UA.ie ? '' : 'event/dom/focusin']}});
   _$jscoverage['/meta/modules.js'].lineData[160]++;
   config({
   'event/dom/base': {

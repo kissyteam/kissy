@@ -410,235 +410,235 @@ if (! _$jscoverage['/lang/lang.js'].branchData) {
   _$jscoverage['/lang/lang.js'].branchData['199'][3] = new BranchData();
 }
 _$jscoverage['/lang/lang.js'].branchData['199'][3].init(1555, 27, 'mismatchValues.length === 0');
-function visit230_199_3(result) {
+function visit234_199_3(result) {
   _$jscoverage['/lang/lang.js'].branchData['199'][3].ranCondition(result);
   return result;
 }_$jscoverage['/lang/lang.js'].branchData['199'][2].init(1526, 25, 'mismatchKeys.length === 0');
-function visit229_199_2(result) {
+function visit233_199_2(result) {
   _$jscoverage['/lang/lang.js'].branchData['199'][2].ranCondition(result);
   return result;
 }_$jscoverage['/lang/lang.js'].branchData['199'][1].init(1526, 56, 'mismatchKeys.length === 0 && mismatchValues.length === 0');
-function visit228_199_1(result) {
+function visit232_199_1(result) {
   _$jscoverage['/lang/lang.js'].branchData['199'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/lang.js'].branchData['194'][3].init(1339, 21, 'a.length !== b.length');
-function visit227_194_3(result) {
+function visit231_194_3(result) {
   _$jscoverage['/lang/lang.js'].branchData['194'][3].ranCondition(result);
   return result;
 }_$jscoverage['/lang/lang.js'].branchData['194'][2].init(1323, 37, 'S.isArray(b) && a.length !== b.length');
-function visit226_194_2(result) {
+function visit230_194_2(result) {
   _$jscoverage['/lang/lang.js'].branchData['194'][2].ranCondition(result);
   return result;
 }_$jscoverage['/lang/lang.js'].branchData['194'][1].init(1307, 53, 'S.isArray(a) && S.isArray(b) && a.length !== b.length');
-function visit225_194_1(result) {
+function visit229_194_1(result) {
   _$jscoverage['/lang/lang.js'].branchData['194'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/lang.js'].branchData['186'][1].init(105, 65, '!S.equals(a[property], b[property], mismatchKeys, mismatchValues)');
-function visit224_186_1(result) {
+function visit228_186_1(result) {
   _$jscoverage['/lang/lang.js'].branchData['186'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/lang.js'].branchData['183'][1].init(18, 27, 'property === COMPARE_MARKER');
-function visit223_183_1(result) {
+function visit227_183_1(result) {
   _$jscoverage['/lang/lang.js'].branchData['183'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/lang.js'].branchData['176'][1].init(18, 43, '!hasKey(b, property) && hasKey(a, property)');
-function visit222_176_1(result) {
+function visit226_176_1(result) {
   _$jscoverage['/lang/lang.js'].branchData['176'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/lang.js'].branchData['169'][1].init(18, 43, '!hasKey(a, property) && hasKey(b, property)');
-function visit221_169_1(result) {
+function visit225_169_1(result) {
   _$jscoverage['/lang/lang.js'].branchData['169'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/lang.js'].branchData['165'][5].init(59, 26, 'obj[keyName] !== undefined');
-function visit220_165_5(result) {
+function visit224_165_5(result) {
   _$jscoverage['/lang/lang.js'].branchData['165'][5].ranCondition(result);
   return result;
 }_$jscoverage['/lang/lang.js'].branchData['165'][4].init(37, 17, 'obj !== undefined');
-function visit219_165_4(result) {
+function visit223_165_4(result) {
   _$jscoverage['/lang/lang.js'].branchData['165'][4].ranCondition(result);
   return result;
 }_$jscoverage['/lang/lang.js'].branchData['165'][3].init(21, 12, 'obj !== null');
-function visit218_165_3(result) {
+function visit222_165_3(result) {
   _$jscoverage['/lang/lang.js'].branchData['165'][3].ranCondition(result);
   return result;
 }_$jscoverage['/lang/lang.js'].branchData['165'][2].init(21, 33, 'obj !== null && obj !== undefined');
-function visit217_165_2(result) {
+function visit221_165_2(result) {
   _$jscoverage['/lang/lang.js'].branchData['165'][2].ranCondition(result);
   return result;
 }_$jscoverage['/lang/lang.js'].branchData['165'][1].init(21, 64, '(obj !== null && obj !== undefined) && obj[keyName] !== undefined');
-function visit216_165_1(result) {
+function visit220_165_1(result) {
   _$jscoverage['/lang/lang.js'].branchData['165'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/lang.js'].branchData['159'][3].init(71, 23, 'b[COMPARE_MARKER] === a');
-function visit215_159_3(result) {
+function visit219_159_3(result) {
   _$jscoverage['/lang/lang.js'].branchData['159'][3].ranCondition(result);
   return result;
 }_$jscoverage['/lang/lang.js'].branchData['159'][2].init(44, 23, 'a[COMPARE_MARKER] === b');
-function visit214_159_2(result) {
+function visit218_159_2(result) {
   _$jscoverage['/lang/lang.js'].branchData['159'][2].ranCondition(result);
   return result;
 }_$jscoverage['/lang/lang.js'].branchData['159'][1].init(44, 50, 'a[COMPARE_MARKER] === b && b[COMPARE_MARKER] === a');
-function visit213_159_1(result) {
+function visit217_159_1(result) {
   _$jscoverage['/lang/lang.js'].branchData['159'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/lang.js'].branchData['147'][2].init(49, 43, 'f.call(input, input[k], k, input) !== FALSE');
-function visit212_147_2(result) {
+function visit216_147_2(result) {
   _$jscoverage['/lang/lang.js'].branchData['147'][2].ranCondition(result);
   return result;
 }_$jscoverage['/lang/lang.js'].branchData['147'][1].init(42, 51, '!f || (f.call(input, input[k], k, input) !== FALSE)');
-function visit211_147_1(result) {
+function visit215_147_1(result) {
   _$jscoverage['/lang/lang.js'].branchData['147'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/lang.js'].branchData['146'][2].init(22, 18, 'k !== CLONE_MARKER');
-function visit210_146_2(result) {
+function visit214_146_2(result) {
   _$jscoverage['/lang/lang.js'].branchData['146'][2].ranCondition(result);
   return result;
 }_$jscoverage['/lang/lang.js'].branchData['146'][1].init(22, 95, 'k !== CLONE_MARKER && (!f || (f.call(input, input[k], k, input) !== FALSE))');
-function visit209_146_1(result) {
+function visit213_146_1(result) {
   _$jscoverage['/lang/lang.js'].branchData['146'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/lang.js'].branchData['143'][1].init(2074, 13, 'isPlainObject');
-function visit208_143_1(result) {
+function visit212_143_1(result) {
   _$jscoverage['/lang/lang.js'].branchData['143'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/lang.js'].branchData['140'][1].init(29, 22, 'i < destination.length');
-function visit207_140_1(result) {
+function visit211_140_1(result) {
   _$jscoverage['/lang/lang.js'].branchData['140'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/lang.js'].branchData['139'][1].init(1895, 7, 'isArray');
-function visit206_139_1(result) {
+function visit210_139_1(result) {
   _$jscoverage['/lang/lang.js'].branchData['139'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/lang.js'].branchData['115'][1].init(90, 63, 'S.inArray(Constructor, [Boolean, String, Number, Date, RegExp])');
-function visit205_115_1(result) {
+function visit209_115_1(result) {
   _$jscoverage['/lang/lang.js'].branchData['115'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/lang.js'].branchData['112'][1].init(499, 25, 'typeof input === \'object\'');
-function visit204_112_1(result) {
+function visit208_112_1(result) {
   _$jscoverage['/lang/lang.js'].branchData['112'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/lang.js'].branchData['109'][1].init(372, 19, 'input[CLONE_MARKER]');
-function visit203_109_1(result) {
+function visit207_109_1(result) {
   _$jscoverage['/lang/lang.js'].branchData['109'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/lang.js'].branchData['102'][1].init(128, 6, '!input');
-function visit202_102_1(result) {
+function visit206_102_1(result) {
   _$jscoverage['/lang/lang.js'].branchData['102'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/lang.js'].branchData['91'][1].init(2990, 67, 'Date.now || function() {\n  return +new Date();\n}');
-function visit201_91_1(result) {
+function visit205_91_1(result) {
   _$jscoverage['/lang/lang.js'].branchData['91'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/lang.js'].branchData['70'][1].init(81, 15, 'v[CLONE_MARKER]');
-function visit200_70_1(result) {
+function visit204_70_1(result) {
   _$jscoverage['/lang/lang.js'].branchData['70'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/lang.js'].branchData['48'][1].init(943, 7, 'a === b');
-function visit199_48_1(result) {
+function visit203_48_1(result) {
   _$jscoverage['/lang/lang.js'].branchData['48'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/lang.js'].branchData['44'][3].init(779, 21, 'typeof b === \'object\'');
-function visit198_44_3(result) {
+function visit202_44_3(result) {
   _$jscoverage['/lang/lang.js'].branchData['44'][3].ranCondition(result);
   return result;
 }_$jscoverage['/lang/lang.js'].branchData['44'][2].init(754, 21, 'typeof a === \'object\'');
-function visit197_44_2(result) {
+function visit201_44_2(result) {
   _$jscoverage['/lang/lang.js'].branchData['44'][2].ranCondition(result);
   return result;
 }_$jscoverage['/lang/lang.js'].branchData['44'][1].init(754, 46, 'typeof a === \'object\' && typeof b === \'object\'');
-function visit196_44_1(result) {
+function visit200_44_1(result) {
   _$jscoverage['/lang/lang.js'].branchData['44'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/lang.js'].branchData['42'][1].init(25, 7, 'a === b');
-function visit195_42_1(result) {
+function visit199_42_1(result) {
   _$jscoverage['/lang/lang.js'].branchData['42'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/lang.js'].branchData['41'][3].init(665, 21, 'typeof b === \'number\'');
-function visit194_41_3(result) {
+function visit198_41_3(result) {
   _$jscoverage['/lang/lang.js'].branchData['41'][3].ranCondition(result);
   return result;
 }_$jscoverage['/lang/lang.js'].branchData['41'][2].init(640, 21, 'typeof a === \'number\'');
-function visit193_41_2(result) {
+function visit197_41_2(result) {
   _$jscoverage['/lang/lang.js'].branchData['41'][2].ranCondition(result);
   return result;
 }_$jscoverage['/lang/lang.js'].branchData['41'][1].init(640, 46, 'typeof a === \'number\' && typeof b === \'number\'');
-function visit192_41_1(result) {
+function visit196_41_1(result) {
   _$jscoverage['/lang/lang.js'].branchData['41'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/lang.js'].branchData['39'][1].init(25, 7, 'a === b');
-function visit191_39_1(result) {
+function visit195_39_1(result) {
   _$jscoverage['/lang/lang.js'].branchData['39'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/lang.js'].branchData['38'][3].init(551, 21, 'typeof b === \'string\'');
-function visit190_38_3(result) {
+function visit194_38_3(result) {
   _$jscoverage['/lang/lang.js'].branchData['38'][3].ranCondition(result);
   return result;
 }_$jscoverage['/lang/lang.js'].branchData['38'][2].init(526, 21, 'typeof a === \'string\'');
-function visit189_38_2(result) {
+function visit193_38_2(result) {
   _$jscoverage['/lang/lang.js'].branchData['38'][2].ranCondition(result);
   return result;
 }_$jscoverage['/lang/lang.js'].branchData['38'][1].init(526, 46, 'typeof a === \'string\' && typeof b === \'string\'');
-function visit188_38_1(result) {
+function visit192_38_1(result) {
   _$jscoverage['/lang/lang.js'].branchData['38'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/lang.js'].branchData['36'][1].init(24, 27, 'a.getTime() === b.getTime()');
-function visit187_36_1(result) {
+function visit191_36_1(result) {
   _$jscoverage['/lang/lang.js'].branchData['36'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/lang.js'].branchData['35'][1].init(402, 38, 'a instanceof Date && b instanceof Date');
-function visit186_35_1(result) {
+function visit190_35_1(result) {
   _$jscoverage['/lang/lang.js'].branchData['35'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/lang.js'].branchData['33'][3].init(75, 9, 'b == null');
-function visit185_33_3(result) {
+function visit189_33_3(result) {
   _$jscoverage['/lang/lang.js'].branchData['33'][3].ranCondition(result);
   return result;
 }_$jscoverage['/lang/lang.js'].branchData['33'][2].init(62, 9, 'a == null');
-function visit184_33_2(result) {
+function visit188_33_2(result) {
   _$jscoverage['/lang/lang.js'].branchData['33'][2].ranCondition(result);
   return result;
 }_$jscoverage['/lang/lang.js'].branchData['33'][1].init(62, 22, 'a == null && b == null');
-function visit183_33_1(result) {
+function visit187_33_1(result) {
   _$jscoverage['/lang/lang.js'].branchData['33'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/lang.js'].branchData['31'][7].init(273, 10, 'b === null');
-function visit182_31_7(result) {
+function visit186_31_7(result) {
   _$jscoverage['/lang/lang.js'].branchData['31'][7].ranCondition(result);
   return result;
 }_$jscoverage['/lang/lang.js'].branchData['31'][6].init(254, 15, 'b === undefined');
-function visit181_31_6(result) {
+function visit185_31_6(result) {
   _$jscoverage['/lang/lang.js'].branchData['31'][6].ranCondition(result);
   return result;
 }_$jscoverage['/lang/lang.js'].branchData['31'][5].init(254, 29, 'b === undefined || b === null');
-function visit180_31_5(result) {
+function visit184_31_5(result) {
   _$jscoverage['/lang/lang.js'].branchData['31'][5].ranCondition(result);
   return result;
 }_$jscoverage['/lang/lang.js'].branchData['31'][4].init(240, 10, 'a === null');
-function visit179_31_4(result) {
+function visit183_31_4(result) {
   _$jscoverage['/lang/lang.js'].branchData['31'][4].ranCondition(result);
   return result;
 }_$jscoverage['/lang/lang.js'].branchData['31'][3].init(240, 43, 'a === null || b === undefined || b === null');
-function visit178_31_3(result) {
+function visit182_31_3(result) {
   _$jscoverage['/lang/lang.js'].branchData['31'][3].ranCondition(result);
   return result;
 }_$jscoverage['/lang/lang.js'].branchData['31'][2].init(221, 15, 'a === undefined');
-function visit177_31_2(result) {
+function visit181_31_2(result) {
   _$jscoverage['/lang/lang.js'].branchData['31'][2].ranCondition(result);
   return result;
 }_$jscoverage['/lang/lang.js'].branchData['31'][1].init(221, 62, 'a === undefined || a === null || b === undefined || b === null');
-function visit176_31_1(result) {
+function visit180_31_1(result) {
   _$jscoverage['/lang/lang.js'].branchData['31'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/lang.js'].branchData['28'][1].init(151, 7, 'a === b');
-function visit175_28_1(result) {
+function visit179_28_1(result) {
   _$jscoverage['/lang/lang.js'].branchData['28'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/lang.js'].branchData['26'][1].init(112, 20, 'mismatchValues || []');
-function visit174_26_1(result) {
+function visit178_26_1(result) {
   _$jscoverage['/lang/lang.js'].branchData['26'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/lang.js'].branchData['25'][1].init(63, 18, 'mismatchKeys || []');
-function visit173_25_1(result) {
+function visit177_25_1(result) {
   _$jscoverage['/lang/lang.js'].branchData['25'][1].ranCondition(result);
   return result;
 }_$jscoverage['/lang/lang.js'].lineData[7]++;
@@ -651,41 +651,41 @@ function visit173_25_1(result) {
   equals: function(a, b, mismatchKeys, mismatchValues) {
   _$jscoverage['/lang/lang.js'].functionData[1]++;
   _$jscoverage['/lang/lang.js'].lineData[25]++;
-  mismatchKeys = visit173_25_1(mismatchKeys || []);
+  mismatchKeys = visit177_25_1(mismatchKeys || []);
   _$jscoverage['/lang/lang.js'].lineData[26]++;
-  mismatchValues = visit174_26_1(mismatchValues || []);
+  mismatchValues = visit178_26_1(mismatchValues || []);
   _$jscoverage['/lang/lang.js'].lineData[28]++;
-  if (visit175_28_1(a === b)) {
+  if (visit179_28_1(a === b)) {
     _$jscoverage['/lang/lang.js'].lineData[29]++;
     return TRUE;
   }
   _$jscoverage['/lang/lang.js'].lineData[31]++;
-  if (visit176_31_1(visit177_31_2(a === undefined) || visit178_31_3(visit179_31_4(a === null) || visit180_31_5(visit181_31_6(b === undefined) || visit182_31_7(b === null))))) {
+  if (visit180_31_1(visit181_31_2(a === undefined) || visit182_31_3(visit183_31_4(a === null) || visit184_31_5(visit185_31_6(b === undefined) || visit186_31_7(b === null))))) {
     _$jscoverage['/lang/lang.js'].lineData[33]++;
-    return visit183_33_1(visit184_33_2(a == null) && visit185_33_3(b == null));
+    return visit187_33_1(visit188_33_2(a == null) && visit189_33_3(b == null));
   }
   _$jscoverage['/lang/lang.js'].lineData[35]++;
-  if (visit186_35_1(a instanceof Date && b instanceof Date)) {
+  if (visit190_35_1(a instanceof Date && b instanceof Date)) {
     _$jscoverage['/lang/lang.js'].lineData[36]++;
-    return visit187_36_1(a.getTime() === b.getTime());
+    return visit191_36_1(a.getTime() === b.getTime());
   }
   _$jscoverage['/lang/lang.js'].lineData[38]++;
-  if (visit188_38_1(visit189_38_2(typeof a === 'string') && visit190_38_3(typeof b === 'string'))) {
+  if (visit192_38_1(visit193_38_2(typeof a === 'string') && visit194_38_3(typeof b === 'string'))) {
     _$jscoverage['/lang/lang.js'].lineData[39]++;
-    return (visit191_39_1(a === b));
+    return (visit195_39_1(a === b));
   }
   _$jscoverage['/lang/lang.js'].lineData[41]++;
-  if (visit192_41_1(visit193_41_2(typeof a === 'number') && visit194_41_3(typeof b === 'number'))) {
+  if (visit196_41_1(visit197_41_2(typeof a === 'number') && visit198_41_3(typeof b === 'number'))) {
     _$jscoverage['/lang/lang.js'].lineData[42]++;
-    return (visit195_42_1(a === b));
+    return (visit199_42_1(a === b));
   }
   _$jscoverage['/lang/lang.js'].lineData[44]++;
-  if (visit196_44_1(visit197_44_2(typeof a === 'object') && visit198_44_3(typeof b === 'object'))) {
+  if (visit200_44_1(visit201_44_2(typeof a === 'object') && visit202_44_3(typeof b === 'object'))) {
     _$jscoverage['/lang/lang.js'].lineData[45]++;
     return compareObjects(a, b, mismatchKeys, mismatchValues);
   }
   _$jscoverage['/lang/lang.js'].lineData[48]++;
-  return (visit199_48_1(a === b));
+  return (visit203_48_1(a === b));
 }, 
   clone: function(input, filter) {
   _$jscoverage['/lang/lang.js'].functionData[2]++;
@@ -697,7 +697,7 @@ function visit173_25_1(result) {
   _$jscoverage['/lang/lang.js'].lineData[69]++;
   v = v.input;
   _$jscoverage['/lang/lang.js'].lineData[70]++;
-  if (visit200_70_1(v[CLONE_MARKER])) {
+  if (visit204_70_1(v[CLONE_MARKER])) {
     _$jscoverage['/lang/lang.js'].lineData[71]++;
     try {
       _$jscoverage['/lang/lang.js'].lineData[72]++;
@@ -713,7 +713,7 @@ function visit173_25_1(result) {
   _$jscoverage['/lang/lang.js'].lineData[79]++;
   return ret;
 }, 
-  now: visit201_91_1(Date.now || function() {
+  now: visit205_91_1(Date.now || function() {
   _$jscoverage['/lang/lang.js'].functionData[4]++;
   _$jscoverage['/lang/lang.js'].lineData[92]++;
   return +new Date();
@@ -724,21 +724,21 @@ function visit173_25_1(result) {
     _$jscoverage['/lang/lang.js'].lineData[97]++;
     var destination = input, isArray, isPlainObject, k, stamp;
     _$jscoverage['/lang/lang.js'].lineData[102]++;
-    if (visit202_102_1(!input)) {
+    if (visit206_102_1(!input)) {
       _$jscoverage['/lang/lang.js'].lineData[103]++;
       return destination;
     }
     _$jscoverage['/lang/lang.js'].lineData[109]++;
-    if (visit203_109_1(input[CLONE_MARKER])) {
+    if (visit207_109_1(input[CLONE_MARKER])) {
       _$jscoverage['/lang/lang.js'].lineData[111]++;
       return memory[input[CLONE_MARKER]].destination;
     } else {
       _$jscoverage['/lang/lang.js'].lineData[112]++;
-      if (visit204_112_1(typeof input === 'object')) {
+      if (visit208_112_1(typeof input === 'object')) {
         _$jscoverage['/lang/lang.js'].lineData[114]++;
         var Constructor = input.constructor;
         _$jscoverage['/lang/lang.js'].lineData[115]++;
-        if (visit205_115_1(S.inArray(Constructor, [Boolean, String, Number, Date, RegExp]))) {
+        if (visit209_115_1(S.inArray(Constructor, [Boolean, String, Number, Date, RegExp]))) {
           _$jscoverage['/lang/lang.js'].lineData[116]++;
           destination = new Constructor(input.valueOf());
         } else {
@@ -763,19 +763,19 @@ function visit173_25_1(result) {
       }
     }
     _$jscoverage['/lang/lang.js'].lineData[139]++;
-    if (visit206_139_1(isArray)) {
+    if (visit210_139_1(isArray)) {
       _$jscoverage['/lang/lang.js'].lineData[140]++;
-      for (var i = 0; visit207_140_1(i < destination.length); i++) {
+      for (var i = 0; visit211_140_1(i < destination.length); i++) {
         _$jscoverage['/lang/lang.js'].lineData[141]++;
         destination[i] = cloneInternal(destination[i], f, memory);
       }
     } else {
       _$jscoverage['/lang/lang.js'].lineData[143]++;
-      if (visit208_143_1(isPlainObject)) {
+      if (visit212_143_1(isPlainObject)) {
         _$jscoverage['/lang/lang.js'].lineData[144]++;
         for (k in input) {
           _$jscoverage['/lang/lang.js'].lineData[146]++;
-          if (visit209_146_1(visit210_146_2(k !== CLONE_MARKER) && (visit211_147_1(!f || (visit212_147_2(f.call(input, input[k], k, input) !== FALSE)))))) {
+          if (visit213_146_1(visit214_146_2(k !== CLONE_MARKER) && (visit215_147_1(!f || (visit216_147_2(f.call(input, input[k], k, input) !== FALSE)))))) {
             _$jscoverage['/lang/lang.js'].lineData[148]++;
             destination[k] = cloneInternal(input[k], f, memory);
           }
@@ -789,7 +789,7 @@ function visit173_25_1(result) {
   function compareObjects(a, b, mismatchKeys, mismatchValues) {
     _$jscoverage['/lang/lang.js'].functionData[6]++;
     _$jscoverage['/lang/lang.js'].lineData[159]++;
-    if (visit213_159_1(visit214_159_2(a[COMPARE_MARKER] === b) && visit215_159_3(b[COMPARE_MARKER] === a))) {
+    if (visit217_159_1(visit218_159_2(a[COMPARE_MARKER] === b) && visit219_159_3(b[COMPARE_MARKER] === a))) {
       _$jscoverage['/lang/lang.js'].lineData[160]++;
       return TRUE;
     }
@@ -801,12 +801,12 @@ function visit173_25_1(result) {
     var hasKey = function(obj, keyName) {
   _$jscoverage['/lang/lang.js'].functionData[7]++;
   _$jscoverage['/lang/lang.js'].lineData[165]++;
-  return visit216_165_1((visit217_165_2(visit218_165_3(obj !== null) && visit219_165_4(obj !== undefined))) && visit220_165_5(obj[keyName] !== undefined));
+  return visit220_165_1((visit221_165_2(visit222_165_3(obj !== null) && visit223_165_4(obj !== undefined))) && visit224_165_5(obj[keyName] !== undefined));
 };
     _$jscoverage['/lang/lang.js'].lineData[167]++;
     for (var property in b) {
       _$jscoverage['/lang/lang.js'].lineData[169]++;
-      if (visit221_169_1(!hasKey(a, property) && hasKey(b, property))) {
+      if (visit225_169_1(!hasKey(a, property) && hasKey(b, property))) {
         _$jscoverage['/lang/lang.js'].lineData[170]++;
         mismatchKeys.push('expected has key ' + property + '", but missing from actual.');
       }
@@ -814,7 +814,7 @@ function visit173_25_1(result) {
     _$jscoverage['/lang/lang.js'].lineData[174]++;
     for (property in a) {
       _$jscoverage['/lang/lang.js'].lineData[176]++;
-      if (visit222_176_1(!hasKey(b, property) && hasKey(a, property))) {
+      if (visit226_176_1(!hasKey(b, property) && hasKey(a, property))) {
         _$jscoverage['/lang/lang.js'].lineData[177]++;
         mismatchKeys.push('expected missing key "' + property + '", but present in actual.');
       }
@@ -822,18 +822,18 @@ function visit173_25_1(result) {
     _$jscoverage['/lang/lang.js'].lineData[181]++;
     for (property in b) {
       _$jscoverage['/lang/lang.js'].lineData[183]++;
-      if (visit223_183_1(property === COMPARE_MARKER)) {
+      if (visit227_183_1(property === COMPARE_MARKER)) {
         _$jscoverage['/lang/lang.js'].lineData[184]++;
         continue;
       }
       _$jscoverage['/lang/lang.js'].lineData[186]++;
-      if (visit224_186_1(!S.equals(a[property], b[property], mismatchKeys, mismatchValues))) {
+      if (visit228_186_1(!S.equals(a[property], b[property], mismatchKeys, mismatchValues))) {
         _$jscoverage['/lang/lang.js'].lineData[187]++;
         mismatchValues.push('"' + property + '" was "' + (b[property] ? (b[property].toString()) : b[property]) + '" in expected, but was "' + (a[property] ? (a[property].toString()) : a[property]) + '" in actual.');
       }
     }
     _$jscoverage['/lang/lang.js'].lineData[194]++;
-    if (visit225_194_1(S.isArray(a) && visit226_194_2(S.isArray(b) && visit227_194_3(a.length !== b.length)))) {
+    if (visit229_194_1(S.isArray(a) && visit230_194_2(S.isArray(b) && visit231_194_3(a.length !== b.length)))) {
       _$jscoverage['/lang/lang.js'].lineData[195]++;
       mismatchValues.push('arrays were not the same length');
     }
@@ -842,6 +842,6 @@ function visit173_25_1(result) {
     _$jscoverage['/lang/lang.js'].lineData[198]++;
     delete b[COMPARE_MARKER];
     _$jscoverage['/lang/lang.js'].lineData[199]++;
-    return (visit228_199_1(visit229_199_2(mismatchKeys.length === 0) && visit230_199_3(mismatchValues.length === 0)));
+    return (visit232_199_1(visit233_199_2(mismatchKeys.length === 0) && visit234_199_3(mismatchValues.length === 0)));
   }
 })(KISSY);
