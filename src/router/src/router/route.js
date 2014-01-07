@@ -33,6 +33,7 @@ KISSY.add(function (S) {
             else if (g4) {
                 return '(.*)';
             }
+            return undefined;
         });
 
         return {
@@ -76,6 +77,15 @@ KISSY.add(function (S) {
             }
 
             return params;
+        },
+
+        removeCallback: function (callback) {
+            var callbacks = this.callbacks || [];
+            for (var i = callbacks.length - 1; i >= 0; i++) {
+                if (callbacks === callback) {
+                    callbacks.splice(i, 1);
+                }
+            }
         }
     };
 

@@ -4,8 +4,9 @@
  */
 KISSY.add(function (S, require) {
     var $ = require('node').all;
+    var Controller = require('navigation-view/controller');
     var Container = require('component/container');
-    var Control = require('component/control');
+    var SubView = require('navigation-view/sub-view');
     var Bar = require('navigation-view/bar');
     var ContentTpl = require('component/extension/content-xtpl');
     var ContentRender = require('component/extension/content-render');
@@ -15,23 +16,7 @@ KISSY.add(function (S, require) {
         '</div>' +
         '</div>';
 
-    var SubView = Control.extend({
-        pause: function () {
-        },
-        resume: function () {
-        }
-    }, {
-        xclass: 'navigation-sub-view',
-        ATTRS: {
-            handleMouseEvents: {
-                value: false
-            },
-            promise: {},
-            focusable: {
-                value: false
-            }
-        }
-    });
+    var uuid = 0;
 
     var NavigationViewRender = Container.getDefaultRender().extend([ContentRender], {
         renderUI: function () {
@@ -52,23 +37,20 @@ KISSY.add(function (S, require) {
             }).render());
             bar.get('backBtn').on('click', this.onBack, this);
         },
+
         onBack: function () {
-            this.pop();
+            history.back();
         },
+
         push: function (subView) {
             var self = this;
             var bar = this.get('bar');
-            if (subView.get('rendered')) {
-                subView.resume();
-            } else {
-                this.addChild(subView);
-            }
             subView.get('el').css('transform', 'translateX(-9999px) translateZ(0)');
             var activeView;
             var loadingEl = this.get('loadingEl');
+            this.viewStack.push(subView);
             if ((activeView = this.get('activeView'))) {
                 var activeEl = activeView.get('el');
-                this.viewStack.push(activeView);
                 loadingEl.css('left', '100%');
                 activeEl.animate({
                     transform: 'translateX(-' + activeEl[0].offsetWidth + 'px) translateZ(0)'
@@ -87,31 +69,41 @@ KISSY.add(function (S, require) {
                 });
                 this.set('activeView', null);
                 bar.forward(subView.get('title'));
+                activeView.controller.leave();
             } else {
                 bar.set('title', subView.get('title'));
             }
 
+            if (self.waitingView) {
+                self.waitingView.controller.leave();
+            }
+
             self.waitingView = subView;
-            subView.get('promise').then(function () {
-                if (self.waitingView === subView) {
+            subView.uuid = uuid++;
+            subView.controller.promise.then(function () {
+                if (self.waitingView.uuid === subView.uuid) {
                     self.set('activeView', subView);
+                    self.waitingView = null;
+                    bar.set('title', subView.get('title'));
                     subView.get('el').css('transform', '');
                     loadingEl.hide();
                 }
             });
         },
+
         pop: function () {
             var self = this;
             if (this.viewStack.length) {
-                var subView = this.viewStack.pop();
-                subView.resume();
+                this.viewStack.pop();
+                var subView = this.viewStack[this.viewStack.length - 1];
                 var activeView;
                 var loadingEl = this.get('loadingEl');
                 var bar = this.get('bar');
+                loadingEl.show();
                 if ((activeView = this.get('activeView'))) {
-                    this.viewStack.push(activeView);
                     loadingEl.css('left', '-100%');
-                    activeView.get('el').animate({
+                    this.animEl = activeView.get('el');
+                    this.animEl.animate({
                         transform: 'translateX(' + activeView.get('el')[0].offsetWidth + 'px) translateZ(0)'
                     }, {
                         useTransition: true,
@@ -127,12 +119,18 @@ KISSY.add(function (S, require) {
                         duration: 0.25
                     });
                     this.set('activeView', null);
+                    activeView.controller.leave();
+                } else if (self.waitingView) {
+                    self.waitingView.controller.leave();
                 }
-                bar.back(subView.get('title'));
+                bar.back(subView.get('title'), this.viewStack.length > 1);
                 self.waitingView = subView;
-                subView.get('promise').then(function () {
-                    if (self.waitingView === subView) {
+                subView.uuid = uuid++;
+                subView.controller.promise.then(function () {
+                    if (self.waitingView.uuid === subView.uuid) {
+                        self.waitingView = null;
                         self.set('activeView', subView);
+                        bar.set('title', subView.get('title'));
                         subView.get('el').css('transform', '');
                         loadingEl.hide();
                     }
@@ -141,25 +139,34 @@ KISSY.add(function (S, require) {
         }
     }, {
         SubView: SubView,
+
+        Controller: Controller,
+
         xclass: 'navigation-view',
+
         ATTRS: {
             activeView: {
             },
 
             loadingEl: {
             },
+
             handleMouseEvents: {
                 value: false
             },
+
             focusable: {
                 value: false
             },
+
             xrender: {
                 value: NavigationViewRender
             },
+
             contentTpl: {
                 value: ContentTpl
             },
+
             defaultChildCfg: {
                 value: {
                     xclass: 'navigation-sub-view'

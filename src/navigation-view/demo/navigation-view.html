@@ -16,64 +16,147 @@
 <script src="/kissy/build/seed.js"></script>
 <script src="/kissy/src/package.js"></script>
 <script>
-    KISSY.use('navigation-view,node,promise', function (S, NavigationView, Node, Promise) {
+    KISSY.use('navigation-view,node,promise,router', function (S, NavigationView, Node, Promise, router) {
         var Defer = Promise.Defer;
         var navigationView = new NavigationView({
             barTitle: 'Navigation bar',
             render: 'body'
         }).render();
         var SubView = NavigationView.SubView;
+        var Controller = NavigationView.Controller;
 
         var Detail = SubView.extend({
-            renderUI: function () {
+            setItem: function (id, content) {
+                this.id = id;
+                content = id + ': ' + content;
+                if (this.button) {
+                    this.button.remove();
+                }
+                if (this.button2) {
+                    this.button2.remove();
+                }
                 var el = this.get('el');
-                el.html('<div style="margin: 40px"><button>pop</button></div>');
-                el.one('button').on('click', function () {
-                    navigationView.pop();
-                });
-                var defer = new Defer();
-                setTimeout(function () {
-                    defer.resolve(1);
-                }, 1000);
-                this.set('promise', defer.promise);
+                el.html('<div>' + content + '</div>');
+                this.button = new Node('<button>got another</button>').appendTo(el);
+                this.button.on('click', this.onButtonClick, this);
+                this.button2 = new Node('<button>update sub content</button>').appendTo(el);
+                this.button2.on('click', this.onButtonClick2, this);
+                this.subContent = new Node('<div>sub content</div>').appendTo(el);
+                this.set('title', content);
             },
-            resume:function(){
-                var defer = new Defer();
+
+            setSubContent: function (c) {
+                this.subContent.html(c);
+            },
+
+            onButtonClick: function () {
+                this.controller.push('/item/' + new Date().valueOf())
+            },
+
+            onButtonClick2: function () {
+                this.controller.push('/item/' + this.id + '/' + new Date().valueOf())
+            }
+        });
+
+        var DetailController = Controller.extend({
+            loadItem: function (request) {
+                var subView = this.getSubView();
+                subView.setItem(request.param('id'), ': loaded!');
+                var self = this;
                 setTimeout(function () {
-                    defer.resolve(1);
+                    self.defer.resolve();
                 }, 1000);
-                this.set('promise', defer.promise);
+            },
+
+            leave: function () {
+                S.log('leave detail');
+            },
+
+            needNavigation: function (request) {
+                var ret = this.getSubView().id !== request.param('id');
+                S.log("navigation: " + ret);
+                return ret;
+            },
+
+            loadSubItem: function (request) {
+                var subView = this.getSubView();
+                if (this.needNavigation(request)) {
+                    subView.setItem(request.param('id'), ': loaded!');
+                }
+                subView.setSubContent(request.param('subId') + ': sub content loaded!');
+                var self = this;
+                setTimeout(function () {
+                    self.defer.resolve();
+                }, 1000);
+            }
+        }, {
+            ATTRS: {
+                navigationView: {
+                    value: navigationView
+                },
+                SubView: {
+                    value: Detail
+                },
+                routes: {
+                    value: {
+                        '/item/:id': 'loadItem',
+                        '/item/:id/:subId': 'loadSubItem'
+                    }
+                }
             }
         });
 
         var Index = SubView.extend({
             renderUI: function () {
+                var self = this;
                 var el = this.get('el');
-                el.html('<div style="margin: 40px"><button>push</button></div>');
+                el.html('<div style="margin: 40px"><button>view item</button></div>');
                 el.one('button').on('click', function () {
-                    navigationView.push(detail);
+                    self.controller.push('/item/1');
                 });
-                var defer = new Defer();
-                setTimeout(function () {
-                    defer.resolve(1);
-                }, 1000);
-                this.set('promise', defer.promise);
-            },
-            resume:function(){
-                var defer = new Defer();
-                setTimeout(function () {
-                    defer.resolve(1);
-                }, 1000);
-                this.set('promise', defer.promise);
+            }
+        }, {
+            ATTRS: {
+                title: {
+                    value: 'index'
+                }
             }
         });
-        var index = new Index({
-            title:'index'
+
+        var IndexController = Controller.extend({
+            leave: function () {
+                S.log('leave index');
+            },
+
+            index: function () {
+                var self = this;
+                setTimeout(function () {
+                    self.defer.resolve();
+                }, 1000);
+            }
+        }, {
+            ATTRS: {
+                navigationView: {
+                    value: navigationView
+                },
+                SubView: {
+                    value: Index
+                },
+                routes: {
+                    value: {
+                        '/': 'index'
+                    }
+                }
+            }
         });
-        var detail = new Detail({
-            title:'detail'
+
+        new IndexController();
+        new DetailController();
+
+        router.start({
+            triggerRoute: true,
+            useHash: true
         });
-        navigationView.push(index);
     });
 </script>
 </body>

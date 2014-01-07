@@ -245,26 +245,31 @@ if (! _$jscoverage['/router/route.js']) {
   _$jscoverage['/router/route.js'].lineData[30] = 0;
   _$jscoverage['/router/route.js'].lineData[33] = 0;
   _$jscoverage['/router/route.js'].lineData[34] = 0;
-  _$jscoverage['/router/route.js'].lineData[38] = 0;
-  _$jscoverage['/router/route.js'].lineData[44] = 0;
+  _$jscoverage['/router/route.js'].lineData[36] = 0;
+  _$jscoverage['/router/route.js'].lineData[39] = 0;
   _$jscoverage['/router/route.js'].lineData[45] = 0;
   _$jscoverage['/router/route.js'].lineData[46] = 0;
   _$jscoverage['/router/route.js'].lineData[47] = 0;
   _$jscoverage['/router/route.js'].lineData[48] = 0;
-  _$jscoverage['/router/route.js'].lineData[50] = 0;
-  _$jscoverage['/router/route.js'].lineData[54] = 0;
-  _$jscoverage['/router/route.js'].lineData[56] = 0;
-  _$jscoverage['/router/route.js'].lineData[59] = 0;
+  _$jscoverage['/router/route.js'].lineData[49] = 0;
+  _$jscoverage['/router/route.js'].lineData[51] = 0;
+  _$jscoverage['/router/route.js'].lineData[55] = 0;
+  _$jscoverage['/router/route.js'].lineData[57] = 0;
   _$jscoverage['/router/route.js'].lineData[60] = 0;
-  _$jscoverage['/router/route.js'].lineData[63] = 0;
-  _$jscoverage['/router/route.js'].lineData[66] = 0;
+  _$jscoverage['/router/route.js'].lineData[61] = 0;
+  _$jscoverage['/router/route.js'].lineData[64] = 0;
   _$jscoverage['/router/route.js'].lineData[67] = 0;
-  _$jscoverage['/router/route.js'].lineData[69] = 0;
-  _$jscoverage['/router/route.js'].lineData[71] = 0;
+  _$jscoverage['/router/route.js'].lineData[68] = 0;
+  _$jscoverage['/router/route.js'].lineData[70] = 0;
   _$jscoverage['/router/route.js'].lineData[72] = 0;
-  _$jscoverage['/router/route.js'].lineData[74] = 0;
-  _$jscoverage['/router/route.js'].lineData[78] = 0;
-  _$jscoverage['/router/route.js'].lineData[82] = 0;
+  _$jscoverage['/router/route.js'].lineData[73] = 0;
+  _$jscoverage['/router/route.js'].lineData[75] = 0;
+  _$jscoverage['/router/route.js'].lineData[79] = 0;
+  _$jscoverage['/router/route.js'].lineData[83] = 0;
+  _$jscoverage['/router/route.js'].lineData[84] = 0;
+  _$jscoverage['/router/route.js'].lineData[85] = 0;
+  _$jscoverage['/router/route.js'].lineData[86] = 0;
+  _$jscoverage['/router/route.js'].lineData[92] = 0;
 }
 if (! _$jscoverage['/router/route.js'].functionData) {
   _$jscoverage['/router/route.js'].functionData = [];
@@ -273,6 +278,7 @@ if (! _$jscoverage['/router/route.js'].functionData) {
   _$jscoverage['/router/route.js'].functionData[2] = 0;
   _$jscoverage['/router/route.js'].functionData[3] = 0;
   _$jscoverage['/router/route.js'].functionData[4] = 0;
+  _$jscoverage['/router/route.js'].functionData[5] = 0;
 }
 if (! _$jscoverage['/router/route.js'].branchData) {
   _$jscoverage['/router/route.js'].branchData = {};
@@ -284,42 +290,60 @@ if (! _$jscoverage['/router/route.js'].branchData) {
   _$jscoverage['/router/route.js'].branchData['29'][1] = new BranchData();
   _$jscoverage['/router/route.js'].branchData['33'] = [];
   _$jscoverage['/router/route.js'].branchData['33'][1] = new BranchData();
-  _$jscoverage['/router/route.js'].branchData['47'] = [];
-  _$jscoverage['/router/route.js'].branchData['47'][1] = new BranchData();
-  _$jscoverage['/router/route.js'].branchData['59'] = [];
-  _$jscoverage['/router/route.js'].branchData['59'][1] = new BranchData();
-  _$jscoverage['/router/route.js'].branchData['63'] = [];
-  _$jscoverage['/router/route.js'].branchData['63'][1] = new BranchData();
-  _$jscoverage['/router/route.js'].branchData['66'] = [];
-  _$jscoverage['/router/route.js'].branchData['66'][1] = new BranchData();
-  _$jscoverage['/router/route.js'].branchData['69'] = [];
-  _$jscoverage['/router/route.js'].branchData['69'][1] = new BranchData();
-  _$jscoverage['/router/route.js'].branchData['71'] = [];
-  _$jscoverage['/router/route.js'].branchData['71'][1] = new BranchData();
+  _$jscoverage['/router/route.js'].branchData['48'] = [];
+  _$jscoverage['/router/route.js'].branchData['48'][1] = new BranchData();
+  _$jscoverage['/router/route.js'].branchData['60'] = [];
+  _$jscoverage['/router/route.js'].branchData['60'][1] = new BranchData();
+  _$jscoverage['/router/route.js'].branchData['64'] = [];
+  _$jscoverage['/router/route.js'].branchData['64'][1] = new BranchData();
+  _$jscoverage['/router/route.js'].branchData['67'] = [];
+  _$jscoverage['/router/route.js'].branchData['67'][1] = new BranchData();
+  _$jscoverage['/router/route.js'].branchData['70'] = [];
+  _$jscoverage['/router/route.js'].branchData['70'][1] = new BranchData();
+  _$jscoverage['/router/route.js'].branchData['72'] = [];
+  _$jscoverage['/router/route.js'].branchData['72'][1] = new BranchData();
+  _$jscoverage['/router/route.js'].branchData['83'] = [];
+  _$jscoverage['/router/route.js'].branchData['83'][1] = new BranchData();
+  _$jscoverage['/router/route.js'].branchData['84'] = [];
+  _$jscoverage['/router/route.js'].branchData['84'][1] = new BranchData();
+  _$jscoverage['/router/route.js'].branchData['85'] = [];
+  _$jscoverage['/router/route.js'].branchData['85'][1] = new BranchData();
 }
-_$jscoverage['/router/route.js'].branchData['71'][1].init(146, 3, 'key');
-function visit11_71_1(result) {
-  _$jscoverage['/router/route.js'].branchData['71'][1].ranCondition(result);
+_$jscoverage['/router/route.js'].branchData['85'][1].init(22, 22, 'callbacks === callback');
+function visit14_85_1(result) {
+  _$jscoverage['/router/route.js'].branchData['85'][1].ranCondition(result);
   return result;
-}_$jscoverage['/router/route.js'].branchData['69'][1].init(70, 24, '\'string\' === typeof m[i]');
-function visit10_69_1(result) {
-  _$jscoverage['/router/route.js'].branchData['69'][1].ranCondition(result);
+}_$jscoverage['/router/route.js'].branchData['84'][1].init(100, 6, 'i >= 0');
+function visit13_84_1(result) {
+  _$jscoverage['/router/route.js'].branchData['84'][1].ranCondition(result);
   return result;
-}_$jscoverage['/router/route.js'].branchData['66'][1].init(269, 7, 'i < len');
-function visit9_66_1(result) {
-  _$jscoverage['/router/route.js'].branchData['66'][1].ranCondition(result);
+}_$jscoverage['/router/route.js'].branchData['83'][1].init(30, 20, 'this.callbacks || []');
+function visit12_83_1(result) {
+  _$jscoverage['/router/route.js'].branchData['83'][1].ranCondition(result);
   return result;
-}_$jscoverage['/router/route.js'].branchData['63'][1].init(174, 15, 'self.keys || []');
-function visit8_63_1(result) {
-  _$jscoverage['/router/route.js'].branchData['63'][1].ranCondition(result);
+}_$jscoverage['/router/route.js'].branchData['72'][1].init(146, 3, 'key');
+function visit11_72_1(result) {
+  _$jscoverage['/router/route.js'].branchData['72'][1].ranCondition(result);
   return result;
-}_$jscoverage['/router/route.js'].branchData['59'][1].init(96, 2, '!m');
-function visit7_59_1(result) {
-  _$jscoverage['/router/route.js'].branchData['59'][1].ranCondition(result);
+}_$jscoverage['/router/route.js'].branchData['70'][1].init(70, 24, '\'string\' === typeof m[i]');
+function visit10_70_1(result) {
+  _$jscoverage['/router/route.js'].branchData['70'][1].ranCondition(result);
   return result;
-}_$jscoverage['/router/route.js'].branchData['47'][1].init(78, 24, 'typeof path === \'string\'');
-function visit6_47_1(result) {
-  _$jscoverage['/router/route.js'].branchData['47'][1].ranCondition(result);
+}_$jscoverage['/router/route.js'].branchData['67'][1].init(269, 7, 'i < len');
+function visit9_67_1(result) {
+  _$jscoverage['/router/route.js'].branchData['67'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/router/route.js'].branchData['64'][1].init(174, 15, 'self.keys || []');
+function visit8_64_1(result) {
+  _$jscoverage['/router/route.js'].branchData['64'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/router/route.js'].branchData['60'][1].init(96, 2, '!m');
+function visit7_60_1(result) {
+  _$jscoverage['/router/route.js'].branchData['60'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/router/route.js'].branchData['48'][1].init(78, 24, 'typeof path === \'string\'');
+function visit6_48_1(result) {
+  _$jscoverage['/router/route.js'].branchData['48'][1].ranCondition(result);
   return result;
 }_$jscoverage['/router/route.js'].branchData['33'][1].init(369, 2, 'g4');
 function visit5_33_1(result) {
@@ -376,59 +400,74 @@ KISSY.add(function(S) {
       return '(.*)';
     }
   }
+  _$jscoverage['/router/route.js'].lineData[36]++;
+  return undefined;
 });
-    _$jscoverage['/router/route.js'].lineData[38]++;
+    _$jscoverage['/router/route.js'].lineData[39]++;
     return {
   keys: keys, 
   regexp: new RegExp('^' + path + '$')};
   }
-  _$jscoverage['/router/route.js'].lineData[44]++;
+  _$jscoverage['/router/route.js'].lineData[45]++;
   function Route(path, callbacks) {
     _$jscoverage['/router/route.js'].functionData[3]++;
-    _$jscoverage['/router/route.js'].lineData[45]++;
-    this.path = path;
     _$jscoverage['/router/route.js'].lineData[46]++;
-    this.callbacks = callbacks;
+    this.path = path;
     _$jscoverage['/router/route.js'].lineData[47]++;
-    if (visit6_47_1(typeof path === 'string')) {
-      _$jscoverage['/router/route.js'].lineData[48]++;
+    this.callbacks = callbacks;
+    _$jscoverage['/router/route.js'].lineData[48]++;
+    if (visit6_48_1(typeof path === 'string')) {
+      _$jscoverage['/router/route.js'].lineData[49]++;
       S.mix(this, pathRegexp(path));
     } else {
-      _$jscoverage['/router/route.js'].lineData[50]++;
+      _$jscoverage['/router/route.js'].lineData[51]++;
       this.regexp = path;
     }
   }
-  _$jscoverage['/router/route.js'].lineData[54]++;
+  _$jscoverage['/router/route.js'].lineData[55]++;
   Route.prototype = {
   match: function(path) {
   _$jscoverage['/router/route.js'].functionData[4]++;
-  _$jscoverage['/router/route.js'].lineData[56]++;
+  _$jscoverage['/router/route.js'].lineData[57]++;
   var self = this, m = path.match(self.regexp);
-  _$jscoverage['/router/route.js'].lineData[59]++;
-  if (visit7_59_1(!m)) {
-    _$jscoverage['/router/route.js'].lineData[60]++;
+  _$jscoverage['/router/route.js'].lineData[60]++;
+  if (visit7_60_1(!m)) {
+    _$jscoverage['/router/route.js'].lineData[61]++;
     return false;
   }
-  _$jscoverage['/router/route.js'].lineData[63]++;
-  var keys = visit8_63_1(self.keys || []), params = [];
-  _$jscoverage['/router/route.js'].lineData[66]++;
-  for (var i = 1, len = m.length; visit9_66_1(i < len); ++i) {
-    _$jscoverage['/router/route.js'].lineData[67]++;
+  _$jscoverage['/router/route.js'].lineData[64]++;
+  var keys = visit8_64_1(self.keys || []), params = [];
+  _$jscoverage['/router/route.js'].lineData[67]++;
+  for (var i = 1, len = m.length; visit9_67_1(i < len); ++i) {
+    _$jscoverage['/router/route.js'].lineData[68]++;
     var key = keys[i - 1];
-    _$jscoverage['/router/route.js'].lineData[69]++;
-    var val = visit10_69_1('string' === typeof m[i]) ? S.urlDecode(m[i]) : m[i];
-    _$jscoverage['/router/route.js'].lineData[71]++;
-    if (visit11_71_1(key)) {
-      _$jscoverage['/router/route.js'].lineData[72]++;
+    _$jscoverage['/router/route.js'].lineData[70]++;
+    var val = visit10_70_1('string' === typeof m[i]) ? S.urlDecode(m[i]) : m[i];
+    _$jscoverage['/router/route.js'].lineData[72]++;
+    if (visit11_72_1(key)) {
+      _$jscoverage['/router/route.js'].lineData[73]++;
       params[key.name] = val;
     } else {
-      _$jscoverage['/router/route.js'].lineData[74]++;
+      _$jscoverage['/router/route.js'].lineData[75]++;
       params.push(val);
     }
   }
-  _$jscoverage['/router/route.js'].lineData[78]++;
+  _$jscoverage['/router/route.js'].lineData[79]++;
   return params;
+}, 
+  removeCallback: function(callback) {
+  _$jscoverage['/router/route.js'].functionData[5]++;
+  _$jscoverage['/router/route.js'].lineData[83]++;
+  var callbacks = visit12_83_1(this.callbacks || []);
+  _$jscoverage['/router/route.js'].lineData[84]++;
+  for (var i = callbacks.length - 1; visit13_84_1(i >= 0); i++) {
+    _$jscoverage['/router/route.js'].lineData[85]++;
+    if (visit14_85_1(callbacks === callback)) {
+      _$jscoverage['/router/route.js'].lineData[86]++;
+      callbacks.splice(i, 1);
+    }
+  }
 }};
-  _$jscoverage['/router/route.js'].lineData[82]++;
+  _$jscoverage['/router/route.js'].lineData[92]++;
   return Route;
 });
