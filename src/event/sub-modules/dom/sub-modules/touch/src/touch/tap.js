@@ -8,10 +8,6 @@ KISSY.add(function (S, require) {
     var DomEvent = require('event/dom/base');
     var SingleTouch = require('./single-touch');
 
-    function preventDefault(e) {
-        e.preventDefault();
-    }
-
     var SINGLE_TAP_EVENT = 'singleTap',
         DOUBLE_TAP_EVENT = 'doubleTap',
         TAP_HOLD_EVENT = 'tapHold',
@@ -102,13 +98,6 @@ KISSY.add(function (S, require) {
             // call e.preventDefault on tap event to prevent tap penetration
             eventObject.originalEvent = e.originalEvent;
             DomEvent.fire(target, TAP_EVENT, eventObject);
-            // preventDefault on tap cause preventDefault click
-            if (eventObject.isDefaultPrevented()) {
-                DomEvent.on(target, 'click', {
-                    fn: preventDefault,
-                    once: 1
-                });
-            }
 
             // fire singleTap or doubleTap
             var lastEndTime = self.lastEndTime,
