@@ -16,8 +16,7 @@
 <script src="/kissy/build/seed.js"></script>
 <script src="/kissy/src/package.js"></script>
 <script>
-    KISSY.use('navigation-view,node,promise,router', function (S, NavigationView, Node, Promise, router) {
-        var Defer = Promise.Defer;
+    KISSY.use('navigation-view,node,router', function (S, NavigationView, Node, router) {
         var navigationView = new NavigationView({
             barTitle: 'Navigation bar',
             render: 'body'
@@ -26,21 +25,18 @@
         var Controller = NavigationView.Controller;
 
         var Detail = SubView.extend({
+            bindUI: function () {
+                this.get('el').delegate('click', '.another', this.onButtonClick, this);
+                this.get('el').delegate('click', '.sub', this.onButtonClick2, this);
+            },
+
             setItem: function (id, content) {
                 this.id = id;
                 content = id + ': ' + content;
-                if (this.button) {
-                    this.button.remove();
-                }
-                if (this.button2) {
-                    this.button2.remove();
-                }
                 var el = this.get('el');
-                el.html('<div>' + content + '</div>');
-                this.button = new Node('<button>got another</button>').appendTo(el);
-                this.button.on('click', this.onButtonClick, this);
-                this.button2 = new Node('<button>update sub content</button>').appendTo(el);
-                this.button2.on('click', this.onButtonClick2, this);
+                el.html('<div>' + content + '</div>' +
+                        '<button class="another">got another</button>' +
+                        '<button class="sub">got another</button>');
                 this.subContent = new Node('<div>sub content</div>').appendTo(el);
                 this.set('title', content);
             },
@@ -70,7 +66,11 @@
             },
 
             leave: function () {
-                //S.log('leave detail');
+                S.log('leave detail');
+            },
+
+            enter: function () {
+                S.log('enter detail');
             },
 
             needNavigation: function (request) {
@@ -126,7 +126,11 @@
 
         var IndexController = Controller.extend({
             leave: function () {
-                //S.log('leave index');
+                S.log('leave index');
+            },
+
+            enter: function () {
+                S.log('enter index');
             },
 
             index: function () {

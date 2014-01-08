@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Jan 8 13:15
+build time: Jan 8 16:54
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -22,13 +22,20 @@ KISSY.add("navigation-view/controller", ["base", "router", "promise"], function(
     var self = this;
     var subView = self.getSubView();
     var navigationView = self.get("navigationView");
+    var activeView = navigationView.get("activeView");
     if(!subView) {
       subView = new (self.get("SubView"));
       navigationView.addChild(subView);
       subView.get("el").css("transform", "translateX(-9999px) translateZ(0)")
     }
     subView.controller = self;
-    if(navigationView.get("activeView") !== subView || self.needNavigation(request)) {
+    if(activeView !== subView || self.needNavigation(request)) {
+      if(activeView) {
+        activeView.controller.leave()
+      }
+      if(navigationView.waitingView) {
+        navigationView.waitingView.leave()
+      }
       self.reload();
       self.go(request)
     }
@@ -47,6 +54,7 @@ KISSY.add("navigation-view/controller", ["base", "router", "promise"], function(
   }, needNavigation:function() {
     return true
   }, leave:function() {
+  }, enter:function() {
   }, getSubView:function() {
     var self = this;
     var navigationView = self.get("navigationView");
@@ -61,7 +69,8 @@ KISSY.add("navigation-view/controller", ["base", "router", "promise"], function(
   }, reload:function() {
     this.getSubView().reset("title");
     this.defer = new Promise.Defer;
-    this.promise = this.defer.promise
+    this.promise = this.defer.promise;
+    this.enter()
   }, push:function(url) {
     router.navigate(url)
   }, go:function(request) {
@@ -280,13 +289,9 @@ KISSY.add("navigation-view", ["node", "navigation-view/controller", "component/c
       loadingEl.show();
       loadingEl.animate({left:"0"}, {useTransition:true, easing:"ease-in-out", duration:0.25});
       this.set("activeView", null);
-      bar.forward(subView.get("title"));
-      activeView.controller.leave()
+      bar.forward(subView.get("title"))
     }else {
       bar.set("title", subView.get("title"))
-    }
-    if(self.waitingView) {
-      self.waitingView.controller.leave()
     }
     self.waitingView = subView;
     subView.controller.promise.then(function() {
@@ -312,15 +317,10 @@ KISSY.add("navigation-view", ["node", "navigation-view/controller", "component/c
         this.animEl.stop(true);
         this.animEl.animate({transform:"translateX(" + activeView.get("el")[0].offsetWidth + "px) translateZ(0)"}, {useTransition:true, easing:"ease-in-out", duration:0.25});
         this.set("activeView", null);
-        activeView.controller.leave();
         loadingEl.stop(true);
         loadingEl.css("left", "-100%");
         loadingEl.show();
         loadingEl.animate({left:"0"}, {useTransition:true, easing:"ease-in-out", duration:0.25})
-      }else {
-        if(self.waitingView) {
-          self.waitingView.controller.leave()
-        }
       }
       bar.back(subView.get("title"), this.viewStack.length > 1);
       self.waitingView = subView;

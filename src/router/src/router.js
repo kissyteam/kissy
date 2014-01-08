@@ -256,14 +256,32 @@ KISSY.add(function (S, require, exports) {
         return false;
     };
 
+    function onPopState(e) {
+        // page to be rendered
+        var state = e.originalEvent.state;
+        var backward = false;
+
+        if (state.pageDepth === pageIdHistory[pageIdHistory.length - 2]) {
+            backward = true;
+            pageIdHistory.pop();
+        } else {
+            pageIdHistory.push(state.pageDepth);
+        }
+
+        //S.log('backward: ' + backward);
+        //S.log(pageIdHistory);
+        dispatch(backward);
+    }
+
     /**
      * Start router (url monitor).
      * @static
      * @member KISSY.Router
-     * @param {Object} opts
-     * @param {Function} opts.success Callback function to be called after router is started.
-     * @param {String} opts.urlRoot Specify url root for html5 history management.
-     * @param {Boolean} opts.useHash Whether use hash url.
+     * @param {Object} [opts]
+     * @param {Function} [opts.success] Callback function to be called after router is started.
+     * @param {String} [opts.urlRoot] Specify url root for html5 history management.
+     * @param {Boolean} [opts.useHash=true] Whether to use hash url for navigation.
+     * false is only invalid for html history supported browsers
      */
     exports.start = function (opts) {
         opts = opts || {};
@@ -276,6 +294,10 @@ KISSY.add(function (S, require, exports) {
         opts.urlRoot = (opts.urlRoot || '').replace(/\/$/, '');
         useHash = opts.useHash;
         urlRoot = opts.urlRoot;
+
+        if (useHash === undefined) {
+            useHash = true;
+        }
 
         var locPath = location.pathname,
             hash = getUrlForRouter(),
@@ -313,20 +335,7 @@ KISSY.add(function (S, require, exports) {
         setTimeout(function () {
             var needReplaceHistory = supportNativeHistory;
             if (supportNativeHistory) {
-                DomEvent.on(win, 'popstate', function (e) {
-                    // page to be rendered
-                    var state = e.originalEvent.state;
-                    var backward = false;
-                    if (state.pageDepth === pageIdHistory[pageIdHistory.length - 2]) {
-                        backward = true;
-                        pageIdHistory.pop();
-                    } else {
-                        pageIdHistory.push(state.pageDepth);
-                    }
-                    //S.log('backward: ' + backward);
-                    //S.log(pageIdHistory);
-                    dispatch(backward);
-                });
+                DomEvent.on(win, 'popstate', onPopState);
                 // html5 triggerRoute is leaved to user decision
                 // if provide no #! hash
             } else {
@@ -367,6 +376,7 @@ KISSY.add(function (S, require, exports) {
     // private
     exports.stop = function () {
         started = false;
-        DomEvent.detach(win, 'popstate hashchange', dispatch);
+        DomEvent.detach(win, 'hashchange', dispatch);
+        DomEvent.detach(win, 'popstate', onPopState);
     };
 });

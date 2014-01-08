@@ -311,19 +311,8 @@ if (! _$jscoverage['/meta/modules.js'].branchData) {
   _$jscoverage['/meta/modules.js'].branchData['108'][1] = new BranchData();
   _$jscoverage['/meta/modules.js'].branchData['152'] = [];
   _$jscoverage['/meta/modules.js'].branchData['152'][1] = new BranchData();
-  _$jscoverage['/meta/modules.js'].branchData['154'] = [];
-  _$jscoverage['/meta/modules.js'].branchData['154'][1] = new BranchData();
-  _$jscoverage['/meta/modules.js'].branchData['154'][2] = new BranchData();
 }
-_$jscoverage['/meta/modules.js'].branchData['154'][2].init(389, 13, 'UA.ieMode > 9');
-function visit539_154_2(result) {
-  _$jscoverage['/meta/modules.js'].branchData['154'][2].ranCondition(result);
-  return result;
-}_$jscoverage['/meta/modules.js'].branchData['154'][1].init(379, 23, '!UA.ie || UA.ieMode > 9');
-function visit538_154_1(result) {
-  _$jscoverage['/meta/modules.js'].branchData['154'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/meta/modules.js'].branchData['152'][1].init(313, 13, 'UA.ieMode < 9');
+_$jscoverage['/meta/modules.js'].branchData['152'][1].init(313, 13, 'UA.ieMode < 9');
 function visit537_152_1(result) {
   _$jscoverage['/meta/modules.js'].branchData['152'][1].ranCondition(result);
   return result;
@@ -471,7 +460,7 @@ function visit535_6_1(result) {
   _$jscoverage['/meta/modules.js'].lineData[142]++;
   config({
   'event/dom': {
-  alias: ['event/dom/base', Features.isTouchGestureSupported() ? 'event/dom/touch' : '', Features.isDeviceMotionSupported() ? 'event/dom/shake' : '', Features.isHashChangeSupported() ? '' : 'event/dom/hashchange', visit537_152_1(UA.ieMode < 9) ? 'event/dom/ie' : '', (visit538_154_1(!UA.ie || visit539_154_2(UA.ieMode > 9))) ? '' : 'event/dom/input', UA.ie ? '' : 'event/dom/focusin']}});
+  alias: ['event/dom/base', Features.isTouchGestureSupported() ? 'event/dom/touch' : '', Features.isDeviceMotionSupported() ? 'event/dom/shake' : '', Features.isHashChangeSupported() ? '' : 'event/dom/hashchange', visit537_152_1(UA.ieMode < 9) ? 'event/dom/ie' : '', Features.isInputEventSupported() ? '' : 'event/dom/input', UA.ie ? '' : 'event/dom/focusin']}});
   _$jscoverage['/meta/modules.js'].lineData[160]++;
   config({
   'event/dom/base': {
@@ -491,7 +480,7 @@ function visit535_6_1(result) {
   _$jscoverage['/meta/modules.js'].lineData[176]++;
   config({
   'event/dom/input': {
-  requires: ['dom', 'event/dom/base']}});
+  requires: ['event/dom/base', 'dom']}});
   _$jscoverage['/meta/modules.js'].lineData[180]++;
   config({
   'event/dom/shake': {

@@ -11,13 +11,20 @@ KISSY.add(function (S, require) {
         var self = this;
         var subView = self.getSubView();
         var navigationView = self.get('navigationView');
+        var activeView = navigationView.get('activeView');
         if (!subView) {
             subView = new (self.get('SubView'))();
             navigationView.addChild(subView);
             subView.get('el').css('transform', 'translateX(-9999px) translateZ(0)');
         }
         subView.controller = self;
-        if (navigationView.get('activeView') !== subView || self.needNavigation(request)) {
+        if (activeView !== subView || self.needNavigation(request)) {
+            if (activeView) {
+                activeView.controller.leave();
+            }
+            if (navigationView.waitingView) {
+                navigationView.waitingView.leave();
+            }
             self.reload();
             self.go(request);
         }
@@ -44,7 +51,9 @@ KISSY.add(function (S, require) {
         },
 
         leave: function () {
+        },
 
+        enter: function () {
         },
 
         getSubView: function () {
@@ -64,6 +73,7 @@ KISSY.add(function (S, require) {
             this.getSubView().reset('title');
             this.defer = new Promise.Defer();
             this.promise = this.defer.promise;
+            this.enter();
         },
 
         push: function (url) {

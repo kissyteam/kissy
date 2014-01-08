@@ -77,7 +77,7 @@ KISSY.add(function (S, Router) {
 
             Router.start({
                 urlRoot: new S.Uri(location.href).resolve('./').getPath(),
-                useNativeHistory: 1
+                useHash: false
             });
 
             waits(200);
@@ -141,7 +141,7 @@ KISSY.add(function (S, Router) {
 
                 Router.start({
                     urlRoot: urlRoot,
-                    useNativeHistory: 1,
+                    useHash: false,
                     success: function () {
                         Router.navigate("/list/");
                         ok = 1;

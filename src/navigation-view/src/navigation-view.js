@@ -72,13 +72,8 @@ KISSY.add(function (S, require) {
                 });
                 this.set('activeView', null);
                 bar.forward(subView.get('title'));
-                activeView.controller.leave();
             } else {
                 bar.set('title', subView.get('title'));
-            }
-
-            if (self.waitingView) {
-                self.waitingView.controller.leave();
             }
 
             self.waitingView = subView;
@@ -114,7 +109,6 @@ KISSY.add(function (S, require) {
                         duration: 0.25
                     });
                     this.set('activeView', null);
-                    activeView.controller.leave();
                     loadingEl.stop(true);
                     loadingEl.css('left', '-100%');
                     loadingEl.show();
@@ -125,8 +119,6 @@ KISSY.add(function (S, require) {
                         easing: 'ease-in-out',
                         duration: 0.25
                     });
-                } else if (self.waitingView) {
-                    self.waitingView.controller.leave();
                 }
 
                 bar.back(subView.get('title'), this.viewStack.length > 1);

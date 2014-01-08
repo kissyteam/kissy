@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Jan 8 13:16
+build time: Jan 8 16:54
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -291,6 +291,17 @@ KISSY.add("router", ["./router/utils", "./router/route", "uri", "./router/reques
     }
     return false
   };
+  function onPopState(e) {
+    var state = e.originalEvent.state;
+    var backward = false;
+    if(state.pageDepth === pageIdHistory[pageIdHistory.length - 2]) {
+      backward = true;
+      pageIdHistory.pop()
+    }else {
+      pageIdHistory.push(state.pageDepth)
+    }
+    dispatch(backward)
+  }
   exports.start = function(opts) {
     opts = opts || {};
     if(started) {
@@ -299,6 +310,9 @@ KISSY.add("router", ["./router/utils", "./router/route", "uri", "./router/reques
     opts.urlRoot = (opts.urlRoot || "").replace(/\/$/, "");
     useHash = opts.useHash;
     urlRoot = opts.urlRoot;
+    if(useHash === undefined) {
+      useHash = true
+    }
     var locPath = location.pathname, hash = getUrlForRouter(), hashIsValid = location.hash.match(/#!.+/);
     if(!useHash) {
       if(supportNativeHistory) {
@@ -320,17 +334,7 @@ KISSY.add("router", ["./router/utils", "./router/route", "uri", "./router/reques
     setTimeout(function() {
       var needReplaceHistory = supportNativeHistory;
       if(supportNativeHistory) {
-        DomEvent.on(win, "popstate", function(e) {
-          var state = e.originalEvent.state;
-          var backward = false;
-          if(state.pageDepth === pageIdHistory[pageIdHistory.length - 2]) {
-            backward = true;
-            pageIdHistory.pop()
-          }else {
-            pageIdHistory.push(state.pageDepth)
-          }
-          dispatch(backward)
-        })
+        DomEvent.on(win, "popstate", onPopState)
       }else {
         DomEvent.on(win, "hashchange", dispatch);
         opts.triggerRoute = 1
@@ -357,7 +361,8 @@ KISSY.add("router", ["./router/utils", "./router/route", "uri", "./router/reques
   };
   exports.stop = function() {
     started = false;
-    DomEvent.detach(win, "popstate hashchange", dispatch)
+    DomEvent.detach(win, "hashchange", dispatch);
+    DomEvent.detach(win, "popstate", onPopState)
   }
 });
 

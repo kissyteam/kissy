@@ -66,9 +66,6 @@ KISSY.add(function (S, Router) {
 
             expect(Router.matchRoute('/list2/what/item')).toBeTruthy();
 
-            // restore hash to its original value
-            location.hash = '';
-
             Router.start();
 
             waits(200);
@@ -193,7 +190,7 @@ KISSY.add(function (S, Router) {
             waits(200);
 
             runs(function () {
-                expect(getHash()).toBe('');
+                expect(getHash()).toBe('/');
             });
 
             runs(function () {
