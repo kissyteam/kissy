@@ -60,7 +60,7 @@ KISSY.add(function (S) {
             // #!/home/q={%22thedate%22:%2220121010~20121010%22}
             // firefox 15 => #!/home/q={"thedate":"20121010~20121010"}
             // !! :(
-            return uri.getFragment().replace(/^!/, '');
+            return uri.getFragment().replace(/^!/, '').replace(/__ks-vid=.+$/, '');
         }
     };
 });

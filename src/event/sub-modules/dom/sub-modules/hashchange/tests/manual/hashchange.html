@@ -26,6 +26,10 @@
 <script>
     KISSY.use("dom,event/dom", function (S, Dom, Event) {
         Event.on(window, "hashchange", function (ev) {
+            S.log('simulated?: ' + (!('clientX' in ev.originalEvent) && !('preventDefault' in ev.originalEvent)));
+            S.log('newURL: ' + ev.newURL);
+            S.log('oldURL: ' + ev.oldURL);
+            S.log('oldURL: ' + ev.originalEvent.oldURL);
             Dom.get('#test').innerHTML = location.hash;
         });
     });

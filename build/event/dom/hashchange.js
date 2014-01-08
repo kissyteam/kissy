@@ -1,10 +1,10 @@
 /*
-Copyright 2013, KISSY v1.50
+Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Dec 12 22:18
+build time: Jan 8 19:03
 */
 /*
- Combined processedModules by KISSY Module Compiler: 
+ Combined modules by KISSY Module Compiler: 
 
  event/dom/hashchange
 */
@@ -12,7 +12,7 @@ build time: Dec 12 22:18
 KISSY.add("event/dom/hashchange", ["event/dom/base", "dom"], function(S, require) {
   var DomEvent = require("event/dom/base");
   var Dom = require("dom");
-  var UA = S.UA, Special = DomEvent.Special, win = S.Env.host, doc = win.document, docMode = UA.ieMode, REPLACE_HISTORY = "__replace_history_" + S.now(), ie = docMode || UA.ie, HASH_CHANGE = "hashchange";
+  var UA = S.UA, urlWithoutHash, Special = DomEvent.Special, win = S.Env.host, doc = win.document, docMode = UA.ieMode, REPLACE_HISTORY = "__replace_history_" + S.now(), ie = docMode || UA.ie, HASH_CHANGE = "hashchange";
   DomEvent.REPLACE_HISTORY = REPLACE_HISTORY;
   function getIframeDoc(iframe) {
     return iframe.contentWindow.document
@@ -27,7 +27,6 @@ KISSY.add("event/dom/hashchange", ["event/dom/base", "dom"], function(S, require
       location.hash = hash
     }
     if(hash !== lastHash) {
-      lastHash = hash;
       hashChange(hash, replaceHistory)
     }
     timer = setTimeout(poll, POLL_INTERVAL)
@@ -46,7 +45,8 @@ KISSY.add("event/dom/hashchange", ["event/dom/base", "dom"], function(S, require
   } : function() {
     notifyHashChange()
   }, notifyHashChange = function() {
-    DomEvent.fireHandler(win, HASH_CHANGE)
+    DomEvent.fireHandler(win, HASH_CHANGE, {newURL:location.href, oldURL:urlWithoutHash + lastHash});
+    lastHash = getHash()
   }, setup = function() {
     if(!timer) {
       poll()
@@ -69,20 +69,17 @@ KISSY.add("event/dom/hashchange", ["event/dom/base", "dom"], function(S, require
           DomEvent.add(iframe, "load", onIframeLoad);
           poll()
         });
-        doc.onpropertychange = function() {
+        doc.attachEvent("propertychange", function(e) {
+          e = e || window.event;
           try {
-            if(event.propertyName === "title") {
+            if(e.propertyName === "title") {
               getIframeDoc(iframe).title = doc.title + " - " + getHash()
             }
           }catch(e) {
           }
-        };
+        });
         var onIframeLoad = function() {
-          var c = S.trim(getIframeDoc(iframe).body.innerText), ch = getHash();
-          if(c !== ch) {
-            location.hash = c;
-            lastHash = c
-          }
+          location.hash = S.trim(getIframeDoc(iframe).body.innerText);
           notifyHashChange()
         }
       }
@@ -102,6 +99,7 @@ KISSY.add("event/dom/hashchange", ["event/dom/base", "dom"], function(S, require
       return
     }
     lastHash = getHash();
+    urlWithoutHash = location.href.replace(/#.+/, "");
     setup()
   }, tearDown:function() {
     if(this !== win) {

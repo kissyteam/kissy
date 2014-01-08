@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Jan 6 23:43
+build time: Jan 8 19:02
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -85,7 +85,7 @@ KISSY.add("event/dom/base/object", ["event/base"], function(S, require) {
     if(event.metaKey === undefined) {
       event.metaKey = event.ctrlKey
     }
-  }}, {reg:/^touch/, props:["touches", "changedTouches", "targetTouches"]}, {reg:/^gesturechange$/i, props:["rotation", "scale"]}, {reg:/^(mousewheel|DOMMouseScroll)$/, props:[], fix:function(event, originalEvent) {
+  }}, {reg:/^touch/, props:["touches", "changedTouches", "targetTouches"]}, {reg:/^hashchange$/, props:["newURL", "oldURL"]}, {reg:/^gesturechange$/i, props:["rotation", "scale"]}, {reg:/^(mousewheel|DOMMouseScroll)$/, props:[], fix:function(event, originalEvent) {
     var deltaX, deltaY, delta, wheelDelta = originalEvent.wheelDelta, axis = originalEvent.axis, wheelDeltaY = originalEvent.wheelDeltaY, wheelDeltaX = originalEvent.wheelDeltaX, detail = originalEvent.detail;
     if(wheelDelta) {
       delta = wheelDelta / 120

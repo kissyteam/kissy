@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Jan 8 16:54
+build time: Jan 9 00:15
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -34,7 +34,7 @@ KISSY.add("navigation-view/controller", ["base", "router", "promise"], function(
         activeView.controller.leave()
       }
       if(navigationView.waitingView) {
-        navigationView.waitingView.leave()
+        navigationView.waitingView.controller.leave()
       }
       self.reload();
       self.go(request)
@@ -71,8 +71,8 @@ KISSY.add("navigation-view/controller", ["base", "router", "promise"], function(
     this.defer = new Promise.Defer;
     this.promise = this.defer.promise;
     this.enter()
-  }, push:function(url) {
-    router.navigate(url)
+  }, navigate:function(url, options) {
+    router.navigate(url, options)
   }, go:function(request) {
     this.get("navigationView")[request.backward ? "pop" : "push"](this.getSubView())
   }, isSubViewActive:function() {

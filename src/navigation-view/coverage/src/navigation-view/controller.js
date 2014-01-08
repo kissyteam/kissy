@@ -382,7 +382,7 @@ KISSY.add(function(S, require) {
       _$jscoverage['/navigation-view/controller.js'].lineData[25]++;
       if (visit16_25_1(navigationView.waitingView)) {
         _$jscoverage['/navigation-view/controller.js'].lineData[26]++;
-        navigationView.waitingView.leave();
+        navigationView.waitingView.controller.leave();
       }
       _$jscoverage['/navigation-view/controller.js'].lineData[28]++;
       self.reload();
@@ -458,10 +458,10 @@ KISSY.add(function(S, require) {
   _$jscoverage['/navigation-view/controller.js'].lineData[76]++;
   this.enter();
 }, 
-  push: function(url) {
+  navigate: function(url, options) {
   _$jscoverage['/navigation-view/controller.js'].functionData[8]++;
   _$jscoverage['/navigation-view/controller.js'].lineData[80]++;
-  router.navigate(url);
+  router.navigate(url, options);
 }, 
   go: function(request) {
   _$jscoverage['/navigation-view/controller.js'].functionData[9]++;

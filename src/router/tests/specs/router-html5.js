@@ -158,7 +158,7 @@ KISSY.add(function (S, Router) {
             runs(function () {
                 // 取代上个记录
                 Router.navigate("/detail/", {
-                    replaceHistory: 1
+                    replace: 1
                 });
             });
 

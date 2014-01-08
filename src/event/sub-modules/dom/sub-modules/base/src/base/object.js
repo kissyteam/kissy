@@ -35,6 +35,10 @@ KISSY.add(function (S, require) {
                 props: ['touches', 'changedTouches', 'targetTouches']
             },
             {
+                reg: /^hashchange$/,
+                props: ['newURL', 'oldURL']
+            },
+            {
                 reg: /^gesturechange$/i,
                 props: ['rotation', 'scale']
             },
@@ -414,7 +418,7 @@ KISSY.add(function (S, require) {
         S.each(eventNormalizers, function (normalizer) {
             if (type.match(normalizer.reg)) {
                 props = props.concat(normalizer.props);
-                if (normalizer.fix){
+                if (normalizer.fix) {
                     fixFns.push(normalizer.fix);
                 }
             }

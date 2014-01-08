@@ -23,7 +23,7 @@ KISSY.add(function (S, require) {
                 activeView.controller.leave();
             }
             if (navigationView.waitingView) {
-                navigationView.waitingView.leave();
+                navigationView.waitingView.controller.leave();
             }
             self.reload();
             self.go(request);
@@ -76,8 +76,8 @@ KISSY.add(function (S, require) {
             this.enter();
         },
 
-        push: function (url) {
-            router.navigate(url);
+        navigate: function (url, options) {
+            router.navigate(url, options);
         },
 
         go: function (request) {

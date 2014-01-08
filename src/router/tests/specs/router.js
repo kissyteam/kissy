@@ -154,7 +154,7 @@ KISSY.add(function (S, Router) {
 
             runs(function () {
                 Router.navigate("/detail/", {
-                    replaceHistory: 1
+                    replace: 1
                 });
             });
 

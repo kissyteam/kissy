@@ -6,8 +6,8 @@
 KISSY.add(function (S, require) {
     var DomEvent = require('event/dom/base');
     var Dom = require('dom');
-
     var UA = S.UA,
+        urlWithoutHash,
         Special = DomEvent.Special,
         win = S.Env.host,
         doc = win.document,
@@ -49,7 +49,8 @@ KISSY.add(function (S, require) {
         lastHash,
 
         poll = function () {
-            var hash = getHash(), replaceHistory;
+            var hash = getHash(),
+                replaceHistory;
 
             if ((replaceHistory = S.endsWith(hash, REPLACE_HISTORY))) {
                 hash = hash.slice(0, -REPLACE_HISTORY.length);
@@ -59,7 +60,6 @@ KISSY.add(function (S, require) {
             if (hash !== lastHash) {
                 // S.log('poll success :' + hash + ' :' + lastHash);
                 // 通知完调用者 hashchange 事件前设置 lastHash
-                lastHash = hash;
                 // ie<8 同步 : hashChange -> onIframeLoad
                 hashChange(hash, replaceHistory);
             }
@@ -103,7 +103,11 @@ KISSY.add(function (S, require) {
         notifyHashChange = function () {
             // S.log('hash changed : ' + getHash());
             // does not need bubbling
-            DomEvent.fireHandler(win, HASH_CHANGE);
+            DomEvent.fireHandler(win, HASH_CHANGE, {
+                newURL: location.href,
+                oldURL: urlWithoutHash + lastHash
+            });
+            lastHash = getHash();
         },
         setup = function () {
             if (!timer) {
@@ -157,15 +161,16 @@ KISSY.add(function (S, require) {
                 // prettify the back/next history menu entries. Since IE sometimes
                 // errors with 'Unspecified error' the very first time this is set
                 // (yes, very useful) wrap this with a try/catch block.
-                doc.onpropertychange = function () {
+                doc.attachEvent('propertychange', function (e) {
+                    e = e || window.event;
                     try {
-                        if (event.propertyName === 'title') {
+                        if (e.propertyName === 'title') {
                             getIframeDoc(iframe).title =
                                 doc.title + ' - ' + getHash();
                         }
                     } catch (e) {
                     }
-                };
+                });
 
                 /*
                  前进后退 ： onIframeLoad -> 触发
@@ -178,28 +183,25 @@ KISSY.add(function (S, require) {
 
                     // 2011.11.02 note: 不能用 innerHTML 会自动转义！！
                     // #/x?z=1&y=2 => #/x?z=1&amp;y=2
-                    var c = S.trim(getIframeDoc(iframe).body.innerText),
-                        ch = getHash();
 
                     // 后退时不等
                     // 定时器调用 hashChange() 修改 iframe 同步调用过来的(手动改变 location)则相等
-                    if (c !== ch) {
-                        // S.log('set loc hash :' + c);
-                        location.hash = c;
-                        // 使 last hash 为 iframe 历史， 不然重新写iframe，
-                        // 会导致最新状态（丢失前进状态）
 
-                        // 后退则立即触发 hashchange，
-                        // 并更新定时器记录的上个 hash 值
-                        lastHash = c;
-                    }
+                    // S.log('set loc hash :' + c);
+                    location.hash = S.trim(getIframeDoc(iframe).body.innerText);
+                    // 使 last hash 为 iframe 历史， 不然重新写iframe，
+                    // 会导致最新状态（丢失前进状态）
+
+                    // 后退则立即触发 hashchange，
+                    // 并更新定时器记录的上个 hash 值
+
                     notifyHashChange();
                 };
             }
         };
 
         tearDown = function () {
-            if(timer){
+            if (timer) {
                 clearTimeout(timer);
             }
             timer = 0;
@@ -217,6 +219,7 @@ KISSY.add(function (S, require) {
             // 第一次启动 hashchange 时取一下，不能类库载入后立即取
             // 防止类库嵌入后，手动修改过 hash，
             lastHash = getHash();
+            urlWithoutHash = location.href.replace(/#.+/, '');
             // 不用注册 dom 事件
             setup();
         },
@@ -230,6 +233,12 @@ KISSY.add(function (S, require) {
 });
 
 /*
+ 2014-01-08
+ - support newURL oldURL
+ - known bugs: newURL oldURL always contains #, for example xx.com/#
+ - when backward, url contains #, for example xx.com/#
+
+
  已知 bug :
  - ie67 有时后退后取得的 location.hash 不和地址栏一致，导致必须后退两次才能触发 hashchange
 

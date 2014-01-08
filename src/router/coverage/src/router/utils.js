@@ -357,6 +357,6 @@ KISSY.add(function(S) {
   getHash: function(uri) {
   _$jscoverage['/router/utils.js'].functionData[9]++;
   _$jscoverage['/router/utils.js'].lineData[63]++;
-  return uri.getFragment().replace(/^!/, '');
+  return uri.getFragment().replace(/^!/, '').replace(/__ks-vid=.+$/, '');
 }};
 });

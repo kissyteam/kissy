@@ -46,11 +46,14 @@
             },
 
             onButtonClick: function () {
-                this.controller.push('/item/' + new Date().valueOf())
+                this.controller.navigate('/item/' + new Date().valueOf())
             },
 
             onButtonClick2: function () {
-                this.controller.push('/item/' + this.id + '/' + new Date().valueOf())
+                this.controller.navigate('/item/' + this.id +
+                        '/' + new Date().valueOf(), {
+                    replace: true
+                });
             }
         });
 
@@ -113,7 +116,7 @@
                 var el = this.get('el');
                 el.html('<div style="margin: 40px"><button>view item</button></div>');
                 el.one('button').on('click', function () {
-                    self.controller.push('/item/1');
+                    self.controller.navigate('/item/1');
                 });
             }
         }, {
@@ -160,6 +163,8 @@
 
         router.start({
             triggerRoute: true,
+            // for test
+            useHashChange: location.href.indexOf('useHashChange') != -1,
             useHash: true
         });
     });
