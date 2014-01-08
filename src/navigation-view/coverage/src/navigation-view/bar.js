@@ -276,10 +276,9 @@ if (! _$jscoverage['/navigation-view/bar.js']) {
   _$jscoverage['/navigation-view/bar.js'].lineData[144] = 0;
   _$jscoverage['/navigation-view/bar.js'].lineData[145] = 0;
   _$jscoverage['/navigation-view/bar.js'].lineData[146] = 0;
-  _$jscoverage['/navigation-view/bar.js'].lineData[149] = 0;
+  _$jscoverage['/navigation-view/bar.js'].lineData[147] = 0;
+  _$jscoverage['/navigation-view/bar.js'].lineData[148] = 0;
   _$jscoverage['/navigation-view/bar.js'].lineData[150] = 0;
-  _$jscoverage['/navigation-view/bar.js'].lineData[151] = 0;
-  _$jscoverage['/navigation-view/bar.js'].lineData[152] = 0;
   _$jscoverage['/navigation-view/bar.js'].lineData[153] = 0;
   _$jscoverage['/navigation-view/bar.js'].lineData[154] = 0;
   _$jscoverage['/navigation-view/bar.js'].lineData[155] = 0;
@@ -287,15 +286,27 @@ if (! _$jscoverage['/navigation-view/bar.js']) {
   _$jscoverage['/navigation-view/bar.js'].lineData[157] = 0;
   _$jscoverage['/navigation-view/bar.js'].lineData[158] = 0;
   _$jscoverage['/navigation-view/bar.js'].lineData[159] = 0;
-  _$jscoverage['/navigation-view/bar.js'].lineData[161] = 0;
+  _$jscoverage['/navigation-view/bar.js'].lineData[160] = 0;
   _$jscoverage['/navigation-view/bar.js'].lineData[162] = 0;
+  _$jscoverage['/navigation-view/bar.js'].lineData[163] = 0;
   _$jscoverage['/navigation-view/bar.js'].lineData[164] = 0;
   _$jscoverage['/navigation-view/bar.js'].lineData[165] = 0;
   _$jscoverage['/navigation-view/bar.js'].lineData[166] = 0;
+  _$jscoverage['/navigation-view/bar.js'].lineData[167] = 0;
+  _$jscoverage['/navigation-view/bar.js'].lineData[168] = 0;
   _$jscoverage['/navigation-view/bar.js'].lineData[169] = 0;
   _$jscoverage['/navigation-view/bar.js'].lineData[171] = 0;
   _$jscoverage['/navigation-view/bar.js'].lineData[172] = 0;
+  _$jscoverage['/navigation-view/bar.js'].lineData[174] = 0;
+  _$jscoverage['/navigation-view/bar.js'].lineData[175] = 0;
+  _$jscoverage['/navigation-view/bar.js'].lineData[176] = 0;
   _$jscoverage['/navigation-view/bar.js'].lineData[177] = 0;
+  _$jscoverage['/navigation-view/bar.js'].lineData[180] = 0;
+  _$jscoverage['/navigation-view/bar.js'].lineData[181] = 0;
+  _$jscoverage['/navigation-view/bar.js'].lineData[183] = 0;
+  _$jscoverage['/navigation-view/bar.js'].lineData[184] = 0;
+  _$jscoverage['/navigation-view/bar.js'].lineData[185] = 0;
+  _$jscoverage['/navigation-view/bar.js'].lineData[190] = 0;
 }
 if (! _$jscoverage['/navigation-view/bar.js'].functionData) {
   _$jscoverage['/navigation-view/bar.js'].functionData = [];
@@ -322,18 +333,30 @@ if (! _$jscoverage['/navigation-view/bar.js'].branchData) {
   _$jscoverage['/navigation-view/bar.js'].branchData['86'][1] = new BranchData();
   _$jscoverage['/navigation-view/bar.js'].branchData['95'] = [];
   _$jscoverage['/navigation-view/bar.js'].branchData['95'][1] = new BranchData();
-  _$jscoverage['/navigation-view/bar.js'].branchData['158'] = [];
-  _$jscoverage['/navigation-view/bar.js'].branchData['158'][1] = new BranchData();
-  _$jscoverage['/navigation-view/bar.js'].branchData['164'] = [];
-  _$jscoverage['/navigation-view/bar.js'].branchData['164'][1] = new BranchData();
+  _$jscoverage['/navigation-view/bar.js'].branchData['147'] = [];
+  _$jscoverage['/navigation-view/bar.js'].branchData['147'][1] = new BranchData();
+  _$jscoverage['/navigation-view/bar.js'].branchData['159'] = [];
+  _$jscoverage['/navigation-view/bar.js'].branchData['159'][1] = new BranchData();
+  _$jscoverage['/navigation-view/bar.js'].branchData['168'] = [];
+  _$jscoverage['/navigation-view/bar.js'].branchData['168'][1] = new BranchData();
+  _$jscoverage['/navigation-view/bar.js'].branchData['174'] = [];
+  _$jscoverage['/navigation-view/bar.js'].branchData['174'][1] = new BranchData();
 }
-_$jscoverage['/navigation-view/bar.js'].branchData['164'][1].init(888, 37, 'ghostBackEl.css(\'display\') !== \'none\'');
-function visit9_164_1(result) {
-  _$jscoverage['/navigation-view/bar.js'].branchData['164'][1].ranCondition(result);
+_$jscoverage['/navigation-view/bar.js'].branchData['174'][1].init(1241, 37, 'ghostBackEl.css(\'display\') !== \'none\'');
+function visit11_174_1(result) {
+  _$jscoverage['/navigation-view/bar.js'].branchData['174'][1].ranCondition(result);
   return result;
-}_$jscoverage['/navigation-view/bar.js'].branchData['158'][1].init(660, 32, 'backEl.css(\'display\') !== \'none\'');
-function visit8_158_1(result) {
-  _$jscoverage['/navigation-view/bar.js'].branchData['158'][1].ranCondition(result);
+}_$jscoverage['/navigation-view/bar.js'].branchData['168'][1].init(1013, 32, 'backEl.css(\'display\') !== \'none\'');
+function visit10_168_1(result) {
+  _$jscoverage['/navigation-view/bar.js'].branchData['168'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/navigation-view/bar.js'].branchData['159'][1].init(601, 16, 'self.ghostBackEl');
+function visit9_159_1(result) {
+  _$jscoverage['/navigation-view/bar.js'].branchData['159'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/navigation-view/bar.js'].branchData['147'][1].init(137, 16, 'self.ghostBackEl');
+function visit8_147_1(result) {
+  _$jscoverage['/navigation-view/bar.js'].branchData['147'][1].ranCondition(result);
   return result;
 }_$jscoverage['/navigation-view/bar.js'].branchData['95'][1].init(77, 19, 'omega !== undefined');
 function visit7_95_1(result) {
@@ -504,57 +527,81 @@ KISSY.add(function(S, require) {
   _$jscoverage['/navigation-view/bar.js'].lineData[145]++;
   var backEl = this.get('backBtn').get('el');
   _$jscoverage['/navigation-view/bar.js'].lineData[146]++;
+  backEl.stop(true);
+  _$jscoverage['/navigation-view/bar.js'].lineData[147]++;
+  if (visit8_147_1(self.ghostBackEl)) {
+    _$jscoverage['/navigation-view/bar.js'].lineData[148]++;
+    self.ghostBackEl.stop(true);
+  }
+  _$jscoverage['/navigation-view/bar.js'].lineData[150]++;
   var backElProps = {
   width: backEl[0].offsetWidth};
-  _$jscoverage['/navigation-view/bar.js'].lineData[149]++;
-  var ghostBackEl = createGhost(backEl);
-  _$jscoverage['/navigation-view/bar.js'].lineData[150]++;
-  backEl.css('opacity', 0);
-  _$jscoverage['/navigation-view/bar.js'].lineData[151]++;
-  backEl[hasPrevious ? 'show' : 'hide']();
-  _$jscoverage['/navigation-view/bar.js'].lineData[152]++;
-  var titleEl = this.get('titleEl');
   _$jscoverage['/navigation-view/bar.js'].lineData[153]++;
-  var ghostTitleEl = createGhost(titleEl.parent());
+  var ghostBackEl = createGhost(backEl);
   _$jscoverage['/navigation-view/bar.js'].lineData[154]++;
-  titleEl.css('opacity', 0);
+  self.ghostBackEl = ghostBackEl;
   _$jscoverage['/navigation-view/bar.js'].lineData[155]++;
-  this.set('title', title);
+  backEl.css('opacity', 0);
   _$jscoverage['/navigation-view/bar.js'].lineData[156]++;
-  var anims = getAnimProps(self, backEl, backElProps, reverse);
+  backEl[hasPrevious ? 'show' : 'hide']();
   _$jscoverage['/navigation-view/bar.js'].lineData[157]++;
-  backEl.css(anims.back.element.from);
+  var titleEl = this.get('titleEl');
   _$jscoverage['/navigation-view/bar.js'].lineData[158]++;
-  if (visit8_158_1(backEl.css('display') !== 'none')) {
-    _$jscoverage['/navigation-view/bar.js'].lineData[159]++;
+  titleEl.stop(true);
+  _$jscoverage['/navigation-view/bar.js'].lineData[159]++;
+  if (visit9_159_1(self.ghostBackEl)) {
+    _$jscoverage['/navigation-view/bar.js'].lineData[160]++;
+    self.ghostBackEl.stop(true);
+  }
+  _$jscoverage['/navigation-view/bar.js'].lineData[162]++;
+  var ghostTitleEl = createGhost(titleEl.parent());
+  _$jscoverage['/navigation-view/bar.js'].lineData[163]++;
+  self.ghostTitleEl = ghostTitleEl;
+  _$jscoverage['/navigation-view/bar.js'].lineData[164]++;
+  titleEl.css('opacity', 0);
+  _$jscoverage['/navigation-view/bar.js'].lineData[165]++;
+  this.set('title', title);
+  _$jscoverage['/navigation-view/bar.js'].lineData[166]++;
+  var anims = getAnimProps(self, backEl, backElProps, reverse);
+  _$jscoverage['/navigation-view/bar.js'].lineData[167]++;
+  backEl.css(anims.back.element.from);
+  _$jscoverage['/navigation-view/bar.js'].lineData[168]++;
+  if (visit10_168_1(backEl.css('display') !== 'none')) {
+    _$jscoverage['/navigation-view/bar.js'].lineData[169]++;
     anim(backEl, anims.back.element.to);
   }
-  _$jscoverage['/navigation-view/bar.js'].lineData[161]++;
+  _$jscoverage['/navigation-view/bar.js'].lineData[171]++;
   titleEl.css(anims.title.element.from);
-  _$jscoverage['/navigation-view/bar.js'].lineData[162]++;
+  _$jscoverage['/navigation-view/bar.js'].lineData[172]++;
   anim(titleEl, anims.title.element.to);
-  _$jscoverage['/navigation-view/bar.js'].lineData[164]++;
-  if (visit9_164_1(ghostBackEl.css('display') !== 'none')) {
-    _$jscoverage['/navigation-view/bar.js'].lineData[165]++;
+  _$jscoverage['/navigation-view/bar.js'].lineData[174]++;
+  if (visit11_174_1(ghostBackEl.css('display') !== 'none')) {
+    _$jscoverage['/navigation-view/bar.js'].lineData[175]++;
     anim(ghostBackEl, anims.back.ghost.to, function() {
   _$jscoverage['/navigation-view/bar.js'].functionData[7]++;
-  _$jscoverage['/navigation-view/bar.js'].lineData[166]++;
+  _$jscoverage['/navigation-view/bar.js'].lineData[176]++;
   ghostBackEl.remove();
+  _$jscoverage['/navigation-view/bar.js'].lineData[177]++;
+  self.ghostBackEl = null;
 });
   } else {
-    _$jscoverage['/navigation-view/bar.js'].lineData[169]++;
+    _$jscoverage['/navigation-view/bar.js'].lineData[180]++;
     ghostBackEl.remove();
+    _$jscoverage['/navigation-view/bar.js'].lineData[181]++;
+    self.ghostBackEl = null;
   }
-  _$jscoverage['/navigation-view/bar.js'].lineData[171]++;
+  _$jscoverage['/navigation-view/bar.js'].lineData[183]++;
   anim(ghostTitleEl, anims.title.ghost.to, function() {
   _$jscoverage['/navigation-view/bar.js'].functionData[8]++;
-  _$jscoverage['/navigation-view/bar.js'].lineData[172]++;
+  _$jscoverage['/navigation-view/bar.js'].lineData[184]++;
   ghostTitleEl.remove();
+  _$jscoverage['/navigation-view/bar.js'].lineData[185]++;
+  self.ghostTitleEl = null;
 });
 }, 
   back: function(title, hasPrevious) {
   _$jscoverage['/navigation-view/bar.js'].functionData[9]++;
-  _$jscoverage['/navigation-view/bar.js'].lineData[177]++;
+  _$jscoverage['/navigation-view/bar.js'].lineData[190]++;
   this.go(title, hasPrevious, true);
 }}, {
   xclass: 'navigation-bar', 

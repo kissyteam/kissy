@@ -143,14 +143,24 @@ KISSY.add(function (S, require) {
         go: function (title, hasPrevious, reverse) {
             var self = this;
             var backEl = this.get('backBtn').get('el');
+            backEl.stop(true);
+            if (self.ghostBackEl) {
+                self.ghostBackEl.stop(true);
+            }
             var backElProps = {
                 width: backEl[0].offsetWidth
             };
             var ghostBackEl = createGhost(backEl);
+            self.ghostBackEl = ghostBackEl;
             backEl.css('opacity', 0);
             backEl[hasPrevious ? 'show' : 'hide']();
             var titleEl = this.get('titleEl');
+            titleEl.stop(true);
+            if (self.ghostBackEl) {
+                self.ghostBackEl.stop(true);
+            }
             var ghostTitleEl = createGhost(titleEl.parent());
+            self.ghostTitleEl = ghostTitleEl;
             titleEl.css('opacity', 0);
             this.set('title', title);
             var anims = getAnimProps(self, backEl, backElProps, reverse);
@@ -164,12 +174,15 @@ KISSY.add(function (S, require) {
             if (ghostBackEl.css('display') !== 'none') {
                 anim(ghostBackEl, anims.back.ghost.to, function () {
                     ghostBackEl.remove();
+                    self.ghostBackEl = null;
                 });
             } else {
                 ghostBackEl.remove();
+                self.ghostBackEl = null;
             }
             anim(ghostTitleEl, anims.title.ghost.to, function () {
                 ghostTitleEl.remove();
+                self.ghostTitleEl = null;
             });
         },
 

@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Jan 7 20:36
+build time: Jan 8 13:15
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -199,12 +199,22 @@ KISSY.add("navigation-view/bar", ["component/control", "./bar-render", "button"]
   }, go:function(title, hasPrevious, reverse) {
     var self = this;
     var backEl = this.get("backBtn").get("el");
+    backEl.stop(true);
+    if(self.ghostBackEl) {
+      self.ghostBackEl.stop(true)
+    }
     var backElProps = {width:backEl[0].offsetWidth};
     var ghostBackEl = createGhost(backEl);
+    self.ghostBackEl = ghostBackEl;
     backEl.css("opacity", 0);
     backEl[hasPrevious ? "show" : "hide"]();
     var titleEl = this.get("titleEl");
+    titleEl.stop(true);
+    if(self.ghostBackEl) {
+      self.ghostBackEl.stop(true)
+    }
     var ghostTitleEl = createGhost(titleEl.parent());
+    self.ghostTitleEl = ghostTitleEl;
     titleEl.css("opacity", 0);
     this.set("title", title);
     var anims = getAnimProps(self, backEl, backElProps, reverse);
@@ -216,13 +226,16 @@ KISSY.add("navigation-view/bar", ["component/control", "./bar-render", "button"]
     anim(titleEl, anims.title.element.to);
     if(ghostBackEl.css("display") !== "none") {
       anim(ghostBackEl, anims.back.ghost.to, function() {
-        ghostBackEl.remove()
+        ghostBackEl.remove();
+        self.ghostBackEl = null
       })
     }else {
-      ghostBackEl.remove()
+      ghostBackEl.remove();
+      self.ghostBackEl = null
     }
     anim(ghostTitleEl, anims.title.ghost.to, function() {
-      ghostTitleEl.remove()
+      ghostTitleEl.remove();
+      self.ghostTitleEl = null
     })
   }, back:function(title, hasPrevious) {
     this.go(title, hasPrevious, true)
@@ -254,12 +267,15 @@ KISSY.add("navigation-view", ["node", "navigation-view/controller", "component/c
     var self = this;
     var bar = this.get("bar");
     subView.get("el").css("transform", "translateX(-9999px) translateZ(0)");
+    subView.uuid = uuid++;
     var activeView;
     var loadingEl = this.get("loadingEl");
     this.viewStack.push(subView);
     if(activeView = this.get("activeView")) {
       var activeEl = activeView.get("el");
+      loadingEl.stop(true);
       loadingEl.css("left", "100%");
+      activeEl.stop(true);
       activeEl.animate({transform:"translateX(-" + activeEl[0].offsetWidth + "px) translateZ(0)"}, {useTransition:true, easing:"ease-in-out", duration:0.25});
       loadingEl.show();
       loadingEl.animate({left:"0"}, {useTransition:true, easing:"ease-in-out", duration:0.25});
@@ -273,9 +289,8 @@ KISSY.add("navigation-view", ["node", "navigation-view/controller", "component/c
       self.waitingView.controller.leave()
     }
     self.waitingView = subView;
-    subView.uuid = uuid++;
     subView.controller.promise.then(function() {
-      if(self.waitingView.uuid === subView.uuid) {
+      if(self.waitingView && self.waitingView.uuid === subView.uuid) {
         self.set("activeView", subView);
         self.waitingView = null;
         bar.set("title", subView.get("title"));
@@ -285,21 +300,23 @@ KISSY.add("navigation-view", ["node", "navigation-view/controller", "component/c
     })
   }, pop:function() {
     var self = this;
-    if(this.viewStack.length) {
+    if(this.viewStack.length > 1) {
       this.viewStack.pop();
       var subView = this.viewStack[this.viewStack.length - 1];
+      subView.uuid = uuid++;
       var activeView;
       var loadingEl = this.get("loadingEl");
       var bar = this.get("bar");
-      loadingEl.show();
       if(activeView = this.get("activeView")) {
-        loadingEl.css("left", "-100%");
         this.animEl = activeView.get("el");
+        this.animEl.stop(true);
         this.animEl.animate({transform:"translateX(" + activeView.get("el")[0].offsetWidth + "px) translateZ(0)"}, {useTransition:true, easing:"ease-in-out", duration:0.25});
-        loadingEl.show();
-        loadingEl.animate({left:"0"}, {useTransition:true, easing:"ease-in-out", duration:0.25});
         this.set("activeView", null);
-        activeView.controller.leave()
+        activeView.controller.leave();
+        loadingEl.stop(true);
+        loadingEl.css("left", "-100%");
+        loadingEl.show();
+        loadingEl.animate({left:"0"}, {useTransition:true, easing:"ease-in-out", duration:0.25})
       }else {
         if(self.waitingView) {
           self.waitingView.controller.leave()
@@ -307,9 +324,8 @@ KISSY.add("navigation-view", ["node", "navigation-view/controller", "component/c
       }
       bar.back(subView.get("title"), this.viewStack.length > 1);
       self.waitingView = subView;
-      subView.uuid = uuid++;
       subView.controller.promise.then(function() {
-        if(self.waitingView.uuid === subView.uuid) {
+        if(self.waitingView && self.waitingView.uuid === subView.uuid) {
           self.waitingView = null;
           self.set("activeView", subView);
           bar.set("title", subView.get("title"));

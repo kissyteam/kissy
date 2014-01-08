@@ -63,18 +63,18 @@
                 var subView = this.getSubView();
                 subView.setItem(request.param('id'), ': loaded!');
                 var self = this;
+                var defer = self.defer;
                 setTimeout(function () {
-                    self.defer.resolve();
+                    defer.resolve();
                 }, 1000);
             },
 
             leave: function () {
-                S.log('leave detail');
+                //S.log('leave detail');
             },
 
             needNavigation: function (request) {
                 var ret = this.getSubView().id !== request.param('id');
-                S.log("navigation: " + ret);
                 return ret;
             },
 
@@ -85,8 +85,9 @@
                 }
                 subView.setSubContent(request.param('subId') + ': sub content loaded!');
                 var self = this;
+                var defer = self.defer;
                 setTimeout(function () {
-                    self.defer.resolve();
+                    defer.resolve();
                 }, 1000);
             }
         }, {
@@ -125,7 +126,7 @@
 
         var IndexController = Controller.extend({
             leave: function () {
-                S.log('leave index');
+                //S.log('leave index');
             },
 
             index: function () {

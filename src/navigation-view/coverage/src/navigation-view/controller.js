@@ -299,27 +299,27 @@ if (! _$jscoverage['/navigation-view/controller.js'].branchData) {
   _$jscoverage['/navigation-view/controller.js'].branchData['78'][1] = new BranchData();
 }
 _$jscoverage['/navigation-view/controller.js'].branchData['78'][1].init(21, 66, 'this.get(\'navigationView\').get(\'activeView\') === this.getSubView()');
-function visit15_78_1(result) {
+function visit17_78_1(result) {
   _$jscoverage['/navigation-view/controller.js'].branchData['78'][1].ranCondition(result);
   return result;
 }_$jscoverage['/navigation-view/controller.js'].branchData['56'][1].init(22, 35, 'children[i].constructor === SubView');
-function visit14_56_1(result) {
+function visit16_56_1(result) {
   _$jscoverage['/navigation-view/controller.js'].branchData['56'][1].ranCondition(result);
   return result;
 }_$jscoverage['/navigation-view/controller.js'].branchData['55'][1].init(248, 6, 'i >= 0');
-function visit13_55_1(result) {
+function visit15_55_1(result) {
   _$jscoverage['/navigation-view/controller.js'].branchData['55'][1].ranCondition(result);
   return result;
 }_$jscoverage['/navigation-view/controller.js'].branchData['20'][2].init(397, 44, 'navigationView.get(\'activeView\') !== subView');
-function visit12_20_2(result) {
+function visit14_20_2(result) {
   _$jscoverage['/navigation-view/controller.js'].branchData['20'][2].ranCondition(result);
   return result;
 }_$jscoverage['/navigation-view/controller.js'].branchData['20'][1].init(397, 76, 'navigationView.get(\'activeView\') !== subView || self.needNavigation(request)');
-function visit11_20_1(result) {
+function visit13_20_1(result) {
   _$jscoverage['/navigation-view/controller.js'].branchData['20'][1].ranCondition(result);
   return result;
 }_$jscoverage['/navigation-view/controller.js'].branchData['14'][1].init(140, 8, '!subView');
-function visit10_14_1(result) {
+function visit12_14_1(result) {
   _$jscoverage['/navigation-view/controller.js'].branchData['14'][1].ranCondition(result);
   return result;
 }_$jscoverage['/navigation-view/controller.js'].lineData[5]++;
@@ -341,7 +341,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/navigation-view/controller.js'].lineData[13]++;
     var navigationView = self.get('navigationView');
     _$jscoverage['/navigation-view/controller.js'].lineData[14]++;
-    if (visit10_14_1(!subView)) {
+    if (visit12_14_1(!subView)) {
       _$jscoverage['/navigation-view/controller.js'].lineData[15]++;
       subView = new (self.get('SubView'))();
       _$jscoverage['/navigation-view/controller.js'].lineData[16]++;
@@ -352,7 +352,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/navigation-view/controller.js'].lineData[19]++;
     subView.controller = self;
     _$jscoverage['/navigation-view/controller.js'].lineData[20]++;
-    if (visit11_20_1(visit12_20_2(navigationView.get('activeView') !== subView) || self.needNavigation(request))) {
+    if (visit13_20_1(visit14_20_2(navigationView.get('activeView') !== subView) || self.needNavigation(request))) {
       _$jscoverage['/navigation-view/controller.js'].lineData[21]++;
       self.reload();
       _$jscoverage['/navigation-view/controller.js'].lineData[22]++;
@@ -403,9 +403,9 @@ KISSY.add(function(S, require) {
   _$jscoverage['/navigation-view/controller.js'].lineData[54]++;
   var children = navigationView.get('children');
   _$jscoverage['/navigation-view/controller.js'].lineData[55]++;
-  for (var i = children.length - 1; visit13_55_1(i >= 0); i--) {
+  for (var i = children.length - 1; visit15_55_1(i >= 0); i--) {
     _$jscoverage['/navigation-view/controller.js'].lineData[56]++;
-    if (visit14_56_1(children[i].constructor === SubView)) {
+    if (visit16_56_1(children[i].constructor === SubView)) {
       _$jscoverage['/navigation-view/controller.js'].lineData[57]++;
       return children[i];
     }
@@ -435,7 +435,7 @@ KISSY.add(function(S, require) {
   'isSubViewActive': function() {
   _$jscoverage['/navigation-view/controller.js'].functionData[9]++;
   _$jscoverage['/navigation-view/controller.js'].lineData[78]++;
-  return visit15_78_1(this.get('navigationView').get('activeView') === this.getSubView());
+  return visit17_78_1(this.get('navigationView').get('activeView') === this.getSubView());
 }}, {
   ATTRS: {
   routes: {}, 

@@ -250,11 +250,11 @@ if (! _$jscoverage['/navigation-view/sub-view.js'].branchData) {
   _$jscoverage['/navigation-view/sub-view.js'].branchData['13'][1] = new BranchData();
 }
 _$jscoverage['/navigation-view/sub-view.js'].branchData['13'][1].init(18, 19, 'this.isActiveView()');
-function visit17_13_1(result) {
+function visit19_13_1(result) {
   _$jscoverage['/navigation-view/sub-view.js'].branchData['13'][1].ranCondition(result);
   return result;
 }_$jscoverage['/navigation-view/sub-view.js'].branchData['9'][1].init(21, 45, 'this.get(\'parent\').get(\'activeView\') === this');
-function visit16_9_1(result) {
+function visit18_9_1(result) {
   _$jscoverage['/navigation-view/sub-view.js'].branchData['9'][1].ranCondition(result);
   return result;
 }_$jscoverage['/navigation-view/sub-view.js'].lineData[4]++;
@@ -267,12 +267,12 @@ KISSY.add(function(S, require) {
   isActiveView: function() {
   _$jscoverage['/navigation-view/sub-view.js'].functionData[1]++;
   _$jscoverage['/navigation-view/sub-view.js'].lineData[9]++;
-  return visit16_9_1(this.get('parent').get('activeView') === this);
+  return visit18_9_1(this.get('parent').get('activeView') === this);
 }, 
   _onSetTitle: function(v) {
   _$jscoverage['/navigation-view/sub-view.js'].functionData[2]++;
   _$jscoverage['/navigation-view/sub-view.js'].lineData[13]++;
-  if (visit17_13_1(this.isActiveView())) {
+  if (visit19_13_1(this.isActiveView())) {
     _$jscoverage['/navigation-view/sub-view.js'].lineData[14]++;
     this.get('parent').get('bar').set('title', v);
   }

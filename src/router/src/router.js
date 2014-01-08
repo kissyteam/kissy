@@ -21,7 +21,7 @@ KISSY.add(function (S, require, exports) {
     var BREATH_INTERVAL = 100;
 
     // for judging backward or forward
-    var uuid = 0;
+    var uuid = 10;
     var pageIdHistory = [uuid];
 
     // get url path for router dispatch
@@ -311,14 +311,15 @@ KISSY.add(function (S, require, exports) {
 
         // prevent hashChange trigger on start
         setTimeout(function () {
+            var needReplaceHistory = supportNativeHistory;
             if (supportNativeHistory) {
                 DomEvent.on(win, 'popstate', function (e) {
+                    // page to be rendered
                     var state = e.originalEvent.state;
                     var backward = false;
-                    if (state.pageDepth <= pageIdHistory[pageIdHistory.length - 1]) {
+                    if (state.pageDepth === pageIdHistory[pageIdHistory.length - 2]) {
                         backward = true;
                         pageIdHistory.pop();
-
                     } else {
                         pageIdHistory.push(state.pageDepth);
                     }
@@ -339,7 +340,14 @@ KISSY.add(function (S, require, exports) {
                         replaceHistory: 1
                     });
                     opts.triggerRoute = 0;
+                    needReplaceHistory = false;
                 }
+            }
+            if (needReplaceHistory) {
+                // fill in first state
+                history.replaceState({
+                    pageDepth: uuid
+                }, '', location.href);
             }
             // check initial hash on start
             // in case server does not render initial state correctly

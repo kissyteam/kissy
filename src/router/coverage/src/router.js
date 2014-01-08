@@ -377,27 +377,31 @@ if (! _$jscoverage['/router.js']) {
   _$jscoverage['/router.js'].lineData[314] = 0;
   _$jscoverage['/router.js'].lineData[315] = 0;
   _$jscoverage['/router.js'].lineData[316] = 0;
-  _$jscoverage['/router.js'].lineData[317] = 0;
   _$jscoverage['/router.js'].lineData[318] = 0;
   _$jscoverage['/router.js'].lineData[319] = 0;
   _$jscoverage['/router.js'].lineData[320] = 0;
-  _$jscoverage['/router.js'].lineData[323] = 0;
-  _$jscoverage['/router.js'].lineData[327] = 0;
-  _$jscoverage['/router.js'].lineData[332] = 0;
-  _$jscoverage['/router.js'].lineData[334] = 0;
-  _$jscoverage['/router.js'].lineData[336] = 0;
+  _$jscoverage['/router.js'].lineData[321] = 0;
+  _$jscoverage['/router.js'].lineData[322] = 0;
+  _$jscoverage['/router.js'].lineData[324] = 0;
+  _$jscoverage['/router.js'].lineData[328] = 0;
+  _$jscoverage['/router.js'].lineData[333] = 0;
+  _$jscoverage['/router.js'].lineData[335] = 0;
   _$jscoverage['/router.js'].lineData[337] = 0;
   _$jscoverage['/router.js'].lineData[338] = 0;
-  _$jscoverage['/router.js'].lineData[341] = 0;
-  _$jscoverage['/router.js'].lineData[347] = 0;
+  _$jscoverage['/router.js'].lineData[339] = 0;
+  _$jscoverage['/router.js'].lineData[342] = 0;
+  _$jscoverage['/router.js'].lineData[343] = 0;
+  _$jscoverage['/router.js'].lineData[346] = 0;
   _$jscoverage['/router.js'].lineData[348] = 0;
-  _$jscoverage['/router.js'].lineData[350] = 0;
-  _$jscoverage['/router.js'].lineData[351] = 0;
   _$jscoverage['/router.js'].lineData[355] = 0;
   _$jscoverage['/router.js'].lineData[356] = 0;
-  _$jscoverage['/router.js'].lineData[360] = 0;
-  _$jscoverage['/router.js'].lineData[361] = 0;
-  _$jscoverage['/router.js'].lineData[362] = 0;
+  _$jscoverage['/router.js'].lineData[358] = 0;
+  _$jscoverage['/router.js'].lineData[359] = 0;
+  _$jscoverage['/router.js'].lineData[363] = 0;
+  _$jscoverage['/router.js'].lineData[364] = 0;
+  _$jscoverage['/router.js'].lineData[368] = 0;
+  _$jscoverage['/router.js'].lineData[369] = 0;
+  _$jscoverage['/router.js'].lineData[370] = 0;
 }
 if (! _$jscoverage['/router.js'].functionData) {
   _$jscoverage['/router.js'].functionData = [];
@@ -493,42 +497,48 @@ if (! _$jscoverage['/router.js'].branchData) {
   _$jscoverage['/router.js'].branchData['292'][1] = new BranchData();
   _$jscoverage['/router.js'].branchData['306'] = [];
   _$jscoverage['/router.js'].branchData['306'][1] = new BranchData();
-  _$jscoverage['/router.js'].branchData['314'] = [];
-  _$jscoverage['/router.js'].branchData['314'][1] = new BranchData();
-  _$jscoverage['/router.js'].branchData['318'] = [];
-  _$jscoverage['/router.js'].branchData['318'][1] = new BranchData();
-  _$jscoverage['/router.js'].branchData['336'] = [];
-  _$jscoverage['/router.js'].branchData['336'][1] = new BranchData();
+  _$jscoverage['/router.js'].branchData['315'] = [];
+  _$jscoverage['/router.js'].branchData['315'][1] = new BranchData();
+  _$jscoverage['/router.js'].branchData['320'] = [];
+  _$jscoverage['/router.js'].branchData['320'][1] = new BranchData();
   _$jscoverage['/router.js'].branchData['337'] = [];
   _$jscoverage['/router.js'].branchData['337'][1] = new BranchData();
-  _$jscoverage['/router.js'].branchData['347'] = [];
-  _$jscoverage['/router.js'].branchData['347'][1] = new BranchData();
-  _$jscoverage['/router.js'].branchData['350'] = [];
-  _$jscoverage['/router.js'].branchData['350'][1] = new BranchData();
+  _$jscoverage['/router.js'].branchData['338'] = [];
+  _$jscoverage['/router.js'].branchData['338'][1] = new BranchData();
+  _$jscoverage['/router.js'].branchData['346'] = [];
+  _$jscoverage['/router.js'].branchData['346'][1] = new BranchData();
+  _$jscoverage['/router.js'].branchData['355'] = [];
+  _$jscoverage['/router.js'].branchData['355'][1] = new BranchData();
+  _$jscoverage['/router.js'].branchData['358'] = [];
+  _$jscoverage['/router.js'].branchData['358'][1] = new BranchData();
 }
-_$jscoverage['/router.js'].branchData['350'][1].init(1541, 12, 'opts.success');
-function visit59_350_1(result) {
-  _$jscoverage['/router.js'].branchData['350'][1].ranCondition(result);
+_$jscoverage['/router.js'].branchData['358'][1].init(1904, 12, 'opts.success');
+function visit60_358_1(result) {
+  _$jscoverage['/router.js'].branchData['358'][1].ranCondition(result);
   return result;
-}_$jscoverage['/router.js'].branchData['347'][1].init(1459, 17, 'opts.triggerRoute');
-function visit58_347_1(result) {
-  _$jscoverage['/router.js'].branchData['347'][1].ranCondition(result);
+}_$jscoverage['/router.js'].branchData['355'][1].init(1822, 17, 'opts.triggerRoute');
+function visit59_355_1(result) {
+  _$jscoverage['/router.js'].branchData['355'][1].ranCondition(result);
   return result;
-}_$jscoverage['/router.js'].branchData['337'][1].init(22, 18, '!getUrlForRouter()');
-function visit57_337_1(result) {
+}_$jscoverage['/router.js'].branchData['346'][1].init(1397, 18, 'needReplaceHistory');
+function visit58_346_1(result) {
+  _$jscoverage['/router.js'].branchData['346'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/router.js'].branchData['338'][1].init(22, 18, '!getUrlForRouter()');
+function visit57_338_1(result) {
+  _$jscoverage['/router.js'].branchData['338'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/router.js'].branchData['337'][1].init(1086, 7, 'useHash');
+function visit56_337_1(result) {
   _$jscoverage['/router.js'].branchData['337'][1].ranCondition(result);
   return result;
-}_$jscoverage['/router.js'].branchData['336'][1].init(983, 7, 'useHash');
-function visit56_336_1(result) {
-  _$jscoverage['/router.js'].branchData['336'][1].ranCondition(result);
+}_$jscoverage['/router.js'].branchData['320'][1].init(169, 59, 'state.pageDepth === pageIdHistory[pageIdHistory.length - 2]');
+function visit55_320_1(result) {
+  _$jscoverage['/router.js'].branchData['320'][1].ranCondition(result);
   return result;
-}_$jscoverage['/router.js'].branchData['318'][1].init(125, 58, 'state.pageDepth <= pageIdHistory[pageIdHistory.length - 1]');
-function visit55_318_1(result) {
-  _$jscoverage['/router.js'].branchData['318'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/router.js'].branchData['314'][1].init(18, 20, 'supportNativeHistory');
-function visit54_314_1(result) {
-  _$jscoverage['/router.js'].branchData['314'][1].ranCondition(result);
+}_$jscoverage['/router.js'].branchData['315'][1].init(78, 20, 'supportNativeHistory');
+function visit54_315_1(result) {
+  _$jscoverage['/router.js'].branchData['315'][1].ranCondition(result);
   return result;
 }_$jscoverage['/router.js'].branchData['306'][1].init(882, 42, '!utils.equalsIgnoreSlash(locPath, urlRoot)');
 function visit53_306_1(result) {
@@ -704,7 +714,7 @@ KISSY.add(function(S, require, exports) {
   _$jscoverage['/router.js'].lineData[21]++;
   var BREATH_INTERVAL = 100;
   _$jscoverage['/router.js'].lineData[24]++;
-  var uuid = 0;
+  var uuid = 10;
   _$jscoverage['/router.js'].lineData[25]++;
   var pageIdHistory = [uuid];
   _$jscoverage['/router.js'].lineData[28]++;
@@ -1043,66 +1053,76 @@ KISSY.add(function(S, require, exports) {
   setTimeout(function() {
   _$jscoverage['/router.js'].functionData[16]++;
   _$jscoverage['/router.js'].lineData[314]++;
-  if (visit54_314_1(supportNativeHistory)) {
-    _$jscoverage['/router.js'].lineData[315]++;
+  var needReplaceHistory = supportNativeHistory;
+  _$jscoverage['/router.js'].lineData[315]++;
+  if (visit54_315_1(supportNativeHistory)) {
+    _$jscoverage['/router.js'].lineData[316]++;
     DomEvent.on(win, 'popstate', function(e) {
   _$jscoverage['/router.js'].functionData[17]++;
-  _$jscoverage['/router.js'].lineData[316]++;
-  var state = e.originalEvent.state;
-  _$jscoverage['/router.js'].lineData[317]++;
-  var backward = false;
   _$jscoverage['/router.js'].lineData[318]++;
-  if (visit55_318_1(state.pageDepth <= pageIdHistory[pageIdHistory.length - 1])) {
-    _$jscoverage['/router.js'].lineData[319]++;
+  var state = e.originalEvent.state;
+  _$jscoverage['/router.js'].lineData[319]++;
+  var backward = false;
+  _$jscoverage['/router.js'].lineData[320]++;
+  if (visit55_320_1(state.pageDepth === pageIdHistory[pageIdHistory.length - 2])) {
+    _$jscoverage['/router.js'].lineData[321]++;
     backward = true;
-    _$jscoverage['/router.js'].lineData[320]++;
+    _$jscoverage['/router.js'].lineData[322]++;
     pageIdHistory.pop();
   } else {
-    _$jscoverage['/router.js'].lineData[323]++;
+    _$jscoverage['/router.js'].lineData[324]++;
     pageIdHistory.push(state.pageDepth);
   }
-  _$jscoverage['/router.js'].lineData[327]++;
+  _$jscoverage['/router.js'].lineData[328]++;
   dispatch(backward);
 });
   } else {
-    _$jscoverage['/router.js'].lineData[332]++;
+    _$jscoverage['/router.js'].lineData[333]++;
     DomEvent.on(win, 'hashchange', dispatch);
-    _$jscoverage['/router.js'].lineData[334]++;
+    _$jscoverage['/router.js'].lineData[335]++;
     opts.triggerRoute = 1;
   }
-  _$jscoverage['/router.js'].lineData[336]++;
-  if (visit56_336_1(useHash)) {
-    _$jscoverage['/router.js'].lineData[337]++;
-    if (visit57_337_1(!getUrlForRouter())) {
-      _$jscoverage['/router.js'].lineData[338]++;
+  _$jscoverage['/router.js'].lineData[337]++;
+  if (visit56_337_1(useHash)) {
+    _$jscoverage['/router.js'].lineData[338]++;
+    if (visit57_338_1(!getUrlForRouter())) {
+      _$jscoverage['/router.js'].lineData[339]++;
       exports.navigate('/', {
   replaceHistory: 1});
-      _$jscoverage['/router.js'].lineData[341]++;
+      _$jscoverage['/router.js'].lineData[342]++;
       opts.triggerRoute = 0;
+      _$jscoverage['/router.js'].lineData[343]++;
+      needReplaceHistory = false;
     }
   }
-  _$jscoverage['/router.js'].lineData[347]++;
-  if (visit58_347_1(opts.triggerRoute)) {
+  _$jscoverage['/router.js'].lineData[346]++;
+  if (visit58_346_1(needReplaceHistory)) {
     _$jscoverage['/router.js'].lineData[348]++;
+    history.replaceState({
+  pageDepth: uuid}, '', location.href);
+  }
+  _$jscoverage['/router.js'].lineData[355]++;
+  if (visit59_355_1(opts.triggerRoute)) {
+    _$jscoverage['/router.js'].lineData[356]++;
     dispatch();
   }
-  _$jscoverage['/router.js'].lineData[350]++;
-  if (visit59_350_1(opts.success)) {
-    _$jscoverage['/router.js'].lineData[351]++;
+  _$jscoverage['/router.js'].lineData[358]++;
+  if (visit60_358_1(opts.success)) {
+    _$jscoverage['/router.js'].lineData[359]++;
     opts.success();
   }
 }, BREATH_INTERVAL);
-  _$jscoverage['/router.js'].lineData[355]++;
+  _$jscoverage['/router.js'].lineData[363]++;
   started = true;
-  _$jscoverage['/router.js'].lineData[356]++;
+  _$jscoverage['/router.js'].lineData[364]++;
   return exports;
 };
-  _$jscoverage['/router.js'].lineData[360]++;
+  _$jscoverage['/router.js'].lineData[368]++;
   exports.stop = function() {
   _$jscoverage['/router.js'].functionData[18]++;
-  _$jscoverage['/router.js'].lineData[361]++;
+  _$jscoverage['/router.js'].lineData[369]++;
   started = false;
-  _$jscoverage['/router.js'].lineData[362]++;
+  _$jscoverage['/router.js'].lineData[370]++;
   DomEvent.detach(win, 'popstate hashchange', dispatch);
 };
 });

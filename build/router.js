@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Jan 7 20:37
+build time: Jan 8 13:16
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -133,7 +133,7 @@ KISSY.add("router", ["./router/utils", "./router/route", "uri", "./router/reques
   var supportNativeHashChange = S.Features.isHashChangeSupported();
   var supportNativeHistory = !!(history && history.pushState);
   var BREATH_INTERVAL = 100;
-  var uuid = 0;
+  var uuid = 10;
   var pageIdHistory = [uuid];
   function getUrlForRouter(url) {
     url = url || location.href;
@@ -318,11 +318,12 @@ KISSY.add("router", ["./router/utils", "./router/route", "uri", "./router/reques
       }
     }
     setTimeout(function() {
+      var needReplaceHistory = supportNativeHistory;
       if(supportNativeHistory) {
         DomEvent.on(win, "popstate", function(e) {
           var state = e.originalEvent.state;
           var backward = false;
-          if(state.pageDepth <= pageIdHistory[pageIdHistory.length - 1]) {
+          if(state.pageDepth === pageIdHistory[pageIdHistory.length - 2]) {
             backward = true;
             pageIdHistory.pop()
           }else {
@@ -337,8 +338,12 @@ KISSY.add("router", ["./router/utils", "./router/route", "uri", "./router/reques
       if(useHash) {
         if(!getUrlForRouter()) {
           exports.navigate("/", {replaceHistory:1});
-          opts.triggerRoute = 0
+          opts.triggerRoute = 0;
+          needReplaceHistory = false
         }
+      }
+      if(needReplaceHistory) {
+        history.replaceState({pageDepth:uuid}, "", location.href)
       }
       if(opts.triggerRoute) {
         dispatch()
