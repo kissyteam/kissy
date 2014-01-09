@@ -18,19 +18,31 @@ KISSY.add(function (S, require) {
             subView.get('el').css('transform', 'translateX(-9999px) translateZ(0)');
         }
         subView.controller = self;
-        if (activeView !== subView || self.needNavigation(request)) {
+
+        this.getSubView().reset('title');
+        this.defer = new Promise.Defer();
+        this.promise = this.defer.promise;
+        self.enter();
+
+        var route = request.route;
+        var routes = self.get('routes');
+
+        if (routes[route.path]) {
+            self[routes[route.path]].apply(self, arguments);
+        }
+
+        if (!request.replace ||
+            // first screen replace
+            !activeView) {
             if (activeView) {
                 activeView.controller.leave();
             }
             if (navigationView.waitingView) {
                 navigationView.waitingView.controller.leave();
             }
-            self.reload();
-            self.go(request);
+
+            self.switchView(request, !self.promise.isResolved());
         }
-        var route = request.route;
-        var routes = self.get('routes');
-        self[routes[route.path]].apply(self, arguments);
     }
 
     return Base.extend({
@@ -44,10 +56,6 @@ KISSY.add(function (S, require) {
             for (path in routes) {
                 router.get(path, self.doRoute);
             }
-        },
-
-        needNavigation: function () {
-            return true;
         },
 
         leave: function () {
@@ -69,19 +77,12 @@ KISSY.add(function (S, require) {
             return undefined;
         },
 
-        reload: function () {
-            this.getSubView().reset('title');
-            this.defer = new Promise.Defer();
-            this.promise = this.defer.promise;
-            this.enter();
-        },
-
         navigate: function (url, options) {
             router.navigate(url, options);
         },
 
-        go: function (request) {
-            this.get('navigationView')[request.backward ? 'pop' : 'push'](this.getSubView());
+        switchView: function (request, async) {
+            this.get('navigationView')[request.backward ? 'pop' : 'push'](this.getSubView(), async);
         },
 
         'isSubViewActive': function () {

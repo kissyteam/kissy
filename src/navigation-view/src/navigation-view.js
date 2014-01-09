@@ -42,18 +42,17 @@ KISSY.add(function (S, require) {
             history.back();
         },
 
-        push: function (subView) {
+        push: function (nextView, async) {
             var self = this;
             var bar = this.get('bar');
-            subView.get('el').css('transform', 'translateX(-9999px) translateZ(0)');
-            subView.uuid = uuid++;
+            var nextViewEl = nextView.get('el');
+            nextViewEl.css('transform', 'translateX(-9999px) translateZ(0)');
+            nextView.uuid = uuid++;
             var activeView;
             var loadingEl = this.get('loadingEl');
-            this.viewStack.push(subView);
+            this.viewStack.push(nextView);
             if ((activeView = this.get('activeView'))) {
                 var activeEl = activeView.get('el');
-                loadingEl.stop(true);
-                loadingEl.css('left', '100%');
                 activeEl.stop(true);
                 activeEl.animate({
                     transform: 'translateX(-' + activeEl[0].offsetWidth + 'px) translateZ(0)'
@@ -62,55 +61,9 @@ KISSY.add(function (S, require) {
                     easing: 'ease-in-out',
                     duration: 0.25
                 });
-                loadingEl.show();
-                loadingEl.animate({
-                    left: '0'
-                }, {
-                    useTransition: true,
-                    easing: 'ease-in-out',
-                    duration: 0.25
-                });
-                this.set('activeView', null);
-                bar.forward(subView.get('title'));
-            } else {
-                bar.set('title', subView.get('title'));
-            }
-
-            self.waitingView = subView;
-            subView.controller.promise.then(function () {
-                if (self.waitingView && self.waitingView.uuid === subView.uuid) {
-                    self.set('activeView', subView);
-                    self.waitingView = null;
-                    bar.set('title', subView.get('title'));
-                    subView.get('el').css('transform', '');
-                    loadingEl.hide();
-                }
-            });
-        },
-
-        pop: function () {
-            var self = this;
-            if (this.viewStack.length > 1) {
-                this.viewStack.pop();
-                var subView = this.viewStack[this.viewStack.length - 1];
-                subView.uuid = uuid++;
-                var activeView;
-                var loadingEl = this.get('loadingEl');
-                var bar = this.get('bar');
-
-                if ((activeView = this.get('activeView'))) {
-                    this.animEl = activeView.get('el');
-                    this.animEl.stop(true);
-                    this.animEl.animate({
-                        transform: 'translateX(' + activeView.get('el')[0].offsetWidth + 'px) translateZ(0)'
-                    }, {
-                        useTransition: true,
-                        easing: 'ease-in-out',
-                        duration: 0.25
-                    });
-                    this.set('activeView', null);
+                if (async) {
                     loadingEl.stop(true);
-                    loadingEl.css('left', '-100%');
+                    loadingEl.css('left', '100%');
                     loadingEl.show();
                     loadingEl.animate({
                         left: '0'
@@ -119,19 +72,112 @@ KISSY.add(function (S, require) {
                         easing: 'ease-in-out',
                         duration: 0.25
                     });
+                    this.set('activeView', null);
+                } else {
+                    nextViewEl.stop(true);
+                    nextViewEl.css('transform', 'translateX(' + activeEl[0].offsetWidth + 'px) translateZ(0)');
+                    nextViewEl.animate({
+                        transform: ''
+                    }, {
+                        useTransition: true,
+                        easing: 'ease-in-out',
+                        duration: 0.25
+                    });
+                    this.set('activeView', nextView);
+                    self.waitingView = null;
                 }
+                bar.forward(nextView.get('title'));
+            } else {
+                bar.set('title', nextView.get('title'));
+                if (!async) {
+                    nextView.get('el').css('transform', '');
+                    this.set('activeView', nextView);
+                    self.waitingView = null;
+                    loadingEl.hide();
+                }
+            }
 
-                bar.back(subView.get('title'), this.viewStack.length > 1);
-                self.waitingView = subView;
-                subView.controller.promise.then(function () {
-                    if (self.waitingView && self.waitingView.uuid === subView.uuid) {
+            if (async) {
+                self.waitingView = nextView;
+                nextView.controller.promise.then(function () {
+                    if (self.waitingView && self.waitingView.uuid === nextView.uuid) {
+                        self.set('activeView', nextView);
                         self.waitingView = null;
-                        self.set('activeView', subView);
-                        bar.set('title', subView.get('title'));
-                        subView.get('el').css('transform', '');
+                        bar.set('title', nextView.get('title'));
+                        nextView.get('el').css('transform', '');
                         loadingEl.hide();
                     }
                 });
+            }
+        },
+
+        pop: function (nextView, async) {
+            var self = this;
+            if (this.viewStack.length > 1) {
+                this.viewStack.pop();
+                nextView.uuid = uuid++;
+                var activeView;
+                var loadingEl = this.get('loadingEl');
+                var bar = this.get('bar');
+
+                if ((activeView = this.get('activeView'))) {
+                    var activeEl = this.animEl = activeView.get('el');
+                    activeEl.stop(true);
+                    activeEl.animate({
+                        transform: 'translateX(' + activeView.get('el')[0].offsetWidth + 'px) translateZ(0)'
+                    }, {
+                        useTransition: true,
+                        easing: 'ease-in-out',
+                        duration: 0.25
+                    });
+                    if (async) {
+                        this.set('activeView', null);
+                        loadingEl.stop(true);
+                        loadingEl.css('left', '-100%');
+                        loadingEl.show();
+                        loadingEl.animate({
+                            left: '0'
+                        }, {
+                            useTransition: true,
+                            easing: 'ease-in-out',
+                            duration: 0.25
+                        });
+                    } else {
+                        var nextViewEl = nextView.get('el');
+                        nextViewEl.stop(true);
+                        nextViewEl.css('transform', 'translateX(-' + activeEl[0].offsetWidth + 'px) translateZ(0)');
+                        nextViewEl.animate({
+                            transform: ''
+                        }, {
+                            useTransition: true,
+                            easing: 'ease-in-out',
+                            duration: 0.25
+                        });
+                        this.set('activeView', nextView);
+                    }
+                } else {
+                    if (!async) {
+                        nextView.get('el').css('transform', '');
+                        this.set('activeView', nextView);
+                        self.waitingView = null;
+                        loadingEl.hide();
+                    }
+                }
+
+                bar.back(nextView.get('title'), this.viewStack.length > 1);
+
+                if (async) {
+                    self.waitingView = nextView;
+                    nextView.controller.promise.then(function () {
+                        if (self.waitingView && self.waitingView.uuid === nextView.uuid) {
+                            self.waitingView = null;
+                            self.set('activeView', nextView);
+                            bar.set('title', nextView.get('title'));
+                            nextView.get('el').css('transform', '');
+                            loadingEl.hide();
+                        }
+                    });
+                }
             }
         }
     }, {

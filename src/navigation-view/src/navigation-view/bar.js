@@ -130,12 +130,45 @@ KISSY.add(function (S, require) {
             var prefixCls = this.get('prefixCls');
             var backBtn;
             this.set('backBtn', backBtn = new Button({
-                prefixCls: prefixCls + 'navigation-bar-back-',
+                prefixCls: prefixCls + 'navigation-bar-',
+                elCls: prefixCls + 'navigation-bar-back',
                 elBefore: this.get('contentEl')[0].firstChild,
                 visible: false,
                 content: this.get('backText')
             }).render());
+            this._buttons = {};
         },
+
+        addButton: function (name, config) {
+            var prefixCls = this.get('prefixCls');
+            config.prefixCls = prefixCls + 'navigation-bar-';
+            if (!config.elBefore && !config.render) {
+                var align = config.align = config.align || 'left';
+                if (align === 'left') {
+                    config.elBefore = this.get('centerEl');
+                } else if (align === 'right') {
+                    config.render = this.get('contentEl');
+                }
+                delete config.align;
+            }
+            this._buttons[name] = new Button(config).render();
+            return this._buttons[name];
+        },
+
+        insertButtonBefore: function (name, config, button) {
+            config.elBefore = button.get('el');
+            return this.addButton(name, config);
+        },
+
+        removeButton: function (name) {
+            this._buttons[name].destroy();
+            delete this._buttons[name];
+        },
+
+        getButton: function (name) {
+            return this._buttons[name];
+        },
+
         forward: function (title) {
             this.go(title, true);
         },
@@ -201,12 +234,9 @@ KISSY.add(function (S, require) {
             xrender: {
                 value: BarRender
             },
-            contentEl: {
-                view: 1
-            },
-            titleEl: {
-                view: 1
-            },
+            centerEl: {},
+            contentEl: {},
+            titleEl: {},
             title: {
                 value: '',
                 view: 1

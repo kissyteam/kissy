@@ -51,6 +51,9 @@ KISSY.add(function (S, require, exports, module) {
             config13.params = params14;
             var id12 = runInlineCommandUtil(engine, scope, config13, "getBaseCssClasses", 5);
             buffer += renderOutputUtil(id12, true);
+            buffer += '" id="ks-navigation-bar-center-';
+            var id15 = getPropertyOrRunCommandUtil(engine, scope, {}, "id", 0, 5);
+            buffer += renderOutputUtil(id15, true);
             buffer += '"></div>\r\n</div>';
             return buffer;
         };

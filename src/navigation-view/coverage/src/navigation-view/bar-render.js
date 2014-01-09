@@ -234,8 +234,8 @@ if (! _$jscoverage['/navigation-view/bar-render.js']) {
   _$jscoverage['/navigation-view/bar-render.js'].lineData[7] = 0;
   _$jscoverage['/navigation-view/bar-render.js'].lineData[8] = 0;
   _$jscoverage['/navigation-view/bar-render.js'].lineData[10] = 0;
-  _$jscoverage['/navigation-view/bar-render.js'].lineData[16] = 0;
-  _$jscoverage['/navigation-view/bar-render.js'].lineData[19] = 0;
+  _$jscoverage['/navigation-view/bar-render.js'].lineData[17] = 0;
+  _$jscoverage['/navigation-view/bar-render.js'].lineData[20] = 0;
 }
 if (! _$jscoverage['/navigation-view/bar-render.js'].functionData) {
   _$jscoverage['/navigation-view/bar-render.js'].functionData = [];
@@ -261,16 +261,17 @@ KISSY.add(function(S, require) {
   _$jscoverage['/navigation-view/bar-render.js'].lineData[10]++;
   this.fillChildrenElsBySelectors({
   titleEl: '#ks-navigation-bar-title-{id}', 
+  centerEl: '#ks-navigation-bar-center-{id}', 
   contentEl: '#ks-navigation-bar-content-{id}'});
 }, 
   _onSetTitle: function(v) {
   _$jscoverage['/navigation-view/bar-render.js'].functionData[2]++;
-  _$jscoverage['/navigation-view/bar-render.js'].lineData[16]++;
+  _$jscoverage['/navigation-view/bar-render.js'].lineData[17]++;
   this.control.get('titleEl').html(v);
 }, 
   _onSetBackText: function(v) {
   _$jscoverage['/navigation-view/bar-render.js'].functionData[3]++;
-  _$jscoverage['/navigation-view/bar-render.js'].lineData[19]++;
+  _$jscoverage['/navigation-view/bar-render.js'].lineData[20]++;
   this.control.get('backButton').set('content', v);
 }}, {
   ATTRS: {

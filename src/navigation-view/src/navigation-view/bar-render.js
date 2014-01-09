@@ -9,6 +9,7 @@ KISSY.add(function (S, require) {
         createDom: function () {
             this.fillChildrenElsBySelectors({
                 titleEl: '#ks-navigation-bar-title-{id}',
+                centerEl: '#ks-navigation-bar-center-{id}',
                 contentEl: '#ks-navigation-bar-content-{id}'
             });
         },

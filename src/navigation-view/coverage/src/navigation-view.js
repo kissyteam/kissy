@@ -261,46 +261,70 @@ if (! _$jscoverage['/navigation-view.js']) {
   _$jscoverage['/navigation-view.js'].lineData[55] = 0;
   _$jscoverage['/navigation-view.js'].lineData[56] = 0;
   _$jscoverage['/navigation-view.js'].lineData[57] = 0;
-  _$jscoverage['/navigation-view.js'].lineData[58] = 0;
+  _$jscoverage['/navigation-view.js'].lineData[64] = 0;
   _$jscoverage['/navigation-view.js'].lineData[65] = 0;
   _$jscoverage['/navigation-view.js'].lineData[66] = 0;
-  _$jscoverage['/navigation-view.js'].lineData[73] = 0;
-  _$jscoverage['/navigation-view.js'].lineData[74] = 0;
-  _$jscoverage['/navigation-view.js'].lineData[76] = 0;
+  _$jscoverage['/navigation-view.js'].lineData[67] = 0;
+  _$jscoverage['/navigation-view.js'].lineData[68] = 0;
+  _$jscoverage['/navigation-view.js'].lineData[75] = 0;
+  _$jscoverage['/navigation-view.js'].lineData[77] = 0;
+  _$jscoverage['/navigation-view.js'].lineData[78] = 0;
   _$jscoverage['/navigation-view.js'].lineData[79] = 0;
-  _$jscoverage['/navigation-view.js'].lineData[80] = 0;
-  _$jscoverage['/navigation-view.js'].lineData[81] = 0;
-  _$jscoverage['/navigation-view.js'].lineData[82] = 0;
-  _$jscoverage['/navigation-view.js'].lineData[83] = 0;
-  _$jscoverage['/navigation-view.js'].lineData[84] = 0;
-  _$jscoverage['/navigation-view.js'].lineData[85] = 0;
   _$jscoverage['/navigation-view.js'].lineData[86] = 0;
+  _$jscoverage['/navigation-view.js'].lineData[87] = 0;
+  _$jscoverage['/navigation-view.js'].lineData[89] = 0;
+  _$jscoverage['/navigation-view.js'].lineData[91] = 0;
   _$jscoverage['/navigation-view.js'].lineData[92] = 0;
   _$jscoverage['/navigation-view.js'].lineData[93] = 0;
   _$jscoverage['/navigation-view.js'].lineData[94] = 0;
   _$jscoverage['/navigation-view.js'].lineData[95] = 0;
   _$jscoverage['/navigation-view.js'].lineData[96] = 0;
-  _$jscoverage['/navigation-view.js'].lineData[97] = 0;
-  _$jscoverage['/navigation-view.js'].lineData[98] = 0;
-  _$jscoverage['/navigation-view.js'].lineData[99] = 0;
+  _$jscoverage['/navigation-view.js'].lineData[100] = 0;
   _$jscoverage['/navigation-view.js'].lineData[101] = 0;
   _$jscoverage['/navigation-view.js'].lineData[102] = 0;
   _$jscoverage['/navigation-view.js'].lineData[103] = 0;
   _$jscoverage['/navigation-view.js'].lineData[104] = 0;
-  _$jscoverage['/navigation-view.js'].lineData[111] = 0;
-  _$jscoverage['/navigation-view.js'].lineData[112] = 0;
-  _$jscoverage['/navigation-view.js'].lineData[113] = 0;
-  _$jscoverage['/navigation-view.js'].lineData[114] = 0;
+  _$jscoverage['/navigation-view.js'].lineData[105] = 0;
+  _$jscoverage['/navigation-view.js'].lineData[106] = 0;
+  _$jscoverage['/navigation-view.js'].lineData[107] = 0;
+  _$jscoverage['/navigation-view.js'].lineData[108] = 0;
   _$jscoverage['/navigation-view.js'].lineData[115] = 0;
+  _$jscoverage['/navigation-view.js'].lineData[116] = 0;
+  _$jscoverage['/navigation-view.js'].lineData[117] = 0;
+  _$jscoverage['/navigation-view.js'].lineData[118] = 0;
+  _$jscoverage['/navigation-view.js'].lineData[119] = 0;
+  _$jscoverage['/navigation-view.js'].lineData[120] = 0;
+  _$jscoverage['/navigation-view.js'].lineData[121] = 0;
+  _$jscoverage['/navigation-view.js'].lineData[123] = 0;
   _$jscoverage['/navigation-view.js'].lineData[124] = 0;
   _$jscoverage['/navigation-view.js'].lineData[125] = 0;
   _$jscoverage['/navigation-view.js'].lineData[126] = 0;
-  _$jscoverage['/navigation-view.js'].lineData[127] = 0;
-  _$jscoverage['/navigation-view.js'].lineData[128] = 0;
-  _$jscoverage['/navigation-view.js'].lineData[129] = 0;
-  _$jscoverage['/navigation-view.js'].lineData[130] = 0;
-  _$jscoverage['/navigation-view.js'].lineData[131] = 0;
-  _$jscoverage['/navigation-view.js'].lineData[132] = 0;
+  _$jscoverage['/navigation-view.js'].lineData[133] = 0;
+  _$jscoverage['/navigation-view.js'].lineData[134] = 0;
+  _$jscoverage['/navigation-view.js'].lineData[135] = 0;
+  _$jscoverage['/navigation-view.js'].lineData[136] = 0;
+  _$jscoverage['/navigation-view.js'].lineData[137] = 0;
+  _$jscoverage['/navigation-view.js'].lineData[138] = 0;
+  _$jscoverage['/navigation-view.js'].lineData[146] = 0;
+  _$jscoverage['/navigation-view.js'].lineData[147] = 0;
+  _$jscoverage['/navigation-view.js'].lineData[148] = 0;
+  _$jscoverage['/navigation-view.js'].lineData[149] = 0;
+  _$jscoverage['/navigation-view.js'].lineData[156] = 0;
+  _$jscoverage['/navigation-view.js'].lineData[159] = 0;
+  _$jscoverage['/navigation-view.js'].lineData[160] = 0;
+  _$jscoverage['/navigation-view.js'].lineData[161] = 0;
+  _$jscoverage['/navigation-view.js'].lineData[162] = 0;
+  _$jscoverage['/navigation-view.js'].lineData[163] = 0;
+  _$jscoverage['/navigation-view.js'].lineData[167] = 0;
+  _$jscoverage['/navigation-view.js'].lineData[169] = 0;
+  _$jscoverage['/navigation-view.js'].lineData[170] = 0;
+  _$jscoverage['/navigation-view.js'].lineData[171] = 0;
+  _$jscoverage['/navigation-view.js'].lineData[172] = 0;
+  _$jscoverage['/navigation-view.js'].lineData[173] = 0;
+  _$jscoverage['/navigation-view.js'].lineData[174] = 0;
+  _$jscoverage['/navigation-view.js'].lineData[175] = 0;
+  _$jscoverage['/navigation-view.js'].lineData[176] = 0;
+  _$jscoverage['/navigation-view.js'].lineData[177] = 0;
 }
 if (! _$jscoverage['/navigation-view.js'].functionData) {
   _$jscoverage['/navigation-view.js'].functionData = [];
@@ -315,40 +339,76 @@ if (! _$jscoverage['/navigation-view.js'].functionData) {
 }
 if (! _$jscoverage['/navigation-view.js'].branchData) {
   _$jscoverage['/navigation-view.js'].branchData = {};
-  _$jscoverage['/navigation-view.js'].branchData['81'] = [];
-  _$jscoverage['/navigation-view.js'].branchData['81'][1] = new BranchData();
-  _$jscoverage['/navigation-view.js'].branchData['81'][2] = new BranchData();
-  _$jscoverage['/navigation-view.js'].branchData['93'] = [];
-  _$jscoverage['/navigation-view.js'].branchData['93'][1] = new BranchData();
-  _$jscoverage['/navigation-view.js'].branchData['124'] = [];
-  _$jscoverage['/navigation-view.js'].branchData['124'][1] = new BranchData();
-  _$jscoverage['/navigation-view.js'].branchData['127'] = [];
-  _$jscoverage['/navigation-view.js'].branchData['127'][1] = new BranchData();
-  _$jscoverage['/navigation-view.js'].branchData['127'][2] = new BranchData();
+  _$jscoverage['/navigation-view.js'].branchData['64'] = [];
+  _$jscoverage['/navigation-view.js'].branchData['64'][1] = new BranchData();
+  _$jscoverage['/navigation-view.js'].branchData['92'] = [];
+  _$jscoverage['/navigation-view.js'].branchData['92'][1] = new BranchData();
+  _$jscoverage['/navigation-view.js'].branchData['100'] = [];
+  _$jscoverage['/navigation-view.js'].branchData['100'][1] = new BranchData();
+  _$jscoverage['/navigation-view.js'].branchData['103'] = [];
+  _$jscoverage['/navigation-view.js'].branchData['103'][1] = new BranchData();
+  _$jscoverage['/navigation-view.js'].branchData['103'][2] = new BranchData();
+  _$jscoverage['/navigation-view.js'].branchData['116'] = [];
+  _$jscoverage['/navigation-view.js'].branchData['116'][1] = new BranchData();
+  _$jscoverage['/navigation-view.js'].branchData['133'] = [];
+  _$jscoverage['/navigation-view.js'].branchData['133'][1] = new BranchData();
+  _$jscoverage['/navigation-view.js'].branchData['159'] = [];
+  _$jscoverage['/navigation-view.js'].branchData['159'][1] = new BranchData();
+  _$jscoverage['/navigation-view.js'].branchData['167'] = [];
+  _$jscoverage['/navigation-view.js'].branchData['167'][1] = new BranchData();
+  _$jscoverage['/navigation-view.js'].branchData['169'] = [];
+  _$jscoverage['/navigation-view.js'].branchData['169'][1] = new BranchData();
+  _$jscoverage['/navigation-view.js'].branchData['172'] = [];
+  _$jscoverage['/navigation-view.js'].branchData['172'][1] = new BranchData();
+  _$jscoverage['/navigation-view.js'].branchData['172'][2] = new BranchData();
 }
-_$jscoverage['/navigation-view.js'].branchData['127'][2].init(46, 38, 'self.waitingView.uuid === subView.uuid');
-function visit27_127_2(result) {
-  _$jscoverage['/navigation-view.js'].branchData['127'][2].ranCondition(result);
+_$jscoverage['/navigation-view.js'].branchData['172'][2].init(50, 39, 'self.waitingView.uuid === nextView.uuid');
+function visit37_172_2(result) {
+  _$jscoverage['/navigation-view.js'].branchData['172'][2].ranCondition(result);
   return result;
-}_$jscoverage['/navigation-view.js'].branchData['127'][1].init(26, 58, 'self.waitingView && self.waitingView.uuid === subView.uuid');
-function visit26_127_1(result) {
-  _$jscoverage['/navigation-view.js'].branchData['127'][1].ranCondition(result);
+}_$jscoverage['/navigation-view.js'].branchData['172'][1].init(30, 59, 'self.waitingView && self.waitingView.uuid === nextView.uuid');
+function visit36_172_1(result) {
+  _$jscoverage['/navigation-view.js'].branchData['172'][1].ranCondition(result);
   return result;
-}_$jscoverage['/navigation-view.js'].branchData['124'][1].init(1307, 25, 'this.viewStack.length > 1');
-function visit25_124_1(result) {
-  _$jscoverage['/navigation-view.js'].branchData['124'][1].ranCondition(result);
+}_$jscoverage['/navigation-view.js'].branchData['169'][1].init(2309, 5, 'async');
+function visit35_169_1(result) {
+  _$jscoverage['/navigation-view.js'].branchData['169'][1].ranCondition(result);
   return result;
-}_$jscoverage['/navigation-view.js'].branchData['93'][1].init(48, 25, 'this.viewStack.length > 1');
-function visit24_93_1(result) {
-  _$jscoverage['/navigation-view.js'].branchData['93'][1].ranCondition(result);
+}_$jscoverage['/navigation-view.js'].branchData['167'][1].init(2258, 25, 'this.viewStack.length > 1');
+function visit34_167_1(result) {
+  _$jscoverage['/navigation-view.js'].branchData['167'][1].ranCondition(result);
   return result;
-}_$jscoverage['/navigation-view.js'].branchData['81'][2].init(42, 38, 'self.waitingView.uuid === subView.uuid');
-function visit23_81_2(result) {
-  _$jscoverage['/navigation-view.js'].branchData['81'][2].ranCondition(result);
+}_$jscoverage['/navigation-view.js'].branchData['159'][1].init(26, 6, '!async');
+function visit33_159_1(result) {
+  _$jscoverage['/navigation-view.js'].branchData['159'][1].ranCondition(result);
   return result;
-}_$jscoverage['/navigation-view.js'].branchData['81'][1].init(22, 58, 'self.waitingView && self.waitingView.uuid === subView.uuid');
-function visit22_81_1(result) {
-  _$jscoverage['/navigation-view.js'].branchData['81'][1].ranCondition(result);
+}_$jscoverage['/navigation-view.js'].branchData['133'][1].init(475, 5, 'async');
+function visit32_133_1(result) {
+  _$jscoverage['/navigation-view.js'].branchData['133'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/navigation-view.js'].branchData['116'][1].init(48, 25, 'this.viewStack.length > 1');
+function visit31_116_1(result) {
+  _$jscoverage['/navigation-view.js'].branchData['116'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/navigation-view.js'].branchData['103'][2].init(46, 39, 'self.waitingView.uuid === nextView.uuid');
+function visit30_103_2(result) {
+  _$jscoverage['/navigation-view.js'].branchData['103'][2].ranCondition(result);
+  return result;
+}_$jscoverage['/navigation-view.js'].branchData['103'][1].init(26, 59, 'self.waitingView && self.waitingView.uuid === nextView.uuid');
+function visit29_103_1(result) {
+  _$jscoverage['/navigation-view.js'].branchData['103'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/navigation-view.js'].branchData['100'][1].init(2272, 5, 'async');
+function visit28_100_1(result) {
+  _$jscoverage['/navigation-view.js'].branchData['100'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/navigation-view.js'].branchData['92'][1].init(80, 6, '!async');
+function visit27_92_1(result) {
+  _$jscoverage['/navigation-view.js'].branchData['92'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/navigation-view.js'].branchData['64'][1].init(410, 5, 'async');
+function visit26_64_1(result) {
+  _$jscoverage['/navigation-view.js'].branchData['64'][1].ranCondition(result);
   return result;
 }_$jscoverage['/navigation-view.js'].lineData[5]++;
 KISSY.add(function(S, require) {
@@ -402,140 +462,205 @@ KISSY.add(function(S, require) {
   _$jscoverage['/navigation-view.js'].lineData[42]++;
   history.back();
 }, 
-  push: function(subView) {
+  push: function(nextView, async) {
   _$jscoverage['/navigation-view.js'].functionData[4]++;
   _$jscoverage['/navigation-view.js'].lineData[46]++;
   var self = this;
   _$jscoverage['/navigation-view.js'].lineData[47]++;
   var bar = this.get('bar');
   _$jscoverage['/navigation-view.js'].lineData[48]++;
-  subView.get('el').css('transform', 'translateX(-9999px) translateZ(0)');
+  var nextViewEl = nextView.get('el');
   _$jscoverage['/navigation-view.js'].lineData[49]++;
-  subView.uuid = uuid++;
+  nextViewEl.css('transform', 'translateX(-9999px) translateZ(0)');
   _$jscoverage['/navigation-view.js'].lineData[50]++;
-  var activeView;
+  nextView.uuid = uuid++;
   _$jscoverage['/navigation-view.js'].lineData[51]++;
-  var loadingEl = this.get('loadingEl');
+  var activeView;
   _$jscoverage['/navigation-view.js'].lineData[52]++;
-  this.viewStack.push(subView);
+  var loadingEl = this.get('loadingEl');
   _$jscoverage['/navigation-view.js'].lineData[53]++;
+  this.viewStack.push(nextView);
+  _$jscoverage['/navigation-view.js'].lineData[54]++;
   if ((activeView = this.get('activeView'))) {
-    _$jscoverage['/navigation-view.js'].lineData[54]++;
-    var activeEl = activeView.get('el');
     _$jscoverage['/navigation-view.js'].lineData[55]++;
-    loadingEl.stop(true);
+    var activeEl = activeView.get('el');
     _$jscoverage['/navigation-view.js'].lineData[56]++;
-    loadingEl.css('left', '100%');
-    _$jscoverage['/navigation-view.js'].lineData[57]++;
     activeEl.stop(true);
-    _$jscoverage['/navigation-view.js'].lineData[58]++;
+    _$jscoverage['/navigation-view.js'].lineData[57]++;
     activeEl.animate({
   transform: 'translateX(-' + activeEl[0].offsetWidth + 'px) translateZ(0)'}, {
   useTransition: true, 
   easing: 'ease-in-out', 
   duration: 0.25});
-    _$jscoverage['/navigation-view.js'].lineData[65]++;
-    loadingEl.show();
-    _$jscoverage['/navigation-view.js'].lineData[66]++;
-    loadingEl.animate({
-  left: '0'}, {
-  useTransition: true, 
-  easing: 'ease-in-out', 
-  duration: 0.25});
-    _$jscoverage['/navigation-view.js'].lineData[73]++;
-    this.set('activeView', null);
-    _$jscoverage['/navigation-view.js'].lineData[74]++;
-    bar.forward(subView.get('title'));
-  } else {
-    _$jscoverage['/navigation-view.js'].lineData[76]++;
-    bar.set('title', subView.get('title'));
-  }
-  _$jscoverage['/navigation-view.js'].lineData[79]++;
-  self.waitingView = subView;
-  _$jscoverage['/navigation-view.js'].lineData[80]++;
-  subView.controller.promise.then(function() {
-  _$jscoverage['/navigation-view.js'].functionData[5]++;
-  _$jscoverage['/navigation-view.js'].lineData[81]++;
-  if (visit22_81_1(self.waitingView && visit23_81_2(self.waitingView.uuid === subView.uuid))) {
-    _$jscoverage['/navigation-view.js'].lineData[82]++;
-    self.set('activeView', subView);
-    _$jscoverage['/navigation-view.js'].lineData[83]++;
-    self.waitingView = null;
-    _$jscoverage['/navigation-view.js'].lineData[84]++;
-    bar.set('title', subView.get('title'));
-    _$jscoverage['/navigation-view.js'].lineData[85]++;
-    subView.get('el').css('transform', '');
-    _$jscoverage['/navigation-view.js'].lineData[86]++;
-    loadingEl.hide();
-  }
-});
-}, 
-  pop: function() {
-  _$jscoverage['/navigation-view.js'].functionData[6]++;
-  _$jscoverage['/navigation-view.js'].lineData[92]++;
-  var self = this;
-  _$jscoverage['/navigation-view.js'].lineData[93]++;
-  if (visit24_93_1(this.viewStack.length > 1)) {
-    _$jscoverage['/navigation-view.js'].lineData[94]++;
-    this.viewStack.pop();
-    _$jscoverage['/navigation-view.js'].lineData[95]++;
-    var subView = this.viewStack[this.viewStack.length - 1];
-    _$jscoverage['/navigation-view.js'].lineData[96]++;
-    subView.uuid = uuid++;
-    _$jscoverage['/navigation-view.js'].lineData[97]++;
-    var activeView;
-    _$jscoverage['/navigation-view.js'].lineData[98]++;
-    var loadingEl = this.get('loadingEl');
-    _$jscoverage['/navigation-view.js'].lineData[99]++;
-    var bar = this.get('bar');
-    _$jscoverage['/navigation-view.js'].lineData[101]++;
-    if ((activeView = this.get('activeView'))) {
-      _$jscoverage['/navigation-view.js'].lineData[102]++;
-      this.animEl = activeView.get('el');
-      _$jscoverage['/navigation-view.js'].lineData[103]++;
-      this.animEl.stop(true);
-      _$jscoverage['/navigation-view.js'].lineData[104]++;
-      this.animEl.animate({
-  transform: 'translateX(' + activeView.get('el')[0].offsetWidth + 'px) translateZ(0)'}, {
-  useTransition: true, 
-  easing: 'ease-in-out', 
-  duration: 0.25});
-      _$jscoverage['/navigation-view.js'].lineData[111]++;
-      this.set('activeView', null);
-      _$jscoverage['/navigation-view.js'].lineData[112]++;
+    _$jscoverage['/navigation-view.js'].lineData[64]++;
+    if (visit26_64_1(async)) {
+      _$jscoverage['/navigation-view.js'].lineData[65]++;
       loadingEl.stop(true);
-      _$jscoverage['/navigation-view.js'].lineData[113]++;
-      loadingEl.css('left', '-100%');
-      _$jscoverage['/navigation-view.js'].lineData[114]++;
+      _$jscoverage['/navigation-view.js'].lineData[66]++;
+      loadingEl.css('left', '100%');
+      _$jscoverage['/navigation-view.js'].lineData[67]++;
       loadingEl.show();
-      _$jscoverage['/navigation-view.js'].lineData[115]++;
+      _$jscoverage['/navigation-view.js'].lineData[68]++;
       loadingEl.animate({
   left: '0'}, {
   useTransition: true, 
   easing: 'ease-in-out', 
   duration: 0.25});
+      _$jscoverage['/navigation-view.js'].lineData[75]++;
+      this.set('activeView', null);
+    } else {
+      _$jscoverage['/navigation-view.js'].lineData[77]++;
+      nextViewEl.stop(true);
+      _$jscoverage['/navigation-view.js'].lineData[78]++;
+      nextViewEl.css('transform', 'translateX(' + activeEl[0].offsetWidth + 'px) translateZ(0)');
+      _$jscoverage['/navigation-view.js'].lineData[79]++;
+      nextViewEl.animate({
+  transform: ''}, {
+  useTransition: true, 
+  easing: 'ease-in-out', 
+  duration: 0.25});
+      _$jscoverage['/navigation-view.js'].lineData[86]++;
+      this.set('activeView', nextView);
+      _$jscoverage['/navigation-view.js'].lineData[87]++;
+      self.waitingView = null;
     }
-    _$jscoverage['/navigation-view.js'].lineData[124]++;
-    bar.back(subView.get('title'), visit25_124_1(this.viewStack.length > 1));
-    _$jscoverage['/navigation-view.js'].lineData[125]++;
-    self.waitingView = subView;
-    _$jscoverage['/navigation-view.js'].lineData[126]++;
-    subView.controller.promise.then(function() {
-  _$jscoverage['/navigation-view.js'].functionData[7]++;
-  _$jscoverage['/navigation-view.js'].lineData[127]++;
-  if (visit26_127_1(self.waitingView && visit27_127_2(self.waitingView.uuid === subView.uuid))) {
-    _$jscoverage['/navigation-view.js'].lineData[128]++;
+    _$jscoverage['/navigation-view.js'].lineData[89]++;
+    bar.forward(nextView.get('title'));
+  } else {
+    _$jscoverage['/navigation-view.js'].lineData[91]++;
+    bar.set('title', nextView.get('title'));
+    _$jscoverage['/navigation-view.js'].lineData[92]++;
+    if (visit27_92_1(!async)) {
+      _$jscoverage['/navigation-view.js'].lineData[93]++;
+      nextView.get('el').css('transform', '');
+      _$jscoverage['/navigation-view.js'].lineData[94]++;
+      this.set('activeView', nextView);
+      _$jscoverage['/navigation-view.js'].lineData[95]++;
+      self.waitingView = null;
+      _$jscoverage['/navigation-view.js'].lineData[96]++;
+      loadingEl.hide();
+    }
+  }
+  _$jscoverage['/navigation-view.js'].lineData[100]++;
+  if (visit28_100_1(async)) {
+    _$jscoverage['/navigation-view.js'].lineData[101]++;
+    self.waitingView = nextView;
+    _$jscoverage['/navigation-view.js'].lineData[102]++;
+    nextView.controller.promise.then(function() {
+  _$jscoverage['/navigation-view.js'].functionData[5]++;
+  _$jscoverage['/navigation-view.js'].lineData[103]++;
+  if (visit29_103_1(self.waitingView && visit30_103_2(self.waitingView.uuid === nextView.uuid))) {
+    _$jscoverage['/navigation-view.js'].lineData[104]++;
+    self.set('activeView', nextView);
+    _$jscoverage['/navigation-view.js'].lineData[105]++;
     self.waitingView = null;
-    _$jscoverage['/navigation-view.js'].lineData[129]++;
-    self.set('activeView', subView);
-    _$jscoverage['/navigation-view.js'].lineData[130]++;
-    bar.set('title', subView.get('title'));
-    _$jscoverage['/navigation-view.js'].lineData[131]++;
-    subView.get('el').css('transform', '');
-    _$jscoverage['/navigation-view.js'].lineData[132]++;
+    _$jscoverage['/navigation-view.js'].lineData[106]++;
+    bar.set('title', nextView.get('title'));
+    _$jscoverage['/navigation-view.js'].lineData[107]++;
+    nextView.get('el').css('transform', '');
+    _$jscoverage['/navigation-view.js'].lineData[108]++;
     loadingEl.hide();
   }
 });
+  }
+}, 
+  pop: function(nextView, async) {
+  _$jscoverage['/navigation-view.js'].functionData[6]++;
+  _$jscoverage['/navigation-view.js'].lineData[115]++;
+  var self = this;
+  _$jscoverage['/navigation-view.js'].lineData[116]++;
+  if (visit31_116_1(this.viewStack.length > 1)) {
+    _$jscoverage['/navigation-view.js'].lineData[117]++;
+    this.viewStack.pop();
+    _$jscoverage['/navigation-view.js'].lineData[118]++;
+    nextView.uuid = uuid++;
+    _$jscoverage['/navigation-view.js'].lineData[119]++;
+    var activeView;
+    _$jscoverage['/navigation-view.js'].lineData[120]++;
+    var loadingEl = this.get('loadingEl');
+    _$jscoverage['/navigation-view.js'].lineData[121]++;
+    var bar = this.get('bar');
+    _$jscoverage['/navigation-view.js'].lineData[123]++;
+    if ((activeView = this.get('activeView'))) {
+      _$jscoverage['/navigation-view.js'].lineData[124]++;
+      var activeEl = this.animEl = activeView.get('el');
+      _$jscoverage['/navigation-view.js'].lineData[125]++;
+      activeEl.stop(true);
+      _$jscoverage['/navigation-view.js'].lineData[126]++;
+      activeEl.animate({
+  transform: 'translateX(' + activeView.get('el')[0].offsetWidth + 'px) translateZ(0)'}, {
+  useTransition: true, 
+  easing: 'ease-in-out', 
+  duration: 0.25});
+      _$jscoverage['/navigation-view.js'].lineData[133]++;
+      if (visit32_133_1(async)) {
+        _$jscoverage['/navigation-view.js'].lineData[134]++;
+        this.set('activeView', null);
+        _$jscoverage['/navigation-view.js'].lineData[135]++;
+        loadingEl.stop(true);
+        _$jscoverage['/navigation-view.js'].lineData[136]++;
+        loadingEl.css('left', '-100%');
+        _$jscoverage['/navigation-view.js'].lineData[137]++;
+        loadingEl.show();
+        _$jscoverage['/navigation-view.js'].lineData[138]++;
+        loadingEl.animate({
+  left: '0'}, {
+  useTransition: true, 
+  easing: 'ease-in-out', 
+  duration: 0.25});
+      } else {
+        _$jscoverage['/navigation-view.js'].lineData[146]++;
+        var nextViewEl = nextView.get('el');
+        _$jscoverage['/navigation-view.js'].lineData[147]++;
+        nextViewEl.stop(true);
+        _$jscoverage['/navigation-view.js'].lineData[148]++;
+        nextViewEl.css('transform', 'translateX(-' + activeEl[0].offsetWidth + 'px) translateZ(0)');
+        _$jscoverage['/navigation-view.js'].lineData[149]++;
+        nextViewEl.animate({
+  transform: ''}, {
+  useTransition: true, 
+  easing: 'ease-in-out', 
+  duration: 0.25});
+        _$jscoverage['/navigation-view.js'].lineData[156]++;
+        this.set('activeView', nextView);
+      }
+    } else {
+      _$jscoverage['/navigation-view.js'].lineData[159]++;
+      if (visit33_159_1(!async)) {
+        _$jscoverage['/navigation-view.js'].lineData[160]++;
+        nextView.get('el').css('transform', '');
+        _$jscoverage['/navigation-view.js'].lineData[161]++;
+        this.set('activeView', nextView);
+        _$jscoverage['/navigation-view.js'].lineData[162]++;
+        self.waitingView = null;
+        _$jscoverage['/navigation-view.js'].lineData[163]++;
+        loadingEl.hide();
+      }
+    }
+    _$jscoverage['/navigation-view.js'].lineData[167]++;
+    bar.back(nextView.get('title'), visit34_167_1(this.viewStack.length > 1));
+    _$jscoverage['/navigation-view.js'].lineData[169]++;
+    if (visit35_169_1(async)) {
+      _$jscoverage['/navigation-view.js'].lineData[170]++;
+      self.waitingView = nextView;
+      _$jscoverage['/navigation-view.js'].lineData[171]++;
+      nextView.controller.promise.then(function() {
+  _$jscoverage['/navigation-view.js'].functionData[7]++;
+  _$jscoverage['/navigation-view.js'].lineData[172]++;
+  if (visit36_172_1(self.waitingView && visit37_172_2(self.waitingView.uuid === nextView.uuid))) {
+    _$jscoverage['/navigation-view.js'].lineData[173]++;
+    self.waitingView = null;
+    _$jscoverage['/navigation-view.js'].lineData[174]++;
+    self.set('activeView', nextView);
+    _$jscoverage['/navigation-view.js'].lineData[175]++;
+    bar.set('title', nextView.get('title'));
+    _$jscoverage['/navigation-view.js'].lineData[176]++;
+    nextView.get('el').css('transform', '');
+    _$jscoverage['/navigation-view.js'].lineData[177]++;
+    loadingEl.hide();
+  }
+});
+    }
   }
 }}, {
   SubView: SubView, 

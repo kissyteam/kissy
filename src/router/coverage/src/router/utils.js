@@ -232,22 +232,34 @@ if (! _$jscoverage['/router/utils.js']) {
   _$jscoverage['/router/utils.js'].lineData[5] = 0;
   _$jscoverage['/router/utils.js'].lineData[6] = 0;
   _$jscoverage['/router/utils.js'].lineData[8] = 0;
+  _$jscoverage['/router/utils.js'].lineData[9] = 0;
   _$jscoverage['/router/utils.js'].lineData[12] = 0;
-  _$jscoverage['/router/utils.js'].lineData[16] = 0;
+  _$jscoverage['/router/utils.js'].lineData[13] = 0;
+  _$jscoverage['/router/utils.js'].lineData[14] = 0;
+  _$jscoverage['/router/utils.js'].lineData[15] = 0;
   _$jscoverage['/router/utils.js'].lineData[17] = 0;
-  _$jscoverage['/router/utils.js'].lineData[19] = 0;
-  _$jscoverage['/router/utils.js'].lineData[23] = 0;
-  _$jscoverage['/router/utils.js'].lineData[24] = 0;
+  _$jscoverage['/router/utils.js'].lineData[20] = 0;
+  _$jscoverage['/router/utils.js'].lineData[22] = 0;
   _$jscoverage['/router/utils.js'].lineData[26] = 0;
   _$jscoverage['/router/utils.js'].lineData[30] = 0;
-  _$jscoverage['/router/utils.js'].lineData[34] = 0;
-  _$jscoverage['/router/utils.js'].lineData[35] = 0;
+  _$jscoverage['/router/utils.js'].lineData[31] = 0;
+  _$jscoverage['/router/utils.js'].lineData[33] = 0;
   _$jscoverage['/router/utils.js'].lineData[37] = 0;
-  _$jscoverage['/router/utils.js'].lineData[43] = 0;
+  _$jscoverage['/router/utils.js'].lineData[38] = 0;
+  _$jscoverage['/router/utils.js'].lineData[40] = 0;
+  _$jscoverage['/router/utils.js'].lineData[44] = 0;
   _$jscoverage['/router/utils.js'].lineData[48] = 0;
   _$jscoverage['/router/utils.js'].lineData[49] = 0;
-  _$jscoverage['/router/utils.js'].lineData[50] = 0;
+  _$jscoverage['/router/utils.js'].lineData[51] = 0;
+  _$jscoverage['/router/utils.js'].lineData[57] = 0;
+  _$jscoverage['/router/utils.js'].lineData[62] = 0;
   _$jscoverage['/router/utils.js'].lineData[63] = 0;
+  _$jscoverage['/router/utils.js'].lineData[64] = 0;
+  _$jscoverage['/router/utils.js'].lineData[77] = 0;
+  _$jscoverage['/router/utils.js'].lineData[83] = 0;
+  _$jscoverage['/router/utils.js'].lineData[87] = 0;
+  _$jscoverage['/router/utils.js'].lineData[91] = 0;
+  _$jscoverage['/router/utils.js'].lineData[96] = 0;
 }
 if (! _$jscoverage['/router/utils.js'].functionData) {
   _$jscoverage['/router/utils.js'].functionData = [];
@@ -261,102 +273,153 @@ if (! _$jscoverage['/router/utils.js'].functionData) {
   _$jscoverage['/router/utils.js'].functionData[7] = 0;
   _$jscoverage['/router/utils.js'].functionData[8] = 0;
   _$jscoverage['/router/utils.js'].functionData[9] = 0;
+  _$jscoverage['/router/utils.js'].functionData[10] = 0;
+  _$jscoverage['/router/utils.js'].functionData[11] = 0;
+  _$jscoverage['/router/utils.js'].functionData[12] = 0;
+  _$jscoverage['/router/utils.js'].functionData[13] = 0;
+  _$jscoverage['/router/utils.js'].functionData[14] = 0;
 }
 if (! _$jscoverage['/router/utils.js'].branchData) {
   _$jscoverage['/router/utils.js'].branchData = {};
-  _$jscoverage['/router/utils.js'].branchData['16'] = [];
-  _$jscoverage['/router/utils.js'].branchData['16'][1] = new BranchData();
-  _$jscoverage['/router/utils.js'].branchData['23'] = [];
-  _$jscoverage['/router/utils.js'].branchData['23'][1] = new BranchData();
-  _$jscoverage['/router/utils.js'].branchData['34'] = [];
-  _$jscoverage['/router/utils.js'].branchData['34'][1] = new BranchData();
-  _$jscoverage['/router/utils.js'].branchData['50'] = [];
-  _$jscoverage['/router/utils.js'].branchData['50'][1] = new BranchData();
+  _$jscoverage['/router/utils.js'].branchData['30'] = [];
+  _$jscoverage['/router/utils.js'].branchData['30'][1] = new BranchData();
+  _$jscoverage['/router/utils.js'].branchData['37'] = [];
+  _$jscoverage['/router/utils.js'].branchData['37'][1] = new BranchData();
+  _$jscoverage['/router/utils.js'].branchData['48'] = [];
+  _$jscoverage['/router/utils.js'].branchData['48'][1] = new BranchData();
+  _$jscoverage['/router/utils.js'].branchData['64'] = [];
+  _$jscoverage['/router/utils.js'].branchData['64'][1] = new BranchData();
+  _$jscoverage['/router/utils.js'].branchData['83'] = [];
+  _$jscoverage['/router/utils.js'].branchData['83'][1] = new BranchData();
 }
-_$jscoverage['/router/utils.js'].branchData['50'][1].init(115, 13, 'str1 === str2');
-function visit18_50_1(result) {
-  _$jscoverage['/router/utils.js'].branchData['50'][1].ranCondition(result);
+_$jscoverage['/router/utils.js'].branchData['83'][1].init(21, 31, 'str.indexOf(\'__ks-vid=\') !== -1');
+function visit19_83_1(result) {
+  _$jscoverage['/router/utils.js'].branchData['83'][1].ranCondition(result);
   return result;
-}_$jscoverage['/router/utils.js'].branchData['34'][1].init(18, 3, 'str');
-function visit17_34_1(result) {
-  _$jscoverage['/router/utils.js'].branchData['34'][1].ranCondition(result);
+}_$jscoverage['/router/utils.js'].branchData['64'][1].init(115, 13, 'str1 === str2');
+function visit18_64_1(result) {
+  _$jscoverage['/router/utils.js'].branchData['64'][1].ranCondition(result);
   return result;
-}_$jscoverage['/router/utils.js'].branchData['23'][1].init(18, 24, 'this.startWithSlash(str)');
-function visit16_23_1(result) {
-  _$jscoverage['/router/utils.js'].branchData['23'][1].ranCondition(result);
+}_$jscoverage['/router/utils.js'].branchData['48'][1].init(18, 3, 'str');
+function visit17_48_1(result) {
+  _$jscoverage['/router/utils.js'].branchData['48'][1].ranCondition(result);
   return result;
-}_$jscoverage['/router/utils.js'].branchData['16'][1].init(18, 22, 'this.endWithSlash(str)');
-function visit15_16_1(result) {
-  _$jscoverage['/router/utils.js'].branchData['16'][1].ranCondition(result);
+}_$jscoverage['/router/utils.js'].branchData['37'][1].init(18, 24, 'this.startWithSlash(str)');
+function visit16_37_1(result) {
+  _$jscoverage['/router/utils.js'].branchData['37'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/router/utils.js'].branchData['30'][1].init(18, 22, 'this.endWithSlash(str)');
+function visit15_30_1(result) {
+  _$jscoverage['/router/utils.js'].branchData['30'][1].ranCondition(result);
   return result;
 }_$jscoverage['/router/utils.js'].lineData[5]++;
 KISSY.add(function(S) {
   _$jscoverage['/router/utils.js'].functionData[0]++;
   _$jscoverage['/router/utils.js'].lineData[6]++;
-  return {
-  endWithSlash: function(str) {
-  _$jscoverage['/router/utils.js'].functionData[1]++;
+  var utils;
   _$jscoverage['/router/utils.js'].lineData[8]++;
+  function removeVid(str) {
+    _$jscoverage['/router/utils.js'].functionData[1]++;
+    _$jscoverage['/router/utils.js'].lineData[9]++;
+    return str.replace(/__ks-vid=.+$/, '');
+  }
+  _$jscoverage['/router/utils.js'].lineData[12]++;
+  function getVidFromHash(hash) {
+    _$jscoverage['/router/utils.js'].functionData[2]++;
+    _$jscoverage['/router/utils.js'].lineData[13]++;
+    var m;
+    _$jscoverage['/router/utils.js'].lineData[14]++;
+    if ((m = hash.match(/__ks-vid=(.+)$/))) {
+      _$jscoverage['/router/utils.js'].lineData[15]++;
+      return parseInt(m[1], 10);
+    }
+    _$jscoverage['/router/utils.js'].lineData[17]++;
+    return 0;
+  }
+  _$jscoverage['/router/utils.js'].lineData[20]++;
+  utils = {
+  endWithSlash: function(str) {
+  _$jscoverage['/router/utils.js'].functionData[3]++;
+  _$jscoverage['/router/utils.js'].lineData[22]++;
   return S.endsWith(str, '/');
 }, 
   startWithSlash: function(str) {
-  _$jscoverage['/router/utils.js'].functionData[2]++;
-  _$jscoverage['/router/utils.js'].lineData[12]++;
+  _$jscoverage['/router/utils.js'].functionData[4]++;
+  _$jscoverage['/router/utils.js'].lineData[26]++;
   return S.startsWith(str, '/');
 }, 
   removeEndSlash: function(str) {
-  _$jscoverage['/router/utils.js'].functionData[3]++;
-  _$jscoverage['/router/utils.js'].lineData[16]++;
-  if (visit15_16_1(this.endWithSlash(str))) {
-    _$jscoverage['/router/utils.js'].lineData[17]++;
+  _$jscoverage['/router/utils.js'].functionData[5]++;
+  _$jscoverage['/router/utils.js'].lineData[30]++;
+  if (visit15_30_1(this.endWithSlash(str))) {
+    _$jscoverage['/router/utils.js'].lineData[31]++;
     str = str.substring(0, str.length - 1);
   }
-  _$jscoverage['/router/utils.js'].lineData[19]++;
+  _$jscoverage['/router/utils.js'].lineData[33]++;
   return str;
 }, 
   removeStartSlash: function(str) {
-  _$jscoverage['/router/utils.js'].functionData[4]++;
-  _$jscoverage['/router/utils.js'].lineData[23]++;
-  if (visit16_23_1(this.startWithSlash(str))) {
-    _$jscoverage['/router/utils.js'].lineData[24]++;
+  _$jscoverage['/router/utils.js'].functionData[6]++;
+  _$jscoverage['/router/utils.js'].lineData[37]++;
+  if (visit16_37_1(this.startWithSlash(str))) {
+    _$jscoverage['/router/utils.js'].lineData[38]++;
     str = str.substring(1);
   }
-  _$jscoverage['/router/utils.js'].lineData[26]++;
+  _$jscoverage['/router/utils.js'].lineData[40]++;
   return str;
 }, 
   addEndSlash: function(str) {
-  _$jscoverage['/router/utils.js'].functionData[5]++;
-  _$jscoverage['/router/utils.js'].lineData[30]++;
+  _$jscoverage['/router/utils.js'].functionData[7]++;
+  _$jscoverage['/router/utils.js'].lineData[44]++;
   return this.removeEndSlash(str) + '/';
 }, 
   addStartSlash: function(str) {
-  _$jscoverage['/router/utils.js'].functionData[6]++;
-  _$jscoverage['/router/utils.js'].lineData[34]++;
-  if (visit17_34_1(str)) {
-    _$jscoverage['/router/utils.js'].lineData[35]++;
+  _$jscoverage['/router/utils.js'].functionData[8]++;
+  _$jscoverage['/router/utils.js'].lineData[48]++;
+  if (visit17_48_1(str)) {
+    _$jscoverage['/router/utils.js'].lineData[49]++;
     return '/' + this.removeStartSlash(str);
   } else {
-    _$jscoverage['/router/utils.js'].lineData[37]++;
+    _$jscoverage['/router/utils.js'].lineData[51]++;
     return str;
   }
 }, 
   getFullPath: function(fragment, urlRoot) {
-  _$jscoverage['/router/utils.js'].functionData[7]++;
-  _$jscoverage['/router/utils.js'].lineData[43]++;
+  _$jscoverage['/router/utils.js'].functionData[9]++;
+  _$jscoverage['/router/utils.js'].lineData[57]++;
   return location.protocol + '//' + location.host + this.removeEndSlash(urlRoot) + this.addStartSlash(fragment);
 }, 
   equalsIgnoreSlash: function(str1, str2) {
-  _$jscoverage['/router/utils.js'].functionData[8]++;
-  _$jscoverage['/router/utils.js'].lineData[48]++;
+  _$jscoverage['/router/utils.js'].functionData[10]++;
+  _$jscoverage['/router/utils.js'].lineData[62]++;
   str1 = this.removeEndSlash(str1);
-  _$jscoverage['/router/utils.js'].lineData[49]++;
+  _$jscoverage['/router/utils.js'].lineData[63]++;
   str2 = this.removeEndSlash(str2);
-  _$jscoverage['/router/utils.js'].lineData[50]++;
-  return visit18_50_1(str1 === str2);
+  _$jscoverage['/router/utils.js'].lineData[64]++;
+  return visit18_64_1(str1 === str2);
 }, 
   getHash: function(uri) {
-  _$jscoverage['/router/utils.js'].functionData[9]++;
-  _$jscoverage['/router/utils.js'].lineData[63]++;
-  return uri.getFragment().replace(/^!/, '').replace(/__ks-vid=.+$/, '');
-}};
+  _$jscoverage['/router/utils.js'].functionData[11]++;
+  _$jscoverage['/router/utils.js'].lineData[77]++;
+  return removeVid(uri.getFragment().replace(/^!/, ''));
+}, 
+  removeVid: removeVid, 
+  hasVid: function(str) {
+  _$jscoverage['/router/utils.js'].functionData[12]++;
+  _$jscoverage['/router/utils.js'].lineData[83]++;
+  return visit19_83_1(str.indexOf('__ks-vid=') !== -1);
+}, 
+  addVid: function(str, vid) {
+  _$jscoverage['/router/utils.js'].functionData[13]++;
+  _$jscoverage['/router/utils.js'].lineData[87]++;
+  return str + '__ks-vid=' + vid;
+}, 
+  getVidFromUrlWithHash: function(url) {
+  _$jscoverage['/router/utils.js'].functionData[14]++;
+  _$jscoverage['/router/utils.js'].lineData[91]++;
+  return getVidFromHash(new S.Uri(url).getFragment());
+}, 
+  getVidFromHash: getVidFromHash};
+  _$jscoverage['/router/utils.js'].lineData[96]++;
+  return utils;
 });

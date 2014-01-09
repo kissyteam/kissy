@@ -13,6 +13,7 @@ KISSY.add(function (S, require, exports) {
     var started = false;
     var useHash;
     var urlRoot;
+    var getVidFromUrlWithHash = utils.getVidFromUrlWithHash;
     var win = S.Env.host;
     var history = win.history;
     var supportNativeHashChange = S.Features.isHashChangeSupported();
@@ -23,6 +24,18 @@ KISSY.add(function (S, require, exports) {
     // for judging backward or forward
     var viewUniqueId = 10;
     var viewsHistory = [viewUniqueId];
+
+    function setPathByHash(path, replace) {
+        var hash = utils.addVid('#!' + path +
+            // add history hack for ie67
+            (supportNativeHashChange ? '' : DomEvent.REPLACE_HISTORY),
+            viewUniqueId);
+        if (replace) {
+            location.replace(hash);
+        } else {
+            location.hash = hash;
+        }
+    }
 
     // get url path for router dispatch
     function getUrlForRouter(url) {
@@ -97,7 +110,7 @@ KISSY.add(function (S, require, exports) {
         next();
     }
 
-    function dispatch(backward) {
+    function dispatch(backward, replace) {
         var url = getUrlForRouter();
         var uri = new S.Uri(url);
         var query = uri.query.get();
@@ -106,7 +119,10 @@ KISSY.add(function (S, require, exports) {
         var path = uri.toString() || '/';
         var request = new Request({
             query: query,
+            // backward or forward
             backward: backward,
+            // replace history
+            replace: replace,
             path: path,
             url: url,
             originalUrl: url
@@ -148,8 +164,7 @@ KISSY.add(function (S, require, exports) {
      */
     exports.navigate = function (path, opts) {
         opts = opts || {};
-        var replace = opts.replace,
-            normalizedPath;
+        var replace = opts.replace;
         if (getUrlForRouter() !== path) {
             if (!replace) {
                 viewUniqueId++;
@@ -163,32 +178,19 @@ KISSY.add(function (S, require, exports) {
                 // pushState does not fire popstate event (unlike hashchange)
                 // so popstate is not statechange
                 // fire manually
-                dispatch();
+                dispatch(false, replace);
             } else {
-                normalizedPath = '#!' + path;
-                if (replace) {
-                    if (supportNativeHistory) {
-                        history.replaceState({
-                            vid: viewUniqueId
-                        }, '', normalizedPath);
-                        dispatch();
-                    } else {
-                        // add history hack for ie67
-                        location.replace(normalizedPath + (supportNativeHashChange ? '' : DomEvent.REPLACE_HISTORY) + '__ks-vid=' + viewUniqueId);
-                    }
+                if (supportNativeHistory) {
+                    history[replace ? 'replaceState' : 'pushState']({
+                        vid: viewUniqueId
+                    }, '', '#!' + path);
+                    dispatch(false, replace);
                 } else {
-                    if (supportNativeHistory) {
-                        history.pushState({
-                            vid: viewUniqueId
-                        }, '', normalizedPath);
-                        dispatch();
-                    } else {
-                        location.hash = normalizedPath + '__ks-vid=' + viewUniqueId;
-                    }
+                    setPathByHash(path, replace);
                 }
             }
         } else if (opts && opts.triggerRoute) {
-            dispatch();
+            dispatch(false, true);
         }
     };
 
@@ -258,6 +260,7 @@ KISSY.add(function (S, require, exports) {
 
     function dispatchByVid(vid) {
         var backward = false;
+        var replace = false;
 
         if (vid === viewsHistory[viewsHistory.length - 2]) {
             backward = true;
@@ -266,37 +269,26 @@ KISSY.add(function (S, require, exports) {
         //  when hashchange mode already push vid by navigate
             vid !== viewsHistory[viewsHistory.length - 1]) {
             viewsHistory.push(vid);
+        } else {
+            replace = true;
         }
 
         //S.log('backward: ' + backward);
         //S.log(viewsHistory);
-        dispatch(backward);
+        dispatch(backward, replace);
     }
 
     function onPopState(e) {
         //S.log('onPopState');
         // page to be rendered
         var state = e.originalEvent.state;
-
         // input url directly
         if (!state) {
             return;
         }
-
         dispatchByVid(state.vid);
     }
 
-    function getVidFromUrlWithHash(url) {
-        return getVidFromHash(new S.Uri(url).getFragment());
-    }
-
-    function getVidFromHash(hash) {
-        var m;
-        if ((m = hash.match(/__ks-vid=(.+)$/))) {
-            return parseInt(m[1], 10);
-        }
-        return 0;
-    }
 
     function onHashChange(e) {
         //S.log('onHashChange');
@@ -342,6 +334,7 @@ KISSY.add(function (S, require, exports) {
         }
 
         var locPath = location.pathname,
+            href = location.href,
             hash = getUrlForRouter(),
             hashIsValid = location.hash.match(/#!.+/);
 
@@ -394,13 +387,18 @@ KISSY.add(function (S, require, exports) {
                     });
                     opts.triggerRoute = 0;
                     needReplaceHistory = false;
+                } else if (!supportNativeHistory && getVidFromUrlWithHash(href) !== viewUniqueId) {
+                    setPathByHash(utils.getHash(new S.Uri(href)), true);
+                    opts.triggerRoute = 0;
+                } else if (supportNativeHistory && utils.hasVid(href)) {
+                    location.replace(href = utils.removeVid(href));
                 }
             }
             if (needReplaceHistory) {
                 // fill in first state
                 history.replaceState({
                     vid: viewUniqueId
-                }, '', location.href);
+                }, '', href);
             }
             // check initial hash on start
             // in case server does not render initial state correctly

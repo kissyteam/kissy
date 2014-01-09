@@ -3,7 +3,21 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S) {
-    return {
+    var utils;
+
+    function removeVid(str) {
+        return str.replace(/__ks-vid=.+$/, '');
+    }
+
+    function getVidFromHash(hash) {
+        var m;
+        if ((m = hash.match(/__ks-vid=(.+)$/))) {
+            return parseInt(m[1], 10);
+        }
+        return 0;
+    }
+
+    utils = {
         endWithSlash: function (str) {
             return S.endsWith(str, '/');
         },
@@ -60,7 +74,24 @@ KISSY.add(function (S) {
             // #!/home/q={%22thedate%22:%2220121010~20121010%22}
             // firefox 15 => #!/home/q={"thedate":"20121010~20121010"}
             // !! :(
-            return uri.getFragment().replace(/^!/, '').replace(/__ks-vid=.+$/, '');
-        }
+            return removeVid(uri.getFragment().replace(/^!/, ''));
+        },
+
+        removeVid: removeVid,
+
+        hasVid: function (str) {
+            return str.indexOf('__ks-vid=') !== -1;
+        },
+
+        addVid: function (str, vid) {
+            return str + '__ks-vid=' + vid;
+        },
+
+        getVidFromUrlWithHash: function (url) {
+            return getVidFromHash(new S.Uri(url).getFragment());
+        },
+
+        getVidFromHash: getVidFromHash
     };
+    return utils;
 });

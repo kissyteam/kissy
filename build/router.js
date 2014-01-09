@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Jan 9 00:15
+build time: Jan 9 20:36
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -13,7 +13,18 @@ build time: Jan 9 00:15
 */
 
 KISSY.add("router/utils", [], function(S) {
-  return{endWithSlash:function(str) {
+  var utils;
+  function removeVid(str) {
+    return str.replace(/__ks-vid=.+$/, "")
+  }
+  function getVidFromHash(hash) {
+    var m;
+    if(m = hash.match(/__ks-vid=(.+)$/)) {
+      return parseInt(m[1], 10)
+    }
+    return 0
+  }
+  utils = {endWithSlash:function(str) {
     return S.endsWith(str, "/")
   }, startWithSlash:function(str) {
     return S.startsWith(str, "/")
@@ -42,8 +53,15 @@ KISSY.add("router/utils", [], function(S) {
     str2 = this.removeEndSlash(str2);
     return str1 === str2
   }, getHash:function(uri) {
-    return uri.getFragment().replace(/^!/, "").replace(/__ks-vid=.+$/, "")
-  }}
+    return removeVid(uri.getFragment().replace(/^!/, ""))
+  }, removeVid:removeVid, hasVid:function(str) {
+    return str.indexOf("__ks-vid=") !== -1
+  }, addVid:function(str, vid) {
+    return str + "__ks-vid=" + vid
+  }, getVidFromUrlWithHash:function(url) {
+    return getVidFromHash((new S.Uri(url)).getFragment())
+  }, getVidFromHash:getVidFromHash};
+  return utils
 });
 KISSY.add("router/route", [], function(S) {
   var grammar = /(:([\w\d]+\??))|(\\\*([\w\d]+))/g;
@@ -128,6 +146,7 @@ KISSY.add("router", ["./router/utils", "./router/route", "uri", "./router/reques
   var started = false;
   var useHash;
   var urlRoot;
+  var getVidFromUrlWithHash = utils.getVidFromUrlWithHash;
   var win = S.Env.host;
   var history = win.history;
   var supportNativeHashChange = S.Features.isHashChangeSupported();
@@ -135,6 +154,14 @@ KISSY.add("router", ["./router/utils", "./router/route", "uri", "./router/reques
   var BREATH_INTERVAL = 100;
   var viewUniqueId = 10;
   var viewsHistory = [viewUniqueId];
+  function setPathByHash(path, replace) {
+    var hash = utils.addVid("#!" + path + (supportNativeHashChange ? "" : DomEvent.REPLACE_HISTORY), viewUniqueId);
+    if(replace) {
+      location.replace(hash)
+    }else {
+      location.hash = hash
+    }
+  }
   function getUrlForRouter(url) {
     url = url || location.href;
     var uri = new Uri(url);
@@ -200,13 +227,13 @@ KISSY.add("router", ["./router/utils", "./router/route", "uri", "./router/reques
     }
     next()
   }
-  function dispatch(backward) {
+  function dispatch(backward, replace) {
     var url = getUrlForRouter();
     var uri = new S.Uri(url);
     var query = uri.query.get();
     uri.query.reset();
     var path = uri.toString() || "/";
-    var request = new Request({query:query, backward:backward, path:path, url:url, originalUrl:url});
+    var request = new Request({query:query, backward:backward, replace:replace, path:path, url:url, originalUrl:url});
     var response = {redirect:exports.navigate};
     fireMiddleWare(request, response, fireRoutes)
   }
@@ -219,7 +246,7 @@ KISSY.add("router", ["./router/utils", "./router/route", "uri", "./router/reques
   };
   exports.navigate = function(path, opts) {
     opts = opts || {};
-    var replace = opts.replace, normalizedPath;
+    var replace = opts.replace;
     if(getUrlForRouter() !== path) {
       if(!replace) {
         viewUniqueId++;
@@ -227,28 +254,18 @@ KISSY.add("router", ["./router/utils", "./router/route", "uri", "./router/reques
       }
       if(!useHash && supportNativeHistory) {
         history[replace ? "replaceState" : "pushState"]({vid:viewUniqueId}, "", utils.getFullPath(path, urlRoot));
-        dispatch()
+        dispatch(false, replace)
       }else {
-        normalizedPath = "#!" + path;
-        if(replace) {
-          if(supportNativeHistory) {
-            history.replaceState({vid:viewUniqueId}, "", normalizedPath);
-            dispatch()
-          }else {
-            location.replace(normalizedPath + (supportNativeHashChange ? "" : DomEvent.REPLACE_HISTORY) + "__ks-vid=" + viewUniqueId)
-          }
+        if(supportNativeHistory) {
+          history[replace ? "replaceState" : "pushState"]({vid:viewUniqueId}, "", "#!" + path);
+          dispatch(false, replace)
         }else {
-          if(supportNativeHistory) {
-            history.pushState({vid:viewUniqueId}, "", normalizedPath);
-            dispatch()
-          }else {
-            location.hash = normalizedPath + "__ks-vid=" + viewUniqueId
-          }
+          setPathByHash(path, replace)
         }
       }
     }else {
       if(opts && opts.triggerRoute) {
-        dispatch()
+        dispatch(false, true)
       }
     }
   };
@@ -293,15 +310,18 @@ KISSY.add("router", ["./router/utils", "./router/route", "uri", "./router/reques
   };
   function dispatchByVid(vid) {
     var backward = false;
+    var replace = false;
     if(vid === viewsHistory[viewsHistory.length - 2]) {
       backward = true;
       viewsHistory.pop()
     }else {
       if(vid !== viewsHistory[viewsHistory.length - 1]) {
         viewsHistory.push(vid)
+      }else {
+        replace = true
       }
     }
-    dispatch(backward)
+    dispatch(backward, replace)
   }
   function onPopState(e) {
     var state = e.originalEvent.state;
@@ -309,16 +329,6 @@ KISSY.add("router", ["./router/utils", "./router/route", "uri", "./router/reques
       return
     }
     dispatchByVid(state.vid)
-  }
-  function getVidFromUrlWithHash(url) {
-    return getVidFromHash((new S.Uri(url)).getFragment())
-  }
-  function getVidFromHash(hash) {
-    var m;
-    if(m = hash.match(/__ks-vid=(.+)$/)) {
-      return parseInt(m[1], 10)
-    }
-    return 0
   }
   function onHashChange(e) {
     var newURL = e.newURL || location.href;
@@ -342,7 +352,7 @@ KISSY.add("router", ["./router/utils", "./router/route", "uri", "./router/reques
     if(opts.useHashChange) {
       supportNativeHistory = false
     }
-    var locPath = location.pathname, hash = getUrlForRouter(), hashIsValid = location.hash.match(/#!.+/);
+    var locPath = location.pathname, href = location.href, hash = getUrlForRouter(), hashIsValid = location.hash.match(/#!.+/);
     if(!useHash) {
       if(supportNativeHistory) {
         if(hashIsValid) {
@@ -375,10 +385,19 @@ KISSY.add("router", ["./router/utils", "./router/route", "uri", "./router/reques
           exports.navigate("/", {replace:1});
           opts.triggerRoute = 0;
           needReplaceHistory = false
+        }else {
+          if(!supportNativeHistory && getVidFromUrlWithHash(href) !== viewUniqueId) {
+            setPathByHash(utils.getHash(new S.Uri(href)), true);
+            opts.triggerRoute = 0
+          }else {
+            if(supportNativeHistory && utils.hasVid(href)) {
+              location.replace(href = utils.removeVid(href))
+            }
+          }
         }
       }
       if(needReplaceHistory) {
-        history.replaceState({vid:viewUniqueId}, "", location.href)
+        history.replaceState({vid:viewUniqueId}, "", href)
       }
       if(opts.triggerRoute) {
         dispatch()

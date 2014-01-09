@@ -274,6 +274,9 @@ if (! _$jscoverage['/navigation-view/bar-xtpl.js']) {
   _$jscoverage['/navigation-view/bar-xtpl.js'].lineData[53] = 0;
   _$jscoverage['/navigation-view/bar-xtpl.js'].lineData[54] = 0;
   _$jscoverage['/navigation-view/bar-xtpl.js'].lineData[55] = 0;
+  _$jscoverage['/navigation-view/bar-xtpl.js'].lineData[56] = 0;
+  _$jscoverage['/navigation-view/bar-xtpl.js'].lineData[57] = 0;
+  _$jscoverage['/navigation-view/bar-xtpl.js'].lineData[58] = 0;
 }
 if (! _$jscoverage['/navigation-view/bar-xtpl.js'].functionData) {
   _$jscoverage['/navigation-view/bar-xtpl.js'].functionData = [];
@@ -384,8 +387,14 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/navigation-view/bar-xtpl.js'].lineData[53]++;
   buffer += renderOutputUtil(id12, true);
   _$jscoverage['/navigation-view/bar-xtpl.js'].lineData[54]++;
-  buffer += '"></div>\r\n</div>';
+  buffer += '" id="ks-navigation-bar-center-';
   _$jscoverage['/navigation-view/bar-xtpl.js'].lineData[55]++;
+  var id15 = getPropertyOrRunCommandUtil(engine, scope, {}, "id", 0, 5);
+  _$jscoverage['/navigation-view/bar-xtpl.js'].lineData[56]++;
+  buffer += renderOutputUtil(id15, true);
+  _$jscoverage['/navigation-view/bar-xtpl.js'].lineData[57]++;
+  buffer += '"></div>\r\n</div>';
+  _$jscoverage['/navigation-view/bar-xtpl.js'].lineData[58]++;
   return buffer;
 };
 });
