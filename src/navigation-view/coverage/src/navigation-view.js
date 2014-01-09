@@ -363,51 +363,51 @@ if (! _$jscoverage['/navigation-view.js'].branchData) {
   _$jscoverage['/navigation-view.js'].branchData['172'][2] = new BranchData();
 }
 _$jscoverage['/navigation-view.js'].branchData['172'][2].init(50, 39, 'self.waitingView.uuid === nextView.uuid');
-function visit37_172_2(result) {
+function visit39_172_2(result) {
   _$jscoverage['/navigation-view.js'].branchData['172'][2].ranCondition(result);
   return result;
 }_$jscoverage['/navigation-view.js'].branchData['172'][1].init(30, 59, 'self.waitingView && self.waitingView.uuid === nextView.uuid');
-function visit36_172_1(result) {
+function visit38_172_1(result) {
   _$jscoverage['/navigation-view.js'].branchData['172'][1].ranCondition(result);
   return result;
 }_$jscoverage['/navigation-view.js'].branchData['169'][1].init(2309, 5, 'async');
-function visit35_169_1(result) {
+function visit37_169_1(result) {
   _$jscoverage['/navigation-view.js'].branchData['169'][1].ranCondition(result);
   return result;
 }_$jscoverage['/navigation-view.js'].branchData['167'][1].init(2258, 25, 'this.viewStack.length > 1');
-function visit34_167_1(result) {
+function visit36_167_1(result) {
   _$jscoverage['/navigation-view.js'].branchData['167'][1].ranCondition(result);
   return result;
 }_$jscoverage['/navigation-view.js'].branchData['159'][1].init(26, 6, '!async');
-function visit33_159_1(result) {
+function visit35_159_1(result) {
   _$jscoverage['/navigation-view.js'].branchData['159'][1].ranCondition(result);
   return result;
 }_$jscoverage['/navigation-view.js'].branchData['133'][1].init(475, 5, 'async');
-function visit32_133_1(result) {
+function visit34_133_1(result) {
   _$jscoverage['/navigation-view.js'].branchData['133'][1].ranCondition(result);
   return result;
 }_$jscoverage['/navigation-view.js'].branchData['116'][1].init(48, 25, 'this.viewStack.length > 1');
-function visit31_116_1(result) {
+function visit33_116_1(result) {
   _$jscoverage['/navigation-view.js'].branchData['116'][1].ranCondition(result);
   return result;
 }_$jscoverage['/navigation-view.js'].branchData['103'][2].init(46, 39, 'self.waitingView.uuid === nextView.uuid');
-function visit30_103_2(result) {
+function visit32_103_2(result) {
   _$jscoverage['/navigation-view.js'].branchData['103'][2].ranCondition(result);
   return result;
 }_$jscoverage['/navigation-view.js'].branchData['103'][1].init(26, 59, 'self.waitingView && self.waitingView.uuid === nextView.uuid');
-function visit29_103_1(result) {
+function visit31_103_1(result) {
   _$jscoverage['/navigation-view.js'].branchData['103'][1].ranCondition(result);
   return result;
 }_$jscoverage['/navigation-view.js'].branchData['100'][1].init(2272, 5, 'async');
-function visit28_100_1(result) {
+function visit30_100_1(result) {
   _$jscoverage['/navigation-view.js'].branchData['100'][1].ranCondition(result);
   return result;
 }_$jscoverage['/navigation-view.js'].branchData['92'][1].init(80, 6, '!async');
-function visit27_92_1(result) {
+function visit29_92_1(result) {
   _$jscoverage['/navigation-view.js'].branchData['92'][1].ranCondition(result);
   return result;
 }_$jscoverage['/navigation-view.js'].branchData['64'][1].init(410, 5, 'async');
-function visit26_64_1(result) {
+function visit28_64_1(result) {
   _$jscoverage['/navigation-view.js'].branchData['64'][1].ranCondition(result);
   return result;
 }_$jscoverage['/navigation-view.js'].lineData[5]++;
@@ -493,7 +493,7 @@ KISSY.add(function(S, require) {
   easing: 'ease-in-out', 
   duration: 0.25});
     _$jscoverage['/navigation-view.js'].lineData[64]++;
-    if (visit26_64_1(async)) {
+    if (visit28_64_1(async)) {
       _$jscoverage['/navigation-view.js'].lineData[65]++;
       loadingEl.stop(true);
       _$jscoverage['/navigation-view.js'].lineData[66]++;
@@ -530,7 +530,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/navigation-view.js'].lineData[91]++;
     bar.set('title', nextView.get('title'));
     _$jscoverage['/navigation-view.js'].lineData[92]++;
-    if (visit27_92_1(!async)) {
+    if (visit29_92_1(!async)) {
       _$jscoverage['/navigation-view.js'].lineData[93]++;
       nextView.get('el').css('transform', '');
       _$jscoverage['/navigation-view.js'].lineData[94]++;
@@ -542,22 +542,22 @@ KISSY.add(function(S, require) {
     }
   }
   _$jscoverage['/navigation-view.js'].lineData[100]++;
-  if (visit28_100_1(async)) {
+  if (visit30_100_1(async)) {
     _$jscoverage['/navigation-view.js'].lineData[101]++;
     self.waitingView = nextView;
     _$jscoverage['/navigation-view.js'].lineData[102]++;
     nextView.controller.promise.then(function() {
   _$jscoverage['/navigation-view.js'].functionData[5]++;
   _$jscoverage['/navigation-view.js'].lineData[103]++;
-  if (visit29_103_1(self.waitingView && visit30_103_2(self.waitingView.uuid === nextView.uuid))) {
+  if (visit31_103_1(self.waitingView && visit32_103_2(self.waitingView.uuid === nextView.uuid))) {
     _$jscoverage['/navigation-view.js'].lineData[104]++;
     self.set('activeView', nextView);
     _$jscoverage['/navigation-view.js'].lineData[105]++;
     self.waitingView = null;
     _$jscoverage['/navigation-view.js'].lineData[106]++;
-    bar.set('title', nextView.get('title'));
-    _$jscoverage['/navigation-view.js'].lineData[107]++;
     nextView.get('el').css('transform', '');
+    _$jscoverage['/navigation-view.js'].lineData[107]++;
+    bar.set('title', nextView.get('title'));
     _$jscoverage['/navigation-view.js'].lineData[108]++;
     loadingEl.hide();
   }
@@ -569,7 +569,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/navigation-view.js'].lineData[115]++;
   var self = this;
   _$jscoverage['/navigation-view.js'].lineData[116]++;
-  if (visit31_116_1(this.viewStack.length > 1)) {
+  if (visit33_116_1(this.viewStack.length > 1)) {
     _$jscoverage['/navigation-view.js'].lineData[117]++;
     this.viewStack.pop();
     _$jscoverage['/navigation-view.js'].lineData[118]++;
@@ -593,7 +593,7 @@ KISSY.add(function(S, require) {
   easing: 'ease-in-out', 
   duration: 0.25});
       _$jscoverage['/navigation-view.js'].lineData[133]++;
-      if (visit32_133_1(async)) {
+      if (visit34_133_1(async)) {
         _$jscoverage['/navigation-view.js'].lineData[134]++;
         this.set('activeView', null);
         _$jscoverage['/navigation-view.js'].lineData[135]++;
@@ -626,7 +626,7 @@ KISSY.add(function(S, require) {
       }
     } else {
       _$jscoverage['/navigation-view.js'].lineData[159]++;
-      if (visit33_159_1(!async)) {
+      if (visit35_159_1(!async)) {
         _$jscoverage['/navigation-view.js'].lineData[160]++;
         nextView.get('el').css('transform', '');
         _$jscoverage['/navigation-view.js'].lineData[161]++;
@@ -638,24 +638,24 @@ KISSY.add(function(S, require) {
       }
     }
     _$jscoverage['/navigation-view.js'].lineData[167]++;
-    bar.back(nextView.get('title'), visit34_167_1(this.viewStack.length > 1));
+    bar.back(nextView.get('title'), visit36_167_1(this.viewStack.length > 1));
     _$jscoverage['/navigation-view.js'].lineData[169]++;
-    if (visit35_169_1(async)) {
+    if (visit37_169_1(async)) {
       _$jscoverage['/navigation-view.js'].lineData[170]++;
       self.waitingView = nextView;
       _$jscoverage['/navigation-view.js'].lineData[171]++;
       nextView.controller.promise.then(function() {
   _$jscoverage['/navigation-view.js'].functionData[7]++;
   _$jscoverage['/navigation-view.js'].lineData[172]++;
-  if (visit36_172_1(self.waitingView && visit37_172_2(self.waitingView.uuid === nextView.uuid))) {
+  if (visit38_172_1(self.waitingView && visit39_172_2(self.waitingView.uuid === nextView.uuid))) {
     _$jscoverage['/navigation-view.js'].lineData[173]++;
     self.waitingView = null;
     _$jscoverage['/navigation-view.js'].lineData[174]++;
     self.set('activeView', nextView);
     _$jscoverage['/navigation-view.js'].lineData[175]++;
-    bar.set('title', nextView.get('title'));
-    _$jscoverage['/navigation-view.js'].lineData[176]++;
     nextView.get('el').css('transform', '');
+    _$jscoverage['/navigation-view.js'].lineData[176]++;
+    bar.set('title', nextView.get('title'));
     _$jscoverage['/navigation-view.js'].lineData[177]++;
     loadingEl.hide();
   }

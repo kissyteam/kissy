@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Jan 9 20:36
+build time: Jan 9 20:58
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -29,15 +29,8 @@ KISSY.add("navigation-view/controller", ["base", "router", "promise"], function(
       subView.get("el").css("transform", "translateX(-9999px) translateZ(0)")
     }
     subView.controller = self;
-    this.getSubView().reset("title");
     this.defer = new Promise.Defer;
     this.promise = this.defer.promise;
-    self.enter();
-    var route = request.route;
-    var routes = self.get("routes");
-    if(routes[route.path]) {
-      self[routes[route.path]].apply(self, arguments)
-    }
     if(!request.replace || !activeView) {
       if(activeView) {
         activeView.controller.leave()
@@ -45,7 +38,19 @@ KISSY.add("navigation-view/controller", ["base", "router", "promise"], function(
       if(navigationView.waitingView) {
         navigationView.waitingView.controller.leave()
       }
-      self.switchView(request, !self.promise.isResolved())
+    }
+    self.enter();
+    var route = request.route;
+    var routes = self.get("routes");
+    if(routes[route.path]) {
+      self[routes[route.path]].apply(self, arguments)
+    }
+    if(!request.replace || !activeView) {
+      var async = !self.promise.isResolved();
+      if(async) {
+        subView.reset("title")
+      }
+      navigationView[request.backward ? "pop" : "push"](subView, async)
     }
   }
   return Base.extend({router:router, initializer:function() {
@@ -71,8 +76,6 @@ KISSY.add("navigation-view/controller", ["base", "router", "promise"], function(
     return undefined
   }, navigate:function(url, options) {
     router.navigate(url, options)
-  }, switchView:function(request, async) {
-    this.get("navigationView")[request.backward ? "pop" : "push"](this.getSubView(), async)
   }, isSubViewActive:function() {
     return this.get("navigationView").get("activeView") === this.getSubView()
   }}, {ATTRS:{routes:{}, SubView:{}}})
@@ -340,8 +343,8 @@ KISSY.add("navigation-view", ["node", "navigation-view/controller", "component/c
         if(self.waitingView && self.waitingView.uuid === nextView.uuid) {
           self.set("activeView", nextView);
           self.waitingView = null;
-          bar.set("title", nextView.get("title"));
           nextView.get("el").css("transform", "");
+          bar.set("title", nextView.get("title"));
           loadingEl.hide()
         }
       })
@@ -386,8 +389,8 @@ KISSY.add("navigation-view", ["node", "navigation-view/controller", "component/c
           if(self.waitingView && self.waitingView.uuid === nextView.uuid) {
             self.waitingView = null;
             self.set("activeView", nextView);
-            bar.set("title", nextView.get("title"));
             nextView.get("el").css("transform", "");
+            bar.set("title", nextView.get("title"));
             loadingEl.hide()
           }
         })

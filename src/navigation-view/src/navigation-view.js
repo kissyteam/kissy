@@ -103,8 +103,8 @@ KISSY.add(function (S, require) {
                     if (self.waitingView && self.waitingView.uuid === nextView.uuid) {
                         self.set('activeView', nextView);
                         self.waitingView = null;
-                        bar.set('title', nextView.get('title'));
                         nextView.get('el').css('transform', '');
+                        bar.set('title', nextView.get('title'));
                         loadingEl.hide();
                     }
                 });
@@ -172,8 +172,8 @@ KISSY.add(function (S, require) {
                         if (self.waitingView && self.waitingView.uuid === nextView.uuid) {
                             self.waitingView = null;
                             self.set('activeView', nextView);
-                            bar.set('title', nextView.get('title'));
                             nextView.get('el').css('transform', '');
+                            bar.set('title', nextView.get('title'));
                             loadingEl.hide();
                         }
                     });

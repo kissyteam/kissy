@@ -80,7 +80,7 @@ KISSY.use('navigation-view,node,router', function (S, NavigationView, Node, rout
                     '<button class="another">got another</button>' +
                     '<button class="sub">got another</button>');
             this.subContent = new Node('<div>sub content</div>').appendTo(el);
-            this.set('title', content);
+
         },
 
         setSubContent: function (c) {
@@ -110,6 +110,7 @@ KISSY.use('navigation-view,node,router', function (S, NavigationView, Node, rout
                 subView.setItem(request.param('id'), ': loaded!');
                 setTimeout(function () {
                     defer.resolve();
+                    subView.set('title', request.param('id'));
                 }, 1000);
             }
         },

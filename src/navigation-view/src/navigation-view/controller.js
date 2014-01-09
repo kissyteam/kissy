@@ -19,9 +19,20 @@ KISSY.add(function (S, require) {
         }
         subView.controller = self;
 
-        this.getSubView().reset('title');
         this.defer = new Promise.Defer();
         this.promise = this.defer.promise;
+
+        if (!request.replace ||
+            // first screen replace
+            !activeView) {
+            if (activeView) {
+                activeView.controller.leave();
+            }
+            if (navigationView.waitingView) {
+                navigationView.waitingView.controller.leave();
+            }
+        }
+
         self.enter();
 
         var route = request.route;
@@ -34,14 +45,11 @@ KISSY.add(function (S, require) {
         if (!request.replace ||
             // first screen replace
             !activeView) {
-            if (activeView) {
-                activeView.controller.leave();
+            var async = !self.promise.isResolved();
+            if (async) {
+                subView.reset('title');
             }
-            if (navigationView.waitingView) {
-                navigationView.waitingView.controller.leave();
-            }
-
-            self.switchView(request, !self.promise.isResolved());
+            navigationView[request.backward ? 'pop' : 'push'](subView, async);
         }
     }
 
@@ -79,10 +87,6 @@ KISSY.add(function (S, require) {
 
         navigate: function (url, options) {
             router.navigate(url, options);
-        },
-
-        switchView: function (request, async) {
-            this.get('navigationView')[request.backward ? 'pop' : 'push'](this.getSubView(), async);
         },
 
         'isSubViewActive': function () {
