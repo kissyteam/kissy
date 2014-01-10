@@ -93,7 +93,7 @@ navigation-view style
     left: -14px;
 }
 
-.ks-navigation-bar-button-active, .ks-navigation-bar-back-active:after {
+.ks-navigation-bar-button-active, .ks-navigation-bar-button-active.ks-navigation-bar-back:after {
     background-color: #043857;
     background-image: -webkit-linear-gradient(top, #021926, #03283f 10%, #043857 65%, #043a59);
 }

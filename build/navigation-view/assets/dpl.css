@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Jan 9 20:58
+build time: Jan 10 12:28
 */
 /**
 navigation-view style
@@ -98,7 +98,7 @@ navigation-view style
     left: -14px;
 }
 
-.ks-navigation-bar-button-active, .ks-navigation-bar-back-active:after {
+.ks-navigation-bar-button-active, .ks-navigation-bar-button-active.ks-navigation-bar-back:after {
     background-color: #043857;
     background-image: -webkit-linear-gradient(top, #021926, #03283f 10%, #043857 65%, #043a59);
 }

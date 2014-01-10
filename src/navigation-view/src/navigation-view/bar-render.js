@@ -7,17 +7,24 @@ KISSY.add(function (S, require) {
     var Control = require('component/control');
     return Control.getDefaultRender().extend({
         createDom: function () {
-            this.fillChildrenElsBySelectors({
-                titleEl: '#ks-navigation-bar-title-{id}',
+            var selectors = {
                 centerEl: '#ks-navigation-bar-center-{id}',
                 contentEl: '#ks-navigation-bar-content-{id}'
-            });
+            };
+            if (this.control._withTitle) {
+                selectors.titleEl = '#ks-navigation-bar-title-{id}';
+            }
+            this.fillChildrenElsBySelectors(selectors);
         },
         _onSetTitle: function (v) {
-            this.control.get('titleEl').html(v);
+            if (this.control._withTitle) {
+                this.control.get('titleEl').html(v);
+            }
         },
         _onSetBackText: function (v) {
-            this.control.get('backButton').set('content',v);
+            if (this.control._backBtn) {
+                this.control._backBtn.set('content', v);
+            }
         }
     }, {
         ATTRS: {

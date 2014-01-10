@@ -32,14 +32,9 @@ KISSY.add(function (S, require) {
         renderUI: function () {
             this.viewStack = [];
             var bar;
-            this.setInternal('bar', bar = new Bar({
-                elBefore: this.get('el')[0].firstChild
-            }).render());
-            bar.get('backBtn').on('click', this.onBack, this);
-        },
-
-        onBack: function () {
-            history.back();
+            var barCfg = this.get('barCfg');
+            barCfg.elBefore = this.get('el')[0].firstChild;
+            this.setInternal('bar', bar = new Bar(barCfg).render());
         },
 
         push: function (nextView, async) {
@@ -188,6 +183,9 @@ KISSY.add(function (S, require) {
         xclass: 'navigation-view',
 
         ATTRS: {
+            barCfg: {
+            },
+
             activeView: {
             },
 

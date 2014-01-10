@@ -234,8 +234,13 @@ if (! _$jscoverage['/navigation-view/bar-render.js']) {
   _$jscoverage['/navigation-view/bar-render.js'].lineData[7] = 0;
   _$jscoverage['/navigation-view/bar-render.js'].lineData[8] = 0;
   _$jscoverage['/navigation-view/bar-render.js'].lineData[10] = 0;
+  _$jscoverage['/navigation-view/bar-render.js'].lineData[14] = 0;
+  _$jscoverage['/navigation-view/bar-render.js'].lineData[15] = 0;
   _$jscoverage['/navigation-view/bar-render.js'].lineData[17] = 0;
   _$jscoverage['/navigation-view/bar-render.js'].lineData[20] = 0;
+  _$jscoverage['/navigation-view/bar-render.js'].lineData[21] = 0;
+  _$jscoverage['/navigation-view/bar-render.js'].lineData[25] = 0;
+  _$jscoverage['/navigation-view/bar-render.js'].lineData[26] = 0;
 }
 if (! _$jscoverage['/navigation-view/bar-render.js'].functionData) {
   _$jscoverage['/navigation-view/bar-render.js'].functionData = [];
@@ -246,8 +251,26 @@ if (! _$jscoverage['/navigation-view/bar-render.js'].functionData) {
 }
 if (! _$jscoverage['/navigation-view/bar-render.js'].branchData) {
   _$jscoverage['/navigation-view/bar-render.js'].branchData = {};
+  _$jscoverage['/navigation-view/bar-render.js'].branchData['14'] = [];
+  _$jscoverage['/navigation-view/bar-render.js'].branchData['14'][1] = new BranchData();
+  _$jscoverage['/navigation-view/bar-render.js'].branchData['20'] = [];
+  _$jscoverage['/navigation-view/bar-render.js'].branchData['20'][1] = new BranchData();
+  _$jscoverage['/navigation-view/bar-render.js'].branchData['25'] = [];
+  _$jscoverage['/navigation-view/bar-render.js'].branchData['25'][1] = new BranchData();
 }
-_$jscoverage['/navigation-view/bar-render.js'].lineData[5]++;
+_$jscoverage['/navigation-view/bar-render.js'].branchData['25'][1].init(18, 21, 'this.control._backBtn');
+function visit3_25_1(result) {
+  _$jscoverage['/navigation-view/bar-render.js'].branchData['25'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/navigation-view/bar-render.js'].branchData['20'][1].init(18, 23, 'this.control._withTitle');
+function visit2_20_1(result) {
+  _$jscoverage['/navigation-view/bar-render.js'].branchData['20'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/navigation-view/bar-render.js'].branchData['14'][1].init(188, 23, 'this.control._withTitle');
+function visit1_14_1(result) {
+  _$jscoverage['/navigation-view/bar-render.js'].branchData['14'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/navigation-view/bar-render.js'].lineData[5]++;
 KISSY.add(function(S, require) {
   _$jscoverage['/navigation-view/bar-render.js'].functionData[0]++;
   _$jscoverage['/navigation-view/bar-render.js'].lineData[6]++;
@@ -259,20 +282,32 @@ KISSY.add(function(S, require) {
   createDom: function() {
   _$jscoverage['/navigation-view/bar-render.js'].functionData[1]++;
   _$jscoverage['/navigation-view/bar-render.js'].lineData[10]++;
-  this.fillChildrenElsBySelectors({
-  titleEl: '#ks-navigation-bar-title-{id}', 
+  var selectors = {
   centerEl: '#ks-navigation-bar-center-{id}', 
-  contentEl: '#ks-navigation-bar-content-{id}'});
+  contentEl: '#ks-navigation-bar-content-{id}'};
+  _$jscoverage['/navigation-view/bar-render.js'].lineData[14]++;
+  if (visit1_14_1(this.control._withTitle)) {
+    _$jscoverage['/navigation-view/bar-render.js'].lineData[15]++;
+    selectors.titleEl = '#ks-navigation-bar-title-{id}';
+  }
+  _$jscoverage['/navigation-view/bar-render.js'].lineData[17]++;
+  this.fillChildrenElsBySelectors(selectors);
 }, 
   _onSetTitle: function(v) {
   _$jscoverage['/navigation-view/bar-render.js'].functionData[2]++;
-  _$jscoverage['/navigation-view/bar-render.js'].lineData[17]++;
-  this.control.get('titleEl').html(v);
+  _$jscoverage['/navigation-view/bar-render.js'].lineData[20]++;
+  if (visit2_20_1(this.control._withTitle)) {
+    _$jscoverage['/navigation-view/bar-render.js'].lineData[21]++;
+    this.control.get('titleEl').html(v);
+  }
 }, 
   _onSetBackText: function(v) {
   _$jscoverage['/navigation-view/bar-render.js'].functionData[3]++;
-  _$jscoverage['/navigation-view/bar-render.js'].lineData[20]++;
-  this.control.get('backButton').set('content', v);
+  _$jscoverage['/navigation-view/bar-render.js'].lineData[25]++;
+  if (visit3_25_1(this.control._backBtn)) {
+    _$jscoverage['/navigation-view/bar-render.js'].lineData[26]++;
+    this.control._backBtn.set('content', v);
+  }
 }}, {
   ATTRS: {
   contentTpl: {

@@ -18,7 +18,10 @@
 <script>
 KISSY.use('navigation-view,node,router', function (S, NavigationView, Node, router) {
     var navigationView = new NavigationView({
-        barTitle: 'Navigation bar',
+        barCfg:{
+            withBackButton:1,
+            withTitle:1
+        },
         render: 'body'
     }).render();
     var SubView = NavigationView.SubView;

@@ -125,34 +125,51 @@ KISSY.add(function (S, require) {
         };
     }
 
+    function onBackButtonClick() {
+        history.back();
+    }
+
     return Control.extend({
+        initializer: function () {
+            this._withTitle = this.get('withTitle');
+        },
+
         renderUI: function () {
-            var prefixCls = this.get('prefixCls');
-            var backBtn;
-            this.set('backBtn', backBtn = new Button({
-                prefixCls: prefixCls + 'navigation-bar-',
-                elCls: prefixCls + 'navigation-bar-back',
-                elBefore: this.get('contentEl')[0].firstChild,
-                visible: false,
-                content: this.get('backText')
-            }).render());
-            this._buttons = {};
+            var self = this,
+                prefixCls = self.get('prefixCls');
+            self._buttons = {};
+            if (self.get('withBackButton')) {
+                self._backBtn = new Button({
+                    prefixCls: prefixCls + 'navigation-bar-',
+                    elCls: prefixCls + 'navigation-bar-back',
+                    elBefore: self.get('contentEl')[0].firstChild,
+                    visible: false,
+                    content: self.get('backText')
+                }).render();
+            }
+        },
+
+        bindUI: function () {
+            if (this._backBtn) {
+                this._backBtn.on('click', onBackButtonClick);
+            }
         },
 
         addButton: function (name, config) {
-            var prefixCls = this.get('prefixCls');
+            var self = this,
+                prefixCls = self.get('prefixCls');
             config.prefixCls = prefixCls + 'navigation-bar-';
             if (!config.elBefore && !config.render) {
                 var align = config.align = config.align || 'left';
                 if (align === 'left') {
-                    config.elBefore = this.get('centerEl');
+                    config.elBefore = self.get('centerEl');
                 } else if (align === 'right') {
-                    config.render = this.get('contentEl');
+                    config.render = self.get('contentEl');
                 }
                 delete config.align;
             }
-            this._buttons[name] = new Button(config).render();
-            return this._buttons[name];
+            self._buttons[name] = new Button(config).render();
+            return self._buttons[name];
         },
 
         insertButtonBefore: function (name, config, button) {
@@ -175,7 +192,19 @@ KISSY.add(function (S, require) {
 
         go: function (title, hasPrevious, reverse) {
             var self = this;
-            var backEl = this.get('backBtn').get('el');
+            var backBtn = self._backBtn;
+
+            if (!(backBtn && self._withTitle)) {
+                if (self._withTitle) {
+                    self.get('titleEl').html(title);
+                }
+                if (backBtn) {
+                    backBtn[hasPrevious ? 'show' : 'hide']();
+                }
+                return;
+            }
+
+            var backEl = backBtn.get('el');
             backEl.stop(true);
             if (self.ghostBackEl) {
                 self.ghostBackEl.stop(true);
@@ -186,24 +215,15 @@ KISSY.add(function (S, require) {
             var ghostBackEl = createGhost(backEl);
             self.ghostBackEl = ghostBackEl;
             backEl.css('opacity', 0);
-            backEl[hasPrevious ? 'show' : 'hide']();
-            var titleEl = this.get('titleEl');
-            titleEl.stop(true);
+            backBtn[hasPrevious ? 'show' : 'hide']();
             if (self.ghostBackEl) {
                 self.ghostBackEl.stop(true);
             }
-            var ghostTitleEl = createGhost(titleEl.parent());
-            self.ghostTitleEl = ghostTitleEl;
-            titleEl.css('opacity', 0);
-            this.set('title', title);
             var anims = getAnimProps(self, backEl, backElProps, reverse);
             backEl.css(anims.back.element.from);
-            if (backEl.css('display') !== 'none') {
+            if (backBtn.get('visible')) {
                 anim(backEl, anims.back.element.to);
             }
-            titleEl.css(anims.title.element.from);
-            anim(titleEl, anims.title.element.to);
-
             if (ghostBackEl.css('display') !== 'none') {
                 anim(ghostBackEl, anims.back.ghost.to, function () {
                     ghostBackEl.remove();
@@ -213,6 +233,15 @@ KISSY.add(function (S, require) {
                 ghostBackEl.remove();
                 self.ghostBackEl = null;
             }
+
+            var titleEl = self.get('titleEl');
+            titleEl.stop(true);
+            var ghostTitleEl = createGhost(titleEl.parent());
+            self.ghostTitleEl = ghostTitleEl;
+            titleEl.css('opacity', 0);
+            self.set('title', title);
+            titleEl.css(anims.title.element.from);
+            anim(titleEl, anims.title.element.to);
             anim(ghostTitleEl, anims.title.ghost.to, function () {
                 ghostTitleEl.remove();
                 self.ghostTitleEl = null;
@@ -239,6 +268,13 @@ KISSY.add(function (S, require) {
             titleEl: {},
             title: {
                 value: '',
+                view: 1
+            },
+            withBackButton: {
+                value: 1
+            },
+            withTitle: {
+                value: 1,
                 view: 1
             },
             backText: {

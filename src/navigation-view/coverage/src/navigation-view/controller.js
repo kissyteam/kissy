@@ -313,43 +313,43 @@ if (! _$jscoverage['/navigation-view/controller.js'].branchData) {
   _$jscoverage['/navigation-view/controller.js'].branchData['93'][1] = new BranchData();
 }
 _$jscoverage['/navigation-view/controller.js'].branchData['93'][1].init(21, 66, 'this.get(\'navigationView\').get(\'activeView\') === this.getSubView()');
-function visit25_93_1(result) {
+function visit34_93_1(result) {
   _$jscoverage['/navigation-view/controller.js'].branchData['93'][1].ranCondition(result);
   return result;
 }_$jscoverage['/navigation-view/controller.js'].branchData['81'][1].init(22, 35, 'children[i].constructor === SubView');
-function visit24_81_1(result) {
+function visit33_81_1(result) {
   _$jscoverage['/navigation-view/controller.js'].branchData['81'][1].ranCondition(result);
   return result;
 }_$jscoverage['/navigation-view/controller.js'].branchData['80'][1].init(248, 6, 'i >= 0');
-function visit23_80_1(result) {
+function visit32_80_1(result) {
   _$jscoverage['/navigation-view/controller.js'].branchData['80'][1].ranCondition(result);
   return result;
 }_$jscoverage['/navigation-view/controller.js'].branchData['49'][1].init(71, 5, 'async');
-function visit22_49_1(result) {
+function visit31_49_1(result) {
   _$jscoverage['/navigation-view/controller.js'].branchData['49'][1].ranCondition(result);
   return result;
 }_$jscoverage['/navigation-view/controller.js'].branchData['45'][1].init(1094, 81, '!request.replace || !activeView');
-function visit21_45_1(result) {
+function visit30_45_1(result) {
   _$jscoverage['/navigation-view/controller.js'].branchData['45'][1].ranCondition(result);
   return result;
 }_$jscoverage['/navigation-view/controller.js'].branchData['41'][1].init(984, 18, 'routes[route.path]');
-function visit20_41_1(result) {
+function visit29_41_1(result) {
   _$jscoverage['/navigation-view/controller.js'].branchData['41'][1].ranCondition(result);
   return result;
 }_$jscoverage['/navigation-view/controller.js'].branchData['31'][1].init(112, 26, 'navigationView.waitingView');
-function visit19_31_1(result) {
+function visit28_31_1(result) {
   _$jscoverage['/navigation-view/controller.js'].branchData['31'][1].ranCondition(result);
   return result;
 }_$jscoverage['/navigation-view/controller.js'].branchData['28'][1].init(18, 10, 'activeView');
-function visit18_28_1(result) {
+function visit27_28_1(result) {
   _$jscoverage['/navigation-view/controller.js'].branchData['28'][1].ranCondition(result);
   return result;
 }_$jscoverage['/navigation-view/controller.js'].branchData['25'][1].init(548, 81, '!request.replace || !activeView');
-function visit17_25_1(result) {
+function visit26_25_1(result) {
   _$jscoverage['/navigation-view/controller.js'].branchData['25'][1].ranCondition(result);
   return result;
 }_$jscoverage['/navigation-view/controller.js'].branchData['15'][1].init(200, 8, '!subView');
-function visit16_15_1(result) {
+function visit25_15_1(result) {
   _$jscoverage['/navigation-view/controller.js'].branchData['15'][1].ranCondition(result);
   return result;
 }_$jscoverage['/navigation-view/controller.js'].lineData[5]++;
@@ -373,7 +373,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/navigation-view/controller.js'].lineData[14]++;
     var activeView = navigationView.get('activeView');
     _$jscoverage['/navigation-view/controller.js'].lineData[15]++;
-    if (visit16_15_1(!subView)) {
+    if (visit25_15_1(!subView)) {
       _$jscoverage['/navigation-view/controller.js'].lineData[16]++;
       subView = new (self.get('SubView'))();
       _$jscoverage['/navigation-view/controller.js'].lineData[17]++;
@@ -388,14 +388,14 @@ KISSY.add(function(S, require) {
     _$jscoverage['/navigation-view/controller.js'].lineData[23]++;
     this.promise = this.defer.promise;
     _$jscoverage['/navigation-view/controller.js'].lineData[25]++;
-    if (visit17_25_1(!request.replace || !activeView)) {
+    if (visit26_25_1(!request.replace || !activeView)) {
       _$jscoverage['/navigation-view/controller.js'].lineData[28]++;
-      if (visit18_28_1(activeView)) {
+      if (visit27_28_1(activeView)) {
         _$jscoverage['/navigation-view/controller.js'].lineData[29]++;
         activeView.controller.leave();
       }
       _$jscoverage['/navigation-view/controller.js'].lineData[31]++;
-      if (visit19_31_1(navigationView.waitingView)) {
+      if (visit28_31_1(navigationView.waitingView)) {
         _$jscoverage['/navigation-view/controller.js'].lineData[32]++;
         navigationView.waitingView.controller.leave();
       }
@@ -407,16 +407,16 @@ KISSY.add(function(S, require) {
     _$jscoverage['/navigation-view/controller.js'].lineData[39]++;
     var routes = self.get('routes');
     _$jscoverage['/navigation-view/controller.js'].lineData[41]++;
-    if (visit20_41_1(routes[route.path])) {
+    if (visit29_41_1(routes[route.path])) {
       _$jscoverage['/navigation-view/controller.js'].lineData[42]++;
       self[routes[route.path]].apply(self, arguments);
     }
     _$jscoverage['/navigation-view/controller.js'].lineData[45]++;
-    if (visit21_45_1(!request.replace || !activeView)) {
+    if (visit30_45_1(!request.replace || !activeView)) {
       _$jscoverage['/navigation-view/controller.js'].lineData[48]++;
       var async = !self.promise.isResolved();
       _$jscoverage['/navigation-view/controller.js'].lineData[49]++;
-      if (visit22_49_1(async)) {
+      if (visit31_49_1(async)) {
         _$jscoverage['/navigation-view/controller.js'].lineData[50]++;
         subView.reset('title');
       }
@@ -460,9 +460,9 @@ KISSY.add(function(S, require) {
   _$jscoverage['/navigation-view/controller.js'].lineData[79]++;
   var children = navigationView.get('children');
   _$jscoverage['/navigation-view/controller.js'].lineData[80]++;
-  for (var i = children.length - 1; visit23_80_1(i >= 0); i--) {
+  for (var i = children.length - 1; visit32_80_1(i >= 0); i--) {
     _$jscoverage['/navigation-view/controller.js'].lineData[81]++;
-    if (visit24_81_1(children[i].constructor === SubView)) {
+    if (visit33_81_1(children[i].constructor === SubView)) {
       _$jscoverage['/navigation-view/controller.js'].lineData[82]++;
       return children[i];
     }
@@ -478,7 +478,7 @@ KISSY.add(function(S, require) {
   'isSubViewActive': function() {
   _$jscoverage['/navigation-view/controller.js'].functionData[7]++;
   _$jscoverage['/navigation-view/controller.js'].lineData[93]++;
-  return visit25_93_1(this.get('navigationView').get('activeView') === this.getSubView());
+  return visit34_93_1(this.get('navigationView').get('activeView') === this.getSubView());
 }}, {
   ATTRS: {
   routes: {}, 

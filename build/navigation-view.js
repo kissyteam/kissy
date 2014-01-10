@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Jan 9 20:58
+build time: Jan 10 12:28
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -97,46 +97,58 @@ KISSY.add("navigation-view/bar-xtpl", [], function(S, require, exports, module) 
       moduleWrap = module
     }
     var runBlockCommandUtil = utils.runBlockCommand, renderOutputUtil = utils.renderOutput, getPropertyUtil = utils.getProperty, runInlineCommandUtil = utils.runInlineCommand, getPropertyOrRunCommandUtil = utils.getPropertyOrRunCommand;
-    buffer += '<div class="';
-    var config1 = {};
-    var params2 = [];
-    params2.push("title-wrap");
-    config1.params = params2;
-    var id0 = runInlineCommandUtil(engine, scope, config1, "getBaseCssClasses", 1);
-    buffer += renderOutputUtil(id0, true);
-    buffer += '">\r\n    <div class="';
-    var config4 = {};
-    var params5 = [];
-    params5.push("title");
-    config4.params = params5;
-    var id3 = runInlineCommandUtil(engine, scope, config4, "getBaseCssClasses", 2);
-    buffer += renderOutputUtil(id3, true);
-    buffer += '" id="ks-navigation-bar-title-';
-    var id6 = getPropertyOrRunCommandUtil(engine, scope, {}, "id", 0, 2);
-    buffer += renderOutputUtil(id6, true);
-    buffer += '">';
-    var id7 = getPropertyOrRunCommandUtil(engine, scope, {}, "title", 0, 2);
-    buffer += renderOutputUtil(id7, true);
-    buffer += '</div>\r\n</div>\r\n<div class="';
-    var config9 = {};
-    var params10 = [];
-    params10.push("content");
-    config9.params = params10;
-    var id8 = runInlineCommandUtil(engine, scope, config9, "getBaseCssClasses", 4);
-    buffer += renderOutputUtil(id8, true);
-    buffer += '" id="ks-navigation-bar-content-';
-    var id11 = getPropertyOrRunCommandUtil(engine, scope, {}, "id", 0, 4);
+    buffer += "";
+    var config0 = {};
+    var params1 = [];
+    var id2 = getPropertyUtil(engine, scope, "withTitle", 0, 1);
+    params1.push(id2);
+    config0.params = params1;
+    config0.fn = function(scope) {
+      var buffer = "";
+      buffer += '\r\n<div class="';
+      var config4 = {};
+      var params5 = [];
+      params5.push("title-wrap");
+      config4.params = params5;
+      var id3 = runInlineCommandUtil(engine, scope, config4, "getBaseCssClasses", 2);
+      buffer += renderOutputUtil(id3, true);
+      buffer += '">\r\n    <div class="';
+      var config7 = {};
+      var params8 = [];
+      params8.push("title");
+      config7.params = params8;
+      var id6 = runInlineCommandUtil(engine, scope, config7, "getBaseCssClasses", 3);
+      buffer += renderOutputUtil(id6, true);
+      buffer += '" id="ks-navigation-bar-title-';
+      var id9 = getPropertyOrRunCommandUtil(engine, scope, {}, "id", 0, 3);
+      buffer += renderOutputUtil(id9, true);
+      buffer += '">';
+      var id10 = getPropertyOrRunCommandUtil(engine, scope, {}, "title", 0, 3);
+      buffer += renderOutputUtil(id10, true);
+      buffer += "</div>\r\n</div>\r\n";
+      return buffer
+    };
+    buffer += runBlockCommandUtil(engine, scope, config0, "if", 1);
+    buffer += '\r\n<div class="';
+    var config12 = {};
+    var params13 = [];
+    params13.push("content");
+    config12.params = params13;
+    var id11 = runInlineCommandUtil(engine, scope, config12, "getBaseCssClasses", 6);
     buffer += renderOutputUtil(id11, true);
+    buffer += '" id="ks-navigation-bar-content-';
+    var id14 = getPropertyOrRunCommandUtil(engine, scope, {}, "id", 0, 6);
+    buffer += renderOutputUtil(id14, true);
     buffer += '">\r\n    <div class="';
-    var config13 = {};
-    var params14 = [];
-    params14.push("center");
-    config13.params = params14;
-    var id12 = runInlineCommandUtil(engine, scope, config13, "getBaseCssClasses", 5);
-    buffer += renderOutputUtil(id12, true);
-    buffer += '" id="ks-navigation-bar-center-';
-    var id15 = getPropertyOrRunCommandUtil(engine, scope, {}, "id", 0, 5);
+    var config16 = {};
+    var params17 = [];
+    params17.push("center");
+    config16.params = params17;
+    var id15 = runInlineCommandUtil(engine, scope, config16, "getBaseCssClasses", 7);
     buffer += renderOutputUtil(id15, true);
+    buffer += '" id="ks-navigation-bar-center-';
+    var id18 = getPropertyOrRunCommandUtil(engine, scope, {}, "id", 0, 7);
+    buffer += renderOutputUtil(id18, true);
     buffer += '"></div>\r\n</div>';
     return buffer
   }
@@ -145,11 +157,19 @@ KISSY.add("navigation-view/bar-render", ["./bar-xtpl", "component/control"], fun
   var tpl = require("./bar-xtpl");
   var Control = require("component/control");
   return Control.getDefaultRender().extend({createDom:function() {
-    this.fillChildrenElsBySelectors({titleEl:"#ks-navigation-bar-title-{id}", centerEl:"#ks-navigation-bar-center-{id}", contentEl:"#ks-navigation-bar-content-{id}"})
+    var selectors = {centerEl:"#ks-navigation-bar-center-{id}", contentEl:"#ks-navigation-bar-content-{id}"};
+    if(this.control._withTitle) {
+      selectors.titleEl = "#ks-navigation-bar-title-{id}"
+    }
+    this.fillChildrenElsBySelectors(selectors)
   }, _onSetTitle:function(v) {
-    this.control.get("titleEl").html(v)
+    if(this.control._withTitle) {
+      this.control.get("titleEl").html(v)
+    }
   }, _onSetBackText:function(v) {
-    this.control.get("backButton").set("content", v)
+    if(this.control._backBtn) {
+      this.control._backBtn.set("content", v)
+    }
   }}, {ATTRS:{contentTpl:{value:tpl}}})
 });
 KISSY.add("navigation-view/bar", ["component/control", "./bar-render", "button"], function(S, require) {
@@ -203,27 +223,37 @@ KISSY.add("navigation-view/bar", ["component/control", "./bar-render", "button"]
     titleAnims = {element:{from:{transform:"translateX(" + newOffset + "px) translateZ(0)"}, to:{transform:"translateX(0) translateZ(0)", opacity:1}}, ghost:{to:{transform:"translateX(" + oldOffset + "px) translateZ(0)", opacity:0}}};
     return{back:backElAnims, title:titleAnims}
   }
-  return Control.extend({renderUI:function() {
-    var prefixCls = this.get("prefixCls");
-    var backBtn;
-    this.set("backBtn", backBtn = (new Button({prefixCls:prefixCls + "navigation-bar-", elCls:prefixCls + "navigation-bar-back", elBefore:this.get("contentEl")[0].firstChild, visible:false, content:this.get("backText")})).render());
-    this._buttons = {}
+  function onBackButtonClick() {
+    history.back()
+  }
+  return Control.extend({initializer:function() {
+    this._withTitle = this.get("withTitle")
+  }, renderUI:function() {
+    var self = this, prefixCls = self.get("prefixCls");
+    self._buttons = {};
+    if(self.get("withBackButton")) {
+      self._backBtn = (new Button({prefixCls:prefixCls + "navigation-bar-", elCls:prefixCls + "navigation-bar-back", elBefore:self.get("contentEl")[0].firstChild, visible:false, content:self.get("backText")})).render()
+    }
+  }, bindUI:function() {
+    if(this._backBtn) {
+      this._backBtn.on("click", onBackButtonClick)
+    }
   }, addButton:function(name, config) {
-    var prefixCls = this.get("prefixCls");
+    var self = this, prefixCls = self.get("prefixCls");
     config.prefixCls = prefixCls + "navigation-bar-";
     if(!config.elBefore && !config.render) {
       var align = config.align = config.align || "left";
       if(align === "left") {
-        config.elBefore = this.get("centerEl")
+        config.elBefore = self.get("centerEl")
       }else {
         if(align === "right") {
-          config.render = this.get("contentEl")
+          config.render = self.get("contentEl")
         }
       }
       delete config.align
     }
-    this._buttons[name] = (new Button(config)).render();
-    return this._buttons[name]
+    self._buttons[name] = (new Button(config)).render();
+    return self._buttons[name]
   }, insertButtonBefore:function(name, config, button) {
     config.elBefore = button.get("el");
     return this.addButton(name, config)
@@ -236,7 +266,17 @@ KISSY.add("navigation-view/bar", ["component/control", "./bar-render", "button"]
     this.go(title, true)
   }, go:function(title, hasPrevious, reverse) {
     var self = this;
-    var backEl = this.get("backBtn").get("el");
+    var backBtn = self._backBtn;
+    if(!(backBtn && self._withTitle)) {
+      if(self._withTitle) {
+        self.get("titleEl").html(title)
+      }
+      if(backBtn) {
+        backBtn[hasPrevious ? "show" : "hide"]()
+      }
+      return
+    }
+    var backEl = backBtn.get("el");
     backEl.stop(true);
     if(self.ghostBackEl) {
       self.ghostBackEl.stop(true)
@@ -245,23 +285,15 @@ KISSY.add("navigation-view/bar", ["component/control", "./bar-render", "button"]
     var ghostBackEl = createGhost(backEl);
     self.ghostBackEl = ghostBackEl;
     backEl.css("opacity", 0);
-    backEl[hasPrevious ? "show" : "hide"]();
-    var titleEl = this.get("titleEl");
-    titleEl.stop(true);
+    backBtn[hasPrevious ? "show" : "hide"]();
     if(self.ghostBackEl) {
       self.ghostBackEl.stop(true)
     }
-    var ghostTitleEl = createGhost(titleEl.parent());
-    self.ghostTitleEl = ghostTitleEl;
-    titleEl.css("opacity", 0);
-    this.set("title", title);
     var anims = getAnimProps(self, backEl, backElProps, reverse);
     backEl.css(anims.back.element.from);
-    if(backEl.css("display") !== "none") {
+    if(backBtn.get("visible")) {
       anim(backEl, anims.back.element.to)
     }
-    titleEl.css(anims.title.element.from);
-    anim(titleEl, anims.title.element.to);
     if(ghostBackEl.css("display") !== "none") {
       anim(ghostBackEl, anims.back.ghost.to, function() {
         ghostBackEl.remove();
@@ -271,13 +303,21 @@ KISSY.add("navigation-view/bar", ["component/control", "./bar-render", "button"]
       ghostBackEl.remove();
       self.ghostBackEl = null
     }
+    var titleEl = self.get("titleEl");
+    titleEl.stop(true);
+    var ghostTitleEl = createGhost(titleEl.parent());
+    self.ghostTitleEl = ghostTitleEl;
+    titleEl.css("opacity", 0);
+    self.set("title", title);
+    titleEl.css(anims.title.element.from);
+    anim(titleEl, anims.title.element.to);
     anim(ghostTitleEl, anims.title.ghost.to, function() {
       ghostTitleEl.remove();
       self.ghostTitleEl = null
     })
   }, back:function(title, hasPrevious) {
     this.go(title, hasPrevious, true)
-  }}, {xclass:"navigation-bar", ATTRS:{handleMouseEvents:{value:false}, focusable:{value:false}, xrender:{value:BarRender}, centerEl:{}, contentEl:{}, titleEl:{}, title:{value:"", view:1}, backText:{value:"Back", view:1}}})
+  }}, {xclass:"navigation-bar", ATTRS:{handleMouseEvents:{value:false}, focusable:{value:false}, xrender:{value:BarRender}, centerEl:{}, contentEl:{}, titleEl:{}, title:{value:"", view:1}, withBackButton:{value:1}, withTitle:{value:1, view:1}, backText:{value:"Back", view:1}}})
 });
 KISSY.add("navigation-view", ["node", "navigation-view/controller", "component/container", "navigation-view/sub-view", "navigation-view/bar", "component/extension/content-xtpl", "component/extension/content-render"], function(S, require) {
   var $ = require("node").all;
@@ -297,10 +337,9 @@ KISSY.add("navigation-view", ["node", "navigation-view/controller", "component/c
   return Container.extend({renderUI:function() {
     this.viewStack = [];
     var bar;
-    this.setInternal("bar", bar = (new Bar({elBefore:this.get("el")[0].firstChild})).render());
-    bar.get("backBtn").on("click", this.onBack, this)
-  }, onBack:function() {
-    history.back()
+    var barCfg = this.get("barCfg");
+    barCfg.elBefore = this.get("el")[0].firstChild;
+    this.setInternal("bar", bar = (new Bar(barCfg)).render())
   }, push:function(nextView, async) {
     var self = this;
     var bar = this.get("bar");
@@ -396,6 +435,6 @@ KISSY.add("navigation-view", ["node", "navigation-view/controller", "component/c
         })
       }
     }
-  }}, {SubView:SubView, Controller:Controller, xclass:"navigation-view", ATTRS:{activeView:{}, loadingEl:{}, handleMouseEvents:{value:false}, focusable:{value:false}, xrender:{value:NavigationViewRender}, contentTpl:{value:ContentTpl}, defaultChildCfg:{value:{xclass:"navigation-sub-view"}}}})
+  }}, {SubView:SubView, Controller:Controller, xclass:"navigation-view", ATTRS:{barCfg:{}, activeView:{}, loadingEl:{}, handleMouseEvents:{value:false}, focusable:{value:false}, xrender:{value:NavigationViewRender}, contentTpl:{value:ContentTpl}, defaultChildCfg:{value:{xclass:"navigation-sub-view"}}}})
 });
 
