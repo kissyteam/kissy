@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Jan 6 12:43
+build time: Jan 13 14:58
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -3217,7 +3217,7 @@ KISSY.add("editor/plugin-meta", [], function() {
     config({"editor/plugin/element-path":{requires:["editor"]}});
     config({"editor/plugin/fake-objects":{requires:["editor", "html-parser"]}});
     config({"editor/plugin/flash-bridge":{requires:["editor", "swf", "event"]}});
-    config({"editor/plugin/flash-common/base-class":{requires:["editor/plugin/flash-common/utils", "base", "editor", "editor/plugin/dialog-loader", "editor/plugin/bubble"]}});
+    config({"editor/plugin/flash-common/base-class":{requires:["editor/plugin/flash-common/utils", "base", "editor", "editor/plugin/dialog-loader", "editor/plugin/bubble", "editor/plugin/contextmenu"]}});
     config({"editor/plugin/flash-common/utils":{requires:["swf"]}});
     config({"editor/plugin/flash":{requires:["editor", "editor/plugin/flash-common/base-class", "editor/plugin/flash-common/utils", "editor/plugin/fake-objects", "editor/plugin/button"]}});
     config({"editor/plugin/flash/dialog":{requires:["editor", "editor/plugin/flash-common/utils", "editor/plugin/dialog", "editor/plugin/menubutton"]}});
@@ -3232,7 +3232,7 @@ KISSY.add("editor/plugin-meta", [], function() {
     config({"editor/plugin/fore-color/cmd":{requires:["editor/plugin/color/cmd"]}});
     config({"editor/plugin/heading":{requires:["editor/plugin/menubutton", "editor", "editor/plugin/heading/cmd"]}});
     config({"editor/plugin/heading/cmd":{requires:["editor"]}});
-    config({"editor/plugin/image":{requires:["editor/plugin/button", "editor", "editor/plugin/bubble", "editor/plugin/dialog-loader"]}});
+    config({"editor/plugin/image":{requires:["editor/plugin/button", "editor", "editor/plugin/bubble", "editor/plugin/contextmenu", "editor/plugin/dialog-loader"]}});
     config({"editor/plugin/image/dialog":{requires:["editor", "io", "editor/plugin/dialog", "tabs", "editor/plugin/menubutton"]}});
     config({"editor/plugin/indent":{requires:["editor", "editor/plugin/indent/cmd", "editor/plugin/button"]}});
     config({"editor/plugin/indent/cmd":{requires:["editor/plugin/dent-cmd"]}});
