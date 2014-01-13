@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Jan 6 12:37
+build time: Jan 13 14:52
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -9,10 +9,11 @@ build time: Jan 6 12:37
  editor/plugin/image
 */
 
-KISSY.add("editor/plugin/image", ["./button", "editor", "./bubble", "./dialog-loader"], function(S, require) {
+KISSY.add("editor/plugin/image", ["./button", "editor", "./bubble", "./contextmenu", "./dialog-loader"], function(S, require) {
   require("./button");
   var Editor = require("editor");
   require("./bubble");
+  require("./contextmenu");
   var DialogLoader = require("./dialog-loader");
   var UA = S.UA, Node = KISSY.NodeList, $ = S.all, checkImg = function(node) {
     node = $(node);

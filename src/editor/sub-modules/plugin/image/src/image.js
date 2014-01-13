@@ -3,10 +3,11 @@
  * insert image for kissy editor
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S,require) {
+KISSY.add(function (S, require) {
     require('./button');
-    var Editor=require('editor');
+    var Editor = require('editor');
     require('./bubble');
+    require('./contextmenu');
     var DialogLoader = require('./dialog-loader');
 
     var UA = S.UA,
@@ -21,7 +22,7 @@ KISSY.add(function (S,require) {
             }
         },
         tipHTML = '<a class="{prefixCls}editor-bubble-url" ' +
-            'target="_blank" href="#">在新窗口查看</a>  |  '+ '<a class="{prefixCls}editor-bubble-link ' +
+            'target="_blank" href="#">在新窗口查看</a>  |  ' + '<a class="{prefixCls}editor-bubble-link ' +
             '{prefixCls}editor-bubble-change" href="#">编辑</a>  |  ' + '<a class="{prefixCls}editor-bubble-link ' +
             '{prefixCls}editor-bubble-remove" href="#">删除</a>';
 
