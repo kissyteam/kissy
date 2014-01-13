@@ -114,7 +114,7 @@ navigation-view style
     -webkit-box-flex: 1;
 }
 
-.ks-navigation-sub-view {
+.ks-navigation-view-content > div {
     position: absolute;
     left: 0;
     top: 0;
@@ -123,11 +123,6 @@ navigation-view style
 }
 
 .ks-navigation-view-loading {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
     background: rgba(0, 0, 0, .8);
     display: -webkit-box;
     -webkit-box-pack: center;

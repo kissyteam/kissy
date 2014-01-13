@@ -10,230 +10,236 @@
            minimum-scale=1.0,
            user-scalable=no">
     <link href="/kissy/build/css/dpl/base.css" rel="stylesheet"/>
-    <link href="/kissy/src/navigation-view/assets/dpl.css" rel="stylesheet"/>
+    <link href="/kissy/src/navigation-view/assets/dpl.css" rel="stylesheet">
+    <link href="/kissy/src/scroll-view/assets/dpl.css" rel="stylesheet"/>
 </head>
 <body>
 <script src="/kissy/build/seed.js"></script>
 <script src="/kissy/src/package.js"></script>
 <script>
-KISSY.use('navigation-view,node,router', function (S, NavigationView, Node, router) {
-    var navigationView = new NavigationView({
-        barCfg:{
-            withBackButton:1,
-            withTitle:1
-        },
-        render: 'body'
-    }).render();
-    var SubView = NavigationView.SubView;
-    var Controller = NavigationView.Controller;
+KISSY.use('component/control,navigation-view,node,router,promise,scroll-view,scroll-view/plugin/scrollbar',
+        function (S, Control, NavigationView, Node, router, Promise, ScrollView, ScrollBar) {
+            var win = Node.all(window);
 
-    var SyncView = SubView.extend({
-        renderUI: function () {
-            this.get('el').html('<div style="margin: 100px">sync view</div>');
-        }
-    }, {
-        ATTRS: {
-            title: {
-                value: 'sync'
-            }
-        }
-    });
+            var navigationView = new NavigationView({
+                barCfg: {
+                    withBackButton: 1,
+                    withTitle: 1
+                },
+                render: 'body'
+            }).render();
 
-    var SyncController = Controller.extend({
-        leave: function () {
-            if (this.get('navigationView').get('bar').getButton('sync'))
-                this.get('navigationView').get('bar').getButton('sync').show();
-        },
-
-        enter: function () {
-            if (this.get('navigationView').get('bar').getButton('sync'))
-                this.get('navigationView').get('bar').getButton('sync').hide();
-
-        },
-        go: function () {
-            this.defer.resolve();
-        }
-    }, {
-        ATTRS: {
-            navigationView: {
-                value: navigationView
-            },
-            SubView: {
-                value: SyncView
-            },
-            routes: {
-                value: {
-                    '/sync': 'go'
-                }
-            }
-        }
-    });
-
-    var DetailView = SubView.extend({
-        bindUI: function () {
-            this.get('el').delegate('click', '.another', this.onButtonClick, this);
-            this.get('el').delegate('click', '.sub', this.onButtonClick2, this);
-        },
-
-        setItem: function (id, content) {
-            this.id = id;
-            content = id + ': ' + content;
-            var el = this.get('el');
-            el.html('<div>' + content + '</div>' +
-                    '<button class="another">got another</button>' +
-                    '<button class="sub">got another</button>');
-            this.subContent = new Node('<div>sub content</div>').appendTo(el);
-
-        },
-
-        setSubContent: function (c) {
-            this.subContent.html(c);
-        },
-
-        onButtonClick: function () {
-            this.controller.navigate('/item/' + new Date().valueOf())
-        },
-
-        onButtonClick2: function () {
-            this.controller.navigate('/item/' + this.id +
-                    '/' + new Date().valueOf(), {
-                replace: true
+            navigationView.on('back', function (e) {
+                e.preventDefault();
+                history.back();
             });
-        }
-    });
 
-    var DetailController = Controller.extend({
-        loadItem: function (request) {
-            var self = this;
-            var subView = this.getSubView();
-            var defer = self.defer;
-            if (subView.id === request.param('id')) {
-                defer.resolve();
-            } else {
-                subView.setItem(request.param('id'), ': loaded!');
+            var SyncView = ScrollView.extend({
+                renderUI: function () {
+                    this.get('contentEl').html('<div style="margin: 100px">sync view</div>');
+                },
+                leave: function () {
+                    if (this.get('navigationView').get('bar').getButton('sync'))
+                        this.get('navigationView').get('bar').getButton('sync').show();
+                    win.detach('resize', this.sync, this);
+
+                },
+
+                enter: function () {
+                    if (this.get('navigationView').get('bar').getButton('sync'))
+                        this.get('navigationView').get('bar').getButton('sync').hide();
+                    this.sync();
+                    win.on('resize', this.sync, this);
+
+                }
+            }, {
+                ATTRS: {
+                    title: {
+                        value: 'sync'
+                    }
+                }
+            });
+
+            var syncView = null;
+
+            router.get('/sync', function (request) {
+                if (request.backward) {
+                    navigationView.pop();
+                } else {
+                    navigationView.push(syncView || (syncView = new SyncView()));
+                }
+            });
+
+            var DetailView = ScrollView.extend({
+                bindUI: function () {
+                    this.get('contentEl').delegate('click', '.another', this.onButtonClick, this);
+                    this.get('contentEl').delegate('click', '.sub', this.onButtonClick2, this);
+                },
+
+                leave: function () {
+                    S.log('leave detail');
+                    navigationView.get('bar').getButton('sync').hide();
+                    win.detach('resize', this.sync, this);
+                },
+
+                enter: function () {
+                    S.log('enter detail');
+                    var self = this;
+                    var helpBtn;
+                    var bar = navigationView.get('bar');
+                    if (!(helpBtn = bar.getButton('sync'))) {
+                        bar.addButton('sync', {
+                            content: 'sync',
+                            align: 'right'
+                        }).on('click', function () {
+                                    router.navigate('/sync');
+                                });
+                    } else {
+                        helpBtn.show();
+                    }
+                    this.sync();
+                    win.on('resize', this.sync, this);
+                },
+
+                setItem: function (id, content) {
+                    this.id = id;
+                    content = id + ': ' + content;
+                    var el = this.get('contentEl');
+                    el.html('<div>' + content + '</div>' +
+                            '<button class="another">got another</button>' +
+                            '<button class="sub">got another</button>');
+                    this.subContent = new Node('<div>sub content</div>').appendTo(el);
+                    var ret = [];
+                    for (var i = 0; i < 20; i++) {
+                        ret.push('<p>' + i + '</p>');
+                    }
+                    el.append('<div>' +
+                            ret.join('') +
+                            '</div>');
+                    this.sync();
+                },
+
+                setSubContent: function (c) {
+                    this.subContent.html(c);
+                },
+
+                onButtonClick: function () {
+                    router.navigate('/item/' + new Date().valueOf())
+                },
+
+                onButtonClick2: function () {
+                    router.navigate('/item/' + this.id +
+                            '/' + new Date().valueOf(), {
+                        replace: true
+                    });
+                }
+            }, {
+                ATTRS: {
+                    plugins: {
+                        value: [ScrollBar]
+                    }
+                }
+            });
+
+            var detailView = null;
+
+            router.get('/item/:id', function (request) {
+                var self = this,
+                        defer;
+                detailView = detailView || new DetailView();
+                if (detailView.id === request.param('id')) {
+                    detailView.promise = null;
+                } else {
+                    defer = new Promise.Defer();
+                    detailView.promise = defer.promise;
+                }
+                if (request.backward) {
+                    navigationView.pop();
+                } else {
+                    navigationView.push(detailView);
+                }
+                if (defer) {
+                    detailView.setItem(request.param('id'), ': loaded!');
+                    setTimeout(function () {
+                        defer.resolve();
+                        detailView.set('title', request.param('id'));
+                    }, 1000);
+                }
+            });
+
+            router.get('/item/:id/:subId', function (request) {
+                detailView = detailView || new DetailView();
+                if (!request.replace) {
+                    if (request.backward) {
+                        navigationView.pop();
+                    } else {
+                        navigationView.push(detailView);
+                    }
+                }
+                if (request.param('id') !== String(detailView.id)) {
+                    detailView.setItem(request.param('id'), ': loaded!');
+                }
+                detailView.setSubContent(request.param('subId') + ': sub content loaded!');
+                var defer = new Promise.Defer();
+                detailView.promise = defer.promise;
                 setTimeout(function () {
                     defer.resolve();
-                    subView.set('title', request.param('id'));
                 }, 1000);
-            }
-        },
-
-        leave: function () {
-            this.get('navigationView').get('bar').getButton('sync').hide();
-        },
-
-        enter: function () {
-            var self = this;
-            var helpBtn;
-            var bar = this.get('navigationView').get('bar');
-            if (!(helpBtn = bar.getButton('sync'))) {
-                bar.addButton('sync', {
-                    content: 'sync',
-                    align: 'right'
-                }).on('click', function () {
-                            self.navigate('/sync');
-                        });
-            } else {
-                helpBtn.show();
-            }
-        },
-
-        loadSubItem: function (request) {
-            var subView = this.getSubView();
-            if (request.param('id') !== String(subView.id)) {
-                subView.setItem(request.param('id'), ': loaded!');
-            }
-            subView.setSubContent(request.param('subId') + ': sub content loaded!');
-            var self = this;
-            var defer = self.defer;
-            setTimeout(function () {
-                defer.resolve();
-            }, 1000);
-        }
-    }, {
-        ATTRS: {
-            navigationView: {
-                value: navigationView
-            },
-            SubView: {
-                value: DetailView
-            },
-            routes: {
-                value: {
-                    '/item/:id': 'loadItem',
-                    '/item/:id/:subId': 'loadSubItem'
-                }
-            }
-        }
-    });
-
-    var IndexView = SubView.extend({
-        renderUI: function () {
-            var self = this;
-            var el = this.get('el');
-            el.html('<div style="margin: 40px"><button>view item</button></div>');
-            el.one('button').on('click', function () {
-                self.controller.navigate('/item/1');
             });
-        }
-    }, {
-        ATTRS: {
-            title: {
-                value: 'index'
-            }
-        }
-    });
 
-    var IndexController = Controller.extend({
-        leave: function () {
-            S.log('leave index');
-        },
+            var IndexView = Control.extend({
+                leave: function () {
+                    S.log('leave index');
+                },
 
-        enter: function () {
-            S.log('enter index');
-        },
+                enter: function () {
+                    S.log('enter index');
+                },
 
-        index: function () {
-            var self = this;
-            var defer = self.defer;
-            if (self.ok) {
-                defer.resolve();
-            } else {
-                setTimeout(function () {
-                    defer.resolve();
-                    self.ok = 1;
-                }, 1000);
-            }
-        }
-    }, {
-        ATTRS: {
-            navigationView: {
-                value: navigationView
-            },
-
-            SubView: {
-                value: IndexView
-            },
-
-            routes: {
-                value: {
-                    '/': 'index'
+                renderUI: function () {
+                    var self = this;
+                    var el = this.get('el');
+                    el.html('<div style="margin: 40px"><button>view item</button></div>');
+                    el.one('button').on('click', function () {
+                        router.navigate('/item/1');
+                    });
                 }
-            }
-        }
-    });
+            }, {
+                ATTRS: {
+                    title: {
+                        value: 'index'
+                    }
+                }
+            });
 
-    new IndexController();
-    new DetailController();
-    new SyncController();
+            var indexView;
 
-    router.start({
-        triggerRoute: true,
-        // for test
-        useHashChange: location.href.indexOf('useHashChange') != -1,
-        useHash: true
-    });
-});
+            router.get('/', function (request) {
+                var self = this;
+                if (indexView) {
+                    indexView.promise = null;
+                } else {
+                    var defer = new Promise.Defer();
+                    indexView = new IndexView();
+                    indexView.promise = defer.promise;
+                    setTimeout(function () {
+                        defer.resolve();
+                    }, 1000);
+                }
+                if (request.backward) {
+                    navigationView.pop();
+                } else {
+                    navigationView.push(indexView);
+                }
+            });
+
+            router.start({
+                triggerRoute: true,
+                // for test
+                useHashChange: location.href.indexOf('useHashChange') != -1,
+                useHash: true
+            });
+        });
 </script>
 </body>
 </html>

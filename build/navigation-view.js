@@ -1,95 +1,17 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Jan 10 12:28
+build time: Jan 13 20:37
 */
 /*
  Combined modules by KISSY Module Compiler: 
 
- navigation-view/controller
- navigation-view/sub-view
  navigation-view/bar-xtpl
  navigation-view/bar-render
  navigation-view/bar
  navigation-view
 */
 
-KISSY.add("navigation-view/controller", ["base", "router", "promise"], function(S, require) {
-  var Base = require("base");
-  var router = require("router");
-  var Promise = require("promise");
-  function doRoute(request) {
-    var self = this;
-    var subView = self.getSubView();
-    var navigationView = self.get("navigationView");
-    var activeView = navigationView.get("activeView");
-    if(!subView) {
-      subView = new (self.get("SubView"));
-      navigationView.addChild(subView);
-      subView.get("el").css("transform", "translateX(-9999px) translateZ(0)")
-    }
-    subView.controller = self;
-    this.defer = new Promise.Defer;
-    this.promise = this.defer.promise;
-    if(!request.replace || !activeView) {
-      if(activeView) {
-        activeView.controller.leave()
-      }
-      if(navigationView.waitingView) {
-        navigationView.waitingView.controller.leave()
-      }
-    }
-    self.enter();
-    var route = request.route;
-    var routes = self.get("routes");
-    if(routes[route.path]) {
-      self[routes[route.path]].apply(self, arguments)
-    }
-    if(!request.replace || !activeView) {
-      var async = !self.promise.isResolved();
-      if(async) {
-        subView.reset("title")
-      }
-      navigationView[request.backward ? "pop" : "push"](subView, async)
-    }
-  }
-  return Base.extend({router:router, initializer:function() {
-    var self = this;
-    var path;
-    self.doRoute = S.bind(doRoute, self);
-    var routes = self.get("routes");
-    for(path in routes) {
-      router.get(path, self.doRoute)
-    }
-  }, leave:function() {
-  }, enter:function() {
-  }, getSubView:function() {
-    var self = this;
-    var navigationView = self.get("navigationView");
-    var SubView = self.get("SubView");
-    var children = navigationView.get("children");
-    for(var i = children.length - 1;i >= 0;i--) {
-      if(children[i].constructor === SubView) {
-        return children[i]
-      }
-    }
-    return undefined
-  }, navigate:function(url, options) {
-    router.navigate(url, options)
-  }, isSubViewActive:function() {
-    return this.get("navigationView").get("activeView") === this.getSubView()
-  }}, {ATTRS:{routes:{}, SubView:{}}})
-});
-KISSY.add("navigation-view/sub-view", ["component/control"], function(S, require) {
-  var Control = require("component/control");
-  return Control.extend({isActiveView:function() {
-    return this.get("parent").get("activeView") === this
-  }, _onSetTitle:function(v) {
-    if(this.isActiveView()) {
-      this.get("parent").get("bar").set("title", v)
-    }
-  }}, {xclass:"navigation-sub-view", ATTRS:{handleMouseEvents:{value:false}, title:{value:"..."}, focusable:{value:false}}})
-});
 KISSY.add("navigation-view/bar-xtpl", [], function(S, require, exports, module) {
   return function(scope, S, undefined) {
     var buffer = "", config = this.config, engine = this, moduleWrap, utils = config.utils;
@@ -224,7 +146,7 @@ KISSY.add("navigation-view/bar", ["component/control", "./bar-render", "button"]
     return{back:backElAnims, title:titleAnims}
   }
   function onBackButtonClick() {
-    history.back()
+    this.fire("back")
   }
   return Control.extend({initializer:function() {
     this._withTitle = this.get("withTitle")
@@ -236,7 +158,7 @@ KISSY.add("navigation-view/bar", ["component/control", "./bar-render", "button"]
     }
   }, bindUI:function() {
     if(this._backBtn) {
-      this._backBtn.on("click", onBackButtonClick)
+      this._backBtn.on("click", onBackButtonClick, this)
     }
   }, addButton:function(name, config) {
     var self = this, prefixCls = self.get("prefixCls");
@@ -319,11 +241,9 @@ KISSY.add("navigation-view/bar", ["component/control", "./bar-render", "button"]
     this.go(title, hasPrevious, true)
   }}, {xclass:"navigation-bar", ATTRS:{handleMouseEvents:{value:false}, focusable:{value:false}, xrender:{value:BarRender}, centerEl:{}, contentEl:{}, titleEl:{}, title:{value:"", view:1}, withBackButton:{value:1}, withTitle:{value:1, view:1}, backText:{value:"Back", view:1}}})
 });
-KISSY.add("navigation-view", ["node", "navigation-view/controller", "component/container", "navigation-view/sub-view", "navigation-view/bar", "component/extension/content-xtpl", "component/extension/content-render"], function(S, require) {
+KISSY.add("navigation-view", ["node", "component/container", "navigation-view/bar", "component/extension/content-xtpl", "component/extension/content-render"], function(S, require) {
   var $ = require("node").all;
-  var Controller = require("navigation-view/controller");
   var Container = require("component/container");
-  var SubView = require("navigation-view/sub-view");
   var Bar = require("navigation-view/bar");
   var ContentTpl = require("component/extension/content-xtpl");
   var ContentRender = require("component/extension/content-render");
@@ -332,76 +252,108 @@ KISSY.add("navigation-view", ["node", "navigation-view/controller", "component/c
   var NavigationViewRender = Container.getDefaultRender().extend([ContentRender], {renderUI:function() {
     var loadingEl = $(S.substitute(LOADING_HTML, {prefixCls:this.control.get("prefixCls")}));
     this.control.get("contentEl").append(loadingEl);
-    this.control.setInternal("loadingEl", loadingEl)
+    this.control.loadingEl = loadingEl
   }});
-  return Container.extend({renderUI:function() {
+  function onBack(e) {
+    if(e.target === this.get("bar")) {
+      this.pop()
+    }
+  }
+  return Container.extend({initializer:function() {
+    this.publish("back", {defaultFn:onBack, defaultTargetOnly:false})
+  }, renderUI:function() {
     this.viewStack = [];
     var bar;
     var barCfg = this.get("barCfg");
     barCfg.elBefore = this.get("el")[0].firstChild;
-    this.setInternal("bar", bar = (new Bar(barCfg)).render())
-  }, push:function(nextView, async) {
+    this.setInternal("bar", bar = (new Bar(barCfg)).render());
+    bar.addTarget(this)
+  }, push:function(nextView) {
     var self = this;
     var bar = this.get("bar");
+    if(!nextView.get("render")) {
+      self.addChild(nextView)
+    }
     var nextViewEl = nextView.get("el");
     nextViewEl.css("transform", "translateX(-9999px) translateZ(0)");
     nextView.uuid = uuid++;
     var activeView;
-    var loadingEl = this.get("loadingEl");
+    var loadingEl = this.loadingEl;
     this.viewStack.push(nextView);
-    if(activeView = this.get("activeView")) {
+    if((activeView = this.activeView) && activeView.leave) {
+      activeView.leave()
+    }else {
+      if(self.waitingView && self.waitingView.leave) {
+        self.waitingView.leave()
+      }
+    }
+    if(nextView.enter) {
+      nextView.enter()
+    }
+    if(activeView) {
       var activeEl = activeView.get("el");
       activeEl.stop(true);
       activeEl.animate({transform:"translateX(-" + activeEl[0].offsetWidth + "px) translateZ(0)"}, {useTransition:true, easing:"ease-in-out", duration:0.25});
-      if(async) {
+      if(nextView.promise) {
         loadingEl.stop(true);
         loadingEl.css("left", "100%");
         loadingEl.show();
         loadingEl.animate({left:"0"}, {useTransition:true, easing:"ease-in-out", duration:0.25});
-        this.set("activeView", null)
+        this.activeView = null
       }else {
         nextViewEl.stop(true);
         nextViewEl.css("transform", "translateX(" + activeEl[0].offsetWidth + "px) translateZ(0)");
         nextViewEl.animate({transform:""}, {useTransition:true, easing:"ease-in-out", duration:0.25});
-        this.set("activeView", nextView);
+        this.activeView = nextView;
         self.waitingView = null
       }
-      bar.forward(nextView.get("title"))
+      bar.forward(nextView.get("title") || "")
     }else {
       bar.set("title", nextView.get("title"));
-      if(!async) {
+      if(!nextView.promise) {
         nextView.get("el").css("transform", "");
-        this.set("activeView", nextView);
+        this.activeView = nextView;
         self.waitingView = null;
         loadingEl.hide()
       }
     }
-    if(async) {
+    if(nextView.promise) {
       self.waitingView = nextView;
-      nextView.controller.promise.then(function() {
+      nextView.promise.then(function() {
         if(self.waitingView && self.waitingView.uuid === nextView.uuid) {
-          self.set("activeView", nextView);
+          self.activeView = nextView;
           self.waitingView = null;
           nextView.get("el").css("transform", "");
-          bar.set("title", nextView.get("title"));
+          bar.set("title", nextView.get("title") || "");
           loadingEl.hide()
         }
       })
     }
-  }, pop:function(nextView, async) {
+  }, pop:function() {
     var self = this;
     if(this.viewStack.length > 1) {
       this.viewStack.pop();
+      var nextView = this.viewStack[this.viewStack.length - 1];
       nextView.uuid = uuid++;
       var activeView;
-      var loadingEl = this.get("loadingEl");
+      var loadingEl = this.loadingEl;
       var bar = this.get("bar");
-      if(activeView = this.get("activeView")) {
-        var activeEl = this.animEl = activeView.get("el");
+      if((activeView = this.activeView) && activeView.leave) {
+        activeView.leave()
+      }else {
+        if(self.waitingView && self.waitingView.leave) {
+          self.waitingView.leave()
+        }
+      }
+      if(nextView.enter) {
+        nextView.enter()
+      }
+      if(activeView) {
+        var activeEl = activeView.get("el");
         activeEl.stop(true);
         activeEl.animate({transform:"translateX(" + activeView.get("el")[0].offsetWidth + "px) translateZ(0)"}, {useTransition:true, easing:"ease-in-out", duration:0.25});
-        if(async) {
-          this.set("activeView", null);
+        if(nextView.promise) {
+          this.activeView = null;
           loadingEl.stop(true);
           loadingEl.css("left", "-100%");
           loadingEl.show();
@@ -411,30 +363,30 @@ KISSY.add("navigation-view", ["node", "navigation-view/controller", "component/c
           nextViewEl.stop(true);
           nextViewEl.css("transform", "translateX(-" + activeEl[0].offsetWidth + "px) translateZ(0)");
           nextViewEl.animate({transform:""}, {useTransition:true, easing:"ease-in-out", duration:0.25});
-          this.set("activeView", nextView)
+          this.activeView = nextView
         }
       }else {
-        if(!async) {
+        if(!nextView.promise) {
           nextView.get("el").css("transform", "");
-          this.set("activeView", nextView);
+          this.activeView = nextView;
           self.waitingView = null;
           loadingEl.hide()
         }
       }
-      bar.back(nextView.get("title"), this.viewStack.length > 1);
-      if(async) {
+      bar.back(nextView.get("title") || "", this.viewStack.length > 1);
+      if(nextView.promise) {
         self.waitingView = nextView;
-        nextView.controller.promise.then(function() {
+        nextView.promise.then(function() {
           if(self.waitingView && self.waitingView.uuid === nextView.uuid) {
             self.waitingView = null;
-            self.set("activeView", nextView);
+            self.activeView = nextView;
             nextView.get("el").css("transform", "");
-            bar.set("title", nextView.get("title"));
+            bar.set("title", nextView.get("title") || "");
             loadingEl.hide()
           }
         })
       }
     }
-  }}, {SubView:SubView, Controller:Controller, xclass:"navigation-view", ATTRS:{barCfg:{}, activeView:{}, loadingEl:{}, handleMouseEvents:{value:false}, focusable:{value:false}, xrender:{value:NavigationViewRender}, contentTpl:{value:ContentTpl}, defaultChildCfg:{value:{xclass:"navigation-sub-view"}}}})
+  }}, {xclass:"navigation-view", ATTRS:{barCfg:{value:{}}, handleMouseEvents:{value:false}, focusable:{value:false}, xrender:{value:NavigationViewRender}, contentTpl:{value:ContentTpl}}})
 });
 

@@ -1,10 +1,10 @@
 /*
-Copyright 2013, KISSY v1.50
+Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Dec 12 22:18
+build time: Jan 13 18:05
 */
 /*
- Combined processedModules by KISSY Module Compiler: 
+ Combined modules by KISSY Module Compiler: 
 
  event/custom/observer
  event/custom/object
@@ -77,7 +77,7 @@ KISSY.add("event/custom/observable", ["event/base", "./observer", "./object"], f
     }
     if(defaultFn && !customEventObject.isDefaultPrevented()) {
       var target = customEventObject.target, lowestCustomEventObservable = target.getCustomEventObservable(customEventObject.type);
-      if(!self.defaultTargetOnly && !lowestCustomEventObservable.defaultTargetOnly || currentTarget === target) {
+      if(!self.defaultTargetOnly && (!lowestCustomEventObservable || !lowestCustomEventObservable.defaultTargetOnly) || currentTarget === target) {
         gRet = defaultFn.call(currentTarget, customEventObject)
       }
     }

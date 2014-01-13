@@ -126,7 +126,7 @@ KISSY.add(function (S, require) {
     }
 
     function onBackButtonClick() {
-        history.back();
+        this.fire('back');
     }
 
     return Control.extend({
@@ -151,7 +151,7 @@ KISSY.add(function (S, require) {
 
         bindUI: function () {
             if (this._backBtn) {
-                this._backBtn.on('click', onBackButtonClick);
+                this._backBtn.on('click', onBackButtonClick, this);
             }
         },
 

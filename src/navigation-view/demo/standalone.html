@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="data-spm" content="1" data-spm-protocol="i"/>
+    <meta name="viewport"
+          content="width=device-width,
+           initial-scale=1.0,
+          maximum-scale=1.0,
+           minimum-scale=1.0,
+           user-scalable=no">
+    <link href="/kissy/build/css/dpl/base.css" rel="stylesheet"/>
+    <link href="/kissy/src/navigation-view/assets/dpl.css" rel="stylesheet">
+    <link href="/kissy/src/scroll-view/assets/dpl.css" rel="stylesheet"/>
+    <style>
+        html, body {
+            height: 100%;
+        }
+
+        .wrap {
+            display: -webkit-box;
+            height: 100%;
+        }
+
+        .sidebar {
+            -webkit-box-flex: 1;
+            position: relative;
+            border: 1px solid red;
+        }
+
+        .content {
+            -webkit-box-flex: 2;
+            border: 1px solid green;
+        }
+
+        .list-item {
+            padding: 10px;
+            border: 1px solid #000000;
+        }
+    </style>
+</head>
+<body>
+<div class="wrap">
+    <div class="sidebar"></div>
+    <div class="content"></div>
+</div>
+<script src="/kissy/build/seed.js"></script>
+<script src="/kissy/src/package.js"></script>
+<script>
+    KISSY.use('component/control,navigation-view,node,scroll-view,scroll-view/plugin/scrollbar',
+            function (S, Control, NavigationView, Node, ScrollView, ScrollBar) {
+                var win = Node.all(window);
+
+                var navigationView = new NavigationView({
+                    render: '.sidebar'
+                }).render();
+
+
+                var DetailView = Control.extend({});
+                var detailView = null;
+
+                var IndexView = ScrollView.extend({
+                    bindUI: function () {
+                        this.get('contentEl').delegate('click', '.list-item', this.onSelect, this);
+                    },
+                    onSelect: function (e) {
+                        var content = e.currentTarget.innerHTML;
+                        detailView = detailView || new DetailView();
+                        detailView.set('content', content + ' detail!');
+                        navigationView.push(detailView);
+                    },
+                    enter: function () {
+                        this.sync();
+                        win.on('resize', this.sync, this);
+                    },
+                    leave: function () {
+                        win.detach('resize', this.sync, this);
+                    },
+                    createDom: function () {
+                        var ret = [];
+                        for (var i = 0; i < 20; i++) {
+                            ret.push('<div class="list-item">' + i + '</div>');
+                        }
+                        this.get('contentEl').html(ret.join(''));
+                    }
+                }, {
+                    ATTRS: {
+                        plugins: {
+                            value: [ScrollBar]
+                        }
+                    }
+                });
+
+
+                navigationView.push(new IndexView());
+
+            });
+</script>
+</body>
+</html>

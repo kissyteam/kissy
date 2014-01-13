@@ -599,7 +599,7 @@ KISSY.add(function(S, require) {
   function onBackButtonClick() {
     _$jscoverage['/navigation-view/bar.js'].functionData[4]++;
     _$jscoverage['/navigation-view/bar.js'].lineData[129]++;
-    history.back();
+    this.fire('back');
   }
   _$jscoverage['/navigation-view/bar.js'].lineData[132]++;
   return Control.extend({
@@ -630,7 +630,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/navigation-view/bar.js'].lineData[153]++;
   if (visit12_153_1(this._backBtn)) {
     _$jscoverage['/navigation-view/bar.js'].lineData[154]++;
-    this._backBtn.on('click', onBackButtonClick);
+    this._backBtn.on('click', onBackButtonClick, this);
   }
 }, 
   addButton: function(name, config) {

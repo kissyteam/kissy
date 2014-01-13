@@ -112,7 +112,9 @@ KISSY.add(function (S, require) {
             if (defaultFn && !customEventObject.isDefaultPrevented()) {
                 var target = customEventObject.target,
                     lowestCustomEventObservable = target.getCustomEventObservable(customEventObject.type);
-                if ((!self.defaultTargetOnly && !lowestCustomEventObservable.defaultTargetOnly) ||
+                if ((!self.defaultTargetOnly &&
+                    // defaults to false
+                    (!lowestCustomEventObservable || !lowestCustomEventObservable.defaultTargetOnly)) ||
                     currentTarget === target) {
                     // default value as final value if possible
                     gRet = defaultFn.call(currentTarget, customEventObject);
