@@ -8,6 +8,7 @@ KISSY.add(function (S,require) {
     var Editor=require('editor');
     require('./bubble');
     var DialogLoader = require('./dialog-loader');
+    require('./contextmenu');
 
     var UA = S.UA,
         Node = KISSY.NodeList,

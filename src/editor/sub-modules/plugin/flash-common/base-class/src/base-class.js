@@ -10,6 +10,7 @@ KISSY.add(function (S, require) {
     var Node = S.Node;
     var DialogLoader = require('../dialog-loader');
     require('../bubble');
+    require('../contextmenu');
 
     var tipHTML = ' <a ' +
         'class="{prefixCls}editor-bubble-url" ' +
