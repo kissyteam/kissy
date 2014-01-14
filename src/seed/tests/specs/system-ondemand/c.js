@@ -1,0 +1,1 @@
+KISSY.add('p-c/c', 2);
