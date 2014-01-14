@@ -44,7 +44,7 @@
                     if (!cfg.ignorePackageNameInUri) {
                         path += name + '/';
                     }
-                    newConfig.uri = normalizeBase(path);
+                    newConfig.uri = normalizePath(path, true);
                 }
                 if (ps[name]) {
                     ps[name].reset(newConfig);
@@ -65,6 +65,11 @@
         var self = this;
         if (modules) {
             S.each(modules, function (modCfg, modName) {
+                var path = modCfg.path;
+                if (path) {
+                    modCfg.uri = normalizePath(path);
+                    delete modCfg.path;
+                }
                 var mod = Utils.createModuleInfo(self, modName, modCfg);
                 // #485, invalid after add
                 if (mod.status === Loader.Status.INIT) {
@@ -81,15 +86,15 @@
         if (!base) {
             return Config.baseUri.toString();
         }
-        baseUri = normalizeBase(base);
+        baseUri = normalizePath(base, true);
         Config.baseUri = baseUri;
         return undefined;
     };
 
-    function normalizeBase(base) {
+    function normalizePath(base, isDirectory) {
         var baseUri;
         base = base.replace(/\\/g, '/');
-        if (base.charAt(base.length - 1) !== '/') {
+        if (isDirectory && base.charAt(base.length - 1) !== '/') {
             base += '/';
         }
         if (simulatedLocation) {

@@ -1,6 +1,7 @@
 /**
  * @ignore
  * init loader, set config
+ * @author yiminghe@gmail.com
  */
 (function (S) {
     var doc = S.Env.host && S.Env.host.document;

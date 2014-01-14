@@ -8,6 +8,7 @@
         doc = S.Env.host.document,
         Utils = S.Loader.Utils,
         Path = S.Path,
+        // solve concurrent requesting same script file
         jsCssCallbacks = {},
         headNode,
         UA = S.UA;

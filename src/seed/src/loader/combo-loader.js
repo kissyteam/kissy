@@ -4,6 +4,18 @@
  * @author yiminghe@gmail.com
  */
 (function (S, undefined) {
+    var logger = S.getLogger('s/loader');
+
+    var Loader = S.Loader,
+        Status = Loader.Status,
+        Utils = Loader.Utils,
+        getHash = Utils.getHash,
+        LOADING = Status.LOADING,
+        LOADED = Status.LOADED,
+        READY_TO_ATTACH = Status.READY_TO_ATTACH,
+        ERROR = Status.ERROR,
+        groupTag = S.now();
+
     // ie11 is a new one!
     var oldIE = S.UA.ieMode < 10;
 
@@ -26,7 +38,7 @@
                     successList.push(rs);
                     if (mod && currentMod) {
                         // standard browser(except ie9) fire load after KISSY.add immediately
-                        logger.debug('standard browser get mod name after load : ' + mod.name);
+                        logger.debug('standard browser get mod name after load: ' + mod.name);
                         Utils.registerModule(runtime, mod.name, currentMod.factory, currentMod.config);
                         currentMod = undefined;
                     }
@@ -53,17 +65,6 @@
             S.Config.loadModsFn(rs, config);
         });
     }
-
-    var logger = S.getLogger('s/loader');
-    var Loader = S.Loader,
-        Status = Loader.Status,
-        Utils = Loader.Utils,
-        getHash = Utils.getHash,
-        LOADING = Status.LOADING,
-        LOADED = Status.LOADED,
-        READY_TO_ATTACH = Status.READY_TO_ATTACH,
-        ERROR = Status.ERROR,
-        groupTag = S.now();
 
     ComboLoader.groupTag = groupTag;
 
@@ -477,8 +478,11 @@
     Loader.ComboLoader = ComboLoader;
 })(KISSY);
 /*
- 2013-09-11
- - union simple loader and combo loader
+ 2014-01-14 yiminghe
+ - support System.ondemand from es6
+
+ 2013-09-11 yiminghe
+ - unify simple loader and combo loader
 
  2013-07-25 阿古, yiminghe
  - support group combo for packages
