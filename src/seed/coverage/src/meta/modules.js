@@ -508,7 +508,7 @@ function visit537_6_1(result) {
   _$jscoverage['/meta/modules.js'].lineData[204]++;
   config({
   'navigation-view': {
-  requires: ['node', 'base', 'router', 'promise', 'component/container', 'component/control', 'button', 'component/extension/content-xtpl', 'component/extension/content-render']}});
+  requires: ['node', 'component/container', 'component/control', 'button', 'component/extension/content-xtpl', 'component/extension/content-render']}});
   _$jscoverage['/meta/modules.js'].lineData[208]++;
   config({
   node: {

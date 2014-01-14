@@ -235,25 +235,7 @@
                 if (self.path) {
                     uri = new S.Uri(self.path);
                 } else {
-                    var name = self.name, t, subPath,
-                        packageInfo = self.getPackage(),
-                        packageUri = packageInfo.getUri(),
-                        packageName = packageInfo.getName(),
-                        extname = '.' + self.getType(),
-                        min = '-min';
-                    name = Path.join(Path.dirname(name), Path.basename(name, extname));
-                    if (packageInfo.isDebug()) {
-                        min = '';
-                    }
-                    subPath = name + min + extname;
-                    if (packageName) {
-                        subPath = Path.relative(packageName, subPath);
-                    }
-                    uri = packageUri.resolve(subPath);
-                    if ((t = self.getTag())) {
-                        t += '.' + self.getType();
-                        uri.query.set('t', t);
-                    }
+                    uri = S.Config.resolveModFn(self);
                 }
                 self.uri = uri;
             }

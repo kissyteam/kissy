@@ -7,6 +7,7 @@
     var logger = S.getLogger('s/loader');
 
     var Loader = S.Loader,
+        Config = S.Config,
         Status = Loader.Status,
         Utils = Loader.Utils,
         getHash = Utils.getHash,
@@ -62,7 +63,7 @@
                     };
                 }
             }
-            S.Config.loadModsFn(rs, config);
+            Config.loadModsFn(rs, config);
         });
     }
 
@@ -215,7 +216,7 @@
             var self = this,
                 allModNames,
                 comboUrls,
-                timeout = S.Config.timeout,
+                timeout = Config.timeout,
                 runtime = self.runtime;
 
             allModNames = S.keys(self.calculate(normalizedModNames));

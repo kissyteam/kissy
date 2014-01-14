@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Jan 14 21:43
+build time: Jan 14 23:22
 */
 /**
  * @ignore
@@ -87,11 +87,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20140114214305' will replace with current timestamp when compressing.
+         * NOTICE: '20140114232208' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20140114214305',
+        __BUILD_TIME: '20140114232208',
 
         /**
          * KISSY Environment.
@@ -4243,25 +4243,7 @@ var KISSY = (function (undefined) {
                 if (self.path) {
                     uri = new S.Uri(self.path);
                 } else {
-                    var name = self.name, t, subPath,
-                        packageInfo = self.getPackage(),
-                        packageUri = packageInfo.getUri(),
-                        packageName = packageInfo.getName(),
-                        extname = '.' + self.getType(),
-                        min = '-min';
-                    name = Path.join(Path.dirname(name), Path.basename(name, extname));
-                    if (packageInfo.isDebug()) {
-                        min = '';
-                    }
-                    subPath = name + min + extname;
-                    if (packageName) {
-                        subPath = Path.relative(packageName, subPath);
-                    }
-                    uri = packageUri.resolve(subPath);
-                    if ((t = self.getTag())) {
-                        t += '.' + self.getType();
-                        uri.query.set('t', t);
-                    }
+                    uri = S.Config.resolveModFn(self);
                 }
                 self.uri = uri;
             }
@@ -4505,6 +4487,7 @@ var KISSY = (function (undefined) {
         doc = S.Env.host.document,
         Utils = S.Loader.Utils,
         Path = S.Path,
+        // solve concurrent requesting same script file
         jsCssCallbacks = {},
         headNode,
         UA = S.UA;
@@ -4680,19 +4663,51 @@ var KISSY = (function (undefined) {
  */
 (function (S, undefined) {
     var Loader = S.Loader,
+        Path = S.Path,
         Utils = Loader.Utils,
         host = S.Env.host,
+        Config = S.Config,
         location = host.location,
         simulatedLocation,
         locationHref,
-        configFns = S.Config.fns;
+        configFns = Config.fns;
 
     if (!S.UA.nodejs && location && (locationHref = location.href)) {
         simulatedLocation = new S.Uri(locationHref);
     }
 
-    S.Config.loadModsFn = function (rs, config) {
+    // how to load mods by path
+    Config.loadModsFn = function (rs, config) {
         S.getScript(rs.path, config);
+    };
+
+    // how to get mod uri
+    Config.resolveModFn = function (mod) {
+        var name = mod.name,
+            min = '-min',
+            t, subPath;
+
+        var packageInfo = mod.getPackage();
+        var packageUri = packageInfo.getUri();
+        var packageName = packageInfo.getName();
+        var extname = '.' + mod.getType();
+
+        name = Path.join(Path.dirname(name), Path.basename(name, extname));
+
+        if (packageInfo.isDebug()) {
+            min = '';
+        }
+
+        subPath = name + min + extname;
+        if (packageName) {
+            subPath = Path.relative(packageName, subPath);
+        }
+        var uri = packageUri.resolve(subPath);
+        if ((t = mod.getTag())) {
+            t += '.' + mod.getType();
+            uri.query.set('t', t);
+        }
+        return uri;
     };
 
     var PACKAGE_MEMBERS = ['alias', 'debug', 'tag', 'group', 'combine', 'charset'];
@@ -4791,6 +4806,19 @@ var KISSY = (function (undefined) {
  * @author yiminghe@gmail.com
  */
 (function (S, undefined) {
+    var logger = S.getLogger('s/loader');
+
+    var Loader = S.Loader,
+        Config = S.Config,
+        Status = Loader.Status,
+        Utils = Loader.Utils,
+        getHash = Utils.getHash,
+        LOADING = Status.LOADING,
+        LOADED = Status.LOADED,
+        READY_TO_ATTACH = Status.READY_TO_ATTACH,
+        ERROR = Status.ERROR,
+        groupTag = S.now();
+
     // ie11 is a new one!
     var oldIE = S.UA.ieMode < 10;
 
@@ -4813,7 +4841,7 @@ var KISSY = (function (undefined) {
                     successList.push(rs);
                     if (mod && currentMod) {
                         // standard browser(except ie9) fire load after KISSY.add immediately
-                        logger.debug('standard browser get mod name after load : ' + mod.name);
+                        logger.debug('standard browser get mod name after load: ' + mod.name);
                         Utils.registerModule(runtime, mod.name, currentMod.factory, currentMod.config);
                         currentMod = undefined;
                     }
@@ -4837,20 +4865,9 @@ var KISSY = (function (undefined) {
                     };
                 }
             }
-            S.Config.loadModsFn(rs, config);
+            Config.loadModsFn(rs, config);
         });
     }
-
-    var logger = S.getLogger('s/loader');
-    var Loader = S.Loader,
-        Status = Loader.Status,
-        Utils = Loader.Utils,
-        getHash = Utils.getHash,
-        LOADING = Status.LOADING,
-        LOADED = Status.LOADED,
-        READY_TO_ATTACH = Status.READY_TO_ATTACH,
-        ERROR = Status.ERROR,
-        groupTag = S.now();
 
     ComboLoader.groupTag = groupTag;
 
@@ -5001,7 +5018,7 @@ var KISSY = (function (undefined) {
             var self = this,
                 allModNames,
                 comboUrls,
-                timeout = S.Config.timeout,
+                timeout = Config.timeout,
                 runtime = self.runtime;
 
             allModNames = S.keys(self.calculate(normalizedModNames));
@@ -5264,7 +5281,10 @@ var KISSY = (function (undefined) {
     Loader.ComboLoader = ComboLoader;
 })(KISSY);
 /*
- 2013-09-11
+ 2014-01-14 yiminghe
+ - support System.ondemand from es6
+
+ 2013-09-11 yiminghe
  - unify simple loader and combo loader
 
  2013-07-25 阿古, yiminghe
@@ -5472,7 +5492,7 @@ var KISSY = (function (undefined) {
     var doc = S.Env.host && S.Env.host.document;
     // var logger = S.getLogger('s/loader');
     var Utils = S.Loader.Utils;
-    var TIMESTAMP = '20140114214305';
+    var TIMESTAMP = '20140114232208';
     var defaultComboPrefix = '??';
     var defaultComboSep = ',';
 

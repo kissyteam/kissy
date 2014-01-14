@@ -5,19 +5,51 @@
  */
 (function (S, undefined) {
     var Loader = S.Loader,
+        Path = S.Path,
         Utils = Loader.Utils,
         host = S.Env.host,
+        Config = S.Config,
         location = host.location,
         simulatedLocation,
         locationHref,
-        configFns = S.Config.fns;
+        configFns = Config.fns;
 
     if (!S.UA.nodejs && location && (locationHref = location.href)) {
         simulatedLocation = new S.Uri(locationHref);
     }
 
-    S.Config.loadModsFn = function (rs, config) {
+    // how to load mods by path
+    Config.loadModsFn = function (rs, config) {
         S.getScript(rs.path, config);
+    };
+
+    // how to get mod uri
+    Config.resolveModFn = function (mod) {
+        var name = mod.name,
+            min = '-min',
+            t, subPath;
+
+        var packageInfo = mod.getPackage();
+        var packageUri = packageInfo.getUri();
+        var packageName = packageInfo.getName();
+        var extname = '.' + mod.getType();
+
+        name = Path.join(Path.dirname(name), Path.basename(name, extname));
+
+        if (packageInfo.isDebug()) {
+            min = '';
+        }
+
+        subPath = name + min + extname;
+        if (packageName) {
+            subPath = Path.relative(packageName, subPath);
+        }
+        var uri = packageUri.resolve(subPath);
+        if ((t = mod.getTag())) {
+            t += '.' + mod.getType();
+            uri.query.set('t', t);
+        }
+        return uri;
     };
 
     var PACKAGE_MEMBERS = ['alias', 'debug', 'tag', 'group', 'combine', 'charset'];
