@@ -55,7 +55,9 @@
                     render: '.sidebar'
                 }).render();
 
-                var DetailView = Control.extend({});
+                Control.extend({}, {
+                    xclass: 'tb-detail-view'
+                });
 
                 var IndexView = ScrollView.extend({
                     bindUI: function () {
@@ -64,7 +66,8 @@
 
                     onSelect: function (e) {
                         var content = e.currentTarget.innerHTML;
-                        navigationView.push(DetailView, {
+                        navigationView.push({
+                            xclass: 'tb-detail-view',
                             content: content + ' detail!'
                         });
                     },
@@ -86,6 +89,8 @@
                         this.get('contentEl').html(ret.join(''));
                     }
                 }, {
+                    xclass: 'tb-index-view',
+
                     ATTRS: {
                         plugins: {
                             value: [ScrollBar]
@@ -93,7 +98,9 @@
                     }
                 });
 
-                navigationView.push(IndexView);
+                navigationView.push({
+                    xclass: 'tb-index-view'
+                });
             });
 </script>
 </body>

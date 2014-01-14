@@ -141,6 +141,7 @@ KISSY.add(function (S, require) {
                 component: c,
                 index: index
             });
+            return children[index];
         },
 
         renderChild: function (childIndex) {

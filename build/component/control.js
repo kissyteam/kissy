@@ -1,10 +1,10 @@
 /*
-Copyright 2013, KISSY v1.50
+Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Dec 12 22:08
+build time: Jan 14 18:38
 */
 /*
- Combined processedModules by KISSY Module Compiler: 
+ Combined modules by KISSY Module Compiler: 
 
  component/control/process
  component/control/render-xtpl
@@ -552,7 +552,7 @@ KISSY.add("component/control", ["node", "./control/process", "component/manager"
       if(!self.get("allowTextSelection")) {
         n = ev.target.nodeName;
         n = n && n.toLowerCase();
-        if(n !== "input" && n !== "textarea") {
+        if(n !== "input" && n !== "textarea" && n !== "button") {
           ev.preventDefault()
         }
       }

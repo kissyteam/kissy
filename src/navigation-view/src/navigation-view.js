@@ -32,11 +32,11 @@ KISSY.add(function (S, require) {
         }
     }
 
-    function getViewInstance(navigationView, ViewClass, config) {
+    function getViewInstance(navigationView, config) {
         var children = navigationView.get('children');
-        var viewId = config && config.viewId;
+        var viewId = config.viewId;
         for (var i = 0; i < children.length; i++) {
-            if (children[i].constructor === ViewClass) {
+            if (children[i].constructor.xclass === config.xclass) {
                 if (viewId) {
                     if (children[i].get('viewId') === viewId) {
                         return children[i];
@@ -87,34 +87,31 @@ KISSY.add(function (S, require) {
 
         /**
          * get inner view instance for specified view class.
-         * @param {Function} ViewClass
          * @param [config]
          * @returns {KISSY.Component.Control}
          */
-        createView: function (ViewClass, config) {
+        createView: function (config) {
             var self = this;
-            var nextView = getViewInstance(self, ViewClass, config);
+            var nextView = getViewInstance(self, config);
             if (!nextView) {
-                self.addChild(nextView = new ViewClass(S.merge(config, {
-                    prefixCls: self.get('prefixCls')
-                })));
+                nextView = self.addChild(config);
                 nextView.get('el').css('transform', 'translateX(-9999px) translateZ(0)');
             }
             return nextView;
         },
 
-        push: function (ViewClass, config) {
+        push: function (config) {
             var self = this,
                 nextView,
                 viewStack = self.viewStack;
             var bar = self.get('bar');
-            nextView = self.createView(ViewClass, config);
+            nextView = self.createView(config);
             var nextViewEl = nextView.get('el');
             nextView.uuid = uuid++;
-            var activeView;
+            var activeView = self.get('activeView');
             var loadingEl = this.loadingEl;
-            viewStack.push([ViewClass, config]);
-            if ((activeView = self.get('activeView')) && activeView.leave) {
+            viewStack.push(config);
+            if (activeView && activeView.leave) {
                 activeView.leave();
             }
             if (config) {
@@ -185,7 +182,7 @@ KISSY.add(function (S, require) {
         replace: function (config) {
             var self = this,
                 viewStack = self.viewStack;
-            viewStack[viewStack.length - 1][1] = config;
+            S.mix(viewStack[viewStack.length - 1], config);
         },
 
         pop: function () {
@@ -193,18 +190,16 @@ KISSY.add(function (S, require) {
                 viewStack = self.viewStack;
             if (viewStack.length > 1) {
                 viewStack.pop();
-                var ViewClassInfo = viewStack[viewStack.length - 1];
-                var nextView = self.createView(ViewClassInfo[0], ViewClassInfo[1]);
+                var config = viewStack[viewStack.length - 1];
+                var nextView = self.createView(config);
                 nextView.uuid = uuid++;
-                var activeView;
+                var activeView = self.get('activeView');
                 var loadingEl = self.loadingEl;
                 var bar = self.get('bar');
-                if ((activeView = self.get('activeView')) && activeView.leave) {
+                if (activeView && activeView.leave) {
                     activeView.leave();
                 }
-                if (ViewClassInfo[1]) {
-                    nextView.set(ViewClassInfo[1]);
-                }
+                nextView.set(config);
                 if (nextView.enter) {
                     nextView.enter();
                 }
@@ -288,12 +283,23 @@ KISSY.add(function (S, require) {
                 value: false
             },
 
+            allowTextSelection: {
+                value: true
+            },
+
             xrender: {
                 value: NavigationViewRender
             },
 
             contentTpl: {
                 value: ContentTpl
+            },
+
+            defaultChildCfg: {
+                value: {
+                    handleMouseEvents: false,
+                    allowTextSelection: true
+                }
             }
         }
     });

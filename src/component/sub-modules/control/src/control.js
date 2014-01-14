@@ -271,7 +271,7 @@ KISSY.add(function (S, require) {
                         n = ev.target.nodeName;
                         n = n && n.toLowerCase();
                         // do not prevent focus when click on editable element
-                        if (n !== 'input' && n !== 'textarea') {
+                        if (n !== 'input' && n !== 'textarea' && n !== 'button') {
                             ev.preventDefault();
                         }
                     }

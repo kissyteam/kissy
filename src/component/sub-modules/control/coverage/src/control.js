@@ -481,6 +481,8 @@ if (! _$jscoverage['/control.js'].branchData) {
   _$jscoverage['/control.js'].branchData['274'][1] = new BranchData();
   _$jscoverage['/control.js'].branchData['274'][2] = new BranchData();
   _$jscoverage['/control.js'].branchData['274'][3] = new BranchData();
+  _$jscoverage['/control.js'].branchData['274'][4] = new BranchData();
+  _$jscoverage['/control.js'].branchData['274'][5] = new BranchData();
   _$jscoverage['/control.js'].branchData['282'] = [];
   _$jscoverage['/control.js'].branchData['282'][1] = new BranchData();
   _$jscoverage['/control.js'].branchData['297'] = [];
@@ -525,94 +527,102 @@ if (! _$jscoverage['/control.js'].branchData) {
   _$jscoverage['/control.js'].branchData['889'][1] = new BranchData();
 }
 _$jscoverage['/control.js'].branchData['889'][1].init(384, 6, 'xclass');
-function visit100_889_1(result) {
+function visit102_889_1(result) {
   _$jscoverage['/control.js'].branchData['889'][1].ranCondition(result);
   return result;
 }_$jscoverage['/control.js'].branchData['849'][1].init(110, 24, '!attrs || !attrs.xrender');
-function visit99_849_1(result) {
+function visit101_849_1(result) {
   _$jscoverage['/control.js'].branchData['849'][1].ranCondition(result);
   return result;
 }_$jscoverage['/control.js'].branchData['800'][1].init(167, 1, 'p');
-function visit98_800_1(result) {
+function visit100_800_1(result) {
   _$jscoverage['/control.js'].branchData['800'][1].ranCondition(result);
   return result;
 }_$jscoverage['/control.js'].branchData['769'][1].init(57, 40, 'S.config(\'component/prefixCls\') || \'ks-\'');
-function visit97_769_1(result) {
+function visit99_769_1(result) {
   _$jscoverage['/control.js'].branchData['769'][1].ranCondition(result);
   return result;
 }_$jscoverage['/control.js'].branchData['574'][1].init(172, 19, 'xy[1] !== undefined');
-function visit96_574_1(result) {
+function visit98_574_1(result) {
   _$jscoverage['/control.js'].branchData['574'][1].ranCondition(result);
   return result;
 }_$jscoverage['/control.js'].branchData['571'][1].init(33, 19, 'xy[0] !== undefined');
-function visit95_571_1(result) {
+function visit97_571_1(result) {
   _$jscoverage['/control.js'].branchData['571'][1].ranCondition(result);
   return result;
 }_$jscoverage['/control.js'].branchData['570'][1].init(119, 9, 'xy.length');
-function visit94_570_1(result) {
+function visit96_570_1(result) {
   _$jscoverage['/control.js'].branchData['570'][1].ranCondition(result);
   return result;
 }_$jscoverage['/control.js'].branchData['472'][1].init(159, 7, 'v || []');
-function visit93_472_1(result) {
+function visit95_472_1(result) {
   _$jscoverage['/control.js'].branchData['472'][1].ranCondition(result);
   return result;
 }_$jscoverage['/control.js'].branchData['469'][1].init(29, 21, 'typeof v === \'string\'');
-function visit92_469_1(result) {
+function visit94_469_1(result) {
   _$jscoverage['/control.js'].branchData['469'][1].ranCondition(result);
   return result;
 }_$jscoverage['/control.js'].branchData['393'][1].init(241, 19, 'self.get(\'srcNode\')');
-function visit91_393_1(result) {
+function visit93_393_1(result) {
   _$jscoverage['/control.js'].branchData['393'][1].ranCondition(result);
   return result;
 }_$jscoverage['/control.js'].branchData['391'][1].init(159, 9, 'self.view');
-function visit90_391_1(result) {
+function visit92_391_1(result) {
   _$jscoverage['/control.js'].branchData['391'][1].ranCondition(result);
   return result;
 }_$jscoverage['/control.js'].branchData['379'][1].init(99, 21, 'self.get(\'focusable\')');
-function visit89_379_1(result) {
+function visit91_379_1(result) {
   _$jscoverage['/control.js'].branchData['379'][1].ranCondition(result);
   return result;
 }_$jscoverage['/control.js'].branchData['367'][1].init(21, 21, '!this.get(\'disabled\')');
-function visit88_367_1(result) {
+function visit90_367_1(result) {
   _$jscoverage['/control.js'].branchData['367'][1].ranCondition(result);
   return result;
 }_$jscoverage['/control.js'].branchData['360'][1].init(21, 33, 'ev.keyCode === Node.KeyCode.ENTER');
-function visit87_360_1(result) {
+function visit89_360_1(result) {
   _$jscoverage['/control.js'].branchData['360'][1].ranCondition(result);
   return result;
 }_$jscoverage['/control.js'].branchData['347'][1].init(54, 55, '!this.get(\'disabled\') && self.handleKeyDownInternal(ev)');
-function visit86_347_1(result) {
+function visit88_347_1(result) {
   _$jscoverage['/control.js'].branchData['347'][1].ranCondition(result);
   return result;
 }_$jscoverage['/control.js'].branchData['331'][1].init(21, 21, '!this.get(\'disabled\')');
-function visit85_331_1(result) {
+function visit87_331_1(result) {
   _$jscoverage['/control.js'].branchData['331'][1].ranCondition(result);
   return result;
 }_$jscoverage['/control.js'].branchData['316'][1].init(21, 21, '!this.get(\'disabled\')');
-function visit84_316_1(result) {
+function visit86_316_1(result) {
   _$jscoverage['/control.js'].branchData['316'][1].ranCondition(result);
   return result;
 }_$jscoverage['/control.js'].branchData['303'][1].init(21, 21, '!this.get(\'disabled\')');
-function visit83_303_1(result) {
+function visit85_303_1(result) {
   _$jscoverage['/control.js'].branchData['303'][1].ranCondition(result);
   return result;
 }_$jscoverage['/control.js'].branchData['297'][3].init(99, 14, 'ev.which === 1');
-function visit82_297_3(result) {
+function visit84_297_3(result) {
   _$jscoverage['/control.js'].branchData['297'][3].ranCondition(result);
   return result;
 }_$jscoverage['/control.js'].branchData['297'][2].init(99, 41, 'ev.which === 1 || isTouchGestureSupported');
-function visit81_297_2(result) {
+function visit83_297_2(result) {
   _$jscoverage['/control.js'].branchData['297'][2].ranCondition(result);
   return result;
 }_$jscoverage['/control.js'].branchData['297'][1].init(76, 65, 'self.get(\'active\') && (ev.which === 1 || isTouchGestureSupported)');
-function visit80_297_1(result) {
+function visit82_297_1(result) {
   _$jscoverage['/control.js'].branchData['297'][1].ranCondition(result);
   return result;
 }_$jscoverage['/control.js'].branchData['282'][1].init(21, 21, '!this.get(\'disabled\')');
-function visit79_282_1(result) {
+function visit81_282_1(result) {
   _$jscoverage['/control.js'].branchData['282'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control.js'].branchData['274'][3].init(334, 16, 'n !== \'textarea\'');
+}_$jscoverage['/control.js'].branchData['274'][5].init(354, 14, 'n !== \'button\'');
+function visit80_274_5(result) {
+  _$jscoverage['/control.js'].branchData['274'][5].ranCondition(result);
+  return result;
+}_$jscoverage['/control.js'].branchData['274'][4].init(334, 16, 'n !== \'textarea\'');
+function visit79_274_4(result) {
+  _$jscoverage['/control.js'].branchData['274'][4].ranCondition(result);
+  return result;
+}_$jscoverage['/control.js'].branchData['274'][3].init(334, 34, 'n !== \'textarea\' && n !== \'button\'');
 function visit78_274_3(result) {
   _$jscoverage['/control.js'].branchData['274'][3].ranCondition(result);
   return result;
@@ -620,7 +630,7 @@ function visit78_274_3(result) {
 function visit77_274_2(result) {
   _$jscoverage['/control.js'].branchData['274'][2].ranCondition(result);
   return result;
-}_$jscoverage['/control.js'].branchData['274'][1].init(317, 33, 'n !== \'input\' && n !== \'textarea\'');
+}_$jscoverage['/control.js'].branchData['274'][1].init(317, 51, 'n !== \'input\' && n !== \'textarea\' && n !== \'button\'');
 function visit76_274_1(result) {
   _$jscoverage['/control.js'].branchData['274'][1].ranCondition(result);
   return result;
@@ -960,7 +970,7 @@ KISSY.add(function(S, require) {
       _$jscoverage['/control.js'].lineData[272]++;
       n = visit75_272_1(n && n.toLowerCase());
       _$jscoverage['/control.js'].lineData[274]++;
-      if (visit76_274_1(visit77_274_2(n !== 'input') && visit78_274_3(n !== 'textarea'))) {
+      if (visit76_274_1(visit77_274_2(n !== 'input') && visit78_274_3(visit79_274_4(n !== 'textarea') && visit80_274_5(n !== 'button')))) {
         _$jscoverage['/control.js'].lineData[275]++;
         ev.preventDefault();
       }
@@ -970,7 +980,7 @@ KISSY.add(function(S, require) {
   handleMouseUp: function(ev) {
   _$jscoverage['/control.js'].functionData[23]++;
   _$jscoverage['/control.js'].lineData[282]++;
-  if (visit79_282_1(!this.get('disabled'))) {
+  if (visit81_282_1(!this.get('disabled'))) {
     _$jscoverage['/control.js'].lineData[283]++;
     this.handleMouseUpInternal(ev);
   }
@@ -980,7 +990,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/control.js'].lineData[295]++;
   var self = this;
   _$jscoverage['/control.js'].lineData[297]++;
-  if (visit80_297_1(self.get('active') && (visit81_297_2(visit82_297_3(ev.which === 1) || isTouchGestureSupported)))) {
+  if (visit82_297_1(self.get('active') && (visit83_297_2(visit84_297_3(ev.which === 1) || isTouchGestureSupported)))) {
     _$jscoverage['/control.js'].lineData[298]++;
     self.set('active', false);
   }
@@ -988,7 +998,7 @@ KISSY.add(function(S, require) {
   handleContextMenu: function(ev) {
   _$jscoverage['/control.js'].functionData[25]++;
   _$jscoverage['/control.js'].lineData[303]++;
-  if (visit83_303_1(!this.get('disabled'))) {
+  if (visit85_303_1(!this.get('disabled'))) {
     _$jscoverage['/control.js'].lineData[304]++;
     this.handleContextMenuInternal(ev);
   }
@@ -999,7 +1009,7 @@ KISSY.add(function(S, require) {
   handleFocus: function() {
   _$jscoverage['/control.js'].functionData[27]++;
   _$jscoverage['/control.js'].lineData[316]++;
-  if (visit84_316_1(!this.get('disabled'))) {
+  if (visit86_316_1(!this.get('disabled'))) {
     _$jscoverage['/control.js'].lineData[317]++;
     this.handleFocusInternal();
   }
@@ -1014,7 +1024,7 @@ KISSY.add(function(S, require) {
   handleBlur: function() {
   _$jscoverage['/control.js'].functionData[29]++;
   _$jscoverage['/control.js'].lineData[331]++;
-  if (visit85_331_1(!this.get('disabled'))) {
+  if (visit87_331_1(!this.get('disabled'))) {
     _$jscoverage['/control.js'].lineData[332]++;
     this.handleBlurInternal();
   }
@@ -1031,7 +1041,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/control.js'].lineData[346]++;
   var self = this;
   _$jscoverage['/control.js'].lineData[347]++;
-  if (visit86_347_1(!this.get('disabled') && self.handleKeyDownInternal(ev))) {
+  if (visit88_347_1(!this.get('disabled') && self.handleKeyDownInternal(ev))) {
     _$jscoverage['/control.js'].lineData[348]++;
     ev.halt();
     _$jscoverage['/control.js'].lineData[349]++;
@@ -1043,7 +1053,7 @@ KISSY.add(function(S, require) {
   handleKeyDownInternal: function(ev) {
   _$jscoverage['/control.js'].functionData[32]++;
   _$jscoverage['/control.js'].lineData[360]++;
-  if (visit87_360_1(ev.keyCode === Node.KeyCode.ENTER)) {
+  if (visit89_360_1(ev.keyCode === Node.KeyCode.ENTER)) {
     _$jscoverage['/control.js'].lineData[361]++;
     return this.handleClickInternal(ev);
   }
@@ -1053,7 +1063,7 @@ KISSY.add(function(S, require) {
   handleClick: function(ev) {
   _$jscoverage['/control.js'].functionData[33]++;
   _$jscoverage['/control.js'].lineData[367]++;
-  if (visit88_367_1(!this.get('disabled'))) {
+  if (visit90_367_1(!this.get('disabled'))) {
     _$jscoverage['/control.js'].lineData[368]++;
     this.handleClickInternal(ev);
   }
@@ -1063,7 +1073,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/control.js'].lineData[378]++;
   var self = this;
   _$jscoverage['/control.js'].lineData[379]++;
-  if (visit89_379_1(self.get('focusable'))) {
+  if (visit91_379_1(self.get('focusable'))) {
     _$jscoverage['/control.js'].lineData[380]++;
     self.focus();
   }
@@ -1075,12 +1085,12 @@ KISSY.add(function(S, require) {
   _$jscoverage['/control.js'].lineData[390]++;
   Manager.removeComponent(self.get('id'));
   _$jscoverage['/control.js'].lineData[391]++;
-  if (visit90_391_1(self.view)) {
+  if (visit92_391_1(self.view)) {
     _$jscoverage['/control.js'].lineData[392]++;
     self.view.destroy();
   } else {
     _$jscoverage['/control.js'].lineData[393]++;
-    if (visit91_393_1(self.get('srcNode'))) {
+    if (visit93_393_1(self.get('srcNode'))) {
       _$jscoverage['/control.js'].lineData[394]++;
       self.get('srcNode').remove();
     }
@@ -1108,12 +1118,12 @@ KISSY.add(function(S, require) {
   setter: function(v) {
   _$jscoverage['/control.js'].functionData[37]++;
   _$jscoverage['/control.js'].lineData[469]++;
-  if (visit92_469_1(typeof v === 'string')) {
+  if (visit94_469_1(typeof v === 'string')) {
     _$jscoverage['/control.js'].lineData[470]++;
     v = v.split(/\s+/);
   }
   _$jscoverage['/control.js'].lineData[472]++;
-  return visit93_472_1(v || []);
+  return visit95_472_1(v || []);
 }}, 
   elStyle: {
   view: 1, 
@@ -1138,14 +1148,14 @@ KISSY.add(function(S, require) {
   _$jscoverage['/control.js'].lineData[568]++;
   var self = this, xy = S.makeArray(v);
   _$jscoverage['/control.js'].lineData[570]++;
-  if (visit94_570_1(xy.length)) {
+  if (visit96_570_1(xy.length)) {
     _$jscoverage['/control.js'].lineData[571]++;
-    if (visit95_571_1(xy[0] !== undefined)) {
+    if (visit97_571_1(xy[0] !== undefined)) {
       _$jscoverage['/control.js'].lineData[572]++;
       self.set('x', xy[0]);
     }
     _$jscoverage['/control.js'].lineData[574]++;
-    if (visit96_574_1(xy[1] !== undefined)) {
+    if (visit98_574_1(xy[1] !== undefined)) {
       _$jscoverage['/control.js'].lineData[575]++;
       self.set('y', xy[1]);
     }
@@ -1190,7 +1200,7 @@ KISSY.add(function(S, require) {
   value: false}, 
   prefixCls: {
   view: 1, 
-  value: visit97_769_1(S.config('component/prefixCls') || 'ks-')}, 
+  value: visit99_769_1(S.config('component/prefixCls') || 'ks-')}, 
   prefixXClass: {}, 
   parent: {
   setter: function(p, prev) {
@@ -1201,7 +1211,7 @@ KISSY.add(function(S, require) {
     this.removeTarget(prev);
   }
   _$jscoverage['/control.js'].lineData[800]++;
-  if (visit98_800_1(p)) {
+  if (visit100_800_1(p)) {
     _$jscoverage['/control.js'].lineData[801]++;
     this.addTarget(p);
   }
@@ -1228,7 +1238,7 @@ KISSY.add(function(S, require) {
       attrs = constructor.ATTRS;
       _$jscoverage['/control.js'].lineData[848]++;
       constructor = constructor.superclass;
-    } while (visit99_849_1(!attrs || !attrs.xrender));
+    } while (visit101_849_1(!attrs || !attrs.xrender));
     _$jscoverage['/control.js'].lineData[850]++;
     return attrs.xrender.value;
   }
@@ -1247,7 +1257,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/control.js'].lineData[887]++;
   newClass = ComponentProcess.extend.apply(baseClass, args);
   _$jscoverage['/control.js'].lineData[889]++;
-  if (visit100_889_1(xclass)) {
+  if (visit102_889_1(xclass)) {
     _$jscoverage['/control.js'].lineData[890]++;
     Manager.setConstructorByXClass(xclass, newClass);
   }

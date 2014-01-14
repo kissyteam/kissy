@@ -1,10 +1,10 @@
 /*
-Copyright 2013, KISSY v1.50
+Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Dec 12 22:07
+build time: Jan 14 20:27
 */
 /*
- Combined processedModules by KISSY Module Compiler: 
+ Combined modules by KISSY Module Compiler: 
 
  component/container/render
  component/container
@@ -31,9 +31,6 @@ KISSY.add("component/container", ["component/control", "./container/render"], fu
   var ContainerRender = require("./container/render");
   function defAddChild(e) {
     var self = this;
-    if(e.target !== self) {
-      return
-    }
     var c = e.component, children = self.get("children"), index = e.index;
     children.splice(index, 0, c);
     children = self.get("children");
@@ -46,9 +43,6 @@ KISSY.add("component/container", ["component/control", "./container/render"], fu
   }
   function defRemoveChild(e) {
     var self = this;
-    if(e.target !== self) {
-      return
-    }
     var c = e.component, cDOMParentEl, cDOMEl, destroy = e.destroy, children = self.get("children"), index = e.index;
     if(index !== -1) {
       children.splice(index, 1)
@@ -69,8 +63,8 @@ KISSY.add("component/container", ["component/control", "./container/render"], fu
   }
   return Control.extend({isContainer:true, initializer:function() {
     var self = this, prefixCls = self.get("prefixCls"), defaultChildCfg = self.get("defaultChildCfg");
-    self.publish("beforeAddChild", {defaultFn:defAddChild});
-    self.publish("beforeRemoveChild", {defaultFn:defRemoveChild});
+    self.publish("beforeAddChild", {defaultFn:defAddChild, defaultTargetOnly:true});
+    self.publish("beforeRemoveChild", {defaultFn:defRemoveChild, defaultTargetOnly:true});
     defaultChildCfg.prefixCls = defaultChildCfg.prefixCls || prefixCls
   }, createDom:function() {
     this.createChildren()
@@ -91,7 +85,8 @@ KISSY.add("component/container", ["component/control", "./container/render"], fu
     if(index === undefined) {
       index = children.length
     }
-    self.fire("beforeAddChild", {component:c, index:index})
+    self.fire("beforeAddChild", {component:c, index:index});
+    return children[index]
   }, renderChild:function(childIndex) {
     var self = this, children = self.get("children");
     self.createChild(childIndex).render();

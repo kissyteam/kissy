@@ -34,7 +34,7 @@ KISSY.use('component/control,navigation-view,node,router,promise,scroll-view,scr
                 history.back();
             });
 
-            var SyncView = ScrollView.extend({
+            ScrollView.extend({
                 renderUI: function () {
                     this.get('contentEl').html('<div style="margin: 100px">sync view</div>');
                 },
@@ -53,6 +53,7 @@ KISSY.use('component/control,navigation-view,node,router,promise,scroll-view,scr
                     win.on('resize', this.sync, this);
                 }
             }, {
+                xclass: 'tb-sync-view',
                 ATTRS: {
                     title: {
                         value: 'sync'
@@ -64,12 +65,14 @@ KISSY.use('component/control,navigation-view,node,router,promise,scroll-view,scr
                 if (request.backward) {
                     navigationView.pop();
                 } else {
-                    navigationView.push(SyncView);
+                    navigationView.push({
+                        xclass: 'tb-sync-view'
+                    });
                 }
             });
 
             // 所有 detail 公用 view
-            var DetailView = ScrollView.extend({
+            ScrollView.extend({
                 bindUI: function () {
                     this.get('contentEl').delegate('click', '.another', this.onButtonClick, this);
                     this.get('contentEl').delegate('click', '.sub', this.onButtonClick2, this);
@@ -109,8 +112,8 @@ KISSY.use('component/control,navigation-view,node,router,promise,scroll-view,scr
                         });
                     } else if (subId) {
                         self.fetchSubId(currentId, subId);
-                        this.sync();
                     }
+                    this.sync();
                 },
 
                 setItem: function (id, content) {
@@ -125,7 +128,7 @@ KISSY.use('component/control,navigation-view,node,router,promise,scroll-view,scr
                     this.subContent = new Node('<div>sub content</div>').appendTo(el);
                     var ret = [];
                     for (var i = 0; i < 20; i++) {
-                        ret.push('<p>' + i + '</p>');
+                        ret.push('<p>' + i + ' : ' + i + ' : ' + i + ' : ' + i + ' : ' + i + ' : ' + '</p>');
                     }
                     el.append('<div>' +
                             ret.join('') +
@@ -181,6 +184,7 @@ KISSY.use('component/control,navigation-view,node,router,promise,scroll-view,scr
                     });
                 }
             }, {
+                xclass: 'tb-detail-view',
                 ATTRS: {
                     plugins: {
                         value: [ScrollBar]
@@ -192,7 +196,8 @@ KISSY.use('component/control,navigation-view,node,router,promise,scroll-view,scr
                 if (request.backward) {
                     navigationView.pop();
                 } else {
-                    navigationView.push(DetailView, {
+                    navigationView.push({
+                        xclass: 'tb-detail-view',
                         currentId: request.param('id'),
                         subId: null
                     });
@@ -206,7 +211,8 @@ KISSY.use('component/control,navigation-view,node,router,promise,scroll-view,scr
                     if (request.backward) {
                         navigationView.pop();
                     } else {
-                        navigationView.push(DetailView, {
+                        navigationView.push({
+                            xclass: 'tb-detail-view',
                             currentId: currentId,
                             subId: subId
                         });
@@ -218,7 +224,7 @@ KISSY.use('component/control,navigation-view,node,router,promise,scroll-view,scr
                 }
             });
 
-            var IndexView = Control.extend({
+            Control.extend({
                 leave: function () {
                     S.log('leave index');
                 },
@@ -238,12 +244,17 @@ KISSY.use('component/control,navigation-view,node,router,promise,scroll-view,scr
 
                 renderUI: function () {
                     var el = this.get('el');
-                    el.html('<div style="margin: 40px"><button>view item</button></div>');
+                    el.html('<div style="margin: 40px"><button>view item</button>' +
+                            '<p>' +
+                            'test test  test  test  test  test  test  test  test  test ' +
+                            '</p></div>');
                     el.one('button').on('click', function () {
                         router.navigate('/item/1');
                     });
                 }
             }, {
+                xclass: 'tb-index-view',
+
                 ATTRS: {
                     title: {
                         value: 'index'
@@ -251,12 +262,13 @@ KISSY.use('component/control,navigation-view,node,router,promise,scroll-view,scr
                 }
             });
 
-
             router.get('/', function (request) {
                 if (request.backward) {
                     navigationView.pop();
                 } else {
-                    navigationView.push(IndexView);
+                    navigationView.push({
+                        xclass: 'tb-index-view'
+                    });
                 }
             });
 
@@ -267,6 +279,10 @@ KISSY.use('component/control,navigation-view,node,router,promise,scroll-view,scr
                 useHash: true
             });
         });
+
+window.onerror = function (e) {
+    alert(e);
+}
 </script>
 </body>
 </html>

@@ -23,7 +23,7 @@
         }
 
         .sidebar {
-            -webkit-box-flex: 1;
+            width: 200px;
             position: relative;
             border: 1px solid red;
         }
@@ -42,7 +42,10 @@
 <body>
 <div class="wrap">
     <div class="sidebar"></div>
-    <div class="content"></div>
+    <div class="content">
+        hit hit hit hit hit hithit hit hithit hit hithit hit hit
+        hit hit hithit hit hithit hit hithit hit hithit hit hit
+    </div>
 </div>
 <script src="/kissy/build/seed.js"></script>
 <script src="/kissy/src/package.js"></script>
@@ -63,7 +66,8 @@
                     },
                     onSelect: function (e) {
                         var content = e.currentTarget.innerHTML;
-                        navigationView.push(IndexView, {
+                        navigationView.push({
+                            xclass: 'index-view',
                             viewId: 'level-' + (this.get('level') + 1),
                             level: (this.get('level') + 1)
                         });
@@ -84,6 +88,8 @@
                         this.get('contentEl').html(ret.join(''));
                     }
                 }, {
+                    xclass: 'index-view',
+
                     ATTRS: {
                         plugins: {
                             value: [ScrollBar]
@@ -92,7 +98,8 @@
                 });
 
 
-                navigationView.push(IndexView, {
+                navigationView.push({
+                    xclass: 'index-view',
                     viewId: 'level-0',
                     level: 0
                 });
