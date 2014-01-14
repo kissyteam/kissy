@@ -47,41 +47,39 @@
 <script src="/kissy/build/seed.js"></script>
 <script src="/kissy/src/package.js"></script>
 <script>
-    KISSY.use('component/control,navigation-view,node,scroll-view,scroll-view/plugin/scrollbar',
-            function (S, Control, NavigationView, Node, ScrollView, ScrollBar) {
+    KISSY.use('navigation-view,node,scroll-view,scroll-view/plugin/scrollbar',
+            function (S, NavigationView, Node, ScrollView, ScrollBar) {
                 var win = Node.all(window);
 
                 var navigationView = new NavigationView({
+                    // defaults to 20
+                    viewCacheSize: 5,
                     render: '.sidebar'
                 }).render();
-
-                var DetailView = Control.extend({});
 
                 var IndexView = ScrollView.extend({
                     bindUI: function () {
                         this.get('contentEl').delegate('click', '.list-item', this.onSelect, this);
                     },
-
                     onSelect: function (e) {
                         var content = e.currentTarget.innerHTML;
-                        navigationView.push(DetailView, {
-                            content: content + ' detail!'
+                        navigationView.push(IndexView, {
+                            viewId: 'level-' + (this.get('level') + 1),
+                            level: (this.get('level') + 1)
                         });
                     },
-
                     enter: function () {
                         this.sync();
                         win.on('resize', this.sync, this);
                     },
-
                     leave: function () {
                         win.detach('resize', this.sync, this);
                     },
-
                     createDom: function () {
                         var ret = [];
+                        var viewId = this.get('viewId');
                         for (var i = 0; i < 20; i++) {
-                            ret.push('<div class="list-item">' + i + '</div>');
+                            ret.push('<div class="list-item">' + viewId + '-' + i + '</div>');
                         }
                         this.get('contentEl').html(ret.join(''));
                     }
@@ -93,7 +91,12 @@
                     }
                 });
 
-                navigationView.push(IndexView);
+
+                navigationView.push(IndexView, {
+                    viewId: 'level-0',
+                    level: 0
+                });
+
             });
 </script>
 </body>

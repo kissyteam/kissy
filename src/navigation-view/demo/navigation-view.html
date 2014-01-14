@@ -38,6 +38,7 @@ KISSY.use('component/control,navigation-view,node,router,promise,scroll-view,scr
                 renderUI: function () {
                     this.get('contentEl').html('<div style="margin: 100px">sync view</div>');
                 },
+
                 leave: function () {
                     if (this.get('navigationView').get('bar').getButton('sync'))
                         this.get('navigationView').get('bar').getButton('sync').show();
@@ -50,7 +51,6 @@ KISSY.use('component/control,navigation-view,node,router,promise,scroll-view,scr
                         this.get('navigationView').get('bar').getButton('sync').hide();
                     this.sync();
                     win.on('resize', this.sync, this);
-
                 }
             }, {
                 ATTRS: {
@@ -60,16 +60,15 @@ KISSY.use('component/control,navigation-view,node,router,promise,scroll-view,scr
                 }
             });
 
-            var syncView = null;
-
             router.get('/sync', function (request) {
                 if (request.backward) {
                     navigationView.pop();
                 } else {
-                    navigationView.push(syncView || (syncView = new SyncView()));
+                    navigationView.push(SyncView);
                 }
             });
 
+            // 所有 detail 公用 view
             var DetailView = ScrollView.extend({
                 bindUI: function () {
                     this.get('contentEl').delegate('click', '.another', this.onButtonClick, this);
@@ -84,7 +83,6 @@ KISSY.use('component/control,navigation-view,node,router,promise,scroll-view,scr
 
                 enter: function () {
                     S.log('enter detail');
-                    var self = this;
                     var helpBtn;
                     var bar = navigationView.get('bar');
                     if (!(helpBtn = bar.getButton('sync'))) {
@@ -97,13 +95,29 @@ KISSY.use('component/control,navigation-view,node,router,promise,scroll-view,scr
                     } else {
                         helpBtn.show();
                     }
-                    this.sync();
                     win.on('resize', this.sync, this);
+
+                    var self = this;
+                    var currentId = self.get('currentId');
+                    var subId = self.get('subId');
+                    self.promise = null;
+                    if (currentId !== self.id) {
+                        self.fetchId(currentId, function () {
+                            if (subId) {
+                                self.fetchSubId(currentId, subId);
+                            }
+                        });
+                    } else if (subId) {
+                        self.fetchSubId(currentId, subId);
+                        this.sync();
+                    }
                 },
 
                 setItem: function (id, content) {
                     this.id = id;
+                    this.subId = null;
                     content = id + ': ' + content;
+                    this.set('title', 'item ' + id);
                     var el = this.get('contentEl');
                     el.html('<div>' + content + '</div>' +
                             '<button class="another">got another</button>' +
@@ -119,8 +133,36 @@ KISSY.use('component/control,navigation-view,node,router,promise,scroll-view,scr
                     this.sync();
                 },
 
-                setSubContent: function (c) {
+                setSubContent: function (subId, c) {
+                    this.subId = subId;
                     this.subContent.html(c);
+                },
+
+                fetchSubId: function (currentId, subId) {
+                    var self = this;
+                    setTimeout(function () {
+                        var content = (currentId + '-' + subId + '-loaded!');
+                        if (navigationView.get('activeView') === self &&
+                                self.get('currentId') == currentId &&
+                                self.get('subId') == subId) {
+                            self.setSubContent(subId, content);
+                        }
+                    }, 1000);
+                },
+
+                fetchId: function (id, cb) {
+                    var self = this;
+                    var defer = new Promise.Defer();
+                    self.promise = defer.promise;
+                    setTimeout(function () {
+                        defer.resolve();
+                        var content = (id + '-loaded!');
+                        if (navigationView.get('activeView') === self &&
+                                self.get('currentId') == id) {
+                            self.setItem(id, content);
+                            cb();
+                        }
+                    }, 1000);
                 },
 
                 onButtonClick: function () {
@@ -128,9 +170,14 @@ KISSY.use('component/control,navigation-view,node,router,promise,scroll-view,scr
                 },
 
                 onButtonClick2: function () {
+                    var subId = new Date().valueOf();
                     router.navigate('/item/' + this.id +
-                            '/' + new Date().valueOf(), {
+                            '/' + subId, {
                         replace: true
+                    });
+                    navigationView.replace({
+                        currentId: this.id,
+                        subId: subId
                     });
                 }
             }, {
@@ -141,50 +188,34 @@ KISSY.use('component/control,navigation-view,node,router,promise,scroll-view,scr
                 }
             });
 
-            var detailView = null;
-
             router.get('/item/:id', function (request) {
-                var self = this,
-                        defer;
-                detailView = detailView || new DetailView();
-                if (detailView.id === request.param('id')) {
-                    detailView.promise = null;
-                } else {
-                    defer = new Promise.Defer();
-                    detailView.promise = defer.promise;
-                }
                 if (request.backward) {
                     navigationView.pop();
                 } else {
-                    navigationView.push(detailView);
-                }
-                if (defer) {
-                    detailView.setItem(request.param('id'), ': loaded!');
-                    setTimeout(function () {
-                        defer.resolve();
-                        detailView.set('title', request.param('id'));
-                    }, 1000);
+                    navigationView.push(DetailView, {
+                        currentId: request.param('id'),
+                        subId: null
+                    });
                 }
             });
 
             router.get('/item/:id/:subId', function (request) {
-                detailView = detailView || new DetailView();
+                var currentId = request.param('id');
+                var subId = request.param('subId');
                 if (!request.replace) {
                     if (request.backward) {
                         navigationView.pop();
                     } else {
-                        navigationView.push(detailView);
+                        navigationView.push(DetailView, {
+                            currentId: currentId,
+                            subId: subId
+                        });
                     }
+                } else {
+                    var detailView = navigationView.get('activeView');
+                    detailView.set('subId', subId);
+                    detailView.fetchSubId(currentId, subId);
                 }
-                if (request.param('id') !== String(detailView.id)) {
-                    detailView.setItem(request.param('id'), ': loaded!');
-                }
-                detailView.setSubContent(request.param('subId') + ': sub content loaded!');
-                var defer = new Promise.Defer();
-                detailView.promise = defer.promise;
-                setTimeout(function () {
-                    defer.resolve();
-                }, 1000);
             });
 
             var IndexView = Control.extend({
@@ -194,10 +225,18 @@ KISSY.use('component/control,navigation-view,node,router,promise,scroll-view,scr
 
                 enter: function () {
                     S.log('enter index');
+                    var self = this;
+                    if (!('promise' in self)) {
+                        var defer = new Promise.Defer();
+                        self.promise = defer.promise;
+                        setTimeout(function () {
+                            defer.resolve();
+                            self.promise = null;
+                        }, 1000);
+                    }
                 },
 
                 renderUI: function () {
-                    var self = this;
                     var el = this.get('el');
                     el.html('<div style="margin: 40px"><button>view item</button></div>');
                     el.one('button').on('click', function () {
@@ -212,24 +251,12 @@ KISSY.use('component/control,navigation-view,node,router,promise,scroll-view,scr
                 }
             });
 
-            var indexView;
 
             router.get('/', function (request) {
-                var self = this;
-                if (indexView) {
-                    indexView.promise = null;
-                } else {
-                    var defer = new Promise.Defer();
-                    indexView = new IndexView();
-                    indexView.promise = defer.promise;
-                    setTimeout(function () {
-                        defer.resolve();
-                    }, 1000);
-                }
                 if (request.backward) {
                     navigationView.pop();
                 } else {
-                    navigationView.push(indexView);
+                    navigationView.push(IndexView);
                 }
             });
 

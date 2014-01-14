@@ -32,12 +32,48 @@ KISSY.add(function (S, require) {
         }
     }
 
+    function getViewInstance(navigationView, ViewClass, config) {
+        var children = navigationView.get('children');
+        var viewId = config && config.viewId;
+        for (var i = 0; i < children.length; i++) {
+            if (children[i].constructor === ViewClass) {
+                if (viewId) {
+                    if (children[i].get('viewId') === viewId) {
+                        return children[i];
+                    }
+                } else {
+                    return children[i];
+                }
+            }
+        }
+        return null;
+    }
+
+    function gc(navigationView) {
+        var children = navigationView.get('children').concat();
+        var viewCacheSize = navigationView.get('viewCacheSize');
+        if (children.length <= viewCacheSize) {
+            return;
+        }
+        var removedSize = Math.floor(viewCacheSize / 3);
+        children.sort(function (a, b) {
+            return a.uuid - b.uuid;
+        });
+        for (var i = 0; i < removedSize; i++) {
+            navigationView.removeChild(children[i]);
+        }
+    }
+
     return Container.extend({
         initializer: function () {
             this.publish('back', {
                 defaultFn: onBack,
                 defaultTargetOnly: false
             });
+        },
+
+        isLoading: function () {
+            return this.loadingEl.css('display') !== 'none';
         },
 
         renderUI: function () {
@@ -49,27 +85,46 @@ KISSY.add(function (S, require) {
             bar.addTarget(this);
         },
 
-        push: function (nextView) {
+        /**
+         * get inner view instance for specified view class.
+         * @param {Function} ViewClass
+         * @param [config]
+         * @returns {KISSY.Component.Control}
+         */
+        createView: function (ViewClass, config) {
             var self = this;
-            var bar = this.get('bar');
-            if (!nextView.get('render')) {
-                self.addChild(nextView);
+            var nextView = getViewInstance(self, ViewClass, config);
+            if (!nextView) {
+                self.addChild(nextView = new ViewClass(S.merge(config, {
+                    prefixCls: self.get('prefixCls')
+                })));
+                nextView.get('el').css('transform', 'translateX(-9999px) translateZ(0)');
             }
+            return nextView;
+        },
+
+        push: function (ViewClass, config) {
+            var self = this,
+                nextView,
+                viewStack = self.viewStack;
+            var bar = self.get('bar');
+            nextView = self.createView(ViewClass, config);
             var nextViewEl = nextView.get('el');
-            nextViewEl.css('transform', 'translateX(-9999px) translateZ(0)');
             nextView.uuid = uuid++;
             var activeView;
             var loadingEl = this.loadingEl;
-            this.viewStack.push(nextView);
-            if ((activeView = this.activeView) && activeView.leave) {
+            viewStack.push([ViewClass, config]);
+            if ((activeView = self.get('activeView')) && activeView.leave) {
                 activeView.leave();
-            } else if (self.waitingView && self.waitingView.leave) {
-                self.waitingView.leave();
+            }
+            if (config) {
+                nextView.set(config);
             }
             if (nextView.enter) {
                 nextView.enter();
             }
-            if (activeView) {
+            var promise = nextView.promise;
+            if (!self.isLoading()) {
                 var activeEl = activeView.get('el');
                 activeEl.stop(true);
                 activeEl.animate({
@@ -79,7 +134,7 @@ KISSY.add(function (S, require) {
                     easing: 'ease-in-out',
                     duration: 0.25
                 });
-                if (nextView.promise) {
+                if (promise) {
                     loadingEl.stop(true);
                     loadingEl.css('left', '100%');
                     loadingEl.show();
@@ -90,8 +145,9 @@ KISSY.add(function (S, require) {
                         easing: 'ease-in-out',
                         duration: 0.25
                     });
-                    this.activeView = null;
+                    self.set('activeView', null);
                 } else {
+                    gc(self);
                     nextViewEl.stop(true);
                     nextViewEl.css('transform', 'translateX(' + activeEl[0].offsetWidth + 'px) translateZ(0)');
                     nextViewEl.animate({
@@ -101,26 +157,23 @@ KISSY.add(function (S, require) {
                         easing: 'ease-in-out',
                         duration: 0.25
                     });
-                    this.activeView = nextView;
-                    self.waitingView = null;
+                    self.set('activeView', nextView);
                 }
                 bar.forward(nextView.get('title') || '');
             } else {
                 bar.set('title', nextView.get('title'));
-                if (!nextView.promise) {
+                if (!promise) {
+                    gc(self);
                     nextView.get('el').css('transform', '');
-                    this.activeView = nextView;
-                    self.waitingView = null;
                     loadingEl.hide();
                 }
             }
-
-            if (nextView.promise) {
-                self.waitingView = nextView;
-                nextView.promise.then(function () {
-                    if (self.waitingView && self.waitingView.uuid === nextView.uuid) {
-                        self.activeView = nextView;
-                        self.waitingView = null;
+            self.set('activeView', nextView);
+            if (promise) {
+                promise.then(function () {
+                    var activeView = self.get('activeView');
+                    if (activeView && activeView.uuid === nextView.uuid) {
+                        gc(self);
                         nextView.get('el').css('transform', '');
                         bar.set('title', nextView.get('title') || '');
                         loadingEl.hide();
@@ -129,24 +182,34 @@ KISSY.add(function (S, require) {
             }
         },
 
+        replace: function (config) {
+            var self = this,
+                viewStack = self.viewStack;
+            viewStack[viewStack.length - 1][1] = config;
+        },
+
         pop: function () {
-            var self = this;
-            if (this.viewStack.length > 1) {
-                this.viewStack.pop();
-                var nextView = this.viewStack[this.viewStack.length - 1];
+            var self = this,
+                viewStack = self.viewStack;
+            if (viewStack.length > 1) {
+                viewStack.pop();
+                var ViewClassInfo = viewStack[viewStack.length - 1];
+                var nextView = self.createView(ViewClassInfo[0], ViewClassInfo[1]);
                 nextView.uuid = uuid++;
                 var activeView;
-                var loadingEl = this.loadingEl;
-                var bar = this.get('bar');
-                if ((activeView = this.activeView) && activeView.leave) {
+                var loadingEl = self.loadingEl;
+                var bar = self.get('bar');
+                if ((activeView = self.get('activeView')) && activeView.leave) {
                     activeView.leave();
-                } else if (self.waitingView && self.waitingView.leave) {
-                    self.waitingView.leave();
+                }
+                if (ViewClassInfo[1]) {
+                    nextView.set(ViewClassInfo[1]);
                 }
                 if (nextView.enter) {
                     nextView.enter();
                 }
-                if (activeView) {
+                var promise = nextView.promise;
+                if (!self.isLoading()) {
                     var activeEl = activeView.get('el');
                     activeEl.stop(true);
                     activeEl.animate({
@@ -156,8 +219,8 @@ KISSY.add(function (S, require) {
                         easing: 'ease-in-out',
                         duration: 0.25
                     });
-                    if (nextView.promise) {
-                        this.activeView = null;
+                    if (promise) {
+                        self.set('activeView', null);
                         loadingEl.stop(true);
                         loadingEl.css('left', '-100%');
                         loadingEl.show();
@@ -169,6 +232,7 @@ KISSY.add(function (S, require) {
                             duration: 0.25
                         });
                     } else {
+                        gc(self);
                         var nextViewEl = nextView.get('el');
                         nextViewEl.stop(true);
                         nextViewEl.css('transform', 'translateX(-' + activeEl[0].offsetWidth + 'px) translateZ(0)');
@@ -179,25 +243,23 @@ KISSY.add(function (S, require) {
                             easing: 'ease-in-out',
                             duration: 0.25
                         });
-                        this.activeView = nextView;
+                        self.set('activeView', nextView);
                     }
                 } else {
-                    if (!nextView.promise) {
+                    if (!promise) {
+                        gc(self);
                         nextView.get('el').css('transform', '');
-                        this.activeView = nextView;
-                        self.waitingView = null;
                         loadingEl.hide();
                     }
                 }
+                self.set('activeView', nextView);
+                bar.back(nextView.get('title') || '', viewStack.length > 1);
 
-                bar.back(nextView.get('title') || '', this.viewStack.length > 1);
-
-                if (nextView.promise) {
-                    self.waitingView = nextView;
-                    nextView.promise.then(function () {
-                        if (self.waitingView && self.waitingView.uuid === nextView.uuid) {
-                            self.waitingView = null;
-                            self.activeView = nextView;
+                if (promise) {
+                    promise.then(function () {
+                        var activeView = self.get('activeView');
+                        if (activeView && activeView.uuid === nextView.uuid) {
+                            gc(self);
                             nextView.get('el').css('transform', '');
                             bar.set('title', nextView.get('title') || '');
                             loadingEl.hide();
@@ -216,6 +278,10 @@ KISSY.add(function (S, require) {
 
             handleMouseEvents: {
                 value: false
+            },
+
+            viewCacheSize: {
+                value: 20
             },
 
             focusable: {

@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Jan 13 20:37
+build time: Jan 14 17:33
 */
 KISSY.add("router/utils",[],function(g){function c(a){return a.replace(/__ks-vid=.+$/,"")}function b(a){var e;return(e=a.match(/__ks-vid=(.+)$/))?parseInt(e[1],10):0}return{endWithSlash:function(a){return g.endsWith(a,"/")},startWithSlash:function(a){return g.startsWith(a,"/")},removeEndSlash:function(a){this.endWithSlash(a)&&(a=a.substring(0,a.length-1));return a},removeStartSlash:function(a){this.startWithSlash(a)&&(a=a.substring(1));return a},addEndSlash:function(a){return this.removeEndSlash(a)+
 "/"},addStartSlash:function(a){return a?"/"+this.removeStartSlash(a):a},getFullPath:function(a,e){return location.protocol+"//"+location.host+this.removeEndSlash(e)+this.addStartSlash(a)},equalsIgnoreSlash:function(a,e){a=this.removeEndSlash(a);e=this.removeEndSlash(e);return a===e},getHash:function(a){return c(a.getFragment().replace(/^!/,""))},removeVid:c,hasVid:function(a){return-1!==a.indexOf("__ks-vid=")},addVid:function(a,e){return a+"__ks-vid="+e},getVidFromUrlWithHash:function(a){return b((new g.Uri(a)).getFragment())},
