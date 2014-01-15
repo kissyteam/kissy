@@ -28,8 +28,10 @@
         }
 
         function *error(){
-            var a = yield retPromiseError('wrong...');
-            return a;
+            var a = yield retPromiseOk(3);
+            var b = yield retPromiseError('wrong');
+            var c = a + b;
+            return c;
         }
 
        Promise.when(Promise.async(ok)(),function(d){
