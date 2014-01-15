@@ -27,7 +27,7 @@ nodejs-kissy 实现了将 kissy 移植到 nodeJS 上运行
 
 运行
 
-`node test.js`
+`node test.html`
 
 ##  Using KISSY
 
