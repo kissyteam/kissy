@@ -292,7 +292,7 @@
     .core (@gridColumnWidth, @gridGutterWidth) {
 
         .spanX (@index) when (@index > 0) {
-            (~".span@{index}") {
+            .span@{index} {
                 _float: left;
                 // ie6 bug...
                 _display: inline;
@@ -305,7 +305,7 @@
         .spanX (0) {}
 
         .offsetX (@index) when (@index > 0) {
-            (~".offset@{index}") { .offset(@index); }
+            .offset@{index} { .offset(@index); }
             .offsetX(@index - 1);
         }
 
@@ -339,8 +339,8 @@
     .fluid (@fluidGridColumnWidth, @fluidGridGutterWidth) {
 
         .spanX (@index) when (@index > 0) {
-            (~"> .span@{index}") { .span(@index); }
-            (~" .span@{index}") {
+           > .span@{index} { .span(@index); }
+            .span@{index} {
                 .spanIE6(@index);
                 _float: left;
                 // ie6 bug...
@@ -389,7 +389,7 @@
     .input(@gridColumnWidth, @gridGutterWidth) {
 
         .spanX (@index) when (@index > 0) {
-            (~"input.span@{index}, textarea.span@{index}, .uneditable-input.span@{index}") { .span(@index); }
+            input.span@{index}, textarea.span@{index}, .uneditable-input.span@{index} { .span(@index); }
             .spanX(@index - 1);
         }
         .spanX (0) {}

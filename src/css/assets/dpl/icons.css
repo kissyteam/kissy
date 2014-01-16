@@ -8,26 +8,9 @@
 *
 * @author yiminghe@gmail.com
 */
-/**
-* Variables to customize the look and feel from Bootstrap.
-*
-* @author yiminghe@gmail.com
-*/
-/**
-* Snippets of reusable CSS to develop faster and keep code readable from KISSY and Bootstrap.
-*
-* @author yiminghe@gmail.com
-*/
 [class^="icon-"],
 [class*=" icon-"] {
   display: inline-block;
-  *display: inline;
-  *zoom: 1;
-  *display: inline;
-  *zoom: 1;
-  display: inline-block;
-  *display: inline;
-  *zoom: 1;
   *display: inline;
   *zoom: 1;
   width: 14px;
@@ -37,11 +20,6 @@
   background-position: 14px 14px;
   background-repeat: no-repeat;
   *margin-right: .3em;
-  *margin-right: .3em;
-}
-[class^="icon-"]:last-child,
-[class*=" icon-"]:last-child {
-  *margin-left: 0;
 }
 [class^="icon-"]:last-child,
 [class*=" icon-"]:last-child {

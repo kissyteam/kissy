@@ -8,11 +8,6 @@
 *
 * @author yiminghe@gmail.com
 */
-/**
-* Variables to customize the look and feel from Bootstrap.
-*
-* @author yiminghe@gmail.com
-*/
 .ks-overlay-mask {
   position: fixed;
   top: 0;
@@ -34,7 +29,6 @@
   border: 1px solid rgba(0, 0, 0, 0.3);
   *border: 1px solid #999999;
   /* IE6-7 */
-
   border-radius: 6px;
   -webkit-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
   -moz-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);

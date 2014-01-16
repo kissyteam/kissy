@@ -11,7 +11,6 @@
 .ks-split-button {
   display: inline-block;
   *display: inline;
-  *zoom: 1;
   position: relative;
   *zoom: 1;
   *margin-left: .3em;

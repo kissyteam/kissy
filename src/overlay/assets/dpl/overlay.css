@@ -4,11 +4,6 @@
 * @author yiminghe@gmail.com
 */
 /**
-* Variables to customize the look and feel from Bootstrap.
-*
-* @author yiminghe@gmail.com
-*/
-/**
 * Snippets of reusable CSS to develop faster and keep code readable from KISSY and Bootstrap.
 *
 * @author yiminghe@gmail.com
@@ -20,19 +15,15 @@
   outline: none;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
-
 .ks-overlay-hidden {
-    visibility: hidden;
+  visibility: hidden;
 }
-
 .ks-overlay-mask-hidden {
-    display: none;
+  display: none;
 }
-
 .ks-overlay-close {
   display: inline-block;
   *display: inline;
-  *zoom: 1;
   width: 14px;
   height: 14px;
   vertical-align: text-top;

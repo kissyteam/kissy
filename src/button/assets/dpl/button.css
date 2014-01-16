@@ -8,20 +8,9 @@
 *
 * @author yiminghe@gmail.com
 */
-/**
-* Variables to customize the look and feel from Bootstrap.
-*
-* @author yiminghe@gmail.com
-*/
-/**
-* Variables to customize the look and feel from Bootstrap.
-*
-* @author yiminghe@gmail.com
-*/
 .ks-button {
   padding: 4px 10px 4px;
   font-size: 12px;
-  color: #333333;
   text-align: center;
   text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
   vertical-align: middle;
@@ -61,7 +50,6 @@
     transition is only when going to hover, otherwise the background
     behind the gradient (there for IE<=9 fallback) gets mismatched
     */
-
   -webkit-transition: background-position 0.1s linear;
   -moz-transition: background-position 0.1s linear;
   -ms-transition: background-position 0.1s linear;
@@ -153,7 +141,6 @@
     transition is only when going to hover, otherwise the background
     behind the gradient (there for IE<=9 fallback) gets mismatched
     */
-
   -webkit-transition: background-position 0.1s linear;
   -moz-transition: background-position 0.1s linear;
   -ms-transition: background-position 0.1s linear;
@@ -221,7 +208,6 @@
     transition is only when going to hover, otherwise the background
     behind the gradient (there for IE<=9 fallback) gets mismatched
     */
-
   -webkit-transition: background-position 0.1s linear;
   -moz-transition: background-position 0.1s linear;
   -ms-transition: background-position 0.1s linear;
@@ -289,7 +275,6 @@
     transition is only when going to hover, otherwise the background
     behind the gradient (there for IE<=9 fallback) gets mismatched
     */
-
   -webkit-transition: background-position 0.1s linear;
   -moz-transition: background-position 0.1s linear;
   -ms-transition: background-position 0.1s linear;
@@ -357,7 +342,6 @@
     transition is only when going to hover, otherwise the background
     behind the gradient (there for IE<=9 fallback) gets mismatched
     */
-
   -webkit-transition: background-position 0.1s linear;
   -moz-transition: background-position 0.1s linear;
   -ms-transition: background-position 0.1s linear;
@@ -425,7 +409,6 @@
     transition is only when going to hover, otherwise the background
     behind the gradient (there for IE<=9 fallback) gets mismatched
     */
-
   -webkit-transition: background-position 0.1s linear;
   -moz-transition: background-position 0.1s linear;
   -ms-transition: background-position 0.1s linear;
@@ -493,7 +476,6 @@
     transition is only when going to hover, otherwise the background
     behind the gradient (there for IE<=9 fallback) gets mismatched
     */
-
   -webkit-transition: background-position 0.1s linear;
   -moz-transition: background-position 0.1s linear;
   -ms-transition: background-position 0.1s linear;

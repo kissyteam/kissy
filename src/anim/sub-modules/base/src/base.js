@@ -11,7 +11,6 @@ KISSY.add(function (S, require) {
     var logger = S.getLogger('s/anim');
     var NodeType = Dom.NodeType,
         noop = S.noop,
-
         specialVals = {
             toggle: 1,
             hide: 1,

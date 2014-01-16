@@ -12,7 +12,7 @@
 @import "mixins.less";
 
 .gen-cssreset(@cssResetContext) when(isstring(@cssResetContext)) {
-    (~".@{cssResetContext}") {
+    .@{cssResetContext} {
         font-size: @baseFontSize;
         font-family: @baseFontFamily;
         color: @textColor;

@@ -12,277 +12,196 @@
     <link href="/kissy/build/css/dpl/base.css" rel="stylesheet"/>
     <link href="/kissy/src/navigation-view/assets/dpl.css" rel="stylesheet">
     <link href="/kissy/src/scroll-view/assets/dpl.css" rel="stylesheet"/>
+    <link href="/kissy/src/menu/assets/dpl.css" rel="stylesheet"/>
+    <style>
+        .ks-menu {
+            padding: 0;
+        }
+
+        .ks-menuitem {
+            border-top: 1px solid #dedede;
+            min-height: 47px;
+            color: black;
+            padding: 12px 15px;
+            font-size: 18px;
+        }
+
+        .ks-navigation-view-content {
+            background: #eeeeee;
+        }
+
+        .anim-title {
+            text-align: center;
+            font-size: 18px;
+            line-height: 24px;
+            color: #444;
+            text-shadow: rgba(255, 255, 255, 0.3) 0 1px 0;
+            padding: 10px;
+            width: 75%;
+            margin: 0 auto;
+        }
+
+        .anim-content {
+            text-align: center;
+            font-size: 18px;
+            line-height: 24px;
+            color: #444;
+            text-shadow: rgba(255, 255, 255, 0.3) 0 1px 0;
+            padding: 10px;
+            width: 75%;
+            margin: 0 auto;
+        }
+    </style>
 </head>
 <body>
 <script src="/kissy/build/seed.js"></script>
 <script src="/kissy/src/package.js"></script>
 <script>
-KISSY.use('component/control,navigation-view,node,router,promise,scroll-view,scroll-view/plugin/scrollbar',
-        function (S, Control, NavigationView, Node, router, Promise, ScrollView, ScrollBar) {
-            var win = Node.all(window);
+    KISSY.use('component/control,component/container,navigation-view,node,router,promise,scroll-view,scroll-view/plugin/scrollbar,menu',
+            function (S, Control, Container, NavigationView, Node, router, Promise, ScrollView, ScrollBar, Menu) {
+                var win = Node.all(window);
 
-            var navigationView = new NavigationView({
-                barCfg: {
-                    withBackButton: 1,
-                    withTitle: 1
-                },
-                render: 'body'
-            }).render();
+                var anims = [
+                    {content: 'default-anim'},
+                    {content: 'slide-left-anim',
+                        value: {
+                            enter: 'slide-left',
+                            leave: 'slide-right'
+                        }}
+                ];
 
-            navigationView.on('back', function (e) {
-                e.preventDefault();
-                history.back();
-            });
-
-            ScrollView.extend({
-                renderUI: function () {
-                    this.get('contentEl').html('<div style="margin: 100px">sync view</div>');
-                },
-
-                leave: function () {
-                    if (this.get('navigationView').get('bar').getButton('sync'))
-                        this.get('navigationView').get('bar').getButton('sync').show();
-                    win.detach('resize', this.sync, this);
-
-                },
-
-                enter: function () {
-                    if (this.get('navigationView').get('bar').getButton('sync'))
-                        this.get('navigationView').get('bar').getButton('sync').hide();
-                    this.sync();
-                    win.on('resize', this.sync, this);
-                }
-            }, {
-                xclass: 'tb-sync-view',
-                ATTRS: {
-                    title: {
-                        value: 'sync'
-                    }
-                }
-            });
-
-            router.get('/sync', function (request) {
-                if (request.backward) {
-                    navigationView.pop();
-                } else {
-                    navigationView.push({
-                        xclass: 'tb-sync-view'
-                    });
-                }
-            });
-
-            // 所有 detail 公用 view
-            ScrollView.extend({
-                bindUI: function () {
-                    this.get('contentEl').delegate('click', '.another', this.onButtonClick, this);
-                    this.get('contentEl').delegate('click', '.sub', this.onButtonClick2, this);
-                },
-
-                leave: function () {
-                    S.log('leave detail');
-                    navigationView.get('bar').getButton('sync').hide();
-                    win.detach('resize', this.sync, this);
-                },
-
-                enter: function () {
-                    S.log('enter detail');
-                    var helpBtn;
-                    var bar = navigationView.get('bar');
-                    if (!(helpBtn = bar.getButton('sync'))) {
-                        bar.addButton('sync', {
-                            content: 'sync',
-                            align: 'right'
-                        }).on('click', function () {
-                                    router.navigate('/sync');
-                                });
-                    } else {
-                        helpBtn.show();
-                    }
-                    win.on('resize', this.sync, this);
-
-                    var self = this;
-                    var currentId = self.get('currentId');
-                    var subId = self.get('subId');
-                    self.promise = null;
-                    if (currentId !== self.id) {
-                        self.fetchId(currentId, function () {
-                            if (subId) {
-                                self.fetchSubId(currentId, subId);
-                            }
-                        });
-                    } else if (subId) {
-                        self.fetchSubId(currentId, subId);
-                    }
-                    this.sync();
-                },
-
-                setItem: function (id, content) {
-                    this.id = id;
-                    this.subId = null;
-                    content = id + ': ' + content;
-                    this.set('title', 'item ' + id);
-                    var el = this.get('contentEl');
-                    el.html('<div>' + content + '</div>' +
-                            '<button class="another">got another</button>' +
-                            '<button class="sub">got another</button>');
-                    this.subContent = new Node('<div>sub content</div>').appendTo(el);
-                    var ret = [];
-                    for (var i = 0; i < 20; i++) {
-                        ret.push('<p>' + i + ' : ' + i + ' : ' + i + ' : ' + i + ' : ' + i + ' : ' + '</p>');
-                    }
-                    el.append('<div>' +
-                            ret.join('') +
-                            '</div>');
-                    this.sync();
-                },
-
-                setSubContent: function (subId, c) {
-                    this.subId = subId;
-                    this.subContent.html(c);
-                },
-
-                fetchSubId: function (currentId, subId) {
-                    var self = this;
-                    setTimeout(function () {
-                        var content = (currentId + '-' + subId + '-loaded!');
-                        if (navigationView.get('activeView') === self &&
-                                self.get('currentId') == currentId &&
-                                self.get('subId') == subId) {
-                            self.setSubContent(subId, content);
+                function getAnimValue(content) {
+                    for (var i = 0; i < anims.length; i++) {
+                        if (anims[i].content === content) {
+                            return anims[i].value;
                         }
-                    }, 1000);
-                },
-
-                fetchId: function (id, cb) {
-                    var self = this;
-                    var defer = new Promise.Defer();
-                    self.promise = defer.promise;
-                    setTimeout(function () {
-                        defer.resolve();
-                        var content = (id + '-loaded!');
-                        if (navigationView.get('activeView') === self &&
-                                self.get('currentId') == id) {
-                            self.setItem(id, content);
-                            cb();
-                        }
-                    }, 1000);
-                },
-
-                onButtonClick: function () {
-                    router.navigate('/item/' + new Date().valueOf())
-                },
-
-                onButtonClick2: function () {
-                    var subId = new Date().valueOf();
-                    router.navigate('/item/' + this.id +
-                            '/' + subId, {
-                        replace: true
-                    });
-                    navigationView.replace({
-                        currentId: this.id,
-                        subId: subId
-                    });
-                }
-            }, {
-                xclass: 'tb-detail-view',
-                ATTRS: {
-                    plugins: {
-                        value: [ScrollBar]
                     }
                 }
-            });
 
-            router.get('/item/:id', function (request) {
-                if (request.backward) {
-                    navigationView.pop();
-                } else {
-                    navigationView.push({
-                        xclass: 'tb-detail-view',
-                        currentId: request.param('id'),
-                        subId: null
-                    });
-                }
-            });
+                var navigationView = new NavigationView({
+                    barCfg: {
+                        withBackButton: 1,
+                        withTitle: 1
+                    },
+                    render: 'body'
+                }).render();
 
-            router.get('/item/:id/:subId', function (request) {
-                var currentId = request.param('id');
-                var subId = request.param('subId');
-                if (!request.replace) {
+                navigationView.on('back', function (e) {
+                    e.preventDefault();
+                    history.back();
+                });
+
+                var tpl = '<h2 class="anim-title">{title}</h2>' +
+                        '<p class="anim-content">Sed ut perspiciatis unde omnis iste natus error ' +
+                        'sit voluptatem accusantium doloremque laudantium, ' +
+                        'totam rem aperiam, eaque ipsa quae ab illo inventore ' +
+                        'veritatis et quasi architecto beatae vitae dicta sunt ' +
+                        'explicabo. Nemo enim ipsam voluptatem quia voluptas sit ' +
+                        'aspernatur aut odit aut fugit, sed quia consequuntur magni ' +
+                        'dolores eos qui ratione voluptatem sequi nesciunt. Neque porro ' +
+                        'quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, ' +
+                        'adipisci velit, sed quia non numquam eius modi tempora incidunt ut ' +
+                        'labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima ' +
+                        'veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, ' +
+                        'nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum ' +
+                        'iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae ' +
+                        'consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?</p>';
+
+                ScrollView.extend({
+                    leave: function () {
+                        S.log('leave detail');
+                    },
+
+                    enter: function () {
+                        S.log('enter detail');
+                    },
+
+                    renderUI: function () {
+                        this.get('el').html(S.substitute(tpl, {
+                            title: this.get('viewId')
+                        }));
+                    }
+                }, {
+                    xclass: 'tb-anim-view'
+                });
+
+                router.get('/anim/:anim', function (request) {
                     if (request.backward) {
                         navigationView.pop();
                     } else {
                         navigationView.push({
-                            xclass: 'tb-detail-view',
-                            currentId: currentId,
-                            subId: subId
+                            xclass: 'tb-anim-view',
+                            viewId: request.params.anim,
+                            animation: getAnimValue(request.params.anim)
                         });
                     }
-                } else {
-                    var detailView = navigationView.get('activeView');
-                    detailView.set('subId', subId);
-                    detailView.fetchSubId(currentId, subId);
-                }
-            });
+                });
 
-            Control.extend({
-                leave: function () {
-                    S.log('leave index');
-                },
+                ScrollView.extend({
+                    leave: function () {
+                        S.log('leave index');
+                    },
 
-                enter: function () {
-                    S.log('enter index');
-                    var self = this;
-                    if (!('promise' in self)) {
-                        var defer = new Promise.Defer();
-                        self.promise = defer.promise;
-                        setTimeout(function () {
-                            defer.resolve();
-                            self.promise = null;
-                        }, 1000);
+                    enter: function () {
+                        S.log('enter index');
+                    },
+
+                    initializer: function () {
+                        var items = [];
+                        S.each(anims, function (anim) {
+                            items.push({
+                                xclass: 'menuitem',
+                                content: anim.content
+                            });
+                        });
+
+                        this.set('children', [
+                            {
+                                xclass: 'menu',
+                                listeners: {
+                                    click: {fn: this.onMenuItemClick, context: this}
+                                },
+                                children: items
+                            }
+                        ]);
+                    },
+
+                    onMenuItemClick: function (e) {
+                        router.navigate('/anim/' + e.target.get('content'))
+
                     }
-                },
+                }, {
+                    xclass: 'tb-index-view',
 
-                renderUI: function () {
-                    var el = this.get('el');
-                    el.html('<div style="margin: 40px"><button>view item</button>' +
-                            '<p>' +
-                            'test test  test  test  test  test  test  test  test  test ' +
-                            '</p></div>');
-                    el.one('button').on('click', function () {
-                        router.navigate('/item/1');
-                    });
-                }
-            }, {
-                xclass: 'tb-index-view',
-
-                ATTRS: {
-                    title: {
-                        value: 'index'
+                    ATTRS: {
+                        title: {
+                            value: 'navigation-view'
+                        }
                     }
-                }
+                });
+
+
+                router.get('/', function (request) {
+                    if (request.backward) {
+                        navigationView.pop();
+                    } else {
+                        navigationView.push({
+                            xclass: 'tb-index-view'
+                        });
+                    }
+                });
+
+                router.start({
+                    triggerRoute: true,
+                    // for test
+                    useHashChange: location.href.indexOf('useHashChange') != -1,
+                    useHash: true
+                });
             });
 
-            router.get('/', function (request) {
-                if (request.backward) {
-                    navigationView.pop();
-                } else {
-                    navigationView.push({
-                        xclass: 'tb-index-view'
-                    });
-                }
-            });
-
-            router.start({
-                triggerRoute: true,
-                // for test
-                useHashChange: location.href.indexOf('useHashChange') != -1,
-                useHash: true
-            });
-        });
-
-window.onerror = function (e) {
-    alert(e);
-}
+    window.onerror = function (e) {
+        alert(e);
+    }
 </script>
 </body>
 </html>

@@ -12,11 +12,6 @@
 *
 * @author yiminghe@gmail.com
 */
-/**
-* Variables to customize the look and feel from Bootstrap.
-*
-* @author yiminghe@gmail.com
-*/
 .ks-menu-button {
   display: inline-block;
   *display: inline;
@@ -31,7 +26,6 @@
   border-top: 4px solid #000000;
   opacity: 0.3;
   filter: alpha(opacity=30);
-  *zoom: 1;
   display: inline-block;
   *display: inline;
   *zoom: 1;
