@@ -226,86 +226,86 @@ catch (e) {}
 if (! this._$jscoverage) {
   this._$jscoverage = {};
 }
-if (! _$jscoverage['/navigation-view/bar-render.js']) {
-  _$jscoverage['/navigation-view/bar-render.js'] = {};
-  _$jscoverage['/navigation-view/bar-render.js'].lineData = [];
-  _$jscoverage['/navigation-view/bar-render.js'].lineData[5] = 0;
-  _$jscoverage['/navigation-view/bar-render.js'].lineData[6] = 0;
-  _$jscoverage['/navigation-view/bar-render.js'].lineData[7] = 0;
-  _$jscoverage['/navigation-view/bar-render.js'].lineData[8] = 0;
-  _$jscoverage['/navigation-view/bar-render.js'].lineData[10] = 0;
-  _$jscoverage['/navigation-view/bar-render.js'].lineData[14] = 0;
-  _$jscoverage['/navigation-view/bar-render.js'].lineData[15] = 0;
-  _$jscoverage['/navigation-view/bar-render.js'].lineData[17] = 0;
-  _$jscoverage['/navigation-view/bar-render.js'].lineData[20] = 0;
-  _$jscoverage['/navigation-view/bar-render.js'].lineData[21] = 0;
-  _$jscoverage['/navigation-view/bar-render.js'].lineData[25] = 0;
-  _$jscoverage['/navigation-view/bar-render.js'].lineData[26] = 0;
+if (! _$jscoverage['/bar/bar-render.js']) {
+  _$jscoverage['/bar/bar-render.js'] = {};
+  _$jscoverage['/bar/bar-render.js'].lineData = [];
+  _$jscoverage['/bar/bar-render.js'].lineData[5] = 0;
+  _$jscoverage['/bar/bar-render.js'].lineData[6] = 0;
+  _$jscoverage['/bar/bar-render.js'].lineData[7] = 0;
+  _$jscoverage['/bar/bar-render.js'].lineData[8] = 0;
+  _$jscoverage['/bar/bar-render.js'].lineData[10] = 0;
+  _$jscoverage['/bar/bar-render.js'].lineData[14] = 0;
+  _$jscoverage['/bar/bar-render.js'].lineData[15] = 0;
+  _$jscoverage['/bar/bar-render.js'].lineData[17] = 0;
+  _$jscoverage['/bar/bar-render.js'].lineData[20] = 0;
+  _$jscoverage['/bar/bar-render.js'].lineData[21] = 0;
+  _$jscoverage['/bar/bar-render.js'].lineData[25] = 0;
+  _$jscoverage['/bar/bar-render.js'].lineData[26] = 0;
 }
-if (! _$jscoverage['/navigation-view/bar-render.js'].functionData) {
-  _$jscoverage['/navigation-view/bar-render.js'].functionData = [];
-  _$jscoverage['/navigation-view/bar-render.js'].functionData[0] = 0;
-  _$jscoverage['/navigation-view/bar-render.js'].functionData[1] = 0;
-  _$jscoverage['/navigation-view/bar-render.js'].functionData[2] = 0;
-  _$jscoverage['/navigation-view/bar-render.js'].functionData[3] = 0;
+if (! _$jscoverage['/bar/bar-render.js'].functionData) {
+  _$jscoverage['/bar/bar-render.js'].functionData = [];
+  _$jscoverage['/bar/bar-render.js'].functionData[0] = 0;
+  _$jscoverage['/bar/bar-render.js'].functionData[1] = 0;
+  _$jscoverage['/bar/bar-render.js'].functionData[2] = 0;
+  _$jscoverage['/bar/bar-render.js'].functionData[3] = 0;
 }
-if (! _$jscoverage['/navigation-view/bar-render.js'].branchData) {
-  _$jscoverage['/navigation-view/bar-render.js'].branchData = {};
-  _$jscoverage['/navigation-view/bar-render.js'].branchData['14'] = [];
-  _$jscoverage['/navigation-view/bar-render.js'].branchData['14'][1] = new BranchData();
-  _$jscoverage['/navigation-view/bar-render.js'].branchData['20'] = [];
-  _$jscoverage['/navigation-view/bar-render.js'].branchData['20'][1] = new BranchData();
-  _$jscoverage['/navigation-view/bar-render.js'].branchData['25'] = [];
-  _$jscoverage['/navigation-view/bar-render.js'].branchData['25'][1] = new BranchData();
+if (! _$jscoverage['/bar/bar-render.js'].branchData) {
+  _$jscoverage['/bar/bar-render.js'].branchData = {};
+  _$jscoverage['/bar/bar-render.js'].branchData['14'] = [];
+  _$jscoverage['/bar/bar-render.js'].branchData['14'][1] = new BranchData();
+  _$jscoverage['/bar/bar-render.js'].branchData['20'] = [];
+  _$jscoverage['/bar/bar-render.js'].branchData['20'][1] = new BranchData();
+  _$jscoverage['/bar/bar-render.js'].branchData['25'] = [];
+  _$jscoverage['/bar/bar-render.js'].branchData['25'][1] = new BranchData();
 }
-_$jscoverage['/navigation-view/bar-render.js'].branchData['25'][1].init(18, 21, 'this.control._backBtn');
+_$jscoverage['/bar/bar-render.js'].branchData['25'][1].init(18, 21, 'this.control._backBtn');
 function visit3_25_1(result) {
-  _$jscoverage['/navigation-view/bar-render.js'].branchData['25'][1].ranCondition(result);
+  _$jscoverage['/bar/bar-render.js'].branchData['25'][1].ranCondition(result);
   return result;
-}_$jscoverage['/navigation-view/bar-render.js'].branchData['20'][1].init(18, 23, 'this.control._withTitle');
+}_$jscoverage['/bar/bar-render.js'].branchData['20'][1].init(18, 23, 'this.control._withTitle');
 function visit2_20_1(result) {
-  _$jscoverage['/navigation-view/bar-render.js'].branchData['20'][1].ranCondition(result);
+  _$jscoverage['/bar/bar-render.js'].branchData['20'][1].ranCondition(result);
   return result;
-}_$jscoverage['/navigation-view/bar-render.js'].branchData['14'][1].init(188, 23, 'this.control._withTitle');
+}_$jscoverage['/bar/bar-render.js'].branchData['14'][1].init(188, 23, 'this.control._withTitle');
 function visit1_14_1(result) {
-  _$jscoverage['/navigation-view/bar-render.js'].branchData['14'][1].ranCondition(result);
+  _$jscoverage['/bar/bar-render.js'].branchData['14'][1].ranCondition(result);
   return result;
-}_$jscoverage['/navigation-view/bar-render.js'].lineData[5]++;
+}_$jscoverage['/bar/bar-render.js'].lineData[5]++;
 KISSY.add(function(S, require) {
-  _$jscoverage['/navigation-view/bar-render.js'].functionData[0]++;
-  _$jscoverage['/navigation-view/bar-render.js'].lineData[6]++;
+  _$jscoverage['/bar/bar-render.js'].functionData[0]++;
+  _$jscoverage['/bar/bar-render.js'].lineData[6]++;
   var tpl = require('./bar-xtpl');
-  _$jscoverage['/navigation-view/bar-render.js'].lineData[7]++;
+  _$jscoverage['/bar/bar-render.js'].lineData[7]++;
   var Control = require('component/control');
-  _$jscoverage['/navigation-view/bar-render.js'].lineData[8]++;
+  _$jscoverage['/bar/bar-render.js'].lineData[8]++;
   return Control.getDefaultRender().extend({
   createDom: function() {
-  _$jscoverage['/navigation-view/bar-render.js'].functionData[1]++;
-  _$jscoverage['/navigation-view/bar-render.js'].lineData[10]++;
+  _$jscoverage['/bar/bar-render.js'].functionData[1]++;
+  _$jscoverage['/bar/bar-render.js'].lineData[10]++;
   var selectors = {
   centerEl: '#ks-navigation-bar-center-{id}', 
   contentEl: '#ks-navigation-bar-content-{id}'};
-  _$jscoverage['/navigation-view/bar-render.js'].lineData[14]++;
+  _$jscoverage['/bar/bar-render.js'].lineData[14]++;
   if (visit1_14_1(this.control._withTitle)) {
-    _$jscoverage['/navigation-view/bar-render.js'].lineData[15]++;
+    _$jscoverage['/bar/bar-render.js'].lineData[15]++;
     selectors.titleEl = '#ks-navigation-bar-title-{id}';
   }
-  _$jscoverage['/navigation-view/bar-render.js'].lineData[17]++;
+  _$jscoverage['/bar/bar-render.js'].lineData[17]++;
   this.fillChildrenElsBySelectors(selectors);
 }, 
   _onSetTitle: function(v) {
-  _$jscoverage['/navigation-view/bar-render.js'].functionData[2]++;
-  _$jscoverage['/navigation-view/bar-render.js'].lineData[20]++;
+  _$jscoverage['/bar/bar-render.js'].functionData[2]++;
+  _$jscoverage['/bar/bar-render.js'].lineData[20]++;
   if (visit2_20_1(this.control._withTitle)) {
-    _$jscoverage['/navigation-view/bar-render.js'].lineData[21]++;
+    _$jscoverage['/bar/bar-render.js'].lineData[21]++;
     this.control.get('titleEl').html(v);
   }
 }, 
   _onSetBackText: function(v) {
-  _$jscoverage['/navigation-view/bar-render.js'].functionData[3]++;
-  _$jscoverage['/navigation-view/bar-render.js'].lineData[25]++;
+  _$jscoverage['/bar/bar-render.js'].functionData[3]++;
+  _$jscoverage['/bar/bar-render.js'].lineData[25]++;
   if (visit3_25_1(this.control._backBtn)) {
-    _$jscoverage['/navigation-view/bar-render.js'].lineData[26]++;
+    _$jscoverage['/bar/bar-render.js'].lineData[26]++;
     this.control._backBtn.set('content', v);
   }
 }}, {

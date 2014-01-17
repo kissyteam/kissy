@@ -60,8 +60,8 @@ navigation-view style
 .ks-navigation-bar-button-hidden {
   display: none;
 }
-.ks-navigation-bar-back:before,
-.ks-navigation-bar-back:after {
+.ks-navigation-bar-backward:before,
+.ks-navigation-bar-backward:after {
   content: '';
   position: absolute;
   width: 15px;
@@ -74,17 +74,17 @@ navigation-view style
   -webkit-mask-size: 15px 100%;
   overflow: hidden;
 }
-.ks-navigation-bar-back:before {
+.ks-navigation-bar-backward:before {
   background: #000304;
   left: -15px;
 }
-.ks-navigation-bar-back:after {
+.ks-navigation-bar-backward:after {
   background-color: #054166;
   background-image: -webkit-linear-gradient(top, #0870af, #06517e 3%, #04324d);
   left: -14px;
 }
 .ks-navigation-bar-button-active,
-.ks-navigation-bar-button-active.ks-navigation-bar-back:after {
+.ks-navigation-bar-button-active.ks-navigation-bar-backward:after {
   background-color: #043857;
   background-image: -webkit-linear-gradient(top, #021926, #03283f 10%, #043857 65%, #043a59);
 }

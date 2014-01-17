@@ -57,8 +57,17 @@
 <script src="/kissy/build/seed.js"></script>
 <script src="/kissy/src/package.js"></script>
 <script>
-    KISSY.use('component/control,component/container,navigation-view,node,router,promise,scroll-view,scroll-view/plugin/scrollbar,menu',
-            function (S, Control, Container, NavigationView, Node, router, Promise, ScrollView, ScrollBar, Menu) {
+    KISSY.use('component/control,' +
+            'component/container,' +
+            'navigation-view,' +
+            'navigation-view/bar,' +
+            'node,' +
+            'router,' +
+            'promise,' +
+            'scroll-view,' +
+            'scroll-view/plugin/scrollbar,' +
+            'menu',
+            function (S, Control, Container, NavigationView, Bar, Node, router, Promise, ScrollView, ScrollBar) {
                 var win = Node.all(window);
 
                 var anims = [
@@ -70,25 +79,31 @@
                         }}
                 ];
 
-                function getAnimValue(content) {
+                var getAnimValue = function (content) {
                     for (var i = 0; i < anims.length; i++) {
                         if (anims[i].content === content) {
                             return anims[i].value;
                         }
                     }
-                }
+                    return null;
+                };
+
+                var bar = new Bar();
 
                 var navigationView = new NavigationView({
-                    barCfg: {
-                        withBackButton: 1,
-                        withTitle: 1
-                    },
+                    bar: bar,
                     render: 'body'
                 }).render();
 
-                navigationView.on('back', function (e) {
+                bar.on('backward', function (e) {
                     e.preventDefault();
                     history.back();
+                });
+
+                router.on('dispatch', function (e) {
+                    if (e.request.backward) {
+                        navigationView.pop();
+                    }
                 });
 
                 var tpl = '<h2 class="anim-title">{title}</h2>' +
@@ -108,27 +123,32 @@
                         'consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?</p>';
 
                 ScrollView.extend({
-                    leave: function () {
-                        S.log('leave detail');
-                    },
-
                     enter: function () {
                         S.log('enter detail');
+                        win.on('resize', this.sync, this);
                     },
 
-                    renderUI: function () {
-                        this.get('el').html(S.substitute(tpl, {
+                    leave: function () {
+                        S.log('leave detail');
+                        win.detach('resize', this.sync, this);
+                    },
+
+                    createDom: function () {
+                        this.get('contentEl').html(S.substitute(tpl, {
                             title: this.get('viewId')
                         }));
                     }
                 }, {
-                    xclass: 'tb-anim-view'
+                    xclass: 'tb-anim-view',
+                    ATTRS: {
+                        plugins: {
+                            value: [ScrollBar]
+                        }
+                    }
                 });
 
                 router.get('/anim/:anim', function (request) {
-                    if (request.backward) {
-                        navigationView.pop();
-                    } else {
+                    if (!request.backward) {
                         navigationView.push({
                             xclass: 'tb-anim-view',
                             title: request.params.anim,
@@ -139,12 +159,14 @@
                 });
 
                 ScrollView.extend({
-                    leave: function () {
-                        S.log('leave index');
-                    },
-
                     enter: function () {
                         S.log('enter index');
+                        win.on('resize', this.sync, this);
+                    },
+
+                    leave: function () {
+                        S.log('leave index');
+                        win.detach('resize', this.sync, this);
                     },
 
                     initializer: function () {
@@ -173,8 +195,10 @@
                     }
                 }, {
                     xclass: 'tb-index-view',
-
                     ATTRS: {
+                        plugins: {
+                            value: [ScrollBar]
+                        },
                         title: {
                             value: 'navigation-view'
                         }
@@ -183,9 +207,7 @@
 
 
                 router.get('/', function (request) {
-                    if (request.backward) {
-                        navigationView.pop();
-                    } else {
+                    if (!request.backward) {
                         navigationView.push({
                             xclass: 'tb-index-view'
                         });

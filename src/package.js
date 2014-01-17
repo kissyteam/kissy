@@ -585,6 +585,10 @@ if (!loc.getQuery().has('build') && !loc.getQuery().has('min')) {
             "base": "/kissy/src/navigation-view/src/navigation-view",
             "ignorePackageNameInUri": 1
         },
+        "navigation-view/bar": {
+            "base": "/kissy/src/navigation-view/sub-modules/bar/src/bar",
+            "ignorePackageNameInUri": 1
+        },
         "node": {
             "base": "/kissy/src/node/src/node",
             "ignorePackageNameInUri": 1

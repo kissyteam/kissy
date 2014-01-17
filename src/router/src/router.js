@@ -10,6 +10,7 @@ KISSY.add(function (S, require, exports) {
     var Uri = require('uri');
     var Request = require('./router/request');
     var DomEvent = require('event/dom');
+    var CustomEvent = require('event/custom');
     var started = false;
     var useHash;
     var urlRoot;
@@ -120,9 +121,10 @@ KISSY.add(function (S, require, exports) {
         var request = new Request({
             query: query,
             // backward or forward
-            backward: backward,
+            backward: backward === true,
             // replace history
-            replace: replace,
+            replace: replace === true,
+            forward: (backward === false && replace === false),
             path: path,
             url: url,
             originalUrl: url
@@ -130,6 +132,10 @@ KISSY.add(function (S, require, exports) {
         var response = {
             redirect: exports.navigate
         };
+        exports.fire('dispatch', {
+            request: request,
+            response: response
+        });
         fireMiddleWare(request, response, fireRoutes);
     }
 
@@ -139,6 +145,7 @@ KISSY.add(function (S, require, exports) {
      * @singleton
      */
 
+    S.mix(exports, CustomEvent.Target);
 
     /**
      * config middleware for router
@@ -164,7 +171,7 @@ KISSY.add(function (S, require, exports) {
      */
     exports.navigate = function (path, opts) {
         opts = opts || {};
-        var replace = opts.replace;
+        var replace = opts.replace||false;
         if (getUrlForRouter() !== path) {
             if (!replace) {
                 viewUniqueId++;
@@ -273,13 +280,10 @@ KISSY.add(function (S, require, exports) {
             replace = true;
         }
 
-        //S.log('backward: ' + backward);
-        //S.log(viewsHistory);
         dispatch(backward, replace);
     }
 
     function onPopState(e) {
-        //S.log('onPopState');
         // page to be rendered
         var state = e.originalEvent.state;
         // input url directly
@@ -404,7 +408,7 @@ KISSY.add(function (S, require, exports) {
             // in case server does not render initial state correctly
             // when monitor hashchange ,client must be responsible for dispatching and rendering.
             if (opts.triggerRoute) {
-                dispatch();
+                dispatch(false, true);
             }
             if (opts.success) {
                 opts.success();

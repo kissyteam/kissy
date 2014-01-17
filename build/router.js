@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Jan 14 17:33
+build time: Jan 17 13:06
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -135,7 +135,7 @@ KISSY.add("router/request", [], function(S) {
   }};
   return Request
 });
-KISSY.add("router", ["./router/utils", "./router/route", "uri", "./router/request", "event/dom"], function(S, require, exports) {
+KISSY.add("router", ["./router/utils", "./router/route", "uri", "./router/request", "event/dom", "event/custom"], function(S, require, exports) {
   var middlewares = [];
   var routes = [];
   var utils = require("./router/utils");
@@ -143,6 +143,7 @@ KISSY.add("router", ["./router/utils", "./router/route", "uri", "./router/reques
   var Uri = require("uri");
   var Request = require("./router/request");
   var DomEvent = require("event/dom");
+  var CustomEvent = require("event/custom");
   var started = false;
   var useHash;
   var urlRoot;
@@ -233,10 +234,12 @@ KISSY.add("router", ["./router/utils", "./router/route", "uri", "./router/reques
     var query = uri.query.get();
     uri.query.reset();
     var path = uri.toString() || "/";
-    var request = new Request({query:query, backward:backward, replace:replace, path:path, url:url, originalUrl:url});
+    var request = new Request({query:query, backward:backward === true, replace:replace === true, forward:backward === false && replace === false, path:path, url:url, originalUrl:url});
     var response = {redirect:exports.navigate};
+    exports.fire("dispatch", {request:request, response:response});
     fireMiddleWare(request, response, fireRoutes)
   }
+  S.mix(exports, CustomEvent.Target);
   exports.use = function(prefix, callback) {
     if(typeof prefix !== "string") {
       callback = prefix;
@@ -246,7 +249,7 @@ KISSY.add("router", ["./router/utils", "./router/route", "uri", "./router/reques
   };
   exports.navigate = function(path, opts) {
     opts = opts || {};
-    var replace = opts.replace;
+    var replace = opts.replace || false;
     if(getUrlForRouter() !== path) {
       if(!replace) {
         viewUniqueId++;
@@ -400,7 +403,7 @@ KISSY.add("router", ["./router/utils", "./router/route", "uri", "./router/reques
         history.replaceState({vid:viewUniqueId}, "", href)
       }
       if(opts.triggerRoute) {
-        dispatch()
+        dispatch(false, true)
       }
       if(opts.success) {
         opts.success()

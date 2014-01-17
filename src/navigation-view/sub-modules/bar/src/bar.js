@@ -4,7 +4,7 @@
  */
 KISSY.add(function (S, require) {
     var Control = require('component/control');
-    var BarRender = require('./bar-render');
+    var BarRender = require('./bar/bar-render');
     var Button = require('button');
 
     function createGhost(elem) {
@@ -126,12 +126,35 @@ KISSY.add(function (S, require) {
     }
 
     function onBackButtonClick() {
-        this.fire('back');
+        this.fire('backward');
+    }
+
+    function onBack() {
+        this.get('navigationView').pop();
+    }
+
+    function afterInnerViewChange(e) {
+        this.set('title', e.newView.get('title') || '');
+    }
+
+    function beforeInnerViewChange(e) {
+        var self = this;
+        var oldView = e.oldView;
+        var newView = e.newView;
+        var backward = e.backward;
+        if (oldView) {
+            self[backward ? 'backward' : 'forward'](newView.get('title') || '');
+        }
     }
 
     return Control.extend({
         initializer: function () {
             this._withTitle = this.get('withTitle');
+            this._stack = [];
+            this.publish('backward', {
+                defaultFn: onBack,
+                defaultTargetOnly: true
+            });
         },
 
         renderUI: function () {
@@ -141,7 +164,7 @@ KISSY.add(function (S, require) {
             if (self.get('withBackButton')) {
                 self._backBtn = new Button({
                     prefixCls: prefixCls + 'navigation-bar-',
-                    elCls: prefixCls + 'navigation-bar-back',
+                    elCls: prefixCls + 'navigation-bar-backward',
                     elBefore: self.get('contentEl')[0].firstChild,
                     visible: false,
                     content: self.get('backText')
@@ -153,6 +176,9 @@ KISSY.add(function (S, require) {
             if (this._backBtn) {
                 this._backBtn.on('click', onBackButtonClick, this);
             }
+            var navigationView = this.get('navigationView');
+            navigationView.on('afterInnerViewChange', afterInnerViewChange, this);
+            navigationView.on('beforeInnerViewChange', beforeInnerViewChange, this);
         },
 
         addButton: function (name, config) {
@@ -187,6 +213,7 @@ KISSY.add(function (S, require) {
         },
 
         forward: function (title) {
+            this._stack.push(title);
             this.go(title, true);
         },
 
@@ -248,8 +275,11 @@ KISSY.add(function (S, require) {
             });
         },
 
-        back: function (title, hasPrevious) {
-            this.go(title, hasPrevious, true);
+        backward: function (title) {
+            if (this._stack.length) {
+                this._stack.pop();
+                this.go(title, this._stack.length, true);
+            }
         }
     }, {
         xclass: 'navigation-bar',

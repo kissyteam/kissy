@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Jan 14 18:38
+build time: Jan 17 13:06
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -447,16 +447,17 @@ KISSY.add("component/control", ["node", "./control/process", "component/manager"
     }else {
       self.set("view", this.view = view = new Render({control:self}))
     }
-    view.create();
+    view.createInternal();
     el = view.getKeyEventTarget();
     if(!self.get("allowTextSelection")) {
       el.unselectable()
     }
     Manager.addComponent(id, self)
   }, renderUI:function() {
-    this.view.render()
+    this.view.renderUI()
   }, bindUI:function() {
     var self = this, el = self.view.getKeyEventTarget();
+    self.view.bindUI();
     if(self.get("focusable")) {
       el.on("focus", self.handleFocus, self).on("blur", self.handleBlur, self).on("keydown", self.handleKeydown, self)
     }
@@ -477,9 +478,10 @@ KISSY.add("component/control", ["node", "./control/process", "component/manager"
     var self = this;
     self.fire("beforeSyncUI");
     self.syncUI();
-    self.view.sync();
     self.__callPluginsMethod("pluginSyncUI");
     self.fire("afterSyncUI")
+  }, syncUI:function() {
+    this.view.syncUI()
   }, createComponent:function(cfg, parent) {
     return Manager.createComponent(cfg, parent || this)
   }, _onSetFocused:function(v) {

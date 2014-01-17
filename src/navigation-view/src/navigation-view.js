@@ -5,7 +5,6 @@
 KISSY.add(function (S, require) {
     var $ = require('node').all;
     var Container = require('component/container');
-    var Bar = require('navigation-view/bar');
     var ContentTpl = require('component/extension/content-xtpl');
     var ContentRender = require('component/extension/content-render');
     var LOADING_HTML = '<div class="{prefixCls}navigation-view-loading">' +
@@ -25,12 +24,6 @@ KISSY.add(function (S, require) {
             this.control.loadingEl = loadingEl;
         }
     });
-
-    function onBack(e) {
-        if (e.target === this.get('bar')) {
-            this.pop();
-        }
-    }
 
     function getViewInstance(navigationView, config) {
         var children = navigationView.get('children');
@@ -108,84 +101,98 @@ KISSY.add(function (S, require) {
         }
     }
 
-    function postProcessSwitchView(self, nextView) {
-        var promise = nextView.promise;
+    function postProcessSwitchView(self, oldView, newView, backward) {
+        var promise = newView.promise;
 
-        self.set('activeView', nextView);
+        self.set('activeView', newView);
 
         gc(self);
 
         if (promise) {
             promise.then(function () {
                 var activeView = self.get('activeView');
-                if (activeView && activeView.uuid === nextView.uuid) {
-                    self.get('bar').set('title', nextView.get('title') || '');
+                if (activeView && activeView.uuid === newView.uuid) {
+                    self.fire('afterInnerViewChange', {
+                        oldView: oldView,
+                        newView: newView,
+                        backward: backward
+                    });
                     stopAnimateEl(self.loadingEl, self);
-                    animateEl(nextView.get('el'), self, self.animateNoneEnterClass);
+                    animateEl(newView.get('el'), self, self.animateNoneEnterClass);
                 }
+            });
+        } else {
+            self.fire('afterInnerViewChange', {
+                oldView: oldView,
+                newView: newView,
+                backward: backward
             });
         }
     }
 
-    function processSwitchView(self, config, nextView, enterAnimCssClass, leaveAnimCssClass) {
+    function processSwitchView(self, config, oldView, newView, enterAnimCssClass, leaveAnimCssClass, backward) {
         var loadingEl = self.loadingEl;
-        var activeView = self.get('activeView');
-        if (activeView && activeView.leave) {
-            activeView.leave();
+        if (oldView && oldView.leave) {
+            oldView.leave();
         }
-        var nextViewEl = nextView.get('el');
-        nextView.set(config);
-        if (nextView.enter) {
-            nextView.enter();
+        var newViewEl = newView.get('el');
+        newView.set(config);
+        if (newView.enter) {
+            newView.enter();
         }
-        var promise = nextView.promise;
 
-        if (activeView) {
-            animateEl(activeView.get('el'), self, leaveAnimCssClass);
+        self.fire('beforeInnerViewChange', {
+            oldView: oldView,
+            newView: newView,
+            backward: backward
+        });
+
+        var promise = newView.promise;
+
+        if (oldView) {
+            animateEl(oldView.get('el'), self, leaveAnimCssClass);
         }
 
         if (promise) {
-            if (activeView) {
+            if (oldView) {
                 animateEl(loadingEl, self, enterAnimCssClass);
             } else {
                 animateEl(loadingEl, self, self.animateNoneEnterClass);
             }
             // leave without aim, hidden
-            stopAnimateEl(nextViewEl, self);
+            stopAnimateEl(newViewEl, self);
         } else {
-            if (self.isLoading() || !activeView) {
+            if (self.isLoading() || !oldView) {
                 stopAnimateEl(loadingEl, self);
-                animateEl(nextViewEl, self, self.animateNoneEnterClass);
+                animateEl(newViewEl, self, self.animateNoneEnterClass);
             } else {
-                animateEl(nextViewEl, self, enterAnimCssClass);
+                animateEl(newViewEl, self, enterAnimCssClass);
             }
         }
     }
 
     return Container.extend({
-        initializer: function () {
-            this.publish('back', {
-                defaultFn: onBack,
-                defaultTargetOnly: false
-            });
-        },
-
         isLoading: function () {
             return this.loadingEl.hasClass(this.animatorClass);
         },
 
         renderUI: function () {
             var self = this;
-            this.animateClassRegExp = new RegExp(this.view.getBaseCssClass() + '-anim-[^\\s]+');
-            this.animatorClass = this.view.getBaseCssClass('animator');
-            this.animateNoneEnterClass = getAnimCss(self, 'none', true);
-            this.animatorClassRegExp = new RegExp(this.animatorClass);
-            this.viewStack = [];
-            var bar;
-            var barCfg = this.get('barCfg');
-            barCfg.elBefore = this.get('el')[0].firstChild;
-            this.setInternal('bar', bar = new Bar(barCfg).render());
-            bar.addTarget(this);
+            self.animateClassRegExp = new RegExp(self.view.getBaseCssClass() + '-anim-[^\\s]+');
+            self.animatorClass = self.view.getBaseCssClass('animator');
+            self.animateNoneEnterClass = getAnimCss(self, 'none', true);
+            self.animatorClassRegExp = new RegExp(self.animatorClass);
+            self.viewStack = [];
+            var barEl = self.get('barEl');
+            var bar = self.get('bar');
+            var el = self.get('el');
+            if (barEl) {
+                el.prepend(barEl);
+            } else if (bar) {
+                bar.set('elBefore', el[0].firstChild);
+                bar.set('navigationView', self);
+                bar.render();
+            }
         },
 
         /**
@@ -210,13 +217,10 @@ KISSY.add(function (S, require) {
                 leaveAnimation,
                 enterAnimCssClass,
                 leaveAnimCssClass,
-                bar,
-                promise,
                 activeView,
                 viewStack = self.viewStack;
 
             activeView = self.get('activeView');
-            bar = self.get('bar');
             config.animation = config.animation || self.get('animation');
             if (!activeView) {
                 // first view no animation
@@ -231,19 +235,13 @@ KISSY.add(function (S, require) {
             if (activeView) {
                 leaveAnimation = activeView.get('animation').leave || leaveAnimation;
             }
-            promise = nextView.promise;
+
             enterAnimCssClass = getAnimCss(self, enterAnimation, true);
             leaveAnimCssClass = getAnimCss(self, leaveAnimation);
 
-            processSwitchView(self, config, nextView, enterAnimCssClass, leaveAnimCssClass);
+            processSwitchView(self, config, activeView, nextView, enterAnimCssClass, leaveAnimCssClass);
 
-            if (activeView) {
-                bar.forward(nextView.get('title') || '');
-            } else if (!promise) {
-                bar.set('title', nextView.get('title') || '');
-            }
-
-            postProcessSwitchView(self, nextView);
+            postProcessSwitchView(self, activeView, nextView);
         },
 
         replace: function (config) {
@@ -267,23 +265,21 @@ KISSY.add(function (S, require) {
                 config = viewStack[viewStack.length - 1];
                 nextView = self.createView(config);
                 nextView.uuid = uuid++;
-                enterAnimCssClass = getAnimCss(self, nextView.get('animation').leave||activeView.get('animation').leave, true);
+                enterAnimCssClass = getAnimCss(self, nextView.get('animation').leave || activeView.get('animation').leave, true);
                 leaveAnimCssClass = getAnimCss(self, activeView.get('animation').enter);
 
-                processSwitchView(self, config, nextView, enterAnimCssClass, leaveAnimCssClass);
+                processSwitchView(self, config, activeView, nextView, enterAnimCssClass, leaveAnimCssClass, true);
 
-                self.get('bar').back(nextView.get('title') || '', viewStack.length > 1);
-
-                postProcessSwitchView(self, nextView);
+                postProcessSwitchView(self, activeView, nextView, true);
             }
         }
     }, {
         xclass: 'navigation-view',
 
         ATTRS: {
-            barCfg: {
-                value: {}
-            },
+            bar: {},
+
+            barEl: {},
 
             /**
              * default animation for view switch when pushed enter or pushed leave

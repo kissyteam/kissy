@@ -53,7 +53,7 @@ KISSY.add(function (S, require) {
                         control: self
                     }));
                 }
-                view.create();
+                view.createInternal();
                 el = view.getKeyEventTarget();
                 if (!self.get('allowTextSelection')) {
                     el.unselectable();
@@ -68,12 +68,14 @@ KISSY.add(function (S, require) {
              *
              */
             renderUI: function () {
-                this.view.render();
+                this.view.renderUI();
             },
 
             bindUI: function () {
                 var self = this,
                     el = self.view.getKeyEventTarget();
+
+                self.view.bindUI();
 
                 if (self.get('focusable')) {
                     // remove smart outline in ie
@@ -112,9 +114,12 @@ KISSY.add(function (S, require) {
                 var self = this;
                 self.fire('beforeSyncUI');
                 self.syncUI();
-                self.view.sync();
                 self.__callPluginsMethod('pluginSyncUI');
                 self.fire('afterSyncUI');
+            },
+
+            syncUI: function () {
+                this.view.syncUI();
             },
 
             createComponent: function (cfg, parent) {
