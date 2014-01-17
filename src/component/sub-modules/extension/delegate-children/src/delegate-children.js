@@ -46,7 +46,7 @@ KISSY.add(function (S, require) {
             if (!this.get('disabled')) {
                 var control = this.getOwnerControl(e);
                 if (control && !control.get('disabled')) {
-                    e.stopPropagation();
+                    // e.stopPropagation();
                     // Child control identified; forward the event.
                     switch (e.type) {
                         case Gesture.start:

@@ -1,10 +1,10 @@
 /*
-Copyright 2013, KISSY v1.50
+Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Dec 12 22:08
+build time: Jan 17 16:52
 */
 /*
- Combined processedModules by KISSY Module Compiler: 
+ Combined modules by KISSY Module Compiler: 
 
  component/extension/delegate-children
 */
@@ -35,7 +35,6 @@ KISSY.add("component/extension/delegate-children", ["node", "component/manager"]
     if(!this.get("disabled")) {
       var control = this.getOwnerControl(e);
       if(control && !control.get("disabled")) {
-        e.stopPropagation();
         switch(e.type) {
           case Gesture.start:
             control.handleMouseDown(e);

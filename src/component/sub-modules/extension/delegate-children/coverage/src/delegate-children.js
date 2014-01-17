@@ -249,7 +249,6 @@ if (! _$jscoverage['/delegate-children.js']) {
   _$jscoverage['/delegate-children.js'].lineData[46] = 0;
   _$jscoverage['/delegate-children.js'].lineData[47] = 0;
   _$jscoverage['/delegate-children.js'].lineData[48] = 0;
-  _$jscoverage['/delegate-children.js'].lineData[49] = 0;
   _$jscoverage['/delegate-children.js'].lineData[51] = 0;
   _$jscoverage['/delegate-children.js'].lineData[53] = 0;
   _$jscoverage['/delegate-children.js'].lineData[54] = 0;
@@ -393,8 +392,6 @@ KISSY.add(function(S, require) {
     var control = this.getOwnerControl(e);
     _$jscoverage['/delegate-children.js'].lineData[48]++;
     if (visit5_48_1(control && !control.get('disabled'))) {
-      _$jscoverage['/delegate-children.js'].lineData[49]++;
-      e.stopPropagation();
       _$jscoverage['/delegate-children.js'].lineData[51]++;
       switch (e.type) {
         case Gesture.start:
