@@ -71,12 +71,107 @@
                 var win = Node.all(window);
 
                 var anims = [
-                    {content: 'default-anim'},
-                    {content: 'slide-left-anim',
+                    {
+                        content: 'default-anim'
+                    },
+                    {
+                        content: 'slide-left-anim',
                         value: {
                             enter: 'slide-left',
                             leave: 'slide-right'
-                        }}
+                        }
+                    },
+                    {
+                        content: 'slide-top-anim',
+                        value: {
+                            enter: 'slide-top',
+                            leave: 'slide-bottom'
+                        }
+                    },
+                    {
+                        content: 'slide-bottom-anim',
+                        value: {
+                            enter: 'slide-bottom',
+                            leave: 'slide-top'
+                        }
+                    },
+                    {
+                        content: 'fade-anim',
+                        value: {
+                            enter: 'fade',
+                            leave: 'fade'
+                        }
+                    },
+                    {
+                        content: 'pop-anim',
+                        value: {
+                            enter: 'pop',
+                            leave: 'pop'
+                        }
+                    },
+                    {
+                        content: 'flip-left-anim',
+                        value: {
+                            enter: 'flip-left',
+                            leave: 'flip-right'
+                        }
+                    },
+                    {
+                        content: 'flip-right-anim',
+                        value: {
+                            enter: 'flip-right',
+                            leave: 'flip-left'
+                        }
+                    },
+                    {
+                        content: 'swap-left-anim',
+                        value: {
+                            enter: 'swap-left',
+                            leave: 'swap-right'
+                        }
+                    },
+                    {
+                        content: 'swap-right-anim',
+                        value: {
+                            enter: 'swap-right',
+                            leave: 'swap-left'
+                        }
+                    },
+                    {
+                        content: 'cube-left-anim',
+                        value: {
+                            enter: 'swap-left',
+                            leave: 'swap-right'
+                        }
+                    },
+                    {
+                        content: 'cube-right-anim',
+                        value: {
+                            enter: 'swap-right',
+                            leave: 'swap-left'
+                        }
+                    },
+                    {
+                        content: 'flow-left-anim',
+                        value: {
+                            enter: 'flow-left',
+                            leave: 'flow-right'
+                        }
+                    },
+                    {
+                        content: 'flow-right-anim',
+                        value: {
+                            enter: 'flow-right',
+                            leave: 'flow-left'
+                        }
+                    },
+                    {
+                        content: 'turn-anim',
+                        value: {
+                            enter: 'turn',
+                            leave: 'turn'
+                        }
+                    }
                 ];
 
                 var getAnimValue = function (content) {

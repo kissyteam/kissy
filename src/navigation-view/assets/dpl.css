@@ -109,6 +109,7 @@ navigation-view style
   width: 100%;
   height: 100%;
   visibility: hidden;
+  z-index: 0;
 }
 .ks-navigation-view-content > div.ks-navigation-view-animator {
   visibility: visible;
@@ -238,6 +239,7 @@ navigation-view style
 }
 .ks-navigation-view-anim-fade-enter {
   -webkit-animation: ks-navigation-view-anim-fade-enter 0.225s ease-out;
+  z-index: 1;
 }
 @-webkit-keyframes ks-navigation-view-anim-fade-enter {
   0% {
@@ -261,6 +263,7 @@ navigation-view style
 }
 .ks-navigation-view-anim-pop-enter {
   -webkit-animation: ks-navigation-view-anim-pop-enter 0.35s ease-out;
+  z-index: 1;
 }
 @-webkit-keyframes ks-navigation-view-anim-pop-enter {
   0% {
@@ -351,6 +354,7 @@ navigation-view style
 .ks-navigation-view-anim-swap-left-enter {
   -webkit-transform-origin: 0% 100%;
   -webkit-animation: ks-navigation-view-anim-swap-left-enter 0.6s ease-out;
+  z-index: 1;
 }
 @-webkit-keyframes ks-navigation-view-anim-swap-left-enter {
   0% {
@@ -409,6 +413,7 @@ navigation-view style
 .ks-navigation-view-anim-swap-right-enter {
   -webkit-transform-origin: 100% 100%;
   -webkit-animation: ks-navigation-view-anim-swap-right-enter 0.6s ease-out;
+  z-index: 1;
 }
 @-webkit-keyframes ks-navigation-view-anim-swap-right-enter {
   0% {
@@ -490,16 +495,17 @@ navigation-view style
   -webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
 }
 .ks-navigation-view-anim-flow-left-enter {
-  -webkit-animation: ks-navigation-view-anim-flow-left-enter 0.35s ease;
-  -webkit-animation-delay: 0.35s;
-  -webkit-transform: translateX(-100%) scale(0.7);
+  -webkit-animation: ks-navigation-view-anim-flow-left-enter 0.7s ease;
 }
 @-webkit-keyframes ks-navigation-view-anim-flow-left-enter {
   0% {
     -webkit-transform: translateX(-100%) scale(0.7);
   }
-  30%,
-  40% {
+  50% {
+    -webkit-transform: translateX(-100%) scale(0.7);
+  }
+  65%,
+  70% {
     -webkit-transform: translateX(0) scale(0.7);
   }
   100% {
@@ -523,15 +529,17 @@ navigation-view style
   }
 }
 .ks-navigation-view-anim-flow-right-enter {
-  -webkit-animation: ks-navigation-view-anim-flow-right-enter 0.35s ease;
-  -webkit-animation-delay: 0.35s;
+  -webkit-animation: ks-navigation-view-anim-flow-right-enter 0.7s ease;
 }
 @-webkit-keyframes ks-navigation-view-anim-flow-right-enter {
   0% {
     -webkit-transform: translateX(100%) scale(0.7);
   }
-  30%,
-  40% {
+  50% {
+    -webkit-transform: translateX(100%) scale(0.7);
+  }
+  65%,
+  70% {
     -webkit-transform: translateX(0) scale(0.7);
   }
   100% {
