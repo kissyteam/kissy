@@ -126,6 +126,7 @@
                     enter: function () {
                         S.log('enter detail');
                         win.on('resize', this.sync, this);
+                        this.sync();
                     },
 
                     leave: function () {
@@ -162,6 +163,7 @@
                     enter: function () {
                         S.log('enter index');
                         win.on('resize', this.sync, this);
+                        this.sync();
                     },
 
                     leave: function () {
