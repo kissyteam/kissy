@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Jan 17 13:06
+build time: Jan 20 11:32
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -15,11 +15,16 @@ KISSY.add("navigation-view", ["node", "component/container", "component/extensio
   var ContentTpl = require("component/extension/content-xtpl");
   var ContentRender = require("component/extension/content-render");
   var LOADING_HTML = '<div class="{prefixCls}navigation-view-loading">' + '<div class="{prefixCls}navigation-view-loading-outer">' + '<div class="{prefixCls}navigation-view-loading-inner"></div>' + "</div>" + "</div>";
+  var vendorPrefix = S.Features.getVendorCssPropPrefix("animation");
+  var ANIMATION_END_EVENT = vendorPrefix ? vendorPrefix.toLowerCase() + "AnimationEnd" : "animationend webkitAnimationEnd";
   var uuid = 0;
-  var NavigationViewRender = Container.getDefaultRender().extend([ContentRender], {renderUI:function() {
-    var loadingEl = $(S.substitute(LOADING_HTML, {prefixCls:this.control.get("prefixCls")}));
-    this.control.get("contentEl").append(loadingEl);
-    this.control.loadingEl = loadingEl
+  var NavigationViewRender = Container.getDefaultRender().extend([ContentRender], {createDom:function() {
+    var self = this, control = self.control;
+    var $loadingEl = $(S.substitute(LOADING_HTML, {prefixCls:self.control.get("prefixCls")}));
+    control.get("contentEl").append($loadingEl);
+    control.$loadingEl = $loadingEl;
+    control.loadingEl = $loadingEl[0];
+    $loadingEl.on(ANIMATION_END_EVENT, onAnimEnd($loadingEl[0]), control)
   }});
   function getViewInstance(navigationView, config) {
     var children = navigationView.get("children");
@@ -57,27 +62,26 @@ KISSY.add("navigation-view", ["node", "component/container", "component/extensio
   function trimClassName(className) {
     return S.trim(className).replace(/\s+/, " ")
   }
-  function animateEl(el, self, css) {
-    var className = el[0].className, originalClassName = className;
+  function showAnimateEl(el, self, css) {
+    var className = el.className, originalClassName = className;
     if(className.match(self.animateClassRegExp)) {
-      className = className.replace(self.animateClassRegExp, css)
-    }else {
-      className += " " + css
+      className = className.replace(self.animateClassRegExp, "")
     }
     if(css) {
-      if(className.indexOf(self.animatorClass) === -1) {
-        className += " " + self.animatorClass
-      }
+      className += " " + css
+    }
+    if(className.indexOf(self.showViewClass) === -1) {
+      className += " " + self.showViewClass
     }
     if(className !== originalClassName) {
-      el[0].className = trimClassName(className)
+      el.className = trimClassName(className)
     }
   }
-  function stopAnimateEl(el, self) {
-    var className = el[0].className, originalClassName = className;
-    className = className.replace(self.animateClassRegExp, "").replace(self.animatorClassRegExp, "");
+  function hideAnimateEl(el, self) {
+    var className = el.className, originalClassName = className;
+    className = className.replace(self.animateClassRegExp, "").replace(self.showViewClass, "");
     if(className !== originalClassName) {
-      el[0].className = trimClassName(className)
+      el.className = trimClassName(className)
     }
   }
   function postProcessSwitchView(self, oldView, newView, backward) {
@@ -89,8 +93,8 @@ KISSY.add("navigation-view", ["node", "component/container", "component/extensio
         var activeView = self.get("activeView");
         if(activeView && activeView.uuid === newView.uuid) {
           self.fire("afterInnerViewChange", {oldView:oldView, newView:newView, backward:backward});
-          stopAnimateEl(self.loadingEl, self);
-          animateEl(newView.get("el"), self, self.animateNoneEnterClass)
+          hideAnimateEl(self.loadingEl, self);
+          showAnimateEl(newView.el, self)
         }
       })
     }else {
@@ -102,7 +106,7 @@ KISSY.add("navigation-view", ["node", "component/container", "component/extensio
     if(oldView && oldView.leave) {
       oldView.leave()
     }
-    var newViewEl = newView.get("el");
+    var newViewEl = newView.el;
     newView.set(config);
     if(newView.enter) {
       newView.enter()
@@ -110,50 +114,56 @@ KISSY.add("navigation-view", ["node", "component/container", "component/extensio
     self.fire("beforeInnerViewChange", {oldView:oldView, newView:newView, backward:backward});
     var promise = newView.promise;
     if(oldView) {
-      animateEl(oldView.get("el"), self, leaveAnimCssClass)
+      showAnimateEl(oldView.el, self, leaveAnimCssClass)
     }
     if(promise) {
       if(oldView) {
-        animateEl(loadingEl, self, enterAnimCssClass)
+        showAnimateEl(loadingEl, self, enterAnimCssClass)
       }else {
-        animateEl(loadingEl, self, self.animateNoneEnterClass)
+        showAnimateEl(loadingEl, self)
       }
-      stopAnimateEl(newViewEl, self)
+      hideAnimateEl(newViewEl, self)
     }else {
-      if(self.isLoading() || !oldView) {
-        stopAnimateEl(loadingEl, self);
-        animateEl(newViewEl, self, self.animateNoneEnterClass)
+      if(self.$loadingEl.hasClass(self.showViewClass) && oldView) {
+        showAnimateEl(loadingEl, self, leaveAnimCssClass)
+      }
+      showAnimateEl(newViewEl, self, enterAnimCssClass)
+    }
+  }
+  function isEnterCss(css, self) {
+    return css.match(self.animateEnterRegExp)
+  }
+  function isLeaveCss(css, self) {
+    return css.match(self.animateLeaveRegExp)
+  }
+  function onAnimEnd(el) {
+    return function() {
+      var self = this;
+      var className = el.className;
+      if(isEnterCss(className, self)) {
+        showAnimateEl(el, self)
       }else {
-        animateEl(newViewEl, self, enterAnimCssClass)
+        if(isLeaveCss(className, self)) {
+          hideAnimateEl(el, self)
+        }
       }
     }
   }
-  return Container.extend({isLoading:function() {
-    return this.loadingEl.hasClass(this.animatorClass)
-  }, renderUI:function() {
+  return Container.extend({createDom:function() {
     var self = this;
     self.animateClassRegExp = new RegExp(self.view.getBaseCssClass() + "-anim-[^\\s]+");
-    self.animatorClass = self.view.getBaseCssClass("animator");
-    self.animateNoneEnterClass = getAnimCss(self, "none", true);
-    self.animatorClassRegExp = new RegExp(self.animatorClass);
-    self.viewStack = [];
-    var barEl = self.get("barEl");
-    var bar = self.get("bar");
-    var el = self.get("el");
-    if(barEl) {
-      el.prepend(barEl)
-    }else {
-      if(bar) {
-        bar.set("elBefore", el[0].firstChild);
-        bar.set("navigationView", self);
-        bar.render()
-      }
-    }
+    self.animateEnterRegExp = new RegExp("-enter(?:\\s|$)");
+    self.animateLeaveRegExp = new RegExp("-leave(?:\\s|$)");
+    self.showViewClass = self.view.getBaseCssClass("show-view");
+    self.viewStack = []
   }, createView:function(config) {
     var self = this;
     var nextView = getViewInstance(self, config);
+    var nextViewEl;
     if(!nextView) {
-      nextView = self.addChild(config)
+      nextView = self.addChild(config);
+      nextViewEl = nextView.get("el");
+      nextViewEl.on(ANIMATION_END_EVENT, onAnimEnd(nextViewEl[0]), self)
     }
     return nextView
   }, push:function(config) {
@@ -192,6 +202,6 @@ KISSY.add("navigation-view", ["node", "component/container", "component/extensio
       processSwitchView(self, config, activeView, nextView, enterAnimCssClass, leaveAnimCssClass, true);
       postProcessSwitchView(self, activeView, nextView, true)
     }
-  }}, {xclass:"navigation-view", ATTRS:{bar:{}, barEl:{}, animation:{value:{enter:"slide-right", leave:"slide-left"}}, handleMouseEvents:{value:false}, viewCacheSize:{value:20}, focusable:{value:false}, allowTextSelection:{value:true}, xrender:{value:NavigationViewRender}, contentTpl:{value:ContentTpl}, defaultChildCfg:{value:{handleMouseEvents:false, allowTextSelection:true}}}})
+  }}, {xclass:"navigation-view", ATTRS:{animation:{value:{enter:"slide-right", leave:"slide-left"}}, handleMouseEvents:{value:false}, viewCacheSize:{value:20}, focusable:{value:false}, allowTextSelection:{value:true}, xrender:{value:NavigationViewRender}, contentTpl:{value:ContentTpl}, defaultChildCfg:{value:{handleMouseEvents:false, allowTextSelection:true}}}})
 });
 

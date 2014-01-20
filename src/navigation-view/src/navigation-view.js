@@ -13,15 +13,26 @@ KISSY.add(function (S, require) {
         '</div>' +
         '</div>';
 
+
+    var vendorPrefix = S.Features.getVendorCssPropPrefix('animation');
+    var ANIMATION_END_EVENT = vendorPrefix ?
+        (vendorPrefix.toLowerCase() + 'AnimationEnd') :
+        // https://github.com/kissyteam/kissy/issues/538
+        'animationend webkitAnimationEnd';
+
     var uuid = 0;
 
     var NavigationViewRender = Container.getDefaultRender().extend([ContentRender], {
-        renderUI: function () {
-            var loadingEl = $(S.substitute(LOADING_HTML, {
-                prefixCls: this.control.get('prefixCls')
+        createDom: function () {
+            var self = this,
+                control = self.control;
+            var $loadingEl = $(S.substitute(LOADING_HTML, {
+                prefixCls: self.control.get('prefixCls')
             }));
-            this.control.get('contentEl').append(loadingEl);
-            this.control.loadingEl = loadingEl;
+            control.get('contentEl').append($loadingEl);
+            control.$loadingEl = $loadingEl;
+            control.loadingEl = $loadingEl[0];
+            $loadingEl.on(ANIMATION_END_EVENT, onAnimEnd($loadingEl[0]), control);
         }
     });
 
@@ -72,32 +83,41 @@ KISSY.add(function (S, require) {
         return S.trim(className).replace(/\s+/, ' ');
     }
 
-    function animateEl(el, self, css) {
-        var className = el[0].className,
+    /**
+     *
+     * @param el
+     * @param self
+     * @param [css]
+     */
+    function showAnimateEl(el, self, css) {
+        var className = el.className,
             originalClassName = className;
+
         if (className.match(self.animateClassRegExp)) {
-            className = className.replace(self.animateClassRegExp, css);
-        } else {
+            className = className.replace(self.animateClassRegExp, '');
+        }
+
+        if (css) {
             className += ' ' + css;
         }
-        if (css) {
-            if (className.indexOf(self.animatorClass) === -1) {
-                className += ' ' + self.animatorClass;
-            }
+
+        if (className.indexOf(self.showViewClass) === -1) {
+            className += ' ' + self.showViewClass;
         }
         if (className !== originalClassName) {
-            el[0].className = trimClassName(className);
+            el.className = trimClassName(className);
         }
     }
 
-    function stopAnimateEl(el, self) {
-        var className = el[0].className,
+    function hideAnimateEl(el, self) {
+        var className = el.className,
             originalClassName = className;
 
-        className = className.replace(self.animateClassRegExp, '').replace(self.animatorClassRegExp, '');
+        className = className.replace(self.animateClassRegExp, '')
+            .replace(self.showViewClass, '');
 
         if (className !== originalClassName) {
-            el[0].className = trimClassName(className);
+            el.className = trimClassName(className);
         }
     }
 
@@ -117,8 +137,8 @@ KISSY.add(function (S, require) {
                         newView: newView,
                         backward: backward
                     });
-                    stopAnimateEl(self.loadingEl, self);
-                    animateEl(newView.get('el'), self, self.animateNoneEnterClass);
+                    hideAnimateEl(self.loadingEl, self);
+                    showAnimateEl(newView.el, self);
                 }
             });
         } else {
@@ -135,7 +155,7 @@ KISSY.add(function (S, require) {
         if (oldView && oldView.leave) {
             oldView.leave();
         }
-        var newViewEl = newView.get('el');
+        var newViewEl = newView.el;
         newView.set(config);
         if (newView.enter) {
             newView.enter();
@@ -150,49 +170,55 @@ KISSY.add(function (S, require) {
         var promise = newView.promise;
 
         if (oldView) {
-            animateEl(oldView.get('el'), self, leaveAnimCssClass);
+            showAnimateEl(oldView.el, self, leaveAnimCssClass);
         }
 
         if (promise) {
             if (oldView) {
-                animateEl(loadingEl, self, enterAnimCssClass);
+                showAnimateEl(loadingEl, self, enterAnimCssClass);
             } else {
-                animateEl(loadingEl, self, self.animateNoneEnterClass);
+                // first view show loading without anim
+                showAnimateEl(loadingEl, self);
             }
             // leave without aim, hidden
-            stopAnimateEl(newViewEl, self);
+            hideAnimateEl(newViewEl, self);
         } else {
-            if (self.isLoading() || !oldView) {
-                stopAnimateEl(loadingEl, self);
-                animateEl(newViewEl, self, self.animateNoneEnterClass);
-            } else {
-                animateEl(newViewEl, self, enterAnimCssClass);
+            // is loading and not first view
+            if (self.$loadingEl.hasClass(self.showViewClass) && oldView) {
+                showAnimateEl(loadingEl, self, leaveAnimCssClass);
             }
+            showAnimateEl(newViewEl, self, enterAnimCssClass);
         }
     }
 
-    return Container.extend({
-        isLoading: function () {
-            return this.loadingEl.hasClass(this.animatorClass);
-        },
+    function isEnterCss(css, self) {
+        return css.match(self.animateEnterRegExp);
+    }
 
-        renderUI: function () {
+    function isLeaveCss(css, self) {
+        return css.match(self.animateLeaveRegExp);
+    }
+
+    function onAnimEnd(el) {
+        return function () {
+            var self = this;
+            var className = el.className;
+            if (isEnterCss(className, self)) {
+                showAnimateEl(el, self);
+            } else if (isLeaveCss(className, self)) {
+                hideAnimateEl(el, self);
+            }
+        };
+    }
+
+    return Container.extend({
+        createDom: function () {
             var self = this;
             self.animateClassRegExp = new RegExp(self.view.getBaseCssClass() + '-anim-[^\\s]+');
-            self.animatorClass = self.view.getBaseCssClass('animator');
-            self.animateNoneEnterClass = getAnimCss(self, 'none', true);
-            self.animatorClassRegExp = new RegExp(self.animatorClass);
+            self.animateEnterRegExp = new RegExp('-enter(?:\\s|$)');
+            self.animateLeaveRegExp = new RegExp('-leave(?:\\s|$)');
+            self.showViewClass = self.view.getBaseCssClass('show-view');
             self.viewStack = [];
-            var barEl = self.get('barEl');
-            var bar = self.get('bar');
-            var el = self.get('el');
-            if (barEl) {
-                el.prepend(barEl);
-            } else if (bar) {
-                bar.set('elBefore', el[0].firstChild);
-                bar.set('navigationView', self);
-                bar.render();
-            }
         },
 
         /**
@@ -203,8 +229,11 @@ KISSY.add(function (S, require) {
         createView: function (config) {
             var self = this;
             var nextView = getViewInstance(self, config);
+            var nextViewEl;
             if (!nextView) {
                 nextView = self.addChild(config);
+                nextViewEl = nextView.get('el');
+                nextViewEl.on(ANIMATION_END_EVENT, onAnimEnd(nextViewEl[0]), self);
             }
             return nextView;
         },
@@ -277,10 +306,6 @@ KISSY.add(function (S, require) {
         xclass: 'navigation-view',
 
         ATTRS: {
-            bar: {},
-
-            barEl: {},
-
             /**
              * default animation for view switch when pushed enter or pushed leave
              */
