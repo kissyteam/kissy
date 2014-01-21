@@ -12,6 +12,7 @@ KISSY.add(function (S, require) {
     var Features = S.Features,
 //        MARKER_CLS = 'ks-scrollview-marker',
         supportTransform3d = Features.isTransform3dSupported(),
+        floor = Math.floor,
         transformProperty;
 
 //    function createMarker(contentEl) {
@@ -128,16 +129,16 @@ KISSY.add(function (S, require) {
         methods._onSetScrollLeft = function (v) {
             var control = this.control;
             control.contentEl.style[transformProperty] = S.substitute(translateTpl, {
-                translateX: -v,
-                translateY: -control.get('scrollTop')
+                translateX: floor(-v),
+                translateY: floor(-control.get('scrollTop'))
             });
         };
 
         methods._onSetScrollTop = function (v) {
             var control = this.control;
             control.contentEl.style[transformProperty] = S.substitute(translateTpl, {
-                translateX: -control.get('scrollLeft'),
-                translateY: -v
+                translateX: floor(-control.get('scrollLeft')),
+                translateY: floor(-v)
             });
         };
     }
