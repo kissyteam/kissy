@@ -110,16 +110,22 @@ KISSY.add(function (S, require) {
                 }
             },
 
-            sync: function () {
-                var self = this;
-                self.fire('beforeSyncUI');
-                self.syncUI();
-                self.__callPluginsMethod('pluginSyncUI');
-                self.fire('afterSyncUI');
-            },
-
             syncUI: function () {
                 this.view.syncUI();
+            },
+
+            /**
+             * @protected
+             */
+            destructor: function () {
+                var self = this;
+                // remove instance from manager
+                Manager.removeComponent(self.get('id'));
+                if (self.view) {
+                    self.view.destroy();
+                } else if (self.get('srcNode')) {
+                    self.get('srcNode').remove();
+                }
             },
 
             createComponent: function (cfg, parent) {
@@ -383,20 +389,6 @@ KISSY.add(function (S, require) {
                 var self = this;
                 if (self.get('focusable')) {
                     self.focus();
-                }
-            },
-
-            /**
-             * @protected
-             */
-            destructor: function () {
-                var self = this;
-                // remove instance from manager
-                Manager.removeComponent(self.get('id'));
-                if (self.view) {
-                    self.view.destroy();
-                } else if (self.get('srcNode')) {
-                    self.get('srcNode').remove();
                 }
             }
         },
