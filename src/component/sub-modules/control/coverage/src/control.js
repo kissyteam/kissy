@@ -528,7 +528,7 @@ if (! _$jscoverage['/control.js'].branchData) {
   _$jscoverage['/control.js'].branchData['894'] = [];
   _$jscoverage['/control.js'].branchData['894'][1] = new BranchData();
 }
-_$jscoverage['/control.js'].branchData['894'][1].init(384, 6, 'xclass');
+_$jscoverage['/control.js'].branchData['894'][1].init(382, 6, 'xclass');
 function visit102_894_1(result) {
   _$jscoverage['/control.js'].branchData['894'][1].ranCondition(result);
   return result;
@@ -716,7 +716,7 @@ function visit57_88_1(result) {
 function visit56_80_1(result) {
   _$jscoverage['/control.js'].branchData['80'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control.js'].branchData['58'][1].init(631, 31, '!self.get(\'allowTextSelection\')');
+}_$jscoverage['/control.js'].branchData['58'][1].init(623, 31, '!self.get(\'allowTextSelection\')');
 function visit55_58_1(result) {
   _$jscoverage['/control.js'].branchData['58'][1].ranCondition(result);
   return result;
@@ -730,7 +730,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/control.js'].lineData[7]++;
   var Node = require('node');
   _$jscoverage['/control.js'].lineData[8]++;
-  var ComponentProcess = require('./control/process');
+  var ControlProcess = require('./control/process');
   _$jscoverage['/control.js'].lineData[9]++;
   var Manager = require('component/manager');
   _$jscoverage['/control.js'].lineData[10]++;
@@ -738,7 +738,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/control.js'].lineData[11]++;
   var ie = S.UA.ieMode, Features = S.Features, Gesture = Node.Gesture, isTouchGestureSupported = Features.isTouchGestureSupported(), isTouchEventSupported = Features.isTouchEventSupported();
   _$jscoverage['/control.js'].lineData[22]++;
-  var Control = ComponentProcess.extend({
+  var Control = ControlProcess.extend({
   isControl: true, 
   createDom: function() {
   _$jscoverage['/control.js'].functionData[1]++;
@@ -754,7 +754,7 @@ KISSY.add(function(S, require) {
   control: self}));
   }
   _$jscoverage['/control.js'].lineData[56]++;
-  view.createInternal();
+  view.create();
   _$jscoverage['/control.js'].lineData[57]++;
   el = view.getKeyEventTarget();
   _$jscoverage['/control.js'].lineData[58]++;
@@ -1262,7 +1262,7 @@ KISSY.add(function(S, require) {
     last.name = xclass;
   }
   _$jscoverage['/control.js'].lineData[892]++;
-  newClass = ComponentProcess.extend.apply(baseClass, args);
+  newClass = ControlProcess.extend.apply(baseClass, args);
   _$jscoverage['/control.js'].lineData[894]++;
   if (visit102_894_1(xclass)) {
     _$jscoverage['/control.js'].lineData[895]++;

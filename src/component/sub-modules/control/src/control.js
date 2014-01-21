@@ -5,7 +5,7 @@
  */
 KISSY.add(function (S, require) {
     var Node = require('node');
-    var ComponentProcess = require('./control/process');
+    var ControlProcess = require('./control/process');
     var Manager = require('component/manager');
     var Render = require('./control/render');
     var ie = S.UA.ieMode,
@@ -19,7 +19,7 @@ KISSY.add(function (S, require) {
      * @extends KISSY.Component.Process
      * @class KISSY.Component.Control
      */
-    var Control = ComponentProcess.extend({
+    var Control = ControlProcess.extend({
             /**
              * mark current instance as control instance.
              *
@@ -53,7 +53,7 @@ KISSY.add(function (S, require) {
                         control: self
                     }));
                 }
-                view.createInternal();
+                view.create();
                 el = view.getKeyEventTarget();
                 if (!self.get('allowTextSelection')) {
                     el.unselectable();
@@ -889,7 +889,7 @@ KISSY.add(function (S, require) {
             last.name = xclass;
         }
 
-        newClass = ComponentProcess.extend.apply(baseClass, args);
+        newClass = ControlProcess.extend.apply(baseClass, args);
 
         if (xclass) {
             Manager.setConstructorByXClass(xclass, newClass);

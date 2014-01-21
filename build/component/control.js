@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Jan 17 13:06
+build time: Jan 21 17:41
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -14,9 +14,11 @@ build time: Jan 17 13:06
 
 KISSY.add("component/control/process", ["base", "promise"], function(S, require) {
   var Base = require("base");
+  var __getHook = Base.prototype.__getHook;
+  var noop = S.noop;
   var Promise = require("promise");
-  var Defer = Promise.Defer, __getHook = Base.prototype.__getHook, noop = S.noop;
-  var ComponentProcess = Base.extend({bindInternal:noop, syncInternal:noop, initializer:function() {
+  var Defer = Promise.Defer;
+  var ControlProcess = Base.extend({bindInternal:noop, syncInternal:noop, initializer:function() {
     this._renderedDefer = new Defer
   }, renderUI:noop, syncUI:noop, bindUI:noop, onRendered:function(fn) {
     return this._renderedDefer.promise.then(fn)
@@ -24,14 +26,12 @@ KISSY.add("component/control/process", ["base", "promise"], function(S, require)
     var self = this;
     if(!self.get("created")) {
       self.fire("beforeCreateDom");
-      self.createInternal();
+      self.createDom();
       self.__callPluginsMethod("pluginCreateDom");
       self.fire("afterCreateDom");
       self.setInternal("created", true)
     }
     return self
-  }, createInternal:function() {
-    this.createDom()
   }, render:function() {
     var self = this;
     if(!self.get("rendered")) {
@@ -41,11 +41,11 @@ KISSY.add("component/control/process", ["base", "promise"], function(S, require)
       self.__callPluginsMethod("pluginRenderUI");
       self.fire("afterRenderUI");
       self.fire("beforeBindUI");
-      ComponentProcess.superclass.bindInternal.call(self);
+      ControlProcess.superclass.bindInternal.call(self);
       self.bindUI();
       self.__callPluginsMethod("pluginBindUI");
       self.fire("afterBindUI");
-      ComponentProcess.superclass.syncInternal.call(self);
+      ControlProcess.superclass.syncInternal.call(self);
       syncUIs(self);
       self.setInternal("rendered", true)
     }
@@ -77,7 +77,7 @@ KISSY.add("component/control/process", ["base", "promise"], function(S, require)
       }
     }
     return self
-  }}, {__hooks__:{createDom:__getHook("__createDom"), renderUI:__getHook("__renderUI"), bindUI:__getHook("__bindUI"), syncUI:__getHook("__syncUI")}, name:"ComponentProcess", ATTRS:{rendered:{value:false, setter:function(v) {
+  }}, {__hooks__:{createDom:__getHook("__createDom"), renderUI:__getHook("__renderUI"), bindUI:__getHook("__bindUI"), syncUI:__getHook("__syncUI")}, name:"ControlProcess", ATTRS:{rendered:{value:false, setter:function(v) {
     if(v) {
       this._renderedDefer.resolve(this)
     }
@@ -88,7 +88,7 @@ KISSY.add("component/control/process", ["base", "promise"], function(S, require)
     self.__callPluginsMethod("pluginSyncUI");
     self.fire("afterSyncUI")
   }
-  return ComponentProcess
+  return ControlProcess
 });
 KISSY.add("component/control/render-xtpl", [], function(S, require, exports, module) {
   return function(scope, S, undefined) {
@@ -162,10 +162,12 @@ KISSY.add("component/control/render-xtpl", [], function(S, require, exports, mod
     return buffer
   }
 });
-KISSY.add("component/control/render", ["node", "xtemplate/runtime", "./process", "./render-xtpl", "component/manager"], function(S, require) {
+KISSY.add("component/control/render", ["base", "node", "xtemplate/runtime", "./render-xtpl", "component/manager"], function(S, require) {
+  var Base = require("base");
+  var __getHook = Base.prototype.__getHook;
+  var noop = S.noop;
   var Node = require("node");
   var XTemplateRuntime = require("xtemplate/runtime");
-  var ComponentProcess = require("./process");
   var RenderTpl = require("./render-xtpl");
   var Manager = require("component/manager");
   var ON_SET = "_onSet", trim = S.trim, $ = Node.all, UA = S.UA, startTpl = RenderTpl, endTpl = "</div>", doc = S.Env.host.document, HTML_PARSER = "HTML_PARSER";
@@ -226,12 +228,12 @@ KISSY.add("component/control/render", ["node", "xtemplate/runtime", "./process",
   function getBaseCssClassCmd() {
     return this.config.view.getBaseCssClass(arguments[1].params[0])
   }
-  return ComponentProcess.extend({isRender:true, createInternal:function() {
+  return Base.extend({bindInternal:noop, syncInternal:noop, isRender:true, create:function() {
     var self = this, srcNode = self.control.get("srcNode");
     if(srcNode) {
       self.decorateDom(srcNode)
     }else {
-      self.callSuper()
+      self.createDom()
     }
   }, beforeCreateDom:function(renderData) {
     var self = this, control = self.control, width, height, visible, elAttrs = control.get("elAttrs"), cls = control.get("elCls"), disabled, attrs = control.getAttrs(), a, attr, elStyle = control.get("elStyle"), zIndex, elCls = control.get("elCls");
@@ -313,7 +315,7 @@ KISSY.add("component/control/render", ["node", "xtemplate/runtime", "./process",
         control.on("after" + ucName + "Change", onSetAttrChange, self)
       }
     }
-  }, destructor:function() {
+  }, syncUI:noop, destructor:function() {
     if(this.$el) {
       this.$el.remove()
     }
@@ -404,9 +406,9 @@ KISSY.add("component/control/render", ["node", "xtemplate/runtime", "./process",
     el[v ? "addClass" : "removeClass"](componentCls)
   }, _onSetZIndex:function(x) {
     this.$el.css("z-index", x)
-  }}, {__hooks__:{decorateDom:ComponentProcess.prototype.__getHook("__decorateDom"), beforeCreateDom:ComponentProcess.prototype.__getHook("__beforeCreateDom")}, extend:function extend(extensions, px, sx) {
+  }}, {__hooks__:{createDom:__getHook("__createDom"), renderUI:__getHook("__renderUI"), bindUI:__getHook("__bindUI"), syncUI:__getHook("__syncUI"), decorateDom:__getHook("__decorateDom"), beforeCreateDom:__getHook("__beforeCreateDom")}, extend:function extend(extensions, px, sx) {
     var SuperClass = this, NewClass, parsers = {};
-    NewClass = ComponentProcess.extend.apply(SuperClass, arguments);
+    NewClass = Base.extend.apply(SuperClass, arguments);
     NewClass[HTML_PARSER] = NewClass[HTML_PARSER] || {};
     if(S.isArray(extensions)) {
       S.each(extensions.concat(NewClass), function(ext) {
@@ -436,18 +438,18 @@ KISSY.add("component/control/render", ["node", "xtemplate/runtime", "./process",
 });
 KISSY.add("component/control", ["node", "./control/process", "component/manager", "./control/render"], function(S, require) {
   var Node = require("node");
-  var ComponentProcess = require("./control/process");
+  var ControlProcess = require("./control/process");
   var Manager = require("component/manager");
   var Render = require("./control/render");
   var ie = S.UA.ieMode, Features = S.Features, Gesture = Node.Gesture, isTouchGestureSupported = Features.isTouchGestureSupported(), isTouchEventSupported = Features.isTouchEventSupported();
-  var Control = ComponentProcess.extend({isControl:true, createDom:function() {
+  var Control = ControlProcess.extend({isControl:true, createDom:function() {
     var self = this, Render = self.get("xrender"), view = self.get("view"), id = self.get("id"), el;
     if(view) {
       view.set("control", self)
     }else {
       self.set("view", this.view = view = new Render({control:self}))
     }
-    view.createInternal();
+    view.create();
     el = view.getKeyEventTarget();
     if(!self.get("allowTextSelection")) {
       el.unselectable()
@@ -667,7 +669,7 @@ KISSY.add("component/control", ["node", "./control/process", "component/manager"
     if(xclass = last.xclass) {
       last.name = xclass
     }
-    newClass = ComponentProcess.extend.apply(baseClass, args);
+    newClass = ControlProcess.extend.apply(baseClass, args);
     if(xclass) {
       Manager.setConstructorByXClass(xclass, newClass)
     }

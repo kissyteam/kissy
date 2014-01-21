@@ -3,8 +3,9 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, Control, Container, DelegateChildrenExtension) {
+    /*jshint quotmark:false*/
     function invalidNode(n) {
-        return n == null || n.nodeType == 11;
+        return n == null || n.nodeType === 11;
     }
 
     describe("component", function () {
@@ -325,7 +326,7 @@ KISSY.add(function (S, Control, Container, DelegateChildrenExtension) {
                     c.render();
 
                     // ie11 bug
-                    if(S.UA.ieMode===11){
+                    if (S.UA.ieMode === 11) {
                         return;
                     }
 
@@ -350,8 +351,8 @@ KISSY.add(function (S, Control, Container, DelegateChildrenExtension) {
                     });
                     waits(100);
                     runs(function () {
-                        // stop bubble
-                        expect(c.get('active')).toBe(false);
+                        // do not stop bubble
+                        expect(c.get('active')).toBe(true);
                         expect(child1.get('active')).toBe(true);
                         expect(child2.get('active')).toBeFalsy();
                     });

@@ -23,7 +23,6 @@ KISSY.add(function (S, require) {
         /**
          * Perform default action when click on enter on this menuitem.
          * If selectable, then make it selected.
-         * If checkable, then toggle it.
          * Finally fire click on its parent menu.
          * @protected
          */
@@ -83,7 +82,6 @@ KISSY.add(function (S, require) {
         }
     }, {
         ATTRS: {
-
             focusable: {
                 value: false
             },

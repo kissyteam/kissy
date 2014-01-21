@@ -5,9 +5,11 @@
  * refer: http://martinfowler.com/eaaDev/uiArchs.html
  */
 KISSY.add(function (S, require) {
+    var Base = require('base');
+    var __getHook = Base.prototype.__getHook;
+    var noop = S.noop;
     var Node = require('node');
     var XTemplateRuntime = require('xtemplate/runtime');
-    var ComponentProcess = require('./process');
     var RenderTpl = require('./render-xtpl');
     var Manager = require('component/manager');
 
@@ -102,10 +104,14 @@ KISSY.add(function (S, require) {
      * @class KISSY.Component.Control.Process
      * @private
      */
-    return ComponentProcess.extend({
+    return Base.extend({
+        bindInternal: noop,
+
+        syncInternal: noop,
+
         isRender: true,
 
-        createInternal: function () {
+        create: function () {
             var self = this,
                 srcNode = self.control.get('srcNode');
 
@@ -113,7 +119,7 @@ KISSY.add(function (S, require) {
                 // decorate from existing dom structure
                 self.decorateDom(srcNode);
             } else {
-                self.callSuper();
+                self.createDom();
             }
         },
 
@@ -239,6 +245,8 @@ KISSY.add(function (S, require) {
                 }
             }
         },
+
+        syncUI: noop,
 
         destructor: function () {
             if (this.$el) {
@@ -438,24 +446,28 @@ KISSY.add(function (S, require) {
         }
     }, {
         __hooks__: {
-            decorateDom: ComponentProcess.prototype.__getHook('__decorateDom'),
-            beforeCreateDom: ComponentProcess.prototype.__getHook('__beforeCreateDom')
+            createDom: __getHook('__createDom'),
+            renderUI: __getHook('__renderUI'),
+            bindUI: __getHook('__bindUI'),
+            syncUI: __getHook('__syncUI'),
+            decorateDom: __getHook('__decorateDom'),
+            beforeCreateDom: __getHook('__beforeCreateDom')
         },
 
         /**
-         * Create a new class which extends ComponentProcess .
+         * Create a new class which extends Base .
          * @param {Function[]} extensions Class constructors for extending.
          * @param {Object} px Object to be mixed into new class 's prototype.
          * @param {Object} sx Object to be mixed into new class.
          * @static
-         * @return {KISSY.Component.Process} A new class which extends ComponentProcess .
+         * @return {KISSY.Component.Process} A new class which extends Base .
          */
         extend: function extend(extensions, px, sx) {
             /*jshint unused: false*/
             var SuperClass = this,
                 NewClass,
                 parsers = {};
-            NewClass = ComponentProcess.extend.apply(SuperClass, arguments);
+            NewClass = Base.extend.apply(SuperClass, arguments);
             NewClass[HTML_PARSER] = NewClass[HTML_PARSER] || {};
             if (S.isArray(extensions)) {
                 // [ex1,ex2]，扩展类后面的优先，ex2 定义的覆盖 ex1 定义的

@@ -5,16 +5,16 @@
  */
 KISSY.add(function (S, require) {
     var Base = require('base');
+    var __getHook = Base.prototype.__getHook;
+    var noop = S.noop;
     var Promise = require('promise');
-    var Defer = Promise.Defer,
-        __getHook = Base.prototype.__getHook,
-        noop = S.noop;
+    var Defer = Promise.Defer;
 
     /**
      * @class KISSY.Component.Process
      * @extends KISSY.Base
      */
-    var ComponentProcess = Base.extend({
+    var ControlProcess = Base.extend({
         bindInternal: noop,
 
         syncInternal: noop,
@@ -47,7 +47,7 @@ KISSY.add(function (S, require) {
                  * @param {KISSY.Event.CustomEvent.Object} e
                  */
                 self.fire('beforeCreateDom');
-                self.createInternal();
+                self.createDom();
                 self.__callPluginsMethod('pluginCreateDom');
                 /**
                  * @event afterCreateDom
@@ -59,10 +59,6 @@ KISSY.add(function (S, require) {
                 self.setInternal('created', true);
             }
             return self;
-        },
-
-        createInternal: function () {
-            this.createDom();
         },
 
         /**
@@ -99,7 +95,7 @@ KISSY.add(function (S, require) {
                  */
 
                 self.fire('beforeBindUI');
-                ComponentProcess.superclass.bindInternal.call(self);
+                ControlProcess.superclass.bindInternal.call(self);
                 self.bindUI();
                 self.__callPluginsMethod('pluginBindUI');
                 /**
@@ -109,7 +105,7 @@ KISSY.add(function (S, require) {
                  */
                 self.fire('afterBindUI');
 
-                ComponentProcess.superclass.syncInternal.call(self);
+                ControlProcess.superclass.syncInternal.call(self);
                 syncUIs(self);
 
                 self.setInternal('rendered', true);
@@ -160,7 +156,7 @@ KISSY.add(function (S, require) {
             syncUI: __getHook('__syncUI')
         },
 
-        name: 'ComponentProcess',
+        name: 'ControlProcess',
 
         ATTRS: {
             /**
@@ -212,13 +208,13 @@ KISSY.add(function (S, require) {
         self.fire('afterSyncUI');
     }
 
-    return ComponentProcess;
+    return ControlProcess;
 });
 /**
  * @ignore
  *
  * 2013.06.18 note:
- *  - ComponentProcess 流程化渲染过程定义
+ *  - ControlProcess 流程化渲染过程定义
  *
  * Refer:
  *  - http://martinfowler.com/eaaDev/uiArchs.html
