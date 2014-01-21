@@ -10,6 +10,7 @@ KISSY.add(function (S, require) {
 
     // http://www.html5rocks.com/en/tutorials/speed/html5/
     var Features = S.Features,
+        floor = Math.floor,
 //        MARKER_CLS = 'ks-scrollview-marker',
         supportTransform3d = Features.isTransform3dSupported(),
         transformProperty;
@@ -128,16 +129,16 @@ KISSY.add(function (S, require) {
         methods._onSetScrollLeft = function (v) {
             var control = this.control;
             control.contentEl.style[transformProperty] = S.substitute(translateTpl, {
-                translateX: -v,
-                translateY: -control.get('scrollTop')
+                translateX: floor(-v),
+                translateY: floor(-control.get('scrollTop'))
             });
         };
 
         methods._onSetScrollTop = function (v) {
             var control = this.control;
             control.contentEl.style[transformProperty] = S.substitute(translateTpl, {
-                translateX: -control.get('scrollLeft'),
-                translateY: -v
+                translateX: floor(-control.get('scrollLeft')),
+                translateY: floor(-v)
             });
         };
     }

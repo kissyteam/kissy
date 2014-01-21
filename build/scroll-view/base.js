@@ -1,7 +1,7 @@
 /*
-Copyright 2013, KISSY v1.41
+Copyright 2014, KISSY v1.41
 MIT Licensed
-build time: Dec 4 22:17
+build time: Jan 21 11:48
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -14,7 +14,7 @@ KISSY.add("scroll-view/base/render", ["component/container", "component/extensio
   var Container = require("component/container");
   var ContentRenderExtension = require("component/extension/content-render");
   var translateTpl = "translate3d({translateX}px,{translateY}px,0)";
-  var Features = S.Features, supportTransform3d = Features.isTransform3dSupported(), transformProperty;
+  var Features = S.Features, floor = Math.floor, supportTransform3d = Features.isTransform3dSupported(), transformProperty;
   var methods = {syncUI:function() {
     var self = this, control = self.control, el = control.el, contentEl = control.contentEl, $contentEl = control.$contentEl;
     var scrollHeight = contentEl.offsetHeight, scrollWidth = contentEl.offsetWidth;
@@ -59,11 +59,11 @@ KISSY.add("scroll-view/base/render", ["component/container", "component/extensio
     transformProperty = Features.getTransformProperty();
     methods._onSetScrollLeft = function(v) {
       var control = this.control;
-      control.contentEl.style[transformProperty] = S.substitute(translateTpl, {translateX:-v, translateY:-control.get("scrollTop")})
+      control.contentEl.style[transformProperty] = S.substitute(translateTpl, {translateX:floor(-v), translateY:floor(-control.get("scrollTop"))})
     };
     methods._onSetScrollTop = function(v) {
       var control = this.control;
-      control.contentEl.style[transformProperty] = S.substitute(translateTpl, {translateX:-control.get("scrollLeft"), translateY:-v})
+      control.contentEl.style[transformProperty] = S.substitute(translateTpl, {translateX:floor(-control.get("scrollLeft")), translateY:floor(-v)})
     }
   }
   return Container.getDefaultRender().extend([ContentRenderExtension], methods, {name:"ScrollViewRender"})
