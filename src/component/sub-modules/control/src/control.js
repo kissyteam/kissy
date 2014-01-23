@@ -69,13 +69,13 @@ KISSY.add(function (S, require) {
              */
             renderUI: function () {
                 this.view.renderUI();
+                // bind view before bind control
+                this.view.bindUI();
             },
 
             bindUI: function () {
                 var self = this,
                     el = self.view.getKeyEventTarget();
-
-                self.view.bindUI();
 
                 if (self.get('focusable')) {
                     // remove smart outline in ie
@@ -135,7 +135,12 @@ KISSY.add(function (S, require) {
             '_onSetFocused': function (v) {
                 var target = this.view.getKeyEventTarget()[0];
                 if (v) {
-                    target.focus();
+                    try {
+                        target.focus();
+                    } catch (e) {
+                        S.log(target);
+                        S.log('focus error', 'warn');
+                    }
                 } else {
                     // force to move focus if just this.set('focused',false);
                     // do not changed focus if changed by other component focus

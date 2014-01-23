@@ -246,8 +246,8 @@ if (! _$jscoverage['/control.js']) {
   _$jscoverage['/control.js'].lineData[59] = 0;
   _$jscoverage['/control.js'].lineData[62] = 0;
   _$jscoverage['/control.js'].lineData[71] = 0;
-  _$jscoverage['/control.js'].lineData[75] = 0;
-  _$jscoverage['/control.js'].lineData[78] = 0;
+  _$jscoverage['/control.js'].lineData[73] = 0;
+  _$jscoverage['/control.js'].lineData[77] = 0;
   _$jscoverage['/control.js'].lineData[80] = 0;
   _$jscoverage['/control.js'].lineData[85] = 0;
   _$jscoverage['/control.js'].lineData[88] = 0;
@@ -260,128 +260,126 @@ if (! _$jscoverage['/control.js']) {
   _$jscoverage['/control.js'].lineData[107] = 0;
   _$jscoverage['/control.js'].lineData[108] = 0;
   _$jscoverage['/control.js'].lineData[114] = 0;
-  _$jscoverage['/control.js'].lineData[115] = 0;
-  _$jscoverage['/control.js'].lineData[116] = 0;
-  _$jscoverage['/control.js'].lineData[117] = 0;
-  _$jscoverage['/control.js'].lineData[118] = 0;
-  _$jscoverage['/control.js'].lineData[122] = 0;
+  _$jscoverage['/control.js'].lineData[121] = 0;
+  _$jscoverage['/control.js'].lineData[123] = 0;
+  _$jscoverage['/control.js'].lineData[124] = 0;
+  _$jscoverage['/control.js'].lineData[125] = 0;
   _$jscoverage['/control.js'].lineData[126] = 0;
-  _$jscoverage['/control.js'].lineData[130] = 0;
-  _$jscoverage['/control.js'].lineData[131] = 0;
+  _$jscoverage['/control.js'].lineData[127] = 0;
   _$jscoverage['/control.js'].lineData[132] = 0;
   _$jscoverage['/control.js'].lineData[136] = 0;
   _$jscoverage['/control.js'].lineData[137] = 0;
-  _$jscoverage['/control.js'].lineData[143] = 0;
-  _$jscoverage['/control.js'].lineData[149] = 0;
-  _$jscoverage['/control.js'].lineData[156] = 0;
-  _$jscoverage['/control.js'].lineData[164] = 0;
-  _$jscoverage['/control.js'].lineData[165] = 0;
-  _$jscoverage['/control.js'].lineData[166] = 0;
+  _$jscoverage['/control.js'].lineData[138] = 0;
+  _$jscoverage['/control.js'].lineData[139] = 0;
+  _$jscoverage['/control.js'].lineData[141] = 0;
+  _$jscoverage['/control.js'].lineData[142] = 0;
+  _$jscoverage['/control.js'].lineData[147] = 0;
+  _$jscoverage['/control.js'].lineData[148] = 0;
+  _$jscoverage['/control.js'].lineData[154] = 0;
+  _$jscoverage['/control.js'].lineData[160] = 0;
   _$jscoverage['/control.js'].lineData[167] = 0;
   _$jscoverage['/control.js'].lineData[175] = 0;
   _$jscoverage['/control.js'].lineData[176] = 0;
   _$jscoverage['/control.js'].lineData[177] = 0;
-  _$jscoverage['/control.js'].lineData[181] = 0;
-  _$jscoverage['/control.js'].lineData[182] = 0;
+  _$jscoverage['/control.js'].lineData[178] = 0;
+  _$jscoverage['/control.js'].lineData[186] = 0;
   _$jscoverage['/control.js'].lineData[187] = 0;
   _$jscoverage['/control.js'].lineData[188] = 0;
+  _$jscoverage['/control.js'].lineData[192] = 0;
   _$jscoverage['/control.js'].lineData[193] = 0;
-  _$jscoverage['/control.js'].lineData[200] = 0;
-  _$jscoverage['/control.js'].lineData[201] = 0;
-  _$jscoverage['/control.js'].lineData[213] = 0;
-  _$jscoverage['/control.js'].lineData[217] = 0;
-  _$jscoverage['/control.js'].lineData[218] = 0;
+  _$jscoverage['/control.js'].lineData[198] = 0;
+  _$jscoverage['/control.js'].lineData[199] = 0;
+  _$jscoverage['/control.js'].lineData[204] = 0;
+  _$jscoverage['/control.js'].lineData[211] = 0;
+  _$jscoverage['/control.js'].lineData[212] = 0;
+  _$jscoverage['/control.js'].lineData[224] = 0;
   _$jscoverage['/control.js'].lineData[228] = 0;
-  _$jscoverage['/control.js'].lineData[232] = 0;
-  _$jscoverage['/control.js'].lineData[233] = 0;
+  _$jscoverage['/control.js'].lineData[229] = 0;
+  _$jscoverage['/control.js'].lineData[239] = 0;
   _$jscoverage['/control.js'].lineData[243] = 0;
   _$jscoverage['/control.js'].lineData[244] = 0;
-  _$jscoverage['/control.js'].lineData[245] = 0;
-  _$jscoverage['/control.js'].lineData[249] = 0;
-  _$jscoverage['/control.js'].lineData[250] = 0;
-  _$jscoverage['/control.js'].lineData[263] = 0;
-  _$jscoverage['/control.js'].lineData[266] = 0;
-  _$jscoverage['/control.js'].lineData[267] = 0;
-  _$jscoverage['/control.js'].lineData[268] = 0;
-  _$jscoverage['/control.js'].lineData[270] = 0;
-  _$jscoverage['/control.js'].lineData[271] = 0;
-  _$jscoverage['/control.js'].lineData[273] = 0;
-  _$jscoverage['/control.js'].lineData[276] = 0;
+  _$jscoverage['/control.js'].lineData[254] = 0;
+  _$jscoverage['/control.js'].lineData[255] = 0;
+  _$jscoverage['/control.js'].lineData[256] = 0;
+  _$jscoverage['/control.js'].lineData[260] = 0;
+  _$jscoverage['/control.js'].lineData[261] = 0;
+  _$jscoverage['/control.js'].lineData[274] = 0;
   _$jscoverage['/control.js'].lineData[277] = 0;
+  _$jscoverage['/control.js'].lineData[278] = 0;
   _$jscoverage['/control.js'].lineData[279] = 0;
-  _$jscoverage['/control.js'].lineData[280] = 0;
+  _$jscoverage['/control.js'].lineData[281] = 0;
+  _$jscoverage['/control.js'].lineData[282] = 0;
+  _$jscoverage['/control.js'].lineData[284] = 0;
   _$jscoverage['/control.js'].lineData[287] = 0;
   _$jscoverage['/control.js'].lineData[288] = 0;
-  _$jscoverage['/control.js'].lineData[300] = 0;
-  _$jscoverage['/control.js'].lineData[302] = 0;
-  _$jscoverage['/control.js'].lineData[303] = 0;
-  _$jscoverage['/control.js'].lineData[308] = 0;
-  _$jscoverage['/control.js'].lineData[309] = 0;
-  _$jscoverage['/control.js'].lineData[321] = 0;
-  _$jscoverage['/control.js'].lineData[322] = 0;
-  _$jscoverage['/control.js'].lineData[331] = 0;
+  _$jscoverage['/control.js'].lineData[290] = 0;
+  _$jscoverage['/control.js'].lineData[291] = 0;
+  _$jscoverage['/control.js'].lineData[298] = 0;
+  _$jscoverage['/control.js'].lineData[299] = 0;
+  _$jscoverage['/control.js'].lineData[311] = 0;
+  _$jscoverage['/control.js'].lineData[313] = 0;
+  _$jscoverage['/control.js'].lineData[314] = 0;
+  _$jscoverage['/control.js'].lineData[319] = 0;
+  _$jscoverage['/control.js'].lineData[320] = 0;
   _$jscoverage['/control.js'].lineData[332] = 0;
-  _$jscoverage['/control.js'].lineData[336] = 0;
-  _$jscoverage['/control.js'].lineData[337] = 0;
-  _$jscoverage['/control.js'].lineData[346] = 0;
+  _$jscoverage['/control.js'].lineData[333] = 0;
+  _$jscoverage['/control.js'].lineData[342] = 0;
+  _$jscoverage['/control.js'].lineData[343] = 0;
   _$jscoverage['/control.js'].lineData[347] = 0;
-  _$jscoverage['/control.js'].lineData[351] = 0;
-  _$jscoverage['/control.js'].lineData[352] = 0;
-  _$jscoverage['/control.js'].lineData[353] = 0;
-  _$jscoverage['/control.js'].lineData[354] = 0;
-  _$jscoverage['/control.js'].lineData[356] = 0;
+  _$jscoverage['/control.js'].lineData[348] = 0;
+  _$jscoverage['/control.js'].lineData[357] = 0;
+  _$jscoverage['/control.js'].lineData[358] = 0;
+  _$jscoverage['/control.js'].lineData[362] = 0;
+  _$jscoverage['/control.js'].lineData[363] = 0;
+  _$jscoverage['/control.js'].lineData[364] = 0;
   _$jscoverage['/control.js'].lineData[365] = 0;
-  _$jscoverage['/control.js'].lineData[366] = 0;
-  _$jscoverage['/control.js'].lineData[368] = 0;
-  _$jscoverage['/control.js'].lineData[372] = 0;
-  _$jscoverage['/control.js'].lineData[373] = 0;
+  _$jscoverage['/control.js'].lineData[367] = 0;
+  _$jscoverage['/control.js'].lineData[376] = 0;
+  _$jscoverage['/control.js'].lineData[377] = 0;
+  _$jscoverage['/control.js'].lineData[379] = 0;
   _$jscoverage['/control.js'].lineData[383] = 0;
   _$jscoverage['/control.js'].lineData[384] = 0;
-  _$jscoverage['/control.js'].lineData[385] = 0;
-  _$jscoverage['/control.js'].lineData[393] = 0;
+  _$jscoverage['/control.js'].lineData[394] = 0;
   _$jscoverage['/control.js'].lineData[395] = 0;
   _$jscoverage['/control.js'].lineData[396] = 0;
-  _$jscoverage['/control.js'].lineData[397] = 0;
-  _$jscoverage['/control.js'].lineData[398] = 0;
-  _$jscoverage['/control.js'].lineData[399] = 0;
-  _$jscoverage['/control.js'].lineData[410] = 0;
+  _$jscoverage['/control.js'].lineData[407] = 0;
+  _$jscoverage['/control.js'].lineData[471] = 0;
+  _$jscoverage['/control.js'].lineData[472] = 0;
   _$jscoverage['/control.js'].lineData[474] = 0;
-  _$jscoverage['/control.js'].lineData[475] = 0;
-  _$jscoverage['/control.js'].lineData[477] = 0;
-  _$jscoverage['/control.js'].lineData[527] = 0;
-  _$jscoverage['/control.js'].lineData[528] = 0;
+  _$jscoverage['/control.js'].lineData[524] = 0;
+  _$jscoverage['/control.js'].lineData[525] = 0;
+  _$jscoverage['/control.js'].lineData[570] = 0;
+  _$jscoverage['/control.js'].lineData[572] = 0;
   _$jscoverage['/control.js'].lineData[573] = 0;
-  _$jscoverage['/control.js'].lineData[575] = 0;
+  _$jscoverage['/control.js'].lineData[574] = 0;
   _$jscoverage['/control.js'].lineData[576] = 0;
   _$jscoverage['/control.js'].lineData[577] = 0;
-  _$jscoverage['/control.js'].lineData[579] = 0;
   _$jscoverage['/control.js'].lineData[580] = 0;
   _$jscoverage['/control.js'].lineData[583] = 0;
-  _$jscoverage['/control.js'].lineData[586] = 0;
-  _$jscoverage['/control.js'].lineData[653] = 0;
+  _$jscoverage['/control.js'].lineData[650] = 0;
+  _$jscoverage['/control.js'].lineData[799] = 0;
+  _$jscoverage['/control.js'].lineData[800] = 0;
   _$jscoverage['/control.js'].lineData[802] = 0;
   _$jscoverage['/control.js'].lineData[803] = 0;
-  _$jscoverage['/control.js'].lineData[805] = 0;
-  _$jscoverage['/control.js'].lineData[806] = 0;
-  _$jscoverage['/control.js'].lineData[842] = 0;
+  _$jscoverage['/control.js'].lineData[839] = 0;
+  _$jscoverage['/control.js'].lineData[845] = 0;
+  _$jscoverage['/control.js'].lineData[846] = 0;
   _$jscoverage['/control.js'].lineData[848] = 0;
   _$jscoverage['/control.js'].lineData[849] = 0;
-  _$jscoverage['/control.js'].lineData[851] = 0;
+  _$jscoverage['/control.js'].lineData[850] = 0;
   _$jscoverage['/control.js'].lineData[852] = 0;
-  _$jscoverage['/control.js'].lineData[853] = 0;
   _$jscoverage['/control.js'].lineData[855] = 0;
-  _$jscoverage['/control.js'].lineData[858] = 0;
-  _$jscoverage['/control.js'].lineData[879] = 0;
-  _$jscoverage['/control.js'].lineData[881] = 0;
-  _$jscoverage['/control.js'].lineData[888] = 0;
+  _$jscoverage['/control.js'].lineData[876] = 0;
+  _$jscoverage['/control.js'].lineData[878] = 0;
+  _$jscoverage['/control.js'].lineData[885] = 0;
+  _$jscoverage['/control.js'].lineData[886] = 0;
   _$jscoverage['/control.js'].lineData[889] = 0;
+  _$jscoverage['/control.js'].lineData[891] = 0;
   _$jscoverage['/control.js'].lineData[892] = 0;
-  _$jscoverage['/control.js'].lineData[894] = 0;
   _$jscoverage['/control.js'].lineData[895] = 0;
+  _$jscoverage['/control.js'].lineData[896] = 0;
   _$jscoverage['/control.js'].lineData[898] = 0;
-  _$jscoverage['/control.js'].lineData[899] = 0;
   _$jscoverage['/control.js'].lineData[901] = 0;
-  _$jscoverage['/control.js'].lineData[904] = 0;
 }
 if (! _$jscoverage['/control.js'].functionData) {
   _$jscoverage['/control.js'].functionData = [];
@@ -431,7 +429,6 @@ if (! _$jscoverage['/control.js'].functionData) {
   _$jscoverage['/control.js'].functionData[43] = 0;
   _$jscoverage['/control.js'].functionData[44] = 0;
   _$jscoverage['/control.js'].functionData[45] = 0;
-  _$jscoverage['/control.js'].functionData[46] = 0;
 }
 if (! _$jscoverage['/control.js'].branchData) {
   _$jscoverage['/control.js'].branchData = {};
@@ -449,252 +446,252 @@ if (! _$jscoverage['/control.js'].branchData) {
   _$jscoverage['/control.js'].branchData['101'][1] = new BranchData();
   _$jscoverage['/control.js'].branchData['107'] = [];
   _$jscoverage['/control.js'].branchData['107'][1] = new BranchData();
+  _$jscoverage['/control.js'].branchData['124'] = [];
+  _$jscoverage['/control.js'].branchData['124'][1] = new BranchData();
   _$jscoverage['/control.js'].branchData['126'] = [];
   _$jscoverage['/control.js'].branchData['126'][1] = new BranchData();
-  _$jscoverage['/control.js'].branchData['131'] = [];
-  _$jscoverage['/control.js'].branchData['131'][1] = new BranchData();
-  _$jscoverage['/control.js'].branchData['136'] = [];
-  _$jscoverage['/control.js'].branchData['136'][1] = new BranchData();
-  _$jscoverage['/control.js'].branchData['181'] = [];
-  _$jscoverage['/control.js'].branchData['181'][1] = new BranchData();
-  _$jscoverage['/control.js'].branchData['187'] = [];
-  _$jscoverage['/control.js'].branchData['187'][1] = new BranchData();
-  _$jscoverage['/control.js'].branchData['200'] = [];
-  _$jscoverage['/control.js'].branchData['200'][1] = new BranchData();
-  _$jscoverage['/control.js'].branchData['217'] = [];
-  _$jscoverage['/control.js'].branchData['217'][1] = new BranchData();
-  _$jscoverage['/control.js'].branchData['232'] = [];
-  _$jscoverage['/control.js'].branchData['232'][1] = new BranchData();
-  _$jscoverage['/control.js'].branchData['249'] = [];
-  _$jscoverage['/control.js'].branchData['249'][1] = new BranchData();
-  _$jscoverage['/control.js'].branchData['265'] = [];
-  _$jscoverage['/control.js'].branchData['265'][1] = new BranchData();
-  _$jscoverage['/control.js'].branchData['266'] = [];
-  _$jscoverage['/control.js'].branchData['266'][1] = new BranchData();
-  _$jscoverage['/control.js'].branchData['267'] = [];
-  _$jscoverage['/control.js'].branchData['267'][1] = new BranchData();
-  _$jscoverage['/control.js'].branchData['270'] = [];
-  _$jscoverage['/control.js'].branchData['270'][1] = new BranchData();
-  _$jscoverage['/control.js'].branchData['273'] = [];
-  _$jscoverage['/control.js'].branchData['273'][1] = new BranchData();
+  _$jscoverage['/control.js'].branchData['132'] = [];
+  _$jscoverage['/control.js'].branchData['132'][1] = new BranchData();
+  _$jscoverage['/control.js'].branchData['137'] = [];
+  _$jscoverage['/control.js'].branchData['137'][1] = new BranchData();
+  _$jscoverage['/control.js'].branchData['147'] = [];
+  _$jscoverage['/control.js'].branchData['147'][1] = new BranchData();
+  _$jscoverage['/control.js'].branchData['192'] = [];
+  _$jscoverage['/control.js'].branchData['192'][1] = new BranchData();
+  _$jscoverage['/control.js'].branchData['198'] = [];
+  _$jscoverage['/control.js'].branchData['198'][1] = new BranchData();
+  _$jscoverage['/control.js'].branchData['211'] = [];
+  _$jscoverage['/control.js'].branchData['211'][1] = new BranchData();
+  _$jscoverage['/control.js'].branchData['228'] = [];
+  _$jscoverage['/control.js'].branchData['228'][1] = new BranchData();
+  _$jscoverage['/control.js'].branchData['243'] = [];
+  _$jscoverage['/control.js'].branchData['243'][1] = new BranchData();
+  _$jscoverage['/control.js'].branchData['260'] = [];
+  _$jscoverage['/control.js'].branchData['260'][1] = new BranchData();
+  _$jscoverage['/control.js'].branchData['276'] = [];
+  _$jscoverage['/control.js'].branchData['276'][1] = new BranchData();
   _$jscoverage['/control.js'].branchData['277'] = [];
   _$jscoverage['/control.js'].branchData['277'][1] = new BranchData();
-  _$jscoverage['/control.js'].branchData['279'] = [];
-  _$jscoverage['/control.js'].branchData['279'][1] = new BranchData();
-  _$jscoverage['/control.js'].branchData['279'][2] = new BranchData();
-  _$jscoverage['/control.js'].branchData['279'][3] = new BranchData();
-  _$jscoverage['/control.js'].branchData['279'][4] = new BranchData();
-  _$jscoverage['/control.js'].branchData['279'][5] = new BranchData();
-  _$jscoverage['/control.js'].branchData['287'] = [];
-  _$jscoverage['/control.js'].branchData['287'][1] = new BranchData();
-  _$jscoverage['/control.js'].branchData['302'] = [];
-  _$jscoverage['/control.js'].branchData['302'][1] = new BranchData();
-  _$jscoverage['/control.js'].branchData['302'][2] = new BranchData();
-  _$jscoverage['/control.js'].branchData['302'][3] = new BranchData();
-  _$jscoverage['/control.js'].branchData['308'] = [];
-  _$jscoverage['/control.js'].branchData['308'][1] = new BranchData();
-  _$jscoverage['/control.js'].branchData['321'] = [];
-  _$jscoverage['/control.js'].branchData['321'][1] = new BranchData();
-  _$jscoverage['/control.js'].branchData['336'] = [];
-  _$jscoverage['/control.js'].branchData['336'][1] = new BranchData();
-  _$jscoverage['/control.js'].branchData['352'] = [];
-  _$jscoverage['/control.js'].branchData['352'][1] = new BranchData();
-  _$jscoverage['/control.js'].branchData['365'] = [];
-  _$jscoverage['/control.js'].branchData['365'][1] = new BranchData();
-  _$jscoverage['/control.js'].branchData['372'] = [];
-  _$jscoverage['/control.js'].branchData['372'][1] = new BranchData();
-  _$jscoverage['/control.js'].branchData['384'] = [];
-  _$jscoverage['/control.js'].branchData['384'][1] = new BranchData();
-  _$jscoverage['/control.js'].branchData['396'] = [];
-  _$jscoverage['/control.js'].branchData['396'][1] = new BranchData();
-  _$jscoverage['/control.js'].branchData['398'] = [];
-  _$jscoverage['/control.js'].branchData['398'][1] = new BranchData();
+  _$jscoverage['/control.js'].branchData['278'] = [];
+  _$jscoverage['/control.js'].branchData['278'][1] = new BranchData();
+  _$jscoverage['/control.js'].branchData['281'] = [];
+  _$jscoverage['/control.js'].branchData['281'][1] = new BranchData();
+  _$jscoverage['/control.js'].branchData['284'] = [];
+  _$jscoverage['/control.js'].branchData['284'][1] = new BranchData();
+  _$jscoverage['/control.js'].branchData['288'] = [];
+  _$jscoverage['/control.js'].branchData['288'][1] = new BranchData();
+  _$jscoverage['/control.js'].branchData['290'] = [];
+  _$jscoverage['/control.js'].branchData['290'][1] = new BranchData();
+  _$jscoverage['/control.js'].branchData['290'][2] = new BranchData();
+  _$jscoverage['/control.js'].branchData['290'][3] = new BranchData();
+  _$jscoverage['/control.js'].branchData['290'][4] = new BranchData();
+  _$jscoverage['/control.js'].branchData['290'][5] = new BranchData();
+  _$jscoverage['/control.js'].branchData['298'] = [];
+  _$jscoverage['/control.js'].branchData['298'][1] = new BranchData();
+  _$jscoverage['/control.js'].branchData['313'] = [];
+  _$jscoverage['/control.js'].branchData['313'][1] = new BranchData();
+  _$jscoverage['/control.js'].branchData['313'][2] = new BranchData();
+  _$jscoverage['/control.js'].branchData['313'][3] = new BranchData();
+  _$jscoverage['/control.js'].branchData['319'] = [];
+  _$jscoverage['/control.js'].branchData['319'][1] = new BranchData();
+  _$jscoverage['/control.js'].branchData['332'] = [];
+  _$jscoverage['/control.js'].branchData['332'][1] = new BranchData();
+  _$jscoverage['/control.js'].branchData['347'] = [];
+  _$jscoverage['/control.js'].branchData['347'][1] = new BranchData();
+  _$jscoverage['/control.js'].branchData['363'] = [];
+  _$jscoverage['/control.js'].branchData['363'][1] = new BranchData();
+  _$jscoverage['/control.js'].branchData['376'] = [];
+  _$jscoverage['/control.js'].branchData['376'][1] = new BranchData();
+  _$jscoverage['/control.js'].branchData['383'] = [];
+  _$jscoverage['/control.js'].branchData['383'][1] = new BranchData();
+  _$jscoverage['/control.js'].branchData['395'] = [];
+  _$jscoverage['/control.js'].branchData['395'][1] = new BranchData();
+  _$jscoverage['/control.js'].branchData['471'] = [];
+  _$jscoverage['/control.js'].branchData['471'][1] = new BranchData();
   _$jscoverage['/control.js'].branchData['474'] = [];
   _$jscoverage['/control.js'].branchData['474'][1] = new BranchData();
-  _$jscoverage['/control.js'].branchData['477'] = [];
-  _$jscoverage['/control.js'].branchData['477'][1] = new BranchData();
-  _$jscoverage['/control.js'].branchData['575'] = [];
-  _$jscoverage['/control.js'].branchData['575'][1] = new BranchData();
+  _$jscoverage['/control.js'].branchData['572'] = [];
+  _$jscoverage['/control.js'].branchData['572'][1] = new BranchData();
+  _$jscoverage['/control.js'].branchData['573'] = [];
+  _$jscoverage['/control.js'].branchData['573'][1] = new BranchData();
   _$jscoverage['/control.js'].branchData['576'] = [];
   _$jscoverage['/control.js'].branchData['576'][1] = new BranchData();
-  _$jscoverage['/control.js'].branchData['579'] = [];
-  _$jscoverage['/control.js'].branchData['579'][1] = new BranchData();
-  _$jscoverage['/control.js'].branchData['774'] = [];
-  _$jscoverage['/control.js'].branchData['774'][1] = new BranchData();
-  _$jscoverage['/control.js'].branchData['805'] = [];
-  _$jscoverage['/control.js'].branchData['805'][1] = new BranchData();
-  _$jscoverage['/control.js'].branchData['854'] = [];
-  _$jscoverage['/control.js'].branchData['854'][1] = new BranchData();
-  _$jscoverage['/control.js'].branchData['894'] = [];
-  _$jscoverage['/control.js'].branchData['894'][1] = new BranchData();
+  _$jscoverage['/control.js'].branchData['771'] = [];
+  _$jscoverage['/control.js'].branchData['771'][1] = new BranchData();
+  _$jscoverage['/control.js'].branchData['802'] = [];
+  _$jscoverage['/control.js'].branchData['802'][1] = new BranchData();
+  _$jscoverage['/control.js'].branchData['851'] = [];
+  _$jscoverage['/control.js'].branchData['851'][1] = new BranchData();
+  _$jscoverage['/control.js'].branchData['891'] = [];
+  _$jscoverage['/control.js'].branchData['891'][1] = new BranchData();
 }
-_$jscoverage['/control.js'].branchData['894'][1].init(382, 6, 'xclass');
-function visit102_894_1(result) {
-  _$jscoverage['/control.js'].branchData['894'][1].ranCondition(result);
+_$jscoverage['/control.js'].branchData['891'][1].init(382, 6, 'xclass');
+function visit102_891_1(result) {
+  _$jscoverage['/control.js'].branchData['891'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control.js'].branchData['854'][1].init(110, 24, '!attrs || !attrs.xrender');
-function visit101_854_1(result) {
-  _$jscoverage['/control.js'].branchData['854'][1].ranCondition(result);
+}_$jscoverage['/control.js'].branchData['851'][1].init(110, 24, '!attrs || !attrs.xrender');
+function visit101_851_1(result) {
+  _$jscoverage['/control.js'].branchData['851'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control.js'].branchData['805'][1].init(167, 1, 'p');
-function visit100_805_1(result) {
-  _$jscoverage['/control.js'].branchData['805'][1].ranCondition(result);
+}_$jscoverage['/control.js'].branchData['802'][1].init(167, 1, 'p');
+function visit100_802_1(result) {
+  _$jscoverage['/control.js'].branchData['802'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control.js'].branchData['774'][1].init(57, 40, 'S.config(\'component/prefixCls\') || \'ks-\'');
-function visit99_774_1(result) {
-  _$jscoverage['/control.js'].branchData['774'][1].ranCondition(result);
+}_$jscoverage['/control.js'].branchData['771'][1].init(57, 40, 'S.config(\'component/prefixCls\') || \'ks-\'');
+function visit99_771_1(result) {
+  _$jscoverage['/control.js'].branchData['771'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control.js'].branchData['579'][1].init(172, 19, 'xy[1] !== undefined');
-function visit98_579_1(result) {
-  _$jscoverage['/control.js'].branchData['579'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/control.js'].branchData['576'][1].init(33, 19, 'xy[0] !== undefined');
-function visit97_576_1(result) {
+}_$jscoverage['/control.js'].branchData['576'][1].init(172, 19, 'xy[1] !== undefined');
+function visit98_576_1(result) {
   _$jscoverage['/control.js'].branchData['576'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control.js'].branchData['575'][1].init(119, 9, 'xy.length');
-function visit96_575_1(result) {
-  _$jscoverage['/control.js'].branchData['575'][1].ranCondition(result);
+}_$jscoverage['/control.js'].branchData['573'][1].init(33, 19, 'xy[0] !== undefined');
+function visit97_573_1(result) {
+  _$jscoverage['/control.js'].branchData['573'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control.js'].branchData['477'][1].init(159, 7, 'v || []');
-function visit95_477_1(result) {
-  _$jscoverage['/control.js'].branchData['477'][1].ranCondition(result);
+}_$jscoverage['/control.js'].branchData['572'][1].init(119, 9, 'xy.length');
+function visit96_572_1(result) {
+  _$jscoverage['/control.js'].branchData['572'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control.js'].branchData['474'][1].init(29, 21, 'typeof v === \'string\'');
-function visit94_474_1(result) {
+}_$jscoverage['/control.js'].branchData['474'][1].init(159, 7, 'v || []');
+function visit95_474_1(result) {
   _$jscoverage['/control.js'].branchData['474'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control.js'].branchData['398'][1].init(241, 19, 'self.get(\'srcNode\')');
-function visit93_398_1(result) {
-  _$jscoverage['/control.js'].branchData['398'][1].ranCondition(result);
+}_$jscoverage['/control.js'].branchData['471'][1].init(29, 21, 'typeof v === \'string\'');
+function visit94_471_1(result) {
+  _$jscoverage['/control.js'].branchData['471'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control.js'].branchData['396'][1].init(159, 9, 'self.view');
-function visit92_396_1(result) {
-  _$jscoverage['/control.js'].branchData['396'][1].ranCondition(result);
+}_$jscoverage['/control.js'].branchData['395'][1].init(99, 21, 'self.get(\'focusable\')');
+function visit93_395_1(result) {
+  _$jscoverage['/control.js'].branchData['395'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control.js'].branchData['384'][1].init(99, 21, 'self.get(\'focusable\')');
-function visit91_384_1(result) {
-  _$jscoverage['/control.js'].branchData['384'][1].ranCondition(result);
+}_$jscoverage['/control.js'].branchData['383'][1].init(21, 21, '!this.get(\'disabled\')');
+function visit92_383_1(result) {
+  _$jscoverage['/control.js'].branchData['383'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control.js'].branchData['372'][1].init(21, 21, '!this.get(\'disabled\')');
-function visit90_372_1(result) {
-  _$jscoverage['/control.js'].branchData['372'][1].ranCondition(result);
+}_$jscoverage['/control.js'].branchData['376'][1].init(21, 33, 'ev.keyCode === Node.KeyCode.ENTER');
+function visit91_376_1(result) {
+  _$jscoverage['/control.js'].branchData['376'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control.js'].branchData['365'][1].init(21, 33, 'ev.keyCode === Node.KeyCode.ENTER');
-function visit89_365_1(result) {
-  _$jscoverage['/control.js'].branchData['365'][1].ranCondition(result);
+}_$jscoverage['/control.js'].branchData['363'][1].init(54, 55, '!this.get(\'disabled\') && self.handleKeyDownInternal(ev)');
+function visit90_363_1(result) {
+  _$jscoverage['/control.js'].branchData['363'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control.js'].branchData['352'][1].init(54, 55, '!this.get(\'disabled\') && self.handleKeyDownInternal(ev)');
-function visit88_352_1(result) {
-  _$jscoverage['/control.js'].branchData['352'][1].ranCondition(result);
+}_$jscoverage['/control.js'].branchData['347'][1].init(21, 21, '!this.get(\'disabled\')');
+function visit89_347_1(result) {
+  _$jscoverage['/control.js'].branchData['347'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control.js'].branchData['336'][1].init(21, 21, '!this.get(\'disabled\')');
-function visit87_336_1(result) {
-  _$jscoverage['/control.js'].branchData['336'][1].ranCondition(result);
+}_$jscoverage['/control.js'].branchData['332'][1].init(21, 21, '!this.get(\'disabled\')');
+function visit88_332_1(result) {
+  _$jscoverage['/control.js'].branchData['332'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control.js'].branchData['321'][1].init(21, 21, '!this.get(\'disabled\')');
-function visit86_321_1(result) {
-  _$jscoverage['/control.js'].branchData['321'][1].ranCondition(result);
+}_$jscoverage['/control.js'].branchData['319'][1].init(21, 21, '!this.get(\'disabled\')');
+function visit87_319_1(result) {
+  _$jscoverage['/control.js'].branchData['319'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control.js'].branchData['308'][1].init(21, 21, '!this.get(\'disabled\')');
-function visit85_308_1(result) {
-  _$jscoverage['/control.js'].branchData['308'][1].ranCondition(result);
+}_$jscoverage['/control.js'].branchData['313'][3].init(99, 14, 'ev.which === 1');
+function visit86_313_3(result) {
+  _$jscoverage['/control.js'].branchData['313'][3].ranCondition(result);
   return result;
-}_$jscoverage['/control.js'].branchData['302'][3].init(99, 14, 'ev.which === 1');
-function visit84_302_3(result) {
-  _$jscoverage['/control.js'].branchData['302'][3].ranCondition(result);
+}_$jscoverage['/control.js'].branchData['313'][2].init(99, 41, 'ev.which === 1 || isTouchGestureSupported');
+function visit85_313_2(result) {
+  _$jscoverage['/control.js'].branchData['313'][2].ranCondition(result);
   return result;
-}_$jscoverage['/control.js'].branchData['302'][2].init(99, 41, 'ev.which === 1 || isTouchGestureSupported');
-function visit83_302_2(result) {
-  _$jscoverage['/control.js'].branchData['302'][2].ranCondition(result);
+}_$jscoverage['/control.js'].branchData['313'][1].init(76, 65, 'self.get(\'active\') && (ev.which === 1 || isTouchGestureSupported)');
+function visit84_313_1(result) {
+  _$jscoverage['/control.js'].branchData['313'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control.js'].branchData['302'][1].init(76, 65, 'self.get(\'active\') && (ev.which === 1 || isTouchGestureSupported)');
-function visit82_302_1(result) {
-  _$jscoverage['/control.js'].branchData['302'][1].ranCondition(result);
+}_$jscoverage['/control.js'].branchData['298'][1].init(21, 21, '!this.get(\'disabled\')');
+function visit83_298_1(result) {
+  _$jscoverage['/control.js'].branchData['298'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control.js'].branchData['287'][1].init(21, 21, '!this.get(\'disabled\')');
-function visit81_287_1(result) {
-  _$jscoverage['/control.js'].branchData['287'][1].ranCondition(result);
+}_$jscoverage['/control.js'].branchData['290'][5].init(354, 14, 'n !== \'button\'');
+function visit82_290_5(result) {
+  _$jscoverage['/control.js'].branchData['290'][5].ranCondition(result);
   return result;
-}_$jscoverage['/control.js'].branchData['279'][5].init(354, 14, 'n !== \'button\'');
-function visit80_279_5(result) {
-  _$jscoverage['/control.js'].branchData['279'][5].ranCondition(result);
+}_$jscoverage['/control.js'].branchData['290'][4].init(334, 16, 'n !== \'textarea\'');
+function visit81_290_4(result) {
+  _$jscoverage['/control.js'].branchData['290'][4].ranCondition(result);
   return result;
-}_$jscoverage['/control.js'].branchData['279'][4].init(334, 16, 'n !== \'textarea\'');
-function visit79_279_4(result) {
-  _$jscoverage['/control.js'].branchData['279'][4].ranCondition(result);
+}_$jscoverage['/control.js'].branchData['290'][3].init(334, 34, 'n !== \'textarea\' && n !== \'button\'');
+function visit80_290_3(result) {
+  _$jscoverage['/control.js'].branchData['290'][3].ranCondition(result);
   return result;
-}_$jscoverage['/control.js'].branchData['279'][3].init(334, 34, 'n !== \'textarea\' && n !== \'button\'');
-function visit78_279_3(result) {
-  _$jscoverage['/control.js'].branchData['279'][3].ranCondition(result);
+}_$jscoverage['/control.js'].branchData['290'][2].init(317, 13, 'n !== \'input\'');
+function visit79_290_2(result) {
+  _$jscoverage['/control.js'].branchData['290'][2].ranCondition(result);
   return result;
-}_$jscoverage['/control.js'].branchData['279'][2].init(317, 13, 'n !== \'input\'');
-function visit77_279_2(result) {
-  _$jscoverage['/control.js'].branchData['279'][2].ranCondition(result);
+}_$jscoverage['/control.js'].branchData['290'][1].init(317, 51, 'n !== \'input\' && n !== \'textarea\' && n !== \'button\'');
+function visit78_290_1(result) {
+  _$jscoverage['/control.js'].branchData['290'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control.js'].branchData['279'][1].init(317, 51, 'n !== \'input\' && n !== \'textarea\' && n !== \'button\'');
-function visit76_279_1(result) {
-  _$jscoverage['/control.js'].branchData['279'][1].ranCondition(result);
+}_$jscoverage['/control.js'].branchData['288'][1].init(188, 20, 'n && n.toLowerCase()');
+function visit77_288_1(result) {
+  _$jscoverage['/control.js'].branchData['288'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control.js'].branchData['277'][1].init(188, 20, 'n && n.toLowerCase()');
-function visit75_277_1(result) {
+}_$jscoverage['/control.js'].branchData['284'][1].init(256, 31, '!self.get(\'allowTextSelection\')');
+function visit76_284_1(result) {
+  _$jscoverage['/control.js'].branchData['284'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/control.js'].branchData['281'][1].init(147, 21, 'self.get(\'focusable\')');
+function visit75_281_1(result) {
+  _$jscoverage['/control.js'].branchData['281'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/control.js'].branchData['278'][1].init(25, 22, 'self.get(\'activeable\')');
+function visit74_278_1(result) {
+  _$jscoverage['/control.js'].branchData['278'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/control.js'].branchData['277'][1].init(135, 46, 'isMouseActionButton || isTouchGestureSupported');
+function visit73_277_1(result) {
   _$jscoverage['/control.js'].branchData['277'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control.js'].branchData['273'][1].init(256, 31, '!self.get(\'allowTextSelection\')');
-function visit74_273_1(result) {
-  _$jscoverage['/control.js'].branchData['273'][1].ranCondition(result);
+}_$jscoverage['/control.js'].branchData['276'][1].init(81, 14, 'ev.which === 1');
+function visit72_276_1(result) {
+  _$jscoverage['/control.js'].branchData['276'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control.js'].branchData['270'][1].init(147, 21, 'self.get(\'focusable\')');
-function visit73_270_1(result) {
-  _$jscoverage['/control.js'].branchData['270'][1].ranCondition(result);
+}_$jscoverage['/control.js'].branchData['260'][1].init(21, 21, '!this.get(\'disabled\')');
+function visit71_260_1(result) {
+  _$jscoverage['/control.js'].branchData['260'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control.js'].branchData['267'][1].init(25, 22, 'self.get(\'activeable\')');
-function visit72_267_1(result) {
-  _$jscoverage['/control.js'].branchData['267'][1].ranCondition(result);
+}_$jscoverage['/control.js'].branchData['243'][1].init(21, 21, '!this.get(\'disabled\')');
+function visit70_243_1(result) {
+  _$jscoverage['/control.js'].branchData['243'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control.js'].branchData['266'][1].init(135, 46, 'isMouseActionButton || isTouchGestureSupported');
-function visit71_266_1(result) {
-  _$jscoverage['/control.js'].branchData['266'][1].ranCondition(result);
+}_$jscoverage['/control.js'].branchData['228'][1].init(21, 21, '!this.get(\'disabled\')');
+function visit69_228_1(result) {
+  _$jscoverage['/control.js'].branchData['228'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control.js'].branchData['265'][1].init(81, 14, 'ev.which === 1');
-function visit70_265_1(result) {
-  _$jscoverage['/control.js'].branchData['265'][1].ranCondition(result);
+}_$jscoverage['/control.js'].branchData['211'][1].init(21, 21, '!this.get(\'disabled\')');
+function visit68_211_1(result) {
+  _$jscoverage['/control.js'].branchData['211'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control.js'].branchData['249'][1].init(21, 21, '!this.get(\'disabled\')');
-function visit69_249_1(result) {
-  _$jscoverage['/control.js'].branchData['249'][1].ranCondition(result);
+}_$jscoverage['/control.js'].branchData['198'][1].init(21, 21, 'this.get(\'focusable\')');
+function visit67_198_1(result) {
+  _$jscoverage['/control.js'].branchData['198'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control.js'].branchData['232'][1].init(21, 21, '!this.get(\'disabled\')');
-function visit68_232_1(result) {
-  _$jscoverage['/control.js'].branchData['232'][1].ranCondition(result);
+}_$jscoverage['/control.js'].branchData['192'][1].init(21, 21, 'this.get(\'focusable\')');
+function visit66_192_1(result) {
+  _$jscoverage['/control.js'].branchData['192'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control.js'].branchData['217'][1].init(21, 21, '!this.get(\'disabled\')');
-function visit67_217_1(result) {
-  _$jscoverage['/control.js'].branchData['217'][1].ranCondition(result);
+}_$jscoverage['/control.js'].branchData['147'][1].init(183, 45, 'target.ownerDocument.activeElement === target');
+function visit65_147_1(result) {
+  _$jscoverage['/control.js'].branchData['147'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control.js'].branchData['200'][1].init(21, 21, '!this.get(\'disabled\')');
-function visit66_200_1(result) {
-  _$jscoverage['/control.js'].branchData['200'][1].ranCondition(result);
+}_$jscoverage['/control.js'].branchData['137'][1].init(84, 1, 'v');
+function visit64_137_1(result) {
+  _$jscoverage['/control.js'].branchData['137'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control.js'].branchData['187'][1].init(21, 21, 'this.get(\'focusable\')');
-function visit65_187_1(result) {
-  _$jscoverage['/control.js'].branchData['187'][1].ranCondition(result);
+}_$jscoverage['/control.js'].branchData['132'][1].init(53, 14, 'parent || this');
+function visit63_132_1(result) {
+  _$jscoverage['/control.js'].branchData['132'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control.js'].branchData['181'][1].init(21, 21, 'this.get(\'focusable\')');
-function visit64_181_1(result) {
-  _$jscoverage['/control.js'].branchData['181'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/control.js'].branchData['136'][1].init(183, 45, 'target.ownerDocument.activeElement === target');
-function visit63_136_1(result) {
-  _$jscoverage['/control.js'].branchData['136'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/control.js'].branchData['131'][1].init(84, 1, 'v');
-function visit62_131_1(result) {
-  _$jscoverage['/control.js'].branchData['131'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/control.js'].branchData['126'][1].init(53, 14, 'parent || this');
-function visit61_126_1(result) {
+}_$jscoverage['/control.js'].branchData['126'][1].init(241, 19, 'self.get(\'srcNode\')');
+function visit62_126_1(result) {
   _$jscoverage['/control.js'].branchData['126'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/control.js'].branchData['124'][1].init(159, 9, 'self.view');
+function visit61_124_1(result) {
+  _$jscoverage['/control.js'].branchData['124'][1].ranCondition(result);
   return result;
 }_$jscoverage['/control.js'].branchData['107'][1].init(882, 6, 'ie < 9');
 function visit60_107_1(result) {
@@ -708,11 +705,11 @@ function visit59_101_1(result) {
 function visit58_91_1(result) {
   _$jscoverage['/control.js'].branchData['91'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control.js'].branchData['88'][1].init(517, 29, 'self.get(\'handleMouseEvents\')');
+}_$jscoverage['/control.js'].branchData['88'][1].init(480, 29, 'self.get(\'handleMouseEvents\')');
 function visit57_88_1(result) {
   _$jscoverage['/control.js'].branchData['88'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control.js'].branchData['80'][1].init(148, 21, 'self.get(\'focusable\')');
+}_$jscoverage['/control.js'].branchData['80'][1].init(111, 21, 'self.get(\'focusable\')');
 function visit56_80_1(result) {
   _$jscoverage['/control.js'].branchData['80'][1].ranCondition(result);
   return result;
@@ -769,13 +766,13 @@ KISSY.add(function(S, require) {
   _$jscoverage['/control.js'].functionData[2]++;
   _$jscoverage['/control.js'].lineData[71]++;
   this.view.renderUI();
+  _$jscoverage['/control.js'].lineData[73]++;
+  this.view.bindUI();
 }, 
   bindUI: function() {
   _$jscoverage['/control.js'].functionData[3]++;
-  _$jscoverage['/control.js'].lineData[75]++;
+  _$jscoverage['/control.js'].lineData[77]++;
   var self = this, el = self.view.getKeyEventTarget();
-  _$jscoverage['/control.js'].lineData[78]++;
-  self.view.bindUI();
   _$jscoverage['/control.js'].lineData[80]++;
   if (visit56_80_1(self.get('focusable'))) {
     _$jscoverage['/control.js'].lineData[85]++;
@@ -804,181 +801,194 @@ KISSY.add(function(S, require) {
     }
   }
 }, 
-  sync: function() {
+  syncUI: function() {
   _$jscoverage['/control.js'].functionData[4]++;
   _$jscoverage['/control.js'].lineData[114]++;
-  var self = this;
-  _$jscoverage['/control.js'].lineData[115]++;
-  self.fire('beforeSyncUI');
-  _$jscoverage['/control.js'].lineData[116]++;
-  self.syncUI();
-  _$jscoverage['/control.js'].lineData[117]++;
-  self.__callPluginsMethod('pluginSyncUI');
-  _$jscoverage['/control.js'].lineData[118]++;
-  self.fire('afterSyncUI');
-}, 
-  syncUI: function() {
-  _$jscoverage['/control.js'].functionData[5]++;
-  _$jscoverage['/control.js'].lineData[122]++;
   this.view.syncUI();
+}, 
+  destructor: function() {
+  _$jscoverage['/control.js'].functionData[5]++;
+  _$jscoverage['/control.js'].lineData[121]++;
+  var self = this;
+  _$jscoverage['/control.js'].lineData[123]++;
+  Manager.removeComponent(self.get('id'));
+  _$jscoverage['/control.js'].lineData[124]++;
+  if (visit61_124_1(self.view)) {
+    _$jscoverage['/control.js'].lineData[125]++;
+    self.view.destroy();
+  } else {
+    _$jscoverage['/control.js'].lineData[126]++;
+    if (visit62_126_1(self.get('srcNode'))) {
+      _$jscoverage['/control.js'].lineData[127]++;
+      self.get('srcNode').remove();
+    }
+  }
 }, 
   createComponent: function(cfg, parent) {
   _$jscoverage['/control.js'].functionData[6]++;
-  _$jscoverage['/control.js'].lineData[126]++;
-  return Manager.createComponent(cfg, visit61_126_1(parent || this));
+  _$jscoverage['/control.js'].lineData[132]++;
+  return Manager.createComponent(cfg, visit63_132_1(parent || this));
 }, 
   '_onSetFocused': function(v) {
   _$jscoverage['/control.js'].functionData[7]++;
-  _$jscoverage['/control.js'].lineData[130]++;
+  _$jscoverage['/control.js'].lineData[136]++;
   var target = this.view.getKeyEventTarget()[0];
-  _$jscoverage['/control.js'].lineData[131]++;
-  if (visit62_131_1(v)) {
-    _$jscoverage['/control.js'].lineData[132]++;
-    target.focus();
+  _$jscoverage['/control.js'].lineData[137]++;
+  if (visit64_137_1(v)) {
+    _$jscoverage['/control.js'].lineData[138]++;
+    try {
+      _$jscoverage['/control.js'].lineData[139]++;
+      target.focus();
+    }    catch (e) {
+  _$jscoverage['/control.js'].lineData[141]++;
+  S.log(target);
+  _$jscoverage['/control.js'].lineData[142]++;
+  S.log('focus error', 'warn');
+}
   } else {
-    _$jscoverage['/control.js'].lineData[136]++;
-    if (visit63_136_1(target.ownerDocument.activeElement === target)) {
-      _$jscoverage['/control.js'].lineData[137]++;
+    _$jscoverage['/control.js'].lineData[147]++;
+    if (visit65_147_1(target.ownerDocument.activeElement === target)) {
+      _$jscoverage['/control.js'].lineData[148]++;
       target.ownerDocument.body.focus();
     }
   }
 }, 
   '_onSetX': function(x) {
   _$jscoverage['/control.js'].functionData[8]++;
-  _$jscoverage['/control.js'].lineData[143]++;
+  _$jscoverage['/control.js'].lineData[154]++;
   this.$el.offset({
   left: x});
 }, 
   '_onSetY': function(y) {
   _$jscoverage['/control.js'].functionData[9]++;
-  _$jscoverage['/control.js'].lineData[149]++;
+  _$jscoverage['/control.js'].lineData[160]++;
   this.$el.offset({
   top: y});
 }, 
   _onSetVisible: function(v) {
   _$jscoverage['/control.js'].functionData[10]++;
-  _$jscoverage['/control.js'].lineData[156]++;
+  _$jscoverage['/control.js'].lineData[167]++;
   this.fire(v ? 'show' : 'hide');
 }, 
   show: function() {
   _$jscoverage['/control.js'].functionData[11]++;
-  _$jscoverage['/control.js'].lineData[164]++;
+  _$jscoverage['/control.js'].lineData[175]++;
   var self = this;
-  _$jscoverage['/control.js'].lineData[165]++;
+  _$jscoverage['/control.js'].lineData[176]++;
   self.render();
-  _$jscoverage['/control.js'].lineData[166]++;
+  _$jscoverage['/control.js'].lineData[177]++;
   self.set('visible', true);
-  _$jscoverage['/control.js'].lineData[167]++;
+  _$jscoverage['/control.js'].lineData[178]++;
   return self;
 }, 
   hide: function() {
   _$jscoverage['/control.js'].functionData[12]++;
-  _$jscoverage['/control.js'].lineData[175]++;
+  _$jscoverage['/control.js'].lineData[186]++;
   var self = this;
-  _$jscoverage['/control.js'].lineData[176]++;
+  _$jscoverage['/control.js'].lineData[187]++;
   self.set('visible', false);
-  _$jscoverage['/control.js'].lineData[177]++;
+  _$jscoverage['/control.js'].lineData[188]++;
   return self;
 }, 
   focus: function() {
   _$jscoverage['/control.js'].functionData[13]++;
-  _$jscoverage['/control.js'].lineData[181]++;
-  if (visit64_181_1(this.get('focusable'))) {
-    _$jscoverage['/control.js'].lineData[182]++;
+  _$jscoverage['/control.js'].lineData[192]++;
+  if (visit66_192_1(this.get('focusable'))) {
+    _$jscoverage['/control.js'].lineData[193]++;
     this.set('focused', true);
   }
 }, 
   blur: function() {
   _$jscoverage['/control.js'].functionData[14]++;
-  _$jscoverage['/control.js'].lineData[187]++;
-  if (visit65_187_1(this.get('focusable'))) {
-    _$jscoverage['/control.js'].lineData[188]++;
+  _$jscoverage['/control.js'].lineData[198]++;
+  if (visit67_198_1(this.get('focusable'))) {
+    _$jscoverage['/control.js'].lineData[199]++;
     this.set('focused', false);
   }
 }, 
   move: function(x, y) {
   _$jscoverage['/control.js'].functionData[15]++;
-  _$jscoverage['/control.js'].lineData[193]++;
+  _$jscoverage['/control.js'].lineData[204]++;
   this.set({
   x: x, 
   y: y});
 }, 
   handleDblClick: function(ev) {
   _$jscoverage['/control.js'].functionData[16]++;
-  _$jscoverage['/control.js'].lineData[200]++;
-  if (visit66_200_1(!this.get('disabled'))) {
-    _$jscoverage['/control.js'].lineData[201]++;
+  _$jscoverage['/control.js'].lineData[211]++;
+  if (visit68_211_1(!this.get('disabled'))) {
+    _$jscoverage['/control.js'].lineData[212]++;
     this.handleDblClickInternal(ev);
   }
 }, 
   handleDblClickInternal: function(ev) {
   _$jscoverage['/control.js'].functionData[17]++;
-  _$jscoverage['/control.js'].lineData[213]++;
+  _$jscoverage['/control.js'].lineData[224]++;
   this.handleClickInternal(ev);
 }, 
   handleMouseEnter: function(ev) {
   _$jscoverage['/control.js'].functionData[18]++;
-  _$jscoverage['/control.js'].lineData[217]++;
-  if (visit67_217_1(!this.get('disabled'))) {
-    _$jscoverage['/control.js'].lineData[218]++;
+  _$jscoverage['/control.js'].lineData[228]++;
+  if (visit69_228_1(!this.get('disabled'))) {
+    _$jscoverage['/control.js'].lineData[229]++;
     this.handleMouseEnterInternal(ev);
   }
 }, 
   handleMouseEnterInternal: function(ev) {
   _$jscoverage['/control.js'].functionData[19]++;
-  _$jscoverage['/control.js'].lineData[228]++;
+  _$jscoverage['/control.js'].lineData[239]++;
   this.set('highlighted', !!ev);
 }, 
   handleMouseLeave: function(ev) {
   _$jscoverage['/control.js'].functionData[20]++;
-  _$jscoverage['/control.js'].lineData[232]++;
-  if (visit68_232_1(!this.get('disabled'))) {
-    _$jscoverage['/control.js'].lineData[233]++;
+  _$jscoverage['/control.js'].lineData[243]++;
+  if (visit70_243_1(!this.get('disabled'))) {
+    _$jscoverage['/control.js'].lineData[244]++;
     this.handleMouseLeaveInternal(ev);
   }
 }, 
   handleMouseLeaveInternal: function(ev) {
   _$jscoverage['/control.js'].functionData[21]++;
-  _$jscoverage['/control.js'].lineData[243]++;
+  _$jscoverage['/control.js'].lineData[254]++;
   var self = this;
-  _$jscoverage['/control.js'].lineData[244]++;
+  _$jscoverage['/control.js'].lineData[255]++;
   self.set('active', false);
-  _$jscoverage['/control.js'].lineData[245]++;
+  _$jscoverage['/control.js'].lineData[256]++;
   self.set('highlighted', !ev);
 }, 
   handleMouseDown: function(ev) {
   _$jscoverage['/control.js'].functionData[22]++;
-  _$jscoverage['/control.js'].lineData[249]++;
-  if (visit69_249_1(!this.get('disabled'))) {
-    _$jscoverage['/control.js'].lineData[250]++;
+  _$jscoverage['/control.js'].lineData[260]++;
+  if (visit71_260_1(!this.get('disabled'))) {
+    _$jscoverage['/control.js'].lineData[261]++;
     this.handleMouseDownInternal(ev);
   }
 }, 
   handleMouseDownInternal: function(ev) {
   _$jscoverage['/control.js'].functionData[23]++;
-  _$jscoverage['/control.js'].lineData[263]++;
-  var self = this, n, isMouseActionButton = visit70_265_1(ev.which === 1);
-  _$jscoverage['/control.js'].lineData[266]++;
-  if (visit71_266_1(isMouseActionButton || isTouchGestureSupported)) {
-    _$jscoverage['/control.js'].lineData[267]++;
-    if (visit72_267_1(self.get('activeable'))) {
-      _$jscoverage['/control.js'].lineData[268]++;
+  _$jscoverage['/control.js'].lineData[274]++;
+  var self = this, n, isMouseActionButton = visit72_276_1(ev.which === 1);
+  _$jscoverage['/control.js'].lineData[277]++;
+  if (visit73_277_1(isMouseActionButton || isTouchGestureSupported)) {
+    _$jscoverage['/control.js'].lineData[278]++;
+    if (visit74_278_1(self.get('activeable'))) {
+      _$jscoverage['/control.js'].lineData[279]++;
       self.set('active', true);
     }
-    _$jscoverage['/control.js'].lineData[270]++;
-    if (visit73_270_1(self.get('focusable'))) {
-      _$jscoverage['/control.js'].lineData[271]++;
+    _$jscoverage['/control.js'].lineData[281]++;
+    if (visit75_281_1(self.get('focusable'))) {
+      _$jscoverage['/control.js'].lineData[282]++;
       self.focus();
     }
-    _$jscoverage['/control.js'].lineData[273]++;
-    if (visit74_273_1(!self.get('allowTextSelection'))) {
-      _$jscoverage['/control.js'].lineData[276]++;
+    _$jscoverage['/control.js'].lineData[284]++;
+    if (visit76_284_1(!self.get('allowTextSelection'))) {
+      _$jscoverage['/control.js'].lineData[287]++;
       n = ev.target.nodeName;
-      _$jscoverage['/control.js'].lineData[277]++;
-      n = visit75_277_1(n && n.toLowerCase());
-      _$jscoverage['/control.js'].lineData[279]++;
-      if (visit76_279_1(visit77_279_2(n !== 'input') && visit78_279_3(visit79_279_4(n !== 'textarea') && visit80_279_5(n !== 'button')))) {
-        _$jscoverage['/control.js'].lineData[280]++;
+      _$jscoverage['/control.js'].lineData[288]++;
+      n = visit77_288_1(n && n.toLowerCase());
+      _$jscoverage['/control.js'].lineData[290]++;
+      if (visit78_290_1(visit79_290_2(n !== 'input') && visit80_290_3(visit81_290_4(n !== 'textarea') && visit82_290_5(n !== 'button')))) {
+        _$jscoverage['/control.js'].lineData[291]++;
         ev.preventDefault();
       }
     }
@@ -986,27 +996,27 @@ KISSY.add(function(S, require) {
 }, 
   handleMouseUp: function(ev) {
   _$jscoverage['/control.js'].functionData[24]++;
-  _$jscoverage['/control.js'].lineData[287]++;
-  if (visit81_287_1(!this.get('disabled'))) {
-    _$jscoverage['/control.js'].lineData[288]++;
+  _$jscoverage['/control.js'].lineData[298]++;
+  if (visit83_298_1(!this.get('disabled'))) {
+    _$jscoverage['/control.js'].lineData[299]++;
     this.handleMouseUpInternal(ev);
   }
 }, 
   handleMouseUpInternal: function(ev) {
   _$jscoverage['/control.js'].functionData[25]++;
-  _$jscoverage['/control.js'].lineData[300]++;
+  _$jscoverage['/control.js'].lineData[311]++;
   var self = this;
-  _$jscoverage['/control.js'].lineData[302]++;
-  if (visit82_302_1(self.get('active') && (visit83_302_2(visit84_302_3(ev.which === 1) || isTouchGestureSupported)))) {
-    _$jscoverage['/control.js'].lineData[303]++;
+  _$jscoverage['/control.js'].lineData[313]++;
+  if (visit84_313_1(self.get('active') && (visit85_313_2(visit86_313_3(ev.which === 1) || isTouchGestureSupported)))) {
+    _$jscoverage['/control.js'].lineData[314]++;
     self.set('active', false);
   }
 }, 
   handleContextMenu: function(ev) {
   _$jscoverage['/control.js'].functionData[26]++;
-  _$jscoverage['/control.js'].lineData[308]++;
-  if (visit85_308_1(!this.get('disabled'))) {
-    _$jscoverage['/control.js'].lineData[309]++;
+  _$jscoverage['/control.js'].lineData[319]++;
+  if (visit87_319_1(!this.get('disabled'))) {
+    _$jscoverage['/control.js'].lineData[320]++;
     this.handleContextMenuInternal(ev);
   }
 }, 
@@ -1015,92 +1025,74 @@ KISSY.add(function(S, require) {
 }, 
   handleFocus: function() {
   _$jscoverage['/control.js'].functionData[28]++;
-  _$jscoverage['/control.js'].lineData[321]++;
-  if (visit86_321_1(!this.get('disabled'))) {
-    _$jscoverage['/control.js'].lineData[322]++;
+  _$jscoverage['/control.js'].lineData[332]++;
+  if (visit88_332_1(!this.get('disabled'))) {
+    _$jscoverage['/control.js'].lineData[333]++;
     this.handleFocusInternal();
   }
 }, 
   handleFocusInternal: function() {
   _$jscoverage['/control.js'].functionData[29]++;
-  _$jscoverage['/control.js'].lineData[331]++;
+  _$jscoverage['/control.js'].lineData[342]++;
   this.focus();
-  _$jscoverage['/control.js'].lineData[332]++;
+  _$jscoverage['/control.js'].lineData[343]++;
   this.fire('focus');
 }, 
   handleBlur: function() {
   _$jscoverage['/control.js'].functionData[30]++;
-  _$jscoverage['/control.js'].lineData[336]++;
-  if (visit87_336_1(!this.get('disabled'))) {
-    _$jscoverage['/control.js'].lineData[337]++;
+  _$jscoverage['/control.js'].lineData[347]++;
+  if (visit89_347_1(!this.get('disabled'))) {
+    _$jscoverage['/control.js'].lineData[348]++;
     this.handleBlurInternal();
   }
 }, 
   handleBlurInternal: function() {
   _$jscoverage['/control.js'].functionData[31]++;
-  _$jscoverage['/control.js'].lineData[346]++;
+  _$jscoverage['/control.js'].lineData[357]++;
   this.blur();
-  _$jscoverage['/control.js'].lineData[347]++;
+  _$jscoverage['/control.js'].lineData[358]++;
   this.fire('blur');
 }, 
   handleKeydown: function(ev) {
   _$jscoverage['/control.js'].functionData[32]++;
-  _$jscoverage['/control.js'].lineData[351]++;
+  _$jscoverage['/control.js'].lineData[362]++;
   var self = this;
-  _$jscoverage['/control.js'].lineData[352]++;
-  if (visit88_352_1(!this.get('disabled') && self.handleKeyDownInternal(ev))) {
-    _$jscoverage['/control.js'].lineData[353]++;
+  _$jscoverage['/control.js'].lineData[363]++;
+  if (visit90_363_1(!this.get('disabled') && self.handleKeyDownInternal(ev))) {
+    _$jscoverage['/control.js'].lineData[364]++;
     ev.halt();
-    _$jscoverage['/control.js'].lineData[354]++;
+    _$jscoverage['/control.js'].lineData[365]++;
     return true;
   }
-  _$jscoverage['/control.js'].lineData[356]++;
+  _$jscoverage['/control.js'].lineData[367]++;
   return undefined;
 }, 
   handleKeyDownInternal: function(ev) {
   _$jscoverage['/control.js'].functionData[33]++;
-  _$jscoverage['/control.js'].lineData[365]++;
-  if (visit89_365_1(ev.keyCode === Node.KeyCode.ENTER)) {
-    _$jscoverage['/control.js'].lineData[366]++;
+  _$jscoverage['/control.js'].lineData[376]++;
+  if (visit91_376_1(ev.keyCode === Node.KeyCode.ENTER)) {
+    _$jscoverage['/control.js'].lineData[377]++;
     return this.handleClickInternal(ev);
   }
-  _$jscoverage['/control.js'].lineData[368]++;
+  _$jscoverage['/control.js'].lineData[379]++;
   return undefined;
 }, 
   handleClick: function(ev) {
   _$jscoverage['/control.js'].functionData[34]++;
-  _$jscoverage['/control.js'].lineData[372]++;
-  if (visit90_372_1(!this.get('disabled'))) {
-    _$jscoverage['/control.js'].lineData[373]++;
+  _$jscoverage['/control.js'].lineData[383]++;
+  if (visit92_383_1(!this.get('disabled'))) {
+    _$jscoverage['/control.js'].lineData[384]++;
     this.handleClickInternal(ev);
   }
 }, 
   handleClickInternal: function() {
   _$jscoverage['/control.js'].functionData[35]++;
-  _$jscoverage['/control.js'].lineData[383]++;
-  var self = this;
-  _$jscoverage['/control.js'].lineData[384]++;
-  if (visit91_384_1(self.get('focusable'))) {
-    _$jscoverage['/control.js'].lineData[385]++;
-    self.focus();
-  }
-}, 
-  destructor: function() {
-  _$jscoverage['/control.js'].functionData[36]++;
-  _$jscoverage['/control.js'].lineData[393]++;
+  _$jscoverage['/control.js'].lineData[394]++;
   var self = this;
   _$jscoverage['/control.js'].lineData[395]++;
-  Manager.removeComponent(self.get('id'));
-  _$jscoverage['/control.js'].lineData[396]++;
-  if (visit92_396_1(self.view)) {
-    _$jscoverage['/control.js'].lineData[397]++;
-    self.view.destroy();
-  } else {
-    _$jscoverage['/control.js'].lineData[398]++;
-    if (visit93_398_1(self.get('srcNode'))) {
-      _$jscoverage['/control.js'].lineData[399]++;
-      self.get('srcNode').remove();
-    }
+  if (visit93_395_1(self.get('focusable'))) {
+    _$jscoverage['/control.js'].lineData[396]++;
+    self.focus();
   }
 }}, {
   name: 'control', 
@@ -1108,8 +1100,8 @@ KISSY.add(function(S, require) {
   id: {
   view: 1, 
   valueFn: function() {
-  _$jscoverage['/control.js'].functionData[37]++;
-  _$jscoverage['/control.js'].lineData[410]++;
+  _$jscoverage['/control.js'].functionData[36]++;
+  _$jscoverage['/control.js'].lineData[407]++;
   return S.guid('ks-component');
 }}, 
   content: {
@@ -1123,14 +1115,14 @@ KISSY.add(function(S, require) {
   view: 1, 
   value: [], 
   setter: function(v) {
-  _$jscoverage['/control.js'].functionData[38]++;
-  _$jscoverage['/control.js'].lineData[474]++;
-  if (visit94_474_1(typeof v === 'string')) {
-    _$jscoverage['/control.js'].lineData[475]++;
+  _$jscoverage['/control.js'].functionData[37]++;
+  _$jscoverage['/control.js'].lineData[471]++;
+  if (visit94_471_1(typeof v === 'string')) {
+    _$jscoverage['/control.js'].lineData[472]++;
     v = v.split(/\s+/);
   }
-  _$jscoverage['/control.js'].lineData[477]++;
-  return visit95_477_1(v || []);
+  _$jscoverage['/control.js'].lineData[474]++;
+  return visit95_474_1(v || []);
 }}, 
   elStyle: {
   view: 1, 
@@ -1141,38 +1133,38 @@ KISSY.add(function(S, require) {
   elBefore: {}, 
   el: {
   setter: function(el) {
-  _$jscoverage['/control.js'].functionData[39]++;
-  _$jscoverage['/control.js'].lineData[527]++;
+  _$jscoverage['/control.js'].functionData[38]++;
+  _$jscoverage['/control.js'].lineData[524]++;
   this.$el = el;
-  _$jscoverage['/control.js'].lineData[528]++;
+  _$jscoverage['/control.js'].lineData[525]++;
   this.el = el[0];
 }}, 
   x: {}, 
   y: {}, 
   xy: {
   setter: function(v) {
-  _$jscoverage['/control.js'].functionData[40]++;
-  _$jscoverage['/control.js'].lineData[573]++;
+  _$jscoverage['/control.js'].functionData[39]++;
+  _$jscoverage['/control.js'].lineData[570]++;
   var self = this, xy = S.makeArray(v);
-  _$jscoverage['/control.js'].lineData[575]++;
-  if (visit96_575_1(xy.length)) {
-    _$jscoverage['/control.js'].lineData[576]++;
-    if (visit97_576_1(xy[0] !== undefined)) {
-      _$jscoverage['/control.js'].lineData[577]++;
+  _$jscoverage['/control.js'].lineData[572]++;
+  if (visit96_572_1(xy.length)) {
+    _$jscoverage['/control.js'].lineData[573]++;
+    if (visit97_573_1(xy[0] !== undefined)) {
+      _$jscoverage['/control.js'].lineData[574]++;
       self.set('x', xy[0]);
     }
-    _$jscoverage['/control.js'].lineData[579]++;
-    if (visit98_579_1(xy[1] !== undefined)) {
-      _$jscoverage['/control.js'].lineData[580]++;
+    _$jscoverage['/control.js'].lineData[576]++;
+    if (visit98_576_1(xy[1] !== undefined)) {
+      _$jscoverage['/control.js'].lineData[577]++;
       self.set('y', xy[1]);
     }
   }
-  _$jscoverage['/control.js'].lineData[583]++;
+  _$jscoverage['/control.js'].lineData[580]++;
   return v;
 }, 
   getter: function() {
-  _$jscoverage['/control.js'].functionData[41]++;
-  _$jscoverage['/control.js'].lineData[586]++;
+  _$jscoverage['/control.js'].functionData[40]++;
+  _$jscoverage['/control.js'].lineData[583]++;
   return [this.get('x'), this.get('y')];
 }}, 
   zIndex: {
@@ -1184,8 +1176,8 @@ KISSY.add(function(S, require) {
   view: 1}, 
   srcNode: {
   setter: function(v) {
-  _$jscoverage['/control.js'].functionData[42]++;
-  _$jscoverage['/control.js'].lineData[653]++;
+  _$jscoverage['/control.js'].functionData[41]++;
+  _$jscoverage['/control.js'].lineData[650]++;
   return Node.all(v);
 }}, 
   handleMouseEvents: {
@@ -1207,19 +1199,19 @@ KISSY.add(function(S, require) {
   value: false}, 
   prefixCls: {
   view: 1, 
-  value: visit99_774_1(S.config('component/prefixCls') || 'ks-')}, 
+  value: visit99_771_1(S.config('component/prefixCls') || 'ks-')}, 
   prefixXClass: {}, 
   parent: {
   setter: function(p, prev) {
-  _$jscoverage['/control.js'].functionData[43]++;
-  _$jscoverage['/control.js'].lineData[802]++;
+  _$jscoverage['/control.js'].functionData[42]++;
+  _$jscoverage['/control.js'].lineData[799]++;
   if ((prev = this.get('parent'))) {
-    _$jscoverage['/control.js'].lineData[803]++;
+    _$jscoverage['/control.js'].lineData[800]++;
     this.removeTarget(prev);
   }
-  _$jscoverage['/control.js'].lineData[805]++;
-  if (visit100_805_1(p)) {
-    _$jscoverage['/control.js'].lineData[806]++;
+  _$jscoverage['/control.js'].lineData[802]++;
+  if (visit100_802_1(p)) {
+    _$jscoverage['/control.js'].lineData[803]++;
     this.addTarget(p);
   }
 }}, 
@@ -1230,51 +1222,51 @@ KISSY.add(function(S, require) {
   value: Render}, 
   view: {
   setter: function(v) {
-  _$jscoverage['/control.js'].functionData[44]++;
-  _$jscoverage['/control.js'].lineData[842]++;
+  _$jscoverage['/control.js'].functionData[43]++;
+  _$jscoverage['/control.js'].lineData[839]++;
   this.view = v;
 }}}});
-  _$jscoverage['/control.js'].lineData[848]++;
+  _$jscoverage['/control.js'].lineData[845]++;
   function getDefaultRender() {
-    _$jscoverage['/control.js'].functionData[45]++;
-    _$jscoverage['/control.js'].lineData[849]++;
+    _$jscoverage['/control.js'].functionData[44]++;
+    _$jscoverage['/control.js'].lineData[846]++;
     var attrs, constructor = this;
-    _$jscoverage['/control.js'].lineData[851]++;
+    _$jscoverage['/control.js'].lineData[848]++;
     do {
-      _$jscoverage['/control.js'].lineData[852]++;
+      _$jscoverage['/control.js'].lineData[849]++;
       attrs = constructor.ATTRS;
-      _$jscoverage['/control.js'].lineData[853]++;
+      _$jscoverage['/control.js'].lineData[850]++;
       constructor = constructor.superclass;
-    } while (visit101_854_1(!attrs || !attrs.xrender));
-    _$jscoverage['/control.js'].lineData[855]++;
+    } while (visit101_851_1(!attrs || !attrs.xrender));
+    _$jscoverage['/control.js'].lineData[852]++;
     return attrs.xrender.value;
   }
-  _$jscoverage['/control.js'].lineData[858]++;
+  _$jscoverage['/control.js'].lineData[855]++;
   Control.getDefaultRender = getDefaultRender;
-  _$jscoverage['/control.js'].lineData[879]++;
+  _$jscoverage['/control.js'].lineData[876]++;
   Control.extend = function extend(extensions, px, sx) {
-  _$jscoverage['/control.js'].functionData[46]++;
-  _$jscoverage['/control.js'].lineData[881]++;
+  _$jscoverage['/control.js'].functionData[45]++;
+  _$jscoverage['/control.js'].lineData[878]++;
   var args = S.makeArray(arguments), baseClass = this, xclass, newClass, argsLen = args.length, last = args[argsLen - 1];
-  _$jscoverage['/control.js'].lineData[888]++;
+  _$jscoverage['/control.js'].lineData[885]++;
   if ((xclass = last.xclass)) {
-    _$jscoverage['/control.js'].lineData[889]++;
+    _$jscoverage['/control.js'].lineData[886]++;
     last.name = xclass;
   }
-  _$jscoverage['/control.js'].lineData[892]++;
+  _$jscoverage['/control.js'].lineData[889]++;
   newClass = ControlProcess.extend.apply(baseClass, args);
-  _$jscoverage['/control.js'].lineData[894]++;
-  if (visit102_894_1(xclass)) {
-    _$jscoverage['/control.js'].lineData[895]++;
+  _$jscoverage['/control.js'].lineData[891]++;
+  if (visit102_891_1(xclass)) {
+    _$jscoverage['/control.js'].lineData[892]++;
     Manager.setConstructorByXClass(xclass, newClass);
   }
-  _$jscoverage['/control.js'].lineData[898]++;
+  _$jscoverage['/control.js'].lineData[895]++;
   newClass.extend = extend;
-  _$jscoverage['/control.js'].lineData[899]++;
+  _$jscoverage['/control.js'].lineData[896]++;
   newClass.getDefaultRender = getDefaultRender;
-  _$jscoverage['/control.js'].lineData[901]++;
+  _$jscoverage['/control.js'].lineData[898]++;
   return newClass;
 };
-  _$jscoverage['/control.js'].lineData[904]++;
+  _$jscoverage['/control.js'].lineData[901]++;
   return Control;
 });

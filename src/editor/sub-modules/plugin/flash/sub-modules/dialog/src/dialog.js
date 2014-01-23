@@ -8,8 +8,6 @@ KISSY.add(function (S, require) {
     var flashUtils = require('../flash-common/utils');
     var Dialog4E = require('../dialog');
     var MenuButton = require('../menubutton');
-
-
     var CLS_FLASH = 'ke_flash',
         TYPE_FLASH = 'flash',
         TIP = '请输入如 http://www.xxx.com/xxx.swf',
@@ -73,7 +71,6 @@ KISSY.add(function (S, require) {
             'style="margin-left:40px;margin-right:20px;">确定</a> ' +
             '<a class="{prefixCls}editor-flash-cancel {prefixCls}editor-button ks-inline-block">取消</a></div>';
 
-
     function FlashDialog(editor, config) {
         var self = this;
         self.editor = editor;
@@ -84,7 +81,9 @@ KISSY.add(function (S, require) {
 
     S.augment(FlashDialog, {
         addRes: Editor.Utils.addRes,
+
         destroyRes: Editor.Utils.destroyRes,
+
         _config: function () {
             var self = this,
                 editor = self.editor,
@@ -101,6 +100,7 @@ KISSY.add(function (S, require) {
                 prefixCls: prefixCls
             });
         },
+
         //建立弹出窗口
         _prepareShow: function () {
             var self = this;
@@ -154,12 +154,12 @@ KISSY.add(function (S, require) {
                 self.dMargin.val('5');
             }
         },
+
         show: function (_selectedEl) {
             var self = this;
             self.selectedFlash = _selectedEl;
             self._prepareShow();
         },
-
 
         // 映射窗口field，子类覆盖
         _initD: function () {
@@ -193,7 +193,6 @@ KISSY.add(function (S, require) {
             self.addRes(self.dAlign);
         },
 
-
         // 应用子类覆盖，提供 flash 元素的相关信息
         _getDInfo: function () {
             var self = this;
@@ -209,7 +208,6 @@ KISSY.add(function (S, require) {
                 }
             };
         },
-
 
         // 真正产生 flash 元素
         _gen: function (ev) {

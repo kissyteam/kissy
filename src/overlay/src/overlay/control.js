@@ -11,8 +11,6 @@ KISSY.add(function (S, require) {
     var Mask = require('./extension/mask');
     var OverlayRender = require('./overlay-render');
     var OverlayEffect = require('./extension/overlay-effect');
-
-
     var HIDE = 'hide',
         actions = {
             hide: HIDE,

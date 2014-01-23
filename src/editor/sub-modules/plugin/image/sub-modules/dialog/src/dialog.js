@@ -109,7 +109,7 @@ KISSY.add(function (S, require) {
             placeholder(self.imgLink, 'http://');
 
             self.imgHeight.on('keyup', function () {
-                var v = parseInt(valInput(self.imgHeight),10);
+                var v = parseInt(valInput(self.imgHeight), 10);
                 if (!v || !self.imgRatio[0].checked ||
                     self.imgRatio[0].disabled || !self.imgRatioValue) {
                     return;
@@ -118,7 +118,7 @@ KISSY.add(function (S, require) {
             });
 
             self.imgWidth.on('keyup', function () {
-                var v = parseInt(valInput(self.imgWidth),10);
+                var v = parseInt(valInput(self.imgWidth), 10);
                 if (!v || !self.imgRatio[0].checked ||
                     self.imgRatio[0].disabled || !self.imgRatioValue) {
                     return;
@@ -144,15 +144,14 @@ KISSY.add(function (S, require) {
             function getFileSize(file) {
                 if (file.files) {
                     return file.files[0].size;
-                } else if (1 > 2) {
-                    //ie 会安全警告
-                    try {
-                        var fso = new window.ActiveXObject('Scripting.FileSystemObject'),
-                            file2 = fso.GetFile(file.value);
-                        return file2.size;
-                    } catch (e) {
-                    }
                 }
+                //ie 会安全警告
+//                    try {
+//                        var fso = new window.ActiveXObject('Scripting.FileSystemObject'),
+//                            file2 = fso.GetFile(file.value);
+//                        return file2.size;
+//                    } catch (e) {
+//                    }
                 return 0;
             }
 
@@ -300,10 +299,10 @@ KISSY.add(function (S, require) {
             var self = this,
                 url = valInput(self.imgUrl),
                 img,
-                height = parseInt(valInput(self.imgHeight),10),
-                width = parseInt(valInput(self.imgWidth),10),
+                height = parseInt(valInput(self.imgHeight), 10),
+                width = parseInt(valInput(self.imgWidth), 10),
                 align = self.imgAlign.get('value'),
-                margin = parseInt(self.imgMargin.val(),10),
+                margin = parseInt(self.imgMargin.val(), 10),
                 style = '';
 
             if (height) {
@@ -412,8 +411,8 @@ KISSY.add(function (S, require) {
             self.selectedEl = selectedEl;
             if (selectedEl && self.imageCfg.remote !== false) {
                 valInput(self.imgUrl, selectedEl.attr('src'));
-                var w = parseInt(selectedEl.style('width'),10),
-                    h = parseInt(selectedEl.style('height'),10);
+                var w = parseInt(selectedEl.style('width'), 10),
+                    h = parseInt(selectedEl.style('height'), 10);
                 if (h) {
                     valInput(self.imgHeight, h);
                 } else {
@@ -425,7 +424,7 @@ KISSY.add(function (S, require) {
                     resetInput(self.imgWidth);
                 }
                 self.imgAlign.set('value', selectedEl.style('float') || 'none');
-                var margin = parseInt(selectedEl.style('margin'),10) || 0;
+                var margin = parseInt(selectedEl.style('margin'), 10) || 0;
                 self.imgMargin.val(margin);
                 self.imgRatio[0].disabled = false;
                 self.imgRatioValue = w / h;

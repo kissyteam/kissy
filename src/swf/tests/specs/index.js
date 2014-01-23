@@ -2,40 +2,42 @@
  * tc for kissy swf
  * @author yiminghe@gmail.com, oicuicu@gmail.com
  */
-KISSY.add(function (S, SWF, Dom) {
-        if (KISSY.UA.mobile || KISSY.UA.phantomjs || location.protocol === 'file:') {
+KISSY.add(function (S, require) {
+    var SWF = require('swf');
+    var Dom = require('dom');
 
+    function getFlashVars(swf) {
+        if (Dom.nodeName(swf) === 'embed') {
+            return S.unparam(swf.getAttribute('flashvars'));
         } else {
-        function getFlashVars(swf) {
-            if (Dom.nodeName(swf) == 'embed') {
-                return S.unparam(swf.getAttribute('flashvars'));
-            } else {
-                var params = swf.childNodes, i;
-                for (i = 0; i < params.length; i++) {
-                    var param = params[i];
-                    if (param.nodeType == 1) {
-                        if (Dom.attr(params[i], 'name').toLowerCase() == "flashvars") {
-                            return S.unparam(Dom.attr(param, 'value'));
-                        }
+            var params = swf.childNodes, i;
+            for (i = 0; i < params.length; i++) {
+                var param = params[i];
+                if (param.nodeType === 1) {
+                    if (Dom.attr(params[i], 'name').toLowerCase() === 'flashvars') {
+                        return S.unparam(Dom.attr(param, 'value'));
                     }
                 }
             }
-            return undefined;
         }
+        return undefined;
+    }
 
+    if (KISSY.UA.mobile || KISSY.UA.phantomjs || location.protocol === 'file:') {
+
+    } else {
         describe('flash', function () {
-
             var defaultConfig = {
                 attrs: {
                     width: 310,
                     height: 130,
-                    alt: "KISSY Flash",
-                    title: "O Yeah! KISSY Flash!"
+                    alt: 'KISSY Flash',
+                    title: 'O Yeah! KISSY Flash!'
                 }
             };
 
             describe('flash player version', function () {
-                it("should not less than 9", function () {
+                it('should not less than 9', function () {
 
                     S.log('flash version: ' + SWF.fpv());
 
@@ -46,7 +48,7 @@ KISSY.add(function (S, SWF, Dom) {
                     expect(SWF.fpvGTE('9')).toBeTruthy();
                     expect(SWF.fpvGTE('9.0.16')).toBeTruthy();
                     expect(SWF.fpvGTE('9.0 r16')).toBeTruthy();
-                    expect(SWF.fpvGTE(["9", "0", "16"])).toBeTruthy();
+                    expect(SWF.fpvGTE(['9', '0', '16'])).toBeTruthy();
                 });
             });
 
@@ -70,6 +72,10 @@ KISSY.add(function (S, SWF, Dom) {
 
                     expect(Dom.last(document.body)).toBe(swf1.get('swfObject'));
                     expect(swf1.get('swfObject').nodeName.toLowerCase()).toBe('object');
+                    // has id
+                    expect(swf1.get('html').replace('classid','').indexOf('id=')).toBeGreaterThan(-1);
+                    expect(swf1.get('el').id).toBe('test');
+
                     swf1.destroy();
                     waits(300);
                     runs(function () {
@@ -86,7 +92,6 @@ KISSY.add(function (S, SWF, Dom) {
                         src: '../assets/test.swf',
                         render: render,
                         attrs: {
-                            id: 'test',
                             width: 300,
                             height: 300
                         },
@@ -101,6 +106,11 @@ KISSY.add(function (S, SWF, Dom) {
 
                     expect(Dom.first(document.body)).toBe(render);
                     expect(render.innerHTML.toLowerCase().indexOf('object')).toBeGreaterThan(0);
+
+                    // has id
+                    expect(swf1.get('html').replace('classid','').indexOf('id=')).toBe(-1);
+                    expect(Dom.hasAttr(swf1.get('el'), 'id')).toBeFalsy();
+
                     swf1.destroy();
                     waits(300);
                     runs(function () {
@@ -108,23 +118,23 @@ KISSY.add(function (S, SWF, Dom) {
                     });
                 });
 
-                it("ok with flashvars", function () {
+                it('ok with flashvars', function () {
                     var config = S.merge(S.clone(defaultConfig), {
-                        src: "../assets/flashvars.swf",
+                        src: '../assets/flashvars.swf',
                         params: {
-                            bgcolor: "#038C3C",
+                            bgcolor: '#038C3C',
                             flashvars: {
                                 name1: 'http://taobao.com/?x=1&z=2',
                                 name2: {
                                     s: 'string',
                                     b: false,
                                     n: 1,
-                                    url: "http://taobao.com/?x=1&z=2",
+                                    url: 'http://taobao.com/?x=1&z=2',
                                     cpx: {
                                         s: 'string',
                                         b: false,
                                         n: 1,
-                                        url: "http://taobao.com/?x=1&z=2"
+                                        url: 'http://taobao.com/?x=1&z=2'
                                     }
                                 },
                                 name3: 'string'
@@ -151,7 +161,6 @@ KISSY.add(function (S, SWF, Dom) {
                     var swf1 = new SWF({
                         src: '../assets/test.swf',
                         attrs: {
-                            id: 'test',
                             width: 300,
                             height: 300
                         },
@@ -170,7 +179,6 @@ KISSY.add(function (S, SWF, Dom) {
                 });
 
             });
-        });}
-},{
-    requires:"swf,dom".split(',')
+        });
+    }
 });

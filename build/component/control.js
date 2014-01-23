@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Jan 21 17:41
+build time: Jan 23 15:28
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -456,10 +456,10 @@ KISSY.add("component/control", ["node", "./control/process", "component/manager"
     }
     Manager.addComponent(id, self)
   }, renderUI:function() {
-    this.view.renderUI()
+    this.view.renderUI();
+    this.view.bindUI()
   }, bindUI:function() {
     var self = this, el = self.view.getKeyEventTarget();
-    self.view.bindUI();
     if(self.get("focusable")) {
       el.on("focus", self.handleFocus, self).on("blur", self.handleBlur, self).on("keydown", self.handleKeydown, self)
     }
@@ -476,20 +476,29 @@ KISSY.add("component/control", ["node", "./control/process", "component/manager"
         el.on("dblclick", self.handleDblClick, self)
       }
     }
-  }, sync:function() {
-    var self = this;
-    self.fire("beforeSyncUI");
-    self.syncUI();
-    self.__callPluginsMethod("pluginSyncUI");
-    self.fire("afterSyncUI")
   }, syncUI:function() {
     this.view.syncUI()
+  }, destructor:function() {
+    var self = this;
+    Manager.removeComponent(self.get("id"));
+    if(self.view) {
+      self.view.destroy()
+    }else {
+      if(self.get("srcNode")) {
+        self.get("srcNode").remove()
+      }
+    }
   }, createComponent:function(cfg, parent) {
     return Manager.createComponent(cfg, parent || this)
   }, _onSetFocused:function(v) {
     var target = this.view.getKeyEventTarget()[0];
     if(v) {
-      target.focus()
+      try {
+        target.focus()
+      }catch(e) {
+        S.log(target);
+        S.log("focus error", "warn")
+      }
     }else {
       if(target.ownerDocument.activeElement === target) {
         target.ownerDocument.body.focus()
@@ -609,16 +618,6 @@ KISSY.add("component/control", ["node", "./control/process", "component/manager"
     var self = this;
     if(self.get("focusable")) {
       self.focus()
-    }
-  }, destructor:function() {
-    var self = this;
-    Manager.removeComponent(self.get("id"));
-    if(self.view) {
-      self.view.destroy()
-    }else {
-      if(self.get("srcNode")) {
-        self.get("srcNode").remove()
-      }
     }
   }}, {name:"control", ATTRS:{id:{view:1, valueFn:function() {
     return S.guid("ks-component")

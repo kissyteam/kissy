@@ -66,11 +66,8 @@ KISSY.add(function (S, require) {
                 // prevent display none for effect
                 self.callSuper(v, e);
             }
-        },
-
-        {
+        },{
             ATTRS: {
-
                 /**
                  * Header element of dialog.
                  * @type {KISSY.NodeList}

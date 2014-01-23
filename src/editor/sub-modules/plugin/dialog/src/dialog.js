@@ -11,7 +11,6 @@ KISSY.add(function (S, require) {
     var DragPlugin = require('component/plugin/drag');
 
     return Overlay.Dialog.extend({
-
         initializer: function () {
             this.plug(new DragPlugin({
                 handlers: ['.ks-editor-dialog-header'],
@@ -39,7 +38,6 @@ KISSY.add(function (S, require) {
             }
             self.callSuper();
         }
-
     }, {
         ATTRS: {
             prefixCls: {
