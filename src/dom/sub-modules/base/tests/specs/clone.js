@@ -1,4 +1,6 @@
 KISSY.add(function (S, Dom, Event) {
+    /*jshint quotmark:false*/
+
     var UA = S.UA;
 
     describe("clone", function () {
@@ -7,11 +9,64 @@ KISSY.add(function (S, Dom, Event) {
             Dom.append(checkbox, "#test_cases");
             Dom.data(checkbox, "custom", 1);
             var cloned = Dom.clone(checkbox);
+            document.body.appendChild(cloned);
             expect(Dom.data(checkbox, "custom")).toBe(1);
             expect(cloned.checked).toBe(true);
             expect(Dom.data(cloned, "custom")).toBe(undefined);
             expect(Dom.val(cloned)).toBe("on");
             Dom.remove(checkbox);
+            Dom.remove(cloned);
+        });
+
+        it("works for checkbox which is checked after create", function () {
+            var checkbox = Dom.create("<input type='checkbox'/>");
+            Dom.append(checkbox, "#test_cases");
+            checkbox.checked = true;
+            Dom.data(checkbox, "custom", 1);
+            var cloned = Dom.clone(checkbox);
+            document.body.appendChild(cloned);
+            expect(Dom.data(checkbox, "custom")).toBe(1);
+            expect(cloned.checked).toBe(true);
+            expect(Dom.data(cloned, "custom")).toBe(undefined);
+            expect(Dom.val(cloned)).toBe("on");
+            Dom.remove(checkbox);
+            Dom.remove(cloned);
+        });
+
+        it("works for radio which is checked after create", function () {
+            var checkbox = Dom.create("<input type='radio'/>");
+            Dom.append(checkbox, "#test_cases");
+            checkbox.checked = true;
+            Dom.data(checkbox, "custom", 1);
+            var cloned = Dom.clone(checkbox);
+            document.body.appendChild(cloned);
+            expect(Dom.data(checkbox, "custom")).toBe(1);
+            expect(cloned.checked).toBe(true);
+            expect(Dom.data(cloned, "custom")).toBe(undefined);
+            expect(Dom.val(cloned)).toBe("on");
+            Dom.remove(checkbox);
+            Dom.remove(cloned);
+        });
+
+        it("works for select which is select after create", function () {
+            var select = Dom.create("<select><option>1</option><option selected>2</option></select>");
+            Dom.append(select, "#test_cases");
+            var cloned = Dom.clone(select);
+            document.body.appendChild(select);
+            expect(select.selectedIndex).toBe(1);
+            Dom.remove(select);
+            Dom.remove(cloned);
+        });
+
+        it("works for select which is select after create", function () {
+            var select = Dom.create("<select><option>1</option><option>2</option></select>");
+            Dom.append(select, "#test_cases");
+            select.selectedIndex = 1;
+            var cloned = Dom.clone(select);
+            document.body.appendChild(select);
+            expect(select.selectedIndex).toBe(1);
+            Dom.remove(select);
+            Dom.remove(cloned);
         });
 
         it('works for single textarea', function () {
@@ -30,10 +85,10 @@ KISSY.add(function (S, Dom, Event) {
         it('works for nested textarea', function () {
             var input = Dom.create("<div><textarea></textarea></div>");
             Dom.append(input, "#test_cases");
-            input=Dom.get('textarea',input);
+            input = Dom.get('textarea', input);
             input.defaultValue = 'y';
             input.value = 'x';
-            var cloned = Dom.clone(input,true);
+            var cloned = Dom.clone(input, true);
             expect(cloned.defaultValue).toBe('y');
             expect(cloned.value).toBe('x');
             Dom.append(cloned, "#test_cases");
@@ -278,6 +333,6 @@ KISSY.add(function (S, Dom, Event) {
             });
         });
     });
-},{
-    requires:['dom','event']
+}, {
+    requires: ['dom', 'event']
 });

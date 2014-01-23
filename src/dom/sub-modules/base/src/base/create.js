@@ -171,10 +171,23 @@ KISSY.add(function (S, require) {
             },
 
             _fixCloneAttributes: function (src, dest) {
-                // value of textarea can not be clone in chrome/firefox??
-                if (Dom.nodeName(src) === 'textarea') {
+                var nodeName = src.nodeName.toLowerCase();
+                var type = (src.type || '').toLowerCase();
+                var srcValue, srcChecked;
+                // value of textarea can not be clone in chrome/firefox
+                if (nodeName === 'textarea') {
                     dest.defaultValue = src.defaultValue;
                     dest.value = src.value;
+                } else if (nodeName === 'input' && (type === 'checkbox' || type === 'radio')) {
+                    // for ie 9,10
+                    srcChecked = src.checked;
+                    if (srcChecked) {
+                        dest.defaultChecked = dest.checked = srcChecked;
+                    }
+                    srcValue = src.value;
+                    if (dest.value !== srcValue) {
+                        dest.value = srcValue;
+                    }
                 }
             },
 

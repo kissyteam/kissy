@@ -25,12 +25,12 @@ KISSY.add(function (S, Dom) {
             $('#test-selector').remove();
         });
 
-        it('return array type', function () {
-            if (document.getElementsByClassName) {
+        if (document.getElementsByClassName) {
+            it('return array type', function () {
                 expect(S.isArray(S.query('.test-selector'))).toBe(true);
-            }
-            expect(S.query('.test-selector').length).toBe(document.getElementsByClassName('test-selector').length);
-        });
+                expect(S.query('.test-selector').length).toBe(document.getElementsByClassName('test-selector').length);
+            });
+        }
 
         it('throws exception when encounter #.', function () {
             expect(function () {

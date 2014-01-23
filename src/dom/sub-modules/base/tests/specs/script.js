@@ -3,21 +3,22 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, Dom) {
-    var div = $('<div style="display:none"></div>').prependTo('body');
+    /*jshint quotmark:false*/
+    var div = document.body.appendChild(Dom.create('<div style="display:none"></div>'));
 
     describe("script", function () {
         var o1, o2, scriptTestHolder2, o22;
 
-        div[0].innerHTML = '<div id="scriptTestHolder">\
-            <script>\
-        if (!window.scriptTest1) {\
-            window.scriptTest1 = 1;\
-        } else {\
-            window.scriptTest1++;\
-        }\
-        </script>\
-            <script src="../others/scripts-exec/clone-ie-tc.js"></script>\
-        </div>';
+        div.innerHTML = '<div id="scriptTestHolder">' +
+            '<script>' +
+            'if (!window.scriptTest1) {' +
+            'window.scriptTest1 = 1;' +
+            '} else {' +
+            'window.scriptTest1++;' +
+            '}' +
+            '</script>' +
+            '<script src="../others/scripts-exec/clone-ie-tc.js"></script>' +
+            '</div>';
 
         o1 = window.scriptTest1 = 1;
         o2 = window.scriptTest2 = 1;
@@ -29,17 +30,17 @@ KISSY.add(function (S, Dom) {
             expect(o2).toBe(1);
             scriptTestHolder2 = Dom.clone(scriptTestHolder, true);
 
-            waits(10);
+            waits(500);
 
             runs(function () {
                 // inline should not run when clone
-                o1 = window['scriptTest1'];
+                o1 = window.scriptTest1;
                 expect(o1).toBe(1);
 
                 // external should not run when clone
-                o22 = o2 = scriptTest2;
+                o22 = o2 = window.scriptTest2;
                 // ie9 bug
-                if (S.UA.ieMode != 9) {
+                if (S.UA.ieMode !== 9) {
                     expect(o2).toBe(1);
                 }
             });
@@ -49,20 +50,20 @@ KISSY.add(function (S, Dom) {
                 Dom.prepend(scriptTestHolder2, div);
             });
 
-            waits(10);
+            waits(500);
             runs(function () {
                 // "inline should not run when insert"
-                o1 = window['scriptTest1'];
+                o1 = window.scriptTest1;
                 expect(o1).toBe(1);
 
                 // external should not run when insert
-                o2 = scriptTest2;
+                o2 = window.scriptTest2;
                 expect(o2).toBe(o22);
 
-                div.remove();
+                Dom.remove(div);
             });
         });
     });
-},{
-    requires:['dom']
+}, {
+    requires: ['dom']
 });

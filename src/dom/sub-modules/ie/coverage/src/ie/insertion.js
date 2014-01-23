@@ -274,39 +274,39 @@ if (! _$jscoverage['/ie/insertion.js'].branchData) {
   _$jscoverage['/ie/insertion.js'].branchData['37'][3] = new BranchData();
 }
 _$jscoverage['/ie/insertion.js'].branchData['37'][3].init(39, 19, 'el.type === \'radio\'');
-function visit59_37_3(result) {
+function visit60_37_3(result) {
   _$jscoverage['/ie/insertion.js'].branchData['37'][3].ranCondition(result);
   return result;
 }_$jscoverage['/ie/insertion.js'].branchData['37'][2].init(13, 22, 'el.type === \'checkbox\'');
-function visit58_37_2(result) {
+function visit59_37_2(result) {
   _$jscoverage['/ie/insertion.js'].branchData['37'][2].ranCondition(result);
   return result;
 }_$jscoverage['/ie/insertion.js'].branchData['37'][1].init(13, 45, 'el.type === \'checkbox\' || el.type === \'radio\'');
-function visit57_37_1(result) {
+function visit58_37_1(result) {
   _$jscoverage['/ie/insertion.js'].branchData['37'][1].ranCondition(result);
   return result;
 }_$jscoverage['/ie/insertion.js'].branchData['28'][1].init(100, 13, 'j < cs.length');
-function visit56_28_1(result) {
+function visit57_28_1(result) {
   _$jscoverage['/ie/insertion.js'].branchData['28'][1].ranCondition(result);
   return result;
 }_$jscoverage['/ie/insertion.js'].branchData['26'][1].init(288, 41, 'el.nodeType === Dom.NodeType.ELEMENT_NODE');
-function visit55_26_1(result) {
+function visit56_26_1(result) {
   _$jscoverage['/ie/insertion.js'].branchData['26'][1].ranCondition(result);
   return result;
 }_$jscoverage['/ie/insertion.js'].branchData['24'][1].init(184, 28, 'Dom.nodeName(el) === \'input\'');
-function visit54_24_1(result) {
+function visit55_24_1(result) {
   _$jscoverage['/ie/insertion.js'].branchData['24'][1].ranCondition(result);
   return result;
 }_$jscoverage['/ie/insertion.js'].branchData['22'][1].init(54, 51, 'el.nodeType === Dom.NodeType.DOCUMENT_FRAGMENT_NODE');
-function visit53_22_1(result) {
+function visit54_22_1(result) {
   _$jscoverage['/ie/insertion.js'].branchData['22'][1].ranCondition(result);
   return result;
 }_$jscoverage['/ie/insertion.js'].branchData['20'][1].init(29, 14, 'i < ret.length');
-function visit52_20_1(result) {
+function visit53_20_1(result) {
   _$jscoverage['/ie/insertion.js'].branchData['20'][1].ranCondition(result);
   return result;
 }_$jscoverage['/ie/insertion.js'].branchData['10'][1].init(64, 13, 'UA.ieMode < 8');
-function visit51_10_1(result) {
+function visit52_10_1(result) {
   _$jscoverage['/ie/insertion.js'].branchData['10'][1].ranCondition(result);
   return result;
 }_$jscoverage['/ie/insertion.js'].lineData[6]++;
@@ -317,30 +317,30 @@ KISSY.add(function(S, require) {
   _$jscoverage['/ie/insertion.js'].lineData[8]++;
   var UA = S.UA;
   _$jscoverage['/ie/insertion.js'].lineData[10]++;
-  if (visit51_10_1(UA.ieMode < 8)) {
+  if (visit52_10_1(UA.ieMode < 8)) {
     _$jscoverage['/ie/insertion.js'].lineData[19]++;
     Dom._fixInsertionChecked = function fixChecked(ret) {
   _$jscoverage['/ie/insertion.js'].functionData[1]++;
   _$jscoverage['/ie/insertion.js'].lineData[20]++;
-  for (var i = 0; visit52_20_1(i < ret.length); i++) {
+  for (var i = 0; visit53_20_1(i < ret.length); i++) {
     _$jscoverage['/ie/insertion.js'].lineData[21]++;
     var el = ret[i];
     _$jscoverage['/ie/insertion.js'].lineData[22]++;
-    if (visit53_22_1(el.nodeType === Dom.NodeType.DOCUMENT_FRAGMENT_NODE)) {
+    if (visit54_22_1(el.nodeType === Dom.NodeType.DOCUMENT_FRAGMENT_NODE)) {
       _$jscoverage['/ie/insertion.js'].lineData[23]++;
       fixChecked(el.childNodes);
     } else {
       _$jscoverage['/ie/insertion.js'].lineData[24]++;
-      if (visit54_24_1(Dom.nodeName(el) === 'input')) {
+      if (visit55_24_1(Dom.nodeName(el) === 'input')) {
         _$jscoverage['/ie/insertion.js'].lineData[25]++;
         fixCheckedInternal(el);
       } else {
         _$jscoverage['/ie/insertion.js'].lineData[26]++;
-        if (visit55_26_1(el.nodeType === Dom.NodeType.ELEMENT_NODE)) {
+        if (visit56_26_1(el.nodeType === Dom.NodeType.ELEMENT_NODE)) {
           _$jscoverage['/ie/insertion.js'].lineData[27]++;
           var cs = el.getElementsByTagName('input');
           _$jscoverage['/ie/insertion.js'].lineData[28]++;
-          for (var j = 0; visit56_28_1(j < cs.length); j++) {
+          for (var j = 0; visit57_28_1(j < cs.length); j++) {
             _$jscoverage['/ie/insertion.js'].lineData[29]++;
             fixChecked(cs[j]);
           }
@@ -354,7 +354,7 @@ KISSY.add(function(S, require) {
   function fixCheckedInternal(el) {
     _$jscoverage['/ie/insertion.js'].functionData[2]++;
     _$jscoverage['/ie/insertion.js'].lineData[37]++;
-    if (visit57_37_1(visit58_37_2(el.type === 'checkbox') || visit59_37_3(el.type === 'radio'))) {
+    if (visit58_37_1(visit59_37_2(el.type === 'checkbox') || visit60_37_3(el.type === 'radio'))) {
       _$jscoverage['/ie/insertion.js'].lineData[39]++;
       el.defaultChecked = el.checked;
     }

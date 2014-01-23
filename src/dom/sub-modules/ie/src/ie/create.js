@@ -3,11 +3,10 @@
  * ie create hack
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S,require) {
+KISSY.add(function (S, require) {
     var Dom = require('dom/base');
     // wierd ie cloneNode fix from jq
     Dom._fixCloneAttributes = function (src, dest) {
-
         // clearAttributes removes the attributes, which we don't want,
         // but also removes the attachEvent events, which we *do* want
         if (dest.clearAttributes) {
@@ -23,6 +22,9 @@ KISSY.add(function (S,require) {
         var nodeName = dest.nodeName.toLowerCase(),
             srcChildren = src.childNodes;
 
+        var type = (src.type || '').toLowerCase();
+        var srcValue, srcChecked;
+
         // IE6-8 fail to clone children inside object elements that use
         // the proprietary classid attribute value (rather than the type
         // attribute) to identify the type of content to display
@@ -30,28 +32,28 @@ KISSY.add(function (S,require) {
             for (var i = 0; i < srcChildren.length; i++) {
                 dest.appendChild(srcChildren[i].cloneNode(true));
             }
-            // dest.outerHTML = src.outerHTML;
-        } else if (nodeName === 'input' && (src.type === 'checkbox' || src.type === 'radio')) {
+        } else if (nodeName === 'input' && (type === 'checkbox' || type === 'radio')) {
             // IE6-8 fails to persist the checked state of a cloned checkbox
             // or radio button. Worse, IE6-7 fail to give the cloned element
             // a checked appearance if the defaultChecked value isn't also set
-            if (src.checked) {
-                dest.defaultChecked = dest.checked = src.checked;
+            srcChecked = src.checked;
+            if (srcChecked) {
+                dest.defaultChecked = dest.checked = srcChecked;
             }
 
             // IE6-7 get confused and end up setting the value of a cloned
             // checkbox/radio button to an empty string instead of 'on'
-            if (dest.value !== src.value) {
-                dest.value = src.value;
+            srcValue = src.value;
+            if (dest.value !== srcValue) {
+                dest.value = srcValue;
             }
-
+        } else if (nodeName === 'option') {
             // IE6-8 fails to return the selected option to the default selected
             // state when cloning options
-        } else if (nodeName === 'option') {
             dest.selected = src.defaultSelected;
+        } else if (nodeName === 'input' || nodeName === 'textarea') {
             // IE6-8 fails to set the defaultValue to the correct value when
             // cloning other types of input fields
-        } else if (nodeName === 'input' || nodeName === 'textarea') {
             dest.defaultValue = src.defaultValue;
             // textarea will not keep value if not deep clone
             dest.value = src.value;

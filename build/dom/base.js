@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Jan 6 17:52
+build time: Jan 23 14:53
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -498,9 +498,23 @@ KISSY.add("dom/base/create", ["./api"], function(S, require) {
     }
     return attachProps(ret, props)
   }, _fixCloneAttributes:function(src, dest) {
-    if(Dom.nodeName(src) === "textarea") {
+    var nodeName = src.nodeName.toLowerCase();
+    var type = (src.type || "").toLowerCase();
+    var srcValue, srcChecked;
+    if(nodeName === "textarea") {
       dest.defaultValue = src.defaultValue;
       dest.value = src.value
+    }else {
+      if(nodeName === "input" && (type === "checkbox" || type === "radio")) {
+        srcChecked = src.checked;
+        if(srcChecked) {
+          dest.defaultChecked = dest.checked = srcChecked
+        }
+        srcValue = src.value;
+        if(dest.value !== srcValue) {
+          dest.value = srcValue
+        }
+      }
     }
   }, _creators:{div:defaultCreator}, _defaultCreator:defaultCreator, html:function(selector, htmlString, loadScripts) {
     var els = Dom.query(selector), el = els[0], success = false, valNode, i, elem;

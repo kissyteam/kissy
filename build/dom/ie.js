@@ -1,10 +1,10 @@
 /*
-Copyright 2013, KISSY v1.50
+Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Dec 12 22:10
+build time: Jan 23 14:54
 */
 /*
- Combined processedModules by KISSY Module Compiler: 
+ Combined modules by KISSY Module Compiler: 
 
  dom/ie/create
  dom/ie/insertion
@@ -26,17 +26,21 @@ KISSY.add("dom/ie/create", ["dom/base"], function(S, require) {
       dest.mergeAttributes(src)
     }
     var nodeName = dest.nodeName.toLowerCase(), srcChildren = src.childNodes;
+    var type = (src.type || "").toLowerCase();
+    var srcValue, srcChecked;
     if(nodeName === "object" && !dest.childNodes.length) {
       for(var i = 0;i < srcChildren.length;i++) {
         dest.appendChild(srcChildren[i].cloneNode(true))
       }
     }else {
-      if(nodeName === "input" && (src.type === "checkbox" || src.type === "radio")) {
-        if(src.checked) {
-          dest.defaultChecked = dest.checked = src.checked
+      if(nodeName === "input" && (type === "checkbox" || type === "radio")) {
+        srcChecked = src.checked;
+        if(srcChecked) {
+          dest.defaultChecked = dest.checked = srcChecked
         }
-        if(dest.value !== src.value) {
-          dest.value = src.value
+        srcValue = src.value;
+        if(dest.value !== srcValue) {
+          dest.value = srcValue
         }
       }else {
         if(nodeName === "option") {
