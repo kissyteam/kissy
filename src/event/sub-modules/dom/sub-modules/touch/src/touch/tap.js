@@ -18,6 +18,10 @@ KISSY.add(function (S, require) {
         TOUCH_MOVE_SENSITIVITY = 5,
         DomEventObject = DomEvent.Object;
 
+    function preventDefault(e) {
+        e.preventDefault();
+    }
+
     function Tap() {
         Tap.superclass.constructor.apply(this, arguments);
     }
@@ -54,7 +58,8 @@ KISSY.add(function (S, require) {
             return undefined;
         },
         onTouchMove: function (e) {
-            var self = this, lastXY;
+            var self = this,
+                lastXY;
             if (!(lastXY = self.lastXY)) {
                 return false;
             }
@@ -95,9 +100,19 @@ KISSY.add(function (S, require) {
                 currentTarget: target
             });
             eventObject.touch = touch;
-            // call e.preventDefault on tap event to prevent tap penetration
-            eventObject.originalEvent = e.originalEvent;
             DomEvent.fire(target, TAP_EVENT, eventObject);
+
+            // call e.preventDefault on tap event to prevent tap penetration in real touch device
+            if (eventObject.isDefaultPrevented() && S.UA.mobile) {
+                if (S.UA.ios) {
+                    e.preventDefault();
+                } else {
+                    DomEvent.on(target.ownerDocument || target, 'click', {
+                        fn: preventDefault,
+                        once: 1
+                    });
+                }
+            }
 
             // fire singleTap or doubleTap
             var lastEndTime = self.lastEndTime,
@@ -159,6 +174,10 @@ KISSY.add(function (S, require) {
 });
 /**
  * @ignore
+ * yiminghe@gmail.com 2013-12-20
+ *
+ * - tap 和 tapHold 互斥触发
+ *
  *
  * yiminghe@gmail.com 2012-10-31
  *

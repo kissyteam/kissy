@@ -1,10 +1,10 @@
 /*
-Copyright 2013, KISSY v1.50
+Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Dec 23 12:49
+build time: Jan 23 19:27
 */
 /*
- Combined processedModules by KISSY Module Compiler: 
+ Combined modules by KISSY Module Compiler: 
 
  event/dom/touch/handle-map
  event/dom/touch/single-touch
@@ -38,10 +38,10 @@ KISSY.add("event/dom/touch/tap", ["./handle-map", "event/dom/base", "./single-to
   var eventHandleMap = require("./handle-map");
   var DomEvent = require("event/dom/base");
   var SingleTouch = require("./single-touch");
+  var SINGLE_TAP_EVENT = "singleTap", DOUBLE_TAP_EVENT = "doubleTap", TAP_HOLD_EVENT = "tapHold", TAP_EVENT = "tap", TAP_HOLD_DELAY = 1E3, SINGLE_TAP_DELAY = 300, TOUCH_MOVE_SENSITIVITY = 5, DomEventObject = DomEvent.Object;
   function preventDefault(e) {
     e.preventDefault()
   }
-  var SINGLE_TAP_EVENT = "singleTap", DOUBLE_TAP_EVENT = "doubleTap", TAP_HOLD_EVENT = "tapHold", TAP_EVENT = "tap", TAP_HOLD_DELAY = 1E3, SINGLE_TAP_DELAY = 300, TOUCH_MOVE_SENSITIVITY = 5, DomEventObject = DomEvent.Object;
   function Tap() {
     Tap.superclass.constructor.apply(this, arguments)
   }
@@ -88,10 +88,13 @@ KISSY.add("event/dom/touch/tap", ["./handle-map", "event/dom/base", "./single-to
     }
     var eventObject = new DomEventObject({type:TAP_EVENT, which:1, pageX:lastXY.pageX, pageY:lastXY.pageY, target:target, currentTarget:target});
     eventObject.touch = touch;
-    eventObject.originalEvent = e.originalEvent;
     DomEvent.fire(target, TAP_EVENT, eventObject);
-    if(eventObject.isDefaultPrevented()) {
-      DomEvent.on(target, "click", {fn:preventDefault, once:1})
+    if(eventObject.isDefaultPrevented() && S.UA.mobile) {
+      if(S.UA.ios) {
+        e.preventDefault()
+      }else {
+        DomEvent.on(target.ownerDocument || target, "click", {fn:preventDefault, once:1})
+      }
     }
     var lastEndTime = self.lastEndTime, time = e.timeStamp, duration;
     self.lastEndTime = time;
