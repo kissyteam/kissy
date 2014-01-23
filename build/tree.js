@@ -1,10 +1,10 @@
 /*
-Copyright 2013, KISSY v1.50
+Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Dec 12 22:22
+build time: Jan 23 11:25
 */
 /*
- Combined processedModules by KISSY Module Compiler: 
+ Combined modules by KISSY Module Compiler: 
 
  tree/node-xtpl
  tree/node-render
@@ -290,6 +290,7 @@ KISSY.add("tree/node", ["node", "component/container", "./node-render"], functio
   }, select:function() {
     this.set("selected", true)
   }, handleClickInternal:function(e) {
+    e.stopPropagation();
     var self = this, target = $(e.target), expanded = self.get("expanded"), tree = self.get("tree");
     tree.focus();
     self.callSuper(e);

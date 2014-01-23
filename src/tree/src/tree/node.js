@@ -144,6 +144,8 @@ KISSY.add(function (S, require) {
         },
 
         handleClickInternal: function (e) {
+            //  prevent firing click from parent
+            e.stopPropagation();
             var self = this,
                 target = $(e.target),
                 expanded = self.get('expanded'),

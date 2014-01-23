@@ -81,7 +81,6 @@ KISSY.add(function (S, DOM, Tree, Node) {
         });
 
         it('校验折叠展开、选中', function () {
-
             // setup
             $('<div id="t2"></div>').appendTo('body');
 
