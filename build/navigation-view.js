@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Jan 20 11:32
+build time: Jan 23 16:58
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -182,7 +182,7 @@ KISSY.add("navigation-view", ["node", "component/container", "component/extensio
     if(activeView) {
       leaveAnimation = activeView.get("animation").leave || leaveAnimation
     }
-    enterAnimCssClass = getAnimCss(self, enterAnimation, true);
+    enterAnimCssClass = enterAnimation && getAnimCss(self, enterAnimation, true) || "";
     leaveAnimCssClass = getAnimCss(self, leaveAnimation);
     processSwitchView(self, config, activeView, nextView, enterAnimCssClass, leaveAnimCssClass);
     postProcessSwitchView(self, activeView, nextView)

@@ -453,18 +453,29 @@ if (! _$jscoverage['/navigation-view.js'].branchData) {
   _$jscoverage['/navigation-view.js'].branchData['264'][1] = new BranchData();
   _$jscoverage['/navigation-view.js'].branchData['265'] = [];
   _$jscoverage['/navigation-view.js'].branchData['265'][1] = new BranchData();
+  _$jscoverage['/navigation-view.js'].branchData['268'] = [];
+  _$jscoverage['/navigation-view.js'].branchData['268'][1] = new BranchData();
+  _$jscoverage['/navigation-view.js'].branchData['268'][2] = new BranchData();
   _$jscoverage['/navigation-view.js'].branchData['291'] = [];
   _$jscoverage['/navigation-view.js'].branchData['291'][1] = new BranchData();
   _$jscoverage['/navigation-view.js'].branchData['297'] = [];
   _$jscoverage['/navigation-view.js'].branchData['297'][1] = new BranchData();
 }
 _$jscoverage['/navigation-view.js'].branchData['297'][1].init(296, 68, 'nextView.get(\'animation\').leave || activeView.get(\'animation\').leave');
-function visit29_297_1(result) {
+function visit31_297_1(result) {
   _$jscoverage['/navigation-view.js'].branchData['297'][1].ranCondition(result);
   return result;
 }_$jscoverage['/navigation-view.js'].branchData['291'][1].init(248, 20, 'viewStack.length > 1');
-function visit28_291_1(result) {
+function visit30_291_1(result) {
   _$jscoverage['/navigation-view.js'].branchData['291'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/navigation-view.js'].branchData['268'][2].init(993, 56, 'enterAnimation && getAnimCss(self, enterAnimation, true)');
+function visit29_268_2(result) {
+  _$jscoverage['/navigation-view.js'].branchData['268'][2].ranCondition(result);
+  return result;
+}_$jscoverage['/navigation-view.js'].branchData['268'][1].init(993, 62, 'enterAnimation && getAnimCss(self, enterAnimation, true) || \'\'');
+function visit28_268_1(result) {
+  _$jscoverage['/navigation-view.js'].branchData['268'][1].ranCondition(result);
   return result;
 }_$jscoverage['/navigation-view.js'].branchData['265'][1].init(35, 51, 'activeView.get(\'animation\').leave || leaveAnimation');
 function visit27_265_1(result) {
@@ -908,7 +919,7 @@ KISSY.add(function(S, require) {
     leaveAnimation = visit27_265_1(activeView.get('animation').leave || leaveAnimation);
   }
   _$jscoverage['/navigation-view.js'].lineData[268]++;
-  enterAnimCssClass = getAnimCss(self, enterAnimation, true);
+  enterAnimCssClass = visit28_268_1(visit29_268_2(enterAnimation && getAnimCss(self, enterAnimation, true)) || '');
   _$jscoverage['/navigation-view.js'].lineData[269]++;
   leaveAnimCssClass = getAnimCss(self, leaveAnimation);
   _$jscoverage['/navigation-view.js'].lineData[271]++;
@@ -928,7 +939,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/navigation-view.js'].lineData[283]++;
   var self = this, activeView, config, nextView, enterAnimCssClass, leaveAnimCssClass, viewStack = self.viewStack;
   _$jscoverage['/navigation-view.js'].lineData[291]++;
-  if (visit28_291_1(viewStack.length > 1)) {
+  if (visit30_291_1(viewStack.length > 1)) {
     _$jscoverage['/navigation-view.js'].lineData[292]++;
     viewStack.pop();
     _$jscoverage['/navigation-view.js'].lineData[293]++;
@@ -940,7 +951,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/navigation-view.js'].lineData[296]++;
     nextView.uuid = uuid++;
     _$jscoverage['/navigation-view.js'].lineData[297]++;
-    enterAnimCssClass = getAnimCss(self, visit29_297_1(nextView.get('animation').leave || activeView.get('animation').leave), true);
+    enterAnimCssClass = getAnimCss(self, visit31_297_1(nextView.get('animation').leave || activeView.get('animation').leave), true);
     _$jscoverage['/navigation-view.js'].lineData[298]++;
     leaveAnimCssClass = getAnimCss(self, activeView.get('animation').enter);
     _$jscoverage['/navigation-view.js'].lineData[300]++;

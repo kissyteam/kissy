@@ -265,7 +265,7 @@ KISSY.add(function (S, require) {
                 leaveAnimation = activeView.get('animation').leave || leaveAnimation;
             }
 
-            enterAnimCssClass = getAnimCss(self, enterAnimation, true);
+            enterAnimCssClass = enterAnimation && getAnimCss(self, enterAnimation, true) || '';
             leaveAnimCssClass = getAnimCss(self, leaveAnimation);
 
             processSwitchView(self, config, activeView, nextView, enterAnimCssClass, leaveAnimCssClass);
