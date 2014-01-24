@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Jan 23 11:25
+build time: Jan 24 20:12
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -328,7 +328,7 @@ KISSY.add("tree/node", ["node", "component/container", "./node-render"], functio
     S.each(self.get("children"), function(c) {
       c.collapseAll()
     })
-  }}, {ATTRS:{xrender:{value:TreeNodeRender}, checkable:{value:false, view:1}, handleMouseEvents:{value:false}, isLeaf:{view:1}, expandIconEl:{}, iconEl:{}, selected:{view:1}, expanded:{sync:0, value:false, view:1}, tooltip:{view:1}, tree:{getter:function() {
+  }}, {ATTRS:{xrender:{value:TreeNodeRender}, checkable:{value:false, view:1}, handleGestureEvents:{value:false}, isLeaf:{view:1}, expandIconEl:{}, iconEl:{}, selected:{view:1}, expanded:{sync:0, value:false, view:1}, tooltip:{view:1}, tree:{getter:function() {
     var from = this;
     while(from && !from.isTree) {
       from = from.get("parent")
@@ -431,7 +431,7 @@ KISSY.add("tree/tree-manager", ["node", "component/extension/delegate-children"]
   var UA = S.UA, ie = UA.ieMode, Features = S.Features, Gesture = Node.Gesture, isTouchEventSupported = Features.isTouchEventSupported();
   function TreeManager() {
   }
-  TreeManager.ATTRS = {showRootNode:{value:true, view:1}, selectedItem:{}, focusable:{value:true}, handleMouseEvents:{value:true}};
+  TreeManager.ATTRS = {showRootNode:{value:true, view:1}, selectedItem:{}, focusable:{value:true}, handleGestureEvents:{value:true}};
   S.augment(TreeManager, DelegateChildrenExtension, {isTree:1, __bindUI:function() {
     var self = this, prefixCls = self.get("prefixCls"), delegateCls = prefixCls + "tree-node", events = Gesture.tap;
     if(!isTouchEventSupported) {

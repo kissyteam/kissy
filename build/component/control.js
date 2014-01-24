@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Jan 23 15:28
+build time: Jan 24 20:11
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -463,7 +463,7 @@ KISSY.add("component/control", ["node", "./control/process", "component/manager"
     if(self.get("focusable")) {
       el.on("focus", self.handleFocus, self).on("blur", self.handleBlur, self).on("keydown", self.handleKeydown, self)
     }
-    if(self.get("handleMouseEvents")) {
+    if(self.get("handleGestureEvents")) {
       el = self.$el;
       if(!isTouchEventSupported) {
         el.on("mouseenter", self.handleMouseEnter, self).on("mouseleave", self.handleMouseLeave, self).on("contextmenu", self.handleContextMenu, self)
@@ -644,7 +644,7 @@ KISSY.add("component/control", ["node", "./control/process", "component/manager"
     return[this.get("x"), this.get("y")]
   }}, zIndex:{view:1}, render:{}, visible:{sync:0, value:true, view:1}, srcNode:{setter:function(v) {
     return Node.all(v)
-  }}, handleMouseEvents:{value:true}, focusable:{value:true, view:1}, allowTextSelection:{value:false}, activeable:{value:true}, focused:{view:1}, active:{view:1, value:false}, highlighted:{view:1, value:false}, prefixCls:{view:1, value:S.config("component/prefixCls") || "ks-"}, prefixXClass:{}, parent:{setter:function(p, prev) {
+  }}, handleGestureEvents:{value:true}, focusable:{value:true, view:1}, allowTextSelection:{value:false}, activeable:{value:true}, focused:{view:1}, active:{view:1, value:false}, highlighted:{view:1, value:false}, prefixCls:{view:1, value:S.config("component/prefixCls") || "ks-"}, prefixXClass:{}, parent:{setter:function(p, prev) {
     if(prev = this.get("parent")) {
       this.removeTarget(prev)
     }

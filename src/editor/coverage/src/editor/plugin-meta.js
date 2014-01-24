@@ -424,7 +424,7 @@ KISSY.add(function() {
   _$jscoverage['/editor/plugin-meta.js'].lineData[90]++;
   config({
   'editor/plugin/flash-common/base-class': {
-  requires: ['editor/plugin/flash-common/utils', 'base', 'editor', 'editor/plugin/dialog-loader', 'editor/plugin/bubble']}});
+  requires: ['editor/plugin/flash-common/utils', 'base', 'editor', 'editor/plugin/dialog-loader', 'editor/plugin/bubble', 'editor/plugin/contextmenu']}});
   _$jscoverage['/editor/plugin-meta.js'].lineData[94]++;
   config({
   'editor/plugin/flash-common/utils': {
@@ -484,7 +484,7 @@ KISSY.add(function() {
   _$jscoverage['/editor/plugin-meta.js'].lineData[150]++;
   config({
   'editor/plugin/image': {
-  requires: ['editor/plugin/button', 'editor', 'editor/plugin/bubble', 'editor/plugin/dialog-loader']}});
+  requires: ['editor/plugin/button', 'editor', 'editor/plugin/bubble', 'editor/plugin/contextmenu', 'editor/plugin/dialog-loader']}});
   _$jscoverage['/editor/plugin-meta.js'].lineData[154]++;
   config({
   'editor/plugin/image/dialog': {

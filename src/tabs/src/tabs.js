@@ -332,7 +332,7 @@ KISSY.add(function (S, require) {
             },
 
             // real attribute
-            handleMouseEvents: {
+            handleGestureEvents: {
                 value: false
             },
 

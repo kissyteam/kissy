@@ -1,7 +1,7 @@
 /*
-Copyright 2013, KISSY v1.50
+Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Dec 12 22:21
+build time: Jan 24 20:12
 */
 /**
 * Variables to customize the look and feel from Bootstrap.
@@ -10,11 +10,6 @@ build time: Dec 12 22:21
 */
 /**
 * Snippets of reusable CSS to develop faster and keep code readable from KISSY and Bootstrap.
-*
-* @author yiminghe@gmail.com
-*/
-/**
-* Variables to customize the look and feel from Bootstrap.
 *
 * @author yiminghe@gmail.com
 */
@@ -41,10 +36,10 @@ build time: Dec 12 22:21
 .ks-tabs-body {
   overflow: auto;
 }
-.ks-tabs-body  > .ks-tabs-panel {
+.ks-tabs-body > .ks-tabs-panel {
   display: none;
 }
-.ks-tabs-body  > .ks-tabs-panel-selected {
+.ks-tabs-body > .ks-tabs-panel-selected {
   display: block;
 }
 .ks-tabs-bar .ks-tabs-tab.ks-button {
@@ -69,90 +64,88 @@ build time: Dec 12 22:21
   -moz-box-shadow: none;
   box-shadow: none;
 }
-.ks-tabs-top  > .ks-tabs-bar {
+.ks-tabs-top > .ks-tabs-bar {
   *zoom: 1;
   border-bottom: 1px solid #bbbbbb;
 }
-.ks-tabs-top  > .ks-tabs-bar:before,
-.ks-tabs-top  > .ks-tabs-bar:after {
+.ks-tabs-top > .ks-tabs-bar:before,
+.ks-tabs-top > .ks-tabs-bar:after {
   display: table;
   content: "";
 }
-.ks-tabs-top  > .ks-tabs-bar:after {
+.ks-tabs-top > .ks-tabs-bar:after {
   clear: both;
 }
-.ks-tabs-top  > .ks-tabs-bar > .ks-tabs-tab {
+.ks-tabs-top > .ks-tabs-bar > .ks-tabs-tab {
   /*
     inline-block cause whitespace in ie67
     float is perfect
     */
-
   float: left;
   margin-right: 2px;
   display: inline;
   margin-bottom: -1px;
   border-radius: 4px 4px 0 0;
 }
-.ks-tabs-top  > .ks-tabs-bar > .ks-tabs-tab.ks-tabs-tab-selected,
-.ks-tabs-top  > .ks-tabs-bar > .ks-tabs-tab.ks-tabs-tab-selected.ks-tabs-tab-active {
+.ks-tabs-top > .ks-tabs-bar > .ks-tabs-tab.ks-tabs-tab-selected,
+.ks-tabs-top > .ks-tabs-bar > .ks-tabs-tab.ks-tabs-tab-selected.ks-tabs-tab-active {
   border-color: #bbbbbb #bbbbbb transparent #bbbbbb;
   /* ie7 transparent border makes bar border leaks*/
-
   *border-bottom-color: white;
 }
-.ks-tabs-bottom  > .ks-tabs-bar {
+.ks-tabs-bottom > .ks-tabs-bar {
   *zoom: 1;
   border-top: 1px solid #bbbbbb;
 }
-.ks-tabs-bottom  > .ks-tabs-bar:before,
-.ks-tabs-bottom  > .ks-tabs-bar:after {
+.ks-tabs-bottom > .ks-tabs-bar:before,
+.ks-tabs-bottom > .ks-tabs-bar:after {
   display: table;
   content: "";
 }
-.ks-tabs-bottom  > .ks-tabs-bar:after {
+.ks-tabs-bottom > .ks-tabs-bar:after {
   clear: both;
 }
-.ks-tabs-bottom  > .ks-tabs-bar > .ks-tabs-tab {
+.ks-tabs-bottom > .ks-tabs-bar > .ks-tabs-tab {
   float: left;
   margin-right: 2px;
   display: inline;
   margin-top: -1px;
   border-radius: 0 0 4px 4px;
 }
-.ks-tabs-bottom  > .ks-tabs-bar > .ks-tabs-tab.ks-tabs-tab-selected,
-.ks-tabs-bottom  > .ks-tabs-bar > .ks-tabs-tab.ks-tabs-tab-selected.ks-tabs-tab-active {
+.ks-tabs-bottom > .ks-tabs-bar > .ks-tabs-tab.ks-tabs-tab-selected,
+.ks-tabs-bottom > .ks-tabs-bar > .ks-tabs-tab.ks-tabs-tab-selected.ks-tabs-tab-active {
   border-color: transparent #bbbbbb #bbbbbb #bbbbbb;
   *border-top-color: white;
 }
-.ks-tabs-left  > .ks-tabs-bar {
+.ks-tabs-left > .ks-tabs-bar {
   margin-right: 18px;
   border-right: 1px solid #bbbbbb;
   float: left;
 }
-.ks-tabs-left  > .ks-tabs-bar > .ks-tabs-tab {
+.ks-tabs-left > .ks-tabs-bar > .ks-tabs-tab {
   margin-right: -1px;
   border-radius: 4px 0 0 4px;
   display: block;
   margin-bottom: 2px;
 }
-.ks-tabs-left  > .ks-tabs-bar > .ks-tabs-tab.ks-tabs-tab-selected,
-.ks-tabs-left  > .ks-tabs-bar > .ks-tabs-tab.ks-tabs-tab-selected.ks-tabs-tab-active {
+.ks-tabs-left > .ks-tabs-bar > .ks-tabs-tab.ks-tabs-tab-selected,
+.ks-tabs-left > .ks-tabs-bar > .ks-tabs-tab.ks-tabs-tab-selected.ks-tabs-tab-active {
   border-color: #bbbbbb transparent #bbbbbb #bbbbbb;
   *border-right-color: white;
 }
-.ks-tabs-right  > .ks-tabs-bar {
+.ks-tabs-right > .ks-tabs-bar {
   margin-left: 18px;
   border-left: 1px solid #bbbbbb;
   float: right;
 }
-.ks-tabs-right  > .ks-tabs-bar > .ks-tabs-tab {
+.ks-tabs-right > .ks-tabs-bar > .ks-tabs-tab {
   margin-left: -1px;
   border-radius: 0 4px 4px 0;
   display: block;
   margin-bottom: 2px;
 }
-.ks-tabs-right  > .ks-tabs-bar > .ks-tabs-tab.ks-tabs-tab-selected,
-.ks-tabs-right  > .ks-tabs-bar > .ks-tabs-tab.ks-tabs-tab-selected.ks-tabs-tab-active {
+.ks-tabs-right > .ks-tabs-bar > .ks-tabs-tab.ks-tabs-tab-selected,
+.ks-tabs-right > .ks-tabs-bar > .ks-tabs-tab.ks-tabs-tab-selected.ks-tabs-tab-active {
   border-color: #bbbbbb #bbbbbb #bbbbbb transparent;
   *border-left-color: white;
 }

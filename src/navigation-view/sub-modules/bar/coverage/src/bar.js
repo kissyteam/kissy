@@ -883,7 +883,7 @@ KISSY.add(function(S, require) {
 }}, {
   xclass: 'navigation-bar', 
   ATTRS: {
-  handleMouseEvents: {
+  handleGestureEvents: {
   value: false}, 
   focusable: {
   value: false}, 

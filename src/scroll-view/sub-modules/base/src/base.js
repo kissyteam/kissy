@@ -296,7 +296,7 @@ KISSY.add(function (S, require) {
             allowTextSelection: {
                 value: true
             },
-            handleMouseEvents: {
+            handleGestureEvents: {
                 value: false
             },
             /**

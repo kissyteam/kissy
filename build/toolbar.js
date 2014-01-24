@@ -1,10 +1,10 @@
 /*
-Copyright 2013, KISSY v1.50
+Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Dec 12 22:22
+build time: Jan 24 20:12
 */
 /*
- Combined processedModules by KISSY Module Compiler: 
+ Combined modules by KISSY Module Compiler: 
 
  toolbar/render
  toolbar
@@ -158,6 +158,6 @@ KISSY.add("toolbar", ["component/container", "component/extension/delegate-child
       nextHighlightedItem.set("highlighted", true)
     }
     return true
-  }}, {xclass:"toolbar", ATTRS:{highlightedItem:{}, expandedItem:{}, defaultChildCfg:{value:{xclass:"button", handleMouseEvents:false, focusable:false}}, xrender:{value:ToolbarRender}}})
+  }}, {xclass:"toolbar", ATTRS:{highlightedItem:{}, expandedItem:{}, defaultChildCfg:{value:{xclass:"button", handleGestureEvents:false, focusable:false}}, xrender:{value:ToolbarRender}}})
 });
 

@@ -141,13 +141,13 @@ KISSY.add(function (S, require) {
              *
              * Defaults to: false
              *
-             * @cfg {Boolean} handleMouseEvents
+             * @cfg {Boolean} handleGestureEvents
              * @protected
              */
             /**
              * @ignore
              */
-            handleMouseEvents: {
+            handleGestureEvents: {
                 value: false
             },
 

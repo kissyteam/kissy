@@ -316,7 +316,7 @@ KISSY.add(function (S, require) {
                 }
             },
 
-            handleMouseEvents: {
+            handleGestureEvents: {
                 value: false
             },
 
@@ -342,7 +342,7 @@ KISSY.add(function (S, require) {
 
             defaultChildCfg: {
                 value: {
-                    handleMouseEvents: false,
+                    handleGestureEvents: false,
                     allowTextSelection: true
                 }
             }

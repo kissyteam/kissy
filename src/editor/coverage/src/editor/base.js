@@ -264,7 +264,7 @@ KISSY.add(function(S, require) {
   document: {}, 
   toolBarEl: {}, 
   statusBarEl: {}, 
-  handleMouseEvents: {
+  handleGestureEvents: {
   value: false}, 
   focusable: {
   value: false}, 

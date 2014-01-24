@@ -86,7 +86,7 @@ KISSY.add(function (S, require) {
                 value: false
             },
 
-            handleMouseEvents: {
+            handleGestureEvents: {
                 value: false
             },
 

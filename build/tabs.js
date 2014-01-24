@@ -1,10 +1,10 @@
 /*
-Copyright 2013, KISSY v1.50
+Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Dec 12 22:21
+build time: Jan 24 20:12
 */
 /*
- Combined processedModules by KISSY Module Compiler: 
+ Combined modules by KISSY Module Compiler: 
 
  tabs/bar-render
  tabs/bar
@@ -101,7 +101,7 @@ KISSY.add("tabs/body", ["component/container"], function(S, require) {
     if(this.get("lazyRender")) {
       this.renderChild(newIndex)
     }
-  }}, {ATTRS:{selectedPanelIndex:{}, allowTextSelection:{value:true}, focusable:{value:false}, lazyRender:{}, handleMouseEvents:{value:false}, defaultChildCfg:{value:{xclass:"tabs-panel"}}}, xclass:"tabs-body"});
+  }}, {ATTRS:{selectedPanelIndex:{}, allowTextSelection:{value:true}, focusable:{value:false}, lazyRender:{}, handleGestureEvents:{value:false}, defaultChildCfg:{value:{xclass:"tabs-panel"}}}, xclass:"tabs-body"});
   function checkLazy(self, method, index) {
     if(self.get("lazyRender")) {
       var c = self.get("children")[index];
@@ -137,7 +137,7 @@ KISSY.add("tabs/tab", ["button", "./tab-render"], function(S, require) {
     this.on("click", function() {
       this.set("selected", true)
     })
-  }}, {ATTRS:{handleMouseEvents:{value:false}, focusable:{value:false}, selected:{view:1}, xrender:{value:TabRender}}, xclass:"tabs-tab"})
+  }}, {ATTRS:{handleGestureEvents:{value:false}, focusable:{value:false}, selected:{view:1}, xrender:{value:TabRender}}, xclass:"tabs-tab"})
 });
 KISSY.add("tabs/panel-render", ["component/container"], function(S, require) {
   var Container = require("component/container");
@@ -286,7 +286,7 @@ KISSY.add("tabs", ["component/container", "tabs/bar", "tabs/body", "tabs/tab", "
     this.on("afterSelectedTabChange", function(e) {
       this.setSelectedTab(e.newVal)
     })
-  }}, {ATTRS:{items:{}, changeType:{}, lazyRender:{value:false}, handleMouseEvents:{value:false}, allowTextSelection:{value:true}, focusable:{value:false}, bar:{getter:function() {
+  }}, {ATTRS:{items:{}, changeType:{}, lazyRender:{value:false}, handleGestureEvents:{value:false}, allowTextSelection:{value:true}, focusable:{value:false}, bar:{getter:function() {
     return this.get("children")[BarIndexMap[this.get("barOrientation")]]
   }}, body:{getter:function() {
     return this.get("children")[1 - BarIndexMap[this.get("barOrientation")]]

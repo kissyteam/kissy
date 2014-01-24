@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Jan 23 16:58
+build time: Jan 24 20:11
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -202,6 +202,6 @@ KISSY.add("navigation-view", ["node", "component/container", "component/extensio
       processSwitchView(self, config, activeView, nextView, enterAnimCssClass, leaveAnimCssClass, true);
       postProcessSwitchView(self, activeView, nextView, true)
     }
-  }}, {xclass:"navigation-view", ATTRS:{animation:{value:{enter:"slide-right", leave:"slide-left"}}, handleMouseEvents:{value:false}, viewCacheSize:{value:20}, focusable:{value:false}, allowTextSelection:{value:true}, xrender:{value:NavigationViewRender}, contentTpl:{value:ContentTpl}, defaultChildCfg:{value:{handleMouseEvents:false, allowTextSelection:true}}}})
+  }}, {xclass:"navigation-view", ATTRS:{animation:{value:{enter:"slide-right", leave:"slide-left"}}, handleGestureEvents:{value:false}, viewCacheSize:{value:20}, focusable:{value:false}, allowTextSelection:{value:true}, xrender:{value:NavigationViewRender}, contentTpl:{value:ContentTpl}, defaultChildCfg:{value:{handleGestureEvents:false, allowTextSelection:true}}}})
 });
 

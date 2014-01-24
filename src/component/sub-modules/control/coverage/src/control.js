@@ -705,7 +705,7 @@ function visit59_101_1(result) {
 function visit58_91_1(result) {
   _$jscoverage['/control.js'].branchData['91'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control.js'].branchData['88'][1].init(480, 29, 'self.get(\'handleMouseEvents\')');
+}_$jscoverage['/control.js'].branchData['88'][1].init(480, 31, 'self.get(\'handleGestureEvents\')');
 function visit57_88_1(result) {
   _$jscoverage['/control.js'].branchData['88'][1].ranCondition(result);
   return result;
@@ -779,7 +779,7 @@ KISSY.add(function(S, require) {
     el.on('focus', self.handleFocus, self).on('blur', self.handleBlur, self).on('keydown', self.handleKeydown, self);
   }
   _$jscoverage['/control.js'].lineData[88]++;
-  if (visit57_88_1(self.get('handleMouseEvents'))) {
+  if (visit57_88_1(self.get('handleGestureEvents'))) {
     _$jscoverage['/control.js'].lineData[89]++;
     el = self.$el;
     _$jscoverage['/control.js'].lineData[91]++;
@@ -1180,7 +1180,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/control.js'].lineData[650]++;
   return Node.all(v);
 }}, 
-  handleMouseEvents: {
+  handleGestureEvents: {
   value: true}, 
   focusable: {
   value: true, 

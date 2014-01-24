@@ -647,7 +647,7 @@ KISSY.add(function(S, require) {
   changeType: {}, 
   lazyRender: {
   value: false}, 
-  handleMouseEvents: {
+  handleGestureEvents: {
   value: false}, 
   allowTextSelection: {
   value: true}, 

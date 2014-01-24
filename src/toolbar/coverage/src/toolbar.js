@@ -788,7 +788,7 @@ KISSY.add(function(S, require) {
   defaultChildCfg: {
   value: {
   xclass: 'button', 
-  handleMouseEvents: false, 
+  handleGestureEvents: false, 
   focusable: false}}, 
   xrender: {
   value: ToolbarRender}}});

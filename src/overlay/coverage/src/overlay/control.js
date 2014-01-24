@@ -237,16 +237,16 @@ if (! _$jscoverage['/overlay/control.js']) {
   _$jscoverage['/overlay/control.js'].lineData[11] = 0;
   _$jscoverage['/overlay/control.js'].lineData[12] = 0;
   _$jscoverage['/overlay/control.js'].lineData[13] = 0;
-  _$jscoverage['/overlay/control.js'].lineData[16] = 0;
-  _$jscoverage['/overlay/control.js'].lineData[32] = 0;
+  _$jscoverage['/overlay/control.js'].lineData[14] = 0;
+  _$jscoverage['/overlay/control.js'].lineData[30] = 0;
+  _$jscoverage['/overlay/control.js'].lineData[38] = 0;
   _$jscoverage['/overlay/control.js'].lineData[40] = 0;
+  _$jscoverage['/overlay/control.js'].lineData[41] = 0;
   _$jscoverage['/overlay/control.js'].lineData[42] = 0;
   _$jscoverage['/overlay/control.js'].lineData[43] = 0;
-  _$jscoverage['/overlay/control.js'].lineData[44] = 0;
-  _$jscoverage['/overlay/control.js'].lineData[45] = 0;
+  _$jscoverage['/overlay/control.js'].lineData[52] = 0;
+  _$jscoverage['/overlay/control.js'].lineData[53] = 0;
   _$jscoverage['/overlay/control.js'].lineData[54] = 0;
-  _$jscoverage['/overlay/control.js'].lineData[55] = 0;
-  _$jscoverage['/overlay/control.js'].lineData[56] = 0;
 }
 if (! _$jscoverage['/overlay/control.js'].functionData) {
   _$jscoverage['/overlay/control.js'].functionData = [];
@@ -257,18 +257,18 @@ if (! _$jscoverage['/overlay/control.js'].functionData) {
 }
 if (! _$jscoverage['/overlay/control.js'].branchData) {
   _$jscoverage['/overlay/control.js'].branchData = {};
-  _$jscoverage['/overlay/control.js'].branchData['42'] = [];
-  _$jscoverage['/overlay/control.js'].branchData['42'][1] = new BranchData();
-  _$jscoverage['/overlay/control.js'].branchData['55'] = [];
-  _$jscoverage['/overlay/control.js'].branchData['55'][1] = new BranchData();
+  _$jscoverage['/overlay/control.js'].branchData['40'] = [];
+  _$jscoverage['/overlay/control.js'].branchData['40'][1] = new BranchData();
+  _$jscoverage['/overlay/control.js'].branchData['53'] = [];
+  _$jscoverage['/overlay/control.js'].branchData['53'][1] = new BranchData();
 }
-_$jscoverage['/overlay/control.js'].branchData['55'][1].init(47, 40, 'actions[self.get(\'closeAction\')] || HIDE');
-function visit4_55_1(result) {
-  _$jscoverage['/overlay/control.js'].branchData['55'][1].ranCondition(result);
+_$jscoverage['/overlay/control.js'].branchData['53'][1].init(47, 40, 'actions[self.get(\'closeAction\')] || HIDE');
+function visit4_53_1(result) {
+  _$jscoverage['/overlay/control.js'].branchData['53'][1].ranCondition(result);
   return result;
-}_$jscoverage['/overlay/control.js'].branchData['42'][1].init(95, 8, 'closeBtn');
-function visit3_42_1(result) {
-  _$jscoverage['/overlay/control.js'].branchData['42'][1].ranCondition(result);
+}_$jscoverage['/overlay/control.js'].branchData['40'][1].init(95, 8, 'closeBtn');
+function visit3_40_1(result) {
+  _$jscoverage['/overlay/control.js'].branchData['40'][1].ranCondition(result);
   return result;
 }_$jscoverage['/overlay/control.js'].lineData[6]++;
 KISSY.add(function(S, require) {
@@ -287,35 +287,35 @@ KISSY.add(function(S, require) {
   var OverlayRender = require('./overlay-render');
   _$jscoverage['/overlay/control.js'].lineData[13]++;
   var OverlayEffect = require('./extension/overlay-effect');
-  _$jscoverage['/overlay/control.js'].lineData[16]++;
+  _$jscoverage['/overlay/control.js'].lineData[14]++;
   var HIDE = 'hide', actions = {
   hide: HIDE, 
   destroy: 'destroy'};
-  _$jscoverage['/overlay/control.js'].lineData[32]++;
+  _$jscoverage['/overlay/control.js'].lineData[30]++;
   return Container.extend([Shim, Loading, AlignExtension, Mask, OverlayEffect], {
   bindUI: function() {
   _$jscoverage['/overlay/control.js'].functionData[1]++;
-  _$jscoverage['/overlay/control.js'].lineData[40]++;
+  _$jscoverage['/overlay/control.js'].lineData[38]++;
   var self = this, closeBtn = self.get('closeBtn');
-  _$jscoverage['/overlay/control.js'].lineData[42]++;
-  if (visit3_42_1(closeBtn)) {
-    _$jscoverage['/overlay/control.js'].lineData[43]++;
+  _$jscoverage['/overlay/control.js'].lineData[40]++;
+  if (visit3_40_1(closeBtn)) {
+    _$jscoverage['/overlay/control.js'].lineData[41]++;
     closeBtn.on('click', function(ev) {
   _$jscoverage['/overlay/control.js'].functionData[2]++;
-  _$jscoverage['/overlay/control.js'].lineData[44]++;
+  _$jscoverage['/overlay/control.js'].lineData[42]++;
   self.close();
-  _$jscoverage['/overlay/control.js'].lineData[45]++;
+  _$jscoverage['/overlay/control.js'].lineData[43]++;
   ev.preventDefault();
 });
   }
 }, 
   close: function() {
   _$jscoverage['/overlay/control.js'].functionData[3]++;
-  _$jscoverage['/overlay/control.js'].lineData[54]++;
+  _$jscoverage['/overlay/control.js'].lineData[52]++;
   var self = this;
-  _$jscoverage['/overlay/control.js'].lineData[55]++;
-  self[visit4_55_1(actions[self.get('closeAction')] || HIDE)]();
-  _$jscoverage['/overlay/control.js'].lineData[56]++;
+  _$jscoverage['/overlay/control.js'].lineData[53]++;
+  self[visit4_53_1(actions[self.get('closeAction')] || HIDE)]();
+  _$jscoverage['/overlay/control.js'].lineData[54]++;
   return self;
 }}, {
   ATTRS: {
@@ -331,7 +331,7 @@ KISSY.add(function(S, require) {
   value: false}, 
   allowTextSelection: {
   value: true}, 
-  handleMouseEvents: {
+  handleGestureEvents: {
   value: false}, 
   visible: {
   value: false}, 

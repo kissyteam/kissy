@@ -1,10 +1,10 @@
 /*
-Copyright 2013, KISSY v1.50
+Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Dec 12 22:21
+build time: Jan 24 20:12
 */
 /*
- Combined processedModules by KISSY Module Compiler: 
+ Combined modules by KISSY Module Compiler: 
 
  scroll-view/plugin/scrollbar/scrollbar-xtpl
  scroll-view/plugin/scrollbar/render

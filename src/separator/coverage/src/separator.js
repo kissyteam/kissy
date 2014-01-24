@@ -255,7 +255,7 @@ KISSY.add(function(S, require) {
   value: false}, 
   disabled: {
   value: true}, 
-  handleMouseEvents: {
+  handleGestureEvents: {
   value: false}, 
   xrender: {
   value: SeparatorRender}}, 

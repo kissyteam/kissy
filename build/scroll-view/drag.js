@@ -1,10 +1,10 @@
 /*
-Copyright 2013, KISSY v1.50
+Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Dec 19 00:19
+build time: Jan 24 20:12
 */
 /*
- Combined processedModules by KISSY Module Compiler: 
+ Combined modules by KISSY Module Compiler: 
 
  scroll-view/drag
 */
@@ -331,7 +331,7 @@ KISSY.add("scroll-view/drag", ["./base", "node", "anim"], function(S, require) {
     self._snapThresholdCfg = self.get("snapThreshold");
     self._snapDurationCfg = self.get("snapDuration");
     self._snapEasingCfg = self.get("snapEasing");
-    self.publish("dragend", {defaultFn:defaultDragEndFn})
+    self.publish("dragend", {defaultFn:defaultDragEndFn, defaultTargetOnly:true})
   }, bindUI:function() {
     var self = this;
     self.$contentEl.on("dragstart", preventDefault).on(Gesture.start, onDragStartHandler, self)

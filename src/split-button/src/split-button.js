@@ -24,7 +24,7 @@ KISSY.add(function (S, require) {
         }
     }, {
         ATTRS: {
-            handleMouseEvents: {
+            handleGestureEvents: {
                 value: false
             },
             focusable: {

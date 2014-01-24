@@ -966,7 +966,7 @@ KISSY.add(function(S, require) {
   value: {
   'enter': 'slide-right', 
   'leave': 'slide-left'}}, 
-  handleMouseEvents: {
+  handleGestureEvents: {
   value: false}, 
   viewCacheSize: {
   value: 20}, 
@@ -980,6 +980,6 @@ KISSY.add(function(S, require) {
   value: ContentTpl}, 
   defaultChildCfg: {
   value: {
-  handleMouseEvents: false, 
+  handleGestureEvents: false, 
   allowTextSelection: true}}}});
 });

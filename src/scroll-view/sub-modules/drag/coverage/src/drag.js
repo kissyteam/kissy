@@ -478,12 +478,12 @@ if (! _$jscoverage['/drag.js']) {
   _$jscoverage['/drag.js'].lineData[492] = 0;
   _$jscoverage['/drag.js'].lineData[493] = 0;
   _$jscoverage['/drag.js'].lineData[494] = 0;
-  _$jscoverage['/drag.js'].lineData[500] = 0;
   _$jscoverage['/drag.js'].lineData[502] = 0;
-  _$jscoverage['/drag.js'].lineData[506] = 0;
-  _$jscoverage['/drag.js'].lineData[510] = 0;
-  _$jscoverage['/drag.js'].lineData[514] = 0;
-  _$jscoverage['/drag.js'].lineData[515] = 0;
+  _$jscoverage['/drag.js'].lineData[504] = 0;
+  _$jscoverage['/drag.js'].lineData[508] = 0;
+  _$jscoverage['/drag.js'].lineData[512] = 0;
+  _$jscoverage['/drag.js'].lineData[516] = 0;
+  _$jscoverage['/drag.js'].lineData[517] = 0;
 }
 if (! _$jscoverage['/drag.js'].functionData) {
   _$jscoverage['/drag.js'].functionData = [];
@@ -1579,30 +1579,31 @@ KISSY.add(function(S, require) {
   self._snapEasingCfg = self.get('snapEasing');
   _$jscoverage['/drag.js'].lineData[494]++;
   self.publish('dragend', {
-  defaultFn: defaultDragEndFn});
+  defaultFn: defaultDragEndFn, 
+  defaultTargetOnly: true});
 }, 
   bindUI: function() {
   _$jscoverage['/drag.js'].functionData[16]++;
-  _$jscoverage['/drag.js'].lineData[500]++;
-  var self = this;
   _$jscoverage['/drag.js'].lineData[502]++;
+  var self = this;
+  _$jscoverage['/drag.js'].lineData[504]++;
   self.$contentEl.on('dragstart', preventDefault).on(Gesture.start, onDragStartHandler, self);
 }, 
   syncUI: function() {
   _$jscoverage['/drag.js'].functionData[17]++;
-  _$jscoverage['/drag.js'].lineData[506]++;
+  _$jscoverage['/drag.js'].lineData[508]++;
   initStates(this);
 }, 
   destructor: function() {
   _$jscoverage['/drag.js'].functionData[18]++;
-  _$jscoverage['/drag.js'].lineData[510]++;
+  _$jscoverage['/drag.js'].lineData[512]++;
   this.stopAnimation();
 }, 
   stopAnimation: function() {
   _$jscoverage['/drag.js'].functionData[19]++;
-  _$jscoverage['/drag.js'].lineData[514]++;
+  _$jscoverage['/drag.js'].lineData[516]++;
   this.callSuper();
-  _$jscoverage['/drag.js'].lineData[515]++;
+  _$jscoverage['/drag.js'].lineData[517]++;
   this.isScrolling = 0;
 }}, {
   ATTRS: {

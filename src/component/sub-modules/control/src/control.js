@@ -85,7 +85,7 @@ KISSY.add(function (S, require) {
                         .on('keydown', self.handleKeydown, self);
                 }
 
-                if (self.get('handleMouseEvents')) {
+                if (self.get('handleGestureEvents')) {
                     el = self.$el;
 
                     if (!isTouchEventSupported) {
@@ -652,19 +652,19 @@ KISSY.add(function (S, require) {
                 },
 
                 /**
-                 * Enables or disables mouse event handling for the component.
-                 * Containers may set this attribute to disable mouse event handling
+                 * Enables or disables gesture event(mouse/gestureStart/gestureEnd) handling for the component.
+                 * Containers may set this attribute to disable gesture event handling
                  * in their child component.
                  *
                  * Defaults to: true.
                  *
-                 * @cfg {Boolean} handleMouseEvents
+                 * @cfg {Boolean} handleGestureEvents
                  * @protected
                  */
                 /**
                  * @ignore
                  */
-                handleMouseEvents: {
+                handleGestureEvents: {
                     value: true
                 },
 

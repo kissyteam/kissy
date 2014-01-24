@@ -300,7 +300,7 @@ KISSY.add(function(S, require) {
   selectedItem: {}, 
   focusable: {
   value: true}, 
-  handleMouseEvents: {
+  handleGestureEvents: {
   value: true}};
   _$jscoverage['/tree/tree-manager.js'].lineData[56]++;
   S.augment(TreeManager, DelegateChildrenExtension, {

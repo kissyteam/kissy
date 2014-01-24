@@ -376,7 +376,7 @@ KISSY.add(function(S, require) {
   focusable: {
   value: false}, 
   lazyRender: {}, 
-  handleMouseEvents: {
+  handleGestureEvents: {
   value: false}, 
   defaultChildCfg: {
   value: {

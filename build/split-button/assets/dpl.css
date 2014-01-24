@@ -1,7 +1,7 @@
 /*
-Copyright 2013, KISSY v1.50
+Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Dec 12 22:21
+build time: Jan 24 20:12
 */
 /**
 * Variables to customize the look and feel from Bootstrap.
@@ -16,7 +16,6 @@ build time: Dec 12 22:21
 .ks-split-button {
   display: inline-block;
   *display: inline;
-  *zoom: 1;
   position: relative;
   *zoom: 1;
   *margin-left: .3em;

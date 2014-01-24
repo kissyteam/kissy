@@ -1,10 +1,10 @@
 /*
-Copyright 2013, KISSY v1.50
+Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Dec 12 22:20
+build time: Jan 24 20:11
 */
 /*
- Combined processedModules by KISSY Module Compiler: 
+ Combined modules by KISSY Module Compiler: 
 
  menu/menu-render
  menu/control
@@ -199,7 +199,7 @@ KISSY.add("menu/menuitem", ["component/control", "./menuitem-render", "node"], f
     }
   }, containsElement:function(element) {
     return this.view.containsElement(element)
-  }}, {ATTRS:{focusable:{value:false}, handleMouseEvents:{value:false}, selectable:{view:1}, value:{}, selected:{view:1}, xrender:{value:MenuItemRender}}, xclass:"menuitem"})
+  }}, {ATTRS:{focusable:{value:false}, handleGestureEvents:{value:false}, selectable:{view:1}, value:{}, selected:{view:1}, xrender:{value:MenuItemRender}}, xclass:"menuitem"})
 });
 KISSY.add("menu/check-menuitem-xtpl", ["component/extension/content-xtpl"], function(S, require, exports, module) {
   return function(scope, S, undefined) {

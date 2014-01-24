@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Jan 13 14:58
+build time: Jan 24 20:11
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -121,7 +121,7 @@ KISSY.add("editor/base", ["html-parser", "component/control", "./render"], funct
   var HtmlParser = require("html-parser");
   var Control = require("component/control");
   var EditorRender = require("./render");
-  return Control.extend({}, {Config:{}, XHTML_DTD:HtmlParser.DTD, ATTRS:{textarea:{}, textareaAttrs:{view:1}, iframe:{}, window:{}, document:{}, toolBarEl:{}, statusBarEl:{}, handleMouseEvents:{value:false}, focusable:{value:false}, mode:{view:1, value:1}, data:{view:1}, customStyle:{value:""}, customLink:{value:[]}, xrender:{value:EditorRender}}, xclass:"editor"})
+  return Control.extend({}, {Config:{}, XHTML_DTD:HtmlParser.DTD, ATTRS:{textarea:{}, textareaAttrs:{view:1}, iframe:{}, window:{}, document:{}, toolBarEl:{}, statusBarEl:{}, handleGestureEvents:{value:false}, focusable:{value:false}, mode:{view:1, value:1}, data:{view:1}, customStyle:{value:""}, customLink:{value:[]}, xrender:{value:EditorRender}}, xclass:"editor"})
 });
 KISSY.add("editor/utils", ["node", "./base"], function(S, require) {
   var Node = require("node");

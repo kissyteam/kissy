@@ -850,7 +850,7 @@ KISSY.add(function(S, require) {
   checkable: {
   value: false, 
   view: 1}, 
-  handleMouseEvents: {
+  handleGestureEvents: {
   value: false}, 
   isLeaf: {
   view: 1}, 

@@ -310,7 +310,7 @@ KISSY.add(function (S, Control, Container, DelegateChildrenExtension) {
 
                     var child1 = new Control({
                         content: "yy",
-                        handleMouseEvents: false,
+                        handleGestureEvents: false,
                         focusable: false
                     });
 
@@ -318,7 +318,7 @@ KISSY.add(function (S, Control, Container, DelegateChildrenExtension) {
 
                     var child2 = new Control({
                         content: "yy",
-                        handleMouseEvents: false,
+                        handleGestureEvents: false,
                         focusable: false
                     });
 

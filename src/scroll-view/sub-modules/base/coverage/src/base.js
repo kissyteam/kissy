@@ -1035,7 +1035,7 @@ KISSY.add(function(S, require) {
   value: !isTouchEventSupported}, 
   allowTextSelection: {
   value: true}, 
-  handleMouseEvents: {
+  handleGestureEvents: {
   value: false}, 
   snap: {
   value: false}, 

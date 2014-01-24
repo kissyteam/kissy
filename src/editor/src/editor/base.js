@@ -63,7 +63,7 @@ KISSY.add(function (S,require) {
              */
             statusBarEl: {},
 
-            handleMouseEvents: {
+            handleGestureEvents: {
                 value: false
             },
 

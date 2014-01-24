@@ -219,7 +219,7 @@ KISSY.add(function (S, require) {
             },
 
             // 事件代理
-            handleMouseEvents: {
+            handleGestureEvents: {
                 value: false
             },
 

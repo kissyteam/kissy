@@ -65,7 +65,7 @@ KISSY.add(function (S, require) {
             },
             lazyRender: {
             },
-            handleMouseEvents: {
+            handleGestureEvents: {
                 value: false
             },
             defaultChildCfg: {

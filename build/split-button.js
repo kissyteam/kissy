@@ -1,10 +1,10 @@
 /*
-Copyright 2013, KISSY v1.50
+Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Dec 12 22:21
+build time: Jan 24 20:12
 */
 /*
- Combined processedModules by KISSY Module Compiler: 
+ Combined modules by KISSY Module Compiler: 
 
  split-button
 */
@@ -18,7 +18,7 @@ KISSY.add("split-button", ["component/container", "button", "menubutton"], funct
     if(alignWithEl) {
       menu.get("align").node = self.$el
     }
-  }}, {ATTRS:{handleMouseEvents:{value:false}, focusable:{value:false}, alignWithEl:{value:true}, children:{value:[{xclass:"button"}, {xclass:"menu-button"}]}, menuButton:{getter:function() {
+  }}, {ATTRS:{handleGestureEvents:{value:false}, focusable:{value:false}, alignWithEl:{value:true}, children:{value:[{xclass:"button"}, {xclass:"menu-button"}]}, menuButton:{getter:function() {
     return this.get("children")[1]
   }, setter:function(v) {
     this.get("children")[1] = v
