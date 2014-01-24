@@ -213,7 +213,7 @@ KISSY.add(function (S, Dom, Anim, Node) {
                             //'border': '5px dashed #999',
                             'border-width': '5px',
                             'border-color': "#999999",
-                            'border-style': "dashed",
+                            //'border-style': "dashed",
                             'width': '100px',
                             'height': '50px',
                             'left': '900px',

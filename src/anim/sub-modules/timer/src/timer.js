@@ -3,7 +3,7 @@
  * @author yiminghe@gmail.com
  * @ignore
  */
-KISSY.add(function (S,require) {
+KISSY.add(function (S, require) {
     var Dom = require('dom');
     var AnimBase = require('./base');
     var Easing = require('./timer/easing');
@@ -20,8 +20,8 @@ KISSY.add(function (S,require) {
         var self = this,
             to;
         Anim.superclass.constructor.apply(self, arguments);
-        // camel case uniformity
-        S.each(to = self.to, function (v, prop) {
+        // camel case uniformity for js anim
+        S.each(to = self.config.to, function (v, prop) {
             var camelProp = camelCase(prop);
             if (prop !== camelProp) {
                 to[camelProp] = to[prop];

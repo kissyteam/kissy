@@ -475,7 +475,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/timer.js'].lineData[22]++;
     Anim.superclass.constructor.apply(self, arguments);
     _$jscoverage['/timer.js'].lineData[24]++;
-    S.each(to = self.to, function(v, prop) {
+    S.each(to = self.config.to, function(v, prop) {
   _$jscoverage['/timer.js'].functionData[2]++;
   _$jscoverage['/timer.js'].lineData[25]++;
   var camelProp = camelCase(prop);

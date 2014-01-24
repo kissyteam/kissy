@@ -1,10 +1,10 @@
 /*
-Copyright 2013, KISSY v1.50
+Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Dec 23 18:50
+build time: Jan 24 15:49
 */
 /*
- Combined processedModules by KISSY Module Compiler: 
+ Combined modules by KISSY Module Compiler: 
 
  anim/timer/easing
  anim/timer/manager
@@ -511,7 +511,7 @@ KISSY.add("anim/timer", ["dom", "./base", "./timer/easing", "./timer/manager", "
   function Anim() {
     var self = this, to;
     Anim.superclass.constructor.apply(self, arguments);
-    S.each(to = self.to, function(v, prop) {
+    S.each(to = self.config.to, function(v, prop) {
       var camelProp = camelCase(prop);
       if(prop !== camelProp) {
         to[camelProp] = to[prop];

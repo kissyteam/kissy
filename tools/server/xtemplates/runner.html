@@ -12,7 +12,11 @@
     <title>{{component}} test runner</title>
     <link rel="stylesheet" href="/kissy/tools/jasmine/jasmine.css">
     <link rel="stylesheet" href="/kissy/build/css/dpl/base.css"/>
-
+    <style>
+        #TrivialReporter {
+            position: static;
+        }
+    </style>
     {{#each externalLinks}}
         <link rel="stylesheet" href="{{{.}}}"/>
     {{/each}}
@@ -45,6 +49,7 @@
     <script src="/kissy/tools/jasmine/jasmine.js"></script>
     <script src="/kissy/tools/jasmine/jasmine-html.js"></script>
     <script src="/kissy/tools/jasmine/jasmine.console_reporter.js"></script>
+    <script src="/kissy/tools/jasmine/kissy-report.js"></script>
     <script src="/kissy/tools/jasmine/event-simulate.js"></script>
     {{#each externalScripts}}
         <script src="{{{.}}}"></script>
@@ -77,38 +82,11 @@
 
     {{{script}}}
 
-    S.use(tests, function (S) {
+    S.use(tests, function () {
         jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
         jasmine.getEnv().addReporter(new jasmine.ConsoleReporter());
-        jasmine.getEnv().execute(function () {
-            var self=this;
-            function createRequest(){
-                if (window.ActiveXObject) {
-                    return new ActiveXObject("Microsoft.XMLHTTP");
-                }
-                else {
-                    return new XMLHttpRequest();
-                }
-            }
-            if(window.jscoverage_serializeCoverageToJSON && S.UA.phantomjs){
-                var json = window.jscoverage_serializeCoverageToJSON();
-                var request = createRequest();
-                request.open('post', '/save-coverage-report', true);
-                request.setRequestHeader('content-type','application/x-www-form-urlencoded; charset=UTF-8');
-                request.onreadystatechange = function () {
-                    if (request.readyState === 4 && request.status == 200) {
-                        jasmine.kissyNext(self.results().failedCount);
-                    }
-                };
-                request.send(S.param({
-                    report:json,
-                    component:component,
-                    path:location.pathname
-                }));
-            }else {
-                jasmine.kissyNext(self.results().failedCount);
-            }
-        });
+        jasmine.getEnv().addReporter(new jasmine.KissyReoport(component));
+        jasmine.getEnv().execute();
     });
 </script>
 {{{include './footer'}}}

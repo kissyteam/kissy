@@ -5,13 +5,23 @@
  * @author yiminghe@gmail.com
  */
 
+/*global phantom*/
 var page = require('webpage').create();
+var specified = '';
+
+function findFailedCount(m) {
+    var match;
+    if ((match = m.match(/specs?, (\d+) failures? in/))) {
+        return match[1];
+    }
+    return '';
+}
 
 page.onConsoleMessage = function (m) {
     console.log(m);
-    var match;
-    if (match = m.match(/specs?, (\d+) failures? in/)) {
-        if (!t && match[1] == '0') {
+    var failedCount = findFailedCount(m);
+    if (failedCount) {
+        if (!specified && failedCount === '0') {
             setTimeout(next, 100);
         } else {
             phantom.exit(1);
@@ -31,7 +41,7 @@ var start = Date.now();
 function next(url) {
     if (!url) {
         index++;
-        if (index == tests.length) {
+        if (index === tests.length) {
             var d = (Date.now() - start);
             console.log('all run success! consume time: ' + d + ' ms / ' +
                 (d / 1000) + ' s / ' +
@@ -47,14 +57,14 @@ function next(url) {
     console.log('\n' + 'run test: ' + url);
     // batch run in separated window, it is better than iframe!
     page.open('http://localhost:8888' + url, function (s) {
-        if (s != 'success') {
+        if (s !== 'success') {
             console.log('can\'t load the address! :(');
             phantom.exit(1);
         }
     });
 }
-var t = '';
-// t = '/kissy/src/color/tests/runner/test.jss?coverage';
-// t='/src/seed/tests/specs/package-raw/test-combo.html';
-// t='/kissy/src/dd/sub-modules/constrain/tests/runner/test.html';
-next(t);
+
+// specified = '/kissy/src/color/tests/runner/test.jss?coverage';
+// specified = '/src/seed/tests/specs/package-raw/test-combo.html';
+// specified = '/kissy/src/dd/sub-modules/constrain/tests/runner/test.html';
+next(specified);
