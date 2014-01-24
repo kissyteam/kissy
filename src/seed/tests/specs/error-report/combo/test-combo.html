@@ -11,20 +11,15 @@
     <script src="/kissy/tools/jasmine/jasmine.js"></script>
     <script src="/kissy/tools/jasmine/jasmine-html.js"></script>
     <script src="/kissy/tools/jasmine/jasmine.console_reporter.js"></script>
-
+    <script src="/kissy/tools/jasmine/kissy-report.js"></script>
+    <script src="/kissy/tools/jasmine/init.js"></script>
     <script src="/kissy/build/seed.js" data-config="{combine:true}"></script>
     <script src="../../../others/clear.js"></script>
 </head>
 <body>
-
-
 <script src="../error-report-spec.js"></script>
 <script>
-    jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
-    jasmine.getEnv().addReporter(new jasmine.ConsoleReporter());
-    jasmine.getEnv().execute(function () {
-        jasmine.kissyNext(this.results().failedCount);
-    });
+    jasmine.getEnv().execute();
 </script>
 
 </body>

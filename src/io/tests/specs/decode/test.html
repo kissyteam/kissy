@@ -6,6 +6,8 @@
     <script src="/kissy/tools/jasmine/jasmine.js"></script>
     <script src="/kissy/tools/jasmine/jasmine-html.js"></script>
     <script src="/kissy/tools/jasmine/jasmine.console_reporter.js"></script>
+    <script src="/kissy/tools/jasmine/kissy-report.js"></script>
+    <script src="/kissy/tools/jasmine/init.js"></script>
 </head>
 <body>
 <h1>KISSY IO Advanced Test Cases</h1>
@@ -32,12 +34,7 @@
     KISSY.use('index', function (S) {
         setTimeout(function () {
             S.ready(function () {
-                jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
-                jasmine.getEnv().addReporter(new jasmine.ConsoleReporter());
-                jasmine.getEnv().execute(function () {
-                    jasmine.kissyNext(this.results().failedCount);
-                });
-            });
+                jasmine.getEnv().execute();
         }, 100);
     });
 </script>

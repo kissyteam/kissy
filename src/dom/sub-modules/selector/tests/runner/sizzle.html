@@ -12,6 +12,8 @@
     <script src="/kissy/tools/jasmine/event-simulate.js"></script>
     <script src="/kissy/tools/jasmine/jasmine-html.js"></script>
     <script src="/kissy/tools/jasmine/jasmine.console_reporter.js"></script>
+    <script src="/kissy/tools/jasmine/kissy-report.js"></script>
+    <script src="/kissy/tools/jasmine/init.js"></script>
     <script src="/kissy/tools/third-party/jquery.js" charset="utf-8"></script>
     <script src="/kissy/tools/third-party/sizzle.js" charset="utf-8"></script>
     <script>
@@ -291,40 +293,7 @@
         }
     });
     S.use('specs/sizzle', function () {
-        jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
-        jasmine.getEnv().addReporter(new jasmine.ConsoleReporter());
-        jasmine.getEnv().execute(function () {
-            var self = this;
-
-            function createRequest() {
-                if (window.ActiveXObject) {
-                    return new ActiveXObject("Microsoft.XMLHTTP");
-                }
-                else {
-                    return new XMLHttpRequest();
-                }
-            }
-
-            if (window.jscoverage_serializeCoverageToJSON) {
-                var json = window.jscoverage_serializeCoverageToJSON();
-
-                var request = createRequest();
-                request.open('post', '/save-coverage-report', true);
-                request.setRequestHeader('content-type', 'application/x-www-form-urlencoded; charset=UTF-8');
-                request.onreadystatechange = function () {
-                    if (request.readyState === 4 && request.status == 200) {
-                        jasmine.kissyNext(self.results().failedCount);
-                    }
-                };
-                request.send(S.param({
-                    report: json,
-                    path: location.pathname
-                }));
-            } else {
-                jasmine.kissyNext(self.results().failedCount);
-            }
-
-        });
+        jasmine.getEnv().execute();
     });
 </script>
 </body>

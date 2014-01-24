@@ -50,6 +50,7 @@
     <script src="/kissy/tools/jasmine/jasmine-html.js"></script>
     <script src="/kissy/tools/jasmine/jasmine.console_reporter.js"></script>
     <script src="/kissy/tools/jasmine/kissy-report.js"></script>
+    <script src="/kissy/tools/jasmine/init.js"></script>
     <script src="/kissy/tools/jasmine/event-simulate.js"></script>
     {{#each externalScripts}}
         <script src="{{{.}}}"></script>
@@ -83,9 +84,6 @@
     {{{script}}}
 
     S.use(tests, function () {
-        jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
-        jasmine.getEnv().addReporter(new jasmine.ConsoleReporter());
-        jasmine.getEnv().addReporter(new jasmine.KissyReoport(component));
         jasmine.getEnv().execute();
     });
 </script>

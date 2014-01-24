@@ -11,6 +11,8 @@
     <script src="/kissy/tools/jasmine/jasmine.js"></script>
     <script src="/kissy/tools/jasmine/jasmine-html.js"></script>
     <script src="/kissy/tools/jasmine/jasmine.console_reporter.js"></script>
+    <script src="/kissy/tools/jasmine/kissy-report.js"></script>
+    <script src="/kissy/tools/jasmine/init.js"></script>
     <script src="/kissy/build/seed.js"></script>
     <script src="../others/clear.js"></script>
     <script>
@@ -19,8 +21,6 @@
 </head>
 <body>
 <h1>KISSY Combo Core Test Cases</h1>
-
-
 <script>
     describe("use core should works as simple loader", function () {
         var S = KISSY;
@@ -47,13 +47,8 @@
 
     });
 
-
     setTimeout(function () {
-        jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
-        jasmine.getEnv().addReporter(new jasmine.ConsoleReporter());
-        jasmine.getEnv().execute(function () {
-            jasmine.kissyNext(this.results().failedCount);
-        });
+        jasmine.getEnv().execute();
     }, 200);
 </script>
 </body>
