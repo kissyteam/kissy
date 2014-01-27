@@ -309,3 +309,8 @@ KISSY.add(function (S, require) {
         name: 'container'
     });
 });
+/**
+ * @ignore
+ * 2014-01-26 yimingnhe@gmail.com need to use innerHTML
+ * - http://jsperf.com/fragment-innnerhtml
+ */

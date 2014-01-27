@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Jan 14 23:22
+build time: Jan 27 12:06
 */
 /**
  * @ignore
@@ -87,11 +87,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20140114232208' will replace with current timestamp when compressing.
+         * NOTICE: '20140127120559' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20140114232208',
+        __BUILD_TIME: '20140127120559',
 
         /**
          * KISSY Environment.
@@ -4016,7 +4016,7 @@ var KISSY = (function (undefined) {
         Path = S.Path,
         Utils = Loader.Utils;
 
-    function forwardSystemPackage(self, property) {
+    function checkGlobalIfNotExist(self, property) {
         return property in self ?
             self[property] :
             self.runtime.Config[property];
@@ -4044,7 +4044,7 @@ var KISSY = (function (undefined) {
          * @return {String}
          */
         getTag: function () {
-            return forwardSystemPackage(this, 'tag');
+            return checkGlobalIfNotExist(this, 'tag');
         },
 
         /**
@@ -4071,7 +4071,7 @@ var KISSY = (function (undefined) {
          * @return {Boolean}
          */
         isDebug: function () {
-            return forwardSystemPackage(this, 'debug');
+            return checkGlobalIfNotExist(this, 'debug');
         },
 
         /**
@@ -4079,7 +4079,7 @@ var KISSY = (function (undefined) {
          * @return {String}
          */
         getCharset: function () {
-            return forwardSystemPackage(this, 'charset');
+            return checkGlobalIfNotExist(this, 'charset');
         },
 
         /**
@@ -4087,7 +4087,7 @@ var KISSY = (function (undefined) {
          * @return {Boolean}
          */
         isCombine: function () {
-            return forwardSystemPackage(this, 'combine');
+            return checkGlobalIfNotExist(this, 'combine');
         },
 
         /**
@@ -4095,7 +4095,7 @@ var KISSY = (function (undefined) {
          * @returns {String}
          */
         getGroup: function () {
-            return forwardSystemPackage(this, 'group');
+            return checkGlobalIfNotExist(this, 'group');
         }
     };
 
@@ -4351,15 +4351,6 @@ var KISSY = (function (undefined) {
 
     Loader.Module = Module;
 
-    var systemPackage = new Package({
-        name: '',
-        runtime: S
-    });
-
-    systemPackage.getUri = function () {
-        return this.runtime.Config.baseUri;
-    };
-
     function getPackage(self, modName) {
         var packages = self.Config.packages || {},
             modNameSlash = modName + '/',
@@ -4370,7 +4361,7 @@ var KISSY = (function (undefined) {
                 pName = p;
             }
         }
-        return packages[pName] || systemPackage;
+        return packages[pName] || self.Env.corePackage;
     }
 })(KISSY);/**
  * @ignore
@@ -4664,6 +4655,7 @@ var KISSY = (function (undefined) {
 (function (S, undefined) {
     var Loader = S.Loader,
         Path = S.Path,
+        Package = Loader.Package,
         Utils = Loader.Utils,
         host = S.Env.host,
         Config = S.Config,
@@ -4711,6 +4703,16 @@ var KISSY = (function (undefined) {
     };
 
     var PACKAGE_MEMBERS = ['alias', 'debug', 'tag', 'group', 'combine', 'charset'];
+
+    configFns.core = function (cfg) {
+        var base = cfg.base;
+        if (base) {
+            cfg.uri = normalizePath(base, true);
+            delete cfg.base;
+        }
+        this.Env.corePackage.reset(cfg);
+    };
+
     configFns.packages = function (config) {
         var name,
             Config = this.Config,
@@ -4739,7 +4741,7 @@ var KISSY = (function (undefined) {
                 if (ps[name]) {
                     ps[name].reset(newConfig);
                 } else {
-                    ps[name] = new Loader.Package(newConfig);
+                    ps[name] = new Package(newConfig);
                 }
             });
             return undefined;
@@ -4773,11 +4775,25 @@ var KISSY = (function (undefined) {
         var self = this,
             Config = self.Config,
             baseUri;
+
         if (!base) {
             return Config.baseUri.toString();
         }
+
         baseUri = normalizePath(base, true);
         Config.baseUri = baseUri;
+
+        var corePackage = self.Env.corePackage;
+
+        if (!corePackage) {
+            corePackage = self.Env.corePackage = new Package({
+                name: '',
+                runtime: S
+            });
+        }
+
+        corePackage.uri = baseUri;
+
         return undefined;
     };
 
@@ -5492,7 +5508,7 @@ var KISSY = (function (undefined) {
     var doc = S.Env.host && S.Env.host.document;
     // var logger = S.getLogger('s/loader');
     var Utils = S.Loader.Utils;
-    var TIMESTAMP = '20140114232208';
+    var TIMESTAMP = '20140127120559';
     var defaultComboPrefix = '??';
     var defaultComboSep = ',';
 
@@ -6106,7 +6122,11 @@ menubutton: {requires: ['node','button','component/extension/content-xtpl','comp
 });
 /*Generated By KISSY Module Compiler*/
 config({
-'navigation-view': {requires: ['node','component/container','component/control','button','component/extension/content-xtpl','component/extension/content-render']}
+'navigation-view': {requires: ['node','component/container','component/extension/content-xtpl','component/extension/content-render']}
+});
+/*Generated By KISSY Module Compiler*/
+config({
+'navigation-view/bar': {requires: ['component/control','button']}
 });
 /*Generated By KISSY Module Compiler*/
 config({
@@ -6126,7 +6146,7 @@ config({
 });
 /*Generated By KISSY Module Compiler*/
 config({
-router: {requires: ['uri','event/dom']}
+router: {requires: ['uri','event/dom','event/custom']}
 });
 config({
     'scroll-view': {

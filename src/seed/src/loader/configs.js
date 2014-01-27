@@ -6,6 +6,7 @@
 (function (S, undefined) {
     var Loader = S.Loader,
         Path = S.Path,
+        Package = Loader.Package,
         Utils = Loader.Utils,
         host = S.Env.host,
         Config = S.Config,
@@ -53,6 +54,16 @@
     };
 
     var PACKAGE_MEMBERS = ['alias', 'debug', 'tag', 'group', 'combine', 'charset'];
+
+    configFns.core = function (cfg) {
+        var base = cfg.base;
+        if (base) {
+            cfg.uri = normalizePath(base, true);
+            delete cfg.base;
+        }
+        this.Env.corePackage.reset(cfg);
+    };
+
     configFns.packages = function (config) {
         var name,
             Config = this.Config,
@@ -81,7 +92,7 @@
                 if (ps[name]) {
                     ps[name].reset(newConfig);
                 } else {
-                    ps[name] = new Loader.Package(newConfig);
+                    ps[name] = new Package(newConfig);
                 }
             });
             return undefined;
@@ -115,11 +126,25 @@
         var self = this,
             Config = self.Config,
             baseUri;
+
         if (!base) {
             return Config.baseUri.toString();
         }
+
         baseUri = normalizePath(base, true);
         Config.baseUri = baseUri;
+
+        var corePackage = self.Env.corePackage;
+
+        if (!corePackage) {
+            corePackage = self.Env.corePackage = new Package({
+                name: '',
+                runtime: S
+            });
+        }
+
+        corePackage.uri = baseUri;
+
         return undefined;
     };
 

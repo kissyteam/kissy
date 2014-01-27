@@ -8,7 +8,7 @@
         Path = S.Path,
         Utils = Loader.Utils;
 
-    function forwardSystemPackage(self, property) {
+    function checkGlobalIfNotExist(self, property) {
         return property in self ?
             self[property] :
             self.runtime.Config[property];
@@ -36,7 +36,7 @@
          * @return {String}
          */
         getTag: function () {
-            return forwardSystemPackage(this, 'tag');
+            return checkGlobalIfNotExist(this, 'tag');
         },
 
         /**
@@ -63,7 +63,7 @@
          * @return {Boolean}
          */
         isDebug: function () {
-            return forwardSystemPackage(this, 'debug');
+            return checkGlobalIfNotExist(this, 'debug');
         },
 
         /**
@@ -71,7 +71,7 @@
          * @return {String}
          */
         getCharset: function () {
-            return forwardSystemPackage(this, 'charset');
+            return checkGlobalIfNotExist(this, 'charset');
         },
 
         /**
@@ -79,7 +79,7 @@
          * @return {Boolean}
          */
         isCombine: function () {
-            return forwardSystemPackage(this, 'combine');
+            return checkGlobalIfNotExist(this, 'combine');
         },
 
         /**
@@ -87,7 +87,7 @@
          * @returns {String}
          */
         getGroup: function () {
-            return forwardSystemPackage(this, 'group');
+            return checkGlobalIfNotExist(this, 'group');
         }
     };
 
@@ -343,15 +343,6 @@
 
     Loader.Module = Module;
 
-    var systemPackage = new Package({
-        name: '',
-        runtime: S
-    });
-
-    systemPackage.getUri = function () {
-        return this.runtime.Config.baseUri;
-    };
-
     function getPackage(self, modName) {
         var packages = self.Config.packages || {},
             modNameSlash = modName + '/',
@@ -362,6 +353,6 @@
                 pName = p;
             }
         }
-        return packages[pName] || systemPackage;
+        return packages[pName] || self.Env.corePackage;
     }
 })(KISSY);
