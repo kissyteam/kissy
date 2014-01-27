@@ -299,7 +299,6 @@ li {
     color: #999;
 }
 
-
 .search-menuitem-active,
 .search-menuitem-hover {
     background-color: #39F;
@@ -333,7 +332,7 @@ li {
     color: white;
 }
 
-    /* 手机充值 */
+/* 手机充值 */
 .search-contentbox .search-menu-extras-cz {
     padding-left: 30px;
     background-image: url(http://img03.taobaocdn.com/tps/i3/T18K9gXlBzXXXXXXXX-16-36.png);
@@ -349,7 +348,7 @@ li {
     padding: 0 2px;
 }
 
-    /* 历史记录 */
+/* 历史记录 */
 .history-box {
     line-height: 20px;
     overflow: hidden;
@@ -390,7 +389,7 @@ li {
     color: white;
 }
 
-    /* 新品搜索 */
+/* 新品搜索 */
 .search-contentbox .search-menu-extras-xp .search-menu-xp-tag,
 .search-contentbox .search-menu-extras-dp .search-menu-dp-tag {
     float: right;
@@ -421,7 +420,7 @@ li {
     border-top: 1px solid #E5E5E5;
 }
 
-    /* 机票搜索 */
+/* 机票搜索 */
 .search-combobox-menu-footer .jipiao-box {
     height: 22px;
     overflow: hidden;
@@ -458,7 +457,7 @@ li {
     height: 15px;
 }
 
-    /* 同店购的 样式 */
+/* 同店购的 样式 */
 .search-combobox-menu-footer .tdg-box {
     height: 22px;
     overflow: hidden;
@@ -508,6 +507,7 @@ li {
     width: 16%;
     height: 18px;
 }
+
 .search-combobox .search-combobox-placeholder {
     font-size: 16px;
     line-height: 33px;
@@ -552,7 +552,7 @@ li {
                                x-webkit-grammar="builtin:translate">
                         <label for="q"
                                class="search-combobox-placeholder">
-                        click me
+                            click me
                         </label>
                     </div>
                 </div>
@@ -620,6 +620,7 @@ li {
                         url: 'http://suggest.taobao.com/sug',
                         dataType: 'jsonp',
                         data: {
+                            k: 1,
                             code: "utf-8"
                         }
                     },
@@ -651,7 +652,7 @@ li {
                 }
             });
             basicComboBox.render();
-            if(document.activeElement!== S.get('#q')){
+            if (document.activeElement !== S.get('#q')) {
                 basicComboBox.get('placeholderEl').show();
             }
 
