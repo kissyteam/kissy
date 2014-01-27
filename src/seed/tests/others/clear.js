@@ -13,22 +13,21 @@ KISSY.clearLoader = function () {
 
     self.config({
         alias: false,
+        tag: false,
+        debug: true,
+        group: false,
         packages: false
+    });
+
+    self.Env.corePackage = new self.Loader.Package({
+        name: '',
+        runtime: self,
+        uri: self.Config.baseUri
     });
 
     for (m in modules) {
         if (!ignore[m]) {
-            var p;
-            for (p in modules[m]) {
-                if (p != 'alias' &&
-                    p != 'name' &&
-                    p != 'type' &&
-                    p != 'runtime') {
-                    delete modules[m][p];
-                }
-            }
-            modules[m].waitedCallbacks = [];
-            modules[m].status = 0;
+            delete modules[m];
         }
     }
 };

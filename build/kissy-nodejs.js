@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Jan 27 12:06
+build time: Jan 27 15:39
 */
 /**
  * @ignore
@@ -87,11 +87,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20140127120559' will replace with current timestamp when compressing.
+         * NOTICE: '20140127153852' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20140127120559',
+        __BUILD_TIME: '20140127153852',
 
         /**
          * KISSY Environment.
@@ -247,8 +247,10 @@ var KISSY = (function (undefined) {
                     }
                 }
                 /*global console*/
-                if (typeof console !== 'undefined' && console.log && matched) {
-                    console[cat && console[cat] ? cat : 'log'](msg);
+                if (matched) {
+                    if (typeof console !== 'undefined' && console.log) {
+                        console[cat && console[cat] ? cat : 'log'](msg);
+                    }
                     return msg;
                 }
             }
@@ -3736,7 +3738,10 @@ var KISSY = (function (undefined) {
                 l = modNames.length,
                 stackDepth = stack.length;
             for (i = 0; i < l; i++) {
-                s = s && Utils.checkModLoadRecursively(modNames[i], runtime, stack, errorList, cache);
+                if (!s) {
+                    return !!s;
+                }
+                s = Utils.checkModLoadRecursively(modNames[i], runtime, stack, errorList, cache);
                 stack.length = stackDepth;
             }
             return !!s;
@@ -3768,12 +3773,18 @@ var KISSY = (function (undefined) {
                 return FALSE;
             }
             if ('@DEBUG@') {
-                if (S.inArray(modName, stack)) {
+                if (stack[modName]) {
                     S.log('find cyclic dependency between mods: ' + stack, 'warn');
-                    cache[modName] = TRUE;
-                    return TRUE;
+                } else {
+                    stack.push(modName);
                 }
-                stack.push(modName);
+            }
+            if (stack[modName]) {
+                cache[modName] = TRUE;
+                return TRUE;
+            } else {
+                // tracking module name
+                stack[modName] = 1;
             }
 
             if (Utils.checkModsLoadRecursively(m.getNormalizedRequires(),
@@ -3824,7 +3835,7 @@ var KISSY = (function (undefined) {
                 // compatible and efficiency
                 // KISSY.add(function(S,undefined){})
                 var require;
-                if (module.requires && module.requires.length) {
+                if (module.requires && module.requires.length && module.cjs) {
                     require = S.bind(module.require, module);
                 }
                 // 需要解开 index，相对路径
@@ -3832,7 +3843,8 @@ var KISSY = (function (undefined) {
                 //noinspection JSUnresolvedFunction
                 exports = factory.apply(module,
                     // KISSY.add(function(S){module.require}) lazy initialize
-                    (module.cjs ? [runtime, require, module.exports, module] : Utils.getModules(runtime, module.getRequiresWithAlias())));
+                    (module.cjs ? [runtime, require, module.exports, module] :
+                        Utils.getModules(runtime, module.getRequiresWithAlias())));
                 if (exports !== undefined) {
                     //noinspection JSUndefinedPropertyAssignment
                     module.exports = exports;
@@ -5320,8 +5332,8 @@ var KISSY = (function (undefined) {
                             });
                         }
                     }
-                    S.log('loader: load modules error:', 'error');
-                    S.error(errorList);
+                    S.log(errorList, 'error');
+                    S.log('loader: load above modules error', 'error');
                 } else {
                     logger.debug(tryCount + ' reload ' + modNames);
                     waitingModules.fn = loadReady;
@@ -5376,7 +5388,7 @@ var KISSY = (function (undefined) {
     var doc = S.Env.host && S.Env.host.document;
     // var logger = S.getLogger('s/loader');
     var Utils = S.Loader.Utils;
-    var TIMESTAMP = '20140127120559';
+    var TIMESTAMP = '20140127153852';
     var defaultComboPrefix = '??';
     var defaultComboSep = ',';
 

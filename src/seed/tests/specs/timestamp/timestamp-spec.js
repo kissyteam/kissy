@@ -1,6 +1,14 @@
-describe("loader", function () {
+
     describe("timestamp for individual module works", function () {
         var S = KISSY;
+
+        beforeEach(function () {
+            KISSY.config('combine', false);
+        });
+
+        afterEach(function () {
+            KISSY.clearLoader();
+        });
 
         it("works and avoid repeated loading", function () {
             var mods = KISSY.Env.mods;
@@ -62,7 +70,6 @@ describe("loader", function () {
 
         it("can be set later", function () {
             window.TIMESTAMP_X = 0;
-            KISSY.clearLoader();
 
             var mods = KISSY.Env.mods;
 
@@ -128,4 +135,3 @@ describe("loader", function () {
             });
         });
     });
-});

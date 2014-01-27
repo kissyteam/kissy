@@ -1,11 +1,17 @@
-describe("S ComboLoader", function () {
+describe("ComboLoader", function () {
     var S = KISSY,
-        kBase= S.config('base'),
+        kBase = S.config('base'),
         host = location.host;
 
-    it("can combo test and not combo kissy", function () {
-        S.clearLoader();
+    beforeEach(function () {
+        S.config('combine', true);
+    });
 
+    afterEach(function () {
+        S.clearLoader();
+    });
+
+    it("can combo test and not combo kissy", function () {
         var ret = 0;
 
         S.config({
@@ -24,7 +30,7 @@ describe("S ComboLoader", function () {
                 requires: ["./b"]
             },
             "tests3/b": {
-                requires: ["./c", "dom"]
+                requires: ["./c"]
             }
         });
 
@@ -62,8 +68,6 @@ describe("S ComboLoader", function () {
     });
 
     it("should works simply", function () {
-        S.clearLoader();
-
         var ret = 0;
         var ret2 = 0;
 
@@ -81,7 +85,7 @@ describe("S ComboLoader", function () {
                 requires: ["./b"]
             },
             "tests3/b": {
-                requires: ["./c", "dom"]
+                requires: ["./c"]
             }
         });
 
@@ -112,8 +116,6 @@ describe("S ComboLoader", function () {
     it("should calculate rightly", function () {
         waits(10);
         runs(function () {
-
-            S.clearLoader();
 
             var waitingModules = new S.Loader.WaitingModules(function () {
             });
@@ -148,8 +150,6 @@ describe("S ComboLoader", function () {
     it("should trunk url by comboMaxFileNum config rightly", function () {
         waits(10);
         runs(function () {
-
-            S.clearLoader();
 
             var comboMaxFileNum = S.config('comboMaxFileNum');
 
@@ -187,8 +187,6 @@ describe("S ComboLoader", function () {
         runs(function () {
             S.config('comboMaxFileNum', 9999);
 
-            S.clearLoader();
-
             var x = {}, k = 3000;
 
             for (var i = 0; i < 100; i++) {
@@ -224,26 +222,9 @@ describe("S ComboLoader", function () {
         });
     });
 
-    it("should works for native mod", function () {
-        waits(10);
-        runs(function () {
-            S.clearLoader();
-
-            S.DOM = null;
-            S.use("dom", function () {
-                expect(S.DOM).not.toBe(undefined);
-            });
-            waitsFor(function () {
-                return S.DOM;
-            });
-        });
-    });
-
     it("should works for packages", function () {
         waits(10);
         runs(function () {
-            S.clearLoader();
-
             S.config({
                 packages: [
                     {
@@ -257,7 +238,7 @@ describe("S ComboLoader", function () {
                     requires: ['./b']
                 },
                 "tests/b": {
-                    requires: ['./c', 'dom']
+                    requires: ['./c']
                 }
             });
 
@@ -269,14 +250,12 @@ describe("S ComboLoader", function () {
             var urls = loader.getComboUrls(mods);
             var host = location.host;
 
-            expect(urls['js']['tests'][0].path)
+            expect(urls.js.tests[0].path)
                 .toBe("http://" + host + "/kissy/src/seed/tests/specs/combo/" +
                     "tests/??a.js,b.js,c.js");
 
-            S.DOM = null;
-
+            // remote fetch
             S.clearLoader();
-
             S.config({
                 packages: [
                     {
@@ -290,16 +269,19 @@ describe("S ComboLoader", function () {
                     requires: ['./b']
                 },
                 "tests/b": {
-                    requires: ['./c', 'dom']
+                    requires: ['./c']
                 }
             });
 
+            var ok = 0;
+
             S.use('tests/a', function (S, a) {
                 expect(a).toBe(6);
+                ok = 1;
             });
 
             waitsFor(function () {
-                return S.DOM;
+                return ok;
             });
         });
     });
@@ -308,8 +290,6 @@ describe("S ComboLoader", function () {
 
         waits(10);
         runs(function () {
-            S.clearLoader();
-
             S.config({
                 packages: [
                     {
@@ -323,12 +303,10 @@ describe("S ComboLoader", function () {
                     requires: ['./b']
                 },
                 "tests2/b": {
-                    requires: ['./c', 'dom']
+                    requires: ['./c']
                 },
                 x: {}
             });
-
-            S.DOM = null;
 
             window.TEST_A = 0;
 
@@ -398,7 +376,6 @@ describe("S ComboLoader", function () {
 
 
     it("should load mod not config", function () {
-        S.clearLoader();
 
         S.config({
             packages: [
@@ -409,8 +386,6 @@ describe("S ComboLoader", function () {
             ]
         });
 
-        S.DOM = null;
-
         var ret = 0;
 
         S.use('tests4/a', function () {
@@ -418,7 +393,7 @@ describe("S ComboLoader", function () {
         });
 
         waitsFor(function () {
-            return S.DOM && (ret === 9);
+            return ret === 9;
         });
     });
 
@@ -451,9 +426,5 @@ describe("S ComboLoader", function () {
         waitsFor(function () {
             return ok;
         }, "too long!");
-    });
-
-    it("clean", function () {
-        S.clearLoader();
     });
 });

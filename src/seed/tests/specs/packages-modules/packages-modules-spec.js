@@ -5,6 +5,14 @@
 describe("modules and packages", function () {
     var S = KISSY;
 
+    beforeEach(function () {
+        KISSY.config('combine', true);
+    });
+
+    afterEach(function () {
+        KISSY.clearLoader();
+    });
+
     it("can get base correctly", function () {
         expect(KISSY.config("base"))
             .toBe(new S.Uri(location.href)
@@ -12,7 +20,6 @@ describe("modules and packages", function () {
     });
 
     it("does not depend on order", function () {
-        S.clearLoader();
         KISSY.config({
             "modules": {
                 "x/x": {
@@ -41,8 +48,6 @@ describe("modules and packages", function () {
     });
 
     it("package can has same path", function () {
-        S.clearLoader();
-        var combine = KISSY.config("combine");
         var ret = 0;
         KISSY.config({
             packages: {
@@ -64,6 +69,5 @@ describe("modules and packages", function () {
         waitsFor(function () {
             return ret;
         });
-
     });
 });

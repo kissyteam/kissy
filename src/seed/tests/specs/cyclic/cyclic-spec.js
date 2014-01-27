@@ -3,31 +3,42 @@
  * @author yiminghe@gmail.com
  */
 (function (S) {
-    describe("loader-cyclic", function () {
-        it("detect cyclic dependency", function () {
-            KISSY.config({
-                packages: [
-                    {
-                        name: "cyclic",
-                        path: "/kissy/src/seed/tests/specs/"
-                    }
-                ]
+    var run=function(combine){
+        describe("loader-cyclic "+ (combine ? 'at combo mode' : ''), function () {
+            beforeEach(function () {
+                KISSY.config('combine', !!combine);
             });
 
-            var ret;
-
-            KISSY.use("cyclic/a", function (S, a) {
-                ret = a.get();
+            afterEach(function () {
+                KISSY.clearLoader();
             });
+            it("can load cyclic dependency", function () {
+                KISSY.config({
+                    packages: [
+                        {
+                            name: "cyclic",
+                            path: "/kissy/src/seed/tests/specs/"
+                        }
+                    ]
+                });
 
-            waitsFor(function () {
-                return ret;
-            });
+                var ret;
 
-            runs(function () {
-                expect(ret).toBe('caba');
+                KISSY.use("cyclic/a", function (S, a) {
+                    ret = a.get();
+                });
+
+                waitsFor(function () {
+                    return ret;
+                });
+
+                runs(function () {
+                    expect(ret).toBe('caba');
+                });
             });
         });
-    });
+    };
+    run();
+    run(1);
 })(KISSY);
 

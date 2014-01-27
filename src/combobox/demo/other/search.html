@@ -114,14 +114,6 @@ li {
     height: 13px
 }
 
-.search-panel-fields label {
-    position: absolute;
-    left: 32px;
-    top: 8px;
-    z-index: 1;
-    color: #bbb
-}
-
 .search-panel-fields input {
     font-size: 14px;
     position: absolute;
@@ -214,15 +206,6 @@ li {
     right: 0;
     top: 0;
     background-position: -148px -351px
-}
-
-.search-status-focus label, .search-status-focus .search-panel-fields s {
-    display: none
-}
-
-.search-panel-fields label,
-.search-panel-fields s {
-    display: none;
 }
 
 .search-menu {
@@ -525,6 +508,17 @@ li {
     width: 16%;
     height: 18px;
 }
+.search-combobox .search-combobox-placeholder {
+    font-size: 16px;
+    line-height: 33px;
+    padding-left: 10px;
+    height: 33px;
+    position: absolute;
+    z-index: 1;
+    display: none;
+    width: 100%;
+    color: #bbb
+}
 </style>
 </head>
 <body>
@@ -549,8 +543,6 @@ li {
     <div class="search-panel ks-switchable-content">
         <form target="_top" action="http://s.taobao.com/search" name="search" id="J_TSearchForm">
             <div class="search-panel-fields">
-                <label for="q">搜“<span>家装节</span>”试试，3折起盛宴！</label>
-
                 <div class="search-combobox" id="combobox">
                     <div class="search-combobox-input-wrap">
                         <input id="q" name="q" accesskey="s"
@@ -558,6 +550,10 @@ li {
                                autofocus="true" autocomplete="off"
                                x-webkit-speech=""
                                x-webkit-grammar="builtin:translate">
+                        <label for="q"
+                               class="search-combobox-placeholder">
+                        click me
+                        </label>
                     </div>
                 </div>
             </div>
@@ -605,7 +601,6 @@ li {
         xclass = 'search-menuitem';
     }
     KISSY.use("event,combobox,search/menuitem", function (S, Event, ComboBox, SearchMenuItem) {
-
         /*
          remote dataSource
          */
@@ -656,6 +651,9 @@ li {
                 }
             });
             basicComboBox.render();
+            if(document.activeElement!== S.get('#q')){
+                basicComboBox.get('placeholderEl').show();
+            }
 
             var html = '<div class="item-wrapper tdg-box">' +
                     '<form method="get" action="http://s.taobao.com/search" class="clearfix">' +

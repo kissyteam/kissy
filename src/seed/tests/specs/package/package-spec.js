@@ -1,8 +1,16 @@
-describe("loader", function () {
+var run = function (combine) {
     var S = KISSY;
-    describe("simple config for package works", function () {
+
+    describe("simple config for package works " + (combine ? 'at combo mode' : ''), function () {
+        beforeEach(function () {
+            KISSY.config('combine', !!combine);
+        });
+
+        afterEach(function () {
+            KISSY.clearLoader();
+        });
+
         it("works", function () {
-            S.clearLoader();
             var mods = KISSY.Env.mods;
             KISSY.config({
                 debug: false,
@@ -37,7 +45,6 @@ describe("loader", function () {
         });
 
         it('allows use package directly', function () {
-            S.clearLoader();
             S.config({
                 packages: [
                     {
@@ -59,4 +66,6 @@ describe("loader", function () {
             });
         });
     });
-});
+};
+run();
+run(1);

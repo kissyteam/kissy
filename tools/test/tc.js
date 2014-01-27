@@ -214,29 +214,9 @@ tests.push('/kissy/src/seed/tests/runner/cache.jss');
 
 tests.push('/kissy/src/seed/tests/runner/cache.jss?build');
 
-tests.push('/kissy/src/seed/tests/runner/clean-combo-loader.html');
+tests.push('/kissy/src/seed/tests/runner/test.html');
 
-tests.push('/kissy/src/seed/tests/runner/clean-combo-loader.html?build');
-
-tests.push('/kissy/src/seed/tests/runner/combo-loader-core.html');
-
-tests.push('/kissy/src/seed/tests/runner/combo-loader-core.html?build');
-
-tests.push('/kissy/src/seed/tests/runner/combo-loader.html');
-
-tests.push('/kissy/src/seed/tests/runner/combo-loader.html?build');
-
-tests.push('/kissy/src/seed/tests/runner/lang.html');
-
-tests.push('/kissy/src/seed/tests/runner/lang.html?build');
-
-tests.push('/kissy/src/seed/tests/runner/no-combo-loader-core.html');
-
-tests.push('/kissy/src/seed/tests/runner/no-combo-loader-core.html?build');
-
-tests.push('/kissy/src/seed/tests/runner/no-combo-loader.html');
-
-tests.push('/kissy/src/seed/tests/runner/no-combo-loader.html?build');
+tests.push('/kissy/src/seed/tests/runner/test.html?build');
 
 tests.push('/kissy/src/stylesheet/tests/runner/test.jss');
 

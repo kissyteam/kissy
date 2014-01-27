@@ -1,15 +1,19 @@
 describe('timeout', function () {
     var S = KISSY;
 
+    var timeout;
+
     beforeEach(function () {
+        timeout = S.config('timeout') || 0;
         S.config({
+            combine: false,
             timeout: 1
         });
     });
 
     afterEach(function () {
         S.config({
-            timeout: 0
+            timeout: timeout
         });
         S.clearLoader();
     });

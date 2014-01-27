@@ -6,9 +6,15 @@ describe("modules and groups", function () {
     var S = KISSY,
         ComboLoader = S.Loader.ComboLoader,
         groupTag = ComboLoader.groupTag;
+    beforeEach(function () {
+        KISSY.config('combine', true);
+    });
+
+    afterEach(function () {
+        KISSY.clearLoader();
+    });
 
     it('works', function () {
-        S.clearLoader();
         KISSY.config({
             packages: {
                 "pkg-a": {
@@ -45,7 +51,6 @@ describe("modules and groups", function () {
     });
 
     it("combo packages", function () {
-        S.clearLoader();
         KISSY.config({
             packages: {
                 "pkg-a": {
@@ -88,7 +93,6 @@ describe("modules and groups", function () {
     });
 
     it("combo packages which have no combo prefix", function () {
-        S.clearLoader();
         var waitingModules = new S.Loader.WaitingModules(function () {
         });
         var l = new ComboLoader(S, waitingModules);
@@ -124,7 +128,6 @@ describe("modules and groups", function () {
     });
 
     it("combo packages with different charset", function () {
-        S.clearLoader();
         var waitingModules = new S.Loader.WaitingModules(function () {
         });
         var l = new ComboLoader(S, waitingModules);
@@ -165,8 +168,6 @@ describe("modules and groups", function () {
     });
 
     it('can perform global combo',function(){
-
-        S.clearLoader();
         KISSY.config({
             group:'my',
             packages: {

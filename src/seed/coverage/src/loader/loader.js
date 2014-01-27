@@ -332,7 +332,7 @@ _$jscoverage['/loader/loader.js'].branchData['170'][1].init(17, 10, 'moduleName'
 function visit486_170_1(result) {
   _$jscoverage['/loader/loader.js'].branchData['170'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/loader.js'].branchData['152'][1].init(2569, 4, 'sync');
+}_$jscoverage['/loader/loader.js'].branchData['152'][1].init(2581, 4, 'sync');
 function visit485_152_1(result) {
   _$jscoverage['/loader/loader.js'].branchData['152'][1].ranCondition(result);
   return result;
@@ -492,9 +492,9 @@ function visit477_27_1(result) {
           }
         }
         _$jscoverage['/loader/loader.js'].lineData[138]++;
-        S.log('loader: load modules error:', 'error');
+        S.log(errorList, 'error');
         _$jscoverage['/loader/loader.js'].lineData[139]++;
-        S.error(errorList);
+        S.log('loader: load above modules error', 'error');
       } else {
         _$jscoverage['/loader/loader.js'].lineData[141]++;
         logger.debug(tryCount + ' reload ' + modNames);

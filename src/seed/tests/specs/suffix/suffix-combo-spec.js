@@ -1,8 +1,15 @@
 describe("mod with suffix", function () {
     var S = KISSY;
+    beforeEach(function () {
+        KISSY.config('combine', true);
+    });
+
+    afterEach(function () {
+        KISSY.clearLoader();
+    });
 
     it("can load mod with a suffix when combo loader", function () {
-        var combine = KISSY.config("combine"), ret = 0;
+        var ret = 0;
 
         KISSY.config({
             packages:{
@@ -30,5 +37,4 @@ describe("mod with suffix", function () {
         });
 
     });
-
 });

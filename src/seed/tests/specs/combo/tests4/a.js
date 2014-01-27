@@ -1,5 +1,3 @@
-KISSY.add("tests4/a", function (S, b) {
+KISSY.add("tests4/a", function (S) {
     return 9;
-}, {
-    requires:['dom']
 });

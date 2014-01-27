@@ -1,8 +1,14 @@
 describe("css-combo", function () {
+    beforeEach(function () {
+        KISSY.config('combine', true);
+    });
+
+    afterEach(function () {
+        KISSY.clearLoader();
+    });
+
     it("works for css and js", function () {
         var S = KISSY;
-
-        S.clearLoader();
 
         $("<div>" +
             "<div class='test2'></div>" +
@@ -48,8 +54,6 @@ describe("css-combo", function () {
 
     it("works for css and js when taged", function () {
         var S = KISSY;
-
-        S.clearLoader();
 
         $("<div>" +
             "<div class='test2'></div>" +

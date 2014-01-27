@@ -135,8 +135,8 @@
                             });
                         }
                     }
-                    S.log('loader: load modules error:', 'error');
-                    S.error(errorList);
+                    S.log(errorList, 'error');
+                    S.log('loader: load above modules error', 'error');
                 } else {
                     logger.debug(tryCount + ' reload ' + modNames);
                     waitingModules.fn = loadReady;

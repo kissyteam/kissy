@@ -3,10 +3,15 @@
  * @author yiminghe@gmail.com
  */
 describe('support system.ondemand', function () {
+    beforeEach(function () {
+        KISSY.config('combine', false);
+    });
+
+    afterEach(function () {
+        KISSY.clearLoader();
+    });
     // https://gist.github.com/wycats/51c96e3adcdb3a68cbc3
     it('provide similar functionality', function () {
-        KISSY.clearLoader();
-
         KISSY.config('packages', {
             'p-c': {
                 base: '/kissy/src/seed/tests/specs/system-ondemand/',
@@ -40,10 +45,6 @@ describe('support system.ondemand', function () {
 
         waitsFor(function () {
             return ret === 2;
-        });
-
-        runs(function () {
-            KISSY.clearLoader();
         });
 
         //},1000);

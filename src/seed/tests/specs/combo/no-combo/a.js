@@ -1,5 +1,5 @@
-KISSY.add(function(S,Dom,n){
+KISSY.add(function(S,n){
     return n+1;
 },{
-    requires:['dom','./b','event']
+    requires:['./b']
 });

@@ -1,16 +1,21 @@
 describe("mod with suffix", function () {
     var S = KISSY;
+    beforeEach(function () {
+        KISSY.config('combine', false);
+    });
 
+    afterEach(function () {
+        KISSY.clearLoader();
+    });
     it("can load mod with a suffix when simple loader", function () {
-        var combine = KISSY.config("combine"), ret = 0;
+        var ret = 0;
 
         KISSY.config({
             packages:{
                 suffix:{
                     base:"../specs/"
                 }
-            },
-            combine:false
+            }
         });
 
         $("<div id='suffix-test'></div>").appendTo('body');
@@ -24,7 +29,5 @@ describe("mod with suffix", function () {
         waitsFor(function () {
             return ret;
         });
-
     });
-
 });

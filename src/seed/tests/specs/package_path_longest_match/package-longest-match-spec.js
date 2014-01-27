@@ -1,6 +1,13 @@
 describe("loader package", function () {
     var S = KISSY;
     var Loader = S.Loader;
+    beforeEach(function () {
+        KISSY.config('combine', false);
+    });
+
+    afterEach(function () {
+        KISSY.clearLoader();
+    });
     it("longest match works", function () {
         var debug = S.Config.debug;
         S.Config.debug = true;
@@ -29,7 +36,6 @@ describe("loader package", function () {
 
         runs(function () {
             S.Config.debug = debug;
-            S.clearLoader();
         });
     });
 

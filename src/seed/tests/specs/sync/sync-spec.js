@@ -1,43 +1,53 @@
-describe('allow sync loading', function () {
-    it('default to async', function () {
-        KISSY.clearLoader();
+var run = function (combine) {
+    describe('allow sync loading ' + (combine ? 'at combo mode' : ''), function () {
 
-        KISSY.add('test-sync', function () {
-            return 1;
+        beforeEach(function () {
+            KISSY.config('combine', !!combine);
         });
 
-        var t = undefined;
-
-
-        KISSY.use('test-sync', function (S, x) {
-            t = x;
+        afterEach(function () {
+            KISSY.clearLoader();
         });
 
-        expect(t).toBe(undefined);
+        it('default to async', function () {
+            KISSY.add('test-sync', function () {
+                return 1;
+            });
 
-        waits(50);
+            var t = undefined;
 
-        runs(function () {
+
+            KISSY.use('test-sync', function (S, x) {
+                t = x;
+            });
+
+            expect(t).toBe(undefined);
+
+            waits(50);
+
+            runs(function () {
+                expect(t).toBe(1);
+            });
+        });
+
+        it('can be sync', function () {
+            KISSY.add('test-sync', function () {
+                return 1;
+            });
+
+            var t = undefined;
+
+            KISSY.use('test-sync', {
+                success: function (S, x) {
+                    t = x;
+                },
+                sync: 1
+            });
+
             expect(t).toBe(1);
         });
     });
+};
 
-    it('can be sync', function () {
-        KISSY.clearLoader();
-
-        KISSY.add('test-sync', function () {
-            return 1;
-        });
-
-        var t = undefined;
-
-        KISSY.use('test-sync', {
-            success: function (S, x) {
-                t = x;
-            },
-            sync: 1
-        });
-
-        expect(t).toBe(1);
-    });
-});
+run();
+run(1);

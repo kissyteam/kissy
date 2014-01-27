@@ -1,5 +1,18 @@
 describe('it support commonjs require', function () {
-    window.cjs_test = [];
+    beforeEach(function () {
+        window.cjs_test = [];
+        KISSY.config('combine', false);
+    });
+
+    afterEach(function () {
+        KISSY.clearLoader();
+        try {
+            delete window.cjs_test;
+        } catch (e) {
+            window.cjs_test = undefined;
+        }
+    });
+
     it('support cjs module and lazy initialization', function () {
         var S = KISSY;
         S.config('packages', {
@@ -8,15 +21,14 @@ describe('it support commonjs require', function () {
             }
         });
         var ret;
-        S.use('cjs/a',function (S,a) {
-            ret = a
+        S.use('cjs/a', function (S, a) {
+            ret = a;
         });
         waitsFor(function () {
-            return ret == 3
+            return ret === 3;
         });
         runs(function () {
-            expect(cjs_test).toEqual([ 2, 3, 4, 6]);
-            window.cjs_test = [];
+            expect(window.cjs_test).toEqual([ 2, 3, 4, 6]);
         });
     });
 
@@ -28,15 +40,14 @@ describe('it support commonjs require', function () {
             }
         });
         var ret;
-        S.use('amd/a',function (S,a) {
+        S.use('amd/a', function (S, a) {
             ret = a;
         });
         waitsFor(function () {
             return ret == 3
         });
         runs(function () {
-            expect(cjs_test).toEqual([3, 2, 4, 6]);
-            window.cjs_test = [];
+            expect(window.cjs_test).toEqual([3, 2, 4, 6]);
         });
     });
 });
