@@ -1,5 +1,5 @@
-module.exports = function (req, res,utils) {
+module.exports = function (req, res,config) {
     res.status(301);
-    res.set('Location','http://'+req.host+':'+utils.config.ports[0]+'/kissy/package.json');
+    res.set('Location','http://'+config.server.host+':'+config.server.ports[0]+'/kissy/package.json');
     res.end();
 };
