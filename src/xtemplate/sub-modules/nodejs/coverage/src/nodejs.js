@@ -234,25 +234,25 @@ if (! _$jscoverage['/nodejs.js']) {
   _$jscoverage['/nodejs.js'].lineData[9] = 0;
   _$jscoverage['/nodejs.js'].lineData[10] = 0;
   _$jscoverage['/nodejs.js'].lineData[17] = 0;
-  _$jscoverage['/nodejs.js'].lineData[25] = 0;
-  _$jscoverage['/nodejs.js'].lineData[28] = 0;
-  _$jscoverage['/nodejs.js'].lineData[29] = 0;
+  _$jscoverage['/nodejs.js'].lineData[27] = 0;
   _$jscoverage['/nodejs.js'].lineData[30] = 0;
   _$jscoverage['/nodejs.js'].lineData[31] = 0;
   _$jscoverage['/nodejs.js'].lineData[32] = 0;
   _$jscoverage['/nodejs.js'].lineData[33] = 0;
   _$jscoverage['/nodejs.js'].lineData[34] = 0;
-  _$jscoverage['/nodejs.js'].lineData[38] = 0;
-  _$jscoverage['/nodejs.js'].lineData[39] = 0;
+  _$jscoverage['/nodejs.js'].lineData[35] = 0;
+  _$jscoverage['/nodejs.js'].lineData[36] = 0;
   _$jscoverage['/nodejs.js'].lineData[40] = 0;
   _$jscoverage['/nodejs.js'].lineData[41] = 0;
   _$jscoverage['/nodejs.js'].lineData[42] = 0;
   _$jscoverage['/nodejs.js'].lineData[43] = 0;
+  _$jscoverage['/nodejs.js'].lineData[44] = 0;
   _$jscoverage['/nodejs.js'].lineData[45] = 0;
-  _$jscoverage['/nodejs.js'].lineData[51] = 0;
-  _$jscoverage['/nodejs.js'].lineData[54] = 0;
+  _$jscoverage['/nodejs.js'].lineData[47] = 0;
+  _$jscoverage['/nodejs.js'].lineData[52] = 0;
   _$jscoverage['/nodejs.js'].lineData[55] = 0;
-  _$jscoverage['/nodejs.js'].lineData[57] = 0;
+  _$jscoverage['/nodejs.js'].lineData[56] = 0;
+  _$jscoverage['/nodejs.js'].lineData[58] = 0;
 }
 if (! _$jscoverage['/nodejs.js'].functionData) {
   _$jscoverage['/nodejs.js'].functionData = [];
@@ -263,24 +263,24 @@ if (! _$jscoverage['/nodejs.js'].functionData) {
 }
 if (! _$jscoverage['/nodejs.js'].branchData) {
   _$jscoverage['/nodejs.js'].branchData = {};
-  _$jscoverage['/nodejs.js'].branchData['28'] = [];
-  _$jscoverage['/nodejs.js'].branchData['28'][1] = new BranchData();
-  _$jscoverage['/nodejs.js'].branchData['42'] = [];
-  _$jscoverage['/nodejs.js'].branchData['42'][1] = new BranchData();
-  _$jscoverage['/nodejs.js'].branchData['54'] = [];
-  _$jscoverage['/nodejs.js'].branchData['54'][1] = new BranchData();
+  _$jscoverage['/nodejs.js'].branchData['30'] = [];
+  _$jscoverage['/nodejs.js'].branchData['30'][1] = new BranchData();
+  _$jscoverage['/nodejs.js'].branchData['44'] = [];
+  _$jscoverage['/nodejs.js'].branchData['44'][1] = new BranchData();
+  _$jscoverage['/nodejs.js'].branchData['55'] = [];
+  _$jscoverage['/nodejs.js'].branchData['55'][1] = new BranchData();
 }
-_$jscoverage['/nodejs.js'].branchData['54'][1].init(410, 9, 'cacheFile');
-function visit3_54_1(result) {
-  _$jscoverage['/nodejs.js'].branchData['54'][1].ranCondition(result);
+_$jscoverage['/nodejs.js'].branchData['55'][1].init(409, 9, 'cacheFile');
+function visit3_55_1(result) {
+  _$jscoverage['/nodejs.js'].branchData['55'][1].ranCondition(result);
   return result;
-}_$jscoverage['/nodejs.js'].branchData['42'][1].init(17, 31, 'cacheFile && cached[subTplName]');
-function visit2_42_1(result) {
-  _$jscoverage['/nodejs.js'].branchData['42'][1].ranCondition(result);
+}_$jscoverage['/nodejs.js'].branchData['44'][1].init(17, 31, 'cacheFile && cached[subTplName]');
+function visit2_44_1(result) {
+  _$jscoverage['/nodejs.js'].branchData['44'][1].ranCondition(result);
   return result;
-}_$jscoverage['/nodejs.js'].branchData['28'][1].init(114, 24, 'config.extname || \'html\'');
-function visit1_28_1(result) {
-  _$jscoverage['/nodejs.js'].branchData['28'][1].ranCondition(result);
+}_$jscoverage['/nodejs.js'].branchData['30'][1].init(114, 24, 'config.extname || \'html\'');
+function visit1_30_1(result) {
+  _$jscoverage['/nodejs.js'].branchData['30'][1].ranCondition(result);
   return result;
 }_$jscoverage['/nodejs.js'].lineData[6]++;
 KISSY.add(function(S, require) {
@@ -295,53 +295,53 @@ KISSY.add(function(S, require) {
   return {
   loadFromModuleName: function(moduleName, config) {
   _$jscoverage['/nodejs.js'].functionData[1]++;
-  _$jscoverage['/nodejs.js'].lineData[25]++;
-  config = S.merge(config, {
-  cacheFile: 1});
-  _$jscoverage['/nodejs.js'].lineData[28]++;
-  config.extname = visit1_28_1(config.extname || 'html');
-  _$jscoverage['/nodejs.js'].lineData[29]++;
-  var loader = getLoader(config);
+  _$jscoverage['/nodejs.js'].lineData[27]++;
+  config = S.merge({
+  cacheFile: 1}, config);
   _$jscoverage['/nodejs.js'].lineData[30]++;
-  config.name = moduleName;
+  config.extname = visit1_30_1(config.extname || 'html');
   _$jscoverage['/nodejs.js'].lineData[31]++;
-  config.loader = loader;
+  var loader = getLoader(config);
   _$jscoverage['/nodejs.js'].lineData[32]++;
-  var tpl = loader(moduleName);
+  config.name = moduleName;
   _$jscoverage['/nodejs.js'].lineData[33]++;
-  delete config.extname;
+  config.loader = loader;
   _$jscoverage['/nodejs.js'].lineData[34]++;
+  var tpl = loader(moduleName);
+  _$jscoverage['/nodejs.js'].lineData[35]++;
+  delete config.extname;
+  _$jscoverage['/nodejs.js'].lineData[36]++;
   return new XTemplate(tpl, config);
 }};
-  _$jscoverage['/nodejs.js'].lineData[38]++;
+  _$jscoverage['/nodejs.js'].lineData[40]++;
   function getLoader(cfg) {
     _$jscoverage['/nodejs.js'].functionData[2]++;
-    _$jscoverage['/nodejs.js'].lineData[39]++;
-    var cacheFile = cfg.cacheFile;
-    _$jscoverage['/nodejs.js'].lineData[40]++;
-    var extname = cfg.extname;
     _$jscoverage['/nodejs.js'].lineData[41]++;
+    var cacheFile = cfg.cacheFile;
+    _$jscoverage['/nodejs.js'].lineData[42]++;
+    var extname = cfg.extname;
+    _$jscoverage['/nodejs.js'].lineData[43]++;
     return function(subTplName) {
   _$jscoverage['/nodejs.js'].functionData[3]++;
-  _$jscoverage['/nodejs.js'].lineData[42]++;
-  if (visit2_42_1(cacheFile && cached[subTplName])) {
-    _$jscoverage['/nodejs.js'].lineData[43]++;
+  _$jscoverage['/nodejs.js'].lineData[44]++;
+  if (visit2_44_1(cacheFile && cached[subTplName])) {
+    _$jscoverage['/nodejs.js'].lineData[45]++;
     return cached[subTplName];
   }
-  _$jscoverage['/nodejs.js'].lineData[45]++;
+  _$jscoverage['/nodejs.js'].lineData[47]++;
   var module = new S.Loader.Module({
   name: subTplName, 
   type: extname, 
   runtime: S});
-  _$jscoverage['/nodejs.js'].lineData[51]++;
+  _$jscoverage['/nodejs.js'].lineData[52]++;
   var tpl = fs.readFileSync(new S.Uri(module.getPath()).getPath(), {
   encoding: 'utf-8'});
-  _$jscoverage['/nodejs.js'].lineData[54]++;
-  if (visit3_54_1(cacheFile)) {
-    _$jscoverage['/nodejs.js'].lineData[55]++;
+  _$jscoverage['/nodejs.js'].lineData[55]++;
+  if (visit3_55_1(cacheFile)) {
+    _$jscoverage['/nodejs.js'].lineData[56]++;
     cached[subTplName] = tpl;
   }
-  _$jscoverage['/nodejs.js'].lineData[57]++;
+  _$jscoverage['/nodejs.js'].lineData[58]++;
   return tpl;
 };
   }

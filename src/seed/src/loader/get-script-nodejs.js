@@ -30,7 +30,10 @@
             path = uri.getPath();
 
         try {
+            // async is controlled by async option in use
+            // sync load in getScript, same as cached load in browser environment
             var mod = fs.readFileSync(path, charset);
+            // code in runInThisContext unlike eval can not access local scope
             //noinspection JSUnresolvedFunction
             var factory = vm.runInThisContext('(function(KISSY,requireNode){' + mod + '})', url);
             factory(S, require);

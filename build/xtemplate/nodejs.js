@@ -1,7 +1,7 @@
 /*
-Copyright 2013, KISSY v1.50
+Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Dec 27 21:46
+build time: Feb 10 13:50
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -14,7 +14,7 @@ KISSY.add("xtemplate/nodejs", ["xtemplate"], function(S, require) {
   var XTemplate = require("xtemplate");
   var cached = {};
   return{loadFromModuleName:function(moduleName, config) {
-    config = S.merge(config, {cacheFile:1});
+    config = S.merge({cacheFile:1}, config);
     config.extname = config.extname || "html";
     var loader = getLoader(config);
     config.name = moduleName;

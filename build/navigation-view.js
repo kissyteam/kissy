@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Jan 24 20:11
+build time: Feb 10 14:55
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -167,20 +167,21 @@ KISSY.add("navigation-view", ["node", "component/container", "component/extensio
     }
     return nextView
   }, push:function(config) {
-    var self = this, nextView, animation, enterAnimation, leaveAnimation, enterAnimCssClass, leaveAnimCssClass, activeView, viewStack = self.viewStack;
+    var self = this, nextView, animation, enterAnimation, leaveAnimation, enterAnimCssClass, leaveAnimCssClass, activeView, viewStack = self.viewStack, activeViewConfig = viewStack[viewStack.length - 1];
     activeView = self.get("activeView");
-    config.animation = config.animation || self.get("animation");
-    if(!activeView) {
+    if(activeView) {
+      config.animation = config.animation || self.get("animation")
+    }else {
       config.animation = {}
     }
+    animation = config.animation;
     nextView = self.createView(config);
     nextView.uuid = uuid++;
     viewStack.push(config);
-    animation = nextView.get("animation");
     enterAnimation = animation.enter;
     leaveAnimation = animation.leave;
     if(activeView) {
-      leaveAnimation = activeView.get("animation").leave || leaveAnimation
+      leaveAnimation = activeViewConfig.animation.leave || leaveAnimation
     }
     enterAnimCssClass = enterAnimation && getAnimCss(self, enterAnimation, true) || "";
     leaveAnimCssClass = getAnimCss(self, leaveAnimation);
@@ -189,16 +190,17 @@ KISSY.add("navigation-view", ["node", "component/container", "component/extensio
   }, replace:function(config) {
     var self = this, viewStack = self.viewStack;
     S.mix(viewStack[viewStack.length - 1], config)
-  }, pop:function() {
-    var self = this, activeView, config, nextView, enterAnimCssClass, leaveAnimCssClass, viewStack = self.viewStack;
+  }, pop:function(config) {
+    var self = this, activeView, nextView, enterAnimCssClass, leaveAnimCssClass, activeViewConfig, viewStack = self.viewStack;
     if(viewStack.length > 1) {
+      activeViewConfig = viewStack[viewStack.length - 1];
       viewStack.pop();
       activeView = self.get("activeView");
       config = viewStack[viewStack.length - 1];
       nextView = self.createView(config);
       nextView.uuid = uuid++;
-      enterAnimCssClass = getAnimCss(self, nextView.get("animation").leave || activeView.get("animation").leave, true);
-      leaveAnimCssClass = getAnimCss(self, activeView.get("animation").enter);
+      enterAnimCssClass = getAnimCss(self, config.animation.leave || activeViewConfig.animation.leave, true);
+      leaveAnimCssClass = getAnimCss(self, activeViewConfig.animation.enter);
       processSwitchView(self, config, activeView, nextView, enterAnimCssClass, leaveAnimCssClass, true);
       postProcessSwitchView(self, activeView, nextView, true)
     }

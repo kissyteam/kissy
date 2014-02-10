@@ -344,35 +344,36 @@ if (! _$jscoverage['/navigation-view.js']) {
   _$jscoverage['/navigation-view.js'].lineData[236] = 0;
   _$jscoverage['/navigation-view.js'].lineData[238] = 0;
   _$jscoverage['/navigation-view.js'].lineData[242] = 0;
-  _$jscoverage['/navigation-view.js'].lineData[252] = 0;
   _$jscoverage['/navigation-view.js'].lineData[253] = 0;
-  _$jscoverage['/navigation-view.js'].lineData[254] = 0;
+  _$jscoverage['/navigation-view.js'].lineData[255] = 0;
   _$jscoverage['/navigation-view.js'].lineData[256] = 0;
-  _$jscoverage['/navigation-view.js'].lineData[258] = 0;
   _$jscoverage['/navigation-view.js'].lineData[259] = 0;
-  _$jscoverage['/navigation-view.js'].lineData[260] = 0;
-  _$jscoverage['/navigation-view.js'].lineData[261] = 0;
   _$jscoverage['/navigation-view.js'].lineData[262] = 0;
   _$jscoverage['/navigation-view.js'].lineData[263] = 0;
   _$jscoverage['/navigation-view.js'].lineData[264] = 0;
   _$jscoverage['/navigation-view.js'].lineData[265] = 0;
+  _$jscoverage['/navigation-view.js'].lineData[266] = 0;
+  _$jscoverage['/navigation-view.js'].lineData[267] = 0;
   _$jscoverage['/navigation-view.js'].lineData[268] = 0;
   _$jscoverage['/navigation-view.js'].lineData[269] = 0;
-  _$jscoverage['/navigation-view.js'].lineData[271] = 0;
+  _$jscoverage['/navigation-view.js'].lineData[272] = 0;
   _$jscoverage['/navigation-view.js'].lineData[273] = 0;
+  _$jscoverage['/navigation-view.js'].lineData[275] = 0;
   _$jscoverage['/navigation-view.js'].lineData[277] = 0;
-  _$jscoverage['/navigation-view.js'].lineData[279] = 0;
+  _$jscoverage['/navigation-view.js'].lineData[281] = 0;
   _$jscoverage['/navigation-view.js'].lineData[283] = 0;
-  _$jscoverage['/navigation-view.js'].lineData[291] = 0;
-  _$jscoverage['/navigation-view.js'].lineData[292] = 0;
-  _$jscoverage['/navigation-view.js'].lineData[293] = 0;
-  _$jscoverage['/navigation-view.js'].lineData[294] = 0;
+  _$jscoverage['/navigation-view.js'].lineData[287] = 0;
   _$jscoverage['/navigation-view.js'].lineData[295] = 0;
   _$jscoverage['/navigation-view.js'].lineData[296] = 0;
   _$jscoverage['/navigation-view.js'].lineData[297] = 0;
   _$jscoverage['/navigation-view.js'].lineData[298] = 0;
-  _$jscoverage['/navigation-view.js'].lineData[300] = 0;
+  _$jscoverage['/navigation-view.js'].lineData[299] = 0;
+  _$jscoverage['/navigation-view.js'].lineData[301] = 0;
   _$jscoverage['/navigation-view.js'].lineData[302] = 0;
+  _$jscoverage['/navigation-view.js'].lineData[303] = 0;
+  _$jscoverage['/navigation-view.js'].lineData[304] = 0;
+  _$jscoverage['/navigation-view.js'].lineData[306] = 0;
+  _$jscoverage['/navigation-view.js'].lineData[308] = 0;
 }
 if (! _$jscoverage['/navigation-view.js'].functionData) {
   _$jscoverage['/navigation-view.js'].functionData = [];
@@ -445,53 +446,53 @@ if (! _$jscoverage['/navigation-view.js'].branchData) {
   _$jscoverage['/navigation-view.js'].branchData['208'][1] = new BranchData();
   _$jscoverage['/navigation-view.js'].branchData['233'] = [];
   _$jscoverage['/navigation-view.js'].branchData['233'][1] = new BranchData();
-  _$jscoverage['/navigation-view.js'].branchData['253'] = [];
-  _$jscoverage['/navigation-view.js'].branchData['253'][1] = new BranchData();
-  _$jscoverage['/navigation-view.js'].branchData['254'] = [];
-  _$jscoverage['/navigation-view.js'].branchData['254'][1] = new BranchData();
-  _$jscoverage['/navigation-view.js'].branchData['264'] = [];
-  _$jscoverage['/navigation-view.js'].branchData['264'][1] = new BranchData();
-  _$jscoverage['/navigation-view.js'].branchData['265'] = [];
-  _$jscoverage['/navigation-view.js'].branchData['265'][1] = new BranchData();
+  _$jscoverage['/navigation-view.js'].branchData['255'] = [];
+  _$jscoverage['/navigation-view.js'].branchData['255'][1] = new BranchData();
+  _$jscoverage['/navigation-view.js'].branchData['256'] = [];
+  _$jscoverage['/navigation-view.js'].branchData['256'][1] = new BranchData();
   _$jscoverage['/navigation-view.js'].branchData['268'] = [];
   _$jscoverage['/navigation-view.js'].branchData['268'][1] = new BranchData();
-  _$jscoverage['/navigation-view.js'].branchData['268'][2] = new BranchData();
-  _$jscoverage['/navigation-view.js'].branchData['291'] = [];
-  _$jscoverage['/navigation-view.js'].branchData['291'][1] = new BranchData();
-  _$jscoverage['/navigation-view.js'].branchData['297'] = [];
-  _$jscoverage['/navigation-view.js'].branchData['297'][1] = new BranchData();
+  _$jscoverage['/navigation-view.js'].branchData['269'] = [];
+  _$jscoverage['/navigation-view.js'].branchData['269'][1] = new BranchData();
+  _$jscoverage['/navigation-view.js'].branchData['272'] = [];
+  _$jscoverage['/navigation-view.js'].branchData['272'][1] = new BranchData();
+  _$jscoverage['/navigation-view.js'].branchData['272'][2] = new BranchData();
+  _$jscoverage['/navigation-view.js'].branchData['295'] = [];
+  _$jscoverage['/navigation-view.js'].branchData['295'][1] = new BranchData();
+  _$jscoverage['/navigation-view.js'].branchData['303'] = [];
+  _$jscoverage['/navigation-view.js'].branchData['303'][1] = new BranchData();
 }
-_$jscoverage['/navigation-view.js'].branchData['297'][1].init(296, 68, 'nextView.get(\'animation\').leave || activeView.get(\'animation\').leave');
-function visit31_297_1(result) {
-  _$jscoverage['/navigation-view.js'].branchData['297'][1].ranCondition(result);
+_$jscoverage['/navigation-view.js'].branchData['303'][1].init(367, 58, 'config.animation.leave || activeViewConfig.animation.leave');
+function visit31_303_1(result) {
+  _$jscoverage['/navigation-view.js'].branchData['303'][1].ranCondition(result);
   return result;
-}_$jscoverage['/navigation-view.js'].branchData['291'][1].init(248, 20, 'viewStack.length > 1');
-function visit30_291_1(result) {
-  _$jscoverage['/navigation-view.js'].branchData['291'][1].ranCondition(result);
+}_$jscoverage['/navigation-view.js'].branchData['295'][1].init(258, 20, 'viewStack.length > 1');
+function visit30_295_1(result) {
+  _$jscoverage['/navigation-view.js'].branchData['295'][1].ranCondition(result);
   return result;
-}_$jscoverage['/navigation-view.js'].branchData['268'][2].init(993, 56, 'enterAnimation && getAnimCss(self, enterAnimation, true)');
-function visit29_268_2(result) {
-  _$jscoverage['/navigation-view.js'].branchData['268'][2].ranCondition(result);
+}_$jscoverage['/navigation-view.js'].branchData['272'][2].init(1081, 56, 'enterAnimation && getAnimCss(self, enterAnimation, true)');
+function visit29_272_2(result) {
+  _$jscoverage['/navigation-view.js'].branchData['272'][2].ranCondition(result);
   return result;
-}_$jscoverage['/navigation-view.js'].branchData['268'][1].init(993, 62, 'enterAnimation && getAnimCss(self, enterAnimation, true) || \'\'');
-function visit28_268_1(result) {
+}_$jscoverage['/navigation-view.js'].branchData['272'][1].init(1081, 62, 'enterAnimation && getAnimCss(self, enterAnimation, true) || \'\'');
+function visit28_272_1(result) {
+  _$jscoverage['/navigation-view.js'].branchData['272'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/navigation-view.js'].branchData['269'][1].init(35, 50, 'activeViewConfig.animation.leave || leaveAnimation');
+function visit27_269_1(result) {
+  _$jscoverage['/navigation-view.js'].branchData['269'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/navigation-view.js'].branchData['268'][1].init(931, 10, 'activeView');
+function visit26_268_1(result) {
   _$jscoverage['/navigation-view.js'].branchData['268'][1].ranCondition(result);
   return result;
-}_$jscoverage['/navigation-view.js'].branchData['265'][1].init(35, 51, 'activeView.get(\'animation\').leave || leaveAnimation');
-function visit27_265_1(result) {
-  _$jscoverage['/navigation-view.js'].branchData['265'][1].ranCondition(result);
+}_$jscoverage['/navigation-view.js'].branchData['256'][1].init(37, 41, 'config.animation || self.get(\'animation\')');
+function visit25_256_1(result) {
+  _$jscoverage['/navigation-view.js'].branchData['256'][1].ranCondition(result);
   return result;
-}_$jscoverage['/navigation-view.js'].branchData['264'][1].init(842, 10, 'activeView');
-function visit26_264_1(result) {
-  _$jscoverage['/navigation-view.js'].branchData['264'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/navigation-view.js'].branchData['254'][1].init(442, 11, '!activeView');
-function visit25_254_1(result) {
-  _$jscoverage['/navigation-view.js'].branchData['254'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/navigation-view.js'].branchData['253'][1].init(382, 41, 'config.animation || self.get(\'animation\')');
-function visit24_253_1(result) {
-  _$jscoverage['/navigation-view.js'].branchData['253'][1].ranCondition(result);
+}_$jscoverage['/navigation-view.js'].branchData['255'][1].init(438, 10, 'activeView');
+function visit24_255_1(result) {
+  _$jscoverage['/navigation-view.js'].branchData['255'][1].ranCondition(result);
   return result;
 }_$jscoverage['/navigation-view.js'].branchData['233'][1].init(136, 9, '!nextView');
 function visit23_233_1(result) {
@@ -891,72 +892,75 @@ KISSY.add(function(S, require) {
   push: function(config) {
   _$jscoverage['/navigation-view.js'].functionData[18]++;
   _$jscoverage['/navigation-view.js'].lineData[242]++;
-  var self = this, nextView, animation, enterAnimation, leaveAnimation, enterAnimCssClass, leaveAnimCssClass, activeView, viewStack = self.viewStack;
-  _$jscoverage['/navigation-view.js'].lineData[252]++;
-  activeView = self.get('activeView');
+  var self = this, nextView, animation, enterAnimation, leaveAnimation, enterAnimCssClass, leaveAnimCssClass, activeView, viewStack = self.viewStack, activeViewConfig = viewStack[viewStack.length - 1];
   _$jscoverage['/navigation-view.js'].lineData[253]++;
-  config.animation = visit24_253_1(config.animation || self.get('animation'));
-  _$jscoverage['/navigation-view.js'].lineData[254]++;
-  if (visit25_254_1(!activeView)) {
+  activeView = self.get('activeView');
+  _$jscoverage['/navigation-view.js'].lineData[255]++;
+  if (visit24_255_1(activeView)) {
     _$jscoverage['/navigation-view.js'].lineData[256]++;
+    config.animation = visit25_256_1(config.animation || self.get('animation'));
+  } else {
+    _$jscoverage['/navigation-view.js'].lineData[259]++;
     config.animation = {};
   }
-  _$jscoverage['/navigation-view.js'].lineData[258]++;
-  nextView = self.createView(config);
-  _$jscoverage['/navigation-view.js'].lineData[259]++;
-  nextView.uuid = uuid++;
-  _$jscoverage['/navigation-view.js'].lineData[260]++;
-  viewStack.push(config);
-  _$jscoverage['/navigation-view.js'].lineData[261]++;
-  animation = nextView.get('animation');
   _$jscoverage['/navigation-view.js'].lineData[262]++;
-  enterAnimation = animation.enter;
+  animation = config.animation;
   _$jscoverage['/navigation-view.js'].lineData[263]++;
-  leaveAnimation = animation.leave;
+  nextView = self.createView(config);
   _$jscoverage['/navigation-view.js'].lineData[264]++;
-  if (visit26_264_1(activeView)) {
-    _$jscoverage['/navigation-view.js'].lineData[265]++;
-    leaveAnimation = visit27_265_1(activeView.get('animation').leave || leaveAnimation);
-  }
+  nextView.uuid = uuid++;
+  _$jscoverage['/navigation-view.js'].lineData[265]++;
+  viewStack.push(config);
+  _$jscoverage['/navigation-view.js'].lineData[266]++;
+  enterAnimation = animation.enter;
+  _$jscoverage['/navigation-view.js'].lineData[267]++;
+  leaveAnimation = animation.leave;
   _$jscoverage['/navigation-view.js'].lineData[268]++;
-  enterAnimCssClass = visit28_268_1(visit29_268_2(enterAnimation && getAnimCss(self, enterAnimation, true)) || '');
-  _$jscoverage['/navigation-view.js'].lineData[269]++;
-  leaveAnimCssClass = getAnimCss(self, leaveAnimation);
-  _$jscoverage['/navigation-view.js'].lineData[271]++;
-  processSwitchView(self, config, activeView, nextView, enterAnimCssClass, leaveAnimCssClass);
+  if (visit26_268_1(activeView)) {
+    _$jscoverage['/navigation-view.js'].lineData[269]++;
+    leaveAnimation = visit27_269_1(activeViewConfig.animation.leave || leaveAnimation);
+  }
+  _$jscoverage['/navigation-view.js'].lineData[272]++;
+  enterAnimCssClass = visit28_272_1(visit29_272_2(enterAnimation && getAnimCss(self, enterAnimation, true)) || '');
   _$jscoverage['/navigation-view.js'].lineData[273]++;
+  leaveAnimCssClass = getAnimCss(self, leaveAnimation);
+  _$jscoverage['/navigation-view.js'].lineData[275]++;
+  processSwitchView(self, config, activeView, nextView, enterAnimCssClass, leaveAnimCssClass);
+  _$jscoverage['/navigation-view.js'].lineData[277]++;
   postProcessSwitchView(self, activeView, nextView);
 }, 
   replace: function(config) {
   _$jscoverage['/navigation-view.js'].functionData[19]++;
-  _$jscoverage['/navigation-view.js'].lineData[277]++;
+  _$jscoverage['/navigation-view.js'].lineData[281]++;
   var self = this, viewStack = self.viewStack;
-  _$jscoverage['/navigation-view.js'].lineData[279]++;
+  _$jscoverage['/navigation-view.js'].lineData[283]++;
   S.mix(viewStack[viewStack.length - 1], config);
 }, 
-  pop: function() {
+  pop: function(config) {
   _$jscoverage['/navigation-view.js'].functionData[20]++;
-  _$jscoverage['/navigation-view.js'].lineData[283]++;
-  var self = this, activeView, config, nextView, enterAnimCssClass, leaveAnimCssClass, viewStack = self.viewStack;
-  _$jscoverage['/navigation-view.js'].lineData[291]++;
-  if (visit30_291_1(viewStack.length > 1)) {
-    _$jscoverage['/navigation-view.js'].lineData[292]++;
-    viewStack.pop();
-    _$jscoverage['/navigation-view.js'].lineData[293]++;
-    activeView = self.get('activeView');
-    _$jscoverage['/navigation-view.js'].lineData[294]++;
-    config = viewStack[viewStack.length - 1];
-    _$jscoverage['/navigation-view.js'].lineData[295]++;
-    nextView = self.createView(config);
+  _$jscoverage['/navigation-view.js'].lineData[287]++;
+  var self = this, activeView, nextView, enterAnimCssClass, leaveAnimCssClass, activeViewConfig, viewStack = self.viewStack;
+  _$jscoverage['/navigation-view.js'].lineData[295]++;
+  if (visit30_295_1(viewStack.length > 1)) {
     _$jscoverage['/navigation-view.js'].lineData[296]++;
-    nextView.uuid = uuid++;
+    activeViewConfig = viewStack[viewStack.length - 1];
     _$jscoverage['/navigation-view.js'].lineData[297]++;
-    enterAnimCssClass = getAnimCss(self, visit31_297_1(nextView.get('animation').leave || activeView.get('animation').leave), true);
+    viewStack.pop();
     _$jscoverage['/navigation-view.js'].lineData[298]++;
-    leaveAnimCssClass = getAnimCss(self, activeView.get('animation').enter);
-    _$jscoverage['/navigation-view.js'].lineData[300]++;
-    processSwitchView(self, config, activeView, nextView, enterAnimCssClass, leaveAnimCssClass, true);
+    activeView = self.get('activeView');
+    _$jscoverage['/navigation-view.js'].lineData[299]++;
+    config = viewStack[viewStack.length - 1];
+    _$jscoverage['/navigation-view.js'].lineData[301]++;
+    nextView = self.createView(config);
     _$jscoverage['/navigation-view.js'].lineData[302]++;
+    nextView.uuid = uuid++;
+    _$jscoverage['/navigation-view.js'].lineData[303]++;
+    enterAnimCssClass = getAnimCss(self, visit31_303_1(config.animation.leave || activeViewConfig.animation.leave), true);
+    _$jscoverage['/navigation-view.js'].lineData[304]++;
+    leaveAnimCssClass = getAnimCss(self, activeViewConfig.animation.enter);
+    _$jscoverage['/navigation-view.js'].lineData[306]++;
+    processSwitchView(self, config, activeView, nextView, enterAnimCssClass, leaveAnimCssClass, true);
+    _$jscoverage['/navigation-view.js'].lineData[308]++;
     postProcessSwitchView(self, activeView, nextView, true);
   }
 }}, {

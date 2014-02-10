@@ -84,8 +84,8 @@
          * @method
          * @param {Object} r the augmented object
          * @param {Object} s the object need to augment
-         * @param {Boolean|Object} [ov=TRUE] whether overwrite existing property or config.
-         * @param {Boolean} [ov.overwrite=TRUE] whether overwrite existing property.
+         * @param {Boolean|Object} [ov=true] whether overwrite existing property or config.
+         * @param {Boolean} [ov.overwrite=true] whether overwrite existing property.
          * @param {String[]|Function} [ov.whitelist] array of white-list properties
          * @param {Boolean}[ov.deep=false] whether recursive mix if encounter object.
          * @param {String[]|Function} [wl] array of white-list properties

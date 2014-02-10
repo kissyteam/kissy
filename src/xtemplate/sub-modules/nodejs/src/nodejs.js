@@ -19,12 +19,14 @@ KISSY.add(function (S, require) {
          * load xtemplate module on nodejs and return xtemplate instance
          * @param {String} moduleName xtemplate module name
          * @param config xtemplate config object
+         * @param {Boolean} [config.cacheFile=true] whether cache file read
+         * @param {String} [config.extname='html'] template file's extension name
          * @returns {KISSY.XTemplate} xtemplate instance
          */
         loadFromModuleName: function (moduleName, config) {
-            config = S.merge(config, {
+            config = S.merge({
                 cacheFile: 1
-            });
+            }, config);
             config.extname = config.extname || 'html';
             var loader = getLoader(config);
             config.name = moduleName;
@@ -47,7 +49,6 @@ KISSY.add(function (S, require) {
                 type: extname,
                 runtime: S
             });
-
             var tpl = fs.readFileSync(new S.Uri(module.getPath()).getPath(), {
                 encoding: 'utf-8'
             });

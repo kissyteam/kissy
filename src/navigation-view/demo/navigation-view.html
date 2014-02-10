@@ -198,8 +198,8 @@ KISSY.use('component/control,' +
             }).render();
 
             var bar = new Bar({
-                navigationView:navigationView,
-                elBefore:navigationView.get('contentEl')
+                navigationView: navigationView,
+                elBefore: navigationView.get('contentEl')
             }).render();
 
             bar.on('backward', function (e) {
@@ -214,6 +214,7 @@ KISSY.use('component/control,' +
             });
 
             var tpl = '<h2 class="anim-title">{title}</h2>' +
+                    '<p><button class="retIndex">goto index</button></p>' +
                     '<p class="anim-content">Sed ut perspiciatis unde omnis iste natus error ' +
                     'sit voluptatem accusantium doloremque laudantium, ' +
                     'totam rem aperiam, eaque ipsa quae ab illo inventore ' +
@@ -245,6 +246,14 @@ KISSY.use('component/control,' +
                     this.get('contentEl').html(S.substitute(tpl, {
                         title: this.get('viewId')
                     }));
+                },
+
+                retIndex: function () {
+                    router.navigate('/');
+                },
+
+                bindUI: function () {
+                    this.get('contentEl').delegate('click', '.retIndex', this.retIndex, this);
                 }
             }, {
                 xclass: 'tb-anim-view',
@@ -254,7 +263,6 @@ KISSY.use('component/control,' +
                     }
                 }
             });
-
 
             ScrollView.extend({
                 enter: function () {
@@ -354,7 +362,6 @@ KISSY.use('component/control,' +
                     }
                 }
             });
-
 
             router.get('/', function (request) {
                 if (!request.backward) {
