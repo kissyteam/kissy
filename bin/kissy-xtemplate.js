@@ -60,8 +60,8 @@ S.use('xtemplate/compiler', function (S, XTemplateCompiler) {
 
     function process(filePath) {
         var modulePath;
-        if (S.endsWith(filePath, '.xtpl.html')) {
-            modulePath = filePath.replace(/\.xtpl\.html$/, '-xtpl.js');
+        if (S.endsWith(filePath, '.xtpl.html')||S.endsWith(filePath, '-xtpl.html')) {
+            modulePath = filePath.replace(/[.-]xtpl\.html$/, '-xtpl.js');
             compile(filePath, modulePath);
         } else if (S.endsWith(filePath, '.tpl.html')) {
             modulePath = filePath.replace(/\.tpl\.html$/, '-tpl.js');
