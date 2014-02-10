@@ -2,7 +2,7 @@
  * KISSY Dev Server
  * @author yiminghe@gmail.com
  */
-
+/*jshint camelcase:false*/
 require('../test/gen-tc');
 require('./gen-package');
 
@@ -32,10 +32,10 @@ S.use('xtemplate/nodejs', function (S, XTemplateNodeJs) {
         var listTpl = XTemplateNodeJs.loadFromModuleName('xtemplates/list');
 
         function getXTemplate(name) {
-            if (tplCache[name]) {
-                return tplCache[name];
+            if (!tplCache[name]) {
+                tplCache[name] = XTemplateNodeJs.loadFromModuleName('xtemplates/' + name);
             }
-            return tplCache[name] = XTemplateNodeJs.loadFromModuleName('xtemplates/' + name);
+            return tplCache[name];
         }
 
         var utils = {
@@ -73,7 +73,7 @@ S.use('xtemplate/nodejs', function (S, XTemplateNodeJs) {
 
             function print_page(req, res, $subtitle, $body, $fragment) {
                 var $uri = req.protocol + '://' + req.host + req.path;
-                var $canonical = $uri + "#!" + $fragment;
+                var $canonical = $uri + '#!' + $fragment;
                 var $html = file_get_contents('print-template.html');
                 res.send(S.substitute($html, {
                     subtitle: $subtitle,
@@ -83,7 +83,7 @@ S.use('xtemplate/nodejs', function (S, XTemplateNodeJs) {
             }
 
             function print_index_page(res) {
-                res.send(fix_links(file_get_contents("index-template.html")));
+                res.send(fix_links(file_get_contents('index-template.html')));
             }
 
             function jsonp_decode($jsonp) {
@@ -95,7 +95,7 @@ S.use('xtemplate/nodejs', function (S, XTemplateNodeJs) {
                 if (fs.existsSync(docsDir + $filename)) {
                     return jsonp_decode(file_get_contents($filename));
                 } else {
-                    throw new Error("File " + $filename + " not found");
+                    throw new Error('File ' + $filename + ' not found');
                 }
             }
 
@@ -103,7 +103,7 @@ S.use('xtemplate/nodejs', function (S, XTemplateNodeJs) {
             // <a href="#!/api/Ext.Element">  -->  <a href="?print=/api/Ext.Element">
             // <a href="#!/api/Ext.Element-cfg-id">  -->  <a href="?print=/api/Ext.Element#cfg-id">
             function fix_links($html) {
-                var $param = "mobile";
+                var $param = 'mobile';
                 return $html
                     .replace(/<a href=(['"])#!?\/(api\/[^-'"]+)-([^'"]+)/g,
                         '<a href=' + '$1?' + $param + '=/$2#$3')
@@ -116,6 +116,7 @@ S.use('xtemplate/nodejs', function (S, XTemplateNodeJs) {
             app.get('/kissy/docs/', function (req, res) {
                 var ua = req.get('User-Agent'),
                     $fragment,
+                    $json,
                     query = req.query;
                 if ('print' in query) {
                     query.mobile = query.print;
@@ -132,15 +133,15 @@ S.use('xtemplate/nodejs', function (S, XTemplateNodeJs) {
                 }
                 if ($fragment !== undefined) {
                     var $m;
-                    if ($m = $fragment.match(/^\/api\/([^-]+)/)) {
+                    if (($m = $fragment.match(/^\/api\/([^-]+)/))) {
                         var $className = $m[1];
-                        var $json = decode_file("output/" + $className + ".js");
-                        print_page(req, res, $className, "<h1>" + $className + "</h1>\n" + $json["html"], $fragment);
-                    } else if ($m = $fragment.match(/^\/api\/?$/)) {
+                        $json = decode_file('output/' + $className + '.js');
+                        print_page(req, res, $className, '<h1>' + $className + '</h1>\n' + $json.html, $fragment);
+                    } else if (($m = $fragment.match(/^\/api\/?$/))) {
                         print_index_page(res);
-                    } else if ($m = $fragment.match(/^\/guide\/(.+?)(-section-.+)?$/)) {
-                        $json = decode_file("guides/" + $m[1] + "/README.js");
-                        print_page(req, res, $json["title"], '<div class="guide-container" style="padding: 1px">' + $json["guide"] + '</div>', $fragment);
+                    } else if (($m = $fragment.match(/^\/guide\/(.+?)(-section-.+)?$/))) {
+                        $json = decode_file('guides/' + $m[1] + '/README.js');
+                        print_page(req, res, $json.title, '<div class="guide-container" style="padding: 1px">' + $json.guide + '</div>', $fragment);
                     } else {
                         print_index_page(res);
                     }
@@ -153,7 +154,7 @@ S.use('xtemplate/nodejs', function (S, XTemplateNodeJs) {
         // combo
         app.use('/kissy/', function (req, res, next) {
             var query = req.query, k,
-                combo = "",
+                combo = '',
                 path = cwd + req.path;
 
             for (k in query) {
@@ -167,7 +168,7 @@ S.use('xtemplate/nodejs', function (S, XTemplateNodeJs) {
 
             if (S.startsWith(combo, '?')) {
                 var nextQ = combo.slice(1).indexOf('?');
-                if (nextQ == -1) {
+                if (nextQ === -1) {
                     nextQ = combo.length;
                 } else {
                     nextQ++;
@@ -179,9 +180,9 @@ S.use('xtemplate/nodejs', function (S, XTemplateNodeJs) {
                     codes.push(fs.readFileSync(path + f));
                 });
                 if (S.endsWith(f, '.js')) {
-                    res.setHeader("Content-Type", "application/x-javascript");
+                    res.setHeader('Content-Type', 'application/x-javascript');
                 } else {
-                    res.setHeader("Content-Type", "text/css");
+                    res.setHeader('Content-Type', 'text/css');
                 }
                 res.send(codes.join('\n'));
             } else {
@@ -191,7 +192,7 @@ S.use('xtemplate/nodejs', function (S, XTemplateNodeJs) {
 
         app.use('/kissy/', function (req, res, next) {
             var path = req.path;
-            if (S.endsWith(path, ".jss")) {
+            if (S.endsWith(path, '.jss')) {
                 require(cwd + path)(req, res, utils);
             } else {
                 next();
@@ -239,7 +240,7 @@ S.use('xtemplate/nodejs', function (S, XTemplateNodeJs) {
         });
 
         //noinspection JSUnresolvedFunction
-        app.use('/kissy/', express.static(cwd));
+        app.use('/kissy/', express['static'](cwd));
 
         var codes = require('./../test/tc.js')();
 
@@ -260,7 +261,7 @@ S.use('xtemplate/nodejs', function (S, XTemplateNodeJs) {
             var source_files = postData.source_files,
                 len = source_files.length;
             for (var i = 0; i < len; i++) {
-                if (source_files[i].name == f) {
+                if (source_files[i].name === f) {
                     return source_files[i];
                 }
             }
@@ -273,9 +274,9 @@ S.use('xtemplate/nodejs', function (S, XTemplateNodeJs) {
             for (var i = 0; i < len; i++) {
                 dd1 = d1[i];
                 dd2 = d2[i];
-                if (typeof  dd2 == 'number' && typeof dd1 == 'number') {
+                if (typeof  dd2 === 'number' && typeof dd1 === 'number') {
                     d1[i] = d1 + d2;
-                } else if (typeof  dd2 == 'number') {
+                } else if (typeof  dd2 === 'number') {
                     d1[i] = dd2;
                 }
             }
@@ -320,11 +321,11 @@ S.use('xtemplate/nodejs', function (S, XTemplateNodeJs) {
             }
             var report = req.param('report');
             var component = req.param('component');
-            if (component.indexOf('/') != -1) {
+            if (component.indexOf('/') !== -1) {
                 // remove last component name
                 component = component.replace(/[^/]+$/, '');
             } else {
-                component = ''
+                component = '';
             }
             var pathParam = req.param('path').slice(1);
             var myPath = cwd + pathParam.slice(pathParam.indexOf('/'));
@@ -359,4 +360,6 @@ S.use('xtemplate/nodejs', function (S, XTemplateNodeJs) {
     serverConfig.ports.forEach(function (port) {
         startServer(port);
     });
+
+    fs.writeFileSync(cwd + '/pid.log', process.pid);
 });
