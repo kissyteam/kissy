@@ -22,9 +22,9 @@ KISSY.add(function (S, require) {
          * @returns {KISSY.XTemplate} xtemplate instance
          */
         loadFromModuleName: function (moduleName, config) {
-            config = S.merge(config, {
+            config = S.merge({
                 cacheFile: 1
-            });
+            }, config);
             config.extname = config.extname || 'html';
             var loader = getLoader(config);
             config.name = moduleName;

@@ -296,8 +296,8 @@ KISSY.add(function(S, require) {
   loadFromModuleName: function(moduleName, config) {
   _$jscoverage['/nodejs.js'].functionData[1]++;
   _$jscoverage['/nodejs.js'].lineData[25]++;
-  config = S.merge(config, {
-  cacheFile: 1});
+  config = S.merge({
+  cacheFile: 1}, config);
   _$jscoverage['/nodejs.js'].lineData[28]++;
   config.extname = visit1_28_1(config.extname || 'html');
   _$jscoverage['/nodejs.js'].lineData[29]++;
