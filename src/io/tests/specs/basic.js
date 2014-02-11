@@ -34,7 +34,6 @@ KISSY.add(function (S,  IO) {
             });
 
             it('301 get success', function () {
-
                 var ret301, o301;
 
                 IO({
