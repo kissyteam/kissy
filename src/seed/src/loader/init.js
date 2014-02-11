@@ -125,7 +125,8 @@
             // 2k(2048) url length
             comboMaxUrlLength: 2000,
             // file limit number for a single combo url
-            comboMaxFileNum: 40
+            comboMaxFileNum: 40,
+            tag:TIMESTAMP
         }, getBaseInfo()));
     }
 })(KISSY);
