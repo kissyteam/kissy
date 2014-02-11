@@ -4,16 +4,12 @@
  * @author yiminghe@gmail.com
  *
  */
-(function (S, undefined) {
+(function (S) {
     // IE doesn't include non-breaking-space (0xa0) in their \s character
     // class (as required by section 7.2 of the ECMAScript spec), we explicitly
     // include it in the regexp to enforce consistent cross-browser behavior.
-    var logger = S.getLogger('s/lang');
-    var SEP = '&',
-        EMPTY = '',
-        EQ = '=',
 
-        TRUE = true,
+    var EMPTY = '',
     // FALSE = false,
         HEX_BASE = 16,
     // http://www.owasp.org/index.php/XSS_(Cross_Site_Scripting)_Prevention_Cheat_Sheet
@@ -39,11 +35,6 @@
         }
     })();
 
-    function isValidParamValue(val) {
-        var t = typeof val;
-        // If the type of val is null, undefined, number, string, boolean, return TRUE.
-        return val == null || (t !== 'object' && t !== 'function');
-    }
 
     function getEscapeReg() {
         if (escapeReg) {
@@ -72,28 +63,6 @@
     }
 
     S.mix(S, {
-
-        /**
-         * Call encodeURIComponent to encode a url component
-         * @param {String} s part of url to be encoded.
-         * @return {String} encoded url part string.
-         * @member KISSY
-         */
-        urlEncode: function (s) {
-            return encodeURIComponent(String(s));
-        },
-
-        /**
-         * Call decodeURIComponent to decode a url component
-         * and replace '+' with space.
-         * @param {String} s part of url to be decoded.
-         * @return {String} decoded url part string.
-         * @member KISSY
-         */
-        urlDecode: function (s) {
-            return decodeURIComponent(s.replace(/\+/g, ' '));
-        },
-
         /**
          * frequently used in taobao cookie about nick
          * @member KISSY
@@ -145,123 +114,6 @@
             return str.replace(getUnEscapeReg(), function (m, n) {
                 return htmlEntities[m] || String.fromCharCode(+n);
             });
-        },
-        /**
-         * Creates a serialized string of an array or object.
-         *
-         * for example:
-         *     @example
-         *     {foo: 1, bar: 2}    // -> 'foo=1&bar=2'
-         *     {foo: 1, bar: [2, 3]}    // -> 'foo=1&bar=2&bar=3'
-         *     {foo: '', bar: 2}    // -> 'foo=&bar=2'
-         *     {foo: undefined, bar: 2}    // -> 'foo=undefined&bar=2'
-         *     {foo: TRUE, bar: 2}    // -> 'foo=TRUE&bar=2'
-         *
-         * @param {Object} o json data
-         * @param {String} [sep='&'] separator between each pair of data
-         * @param {String} [eq='='] separator between key and value of data
-         * @param {Boolean} [serializeArray=true] whether add '[]' to array key of data
-         * @return {String}
-         * @member KISSY
-         */
-        param: function (o, sep, eq, serializeArray) {
-            sep = sep || SEP;
-            eq = eq || EQ;
-            if (serializeArray === undefined) {
-                serializeArray = TRUE;
-            }
-            var buf = [], key, i, v, len, val,
-                encode = S.urlEncode;
-            for (key in o) {
-
-                val = o[key];
-                key = encode(key);
-
-                // val is valid non-array value
-                if (isValidParamValue(val)) {
-                    buf.push(key);
-                    if (val !== undefined) {
-                        buf.push(eq, encode(val + EMPTY));
-                    }
-                    buf.push(sep);
-                } else if (S.isArray(val) && val.length) {
-                    // val is not empty array
-                    for (i = 0, len = val.length; i < len; ++i) {
-                        v = val[i];
-                        if (isValidParamValue(v)) {
-                            buf.push(key, (serializeArray ? encode('[]') : EMPTY));
-                            if (v !== undefined) {
-                                buf.push(eq, encode(v + EMPTY));
-                            }
-                            buf.push(sep);
-                        }
-                    }
-                }
-                // ignore other cases, including empty array, Function, RegExp, Date etc.
-
-            }
-            buf.pop();
-            return buf.join(EMPTY);
-        },
-
-        /**
-         * Parses a URI-like query string and returns an object composed of parameter/value pairs.
-         *
-         * for example:
-         *      @example
-         *      'section=blog&id=45'        // -> {section: 'blog', id: '45'}
-         *      'section=blog&tag=js&tag=doc' // -> {section: 'blog', tag: ['js', 'doc']}
-         *      'tag=ruby%20on%20rails'        // -> {tag: 'ruby on rails'}
-         *      'id=45&raw'        // -> {id: '45', raw: ''}
-         * @param {String} str param string
-         * @param {String} [sep='&'] separator between each pair of data
-         * @param {String} [eq='='] separator between key and value of data
-         * @return {Object} json data
-         * @member KISSY
-         */
-        unparam: function (str, sep, eq) {
-            if (typeof str !== 'string' || !(str = S.trim(str))) {
-                return {};
-            }
-            sep = sep || SEP;
-            eq = eq || EQ;
-            var ret = {},
-                eqIndex,
-                decode = S.urlDecode,
-                pairs = str.split(sep),
-                key, val,
-                i = 0, len = pairs.length;
-
-            for (; i < len; ++i) {
-                eqIndex = pairs[i].indexOf(eq);
-                if (eqIndex === -1) {
-                    key = decode(pairs[i]);
-                    val = undefined;
-                } else {
-                    // remember to decode key!
-                    key = decode(pairs[i].substring(0, eqIndex));
-                    val = pairs[i].substring(eqIndex + 1);
-                    try {
-                        val = decode(val);
-                    } catch (e) {
-                        logger.error('decodeURIComponent error : ' + val);
-                        logger.error(e);
-                    }
-                    if (S.endsWith(key, '[]')) {
-                        key = key.substring(0, key.length - 2);
-                    }
-                }
-                if (key in ret) {
-                    if (S.isArray(ret[key])) {
-                        ret[key].push(val);
-                    } else {
-                        ret[key] = [ret[key], val];
-                    }
-                } else {
-                    ret[key] = val;
-                }
-            }
-            return ret;
         }
     });
 

@@ -1,0 +1,11 @@
+<script src="/kissy/build/kissy.js"></script>
+<script>
+    var S = KISSY;
+    S.log(KISSY.DOM);
+    KISSY.ready(function (S) {
+        S.log(S.Event);
+    });
+    setTimeout(function () {
+        S.log(S.Event);
+    }, 100);
+</script>

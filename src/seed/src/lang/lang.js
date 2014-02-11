@@ -77,19 +77,6 @@
             });
             memory = null;
             return ret;
-        },
-
-        /**
-         * Gets current date in milliseconds.
-         * @method
-         * refer:  https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Date/now
-         * http://j-query.blogspot.com/2011/02/timing-ecmascript-5-datenow-function.html
-         * http://kangax.github.com/es5-compat-table/
-         * @member KISSY
-         * @return {Number} current time
-         */
-        now: Date.now || function () {
-            return +new Date();
         }
     });
 

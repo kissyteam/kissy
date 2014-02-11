@@ -174,6 +174,14 @@ tests.push('/kissy/src/kison/tests/runner/test.jss?build');
 
 tests.push('/kissy/src/kison/tests/runner/test.jss?coverage');
 
+tests.push('/kissy/src/loader/tests/runner/cache.jss');
+
+tests.push('/kissy/src/loader/tests/runner/cache.jss?build');
+
+tests.push('/kissy/src/loader/tests/runner/test.html');
+
+tests.push('/kissy/src/loader/tests/runner/test.html?build');
+
 tests.push('/kissy/src/menu/tests/runner/test.jss');
 
 tests.push('/kissy/src/menu/tests/runner/test.jss?build');
@@ -209,10 +217,6 @@ tests.push('/kissy/src/router/tests/runner/test-middle-set-domain.jss?build');
 tests.push('/kissy/src/router/tests/runner/test.jss');
 
 tests.push('/kissy/src/router/tests/runner/test.jss?build');
-
-tests.push('/kissy/src/seed/tests/runner/cache.jss');
-
-tests.push('/kissy/src/seed/tests/runner/cache.jss?build');
 
 tests.push('/kissy/src/seed/tests/runner/test.html');
 

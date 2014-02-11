@@ -46,19 +46,6 @@
         },
 
         /**
-         * Checks to see if an object is empty.
-         * @member KISSY
-         */
-        isEmptyObject: function (o) {
-            for (var p in o) {
-                if (p !== undefined) {
-                    return FALSE;
-                }
-            }
-            return true;
-        },
-
-        /**
          * Checks to see if an object is a plain object (created using '{}'
          * or 'new Object()' but not 'new FunctionClass()').
          * @member KISSY

@@ -573,6 +573,10 @@ if (!loc.getQuery().has('build') && !loc.getQuery().has('min')) {
             "base": "/kissy/src/kison/src/kison",
             "ignorePackageNameInUri": 1
         },
+        "loader": {
+            "base": "/kissy/src/loader/src/loader",
+            "ignorePackageNameInUri": 1
+        },
         "menu": {
             "base": "/kissy/src/menu/src/menu",
             "ignorePackageNameInUri": 1

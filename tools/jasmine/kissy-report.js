@@ -7,6 +7,16 @@ jasmine.KissyReoport = (function () {
 
     var S = KISSY;
 
+    var ua = window.navigator.userAgent;
+
+    function numberify(s) {
+        var c = 0;
+        // convert '1.2.3.4' to 1.234
+        return parseFloat(s.replace(/\./g, function () {
+            return (c++ === 0) ? '.' : '';
+        }));
+    }
+
     function createRequest() {
         if (window.ActiveXObject) {
             return new window.ActiveXObject('Microsoft.XMLHTTP');
@@ -17,7 +27,7 @@ jasmine.KissyReoport = (function () {
     }
 
     function next(failedCount) {
-        var ie = document.documentMode || KISSY.UA.ie || 100;
+        var ie = document.documentMode || getIEVersion() || 100;
         if (!failedCount && parent !== window) {
             if ('postMessage' in parent && ie > 8) {
                 parent.postMessage('next', '*');
@@ -29,6 +39,15 @@ jasmine.KissyReoport = (function () {
 
     function Report(component) {
         this.component = component;
+    }
+
+    function getIEVersion() {
+        var m, v;
+        if ((m = ua.match(/MSIE ([^;]*)|Trident.*; rv(?:\s|:)?([0-9.]+)/)) &&
+            (v = (m[1] || m[2]))) {
+            return numberify(v);
+        }
+        return 0;
     }
 
     Report.prototype.reportRunnerResults = function (runner) {

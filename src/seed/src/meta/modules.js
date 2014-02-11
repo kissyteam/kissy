@@ -295,5 +295,5 @@ config({
 
                 })(function (c) {
                 KISSY.config('modules', c);
-                },KISSY.Features,KISSY.UA);
+                },KISSY.Features, KISSY.UA);
             

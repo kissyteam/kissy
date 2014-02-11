@@ -12,19 +12,8 @@
         TRUE = true,
         EMPTY = '',
         Obj = Object,
+        objectCreate = Obj.create;
 
-        objectCreate = Obj.create,
-    // error in native ie678, not in simulated ie9
-        hasEnumBug = !({toString: 1}.propertyIsEnumerable('toString')),
-        enumProperties = [
-            'constructor',
-            'hasOwnProperty',
-            'isPrototypeOf',
-            'propertyIsEnumerable',
-            'toString',
-            'toLocaleString',
-            'valueOf'
-        ];
 
     mix(S, {
         /**
@@ -51,33 +40,7 @@
             return guid;
         },
 
-        /**
-         * Get all the property names of o as array
-         * @param {Object} o
-         * @return {Array}
-         * @member KISSY
-         */
-        keys: Obj.keys || function (o) {
-            var result = [], p, i;
 
-            for (p in o) {
-                // S.keys(new XX())
-                if (o.hasOwnProperty(p)) {
-                    result.push(p);
-                }
-            }
-
-            if (hasEnumBug) {
-                for (i = enumProperties.length - 1; i >= 0; i--) {
-                    p = enumProperties[i];
-                    if (o.hasOwnProperty(p)) {
-                        result.push(p);
-                    }
-                }
-            }
-
-            return result;
-        },
 
         /**
          * Copies all the properties of s to r.

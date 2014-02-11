@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <title>Seed Test Runner</title>
+    <link rel="stylesheet" href="/kissy/tools/jasmine/jasmine.css">
+    <script src="/kissy/build/loader.js"></script>
+    <script src="/kissy/tools/jasmine/jasmine.js"></script>
+    <script src="/kissy/tools/third-party/jquery.js"></script>
+    <script src="/kissy/tools/jasmine/jasmine-html.js"></script>
+    <script src="/kissy/tools/jasmine/jasmine.console_reporter.js"></script>
+    <script src="/kissy/tools/jasmine/kissy-report.js"></script>
+    <script src="/kissy/tools/jasmine/init.js"></script>
+    <script src="../others/clear.js"></script>
+</head>
+<body>
+<h1>KISSY Loader Test Cases</h1>
+<!--lang-->
+<script src="../specs/path-spec.js"></script>
+<script src="../specs/uri-spec.js"></script>
+<script src="../specs/logger-spec.js"></script>
+
+<!--loader-->
+<script src="../specs/combo/combo-spec.js"></script>
+<script src="../specs/sync/sync-spec.js"></script>
+<script src="../specs/error-report/error-report-spec.js"></script>
+<script src="../specs/cjs/cjs-spec.js"></script>
+<script src="../specs/system-ondemand/system-ondemand-spec.js"></script>
+<script src="../specs/timeout/timeout-spec.js"></script>
+<script src="../specs/loader-simple/loader-simple-spec.js"></script>
+<script src="../specs/cyclic/cyclic-spec.js"></script>
+<script src="../specs/css-combo/css-combo-spec.js"></script>
+<script src="../specs/suffix/suffix-combo-spec.js"></script>
+<script src="../specs/packages-modules/packages-modules-spec.js"></script>
+<script src="../specs/package/package-spec.js"></script>
+<script src="../specs/add_require/add-require-spec.js"></script>
+<script src="../specs/alias/alias-spec.js"></script>
+<script src="../specs/ignore-package-name-in-uri/test-spec.js"></script>
+<script src="../specs/packages-groups/packages-groups-spec.js"></script>
+<script src="../specs/timestamp/timestamp-spec.js"></script>
+<script src="../specs/timestamp/timestamp-combo-spec.js"></script>
+<script src="../specs/package_path_longest_match/package-longest-match-spec.js"></script>
+<script src="../specs/suffix/suffix-spec.js"></script>
+<script>
+    setTimeout(function () {
+        jasmine.getEnv().execute();
+    }, 100);
+</script>
+</body>
+</html>

@@ -383,6 +383,11 @@
             documentElement.className = S.trim(documentElement.className + className);
         }
     }
+
+
+    S.add('ua', function () {
+        return S.UA;
+    });
 })(KISSY);
 
 /*

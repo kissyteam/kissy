@@ -175,7 +175,7 @@
     <!-- 压缩 js -->
     <target name="compress-js" depends="create-build.dir">
         <replaceregexp
-                match="^(\s*(S|KISSY|logger)\.(log|error|info|warn|debug))|(.*logger\s*=\s*(S|KISSY)\.getLogger)\s*\(.+$"
+                match="^((\s*(S|KISSY|logger)\.(log|error|info|warn|debug))|(.*logger\s*=\s*(S|KISSY)\.getLogger)\s*\().+$"
                 replace=""
                 flags="g"
                 byline="true"
