@@ -3,7 +3,9 @@
  * Uri class for KISSY.
  * @author yiminghe@gmail.com
  */
-(function (S, undefined) {
+KISSY.add(function (S, require) {
+    // if combined into loader
+    var Path = require ? require('path') : S.Path;
     var logger = S.getLogger('s/uri');
     var reDisallowedInSchemeOrUserInfo = /[#\/\?@]/g,
         reDisallowedInPathName = /[#\?]/g,
@@ -62,8 +64,6 @@
                  */
                 '(?:#(.*))?' + // fragment
                 '$'),
-
-        Path = S.Path,
 
         REG_INFO = {
             scheme: 1,
@@ -663,7 +663,9 @@
     };
 
     S.Uri = Uri;
-})(KISSY);
+
+    return Uri;
+});
 /*
  Refer
  - application/x-www-form-urlencoded

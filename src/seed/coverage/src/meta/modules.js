@@ -297,7 +297,8 @@ if (! _$jscoverage['/meta/modules.js']) {
   _$jscoverage['/meta/modules.js'].lineData[284] = 0;
   _$jscoverage['/meta/modules.js'].lineData[288] = 0;
   _$jscoverage['/meta/modules.js'].lineData[292] = 0;
-  _$jscoverage['/meta/modules.js'].lineData[297] = 0;
+  _$jscoverage['/meta/modules.js'].lineData[296] = 0;
+  _$jscoverage['/meta/modules.js'].lineData[301] = 0;
 }
 if (! _$jscoverage['/meta/modules.js'].functionData) {
   _$jscoverage['/meta/modules.js'].functionData = [];
@@ -584,22 +585,26 @@ function visit250_6_1(result) {
   requires: ['node', 'component/container', 'component/extension/content-xtpl', 'component/extension/content-render', 'component/extension/delegate-children']}});
   _$jscoverage['/meta/modules.js'].lineData[280]++;
   config({
+  uri: {
+  requires: ['path']}});
+  _$jscoverage['/meta/modules.js'].lineData[284]++;
+  config({
   xtemplate: {
   requires: ['xtemplate/runtime', 'xtemplate/compiler']}});
-  _$jscoverage['/meta/modules.js'].lineData[284]++;
+  _$jscoverage['/meta/modules.js'].lineData[288]++;
   config({
   'xtemplate/compiler': {
   requires: ['xtemplate/runtime']}});
-  _$jscoverage['/meta/modules.js'].lineData[288]++;
+  _$jscoverage['/meta/modules.js'].lineData[292]++;
   config({
   'xtemplate/nodejs': {
   requires: ['xtemplate']}});
-  _$jscoverage['/meta/modules.js'].lineData[292]++;
+  _$jscoverage['/meta/modules.js'].lineData[296]++;
   config({
   'xtemplate/runtime': {
   requires: ['path']}});
 })(function(c) {
   _$jscoverage['/meta/modules.js'].functionData[1]++;
-  _$jscoverage['/meta/modules.js'].lineData[297]++;
+  _$jscoverage['/meta/modules.js'].lineData[301]++;
   KISSY.config('modules', c);
 }, KISSY.Features, KISSY.UA);

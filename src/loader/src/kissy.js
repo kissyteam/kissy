@@ -248,6 +248,11 @@ var KISSY = (function (undefined) {
          */
         guid: function (pre) {
             return (pre || EMPTY) + guid++;
+        },
+
+        // stub for uri and path
+        add: function (fn) {
+            fn(S);
         }
     };
 

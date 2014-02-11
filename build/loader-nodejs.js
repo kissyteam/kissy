@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Feb 11 17:42
+build time: Feb 11 19:11
 */
 /**
  * @ignore
@@ -57,11 +57,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20140211174200' will replace with current timestamp when compressing.
+         * NOTICE: '20140211191044' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20140211174200',
+        __BUILD_TIME: '20140211191044',
 
         /**
          * KISSY Environment.
@@ -253,6 +253,11 @@ var KISSY = (function (undefined) {
          */
         guid: function (pre) {
             return (pre || EMPTY) + guid++;
+        },
+
+        // stub for uri and path
+        add: function (fn) {
+            fn(S);
         }
     };
 
@@ -614,7 +619,7 @@ var KISSY = (function (undefined) {
  * Note: Only posix mode.
  * @author yiminghe@gmail.com
  */
-(function (S) {
+KISSY.add(function (S) {
     // [root, dir, basename, ext]
     var splitPathRe = /^(\/?)([\s\S]+\/(?!$)|\/)?((?:\.{1,2}$|[\s\S]+?)?(\.[^.\/]*)?)$/;
 
@@ -830,7 +835,9 @@ var KISSY = (function (undefined) {
             return (path.match(splitPathRe) || [])[4] || '';
         }
     };
-})(KISSY);
+
+    return Path;
+});
 /*
  Refer
  - https://github.com/joyent/node/blob/master/lib/path.js
@@ -839,7 +846,9 @@ var KISSY = (function (undefined) {
  * Uri class for KISSY.
  * @author yiminghe@gmail.com
  */
-(function (S, undefined) {
+KISSY.add(function (S, require) {
+    // if combined into loader
+    var Path = require ? require('path') : S.Path;
     var logger = S.getLogger('s/uri');
     var reDisallowedInSchemeOrUserInfo = /[#\/\?@]/g,
         reDisallowedInPathName = /[#\?]/g,
@@ -898,8 +907,6 @@ var KISSY = (function (undefined) {
                  */
                 '(?:#(.*))?' + // fragment
                 '$'),
-
-        Path = S.Path,
 
         REG_INFO = {
             scheme: 1,
@@ -1499,7 +1506,9 @@ var KISSY = (function (undefined) {
     };
 
     S.Uri = Uri;
-})(KISSY);
+
+    return Uri;
+});
 /*
  Refer
  - application/x-www-form-urlencoded
@@ -3631,7 +3640,7 @@ KISSY.add('i18n', {
     var doc = S.Env.host && S.Env.host.document;
     // var logger = S.getLogger('s/loader');
     var Utils = S.Loader.Utils;
-    var TIMESTAMP = '20140211174200';
+    var TIMESTAMP = '20140211191044';
     var defaultComboPrefix = '??';
     var defaultComboSep = ',';
 

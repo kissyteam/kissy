@@ -8,13 +8,28 @@
 
     <target name="tpl2mod"/>
 
+    <target name="build-uri">
+        <subant target=""
+                antfile="x-build.xml"
+                failonerror="true"
+                buildpath="${kissy.src.dir}/path"
+                inheritall="false"/>
+        <subant target=""
+                antfile="x-build.xml"
+                failonerror="true"
+                buildpath="${kissy.src.dir}/uri"
+                inheritall="false"/>
+    </target>
+
+    <target name="build" depends="build-uri,common.build.build"/>
+
     <target name="concat">
         <concat destfile="${component.src.dir.tmp}/loader-pkg.js"
                 encoding="${charset}" outputencoding="${charset}">
             <path location="${component.src.dir}/kissy.js"/>
             <path location="${component.src.dir}/lang.js"/>
-            <path location="${component.src.dir}/path.js"/>
-            <path location="${component.src.dir}/uri.js"/>
+            <path location="${kissy.src.dir}/path/src/path.js"/>
+            <path location="${kissy.src.dir}/uri/src/uri.js"/>
             <path location="${component.src.dir}/setup.js"/>
             <path location="${component.src.dir}/utils.js"/>
             <path location="${component.src.dir}/set-immediate.js"/>

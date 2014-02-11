@@ -4,7 +4,7 @@
  * Note: Only posix mode.
  * @author yiminghe@gmail.com
  */
-(function (S) {
+KISSY.add(function (S) {
     // [root, dir, basename, ext]
     var splitPathRe = /^(\/?)([\s\S]+\/(?!$)|\/)?((?:\.{1,2}$|[\s\S]+?)?(\.[^.\/]*)?)$/;
 
@@ -220,7 +220,9 @@
             return (path.match(splitPathRe) || [])[4] || '';
         }
     };
-})(KISSY);
+
+    return Path;
+});
 /*
  Refer
  - https://github.com/joyent/node/blob/master/lib/path.js

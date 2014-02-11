@@ -601,6 +601,10 @@ if (!loc.getQuery().has('build') && !loc.getQuery().has('min')) {
             "base": "/kissy/src/overlay/src/overlay",
             "ignorePackageNameInUri": 1
         },
+        "path": {
+            "base": "/kissy/src/path/src/path",
+            "ignorePackageNameInUri": 1
+        },
         "promise": {
             "base": "/kissy/src/promise/src/promise",
             "ignorePackageNameInUri": 1
@@ -663,6 +667,10 @@ if (!loc.getQuery().has('build') && !loc.getQuery().has('min')) {
         },
         "tree": {
             "base": "/kissy/src/tree/src/tree",
+            "ignorePackageNameInUri": 1
+        },
+        "uri": {
+            "base": "/kissy/src/uri/src/uri",
             "ignorePackageNameInUri": 1
         },
         "xtemplate": {
