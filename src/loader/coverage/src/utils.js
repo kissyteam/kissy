@@ -756,11 +756,11 @@ function visit273_127_1(result) {
 function visit272_115_1(result) {
   _$jscoverage['/utils.js'].branchData['115'][1].ranCondition(result);
   return result;
-}_$jscoverage['/utils.js'].branchData['102'][2].init(2733, 76, '(m = ua.match(/AppleWebKit\\/([\\d.]*)/)) || (m = ua.match(/Safari\\/([\\d.]*)/))');
+}_$jscoverage['/utils.js'].branchData['102'][2].init(2736, 76, '(m = ua.match(/AppleWebKit\\/([\\d.]*)/)) || (m = ua.match(/Safari\\/([\\d.]*)/))');
 function visit271_102_2(result) {
   _$jscoverage['/utils.js'].branchData['102'][2].ranCondition(result);
   return result;
-}_$jscoverage['/utils.js'].branchData['102'][1].init(2733, 85, '((m = ua.match(/AppleWebKit\\/([\\d.]*)/)) || (m = ua.match(/Safari\\/([\\d.]*)/))) && m[1]');
+}_$jscoverage['/utils.js'].branchData['102'][1].init(2736, 85, '((m = ua.match(/AppleWebKit\\/([\\d.]*)/)) || (m = ua.match(/Safari\\/([\\d.]*)/))) && m[1]');
 function visit270_102_1(result) {
   _$jscoverage['/utils.js'].branchData['102'][1].ranCondition(result);
   return result;
@@ -867,7 +867,7 @@ function visit259_33_1(result) {
   _$jscoverage['/utils.js'].lineData[65]++;
   if (visit264_65_1(Plugin.alias)) {
     _$jscoverage['/utils.js'].lineData[67]++;
-    name = Plugin.alias(name, pluginName);
+    name = Plugin.alias(S, name, pluginName);
   }
 }});
     }

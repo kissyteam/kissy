@@ -64,7 +64,7 @@
                 success: function (S, Plugin) {
                     if (Plugin.alias) {
                         //noinspection JSReferencingMutableVariableFromClosure
-                        name = Plugin.alias(name, pluginName);
+                        name = Plugin.alias(S, name, pluginName);
                     }
                 }
             });

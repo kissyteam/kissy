@@ -58,7 +58,7 @@ jasmine.KissyReoport = (function () {
             request.setRequestHeader('content-type', 'application/x-www-form-urlencoded; charset=UTF-8');
             request.onreadystatechange = function () {
                 if (request.readyState === 4 && request.status === 200) {
-                    jasmine.kissyNext(runner.results().failedCount);
+                    next(runner.results().failedCount);
                 }
             };
             request.send(S.param({

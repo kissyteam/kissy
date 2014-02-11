@@ -1,12 +1,12 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Feb 11 19:11
+build time: Feb 11 19:55
 */
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Feb 11 19:11
+build time: Feb 11 19:55
 */
 /**
  * @ignore
@@ -62,11 +62,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20140211191044' will replace with current timestamp when compressing.
+         * NOTICE: '20140211195518' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20140211191044',
+        __BUILD_TIME: '20140211195518',
 
         /**
          * KISSY Environment.
@@ -1616,7 +1616,7 @@ KISSY.add(function (S, require) {
                 success: function (S, Plugin) {
                     if (Plugin.alias) {
                         //noinspection JSReferencingMutableVariableFromClosure
-                        name = Plugin.alias(name, pluginName);
+                        name = Plugin.alias(S, name, pluginName);
                     }
                 }
             });
@@ -3645,7 +3645,7 @@ KISSY.add('i18n', {
     var doc = S.Env.host && S.Env.host.document;
     // var logger = S.getLogger('s/loader');
     var Utils = S.Loader.Utils;
-    var TIMESTAMP = '20140211191044';
+    var TIMESTAMP = '20140211195518';
     var defaultComboPrefix = '??';
     var defaultComboSep = ',';
 
