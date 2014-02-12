@@ -12,6 +12,7 @@ program
     .parse(process.argv);
 
 var S = require('../build/kissy-nodejs'),
+    XTemplateCompiler = S.nodeRequire('xtemplate/compiler'),
     chokidar = require('chokidar'),
 /*jshint camelcase: false*/
     jsBeautify = require('js-beautify').js_beautify,
@@ -45,51 +46,49 @@ function myJsBeautify(str) {
     return jsBeautify(str, opts);
 }
 
-S.use('xtemplate/compiler', function (S, XTemplateCompiler) {
-    function compile(tpl, modulePath) {
-        var tplContent = fs.readFileSync(tpl, encoding);
-        var moduleCode = myJsBeautify(
-            '/** Compiled By kissy-xtemplate */\n' +
-                'KISSY.add(function(S,require,exports,module){\n' +
-                '/*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true*/\n' +
-                'return ' + XTemplateCompiler.compileToStr(tplContent)) + ';\n' +
-            '});';
+function compile(tpl, modulePath) {
+    var tplContent = fs.readFileSync(tpl, encoding);
+    var moduleCode = myJsBeautify(
+        '/** Compiled By kissy-xtemplate */\n' +
+            'KISSY.add(function(S,require,exports,module){\n' +
+            '/*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true*/\n' +
+            'return ' + XTemplateCompiler.compileToStr(tplContent)) + ';\n' +
+        '});';
+    fs.writeFileSync(modulePath, moduleCode, encoding);
+    console.info('generate xtpl module: ' + modulePath + ' at ' + (new Date().toLocaleString()));
+}
+
+function process(filePath) {
+    var modulePath;
+    if (S.endsWith(filePath, '.xtpl.html') || S.endsWith(filePath, '-xtpl.html')) {
+        modulePath = filePath.replace(/[.-]xtpl\.html$/, '-xtpl.js');
+        compile(filePath, modulePath);
+    } else if (S.endsWith(filePath, '.tpl.html')) {
+        modulePath = filePath.replace(/\.tpl\.html$/, '-tpl.js');
+        var tplContent = fs.readFileSync(filePath, encoding);
+        tplContent = tplContent.replace(/\\/g, '\\')
+            .replace(/\r?\n/g, '\\n')
+            .replace(/'/g, '\\\'');
+        var moduleCode = myJsBeautify(S.substitute(tplTemplate, {
+            code: tplContent
+        }));
         fs.writeFileSync(modulePath, moduleCode, encoding);
-        console.info('generate xtpl module: ' + modulePath + ' at ' + (new Date().toLocaleString()));
+        console.info('generate tpl module: ' + modulePath +
+            ' at ' + (new Date().toLocaleString()));
     }
+}
 
-    function process(filePath) {
-        var modulePath;
-        if (S.endsWith(filePath, '.xtpl.html')||S.endsWith(filePath, '-xtpl.html')) {
-            modulePath = filePath.replace(/[.-]xtpl\.html$/, '-xtpl.js');
-            compile(filePath, modulePath);
-        } else if (S.endsWith(filePath, '.tpl.html')) {
-            modulePath = filePath.replace(/\.tpl\.html$/, '-tpl.js');
-            var tplContent = fs.readFileSync(filePath, encoding);
-            tplContent = tplContent.replace(/\\/g, '\\')
-                .replace(/\r?\n/g, '\\n')
-                .replace(/'/g, '\\\'');
-            var moduleCode = myJsBeautify(S.substitute(tplTemplate, {
-                code: tplContent
-            }));
-            fs.writeFileSync(modulePath, moduleCode, encoding);
-            console.info('generate tpl module: ' + modulePath +
-                ' at ' + (new Date().toLocaleString()));
-        }
-    }
-
-    if (program.watch) {
-        var watcher = chokidar.watch(packagePath, {ignored: /^\./, persistent: true});
-        watcher.on('add', process).on('change', process);
-        watcher.close();
-    } else {
-        var walk = require('walk');
-        //noinspection JSUnresolvedFunction
-        var walker = walk.walk(packagePath);
-        walker.on('file', function (root, fileStats, next) {
-            var filePath = normalizeSlash(root + '/' + fileStats.name);
-            process(filePath);
-            next();
-        });
-    }
-});
+if (program.watch) {
+    var watcher = chokidar.watch(packagePath, {ignored: /^\./, persistent: true});
+    watcher.on('add', process).on('change', process);
+    watcher.close();
+} else {
+    var walk = require('walk');
+    //noinspection JSUnresolvedFunction
+    var walker = walk.walk(packagePath);
+    walker.on('file', function (root, fileStats, next) {
+        var filePath = normalizeSlash(root + '/' + fileStats.name);
+        process(filePath);
+        next();
+    });
+}

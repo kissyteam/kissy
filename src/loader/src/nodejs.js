@@ -61,4 +61,16 @@
         /*global __dirname*/
         base: __dirname.replace(/\\/g, '/').replace(/\/$/, '') + '/'
     });
+
+    // require synchronously in node js
+    S.nodeRequire = function (modName) {
+        var ret;
+        S.use(modName, {
+            success: function (S, r) {
+                ret = r;
+            },
+            sync: true
+        });
+        return ret;
+    };
 })(KISSY);

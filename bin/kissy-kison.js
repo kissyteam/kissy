@@ -15,7 +15,8 @@ program
     .parse(process.argv);
 
 var S = require('../build/kissy-nodejs'),
-    /*jshint camelcase:false*/
+    KISON = S.nodeRequire('kison'),
+/*jshint camelcase:false*/
     js_beautify = require('js-beautify').js_beautify,
     fs = require('fs'),
     path = require('path'),
@@ -66,36 +67,34 @@ function my_js_beautify(str) {
     return js_beautify(str, opts);
 }
 
-S.use('kison', function (S, KISON) {
-    function genParser() {
-        var grammarContent = fs.readFileSync(grammar, encoding);
-        //// S.log('*********** grammarContent:');
-        //// S.log(grammarContent);
+function genParser() {
+    var grammarContent = fs.readFileSync(grammar, encoding);
+    //// S.log('*********** grammarContent:');
+    //// S.log(grammarContent);
 
-        console.info('start generate grammar module: ' + modulePath + '\n');
-        var start = S.now();
-        /*jshint evil:true*/
-        var code = new KISON.Grammar(eval(grammarContent)).genCode(kisonCfg);
+    console.info('start generate grammar module: ' + modulePath + '\n');
+    var start = S.now();
+    /*jshint evil:true*/
+    var code = new KISON.Grammar(eval(grammarContent)).genCode(kisonCfg);
 
-        var moduleCode = my_js_beautify(S.substitute(codeTemplate, {
-            code: code
-        }));
+    var moduleCode = my_js_beautify(S.substitute(codeTemplate, {
+        code: code
+    }));
 
-        //// S.log(moduleCode);
+    //// S.log(moduleCode);
 
-        fs.writeFileSync(modulePath, moduleCode, encoding);
+    fs.writeFileSync(modulePath, moduleCode, encoding);
 
-        console.info('generate grammar module: ' + modulePath + ' at ' + (new Date().toLocaleString()));
-        console.info('duration: ' + (S.now() - start) + 'ms');
+    console.info('generate grammar module: ' + modulePath + ' at ' + (new Date().toLocaleString()));
+    console.info('duration: ' + (S.now() - start) + 'ms');
 
-    }
+}
 
-    var bufferCompile = S.buffer(genParser);
+var bufferCompile = S.buffer(genParser);
 
-    if (program.watch) {
-        fs.watch(grammar, bufferCompile);
-        genParser();
-    } else {
-        bufferCompile();
-    }
-});
+if (program.watch) {
+    fs.watch(grammar, bufferCompile);
+    genParser();
+} else {
+    bufferCompile();
+}

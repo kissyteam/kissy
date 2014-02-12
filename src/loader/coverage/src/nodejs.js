@@ -257,11 +257,18 @@ if (! _$jscoverage['/nodejs.js']) {
   _$jscoverage['/nodejs.js'].lineData[55] = 0;
   _$jscoverage['/nodejs.js'].lineData[56] = 0;
   _$jscoverage['/nodejs.js'].lineData[59] = 0;
+  _$jscoverage['/nodejs.js'].lineData[66] = 0;
+  _$jscoverage['/nodejs.js'].lineData[67] = 0;
+  _$jscoverage['/nodejs.js'].lineData[68] = 0;
+  _$jscoverage['/nodejs.js'].lineData[70] = 0;
+  _$jscoverage['/nodejs.js'].lineData[74] = 0;
 }
 if (! _$jscoverage['/nodejs.js'].functionData) {
   _$jscoverage['/nodejs.js'].functionData = [];
   _$jscoverage['/nodejs.js'].functionData[0] = 0;
   _$jscoverage['/nodejs.js'].functionData[1] = 0;
+  _$jscoverage['/nodejs.js'].functionData[2] = 0;
+  _$jscoverage['/nodejs.js'].functionData[3] = 0;
 }
 if (! _$jscoverage['/nodejs.js'].branchData) {
   _$jscoverage['/nodejs.js'].branchData = {};
@@ -371,4 +378,20 @@ function visit245_15_1(result) {
   S.config({
   charset: 'utf-8', 
   base: __dirname.replace(/\\/g, '/').replace(/\/$/, '') + '/'});
+  _$jscoverage['/nodejs.js'].lineData[66]++;
+  S.nodeRequire = function(modName) {
+  _$jscoverage['/nodejs.js'].functionData[2]++;
+  _$jscoverage['/nodejs.js'].lineData[67]++;
+  var ret;
+  _$jscoverage['/nodejs.js'].lineData[68]++;
+  S.use(modName, {
+  success: function(S, r) {
+  _$jscoverage['/nodejs.js'].functionData[3]++;
+  _$jscoverage['/nodejs.js'].lineData[70]++;
+  ret = r;
+}, 
+  sync: true});
+  _$jscoverage['/nodejs.js'].lineData[74]++;
+  return ret;
+};
 })(KISSY);
