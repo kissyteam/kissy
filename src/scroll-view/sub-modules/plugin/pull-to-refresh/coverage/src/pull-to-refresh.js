@@ -337,7 +337,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/pull-to-refresh.js'].lineData[8]++;
   var substitute = S.substitute;
   _$jscoverage['/pull-to-refresh.js'].lineData[9]++;
-  var transformProperty = S.Features.getVendorCssPropName('transform');
+  var transformProperty = S.Feature.getVendorCssPropName('transform');
   _$jscoverage['/pull-to-refresh.js'].lineData[16]++;
   return Base.extend({
   pluginId: this.getName(), 

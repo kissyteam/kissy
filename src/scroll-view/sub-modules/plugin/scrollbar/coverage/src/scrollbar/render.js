@@ -331,7 +331,7 @@ function visit21_55_1(result) {
 function visit20_52_1(result) {
   _$jscoverage['/scrollbar/render.js'].branchData['52'][1].ranCondition(result);
   return result;
-}_$jscoverage['/scrollbar/render.js'].branchData['12'][1].init(253, 56, 'S.Features.getVendorCssPropPrefix(\'transform\') !== false');
+}_$jscoverage['/scrollbar/render.js'].branchData['12'][1].init(253, 56, 'S.Feature.getVendorCssPropPrefix(\'transform\') !== false');
 function visit19_12_1(result) {
   _$jscoverage['/scrollbar/render.js'].branchData['12'][1].ranCondition(result);
   return result;
@@ -343,9 +343,9 @@ KISSY.add(function(S, require) {
   _$jscoverage['/scrollbar/render.js'].lineData[8]++;
   var ScrollBarTpl = require('./scrollbar-xtpl');
   _$jscoverage['/scrollbar/render.js'].lineData[9]++;
-  var isTransform3dSupported = S.Features.isTransform3dSupported();
+  var isTransform3dSupported = S.Feature.isTransform3dSupported();
   _$jscoverage['/scrollbar/render.js'].lineData[12]++;
-  var supportCss3 = visit19_12_1(S.Features.getVendorCssPropPrefix('transform') !== false);
+  var supportCss3 = visit19_12_1(S.Feature.getVendorCssPropPrefix('transform') !== false);
   _$jscoverage['/scrollbar/render.js'].lineData[14]++;
   var methods = {
   beforeCreateDom: function(renderData, childrenElSelectors) {
@@ -463,7 +463,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/scrollbar/render.js'].lineData[117]++;
   if (visit24_117_1(supportCss3)) {
     _$jscoverage['/scrollbar/render.js'].lineData[118]++;
-    var transformProperty = S.Features.getVendorCssPropName('transform');
+    var transformProperty = S.Feature.getVendorCssPropName('transform');
     _$jscoverage['/scrollbar/render.js'].lineData[120]++;
     methods._onSetDragLeft = function(v) {
   _$jscoverage['/scrollbar/render.js'].functionData[9]++;

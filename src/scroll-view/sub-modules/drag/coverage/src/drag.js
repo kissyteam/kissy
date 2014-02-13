@@ -759,7 +759,7 @@ function visit51_332_1(result) {
 function visit50_324_1(result) {
   _$jscoverage['/drag.js'].branchData['324'][1].ranCondition(result);
   return result;
-}_$jscoverage['/drag.js'].branchData['313'][1].init(1760, 34, 'S.Features.isTouchEventSupported()');
+}_$jscoverage['/drag.js'].branchData['313'][1].init(1760, 34, 'S.Feature.isTouchEventSupported()');
 function visit49_313_1(result) {
   _$jscoverage['/drag.js'].branchData['313'][1].ranCondition(result);
   return result;
@@ -1323,7 +1323,7 @@ KISSY.add(function(S, require) {
     }
   }
   _$jscoverage['/drag.js'].lineData[313]++;
-  if (visit49_313_1(S.Features.isTouchEventSupported())) {
+  if (visit49_313_1(S.Feature.isTouchEventSupported())) {
     _$jscoverage['/drag.js'].lineData[314]++;
     e.preventDefault();
   }

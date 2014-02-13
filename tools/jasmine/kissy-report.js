@@ -50,8 +50,14 @@ jasmine.KissyReoport = (function () {
         return 0;
     }
 
+    var phantomjs,m;
+
+    if ((m = ua.match(/PhantomJS\/([^\s]*)/)) && m[1]) {
+        phantomjs = numberify(m[1]);
+    }
+
     Report.prototype.reportRunnerResults = function (runner) {
-        if (window.jscoverage_serializeCoverageToJSON && S.UA.phantomjs) {
+        if (window.jscoverage_serializeCoverageToJSON && phantomjs) {
             var json = window.jscoverage_serializeCoverageToJSON();
             var request = createRequest();
             request.open('post', '/save-coverage-report', true);

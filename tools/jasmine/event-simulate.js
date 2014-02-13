@@ -953,7 +953,7 @@
             jasmine.simulate(target, 'mousedown', options);
             jasmine.simulate(target, 'mouseup', options);
         }
-        if (KISSY.Features.isPointerSupported()) {
+        if (KISSY.Feature.isPointerSupported()) {
             if (type == 'mousedown') {
                 jasmine.simulate(target, 'pointerdown', options);
             } else if (type == 'mouseup') {
@@ -961,7 +961,7 @@
             } else if (type == 'mousemove') {
                 jasmine.simulate(target, 'pointermove', options);
             }
-        } else if (KISSY.Features.isMsPointerSupported()) {
+        } else if (KISSY.Feature.isMsPointerSupported()) {
             if (type == 'mousedown') {
                 jasmine.simulate(target, 'MSPointerDown', options);
             } else if (type == 'mouseup') {

@@ -474,9 +474,9 @@ KISSY.add(function(S, require) {
   _$jscoverage['/scrollbar/control.js'].lineData[15]++;
   var Gesture = Node.Gesture;
   _$jscoverage['/scrollbar/control.js'].lineData[17]++;
-  var Features = S.Features;
+  var Feature = S.Feature;
   _$jscoverage['/scrollbar/control.js'].lineData[19]++;
-  var allowDrag = !Features.isTouchGestureSupported();
+  var allowDrag = !Feature.isTouchGestureSupported();
   _$jscoverage['/scrollbar/control.js'].lineData[26]++;
   return Control.extend({
   initializer: function() {

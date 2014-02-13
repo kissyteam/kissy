@@ -302,7 +302,7 @@ if (! _$jscoverage['/touch/rotate.js'].branchData) {
   _$jscoverage['/touch/rotate.js'].branchData['106'] = [];
   _$jscoverage['/touch/rotate.js'].branchData['106'][1] = new BranchData();
 }
-_$jscoverage['/touch/rotate.js'].branchData['106'][1].init(2851, 34, 'S.Features.isTouchEventSupported()');
+_$jscoverage['/touch/rotate.js'].branchData['106'][1].init(2851, 34, 'S.Feature.isTouchEventSupported()');
 function visit80_106_1(result) {
   _$jscoverage['/touch/rotate.js'].branchData['106'][1].ranCondition(result);
   return result;
@@ -436,7 +436,7 @@ KISSY.add(function(S, require) {
   var config = eventHandleMap[ROTATE] = {
   handle: r};
   _$jscoverage['/touch/rotate.js'].lineData[106]++;
-  if (visit80_106_1(S.Features.isTouchEventSupported())) {
+  if (visit80_106_1(S.Feature.isTouchEventSupported())) {
     _$jscoverage['/touch/rotate.js'].lineData[107]++;
     config.setup = function() {
   _$jscoverage['/touch/rotate.js'].functionData[6]++;

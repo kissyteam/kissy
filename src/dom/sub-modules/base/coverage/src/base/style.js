@@ -1204,7 +1204,7 @@ function visit406_64_1(result) {
 function visit405_63_1(result) {
   _$jscoverage['/base/style.js'].branchData['63'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/style.js'].branchData['47'][1].init(16, 55, 'cssProps[name] || S.Features.getVendorCssPropName(name)');
+}_$jscoverage['/base/style.js'].branchData['47'][1].init(16, 55, 'cssProps[name] || S.Feature.getVendorCssPropName(name)');
 function visit404_47_1(result) {
   _$jscoverage['/base/style.js'].branchData['47'][1].ranCondition(result);
   return result;
@@ -1235,7 +1235,7 @@ KISSY.add(function(S, require) {
   function normalizeCssPropName(name) {
     _$jscoverage['/base/style.js'].functionData[1]++;
     _$jscoverage['/base/style.js'].lineData[47]++;
-    return visit404_47_1(cssProps[name] || S.Features.getVendorCssPropName(name));
+    return visit404_47_1(cssProps[name] || S.Feature.getVendorCssPropName(name));
   }
   _$jscoverage['/base/style.js'].lineData[50]++;
   function upperCase() {
@@ -1507,7 +1507,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/base/style.js'].lineData[325]++;
   if (visit439_325_1(userSelectProperty === undefined)) {
     _$jscoverage['/base/style.js'].lineData[326]++;
-    userSelectProperty = S.Features.getVendorCssPropName('userSelect');
+    userSelectProperty = S.Feature.getVendorCssPropName('userSelect');
   }
   _$jscoverage['/base/style.js'].lineData[328]++;
   for (j = _els.length - 1; visit440_328_1(j >= 0); j--) {

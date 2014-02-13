@@ -733,7 +733,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/control.js'].lineData[10]++;
   var Render = require('./control/render');
   _$jscoverage['/control.js'].lineData[11]++;
-  var ie = S.UA.ieMode, Features = S.Features, Gesture = Node.Gesture, isTouchGestureSupported = Features.isTouchGestureSupported(), isTouchEventSupported = Features.isTouchEventSupported();
+  var ie = S.UA.ieMode, Feature = S.Feature, Gesture = Node.Gesture, isTouchGestureSupported = Feature.isTouchGestureSupported(), isTouchEventSupported = Feature.isTouchEventSupported();
   _$jscoverage['/control.js'].lineData[22]++;
   var Control = ControlProcess.extend({
   isControl: true, 

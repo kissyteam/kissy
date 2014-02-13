@@ -335,7 +335,7 @@ _$jscoverage['/editor/plugin-meta.js'].lineData[3]++;
 KISSY.add(function() {
   _$jscoverage['/editor/plugin-meta.js'].functionData[0]++;
   _$jscoverage['/editor/plugin-meta.js'].lineData[4]++;
-  (function(config, Features, UA) {
+  (function(config, Feature, UA) {
   _$jscoverage['/editor/plugin-meta.js'].functionData[1]++;
   _$jscoverage['/editor/plugin-meta.js'].lineData[6]++;
   config({
@@ -697,5 +697,5 @@ KISSY.add(function() {
   _$jscoverage['/editor/plugin-meta.js'].functionData[2]++;
   _$jscoverage['/editor/plugin-meta.js'].lineData[363]++;
   KISSY.config('modules', c);
-}, KISSY.Features, KISSY.UA);
+}, KISSY.Feature, KISSY.UA);
 });

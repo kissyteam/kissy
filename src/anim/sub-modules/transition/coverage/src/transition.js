@@ -409,15 +409,15 @@ KISSY.add(function(S, require) {
   _$jscoverage['/transition.js'].lineData[9]++;
   var AnimBase = require('./base');
   _$jscoverage['/transition.js'].lineData[11]++;
-  var Features = S.Features;
+  var Feature = S.Feature;
   _$jscoverage['/transition.js'].lineData[12]++;
-  var vendorPrefix = Features.getVendorCssPropPrefix('transition');
+  var vendorPrefix = Feature.getVendorCssPropPrefix('transition');
   _$jscoverage['/transition.js'].lineData[13]++;
   var R_UPPER = /([A-Z]|^ms)/g;
   _$jscoverage['/transition.js'].lineData[14]++;
   var TRANSITION_END_EVENT = vendorPrefix ? (vendorPrefix.toLowerCase() + 'TransitionEnd') : 'transitionend webkitTransitionEnd';
   _$jscoverage['/transition.js'].lineData[19]++;
-  var TRANSITION = Features.getVendorCssPropName('transition');
+  var TRANSITION = Feature.getVendorCssPropName('transition');
   _$jscoverage['/transition.js'].lineData[21]++;
   function genTransition(propsData) {
     _$jscoverage['/transition.js'].functionData[1]++;
@@ -454,7 +454,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/transition.js'].lineData[49]++;
     delete _propsData.transform;
     _$jscoverage['/transition.js'].lineData[50]++;
-    _propsData[Features.getVendorCssPropName('transform').replace(R_UPPER, '-$1').toLowerCase()] = transform;
+    _propsData[Feature.getVendorCssPropName('transform').replace(R_UPPER, '-$1').toLowerCase()] = transform;
   }
   _$jscoverage['/transition.js'].lineData[53]++;
   S.each(_propsData, function(propData, prop) {

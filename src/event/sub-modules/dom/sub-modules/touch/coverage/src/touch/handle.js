@@ -732,11 +732,11 @@ function visit7_105_1(result) {
 function visit6_88_1(result) {
   _$jscoverage['/touch/handle.js'].branchData['88'][1].ranCondition(result);
   return result;
-}_$jscoverage['/touch/handle.js'].branchData['56'][1].init(1643, 31, 'Features.isMsPointerSupported()');
+}_$jscoverage['/touch/handle.js'].branchData['56'][1].init(1643, 31, 'Feature.isMsPointerSupported()');
 function visit5_56_1(result) {
   _$jscoverage['/touch/handle.js'].branchData['56'][1].ranCondition(result);
   return result;
-}_$jscoverage['/touch/handle.js'].branchData['50'][1].init(1364, 29, 'Features.isPointerSupported()');
+}_$jscoverage['/touch/handle.js'].branchData['50'][1].init(1364, 29, 'Feature.isPointerSupported()');
 function visit4_50_1(result) {
   _$jscoverage['/touch/handle.js'].branchData['50'][1].ranCondition(result);
   return result;
@@ -744,7 +744,7 @@ function visit4_50_1(result) {
 function visit3_39_1(result) {
   _$jscoverage['/touch/handle.js'].branchData['39'][1].ranCondition(result);
   return result;
-}_$jscoverage['/touch/handle.js'].branchData['38'][1].init(864, 32, 'Features.isTouchEventSupported()');
+}_$jscoverage['/touch/handle.js'].branchData['38'][1].init(864, 32, 'Feature.isTouchEventSupported()');
 function visit2_38_1(result) {
   _$jscoverage['/touch/handle.js'].branchData['38'][1].ranCondition(result);
   return result;
@@ -770,7 +770,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/touch/handle.js'].lineData[13]++;
   require('./rotate');
   _$jscoverage['/touch/handle.js'].lineData[15]++;
-  var key = S.guid('touch-handle'), Features = S.Features, gestureStartEvent, gestureMoveEvent, gestureEndEvent;
+  var key = S.guid('touch-handle'), Feature = S.Feature, gestureStartEvent, gestureMoveEvent, gestureEndEvent;
   _$jscoverage['/touch/handle.js'].lineData[21]++;
   function isTouchEvent(type) {
     _$jscoverage['/touch/handle.js'].functionData[1]++;
@@ -794,7 +794,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/touch/handle.js'].lineData[36]++;
   var DUP_DIST = 25;
   _$jscoverage['/touch/handle.js'].lineData[38]++;
-  if (visit2_38_1(Features.isTouchEventSupported())) {
+  if (visit2_38_1(Feature.isTouchEventSupported())) {
     _$jscoverage['/touch/handle.js'].lineData[39]++;
     if (visit3_39_1(S.UA.ios)) {
       _$jscoverage['/touch/handle.js'].lineData[41]++;
@@ -813,7 +813,7 @@ KISSY.add(function(S, require) {
     }
   } else {
     _$jscoverage['/touch/handle.js'].lineData[50]++;
-    if (visit4_50_1(Features.isPointerSupported())) {
+    if (visit4_50_1(Feature.isPointerSupported())) {
       _$jscoverage['/touch/handle.js'].lineData[53]++;
       gestureStartEvent = 'pointerdown';
       _$jscoverage['/touch/handle.js'].lineData[54]++;
@@ -822,7 +822,7 @@ KISSY.add(function(S, require) {
       gestureEndEvent = 'pointerup pointercancel';
     } else {
       _$jscoverage['/touch/handle.js'].lineData[56]++;
-      if (visit5_56_1(Features.isMsPointerSupported())) {
+      if (visit5_56_1(Feature.isMsPointerSupported())) {
         _$jscoverage['/touch/handle.js'].lineData[57]++;
         gestureStartEvent = 'MSPointerDown';
         _$jscoverage['/touch/handle.js'].lineData[58]++;

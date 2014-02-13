@@ -2,8 +2,8 @@ module.exports=function(req,res){
     res.render('runner',{
         component:'tabs',
         externalLinks:[
-            '../../../button/assets/picker.css',
-            '../../assets/picker.css'
+            '/kissy/src/button/assets/dpl.css',
+            '/kissy/src/tabs/assets/dpl.css'
         ]
     });
 };

@@ -683,7 +683,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/base.js'].lineData[10]++;
   var Render = require('./base/render');
   _$jscoverage['/base.js'].lineData[13]++;
-  var $ = S.all, isTouchEventSupported = S.Features.isTouchEventSupported(), KeyCode = Node.KeyCode;
+  var $ = S.all, isTouchEventSupported = S.Feature.isTouchEventSupported(), KeyCode = Node.KeyCode;
   _$jscoverage['/base.js'].lineData[17]++;
   function onElScroll() {
     _$jscoverage['/base.js'].functionData[1]++;

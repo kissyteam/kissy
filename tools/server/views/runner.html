@@ -37,10 +37,13 @@
             <script src="/kissy/build/seed.js"></script>
         {{/if}}
     {{/if}}
-
-    <script src="/kissy/src/package.js"></script>
     <script>
         var component = '{{{component}}}';
+        delete KISSY.Env.mods[component];
+        {{{externalScript}}}
+    </script>
+    <script src="/kissy/src/package.js"></script>
+    <script>
         (function(){
             var loc=new KISSY.Uri(location.href);
             if(loc.getQuery().has('coverage')){
@@ -63,6 +66,7 @@
     {{#each externalScripts}}
         <script src="{{{.}}}"></script>
     {{/each}}
+
 </head>
 <body>
 <h1 style="text-align: center">{{component}} test cases</h1>

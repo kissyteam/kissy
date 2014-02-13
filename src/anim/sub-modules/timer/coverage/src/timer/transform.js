@@ -387,7 +387,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/timer/transform.js'].lineData[8]++;
   var Fx = require('./fx');
   _$jscoverage['/timer/transform.js'].lineData[9]++;
-  var translateTpl = S.Features.isTransform3dSupported() ? 'translate3d({translateX}px,{translateY}px,0)' : 'translate({translateX}px,{translateY}px)';
+  var translateTpl = S.Feature.isTransform3dSupported() ? 'translate3d({translateX}px,{translateY}px,0)' : 'translate({translateX}px,{translateY}px)';
   _$jscoverage['/timer/transform.js'].lineData[12]++;
   function toMatrixArray(matrix) {
     _$jscoverage['/timer/transform.js'].functionData[1]++;

@@ -15,6 +15,7 @@ function collectTc(baseDir, codes) {
         f = baseDir + '/' + f;
         if (fs.statSync(f).isDirectory()) {
             if (S.endsWith(f, ts)) {
+                f = f.replace(/\\/g, '/');
                 var runners = fs.readdirSync(f);
                 var coverDir = path.resolve(f, '../../coverage/runner');
                 var cover = 0;
@@ -22,8 +23,15 @@ function collectTc(baseDir, codes) {
                 if (fs.existsSync(coverDir)) {
                     cover = 1;
                 }
+                if(!runners.length){
+                    var r = '/kissy/' + (f + '/').replace(cwd + '/', '');
+                    codes.push("tests.push('" + r + "');\n");
+                    codes.push("tests.push('" + r + "?build');\n");
+                    if (cover) {
+                        codes.push("tests.push('" + r + "?coverage');\n");
+                    }
+                }
                 runners.forEach(function (r) {
-                    f = f.replace(/\\/g, '/');
                     r = '/kissy/' + (f + '/' + r).replace(cwd + '/', '');
                     codes.push("tests.push('" + r + "');\n");
                     codes.push("tests.push('" + r + "?build');\n");

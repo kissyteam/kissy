@@ -343,7 +343,7 @@ function visit3_65_1(result) {
 function visit2_62_1(result) {
   _$jscoverage['/base/render.js'].branchData['62'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/render.js'].branchData['19'][1].init(479, 56, 'S.Features.getVendorCssPropPrefix(\'transform\') !== false');
+}_$jscoverage['/base/render.js'].branchData['19'][1].init(479, 56, 'S.Feature.getVendorCssPropPrefix(\'transform\') !== false');
 function visit1_19_1(result) {
   _$jscoverage['/base/render.js'].branchData['19'][1].ranCondition(result);
   return result;
@@ -355,11 +355,11 @@ KISSY.add(function(S, require) {
   _$jscoverage['/base/render.js'].lineData[8]++;
   var ContentRenderExtension = require('component/extension/content-render');
   _$jscoverage['/base/render.js'].lineData[11]++;
-  var Features = S.Features, floor = Math.floor, transformProperty;
+  var Feature = S.Feature, floor = Math.floor, transformProperty;
   _$jscoverage['/base/render.js'].lineData[16]++;
-  var isTransform3dSupported = S.Features.isTransform3dSupported();
+  var isTransform3dSupported = S.Feature.isTransform3dSupported();
   _$jscoverage['/base/render.js'].lineData[19]++;
-  var supportCss3 = visit1_19_1(S.Features.getVendorCssPropPrefix('transform') !== false);
+  var supportCss3 = visit1_19_1(S.Feature.getVendorCssPropPrefix('transform') !== false);
   _$jscoverage['/base/render.js'].lineData[35]++;
   var methods = {
   syncUI: function() {
@@ -450,7 +450,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/base/render.js'].lineData[129]++;
   if (visit10_129_1(supportCss3)) {
     _$jscoverage['/base/render.js'].lineData[130]++;
-    transformProperty = Features.getVendorCssPropName('transform');
+    transformProperty = Feature.getVendorCssPropName('transform');
     _$jscoverage['/base/render.js'].lineData[132]++;
     methods._onSetScrollLeft = function(v) {
   _$jscoverage['/base/render.js'].functionData[5]++;

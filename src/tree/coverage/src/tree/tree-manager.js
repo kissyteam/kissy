@@ -287,7 +287,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/tree/tree-manager.js'].lineData[8]++;
   var DelegateChildrenExtension = require('component/extension/delegate-children');
   _$jscoverage['/tree/tree-manager.js'].lineData[10]++;
-  var UA = S.UA, ie = UA.ieMode, Features = S.Features, Gesture = Node.Gesture, isTouchEventSupported = Features.isTouchEventSupported();
+  var UA = S.UA, ie = UA.ieMode, Feature = S.Feature, Gesture = Node.Gesture, isTouchEventSupported = Feature.isTouchEventSupported();
   _$jscoverage['/tree/tree-manager.js'].lineData[20]++;
   function TreeManager() {
     _$jscoverage['/tree/tree-manager.js'].functionData[1]++;
