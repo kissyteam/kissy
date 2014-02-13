@@ -274,28 +274,28 @@ var KISSY = (function (undefined) {
         /**
          * print debug log
          * @method debug
-         * @memberOf KISSY.Logger
+         * @member KISSY.Logger
          * @param {String} str log str
          */
 
         /**
          * print info log
          * @method info
-         * @memberOf KISSY.Logger
+         * @member KISSY.Logger
          * @param {String} str log str
          */
 
         /**
          * print warn log
          * @method log
-         * @memberOf KISSY.Logger
+         * @member KISSY.Logger
          * @param {String} str log str
          */
 
         /**
          * print error log
          * @method error
-         * @memberOf KISSY.Logger
+         * @member KISSY.Logger
          * @param {String} str log str
          */
     }

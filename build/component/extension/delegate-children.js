@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Jan 17 16:52
+build time: Feb 13 19:58
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -11,7 +11,7 @@ build time: Jan 17 16:52
 
 KISSY.add("component/extension/delegate-children", ["node", "component/manager"], function(S, require) {
   var Node = require("node"), Manager = require("component/manager");
-  var UA = S.UA, ie = UA.ieMode, Features = S.Features, Gesture = Node.Gesture, isTouchEventSupported = Features.isTouchEventSupported();
+  var UA = S.UA, ie = UA.ieMode, Feature = S.Feature, Gesture = Node.Gesture, isTouchEventSupported = Feature.isTouchEventSupported();
   function onRenderChild(e) {
     if(e.target === this) {
       var child = e.component, el = child.$el;

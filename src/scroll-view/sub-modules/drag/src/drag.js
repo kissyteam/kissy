@@ -310,7 +310,7 @@ KISSY.add(function (S, require) {
             }
         }
 
-        if (S.Features.isTouchEventSupported()) {
+        if (S.Feature.isTouchEventSupported()) {
             e.preventDefault();
         }
 

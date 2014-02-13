@@ -94,8 +94,8 @@ KISSY.add("scroll-view/plugin/scrollbar/scrollbar-xtpl", [], function(S, require
 KISSY.add("scroll-view/plugin/scrollbar/render", ["component/control", "./scrollbar-xtpl"], function(S, require) {
   var Control = require("component/control");
   var ScrollBarTpl = require("./scrollbar-xtpl");
-  var isTransform3dSupported = S.Features.isTransform3dSupported();
-  var supportCss3 = S.Features.getVendorCssPropPrefix("transform") !== false;
+  var isTransform3dSupported = S.Feature.isTransform3dSupported();
+  var supportCss3 = S.Feature.getVendorCssPropPrefix("transform") !== false;
   var methods = {beforeCreateDom:function(renderData, childrenElSelectors) {
     renderData.elCls.push(renderData.prefixCls + "scrollbar-" + renderData.axis);
     S.mix(childrenElSelectors, {dragEl:"#ks-scrollbar-drag-{id}", downBtn:"#ks-scrollbar-arrow-down-{id}", upBtn:"#ks-scrollbar-arrow-up-{id}", trackEl:"#ks-scrollbar-track-{id}"})
@@ -151,7 +151,7 @@ KISSY.add("scroll-view/plugin/scrollbar/render", ["component/control", "./scroll
     this.control.dragEl.style.top = v + "px"
   }};
   if(supportCss3) {
-    var transformProperty = S.Features.getVendorCssPropName("transform");
+    var transformProperty = S.Feature.getVendorCssPropName("transform");
     methods._onSetDragLeft = function(v) {
       this.control.dragEl.style[transformProperty] = "translateX(" + v + "px)" + " translateY(" + this.control.get("dragTop") + "px)" + (isTransform3dSupported ? " translateZ(0)" : "")
     };
@@ -168,8 +168,8 @@ KISSY.add("scroll-view/plugin/scrollbar/control", ["node", "component/control", 
   var MIN_BAR_LENGTH = 20;
   var SCROLLBAR_EVENT_NS = ".ks-scrollbar";
   var Gesture = Node.Gesture;
-  var Features = S.Features;
-  var allowDrag = !Features.isTouchGestureSupported();
+  var Feature = S.Feature;
+  var allowDrag = !Feature.isTouchGestureSupported();
   return Control.extend({initializer:function() {
     var self = this;
     var scrollType = self.scrollType = self.get("axis") === "x" ? "left" : "top";

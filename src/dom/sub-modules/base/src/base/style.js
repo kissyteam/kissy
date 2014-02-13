@@ -44,7 +44,7 @@ KISSY.add(function (S, require) {
     cssProps['float'] = 'cssFloat';
 
     function normalizeCssPropName(name) {
-        return cssProps[name] || S.Features.getVendorCssPropName(name);
+        return cssProps[name] || S.Feature.getVendorCssPropName(name);
     }
 
     function upperCase() {
@@ -323,7 +323,7 @@ KISSY.add(function (S, require) {
                     style,
                     els;
                 if (userSelectProperty === undefined) {
-                    userSelectProperty = S.Features.getVendorCssPropName('userSelect');
+                    userSelectProperty = S.Feature.getVendorCssPropName('userSelect');
                 }
                 for (j = _els.length - 1; j >= 0; j--) {
                     elem = _els[j];

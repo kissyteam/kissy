@@ -288,7 +288,7 @@ KISSY.add("event/dom/touch/pinch", ["./handle-map", "event/dom/base", "./multi-t
     }
   }
   var config = eventHandleMap[PINCH] = {handle:p};
-  if(S.Features.isTouchEventSupported()) {
+  if(S.Feature.isTouchEventSupported()) {
     config.setup = function() {
       this.addEventListener("touchmove", prevent, false)
     };
@@ -349,7 +349,7 @@ KISSY.add("event/dom/touch/rotate", ["./handle-map", "event/dom/base", "./multi-
   var r = new Rotate;
   eventHandleMap[ROTATE_END] = eventHandleMap[ROTATE_START] = {handle:r};
   var config = eventHandleMap[ROTATE] = {handle:r};
-  if(S.Features.isTouchEventSupported()) {
+  if(S.Feature.isTouchEventSupported()) {
     config.setup = function() {
       this.addEventListener("touchmove", prevent, false)
     };
@@ -367,7 +367,7 @@ KISSY.add("event/dom/touch/handle", ["dom", "./handle-map", "event/dom/base", ".
   require("./swipe");
   require("./pinch");
   require("./rotate");
-  var key = S.guid("touch-handle"), Features = S.Features, gestureStartEvent, gestureMoveEvent, gestureEndEvent;
+  var key = S.guid("touch-handle"), Feature = S.Feature, gestureStartEvent, gestureMoveEvent, gestureEndEvent;
   function isTouchEvent(type) {
     return S.startsWith(type, "touch")
   }
@@ -379,7 +379,7 @@ KISSY.add("event/dom/touch/handle", ["dom", "./handle-map", "event/dom/base", ".
   }
   var DUP_TIMEOUT = 2500;
   var DUP_DIST = 25;
-  if(Features.isTouchEventSupported()) {
+  if(Feature.isTouchEventSupported()) {
     if(S.UA.ios) {
       gestureEndEvent = "touchend touchcancel";
       gestureStartEvent = "touchstart";
@@ -390,12 +390,12 @@ KISSY.add("event/dom/touch/handle", ["dom", "./handle-map", "event/dom/base", ".
       gestureMoveEvent = "touchmove mousemove"
     }
   }else {
-    if(Features.isPointerSupported()) {
+    if(Feature.isPointerSupported()) {
       gestureStartEvent = "pointerdown";
       gestureMoveEvent = "pointermove";
       gestureEndEvent = "pointerup pointercancel"
     }else {
-      if(Features.isMsPointerSupported()) {
+      if(Feature.isMsPointerSupported()) {
         gestureStartEvent = "MSPointerDown";
         gestureMoveEvent = "MSPointerMove";
         gestureEndEvent = "MSPointerUp MSPointerCancel"

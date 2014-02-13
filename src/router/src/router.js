@@ -17,7 +17,7 @@ KISSY.add(function (S, require, exports) {
     var getVidFromUrlWithHash = utils.getVidFromUrlWithHash;
     var win = S.Env.host;
     var history = win.history;
-    var supportNativeHashChange = S.Features.isHashChangeSupported();
+    var supportNativeHashChange = S.Feature.isHashChangeSupported();
     var supportNativeHistory = !!(history && history.pushState);
     // take a breath to avoid duplicate hashchange
     var BREATH_INTERVAL = 100;

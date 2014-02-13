@@ -2,16 +2,15 @@
  * Path spec for kissy
  * @author yiminghe@gmail.com
  */
-KISSY.add(function(){
+KISSY.add(function (S, require) {
+    var Path = require('path');
     describe("path", function () {
-        var Path = KISSY.Path;
-
         it("resolve works", function () {
             expect(Path.resolve('x', 'y', "..", "z", ".")).toBe("x/z");
 
-            expect(Path.resolve('x',"./y")).toBe("x/y");
+            expect(Path.resolve('x', "./y")).toBe("x/y");
 
-            expect(Path.resolve("/x","./y")).toBe("/x/y");
+            expect(Path.resolve("/x", "./y")).toBe("/x/y");
         });
 
         it("normalize works", function () {

@@ -324,59 +324,59 @@ if (! _$jscoverage['/init.js'].branchData) {
   _$jscoverage['/init.js'].branchData['117'] = [];
   _$jscoverage['/init.js'].branchData['117'][1] = new BranchData();
 }
-_$jscoverage['/init.js'].branchData['117'][1].init(3308, 31, 'doc && doc.getElementsByTagName');
+_$jscoverage['/init.js'].branchData['117'][1].init(3419, 31, 'doc && doc.getElementsByTagName');
 function visit153_117_1(result) {
   _$jscoverage['/init.js'].branchData['117'][1].ranCondition(result);
   return result;
-}_$jscoverage['/init.js'].branchData['97'][1].init(209, 6, 'i >= 0');
+}_$jscoverage['/init.js'].branchData['97'][1].init(216, 6, 'i >= 0');
 function visit152_97_1(result) {
   _$jscoverage['/init.js'].branchData['97'][1].ranCondition(result);
   return result;
-}_$jscoverage['/init.js'].branchData['74'][1].init(1678, 21, 'baseInfo.base || base');
+}_$jscoverage['/init.js'].branchData['74'][1].init(1730, 21, 'baseInfo.base || base');
 function visit151_74_1(result) {
   _$jscoverage['/init.js'].branchData['74'][1].ranCondition(result);
   return result;
-}_$jscoverage['/init.js'].branchData['67'][1].init(70, 17, 'queryIndex !== -1');
+}_$jscoverage['/init.js'].branchData['67'][1].init(72, 17, 'queryIndex !== -1');
 function visit150_67_1(result) {
   _$jscoverage['/init.js'].branchData['67'][1].ranCondition(result);
   return result;
-}_$jscoverage['/init.js'].branchData['65'][1].init(1303, 20, '!(\'tag\' in baseInfo)');
+}_$jscoverage['/init.js'].branchData['65'][1].init(1346, 20, '!(\'tag\' in baseInfo)');
 function visit149_65_1(result) {
   _$jscoverage['/init.js'].branchData['65'][1].ranCondition(result);
   return result;
-}_$jscoverage['/init.js'].branchData['57'][1].init(21, 23, 'part.match(baseTestReg)');
+}_$jscoverage['/init.js'].branchData['57'][1].init(22, 23, 'part.match(baseTestReg)');
 function visit148_57_1(result) {
   _$jscoverage['/init.js'].branchData['57'][1].ranCondition(result);
   return result;
-}_$jscoverage['/init.js'].branchData['52'][1].init(179, 36, 'base.charAt(base.length - 1) !== \'/\'');
+}_$jscoverage['/init.js'].branchData['52'][1].init(183, 36, 'base.charAt(base.length - 1) !== \'/\'');
 function visit147_52_1(result) {
   _$jscoverage['/init.js'].branchData['52'][1].ranCondition(result);
   return result;
-}_$jscoverage['/init.js'].branchData['46'][1].init(610, 12, 'index === -1');
+}_$jscoverage['/init.js'].branchData['46'][1].init(634, 12, 'index === -1');
 function visit146_46_1(result) {
   _$jscoverage['/init.js'].branchData['46'][1].ranCondition(result);
   return result;
-}_$jscoverage['/init.js'].branchData['39'][1].init(455, 36, 'baseInfo.comboSep || defaultComboSep');
+}_$jscoverage['/init.js'].branchData['39'][1].init(472, 36, 'baseInfo.comboSep || defaultComboSep');
 function visit145_39_1(result) {
   _$jscoverage['/init.js'].branchData['39'][1].ranCondition(result);
   return result;
-}_$jscoverage['/init.js'].branchData['38'][1].init(388, 42, 'baseInfo.comboPrefix || defaultComboPrefix');
+}_$jscoverage['/init.js'].branchData['38'][1].init(404, 42, 'baseInfo.comboPrefix || defaultComboPrefix');
 function visit144_38_1(result) {
   _$jscoverage['/init.js'].branchData['38'][1].ranCondition(result);
   return result;
-}_$jscoverage['/init.js'].branchData['32'][1].init(250, 8, 'baseInfo');
+}_$jscoverage['/init.js'].branchData['32'][1].init(260, 8, 'baseInfo');
 function visit143_32_1(result) {
   _$jscoverage['/init.js'].branchData['32'][1].ranCondition(result);
   return result;
-}_$jscoverage['/init.js'].branchData['26'][1].init(118, 23, '!src.match(baseTestReg)');
+}_$jscoverage['/init.js'].branchData['26'][1].init(122, 23, '!src.match(baseTestReg)');
 function visit142_26_1(result) {
   _$jscoverage['/init.js'].branchData['26'][1].ranCondition(result);
   return result;
-}_$jscoverage['/init.js'].branchData['25'][1].init(88, 16, 'script.src || \'\'');
+}_$jscoverage['/init.js'].branchData['25'][1].init(91, 16, 'script.src || \'\'');
 function visit141_25_1(result) {
   _$jscoverage['/init.js'].branchData['25'][1].ranCondition(result);
   return result;
-}_$jscoverage['/init.js'].branchData['7'][1].init(15, 33, 'S.Env.host && S.Env.host.document');
+}_$jscoverage['/init.js'].branchData['7'][1].init(16, 33, 'S.Env.host && S.Env.host.document');
 function visit140_7_1(result) {
   _$jscoverage['/init.js'].branchData['7'][1].ranCondition(result);
   return result;

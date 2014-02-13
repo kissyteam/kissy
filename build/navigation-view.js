@@ -15,7 +15,7 @@ KISSY.add("navigation-view", ["node", "component/container", "component/extensio
   var ContentTpl = require("component/extension/content-xtpl");
   var ContentRender = require("component/extension/content-render");
   var LOADING_HTML = '<div class="{prefixCls}navigation-view-loading">' + '<div class="{prefixCls}navigation-view-loading-outer">' + '<div class="{prefixCls}navigation-view-loading-inner"></div>' + "</div>" + "</div>";
-  var vendorPrefix = S.Features.getVendorCssPropPrefix("animation");
+  var vendorPrefix = S.Feature.getVendorCssPropPrefix("animation");
   var ANIMATION_END_EVENT = vendorPrefix ? vendorPrefix.toLowerCase() + "AnimationEnd" : "animationend webkitAnimationEnd";
   var uuid = 0;
   var NavigationViewRender = Container.getDefaultRender().extend([ContentRender], {createDom:function() {

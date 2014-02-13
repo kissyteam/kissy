@@ -2,15 +2,13 @@
  * Path spec for kissy
  * @author yiminghe@gmail.com
  */
-KISSY.add(function () {
+KISSY.add(function (S, require) {
+    var Uri = require('uri');
     /**
      * Uri spec for kissy.
      * @author yiminghe@gmail.com
      */
     describe("uri", function () {
-        var Uri = KISSY.Uri, S = KISSY;
-
-
         it("create works", function () {
             var base = new Uri("http://my:sd@a/b/c/d;p?q#w");
             expect(base.getScheme()).toBe("http");

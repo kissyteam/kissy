@@ -222,10 +222,6 @@ tests.push('/kissy/src/router/tests/runner/test.jss');
 
 tests.push('/kissy/src/router/tests/runner/test.jss?build');
 
-tests.push('/kissy/src/seed/tests/runner/test.html');
-
-tests.push('/kissy/src/seed/tests/runner/test.html?build');
-
 tests.push('/kissy/src/stylesheet/tests/runner/test.jss');
 
 tests.push('/kissy/src/stylesheet/tests/runner/test.jss?build');
@@ -250,9 +246,17 @@ tests.push('/kissy/src/tree/tests/runner/test.jss?build');
 
 tests.push('/kissy/src/tree/tests/runner/test.jss?coverage');
 
+tests.push('/kissy/src/ua/tests/runner/test.jss');
+
+tests.push('/kissy/src/ua/tests/runner/test.jss?build');
+
 tests.push('/kissy/src/uri/tests/runner/test.jss');
 
 tests.push('/kissy/src/uri/tests/runner/test.jss?build');
+
+tests.push('/kissy/src/util/tests/runner/test.jss');
+
+tests.push('/kissy/src/util/tests/runner/test.jss?build');
 
 tests.push('/kissy/src/xtemplate/tests/runner/test.jss');
 

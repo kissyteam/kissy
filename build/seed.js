@@ -1,12 +1,12 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Feb 12 11:25
+build time: Feb 13 19:32
 */
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Feb 12 11:25
+build time: Feb 13 19:31
 */
 /**
  * @ignore
@@ -62,11 +62,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20140212112501' will replace with current timestamp when compressing.
+         * NOTICE: '20140213193128' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20140212112501',
+        __BUILD_TIME: '20140213193128',
 
         /**
          * KISSY Environment.
@@ -284,28 +284,28 @@ var KISSY = (function (undefined) {
         /**
          * print debug log
          * @method debug
-         * @memberOf KISSY.Logger
+         * @member KISSY.Logger
          * @param {String} str log str
          */
 
         /**
          * print info log
          * @method info
-         * @memberOf KISSY.Logger
+         * @member KISSY.Logger
          * @param {String} str log str
          */
 
         /**
          * print warn log
          * @method log
-         * @memberOf KISSY.Logger
+         * @member KISSY.Logger
          * @param {String} str log str
          */
 
         /**
          * print error log
          * @method error
-         * @memberOf KISSY.Logger
+         * @member KISSY.Logger
          * @param {String} str log str
          */
     }
@@ -3645,7 +3645,7 @@ KISSY.add('i18n', {
     var doc = S.Env.host && S.Env.host.document;
     // var logger = S.getLogger('s/loader');
     var Utils = S.Loader.Utils;
-    var TIMESTAMP = '20140212112501';
+    var TIMESTAMP = '20140213193128';
     var defaultComboPrefix = '??';
     var defaultComboSep = ',';
 
@@ -3770,2216 +3770,1059 @@ KISSY.add('i18n', {
         return S.Path;
     });
 })(KISSY);
-/**
- * @ignore
- * object utilities of lang
- * @author yiminghe@gmail.com
- *
- */
-(function (S, undefined) {
-    var logger = S.getLogger('s/lang');
-    var MIX_CIRCULAR_DETECTION = '__MIX_CIRCULAR',
-        STAMP_MARKER = '__~ks_stamped',
-        self = this,
-        TRUE = true,
-        EMPTY = '',
-        Obj = Object,
-        objectCreate = Obj.create;
+/*
+Copyright 2014, KISSY v1.50
+MIT Licensed
+build time: Feb 13 19:32
+*/
+/*
+ Combined modules by KISSY Module Compiler: 
 
+ util/array
+ util/escape
+ util/function
+ util/object
+ util/string
+ util/type
+ util/web
+ util
+*/
 
-    mix(S, {
-        /**
-         * stamp a object by guid
-         * @param {Object} o object needed to be stamped
-         * @param {Boolean} [readOnly] while set marker on o if marker does not exist
-         * @param {String} [marker] the marker will be set on Object
-         * @return {String} guid associated with this object
-         * @member KISSY
-         */
-        stamp: function (o, readOnly, marker) {
-            marker = marker || STAMP_MARKER;
-            var guid = o[marker];
-            if (guid) {
-                return guid;
-            } else if (!readOnly) {
-                try {
-                    guid = o[marker] = S.guid(marker);
-                }
-                catch (e) {
-                    guid = undefined;
-                }
-            }
-            return guid;
-        },
-
-
-
-        /**
-         * Copies all the properties of s to r.
-         * @method
-         * @param {Object} r the augmented object
-         * @param {Object} s the object need to augment
-         * @param {Boolean|Object} [ov=true] whether overwrite existing property or config.
-         * @param {Boolean} [ov.overwrite=true] whether overwrite existing property.
-         * @param {String[]|Function} [ov.whitelist] array of white-list properties
-         * @param {Boolean}[ov.deep=false] whether recursive mix if encounter object.
-         * @param {String[]|Function} [wl] array of white-list properties
-         * @param [deep=false] {Boolean} whether recursive mix if encounter object.
-         * @return {Object} the augmented object
-         * @member KISSY
-         *
-         * for example:
-         *     @example
-         *     var t = {};
-         *     S.mix({x: {y: 2, z: 4}}, {x: {y: 3, a: t}}, {deep: TRUE}) => {x: {y: 3, z: 4, a: {}}}, a !== t
-         *     S.mix({x: {y: 2, z: 4}}, {x: {y: 3, a: t}}, {deep: TRUE, overwrite: false}) => {x: {y: 2, z: 4, a: {}}}, a !== t
-         *     S.mix({x: {y: 2, z: 4}}, {x: {y: 3, a: t}}, 1) => {x: {y: 3, a: t}}
-         */
-        mix: function (r, s, ov, wl, deep) {
-            if (typeof ov === 'object') {
-                wl = /**
-                 @ignore
-                 @type {String[]|Function}
-                 */ov.whitelist;
-                deep = ov.deep;
-                ov = ov.overwrite;
-            }
-
-            if (wl && (typeof wl !== 'function')) {
-                var originalWl = wl;
-                wl = function (name, val) {
-                    return S.inArray(name, originalWl) ? val : undefined;
-                };
-            }
-
-            if (ov === undefined) {
-                ov = TRUE;
-            }
-
-            var cache = [],
-                c,
-                i = 0;
-            mixInternal(r, s, ov, wl, deep, cache);
-            while ((c = cache[i++])) {
-                delete c[MIX_CIRCULAR_DETECTION];
-            }
-            return r;
-        },
-
-        /**
-         * Returns a new object containing all of the properties of
-         * all the supplied objects. The properties from later objects
-         * will overwrite those in earlier objects. Passing in a
-         * single object will create a shallow copy of it.
-         * @param {...Object} varArgs objects need to be merged
-         * @return {Object} the new merged object
-         * @member KISSY
-         */
-        merge: function (varArgs) {
-            varArgs = S.makeArray(arguments);
-            var o = {},
-                i,
-                l = varArgs.length;
-            for (i = 0; i < l; i++) {
-                S.mix(o, varArgs[i]);
-            }
-            return o;
-        },
-
-        /**
-         * Applies prototype properties from the supplier to the receiver.
-         * @param   {Object} r received object
-         * @param   {...Object} varArgs object need to  augment
-         *          {Boolean} [ov=TRUE] whether overwrite existing property
-         *          {String[]} [wl] array of white-list properties
-         * @return  {Object} the augmented object
-         * @member KISSY
-         */
-        augment: function (r, varArgs) {
-            var args = S.makeArray(arguments),
-                len = args.length - 2,
-                i = 1,
-                proto,
-                arg,
-                ov = args[len],
-                wl = args[len + 1];
-
-            args[1] = varArgs;
-
-            if (!S.isArray(wl)) {
-                ov = wl;
-                wl = undefined;
-                len++;
-            }
-            if (typeof ov !== 'boolean') {
-                ov = undefined;
-                len++;
-            }
-
-            for (; i < len; i++) {
-                arg = args[i];
-                if ((proto = arg.prototype)) {
-                    arg = S.mix({}, proto, true, removeConstructor);
-                }
-                S.mix(r.prototype, arg, ov, wl);
-            }
-
-            return r;
-        },
-
-        /**
-         * Utility to set up the prototype, constructor and superclass properties to
-         * support an inheritance strategy that can chain constructors and methods.
-         * Static members will not be inherited.
-         * @param r {Function} the object to modify
-         * @param s {Function} the object to inherit
-         * @param {Object} [px] prototype properties to add/override
-         * @param {Object} [sx] static properties to add/override
-         * @return r {Object}
-         * @member KISSY
-         */
-        extend: function (r, s, px, sx) {
-            if ('@DEBUG@') {
-                if (!r) {
-                    logger.error('extend r is null');
-                }
-                if (!s) {
-                    logger.error('extend s is null');
-                }
-                if (!s || !r) {
-                    return r;
-                }
-            }
-
-            var sp = s.prototype,
-                rp;
-
-            // in case parent does not set constructor
-            // eg: parent.prototype={};
-            sp.constructor = s;
-
-            // add prototype chain
-            rp = createObject(sp, r);
-            r.prototype = S.mix(rp, r.prototype);
-            r.superclass = sp;
-
-            // add prototype overrides
-            if (px) {
-                S.mix(rp, px);
-            }
-
-            // add object overrides
-            if (sx) {
-                S.mix(r, sx);
-            }
-
-            return r;
-        },
-
-        /**
-         * Returns the namespace specified and creates it if it doesn't exist. Be careful
-         * when naming packages. Reserved words may work in some browsers and not others.
-         *
-         * for example:
-         *      @example
-         *      S.namespace('KISSY.app'); // returns KISSY.app
-         *      S.namespace('app.Shop'); // returns KISSY.app.Shop
-         *      S.namespace('TB.app.Shop', TRUE); // returns TB.app.Shop
-         *
-         * @return {Object}  A reference to the last namespace object created
-         * @member KISSY
-         */
-        namespace: function () {
-            var args = S.makeArray(arguments),
-                l = args.length,
-                o = null, i, j, p,
-                global = (args[l - 1] === TRUE && l--);
-
-            for (i = 0; i < l; i++) {
-                p = (EMPTY + args[i]).split('.');
-                o = global ? self : this;
-                for (j = (self[p[0]] === o) ? 1 : 0; j < p.length; ++j) {
-                    o = o[p[j]] = o[p[j]] || {};
-                }
-            }
-            return o;
-        }
+KISSY.add("util/array", [], function(S, undefined) {
+  var TRUE = true, AP = Array.prototype, indexOf = AP.indexOf, lastIndexOf = AP.lastIndexOf, filter = AP.filter, every = AP.every, some = AP.some, map = AP.map, FALSE = false;
+  S.mix(S, {indexOf:indexOf ? function(item, arr) {
+    return indexOf.call(arr, item)
+  } : function(item, arr) {
+    for(var i = 0, len = arr.length;i < len;++i) {
+      if(arr[i] === item) {
+        return i
+      }
+    }
+    return-1
+  }, lastIndexOf:lastIndexOf ? function(item, arr) {
+    return lastIndexOf.call(arr, item)
+  } : function(item, arr) {
+    for(var i = arr.length - 1;i >= 0;i--) {
+      if(arr[i] === item) {
+        break
+      }
+    }
+    return i
+  }, unique:function(a, override) {
+    var b = a.slice();
+    if(override) {
+      b.reverse()
+    }
+    var i = 0, n, item;
+    while(i < b.length) {
+      item = b[i];
+      while((n = S.lastIndexOf(item, b)) !== i) {
+        b.splice(n, 1)
+      }
+      i += 1
+    }
+    if(override) {
+      b.reverse()
+    }
+    return b
+  }, inArray:function(item, arr) {
+    return S.indexOf(item, arr) > -1
+  }, filter:filter ? function(arr, fn, context) {
+    return filter.call(arr, fn, context || this)
+  } : function(arr, fn, context) {
+    var ret = [];
+    S.each(arr, function(item, i, arr) {
+      if(fn.call(context || this, item, i, arr)) {
+        ret.push(item)
+      }
     });
-
-    function Empty() {
+    return ret
+  }, map:map ? function(arr, fn, context) {
+    return map.call(arr, fn, context || this)
+  } : function(arr, fn, context) {
+    var len = arr.length, res = new Array(len);
+    for(var i = 0;i < len;i++) {
+      var el = typeof arr === "string" ? arr.charAt(i) : arr[i];
+      if(el || i in arr) {
+        res[i] = fn.call(context || this, el, i, arr)
+      }
     }
-
-    function createObject(proto, constructor) {
-        var newProto;
-        if (objectCreate) {
-            newProto = objectCreate(proto);
-        } else {
-            Empty.prototype = proto;
-            newProto = new Empty();
-        }
-        newProto.constructor = constructor;
-        return newProto;
+    return res
+  }, reduce:function(arr, callback, initialValue) {
+    var len = arr.length;
+    if(typeof callback !== "function") {
+      throw new TypeError("callback is not function!");
     }
-
-    function mix(r, s) {
-        for (var i in s) {
-            r[i] = s[i];
-        }
+    if(len === 0 && arguments.length === 2) {
+      throw new TypeError("arguments invalid");
     }
-
-    function mixInternal(r, s, ov, wl, deep, cache) {
-        if (!s || !r) {
-            return r;
+    var k = 0;
+    var accumulator;
+    if(arguments.length >= 3) {
+      accumulator = initialValue
+    }else {
+      do {
+        if(k in arr) {
+          accumulator = arr[k++];
+          break
         }
-        var i, p, keys, len;
-
-        // 记录循环标志
-        s[MIX_CIRCULAR_DETECTION] = r;
-
-        // 记录被记录了循环标志的对像
-        cache.push(s);
-
-        // mix all properties
-        keys = S.keys(s);
-        len = keys.length;
-        for (i = 0; i < len; i++) {
-            p = keys[i];
-            if (p !== MIX_CIRCULAR_DETECTION) {
-                // no hasOwnProperty judge!
-                _mix(p, r, s, ov, wl, deep, cache);
-            }
+        k += 1;
+        if(k >= len) {
+          throw new TypeError;
         }
-
-        return r;
+      }while(TRUE)
     }
-
-    function removeConstructor(k, v) {
-        return k === 'constructor' ? undefined : v;
+    while(k < len) {
+      if(k in arr) {
+        accumulator = callback.call(undefined, accumulator, arr[k], k, arr)
+      }
+      k++
     }
-
-    function _mix(p, r, s, ov, wl, deep, cache) {
-        // 要求覆盖
-        // 或者目的不存在
-        // 或者深度mix
-        if (ov || !(p in r) || deep) {
-            var target = r[p],
-                src = s[p];
-            // prevent never-end loop
-            if (target === src) {
-                // S.mix({},{x:undefined})
-                if (target === undefined) {
-                    r[p] = target;
-                }
-                return;
-            }
-            if (wl) {
-                src = wl.call(s, p, src);
-            }
-            // 来源是数组和对象，并且要求深度 mix
-            if (deep && src && (S.isArray(src) || S.isPlainObject(src))) {
-                if (src[MIX_CIRCULAR_DETECTION]) {
-                    r[p] = src[MIX_CIRCULAR_DETECTION];
-                } else {
-                    // 目标值为对象或数组，直接 mix
-                    // 否则 新建一个和源值类型一样的空数组/对象，递归 mix
-                    var clone = target && (S.isArray(target) || S.isPlainObject(target)) ?
-                        target :
-                        (S.isArray(src) ? [] : {});
-                    r[p] = clone;
-                    mixInternal(clone, src, ov, wl, TRUE, cache);
-                }
-            } else if (src !== undefined && (ov || !(p in r))) {
-                r[p] = src;
-            }
-        }
+    return accumulator
+  }, every:every ? function(arr, fn, context) {
+    return every.call(arr, fn, context || this)
+  } : function(arr, fn, context) {
+    var len = arr && arr.length || 0;
+    for(var i = 0;i < len;i++) {
+      if(i in arr && !fn.call(context, arr[i], i, arr)) {
+        return FALSE
+      }
     }
-})(KISSY);/**
- * @ignore
- * array utilities of lang
- * @author yiminghe@gmail.com
- *
- */
-(function (S, undefined) {
-    var TRUE = true,
-        AP = Array.prototype,
-        indexOf = AP.indexOf,
-        lastIndexOf = AP.lastIndexOf,
-        filter = AP.filter,
-        every = AP.every,
-        some = AP.some,
-        map = AP.map,
-        FALSE = false;
-
-    S.mix(S, {
-        /**
-         * Executes the supplied function on each item in the array.
-         * @param object {Object} the object to iterate
-         * @param fn {Function} the function to execute on each item. The function
-         *        receives three arguments: the value, the index, the full array.
-         * @param {Object} [context]
-         * @member KISSY
-         */
-        each: function (object, fn, context) {
-            if (object) {
-                var key,
-                    val,
-                    keys,
-                    i = 0,
-                    length = object && object.length,
-                // do not use typeof obj == 'function': bug in phantomjs
-                    isObj = length === undefined || S.type(object) === 'function';
-
-                context = context || null;
-
-                if (isObj) {
-                    keys = S.keys(object);
-                    for (; i < keys.length; i++) {
-                        key = keys[i];
-                        // can not use hasOwnProperty
-                        if (fn.call(context, object[key], key, object) === FALSE) {
-                            break;
-                        }
-                    }
-                } else {
-                    for (val = object[0];
-                         i < length; val = object[++i]) {
-                        if (fn.call(context, val, i, object) === FALSE) {
-                            break;
-                        }
-                    }
-                }
-            }
-            return object;
-        },
-
-        /**
-         * Search for a specified value within an array.
-         * @param item individual item to be searched
-         * @method
-         * @member KISSY
-         * @param {Array} arr the array of items where item will be search
-         * @return {number} item's index in array
-         */
-        indexOf: indexOf ?
-            function (item, arr) {
-                return indexOf.call(arr, item);
-            } :
-            function (item, arr) {
-                for (var i = 0, len = arr.length; i < len; ++i) {
-                    if (arr[i] === item) {
-                        return i;
-                    }
-                }
-                return -1;
-            },
-
-        /**
-         * Returns the index of the last item in the array
-         * that contains the specified value, -1 if the
-         * value isn't found.
-         * @method
-         * @param item individual item to be searched
-         * @param {Array} arr the array of items where item will be search
-         * @return {number} item's last index in array
-         * @member KISSY
-         */
-        lastIndexOf: (lastIndexOf) ?
-            function (item, arr) {
-                return lastIndexOf.call(arr, item);
-            } :
-            function (item, arr) {
-                for (var i = arr.length - 1; i >= 0; i--) {
-                    if (arr[i] === item) {
-                        break;
-                    }
-                }
-                return i;
-            },
-
-        /**
-         * Returns a copy of the array with the duplicate entries removed
-         * @param a {Array} the array to find the subset of unique for
-         * @param [override] {Boolean} if override is TRUE, S.unique([a, b, a]) => [b, a].
-         * if override is FALSE, S.unique([a, b, a]) => [a, b]
-         * @return {Array} a copy of the array with duplicate entries removed
-         * @member KISSY
-         */
-        unique: function (a, override) {
-            var b = a.slice();
-            if (override) {
-                b.reverse();
-            }
-            var i = 0,
-                n,
-                item;
-
-            while (i < b.length) {
-                item = b[i];
-                while ((n = S.lastIndexOf(item, b)) !== i) {
-                    b.splice(n, 1);
-                }
-                i += 1;
-            }
-
-            if (override) {
-                b.reverse();
-            }
-            return b;
-        },
-
-        /**
-         * Search for a specified value index within an array.
-         * @param item individual item to be searched
-         * @param {Array} arr the array of items where item will be search
-         * @return {Boolean} the item exists in arr
-         * @member KISSY
-         */
-        inArray: function (item, arr) {
-            return S.indexOf(item, arr) > -1;
-        },
-
-        /**
-         * Executes the supplied function on each item in the array.
-         * Returns a new array containing the items that the supplied
-         * function returned TRUE for.
-         * @member KISSY
-         * @method
-         * @param arr {Array} the array to iterate
-         * @param fn {Function} the function to execute on each item
-         * @param [context] {Object} optional context object
-         * @return {Array} The items on which the supplied function returned TRUE.
-         * If no items matched an empty array is returned.
-         */
-        filter: filter ?
-            function (arr, fn, context) {
-                return filter.call(arr, fn, context || this);
-            } :
-            function (arr, fn, context) {
-                var ret = [];
-                S.each(arr, function (item, i, arr) {
-                    if (fn.call(context || this, item, i, arr)) {
-                        ret.push(item);
-                    }
-                });
-                return ret;
-            },
-
-        /**
-         * Executes the supplied function on each item in the array.
-         * Returns a new array containing the items that the supplied
-         * function returned for.
-         * @method
-         * @param arr {Array} the array to iterate
-         * @param fn {Function} the function to execute on each item
-         * @param [context] {Object} optional context object
-         * refer: https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/map
-         * @return {Array} The items on which the supplied function returned
-         * @member KISSY
-         */
-        map: map ?
-            function (arr, fn, context) {
-                return map.call(arr, fn, context || this);
-            } :
-            function (arr, fn, context) {
-                var len = arr.length,
-                    res = new Array(len);
-                for (var i = 0; i < len; i++) {
-                    var el = typeof arr === 'string' ? arr.charAt(i) : arr[i];
-                    if (el ||
-                        //ie<9 in invalid when typeof arr == string
-                        i in arr) {
-                        res[i] = fn.call(context || this, el, i, arr);
-                    }
-                }
-                return res;
-            },
-
-        /**
-         * Executes the supplied function on each item in the array.
-         * Returns a value which is accumulation of the value that the supplied
-         * function returned.
-         *
-         * @param arr {Array} the array to iterate
-         * @param callback {Function} the function to execute on each item
-         * @param initialValue {number} optional context object
-         * refer: https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/array/reduce
-         * @return {Array} The items on which the supplied function returned
-         * @member KISSY
-         */
-        reduce: function (arr, callback, initialValue) {
-            var len = arr.length;
-            if (typeof callback !== 'function') {
-                throw new TypeError('callback is not function!');
-            }
-
-            // no value to return if no initial value and an empty array
-            if (len === 0 && arguments.length === 2) {
-                throw new TypeError('arguments invalid');
-            }
-
-            var k = 0;
-            var accumulator;
-            if (arguments.length >= 3) {
-                accumulator = initialValue;
-            } else {
-                do {
-                    if (k in arr) {
-                        accumulator = arr[k++];
-                        break;
-                    }
-
-                    // if array contains no values, no initial value to return
-                    k += 1;
-                    if (k >= len) {
-                        throw new TypeError();
-                    }
-                }
-                while (TRUE);
-            }
-
-            while (k < len) {
-                if (k in arr) {
-                    accumulator = callback.call(undefined, accumulator, arr[k], k, arr);
-                }
-                k++;
-            }
-
-            return accumulator;
-        },
-
-        /**
-         * Tests whether all elements in the array pass the test implemented by the provided function.
-         * @method
-         * @param arr {Array} the array to iterate
-         * @param callback {Function} the function to execute on each item
-         * @param [context] {Object} optional context object
-         * @member KISSY
-         * @return {Boolean} whether all elements in the array pass the test implemented by the provided function.
-         */
-        every: every ?
-            function (arr, fn, context) {
-                return every.call(arr, fn, context || this);
-            } :
-            function (arr, fn, context) {
-                var len = arr && arr.length || 0;
-                for (var i = 0; i < len; i++) {
-                    if (i in arr && !fn.call(context, arr[i], i, arr)) {
-                        return FALSE;
-                    }
-                }
-                return TRUE;
-            },
-
-        /**
-         * Tests whether some element in the array passes the test implemented by the provided function.
-         * @method
-         * @param arr {Array} the array to iterate
-         * @param callback {Function} the function to execute on each item
-         * @param [context] {Object} optional context object
-         * @member KISSY
-         * @return {Boolean} whether some element in the array passes the test implemented by the provided function.
-         */
-        some: some ?
-            function (arr, fn, context) {
-                return some.call(arr, fn, context || this);
-            } :
-            function (arr, fn, context) {
-                var len = arr && arr.length || 0;
-                for (var i = 0; i < len; i++) {
-                    if (i in arr && fn.call(context, arr[i], i, arr)) {
-                        return TRUE;
-                    }
-                }
-                return FALSE;
-            },
-        /**
-         * Converts object to a TRUE array.
-         * // do not pass form.elements to this function ie678 bug
-         * @param o {object|Array} array like object or array
-         * @return {Array} native Array
-         * @member KISSY
-         */
-        makeArray: function (o) {
-            if (o == null) {
-                return [];
-            }
-            if (S.isArray(o)) {
-                return o;
-            }
-            var lengthType = typeof o.length,
-                oType = typeof o;
-            // The strings and functions also have 'length'
-            if (lengthType !== 'number' ||
-                // select element
-                // https://github.com/kissyteam/kissy/issues/537
-                typeof o.nodeName === 'string' ||
-                // window
-                /*jshint eqeqeq:false*/
-                (o != null && o == o.window) ||
-                oType === 'string' ||
-                // https://github.com/ariya/phantomjs/issues/11478
-                (oType === 'function' && !('item' in o && lengthType === 'number'))) {
-                return [o];
-            }
-            var ret = [];
-            for (var i = 0, l = o.length; i < l; i++) {
-                ret[i] = o[i];
-            }
-            return ret;
-        }
+    return TRUE
+  }, some:some ? function(arr, fn, context) {
+    return some.call(arr, fn, context || this)
+  } : function(arr, fn, context) {
+    var len = arr && arr.length || 0;
+    for(var i = 0;i < len;i++) {
+      if(i in arr && fn.call(context, arr[i], i, arr)) {
+        return TRUE
+      }
+    }
+    return FALSE
+  }, makeArray:function(o) {
+    if(o == null) {
+      return[]
+    }
+    if(S.isArray(o)) {
+      return o
+    }
+    var lengthType = typeof o.length, oType = typeof o;
+    if(lengthType !== "number" || typeof o.nodeName === "string" || o != null && o == o.window || oType === "string" || oType === "function" && !("item" in o && lengthType === "number")) {
+      return[o]
+    }
+    var ret = [];
+    for(var i = 0, l = o.length;i < l;i++) {
+      ret[i] = o[i]
+    }
+    return ret
+  }})
+});
+KISSY.add("util/escape", [], function(S) {
+  var EMPTY = "", HEX_BASE = 16, htmlEntities = {"&amp;":"&", "&gt;":">", "&lt;":"<", "&#x60;":"`", "&#x2F;":"/", "&quot;":'"', "&#x27;":"'"}, reverseEntities = {}, escapeReg, unEscapeReg, escapeRegExp = /[\-#$\^*()+\[\]{}|\\,.?\s]/g;
+  (function() {
+    for(var k in htmlEntities) {
+      reverseEntities[htmlEntities[k]] = k
+    }
+  })();
+  function getEscapeReg() {
+    if(escapeReg) {
+      return escapeReg
+    }
+    var str = EMPTY;
+    S.each(htmlEntities, function(entity) {
+      str += entity + "|"
     });
-})(KISSY);/**
- * @ignore
- * escape of lang
- * @author yiminghe@gmail.com
- *
- */
-(function (S) {
-    // IE doesn't include non-breaking-space (0xa0) in their \s character
-    // class (as required by section 7.2 of the ECMAScript spec), we explicitly
-    // include it in the regexp to enforce consistent cross-browser behavior.
-
-    var EMPTY = '',
-    // FALSE = false,
-        HEX_BASE = 16,
-    // http://www.owasp.org/index.php/XSS_(Cross_Site_Scripting)_Prevention_Cheat_Sheet
-    // http://wonko.com/post/html-escaping
-        htmlEntities = {
-            '&amp;': '&',
-            '&gt;': '>',
-            '&lt;': '<',
-            '&#x60;': '`',
-            '&#x2F;': '/',
-            '&quot;': '"',
-            /*jshint quotmark:false*/
-            '&#x27;': "'"
-        },
-        reverseEntities = {},
-        escapeReg,
-        unEscapeReg,
-    // - # $ ^ * ( ) + [ ] { } | \ , . ?
-        escapeRegExp = /[\-#$\^*()+\[\]{}|\\,.?\s]/g;
-    (function () {
-        for (var k in htmlEntities) {
-            reverseEntities[htmlEntities[k]] = k;
-        }
-    })();
-
-
-    function getEscapeReg() {
-        if (escapeReg) {
-            return escapeReg;
-        }
-        var str = EMPTY;
-        S.each(htmlEntities, function (entity) {
-            str += entity + '|';
-        });
-        str = str.slice(0, -1);
-        escapeReg = new RegExp(str, 'g');
-        return escapeReg;
+    str = str.slice(0, -1);
+    escapeReg = new RegExp(str, "g");
+    return escapeReg
+  }
+  function getUnEscapeReg() {
+    if(unEscapeReg) {
+      return unEscapeReg
     }
-
-    function getUnEscapeReg() {
-        if (unEscapeReg) {
-            return unEscapeReg;
-        }
-        var str = EMPTY;
-        S.each(reverseEntities, function (entity) {
-            str += entity + '|';
-        });
-        str += '&#(\\d{1,5});';
-        unEscapeReg = new RegExp(str, 'g');
-        return unEscapeReg;
-    }
-
-    S.mix(S, {
-        /**
-         * frequently used in taobao cookie about nick
-         * @member KISSY
-         * @return {String} un-unicode string.
-         */
-        fromUnicode: function (str) {
-            return str.replace(/\\u([a-f\d]{4})/ig, function (m, u) {
-                return  String.fromCharCode(parseInt(u, HEX_BASE));
-            });
-        },
-        /**
-         * get escaped string from html.
-         * only escape
-         *      & > < ` / " '
-         * refer:
-         *
-         * [http://yiminghe.javaeye.com/blog/788929](http://yiminghe.javaeye.com/blog/788929)
-         *
-         * [http://wonko.com/post/html-escaping](http://wonko.com/post/html-escaping)
-         * @param str {string} text2html show
-         * @member KISSY
-         * @return {String} escaped html
-         */
-        escapeHtml: function (str) {
-            return (str + '').replace(getEscapeReg(), function (m) {
-                return reverseEntities[m];
-            });
-        },
-
-        /**
-         * get escaped regexp string for construct regexp.
-         * @param str
-         * @member KISSY
-         * @return {String} escaped regexp
-         */
-        escapeRegExp: function (str) {
-            return str.replace(escapeRegExp, '\\$&');
-        },
-
-        /**
-         * un-escape html to string.
-         * only unescape
-         *      &amp; &lt; &gt; &#x60; &#x2F; &quot; &#x27; &#\d{1,5}
-         * @param str {string} html2text
-         * @member KISSY
-         * @return {String} un-escaped html
-         */
-        unEscapeHtml: function (str) {
-            return str.replace(getUnEscapeReg(), function (m, n) {
-                return htmlEntities[m] || String.fromCharCode(+n);
-            });
-        }
+    var str = EMPTY;
+    S.each(reverseEntities, function(entity) {
+      str += entity + "|"
     });
-
-    S.escapeHTML = S.escapeHtml;
-    S.unEscapeHTML = S.unEscapeHtml;
-})(KISSY);/**
- * @ignore
- * function utilities of lang
- * @author yiminghe@gmail.com
- *
- */
-(function (S, undefined) {
-    // ios Function.prototype.bind === undefined
-    function bindFn(r, fn, obj) {
-        function FNOP() {
-        }
-
-        var slice = [].slice,
-            args = slice.call(arguments, 3),
-            bound = function () {
-                var inArgs = slice.call(arguments);
-                return fn.apply(
-                    this instanceof FNOP ? this :
-                        // fix: y.x=S.bind(fn);
-                        obj || this,
-                    (r ? inArgs.concat(args) : args.concat(inArgs))
-                );
-            };
-        FNOP.prototype = fn.prototype;
-        bound.prototype = new FNOP();
-        return bound;
+    str += "&#(\\d{1,5});";
+    unEscapeReg = new RegExp(str, "g");
+    return unEscapeReg
+  }
+  S.mix(S, {fromUnicode:function(str) {
+    return str.replace(/\\u([a-f\d]{4})/ig, function(m, u) {
+      return String.fromCharCode(parseInt(u, HEX_BASE))
+    })
+  }, escapeHtml:function(str) {
+    return(str + "").replace(getEscapeReg(), function(m) {
+      return reverseEntities[m]
+    })
+  }, escapeRegExp:function(str) {
+    return str.replace(escapeRegExp, "\\$&")
+  }, unEscapeHtml:function(str) {
+    return str.replace(getUnEscapeReg(), function(m, n) {
+      return htmlEntities[m] || String.fromCharCode(+n)
+    })
+  }});
+  S.escapeHTML = S.escapeHtml;
+  S.unEscapeHTML = S.unEscapeHtml
+});
+KISSY.add("util/function", [], function(S, undefined) {
+  function bindFn(r, fn, obj) {
+    function FNOP() {
     }
-
-    S.mix(S, {
-        /**
-         * empty function
-         * @member KISSY
-         */
-        noop: function () {
-        },
-        /**
-         * Creates a new function that, when called, itself calls this function in the context of the provided this value,
-         * with a given sequence of arguments preceding any provided when the new function was called.
-         * refer: https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function/bind
-         * @param {Function} fn internal called function
-         * @param {Object} obj context in which fn runs
-         * @param {*...} var_args extra arguments
-         * @member KISSY
-         * @return {Function} new function with context and arguments
-         */
-        bind: bindFn(0, bindFn, null, 0),
-
-        /**
-         * Creates a new function that, when called, itself calls this function in the context of the provided this value,
-         * with a given sequence of arguments preceding any provided when the new function was called.
-         * refer: https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function/bind
-         * @param {Function} fn internal called function
-         * @param {Object} obj context in which fn runs
-         * @param {*...} var_args extra arguments
-         * @member KISSY
-         * @return {Function} new function with context and arguments
-         */
-        rbind: bindFn(0, bindFn, null, 1),
-
-        /**
-         * Executes the supplied function in the context of the supplied
-         * object 'when' milliseconds later. Executes the function a
-         * single time unless periodic is set to true.
-         *
-         * @param fn {Function|String} the function to execute or the name of the method in
-         * the 'o' object to execute.
-         *
-         * @param [when=0] {Number} the number of milliseconds to wait until the fn is executed.
-         *
-         * @param {Boolean} [periodic] if true, executes continuously at supplied interval
-         * until canceled.
-         *
-         * @param {Object} [context] the context object.
-         *
-         * @param [data] that is provided to the function. This accepts either a single
-         * item or an array. If an array is provided, the function is executed with
-         * one parameter for each array item. If you need to pass a single array
-         * parameter, it needs to be wrapped in an array.
-         *
-         * @return {Object} a timer object. Call the cancel() method on this object to stop
-         * the timer.
-         *
-         * @member KISSY
-         */
-        later: function (fn, when, periodic, context, data) {
-            when = when || 0;
-            var m = fn,
-                d = S.makeArray(data),
-                f,
-                r;
-
-            if (typeof fn === 'string') {
-                m = context[fn];
-            }
-
-            if (!m) {
-                S.error('method undefined');
-            }
-
-            f = function () {
-                m.apply(context, d);
-            };
-
-            r = (periodic) ? setInterval(f, when) : setTimeout(f, when);
-
-            return {
-                id: r,
-                interval: periodic,
-                cancel: function () {
-                    if (this.interval) {
-                        clearInterval(r);
-                    } else {
-                        clearTimeout(r);
-                    }
-                }
-            };
-        },
-
-        /**
-         * Throttles a call to a method based on the time between calls.
-         * @param {Function} fn The function call to throttle.
-         * @param {Object} [context] context fn to run
-         * @param {Number} [ms] The number of milliseconds to throttle the method call.
-         * Passing a -1 will disable the throttle. Defaults to 150.
-         * @return {Function} Returns a wrapped function that calls fn throttled.
-         * @member KISSY
-         */
-        throttle: function (fn, ms, context) {
-            ms = ms || 150;
-
-            if (ms === -1) {
-                return function () {
-                    fn.apply(context || this, arguments);
-                };
-            }
-
-            var last = S.now();
-
-            return function () {
-                var now = S.now();
-                if (now - last > ms) {
-                    last = now;
-                    fn.apply(context || this, arguments);
-                }
-            };
-        },
-
-        /**
-         * buffers a call between a fixed time
-         * @param {Function} fn
-         * @param {Number} ms
-         * @param {Object} [context]
-         * @return {Function} Returns a wrapped function that calls fn buffered.
-         * @member KISSY
-         */
-        buffer: function (fn, ms, context) {
-            ms = ms || 150;
-
-            if (ms === -1) {
-                return function () {
-                    fn.apply(context || this, arguments);
-                };
-            }
-            var bufferTimer = null;
-
-            function f() {
-                f.stop();
-                bufferTimer = S.later(fn, ms, 0, context || this, arguments);
-            }
-
-            f.stop = function () {
-                if (bufferTimer) {
-                    bufferTimer.cancel();
-                    bufferTimer = 0;
-                }
-            };
-
-            return f;
-        }
-    });
-})(KISSY);/**
- * @ignore
- * lang
- * @author  yiminghe@gmail.com
- *
- */
-(function (S, undefined) {
-    var TRUE = true,
-        FALSE = false,
-        CLONE_MARKER = '__~ks_cloned',
-        COMPARE_MARKER = '__~ks_compared';
-
-    S.mix(S, {
-        /**
-         * Checks to see whether two object are equals.
-         * @param a 比较目标1
-         * @param b 比较目标2
-         * @param [mismatchKeys] internal usage
-         * @param [mismatchValues] internal usage
-         * @return {Boolean} a.equals(b)
-         * @member KISSY
-         */
-        equals: function (a, b, /*internal use*/mismatchKeys, /*internal use*/mismatchValues) {
-            // inspired by jasmine
-            mismatchKeys = mismatchKeys || [];
-            mismatchValues = mismatchValues || [];
-
-            if (a === b) {
-                return TRUE;
-            }
-            if (a === undefined || a === null || b === undefined || b === null) {
-                // need type coercion
-                return a == null && b == null;
-            }
-            if (a instanceof Date && b instanceof Date) {
-                return a.getTime() === b.getTime();
-            }
-            if (typeof a === 'string' && typeof b === 'string') {
-                return (a === b);
-            }
-            if (typeof a === 'number' && typeof b === 'number') {
-                return (a === b);
-            }
-            if (typeof a === 'object' && typeof b === 'object') {
-                return compareObjects(a, b, mismatchKeys, mismatchValues);
-            }
-            // Straight check
-            return (a === b);
-        },
-
-        /**
-         * Creates a deep copy of a plain object or array. Others are returned untouched.
-         * @param input
-         * @member KISSY
-         * @param {Function} [filter] filter function
-         * @return {Object} the new cloned object
-         * refer: http://www.w3.org/TR/html5/common-dom-interfaces.html#safe-passing-of-structured-data
-         */
-        clone: function (input, filter) {
-            // 稍微改改就和规范一样了 :)
-            // Let memory be an association list of pairs of objects,
-            // initially empty. This is used to handle duplicate references.
-            // In each pair of objects, one is called the source object
-            // and the other the destination object.
-            var memory = {},
-                ret = cloneInternal(input, filter, memory);
-            S.each(memory, function (v) {
-                // 清理在源对象上做的标记
-                v = v.input;
-                if (v[CLONE_MARKER]) {
-                    try {
-                        delete v[CLONE_MARKER];
-                    } catch (e) {
-                        v[CLONE_MARKER] = undefined;
-                    }
-                }
-            });
-            memory = null;
-            return ret;
-        }
-    });
-
-    function cloneInternal(input, f, memory) {
-        var destination = input,
-            isArray,
-            isPlainObject,
-            k,
-            stamp;
-        if (!input) {
-            return destination;
-        }
-
-        // If input is the source object of a pair of objects in memory,
-        // then return the destination object in that pair of objects .
-        // and abort these steps.
-        if (input[CLONE_MARKER]) {
-            // 对应的克隆后对象
-            return memory[input[CLONE_MARKER]].destination;
-        } else if (typeof input === 'object') {
-            // 引用类型要先记录
-            var Constructor = input.constructor;
-            if (S.inArray(Constructor, [Boolean, String, Number, Date, RegExp])) {
-                destination = new Constructor(input.valueOf());
-            } else if ((isArray = S.isArray(input))) {
-                // ImageData , File, Blob , FileList .. etc
-                destination = f ? S.filter(input, f) : input.concat();
-            } else if ((isPlainObject = S.isPlainObject(input))) {
-                destination = {};
-            }
-            // Add a mapping from input (the source object)
-            // to output (the destination object) to memory.
-            // 做标记
-            // stamp can not be
-            input[CLONE_MARKER] = (stamp = S.guid('c'));
-            // 存储源对象以及克隆后的对象
-            memory[stamp] = {destination: destination, input: input};
-        }
-        // If input is an Array object or an Object object,
-        // then, for each enumerable property in input,
-        // add a new property to output having the same name,
-        // and having a value created from invoking the internal structured cloning algorithm recursively
-        // with the value of the property as the 'input' argument and memory as the 'memory' argument.
-        // The order of the properties in the input and output objects must be the same.
-
-        // clone it
-        if (isArray) {
-            for (var i = 0; i < destination.length; i++) {
-                destination[i] = cloneInternal(destination[i], f, memory);
-            }
-        } else if (isPlainObject) {
-            for (k in input) {
-
-                if (k !== CLONE_MARKER &&
-                    (!f || (f.call(input, input[k], k, input) !== FALSE))) {
-                    destination[k] = cloneInternal(input[k], f, memory);
-                }
-
-            }
-        }
-
-        return destination;
+    var slice = [].slice, args = slice.call(arguments, 3), bound = function() {
+      var inArgs = slice.call(arguments);
+      return fn.apply(this instanceof FNOP ? this : obj || this, r ? inArgs.concat(args) : args.concat(inArgs))
+    };
+    FNOP.prototype = fn.prototype;
+    bound.prototype = new FNOP;
+    return bound
+  }
+  S.mix(S, {noop:function() {
+  }, bind:bindFn(0, bindFn, null, 0), rbind:bindFn(0, bindFn, null, 1), later:function(fn, when, periodic, context, data) {
+    when = when || 0;
+    var m = fn, d = S.makeArray(data), f, r;
+    if(typeof fn === "string") {
+      m = context[fn]
     }
-
-    function compareObjects(a, b, mismatchKeys, mismatchValues) {
-        // 两个比较过了，无需再比较，防止循环比较
-        if (a[COMPARE_MARKER] === b && b[COMPARE_MARKER] === a) {
-            return TRUE;
+    if(!m) {
+      S.error("method undefined")
+    }
+    f = function() {
+      m.apply(context, d)
+    };
+    r = periodic ? setInterval(f, when) : setTimeout(f, when);
+    return{id:r, interval:periodic, cancel:function() {
+      if(this.interval) {
+        clearInterval(r)
+      }else {
+        clearTimeout(r)
+      }
+    }}
+  }, throttle:function(fn, ms, context) {
+    ms = ms || 150;
+    if(ms === -1) {
+      return function() {
+        fn.apply(context || this, arguments)
+      }
+    }
+    var last = S.now();
+    return function() {
+      var now = S.now();
+      if(now - last > ms) {
+        last = now;
+        fn.apply(context || this, arguments)
+      }
+    }
+  }, buffer:function(fn, ms, context) {
+    ms = ms || 150;
+    if(ms === -1) {
+      return function() {
+        fn.apply(context || this, arguments)
+      }
+    }
+    var bufferTimer = null;
+    function f() {
+      f.stop();
+      bufferTimer = S.later(fn, ms, 0, context || this, arguments)
+    }
+    f.stop = function() {
+      if(bufferTimer) {
+        bufferTimer.cancel();
+        bufferTimer = 0
+      }
+    };
+    return f
+  }})
+});
+KISSY.add("util/object", [], function(S, undefined) {
+  var logger = S.getLogger("s/util");
+  var MIX_CIRCULAR_DETECTION = "__MIX_CIRCULAR", STAMP_MARKER = "__~ks_stamped", host = S.Env.host, TRUE = true, EMPTY = "", Obj = Object, objectCreate = Obj.create;
+  mix(S, {stamp:function(o, readOnly, marker) {
+    marker = marker || STAMP_MARKER;
+    var guid = o[marker];
+    if(guid) {
+      return guid
+    }else {
+      if(!readOnly) {
+        try {
+          guid = o[marker] = S.guid(marker)
+        }catch(e) {
+          guid = undefined
         }
-        a[COMPARE_MARKER] = b;
-        b[COMPARE_MARKER] = a;
-        var hasKey = function (obj, keyName) {
-            return (obj !== null && obj !== undefined) && obj[keyName] !== undefined;
+      }
+    }
+    return guid
+  }, mix:function(r, s, ov, wl, deep) {
+    if(typeof ov === "object") {
+      wl = ov.whitelist;
+      deep = ov.deep;
+      ov = ov.overwrite
+    }
+    if(wl && typeof wl !== "function") {
+      var originalWl = wl;
+      wl = function(name, val) {
+        return S.inArray(name, originalWl) ? val : undefined
+      }
+    }
+    if(ov === undefined) {
+      ov = TRUE
+    }
+    var cache = [], c, i = 0;
+    mixInternal(r, s, ov, wl, deep, cache);
+    while(c = cache[i++]) {
+      delete c[MIX_CIRCULAR_DETECTION]
+    }
+    return r
+  }, merge:function(varArgs) {
+    varArgs = S.makeArray(arguments);
+    var o = {}, i, l = varArgs.length;
+    for(i = 0;i < l;i++) {
+      S.mix(o, varArgs[i])
+    }
+    return o
+  }, augment:function(r, varArgs) {
+    var args = S.makeArray(arguments), len = args.length - 2, i = 1, proto, arg, ov = args[len], wl = args[len + 1];
+    args[1] = varArgs;
+    if(!S.isArray(wl)) {
+      ov = wl;
+      wl = undefined;
+      len++
+    }
+    if(typeof ov !== "boolean") {
+      ov = undefined;
+      len++
+    }
+    for(;i < len;i++) {
+      arg = args[i];
+      if(proto = arg.prototype) {
+        arg = S.mix({}, proto, true, removeConstructor)
+      }
+      S.mix(r.prototype, arg, ov, wl)
+    }
+    return r
+  }, extend:function(r, s, px, sx) {
+    if("@DEBUG@") {
+      if(!r) {
+        logger.error("extend r is null")
+      }
+      if(!s) {
+        logger.error("extend s is null")
+      }
+      if(!s || !r) {
+        return r
+      }
+    }
+    var sp = s.prototype, rp;
+    sp.constructor = s;
+    rp = createObject(sp, r);
+    r.prototype = S.mix(rp, r.prototype);
+    r.superclass = sp;
+    if(px) {
+      S.mix(rp, px)
+    }
+    if(sx) {
+      S.mix(r, sx)
+    }
+    return r
+  }, namespace:function() {
+    var args = S.makeArray(arguments), l = args.length, o = null, i, j, p, global = args[l - 1] === TRUE && l--;
+    for(i = 0;i < l;i++) {
+      p = (EMPTY + args[i]).split(".");
+      o = global ? host : this;
+      for(j = host[p[0]] === o ? 1 : 0;j < p.length;++j) {
+        o = o[p[j]] = o[p[j]] || {}
+      }
+    }
+    return o
+  }});
+  function Empty() {
+  }
+  function createObject(proto, constructor) {
+    var newProto;
+    if(objectCreate) {
+      newProto = objectCreate(proto)
+    }else {
+      Empty.prototype = proto;
+      newProto = new Empty
+    }
+    newProto.constructor = constructor;
+    return newProto
+  }
+  function mix(r, s) {
+    for(var i in s) {
+      r[i] = s[i]
+    }
+  }
+  function mixInternal(r, s, ov, wl, deep, cache) {
+    if(!s || !r) {
+      return r
+    }
+    var i, p, keys, len;
+    s[MIX_CIRCULAR_DETECTION] = r;
+    cache.push(s);
+    keys = S.keys(s);
+    len = keys.length;
+    for(i = 0;i < len;i++) {
+      p = keys[i];
+      if(p !== MIX_CIRCULAR_DETECTION) {
+        _mix(p, r, s, ov, wl, deep, cache)
+      }
+    }
+    return r
+  }
+  function removeConstructor(k, v) {
+    return k === "constructor" ? undefined : v
+  }
+  function _mix(p, r, s, ov, wl, deep, cache) {
+    if(ov || !(p in r) || deep) {
+      var target = r[p], src = s[p];
+      if(target === src) {
+        if(target === undefined) {
+          r[p] = target
+        }
+        return
+      }
+      if(wl) {
+        src = wl.call(s, p, src)
+      }
+      if(deep && src && (S.isArray(src) || S.isPlainObject(src))) {
+        if(src[MIX_CIRCULAR_DETECTION]) {
+          r[p] = src[MIX_CIRCULAR_DETECTION]
+        }else {
+          var clone = target && (S.isArray(target) || S.isPlainObject(target)) ? target : S.isArray(src) ? [] : {};
+          r[p] = clone;
+          mixInternal(clone, src, ov, wl, TRUE, cache)
+        }
+      }else {
+        if(src !== undefined && (ov || !(p in r))) {
+          r[p] = src
+        }
+      }
+    }
+  }
+});
+KISSY.add("util/string", [], function(S, undefined) {
+  var SUBSTITUTE_REG = /\\?\{([^{}]+)\}/g, EMPTY = "";
+  S.mix(S, {substitute:function(str, o, regexp) {
+    if(typeof str !== "string" || !o) {
+      return str
+    }
+    return str.replace(regexp || SUBSTITUTE_REG, function(match, name) {
+      if(match.charAt(0) === "\\") {
+        return match.slice(1)
+      }
+      return o[name] === undefined ? EMPTY : o[name]
+    })
+  }, ucfirst:function(s) {
+    s += "";
+    return s.charAt(0).toUpperCase() + s.substring(1)
+  }})
+});
+KISSY.add("util/type", [], function(S, undefined) {
+  var class2type = {}, FALSE = false, noop = S.noop, OP = Object.prototype, toString = OP.toString;
+  function hasOwnProperty(o, p) {
+    return OP.hasOwnProperty.call(o, p)
+  }
+  S.mix(S, {type:function(o) {
+    return o == null ? String(o) : class2type[toString.call(o)] || "object"
+  }, isNull:function(o) {
+    return o === null
+  }, isUndefined:function(o) {
+    return o === undefined
+  }, isPlainObject:function(obj) {
+    if(!obj || S.type(obj) !== "object" || obj.nodeType || obj.window == obj) {
+      return FALSE
+    }
+    var key, objConstructor;
+    try {
+      if((objConstructor = obj.constructor) && !hasOwnProperty(obj, "constructor") && !hasOwnProperty(objConstructor.prototype, "isPrototypeOf")) {
+        return FALSE
+      }
+    }catch(e) {
+      return FALSE
+    }
+    for(key in obj) {
+    }
+    return key === undefined || hasOwnProperty(obj, key)
+  }});
+  if("@DEBUG@") {
+    S.mix(S, {isBoolean:noop, isNumber:noop, isString:noop, isFunction:noop, isArray:noop, isDate:noop, isRegExp:noop, isObject:noop})
+  }
+  S.each("Boolean Number String Function Date RegExp Object Array".split(" "), function(name, lc) {
+    class2type["[object " + name + "]"] = lc = name.toLowerCase();
+    S["is" + name] = function(o) {
+      return S.type(o) === lc
+    }
+  });
+  S.isArray = Array.isArray || S.isArray
+});
+KISSY.add("util/web", [], function(S, undefined) {
+  var logger = S.getLogger("s/web");
+  var win = S.Env.host, doc = win.document || {}, docElem = doc.documentElement, location = win.location, EMPTY = "", domReady = 0, callbacks = [], POLL_RETIRES = 500, POLL_INTERVAL = 40, RE_ID_STR = /^#?([\w-]+)$/, RE_NOT_WHITESPACE = /\S/, standardEventModel = doc.addEventListener, supportEvent = doc.attachEvent || standardEventModel, DOM_READY_EVENT = "DOMContentLoaded", READY_STATE_CHANGE_EVENT = "readystatechange", LOAD_EVENT = "load", COMPLETE = "complete", addEventListener = standardEventModel ? 
+  function(el, type, fn) {
+    el.addEventListener(type, fn, false)
+  } : function(el, type, fn) {
+    el.attachEvent("on" + type, fn)
+  }, removeEventListener = standardEventModel ? function(el, type, fn) {
+    el.removeEventListener(type, fn, false)
+  } : function(el, type, fn) {
+    el.detachEvent("on" + type, fn)
+  };
+  S.mix(S, {isWindow:function(obj) {
+    return obj != null && obj == obj.window
+  }, parseXML:function(data) {
+    if(data.documentElement) {
+      return data
+    }
+    var xml;
+    try {
+      if(win.DOMParser) {
+        xml = (new DOMParser).parseFromString(data, "text/xml")
+      }else {
+        xml = new ActiveXObject("Microsoft.XMLDOM");
+        xml.async = false;
+        xml.loadXML(data)
+      }
+    }catch(e) {
+      logger.error("parseXML error :");
+      logger.error(e);
+      xml = undefined
+    }
+    if(!xml || !xml.documentElement || xml.getElementsByTagName("parsererror").length) {
+      S.error("Invalid XML: " + data)
+    }
+    return xml
+  }, globalEval:function(data) {
+    if(data && RE_NOT_WHITESPACE.test(data)) {
+      if(win.execScript) {
+        win.execScript(data)
+      }else {
+        (function(data) {
+          win["eval"].call(win, data)
+        })(data)
+      }
+    }
+  }, ready:function(fn) {
+    if(domReady) {
+      try {
+        fn(S)
+      }catch(e) {
+        S.log(e.stack || e, "error");
+        setTimeout(function() {
+          throw e;
+        }, 0)
+      }
+    }else {
+      callbacks.push(fn)
+    }
+    return this
+  }, available:function(id, fn) {
+    id = (id + EMPTY).match(RE_ID_STR)[1];
+    var retryCount = 1;
+    var timer = S.later(function() {
+      if(++retryCount > POLL_RETIRES) {
+        timer.cancel();
+        return
+      }
+      var node = doc.getElementById(id);
+      if(node) {
+        fn(node);
+        timer.cancel()
+      }
+    }, POLL_INTERVAL, true)
+  }});
+  function fireReady() {
+    if(domReady) {
+      return
+    }
+    if(win && win.setTimeout) {
+      removeEventListener(win, LOAD_EVENT, fireReady)
+    }
+    domReady = 1;
+    for(var i = 0;i < callbacks.length;i++) {
+      try {
+        callbacks[i](S)
+      }catch(e) {
+        S.log(e.stack || e, "error");
+        setTimeout(function() {
+          throw e;
+        }, 0)
+      }
+    }
+  }
+  function bindReady() {
+    if(!doc || doc.readyState === COMPLETE) {
+      fireReady();
+      return
+    }
+    addEventListener(win, LOAD_EVENT, fireReady);
+    if(standardEventModel) {
+      var domReady = function() {
+        removeEventListener(doc, DOM_READY_EVENT, domReady);
+        fireReady()
+      };
+      addEventListener(doc, DOM_READY_EVENT, domReady)
+    }else {
+      var stateChange = function() {
+        if(doc.readyState === COMPLETE) {
+          removeEventListener(doc, READY_STATE_CHANGE_EVENT, stateChange);
+          fireReady()
+        }
+      };
+      addEventListener(doc, READY_STATE_CHANGE_EVENT, stateChange);
+      var notframe, doScroll = docElem && docElem.doScroll;
+      try {
+        notframe = win.frameElement === null
+      }catch(e) {
+        notframe = false
+      }
+      if(doScroll && notframe) {
+        var readyScroll = function() {
+          try {
+            doScroll("left");
+            fireReady()
+          }catch(ex) {
+            setTimeout(readyScroll, POLL_INTERVAL)
+          }
         };
-        for (var property in b) {
-
-            if (!hasKey(a, property) && hasKey(b, property)) {
-                mismatchKeys.push('expected has key ' + property + '", but missing from actual.');
-            }
-
-        }
-        for (property in a) {
-
-            if (!hasKey(b, property) && hasKey(a, property)) {
-                mismatchKeys.push('expected missing key "' + property + '", but present in actual.');
-            }
-
-        }
-        for (property in b) {
-
-            if (property === COMPARE_MARKER) {
-                continue;
-            }
-            if (!S.equals(a[property], b[property], mismatchKeys, mismatchValues)) {
-                mismatchValues.push('"' + property + '" was "' +
-                    (b[property] ? (b[property].toString()) : b[property]) +
-                    '" in expected, but was "' +
-                    (a[property] ? (a[property].toString()) : a[property]) + '" in actual.');
-            }
-
-        }
-        if (S.isArray(a) && S.isArray(b) && a.length !== b.length) {
-            mismatchValues.push('arrays were not the same length');
-        }
-        delete a[COMPARE_MARKER];
-        delete b[COMPARE_MARKER];
-        return (mismatchKeys.length === 0 && mismatchValues.length === 0);
+        readyScroll()
+      }
     }
-})(KISSY);
-/**
- * @ignore
- * string utilities of lang
- * @author yiminghe@gmail.com
- *
- */
-(function (S, undefined) {
-
-    // IE doesn't include non-breaking-space (0xa0) in their \s character
-    // class (as required by section 7.2 of the ECMAScript spec), we explicitly
-    // include it in the regexp to enforce consistent cross-browser behavior.
-    var SUBSTITUTE_REG = /\\?\{([^{}]+)\}/g,
-        EMPTY = '';
-
-    S.mix(S, {
-        /**
-         * Substitutes keywords in a string using an object/array.
-         * Removes undefined keywords and ignores escaped keywords.
-         * @param {String} str template string
-         * @param {Object} o json data
-         * @member KISSY
-         * @param {RegExp} [regexp] to match a piece of template string
-         */
-        substitute: function (str, o, regexp) {
-            if (typeof str !== 'string' || !o) {
-                return str;
-            }
-
-            return str.replace(regexp || SUBSTITUTE_REG, function (match, name) {
-                if (match.charAt(0) === '\\') {
-                    return match.slice(1);
-                }
-                return (o[name] === undefined) ? EMPTY : o[name];
-            });
-        },
-
-        /** uppercase first character.
-         * @member KISSY
-         * @param s
-         * @return {String}
-         */
-        ucfirst: function (s) {
-            s += '';
-            return s.charAt(0).toUpperCase() + s.substring(1);
+  }
+  if(location && (location.search || EMPTY).indexOf("ks-debug") !== -1) {
+    S.Config.debug = true
+  }
+  if(supportEvent) {
+    bindReady()
+  }
+  try {
+    doc.execCommand("BackgroundImageCache", false, true)
+  }catch(e) {
+  }
+});
+KISSY.add("util", ["util/array", "util/escape", "util/function", "util/object", "util/string", "util/type", "util/web"], function(S, require) {
+  var TRUE = true, FALSE = false, CLONE_MARKER = "__~ks_cloned", COMPARE_MARKER = "__~ks_compared";
+  require("util/array");
+  require("util/escape");
+  require("util/function");
+  require("util/object");
+  require("util/string");
+  require("util/type");
+  require("util/web");
+  S.mix(S, {equals:function(a, b, mismatchKeys, mismatchValues) {
+    mismatchKeys = mismatchKeys || [];
+    mismatchValues = mismatchValues || [];
+    if(a === b) {
+      return TRUE
+    }
+    if(a === undefined || a === null || b === undefined || b === null) {
+      return a == null && b == null
+    }
+    if(a instanceof Date && b instanceof Date) {
+      return a.getTime() === b.getTime()
+    }
+    if(typeof a === "string" && typeof b === "string") {
+      return a === b
+    }
+    if(typeof a === "number" && typeof b === "number") {
+      return a === b
+    }
+    if(typeof a === "object" && typeof b === "object") {
+      return compareObjects(a, b, mismatchKeys, mismatchValues)
+    }
+    return a === b
+  }, clone:function(input, filter) {
+    var memory = {}, ret = cloneInternal(input, filter, memory);
+    S.each(memory, function(v) {
+      v = v.input;
+      if(v[CLONE_MARKER]) {
+        try {
+          delete v[CLONE_MARKER]
+        }catch(e) {
+          v[CLONE_MARKER] = undefined
         }
+      }
     });
-})(KISSY);/**
- * @ignore
- * type judgement
- * @author yiminghe@gmail.com, lifesinger@gmail.com
- *
- */
-(function (S, undefined) {
-    // [[Class]] -> type pairs
-    var class2type = {},
-        FALSE = false,
-        noop = S.noop,
-        OP = Object.prototype,
-        toString = OP.toString;
-
-    function hasOwnProperty(o, p) {
-        return OP.hasOwnProperty.call(o, p);
+    memory = null;
+    return ret
+  }});
+  function cloneInternal(input, f, memory) {
+    var destination = input, isArray, isPlainObject, k, stamp;
+    if(!input) {
+      return destination
     }
-
-    S.mix(S, {
-        /**
-         * Determine the internal JavaScript [[Class]] of an object.
-         * @member KISSY
-         */
-        type: function (o) {
-            return o == null ?
-                String(o) :
-                class2type[toString.call(o)] || 'object';
-        },
-
-        /**
-         * whether o === null
-         * @param o
-         * @member KISSY
-         */
-        isNull: function (o) {
-            return o === null;
-        },
-
-        /**
-         * whether o === undefined
-         * @param o
-         * @member KISSY
-         */
-        isUndefined: function (o) {
-            return o === undefined;
-        },
-
-        /**
-         * Checks to see if an object is a plain object (created using '{}'
-         * or 'new Object()' but not 'new FunctionClass()').
-         * @member KISSY
-         */
-        isPlainObject: function (obj) {
-            // Must be an Object.
-            // Because of IE, we also have to check the presence of the constructor property.
-            // Make sure that Dom nodes and window objects don't pass through, as well
-            if (!obj || S.type(obj) !== 'object' || obj.nodeType ||
-                /*jshint eqeqeq:false*/
-                // must == for ie8
-                obj.window == obj) {
-                return FALSE;
+    if(input[CLONE_MARKER]) {
+      return memory[input[CLONE_MARKER]].destination
+    }else {
+      if(typeof input === "object") {
+        var Constructor = input.constructor;
+        if(S.inArray(Constructor, [Boolean, String, Number, Date, RegExp])) {
+          destination = new Constructor(input.valueOf())
+        }else {
+          if(isArray = S.isArray(input)) {
+            destination = f ? S.filter(input, f) : input.concat()
+          }else {
+            if(isPlainObject = S.isPlainObject(input)) {
+              destination = {}
             }
-
-            var key, objConstructor;
-
-            try {
-                // Not own constructor property must be Object
-                if ((objConstructor = obj.constructor) && !hasOwnProperty(obj, 'constructor') && !hasOwnProperty(objConstructor.prototype, 'isPrototypeOf')) {
-                    return FALSE;
-                }
-            } catch (e) {
-                // IE8,9 Will throw exceptions on certain host objects
-                return FALSE;
-            }
-
-            // Own properties are enumerated firstly, so to speed up,
-            // if last one is own, then all properties are own.
-            /*jshint noempty:false*/
-            for (key in obj) {
-            }
-
-            return ((key === undefined) || hasOwnProperty(obj, key));
+          }
         }
-    });
-
-    if ('@DEBUG@') {
-        S.mix(S, {
-            /**
-             * test whether o is boolean
-             * @method
-             * @param  o
-             * @return {Boolean}
-             * @member KISSY
-             */
-            isBoolean: noop,
-            /**
-             * test whether o is number
-             * @method
-             * @param  o
-             * @return {Boolean}
-             * @member KISSY
-             */
-            isNumber: noop,
-            /**
-             * test whether o is String
-             * @method
-             * @param  o
-             * @return {Boolean}
-             * @member KISSY
-             */
-            isString: noop,
-            /**
-             * test whether o is function
-             * @method
-             * @param  o
-             * @return {Boolean}
-             * @member KISSY
-             */
-            isFunction: noop,
-            /**
-             * test whether o is Array
-             * @method
-             * @param  o
-             * @return {Boolean}
-             * @member KISSY
-             */
-            isArray: noop,
-            /**
-             * test whether o is Date
-             * @method
-             * @param  o
-             * @return {Boolean}
-             * @member KISSY
-             */
-            isDate: noop,
-            /**
-             * test whether o is RegExp
-             * @method
-             * @param  o
-             * @return {Boolean}
-             * @member KISSY
-             */
-            isRegExp: noop,
-            /**
-             * test whether o is Object
-             * @method
-             * @param  o
-             * @return {Boolean}
-             * @member KISSY
-             */
-            isObject: noop
-        });
+        input[CLONE_MARKER] = stamp = S.guid("c");
+        memory[stamp] = {destination:destination, input:input}
+      }
     }
-
-    S.each('Boolean Number String Function Date RegExp Object Array'.split(' '), function (name, lc) {
-        // populate the class2type map
-        class2type['[object ' + name + ']'] = (lc = name.toLowerCase());
-
-        // add isBoolean/isNumber/...
-        S['is' + name] = function (o) {
-            return S.type(o) === lc;
-        };
-    });
-    S.isArray = Array.isArray || S.isArray;
-})(KISSY);/**
- * @ignore
- * ua
- */
-(function (S, undefined) {
-    /*global process*/
-
-    var win = S.Env.host,
-        doc = win.document,
-        navigator = win.navigator,
-        ua = navigator && navigator.userAgent || '';
-
-    function numberify(s) {
-        var c = 0;
-        // convert '1.2.3.4' to 1.234
-        return parseFloat(s.replace(/\./g, function () {
-            return (c++ === 0) ? '.' : '';
-        }));
+    if(isArray) {
+      for(var i = 0;i < destination.length;i++) {
+        destination[i] = cloneInternal(destination[i], f, memory)
+      }
+    }else {
+      if(isPlainObject) {
+        for(k in input) {
+          if(k !== CLONE_MARKER && (!f || f.call(input, input[k], k, input) !== FALSE)) {
+            destination[k] = cloneInternal(input[k], f, memory)
+          }
+        }
+      }
     }
-
-    function setTridentVersion(ua, UA) {
-        var core, m;
-        UA[core = 'trident'] = 0.1; // Trident detected, look for revision
-
-        // Get the Trident's accurate version
-        if ((m = ua.match(/Trident\/([\d.]*)/)) && m[1]) {
-            UA[core] = numberify(m[1]);
-        }
-
-        UA.core = core;
+    return destination
+  }
+  function compareObjects(a, b, mismatchKeys, mismatchValues) {
+    if(a[COMPARE_MARKER] === b && b[COMPARE_MARKER] === a) {
+      return TRUE
     }
-
-    function getIEVersion(ua) {
-        var m, v;
-        if ((m = ua.match(/MSIE ([^;]*)|Trident.*; rv(?:\s|:)?([0-9.]+)/)) &&
-            (v = (m[1] || m[2]))) {
-            return numberify(v);
-        }
-        return 0;
+    a[COMPARE_MARKER] = b;
+    b[COMPARE_MARKER] = a;
+    var hasKey = function(obj, keyName) {
+      return obj !== null && obj !== undefined && obj[keyName] !== undefined
+    };
+    for(var property in b) {
+      if(!hasKey(a, property) && hasKey(b, property)) {
+        mismatchKeys.push("expected has key " + property + '", but missing from actual.')
+      }
     }
-
-    function getDescriptorFromUserAgent(ua) {
-        var EMPTY = '',
-            os,
-            core = EMPTY,
-            shell = EMPTY, m,
-            IE_DETECT_RANGE = [6, 9],
-            ieVersion,
-            v,
-            end,
-            VERSION_PLACEHOLDER = '{{version}}',
-            IE_DETECT_TPL = '<!--[if IE ' + VERSION_PLACEHOLDER + ']><' + 's></s><![endif]-->',
-            div = doc && doc.createElement('div'),
-            s = [];
-        /**
-         * KISSY UA
-         * @class KISSY.UA
-         * @singleton
-         */
-        var UA = {
-            /**
-             * webkit version
-             * @type undefined|Number
-             * @member KISSY.UA
-             */
-            webkit: undefined,
-            /**
-             * trident version
-             * @type undefined|Number
-             * @member KISSY.UA
-             */
-            trident: undefined,
-            /**
-             * gecko version
-             * @type undefined|Number
-             * @member KISSY.UA
-             */
-            gecko: undefined,
-            /**
-             * presto version
-             * @type undefined|Number
-             * @member KISSY.UA
-             */
-            presto: undefined,
-            /**
-             * chrome version
-             * @type undefined|Number
-             * @member KISSY.UA
-             */
-            chrome: undefined,
-            /**
-             * safari version
-             * @type undefined|Number
-             * @member KISSY.UA
-             */
-            safari: undefined,
-            /**
-             * firefox version
-             * @type undefined|Number
-             * @member KISSY.UA
-             */
-            firefox: undefined,
-            /**
-             * ie version
-             * @type undefined|Number
-             * @member KISSY.UA
-             */
-            ie: undefined,
-            /**
-             * ie document mode
-             * @type undefined|Number
-             * @member KISSY.UA
-             */
-            ieMode: undefined,
-            /**
-             * opera version
-             * @type undefined|Number
-             * @member KISSY.UA
-             */
-            opera: undefined,
-            /**
-             * mobile browser. apple, android.
-             * @type String
-             * @member KISSY.UA
-             */
-            mobile: undefined,
-            /**
-             * browser render engine name. webkit, trident
-             * @type String
-             * @member KISSY.UA
-             */
-            core: undefined,
-            /**
-             * browser shell name. ie, chrome, firefox
-             * @type String
-             * @member KISSY.UA
-             */
-            shell: undefined,
-
-            /**
-             * PhantomJS version number
-             * @type undefined|Number
-             * @member KISSY.UA
-             */
-            phantomjs: undefined,
-
-            /**
-             * operating system. android, ios, linux, windows
-             * @type string
-             * @member KISSY.UA
-             */
-            os: undefined,
-
-            /**
-             * ipad ios version
-             * @type Number
-             * @member KISSY.UA
-             */
-            ipad: undefined,
-            /**
-             * iphone ios version
-             * @type Number
-             * @member KISSY.UA
-             */
-            iphone: undefined,
-            /**
-             * ipod ios
-             * @type Number
-             * @member KISSY.UA
-             */
-            ipod: undefined,
-            /**
-             * ios version
-             * @type Number
-             * @member KISSY.UA
-             */
-            ios: undefined,
-
-            /**
-             * android version
-             * @type Number
-             * @member KISSY.UA
-             */
-            android: undefined,
-
-            /**
-             * nodejs version
-             * @type Number
-             * @member KISSY.UA
-             */
-            nodejs: undefined
-        };
-
-        // ejecta
-        if (div && div.getElementsByTagName) {
-            // try to use IE-Conditional-Comment detect IE more accurately
-            // IE10 doesn't support this method, @ref: http://blogs.msdn.com/b/ie/archive/2011/07/06/html5-parsing-in-ie10.aspx
-            div.innerHTML = IE_DETECT_TPL.replace(VERSION_PLACEHOLDER, '');
-            s = div.getElementsByTagName('s');
-        }
-
-        if (s.length > 0) {
-
-            setTridentVersion(ua, UA);
-
-            // Detect the accurate version
-            // 注意：
-            //  UA.shell = ie, 表示外壳是 ie
-            //  但 UA.ie = 7, 并不代表外壳是 ie7, 还有可能是 ie8 的兼容模式
-            //  对于 ie8 的兼容模式，还要通过 documentMode 去判断。但此处不能让 UA.ie = 8, 否则
-            //  很多脚本判断会失误。因为 ie8 的兼容模式表现行为和 ie7 相同，而不是和 ie8 相同
-            for (v = IE_DETECT_RANGE[0], end = IE_DETECT_RANGE[1]; v <= end; v++) {
-                div.innerHTML = IE_DETECT_TPL.replace(VERSION_PLACEHOLDER, v);
-                if (s.length > 0) {
-                    UA[shell = 'ie'] = v;
-                    break;
-                }
-            }
-
-            // https://github.com/kissyteam/kissy/issues/321
-            // win8 embed app
-            if (!UA.ie && (ieVersion = getIEVersion(ua))) {
-                UA[shell = 'ie'] = ieVersion;
-            }
-
-        } else {
-            // WebKit
-            // https://github.com/kissyteam/kissy/issues/545
-            if (((m = ua.match(/AppleWebKit\/([\d.]*)/)) || (m = ua.match(/Safari\/([\d.]*)/))) && m[1]) {
-                UA[core = 'webkit'] = numberify(m[1]);
-
-                if ((m = ua.match(/OPR\/(\d+\.\d+)/)) && m[1]) {
-                    UA[shell = 'opera'] = numberify(m[1]);
-                } else if ((m = ua.match(/Chrome\/([\d.]*)/)) && m[1]) {
-                    UA[shell = 'chrome'] = numberify(m[1]);
-                } else if ((m = ua.match(/\/([\d.]*) Safari/)) && m[1]) {
-                    UA[shell = 'safari'] = numberify(m[1]);
-                } else {
-                    // default to mobile safari
-                    UA.safari = UA.webkit;
-                }
-
-                // Apple Mobile
-                if (/ Mobile\//.test(ua) && ua.match(/iPad|iPod|iPhone/)) {
-                    UA.mobile = 'apple'; // iPad, iPhone or iPod Touch
-
-                    m = ua.match(/OS ([^\s]*)/);
-                    if (m && m[1]) {
-                        UA.ios = numberify(m[1].replace('_', '.'));
-                    }
-                    os = 'ios';
-                    m = ua.match(/iPad|iPod|iPhone/);
-                    if (m && m[0]) {
-                        UA[m[0].toLowerCase()] = UA.ios;
-                    }
-                } else if (/ Android/i.test(ua)) {
-                    if (/Mobile/.test(ua)) {
-                        os = UA.mobile = 'android';
-                    }
-                    m = ua.match(/Android ([^\s]*);/);
-                    if (m && m[1]) {
-                        UA.android = numberify(m[1]);
-                    }
-                } else if ((m = ua.match(/NokiaN[^\/]*|Android \d\.\d|webOS\/\d\.\d/))) {
-                    UA.mobile = m[0].toLowerCase(); // Nokia N-series, Android, webOS, ex: NokiaN95
-                }
-
-                if ((m = ua.match(/PhantomJS\/([^\s]*)/)) && m[1]) {
-                    UA.phantomjs = numberify(m[1]);
-                }
-            } else {
-                // Presto
-                // ref: http://www.useragentstring.com/pages/useragentstring.php
-                if ((m = ua.match(/Presto\/([\d.]*)/)) && m[1]) {
-                    UA[core = 'presto'] = numberify(m[1]);
-
-                    // Opera
-                    if ((m = ua.match(/Opera\/([\d.]*)/)) && m[1]) {
-                        UA[shell = 'opera'] = numberify(m[1]); // Opera detected, look for revision
-
-                        if ((m = ua.match(/Opera\/.* Version\/([\d.]*)/)) && m[1]) {
-                            UA[shell] = numberify(m[1]);
-                        }
-
-                        // Opera Mini
-                        if ((m = ua.match(/Opera Mini[^;]*/)) && m) {
-                            UA.mobile = m[0].toLowerCase(); // ex: Opera Mini/2.0.4509/1316
-                        } else if ((m = ua.match(/Opera Mobi[^;]*/)) && m) {
-                            // Opera Mobile
-                            // ex: Opera/9.80 (Windows NT 6.1; Opera Mobi/49; U; en) Presto/2.4.18 Version/10.00
-                            // issue: 由于 Opera Mobile 有 Version/ 字段，可能会与 Opera 混淆，同时对于 Opera Mobile 的版本号也比较混乱
-                            UA.mobile = m[0];
-                        }
-                    }
-                    // NOT WebKit or Presto
-                } else {
-                    // MSIE
-                    // 由于最开始已经使用了 IE 条件注释判断，因此落到这里的唯一可能性只有 IE10+
-                    // and analysis tools in nodejs
-                    if ((ieVersion = getIEVersion(ua))) {
-                        UA[shell = 'ie'] = ieVersion;
-                        setTridentVersion(ua, UA);
-                        // NOT WebKit, Presto or IE
-                    } else {
-                        // Gecko
-                        if ((m = ua.match(/Gecko/))) {
-                            UA[core = 'gecko'] = 0.1; // Gecko detected, look for revision
-                            if ((m = ua.match(/rv:([\d.]*)/)) && m[1]) {
-                                UA[core] = numberify(m[1]);
-                                if (/Mobile|Tablet/.test(ua)) {
-                                    UA.mobile = 'firefox';
-                                }
-                            }
-                            // Firefox
-                            if ((m = ua.match(/Firefox\/([\d.]*)/)) && m[1]) {
-                                UA[shell = 'firefox'] = numberify(m[1]);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        if (!os) {
-            if ((/windows|win32/i).test(ua)) {
-                os = 'windows';
-            } else if ((/macintosh|mac_powerpc/i).test(ua)) {
-                os = 'macintosh';
-            } else if ((/linux/i).test(ua)) {
-                os = 'linux';
-            } else if ((/rhino/i).test(ua)) {
-                os = 'rhino';
-            }
-        }
-
-        UA.os = os;
-        UA.core = UA.core || core;
-        UA.shell = shell;
-        UA.ieMode = UA.ie && doc.documentMode || UA.ie;
-
-        return UA;
+    for(property in a) {
+      if(!hasKey(b, property) && hasKey(a, property)) {
+        mismatchKeys.push('expected missing key "' + property + '", but present in actual.')
+      }
     }
-
-    var UA = KISSY.UA = getDescriptorFromUserAgent(ua);
-
-    // nodejs
-    if (typeof process === 'object') {
-        var versions, nodeVersion;
-
-        if ((versions = process.versions) && (nodeVersion = versions.node)) {
-            UA.os = process.platform;
-            UA.nodejs = numberify(nodeVersion);
-        }
+    for(property in b) {
+      if(property === COMPARE_MARKER) {
+        continue
+      }
+      if(!S.equals(a[property], b[property], mismatchKeys, mismatchValues)) {
+        mismatchValues.push('"' + property + '" was "' + (b[property] ? b[property].toString() : b[property]) + '" in expected, but was "' + (a[property] ? a[property].toString() : a[property]) + '" in actual.')
+      }
     }
-
-    // use by analysis tools in nodejs
-    UA.getDescriptorFromUserAgent = getDescriptorFromUserAgent;
-
-    var browsers = [
-            // browser core type
-            'webkit',
-            'trident',
-            'gecko',
-            'presto',
-            // browser type
-            'chrome',
-            'safari',
-            'firefox',
-            'ie',
-            'opera'
-        ],
-        documentElement = doc && doc.documentElement,
-        className = '';
-    if (documentElement) {
-        S.each(browsers, function (key) {
-            var v = UA[key];
-            if (v) {
-                className += ' ks-' + key + (parseInt(v, 10) + '');
-                className += ' ks-' + key;
-            }
-        });
-        if (S.trim(className)) {
-            documentElement.className = S.trim(documentElement.className + className);
-        }
+    if(S.isArray(a) && S.isArray(b) && a.length !== b.length) {
+      mismatchValues.push("arrays were not the same length")
     }
-
-
-    S.add('ua', function () {
-        return S.UA;
-    });
-})(KISSY);
+    delete a[COMPARE_MARKER];
+    delete b[COMPARE_MARKER];
+    return mismatchKeys.length === 0 && mismatchValues.length === 0
+  }
+  return S
+});
 
 /*
- NOTES:
- 2013.07.08 yiminghe@gmail.com
- - support ie11 and opera(using blink)
+Copyright 2014, KISSY v1.50
+MIT Licensed
+build time: Feb 13 19:31
+*/
+/*
+ Combined modules by KISSY Module Compiler: 
 
- 2013.01.17 yiminghe@gmail.com
- - expose getDescriptorFromUserAgent for analysis tool in nodejs
+ ua
+*/
 
- 2012.11.27 yiminghe@gmail.com
- - moved to seed for conditional loading and better code share
+KISSY.add("ua", [], function(S, undefined) {
+  var win = S.Env.host, doc = win.document, navigator = win.navigator, ua = navigator && navigator.userAgent || "";
+  function numberify(s) {
+    var c = 0;
+    return parseFloat(s.replace(/\./g, function() {
+      return c++ === 0 ? "." : ""
+    }))
+  }
+  function setTridentVersion(ua, UA) {
+    var core, m;
+    UA[core = "trident"] = 0.1;
+    if((m = ua.match(/Trident\/([\d.]*)/)) && m[1]) {
+      UA[core] = numberify(m[1])
+    }
+    UA.core = core
+  }
+  function getIEVersion(ua) {
+    var m, v;
+    if((m = ua.match(/MSIE ([^;]*)|Trident.*; rv(?:\s|:)?([0-9.]+)/)) && (v = m[1] || m[2])) {
+      return numberify(v)
+    }
+    return 0
+  }
+  function getDescriptorFromUserAgent(ua) {
+    var EMPTY = "", os, core = EMPTY, shell = EMPTY, m, IE_DETECT_RANGE = [6, 9], ieVersion, v, end, VERSION_PLACEHOLDER = "{{version}}", IE_DETECT_TPL = "<!--[if IE " + VERSION_PLACEHOLDER + "]><" + "s></s><![endif]--\>", div = doc && doc.createElement("div"), s = [];
+    var UA = {webkit:undefined, trident:undefined, gecko:undefined, presto:undefined, chrome:undefined, safari:undefined, firefox:undefined, ie:undefined, ieMode:undefined, opera:undefined, mobile:undefined, core:undefined, shell:undefined, phantomjs:undefined, os:undefined, ipad:undefined, iphone:undefined, ipod:undefined, ios:undefined, android:undefined, nodejs:undefined};
+    if(div && div.getElementsByTagName) {
+      div.innerHTML = IE_DETECT_TPL.replace(VERSION_PLACEHOLDER, "");
+      s = div.getElementsByTagName("s")
+    }
+    if(s.length > 0) {
+      setTridentVersion(ua, UA);
+      for(v = IE_DETECT_RANGE[0], end = IE_DETECT_RANGE[1];v <= end;v++) {
+        div.innerHTML = IE_DETECT_TPL.replace(VERSION_PLACEHOLDER, v);
+        if(s.length > 0) {
+          UA[shell = "ie"] = v;
+          break
+        }
+      }
+      if(!UA.ie && (ieVersion = getIEVersion(ua))) {
+        UA[shell = "ie"] = ieVersion
+      }
+    }else {
+      if(((m = ua.match(/AppleWebKit\/([\d.]*)/)) || (m = ua.match(/Safari\/([\d.]*)/))) && m[1]) {
+        UA[core = "webkit"] = numberify(m[1]);
+        if((m = ua.match(/OPR\/(\d+\.\d+)/)) && m[1]) {
+          UA[shell = "opera"] = numberify(m[1])
+        }else {
+          if((m = ua.match(/Chrome\/([\d.]*)/)) && m[1]) {
+            UA[shell = "chrome"] = numberify(m[1])
+          }else {
+            if((m = ua.match(/\/([\d.]*) Safari/)) && m[1]) {
+              UA[shell = "safari"] = numberify(m[1])
+            }else {
+              UA.safari = UA.webkit
+            }
+          }
+        }
+        if(/ Mobile\//.test(ua) && ua.match(/iPad|iPod|iPhone/)) {
+          UA.mobile = "apple";
+          m = ua.match(/OS ([^\s]*)/);
+          if(m && m[1]) {
+            UA.ios = numberify(m[1].replace("_", "."))
+          }
+          os = "ios";
+          m = ua.match(/iPad|iPod|iPhone/);
+          if(m && m[0]) {
+            UA[m[0].toLowerCase()] = UA.ios
+          }
+        }else {
+          if(/ Android/i.test(ua)) {
+            if(/Mobile/.test(ua)) {
+              os = UA.mobile = "android"
+            }
+            m = ua.match(/Android ([^\s]*);/);
+            if(m && m[1]) {
+              UA.android = numberify(m[1])
+            }
+          }else {
+            if(m = ua.match(/NokiaN[^\/]*|Android \d\.\d|webOS\/\d\.\d/)) {
+              UA.mobile = m[0].toLowerCase()
+            }
+          }
+        }
+        if((m = ua.match(/PhantomJS\/([^\s]*)/)) && m[1]) {
+          UA.phantomjs = numberify(m[1])
+        }
+      }else {
+        if((m = ua.match(/Presto\/([\d.]*)/)) && m[1]) {
+          UA[core = "presto"] = numberify(m[1]);
+          if((m = ua.match(/Opera\/([\d.]*)/)) && m[1]) {
+            UA[shell = "opera"] = numberify(m[1]);
+            if((m = ua.match(/Opera\/.* Version\/([\d.]*)/)) && m[1]) {
+              UA[shell] = numberify(m[1])
+            }
+            if((m = ua.match(/Opera Mini[^;]*/)) && m) {
+              UA.mobile = m[0].toLowerCase()
+            }else {
+              if((m = ua.match(/Opera Mobi[^;]*/)) && m) {
+                UA.mobile = m[0]
+              }
+            }
+          }
+        }else {
+          if(ieVersion = getIEVersion(ua)) {
+            UA[shell = "ie"] = ieVersion;
+            setTridentVersion(ua, UA)
+          }else {
+            if(m = ua.match(/Gecko/)) {
+              UA[core = "gecko"] = 0.1;
+              if((m = ua.match(/rv:([\d.]*)/)) && m[1]) {
+                UA[core] = numberify(m[1]);
+                if(/Mobile|Tablet/.test(ua)) {
+                  UA.mobile = "firefox"
+                }
+              }
+              if((m = ua.match(/Firefox\/([\d.]*)/)) && m[1]) {
+                UA[shell = "firefox"] = numberify(m[1])
+              }
+            }
+          }
+        }
+      }
+    }
+    if(!os) {
+      if(/windows|win32/i.test(ua)) {
+        os = "windows"
+      }else {
+        if(/macintosh|mac_powerpc/i.test(ua)) {
+          os = "macintosh"
+        }else {
+          if(/linux/i.test(ua)) {
+            os = "linux"
+          }else {
+            if(/rhino/i.test(ua)) {
+              os = "rhino"
+            }
+          }
+        }
+      }
+    }
+    UA.os = os;
+    UA.core = UA.core || core;
+    UA.shell = shell;
+    UA.ieMode = UA.ie && doc.documentMode || UA.ie;
+    return UA
+  }
+  var UA = S.UA = getDescriptorFromUserAgent(ua);
+  if(typeof process === "object") {
+    var versions, nodeVersion;
+    if((versions = process.versions) && (nodeVersion = versions.node)) {
+      UA.os = process.platform;
+      UA.nodejs = numberify(nodeVersion)
+    }
+  }
+  UA.getDescriptorFromUserAgent = getDescriptorFromUserAgent;
+  var browsers = ["webkit", "trident", "gecko", "presto", "chrome", "safari", "firefox", "ie", "opera"], documentElement = doc && doc.documentElement, className = "";
+  if(documentElement) {
+    S.each(browsers, function(key) {
+      var v = UA[key];
+      if(v) {
+        className += " ks-" + key + (parseInt(v, 10) + "");
+        className += " ks-" + key
+      }
+    });
+    if(S.trim(className)) {
+      documentElement.className = S.trim(documentElement.className + className)
+    }
+  }
+  return UA
+});
 
- 2012.11.21 yiminghe@gmail.com
- - touch and os support
+/*
+Copyright 2014, KISSY v1.50
+MIT Licensed
+build time: Feb 13 19:32
+*/
+/*
+ Combined modules by KISSY Module Compiler: 
 
- 2011.11.08 gonghaocn@gmail.com
- - ie < 10 使用条件注释判断内核，更精确
+ feature
+*/
 
- 2010.03
- - jQuery, YUI 等类库都推荐用特性探测替代浏览器嗅探。特性探测的好处是能自动适应未来设备和未知设备，比如
- if(document.addEventListener) 假设 IE9 支持标准事件，则代码不用修改，就自适应了“未来浏览器”。
- 对于未知浏览器也是如此。但是，这并不意味着浏览器嗅探就得彻底抛弃。当代码很明确就是针对已知特定浏览器的，
- 同时并非是某个特性探测可以解决时，用浏览器嗅探反而能带来代码的简洁，同时也也不会有什么后患。总之，一切
- 皆权衡。
- - UA.ie && UA.ie < 8 并不意味着浏览器就不是 IE8, 有可能是 IE8 的兼容模式。进一步的判断需要使用 documentMode.
- */
+KISSY.add("feature", ["ua"], function(S, require) {
+  var win = S.Env.host, Config = S.Config, UA = require("ua"), VENDORS = ["Webkit", "Moz", "O", "ms"], doc = win.document || {}, isMsPointerSupported, isPointerSupported, isTransform3dSupported, documentElement = doc && doc.documentElement, navigator, documentElementStyle, isClassListSupportedState = true, isQuerySelectorSupportedState = false, isTouchEventSupportedState = "ontouchstart" in doc && !UA.phantomjs, vendorInfos = {}, ie = UA.ieMode;
+  if(documentElement) {
+    if(documentElement.querySelector && ie !== 8) {
+      isQuerySelectorSupportedState = true
+    }
+    documentElementStyle = documentElement.style;
+    isClassListSupportedState = "classList" in documentElement;
+    navigator = win.navigator || {};
+    isMsPointerSupported = "msPointerEnabled" in navigator;
+    isPointerSupported = "pointerEnabled" in navigator
+  }
+  function getVendorInfo(name) {
+    if(vendorInfos[name]) {
+      return vendorInfos[name]
+    }
+    if(!documentElementStyle || name in documentElementStyle) {
+      vendorInfos[name] = {name:name, prefix:""}
+    }else {
+      var upperFirstName = name.charAt(0).toUpperCase() + name.slice(1), vendorName, i = VENDORS.length;
+      while(i--) {
+        vendorName = VENDORS[i] + upperFirstName;
+        if(vendorName in documentElementStyle) {
+          vendorInfos[name] = {name:vendorName, prefix:VENDORS[i]}
+        }
+      }
+      vendorInfos[name] = vendorInfos[name] || {name:name, prefix:false}
+    }
+    return vendorInfos[name]
+  }
+  S.Feature = {isMsPointerSupported:function() {
+    return isMsPointerSupported
+  }, isPointerSupported:function() {
+    return isPointerSupported
+  }, isTouchEventSupported:function() {
+    return isTouchEventSupportedState
+  }, isTouchGestureSupported:function() {
+    return isTouchEventSupportedState || isPointerSupported || isMsPointerSupported
+  }, isDeviceMotionSupported:function() {
+    return!!win.DeviceMotionEvent
+  }, isHashChangeSupported:function() {
+    return"onhashchange" in win && (!ie || ie > 7)
+  }, isInputEventSupported:function() {
+    return!Config.simulateInputEvent && "oninput" in win && (!ie || ie > 9)
+  }, isTransform3dSupported:function() {
+    if(isTransform3dSupported !== undefined) {
+      return isTransform3dSupported
+    }
+    if(!documentElement || getVendorInfo("transform").prefix === false) {
+      isTransform3dSupported = false
+    }else {
+      var el = doc.createElement("p");
+      var transformProperty = getVendorInfo("transform").name;
+      documentElement.insertBefore(el, documentElement.firstChild);
+      el.style[transformProperty] = "translate3d(1px,1px,1px)";
+      var computedStyle = win.getComputedStyle(el);
+      var has3d = computedStyle.getPropertyValue(transformProperty) || computedStyle[transformProperty];
+      documentElement.removeChild(el);
+      isTransform3dSupported = has3d !== undefined && has3d.length > 0 && has3d !== "none"
+    }
+    return isTransform3dSupported
+  }, isClassListSupported:function() {
+    return isClassListSupportedState
+  }, isQuerySelectorSupported:function() {
+    return!Config.simulateCss3Selector && isQuerySelectorSupportedState
+  }, getVendorCssPropPrefix:function(name) {
+    return getVendorInfo(name).prefix
+  }, getVendorCssPropName:function(name) {
+    return getVendorInfo(name).name
+  }};
+  return S.Feature
+});
+
 /**
  * @ignore
- * detect if current browser supports various features.
+ * Default KISSY Gallery and core alias.
  * @author yiminghe@gmail.com
  */
-(function (S, undefined) {
-    var win = S.Env.host,
-        Config = S.Config,
-        UA = S.UA,
-        VENDORS = [
-            'Webkit',
-            'Moz',
-            'O',
-            // ms is special .... !
-            'ms'
-        ],
-    // for nodejs
-        doc = win.document || {},
-        isMsPointerSupported,
-    // ie11
-        isPointerSupported,
-        isTransform3dSupported,
-    // nodejs
-        documentElement = doc && doc.documentElement,
-        navigator,
-        documentElementStyle,
-        isClassListSupportedState = true,
-        isQuerySelectorSupportedState = false,
-    // phantomjs issue: http://code.google.com/p/phantomjs/issues/detail?id=375
-        isTouchEventSupportedState = ('ontouchstart' in doc) && !(UA.phantomjs),
-        vendorInfos = {},
-        ie = UA.ieMode;
-
-    if (documentElement) {
-        // broken ie8
-        if (documentElement.querySelector && ie !== 8) {
-            isQuerySelectorSupportedState = true;
-        }
-        documentElementStyle = documentElement.style;
-        isClassListSupportedState = 'classList' in documentElement;
-        navigator = win.navigator || {};
-        isMsPointerSupported = 'msPointerEnabled' in navigator;
-        isPointerSupported = 'pointerEnabled' in navigator;
-    }
-
-    // return prefixed css prefix name
-    function getVendorInfo(name) {
-        if (vendorInfos[name]) {
-            return vendorInfos[name];
-        }
-        // if already prefixed or need not to prefix
-        if (!documentElementStyle || name in documentElementStyle) {
-            vendorInfos[name] = {
-                name: name,
-                prefix: ''
-            };
-        } else {
-            var upperFirstName = name.charAt(0).toUpperCase() + name.slice(1),
-                vendorName,
-                i = VENDORS.length;
-
-            while (i--) {
-                vendorName = VENDORS[i] + upperFirstName;
-                if (vendorName in documentElementStyle) {
-                    vendorInfos[name] = {
-                        name: vendorName,
-                        prefix: VENDORS[i]
-                    };
-                }
+(function (S) {
+    // compatibility
+    S.config({
+        modules: {
+            ajax: {
+                alias: 'io'
             }
-
-            vendorInfos[name] = vendorInfos[name] || {
-                name: name,
-                prefix: false
-            };
-        }
-        return  vendorInfos[name];
-    }
-
-    /**
-     * browser features detection
-     * @class KISSY.Features
-     * @private
-     * @singleton
-     */
-    S.Features = {
-        // http://blogs.msdn.com/b/ie/archive/2011/09/20/touch-input-for-ie10-and-metro-style-apps.aspx
-        /**
-         * whether support microsoft pointer event.
-         * @type {Boolean}
-         */
-        isMsPointerSupported: function () {
-            // ie11 onMSPointerDown but e.type==pointerdown
-            return isMsPointerSupported;
-        },
-
-        /**
-         * whether support microsoft pointer event (ie11).
-         * @type {Boolean}
-         */
-        isPointerSupported: function () {
-            // ie11
-            return isPointerSupported;
-        },
-
-        /**
-         * whether support touch event.
-         * @return {Boolean}
-         */
-        isTouchEventSupported: function () {
-            return isTouchEventSupportedState;
-        },
-
-        isTouchGestureSupported: function () {
-            return isTouchEventSupportedState || isPointerSupported || isMsPointerSupported;
-        },
-
-        /**
-         * whether support device motion event
-         * @returns {boolean}
-         */
-        isDeviceMotionSupported: function () {
-            return !!win.DeviceMotionEvent;
-        },
-
-        /**
-         * whether support hashchange event
-         * @returns {boolean}
-         */
-        isHashChangeSupported: function () {
-            // ie8 支持 hashchange
-            // 但 ie8 以上切换浏览器模式到 ie7（兼容模式），
-            // 会导致 'onhashchange' in window === true，但是不触发事件
-            return ('onhashchange' in win) && (!ie || ie > 7);
-        },
-
-        isInputEventSupported: function () {
-            return !Config.simulateInputEvent && ('oninput' in win) && (!ie || ie > 9);
-        },
-
-        /**
-         * whether support css transform 3d
-         * @returns {boolean}
-         */
-        isTransform3dSupported: function () {
-            if (isTransform3dSupported !== undefined) {
-                return isTransform3dSupported;
-            }
-            if (!documentElement || getVendorInfo('transform').prefix === false) {
-                isTransform3dSupported = false;
-            } else {
-                // https://gist.github.com/lorenzopolidori/3794226
-                // ie9 does not support 3d transform
-                // http://msdn.microsoft.com/en-us/ie/ff468705
-                var el = doc.createElement('p');
-                var transformProperty = getVendorInfo('transform').name;
-                documentElement.insertBefore(el, documentElement.firstChild);
-                el.style[transformProperty] = 'translate3d(1px,1px,1px)';
-                var computedStyle = win.getComputedStyle(el);
-                var has3d = computedStyle.getPropertyValue(transformProperty) || computedStyle[transformProperty];
-                documentElement.removeChild(el);
-                isTransform3dSupported = (has3d !== undefined && has3d.length > 0 && has3d !== 'none');
-            }
-
-            return isTransform3dSupported;
-        },
-
-        /**
-         * whether support class list api
-         * @returns {boolean}
-         */
-        isClassListSupported: function () {
-            return isClassListSupportedState;
-        },
-
-        /**
-         * whether support querySelectorAll
-         * @returns {boolean}
-         */
-        isQuerySelectorSupported: function () {
-            // force to use js selector engine
-            return !Config.simulateCss3Selector && isQuerySelectorSupportedState;
-        },
-
-        getVendorCssPropPrefix: function (name) {
-            return getVendorInfo(name).prefix;
-        },
-
-        getVendorCssPropName: function (name) {
-            return getVendorInfo(name).name;
-        }
-    };
-})(KISSY);/**
- * this code can only run at browser environment
- * @ignore
- * @author lifesinger@gmail.com, yiminghe@gmail.com
- */
-(function (S, undefined) {
-    var logger = S.getLogger('s/web');
-    var win = S.Env.host,
-        UA = S.UA,
-        doc = win.document,
-        docElem = doc && doc.documentElement,
-        location = win.location,
-        EMPTY = '',
-        domReady = 0,
-        callbacks = [],
-    // The number of poll times.
-        POLL_RETIRES = 500,
-    // The poll interval in milliseconds.
-        POLL_INTERVAL = 40,
-    // #id or id
-        RE_ID_STR = /^#?([\w-]+)$/,
-        RE_NOT_WHITESPACE = /\S/,
-        standardEventModel = !!(doc && doc.addEventListener),
-        DOM_READY_EVENT = 'DOMContentLoaded',
-        READY_STATE_CHANGE_EVENT = 'readystatechange',
-        LOAD_EVENT = 'load',
-        COMPLETE = 'complete',
-        addEventListener = standardEventModel ? function (el, type, fn) {
-            el.addEventListener(type, fn, false);
-        } : function (el, type, fn) {
-            el.attachEvent('on' + type, fn);
-        },
-        removeEventListener = standardEventModel ? function (el, type, fn) {
-            el.removeEventListener(type, fn, false);
-        } : function (el, type, fn) {
-            el.detachEvent('on' + type, fn);
-        };
-
-    S.mix(S, {
-        /**
-         * A crude way of determining if an object is a window
-         * @member KISSY
-         */
-        isWindow: function (obj) {
-            // must use == for ie8
-            /*jshint eqeqeq:false*/
-            return obj != null && obj == obj.window;
-        },
-
-        /**
-         * get xml representation of data
-         * @param {String} data
-         * @member KISSY
-         */
-        parseXML: function (data) {
-            // already a xml
-            if (data.documentElement) {
-                return data;
-            }
-            var xml;
-            try {
-                // Standard
-                if (win.DOMParser) {
-                    xml = new DOMParser().parseFromString(data, 'text/xml');
-                } else { // IE
-                    /*global ActiveXObject*/
-                    xml = new ActiveXObject('Microsoft.XMLDOM');
-                    xml.async = false;
-                    xml.loadXML(data);
-                }
-            } catch (e) {
-                logger.error('parseXML error :');
-                logger.error(e);
-                xml = undefined;
-            }
-            if (!xml || !xml.documentElement || xml.getElementsByTagName('parsererror').length) {
-                S.error('Invalid XML: ' + data);
-            }
-            return xml;
-        },
-
-        /**
-         * Evaluates a script in a global context.
-         * @member KISSY
-         */
-        globalEval: function (data) {
-            if (data && RE_NOT_WHITESPACE.test(data)) {
-                // http://weblogs.java.net/blog/driscoll/archive/2009/09/08/eval-javascript-global-context
-                // http://msdn.microsoft.com/en-us/library/ie/ms536420(v=vs.85).aspx always return null
-                /*jshint evil:true*/
-                if (win.execScript) {
-                    win.execScript(data);
-                } else {
-                    (function (data) {
-                        win['eval'].call(win, data);
-                    })(data);
-                }
-            }
-        },
-
-        /**
-         * Specify a function to execute when the Dom is fully loaded.
-         * @param fn {Function} A function to execute after the Dom is ready
-         * @chainable
-         * @member KISSY
-         */
-        ready: function (fn) {
-            if (domReady) {
-                try {
-                    fn(S);
-                } catch (e) {
-                    S.log(e.stack || e, 'error');
-                    setTimeout(function () {
-                        throw e;
-                    }, 0);
-                }
-            } else {
-                callbacks.push(fn);
-            }
-            return this;
-        },
-
-        /**
-         * Executes the supplied callback when the item with the supplied id is found.
-         * @param id {String} The id of the element, or an array of ids to look for.
-         * @param fn {Function} What to execute when the element is found.
-         * @member KISSY
-         */
-        available: function (id, fn) {
-            id = (id + EMPTY).match(RE_ID_STR)[1];
-            var retryCount = 1;
-            var timer = S.later(function () {
-                if (++retryCount > POLL_RETIRES) {
-                    timer.cancel();
-                    return;
-                }
-                var node = doc.getElementById(id);
-                if (node) {
-                    fn(node);
-                    timer.cancel();
-                }
-            }, POLL_INTERVAL, true);
         }
     });
 
-    function fireReady() {
-        if (domReady) {
-            return;
-        }
-        // nodejs
-        if (doc && !UA.nodejs) {
-            removeEventListener(win, LOAD_EVENT, fireReady);
-        }
-        domReady = 1;
-        for (var i = 0; i < callbacks.length; i++) {
-            try {
-                callbacks[i](S);
-            } catch (e) {
-                S.log(e.stack || e, 'error');
-                /*jshint loopfunc:true*/
-                setTimeout(function () {
-                    throw e;
-                }, 0);
-            }
-        }
-    }
-
-    //  Binds ready events.
-    function bindReady() {
-        // Catch cases where ready() is called after the
-        // browser event has already occurred.
-        if (!doc || doc.readyState === COMPLETE) {
-            fireReady();
-            return;
-        }
-
-        // A fallback to window.onload, that will always work
-        addEventListener(win, LOAD_EVENT, fireReady);
-
-        // w3c mode
-        if (standardEventModel) {
-            var domReady = function () {
-                removeEventListener(doc, DOM_READY_EVENT, domReady);
-                fireReady();
-            };
-
-            addEventListener(doc, DOM_READY_EVENT, domReady);
-        } else {
-            var stateChange = function () {
-                if (doc.readyState === COMPLETE) {
-                    removeEventListener(doc, READY_STATE_CHANGE_EVENT, stateChange);
-                    fireReady();
+    if (typeof location !== 'undefined') {
+        var https = S.startsWith(location.href, 'https');
+        var prefix = https ? 'https://s.tbcdn.cn/s/kissy/' : 'http://a.tbcdn.cn/s/kissy/';
+        S.config({
+            packages: {
+                gallery: {
+                    base: prefix
+                },
+                mobile: {
+                    base: prefix
                 }
-            };
-
-            // ensure firing before onload (but completed after all inner iframes is loaded)
-            // maybe late but safe also for iframes
-            addEventListener(doc, READY_STATE_CHANGE_EVENT, stateChange);
-
-            // If IE and not a frame
-            // continually check to see if the document is ready
-            var notframe,
-                doScroll = docElem && docElem.doScroll;
-
-            try {
-                notframe = (win.frameElement === null);
-            } catch (e) {
-                notframe = false;
             }
-
-            // can not use in iframe,parent window is dom ready so doScroll is ready too
-            if (doScroll && notframe) {
-                var readyScroll = function () {
-                    try {
-                        // Ref: http://javascript.nwbox.com/IEContentLoaded/
-                        doScroll('left');
-                        fireReady();
-                    } catch (ex) {
-                        setTimeout(readyScroll, POLL_INTERVAL);
-                    }
-                };
-                readyScroll();
-            }
-        }
+        });
     }
 
-    // If url contains '?ks-debug', debug mode will turn on automatically.
-    if (location && (location.search || EMPTY).indexOf('ks-debug') !== -1) {
-        S.Config.debug = true;
-    }
-
-    // bind on start
-    // in case when you bind but the DOMContentLoaded has triggered
-    // then you has to wait onload
-    // worst case no callback at all
-    bindReady();
-
-    if (UA.ie) {
-        try {
-            doc.execCommand('BackgroundImageCache', false, true);
-        } catch (e) {
-        }
-    }
-})(KISSY, undefined);
+    S.use('ua,feature,util', {sync: true});
+})(KISSY);
 /**
  * @ignore
  * 1. export KISSY 's functionality to module system
@@ -6032,47 +4875,12 @@ KISSY.add('i18n', {
             return S.error('Invalid Json: ' + data);
         };
     }
-})(KISSY);/**
- * @ignore
- * Default KISSY Gallery and core alias.
- * @author yiminghe@gmail.com
- */
-(function (S) {
-    // compatibility
-    S.config({
-        modules: {
-            core: {
-                alias: ['dom', 'event', 'io', 'anim', 'base', 'node', 'json', 'ua', 'cookie']
-            },
-            ajax: {
-                alias: 'io'
-            },
-            'rich-base': {
-                alias: 'base'
-            }
-        }
-    });
-    if (typeof location !== 'undefined') {
-        var https = S.startsWith(location.href, 'https');
-        var prefix = https ? 'https://s.tbcdn.cn/s/kissy/' : 'http://a.tbcdn.cn/s/kissy/';
-        S.config({
-            packages: {
-                gallery: {
-                    base: prefix
-                },
-                mobile: {
-                    base: prefix
-                }
-            }
-        });
-    }
 })(KISSY);
-
 /*jshint indent:false*/
-(function (config, Features, UA) {
+(function (config, Feature, UA) {
 config({
     'anim/transition?': {
-        alias: KISSY.Features.getVendorCssPropPrefix('transition') !== false ? 'anim/transition' : ''
+        alias: KISSY.Feature.getVendorCssPropPrefix('transition') !== false ? 'anim/transition' : ''
     }
 });/*Generated By KISSY Module Compiler*/
 config({
@@ -6175,13 +4983,13 @@ config({
         alias: [
             'dom/base',
             UA.ieMode < 9 ? 'dom/ie' : '',
-            Features.isClassListSupported() ? '' : 'dom/class-list'
+            Feature.isClassListSupported() ? '' : 'dom/class-list'
         ]
     },
     dom: {
         alias: [
             'dom/basic',
-            !Features.isQuerySelectorSupported() ? 'dom/selector' : ''
+            !Feature.isQuerySelectorSupported() ? 'dom/selector' : ''
         ]
     }
 });/*Generated By KISSY Module Compiler*/
@@ -6212,15 +5020,15 @@ config({
     'event/dom': {
         alias: [
             'event/dom/base',
-            Features.isTouchGestureSupported() ?
+            Feature.isTouchGestureSupported() ?
                 'event/dom/touch' : '',
-            Features.isDeviceMotionSupported() ?
+            Feature.isDeviceMotionSupported() ?
                 'event/dom/shake' : '',
-            Features.isHashChangeSupported() ?
+            Feature.isHashChangeSupported() ?
                 '' : 'event/dom/hashchange',
             UA.ieMode < 9 ?
                 'event/dom/ie' : '',
-            Features.isInputEventSupported() ?
+            Feature.isInputEventSupported() ?
                 '' : 'event/dom/input',
             UA.ie ? '' : 'event/dom/focusin'
         ]
@@ -6252,6 +5060,10 @@ config({
 /*Generated By KISSY Module Compiler*/
 config({
 'event/dom/touch': {requires: ['event/dom/base','dom']}
+});
+/*Generated By KISSY Module Compiler*/
+config({
+feature: {requires: ['ua']}
 });
 /*Generated By KISSY Module Compiler*/
 config({
@@ -6299,7 +5111,7 @@ router: {requires: ['uri','event/dom','event/custom']}
 });
 config({
     'scroll-view': {
-        alias: Features.isTouchGestureSupported() ? 'scroll-view/drag' : 'scroll-view/base'
+        alias: Feature.isTouchGestureSupported() ? 'scroll-view/drag' : 'scroll-view/base'
     }
 });/*Generated By KISSY Module Compiler*/
 config({
@@ -6351,6 +5163,10 @@ uri: {requires: ['path']}
 });
 /*Generated By KISSY Module Compiler*/
 config({
+util: {requires: ['util/set-immediate']}
+});
+/*Generated By KISSY Module Compiler*/
+config({
 xtemplate: {requires: ['xtemplate/runtime','xtemplate/compiler']}
 });
 /*Generated By KISSY Module Compiler*/
@@ -6368,5 +5184,5 @@ config({
 
                 })(function (c) {
                 KISSY.config('modules', c);
-                },KISSY.Features, KISSY.UA);
+                },KISSY.Feature, KISSY.UA);
             

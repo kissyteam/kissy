@@ -25,9 +25,17 @@
         {{{externalStyle}}}
     </style>
     {{#if query.min}}
-        <script src="/kissy/build/seed-min.js"></script>
+        {{#if loader}}
+            <script src="/kissy/build/loader-min.js"></script>
+        {{else}}
+            <script src="/kissy/build/seed-min.js"></script>
+        {{/if}}
     {{else}}
-        <script src="/kissy/build/seed.js"></script>
+        {{#if loader}}
+            <script src="/kissy/build/loader.js"></script>
+        {{else}}
+            <script src="/kissy/build/seed.js"></script>
+        {{/if}}
     {{/if}}
 
     <script src="/kissy/src/package.js"></script>

@@ -1,5 +1,5 @@
 config({
     'scroll-view': {
-        alias: Features.isTouchGestureSupported() ? 'scroll-view/drag' : 'scroll-view/base'
+        alias: Feature.isTouchGestureSupported() ? 'scroll-view/drag' : 'scroll-view/base'
     }
 });

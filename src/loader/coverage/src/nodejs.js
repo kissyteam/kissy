@@ -286,27 +286,27 @@ if (! _$jscoverage['/nodejs.js'].branchData) {
   _$jscoverage['/nodejs.js'].branchData['55'][1] = new BranchData();
 }
 _$jscoverage['/nodejs.js'].branchData['55'][1].init(1394, 29, 'typeof module !== \'undefined\'');
-function visit250_55_1(result) {
+function visit202_55_1(result) {
   _$jscoverage['/nodejs.js'].branchData['55'][1].ranCondition(result);
   return result;
 }_$jscoverage['/nodejs.js'].branchData['46'][1].init(101, 5, 'error');
-function visit249_46_1(result) {
+function visit201_46_1(result) {
   _$jscoverage['/nodejs.js'].branchData['46'][1].ranCondition(result);
   return result;
 }_$jscoverage['/nodejs.js'].branchData['40'][1].init(469, 7, 'success');
-function visit248_40_1(result) {
+function visit200_40_1(result) {
   _$jscoverage['/nodejs.js'].branchData['40'][1].ranCondition(result);
   return result;
 }_$jscoverage['/nodejs.js'].branchData['23'][1].init(80, 7, 'success');
-function visit247_23_1(result) {
+function visit199_23_1(result) {
   _$jscoverage['/nodejs.js'].branchData['23'][1].ranCondition(result);
   return result;
 }_$jscoverage['/nodejs.js'].branchData['21'][1].init(200, 55, 'S.startsWith(S.Path.extname(url).toLowerCase(), \'.css\')');
-function visit246_21_1(result) {
+function visit198_21_1(result) {
   _$jscoverage['/nodejs.js'].branchData['21'][1].ranCondition(result);
   return result;
 }_$jscoverage['/nodejs.js'].branchData['15'][1].init(33, 27, 'typeof success === \'object\'');
-function visit245_15_1(result) {
+function visit197_15_1(result) {
   _$jscoverage['/nodejs.js'].branchData['15'][1].ranCondition(result);
   return result;
 }_$jscoverage['/nodejs.js'].lineData[7]++;
@@ -320,7 +320,7 @@ function visit245_15_1(result) {
   _$jscoverage['/nodejs.js'].lineData[13]++;
   var error;
   _$jscoverage['/nodejs.js'].lineData[15]++;
-  if (visit245_15_1(typeof success === 'object')) {
+  if (visit197_15_1(typeof success === 'object')) {
     _$jscoverage['/nodejs.js'].lineData[16]++;
     charset = success.charset;
     _$jscoverage['/nodejs.js'].lineData[17]++;
@@ -329,11 +329,11 @@ function visit245_15_1(result) {
     success = success.success;
   }
   _$jscoverage['/nodejs.js'].lineData[21]++;
-  if (visit246_21_1(S.startsWith(S.Path.extname(url).toLowerCase(), '.css'))) {
+  if (visit198_21_1(S.startsWith(S.Path.extname(url).toLowerCase(), '.css'))) {
     _$jscoverage['/nodejs.js'].lineData[22]++;
     S.log('node js can not load css: ' + url, 'warn');
     _$jscoverage['/nodejs.js'].lineData[23]++;
-    if (visit247_23_1(success)) {
+    if (visit199_23_1(success)) {
       _$jscoverage['/nodejs.js'].lineData[24]++;
       success();
     }
@@ -351,7 +351,7 @@ function visit245_15_1(result) {
     _$jscoverage['/nodejs.js'].lineData[39]++;
     factory(S, require);
     _$jscoverage['/nodejs.js'].lineData[40]++;
-    if (visit248_40_1(success)) {
+    if (visit200_40_1(success)) {
       _$jscoverage['/nodejs.js'].lineData[41]++;
       success();
     }
@@ -361,7 +361,7 @@ function visit245_15_1(result) {
   _$jscoverage['/nodejs.js'].lineData[45]++;
   S.log(e.stack, 'error');
   _$jscoverage['/nodejs.js'].lineData[46]++;
-  if (visit249_46_1(error)) {
+  if (visit201_46_1(error)) {
     _$jscoverage['/nodejs.js'].lineData[47]++;
     error(e);
   }
@@ -370,7 +370,7 @@ function visit245_15_1(result) {
   _$jscoverage['/nodejs.js'].lineData[52]++;
   S.KISSY = S;
   _$jscoverage['/nodejs.js'].lineData[55]++;
-  if (visit250_55_1(typeof module !== 'undefined')) {
+  if (visit202_55_1(typeof module !== 'undefined')) {
     _$jscoverage['/nodejs.js'].lineData[56]++;
     module.exports = S;
   }

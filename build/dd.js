@@ -256,7 +256,7 @@ KISSY.add("dd/ddm", ["node", "base"], function(S, require) {
 });
 KISSY.add("dd/draggable", ["node", "./ddm", "base"], function(S, require) {
   var Node = require("node"), DDM = require("./ddm"), Base = require("base");
-  var UA = S.UA, $ = Node.all, each = S.each, Features = S.Features, ie = UA.ie, NULL = null, PREFIX_CLS = DDM.PREFIX_CLS, doc = S.Env.host.document;
+  var UA = S.UA, $ = Node.all, each = S.each, Feature = S.Feature, ie = UA.ie, NULL = null, PREFIX_CLS = DDM.PREFIX_CLS, doc = S.Env.host.document;
   var Draggable = Base.extend({initializer:function() {
     var self = this;
     self.addTarget(DDM);
@@ -302,7 +302,7 @@ KISSY.add("dd/draggable", ["node", "./ddm", "base"], function(S, require) {
     if(self.get("halt")) {
       ev.stopPropagation()
     }
-    if(!Features.isTouchEventSupported()) {
+    if(!Feature.isTouchEventSupported()) {
       ev.preventDefault()
     }
     var mx = ev.pageX, my = ev.pageY;

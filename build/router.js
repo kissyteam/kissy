@@ -150,7 +150,7 @@ KISSY.add("router", ["./router/utils", "./router/route", "uri", "./router/reques
   var getVidFromUrlWithHash = utils.getVidFromUrlWithHash;
   var win = S.Env.host;
   var history = win.history;
-  var supportNativeHashChange = S.Features.isHashChangeSupported();
+  var supportNativeHashChange = S.Feature.isHashChangeSupported();
   var supportNativeHistory = !!(history && history.pushState);
   var BREATH_INTERVAL = 100;
   var viewUniqueId = 10;

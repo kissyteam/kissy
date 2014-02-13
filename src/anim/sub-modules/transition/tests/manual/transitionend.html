@@ -11,8 +11,8 @@
 <div id="t2" style="border:1px solid red;width:100px;height:100px"></div>
 <script>
     var S = KISSY;
-    var Features = S.Features;
-    var vendorPrefix = Features.getVendorCssPropPrefix('transition');
+    var Feature = S.Feature;
+    var vendorPrefix = Feature.getVendorCssPropPrefix('transition');
     var TRANSITION_END_EVENT = vendorPrefix ?
         // webkitTransitionEnd !
             (vendorPrefix.toLowerCase() + 'TransitionEnd') :

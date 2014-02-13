@@ -103,7 +103,7 @@ KISSY.add(function (S, require) {
     var config = eventHandleMap[ROTATE] = {
         handle: r
     };
-    if (S.Features.isTouchEventSupported()) {
+    if (S.Feature.isTouchEventSupported()) {
         config.setup = function () {
             this.addEventListener('touchmove', prevent, false);
         };

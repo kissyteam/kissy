@@ -6,7 +6,7 @@
 KISSY.add(function (S, require) {
     var Base = require('base');
     var substitute = S.substitute;
-    var transformProperty = S.Features.getVendorCssPropName('transform');
+    var transformProperty = S.Feature.getVendorCssPropName('transform');
 
     /**
      * pull to refresh plugin for ScrollView

@@ -428,7 +428,7 @@ KISSY.add("tree/node", ["node", "component/container", "./node-render"], functio
 KISSY.add("tree/tree-manager", ["node", "component/extension/delegate-children"], function(S, require) {
   var Node = require("node");
   var DelegateChildrenExtension = require("component/extension/delegate-children");
-  var UA = S.UA, ie = UA.ieMode, Features = S.Features, Gesture = Node.Gesture, isTouchEventSupported = Features.isTouchEventSupported();
+  var UA = S.UA, ie = UA.ieMode, Feature = S.Feature, Gesture = Node.Gesture, isTouchEventSupported = Feature.isTouchEventSupported();
   function TreeManager() {
   }
   TreeManager.ATTRS = {showRootNode:{value:true, view:1}, selectedItem:{}, focusable:{value:true}, handleGestureEvents:{value:true}};

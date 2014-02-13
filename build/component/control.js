@@ -441,7 +441,7 @@ KISSY.add("component/control", ["node", "./control/process", "component/manager"
   var ControlProcess = require("./control/process");
   var Manager = require("component/manager");
   var Render = require("./control/render");
-  var ie = S.UA.ieMode, Features = S.Features, Gesture = Node.Gesture, isTouchGestureSupported = Features.isTouchGestureSupported(), isTouchEventSupported = Features.isTouchEventSupported();
+  var ie = S.UA.ieMode, Feature = S.Feature, Gesture = Node.Gesture, isTouchGestureSupported = Feature.isTouchGestureSupported(), isTouchEventSupported = Feature.isTouchEventSupported();
   var Control = ControlProcess.extend({isControl:true, createDom:function() {
     var self = this, Render = self.get("xrender"), view = self.get("view"), id = self.get("id"), el;
     if(view) {

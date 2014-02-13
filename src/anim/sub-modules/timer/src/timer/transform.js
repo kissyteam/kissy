@@ -6,7 +6,7 @@
 KISSY.add(function (S, require) {
     var Dom = require('dom');
     var Fx = require('./fx');
-    var translateTpl = S.Features.isTransform3dSupported() ?
+    var translateTpl = S.Feature.isTransform3dSupported() ?
         'translate3d({translateX}px,{translateY}px,0)' : 'translate({translateX}px,{translateY}px)';
 
     function toMatrixArray(matrix) {

@@ -390,7 +390,7 @@ KISSY.add("anim/timer/color", ["./fx", "./short-hand"], function(S, require) {
 KISSY.add("anim/timer/transform", ["dom", "./fx"], function(S, require) {
   var Dom = require("dom");
   var Fx = require("./fx");
-  var translateTpl = S.Features.isTransform3dSupported() ? "translate3d({translateX}px,{translateY}px,0)" : "translate({translateX}px,{translateY}px)";
+  var translateTpl = S.Feature.isTransform3dSupported() ? "translate3d({translateX}px,{translateY}px,0)" : "translate({translateX}px,{translateY}px)";
   function toMatrixArray(matrix) {
     matrix = matrix.split(/,/);
     matrix = S.map(matrix, function(v) {

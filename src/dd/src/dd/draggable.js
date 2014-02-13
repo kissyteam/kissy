@@ -10,7 +10,7 @@ KISSY.add(function (S,require) {
     var UA = S.UA,
         $ = Node.all,
         each = S.each,
-        Features = S.Features,
+        Feature = S.Feature,
         ie = UA.ie,
         NULL = null,
         PREFIX_CLS = DDM.PREFIX_CLS,
@@ -281,7 +281,7 @@ KISSY.add(function (S,require) {
             // prevent touchdown will prevent native scroll
             // need to prevent on move conditionally
             // will prevent text selection and link click
-            if (!Features.isTouchEventSupported()) {
+            if (!Feature.isTouchEventSupported()) {
                 ev.preventDefault();
             }
 

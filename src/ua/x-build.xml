@@ -1,0 +1,6 @@
+<project name="ua.build" default="build" basedir=".">
+    <property name="component.name" value="ua"/>
+    <import file="../common.xml"/>
+    <target name="compress-css"/>
+    <target name="tpl2mod"/>
+</project>

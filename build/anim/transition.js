@@ -13,11 +13,11 @@ KISSY.add("anim/transition", ["dom", "event/dom", "./base"], function(S, require
   var Dom = require("dom");
   var Event = require("event/dom");
   var AnimBase = require("./base");
-  var Features = S.Features;
-  var vendorPrefix = Features.getVendorCssPropPrefix("transition");
+  var Feature = S.Feature;
+  var vendorPrefix = Feature.getVendorCssPropPrefix("transition");
   var R_UPPER = /([A-Z]|^ms)/g;
   var TRANSITION_END_EVENT = vendorPrefix ? vendorPrefix.toLowerCase() + "TransitionEnd" : "transitionend webkitTransitionEnd";
-  var TRANSITION = Features.getVendorCssPropName("transition");
+  var TRANSITION = Feature.getVendorCssPropName("transition");
   function genTransition(propsData) {
     var str = "";
     S.each(propsData, function(propData, prop) {
@@ -35,7 +35,7 @@ KISSY.add("anim/transition", ["dom", "event/dom", "./base"], function(S, require
     var self = this, node = self.node, elStyle = node.style, _propsData = self._propsData, original = elStyle[TRANSITION], transform, propsCss = {};
     if(transform = _propsData.transform) {
       delete _propsData.transform;
-      _propsData[Features.getVendorCssPropName("transform").replace(R_UPPER, "-$1").toLowerCase()] = transform
+      _propsData[Feature.getVendorCssPropName("transform").replace(R_UPPER, "-$1").toLowerCase()] = transform
     }
     S.each(_propsData, function(propData, prop) {
       var v = propData.value, currentValue = Dom.css(node, prop);

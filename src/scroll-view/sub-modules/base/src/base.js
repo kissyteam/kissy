@@ -11,7 +11,7 @@ KISSY.add(function (S, require) {
 
 
     var $ = S.all,
-        isTouchEventSupported = S.Features.isTouchEventSupported(),
+        isTouchEventSupported = S.Feature.isTouchEventSupported(),
         KeyCode = Node.KeyCode;
 
     function onElScroll() {

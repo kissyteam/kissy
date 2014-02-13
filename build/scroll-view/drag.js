@@ -199,7 +199,7 @@ KISSY.add("scroll-view/drag", ["./base", "node", "anim"], function(S, require) {
         return
       }
     }
-    if(S.Features.isTouchEventSupported()) {
+    if(S.Feature.isTouchEventSupported()) {
       e.preventDefault()
     }
     onDragScroll(self, e, "left", startMousePos);

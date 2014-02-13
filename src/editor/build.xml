@@ -10,14 +10,14 @@
             <header filtering="no" trimleading="yes">
                 /*jshint indent:false, unused:false*/
                 KISSY.add(function(){
-                (function(config,Features,UA){
+                (function(config,Feature,UA){
             </header>
             <fileset dir="${kissy.src.dir}/editor/sub-modules/plugin/"
                      includes="**/ke-meta/*.js"/>
             <footer>
                 })(function(c){
                 KISSY.config('modules', c);
-                },KISSY.Features,KISSY.UA);
+                },KISSY.Feature,KISSY.UA);
                 });
             </footer>
         </concat>

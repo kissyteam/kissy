@@ -1241,7 +1241,7 @@ KISSY.add("dom/base/style", ["./api"], function(S, require) {
   "px", NO_PX_REG = /\d(?!px)[a-z%]+$/i, cssHooks = {}, cssProps = {}, userSelectProperty, defaultDisplay = {}, RE_DASH = /-([a-z])/ig;
   cssProps["float"] = "cssFloat";
   function normalizeCssPropName(name) {
-    return cssProps[name] || S.Features.getVendorCssPropName(name)
+    return cssProps[name] || S.Feature.getVendorCssPropName(name)
   }
   function upperCase() {
     return arguments[1].toUpperCase()
@@ -1387,7 +1387,7 @@ KISSY.add("dom/base/style", ["./api"], function(S, require) {
   }, unselectable:function(selector) {
     var _els = Dom.query(selector), elem, j, e, i = 0, excludes, style, els;
     if(userSelectProperty === undefined) {
-      userSelectProperty = S.Features.getVendorCssPropName("userSelect")
+      userSelectProperty = S.Feature.getVendorCssPropName("userSelect")
     }
     for(j = _els.length - 1;j >= 0;j--) {
       elem = _els[j];

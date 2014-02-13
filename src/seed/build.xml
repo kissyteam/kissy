@@ -8,28 +8,46 @@
 
     <target name="tpl2mod"/>
 
-    <target name="build-loader">
+    <target name="pre-build">
         <subant target=""
                 antfile="x-build.xml"
                 failonerror="true"
                 buildpath="${kissy.src.dir}/loader"
                 inheritall="false"/>
+
+        <subant target=""
+                antfile="x-build.xml"
+                failonerror="true"
+                buildpath="${kissy.src.dir}/ua"
+                inheritall="false"/>
+
+        <subant target=""
+                antfile="x-build.xml"
+                failonerror="true"
+                buildpath="${kissy.src.dir}/feature"
+                inheritall="false"/>
+
+        <subant target=""
+                antfile="x-build.xml"
+                failonerror="true"
+                buildpath="${kissy.src.dir}/util"
+                inheritall="false"/>
     </target>
 
-    <target name="build" depends="build-loader,common.build.build"/>
+    <target name="build" depends="pre-build,common.build.build"/>
 
     <target name="merge-dependency">
-        <concat destfile="${component.src.dir}/meta/modules.js" encoding="${charset}" outputencoding="${charset}">
+        <concat destfile="${component.src.dir}/modules.js" encoding="${charset}" outputencoding="${charset}">
             <header filtering="no" trimleading="yes">
                 /*jshint indent:false*/
-                (function (config, Features, UA) {
+                (function (config, Feature, UA) {
             </header>
             <fileset dir="${kissy.src.dir}" includes="**/meta/*.js"
                      excludes="seed/**/*"/>
             <footer>
                 })(function (c) {
                 KISSY.config('modules', c);
-                },KISSY.Features, KISSY.UA);
+                },KISSY.Feature, KISSY.UA);
             </footer>
         </concat>
     </target>
@@ -38,44 +56,23 @@
         <concat destfile="${component.src.dir.tmp}/seed-pkg.js"
                 encoding="${charset}" outputencoding="${charset}">
             <path location="${kissy.build.dir}/loader.js"/>
-
-            <!-- kissy lang start-->
-            <path location="${component.src.dir}/lang/object.js"/>
-            <path location="${component.src.dir}/lang/array.js"/>
-            <path location="${component.src.dir}/lang/escape.js"/>
-            <path location="${component.src.dir}/lang/function.js"/>
-            <path location="${component.src.dir}/lang/lang.js"/>
-            <path location="${component.src.dir}/lang/string.js"/>
-            <path location="${component.src.dir}/lang/type.js"/>
-            <!-- kissy lang end-->
-
-            <path location="${component.src.dir}/ua.js"/>
-            <path location="${component.src.dir}/features.js"/>
-            <path location="${component.src.dir}/web.js"/>
+            <path location="${kissy.build.dir}/util.js"/>
+            <path location="${kissy.build.dir}/ua.js"/>
+            <path location="${kissy.build.dir}/feature.js"/>
+            <path location="${component.src.dir}/base.js"/>
             <path location="${component.src.dir}/json.js"/>
-            <fileset dir="${component.src.dir}/meta/" includes="**/*.js"/>
+            <path location="${component.src.dir}/modules.js"/>
         </concat>
 
         <!-- build kissy-nodejs -->
         <concat destfile="${component.src.dir.tmp}/kissy-nodejs-pkg.js"
                 encoding="${charset}" outputencoding="${charset}">
             <path location="${kissy.build.dir}/loader-nodejs.js"/>
-
-            <!-- kissy lang start-->
-            <path location="${component.src.dir}/lang/object.js"/>
-            <path location="${component.src.dir}/lang/array.js"/>
-            <path location="${component.src.dir}/lang/escape.js"/>
-            <path location="${component.src.dir}/lang/function.js"/>
-            <path location="${component.src.dir}/lang/lang.js"/>
-            <path location="${component.src.dir}/lang/string.js"/>
-            <path location="${component.src.dir}/lang/type.js"/>
-            <!-- kissy lang end-->
-
-            <path location="${component.src.dir}/ua.js"/>
-            <path location="${component.src.dir}/features.js"/>
+            <path location="${kissy.build.dir}/util.js"/>
+            <path location="${kissy.build.dir}/ua.js"/>
+            <path location="${kissy.build.dir}/feature.js"/>
+            <path location="${component.src.dir}/base.js"/>
             <path location="${component.src.dir}/json.js"/>
-            <path location="${component.src.dir}/web.js"/>
-            <fileset dir="${component.src.dir}/meta/" includes="**/*.js"/>
         </concat>
     </target>
 </project>

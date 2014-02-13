@@ -14,7 +14,7 @@ KISSY.add(function (S, require) {
         '</div>';
 
 
-    var vendorPrefix = S.Features.getVendorCssPropPrefix('animation');
+    var vendorPrefix = S.Feature.getVendorCssPropPrefix('animation');
     var ANIMATION_END_EVENT = vendorPrefix ?
         (vendorPrefix.toLowerCase() + 'AnimationEnd') :
         // https://github.com/kissyteam/kissy/issues/538

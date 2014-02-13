@@ -549,6 +549,10 @@ if (!loc.getQuery().has('build') && !loc.getQuery().has('min')) {
             "base": "/kissy/src/event/sub-modules/dom/sub-modules/touch/src/touch",
             "ignorePackageNameInUri": 1
         },
+        "feature": {
+            "base": "/kissy/src/feature/src/feature",
+            "ignorePackageNameInUri": 1
+        },
         "filter-menu": {
             "base": "/kissy/src/filter-menu/src/filter-menu",
             "ignorePackageNameInUri": 1
@@ -669,8 +673,16 @@ if (!loc.getQuery().has('build') && !loc.getQuery().has('min')) {
             "base": "/kissy/src/tree/src/tree",
             "ignorePackageNameInUri": 1
         },
+        "ua": {
+            "base": "/kissy/src/ua/src/ua",
+            "ignorePackageNameInUri": 1
+        },
         "uri": {
             "base": "/kissy/src/uri/src/uri",
+            "ignorePackageNameInUri": 1
+        },
+        "util": {
+            "base": "/kissy/src/util/src/util",
             "ignorePackageNameInUri": 1
         },
         "xtemplate": {

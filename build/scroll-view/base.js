@@ -13,9 +13,9 @@ build time: Feb 13 12:29
 KISSY.add("scroll-view/base/render", ["component/container", "component/extension/content-render"], function(S, require) {
   var Container = require("component/container");
   var ContentRenderExtension = require("component/extension/content-render");
-  var Features = S.Features, floor = Math.floor, transformProperty;
-  var isTransform3dSupported = S.Features.isTransform3dSupported();
-  var supportCss3 = S.Features.getVendorCssPropPrefix("transform") !== false;
+  var Feature = S.Feature, floor = Math.floor, transformProperty;
+  var isTransform3dSupported = S.Feature.isTransform3dSupported();
+  var supportCss3 = S.Feature.getVendorCssPropPrefix("transform") !== false;
   var methods = {syncUI:function() {
     var self = this, control = self.control, el = control.el, contentEl = control.contentEl, $contentEl = control.$contentEl;
     var scrollHeight = contentEl.offsetHeight, scrollWidth = contentEl.offsetWidth;
@@ -57,7 +57,7 @@ KISSY.add("scroll-view/base/render", ["component/container", "component/extensio
     this.control.contentEl.style.top = -v + "px"
   }};
   if(supportCss3) {
-    transformProperty = Features.getVendorCssPropName("transform");
+    transformProperty = Feature.getVendorCssPropName("transform");
     methods._onSetScrollLeft = function(v) {
       var control = this.control;
       control.contentEl.style[transformProperty] = "translateX(" + floor(-v) + "px)" + " translateY(" + floor(-control.get("scrollTop")) + "px)" + (isTransform3dSupported ? " translateZ(0)" : "")
@@ -74,7 +74,7 @@ KISSY.add("scroll-view/base", ["node", "anim", "component/container", "./base/re
   var Anim = require("anim");
   var Container = require("component/container");
   var Render = require("./base/render");
-  var $ = S.all, isTouchEventSupported = S.Features.isTouchEventSupported(), KeyCode = Node.KeyCode;
+  var $ = S.all, isTouchEventSupported = S.Feature.isTouchEventSupported(), KeyCode = Node.KeyCode;
   function onElScroll() {
     var self = this, el = self.el, scrollTop = el.scrollTop, scrollLeft = el.scrollLeft;
     if(scrollTop) {

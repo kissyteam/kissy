@@ -27,7 +27,7 @@
         <concat destfile="${component.src.dir.tmp}/loader-pkg.js"
                 encoding="${charset}" outputencoding="${charset}">
             <path location="${component.src.dir}/kissy.js"/>
-            <path location="${component.src.dir}/lang.js"/>
+            <path location="${component.src.dir}/util.js"/>
             <path location="${kissy.src.dir}/path/src/path.js"/>
             <path location="${kissy.src.dir}/uri/src/uri.js"/>
             <path location="${component.src.dir}/setup.js"/>

@@ -9,10 +9,10 @@ KISSY.add(function (S, require) {
     var Manager = require('component/manager');
     var Render = require('./control/render');
     var ie = S.UA.ieMode,
-        Features = S.Features,
+        Feature = S.Feature,
         Gesture = Node.Gesture,
-        isTouchGestureSupported = Features.isTouchGestureSupported(),
-        isTouchEventSupported = Features.isTouchEventSupported();
+        isTouchGestureSupported = Feature.isTouchGestureSupported(),
+        isTouchEventSupported = Feature.isTouchEventSupported();
 
     /**
      * Base Control class for KISSY Component.

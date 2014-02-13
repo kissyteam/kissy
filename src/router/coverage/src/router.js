@@ -824,7 +824,7 @@ KISSY.add(function(S, require, exports) {
   _$jscoverage['/router.js'].lineData[19]++;
   var history = win.history;
   _$jscoverage['/router.js'].lineData[20]++;
-  var supportNativeHashChange = S.Features.isHashChangeSupported();
+  var supportNativeHashChange = S.Feature.isHashChangeSupported();
   _$jscoverage['/router.js'].lineData[21]++;
   var supportNativeHistory = !!(visit20_21_1(history && history.pushState));
   _$jscoverage['/router.js'].lineData[23]++;

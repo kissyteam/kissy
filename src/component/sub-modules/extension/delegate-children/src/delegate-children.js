@@ -8,9 +8,9 @@ KISSY.add(function (S, require) {
         Manager = require('component/manager');
     var UA = S.UA,
         ie = UA.ieMode,
-        Features = S.Features,
+        Feature = S.Feature,
         Gesture = Node.Gesture,
-        isTouchEventSupported = Features.isTouchEventSupported();
+        isTouchEventSupported = Feature.isTouchEventSupported();
 
     function onRenderChild(e) {
         if (e.target === this) {

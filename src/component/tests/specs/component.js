@@ -300,7 +300,7 @@ KISSY.add(function (S, Control, Container, DelegateChildrenExtension) {
                 expect(invalidNode(c.get('el')[0].parentNode)).toBe(true);
             });
 
-            if (S.Features.isTouchEventSupported()) {
+            if (S.Feature.isTouchEventSupported()) {
 
             } else {
                 it("should delegate events", function () {

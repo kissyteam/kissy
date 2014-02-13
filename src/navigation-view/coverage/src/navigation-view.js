@@ -600,7 +600,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/navigation-view.js'].lineData[10]++;
   var LOADING_HTML = '<div class="{prefixCls}navigation-view-loading">' + '<div class="{prefixCls}navigation-view-loading-outer">' + '<div class="{prefixCls}navigation-view-loading-inner"></div>' + '</div>' + '</div>';
   _$jscoverage['/navigation-view.js'].lineData[17]++;
-  var vendorPrefix = S.Features.getVendorCssPropPrefix('animation');
+  var vendorPrefix = S.Feature.getVendorCssPropPrefix('animation');
   _$jscoverage['/navigation-view.js'].lineData[18]++;
   var ANIMATION_END_EVENT = vendorPrefix ? (vendorPrefix.toLowerCase() + 'AnimationEnd') : 'animationend webkitAnimationEnd';
   _$jscoverage['/navigation-view.js'].lineData[23]++;

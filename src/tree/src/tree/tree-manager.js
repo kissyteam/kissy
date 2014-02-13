@@ -9,9 +9,9 @@ KISSY.add(function (S, require) {
 
     var UA = S.UA,
         ie = UA.ieMode,
-        Features = S.Features,
+        Feature = S.Feature,
         Gesture = Node.Gesture,
-        isTouchEventSupported = Features.isTouchEventSupported();
+        isTouchEventSupported = Feature.isTouchEventSupported();
 
     /**
      * Manage tree node for tree root

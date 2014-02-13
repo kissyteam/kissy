@@ -14,9 +14,9 @@ KISSY.add(function (S, require) {
 
     var Gesture = Node.Gesture;
 
-    var Features = S.Features;
+    var Feature = S.Feature;
 
-    var allowDrag = !Features.isTouchGestureSupported();
+    var allowDrag = !Feature.isTouchGestureSupported();
 
     /**
      * @class KISSY.ScrollView.ScrollBar

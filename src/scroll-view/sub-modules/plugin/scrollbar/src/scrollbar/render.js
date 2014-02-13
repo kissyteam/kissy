@@ -6,10 +6,10 @@
 KISSY.add(function (S, require) {
     var Control = require('component/control');
     var ScrollBarTpl = require('./scrollbar-xtpl');
-    var isTransform3dSupported = S.Features.isTransform3dSupported();
+    var isTransform3dSupported = S.Feature.isTransform3dSupported();
 
     // http://www.html5rocks.com/en/tutorials/speed/html5/
-    var supportCss3 = S.Features.getVendorCssPropPrefix('transform') !== false;
+    var supportCss3 = S.Feature.getVendorCssPropPrefix('transform') !== false;
 
     var methods = {
         beforeCreateDom: function (renderData, childrenElSelectors) {
@@ -115,7 +115,7 @@ KISSY.add(function (S, require) {
 
 
     if (supportCss3) {
-        var transformProperty = S.Features.getVendorCssPropName('transform');
+        var transformProperty = S.Feature.getVendorCssPropName('transform');
 
         methods._onSetDragLeft = function (v) {
             this.control.dragEl.style[transformProperty] = 'translateX(' + v + 'px)' +

@@ -3195,7 +3195,7 @@ KISSY.add("editor/selectionFix", ["./base", "./selection", "node"], function(S, 
   }}
 });
 KISSY.add("editor/plugin-meta", [], function() {
-  (function(config, Features, UA) {
+  (function(config, Feature, UA) {
     config({"editor/plugin/back-color":{requires:["editor/plugin/color/btn", "editor/plugin/back-color/cmd"]}});
     config({"editor/plugin/back-color/cmd":{requires:["editor/plugin/color/cmd"]}});
     config({"editor/plugin/bold":{requires:["editor/plugin/font/ui", "editor/plugin/bold/cmd", "editor/plugin/button"]}});
@@ -3287,7 +3287,7 @@ KISSY.add("editor/plugin-meta", [], function() {
     config({"editor/plugin/xiami-music/dialog":{requires:["editor", "editor/plugin/flash/dialog", "editor/plugin/menubutton"]}})
   })(function(c) {
     KISSY.config("modules", c)
-  }, KISSY.Features, KISSY.UA)
+  }, KISSY.Feature, KISSY.UA)
 });
 KISSY.add("editor/styles", ["node", "./selection", "./range", "./base", "./elementPath"], function(S, require) {
   var Node = require("node");

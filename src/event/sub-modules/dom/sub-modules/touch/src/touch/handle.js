@@ -13,7 +13,7 @@ KISSY.add(function (S, require) {
     require('./rotate');
 
     var key = S.guid('touch-handle'),
-        Features = S.Features,
+        Feature = S.Feature,
         gestureStartEvent,
         gestureMoveEvent,
         gestureEndEvent;
@@ -35,7 +35,7 @@ KISSY.add(function (S, require) {
     // radius around touchend that swallows mouse events
     var DUP_DIST = 25;
 
-    if (Features.isTouchEventSupported()) {
+    if (Feature.isTouchEventSupported()) {
         if (S.UA.ios) {
             // ios mousedown is buggy
             gestureEndEvent = 'touchend touchcancel';
@@ -47,13 +47,13 @@ KISSY.add(function (S, require) {
             gestureStartEvent = 'touchstart mousedown';
             gestureMoveEvent = 'touchmove mousemove';
         }
-    } else if (Features.isPointerSupported()) {
+    } else if (Feature.isPointerSupported()) {
         // ie11 requires lowercase
         // https://github.com/kissyteam/kissy/issues/509
         gestureStartEvent = 'pointerdown';
         gestureMoveEvent = 'pointermove';
         gestureEndEvent = 'pointerup pointercancel';
-    } else if (Features.isMsPointerSupported()) {
+    } else if (Feature.isMsPointerSupported()) {
         gestureStartEvent = 'MSPointerDown';
         gestureMoveEvent = 'MSPointerMove';
         gestureEndEvent = 'MSPointerUp MSPointerCancel';
