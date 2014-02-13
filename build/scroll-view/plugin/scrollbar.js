@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Jan 24 20:12
+build time: Feb 13 12:29
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -150,13 +150,13 @@ KISSY.add("scroll-view/plugin/scrollbar/render", ["component/control", "./scroll
   }, _onSetDragTop:function(v) {
     this.control.dragEl.style.top = v + "px"
   }};
-  var transformProperty = S.Features.getVendorCssPropName("transform");
   if(supportCss3) {
+    var transformProperty = S.Features.getVendorCssPropName("transform");
     methods._onSetDragLeft = function(v) {
-      this.control.dragEl.style[transformProperty] = "translateX(" + v + "px)" + (isTransform3dSupported ? " translateZ(0)" : "")
+      this.control.dragEl.style[transformProperty] = "translateX(" + v + "px)" + " translateY(" + this.control.get("dragTop") + "px)" + (isTransform3dSupported ? " translateZ(0)" : "")
     };
     methods._onSetDragTop = function(v) {
-      this.control.dragEl.style[transformProperty] = "translateY(" + v + "px)" + (isTransform3dSupported ? " translateZ(0)" : "")
+      this.control.dragEl.style[transformProperty] = "translateX(" + this.control.get("dragLeft") + "px)" + " translateY(" + v + "px)" + (isTransform3dSupported ? " translateZ(0)" : "")
     }
   }
   return Control.getDefaultRender().extend(methods, {ATTRS:{contentTpl:{value:ScrollBarTpl}}})
@@ -288,7 +288,7 @@ KISSY.add("scroll-view/plugin/scrollbar/control", ["node", "component/control", 
       return minLength
     }
     return v
-  }, view:1}, dragLeft:{view:1}, dragTop:{view:1}, dragEl:{}, downBtn:{}, upBtn:{}, trackEl:{}, focusable:{value:false}, xrender:{value:ScrollBarRender}}, xclass:"scrollbar"})
+  }, view:1}, dragLeft:{view:1, value:0}, dragTop:{view:1, value:0}, dragEl:{}, downBtn:{}, upBtn:{}, trackEl:{}, focusable:{value:false}, xrender:{value:ScrollBarRender}}, xclass:"scrollbar"})
 });
 KISSY.add("scroll-view/plugin/scrollbar", ["base", "./scrollbar/control"], function(S, require) {
   var Base = require("base");

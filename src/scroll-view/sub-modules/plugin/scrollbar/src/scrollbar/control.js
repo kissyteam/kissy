@@ -269,11 +269,13 @@ KISSY.add(function (S, require) {
             },
 
             dragLeft: {
-                view: 1
+                view: 1,
+                value: 0
             },
 
             dragTop: {
-                view: 1
+                view: 1,
+                value: 0
             },
 
             dragEl: {

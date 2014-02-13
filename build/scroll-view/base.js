@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Jan 24 20:12
+build time: Feb 13 12:29
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -13,8 +13,9 @@ build time: Jan 24 20:12
 KISSY.add("scroll-view/base/render", ["component/container", "component/extension/content-render"], function(S, require) {
   var Container = require("component/container");
   var ContentRenderExtension = require("component/extension/content-render");
-  var translateTpl = "translate3d({translateX}px,{translateY}px,0)";
-  var Features = S.Features, supportTransform3d = Features.isTransform3dSupported(), floor = Math.floor, transformProperty;
+  var Features = S.Features, floor = Math.floor, transformProperty;
+  var isTransform3dSupported = S.Features.isTransform3dSupported();
+  var supportCss3 = S.Features.getVendorCssPropPrefix("transform") !== false;
   var methods = {syncUI:function() {
     var self = this, control = self.control, el = control.el, contentEl = control.contentEl, $contentEl = control.$contentEl;
     var scrollHeight = contentEl.offsetHeight, scrollWidth = contentEl.offsetWidth;
@@ -55,15 +56,15 @@ KISSY.add("scroll-view/base/render", ["component/container", "component/extensio
   }, _onSetScrollTop:function(v) {
     this.control.contentEl.style.top = -v + "px"
   }};
-  if(supportTransform3d) {
+  if(supportCss3) {
     transformProperty = Features.getVendorCssPropName("transform");
     methods._onSetScrollLeft = function(v) {
       var control = this.control;
-      control.contentEl.style[transformProperty] = S.substitute(translateTpl, {translateX:floor(-v), translateY:floor(-control.get("scrollTop"))})
+      control.contentEl.style[transformProperty] = "translateX(" + floor(-v) + "px)" + " translateY(" + floor(-control.get("scrollTop")) + "px)" + (isTransform3dSupported ? " translateZ(0)" : "")
     };
     methods._onSetScrollTop = function(v) {
       var control = this.control;
-      control.contentEl.style[transformProperty] = S.substitute(translateTpl, {translateX:floor(-control.get("scrollLeft")), translateY:floor(-v)})
+      control.contentEl.style[transformProperty] = "translateX(" + floor(-control.get("scrollLeft")) + "px)" + " translateY(" + floor(-v) + "px)" + (isTransform3dSupported ? " translateZ(0)" : "")
     }
   }
   return Container.getDefaultRender().extend([ContentRenderExtension], methods, {name:"ScrollViewRender"})

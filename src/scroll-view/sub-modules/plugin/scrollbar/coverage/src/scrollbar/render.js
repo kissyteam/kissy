@@ -274,13 +274,13 @@ if (! _$jscoverage['/scrollbar/render.js']) {
   _$jscoverage['/scrollbar/render.js'].lineData[104] = 0;
   _$jscoverage['/scrollbar/render.js'].lineData[108] = 0;
   _$jscoverage['/scrollbar/render.js'].lineData[112] = 0;
-  _$jscoverage['/scrollbar/render.js'].lineData[116] = 0;
+  _$jscoverage['/scrollbar/render.js'].lineData[117] = 0;
   _$jscoverage['/scrollbar/render.js'].lineData[118] = 0;
-  _$jscoverage['/scrollbar/render.js'].lineData[119] = 0;
   _$jscoverage['/scrollbar/render.js'].lineData[120] = 0;
-  _$jscoverage['/scrollbar/render.js'].lineData[124] = 0;
-  _$jscoverage['/scrollbar/render.js'].lineData[125] = 0;
-  _$jscoverage['/scrollbar/render.js'].lineData[130] = 0;
+  _$jscoverage['/scrollbar/render.js'].lineData[121] = 0;
+  _$jscoverage['/scrollbar/render.js'].lineData[126] = 0;
+  _$jscoverage['/scrollbar/render.js'].lineData[127] = 0;
+  _$jscoverage['/scrollbar/render.js'].lineData[133] = 0;
 }
 if (! _$jscoverage['/scrollbar/render.js'].functionData) {
   _$jscoverage['/scrollbar/render.js'].functionData = [];
@@ -308,12 +308,12 @@ if (! _$jscoverage['/scrollbar/render.js'].branchData) {
   _$jscoverage['/scrollbar/render.js'].branchData['83'][1] = new BranchData();
   _$jscoverage['/scrollbar/render.js'].branchData['88'] = [];
   _$jscoverage['/scrollbar/render.js'].branchData['88'][1] = new BranchData();
-  _$jscoverage['/scrollbar/render.js'].branchData['118'] = [];
-  _$jscoverage['/scrollbar/render.js'].branchData['118'][1] = new BranchData();
+  _$jscoverage['/scrollbar/render.js'].branchData['117'] = [];
+  _$jscoverage['/scrollbar/render.js'].branchData['117'][1] = new BranchData();
 }
-_$jscoverage['/scrollbar/render.js'].branchData['118'][1].init(4575, 11, 'supportCss3');
-function visit24_118_1(result) {
-  _$jscoverage['/scrollbar/render.js'].branchData['118'][1].ranCondition(result);
+_$jscoverage['/scrollbar/render.js'].branchData['117'][1].init(4503, 11, 'supportCss3');
+function visit24_117_1(result) {
+  _$jscoverage['/scrollbar/render.js'].branchData['117'][1].ranCondition(result);
   return result;
 }_$jscoverage['/scrollbar/render.js'].branchData['88'][1].init(1079, 15, 'val < minScroll');
 function visit23_88_1(result) {
@@ -331,7 +331,7 @@ function visit21_55_1(result) {
 function visit20_52_1(result) {
   _$jscoverage['/scrollbar/render.js'].branchData['52'][1].ranCondition(result);
   return result;
-}_$jscoverage['/scrollbar/render.js'].branchData['12'][1].init(253, 54, 'S.Features.getVendorCssPropPrefix(\'transform\') !== false');
+}_$jscoverage['/scrollbar/render.js'].branchData['12'][1].init(253, 56, 'S.Features.getVendorCssPropPrefix(\'transform\') !== false');
 function visit19_12_1(result) {
   _$jscoverage['/scrollbar/render.js'].branchData['12'][1].ranCondition(result);
   return result;
@@ -460,24 +460,24 @@ KISSY.add(function(S, require) {
   _$jscoverage['/scrollbar/render.js'].lineData[112]++;
   this.control.dragEl.style.top = v + 'px';
 }};
-  _$jscoverage['/scrollbar/render.js'].lineData[116]++;
-  var transformProperty = S.Features.getVendorCssPropName('transform');
-  _$jscoverage['/scrollbar/render.js'].lineData[118]++;
-  if (visit24_118_1(supportCss3)) {
-    _$jscoverage['/scrollbar/render.js'].lineData[119]++;
+  _$jscoverage['/scrollbar/render.js'].lineData[117]++;
+  if (visit24_117_1(supportCss3)) {
+    _$jscoverage['/scrollbar/render.js'].lineData[118]++;
+    var transformProperty = S.Features.getVendorCssPropName('transform');
+    _$jscoverage['/scrollbar/render.js'].lineData[120]++;
     methods._onSetDragLeft = function(v) {
   _$jscoverage['/scrollbar/render.js'].functionData[9]++;
-  _$jscoverage['/scrollbar/render.js'].lineData[120]++;
-  this.control.dragEl.style[transformProperty] = 'translateX(' + v + 'px)' + (isTransform3dSupported ? ' translateZ(0)' : '');
+  _$jscoverage['/scrollbar/render.js'].lineData[121]++;
+  this.control.dragEl.style[transformProperty] = 'translateX(' + v + 'px)' + ' translateY(' + this.control.get('dragTop') + 'px)' + (isTransform3dSupported ? ' translateZ(0)' : '');
 };
-    _$jscoverage['/scrollbar/render.js'].lineData[124]++;
+    _$jscoverage['/scrollbar/render.js'].lineData[126]++;
     methods._onSetDragTop = function(v) {
   _$jscoverage['/scrollbar/render.js'].functionData[10]++;
-  _$jscoverage['/scrollbar/render.js'].lineData[125]++;
-  this.control.dragEl.style[transformProperty] = 'translateY(' + v + 'px)' + (isTransform3dSupported ? ' translateZ(0)' : '');
+  _$jscoverage['/scrollbar/render.js'].lineData[127]++;
+  this.control.dragEl.style[transformProperty] = 'translateX(' + this.control.get('dragLeft') + 'px)' + ' translateY(' + v + 'px)' + (isTransform3dSupported ? ' translateZ(0)' : '');
 };
   }
-  _$jscoverage['/scrollbar/render.js'].lineData[130]++;
+  _$jscoverage['/scrollbar/render.js'].lineData[133]++;
   return Control.getDefaultRender().extend(methods, {
   ATTRS: {
   contentTpl: {

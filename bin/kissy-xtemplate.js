@@ -5,6 +5,7 @@
  * @author yiminghe@gmail.com
  */
 var program = require('./lib/commander');
+
 program
     .option('-p, --package-path <packagePath>', 'Set kissy package path')
     .option('-e, --encoding [encoding]', 'Set xtemplate file encoding', 'utf-8')
@@ -58,7 +59,7 @@ function compile(tpl, modulePath) {
     console.info('generate xtpl module: ' + modulePath + ' at ' + (new Date().toLocaleString()));
 }
 
-function process(filePath) {
+function generate(filePath) {
     var modulePath;
     if (S.endsWith(filePath, '.xtpl.html') || S.endsWith(filePath, '-xtpl.html')) {
         modulePath = filePath.replace(/[.-]xtpl\.html$/, '-xtpl.js');
@@ -80,7 +81,7 @@ function process(filePath) {
 
 if (program.watch) {
     var watcher = chokidar.watch(packagePath, {ignored: /^\./, persistent: true});
-    watcher.on('add', process).on('change', process);
+    watcher.on('add', generate).on('change', generate);
     watcher.close();
 } else {
     var walk = require('walk');
@@ -88,7 +89,7 @@ if (program.watch) {
     var walker = walk.walk(packagePath);
     walker.on('file', function (root, fileStats, next) {
         var filePath = normalizeSlash(root + '/' + fileStats.name);
-        process(filePath);
+        generate(filePath);
         next();
     });
 }
