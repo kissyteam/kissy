@@ -307,43 +307,43 @@ if (! _$jscoverage['/base/render.js'].branchData) {
   _$jscoverage['/base/render.js'].branchData['129'] = [];
   _$jscoverage['/base/render.js'].branchData['129'][1] = new BranchData();
 }
-_$jscoverage['/base/render.js'].branchData['129'][1].init(4129, 11, 'supportCss3');
+_$jscoverage['/base/render.js'].branchData['129'][1].init(4315, 11, 'supportCss3');
 function visit10_129_1(result) {
   _$jscoverage['/base/render.js'].branchData['129'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/render.js'].branchData['107'][1].init(862, 9, 'pageIndex');
+}_$jscoverage['/base/render.js'].branchData['107'][1].init(881, 9, 'pageIndex');
 function visit9_107_1(result) {
   _$jscoverage['/base/render.js'].branchData['107'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/render.js'].branchData['99'][3].init(212, 19, 'top <= maxScrollTop');
+}_$jscoverage['/base/render.js'].branchData['99'][3].init(216, 19, 'top <= maxScrollTop');
 function visit8_99_3(result) {
   _$jscoverage['/base/render.js'].branchData['99'][3].ranCondition(result);
   return result;
-}_$jscoverage['/base/render.js'].branchData['99'][2].init(187, 21, 'left <= maxScrollLeft');
+}_$jscoverage['/base/render.js'].branchData['99'][2].init(191, 21, 'left <= maxScrollLeft');
 function visit7_99_2(result) {
   _$jscoverage['/base/render.js'].branchData['99'][2].ranCondition(result);
   return result;
-}_$jscoverage['/base/render.js'].branchData['99'][1].init(187, 44, 'left <= maxScrollLeft && top <= maxScrollTop');
+}_$jscoverage['/base/render.js'].branchData['99'][1].init(191, 44, 'left <= maxScrollLeft && top <= maxScrollTop');
 function visit6_99_1(result) {
   _$jscoverage['/base/render.js'].branchData['99'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/render.js'].branchData['90'][1].init(97, 24, 'typeof snap === \'string\'');
+}_$jscoverage['/base/render.js'].branchData['90'][1].init(99, 24, 'typeof snap === \'string\'');
 function visit5_90_1(result) {
   _$jscoverage['/base/render.js'].branchData['90'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/render.js'].branchData['88'][1].init(1715, 4, 'snap');
+}_$jscoverage['/base/render.js'].branchData['88'][1].init(1834, 4, 'snap');
 function visit4_88_1(result) {
   _$jscoverage['/base/render.js'].branchData['88'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/render.js'].branchData['65'][1].init(1083, 25, 'scrollWidth > clientWidth');
+}_$jscoverage['/base/render.js'].branchData['65'][1].init(1179, 25, 'scrollWidth > clientWidth');
 function visit3_65_1(result) {
   _$jscoverage['/base/render.js'].branchData['65'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/render.js'].branchData['62'][1].init(985, 27, 'scrollHeight > clientHeight');
+}_$jscoverage['/base/render.js'].branchData['62'][1].init(1078, 27, 'scrollHeight > clientHeight');
 function visit2_62_1(result) {
   _$jscoverage['/base/render.js'].branchData['62'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/render.js'].branchData['19'][1].init(479, 56, 'S.Feature.getVendorCssPropPrefix(\'transform\') !== false');
+}_$jscoverage['/base/render.js'].branchData['19'][1].init(489, 55, 'S.Feature.getVendorCssPropPrefix(\'transform\') !== false');
 function visit1_19_1(result) {
   _$jscoverage['/base/render.js'].branchData['19'][1].ranCondition(result);
   return result;
@@ -367,7 +367,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/base/render.js'].lineData[37]++;
   var self = this, control = self.control, el = control.el, contentEl = control.contentEl, $contentEl = control.$contentEl;
   _$jscoverage['/base/render.js'].lineData[48]++;
-  var scrollHeight = contentEl.offsetHeight, scrollWidth = contentEl.offsetWidth;
+  var scrollHeight = Math.max(contentEl.offsetHeight, contentEl.scrollHeight), scrollWidth = Math.max(contentEl.offsetWidth, contentEl.scrollWidth);
   _$jscoverage['/base/render.js'].lineData[51]++;
   var clientHeight = el.clientHeight, allowScroll, clientWidth = el.clientWidth;
   _$jscoverage['/base/render.js'].lineData[55]++;
