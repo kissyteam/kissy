@@ -280,7 +280,9 @@ KISSY.add(function (S, require) {
             return new IO(c);
         }
 
-        Promise.call(self);
+        // Promise.call(self);
+        IO.superclass.constructor.call(self);
+        Promise.Defer(self);
 
         self.userConfig = c;
 
@@ -337,7 +339,7 @@ KISSY.add(function (S, require) {
             transport: null
         });
 
-        Promise.Defer(self);
+
 
         var TransportConstructor,
             transport;

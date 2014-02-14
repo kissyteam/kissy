@@ -8,7 +8,6 @@ KISSY.add(function (S, require) {
         Utils = require('./base/utils'),
         Q = require('./base/queue'),
         Promise = require('promise');
-    var logger = S.getLogger('s/anim');
     var NodeType = Dom.NodeType,
         noop = S.noop,
         specialVals = {
@@ -25,8 +24,11 @@ KISSY.add(function (S, require) {
      */
     function AnimBase(config) {
         var self = this;
+
+        // Promise.call(self);
         AnimBase.superclass.constructor.call(self);
         Promise.Defer(self);
+
         /**
          * config object of current anim instance
          * @type {Object}
@@ -54,25 +56,6 @@ KISSY.add(function (S, require) {
     }
 
     S.extend(AnimBase, Promise, {
-        /**
-         * please use promise api instead
-         * @deprecated
-         */
-        on: function (name, fn) {
-            var self = this;
-            logger.warn('please use promise api of anim instead');
-            if (name === 'complete') {
-                self.then(fn);
-            } else if (name === 'end') {
-                self.fin(fn);
-            } else if (name === 'step') {
-                self.progress(fn);
-            } else {
-                logger.error('not supported event for anim: ' + name);
-            }
-            return self;
-        },
-
         /**
          * prepare fx hook
          * @protected

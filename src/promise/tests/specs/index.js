@@ -1,13 +1,12 @@
-KISSY.add(function(S,Promise){
-    describe("KISSY.Defer", function () {
-        var S = KISSY,
-            Defer= S.Defer,
-            Promise = S.Promise;
-
-        it('progress works',function(){
-            var defer=new Defer();
-            var ret=[];
-            defer.promise.progress(function(v){
+KISSY.add(function (S, require) {
+    var Promise = require('promise');
+    var Defer = Promise.Defer;
+    require('./es6');
+    describe('KISSY.Defer', function () {
+        it('progress works', function () {
+            var defer = new Defer();
+            var ret = [];
+            defer.promise.progress(function (v) {
                 ret.push(v);
             });
             defer.notify(1);
@@ -15,7 +14,7 @@ KISSY.add(function(S,Promise){
             // invalid after resolve
             defer.notify(2);
             waits(500);
-            runs(function(){
+            runs(function () {
                 expect(ret).toEqual([1]);
             });
         });
@@ -40,7 +39,7 @@ KISSY.add(function(S,Promise){
             });
         });
 
-        it("works for simple value", function () {
+        it('works for simple value', function () {
             var r, r2;
 
             Promise.when(1,
@@ -52,11 +51,11 @@ KISSY.add(function(S,Promise){
                 });
 
             waitsFor(function () {
-                return r == 1 && r2 == 2;
+                return r === 1 && r2 === 2;
             }, 100);
         });
 
-        it("works simply when fulfilled", function () {
+        it('works simply when fulfilled', function () {
             var d = S.Defer(),
                 p = d.promise,
                 r;
@@ -81,7 +80,7 @@ KISSY.add(function(S,Promise){
             });
         });
 
-        it("can access value after resolved", function () {
+        it('can access value after resolved', function () {
             var d = S.Defer(),
                 r,
                 p = d.promise;
@@ -100,7 +99,7 @@ KISSY.add(function(S,Promise){
             });
         });
 
-        it("can access error after resolved", function () {
+        it('can access error after resolved', function () {
             var d = S.Defer(),
                 r,
                 p = d.promise;
@@ -121,7 +120,7 @@ KISSY.add(function(S,Promise){
             });
         });
 
-        it("can transform returned value by chained promise", function () {
+        it('can transform returned value by chained promise', function () {
             var d = S.Defer(),
                 p = d.promise,
                 r;
@@ -142,7 +141,7 @@ KISSY.add(function(S,Promise){
             });
         });
 
-        it("should support promise chained promise", function () {
+        it('should support promise chained promise', function () {
             var defer = S.Defer(),
                 p = defer.promise,
                 p2,
@@ -179,7 +178,7 @@ KISSY.add(function(S,Promise){
             });
         });
 
-        it("should propagate error reason", function () {
+        it('should propagate error reason', function () {
 
             var d = S.Defer(),
                 order = [],
@@ -187,30 +186,30 @@ KISSY.add(function(S,Promise){
 
             var p2 = p.then(
                 function (v) {
-                    order.push("e1 :" + v);
-                    throw "e1";
+                    order.push('e1 :' + v);
+                    throw 'e1';
                 },
                 function (r) {
-                    order.push("e2 :" + r);
-                    return "e2";
+                    order.push('e2 :' + r);
+                    return 'e2';
                 });
 
             var p3 = p2.then(
                 function (v) {
-                    order.push("e3 :" + v);
-                    throw "e3";
+                    order.push('e3 :' + v);
+                    throw 'e3';
                 },
                 function (r) {
-                    order.push("e4 :" + r);
-                    throw "e4";
+                    order.push('e4 :' + r);
+                    throw 'e4';
                 });
 
-            var p4 = p3.then(function (v) {
-                order.push("e5 :" + v);
-                throw "e5";
+            p3.then(function (v) {
+                order.push('e5 :' + v);
+                throw 'e5';
             }, function (r) {
-                order.push("e6 :" + r);
-                throw "e6";
+                order.push('e6 :' + r);
+                throw 'e6';
             });
 
             waits(100);
@@ -231,12 +230,12 @@ KISSY.add(function(S,Promise){
             });
             waits(100);
             runs(function () {
-                expect(order).toEqual(['e1 :1', 'e4 :e1', 'e6 :e4'])
+                expect(order).toEqual(['e1 :1', 'e4 :e1', 'e6 :e4']);
             });
 
         });
 
-        it("should support error recovery", function () {
+        it('should support error recovery', function () {
 
             var d = S.Defer(),
                 order = [],
@@ -244,30 +243,30 @@ KISSY.add(function(S,Promise){
 
             var p2 = p.then(
                 function (v) {
-                    order.push("e1 :" + v);
-                    throw "e1";
+                    order.push('e1 :' + v);
+                    throw 'e1';
                 },
                 function (r) {
-                    order.push("e2 :" + r);
-                    return "e2";
+                    order.push('e2 :' + r);
+                    return 'e2';
                 });
 
             var p3 = p2.then(
                 function (v) {
-                    order.push("e3 :" + v);
-                    throw "e3";
+                    order.push('e3 :' + v);
+                    throw 'e3';
                 },
                 function (r) {
-                    order.push("e4 :" + r);
-                    return "e4";
+                    order.push('e4 :' + r);
+                    return 'e4';
                 });
 
-            var p4 = p3.then(function (v) {
-                order.push("e5 :" + v);
-                throw "e5";
+            p3.then(function (v) {
+                order.push('e5 :' + v);
+                throw 'e5';
             }, function (r) {
-                order.push("e6 :" + r);
-                throw "e6";
+                order.push('e6 :' + r);
+                throw 'e6';
             });
 
             waits(100);
@@ -288,12 +287,12 @@ KISSY.add(function(S,Promise){
             });
             waits(100);
             runs(function () {
-                expect(order).toEqual(['e1 :1', 'e4 :e1', 'e5 :e4'])
+                expect(order).toEqual(['e1 :1', 'e4 :e1', 'e5 :e4']);
             });
 
         });
 
-        it("should propagate error reason by default", function () {
+        it('should propagate error reason by default', function () {
 
             var d = S.Defer(),
                 order = [],
@@ -301,22 +300,22 @@ KISSY.add(function(S,Promise){
 
             var p2 = p.then(
                 function (v) {
-                    order.push("e1 :" + v);
-                    throw "e1";
+                    order.push('e1 :' + v);
+                    throw 'e1';
                 });
 
             var p3 = p2.then(
                 function (v) {
-                    order.push("e3 :" + v);
-                    throw "e3";
+                    order.push('e3 :' + v);
+                    throw 'e3';
                 });
 
-            var p4 = p3.then(function (v) {
-                order.push("e5 :" + v);
-                throw "e5";
+            p3.then(function (v) {
+                order.push('e5 :' + v);
+                throw 'e5';
             }, function (r) {
-                order.push("e6 :" + r);
-                throw "e6";
+                order.push('e6 :' + r);
+                throw 'e6';
             });
 
             waits(100);
@@ -325,11 +324,11 @@ KISSY.add(function(S,Promise){
             });
             waits(100);
             runs(function () {
-                expect(order).toEqual(['e1 :1', 'e6 :e1'])
+                expect(order).toEqual(['e1 :1', 'e6 :e1']);
             });
         });
 
-        it("all works", function () {
+        it('all works', function () {
             var defer1 = S.Defer();
             var defer2 = S.Defer();
             var r = [];
@@ -362,6 +361,4 @@ KISSY.add(function(S,Promise){
 
         });
     });
-},{
-    requires:['promise']
 });

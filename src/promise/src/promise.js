@@ -7,7 +7,6 @@ KISSY.add(function (S) {
     var logger = S.getLogger('s/promise');
     var PROMISE_VALUE = '__promise_value',
         processImmediate = S.setImmediate,
-
         PROMISE_PROGRESS_LISTENERS = '__promise_progress_listeners',
         PROMISE_PENDINGS = '__promise_pendings';
 
@@ -33,6 +32,10 @@ KISSY.add(function (S) {
         } else {
             var v = promise[PROMISE_VALUE],
                 pendings = promise[PROMISE_PENDINGS];
+
+            if (pendings === undefined) {
+                pendings = promise[PROMISE_PENDINGS] = [];
+            }
 
             // unresolved
             // pushed to pending list
@@ -86,15 +89,15 @@ KISSY.add(function (S) {
         resolve: function (value) {
             var promise = this.promise,
                 pendings;
-            if (!(pendings = promise[PROMISE_PENDINGS])) {
+            if ((pendings = promise[PROMISE_PENDINGS]) === false) {
                 return null;
             }
             // set current promise 's resolved value
             // maybe a promise or instant value
             promise[PROMISE_VALUE] = value;
-            pendings = [].concat(pendings);
-            promise[PROMISE_PENDINGS] = undefined;
-            promise[PROMISE_PROGRESS_LISTENERS] = undefined;
+            pendings = pendings ? [].concat(pendings) : [];
+            promise[PROMISE_PENDINGS] = false;
+            promise[PROMISE_PROGRESS_LISTENERS] = false;
             S.each(pendings, function (p) {
                 promiseWhen(promise, p[0], p[1]);
             });
@@ -125,6 +128,12 @@ KISSY.add(function (S) {
         return  obj && obj instanceof Promise;
     }
 
+    function bind(fn, context) {
+        return function () {
+            return fn.apply(context, arguments);
+        };
+    }
+
     /**
      * @class KISSY.Promise
      * Promise constructor.
@@ -134,12 +143,16 @@ KISSY.add(function (S) {
      */
     function Promise(v) {
         var self = this;
-        // maybe internal value is also a promise
-        self[PROMISE_VALUE] = v;
-        if (v === undefined) {
-            // unresolved
-            self[PROMISE_PENDINGS] = [];
-            self[PROMISE_PROGRESS_LISTENERS] = [];
+        if (typeof v === 'function') {
+            var defer = new Defer(self);
+            var resolve = bind(defer.resolve, defer);
+            var reject = bind(defer.reject, defer);
+            try {
+                v(resolve, reject);
+            } catch (e) {
+                logError(e.stack || e);
+                reject(e);
+            }
         }
     }
 
@@ -166,10 +179,16 @@ KISSY.add(function (S) {
          * @param {Function} [progressListener] progress listener
          */
         progress: function (progressListener) {
-            if (this[PROMISE_PROGRESS_LISTENERS]) {
-                this[PROMISE_PROGRESS_LISTENERS].push(progressListener);
+            var self = this,
+                listeners = self[PROMISE_PROGRESS_LISTENERS];
+            if (listeners === false) {
+                return self;
             }
-            return this;
+            if (!listeners) {
+                listeners = self[PROMISE_PROGRESS_LISTENERS] = [];
+            }
+            listeners.push(progressListener);
+            return self;
         },
         /**
          * call rejected callback when this promise object is rejected
@@ -236,6 +255,13 @@ KISSY.add(function (S) {
     };
 
     /**
+     * Sugar for promise.then(undefined, onRejected)
+     * @method catch
+     * @member {KISSY.Promise}
+     */
+    Promise.prototype['catch'] = Promise.prototype.fail;
+
+    /**
      * Reject promise
      * @param {String|KISSY.Promise.Reject} reason reject reason
      * @class KISSY.Promise.Reject
@@ -247,10 +273,12 @@ KISSY.add(function (S) {
             return reason;
         }
         var self = this;
-        Promise.apply(self, arguments);
-        if (self[PROMISE_VALUE] instanceof Promise) {
-            logger.error('assert.not(this.__promise_value instanceof promise) in Reject constructor');
-        }
+        self[PROMISE_VALUE] = reason;
+        self[PROMISE_PENDINGS] = false;
+        self[PROMISE_PROGRESS_LISTENERS] = false;
+//        if (self[PROMISE_VALUE] instanceof Promise) {
+//            logger.error('assert.not(this.__promise_value instanceof promise) in Reject constructor');
+//        }
         return self;
     }
 
@@ -325,10 +353,11 @@ KISSY.add(function (S) {
 
     function isResolved(obj) {
         // exclude Reject at first
-        return !isRejected(obj) &&
-            isPromise(obj) &&
+        return obj && !isRejected(obj) &&
+            // implicit by obj[PROMISE_PENDINGS] === false
+            // isPromise(obj) &&
             // self is resolved
-            (obj[PROMISE_PENDINGS] === undefined) &&
+            (obj[PROMISE_PENDINGS] === false) &&
             // value is a resolved promise or value is immediate value
             (
                 // immediate value
@@ -340,9 +369,9 @@ KISSY.add(function (S) {
     }
 
     function isRejected(obj) {
-        return isPromise(obj) &&
-            (obj[PROMISE_PENDINGS] === undefined) &&
-            (obj[PROMISE_VALUE] instanceof Reject);
+        // implicit by obj[PROMISE_VALUE]
+        // isPromise(obj) &&
+        return obj && (obj instanceof Reject || obj[PROMISE_VALUE] instanceof Reject);
     }
 
     KISSY.Defer = Defer;
@@ -380,6 +409,34 @@ KISSY.add(function (S) {
          * @member KISSY.Promise
          */
         when: when,
+
+        /**
+         * Returns promise (only if promise.constructor == Promise)
+         * or
+         * Make a promise that fulfills to obj.
+         */
+        'cast': function (obj) {
+            if (obj instanceof Promise) {
+                return obj;
+            }
+            return when(obj);
+        },
+
+        /**
+         * Make a promise that fulfills to obj.
+         */
+        resolve: function (obj) {
+            return when(obj);
+        },
+
+        /**
+         * Make a promise that rejects to obj. For consistency and debugging (e.g. stack traces), obj should be an instanceof Error.
+         * @param obj
+         * @returns {KISSY.Promise.Reject}
+         */
+        reject: function (obj) {
+            return new Reject(obj);
+        },
 
         /**
          * whether the given object is a promise
