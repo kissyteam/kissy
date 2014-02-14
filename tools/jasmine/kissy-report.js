@@ -4,10 +4,22 @@
  */
 jasmine.KissyReoport = (function () {
     /*jshint camelcase:false*/
+    var phantomjs, m;
 
     var S = KISSY;
 
     var ua = window.navigator.userAgent;
+
+    if ((m = ua.match(/PhantomJS\/([^\s]*)/)) && m[1]) {
+        phantomjs = numberify(m[1]);
+    }
+
+    // https://github.com/ariya/phantomjs/wiki/API-Reference-WebPage
+    if (phantomjs && !window.callPhantom) {
+        var msg = 'phantomjs does not support callPhantom!';
+        console.error(msg);
+        throw new Error(msg);
+    }
 
     function numberify(s) {
         var c = 0;
@@ -27,12 +39,20 @@ jasmine.KissyReoport = (function () {
     }
 
     function next(failedCount) {
-        var ie = document.documentMode || getIEVersion() || 100;
-        if (!failedCount && parent !== window) {
-            if ('postMessage' in parent && ie > 8) {
-                parent.postMessage('next', '*');
-            } else {
-                parent.name = 'next';
+        // https://github.com/ariya/phantomjs/wiki/API-Reference-WebPage
+        if (window.callPhantom) {
+            window.callPhantom({
+                type: 'report',
+                failedCount: failedCount
+            });
+        } else {
+            var ie = document.documentMode || getIEVersion() || 100;
+            if (!failedCount && parent !== window) {
+                if ('postMessage' in parent && ie > 8) {
+                    parent.postMessage('next', '*');
+                } else {
+                    parent.name = 'next';
+                }
             }
         }
     }
@@ -48,12 +68,6 @@ jasmine.KissyReoport = (function () {
             return numberify(v);
         }
         return 0;
-    }
-
-    var phantomjs,m;
-
-    if ((m = ua.match(/PhantomJS\/([^\s]*)/)) && m[1]) {
-        phantomjs = numberify(m[1]);
     }
 
     Report.prototype.reportRunnerResults = function (runner) {

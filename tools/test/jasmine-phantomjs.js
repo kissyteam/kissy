@@ -8,20 +8,18 @@
 /*global phantom*/
 var page = require('webpage').create();
 var specified = '';
-
-function findFailedCount(m) {
-    var match;
-    if ((match = m.match(/specs?, (\d+) failures? in/))) {
-        return match[1];
-    }
-    return '';
-}
+var tests = require('./tc.js')(), index = -1;
+var start = Date.now();
 
 page.onConsoleMessage = function (m) {
     console.log(m);
-    var failedCount = findFailedCount(m);
-    if (failedCount) {
-        if (!specified && failedCount === '0') {
+};
+
+// https://github.com/ariya/phantomjs/wiki/API-Reference-WebPage
+page.onCallback = function (data) {
+    if (data.type === 'report') {
+        var failedCount = data.failedCount;
+        if (!specified && failedCount === 0) {
             setTimeout(next, 100);
         } else {
             phantom.exit(1);
@@ -32,12 +30,11 @@ page.onConsoleMessage = function (m) {
 //page.onResourceRequested = function (request) {
 //    console.log('Request ' + JSON.stringify(request, undefined, 4));
 //};
+
 //page.onResourceReceived = function (response) {
 //    console.log('Receive ' + JSON.stringify(response, undefined, 4));
 //};
 
-var tests = require('./tc.js')(), index = -1;
-var start = Date.now();
 function next(url) {
     if (!url) {
         index++;
