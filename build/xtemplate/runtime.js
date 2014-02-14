@@ -1,10 +1,10 @@
 /*
-Copyright 2013, KISSY v1.50
+Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Dec 12 22:22
+build time: Feb 14 12:34
 */
 /*
- Combined processedModules by KISSY Module Compiler: 
+ Combined modules by KISSY Module Compiler: 
 
  xtemplate/runtime/scope
  xtemplate/runtime/commands
@@ -114,10 +114,26 @@ KISSY.add("xtemplate/runtime/scope", [], function(S) {
   }};
   return Scope
 });
-KISSY.add("xtemplate/runtime/commands", ["path", "./scope"], function(S, require) {
+KISSY.add("xtemplate/runtime/commands", ["./scope"], function(S, require) {
   var commands;
-  var Path = require("path");
   var Scope = require("./scope");
+  function getSubNameFromParentName(parentName, subName) {
+    var parts = parentName.split("/");
+    var subParts = subName.split("/");
+    parts.pop();
+    for(var i = 0;i < subParts.length;i++) {
+      var subPart = subParts[i];
+      if(subPart === ".") {
+      }else {
+        if(subPart === "..") {
+          parts.pop()
+        }else {
+          parts.push(subPart)
+        }
+      }
+    }
+    return parts.join("/")
+  }
   commands = {each:function(scope, config) {
     var params = config.params;
     var param0 = params[0];
@@ -208,7 +224,7 @@ KISSY.add("xtemplate/runtime/commands", ["path", "./scope"], function(S, require
         S.error("parent template does not have name" + " for relative sub tpl name: " + subTplName);
         return""
       }
-      subTplName = Path.resolve(myName, "../", subTplName)
+      subTplName = getSubNameFromParentName(myName, subTplName)
     }
     var tpl = this.config.loader.call(this, subTplName);
     config = S.merge(this.config);

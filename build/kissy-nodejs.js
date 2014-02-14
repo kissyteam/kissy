@@ -1,12 +1,12 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Feb 13 19:32
+build time: Feb 14 12:35
 */
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Feb 13 19:31
+build time: Feb 14 12:34
 */
 /**
  * @ignore
@@ -62,11 +62,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20140213193128' will replace with current timestamp when compressing.
+         * NOTICE: '20140214123433' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20140213193128',
+        __BUILD_TIME: '20140214123433',
 
         /**
          * KISSY Environment.
@@ -3645,7 +3645,7 @@ KISSY.add('i18n', {
     var doc = S.Env.host && S.Env.host.document;
     // var logger = S.getLogger('s/loader');
     var Utils = S.Loader.Utils;
-    var TIMESTAMP = '20140213193128';
+    var TIMESTAMP = '20140214123433';
     var defaultComboPrefix = '??';
     var defaultComboSep = ',';
 
@@ -3848,7 +3848,7 @@ KISSY.add('i18n', {
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Feb 13 19:32
+build time: Feb 14 12:35
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -4602,7 +4602,7 @@ KISSY.add("util", ["util/array", "util/escape", "util/function", "util/object", 
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Feb 13 19:31
+build time: Feb 14 12:35
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -4785,7 +4785,7 @@ KISSY.add("ua", [], function(S, undefined) {
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Feb 13 19:32
+build time: Feb 14 12:35
 */
 /*
  Combined modules by KISSY Module Compiler: 

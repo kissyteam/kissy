@@ -5,8 +5,23 @@
  */
 KISSY.add(function (S, require) {
     var commands;
-    var Path = require('path');
     var Scope = require('./scope');
+
+    function getSubNameFromParentName(parentName, subName) {
+        var parts = parentName.split('/');
+        var subParts = subName.split('/');
+        parts.pop();
+        for (var i = 0; i < subParts.length; i++) {
+            var subPart = subParts[i];
+            if (subPart === '.') {
+            } else if (subPart === '..') {
+                parts.pop();
+            } else {
+                parts.push(subPart);
+            }
+        }
+        return parts.join('/');
+    }
 
     commands = {
         'each': function (scope, config) {
@@ -112,7 +127,7 @@ KISSY.add(function (S, require) {
                     S.error('parent template does not have name' + ' for relative sub tpl name: ' + subTplName);
                     return '';
                 }
-                subTplName = Path.resolve(myName, '../', subTplName);
+                subTplName = getSubNameFromParentName(myName, subTplName);
             }
 
             var tpl = this.config.loader.call(this, subTplName);
