@@ -42,8 +42,8 @@ KISSY.add(function (S, require) {
             // or else
             // relative is weird, should math.max(contentEl.scrollHeight,el.scrollHeight)
             // will affect pull to refresh
-            var scrollHeight = contentEl.offsetHeight,
-                scrollWidth = contentEl.offsetWidth;
+            var scrollHeight = Math.max(contentEl.offsetHeight, contentEl.scrollHeight),
+                scrollWidth = Math.max(contentEl.offsetWidth, contentEl.scrollWidth);
 
             var clientHeight = el.clientHeight,
                 allowScroll,

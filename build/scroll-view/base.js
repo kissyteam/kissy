@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.41
 MIT Licensed
-build time: Jan 21 11:48
+build time: Feb 14 16:48
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -17,7 +17,7 @@ KISSY.add("scroll-view/base/render", ["component/container", "component/extensio
   var Features = S.Features, floor = Math.floor, supportTransform3d = Features.isTransform3dSupported(), transformProperty;
   var methods = {syncUI:function() {
     var self = this, control = self.control, el = control.el, contentEl = control.contentEl, $contentEl = control.$contentEl;
-    var scrollHeight = contentEl.offsetHeight, scrollWidth = contentEl.offsetWidth;
+    var scrollHeight = Math.max(contentEl.offsetHeight, contentEl.scrollHeight), scrollWidth = Math.max(contentEl.offsetWidth, contentEl.scrollWidth);
     var clientHeight = el.clientHeight, allowScroll, clientWidth = el.clientWidth;
     control.scrollHeight = scrollHeight;
     control.scrollWidth = scrollWidth;

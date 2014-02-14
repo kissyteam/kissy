@@ -304,7 +304,7 @@ if (! _$jscoverage['/base/render.js'].branchData) {
   _$jscoverage['/base/render.js'].branchData['126'] = [];
   _$jscoverage['/base/render.js'].branchData['126'][1] = new BranchData();
 }
-_$jscoverage['/base/render.js'].branchData['126'][1].init(4173, 18, 'supportTransform3d');
+_$jscoverage['/base/render.js'].branchData['126'][1].init(4240, 18, 'supportTransform3d');
 function visit9_126_1(result) {
   _$jscoverage['/base/render.js'].branchData['126'][1].ranCondition(result);
   return result;
@@ -328,15 +328,15 @@ function visit5_96_1(result) {
 function visit4_87_1(result) {
   _$jscoverage['/base/render.js'].branchData['87'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/render.js'].branchData['85'][1].init(1767, 4, 'snap');
+}_$jscoverage['/base/render.js'].branchData['85'][1].init(1834, 4, 'snap');
 function visit3_85_1(result) {
   _$jscoverage['/base/render.js'].branchData['85'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/render.js'].branchData['62'][1].init(1112, 25, 'scrollWidth > clientWidth');
+}_$jscoverage['/base/render.js'].branchData['62'][1].init(1179, 25, 'scrollWidth > clientWidth');
 function visit2_62_1(result) {
   _$jscoverage['/base/render.js'].branchData['62'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/render.js'].branchData['59'][1].init(1011, 27, 'scrollHeight > clientHeight');
+}_$jscoverage['/base/render.js'].branchData['59'][1].init(1078, 27, 'scrollHeight > clientHeight');
 function visit1_59_1(result) {
   _$jscoverage['/base/render.js'].branchData['59'][1].ranCondition(result);
   return result;
@@ -358,7 +358,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/base/render.js'].lineData[34]++;
   var self = this, control = self.control, el = control.el, contentEl = control.contentEl, $contentEl = control.$contentEl;
   _$jscoverage['/base/render.js'].lineData[45]++;
-  var scrollHeight = contentEl.offsetHeight, scrollWidth = contentEl.offsetWidth;
+  var scrollHeight = Math.max(contentEl.offsetHeight, contentEl.scrollHeight), scrollWidth = Math.max(contentEl.offsetWidth, contentEl.scrollWidth);
   _$jscoverage['/base/render.js'].lineData[48]++;
   var clientHeight = el.clientHeight, allowScroll, clientWidth = el.clientWidth;
   _$jscoverage['/base/render.js'].lineData[52]++;
