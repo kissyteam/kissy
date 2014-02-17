@@ -25,11 +25,11 @@ KISSY.add(function (S, undefined) {
          * @return {number} item's index in array
          */
         indexOf: indexOf ?
-            function (item, arr) {
-                return indexOf.call(arr, item);
+            function (item, arr, fromIndex) {
+                return indexOf.call(arr, item, fromIndex);
             } :
-            function (item, arr) {
-                for (var i = 0, len = arr.length; i < len; ++i) {
+            function (item, arr, fromIndex) {
+                for (var i = fromIndex || 0, len = arr.length; i < len; ++i) {
                     if (arr[i] === item) {
                         return i;
                     }
@@ -48,11 +48,14 @@ KISSY.add(function (S, undefined) {
          * @member KISSY
          */
         lastIndexOf: (lastIndexOf) ?
-            function (item, arr) {
-                return lastIndexOf.call(arr, item);
+            function (item, arr, fromIndex) {
+                return lastIndexOf.call(arr, item, fromIndex);
             } :
-            function (item, arr) {
-                for (var i = arr.length - 1; i >= 0; i--) {
+            function (item, arr, fromIndex) {
+                if (fromIndex === undefined) {
+                    fromIndex = arr.length - 1;
+                }
+                for (var i = fromIndex; i >= 0; i--) {
                     if (arr[i] === item) {
                         break;
                     }
