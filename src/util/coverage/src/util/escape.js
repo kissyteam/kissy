@@ -289,15 +289,15 @@ if (! _$jscoverage['/util/escape.js'].branchData) {
   _$jscoverage['/util/escape.js'].branchData['115'][1] = new BranchData();
 }
 _$jscoverage['/util/escape.js'].branchData['115'][1].init(24, 42, 'htmlEntities[m] || String.fromCharCode(+n)');
-function visit56_115_1(result) {
+function visit60_115_1(result) {
   _$jscoverage['/util/escape.js'].branchData['115'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util/escape.js'].branchData['53'][1].init(13, 11, 'unEscapeReg');
-function visit55_53_1(result) {
+function visit59_53_1(result) {
   _$jscoverage['/util/escape.js'].branchData['53'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util/escape.js'].branchData['40'][1].init(13, 9, 'escapeReg');
-function visit54_40_1(result) {
+function visit58_40_1(result) {
   _$jscoverage['/util/escape.js'].branchData['40'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util/escape.js'].lineData[7]++;
@@ -325,7 +325,7 @@ KISSY.add(function(S) {
   function getEscapeReg() {
     _$jscoverage['/util/escape.js'].functionData[2]++;
     _$jscoverage['/util/escape.js'].lineData[40]++;
-    if (visit54_40_1(escapeReg)) {
+    if (visit58_40_1(escapeReg)) {
       _$jscoverage['/util/escape.js'].lineData[41]++;
       return escapeReg;
     }
@@ -348,7 +348,7 @@ KISSY.add(function(S) {
   function getUnEscapeReg() {
     _$jscoverage['/util/escape.js'].functionData[4]++;
     _$jscoverage['/util/escape.js'].lineData[53]++;
-    if (visit55_53_1(unEscapeReg)) {
+    if (visit59_53_1(unEscapeReg)) {
       _$jscoverage['/util/escape.js'].lineData[54]++;
       return unEscapeReg;
     }
@@ -398,7 +398,7 @@ KISSY.add(function(S) {
   return str.replace(getUnEscapeReg(), function(m, n) {
   _$jscoverage['/util/escape.js'].functionData[12]++;
   _$jscoverage['/util/escape.js'].lineData[115]++;
-  return visit56_115_1(htmlEntities[m] || String.fromCharCode(+n));
+  return visit60_115_1(htmlEntities[m] || String.fromCharCode(+n));
 });
 }});
   _$jscoverage['/util/escape.js'].lineData[120]++;

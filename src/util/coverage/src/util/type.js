@@ -296,67 +296,67 @@ if (! _$jscoverage['/util/type.js'].branchData) {
   _$jscoverage['/util/type.js'].branchData['164'][1] = new BranchData();
 }
 _$jscoverage['/util/type.js'].branchData['164'][1].init(4455, 26, 'Array.isArray || S.isArray');
-function visit134_164_1(result) {
+function visit138_164_1(result) {
   _$jscoverage['/util/type.js'].branchData['164'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util/type.js'].branchData['161'][1].init(20, 16, 'S.type(o) === lc');
-function visit133_161_1(result) {
+function visit137_161_1(result) {
   _$jscoverage['/util/type.js'].branchData['161'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util/type.js'].branchData['86'][1].init(2359, 9, '\'@DEBUG@\'');
-function visit132_86_1(result) {
+function visit136_86_1(result) {
   _$jscoverage['/util/type.js'].branchData['86'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util/type.js'].branchData['82'][2].init(1151, 17, 'key === undefined');
-function visit131_82_2(result) {
+function visit135_82_2(result) {
   _$jscoverage['/util/type.js'].branchData['82'][2].ranCondition(result);
   return result;
 }_$jscoverage['/util/type.js'].branchData['82'][1].init(1151, 46, '(key === undefined) || hasOwnProperty(obj, key)');
-function visit130_82_1(result) {
+function visit134_82_1(result) {
   _$jscoverage['/util/type.js'].branchData['82'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util/type.js'].branchData['68'][2].init(122, 97, '!hasOwnProperty(obj, \'constructor\') && !hasOwnProperty(objConstructor.prototype, \'isPrototypeOf\')');
-function visit129_68_2(result) {
+function visit133_68_2(result) {
   _$jscoverage['/util/type.js'].branchData['68'][2].ranCondition(result);
   return result;
 }_$jscoverage['/util/type.js'].branchData['68'][1].init(85, 134, '(objConstructor = obj.constructor) && !hasOwnProperty(obj, \'constructor\') && !hasOwnProperty(objConstructor.prototype, \'isPrototypeOf\')');
-function visit128_68_1(result) {
+function visit132_68_1(result) {
   _$jscoverage['/util/type.js'].branchData['68'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util/type.js'].branchData['60'][1].init(106, 17, 'obj.window == obj');
-function visit127_60_1(result) {
+function visit131_60_1(result) {
   _$jscoverage['/util/type.js'].branchData['60'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util/type.js'].branchData['57'][4].init(268, 124, 'obj.nodeType || obj.window == obj');
-function visit126_57_4(result) {
+function visit130_57_4(result) {
   _$jscoverage['/util/type.js'].branchData['57'][4].ranCondition(result);
   return result;
 }_$jscoverage['/util/type.js'].branchData['57'][3].init(240, 24, 'S.type(obj) !== \'object\'');
-function visit125_57_3(result) {
+function visit129_57_3(result) {
   _$jscoverage['/util/type.js'].branchData['57'][3].ranCondition(result);
   return result;
 }_$jscoverage['/util/type.js'].branchData['57'][2].init(240, 152, 'S.type(obj) !== \'object\' || obj.nodeType || obj.window == obj');
-function visit124_57_2(result) {
+function visit128_57_2(result) {
   _$jscoverage['/util/type.js'].branchData['57'][2].ranCondition(result);
   return result;
 }_$jscoverage['/util/type.js'].branchData['57'][1].init(232, 160, '!obj || S.type(obj) !== \'object\' || obj.nodeType || obj.window == obj');
-function visit123_57_1(result) {
+function visit127_57_1(result) {
   _$jscoverage['/util/type.js'].branchData['57'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util/type.js'].branchData['45'][1].init(20, 15, 'o === undefined');
-function visit122_45_1(result) {
+function visit126_45_1(result) {
   _$jscoverage['/util/type.js'].branchData['45'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util/type.js'].branchData['36'][1].init(20, 10, 'o === null');
-function visit121_36_1(result) {
+function visit125_36_1(result) {
   _$jscoverage['/util/type.js'].branchData['36'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util/type.js'].branchData['27'][1].init(55, 40, 'class2type[toString.call(o)] || \'object\'');
-function visit120_27_1(result) {
+function visit124_27_1(result) {
   _$jscoverage['/util/type.js'].branchData['27'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util/type.js'].branchData['25'][1].init(20, 9, 'o == null');
-function visit119_25_1(result) {
+function visit123_25_1(result) {
   _$jscoverage['/util/type.js'].branchData['25'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util/type.js'].lineData[7]++;
@@ -375,22 +375,22 @@ KISSY.add(function(S, undefined) {
   type: function(o) {
   _$jscoverage['/util/type.js'].functionData[2]++;
   _$jscoverage['/util/type.js'].lineData[25]++;
-  return visit119_25_1(o == null) ? String(o) : visit120_27_1(class2type[toString.call(o)] || 'object');
+  return visit123_25_1(o == null) ? String(o) : visit124_27_1(class2type[toString.call(o)] || 'object');
 }, 
   isNull: function(o) {
   _$jscoverage['/util/type.js'].functionData[3]++;
   _$jscoverage['/util/type.js'].lineData[36]++;
-  return visit121_36_1(o === null);
+  return visit125_36_1(o === null);
 }, 
   isUndefined: function(o) {
   _$jscoverage['/util/type.js'].functionData[4]++;
   _$jscoverage['/util/type.js'].lineData[45]++;
-  return visit122_45_1(o === undefined);
+  return visit126_45_1(o === undefined);
 }, 
   isPlainObject: function(obj) {
   _$jscoverage['/util/type.js'].functionData[5]++;
   _$jscoverage['/util/type.js'].lineData[57]++;
-  if (visit123_57_1(!obj || visit124_57_2(visit125_57_3(S.type(obj) !== 'object') || visit126_57_4(obj.nodeType || visit127_60_1(obj.window == obj))))) {
+  if (visit127_57_1(!obj || visit128_57_2(visit129_57_3(S.type(obj) !== 'object') || visit130_57_4(obj.nodeType || visit131_60_1(obj.window == obj))))) {
     _$jscoverage['/util/type.js'].lineData[61]++;
     return FALSE;
   }
@@ -399,7 +399,7 @@ KISSY.add(function(S, undefined) {
   _$jscoverage['/util/type.js'].lineData[66]++;
   try {
     _$jscoverage['/util/type.js'].lineData[68]++;
-    if (visit128_68_1((objConstructor = obj.constructor) && visit129_68_2(!hasOwnProperty(obj, 'constructor') && !hasOwnProperty(objConstructor.prototype, 'isPrototypeOf')))) {
+    if (visit132_68_1((objConstructor = obj.constructor) && visit133_68_2(!hasOwnProperty(obj, 'constructor') && !hasOwnProperty(objConstructor.prototype, 'isPrototypeOf')))) {
       _$jscoverage['/util/type.js'].lineData[69]++;
       return FALSE;
     }
@@ -411,10 +411,10 @@ KISSY.add(function(S, undefined) {
   for (key in obj) {
   }
   _$jscoverage['/util/type.js'].lineData[82]++;
-  return (visit130_82_1((visit131_82_2(key === undefined)) || hasOwnProperty(obj, key)));
+  return (visit134_82_1((visit135_82_2(key === undefined)) || hasOwnProperty(obj, key)));
 }});
   _$jscoverage['/util/type.js'].lineData[86]++;
-  if (visit132_86_1('@DEBUG@')) {
+  if (visit136_86_1('@DEBUG@')) {
     _$jscoverage['/util/type.js'].lineData[87]++;
     S.mix(S, {
   isBoolean: noop, 
@@ -435,9 +435,9 @@ KISSY.add(function(S, undefined) {
   S['is' + name] = function(o) {
   _$jscoverage['/util/type.js'].functionData[7]++;
   _$jscoverage['/util/type.js'].lineData[161]++;
-  return visit133_161_1(S.type(o) === lc);
+  return visit137_161_1(S.type(o) === lc);
 };
 });
   _$jscoverage['/util/type.js'].lineData[164]++;
-  S.isArray = visit134_164_1(Array.isArray || S.isArray);
+  S.isArray = visit138_164_1(Array.isArray || S.isArray);
 });

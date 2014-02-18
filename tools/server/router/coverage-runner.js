@@ -15,12 +15,16 @@ module.exports = function (app) {
             next();
             return;
         }
-        var coveragePath = Path.normalize(runnerFolder + 'test.jss');
-        if (fs.existsSync(coveragePath)) {
-            res.redirect(removeQ(req.url) + 'test.jss?' + S.param(req.query));
+
+        var runners = fs.readdirSync(runnerFolder);
+
+        if (runners.length) {
+            next();
             return;
         }
+
         var testPath = path + '/tests/runner/';
+
         res.render('coverage', {
             component: componentName,
             jss: testPath

@@ -26,7 +26,9 @@ KISSY.add(function (S, undefined) {
          */
         indexOf: indexOf ?
             function (item, arr, fromIndex) {
-                return indexOf.call(arr, item, fromIndex);
+                return fromIndex === undefined ?
+                    indexOf.call(arr, item) :
+                    indexOf.call(arr, item, fromIndex);
             } :
             function (item, arr, fromIndex) {
                 for (var i = fromIndex || 0, len = arr.length; i < len; ++i) {
@@ -49,7 +51,9 @@ KISSY.add(function (S, undefined) {
          */
         lastIndexOf: (lastIndexOf) ?
             function (item, arr, fromIndex) {
-                return lastIndexOf.call(arr, item, fromIndex);
+                return fromIndex === undefined ?
+                    lastIndexOf.call(arr, item) :
+                    lastIndexOf.call(arr, item, fromIndex);
             } :
             function (item, arr, fromIndex) {
                 if (fromIndex === undefined) {

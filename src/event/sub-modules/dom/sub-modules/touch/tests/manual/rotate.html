@@ -18,6 +18,7 @@
 <button id="detach">detach</button>
 <div id='t'
      style='border:1px solid green;
+      -ms-touch-action:none;
      width:200px;height:200px;margin:10px'>
     rotate me
 </div>
@@ -26,7 +27,7 @@
 
 <div style="height: 900px;"></div>
 <script>
-    KISSY.use('event,dom', function (S, Event) {
+    KISSY.use('event,dom', function (S, Event,Dom) {
 
         Event.on('#detach', 'click', function () {
             Event.detach('#t');

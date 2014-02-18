@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Feb 14 12:35
+build time: Feb 18 17:33
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -18,19 +18,22 @@ build time: Feb 14 12:35
 
 KISSY.add("util/array", [], function(S, undefined) {
   var TRUE = true, AP = Array.prototype, indexOf = AP.indexOf, lastIndexOf = AP.lastIndexOf, filter = AP.filter, every = AP.every, some = AP.some, map = AP.map, FALSE = false;
-  S.mix(S, {indexOf:indexOf ? function(item, arr) {
-    return indexOf.call(arr, item)
-  } : function(item, arr) {
-    for(var i = 0, len = arr.length;i < len;++i) {
+  S.mix(S, {indexOf:indexOf ? function(item, arr, fromIndex) {
+    return fromIndex === undefined ? indexOf.call(arr, item) : indexOf.call(arr, item, fromIndex)
+  } : function(item, arr, fromIndex) {
+    for(var i = fromIndex || 0, len = arr.length;i < len;++i) {
       if(arr[i] === item) {
         return i
       }
     }
     return-1
-  }, lastIndexOf:lastIndexOf ? function(item, arr) {
-    return lastIndexOf.call(arr, item)
-  } : function(item, arr) {
-    for(var i = arr.length - 1;i >= 0;i--) {
+  }, lastIndexOf:lastIndexOf ? function(item, arr, fromIndex) {
+    return fromIndex === undefined ? lastIndexOf.call(arr, item) : lastIndexOf.call(arr, item, fromIndex)
+  } : function(item, arr, fromIndex) {
+    if(fromIndex === undefined) {
+      fromIndex = arr.length - 1
+    }
+    for(var i = fromIndex;i >= 0;i--) {
       if(arr[i] === item) {
         break
       }

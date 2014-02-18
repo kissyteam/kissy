@@ -110,7 +110,7 @@ KISSY.add(function (S, Router) {
 
         // ie8 iframe 内 重复刷新！
         // firefox
-        if ((ie === 8 || ie === 9) && window.frameElement || S.UA.firefox) {
+        if (ie && window.frameElement || S.UA.firefox) {
             return;
         }
 

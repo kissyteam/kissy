@@ -949,6 +949,8 @@ KISSY.add(function (S, require) {
 
             expect(S.indexOf(6, [1, 2, 3, 4, 5])).toBe(-1);
             expect(S.indexOf(2, [1, 2, 3, 4, 5])).toBe(1);
+            expect(S.indexOf(2, [1, 2, 3, 4, 5], 1)).toBe(1);
+            expect(S.indexOf(2, [1, 2, 3, 4, 5], 2)).toBe(-1);
 
             expect(S.indexOf(a, [1, 2, 3, 4, undefined])).toBe(4);
             expect(S.indexOf({}, [1, 2, 3, 4, undefined])).toBe(-1);
@@ -957,6 +959,9 @@ KISSY.add(function (S, require) {
         it('S.lastIndexOf', function () {
             expect(S.indexOf(6, [1, 2, 3, 4, 5])).toBe(-1);
             expect(S.indexOf(2, [1, 2, 3, 4, 5])).toBe(1);
+            expect(S.indexOf(2, [1, 2, 3, 4, 5], 1)).toBe(1);
+            expect(S.indexOf(2, [1, 2, 3, 4, 5], 2)).toBe(-1);
+            expect(S.indexOf(2, [1, 2, 3, 4, 5], 0)).toBe(1);
         });
 
         it('S.unique', function () {

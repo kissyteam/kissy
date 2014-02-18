@@ -7,10 +7,10 @@
             url: "../../data/ifModified.jss",
             dataType: 'text',
             complete: function (data, s, jq) {
-                alert(data);
-                alert(s);
-                alert(jq.getAllResponseHeaders());
-                alert("next .........");
+                S.log(data);
+                S.log(s);
+                S.log(jq.getAllResponseHeaders());
+                S.log("next .........");
 
                 setTimeout(function () {
 
@@ -21,9 +21,9 @@
 //                            },
                         dataType: 'text',
                         complete: function (data, status, jq) {
-                            alert(data);
-                            alert(status);
-                            alert(jq.getAllResponseHeaders());
+                            S.log(data);
+                            S.log(status);
+                            S.log(jq.getAllResponseHeaders());
                             //console.log(arguments);
                         }
                     });

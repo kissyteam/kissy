@@ -414,231 +414,231 @@ if (! _$jscoverage['/util.js'].branchData) {
   _$jscoverage['/util.js'].branchData['194'][3] = new BranchData();
 }
 _$jscoverage['/util.js'].branchData['194'][3].init(1555, 27, 'mismatchValues.length === 0');
-function visit221_194_3(result) {
+function visit225_194_3(result) {
   _$jscoverage['/util.js'].branchData['194'][3].ranCondition(result);
   return result;
 }_$jscoverage['/util.js'].branchData['194'][2].init(1526, 25, 'mismatchKeys.length === 0');
-function visit220_194_2(result) {
+function visit224_194_2(result) {
   _$jscoverage['/util.js'].branchData['194'][2].ranCondition(result);
   return result;
 }_$jscoverage['/util.js'].branchData['194'][1].init(1526, 56, 'mismatchKeys.length === 0 && mismatchValues.length === 0');
-function visit219_194_1(result) {
+function visit223_194_1(result) {
   _$jscoverage['/util.js'].branchData['194'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util.js'].branchData['189'][3].init(1339, 21, 'a.length !== b.length');
-function visit218_189_3(result) {
+function visit222_189_3(result) {
   _$jscoverage['/util.js'].branchData['189'][3].ranCondition(result);
   return result;
 }_$jscoverage['/util.js'].branchData['189'][2].init(1323, 37, 'S.isArray(b) && a.length !== b.length');
-function visit217_189_2(result) {
+function visit221_189_2(result) {
   _$jscoverage['/util.js'].branchData['189'][2].ranCondition(result);
   return result;
 }_$jscoverage['/util.js'].branchData['189'][1].init(1307, 53, 'S.isArray(a) && S.isArray(b) && a.length !== b.length');
-function visit216_189_1(result) {
+function visit220_189_1(result) {
   _$jscoverage['/util.js'].branchData['189'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util.js'].branchData['181'][1].init(105, 65, '!S.equals(a[property], b[property], mismatchKeys, mismatchValues)');
-function visit215_181_1(result) {
+function visit219_181_1(result) {
   _$jscoverage['/util.js'].branchData['181'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util.js'].branchData['178'][1].init(18, 27, 'property === COMPARE_MARKER');
-function visit214_178_1(result) {
+function visit218_178_1(result) {
   _$jscoverage['/util.js'].branchData['178'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util.js'].branchData['171'][1].init(18, 43, '!hasKey(b, property) && hasKey(a, property)');
-function visit213_171_1(result) {
+function visit217_171_1(result) {
   _$jscoverage['/util.js'].branchData['171'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util.js'].branchData['164'][1].init(18, 43, '!hasKey(a, property) && hasKey(b, property)');
-function visit212_164_1(result) {
+function visit216_164_1(result) {
   _$jscoverage['/util.js'].branchData['164'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util.js'].branchData['160'][5].init(59, 26, 'obj[keyName] !== undefined');
-function visit211_160_5(result) {
+function visit215_160_5(result) {
   _$jscoverage['/util.js'].branchData['160'][5].ranCondition(result);
   return result;
 }_$jscoverage['/util.js'].branchData['160'][4].init(37, 17, 'obj !== undefined');
-function visit210_160_4(result) {
+function visit214_160_4(result) {
   _$jscoverage['/util.js'].branchData['160'][4].ranCondition(result);
   return result;
 }_$jscoverage['/util.js'].branchData['160'][3].init(21, 12, 'obj !== null');
-function visit209_160_3(result) {
+function visit213_160_3(result) {
   _$jscoverage['/util.js'].branchData['160'][3].ranCondition(result);
   return result;
 }_$jscoverage['/util.js'].branchData['160'][2].init(21, 33, 'obj !== null && obj !== undefined');
-function visit208_160_2(result) {
+function visit212_160_2(result) {
   _$jscoverage['/util.js'].branchData['160'][2].ranCondition(result);
   return result;
 }_$jscoverage['/util.js'].branchData['160'][1].init(21, 64, '(obj !== null && obj !== undefined) && obj[keyName] !== undefined');
-function visit207_160_1(result) {
+function visit211_160_1(result) {
   _$jscoverage['/util.js'].branchData['160'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util.js'].branchData['154'][3].init(71, 23, 'b[COMPARE_MARKER] === a');
-function visit206_154_3(result) {
+function visit210_154_3(result) {
   _$jscoverage['/util.js'].branchData['154'][3].ranCondition(result);
   return result;
 }_$jscoverage['/util.js'].branchData['154'][2].init(44, 23, 'a[COMPARE_MARKER] === b');
-function visit205_154_2(result) {
+function visit209_154_2(result) {
   _$jscoverage['/util.js'].branchData['154'][2].ranCondition(result);
   return result;
 }_$jscoverage['/util.js'].branchData['154'][1].init(44, 50, 'a[COMPARE_MARKER] === b && b[COMPARE_MARKER] === a');
-function visit204_154_1(result) {
+function visit208_154_1(result) {
   _$jscoverage['/util.js'].branchData['154'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util.js'].branchData['142'][2].init(49, 43, 'f.call(input, input[k], k, input) !== FALSE');
-function visit203_142_2(result) {
+function visit207_142_2(result) {
   _$jscoverage['/util.js'].branchData['142'][2].ranCondition(result);
   return result;
 }_$jscoverage['/util.js'].branchData['142'][1].init(42, 51, '!f || (f.call(input, input[k], k, input) !== FALSE)');
-function visit202_142_1(result) {
+function visit206_142_1(result) {
   _$jscoverage['/util.js'].branchData['142'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util.js'].branchData['141'][2].init(22, 18, 'k !== CLONE_MARKER');
-function visit201_141_2(result) {
+function visit205_141_2(result) {
   _$jscoverage['/util.js'].branchData['141'][2].ranCondition(result);
   return result;
 }_$jscoverage['/util.js'].branchData['141'][1].init(22, 95, 'k !== CLONE_MARKER && (!f || (f.call(input, input[k], k, input) !== FALSE))');
-function visit200_141_1(result) {
+function visit204_141_1(result) {
   _$jscoverage['/util.js'].branchData['141'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util.js'].branchData['138'][1].init(2074, 13, 'isPlainObject');
-function visit199_138_1(result) {
+function visit203_138_1(result) {
   _$jscoverage['/util.js'].branchData['138'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util.js'].branchData['135'][1].init(29, 22, 'i < destination.length');
-function visit198_135_1(result) {
+function visit202_135_1(result) {
   _$jscoverage['/util.js'].branchData['135'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util.js'].branchData['134'][1].init(1895, 7, 'isArray');
-function visit197_134_1(result) {
+function visit201_134_1(result) {
   _$jscoverage['/util.js'].branchData['134'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util.js'].branchData['110'][1].init(90, 63, 'S.inArray(Constructor, [Boolean, String, Number, Date, RegExp])');
-function visit196_110_1(result) {
+function visit200_110_1(result) {
   _$jscoverage['/util.js'].branchData['110'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util.js'].branchData['107'][1].init(499, 25, 'typeof input === \'object\'');
-function visit195_107_1(result) {
+function visit199_107_1(result) {
   _$jscoverage['/util.js'].branchData['107'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util.js'].branchData['104'][1].init(372, 19, 'input[CLONE_MARKER]');
-function visit194_104_1(result) {
+function visit198_104_1(result) {
   _$jscoverage['/util.js'].branchData['104'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util.js'].branchData['97'][1].init(128, 6, '!input');
-function visit193_97_1(result) {
+function visit197_97_1(result) {
   _$jscoverage['/util.js'].branchData['97'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util.js'].branchData['78'][1].init(81, 15, 'v[CLONE_MARKER]');
-function visit192_78_1(result) {
+function visit196_78_1(result) {
   _$jscoverage['/util.js'].branchData['78'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util.js'].branchData['56'][1].init(943, 7, 'a === b');
-function visit191_56_1(result) {
+function visit195_56_1(result) {
   _$jscoverage['/util.js'].branchData['56'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util.js'].branchData['52'][3].init(779, 21, 'typeof b === \'object\'');
-function visit190_52_3(result) {
+function visit194_52_3(result) {
   _$jscoverage['/util.js'].branchData['52'][3].ranCondition(result);
   return result;
 }_$jscoverage['/util.js'].branchData['52'][2].init(754, 21, 'typeof a === \'object\'');
-function visit189_52_2(result) {
+function visit193_52_2(result) {
   _$jscoverage['/util.js'].branchData['52'][2].ranCondition(result);
   return result;
 }_$jscoverage['/util.js'].branchData['52'][1].init(754, 46, 'typeof a === \'object\' && typeof b === \'object\'');
-function visit188_52_1(result) {
+function visit192_52_1(result) {
   _$jscoverage['/util.js'].branchData['52'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util.js'].branchData['50'][1].init(25, 7, 'a === b');
-function visit187_50_1(result) {
+function visit191_50_1(result) {
   _$jscoverage['/util.js'].branchData['50'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util.js'].branchData['49'][3].init(665, 21, 'typeof b === \'number\'');
-function visit186_49_3(result) {
+function visit190_49_3(result) {
   _$jscoverage['/util.js'].branchData['49'][3].ranCondition(result);
   return result;
 }_$jscoverage['/util.js'].branchData['49'][2].init(640, 21, 'typeof a === \'number\'');
-function visit185_49_2(result) {
+function visit189_49_2(result) {
   _$jscoverage['/util.js'].branchData['49'][2].ranCondition(result);
   return result;
 }_$jscoverage['/util.js'].branchData['49'][1].init(640, 46, 'typeof a === \'number\' && typeof b === \'number\'');
-function visit184_49_1(result) {
+function visit188_49_1(result) {
   _$jscoverage['/util.js'].branchData['49'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util.js'].branchData['47'][1].init(25, 7, 'a === b');
-function visit183_47_1(result) {
+function visit187_47_1(result) {
   _$jscoverage['/util.js'].branchData['47'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util.js'].branchData['46'][3].init(551, 21, 'typeof b === \'string\'');
-function visit182_46_3(result) {
+function visit186_46_3(result) {
   _$jscoverage['/util.js'].branchData['46'][3].ranCondition(result);
   return result;
 }_$jscoverage['/util.js'].branchData['46'][2].init(526, 21, 'typeof a === \'string\'');
-function visit181_46_2(result) {
+function visit185_46_2(result) {
   _$jscoverage['/util.js'].branchData['46'][2].ranCondition(result);
   return result;
 }_$jscoverage['/util.js'].branchData['46'][1].init(526, 46, 'typeof a === \'string\' && typeof b === \'string\'');
-function visit180_46_1(result) {
+function visit184_46_1(result) {
   _$jscoverage['/util.js'].branchData['46'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util.js'].branchData['44'][1].init(24, 27, 'a.getTime() === b.getTime()');
-function visit179_44_1(result) {
+function visit183_44_1(result) {
   _$jscoverage['/util.js'].branchData['44'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util.js'].branchData['43'][1].init(402, 38, 'a instanceof Date && b instanceof Date');
-function visit178_43_1(result) {
+function visit182_43_1(result) {
   _$jscoverage['/util.js'].branchData['43'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util.js'].branchData['41'][3].init(75, 9, 'b == null');
-function visit177_41_3(result) {
+function visit181_41_3(result) {
   _$jscoverage['/util.js'].branchData['41'][3].ranCondition(result);
   return result;
 }_$jscoverage['/util.js'].branchData['41'][2].init(62, 9, 'a == null');
-function visit176_41_2(result) {
+function visit180_41_2(result) {
   _$jscoverage['/util.js'].branchData['41'][2].ranCondition(result);
   return result;
 }_$jscoverage['/util.js'].branchData['41'][1].init(62, 22, 'a == null && b == null');
-function visit175_41_1(result) {
+function visit179_41_1(result) {
   _$jscoverage['/util.js'].branchData['41'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util.js'].branchData['39'][7].init(273, 10, 'b === null');
-function visit174_39_7(result) {
+function visit178_39_7(result) {
   _$jscoverage['/util.js'].branchData['39'][7].ranCondition(result);
   return result;
 }_$jscoverage['/util.js'].branchData['39'][6].init(254, 15, 'b === undefined');
-function visit173_39_6(result) {
+function visit177_39_6(result) {
   _$jscoverage['/util.js'].branchData['39'][6].ranCondition(result);
   return result;
 }_$jscoverage['/util.js'].branchData['39'][5].init(254, 29, 'b === undefined || b === null');
-function visit172_39_5(result) {
+function visit176_39_5(result) {
   _$jscoverage['/util.js'].branchData['39'][5].ranCondition(result);
   return result;
 }_$jscoverage['/util.js'].branchData['39'][4].init(240, 10, 'a === null');
-function visit171_39_4(result) {
+function visit175_39_4(result) {
   _$jscoverage['/util.js'].branchData['39'][4].ranCondition(result);
   return result;
 }_$jscoverage['/util.js'].branchData['39'][3].init(240, 43, 'a === null || b === undefined || b === null');
-function visit170_39_3(result) {
+function visit174_39_3(result) {
   _$jscoverage['/util.js'].branchData['39'][3].ranCondition(result);
   return result;
 }_$jscoverage['/util.js'].branchData['39'][2].init(221, 15, 'a === undefined');
-function visit169_39_2(result) {
+function visit173_39_2(result) {
   _$jscoverage['/util.js'].branchData['39'][2].ranCondition(result);
   return result;
 }_$jscoverage['/util.js'].branchData['39'][1].init(221, 62, 'a === undefined || a === null || b === undefined || b === null');
-function visit168_39_1(result) {
+function visit172_39_1(result) {
   _$jscoverage['/util.js'].branchData['39'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util.js'].branchData['36'][1].init(151, 7, 'a === b');
-function visit167_36_1(result) {
+function visit171_36_1(result) {
   _$jscoverage['/util.js'].branchData['36'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util.js'].branchData['34'][1].init(112, 20, 'mismatchValues || []');
-function visit166_34_1(result) {
+function visit170_34_1(result) {
   _$jscoverage['/util.js'].branchData['34'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util.js'].branchData['33'][1].init(63, 18, 'mismatchKeys || []');
-function visit165_33_1(result) {
+function visit169_33_1(result) {
   _$jscoverage['/util.js'].branchData['33'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util.js'].lineData[7]++;
@@ -665,41 +665,41 @@ KISSY.add(function(S, require) {
   equals: function(a, b, mismatchKeys, mismatchValues) {
   _$jscoverage['/util.js'].functionData[1]++;
   _$jscoverage['/util.js'].lineData[33]++;
-  mismatchKeys = visit165_33_1(mismatchKeys || []);
+  mismatchKeys = visit169_33_1(mismatchKeys || []);
   _$jscoverage['/util.js'].lineData[34]++;
-  mismatchValues = visit166_34_1(mismatchValues || []);
+  mismatchValues = visit170_34_1(mismatchValues || []);
   _$jscoverage['/util.js'].lineData[36]++;
-  if (visit167_36_1(a === b)) {
+  if (visit171_36_1(a === b)) {
     _$jscoverage['/util.js'].lineData[37]++;
     return TRUE;
   }
   _$jscoverage['/util.js'].lineData[39]++;
-  if (visit168_39_1(visit169_39_2(a === undefined) || visit170_39_3(visit171_39_4(a === null) || visit172_39_5(visit173_39_6(b === undefined) || visit174_39_7(b === null))))) {
+  if (visit172_39_1(visit173_39_2(a === undefined) || visit174_39_3(visit175_39_4(a === null) || visit176_39_5(visit177_39_6(b === undefined) || visit178_39_7(b === null))))) {
     _$jscoverage['/util.js'].lineData[41]++;
-    return visit175_41_1(visit176_41_2(a == null) && visit177_41_3(b == null));
+    return visit179_41_1(visit180_41_2(a == null) && visit181_41_3(b == null));
   }
   _$jscoverage['/util.js'].lineData[43]++;
-  if (visit178_43_1(a instanceof Date && b instanceof Date)) {
+  if (visit182_43_1(a instanceof Date && b instanceof Date)) {
     _$jscoverage['/util.js'].lineData[44]++;
-    return visit179_44_1(a.getTime() === b.getTime());
+    return visit183_44_1(a.getTime() === b.getTime());
   }
   _$jscoverage['/util.js'].lineData[46]++;
-  if (visit180_46_1(visit181_46_2(typeof a === 'string') && visit182_46_3(typeof b === 'string'))) {
+  if (visit184_46_1(visit185_46_2(typeof a === 'string') && visit186_46_3(typeof b === 'string'))) {
     _$jscoverage['/util.js'].lineData[47]++;
-    return (visit183_47_1(a === b));
+    return (visit187_47_1(a === b));
   }
   _$jscoverage['/util.js'].lineData[49]++;
-  if (visit184_49_1(visit185_49_2(typeof a === 'number') && visit186_49_3(typeof b === 'number'))) {
+  if (visit188_49_1(visit189_49_2(typeof a === 'number') && visit190_49_3(typeof b === 'number'))) {
     _$jscoverage['/util.js'].lineData[50]++;
-    return (visit187_50_1(a === b));
+    return (visit191_50_1(a === b));
   }
   _$jscoverage['/util.js'].lineData[52]++;
-  if (visit188_52_1(visit189_52_2(typeof a === 'object') && visit190_52_3(typeof b === 'object'))) {
+  if (visit192_52_1(visit193_52_2(typeof a === 'object') && visit194_52_3(typeof b === 'object'))) {
     _$jscoverage['/util.js'].lineData[53]++;
     return compareObjects(a, b, mismatchKeys, mismatchValues);
   }
   _$jscoverage['/util.js'].lineData[56]++;
-  return (visit191_56_1(a === b));
+  return (visit195_56_1(a === b));
 }, 
   clone: function(input, filter) {
   _$jscoverage['/util.js'].functionData[2]++;
@@ -711,7 +711,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/util.js'].lineData[77]++;
   v = v.input;
   _$jscoverage['/util.js'].lineData[78]++;
-  if (visit192_78_1(v[CLONE_MARKER])) {
+  if (visit196_78_1(v[CLONE_MARKER])) {
     _$jscoverage['/util.js'].lineData[79]++;
     try {
       _$jscoverage['/util.js'].lineData[80]++;
@@ -733,21 +733,21 @@ KISSY.add(function(S, require) {
     _$jscoverage['/util.js'].lineData[92]++;
     var destination = input, isArray, isPlainObject, k, stamp;
     _$jscoverage['/util.js'].lineData[97]++;
-    if (visit193_97_1(!input)) {
+    if (visit197_97_1(!input)) {
       _$jscoverage['/util.js'].lineData[98]++;
       return destination;
     }
     _$jscoverage['/util.js'].lineData[104]++;
-    if (visit194_104_1(input[CLONE_MARKER])) {
+    if (visit198_104_1(input[CLONE_MARKER])) {
       _$jscoverage['/util.js'].lineData[106]++;
       return memory[input[CLONE_MARKER]].destination;
     } else {
       _$jscoverage['/util.js'].lineData[107]++;
-      if (visit195_107_1(typeof input === 'object')) {
+      if (visit199_107_1(typeof input === 'object')) {
         _$jscoverage['/util.js'].lineData[109]++;
         var Constructor = input.constructor;
         _$jscoverage['/util.js'].lineData[110]++;
-        if (visit196_110_1(S.inArray(Constructor, [Boolean, String, Number, Date, RegExp]))) {
+        if (visit200_110_1(S.inArray(Constructor, [Boolean, String, Number, Date, RegExp]))) {
           _$jscoverage['/util.js'].lineData[111]++;
           destination = new Constructor(input.valueOf());
         } else {
@@ -772,19 +772,19 @@ KISSY.add(function(S, require) {
       }
     }
     _$jscoverage['/util.js'].lineData[134]++;
-    if (visit197_134_1(isArray)) {
+    if (visit201_134_1(isArray)) {
       _$jscoverage['/util.js'].lineData[135]++;
-      for (var i = 0; visit198_135_1(i < destination.length); i++) {
+      for (var i = 0; visit202_135_1(i < destination.length); i++) {
         _$jscoverage['/util.js'].lineData[136]++;
         destination[i] = cloneInternal(destination[i], f, memory);
       }
     } else {
       _$jscoverage['/util.js'].lineData[138]++;
-      if (visit199_138_1(isPlainObject)) {
+      if (visit203_138_1(isPlainObject)) {
         _$jscoverage['/util.js'].lineData[139]++;
         for (k in input) {
           _$jscoverage['/util.js'].lineData[141]++;
-          if (visit200_141_1(visit201_141_2(k !== CLONE_MARKER) && (visit202_142_1(!f || (visit203_142_2(f.call(input, input[k], k, input) !== FALSE)))))) {
+          if (visit204_141_1(visit205_141_2(k !== CLONE_MARKER) && (visit206_142_1(!f || (visit207_142_2(f.call(input, input[k], k, input) !== FALSE)))))) {
             _$jscoverage['/util.js'].lineData[143]++;
             destination[k] = cloneInternal(input[k], f, memory);
           }
@@ -798,7 +798,7 @@ KISSY.add(function(S, require) {
   function compareObjects(a, b, mismatchKeys, mismatchValues) {
     _$jscoverage['/util.js'].functionData[5]++;
     _$jscoverage['/util.js'].lineData[154]++;
-    if (visit204_154_1(visit205_154_2(a[COMPARE_MARKER] === b) && visit206_154_3(b[COMPARE_MARKER] === a))) {
+    if (visit208_154_1(visit209_154_2(a[COMPARE_MARKER] === b) && visit210_154_3(b[COMPARE_MARKER] === a))) {
       _$jscoverage['/util.js'].lineData[155]++;
       return TRUE;
     }
@@ -810,12 +810,12 @@ KISSY.add(function(S, require) {
     var hasKey = function(obj, keyName) {
   _$jscoverage['/util.js'].functionData[6]++;
   _$jscoverage['/util.js'].lineData[160]++;
-  return visit207_160_1((visit208_160_2(visit209_160_3(obj !== null) && visit210_160_4(obj !== undefined))) && visit211_160_5(obj[keyName] !== undefined));
+  return visit211_160_1((visit212_160_2(visit213_160_3(obj !== null) && visit214_160_4(obj !== undefined))) && visit215_160_5(obj[keyName] !== undefined));
 };
     _$jscoverage['/util.js'].lineData[162]++;
     for (var property in b) {
       _$jscoverage['/util.js'].lineData[164]++;
-      if (visit212_164_1(!hasKey(a, property) && hasKey(b, property))) {
+      if (visit216_164_1(!hasKey(a, property) && hasKey(b, property))) {
         _$jscoverage['/util.js'].lineData[165]++;
         mismatchKeys.push('expected has key ' + property + '", but missing from actual.');
       }
@@ -823,7 +823,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/util.js'].lineData[169]++;
     for (property in a) {
       _$jscoverage['/util.js'].lineData[171]++;
-      if (visit213_171_1(!hasKey(b, property) && hasKey(a, property))) {
+      if (visit217_171_1(!hasKey(b, property) && hasKey(a, property))) {
         _$jscoverage['/util.js'].lineData[172]++;
         mismatchKeys.push('expected missing key "' + property + '", but present in actual.');
       }
@@ -831,18 +831,18 @@ KISSY.add(function(S, require) {
     _$jscoverage['/util.js'].lineData[176]++;
     for (property in b) {
       _$jscoverage['/util.js'].lineData[178]++;
-      if (visit214_178_1(property === COMPARE_MARKER)) {
+      if (visit218_178_1(property === COMPARE_MARKER)) {
         _$jscoverage['/util.js'].lineData[179]++;
         continue;
       }
       _$jscoverage['/util.js'].lineData[181]++;
-      if (visit215_181_1(!S.equals(a[property], b[property], mismatchKeys, mismatchValues))) {
+      if (visit219_181_1(!S.equals(a[property], b[property], mismatchKeys, mismatchValues))) {
         _$jscoverage['/util.js'].lineData[182]++;
         mismatchValues.push('"' + property + '" was "' + (b[property] ? (b[property].toString()) : b[property]) + '" in expected, but was "' + (a[property] ? (a[property].toString()) : a[property]) + '" in actual.');
       }
     }
     _$jscoverage['/util.js'].lineData[189]++;
-    if (visit216_189_1(S.isArray(a) && visit217_189_2(S.isArray(b) && visit218_189_3(a.length !== b.length)))) {
+    if (visit220_189_1(S.isArray(a) && visit221_189_2(S.isArray(b) && visit222_189_3(a.length !== b.length)))) {
       _$jscoverage['/util.js'].lineData[190]++;
       mismatchValues.push('arrays were not the same length');
     }
@@ -851,7 +851,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/util.js'].lineData[193]++;
     delete b[COMPARE_MARKER];
     _$jscoverage['/util.js'].lineData[194]++;
-    return (visit219_194_1(visit220_194_2(mismatchKeys.length === 0) && visit221_194_3(mismatchValues.length === 0)));
+    return (visit223_194_1(visit224_194_2(mismatchKeys.length === 0) && visit225_194_3(mismatchValues.length === 0)));
   }
   _$jscoverage['/util.js'].lineData[197]++;
   return S;

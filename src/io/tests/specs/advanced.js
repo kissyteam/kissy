@@ -38,9 +38,6 @@ KISSY.add(function (S, UA, Json, io, Node) {
         });
 
         it("should support last-modified from server", function () {
-
-            S.log("should support last-modified from server");
-
             var ok = 0;
 
             io({
@@ -78,8 +75,6 @@ KISSY.add(function (S, UA, Json, io, Node) {
 
         it("should support ifModified config", function () {
 
-            S.log("should support ifModified config");
-
             var ok = 0;
 
             io({
@@ -97,15 +92,16 @@ KISSY.add(function (S, UA, Json, io, Node) {
                         cache: false,
                         ifModified: true,
                         success: function (data, status, xhr) {
-                            expect(data).toBe(null);
-                            expect(xhr.status).toBe(304);
-                            expect(status).toBe("not modified");
+                            if (status === 'not modified') {
+                                expect(data).toBe(null);
+                                expect(xhr.status).toBe(304);
+                                expect(status).toBe("not modified");
 
-                            expect(io.__lastModifiedCached[
-                                pageUri.resolve('../data/ifModified.jss').toString()
-                                ])
-                                .toBe('Thu, 18 Jul 2002 15:48:32 GMT');
-
+                                expect(io.__lastModifiedCached[
+                                    pageUri.resolve('../data/ifModified.jss').toString()
+                                    ])
+                                    .toBe('Thu, 18 Jul 2002 15:48:32 GMT');
+                            }
                             ok = 1;
                         }
                     });
@@ -120,9 +116,6 @@ KISSY.add(function (S, UA, Json, io, Node) {
 
 
         it("should support ifModified config for form", function () {
-
-            S.log("should support ifModified config for form");
-
             var ok = 0;
 
             var form = $("<form><input name='t' value='t'/></form>").appendTo('body');
@@ -144,17 +137,18 @@ KISSY.add(function (S, UA, Json, io, Node) {
                         form: form,
                         ifModified: true,
                         success: function (data, status, xhr) {
-                            expect(data).toBe(null);
-                            expect(xhr.status).toBe(304);
-                            expect(status).toBe("not modified");
+                            if (status === 'not modified') {
+                                expect(data).toBe(null);
+                                expect(xhr.status).toBe(304);
+                                expect(status).toBe("not modified");
 
-                            var uri = pageUri.resolve('../data/ifModified.jss');
-                            uri.query.add("t", "t");
+                                var uri = pageUri.resolve('../data/ifModified.jss');
+                                uri.query.add("t", "t");
 
-                            expect(io.__lastModifiedCached[
-                                uri.toString()
-                                ]).toBe('Thu, 18 Jul 2002 15:48:32 GMT');
-
+                                expect(io.__lastModifiedCached[
+                                    uri.toString()
+                                    ]).toBe('Thu, 18 Jul 2002 15:48:32 GMT');
+                            }
                             ok = 1;
                         }
                     });
@@ -172,9 +166,6 @@ KISSY.add(function (S, UA, Json, io, Node) {
         });
 
         it("should jsonp with array arguments", function () {
-
-            S.log("should jsonp with array arguments");
-
             var re = false, data;
 
             io.jsonp("../data/jsonp-array.jss", function (d, status, xhr) {
@@ -193,9 +184,6 @@ KISSY.add(function (S, UA, Json, io, Node) {
         });
 
         it("should abort for xhr", function () {
-
-            S.log("should abort for xhr");
-
             var re = [];
             var xhr = io({
                 url: '../data/io.jss',
@@ -225,9 +213,6 @@ KISSY.add(function (S, UA, Json, io, Node) {
 
 
         it("nothing happens if abort xhr after complete", function () {
-
-            S.log("nothing happens if abort xhr after complete");
-
             var re = [], ok = false;
 
             var xhr = io({
@@ -263,9 +248,6 @@ KISSY.add(function (S, UA, Json, io, Node) {
 
 
         it("should abort for jsonp", function () {
-
-            S.log("should abort for jsonp");
-
             var re = [];
 
             var xhr = io({
@@ -298,9 +280,6 @@ KISSY.add(function (S, UA, Json, io, Node) {
 
 
         it("nothing happens if abort jsonp after complete", function () {
-
-            S.log("nothing happens if abort jsonp after complete");
-
             var re = [], ok;
 
             var xhr = io({
@@ -336,9 +315,6 @@ KISSY.add(function (S, UA, Json, io, Node) {
         });
 
         it("timeout should work for xhr", function () {
-
-            S.log("timeout should work for xhr");
-
             var re = [], ok;
             var xhr = io({
                 url: '../data/io.jss',
@@ -373,9 +349,6 @@ KISSY.add(function (S, UA, Json, io, Node) {
 
 
         it("should works for form file upload", function () {
-
-            S.log("should works for form file upload");
-
             var f = $('<form id="f' + S.guid(S.now()) + '">' +
                 //php need []
                 '<input name="test4[]" value="t6"/>' +
@@ -424,9 +397,6 @@ KISSY.add(function (S, UA, Json, io, Node) {
 
 
         it("should works for common form", function () {
-
-            S.log("should works for common form");
-
             var f = $('<form id="f' + S.guid(S.now()) + '">' +
                 '<input name="test4[]" value="t6"/>' +
                 '<input name="test4[]" value="t7"/>' +
@@ -469,6 +439,6 @@ KISSY.add(function (S, UA, Json, io, Node) {
             });
         });
     });
-},{
-    requires:['ua','json','io','node']
+}, {
+    requires: ['ua', 'json', 'io', 'node']
 });

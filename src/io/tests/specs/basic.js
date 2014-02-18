@@ -671,7 +671,7 @@ KISSY.add(function (S,  IO) {
 
                 runs(function () {
                     ok = false;
-                    IO.get('test.jss', function (data) {
+                    IO.get('../data/html.jss', function (data) {
                         ok = true;
                         o = data;
                     });
@@ -682,7 +682,7 @@ KISSY.add(function (S,  IO) {
                 });
 
                 runs(function () {
-                    expect(o.toLowerCase().indexOf('<!doctype')).toBe(0);
+                    expect(o.toLowerCase().indexOf('<html')).toBe(0);
                 });
 
             });
