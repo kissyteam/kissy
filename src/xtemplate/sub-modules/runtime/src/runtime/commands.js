@@ -159,17 +159,17 @@ KISSY.add(function (S, require) {
             } else {
                 var paramValues = {};
                 var macro = macros[macroName];
-
-                if (!macro) {
+                if (macro) {
+                    S.each(macro.paramNames, function (p, i) {
+                        paramValues[p] = params1[i];
+                    });
+                    var newScope = new Scope(paramValues);
+                    // call caller Scope for extend layout
+                    newScope.setParent(scope);
+                    return macro.fn.call(this, newScope);
+                }else{
                     S.error('can not find macro:' + name);
                 }
-
-                S.each(macro.paramNames, function (p, i) {
-                    paramValues[p] = params1[i];
-                });
-                var newScope = new Scope(paramValues);
-                // no caller scope
-                return macro.fn.call(this, newScope);
             }
             return '';
         },

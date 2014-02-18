@@ -861,15 +861,15 @@ KISSY.add(function (S, require) {
                 expect(render).toBe('call macro2');
             });
 
-            it('support template extend', function () {
+            it('support template extend  with scope', function () {
                 KISSY.add('xtemplate/parent', '{{#macro "x"}}parent{{/macro}}' +
                     '{{macro "x"}}');
-                var render = new XTemplate('{{#macro "x"}}{{content}}child{{/macro}}' +
+                var render = new XTemplate('{{#macro "x"}}{{content}} child{{/macro}}' +
                     '{{include "xtemplate/parent"}}').render({
                         title: 'title',
                         content: 'content'
                     });
-                expect(render).toBe('child');
+                expect(render).toBe('content child');
             });
         });
 

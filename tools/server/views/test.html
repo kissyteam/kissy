@@ -1,39 +1,28 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta name="data-spm" content="1" data-spm-protocol="i" />
-    <meta name="viewport"
-          content="width=device-width,
-           initial-scale=1.0,
-          maximum-scale=1.0,
-           minimum-scale=1.0,
-           user-scalable=no">
+{{#macro 'head'}}
     <script src="/kissy/build/seed.js"></script>
-</head>
-<body>
-<h1>KISSY 集成化测试</h1>
-<div id="iframe">
+{{/macro}}
+{{#macro 'body'}}
+    <h1>KISSY 集成化测试</h1>
+    <div id="iframe">
 
-</div>
+    </div>
 
-<script src="/kissy/tools/test/test.js"></script>
+    <script src="/kissy/tools/test/test.js"></script>
 
-<script>
-(function(){
-    var S=KISSY,onlySrc=location.href.indexOf('onlySrc')!=-1;
-    var t;
-    {{#each tests}}
-    t='{{{.}}}';
-    if(!S.endsWith(t,'?coverage') && t!='/send-to-coveralls'){
-        if(onlySrc && S.endsWith(t,'?build')){}else{
-            tests.push(t);
+    <script>
+    (function(){
+        var S=KISSY,onlySrc=location.href.indexOf('onlySrc')!=-1;
+        var t;
+        {{#each tests}}
+        t='{{{.}}}';
+        if(!S.endsWith(t,'?coverage') && t!='/send-to-coveralls'){
+            if(onlySrc && S.endsWith(t,'?build')){}else{
+                tests.push(t);
+            }
         }
-    }
-    {{/each}}
-    document.write(tests.join("<br>"));
-})();
-</script>
-{{{include './footer'}}}
-</body>
-</html>
-
+        {{/each}}
+        document.write(tests.join("<br>"));
+    })();
+    </script>
+{{/macro}}
+{{{include './layout'}}}

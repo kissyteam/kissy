@@ -1,25 +1,15 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta name="data-spm" content="1" data-spm-protocol="i" />
-    <meta name="viewport"
-          content="width=device-width,
-           initial-scale=1.0,
-          maximum-scale=1.0,
-           minimum-scale=1.0,
-           user-scalable=no">
+{{#macro 'head'}}
     <title>Index of {{cur}}</title>
-</head>
-<body>
-<h1>Index of {{cur}}</h1>
-<ul>
-    {{#if cur!=='/'}}
-    <li><a href="../../"> Parent Directory</a></li>
-    {{/if}}
-    {{#each files}}
-    <li><a href="{{.}}">{{.}}</a></li>
-    {{/each}}
-</ul>
-{{{include './footer'}}}
-</body>
-</html>
+{{/macro}}
+{{#macro 'body'}}
+    <h1>Index of {{cur}}</h1>
+    <ul>
+        {{#if cur!=='/'}}
+        <li><a href="../../"> Parent Directory</a></li>
+        {{/if}}
+        {{#each files}}
+        <li><a href="{{.}}">{{.}}</a></li>
+        {{/each}}
+    </ul>
+{{/macro}}
+{{{include './layout'}}}

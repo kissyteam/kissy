@@ -1,14 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport"
-          content="width=device-width,
-           initial-scale=1.0,
-          maximum-scale=1.0,
-           minimum-scale=1.0,
-           user-scalable=no">
-    <meta name="data-spm" content="1" data-spm-protocol="i" />
+{{#macro 'head'}}
     <title>{{component}} test runner</title>
     <link rel="stylesheet" href="/kissy/tools/jasmine/jasmine.css">
     <link rel="stylesheet" href="/kissy/build/css/dpl/base.css"/>
@@ -66,39 +56,37 @@
     {{#each externalScripts}}
         <script src="{{{.}}}"></script>
     {{/each}}
+{{/macro}}
+{{#macro 'body'}}
+    <h1 style="text-align: center">{{component}} test cases</h1>
+    {{{html}}}
+    <script>
+        var tests=['specs/'], S=KISSY;
 
-</head>
-<body>
-<h1 style="text-align: center">{{component}} test cases</h1>
-{{{html}}}
-<script>
-    var tests=['specs/'], S=KISSY;
+        S.config('packages',{
+            specs:{
+                debug:1,
+                base:'../'
+            },
+            src:{
+                debug:1,
+                base:'/kissy/'
+            }
+        });
 
-    S.config('packages',{
-        specs:{
-            debug:1,
-            base:'../'
-        },
-        src:{
-            debug:1,
-            base:'/kissy/'
-        }
-    });
+        {{#if tests}}
+            tests.shift();
+        {{/if}}
 
-    {{#if tests}}
-        tests.shift();
-    {{/if}}
+        {{#each tests}}
+            tests.push('specs/{{{.}}}');
+        {{/each}}
 
-    {{#each tests}}
-        tests.push('specs/{{{.}}}');
-    {{/each}}
+        {{{script}}}
 
-    {{{script}}}
-
-    S.use(tests, function () {
-        jasmine.getEnv().execute();
-    });
-</script>
-{{{include './footer'}}}
-</body>
-</html>
+        S.use(tests, function () {
+            jasmine.getEnv().execute();
+        });
+    </script>
+{{/macro}}
+{{{include './layout'}}}

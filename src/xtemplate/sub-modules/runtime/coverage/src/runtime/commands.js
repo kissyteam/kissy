@@ -326,12 +326,13 @@ if (! _$jscoverage['/runtime/commands.js']) {
   _$jscoverage['/runtime/commands.js'].lineData[154] = 0;
   _$jscoverage['/runtime/commands.js'].lineData[160] = 0;
   _$jscoverage['/runtime/commands.js'].lineData[161] = 0;
+  _$jscoverage['/runtime/commands.js'].lineData[162] = 0;
   _$jscoverage['/runtime/commands.js'].lineData[163] = 0;
   _$jscoverage['/runtime/commands.js'].lineData[164] = 0;
-  _$jscoverage['/runtime/commands.js'].lineData[167] = 0;
+  _$jscoverage['/runtime/commands.js'].lineData[166] = 0;
   _$jscoverage['/runtime/commands.js'].lineData[168] = 0;
-  _$jscoverage['/runtime/commands.js'].lineData[170] = 0;
-  _$jscoverage['/runtime/commands.js'].lineData[172] = 0;
+  _$jscoverage['/runtime/commands.js'].lineData[169] = 0;
+  _$jscoverage['/runtime/commands.js'].lineData[171] = 0;
   _$jscoverage['/runtime/commands.js'].lineData[174] = 0;
   _$jscoverage['/runtime/commands.js'].lineData[179] = 0;
   _$jscoverage['/runtime/commands.js'].lineData[183] = 0;
@@ -394,12 +395,12 @@ if (! _$jscoverage['/runtime/commands.js'].branchData) {
   _$jscoverage['/runtime/commands.js'].branchData['151'][1] = new BranchData();
   _$jscoverage['/runtime/commands.js'].branchData['153'] = [];
   _$jscoverage['/runtime/commands.js'].branchData['153'][1] = new BranchData();
-  _$jscoverage['/runtime/commands.js'].branchData['163'] = [];
-  _$jscoverage['/runtime/commands.js'].branchData['163'][1] = new BranchData();
+  _$jscoverage['/runtime/commands.js'].branchData['162'] = [];
+  _$jscoverage['/runtime/commands.js'].branchData['162'][1] = new BranchData();
 }
-_$jscoverage['/runtime/commands.js'].branchData['163'][1].init(107, 6, '!macro');
-function visit23_163_1(result) {
-  _$jscoverage['/runtime/commands.js'].branchData['163'][1].ranCondition(result);
+_$jscoverage['/runtime/commands.js'].branchData['162'][1].init(106, 5, 'macro');
+function visit23_162_1(result) {
+  _$jscoverage['/runtime/commands.js'].branchData['162'][1].ranCondition(result);
   return result;
 }_$jscoverage['/runtime/commands.js'].branchData['153'][1].init(80, 18, '!macros[macroName]');
 function visit22_153_1(result) {
@@ -733,21 +734,24 @@ KISSY.add(function(S, require) {
     var paramValues = {};
     _$jscoverage['/runtime/commands.js'].lineData[161]++;
     var macro = macros[macroName];
-    _$jscoverage['/runtime/commands.js'].lineData[163]++;
-    if (visit23_163_1(!macro)) {
-      _$jscoverage['/runtime/commands.js'].lineData[164]++;
-      S.error('can not find macro:' + name);
-    }
-    _$jscoverage['/runtime/commands.js'].lineData[167]++;
-    S.each(macro.paramNames, function(p, i) {
+    _$jscoverage['/runtime/commands.js'].lineData[162]++;
+    if (visit23_162_1(macro)) {
+      _$jscoverage['/runtime/commands.js'].lineData[163]++;
+      S.each(macro.paramNames, function(p, i) {
   _$jscoverage['/runtime/commands.js'].functionData[8]++;
-  _$jscoverage['/runtime/commands.js'].lineData[168]++;
+  _$jscoverage['/runtime/commands.js'].lineData[164]++;
   paramValues[p] = params1[i];
 });
-    _$jscoverage['/runtime/commands.js'].lineData[170]++;
-    var newScope = new Scope(paramValues);
-    _$jscoverage['/runtime/commands.js'].lineData[172]++;
-    return macro.fn.call(this, newScope);
+      _$jscoverage['/runtime/commands.js'].lineData[166]++;
+      var newScope = new Scope(paramValues);
+      _$jscoverage['/runtime/commands.js'].lineData[168]++;
+      newScope.setParent(scope);
+      _$jscoverage['/runtime/commands.js'].lineData[169]++;
+      return macro.fn.call(this, newScope);
+    } else {
+      _$jscoverage['/runtime/commands.js'].lineData[171]++;
+      S.error('can not find macro:' + name);
+    }
   }
   _$jscoverage['/runtime/commands.js'].lineData[174]++;
   return '';
