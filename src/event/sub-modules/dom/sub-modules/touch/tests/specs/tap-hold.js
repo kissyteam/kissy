@@ -25,9 +25,8 @@ KISSY.add(function (S, Node) {
                     var tapCalled = 0;
 
                     t.on('tapHold', function (e) {
-                        var touch = e.touch;
-                        expect(touch.pageX).toBe(10);
-                        expect(touch.pageY).toBe(10);
+                        expect(e.pageX).toBe(10);
+                        expect(e.pageY).toBe(10);
                         called = 1;
                     });
 
@@ -114,7 +113,7 @@ KISSY.add(function (S, Node) {
                 it('does not fire when touchmove occurs', function () {
                     var called = 0;
 
-                    t.on('tapHold', function (e) {
+                    t.on('tapHold', function () {
                         called = 1;
                     });
 

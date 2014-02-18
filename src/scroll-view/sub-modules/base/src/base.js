@@ -9,9 +9,7 @@ KISSY.add(function (S, require) {
     var Container = require('component/container');
     var Render = require('./base/render');
 
-
     var $ = S.all,
-        isTouchEventSupported = S.Feature.isTouchEventSupported(),
         KeyCode = Node.KeyCode;
 
     function onElScroll() {
@@ -291,7 +289,7 @@ KISSY.add(function (S, require) {
             },
             focusable: {
                 // need process keydown
-                value: !isTouchEventSupported
+                value: true
             },
             allowTextSelection: {
                 value: true

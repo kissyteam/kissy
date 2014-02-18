@@ -6,11 +6,10 @@
 KISSY.add(function (S, require) {
     var Node = require('node'),
         Manager = require('component/manager');
+
     var UA = S.UA,
         ie = UA.ieMode,
-        Feature = S.Feature,
-        Gesture = Node.Gesture,
-        isTouchEventSupported = Feature.isTouchEventSupported();
+        Gesture = Node.Gesture;
 
     function onRenderChild(e) {
         if (e.target === this) {
@@ -80,17 +79,15 @@ KISSY.add(function (S, require) {
         __bindUI: function () {
             var self = this,
                 events = Gesture.start +
-                    ' '+ Gesture.end +
+                    ' ' + Gesture.end +
                     ' ' + Gesture.tap;
 
             if (Gesture.cancel) {
                 events += ' ' + Gesture.cancel;
             }
 
-            if (!isTouchEventSupported) {
-                events += ' mouseenter mouseleave contextmenu ' +
-                    (ie && ie < 9 ? 'dblclick ' : '');
-            }
+            events += ' mouseenter mouseleave contextmenu ' +
+                (ie && ie < 9 ? 'dblclick ' : '');
 
             self.$el.delegate(events, '.' + self.__childClsTag,
                 self.handleChildrenEvents, self);

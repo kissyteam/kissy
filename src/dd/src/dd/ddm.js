@@ -9,7 +9,6 @@ KISSY.add(function (S, require) {
     var logger = S.getLogger('dd/ddm');
     var UA = S.UA,
         $ = Node.all,
-
         win = S.Env.host,
         doc = win.document,
         $doc = $(doc),
@@ -31,7 +30,6 @@ KISSY.add(function (S, require) {
      2.全局统一的鼠标弹起监控，用来通知当前拖动对象停止
      3.为了跨越 iframe 而统一在底下的遮罩层
      */
-
 
     /**
      * @class KISSY.DD.DDM
@@ -284,7 +282,7 @@ KISSY.add(function (S, require) {
 
     // 同一时刻只可能有个 drag 元素，只能有一次 move 被注册，不需要每个实例一个 throttle
     // 一个应用一个 document 只需要注册一个 move
-    // 2013-01-24 更灵敏 for scroller in webkit
+    // 2013-01-24 更灵敏 for scroll-view in webkit
     var throttleMove = UA.ie ? S.throttle(move, MOVE_DELAY) : move;
 
     function notifyDropsMove(self, ev, activeDrag) {

@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Jan 23 19:27
+build time: Feb 18 14:39
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -86,7 +86,8 @@ KISSY.add("event/dom/touch/tap", ["./handle-map", "event/dom/base", "./single-to
       clearTimeout(self.tapHoldTimer);
       self.tapHoldTimer = 0
     }
-    var eventObject = new DomEventObject({type:TAP_EVENT, which:1, pageX:lastXY.pageX, pageY:lastXY.pageY, target:target, currentTarget:target});
+    var eventObject = new DomEventObject(e.originalEvent);
+    S.mix(eventObject, {type:TAP_EVENT, which:1, pageX:lastXY.pageX, pageY:lastXY.pageY, target:target, currentTarget:target});
     eventObject.touch = touch;
     DomEvent.fire(target, TAP_EVENT, eventObject);
     if(eventObject.isDefaultPrevented() && S.UA.mobile) {
@@ -171,7 +172,7 @@ KISSY.add("event/dom/touch/swipe", ["./handle-map", "event/dom/base", "./single-
     self.isVertical = 1;
     self.startX = touch.pageX;
     this.startY = touch.pageY;
-    if(e.type.indexOf("mouse") !== -1) {
+    if(e.type.toLowerCase().indexOf("mouse") !== -1) {
       e.preventDefault()
     }
     return undefined

@@ -3,6 +3,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, Node) {
+    /*jshint loopfunc:true*/
     var $ = Node.all, step = 10;
 
     return {
@@ -28,13 +29,13 @@ KISSY.add(function (S, Node) {
                 });
 
                 function swipe(p) {
-                    var d = p === 'pageX' ? 'left' : 'top';
+                    var d = p === 'pageX' ? 'left' : 'up';
+                    var unchangedP = p === 'pageX' ? 'pageY' : 'pageX';
                     var called = 0, start = 90, end = 10;
 
                     t.on('swipe', function (e) {
-                        var touch = e.touch;
-                        expect(touch.pageX).toBe(end);
-                        expect(touch.pageY).toBe(start);
+                        expect(e[p]).toBe(end);
+                        expect(e[unchangedP]).toBe(start);
                         expect(e.direction).toBe(d);
                         expect(e.distance).toBe(start - end);
                         called = 1;
@@ -55,6 +56,7 @@ KISSY.add(function (S, Node) {
 
                     for (var i = 0; i < step; i++) {
                         waits(30);
+
                         (function (i) {
                             runs(function () {
                                 touches[0][p] = start - (start - end) / step * i;
@@ -104,7 +106,7 @@ KISSY.add(function (S, Node) {
                     });
                 }
 
-                it('fires Horizontal', function () {
+                it('fires horizontal', function () {
                     swipe('pageX');
                 });
 
@@ -112,7 +114,7 @@ KISSY.add(function (S, Node) {
                 it('will not fire if max offset > 35', function () {
                     var called = 0, start = 90, end = 10;
 
-                    t.on('swipe', function (e) {
+                    t.on('swipe', function () {
                         called = 1;
                     });
 
@@ -145,7 +147,7 @@ KISSY.add(function (S, Node) {
                     }
 
                     waits(30);
-                    (function (i) {
+                    (function () {
                         runs(function () {
                             touches[0].pageX = end;
                             jasmine.simulate(t[0], 'touchmove', {
@@ -155,7 +157,7 @@ KISSY.add(function (S, Node) {
                             });
 
                         });
-                    })(i);
+                    })();
 
                     waits(30);
 
@@ -179,7 +181,7 @@ KISSY.add(function (S, Node) {
                 it('will not fire if min distance < 50', function () {
                     var called = 0, start = 90, end = 80;
 
-                    t.on('swipe', function (e) {
+                    t.on('swipe', function () {
                         called = 1;
                     });
 
@@ -212,7 +214,7 @@ KISSY.add(function (S, Node) {
                     }
 
                     waits(30);
-                    (function (i) {
+                    (function () {
                         runs(function () {
                             touches[0].pageX = end;
                             jasmine.simulate(t[0], 'touchmove', {
@@ -222,7 +224,7 @@ KISSY.add(function (S, Node) {
                             });
 
                         });
-                    })(i);
+                    })();
 
                     waits(30);
 
@@ -245,7 +247,7 @@ KISSY.add(function (S, Node) {
                 it('does not fire if max duration > 1000', function () {
                     var called = 0, start = 90, end = 10;
 
-                    t.on('swipe', function (e) {
+                    t.on('swipe', function () {
                         called = 1;
                     });
 
@@ -278,7 +280,7 @@ KISSY.add(function (S, Node) {
                     }
 
                     waits(30);
-                    (function (i) {
+                    (function () {
                         runs(function () {
                             touches[0].pageY = end;
                             jasmine.simulate(t[0], 'touchmove', {
@@ -288,7 +290,7 @@ KISSY.add(function (S, Node) {
                             });
 
                         });
-                    })(i);
+                    })();
 
                     waits(1000);
 
@@ -307,11 +309,10 @@ KISSY.add(function (S, Node) {
                     });
                 });
 
-
                 it('does not fire if touches.length > 1', function () {
                     var called = 0, start = 90, end = 10;
 
-                    t.on('swipe', function (e) {
+                    t.on('swipe', function () {
                         called = 1;
                     });
 
@@ -348,7 +349,7 @@ KISSY.add(function (S, Node) {
                     }
 
                     waits(30);
-                    (function (i) {
+                    (function () {
                         runs(function () {
                             touches[0].pageY = end;
                             jasmine.simulate(t[0], 'touchmove', {
@@ -358,7 +359,7 @@ KISSY.add(function (S, Node) {
                             });
 
                         });
-                    })(i);
+                    })();
 
                     waits(30);
 

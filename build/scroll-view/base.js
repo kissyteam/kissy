@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Feb 14 16:53
+build time: Feb 18 14:07
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -74,7 +74,7 @@ KISSY.add("scroll-view/base", ["node", "anim", "component/container", "./base/re
   var Anim = require("anim");
   var Container = require("component/container");
   var Render = require("./base/render");
-  var $ = S.all, isTouchEventSupported = S.Feature.isTouchEventSupported(), KeyCode = Node.KeyCode;
+  var $ = S.all, KeyCode = Node.KeyCode;
   function onElScroll() {
     var self = this, el = self.el, scrollTop = el.scrollTop, scrollLeft = el.scrollLeft;
     if(scrollTop) {
@@ -250,6 +250,6 @@ KISSY.add("scroll-view/base", ["node", "anim", "component/container", "./base/re
         self.set("scrollTop", top)
       }
     }
-  }}, {ATTRS:{contentEl:{}, scrollLeft:{view:1, value:0}, scrollTop:{view:1, value:0}, focusable:{value:!isTouchEventSupported}, allowTextSelection:{value:true}, handleGestureEvents:{value:false}, snap:{value:false}, pageIndex:{value:0}, xrender:{value:Render}}, xclass:"scroll-view"})
+  }}, {ATTRS:{contentEl:{}, scrollLeft:{view:1, value:0}, scrollTop:{view:1, value:0}, focusable:{value:true}, allowTextSelection:{value:true}, handleGestureEvents:{value:false}, snap:{value:false}, pageIndex:{value:0}, xrender:{value:Render}}, xclass:"scroll-view"})
 });
 

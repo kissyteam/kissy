@@ -59,9 +59,8 @@ KISSY.add(function (S, Node) {
                     var offset = t.offset();
 
                     t.on('tap', function (e) {
-                        var touch = e.touch;
-                        expect(touch.pageX).toBe(offset.left);
-                        expect(touch.pageY).toBe(offset.top);
+                        expect(e.pageX).toBe(offset.left);
+                        expect(e.pageY).toBe(offset.top);
                         called = 1;
                     });
 

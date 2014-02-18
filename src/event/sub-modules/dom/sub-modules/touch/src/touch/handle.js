@@ -85,6 +85,7 @@ KISSY.add(function (S, require) {
             var self = this,
                 doc = self.doc;
             DomEvent.on(doc, gestureStartEvent, self.onTouchStart, self);
+            // pointermove will be fired regardless of pointerdown
             if (!isPointerEvent(gestureMoveEvent)) {
                 DomEvent.on(doc, gestureMoveEvent, self.onTouchMove, self);
             }

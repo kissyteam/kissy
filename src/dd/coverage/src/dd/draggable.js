@@ -231,7 +231,7 @@ if (! _$jscoverage['/dd/draggable.js']) {
   _$jscoverage['/dd/draggable.js'].lineData = [];
   _$jscoverage['/dd/draggable.js'].lineData[6] = 0;
   _$jscoverage['/dd/draggable.js'].lineData[7] = 0;
-  _$jscoverage['/dd/draggable.js'].lineData[10] = 0;
+  _$jscoverage['/dd/draggable.js'].lineData[11] = 0;
   _$jscoverage['/dd/draggable.js'].lineData[24] = 0;
   _$jscoverage['/dd/draggable.js'].lineData[26] = 0;
   _$jscoverage['/dd/draggable.js'].lineData[27] = 0;
@@ -539,15 +539,15 @@ function visit77_332_1(result) {
 function visit76_321_1(result) {
   _$jscoverage['/dd/draggable.js'].branchData['321'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/draggable.js'].branchData['311'][1].init(1626, 10, 'bufferTime');
+}_$jscoverage['/dd/draggable.js'].branchData['311'][1].init(1637, 10, 'bufferTime');
 function visit75_311_1(result) {
   _$jscoverage['/dd/draggable.js'].branchData['311'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/draggable.js'].branchData['296'][1].init(1169, 15, 'self._allowMove');
+}_$jscoverage['/dd/draggable.js'].branchData['296'][1].init(1180, 15, 'self._allowMove');
 function visit74_296_1(result) {
   _$jscoverage['/dd/draggable.js'].branchData['296'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/draggable.js'].branchData['284'][1].init(870, 33, '!Feature.isTouchEventSupported()');
+}_$jscoverage['/dd/draggable.js'].branchData['284'][1].init(870, 44, 'S.startsWith(ev.type.toLowerCase(), \'mouse\')');
 function visit73_284_1(result) {
   _$jscoverage['/dd/draggable.js'].branchData['284'][1].ranCondition(result);
   return result;
@@ -588,8 +588,8 @@ KISSY.add(function(S, require) {
   _$jscoverage['/dd/draggable.js'].functionData[0]++;
   _$jscoverage['/dd/draggable.js'].lineData[7]++;
   var Node = require('node'), DDM = require('./ddm'), Base = require('base');
-  _$jscoverage['/dd/draggable.js'].lineData[10]++;
-  var UA = S.UA, $ = Node.all, each = S.each, Feature = S.Feature, ie = UA.ie, NULL = null, PREFIX_CLS = DDM.PREFIX_CLS, doc = S.Env.host.document;
+  _$jscoverage['/dd/draggable.js'].lineData[11]++;
+  var UA = S.UA, $ = Node.all, each = S.each, ie = UA.ie, NULL = null, PREFIX_CLS = DDM.PREFIX_CLS, doc = S.Env.host.document;
   _$jscoverage['/dd/draggable.js'].lineData[24]++;
   var Draggable = Base.extend({
   initializer: function() {
@@ -687,7 +687,7 @@ KISSY.add(function(S, require) {
     ev.stopPropagation();
   }
   _$jscoverage['/dd/draggable.js'].lineData[284]++;
-  if (visit73_284_1(!Feature.isTouchEventSupported())) {
+  if (visit73_284_1(S.startsWith(ev.type.toLowerCase(), 'mouse'))) {
     _$jscoverage['/dd/draggable.js'].lineData[285]++;
     ev.preventDefault();
   }

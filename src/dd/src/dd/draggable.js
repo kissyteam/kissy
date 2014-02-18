@@ -3,14 +3,14 @@
  * dd support for kissy, drag for dd
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S,require) {
+KISSY.add(function (S, require) {
     var Node = require('node'),
         DDM = require('./ddm'),
         Base = require('base');
+
     var UA = S.UA,
         $ = Node.all,
         each = S.each,
-        Feature = S.Feature,
         ie = UA.ie,
         NULL = null,
         PREFIX_CLS = DDM.PREFIX_CLS,
@@ -281,7 +281,7 @@ KISSY.add(function (S,require) {
             // prevent touchdown will prevent native scroll
             // need to prevent on move conditionally
             // will prevent text selection and link click
-            if (!Feature.isTouchEventSupported()) {
+            if (S.startsWith(ev.type.toLowerCase(), 'mouse')) {
                 ev.preventDefault();
             }
 

@@ -27,7 +27,6 @@ KISSY.add(function (S, require) {
     };
 
     eventHandleMap[moveEvent] = {
-
         handle: {
             // always fire
             isActive: 1,

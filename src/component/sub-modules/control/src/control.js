@@ -11,8 +11,7 @@ KISSY.add(function (S, require) {
     var ie = S.UA.ieMode,
         Feature = S.Feature,
         Gesture = Node.Gesture,
-        isTouchGestureSupported = Feature.isTouchGestureSupported(),
-        isTouchEventSupported = Feature.isTouchEventSupported();
+        isTouchGestureSupported = Feature.isTouchGestureSupported();
 
     /**
      * Base Control class for KISSY Component.
@@ -88,11 +87,10 @@ KISSY.add(function (S, require) {
                 if (self.get('handleGestureEvents')) {
                     el = self.$el;
 
-                    if (!isTouchEventSupported) {
-                        el.on('mouseenter', self.handleMouseEnter, self)
-                            .on('mouseleave', self.handleMouseLeave, self)
-                            .on('contextmenu', self.handleContextMenu, self);
-                    }
+                    // chrome on windows8 has both mouse and touch event
+                    el.on('mouseenter', self.handleMouseEnter, self)
+                        .on('mouseleave', self.handleMouseLeave, self)
+                        .on('contextmenu', self.handleContextMenu, self);
 
                     el.on(Gesture.start, self.handleMouseDown, self)
                         .on(Gesture.end, self.handleMouseUp, self)

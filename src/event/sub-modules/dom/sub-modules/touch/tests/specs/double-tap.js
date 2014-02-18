@@ -3,11 +3,11 @@
  * @author yiminghe@gmail.com
  */
 
-KISSY.add(function (S,Node) {
+KISSY.add(function (S, Node) {
     var $ = Node.all, step = 10;
 
     return {
-        init:function(){
+        init: function () {
             describe('doubleTap/singleTap', function () {
 
                 var t, delay = 500;
@@ -29,9 +29,8 @@ KISSY.add(function (S,Node) {
                     var doubleCalled = 0, singleCalled = 0;
 
                     t.on('doubleTap', function (e) {
-                        var touch = e.touch;
-                        expect(touch.pageX).toBe(20);
-                        expect(touch.pageY).toBe(20);
+                        expect(e.pageX).toBe(20);
+                        expect(e.pageY).toBe(20);
                         doubleCalled = 1;
                     });
 
@@ -107,13 +106,12 @@ KISSY.add(function (S,Node) {
                     });
 
                     t.on('singleTap', function (e) {
-                        var touch = e.touch;
                         if (singleCalled) {
-                            expect(touch.pageX).toBe(20);
-                            expect(touch.pageY).toBe(20);
+                            expect(e.pageX).toBe(20);
+                            expect(e.pageY).toBe(20);
                         } else {
-                            expect(touch.pageX).toBe(10);
-                            expect(touch.pageY).toBe(10);
+                            expect(e.pageX).toBe(10);
+                            expect(e.pageY).toBe(10);
                         }
                         singleCalled++;
                     });
@@ -243,23 +241,17 @@ KISSY.add(function (S,Node) {
                     });
 
                     for (var i = 0; i < step; i++) {
-
                         waits(30);
-
-                        (function (i) {
-
-                            runs(function () {
-                                touches[0].pageX = touches[0].pageY = 10 + (Math.random() * 20);
-                                jasmine.simulate(t[0], 'touchmove', {
-                                    touches: touches,
-                                    changedTouches: touches,
-                                    targetTouches: touches
-                                });
+                        /*jshint loopfunc:true*/
+                        runs(function () {
+                            touches[0].pageX = touches[0].pageY = 10 + (Math.random() * 20);
+                            jasmine.simulate(t[0], 'touchmove', {
+                                touches: touches,
+                                changedTouches: touches,
+                                targetTouches: touches
                             });
-
-                        })(i);
+                        });
                     }
-
 
                     waits(30);
 

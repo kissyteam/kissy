@@ -299,7 +299,7 @@ if (! _$jscoverage['/touch/pinch.js'].branchData) {
   _$jscoverage['/touch/pinch.js'].branchData['85'] = [];
   _$jscoverage['/touch/pinch.js'].branchData['85'][1] = new BranchData();
 }
-_$jscoverage['/touch/pinch.js'].branchData['85'][1].init(2130, 34, 'S.Feature.isTouchEventSupported()');
+_$jscoverage['/touch/pinch.js'].branchData['85'][1].init(2130, 33, 'S.Feature.isTouchEventSupported()');
 function visit73_85_1(result) {
   _$jscoverage['/touch/pinch.js'].branchData['85'][1].ranCondition(result);
   return result;

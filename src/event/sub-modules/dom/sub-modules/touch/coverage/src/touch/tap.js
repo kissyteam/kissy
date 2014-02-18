@@ -270,27 +270,28 @@ if (! _$jscoverage['/touch/tap.js']) {
   _$jscoverage['/touch/tap.js'].lineData[89] = 0;
   _$jscoverage['/touch/tap.js'].lineData[90] = 0;
   _$jscoverage['/touch/tap.js'].lineData[94] = 0;
-  _$jscoverage['/touch/tap.js'].lineData[102] = 0;
-  _$jscoverage['/touch/tap.js'].lineData[103] = 0;
+  _$jscoverage['/touch/tap.js'].lineData[96] = 0;
+  _$jscoverage['/touch/tap.js'].lineData[105] = 0;
   _$jscoverage['/touch/tap.js'].lineData[106] = 0;
-  _$jscoverage['/touch/tap.js'].lineData[107] = 0;
-  _$jscoverage['/touch/tap.js'].lineData[108] = 0;
+  _$jscoverage['/touch/tap.js'].lineData[109] = 0;
   _$jscoverage['/touch/tap.js'].lineData[110] = 0;
-  _$jscoverage['/touch/tap.js'].lineData[118] = 0;
+  _$jscoverage['/touch/tap.js'].lineData[111] = 0;
+  _$jscoverage['/touch/tap.js'].lineData[113] = 0;
   _$jscoverage['/touch/tap.js'].lineData[121] = 0;
-  _$jscoverage['/touch/tap.js'].lineData[123] = 0;
-  _$jscoverage['/touch/tap.js'].lineData[125] = 0;
-  _$jscoverage['/touch/tap.js'].lineData[127] = 0;
-  _$jscoverage['/touch/tap.js'].lineData[129] = 0;
+  _$jscoverage['/touch/tap.js'].lineData[124] = 0;
+  _$jscoverage['/touch/tap.js'].lineData[126] = 0;
+  _$jscoverage['/touch/tap.js'].lineData[128] = 0;
   _$jscoverage['/touch/tap.js'].lineData[130] = 0;
-  _$jscoverage['/touch/tap.js'].lineData[137] = 0;
-  _$jscoverage['/touch/tap.js'].lineData[144] = 0;
-  _$jscoverage['/touch/tap.js'].lineData[145] = 0;
-  _$jscoverage['/touch/tap.js'].lineData[146] = 0;
-  _$jscoverage['/touch/tap.js'].lineData[156] = 0;
-  _$jscoverage['/touch/tap.js'].lineData[157] = 0;
-  _$jscoverage['/touch/tap.js'].lineData[169] = 0;
-  _$jscoverage['/touch/tap.js'].lineData[173] = 0;
+  _$jscoverage['/touch/tap.js'].lineData[132] = 0;
+  _$jscoverage['/touch/tap.js'].lineData[133] = 0;
+  _$jscoverage['/touch/tap.js'].lineData[140] = 0;
+  _$jscoverage['/touch/tap.js'].lineData[147] = 0;
+  _$jscoverage['/touch/tap.js'].lineData[148] = 0;
+  _$jscoverage['/touch/tap.js'].lineData[149] = 0;
+  _$jscoverage['/touch/tap.js'].lineData[159] = 0;
+  _$jscoverage['/touch/tap.js'].lineData[160] = 0;
+  _$jscoverage['/touch/tap.js'].lineData[172] = 0;
+  _$jscoverage['/touch/tap.js'].lineData[176] = 0;
 }
 if (! _$jscoverage['/touch/tap.js'].functionData) {
   _$jscoverage['/touch/tap.js'].functionData = [];
@@ -324,42 +325,42 @@ if (! _$jscoverage['/touch/tap.js'].branchData) {
   _$jscoverage['/touch/tap.js'].branchData['81'][1] = new BranchData();
   _$jscoverage['/touch/tap.js'].branchData['88'] = [];
   _$jscoverage['/touch/tap.js'].branchData['88'][1] = new BranchData();
-  _$jscoverage['/touch/tap.js'].branchData['106'] = [];
-  _$jscoverage['/touch/tap.js'].branchData['106'][1] = new BranchData();
-  _$jscoverage['/touch/tap.js'].branchData['107'] = [];
-  _$jscoverage['/touch/tap.js'].branchData['107'][1] = new BranchData();
+  _$jscoverage['/touch/tap.js'].branchData['109'] = [];
+  _$jscoverage['/touch/tap.js'].branchData['109'][1] = new BranchData();
   _$jscoverage['/touch/tap.js'].branchData['110'] = [];
   _$jscoverage['/touch/tap.js'].branchData['110'][1] = new BranchData();
-  _$jscoverage['/touch/tap.js'].branchData['123'] = [];
-  _$jscoverage['/touch/tap.js'].branchData['123'][1] = new BranchData();
-  _$jscoverage['/touch/tap.js'].branchData['127'] = [];
-  _$jscoverage['/touch/tap.js'].branchData['127'][1] = new BranchData();
-  _$jscoverage['/touch/tap.js'].branchData['145'] = [];
-  _$jscoverage['/touch/tap.js'].branchData['145'][1] = new BranchData();
+  _$jscoverage['/touch/tap.js'].branchData['113'] = [];
+  _$jscoverage['/touch/tap.js'].branchData['113'][1] = new BranchData();
+  _$jscoverage['/touch/tap.js'].branchData['126'] = [];
+  _$jscoverage['/touch/tap.js'].branchData['126'][1] = new BranchData();
+  _$jscoverage['/touch/tap.js'].branchData['130'] = [];
+  _$jscoverage['/touch/tap.js'].branchData['130'][1] = new BranchData();
+  _$jscoverage['/touch/tap.js'].branchData['148'] = [];
+  _$jscoverage['/touch/tap.js'].branchData['148'][1] = new BranchData();
 }
-_$jscoverage['/touch/tap.js'].branchData['145'][1].init(2349, 27, 'duration > SINGLE_TAP_DELAY');
-function visit117_145_1(result) {
-  _$jscoverage['/touch/tap.js'].branchData['145'][1].ranCondition(result);
+_$jscoverage['/touch/tap.js'].branchData['148'][1].init(2400, 27, 'duration > SINGLE_TAP_DELAY');
+function visit117_148_1(result) {
+  _$jscoverage['/touch/tap.js'].branchData['148'][1].ranCondition(result);
   return result;
-}_$jscoverage['/touch/tap.js'].branchData['127'][1].init(155, 27, 'duration < SINGLE_TAP_DELAY');
-function visit116_127_1(result) {
-  _$jscoverage['/touch/tap.js'].branchData['127'][1].ranCondition(result);
+}_$jscoverage['/touch/tap.js'].branchData['130'][1].init(155, 27, 'duration < SINGLE_TAP_DELAY');
+function visit116_130_1(result) {
+  _$jscoverage['/touch/tap.js'].branchData['130'][1].ranCondition(result);
   return result;
-}_$jscoverage['/touch/tap.js'].branchData['123'][1].init(1500, 11, 'lastEndTime');
-function visit115_123_1(result) {
-  _$jscoverage['/touch/tap.js'].branchData['123'][1].ranCondition(result);
+}_$jscoverage['/touch/tap.js'].branchData['126'][1].init(1551, 11, 'lastEndTime');
+function visit115_126_1(result) {
+  _$jscoverage['/touch/tap.js'].branchData['126'][1].ranCondition(result);
   return result;
-}_$jscoverage['/touch/tap.js'].branchData['110'][1].init(33, 30, 'target.ownerDocument || target');
-function visit114_110_1(result) {
+}_$jscoverage['/touch/tap.js'].branchData['113'][1].init(33, 30, 'target.ownerDocument || target');
+function visit114_113_1(result) {
+  _$jscoverage['/touch/tap.js'].branchData['113'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/touch/tap.js'].branchData['110'][1].init(21, 8, 'S.UA.ios');
+function visit113_110_1(result) {
   _$jscoverage['/touch/tap.js'].branchData['110'][1].ranCondition(result);
   return result;
-}_$jscoverage['/touch/tap.js'].branchData['107'][1].init(21, 8, 'S.UA.ios');
-function visit113_107_1(result) {
-  _$jscoverage['/touch/tap.js'].branchData['107'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/touch/tap.js'].branchData['106'][1].init(906, 47, 'eventObject.isDefaultPrevented() && S.UA.mobile');
-function visit112_106_1(result) {
-  _$jscoverage['/touch/tap.js'].branchData['106'][1].ranCondition(result);
+}_$jscoverage['/touch/tap.js'].branchData['109'][1].init(957, 47, 'eventObject.isDefaultPrevented() && S.UA.mobile');
+function visit112_109_1(result) {
+  _$jscoverage['/touch/tap.js'].branchData['109'][1].ranCondition(result);
   return result;
 }_$jscoverage['/touch/tap.js'].branchData['88'][1].init(275, 17, 'self.tapHoldTimer');
 function visit111_88_1(result) {
@@ -507,58 +508,60 @@ KISSY.add(function(S, require) {
     self.tapHoldTimer = 0;
   }
   _$jscoverage['/touch/tap.js'].lineData[94]++;
-  var eventObject = new DomEventObject({
+  var eventObject = new DomEventObject(e.originalEvent);
+  _$jscoverage['/touch/tap.js'].lineData[96]++;
+  S.mix(eventObject, {
   type: TAP_EVENT, 
   which: 1, 
   pageX: lastXY.pageX, 
   pageY: lastXY.pageY, 
   target: target, 
   currentTarget: target});
-  _$jscoverage['/touch/tap.js'].lineData[102]++;
+  _$jscoverage['/touch/tap.js'].lineData[105]++;
   eventObject.touch = touch;
-  _$jscoverage['/touch/tap.js'].lineData[103]++;
-  DomEvent.fire(target, TAP_EVENT, eventObject);
   _$jscoverage['/touch/tap.js'].lineData[106]++;
-  if (visit112_106_1(eventObject.isDefaultPrevented() && S.UA.mobile)) {
-    _$jscoverage['/touch/tap.js'].lineData[107]++;
-    if (visit113_107_1(S.UA.ios)) {
-      _$jscoverage['/touch/tap.js'].lineData[108]++;
+  DomEvent.fire(target, TAP_EVENT, eventObject);
+  _$jscoverage['/touch/tap.js'].lineData[109]++;
+  if (visit112_109_1(eventObject.isDefaultPrevented() && S.UA.mobile)) {
+    _$jscoverage['/touch/tap.js'].lineData[110]++;
+    if (visit113_110_1(S.UA.ios)) {
+      _$jscoverage['/touch/tap.js'].lineData[111]++;
       e.preventDefault();
     } else {
-      _$jscoverage['/touch/tap.js'].lineData[110]++;
-      DomEvent.on(visit114_110_1(target.ownerDocument || target), 'click', {
+      _$jscoverage['/touch/tap.js'].lineData[113]++;
+      DomEvent.on(visit114_113_1(target.ownerDocument || target), 'click', {
   fn: preventDefault, 
   once: 1});
     }
   }
-  _$jscoverage['/touch/tap.js'].lineData[118]++;
-  var lastEndTime = self.lastEndTime, time = e.timeStamp, duration;
   _$jscoverage['/touch/tap.js'].lineData[121]++;
+  var lastEndTime = self.lastEndTime, time = e.timeStamp, duration;
+  _$jscoverage['/touch/tap.js'].lineData[124]++;
   self.lastEndTime = time;
-  _$jscoverage['/touch/tap.js'].lineData[123]++;
-  if (visit115_123_1(lastEndTime)) {
-    _$jscoverage['/touch/tap.js'].lineData[125]++;
+  _$jscoverage['/touch/tap.js'].lineData[126]++;
+  if (visit115_126_1(lastEndTime)) {
+    _$jscoverage['/touch/tap.js'].lineData[128]++;
     duration = time - lastEndTime;
-    _$jscoverage['/touch/tap.js'].lineData[127]++;
-    if (visit116_127_1(duration < SINGLE_TAP_DELAY)) {
-      _$jscoverage['/touch/tap.js'].lineData[129]++;
+    _$jscoverage['/touch/tap.js'].lineData[130]++;
+    if (visit116_130_1(duration < SINGLE_TAP_DELAY)) {
+      _$jscoverage['/touch/tap.js'].lineData[132]++;
       self.lastEndTime = 0;
-      _$jscoverage['/touch/tap.js'].lineData[130]++;
+      _$jscoverage['/touch/tap.js'].lineData[133]++;
       DomEvent.fire(target, DOUBLE_TAP_EVENT, {
   touch: touch, 
   pageX: lastXY.pageX, 
   pageY: lastXY.pageY, 
   which: 1, 
   duration: duration / 1000});
-      _$jscoverage['/touch/tap.js'].lineData[137]++;
+      _$jscoverage['/touch/tap.js'].lineData[140]++;
       return;
     }
   }
-  _$jscoverage['/touch/tap.js'].lineData[144]++;
+  _$jscoverage['/touch/tap.js'].lineData[147]++;
   duration = time - self.startTime;
-  _$jscoverage['/touch/tap.js'].lineData[145]++;
-  if (visit117_145_1(duration > SINGLE_TAP_DELAY)) {
-    _$jscoverage['/touch/tap.js'].lineData[146]++;
+  _$jscoverage['/touch/tap.js'].lineData[148]++;
+  if (visit117_148_1(duration > SINGLE_TAP_DELAY)) {
+    _$jscoverage['/touch/tap.js'].lineData[149]++;
     DomEvent.fire(target, SINGLE_TAP_EVENT, {
   touch: touch, 
   pageX: lastXY.pageX, 
@@ -566,10 +569,10 @@ KISSY.add(function(S, require) {
   which: 1, 
   duration: duration / 1000});
   } else {
-    _$jscoverage['/touch/tap.js'].lineData[156]++;
+    _$jscoverage['/touch/tap.js'].lineData[159]++;
     self.singleTapTimer = setTimeout(function() {
   _$jscoverage['/touch/tap.js'].functionData[7]++;
-  _$jscoverage['/touch/tap.js'].lineData[157]++;
+  _$jscoverage['/touch/tap.js'].lineData[160]++;
   DomEvent.fire(target, SINGLE_TAP_EVENT, {
   touch: touch, 
   pageX: lastXY.pageX, 
@@ -579,9 +582,9 @@ KISSY.add(function(S, require) {
 }, SINGLE_TAP_DELAY);
   }
 }});
-  _$jscoverage['/touch/tap.js'].lineData[169]++;
+  _$jscoverage['/touch/tap.js'].lineData[172]++;
   eventHandleMap[TAP_EVENT] = eventHandleMap[DOUBLE_TAP_EVENT] = eventHandleMap[SINGLE_TAP_EVENT] = eventHandleMap[TAP_HOLD_EVENT] = {
   handle: new Tap()};
-  _$jscoverage['/touch/tap.js'].lineData[173]++;
+  _$jscoverage['/touch/tap.js'].lineData[176]++;
   return Tap;
 });

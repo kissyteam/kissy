@@ -194,7 +194,11 @@ function startServer(port) {
         var ok = '<script>{' +
             'content' +
             '}\n' +
-            'console.log("0 specs, 0 failures in {time}ms.")</script>';
+            'window.callPhantom&&window.callPhantom({' +
+            'type: "report",' +
+            'failedCount: 0' +
+            '});' +
+            ')</script>';
         var str = JSON.stringify(postData);
         if (!service_job_id) {
             //console.log(str);

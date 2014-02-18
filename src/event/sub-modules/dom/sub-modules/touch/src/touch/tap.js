@@ -91,7 +91,9 @@ KISSY.add(function (S, require) {
             }
 
             // fire tap
-            var eventObject = new DomEventObject({
+            var eventObject = new DomEventObject(e.originalEvent);
+
+            S.mix(eventObject, {
                 type: TAP_EVENT,
                 which: 1,
                 pageX: lastXY.pageX,
@@ -99,6 +101,7 @@ KISSY.add(function (S, require) {
                 target: target,
                 currentTarget: target
             });
+
             eventObject.touch = touch;
             DomEvent.fire(target, TAP_EVENT, eventObject);
 

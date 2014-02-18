@@ -158,8 +158,8 @@ KISSY.add(function (S, require) {
                 top: y - offsetY
             };
         } else {
-            var pageX = e.pageX || e.touch.pageX;
-            var pageY = e.pageY || e.touch.pageY;
+            var pageX = e.pageX;
+            var pageY = e.pageY;
             x = pageX - win.scrollLeft();
             y = pageY - win.scrollTop();
             centerOffset = {
