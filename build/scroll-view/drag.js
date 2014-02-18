@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Feb 13 12:29
+build time: Feb 18 15:46
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -29,7 +29,7 @@ KISSY.add("scroll-view/drag", ["./base", "node", "anim"], function(S, require) {
     if(forbidDrag(self, scrollType)) {
       return
     }
-    var pos = {pageX:e.touches[0].pageX, pageY:e.touches[0].pageY};
+    var pos = {pageX:e.pageX, pageY:e.pageY};
     var pageOffsetProperty = scrollType === "left" ? "pageX" : "pageY", lastPageXY = self.lastPageXY;
     var diff = pos[pageOffsetProperty] - startMousePos[pageOffsetProperty], eqWithLastPoint, scroll = self.startScroll[scrollType] - diff, bound, now = e.timeStamp, minScroll = self.minScroll, maxScroll = self.maxScroll, lastDirection = self.lastDirection, swipe = self.swipe, direction;
     if(lastPageXY[pageOffsetProperty]) {
@@ -142,12 +142,15 @@ KISSY.add("scroll-view/drag", ["./base", "node", "anim"], function(S, require) {
     }
   }
   function onDragStartHandler(e) {
+    if(!e.isTouch) {
+      return
+    }
     var self = this, touches = e.touches;
     if(self.get("disabled")) {
       return
     }
     self.stopAnimation();
-    var pos = {pageX:e.touches[0].pageX, pageY:e.touches[0].pageY};
+    var pos = {pageX:e.pageX, pageY:e.pageY};
     var isScrolling = self.isScrolling;
     if(isScrolling) {
       var pageIndex = self.get("pageIndex");
@@ -163,11 +166,14 @@ KISSY.add("scroll-view/drag", ["./base", "node", "anim"], function(S, require) {
     $document.on(Gesture.move, onDragHandler, self).on(Gesture.end, onDragEndHandler, self)
   }
   var onDragHandler = function(e) {
-    var self = this, touches = e.touches, startMousePos = self.startMousePos;
+    if(!e.isTouch) {
+      return
+    }
+    var self = this, startMousePos = self.startMousePos;
     if(!startMousePos) {
       return
     }
-    var pos = {pageX:touches[0].pageX, pageY:touches[0].pageY};
+    var pos = {pageX:e.pageX, pageY:e.pageY};
     var xDiff = Math.abs(pos.pageX - startMousePos.pageX);
     var yDiff = Math.abs(pos.pageY - startMousePos.pageY);
     if(Math.max(xDiff, yDiff) < PIXEL_THRESH) {
@@ -210,9 +216,12 @@ KISSY.add("scroll-view/drag", ["./base", "node", "anim"], function(S, require) {
     onDragHandler = S.throttle(onDragHandler, 30)
   }
   function onDragEndHandler(e) {
+    if(!e.isTouch) {
+      return
+    }
     var self = this;
     var startMousePos = self.startMousePos;
-    $document.detach(Gesture.move, onDragHandler, self);
+    $document.detach(Gesture.move, onDragHandler, self).detach(Gesture.end, onDragEndHandler, self);
     if(!startMousePos || !self.isScrolling) {
       return
     }

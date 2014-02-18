@@ -179,19 +179,29 @@ KISSY.add(function (S, require) {
         normalize: function (e) {
             var type = e.type,
                 notUp,
+                touchEvent,
                 touchList;
-            if (isTouchEvent(type)) {
+            if ((touchEvent = isTouchEvent(type))) {
                 touchList = (type === 'touchend' || type === 'touchcancel') ?
                     e.changedTouches :
                     e.touches;
-                if (touchList.length === 1) {
-                    e.which = 1;
-                    e.pageX = touchList[0].pageX;
-                    e.pageY = touchList[0].pageY;
-                }
-                return e;
+                e.isTouch = 1;
             } else {
+                if (isPointerEvent(type)) {
+                    var pointerType = e.originalEvent.pointerType;
+                    if (pointerType === 'touch') {
+                        e.isTouch = 1;
+                    }
+                }
                 touchList = this.touches;
+            }
+            if (touchList && touchList.length === 1) {
+                e.which = 1;
+                e.pageX = touchList[0].pageX;
+                e.pageY = touchList[0].pageY;
+            }
+            if (touchEvent) {
+                return e;
             }
             notUp = !type.match(/(up|cancel)$/i);
             e.touches = notUp ? touchList : [];

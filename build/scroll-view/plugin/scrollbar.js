@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Feb 13 12:29
+build time: Feb 18 15:47
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -163,13 +163,36 @@ KISSY.add("scroll-view/plugin/scrollbar/render", ["component/control", "./scroll
 });
 KISSY.add("scroll-view/plugin/scrollbar/control", ["node", "component/control", "./render"], function(S, require) {
   var Node = require("node");
+  var $document = Node.all(document);
   var Control = require("component/control");
   var ScrollBarRender = require("./render");
   var MIN_BAR_LENGTH = 20;
   var SCROLLBAR_EVENT_NS = ".ks-scrollbar";
   var Gesture = Node.Gesture;
-  var Feature = S.Feature;
-  var allowDrag = !Feature.isTouchGestureSupported();
+  function preventDefault(e) {
+    e.preventDefault()
+  }
+  function onDragStartHandler(e) {
+    e.stopPropagation();
+    if(!e.isTouch) {
+      e.preventDefault()
+    }
+    var self = this;
+    if(self.get("disabled")) {
+      return
+    }
+    self.startMousePos = e[self.pageXyProperty];
+    self.startScroll = self.scrollView.get(self.scrollProperty);
+    $document.on(Gesture.move, onDragHandler, self).on(Gesture.end, onDragEndHandler, self)
+  }
+  function onDragHandler(e) {
+    var self = this, diff = e[self.pageXyProperty] - self.startMousePos, scrollView = self.scrollView, scrollType = self.scrollType, scrollCfg = {};
+    scrollCfg[scrollType] = self.startScroll + diff / self.trackElSize * self.scrollLength;
+    scrollView.scrollToWithBounds(scrollCfg)
+  }
+  function onDragEndHandler() {
+    $document.detach(Gesture.move, onDragHandler, this).detach(Gesture.end, onDragEndHandler, this)
+  }
   return Control.extend({initializer:function() {
     var self = this;
     var scrollType = self.scrollType = self.get("axis") === "x" ? "left" : "top";
@@ -192,26 +215,14 @@ KISSY.add("scroll-view/plugin/scrollbar/control", ["node", "component/control", 
         b.on(Gesture.start, self.onUpDownBtnMouseDown, self).on(Gesture.end, self.onUpDownBtnMouseUp, self)
       });
       self.$trackEl.on(Gesture.start, self.onTrackElMouseDown, self);
-      if(allowDrag) {
-        S.use("dd", function(S, DD) {
-          self.dd = (new DD.Draggable({node:self.$dragEl, disabled:self.get("disabled"), groups:false, halt:true})).on("drag", self.onDrag, self).on("dragstart", self.onDragStart, self)
-        })
-      }
+      self.$dragEl.on("dragstart", preventDefault).on(Gesture.start, onDragStartHandler, self);
+      scrollView.on(self.afterScrollChangeEvent + SCROLLBAR_EVENT_NS, self.afterScrollChange, self).on("scrollEnd" + SCROLLBAR_EVENT_NS, self.onScrollEnd, self).on("afterDisabledChange", self.onScrollViewDisabled, self)
     }
-    scrollView.on(self.afterScrollChangeEvent + SCROLLBAR_EVENT_NS, self.afterScrollChange, self).on("scrollEnd" + SCROLLBAR_EVENT_NS, self.onScrollEnd, self).on("afterDisabledChange", self.onScrollViewDisabled, self)
   }, destructor:function() {
     this.get("scrollView").detach(SCROLLBAR_EVENT_NS);
     this.clearHideTimer()
   }, onScrollViewDisabled:function(e) {
     this.set("disabled", e.newVal)
-  }, onDragStart:function() {
-    var self = this, scrollView = self.scrollView;
-    self.startMousePos = self.dd.get("startMousePos")[self.scrollType];
-    self.startScroll = scrollView.get(self.scrollProperty)
-  }, onDrag:function(e) {
-    var self = this, diff = e[self.pageXyProperty] - self.startMousePos, scrollView = self.scrollView, scrollType = self.scrollType, scrollCfg = {};
-    scrollCfg[scrollType] = self.startScroll + diff / self.trackElSize * self.scrollLength;
-    scrollView.scrollToWithBounds(scrollCfg)
   }, startHideTimer:function() {
     var self = this;
     self.clearHideTimer();

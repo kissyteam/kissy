@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Feb 18 14:39
+build time: Feb 18 15:46
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -476,17 +476,26 @@ KISSY.add("event/dom/touch/handle", ["dom", "./handle-map", "event/dom/base", ".
     }
     return 0
   }, normalize:function(e) {
-    var type = e.type, notUp, touchList;
-    if(isTouchEvent(type)) {
+    var type = e.type, notUp, touchEvent, touchList;
+    if(touchEvent = isTouchEvent(type)) {
       touchList = type === "touchend" || type === "touchcancel" ? e.changedTouches : e.touches;
-      if(touchList.length === 1) {
-        e.which = 1;
-        e.pageX = touchList[0].pageX;
-        e.pageY = touchList[0].pageY
-      }
-      return e
+      e.isTouch = 1
     }else {
+      if(isPointerEvent(type)) {
+        var pointerType = e.originalEvent.pointerType;
+        if(pointerType === "touch") {
+          e.isTouch = 1
+        }
+      }
       touchList = this.touches
+    }
+    if(touchList && touchList.length === 1) {
+      e.which = 1;
+      e.pageX = touchList[0].pageX;
+      e.pageY = touchList[0].pageY
+    }
+    if(touchEvent) {
+      return e
     }
     notUp = !type.match(/(up|cancel)$/i);
     e.touches = notUp ? touchList : [];
