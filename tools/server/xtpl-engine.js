@@ -1,5 +1,5 @@
 //noinspection JSUnresolvedVariable
-var currentDir = __dirname;
+var viewDir;
 var S = require(process.cwd() + '/lib/seed.js');
 var XTemplateNodeJs = S.nodeRequire('xtemplate/nodejs');
 var packageSet = 0;
@@ -15,12 +15,12 @@ exports.renderFile = function (path, options, callback) {
         packageSet = 1;
         S.config('packages', {
             'views': {
-                base: Path.dirname(options.settings.views)
+                base: (viewDir = Path.dirname(options.settings.views))
             }
         });
     }
     var extname = options.settings['view engine'];
-    var moduleName = normalizeSlash(path.substring(currentDir.length + 1).slice(0, -extname.length - 1));
+    var moduleName = normalizeSlash(path.substring(viewDir.length + 1).slice(0, -extname.length - 1));
     try {
         callback(null, XTemplateNodeJs.loadFromModuleName(moduleName, {
             cache: options.cache,
