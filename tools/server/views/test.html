@@ -1,7 +1,8 @@
-{{#macro 'head'}}
+{{extend './layout'}}
+{{#block 'head'}}
     <script src="/kissy/build/seed.js"></script>
-{{/macro}}
-{{#macro 'body'}}
+{{/block}}
+{{#block 'body'}}
     <h1>KISSY 集成化测试</h1>
     <div id="iframe">
 
@@ -24,5 +25,4 @@
         document.write(tests.join("<br>"));
     })();
     </script>
-{{/macro}}
-{{{include './layout'}}}
+{{/block}}

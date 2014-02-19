@@ -195,7 +195,8 @@ KISSY.add(function (S, require) {
         config = S.merge(defaultConfig, config);
         config.commands = S.merge(config.commands, commands);
         config.utils = utils;
-        config.macros = config.macros || {};
+        config.macros = config.macros||{};
+        config.blocks = config.blocks||{};
         this.config = config;
     }
 
@@ -260,10 +261,20 @@ KISSY.add(function (S, require) {
          */
         render: function (data) {
             var root = data;
+            var self = this;
             if (!(root && root.isScope)) {
                 root = new Scope(data);
             }
-            return this.tpl(root, S);
+            var html = self.tpl(root, S);
+            var extendTplName = self._extendTplName;
+            // if has extend statement, only parse
+            if (extendTplName) {
+                return commands.include.call(self, root, {
+                    params: [extendTplName]
+                });
+            } else {
+                return html;
+            }
         }
     };
 

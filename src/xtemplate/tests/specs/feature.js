@@ -861,15 +861,14 @@ KISSY.add(function (S, require) {
                 expect(render).toBe('call macro2');
             });
 
-            it('support template extend  with scope', function () {
-                KISSY.add('xtemplate/parent', '{{#macro "x"}}parent{{/macro}}' +
-                    '{{macro "x"}}');
-                var render = new XTemplate('{{#macro "x"}}{{content}} child{{/macro}}' +
-                    '{{include "xtemplate/parent"}}').render({
+            it('support macro override without scope', function () {
+                KISSY.add('xtemplate/parent', '{{#macro "x"}}parent{{/macro}}');
+                var render = new XTemplate('{{include "xtemplate/parent"}}{{#macro "x"}}{{content}} child{{/macro}}' +
+                    '{{macro "x"}}').render({
                         title: 'title',
                         content: 'content'
                     });
-                expect(render).toBe('content child');
+                expect(render).toBe(' child');
             });
         });
 
@@ -1264,6 +1263,35 @@ KISSY.add(function (S, require) {
 
             });
 
+        });
+
+        describe('汉字', function () {
+            it('允许汉字内容', function () {
+                var tpl = '{{t}}出现了';
+                var data = {
+                    t: 1
+                };
+
+                var render = new XTemplate(tpl).render(data);
+
+                expect(render).toBe('1出现了');
+            });
+
+            it('允许汉字参数', function () {
+                var tpl = '{{t "出现了"}}';
+                var data = {
+                };
+
+                var render = new XTemplate(tpl, {
+                    commands: {
+                        t: function (scope, option) {
+                            return option.params[0];
+                        }
+                    }
+                }).render(data);
+
+                expect(render).toBe('出现了');
+            });
         });
     });
 });

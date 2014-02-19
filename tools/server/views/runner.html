@@ -1,4 +1,5 @@
-{{#macro 'head'}}
+{{extend './layout'}}
+{{#block 'head'}}
     <title>{{component}} test runner</title>
     <link rel="stylesheet" href="/kissy/tools/jasmine/jasmine.css">
     <link rel="stylesheet" href="/kissy/build/css/dpl/base.css"/>
@@ -56,8 +57,8 @@
     {{#each externalScripts}}
         <script src="{{{.}}}"></script>
     {{/each}}
-{{/macro}}
-{{#macro 'body'}}
+{{/block}}
+{{#block 'body'}}
     <h1 style="text-align: center">{{component}} test cases</h1>
     {{{html}}}
     <script>
@@ -88,5 +89,4 @@
             jasmine.getEnv().execute();
         });
     </script>
-{{/macro}}
-{{{include './layout'}}}
+{{/block}}

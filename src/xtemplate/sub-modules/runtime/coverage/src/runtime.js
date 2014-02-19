@@ -321,19 +321,25 @@ if (! _$jscoverage['/runtime.js']) {
   _$jscoverage['/runtime.js'].lineData[197] = 0;
   _$jscoverage['/runtime.js'].lineData[198] = 0;
   _$jscoverage['/runtime.js'].lineData[199] = 0;
-  _$jscoverage['/runtime.js'].lineData[202] = 0;
-  _$jscoverage['/runtime.js'].lineData[216] = 0;
-  _$jscoverage['/runtime.js'].lineData[227] = 0;
-  _$jscoverage['/runtime.js'].lineData[231] = 0;
-  _$jscoverage['/runtime.js'].lineData[236] = 0;
-  _$jscoverage['/runtime.js'].lineData[244] = 0;
-  _$jscoverage['/runtime.js'].lineData[253] = 0;
-  _$jscoverage['/runtime.js'].lineData[262] = 0;
+  _$jscoverage['/runtime.js'].lineData[200] = 0;
+  _$jscoverage['/runtime.js'].lineData[203] = 0;
+  _$jscoverage['/runtime.js'].lineData[217] = 0;
+  _$jscoverage['/runtime.js'].lineData[228] = 0;
+  _$jscoverage['/runtime.js'].lineData[232] = 0;
+  _$jscoverage['/runtime.js'].lineData[237] = 0;
+  _$jscoverage['/runtime.js'].lineData[245] = 0;
+  _$jscoverage['/runtime.js'].lineData[254] = 0;
   _$jscoverage['/runtime.js'].lineData[263] = 0;
   _$jscoverage['/runtime.js'].lineData[264] = 0;
+  _$jscoverage['/runtime.js'].lineData[265] = 0;
   _$jscoverage['/runtime.js'].lineData[266] = 0;
-  _$jscoverage['/runtime.js'].lineData[270] = 0;
+  _$jscoverage['/runtime.js'].lineData[268] = 0;
+  _$jscoverage['/runtime.js'].lineData[269] = 0;
+  _$jscoverage['/runtime.js'].lineData[271] = 0;
   _$jscoverage['/runtime.js'].lineData[272] = 0;
+  _$jscoverage['/runtime.js'].lineData[276] = 0;
+  _$jscoverage['/runtime.js'].lineData[281] = 0;
+  _$jscoverage['/runtime.js'].lineData[283] = 0;
 }
 if (! _$jscoverage['/runtime.js'].functionData) {
   _$jscoverage['/runtime.js'].functionData = [];
@@ -394,88 +400,100 @@ if (! _$jscoverage['/runtime.js'].branchData) {
   _$jscoverage['/runtime.js'].branchData['180'][1] = new BranchData();
   _$jscoverage['/runtime.js'].branchData['198'] = [];
   _$jscoverage['/runtime.js'].branchData['198'][1] = new BranchData();
-  _$jscoverage['/runtime.js'].branchData['263'] = [];
-  _$jscoverage['/runtime.js'].branchData['263'][1] = new BranchData();
-  _$jscoverage['/runtime.js'].branchData['263'][2] = new BranchData();
+  _$jscoverage['/runtime.js'].branchData['199'] = [];
+  _$jscoverage['/runtime.js'].branchData['199'][1] = new BranchData();
+  _$jscoverage['/runtime.js'].branchData['265'] = [];
+  _$jscoverage['/runtime.js'].branchData['265'][1] = new BranchData();
+  _$jscoverage['/runtime.js'].branchData['265'][2] = new BranchData();
+  _$jscoverage['/runtime.js'].branchData['271'] = [];
+  _$jscoverage['/runtime.js'].branchData['271'][1] = new BranchData();
 }
-_$jscoverage['/runtime.js'].branchData['263'][2].init(48, 20, 'root && root.isScope');
-function visit66_263_2(result) {
-  _$jscoverage['/runtime.js'].branchData['263'][2].ranCondition(result);
+_$jscoverage['/runtime.js'].branchData['271'][1].init(318, 13, 'extendTplName');
+function visit74_271_1(result) {
+  _$jscoverage['/runtime.js'].branchData['271'][1].ranCondition(result);
   return result;
-}_$jscoverage['/runtime.js'].branchData['263'][1].init(46, 23, '!(root && root.isScope)');
-function visit65_263_1(result) {
-  _$jscoverage['/runtime.js'].branchData['263'][1].ranCondition(result);
+}_$jscoverage['/runtime.js'].branchData['265'][2].init(77, 20, 'root && root.isScope');
+function visit73_265_2(result) {
+  _$jscoverage['/runtime.js'].branchData['265'][2].ranCondition(result);
   return result;
-}_$jscoverage['/runtime.js'].branchData['198'][1].init(215, 19, 'config.macros || {}');
-function visit64_198_1(result) {
+}_$jscoverage['/runtime.js'].branchData['265'][1].init(75, 23, '!(root && root.isScope)');
+function visit72_265_1(result) {
+  _$jscoverage['/runtime.js'].branchData['265'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/runtime.js'].branchData['199'][1].init(258, 17, 'config.blocks || {}');
+function visit71_199_1(result) {
+  _$jscoverage['/runtime.js'].branchData['199'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/runtime.js'].branchData['198'][1].init(215, 17, 'config.macros || {}');
+function visit70_198_1(result) {
   _$jscoverage['/runtime.js'].branchData['198'][1].ranCondition(result);
   return result;
 }_$jscoverage['/runtime.js'].branchData['180'][1].init(70, 4, '!tpl');
-function visit63_180_1(result) {
+function visit69_180_1(result) {
   _$jscoverage['/runtime.js'].branchData['180'][1].ranCondition(result);
   return result;
 }_$jscoverage['/runtime.js'].branchData['139'][1].init(434, 12, '!onlyCommand');
-function visit62_139_1(result) {
+function visit68_139_1(result) {
   _$jscoverage['/runtime.js'].branchData['139'][1].ranCondition(result);
   return result;
 }_$jscoverage['/runtime.js'].branchData['135'][1].init(273, 8, 'ret.find');
-function visit61_135_1(result) {
+function visit67_135_1(result) {
   _$jscoverage['/runtime.js'].branchData['135'][1].ranCondition(result);
   return result;
 }_$jscoverage['/runtime.js'].branchData['129'][1].init(66, 30, 'options.hash || options.params');
-function visit60_129_1(result) {
+function visit66_129_1(result) {
   _$jscoverage['/runtime.js'].branchData['129'][1].ranCondition(result);
   return result;
 }_$jscoverage['/runtime.js'].branchData['120'][1].init(185, 8, 'ret.find');
-function visit59_120_1(result) {
+function visit65_120_1(result) {
   _$jscoverage['/runtime.js'].branchData['120'][1].ranCondition(result);
   return result;
 }_$jscoverage['/runtime.js'].branchData['108'][1].init(113, 14, 'escaped && exp');
-function visit58_108_1(result) {
+function visit64_108_1(result) {
   _$jscoverage['/runtime.js'].branchData['108'][1].ranCondition(result);
   return result;
 }_$jscoverage['/runtime.js'].branchData['105'][1].init(21, 17, 'exp === undefined');
-function visit57_105_1(result) {
+function visit63_105_1(result) {
   _$jscoverage['/runtime.js'].branchData['105'][1].ranCondition(result);
   return result;
 }_$jscoverage['/runtime.js'].branchData['86'][1].init(571, 28, 'typeof property === \'object\'');
-function visit56_86_1(result) {
+function visit62_86_1(result) {
   _$jscoverage['/runtime.js'].branchData['86'][1].ranCondition(result);
   return result;
 }_$jscoverage['/runtime.js'].branchData['83'][1].init(435, 19, 'S.isArray(property)');
-function visit55_83_1(result) {
+function visit61_83_1(result) {
   _$jscoverage['/runtime.js'].branchData['83'][1].ranCondition(result);
   return result;
 }_$jscoverage['/runtime.js'].branchData['76'][1].init(89, 18, 'property === false');
-function visit54_76_1(result) {
+function visit60_76_1(result) {
   _$jscoverage['/runtime.js'].branchData['76'][1].ranCondition(result);
   return result;
 }_$jscoverage['/runtime.js'].branchData['74'][1].init(25, 32, '!options.params && !options.hash');
-function visit53_74_1(result) {
+function visit59_74_1(result) {
   _$jscoverage['/runtime.js'].branchData['74'][1].ranCondition(result);
   return result;
 }_$jscoverage['/runtime.js'].branchData['73'][1].init(232, 8, '!command');
-function visit52_73_1(result) {
+function visit58_73_1(result) {
   _$jscoverage['/runtime.js'].branchData['73'][1].ranCondition(result);
   return result;
 }_$jscoverage['/runtime.js'].branchData['57'][1].init(165, 14, 'tmp2 === false');
-function visit51_57_1(result) {
+function visit57_57_1(result) {
   _$jscoverage['/runtime.js'].branchData['57'][1].ranCondition(result);
   return result;
 }_$jscoverage['/runtime.js'].branchData['44'][1].init(473, 11, 'onlyCommand');
-function visit50_44_1(result) {
+function visit56_44_1(result) {
   _$jscoverage['/runtime.js'].branchData['44'][1].ranCondition(result);
   return result;
 }_$jscoverage['/runtime.js'].branchData['34'][1].init(158, 8, 'command1');
-function visit49_34_1(result) {
+function visit55_34_1(result) {
   _$jscoverage['/runtime.js'].branchData['34'][1].ranCondition(result);
   return result;
 }_$jscoverage['/runtime.js'].branchData['22'][1].init(50, 4, '!cmd');
-function visit48_22_1(result) {
+function visit54_22_1(result) {
   _$jscoverage['/runtime.js'].branchData['22'][1].ranCondition(result);
   return result;
 }_$jscoverage['/runtime.js'].branchData['20'][1].init(122, 7, 'i < len');
-function visit47_20_1(result) {
+function visit53_20_1(result) {
   _$jscoverage['/runtime.js'].branchData['20'][1].ranCondition(result);
   return result;
 }_$jscoverage['/runtime.js'].lineData[6]++;
@@ -505,11 +523,11 @@ KISSY.add(function(S, require) {
     _$jscoverage['/runtime.js'].lineData[19]++;
     var len = parts.length;
     _$jscoverage['/runtime.js'].lineData[20]++;
-    for (var i = 0; visit47_20_1(i < len); i++) {
+    for (var i = 0; visit53_20_1(i < len); i++) {
       _$jscoverage['/runtime.js'].lineData[21]++;
       cmd = cmd[parts[i]];
       _$jscoverage['/runtime.js'].lineData[22]++;
-      if (visit48_22_1(!cmd)) {
+      if (visit54_22_1(!cmd)) {
         _$jscoverage['/runtime.js'].lineData[23]++;
         break;
       }
@@ -529,7 +547,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/runtime.js'].lineData[33]++;
     var command1 = findCommand(commands, name);
     _$jscoverage['/runtime.js'].lineData[34]++;
-    if (visit49_34_1(command1)) {
+    if (visit55_34_1(command1)) {
       _$jscoverage['/runtime.js'].lineData[35]++;
       try {
         _$jscoverage['/runtime.js'].lineData[36]++;
@@ -544,7 +562,7 @@ KISSY.add(function(S, require) {
   value: id0};
     } else {
       _$jscoverage['/runtime.js'].lineData[44]++;
-      if (visit50_44_1(onlyCommand)) {
+      if (visit56_44_1(onlyCommand)) {
         _$jscoverage['/runtime.js'].lineData[45]++;
         S.error('can not find command: ' + name + '" at line ' + line);
       }
@@ -565,7 +583,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/runtime.js'].lineData[56]++;
     var tmp2 = scope.resolve(name, depth);
     _$jscoverage['/runtime.js'].lineData[57]++;
-    if (visit51_57_1(tmp2 === false)) {
+    if (visit57_57_1(tmp2 === false)) {
       _$jscoverage['/runtime.js'].lineData[58]++;
       logFn('can not find property: "' + name + '" at line ' + line, 'warn');
     } else {
@@ -588,13 +606,13 @@ KISSY.add(function(S, require) {
   _$jscoverage['/runtime.js'].lineData[72]++;
   var command = findCommand(commands, name);
   _$jscoverage['/runtime.js'].lineData[73]++;
-  if (visit52_73_1(!command)) {
+  if (visit58_73_1(!command)) {
     _$jscoverage['/runtime.js'].lineData[74]++;
-    if (visit53_74_1(!options.params && !options.hash)) {
+    if (visit59_74_1(!options.params && !options.hash)) {
       _$jscoverage['/runtime.js'].lineData[75]++;
       var property = scope.resolve(name);
       _$jscoverage['/runtime.js'].lineData[76]++;
-      if (visit54_76_1(property === false)) {
+      if (visit60_76_1(property === false)) {
         _$jscoverage['/runtime.js'].lineData[77]++;
         logFn('can not find property: "' + name + '" at line ' + line);
         _$jscoverage['/runtime.js'].lineData[78]++;
@@ -606,12 +624,12 @@ KISSY.add(function(S, require) {
       _$jscoverage['/runtime.js'].lineData[82]++;
       command = commands['if'];
       _$jscoverage['/runtime.js'].lineData[83]++;
-      if (visit55_83_1(S.isArray(property))) {
+      if (visit61_83_1(S.isArray(property))) {
         _$jscoverage['/runtime.js'].lineData[84]++;
         command = commands.each;
       } else {
         _$jscoverage['/runtime.js'].lineData[86]++;
-        if (visit56_86_1(typeof property === 'object')) {
+        if (visit62_86_1(typeof property === 'object')) {
           _$jscoverage['/runtime.js'].lineData[87]++;
           command = commands['with'];
         }
@@ -641,12 +659,12 @@ KISSY.add(function(S, require) {
   'renderOutput': function(exp, escaped) {
   _$jscoverage['/runtime.js'].functionData[6]++;
   _$jscoverage['/runtime.js'].lineData[105]++;
-  if (visit57_105_1(exp === undefined)) {
+  if (visit63_105_1(exp === undefined)) {
     _$jscoverage['/runtime.js'].lineData[106]++;
     exp = '';
   }
   _$jscoverage['/runtime.js'].lineData[108]++;
-  return visit58_108_1(escaped && exp) ? escapeHtml(exp) : exp;
+  return visit64_108_1(escaped && exp) ? escapeHtml(exp) : exp;
 }, 
   'getProperty': function(engine, scope, name, depth, line) {
   _$jscoverage['/runtime.js'].functionData[7]++;
@@ -660,7 +678,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/runtime.js'].lineData[119]++;
   ret = runInlineCommand(engine, scope, options, name, line);
   _$jscoverage['/runtime.js'].lineData[120]++;
-  if (visit59_120_1(ret.find)) {
+  if (visit65_120_1(ret.find)) {
     _$jscoverage['/runtime.js'].lineData[121]++;
     id0 = ret.value;
   }
@@ -672,16 +690,16 @@ KISSY.add(function(S, require) {
   _$jscoverage['/runtime.js'].lineData[127]++;
   var id0, ret;
   _$jscoverage['/runtime.js'].lineData[129]++;
-  var onlyCommand = visit60_129_1(options.hash || options.params);
+  var onlyCommand = visit66_129_1(options.hash || options.params);
   _$jscoverage['/runtime.js'].lineData[133]++;
   ret = runInlineCommand(engine, scope, options, name, line, onlyCommand);
   _$jscoverage['/runtime.js'].lineData[135]++;
-  if (visit61_135_1(ret.find)) {
+  if (visit67_135_1(ret.find)) {
     _$jscoverage['/runtime.js'].lineData[136]++;
     id0 = ret.value;
   } else {
     _$jscoverage['/runtime.js'].lineData[139]++;
-    if (visit62_139_1(!onlyCommand)) {
+    if (visit68_139_1(!onlyCommand)) {
       _$jscoverage['/runtime.js'].lineData[140]++;
       id0 = getProperty(engine, scope, name, depth, line);
     }
@@ -696,7 +714,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/runtime.js'].lineData[179]++;
   var tpl = S.require(subTplName);
   _$jscoverage['/runtime.js'].lineData[180]++;
-  if (visit63_180_1(!tpl)) {
+  if (visit69_180_1(!tpl)) {
     _$jscoverage['/runtime.js'].lineData[181]++;
     S.error('template "' + subTplName + '" does not exist, ' + 'need to be required or used first!');
   }
@@ -717,56 +735,71 @@ KISSY.add(function(S, require) {
     _$jscoverage['/runtime.js'].lineData[197]++;
     config.utils = utils;
     _$jscoverage['/runtime.js'].lineData[198]++;
-    config.macros = visit64_198_1(config.macros || {});
+    config.macros = visit70_198_1(config.macros || {});
     _$jscoverage['/runtime.js'].lineData[199]++;
+    config.blocks = visit71_199_1(config.blocks || {});
+    _$jscoverage['/runtime.js'].lineData[200]++;
     this.config = config;
   }
-  _$jscoverage['/runtime.js'].lineData[202]++;
+  _$jscoverage['/runtime.js'].lineData[203]++;
   S.mix(XTemplateRuntime, {
   commands: commands, 
   utils: utils, 
   addCommand: function(commandName, fn) {
   _$jscoverage['/runtime.js'].functionData[12]++;
-  _$jscoverage['/runtime.js'].lineData[216]++;
+  _$jscoverage['/runtime.js'].lineData[217]++;
   commands[commandName] = fn;
 }, 
   removeCommand: function(commandName) {
   _$jscoverage['/runtime.js'].functionData[13]++;
-  _$jscoverage['/runtime.js'].lineData[227]++;
+  _$jscoverage['/runtime.js'].lineData[228]++;
   delete commands[commandName];
 }});
-  _$jscoverage['/runtime.js'].lineData[231]++;
+  _$jscoverage['/runtime.js'].lineData[232]++;
   XTemplateRuntime.prototype = {
   constructor: XTemplateRuntime, 
   invokeEngine: function(tpl, scope, config) {
   _$jscoverage['/runtime.js'].functionData[14]++;
-  _$jscoverage['/runtime.js'].lineData[236]++;
+  _$jscoverage['/runtime.js'].lineData[237]++;
   return new this.constructor(tpl, config).render(scope, true);
 }, 
   'removeCommand': function(commandName) {
   _$jscoverage['/runtime.js'].functionData[15]++;
-  _$jscoverage['/runtime.js'].lineData[244]++;
+  _$jscoverage['/runtime.js'].lineData[245]++;
   delete this.config.commands[commandName];
 }, 
   addCommand: function(commandName, fn) {
   _$jscoverage['/runtime.js'].functionData[16]++;
-  _$jscoverage['/runtime.js'].lineData[253]++;
+  _$jscoverage['/runtime.js'].lineData[254]++;
   this.config.commands[commandName] = fn;
 }, 
   render: function(data) {
   _$jscoverage['/runtime.js'].functionData[17]++;
-  _$jscoverage['/runtime.js'].lineData[262]++;
-  var root = data;
   _$jscoverage['/runtime.js'].lineData[263]++;
-  if (visit65_263_1(!(visit66_263_2(root && root.isScope)))) {
-    _$jscoverage['/runtime.js'].lineData[264]++;
+  var root = data;
+  _$jscoverage['/runtime.js'].lineData[264]++;
+  var self = this;
+  _$jscoverage['/runtime.js'].lineData[265]++;
+  if (visit72_265_1(!(visit73_265_2(root && root.isScope)))) {
+    _$jscoverage['/runtime.js'].lineData[266]++;
     root = new Scope(data);
   }
-  _$jscoverage['/runtime.js'].lineData[266]++;
-  return this.tpl(root, S);
+  _$jscoverage['/runtime.js'].lineData[268]++;
+  var html = self.tpl(root, S);
+  _$jscoverage['/runtime.js'].lineData[269]++;
+  var extendTplName = self._extendTplName;
+  _$jscoverage['/runtime.js'].lineData[271]++;
+  if (visit74_271_1(extendTplName)) {
+    _$jscoverage['/runtime.js'].lineData[272]++;
+    return commands.include.call(self, root, {
+  params: [extendTplName]});
+  } else {
+    _$jscoverage['/runtime.js'].lineData[276]++;
+    return html;
+  }
 }};
-  _$jscoverage['/runtime.js'].lineData[270]++;
+  _$jscoverage['/runtime.js'].lineData[281]++;
   XTemplateRuntime.Scope = Scope;
-  _$jscoverage['/runtime.js'].lineData[272]++;
+  _$jscoverage['/runtime.js'].lineData[283]++;
   return XTemplateRuntime;
 });

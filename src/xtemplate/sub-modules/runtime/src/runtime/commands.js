@@ -106,11 +106,8 @@ KISSY.add(function (S, require) {
 
         include: function (scope, config) {
             var params = config.params;
-
-            if (!params || params.length !== 1) {
-                S.error('include must has one param');
-                return '';
-            }
+            var self = this;
+            var selfConfig = self.config;
 
             // sub template scope
             if (config.hash) {
@@ -119,7 +116,7 @@ KISSY.add(function (S, require) {
                 scope = newScope;
             }
 
-            var myName = this.config.name;
+            var myName = selfConfig.name;
             var subTplName = params[0];
 
             if (subTplName.charAt(0) === '.') {
@@ -130,32 +127,80 @@ KISSY.add(function (S, require) {
                 subTplName = getSubNameFromParentName(myName, subTplName);
             }
 
-            var tpl = this.config.loader.call(this, subTplName);
-
-            config = S.merge(this.config);
+            var tpl = selfConfig.loader.call(this, subTplName);
+            var subConfig = S.merge(selfConfig);
             // template file name
-            config.name = subTplName;
-            // pass commands to sub template
-            config.commands = this.config.commands;
-            // share macros with parent template and sub template
-            config.macros = this.config.macros;
-            return this.invokeEngine(tpl, scope, config);
+            subConfig.name = subTplName;
+            return self.invokeEngine(tpl, scope, subConfig);
+        },
+        parse: function (scope, config) {
+            // abandon scope
+            return commands.include.call(this, new Scope(), config);
+        },
+
+        extend: function (scope, config) {
+            this._extendTplName = config.params[0];
+        },
+
+        block: function (scope, config) {
+            var self = this;
+            var params = config.params;
+            var blockName = params[0];
+            var type;
+            if (params.length === 2) {
+                type = params[0];
+                blockName = params[1];
+            }
+            var blocks = self.config.blocks;
+            var head = blocks[blockName],
+                cursor;
+            var current = {
+                fn: config.fn,
+                type: type
+            };
+            if (!head) {
+                blocks[blockName] = current;
+            } else if (head.type) {
+                if (head.type === 'append') {
+                    current.next = head;
+                    blocks[blockName] = current;
+                } else if (head.type === 'prepend') {
+                    var prev;
+                    cursor = head;
+                    while (cursor && cursor.type === 'prepend') {
+                        prev = cursor;
+                        cursor = cursor.next;
+                    }
+                    current.next = cursor;
+                    prev.next = current;
+                }
+            }
+            var ret = '';
+            if (!self._extendTplName) {
+                cursor = blocks[blockName];
+                while (cursor) {
+                    if (cursor.fn) {
+                        ret += cursor.fn.call(self, scope);
+                    }
+                    cursor = cursor.next;
+                }
+
+            }
+            return ret;
         },
 
         'macro': function (scope, config) {
             var params = config.params;
             var macroName = params[0];
             var params1 = params.slice(1);
-            var macros = this.config.macros;
+            var self = this;
+            var macros = self.config.macros;
             // definition
             if (config.fn) {
-                // parent template override child template
-                if (!macros[macroName]) {
-                    macros[macroName] = {
-                        paramNames: params1,
-                        fn: config.fn
-                    };
-                }
+                macros[macroName] = {
+                    paramNames: params1,
+                    fn: config.fn
+                };
             } else {
                 var paramValues = {};
                 var macro = macros[macroName];
@@ -164,19 +209,13 @@ KISSY.add(function (S, require) {
                         paramValues[p] = params1[i];
                     });
                     var newScope = new Scope(paramValues);
-                    // call caller Scope for extend layout
-                    newScope.setParent(scope);
-                    return macro.fn.call(this, newScope);
-                }else{
+                    // no caller Scope
+                    return macro.fn.call(self, newScope);
+                } else {
                     S.error('can not find macro:' + name);
                 }
             }
             return '';
-        },
-
-        parse: function (scope, config) {
-            // abandon scope
-            return commands.include.call(this, new Scope(), config);
         }
     };
 

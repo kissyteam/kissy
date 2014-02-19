@@ -1,7 +1,8 @@
-{{#macro 'head'}}
+{{extend './layout'}}
+{{#block 'head'}}
     <title>Index of {{cur}}</title>
-{{/macro}}
-{{#macro 'body'}}
+{{/block}}
+{{#block 'body'}}
     <h1>Index of {{cur}}</h1>
     <ul>
         {{#if cur!=='/'}}
@@ -11,5 +12,4 @@
         <li><a href="{{.}}">{{.}}</a></li>
         {{/each}}
     </ul>
-{{/macro}}
-{{{include './layout'}}}
+{{/block}}

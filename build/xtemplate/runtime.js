@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Feb 18 12:51
+build time: Feb 19 15:00
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -208,16 +208,14 @@ KISSY.add("xtemplate/runtime/commands", ["./scope"], function(S, require) {
     return""
   }, include:function(scope, config) {
     var params = config.params;
-    if(!params || params.length !== 1) {
-      S.error("include must has one param");
-      return""
-    }
+    var self = this;
+    var selfConfig = self.config;
     if(config.hash) {
       var newScope = new Scope(config.hash);
       newScope.setParent(scope);
       scope = newScope
     }
-    var myName = this.config.name;
+    var myName = selfConfig.name;
     var subTplName = params[0];
     if(subTplName.charAt(0) === ".") {
       if(myName === "unspecified") {
@@ -226,21 +224,66 @@ KISSY.add("xtemplate/runtime/commands", ["./scope"], function(S, require) {
       }
       subTplName = getSubNameFromParentName(myName, subTplName)
     }
-    var tpl = this.config.loader.call(this, subTplName);
-    config = S.merge(this.config);
-    config.name = subTplName;
-    config.commands = this.config.commands;
-    config.macros = this.config.macros;
-    return this.invokeEngine(tpl, scope, config)
+    var tpl = selfConfig.loader.call(this, subTplName);
+    var subConfig = S.merge(selfConfig);
+    subConfig.name = subTplName;
+    return self.invokeEngine(tpl, scope, subConfig)
+  }, parse:function(scope, config) {
+    return commands.include.call(this, new Scope, config)
+  }, extend:function(scope, config) {
+    this._extendTplName = config.params[0]
+  }, block:function(scope, config) {
+    var self = this;
+    var params = config.params;
+    var blockName = params[0];
+    var type;
+    if(params.length === 2) {
+      type = params[0];
+      blockName = params[1]
+    }
+    var blocks = self.config.blocks;
+    var head = blocks[blockName], cursor;
+    var current = {fn:config.fn, type:type};
+    if(!head) {
+      blocks[blockName] = current
+    }else {
+      if(head.type) {
+        if(head.type === "append") {
+          current.next = head;
+          blocks[blockName] = current
+        }else {
+          if(head.type === "prepend") {
+            var prev;
+            cursor = head;
+            while(cursor && cursor.type === "prepend") {
+              prev = cursor;
+              cursor = cursor.next
+            }
+            current.next = cursor;
+            prev.next = current
+          }
+        }
+      }
+    }
+    var ret = "";
+    if(!self._extendTplName) {
+      cursor = blocks[blockName];
+      while(cursor) {
+        if(cursor.fn) {
+          ret += cursor.fn.call(self, scope)
+        }
+        cursor = cursor.next
+      }
+    }
+    return ret
   }, macro:function(scope, config) {
     var params = config.params;
     var macroName = params[0];
     var params1 = params.slice(1);
-    var macros = this.config.macros;
+    var self = this;
+    var macros = self.config.macros;
     if(config.fn) {
-      if(!macros[macroName]) {
-        macros[macroName] = {paramNames:params1, fn:config.fn}
-      }
+      macros[macroName] = {paramNames:params1, fn:config.fn}
     }else {
       var paramValues = {};
       var macro = macros[macroName];
@@ -249,15 +292,12 @@ KISSY.add("xtemplate/runtime/commands", ["./scope"], function(S, require) {
           paramValues[p] = params1[i]
         });
         var newScope = new Scope(paramValues);
-        newScope.setParent(scope);
-        return macro.fn.call(this, newScope)
+        return macro.fn.call(self, newScope)
       }else {
         S.error("can not find macro:" + name)
       }
     }
     return""
-  }, parse:function(scope, config) {
-    return commands.include.call(this, new Scope, config)
   }};
   return commands
 });
@@ -387,6 +427,7 @@ KISSY.add("xtemplate/runtime", ["./runtime/commands", "./runtime/scope"], functi
     config.commands = S.merge(config.commands, commands);
     config.utils = utils;
     config.macros = config.macros || {};
+    config.blocks = config.blocks || {};
     this.config = config
   }
   S.mix(XTemplateRuntime, {commands:commands, utils:utils, addCommand:function(commandName, fn) {
@@ -402,10 +443,17 @@ KISSY.add("xtemplate/runtime", ["./runtime/commands", "./runtime/scope"], functi
     this.config.commands[commandName] = fn
   }, render:function(data) {
     var root = data;
+    var self = this;
     if(!(root && root.isScope)) {
       root = new Scope(data)
     }
-    return this.tpl(root, S)
+    var html = self.tpl(root, S);
+    var extendTplName = self._extendTplName;
+    if(extendTplName) {
+      return commands.include.call(self, root, {params:[extendTplName]})
+    }else {
+      return html
+    }
   }};
   XTemplateRuntime.Scope = Scope;
   return XTemplateRuntime
