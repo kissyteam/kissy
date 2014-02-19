@@ -1,68 +1,68 @@
 {
-  "name": "kissy",
-  "version": "1.5.0dev",
-  "description": "KISSY",
-  "author": "yiminghe <yiminghe@gmail.com>",
-  "homepage": "http://docs.kissyui.com",
-  "bugs": {
-    "url": "https://github.com/kissyteam/kissy/issues"
-  },
-  "contributors": [
-    "Jayli <lijing00333@163.com>",
-    "dxq613 <dxq613@gmail.com>",
-    "fool2fish <fool2fish@gmail.com>",
-    "kingfo <oicuicu@gmail.com>",
-    "lifesinger <lifesinger@gmail.com>",
-    "lizzie <shengyan1985@gmail.com>",
-    "satans17 <satans17@gmail.com>",
-    "yyfrankyy <yyfrankyy@gmail.com>"
-  ],
-  "engines": {
-    "node": "~0.10"
-  },
-  "bin": {
-    "kissy": "./bin/kissy.js",
-    "kissy-xtemplate": "./bin/kissy-xtemplate.js",
-    "kissy-kison": "./bin/kissy-kison.js"
-  },
-  "directories": {
-    "lib": "./build/"
-  },
-  "main": "./lib/seed.js",
-  "scripts": {
-    "test": "node ./tools/test/jasmine-node",
-    "start": "node ./tools/server/start",
-    "stop": "node ./tools/server/stop"
-  },
-  "devDependencies": {
-    "shelljs": "0.1.x",
-    "underscore": "1.4.x",
-    "cli": "0.4.x",
-    "minimatch": "0.x.x",
-    "console-browserify": "0.1.x",
-    "express": "3.3.4",
-    "request": "~2.27.0"
-  },
-  "dependencies": {
-    "chokidar": "~0.7.0",
-    "js-beautify": "~1.4.0",
-    "fs-extra": "~0.8.0",
-    "walk": "~2.2.1",
-    "jscs": "~1.0.15",
-    "recluster": "~0.3.6",
-    "debug": "~0.7.4"
-  },
-  "notes": [
-    "express 3.3.8-3.4.0 cors bug"
-  ],
-  "licenses": [
-    {
-      "type": "MIT",
-      "url": "https://github.com/kissyteam/kissy/blob/master/LICENSE.md"
+    "name": "kissy",
+    "version": "1.5.0dev",
+    "description": "KISSY",
+    "author": "yiminghe <yiminghe@gmail.com>",
+    "homepage": "http://docs.kissyui.com",
+    "bugs": {
+        "url": "https://github.com/kissyteam/kissy/issues"
+    },
+    "contributors": [
+        "Jayli <lijing00333@163.com>",
+        "dxq613 <dxq613@gmail.com>",
+        "fool2fish <fool2fish@gmail.com>",
+        "kingfo <oicuicu@gmail.com>",
+        "lifesinger <lifesinger@gmail.com>",
+        "lizzie <shengyan1985@gmail.com>",
+        "satans17 <satans17@gmail.com>",
+        "yyfrankyy <yyfrankyy@gmail.com>"
+    ],
+    "engines": {
+        "node": "~0.10"
+    },
+    "bin": {
+        "kissy": "./bin/kissy.js",
+        "kissy-xtemplate": "./bin/kissy-xtemplate.js",
+        "kissy-kison": "./bin/kissy-kison.js"
+    },
+    "directories": {
+        "lib": "./build/"
+    },
+    "main": "./lib/seed.js",
+    "scripts": {
+        "test": "node ./tools/test/jasmine-node",
+        "start": "node ./tools/server/start",
+        "stop": "node ./tools/server/stop"
+    },
+    "devDependencies": {
+        "shelljs": "0.1.x",
+        "underscore": "1.4.x",
+        "cli": "0.4.x",
+        "minimatch": "0.x.x",
+        "console-browserify": "0.1.x",
+        "express": "3.3.4",
+        "request": "~2.27.0",
+        "jscs": "~1.0.15",
+        "recluster": "~0.3.6",
+        "debug": "~0.7.4"
+    },
+    "dependencies": {
+        "chokidar": "~0.7.0",
+        "js-beautify": "~1.4.0",
+        "fs-extra": "~0.8.0",
+        "walk": "~2.2.1"
+    },
+    "notes": [
+        "express 3.3.8-3.4.0 cors bug"
+    ],
+    "licenses": [
+        {
+            "type": "MIT",
+            "url": "https://github.com/kissyteam/kissy/blob/master/LICENSE.md"
+        }
+    ],
+    "repository": {
+        "type": "git",
+        "url": "http://github.com/kissyteam/kissy.git"
     }
-  ],
-  "repository": {
-    "type": "git",
-    "url": "http://github.com/kissyteam/kissy.git"
-  }
 }
