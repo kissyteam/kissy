@@ -55,7 +55,9 @@
                     combinedUrl.push(path);
                     if (combined.length === 1) {
                         prefix = packagePath + comboPrefix;
-                        suffix = '?t=' + encodeURIComponent(currentPackage.getTag()) + '.css';
+                        if (currentPackage.getTag()) {
+                            suffix = '?t=' + encodeURIComponent(currentPackage.getTag()) + '.css';
+                        }
                     } else {
                         if ((combinedUrl.length > maxFileNum) ||
                             (prefix.length + combinedUrl.join(comboSep).length +
