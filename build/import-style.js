@@ -1,7 +1,7 @@
 /*
-Copyright 2013, KISSY v1.41
+Copyright 2014, KISSY v1.41
 MIT Licensed
-build time: Dec 4 22:16
+build time: Feb 19 17:22
 */
 /**
  * use document.write to load external css files in block loading ways.
@@ -60,7 +60,9 @@ build time: Dec 4 22:16
                     combinedUrl.push(path);
                     if (combined.length === 1) {
                         prefix = packagePath + comboPrefix;
-                        suffix = '?t=' + encodeURIComponent(currentPackage.getTag()) + '.css';
+                        if (currentPackage.getTag()) {
+                            suffix = '?t=' + encodeURIComponent(currentPackage.getTag()) + '.css';
+                        }
                     } else {
                         if ((combinedUrl.length > maxFileNum) ||
                             (prefix.length + combinedUrl.join(comboSep).length +

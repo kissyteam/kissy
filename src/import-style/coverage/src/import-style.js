@@ -261,41 +261,42 @@ if (! _$jscoverage['/import-style.js']) {
   _$jscoverage['/import-style.js'].lineData[56] = 0;
   _$jscoverage['/import-style.js'].lineData[57] = 0;
   _$jscoverage['/import-style.js'].lineData[58] = 0;
-  _$jscoverage['/import-style.js'].lineData[60] = 0;
-  _$jscoverage['/import-style.js'].lineData[64] = 0;
-  _$jscoverage['/import-style.js'].lineData[65] = 0;
+  _$jscoverage['/import-style.js'].lineData[59] = 0;
+  _$jscoverage['/import-style.js'].lineData[62] = 0;
   _$jscoverage['/import-style.js'].lineData[66] = 0;
-  _$jscoverage['/import-style.js'].lineData[69] = 0;
-  _$jscoverage['/import-style.js'].lineData[70] = 0;
+  _$jscoverage['/import-style.js'].lineData[67] = 0;
+  _$jscoverage['/import-style.js'].lineData[68] = 0;
   _$jscoverage['/import-style.js'].lineData[71] = 0;
-  _$jscoverage['/import-style.js'].lineData[75] = 0;
-  _$jscoverage['/import-style.js'].lineData[76] = 0;
-  _$jscoverage['/import-style.js'].lineData[81] = 0;
-  _$jscoverage['/import-style.js'].lineData[82] = 0;
-  _$jscoverage['/import-style.js'].lineData[88] = 0;
-  _$jscoverage['/import-style.js'].lineData[89] = 0;
+  _$jscoverage['/import-style.js'].lineData[72] = 0;
+  _$jscoverage['/import-style.js'].lineData[73] = 0;
+  _$jscoverage['/import-style.js'].lineData[77] = 0;
+  _$jscoverage['/import-style.js'].lineData[78] = 0;
+  _$jscoverage['/import-style.js'].lineData[83] = 0;
+  _$jscoverage['/import-style.js'].lineData[84] = 0;
   _$jscoverage['/import-style.js'].lineData[90] = 0;
   _$jscoverage['/import-style.js'].lineData[91] = 0;
   _$jscoverage['/import-style.js'].lineData[92] = 0;
+  _$jscoverage['/import-style.js'].lineData[93] = 0;
   _$jscoverage['/import-style.js'].lineData[94] = 0;
-  _$jscoverage['/import-style.js'].lineData[95] = 0;
+  _$jscoverage['/import-style.js'].lineData[96] = 0;
   _$jscoverage['/import-style.js'].lineData[97] = 0;
-  _$jscoverage['/import-style.js'].lineData[98] = 0;
   _$jscoverage['/import-style.js'].lineData[99] = 0;
   _$jscoverage['/import-style.js'].lineData[100] = 0;
   _$jscoverage['/import-style.js'].lineData[101] = 0;
   _$jscoverage['/import-style.js'].lineData[102] = 0;
+  _$jscoverage['/import-style.js'].lineData[103] = 0;
   _$jscoverage['/import-style.js'].lineData[104] = 0;
   _$jscoverage['/import-style.js'].lineData[106] = 0;
-  _$jscoverage['/import-style.js'].lineData[107] = 0;
   _$jscoverage['/import-style.js'].lineData[108] = 0;
   _$jscoverage['/import-style.js'].lineData[109] = 0;
+  _$jscoverage['/import-style.js'].lineData[110] = 0;
   _$jscoverage['/import-style.js'].lineData[111] = 0;
-  _$jscoverage['/import-style.js'].lineData[112] = 0;
+  _$jscoverage['/import-style.js'].lineData[113] = 0;
   _$jscoverage['/import-style.js'].lineData[114] = 0;
-  _$jscoverage['/import-style.js'].lineData[115] = 0;
   _$jscoverage['/import-style.js'].lineData[116] = 0;
-  _$jscoverage['/import-style.js'].lineData[120] = 0;
+  _$jscoverage['/import-style.js'].lineData[117] = 0;
+  _$jscoverage['/import-style.js'].lineData[118] = 0;
+  _$jscoverage['/import-style.js'].lineData[122] = 0;
 }
 if (! _$jscoverage['/import-style.js'].functionData) {
   _$jscoverage['/import-style.js'].functionData = [];
@@ -318,76 +319,82 @@ if (! _$jscoverage['/import-style.js'].branchData) {
   _$jscoverage['/import-style.js'].branchData['49'][1] = new BranchData();
   _$jscoverage['/import-style.js'].branchData['56'] = [];
   _$jscoverage['/import-style.js'].branchData['56'][1] = new BranchData();
-  _$jscoverage['/import-style.js'].branchData['60'] = [];
-  _$jscoverage['/import-style.js'].branchData['60'][1] = new BranchData();
-  _$jscoverage['/import-style.js'].branchData['60'][2] = new BranchData();
-  _$jscoverage['/import-style.js'].branchData['61'] = [];
-  _$jscoverage['/import-style.js'].branchData['61'][1] = new BranchData();
-  _$jscoverage['/import-style.js'].branchData['61'][2] = new BranchData();
+  _$jscoverage['/import-style.js'].branchData['58'] = [];
+  _$jscoverage['/import-style.js'].branchData['58'][1] = new BranchData();
+  _$jscoverage['/import-style.js'].branchData['62'] = [];
+  _$jscoverage['/import-style.js'].branchData['62'][1] = new BranchData();
+  _$jscoverage['/import-style.js'].branchData['62'][2] = new BranchData();
   _$jscoverage['/import-style.js'].branchData['63'] = [];
   _$jscoverage['/import-style.js'].branchData['63'][1] = new BranchData();
-  _$jscoverage['/import-style.js'].branchData['75'] = [];
-  _$jscoverage['/import-style.js'].branchData['75'][1] = new BranchData();
-  _$jscoverage['/import-style.js'].branchData['90'] = [];
-  _$jscoverage['/import-style.js'].branchData['90'][1] = new BranchData();
-  _$jscoverage['/import-style.js'].branchData['94'] = [];
-  _$jscoverage['/import-style.js'].branchData['94'][1] = new BranchData();
-  _$jscoverage['/import-style.js'].branchData['98'] = [];
-  _$jscoverage['/import-style.js'].branchData['98'][1] = new BranchData();
-  _$jscoverage['/import-style.js'].branchData['99'] = [];
-  _$jscoverage['/import-style.js'].branchData['99'][1] = new BranchData();
-  _$jscoverage['/import-style.js'].branchData['107'] = [];
-  _$jscoverage['/import-style.js'].branchData['107'][1] = new BranchData();
-  _$jscoverage['/import-style.js'].branchData['114'] = [];
-  _$jscoverage['/import-style.js'].branchData['114'][1] = new BranchData();
+  _$jscoverage['/import-style.js'].branchData['63'][2] = new BranchData();
+  _$jscoverage['/import-style.js'].branchData['65'] = [];
+  _$jscoverage['/import-style.js'].branchData['65'][1] = new BranchData();
+  _$jscoverage['/import-style.js'].branchData['77'] = [];
+  _$jscoverage['/import-style.js'].branchData['77'][1] = new BranchData();
+  _$jscoverage['/import-style.js'].branchData['92'] = [];
+  _$jscoverage['/import-style.js'].branchData['92'][1] = new BranchData();
+  _$jscoverage['/import-style.js'].branchData['96'] = [];
+  _$jscoverage['/import-style.js'].branchData['96'][1] = new BranchData();
+  _$jscoverage['/import-style.js'].branchData['100'] = [];
+  _$jscoverage['/import-style.js'].branchData['100'][1] = new BranchData();
+  _$jscoverage['/import-style.js'].branchData['101'] = [];
+  _$jscoverage['/import-style.js'].branchData['101'][1] = new BranchData();
+  _$jscoverage['/import-style.js'].branchData['109'] = [];
+  _$jscoverage['/import-style.js'].branchData['109'][1] = new BranchData();
+  _$jscoverage['/import-style.js'].branchData['116'] = [];
+  _$jscoverage['/import-style.js'].branchData['116'][1] = new BranchData();
 }
-_$jscoverage['/import-style.js'].branchData['114'][1].init(764, 7, 'isDebug');
-function visit17_114_1(result) {
-  _$jscoverage['/import-style.js'].branchData['114'][1].ranCondition(result);
+_$jscoverage['/import-style.js'].branchData['116'][1].init(764, 7, 'isDebug');
+function visit18_116_1(result) {
+  _$jscoverage['/import-style.js'].branchData['116'][1].ranCondition(result);
   return result;
-}_$jscoverage['/import-style.js'].branchData['107'][1].init(539, 7, 'isDebug');
-function visit16_107_1(result) {
-  _$jscoverage['/import-style.js'].branchData['107'][1].ranCondition(result);
+}_$jscoverage['/import-style.js'].branchData['109'][1].init(539, 7, 'isDebug');
+function visit17_109_1(result) {
+  _$jscoverage['/import-style.js'].branchData['109'][1].ranCondition(result);
   return result;
-}_$jscoverage['/import-style.js'].branchData['99'][1].init(17, 15, '!cssCache[name]');
-function visit15_99_1(result) {
-  _$jscoverage['/import-style.js'].branchData['99'][1].ranCondition(result);
+}_$jscoverage['/import-style.js'].branchData['101'][1].init(17, 15, '!cssCache[name]');
+function visit16_101_1(result) {
+  _$jscoverage['/import-style.js'].branchData['101'][1].ranCondition(result);
   return result;
-}_$jscoverage['/import-style.js'].branchData['98'][1].init(272, 23, 'mod.getType() === \'css\'');
-function visit14_98_1(result) {
-  _$jscoverage['/import-style.js'].branchData['98'][1].ranCondition(result);
+}_$jscoverage['/import-style.js'].branchData['100'][1].init(272, 23, 'mod.getType() === \'css\'');
+function visit15_100_1(result) {
+  _$jscoverage['/import-style.js'].branchData['100'][1].ranCondition(result);
   return result;
-}_$jscoverage['/import-style.js'].branchData['94'][1].init(182, 15, 'processed[name]');
-function visit13_94_1(result) {
-  _$jscoverage['/import-style.js'].branchData['94'][1].ranCondition(result);
+}_$jscoverage['/import-style.js'].branchData['96'][1].init(182, 15, 'processed[name]');
+function visit14_96_1(result) {
+  _$jscoverage['/import-style.js'].branchData['96'][1].ranCondition(result);
   return result;
-}_$jscoverage['/import-style.js'].branchData['90'][1].init(47, 27, 'isDebug && stackCache[name]');
-function visit12_90_1(result) {
-  _$jscoverage['/import-style.js'].branchData['90'][1].ranCondition(result);
+}_$jscoverage['/import-style.js'].branchData['92'][1].init(47, 27, 'isDebug && stackCache[name]');
+function visit13_92_1(result) {
+  _$jscoverage['/import-style.js'].branchData['92'][1].ranCondition(result);
   return result;
-}_$jscoverage['/import-style.js'].branchData['75'][1].init(2151, 18, 'combinedUrl.length');
-function visit11_75_1(result) {
-  _$jscoverage['/import-style.js'].branchData['75'][1].ranCondition(result);
+}_$jscoverage['/import-style.js'].branchData['77'][1].init(2236, 18, 'combinedUrl.length');
+function visit12_77_1(result) {
+  _$jscoverage['/import-style.js'].branchData['77'][1].ranCondition(result);
   return result;
-}_$jscoverage['/import-style.js'].branchData['63'][1].init(144, 43, 'combined[0].getPackage() !== currentPackage');
-function visit10_63_1(result) {
+}_$jscoverage['/import-style.js'].branchData['65'][1].init(144, 43, 'combined[0].getPackage() !== currentPackage');
+function visit11_65_1(result) {
+  _$jscoverage['/import-style.js'].branchData['65'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/import-style.js'].branchData['63'][2].init(97, 112, 'prefix.length + combinedUrl.join(comboSep).length + suffix.length > maxUrlLength');
+function visit10_63_2(result) {
+  _$jscoverage['/import-style.js'].branchData['63'][2].ranCondition(result);
+  return result;
+}_$jscoverage['/import-style.js'].branchData['63'][1].init(64, 188, '(prefix.length + combinedUrl.join(comboSep).length + suffix.length > maxUrlLength) || combined[0].getPackage() !== currentPackage');
+function visit9_63_1(result) {
   _$jscoverage['/import-style.js'].branchData['63'][1].ranCondition(result);
   return result;
-}_$jscoverage['/import-style.js'].branchData['61'][2].init(97, 112, 'prefix.length + combinedUrl.join(comboSep).length + suffix.length > maxUrlLength');
-function visit9_61_2(result) {
-  _$jscoverage['/import-style.js'].branchData['61'][2].ranCondition(result);
+}_$jscoverage['/import-style.js'].branchData['62'][2].init(30, 31, 'combinedUrl.length > maxFileNum');
+function visit8_62_2(result) {
+  _$jscoverage['/import-style.js'].branchData['62'][2].ranCondition(result);
   return result;
-}_$jscoverage['/import-style.js'].branchData['61'][1].init(64, 188, '(prefix.length + combinedUrl.join(comboSep).length + suffix.length > maxUrlLength) || combined[0].getPackage() !== currentPackage');
-function visit8_61_1(result) {
-  _$jscoverage['/import-style.js'].branchData['61'][1].ranCondition(result);
+}_$jscoverage['/import-style.js'].branchData['62'][1].init(30, 253, '(combinedUrl.length > maxFileNum) || (prefix.length + combinedUrl.join(comboSep).length + suffix.length > maxUrlLength) || combined[0].getPackage() !== currentPackage');
+function visit7_62_1(result) {
+  _$jscoverage['/import-style.js'].branchData['62'][1].ranCondition(result);
   return result;
-}_$jscoverage['/import-style.js'].branchData['60'][2].init(30, 31, 'combinedUrl.length > maxFileNum');
-function visit7_60_2(result) {
-  _$jscoverage['/import-style.js'].branchData['60'][2].ranCondition(result);
-  return result;
-}_$jscoverage['/import-style.js'].branchData['60'][1].init(30, 253, '(combinedUrl.length > maxFileNum) || (prefix.length + combinedUrl.join(comboSep).length + suffix.length > maxUrlLength) || combined[0].getPackage() !== currentPackage');
-function visit6_60_1(result) {
-  _$jscoverage['/import-style.js'].branchData['60'][1].ranCondition(result);
+}_$jscoverage['/import-style.js'].branchData['58'][1].init(89, 23, 'currentPackage.getTag()');
+function visit6_58_1(result) {
+  _$jscoverage['/import-style.js'].branchData['58'][1].ranCondition(result);
   return result;
 }_$jscoverage['/import-style.js'].branchData['56'][1].init(743, 21, 'combined.length === 1');
 function visit5_56_1(result) {
@@ -477,96 +484,99 @@ function visit1_33_1(result) {
             _$jscoverage['/import-style.js'].lineData[57]++;
             prefix = packagePath + comboPrefix;
             _$jscoverage['/import-style.js'].lineData[58]++;
-            suffix = '?t=' + encodeURIComponent(currentPackage.getTag()) + '.css';
+            if (visit6_58_1(currentPackage.getTag())) {
+              _$jscoverage['/import-style.js'].lineData[59]++;
+              suffix = '?t=' + encodeURIComponent(currentPackage.getTag()) + '.css';
+            }
           } else {
-            _$jscoverage['/import-style.js'].lineData[60]++;
-            if (visit6_60_1((visit7_60_2(combinedUrl.length > maxFileNum)) || visit8_61_1((visit9_61_2(prefix.length + combinedUrl.join(comboSep).length + suffix.length > maxUrlLength)) || visit10_63_1(combined[0].getPackage() !== currentPackage)))) {
-              _$jscoverage['/import-style.js'].lineData[64]++;
-              combined.pop();
-              _$jscoverage['/import-style.js'].lineData[65]++;
-              combinedUrl.pop();
+            _$jscoverage['/import-style.js'].lineData[62]++;
+            if (visit7_62_1((visit8_62_2(combinedUrl.length > maxFileNum)) || visit9_63_1((visit10_63_2(prefix.length + combinedUrl.join(comboSep).length + suffix.length > maxUrlLength)) || visit11_65_1(combined[0].getPackage() !== currentPackage)))) {
               _$jscoverage['/import-style.js'].lineData[66]++;
+              combined.pop();
+              _$jscoverage['/import-style.js'].lineData[67]++;
+              combinedUrl.pop();
+              _$jscoverage['/import-style.js'].lineData[68]++;
               doc.writeln('<link href="' + (prefix + combinedUrl.join(comboSep) + suffix) + '"  rel="stylesheet"/>');
-              _$jscoverage['/import-style.js'].lineData[69]++;
-              combined = [];
-              _$jscoverage['/import-style.js'].lineData[70]++;
-              combinedUrl = [];
               _$jscoverage['/import-style.js'].lineData[71]++;
+              combined = [];
+              _$jscoverage['/import-style.js'].lineData[72]++;
+              combinedUrl = [];
+              _$jscoverage['/import-style.js'].lineData[73]++;
               i--;
             }
           }
         }
-        _$jscoverage['/import-style.js'].lineData[75]++;
-        if (visit11_75_1(combinedUrl.length)) {
-          _$jscoverage['/import-style.js'].lineData[76]++;
+        _$jscoverage['/import-style.js'].lineData[77]++;
+        if (visit12_77_1(combinedUrl.length)) {
+          _$jscoverage['/import-style.js'].lineData[78]++;
           doc.writeln('<link href="' + (prefix + combinedUrl.join(comboSep) + suffix) + '"  rel="stylesheet"/>');
         }
       } else {
-        _$jscoverage['/import-style.js'].lineData[81]++;
+        _$jscoverage['/import-style.js'].lineData[83]++;
         S.each(cssList, function(css) {
   _$jscoverage['/import-style.js'].functionData[3]++;
-  _$jscoverage['/import-style.js'].lineData[82]++;
+  _$jscoverage['/import-style.js'].lineData[84]++;
   doc.writeln('<link href="' + css.getFullPath() + '"  rel="stylesheet"/>');
 });
       }
     }
   }
-  _$jscoverage['/import-style.js'].lineData[88]++;
+  _$jscoverage['/import-style.js'].lineData[90]++;
   function collectCss(mod, cssList, stack, cssCache, stackCache, processed) {
     _$jscoverage['/import-style.js'].functionData[4]++;
-    _$jscoverage['/import-style.js'].lineData[89]++;
+    _$jscoverage['/import-style.js'].lineData[91]++;
     var name = mod.getName();
-    _$jscoverage['/import-style.js'].lineData[90]++;
-    if (visit12_90_1(isDebug && stackCache[name])) {
-      _$jscoverage['/import-style.js'].lineData[91]++;
+    _$jscoverage['/import-style.js'].lineData[92]++;
+    if (visit13_92_1(isDebug && stackCache[name])) {
+      _$jscoverage['/import-style.js'].lineData[93]++;
       S.error('circular dependencies found: ' + stack);
-      _$jscoverage['/import-style.js'].lineData[92]++;
+      _$jscoverage['/import-style.js'].lineData[94]++;
       return;
     }
-    _$jscoverage['/import-style.js'].lineData[94]++;
-    if (visit13_94_1(processed[name])) {
-      _$jscoverage['/import-style.js'].lineData[95]++;
+    _$jscoverage['/import-style.js'].lineData[96]++;
+    if (visit14_96_1(processed[name])) {
+      _$jscoverage['/import-style.js'].lineData[97]++;
       return;
     }
-    _$jscoverage['/import-style.js'].lineData[97]++;
+    _$jscoverage['/import-style.js'].lineData[99]++;
     processed[name] = 1;
-    _$jscoverage['/import-style.js'].lineData[98]++;
-    if (visit14_98_1(mod.getType() === 'css')) {
-      _$jscoverage['/import-style.js'].lineData[99]++;
-      if (visit15_99_1(!cssCache[name])) {
-        _$jscoverage['/import-style.js'].lineData[100]++;
-        mod.status = 4;
-        _$jscoverage['/import-style.js'].lineData[101]++;
-        cssList.push(mod);
+    _$jscoverage['/import-style.js'].lineData[100]++;
+    if (visit15_100_1(mod.getType() === 'css')) {
+      _$jscoverage['/import-style.js'].lineData[101]++;
+      if (visit16_101_1(!cssCache[name])) {
         _$jscoverage['/import-style.js'].lineData[102]++;
+        mod.status = 4;
+        _$jscoverage['/import-style.js'].lineData[103]++;
+        cssList.push(mod);
+        _$jscoverage['/import-style.js'].lineData[104]++;
         cssCache[name] = 1;
       }
-      _$jscoverage['/import-style.js'].lineData[104]++;
+      _$jscoverage['/import-style.js'].lineData[106]++;
       return;
     }
-    _$jscoverage['/import-style.js'].lineData[106]++;
+    _$jscoverage['/import-style.js'].lineData[108]++;
     var requires = mod.getRequiredMods();
-    _$jscoverage['/import-style.js'].lineData[107]++;
-    if (visit16_107_1(isDebug)) {
-      _$jscoverage['/import-style.js'].lineData[108]++;
+    _$jscoverage['/import-style.js'].lineData[109]++;
+    if (visit17_109_1(isDebug)) {
+      _$jscoverage['/import-style.js'].lineData[110]++;
       stackCache[name] = 1;
-      _$jscoverage['/import-style.js'].lineData[109]++;
+      _$jscoverage['/import-style.js'].lineData[111]++;
       stack.push(name);
     }
-    _$jscoverage['/import-style.js'].lineData[111]++;
+    _$jscoverage['/import-style.js'].lineData[113]++;
     S.each(requires, function(r) {
   _$jscoverage['/import-style.js'].functionData[5]++;
-  _$jscoverage['/import-style.js'].lineData[112]++;
+  _$jscoverage['/import-style.js'].lineData[114]++;
   collectCss(r, cssList, stack, cssCache, stackCache, processed);
 });
-    _$jscoverage['/import-style.js'].lineData[114]++;
-    if (visit17_114_1(isDebug)) {
-      _$jscoverage['/import-style.js'].lineData[115]++;
+    _$jscoverage['/import-style.js'].lineData[116]++;
+    if (visit18_116_1(isDebug)) {
+      _$jscoverage['/import-style.js'].lineData[117]++;
       stack.pop();
-      _$jscoverage['/import-style.js'].lineData[116]++;
+      _$jscoverage['/import-style.js'].lineData[118]++;
       delete stackCache[name];
     }
   }
-  _$jscoverage['/import-style.js'].lineData[120]++;
+  _$jscoverage['/import-style.js'].lineData[122]++;
   S.importStyle = importStyle;
 })(KISSY);
