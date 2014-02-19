@@ -1,1 +1,1 @@
-NODE_ENV=production npm start
+DEBUG=kissy NODE_ENV=production nohup npm start &
