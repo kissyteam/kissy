@@ -8,7 +8,6 @@ var cwd = process.cwd();
 var pid = fs.readFileSync(cwd + '/pid.log', {
     encoding: 'utf-8'
 });
-fs.unlinkSync(cwd + '/pid.log');
 process.kill(pid, 'SIGINT');
 
 

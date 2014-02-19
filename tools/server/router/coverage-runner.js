@@ -2,10 +2,6 @@ var prefix = '/kissy/src/';
 var fs = require('fs');
 var cwd = process.cwd();
 var Path = require('path');
-var S = require(cwd + '/lib/seed.js');
-function removeQ(str) {
-    return str.replace(/\?.+$/, '');
-}
 module.exports = function (app) {
     app.get(/(.+)\/coverage\/runner\/(\?.+)?$/, function (req, res, next) {
         var path = req.params[0];
