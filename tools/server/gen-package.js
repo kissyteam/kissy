@@ -11,7 +11,7 @@ var fs = require('fs');
 var suffixLen = '/src'.length;
 //noinspection JSUnresolvedVariable
 var currentDir = __dirname;
-var S = global.KISSY = global.S = require(cwd + '/build/kissy-nodejs');
+var S = global.KISSY = global.S = require(cwd + '/lib/seed');
 
 function normalizeSlash(str) {
     return str.replace(/\\/g, '/');

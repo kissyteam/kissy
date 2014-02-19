@@ -44,7 +44,7 @@
         </concat>
 
         <!-- build loader-nodejs -->
-        <concat destfile="${component.src.dir.tmp}/loader-nodejs-pkg.js" encoding="${charset}"
+        <concat destfile="${kissy.lib.dir}/loader.js" encoding="${charset}"
                 outputencoding="${charset}">
             <path location="${component.src.dir.tmp}/loader-pkg.js"/>
             <path location="${component.src.dir}/nodejs.js"/>

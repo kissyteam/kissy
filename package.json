@@ -28,7 +28,7 @@
   "directories": {
     "lib": "./build/"
   },
-  "main": "./build/kissy-nodejs.js",
+  "main": "./lib/seed.js",
   "scripts": {
     "test": "node ./tools/test/jasmine-node",
     "start": "node ./tools/server/start",

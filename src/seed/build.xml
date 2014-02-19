@@ -65,14 +65,16 @@
         </concat>
 
         <!-- build kissy-nodejs -->
-        <concat destfile="${component.src.dir.tmp}/kissy-nodejs-pkg.js"
+        <concat destfile="${kissy.lib.dir}/seed.js"
                 encoding="${charset}" outputencoding="${charset}">
-            <path location="${kissy.build.dir}/loader-nodejs.js"/>
+            <path location="${kissy.lib.dir}/loader.js"/>
             <path location="${kissy.build.dir}/util.js"/>
             <path location="${kissy.build.dir}/ua.js"/>
             <path location="${kissy.build.dir}/feature.js"/>
             <path location="${component.src.dir}/base.js"/>
             <path location="${component.src.dir}/json.js"/>
         </concat>
+
+        <delete file="${kissy.lib.dir}/loader.js"/>
     </target>
 </project>

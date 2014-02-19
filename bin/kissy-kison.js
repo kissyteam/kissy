@@ -14,7 +14,7 @@ program
     .option('--compressLexerState', 'Set compress lexer state')
     .parse(process.argv);
 
-var S = require('../build/kissy-nodejs'),
+var S = require('../lib/seed'),
     KISON = S.nodeRequire('kison'),
 /*jshint camelcase:false*/
     js_beautify = require('js-beautify').js_beautify,

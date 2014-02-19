@@ -1,5 +1,5 @@
 <project name="event/base.build" default="build" basedir=".">
     <property name="component.name" value="event/base"/>
-
+    <property name="component.isNode" value="1"/>
     <import file="../../../common.xml"/>
 </project>

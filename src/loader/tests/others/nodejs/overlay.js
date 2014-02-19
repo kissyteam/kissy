@@ -8,7 +8,7 @@ location = window.location;
 navigator = window.navigator;
 window.document = document;
 
-var S = require('../../../../../build/kissy-nodejs').KISSY;
+var S = require('../../../../../lib/seed').KISSY;
 
 S.use("overlay", function(S, Overlay) {
     

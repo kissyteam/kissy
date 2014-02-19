@@ -2,7 +2,7 @@ var prefix = '/kissy/src/';
 var fs = require('fs');
 var cwd = process.cwd();
 var Path = require('path');
-var S = require(cwd + '/build/kissy-nodejs.js');
+var S = require(cwd + '/lib/seed.js');
 function removeQ(str) {
     return str.replace(/\?.+$/, '');
 }

@@ -22,6 +22,7 @@
     <!-- 本 xml 需要的属性 -->
     <property name="component.build.dir" value="${kissy.build.dir}/${component.name}/build"/>
     <property name="build.component.dir" value="${kissy.build.dir}/${component.name}/"/>
+    <property name="lib.component.dir" value="${kissy.lib.dir}/${component.name}/"/>
     <property name="component.build.dir.tmp" value="${kissy.build.dir}/${component.name}/tmp/"/>
     <tstamp>
         <format property="timestamp.isoformat" pattern="yyyyMMddHHmmss" locale="en"/>
@@ -345,6 +346,28 @@
         <delete dir="${component.src.dir.tmp}"/>
     </target>
 
+    <target name="build-node">
+        <ac:if>
+            <ac:isset property="component.isNode"/>
+            <ac:then>
+                <ac:if>
+                    <available file="${build.component.dir}" type="dir"/>
+                    <ac:then>
+                        <copy todir="${lib.component.dir}">
+                            <fileset dir="${build.component.dir}"
+                                     includes="**/*.js" excludes="**/*-min.js"/>
+                        </copy>
+                    </ac:then>
+                </ac:if>
+
+                <copy todir="${kissy.lib.dir}">
+                    <fileset dir="${kissy.build.dir}"
+                             includes="${component.name}.js"/>
+                </copy>
+            </ac:then>
+        </ac:if>
+    </target>
+
     <target name="build" depends="
     create-build.dir,
     tpl2mod,
@@ -359,7 +382,8 @@
     copyright,
     fill-var,
     fix-cr-lf,
-    clear">
+    clear,
+    build-node">
     </target>
 
     <target name="clean">

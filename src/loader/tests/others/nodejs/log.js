@@ -1,5 +1,5 @@
 
-var S = require('../../../../../build/kissy-nodejs').KISSY;
+var S = require('../../../../../lib/seed').KISSY;
 
 
 S.log('This output should be colored');

@@ -14,7 +14,7 @@ process.kill(pid, 'SIGINT');
 
 
 //com child_process = require('child_process');
-//var S = require('../../build/kissy-nodejs');
+//var S = require('../../lib/seed');
 //child_process.exec('ps aux | grep node', function (error, stdout, stderr) {
 //    var lines = stdout.split(/\n/);
 //    lines.forEach(function (l) {

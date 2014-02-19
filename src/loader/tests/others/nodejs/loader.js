@@ -1,4 +1,4 @@
-var S = require('../../../../../build/kissy-nodejs').KISSY;
+var S = require('../../../../../lib/seed').KISSY;
 var path = require("path");
 
 console.log(path.dirname(__filename) + '/../');

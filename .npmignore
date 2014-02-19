@@ -1,5 +1,5 @@
 src/
-*-min.*
+build/
 tools/
 docs/
 node_modules/

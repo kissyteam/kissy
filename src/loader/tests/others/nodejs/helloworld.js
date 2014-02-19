@@ -1,4 +1,4 @@
-var S = require('../../../../../build/kissy-nodejs').KISSY;
+var S = require('../../../../../lib/seed').KISSY;
 
 S.log('hello world!');
 

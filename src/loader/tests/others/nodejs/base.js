@@ -1,4 +1,4 @@
-var KISSY = require('../../../../../build/kissy-nodejs').KISSY;
+var KISSY = require('../../../../../lib/seed').KISSY;
 
 var path=require('./path');
 

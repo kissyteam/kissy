@@ -299,8 +299,7 @@ if (! _$jscoverage['/modules.js']) {
   _$jscoverage['/modules.js'].lineData[292] = 0;
   _$jscoverage['/modules.js'].lineData[296] = 0;
   _$jscoverage['/modules.js'].lineData[300] = 0;
-  _$jscoverage['/modules.js'].lineData[304] = 0;
-  _$jscoverage['/modules.js'].lineData[309] = 0;
+  _$jscoverage['/modules.js'].lineData[305] = 0;
 }
 if (! _$jscoverage['/modules.js'].functionData) {
   _$jscoverage['/modules.js'].functionData = [];
@@ -607,14 +606,10 @@ function visit10_6_1(result) {
   requires: ['xtemplate/runtime']}});
   _$jscoverage['/modules.js'].lineData[300]++;
   config({
-  'xtemplate/nodejs': {
-  requires: ['xtemplate']}});
-  _$jscoverage['/modules.js'].lineData[304]++;
-  config({
   'xtemplate/runtime': {
   requires: ['path']}});
 })(function(c) {
   _$jscoverage['/modules.js'].functionData[1]++;
-  _$jscoverage['/modules.js'].lineData[309]++;
+  _$jscoverage['/modules.js'].lineData[305]++;
   KISSY.config('modules', c);
 }, KISSY.Feature, KISSY.UA);

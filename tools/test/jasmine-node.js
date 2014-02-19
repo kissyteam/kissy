@@ -5,7 +5,7 @@
  */
 
 // global
-var S = global.KISSY = require('../../' + 'build/kissy-nodejs.js');
+var S = global.KISSY = require('../../' + 'lib/seed.js');
 
 var fs = require('fs');
 

@@ -5,7 +5,7 @@ location = window.location;
 navigator = window.navigator;
 window.document = document;
 
-var S = require('../../../../../../build/kissy-nodejs').KISSY;
+var S = require('../../../../../../lib/seed').KISSY;
 var vm = require('vm'),
     fs = require('fs'),
     url = require('url'),

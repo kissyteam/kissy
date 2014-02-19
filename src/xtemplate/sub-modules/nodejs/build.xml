@@ -1,9 +1,16 @@
 <project name="xtemplate/nodejs.build" default="build" basedir=".">
     <property name="component.name" value="xtemplate/nodejs"/>
+    <property name="component.isNode" value="1"/>
 
     <import file="../../../common.xml"/>
 
     <target name="compress-css"/>
 
     <target name="tpl2mod"/>
+
+    <target name="del-meta">
+        <delete dir="meta"></delete>
+    </target>
+
+    <target name="build" depends="common.build.build,del-meta"/>
 </project>

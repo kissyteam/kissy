@@ -1,6 +1,6 @@
 <project name="kison.build" default="kison-build" basedir=".">
     <property name="component.name" value="kison"/>
-
+    <property name="component.isNode" value="1"/>
     <!-- kison can not rename variables -->
     <target name="compress-js">
         <apply executable="java" verbose="true" dest="${component.build.dir}">

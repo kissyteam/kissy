@@ -272,19 +272,19 @@ if (! _$jscoverage['/nodejs.js'].branchData) {
   _$jscoverage['/nodejs.js'].branchData['53'] = [];
   _$jscoverage['/nodejs.js'].branchData['53'][1] = new BranchData();
 }
-_$jscoverage['/nodejs.js'].branchData['53'][1].init(409, 9, 'cacheFile');
+_$jscoverage['/nodejs.js'].branchData['53'][1].init(421, 9, 'cacheFile');
 function visit4_53_1(result) {
   _$jscoverage['/nodejs.js'].branchData['53'][1].ranCondition(result);
   return result;
-}_$jscoverage['/nodejs.js'].branchData['42'][1].init(17, 31, 'cacheFile && cached[subTplName]');
+}_$jscoverage['/nodejs.js'].branchData['42'][1].init(18, 31, 'cacheFile && cached[subTplName]');
 function visit3_42_1(result) {
   _$jscoverage['/nodejs.js'].branchData['42'][1].ranCondition(result);
   return result;
-}_$jscoverage['/nodejs.js'].branchData['27'][1].init(65, 24, 'config.extname || \'html\'');
+}_$jscoverage['/nodejs.js'].branchData['27'][1].init(67, 24, 'config.extname || \'html\'');
 function visit2_27_1(result) {
   _$jscoverage['/nodejs.js'].branchData['27'][1].ranCondition(result);
   return result;
-}_$jscoverage['/nodejs.js'].branchData['26'][1].init(22, 12, 'config || {}');
+}_$jscoverage['/nodejs.js'].branchData['26'][1].init(23, 12, 'config || {}');
 function visit1_26_1(result) {
   _$jscoverage['/nodejs.js'].branchData['26'][1].ranCondition(result);
   return result;

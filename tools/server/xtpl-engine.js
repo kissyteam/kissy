@@ -1,6 +1,6 @@
 //noinspection JSUnresolvedVariable
 var currentDir = __dirname;
-var S = require(process.cwd() + '/build/kissy-nodejs.js');
+var S = require(process.cwd() + '/lib/seed.js');
 var XTemplateNodeJs = S.nodeRequire('xtemplate/nodejs');
 var packageSet = 0;
 var Path = require('path');

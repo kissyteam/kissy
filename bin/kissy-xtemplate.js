@@ -12,7 +12,7 @@ program
     .option('-w, --watch', 'Watch xtemplate file change')
     .parse(process.argv);
 
-var S = require('../build/kissy-nodejs'),
+var S = require('../lib/seed'),
     XTemplateCompiler = S.nodeRequire('xtemplate/compiler'),
     chokidar = require('chokidar'),
 /*jshint camelcase: false*/

@@ -1,7 +1,7 @@
 /*jshint camelcase:false*/
 var cwd = process.cwd();
 var fs = require('fs');
-var S = require(cwd + '/build/kissy-nodejs.js');
+var S = require(cwd + '/lib/seed.js');
 
 module.exports = function (app) {
     // js duck mobile

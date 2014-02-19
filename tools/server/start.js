@@ -12,7 +12,7 @@ var fs = require('fs');
 var cwd = process.cwd();
 //noinspection JSUnresolvedVariable
 var currentDir = __dirname;
-var S = require(cwd + '/build/kissy-nodejs.js');
+var S = require(cwd + '/lib/seed.js');
 var request = require('request');
 var serverConfig = JSON.parse(fs.readFileSync(currentDir + '/server.json'));
 
