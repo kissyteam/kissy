@@ -14,7 +14,7 @@ function startServer(port) {
 
     app.set('view engine', 'html');
     app.set('views', path.join(__dirname, 'views'));
-    app.engine('html', require('./xtpl-engine').renderFile);
+    app.engine('html', require('../../lib/xtemplate').__express);
 
     var domain = require('domain');
 
@@ -45,9 +45,9 @@ function startServer(port) {
     // combo
     app.use('/kissy/', require('./middleware/combo'));
 
-    app.use('/kissy/',require('./middleware/coverage-runner'));
+    app.use('/kissy/', require('./middleware/coverage-runner'));
 
-    app.use('/kissy/',require('./middleware/test-runner'));
+    app.use('/kissy/', require('./middleware/test-runner'));
 
     // list and process jss
     app.use('/kissy/', require('./middleware/serve'));
@@ -92,7 +92,6 @@ function startServer(port) {
     });
 
     require('./router/docs')(app);
-
 
 
     app.get('/crossdomain.xml', function (req, res) {

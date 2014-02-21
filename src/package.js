@@ -685,16 +685,16 @@ if (!loc.getQuery().has('build') && !loc.getQuery().has('min')) {
             "base": "/kissy/src/util/src/util",
             "ignorePackageNameInUri": 1
         },
+        "xtemplate/nodejs": {
+            "base": "/kissy/src/xtemplate/nodejs/src/nodejs",
+            "ignorePackageNameInUri": 1
+        },
         "xtemplate": {
             "base": "/kissy/src/xtemplate/src/xtemplate",
             "ignorePackageNameInUri": 1
         },
         "xtemplate/compiler": {
             "base": "/kissy/src/xtemplate/sub-modules/compiler/src/compiler",
-            "ignorePackageNameInUri": 1
-        },
-        "xtemplate/nodejs": {
-            "base": "/kissy/src/xtemplate/sub-modules/nodejs/src/nodejs",
             "ignorePackageNameInUri": 1
         },
         "xtemplate/runtime": {

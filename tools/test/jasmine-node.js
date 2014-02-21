@@ -5,7 +5,9 @@
  */
 
 // global
-var S = global.KISSY = require('../../' + 'lib/seed.js');
+var S = require('../../' + 'lib/seed.js');
+
+var sys = require('sys');
 
 var fs = require('fs');
 
@@ -13,14 +15,11 @@ var jasmineExports = require('../jasmine/jasmine');
 
 var jasmineNode = require('../jasmine/node/reporter').jasmineNode;
 
-var jasmine = jasmineExports.jasmine;
-
-
 S.each(jasmineExports, function (v, k) {
     global[k] = v;
 });
 
-var jasmineEnv = jasmine.getEnv();
+var jasmineEnv = jasmineExports.jasmine.getEnv();
 
 // ------------ configs start
 
@@ -29,13 +28,12 @@ var showColors = true;
 
 var junitReport = {
     report: true,
-    savePath: "./reports/",
+    savePath: './reports/',
     useDotNotation: true,
     consolidate: true
 };
 
 var cwd = process.cwd();
-console.log('cwd: ' + cwd);
 
 S.config('packages', {
     src: {
@@ -52,40 +50,35 @@ var mods = [
     'src/event/sub-modules/custom/tests/specs/'
 ];
 
-console.log('test mods: ' + mods);
-
 function onComplete(runner) {
     var description = runner.queue.blocks[0].description;
     console.log(description + ' ↑ \n');
     console.log(new Array(20).join('-'));
     console.log('\n');
-    if (runner.results().failedCount == 0) {
-        exitCode = 0;
-    } else {
-        exitCode = 1;
-        process.exit(exitCode);
+    if (runner.results().failedCount !== 0) {
+        process.exit(1);
     }
 }
 
 if (junitReport && junitReport.report) {
     if (!fs.existsSync(junitReport.savePath)) {
         console.log('creating junit xml report save path: ' + junitReport.savePath);
-        fs.mkdirSync(junitReport.savePath, "0755");
+        fs.mkdirSync(junitReport.savePath, '0755');
     }
-    jasmineEnv.addReporter(new jasmineNode['JUnitXmlReporter'](junitReport.savePath,
+    jasmineEnv.addReporter(new jasmineNode.JUnitXmlReporter(junitReport.savePath,
         junitReport.consolidate,
         junitReport.useDotNotation));
 }
 
 if (isVerbose) {
     jasmineEnv.addReporter(new jasmineNode.TerminalVerboseReporter({
-        print: require('sys').print,
+        print: sys.print,
         color: showColors,
         onComplete: onComplete
     }));
 } else {
     jasmineEnv.addReporter(new jasmineNode.TerminalReporter({
-        print: require('sys').print,
+        print: sys.print,
         color: showColors,
         onComplete: onComplete
     }));
@@ -93,7 +86,7 @@ if (isVerbose) {
 
 // ------------ configs end
 
-// KISSY.use is asynchronous even in nodejs
-KISSY.use(mods, function () {
-    jasmineEnv.execute();
-});
+
+S.nodeRequire(mods);
+require('../../tests/');
+jasmineEnv.execute();

@@ -64,13 +64,16 @@
 
     // require synchronously in node js
     S.nodeRequire = function (modName) {
-        var ret;
+        var ret = [];
+        if (typeof modName === 'string' && modName.indexOf(',') !== -1) {
+            modName = modName.split(',');
+        }
         S.use(modName, {
-            success: function (S, r) {
-                ret = r;
+            success: function () {
+                ret = [].slice.call(arguments, 1);
             },
             sync: true
         });
-        return ret;
+        return typeof modName === 'string' ? ret[0] : ret;
     };
 })(KISSY);

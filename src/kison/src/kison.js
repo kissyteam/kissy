@@ -14,10 +14,5 @@ KISSY.add(function (S, require) {
     Kison.Production = Production;
     Kison.Lexer = Lexer;
     Kison.Utils = Utils;
-    if ('@DEBUG@') {
-        return Kison;
-    } else {
-        window.alert('kison can only use uncompressed version!');
-        return null;
-    }
+    return Kison;
 });

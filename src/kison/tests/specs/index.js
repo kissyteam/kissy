@@ -189,8 +189,8 @@ KISSY.add(function (S, Kison) {
                     ]
                 }
             });
-
-            expect(new Function(grammar.genCode(true))().parse("ccdd")).not.toBe(false);
+            var code = grammar.genCode(true);
+            expect(new Function('KISSY',code)(S).parse("ccdd")).not.toBe(false);
         });
 
 
@@ -238,7 +238,7 @@ KISSY.add(function (S, Kison) {
             });
 
             expect(function () {
-                new Function(grammar.genCode())().parse("dc");
+                new Function("KISSY",grammar.genCode())(S).parse("dc");
             }).toThrow('Syntax error at line 1:\ndc\n--^\n' +
                     'expect c, d');
 
@@ -289,9 +289,9 @@ KISSY.add(function (S, Kison) {
             });
 
             expect(function () {
-                new Function(grammar.genCode({
+                new Function("KISSY",grammar.genCode({
                     compressSymbol: 1
-                }))().parse("dc");
+                }))(S).parse("dc");
             }).toThrow('Syntax error at line 1:\ndc\n--^\n' +
                     'expect c, d');
 
@@ -334,9 +334,9 @@ KISSY.add(function (S, Kison) {
                         ]
                     }
                 });
-                var parser = new Function(grammar.genCode({
+                var parser = new Function("KISSY",grammar.genCode({
                     compressSymbol: 0
-                }))();
+                }))(S);
 
                 parser.yy = {
                     log: log
@@ -389,9 +389,9 @@ KISSY.add(function (S, Kison) {
                         ]
                     }
                 });
-                var parser = new Function(grammar.genCode({
+                var parser = new Function("KISSY",grammar.genCode({
                     compressSymbol: 1
-                }))();
+                }))(S);
 
                 parser.yy = {
                     log: log
@@ -440,9 +440,9 @@ KISSY.add(function (S, Kison) {
                         ]
                     }
                 });
-                var parser = new Function(grammar.genCode({
+                var parser = new Function("KISSY",grammar.genCode({
                     compressSymbol: 0
-                }))();
+                }))(S);
 
                 parser.yy = {
                     log: log
@@ -543,7 +543,7 @@ KISSY.add(function (S, Kison) {
             });
 
             expect(function () {
-                new Function(grammar.genCode())().parse("ccdd")
+                new Function("KISSY",grammar.genCode())(S).parse("ccdd")
             }).not.toThrow(undefined);
 
             // S.log(global.TEST_RET.join('\n'));

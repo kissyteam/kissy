@@ -19,7 +19,7 @@
     <property name="yui-compressor"
               location="${tools.dir}/yui-compressor/yui-compressor.jar"/>
     <property name="kissy.build.dir" location="${kissy.dir}/build/"/>
-    <property name="kissy.lib.dir" location="${kissy.dir}/lib/"/>
+    <property name="kissy.lib.dir" location="${kissy.dir}/lib/build/"/>
     <property name="kissy.src.dir" location="${kissy.dir}/src/"/>
 
     <property name="version" value="1.50"/>

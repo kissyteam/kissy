@@ -26,7 +26,7 @@
     "kissy-kison": "./bin/kissy-kison.js"
   },
   "directories": {
-    "lib": "./build/"
+    "lib": "./lib/"
   },
   "main": "./lib/seed.js",
   "scripts": {
