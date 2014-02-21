@@ -63,11 +63,11 @@
     {{{html}}}
     <script>
         var tests=['specs/'], S=KISSY;
-
         S.config('packages',{
             specs:{
                 debug:1,
-                base:'../'
+                base: S.endsWith(location.href.replace(/\?.+$/,''),
+                        'runner')?'./':'../'
             },
             src:{
                 debug:1,

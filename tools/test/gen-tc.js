@@ -13,24 +13,24 @@ function collectTc(baseDir, codes) {
     var ts = "/tests/runner";
     files.forEach(function (f) {
         f = baseDir + '/' + f;
-        if (fs.statSync(f).isDirectory()) {
-            if (S.endsWith(f, ts)) {
-                f = f.replace(/\\/g, '/');
+
+        if (S.endsWith(f, ts)) {
+            f = f.replace(/\\/g, '/');
+            var coverDir = path.resolve(f, '../../coverage/runner');
+            var cover = 0;
+            // allow coverage
+            if (fs.existsSync(coverDir)) {
+                cover = 1;
+            }
+            if (!fs.statSync(f).isDirectory()) {
+                var r = '/kissy/' + f.replace(cwd + '/', '');
+                codes.push("tests.push('" + r + "');\n");
+                codes.push("tests.push('" + r + "?build');\n");
+                if (cover) {
+                    codes.push("tests.push('" + r + "?coverage');\n");
+                }
+            } else {
                 var runners = fs.readdirSync(f);
-                var coverDir = path.resolve(f, '../../coverage/runner');
-                var cover = 0;
-                // allow coverage
-                if (fs.existsSync(coverDir)) {
-                    cover = 1;
-                }
-                if(!runners.length){
-                    var r = '/kissy/' + (f + '/').replace(cwd + '/', '');
-                    codes.push("tests.push('" + r + "');\n");
-                    codes.push("tests.push('" + r + "?build');\n");
-                    if (cover) {
-                        codes.push("tests.push('" + r + "?coverage');\n");
-                    }
-                }
                 runners.forEach(function (r) {
                     r = '/kissy/' + (f + '/' + r).replace(cwd + '/', '');
                     codes.push("tests.push('" + r + "');\n");
@@ -39,10 +39,11 @@ function collectTc(baseDir, codes) {
                         codes.push("tests.push('" + r + "?coverage');\n");
                     }
                 });
-            } else {
-                collectTc(f, codes);
             }
+        } else if (fs.statSync(f).isDirectory()) {
+            collectTc(f, codes);
         }
+
     });
 }
 
