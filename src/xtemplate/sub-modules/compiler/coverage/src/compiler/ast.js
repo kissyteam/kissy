@@ -231,30 +231,34 @@ if (! _$jscoverage['/compiler/ast.js']) {
   _$jscoverage['/compiler/ast.js'].lineData = [];
   _$jscoverage['/compiler/ast.js'].lineData[6] = 0;
   _$jscoverage['/compiler/ast.js'].lineData[7] = 0;
+  _$jscoverage['/compiler/ast.js'].lineData[9] = 0;
+  _$jscoverage['/compiler/ast.js'].lineData[10] = 0;
+  _$jscoverage['/compiler/ast.js'].lineData[11] = 0;
+  _$jscoverage['/compiler/ast.js'].lineData[12] = 0;
+  _$jscoverage['/compiler/ast.js'].lineData[14] = 0;
+  _$jscoverage['/compiler/ast.js'].lineData[15] = 0;
   _$jscoverage['/compiler/ast.js'].lineData[16] = 0;
-  _$jscoverage['/compiler/ast.js'].lineData[17] = 0;
-  _$jscoverage['/compiler/ast.js'].lineData[18] = 0;
   _$jscoverage['/compiler/ast.js'].lineData[19] = 0;
-  _$jscoverage['/compiler/ast.js'].lineData[20] = 0;
-  _$jscoverage['/compiler/ast.js'].lineData[23] = 0;
-  _$jscoverage['/compiler/ast.js'].lineData[25] = 0;
-  _$jscoverage['/compiler/ast.js'].lineData[26] = 0;
-  _$jscoverage['/compiler/ast.js'].lineData[28] = 0;
   _$jscoverage['/compiler/ast.js'].lineData[29] = 0;
-  _$jscoverage['/compiler/ast.js'].lineData[35] = 0;
-  _$jscoverage['/compiler/ast.js'].lineData[37] = 0;
+  _$jscoverage['/compiler/ast.js'].lineData[30] = 0;
+  _$jscoverage['/compiler/ast.js'].lineData[31] = 0;
+  _$jscoverage['/compiler/ast.js'].lineData[32] = 0;
+  _$jscoverage['/compiler/ast.js'].lineData[33] = 0;
+  _$jscoverage['/compiler/ast.js'].lineData[36] = 0;
   _$jscoverage['/compiler/ast.js'].lineData[38] = 0;
   _$jscoverage['/compiler/ast.js'].lineData[39] = 0;
-  _$jscoverage['/compiler/ast.js'].lineData[42] = 0;
+  _$jscoverage['/compiler/ast.js'].lineData[43] = 0;
+  _$jscoverage['/compiler/ast.js'].lineData[44] = 0;
+  _$jscoverage['/compiler/ast.js'].lineData[50] = 0;
   _$jscoverage['/compiler/ast.js'].lineData[52] = 0;
   _$jscoverage['/compiler/ast.js'].lineData[53] = 0;
   _$jscoverage['/compiler/ast.js'].lineData[54] = 0;
-  _$jscoverage['/compiler/ast.js'].lineData[55] = 0;
-  _$jscoverage['/compiler/ast.js'].lineData[56] = 0;
   _$jscoverage['/compiler/ast.js'].lineData[57] = 0;
-  _$jscoverage['/compiler/ast.js'].lineData[58] = 0;
+  _$jscoverage['/compiler/ast.js'].lineData[59] = 0;
+  _$jscoverage['/compiler/ast.js'].lineData[60] = 0;
   _$jscoverage['/compiler/ast.js'].lineData[61] = 0;
-  _$jscoverage['/compiler/ast.js'].lineData[64] = 0;
+  _$jscoverage['/compiler/ast.js'].lineData[62] = 0;
+  _$jscoverage['/compiler/ast.js'].lineData[65] = 0;
   _$jscoverage['/compiler/ast.js'].lineData[67] = 0;
   _$jscoverage['/compiler/ast.js'].lineData[68] = 0;
   _$jscoverage['/compiler/ast.js'].lineData[69] = 0;
@@ -269,18 +273,13 @@ if (! _$jscoverage['/compiler/ast.js']) {
   _$jscoverage['/compiler/ast.js'].lineData[84] = 0;
   _$jscoverage['/compiler/ast.js'].lineData[85] = 0;
   _$jscoverage['/compiler/ast.js'].lineData[86] = 0;
-  _$jscoverage['/compiler/ast.js'].lineData[89] = 0;
-  _$jscoverage['/compiler/ast.js'].lineData[91] = 0;
-  _$jscoverage['/compiler/ast.js'].lineData[92] = 0;
-  _$jscoverage['/compiler/ast.js'].lineData[93] = 0;
-  _$jscoverage['/compiler/ast.js'].lineData[94] = 0;
-  _$jscoverage['/compiler/ast.js'].lineData[95] = 0;
+  _$jscoverage['/compiler/ast.js'].lineData[97] = 0;
   _$jscoverage['/compiler/ast.js'].lineData[98] = 0;
+  _$jscoverage['/compiler/ast.js'].lineData[99] = 0;
   _$jscoverage['/compiler/ast.js'].lineData[100] = 0;
   _$jscoverage['/compiler/ast.js'].lineData[101] = 0;
   _$jscoverage['/compiler/ast.js'].lineData[102] = 0;
-  _$jscoverage['/compiler/ast.js'].lineData[103] = 0;
-  _$jscoverage['/compiler/ast.js'].lineData[104] = 0;
+  _$jscoverage['/compiler/ast.js'].lineData[105] = 0;
   _$jscoverage['/compiler/ast.js'].lineData[107] = 0;
   _$jscoverage['/compiler/ast.js'].lineData[109] = 0;
   _$jscoverage['/compiler/ast.js'].lineData[110] = 0;
@@ -298,46 +297,57 @@ if (! _$jscoverage['/compiler/ast.js']) {
   _$jscoverage['/compiler/ast.js'].lineData[128] = 0;
   _$jscoverage['/compiler/ast.js'].lineData[129] = 0;
   _$jscoverage['/compiler/ast.js'].lineData[130] = 0;
-  _$jscoverage['/compiler/ast.js'].lineData[133] = 0;
-  _$jscoverage['/compiler/ast.js'].lineData[135] = 0;
+  _$jscoverage['/compiler/ast.js'].lineData[131] = 0;
+  _$jscoverage['/compiler/ast.js'].lineData[134] = 0;
   _$jscoverage['/compiler/ast.js'].lineData[136] = 0;
   _$jscoverage['/compiler/ast.js'].lineData[137] = 0;
   _$jscoverage['/compiler/ast.js'].lineData[138] = 0;
-  _$jscoverage['/compiler/ast.js'].lineData[141] = 0;
+  _$jscoverage['/compiler/ast.js'].lineData[139] = 0;
+  _$jscoverage['/compiler/ast.js'].lineData[140] = 0;
   _$jscoverage['/compiler/ast.js'].lineData[143] = 0;
-  _$jscoverage['/compiler/ast.js'].lineData[144] = 0;
   _$jscoverage['/compiler/ast.js'].lineData[145] = 0;
   _$jscoverage['/compiler/ast.js'].lineData[146] = 0;
-  _$jscoverage['/compiler/ast.js'].lineData[149] = 0;
+  _$jscoverage['/compiler/ast.js'].lineData[147] = 0;
+  _$jscoverage['/compiler/ast.js'].lineData[148] = 0;
   _$jscoverage['/compiler/ast.js'].lineData[151] = 0;
-  _$jscoverage['/compiler/ast.js'].lineData[152] = 0;
   _$jscoverage['/compiler/ast.js'].lineData[153] = 0;
   _$jscoverage['/compiler/ast.js'].lineData[154] = 0;
-  _$jscoverage['/compiler/ast.js'].lineData[157] = 0;
+  _$jscoverage['/compiler/ast.js'].lineData[155] = 0;
+  _$jscoverage['/compiler/ast.js'].lineData[156] = 0;
   _$jscoverage['/compiler/ast.js'].lineData[159] = 0;
-  _$jscoverage['/compiler/ast.js'].lineData[160] = 0;
   _$jscoverage['/compiler/ast.js'].lineData[161] = 0;
   _$jscoverage['/compiler/ast.js'].lineData[162] = 0;
-  _$jscoverage['/compiler/ast.js'].lineData[165] = 0;
+  _$jscoverage['/compiler/ast.js'].lineData[163] = 0;
+  _$jscoverage['/compiler/ast.js'].lineData[164] = 0;
   _$jscoverage['/compiler/ast.js'].lineData[167] = 0;
-  _$jscoverage['/compiler/ast.js'].lineData[168] = 0;
   _$jscoverage['/compiler/ast.js'].lineData[169] = 0;
   _$jscoverage['/compiler/ast.js'].lineData[170] = 0;
   _$jscoverage['/compiler/ast.js'].lineData[171] = 0;
-  _$jscoverage['/compiler/ast.js'].lineData[173] = 0;
-  _$jscoverage['/compiler/ast.js'].lineData[176] = 0;
+  _$jscoverage['/compiler/ast.js'].lineData[172] = 0;
+  _$jscoverage['/compiler/ast.js'].lineData[175] = 0;
+  _$jscoverage['/compiler/ast.js'].lineData[177] = 0;
   _$jscoverage['/compiler/ast.js'].lineData[178] = 0;
   _$jscoverage['/compiler/ast.js'].lineData[179] = 0;
   _$jscoverage['/compiler/ast.js'].lineData[180] = 0;
-  _$jscoverage['/compiler/ast.js'].lineData[181] = 0;
-  _$jscoverage['/compiler/ast.js'].lineData[182] = 0;
   _$jscoverage['/compiler/ast.js'].lineData[183] = 0;
   _$jscoverage['/compiler/ast.js'].lineData[185] = 0;
+  _$jscoverage['/compiler/ast.js'].lineData[186] = 0;
   _$jscoverage['/compiler/ast.js'].lineData[188] = 0;
   _$jscoverage['/compiler/ast.js'].lineData[189] = 0;
-  _$jscoverage['/compiler/ast.js'].lineData[190] = 0;
-  _$jscoverage['/compiler/ast.js'].lineData[193] = 0;
+  _$jscoverage['/compiler/ast.js'].lineData[192] = 0;
+  _$jscoverage['/compiler/ast.js'].lineData[194] = 0;
   _$jscoverage['/compiler/ast.js'].lineData[195] = 0;
+  _$jscoverage['/compiler/ast.js'].lineData[198] = 0;
+  _$jscoverage['/compiler/ast.js'].lineData[199] = 0;
+  _$jscoverage['/compiler/ast.js'].lineData[200] = 0;
+  _$jscoverage['/compiler/ast.js'].lineData[201] = 0;
+  _$jscoverage['/compiler/ast.js'].lineData[202] = 0;
+  _$jscoverage['/compiler/ast.js'].lineData[204] = 0;
+  _$jscoverage['/compiler/ast.js'].lineData[207] = 0;
+  _$jscoverage['/compiler/ast.js'].lineData[208] = 0;
+  _$jscoverage['/compiler/ast.js'].lineData[209] = 0;
+  _$jscoverage['/compiler/ast.js'].lineData[212] = 0;
+  _$jscoverage['/compiler/ast.js'].lineData[214] = 0;
 }
 if (! _$jscoverage['/compiler/ast.js'].functionData) {
   _$jscoverage['/compiler/ast.js'].functionData = [];
@@ -364,96 +374,133 @@ if (! _$jscoverage['/compiler/ast.js'].functionData) {
 }
 if (! _$jscoverage['/compiler/ast.js'].branchData) {
   _$jscoverage['/compiler/ast.js'].branchData = {};
-  _$jscoverage['/compiler/ast.js'].branchData['28'] = [];
-  _$jscoverage['/compiler/ast.js'].branchData['28'][1] = new BranchData();
-  _$jscoverage['/compiler/ast.js'].branchData['182'] = [];
-  _$jscoverage['/compiler/ast.js'].branchData['182'][1] = new BranchData();
+  _$jscoverage['/compiler/ast.js'].branchData['11'] = [];
+  _$jscoverage['/compiler/ast.js'].branchData['11'][1] = new BranchData();
+  _$jscoverage['/compiler/ast.js'].branchData['14'] = [];
+  _$jscoverage['/compiler/ast.js'].branchData['14'][1] = new BranchData();
+  _$jscoverage['/compiler/ast.js'].branchData['15'] = [];
+  _$jscoverage['/compiler/ast.js'].branchData['15'][1] = new BranchData();
+  _$jscoverage['/compiler/ast.js'].branchData['43'] = [];
+  _$jscoverage['/compiler/ast.js'].branchData['43'][1] = new BranchData();
+  _$jscoverage['/compiler/ast.js'].branchData['199'] = [];
+  _$jscoverage['/compiler/ast.js'].branchData['199'][1] = new BranchData();
+  _$jscoverage['/compiler/ast.js'].branchData['201'] = [];
+  _$jscoverage['/compiler/ast.js'].branchData['201'][1] = new BranchData();
 }
-_$jscoverage['/compiler/ast.js'].branchData['182'][1].init(17, 10, 'p === \'..\'');
-function visit2_182_1(result) {
-  _$jscoverage['/compiler/ast.js'].branchData['182'][1].ranCondition(result);
+_$jscoverage['/compiler/ast.js'].branchData['201'][1].init(45, 10, 'p === \'..\'');
+function visit6_201_1(result) {
+  _$jscoverage['/compiler/ast.js'].branchData['201'][1].ranCondition(result);
   return result;
-}_$jscoverage['/compiler/ast.js'].branchData['28'][1].init(91, 37, '!S.equals(tpl.path.parts, closeParts)');
-function visit1_28_1(result) {
-  _$jscoverage['/compiler/ast.js'].branchData['28'][1].ranCondition(result);
+}_$jscoverage['/compiler/ast.js'].branchData['199'][1].init(151, 5, 'i < l');
+function visit5_199_1(result) {
+  _$jscoverage['/compiler/ast.js'].branchData['199'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/compiler/ast.js'].branchData['43'][1].init(115, 40, '!sameArray(command.id.parts, closeParts)');
+function visit4_43_1(result) {
+  _$jscoverage['/compiler/ast.js'].branchData['43'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/compiler/ast.js'].branchData['15'][1].init(17, 15, 'a1[i] !== a2[i]');
+function visit3_15_1(result) {
+  _$jscoverage['/compiler/ast.js'].branchData['15'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/compiler/ast.js'].branchData['14'][1].init(126, 6, 'i < l1');
+function visit2_14_1(result) {
+  _$jscoverage['/compiler/ast.js'].branchData['14'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/compiler/ast.js'].branchData['11'][1].init(57, 9, 'l1 !== l2');
+function visit1_11_1(result) {
+  _$jscoverage['/compiler/ast.js'].branchData['11'][1].ranCondition(result);
   return result;
 }_$jscoverage['/compiler/ast.js'].lineData[6]++;
 KISSY.add(function(S) {
   _$jscoverage['/compiler/ast.js'].functionData[0]++;
   _$jscoverage['/compiler/ast.js'].lineData[7]++;
   var ast = {};
-  _$jscoverage['/compiler/ast.js'].lineData[16]++;
+  _$jscoverage['/compiler/ast.js'].lineData[9]++;
+  function sameArray(a1, a2) {
+    _$jscoverage['/compiler/ast.js'].functionData[1]++;
+    _$jscoverage['/compiler/ast.js'].lineData[10]++;
+    var l1 = a1.length, l2 = a2.length;
+    _$jscoverage['/compiler/ast.js'].lineData[11]++;
+    if (visit1_11_1(l1 !== l2)) {
+      _$jscoverage['/compiler/ast.js'].lineData[12]++;
+      return 0;
+    }
+    _$jscoverage['/compiler/ast.js'].lineData[14]++;
+    for (var i = 0; visit2_14_1(i < l1); i++) {
+      _$jscoverage['/compiler/ast.js'].lineData[15]++;
+      if (visit3_15_1(a1[i] !== a2[i])) {
+        _$jscoverage['/compiler/ast.js'].lineData[16]++;
+        return 0;
+      }
+    }
+    _$jscoverage['/compiler/ast.js'].lineData[19]++;
+    return 1;
+  }
+  _$jscoverage['/compiler/ast.js'].lineData[29]++;
   ast.ProgramNode = function(lineNumber, statements, inverse) {
-  _$jscoverage['/compiler/ast.js'].functionData[1]++;
-  _$jscoverage['/compiler/ast.js'].lineData[17]++;
+  _$jscoverage['/compiler/ast.js'].functionData[2]++;
+  _$jscoverage['/compiler/ast.js'].lineData[30]++;
   var self = this;
-  _$jscoverage['/compiler/ast.js'].lineData[18]++;
+  _$jscoverage['/compiler/ast.js'].lineData[31]++;
   self.lineNumber = lineNumber;
-  _$jscoverage['/compiler/ast.js'].lineData[19]++;
+  _$jscoverage['/compiler/ast.js'].lineData[32]++;
   self.statements = statements;
-  _$jscoverage['/compiler/ast.js'].lineData[20]++;
+  _$jscoverage['/compiler/ast.js'].lineData[33]++;
   self.inverse = inverse;
 };
-  _$jscoverage['/compiler/ast.js'].lineData[23]++;
+  _$jscoverage['/compiler/ast.js'].lineData[36]++;
   ast.ProgramNode.prototype.type = 'program';
-  _$jscoverage['/compiler/ast.js'].lineData[25]++;
-  ast.BlockNode = function(lineNumber, tpl, program, close) {
-  _$jscoverage['/compiler/ast.js'].functionData[2]++;
-  _$jscoverage['/compiler/ast.js'].lineData[26]++;
+  _$jscoverage['/compiler/ast.js'].lineData[38]++;
+  ast.BlockStatement = function(lineNumber, command, program, close) {
+  _$jscoverage['/compiler/ast.js'].functionData[3]++;
+  _$jscoverage['/compiler/ast.js'].lineData[39]++;
   var closeParts = close.parts, self = this, e;
-  _$jscoverage['/compiler/ast.js'].lineData[28]++;
-  if (visit1_28_1(!S.equals(tpl.path.parts, closeParts))) {
-    _$jscoverage['/compiler/ast.js'].lineData[29]++;
-    e = ('Syntax error at line ' + lineNumber + ':\n' + 'expect {{/' + tpl.path.parts + '}} not {{/' + closeParts + '}}');
-    _$jscoverage['/compiler/ast.js'].lineData[35]++;
+  _$jscoverage['/compiler/ast.js'].lineData[43]++;
+  if (visit4_43_1(!sameArray(command.id.parts, closeParts))) {
+    _$jscoverage['/compiler/ast.js'].lineData[44]++;
+    e = ('Syntax error at line ' + lineNumber + ':\n' + 'expect {{/' + command.id.parts + '}} not {{/' + closeParts + '}}');
+    _$jscoverage['/compiler/ast.js'].lineData[50]++;
     S.error(e);
   }
-  _$jscoverage['/compiler/ast.js'].lineData[37]++;
+  _$jscoverage['/compiler/ast.js'].lineData[52]++;
   self.lineNumber = lineNumber;
-  _$jscoverage['/compiler/ast.js'].lineData[38]++;
-  self.tpl = tpl;
-  _$jscoverage['/compiler/ast.js'].lineData[39]++;
+  _$jscoverage['/compiler/ast.js'].lineData[53]++;
+  self.command = command;
+  _$jscoverage['/compiler/ast.js'].lineData[54]++;
   self.program = program;
 };
-  _$jscoverage['/compiler/ast.js'].lineData[42]++;
-  ast.BlockNode.prototype.type = 'block';
-  _$jscoverage['/compiler/ast.js'].lineData[52]++;
-  ast.TplNode = function(lineNumber, path, params, hash) {
-  _$jscoverage['/compiler/ast.js'].functionData[3]++;
-  _$jscoverage['/compiler/ast.js'].lineData[53]++;
-  var self = this;
-  _$jscoverage['/compiler/ast.js'].lineData[54]++;
-  self.lineNumber = lineNumber;
-  _$jscoverage['/compiler/ast.js'].lineData[55]++;
-  self.path = path;
-  _$jscoverage['/compiler/ast.js'].lineData[56]++;
-  self.params = params;
   _$jscoverage['/compiler/ast.js'].lineData[57]++;
-  self.hash = hash;
-  _$jscoverage['/compiler/ast.js'].lineData[58]++;
-  self.escaped = true;
-  _$jscoverage['/compiler/ast.js'].lineData[61]++;
-  self.isInverted = false;
-};
-  _$jscoverage['/compiler/ast.js'].lineData[64]++;
-  ast.TplNode.prototype.type = 'tpl';
-  _$jscoverage['/compiler/ast.js'].lineData[67]++;
-  ast.TplExpressionNode = function(lineNumber, expression) {
+  ast.BlockStatement.prototype.type = 'blockStatement';
+  _$jscoverage['/compiler/ast.js'].lineData[59]++;
+  ast.InlineCommandStatement = function(lineNumber, command, escape) {
   _$jscoverage['/compiler/ast.js'].functionData[4]++;
+  _$jscoverage['/compiler/ast.js'].lineData[60]++;
+  this.lineNumber = lineNumber;
+  _$jscoverage['/compiler/ast.js'].lineData[61]++;
+  this.command = command;
+  _$jscoverage['/compiler/ast.js'].lineData[62]++;
+  this.escape = escape;
+};
+  _$jscoverage['/compiler/ast.js'].lineData[65]++;
+  ast.InlineCommandStatement.prototype.type = 'inlineCommandStatement';
+  _$jscoverage['/compiler/ast.js'].lineData[67]++;
+  ast.ExpressionStatement = function(lineNumber, expression, escape) {
+  _$jscoverage['/compiler/ast.js'].functionData[5]++;
   _$jscoverage['/compiler/ast.js'].lineData[68]++;
   var self = this;
   _$jscoverage['/compiler/ast.js'].lineData[69]++;
   self.lineNumber = lineNumber;
   _$jscoverage['/compiler/ast.js'].lineData[70]++;
-  self.expression = expression;
+  self.value = expression;
   _$jscoverage['/compiler/ast.js'].lineData[71]++;
-  self.escaped = true;
+  self.escape = escape;
 };
   _$jscoverage['/compiler/ast.js'].lineData[74]++;
-  ast.TplExpressionNode.prototype.type = 'tplExpression';
+  ast.ExpressionStatement.prototype.type = 'expressionStatement';
   _$jscoverage['/compiler/ast.js'].lineData[76]++;
-  ast.ContentNode = function(lineNumber, value) {
-  _$jscoverage['/compiler/ast.js'].functionData[5]++;
+  ast.ContentStatement = function(lineNumber, value) {
+  _$jscoverage['/compiler/ast.js'].functionData[6]++;
   _$jscoverage['/compiler/ast.js'].lineData[77]++;
   var self = this;
   _$jscoverage['/compiler/ast.js'].lineData[78]++;
@@ -462,47 +509,35 @@ KISSY.add(function(S) {
   self.value = value;
 };
   _$jscoverage['/compiler/ast.js'].lineData[82]++;
-  ast.ContentNode.prototype.type = 'content';
+  ast.ContentStatement.prototype.type = 'contentStatement';
   _$jscoverage['/compiler/ast.js'].lineData[84]++;
   ast.UnaryExpression = function(unaryType, v) {
-  _$jscoverage['/compiler/ast.js'].functionData[6]++;
+  _$jscoverage['/compiler/ast.js'].functionData[7]++;
   _$jscoverage['/compiler/ast.js'].lineData[85]++;
   this.value = v;
   _$jscoverage['/compiler/ast.js'].lineData[86]++;
   this.unaryType = unaryType;
 };
-  _$jscoverage['/compiler/ast.js'].lineData[89]++;
-  ast.UnaryExpression.prototype.type = 'unaryExpression';
-  _$jscoverage['/compiler/ast.js'].lineData[91]++;
-  ast.MultiplicativeExpression = function(op1, opType, op2) {
-  _$jscoverage['/compiler/ast.js'].functionData[7]++;
-  _$jscoverage['/compiler/ast.js'].lineData[92]++;
-  var self = this;
-  _$jscoverage['/compiler/ast.js'].lineData[93]++;
-  self.op1 = op1;
-  _$jscoverage['/compiler/ast.js'].lineData[94]++;
-  self.opType = opType;
-  _$jscoverage['/compiler/ast.js'].lineData[95]++;
-  self.op2 = op2;
-};
-  _$jscoverage['/compiler/ast.js'].lineData[98]++;
-  ast.MultiplicativeExpression.prototype.type = 'multiplicativeExpression';
-  _$jscoverage['/compiler/ast.js'].lineData[100]++;
-  ast.AdditiveExpression = function(op1, opType, op2) {
+  _$jscoverage['/compiler/ast.js'].lineData[97]++;
+  ast.Command = function(lineNumber, id, params, hash) {
   _$jscoverage['/compiler/ast.js'].functionData[8]++;
-  _$jscoverage['/compiler/ast.js'].lineData[101]++;
+  _$jscoverage['/compiler/ast.js'].lineData[98]++;
   var self = this;
+  _$jscoverage['/compiler/ast.js'].lineData[99]++;
+  self.lineNumber = lineNumber;
+  _$jscoverage['/compiler/ast.js'].lineData[100]++;
+  self.id = id;
+  _$jscoverage['/compiler/ast.js'].lineData[101]++;
+  self.params = params;
   _$jscoverage['/compiler/ast.js'].lineData[102]++;
-  self.op1 = op1;
-  _$jscoverage['/compiler/ast.js'].lineData[103]++;
-  self.opType = opType;
-  _$jscoverage['/compiler/ast.js'].lineData[104]++;
-  self.op2 = op2;
+  self.hash = hash;
 };
+  _$jscoverage['/compiler/ast.js'].lineData[105]++;
+  ast.Command.prototype.type = 'command';
   _$jscoverage['/compiler/ast.js'].lineData[107]++;
-  ast.AdditiveExpression.prototype.type = 'additiveExpression';
+  ast.UnaryExpression.prototype.type = 'unaryExpression';
   _$jscoverage['/compiler/ast.js'].lineData[109]++;
-  ast.RelationalExpression = function(op1, opType, op2) {
+  ast.MultiplicativeExpression = function(op1, opType, op2) {
   _$jscoverage['/compiler/ast.js'].functionData[9]++;
   _$jscoverage['/compiler/ast.js'].lineData[110]++;
   var self = this;
@@ -514,9 +549,9 @@ KISSY.add(function(S) {
   self.op2 = op2;
 };
   _$jscoverage['/compiler/ast.js'].lineData[116]++;
-  ast.RelationalExpression.prototype.type = 'relationalExpression';
+  ast.MultiplicativeExpression.prototype.type = 'multiplicativeExpression';
   _$jscoverage['/compiler/ast.js'].lineData[118]++;
-  ast.EqualityExpression = function(op1, opType, op2) {
+  ast.AdditiveExpression = function(op1, opType, op2) {
   _$jscoverage['/compiler/ast.js'].functionData[10]++;
   _$jscoverage['/compiler/ast.js'].lineData[119]++;
   var self = this;
@@ -528,113 +563,136 @@ KISSY.add(function(S) {
   self.op2 = op2;
 };
   _$jscoverage['/compiler/ast.js'].lineData[125]++;
-  ast.EqualityExpression.prototype.type = 'equalityExpression';
+  ast.AdditiveExpression.prototype.type = 'additiveExpression';
   _$jscoverage['/compiler/ast.js'].lineData[127]++;
-  ast.ConditionalAndExpression = function(op1, op2) {
+  ast.RelationalExpression = function(op1, opType, op2) {
   _$jscoverage['/compiler/ast.js'].functionData[11]++;
   _$jscoverage['/compiler/ast.js'].lineData[128]++;
   var self = this;
   _$jscoverage['/compiler/ast.js'].lineData[129]++;
   self.op1 = op1;
   _$jscoverage['/compiler/ast.js'].lineData[130]++;
+  self.opType = opType;
+  _$jscoverage['/compiler/ast.js'].lineData[131]++;
   self.op2 = op2;
 };
-  _$jscoverage['/compiler/ast.js'].lineData[133]++;
-  ast.ConditionalAndExpression.prototype.type = 'conditionalAndExpression';
-  _$jscoverage['/compiler/ast.js'].lineData[135]++;
-  ast.ConditionalOrExpression = function(op1, op2) {
-  _$jscoverage['/compiler/ast.js'].functionData[12]++;
+  _$jscoverage['/compiler/ast.js'].lineData[134]++;
+  ast.RelationalExpression.prototype.type = 'relationalExpression';
   _$jscoverage['/compiler/ast.js'].lineData[136]++;
-  var self = this;
+  ast.EqualityExpression = function(op1, opType, op2) {
+  _$jscoverage['/compiler/ast.js'].functionData[12]++;
   _$jscoverage['/compiler/ast.js'].lineData[137]++;
-  self.op1 = op1;
+  var self = this;
   _$jscoverage['/compiler/ast.js'].lineData[138]++;
+  self.op1 = op1;
+  _$jscoverage['/compiler/ast.js'].lineData[139]++;
+  self.opType = opType;
+  _$jscoverage['/compiler/ast.js'].lineData[140]++;
   self.op2 = op2;
 };
-  _$jscoverage['/compiler/ast.js'].lineData[141]++;
-  ast.ConditionalOrExpression.prototype.type = 'conditionalOrExpression';
   _$jscoverage['/compiler/ast.js'].lineData[143]++;
-  ast.StringNode = function(lineNumber, value) {
-  _$jscoverage['/compiler/ast.js'].functionData[13]++;
-  _$jscoverage['/compiler/ast.js'].lineData[144]++;
-  var self = this;
+  ast.EqualityExpression.prototype.type = 'equalityExpression';
   _$jscoverage['/compiler/ast.js'].lineData[145]++;
-  self.lineNumber = lineNumber;
+  ast.ConditionalAndExpression = function(op1, op2) {
+  _$jscoverage['/compiler/ast.js'].functionData[13]++;
   _$jscoverage['/compiler/ast.js'].lineData[146]++;
-  self.value = value;
+  var self = this;
+  _$jscoverage['/compiler/ast.js'].lineData[147]++;
+  self.op1 = op1;
+  _$jscoverage['/compiler/ast.js'].lineData[148]++;
+  self.op2 = op2;
 };
-  _$jscoverage['/compiler/ast.js'].lineData[149]++;
-  ast.StringNode.prototype.type = 'string';
   _$jscoverage['/compiler/ast.js'].lineData[151]++;
-  ast.NumberNode = function(lineNumber, value) {
-  _$jscoverage['/compiler/ast.js'].functionData[14]++;
-  _$jscoverage['/compiler/ast.js'].lineData[152]++;
-  var self = this;
+  ast.ConditionalAndExpression.prototype.type = 'conditionalAndExpression';
   _$jscoverage['/compiler/ast.js'].lineData[153]++;
-  self.lineNumber = lineNumber;
+  ast.ConditionalOrExpression = function(op1, op2) {
+  _$jscoverage['/compiler/ast.js'].functionData[14]++;
   _$jscoverage['/compiler/ast.js'].lineData[154]++;
-  self.value = value;
-};
-  _$jscoverage['/compiler/ast.js'].lineData[157]++;
-  ast.NumberNode.prototype.type = 'number';
-  _$jscoverage['/compiler/ast.js'].lineData[159]++;
-  ast.BooleanNode = function(lineNumber, value) {
-  _$jscoverage['/compiler/ast.js'].functionData[15]++;
-  _$jscoverage['/compiler/ast.js'].lineData[160]++;
   var self = this;
+  _$jscoverage['/compiler/ast.js'].lineData[155]++;
+  self.op1 = op1;
+  _$jscoverage['/compiler/ast.js'].lineData[156]++;
+  self.op2 = op2;
+};
+  _$jscoverage['/compiler/ast.js'].lineData[159]++;
+  ast.ConditionalOrExpression.prototype.type = 'conditionalOrExpression';
   _$jscoverage['/compiler/ast.js'].lineData[161]++;
-  self.lineNumber = lineNumber;
+  ast.String = function(lineNumber, value) {
+  _$jscoverage['/compiler/ast.js'].functionData[15]++;
   _$jscoverage['/compiler/ast.js'].lineData[162]++;
+  var self = this;
+  _$jscoverage['/compiler/ast.js'].lineData[163]++;
+  self.lineNumber = lineNumber;
+  _$jscoverage['/compiler/ast.js'].lineData[164]++;
   self.value = value;
 };
-  _$jscoverage['/compiler/ast.js'].lineData[165]++;
-  ast.BooleanNode.prototype.type = 'boolean';
   _$jscoverage['/compiler/ast.js'].lineData[167]++;
-  ast.HashNode = function(lineNumber, raw) {
-  _$jscoverage['/compiler/ast.js'].functionData[16]++;
-  _$jscoverage['/compiler/ast.js'].lineData[168]++;
-  var self = this, value = {};
+  ast.String.prototype.type = 'string';
   _$jscoverage['/compiler/ast.js'].lineData[169]++;
-  self.lineNumber = lineNumber;
+  ast.Number = function(lineNumber, value) {
+  _$jscoverage['/compiler/ast.js'].functionData[16]++;
   _$jscoverage['/compiler/ast.js'].lineData[170]++;
-  S.each(raw, function(r) {
-  _$jscoverage['/compiler/ast.js'].functionData[17]++;
+  var self = this;
   _$jscoverage['/compiler/ast.js'].lineData[171]++;
-  value[r[0]] = r[1];
-});
-  _$jscoverage['/compiler/ast.js'].lineData[173]++;
+  self.lineNumber = lineNumber;
+  _$jscoverage['/compiler/ast.js'].lineData[172]++;
   self.value = value;
 };
-  _$jscoverage['/compiler/ast.js'].lineData[176]++;
-  ast.HashNode.prototype.type = 'hash';
+  _$jscoverage['/compiler/ast.js'].lineData[175]++;
+  ast.Number.prototype.type = 'number';
+  _$jscoverage['/compiler/ast.js'].lineData[177]++;
+  ast.Boolean = function(lineNumber, value) {
+  _$jscoverage['/compiler/ast.js'].functionData[17]++;
   _$jscoverage['/compiler/ast.js'].lineData[178]++;
-  ast.IdNode = function(lineNumber, raw) {
-  _$jscoverage['/compiler/ast.js'].functionData[18]++;
+  var self = this;
   _$jscoverage['/compiler/ast.js'].lineData[179]++;
-  var self = this, parts = [], depth = 0;
-  _$jscoverage['/compiler/ast.js'].lineData[180]++;
   self.lineNumber = lineNumber;
-  _$jscoverage['/compiler/ast.js'].lineData[181]++;
-  S.each(raw, function(p) {
-  _$jscoverage['/compiler/ast.js'].functionData[19]++;
-  _$jscoverage['/compiler/ast.js'].lineData[182]++;
-  if (visit2_182_1(p === '..')) {
-    _$jscoverage['/compiler/ast.js'].lineData[183]++;
-    depth++;
-  } else {
-    _$jscoverage['/compiler/ast.js'].lineData[185]++;
-    parts.push(p);
-  }
-});
+  _$jscoverage['/compiler/ast.js'].lineData[180]++;
+  self.value = value;
+};
+  _$jscoverage['/compiler/ast.js'].lineData[183]++;
+  ast.Boolean.prototype.type = 'boolean';
+  _$jscoverage['/compiler/ast.js'].lineData[185]++;
+  ast.Hash = function(lineNumber) {
+  _$jscoverage['/compiler/ast.js'].functionData[18]++;
+  _$jscoverage['/compiler/ast.js'].lineData[186]++;
+  var self = this, value = {};
   _$jscoverage['/compiler/ast.js'].lineData[188]++;
-  self.parts = parts;
+  self.lineNumber = lineNumber;
   _$jscoverage['/compiler/ast.js'].lineData[189]++;
+  self.value = value;
+};
+  _$jscoverage['/compiler/ast.js'].lineData[192]++;
+  ast.Hash.prototype.type = 'hash';
+  _$jscoverage['/compiler/ast.js'].lineData[194]++;
+  ast.Id = function(lineNumber, raw) {
+  _$jscoverage['/compiler/ast.js'].functionData[19]++;
+  _$jscoverage['/compiler/ast.js'].lineData[195]++;
+  var self = this, parts = [], depth = 0;
+  _$jscoverage['/compiler/ast.js'].lineData[198]++;
+  self.lineNumber = lineNumber;
+  _$jscoverage['/compiler/ast.js'].lineData[199]++;
+  for (var i = 0, l = raw.length; visit5_199_1(i < l); i++) {
+    _$jscoverage['/compiler/ast.js'].lineData[200]++;
+    var p = raw[i];
+    _$jscoverage['/compiler/ast.js'].lineData[201]++;
+    if (visit6_201_1(p === '..')) {
+      _$jscoverage['/compiler/ast.js'].lineData[202]++;
+      depth++;
+    } else {
+      _$jscoverage['/compiler/ast.js'].lineData[204]++;
+      parts.push(p);
+    }
+  }
+  _$jscoverage['/compiler/ast.js'].lineData[207]++;
+  self.parts = parts;
+  _$jscoverage['/compiler/ast.js'].lineData[208]++;
   self.string = parts.join('.');
-  _$jscoverage['/compiler/ast.js'].lineData[190]++;
+  _$jscoverage['/compiler/ast.js'].lineData[209]++;
   self.depth = depth;
 };
-  _$jscoverage['/compiler/ast.js'].lineData[193]++;
-  ast.IdNode.prototype.type = 'id';
-  _$jscoverage['/compiler/ast.js'].lineData[195]++;
+  _$jscoverage['/compiler/ast.js'].lineData[212]++;
+  ast.Id.prototype.type = 'id';
+  _$jscoverage['/compiler/ast.js'].lineData[214]++;
   return ast;
 });

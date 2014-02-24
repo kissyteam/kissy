@@ -59,6 +59,7 @@
     KISSY.use("xtemplate,node", function (S, XTemplate) {
         var $ = S.all;
         $('#parse').on('click', function () {
+            debugger
             var g = XTemplate.compiler.parse($('#tpl').val());
             S.log(g);
         });

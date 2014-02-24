@@ -9,30 +9,12 @@ KISSY.add(function (S, require) {
 
     var cache = XTemplate.cache = {};
 
-    function compile(tpl, config) {
-        var fn;
-
-        if (config.cache && (fn = cache[tpl])) {
-            return fn;
-        }
-
-        fn = compiler.compileToFn(tpl, config);
-
-        if (config.cache) {
-            cache[tpl] = fn;
-        }
-
-        return fn;
-    }
-
-    var defaultCfg = {
-        /**
-         * whether cache template string
-         * @member KISSY.XTemplate
-         * @cfg {Boolean} cache
-         */
-        cache: true
-    };
+    /*
+     *whether cache template string
+     * @member KISSY.XTemplate
+     * @cfg {Boolean} cache.
+     * Defaults to true.
+     */
 
     /**
      * xtemplate engine for KISSY.
@@ -49,19 +31,54 @@ KISSY.add(function (S, require) {
      */
     function XTemplate(tpl, config) {
         var self = this;
-        config = S.merge(defaultCfg, config);
-
-        if (typeof tpl === 'string') {
-            tpl = compile(tpl, config);
+        if (config && config.cache === false) {
+            self.cache = false;
         }
-
         XTemplate.superclass.constructor.call(self, tpl, config);
     }
 
-    S.extend(XTemplate, XTemplateRuntime, {}, {
+    S.extend(XTemplate, XTemplateRuntime, {
+        cache: true,
+
+        derive: function () {
+            var engine = XTemplate.superclass.derive.apply(this, arguments);
+            engine.cache = this.cache;
+            return engine;
+        },
+
+        compile: function () {
+            var fn,
+                self = this,
+                tpl = self.tpl;
+
+            if (self.cache && (fn = cache[tpl])) {
+                return fn;
+            }
+
+            fn = compiler.compileToFn(tpl, self.name);
+
+            if (self.cache) {
+                cache[tpl] = fn;
+            }
+
+            return fn;
+        },
+
+        render: function () {
+            var self = this;
+            if (!self.compiled) {
+                self.compiled = 1;
+                var tpl = self.tpl;
+                if (typeof tpl === 'string') {
+                    self.tpl = self.compile();
+                }
+            }
+            return XTemplate.superclass.render.apply(self, arguments);
+        }
+    }, {
         compiler: compiler,
 
-        Scope:XTemplateRuntime.Scope,
+        Scope: XTemplateRuntime.Scope,
 
         RunTime: XTemplateRuntime,
 

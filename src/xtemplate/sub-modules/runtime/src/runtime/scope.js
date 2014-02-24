@@ -53,6 +53,9 @@ KISSY.add(function (S) {
         has: function (name) {
             var data = this.data;
             var affix = this.affix;
+            if (name === '.' || name === 'this') {
+                return true;
+            }
 
             if (affix && (name in affix)) {
                 return true;
@@ -66,6 +69,10 @@ KISSY.add(function (S) {
             var data = this.data;
             var affix = this.affix;
 
+            if (name === '.' || name === 'this') {
+                return this.data;
+            }
+
             if (affix && (name in affix)) {
                 return affix[name];
             }
@@ -78,15 +85,20 @@ KISSY.add(function (S) {
         },
 
         resolve: function (name, depth) {
-            // this refer to current scope object
-            if (name === '.') {
-                name = 'this';
+            var scope = this;
+            if (!depth && typeof name !== 'string' && name.length === 1) {
+                if (scope.has(name[0])) {
+                    return scope.get(name[0]);
+                }
             }
 
-            var parts = name.split('.');
+            var parts = name;
 
-            var scope = this,
-                len, i, v, p, valid;
+            if (typeof name === 'string') {
+                parts = name.split('.');
+            }
+
+            var len, i, v, p, valid;
 
             // root keyword for root scope
             if (parts[0] === 'root') {
@@ -135,7 +147,7 @@ KISSY.add(function (S) {
                         // this is current scope for mustache
                         v = v.call(this.data);
                     }
-                    return [v];
+                    return v;
                 }
                 if (endScopeFind) {
                     break;
@@ -143,7 +155,8 @@ KISSY.add(function (S) {
 
                 scope = scope.parent;
             }
-            return false;
+            // for speed, return empty by default
+            return '';
         }
     };
 

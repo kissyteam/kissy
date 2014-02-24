@@ -1,6 +1,7 @@
 /*
-Copyright 2013, KISSY v1.50
+Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Dec 12 22:22
+build time: Feb 25 00:53
 */
-KISSY.add("xtemplate",["xtemplate/runtime","xtemplate/compiler"],function(g,h){function b(a,c){c=g.merge(k,c);if("string"===typeof a){var e=a,f=c,d;if(!f.cache||!(d=i[e]))d=j.compileToFn(e,f),f.cache&&(i[e]=d);a=d}b.superclass.constructor.call(this,a,c)}var a=h("xtemplate/runtime"),j=h("xtemplate/compiler"),i=b.cache={},k={cache:!0};g.extend(b,a,{},{compiler:j,Scope:a.Scope,RunTime:a,addCommand:a.addCommand,removeCommand:a.removeCommand});return b});
+KISSY.add("xtemplate",["xtemplate/runtime","xtemplate/compiler"],function(h,e){function c(a,b){b&&!1===b.cache&&(this.cache=!1);c.superclass.constructor.call(this,a,b)}var d=e("xtemplate/runtime"),f=e("xtemplate/compiler"),g=c.cache={};h.extend(c,d,{cache:!0,derive:function(){var a=c.superclass.derive.apply(this,arguments);a.cache=this.cache;return a},compile:function(){var a,b=this.tpl;if(this.cache&&(a=g[b]))return a;a=f.compileToFn(b,this.name);this.cache&&(g[b]=a);return a},render:function(){this.compiled||
+(this.compiled=1,"string"===typeof this.tpl&&(this.tpl=this.compile()));return c.superclass.render.apply(this,arguments)}},{compiler:f,Scope:d.Scope,RunTime:d,addCommand:d.addCommand,removeCommand:d.removeCommand});return c});

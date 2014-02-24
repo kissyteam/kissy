@@ -15,7 +15,7 @@ KISSY.add(function (S, require) {
         });
 
         it('detect un-closed block tag', function () {
-            var tpl = '{{#if title}}\n' +
+            var tpl = '{{#if(title)}}\n' +
                     'shoot\n' +
                     '',
                 data = {
@@ -31,68 +31,18 @@ KISSY.add(function (S, require) {
             }
             if (S.config('debug')) {
                 expect(S.startsWith(info, 'Syntax error at line 3:\n' +
-                    '{{#if title}} shoot\n\n' +
+                    '{{#if(title)}} shoot\n\n' +
                     '--------------------^\n' +
                     'expect'));
                 // OPEN_END_BLOCK
             }
         });
 
-        it('warn about missing property', function () {
-            var log = S.log, msg2 = '';
-
-            var tpl = 'this is \n' +
-                '{{title}}';
-
-            var data = {
-                title2: 1
-            };
-
-            S.log = function (msg, type) {
-                if (type === 'info') {
-                    msg2 = msg;
-                }
-            };
-
-            var render = new XTemplate(tpl).render(data);
-
-            expect(render).toBe('this is \n');
-
-            expect(msg2).toBe('can not find property: "title" at line 2');
-
-            S.log = log;
-        });
-
-        it('throw error if missing property', function () {
-            if (!KISSY.config('debug')) {
-                return;
-            }
-
-            var tpl = 'this is \n' +
-                '{{title}}';
-
-            var data = {
-                title2: 1
-            };
-
-            var msg;
-
-            try {
-                new XTemplate(tpl, {
-                    silent: 0
-                }).render(data);
-            } catch (e) {
-                msg = e.message;
-            }
-
-            expect(msg).toBe('can not find property: "title" at line 2');
-        });
-
         it('detect unmatched', function () {
             if (!KISSY.config('debug')) {
                 return;
             }
-            var tpl = '{{#if n===n1}}\n' +
+            var tpl = '{{#if(n === n1)}}\n' +
                 'n eq n1\n' +
                 '{{/with}}';
 
@@ -110,8 +60,6 @@ KISSY.add(function (S, require) {
                 }
             }).toThrow('Syntax error at line 3:\n' +
                     'expect {{/if}} not {{/with}}');
-
         });
-
     });
 });

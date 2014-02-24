@@ -180,7 +180,7 @@ kison 支持在每个语法规则项中添加动作函数，通过工具在识�
 不过为了不折磨大脑，最后放松下，可以直接采用原生的代码拼接：
 
 
-    visitor.tplNode=function(node){
+    visitor.command=function(node){
 
         if(node.escapeHtml){
             codes.push("if("+node.id+" in data) { ret.push(KISSY.escapeHtml(data."+node.js+");) }"+

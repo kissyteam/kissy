@@ -1,14 +1,14 @@
-{{extend './layout'}}
-{{#block 'head'}}
+{{extend ('./layout')}}
+{{#block ('head')}}
     <title>Index of {{cur}}</title>
 {{/block}}
-{{#block 'body'}}
+{{#block ('body')}}
     <h1>Index of {{cur}}</h1>
     <ul>
-        {{#if cur!=='/'}}
+        {{#if (cur !== '/')}}
         <li><a href="../../"> Parent Directory</a></li>
         {{/if}}
-        {{#each files}}
+        {{#each (files)}}
         <li><a href="{{.}}">{{.}}</a></li>
         {{/each}}
     </ul>

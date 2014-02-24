@@ -1,10 +1,10 @@
 /*
-Copyright 2013, KISSY v1.50
+Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Dec 12 22:22
+build time: Feb 25 00:53
 */
 /*
- Combined processedModules by KISSY Module Compiler: 
+ Combined modules by KISSY Module Compiler: 
 
  xtemplate/compiler/parser
  xtemplate/compiler/ast
@@ -159,7 +159,7 @@ KISSY.add("xtemplate/compiler/parser", [], function(_, undefined) {
   }, ["t"]], ["b", /^{{%([\s\S]*?)%}}/, function() {
     this.text = this.matches[1] || "";
     this.popState()
-  }, ["t"]], ["f", /^{{{?/, 0, ["t"]], ["g", /^\s+/, 0, ["t"]], ["h", /^}}}?/, function popState() {
+  }, ["t"]], ["f", /^{{{?/, 0, ["t"]], [0, /^\s+/, 0, ["t"]], ["g", /^,/, 0, ["t"]], ["h", /^}}}?/, function popState() {
     this.popState()
   }, ["t"]], ["i", /^\(/, 0, ["t"]], ["j", /^\)/, 0, ["t"]], ["k", /^\|\|/, 0, ["t"]], ["l", /^&&/, 0, ["t"]], ["m", /^===/, 0, ["t"]], ["n", /^!==/, 0, ["t"]], ["o", /^>=/, 0, ["t"]], ["p", /^<=/, 0, ["t"]], ["q", /^>/, 0, ["t"]], ["r", /^</, 0, ["t"]], ["s", /^\+/, 0, ["t"]], ["t", /^-/, 0, ["t"]], ["u", /^\*/, 0, ["t"]], ["v", /^\//, 0, ["t"]], ["w", /^%/, 0, ["t"]], ["x", /^!/, 0, ["t"]], ["y", /^"(\\[\s\S]|[^\\"])*"/, function() {
     this.text = this.text.slice(1, -1).replace(/\\"/g, '"')
@@ -171,8 +171,8 @@ KISSY.add("xtemplate/compiler/parser", [], function(_, undefined) {
     this.popState()
   }, ["ws"]], ["ad", /^\./, 0, ["t"]], ["ae", /^\[/, 0, ["t"]], ["af", /^\]/, 0, ["t"]], ["ac", /^[a-zA-Z0-9_$]+/, 0, ["t"]], ["ag", /^./, 0, ["t"]]]});
   parser.lexer = lexer;
-  lexer.symbolMap = {$EOF:"a", CONTENT:"b", OPEN_BLOCK:"c", OPEN_CLOSE_BLOCK:"d", INVERSE:"e", OPEN_TPL:"f", SPACE:"g", CLOSE:"h", LPAREN:"i", RPAREN:"j", OR:"k", AND:"l", LOGIC_EQUALS:"m", LOGIC_NOT_EQUALS:"n", GE:"o", LE:"p", GT:"q", LT:"r", PLUS:"s", MINUS:"t", MULTIPLY:"u", DIVIDE:"v", MODULUS:"w", NOT:"x", STRING:"y", BOOLEAN:"z", NUMBER:"aa", EQUALS:"ab", ID:"ac", SEP:"ad", REF_START:"ae", REF_END:"af", INVALID:"ag", $START:"ah", program:"ai", statements:"aj", statement:"ak", openBlock:"al", 
-  closeBlock:"am", tpl:"an", inBlockTpl:"ao", path:"ap", inTpl:"aq", Expression:"ar", params:"as", hash:"at", param:"au", ConditionalOrExpression:"av", ConditionalAndExpression:"aw", EqualityExpression:"ax", RelationalExpression:"ay", AdditiveExpression:"az", MultiplicativeExpression:"ba", UnaryExpression:"bb", PrimaryExpression:"bc", hashSegments:"bd", hashSegment:"be", pathSegments:"bf"};
+  lexer.symbolMap = {$EOF:"a", CONTENT:"b", OPEN_BLOCK:"c", OPEN_CLOSE_BLOCK:"d", INVERSE:"e", OPEN_TPL:"f", COMMA:"g", CLOSE:"h", LPAREN:"i", RPAREN:"j", OR:"k", AND:"l", LOGIC_EQUALS:"m", LOGIC_NOT_EQUALS:"n", GE:"o", LE:"p", GT:"q", LT:"r", PLUS:"s", MINUS:"t", MULTIPLY:"u", DIVIDE:"v", MODULUS:"w", NOT:"x", STRING:"y", BOOLEAN:"z", NUMBER:"aa", EQUALS:"ab", ID:"ac", SEP:"ad", REF_START:"ae", REF_END:"af", INVALID:"ag", $START:"ah", program:"ai", statements:"aj", statement:"ak", command:"al", 
+  id:"am", expression:"an", params:"ao", hash:"ap", param:"aq", ConditionalOrExpression:"ar", ConditionalAndExpression:"as", EqualityExpression:"at", RelationalExpression:"au", AdditiveExpression:"av", MultiplicativeExpression:"aw", UnaryExpression:"ax", PrimaryExpression:"ay", hashSegment:"az", idSegments:"ba"};
   parser.productions = [["ah", ["ai"]], ["ai", ["aj", "e", "aj"], function() {
     return new this.yy.ProgramNode(this.lexer.lineNumber, this.$1, this.$3)
   }], ["ai", ["aj"], function() {
@@ -181,124 +181,110 @@ KISSY.add("xtemplate/compiler/parser", [], function(_, undefined) {
     return[this.$1]
   }], ["aj", ["aj", "ak"], function() {
     this.$1.push(this.$2)
-  }], ["ak", ["al", "ai", "am"], function() {
-    return new this.yy.BlockNode(this.lexer.lineNumber, this.$1, this.$2, this.$3)
-  }], ["ak", ["an"]], ["ak", ["b"], function() {
-    return new this.yy.ContentNode(this.lexer.lineNumber, this.$1)
-  }], ["ao", ["ap"], function() {
-    return new this.yy.TplNode(this.lexer.lineNumber, this.$1)
-  }], ["ao", ["aq"]], ["al", ["c", "ao", "h"], function() {
-    if(this.$1.charAt(this.$1.length - 1) === "^") {
-      this.$2.isInverted = 1
-    }
-    return this.$2
-  }], ["am", ["d", "ap", "h"], function() {
-    return this.$2
-  }], ["an", ["f", "aq", "h"], function() {
-    if(this.$1.length === 3) {
-      this.$2.escaped = false
-    }
-    return this.$2
-  }], ["an", ["f", "ar", "h"], function() {
-    var tpl = new this.yy.TplExpressionNode(this.lexer.lineNumber, this.$2);
-    if(this.$1.length === 3) {
-      tpl.escaped = false
-    }
-    return tpl
-  }], ["aq", ["ap", "g", "as", "g", "at"], function() {
-    return new this.yy.TplNode(this.lexer.lineNumber, this.$1, this.$3, this.$5)
-  }], ["aq", ["ap", "g", "as"], function() {
-    return new this.yy.TplNode(this.lexer.lineNumber, this.$1, this.$3)
-  }], ["aq", ["ap", "g", "at"], function() {
-    return new this.yy.TplNode(this.lexer.lineNumber, this.$1, null, this.$3)
-  }], ["as", ["as", "g", "au"], function() {
+  }], ["ak", ["c", "al", "h", "ai", "d", "am", "h"], function() {
+    return new this.yy.BlockStatement(this.lexer.lineNumber, this.$2, this.$4, this.$6)
+  }], ["ak", ["f", "an", "h"], function() {
+    return new this.yy.ExpressionStatement(this.lexer.lineNumber, this.$2, this.$1.length !== 3)
+  }], ["ak", ["b"], function() {
+    return new this.yy.ContentStatement(this.lexer.lineNumber, this.$1)
+  }], ["al", ["am", "i", "ao", "g", "ap", "j"], function() {
+    return new this.yy.Command(this.lexer.lineNumber, this.$1, this.$3, this.$5)
+  }], ["al", ["am", "i", "ao", "j"], function() {
+    return new this.yy.Command(this.lexer.lineNumber, this.$1, this.$3)
+  }], ["al", ["am", "i", "ap", "j"], function() {
+    return new this.yy.Command(this.lexer.lineNumber, this.$1, null, this.$3)
+  }], ["al", ["am", "i", "j"], function() {
+    return new this.yy.Command(this.lexer.lineNumber, this.$1)
+  }], ["ao", ["ao", "g", "aq"], function() {
     this.$1.push(this.$3)
-  }], ["as", ["au"], function() {
+  }], ["ao", ["aq"], function() {
     return[this.$1]
-  }], ["au", ["ar"]], ["ar", ["av"]], ["av", ["aw"]], ["av", ["av", "k", "aw"], function() {
+  }], ["aq", ["an"]], ["an", ["ar"]], ["ar", ["as"]], ["ar", ["ar", "k", "as"], function() {
     return new this.yy.ConditionalOrExpression(this.$1, this.$3)
-  }], ["aw", ["ax"]], ["aw", ["aw", "l", "ax"], function() {
+  }], ["as", ["at"]], ["as", ["as", "l", "at"], function() {
     return new this.yy.ConditionalAndExpression(this.$1, this.$3)
-  }], ["ax", ["ay"]], ["ax", ["ax", "m", "ay"], function() {
+  }], ["at", ["au"]], ["at", ["at", "m", "au"], function() {
     return new this.yy.EqualityExpression(this.$1, "===", this.$3)
-  }], ["ax", ["ax", "n", "ay"], function() {
+  }], ["at", ["at", "n", "au"], function() {
     return new this.yy.EqualityExpression(this.$1, "!==", this.$3)
-  }], ["ay", ["az"]], ["ay", ["ay", "r", "az"], function() {
+  }], ["au", ["av"]], ["au", ["au", "r", "av"], function() {
     return new this.yy.RelationalExpression(this.$1, "<", this.$3)
-  }], ["ay", ["ay", "q", "az"], function() {
+  }], ["au", ["au", "q", "av"], function() {
     return new this.yy.RelationalExpression(this.$1, ">", this.$3)
-  }], ["ay", ["ay", "p", "az"], function() {
+  }], ["au", ["au", "p", "av"], function() {
     return new this.yy.RelationalExpression(this.$1, "<=", this.$3)
-  }], ["ay", ["ay", "o", "az"], function() {
+  }], ["au", ["au", "o", "av"], function() {
     return new this.yy.RelationalExpression(this.$1, ">=", this.$3)
-  }], ["az", ["ba"]], ["az", ["az", "s", "ba"], function() {
+  }], ["av", ["aw"]], ["av", ["av", "s", "aw"], function() {
     return new this.yy.AdditiveExpression(this.$1, "+", this.$3)
-  }], ["az", ["az", "t", "ba"], function() {
+  }], ["av", ["av", "t", "aw"], function() {
     return new this.yy.AdditiveExpression(this.$1, "-", this.$3)
-  }], ["ba", ["bb"]], ["ba", ["ba", "u", "bb"], function() {
+  }], ["aw", ["ax"]], ["aw", ["aw", "u", "ax"], function() {
     return new this.yy.MultiplicativeExpression(this.$1, "*", this.$3)
-  }], ["ba", ["ba", "v", "bb"], function() {
+  }], ["aw", ["aw", "v", "ax"], function() {
     return new this.yy.MultiplicativeExpression(this.$1, "/", this.$3)
-  }], ["ba", ["ba", "w", "bb"], function() {
+  }], ["aw", ["aw", "w", "ax"], function() {
     return new this.yy.MultiplicativeExpression(this.$1, "%", this.$3)
-  }], ["bb", ["x", "bb"], function() {
+  }], ["ax", ["x", "ax"], function() {
     return new this.yy.UnaryExpression(this.$1, this.$2)
-  }], ["bb", ["t", "bb"], function() {
+  }], ["ax", ["t", "ax"], function() {
     return new this.yy.UnaryExpression(this.$1, this.$2)
-  }], ["bb", ["bc"]], ["bc", ["y"], function() {
-    return new this.yy.StringNode(this.lexer.lineNumber, this.$1)
-  }], ["bc", ["aa"], function() {
-    return new this.yy.NumberNode(this.lexer.lineNumber, this.$1)
-  }], ["bc", ["z"], function() {
-    return new this.yy.BooleanNode(this.lexer.lineNumber, this.$1)
-  }], ["bc", ["ap"]], ["bc", ["i", "ar", "j"], function() {
+  }], ["ax", ["ay"]], ["ay", ["al"]], ["ay", ["y"], function() {
+    return new this.yy.String(this.lexer.lineNumber, this.$1)
+  }], ["ay", ["aa"], function() {
+    return new this.yy.Number(this.lexer.lineNumber, this.$1)
+  }], ["ay", ["z"], function() {
+    return new this.yy.Boolean(this.lexer.lineNumber, this.$1)
+  }], ["ay", ["am"]], ["ay", ["i", "an", "j"], function() {
     return this.$2
-  }], ["at", ["bd"], function() {
-    return new this.yy.HashNode(this.lexer.lineNumber, this.$1)
-  }], ["bd", ["bd", "g", "be"], function() {
-    this.$1.push(this.$3)
-  }], ["bd", ["be"], function() {
-    return[this.$1]
-  }], ["be", ["ac", "ab", "ar"], function() {
+  }], ["ap", ["ap", "g", "az"], function() {
+    var hash = this.$1, seg = this.$3;
+    hash.value[seg[0]] = seg[1]
+  }], ["ap", ["az"], function() {
+    var hash = new this.yy.Hash(this.lexer.lineNumber), $1 = this.$1;
+    hash.value[$1[0]] = $1[1];
+    return hash
+  }], ["az", ["ac", "ab", "an"], function() {
     return[this.$1, this.$3]
-  }], ["ap", ["bf"], function() {
-    return new this.yy.IdNode(this.lexer.lineNumber, this.$1)
-  }], ["bf", ["bf", "ad", "ac"], function() {
+  }], ["am", ["ba"], function() {
+    return new this.yy.Id(this.lexer.lineNumber, this.$1)
+  }], ["ba", ["ba", "ad", "ac"], function() {
     this.$1.push(this.$3)
-  }], ["bf", ["bf", "ae", "ar", "af"], function() {
+  }], ["ba", ["ba", "ae", "an", "af"], function() {
     this.$1.push(this.$3)
-  }], ["bf", ["bf", "ad", "aa"], function() {
+  }], ["ba", ["ba", "ad", "aa"], function() {
     this.$1.push(this.$3)
-  }], ["bf", ["ac"], function() {
+  }], ["ba", ["ac"], function() {
     return[this.$1]
   }]];
-  parser.table = {gotos:{"0":{ai:4, aj:5, ak:6, al:7, an:8}, "2":{ao:10, aq:11, ap:12, bf:13}, "3":{aq:20, ar:21, av:22, aw:23, ax:24, ay:25, az:26, ba:27, bb:28, bc:29, ap:30, bf:13}, "5":{ak:32, al:7, an:8}, "7":{ai:33, aj:5, ak:6, al:7, an:8}, "14":{ar:38, av:22, aw:23, ax:24, ay:25, az:26, ba:27, bb:28, bc:29, ap:39, bf:13}, "15":{bb:40, bc:29, ap:39, bf:13}, "16":{bb:41, bc:29, ap:39, bf:13}, "31":{aj:57, ak:6, al:7, an:8}, "33":{am:59}, "35":{as:61, au:62, ar:63, av:22, aw:23, ax:24, ay:25, 
-  az:26, ba:27, bb:28, bc:29, at:64, bd:65, be:66, ap:39, bf:13}, "37":{ar:69, av:22, aw:23, ax:24, ay:25, az:26, ba:27, bb:28, bc:29, ap:39, bf:13}, "44":{aw:71, ax:24, ay:25, az:26, ba:27, bb:28, bc:29, ap:39, bf:13}, "45":{ax:72, ay:25, az:26, ba:27, bb:28, bc:29, ap:39, bf:13}, "46":{ay:73, az:26, ba:27, bb:28, bc:29, ap:39, bf:13}, "47":{ay:74, az:26, ba:27, bb:28, bc:29, ap:39, bf:13}, "48":{az:75, ba:27, bb:28, bc:29, ap:39, bf:13}, "49":{az:76, ba:27, bb:28, bc:29, ap:39, bf:13}, "50":{az:77, 
-  ba:27, bb:28, bc:29, ap:39, bf:13}, "51":{az:78, ba:27, bb:28, bc:29, ap:39, bf:13}, "52":{ba:79, bb:28, bc:29, ap:39, bf:13}, "53":{ba:80, bb:28, bc:29, ap:39, bf:13}, "54":{bb:81, bc:29, ap:39, bf:13}, "55":{bb:82, bc:29, ap:39, bf:13}, "56":{bb:83, bc:29, ap:39, bf:13}, "57":{ak:32, al:7, an:8}, "58":{ap:84, bf:13}, "85":{ar:90, av:22, aw:23, ax:24, ay:25, az:26, ba:27, bb:28, bc:29, ap:39, bf:13}, "86":{au:91, ar:63, av:22, aw:23, ax:24, ay:25, az:26, ba:27, bb:28, bc:29, at:92, bd:65, be:66, 
-  ap:39, bf:13}, "87":{be:94}}, action:{"0":{b:[1, undefined, 1], c:[1, undefined, 2], f:[1, undefined, 3]}, "1":{a:[2, 7], e:[2, 7], c:[2, 7], f:[2, 7], b:[2, 7], d:[2, 7]}, "2":{ac:[1, undefined, 9]}, "3":{i:[1, undefined, 14], t:[1, undefined, 15], x:[1, undefined, 16], y:[1, undefined, 17], z:[1, undefined, 18], aa:[1, undefined, 19], ac:[1, undefined, 9]}, "4":{a:[0]}, "5":{a:[2, 2], d:[2, 2], b:[1, undefined, 1], c:[1, undefined, 2], e:[1, undefined, 31], f:[1, undefined, 3]}, "6":{a:[2, 3], 
-  e:[2, 3], c:[2, 3], f:[2, 3], b:[2, 3], d:[2, 3]}, "7":{b:[1, undefined, 1], c:[1, undefined, 2], f:[1, undefined, 3]}, "8":{a:[2, 6], e:[2, 6], c:[2, 6], f:[2, 6], b:[2, 6], d:[2, 6]}, "9":{h:[2, 56], g:[2, 56], ad:[2, 56], ae:[2, 56], k:[2, 56], l:[2, 56], m:[2, 56], n:[2, 56], o:[2, 56], p:[2, 56], q:[2, 56], r:[2, 56], s:[2, 56], t:[2, 56], u:[2, 56], v:[2, 56], w:[2, 56], j:[2, 56], af:[2, 56]}, "10":{h:[1, undefined, 34]}, "11":{h:[2, 9]}, "12":{h:[2, 8], g:[1, undefined, 35]}, "13":{h:[2, 
-  52], g:[2, 52], k:[2, 52], l:[2, 52], m:[2, 52], n:[2, 52], o:[2, 52], p:[2, 52], q:[2, 52], r:[2, 52], s:[2, 52], t:[2, 52], u:[2, 52], v:[2, 52], w:[2, 52], j:[2, 52], af:[2, 52], ad:[1, undefined, 36], ae:[1, undefined, 37]}, "14":{i:[1, undefined, 14], t:[1, undefined, 15], x:[1, undefined, 16], y:[1, undefined, 17], z:[1, undefined, 18], aa:[1, undefined, 19], ac:[1, undefined, 9]}, "15":{i:[1, undefined, 14], t:[1, undefined, 15], x:[1, undefined, 16], y:[1, undefined, 17], z:[1, undefined, 
-  18], aa:[1, undefined, 19], ac:[1, undefined, 9]}, "16":{i:[1, undefined, 14], t:[1, undefined, 15], x:[1, undefined, 16], y:[1, undefined, 17], z:[1, undefined, 18], aa:[1, undefined, 19], ac:[1, undefined, 9]}, "17":{h:[2, 43], k:[2, 43], l:[2, 43], m:[2, 43], n:[2, 43], o:[2, 43], p:[2, 43], q:[2, 43], r:[2, 43], s:[2, 43], t:[2, 43], u:[2, 43], v:[2, 43], w:[2, 43], j:[2, 43], g:[2, 43], af:[2, 43]}, "18":{h:[2, 45], k:[2, 45], l:[2, 45], m:[2, 45], n:[2, 45], o:[2, 45], p:[2, 45], q:[2, 45], 
-  r:[2, 45], s:[2, 45], t:[2, 45], u:[2, 45], v:[2, 45], w:[2, 45], j:[2, 45], g:[2, 45], af:[2, 45]}, "19":{h:[2, 44], k:[2, 44], l:[2, 44], m:[2, 44], n:[2, 44], o:[2, 44], p:[2, 44], q:[2, 44], r:[2, 44], s:[2, 44], t:[2, 44], u:[2, 44], v:[2, 44], w:[2, 44], j:[2, 44], g:[2, 44], af:[2, 44]}, "20":{h:[1, undefined, 42]}, "21":{h:[1, undefined, 43]}, "22":{h:[2, 20], j:[2, 20], g:[2, 20], af:[2, 20], k:[1, undefined, 44]}, "23":{h:[2, 21], k:[2, 21], j:[2, 21], g:[2, 21], af:[2, 21], l:[1, undefined, 
-  45]}, "24":{h:[2, 23], k:[2, 23], l:[2, 23], j:[2, 23], g:[2, 23], af:[2, 23], m:[1, undefined, 46], n:[1, undefined, 47]}, "25":{h:[2, 25], k:[2, 25], l:[2, 25], m:[2, 25], n:[2, 25], j:[2, 25], g:[2, 25], af:[2, 25], o:[1, undefined, 48], p:[1, undefined, 49], q:[1, undefined, 50], r:[1, undefined, 51]}, "26":{h:[2, 28], k:[2, 28], l:[2, 28], m:[2, 28], n:[2, 28], o:[2, 28], p:[2, 28], q:[2, 28], r:[2, 28], j:[2, 28], g:[2, 28], af:[2, 28], s:[1, undefined, 52], t:[1, undefined, 53]}, "27":{h:[2, 
-  33], k:[2, 33], l:[2, 33], m:[2, 33], n:[2, 33], o:[2, 33], p:[2, 33], q:[2, 33], r:[2, 33], s:[2, 33], t:[2, 33], j:[2, 33], g:[2, 33], af:[2, 33], u:[1, undefined, 54], v:[1, undefined, 55], w:[1, undefined, 56]}, "28":{h:[2, 36], k:[2, 36], l:[2, 36], m:[2, 36], n:[2, 36], o:[2, 36], p:[2, 36], q:[2, 36], r:[2, 36], s:[2, 36], t:[2, 36], u:[2, 36], v:[2, 36], w:[2, 36], j:[2, 36], g:[2, 36], af:[2, 36]}, "29":{h:[2, 42], k:[2, 42], l:[2, 42], m:[2, 42], n:[2, 42], o:[2, 42], p:[2, 42], q:[2, 
-  42], r:[2, 42], s:[2, 42], t:[2, 42], u:[2, 42], v:[2, 42], w:[2, 42], j:[2, 42], g:[2, 42], af:[2, 42]}, "30":{h:[2, 46], k:[2, 46], l:[2, 46], m:[2, 46], n:[2, 46], o:[2, 46], p:[2, 46], q:[2, 46], r:[2, 46], s:[2, 46], t:[2, 46], u:[2, 46], v:[2, 46], w:[2, 46], g:[1, undefined, 35]}, "31":{b:[1, undefined, 1], c:[1, undefined, 2], f:[1, undefined, 3]}, "32":{a:[2, 4], e:[2, 4], c:[2, 4], f:[2, 4], b:[2, 4], d:[2, 4]}, "33":{d:[1, undefined, 58]}, "34":{c:[2, 10], f:[2, 10], b:[2, 10]}, "35":{i:[1, 
-  undefined, 14], t:[1, undefined, 15], x:[1, undefined, 16], y:[1, undefined, 17], z:[1, undefined, 18], aa:[1, undefined, 19], ac:[1, undefined, 60]}, "36":{aa:[1, undefined, 67], ac:[1, undefined, 68]}, "37":{i:[1, undefined, 14], t:[1, undefined, 15], x:[1, undefined, 16], y:[1, undefined, 17], z:[1, undefined, 18], aa:[1, undefined, 19], ac:[1, undefined, 9]}, "38":{j:[1, undefined, 70]}, "39":{j:[2, 46], k:[2, 46], l:[2, 46], m:[2, 46], n:[2, 46], o:[2, 46], p:[2, 46], q:[2, 46], r:[2, 46], 
-  s:[2, 46], t:[2, 46], u:[2, 46], v:[2, 46], w:[2, 46], h:[2, 46], g:[2, 46], af:[2, 46]}, "40":{h:[2, 41], k:[2, 41], l:[2, 41], m:[2, 41], n:[2, 41], o:[2, 41], p:[2, 41], q:[2, 41], r:[2, 41], s:[2, 41], t:[2, 41], u:[2, 41], v:[2, 41], w:[2, 41], j:[2, 41], g:[2, 41], af:[2, 41]}, "41":{h:[2, 40], k:[2, 40], l:[2, 40], m:[2, 40], n:[2, 40], o:[2, 40], p:[2, 40], q:[2, 40], r:[2, 40], s:[2, 40], t:[2, 40], u:[2, 40], v:[2, 40], w:[2, 40], j:[2, 40], g:[2, 40], af:[2, 40]}, "42":{a:[2, 12], e:[2, 
-  12], c:[2, 12], f:[2, 12], b:[2, 12], d:[2, 12]}, "43":{a:[2, 13], e:[2, 13], c:[2, 13], f:[2, 13], b:[2, 13], d:[2, 13]}, "44":{i:[1, undefined, 14], t:[1, undefined, 15], x:[1, undefined, 16], y:[1, undefined, 17], z:[1, undefined, 18], aa:[1, undefined, 19], ac:[1, undefined, 9]}, "45":{i:[1, undefined, 14], t:[1, undefined, 15], x:[1, undefined, 16], y:[1, undefined, 17], z:[1, undefined, 18], aa:[1, undefined, 19], ac:[1, undefined, 9]}, "46":{i:[1, undefined, 14], t:[1, undefined, 15], x:[1, 
-  undefined, 16], y:[1, undefined, 17], z:[1, undefined, 18], aa:[1, undefined, 19], ac:[1, undefined, 9]}, "47":{i:[1, undefined, 14], t:[1, undefined, 15], x:[1, undefined, 16], y:[1, undefined, 17], z:[1, undefined, 18], aa:[1, undefined, 19], ac:[1, undefined, 9]}, "48":{i:[1, undefined, 14], t:[1, undefined, 15], x:[1, undefined, 16], y:[1, undefined, 17], z:[1, undefined, 18], aa:[1, undefined, 19], ac:[1, undefined, 9]}, "49":{i:[1, undefined, 14], t:[1, undefined, 15], x:[1, undefined, 16], 
-  y:[1, undefined, 17], z:[1, undefined, 18], aa:[1, undefined, 19], ac:[1, undefined, 9]}, "50":{i:[1, undefined, 14], t:[1, undefined, 15], x:[1, undefined, 16], y:[1, undefined, 17], z:[1, undefined, 18], aa:[1, undefined, 19], ac:[1, undefined, 9]}, "51":{i:[1, undefined, 14], t:[1, undefined, 15], x:[1, undefined, 16], y:[1, undefined, 17], z:[1, undefined, 18], aa:[1, undefined, 19], ac:[1, undefined, 9]}, "52":{i:[1, undefined, 14], t:[1, undefined, 15], x:[1, undefined, 16], y:[1, undefined, 
-  17], z:[1, undefined, 18], aa:[1, undefined, 19], ac:[1, undefined, 9]}, "53":{i:[1, undefined, 14], t:[1, undefined, 15], x:[1, undefined, 16], y:[1, undefined, 17], z:[1, undefined, 18], aa:[1, undefined, 19], ac:[1, undefined, 9]}, "54":{i:[1, undefined, 14], t:[1, undefined, 15], x:[1, undefined, 16], y:[1, undefined, 17], z:[1, undefined, 18], aa:[1, undefined, 19], ac:[1, undefined, 9]}, "55":{i:[1, undefined, 14], t:[1, undefined, 15], x:[1, undefined, 16], y:[1, undefined, 17], z:[1, undefined, 
-  18], aa:[1, undefined, 19], ac:[1, undefined, 9]}, "56":{i:[1, undefined, 14], t:[1, undefined, 15], x:[1, undefined, 16], y:[1, undefined, 17], z:[1, undefined, 18], aa:[1, undefined, 19], ac:[1, undefined, 9]}, "57":{a:[2, 1], d:[2, 1], b:[1, undefined, 1], c:[1, undefined, 2], f:[1, undefined, 3]}, "58":{ac:[1, undefined, 9]}, "59":{a:[2, 5], e:[2, 5], c:[2, 5], f:[2, 5], b:[2, 5], d:[2, 5]}, "60":{h:[2, 56], g:[2, 56], k:[2, 56], l:[2, 56], m:[2, 56], n:[2, 56], o:[2, 56], p:[2, 56], q:[2, 
-  56], r:[2, 56], s:[2, 56], t:[2, 56], u:[2, 56], v:[2, 56], w:[2, 56], ad:[2, 56], ae:[2, 56], ab:[1, undefined, 85]}, "61":{h:[2, 15], g:[1, undefined, 86]}, "62":{h:[2, 18], g:[2, 18]}, "63":{h:[2, 19], g:[2, 19]}, "64":{h:[2, 16]}, "65":{h:[2, 48], g:[1, undefined, 87]}, "66":{h:[2, 50], g:[2, 50]}, "67":{h:[2, 55], g:[2, 55], ad:[2, 55], ae:[2, 55], k:[2, 55], l:[2, 55], m:[2, 55], n:[2, 55], o:[2, 55], p:[2, 55], q:[2, 55], r:[2, 55], s:[2, 55], t:[2, 55], u:[2, 55], v:[2, 55], w:[2, 55], 
-  j:[2, 55], af:[2, 55]}, "68":{h:[2, 53], g:[2, 53], ad:[2, 53], ae:[2, 53], k:[2, 53], l:[2, 53], m:[2, 53], n:[2, 53], o:[2, 53], p:[2, 53], q:[2, 53], r:[2, 53], s:[2, 53], t:[2, 53], u:[2, 53], v:[2, 53], w:[2, 53], j:[2, 53], af:[2, 53]}, "69":{af:[1, undefined, 88]}, "70":{h:[2, 47], k:[2, 47], l:[2, 47], m:[2, 47], n:[2, 47], o:[2, 47], p:[2, 47], q:[2, 47], r:[2, 47], s:[2, 47], t:[2, 47], u:[2, 47], v:[2, 47], w:[2, 47], j:[2, 47], g:[2, 47], af:[2, 47]}, "71":{h:[2, 22], k:[2, 22], j:[2, 
-  22], g:[2, 22], af:[2, 22], l:[1, undefined, 45]}, "72":{h:[2, 24], k:[2, 24], l:[2, 24], j:[2, 24], g:[2, 24], af:[2, 24], m:[1, undefined, 46], n:[1, undefined, 47]}, "73":{h:[2, 26], k:[2, 26], l:[2, 26], m:[2, 26], n:[2, 26], j:[2, 26], g:[2, 26], af:[2, 26], o:[1, undefined, 48], p:[1, undefined, 49], q:[1, undefined, 50], r:[1, undefined, 51]}, "74":{h:[2, 27], k:[2, 27], l:[2, 27], m:[2, 27], n:[2, 27], j:[2, 27], g:[2, 27], af:[2, 27], o:[1, undefined, 48], p:[1, undefined, 49], q:[1, undefined, 
-  50], r:[1, undefined, 51]}, "75":{h:[2, 32], k:[2, 32], l:[2, 32], m:[2, 32], n:[2, 32], o:[2, 32], p:[2, 32], q:[2, 32], r:[2, 32], j:[2, 32], g:[2, 32], af:[2, 32], s:[1, undefined, 52], t:[1, undefined, 53]}, "76":{h:[2, 31], k:[2, 31], l:[2, 31], m:[2, 31], n:[2, 31], o:[2, 31], p:[2, 31], q:[2, 31], r:[2, 31], j:[2, 31], g:[2, 31], af:[2, 31], s:[1, undefined, 52], t:[1, undefined, 53]}, "77":{h:[2, 30], k:[2, 30], l:[2, 30], m:[2, 30], n:[2, 30], o:[2, 30], p:[2, 30], q:[2, 30], r:[2, 30], 
-  j:[2, 30], g:[2, 30], af:[2, 30], s:[1, undefined, 52], t:[1, undefined, 53]}, "78":{h:[2, 29], k:[2, 29], l:[2, 29], m:[2, 29], n:[2, 29], o:[2, 29], p:[2, 29], q:[2, 29], r:[2, 29], j:[2, 29], g:[2, 29], af:[2, 29], s:[1, undefined, 52], t:[1, undefined, 53]}, "79":{h:[2, 34], k:[2, 34], l:[2, 34], m:[2, 34], n:[2, 34], o:[2, 34], p:[2, 34], q:[2, 34], r:[2, 34], s:[2, 34], t:[2, 34], j:[2, 34], g:[2, 34], af:[2, 34], u:[1, undefined, 54], v:[1, undefined, 55], w:[1, undefined, 56]}, "80":{h:[2, 
-  35], k:[2, 35], l:[2, 35], m:[2, 35], n:[2, 35], o:[2, 35], p:[2, 35], q:[2, 35], r:[2, 35], s:[2, 35], t:[2, 35], j:[2, 35], g:[2, 35], af:[2, 35], u:[1, undefined, 54], v:[1, undefined, 55], w:[1, undefined, 56]}, "81":{h:[2, 37], k:[2, 37], l:[2, 37], m:[2, 37], n:[2, 37], o:[2, 37], p:[2, 37], q:[2, 37], r:[2, 37], s:[2, 37], t:[2, 37], u:[2, 37], v:[2, 37], w:[2, 37], j:[2, 37], g:[2, 37], af:[2, 37]}, "82":{h:[2, 38], k:[2, 38], l:[2, 38], m:[2, 38], n:[2, 38], o:[2, 38], p:[2, 38], q:[2, 
-  38], r:[2, 38], s:[2, 38], t:[2, 38], u:[2, 38], v:[2, 38], w:[2, 38], j:[2, 38], g:[2, 38], af:[2, 38]}, "83":{h:[2, 39], k:[2, 39], l:[2, 39], m:[2, 39], n:[2, 39], o:[2, 39], p:[2, 39], q:[2, 39], r:[2, 39], s:[2, 39], t:[2, 39], u:[2, 39], v:[2, 39], w:[2, 39], j:[2, 39], g:[2, 39], af:[2, 39]}, "84":{h:[1, undefined, 89]}, "85":{i:[1, undefined, 14], t:[1, undefined, 15], x:[1, undefined, 16], y:[1, undefined, 17], z:[1, undefined, 18], aa:[1, undefined, 19], ac:[1, undefined, 9]}, "86":{i:[1, 
-  undefined, 14], t:[1, undefined, 15], x:[1, undefined, 16], y:[1, undefined, 17], z:[1, undefined, 18], aa:[1, undefined, 19], ac:[1, undefined, 60]}, "87":{ac:[1, undefined, 93]}, "88":{h:[2, 54], g:[2, 54], ad:[2, 54], ae:[2, 54], k:[2, 54], l:[2, 54], m:[2, 54], n:[2, 54], o:[2, 54], p:[2, 54], q:[2, 54], r:[2, 54], s:[2, 54], t:[2, 54], u:[2, 54], v:[2, 54], w:[2, 54], j:[2, 54], af:[2, 54]}, "89":{a:[2, 11], e:[2, 11], c:[2, 11], f:[2, 11], b:[2, 11], d:[2, 11]}, "90":{h:[2, 51], g:[2, 51]}, 
-  "91":{h:[2, 17], g:[2, 17]}, "92":{h:[2, 14]}, "93":{ab:[1, undefined, 85]}, "94":{h:[2, 49], g:[2, 49]}}};
+  parser.table = {gotos:{"0":{ai:4, aj:5, ak:6}, "2":{al:8, am:9, ba:10}, "3":{al:17, an:18, ar:19, as:20, at:21, au:22, av:23, aw:24, ax:25, ay:26, am:27, ba:10}, "5":{ak:29}, "11":{al:17, an:34, ar:19, as:20, at:21, au:22, av:23, aw:24, ax:25, ay:26, am:27, ba:10}, "12":{al:17, ax:35, ay:26, am:27, ba:10}, "13":{al:17, ax:36, ay:26, am:27, ba:10}, "28":{aj:51, ak:6}, "30":{ai:52, aj:5, ak:6}, "31":{al:17, ao:55, aq:56, an:57, ar:19, as:20, at:21, au:22, av:23, aw:24, ax:25, ay:26, ap:58, az:59, 
+  am:27, ba:10}, "33":{al:17, an:62, ar:19, as:20, at:21, au:22, av:23, aw:24, ax:25, ay:26, am:27, ba:10}, "38":{al:17, as:64, at:21, au:22, av:23, aw:24, ax:25, ay:26, am:27, ba:10}, "39":{al:17, at:65, au:22, av:23, aw:24, ax:25, ay:26, am:27, ba:10}, "40":{al:17, au:66, av:23, aw:24, ax:25, ay:26, am:27, ba:10}, "41":{al:17, au:67, av:23, aw:24, ax:25, ay:26, am:27, ba:10}, "42":{al:17, av:68, aw:24, ax:25, ay:26, am:27, ba:10}, "43":{al:17, av:69, aw:24, ax:25, ay:26, am:27, ba:10}, "44":{al:17, 
+  av:70, aw:24, ax:25, ay:26, am:27, ba:10}, "45":{al:17, av:71, aw:24, ax:25, ay:26, am:27, ba:10}, "46":{al:17, aw:72, ax:25, ay:26, am:27, ba:10}, "47":{al:17, aw:73, ax:25, ay:26, am:27, ba:10}, "48":{al:17, ax:74, ay:26, am:27, ba:10}, "49":{al:17, ax:75, ay:26, am:27, ba:10}, "50":{al:17, ax:76, ay:26, am:27, ba:10}, "51":{ak:29}, "77":{am:84, ba:10}, "78":{al:17, an:85, ar:19, as:20, at:21, au:22, av:23, aw:24, ax:25, ay:26, am:27, ba:10}, "79":{al:17, aq:86, an:57, ar:19, as:20, at:21, au:22, 
+  av:23, aw:24, ax:25, ay:26, ap:87, az:59, am:27, ba:10}, "81":{az:89}}, action:{"0":{b:[1, undefined, 1], c:[1, undefined, 2], f:[1, undefined, 3]}, "1":{a:[2, 7], e:[2, 7], c:[2, 7], f:[2, 7], b:[2, 7], d:[2, 7]}, "2":{ac:[1, undefined, 7]}, "3":{i:[1, undefined, 11], t:[1, undefined, 12], x:[1, undefined, 13], y:[1, undefined, 14], z:[1, undefined, 15], aa:[1, undefined, 16], ac:[1, undefined, 7]}, "4":{a:[0]}, "5":{a:[2, 2], d:[2, 2], b:[1, undefined, 1], c:[1, undefined, 2], e:[1, undefined, 
+  28], f:[1, undefined, 3]}, "6":{a:[2, 3], e:[2, 3], c:[2, 3], f:[2, 3], b:[2, 3], d:[2, 3]}, "7":{i:[2, 51], ad:[2, 51], ae:[2, 51], h:[2, 51], k:[2, 51], l:[2, 51], m:[2, 51], n:[2, 51], o:[2, 51], p:[2, 51], q:[2, 51], r:[2, 51], s:[2, 51], t:[2, 51], u:[2, 51], v:[2, 51], w:[2, 51], j:[2, 51], af:[2, 51], g:[2, 51]}, "8":{h:[1, undefined, 30]}, "9":{i:[1, undefined, 31]}, "10":{i:[2, 47], h:[2, 47], k:[2, 47], l:[2, 47], m:[2, 47], n:[2, 47], o:[2, 47], p:[2, 47], q:[2, 47], r:[2, 47], s:[2, 
+  47], t:[2, 47], u:[2, 47], v:[2, 47], w:[2, 47], j:[2, 47], g:[2, 47], af:[2, 47], ad:[1, undefined, 32], ae:[1, undefined, 33]}, "11":{i:[1, undefined, 11], t:[1, undefined, 12], x:[1, undefined, 13], y:[1, undefined, 14], z:[1, undefined, 15], aa:[1, undefined, 16], ac:[1, undefined, 7]}, "12":{i:[1, undefined, 11], t:[1, undefined, 12], x:[1, undefined, 13], y:[1, undefined, 14], z:[1, undefined, 15], aa:[1, undefined, 16], ac:[1, undefined, 7]}, "13":{i:[1, undefined, 11], t:[1, undefined, 
+  12], x:[1, undefined, 13], y:[1, undefined, 14], z:[1, undefined, 15], aa:[1, undefined, 16], ac:[1, undefined, 7]}, "14":{h:[2, 39], k:[2, 39], l:[2, 39], m:[2, 39], n:[2, 39], o:[2, 39], p:[2, 39], q:[2, 39], r:[2, 39], s:[2, 39], t:[2, 39], u:[2, 39], v:[2, 39], w:[2, 39], j:[2, 39], g:[2, 39], af:[2, 39]}, "15":{h:[2, 41], k:[2, 41], l:[2, 41], m:[2, 41], n:[2, 41], o:[2, 41], p:[2, 41], q:[2, 41], r:[2, 41], s:[2, 41], t:[2, 41], u:[2, 41], v:[2, 41], w:[2, 41], j:[2, 41], g:[2, 41], af:[2, 
+  41]}, "16":{h:[2, 40], k:[2, 40], l:[2, 40], m:[2, 40], n:[2, 40], o:[2, 40], p:[2, 40], q:[2, 40], r:[2, 40], s:[2, 40], t:[2, 40], u:[2, 40], v:[2, 40], w:[2, 40], j:[2, 40], g:[2, 40], af:[2, 40]}, "17":{h:[2, 38], k:[2, 38], l:[2, 38], m:[2, 38], n:[2, 38], o:[2, 38], p:[2, 38], q:[2, 38], r:[2, 38], s:[2, 38], t:[2, 38], u:[2, 38], v:[2, 38], w:[2, 38], j:[2, 38], g:[2, 38], af:[2, 38]}, "18":{h:[1, undefined, 37]}, "19":{h:[2, 15], j:[2, 15], g:[2, 15], af:[2, 15], k:[1, undefined, 38]}, 
+  "20":{h:[2, 16], k:[2, 16], j:[2, 16], g:[2, 16], af:[2, 16], l:[1, undefined, 39]}, "21":{h:[2, 18], k:[2, 18], l:[2, 18], j:[2, 18], g:[2, 18], af:[2, 18], m:[1, undefined, 40], n:[1, undefined, 41]}, "22":{h:[2, 20], k:[2, 20], l:[2, 20], m:[2, 20], n:[2, 20], j:[2, 20], g:[2, 20], af:[2, 20], o:[1, undefined, 42], p:[1, undefined, 43], q:[1, undefined, 44], r:[1, undefined, 45]}, "23":{h:[2, 23], k:[2, 23], l:[2, 23], m:[2, 23], n:[2, 23], o:[2, 23], p:[2, 23], q:[2, 23], r:[2, 23], j:[2, 23], 
+  g:[2, 23], af:[2, 23], s:[1, undefined, 46], t:[1, undefined, 47]}, "24":{h:[2, 28], k:[2, 28], l:[2, 28], m:[2, 28], n:[2, 28], o:[2, 28], p:[2, 28], q:[2, 28], r:[2, 28], s:[2, 28], t:[2, 28], j:[2, 28], g:[2, 28], af:[2, 28], u:[1, undefined, 48], v:[1, undefined, 49], w:[1, undefined, 50]}, "25":{h:[2, 31], k:[2, 31], l:[2, 31], m:[2, 31], n:[2, 31], o:[2, 31], p:[2, 31], q:[2, 31], r:[2, 31], s:[2, 31], t:[2, 31], u:[2, 31], v:[2, 31], w:[2, 31], j:[2, 31], g:[2, 31], af:[2, 31]}, "26":{h:[2, 
+  37], k:[2, 37], l:[2, 37], m:[2, 37], n:[2, 37], o:[2, 37], p:[2, 37], q:[2, 37], r:[2, 37], s:[2, 37], t:[2, 37], u:[2, 37], v:[2, 37], w:[2, 37], j:[2, 37], g:[2, 37], af:[2, 37]}, "27":{h:[2, 42], k:[2, 42], l:[2, 42], m:[2, 42], n:[2, 42], o:[2, 42], p:[2, 42], q:[2, 42], r:[2, 42], s:[2, 42], t:[2, 42], u:[2, 42], v:[2, 42], w:[2, 42], j:[2, 42], g:[2, 42], af:[2, 42], i:[1, undefined, 31]}, "28":{b:[1, undefined, 1], c:[1, undefined, 2], f:[1, undefined, 3]}, "29":{a:[2, 4], e:[2, 4], c:[2, 
+  4], f:[2, 4], b:[2, 4], d:[2, 4]}, "30":{b:[1, undefined, 1], c:[1, undefined, 2], f:[1, undefined, 3]}, "31":{i:[1, undefined, 11], j:[1, undefined, 53], t:[1, undefined, 12], x:[1, undefined, 13], y:[1, undefined, 14], z:[1, undefined, 15], aa:[1, undefined, 16], ac:[1, undefined, 54]}, "32":{aa:[1, undefined, 60], ac:[1, undefined, 61]}, "33":{i:[1, undefined, 11], t:[1, undefined, 12], x:[1, undefined, 13], y:[1, undefined, 14], z:[1, undefined, 15], aa:[1, undefined, 16], ac:[1, undefined, 
+  7]}, "34":{j:[1, undefined, 63]}, "35":{h:[2, 36], k:[2, 36], l:[2, 36], m:[2, 36], n:[2, 36], o:[2, 36], p:[2, 36], q:[2, 36], r:[2, 36], s:[2, 36], t:[2, 36], u:[2, 36], v:[2, 36], w:[2, 36], j:[2, 36], g:[2, 36], af:[2, 36]}, "36":{h:[2, 35], k:[2, 35], l:[2, 35], m:[2, 35], n:[2, 35], o:[2, 35], p:[2, 35], q:[2, 35], r:[2, 35], s:[2, 35], t:[2, 35], u:[2, 35], v:[2, 35], w:[2, 35], j:[2, 35], g:[2, 35], af:[2, 35]}, "37":{a:[2, 6], e:[2, 6], c:[2, 6], f:[2, 6], b:[2, 6], d:[2, 6]}, "38":{i:[1, 
+  undefined, 11], t:[1, undefined, 12], x:[1, undefined, 13], y:[1, undefined, 14], z:[1, undefined, 15], aa:[1, undefined, 16], ac:[1, undefined, 7]}, "39":{i:[1, undefined, 11], t:[1, undefined, 12], x:[1, undefined, 13], y:[1, undefined, 14], z:[1, undefined, 15], aa:[1, undefined, 16], ac:[1, undefined, 7]}, "40":{i:[1, undefined, 11], t:[1, undefined, 12], x:[1, undefined, 13], y:[1, undefined, 14], z:[1, undefined, 15], aa:[1, undefined, 16], ac:[1, undefined, 7]}, "41":{i:[1, undefined, 11], 
+  t:[1, undefined, 12], x:[1, undefined, 13], y:[1, undefined, 14], z:[1, undefined, 15], aa:[1, undefined, 16], ac:[1, undefined, 7]}, "42":{i:[1, undefined, 11], t:[1, undefined, 12], x:[1, undefined, 13], y:[1, undefined, 14], z:[1, undefined, 15], aa:[1, undefined, 16], ac:[1, undefined, 7]}, "43":{i:[1, undefined, 11], t:[1, undefined, 12], x:[1, undefined, 13], y:[1, undefined, 14], z:[1, undefined, 15], aa:[1, undefined, 16], ac:[1, undefined, 7]}, "44":{i:[1, undefined, 11], t:[1, undefined, 
+  12], x:[1, undefined, 13], y:[1, undefined, 14], z:[1, undefined, 15], aa:[1, undefined, 16], ac:[1, undefined, 7]}, "45":{i:[1, undefined, 11], t:[1, undefined, 12], x:[1, undefined, 13], y:[1, undefined, 14], z:[1, undefined, 15], aa:[1, undefined, 16], ac:[1, undefined, 7]}, "46":{i:[1, undefined, 11], t:[1, undefined, 12], x:[1, undefined, 13], y:[1, undefined, 14], z:[1, undefined, 15], aa:[1, undefined, 16], ac:[1, undefined, 7]}, "47":{i:[1, undefined, 11], t:[1, undefined, 12], x:[1, undefined, 
+  13], y:[1, undefined, 14], z:[1, undefined, 15], aa:[1, undefined, 16], ac:[1, undefined, 7]}, "48":{i:[1, undefined, 11], t:[1, undefined, 12], x:[1, undefined, 13], y:[1, undefined, 14], z:[1, undefined, 15], aa:[1, undefined, 16], ac:[1, undefined, 7]}, "49":{i:[1, undefined, 11], t:[1, undefined, 12], x:[1, undefined, 13], y:[1, undefined, 14], z:[1, undefined, 15], aa:[1, undefined, 16], ac:[1, undefined, 7]}, "50":{i:[1, undefined, 11], t:[1, undefined, 12], x:[1, undefined, 13], y:[1, undefined, 
+  14], z:[1, undefined, 15], aa:[1, undefined, 16], ac:[1, undefined, 7]}, "51":{a:[2, 1], d:[2, 1], b:[1, undefined, 1], c:[1, undefined, 2], f:[1, undefined, 3]}, "52":{d:[1, undefined, 77]}, "53":{h:[2, 11], k:[2, 11], l:[2, 11], m:[2, 11], n:[2, 11], o:[2, 11], p:[2, 11], q:[2, 11], r:[2, 11], s:[2, 11], t:[2, 11], u:[2, 11], v:[2, 11], w:[2, 11], j:[2, 11], g:[2, 11], af:[2, 11]}, "54":{g:[2, 51], i:[2, 51], j:[2, 51], k:[2, 51], l:[2, 51], m:[2, 51], n:[2, 51], o:[2, 51], p:[2, 51], q:[2, 51], 
+  r:[2, 51], s:[2, 51], t:[2, 51], u:[2, 51], v:[2, 51], w:[2, 51], ad:[2, 51], ae:[2, 51], ab:[1, undefined, 78]}, "55":{g:[1, undefined, 79], j:[1, undefined, 80]}, "56":{g:[2, 13], j:[2, 13]}, "57":{g:[2, 14], j:[2, 14]}, "58":{g:[1, undefined, 81], j:[1, undefined, 82]}, "59":{j:[2, 45], g:[2, 45]}, "60":{i:[2, 50], ad:[2, 50], ae:[2, 50], h:[2, 50], k:[2, 50], l:[2, 50], m:[2, 50], n:[2, 50], o:[2, 50], p:[2, 50], q:[2, 50], r:[2, 50], s:[2, 50], t:[2, 50], u:[2, 50], v:[2, 50], w:[2, 50], j:[2, 
+  50], g:[2, 50], af:[2, 50]}, "61":{i:[2, 48], ad:[2, 48], ae:[2, 48], h:[2, 48], k:[2, 48], l:[2, 48], m:[2, 48], n:[2, 48], o:[2, 48], p:[2, 48], q:[2, 48], r:[2, 48], s:[2, 48], t:[2, 48], u:[2, 48], v:[2, 48], w:[2, 48], j:[2, 48], g:[2, 48], af:[2, 48]}, "62":{af:[1, undefined, 83]}, "63":{h:[2, 43], k:[2, 43], l:[2, 43], m:[2, 43], n:[2, 43], o:[2, 43], p:[2, 43], q:[2, 43], r:[2, 43], s:[2, 43], t:[2, 43], u:[2, 43], v:[2, 43], w:[2, 43], j:[2, 43], g:[2, 43], af:[2, 43]}, "64":{h:[2, 17], 
+  k:[2, 17], j:[2, 17], g:[2, 17], af:[2, 17], l:[1, undefined, 39]}, "65":{h:[2, 19], k:[2, 19], l:[2, 19], j:[2, 19], g:[2, 19], af:[2, 19], m:[1, undefined, 40], n:[1, undefined, 41]}, "66":{h:[2, 21], k:[2, 21], l:[2, 21], m:[2, 21], n:[2, 21], j:[2, 21], g:[2, 21], af:[2, 21], o:[1, undefined, 42], p:[1, undefined, 43], q:[1, undefined, 44], r:[1, undefined, 45]}, "67":{h:[2, 22], k:[2, 22], l:[2, 22], m:[2, 22], n:[2, 22], j:[2, 22], g:[2, 22], af:[2, 22], o:[1, undefined, 42], p:[1, undefined, 
+  43], q:[1, undefined, 44], r:[1, undefined, 45]}, "68":{h:[2, 27], k:[2, 27], l:[2, 27], m:[2, 27], n:[2, 27], o:[2, 27], p:[2, 27], q:[2, 27], r:[2, 27], j:[2, 27], g:[2, 27], af:[2, 27], s:[1, undefined, 46], t:[1, undefined, 47]}, "69":{h:[2, 26], k:[2, 26], l:[2, 26], m:[2, 26], n:[2, 26], o:[2, 26], p:[2, 26], q:[2, 26], r:[2, 26], j:[2, 26], g:[2, 26], af:[2, 26], s:[1, undefined, 46], t:[1, undefined, 47]}, "70":{h:[2, 25], k:[2, 25], l:[2, 25], m:[2, 25], n:[2, 25], o:[2, 25], p:[2, 25], 
+  q:[2, 25], r:[2, 25], j:[2, 25], g:[2, 25], af:[2, 25], s:[1, undefined, 46], t:[1, undefined, 47]}, "71":{h:[2, 24], k:[2, 24], l:[2, 24], m:[2, 24], n:[2, 24], o:[2, 24], p:[2, 24], q:[2, 24], r:[2, 24], j:[2, 24], g:[2, 24], af:[2, 24], s:[1, undefined, 46], t:[1, undefined, 47]}, "72":{h:[2, 29], k:[2, 29], l:[2, 29], m:[2, 29], n:[2, 29], o:[2, 29], p:[2, 29], q:[2, 29], r:[2, 29], s:[2, 29], t:[2, 29], j:[2, 29], g:[2, 29], af:[2, 29], u:[1, undefined, 48], v:[1, undefined, 49], w:[1, undefined, 
+  50]}, "73":{h:[2, 30], k:[2, 30], l:[2, 30], m:[2, 30], n:[2, 30], o:[2, 30], p:[2, 30], q:[2, 30], r:[2, 30], s:[2, 30], t:[2, 30], j:[2, 30], g:[2, 30], af:[2, 30], u:[1, undefined, 48], v:[1, undefined, 49], w:[1, undefined, 50]}, "74":{h:[2, 32], k:[2, 32], l:[2, 32], m:[2, 32], n:[2, 32], o:[2, 32], p:[2, 32], q:[2, 32], r:[2, 32], s:[2, 32], t:[2, 32], u:[2, 32], v:[2, 32], w:[2, 32], j:[2, 32], g:[2, 32], af:[2, 32]}, "75":{h:[2, 33], k:[2, 33], l:[2, 33], m:[2, 33], n:[2, 33], o:[2, 33], 
+  p:[2, 33], q:[2, 33], r:[2, 33], s:[2, 33], t:[2, 33], u:[2, 33], v:[2, 33], w:[2, 33], j:[2, 33], g:[2, 33], af:[2, 33]}, "76":{h:[2, 34], k:[2, 34], l:[2, 34], m:[2, 34], n:[2, 34], o:[2, 34], p:[2, 34], q:[2, 34], r:[2, 34], s:[2, 34], t:[2, 34], u:[2, 34], v:[2, 34], w:[2, 34], j:[2, 34], g:[2, 34], af:[2, 34]}, "77":{ac:[1, undefined, 7]}, "78":{i:[1, undefined, 11], t:[1, undefined, 12], x:[1, undefined, 13], y:[1, undefined, 14], z:[1, undefined, 15], aa:[1, undefined, 16], ac:[1, undefined, 
+  7]}, "79":{i:[1, undefined, 11], t:[1, undefined, 12], x:[1, undefined, 13], y:[1, undefined, 14], z:[1, undefined, 15], aa:[1, undefined, 16], ac:[1, undefined, 54]}, "80":{h:[2, 9], k:[2, 9], l:[2, 9], m:[2, 9], n:[2, 9], o:[2, 9], p:[2, 9], q:[2, 9], r:[2, 9], s:[2, 9], t:[2, 9], u:[2, 9], v:[2, 9], w:[2, 9], j:[2, 9], g:[2, 9], af:[2, 9]}, "81":{ac:[1, undefined, 88]}, "82":{h:[2, 10], k:[2, 10], l:[2, 10], m:[2, 10], n:[2, 10], o:[2, 10], p:[2, 10], q:[2, 10], r:[2, 10], s:[2, 10], t:[2, 10], 
+  u:[2, 10], v:[2, 10], w:[2, 10], j:[2, 10], g:[2, 10], af:[2, 10]}, "83":{i:[2, 49], ad:[2, 49], ae:[2, 49], h:[2, 49], k:[2, 49], l:[2, 49], m:[2, 49], n:[2, 49], o:[2, 49], p:[2, 49], q:[2, 49], r:[2, 49], s:[2, 49], t:[2, 49], u:[2, 49], v:[2, 49], w:[2, 49], j:[2, 49], g:[2, 49], af:[2, 49]}, "84":{h:[1, undefined, 90]}, "85":{j:[2, 46], g:[2, 46]}, "86":{g:[2, 12], j:[2, 12]}, "87":{g:[1, undefined, 81], j:[1, undefined, 91]}, "88":{ab:[1, undefined, 78]}, "89":{j:[2, 44], g:[2, 44]}, "90":{a:[2, 
+  5], e:[2, 5], c:[2, 5], f:[2, 5], b:[2, 5], d:[2, 5]}, "91":{h:[2, 8], k:[2, 8], l:[2, 8], m:[2, 8], n:[2, 8], o:[2, 8], p:[2, 8], q:[2, 8], r:[2, 8], s:[2, 8], t:[2, 8], u:[2, 8], v:[2, 8], w:[2, 8], j:[2, 8], g:[2, 8], af:[2, 8]}}};
   parser.parse = function parse(input) {
     var self = this, lexer = self.lexer, state, symbol, action, table = self.table, gotos = table.gotos, tableAction = table.action, productions = self.productions, valueStack = [null], stack = [0];
     lexer.resetInput(input);
@@ -364,6 +350,18 @@ KISSY.add("xtemplate/compiler/parser", [], function(_, undefined) {
 });
 KISSY.add("xtemplate/compiler/ast", [], function(S) {
   var ast = {};
+  function sameArray(a1, a2) {
+    var l1 = a1.length, l2 = a2.length;
+    if(l1 !== l2) {
+      return 0
+    }
+    for(var i = 0;i < l1;i++) {
+      if(a1[i] !== a2[i]) {
+        return 0
+      }
+    }
+    return 1
+  }
   ast.ProgramNode = function(lineNumber, statements, inverse) {
     var self = this;
     self.lineNumber = lineNumber;
@@ -371,44 +369,48 @@ KISSY.add("xtemplate/compiler/ast", [], function(S) {
     self.inverse = inverse
   };
   ast.ProgramNode.prototype.type = "program";
-  ast.BlockNode = function(lineNumber, tpl, program, close) {
+  ast.BlockStatement = function(lineNumber, command, program, close) {
     var closeParts = close.parts, self = this, e;
-    if(!S.equals(tpl.path.parts, closeParts)) {
-      e = "Syntax error at line " + lineNumber + ":\n" + "expect {{/" + tpl.path.parts + "}} not {{/" + closeParts + "}}";
+    if(!sameArray(command.id.parts, closeParts)) {
+      e = "Syntax error at line " + lineNumber + ":\n" + "expect {{/" + command.id.parts + "}} not {{/" + closeParts + "}}";
       S.error(e)
     }
     self.lineNumber = lineNumber;
-    self.tpl = tpl;
+    self.command = command;
     self.program = program
   };
-  ast.BlockNode.prototype.type = "block";
-  ast.TplNode = function(lineNumber, path, params, hash) {
+  ast.BlockStatement.prototype.type = "blockStatement";
+  ast.InlineCommandStatement = function(lineNumber, command, escape) {
+    this.lineNumber = lineNumber;
+    this.command = command;
+    this.escape = escape
+  };
+  ast.InlineCommandStatement.prototype.type = "inlineCommandStatement";
+  ast.ExpressionStatement = function(lineNumber, expression, escape) {
     var self = this;
     self.lineNumber = lineNumber;
-    self.path = path;
-    self.params = params;
-    self.hash = hash;
-    self.escaped = true;
-    self.isInverted = false
+    self.value = expression;
+    self.escape = escape
   };
-  ast.TplNode.prototype.type = "tpl";
-  ast.TplExpressionNode = function(lineNumber, expression) {
-    var self = this;
-    self.lineNumber = lineNumber;
-    self.expression = expression;
-    self.escaped = true
-  };
-  ast.TplExpressionNode.prototype.type = "tplExpression";
-  ast.ContentNode = function(lineNumber, value) {
+  ast.ExpressionStatement.prototype.type = "expressionStatement";
+  ast.ContentStatement = function(lineNumber, value) {
     var self = this;
     self.lineNumber = lineNumber;
     self.value = value
   };
-  ast.ContentNode.prototype.type = "content";
+  ast.ContentStatement.prototype.type = "contentStatement";
   ast.UnaryExpression = function(unaryType, v) {
     this.value = v;
     this.unaryType = unaryType
   };
+  ast.Command = function(lineNumber, id, params, hash) {
+    var self = this;
+    self.lineNumber = lineNumber;
+    self.id = id;
+    self.params = params;
+    self.hash = hash
+  };
+  ast.Command.prototype.type = "command";
   ast.UnaryExpression.prototype.type = "unaryExpression";
   ast.MultiplicativeExpression = function(op1, opType, op2) {
     var self = this;
@@ -450,52 +452,59 @@ KISSY.add("xtemplate/compiler/ast", [], function(S) {
     self.op2 = op2
   };
   ast.ConditionalOrExpression.prototype.type = "conditionalOrExpression";
-  ast.StringNode = function(lineNumber, value) {
+  ast.String = function(lineNumber, value) {
     var self = this;
     self.lineNumber = lineNumber;
     self.value = value
   };
-  ast.StringNode.prototype.type = "string";
-  ast.NumberNode = function(lineNumber, value) {
+  ast.String.prototype.type = "string";
+  ast.Number = function(lineNumber, value) {
     var self = this;
     self.lineNumber = lineNumber;
     self.value = value
   };
-  ast.NumberNode.prototype.type = "number";
-  ast.BooleanNode = function(lineNumber, value) {
+  ast.Number.prototype.type = "number";
+  ast.Boolean = function(lineNumber, value) {
     var self = this;
     self.lineNumber = lineNumber;
     self.value = value
   };
-  ast.BooleanNode.prototype.type = "boolean";
-  ast.HashNode = function(lineNumber, raw) {
+  ast.Boolean.prototype.type = "boolean";
+  ast.Hash = function(lineNumber) {
     var self = this, value = {};
     self.lineNumber = lineNumber;
-    S.each(raw, function(r) {
-      value[r[0]] = r[1]
-    });
     self.value = value
   };
-  ast.HashNode.prototype.type = "hash";
-  ast.IdNode = function(lineNumber, raw) {
+  ast.Hash.prototype.type = "hash";
+  ast.Id = function(lineNumber, raw) {
     var self = this, parts = [], depth = 0;
     self.lineNumber = lineNumber;
-    S.each(raw, function(p) {
+    for(var i = 0, l = raw.length;i < l;i++) {
+      var p = raw[i];
       if(p === "..") {
         depth++
       }else {
         parts.push(p)
       }
-    });
+    }
     self.parts = parts;
     self.string = parts.join(".");
     self.depth = depth
   };
-  ast.IdNode.prototype.type = "id";
+  ast.Id.prototype.type = "id";
   return ast
 });
 KISSY.add("xtemplate/compiler", ["xtemplate/runtime", "./compiler/parser", "./compiler/ast"], function(S, require) {
   var XTemplateRuntime = require("xtemplate/runtime");
+  var nativeCode = "", t;
+  var nativeCommands = XTemplateRuntime.nativeCommands, nativeUtils = XTemplateRuntime.utils;
+  for(t in nativeUtils) {
+    nativeCode += t + "Util = utils." + t + ","
+  }
+  for(t in nativeCommands) {
+    nativeCode += t + "Command = nativeCommands." + t + ","
+  }
+  nativeCode = nativeCode.slice(0, -1);
   var parser = require("./compiler/parser");
   parser.yy = require("./compiler/ast");
   var doubleReg = /\\*"/g, singleReg = /\\*'/g, arrayPush = [].push, variableId = 0, xtemplateId = 0;
@@ -525,22 +534,39 @@ KISSY.add("xtemplate/compiler", ["xtemplate/runtime", "./compiler/parser", "./co
   function lastOfArray(arr) {
     return arr[arr.length - 1]
   }
-  var gen = {genFunction:function(statements, global) {
+  var gen = {getIdStringFromIdParts:function(source, idParts) {
+    var idString = "", self = this, i, l, idPart, idPartType, nextIdNameCode, first = true;
+    for(i = 0, l = idParts.length;i < l;i++) {
+      idPart = idParts[i];
+      idPartType = idPart.type;
+      if(!first) {
+        idString += "."
+      }
+      if(idPartType) {
+        nextIdNameCode = self[idPartType](idPart);
+        if(nextIdNameCode[0]) {
+          pushToArray(source, nextIdNameCode[1]);
+          idString += '"+' + nextIdNameCode[0] + '+"';
+          first = true
+        }else {
+          idString += nextIdNameCode[1][0]
+        }
+      }else {
+        idString += idPart;
+        first = false
+      }
+    }
+    return idString
+  }, genFunction:function(statements, global) {
     var source = [];
     if(!global) {
       source.push("function(scope) {")
     }
     source.push('var buffer = ""' + (global ? "," : ";"));
     if(global) {
-      source.push("config = this.config," + "engine = this," + "moduleWrap, " + "utils = config.utils;");
+      source.push("config = this.config," + "engine = this," + "moduleWrap," + "nativeCommands = engine.nativeCommands," + "utils = engine.utils;");
       source.push('if (typeof module !== "undefined" && module.kissy) {' + "moduleWrap = module;" + "}");
-      var natives = "", c, utils = XTemplateRuntime.utils;
-      for(c in utils) {
-        natives += c + "Util = utils." + c + ","
-      }
-      if(natives) {
-        source.push("var " + natives.slice(0, natives.length - 1) + ";")
-      }
+      source.push("var " + nativeCode + ";")
     }
     if(statements) {
       for(var i = 0, len = statements.length;i < len;i++) {
@@ -552,31 +578,8 @@ KISSY.add("xtemplate/compiler", ["xtemplate/runtime", "./compiler/parser", "./co
       source.push("}");
       return source
     }else {
-      return{params:["scope", "S", "undefined"], source:source}
+      return{params:["scope", "S", "payload", "undefined"], source:source}
     }
-  }, genIdOrInlineCommand:function(idNode, tplNode) {
-    var source = [], depth = idNode.depth, configName, idParts = idNode.parts, idName = guid("id"), self = this;
-    if(depth === 0) {
-      var configNameCode = tplNode && self.genConfig(tplNode);
-      if(configNameCode) {
-        configName = configNameCode[0];
-        pushToArray(source, configNameCode[1])
-      }
-    }
-    var idString = self.getIdStringFromIdParts(source, idParts);
-    if(depth || S.startsWith(idString, "this.")) {
-      source.push("var " + idName + " = getPropertyUtil(engine,scope" + ',"' + idString + '",' + depth + "," + idNode.lineNumber + ");")
-    }else {
-      if(configName) {
-        if(idString === "include") {
-          source.push("if(moduleWrap) {re" + 'quire("' + tplNode.params[0].value + '");' + configName + ".params[0] = moduleWrap.resolveByName(" + configName + ".params[0]);" + "}")
-        }
-        source.push("var " + idName + " = runInlineCommandUtil(engine,scope," + configName + ',"' + idString + '",' + idNode.lineNumber + ");")
-      }else {
-        source.push("var " + idName + " = getPropertyOrRunCommandUtil(engine,scope," + (configName || "{}") + ',"' + idString + '",' + depth + "," + idNode.lineNumber + ");")
-      }
-    }
-    return[idName, source]
   }, genOpExpression:function(e, type) {
     var source = [], name1, name2, code1 = this[e.op1.type](e.op1), code2 = this[e.op2.type](e.op2);
     name1 = code1[0];
@@ -606,45 +609,43 @@ KISSY.add("xtemplate/compiler", ["xtemplate/runtime", "./compiler/parser", "./co
       return["", source]
     }
     return undefined
-  }, genConfig:function(tplNode) {
+  }, genConfigFromCommand:function(command) {
     var source = [], configName, params, hash, self = this;
-    if(tplNode) {
-      params = tplNode.params;
-      hash = tplNode.hash;
-      if(params || hash) {
-        configName = guid("config");
-        source.push("var " + configName + " = {};")
-      }
-      if(params) {
-        var paramsName = guid("params");
-        source.push("var " + paramsName + " = [];");
-        S.each(params, function(param) {
-          var nextIdNameCode = self[param.type](param);
-          if(nextIdNameCode[0]) {
-            pushToArray(source, nextIdNameCode[1]);
-            source.push(paramsName + ".push(" + nextIdNameCode[0] + ");")
-          }else {
-            pushToArray(source, nextIdNameCode[1].slice(0, -1));
-            source.push(paramsName + ".push(" + lastOfArray(nextIdNameCode[1]) + ");")
-          }
-        });
-        source.push(configName + ".params=" + paramsName + ";")
-      }
-      if(hash) {
-        var hashName = guid("hash");
-        source.push("var " + hashName + " = {};");
-        S.each(hash.value, function(v, key) {
-          var nextIdNameCode = self[v.type](v);
-          if(nextIdNameCode[0]) {
-            pushToArray(source, nextIdNameCode[1]);
-            source.push(hashName + '["' + key + '"] = ' + nextIdNameCode[0] + ";")
-          }else {
-            pushToArray(source, nextIdNameCode[1].slice(0, -1));
-            source.push(hashName + '["' + key + '"] = ' + lastOfArray(nextIdNameCode[1]) + ";")
-          }
-        });
-        source.push(configName + ".hash=" + hashName + ";")
-      }
+    params = command.params;
+    hash = command.hash;
+    if(params || hash) {
+      configName = guid("config");
+      source.push("var " + configName + " = {};")
+    }
+    if(params) {
+      var paramsName = guid("params");
+      source.push("var " + paramsName + " = [];");
+      S.each(params, function(param) {
+        var nextIdNameCode = self[param.type](param);
+        if(nextIdNameCode[0]) {
+          pushToArray(source, nextIdNameCode[1]);
+          source.push(paramsName + ".push(" + nextIdNameCode[0] + ");")
+        }else {
+          pushToArray(source, nextIdNameCode[1].slice(0, -1));
+          source.push(paramsName + ".push(" + lastOfArray(nextIdNameCode[1]) + ");")
+        }
+      });
+      source.push(configName + ".params=" + paramsName + ";")
+    }
+    if(hash) {
+      var hashName = guid("hash");
+      source.push("var " + hashName + " = {};");
+      S.each(hash.value, function(v, key) {
+        var nextIdNameCode = self[v.type](v);
+        if(nextIdNameCode[0]) {
+          pushToArray(source, nextIdNameCode[1]);
+          source.push(hashName + '["' + key + '"] = ' + nextIdNameCode[0] + ";")
+        }else {
+          pushToArray(source, nextIdNameCode[1].slice(0, -1));
+          source.push(hashName + '["' + key + '"] = ' + lastOfArray(nextIdNameCode[1]) + ";")
+        }
+      });
+      source.push(configName + ".hash=" + hashName + ";")
     }
     return[configName, source]
   }, conditionalOrExpression:function(e) {
@@ -675,13 +676,35 @@ KISSY.add("xtemplate/compiler", ["xtemplate/runtime", "./compiler/parser", "./co
   }, "boolean":function(e) {
     return["", [e.value]]
   }, id:function(idNode) {
-    var source = [], depth = idNode.depth, idParts = idNode.parts, idName = guid("id"), self = this;
+    var source = [], depth = idNode.depth, idParts = idNode.parts, originalIdString = idNode.string, idName = guid("id"), self = this;
     var idString = self.getIdStringFromIdParts(source, idParts);
-    source.push("var " + idName + " = getPropertyUtil(engine,scope" + ',"' + idString + '",' + depth + "," + idNode.lineNumber + ");");
+    var depthParam = depth ? "," + depth : "";
+    if(originalIdString === idString) {
+      source.push("var " + idName + ' = scope.resolve(["' + idParts.join('","') + '"]' + depthParam + ");")
+    }else {
+      source.push("var " + idName + ' = scope.resolve("' + idString + '"' + depthParam + ");")
+    }
     return[idName, source]
-  }, block:function(block) {
-    var programNode = block.program, source = [], self = this, tplNode = block.tpl, configNameCode = self.genConfig(tplNode), configName = configNameCode[0], tplPath = tplNode.path, pathString = tplPath.string, inverseFn;
-    pushToArray(source, configNameCode[1]);
+  }, command:function(command) {
+    var source = [], idNode = command.id, configName, idParts = idNode.parts, idName = guid("id"), self = this;
+    var commandConfigCode = self.genConfigFromCommand(command);
+    if(commandConfigCode) {
+      configName = commandConfigCode[0];
+      pushToArray(source, commandConfigCode[1])
+    }
+    var idString = self.getIdStringFromIdParts(source, idParts);
+    if(idString === "include") {
+      source.push("if(moduleWrap) {re" + 'quire("' + command.params[0].value + '");' + configName + ".params[0] = moduleWrap.resolveByName(" + configName + ".params[0]);" + "}")
+    }
+    if(idString in nativeCommands) {
+      source.push("var " + idName + " = " + idString + "Command.call(engine,scope," + configName + ",payload);")
+    }else {
+      source.push("var " + idName + " = runInlineCommandUtil(engine,scope," + configName + ',"' + idString + '",' + idNode.lineNumber + ");")
+    }
+    return[idName, source]
+  }, blockStatement:function(block) {
+    var programNode = block.program, source = [], self = this, command = block.command, commandConfigCode = self.genConfigFromCommand(command), configName = commandConfigCode[0], id = command.id, idString = id.string, inverseFn;
+    pushToArray(source, commandConfigCode[1]);
     if(!configName) {
       configName = S.guid("config");
       source.push("var " + configName + " = {};")
@@ -691,37 +714,22 @@ KISSY.add("xtemplate/compiler", ["xtemplate/runtime", "./compiler/parser", "./co
       inverseFn = self.genFunction(programNode.inverse).join("\n");
       source.push(configName + ".inverse=" + inverseFn + ";")
     }
-    if(tplNode.isInverted) {
-      var tmp = guid("inverse");
-      source.push("var " + tmp + "=" + configName + ".fn;");
-      source.push(configName + ".fn = " + configName + ".inverse;");
-      source.push(configName + ".inverse = " + tmp + ";")
-    }
-    if(!tplNode.hash && !tplNode.params) {
-      var parts = tplPath.parts;
-      for(var i = 0;i < parts.length;i++) {
-        if(typeof parts[i] !== "string") {
-          pathString = self.getIdStringFromIdParts(source, parts);
-          break
-        }
+    var parts = id.parts;
+    for(var i = 0, l = parts.length;i < l;i++) {
+      if(typeof parts[i] !== "string") {
+        idString = self.getIdStringFromIdParts(source, parts);
+        break
       }
     }
-    source.push("buffer += runBlockCommandUtil(engine, scope, " + configName + ", " + '"' + pathString + '", ' + tplPath.lineNumber + ");");
-    return source
-  }, content:function(contentNode) {
-    return["buffer += '" + escapeString(contentNode.value, false) + "';"]
-  }, tpl:function(tplNode) {
-    var source = [], genIdOrInlineCommandCode = this.genIdOrInlineCommand(tplNode.path, tplNode);
-    pushToArray(source, genIdOrInlineCommandCode[1]);
-    source.push("buffer += renderOutputUtil(" + genIdOrInlineCommandCode[0] + "," + tplNode.escaped + ");");
-    return source
-  }, tplExpression:function(e) {
-    var source = [], escaped = e.escaped, code, expression = e.expression, type = e.expression.type, expressionOrVariable;
-    if(type === "id") {
-      code = this.genIdOrInlineCommand(expression)
+    if(idString in nativeCommands) {
+      source.push("buffer += " + idString + "Command.call(engine, scope, " + configName + ",payload);")
     }else {
-      code = this[type](expression)
+      source.push("buffer += runBlockCommandUtil(engine, scope, " + configName + ", " + '"' + idString + '", ' + id.lineNumber + ");")
     }
+    return source
+  }, expressionStatement:function(expressionStatement) {
+    var source = [], escape = expressionStatement.escape, code, expression = expressionStatement.value, type = expression.type, expressionOrVariable;
+    code = this[type](expression);
     if(code[0]) {
       pushToArray(source, code[1]);
       expressionOrVariable = code[0]
@@ -729,29 +737,10 @@ KISSY.add("xtemplate/compiler", ["xtemplate/runtime", "./compiler/parser", "./co
       pushToArray(source, code[1].slice(0, -1));
       expressionOrVariable = lastOfArray(code[1])
     }
-    source.push("buffer += renderOutputUtil(" + expressionOrVariable + "," + escaped + ");");
+    source.push("buffer += renderOutputUtil(" + expressionOrVariable + "," + escape + ");");
     return source
-  }, getIdStringFromIdParts:function(source, idParts) {
-    var idString = "", self = this, i, idPart, idPartType, nextIdNameCode, first = true;
-    for(i = 0;i < idParts.length;i++) {
-      idPart = idParts[i];
-      idPartType = idPart.type;
-      if(!first) {
-        idString += "."
-      }
-      if(idPartType) {
-        nextIdNameCode = self[idPartType](idPart);
-        if(nextIdNameCode[0]) {
-          pushToArray(source, nextIdNameCode[1]);
-          idString += '"+' + nextIdNameCode[0] + '+"';
-          first = true
-        }
-      }else {
-        idString += idPart;
-        first = false
-      }
-    }
-    return idString
+  }, contentStatement:function(contentStatement) {
+    return["buffer += '" + escapeString(contentStatement.value, false) + "';"]
   }};
   var compiler;
   compiler = {parse:function(tpl) {
@@ -763,10 +752,10 @@ KISSY.add("xtemplate/compiler", ["xtemplate/runtime", "./compiler/parser", "./co
     var root = this.parse(tpl);
     variableId = 0;
     return gen.genFunction(root.statements, true)
-  }, compileToFn:function(tpl, config) {
+  }, compileToFn:function(tpl, name) {
     var code = compiler.compile(tpl);
-    config = config || {};
-    var sourceURL = "sourceURL=" + (config.name ? config.name : "xtemplate" + xtemplateId++) + ".js";
+    name = name || "xtemplate" + xtemplateId++;
+    var sourceURL = "sourceURL=" + name + ".js";
     return Function.apply(null, [].concat(code.params).concat(code.source.join("\n") + "\n//@ " + sourceURL + "\n//# " + sourceURL))
   }};
   return compiler

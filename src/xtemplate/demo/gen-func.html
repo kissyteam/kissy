@@ -29,9 +29,9 @@
             <div>
                 <textarea style="width: 350px;height: 400px;" id="tpl">
 
-                    my first {{tpl name '0' file=3}} o
+                    my first {{tpl(name ,'0', file=3)}} o
 
-                    {{#each this}}
+                    {{#each(this)}}
                     {{xindex}} {{name}}
                     {{/each}}
 
@@ -43,15 +43,15 @@
 
                     }}
 
-                    {{#if cond}}
+                    {{#if (cond)}}
 
                     y
 
-                    {{#each my}}
+                    {{#each (my)}}
 
                     {{escapeName}}
 
-                    {{#if cond2}}
+                    {{#if (cond2)}}
 
                     {{break}}
 
@@ -103,6 +103,7 @@
     KISSY.use("xtemplate,node", function (S, XTemplate) {
         var $ = S.all;
         $('#parse').on('click', function () {
+            debugger
             var g = XTemplate.compiler.compileToStr($('#tpl').val());
             $('#gen').html('<pre class="brush: js;">' +
                     S.escapeHtml(js_beauty(g)) + '</pre>');

@@ -1,5 +1,5 @@
-{{extend './layout'}}
-{{#block 'head'}}
+{{extend ('./layout')}}
+{{#block ('head'}}
     <title>{{component}} test runner</title>
     <link rel="stylesheet" href="/kissy/tools/jasmine/jasmine.css">
     <link rel="stylesheet" href="/kissy/build/css/dpl/base.css"/>
@@ -8,21 +8,21 @@
             position: static;
         }
     </style>
-    {{#each externalLinks}}
+    {{#each (externalLinks)}}
         <link rel="stylesheet" href="{{{.}}}"/>
     {{/each}}
 
     <style>
         {{{externalStyle}}}
     </style>
-    {{#if query.min}}
-        {{#if loader}}
+    {{#if (query.min)}}
+        {{#if (loader)}}
             <script src="/kissy/build/loader-min.js"></script>
         {{else}}
             <script src="/kissy/build/seed-min.js"></script>
         {{/if}}
     {{else}}
-        {{#if loader}}
+        {{#if (loader)}}
             <script src="/kissy/build/loader.js"></script>
         {{else}}
             <script src="/kissy/build/seed.js"></script>
@@ -54,11 +54,11 @@
     <script src="/kissy/tools/jasmine/kissy-report.js"></script>
     <script src="/kissy/tools/jasmine/init.js"></script>
     <script src="/kissy/tools/jasmine/event-simulate.js"></script>
-    {{#each externalScripts}}
+    {{#each (externalScripts}}
         <script src="{{{.}}}"></script>
     {{/each}}
 {{/block}}
-{{#block 'body'}}
+{{#block ('body'}}
     <h1 style="text-align: center">{{component}} test cases</h1>
     {{{html}}}
     <script>
@@ -75,11 +75,11 @@
             }
         });
 
-        {{#if tests}}
+        {{#if (tests)}}
             tests.shift();
         {{/if}}
 
-        {{#each tests}}
+        {{#each (tests)}}
             tests.push('specs/{{{.}}}');
         {{/each}}
 

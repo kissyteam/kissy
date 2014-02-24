@@ -6,6 +6,19 @@
 KISSY.add(function (S) {
     var ast = {};
 
+    function sameArray(a1, a2) {
+        var l1 = a1.length, l2 = a2.length;
+        if (l1 !== l2) {
+            return 0;
+        }
+        for (var i = 0; i < l1; i++) {
+            if (a1[i] !== a2[i]) {
+                return 0;
+            }
+        }
+        return 1;
+    }
+
     /**
      * @ignore
      * @param lineNumber
@@ -22,69 +35,74 @@ KISSY.add(function (S) {
 
     ast.ProgramNode.prototype.type = 'program';
 
-    ast.BlockNode = function (lineNumber, tpl, program, close) {
-        var closeParts = close.parts, self = this, e;
+    ast.BlockStatement = function (lineNumber, command, program, close) {
+        var closeParts = close.parts,
+            self = this,
+            e;
         // no close tag
-        if (!S.equals(tpl.path.parts, closeParts)) {
+        if (!sameArray(command.id.parts, closeParts)) {
             e = ('Syntax error at line ' +
                 lineNumber +
                 ':\n' + 'expect {{/' +
-                tpl.path.parts +
+                command.id.parts +
                 '}} not {{/' +
                 closeParts + '}}');
             S.error(e);
         }
         self.lineNumber = lineNumber;
-        self.tpl = tpl;
+        self.command = command;
         self.program = program;
     };
 
-    ast.BlockNode.prototype.type = 'block';
+    ast.BlockStatement.prototype.type = 'blockStatement';
 
-    /**
-     * @ignore
-     * @param lineNumber
-     * @param path
-     * @param [params]
-     * @param [hash]
-     * @constructor
-     */
-    ast.TplNode = function (lineNumber, path, params, hash) {
-        var self = this;
-        self.lineNumber = lineNumber;
-        self.path = path;
-        self.params = params;
-        self.hash = hash;
-        self.escaped = true;
-        // inside {{^}}
-        // default: inside {{#}}
-        self.isInverted = false;
+    ast.InlineCommandStatement = function (lineNumber, command, escape) {
+        this.lineNumber = lineNumber;
+        this.command = command;
+        this.escape = escape;
     };
 
-    ast.TplNode.prototype.type = 'tpl';
+    ast.InlineCommandStatement.prototype.type = 'inlineCommandStatement';
 
-
-    ast.TplExpressionNode = function (lineNumber, expression) {
+    ast.ExpressionStatement = function (lineNumber, expression, escape) {
         var self = this;
         self.lineNumber = lineNumber;
-        self.expression = expression;
-        self.escaped = true;
+        self.value = expression;
+        self.escape = escape;
     };
 
-    ast.TplExpressionNode.prototype.type = 'tplExpression';
+    ast.ExpressionStatement.prototype.type = 'expressionStatement';
 
-    ast.ContentNode = function (lineNumber, value) {
+    ast.ContentStatement = function (lineNumber, value) {
         var self = this;
         self.lineNumber = lineNumber;
         self.value = value;
     };
 
-    ast.ContentNode.prototype.type = 'content';
+    ast.ContentStatement.prototype.type = 'contentStatement';
 
     ast.UnaryExpression = function (unaryType, v) {
         this.value = v;
         this.unaryType = unaryType;
     };
+
+    /**
+     * @ignore
+     * @param lineNumber
+     * @param id
+     * @param [params]
+     * @param [hash]
+     * @constructor
+     */
+    ast.Command = function (lineNumber, id, params, hash) {
+        var self = this;
+        self.lineNumber = lineNumber;
+        self.id = id;
+        self.params = params;
+        self.hash = hash;
+    };
+
+    ast.Command.prototype.type = 'command';
 
     ast.UnaryExpression.prototype.type = 'unaryExpression';
 
@@ -140,57 +158,58 @@ KISSY.add(function (S) {
 
     ast.ConditionalOrExpression.prototype.type = 'conditionalOrExpression';
 
-    ast.StringNode = function (lineNumber, value) {
+    ast.String = function (lineNumber, value) {
         var self = this;
         self.lineNumber = lineNumber;
         self.value = value;
     };
 
-    ast.StringNode.prototype.type = 'string';
+    ast.String.prototype.type = 'string';
 
-    ast.NumberNode = function (lineNumber, value) {
+    ast.Number = function (lineNumber, value) {
         var self = this;
         self.lineNumber = lineNumber;
         self.value = value;
     };
 
-    ast.NumberNode.prototype.type = 'number';
+    ast.Number.prototype.type = 'number';
 
-    ast.BooleanNode = function (lineNumber, value) {
+    ast.Boolean = function (lineNumber, value) {
         var self = this;
         self.lineNumber = lineNumber;
         self.value = value;
     };
 
-    ast.BooleanNode.prototype.type = 'boolean';
+    ast.Boolean.prototype.type = 'boolean';
 
-    ast.HashNode = function (lineNumber, raw) {
-        var self = this, value = {};
+    ast.Hash = function (lineNumber) {
+        var self = this,
+            value = {};
         self.lineNumber = lineNumber;
-        S.each(raw, function (r) {
-            value[r[0]] = r[1];
-        });
         self.value = value;
     };
 
-    ast.HashNode.prototype.type = 'hash';
+    ast.Hash.prototype.type = 'hash';
 
-    ast.IdNode = function (lineNumber, raw) {
-        var self = this, parts = [], depth = 0;
+    ast.Id = function (lineNumber, raw) {
+        var self = this,
+            parts = [],
+            depth = 0;
         self.lineNumber = lineNumber;
-        S.each(raw, function (p) {
+        for (var i = 0, l = raw.length; i < l; i++) {
+            var p = raw[i];
             if (p === '..') {
                 depth++;
             } else {
                 parts.push(p);
             }
-        });
+        }
         self.parts = parts;
         self.string = parts.join('.');
         self.depth = depth;
     };
 
-    ast.IdNode.prototype.type = 'id';
+    ast.Id.prototype.type = 'id';
 
     return ast;
 });

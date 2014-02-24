@@ -11,7 +11,7 @@ KISSY.add(function (S, require) {
         var parts = parentName.split('/');
         var subParts = subName.split('/');
         parts.pop();
-        for (var i = 0; i < subParts.length; i++) {
+        for (var i = 0, l = subParts.length; i < l; i++) {
             var subPart = subParts[i];
             if (subPart === '.') {
             } else if (subPart === '..') {
@@ -104,11 +104,9 @@ KISSY.add(function (S, require) {
             return '';
         },
 
-        include: function (scope, config) {
+        include: function (scope, config, payload) {
             var params = config.params;
             var self = this;
-            var selfConfig = self.config;
-
             // sub template scope
             if (config.hash) {
                 var newScope = new Scope(config.hash);
@@ -116,7 +114,7 @@ KISSY.add(function (S, require) {
                 scope = newScope;
             }
 
-            var myName = selfConfig.name;
+            var myName = self.name;
             var subTplName = params[0];
 
             if (subTplName.charAt(0) === '.') {
@@ -127,22 +125,19 @@ KISSY.add(function (S, require) {
                 subTplName = getSubNameFromParentName(myName, subTplName);
             }
 
-            var tpl = selfConfig.loader.call(this, subTplName);
-            var subConfig = S.merge(selfConfig);
-            // template file name
-            subConfig.name = subTplName;
-            return self.invokeEngine(tpl, scope, subConfig);
+            return self.load(subTplName).render(scope, payload);
         },
+
         parse: function (scope, config) {
             // abandon scope
             return commands.include.call(this, new Scope(), config);
         },
 
-        extend: function (scope, config) {
-            this._extendTplName = config.params[0];
+        extend: function (scope, config, payload) {
+            payload.extendTplName = config.params[0];
         },
 
-        block: function (scope, config) {
+        block: function (scope, config, payload) {
             var self = this;
             var params = config.params;
             var blockName = params[0];
@@ -151,7 +146,7 @@ KISSY.add(function (S, require) {
                 type = params[0];
                 blockName = params[1];
             }
-            var blocks = self.config.blocks;
+            var blocks = payload.blocks = payload.blocks || {};
             var head = blocks[blockName],
                 cursor;
             var current = {
@@ -176,7 +171,7 @@ KISSY.add(function (S, require) {
                 }
             }
             var ret = '';
-            if (!self._extendTplName) {
+            if (!payload.extendTplName) {
                 cursor = blocks[blockName];
                 while (cursor) {
                     if (cursor.fn) {
@@ -189,12 +184,12 @@ KISSY.add(function (S, require) {
             return ret;
         },
 
-        'macro': function (scope, config) {
+        'macro': function (scope, config, payload) {
             var params = config.params;
             var macroName = params[0];
             var params1 = params.slice(1);
             var self = this;
-            var macros = self.config.macros;
+            var macros = payload.macros = payload.macros || {};
             // definition
             if (config.fn) {
                 macros[macroName] = {
@@ -204,10 +199,12 @@ KISSY.add(function (S, require) {
             } else {
                 var paramValues = {};
                 var macro = macros[macroName];
-                if (macro) {
-                    S.each(macro.paramNames, function (p, i) {
+                var paramNames;
+                if (macro && (paramNames = macro.paramNames)) {
+                    for (var i = 0, len = paramNames.length; i < len; i++) {
+                        var p = paramNames[i];
                         paramValues[p] = params1[i];
-                    });
+                    }
                     var newScope = new Scope(paramValues);
                     // no caller Scope
                     return macro.fn.call(self, newScope);

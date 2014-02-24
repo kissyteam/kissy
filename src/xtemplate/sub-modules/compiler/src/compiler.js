@@ -5,6 +5,22 @@
  */
 KISSY.add(function (S, require) {
     var XTemplateRuntime = require('xtemplate/runtime');
+    var nativeCode = '',
+        t;
+
+    var nativeCommands = XTemplateRuntime.nativeCommands,
+        nativeUtils = XTemplateRuntime.utils;
+
+    for (t in nativeUtils) {
+        nativeCode += t + 'Util = utils.' + t + ',';
+    }
+
+    for (t in nativeCommands) {
+        nativeCode += t + 'Command = nativeCommands.' + t + ',';
+    }
+
+    nativeCode = nativeCode.slice(0, -1);
+
     var parser = require('./compiler/parser');
 
     parser.yy = require('./compiler/ast');
@@ -50,6 +66,40 @@ KISSY.add(function (S, require) {
     }
 
     var gen = {
+        // consider x[d]
+        getIdStringFromIdParts: function (source, idParts) {
+            var idString = '',
+                self = this,
+                i, l,
+                idPart,
+                idPartType,
+                nextIdNameCode,
+                first = true;
+            for (i = 0, l = idParts.length; i < l; i++) {
+                idPart = idParts[i];
+                idPartType = idPart.type;
+                if (!first) {
+                    idString += '.';
+                }
+                if (idPartType) {
+                    nextIdNameCode = self[idPartType](idPart);
+                    if (nextIdNameCode[0]) {
+                        pushToArray(source, nextIdNameCode[1]);
+                        idString += '"+' + nextIdNameCode[0] + '+"';
+                        first = true;
+                    } else {
+                        // number
+                        idString += nextIdNameCode[1][0];
+                    }
+                } else {
+                    // string
+                    idString += idPart;
+                    first = false;
+                }
+            }
+            return idString;
+        },
+
         // ------------ helper generation function start
         genFunction: function (statements, global) {
             var source = [];
@@ -61,24 +111,15 @@ KISSY.add(function (S, require) {
                 source.push('config = this.config,' +
                     // current xtemplate engine
                     'engine = this,' +
-                    'moduleWrap, ' +
-                    'utils = config.utils;');
+                    'moduleWrap,' +
+                    'nativeCommands = engine.nativeCommands,' +
+                    'utils = engine.utils;');
 
                 source.push('if (typeof module !== "undefined" && module.kissy) {' +
                     'moduleWrap = module;' +
                     '}');
 
-                var natives = '',
-                    c,
-                    utils = XTemplateRuntime.utils;
-
-                for (c in utils) {
-                    natives += c + 'Util = utils.' + c + ',';
-                }
-
-                if (natives) {
-                    source.push('var ' + natives.slice(0, natives.length - 1) + ';');
-                }
+                source.push('var ' + nativeCode + ';');
             }
             if (statements) {
                 for (var i = 0, len = statements.length; i < len; i++) {
@@ -91,60 +132,10 @@ KISSY.add(function (S, require) {
                 return source;
             } else {
                 return {
-                    params: ['scope', 'S', 'undefined'],
+                    params: ['scope', 'S', 'payload', 'undefined'],
                     source: source
                 };
             }
-        },
-
-        genIdOrInlineCommand: function (idNode, tplNode) {
-            var source = [],
-                depth = idNode.depth,
-                configName,
-                idParts = idNode.parts,
-                idName = guid('id'),
-                self = this;
-
-            // {{#each variable}} {{variable}}
-            // {{command}}
-            if (depth === 0) {
-                var configNameCode = tplNode && self.genConfig(tplNode);
-                if (configNameCode) {
-                    configName = configNameCode[0];
-                    pushToArray(source, configNameCode[1]);
-                }
-            }
-
-            // variable {{variable.subVariable}}
-            var idString = self.getIdStringFromIdParts(source, idParts);
-
-            // {{../x}}
-            // {{this.x}}
-            // {{command x}}
-            if (depth || S.startsWith(idString, 'this.')) {
-                source.push('var ' + idName +
-                    ' = getPropertyUtil(engine,scope' +
-                    ',"' + idString + '",' +
-                    depth + ',' + idNode.lineNumber + ');');
-            } else if (configName) {
-                // require include modules
-                if (idString === 'include') {
-                    // prevent require parse...
-                    source.push('if(moduleWrap) {re' + 'quire("' + tplNode.params[0].value + '");' +
-                        configName + '.params[0] = moduleWrap.resolveByName(' + configName + '.params[0]);' +
-                        '}');
-                }
-                source.push('var ' + idName +
-                    ' = runInlineCommandUtil(engine,scope,' +
-                    configName + ',"' + idString + '",' +
-                    idNode.lineNumber + ');');
-            } else {
-                source.push('var ' + idName +
-                    ' = getPropertyOrRunCommandUtil(engine,scope,' +
-                    (configName || '{}') + ',"' + idString + '",' + depth +
-                    ',' + idNode.lineNumber + ');');
-            }
-            return [idName, source];
         },
 
         genOpExpression: function (e, type) {
@@ -198,84 +189,81 @@ KISSY.add(function (S, require) {
             return undefined;
         },
 
-        genConfig: function (tplNode) {
+        genConfigFromCommand: function (command) {
             var source = [],
                 configName,
                 params,
                 hash,
                 self = this;
 
-            if (tplNode) {
-                params = tplNode.params;
-                hash = tplNode.hash;
+            params = command.params;
+            hash = command.hash;
 
-                if (params || hash) {
-                    configName = guid('config');
-                    source.push('var ' + configName + ' = {};');
-                }
+            if (params || hash) {
+                configName = guid('config');
+                source.push('var ' + configName + ' = {};');
+            }
 
-                if (params) {
-                    var paramsName = guid('params');
-                    source.push('var ' + paramsName + ' = [];');
-                    S.each(params, function (param) {
-                        var nextIdNameCode = self[param.type](param);
-                        if (nextIdNameCode[0]) {
-                            pushToArray(source, nextIdNameCode[1]);
-                            source.push(paramsName + '.push(' + nextIdNameCode[0] + ');');
-                        } else {
-                            pushToArray(source, nextIdNameCode[1].slice(0, -1));
-                            source.push(paramsName + '.push(' + lastOfArray(nextIdNameCode[1]) + ');');
-                        }
-                    });
-                    source.push(configName + '.params=' + paramsName + ';');
-                }
+            if (params) {
+                var paramsName = guid('params');
+                source.push('var ' + paramsName + ' = [];');
+                S.each(params, function (param) {
+                    var nextIdNameCode = self[param.type](param);
+                    if (nextIdNameCode[0]) {
+                        pushToArray(source, nextIdNameCode[1]);
+                        source.push(paramsName + '.push(' + nextIdNameCode[0] + ');');
+                    } else {
+                        pushToArray(source, nextIdNameCode[1].slice(0, -1));
+                        source.push(paramsName + '.push(' + lastOfArray(nextIdNameCode[1]) + ');');
+                    }
+                });
+                source.push(configName + '.params=' + paramsName + ';');
+            }
 
-                if (hash) {
-                    var hashName = guid('hash');
-                    source.push('var ' + hashName + ' = {};');
-                    S.each(hash.value, function (v, key) {
-                        var nextIdNameCode = self[v.type](v);
-                        if (nextIdNameCode[0]) {
-                            pushToArray(source, nextIdNameCode[1]);
-                            source.push(hashName + '["' + key + '"] = ' + nextIdNameCode[0] + ';');
-                        } else {
-                            pushToArray(source, nextIdNameCode[1].slice(0, -1));
-                            source.push(hashName + '["' + key + '"] = ' + lastOfArray(nextIdNameCode[1]) + ';');
-                        }
-                    });
-                    source.push(configName + '.hash=' + hashName + ';');
-                }
+            if (hash) {
+                var hashName = guid('hash');
+                source.push('var ' + hashName + ' = {};');
+                S.each(hash.value, function (v, key) {
+                    var nextIdNameCode = self[v.type](v);
+                    if (nextIdNameCode[0]) {
+                        pushToArray(source, nextIdNameCode[1]);
+                        source.push(hashName + '["' + key + '"] = ' + nextIdNameCode[0] + ';');
+                    } else {
+                        pushToArray(source, nextIdNameCode[1].slice(0, -1));
+                        source.push(hashName + '["' + key + '"] = ' + lastOfArray(nextIdNameCode[1]) + ';');
+                    }
+                });
+                source.push(configName + '.hash=' + hashName + ';');
             }
 
             return [configName, source];
         },
-        // ------------ helper generation function end
 
-        conditionalOrExpression: function (e) {
+        'conditionalOrExpression': function (e) {
             return this.genOpExpression(e, '||');
         },
 
-        conditionalAndExpression: function (e) {
+        'conditionalAndExpression': function (e) {
             return this.genOpExpression(e, '&&');
         },
 
-        relationalExpression: function (e) {
+        'relationalExpression': function (e) {
             return this.genOpExpression(e, e.opType);
         },
 
-        equalityExpression: function (e) {
+        'equalityExpression': function (e) {
             return this.genOpExpression(e, e.opType);
         },
 
-        additiveExpression: function (e) {
+        'additiveExpression': function (e) {
             return this.genOpExpression(e, e.opType);
         },
 
-        multiplicativeExpression: function (e) {
+        'multiplicativeExpression': function (e) {
             return this.genOpExpression(e, e.opType);
         },
 
-        unaryExpression: function (e) {
+        'unaryExpression': function (e) {
             var source = [],
                 name,
                 unaryType = e.unaryType,
@@ -307,29 +295,70 @@ KISSY.add(function (S, require) {
             var source = [],
                 depth = idNode.depth,
                 idParts = idNode.parts,
+                originalIdString = idNode.string,
                 idName = guid('id'),
                 self = this;
             // variable {{variable.subVariable}}
             var idString = self.getIdStringFromIdParts(source, idParts);
-            source.push('var ' + idName +
-                ' = getPropertyUtil(engine,scope' +
-                ',"' + idString + '",' +
-                depth + ',' + idNode.lineNumber + ');');
+            var depthParam = depth ? (',' + depth) : '';
+            if (originalIdString === idString) {
+                source.push('var ' + idName + ' = scope.resolve(["' + idParts.join('","') + '"]' + depthParam + ');');
+            } else {
+                source.push('var ' + idName + ' = scope.resolve("' + idString + '"' + depthParam + ');');
+            }
             return [idName, source];
         },
 
-        'block': function (block) {
+        'command': function (command) {
+            var source = [],
+                idNode = command.id,
+                configName,
+                idParts = idNode.parts,
+                idName = guid('id'),
+                self = this;
+
+            var commandConfigCode = self.genConfigFromCommand(command);
+
+            if (commandConfigCode) {
+                configName = commandConfigCode[0];
+                pushToArray(source, commandConfigCode[1]);
+            }
+
+            var idString = self.getIdStringFromIdParts(source, idParts);
+
+            // require include modules
+            if (idString === 'include') {
+                // prevent require parse...
+                source.push('if(moduleWrap) {re' + 'quire("' + command.params[0].value + '");' +
+                    configName + '.params[0] = moduleWrap.resolveByName(' + configName + '.params[0]);' +
+                    '}');
+            }
+            if (idString in nativeCommands) {
+                source.push('var ' + idName + ' = ' + idString +
+                    'Command.call(engine,scope,' + configName + ',payload);');
+            } else {
+                source.push('var ' + idName +
+                    ' = runInlineCommandUtil(engine,scope,' +
+                    configName + ',"' + idString + '",' +
+                    idNode.lineNumber + ');');
+            }
+
+            return [idName, source];
+        },
+
+
+        'blockStatement': function (block) {
             var programNode = block.program,
                 source = [],
                 self = this,
-                tplNode = block.tpl,
-                configNameCode = self.genConfig(tplNode),
-                configName = configNameCode[0],
-                tplPath = tplNode.path,
-                pathString = tplPath.string,
+                command = block.command,
+                commandConfigCode = self.genConfigFromCommand(command),
+                configName = commandConfigCode[0],
+                id = command.id,
+                idString = id.string,
                 inverseFn;
 
-            pushToArray(source, configNameCode[1]);
+            pushToArray(source, commandConfigCode[1]);
 
             if (!configName) {
                 configName = S.guid('config');
@@ -344,58 +373,36 @@ KISSY.add(function (S, require) {
                 source.push(configName + '.inverse=' + inverseFn + ';');
             }
 
-            // support {{^
-            // exchange fn with inverse
-            if (tplNode.isInverted) {
-                var tmp = guid('inverse');
-                source.push('var ' + tmp + '=' + configName + '.fn;');
-                source.push(configName + '.fn = ' + configName + '.inverse;');
-                source.push(configName + '.inverse = ' + tmp + ';');
-            }
-
-            if (!tplNode.hash && !tplNode.params) {
-                var parts = tplPath.parts;
-                for (var i = 0; i < parts.length; i++) {
-                    // {{x[d]}}
-                    if (typeof parts[i] !== 'string') {
-                        pathString = self.getIdStringFromIdParts(source, parts);
-                        break;
-                    }
+            var parts = id.parts;
+            for (var i = 0, l = parts.length; i < l; i++) {
+                // {{x[d]}}
+                if (typeof parts[i] !== 'string') {
+                    idString = self.getIdStringFromIdParts(source, parts);
+                    break;
                 }
             }
 
-            source.push('buffer += runBlockCommandUtil(engine, scope, ' +
-                configName + ', ' +
-                '"' + pathString + '", ' +
-                tplPath.lineNumber + ');');
-            return source;
-        },
-
-        'content': function (contentNode) {
-            return ['buffer += \'' + escapeString(contentNode.value, false) + '\';'];
-        },
-
-        'tpl': function (tplNode) {
-            var source = [],
-                genIdOrInlineCommandCode = this.genIdOrInlineCommand(tplNode.path, tplNode);
-            pushToArray(source, genIdOrInlineCommandCode[1]);
-            source.push('buffer += renderOutputUtil(' + genIdOrInlineCommandCode[0] + ',' + tplNode.escaped + ');');
-            return source;
-        },
-
-        'tplExpression': function (e) {
-            var source = [],
-                escaped = e.escaped,
-                code,
-                expression = e.expression,
-                type = e.expression.type,
-                expressionOrVariable;
-            if (type === 'id') {
-                code = this.genIdOrInlineCommand(expression);
+            if (idString in nativeCommands) {
+                source.push('buffer += ' + idString + 'Command.call(engine, scope, ' + configName + ',payload);');
             } else {
-                // {{x+y}}
-                code = this[type](expression);
+                source.push('buffer += runBlockCommandUtil(engine, scope, ' +
+                    configName + ', ' +
+                    '"' + idString + '", ' +
+                    id.lineNumber + ');');
             }
+            return source;
+        },
+
+        'expressionStatement': function (expressionStatement) {
+            var source = [],
+                escape = expressionStatement.escape,
+                code,
+                expression = expressionStatement.value,
+                type = expression.type,
+                expressionOrVariable;
+
+            code = this[type](expression);
+
             if (code[0]) {
                 pushToArray(source, code[1]);
                 expressionOrVariable = code[0];
@@ -403,39 +410,12 @@ KISSY.add(function (S, require) {
                 pushToArray(source, code[1].slice(0, -1));
                 expressionOrVariable = lastOfArray(code[1]);
             }
-            source.push('buffer += renderOutputUtil(' + expressionOrVariable + ',' + escaped + ');');
+            source.push('buffer += renderOutputUtil(' + expressionOrVariable + ',' + escape + ');');
             return source;
         },
 
-        // consider x[d]
-        'getIdStringFromIdParts': function (source, idParts) {
-            var idString = '',
-                self = this,
-                i,
-                idPart,
-                idPartType,
-                nextIdNameCode,
-                first = true;
-            for (i = 0; i < idParts.length; i++) {
-                idPart = idParts[i];
-                idPartType = idPart.type;
-                if (!first) {
-                    idString += '.';
-                }
-                if (idPartType) {
-                    nextIdNameCode = self[idPartType](idPart);
-                    if (nextIdNameCode[0]) {
-                        pushToArray(source, nextIdNameCode[1]);
-                        idString += '"+' + nextIdNameCode[0] + '+"';
-                        first = true;
-                    }
-                } else {
-                    // number or string
-                    idString += idPart;
-                    first = false;
-                }
-            }
-            return idString;
+        'contentStatement': function (contentStatement) {
+            return ['buffer += \'' + escapeString(contentStatement.value, false) + '\';'];
         }
     };
 
@@ -479,17 +459,13 @@ KISSY.add(function (S, require) {
         /**
          * get template function
          * @param {String} tpl
-         * @param {Object} config
-         * @param {String} config.name template file name
+         * @param {String} name template file name
          * @return {Function}
          */
-        compileToFn: function (tpl, config) {
+        compileToFn: function (tpl, name) {
             var code = compiler.compile(tpl);
-            config = config || {};
-            var sourceURL = 'sourceURL=' + (config.name ?
-                config.name :
-                ('xtemplate' + (xtemplateId++))) +
-                '.js';
+            name=name||('xtemplate' + (xtemplateId++));
+            var sourceURL = 'sourceURL=' + name  +'.js';
             // eval is not ok for eval("(function(){})") ie
             return Function.apply(null, []
                 .concat(code.params)
