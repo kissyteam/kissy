@@ -8,14 +8,15 @@ KISSY.add(function (S, require) {
     var Event = require('event/dom');
     var AnimBase = require('./base');
 
-    var Features = S.Features;
-    var vendorPrefix = Features.getTransitionPrefix();
+    var Feature = S.Features;
+    var vendorPrefix = Feature.getVendorCssPropPrefix('transition');
     var R_UPPER = /([A-Z]|^ms)/g;
     var TRANSITION_END_EVENT = vendorPrefix ?
         // webkitTransitionEnd !
         (vendorPrefix.toLowerCase() + 'TransitionEnd') :
-        'transitionend';
-    var TRANSITION = Features.getTransitionProperty();
+        // https://github.com/kissyteam/kissy/issues/538
+        'transitionend webkitTransitionEnd';
+    var TRANSITION = Feature.getVendorCssPropName('transition');
 
     function genTransition(propsData) {
         var str = '';
@@ -46,7 +47,7 @@ KISSY.add(function (S, require) {
                 propsCss = {};
             if ((transform = _propsData.transform)) {
                 delete _propsData.transform;
-                _propsData[Features.getTransformProperty()
+                _propsData[Feature.getVendorCssPropName('transform')
                     .replace(R_UPPER, '-$1').toLowerCase()] = transform;
             }
             S.each(_propsData, function (propData, prop) {
@@ -114,6 +115,11 @@ KISSY.add(function (S, require) {
                 propsData = self._propsData;
             // other anim on the same element
             if (!propsData[e.propertyName]) {
+                return;
+            }
+            // webkitTransitionEnd transitionend are both bind for
+            // https://github.com/kissyteam/kissy/issues/538
+            if (propsData[e.propertyName].pos === 1) {
                 return;
             }
             propsData[e.propertyName].pos = 1;

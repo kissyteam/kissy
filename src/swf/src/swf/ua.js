@@ -4,7 +4,6 @@
  * @author oicuicu@gmail.com
  */
 KISSY.add(function (S) {
-
     var fpvCached,
         firstRun = true,
         win = S.Env.host;

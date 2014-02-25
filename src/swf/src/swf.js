@@ -14,9 +14,6 @@ KISSY.add(function (S, require) {
         CID = 'clsid:d27cdb6e-ae6d-11cf-96b8-444553540000',
         FLASHVARS = 'flashvars',
         EMPTY = '',
-        SPACE = ' ',
-        EQUAL = '=',
-        DOUBLE_QUOTE = '"',
         LT = '<',
         GT = '>',
         doc = S.Env.host.document,
@@ -58,9 +55,9 @@ KISSY.add(function (S, require) {
      * @extends KISSY.Base
      */
     SWF = Attribute.extend({
-        constructor: function () {
+        constructor: function (config) {
             var self = this;
-            self.callSuper.apply(self, arguments);
+            self.callSuper(config);
             var expressInstall = self.get('expressInstall'),
                 swf,
                 html,
@@ -73,9 +70,15 @@ KISSY.add(function (S, require) {
                 placeHolder = Dom.create('<span>', undefined, doc),
                 elBefore = self.get('elBefore'),
                 installedSrc = self.get('src'),
+                hasNoId = !('id' in attrs),
+                idRegExp,
                 version = self.get('version');
 
             id = attrs.id = attrs.id || S.guid('ks-swf-');
+
+            if (hasNoId) {
+                idRegExp = new RegExp('\\s+id\\s*=\\s*[\'"]?' + S.escapeRegExp(id) + '[\'"]?', 'i');
+            }
 
             // 2. flash 插件没有安装
             if (!fpv()) {
@@ -118,8 +121,8 @@ KISSY.add(function (S, require) {
                 html = _stringSWFDefault(installedSrc, attrs, params);
             }
 
-            // ie 再取  target.innerHTML 属性大写，很多多与属性，等
-            self.set('html', html);
+            // ie 再取 target.innerHTML 属性大写，很多多与属性，等
+            self.set('html', idRegExp ? html.replace(idRegExp, '') : html);
 
             if (elBefore) {
                 Dom.insertBefore(placeHolder, elBefore);
@@ -135,18 +138,22 @@ KISSY.add(function (S, require) {
 
             swf = Dom.get('#' + id, doc);
 
-            self.set('swfObject', swf);
-
             if (htmlMode === 'full') {
                 if (OLD_IE) {
                     self.set('swfObject', swf);
                 } else {
                     self.set('swfObject', swf.parentNode);
                 }
+            } else {
+                self.set('swfObject', swf);
+            }
+
+            if (hasNoId) {
+                Dom.removeAttr(swf, 'id');
             }
 
             // bug fix: 重新获取对象,否则还是老对象.
-            // 如 入口为 div 如果不重新获取则仍然是 div	longzang | 2010/8/9
+            // 如 入口为 div 如果不重新获取则仍然是 div longzang | 2010/8/9
             self.set('el', swf);
 
             if (!self.get('status')) {
@@ -184,7 +191,6 @@ KISSY.add(function (S, require) {
          */
         destroy: function () {
             var self = this;
-            self.detach();
             var swfObject = self.get('swfObject');
             /* Cross-browser SWF removal
              - Especially needed to safely and completely remove a SWF in Internet Explorer
@@ -423,7 +429,9 @@ KISSY.add(function (S, require) {
         },
 
         fpv: fpv,
+
         fpvGEQ: fpvGEQ,
+
         fpvGTE: fpvGTE
     });
 
@@ -466,7 +474,6 @@ KISSY.add(function (S, require) {
     }
 
     // setSrc ie 不重新渲染
-
     function collectionParams(params) {
         var par = EMPTY;
         S.each(params, function (v, k) {
@@ -481,7 +488,6 @@ KISSY.add(function (S, require) {
         });
         return par;
     }
-
 
     function _stringSWFDefault(src, attrs, params) {
         return _stringSWF(src, attrs, params, OLD_IE) + LT + '/' + OBJECT_TAG + GT;
@@ -538,7 +544,6 @@ KISSY.add(function (S, require) {
     function toFlashVars(obj) {
         var arr = [],
             ret;
-
         S.each(obj, function (data, prop) {
             if (typeof data !== 'string') {
                 data = Json.stringify(data);
@@ -556,7 +561,7 @@ KISSY.add(function (S, require) {
     }
 
     function stringAttr(key, value) {
-        return SPACE + key + EQUAL + DOUBLE_QUOTE + value + DOUBLE_QUOTE;
+        return ' ' + key + '=' + '"' + value + '"';
     }
 
     return SWF;

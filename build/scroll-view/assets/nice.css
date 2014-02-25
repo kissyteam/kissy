@@ -1,7 +1,7 @@
 /*
-Copyright 2013, KISSY v1.42
+Copyright 2014, KISSY v1.42
 MIT Licensed
-build time: Dec 4 22:18
+build time: Feb 25 16:08
 */
 .ks-scroll-view {
     overflow: hidden !important;
@@ -12,7 +12,6 @@ build time: Dec 4 22:18
     -webkit-tap-highlight-color: rgba(0,0,0,0);
     -webkit-user-drag: none;
     -ms-touch-action:none;
-    -ms-user-select:none;
 }
 
 .ks-scroll-view-hidden{
