@@ -771,11 +771,11 @@ function visit54_342_1(result) {
 function visit53_335_1(result) {
   _$jscoverage['/drag.js'].branchData['335'][1].ranCondition(result);
   return result;
-}_$jscoverage['/drag.js'].branchData['330'][1].init(10717, 7, 'S.UA.ie');
+}_$jscoverage['/drag.js'].branchData['330'][1].init(10718, 7, 'S.UA.ie');
 function visit52_330_1(result) {
   _$jscoverage['/drag.js'].branchData['330'][1].ranCondition(result);
   return result;
-}_$jscoverage['/drag.js'].branchData['319'][1].init(1765, 33, 'S.Features.isTouchEventSupported()');
+}_$jscoverage['/drag.js'].branchData['319'][1].init(1765, 34, 'S.Features.isTouchEventSupported()');
 function visit51_319_1(result) {
   _$jscoverage['/drag.js'].branchData['319'][1].ranCondition(result);
   return result;

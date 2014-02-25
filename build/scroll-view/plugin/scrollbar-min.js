@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.42
 MIT Licensed
-build time: Feb 25 20:26
+build time: Feb 25 20:58
 */
 KISSY.add("scroll-view/plugin/scrollbar/scrollbar-xtpl",[],function(){return function(d){var a;a=this.config.utils;var f=a.renderOutput,g=a.getProperty,h=a.runInlineCommand,e=a.getPropertyOrRunCommand;a='<div id="ks-scrollbar-arrow-up-';var c=e(this,d,{},"id",0,1);a+=f(c,!0);a+='"\n        class="';var c={},b=[],i=g(this,d,"axis",0,2);b.push(i+"-arrow-up");c.params=b;c=h(this,d,c,"getBaseCssClasses",2);a+=f(c,!0);a+='">\n    <a href="javascript:void(\'up\')">up</a>\n</div>\n<div id="ks-scrollbar-arrow-down-';
 c=e(this,d,{},"id",0,5);a+=f(c,!0);a+='"\n        class="';c={};b=[];i=g(this,d,"axis",0,6);b.push(i+"-arrow-down");c.params=b;c=h(this,d,c,"getBaseCssClasses",6);a+=f(c,!0);a+='">\n    <a href="javascript:void(\'down\')">down</a>\n</div>\n<div id="ks-scrollbar-track-';c=e(this,d,{},"id",0,9);a+=f(c,!0);a+='"\n     class="';c={};b=[];i=g(this,d,"axis",0,10);b.push(i+"-track");c.params=b;c=h(this,d,c,"getBaseCssClasses",10);a+=f(c,!0);a+='">\n<div id="ks-scrollbar-drag-';e=e(this,d,{},"id",0,11);a+=

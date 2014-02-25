@@ -307,7 +307,7 @@ if (! _$jscoverage['/base/render.js'].branchData) {
   _$jscoverage['/base/render.js'].branchData['129'] = [];
   _$jscoverage['/base/render.js'].branchData['129'][1] = new BranchData();
 }
-_$jscoverage['/base/render.js'].branchData['129'][1].init(4315, 11, 'supportCss3');
+_$jscoverage['/base/render.js'].branchData['129'][1].init(4319, 11, 'supportCss3');
 function visit10_129_1(result) {
   _$jscoverage['/base/render.js'].branchData['129'][1].ranCondition(result);
   return result;
@@ -343,7 +343,7 @@ function visit3_65_1(result) {
 function visit2_62_1(result) {
   _$jscoverage['/base/render.js'].branchData['62'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/render.js'].branchData['19'][1].init(489, 55, 'S.Features.getVendorCssPropPrefix(\'transform\') !== false');
+}_$jscoverage['/base/render.js'].branchData['19'][1].init(492, 56, 'S.Features.getVendorCssPropPrefix(\'transform\') !== false');
 function visit1_19_1(result) {
   _$jscoverage['/base/render.js'].branchData['19'][1].ranCondition(result);
   return result;

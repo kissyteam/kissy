@@ -305,27 +305,27 @@ if (! _$jscoverage['/pull-to-refresh.js'].branchData) {
   _$jscoverage['/pull-to-refresh.js'].branchData['79'] = [];
   _$jscoverage['/pull-to-refresh.js'].branchData['79'][1] = new BranchData();
 }
-_$jscoverage['/pull-to-refresh.js'].branchData['79'][1].init(43, 5, 'v < 0');
+_$jscoverage['/pull-to-refresh.js'].branchData['79'][1].init(45, 5, 'v < 0');
 function visit6_79_1(result) {
   _$jscoverage['/pull-to-refresh.js'].branchData['79'][1].ranCondition(result);
   return result;
-}_$jscoverage['/pull-to-refresh.js'].branchData['69'][1].init(720, 6, 'loadFn');
+}_$jscoverage['/pull-to-refresh.js'].branchData['69'][1].init(739, 6, 'loadFn');
 function visit5_69_1(result) {
   _$jscoverage['/pull-to-refresh.js'].branchData['69'][1].ranCondition(result);
   return result;
-}_$jscoverage['/pull-to-refresh.js'].branchData['50'][1].init(141, 18, '-b > self.elHeight');
+}_$jscoverage['/pull-to-refresh.js'].branchData['50'][1].init(145, 18, '-b > self.elHeight');
 function visit4_50_1(result) {
   _$jscoverage['/pull-to-refresh.js'].branchData['50'][1].ranCondition(result);
   return result;
-}_$jscoverage['/pull-to-refresh.js'].branchData['41'][1].init(194, 5, 'b < 0');
+}_$jscoverage['/pull-to-refresh.js'].branchData['41'][1].init(199, 5, 'b < 0');
 function visit3_41_1(result) {
   _$jscoverage['/pull-to-refresh.js'].branchData['41'][1].ranCondition(result);
   return result;
-}_$jscoverage['/pull-to-refresh.js'].branchData['39'][1].init(100, 18, '-b > self.elHeight');
+}_$jscoverage['/pull-to-refresh.js'].branchData['39'][1].init(103, 18, '-b > self.elHeight');
 function visit2_39_1(result) {
   _$jscoverage['/pull-to-refresh.js'].branchData['39'][1].ranCondition(result);
   return result;
-}_$jscoverage['/pull-to-refresh.js'].branchData['22'][1].init(17, 16, '!this.scrollView');
+}_$jscoverage['/pull-to-refresh.js'].branchData['22'][1].init(18, 16, '!this.scrollView');
 function visit1_22_1(result) {
   _$jscoverage['/pull-to-refresh.js'].branchData['22'][1].ranCondition(result);
   return result;

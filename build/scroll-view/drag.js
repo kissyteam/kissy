@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.42
 MIT Licensed
-build time: Feb 25 15:54
+build time: Feb 25 20:58
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -205,7 +205,7 @@ KISSY.add("scroll-view/drag", ["./base", "node", "anim"], function(S, require) {
         return
       }
     }
-    if(S.Feature.isTouchEventSupported()) {
+    if(S.Features.isTouchEventSupported()) {
       e.preventDefault()
     }
     onDragScroll(self, e, "left", startMousePos);
