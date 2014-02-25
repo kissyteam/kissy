@@ -75,6 +75,41 @@
         }
     }
 
+    var vendorInfos = {};
+    // return prefixed css prefix name
+    function getVendorInfo(name) {
+        if (vendorInfos[name]) {
+            return vendorInfos[name];
+        }
+        // if already prefixed or need not to prefix
+        if (!documentElementStyle || name in documentElementStyle) {
+            vendorInfos[name] = {
+                name: name,
+                prefix: ''
+            };
+        } else {
+            var upperFirstName = name.charAt(0).toUpperCase() + name.slice(1),
+                vendorName,
+                i = VENDORS.length;
+
+            while (i--) {
+                vendorName = VENDORS[i] + upperFirstName;
+                if (vendorName in documentElementStyle) {
+                    vendorInfos[name] = {
+                        name: vendorName,
+                        prefix: VENDORS[i]
+                    };
+                }
+            }
+
+            vendorInfos[name] = vendorInfos[name] || {
+                name: name,
+                prefix: false
+            };
+        }
+        return  vendorInfos[name];
+    }
+
     /**
      * browser features detection
      * @class KISSY.Features
@@ -213,6 +248,14 @@
          */
         'getTransformProperty': function () {
             return transformProperty;
+        },
+
+        getVendorCssPropPrefix: function (name) {
+            return getVendorInfo(name).prefix;
+        },
+
+        getVendorCssPropName: function (name) {
+            return getVendorInfo(name).name;
         }
     };
 })(KISSY);

@@ -108,7 +108,6 @@ KISSY.add(function (S, require) {
     }
 
     S.extend(Swipe, SingleTouch, {
-
         onTouchStart: function (e) {
             var self = this;
             if (Swipe.superclass.onTouchStart.apply(self, arguments) === false) {
@@ -123,7 +122,7 @@ KISSY.add(function (S, require) {
             self.startX = touch.pageX;
             this.startY = touch.pageY;
 
-            if (e.type.indexOf('mouse') !== -1) {
+            if (e.type.toLowerCase().indexOf('mouse') !== -1) {
                 e.preventDefault();
             }
             return undefined;

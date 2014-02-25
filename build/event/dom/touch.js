@@ -1,7 +1,7 @@
 /*
-Copyright 2013, KISSY v1.41
+Copyright 2014, KISSY v1.41
 MIT Licensed
-build time: Dec 13 19:28
+build time: Feb 25 15:53
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -10,10 +10,8 @@ build time: Dec 13 19:28
  event/dom/touch/single-touch
  event/dom/touch/tap
  event/dom/touch/swipe
- event/dom/touch/double-tap
  event/dom/touch/multi-touch
  event/dom/touch/pinch
- event/dom/touch/tap-hold
  event/dom/touch/rotate
  event/dom/touch/handle
  event/dom/touch
@@ -40,33 +38,85 @@ KISSY.add("event/dom/touch/tap", ["./handle-map", "event/dom/base", "./single-to
   var eventHandleMap = require("./handle-map");
   var DomEvent = require("event/dom/base");
   var SingleTouch = require("./single-touch");
+  var SINGLE_TAP_EVENT = "singleTap", DOUBLE_TAP_EVENT = "doubleTap", TAP_HOLD_EVENT = "tapHold", TAP_EVENT = "tap", TAP_HOLD_DELAY = 1E3, SINGLE_TAP_DELAY = 300, TOUCH_MOVE_SENSITIVITY = 5, DomEventObject = DomEvent.Object;
   function preventDefault(e) {
     e.preventDefault()
   }
-  var sensitivity = 5;
-  var event = "tap";
-  var DomEventObject = DomEvent.Object;
   function Tap() {
     Tap.superclass.constructor.apply(this, arguments)
   }
-  S.extend(Tap, SingleTouch, {onTouchMove:function(e) {
-    var firstTouchXY = this.lastXY;
+  S.extend(Tap, SingleTouch, {onTouchStart:function(e) {
+    var self = this;
+    if(Tap.superclass.onTouchStart.call(self, e) === false) {
+      return false
+    }
+    if(self.tapHoldTimer) {
+      clearTimeout(self.tapHoldTimer)
+    }
+    self.tapHoldTimer = setTimeout(function() {
+      var eventObj = S.mix({touch:e.touches[0], which:1, TAP_HOLD_DELAY:(S.now() - e.timeStamp) / 1E3}, self.lastXY);
+      self.tapHoldTimer = 0;
+      self.lastXY = 0;
+      DomEvent.fire(e.target, TAP_HOLD_EVENT, eventObj)
+    }, TAP_HOLD_DELAY);
+    self.startTime = e.timeStamp;
+    if(self.singleTapTimer) {
+      clearTimeout(self.singleTapTimer);
+      self.singleTapTimer = 0
+    }
+    return undefined
+  }, onTouchMove:function(e) {
+    var self = this, lastXY;
+    if(!(lastXY = self.lastXY)) {
+      return false
+    }
     var currentTouch = e.changedTouches[0];
-    if(!currentTouch || Math.abs(currentTouch.pageX - firstTouchXY.pageX) > sensitivity || Math.abs(currentTouch.pageY - firstTouchXY.pageY) > sensitivity) {
+    if(!currentTouch || Math.abs(currentTouch.pageX - lastXY.pageX) > TOUCH_MOVE_SENSITIVITY || Math.abs(currentTouch.pageY - lastXY.pageY) > TOUCH_MOVE_SENSITIVITY) {
       return false
     }
     return undefined
   }, onTouchEnd:function(e) {
-    var touch = e.changedTouches[0];
+    var self = this, lastXY;
+    if(!(lastXY = self.lastXY)) {
+      return
+    }
     var target = e.target;
-    var eventObject = new DomEventObject({type:event, target:target, currentTarget:target});
-    S.mix(eventObject, {pageX:touch.pageX, pageY:touch.pageY, originalEvent:e.originalEvent, which:1, touch:touch});
-    DomEvent.fire(target, event, eventObject);
-    if(eventObject.isDefaultPrevented()) {
-      DomEvent.on(target, "click", {fn:preventDefault, once:1})
+    var touch = e.changedTouches[0];
+    if(self.tapHoldTimer) {
+      clearTimeout(self.tapHoldTimer);
+      self.tapHoldTimer = 0
+    }
+    var eventObject = new DomEventObject(e.originalEvent);
+    S.mix(eventObject, {type:TAP_EVENT, which:1, pageX:lastXY.pageX, pageY:lastXY.pageY, target:target, currentTarget:target});
+    eventObject.touch = touch;
+    DomEvent.fire(target, TAP_EVENT, eventObject);
+    if(eventObject.isDefaultPrevented() && S.UA.mobile) {
+      if(S.UA.ios) {
+        e.preventDefault()
+      }else {
+        DomEvent.on(target.ownerDocument || target, "click", {fn:preventDefault, once:1})
+      }
+    }
+    var lastEndTime = self.lastEndTime, time = e.timeStamp, duration;
+    self.lastEndTime = time;
+    if(lastEndTime) {
+      duration = time - lastEndTime;
+      if(duration < SINGLE_TAP_DELAY) {
+        self.lastEndTime = 0;
+        DomEvent.fire(target, DOUBLE_TAP_EVENT, {touch:touch, pageX:lastXY.pageX, pageY:lastXY.pageY, which:1, duration:duration / 1E3});
+        return
+      }
+    }
+    duration = time - self.startTime;
+    if(duration > SINGLE_TAP_DELAY) {
+      DomEvent.fire(target, SINGLE_TAP_EVENT, {touch:touch, pageX:lastXY.pageX, pageY:lastXY.pageY, which:1, duration:duration / 1E3})
+    }else {
+      self.singleTapTimer = setTimeout(function() {
+        DomEvent.fire(target, SINGLE_TAP_EVENT, {touch:touch, pageX:lastXY.pageX, pageY:lastXY.pageY, which:1, duration:duration / 1E3})
+      }, SINGLE_TAP_DELAY)
     }
   }});
-  eventHandleMap[event] = {handle:new Tap};
+  eventHandleMap[TAP_EVENT] = eventHandleMap[DOUBLE_TAP_EVENT] = eventHandleMap[SINGLE_TAP_EVENT] = eventHandleMap[TAP_HOLD_EVENT] = {handle:new Tap};
   return Tap
 });
 KISSY.add("event/dom/touch/swipe", ["./handle-map", "event/dom/base", "./single-touch"], function(S, require) {
@@ -122,7 +172,7 @@ KISSY.add("event/dom/touch/swipe", ["./handle-map", "event/dom/base", "./single-
     self.isVertical = 1;
     self.startX = touch.pageX;
     this.startY = touch.pageY;
-    if(e.type.indexOf("mouse") !== -1) {
+    if(e.type.toLowerCase().indexOf("mouse") !== -1) {
       e.preventDefault()
     }
     return undefined
@@ -147,48 +197,6 @@ KISSY.add("event/dom/touch/swipe", ["./handle-map", "event/dom/base", "./single-
   }});
   eventHandleMap[event] = eventHandleMap[ingEvent] = {handle:new Swipe};
   return Swipe
-});
-KISSY.add("event/dom/touch/double-tap", ["./handle-map", "event/dom/base", "./single-touch"], function(S, require) {
-  var eventHandleMap = require("./handle-map");
-  var DomEvent = require("event/dom/base");
-  var SingleTouch = require("./single-touch");
-  var SINGLE_TAP = "singleTap", DOUBLE_TAP = "doubleTap", MAX_DURATION = 300;
-  function DoubleTap() {
-  }
-  S.extend(DoubleTap, SingleTouch, {onTouchStart:function(e) {
-    var self = this;
-    if(DoubleTap.superclass.onTouchStart.apply(self, arguments) === false) {
-      return false
-    }
-    self.startTime = e.timeStamp;
-    if(self.singleTapTimer) {
-      clearTimeout(self.singleTapTimer);
-      self.singleTapTimer = 0
-    }
-  }, onTouchMove:function() {
-    return false
-  }, onTouchEnd:function(e) {
-    var self = this, lastEndTime = self.lastEndTime, time = e.timeStamp, target = e.target, touch = e.changedTouches[0], duration = time - self.startTime;
-    self.lastEndTime = time;
-    if(lastEndTime) {
-      duration = time - lastEndTime;
-      if(duration < MAX_DURATION) {
-        self.lastEndTime = 0;
-        DomEvent.fire(target, DOUBLE_TAP, {touch:touch, duration:duration / 1E3});
-        return
-      }
-    }
-    duration = time - self.startTime;
-    if(duration > MAX_DURATION) {
-      DomEvent.fire(target, SINGLE_TAP, {touch:touch, pageX:touch.pageX, which:1, pageY:touch.pageY, duration:duration / 1E3})
-    }else {
-      self.singleTapTimer = setTimeout(function() {
-        DomEvent.fire(target, SINGLE_TAP, {touch:touch, pageX:touch.pageX, which:1, pageY:touch.pageY, duration:duration / 1E3})
-      }, MAX_DURATION)
-    }
-  }});
-  eventHandleMap[SINGLE_TAP] = eventHandleMap[DOUBLE_TAP] = {handle:new DoubleTap};
-  return DoubleTap
 });
 KISSY.add("event/dom/touch/multi-touch", ["dom"], function(S, require) {
   var Dom = require("dom");
@@ -276,43 +284,20 @@ KISSY.add("event/dom/touch/pinch", ["./handle-map", "event/dom/base", "./multi-t
   var p = new Pinch;
   eventHandleMap[PINCH_START] = eventHandleMap[PINCH_END] = {handle:p};
   function prevent(e) {
-    if(e.touches.length === 2) {
+    if(e.targetTouches.length === 2) {
       e.preventDefault()
     }
   }
-  eventHandleMap[PINCH] = {handle:p, setup:function() {
-    DomEvent.on(this, "touchmove", prevent)
-  }, tearDown:function() {
-    DomEvent.detach(this, "touchmove", prevent)
-  }};
-  return Pinch
-});
-KISSY.add("event/dom/touch/tap-hold", ["./handle-map", "event/dom/base", "./single-touch"], function(S, require) {
-  var eventHandleMap = require("./handle-map");
-  var DomEvent = require("event/dom/base");
-  var SingleTouch = require("./single-touch");
-  var event = "tapHold";
-  var duration = 1E3;
-  function TapHold() {
-  }
-  S.extend(TapHold, SingleTouch, {onTouchStart:function(e) {
-    var self = this;
-    if(TapHold.superclass.onTouchStart.call(self, e) === false) {
-      return false
+  var config = eventHandleMap[PINCH] = {handle:p};
+  if(S.Feature.isTouchEventSupported()) {
+    config.setup = function() {
+      this.addEventListener("touchmove", prevent, false)
+    };
+    config.tearDown = function() {
+      this.removeEventListener("touchmove", prevent, false)
     }
-    self.timer = setTimeout(function() {
-      var touch = e.touches[0];
-      DomEvent.fire(e.target, event, {touch:touch, pageX:touch.pageX, pageY:touch.pageY, which:1, duration:(S.now() - e.timeStamp) / 1E3})
-    }, duration);
-    return undefined
-  }, onTouchMove:function() {
-    clearTimeout(this.timer);
-    return false
-  }, onTouchEnd:function() {
-    clearTimeout(this.timer)
-  }});
-  eventHandleMap[event] = {handle:new TapHold};
-  return TapHold
+  }
+  return Pinch
 });
 KISSY.add("event/dom/touch/rotate", ["./handle-map", "event/dom/base", "./multi-touch"], function(S, require) {
   var eventHandleMap = require("./handle-map");
@@ -358,30 +343,32 @@ KISSY.add("event/dom/touch/rotate", ["./handle-map", "event/dom/base", "./multi-
     DomEvent.fire(self.target, ROTATE_END, S.mix(e, {touches:self.lastTouches}))
   }});
   function prevent(e) {
-    if(e.touches.length === 2) {
+    if(e.targetTouches.length === 2) {
       e.preventDefault()
     }
   }
   var r = new Rotate;
   eventHandleMap[ROTATE_END] = eventHandleMap[ROTATE_START] = {handle:r};
-  eventHandleMap[ROTATE] = {handle:r, setup:function() {
-    DomEvent.on(this, "touchmove", prevent)
-  }, tearDown:function() {
-    DomEvent.detach(this, "touchmove", prevent)
-  }};
+  var config = eventHandleMap[ROTATE] = {handle:r};
+  if(S.Feature.isTouchEventSupported()) {
+    config.setup = function() {
+      this.addEventListener("touchmove", prevent, false)
+    };
+    config.tearDown = function() {
+      this.removeEventListener("touchmove", prevent, false)
+    }
+  }
   return Rotate
 });
-KISSY.add("event/dom/touch/handle", ["dom", "./handle-map", "event/dom/base", "./tap", "./swipe", "./double-tap", "./pinch", "./tap-hold", "./rotate"], function(S, require) {
+KISSY.add("event/dom/touch/handle", ["dom", "./handle-map", "event/dom/base", "./tap", "./swipe", "./pinch", "./rotate"], function(S, require) {
   var Dom = require("dom");
   var eventHandleMap = require("./handle-map");
   var DomEvent = require("event/dom/base");
   require("./tap");
   require("./swipe");
-  require("./double-tap");
   require("./pinch");
-  require("./tap-hold");
   require("./rotate");
-  var key = S.guid("touch-handle"), Features = S.Features, gestureStartEvent, gestureMoveEvent, gestureEndEvent;
+  var key = S.guid("touch-handle"), Feature = S.Feature, gestureStartEvent, gestureMoveEvent, gestureEndEvent;
   function isTouchEvent(type) {
     return S.startsWith(type, "touch")
   }
@@ -393,7 +380,7 @@ KISSY.add("event/dom/touch/handle", ["dom", "./handle-map", "event/dom/base", ".
   }
   var DUP_TIMEOUT = 2500;
   var DUP_DIST = 25;
-  if(Features.isTouchEventSupported()) {
+  if(Feature.isTouchEventSupported()) {
     if(S.UA.ios) {
       gestureEndEvent = "touchend touchcancel";
       gestureStartEvent = "touchstart";
@@ -404,12 +391,12 @@ KISSY.add("event/dom/touch/handle", ["dom", "./handle-map", "event/dom/base", ".
       gestureMoveEvent = "touchmove mousemove"
     }
   }else {
-    if(Features.isPointerSupported()) {
+    if(Feature.isPointerSupported()) {
       gestureStartEvent = "pointerdown";
       gestureMoveEvent = "pointermove";
       gestureEndEvent = "pointerup pointercancel"
     }else {
-      if(Features.isMsPointerSupported()) {
+      if(Feature.isMsPointerSupported()) {
         gestureStartEvent = "MSPointerDown";
         gestureMoveEvent = "MSPointerMove";
         gestureEndEvent = "MSPointerUp MSPointerCancel"
@@ -489,17 +476,26 @@ KISSY.add("event/dom/touch/handle", ["dom", "./handle-map", "event/dom/base", ".
     }
     return 0
   }, normalize:function(e) {
-    var type = e.type, notUp, touchList;
-    if(isTouchEvent(type)) {
+    var type = e.type, notUp, touchEvent, touchList;
+    if(touchEvent = isTouchEvent(type)) {
       touchList = type === "touchend" || type === "touchcancel" ? e.changedTouches : e.touches;
-      if(touchList.length === 1) {
-        e.which = 1;
-        e.pageX = touchList[0].pageX;
-        e.pageY = touchList[0].pageY
-      }
-      return e
+      e.isTouch = 1
     }else {
+      if(isPointerEvent(type)) {
+        var pointerType = e.originalEvent.pointerType;
+        if(pointerType === "touch") {
+          e.isTouch = 1
+        }
+      }
       touchList = this.touches
+    }
+    if(touchList && touchList.length === 1) {
+      e.which = 1;
+      e.pageX = touchList[0].pageX;
+      e.pageY = touchList[0].pageY
+    }
+    if(touchEvent) {
+      return e
     }
     notUp = !type.match(/(up|cancel)$/i);
     e.touches = notUp ? touchList : [];
@@ -646,6 +642,7 @@ KISSY.add("event/dom/touch", ["event/dom/base", "./touch/handle-map", "./touch/h
   var moveEvent = Gesture.move = "KSPointerMove";
   var endEvent = Gesture.end = "KSPointerUp";
   Gesture.tap = "tap";
+  Gesture.singleTap = "singleTap";
   Gesture.doubleTap = "doubleTap";
   eventHandleMap[startEvent] = {handle:{isActive:1, onTouchStart:function(e) {
     DomEvent.fire(e.target, startEvent, e)

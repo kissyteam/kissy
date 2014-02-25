@@ -1,7 +1,7 @@
 /*
-Copyright 2013, KISSY v1.41
+Copyright 2014, KISSY v1.41
 MIT Licensed
-build time: Dec 4 22:05
+build time: Feb 25 15:53
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -68,9 +68,7 @@ KISSY.add("component/extension/delegate-children", ["node", "component/manager"]
     if(Gesture.cancel) {
       events += " " + Gesture.cancel
     }
-    if(!isTouchEventSupported) {
-      events += " mouseenter mouseleave contextmenu " + (ie && ie < 9 ? "dblclick " : "")
-    }
+    events += " mouseenter mouseleave contextmenu " + (ie && ie < 9 ? "dblclick " : "");
     self.$el.delegate(events, "." + self.__childClsTag, self.handleChildrenEvents, self)
   }, getOwnerControl:function(e) {
     return Manager.getComponent(e.currentTarget.id)

@@ -86,11 +86,9 @@ KISSY.add(function (S, require) {
                 if (self.get('handleMouseEvents')) {
                     el = self.$el;
 
-                    if (!isTouchEventSupported) {
-                        el.on('mouseenter', self.handleMouseEnter, self)
-                            .on('mouseleave', self.handleMouseLeave, self)
-                            .on('contextmenu', self.handleContextMenu, self);
-                    }
+                    el.on('mouseenter', self.handleMouseEnter, self)
+                        .on('mouseleave', self.handleMouseLeave, self)
+                        .on('contextmenu', self.handleContextMenu, self);
 
                     el.on(Gesture.start, self.handleMouseDown, self)
                         .on(Gesture.end, self.handleMouseUp, self)

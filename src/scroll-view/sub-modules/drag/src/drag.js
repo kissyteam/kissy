@@ -33,8 +33,8 @@ KISSY.add(function (S, require) {
             return;
         }
         var pos = {
-            pageX: e.touches[0].pageX,
-            pageY: e.touches[0].pageY
+            pageX: e.pageX,
+            pageY: e.pageY
         };
         var pageOffsetProperty = scrollType === 'left' ? 'pageX' : 'pageY',
             lastPageXY = self.lastPageXY;
@@ -223,6 +223,10 @@ KISSY.add(function (S, require) {
     }
 
     function onDragStartHandler(e) {
+        // does not allow drag by mouse in win8 touch screen
+        if (!e.isTouch) {
+            return;
+        }
         var self = this,
             touches = e.touches;
         if (self.get('disabled')) {
@@ -230,8 +234,8 @@ KISSY.add(function (S, require) {
         }
         self.stopAnimation();
         var pos = {
-            pageX: e.touches[0].pageX,
-            pageY: e.touches[0].pageY
+            pageX: e.pageX,
+            pageY: e.pageY
         };
         var isScrolling = self.isScrolling;
         if (isScrolling) {
@@ -254,8 +258,10 @@ KISSY.add(function (S, require) {
     }
 
     var onDragHandler = function (e) {
+        if (!e.isTouch) {
+            return;
+        }
         var self = this,
-            touches = e.touches,
             startMousePos = self.startMousePos;
 
         if (!startMousePos) {
@@ -263,8 +269,8 @@ KISSY.add(function (S, require) {
         }
 
         var pos = {
-            pageX: touches[0].pageX,
-            pageY: touches[0].pageY
+            pageX: e.pageX,
+            pageY: e.pageY
         };
 
         var xDiff = Math.abs(pos.pageX - startMousePos.pageX);
@@ -326,9 +332,13 @@ KISSY.add(function (S, require) {
     }
 
     function onDragEndHandler(e) {
+        if (!e.isTouch) {
+            return;
+        }
         var self = this;
         var startMousePos = self.startMousePos;
-        $document.detach(Gesture.move, onDragHandler, self);
+        $document.detach(Gesture.move, onDragHandler, self)
+            .detach(Gesture.end, onDragEndHandler, self);
         if (!startMousePos || !self.isScrolling) {
             return;
         }
@@ -492,7 +502,9 @@ KISSY.add(function (S, require) {
                 self._snapDurationCfg = self.get('snapDuration');
                 self._snapEasingCfg = self.get('snapEasing');
                 self.publish('dragend', {
-                    defaultFn: defaultDragEndFn
+                    defaultFn: defaultDragEndFn,
+                    // only process its own default function
+                    defaultTargetOnly: true
                 });
             },
 

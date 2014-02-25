@@ -294,8 +294,7 @@ if (! _$jscoverage['/meta/modules.js']) {
   _$jscoverage['/meta/modules.js'].lineData[270] = 0;
   _$jscoverage['/meta/modules.js'].lineData[274] = 0;
   _$jscoverage['/meta/modules.js'].lineData[278] = 0;
-  _$jscoverage['/meta/modules.js'].lineData[282] = 0;
-  _$jscoverage['/meta/modules.js'].lineData[287] = 0;
+  _$jscoverage['/meta/modules.js'].lineData[283] = 0;
 }
 if (! _$jscoverage['/meta/modules.js'].functionData) {
   _$jscoverage['/meta/modules.js'].functionData = [];
@@ -387,11 +386,11 @@ _$jscoverage['/meta/modules.js'].lineData[3]++;
   _$jscoverage['/meta/modules.js'].lineData[81]++;
   config({
   'date/picker': {
-  requires: ['node', 'date/gregorian', 'i18n!date/picker', 'component/control', 'date/format']}});
+  requires: ['node', 'date/gregorian', 'i18n!date/picker', 'component/control', 'date/format', 'date/picker-xtpl']}});
   _$jscoverage['/meta/modules.js'].lineData[85]++;
   config({
   'date/popup-picker': {
-  requires: ['date/picker/picker-xtpl', 'date/picker', 'component/extension/shim', 'component/extension/align']}});
+  requires: ['date/picker-xtpl', 'date/picker', 'component/extension/shim', 'component/extension/align']}});
   _$jscoverage['/meta/modules.js'].lineData[89]++;
   config({
   'dd': {
@@ -564,14 +563,10 @@ _$jscoverage['/meta/modules.js'].lineData[3]++;
   requires: ['xtemplate/runtime']}});
   _$jscoverage['/meta/modules.js'].lineData[278]++;
   config({
-  'xtemplate/nodejs': {
-  requires: ['xtemplate']}});
-  _$jscoverage['/meta/modules.js'].lineData[282]++;
-  config({
   'xtemplate/runtime': {
   requires: ['path']}});
 })(function(c) {
   _$jscoverage['/meta/modules.js'].functionData[1]++;
-  _$jscoverage['/meta/modules.js'].lineData[287]++;
+  _$jscoverage['/meta/modules.js'].lineData[283]++;
   KISSY.config('modules', c);
 }, KISSY.Features, KISSY.UA);

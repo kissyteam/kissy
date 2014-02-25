@@ -270,10 +270,9 @@ if (! _$jscoverage['/delegate-children.js']) {
   _$jscoverage['/delegate-children.js'].lineData[86] = 0;
   _$jscoverage['/delegate-children.js'].lineData[87] = 0;
   _$jscoverage['/delegate-children.js'].lineData[90] = 0;
-  _$jscoverage['/delegate-children.js'].lineData[91] = 0;
-  _$jscoverage['/delegate-children.js'].lineData[95] = 0;
-  _$jscoverage['/delegate-children.js'].lineData[106] = 0;
-  _$jscoverage['/delegate-children.js'].lineData[110] = 0;
+  _$jscoverage['/delegate-children.js'].lineData[93] = 0;
+  _$jscoverage['/delegate-children.js'].lineData[104] = 0;
+  _$jscoverage['/delegate-children.js'].lineData[108] = 0;
 }
 if (! _$jscoverage['/delegate-children.js'].functionData) {
   _$jscoverage['/delegate-children.js'].functionData = [];
@@ -299,25 +298,19 @@ if (! _$jscoverage['/delegate-children.js'].branchData) {
   _$jscoverage['/delegate-children.js'].branchData['48'][1] = new BranchData();
   _$jscoverage['/delegate-children.js'].branchData['86'] = [];
   _$jscoverage['/delegate-children.js'].branchData['86'][1] = new BranchData();
-  _$jscoverage['/delegate-children.js'].branchData['90'] = [];
-  _$jscoverage['/delegate-children.js'].branchData['90'][1] = new BranchData();
-  _$jscoverage['/delegate-children.js'].branchData['92'] = [];
-  _$jscoverage['/delegate-children.js'].branchData['92'][1] = new BranchData();
-  _$jscoverage['/delegate-children.js'].branchData['92'][2] = new BranchData();
+  _$jscoverage['/delegate-children.js'].branchData['91'] = [];
+  _$jscoverage['/delegate-children.js'].branchData['91'][1] = new BranchData();
+  _$jscoverage['/delegate-children.js'].branchData['91'][2] = new BranchData();
 }
-_$jscoverage['/delegate-children.js'].branchData['92'][2].init(66, 6, 'ie < 9');
-function visit9_92_2(result) {
-  _$jscoverage['/delegate-children.js'].branchData['92'][2].ranCondition(result);
+_$jscoverage['/delegate-children.js'].branchData['91'][2].init(62, 6, 'ie < 9');
+function visit8_91_2(result) {
+  _$jscoverage['/delegate-children.js'].branchData['91'][2].ranCondition(result);
   return result;
-}_$jscoverage['/delegate-children.js'].branchData['92'][1].init(60, 12, 'ie && ie < 9');
-function visit8_92_1(result) {
-  _$jscoverage['/delegate-children.js'].branchData['92'][1].ranCondition(result);
+}_$jscoverage['/delegate-children.js'].branchData['91'][1].init(56, 12, 'ie && ie < 9');
+function visit7_91_1(result) {
+  _$jscoverage['/delegate-children.js'].branchData['91'][1].ranCondition(result);
   return result;
-}_$jscoverage['/delegate-children.js'].branchData['90'][1].init(263, 22, '!isTouchEventSupported');
-function visit7_90_1(result) {
-  _$jscoverage['/delegate-children.js'].branchData['90'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/delegate-children.js'].branchData['86'][1].init(166, 14, 'Gesture.cancel');
+}_$jscoverage['/delegate-children.js'].branchData['86'][1].init(167, 14, 'Gesture.cancel');
 function visit6_86_1(result) {
   _$jscoverage['/delegate-children.js'].branchData['86'][1].ranCondition(result);
   return result;
@@ -449,18 +442,15 @@ KISSY.add(function(S, require) {
     events += ' ' + Gesture.cancel;
   }
   _$jscoverage['/delegate-children.js'].lineData[90]++;
-  if (visit7_90_1(!isTouchEventSupported)) {
-    _$jscoverage['/delegate-children.js'].lineData[91]++;
-    events += ' mouseenter mouseleave contextmenu ' + (visit8_92_1(ie && visit9_92_2(ie < 9)) ? 'dblclick ' : '');
-  }
-  _$jscoverage['/delegate-children.js'].lineData[95]++;
+  events += ' mouseenter mouseleave contextmenu ' + (visit7_91_1(ie && visit8_91_2(ie < 9)) ? 'dblclick ' : '');
+  _$jscoverage['/delegate-children.js'].lineData[93]++;
   self.$el.delegate(events, '.' + self.__childClsTag, self.handleChildrenEvents, self);
 }, 
   getOwnerControl: function(e) {
   _$jscoverage['/delegate-children.js'].functionData[6]++;
-  _$jscoverage['/delegate-children.js'].lineData[106]++;
+  _$jscoverage['/delegate-children.js'].lineData[104]++;
   return Manager.getComponent(e.currentTarget.id);
 }});
-  _$jscoverage['/delegate-children.js'].lineData[110]++;
+  _$jscoverage['/delegate-children.js'].lineData[108]++;
   return DelegateChildren;
 });

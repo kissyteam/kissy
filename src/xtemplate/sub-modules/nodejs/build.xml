@@ -6,4 +6,8 @@
     <target name="compress-css"/>
 
     <target name="tpl2mod"/>
+
+    <target name="build" depends="common.build.build">
+        <delete file="meta/deps.js"></delete>
+    </target>
 </project>

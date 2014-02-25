@@ -268,8 +268,11 @@ if (! _$jscoverage['/touch/rotate.js']) {
   _$jscoverage['/touch/rotate.js'].lineData[98] = 0;
   _$jscoverage['/touch/rotate.js'].lineData[103] = 0;
   _$jscoverage['/touch/rotate.js'].lineData[106] = 0;
-  _$jscoverage['/touch/rotate.js'].lineData[109] = 0;
-  _$jscoverage['/touch/rotate.js'].lineData[113] = 0;
+  _$jscoverage['/touch/rotate.js'].lineData[107] = 0;
+  _$jscoverage['/touch/rotate.js'].lineData[108] = 0;
+  _$jscoverage['/touch/rotate.js'].lineData[110] = 0;
+  _$jscoverage['/touch/rotate.js'].lineData[111] = 0;
+  _$jscoverage['/touch/rotate.js'].lineData[115] = 0;
 }
 if (! _$jscoverage['/touch/rotate.js'].functionData) {
   _$jscoverage['/touch/rotate.js'].functionData = [];
@@ -296,29 +299,35 @@ if (! _$jscoverage['/touch/rotate.js'].branchData) {
   _$jscoverage['/touch/rotate.js'].branchData['54'][1] = new BranchData();
   _$jscoverage['/touch/rotate.js'].branchData['91'] = [];
   _$jscoverage['/touch/rotate.js'].branchData['91'][1] = new BranchData();
+  _$jscoverage['/touch/rotate.js'].branchData['106'] = [];
+  _$jscoverage['/touch/rotate.js'].branchData['106'][1] = new BranchData();
 }
-_$jscoverage['/touch/rotate.js'].branchData['91'][1].init(87, 22, 'e.touches.length === 2');
-function visit83_91_1(result) {
+_$jscoverage['/touch/rotate.js'].branchData['106'][1].init(2851, 33, 'S.Features.isTouchEventSupported()');
+function visit83_106_1(result) {
+  _$jscoverage['/touch/rotate.js'].branchData['106'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/touch/rotate.js'].branchData['91'][1].init(87, 28, 'e.targetTouches.length === 2');
+function visit82_91_1(result) {
   _$jscoverage['/touch/rotate.js'].branchData['91'][1].ranCondition(result);
   return result;
 }_$jscoverage['/touch/rotate.js'].branchData['54'][1].init(1168, 15, '!self.isStarted');
-function visit82_54_1(result) {
+function visit81_54_1(result) {
   _$jscoverage['/touch/rotate.js'].branchData['54'][1].ranCondition(result);
   return result;
 }_$jscoverage['/touch/rotate.js'].branchData['46'][1].init(542, 42, 'Math.abs(negativeAngle - lastAngle) < diff');
-function visit81_46_1(result) {
+function visit80_46_1(result) {
   _$jscoverage['/touch/rotate.js'].branchData['46'][1].ranCondition(result);
   return result;
 }_$jscoverage['/touch/rotate.js'].branchData['42'][1].init(354, 42, 'Math.abs(positiveAngle - lastAngle) < diff');
-function visit80_42_1(result) {
+function visit79_42_1(result) {
   _$jscoverage['/touch/rotate.js'].branchData['42'][1].ranCondition(result);
   return result;
 }_$jscoverage['/touch/rotate.js'].branchData['33'][1].init(386, 23, 'lastAngle !== undefined');
-function visit79_33_1(result) {
+function visit78_33_1(result) {
   _$jscoverage['/touch/rotate.js'].branchData['33'][1].ranCondition(result);
   return result;
 }_$jscoverage['/touch/rotate.js'].branchData['22'][1].init(47, 16, '!self.isTracking');
-function visit78_22_1(result) {
+function visit77_22_1(result) {
   _$jscoverage['/touch/rotate.js'].branchData['22'][1].ranCondition(result);
   return result;
 }_$jscoverage['/touch/rotate.js'].lineData[6]++;
@@ -343,14 +352,14 @@ KISSY.add(function(S, require) {
   _$jscoverage['/touch/rotate.js'].lineData[20]++;
   var self = this;
   _$jscoverage['/touch/rotate.js'].lineData[22]++;
-  if (visit78_22_1(!self.isTracking)) {
+  if (visit77_22_1(!self.isTracking)) {
     _$jscoverage['/touch/rotate.js'].lineData[23]++;
     return;
   }
   _$jscoverage['/touch/rotate.js'].lineData[26]++;
   var touches = e.touches, one = touches[0], two = touches[1], lastAngle = self.lastAngle, angle = Math.atan2(two.pageY - one.pageY, two.pageX - one.pageX) * RAD_2_DEG;
   _$jscoverage['/touch/rotate.js'].lineData[33]++;
-  if (visit79_33_1(lastAngle !== undefined)) {
+  if (visit78_33_1(lastAngle !== undefined)) {
     _$jscoverage['/touch/rotate.js'].lineData[37]++;
     var diff = Math.abs(angle - lastAngle);
     _$jscoverage['/touch/rotate.js'].lineData[38]++;
@@ -358,12 +367,12 @@ KISSY.add(function(S, require) {
     _$jscoverage['/touch/rotate.js'].lineData[39]++;
     var negativeAngle = (angle - 360) % 360;
     _$jscoverage['/touch/rotate.js'].lineData[42]++;
-    if (visit80_42_1(Math.abs(positiveAngle - lastAngle) < diff)) {
+    if (visit79_42_1(Math.abs(positiveAngle - lastAngle) < diff)) {
       _$jscoverage['/touch/rotate.js'].lineData[43]++;
       angle = positiveAngle;
     } else {
       _$jscoverage['/touch/rotate.js'].lineData[46]++;
-      if (visit81_46_1(Math.abs(negativeAngle - lastAngle) < diff)) {
+      if (visit80_46_1(Math.abs(negativeAngle - lastAngle) < diff)) {
         _$jscoverage['/touch/rotate.js'].lineData[47]++;
         angle = negativeAngle;
       }
@@ -374,7 +383,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/touch/rotate.js'].lineData[52]++;
   self.lastAngle = angle;
   _$jscoverage['/touch/rotate.js'].lineData[54]++;
-  if (visit82_54_1(!self.isStarted)) {
+  if (visit81_54_1(!self.isStarted)) {
     _$jscoverage['/touch/rotate.js'].lineData[55]++;
     self.isStarted = true;
     _$jscoverage['/touch/rotate.js'].lineData[57]++;
@@ -413,7 +422,7 @@ KISSY.add(function(S, require) {
   function prevent(e) {
     _$jscoverage['/touch/rotate.js'].functionData[5]++;
     _$jscoverage['/touch/rotate.js'].lineData[91]++;
-    if (visit83_91_1(e.touches.length === 2)) {
+    if (visit82_91_1(e.targetTouches.length === 2)) {
       _$jscoverage['/touch/rotate.js'].lineData[92]++;
       e.preventDefault();
     }
@@ -424,18 +433,23 @@ KISSY.add(function(S, require) {
   eventHandleMap[ROTATE_END] = eventHandleMap[ROTATE_START] = {
   handle: r};
   _$jscoverage['/touch/rotate.js'].lineData[103]++;
-  eventHandleMap[ROTATE] = {
-  handle: r, 
-  setup: function() {
-  _$jscoverage['/touch/rotate.js'].functionData[6]++;
+  var config = eventHandleMap[ROTATE] = {
+  handle: r};
   _$jscoverage['/touch/rotate.js'].lineData[106]++;
-  DomEvent.on(this, 'touchmove', prevent);
-}, 
-  tearDown: function() {
+  if (visit83_106_1(S.Features.isTouchEventSupported())) {
+    _$jscoverage['/touch/rotate.js'].lineData[107]++;
+    config.setup = function() {
+  _$jscoverage['/touch/rotate.js'].functionData[6]++;
+  _$jscoverage['/touch/rotate.js'].lineData[108]++;
+  this.addEventListener('touchmove', prevent, false);
+};
+    _$jscoverage['/touch/rotate.js'].lineData[110]++;
+    config.tearDown = function() {
   _$jscoverage['/touch/rotate.js'].functionData[7]++;
-  _$jscoverage['/touch/rotate.js'].lineData[109]++;
-  DomEvent.detach(this, 'touchmove', prevent);
-}};
-  _$jscoverage['/touch/rotate.js'].lineData[113]++;
+  _$jscoverage['/touch/rotate.js'].lineData[111]++;
+  this.removeEventListener('touchmove', prevent, false);
+};
+  }
+  _$jscoverage['/touch/rotate.js'].lineData[115]++;
   return Rotate;
 });

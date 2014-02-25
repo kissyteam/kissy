@@ -6,14 +6,17 @@
 KISSY.add(function (S, require) {
     var Container = require('component/container');
     var ContentRenderExtension = require('component/extension/content-render');
-    var translateTpl = 'translate3d({translateX}px,{translateY}px,0)';
 
     // http://www.html5rocks.com/en/tutorials/speed/html5/
     var Features = S.Features,
-        floor = Math.floor,
 //        MARKER_CLS = 'ks-scrollview-marker',
-        supportTransform3d = Features.isTransform3dSupported(),
+        floor = Math.floor,
         transformProperty;
+
+    var isTransform3dSupported = S.Features.isTransform3dSupported();
+
+    // http://www.html5rocks.com/en/tutorials/speed/html5/
+    var supportCss3 = S.Features.getVendorCssPropPrefix('transform') !== false;
 
 //    function createMarker(contentEl) {
 //        var m;
@@ -123,23 +126,21 @@ KISSY.add(function (S, require) {
         }
     };
 
-    if (supportTransform3d) {
-        transformProperty = Features.getTransformProperty();
+    if (supportCss3) {
+        transformProperty = Features.getVendorCssPropName('transform');
 
         methods._onSetScrollLeft = function (v) {
             var control = this.control;
-            control.contentEl.style[transformProperty] = S.substitute(translateTpl, {
-                translateX: floor(-v),
-                translateY: floor(-control.get('scrollTop'))
-            });
+            control.contentEl.style[transformProperty] = 'translateX(' + floor(-v) + 'px)' +
+                ' translateY(' + floor(-control.get('scrollTop')) + 'px)' +
+                (isTransform3dSupported ? ' translateZ(0)' : '');
         };
 
         methods._onSetScrollTop = function (v) {
             var control = this.control;
-            control.contentEl.style[transformProperty] = S.substitute(translateTpl, {
-                translateX: floor(-control.get('scrollLeft')),
-                translateY: floor(-v)
-            });
+            control.contentEl.style[transformProperty] = 'translateX(' + floor(-control.get('scrollLeft')) + 'px)' +
+                ' translateY(' + floor(-v) + 'px)' +
+                (isTransform3dSupported ? ' translateZ(0)' : '');
         };
     }
 

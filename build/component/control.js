@@ -1,7 +1,7 @@
 /*
-Copyright 2013, KISSY v1.41
+Copyright 2014, KISSY v1.41
 MIT Licensed
-build time: Dec 10 01:30
+build time: Feb 25 15:53
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -462,9 +462,7 @@ KISSY.add("component/control", ["node", "./control/process", "component/manager"
     }
     if(self.get("handleMouseEvents")) {
       el = self.$el;
-      if(!isTouchEventSupported) {
-        el.on("mouseenter", self.handleMouseEnter, self).on("mouseleave", self.handleMouseLeave, self).on("contextmenu", self.handleContextMenu, self)
-      }
+      el.on("mouseenter", self.handleMouseEnter, self).on("mouseleave", self.handleMouseLeave, self).on("contextmenu", self.handleContextMenu, self);
       el.on(Gesture.start, self.handleMouseDown, self).on(Gesture.end, self.handleMouseUp, self).on(Gesture.tap, self.handleClick, self);
       if(Gesture.cancel) {
         el.on(Gesture.cancel, self.handleMouseUp, self)

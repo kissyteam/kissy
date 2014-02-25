@@ -80,17 +80,15 @@ KISSY.add(function (S, require) {
         __bindUI: function () {
             var self = this,
                 events = Gesture.start +
-                    ' '+ Gesture.end +
+                    ' ' + Gesture.end +
                     ' ' + Gesture.tap;
 
             if (Gesture.cancel) {
                 events += ' ' + Gesture.cancel;
             }
 
-            if (!isTouchEventSupported) {
-                events += ' mouseenter mouseleave contextmenu ' +
-                    (ie && ie < 9 ? 'dblclick ' : '');
-            }
+            events += ' mouseenter mouseleave contextmenu ' +
+                (ie && ie < 9 ? 'dblclick ' : '');
 
             self.$el.delegate(events, '.' + self.__childClsTag,
                 self.handleChildrenEvents, self);

@@ -74,22 +74,22 @@ KISSY.add(function (S, require) {
         };
 
     function prevent(e) {
-        if (e.touches.length === 2) {
+        if (e.targetTouches.length === 2) {
             e.preventDefault();
         }
     }
 
-    eventHandleMap[PINCH] = {
-        handle: p,
-        setup: function () {
-            // need on this
-            // if on document, will affect other elements!
-            DomEvent.on(this, 'touchmove', prevent);
-        },
-        tearDown: function () {
-            DomEvent.detach(this, 'touchmove', prevent);
-        }
+    var config = eventHandleMap[PINCH] = {
+        handle: p
     };
+    if (S.Features.isTouchEventSupported()) {
+        config.setup = function () {
+            this.addEventListener('touchmove', prevent, false);
+        };
+        config.tearDown = function () {
+            this.removeEventListener('touchmove', prevent, false);
+        };
+    }
 
     return Pinch;
 });

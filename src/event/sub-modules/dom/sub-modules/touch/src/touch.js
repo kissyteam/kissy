@@ -13,6 +13,7 @@ KISSY.add(function (S, require) {
     var moveEvent = Gesture.move = 'KSPointerMove';
     var endEvent = Gesture.end = 'KSPointerUp';
     Gesture.tap = 'tap';
+    Gesture.singleTap = 'singleTap';
     Gesture.doubleTap = 'doubleTap';
 
     eventHandleMap[startEvent] = {
@@ -26,7 +27,6 @@ KISSY.add(function (S, require) {
     };
 
     eventHandleMap[moveEvent] = {
-
         handle: {
             // always fire
             isActive: 1,

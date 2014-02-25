@@ -9,7 +9,7 @@ KISSY.add(function (S, require) {
     var isTransform3dSupported = S.Features.isTransform3dSupported();
 
     // http://www.html5rocks.com/en/tutorials/speed/html5/
-    var supportCss3 = S.Features.isTransformSupported();
+    var supportCss3 = S.Features.getVendorCssPropPrefix('transform') !== false;
 
     var methods = {
         beforeCreateDom: function (renderData, childrenElSelectors) {
@@ -113,16 +113,19 @@ KISSY.add(function (S, require) {
         }
     };
 
-    var transformProperty = S.Features.getTransformProperty();
 
     if (supportCss3) {
+        var transformProperty = S.Features.getVendorCssPropName('transform');
+
         methods._onSetDragLeft = function (v) {
             this.control.dragEl.style[transformProperty] = 'translateX(' + v + 'px)' +
+                ' translateY(' + this.control.get('dragTop') + 'px)' +
                 (isTransform3dSupported ? ' translateZ(0)' : '');
         };
 
         methods._onSetDragTop = function (v) {
-            this.control.dragEl.style[transformProperty] = 'translateY(' + v + 'px)' +
+            this.control.dragEl.style[transformProperty] = 'translateX(' + this.control.get('dragLeft') + 'px)' +
+                ' translateY(' + v + 'px)' +
                 (isTransform3dSupported ? ' translateZ(0)' : '');
         };
     }
