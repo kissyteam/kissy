@@ -379,11 +379,11 @@ function visit7_102_1(result) {
 function visit6_97_1(result) {
   _$jscoverage['/transition.js'].branchData['97'][1].ranCondition(result);
   return result;
-}_$jscoverage['/transition.js'].branchData['75'][1].init(1435, 8, 'original');
+}_$jscoverage['/transition.js'].branchData['75'][1].init(1436, 8, 'original');
 function visit5_75_1(result) {
   _$jscoverage['/transition.js'].branchData['75'][1].ranCondition(result);
   return result;
-}_$jscoverage['/transition.js'].branchData['73'][1].init(1345, 31, 'original.indexOf(\'none\') !== -1');
+}_$jscoverage['/transition.js'].branchData['73'][1].init(1346, 31, 'original.indexOf(\'none\') !== -1');
 function visit4_73_1(result) {
   _$jscoverage['/transition.js'].branchData['73'][1].ranCondition(result);
   return result;
@@ -409,15 +409,15 @@ KISSY.add(function(S, require) {
   _$jscoverage['/transition.js'].lineData[9]++;
   var AnimBase = require('./base');
   _$jscoverage['/transition.js'].lineData[11]++;
-  var Feature = S.Features;
+  var Features = S.Features;
   _$jscoverage['/transition.js'].lineData[12]++;
-  var vendorPrefix = Feature.getVendorCssPropPrefix('transition');
+  var vendorPrefix = Features.getVendorCssPropPrefix('transition');
   _$jscoverage['/transition.js'].lineData[13]++;
   var R_UPPER = /([A-Z]|^ms)/g;
   _$jscoverage['/transition.js'].lineData[14]++;
   var TRANSITION_END_EVENT = vendorPrefix ? (vendorPrefix.toLowerCase() + 'TransitionEnd') : 'transitionend webkitTransitionEnd';
   _$jscoverage['/transition.js'].lineData[19]++;
-  var TRANSITION = Feature.getVendorCssPropName('transition');
+  var TRANSITION = Features.getVendorCssPropName('transition');
   _$jscoverage['/transition.js'].lineData[21]++;
   function genTransition(propsData) {
     _$jscoverage['/transition.js'].functionData[1]++;
@@ -454,7 +454,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/transition.js'].lineData[49]++;
     delete _propsData.transform;
     _$jscoverage['/transition.js'].lineData[50]++;
-    _propsData[Feature.getVendorCssPropName('transform').replace(R_UPPER, '-$1').toLowerCase()] = transform;
+    _propsData[Features.getVendorCssPropName('transform').replace(R_UPPER, '-$1').toLowerCase()] = transform;
   }
   _$jscoverage['/transition.js'].lineData[53]++;
   S.each(_propsData, function(propData, prop) {
