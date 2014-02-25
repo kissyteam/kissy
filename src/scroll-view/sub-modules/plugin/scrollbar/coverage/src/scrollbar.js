@@ -291,39 +291,39 @@ if (! _$jscoverage['/scrollbar.js'].branchData) {
   _$jscoverage['/scrollbar.js'].branchData['63'][1] = new BranchData();
 }
 _$jscoverage['/scrollbar.js'].branchData['63'][1].init(178, 15, 'self.scrollBarY');
-function visit38_63_1(result) {
+function visit35_63_1(result) {
   _$jscoverage['/scrollbar.js'].branchData['63'][1].ranCondition(result);
   return result;
 }_$jscoverage['/scrollbar.js'].branchData['59'][1].init(46, 15, 'self.scrollBarX');
-function visit37_59_1(result) {
+function visit34_59_1(result) {
   _$jscoverage['/scrollbar.js'].branchData['59'][1].ranCondition(result);
   return result;
 }_$jscoverage['/scrollbar.js'].branchData['50'][1].init(93, 23, 'autoHideY !== undefined');
-function visit36_50_1(result) {
+function visit33_50_1(result) {
   _$jscoverage['/scrollbar.js'].branchData['50'][1].ranCondition(result);
   return result;
 }_$jscoverage['/scrollbar.js'].branchData['46'][1].init(992, 26, 'scrollView.allowScroll.top');
-function visit35_46_1(result) {
+function visit32_46_1(result) {
   _$jscoverage['/scrollbar.js'].branchData['46'][1].ranCondition(result);
   return result;
 }_$jscoverage['/scrollbar.js'].branchData['44'][1].init(909, 15, 'self.scrollBarY');
-function visit34_44_1(result) {
+function visit31_44_1(result) {
   _$jscoverage['/scrollbar.js'].branchData['44'][1].ranCondition(result);
   return result;
 }_$jscoverage['/scrollbar.js'].branchData['38'][1].init(93, 23, 'autoHideX !== undefined');
-function visit33_38_1(result) {
+function visit30_38_1(result) {
   _$jscoverage['/scrollbar.js'].branchData['38'][1].ranCondition(result);
   return result;
 }_$jscoverage['/scrollbar.js'].branchData['34'][1].init(589, 27, 'scrollView.allowScroll.left');
-function visit32_34_1(result) {
+function visit29_34_1(result) {
   _$jscoverage['/scrollbar.js'].branchData['34'][1].ranCondition(result);
   return result;
 }_$jscoverage['/scrollbar.js'].branchData['32'][1].init(506, 15, 'self.scrollBarX');
-function visit31_32_1(result) {
+function visit28_32_1(result) {
   _$jscoverage['/scrollbar.js'].branchData['32'][1].ranCondition(result);
   return result;
 }_$jscoverage['/scrollbar.js'].branchData['28'][1].init(405, 23, 'minLength !== undefined');
-function visit30_28_1(result) {
+function visit27_28_1(result) {
   _$jscoverage['/scrollbar.js'].branchData['28'][1].ranCondition(result);
   return result;
 }_$jscoverage['/scrollbar.js'].lineData[6]++;
@@ -353,22 +353,22 @@ KISSY.add(function(S, require) {
   scrollView: scrollView, 
   elBefore: scrollView.$contentEl};
   _$jscoverage['/scrollbar.js'].lineData[28]++;
-  if (visit30_28_1(minLength !== undefined)) {
+  if (visit27_28_1(minLength !== undefined)) {
     _$jscoverage['/scrollbar.js'].lineData[29]++;
     cfg.minLength = minLength;
   }
   _$jscoverage['/scrollbar.js'].lineData[32]++;
-  if (visit31_32_1(self.scrollBarX)) {
+  if (visit28_32_1(self.scrollBarX)) {
     _$jscoverage['/scrollbar.js'].lineData[33]++;
     self.scrollBarX.sync();
   } else {
     _$jscoverage['/scrollbar.js'].lineData[34]++;
-    if (visit32_34_1(scrollView.allowScroll.left)) {
+    if (visit29_34_1(scrollView.allowScroll.left)) {
       _$jscoverage['/scrollbar.js'].lineData[35]++;
       my = {
   axis: 'x'};
       _$jscoverage['/scrollbar.js'].lineData[38]++;
-      if (visit33_38_1(autoHideX !== undefined)) {
+      if (visit30_38_1(autoHideX !== undefined)) {
         _$jscoverage['/scrollbar.js'].lineData[39]++;
         cfg.autoHide = autoHideX;
       }
@@ -377,17 +377,17 @@ KISSY.add(function(S, require) {
     }
   }
   _$jscoverage['/scrollbar.js'].lineData[44]++;
-  if (visit34_44_1(self.scrollBarY)) {
+  if (visit31_44_1(self.scrollBarY)) {
     _$jscoverage['/scrollbar.js'].lineData[45]++;
     self.scrollBarY.sync();
   } else {
     _$jscoverage['/scrollbar.js'].lineData[46]++;
-    if (visit35_46_1(scrollView.allowScroll.top)) {
+    if (visit32_46_1(scrollView.allowScroll.top)) {
       _$jscoverage['/scrollbar.js'].lineData[47]++;
       my = {
   axis: 'y'};
       _$jscoverage['/scrollbar.js'].lineData[50]++;
-      if (visit36_50_1(autoHideY !== undefined)) {
+      if (visit33_50_1(autoHideY !== undefined)) {
         _$jscoverage['/scrollbar.js'].lineData[51]++;
         cfg.autoHide = autoHideY;
       }
@@ -401,14 +401,14 @@ KISSY.add(function(S, require) {
   _$jscoverage['/scrollbar.js'].lineData[58]++;
   var self = this;
   _$jscoverage['/scrollbar.js'].lineData[59]++;
-  if (visit37_59_1(self.scrollBarX)) {
+  if (visit34_59_1(self.scrollBarX)) {
     _$jscoverage['/scrollbar.js'].lineData[60]++;
     self.scrollBarX.destroy();
     _$jscoverage['/scrollbar.js'].lineData[61]++;
     self.scrollBarX = null;
   }
   _$jscoverage['/scrollbar.js'].lineData[63]++;
-  if (visit38_63_1(self.scrollBarY)) {
+  if (visit35_63_1(self.scrollBarY)) {
     _$jscoverage['/scrollbar.js'].lineData[64]++;
     self.scrollBarY.destroy();
     _$jscoverage['/scrollbar.js'].lineData[65]++;

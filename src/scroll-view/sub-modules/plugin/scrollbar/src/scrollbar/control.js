@@ -178,7 +178,7 @@ KISSY.add(function (S, require) {
             }
         },
 
-        fullSync: function (ignoreWH) {
+        syncOnScroll: function () {
             var control = this,
                 scrollType = control.scrollType,
                 scrollView = control.scrollView,
@@ -195,23 +195,17 @@ KISSY.add(function (S, require) {
                 dragVal;
             if (val > maxScroll) {
                 dragVal = maxScroll / contentSize * trackElSize;
-                if (!ignoreWH) {
-                    control.set(dragWHProperty, barSize - (val - maxScroll));
-                }
+                control.set(dragWHProperty, barSize - (val - maxScroll));
                 // dragSizeAxis has minLength
                 control.set(dragLTProperty, dragVal + barSize - control.get(dragWHProperty));
             } else if (val < minScroll) {
                 dragVal = minScroll / contentSize * trackElSize;
-                if (!ignoreWH) {
-                    control.set(dragWHProperty, barSize - (minScroll - val));
-                }
+                control.set(dragWHProperty, barSize - (minScroll - val));
                 control.set(dragLTProperty, dragVal);
             } else {
                 dragVal = val / contentSize * trackElSize;
                 control.set(dragLTProperty, dragVal);
-                if (!ignoreWH) {
-                    control.set(dragWHProperty, barSize);
-                }
+                control.set(dragWHProperty, barSize);
             }
         },
 
@@ -228,7 +222,7 @@ KISSY.add(function (S, require) {
             if (self.hideFn && !scrollView.isScrolling) {
                 self.startHideTimer();
             }
-            self.fullSync(1);
+            self.syncOnScroll();
         }
     }, {
         ATTRS: {

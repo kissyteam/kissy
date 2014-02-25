@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.42
 MIT Licensed
-build time: Feb 25 18:29
+build time: Feb 25 19:23
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -94,8 +94,8 @@ KISSY.add("scroll-view/plugin/scrollbar/scrollbar-xtpl", [], function(S, require
 KISSY.add("scroll-view/plugin/scrollbar/render", ["component/control", "./scrollbar-xtpl"], function(S, require) {
   var Control = require("component/control");
   var ScrollBarTpl = require("./scrollbar-xtpl");
-  var isTransform3dSupported = S.Features.isTransform3dSupported();
-  var supportCss3 = S.Features.getVendorCssPropPrefix("transform") !== false;
+  var isTransform3dSupported = S.Feature.isTransform3dSupported();
+  var supportCss3 = S.Feature.getVendorCssPropPrefix("transform") !== false;
   var methods = {beforeCreateDom:function(renderData, childrenElSelectors) {
     renderData.elCls.push(renderData.prefixCls + "scrollbar-" + renderData.axis);
     S.mix(childrenElSelectors, {dragEl:"#ks-scrollbar-drag-{id}", downBtn:"#ks-scrollbar-arrow-down-{id}", upBtn:"#ks-scrollbar-arrow-up-{id}", trackEl:"#ks-scrollbar-track-{id}"})
@@ -119,7 +119,7 @@ KISSY.add("scroll-view/plugin/scrollbar/render", ["component/control", "./scroll
       barSize = ratio * trackElSize;
       control.set(dragWHProperty, barSize);
       control.barSize = barSize;
-      control.fullSync();
+      control.syncOnScroll();
       control.set("visible", true)
     }else {
       control.set("visible", false)
@@ -134,7 +134,7 @@ KISSY.add("scroll-view/plugin/scrollbar/render", ["component/control", "./scroll
     this.control.dragEl.style.top = v + "px"
   }};
   if(supportCss3) {
-    var transformProperty = S.Features.getVendorCssPropName("transform");
+    var transformProperty = S.Feature.getVendorCssPropName("transform");
     methods._onSetDragLeft = function(v) {
       this.control.dragEl.style[transformProperty] = "translateX(" + v + "px)" + " translateY(" + this.control.get("dragTop") + "px)" + (isTransform3dSupported ? " translateZ(0)" : "")
     };
@@ -252,27 +252,21 @@ KISSY.add("scroll-view/plugin/scrollbar/control", ["node", "component/control", 
     if(self.hideFn) {
       self.startHideTimer()
     }
-  }, fullSync:function(ignoreWH) {
+  }, syncOnScroll:function() {
     var control = this, scrollType = control.scrollType, scrollView = control.scrollView, dragLTProperty = control.dragLTProperty, dragWHProperty = control.dragWHProperty, trackElSize = control.trackElSize, barSize = control.barSize, contentSize = control.scrollLength, val = scrollView.get(control.scrollProperty), maxScrollOffset = scrollView.maxScroll, minScrollOffset = scrollView.minScroll, minScroll = minScrollOffset[scrollType], maxScroll = maxScrollOffset[scrollType], dragVal;
     if(val > maxScroll) {
       dragVal = maxScroll / contentSize * trackElSize;
-      if(!ignoreWH) {
-        control.set(dragWHProperty, barSize - (val - maxScroll))
-      }
+      control.set(dragWHProperty, barSize - (val - maxScroll));
       control.set(dragLTProperty, dragVal + barSize - control.get(dragWHProperty))
     }else {
       if(val < minScroll) {
         dragVal = minScroll / contentSize * trackElSize;
-        if(!ignoreWH) {
-          control.set(dragWHProperty, barSize - (minScroll - val))
-        }
+        control.set(dragWHProperty, barSize - (minScroll - val));
         control.set(dragLTProperty, dragVal)
       }else {
         dragVal = val / contentSize * trackElSize;
         control.set(dragLTProperty, dragVal);
-        if(!ignoreWH) {
-          control.set(dragWHProperty, barSize)
-        }
+        control.set(dragWHProperty, barSize)
       }
     }
   }, afterScrollChange:function() {
@@ -286,7 +280,7 @@ KISSY.add("scroll-view/plugin/scrollbar/control", ["node", "component/control", 
     if(self.hideFn && !scrollView.isScrolling) {
       self.startHideTimer()
     }
-    self.fullSync(1)
+    self.syncOnScroll()
   }}, {ATTRS:{minLength:{value:MIN_BAR_LENGTH}, scrollView:{}, axis:{view:1}, autoHide:{value:S.UA.ios}, visible:{valueFn:function() {
     return!this.get("autoHide")
   }}, hideDelay:{value:0.1}, dragWidth:{setter:function(v) {
