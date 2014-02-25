@@ -729,7 +729,7 @@ KISSY.add(function (S, require) {
 
 
     // #-------------- for generation start
-    function parse(input) {
+    function parse(input, filename) {
         var self = this,
             lexer = self.lexer,
             state,
@@ -740,9 +740,11 @@ KISSY.add(function (S, require) {
             tableAction = table.action,
             productions = self.productions,
             valueStack = [null],
+        // for debug info
+            prefix = filename ? ('in file: ' + filename + ' ') : '',
             stack = [0];
 
-        lexer.resetInput(input);
+        lexer.resetInput(input, filename);
 
         while (1) {
             // retrieve state number from top of stack
@@ -753,7 +755,7 @@ KISSY.add(function (S, require) {
             }
 
             if (!symbol) {
-                S.log('it is not a valid input: ' + input, 'error');
+                S.log(prefix + 'it is not a valid input: ' + input, 'error');
                 return false;
             }
 
@@ -767,7 +769,7 @@ KISSY.add(function (S, require) {
                         expected.push(self.lexer.mapReverseSymbol(symbolForState));
                     }
                 }
-                error = 'Syntax error at line ' + lexer.lineNumber +
+                error = prefix + 'syntax error at line ' + lexer.lineNumber +
                     ':\n' + lexer.showDebugInfo() +
                     '\n' + 'expect ' + expected.join(', ');
                 S.error(error);

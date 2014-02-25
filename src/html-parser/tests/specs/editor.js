@@ -87,7 +87,7 @@ KISSY.add(function (S, HtmlParser, UA) {
 
             var before = '';
 
-            getTextSync('../others/editor/vml_img.html', function (d) {
+            getTextSync('./others/editor/vml_img.html', function (d) {
                 before = d;
             });
 

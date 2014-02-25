@@ -57,42 +57,10 @@ KISSY.add(function (S, require) {
                 barSize = ratio * trackElSize;
                 control.set(dragWHProperty, barSize);
                 control.barSize = barSize;
-                self.syncOnScrollChange();
+                control.syncOnScroll();
                 control.set('visible', true);
             } else {
                 control.set('visible', false);
-            }
-        },
-
-        syncOnScrollChange: function () {
-            var self = this,
-                control = self.control,
-                scrollType = control.scrollType,
-                scrollView = control.scrollView,
-                dragLTProperty = control.dragLTProperty,
-                dragWHProperty = control.dragWHProperty,
-                trackElSize = control.trackElSize,
-                barSize = control.barSize,
-                contentSize = control.scrollLength,
-                val = scrollView.get(control.scrollProperty),
-                maxScrollOffset = scrollView.maxScroll,
-                minScrollOffset = scrollView.minScroll,
-                minScroll = minScrollOffset[scrollType],
-                maxScroll = maxScrollOffset[scrollType],
-                dragVal;
-            if (val > maxScroll) {
-                dragVal = maxScroll / contentSize * trackElSize;
-                control.set(dragWHProperty, barSize - (val - maxScroll));
-                // dragSizeAxis has minLength
-                control.set(dragLTProperty, dragVal + barSize - control.get(dragWHProperty));
-            } else if (val < minScroll) {
-                dragVal = minScroll / contentSize * trackElSize;
-                control.set(dragWHProperty, barSize - (minScroll - val));
-                control.set(dragLTProperty, dragVal);
-            } else {
-                dragVal = val / contentSize * trackElSize;
-                control.set(dragLTProperty, dragVal);
-                control.set(dragWHProperty, barSize);
             }
         },
 

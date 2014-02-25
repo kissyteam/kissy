@@ -37,7 +37,7 @@ KISSY.add(function (S, StyleSheet, Node) {
 
             var ret = 0;
 
-            var style = S.getScript("../data/test.css", function () {
+            var style = S.getScript("/kissy/src/stylesheet/tests/data/test.css", function () {
 
                 expect(n.css('height')).toBe("120px");
 

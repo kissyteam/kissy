@@ -25,7 +25,7 @@ KISSY.add(function (S, require) {
                     name: 'tpl-empty-content'
                 }).render(data);
             } catch (e) {
-                expect(e.message.indexOf('Syntax error') !== -1).toBeTruthy();
+                expect(e.message.indexOf('syntax error') !== -1).toBeTruthy();
             }
         });
 
@@ -186,7 +186,7 @@ KISSY.add(function (S, require) {
             });
 
             it('support nest array', function () {
-                var tpl = '{{#each (data)}}{{this.0}}{{this.1}}{{.}}{{/each}}';
+                var tpl = '{{#each (data)}}{{this.0}}{{this.1}}{{this}}{{/each}}';
                 var data = {
                     data: [
                         [1, 2]
@@ -197,7 +197,7 @@ KISSY.add(function (S, require) {
             });
 
             it('support each object', function () {
-                var tpl = '{{#each (data)}}{{xindex}}:{{.}}{{/each}}';
+                var tpl = '{{#each (data)}}{{xindex}}:{{this}}{{/each}}';
                 var data = {
                     data: {
                         x: 1,
@@ -242,7 +242,7 @@ KISSY.add(function (S, require) {
             });
 
             it('support variable as index', function () {
-                var tpl = '{{#each (data[d])}}{{.}}{{/each}}';
+                var tpl = '{{#each (data[d])}}{{this}}{{/each}}';
 
                 var data = {
                     data: {
@@ -684,8 +684,8 @@ KISSY.add(function (S, require) {
             });
 
             it('support global command for variable', function () {
-                XTemplate.addCommand('globalXcmd', function (scope, config) {
-                    return 'global-' + config.params[0];
+                XTemplate.addCommand('globalXcmd', function (scope, option) {
+                    return 'global-' + option.params[0];
                 });
 
                 var tpl = 'my {{globalXcmd( title)}}';
@@ -700,12 +700,11 @@ KISSY.add(function (S, require) {
 
             });
 
-
             it('support namespace global command for variable', function () {
 
                 XTemplate.addCommand('cmd', {
-                    globalXcmd: function (scope, config) {
-                        return 'global-' + config.params[0];
+                    globalXcmd: function (scope, option) {
+                        return 'global-' + option.params[0];
                     }
                 });
 
@@ -721,11 +720,10 @@ KISSY.add(function (S, require) {
 
             });
 
-
             it('support global command for block', function () {
 
-                XTemplate.addCommand('global2_xcmd', function (scope, config) {
-                    return 'global2-' + config.fn(scope);
+                XTemplate.addCommand('global2_xcmd', function (scope, option) {
+                    return 'global2-' + option.fn(scope);
                 });
 
                 var tpl = 'my {{#global2_xcmd()}}{{title}}{{/global2_xcmd}}';
@@ -740,7 +738,6 @@ KISSY.add(function (S, require) {
 
             });
 
-
             it('support local command for variable', function () {
 
                 var tpl = 'my {{global3(title)}}';
@@ -751,8 +748,8 @@ KISSY.add(function (S, require) {
 
                 var render = new XTemplate(tpl, {
                     commands: {
-                        'global3': function (scope, config) {
-                            return 'global3-' + config.params[0];
+                        'global3': function (scope, option) {
+                            return 'global3-' + option.params[0];
                         }
                     }
                 }).render(data);
@@ -772,8 +769,8 @@ KISSY.add(function (S, require) {
                 var render = new XTemplate(tpl, {
                     commands: {
                         'global3': {
-                            x: function (scope, config) {
-                                return 'global3-' + config.params[0];
+                            x: function (scope, option) {
+                                return 'global3-' + option.params[0];
                             }
                         }
                     }
@@ -782,7 +779,6 @@ KISSY.add(function (S, require) {
                 expect(render).toBe('my global3-1');
 
             });
-
 
             it('support local command for block', function () {
 
@@ -794,8 +790,8 @@ KISSY.add(function (S, require) {
 
                 var render = new XTemplate(tpl, {
                     commands: {
-                        'global4': function (scope, config) {
-                            return 'global4-' + config.fn(scope);
+                        'global4': function (scope, option) {
+                            return 'global4-' + option.fn(scope);
                         }
                     }
                 }).render(data);
@@ -804,6 +800,32 @@ KISSY.add(function (S, require) {
 
             });
 
+            it('support filter command', function () {
+                var tpl = '{{ join (map (users)) }}';
+                var render = new XTemplate(tpl, {
+                    commands: {
+                        'map': function (scope, option) {
+                            return S.map(option.params[0], function (u) {
+                                return u.name;
+                            });
+                        },
+                        join: function (scope, option) {
+                            return option.params[0].join('|');
+                        }
+                    }
+                }).render({
+                        users: [
+                            {
+                                name: '1'
+                            },
+                            {
+                                name: '2'
+                            }
+                        ]
+                    });
+
+                expect(render).toBe('1|2');
+            });
         });
 
         describe('support macro', function () {
@@ -1025,18 +1047,6 @@ KISSY.add(function (S, require) {
             };
 
             expect(new XTemplate(tpl).render(data)).toBe('2-3|4-6|');
-        });
-
-        it('support {{.}}', function () {
-            var tpl = '{{.}}';
-
-            var data = '1';
-
-            var renderFn = new XTemplate(tpl);
-
-            var render = renderFn.render(data);
-
-            expect(render).toBe('1');
         });
 
         it('support function as property value', function () {

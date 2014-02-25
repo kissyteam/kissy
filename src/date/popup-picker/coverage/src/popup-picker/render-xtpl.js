@@ -232,15 +232,9 @@ if (! _$jscoverage['/popup-picker/render-xtpl.js']) {
   _$jscoverage['/popup-picker/render-xtpl.js'].lineData[2] = 0;
   _$jscoverage['/popup-picker/render-xtpl.js'].lineData[4] = 0;
   _$jscoverage['/popup-picker/render-xtpl.js'].lineData[5] = 0;
-  _$jscoverage['/popup-picker/render-xtpl.js'].lineData[9] = 0;
   _$jscoverage['/popup-picker/render-xtpl.js'].lineData[10] = 0;
-  _$jscoverage['/popup-picker/render-xtpl.js'].lineData[12] = 0;
-  _$jscoverage['/popup-picker/render-xtpl.js'].lineData[17] = 0;
-  _$jscoverage['/popup-picker/render-xtpl.js'].lineData[18] = 0;
-  _$jscoverage['/popup-picker/render-xtpl.js'].lineData[19] = 0;
-  _$jscoverage['/popup-picker/render-xtpl.js'].lineData[20] = 0;
-  _$jscoverage['/popup-picker/render-xtpl.js'].lineData[21] = 0;
-  _$jscoverage['/popup-picker/render-xtpl.js'].lineData[22] = 0;
+  _$jscoverage['/popup-picker/render-xtpl.js'].lineData[11] = 0;
+  _$jscoverage['/popup-picker/render-xtpl.js'].lineData[13] = 0;
   _$jscoverage['/popup-picker/render-xtpl.js'].lineData[23] = 0;
   _$jscoverage['/popup-picker/render-xtpl.js'].lineData[24] = 0;
   _$jscoverage['/popup-picker/render-xtpl.js'].lineData[25] = 0;
@@ -250,10 +244,19 @@ if (! _$jscoverage['/popup-picker/render-xtpl.js']) {
   _$jscoverage['/popup-picker/render-xtpl.js'].lineData[29] = 0;
   _$jscoverage['/popup-picker/render-xtpl.js'].lineData[30] = 0;
   _$jscoverage['/popup-picker/render-xtpl.js'].lineData[31] = 0;
+  _$jscoverage['/popup-picker/render-xtpl.js'].lineData[32] = 0;
   _$jscoverage['/popup-picker/render-xtpl.js'].lineData[33] = 0;
   _$jscoverage['/popup-picker/render-xtpl.js'].lineData[34] = 0;
   _$jscoverage['/popup-picker/render-xtpl.js'].lineData[35] = 0;
   _$jscoverage['/popup-picker/render-xtpl.js'].lineData[36] = 0;
+  _$jscoverage['/popup-picker/render-xtpl.js'].lineData[37] = 0;
+  _$jscoverage['/popup-picker/render-xtpl.js'].lineData[39] = 0;
+  _$jscoverage['/popup-picker/render-xtpl.js'].lineData[40] = 0;
+  _$jscoverage['/popup-picker/render-xtpl.js'].lineData[41] = 0;
+  _$jscoverage['/popup-picker/render-xtpl.js'].lineData[43] = 0;
+  _$jscoverage['/popup-picker/render-xtpl.js'].lineData[44] = 0;
+  _$jscoverage['/popup-picker/render-xtpl.js'].lineData[46] = 0;
+  _$jscoverage['/popup-picker/render-xtpl.js'].lineData[47] = 0;
 }
 if (! _$jscoverage['/popup-picker/render-xtpl.js'].functionData) {
   _$jscoverage['/popup-picker/render-xtpl.js'].functionData = [];
@@ -262,77 +265,95 @@ if (! _$jscoverage['/popup-picker/render-xtpl.js'].functionData) {
 }
 if (! _$jscoverage['/popup-picker/render-xtpl.js'].branchData) {
   _$jscoverage['/popup-picker/render-xtpl.js'].branchData = {};
-  _$jscoverage['/popup-picker/render-xtpl.js'].branchData['9'] = [];
-  _$jscoverage['/popup-picker/render-xtpl.js'].branchData['9'][1] = new BranchData();
-  _$jscoverage['/popup-picker/render-xtpl.js'].branchData['9'][2] = new BranchData();
-  _$jscoverage['/popup-picker/render-xtpl.js'].branchData['29'] = [];
-  _$jscoverage['/popup-picker/render-xtpl.js'].branchData['29'][1] = new BranchData();
+  _$jscoverage['/popup-picker/render-xtpl.js'].branchData['10'] = [];
+  _$jscoverage['/popup-picker/render-xtpl.js'].branchData['10'][1] = new BranchData();
+  _$jscoverage['/popup-picker/render-xtpl.js'].branchData['10'][2] = new BranchData();
+  _$jscoverage['/popup-picker/render-xtpl.js'].branchData['35'] = [];
+  _$jscoverage['/popup-picker/render-xtpl.js'].branchData['35'][1] = new BranchData();
+  _$jscoverage['/popup-picker/render-xtpl.js'].branchData['40'] = [];
+  _$jscoverage['/popup-picker/render-xtpl.js'].branchData['40'][1] = new BranchData();
+  _$jscoverage['/popup-picker/render-xtpl.js'].branchData['40'][2] = new BranchData();
 }
-_$jscoverage['/popup-picker/render-xtpl.js'].branchData['29'][1].init(1084, 10, 'moduleWrap');
-function visit3_29_1(result) {
-  _$jscoverage['/popup-picker/render-xtpl.js'].branchData['29'][1].ranCondition(result);
+_$jscoverage['/popup-picker/render-xtpl.js'].branchData['40'][2].init(1600, 9, 'id3 === 0');
+function visit5_40_2(result) {
+  _$jscoverage['/popup-picker/render-xtpl.js'].branchData['40'][2].ranCondition(result);
   return result;
-}_$jscoverage['/popup-picker/render-xtpl.js'].branchData['9'][2].init(165, 29, 'typeof module !== "undefined"');
-function visit2_9_2(result) {
-  _$jscoverage['/popup-picker/render-xtpl.js'].branchData['9'][2].ranCondition(result);
+}_$jscoverage['/popup-picker/render-xtpl.js'].branchData['40'][1].init(1593, 16, 'id3 || id3 === 0');
+function visit4_40_1(result) {
+  _$jscoverage['/popup-picker/render-xtpl.js'].branchData['40'][1].ranCondition(result);
   return result;
-}_$jscoverage['/popup-picker/render-xtpl.js'].branchData['9'][1].init(165, 45, 'typeof module !== "undefined" && module.kissy');
-function visit1_9_1(result) {
-  _$jscoverage['/popup-picker/render-xtpl.js'].branchData['9'][1].ranCondition(result);
+}_$jscoverage['/popup-picker/render-xtpl.js'].branchData['35'][1].init(1347, 10, 'moduleWrap');
+function visit3_35_1(result) {
+  _$jscoverage['/popup-picker/render-xtpl.js'].branchData['35'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/popup-picker/render-xtpl.js'].branchData['10'][2].init(226, 29, 'typeof module !== "undefined"');
+function visit2_10_2(result) {
+  _$jscoverage['/popup-picker/render-xtpl.js'].branchData['10'][2].ranCondition(result);
+  return result;
+}_$jscoverage['/popup-picker/render-xtpl.js'].branchData['10'][1].init(226, 45, 'typeof module !== "undefined" && module.kissy');
+function visit1_10_1(result) {
+  _$jscoverage['/popup-picker/render-xtpl.js'].branchData['10'][1].ranCondition(result);
   return result;
 }_$jscoverage['/popup-picker/render-xtpl.js'].lineData[2]++;
 KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/popup-picker/render-xtpl.js'].functionData[0]++;
   _$jscoverage['/popup-picker/render-xtpl.js'].lineData[4]++;
-  return function(scope, S, undefined) {
+  var t = function(scope, S, payload, undefined) {
   _$jscoverage['/popup-picker/render-xtpl.js'].functionData[1]++;
   _$jscoverage['/popup-picker/render-xtpl.js'].lineData[5]++;
-  var buffer = "", config = this.config, engine = this, moduleWrap, utils = config.utils;
-  _$jscoverage['/popup-picker/render-xtpl.js'].lineData[9]++;
-  if (visit1_9_1(visit2_9_2(typeof module !== "undefined") && module.kissy)) {
-    _$jscoverage['/popup-picker/render-xtpl.js'].lineData[10]++;
+  var buffer = "", engine = this, moduleWrap, escapeHtml = S.escapeHtml, nativeCommands = engine.nativeCommands, utils = engine.utils;
+  _$jscoverage['/popup-picker/render-xtpl.js'].lineData[10]++;
+  if (visit1_10_1(visit2_10_2(typeof module !== "undefined") && module.kissy)) {
+    _$jscoverage['/popup-picker/render-xtpl.js'].lineData[11]++;
     moduleWrap = module;
   }
-  _$jscoverage['/popup-picker/render-xtpl.js'].lineData[12]++;
-  var runBlockCommandUtil = utils.runBlockCommand, renderOutputUtil = utils.renderOutput, getPropertyUtil = utils.getProperty, runInlineCommandUtil = utils.runInlineCommand, getPropertyOrRunCommandUtil = utils.getPropertyOrRunCommand;
-  _$jscoverage['/popup-picker/render-xtpl.js'].lineData[17]++;
-  buffer += '<div class="';
-  _$jscoverage['/popup-picker/render-xtpl.js'].lineData[18]++;
-  var config1 = {};
-  _$jscoverage['/popup-picker/render-xtpl.js'].lineData[19]++;
-  var params2 = [];
-  _$jscoverage['/popup-picker/render-xtpl.js'].lineData[20]++;
-  params2.push('content');
-  _$jscoverage['/popup-picker/render-xtpl.js'].lineData[21]++;
-  config1.params = params2;
-  _$jscoverage['/popup-picker/render-xtpl.js'].lineData[22]++;
-  var id0 = runInlineCommandUtil(engine, scope, config1, "getBaseCssClasses", 1);
+  _$jscoverage['/popup-picker/render-xtpl.js'].lineData[13]++;
+  var callCommandUtil = utils.callCommand, eachCommand = nativeCommands.each, withCommand = nativeCommands["with"], ifCommand = nativeCommands["if"], setCommand = nativeCommands.set, includeCommand = nativeCommands.include, parseCommand = nativeCommands.parse, extendCommand = nativeCommands.extend, blockCommand = nativeCommands.block, macroCommand = nativeCommands.macro;
   _$jscoverage['/popup-picker/render-xtpl.js'].lineData[23]++;
-  buffer += renderOutputUtil(id0, true);
+  buffer += '<div class="';
   _$jscoverage['/popup-picker/render-xtpl.js'].lineData[24]++;
-  buffer += '">\n    ';
+  var option1 = {};
   _$jscoverage['/popup-picker/render-xtpl.js'].lineData[25]++;
-  var config4 = {};
+  var params2 = [];
   _$jscoverage['/popup-picker/render-xtpl.js'].lineData[26]++;
-  var params5 = [];
+  params2.push('content');
   _$jscoverage['/popup-picker/render-xtpl.js'].lineData[27]++;
-  params5.push('date/picker-xtpl');
+  option1.params = params2;
   _$jscoverage['/popup-picker/render-xtpl.js'].lineData[28]++;
-  config4.params = params5;
+  var id0 = callCommandUtil(engine, scope, option1, "getBaseCssClasses", 1);
   _$jscoverage['/popup-picker/render-xtpl.js'].lineData[29]++;
-  if (visit3_29_1(moduleWrap)) {
-    _$jscoverage['/popup-picker/render-xtpl.js'].lineData[30]++;
-    require("date/picker-xtpl");
-    _$jscoverage['/popup-picker/render-xtpl.js'].lineData[31]++;
-    config4.params[0] = moduleWrap.resolveByName(config4.params[0]);
-  }
+  buffer += escapeHtml(id0);
+  _$jscoverage['/popup-picker/render-xtpl.js'].lineData[30]++;
+  buffer += '">\n    ';
+  _$jscoverage['/popup-picker/render-xtpl.js'].lineData[31]++;
+  var option4 = {};
+  _$jscoverage['/popup-picker/render-xtpl.js'].lineData[32]++;
+  var params5 = [];
   _$jscoverage['/popup-picker/render-xtpl.js'].lineData[33]++;
-  var id3 = runInlineCommandUtil(engine, scope, config4, "include", 2);
+  params5.push('date/picker-xtpl');
   _$jscoverage['/popup-picker/render-xtpl.js'].lineData[34]++;
-  buffer += renderOutputUtil(id3, false);
+  option4.params = params5;
   _$jscoverage['/popup-picker/render-xtpl.js'].lineData[35]++;
+  if (visit3_35_1(moduleWrap)) {
+    _$jscoverage['/popup-picker/render-xtpl.js'].lineData[36]++;
+    require("date/picker-xtpl");
+    _$jscoverage['/popup-picker/render-xtpl.js'].lineData[37]++;
+    option4.params[0] = moduleWrap.resolveByName(option4.params[0]);
+  }
+  _$jscoverage['/popup-picker/render-xtpl.js'].lineData[39]++;
+  var id3 = includeCommand.call(engine, scope, option4, payload);
+  _$jscoverage['/popup-picker/render-xtpl.js'].lineData[40]++;
+  if (visit4_40_1(id3 || visit5_40_2(id3 === 0))) {
+    _$jscoverage['/popup-picker/render-xtpl.js'].lineData[41]++;
+    buffer += id3;
+  }
+  _$jscoverage['/popup-picker/render-xtpl.js'].lineData[43]++;
   buffer += '\n</div>';
-  _$jscoverage['/popup-picker/render-xtpl.js'].lineData[36]++;
+  _$jscoverage['/popup-picker/render-xtpl.js'].lineData[44]++;
   return buffer;
 };
+  _$jscoverage['/popup-picker/render-xtpl.js'].lineData[46]++;
+  t.TPL_NAME = "E:/code/kissy_git/kissy/kissy/src/date/popup-picker/src/popup-picker/render.xtpl.html";
+  _$jscoverage['/popup-picker/render-xtpl.js'].lineData[47]++;
+  return t;
 });

@@ -193,9 +193,7 @@ KISSY.add(function (S, Kison) {
             expect(new Function('KISSY',code)(S).parse("ccdd")).not.toBe(false);
         });
 
-
         it("can not parse invalid input", function () {
-
             var grammar = new Grammar({
                 productions: [
                     {
@@ -239,14 +237,12 @@ KISSY.add(function (S, Kison) {
 
             expect(function () {
                 new Function("KISSY",grammar.genCode())(S).parse("dc");
-            }).toThrow('Syntax error at line 1:\ndc\n--^\n' +
+            }).toThrow('syntax error at line 1:\ndc\n--^\n' +
                     'expect c, d');
 
         });
 
-
         it("can not parse invalid input in compress mode", function () {
-
             var grammar = new Grammar({
                 productions: [
                     {
@@ -292,7 +288,7 @@ KISSY.add(function (S, Kison) {
                 new Function("KISSY",grammar.genCode({
                     compressSymbol: 1
                 }))(S).parse("dc");
-            }).toThrow('Syntax error at line 1:\ndc\n--^\n' +
+            }).toThrow('syntax error at line 1:\ndc\n--^\n' +
                     'expect c, d');
 
         });
@@ -458,7 +454,6 @@ KISSY.add(function (S, Kison) {
 
         });
 
-
         it("parse ok with action", function () {
 
             // S.log("---------------- parse ok with action : ccdd by ");
@@ -548,8 +543,6 @@ KISSY.add(function (S, Kison) {
 
             // S.log(global.TEST_RET.join('\n'));
         });
-
-
     });
 }, {
     requires: ['kison']

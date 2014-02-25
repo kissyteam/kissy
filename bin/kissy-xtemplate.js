@@ -53,7 +53,9 @@ function compile(tpl, modulePath) {
         '/** Compiled By kissy-xtemplate */\n' +
             'KISSY.add(function(S,require,exports,module){\n' +
             '/*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true*/\n' +
-            'return ' + XTemplateCompiler.compileToStr(tplContent)) + ';\n' +
+            'var t = ' + XTemplateCompiler.compileToStr(tplContent, tpl)) + ';\n' +
+        't.TPL_NAME = "' + tpl + '";\n' +
+        'return t;\n' +
         '});';
     fs.writeFileSync(modulePath, moduleCode, encoding);
     console.info('generate xtpl module: ' + modulePath + ' at ' + (new Date().toLocaleString()));

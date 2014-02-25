@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Feb 19 16:24
+build time: Feb 25 20:56
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -149,48 +149,51 @@ KISSY.add("util/array", [], function(S, undefined) {
   }})
 });
 KISSY.add("util/escape", [], function(S) {
-  var EMPTY = "", HEX_BASE = 16, htmlEntities = {"&amp;":"&", "&gt;":">", "&lt;":"<", "&#x60;":"`", "&#x2F;":"/", "&quot;":'"', "&#x27;":"'"}, reverseEntities = {}, escapeReg, unEscapeReg, escapeRegExp = /[\-#$\^*()+\[\]{}|\\,.?\s]/g;
+  var EMPTY = "", HEX_BASE = 16, htmlEntities = {"&amp;":"&", "&gt;":">", "&lt;":"<", "&#x60;":"`", "&#x2F;":"/", "&quot;":'"', "&#x27;":"'"}, reverseEntities = {}, escapeHtmlReg, unEscapeHtmlReg, possibleEscapeHtmlReg = /[&<>"'`]/, escapeRegExp = /[\-#$\^*()+\[\]{}|\\,.?\s]/g;
   (function() {
     for(var k in htmlEntities) {
       reverseEntities[htmlEntities[k]] = k
     }
   })();
+  escapeHtmlReg = getEscapeReg();
+  unEscapeHtmlReg = getUnEscapeReg();
   function getEscapeReg() {
-    if(escapeReg) {
-      return escapeReg
-    }
     var str = EMPTY;
     S.each(htmlEntities, function(entity) {
       str += entity + "|"
     });
     str = str.slice(0, -1);
-    escapeReg = new RegExp(str, "g");
-    return escapeReg
+    escapeHtmlReg = new RegExp(str, "g");
+    return escapeHtmlReg
   }
   function getUnEscapeReg() {
-    if(unEscapeReg) {
-      return unEscapeReg
-    }
     var str = EMPTY;
     S.each(reverseEntities, function(entity) {
       str += entity + "|"
     });
     str += "&#(\\d{1,5});";
-    unEscapeReg = new RegExp(str, "g");
-    return unEscapeReg
+    unEscapeHtmlReg = new RegExp(str, "g");
+    return unEscapeHtmlReg
   }
   S.mix(S, {fromUnicode:function(str) {
     return str.replace(/\\u([a-f\d]{4})/ig, function(m, u) {
       return String.fromCharCode(parseInt(u, HEX_BASE))
     })
   }, escapeHtml:function(str) {
-    return(str + "").replace(getEscapeReg(), function(m) {
+    if(!str && str !== 0) {
+      return""
+    }
+    str = "" + str;
+    if(!possibleEscapeHtmlReg.test(str)) {
+      return str
+    }
+    return(str + "").replace(escapeHtmlReg, function(m) {
       return reverseEntities[m]
     })
   }, escapeRegExp:function(str) {
     return str.replace(escapeRegExp, "\\$&")
   }, unEscapeHtml:function(str) {
-    return str.replace(getUnEscapeReg(), function(m, n) {
+    return str.replace(unEscapeHtmlReg, function(m, n) {
       return htmlEntities[m] || String.fromCharCode(+n)
     })
   }});

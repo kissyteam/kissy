@@ -24,8 +24,8 @@ KISSY.add(function (S, require) {
     }
 
     commands = {
-        'each': function (scope, config) {
-            var params = config.params;
+        'each': function (scope, option) {
+            var params = option.params;
             var param0 = params[0];
             var xindexName = params[2] || 'xindex';
             var valueName = params[1];
@@ -38,78 +38,78 @@ KISSY.add(function (S, require) {
                 opScope = new Scope();
                 if (S.isArray(param0)) {
                     xcount = param0.length;
+                    affix = opScope.affix = {
+                        xcount: xcount
+                    };
                     for (var xindex = 0; xindex < xcount; xindex++) {
                         // two more variable scope for array looping
                         opScope.data = param0[xindex];
-                        affix = opScope.affix = {
-                            xcount: xcount
-                        };
                         affix[xindexName] = xindex;
                         if (valueName) {
                             affix[valueName] = param0[xindex];
                         }
                         opScope.setParent(scope);
-                        buffer += config.fn(opScope);
+                        buffer += option.fn(opScope);
                     }
                 } else {
+                    affix = opScope.affix = {};
                     for (var name in param0) {
                         opScope.data = param0[name];
-                        affix = opScope.affix = {};
                         affix[xindexName] = name;
                         if (valueName) {
                             affix[valueName] = param0[name];
                         }
                         opScope.setParent(scope);
-                        buffer += config.fn(opScope);
+                        buffer += option.fn(opScope);
                     }
                 }
 
-            } else if (config.inverse) {
-                buffer = config.inverse(scope);
+            } else if (option.inverse) {
+                buffer = option.inverse(scope);
             }
             return buffer;
         },
 
-        'with': function (scope, config) {
-            var params = config.params;
+        'with': function (scope, option) {
+            var params = option.params;
             var param0 = params[0];
             var buffer = '';
             if (param0) {
                 // skip object check for performance
                 var opScope = new Scope(param0);
                 opScope.setParent(scope);
-                buffer = config.fn(opScope);
-            } else if (config.inverse) {
-                buffer = config.inverse(scope);
+                buffer = option.fn(opScope);
+            } else if (option.inverse) {
+                buffer = option.inverse(scope);
             }
             return buffer;
         },
 
-        'if': function (scope, config) {
-            var params = config.params;
+        'if': function (scope, option) {
+            var params = option.params;
             var param0 = params[0];
             var buffer = '';
             if (param0) {
-                if (config.fn) {
-                    buffer = config.fn(scope);
+                if (option.fn) {
+                    buffer = option.fn(scope);
                 }
-            } else if (config.inverse) {
-                buffer = config.inverse(scope);
+            } else if (option.inverse) {
+                buffer = option.inverse(scope);
             }
             return buffer;
         },
 
-        'set': function (scope, config) {
-            scope.mix(config.hash);
+        'set': function (scope, option) {
+            scope.mix(option.hash);
             return '';
         },
 
-        include: function (scope, config, payload) {
-            var params = config.params;
+        include: function (scope, option, payload) {
+            var params = option.params;
             var self = this;
             // sub template scope
-            if (config.hash) {
-                var newScope = new Scope(config.hash);
+            if (option.hash) {
+                var newScope = new Scope(option.hash);
                 newScope.setParent(scope);
                 scope = newScope;
             }
@@ -118,7 +118,7 @@ KISSY.add(function (S, require) {
             var subTplName = params[0];
 
             if (subTplName.charAt(0) === '.') {
-                if (myName === 'unspecified') {
+                if (!myName) {
                     S.error('parent template does not have name' + ' for relative sub tpl name: ' + subTplName);
                     return '';
                 }
@@ -128,18 +128,18 @@ KISSY.add(function (S, require) {
             return self.load(subTplName).render(scope, payload);
         },
 
-        parse: function (scope, config) {
+        parse: function (scope, option) {
             // abandon scope
-            return commands.include.call(this, new Scope(), config);
+            return commands.include.call(this, new Scope(), option);
         },
 
-        extend: function (scope, config, payload) {
-            payload.extendTplName = config.params[0];
+        extend: function (scope, option, payload) {
+            payload.extendTplName = option.params[0];
         },
 
-        block: function (scope, config, payload) {
+        block: function (scope, option, payload) {
             var self = this;
-            var params = config.params;
+            var params = option.params;
             var blockName = params[0];
             var type;
             if (params.length === 2) {
@@ -150,7 +150,7 @@ KISSY.add(function (S, require) {
             var head = blocks[blockName],
                 cursor;
             var current = {
-                fn: config.fn,
+                fn: option.fn,
                 type: type
             };
             if (!head) {
@@ -184,17 +184,17 @@ KISSY.add(function (S, require) {
             return ret;
         },
 
-        'macro': function (scope, config, payload) {
-            var params = config.params;
+        'macro': function (scope, option, payload) {
+            var params = option.params;
             var macroName = params[0];
             var params1 = params.slice(1);
             var self = this;
             var macros = payload.macros = payload.macros || {};
             // definition
-            if (config.fn) {
+            if (option.fn) {
                 macros[macroName] = {
                     paramNames: params1,
-                    fn: config.fn
+                    fn: option.fn
                 };
             } else {
                 var paramValues = {};

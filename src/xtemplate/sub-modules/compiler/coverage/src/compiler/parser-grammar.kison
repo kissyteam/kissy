@@ -579,12 +579,6 @@
                     token: 'EQUALS'
                 },
                 {
-                    // support {{.}}
-                    state: ['t'],
-                    regexp: /^\.(?=})/,
-                    token: 'ID'
-                },
-                {
                     state: ['t'],
                     regexp: /^\.\./,
                     token: 'ID',

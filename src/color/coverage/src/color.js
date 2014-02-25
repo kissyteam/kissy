@@ -504,11 +504,11 @@ function visit26_399_1(result) {
 function visit25_387_1(result) {
   _$jscoverage['/color.js'].branchData['387'][1].ranCondition(result);
   return result;
-}_$jscoverage['/color.js'].branchData['279'][1].init(944, 24, 'typeof r === \'undefined\'');
+}_$jscoverage['/color.js'].branchData['279'][1].init(953, 24, 'typeof r === \'undefined\'');
 function visit24_279_1(result) {
   _$jscoverage['/color.js'].branchData['279'][1].ranCondition(result);
   return result;
-}_$jscoverage['/color.js'].branchData['275'][1].init(160, 26, 'parseFloat(values[4]) || 1');
+}_$jscoverage['/color.js'].branchData['275'][1].init(169, 26, 'parseFloat(values[4]) || 1');
 function visit23_275_1(result) {
   _$jscoverage['/color.js'].branchData['275'][1].ranCondition(result);
   return result;
@@ -809,11 +809,11 @@ KISSY.add(function(S, require, exports, module) {
     _$jscoverage['/color.js'].lineData[271]++;
     if (visit22_271_1(values)) {
       _$jscoverage['/color.js'].lineData[272]++;
-      r = parseInt(values[1]);
+      r = parseInt(values[1], 10);
       _$jscoverage['/color.js'].lineData[273]++;
-      g = parseInt(values[2]);
+      g = parseInt(values[2], 10);
       _$jscoverage['/color.js'].lineData[274]++;
-      b = parseInt(values[3]);
+      b = parseInt(values[3], 10);
       _$jscoverage['/color.js'].lineData[275]++;
       a = visit23_275_1(parseFloat(values[4]) || 1);
     }

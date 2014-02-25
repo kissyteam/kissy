@@ -1,8 +1,8 @@
-{{#if withTitle}}
-<div class="{{getBaseCssClasses 'title-wrap'}}">
-    <div class="{{getBaseCssClasses 'title'}}" id="ks-navigation-bar-title-{{id}}">{{title}}</div>
+{{#if (withTitle)}}
+<div class="{{getBaseCssClasses ('title-wrap')}}">
+    <div class="{{getBaseCssClasses ('title')}}" id="ks-navigation-bar-title-{{id}}">{{title}}</div>
 </div>
 {{/if}}
-<div class="{{getBaseCssClasses 'content'}}" id="ks-navigation-bar-content-{{id}}">
-    <div class="{{getBaseCssClasses 'center'}}" id="ks-navigation-bar-center-{{id}}"></div>
+<div class="{{getBaseCssClasses ('content')}}" id="ks-navigation-bar-content-{{id}}">
+    <div class="{{getBaseCssClasses ('center')}}" id="ks-navigation-bar-center-{{id}}"></div>
 </div>

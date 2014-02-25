@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Jan 6 12:37
+build time: Feb 25 19:38
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -88,14 +88,6 @@ KISSY.add("editor/plugin/image/dialog", ["editor", "io", "../dialog", "tabs", ".
     function getFileSize(file) {
       if(file.files) {
         return file.files[0].size
-      }else {
-        if(1 > 2) {
-          try {
-            var fso = new window.ActiveXObject("Scripting.FileSystemObject"), file2 = fso.GetFile(file.value);
-            return file2.size
-          }catch(e) {
-          }
-        }
       }
       return 0
     }

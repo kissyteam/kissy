@@ -261,23 +261,23 @@ if (! _$jscoverage['/util/string.js'].branchData) {
   _$jscoverage['/util/string.js'].branchData['32'][1] = new BranchData();
 }
 _$jscoverage['/util/string.js'].branchData['32'][1].init(134, 21, 'o[name] === undefined');
-function visit122_32_1(result) {
+function visit123_32_1(result) {
   _$jscoverage['/util/string.js'].branchData['32'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util/string.js'].branchData['29'][1].init(21, 24, 'match.charAt(0) === \'\\\\\'');
-function visit121_29_1(result) {
+function visit122_29_1(result) {
   _$jscoverage['/util/string.js'].branchData['29'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util/string.js'].branchData['28'][1].init(124, 24, 'regexp || SUBSTITUTE_REG');
-function visit120_28_1(result) {
+function visit121_28_1(result) {
   _$jscoverage['/util/string.js'].branchData['28'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util/string.js'].branchData['24'][2].init(17, 23, 'typeof str !== \'string\'');
-function visit119_24_2(result) {
+function visit120_24_2(result) {
   _$jscoverage['/util/string.js'].branchData['24'][2].ranCondition(result);
   return result;
 }_$jscoverage['/util/string.js'].branchData['24'][1].init(17, 29, 'typeof str !== \'string\' || !o');
-function visit118_24_1(result) {
+function visit119_24_1(result) {
   _$jscoverage['/util/string.js'].branchData['24'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util/string.js'].lineData[7]++;
@@ -290,20 +290,20 @@ KISSY.add(function(S, undefined) {
   substitute: function(str, o, regexp) {
   _$jscoverage['/util/string.js'].functionData[1]++;
   _$jscoverage['/util/string.js'].lineData[24]++;
-  if (visit118_24_1(visit119_24_2(typeof str !== 'string') || !o)) {
+  if (visit119_24_1(visit120_24_2(typeof str !== 'string') || !o)) {
     _$jscoverage['/util/string.js'].lineData[25]++;
     return str;
   }
   _$jscoverage['/util/string.js'].lineData[28]++;
-  return str.replace(visit120_28_1(regexp || SUBSTITUTE_REG), function(match, name) {
+  return str.replace(visit121_28_1(regexp || SUBSTITUTE_REG), function(match, name) {
   _$jscoverage['/util/string.js'].functionData[2]++;
   _$jscoverage['/util/string.js'].lineData[29]++;
-  if (visit121_29_1(match.charAt(0) === '\\')) {
+  if (visit122_29_1(match.charAt(0) === '\\')) {
     _$jscoverage['/util/string.js'].lineData[30]++;
     return match.slice(1);
   }
   _$jscoverage['/util/string.js'].lineData[32]++;
-  return (visit122_32_1(o[name] === undefined)) ? EMPTY : o[name];
+  return (visit123_32_1(o[name] === undefined)) ? EMPTY : o[name];
 });
 }, 
   ucfirst: function(s) {

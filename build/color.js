@@ -1,10 +1,10 @@
 /*
-Copyright 2013, KISSY v1.50
+Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Dec 12 22:07
+build time: Feb 25 19:32
 */
 /*
- Combined processedModules by KISSY Module Compiler: 
+ Combined modules by KISSY Module Compiler: 
 
  color
 */
@@ -103,9 +103,9 @@ KISSY.add("color", ["attribute"], function(S, require, exports, module) {
     }else {
       values = str.match(rgbaRe);
       if(values) {
-        r = parseInt(values[1]);
-        g = parseInt(values[2]);
-        b = parseInt(values[3]);
+        r = parseInt(values[1], 10);
+        g = parseInt(values[2], 10);
+        b = parseInt(values[3], 10);
         a = parseFloat(values[4]) || 1
       }
     }

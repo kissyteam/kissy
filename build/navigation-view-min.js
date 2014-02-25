@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Feb 10 14:55
+build time: Feb 25 19:45
 */
 KISSY.add("navigation-view",["node","component/container","component/extension/content-xtpl","component/extension/content-render"],function(g,f){function t(a){var b=a.get("children").concat(),c=a.get("viewCacheSize");if(!(b.length<=c)){c=Math.floor(c/3);b.sort(function(a,b){return a.uuid-b.uuid});for(var d=0;d<c;d++)a.removeChild(b[d])}}function h(a,b,c){return a.view.getBaseCssClass("anim-"+b+"-"+(c?"enter":"leave"))}function i(a,b,c){var d=a.className,e=d;d.match(b.animateClassRegExp)&&(d=d.replace(b.animateClassRegExp,
 ""));c&&(d+=" "+c);-1===d.indexOf(b.showViewClass)&&(d+=" "+b.showViewClass);d!==e&&(a.className=g.trim(d).replace(/\s+/," "))}function j(a,b){var c=a.className,d=c,c=c.replace(b.animateClassRegExp,"").replace(b.showViewClass,"");c!==d&&(a.className=g.trim(c).replace(/\s+/," "))}function m(a,b,c,d){var e=c.promise;a.set("activeView",c);t(a);e?e.then(function(){var e=a.get("activeView");e&&e.uuid===c.uuid&&(a.fire("afterInnerViewChange",{oldView:b,newView:c,backward:d}),j(a.loadingEl,a),i(c.el,a))}):

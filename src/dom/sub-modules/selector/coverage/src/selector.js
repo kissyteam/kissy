@@ -1085,7 +1085,7 @@ function visit141_418_1(result) {
 function visit140_415_1(result) {
   _$jscoverage['/selector.js'].branchData['415'][1].ranCondition(result);
   return result;
-}_$jscoverage['/selector.js'].branchData['402'][1].init(12647, 41, '\'sourceIndex\' in document.documentElement');
+}_$jscoverage['/selector.js'].branchData['402'][1].init(12653, 41, '\'sourceIndex\' in document.documentElement');
 function visit139_402_1(result) {
   _$jscoverage['/selector.js'].branchData['402'][1].ranCondition(result);
   return result;
@@ -1457,7 +1457,7 @@ function visit48_103_1(result) {
 function visit47_102_1(result) {
   _$jscoverage['/selector.js'].branchData['102'][1].ranCondition(result);
   return result;
-}_$jscoverage['/selector.js'].branchData['93'][1].init(351, 23, 'parseInt(match[3]) || 0');
+}_$jscoverage['/selector.js'].branchData['93'][1].init(354, 26, 'parseInt(match[3], 10) || 0');
 function visit46_93_1(result) {
   _$jscoverage['/selector.js'].branchData['93'][1].ranCondition(result);
   return result;
@@ -1465,7 +1465,7 @@ function visit46_93_1(result) {
 function visit45_84_1(result) {
   _$jscoverage['/selector.js'].branchData['84'][1].ranCondition(result);
   return result;
-}_$jscoverage['/selector.js'].branchData['83'][1].init(61, 8, 'isNaN(a)');
+}_$jscoverage['/selector.js'].branchData['83'][1].init(64, 8, 'isNaN(a)');
 function visit44_83_1(result) {
   _$jscoverage['/selector.js'].branchData['83'][1].ranCondition(result);
   return result;
@@ -1592,7 +1592,7 @@ KISSY.add(function(S, require) {
             _$jscoverage['/selector.js'].lineData[81]++;
             if (visit43_81_1(match[1])) {
               _$jscoverage['/selector.js'].lineData[82]++;
-              a = parseInt(match[2]);
+              a = parseInt(match[2], 10);
               _$jscoverage['/selector.js'].lineData[83]++;
               if (visit44_83_1(isNaN(a))) {
                 _$jscoverage['/selector.js'].lineData[84]++;
@@ -1609,7 +1609,7 @@ KISSY.add(function(S, require) {
               a = 0;
             }
             _$jscoverage['/selector.js'].lineData[93]++;
-            b = visit46_93_1(parseInt(match[3]) || 0);
+            b = visit46_93_1(parseInt(match[3], 10) || 0);
           }
         }
       }

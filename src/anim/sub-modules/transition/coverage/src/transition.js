@@ -379,11 +379,11 @@ function visit7_102_1(result) {
 function visit6_97_1(result) {
   _$jscoverage['/transition.js'].branchData['97'][1].ranCondition(result);
   return result;
-}_$jscoverage['/transition.js'].branchData['75'][1].init(1436, 8, 'original');
+}_$jscoverage['/transition.js'].branchData['75'][1].init(1435, 8, 'original');
 function visit5_75_1(result) {
   _$jscoverage['/transition.js'].branchData['75'][1].ranCondition(result);
   return result;
-}_$jscoverage['/transition.js'].branchData['73'][1].init(1346, 31, 'original.indexOf(\'none\') !== -1');
+}_$jscoverage['/transition.js'].branchData['73'][1].init(1345, 31, 'original.indexOf(\'none\') !== -1');
 function visit4_73_1(result) {
   _$jscoverage['/transition.js'].branchData['73'][1].ranCondition(result);
   return result;

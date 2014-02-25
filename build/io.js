@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Jan 6 12:22
+build time: Feb 25 19:44
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -110,11 +110,11 @@ KISSY.add("io/base", ["event/custom", "promise"], function(S, require) {
     if(!(self instanceof IO)) {
       return new IO(c)
     }
-    Promise.call(self);
+    IO.superclass.constructor.call(self);
+    Promise.Defer(self);
     self.userConfig = c;
     c = setUpConfig(c);
     S.mix(self, {responseData:null, config:c || {}, timeoutTimer:null, responseText:null, responseXML:null, responseHeadersString:"", responseHeaders:null, requestHeaders:{}, readyState:0, state:0, statusText:null, status:0, transport:null});
-    Promise.Defer(self);
     var TransportConstructor, transport;
     IO.fire("start", {ajaxConfig:c, io:self});
     TransportConstructor = transports[c.dataType[0]] || transports["*"];

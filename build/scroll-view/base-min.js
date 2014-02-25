@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Feb 18 14:07
+build time: Feb 25 19:45
 */
 KISSY.add("scroll-view/base/render",["component/container","component/extension/content-render"],function(j,f){var o=f("component/container"),p=f("component/extension/content-render"),q=j.Feature,k=Math.floor,m,n=j.Feature.isTransform3dSupported(),l={syncUI:function(){var c=this.control,a=c.el,b=c.contentEl,d=c.$contentEl,g=Math.max(b.offsetHeight,b.scrollHeight),b=Math.max(b.offsetWidth,b.scrollWidth),e=a.clientHeight,i=a.clientWidth;c.scrollHeight=g;c.scrollWidth=b;c.clientHeight=e;c.clientWidth=
 i;a=c.allowScroll={};g>e&&(a.top=1);b>i&&(a.left=1);c.minScroll={left:0,top:0};var h,r;c.maxScroll={left:h=b-i,top:r=g-e};delete c.scrollStep;e=c.get("snap");g=c.get("scrollLeft");b=c.get("scrollTop");if(e){var f=d.offset(),d=c.pages="string"===typeof e?d.all(e):d.children(),e=c.get("pageIndex"),j=c.pagesOffset=[];d.each(function(a,b){var d=a.offset(),c=d.left-f.left,d=d.top-f.top;c<=h&&d<=r&&(j[b]={left:c,top:d,index:b})});if(e){c.scrollToPage(e);return}}c.scrollToWithBounds({left:g,top:b})},_onSetScrollLeft:function(c){this.control.contentEl.style.left=

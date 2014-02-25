@@ -21,9 +21,9 @@ KISSY.add(function (S, Control,XTemplate) {
                 value: XTemplate
             },
             contentTpl: {
-                value: '<div id="ks-my-control-{{id}}" class="{{getBaseCssClasses \'check\'}} ' +
-                    '{{#if checked}}' +
-                    '{{getBaseCssClasses \'checked\'}}' +
+                value: '<div id="ks-my-control-{{id}}" class="{{getBaseCssClasses (\'check\')}} ' +
+                    '{{#if (checked)}}' +
+                    '{{getBaseCssClasses (\'checked\')}}' +
                     '{{/if}}' +
                     '">' +
                     '</div>'

@@ -6,7 +6,6 @@
 KISSY.add(function (S, require) {
     var Utils = require('./utils');
 
-
     var serializeObject = Utils.serializeObject,
         /**
          * Lexer generator
@@ -40,7 +39,6 @@ KISSY.add(function (S, require) {
              */
 
             self.resetInput(self.input);
-
         };
 
     Lexer.STATIC = {
@@ -52,9 +50,10 @@ KISSY.add(function (S, require) {
     Lexer.prototype = {
         constructor: Lexer,
 
-        resetInput: function (input) {
+        resetInput: function (input, filename) {
             S.mix(this, {
                 input: input,
+                filename: filename,
                 matched: '',
                 stateStack: [Lexer.STATIC.INITIAL],
                 match: '',
@@ -65,7 +64,6 @@ KISSY.add(function (S, require) {
                 firstColumn: 1,
                 lastColumn: 1
             });
-
         },
 
         genShortId: function (field) {
@@ -242,6 +240,9 @@ KISSY.add(function (S, require) {
                 m,
                 ret,
                 lines,
+                // for debug info
+                filename = self.filename,
+                prefix = filename ? ('in file: ' + filename + ' ') : '',
                 rules = self.getCurrentRules();
 
             self.match = self.text = '';
@@ -296,7 +297,7 @@ KISSY.add(function (S, require) {
                 }
             }
 
-            S.error('lex error at line ' + self.lineNumber + ':\n' + self.showDebugInfo());
+            S.error(prefix + 'lex error at line ' + self.lineNumber + ':\n' + self.showDebugInfo());
             return undefined;
         }
     };

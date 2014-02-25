@@ -11,7 +11,7 @@ KISSY.add(function (S, UA, Json, io, Node) {
         it('support custom contentType', function () {
             var done = 0, ok = 0;
             io({
-                url: '../data/receive-json.jss',
+                url: '/kissy/src/io/tests/data/receive-json.jss',
                 dataType: 'json',
                 type: 'post',
                 contentType: 'application/json',
@@ -41,14 +41,14 @@ KISSY.add(function (S, UA, Json, io, Node) {
             var ok = 0;
 
             io({
-                url: '../data/ifModified.jss',
+                url: '/kissy/src/io/tests/data/ifModified.jss',
                 dataType: "text",
                 success: function (data, status, xhr) {
                     expect(data).toBe("haha");
                     expect(status).toBe("success");
                     expect(xhr.status).toBe(200);
                     io({
-                        url: '../data/ifModified.jss',
+                        url: '/kissy/src/io/tests/data/ifModified.jss',
                         dataType: "text",
                         success: function (data, status, xhr) {
                             expect(data).toBe("haha");
@@ -78,7 +78,7 @@ KISSY.add(function (S, UA, Json, io, Node) {
             var ok = 0;
 
             io({
-                url: '../data/ifModified.jss',
+                url: '/kissy/src/io/tests/data/ifModified.jss',
                 dataType: "text",
                 cache: false,
                 ifModified: true,
@@ -87,7 +87,7 @@ KISSY.add(function (S, UA, Json, io, Node) {
                     expect(status).toBe("success");
                     expect(xhr.status).toBe(200);
                     io({
-                        url: '../data/ifModified.jss',
+                        url: '/kissy/src/io/tests/data/ifModified.jss',
                         dataType: "text",
                         cache: false,
                         ifModified: true,
@@ -98,7 +98,7 @@ KISSY.add(function (S, UA, Json, io, Node) {
                                 expect(status).toBe("not modified");
 
                                 expect(io.__lastModifiedCached[
-                                    pageUri.resolve('../data/ifModified.jss').toString()
+                                    pageUri.resolve('/kissy/src/io/tests/data/ifModified.jss').toString()
                                     ])
                                     .toBe('Thu, 18 Jul 2002 15:48:32 GMT');
                             }
@@ -121,7 +121,7 @@ KISSY.add(function (S, UA, Json, io, Node) {
             var form = $("<form><input name='t' value='t'/></form>").appendTo('body');
 
             io({
-                url: '../data/ifModified.jss',
+                url: '/kissy/src/io/tests/data/ifModified.jss',
                 dataType: "text",
                 cache: false,
                 ifModified: true,
@@ -131,7 +131,7 @@ KISSY.add(function (S, UA, Json, io, Node) {
                     expect(status).toBe("success");
                     expect(xhr.status).toBe(200);
                     io({
-                        url: '../data/ifModified.jss',
+                        url: '/kissy/src/io/tests/data/ifModified.jss',
                         dataType: "text",
                         cache: false,
                         form: form,
@@ -142,7 +142,7 @@ KISSY.add(function (S, UA, Json, io, Node) {
                                 expect(xhr.status).toBe(304);
                                 expect(status).toBe("not modified");
 
-                                var uri = pageUri.resolve('../data/ifModified.jss');
+                                var uri = pageUri.resolve('/kissy/src/io/tests/data/ifModified.jss');
                                 uri.query.add("t", "t");
 
                                 expect(io.__lastModifiedCached[
@@ -168,7 +168,7 @@ KISSY.add(function (S, UA, Json, io, Node) {
         it("should jsonp with array arguments", function () {
             var re = false, data;
 
-            io.jsonp("../data/jsonp-array.jss", function (d, status, xhr) {
+            io.jsonp("/kissy/src/io/tests/data/jsonp-array.jss", function (d, status, xhr) {
                 re = true;
                 data = d;
             });
@@ -186,7 +186,7 @@ KISSY.add(function (S, UA, Json, io, Node) {
         it("should abort for xhr", function () {
             var re = [];
             var xhr = io({
-                url: '../data/io.jss',
+                url: '/kissy/src/io/tests/data/io.jss',
                 cache: false,
                 success: function (data, status) {
                     var args = S.makeArray(arguments);
@@ -216,7 +216,7 @@ KISSY.add(function (S, UA, Json, io, Node) {
             var re = [], ok = false;
 
             var xhr = io({
-                url: '../data/io.jss',
+                url: '/kissy/src/io/tests/data/io.jss',
                 cache: false,
                 success: function (data, status) {
                     ok = true;
@@ -253,7 +253,7 @@ KISSY.add(function (S, UA, Json, io, Node) {
             var xhr = io({
                 forceScript: !(UA.ie == 6),
                 dataType: 'jsonp',
-                url: '../data/jsonp.jss',
+                url: '/kissy/src/io/tests/data/jsonp.jss',
                 cache: false,
                 success: function (data, status) {
                     var args = S.makeArray(arguments);
@@ -284,7 +284,7 @@ KISSY.add(function (S, UA, Json, io, Node) {
 
             var xhr = io({
                 forceScript: !(UA.ie == 6),
-                url: '../data/io.jss',
+                url: '/kissy/src/io/tests/data/io.jss',
                 cache: false,
                 success: function (data, status) {
                     ok = true;
@@ -317,7 +317,7 @@ KISSY.add(function (S, UA, Json, io, Node) {
         it("timeout should work for xhr", function () {
             var re = [], ok;
             var xhr = io({
-                url: '../data/io.jss',
+                url: '/kissy/src/io/tests/data/io.jss',
                 // ie 默认会缓存，可能直接触发 success
                 // fiddler 看不到请求，自带网络捕获为 304
                 cache: false,
@@ -365,7 +365,7 @@ KISSY.add(function (S, UA, Json, io, Node) {
             var ok, d;
 
             io({
-                url: '../others/form/upload.jss',
+                url: '/kissy/src/io/tests/others/form/upload.jss',
                 form: "#" + f.prop('id'),
                 type: 'post',
                 dataType: 'json',
@@ -409,7 +409,7 @@ KISSY.add(function (S, UA, Json, io, Node) {
 
             var ok, d;
             io({
-                url: '../others/form/upload.jss',
+                url: '/kissy/src/io/tests/others/form/upload.jss',
                 form: "#" + f.prop('id'),
                 type: 'post',
                 dataType: 'json',

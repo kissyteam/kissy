@@ -1,16 +1,16 @@
 <div id="ks-combobox-invalid-el-{{id}}"
-     class="{{getBaseCssClasses "invalid-el"}}">
-    <div class="{{getBaseCssClasses "invalid-inner"}}"></div>
+     class="{{getBaseCssClasses ('invalid-el')}}">
+    <div class="{{getBaseCssClasses ('invalid-inner')}}"></div>
 </div>
 
-{{#if hasTrigger}}
+{{#if (hasTrigger)}}
 <div id="ks-combobox-trigger-{{id}}"
-     class="{{getBaseCssClasses "trigger"}}">
-    <div class="{{getBaseCssClasses "trigger-inner"}}">&#x25BC;</div>
+     class="{{getBaseCssClasses ('trigger')}}">
+    <div class="{{getBaseCssClasses ('trigger-inner')}}">&#x25BC;</div>
 </div>
 {{/if}}
 
-<div class="{{getBaseCssClasses "input-wrap"}}">
+<div class="{{getBaseCssClasses ('input-wrap')}}">
 
     <input id="ks-combobox-input-{{id}}"
            aria-haspopup="true"
@@ -19,12 +19,12 @@
            role="autocomplete"
            aria-expanded="false"
 
-    {{#if disabled}}
+    {{#if (disabled)}}
     disabled
     {{/if}}
 
     autocomplete="off"
-    class="{{getBaseCssClasses 'input'}}"
+    class="{{getBaseCssClasses ('input')}}"
 
     value="{{value}}"
     />
@@ -32,8 +32,8 @@
 
     <label id="ks-combobox-placeholder-{{id}}"
            for="ks-combobox-input-{{id}}"
-            style='display:{{#if value}}none{{else}}block{{/if}};'
-    class="{{getBaseCssClasses "placeholder"}}">
+            style='display:{{#if (value)}}none{{else}}block{{/if}};'
+    class="{{getBaseCssClasses ('placeholder')}}">
     {{placeholder}}
     </label>
 </div>

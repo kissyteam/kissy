@@ -16,7 +16,9 @@ KISSY.add(function (S, require) {
     }
 
     for (t in nativeCommands) {
-        nativeCode += t + 'Command = nativeCommands.' + t + ',';
+        nativeCode += t + ((t === 'with' || t === 'if') ?
+            ('Command = nativeCommands["' + t + '"]') :
+            ('Command = nativeCommands.' + t)) + ',';
     }
 
     nativeCode = nativeCode.slice(0, -1);
@@ -108,12 +110,14 @@ KISSY.add(function (S, require) {
             }
             source.push('var buffer = ""' + (global ? ',' : ';'));
             if (global) {
-                source.push('config = this.config,' +
+                source.push(
                     // current xtemplate engine
                     'engine = this,' +
-                    'moduleWrap,' +
-                    'nativeCommands = engine.nativeCommands,' +
-                    'utils = engine.utils;');
+                        'moduleWrap,' +
+                        'escapeHtml = S.escapeHtml,' +
+                        'nativeCommands = engine.nativeCommands,' +
+                        'utils = engine.utils;'
+                );
 
                 source.push('if (typeof module !== "undefined" && module.kissy) {' +
                     'moduleWrap = module;' +
@@ -189,9 +193,9 @@ KISSY.add(function (S, require) {
             return undefined;
         },
 
-        genConfigFromCommand: function (command) {
+        genOptionFromCommand: function (command) {
             var source = [],
-                configName,
+                optionName,
                 params,
                 hash,
                 self = this;
@@ -200,8 +204,8 @@ KISSY.add(function (S, require) {
             hash = command.hash;
 
             if (params || hash) {
-                configName = guid('config');
-                source.push('var ' + configName + ' = {};');
+                optionName = guid('option');
+                source.push('var ' + optionName + ' = {};');
             }
 
             if (params) {
@@ -217,7 +221,7 @@ KISSY.add(function (S, require) {
                         source.push(paramsName + '.push(' + lastOfArray(nextIdNameCode[1]) + ');');
                     }
                 });
-                source.push(configName + '.params=' + paramsName + ';');
+                source.push(optionName + '.params=' + paramsName + ';');
             }
 
             if (hash) {
@@ -233,10 +237,10 @@ KISSY.add(function (S, require) {
                         source.push(hashName + '["' + key + '"] = ' + lastOfArray(nextIdNameCode[1]) + ';');
                     }
                 });
-                source.push(configName + '.hash=' + hashName + ';');
+                source.push(optionName + '.hash=' + hashName + ';');
             }
 
-            return [configName, source];
+            return [optionName, source];
         },
 
         'conditionalOrExpression': function (e) {
@@ -312,15 +316,15 @@ KISSY.add(function (S, require) {
         'command': function (command) {
             var source = [],
                 idNode = command.id,
-                configName,
+                optionName,
                 idParts = idNode.parts,
                 idName = guid('id'),
                 self = this;
 
-            var commandConfigCode = self.genConfigFromCommand(command);
+            var commandConfigCode = self.genOptionFromCommand(command);
 
             if (commandConfigCode) {
-                configName = commandConfigCode[0];
+                optionName = commandConfigCode[0];
                 pushToArray(source, commandConfigCode[1]);
             }
 
@@ -330,16 +334,16 @@ KISSY.add(function (S, require) {
             if (idString === 'include') {
                 // prevent require parse...
                 source.push('if(moduleWrap) {re' + 'quire("' + command.params[0].value + '");' +
-                    configName + '.params[0] = moduleWrap.resolveByName(' + configName + '.params[0]);' +
+                    optionName + '.params[0] = moduleWrap.resolveByName(' + optionName + '.params[0]);' +
                     '}');
             }
             if (idString in nativeCommands) {
                 source.push('var ' + idName + ' = ' + idString +
-                    'Command.call(engine,scope,' + configName + ',payload);');
+                    'Command.call(engine,scope,' + optionName + ',payload);');
             } else {
                 source.push('var ' + idName +
-                    ' = runInlineCommandUtil(engine,scope,' +
-                    configName + ',"' + idString + '",' +
+                    ' = callCommandUtil(engine,scope,' +
+                    optionName + ',"' + idString + '",' +
                     idNode.lineNumber + ');');
             }
 
@@ -352,25 +356,25 @@ KISSY.add(function (S, require) {
                 source = [],
                 self = this,
                 command = block.command,
-                commandConfigCode = self.genConfigFromCommand(command),
-                configName = commandConfigCode[0],
+                commandConfigCode = self.genOptionFromCommand(command),
+                optionName = commandConfigCode[0],
                 id = command.id,
                 idString = id.string,
                 inverseFn;
 
             pushToArray(source, commandConfigCode[1]);
 
-            if (!configName) {
-                configName = S.guid('config');
-                source.push('var ' + configName + ' = {};');
+            if (!optionName) {
+                optionName = S.guid('option');
+                source.push('var ' + optionName + ' = {};');
             }
 
-            source.push(configName + '.fn=' +
+            source.push(optionName + '.fn=' +
                 self.genFunction(programNode.statements).join('\n') + ';');
 
             if (programNode.inverse) {
                 inverseFn = self.genFunction(programNode.inverse).join('\n');
-                source.push(configName + '.inverse=' + inverseFn + ';');
+                source.push(optionName + '.inverse=' + inverseFn + ';');
             }
 
             var parts = id.parts;
@@ -383,10 +387,10 @@ KISSY.add(function (S, require) {
             }
 
             if (idString in nativeCommands) {
-                source.push('buffer += ' + idString + 'Command.call(engine, scope, ' + configName + ',payload);');
+                source.push('buffer += ' + idString + 'Command.call(engine, scope, ' + optionName + ',payload);');
             } else {
-                source.push('buffer += runBlockCommandUtil(engine, scope, ' +
-                    configName + ', ' +
+                source.push('buffer += callCommandUtil(engine, scope, ' +
+                    optionName + ', ' +
                     '"' + idString + '", ' +
                     id.lineNumber + ');');
             }
@@ -410,7 +414,15 @@ KISSY.add(function (S, require) {
                 pushToArray(source, code[1].slice(0, -1));
                 expressionOrVariable = lastOfArray(code[1]);
             }
-            source.push('buffer += renderOutputUtil(' + expressionOrVariable + ',' + escape + ');');
+
+            if (escape) {
+                source.push('buffer += escapeHtml(' + expressionOrVariable + ');');
+            } else {
+                source.push('if(' + expressionOrVariable + ' || ' + expressionOrVariable + ' === 0) { ' +
+                    'buffer += ' + expressionOrVariable + ';' +
+                    ' }');
+            }
+
             return source;
         },
 
@@ -429,30 +441,33 @@ KISSY.add(function (S, require) {
     compiler = {
         /**
          * get ast of template
+         * @param {String} [name] xtemplate name
          * @param {String} tpl
          * @return {Object}
          */
-        parse: function (tpl) {
-            return parser.parse(tpl);
+        parse: function (tpl, name) {
+            return parser.parse(name, tpl);
         },
         /**
          * get template function string
          * @param {String} tpl
+         * @param {String} [name] xtemplate name
          * @return {String}
          */
-        compileToStr: function (tpl) {
-            var func = this.compile(tpl);
+        compileToStr: function (tpl, name) {
+            var func = compiler.compile(tpl, name);
             return 'function(' + func.params.join(',') + '){\n' +
                 func.source.join('\n') +
                 '}';
         },
         /**
          * get template function json format
+         * @param {String} [name] xtemplate name
          * @param {String} tpl
          * @return {Object}
          */
-        compile: function (tpl) {
-            var root = this.parse(tpl);
+        compile: function (tpl, name) {
+            var root = compiler.parse(name, tpl);
             variableId = 0;
             return gen.genFunction(root.statements, true);
         },
@@ -463,9 +478,9 @@ KISSY.add(function (S, require) {
          * @return {Function}
          */
         compileToFn: function (tpl, name) {
-            var code = compiler.compile(tpl);
-            name=name||('xtemplate' + (xtemplateId++));
-            var sourceURL = 'sourceURL=' + name  +'.js';
+            name = name || ('xtemplate' + (xtemplateId++));
+            var code = compiler.compile(tpl, name);
+            var sourceURL = 'sourceURL=' + name + '.js';
             // eval is not ok for eval("(function(){})") ie
             return Function.apply(null, []
                 .concat(code.params)

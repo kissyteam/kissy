@@ -15,7 +15,7 @@
         var S=KISSY,onlySrc=location.href.indexOf('onlySrc')!=-1;
         var t;
         {{#each (tests)}}
-        t='{{{.}}}';
+        t='{{{this}}}';
         if(!S.endsWith(t,'?coverage') && t!='/send-to-coveralls'){
             if(onlySrc && S.endsWith(t,'?build')){}else{
                 tests.push(t);

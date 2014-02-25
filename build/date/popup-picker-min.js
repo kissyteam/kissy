@@ -1,7 +1,8 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Jan 6 12:03
+build time: Feb 25 19:34
 */
-KISSY.add("date/popup-picker/render-xtpl",["date/picker-xtpl"],function(j,d,c,e){return function(f){var a,c;a=this.config.utils;"undefined"!==typeof e&&e.kissy&&(c=e);var h=a.renderOutput,i=a.runInlineCommand;a='<div class="';var b={},g=[];g.push("content");b.params=g;b=i(this,f,b,"getBaseCssClasses",1);a+=h(b,!0);a+='">\n    ';b={};g=[];g.push("date/picker-xtpl");b.params=g;c&&(d("date/picker-xtpl"),b.params[0]=c.resolveByName(b.params[0]));f=i(this,f,b,"include",2);a+=h(f,!1);return a+"\n</div>"}});
-KISSY.add("date/popup-picker",["./popup-picker/render-xtpl","date/picker","component/extension/shim","component/extension/align"],function(j,d){var c=d("./popup-picker/render-xtpl"),e=d("date/picker"),f=d("component/extension/shim"),a=d("component/extension/align"),c=e.getDefaultRender().extend({},{ATTRS:{contentTpl:{value:c}}});return e.extend([f,a],{},{xclass:"popup-date-picker",ATTRS:{xrender:{value:c}}})});
+KISSY.add("date/popup-picker/render-xtpl",["date/picker-xtpl"],function(d,e,b,f){d=function(c,a,d){var b,g=a.escapeHtml,a=this.nativeCommands,i=this.utils;"undefined"!==typeof f&&f.kissy&&(b=f);var h=i.callCommand,i=a.include,a='<div class="',j={},k=[];k.push("content");j.params=k;h=h(this,c,j,"getBaseCssClasses",1);a+=g(h);a+='">\n    ';g={};h=[];h.push("date/picker-xtpl");g.params=h;b&&(e("date/picker-xtpl"),g.params[0]=b.resolveByName(g.params[0]));if((c=i.call(this,c,g,d))||0===c)a+=c;return a+
+"\n</div>"};d.TPL_NAME="E:/code/kissy_git/kissy/kissy/src/date/popup-picker/src/popup-picker/render.xtpl.html";return d});
+KISSY.add("date/popup-picker",["./popup-picker/render-xtpl","date/picker","component/extension/shim","component/extension/align"],function(d,e){var b=e("./popup-picker/render-xtpl"),f=e("date/picker"),c=e("component/extension/shim"),a=e("component/extension/align"),b=f.getDefaultRender().extend({},{ATTRS:{contentTpl:{value:b}}});return f.extend([c,a],{},{xclass:"popup-date-picker",ATTRS:{xrender:{value:b}}})});

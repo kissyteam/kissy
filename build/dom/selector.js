@@ -1,10 +1,10 @@
 /*
-Copyright 2013, KISSY v1.50
+Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Dec 12 22:10
+build time: Feb 25 19:35
 */
 /*
- Combined processedModules by KISSY Module Compiler: 
+ Combined modules by KISSY Module Compiler: 
 
  dom/selector/parser
  dom/selector
@@ -327,7 +327,7 @@ KISSY.add("dom/selector", ["./selector/parser", "dom/basic"], function(S, requir
         }else {
           if(match = param.replace(/\s/g, "").match(aNPlusB)) {
             if(match[1]) {
-              a = parseInt(match[2]);
+              a = parseInt(match[2], 10);
               if(isNaN(a)) {
                 if(match[2] === "-") {
                   a = -1
@@ -338,7 +338,7 @@ KISSY.add("dom/selector", ["./selector/parser", "dom/basic"], function(S, requir
             }else {
               a = 0
             }
-            b = parseInt(match[3]) || 0
+            b = parseInt(match[3], 10) || 0
           }
         }
       }

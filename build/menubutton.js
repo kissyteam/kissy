@@ -1,10 +1,10 @@
 /*
-Copyright 2013, KISSY v1.50
+Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Dec 12 22:20
+build time: Feb 25 19:45
 */
 /*
- Combined processedModules by KISSY Module Compiler: 
+ Combined modules by KISSY Module Compiler: 
 
  menubutton/menubutton-xtpl
  menubutton/render
@@ -15,40 +15,44 @@ build time: Dec 12 22:20
 */
 
 KISSY.add("menubutton/menubutton-xtpl", ["component/extension/content-xtpl"], function(S, require, exports, module) {
-  return function(scope, S, undefined) {
-    var buffer = "", config = this.config, engine = this, moduleWrap, utils = config.utils;
+  var t = function(scope, S, payload, undefined) {
+    var buffer = "", engine = this, moduleWrap, escapeHtml = S.escapeHtml, nativeCommands = engine.nativeCommands, utils = engine.utils;
     if(typeof module !== "undefined" && module.kissy) {
       moduleWrap = module
     }
-    var runBlockCommandUtil = utils.runBlockCommand, renderOutputUtil = utils.renderOutput, getPropertyUtil = utils.getProperty, runInlineCommandUtil = utils.runInlineCommand, getPropertyOrRunCommandUtil = utils.getPropertyOrRunCommand;
+    var callCommandUtil = utils.callCommand, eachCommand = nativeCommands.each, withCommand = nativeCommands["with"], ifCommand = nativeCommands["if"], setCommand = nativeCommands.set, includeCommand = nativeCommands.include, parseCommand = nativeCommands.parse, extendCommand = nativeCommands.extend, blockCommand = nativeCommands.block, macroCommand = nativeCommands.macro;
     buffer += "";
-    var config1 = {};
+    var option1 = {};
     var params2 = [];
     params2.push("component/extension/content-xtpl");
-    config1.params = params2;
+    option1.params = params2;
     if(moduleWrap) {
       require("component/extension/content-xtpl");
-      config1.params[0] = moduleWrap.resolveByName(config1.params[0])
+      option1.params[0] = moduleWrap.resolveByName(option1.params[0])
     }
-    var id0 = runInlineCommandUtil(engine, scope, config1, "include", 1);
-    buffer += renderOutputUtil(id0, false);
+    var id0 = includeCommand.call(engine, scope, option1, payload);
+    if(id0 || id0 === 0) {
+      buffer += id0
+    }
     buffer += '\n<div class="';
-    var config4 = {};
+    var option4 = {};
     var params5 = [];
     params5.push("dropdown");
-    config4.params = params5;
-    var id3 = runInlineCommandUtil(engine, scope, config4, "getBaseCssClasses", 2);
-    buffer += renderOutputUtil(id3, true);
+    option4.params = params5;
+    var id3 = callCommandUtil(engine, scope, option4, "getBaseCssClasses", 2);
+    buffer += escapeHtml(id3);
     buffer += '">\n    <div class="';
-    var config7 = {};
+    var option7 = {};
     var params8 = [];
     params8.push("dropdown-inner");
-    config7.params = params8;
-    var id6 = runInlineCommandUtil(engine, scope, config7, "getBaseCssClasses", 3);
-    buffer += renderOutputUtil(id6, true);
+    option7.params = params8;
+    var id6 = callCommandUtil(engine, scope, option7, "getBaseCssClasses", 3);
+    buffer += escapeHtml(id6);
     buffer += '">\n    </div>\n</div>';
     return buffer
-  }
+  };
+  t.TPL_NAME = "E:/code/kissy_git/kissy/kissy/src/menubutton/src/menubutton/menubutton.xtpl.html";
+  return t
 });
 KISSY.add("menubutton/render", ["button", "./menubutton-xtpl", "component/extension/content-render"], function(S, require) {
   var Button = require("button");
@@ -85,7 +89,7 @@ KISSY.add("menubutton/control", ["node", "button", "./render"], function(S, requ
         if(self.get("matchElWidth")) {
           menu.render();
           var menuEl = menu.get("el");
-          var borderWidth = (parseInt(menuEl.css("borderLeftWidth")) || 0) + (parseInt(menuEl.css("borderRightWidth")) || 0);
+          var borderWidth = (parseInt(menuEl.css("borderLeftWidth"), 10) || 0) + (parseInt(menuEl.css("borderRightWidth"), 10) || 0);
           menu.set("width", menu.get("align").node[0].offsetWidth - borderWidth)
         }
         menu.show();

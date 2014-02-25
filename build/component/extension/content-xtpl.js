@@ -1,36 +1,40 @@
 /*
-Copyright 2013, KISSY v1.50
+Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Dec 12 22:08
+build time: Feb 25 19:33
 */
 /*
- Combined processedModules by KISSY Module Compiler: 
+ Combined modules by KISSY Module Compiler: 
 
  component/extension/content-xtpl
 */
 
 KISSY.add("component/extension/content-xtpl", [], function(S, require, exports, module) {
-  return function(scope, S, undefined) {
-    var buffer = "", config = this.config, engine = this, moduleWrap, utils = config.utils;
+  var t = function(scope, S, payload, undefined) {
+    var buffer = "", engine = this, moduleWrap, escapeHtml = S.escapeHtml, nativeCommands = engine.nativeCommands, utils = engine.utils;
     if(typeof module !== "undefined" && module.kissy) {
       moduleWrap = module
     }
-    var runBlockCommandUtil = utils.runBlockCommand, renderOutputUtil = utils.renderOutput, getPropertyUtil = utils.getProperty, runInlineCommandUtil = utils.runInlineCommand, getPropertyOrRunCommandUtil = utils.getPropertyOrRunCommand;
+    var callCommandUtil = utils.callCommand, eachCommand = nativeCommands.each, withCommand = nativeCommands["with"], ifCommand = nativeCommands["if"], setCommand = nativeCommands.set, includeCommand = nativeCommands.include, parseCommand = nativeCommands.parse, extendCommand = nativeCommands.extend, blockCommand = nativeCommands.block, macroCommand = nativeCommands.macro;
     buffer += '<div id="ks-content-';
-    var id0 = getPropertyOrRunCommandUtil(engine, scope, {}, "id", 0, 1);
-    buffer += renderOutputUtil(id0, true);
+    var id0 = scope.resolve(["id"]);
+    buffer += escapeHtml(id0);
     buffer += '"\n           class="';
-    var config2 = {};
+    var option2 = {};
     var params3 = [];
     params3.push("content");
-    config2.params = params3;
-    var id1 = runInlineCommandUtil(engine, scope, config2, "getBaseCssClasses", 2);
-    buffer += renderOutputUtil(id1, true);
+    option2.params = params3;
+    var id1 = callCommandUtil(engine, scope, option2, "getBaseCssClasses", 2);
+    buffer += escapeHtml(id1);
     buffer += '">';
-    var id4 = getPropertyOrRunCommandUtil(engine, scope, {}, "content", 0, 2);
-    buffer += renderOutputUtil(id4, false);
+    var id4 = scope.resolve(["content"]);
+    if(id4 || id4 === 0) {
+      buffer += id4
+    }
     buffer += "</div>";
     return buffer
-  }
+  };
+  t.TPL_NAME = "E:/code/kissy_git/kissy/kissy/src/component/sub-modules/extension/content-xtpl/src/content.xtpl.html";
+  return t
 });
 

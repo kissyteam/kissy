@@ -1,37 +1,36 @@
 /** Compiled By kissy-xtemplate */
 KISSY.add(function (S, require, exports, module) {
         /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true*/
-        return function (scope, S, payload, undefined) {
+        var t = function (scope, S, payload, undefined) {
             var buffer = "",
-                config = this.config,
                 engine = this,
-                moduleWrap, nativeCommands = engine.nativeCommands,
+                moduleWrap, escapeHtml = S.escapeHtml,
+                nativeCommands = engine.nativeCommands,
                 utils = engine.utils;
             if (typeof module !== "undefined" && module.kissy) {
                 moduleWrap = module;
             }
-            var runBlockCommandUtil = utils.runBlockCommand,
-                renderOutputUtil = utils.renderOutput,
-                getPropertyUtil = utils.getProperty,
-                runInlineCommandUtil = utils.runInlineCommand,
+            var callCommandUtil = utils.callCommand,
                 eachCommand = nativeCommands.each,
                 withCommand = nativeCommands.with,
                 ifCommand = nativeCommands.
             if, setCommand = nativeCommands.set, includeCommand = nativeCommands.include, parseCommand = nativeCommands.parse, extendCommand = nativeCommands.extend, blockCommand = nativeCommands.block, macroCommand = nativeCommands.macro;
             buffer += '';
             var id0 = scope.resolve(["a"]);
-            buffer += renderOutputUtil(id0, true);
+            buffer += escapeHtml(id0);
             buffer += '';
-            var config2 = {};
+            var option2 = {};
             var params3 = [];
             params3.push('./b-xtpl');
-            config2.params = params3;
+            option2.params = params3;
             if (moduleWrap) {
                 require("./b-xtpl");
-                config2.params[0] = moduleWrap.resolveByName(config2.params[0]);
+                option2.params[0] = moduleWrap.resolveByName(option2.params[0]);
             }
-            var id1 = includeCommand.call(engine, scope, config2, payload);
-            buffer += renderOutputUtil(id1, true);
+            var id1 = includeCommand.call(engine, scope, option2, payload);
+            buffer += escapeHtml(id1);
             return buffer;
         };
+t.TPL_NAME = "e:/code/kissy_git/kissy/kissy/src/xtemplate/tests/specs/xtpls/a-xtpl.html";
+return t;
 });

@@ -1,84 +1,92 @@
 /** Compiled By kissy-xtemplate */
 KISSY.add(function (S, require, exports, module) {
         /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true*/
-        return function (scope, S, undefined) {
+        var t = function (scope, S, payload, undefined) {
             var buffer = "",
-                config = this.config,
                 engine = this,
-                moduleWrap, utils = config.utils;
+                moduleWrap, escapeHtml = S.escapeHtml,
+                nativeCommands = engine.nativeCommands,
+                utils = engine.utils;
             if (typeof module !== "undefined" && module.kissy) {
                 moduleWrap = module;
             }
-            var runBlockCommandUtil = utils.runBlockCommand,
-                renderOutputUtil = utils.renderOutput,
-                getPropertyUtil = utils.getProperty,
-                runInlineCommandUtil = utils.runInlineCommand,
-                getPropertyOrRunCommandUtil = utils.getPropertyOrRunCommand;
+            var callCommandUtil = utils.callCommand,
+                eachCommand = nativeCommands.each,
+                withCommand = nativeCommands["with"],
+                ifCommand = nativeCommands["if"],
+                setCommand = nativeCommands.set,
+                includeCommand = nativeCommands.include,
+                parseCommand = nativeCommands.parse,
+                extendCommand = nativeCommands.extend,
+                blockCommand = nativeCommands.block,
+                macroCommand = nativeCommands.macro;
             buffer += '';
-            var config0 = {};
+            var option0 = {};
             var params1 = [];
-            var id2 = getPropertyUtil(engine, scope, "months", 0, 1);
+            var id2 = scope.resolve(["months"]);
             params1.push(id2);
-            config0.params = params1;
-            config0.fn = function (scope) {
+            option0.params = params1;
+            option0.fn = function (scope) {
                 var buffer = "";
                 buffer += '\n<tr role="row">\n    ';
-                var config3 = {};
+                var option3 = {};
                 var params4 = [];
-                var id6 = getPropertyUtil(engine, scope, "xindex", 0, 3);
-                var id5 = getPropertyUtil(engine, scope, "months." + id6 + "", 0, 3);
+                var id6 = scope.resolve(["xindex"]);
+                var id5 = scope.resolve("months." + id6 + "");
                 params4.push(id5);
-                config3.params = params4;
-                config3.fn = function (scope) {
+                option3.params = params4;
+                option3.fn = function (scope) {
                     var buffer = "";
                     buffer += '\n    <td role="gridcell"\n        title="';
-                    var id7 = getPropertyOrRunCommandUtil(engine, scope, {}, "title", 0, 5);
-                    buffer += renderOutputUtil(id7, true);
+                    var id7 = scope.resolve(["title"]);
+                    buffer += escapeHtml(id7);
                     buffer += '"\n        class="';
-                    var config9 = {};
+                    var option9 = {};
                     var params10 = [];
                     params10.push('cell');
-                    config9.params = params10;
-                    var id8 = runInlineCommandUtil(engine, scope, config9, "getBaseCssClasses", 6);
-                    buffer += renderOutputUtil(id8, true);
+                    option9.params = params10;
+                    var id8 = callCommandUtil(engine, scope, option9, "getBaseCssClasses", 6);
+                    buffer += escapeHtml(id8);
                     buffer += '\n        ';
-                    var config11 = {};
+                    var option11 = {};
                     var params12 = [];
-                    var id13 = getPropertyUtil(engine, scope, "month", 0, 7);
-                    var id14 = getPropertyUtil(engine, scope, "value", 0, 7);
+                    var id13 = scope.resolve(["month"]);
+                    var id14 = scope.resolve(["value"]);
                     params12.push(id13 === id14);
-                    config11.params = params12;
-                    config11.fn = function (scope) {
+                    option11.params = params12;
+                    option11.fn = function (scope) {
                         var buffer = "";
                         buffer += '\n        ';
-                        var config16 = {};
+                        var option16 = {};
                         var params17 = [];
                         params17.push('selected-cell');
-                        config16.params = params17;
-                        var id15 = runInlineCommandUtil(engine, scope, config16, "getBaseCssClasses", 8);
-                        buffer += renderOutputUtil(id15, true);
+                        option16.params = params17;
+                        var id15 = callCommandUtil(engine, scope, option16, "getBaseCssClasses", 8);
+                        buffer += escapeHtml(id15);
                         buffer += '\n        ';
                         return buffer;
                     };
-                    buffer += runBlockCommandUtil(engine, scope, config11, "if", 7);
+                    buffer += ifCommand.call(engine, scope, option11, payload);
                     buffer += '\n        ">\n        <a hidefocus="on"\n           href="#"\n           class="';
-                    var config19 = {};
+                    var option19 = {};
                     var params20 = [];
                     params20.push('month');
-                    config19.params = params20;
-                    var id18 = runInlineCommandUtil(engine, scope, config19, "getBaseCssClasses", 13);
-                    buffer += renderOutputUtil(id18, true);
+                    option19.params = params20;
+                    var id18 = callCommandUtil(engine, scope, option19, "getBaseCssClasses", 13);
+                    buffer += escapeHtml(id18);
                     buffer += '">\n            ';
-                    var id21 = getPropertyOrRunCommandUtil(engine, scope, {}, "content", 0, 14);
-                    buffer += renderOutputUtil(id21, true);
+                    var id21 = scope.resolve(["content"]);
+                    buffer += escapeHtml(id21);
                     buffer += '\n        </a>\n    </td>\n    ';
                     return buffer;
                 };
-                buffer += runBlockCommandUtil(engine, scope, config3, "each", 3);
+                buffer += eachCommand.call(engine, scope, option3, payload);
                 buffer += '\n</tr>\n';
                 return buffer;
             };
-            buffer += runBlockCommandUtil(engine, scope, config0, "each", 1);
+            buffer += eachCommand.call(engine, scope, option0, payload);
             return buffer;
         };
+t.TPL_NAME = "E:/code/kissy_git/kissy/kissy/src/date/picker/src/picker/month-panel/months.xtpl.html";
+return t;
 });

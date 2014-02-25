@@ -259,19 +259,19 @@ if (! _$jscoverage['/menu/menuitem-render.js'].branchData) {
   _$jscoverage['/menu/menuitem-render.js'].branchData['25'][3] = new BranchData();
 }
 _$jscoverage['/menu/menuitem-render.js'].branchData['25'][3].init(61, 18, '$el[0] === element');
-function visit30_25_3(result) {
+function visit32_25_3(result) {
   _$jscoverage['/menu/menuitem-render.js'].branchData['25'][3].ranCondition(result);
   return result;
 }_$jscoverage['/menu/menuitem-render.js'].branchData['25'][2].init(61, 43, '$el[0] === element || $el.contains(element)');
-function visit29_25_2(result) {
+function visit31_25_2(result) {
   _$jscoverage['/menu/menuitem-render.js'].branchData['25'][2].ranCondition(result);
   return result;
 }_$jscoverage['/menu/menuitem-render.js'].branchData['25'][1].init(52, 53, '$el && ($el[0] === element || $el.contains(element))');
-function visit28_25_1(result) {
+function visit30_25_1(result) {
   _$jscoverage['/menu/menuitem-render.js'].branchData['25'][1].ranCondition(result);
   return result;
 }_$jscoverage['/menu/menuitem-render.js'].branchData['12'][1].init(125, 19, 'renderData.selected');
-function visit27_12_1(result) {
+function visit29_12_1(result) {
   _$jscoverage['/menu/menuitem-render.js'].branchData['12'][1].ranCondition(result);
   return result;
 }_$jscoverage['/menu/menuitem-render.js'].lineData[6]++;
@@ -286,7 +286,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/menu/menuitem-render.js'].lineData[10]++;
   renderData.elAttrs.role = renderData.selectable ? 'menuitemradio' : 'menuitem';
   _$jscoverage['/menu/menuitem-render.js'].lineData[12]++;
-  if (visit27_12_1(renderData.selected)) {
+  if (visit29_12_1(renderData.selected)) {
     _$jscoverage['/menu/menuitem-render.js'].lineData[13]++;
     renderData.elCls.push(this.getBaseCssClasses('selected'));
   }
@@ -303,7 +303,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/menu/menuitem-render.js'].lineData[24]++;
   var $el = this.$el;
   _$jscoverage['/menu/menuitem-render.js'].lineData[25]++;
-  return visit28_25_1($el && (visit29_25_2(visit30_25_3($el[0] === element) || $el.contains(element))));
+  return visit30_25_1($el && (visit31_25_2(visit32_25_3($el[0] === element) || $el.contains(element))));
 }}, {
   HTML_PARSER: {
   selectable: function(el) {

@@ -316,38 +316,38 @@ if (! _$jscoverage['/overlay/extension/mask.js'].branchData) {
   _$jscoverage['/overlay/extension/mask.js'].branchData['161'][1] = new BranchData();
 }
 _$jscoverage['/overlay/extension/mask.js'].branchData['161'][1].init(70, 17, 'mask.closeOnClick');
-function visit28_161_1(result) {
+function visit36_161_1(result) {
   _$jscoverage['/overlay/extension/mask.js'].branchData['161'][1].ranCondition(result);
   return result;
 }_$jscoverage['/overlay/extension/mask.js'].branchData['150'][1].init(46, 16, 'self.get(\'mask\')');
-function visit27_150_1(result) {
+function visit35_150_1(result) {
   _$jscoverage['/overlay/extension/mask.js'].branchData['150'][1].ranCondition(result);
   return result;
 }_$jscoverage['/overlay/extension/mask.js'].branchData['140'][1].init(77, 16, '!isNaN(elZIndex)');
-function visit26_140_1(result) {
+function visit34_140_1(result) {
   _$jscoverage['/overlay/extension/mask.js'].branchData['140'][1].ranCondition(result);
   return result;
 }_$jscoverage['/overlay/extension/mask.js'].branchData['113'][1].init(94, 15, 'effect === NONE');
-function visit25_113_1(result) {
+function visit33_113_1(result) {
   _$jscoverage['/overlay/extension/mask.js'].branchData['113'][1].ranCondition(result);
   return result;
 }_$jscoverage['/overlay/extension/mask.js'].branchData['109'][1].init(23, 19, 'mask.effect || NONE');
-function visit24_109_1(result) {
+function visit32_109_1(result) {
   _$jscoverage['/overlay/extension/mask.js'].branchData['109'][1].ranCondition(result);
   return result;
 }_$jscoverage['/overlay/extension/mask.js'].branchData['100'][1].init(126, 5, 'shown');
-function visit23_100_1(result) {
+function visit31_100_1(result) {
   _$jscoverage['/overlay/extension/mask.js'].branchData['100'][1].ranCondition(result);
   return result;
 }_$jscoverage['/overlay/extension/mask.js'].branchData['9'][1].init(61, 11, 'UA.ie === 6');
-function visit22_9_1(result) {
+function visit30_9_1(result) {
   _$jscoverage['/overlay/extension/mask.js'].branchData['9'][1].ranCondition(result);
   return result;
 }_$jscoverage['/overlay/extension/mask.js'].lineData[6]++;
 KISSY.add(function(S, require) {
   _$jscoverage['/overlay/extension/mask.js'].functionData[0]++;
   _$jscoverage['/overlay/extension/mask.js'].lineData[7]++;
-  var UA = S.UA, Node = require('node'), ie6 = (visit22_9_1(UA.ie === 6)), $ = Node.all;
+  var UA = S.UA, Node = require('node'), ie6 = (visit30_9_1(UA.ie === 6)), $ = Node.all;
   _$jscoverage['/overlay/extension/mask.js'].lineData[12]++;
   function docWidth() {
     _$jscoverage['/overlay/extension/mask.js'].functionData[1]++;
@@ -395,7 +395,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/overlay/extension/mask.js'].lineData[98]++;
     var maskNode = self.get('maskNode'), hiddenCls = self.view.getBaseCssClasses('mask-hidden');
     _$jscoverage['/overlay/extension/mask.js'].lineData[100]++;
-    if (visit23_100_1(shown)) {
+    if (visit31_100_1(shown)) {
       _$jscoverage['/overlay/extension/mask.js'].lineData[101]++;
       maskNode.removeClass(hiddenCls);
     } else {
@@ -407,11 +407,11 @@ KISSY.add(function(S, require) {
   function processMask(mask, el, show, self) {
     _$jscoverage['/overlay/extension/mask.js'].functionData[7]++;
     _$jscoverage['/overlay/extension/mask.js'].lineData[109]++;
-    var effect = visit24_109_1(mask.effect || NONE);
+    var effect = visit32_109_1(mask.effect || NONE);
     _$jscoverage['/overlay/extension/mask.js'].lineData[111]++;
     setMaskVisible(self, show);
     _$jscoverage['/overlay/extension/mask.js'].lineData[113]++;
-    if (visit25_113_1(effect === NONE)) {
+    if (visit33_113_1(effect === NONE)) {
       _$jscoverage['/overlay/extension/mask.js'].lineData[114]++;
       return;
     }
@@ -440,7 +440,7 @@ KISSY.add(function(S, require) {
       _$jscoverage['/overlay/extension/mask.js'].lineData[139]++;
       var elZIndex = Number(self.$el.css('z-index'));
       _$jscoverage['/overlay/extension/mask.js'].lineData[140]++;
-      if (visit26_140_1(!isNaN(elZIndex))) {
+      if (visit34_140_1(!isNaN(elZIndex))) {
         _$jscoverage['/overlay/extension/mask.js'].lineData[141]++;
         maskNode.css('z-index', elZIndex);
       }
@@ -455,7 +455,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/overlay/extension/mask.js'].lineData[149]++;
   var self = this;
   _$jscoverage['/overlay/extension/mask.js'].lineData[150]++;
-  if (visit27_150_1(self.get('mask'))) {
+  if (visit35_150_1(self.get('mask'))) {
     _$jscoverage['/overlay/extension/mask.js'].lineData[151]++;
     self.set('maskNode', initMask(self, self.get('visible') ? '' : self.view.getBaseCssClasses('mask-hidden')));
   }
@@ -469,7 +469,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/overlay/extension/mask.js'].lineData[160]++;
     maskNode = self.get('maskNode');
     _$jscoverage['/overlay/extension/mask.js'].lineData[161]++;
-    if (visit28_161_1(mask.closeOnClick)) {
+    if (visit36_161_1(mask.closeOnClick)) {
       _$jscoverage['/overlay/extension/mask.js'].lineData[162]++;
       maskNode.on(Node.Gesture.tap, self.close, self);
     }

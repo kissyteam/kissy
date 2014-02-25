@@ -1,7 +1,7 @@
 /*
-Copyright 2013, KISSY v1.50
+Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Dec 12 22:19
+build time: Feb 25 19:44
 */
 /**
  * use document.write to load external css files in block loading ways.
@@ -48,9 +48,9 @@ build time: Dec 12 22:19
                 for (var i = 0; i < cssList.length; i++) {
                     var currentCss = cssList[i];
                     var currentPackage = currentCss.getPackage();
-                    var packagePath = currentPackage.getPrefixUriForCombo();
+                    var packagePath = currentPackage.getUri().toString();
                     // map individual module
-                    var fullpath = currentCss.getFullPath();
+                    var fullpath = currentCss.getPath();
                     if (!currentPackage.isCombine() || !S.startsWith(fullpath, packagePath)) {
                         doc.writeln('<link href="' + fullpath + '"  rel="stylesheet"/>');
                         continue;
@@ -60,7 +60,9 @@ build time: Dec 12 22:19
                     combinedUrl.push(path);
                     if (combined.length === 1) {
                         prefix = packagePath + comboPrefix;
-                        suffix = '?t=' + encodeURIComponent(currentPackage.getTag()) + '.css';
+                        if (currentPackage.getTag()) {
+                            suffix = '?t=' + encodeURIComponent(currentPackage.getTag()) + '.css';
+                        }
                     } else {
                         if ((combinedUrl.length > maxFileNum) ||
                             (prefix.length + combinedUrl.join(comboSep).length +
@@ -84,7 +86,7 @@ build time: Dec 12 22:19
                 }
             } else {
                 S.each(cssList, function (css) {
-                    doc.writeln('<link href="' + css.getFullPath() + '"  rel="stylesheet"/>');
+                    doc.writeln('<link href="' + css.Path() + '"  rel="stylesheet"/>');
                 });
             }
         }

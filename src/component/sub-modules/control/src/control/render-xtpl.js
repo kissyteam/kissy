@@ -1,81 +1,85 @@
 /** Compiled By kissy-xtemplate */
 KISSY.add(function (S, require, exports, module) {
         /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true*/
-        return function (scope, S, undefined) {
+        var t = function (scope, S, payload, undefined) {
             var buffer = "",
-                config = this.config,
                 engine = this,
-                moduleWrap, utils = config.utils;
+                moduleWrap, escapeHtml = S.escapeHtml,
+                nativeCommands = engine.nativeCommands,
+                utils = engine.utils;
             if (typeof module !== "undefined" && module.kissy) {
                 moduleWrap = module;
             }
-            var runBlockCommandUtil = utils.runBlockCommand,
-                renderOutputUtil = utils.renderOutput,
-                getPropertyUtil = utils.getProperty,
-                runInlineCommandUtil = utils.runInlineCommand,
-                getPropertyOrRunCommandUtil = utils.getPropertyOrRunCommand;
+            var callCommandUtil = utils.callCommand,
+                eachCommand = nativeCommands.each,
+                withCommand = nativeCommands["with"],
+                ifCommand = nativeCommands["if"],
+                setCommand = nativeCommands.set,
+                includeCommand = nativeCommands.include,
+                parseCommand = nativeCommands.parse,
+                extendCommand = nativeCommands.extend,
+                blockCommand = nativeCommands.block,
+                macroCommand = nativeCommands.macro;
             buffer += '<div id="';
-            var id0 = getPropertyOrRunCommandUtil(engine, scope, {}, "id", 0, 1);
-            buffer += renderOutputUtil(id0, true);
+            var id0 = scope.resolve(["id"]);
+            buffer += escapeHtml(id0);
             buffer += '"\n class="';
-            var config2 = {};
-            var params3 = [];
-            params3.push('');
-            config2.params = params3;
-            var id1 = runInlineCommandUtil(engine, scope, config2, "getBaseCssClasses", 2);
-            buffer += renderOutputUtil(id1, true);
+            var id1 = callCommandUtil(engine, scope, undefined, "getBaseCssClasses", 2);
+            buffer += escapeHtml(id1);
             buffer += '\n';
-            var config4 = {};
-            var params5 = [];
-            var id6 = getPropertyUtil(engine, scope, "elCls", 0, 3);
-            params5.push(id6);
-            config4.params = params5;
-            config4.fn = function (scope) {
+            var option2 = {};
+            var params3 = [];
+            var id4 = scope.resolve(["elCls"]);
+            params3.push(id4);
+            option2.params = params3;
+            option2.fn = function (scope) {
                 var buffer = "";
                 buffer += '\n ';
-                var id7 = getPropertyOrRunCommandUtil(engine, scope, {}, ".", 0, 4);
-                buffer += renderOutputUtil(id7, true);
-                buffer += '  \n';
+                var id5 = scope.resolve(["this"]);
+                buffer += escapeHtml(id5);
+                buffer += '\n';
                 return buffer;
             };
-            buffer += runBlockCommandUtil(engine, scope, config4, "each", 3);
+            buffer += eachCommand.call(engine, scope, option2, payload);
             buffer += '\n"\n\n';
-            var config8 = {};
-            var params9 = [];
-            var id10 = getPropertyUtil(engine, scope, "elAttrs", 0, 8);
-            params9.push(id10);
-            config8.params = params9;
-            config8.fn = function (scope) {
+            var option6 = {};
+            var params7 = [];
+            var id8 = scope.resolve(["elAttrs"]);
+            params7.push(id8);
+            option6.params = params7;
+            option6.fn = function (scope) {
                 var buffer = "";
-                buffer += ' \n ';
-                var id11 = getPropertyOrRunCommandUtil(engine, scope, {}, "xindex", 0, 9);
-                buffer += renderOutputUtil(id11, true);
+                buffer += '\n ';
+                var id9 = scope.resolve(["xindex"]);
+                buffer += escapeHtml(id9);
                 buffer += '="';
-                var id12 = getPropertyOrRunCommandUtil(engine, scope, {}, ".", 0, 9);
-                buffer += renderOutputUtil(id12, true);
+                var id10 = scope.resolve(["this"]);
+                buffer += escapeHtml(id10);
                 buffer += '"\n';
                 return buffer;
             };
-            buffer += runBlockCommandUtil(engine, scope, config8, "each", 8);
+            buffer += eachCommand.call(engine, scope, option6, payload);
             buffer += '\n\nstyle="\n';
-            var config13 = {};
-            var params14 = [];
-            var id15 = getPropertyUtil(engine, scope, "elStyle", 0, 13);
-            params14.push(id15);
-            config13.params = params14;
-            config13.fn = function (scope) {
+            var option11 = {};
+            var params12 = [];
+            var id13 = scope.resolve(["elStyle"]);
+            params12.push(id13);
+            option11.params = params12;
+            option11.fn = function (scope) {
                 var buffer = "";
-                buffer += ' \n ';
-                var id16 = getPropertyOrRunCommandUtil(engine, scope, {}, "xindex", 0, 14);
-                buffer += renderOutputUtil(id16, true);
+                buffer += '\n ';
+                var id14 = scope.resolve(["xindex"]);
+                buffer += escapeHtml(id14);
                 buffer += ':';
-                var id17 = getPropertyOrRunCommandUtil(engine, scope, {}, ".", 0, 14);
-                buffer += renderOutputUtil(id17, true);
+                var id15 = scope.resolve(["this"]);
+                buffer += escapeHtml(id15);
                 buffer += ';\n';
                 return buffer;
             };
-            buffer += runBlockCommandUtil(engine, scope, config13, "each", 13);
+            buffer += eachCommand.call(engine, scope, option11, payload);
             buffer += '\n">';
             return buffer;
         };
+t.TPL_NAME = "E:/code/kissy_git/kissy/kissy/src/component/sub-modules/control/src/control/render.xtpl.html";
+return t;
 });

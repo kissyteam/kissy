@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Feb 25 00:53
+build time: Feb 25 19:47
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -41,7 +41,7 @@ KISSY.add("xtemplate/runtime/scope", [], function(S) {
   }, has:function(name) {
     var data = this.data;
     var affix = this.affix;
-    if(name === "." || name === "this") {
+    if(name === "this") {
       return true
     }
     if(affix && name in affix) {
@@ -51,7 +51,7 @@ KISSY.add("xtemplate/runtime/scope", [], function(S) {
   }, get:function(name) {
     var data = this.data;
     var affix = this.affix;
-    if(name === "." || name === "this") {
+    if(name === "this") {
       return this.data
     }
     if(affix && name in affix) {
@@ -146,8 +146,8 @@ KISSY.add("xtemplate/runtime/commands", ["./scope"], function(S, require) {
     }
     return parts.join("/")
   }
-  commands = {each:function(scope, config) {
-    var params = config.params;
+  commands = {each:function(scope, option) {
+    var params = option.params;
     var param0 = params[0];
     var xindexName = params[2] || "xindex";
     var valueName = params[1];
@@ -159,90 +159,90 @@ KISSY.add("xtemplate/runtime/commands", ["./scope"], function(S, require) {
       opScope = new Scope;
       if(S.isArray(param0)) {
         xcount = param0.length;
+        affix = opScope.affix = {xcount:xcount};
         for(var xindex = 0;xindex < xcount;xindex++) {
           opScope.data = param0[xindex];
-          affix = opScope.affix = {xcount:xcount};
           affix[xindexName] = xindex;
           if(valueName) {
             affix[valueName] = param0[xindex]
           }
           opScope.setParent(scope);
-          buffer += config.fn(opScope)
+          buffer += option.fn(opScope)
         }
       }else {
+        affix = opScope.affix = {};
         for(var name in param0) {
           opScope.data = param0[name];
-          affix = opScope.affix = {};
           affix[xindexName] = name;
           if(valueName) {
             affix[valueName] = param0[name]
           }
           opScope.setParent(scope);
-          buffer += config.fn(opScope)
+          buffer += option.fn(opScope)
         }
       }
     }else {
-      if(config.inverse) {
-        buffer = config.inverse(scope)
+      if(option.inverse) {
+        buffer = option.inverse(scope)
       }
     }
     return buffer
-  }, "with":function(scope, config) {
-    var params = config.params;
+  }, "with":function(scope, option) {
+    var params = option.params;
     var param0 = params[0];
     var buffer = "";
     if(param0) {
       var opScope = new Scope(param0);
       opScope.setParent(scope);
-      buffer = config.fn(opScope)
+      buffer = option.fn(opScope)
     }else {
-      if(config.inverse) {
-        buffer = config.inverse(scope)
+      if(option.inverse) {
+        buffer = option.inverse(scope)
       }
     }
     return buffer
-  }, "if":function(scope, config) {
-    var params = config.params;
+  }, "if":function(scope, option) {
+    var params = option.params;
     var param0 = params[0];
     var buffer = "";
     if(param0) {
-      if(config.fn) {
-        buffer = config.fn(scope)
+      if(option.fn) {
+        buffer = option.fn(scope)
       }
     }else {
-      if(config.inverse) {
-        buffer = config.inverse(scope)
+      if(option.inverse) {
+        buffer = option.inverse(scope)
       }
     }
     return buffer
-  }, set:function(scope, config) {
-    scope.mix(config.hash);
+  }, set:function(scope, option) {
+    scope.mix(option.hash);
     return""
-  }, include:function(scope, config, payload) {
-    var params = config.params;
+  }, include:function(scope, option, payload) {
+    var params = option.params;
     var self = this;
-    if(config.hash) {
-      var newScope = new Scope(config.hash);
+    if(option.hash) {
+      var newScope = new Scope(option.hash);
       newScope.setParent(scope);
       scope = newScope
     }
     var myName = self.name;
     var subTplName = params[0];
     if(subTplName.charAt(0) === ".") {
-      if(myName === "unspecified") {
+      if(!myName) {
         S.error("parent template does not have name" + " for relative sub tpl name: " + subTplName);
         return""
       }
       subTplName = getSubNameFromParentName(myName, subTplName)
     }
     return self.load(subTplName).render(scope, payload)
-  }, parse:function(scope, config) {
-    return commands.include.call(this, new Scope, config)
-  }, extend:function(scope, config, payload) {
-    payload.extendTplName = config.params[0]
-  }, block:function(scope, config, payload) {
+  }, parse:function(scope, option) {
+    return commands.include.call(this, new Scope, option)
+  }, extend:function(scope, option, payload) {
+    payload.extendTplName = option.params[0]
+  }, block:function(scope, option, payload) {
     var self = this;
-    var params = config.params;
+    var params = option.params;
     var blockName = params[0];
     var type;
     if(params.length === 2) {
@@ -251,7 +251,7 @@ KISSY.add("xtemplate/runtime/commands", ["./scope"], function(S, require) {
     }
     var blocks = payload.blocks = payload.blocks || {};
     var head = blocks[blockName], cursor;
-    var current = {fn:config.fn, type:type};
+    var current = {fn:option.fn, type:type};
     if(!head) {
       blocks[blockName] = current
     }else {
@@ -284,14 +284,14 @@ KISSY.add("xtemplate/runtime/commands", ["./scope"], function(S, require) {
       }
     }
     return ret
-  }, macro:function(scope, config, payload) {
-    var params = config.params;
+  }, macro:function(scope, option, payload) {
+    var params = option.params;
     var macroName = params[0];
     var params1 = params.slice(1);
     var self = this;
     var macros = payload.macros = payload.macros || {};
-    if(config.fn) {
-      macros[macroName] = {paramNames:params1, fn:config.fn}
+    if(option.fn) {
+      macros[macroName] = {paramNames:params1, fn:option.fn}
     }else {
       var paramValues = {};
       var macro = macros[macroName];
@@ -315,154 +315,69 @@ KISSY.add("xtemplate/runtime", ["./runtime/commands", "./runtime/scope"], functi
   var nativeCommands = require("./runtime/commands");
   var commands = {};
   var Scope = require("./runtime/scope");
-  var escapeHtml = S.escapeHtml;
-  var logger = S.getLogger("s/xtemplate");
-  function merge(from, to) {
-    for(var i in to) {
-      from[i] = to[i]
+  function findCommand(localCommands, name) {
+    if(name.indexOf(".") === -1) {
+      return localCommands && localCommands[name] || commands[name]
     }
-  }
-  function info(s) {
-    logger.info(s)
-  }
-  function findCommand(commands, name) {
     var parts = name.split(".");
-    var cmd = commands;
-    var len = parts.length;
-    for(var i = 0;i < len;i++) {
-      cmd = cmd[parts[i]];
-      if(!cmd) {
-        break
+    var cmd = localCommands && localCommands[parts[0]] || commands[parts[0]];
+    if(cmd) {
+      var len = parts.length;
+      for(var i = 1;i < len;i++) {
+        cmd = cmd[parts[i]];
+        if(!cmd) {
+          break
+        }
       }
     }
     return cmd
   }
-  function runInlineCommand(engine, scope, options, name, line, onlyCommand) {
-    var id0;
-    var commands = engine.commands;
-    var command1 = commands && findCommand(commands, name);
+  var utils = {callCommand:function(engine, scope, options, name, line) {
+    var ret = "";
+    var commands = engine.config.commands;
+    var command1 = findCommand(commands, name);
     if(command1) {
       try {
-        id0 = command1.call(engine, scope, options)
+        ret = command1.call(engine, scope, options)
       }catch(e) {
-        S.error(e.message + ': "' + name + '" at line ' + line)
+        S.error("in file: " + engine.name + " " + e.message + ': "' + name + '" at line ' + line)
       }
-      return{find:true, value:id0}
     }else {
-      if(onlyCommand) {
-        S.error("can not find command: " + name + '" at line ' + line)
-      }
-    }
-    return{find:false}
-  }
-  function getProperty(engine, scope, name, depth, line) {
-    var id0;
-    var logFn = engine.silent ? info : S.error;
-    var tmp2 = scope.resolve(name, depth);
-    if(tmp2 === false) {
-      logFn('can not find property: "' + name + '" at line ' + line, "warn")
-    }else {
-      id0 = tmp2[0]
-    }
-    return id0
-  }
-  var utils = {runBlockCommand:function(engine, scope, options, name, line) {
-    var logFn = engine.silent ? info : S.error;
-    var commands = engine.commands;
-    var command = commands && findCommand(commands, name);
-    if(!command) {
-      if(!options.params && !options.hash) {
-        var property = scope.resolve(name);
-        if(property === false) {
-          logFn('can not find property: "' + name + '" at line ' + line);
-          property = ""
-        }else {
-          property = property[0]
-        }
-        command = commands["if"];
-        if(S.isArray(property)) {
-          command = commands.each
-        }else {
-          if(typeof property === "object") {
-            command = commands["with"]
-          }
-        }
-        options.params = [property]
-      }else {
-        S.error("can not find command: " + name + '" at line ' + line);
-        return""
-      }
-    }
-    var ret;
-    try {
-      ret = command.call(engine, scope, options)
-    }catch(e) {
-      S.error(e.message + ': "' + name + '" at line ' + line)
+      S.error("in file: " + engine.name + " can not find command: " + name + '" at line ' + line)
     }
     return ret
-  }, renderOutput:function(exp, escape) {
-    if(exp === undefined) {
-      exp = ""
-    }
-    return escape && exp ? escapeHtml(exp) : exp
-  }, getProperty:function(engine, scope, name, depth, line) {
-    return getProperty(engine, scope, name, depth, line)
-  }, runInlineCommand:function(engine, scope, options, name, line) {
-    var id0 = "", ret;
-    ret = runInlineCommand(engine, scope, options, name, line);
-    if(ret.find) {
-      id0 = ret.value
-    }
-    return id0
   }};
   function XTemplateRuntime(tpl, config) {
     var self = this;
     self.tpl = tpl;
-    if(config) {
-      if(config.commands) {
-        self.commands = config.commands;
-        merge(self.commands, commands)
-      }else {
-        self.commands = commands
-      }
-      if(config.name) {
-        self.name = config.name
-      }
-      if(config.silent !== undefined) {
-        self.silent = config.silent
-      }
+    config = config || {};
+    if(config.name) {
+      self.name = config.name
     }
+    self.config = config
   }
   S.mix(XTemplateRuntime, {nativeCommands:nativeCommands, utils:utils, addCommand:function(commandName, fn) {
-    commands = commands || {};
     commands[commandName] = fn
   }, removeCommand:function(commandName) {
-    if(commands) {
-      delete commands[commandName]
-    }
+    delete commands[commandName]
   }});
-  XTemplateRuntime.prototype = {constructor:XTemplateRuntime, name:"unspecified", silent:true, commands:commands, nativeCommands:nativeCommands, utils:utils, load:function(subTplName) {
+  XTemplateRuntime.prototype = {constructor:XTemplateRuntime, nativeCommands:nativeCommands, utils:utils, load:function(subTplName) {
     var tpl = S.require(subTplName);
     if(!tpl) {
       S.error('template "' + subTplName + '" does not exist, ' + "need to be required or used first!")
     }
-    return this.derive(subTplName, tpl)
-  }, derive:function(name, tpl) {
-    var engine = new this.constructor(tpl);
-    engine.name = name;
-    engine.commands = this.commands;
-    engine.silent = this.silent;
+    var engine = new this.constructor(tpl, this.config);
+    engine.name = subTplName;
     return engine
   }, removeCommand:function(commandName) {
-    if(this.commands === commands) {
-      this.commands = merge({}, this.commands)
+    var config = this.config;
+    if(config.commands) {
+      delete config.commands[commandName]
     }
-    delete this.commands[commandName]
   }, addCommand:function(commandName, fn) {
-    if(this.commands === commands) {
-      this.commands = merge({}, this.commands)
-    }
-    this.commands[commandName] = fn
+    var config = this.config;
+    config.commands = config.commands || {};
+    config.commands[commandName] = fn
   }, render:function(data, payload) {
     var root = data;
     var self = this;
@@ -471,6 +386,9 @@ KISSY.add("xtemplate/runtime", ["./runtime/commands", "./runtime/scope"], functi
     }
     payload = payload || {};
     payload.extendTplName = null;
+    if(self.tpl.TPL_NAME && !self.name) {
+      self.name = self.tpl.TPL_NAME
+    }
     var html = self.tpl(root, S, payload);
     var extendTplName = payload.extendTplName;
     if(extendTplName) {

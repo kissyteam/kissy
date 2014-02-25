@@ -298,8 +298,7 @@ if (! _$jscoverage['/modules.js']) {
   _$jscoverage['/modules.js'].lineData[288] = 0;
   _$jscoverage['/modules.js'].lineData[292] = 0;
   _$jscoverage['/modules.js'].lineData[296] = 0;
-  _$jscoverage['/modules.js'].lineData[300] = 0;
-  _$jscoverage['/modules.js'].lineData[305] = 0;
+  _$jscoverage['/modules.js'].lineData[301] = 0;
 }
 if (! _$jscoverage['/modules.js'].functionData) {
   _$jscoverage['/modules.js'].functionData = [];
@@ -594,22 +593,18 @@ function visit10_6_1(result) {
   requires: ['path']}});
   _$jscoverage['/modules.js'].lineData[288]++;
   config({
-  util: {
-  requires: ['util/set-immediate']}});
-  _$jscoverage['/modules.js'].lineData[292]++;
-  config({
   xtemplate: {
   requires: ['xtemplate/runtime', 'xtemplate/compiler']}});
-  _$jscoverage['/modules.js'].lineData[296]++;
+  _$jscoverage['/modules.js'].lineData[292]++;
   config({
   'xtemplate/compiler': {
   requires: ['xtemplate/runtime']}});
-  _$jscoverage['/modules.js'].lineData[300]++;
+  _$jscoverage['/modules.js'].lineData[296]++;
   config({
   'xtemplate/runtime': {
   requires: ['path']}});
 })(function(c) {
   _$jscoverage['/modules.js'].functionData[1]++;
-  _$jscoverage['/modules.js'].lineData[305]++;
+  _$jscoverage['/modules.js'].lineData[301]++;
   KISSY.config('modules', c);
 }, KISSY.Feature, KISSY.UA);

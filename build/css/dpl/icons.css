@@ -1,17 +1,7 @@
 /*
-Copyright 2013, KISSY v1.50
+Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Dec 12 22:08
-*/
-/**
-* Variables to customize the look and feel from Bootstrap.
-*
-* @author yiminghe@gmail.com
-*/
-/**
-* Snippets of reusable CSS to develop faster and keep code readable from KISSY and Bootstrap.
-*
-* @author yiminghe@gmail.com
+build time: Feb 25 19:33
 */
 /**
 * Variables to customize the look and feel from Bootstrap.
@@ -28,13 +18,6 @@ build time: Dec 12 22:08
   display: inline-block;
   *display: inline;
   *zoom: 1;
-  *display: inline;
-  *zoom: 1;
-  display: inline-block;
-  *display: inline;
-  *zoom: 1;
-  *display: inline;
-  *zoom: 1;
   width: 14px;
   height: 14px;
   vertical-align: text-top;
@@ -42,11 +25,6 @@ build time: Dec 12 22:08
   background-position: 14px 14px;
   background-repeat: no-repeat;
   *margin-right: .3em;
-  *margin-right: .3em;
-}
-[class^="icon-"]:last-child,
-[class*=" icon-"]:last-child {
-  *margin-left: 0;
 }
 [class^="icon-"]:last-child,
 [class*=" icon-"]:last-child {

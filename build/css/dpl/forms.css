@@ -1,7 +1,7 @@
 /*
-Copyright 2013, KISSY v1.50
+Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Dec 12 22:08
+build time: Feb 25 19:33
 */
 /**
  * Form Style for KISSY from bootstrap.
@@ -22,76 +22,124 @@ textarea,
 .uneditable-input {
   margin-left: 0;
 }
-input.span24, textarea.span24, .uneditable-input.span24 {
+input.span24,
+textarea.span24,
+.uneditable-input.span24 {
   width: 1180px;
 }
-input.span23, textarea.span23, .uneditable-input.span23 {
+input.span23,
+textarea.span23,
+.uneditable-input.span23 {
   width: 1130px;
 }
-input.span22, textarea.span22, .uneditable-input.span22 {
+input.span22,
+textarea.span22,
+.uneditable-input.span22 {
   width: 1080px;
 }
-input.span21, textarea.span21, .uneditable-input.span21 {
+input.span21,
+textarea.span21,
+.uneditable-input.span21 {
   width: 1030px;
 }
-input.span20, textarea.span20, .uneditable-input.span20 {
+input.span20,
+textarea.span20,
+.uneditable-input.span20 {
   width: 980px;
 }
-input.span19, textarea.span19, .uneditable-input.span19 {
+input.span19,
+textarea.span19,
+.uneditable-input.span19 {
   width: 930px;
 }
-input.span18, textarea.span18, .uneditable-input.span18 {
+input.span18,
+textarea.span18,
+.uneditable-input.span18 {
   width: 880px;
 }
-input.span17, textarea.span17, .uneditable-input.span17 {
+input.span17,
+textarea.span17,
+.uneditable-input.span17 {
   width: 830px;
 }
-input.span16, textarea.span16, .uneditable-input.span16 {
+input.span16,
+textarea.span16,
+.uneditable-input.span16 {
   width: 780px;
 }
-input.span15, textarea.span15, .uneditable-input.span15 {
+input.span15,
+textarea.span15,
+.uneditable-input.span15 {
   width: 730px;
 }
-input.span14, textarea.span14, .uneditable-input.span14 {
+input.span14,
+textarea.span14,
+.uneditable-input.span14 {
   width: 680px;
 }
-input.span13, textarea.span13, .uneditable-input.span13 {
+input.span13,
+textarea.span13,
+.uneditable-input.span13 {
   width: 630px;
 }
-input.span12, textarea.span12, .uneditable-input.span12 {
+input.span12,
+textarea.span12,
+.uneditable-input.span12 {
   width: 580px;
 }
-input.span11, textarea.span11, .uneditable-input.span11 {
+input.span11,
+textarea.span11,
+.uneditable-input.span11 {
   width: 530px;
 }
-input.span10, textarea.span10, .uneditable-input.span10 {
+input.span10,
+textarea.span10,
+.uneditable-input.span10 {
   width: 480px;
 }
-input.span9, textarea.span9, .uneditable-input.span9 {
+input.span9,
+textarea.span9,
+.uneditable-input.span9 {
   width: 430px;
 }
-input.span8, textarea.span8, .uneditable-input.span8 {
+input.span8,
+textarea.span8,
+.uneditable-input.span8 {
   width: 380px;
 }
-input.span7, textarea.span7, .uneditable-input.span7 {
+input.span7,
+textarea.span7,
+.uneditable-input.span7 {
   width: 330px;
 }
-input.span6, textarea.span6, .uneditable-input.span6 {
+input.span6,
+textarea.span6,
+.uneditable-input.span6 {
   width: 280px;
 }
-input.span5, textarea.span5, .uneditable-input.span5 {
+input.span5,
+textarea.span5,
+.uneditable-input.span5 {
   width: 230px;
 }
-input.span4, textarea.span4, .uneditable-input.span4 {
+input.span4,
+textarea.span4,
+.uneditable-input.span4 {
   width: 180px;
 }
-input.span3, textarea.span3, .uneditable-input.span3 {
+input.span3,
+textarea.span3,
+.uneditable-input.span3 {
   width: 130px;
 }
-input.span2, textarea.span2, .uneditable-input.span2 {
+input.span2,
+textarea.span2,
+.uneditable-input.span2 {
   width: 80px;
 }
-input.span1, textarea.span1, .uneditable-input.span1 {
+input.span1,
+textarea.span1,
+.uneditable-input.span1 {
   width: 30px;
 }
 input[class*="span"],
@@ -151,7 +199,6 @@ input[type="color"]:focus,
   outline: 0;
   outline: thin dotted \9;
   /* IE6-9 */
-
   -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(82,168,236,.6);
   -moz-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(82,168,236,.6);
   box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(82,168,236,.6);
@@ -290,7 +337,6 @@ input[type="checkbox"][readonly] {
   padding-left: 14px;
   padding-left: 4px \9;
   /* IE7-8 doesn't have border-radius, so don't indent the padding */
-
   margin-bottom: 0;
   border-radius: 14px;
 }

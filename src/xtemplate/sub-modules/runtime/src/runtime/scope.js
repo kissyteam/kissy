@@ -53,7 +53,7 @@ KISSY.add(function (S) {
         has: function (name) {
             var data = this.data;
             var affix = this.affix;
-            if (name === '.' || name === 'this') {
+            if (name === 'this') {
                 return true;
             }
 
@@ -69,7 +69,7 @@ KISSY.add(function (S) {
             var data = this.data;
             var affix = this.affix;
 
-            if (name === '.' || name === 'this') {
+            if (name === 'this') {
                 return this.data;
             }
 

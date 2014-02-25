@@ -1,6 +1,6 @@
-<div class="{{getBaseCssClasses 'header'}}">
+<div class="{{getBaseCssClasses ('header')}}">
     <a id="ks-date-picker-previous-year-btn-{{id}}"
-       class="{{getBaseCssClasses 'prev-year-btn'}}"
+       class="{{getBaseCssClasses ('prev-year-btn')}}"
        href="#"
        tabindex="-1"
        role="button"
@@ -8,14 +8,14 @@
        hidefocus="on">
     </a>
     <a id="ks-date-picker-previous-month-btn-{{id}}"
-       class="{{getBaseCssClasses 'prev-month-btn'}}"
+       class="{{getBaseCssClasses ('prev-month-btn')}}"
        href="#"
        tabindex="-1"
        role="button"
        title="{{previousMonthLabel}}"
        hidefocus="on">
     </a>
-    <a class="{{getBaseCssClasses 'month-select'}}"
+    <a class="{{getBaseCssClasses ('month-select')}}"
        role="button"
        href="#"
        tabindex="-1"
@@ -23,10 +23,10 @@
        title="{{monthSelectLabel}}"
        id="ks-date-picker-month-select-{{id}}">
         <span id="ks-date-picker-month-select-content-{{id}}">{{monthYearLabel}}</span>
-        <span class="{{getBaseCssClasses 'month-select-arrow'}}">x</span>
+        <span class="{{getBaseCssClasses ('month-select-arrow')}}">x</span>
     </a>
     <a id="ks-date-picker-next-month-btn-{{id}}"
-       class="{{getBaseCssClasses 'next-month-btn'}}"
+       class="{{getBaseCssClasses ('next-month-btn')}}"
        href="#"
        tabindex="-1"
        role="button"
@@ -34,7 +34,7 @@
        hidefocus="on">
     </a>
     <a id="ks-date-picker-next-year-btn-{{id}}"
-       class="{{getBaseCssClasses 'next-year-btn'}}"
+       class="{{getBaseCssClasses ('next-year-btn')}}"
        href="#"
        tabindex="-1"
        role="button"
@@ -42,18 +42,18 @@
        hidefocus="on">
     </a>
 </div>
-<div class="{{getBaseCssClasses 'body'}}">
-    <table class="{{getBaseCssClasses 'table'}}" cellspacing="0" role="grid">
+<div class="{{getBaseCssClasses ('body')}}">
+    <table class="{{getBaseCssClasses ('table')}}" cellspacing="0" role="grid">
         <thead>
         <tr role="row">
-            {{#if showWeekNumber}}
-            <th role="columnheader" class="{{getBaseCssClasses 'column-header'}} {{getBaseCssClasses 'week-number-header'}}">
-                <span class="{{getBaseCssClasses 'column-header-inner'}}">x</span>
+            {{#if (showWeekNumber)}}
+            <th role="columnheader" class="{{getBaseCssClasses ('column-header')}} {{getBaseCssClasses ('week-number-header')}}">
+                <span class="{{getBaseCssClasses ('column-header-inner')}}">x</span>
             </th>
             {{/if}}
-            {{#each weekdays}}
-            <th role="columnheader" title="{{.}}" class="{{getBaseCssClasses 'column-header'}}">
-                <span class="{{getBaseCssClasses 'column-header-inner'}}">
+            {{#each (weekdays)}}
+            <th role="columnheader" title="{{this}}" class="{{getBaseCssClasses ('column-header')}}">
+                <span class="{{getBaseCssClasses ('column-header-inner')}}">
                     {{veryShortWeekdays[xindex]}}
                 </span>
             </th>
@@ -65,16 +65,16 @@
         </tbody>
     </table>
 </div>
-{{#if showToday||showClear}}
-<div class="{{getBaseCssClasses 'footer'}}">
-    <a class="{{getBaseCssClasses 'today-btn'}}"
+{{#if (showToday || showClear)}}
+<div class="{{getBaseCssClasses ('footer')}}">
+    <a class="{{getBaseCssClasses ('today-btn')}}"
        role="button"
        hidefocus="on"
        tabindex="-1"
        href="#"
        id="ks-date-picker-today-btn-{{id}}"
        title="{{todayTimeLabel}}">{{todayLabel}}</a>
-    <a class="{{getBaseCssClasses 'clear-btn'}}"
+    <a class="{{getBaseCssClasses ('clear-btn')}}"
        role="button"
        hidefocus="on"
        tabindex="-1"

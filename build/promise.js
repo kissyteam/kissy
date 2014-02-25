@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Jan 15 16:45
+build time: Feb 25 19:45
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -24,6 +24,9 @@ KISSY.add("promise", [], function(S) {
       })
     }else {
       var v = promise[PROMISE_VALUE], pendings = promise[PROMISE_PENDINGS];
+      if(pendings === undefined) {
+        pendings = promise[PROMISE_PENDINGS] = []
+      }
       if(pendings) {
         pendings.push([fulfilled, rejected])
       }else {
@@ -49,13 +52,13 @@ KISSY.add("promise", [], function(S) {
   }
   Defer.prototype = {constructor:Defer, resolve:function(value) {
     var promise = this.promise, pendings;
-    if(!(pendings = promise[PROMISE_PENDINGS])) {
+    if((pendings = promise[PROMISE_PENDINGS]) === false) {
       return null
     }
     promise[PROMISE_VALUE] = value;
-    pendings = [].concat(pendings);
-    promise[PROMISE_PENDINGS] = undefined;
-    promise[PROMISE_PROGRESS_LISTENERS] = undefined;
+    pendings = pendings ? [].concat(pendings) : [];
+    promise[PROMISE_PENDINGS] = false;
+    promise[PROMISE_PROGRESS_LISTENERS] = false;
     S.each(pendings, function(p) {
       promiseWhen(promise, p[0], p[1])
     });
@@ -72,12 +75,23 @@ KISSY.add("promise", [], function(S) {
   function isPromise(obj) {
     return obj && obj instanceof Promise
   }
+  function bind(fn, context) {
+    return function() {
+      return fn.apply(context, arguments)
+    }
+  }
   function Promise(v) {
     var self = this;
-    self[PROMISE_VALUE] = v;
-    if(v === undefined) {
-      self[PROMISE_PENDINGS] = [];
-      self[PROMISE_PROGRESS_LISTENERS] = []
+    if(typeof v === "function") {
+      var defer = new Defer(self);
+      var resolve = bind(defer.resolve, defer);
+      var reject = bind(defer.reject, defer);
+      try {
+        v(resolve, reject)
+      }catch(e) {
+        logError(e.stack || e);
+        reject(e)
+      }
     }
   }
   Promise.prototype = {constructor:Promise, then:function(fulfilled, rejected, progressListener) {
@@ -86,10 +100,15 @@ KISSY.add("promise", [], function(S) {
     }
     return when(this, fulfilled, rejected)
   }, progress:function(progressListener) {
-    if(this[PROMISE_PROGRESS_LISTENERS]) {
-      this[PROMISE_PROGRESS_LISTENERS].push(progressListener)
+    var self = this, listeners = self[PROMISE_PROGRESS_LISTENERS];
+    if(listeners === false) {
+      return self
     }
-    return this
+    if(!listeners) {
+      listeners = self[PROMISE_PROGRESS_LISTENERS] = []
+    }
+    listeners.push(progressListener);
+    return self
   }, fail:function(rejected) {
     return when(this, 0, rejected)
   }, fin:function(callback) {
@@ -111,15 +130,15 @@ KISSY.add("promise", [], function(S) {
   }, isRejected:function() {
     return isRejected(this)
   }};
+  Promise.prototype["catch"] = Promise.prototype.fail;
   function Reject(reason) {
     if(reason instanceof Reject) {
       return reason
     }
     var self = this;
-    Promise.apply(self, arguments);
-    if(self[PROMISE_VALUE] instanceof Promise) {
-      logger.error("assert.not(this.__promise_value instanceof promise) in Reject constructor")
-    }
+    self[PROMISE_VALUE] = reason;
+    self[PROMISE_PENDINGS] = false;
+    self[PROMISE_PROGRESS_LISTENERS] = false;
     return self
   }
   S.extend(Reject, Promise);
@@ -168,15 +187,24 @@ KISSY.add("promise", [], function(S) {
     return defer.promise
   }
   function isResolved(obj) {
-    return!isRejected(obj) && isPromise(obj) && obj[PROMISE_PENDINGS] === undefined && (!isPromise(obj[PROMISE_VALUE]) || isResolved(obj[PROMISE_VALUE]))
+    return obj && !isRejected(obj) && obj[PROMISE_PENDINGS] === false && (!isPromise(obj[PROMISE_VALUE]) || isResolved(obj[PROMISE_VALUE]))
   }
   function isRejected(obj) {
-    return isPromise(obj) && obj[PROMISE_PENDINGS] === undefined && obj[PROMISE_VALUE] instanceof Reject
+    return obj && (obj instanceof Reject || obj[PROMISE_VALUE] instanceof Reject)
   }
   KISSY.Defer = Defer;
   KISSY.Promise = Promise;
   Promise.Defer = Defer;
-  S.mix(Promise, {when:when, isPromise:isPromise, isResolved:isResolved, isRejected:isRejected, all:function(promises) {
+  S.mix(Promise, {when:when, cast:function(obj) {
+    if(obj instanceof Promise) {
+      return obj
+    }
+    return when(obj)
+  }, resolve:function(obj) {
+    return when(obj)
+  }, reject:function(obj) {
+    return new Reject(obj)
+  }, isPromise:isPromise, isResolved:isResolved, isRejected:isRejected, all:function(promises) {
     var count = promises.length;
     if(!count) {
       return null

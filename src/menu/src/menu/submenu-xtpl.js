@@ -1,36 +1,46 @@
 /** Compiled By kissy-xtemplate */
 KISSY.add(function (S, require, exports, module) {
         /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true*/
-        return function (scope, S, undefined) {
+        var t = function (scope, S, payload, undefined) {
             var buffer = "",
-                config = this.config,
                 engine = this,
-                moduleWrap, utils = config.utils;
+                moduleWrap, escapeHtml = S.escapeHtml,
+                nativeCommands = engine.nativeCommands,
+                utils = engine.utils;
             if (typeof module !== "undefined" && module.kissy) {
                 moduleWrap = module;
             }
-            var runBlockCommandUtil = utils.runBlockCommand,
-                renderOutputUtil = utils.renderOutput,
-                getPropertyUtil = utils.getProperty,
-                runInlineCommandUtil = utils.runInlineCommand,
-                getPropertyOrRunCommandUtil = utils.getPropertyOrRunCommand;
+            var callCommandUtil = utils.callCommand,
+                eachCommand = nativeCommands.each,
+                withCommand = nativeCommands["with"],
+                ifCommand = nativeCommands["if"],
+                setCommand = nativeCommands.set,
+                includeCommand = nativeCommands.include,
+                parseCommand = nativeCommands.parse,
+                extendCommand = nativeCommands.extend,
+                blockCommand = nativeCommands.block,
+                macroCommand = nativeCommands.macro;
             buffer += '<div id="ks-content-';
-            var id0 = getPropertyOrRunCommandUtil(engine, scope, {}, "id", 0, 1);
-            buffer += renderOutputUtil(id0, true);
+            var id0 = scope.resolve(["id"]);
+            buffer += escapeHtml(id0);
             buffer += '"\n     class="';
-            var config2 = {};
+            var option2 = {};
             var params3 = [];
             params3.push('content');
-            config2.params = params3;
-            var id1 = runInlineCommandUtil(engine, scope, config2, "getBaseCssClasses", 2);
-            buffer += renderOutputUtil(id1, true);
+            option2.params = params3;
+            var id1 = callCommandUtil(engine, scope, option2, "getBaseCssClasses", 2);
+            buffer += escapeHtml(id1);
             buffer += '">';
-            var id4 = getPropertyOrRunCommandUtil(engine, scope, {}, "content", 0, 2);
-            buffer += renderOutputUtil(id4, false);
+            var id4 = scope.resolve(["content"]);
+            if (id4 || id4 === 0) {
+                buffer += id4;
+            }
             buffer += '</div>\n<span class="';
-            var id5 = getPropertyOrRunCommandUtil(engine, scope, {}, "prefixCls", 0, 3);
-            buffer += renderOutputUtil(id5, true);
+            var id5 = scope.resolve(["prefixCls"]);
+            buffer += escapeHtml(id5);
             buffer += 'submenu-arrow">►</span>';
             return buffer;
         };
+t.TPL_NAME = "E:/code/kissy_git/kissy/kissy/src/menu/src/menu/submenu.xtpl.html";
+return t;
 });

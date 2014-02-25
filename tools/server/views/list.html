@@ -9,7 +9,7 @@
         <li><a href="../../"> Parent Directory</a></li>
         {{/if}}
         {{#each (files)}}
-        <li><a href="{{.}}">{{.}}</a></li>
+        <li><a href="{{this}}">{{this}}</a></li>
         {{/each}}
     </ul>
 {{/block}}

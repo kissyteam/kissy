@@ -3,7 +3,7 @@ KISSY.add(function (S, io) {
         it('does not encode url query and encode data query', function () {
             var ok = 0;
 
-            var p = window.decodePath || '../specs/decode/t.jss';
+            var p = window.decodePath || '/kissy/src/io/tests/specs/decode/t.jss';
             io({
                 url: p + '?t=1,2',
                 data: {

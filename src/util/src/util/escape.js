@@ -25,8 +25,9 @@ KISSY.add(function (S) {
             '&#x27;': "'"
         },
         reverseEntities = {},
-        escapeReg,
-        unEscapeReg,
+        escapeHtmlReg,
+        unEscapeHtmlReg ,
+        possibleEscapeHtmlReg = /[&<>"'`]/,
     // - # $ ^ * ( ) + [ ] { } | \ , . ?
         escapeRegExp = /[\-#$\^*()+\[\]{}|\\,.?\s]/g;
     (function () {
@@ -35,31 +36,27 @@ KISSY.add(function (S) {
         }
     })();
 
+    escapeHtmlReg = getEscapeReg();
+    unEscapeHtmlReg = getUnEscapeReg();
 
     function getEscapeReg() {
-        if (escapeReg) {
-            return escapeReg;
-        }
         var str = EMPTY;
         S.each(htmlEntities, function (entity) {
             str += entity + '|';
         });
         str = str.slice(0, -1);
-        escapeReg = new RegExp(str, 'g');
-        return escapeReg;
+        escapeHtmlReg = new RegExp(str, 'g');
+        return escapeHtmlReg;
     }
 
     function getUnEscapeReg() {
-        if (unEscapeReg) {
-            return unEscapeReg;
-        }
         var str = EMPTY;
         S.each(reverseEntities, function (entity) {
             str += entity + '|';
         });
         str += '&#(\\d{1,5});';
-        unEscapeReg = new RegExp(str, 'g');
-        return unEscapeReg;
+        unEscapeHtmlReg = new RegExp(str, 'g');
+        return unEscapeHtmlReg;
     }
 
     S.mix(S, {
@@ -87,7 +84,14 @@ KISSY.add(function (S) {
          * @return {String} escaped html
          */
         escapeHtml: function (str) {
-            return (str + '').replace(getEscapeReg(), function (m) {
+            if (!str && str !== 0) {
+                return '';
+            }
+            str = '' + str;
+            if (!possibleEscapeHtmlReg.test(str)) {
+                return str;
+            }
+            return (str + '').replace(escapeHtmlReg, function (m) {
                 return reverseEntities[m];
             });
         },
@@ -111,7 +115,7 @@ KISSY.add(function (S) {
          * @return {String} un-escaped html
          */
         unEscapeHtml: function (str) {
-            return str.replace(getUnEscapeReg(), function (m, n) {
+            return str.replace(unEscapeHtmlReg, function (m, n) {
                 return htmlEntities[m] || String.fromCharCode(+n);
             });
         }

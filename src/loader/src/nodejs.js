@@ -35,7 +35,8 @@
             var mod = fs.readFileSync(path, charset);
             // code in runInThisContext unlike eval can not access local scope
             //noinspection JSUnresolvedFunction
-            var factory = vm.runInThisContext('(function(KISSY,requireNode){' + mod + '})', url);
+            // use path, or else use url will error in nodejs debug mode
+            var factory = vm.runInThisContext('(function(KISSY,requireNode){' + mod + '})', path);
             factory(S, require);
             if (success) {
                 success();

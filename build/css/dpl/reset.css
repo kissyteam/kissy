@@ -1,7 +1,7 @@
 /*
-Copyright 2013, KISSY v1.50
+Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Dec 12 22:08
+build time: Feb 25 19:33
 */
 /**
 * KISSY New DPL CSS Reset Based on
@@ -47,10 +47,9 @@ header,
 hgroup,
 nav,
 section,
-summary{
+summary {
   display: block;
 }
-
 /*
  * Corrects `inline-block` display not defined in IE6/7/8/9 & FF3.
  */
@@ -104,13 +103,10 @@ figure {
 html {
   font-size: 12px;
   /* 1 */
-
   -webkit-text-size-adjust: 100%;
   /* 2 */
-
   -ms-text-size-adjust: 100%;
   /* 2 */
-
 }
 /*
  * Addresses `font-family` inconsistency between `textarea` and other form
@@ -128,7 +124,6 @@ select,
 textarea {
   font-family: tahoma, arial, \5b8b\4f53, sans-serif;
   /* 1 */
-
 }
 button,
 input,
@@ -145,14 +140,11 @@ textarea {
 body {
   margin: 0;
   /* 1 */
-
   color: #333333;
   background-color: #ffffff;
   /* 2 */
-
   line-height: 1.5;
   /* 3 */
-
 }
 /* ==========================================================================
    Links
@@ -167,7 +159,6 @@ a {
      * Improves readability when focused and also mouse hovered in all browsers.
      * people.opera.com/patrickl/experiments/keyboard/test
      */
-
 }
 a:focus {
   outline: thin dotted;
@@ -258,10 +249,8 @@ pre,
 samp {
   font-family: monospace, serif;
   /* 1 */
-
   font-size: 1em;
   /* 2 */
-
 }
 /*
  * Improves readability of pre-formatted text in all browsers.
@@ -270,7 +259,6 @@ pre {
   white-space: pre;
   white-space: pre-wrap;
   /*ie*/
-
   word-wrap: break-word;
 }
 /*
@@ -344,10 +332,8 @@ ul {
 img {
   border: 0;
   /* 1 */
-
   -ms-interpolation-mode: bicubic;
   /* 2 */
-
 }
 /*
  * Corrects overflow displayed oddly in IE9.
@@ -382,15 +368,12 @@ fieldset {
 legend {
   border: 0;
   /* 1 */
-
   margin: 0;
   padding: 0;
   white-space: normal;
   /* 2 */
-
   *margin-left: -7px;
   /* 3 */
-
 }
 button,
 input,
@@ -406,10 +389,8 @@ textarea {
 textarea {
   overflow: auto;
   /* 1 */
-
   vertical-align: top;
   /* 2 */
-
 }
 /*
  * IE6+ need padding-left/right
@@ -417,7 +398,6 @@ textarea {
 button {
   padding: 0px 6px;
   /* ie6 fix*/
-
   _padding: 0;
 }
 /*
@@ -443,13 +423,10 @@ input[type="reset"],
 input[type="submit"] {
   -webkit-appearance: button;
   /* 2 */
-
   cursor: pointer;
   /* 3 */
-
   *overflow: visible;
   /* 4 */
-
 }
 /*
  * Re-set default cursor for disabled elements.
@@ -476,16 +453,12 @@ input[type="checkbox"],
 input[type="radio"] {
   box-sizing: border-box;
   /* 1 */
-
   padding: 0;
   /* 2 */
-
   *height: 13px;
   /* 3 */
-
   *width: 13px;
   /* 3 */
-
 }
 /*
  * 1. Addresses `appearance` set to `searchfield` in S5, Chrome.
@@ -495,10 +468,8 @@ input[type="radio"] {
 input[type="search"] {
   -webkit-appearance: textfield;
   /* 1 */
-
   box-sizing: content-box;
   /* 2 */
-
 }
 /*
  * Removes inner padding and search cancel button in S5, Chrome.

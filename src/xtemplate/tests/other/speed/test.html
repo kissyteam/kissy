@@ -2,7 +2,7 @@
 doctype html
 html(lang="en")
     head
-        title= pageTitle
+        title= title
         script(type='text/javascript').
             if (foo) {
                 bar(1 + 5)
@@ -21,11 +21,7 @@ html(lang="en")
             and powerful features.
         ul
             each val, index in lis
-                li= index + ': ' + val.d
-
-
-
-
+                li= index + ': ' + val.d + ' of '+title
 
 </script>
 <script type="xtpl" id="testXtpl">
@@ -53,15 +49,11 @@ html(lang="en")
         and powerful features.</p>
     <ul>
     {{#each (lis)}}
-        <li>{{xindex}}: {{d}}</li>
+        <li>{{xindex}}: {{d}} of {{title}}</li>
     </ul>
     {{/each}}
 </body>
 </html>
-
-
-
-
 
 </script>
 <script type="handlebars" id="testHandlebars">
@@ -89,7 +81,7 @@ html(lang="en")
         and powerful features.</p>
     <ul>
     {{#each lis}}
-        <li>{{@index}}: {{d}}</li>
+        <li>{{@index}}: {{d}} of {{title}}</li>
     </ul>
     {{/each}}
 </body>
@@ -97,11 +89,13 @@ html(lang="en")
 
 
 
-
-
 </script>
-<script src="jade.js"></script>
-<script src="handlebars-v1.3.0.js"></script>
+<p>
+    <a href="http://jsperf.com/jade-xtpl">http://jsperf.com/jade-xtpl</a>
+</p>
+<pre id="ret"></pre>
+<script src="/kissy/tools/third-party/jade.js"></script>
+<script src="/kissy/tools/third-party/handlebars-v1.3.0.js"></script>
 <script src="/kissy/build/seed.js"></script>
 <script src="/kissy/src/package.js"></script>
 <button id="startJade">startJade</button>
@@ -109,9 +103,12 @@ html(lang="en")
 <button id="startHandlebars">startHandlebars</button>
 <script>
     (function () {
-        var getElementById = function (str) {
+        var debug = location.href.indexOf('debug') > -1;
+        var ret = getElementById('ret');
+
+        function getElementById(str) {
             return document.getElementById(str);
-        };
+        }
 
         (function () {
             // Compile a function
@@ -120,8 +117,11 @@ html(lang="en")
                 console.time('jade');
                 for (var i = 0; i < 10000; i++) {
                     // Render the function
+                    if (debug) {
+                        debugger;
+                    }
                     var html = fn({
-                        pageTitle: 'Jade Demo',
+                        title: 'Jade Demo',
                         youAreUsingJade: true,
                         lis: [
                             {d: 'one'},
@@ -129,16 +129,19 @@ html(lang="en")
                             {d: 'three'}
                         ]
                     });
+                    if (debug) {
+                        break;
+                    }
                 }
                 console.timeEnd('jade');
-                //console.log(html);
+                ret.innerText = html;
             };
         })();
 
         (function () {
             var fn = Handlebars.compile(getElementById('testHandlebars').innerHTML.trim());
             fn({
-                pageTitle: 'Jade Demo',
+                title: 'Jade Demo',
                 youAreUsingJade: true,
                 lis: [
                     {d: 'one'},
@@ -148,12 +151,13 @@ html(lang="en")
             });
             getElementById('startHandlebars').onclick = function () {
                 console.time('handleBars');
-                var debug;
                 for (var i = 0; i < 10000; i++) {
                     // Render the function
-                    //debugger;debug=1;
+                    if (debug) {
+                        debugger;
+                    }
                     var html = fn({
-                        pageTitle: 'Jade Demo',
+                        title: 'Jade Demo',
                         youAreUsingJade: true,
                         lis: [
                             {d: 'one'},
@@ -161,12 +165,12 @@ html(lang="en")
                             {d: 'three'}
                         ]
                     });
-                    if(debug){
+                    if (debug) {
                         break;
                     }
                 }
-                //console.log(html);
                 console.timeEnd('handleBars');
+                ret.innerText = html;
             };
         })();
 
@@ -175,12 +179,13 @@ html(lang="en")
             new XTemplate(str);
             getElementById('startXtpl').onclick = function () {
                 console.time('xtpl');
-                var debug;
                 var tpl = new XTemplate(str);
                 for (var i = 0; i < 10000; i++) {
-                    //debugger;debug=1;
+                    if (debug) {
+                        debugger;
+                    }
                     var html = tpl.render({
-                        pageTitle: 'Jade Demo',
+                        title: 'Jade Demo',
                         youAreUsingJade: true,
                         lis: [
                             {d: 'one'},
@@ -188,11 +193,12 @@ html(lang="en")
                             {d: 'three'}
                         ]
                     });
-                    if(debug){
+                    if (debug) {
                         break;
                     }
                 }
                 console.timeEnd('xtpl');
+                ret.innerText = html;
             };
         });
     })();

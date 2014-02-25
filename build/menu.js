@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Jan 24 20:11
+build time: Feb 25 19:44
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -202,32 +202,36 @@ KISSY.add("menu/menuitem", ["component/control", "./menuitem-render", "node"], f
   }}, {ATTRS:{focusable:{value:false}, handleGestureEvents:{value:false}, selectable:{view:1}, value:{}, selected:{view:1}, xrender:{value:MenuItemRender}}, xclass:"menuitem"})
 });
 KISSY.add("menu/check-menuitem-xtpl", ["component/extension/content-xtpl"], function(S, require, exports, module) {
-  return function(scope, S, undefined) {
-    var buffer = "", config = this.config, engine = this, moduleWrap, utils = config.utils;
+  var t = function(scope, S, payload, undefined) {
+    var buffer = "", engine = this, moduleWrap, escapeHtml = S.escapeHtml, nativeCommands = engine.nativeCommands, utils = engine.utils;
     if(typeof module !== "undefined" && module.kissy) {
       moduleWrap = module
     }
-    var runBlockCommandUtil = utils.runBlockCommand, renderOutputUtil = utils.renderOutput, getPropertyUtil = utils.getProperty, runInlineCommandUtil = utils.runInlineCommand, getPropertyOrRunCommandUtil = utils.getPropertyOrRunCommand;
+    var callCommandUtil = utils.callCommand, eachCommand = nativeCommands.each, withCommand = nativeCommands["with"], ifCommand = nativeCommands["if"], setCommand = nativeCommands.set, includeCommand = nativeCommands.include, parseCommand = nativeCommands.parse, extendCommand = nativeCommands.extend, blockCommand = nativeCommands.block, macroCommand = nativeCommands.macro;
     buffer += '<div class="';
-    var config1 = {};
+    var option1 = {};
     var params2 = [];
     params2.push("checkbox");
-    config1.params = params2;
-    var id0 = runInlineCommandUtil(engine, scope, config1, "getBaseCssClasses", 1);
-    buffer += renderOutputUtil(id0, true);
+    option1.params = params2;
+    var id0 = callCommandUtil(engine, scope, option1, "getBaseCssClasses", 1);
+    buffer += escapeHtml(id0);
     buffer += '">\n</div>\n';
-    var config4 = {};
+    var option4 = {};
     var params5 = [];
     params5.push("component/extension/content-xtpl");
-    config4.params = params5;
+    option4.params = params5;
     if(moduleWrap) {
       require("component/extension/content-xtpl");
-      config4.params[0] = moduleWrap.resolveByName(config4.params[0])
+      option4.params[0] = moduleWrap.resolveByName(option4.params[0])
     }
-    var id3 = runInlineCommandUtil(engine, scope, config4, "include", 3);
-    buffer += renderOutputUtil(id3, false);
+    var id3 = includeCommand.call(engine, scope, option4, payload);
+    if(id3 || id3 === 0) {
+      buffer += id3
+    }
     return buffer
-  }
+  };
+  t.TPL_NAME = "E:/code/kissy_git/kissy/kissy/src/menu/src/menu/check-menuitem.xtpl.html";
+  return t
 });
 KISSY.add("menu/check-menuitem-render", ["./menuitem-render", "component/extension/content-render", "./check-menuitem-xtpl"], function(S, require) {
   var MenuItemRender = require("./menuitem-render");
@@ -254,31 +258,35 @@ KISSY.add("menu/check-menuitem", ["./menuitem", "./check-menuitem-render"], func
   }}, {ATTRS:{checked:{view:1}, xrender:{value:CheckMenuItemRender}}, xclass:"check-menuitem"})
 });
 KISSY.add("menu/submenu-xtpl", [], function(S, require, exports, module) {
-  return function(scope, S, undefined) {
-    var buffer = "", config = this.config, engine = this, moduleWrap, utils = config.utils;
+  var t = function(scope, S, payload, undefined) {
+    var buffer = "", engine = this, moduleWrap, escapeHtml = S.escapeHtml, nativeCommands = engine.nativeCommands, utils = engine.utils;
     if(typeof module !== "undefined" && module.kissy) {
       moduleWrap = module
     }
-    var runBlockCommandUtil = utils.runBlockCommand, renderOutputUtil = utils.renderOutput, getPropertyUtil = utils.getProperty, runInlineCommandUtil = utils.runInlineCommand, getPropertyOrRunCommandUtil = utils.getPropertyOrRunCommand;
+    var callCommandUtil = utils.callCommand, eachCommand = nativeCommands.each, withCommand = nativeCommands["with"], ifCommand = nativeCommands["if"], setCommand = nativeCommands.set, includeCommand = nativeCommands.include, parseCommand = nativeCommands.parse, extendCommand = nativeCommands.extend, blockCommand = nativeCommands.block, macroCommand = nativeCommands.macro;
     buffer += '<div id="ks-content-';
-    var id0 = getPropertyOrRunCommandUtil(engine, scope, {}, "id", 0, 1);
-    buffer += renderOutputUtil(id0, true);
+    var id0 = scope.resolve(["id"]);
+    buffer += escapeHtml(id0);
     buffer += '"\n     class="';
-    var config2 = {};
+    var option2 = {};
     var params3 = [];
     params3.push("content");
-    config2.params = params3;
-    var id1 = runInlineCommandUtil(engine, scope, config2, "getBaseCssClasses", 2);
-    buffer += renderOutputUtil(id1, true);
+    option2.params = params3;
+    var id1 = callCommandUtil(engine, scope, option2, "getBaseCssClasses", 2);
+    buffer += escapeHtml(id1);
     buffer += '">';
-    var id4 = getPropertyOrRunCommandUtil(engine, scope, {}, "content", 0, 2);
-    buffer += renderOutputUtil(id4, false);
+    var id4 = scope.resolve(["content"]);
+    if(id4 || id4 === 0) {
+      buffer += id4
+    }
     buffer += '</div>\n<span class="';
-    var id5 = getPropertyOrRunCommandUtil(engine, scope, {}, "prefixCls", 0, 3);
-    buffer += renderOutputUtil(id5, true);
+    var id5 = scope.resolve(["prefixCls"]);
+    buffer += escapeHtml(id5);
     buffer += 'submenu-arrow">\u25ba</span>';
     return buffer
-  }
+  };
+  t.TPL_NAME = "E:/code/kissy_git/kissy/kissy/src/menu/src/menu/submenu.xtpl.html";
+  return t
 });
 KISSY.add("menu/submenu-render", ["./submenu-xtpl", "./menuitem-render", "component/extension/content-render"], function(S, require) {
   var SubMenuTpl = require("./submenu-xtpl");

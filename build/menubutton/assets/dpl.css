@@ -1,7 +1,7 @@
 /*
-Copyright 2013, KISSY v1.50
+Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Dec 12 22:20
+build time: Feb 25 19:45
 */
 /**
  * MenuButton style for KISSY from Bootstrap dropdown.
@@ -14,11 +14,6 @@ build time: Dec 12 22:20
 */
 /**
 * Snippets of reusable CSS to develop faster and keep code readable from KISSY and Bootstrap.
-*
-* @author yiminghe@gmail.com
-*/
-/**
-* Variables to customize the look and feel from Bootstrap.
 *
 * @author yiminghe@gmail.com
 */
@@ -36,7 +31,6 @@ build time: Dec 12 22:20
   border-top: 4px solid #000000;
   opacity: 0.3;
   filter: alpha(opacity=30);
-  *zoom: 1;
   display: inline-block;
   *display: inline;
   *zoom: 1;

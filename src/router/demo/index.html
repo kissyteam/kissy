@@ -30,7 +30,7 @@
 
 <!--笔记列表的搜索模板-->
 <script type="template" id="searchTpl">
-    {{#each list}}
+    {{#each (list)}}
     <div id='{{id}}' class='note'>
         <p>{{title}} @ {{time}}</p>
     </div>
@@ -75,7 +75,7 @@
 
 <!--笔记列表的模板-->
 <script type="template" id="listTpl">
-    {{#each list}}
+    {{#each (list)}}
     <div id='{{id}}' class='note'>
         <p>{{title}} @ {{time}}</p>
         <button class="edit">edit/view</button>

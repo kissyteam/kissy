@@ -7,141 +7,48 @@ KISSY.add(function (S, require) {
     var nativeCommands = require('./runtime/commands');
     var commands = {};
     var Scope = require('./runtime/scope');
-    var escapeHtml = S.escapeHtml;
-    var logger = S.getLogger('s/xtemplate');
 
-    function merge(from, to) {
-        for (var i in to) {
-            from[i] = to[i];
+//    function merge(from, to) {
+//        for (var i in to) {
+//            from[i] = to[i];
+//        }
+//    }
+
+    function findCommand(localCommands, name) {
+        if (name.indexOf('.') === -1) {
+            return localCommands && localCommands[name] || commands[name];
         }
-    }
-
-    function info(s) {
-        logger.info(s);
-    }
-
-    function findCommand(commands, name) {
         var parts = name.split('.');
-        var cmd = commands;
-        var len = parts.length;
-        for (var i = 0; i < len; i++) {
-            cmd = cmd[parts[i]];
-            if (!cmd) {
-                break;
+        var cmd = localCommands && localCommands[parts[0]] || commands[parts[0]];
+        if (cmd) {
+            var len = parts.length;
+            for (var i = 1; i < len; i++) {
+                cmd = cmd[parts[i]];
+                if (!cmd) {
+                    break;
+                }
             }
         }
         return cmd;
     }
 
-    function runInlineCommand(engine, scope, options, name, line, onlyCommand) {
-        var id0;
-        var commands = engine.commands;
-        var command1 = commands && findCommand(commands, name);
-        if (command1) {
-            try {
-                id0 = command1.call(engine, scope, options);
-            } catch (e) {
-                S.error(e.message + ': "' + name + '" at line ' + line);
-            }
-            return {
-                find: true,
-                value: id0
-            };
-        } else if (onlyCommand) {
-            S.error('can not find command: ' + name + '" at line ' + line);
-        }
-        return {
-            find: false
-        };
-    }
-
-    function getProperty(engine, scope, name, depth, line) {
-        var id0;
-        var logFn = engine.silent ? info : S.error;
-        var tmp2 = scope.resolve(name, depth);
-        if (tmp2 === false) {
-            logFn('can not find property: "' + name + '" at line ' + line, 'warn');
-            // undefined for expression
-            // {{n+2}}
-        } else {
-            id0 = tmp2[0];
-        }
-        return id0;
-    }
-
     var utils = {
-        'runBlockCommand': function (engine, scope, options, name, line) {
-            var logFn = engine.silent ? info : S.error;
-            var commands = engine.commands;
-            var command = commands && findCommand(commands, name);
-            if (!command) {
-                if (!options.params && !options.hash) {
-                    var property = scope.resolve(name);
-                    if (property === false) {
-                        logFn('can not find property: "' + name + '" at line ' + line);
-                        property = '';
-                    } else {
-                        property = property[0];
-                    }
-                    command = commands['if'];
-                    if (S.isArray(property)) {
-                        command = commands.each;
-                    }
-                    else if (typeof property === 'object') {
-                        command = commands['with'];
-                    }
-                    options.params = [property];
-                } else {
-                    S.error('can not find command: ' + name + '" at line ' + line);
-                    return '';
+        'callCommand': function (engine, scope, options, name, line) {
+            var ret = '';
+            var commands = engine.config.commands;
+            var command1 = findCommand(commands, name);
+            if (command1) {
+                try {
+                    ret = command1.call(engine, scope, options);
+                } catch (e) {
+                    S.error('in file: ' + engine.name + ' ' + e.message + ': "' + name + '" at line ' + line);
                 }
-            }
-            var ret;
-            try {
-                ret = command.call(engine, scope, options);
-            } catch (e) {
-                S.error(e.message + ': "' + name + '" at line ' + line);
+            } else {
+                S.error('in file: ' + engine.name + ' can not find command: ' + name + '" at line ' + line);
             }
             return ret;
-        },
-
-        'renderOutput': function (exp, escape) {
-            if (exp === undefined) {
-                exp = '';
-            }
-            return escape && exp ? escapeHtml(exp) : exp;
-        },
-
-        'getProperty': function (engine, scope, name, depth, line) {
-            return getProperty(engine, scope, name, depth, line);
-        },
-
-        'runInlineCommand': function (engine, scope, options, name, line) {
-            var id0 = '',
-                ret;
-            // command first
-            ret = runInlineCommand(engine, scope, options, name, line);
-            if (ret.find) {
-                id0 = ret.value;
-            }
-            return id0;
         }
     };
-
-    /**
-     * whether throw exception when template variable is not found in data
-     *
-     * or
-     *
-     * command is not found
-     *
-     *
-     *      '{{title}}'.render({t2:0})
-     *
-     *
-     * @cfg {Boolean} silent
-     * @member KISSY.XTemplate.Runtime
-     */
 
     /**
      * template file name for chrome debug
@@ -157,20 +64,12 @@ KISSY.add(function (S, require) {
     function XTemplateRuntime(tpl, config) {
         var self = this;
         self.tpl = tpl;
-        if (config) {
-            if (config.commands) {
-                self.commands = config.commands;
-                merge(self.commands, commands);
-            } else {
-                self.commands = commands;
-            }
-            if (config.name) {
-                self.name = config.name;
-            }
-            if (config.silent !== undefined) {
-                self.silent = config.silent;
-            }
+        config = config || {};
+        // can not shared between config
+        if (config.name) {
+            self.name = config.name;
         }
+        self.config = config;
     }
 
     S.mix(XTemplateRuntime, {
@@ -187,7 +86,6 @@ KISSY.add(function (S, require) {
          * @member KISSY.XTemplate.Runtime
          */
         addCommand: function (commandName, fn) {
-            commands = commands || {};
             commands[commandName] = fn;
         },
 
@@ -199,20 +97,12 @@ KISSY.add(function (S, require) {
          * @member KISSY.XTemplate.Runtime
          */
         removeCommand: function (commandName) {
-            if (commands) {
-                delete commands[commandName];
-            }
+            delete commands[commandName];
         }
     });
 
     XTemplateRuntime.prototype = {
         constructor: XTemplateRuntime,
-
-        name: 'unspecified',
-
-        silent: true,
-
-        commands: commands,
 
         nativeCommands: nativeCommands,
 
@@ -228,14 +118,8 @@ KISSY.add(function (S, require) {
             if (!tpl) {
                 S.error('template "' + subTplName + '" does not exist, ' + 'need to be required or used first!');
             }
-            return this.derive(subTplName, tpl);
-        },
-
-        derive: function (name, tpl) {
-            var engine = new this.constructor(tpl);
-            engine.name = name;
-            engine.commands = this.commands;
-            engine.silent = this.silent;
+            var engine = new this.constructor(tpl, this.config);
+            engine.name = subTplName;
             return engine;
         },
 
@@ -244,10 +128,10 @@ KISSY.add(function (S, require) {
          * @param commandName
          */
         'removeCommand': function (commandName) {
-            if (this.commands === commands) {
-                this.commands = merge({}, this.commands);
+            var config = this.config;
+            if (config.commands) {
+                delete config.commands[commandName];
             }
-            delete this.commands[commandName];
         },
 
         /**
@@ -256,15 +140,15 @@ KISSY.add(function (S, require) {
          * @param {Function} fn command definition
          */
         addCommand: function (commandName, fn) {
-            if (this.commands === commands) {
-                this.commands = merge({}, this.commands);
-            }
-            this.commands[commandName] = fn;
+            var config = this.config;
+            config.commands = config.commands || {};
+            config.commands[commandName] = fn;
         },
 
         /**
          * get result by merge data with template
          * @param data
+         * @param payload internal usage
          * @return {String}
          */
         render: function (data, payload) {
@@ -275,6 +159,9 @@ KISSY.add(function (S, require) {
             }
             payload = payload || {};
             payload.extendTplName = null;
+            if (self.tpl.TPL_NAME && !self.name) {
+                self.name = self.tpl.TPL_NAME;
+            }
             var html = self.tpl(root, S, payload);
             var extendTplName = payload.extendTplName;
             // if has extend statement, only parse

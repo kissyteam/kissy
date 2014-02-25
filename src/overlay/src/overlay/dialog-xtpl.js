@@ -1,134 +1,150 @@
 /** Compiled By kissy-xtemplate */
 KISSY.add(function (S, require, exports, module) {
         /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true*/
-        return function (scope, S, undefined) {
+        var t = function (scope, S, payload, undefined) {
             var buffer = "",
-                config = this.config,
                 engine = this,
-                moduleWrap, utils = config.utils;
+                moduleWrap, escapeHtml = S.escapeHtml,
+                nativeCommands = engine.nativeCommands,
+                utils = engine.utils;
             if (typeof module !== "undefined" && module.kissy) {
                 moduleWrap = module;
             }
-            var runBlockCommandUtil = utils.runBlockCommand,
-                renderOutputUtil = utils.renderOutput,
-                getPropertyUtil = utils.getProperty,
-                runInlineCommandUtil = utils.runInlineCommand,
-                getPropertyOrRunCommandUtil = utils.getPropertyOrRunCommand;
+            var callCommandUtil = utils.callCommand,
+                eachCommand = nativeCommands.each,
+                withCommand = nativeCommands["with"],
+                ifCommand = nativeCommands["if"],
+                setCommand = nativeCommands.set,
+                includeCommand = nativeCommands.include,
+                parseCommand = nativeCommands.parse,
+                extendCommand = nativeCommands.extend,
+                blockCommand = nativeCommands.block,
+                macroCommand = nativeCommands.macro;
             buffer += '';
-            var config1 = {};
+            var option1 = {};
             var params2 = [];
             params2.push('overlay/close-xtpl');
-            config1.params = params2;
+            option1.params = params2;
             if (moduleWrap) {
                 require("overlay/close-xtpl");
-                config1.params[0] = moduleWrap.resolveByName(config1.params[0]);
+                option1.params[0] = moduleWrap.resolveByName(option1.params[0]);
             }
-            var id0 = runInlineCommandUtil(engine, scope, config1, "include", 1);
-            buffer += renderOutputUtil(id0, false);
+            var id0 = includeCommand.call(engine, scope, option1, payload);
+            if (id0 || id0 === 0) {
+                buffer += id0;
+            }
             buffer += '\n<div id="ks-content-';
-            var id3 = getPropertyOrRunCommandUtil(engine, scope, {}, "id", 0, 2);
-            buffer += renderOutputUtil(id3, true);
+            var id3 = scope.resolve(["id"]);
+            buffer += escapeHtml(id3);
             buffer += '"\n     class="';
-            var config5 = {};
+            var option5 = {};
             var params6 = [];
             params6.push('content');
-            config5.params = params6;
-            var id4 = runInlineCommandUtil(engine, scope, config5, "getBaseCssClasses", 3);
-            buffer += renderOutputUtil(id4, true);
+            option5.params = params6;
+            var id4 = callCommandUtil(engine, scope, option5, "getBaseCssClasses", 3);
+            buffer += escapeHtml(id4);
             buffer += '">\n    <div class="';
-            var config8 = {};
+            var option8 = {};
             var params9 = [];
             params9.push('header');
-            config8.params = params9;
-            var id7 = runInlineCommandUtil(engine, scope, config8, "getBaseCssClasses", 4);
-            buffer += renderOutputUtil(id7, true);
+            option8.params = params9;
+            var id7 = callCommandUtil(engine, scope, option8, "getBaseCssClasses", 4);
+            buffer += escapeHtml(id7);
             buffer += '"\n         style="\n';
-            var config10 = {};
+            var option10 = {};
             var params11 = [];
-            var id12 = getPropertyUtil(engine, scope, "headerStyle", 0, 6);
+            var id12 = scope.resolve(["headerStyle"]);
             params11.push(id12);
-            config10.params = params11;
-            config10.fn = function (scope) {
+            option10.params = params11;
+            option10.fn = function (scope) {
                 var buffer = "";
-                buffer += ' \n ';
-                var id13 = getPropertyOrRunCommandUtil(engine, scope, {}, "xindex", 0, 7);
-                buffer += renderOutputUtil(id13, true);
+                buffer += '\n ';
+                var id13 = scope.resolve(["xindex"]);
+                buffer += escapeHtml(id13);
                 buffer += ':';
-                var id14 = getPropertyOrRunCommandUtil(engine, scope, {}, ".", 0, 7);
-                buffer += renderOutputUtil(id14, true);
+                var id14 = scope.resolve(["this"]);
+                buffer += escapeHtml(id14);
                 buffer += ';\n';
                 return buffer;
             };
-            buffer += runBlockCommandUtil(engine, scope, config10, "each", 6);
+            buffer += eachCommand.call(engine, scope, option10, payload);
             buffer += '\n"\n         id="ks-stdmod-header-';
-            var id15 = getPropertyOrRunCommandUtil(engine, scope, {}, "id", 0, 10);
-            buffer += renderOutputUtil(id15, true);
+            var id15 = scope.resolve(["id"]);
+            buffer += escapeHtml(id15);
             buffer += '">';
-            var id16 = getPropertyOrRunCommandUtil(engine, scope, {}, "headerContent", 0, 10);
-            buffer += renderOutputUtil(id16, false);
+            var id16 = scope.resolve(["headerContent"]);
+            if (id16 || id16 === 0) {
+                buffer += id16;
+            }
             buffer += '</div>\n\n    <div class="';
-            var config18 = {};
+            var option18 = {};
             var params19 = [];
             params19.push('body');
-            config18.params = params19;
-            var id17 = runInlineCommandUtil(engine, scope, config18, "getBaseCssClasses", 12);
-            buffer += renderOutputUtil(id17, true);
+            option18.params = params19;
+            var id17 = callCommandUtil(engine, scope, option18, "getBaseCssClasses", 12);
+            buffer += escapeHtml(id17);
             buffer += '"\n         style="\n';
-            var config20 = {};
+            var option20 = {};
             var params21 = [];
-            var id22 = getPropertyUtil(engine, scope, "bodyStyle", 0, 14);
+            var id22 = scope.resolve(["bodyStyle"]);
             params21.push(id22);
-            config20.params = params21;
-            config20.fn = function (scope) {
+            option20.params = params21;
+            option20.fn = function (scope) {
                 var buffer = "";
-                buffer += ' \n ';
-                var id23 = getPropertyOrRunCommandUtil(engine, scope, {}, "xindex", 0, 15);
-                buffer += renderOutputUtil(id23, true);
+                buffer += '\n ';
+                var id23 = scope.resolve(["xindex"]);
+                buffer += escapeHtml(id23);
                 buffer += ':';
-                var id24 = getPropertyOrRunCommandUtil(engine, scope, {}, ".", 0, 15);
-                buffer += renderOutputUtil(id24, true);
+                var id24 = scope.resolve(["this"]);
+                buffer += escapeHtml(id24);
                 buffer += ';\n';
                 return buffer;
             };
-            buffer += runBlockCommandUtil(engine, scope, config20, "each", 14);
+            buffer += eachCommand.call(engine, scope, option20, payload);
             buffer += '\n"\n         id="ks-stdmod-body-';
-            var id25 = getPropertyOrRunCommandUtil(engine, scope, {}, "id", 0, 18);
-            buffer += renderOutputUtil(id25, true);
+            var id25 = scope.resolve(["id"]);
+            buffer += escapeHtml(id25);
             buffer += '">';
-            var id26 = getPropertyOrRunCommandUtil(engine, scope, {}, "bodyContent", 0, 18);
-            buffer += renderOutputUtil(id26, false);
+            var id26 = scope.resolve(["bodyContent"]);
+            if (id26 || id26 === 0) {
+                buffer += id26;
+            }
             buffer += '</div>\n\n    <div class="';
-            var config28 = {};
+            var option28 = {};
             var params29 = [];
             params29.push('footer');
-            config28.params = params29;
-            var id27 = runInlineCommandUtil(engine, scope, config28, "getBaseCssClasses", 20);
-            buffer += renderOutputUtil(id27, true);
+            option28.params = params29;
+            var id27 = callCommandUtil(engine, scope, option28, "getBaseCssClasses", 20);
+            buffer += escapeHtml(id27);
             buffer += '"\n         style="\n';
-            var config30 = {};
+            var option30 = {};
             var params31 = [];
-            var id32 = getPropertyUtil(engine, scope, "footerStyle", 0, 22);
+            var id32 = scope.resolve(["footerStyle"]);
             params31.push(id32);
-            config30.params = params31;
-            config30.fn = function (scope) {
+            option30.params = params31;
+            option30.fn = function (scope) {
                 var buffer = "";
-                buffer += ' \n ';
-                var id33 = getPropertyOrRunCommandUtil(engine, scope, {}, "xindex", 0, 23);
-                buffer += renderOutputUtil(id33, true);
+                buffer += '\n ';
+                var id33 = scope.resolve(["xindex"]);
+                buffer += escapeHtml(id33);
                 buffer += ':';
-                var id34 = getPropertyOrRunCommandUtil(engine, scope, {}, ".", 0, 23);
-                buffer += renderOutputUtil(id34, true);
+                var id34 = scope.resolve(["this"]);
+                buffer += escapeHtml(id34);
                 buffer += ';\n';
                 return buffer;
             };
-            buffer += runBlockCommandUtil(engine, scope, config30, "each", 22);
+            buffer += eachCommand.call(engine, scope, option30, payload);
             buffer += '\n"\n         id="ks-stdmod-footer-';
-            var id35 = getPropertyOrRunCommandUtil(engine, scope, {}, "id", 0, 26);
-            buffer += renderOutputUtil(id35, true);
+            var id35 = scope.resolve(["id"]);
+            buffer += escapeHtml(id35);
             buffer += '">';
-            var id36 = getPropertyOrRunCommandUtil(engine, scope, {}, "footerContent", 0, 26);
-            buffer += renderOutputUtil(id36, false);
+            var id36 = scope.resolve(["footerContent"]);
+            if (id36 || id36 === 0) {
+                buffer += id36;
+            }
             buffer += '</div>\n</div>\n<div tabindex="0"></div>';
             return buffer;
         };
+t.TPL_NAME = "E:/code/kissy_git/kissy/kissy/src/overlay/src/overlay/dialog.xtpl.html";
+return t;
 });

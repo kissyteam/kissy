@@ -28,7 +28,7 @@ KISSY.add(function (S, UA,  io, Node) {
             var re = [], ok, d;
 
             var xhr = io({
-                url: '../others/form/upload.jss',
+                url: '/kissy/src/io/tests/others/form/upload.jss',
                 form: "#" + f.prop('id'),
                 type: 'post',
                 dataType: 'json',
@@ -78,7 +78,7 @@ KISSY.add(function (S, UA,  io, Node) {
             var re = [], ok, d;
 
             var xhr = io({
-                url: '../others/form/upload.jss',
+                url: '/kissy/src/io/tests/others/form/upload.jss',
                 form: "#" + f.prop('id'),
                 type: 'post',
                 dataType: 'json',
@@ -122,7 +122,7 @@ KISSY.add(function (S, UA,  io, Node) {
                 type:'post',
                 form: form[0],
                 dataType: 'xml',
-                url: '../data/xml.jss',
+                url: '/kissy/src/io/tests/data/xml.jss',
                 success: function (data) {
                     expect(data.nodeType).toBe(9);
                     expect(data.documentElement.nodeType).toBe(1);
@@ -153,7 +153,7 @@ KISSY.add(function (S, UA,  io, Node) {
                 type:'post',
                 form: form[0],
                 dataType: 'html',
-                url: '../data/html.jss',
+                url: '/kissy/src/io/tests/data/html.jss',
                 success: function (data) {
                     expect(data.toLowerCase()).toBe('<b>html</b>');
                     ok = 1;
@@ -184,7 +184,7 @@ KISSY.add(function (S, UA,  io, Node) {
                 type:'post',
                 form: form[0],
                 dataType: 'text',
-                url: '../data/html.jss',
+                url: '/kissy/src/io/tests/data/html.jss',
                 success: function (data) {
                     expect(data.toLowerCase()).toBe('<b>html</b>');
                     ok = 1;

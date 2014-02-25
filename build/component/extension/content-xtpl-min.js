@@ -1,6 +1,6 @@
 /*
-Copyright 2013, KISSY v1.50
+Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Dec 12 22:08
+build time: Feb 25 19:33
 */
-KISSY.add("component/extension/content-xtpl",[],function(){return function(b){var a;a=this.config.utils;var d=a.renderOutput,e=a.runInlineCommand,f=a.getPropertyOrRunCommand;a='<div id="ks-content-';var c=f(this,b,{},"id",0,1);a+=d(c,!0);a+='"\n           class="';var c={},g=[];g.push("content");c.params=g;e=e(this,b,c,"getBaseCssClasses",2);a+=d(e,!0);a+='">';b=f(this,b,{},"content",0,2);a+=d(b,!1);return a+"</div>"}});
+KISSY.add("component/extension/content-xtpl",[],function(){var d=function(e,d){var a,b=d.escapeHtml,f=this.utils.callCommand;a='<div id="ks-content-';var c=e.resolve(["id"]);a+=b(c);a+='"\n           class="';var c={},g=[];g.push("content");c.params=g;f=f(this,e,c,"getBaseCssClasses",2);a+=b(f);a+='">';if((b=e.resolve(["content"]))||0===b)a+=b;return a+"</div>"};d.TPL_NAME="E:/code/kissy_git/kissy/kissy/src/component/sub-modules/extension/content-xtpl/src/content.xtpl.html";return d});

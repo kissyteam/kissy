@@ -281,35 +281,35 @@ if (! _$jscoverage['/menu/menuitem.js'].branchData) {
   _$jscoverage['/menu/menuitem.js'].branchData['64'][1] = new BranchData();
 }
 _$jscoverage['/menu/menuitem.js'].branchData['64'][1].init(325, 2, '!p');
-function visit38_64_1(result) {
+function visit40_64_1(result) {
   _$jscoverage['/menu/menuitem.js'].branchData['64'][1].ranCondition(result);
   return result;
 }_$jscoverage['/menu/menuitem.js'].branchData['62'][1].init(32, 34, '$(e).css(\'overflow\') !== \'visible\'');
-function visit37_62_1(result) {
+function visit39_62_1(result) {
   _$jscoverage['/menu/menuitem.js'].branchData['62'][1].ranCondition(result);
   return result;
 }_$jscoverage['/menu/menuitem.js'].branchData['57'][1].init(519, 1, 'v');
-function visit36_57_1(result) {
+function visit38_57_1(result) {
   _$jscoverage['/menu/menuitem.js'].branchData['57'][1].ranCondition(result);
   return result;
 }_$jscoverage['/menu/menuitem.js'].branchData['50'][1].init(25, 1, 'v');
-function visit35_50_1(result) {
+function visit37_50_1(result) {
   _$jscoverage['/menu/menuitem.js'].branchData['50'][1].ranCondition(result);
   return result;
 }_$jscoverage['/menu/menuitem.js'].branchData['47'][1].init(21, 20, 'self.get(\'rendered\')');
-function visit34_47_1(result) {
+function visit36_47_1(result) {
   _$jscoverage['/menu/menuitem.js'].branchData['47'][1].ranCondition(result);
   return result;
 }_$jscoverage['/menu/menuitem.js'].branchData['46'][2].init(94, 31, 'e && e.byPassSetHighlightedItem');
-function visit33_46_2(result) {
+function visit35_46_2(result) {
   _$jscoverage['/menu/menuitem.js'].branchData['46'][2].ranCondition(result);
   return result;
 }_$jscoverage['/menu/menuitem.js'].branchData['46'][1].init(92, 34, '!(e && e.byPassSetHighlightedItem)');
-function visit32_46_1(result) {
+function visit34_46_1(result) {
   _$jscoverage['/menu/menuitem.js'].branchData['46'][1].ranCondition(result);
   return result;
 }_$jscoverage['/menu/menuitem.js'].branchData['33'][1].init(94, 22, 'self.get(\'selectable\')');
-function visit31_33_1(result) {
+function visit33_33_1(result) {
   _$jscoverage['/menu/menuitem.js'].branchData['33'][1].ranCondition(result);
   return result;
 }_$jscoverage['/menu/menuitem.js'].lineData[6]++;
@@ -331,7 +331,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/menu/menuitem.js'].lineData[31]++;
   self.callSuper();
   _$jscoverage['/menu/menuitem.js'].lineData[33]++;
-  if (visit31_33_1(self.get('selectable'))) {
+  if (visit33_33_1(self.get('selectable'))) {
     _$jscoverage['/menu/menuitem.js'].lineData[34]++;
     self.set('selected', true);
   }
@@ -345,29 +345,29 @@ KISSY.add(function(S, require) {
   _$jscoverage['/menu/menuitem.js'].lineData[43]++;
   var self = this, parent = self.get('parent');
   _$jscoverage['/menu/menuitem.js'].lineData[46]++;
-  if (visit32_46_1(!(visit33_46_2(e && e.byPassSetHighlightedItem)))) {
+  if (visit34_46_1(!(visit35_46_2(e && e.byPassSetHighlightedItem)))) {
     _$jscoverage['/menu/menuitem.js'].lineData[47]++;
-    if (visit34_47_1(self.get('rendered'))) {
+    if (visit36_47_1(self.get('rendered'))) {
       _$jscoverage['/menu/menuitem.js'].lineData[48]++;
       parent.set('highlightedItem', v ? self : null);
     } else {
       _$jscoverage['/menu/menuitem.js'].lineData[50]++;
-      if (visit35_50_1(v)) {
+      if (visit37_50_1(v)) {
         _$jscoverage['/menu/menuitem.js'].lineData[52]++;
         parent.set('highlightedItem', self);
       }
     }
   }
   _$jscoverage['/menu/menuitem.js'].lineData[57]++;
-  if (visit36_57_1(v)) {
+  if (visit38_57_1(v)) {
     _$jscoverage['/menu/menuitem.js'].lineData[58]++;
     var el = self.$el, p = el.parent(function(e) {
   _$jscoverage['/menu/menuitem.js'].functionData[3]++;
   _$jscoverage['/menu/menuitem.js'].lineData[62]++;
-  return visit37_62_1($(e).css('overflow') !== 'visible');
+  return visit39_62_1($(e).css('overflow') !== 'visible');
 }, parent.get('el').parent());
     _$jscoverage['/menu/menuitem.js'].lineData[64]++;
-    if (visit38_64_1(!p)) {
+    if (visit40_64_1(!p)) {
       _$jscoverage['/menu/menuitem.js'].lineData[65]++;
       return;
     }

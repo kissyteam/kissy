@@ -1,26 +1,26 @@
-{{{include 'overlay/close-xtpl'}}}
+{{{include ('overlay/close-xtpl')}}}
 <div id="ks-content-{{id}}"
-     class="{{getBaseCssClasses 'content'}}">
-    <div class="{{getBaseCssClasses 'header'}}"
+     class="{{getBaseCssClasses ('content')}}">
+    <div class="{{getBaseCssClasses ('header')}}"
          style="
-{{#each headerStyle}} 
- {{xindex}}:{{.}};
+{{#each (headerStyle)}}
+ {{xindex}}:{{this}};
 {{/each}}
 "
          id="ks-stdmod-header-{{id}}">{{{headerContent}}}</div>
 
-    <div class="{{getBaseCssClasses 'body'}}"
+    <div class="{{getBaseCssClasses ('body')}}"
          style="
-{{#each bodyStyle}} 
- {{xindex}}:{{.}};
+{{#each (bodyStyle)}}
+ {{xindex}}:{{this}};
 {{/each}}
 "
          id="ks-stdmod-body-{{id}}">{{{bodyContent}}}</div>
 
-    <div class="{{getBaseCssClasses 'footer'}}"
+    <div class="{{getBaseCssClasses ('footer')}}"
          style="
-{{#each footerStyle}} 
- {{xindex}}:{{.}};
+{{#each (footerStyle)}}
+ {{xindex}}:{{this}};
 {{/each}}
 "
          id="ks-stdmod-footer-{{id}}">{{{footerContent}}}</div>

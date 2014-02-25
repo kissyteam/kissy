@@ -9,7 +9,7 @@ KISSY.add(function (S,  IO) {
                 var ret404, o404 = 0;
 
                 IO({
-                    url: '../data/404',
+                    url: '/kissy/src/io/tests/data/404',
                     cache: false,
                     success: function () {
                         //var args = S.makeArray(arguments);
@@ -37,7 +37,7 @@ KISSY.add(function (S,  IO) {
                 var ret301, o301;
 
                 IO({
-                    url: '../data/301.jss',
+                    url: '/kissy/src/io/tests/data/301.jss',
                     cache: false,
                     success: function (p) {
                         //var args = S.makeArray(arguments);
@@ -68,7 +68,7 @@ KISSY.add(function (S,  IO) {
                 var ret404, o404 = 0;
 
                 IO({
-                    url: '../data/404',
+                    url: '/kissy/src/io/tests/data/404',
                     type: 'post',
                     cache: false,
                     success: function () {
@@ -100,7 +100,7 @@ KISSY.add(function (S,  IO) {
                 var ret301, o301;
 
                 IO({
-                    url: '../data/301.jss',
+                    url: '/kissy/src/io/tests/data/301.jss',
                     cache: false,
                     type: 'post',
                     success: function (p) {
@@ -131,7 +131,7 @@ KISSY.add(function (S,  IO) {
             it('404时，jsonp不触发回调', function () {
                 var ret404;
                 IO({
-                    url: '../data/404',
+                    url: '/kissy/src/io/tests/data/404',
                     dataType: 'jsonp',
                     success: function () {
                         //var args = S.makeArray(arguments);
@@ -152,7 +152,7 @@ KISSY.add(function (S,  IO) {
             it('404时，cross domain jsonp不触发回调', function () {
                 var ret404;
                 IO({
-                    url: '../data/404',
+                    url: '/kissy/src/io/tests/data/404',
                     dataType: 'jsonp',
                     crossDomain: true,
                     success: function () {
@@ -177,7 +177,6 @@ KISSY.add(function (S,  IO) {
         });
 
         describe('jsonp', function () {
-
             it('自定义callback', function () {
                 var ok = false;
                 runs(function () {
@@ -186,7 +185,7 @@ KISSY.add(function (S,  IO) {
                         expect(typeof data).toBe('object');
                         expect(data.callback).toBe('customCallback');
                     };
-                    S.getScript('../data/interface.jss?callback=customCallback');
+                    S.getScript('/kissy/src/io/tests/data/interface.jss?callback=customCallback');
                 });
 
                 waitsFor(function () {
@@ -200,14 +199,13 @@ KISSY.add(function (S,  IO) {
                         window['customCallback'] = undefined;
                     }
                 })
-
             });
 
             it('does not have content-type', function () {
                 var ok = false;
                 runs(function () {
                     IO({
-                        url: '../data/interface.jss?t=get',
+                        url: '/kissy/src/io/tests/data/interface.jss?t=get',
                         success: function (data) {
                             expect(data.contentType).toBe(undefined);
                             ok=1;
@@ -226,7 +224,7 @@ KISSY.add(function (S,  IO) {
                 var ok = false;
                 runs(function () {
                     IO({
-                        url: '../data/interface.jss?t=get',
+                        url: '/kissy/src/io/tests/data/interface.jss?t=get',
                         success: function (data) {
                             ok = true;
                             expect(typeof data).toBe('object');
@@ -248,7 +246,7 @@ KISSY.add(function (S,  IO) {
                 var ok = 0;
 
                 runs(function () {
-                    IO.jsonp('../data/interface.jss', function (data) {
+                    IO.jsonp('/kissy/src/io/tests/data/interface.jss', function (data) {
                         ok = true;
                         expect(typeof data).toBe('object');
 
@@ -263,7 +261,7 @@ KISSY.add(function (S,  IO) {
 
             it('带参数提交jsonp，获取回调参数', function () {
                 var ok = 0;
-                IO.jsonp('../data/interface.jss?sleep=0', {
+                IO.jsonp('/kissy/src/io/tests/data/interface.jss?sleep=0', {
                     my_param: 'taobao'
                 }, function (data) {
                     expect(typeof data).toBe('object');
@@ -301,7 +299,7 @@ KISSY.add(function (S,  IO) {
                 IO({
                     type: 'get',
                     // 根据 content-type 自动 parse
-                    url: '../data/interface.jss?sleep=1&contentType=text/json',
+                    url: '/kissy/src/io/tests/data/interface.jss?sleep=1&contentType=text/json',
                     async: false,
                     success: function (o) {
                         d = o;
@@ -315,7 +313,7 @@ KISSY.add(function (S,  IO) {
                     var d = 0;
                     IO({
                         type: 'post',
-                        url: '../data/interface.jss?sleep=1&contentType=text/json',
+                        url: '/kissy/src/io/tests/data/interface.jss?sleep=1&contentType=text/json',
                         async: false,
                         success: function (o) {
                             d = o;
@@ -333,7 +331,7 @@ KISSY.add(function (S,  IO) {
             it('能正确发起post 请求，无参数,正确获取回调参数，类型是text/json', function () {
 
                 var ok = false;
-                IO.post('../data/interface.jss?t=post&contentType=text/json', function (data) {
+                IO.post('/kissy/src/io/tests/data/interface.jss?t=post&contentType=text/json', function (data) {
                     ok = true;
                     expect(typeof data).toBe('object');
                     expect(data).not.toBe(undefined);
@@ -349,7 +347,7 @@ KISSY.add(function (S,  IO) {
             it('能正确发起 post 请求，无参数,正确获取回调参数', function () {
 
                 var ok = false;
-                IO.post('../data/interface.jss?t=post', function (data, status, xhr) {
+                IO.post('/kissy/src/io/tests/data/interface.jss?t=post', function (data, status, xhr) {
                     ok = true;
                     expect(typeof data).toBe('string');
                     var o = S.parseJson(data);
@@ -368,11 +366,11 @@ KISSY.add(function (S,  IO) {
             it('能正确发起 post 请求, 参数为json，并正确获取参数', function () {
 
                 var ok = false;
-                IO.post('../data/interface.jss?t=post', {
+                IO.post('/kissy/src/io/tests/data/interface.jss?t=post', {
                     type: 'post',
                     name: 'test',
                     company: 'www.taobao.com',
-                    exp: '>,?/\%."`~'
+                    exp: '>,?/%."`~'
                 }, function (data, textStatus, xhr) {
                     ok = true;
                     var o = S.parseJson(data);
@@ -392,7 +390,7 @@ KISSY.add(function (S,  IO) {
             it('能正确发起 post 请求 参数为string，并正确获取参数', function () {
 
                 var ok = false;
-                IO.post('../data/interface.jss?t=post',
+                IO.post('/kissy/src/io/tests/data/interface.jss?t=post',
                     'name=test&company=www.taobao.com&exp=' +
                         encodeURIComponent('>,?/\\%."`~'),
                     function (data, textStatus, xhr) {
@@ -417,7 +415,7 @@ KISSY.add(function (S,  IO) {
                 var ok, o;
 
                 runs(function () {
-                    IO.post('../data/interface.jss?contentType=text/json',
+                    IO.post('/kissy/src/io/tests/data/interface.jss?contentType=text/json',
                         function (data) {
                             ok = true;
                             o = data;
@@ -437,7 +435,7 @@ KISSY.add(function (S,  IO) {
 
             it('json 参数 可以覆盖url参数', function () {
                 var ok = false;
-                IO.post('../data/interface.jss?foo=sk1', {
+                IO.post('/kissy/src/io/tests/data/interface.jss?foo=sk1', {
                     foo: 'sk2'
                 }, function (data) {
                     ok = true;
@@ -457,7 +455,7 @@ KISSY.add(function (S,  IO) {
                 runs(function () {
                     ok = false;
 
-                    IO.post('../data/interface.jss', function (data) {
+                    IO.post('/kissy/src/io/tests/data/interface.jss', function (data) {
                         ok = true;
                         o = data;
                     }, 'jsonp');
@@ -481,7 +479,7 @@ KISSY.add(function (S,  IO) {
 
                 runs(function () {
                     // 这里和get的处理一致
-                    IO.post('../data/interface.jss?type=post&dataType=script',
+                    IO.post('/kissy/src/io/tests/data/interface.jss?type=post&dataType=script',
                         function (data) {
                             ok = true;
                             expect(data).toBe("var global_script_test = 500;");
@@ -509,7 +507,7 @@ KISSY.add(function (S,  IO) {
 
                 runs(function () {
                     // 这里和get的处理一致
-                    IO.post('../data/interface.jss?type=post' +
+                    IO.post('/kissy/src/io/tests/data/interface.jss?type=post' +
                         '&dataType=script' +
                         '&contentType=text/javascript',
                         function (data) {
@@ -539,7 +537,7 @@ KISSY.add(function (S,  IO) {
                 runs(function () {
 
                     //这里'xml'的参数可以省略
-                    IO.post('../data/xml.jss', function (data) {
+                    IO.post('/kissy/src/io/tests/data/xml.jss', function (data) {
                         ok = true;
                         o = data;
                     }, 'xml');
@@ -563,7 +561,7 @@ KISSY.add(function (S,  IO) {
 
                     // 可以么？ content-type 为 xml
                     // 但实际内容也为 json ，需要自动转换成 json
-                    IO.post('../data/xml-json.jss', function (data) {
+                    IO.post('/kissy/src/io/tests/data/xml-json.jss', function (data) {
                         ok = true;
                         o = data;
                     }, 'json');
@@ -627,7 +625,7 @@ KISSY.add(function (S,  IO) {
 
                 var ok = false;
 
-                IO.post('../data/interface.jss', function () {
+                IO.post('/kissy/src/io/tests/data/interface.jss', function () {
                     ok = true;
                     // this === config
                     expect(this.type).toBe('POST');
@@ -641,7 +639,7 @@ KISSY.add(function (S,  IO) {
             it('getScript 方式时，能正确设置 callback 里的 this', function () {
                 var ok = false;
 
-                IO.post('../data/interface.jss?t=get&dataType=script', function () {
+                IO.post('/kissy/src/io/tests/data/interface.jss?t=get&dataType=script', function () {
                     ok = true;
                     expect(this.type).toBe('POST');
                 }, 'script');
@@ -652,11 +650,11 @@ KISSY.add(function (S,  IO) {
 
             });
             it('能正确获取返回值', function () {
-                var xhr = IO.post('../data/interface.jss');
+                var xhr = IO.post('/kissy/src/io/tests/data/interface.jss');
                 expect('abort' in xhr).toBe(true);
 
                 // 注：jQuery 里，不跨域时，jsonp 返回 xhr. 跨域时，返回 void
-                xhr = IO.jsonp('../data/interface.jss');
+                xhr = IO.jsonp('/kissy/src/io/tests/data/interface.jss');
                 expect('abort' in xhr).toBe(true);
             });
 
@@ -671,7 +669,7 @@ KISSY.add(function (S,  IO) {
 
                 runs(function () {
                     ok = false;
-                    IO.get('../data/html.jss', function (data) {
+                    IO.get('/kissy/src/io/tests/data/html.jss', function (data) {
                         ok = true;
                         o = data;
                     });
@@ -690,7 +688,7 @@ KISSY.add(function (S,  IO) {
             it('能正确获取 callback 参数', function () {
                 var ok = false;
 
-                IO.get('../data/interface.jss?t=get', function (data, textStatus, xhr) {
+                IO.get('/kissy/src/io/tests/data/interface.jss?t=get', function (data, textStatus, xhr) {
                     ok = true;
 
                     var o = S.parseJson(data);
@@ -712,7 +710,7 @@ KISSY.add(function (S,  IO) {
             it('能正确处理 data 参数', function () {
                 var ok;
 
-                IO.get('../data/interface.jss?t=get', {'data': 'hello'}, function (data) {
+                IO.get('/kissy/src/io/tests/data/interface.jss?t=get', {'data': 'hello'}, function (data) {
                     ok = true;
                     var o = S.parseJson(data);
                     expect(o['data']).toBe('hello');
@@ -730,7 +728,7 @@ KISSY.add(function (S,  IO) {
                     //IO.get('http://test.com/kissy/src/io/tests/interface.jss?t=get', function(data) {
                     // test.com -> 127.0.0.1
                     // jQuery 里，当跨域时，dataType 为 json 时，依旧会调用 xhr. KISSY 处理逻辑与 jQuery 一致。
-                    IO.get('../data/interface.jss?t=get', function (data) {
+                    IO.get('/kissy/src/io/tests/data/interface.jss?t=get', function (data) {
                         ok = true;
                         o = data;
                     }, 'json');
@@ -762,7 +760,7 @@ KISSY.add(function (S,  IO) {
                     // KISSY 里，无论跨不跨域，只要 dataType 为 jsonp, 都用 getScript 处理
                     // 1.2 修正，和 jquery 保持一致，ie 下可以有出错处理，也方便 abort
                     //IO.get('http://test.com/kissy/src/io/tests/interface.jss?t=get', function(data) {
-                    IO.get('../data/interface.jss?t=get', function (data) {
+                    IO.get('/kissy/src/io/tests/data/interface.jss?t=get', function (data) {
                         ok = true;
                         o = data;
                     }, 'jsonp');
@@ -786,7 +784,7 @@ KISSY.add(function (S,  IO) {
                 runs(function () {
                     ok = false;
 
-                    IO.get('../data/interface.jss?t=get&dataType=script', function (d) {
+                    IO.get('/kissy/src/io/tests/data/interface.jss?t=get&dataType=script', function (d) {
                         ok = true;
                         expect(d).toBe("var global_script_test = 200;");
                     }, 'script');
@@ -807,7 +805,7 @@ KISSY.add(function (S,  IO) {
                 runs(function () {
                     ok = false;
 
-                    IO.get('../data/xml.jss', function (data) {
+                    IO.get('/kissy/src/io/tests/data/xml.jss', function (data) {
                         ok = true;
                         o = data;
                     });
@@ -826,7 +824,7 @@ KISSY.add(function (S,  IO) {
             it('xhr 方式时，能正确设置 callback 里的 this', function () {
                 var ok = false;
 
-                IO.get('../data/interface.jss?t=get', function () {
+                IO.get('/kissy/src/io/tests/data/interface.jss?t=get', function () {
                     ok = true;
                     expect(this.type).toBe('GET');
                 });
@@ -839,7 +837,7 @@ KISSY.add(function (S,  IO) {
             it('getScript 方式时，能正确设置 callback 里的 this', function () {
                 var ok = false;
 
-                IO.get('../data/interface.jss?t=get&dataType=script', function () {
+                IO.get('/kissy/src/io/tests/data/interface.jss?t=get&dataType=script', function () {
                     ok = true;
                     expect(this.type).toBe('GET');
                 }, 'script');
@@ -864,7 +862,7 @@ KISSY.add(function (S,  IO) {
                             expect(ev.type).toBe(type);
                         });
                     });
-                    IO.get('../data/interface.jss?t=' + S.now(), function () {
+                    IO.get('/kissy/src/io/tests/data/interface.jss?t=' + S.now(), function () {
                         ok = true;
                     });
                 });
@@ -888,7 +886,7 @@ KISSY.add(function (S,  IO) {
                         expect(ev.ajaxConfig).not.toBe(undefined);
                         expect(ev.type).toBe('error');
                     });
-                    IO.get('../data/404?t=' + S.now());
+                    IO.get('/kissy/src/io/tests/data/404?t=' + S.now());
                 });
 
                 waitsFor(function () {

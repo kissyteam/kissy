@@ -269,9 +269,9 @@ KISSY.add(function (S, require, exports, module) {
             else {
                 values = str.match(rgbaRe);
                 if (values) {
-                    r = parseInt(values[1]);
-                    g = parseInt(values[2]);
-                    b = parseInt(values[3]);
+                    r = parseInt(values[1],10);
+                    g = parseInt(values[2],10);
+                    b = parseInt(values[3],10);
                     a = parseFloat(values[4]) || 1;
                 }
             }

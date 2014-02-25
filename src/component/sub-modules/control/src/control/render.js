@@ -91,8 +91,8 @@ KISSY.add(function (S, require) {
     }
 
     // scope option
-    function getBaseCssClassesCmd() {
-        return this.config.view.getBaseCssClasses(arguments[1].params[0]);
+    function getBaseCssClassesCmd(_, options) {
+        return this.config.view.getBaseCssClasses(options && options.params[0]);
     }
 
     function getBaseCssClassCmd() {

@@ -1060,7 +1060,7 @@ function visit442_333_1(result) {
 function visit441_331_1(result) {
   _$jscoverage['/base/style.js'].branchData['331'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/style.js'].branchData['328'][1].init(434, 6, 'j >= 0');
+}_$jscoverage['/base/style.js'].branchData['328'][1].init(433, 6, 'j >= 0');
 function visit440_328_1(result) {
   _$jscoverage['/base/style.js'].branchData['328'][1].ranCondition(result);
   return result;
@@ -1204,7 +1204,7 @@ function visit406_64_1(result) {
 function visit405_63_1(result) {
   _$jscoverage['/base/style.js'].branchData['63'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/style.js'].branchData['47'][1].init(16, 55, 'cssProps[name] || S.Feature.getVendorCssPropName(name)');
+}_$jscoverage['/base/style.js'].branchData['47'][1].init(16, 54, 'cssProps[name] || S.Feature.getVendorCssPropName(name)');
 function visit404_47_1(result) {
   _$jscoverage['/base/style.js'].branchData['47'][1].ranCondition(result);
   return result;

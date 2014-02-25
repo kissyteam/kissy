@@ -231,12 +231,12 @@ if (! _$jscoverage['/util/escape.js']) {
   _$jscoverage['/util/escape.js'].lineData = [];
   _$jscoverage['/util/escape.js'].lineData[7] = 0;
   _$jscoverage['/util/escape.js'].lineData[12] = 0;
-  _$jscoverage['/util/escape.js'].lineData[32] = 0;
   _$jscoverage['/util/escape.js'].lineData[33] = 0;
   _$jscoverage['/util/escape.js'].lineData[34] = 0;
+  _$jscoverage['/util/escape.js'].lineData[35] = 0;
   _$jscoverage['/util/escape.js'].lineData[39] = 0;
   _$jscoverage['/util/escape.js'].lineData[40] = 0;
-  _$jscoverage['/util/escape.js'].lineData[41] = 0;
+  _$jscoverage['/util/escape.js'].lineData[42] = 0;
   _$jscoverage['/util/escape.js'].lineData[43] = 0;
   _$jscoverage['/util/escape.js'].lineData[44] = 0;
   _$jscoverage['/util/escape.js'].lineData[45] = 0;
@@ -246,22 +246,25 @@ if (! _$jscoverage['/util/escape.js']) {
   _$jscoverage['/util/escape.js'].lineData[52] = 0;
   _$jscoverage['/util/escape.js'].lineData[53] = 0;
   _$jscoverage['/util/escape.js'].lineData[54] = 0;
-  _$jscoverage['/util/escape.js'].lineData[56] = 0;
+  _$jscoverage['/util/escape.js'].lineData[55] = 0;
   _$jscoverage['/util/escape.js'].lineData[57] = 0;
   _$jscoverage['/util/escape.js'].lineData[58] = 0;
-  _$jscoverage['/util/escape.js'].lineData[60] = 0;
-  _$jscoverage['/util/escape.js'].lineData[61] = 0;
+  _$jscoverage['/util/escape.js'].lineData[59] = 0;
   _$jscoverage['/util/escape.js'].lineData[62] = 0;
-  _$jscoverage['/util/escape.js'].lineData[65] = 0;
-  _$jscoverage['/util/escape.js'].lineData[72] = 0;
-  _$jscoverage['/util/escape.js'].lineData[73] = 0;
+  _$jscoverage['/util/escape.js'].lineData[69] = 0;
+  _$jscoverage['/util/escape.js'].lineData[70] = 0;
+  _$jscoverage['/util/escape.js'].lineData[87] = 0;
+  _$jscoverage['/util/escape.js'].lineData[88] = 0;
   _$jscoverage['/util/escape.js'].lineData[90] = 0;
   _$jscoverage['/util/escape.js'].lineData[91] = 0;
-  _$jscoverage['/util/escape.js'].lineData[102] = 0;
-  _$jscoverage['/util/escape.js'].lineData[114] = 0;
-  _$jscoverage['/util/escape.js'].lineData[115] = 0;
-  _$jscoverage['/util/escape.js'].lineData[120] = 0;
-  _$jscoverage['/util/escape.js'].lineData[121] = 0;
+  _$jscoverage['/util/escape.js'].lineData[92] = 0;
+  _$jscoverage['/util/escape.js'].lineData[94] = 0;
+  _$jscoverage['/util/escape.js'].lineData[95] = 0;
+  _$jscoverage['/util/escape.js'].lineData[106] = 0;
+  _$jscoverage['/util/escape.js'].lineData[118] = 0;
+  _$jscoverage['/util/escape.js'].lineData[119] = 0;
+  _$jscoverage['/util/escape.js'].lineData[124] = 0;
+  _$jscoverage['/util/escape.js'].lineData[125] = 0;
 }
 if (! _$jscoverage['/util/escape.js'].functionData) {
   _$jscoverage['/util/escape.js'].functionData = [];
@@ -281,24 +284,29 @@ if (! _$jscoverage['/util/escape.js'].functionData) {
 }
 if (! _$jscoverage['/util/escape.js'].branchData) {
   _$jscoverage['/util/escape.js'].branchData = {};
-  _$jscoverage['/util/escape.js'].branchData['40'] = [];
-  _$jscoverage['/util/escape.js'].branchData['40'][1] = new BranchData();
-  _$jscoverage['/util/escape.js'].branchData['53'] = [];
-  _$jscoverage['/util/escape.js'].branchData['53'][1] = new BranchData();
-  _$jscoverage['/util/escape.js'].branchData['115'] = [];
-  _$jscoverage['/util/escape.js'].branchData['115'][1] = new BranchData();
+  _$jscoverage['/util/escape.js'].branchData['87'] = [];
+  _$jscoverage['/util/escape.js'].branchData['87'][1] = new BranchData();
+  _$jscoverage['/util/escape.js'].branchData['87'][2] = new BranchData();
+  _$jscoverage['/util/escape.js'].branchData['91'] = [];
+  _$jscoverage['/util/escape.js'].branchData['91'][1] = new BranchData();
+  _$jscoverage['/util/escape.js'].branchData['119'] = [];
+  _$jscoverage['/util/escape.js'].branchData['119'][1] = new BranchData();
 }
-_$jscoverage['/util/escape.js'].branchData['115'][1].init(24, 42, 'htmlEntities[m] || String.fromCharCode(+n)');
-function visit60_115_1(result) {
-  _$jscoverage['/util/escape.js'].branchData['115'][1].ranCondition(result);
+_$jscoverage['/util/escape.js'].branchData['119'][1].init(24, 42, 'htmlEntities[m] || String.fromCharCode(+n)');
+function visit61_119_1(result) {
+  _$jscoverage['/util/escape.js'].branchData['119'][1].ranCondition(result);
   return result;
-}_$jscoverage['/util/escape.js'].branchData['53'][1].init(13, 11, 'unEscapeReg');
-function visit59_53_1(result) {
-  _$jscoverage['/util/escape.js'].branchData['53'][1].ranCondition(result);
+}_$jscoverage['/util/escape.js'].branchData['91'][1].init(123, 32, '!possibleEscapeHtmlReg.test(str)');
+function visit60_91_1(result) {
+  _$jscoverage['/util/escape.js'].branchData['91'][1].ranCondition(result);
   return result;
-}_$jscoverage['/util/escape.js'].branchData['40'][1].init(13, 9, 'escapeReg');
-function visit58_40_1(result) {
-  _$jscoverage['/util/escape.js'].branchData['40'][1].ranCondition(result);
+}_$jscoverage['/util/escape.js'].branchData['87'][2].init(25, 9, 'str !== 0');
+function visit59_87_2(result) {
+  _$jscoverage['/util/escape.js'].branchData['87'][2].ranCondition(result);
+  return result;
+}_$jscoverage['/util/escape.js'].branchData['87'][1].init(17, 17, '!str && str !== 0');
+function visit58_87_1(result) {
+  _$jscoverage['/util/escape.js'].branchData['87'][1].ranCondition(result);
   return result;
 }_$jscoverage['/util/escape.js'].lineData[7]++;
 KISSY.add(function(S) {
@@ -311,24 +319,23 @@ KISSY.add(function(S) {
   '&#x60;': '`', 
   '&#x2F;': '/', 
   '&quot;': '"', 
-  '&#x27;': "'"}, reverseEntities = {}, escapeReg, unEscapeReg, escapeRegExp = /[\-#$\^*()+\[\]{}|\\,.?\s]/g;
-  _$jscoverage['/util/escape.js'].lineData[32]++;
+  '&#x27;': "'"}, reverseEntities = {}, escapeHtmlReg, unEscapeHtmlReg, possibleEscapeHtmlReg = /[&<>"'`]/, escapeRegExp = /[\-#$\^*()+\[\]{}|\\,.?\s]/g;
+  _$jscoverage['/util/escape.js'].lineData[33]++;
   (function() {
   _$jscoverage['/util/escape.js'].functionData[1]++;
-  _$jscoverage['/util/escape.js'].lineData[33]++;
+  _$jscoverage['/util/escape.js'].lineData[34]++;
   for (var k in htmlEntities) {
-    _$jscoverage['/util/escape.js'].lineData[34]++;
+    _$jscoverage['/util/escape.js'].lineData[35]++;
     reverseEntities[htmlEntities[k]] = k;
   }
 })();
   _$jscoverage['/util/escape.js'].lineData[39]++;
+  escapeHtmlReg = getEscapeReg();
+  _$jscoverage['/util/escape.js'].lineData[40]++;
+  unEscapeHtmlReg = getUnEscapeReg();
+  _$jscoverage['/util/escape.js'].lineData[42]++;
   function getEscapeReg() {
     _$jscoverage['/util/escape.js'].functionData[2]++;
-    _$jscoverage['/util/escape.js'].lineData[40]++;
-    if (visit58_40_1(escapeReg)) {
-      _$jscoverage['/util/escape.js'].lineData[41]++;
-      return escapeReg;
-    }
     _$jscoverage['/util/escape.js'].lineData[43]++;
     var str = EMPTY;
     _$jscoverage['/util/escape.js'].lineData[44]++;
@@ -340,69 +347,76 @@ KISSY.add(function(S) {
     _$jscoverage['/util/escape.js'].lineData[47]++;
     str = str.slice(0, -1);
     _$jscoverage['/util/escape.js'].lineData[48]++;
-    escapeReg = new RegExp(str, 'g');
+    escapeHtmlReg = new RegExp(str, 'g');
     _$jscoverage['/util/escape.js'].lineData[49]++;
-    return escapeReg;
+    return escapeHtmlReg;
   }
   _$jscoverage['/util/escape.js'].lineData[52]++;
   function getUnEscapeReg() {
     _$jscoverage['/util/escape.js'].functionData[4]++;
     _$jscoverage['/util/escape.js'].lineData[53]++;
-    if (visit59_53_1(unEscapeReg)) {
-      _$jscoverage['/util/escape.js'].lineData[54]++;
-      return unEscapeReg;
-    }
-    _$jscoverage['/util/escape.js'].lineData[56]++;
     var str = EMPTY;
-    _$jscoverage['/util/escape.js'].lineData[57]++;
+    _$jscoverage['/util/escape.js'].lineData[54]++;
     S.each(reverseEntities, function(entity) {
   _$jscoverage['/util/escape.js'].functionData[5]++;
-  _$jscoverage['/util/escape.js'].lineData[58]++;
+  _$jscoverage['/util/escape.js'].lineData[55]++;
   str += entity + '|';
 });
-    _$jscoverage['/util/escape.js'].lineData[60]++;
+    _$jscoverage['/util/escape.js'].lineData[57]++;
     str += '&#(\\d{1,5});';
-    _$jscoverage['/util/escape.js'].lineData[61]++;
-    unEscapeReg = new RegExp(str, 'g');
-    _$jscoverage['/util/escape.js'].lineData[62]++;
-    return unEscapeReg;
+    _$jscoverage['/util/escape.js'].lineData[58]++;
+    unEscapeHtmlReg = new RegExp(str, 'g');
+    _$jscoverage['/util/escape.js'].lineData[59]++;
+    return unEscapeHtmlReg;
   }
-  _$jscoverage['/util/escape.js'].lineData[65]++;
+  _$jscoverage['/util/escape.js'].lineData[62]++;
   S.mix(S, {
   fromUnicode: function(str) {
   _$jscoverage['/util/escape.js'].functionData[6]++;
-  _$jscoverage['/util/escape.js'].lineData[72]++;
+  _$jscoverage['/util/escape.js'].lineData[69]++;
   return str.replace(/\\u([a-f\d]{4})/ig, function(m, u) {
   _$jscoverage['/util/escape.js'].functionData[7]++;
-  _$jscoverage['/util/escape.js'].lineData[73]++;
+  _$jscoverage['/util/escape.js'].lineData[70]++;
   return String.fromCharCode(parseInt(u, HEX_BASE));
 });
 }, 
   escapeHtml: function(str) {
   _$jscoverage['/util/escape.js'].functionData[8]++;
+  _$jscoverage['/util/escape.js'].lineData[87]++;
+  if (visit58_87_1(!str && visit59_87_2(str !== 0))) {
+    _$jscoverage['/util/escape.js'].lineData[88]++;
+    return '';
+  }
   _$jscoverage['/util/escape.js'].lineData[90]++;
-  return (str + '').replace(getEscapeReg(), function(m) {
-  _$jscoverage['/util/escape.js'].functionData[9]++;
+  str = '' + str;
   _$jscoverage['/util/escape.js'].lineData[91]++;
+  if (visit60_91_1(!possibleEscapeHtmlReg.test(str))) {
+    _$jscoverage['/util/escape.js'].lineData[92]++;
+    return str;
+  }
+  _$jscoverage['/util/escape.js'].lineData[94]++;
+  return (str + '').replace(escapeHtmlReg, function(m) {
+  _$jscoverage['/util/escape.js'].functionData[9]++;
+  _$jscoverage['/util/escape.js'].lineData[95]++;
   return reverseEntities[m];
 });
 }, 
   escapeRegExp: function(str) {
   _$jscoverage['/util/escape.js'].functionData[10]++;
-  _$jscoverage['/util/escape.js'].lineData[102]++;
+  _$jscoverage['/util/escape.js'].lineData[106]++;
   return str.replace(escapeRegExp, '\\$&');
 }, 
   unEscapeHtml: function(str) {
   _$jscoverage['/util/escape.js'].functionData[11]++;
-  _$jscoverage['/util/escape.js'].lineData[114]++;
-  return str.replace(getUnEscapeReg(), function(m, n) {
+  _$jscoverage['/util/escape.js'].lineData[118]++;
+  return str.replace(unEscapeHtmlReg, function(m, n) {
   _$jscoverage['/util/escape.js'].functionData[12]++;
-  _$jscoverage['/util/escape.js'].lineData[115]++;
-  return visit60_115_1(htmlEntities[m] || String.fromCharCode(+n));
+  _$jscoverage['/util/escape.js'].lineData[119]++;
+  return visit61_119_1(htmlEntities[m] || String.fromCharCode(+n));
 });
 }});
-  _$jscoverage['/util/escape.js'].lineData[120]++;
+  _$jscoverage['/util/escape.js'].lineData[124]++;
   S.escapeHTML = S.escapeHtml;
-  _$jscoverage['/util/escape.js'].lineData[121]++;
+  _$jscoverage['/util/escape.js'].lineData[125]++;
   S.unEscapeHTML = S.unEscapeHtml;
 });

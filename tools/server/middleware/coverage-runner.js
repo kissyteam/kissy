@@ -10,7 +10,7 @@ module.exports = function (req, res, next) {
         return;
     }
     var path = m[1];
-    var componentName = path.slice(prefix.length).replace(/sub-modules\//, '');
+    var componentName = path.slice(prefix.length).replace(/sub-modules\//g, '');
     var testPath = path + '/tests/runner';
     var testJss = Path.normalize(cwd + '/../' + testPath + '/test.jss');
     var testHtml = Path.normalize(cwd + '/../' + testPath + '/test.html');

@@ -269,20 +269,20 @@ if (! _$jscoverage['/base-class.js']) {
   _$jscoverage['/base-class.js'].lineData[97] = 0;
   _$jscoverage['/base-class.js'].lineData[98] = 0;
   _$jscoverage['/base-class.js'].lineData[99] = 0;
-  _$jscoverage['/base-class.js'].lineData[107] = 0;
-  _$jscoverage['/base-class.js'].lineData[109] = 0;
-  _$jscoverage['/base-class.js'].lineData[114] = 0;
-  _$jscoverage['/base-class.js'].lineData[119] = 0;
+  _$jscoverage['/base-class.js'].lineData[106] = 0;
+  _$jscoverage['/base-class.js'].lineData[108] = 0;
+  _$jscoverage['/base-class.js'].lineData[113] = 0;
+  _$jscoverage['/base-class.js'].lineData[118] = 0;
+  _$jscoverage['/base-class.js'].lineData[121] = 0;
   _$jscoverage['/base-class.js'].lineData[122] = 0;
-  _$jscoverage['/base-class.js'].lineData[123] = 0;
+  _$jscoverage['/base-class.js'].lineData[124] = 0;
   _$jscoverage['/base-class.js'].lineData[125] = 0;
-  _$jscoverage['/base-class.js'].lineData[126] = 0;
-  _$jscoverage['/base-class.js'].lineData[131] = 0;
+  _$jscoverage['/base-class.js'].lineData[130] = 0;
+  _$jscoverage['/base-class.js'].lineData[132] = 0;
   _$jscoverage['/base-class.js'].lineData[133] = 0;
   _$jscoverage['/base-class.js'].lineData[134] = 0;
-  _$jscoverage['/base-class.js'].lineData[135] = 0;
-  _$jscoverage['/base-class.js'].lineData[140] = 0;
-  _$jscoverage['/base-class.js'].lineData[142] = 0;
+  _$jscoverage['/base-class.js'].lineData[139] = 0;
+  _$jscoverage['/base-class.js'].lineData[141] = 0;
 }
 if (! _$jscoverage['/base-class.js'].functionData) {
   _$jscoverage['/base-class.js'].functionData = [];
@@ -315,23 +315,23 @@ if (! _$jscoverage['/base-class.js'].branchData) {
   _$jscoverage['/base-class.js'].branchData['82'][1] = new BranchData();
   _$jscoverage['/base-class.js'].branchData['98'] = [];
   _$jscoverage['/base-class.js'].branchData['98'][1] = new BranchData();
-  _$jscoverage['/base-class.js'].branchData['122'] = [];
-  _$jscoverage['/base-class.js'].branchData['122'][1] = new BranchData();
-  _$jscoverage['/base-class.js'].branchData['133'] = [];
-  _$jscoverage['/base-class.js'].branchData['133'][1] = new BranchData();
-  _$jscoverage['/base-class.js'].branchData['133'][2] = new BranchData();
+  _$jscoverage['/base-class.js'].branchData['121'] = [];
+  _$jscoverage['/base-class.js'].branchData['121'][1] = new BranchData();
+  _$jscoverage['/base-class.js'].branchData['132'] = [];
+  _$jscoverage['/base-class.js'].branchData['132'][1] = new BranchData();
+  _$jscoverage['/base-class.js'].branchData['132'][2] = new BranchData();
 }
-_$jscoverage['/base-class.js'].branchData['133'][2].init(87, 22, 't.nodeName() === \'img\'');
-function visit9_133_2(result) {
-  _$jscoverage['/base-class.js'].branchData['133'][2].ranCondition(result);
+_$jscoverage['/base-class.js'].branchData['132'][2].init(87, 22, 't.nodeName() === \'img\'');
+function visit9_132_2(result) {
+  _$jscoverage['/base-class.js'].branchData['132'][2].ranCondition(result);
   return result;
-}_$jscoverage['/base-class.js'].branchData['133'][1].init(87, 64, 't.nodeName() === \'img\' && t.hasClass(self.get(\'cls\'), undefined)');
-function visit8_133_1(result) {
-  _$jscoverage['/base-class.js'].branchData['133'][1].ranCondition(result);
+}_$jscoverage['/base-class.js'].branchData['132'][1].init(87, 64, 't.nodeName() === \'img\' && t.hasClass(self.get(\'cls\'), undefined)');
+function visit8_132_1(result) {
+  _$jscoverage['/base-class.js'].branchData['132'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base-class.js'].branchData['122'][1].init(153, 2, '!r');
-function visit7_122_1(result) {
-  _$jscoverage['/base-class.js'].branchData['122'][1].ranCondition(result);
+}_$jscoverage['/base-class.js'].branchData['121'][1].init(153, 2, '!r');
+function visit7_121_1(result) {
+  _$jscoverage['/base-class.js'].branchData['121'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base-class.js'].branchData['98'][1].init(109, 1, 'a');
 function visit6_98_1(result) {
@@ -467,49 +467,49 @@ KISSY.add(function(S, require) {
   }
 });
 }}});
-  _$jscoverage['/base-class.js'].lineData[107]++;
+  _$jscoverage['/base-class.js'].lineData[106]++;
   editor.docReady(function() {
   _$jscoverage['/base-class.js'].functionData[9]++;
-  _$jscoverage['/base-class.js'].lineData[109]++;
+  _$jscoverage['/base-class.js'].lineData[108]++;
   editor.get('document').on('dblclick', self._dbClick, self);
 });
 }, 
   _getFlashUrl: function(r) {
   _$jscoverage['/base-class.js'].functionData[10]++;
-  _$jscoverage['/base-class.js'].lineData[114]++;
+  _$jscoverage['/base-class.js'].lineData[113]++;
   return flashUtils.getUrl(r);
 }, 
   _updateTip: function(tipUrlElEl, selectedFlash) {
   _$jscoverage['/base-class.js'].functionData[11]++;
-  _$jscoverage['/base-class.js'].lineData[119]++;
+  _$jscoverage['/base-class.js'].lineData[118]++;
   var self = this, editor = self.get('editor'), r = editor.restoreRealElement(selectedFlash);
-  _$jscoverage['/base-class.js'].lineData[122]++;
-  if (visit7_122_1(!r)) {
-    _$jscoverage['/base-class.js'].lineData[123]++;
+  _$jscoverage['/base-class.js'].lineData[121]++;
+  if (visit7_121_1(!r)) {
+    _$jscoverage['/base-class.js'].lineData[122]++;
     return;
   }
-  _$jscoverage['/base-class.js'].lineData[125]++;
+  _$jscoverage['/base-class.js'].lineData[124]++;
   var url = self._getFlashUrl(r);
-  _$jscoverage['/base-class.js'].lineData[126]++;
+  _$jscoverage['/base-class.js'].lineData[125]++;
   tipUrlElEl.attr('href', url);
 }, 
   _dbClick: function(ev) {
   _$jscoverage['/base-class.js'].functionData[12]++;
-  _$jscoverage['/base-class.js'].lineData[131]++;
+  _$jscoverage['/base-class.js'].lineData[130]++;
   var self = this, t = new Node(ev.target);
-  _$jscoverage['/base-class.js'].lineData[133]++;
-  if (visit8_133_1(visit9_133_2(t.nodeName() === 'img') && t.hasClass(self.get('cls'), undefined))) {
-    _$jscoverage['/base-class.js'].lineData[134]++;
+  _$jscoverage['/base-class.js'].lineData[132]++;
+  if (visit8_132_1(visit9_132_2(t.nodeName() === 'img') && t.hasClass(self.get('cls'), undefined))) {
+    _$jscoverage['/base-class.js'].lineData[133]++;
     self.show(t);
-    _$jscoverage['/base-class.js'].lineData[135]++;
+    _$jscoverage['/base-class.js'].lineData[134]++;
     ev.halt();
   }
 }, 
   show: function(selectedEl) {
   _$jscoverage['/base-class.js'].functionData[13]++;
-  _$jscoverage['/base-class.js'].lineData[140]++;
+  _$jscoverage['/base-class.js'].lineData[139]++;
   var self = this, editor = self.get('editor');
-  _$jscoverage['/base-class.js'].lineData[142]++;
+  _$jscoverage['/base-class.js'].lineData[141]++;
   DialogLoader.useDialog(editor, self.get('type'), self.get('pluginConfig'), selectedEl);
 }}, {
   ATTRS: {

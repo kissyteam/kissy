@@ -87,12 +87,12 @@ KISSY.add(function (S, require) {
                 self.$trackEl.on(Gesture.start, self.onTrackElMouseDown, self);
                 self.$dragEl.on('dragstart', preventDefault)
                     .on(Gesture.start, onDragStartHandler, self);
-                scrollView
-                    .on(self.afterScrollChangeEvent + SCROLLBAR_EVENT_NS,
-                        self.afterScrollChange, self)
-                    .on('scrollEnd' + SCROLLBAR_EVENT_NS, self.onScrollEnd, self)
-                    .on('afterDisabledChange', self.onScrollViewDisabled, self);
             }
+            scrollView
+                .on(self.afterScrollChangeEvent + SCROLLBAR_EVENT_NS,
+                    self.afterScrollChange, self)
+                .on('scrollEnd' + SCROLLBAR_EVENT_NS, self.onScrollEnd, self)
+                .on('afterDisabledChange', self.onScrollViewDisabled, self);
         },
 
         destructor: function () {
@@ -178,6 +178,37 @@ KISSY.add(function (S, require) {
             }
         },
 
+        syncOnScroll: function () {
+            var control = this,
+                scrollType = control.scrollType,
+                scrollView = control.scrollView,
+                dragLTProperty = control.dragLTProperty,
+                dragWHProperty = control.dragWHProperty,
+                trackElSize = control.trackElSize,
+                barSize = control.barSize,
+                contentSize = control.scrollLength,
+                val = scrollView.get(control.scrollProperty),
+                maxScrollOffset = scrollView.maxScroll,
+                minScrollOffset = scrollView.minScroll,
+                minScroll = minScrollOffset[scrollType],
+                maxScroll = maxScrollOffset[scrollType],
+                dragVal;
+            if (val > maxScroll) {
+                dragVal = maxScroll / contentSize * trackElSize;
+                control.set(dragWHProperty, barSize - (val - maxScroll));
+                // dragSizeAxis has minLength
+                control.set(dragLTProperty, dragVal + barSize - control.get(dragWHProperty));
+            } else if (val < minScroll) {
+                dragVal = minScroll / contentSize * trackElSize;
+                control.set(dragWHProperty, barSize - (minScroll - val));
+                control.set(dragLTProperty, dragVal);
+            } else {
+                dragVal = val / contentSize * trackElSize;
+                control.set(dragLTProperty, dragVal);
+                control.set(dragWHProperty, barSize);
+            }
+        },
+
         // percentage matters!
         afterScrollChange: function () {
             // only show when scroll
@@ -191,13 +222,7 @@ KISSY.add(function (S, require) {
             if (self.hideFn && !scrollView.isScrolling) {
                 self.startHideTimer();
             }
-            self.view.syncOnScrollChange();
-        },
-
-        _onSetDisabled: function (v) {
-            if (this.dd) {
-                this.dd.set('disabled', v);
-            }
+            self.syncOnScroll();
         }
     }, {
         ATTRS: {

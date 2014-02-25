@@ -1,10 +1,10 @@
 /*
-Copyright 2013, KISSY v1.50
+Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Dec 23 18:50
+build time: Feb 25 19:31
 */
 /*
- Combined processedModules by KISSY Module Compiler: 
+ Combined modules by KISSY Module Compiler: 
 
  anim/base/queue
  anim/base/utils
@@ -151,7 +151,6 @@ KISSY.add("anim/base/utils", ["./queue", "dom"], function(S, require) {
 });
 KISSY.add("anim/base", ["dom", "./base/utils", "./base/queue", "promise"], function(S, require) {
   var Dom = require("dom"), Utils = require("./base/utils"), Q = require("./base/queue"), Promise = require("promise");
-  var logger = S.getLogger("s/anim");
   var NodeType = Dom.NodeType, noop = S.noop, specialVals = {toggle:1, hide:1, show:1};
   function AnimBase(config) {
     var self = this;
@@ -175,24 +174,7 @@ KISSY.add("anim/base", ["dom", "./base/utils", "./base/queue", "promise"], funct
       complete.call(self)
     }
   }
-  S.extend(AnimBase, Promise, {on:function(name, fn) {
-    var self = this;
-    logger.warn("please use promise api of anim instead");
-    if(name === "complete") {
-      self.then(fn)
-    }else {
-      if(name === "end") {
-        self.fin(fn)
-      }else {
-        if(name === "step") {
-          self.progress(fn)
-        }else {
-          logger.error("not supported event for anim: " + name)
-        }
-      }
-    }
-    return self
-  }, prepareFx:noop, runInternal:function() {
+  S.extend(AnimBase, Promise, {prepareFx:noop, runInternal:function() {
     var self = this, config = self.config, node = self.node, val, _backupProps = self._backupProps, _propsData = self._propsData, to = config.to, defaultDelay = config.delay || 0, defaultDuration = config.duration;
     Utils.saveRunningAnim(self);
     S.each(to, function(val, prop) {

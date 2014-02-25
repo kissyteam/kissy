@@ -232,15 +232,9 @@ if (! _$jscoverage['/menu/check-menuitem-xtpl.js']) {
   _$jscoverage['/menu/check-menuitem-xtpl.js'].lineData[2] = 0;
   _$jscoverage['/menu/check-menuitem-xtpl.js'].lineData[4] = 0;
   _$jscoverage['/menu/check-menuitem-xtpl.js'].lineData[5] = 0;
-  _$jscoverage['/menu/check-menuitem-xtpl.js'].lineData[9] = 0;
   _$jscoverage['/menu/check-menuitem-xtpl.js'].lineData[10] = 0;
-  _$jscoverage['/menu/check-menuitem-xtpl.js'].lineData[12] = 0;
-  _$jscoverage['/menu/check-menuitem-xtpl.js'].lineData[17] = 0;
-  _$jscoverage['/menu/check-menuitem-xtpl.js'].lineData[18] = 0;
-  _$jscoverage['/menu/check-menuitem-xtpl.js'].lineData[19] = 0;
-  _$jscoverage['/menu/check-menuitem-xtpl.js'].lineData[20] = 0;
-  _$jscoverage['/menu/check-menuitem-xtpl.js'].lineData[21] = 0;
-  _$jscoverage['/menu/check-menuitem-xtpl.js'].lineData[22] = 0;
+  _$jscoverage['/menu/check-menuitem-xtpl.js'].lineData[11] = 0;
+  _$jscoverage['/menu/check-menuitem-xtpl.js'].lineData[13] = 0;
   _$jscoverage['/menu/check-menuitem-xtpl.js'].lineData[23] = 0;
   _$jscoverage['/menu/check-menuitem-xtpl.js'].lineData[24] = 0;
   _$jscoverage['/menu/check-menuitem-xtpl.js'].lineData[25] = 0;
@@ -250,9 +244,18 @@ if (! _$jscoverage['/menu/check-menuitem-xtpl.js']) {
   _$jscoverage['/menu/check-menuitem-xtpl.js'].lineData[29] = 0;
   _$jscoverage['/menu/check-menuitem-xtpl.js'].lineData[30] = 0;
   _$jscoverage['/menu/check-menuitem-xtpl.js'].lineData[31] = 0;
+  _$jscoverage['/menu/check-menuitem-xtpl.js'].lineData[32] = 0;
   _$jscoverage['/menu/check-menuitem-xtpl.js'].lineData[33] = 0;
   _$jscoverage['/menu/check-menuitem-xtpl.js'].lineData[34] = 0;
   _$jscoverage['/menu/check-menuitem-xtpl.js'].lineData[35] = 0;
+  _$jscoverage['/menu/check-menuitem-xtpl.js'].lineData[36] = 0;
+  _$jscoverage['/menu/check-menuitem-xtpl.js'].lineData[37] = 0;
+  _$jscoverage['/menu/check-menuitem-xtpl.js'].lineData[39] = 0;
+  _$jscoverage['/menu/check-menuitem-xtpl.js'].lineData[40] = 0;
+  _$jscoverage['/menu/check-menuitem-xtpl.js'].lineData[41] = 0;
+  _$jscoverage['/menu/check-menuitem-xtpl.js'].lineData[43] = 0;
+  _$jscoverage['/menu/check-menuitem-xtpl.js'].lineData[45] = 0;
+  _$jscoverage['/menu/check-menuitem-xtpl.js'].lineData[46] = 0;
 }
 if (! _$jscoverage['/menu/check-menuitem-xtpl.js'].functionData) {
   _$jscoverage['/menu/check-menuitem-xtpl.js'].functionData = [];
@@ -261,75 +264,93 @@ if (! _$jscoverage['/menu/check-menuitem-xtpl.js'].functionData) {
 }
 if (! _$jscoverage['/menu/check-menuitem-xtpl.js'].branchData) {
   _$jscoverage['/menu/check-menuitem-xtpl.js'].branchData = {};
-  _$jscoverage['/menu/check-menuitem-xtpl.js'].branchData['9'] = [];
-  _$jscoverage['/menu/check-menuitem-xtpl.js'].branchData['9'][1] = new BranchData();
-  _$jscoverage['/menu/check-menuitem-xtpl.js'].branchData['9'][2] = new BranchData();
-  _$jscoverage['/menu/check-menuitem-xtpl.js'].branchData['29'] = [];
-  _$jscoverage['/menu/check-menuitem-xtpl.js'].branchData['29'][1] = new BranchData();
+  _$jscoverage['/menu/check-menuitem-xtpl.js'].branchData['10'] = [];
+  _$jscoverage['/menu/check-menuitem-xtpl.js'].branchData['10'][1] = new BranchData();
+  _$jscoverage['/menu/check-menuitem-xtpl.js'].branchData['10'][2] = new BranchData();
+  _$jscoverage['/menu/check-menuitem-xtpl.js'].branchData['35'] = [];
+  _$jscoverage['/menu/check-menuitem-xtpl.js'].branchData['35'][1] = new BranchData();
+  _$jscoverage['/menu/check-menuitem-xtpl.js'].branchData['40'] = [];
+  _$jscoverage['/menu/check-menuitem-xtpl.js'].branchData['40'][1] = new BranchData();
+  _$jscoverage['/menu/check-menuitem-xtpl.js'].branchData['40'][2] = new BranchData();
 }
-_$jscoverage['/menu/check-menuitem-xtpl.js'].branchData['29'][1].init(1105, 10, 'moduleWrap');
-function visit4_29_1(result) {
-  _$jscoverage['/menu/check-menuitem-xtpl.js'].branchData['29'][1].ranCondition(result);
+_$jscoverage['/menu/check-menuitem-xtpl.js'].branchData['40'][2].init(1637, 9, 'id3 === 0');
+function visit6_40_2(result) {
+  _$jscoverage['/menu/check-menuitem-xtpl.js'].branchData['40'][2].ranCondition(result);
   return result;
-}_$jscoverage['/menu/check-menuitem-xtpl.js'].branchData['9'][2].init(165, 29, 'typeof module !== "undefined"');
-function visit3_9_2(result) {
-  _$jscoverage['/menu/check-menuitem-xtpl.js'].branchData['9'][2].ranCondition(result);
+}_$jscoverage['/menu/check-menuitem-xtpl.js'].branchData['40'][1].init(1630, 16, 'id3 || id3 === 0');
+function visit5_40_1(result) {
+  _$jscoverage['/menu/check-menuitem-xtpl.js'].branchData['40'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menu/check-menuitem-xtpl.js'].branchData['9'][1].init(165, 45, 'typeof module !== "undefined" && module.kissy');
-function visit2_9_1(result) {
-  _$jscoverage['/menu/check-menuitem-xtpl.js'].branchData['9'][1].ranCondition(result);
+}_$jscoverage['/menu/check-menuitem-xtpl.js'].branchData['35'][1].init(1368, 10, 'moduleWrap');
+function visit4_35_1(result) {
+  _$jscoverage['/menu/check-menuitem-xtpl.js'].branchData['35'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/menu/check-menuitem-xtpl.js'].branchData['10'][2].init(226, 29, 'typeof module !== "undefined"');
+function visit3_10_2(result) {
+  _$jscoverage['/menu/check-menuitem-xtpl.js'].branchData['10'][2].ranCondition(result);
+  return result;
+}_$jscoverage['/menu/check-menuitem-xtpl.js'].branchData['10'][1].init(226, 45, 'typeof module !== "undefined" && module.kissy');
+function visit2_10_1(result) {
+  _$jscoverage['/menu/check-menuitem-xtpl.js'].branchData['10'][1].ranCondition(result);
   return result;
 }_$jscoverage['/menu/check-menuitem-xtpl.js'].lineData[2]++;
 KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/menu/check-menuitem-xtpl.js'].functionData[0]++;
   _$jscoverage['/menu/check-menuitem-xtpl.js'].lineData[4]++;
-  return function(scope, S, undefined) {
+  var t = function(scope, S, payload, undefined) {
   _$jscoverage['/menu/check-menuitem-xtpl.js'].functionData[1]++;
   _$jscoverage['/menu/check-menuitem-xtpl.js'].lineData[5]++;
-  var buffer = "", config = this.config, engine = this, moduleWrap, utils = config.utils;
-  _$jscoverage['/menu/check-menuitem-xtpl.js'].lineData[9]++;
-  if (visit2_9_1(visit3_9_2(typeof module !== "undefined") && module.kissy)) {
-    _$jscoverage['/menu/check-menuitem-xtpl.js'].lineData[10]++;
+  var buffer = "", engine = this, moduleWrap, escapeHtml = S.escapeHtml, nativeCommands = engine.nativeCommands, utils = engine.utils;
+  _$jscoverage['/menu/check-menuitem-xtpl.js'].lineData[10]++;
+  if (visit2_10_1(visit3_10_2(typeof module !== "undefined") && module.kissy)) {
+    _$jscoverage['/menu/check-menuitem-xtpl.js'].lineData[11]++;
     moduleWrap = module;
   }
-  _$jscoverage['/menu/check-menuitem-xtpl.js'].lineData[12]++;
-  var runBlockCommandUtil = utils.runBlockCommand, renderOutputUtil = utils.renderOutput, getPropertyUtil = utils.getProperty, runInlineCommandUtil = utils.runInlineCommand, getPropertyOrRunCommandUtil = utils.getPropertyOrRunCommand;
-  _$jscoverage['/menu/check-menuitem-xtpl.js'].lineData[17]++;
-  buffer += '<div class="';
-  _$jscoverage['/menu/check-menuitem-xtpl.js'].lineData[18]++;
-  var config1 = {};
-  _$jscoverage['/menu/check-menuitem-xtpl.js'].lineData[19]++;
-  var params2 = [];
-  _$jscoverage['/menu/check-menuitem-xtpl.js'].lineData[20]++;
-  params2.push('checkbox');
-  _$jscoverage['/menu/check-menuitem-xtpl.js'].lineData[21]++;
-  config1.params = params2;
-  _$jscoverage['/menu/check-menuitem-xtpl.js'].lineData[22]++;
-  var id0 = runInlineCommandUtil(engine, scope, config1, "getBaseCssClasses", 1);
+  _$jscoverage['/menu/check-menuitem-xtpl.js'].lineData[13]++;
+  var callCommandUtil = utils.callCommand, eachCommand = nativeCommands.each, withCommand = nativeCommands["with"], ifCommand = nativeCommands["if"], setCommand = nativeCommands.set, includeCommand = nativeCommands.include, parseCommand = nativeCommands.parse, extendCommand = nativeCommands.extend, blockCommand = nativeCommands.block, macroCommand = nativeCommands.macro;
   _$jscoverage['/menu/check-menuitem-xtpl.js'].lineData[23]++;
-  buffer += renderOutputUtil(id0, true);
+  buffer += '<div class="';
   _$jscoverage['/menu/check-menuitem-xtpl.js'].lineData[24]++;
-  buffer += '">\n</div>\n';
+  var option1 = {};
   _$jscoverage['/menu/check-menuitem-xtpl.js'].lineData[25]++;
-  var config4 = {};
+  var params2 = [];
   _$jscoverage['/menu/check-menuitem-xtpl.js'].lineData[26]++;
-  var params5 = [];
+  params2.push('checkbox');
   _$jscoverage['/menu/check-menuitem-xtpl.js'].lineData[27]++;
-  params5.push('component/extension/content-xtpl');
+  option1.params = params2;
   _$jscoverage['/menu/check-menuitem-xtpl.js'].lineData[28]++;
-  config4.params = params5;
+  var id0 = callCommandUtil(engine, scope, option1, "getBaseCssClasses", 1);
   _$jscoverage['/menu/check-menuitem-xtpl.js'].lineData[29]++;
-  if (visit4_29_1(moduleWrap)) {
-    _$jscoverage['/menu/check-menuitem-xtpl.js'].lineData[30]++;
-    require("component/extension/content-xtpl");
-    _$jscoverage['/menu/check-menuitem-xtpl.js'].lineData[31]++;
-    config4.params[0] = moduleWrap.resolveByName(config4.params[0]);
-  }
+  buffer += escapeHtml(id0);
+  _$jscoverage['/menu/check-menuitem-xtpl.js'].lineData[30]++;
+  buffer += '">\n</div>\n';
+  _$jscoverage['/menu/check-menuitem-xtpl.js'].lineData[31]++;
+  var option4 = {};
+  _$jscoverage['/menu/check-menuitem-xtpl.js'].lineData[32]++;
+  var params5 = [];
   _$jscoverage['/menu/check-menuitem-xtpl.js'].lineData[33]++;
-  var id3 = runInlineCommandUtil(engine, scope, config4, "include", 3);
+  params5.push('component/extension/content-xtpl');
   _$jscoverage['/menu/check-menuitem-xtpl.js'].lineData[34]++;
-  buffer += renderOutputUtil(id3, false);
+  option4.params = params5;
   _$jscoverage['/menu/check-menuitem-xtpl.js'].lineData[35]++;
+  if (visit4_35_1(moduleWrap)) {
+    _$jscoverage['/menu/check-menuitem-xtpl.js'].lineData[36]++;
+    require("component/extension/content-xtpl");
+    _$jscoverage['/menu/check-menuitem-xtpl.js'].lineData[37]++;
+    option4.params[0] = moduleWrap.resolveByName(option4.params[0]);
+  }
+  _$jscoverage['/menu/check-menuitem-xtpl.js'].lineData[39]++;
+  var id3 = includeCommand.call(engine, scope, option4, payload);
+  _$jscoverage['/menu/check-menuitem-xtpl.js'].lineData[40]++;
+  if (visit5_40_1(id3 || visit6_40_2(id3 === 0))) {
+    _$jscoverage['/menu/check-menuitem-xtpl.js'].lineData[41]++;
+    buffer += id3;
+  }
+  _$jscoverage['/menu/check-menuitem-xtpl.js'].lineData[43]++;
   return buffer;
 };
+  _$jscoverage['/menu/check-menuitem-xtpl.js'].lineData[45]++;
+  t.TPL_NAME = "E:/code/kissy_git/kissy/kissy/src/menu/src/menu/check-menuitem.xtpl.html";
+  _$jscoverage['/menu/check-menuitem-xtpl.js'].lineData[46]++;
+  return t;
 });

@@ -1,128 +1,136 @@
 /** Compiled By kissy-xtemplate */
 KISSY.add(function (S, require, exports, module) {
         /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true*/
-        return function (scope, S, undefined) {
+        var t = function (scope, S, payload, undefined) {
             var buffer = "",
-                config = this.config,
                 engine = this,
-                moduleWrap, utils = config.utils;
+                moduleWrap, escapeHtml = S.escapeHtml,
+                nativeCommands = engine.nativeCommands,
+                utils = engine.utils;
             if (typeof module !== "undefined" && module.kissy) {
                 moduleWrap = module;
             }
-            var runBlockCommandUtil = utils.runBlockCommand,
-                renderOutputUtil = utils.renderOutput,
-                getPropertyUtil = utils.getProperty,
-                runInlineCommandUtil = utils.runInlineCommand,
-                getPropertyOrRunCommandUtil = utils.getPropertyOrRunCommand;
+            var callCommandUtil = utils.callCommand,
+                eachCommand = nativeCommands.each,
+                withCommand = nativeCommands["with"],
+                ifCommand = nativeCommands["if"],
+                setCommand = nativeCommands.set,
+                includeCommand = nativeCommands.include,
+                parseCommand = nativeCommands.parse,
+                extendCommand = nativeCommands.extend,
+                blockCommand = nativeCommands.block,
+                macroCommand = nativeCommands.macro;
             buffer += '<div id="ks-tree-node-row-';
-            var id0 = getPropertyOrRunCommandUtil(engine, scope, {}, "id", 0, 1);
-            buffer += renderOutputUtil(id0, true);
+            var id0 = scope.resolve(["id"]);
+            buffer += escapeHtml(id0);
             buffer += '"\n     class="';
-            var config2 = {};
+            var option2 = {};
             var params3 = [];
             params3.push('row');
-            config2.params = params3;
-            var id1 = runInlineCommandUtil(engine, scope, config2, "getBaseCssClasses", 2);
-            buffer += renderOutputUtil(id1, true);
+            option2.params = params3;
+            var id1 = callCommandUtil(engine, scope, option2, "getBaseCssClasses", 2);
+            buffer += escapeHtml(id1);
             buffer += '\n     ';
-            var config4 = {};
+            var option4 = {};
             var params5 = [];
-            var id6 = getPropertyUtil(engine, scope, "selected", 0, 3);
+            var id6 = scope.resolve(["selected"]);
             params5.push(id6);
-            config4.params = params5;
-            config4.fn = function (scope) {
+            option4.params = params5;
+            option4.fn = function (scope) {
                 var buffer = "";
                 buffer += '\n        ';
-                var config8 = {};
+                var option8 = {};
                 var params9 = [];
                 params9.push('selected');
-                config8.params = params9;
-                var id7 = runInlineCommandUtil(engine, scope, config8, "getBaseCssClasses", 4);
-                buffer += renderOutputUtil(id7, true);
+                option8.params = params9;
+                var id7 = callCommandUtil(engine, scope, option8, "getBaseCssClasses", 4);
+                buffer += escapeHtml(id7);
                 buffer += '\n     ';
                 return buffer;
             };
-            buffer += runBlockCommandUtil(engine, scope, config4, "if", 3);
+            buffer += ifCommand.call(engine, scope, option4, payload);
             buffer += '\n     ">\n    <div id="ks-tree-node-expand-icon-';
-            var id10 = getPropertyOrRunCommandUtil(engine, scope, {}, "id", 0, 7);
-            buffer += renderOutputUtil(id10, true);
+            var id10 = scope.resolve(["id"]);
+            buffer += escapeHtml(id10);
             buffer += '"\n         class="';
-            var config12 = {};
+            var option12 = {};
             var params13 = [];
             params13.push('expand-icon');
-            config12.params = params13;
-            var id11 = runInlineCommandUtil(engine, scope, config12, "getBaseCssClasses", 8);
-            buffer += renderOutputUtil(id11, true);
+            option12.params = params13;
+            var id11 = callCommandUtil(engine, scope, option12, "getBaseCssClasses", 8);
+            buffer += escapeHtml(id11);
             buffer += '">\n    </div>\n    ';
-            var config14 = {};
+            var option14 = {};
             var params15 = [];
-            var id16 = getPropertyUtil(engine, scope, "checkable", 0, 10);
+            var id16 = scope.resolve(["checkable"]);
             params15.push(id16);
-            config14.params = params15;
-            config14.fn = function (scope) {
+            option14.params = params15;
+            option14.fn = function (scope) {
                 var buffer = "";
                 buffer += '\n    <div id="ks-tree-node-checked-';
-                var id17 = getPropertyOrRunCommandUtil(engine, scope, {}, "id", 0, 11);
-                buffer += renderOutputUtil(id17, true);
+                var id17 = scope.resolve(["id"]);
+                buffer += escapeHtml(id17);
                 buffer += '"\n         class="';
-                var config19 = {};
+                var option19 = {};
                 var params20 = [];
-                var id21 = getPropertyUtil(engine, scope, "checkState", 0, 12);
+                var id21 = scope.resolve(["checkState"]);
                 params20.push(('checked') + id21);
-                config19.params = params20;
-                var id18 = runInlineCommandUtil(engine, scope, config19, "getBaseCssClasses", 12);
-                buffer += renderOutputUtil(id18, true);
+                option19.params = params20;
+                var id18 = callCommandUtil(engine, scope, option19, "getBaseCssClasses", 12);
+                buffer += escapeHtml(id18);
                 buffer += '"></div>\n    ';
                 return buffer;
             };
-            buffer += runBlockCommandUtil(engine, scope, config14, "if", 10);
+            buffer += ifCommand.call(engine, scope, option14, payload);
             buffer += '\n    <div id="ks-tree-node-icon-';
-            var id22 = getPropertyOrRunCommandUtil(engine, scope, {}, "id", 0, 14);
-            buffer += renderOutputUtil(id22, true);
+            var id22 = scope.resolve(["id"]);
+            buffer += escapeHtml(id22);
             buffer += '"\n         class="';
-            var config24 = {};
+            var option24 = {};
             var params25 = [];
             params25.push('icon');
-            config24.params = params25;
-            var id23 = runInlineCommandUtil(engine, scope, config24, "getBaseCssClasses", 15);
-            buffer += renderOutputUtil(id23, true);
+            option24.params = params25;
+            var id23 = callCommandUtil(engine, scope, option24, "getBaseCssClasses", 15);
+            buffer += escapeHtml(id23);
             buffer += '">\n\n    </div>\n    ';
-            var config27 = {};
+            var option27 = {};
             var params28 = [];
             params28.push('component/extension/content-xtpl');
-            config27.params = params28;
+            option27.params = params28;
             if (moduleWrap) {
                 require("component/extension/content-xtpl");
-                config27.params[0] = moduleWrap.resolveByName(config27.params[0]);
+                option27.params[0] = moduleWrap.resolveByName(option27.params[0]);
             }
-            var id26 = runInlineCommandUtil(engine, scope, config27, "include", 18);
-            buffer += renderOutputUtil(id26, false);
+            var id26 = includeCommand.call(engine, scope, option27, payload);
+            if (id26 || id26 === 0) {
+                buffer += id26;
+            }
             buffer += '\n</div>\n<div id="ks-tree-node-children-';
-            var id29 = getPropertyOrRunCommandUtil(engine, scope, {}, "id", 0, 20);
-            buffer += renderOutputUtil(id29, true);
+            var id29 = scope.resolve(["id"]);
+            buffer += escapeHtml(id29);
             buffer += '"\n     class="';
-            var config31 = {};
+            var option31 = {};
             var params32 = [];
             params32.push('children');
-            config31.params = params32;
-            var id30 = runInlineCommandUtil(engine, scope, config31, "getBaseCssClasses", 21);
-            buffer += renderOutputUtil(id30, true);
+            option31.params = params32;
+            var id30 = callCommandUtil(engine, scope, option31, "getBaseCssClasses", 21);
+            buffer += escapeHtml(id30);
             buffer += '"\n';
-            var config33 = {};
+            var option33 = {};
             var params34 = [];
-            var id35 = getPropertyUtil(engine, scope, "expanded", 0, 22);
+            var id35 = scope.resolve(["expanded"]);
+            id35 = !id35;
             params34.push(id35);
-            config33.params = params34;
-            config33.fn = function (scope) {
+            option33.params = params34;
+            option33.fn = function (scope) {
                 var buffer = "";
                 buffer += '\nstyle="display:none"\n';
                 return buffer;
             };
-            var inverse36 = config33.fn;
-            config33.fn = config33.inverse;
-            config33.inverse = inverse36;
-            buffer += runBlockCommandUtil(engine, scope, config33, "if", 22);
+            buffer += ifCommand.call(engine, scope, option33, payload);
             buffer += '\n>\n</div>';
             return buffer;
         };
+t.TPL_NAME = "E:/code/kissy_git/kissy/kissy/src/tree/src/tree/node.xtpl.html";
+return t;
 });

@@ -1,16 +1,16 @@
-{{#each months}}
+{{#each (months)}}
 <tr role="row">
-    {{#each months[xindex]}}
+    {{#each (months[xindex])}}
     <td role="gridcell"
         title="{{title}}"
-        class="{{getBaseCssClasses 'cell'}}
-        {{#if month===value}}
-        {{getBaseCssClasses 'selected-cell'}}
+        class="{{getBaseCssClasses ('cell')}}
+        {{#if (month===value)}}
+        {{getBaseCssClasses ('selected-cell')}}
         {{/if}}
         ">
         <a hidefocus="on"
            href="#"
-           class="{{getBaseCssClasses 'month'}}">
+           class="{{getBaseCssClasses ('month')}}">
             {{content}}
         </a>
     </td>

@@ -6,7 +6,6 @@
 KISSY.add(function (S, require) {
     var XTemplateRuntime = require('xtemplate/runtime');
     var compiler = require('xtemplate/compiler');
-
     var cache = XTemplate.cache = {};
 
     /*
@@ -29,35 +28,24 @@ KISSY.add(function (S, require) {
      * @class KISSY.XTemplate
      * @extends KISSY.XTemplate.Runtime
      */
-    function XTemplate(tpl, config) {
-        var self = this;
-        if (config && config.cache === false) {
-            self.cache = false;
-        }
-        XTemplate.superclass.constructor.call(self, tpl, config);
+    function XTemplate() {
+        XTemplate.superclass.constructor.apply(this, arguments);
     }
 
     S.extend(XTemplate, XTemplateRuntime, {
-        cache: true,
-
-        derive: function () {
-            var engine = XTemplate.superclass.derive.apply(this, arguments);
-            engine.cache = this.cache;
-            return engine;
-        },
-
         compile: function () {
             var fn,
                 self = this,
+                config = self.config,
                 tpl = self.tpl;
 
-            if (self.cache && (fn = cache[tpl])) {
+            if (config.cache !== false && (fn = cache[tpl])) {
                 return fn;
             }
 
             fn = compiler.compileToFn(tpl, self.name);
 
-            if (self.cache) {
+            if (config.cache !== false) {
                 cache[tpl] = fn;
             }
 

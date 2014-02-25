@@ -788,7 +788,7 @@ function visit22_43_1(result) {
 function visit21_34_1(result) {
   _$jscoverage['/router.js'].branchData['34'][1].ranCondition(result);
   return result;
-}_$jscoverage['/router.js'].branchData['21'][1].init(596, 28, 'history && history.pushState');
+}_$jscoverage['/router.js'].branchData['21'][1].init(595, 28, 'history && history.pushState');
 function visit20_21_1(result) {
   _$jscoverage['/router.js'].branchData['21'][1].ranCondition(result);
   return result;

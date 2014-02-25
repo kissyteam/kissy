@@ -7,7 +7,7 @@ module.exports = function (req, res, next) {
         return;
     }
     var path = m[1];
-    var componentName = path.slice(prefix.length).replace(/sub-modules\//, '');
+    var componentName = path.slice(prefix.length).replace(/sub-modules\//g, '');
     res.render('runner', {
         component: componentName,
         query: req.query

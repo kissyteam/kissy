@@ -58,9 +58,6 @@ ast.TplNode = function (lineNumber, path, params, hash) {
     self.params = params;
     self.hash = hash;
     self.escaped = true;
-    // inside {{^}}
-    // default: inside {{#}}
-    self.isInverted = false;
 };
 
 ast.TplNode.prototype.type = 'tpl';

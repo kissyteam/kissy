@@ -1,10 +1,10 @@
 /*
-Copyright 2013, KISSY v1.50
+Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Dec 12 22:20
+build time: Feb 25 19:45
 */
 /*
- Combined processedModules by KISSY Module Compiler: 
+ Combined modules by KISSY Module Compiler: 
 
  resizable
 */
@@ -76,8 +76,8 @@ KISSY.add("resizable", ["node", "base", "dd"], function(S, require) {
           startEdgePos = dd.get("startMousePos");
           preserveRatio = self.get("preserveRatio");
           self._width = node.width();
-          self._top = parseInt(node.css("top"));
-          self._left = parseInt(node.css("left"));
+          self._top = parseInt(node.css("top"), 10);
+          self._left = parseInt(node.css("left"), 10);
           self._height = node.height();
           self.fire("resizeStart", {handler:hc, dd:dd})
         });
@@ -89,7 +89,7 @@ KISSY.add("resizable", ["node", "base", "dd"], function(S, require) {
   }
   var Resizable = Base.extend({initializer:function() {
     this.dds = {};
-    this.publish("beforeResize", {defaultFn:this._onBeforeResize})
+    this.publish("beforeResize", {defaultFn:this._onBeforeResize, defaultTargetOnly:true})
   }, _onBeforeResize:function(e) {
     this.get("node").css(e.region);
     this.fire("resize", {handler:e.hc, dd:e.dd, region:e.region})

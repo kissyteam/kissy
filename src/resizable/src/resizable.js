@@ -129,8 +129,8 @@ KISSY.add(function (S, require) {
                     startEdgePos = dd.get('startMousePos');
                     preserveRatio = self.get('preserveRatio');
                     self._width = node.width();
-                    self._top = parseInt(node.css('top'));
-                    self._left = parseInt(node.css('left'));
+                    self._top = parseInt(node.css('top'),10);
+                    self._left = parseInt(node.css('left'),10);
                     self._height = node.height();
                     self.fire('resizeStart', {
                         handler: hc,
