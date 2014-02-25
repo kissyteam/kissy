@@ -1,9 +1,9 @@
 /*
-Copyright 2014, KISSY v1.41
+Copyright 2014, KISSY v1.42
 MIT Licensed
 build time: Feb 25 16:01
 */
-var KISSY=function(a){function f(a){var g={},f;for(f in i)(function(b,d){b[d]=function(b){return h.log(b,d,a)}})(g,f);return g}var h,k=0,i={debug:10,info:20,warn:30,error:40};h={__BUILD_TIME:"20140225160104",Env:{host:this},Config:{debug:"",fns:{}},version:"1.41",config:function(c,g){var f,b,d=this,j,e=h.Config,p=e.fns;h.isObject(c)?h.each(c,function(a,b){(j=p[b])?j.call(d,a):e[b]=a}):(f=p[c],g===a?b=f?f.call(d):e[c]:f?b=f.call(d,g):e[c]=g);return b},log:function(){return a},getLogger:function(a){return f(a)},
+var KISSY=function(a){function f(a){var g={},f;for(f in i)(function(b,d){b[d]=function(b){return h.log(b,d,a)}})(g,f);return g}var h,k=0,i={debug:10,info:20,warn:30,error:40};h={__BUILD_TIME:"20140225160104",Env:{host:this},Config:{debug:"",fns:{}},version:'1.42',config:function(c,g){var f,b,d=this,j,e=h.Config,p=e.fns;h.isObject(c)?h.each(c,function(a,b){(j=p[b])?j.call(d,a):e[b]=a}):(f=p[c],g===a?b=f?f.call(d):e[c]:f?b=f.call(d,g):e[c]=g);return b},log:function(){return a},getLogger:function(a){return f(a)},
 error:function(){},guid:function(a){return(a||"")+k++},Logger:{}};h.Logger.Level={DEBUG:"debug",INFO:"info",WARN:"warn",ERROR:"error"};return h}();
 (function(a,f){function h(){}function k(d,l,b,e,j,g){if(!l||!d)return d;var h,t,u,r;l[c]=d;g.push(l);u=a.keys(l);r=u.length;for(h=0;h<r;h++)if(t=u[h],t!==c){var i=d,z=l,D=b,E=e,F=j,I=g;if(D||!(t in i)||F){var x=i[t],w=z[t];if(x===w)x===f&&(i[t]=x);else if(E&&(w=E.call(z,t,w)),F&&w&&(a.isArray(w)||a.isPlainObject(w)))w[c]?i[t]=w[c]:(z=x&&(a.isArray(x)||a.isPlainObject(x))?x:a.isArray(w)?[]:{},i[t]=z,k(z,w,D,E,m,I));else if(w!==f&&(D||!(t in i)))i[t]=w}}return d}function i(a,d){return"constructor"===
 a?f:d}var c="__MIX_CIRCULAR",g=this,m=!0,b=Object,d=b.create,j=!{toString:1}.propertyIsEnumerable("toString"),e="constructor,hasOwnProperty,isPrototypeOf,propertyIsEnumerable,toString,toLocaleString,valueOf".split(",");(function(a,d){for(var b in d)a[b]=d[b]})(a,{stamp:function(d,l,b){var b=b||"__~ks_stamped",e=d[b];if(!e&&!l)try{e=d[b]=a.guid(b)}catch(c){e=f}return e},keys:b.keys||function(a){var d=[],b,c;for(b in a)a.hasOwnProperty(b)&&d.push(b);if(j)for(c=e.length-1;0<=c;c--)b=e[c],a.hasOwnProperty(b)&&
