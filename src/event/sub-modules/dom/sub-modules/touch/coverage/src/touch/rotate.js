@@ -302,7 +302,7 @@ if (! _$jscoverage['/touch/rotate.js'].branchData) {
   _$jscoverage['/touch/rotate.js'].branchData['106'] = [];
   _$jscoverage['/touch/rotate.js'].branchData['106'][1] = new BranchData();
 }
-_$jscoverage['/touch/rotate.js'].branchData['106'][1].init(2851, 33, 'S.Features.isTouchEventSupported()');
+_$jscoverage['/touch/rotate.js'].branchData['106'][1].init(2851, 34, 'S.Features.isTouchEventSupported()');
 function visit83_106_1(result) {
   _$jscoverage['/touch/rotate.js'].branchData['106'][1].ranCondition(result);
   return result;

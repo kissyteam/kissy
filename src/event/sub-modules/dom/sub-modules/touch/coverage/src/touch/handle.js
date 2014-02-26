@@ -755,11 +755,11 @@ function visit7_106_1(result) {
 function visit6_89_1(result) {
   _$jscoverage['/touch/handle.js'].branchData['89'][1].ranCondition(result);
   return result;
-}_$jscoverage['/touch/handle.js'].branchData['56'][1].init(1639, 30, 'Features.isMsPointerSupported()');
+}_$jscoverage['/touch/handle.js'].branchData['56'][1].init(1643, 31, 'Features.isMsPointerSupported()');
 function visit5_56_1(result) {
   _$jscoverage['/touch/handle.js'].branchData['56'][1].ranCondition(result);
   return result;
-}_$jscoverage['/touch/handle.js'].branchData['50'][1].init(1361, 28, 'Features.isPointerSupported()');
+}_$jscoverage['/touch/handle.js'].branchData['50'][1].init(1364, 29, 'Features.isPointerSupported()');
 function visit4_50_1(result) {
   _$jscoverage['/touch/handle.js'].branchData['50'][1].ranCondition(result);
   return result;
@@ -767,7 +767,7 @@ function visit4_50_1(result) {
 function visit3_39_1(result) {
   _$jscoverage['/touch/handle.js'].branchData['39'][1].ranCondition(result);
   return result;
-}_$jscoverage['/touch/handle.js'].branchData['38'][1].init(862, 31, 'Features.isTouchEventSupported()');
+}_$jscoverage['/touch/handle.js'].branchData['38'][1].init(864, 32, 'Features.isTouchEventSupported()');
 function visit2_38_1(result) {
   _$jscoverage['/touch/handle.js'].branchData['38'][1].ranCondition(result);
   return result;
