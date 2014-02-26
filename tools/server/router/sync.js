@@ -27,8 +27,9 @@ function shouldSyncFn(req) {
     }
     return shouldSync;
 }
+
 module.exports = function (app) {
-    app.get('/sync', function (req, res) {
+    app.all('/sync', function (req, res) {
         if (shouldSyncFn(req)) {
             syncCode(function (str) {
                 res.send(str);
@@ -38,7 +39,7 @@ module.exports = function (app) {
         }
     });
 
-    app.get('/sync-docs', function (req, res) {
+    app.all('/sync-docs', function (req, res) {
         if (shouldSyncFn(req)) {
             syncDocs(function (str) {
                 res.send(str);
