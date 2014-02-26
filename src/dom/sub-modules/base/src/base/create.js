@@ -528,7 +528,7 @@ KISSY.add(function (S, require) {
     }
 
     // https://github.com/kissyteam/kissy/issues/422
-    creatorsMap.option = creatorsMap.optgroup = function (html, ownerDoc) {
+    creators.option = creators.optgroup = function (html, ownerDoc) {
         return create('<select multiple="multiple">' + html + '</select>', undefined, ownerDoc);
     };
 

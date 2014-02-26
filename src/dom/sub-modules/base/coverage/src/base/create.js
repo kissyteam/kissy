@@ -1381,7 +1381,7 @@ KISSY.add(function(S, require) {
 })(creatorsMap[p]);
   }
   _$jscoverage['/base/create.js'].lineData[531]++;
-  creatorsMap.option = creatorsMap.optgroup = function(html, ownerDoc) {
+  creators.option = creators.optgroup = function(html, ownerDoc) {
   _$jscoverage['/base/create.js'].functionData[19]++;
   _$jscoverage['/base/create.js'].lineData[532]++;
   return create('<select multiple="multiple">' + html + '</select>', undefined, ownerDoc);
