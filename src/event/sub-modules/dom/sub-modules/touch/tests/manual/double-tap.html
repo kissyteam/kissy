@@ -25,7 +25,7 @@
 <script>
 
     KISSY.use('event', function (S, Event) {
-        Event.on('#t', "singleTap doubleTap", function (e) {
+        Event.on('#t', "singleTap doubleTap tap", function (e) {
             log(e.type + ' : ' + e.duration);
         });
         alert('ok');

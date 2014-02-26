@@ -31,7 +31,7 @@
 
 <script>
     KISSY.use('event', function (S, Event) {
-        Event.on('#t', "tapHold", function (e) {
+        Event.on('#t', "tapHold tap", function (e) {
             log(e.type + ' : ' + e.duration);
         });
     });
