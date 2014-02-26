@@ -7,7 +7,6 @@ KISSY.add(function (S, require) {
     var Control = require('component/control');
     var ScrollBarTpl = require('./scrollbar-xtpl');
     var isTransform3dSupported = S.Feature.isTransform3dSupported();
-
     // http://www.html5rocks.com/en/tutorials/speed/html5/
     var supportCss3 = S.Feature.getVendorCssPropPrefix('transform') !== false;
 
@@ -34,36 +33,6 @@ KISSY.add(function (S, require) {
             control.upBtn = control.$upBtn[0];
         },
 
-        syncUI: function () {
-            var self = this,
-                control = self.control,
-                scrollView = control.get('scrollView'),
-                trackEl = control.trackEl,
-                scrollWHProperty = control.scrollWHProperty,
-                whProperty = control.whProperty,
-                clientWHProperty = control.clientWHProperty,
-                dragWHProperty = control.dragWHProperty,
-                ratio,
-                trackElSize,
-                barSize;
-
-            control.scrollView = scrollView;
-
-            if (scrollView.allowScroll[control.scrollType]) {
-                control.scrollLength = scrollView[scrollWHProperty];
-                trackElSize = control.trackElSize =
-                    whProperty === 'width' ? trackEl.offsetWidth : trackEl.offsetHeight;
-                ratio = scrollView[clientWHProperty] / control.scrollLength;
-                barSize = ratio * trackElSize;
-                control.set(dragWHProperty, barSize);
-                control.barSize = barSize;
-                control.syncOnScroll();
-                control.set('visible', true);
-            } else {
-                control.set('visible', false);
-            }
-        },
-
         '_onSetDragHeight': function (v) {
             this.control.dragEl.style.height = v + 'px';
         },
@@ -80,7 +49,6 @@ KISSY.add(function (S, require) {
             this.control.dragEl.style.top = v + 'px';
         }
     };
-
 
     if (supportCss3) {
         var transformProperty = S.Feature.getVendorCssPropName('transform');

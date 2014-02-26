@@ -488,8 +488,7 @@ if (! _$jscoverage['/drag.js']) {
   _$jscoverage['/drag.js'].lineData[514] = 0;
   _$jscoverage['/drag.js'].lineData[518] = 0;
   _$jscoverage['/drag.js'].lineData[522] = 0;
-  _$jscoverage['/drag.js'].lineData[526] = 0;
-  _$jscoverage['/drag.js'].lineData[527] = 0;
+  _$jscoverage['/drag.js'].lineData[523] = 0;
 }
 if (! _$jscoverage['/drag.js'].functionData) {
   _$jscoverage['/drag.js'].functionData = [];
@@ -512,7 +511,6 @@ if (! _$jscoverage['/drag.js'].functionData) {
   _$jscoverage['/drag.js'].functionData[16] = 0;
   _$jscoverage['/drag.js'].functionData[17] = 0;
   _$jscoverage['/drag.js'].functionData[18] = 0;
-  _$jscoverage['/drag.js'].functionData[19] = 0;
 }
 if (! _$jscoverage['/drag.js'].branchData) {
   _$jscoverage['/drag.js'].branchData = {};
@@ -1562,7 +1560,7 @@ KISSY.add(function(S, require) {
             _$jscoverage['/drag.js'].lineData[458]++;
             if (visit80_458_1(allowX || allowY)) {
               _$jscoverage['/drag.js'].lineData[459]++;
-              var toPageIndex = self._getPageIndexFromXY(allowX ? scrollLeft : scrollTop, allowX, allowX ? offsetX : offsetY);
+              var toPageIndex = self.getPageIndexFromXY(allowX ? scrollLeft : scrollTop, allowX, allowX ? offsetX : offsetY);
               _$jscoverage['/drag.js'].lineData[462]++;
               self.scrollToPage(toPageIndex, animCfg);
             } else {
@@ -1628,21 +1626,16 @@ KISSY.add(function(S, require) {
   _$jscoverage['/drag.js'].lineData[514]++;
   self.$contentEl.on('dragstart', preventDefault).on(Gesture.start, onDragStartHandler, self);
 }, 
-  syncUI: function() {
+  destructor: function() {
   _$jscoverage['/drag.js'].functionData[17]++;
   _$jscoverage['/drag.js'].lineData[518]++;
-  initStates(this);
-}, 
-  destructor: function() {
-  _$jscoverage['/drag.js'].functionData[18]++;
-  _$jscoverage['/drag.js'].lineData[522]++;
   this.stopAnimation();
 }, 
   stopAnimation: function() {
-  _$jscoverage['/drag.js'].functionData[19]++;
-  _$jscoverage['/drag.js'].lineData[526]++;
+  _$jscoverage['/drag.js'].functionData[18]++;
+  _$jscoverage['/drag.js'].lineData[522]++;
   this.callSuper();
-  _$jscoverage['/drag.js'].lineData[527]++;
+  _$jscoverage['/drag.js'].lineData[523]++;
   this.isScrolling = 0;
 }}, {
   ATTRS: {

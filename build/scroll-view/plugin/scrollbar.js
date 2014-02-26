@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Feb 25 19:46
+build time: Feb 26 21:15
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -111,21 +111,6 @@ KISSY.add("scroll-view/plugin/scrollbar/render", ["component/control", "./scroll
     control.trackEl = control.$trackEl[0];
     control.downBtn = control.$downBtn[0];
     control.upBtn = control.$upBtn[0]
-  }, syncUI:function() {
-    var self = this, control = self.control, scrollView = control.get("scrollView"), trackEl = control.trackEl, scrollWHProperty = control.scrollWHProperty, whProperty = control.whProperty, clientWHProperty = control.clientWHProperty, dragWHProperty = control.dragWHProperty, ratio, trackElSize, barSize;
-    control.scrollView = scrollView;
-    if(scrollView.allowScroll[control.scrollType]) {
-      control.scrollLength = scrollView[scrollWHProperty];
-      trackElSize = control.trackElSize = whProperty === "width" ? trackEl.offsetWidth : trackEl.offsetHeight;
-      ratio = scrollView[clientWHProperty] / control.scrollLength;
-      barSize = ratio * trackElSize;
-      control.set(dragWHProperty, barSize);
-      control.barSize = barSize;
-      control.syncOnScroll();
-      control.set("visible", true)
-    }else {
-      control.set("visible", false)
-    }
   }, _onSetDragHeight:function(v) {
     this.control.dragEl.style.height = v + "px"
   }, _onSetDragWidth:function(v) {
@@ -178,47 +163,44 @@ KISSY.add("scroll-view/plugin/scrollbar/control", ["node", "component/control", 
   function onDragEndHandler() {
     $document.detach(Gesture.move, onDragHandler, this).detach(Gesture.end, onDragEndHandler, this)
   }
-  return Control.extend({initializer:function() {
-    var self = this;
-    var scrollType = self.scrollType = self.get("axis") === "x" ? "left" : "top";
-    var ucScrollType = S.ucfirst(scrollType);
-    self.pageXyProperty = scrollType === "left" ? "pageX" : "pageY";
-    var wh = self.whProperty = scrollType === "left" ? "width" : "height";
-    var ucWH = S.ucfirst(wh);
-    self.afterScrollChangeEvent = "afterScroll" + ucScrollType + "Change";
-    self.scrollProperty = "scroll" + ucScrollType;
-    self.dragWHProperty = "drag" + ucWH;
-    self.dragLTProperty = "drag" + ucScrollType;
-    self.clientWHProperty = "client" + ucWH;
-    self.scrollWHProperty = "scroll" + ucWH
-  }, bindUI:function() {
-    var self = this, autoHide = self.get("autoHide"), scrollView = self.get("scrollView");
-    if(autoHide) {
-      self.hideFn = S.bind(self.hide, self)
+  function onScrollViewReflow() {
+    var control = this, scrollView = control.scrollView, trackEl = control.trackEl, scrollWHProperty = control.scrollWHProperty, whProperty = control.whProperty, clientWHProperty = control.clientWHProperty, dragWHProperty = control.dragWHProperty, ratio, trackElSize, barSize;
+    if(scrollView.allowScroll[control.scrollType]) {
+      control.scrollLength = scrollView[scrollWHProperty];
+      trackElSize = control.trackElSize = whProperty === "width" ? trackEl.offsetWidth : trackEl.offsetHeight;
+      ratio = scrollView[clientWHProperty] / control.scrollLength;
+      barSize = ratio * trackElSize;
+      control.set(dragWHProperty, barSize);
+      control.barSize = barSize;
+      syncOnScroll(control);
+      control.set("visible", true)
     }else {
-      S.each([self.$downBtn, self.$upBtn], function(b) {
-        b.on(Gesture.start, self.onUpDownBtnMouseDown, self).on(Gesture.end, self.onUpDownBtnMouseUp, self)
-      });
-      self.$trackEl.on(Gesture.start, self.onTrackElMouseDown, self);
-      self.$dragEl.on("dragstart", preventDefault).on(Gesture.start, onDragStartHandler, self)
+      control.set("visible", false)
     }
-    scrollView.on(self.afterScrollChangeEvent + SCROLLBAR_EVENT_NS, self.afterScrollChange, self).on("scrollEnd" + SCROLLBAR_EVENT_NS, self.onScrollEnd, self).on("afterDisabledChange", self.onScrollViewDisabled, self)
-  }, destructor:function() {
-    this.get("scrollView").detach(SCROLLBAR_EVENT_NS);
-    this.clearHideTimer()
-  }, onScrollViewDisabled:function(e) {
+  }
+  function onScrollViewDisabled(e) {
     this.set("disabled", e.newVal)
-  }, startHideTimer:function() {
+  }
+  function onScrollEnd() {
     var self = this;
-    self.clearHideTimer();
-    self.hideTimer = setTimeout(self.hideFn, self.get("hideDelay") * 1E3)
-  }, clearHideTimer:function() {
-    var self = this;
-    if(self.hideTimer) {
-      clearTimeout(self.hideTimer);
-      self.hideTimer = null
+    if(self.hideFn) {
+      startHideTimer(self)
     }
-  }, onUpDownBtnMouseDown:function(e) {
+  }
+  function afterScrollChange() {
+    var self = this;
+    var scrollView = self.scrollView;
+    if(!scrollView.allowScroll[self.scrollType]) {
+      return
+    }
+    clearHideTimer(self);
+    self.set("visible", true);
+    if(self.hideFn && !scrollView.isScrolling) {
+      startHideTimer(self)
+    }
+    syncOnScroll(self)
+  }
+  function onUpDownBtnMouseDown(e) {
     if(this.get("disabled")) {
       return
     }
@@ -232,7 +214,8 @@ KISSY.add("scroll-view/plugin/scrollbar/control", ["node", "component/control", 
     }
     self.mouseInterval = setInterval(doScroll, 100);
     doScroll()
-  }, onTrackElMouseDown:function(e) {
+  }
+  function onTrackElMouseDown(e) {
     var self = this;
     if(self.get("disabled")) {
       return
@@ -247,15 +230,12 @@ KISSY.add("scroll-view/plugin/scrollbar/control", ["node", "component/control", 
     scrollCfg[scrollType] = per * self.scrollLength;
     scrollView.scrollToWithBounds(scrollCfg);
     e.halt()
-  }, onUpDownBtnMouseUp:function() {
+  }
+  function onUpDownBtnMouseUp() {
     clearInterval(this.mouseInterval)
-  }, onScrollEnd:function() {
-    var self = this;
-    if(self.hideFn) {
-      self.startHideTimer()
-    }
-  }, syncOnScroll:function() {
-    var control = this, scrollType = control.scrollType, scrollView = control.scrollView, dragLTProperty = control.dragLTProperty, dragWHProperty = control.dragWHProperty, trackElSize = control.trackElSize, barSize = control.barSize, contentSize = control.scrollLength, val = scrollView.get(control.scrollProperty), maxScrollOffset = scrollView.maxScroll, minScrollOffset = scrollView.minScroll, minScroll = minScrollOffset[scrollType], maxScroll = maxScrollOffset[scrollType], dragVal;
+  }
+  function syncOnScroll(control) {
+    var scrollType = control.scrollType, scrollView = control.scrollView, dragLTProperty = control.dragLTProperty, dragWHProperty = control.dragWHProperty, trackElSize = control.trackElSize, barSize = control.barSize, contentSize = control.scrollLength, val = scrollView.get(control.scrollProperty), maxScrollOffset = scrollView.maxScroll, minScrollOffset = scrollView.minScroll, minScroll = minScrollOffset[scrollType], maxScroll = maxScrollOffset[scrollType], dragVal;
     if(val > maxScroll) {
       dragVal = maxScroll / contentSize * trackElSize;
       control.set(dragWHProperty, barSize - (val - maxScroll));
@@ -271,18 +251,48 @@ KISSY.add("scroll-view/plugin/scrollbar/control", ["node", "component/control", 
         control.set(dragWHProperty, barSize)
       }
     }
-  }, afterScrollChange:function() {
+  }
+  function startHideTimer(self) {
+    clearHideTimer(self);
+    self.hideTimer = setTimeout(self.hideFn, self.get("hideDelay") * 1E3)
+  }
+  function clearHideTimer(self) {
+    if(self.hideTimer) {
+      clearTimeout(self.hideTimer);
+      self.hideTimer = null
+    }
+  }
+  return Control.extend({initializer:function() {
     var self = this;
-    var scrollView = self.scrollView;
-    if(!scrollView.allowScroll[self.scrollType]) {
-      return
+    var scrollType = self.scrollType = self.get("axis") === "x" ? "left" : "top";
+    var ucScrollType = S.ucfirst(scrollType);
+    self.pageXyProperty = scrollType === "left" ? "pageX" : "pageY";
+    var wh = self.whProperty = scrollType === "left" ? "width" : "height";
+    var ucWH = S.ucfirst(wh);
+    self.afterScrollChangeEvent = "afterScroll" + ucScrollType + "Change";
+    self.scrollProperty = "scroll" + ucScrollType;
+    self.dragWHProperty = "drag" + ucWH;
+    self.dragLTProperty = "drag" + ucScrollType;
+    self.clientWHProperty = "client" + ucWH;
+    self.scrollWHProperty = "scroll" + ucWH;
+    self.scrollView = self.get("scrollView")
+  }, bindUI:function() {
+    var self = this, autoHide = self.get("autoHide"), scrollView = self.scrollView;
+    if(autoHide) {
+      self.hideFn = S.bind(self.hide, self)
+    }else {
+      S.each([self.$downBtn, self.$upBtn], function(b) {
+        b.on(Gesture.start, onUpDownBtnMouseDown, self).on(Gesture.end, onUpDownBtnMouseUp, self)
+      });
+      self.$trackEl.on(Gesture.start, onTrackElMouseDown, self);
+      self.$dragEl.on("dragstart", preventDefault).on(Gesture.start, onDragStartHandler, self)
     }
-    self.clearHideTimer();
-    self.set("visible", true);
-    if(self.hideFn && !scrollView.isScrolling) {
-      self.startHideTimer()
-    }
-    self.syncOnScroll()
+    scrollView.on(self.afterScrollChangeEvent + SCROLLBAR_EVENT_NS, afterScrollChange, self).on("scrollEnd" + SCROLLBAR_EVENT_NS, onScrollEnd, self).on("afterDisabledChange" + SCROLLBAR_EVENT_NS, onScrollViewDisabled, self).on("reflow" + SCROLLBAR_EVENT_NS, onScrollViewReflow, self)
+  }, syncUI:function() {
+    onScrollViewReflow.call(this)
+  }, destructor:function() {
+    this.scrollView.detach(SCROLLBAR_EVENT_NS);
+    clearHideTimer(this)
   }}, {ATTRS:{minLength:{value:MIN_BAR_LENGTH}, scrollView:{}, axis:{view:1}, autoHide:{value:S.UA.ios}, visible:{valueFn:function() {
     return!this.get("autoHide")
   }}, hideDelay:{value:0.1}, dragWidth:{setter:function(v) {
@@ -302,39 +312,39 @@ KISSY.add("scroll-view/plugin/scrollbar/control", ["node", "component/control", 
 KISSY.add("scroll-view/plugin/scrollbar", ["base", "./scrollbar/control"], function(S, require) {
   var Base = require("base");
   var ScrollBar = require("./scrollbar/control");
-  return Base.extend({pluginId:this.getName(), pluginSyncUI:function(scrollView) {
+  function onScrollViewReflow() {
     var self = this;
+    var scrollView = self.scrollView;
     var minLength = self.get("minLength");
     var autoHideX = self.get("autoHideX");
     var autoHideY = self.get("autoHideY");
-    var my;
-    var cfg = {scrollView:scrollView, elBefore:scrollView.$contentEl};
-    if(minLength !== undefined) {
-      cfg.minLength = minLength
-    }
-    if(self.scrollBarX) {
-      self.scrollBarX.sync()
-    }else {
-      if(scrollView.allowScroll.left) {
-        my = {axis:"x"};
-        if(autoHideX !== undefined) {
-          cfg.autoHide = autoHideX
-        }
-        self.scrollBarX = (new ScrollBar(S.merge(cfg, my))).render()
+    var cfg;
+    if(!self.scrollBarX && scrollView.allowScroll.left) {
+      cfg = {axis:"x", scrollView:scrollView, elBefore:scrollView.$contentEl};
+      if(minLength !== undefined) {
+        cfg.minLength = minLength
       }
-    }
-    if(self.scrollBarY) {
-      self.scrollBarY.sync()
-    }else {
-      if(scrollView.allowScroll.top) {
-        my = {axis:"y"};
-        if(autoHideY !== undefined) {
-          cfg.autoHide = autoHideY
-        }
-        self.scrollBarY = (new ScrollBar(S.merge(cfg, my))).render()
+      if(autoHideX !== undefined) {
+        cfg.autoHide = autoHideX
       }
+      self.scrollBarX = (new ScrollBar(cfg)).render()
     }
-  }, pluginDestructor:function() {
+    if(!self.scrollBarY && scrollView.allowScroll.top) {
+      cfg = {axis:"y", scrollView:scrollView, elBefore:scrollView.$contentEl};
+      if(minLength !== undefined) {
+        cfg.minLength = minLength
+      }
+      if(autoHideY !== undefined) {
+        cfg.autoHide = autoHideY
+      }
+      self.scrollBarY = (new ScrollBar(cfg)).render()
+    }
+  }
+  return Base.extend({pluginId:this.getName(), pluginBindUI:function(scrollView) {
+    var self = this;
+    self.scrollView = scrollView;
+    scrollView.on("reflow", onScrollViewReflow, self)
+  }, pluginDestructor:function(scrollView) {
     var self = this;
     if(self.scrollBarX) {
       self.scrollBarX.destroy();
@@ -344,6 +354,7 @@ KISSY.add("scroll-view/plugin/scrollbar", ["base", "./scrollbar/control"], funct
       self.scrollBarY.destroy();
       self.scrollBarY = null
     }
+    scrollView.detach("reflow", onScrollViewReflow, self)
   }}, {ATTRS:{minLength:{}, autoHideX:{}, autoHideY:{}}})
 });
 

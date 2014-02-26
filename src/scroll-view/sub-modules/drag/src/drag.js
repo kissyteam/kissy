@@ -456,7 +456,7 @@ KISSY.add(function (S, require) {
                         }
                     } else {
                         if (allowX || allowY) {
-                            var toPageIndex = self._getPageIndexFromXY(
+                            var toPageIndex = self.getPageIndexFromXY(
                                 allowX ? scrollLeft : scrollTop, allowX,
                                 allowX ? offsetX : offsetY);
                             self.scrollToPage(toPageIndex, animCfg);
@@ -512,10 +512,6 @@ KISSY.add(function (S, require) {
                 var self = this;
                 self.$contentEl.on('dragstart', preventDefault)
                     .on(Gesture.start, onDragStartHandler, self);
-            },
-
-            syncUI: function () {
-                initStates(this);
             },
 
             destructor: function () {
