@@ -93,6 +93,7 @@ function startServer(port) {
 
     require('./router/docs')(app);
 
+    require('./router/sync')(app);
 
     app.get('/crossdomain.xml', function (req, res) {
         res.set('content-type', 'text/xml');

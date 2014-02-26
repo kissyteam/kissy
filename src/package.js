@@ -3,7 +3,9 @@
     For dev mode only!
 */
 var SERVER_CONFIG = {
-    "ports": [8888, 9999]
+    "ports": [8888, 9999],
+    "codeDir": "e:/code/kissy_git/kissy/kissy/",
+    "docsDir": "/home/admin/cai/www/docs.kissyui.com/kissyteam.github.com"
 };
 KISSY.config('tag', KISSY.now());
 var loc = new KISSY.Uri(location.href);
