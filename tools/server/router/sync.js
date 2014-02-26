@@ -17,16 +17,34 @@ function syncDocs(callback) {
     sync(serverConfig.docsDir, callback);
 }
 
+function shouldSyncFn(req) {
+    var shouldSync = 1;
+    if (req.body && req.body.payload) {
+        var payload = JSON.parse(req.body.payload);
+        if (payload.ref !== 'refs/heads/master') {
+            shouldSync = 0;
+        }
+    }
+    return shouldSync;
+}
 module.exports = function (app) {
     app.get('/sync', function (req, res) {
-        syncCode(function (str) {
-            res.send(str);
-        });
+        if (shouldSyncFn(req)) {
+            syncCode(function (str) {
+                res.send(str);
+            });
+        } else {
+            res.end();
+        }
     });
 
     app.get('/sync-docs', function (req, res) {
-        syncDocs(function (str) {
-            res.send(str);
-        });
+        if (shouldSyncFn(req)) {
+            syncDocs(function (str) {
+                res.send(str);
+            });
+        } else {
+            res.end();
+        }
     });
 };
