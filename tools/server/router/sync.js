@@ -5,10 +5,10 @@ function sync(dir, callback, errorCallback) {
     exec('cd ' + dir + ' && git pull origin master',
         { maxBuffer: 1024 * 1024 },
         function (error, stdout, stderr) {
-            if (error || stderr) {
-                errorCallback(error || stderr);
+            if (error) {
+                errorCallback(error);
             } else {
-                callback(stdout);
+                callback(stdout || stderr);
             }
         });
 }
