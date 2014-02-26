@@ -8,7 +8,7 @@ KISSY.add(function (S, HtmlParser, UA) {
     function getTextSync(path, callback) {
         if (S.UA.nodejs) {
             path = S.config('packages').src.uri
-                .resolve('../src/html-parser/tests/runner/' + path).getPath();
+                .resolve('../../' + path).getPath();
             var fs = requireNode('fs');
             callback(fs.readFileSync(path, 'utf-8'));
         } else {
@@ -87,7 +87,7 @@ KISSY.add(function (S, HtmlParser, UA) {
 
             var before = '';
 
-            getTextSync('./others/editor/vml_img.html', function (d) {
+            getTextSync('/kissy/src/html-parser/tests/others/editor/vml_img.html', function (d) {
                 before = d;
             });
 

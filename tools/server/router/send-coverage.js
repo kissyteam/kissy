@@ -83,9 +83,15 @@ module.exports = function (app) {
             component = '';
         }
         var pathParam = req.param('path').slice(1);
-        var myPath = cwd + pathParam.slice(pathParam.indexOf('/'));
         var jsonReport = JSON.parse(report);
-        var srcPath = path.resolve(myPath, '../../../src/');
+        var srcPath;
+        var myPath = cwd + pathParam.slice(pathParam.indexOf('/'));
+        // find src dir
+        if (S.endsWith(pathParam, 'runner')) {
+            srcPath = path.resolve(myPath, '../../src/');
+        } else {
+            srcPath = path.resolve(myPath, '../../../src/');
+        }
         var source_files = postData.source_files;
         for (var f in jsonReport) {
             var detail = jsonReport[f];

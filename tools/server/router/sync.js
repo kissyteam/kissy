@@ -1,20 +1,24 @@
 var serverConfig = require('../server.json');
 var exec = require('child_process').exec;
 
-function sync(dir, callback) {
+function sync(dir, callback, errorCallback) {
     exec('cd ' + dir + ' && git pull origin master',
         { maxBuffer: 1024 * 1024 },
         function (error, stdout, stderr) {
-            callback(error || stderr || stdout);
+            if (error || stderr) {
+                errorCallback(error || stderr);
+            } else {
+                callback(stdout);
+            }
         });
 }
 
-function syncCode(callback) {
-    sync(serverConfig.codeDir, callback);
+function syncCode(callback, errorCallback) {
+    sync(serverConfig.codeDir, callback, errorCallback);
 }
 
-function syncDocs(callback) {
-    sync(serverConfig.docsDir, callback);
+function syncDocs(callback, errorCallback) {
+    sync(serverConfig.docsDir, callback, errorCallback);
 }
 
 function shouldSyncFn(req) {
@@ -33,6 +37,9 @@ module.exports = function (app) {
         if (shouldSyncFn(req)) {
             syncCode(function (str) {
                 res.send(str);
+            }, function (str) {
+                res.status(500);
+                res.send(str);
             });
         } else {
             res.end();
@@ -42,6 +49,9 @@ module.exports = function (app) {
     app.all('/sync-docs', function (req, res) {
         if (shouldSyncFn(req)) {
             syncDocs(function (str) {
+                res.send(str);
+            }, function (str) {
+                res.status(500);
                 res.send(str);
             });
         } else {

@@ -1,5 +1,5 @@
 {
     "ports": [8888,9999],
-    "codeDir":"/home/admin/cai/www/dev.kissyui.com/kissy",
+    "codeDir":"e:\\code\\kissy_git\\kissy\\kissy",
     "docsDir":"/home/admin/cai/www/docs.kissyui.com/kissyteam.github.com"
 }
