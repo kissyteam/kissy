@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Feb 25 19:34
+build time: Feb 26 18:56
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -703,7 +703,7 @@ KISSY.add("dom/base/create", ["./api"], function(S, require) {
       }
     })(creatorsMap[p])
   }
-  creatorsMap.option = creatorsMap.optgroup = function(html, ownerDoc) {
+  creators.option = creators.optgroup = function(html, ownerDoc) {
     return create('<select multiple="multiple">' + html + "</select>", undefined, ownerDoc)
   };
   return Dom

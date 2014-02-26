@@ -47,12 +47,18 @@ KISSY.add(function (S, Dom) {
             expect(Dom.create('<p></p><div></div>').childNodes[0].tagName.toLowerCase()).toBe('p');
 
             // 属性支持
-            expect(Dom.create('<p>', { rel:'-1', 'class':'test-p', data:'test'}).className).toBe('test-p');
+            expect(Dom.create('<p>', { rel: '-1', 'class': 'test-p', data: 'test'}).className).toBe('test-p');
 
             expect(Dom.create("<a hideFocus=\'true\'  " +
-                "tabIndex=\'0\'  " +
-                "class=\'ke-triplebutton ke-triplebutton-off\' />")
+                    "tabIndex=\'0\'  " +
+                    "class=\'ke-triplebutton ke-triplebutton-off\' />")
                 .className).toBe("ke-triplebutton ke-triplebutton-off");
+        });
+
+        it('create option works', function () {
+            var s = Dom.create('<select>');
+            s.appendChild(Dom.create('<option>1</option>'));
+            expect(s.innerHTML.toLowerCase().indexOf('option')).toBeGreaterThan(-1);
         });
 
         it("create should works for style with content in ie<8", function () {
@@ -133,9 +139,9 @@ KISSY.add(function (S, Dom) {
             Dom.remove(multiple);
         });
 
-        it('html works for fragment',function(){
-            var html='<div></div><span></span>';
-            var n= Dom.create(html);
+        it('html works for fragment', function () {
+            var html = '<div></div><span></span>';
+            var n = Dom.create(html);
             expect(Dom.html(n).toLowerCase()).toBe(html);
         });
 
@@ -209,12 +215,12 @@ KISSY.add(function (S, Dom) {
             Dom.remove(div2);
         });
 
-        it('outerHtml works for fragment',function(){
-            var html='<div></div><span></span>';
-            var n= Dom.create(html);
+        it('outerHtml works for fragment', function () {
+            var html = '<div></div><span></span>';
+            var n = Dom.create(html);
             expect(Dom.outerHtml(n).toLowerCase()).toBe(html);
         });
     });
-},{
-    requires:['dom']
+}, {
+    requires: ['dom']
 });
