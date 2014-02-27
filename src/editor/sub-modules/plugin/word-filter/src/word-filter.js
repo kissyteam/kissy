@@ -883,8 +883,8 @@ KISSY.add(function (S, require) {
                             return node.nodeType === 3 && !containsNothingButSpaces(node.parentNode);
                         });
                         var bullet = bulletText && bulletText.parentNode;
-                        if (!bullet.getAttribute('style')) {
-                            ( bullet.setAttribute('style', 'mso-list: Ignore;'));
+                        if (bullet && !bullet.getAttribute('style')) {
+                            bullet.setAttribute('style', 'mso-list: Ignore;');
                         }
                     }
 

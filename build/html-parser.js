@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Feb 25 19:44
+build time: Feb 27 14:53
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -414,8 +414,8 @@ KISSY.add("html-parser/nodes/tag", ["./node", "./attribute", "../dtd"], function
     this.childNodes.push(node);
     refreshChildNodes(this)
   }, replace:function(ref) {
-    var silbing = ref.parentNode.childNodes, index = S.indexOf(ref, silbing);
-    silbing[index] = this;
+    var sibling = ref.parentNode.childNodes, index = S.indexOf(ref, sibling);
+    sibling[index] = this;
     refreshChildNodes(ref.parentNode)
   }, replaceChild:function(newC, refC) {
     var self = this, childNodes = self.childNodes;
@@ -426,12 +426,12 @@ KISSY.add("html-parser/nodes/tag", ["./node", "./attribute", "../dtd"], function
     this.childNodes.unshift(node);
     refreshChildNodes(this)
   }, insertBefore:function(ref) {
-    var silbing = ref.parentNode.childNodes, index = S.indexOf(ref, silbing);
-    silbing.splice(index, 0, this);
+    var sibling = ref.parentNode.childNodes, index = S.indexOf(ref, sibling);
+    sibling.splice(index, 0, this);
     refreshChildNodes(ref.parentNode)
   }, insertAfter:function(ref) {
-    var silbing = ref.parentNode.childNodes, index = S.indexOf(ref, silbing);
-    if(index === silbing.length - 1) {
+    var sibling = ref.parentNode.childNodes, index = S.indexOf(ref, sibling);
+    if(index === sibling.length - 1) {
       ref.parentNode.appendChild(this)
     }else {
       this.insertBefore(ref.parentNode.childNodes[[index + 1]])
@@ -440,8 +440,8 @@ KISSY.add("html-parser/nodes/tag", ["./node", "./attribute", "../dtd"], function
     this.childNodes = [];
     refreshChildNodes(this)
   }, removeChild:function(node) {
-    var silbing = node.parentNode.childNodes, index = S.indexOf(node, silbing);
-    silbing.splice(index, 1);
+    var sibling = node.parentNode.childNodes, index = S.indexOf(node, sibling);
+    sibling.splice(index, 1);
     refreshChildNodes(node.parentNode)
   }, getAttribute:function(name) {
     var attr = findAttributeByName(this.attributes, name);
@@ -526,6 +526,10 @@ KISSY.add("html-parser/nodes/tag", ["./node", "./attribute", "../dtd"], function
     S.each(self.childNodes, function(child) {
       child.writeHtml(writer, filter)
     })
+  }, outerHtml:function() {
+    var writer = new (S.require("html-parser/writer/basic"));
+    this.writeHtml(writer);
+    return writer.getHtml()
   }});
   function findAttributeByName(attributes, name) {
     if(attributes && attributes.length) {
@@ -1471,9 +1475,9 @@ KISSY.add("html-parser/parser", ["./dtd", "./nodes/tag", "./nodes/fragment", "./
   function fixBody(doc) {
     var body = findTagWithName(doc, "body", 3);
     if(body) {
-      var parent = body.parentNode, silbing = parent.childNodes, bodyIndex = S.indexOf(body, silbing);
-      if(bodyIndex !== silbing.length - 1) {
-        var fixes = silbing.slice(bodyIndex + 1, silbing.length);
+      var parent = body.parentNode, sibling = parent.childNodes, bodyIndex = S.indexOf(body, sibling);
+      if(bodyIndex !== sibling.length - 1) {
+        var fixes = sibling.slice(bodyIndex + 1, sibling.length);
         for(var i = 0;i < fixes.length;i++) {
           parent.removeChild(fixes[i]);
           if(fixes[i].tagName === "body") {

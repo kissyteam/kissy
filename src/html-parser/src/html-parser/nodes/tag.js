@@ -86,7 +86,6 @@ KISSY.add(function (S, require) {
     }
 
     S.extend(Tag, Node, {
-
         _updateSelfClosed: function () {
             var self = this;
             // <br> <img> <input> , just recognize them immediately
@@ -155,9 +154,9 @@ KISSY.add(function (S, require) {
         },
 
         replace: function (ref) {
-            var silbing = ref.parentNode.childNodes,
-                index = S.indexOf(ref, silbing);
-            silbing[index] = this;
+            var sibling = ref.parentNode.childNodes,
+                index = S.indexOf(ref, sibling);
+            sibling[index] = this;
             refreshChildNodes(ref.parentNode);
         },
 
@@ -175,17 +174,16 @@ KISSY.add(function (S, require) {
         },
 
         insertBefore: function (ref) {
-            var silbing = ref.parentNode.childNodes,
-                index = S.indexOf(ref, silbing);
-            silbing.splice(index, 0, this);
+            var sibling = ref.parentNode.childNodes,
+                index = S.indexOf(ref, sibling);
+            sibling.splice(index, 0, this);
             refreshChildNodes(ref.parentNode);
         },
 
-
         insertAfter: function (ref) {
-            var silbing = ref.parentNode.childNodes,
-                index = S.indexOf(ref, silbing);
-            if (index === silbing.length - 1) {
+            var sibling = ref.parentNode.childNodes,
+                index = S.indexOf(ref, sibling);
+            if (index === sibling.length - 1) {
                 ref.parentNode.appendChild(this);
             } else {
                 this.insertBefore(ref.parentNode.childNodes[[index + 1]]);
@@ -198,9 +196,9 @@ KISSY.add(function (S, require) {
         },
 
         removeChild: function (node) {
-            var silbing = node.parentNode.childNodes,
-                index = S.indexOf(node, silbing);
-            silbing.splice(index, 1);
+            var sibling = node.parentNode.childNodes,
+                index = S.indexOf(node, sibling);
+            sibling.splice(index, 1);
             refreshChildNodes(node.parentNode);
         },
 
@@ -328,7 +326,6 @@ KISSY.add(function (S, require) {
             }
         },
 
-
         /**
          * @param writer
          * @protected
@@ -340,8 +337,13 @@ KISSY.add(function (S, require) {
             S.each(self.childNodes, function (child) {
                 child.writeHtml(writer, filter);
             });
-        }
+        },
 
+        outerHtml: function () {
+            var writer = new (S.require('html-parser/writer/basic'))();
+            this.writeHtml(writer);
+            return writer.getHtml();
+        }
     });
 
     function findAttributeByName(attributes, name) {

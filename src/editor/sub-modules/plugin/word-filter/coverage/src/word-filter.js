@@ -1279,7 +1279,7 @@ function visit143_901_2(result) {
 function visit142_901_1(result) {
   _$jscoverage['/word-filter.js'].branchData['901'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['886'][1].init(312, 29, '!bullet.getAttribute(\'style\')');
+}_$jscoverage['/word-filter.js'].branchData['886'][1].init(312, 39, 'bullet && !bullet.getAttribute(\'style\')');
 function visit141_886_1(result) {
   _$jscoverage['/word-filter.js'].branchData['886'][1].ranCondition(result);
   return result;
@@ -2774,9 +2774,9 @@ KISSY.add(function(S, require) {
     _$jscoverage['/word-filter.js'].lineData[885]++;
     var bullet = visit140_885_1(bulletText && bulletText.parentNode);
     _$jscoverage['/word-filter.js'].lineData[886]++;
-    if (visit141_886_1(!bullet.getAttribute('style'))) {
+    if (visit141_886_1(bullet && !bullet.getAttribute('style'))) {
       _$jscoverage['/word-filter.js'].lineData[887]++;
-      (bullet.setAttribute('style', 'mso-list: Ignore;'));
+      bullet.setAttribute('style', 'mso-list: Ignore;');
     }
   }
   _$jscoverage['/word-filter.js'].lineData[891]++;

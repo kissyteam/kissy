@@ -97,10 +97,10 @@ KISSY.add(function (S, require) {
              </body>
              */
             var parent = body.parentNode,
-                silbing = parent.childNodes,
-                bodyIndex = S.indexOf(body, silbing);
-            if (bodyIndex !== silbing.length - 1) {
-                var fixes = silbing.slice(bodyIndex + 1, silbing.length);
+                sibling = parent.childNodes,
+                bodyIndex = S.indexOf(body, sibling);
+            if (bodyIndex !== sibling.length - 1) {
+                var fixes = sibling.slice(bodyIndex + 1, sibling.length);
                 for (var i = 0; i < fixes.length; i++) {
                     parent.removeChild(fixes[i]);
                     if (fixes[i].tagName === 'body') {
@@ -116,7 +116,6 @@ KISSY.add(function (S, require) {
         }
         return body;
     }
-
 
     function autoParagraph(doc) {
         var childNodes = doc.childNodes,
@@ -160,7 +159,6 @@ KISSY.add(function (S, require) {
             }
         }
     }
-
 
     function findTagWithName(root, tagName, level) {
         if (level === 0) {
