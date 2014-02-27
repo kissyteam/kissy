@@ -8,7 +8,7 @@ KISSY.add(function (S, require) {
     var ContentRenderExtension = require('component/extension/content-render');
 
     // http://www.html5rocks.com/en/tutorials/speed/html5/
-    var Features = S.Features,
+    var Feature = S.Features,
 //        MARKER_CLS = 'ks-scrollview-marker',
         floor = Math.floor,
         transformProperty;
@@ -37,8 +37,7 @@ KISSY.add(function (S, require) {
             var self = this,
                 control = self.control,
                 el = control.el,
-                contentEl = control.contentEl,
-                $contentEl = control.$contentEl;
+                contentEl = control.contentEl;
             // consider pull to refresh
             // refresh label will be prepended to el
             // contentEl must be absolute
@@ -49,71 +48,13 @@ KISSY.add(function (S, require) {
                 scrollWidth = Math.max(contentEl.offsetWidth, contentEl.scrollWidth);
 
             var clientHeight = el.clientHeight,
-                allowScroll,
                 clientWidth = el.clientWidth;
 
-            control.scrollHeight = scrollHeight;
-            control.scrollWidth = scrollWidth;
-            control.clientHeight = clientHeight;
-            control.clientWidth = clientWidth;
-
-            allowScroll = control.allowScroll = {};
-
-            if (scrollHeight > clientHeight) {
-                allowScroll.top = 1;
-            }
-            if (scrollWidth > clientWidth) {
-                allowScroll.left = 1;
-            }
-
-            control.minScroll = {
-                left: 0,
-                top: 0
-            };
-
-            var maxScrollLeft,
-                maxScrollTop;
-
-            control.maxScroll = {
-                left: maxScrollLeft = scrollWidth - clientWidth,
-                top: maxScrollTop = scrollHeight - clientHeight
-            };
-
-            delete control.scrollStep;
-
-            var snap = control.get('snap'),
-                scrollLeft = control.get('scrollLeft'),
-                scrollTop = control.get('scrollTop');
-
-            if (snap) {
-                var elOffset = $contentEl.offset();
-                var pages = control.pages = typeof snap === 'string' ?
-                        $contentEl.all(snap) :
-                        $contentEl.children(),
-                    pageIndex = control.get('pageIndex'),
-                    pagesOffset = control.pagesOffset = [];
-                pages.each(function (p, i) {
-                    var offset = p.offset(),
-                        left = offset.left - elOffset.left,
-                        top = offset.top - elOffset.top;
-                    if (left <= maxScrollLeft && top <= maxScrollTop) {
-                        pagesOffset[i] = {
-                            left: left,
-                            top: top,
-                            index: i
-                        };
-                    }
-                });
-                if (pageIndex) {
-                    control.scrollToPage(pageIndex);
-                    return;
-                }
-            }
-
-            // in case content is reduces
-            control.scrollToWithBounds({
-                left: scrollLeft,
-                top: scrollTop
+            control.set({
+                'scrollHeight':scrollHeight,
+                'scrollWidth':scrollWidth,
+                'clientWidth':clientWidth,
+                'clientHeight':clientHeight
             });
         },
 
@@ -127,7 +68,7 @@ KISSY.add(function (S, require) {
     };
 
     if (supportCss3) {
-        transformProperty = Features.getVendorCssPropName('transform');
+        transformProperty = Feature.getVendorCssPropName('transform');
 
         methods._onSetScrollLeft = function (v) {
             var control = this.control;

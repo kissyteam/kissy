@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.42
 MIT Licensed
-build time: Feb 25 20:57
+build time: Feb 27 14:34
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -13,51 +13,21 @@ build time: Feb 25 20:57
 KISSY.add("scroll-view/base/render", ["component/container", "component/extension/content-render"], function(S, require) {
   var Container = require("component/container");
   var ContentRenderExtension = require("component/extension/content-render");
-  var Features = S.Features, floor = Math.floor, transformProperty;
+  var Feature = S.Features, floor = Math.floor, transformProperty;
   var isTransform3dSupported = S.Features.isTransform3dSupported();
   var supportCss3 = S.Features.getVendorCssPropPrefix("transform") !== false;
   var methods = {syncUI:function() {
-    var self = this, control = self.control, el = control.el, contentEl = control.contentEl, $contentEl = control.$contentEl;
+    var self = this, control = self.control, el = control.el, contentEl = control.contentEl;
     var scrollHeight = Math.max(contentEl.offsetHeight, contentEl.scrollHeight), scrollWidth = Math.max(contentEl.offsetWidth, contentEl.scrollWidth);
-    var clientHeight = el.clientHeight, allowScroll, clientWidth = el.clientWidth;
-    control.scrollHeight = scrollHeight;
-    control.scrollWidth = scrollWidth;
-    control.clientHeight = clientHeight;
-    control.clientWidth = clientWidth;
-    allowScroll = control.allowScroll = {};
-    if(scrollHeight > clientHeight) {
-      allowScroll.top = 1
-    }
-    if(scrollWidth > clientWidth) {
-      allowScroll.left = 1
-    }
-    control.minScroll = {left:0, top:0};
-    var maxScrollLeft, maxScrollTop;
-    control.maxScroll = {left:maxScrollLeft = scrollWidth - clientWidth, top:maxScrollTop = scrollHeight - clientHeight};
-    delete control.scrollStep;
-    var snap = control.get("snap"), scrollLeft = control.get("scrollLeft"), scrollTop = control.get("scrollTop");
-    if(snap) {
-      var elOffset = $contentEl.offset();
-      var pages = control.pages = typeof snap === "string" ? $contentEl.all(snap) : $contentEl.children(), pageIndex = control.get("pageIndex"), pagesOffset = control.pagesOffset = [];
-      pages.each(function(p, i) {
-        var offset = p.offset(), left = offset.left - elOffset.left, top = offset.top - elOffset.top;
-        if(left <= maxScrollLeft && top <= maxScrollTop) {
-          pagesOffset[i] = {left:left, top:top, index:i}
-        }
-      });
-      if(pageIndex) {
-        control.scrollToPage(pageIndex);
-        return
-      }
-    }
-    control.scrollToWithBounds({left:scrollLeft, top:scrollTop})
+    var clientHeight = el.clientHeight, clientWidth = el.clientWidth;
+    control.set({scrollHeight:scrollHeight, scrollWidth:scrollWidth, clientWidth:clientWidth, clientHeight:clientHeight})
   }, _onSetScrollLeft:function(v) {
     this.control.contentEl.style.left = -v + "px"
   }, _onSetScrollTop:function(v) {
     this.control.contentEl.style.top = -v + "px"
   }};
   if(supportCss3) {
-    transformProperty = Features.getVendorCssPropName("transform");
+    transformProperty = Feature.getVendorCssPropName("transform");
     methods._onSetScrollLeft = function(v) {
       var control = this.control;
       control.contentEl.style[transformProperty] = "translateX(" + floor(-v) + "px)" + " translateY(" + floor(-control.get("scrollTop")) + "px)" + (isTransform3dSupported ? " translateZ(0)" : "")
@@ -88,12 +58,49 @@ KISSY.add("scroll-view/base", ["node", "anim", "component/container", "./base/re
   function frame(anim, fx) {
     anim.scrollView.set(fx.prop, fx.val)
   }
+  var reflow = S.buffer(function() {
+    var control = this, $contentEl = control.$contentEl;
+    var scrollHeight = control.get("scrollHeight"), scrollWidth = control.get("scrollWidth");
+    var clientHeight = control.get("clientHeight"), allowScroll, clientWidth = control.get("clientWidth");
+    control.scrollHeight = scrollHeight;
+    control.scrollWidth = scrollWidth;
+    control.clientHeight = clientHeight;
+    control.clientWidth = clientWidth;
+    allowScroll = control.allowScroll = {};
+    if(scrollHeight > clientHeight) {
+      allowScroll.top = 1
+    }
+    if(scrollWidth > clientWidth) {
+      allowScroll.left = 1
+    }
+    control.minScroll = {left:0, top:0};
+    var maxScrollLeft, maxScrollTop;
+    control.maxScroll = {left:maxScrollLeft = scrollWidth - clientWidth, top:maxScrollTop = scrollHeight - clientHeight};
+    delete control.scrollStep;
+    var snap = control.get("snap"), scrollLeft = control.get("scrollLeft"), scrollTop = control.get("scrollTop");
+    if(snap) {
+      var elOffset = $contentEl.offset();
+      var pages = control.pages = typeof snap === "string" ? $contentEl.all(snap) : $contentEl.children(), pageIndex = control.get("pageIndex"), pagesOffset = control.pagesOffset = [];
+      pages.each(function(p, i) {
+        var offset = p.offset(), left = offset.left - elOffset.left, top = offset.top - elOffset.top;
+        if(left <= maxScrollLeft && top <= maxScrollTop) {
+          pagesOffset[i] = {left:left, top:top, index:i}
+        }
+      });
+      if(pageIndex) {
+        control.scrollToPage(pageIndex);
+        return
+      }
+    }
+    control.scrollToWithBounds({left:scrollLeft, top:scrollTop});
+    control.fire("reflow")
+  });
   return Container.extend({initializer:function() {
     this.scrollAnims = []
   }, bindUI:function() {
     var self = this, $el = self.$el;
     $el.on("mousewheel", self.handleMouseWheel, self).on("scroll", onElScroll, self)
-  }, handleKeyDownInternal:function(e) {
+  }, _onSetClientHeight:reflow, _onSetClientWidth:reflow, _onSetScrollHeight:reflow, _onSetScrollWidth:reflow, handleKeyDownInternal:function(e) {
     var target = e.target, $target = $(target), nodeName = $target.nodeName();
     if(nodeName === "input" || nodeName === "textarea" || nodeName === "select" || $target.hasAttr("contenteditable")) {
       return undefined
@@ -170,8 +177,6 @@ KISSY.add("scroll-view/base", ["node", "anim", "component/container", "./base/re
         e.preventDefault()
       }
     }
-  }, isAxisEnabled:function(axis) {
-    return this.allowScroll[axis === "x" ? "left" : "top"]
   }, stopAnimation:function() {
     var self = this;
     if(self.scrollAnims.length) {
@@ -183,7 +188,7 @@ KISSY.add("scroll-view/base", ["node", "anim", "component/container", "./base/re
     self.scrollToWithBounds({left:self.get("scrollLeft"), top:self.get("scrollTop")})
   }, _uiSetPageIndex:function(v) {
     this.scrollToPage(v)
-  }, _getPageIndexFromXY:function(v, allowX, direction) {
+  }, getPageIndexFromXY:function(v, allowX, direction) {
     var pagesOffset = this.pagesOffset.concat([]);
     var p2 = allowX ? "left" : "top";
     var i, offset;
@@ -250,6 +255,6 @@ KISSY.add("scroll-view/base", ["node", "anim", "component/container", "./base/re
         self.set("scrollTop", top)
       }
     }
-  }}, {ATTRS:{contentEl:{}, scrollLeft:{view:1, value:0}, scrollTop:{view:1, value:0}, focusable:{value:true}, allowTextSelection:{value:true}, handleGestureEvents:{value:false}, snap:{value:false}, pageIndex:{value:0}, xrender:{value:Render}}, xclass:"scroll-view"})
+  }}, {ATTRS:{contentEl:{}, scrollLeft:{view:1, value:0}, scrollTop:{view:1, value:0}, scrollWidth:{}, scrollHeight:{}, clientWidth:{}, clientHeight:{}, focusable:{value:true}, allowTextSelection:{value:true}, handleGestureEvents:{value:false}, snap:{value:false}, pageIndex:{value:0}, xrender:{value:Render}}, xclass:"scroll-view"})
 });
 

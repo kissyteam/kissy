@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.42
 MIT Licensed
-build time: Feb 25 20:58
+build time: Feb 27 14:34
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -311,7 +311,7 @@ KISSY.add("scroll-view/drag", ["./base", "node", "anim"], function(S, require) {
             }
           }else {
             if(allowX || allowY) {
-              var toPageIndex = self._getPageIndexFromXY(allowX ? scrollLeft : scrollTop, allowX, allowX ? offsetX : offsetY);
+              var toPageIndex = self.getPageIndexFromXY(allowX ? scrollLeft : scrollTop, allowX, allowX ? offsetX : offsetY);
               self.scrollToPage(toPageIndex, animCfg)
             }else {
               self.scrollToPage(pageIndex);
@@ -344,8 +344,6 @@ KISSY.add("scroll-view/drag", ["./base", "node", "anim"], function(S, require) {
   }, bindUI:function() {
     var self = this;
     self.$contentEl.on("dragstart", preventDefault).on(Gesture.start, onDragStartHandler, self)
-  }, syncUI:function() {
-    initStates(this)
   }, destructor:function() {
     this.stopAnimation()
   }, stopAnimation:function() {

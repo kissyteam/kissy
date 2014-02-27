@@ -232,99 +232,97 @@ if (! _$jscoverage['/scrollbar.js']) {
   _$jscoverage['/scrollbar.js'].lineData[6] = 0;
   _$jscoverage['/scrollbar.js'].lineData[7] = 0;
   _$jscoverage['/scrollbar.js'].lineData[8] = 0;
+  _$jscoverage['/scrollbar.js'].lineData[10] = 0;
+  _$jscoverage['/scrollbar.js'].lineData[11] = 0;
+  _$jscoverage['/scrollbar.js'].lineData[12] = 0;
+  _$jscoverage['/scrollbar.js'].lineData[13] = 0;
   _$jscoverage['/scrollbar.js'].lineData[14] = 0;
+  _$jscoverage['/scrollbar.js'].lineData[15] = 0;
+  _$jscoverage['/scrollbar.js'].lineData[16] = 0;
   _$jscoverage['/scrollbar.js'].lineData[18] = 0;
   _$jscoverage['/scrollbar.js'].lineData[19] = 0;
-  _$jscoverage['/scrollbar.js'].lineData[20] = 0;
-  _$jscoverage['/scrollbar.js'].lineData[21] = 0;
-  _$jscoverage['/scrollbar.js'].lineData[22] = 0;
-  _$jscoverage['/scrollbar.js'].lineData[23] = 0;
+  _$jscoverage['/scrollbar.js'].lineData[25] = 0;
+  _$jscoverage['/scrollbar.js'].lineData[26] = 0;
   _$jscoverage['/scrollbar.js'].lineData[28] = 0;
   _$jscoverage['/scrollbar.js'].lineData[29] = 0;
-  _$jscoverage['/scrollbar.js'].lineData[32] = 0;
-  _$jscoverage['/scrollbar.js'].lineData[33] = 0;
+  _$jscoverage['/scrollbar.js'].lineData[31] = 0;
   _$jscoverage['/scrollbar.js'].lineData[34] = 0;
   _$jscoverage['/scrollbar.js'].lineData[35] = 0;
-  _$jscoverage['/scrollbar.js'].lineData[38] = 0;
-  _$jscoverage['/scrollbar.js'].lineData[39] = 0;
   _$jscoverage['/scrollbar.js'].lineData[41] = 0;
+  _$jscoverage['/scrollbar.js'].lineData[42] = 0;
   _$jscoverage['/scrollbar.js'].lineData[44] = 0;
   _$jscoverage['/scrollbar.js'].lineData[45] = 0;
-  _$jscoverage['/scrollbar.js'].lineData[46] = 0;
   _$jscoverage['/scrollbar.js'].lineData[47] = 0;
-  _$jscoverage['/scrollbar.js'].lineData[50] = 0;
-  _$jscoverage['/scrollbar.js'].lineData[51] = 0;
-  _$jscoverage['/scrollbar.js'].lineData[53] = 0;
-  _$jscoverage['/scrollbar.js'].lineData[58] = 0;
-  _$jscoverage['/scrollbar.js'].lineData[59] = 0;
+  _$jscoverage['/scrollbar.js'].lineData[56] = 0;
   _$jscoverage['/scrollbar.js'].lineData[60] = 0;
   _$jscoverage['/scrollbar.js'].lineData[61] = 0;
-  _$jscoverage['/scrollbar.js'].lineData[63] = 0;
-  _$jscoverage['/scrollbar.js'].lineData[64] = 0;
-  _$jscoverage['/scrollbar.js'].lineData[65] = 0;
+  _$jscoverage['/scrollbar.js'].lineData[62] = 0;
+  _$jscoverage['/scrollbar.js'].lineData[66] = 0;
+  _$jscoverage['/scrollbar.js'].lineData[67] = 0;
+  _$jscoverage['/scrollbar.js'].lineData[68] = 0;
+  _$jscoverage['/scrollbar.js'].lineData[69] = 0;
+  _$jscoverage['/scrollbar.js'].lineData[71] = 0;
+  _$jscoverage['/scrollbar.js'].lineData[72] = 0;
+  _$jscoverage['/scrollbar.js'].lineData[73] = 0;
+  _$jscoverage['/scrollbar.js'].lineData[75] = 0;
 }
 if (! _$jscoverage['/scrollbar.js'].functionData) {
   _$jscoverage['/scrollbar.js'].functionData = [];
   _$jscoverage['/scrollbar.js'].functionData[0] = 0;
   _$jscoverage['/scrollbar.js'].functionData[1] = 0;
   _$jscoverage['/scrollbar.js'].functionData[2] = 0;
+  _$jscoverage['/scrollbar.js'].functionData[3] = 0;
 }
 if (! _$jscoverage['/scrollbar.js'].branchData) {
   _$jscoverage['/scrollbar.js'].branchData = {};
+  _$jscoverage['/scrollbar.js'].branchData['18'] = [];
+  _$jscoverage['/scrollbar.js'].branchData['18'][1] = new BranchData();
+  _$jscoverage['/scrollbar.js'].branchData['25'] = [];
+  _$jscoverage['/scrollbar.js'].branchData['25'][1] = new BranchData();
   _$jscoverage['/scrollbar.js'].branchData['28'] = [];
   _$jscoverage['/scrollbar.js'].branchData['28'][1] = new BranchData();
-  _$jscoverage['/scrollbar.js'].branchData['32'] = [];
-  _$jscoverage['/scrollbar.js'].branchData['32'][1] = new BranchData();
   _$jscoverage['/scrollbar.js'].branchData['34'] = [];
   _$jscoverage['/scrollbar.js'].branchData['34'][1] = new BranchData();
-  _$jscoverage['/scrollbar.js'].branchData['38'] = [];
-  _$jscoverage['/scrollbar.js'].branchData['38'][1] = new BranchData();
+  _$jscoverage['/scrollbar.js'].branchData['41'] = [];
+  _$jscoverage['/scrollbar.js'].branchData['41'][1] = new BranchData();
   _$jscoverage['/scrollbar.js'].branchData['44'] = [];
   _$jscoverage['/scrollbar.js'].branchData['44'][1] = new BranchData();
-  _$jscoverage['/scrollbar.js'].branchData['46'] = [];
-  _$jscoverage['/scrollbar.js'].branchData['46'][1] = new BranchData();
-  _$jscoverage['/scrollbar.js'].branchData['50'] = [];
-  _$jscoverage['/scrollbar.js'].branchData['50'][1] = new BranchData();
-  _$jscoverage['/scrollbar.js'].branchData['59'] = [];
-  _$jscoverage['/scrollbar.js'].branchData['59'][1] = new BranchData();
-  _$jscoverage['/scrollbar.js'].branchData['63'] = [];
-  _$jscoverage['/scrollbar.js'].branchData['63'][1] = new BranchData();
+  _$jscoverage['/scrollbar.js'].branchData['67'] = [];
+  _$jscoverage['/scrollbar.js'].branchData['67'][1] = new BranchData();
+  _$jscoverage['/scrollbar.js'].branchData['71'] = [];
+  _$jscoverage['/scrollbar.js'].branchData['71'][1] = new BranchData();
 }
-_$jscoverage['/scrollbar.js'].branchData['63'][1].init(178, 15, 'self.scrollBarY');
-function visit35_63_1(result) {
-  _$jscoverage['/scrollbar.js'].branchData['63'][1].ranCondition(result);
+_$jscoverage['/scrollbar.js'].branchData['71'][1].init(178, 15, 'self.scrollBarY');
+function visit34_71_1(result) {
+  _$jscoverage['/scrollbar.js'].branchData['71'][1].ranCondition(result);
   return result;
-}_$jscoverage['/scrollbar.js'].branchData['59'][1].init(46, 15, 'self.scrollBarX');
-function visit34_59_1(result) {
-  _$jscoverage['/scrollbar.js'].branchData['59'][1].ranCondition(result);
+}_$jscoverage['/scrollbar.js'].branchData['67'][1].init(46, 15, 'self.scrollBarX');
+function visit33_67_1(result) {
+  _$jscoverage['/scrollbar.js'].branchData['67'][1].ranCondition(result);
   return result;
-}_$jscoverage['/scrollbar.js'].branchData['50'][1].init(93, 23, 'autoHideY !== undefined');
-function visit33_50_1(result) {
-  _$jscoverage['/scrollbar.js'].branchData['50'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/scrollbar.js'].branchData['46'][1].init(992, 26, 'scrollView.allowScroll.top');
-function visit32_46_1(result) {
-  _$jscoverage['/scrollbar.js'].branchData['46'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/scrollbar.js'].branchData['44'][1].init(909, 15, 'self.scrollBarY');
-function visit31_44_1(result) {
+}_$jscoverage['/scrollbar.js'].branchData['44'][1].init(326, 23, 'autoHideY !== undefined');
+function visit32_44_1(result) {
   _$jscoverage['/scrollbar.js'].branchData['44'][1].ranCondition(result);
   return result;
-}_$jscoverage['/scrollbar.js'].branchData['38'][1].init(93, 23, 'autoHideX !== undefined');
-function visit30_38_1(result) {
-  _$jscoverage['/scrollbar.js'].branchData['38'][1].ranCondition(result);
+}_$jscoverage['/scrollbar.js'].branchData['41'][1].init(226, 23, 'minLength !== undefined');
+function visit31_41_1(result) {
+  _$jscoverage['/scrollbar.js'].branchData['41'][1].ranCondition(result);
   return result;
-}_$jscoverage['/scrollbar.js'].branchData['34'][1].init(589, 27, 'scrollView.allowScroll.left');
-function visit29_34_1(result) {
+}_$jscoverage['/scrollbar.js'].branchData['34'][1].init(780, 46, '!self.scrollBarY && scrollView.allowScroll.top');
+function visit30_34_1(result) {
   _$jscoverage['/scrollbar.js'].branchData['34'][1].ranCondition(result);
   return result;
-}_$jscoverage['/scrollbar.js'].branchData['32'][1].init(506, 15, 'self.scrollBarX');
-function visit28_32_1(result) {
-  _$jscoverage['/scrollbar.js'].branchData['32'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/scrollbar.js'].branchData['28'][1].init(405, 23, 'minLength !== undefined');
-function visit27_28_1(result) {
+}_$jscoverage['/scrollbar.js'].branchData['28'][1].init(326, 23, 'autoHideX !== undefined');
+function visit29_28_1(result) {
   _$jscoverage['/scrollbar.js'].branchData['28'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/scrollbar.js'].branchData['25'][1].init(226, 23, 'minLength !== undefined');
+function visit28_25_1(result) {
+  _$jscoverage['/scrollbar.js'].branchData['25'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/scrollbar.js'].branchData['18'][1].init(239, 47, '!self.scrollBarX && scrollView.allowScroll.left');
+function visit27_18_1(result) {
+  _$jscoverage['/scrollbar.js'].branchData['18'][1].ranCondition(result);
   return result;
 }_$jscoverage['/scrollbar.js'].lineData[6]++;
 KISSY.add(function(S, require) {
@@ -333,87 +331,94 @@ KISSY.add(function(S, require) {
   var Base = require('base');
   _$jscoverage['/scrollbar.js'].lineData[8]++;
   var ScrollBar = require('./scrollbar/control');
-  _$jscoverage['/scrollbar.js'].lineData[14]++;
-  return Base.extend({
-  pluginId: this.getName(), 
-  pluginSyncUI: function(scrollView) {
-  _$jscoverage['/scrollbar.js'].functionData[1]++;
-  _$jscoverage['/scrollbar.js'].lineData[18]++;
-  var self = this;
-  _$jscoverage['/scrollbar.js'].lineData[19]++;
-  var minLength = self.get('minLength');
-  _$jscoverage['/scrollbar.js'].lineData[20]++;
-  var autoHideX = self.get('autoHideX');
-  _$jscoverage['/scrollbar.js'].lineData[21]++;
-  var autoHideY = self.get('autoHideY');
-  _$jscoverage['/scrollbar.js'].lineData[22]++;
-  var my;
-  _$jscoverage['/scrollbar.js'].lineData[23]++;
-  var cfg = {
+  _$jscoverage['/scrollbar.js'].lineData[10]++;
+  function onScrollViewReflow() {
+    _$jscoverage['/scrollbar.js'].functionData[1]++;
+    _$jscoverage['/scrollbar.js'].lineData[11]++;
+    var self = this;
+    _$jscoverage['/scrollbar.js'].lineData[12]++;
+    var scrollView = self.scrollView;
+    _$jscoverage['/scrollbar.js'].lineData[13]++;
+    var minLength = self.get('minLength');
+    _$jscoverage['/scrollbar.js'].lineData[14]++;
+    var autoHideX = self.get('autoHideX');
+    _$jscoverage['/scrollbar.js'].lineData[15]++;
+    var autoHideY = self.get('autoHideY');
+    _$jscoverage['/scrollbar.js'].lineData[16]++;
+    var cfg;
+    _$jscoverage['/scrollbar.js'].lineData[18]++;
+    if (visit27_18_1(!self.scrollBarX && scrollView.allowScroll.left)) {
+      _$jscoverage['/scrollbar.js'].lineData[19]++;
+      cfg = {
+  axis: 'x', 
   scrollView: scrollView, 
   elBefore: scrollView.$contentEl};
-  _$jscoverage['/scrollbar.js'].lineData[28]++;
-  if (visit27_28_1(minLength !== undefined)) {
-    _$jscoverage['/scrollbar.js'].lineData[29]++;
-    cfg.minLength = minLength;
-  }
-  _$jscoverage['/scrollbar.js'].lineData[32]++;
-  if (visit28_32_1(self.scrollBarX)) {
-    _$jscoverage['/scrollbar.js'].lineData[33]++;
-    self.scrollBarX.sync();
-  } else {
-    _$jscoverage['/scrollbar.js'].lineData[34]++;
-    if (visit29_34_1(scrollView.allowScroll.left)) {
-      _$jscoverage['/scrollbar.js'].lineData[35]++;
-      my = {
-  axis: 'x'};
-      _$jscoverage['/scrollbar.js'].lineData[38]++;
-      if (visit30_38_1(autoHideX !== undefined)) {
-        _$jscoverage['/scrollbar.js'].lineData[39]++;
+      _$jscoverage['/scrollbar.js'].lineData[25]++;
+      if (visit28_25_1(minLength !== undefined)) {
+        _$jscoverage['/scrollbar.js'].lineData[26]++;
+        cfg.minLength = minLength;
+      }
+      _$jscoverage['/scrollbar.js'].lineData[28]++;
+      if (visit29_28_1(autoHideX !== undefined)) {
+        _$jscoverage['/scrollbar.js'].lineData[29]++;
         cfg.autoHide = autoHideX;
       }
-      _$jscoverage['/scrollbar.js'].lineData[41]++;
-      self.scrollBarX = new ScrollBar(S.merge(cfg, my)).render();
+      _$jscoverage['/scrollbar.js'].lineData[31]++;
+      self.scrollBarX = new ScrollBar(cfg).render();
     }
-  }
-  _$jscoverage['/scrollbar.js'].lineData[44]++;
-  if (visit31_44_1(self.scrollBarY)) {
-    _$jscoverage['/scrollbar.js'].lineData[45]++;
-    self.scrollBarY.sync();
-  } else {
-    _$jscoverage['/scrollbar.js'].lineData[46]++;
-    if (visit32_46_1(scrollView.allowScroll.top)) {
-      _$jscoverage['/scrollbar.js'].lineData[47]++;
-      my = {
-  axis: 'y'};
-      _$jscoverage['/scrollbar.js'].lineData[50]++;
-      if (visit33_50_1(autoHideY !== undefined)) {
-        _$jscoverage['/scrollbar.js'].lineData[51]++;
+    _$jscoverage['/scrollbar.js'].lineData[34]++;
+    if (visit30_34_1(!self.scrollBarY && scrollView.allowScroll.top)) {
+      _$jscoverage['/scrollbar.js'].lineData[35]++;
+      cfg = {
+  axis: 'y', 
+  scrollView: scrollView, 
+  elBefore: scrollView.$contentEl};
+      _$jscoverage['/scrollbar.js'].lineData[41]++;
+      if (visit31_41_1(minLength !== undefined)) {
+        _$jscoverage['/scrollbar.js'].lineData[42]++;
+        cfg.minLength = minLength;
+      }
+      _$jscoverage['/scrollbar.js'].lineData[44]++;
+      if (visit32_44_1(autoHideY !== undefined)) {
+        _$jscoverage['/scrollbar.js'].lineData[45]++;
         cfg.autoHide = autoHideY;
       }
-      _$jscoverage['/scrollbar.js'].lineData[53]++;
-      self.scrollBarY = new ScrollBar(S.merge(cfg, my)).render();
+      _$jscoverage['/scrollbar.js'].lineData[47]++;
+      self.scrollBarY = new ScrollBar(cfg).render();
     }
   }
-}, 
-  pluginDestructor: function() {
+  _$jscoverage['/scrollbar.js'].lineData[56]++;
+  return Base.extend({
+  pluginId: this.getName(), 
+  pluginBindUI: function(scrollView) {
   _$jscoverage['/scrollbar.js'].functionData[2]++;
-  _$jscoverage['/scrollbar.js'].lineData[58]++;
+  _$jscoverage['/scrollbar.js'].lineData[60]++;
   var self = this;
-  _$jscoverage['/scrollbar.js'].lineData[59]++;
-  if (visit34_59_1(self.scrollBarX)) {
-    _$jscoverage['/scrollbar.js'].lineData[60]++;
+  _$jscoverage['/scrollbar.js'].lineData[61]++;
+  self.scrollView = scrollView;
+  _$jscoverage['/scrollbar.js'].lineData[62]++;
+  scrollView.on('reflow', onScrollViewReflow, self);
+}, 
+  pluginDestructor: function(scrollView) {
+  _$jscoverage['/scrollbar.js'].functionData[3]++;
+  _$jscoverage['/scrollbar.js'].lineData[66]++;
+  var self = this;
+  _$jscoverage['/scrollbar.js'].lineData[67]++;
+  if (visit33_67_1(self.scrollBarX)) {
+    _$jscoverage['/scrollbar.js'].lineData[68]++;
     self.scrollBarX.destroy();
-    _$jscoverage['/scrollbar.js'].lineData[61]++;
+    _$jscoverage['/scrollbar.js'].lineData[69]++;
     self.scrollBarX = null;
   }
-  _$jscoverage['/scrollbar.js'].lineData[63]++;
-  if (visit35_63_1(self.scrollBarY)) {
-    _$jscoverage['/scrollbar.js'].lineData[64]++;
+  _$jscoverage['/scrollbar.js'].lineData[71]++;
+  if (visit34_71_1(self.scrollBarY)) {
+    _$jscoverage['/scrollbar.js'].lineData[72]++;
     self.scrollBarY.destroy();
-    _$jscoverage['/scrollbar.js'].lineData[65]++;
+    _$jscoverage['/scrollbar.js'].lineData[73]++;
     self.scrollBarY = null;
   }
+  _$jscoverage['/scrollbar.js'].lineData[75]++;
+  scrollView.detach('reflow', onScrollViewReflow, self);
 }}, {
   ATTRS: {
   minLength: {}, 
