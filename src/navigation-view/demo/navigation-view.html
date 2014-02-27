@@ -87,7 +87,7 @@
             box-shadow: inset -0.2rem .2rem 0 currentcolor;
         }
 
-        .nav a:active {
+        .nav .list-item-active a {
             background: #d9d9d9;
         }
 
@@ -249,7 +249,7 @@ KISSY.use('navigation-view,' +
             var menuContent = '<ul class="nav">';
 
             S.each(anims, function (anim, i) {
-                menuContent += '<li class="list-item"><a>' + anim.content + '</a></li>';
+                menuContent += '<li class="list-item"><a tabindex="0">' + anim.content + '</a></li>';
             });
 
             var getAnimValue = function (content) {
@@ -396,6 +396,12 @@ KISSY.use('navigation-view,' +
 
                 bindUI: function () {
                     this.$el.delegate(Node.Gesture.tap, '.list-item', this.onMenuItemClick, this);
+                    this.$el.delegate(Node.Gesture.start, '.list-item', function (e) {
+                        e.currentTarget.classList.add('list-item-active');
+                    });
+                    this.$el.delegate(Node.Gesture.end, '.list-item', function (e) {
+                        e.currentTarget.classList.remove('list-item-active');
+                    });
                 },
 
                 onMenuItemClick: function (e) {
@@ -434,7 +440,7 @@ KISSY.use('navigation-view,' +
         });
 
 window.onerror = function (e) {
-    alert(e);
+    alert([].join.call(arguments, '!'));
 }
 </script>
 </body>
