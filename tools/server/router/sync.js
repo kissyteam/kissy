@@ -2,7 +2,7 @@ var serverConfig = require('../server.json');
 var exec = require('child_process').exec;
 
 function sync(dir, callback, errorCallback) {
-    exec('cd ' + dir + ' && git pull origin master',
+    exec('cd ' + dir + ' && git reset --hard && git pull origin master',
         { maxBuffer: 1024 * 1024 },
         function (error, stdout, stderr) {
             if (error) {
