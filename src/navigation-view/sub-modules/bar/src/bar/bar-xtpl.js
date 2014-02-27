@@ -12,9 +12,14 @@ KISSY.add(function (S, require, exports, module) {
             }
             var callCommandUtil = utils.callCommand,
                 eachCommand = nativeCommands.each,
-                withCommand = nativeCommands.with,
-                ifCommand = nativeCommands.
-            if, setCommand = nativeCommands.set, includeCommand = nativeCommands.include, parseCommand = nativeCommands.parse, extendCommand = nativeCommands.extend, blockCommand = nativeCommands.block, macroCommand = nativeCommands.macro;
+                withCommand = nativeCommands["with"],
+                ifCommand = nativeCommands["if"],
+                setCommand = nativeCommands.set,
+                includeCommand = nativeCommands.include,
+                parseCommand = nativeCommands.parse,
+                extendCommand = nativeCommands.extend,
+                blockCommand = nativeCommands.block,
+                macroCommand = nativeCommands.macro;
             buffer += '';
             var option0 = {};
             var params1 = [];
@@ -70,6 +75,6 @@ KISSY.add(function (S, require, exports, module) {
             buffer += '"></div>\r\n</div>';
             return buffer;
         };
-t.TPL_NAME = "e:/code/kissy_git/kissy/kissy/src/navigation-view/sub-modules/bar/src/bar/bar.xtpl.html";
+t.TPL_NAME = "E:/code/kissy_git/kissy/kissy/src/navigation-view/sub-modules/bar/src/bar/bar.xtpl.html";
 return t;
 });

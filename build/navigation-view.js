@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Feb 25 19:45
+build time: Feb 27 13:01
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -103,13 +103,19 @@ KISSY.add("navigation-view", ["node", "component/container", "component/extensio
   }
   function processSwitchView(self, config, oldView, newView, enterAnimCssClass, leaveAnimCssClass, backward) {
     var loadingEl = self.loadingEl;
-    if(oldView && oldView.leave) {
-      oldView.leave()
+    if(oldView) {
+      if(oldView.leave) {
+        oldView.leave()
+      }
+      oldView.fire("leave")
     }
     var newViewEl = newView.el;
     newView.set(config);
-    if(newView.enter) {
-      newView.enter()
+    if(newView) {
+      if(newView.enter) {
+        newView.enter()
+      }
+      newView.fire("enter")
     }
     self.fire("beforeInnerViewChange", {oldView:oldView, newView:newView, backward:backward});
     var promise = newView.promise;

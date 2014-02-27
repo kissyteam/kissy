@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Jan 17 12:30
+build time: Feb 27 13:01
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -12,67 +12,69 @@ build time: Jan 17 12:30
 */
 
 KISSY.add("navigation-view/bar/bar-xtpl", [], function(S, require, exports, module) {
-  return function(scope, S, undefined) {
-    var buffer = "", config = this.config, engine = this, moduleWrap, utils = config.utils;
+  var t = function(scope, S, payload, undefined) {
+    var buffer = "", engine = this, moduleWrap, escapeHtml = S.escapeHtml, nativeCommands = engine.nativeCommands, utils = engine.utils;
     if(typeof module !== "undefined" && module.kissy) {
       moduleWrap = module
     }
-    var runBlockCommandUtil = utils.runBlockCommand, renderOutputUtil = utils.renderOutput, getPropertyUtil = utils.getProperty, runInlineCommandUtil = utils.runInlineCommand, getPropertyOrRunCommandUtil = utils.getPropertyOrRunCommand;
+    var callCommandUtil = utils.callCommand, eachCommand = nativeCommands.each, withCommand = nativeCommands["with"], ifCommand = nativeCommands["if"], setCommand = nativeCommands.set, includeCommand = nativeCommands.include, parseCommand = nativeCommands.parse, extendCommand = nativeCommands.extend, blockCommand = nativeCommands.block, macroCommand = nativeCommands.macro;
     buffer += "";
-    var config0 = {};
+    var option0 = {};
     var params1 = [];
-    var id2 = getPropertyUtil(engine, scope, "withTitle", 0, 1);
+    var id2 = scope.resolve(["withTitle"]);
     params1.push(id2);
-    config0.params = params1;
-    config0.fn = function(scope) {
+    option0.params = params1;
+    option0.fn = function(scope) {
       var buffer = "";
       buffer += '\r\n<div class="';
-      var config4 = {};
+      var option4 = {};
       var params5 = [];
       params5.push("title-wrap");
-      config4.params = params5;
-      var id3 = runInlineCommandUtil(engine, scope, config4, "getBaseCssClasses", 2);
-      buffer += renderOutputUtil(id3, true);
+      option4.params = params5;
+      var id3 = callCommandUtil(engine, scope, option4, "getBaseCssClasses", 2);
+      buffer += escapeHtml(id3);
       buffer += '">\r\n    <div class="';
-      var config7 = {};
+      var option7 = {};
       var params8 = [];
       params8.push("title");
-      config7.params = params8;
-      var id6 = runInlineCommandUtil(engine, scope, config7, "getBaseCssClasses", 3);
-      buffer += renderOutputUtil(id6, true);
+      option7.params = params8;
+      var id6 = callCommandUtil(engine, scope, option7, "getBaseCssClasses", 3);
+      buffer += escapeHtml(id6);
       buffer += '" id="ks-navigation-bar-title-';
-      var id9 = getPropertyOrRunCommandUtil(engine, scope, {}, "id", 0, 3);
-      buffer += renderOutputUtil(id9, true);
+      var id9 = scope.resolve(["id"]);
+      buffer += escapeHtml(id9);
       buffer += '">';
-      var id10 = getPropertyOrRunCommandUtil(engine, scope, {}, "title", 0, 3);
-      buffer += renderOutputUtil(id10, true);
+      var id10 = scope.resolve(["title"]);
+      buffer += escapeHtml(id10);
       buffer += "</div>\r\n</div>\r\n";
       return buffer
     };
-    buffer += runBlockCommandUtil(engine, scope, config0, "if", 1);
+    buffer += ifCommand.call(engine, scope, option0, payload);
     buffer += '\r\n<div class="';
-    var config12 = {};
+    var option12 = {};
     var params13 = [];
     params13.push("content");
-    config12.params = params13;
-    var id11 = runInlineCommandUtil(engine, scope, config12, "getBaseCssClasses", 6);
-    buffer += renderOutputUtil(id11, true);
+    option12.params = params13;
+    var id11 = callCommandUtil(engine, scope, option12, "getBaseCssClasses", 6);
+    buffer += escapeHtml(id11);
     buffer += '" id="ks-navigation-bar-content-';
-    var id14 = getPropertyOrRunCommandUtil(engine, scope, {}, "id", 0, 6);
-    buffer += renderOutputUtil(id14, true);
+    var id14 = scope.resolve(["id"]);
+    buffer += escapeHtml(id14);
     buffer += '">\r\n    <div class="';
-    var config16 = {};
+    var option16 = {};
     var params17 = [];
     params17.push("center");
-    config16.params = params17;
-    var id15 = runInlineCommandUtil(engine, scope, config16, "getBaseCssClasses", 7);
-    buffer += renderOutputUtil(id15, true);
+    option16.params = params17;
+    var id15 = callCommandUtil(engine, scope, option16, "getBaseCssClasses", 7);
+    buffer += escapeHtml(id15);
     buffer += '" id="ks-navigation-bar-center-';
-    var id18 = getPropertyOrRunCommandUtil(engine, scope, {}, "id", 0, 7);
-    buffer += renderOutputUtil(id18, true);
+    var id18 = scope.resolve(["id"]);
+    buffer += escapeHtml(id18);
     buffer += '"></div>\r\n</div>';
     return buffer
-  }
+  };
+  t.TPL_NAME = "E:/code/kissy_git/kissy/kissy/src/navigation-view/sub-modules/bar/src/bar/bar.xtpl.html";
+  return t
 });
 KISSY.add("navigation-view/bar/bar-render", ["./bar-xtpl", "component/control"], function(S, require) {
   var tpl = require("./bar-xtpl");
@@ -262,6 +264,6 @@ KISSY.add("navigation-view/bar", ["component/control", "./bar/bar-render", "butt
       this._stack.pop();
       this.go(title, this._stack.length, true)
     }
-  }}, {xclass:"navigation-bar", ATTRS:{handleMouseEvents:{value:false}, focusable:{value:false}, xrender:{value:BarRender}, centerEl:{}, contentEl:{}, titleEl:{}, title:{value:"", view:1}, withBackButton:{value:1}, withTitle:{value:1, view:1}, backText:{value:"Back", view:1}}})
+  }}, {xclass:"navigation-bar", ATTRS:{handleGestureEvents:{value:false}, focusable:{value:false}, xrender:{value:BarRender}, centerEl:{}, contentEl:{}, titleEl:{}, title:{value:"", view:1}, withBackButton:{value:1}, withTitle:{value:1, view:1}, backText:{value:"Back", view:1}}})
 });
 
