@@ -152,13 +152,20 @@ KISSY.add(function (S, require) {
 
     function processSwitchView(self, config, oldView, newView, enterAnimCssClass, leaveAnimCssClass, backward) {
         var loadingEl = self.loadingEl;
-        if (oldView && oldView.leave) {
-            oldView.leave();
+        if (oldView) {
+            if (oldView.leave) {
+                oldView.leave();
+            }
+            oldView.fire('leave');
         }
         var newViewEl = newView.el;
         newView.set(config);
-        if (newView.enter) {
-            newView.enter();
+
+        if (newView) {
+            if (newView.enter) {
+                newView.enter();
+            }
+            newView.fire('enter');
         }
 
         self.fire('beforeInnerViewChange', {

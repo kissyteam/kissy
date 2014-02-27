@@ -4,7 +4,7 @@
 */
 var SERVER_CONFIG = {
     "ports": [8888, 9999],
-    "codeDir": "e:\\code\\kissy_git\\kissy\\kissy",
+    "codeDir": "/home/admin/cai/www/dev.kissyui.com/kissy",
     "docsDir": "/home/admin/cai/www/docs.kissyui.com/kissyteam.github.com"
 };
 KISSY.config('tag', KISSY.now());

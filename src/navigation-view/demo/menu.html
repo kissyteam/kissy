@@ -12,83 +12,18 @@
     <link href="/kissy/build/css/dpl/base.css" rel="stylesheet"/>
     <link href="/kissy/src/navigation-view/assets/dpl.css" rel="stylesheet">
     <link href="/kissy/src/scroll-view/assets/dpl.css" rel="stylesheet"/>
+    <link href="/kissy/src/menu/assets/dpl.css" rel="stylesheet"/>
     <style>
-        ul, li {
-            margin: 0;
+        .ks-menu {
             padding: 0;
         }
 
-        .nav {
-            color: #000;
-            background: white;
-            border: 1px solid #aaa;
-            padding-left: 0;
-        }
-
-        .nav > li {
-            text-indent: 0;
-            font-size: 1.5em;
-            margin: 0;
-            display: block;
-            position: relative;
-            list-style-type: none;
-            vertical-align: middle;
-            box-sizing: border-box;
-            padding: .5em .7em;
-            padding-left: 1em;
-            line-height: 1.6em;
-            overflow: hidden;
-            color: #000;
-            border: 0;
-            background: transparent;
-            border-radius: 0;
-            border-top: 1px solid rgba(180, 180, 180, 0.5);
-        }
-
-        .nav > li:first-child {
-            border-top: 0;
-        }
-
-        .nav a {
-            line-height: inherit;
-            text-decoration: none;
-            margin: -0.5em -0.7em;
-            margin-left: -1em;
-            padding-left: 1em;
-            color: #000;
-            display: block;
-            position: relative;
-            list-style-type: none;
-            vertical-align: middle;
-            -moz-box-sizing: border-box;
-            -webkit-box-sizing: border-box;
-            box-sizing: border-box;
-            padding: .5em .7em;
-        }
-
-        .nav a:after {
-            -webkit-text-fill-color: #fff;
-            -webkit-transform: rotate(45deg);
-            vertical-align: middle;
-            margin-left: -0.2rem;
-            border-style: solid;
-            border-color: #777;
-            content: "\a0";
-            display: block;
-            position: absolute;
-            right: 1rem;
-            top: 50%;
-            margin-top: -0.32rem;
-            color: #999ea9;
-            width: .66rem;
-            height: .64rem;
-            border-width: 0;
-            -webkit-box-shadow: inset -0.2rem .2rem 0 #999ea9;
-            box-shadow: inset -0.2rem .2rem 0 currentcolor;
-        }
-
-        .nav a:active {
-            background: #d9d9d9;
+        .ks-menuitem {
+            border-top: 1px solid #dedede;
+            min-height: 47px;
+            color: black;
+            padding: 12px 15px;
+            font-size: 18px;
         }
 
         .ks-navigation-view-content {
@@ -122,14 +57,17 @@
 <script src="/kissy/build/seed.js"></script>
 <script src="/kissy/src/package.js"></script>
 <script>
-KISSY.use('navigation-view,' +
+KISSY.use('component/control,' +
+        'component/container,' +
+        'navigation-view,' +
         'navigation-view/bar,' +
         'node,' +
         'router,' +
         'promise,' +
         'scroll-view,' +
-        'scroll-view/plugin/scrollbar',
-        function (S, NavigationView, Bar, Node, router, Promise, ScrollView, ScrollBar) {
+        'scroll-view/plugin/scrollbar,' +
+        'menu',
+        function (S, Control, Container, NavigationView, Bar, Node, router, Promise, ScrollView, ScrollBar) {
             var win = Node.all(window);
 
             var anims = [
@@ -246,12 +184,6 @@ KISSY.use('navigation-view,' +
                 }
             ];
 
-            var menuContent = '<ul class="nav">';
-
-            S.each(anims, function (anim, i) {
-                menuContent += '<li class="list-item"><a>' + anim.content + '</a></li>';
-            });
-
             var getAnimValue = function (content) {
                 for (var i = 0; i < anims.length; i++) {
                     if (anims[i].content === content) {
@@ -282,6 +214,7 @@ KISSY.use('navigation-view,' +
             });
 
             var tpl = '<h2 class="anim-title">{title}</h2>' +
+                    '<p><button class="retIndex">goto index</button></p>' +
                     '<p class="anim-content">Sed ut perspiciatis unde omnis iste natus error ' +
                     'sit voluptatem accusantium doloremque laudantium, ' +
                     'totam rem aperiam, eaque ipsa quae ab illo inventore ' +
@@ -394,20 +327,33 @@ KISSY.use('navigation-view,' +
                     win.detach('resize', this.sync, this);
                 },
 
-                bindUI: function () {
-                    this.$el.delegate(Node.Gesture.tap, '.list-item', this.onMenuItemClick, this);
+                initializer: function () {
+                    var items = [];
+                    S.each(anims, function (anim) {
+                        items.push({
+                            xclass: 'menuitem',
+                            content: anim.content
+                        });
+                    });
+
+                    this.set('children', [
+                        {
+                            xclass: 'menu',
+                            listeners: {
+                                click: {fn: this.onMenuItemClick, context: this}
+                            },
+                            children: items
+                        }
+                    ]);
                 },
 
                 onMenuItemClick: function (e) {
-                    router.navigate('/' + e.currentTarget.innerText)
+                    router.navigate('/' + e.target.get('content'))
 
                 }
             }, {
                 xclass: 'tb-index-view',
                 ATTRS: {
-                    content: {
-                        value: menuContent
-                    },
                     plugins: {
                         value: [ScrollBar]
                     },
