@@ -1,5 +1,6 @@
 KISSY.add(function (S, Json) {
     /*global global*/
+    /*jshint camelcase:false*/
     var JSON = ((S.UA.nodejs && typeof global === 'object') ? global : S.Env.host).JSON;
 
     var phantomjs = S.UA.phantomjs;
@@ -208,6 +209,17 @@ KISSY.add(function (S, Json) {
         });
 
         describe('parse', function () {
+            it('works for xiami', function () {
+                var data = '{"data":{"room_id":6252,' +
+                    '"content":"<a class=\\"nick-name\\" target=\\"_blank\\" ' +
+                    'href=\\"http://www.xiami.com/u/6252\\">iburning</a> 收到 <a class=\'nick-name\' ' +
+                    'href=\'http://www.xiami.com/u/2412\' target=\'_blank\'>红茶盗用</a> 的鲜花 ",' +
+                    '"since_id":"1393494716.25127100","user_id":2412,"type":1,"songs":null,"role":2},' +
+                    '"event":"sysRoomMessage"} ';
+
+                expect(Json.parse(data).data.since_id).toBe('1393494716.25127100');
+            });
+
             it('allow whitespace', function () {
                 var t = '{"test": 1,"t":2}',
                     r = {test: 1, t: 2};
