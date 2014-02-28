@@ -30,7 +30,7 @@ KISSY.add(function (S, require) {
         anim.scrollView.set(fx.prop, fx.val);
     }
 
-    var reflow = S.buffer(function () {
+    function reflow(v) {
         var control = this,
             $contentEl = control.$contentEl;
         // consider pull to refresh
@@ -39,12 +39,12 @@ KISSY.add(function (S, require) {
         // or else
         // relative is weird, should math.max(contentEl.scrollHeight,el.scrollHeight)
         // will affect pull to refresh
-        var scrollHeight = control.get('scrollHeight'),
-            scrollWidth = control.get('scrollWidth');
+        var scrollHeight = v.scrollHeight,
+            scrollWidth = v.scrollWidth;
 
-        var clientHeight = control.get('clientHeight'),
+        var clientHeight = v.clientHeight,
             allowScroll,
-            clientWidth = control.get('clientWidth');
+            clientWidth = v.clientWidth;
 
         control.scrollHeight = scrollHeight;
         control.scrollWidth = scrollWidth;
@@ -110,8 +110,8 @@ KISSY.add(function (S, require) {
             top: scrollTop
         });
 
-        control.fire('reflow');
-    });
+        control.fire('reflow', v);
+    }
 
     /**
      * Make container scrollable.
@@ -133,13 +133,7 @@ KISSY.add(function (S, require) {
                 .on('scroll', onElScroll, self);
         },
 
-        _onSetClientHeight: reflow,
-
-        _onSetClientWidth: reflow,
-
-        _onSetScrollHeight: reflow,
-
-        _onSetScrollWidth: reflow,
+        _onSetDimension: reflow,
 
         handleKeyDownInternal: function (e) {
             // no need to process disabled (already processed by Component)
@@ -375,17 +369,7 @@ KISSY.add(function (S, require) {
                 value: 0
             },
 
-            scrollWidth: {
-            },
-
-            scrollHeight: {
-            },
-
-            clientWidth: {
-            },
-
-            clientHeight: {
-            },
+            dimension: {},
 
             focusable: {
                 // need process keydown

@@ -268,7 +268,7 @@ if (! _$jscoverage['/base/render.js'].branchData) {
   _$jscoverage['/base/render.js'].branchData['70'] = [];
   _$jscoverage['/base/render.js'].branchData['70'][1] = new BranchData();
 }
-_$jscoverage['/base/render.js'].branchData['70'][1].init(2246, 11, 'supportCss3');
+_$jscoverage['/base/render.js'].branchData['70'][1].init(2263, 11, 'supportCss3');
 function visit2_70_1(result) {
   _$jscoverage['/base/render.js'].branchData['70'][1].ranCondition(result);
   return result;
@@ -300,7 +300,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/base/render.js'].lineData[50]++;
   var clientHeight = el.clientHeight, clientWidth = el.clientWidth;
   _$jscoverage['/base/render.js'].lineData[53]++;
-  control.set({
+  control.set('dimension', {
   'scrollHeight': scrollHeight, 
   'scrollWidth': scrollWidth, 
   'clientWidth': clientWidth, 

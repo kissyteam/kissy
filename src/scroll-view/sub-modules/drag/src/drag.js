@@ -5,6 +5,7 @@
  */
 KISSY.add(function (S, require) {
     var ScrollViewBase = require('./base');
+    var isTouchEventSupported= S.Features.isTouchEventSupported();
     var Node = require('node');
     var Anim = require('anim');
 
@@ -223,29 +224,30 @@ KISSY.add(function (S, require) {
     }
 
     function onDragStartHandler(e) {
+        //log('touch start');
         // does not allow drag by mouse in win8 touch screen
         if (!e.isTouch) {
             return;
         }
         var self = this,
             touches = e.touches;
-        if (self.get('disabled')) {
+        if (self.get('disabled') ||
+            // snap mode can not stop anim in the middle
+            (self.isScrolling && self.pagesOffset)) {
             return;
         }
-        self.stopAnimation();
         var pos = {
             pageX: e.pageX,
             pageY: e.pageY
         };
-        var isScrolling = self.isScrolling;
-        if (isScrolling) {
-            var pageIndex = self.get('pageIndex');
-            self.fire('scrollEnd', S.mix({
-                fromPageIndex: pageIndex,
-                pageIndex: pageIndex
-            }, pos));
+        if (self.isScrolling) {
+            self.stopAnimation();
+            self.fire('scrollEnd', pos);
         }
         if (touches.length > 1) {
+            $document.detach(Gesture.move, onDragHandler, self)
+                .detach(Gesture.end, onDragEndHandler, self);
+            //log('touch more than 1');
             return;
         }
         initStates(self);
@@ -316,7 +318,7 @@ KISSY.add(function (S, require) {
             }
         }
 
-        if (S.Features.isTouchEventSupported()) {
+        if (isTouchEventSupported) {
             e.preventDefault();
         }
 

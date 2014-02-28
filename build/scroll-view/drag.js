@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.42
 MIT Licensed
-build time: Feb 27 14:34
+build time: Feb 28 14:17
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -11,6 +11,7 @@ build time: Feb 27 14:34
 
 KISSY.add("scroll-view/drag", ["./base", "node", "anim"], function(S, require) {
   var ScrollViewBase = require("./base");
+  var isTouchEventSupported = S.Features.isTouchEventSupported();
   var Node = require("node");
   var Anim = require("anim");
   var OUT_OF_BOUND_FACTOR = 0.5;
@@ -146,17 +147,16 @@ KISSY.add("scroll-view/drag", ["./base", "node", "anim"], function(S, require) {
       return
     }
     var self = this, touches = e.touches;
-    if(self.get("disabled")) {
+    if(self.get("disabled") || self.isScrolling && self.pagesOffset) {
       return
     }
-    self.stopAnimation();
     var pos = {pageX:e.pageX, pageY:e.pageY};
-    var isScrolling = self.isScrolling;
-    if(isScrolling) {
-      var pageIndex = self.get("pageIndex");
-      self.fire("scrollEnd", S.mix({fromPageIndex:pageIndex, pageIndex:pageIndex}, pos))
+    if(self.isScrolling) {
+      self.stopAnimation();
+      self.fire("scrollEnd", pos)
     }
     if(touches.length > 1) {
+      $document.detach(Gesture.move, onDragHandler, self).detach(Gesture.end, onDragEndHandler, self);
       return
     }
     initStates(self);
@@ -205,7 +205,7 @@ KISSY.add("scroll-view/drag", ["./base", "node", "anim"], function(S, require) {
         return
       }
     }
-    if(S.Features.isTouchEventSupported()) {
+    if(isTouchEventSupported) {
       e.preventDefault()
     }
     onDragScroll(self, e, "left", startMousePos);

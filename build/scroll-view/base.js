@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.42
 MIT Licensed
-build time: Feb 27 14:34
+build time: Feb 28 14:17
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -20,7 +20,7 @@ KISSY.add("scroll-view/base/render", ["component/container", "component/extensio
     var self = this, control = self.control, el = control.el, contentEl = control.contentEl;
     var scrollHeight = Math.max(contentEl.offsetHeight, contentEl.scrollHeight), scrollWidth = Math.max(contentEl.offsetWidth, contentEl.scrollWidth);
     var clientHeight = el.clientHeight, clientWidth = el.clientWidth;
-    control.set({scrollHeight:scrollHeight, scrollWidth:scrollWidth, clientWidth:clientWidth, clientHeight:clientHeight})
+    control.set("dimension", {scrollHeight:scrollHeight, scrollWidth:scrollWidth, clientWidth:clientWidth, clientHeight:clientHeight})
   }, _onSetScrollLeft:function(v) {
     this.control.contentEl.style.left = -v + "px"
   }, _onSetScrollTop:function(v) {
@@ -58,10 +58,10 @@ KISSY.add("scroll-view/base", ["node", "anim", "component/container", "./base/re
   function frame(anim, fx) {
     anim.scrollView.set(fx.prop, fx.val)
   }
-  var reflow = S.buffer(function() {
+  function reflow(v) {
     var control = this, $contentEl = control.$contentEl;
-    var scrollHeight = control.get("scrollHeight"), scrollWidth = control.get("scrollWidth");
-    var clientHeight = control.get("clientHeight"), allowScroll, clientWidth = control.get("clientWidth");
+    var scrollHeight = v.scrollHeight, scrollWidth = v.scrollWidth;
+    var clientHeight = v.clientHeight, allowScroll, clientWidth = v.clientWidth;
     control.scrollHeight = scrollHeight;
     control.scrollWidth = scrollWidth;
     control.clientHeight = clientHeight;
@@ -93,14 +93,14 @@ KISSY.add("scroll-view/base", ["node", "anim", "component/container", "./base/re
       }
     }
     control.scrollToWithBounds({left:scrollLeft, top:scrollTop});
-    control.fire("reflow")
-  });
+    control.fire("reflow", v)
+  }
   return Container.extend({initializer:function() {
     this.scrollAnims = []
   }, bindUI:function() {
     var self = this, $el = self.$el;
     $el.on("mousewheel", self.handleMouseWheel, self).on("scroll", onElScroll, self)
-  }, _onSetClientHeight:reflow, _onSetClientWidth:reflow, _onSetScrollHeight:reflow, _onSetScrollWidth:reflow, handleKeyDownInternal:function(e) {
+  }, _onSetDimension:reflow, handleKeyDownInternal:function(e) {
     var target = e.target, $target = $(target), nodeName = $target.nodeName();
     if(nodeName === "input" || nodeName === "textarea" || nodeName === "select" || $target.hasAttr("contenteditable")) {
       return undefined
@@ -255,6 +255,6 @@ KISSY.add("scroll-view/base", ["node", "anim", "component/container", "./base/re
         self.set("scrollTop", top)
       }
     }
-  }}, {ATTRS:{contentEl:{}, scrollLeft:{view:1, value:0}, scrollTop:{view:1, value:0}, scrollWidth:{}, scrollHeight:{}, clientWidth:{}, clientHeight:{}, focusable:{value:true}, allowTextSelection:{value:true}, handleGestureEvents:{value:false}, snap:{value:false}, pageIndex:{value:0}, xrender:{value:Render}}, xclass:"scroll-view"})
+  }}, {ATTRS:{contentEl:{}, scrollLeft:{view:1, value:0}, scrollTop:{view:1, value:0}, dimension:{}, focusable:{value:true}, allowTextSelection:{value:true}, handleGestureEvents:{value:false}, snap:{value:false}, pageIndex:{value:0}, xrender:{value:Render}}, xclass:"scroll-view"})
 });
 
