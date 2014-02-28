@@ -50,11 +50,11 @@ KISSY.add(function (S, require) {
             var clientHeight = el.clientHeight,
                 clientWidth = el.clientWidth;
 
-            control.set({
-                'scrollHeight':scrollHeight,
-                'scrollWidth':scrollWidth,
-                'clientWidth':clientWidth,
-                'clientHeight':clientHeight
+            control.set('dimension', {
+                'scrollHeight': scrollHeight,
+                'scrollWidth': scrollWidth,
+                'clientWidth': clientWidth,
+                'clientHeight': clientHeight
             });
         },
 

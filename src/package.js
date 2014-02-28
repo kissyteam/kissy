@@ -631,16 +631,16 @@ if (!loc.getQuery().has('build') && !loc.getQuery().has('min')) {
             "base": "/kissy/src/scroll-view/sub-modules/base/src/base",
             "ignorePackageNameInUri": 1
         },
-        "scroll-view/drag": {
-            "base": "/kissy/src/scroll-view/sub-modules/drag/src/drag",
-            "ignorePackageNameInUri": 1
-        },
         "scroll-view/plugin/pull-to-refresh": {
             "base": "/kissy/src/scroll-view/sub-modules/plugin/pull-to-refresh/src/pull-to-refresh",
             "ignorePackageNameInUri": 1
         },
         "scroll-view/plugin/scrollbar": {
             "base": "/kissy/src/scroll-view/sub-modules/plugin/scrollbar/src/scrollbar",
+            "ignorePackageNameInUri": 1
+        },
+        "scroll-view/touch": {
+            "base": "/kissy/src/scroll-view/sub-modules/touch/src/touch",
             "ignorePackageNameInUri": 1
         },
         "seed": {

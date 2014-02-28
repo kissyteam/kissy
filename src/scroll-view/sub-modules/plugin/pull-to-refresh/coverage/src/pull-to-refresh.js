@@ -451,9 +451,9 @@ KISSY.add(function(S, require) {
   _$jscoverage['/pull-to-refresh.js'].lineData[105]++;
   var self = this;
   _$jscoverage['/pull-to-refresh.js'].lineData[106]++;
-  scrollView.on('scrollMove', self._onScrollMove, self);
+  scrollView.on('scrollTouchMove', self._onScrollMove, self);
   _$jscoverage['/pull-to-refresh.js'].lineData[107]++;
-  scrollView.on('dragend', self._onDragEnd, self);
+  scrollView.on('touchEnd', self._onDragEnd, self);
   _$jscoverage['/pull-to-refresh.js'].lineData[108]++;
   self.on('afterStateChange', self._onSetState, self);
   _$jscoverage['/pull-to-refresh.js'].lineData[109]++;

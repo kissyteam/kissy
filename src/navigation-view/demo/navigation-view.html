@@ -121,6 +121,7 @@
 <body>
 <script src="/kissy/build/seed.js"></script>
 <script src="/kissy/src/package.js"></script>
+<script src="/kissy/src/log.js"></script>
 <script>
 KISSY.use('navigation-view,' +
         'navigation-view/bar,' +
@@ -250,6 +251,7 @@ KISSY.use('navigation-view,' +
 
             S.each(anims, function (anim, i) {
                 menuContent += '<li class="list-item"><a tabindex="0">' + anim.content + '</a></li>';
+                menuContent += '<li class="list-item"><a tabindex="0">' + anim.content + '</a></li>';
             });
 
             var getAnimValue = function (content) {
@@ -296,6 +298,10 @@ KISSY.use('navigation-view,' +
                     'nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum ' +
                     'iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae ' +
                     'consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?</p>';
+
+            tpl += tpl;
+            tpl += tpl;
+            tpl += tpl;
 
             ScrollView.extend({
                 enter: function () {

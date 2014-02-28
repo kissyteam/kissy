@@ -5,6 +5,7 @@
  */
 KISSY.add(function (S, require) {
     var ScrollViewBase = require('./base');
+    var isTouchEventSupported = S.Feature.isTouchEventSupported();
     var Node = require('node');
     var Anim = require('anim');
 
@@ -223,29 +224,30 @@ KISSY.add(function (S, require) {
     }
 
     function onDragStartHandler(e) {
+        //log('touch start');
         // does not allow drag by mouse in win8 touch screen
         if (!e.isTouch) {
             return;
         }
         var self = this,
             touches = e.touches;
-        if (self.get('disabled')) {
+        if (self.get('disabled') ||
+            // snap mode can not stop anim in the middle
+            (self.isScrolling && self.pagesOffset)) {
             return;
         }
-        self.stopAnimation();
         var pos = {
             pageX: e.pageX,
             pageY: e.pageY
         };
-        var isScrolling = self.isScrolling;
-        if (isScrolling) {
-            var pageIndex = self.get('pageIndex');
-            self.fire('scrollEnd', S.mix({
-                fromPageIndex: pageIndex,
-                pageIndex: pageIndex
-            }, pos));
+        if (self.isScrolling) {
+            self.stopAnimation();
+            self.fire('scrollTouchEnd', pos);
         }
         if (touches.length > 1) {
+            $document.detach(Gesture.move, onDragHandler, self)
+                .detach(Gesture.end, onDragEndHandler, self);
+            //log('touch more than 1');
             return;
         }
         initStates(self);
@@ -258,15 +260,12 @@ KISSY.add(function (S, require) {
     }
 
     var onDragHandler = function (e) {
+        //log('touch move');
         if (!e.isTouch) {
             return;
         }
         var self = this,
             startMousePos = self.startMousePos;
-
-        if (!startMousePos) {
-            return;
-        }
 
         var pos = {
             pageX: e.pageX,
@@ -281,7 +280,7 @@ KISSY.add(function (S, require) {
             return;
         } else {
             if (!self.isScrolling) {
-                self.fire('scrollStart', pos);
+                self.fire('scrollTouchStart', pos);
                 self.isScrolling = 1;
             }
         }
@@ -316,7 +315,7 @@ KISSY.add(function (S, require) {
             }
         }
 
-        if (S.Feature.isTouchEventSupported()) {
+        if (isTouchEventSupported) {
             e.preventDefault();
         }
 
@@ -324,7 +323,7 @@ KISSY.add(function (S, require) {
         onDragScroll(self, e, 'top', startMousePos);
 
         // touchmove frequency is slow on android
-        self.fire('scrollMove', pos);
+        self.fire('scrollTouchMove', pos);
     };
 
     if (S.UA.ie) {
@@ -332,6 +331,7 @@ KISSY.add(function (S, require) {
     }
 
     function onDragEndHandler(e) {
+        //log('touch end');
         if (!e.isTouch) {
             return;
         }
@@ -344,7 +344,7 @@ KISSY.add(function (S, require) {
         }
         var offsetX = startMousePos.pageX - e.pageX;
         var offsetY = startMousePos.pageY - e.pageY;
-        self.fire('dragend', {
+        self.fire('touchEnd', {
             pageX: e.pageX,
             deltaX: -offsetX,
             deltaY: -offsetY,
@@ -353,7 +353,7 @@ KISSY.add(function (S, require) {
 
     }
 
-    function defaultDragEndFn(e) {
+    function defaultTouchEndHandler(e) {
         var self = this;
         var count = 0;
         var offsetX = -e.deltaX;
@@ -367,7 +367,7 @@ KISSY.add(function (S, require) {
             if (count === 2) {
                 var scrollEnd = function () {
                     self.isScrolling = 0;
-                    self.fire('scrollEnd', {
+                    self.fire('scrollTouchEnd', {
                         pageX: e.pageX,
                         pageY: e.pageY,
                         deltaX: -offsetX,
@@ -501,8 +501,8 @@ KISSY.add(function (S, require) {
                 self._snapThresholdCfg = self.get('snapThreshold');
                 self._snapDurationCfg = self.get('snapDuration');
                 self._snapEasingCfg = self.get('snapEasing');
-                self.publish('dragend', {
-                    defaultFn: defaultDragEndFn,
+                self.publish('touchEnd', {
+                    defaultFn: defaultTouchEndHandler,
                     // only process its own default function
                     defaultTargetOnly: true
                 });

@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Feb 26 21:15
+build time: Feb 28 14:05
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -287,7 +287,7 @@ KISSY.add("scroll-view/plugin/scrollbar/control", ["node", "component/control", 
       self.$trackEl.on(Gesture.start, onTrackElMouseDown, self);
       self.$dragEl.on("dragstart", preventDefault).on(Gesture.start, onDragStartHandler, self)
     }
-    scrollView.on(self.afterScrollChangeEvent + SCROLLBAR_EVENT_NS, afterScrollChange, self).on("scrollEnd" + SCROLLBAR_EVENT_NS, onScrollEnd, self).on("afterDisabledChange" + SCROLLBAR_EVENT_NS, onScrollViewDisabled, self).on("reflow" + SCROLLBAR_EVENT_NS, onScrollViewReflow, self)
+    scrollView.on(self.afterScrollChangeEvent + SCROLLBAR_EVENT_NS, afterScrollChange, self).on("scrollTouchEnd" + SCROLLBAR_EVENT_NS, onScrollEnd, self).on("afterDisabledChange" + SCROLLBAR_EVENT_NS, onScrollViewDisabled, self).on("reflow" + SCROLLBAR_EVENT_NS, onScrollViewReflow, self)
   }, syncUI:function() {
     onScrollViewReflow.call(this)
   }, destructor:function() {

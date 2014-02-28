@@ -825,7 +825,7 @@ KISSY.add(function(S, require) {
     self.$dragEl.on('dragstart', preventDefault).on(Gesture.start, onDragStartHandler, self);
   }
   _$jscoverage['/scrollbar/control.js'].lineData[246]++;
-  scrollView.on(self.afterScrollChangeEvent + SCROLLBAR_EVENT_NS, afterScrollChange, self).on('scrollEnd' + SCROLLBAR_EVENT_NS, onScrollEnd, self).on('afterDisabledChange' + SCROLLBAR_EVENT_NS, onScrollViewDisabled, self).on('reflow' + SCROLLBAR_EVENT_NS, onScrollViewReflow, self);
+  scrollView.on(self.afterScrollChangeEvent + SCROLLBAR_EVENT_NS, afterScrollChange, self).on('scrollTouchEnd' + SCROLLBAR_EVENT_NS, onScrollEnd, self).on('afterDisabledChange' + SCROLLBAR_EVENT_NS, onScrollViewDisabled, self).on('reflow' + SCROLLBAR_EVENT_NS, onScrollViewReflow, self);
 }, 
   syncUI: function() {
   _$jscoverage['/scrollbar/control.js'].functionData[19]++;

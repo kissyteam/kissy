@@ -80,7 +80,7 @@ KISSY.add(function (S, require) {
         win.on('resize orientationchange', onResize, self);
         updateViewport(self);
 
-        scrollView.on('dragend', onDragEnd, self);
+        scrollView.on('touchEnd', onDragEnd, self);
     }
 
     function onDragEnd(e) {

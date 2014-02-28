@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Feb 26 21:15
+build time: Feb 28 14:04
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -66,8 +66,8 @@ KISSY.add("scroll-view/plugin/pull-to-refresh", ["base"], function(S, require) {
     self._onSetState({newValue:"pulling"})
   }, pluginBindUI:function(scrollView) {
     var self = this;
-    scrollView.on("scrollMove", self._onScrollMove, self);
-    scrollView.on("dragend", self._onDragEnd, self);
+    scrollView.on("scrollTouchMove", self._onScrollMove, self);
+    scrollView.on("touchEnd", self._onDragEnd, self);
     self.on("afterStateChange", self._onSetState, self);
     scrollView.on("afterScrollTopChange", self._onSetScrollTop, self)
   }, pluginDestructor:function() {

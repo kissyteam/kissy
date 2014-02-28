@@ -241,7 +241,7 @@ KISSY.add(function (S, require) {
             }
             scrollView
                 .on(self.afterScrollChangeEvent + SCROLLBAR_EVENT_NS, afterScrollChange, self)
-                .on('scrollEnd' + SCROLLBAR_EVENT_NS, onScrollEnd, self)
+                .on('scrollTouchEnd' + SCROLLBAR_EVENT_NS, onScrollEnd, self)
                 .on('afterDisabledChange' + SCROLLBAR_EVENT_NS, onScrollViewDisabled, self)
                 .on('reflow' + SCROLLBAR_EVENT_NS, onScrollViewReflow, self);
         },

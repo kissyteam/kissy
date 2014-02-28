@@ -103,8 +103,8 @@ KISSY.add(function (S, require) {
 
         pluginBindUI: function (scrollView) {
             var self = this;
-            scrollView.on('scrollMove', self._onScrollMove, self);
-            scrollView.on('dragend', self._onDragEnd, self);
+            scrollView.on('scrollTouchMove', self._onScrollMove, self);
+            scrollView.on('touchEnd', self._onDragEnd, self);
             self.on('afterStateChange', self._onSetState, self);
             scrollView.on('afterScrollTopChange', self._onSetScrollTop, self);
         },
