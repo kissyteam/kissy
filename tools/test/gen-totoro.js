@@ -4,7 +4,7 @@ var totoroConfig = cwd + '/totoro.json';
 var fs = require('fs');
 var testsData = [];
 var configData = {
-    group: "KISSY",
+    group: 'KISSY',
     notice: 1,
     tests: testsData
 };
