@@ -53,7 +53,9 @@ function startServer(port) {
     app.use('/kissy/', require('./middleware/serve'));
 
     //noinspection JSUnresolvedFunction
-    app.use('/kissy/', express['static'](cwd));
+    app.use('/kissy/', express['static'](cwd, {
+        hidden: true
+    }));
 
     app.use(app.router);
 

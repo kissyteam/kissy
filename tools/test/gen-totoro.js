@@ -1,6 +1,6 @@
 var tc = require('./tc')();
 var cwd = process.cwd();
-var totoroConfig = cwd + '/.totoro.json';
+var totoroConfig = cwd + '/totoro.json';
 var fs = require('fs');
 var testsData = [];
 var configData = {
