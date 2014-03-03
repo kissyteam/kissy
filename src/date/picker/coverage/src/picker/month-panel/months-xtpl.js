@@ -441,7 +441,7 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/picker/month-panel/months-xtpl.js'].lineData[69]++;
   buffer += ifCommand.call(engine, scope, option11, payload);
   _$jscoverage['/picker/month-panel/months-xtpl.js'].lineData[70]++;
-  buffer += '\n        ">\n        <a hidefocus="on"\n           href="#"\n           class="';
+  buffer += '\n        ">\n        <a hidefocus="on"\n           href="#"\n           unselectable="on"\n           class="';
   _$jscoverage['/picker/month-panel/months-xtpl.js'].lineData[71]++;
   var option19 = {};
   _$jscoverage['/picker/month-panel/months-xtpl.js'].lineData[72]++;
@@ -451,7 +451,7 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/picker/month-panel/months-xtpl.js'].lineData[74]++;
   option19.params = params20;
   _$jscoverage['/picker/month-panel/months-xtpl.js'].lineData[75]++;
-  var id18 = callCommandUtil(engine, scope, option19, "getBaseCssClasses", 13);
+  var id18 = callCommandUtil(engine, scope, option19, "getBaseCssClasses", 14);
   _$jscoverage['/picker/month-panel/months-xtpl.js'].lineData[76]++;
   buffer += escapeHtml(id18);
   _$jscoverage['/picker/month-panel/months-xtpl.js'].lineData[77]++;

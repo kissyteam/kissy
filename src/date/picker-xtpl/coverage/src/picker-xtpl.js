@@ -476,15 +476,15 @@ if (! _$jscoverage['/picker-xtpl.js'].branchData) {
   _$jscoverage['/picker-xtpl.js'].branchData['201'] = [];
   _$jscoverage['/picker-xtpl.js'].branchData['201'][1] = new BranchData();
 }
-_$jscoverage['/picker-xtpl.js'].branchData['201'][1].init(9877, 12, 'id67 || id68');
+_$jscoverage['/picker-xtpl.js'].branchData['201'][1].init(9907, 12, 'id67 || id68');
 function visit5_201_1(result) {
   _$jscoverage['/picker-xtpl.js'].branchData['201'][1].ranCondition(result);
   return result;
-}_$jscoverage['/picker-xtpl.js'].branchData['193'][2].init(9555, 10, 'id64 === 0');
+}_$jscoverage['/picker-xtpl.js'].branchData['193'][2].init(9585, 10, 'id64 === 0');
 function visit4_193_2(result) {
   _$jscoverage['/picker-xtpl.js'].branchData['193'][2].ranCondition(result);
   return result;
-}_$jscoverage['/picker-xtpl.js'].branchData['193'][1].init(9547, 18, 'id64 || id64 === 0');
+}_$jscoverage['/picker-xtpl.js'].branchData['193'][1].init(9577, 18, 'id64 || id64 === 0');
 function visit3_193_1(result) {
   _$jscoverage['/picker-xtpl.js'].branchData['193'][1].ranCondition(result);
   return result;
@@ -850,7 +850,7 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/picker-xtpl.js'].lineData[191]++;
   buffer += '">\n        ';
   _$jscoverage['/picker-xtpl.js'].lineData[192]++;
-  var id64 = scope.resolve(["renderDates"]);
+  var id64 = callCommandUtil(engine, scope, undefined, "renderDates", 64);
   _$jscoverage['/picker-xtpl.js'].lineData[193]++;
   if (visit3_193_1(id64 || visit4_193_2(id64 === 0))) {
     _$jscoverage['/picker-xtpl.js'].lineData[194]++;

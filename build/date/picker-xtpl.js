@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Feb 25 19:34
+build time: Mar 3 14:47
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -185,7 +185,7 @@ KISSY.add("date/picker-xtpl", [], function(S, require, exports, module) {
     var id63 = scope.resolve(["id"]);
     buffer += escapeHtml(id63);
     buffer += '">\n        ';
-    var id64 = scope.resolve(["renderDates"]);
+    var id64 = callCommandUtil(engine, scope, undefined, "renderDates", 64);
     if(id64 || id64 === 0) {
       buffer += id64
     }

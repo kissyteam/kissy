@@ -189,7 +189,7 @@ KISSY.add(function (S, require, exports, module) {
             var id63 = scope.resolve(["id"]);
             buffer += escapeHtml(id63);
             buffer += '">\n        ';
-            var id64 = scope.resolve(["renderDates"]);
+            var id64 = callCommandUtil(engine, scope, undefined, "renderDates", 64);
             if (id64 || id64 === 0) {
                 buffer += id64;
             }

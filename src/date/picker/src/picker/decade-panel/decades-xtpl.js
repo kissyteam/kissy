@@ -106,12 +106,12 @@ KISSY.add(function (S, require, exports, module) {
                         return buffer;
                     };
                     buffer += ifCommand.call(engine, scope, option26, payload);
-                    buffer += '\n        ">\n        <a hidefocus="on"\n           href="#"\n           class="';
+                    buffer += '\n        ">\n        <a hidefocus="on"\n           href="#"\n           unselectable="on"\n           class="';
                     var option34 = {};
                     var params35 = [];
                     params35.push('decade');
                     option34.params = params35;
-                    var id33 = callCommandUtil(engine, scope, option34, "getBaseCssClasses", 18);
+                    var id33 = callCommandUtil(engine, scope, option34, "getBaseCssClasses", 19);
                     buffer += escapeHtml(id33);
                     buffer += '">\n            ';
                     var id36 = scope.resolve(["startDecade"]);

@@ -67,12 +67,12 @@ KISSY.add(function (S, require, exports, module) {
                         return buffer;
                     };
                     buffer += ifCommand.call(engine, scope, option11, payload);
-                    buffer += '\n        ">\n        <a hidefocus="on"\n           href="#"\n           class="';
+                    buffer += '\n        ">\n        <a hidefocus="on"\n           href="#"\n           unselectable="on"\n           class="';
                     var option19 = {};
                     var params20 = [];
                     params20.push('month');
                     option19.params = params20;
-                    var id18 = callCommandUtil(engine, scope, option19, "getBaseCssClasses", 13);
+                    var id18 = callCommandUtil(engine, scope, option19, "getBaseCssClasses", 14);
                     buffer += escapeHtml(id18);
                     buffer += '">\n            ';
                     var id21 = scope.resolve(["content"]);

@@ -583,7 +583,7 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/picker/decade-panel/decades-xtpl.js'].lineData[108]++;
   buffer += ifCommand.call(engine, scope, option26, payload);
   _$jscoverage['/picker/decade-panel/decades-xtpl.js'].lineData[109]++;
-  buffer += '\n        ">\n        <a hidefocus="on"\n           href="#"\n           class="';
+  buffer += '\n        ">\n        <a hidefocus="on"\n           href="#"\n           unselectable="on"\n           class="';
   _$jscoverage['/picker/decade-panel/decades-xtpl.js'].lineData[110]++;
   var option34 = {};
   _$jscoverage['/picker/decade-panel/decades-xtpl.js'].lineData[111]++;
@@ -593,7 +593,7 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/picker/decade-panel/decades-xtpl.js'].lineData[113]++;
   option34.params = params35;
   _$jscoverage['/picker/decade-panel/decades-xtpl.js'].lineData[114]++;
-  var id33 = callCommandUtil(engine, scope, option34, "getBaseCssClasses", 18);
+  var id33 = callCommandUtil(engine, scope, option34, "getBaseCssClasses", 19);
   _$jscoverage['/picker/decade-panel/decades-xtpl.js'].lineData[115]++;
   buffer += escapeHtml(id33);
   _$jscoverage['/picker/decade-panel/decades-xtpl.js'].lineData[116]++;

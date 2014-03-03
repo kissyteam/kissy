@@ -52,7 +52,7 @@ KISSY.add(function(S,require){
         var self = this;
         var yearPanel = new YearPanel({
             locale:this.get('locale'),
-            render: self.get('el')
+            render: self.get('render')
         });
         yearPanel.on('select', onYearPanelSelect, self);
         return yearPanel;

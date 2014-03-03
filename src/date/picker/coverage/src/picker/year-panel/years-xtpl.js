@@ -573,7 +573,7 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/picker/year-panel/years-xtpl.js'].lineData[109]++;
   buffer += ifCommand.call(engine, scope, option25, payload);
   _$jscoverage['/picker/year-panel/years-xtpl.js'].lineData[110]++;
-  buffer += '\n        ">\n        <a hidefocus="on"\n           href="#"\n           class="';
+  buffer += '\n        ">\n        <a hidefocus="on"\n           href="#"\n           unselectable="on"\n           class="';
   _$jscoverage['/picker/year-panel/years-xtpl.js'].lineData[111]++;
   var option33 = {};
   _$jscoverage['/picker/year-panel/years-xtpl.js'].lineData[112]++;
@@ -583,7 +583,7 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/picker/year-panel/years-xtpl.js'].lineData[114]++;
   option33.params = params34;
   _$jscoverage['/picker/year-panel/years-xtpl.js'].lineData[115]++;
-  var id32 = callCommandUtil(engine, scope, option33, "getBaseCssClasses", 19);
+  var id32 = callCommandUtil(engine, scope, option33, "getBaseCssClasses", 20);
   _$jscoverage['/picker/year-panel/years-xtpl.js'].lineData[116]++;
   buffer += escapeHtml(id32);
   _$jscoverage['/picker/year-panel/years-xtpl.js'].lineData[117]++;

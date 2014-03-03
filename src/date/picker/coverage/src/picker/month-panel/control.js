@@ -363,7 +363,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/picker/month-panel/control.js'].lineData[53]++;
     var yearPanel = new YearPanel({
   locale: this.get('locale'), 
-  render: self.get('el')});
+  render: self.get('render')});
     _$jscoverage['/picker/month-panel/control.js'].lineData[57]++;
     yearPanel.on('select', onYearPanelSelect, self);
     _$jscoverage['/picker/month-panel/control.js'].lineData[58]++;

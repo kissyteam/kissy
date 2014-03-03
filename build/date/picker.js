@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Feb 25 19:34
+build time: Mar 3 14:47
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -287,12 +287,12 @@ KISSY.add("date/picker/year-panel/years-xtpl", [], function(S, require, exports,
           return buffer
         };
         buffer += ifCommand.call(engine, scope, option25, payload);
-        buffer += '\n        ">\n        <a hidefocus="on"\n           href="#"\n           class="';
+        buffer += '\n        ">\n        <a hidefocus="on"\n           href="#"\n           unselectable="on"\n           class="';
         var option33 = {};
         var params34 = [];
         params34.push("year");
         option33.params = params34;
-        var id32 = callCommandUtil(engine, scope, option33, "getBaseCssClasses", 19);
+        var id32 = callCommandUtil(engine, scope, option33, "getBaseCssClasses", 20);
         buffer += escapeHtml(id32);
         buffer += '">\n            ';
         var id35 = scope.resolve(["content"]);
@@ -552,12 +552,12 @@ KISSY.add("date/picker/decade-panel/decades-xtpl", [], function(S, require, expo
           return buffer
         };
         buffer += ifCommand.call(engine, scope, option26, payload);
-        buffer += '\n        ">\n        <a hidefocus="on"\n           href="#"\n           class="';
+        buffer += '\n        ">\n        <a hidefocus="on"\n           href="#"\n           unselectable="on"\n           class="';
         var option34 = {};
         var params35 = [];
         params35.push("decade");
         option34.params = params35;
-        var id33 = callCommandUtil(engine, scope, option34, "getBaseCssClasses", 18);
+        var id33 = callCommandUtil(engine, scope, option34, "getBaseCssClasses", 19);
         buffer += escapeHtml(id33);
         buffer += '">\n            ';
         var id36 = scope.resolve(["startDecade"]);
@@ -777,7 +777,7 @@ KISSY.add("date/picker/year-panel/control", ["node", "component/control", "./ren
   }
   function setUpDecadePanel() {
     var self = this;
-    var decadePanel = new DecadePanel({locale:this.get("locale"), render:self.get("el")});
+    var decadePanel = new DecadePanel({locale:this.get("locale"), render:self.get("render")});
     decadePanel.on("select", onDecadePanelSelect, self);
     return decadePanel
   }
@@ -847,12 +847,12 @@ KISSY.add("date/picker/month-panel/months-xtpl", [], function(S, require, export
           return buffer
         };
         buffer += ifCommand.call(engine, scope, option11, payload);
-        buffer += '\n        ">\n        <a hidefocus="on"\n           href="#"\n           class="';
+        buffer += '\n        ">\n        <a hidefocus="on"\n           href="#"\n           unselectable="on"\n           class="';
         var option19 = {};
         var params20 = [];
         params20.push("month");
         option19.params = params20;
-        var id18 = callCommandUtil(engine, scope, option19, "getBaseCssClasses", 13);
+        var id18 = callCommandUtil(engine, scope, option19, "getBaseCssClasses", 14);
         buffer += escapeHtml(id18);
         buffer += '">\n            ';
         var id21 = scope.resolve(["content"]);
@@ -1045,7 +1045,7 @@ KISSY.add("date/picker/month-panel/control", ["node", "component/control", "../y
   }
   function setUpYearPanel() {
     var self = this;
-    var yearPanel = new YearPanel({locale:this.get("locale"), render:self.get("el")});
+    var yearPanel = new YearPanel({locale:this.get("locale"), render:self.get("render")});
     yearPanel.on("select", onYearPanelSelect, self);
     return yearPanel
   }
