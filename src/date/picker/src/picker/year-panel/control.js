@@ -52,7 +52,7 @@ KISSY.add(function (S, require) {
         var self = this;
         var decadePanel = new DecadePanel({
             locale: this.get('locale'),
-            render: self.get('el')
+            render: self.get('render')
         });
         decadePanel.on('select', onDecadePanelSelect, self);
         return decadePanel;

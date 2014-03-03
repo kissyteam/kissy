@@ -101,15 +101,15 @@ KISSY.add(function (S, require, exports, module) {
                         return buffer;
                     };
                     buffer += runBlockCommandUtil(engine, scope, config25, "if", 13);
-                    buffer += '\n        ">\n        <a hidefocus="on"\n           href="#"\n           class="';
+                    buffer += '\n        ">\n        <a hidefocus="on"\n           href="#"\n           unselectable="on"\n           class="';
                     var config33 = {};
                     var params34 = [];
                     params34.push('year');
                     config33.params = params34;
-                    var id32 = runInlineCommandUtil(engine, scope, config33, "getBaseCssClasses", 19);
+                    var id32 = runInlineCommandUtil(engine, scope, config33, "getBaseCssClasses", 20);
                     buffer += renderOutputUtil(id32, true);
                     buffer += '">\n            ';
-                    var id35 = getPropertyOrRunCommandUtil(engine, scope, {}, "content", 0, 20);
+                    var id35 = getPropertyOrRunCommandUtil(engine, scope, {}, "content", 0, 21);
                     buffer += renderOutputUtil(id35, true);
                     buffer += '\n        </a>\n    </td>\n    ';
                     return buffer;

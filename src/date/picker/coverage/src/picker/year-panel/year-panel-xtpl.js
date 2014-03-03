@@ -341,15 +341,15 @@ if (! _$jscoverage['/picker/year-panel/year-panel-xtpl.js'].branchData) {
   _$jscoverage['/picker/year-panel/year-panel-xtpl.js'].branchData['101'][1] = new BranchData();
 }
 _$jscoverage['/picker/year-panel/year-panel-xtpl.js'].branchData['101'][1].init(5444, 10, 'moduleWrap');
-function visit69_101_1(result) {
+function visit66_101_1(result) {
   _$jscoverage['/picker/year-panel/year-panel-xtpl.js'].branchData['101'][1].ranCondition(result);
   return result;
 }_$jscoverage['/picker/year-panel/year-panel-xtpl.js'].branchData['9'][2].init(165, 29, 'typeof module !== "undefined"');
-function visit68_9_2(result) {
+function visit65_9_2(result) {
   _$jscoverage['/picker/year-panel/year-panel-xtpl.js'].branchData['9'][2].ranCondition(result);
   return result;
 }_$jscoverage['/picker/year-panel/year-panel-xtpl.js'].branchData['9'][1].init(165, 45, 'typeof module !== "undefined" && module.kissy');
-function visit67_9_1(result) {
+function visit64_9_1(result) {
   _$jscoverage['/picker/year-panel/year-panel-xtpl.js'].branchData['9'][1].ranCondition(result);
   return result;
 }_$jscoverage['/picker/year-panel/year-panel-xtpl.js'].lineData[2]++;
@@ -361,7 +361,7 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/picker/year-panel/year-panel-xtpl.js'].lineData[5]++;
   var buffer = "", config = this.config, engine = this, moduleWrap, utils = config.utils;
   _$jscoverage['/picker/year-panel/year-panel-xtpl.js'].lineData[9]++;
-  if (visit67_9_1(visit68_9_2(typeof module !== "undefined") && module.kissy)) {
+  if (visit64_9_1(visit65_9_2(typeof module !== "undefined") && module.kissy)) {
     _$jscoverage['/picker/year-panel/year-panel-xtpl.js'].lineData[10]++;
     moduleWrap = module;
   }
@@ -536,7 +536,7 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/picker/year-panel/year-panel-xtpl.js'].lineData[100]++;
   config32.params = params33;
   _$jscoverage['/picker/year-panel/year-panel-xtpl.js'].lineData[101]++;
-  if (visit69_101_1(moduleWrap)) {
+  if (visit66_101_1(moduleWrap)) {
     _$jscoverage['/picker/year-panel/year-panel-xtpl.js'].lineData[102]++;
     require("date/picker/year-panel/years-xtpl");
     _$jscoverage['/picker/year-panel/year-panel-xtpl.js'].lineData[103]++;

@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.42
 MIT Licensed
-build time: Jan 6 15:43
+build time: Mar 3 14:54
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -287,15 +287,15 @@ KISSY.add("date/picker/year-panel/years-xtpl", [], function(S, require, exports,
           return buffer
         };
         buffer += runBlockCommandUtil(engine, scope, config25, "if", 13);
-        buffer += '\n        ">\n        <a hidefocus="on"\n           href="#"\n           class="';
+        buffer += '\n        ">\n        <a hidefocus="on"\n           href="#"\n           unselectable="on"\n           class="';
         var config33 = {};
         var params34 = [];
         params34.push("year");
         config33.params = params34;
-        var id32 = runInlineCommandUtil(engine, scope, config33, "getBaseCssClasses", 19);
+        var id32 = runInlineCommandUtil(engine, scope, config33, "getBaseCssClasses", 20);
         buffer += renderOutputUtil(id32, true);
         buffer += '">\n            ';
-        var id35 = getPropertyOrRunCommandUtil(engine, scope, {}, "content", 0, 20);
+        var id35 = getPropertyOrRunCommandUtil(engine, scope, {}, "content", 0, 21);
         buffer += renderOutputUtil(id35, true);
         buffer += "\n        </a>\n    </td>\n    ";
         return buffer
@@ -546,18 +546,18 @@ KISSY.add("date/picker/decade-panel/decades-xtpl", [], function(S, require, expo
           return buffer
         };
         buffer += runBlockCommandUtil(engine, scope, config26, "if", 12);
-        buffer += '\n        ">\n        <a hidefocus="on"\n           href="#"\n           class="';
+        buffer += '\n        ">\n        <a hidefocus="on"\n           href="#"\n           unselectable="on"\n           class="';
         var config34 = {};
         var params35 = [];
         params35.push("decade");
         config34.params = params35;
-        var id33 = runInlineCommandUtil(engine, scope, config34, "getBaseCssClasses", 18);
+        var id33 = runInlineCommandUtil(engine, scope, config34, "getBaseCssClasses", 19);
         buffer += renderOutputUtil(id33, true);
         buffer += '">\n            ';
-        var id36 = getPropertyOrRunCommandUtil(engine, scope, {}, "startDecade", 0, 19);
+        var id36 = getPropertyOrRunCommandUtil(engine, scope, {}, "startDecade", 0, 20);
         buffer += renderOutputUtil(id36, true);
         buffer += "-";
-        var id37 = getPropertyOrRunCommandUtil(engine, scope, {}, "endDecade", 0, 19);
+        var id37 = getPropertyOrRunCommandUtil(engine, scope, {}, "endDecade", 0, 20);
         buffer += renderOutputUtil(id37, true);
         buffer += "\n        </a>\n    </td>\n    ";
         return buffer
@@ -765,7 +765,7 @@ KISSY.add("date/picker/year-panel/control", ["node", "component/control", "./ren
   }
   function setUpDecadePanel() {
     var self = this;
-    var decadePanel = new DecadePanel({locale:this.get("locale"), render:self.get("el")});
+    var decadePanel = new DecadePanel({locale:this.get("locale"), render:self.get("render")});
     decadePanel.on("select", onDecadePanelSelect, self);
     return decadePanel
   }
@@ -835,15 +835,15 @@ KISSY.add("date/picker/month-panel/months-xtpl", [], function(S, require, export
           return buffer
         };
         buffer += runBlockCommandUtil(engine, scope, config11, "if", 7);
-        buffer += '\n        ">\n        <a hidefocus="on"\n           href="#"\n           class="';
+        buffer += '\n        ">\n        <a hidefocus="on"\n           href="#"\n           unselectable="on"\n           class="';
         var config19 = {};
         var params20 = [];
         params20.push("month");
         config19.params = params20;
-        var id18 = runInlineCommandUtil(engine, scope, config19, "getBaseCssClasses", 13);
+        var id18 = runInlineCommandUtil(engine, scope, config19, "getBaseCssClasses", 14);
         buffer += renderOutputUtil(id18, true);
         buffer += '">\n            ';
-        var id21 = getPropertyOrRunCommandUtil(engine, scope, {}, "content", 0, 14);
+        var id21 = getPropertyOrRunCommandUtil(engine, scope, {}, "content", 0, 15);
         buffer += renderOutputUtil(id21, true);
         buffer += "\n        </a>\n    </td>\n    ";
         return buffer
@@ -1027,7 +1027,7 @@ KISSY.add("date/picker/month-panel/control", ["node", "component/control", "../y
   }
   function setUpYearPanel() {
     var self = this;
-    var yearPanel = new YearPanel({locale:this.get("locale"), render:self.get("el")});
+    var yearPanel = new YearPanel({locale:this.get("locale"), render:self.get("render")});
     yearPanel.on("select", onYearPanelSelect, self);
     return yearPanel
   }

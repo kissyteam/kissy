@@ -439,7 +439,7 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/picker/month-panel/months-xtpl.js'].lineData[63]++;
   buffer += runBlockCommandUtil(engine, scope, config11, "if", 7);
   _$jscoverage['/picker/month-panel/months-xtpl.js'].lineData[64]++;
-  buffer += '\n        ">\n        <a hidefocus="on"\n           href="#"\n           class="';
+  buffer += '\n        ">\n        <a hidefocus="on"\n           href="#"\n           unselectable="on"\n           class="';
   _$jscoverage['/picker/month-panel/months-xtpl.js'].lineData[65]++;
   var config19 = {};
   _$jscoverage['/picker/month-panel/months-xtpl.js'].lineData[66]++;
@@ -449,13 +449,13 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/picker/month-panel/months-xtpl.js'].lineData[68]++;
   config19.params = params20;
   _$jscoverage['/picker/month-panel/months-xtpl.js'].lineData[69]++;
-  var id18 = runInlineCommandUtil(engine, scope, config19, "getBaseCssClasses", 13);
+  var id18 = runInlineCommandUtil(engine, scope, config19, "getBaseCssClasses", 14);
   _$jscoverage['/picker/month-panel/months-xtpl.js'].lineData[70]++;
   buffer += renderOutputUtil(id18, true);
   _$jscoverage['/picker/month-panel/months-xtpl.js'].lineData[71]++;
   buffer += '">\n            ';
   _$jscoverage['/picker/month-panel/months-xtpl.js'].lineData[72]++;
-  var id21 = getPropertyOrRunCommandUtil(engine, scope, {}, "content", 0, 14);
+  var id21 = getPropertyOrRunCommandUtil(engine, scope, {}, "content", 0, 15);
   _$jscoverage['/picker/month-panel/months-xtpl.js'].lineData[73]++;
   buffer += renderOutputUtil(id21, true);
   _$jscoverage['/picker/month-panel/months-xtpl.js'].lineData[74]++;
