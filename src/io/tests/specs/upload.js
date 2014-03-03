@@ -2,7 +2,7 @@
  * advanced io tc
  * @author yiminghe@gmail.com
  **/
-KISSY.add(function (S, UA,  io, Node) {
+KISSY.add(function (S, UA, io, Node) {
     var $ = Node.all;
 
     // travis-ci will not pass ...
@@ -119,7 +119,7 @@ KISSY.add(function (S, UA,  io, Node) {
             var ok = 0;
 
             io({
-                type:'post',
+                type: 'post',
                 form: form[0],
                 dataType: 'xml',
                 url: '/kissy/src/io/tests/data/xml.jss',
@@ -150,7 +150,7 @@ KISSY.add(function (S, UA,  io, Node) {
             var ok = 0;
 
             io({
-                type:'post',
+                type: 'post',
                 form: form[0],
                 dataType: 'html',
                 url: '/kissy/src/io/tests/data/html.jss',
@@ -181,7 +181,7 @@ KISSY.add(function (S, UA,  io, Node) {
             var ok = 0;
 
             io({
-                type:'post',
+                type: 'post',
                 form: form[0],
                 dataType: 'text',
                 url: '/kissy/src/io/tests/data/html.jss',
@@ -214,8 +214,12 @@ KISSY.add(function (S, UA,  io, Node) {
             // 否则 localhost:8888 和 localhost:9999 默认可以通信...
 
             // 标准浏览器是 cors 关系
-            var uploadRc = 'http://' + location.hostname + ':'+SERVER_CONFIG.ports[1]+'/' +
-                'kissy/src/io/tests/others/form/upload-domain.jss';
+            var url = location.hostname;
+            if (url === 'localhost') {
+                url += ':' + window.SERVER_CONFIG.ports[1];
+            }
+
+            var uploadRc = 'http://' + url + '/kissy/src/io/tests/others/form/upload-domain.jss';
 
             io({
                 type: 'post',
@@ -245,6 +249,6 @@ KISSY.add(function (S, UA,  io, Node) {
         });
 
     });
-},{
-    requires:['ua','io','node']
+}, {
+    requires: ['ua', 'io', 'node']
 });

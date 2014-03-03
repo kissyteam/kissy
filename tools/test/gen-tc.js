@@ -59,4 +59,6 @@ var finalCode = '/**\n' +
 
 fs.writeFileSync('./tools/test/tc.js', finalCode, 'utf-8');
 
+require('./gen-totoro');
+
 console.log('ok with gen-tc to tc.js!');

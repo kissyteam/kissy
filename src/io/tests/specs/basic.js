@@ -2,7 +2,7 @@
  * basic test cases for kissy io
  * @author lijing00333@163.com, yiminghe@gmail.com
  */
-KISSY.add(function (S,  IO) {
+KISSY.add(function (S, IO) {
     describe('IO', function () {
         describe('404/301', function () {
             it('404 get error', function () {
@@ -208,7 +208,7 @@ KISSY.add(function (S,  IO) {
                         url: '/kissy/src/io/tests/data/interface.jss?t=get',
                         success: function (data) {
                             expect(data.contentType).toBe(undefined);
-                            ok=1;
+                            ok = 1;
                         },
                         dataType: 'jsonp'
                     });
@@ -277,7 +277,11 @@ KISSY.add(function (S,  IO) {
             // https://github.com/kissyteam/kissy/issues/187
             it("can ignore protocol", function () {
                 var ok = 0;
-                IO.jsonp('//' + location.hostname + ':'+SERVER_CONFIG.ports[1]+'/kissy/src/io/tests/data/interface.jss', {
+                var url = location.hostname;
+                if (url === 'localhost') {
+                    url += ':' + window.SERVER_CONFIG.ports[1];
+                }
+                IO.jsonp('//' + url + '/kissy/src/io/tests/data/interface.jss', {
                     my_param: 'taobao'
                 }, function (data) {
                     expect(typeof data).toBe('object');
@@ -895,6 +899,6 @@ KISSY.add(function (S,  IO) {
             });
         });
     });
-},{
-        requires:['io']
-    });
+}, {
+    requires: ['io']
+});
