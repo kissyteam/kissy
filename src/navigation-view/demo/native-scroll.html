@@ -10,16 +10,27 @@
            minimum-scale=1.0,
            user-scalable=no">
     <link href="/kissy/build/css/dpl/base.css" rel="stylesheet"/>
-    <link href="/kissy/src/navigation-view/assets/dpl.css" rel="stylesheet">
-    <link href="/kissy/src/scroll-view/assets/dpl.css" rel="stylesheet"/>
+    <link href="/kissy/src/navigation-view/assets/native-scroll.css" rel="stylesheet">
     <style>
-        ul, li {
-            margin: 0;
-            padding: 0;
+        body,html {
+            height: 100%;
         }
 
         .ks-navigation-bar {
+            position: fixed;
             height: 47px;
+            width: 100%;
+            box-sizing: border-box;
+            z-index: 10;
+        }
+
+        .ks-navigation-view-content {
+            margin-top: 47px;
+        }
+
+        ul, li {
+            margin: 0;
+            padding: 0;
         }
 
         .nav {
@@ -127,7 +138,7 @@
 <script src="/kissy/src/package.js"></script>
 <script src="/kissy/src/log.js"></script>
 <script>
-    window.PAGE_VIEW = 'demo/page-scroll-view';
+    window.PAGE_VIEW = 'demo/page-view';
 </script>
 <script src="demo.js"></script>
 </body>

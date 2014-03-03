@@ -12,8 +12,6 @@ KISSY.add(function (S, require) {
         '<div class="{prefixCls}navigation-view-loading-inner"></div>' +
         '</div>' +
         '</div>';
-
-
     var vendorPrefix = S.Feature.getVendorCssPropPrefix('animation');
     var ANIMATION_END_EVENT = vendorPrefix ?
         (vendorPrefix.toLowerCase() + 'AnimationEnd') :
@@ -93,20 +91,31 @@ KISSY.add(function (S, require) {
         var className = el.className,
             originalClassName = className;
 
+        if (css) {
+            if (css.match(self.animateNoneEnterRegExp)) {
+                css = '';
+            } else if (css.match(self.animateNoneLeaveRegExp)) {
+                return hideAnimateEl(el, self);
+            }
+        }
+
         if (className.match(self.animateClassRegExp)) {
             className = className.replace(self.animateClassRegExp, '');
         }
 
         if (css) {
             className += ' ' + css;
+            className += ' ' + self.animingClass;
         }
 
         if (className.indexOf(self.showViewClass) === -1) {
             className += ' ' + self.showViewClass;
         }
+
         if (className !== originalClassName) {
             el.className = trimClassName(className);
         }
+        return undefined;
     }
 
     function hideAnimateEl(el, self) {
@@ -208,22 +217,29 @@ KISSY.add(function (S, require) {
 
     function onAnimEnd(el) {
         return function () {
-            var self = this;
-            var className = el.className;
-            if (isEnterCss(className, self)) {
-                showAnimateEl(el, self);
-            } else if (isLeaveCss(className, self)) {
-                hideAnimateEl(el, self);
-            }
+            animEndEl.call(this, el);
         };
+    }
+
+    function animEndEl(el) {
+        var self = this;
+        var className = el.className;
+        if (isEnterCss(className, self)) {
+            showAnimateEl(el, self);
+        } else if (isLeaveCss(className, self)) {
+            hideAnimateEl(el, self);
+        }
     }
 
     return Container.extend({
         createDom: function () {
             var self = this;
-            self.animateClassRegExp = new RegExp(self.view.getBaseCssClass() + '-anim-[^\\s]+');
+            self.animateClassRegExp = new RegExp(self.view.getBaseCssClass() + '-anim-[^\\s]+', 'g');
             self.animateEnterRegExp = new RegExp('-enter(?:\\s|$)');
             self.animateLeaveRegExp = new RegExp('-leave(?:\\s|$)');
+            self.animateNoneEnterRegExp = new RegExp('none-enter(?:\\s|$)');
+            self.animateNoneLeaveRegExp = new RegExp('none-leave(?:\\s|$)');
+            self.animingClass = self.view.getBaseCssClass() + '-anim-ing';
             self.showViewClass = self.view.getBaseCssClass('show-view');
             self.viewStack = [];
         },

@@ -1,8 +1,3 @@
-/*
-Copyright 2014, KISSY v1.50
-MIT Licensed
-build time: Mar 3 20:52
-*/
 /**
 navigation-view style
 */
@@ -94,38 +89,34 @@ navigation-view style
   background-image: -webkit-linear-gradient(top, #021926, #03283f 10%, #043857 65%, #043a59);
 }
 .ks-navigation-view {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
   display: -webkit-box;
   -webkit-box-orient: vertical;
+  min-height: 100%;
 }
 .ks-navigation-view-content {
   position: relative;
-  overflow: hidden;
   -webkit-box-flex: 1;
 }
 .ks-navigation-view-content > div {
+  display: none;
+}
+.ks-navigation-view-anim-ing,
+.ks-navigation-view-loading {
   position: absolute;
   left: 0;
   top: 0;
   width: 100%;
-  height: 100%;
-  visibility: hidden;
+  display: block;
 }
 .ks-navigation-view-content > div.ks-navigation-view-show-view {
-  visibility: visible;
+  display: block;
 }
-.ks-navigation-view-content > div.ks-navigation-view-anim-none-leave {
-  visibility: hidden;
-}
-.ks-navigation-view-loading {
-  background: rgba(0, 0, 0, 0.8);
+.ks-navigation-view-content > div.ks-navigation-view-show-view.ks-navigation-view-loading {
   display: -webkit-box;
+  background: rgba(0, 0, 0, 0.8);
   -webkit-box-pack: center;
   -webkit-box-align: center;
+  height: 100%;
 }
 .ks-navigation-view-loading-outer,
 .ks-navigation-view-loading-inner {

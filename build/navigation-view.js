@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Feb 27 13:01
+build time: Mar 3 20:52
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -64,11 +64,21 @@ KISSY.add("navigation-view", ["node", "component/container", "component/extensio
   }
   function showAnimateEl(el, self, css) {
     var className = el.className, originalClassName = className;
+    if(css) {
+      if(css.match(self.animateNoneEnterRegExp)) {
+        css = ""
+      }else {
+        if(css.match(self.animateNoneLeaveRegExp)) {
+          return hideAnimateEl(el, self)
+        }
+      }
+    }
     if(className.match(self.animateClassRegExp)) {
       className = className.replace(self.animateClassRegExp, "")
     }
     if(css) {
-      className += " " + css
+      className += " " + css;
+      className += " " + self.animingClass
     }
     if(className.indexOf(self.showViewClass) === -1) {
       className += " " + self.showViewClass
@@ -76,6 +86,7 @@ KISSY.add("navigation-view", ["node", "component/container", "component/extensio
     if(className !== originalClassName) {
       el.className = trimClassName(className)
     }
+    return undefined
   }
   function hideAnimateEl(el, self) {
     var className = el.className, originalClassName = className;
@@ -144,22 +155,28 @@ KISSY.add("navigation-view", ["node", "component/container", "component/extensio
   }
   function onAnimEnd(el) {
     return function() {
-      var self = this;
-      var className = el.className;
-      if(isEnterCss(className, self)) {
-        showAnimateEl(el, self)
-      }else {
-        if(isLeaveCss(className, self)) {
-          hideAnimateEl(el, self)
-        }
+      animEndEl.call(this, el)
+    }
+  }
+  function animEndEl(el) {
+    var self = this;
+    var className = el.className;
+    if(isEnterCss(className, self)) {
+      showAnimateEl(el, self)
+    }else {
+      if(isLeaveCss(className, self)) {
+        hideAnimateEl(el, self)
       }
     }
   }
   return Container.extend({createDom:function() {
     var self = this;
-    self.animateClassRegExp = new RegExp(self.view.getBaseCssClass() + "-anim-[^\\s]+");
+    self.animateClassRegExp = new RegExp(self.view.getBaseCssClass() + "-anim-[^\\s]+", "g");
     self.animateEnterRegExp = new RegExp("-enter(?:\\s|$)");
     self.animateLeaveRegExp = new RegExp("-leave(?:\\s|$)");
+    self.animateNoneEnterRegExp = new RegExp("none-enter(?:\\s|$)");
+    self.animateNoneLeaveRegExp = new RegExp("none-leave(?:\\s|$)");
+    self.animingClass = self.view.getBaseCssClass() + "-anim-ing";
     self.showViewClass = self.view.getBaseCssClass("show-view");
     self.viewStack = []
   }, createView:function(config) {
