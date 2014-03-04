@@ -220,6 +220,7 @@ KISSY.use('navigation-view,' +
                 var self = this;
                 self.defer = new Promise.Defer();
                 self.promise = self.defer.promise;
+                win.on('resize', self.sync, self);
                 if (self.logic) {
                     self.logic.enter();
                 } else {
@@ -229,6 +230,14 @@ KISSY.use('navigation-view,' +
                         self.logic.enter();
                     });
                 }
+            },
+            leave: function () {
+                var self = this;
+                win.detach('resize', self.sync, self);
+            },
+            destructor: function () {
+                var self = this;
+                win.detach('resize', self.sync, self);
             }
         }, {
             xclass: 'tb-loading-view'

@@ -31,7 +31,6 @@ KISSY.add(function (S, require) {
         enter: function () {
             var page = this.page;
             S.log('enter loading');
-            win.on('resize', page.sync, page);
             setTimeout(function () {
                 page.getContentEl().html(S.substitute(tpl, {
                     title: page.get('viewId')
@@ -41,14 +40,11 @@ KISSY.add(function (S, require) {
             }, 1400);
         },
         leave: function () {
-            var page = this.page;
             S.log('leave loading');
-            win.detach('resize', page.sync, page);
         },
         destroy: function () {
             var page = this.page;
             S.log('destroy loading');
-            win.detach('resize', page.sync, page);
         }
     };
 
