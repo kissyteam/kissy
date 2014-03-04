@@ -2,15 +2,13 @@
  * Router spec for mvc
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, Router) {
+KISSY.add(function (S, require) {
     /*jshint quotmark:false*/
-    function getHash() {
-        // 不能 location.hash
-        // http://xx.com/#yy?z=1
-        // ie6 => location.hash = #yy
-        // 其他浏览器 => location.hash = #yy?z=1
-        return new S.Uri(location.href).getFragment().replace(/^!/, "");
-    }
+    var Uri = require('uri');
+    var Router = require('router');
+    var getHash = function () {
+        return Router.Utils.getHash(new Uri(location.href));
+    };
 
     describe("router", function () {
         beforeEach(function () {
@@ -117,7 +115,10 @@ KISSY.add(function (S, Router) {
         // ie<8 can only used on event handler
         // see ../others/test-replace-history.html
         it("can replace history", function () {
-            var go = 0, list = 0, detail = 0, ok = 0;
+            var go = 0,
+                list = 0,
+                detail = 0,
+                ok = 0;
 
             waits(200);
 
@@ -150,7 +151,7 @@ KISSY.add(function (S, Router) {
                 return ok;
             });
 
-            waits(200);
+            waits(500);
 
             runs(function () {
                 Router.navigate("/detail/", {
@@ -201,6 +202,4 @@ KISSY.add(function (S, Router) {
         });
 
     });
-}, {
-    requires: ['router']
 });

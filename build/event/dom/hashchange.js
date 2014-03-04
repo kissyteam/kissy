@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Feb 25 19:43
+build time: Mar 4 11:39
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -12,7 +12,7 @@ build time: Feb 25 19:43
 KISSY.add("event/dom/hashchange", ["event/dom/base", "dom"], function(S, require) {
   var DomEvent = require("event/dom/base");
   var Dom = require("dom");
-  var UA = S.UA, urlWithoutHash, Special = DomEvent.Special, win = S.Env.host, doc = win.document, docMode = UA.ieMode, REPLACE_HISTORY = "__replace_history_" + S.now(), ie = docMode || UA.ie, HASH_CHANGE = "hashchange";
+  var UA = S.UA, urlWithoutHash, Special = DomEvent.Special, win = S.Env.host, doc = win.document, docMode = UA.ieMode, REPLACE_HISTORY = "__ks_replace_history__", ie = docMode || UA.ie, HASH_CHANGE = "hashchange";
   DomEvent.REPLACE_HISTORY = REPLACE_HISTORY;
   function getIframeDoc(iframe) {
     return iframe.contentWindow.document
@@ -21,9 +21,10 @@ KISSY.add("event/dom/hashchange", ["event/dom/base", "dom"], function(S, require
     var uri = new S.Uri(location.href);
     return"#" + uri.getFragment()
   }, timer, lastHash, poll = function() {
-    var hash = getHash(), replaceHistory;
-    if(replaceHistory = S.endsWith(hash, REPLACE_HISTORY)) {
-      hash = hash.slice(0, -REPLACE_HISTORY.length);
+    var hash = getHash(), replaceHistory = 0;
+    if(hash.indexOf(REPLACE_HISTORY) !== -1) {
+      replaceHistory = 1;
+      hash = hash.replace(REPLACE_HISTORY, "");
       location.hash = hash
     }
     if(hash !== lastHash) {

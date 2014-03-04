@@ -25,11 +25,19 @@ function endsWith(str, suffix) {
     return ind >= 0 && str.indexOf(suffix, ind) === ind;
 }
 
+var trace = {};
+
 tc.forEach(function (t) {
     if (endsWith(t, '?build') || endsWith(t, '?coverage') || t.indexOf('send-to-coveralls') !== -1) {
         return;
     }
     var mod = getModName(t);
+    if (trace[mod]) {
+        trace[mod]++;
+        mod += trace[mod];
+    } else {
+        trace[mod] = 1;
+    }
     testsData.push({
         name: mod,
         runner: server + t,

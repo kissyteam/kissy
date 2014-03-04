@@ -38,9 +38,7 @@ KISSY.add(function (S, require) {
 
             describe('flash player version', function () {
                 it('should not less than 9', function () {
-
                     S.log('flash version: ' + SWF.fpv());
-
                     expect(SWF.fpv()).toBeDefined();
                     expect(SWF.fpv().length).toEqual(3);
                     expect(SWF.fpvGTE(9)).toBeTruthy();

@@ -122,7 +122,7 @@
             ]
         },
         {
-            "name": "dom/selector",
+            "name": "dom/selector2",
             "runner": "http://dev.kissyui.com/kissy/src/dom/sub-modules/selector/tests/runner/test.jss",
             "email": [
                 "yiminghe@gmail.com"
@@ -227,7 +227,7 @@
             ]
         },
         {
-            "name": "loader",
+            "name": "loader2",
             "runner": "http://dev.kissyui.com/kissy/src/loader/tests/runner/test.html",
             "email": [
                 "yiminghe@gmail.com"
@@ -283,7 +283,7 @@
             ]
         },
         {
-            "name": "router",
+            "name": "router2",
             "runner": "http://dev.kissyui.com/kissy/src/router/tests/runner/test.jss",
             "email": [
                 "yiminghe@gmail.com"

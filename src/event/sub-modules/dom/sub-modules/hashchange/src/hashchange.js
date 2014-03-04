@@ -12,7 +12,7 @@ KISSY.add(function (S, require) {
         win = S.Env.host,
         doc = win.document,
         docMode = UA.ieMode,
-        REPLACE_HISTORY = '__replace_history_' + S.now(),
+        REPLACE_HISTORY = '__ks_replace_history__',
         ie = docMode || UA.ie,
         HASH_CHANGE = 'hashchange';
 
@@ -50,10 +50,11 @@ KISSY.add(function (S, require) {
 
         poll = function () {
             var hash = getHash(),
-                replaceHistory;
+                replaceHistory = 0;
 
-            if ((replaceHistory = S.endsWith(hash, REPLACE_HISTORY))) {
-                hash = hash.slice(0, -REPLACE_HISTORY.length);
+            if (hash.indexOf(REPLACE_HISTORY) !== -1) {
+                replaceHistory = 1;
+                hash = hash.replace(REPLACE_HISTORY, '');
                 // 去除 ie67 hack 标记
                 location.hash = hash;
             }

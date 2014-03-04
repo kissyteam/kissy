@@ -12,9 +12,14 @@ KISSY.add(function (S, require, exports, module) {
             }
             var callCommandUtil = utils.callCommand,
                 eachCommand = nativeCommands.each,
-                withCommand = nativeCommands.with,
-                ifCommand = nativeCommands.
-            if, setCommand = nativeCommands.set, includeCommand = nativeCommands.include, parseCommand = nativeCommands.parse, extendCommand = nativeCommands.extend, blockCommand = nativeCommands.block, macroCommand = nativeCommands.macro;
+                withCommand = nativeCommands["with"],
+                ifCommand = nativeCommands["if"],
+                setCommand = nativeCommands.set,
+                includeCommand = nativeCommands.include,
+                parseCommand = nativeCommands.parse,
+                extendCommand = nativeCommands.extend,
+                blockCommand = nativeCommands.block,
+                macroCommand = nativeCommands.macro;
             buffer += '';
             var id0 = scope.resolve(["a"]);
             buffer += escapeHtml(id0);

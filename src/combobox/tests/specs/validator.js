@@ -3,30 +3,27 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, ComboBox) {
-
     window.focus();
     document.body.focus();
 
-    var $ = S.all;
-
-    describe("validator", function () {
+    describe('validator', function () {
         beforeEach(function () {
             this.addMatchers({
                 toBeNearEqual: function (expected) {
-                    return Math.abs(parseInt(this.actual) - parseInt(expected)) < 5;
+                    return Math.abs(parseInt(this.actual, 10) - parseInt(expected, 10)) < 5;
                 }
             });
         });
 
-        it("validator works", function () {
-            var data = ["1", "21", "31"];
+        it('validator works', function () {
+            var data = ['1', '21', '31'];
 
-            var ERROR = "太大了";
+            var ERROR = '太大了';
 
             var comboBox = new ComboBox({
                 width: 200,
                 validator: function (v, complete) {
-                    complete(parseInt(v) > 10 ? ERROR : "");
+                    complete(parseInt(v, 10) > 10 ? ERROR : '');
                 },
                 render: 'body',
                 dataSource: new ComboBox.LocalDataSource({
@@ -36,9 +33,9 @@ KISSY.add(function (S, ComboBox) {
                     var ret = [];
                     S.each(data, function (d) {
                         ret.push({
-                            content: d.replace(new RegExp(S.escapeRegExp(q), "g"), "<b>$&</b>"),
+                            content: d.replace(new RegExp(S.escapeRegExp(q), 'g'), '<b>$&</b>'),
                             textContent: d
-                        })
+                        });
                     });
                     return ret;
                 }
@@ -47,7 +44,7 @@ KISSY.add(function (S, ComboBox) {
 
             var t = comboBox.get('input')[0];
 
-            t.value = "";
+            t.value = '';
 
             t.focus();
 
@@ -56,14 +53,15 @@ KISSY.add(function (S, ComboBox) {
             waits(100);
 
             runs(function () {
-                t.value = "11";
-                jasmine.simulate(t,'input');
+                t.value = '11';
+                jasmine.simulate(t, 'input');
             });
             // longer for ie8
             waits(500);
 
             runs(function () {
-                jasmine.simulate(t, "keyup");
+                t.focus();
+                jasmine.simulate(t, 'keyup');
             });
 
             // longer for ie8
@@ -72,6 +70,8 @@ KISSY.add(function (S, ComboBox) {
             runs(function () {
                 // firefox will not trigger blur event??
                 // $(t).fire('blur');
+                document.body.focus();
+                window.focus();
                 t.blur();
             });
 
@@ -79,19 +79,17 @@ KISSY.add(function (S, ComboBox) {
             waits(500);
 
             runs(function () {
-                var error = "";
+                var error = '';
                 comboBox.validate(function (err) {
                     error = err;
                 });
                 expect(error).toBe(ERROR);
-                expect(comboBox.get('el').hasClass("ks-combobox-invalid")).toBe(true);
-                expect(comboBox.get('invalidEl').css("display")).toBe("block");
+                expect(comboBox.get('el').hasClass('ks-combobox-invalid')).toBe(true);
+                expect(comboBox.get('invalidEl').css('display')).toBe('block');
                 expect(comboBox.get('invalidEl').attr('title')).toBe(ERROR);
             });
 
-
             // ok
-
             waits(100);
 
             runs(function () {
@@ -102,14 +100,14 @@ KISSY.add(function (S, ComboBox) {
             waits(100);
 
             runs(function () {
-                t.value = "3";
-                jasmine.simulate(t,'input');
+                t.value = '3';
+                jasmine.simulate(t, 'input');
             });
 
             waits(100);
 
             runs(function () {
-                jasmine.simulate(t, "keyup");
+                jasmine.simulate(t, 'keyup');
             });
 
 
@@ -122,31 +120,31 @@ KISSY.add(function (S, ComboBox) {
             waits(100);
 
             runs(function () {
-                var error = "";
+                var error = '';
                 comboBox.validate(function (err) {
                     error = err;
                 });
-                expect(error).toBe("");
-                expect(comboBox.get('el').hasClass("ks-combobox-invalid")).toBe(false);
-                expect(comboBox.get('invalidEl').css("display")).toBe("none");
+                expect(error).toBe('');
+                expect(comboBox.get('el').hasClass('ks-combobox-invalid')).toBe(false);
+                expect(comboBox.get('invalidEl').css('display')).toBe('none');
             });
 
-            runs(function(){
+            runs(function () {
                 comboBox.destroy();
             });
 
         });
 
 
-        it("FilterSelect works", function () {
+        it('FilterSelect works', function () {
 
-            var data = ["1", "21", "31"];
+            var data = ['1', '21', '31'];
 
-            var ERROR = "不符合下拉列表";
+            var ERROR = '不符合下拉列表';
 
             var comboBox = new ComboBox.FilterSelect({
                 width: 200,
-                invalidMessage:ERROR,
+                invalidMessage: ERROR,
                 render: 'body',
                 dataSource: new ComboBox.LocalDataSource({
                     data: data
@@ -155,9 +153,9 @@ KISSY.add(function (S, ComboBox) {
                     var ret = [];
                     S.each(data, function (d) {
                         ret.push({
-                            content: d.replace(new RegExp(S.escapeRegExp(q), "g"), "<b>$&</b>"),
+                            content: d.replace(new RegExp(S.escapeRegExp(q), 'g'), '<b>$&</b>'),
                             textContent: d
-                        })
+                        });
                     });
                     return ret;
                 }
@@ -166,7 +164,7 @@ KISSY.add(function (S, ComboBox) {
 
             var t = comboBox.get('input')[0];
 
-            t.value = "";
+            t.value = '';
 
             t.focus();
 
@@ -175,14 +173,14 @@ KISSY.add(function (S, ComboBox) {
             waits(100);
 
             runs(function () {
-                t.value = "11";
-                jasmine.simulate(t,'input');
+                t.value = '11';
+                jasmine.simulate(t, 'input');
             });
 
             waits(100);
 
             runs(function () {
-                jasmine.simulate(t, "keyup");
+                jasmine.simulate(t, 'keyup');
             });
 
 
@@ -195,13 +193,13 @@ KISSY.add(function (S, ComboBox) {
             waits(100);
 
             runs(function () {
-                var error = "";
+                var error = '';
                 comboBox.validate(function (err) {
                     error = err;
                 });
                 expect(error).toBe(ERROR);
-                expect(comboBox.get('el').hasClass("ks-combobox-invalid")).toBe(true);
-                expect(comboBox.get('invalidEl').css("display")).toBe("block");
+                expect(comboBox.get('el').hasClass('ks-combobox-invalid')).toBe(true);
+                expect(comboBox.get('invalidEl').css('display')).toBe('block');
                 expect(comboBox.get('invalidEl').attr('title')).toBe(ERROR);
             });
 
@@ -218,14 +216,14 @@ KISSY.add(function (S, ComboBox) {
             waits(100);
 
             runs(function () {
-                t.value = "21";
-                jasmine.simulate(t,'input');
+                t.value = '21';
+                jasmine.simulate(t, 'input');
             });
 
             waits(100);
 
             runs(function () {
-                jasmine.simulate(t, "keyup");
+                jasmine.simulate(t, 'keyup');
             });
 
 
@@ -238,22 +236,20 @@ KISSY.add(function (S, ComboBox) {
             waits(100);
 
             runs(function () {
-                var error = "";
+                var error = '';
                 comboBox.validate(function (err) {
                     error = err;
                 });
-                expect(error).toBe("");
-                expect(comboBox.get('el').hasClass("ks-combobox-invalid")).toBe(false);
-                expect(comboBox.get('invalidEl').css("display")).toBe("none");
+                expect(error).toBe('');
+                expect(comboBox.get('el').hasClass('ks-combobox-invalid')).toBe(false);
+                expect(comboBox.get('invalidEl').css('display')).toBe('none');
             });
 
-            runs(function(){
+            runs(function () {
                 comboBox.destroy();
             });
-
         });
-
     });
-},{
-    requires:['combobox']
+}, {
+    requires: ['combobox']
 });

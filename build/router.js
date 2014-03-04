@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Feb 25 19:45
+build time: Mar 4 11:40
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -12,8 +12,9 @@ build time: Feb 25 19:45
  router
 */
 
-KISSY.add("router/utils", [], function(S) {
+KISSY.add("router/utils", ["event/dom"], function(S, require) {
   var utils;
+  var DomEvent = require("event/dom");
   function removeVid(str) {
     return str.replace(/__ks-vid=.+$/, "")
   }
@@ -53,7 +54,7 @@ KISSY.add("router/utils", [], function(S) {
     str2 = this.removeEndSlash(str2);
     return str1 === str2
   }, getHash:function(uri) {
-    return removeVid(uri.getFragment().replace(/^!/, ""))
+    return removeVid(uri.getFragment().replace(/^!/, "")).replace(DomEvent.REPLACE_HISTORY, "")
   }, removeVid:removeVid, hasVid:function(str) {
     return str.indexOf("__ks-vid=") !== -1
   }, addVid:function(str, vid) {
@@ -156,7 +157,7 @@ KISSY.add("router", ["./router/utils", "./router/route", "uri", "./router/reques
   var viewUniqueId = 10;
   var viewsHistory = [viewUniqueId];
   function setPathByHash(path, replace) {
-    var hash = utils.addVid("#!" + path + (supportNativeHashChange ? "" : DomEvent.REPLACE_HISTORY), viewUniqueId);
+    var hash = utils.addVid("#!" + path + (supportNativeHashChange ? "" : replace ? DomEvent.REPLACE_HISTORY : ""), viewUniqueId);
     if(replace) {
       location.replace(hash)
     }else {
@@ -412,6 +413,7 @@ KISSY.add("router", ["./router/utils", "./router/route", "uri", "./router/reques
     started = true;
     return exports
   };
+  exports.Utils = utils;
   exports.stop = function() {
     started = false;
     DomEvent.detach(win, "hashchange", onHashChange);

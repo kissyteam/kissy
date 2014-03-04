@@ -134,7 +134,7 @@ KISSY.add(function (S, require) {
             } else {
                 KISSY.config('packages', {
                     'xtpls': {
-                        base: './specs/'
+                        base: '/kissy/src/xtemplate/tests/specs/'
                     }
                 });
             }

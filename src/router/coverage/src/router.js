@@ -426,10 +426,11 @@ if (! _$jscoverage['/router.js']) {
   _$jscoverage['/router.js'].lineData[414] = 0;
   _$jscoverage['/router.js'].lineData[418] = 0;
   _$jscoverage['/router.js'].lineData[419] = 0;
-  _$jscoverage['/router.js'].lineData[423] = 0;
-  _$jscoverage['/router.js'].lineData[424] = 0;
+  _$jscoverage['/router.js'].lineData[422] = 0;
   _$jscoverage['/router.js'].lineData[425] = 0;
   _$jscoverage['/router.js'].lineData[426] = 0;
+  _$jscoverage['/router.js'].lineData[427] = 0;
+  _$jscoverage['/router.js'].lineData[428] = 0;
 }
 if (! _$jscoverage['/router.js'].functionData) {
   _$jscoverage['/router.js'].functionData = [];
@@ -700,7 +701,7 @@ function visit44_220_1(result) {
 function visit43_219_1(result) {
   _$jscoverage['/router.js'].branchData['219'][1].ranCondition(result);
   return result;
-}_$jscoverage['/router.js'].branchData['199'][1].init(1120, 25, 'opts && opts.triggerRoute');
+}_$jscoverage['/router.js'].branchData['199'][1].init(1122, 25, 'opts && opts.triggerRoute');
 function visit42_199_1(result) {
   _$jscoverage['/router.js'].branchData['199'][1].ranCondition(result);
   return result;
@@ -716,11 +717,11 @@ function visit40_181_1(result) {
 function visit39_176_1(result) {
   _$jscoverage['/router.js'].branchData['176'][1].ranCondition(result);
   return result;
-}_$jscoverage['/router.js'].branchData['175'][1].init(86, 26, 'getUrlForRouter() !== path');
+}_$jscoverage['/router.js'].branchData['175'][1].init(88, 26, 'getUrlForRouter() !== path');
 function visit38_175_1(result) {
   _$jscoverage['/router.js'].branchData['175'][1].ranCondition(result);
   return result;
-}_$jscoverage['/router.js'].branchData['174'][1].init(52, 19, 'opts.replace || false');
+}_$jscoverage['/router.js'].branchData['174'][1].init(52, 21, 'opts.replace || false');
 function visit37_174_1(result) {
   _$jscoverage['/router.js'].branchData['174'][1].ranCondition(result);
   return result;
@@ -784,7 +785,7 @@ function visit23_45_1(result) {
 function visit22_43_1(result) {
   _$jscoverage['/router.js'].branchData['43'][1].ranCondition(result);
   return result;
-}_$jscoverage['/router.js'].branchData['34'][1].init(203, 7, 'replace');
+}_$jscoverage['/router.js'].branchData['34'][1].init(220, 7, 'replace');
 function visit21_34_1(result) {
   _$jscoverage['/router.js'].branchData['34'][1].ranCondition(result);
   return result;
@@ -837,7 +838,7 @@ KISSY.add(function(S, require, exports) {
   function setPathByHash(path, replace) {
     _$jscoverage['/router.js'].functionData[1]++;
     _$jscoverage['/router.js'].lineData[30]++;
-    var hash = utils.addVid('#!' + path + (supportNativeHashChange ? '' : DomEvent.REPLACE_HISTORY), viewUniqueId);
+    var hash = utils.addVid('#!' + path + (supportNativeHashChange ? '' : (replace ? DomEvent.REPLACE_HISTORY : '')), viewUniqueId);
     _$jscoverage['/router.js'].lineData[34]++;
     if (visit21_34_1(replace)) {
       _$jscoverage['/router.js'].lineData[35]++;
@@ -1301,14 +1302,16 @@ KISSY.add(function(S, require, exports) {
   _$jscoverage['/router.js'].lineData[419]++;
   return exports;
 };
-  _$jscoverage['/router.js'].lineData[423]++;
+  _$jscoverage['/router.js'].lineData[422]++;
+  exports.Utils = utils;
+  _$jscoverage['/router.js'].lineData[425]++;
   exports.stop = function() {
   _$jscoverage['/router.js'].functionData[21]++;
-  _$jscoverage['/router.js'].lineData[424]++;
-  started = false;
-  _$jscoverage['/router.js'].lineData[425]++;
-  DomEvent.detach(win, 'hashchange', onHashChange);
   _$jscoverage['/router.js'].lineData[426]++;
+  started = false;
+  _$jscoverage['/router.js'].lineData[427]++;
+  DomEvent.detach(win, 'hashchange', onHashChange);
+  _$jscoverage['/router.js'].lineData[428]++;
   DomEvent.detach(win, 'popstate', onPopState);
 };
 });

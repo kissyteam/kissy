@@ -9,7 +9,7 @@ KISSY.add(function (S, require) {
             try {
                 ret = new XTemplate("{{'\\'}}").render();
             } catch (e) {
-                ret = e.toString();
+                ret = e.message;
             }
             expect(ret.indexOf('expect LPAREN')).not.toBe(-1);
         });

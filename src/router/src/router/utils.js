@@ -2,8 +2,9 @@
  * utils for router
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S) {
+KISSY.add(function (S, require) {
     var utils;
+    var DomEvent = require('event/dom');
 
     function removeVid(str) {
         return str.replace(/__ks-vid=.+$/, '');
@@ -74,7 +75,7 @@ KISSY.add(function (S) {
             // #!/home/q={%22thedate%22:%2220121010~20121010%22}
             // firefox 15 => #!/home/q={"thedate":"20121010~20121010"}
             // !! :(
-            return removeVid(uri.getFragment().replace(/^!/, ''));
+            return removeVid(uri.getFragment().replace(/^!/, '')).replace(DomEvent.REPLACE_HISTORY, '');
         },
 
         removeVid: removeVid,

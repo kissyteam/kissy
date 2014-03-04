@@ -29,7 +29,7 @@ KISSY.add(function (S, require, exports) {
     function setPathByHash(path, replace) {
         var hash = utils.addVid('#!' + path +
             // add history hack for ie67
-            (supportNativeHashChange ? '' : DomEvent.REPLACE_HISTORY),
+            (supportNativeHashChange ? '' : (replace ? DomEvent.REPLACE_HISTORY : '')),
             viewUniqueId);
         if (replace) {
             location.replace(hash);
@@ -171,7 +171,7 @@ KISSY.add(function (S, require, exports) {
      */
     exports.navigate = function (path, opts) {
         opts = opts || {};
-        var replace = opts.replace||false;
+        var replace = opts.replace || false;
         if (getUrlForRouter() !== path) {
             if (!replace) {
                 viewUniqueId++;
@@ -418,6 +418,8 @@ KISSY.add(function (S, require, exports) {
         started = true;
         return exports;
     };
+
+    exports.Utils = utils;
 
     // private
     exports.stop = function () {

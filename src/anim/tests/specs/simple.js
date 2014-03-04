@@ -3,6 +3,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, Dom, Anim, Node) {
+    /*jshint quotmark:false*/
     function matrix(transform) {
         transform = transform.split(")");
         var trim = S.trim,
@@ -173,8 +174,9 @@ KISSY.add(function (S, Dom, Anim, Node) {
                 });
 
                 function padding(s) {
-                    if (s.length == 1)
+                    if (s.length === 1) {
                         return "0" + s;
+                    }
                     return s;
                 }
 
@@ -200,6 +202,7 @@ KISSY.add(function (S, Dom, Anim, Node) {
                     Dom.append(test1, 'body');
                     Dom.css(test1, {
                         //'border-color':"#000",
+                        borderStyle: 'solid',
                         width: "10px",
                         height: "20px",
                         left: "120px",
@@ -210,7 +213,7 @@ KISSY.add(function (S, Dom, Anim, Node) {
 
                     var anim = new Anim(test1, {
                             'background-color': '#fcc',
-                            //'border': '5px dashed #999',
+                            //'border': '5px dashed #999',el
                             'border-width': '5px',
                             'border-color': "#999999",
                             //'border-style': "dashed",
@@ -240,6 +243,7 @@ KISSY.add(function (S, Dom, Anim, Node) {
                     });
 
                     waits(800);
+
                     runs(function () {
                         expect(normalizeColor(Dom.style(test1, "border-color")))
                             .toBe("#999999");
@@ -249,7 +253,6 @@ KISSY.add(function (S, Dom, Anim, Node) {
                         expect(Dom.css(test1, "top")).toBe("285px");
                         Dom.remove(test1);
                     });
-
                 });
 
                 it('support different easing for different property', function () {
