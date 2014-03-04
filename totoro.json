@@ -1,6 +1,7 @@
 {
     "group": "KISSY",
     "notice": 1,
+    "option": "--no-catch",
     "tests": [
         {
             "name": "anim/timer",
