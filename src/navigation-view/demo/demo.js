@@ -218,23 +218,17 @@ KISSY.use('navigation-view,' +
         PageView.extend({
             enter: function () {
                 var self = this;
-                S.log('enter loading');
-                win.on('resize', self.sync, self);
-                self.sync();
-                var defer = new Promise.Defer();
-                self.promise = defer.promise;
-                setTimeout(function () {
-                    self.getContentEl().html(S.substitute(tpl, {
-                        title: self.get('viewId')
-                    }));
-                    self.sync();
-                    defer.resolve();
-                }, 1400);
-            },
-
-            leave: function () {
-                S.log('leave loading');
-                win.detach('resize', this.sync, this);
+                self.defer = new Promise.Defer();
+                self.promise = self.defer.promise;
+                if (self.logic) {
+                    self.logic.enter();
+                } else {
+                    S.use('demo/loading', function (S, Loading) {
+                        /*jshint nonew:false*/
+                        self.logic = self.logic || new Loading(self);
+                        self.logic.enter();
+                    });
+                }
             }
         }, {
             xclass: 'tb-loading-view'
@@ -282,7 +276,7 @@ KISSY.use('navigation-view,' +
                     e.currentTarget.classList.remove('list-item-active');
                 });
 
-                this.onScroll(function(top){
+                this.onScroll(function (top) {
                     S.log(top);
                 });
             },
