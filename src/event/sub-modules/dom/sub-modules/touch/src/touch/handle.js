@@ -7,10 +7,12 @@ KISSY.add(function (S, require) {
     var Dom = require('dom');
     var eventHandleMap = require('./handle-map');
     var DomEvent = require('event/dom/base');
+
     require('./tap');
     require('./swipe');
     require('./pinch');
     require('./rotate');
+    require('./drag');
 
     var key = S.guid('touch-handle'),
         Feature = S.Feature,

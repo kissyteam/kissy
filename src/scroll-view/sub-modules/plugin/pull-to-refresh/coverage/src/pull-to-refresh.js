@@ -317,11 +317,11 @@ function visit5_67_1(result) {
 function visit4_48_1(result) {
   _$jscoverage['/pull-to-refresh.js'].branchData['48'][1].ranCondition(result);
   return result;
-}_$jscoverage['/pull-to-refresh.js'].branchData['39'][1].init(194, 5, 'b < 0');
+}_$jscoverage['/pull-to-refresh.js'].branchData['39'][1].init(170, 5, 'b < 0');
 function visit3_39_1(result) {
   _$jscoverage['/pull-to-refresh.js'].branchData['39'][1].ranCondition(result);
   return result;
-}_$jscoverage['/pull-to-refresh.js'].branchData['37'][1].init(100, 18, '-b > self.elHeight');
+}_$jscoverage['/pull-to-refresh.js'].branchData['37'][1].init(76, 18, '-b > self.elHeight');
 function visit2_37_1(result) {
   _$jscoverage['/pull-to-refresh.js'].branchData['37'][1].ranCondition(result);
   return result;
@@ -357,10 +357,10 @@ KISSY.add(function(S, require) {
   _$jscoverage['/pull-to-refresh.js'].lineData[31]++;
   self.elHeight = $el.height();
 }, 
-  _onScrollMove: function() {
+  _onScrollMove: function(e) {
   _$jscoverage['/pull-to-refresh.js'].functionData[2]++;
   _$jscoverage['/pull-to-refresh.js'].lineData[35]++;
-  var self = this, b = self.scrollView.get('scrollTop');
+  var self = this, b = e.newVal;
   _$jscoverage['/pull-to-refresh.js'].lineData[37]++;
   if (visit2_37_1(-b > self.elHeight)) {
     _$jscoverage['/pull-to-refresh.js'].lineData[38]++;
@@ -451,7 +451,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/pull-to-refresh.js'].lineData[105]++;
   var self = this;
   _$jscoverage['/pull-to-refresh.js'].lineData[106]++;
-  scrollView.on('scrollTouchMove', self._onScrollMove, self);
+  scrollView.on('afterScrollTopChange', self._onScrollMove, self);
   _$jscoverage['/pull-to-refresh.js'].lineData[107]++;
   scrollView.on('touchEnd', self._onDragEnd, self);
   _$jscoverage['/pull-to-refresh.js'].lineData[108]++;

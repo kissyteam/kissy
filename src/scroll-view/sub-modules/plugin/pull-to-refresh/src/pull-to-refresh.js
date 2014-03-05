@@ -31,9 +31,9 @@ KISSY.add(function (S, require) {
             self.elHeight = $el.height();
         },
 
-        _onScrollMove: function () {
+        _onScrollMove: function (e) {
             var self = this,
-                b = self.scrollView.get('scrollTop');
+                b = e.newVal;
             if (-b > self.elHeight) {
                 self.set('state', 'releasing');
             } else if (b < 0) {
@@ -103,7 +103,7 @@ KISSY.add(function (S, require) {
 
         pluginBindUI: function (scrollView) {
             var self = this;
-            scrollView.on('scrollTouchMove', self._onScrollMove, self);
+            scrollView.on('afterScrollTopChange', self._onScrollMove, self);
             scrollView.on('touchEnd', self._onDragEnd, self);
             self.on('afterStateChange', self._onSetState, self);
             scrollView.on('afterScrollTopChange', self._onSetScrollTop, self);

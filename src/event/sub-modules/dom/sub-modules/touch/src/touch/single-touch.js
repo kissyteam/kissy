@@ -3,30 +3,26 @@
  * touch count guard
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S) {
+KISSY.add(function (S, require) {
+    var Touch = require('./touch');
+
     function SingleTouch() {
     }
 
-    SingleTouch.prototype = {
-        constructor: SingleTouch,
+    S.extend(SingleTouch, Touch, {
         requiredTouchCount: 1,
-        onTouchStart: function (e) {
+
+        start: function () {
+            SingleTouch.superclass.start.apply(this, arguments);
             var self = this,
-                touches;
-            if (e.touches.length !== self.requiredTouchCount) {
-                return false;
-            }
-            touches = self.lastTouches = e.touches;
+                touches =self.lastTouches;
             // ios will share touches with touchmove...
             self.lastXY = {
                 pageX: touches[0].pageX,
                 pageY: touches[0].pageY
             };
-            return undefined;
-        },
-        onTouchMove: S.noop,
-        onTouchEnd: S.noop
-    };
+        }
+    });
 
     return SingleTouch;
 });

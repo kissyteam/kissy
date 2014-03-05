@@ -27,25 +27,26 @@ KISSY.add(function (S, require) {
     }
 
     S.extend(Tap, SingleTouch, {
-        onTouchStart: function (e) {
+        start: function (e) {
             var self = this;
-            if (Tap.superclass.onTouchStart.call(self, e) === false) {
-                return false;
-            }
+            Tap.superclass.start.call(self, e);
 
             // tapHold
             if (self.tapHoldTimer) {
                 clearTimeout(self.tapHoldTimer);
             }
+
+            var currentTouch = self.lastTouches[0];
+
             self.tapHoldTimer = setTimeout(function () {
                 var eventObj = S.mix({
-                    touch: e.touches[0],
+                    touch: currentTouch,
                     which: 1,
                     TAP_HOLD_DELAY: (S.now() - e.timeStamp) / 1000
                 }, self.lastXY);
                 self.tapHoldTimer = 0;
                 self.lastXY = 0;
-                DomEvent.fire(e.target, TAP_HOLD_EVENT, eventObj);
+                DomEvent.fire(currentTouch.target, TAP_HOLD_EVENT, eventObj);
             }, TAP_HOLD_DELAY);
 
             // doubleTap and singleTap
@@ -57,13 +58,13 @@ KISSY.add(function (S, require) {
 
             return undefined;
         },
-        onTouchMove: function (e) {
+        move: function () {
             var self = this,
                 lastXY;
             if (!(lastXY = self.lastXY)) {
                 return false;
             }
-            var currentTouch = e.changedTouches[0];
+            var currentTouch = self.lastTouches[0];
             // some TOUCH_MOVE_SENSITIVITY
             // android browser will trigger touchmove event finger is not moved ...
             // ie10 will has no touch when mouse
@@ -75,14 +76,15 @@ KISSY.add(function (S, require) {
             return undefined;
         },
 
-        onTouchEnd: function (e) {
+        end: function (e) {
             var self = this, lastXY;
             // tapHold fired
             if (!(lastXY = self.lastXY)) {
                 return;
             }
-            var target = e.target;
-            var touch = e.changedTouches[0];
+
+            var touch = self.lastTouches[0];
+            var target = touch.target;
 
             // cancel tapHold
             if (self.tapHoldTimer) {

@@ -7,7 +7,6 @@ KISSY.add(function (S, require) {
     var eventHandleMap = require('./handle-map');
     var DomEvent = require('event/dom/base');
     var SingleTouch = require('./single-touch');
-
     var event = 'swipe',
         ingEvent = 'swiping',
         MAX_DURATION = 1000,
@@ -15,7 +14,7 @@ KISSY.add(function (S, require) {
         MIN_DISTANCE = 50;
 
     function fire(self, e, ing) {
-        var touches = e.changedTouches,
+        var touches = self.lastTouches,
             touch = touches[0],
             x = touch.pageX,
             y = touch.pageY,
@@ -59,10 +58,13 @@ KISSY.add(function (S, require) {
             return false;
         }
 
-        DomEvent.fire(e.target, ing ? ingEvent : event, {
+        DomEvent.fire(touch.target, ing ? ingEvent : event, {
             originalEvent: e.originalEvent,
+
             pageX: touch.pageX,
+
             pageY: touch.pageY,
+
             which: 1,
             /**
              *
@@ -108,40 +110,42 @@ KISSY.add(function (S, require) {
     }
 
     S.extend(Swipe, SingleTouch, {
-        onTouchStart: function (e) {
-            var self = this;
-            if (Swipe.superclass.onTouchStart.apply(self, arguments) === false) {
+        start: function (e) {
+            if(!e.isTouch){
                 return false;
             }
-            var touch = e.touches[0];
+
+            var self = this;
+            Swipe.superclass.start.apply(self, arguments);
+            self.isStarted = true;
+
+            var touch = self.lastTouches[0];
             self.startTime = e.timeStamp;
 
             self.isHorizontal = 1;
             self.isVertical = 1;
 
             self.startX = touch.pageX;
-            this.startY = touch.pageY;
-
-            if (e.type.toLowerCase().indexOf('mouse') !== -1) {
-                e.preventDefault();
-            }
-            return undefined;
+            self.startY = touch.pageY;
         },
 
-        onTouchMove: function (e) {
+        move: function (e) {
             var self = this,
-                touch = e.changedTouches[0],
+                time = e.timeStamp;
+
+            Swipe.superclass.move.apply(self, arguments);
+
+            if (time - self.startTime > MAX_DURATION) {
+                return false;
+            }
+
+            var touch = self.lastTouches[0],
                 x = touch.pageX,
                 y = touch.pageY,
                 deltaX = x - self.startX,
                 deltaY = y - self.startY,
                 absDeltaX = Math.abs(deltaX),
-                absDeltaY = Math.abs(deltaY),
-                time = e.timeStamp;
-
-            if (time - self.startTime > MAX_DURATION) {
-                return false;
-            }
+                absDeltaY = Math.abs(deltaY);
 
             if (self.isVertical && absDeltaX > MAX_OFFSET) {
                 self.isVertical = 0;
@@ -154,14 +158,13 @@ KISSY.add(function (S, require) {
             return fire(self, e, 1);
         },
 
-        onTouchEnd: function (e) {
+        end: function (e) {
             var self = this;
-            if (self.onTouchMove(e) === false) {
+            if (self.move(e) === false) {
                 return false;
             }
             return fire(self, e, 0);
         }
-
     });
 
     eventHandleMap[event] = eventHandleMap[ingEvent] = {

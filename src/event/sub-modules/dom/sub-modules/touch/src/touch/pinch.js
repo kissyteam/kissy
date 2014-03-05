@@ -6,8 +6,7 @@
 KISSY.add(function (S, require) {
     var eventHandleMap = require('./handle-map');
     var DomEvent = require('event/dom/base');
-    var MultiTouch = require('./multi-touch');
-
+    var DoubleTouch = require('./double-touch');
     var PINCH = 'pinch',
         PINCH_START = 'pinchStart',
         PINCH_END = 'pinchEnd';
@@ -21,15 +20,13 @@ KISSY.add(function (S, require) {
     function Pinch() {
     }
 
-    S.extend(Pinch, MultiTouch, {
-        onTouchMove: function (e) {
+    S.extend(Pinch, DoubleTouch, {
+        move: function (e) {
             var self = this;
 
-            if (!self.isTracking) {
-                return;
-            }
+            Pinch.superclass.move.apply(self,arguments);
 
-            var touches = e.touches;
+            var touches = self.lastTouches;
 
             // error report in android 2.3
             if (!(touches[0].pageX > 0 && touches[0].pageY > 0 && touches[1].pageX > 0 && touches[1].pageY > 0)) {
@@ -37,8 +34,6 @@ KISSY.add(function (S, require) {
             }
 
             var distance = getDistance(touches[0], touches[1]);
-
-            self.lastTouches = touches;
 
             if (!self.isStarted) {
                 self.isStarted = true;
@@ -58,8 +53,9 @@ KISSY.add(function (S, require) {
             }
         },
 
-        fireEnd: function (e) {
+        end: function (e) {
             var self = this;
+            Pinch.superclass.end.apply(self,arguments);
             DomEvent.fire(self.target, PINCH_END, S.mix(e, {
                 touches: self.lastTouches
             }));

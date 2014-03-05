@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Feb 28 14:04
+build time: Mar 5 22:11
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -21,8 +21,8 @@ KISSY.add("scroll-view/plugin/pull-to-refresh", ["base"], function(S, require) {
     $el.attr("class", prefixCls + "scroll-view-pull-to-refresh " + prefixCls + "scroll-view-" + status);
     self.labelEl.html(self.get(status + "Html"));
     self.elHeight = $el.height()
-  }, _onScrollMove:function() {
-    var self = this, b = self.scrollView.get("scrollTop");
+  }, _onScrollMove:function(e) {
+    var self = this, b = e.newVal;
     if(-b > self.elHeight) {
       self.set("state", "releasing")
     }else {
@@ -66,7 +66,7 @@ KISSY.add("scroll-view/plugin/pull-to-refresh", ["base"], function(S, require) {
     self._onSetState({newValue:"pulling"})
   }, pluginBindUI:function(scrollView) {
     var self = this;
-    scrollView.on("scrollTouchMove", self._onScrollMove, self);
+    scrollView.on("afterScrollTopChange", self._onScrollMove, self);
     scrollView.on("touchEnd", self._onDragEnd, self);
     self.on("afterStateChange", self._onSetState, self);
     scrollView.on("afterScrollTopChange", self._onSetScrollTop, self)

@@ -1,18 +1,20 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Feb 25 19:44
+build time: Mar 5 22:11
 */
 /*
  Combined modules by KISSY Module Compiler: 
 
  event/dom/touch/handle-map
+ event/dom/touch/touch
  event/dom/touch/single-touch
  event/dom/touch/tap
  event/dom/touch/swipe
- event/dom/touch/multi-touch
+ event/dom/touch/double-touch
  event/dom/touch/pinch
  event/dom/touch/rotate
+ event/dom/touch/drag
  event/dom/touch/handle
  event/dom/touch
 */
@@ -20,18 +22,53 @@ build time: Feb 25 19:44
 KISSY.add("event/dom/touch/handle-map", [], function() {
   return{}
 });
-KISSY.add("event/dom/touch/single-touch", [], function(S) {
+KISSY.add("event/dom/touch/touch", [], function(S) {
+  var noop = S.noop;
+  function Touch() {
+  }
+  Touch.prototype = {constructor:Touch, requiredTouchCount:0, onTouchStart:function(e) {
+    var self = this, requiredTouchesCount = self.requiredTouchCount, touches = e.touches, touchesCount = touches.length;
+    if(touchesCount === requiredTouchesCount) {
+      if(!self.isTracking) {
+        self.isTracking = true;
+        self.isStarted = false
+      }
+      self.lastTouches = e.touches;
+      return self.start(e)
+    }else {
+      if(touchesCount > requiredTouchesCount) {
+        self.onTouchEnd(e)
+      }
+    }
+    return undefined
+  }, onTouchMove:function(e) {
+    var self = this;
+    if(!self.isTracking) {
+      return undefined
+    }
+    self.lastTouches = e.touches;
+    return self.move(e)
+  }, onTouchEnd:function(e) {
+    var self = this;
+    if(self.isTracking) {
+      self.isTracking = false;
+      if(self.isStarted) {
+        self.isStarted = false;
+        self.end(e)
+      }
+    }
+  }, start:noop, move:noop, end:noop};
+  return Touch
+});
+KISSY.add("event/dom/touch/single-touch", ["./touch"], function(S, require) {
+  var Touch = require("./touch");
   function SingleTouch() {
   }
-  SingleTouch.prototype = {constructor:SingleTouch, requiredTouchCount:1, onTouchStart:function(e) {
-    var self = this, touches;
-    if(e.touches.length !== self.requiredTouchCount) {
-      return false
-    }
-    touches = self.lastTouches = e.touches;
-    self.lastXY = {pageX:touches[0].pageX, pageY:touches[0].pageY};
-    return undefined
-  }, onTouchMove:S.noop, onTouchEnd:S.noop};
+  S.extend(SingleTouch, Touch, {requiredTouchCount:1, start:function() {
+    SingleTouch.superclass.start.apply(this, arguments);
+    var self = this, touches = self.lastTouches;
+    self.lastXY = {pageX:touches[0].pageX, pageY:touches[0].pageY}
+  }});
   return SingleTouch
 });
 KISSY.add("event/dom/touch/tap", ["./handle-map", "event/dom/base", "./single-touch"], function(S, require) {
@@ -45,19 +82,18 @@ KISSY.add("event/dom/touch/tap", ["./handle-map", "event/dom/base", "./single-to
   function Tap() {
     Tap.superclass.constructor.apply(this, arguments)
   }
-  S.extend(Tap, SingleTouch, {onTouchStart:function(e) {
+  S.extend(Tap, SingleTouch, {start:function(e) {
     var self = this;
-    if(Tap.superclass.onTouchStart.call(self, e) === false) {
-      return false
-    }
+    Tap.superclass.start.call(self, e);
     if(self.tapHoldTimer) {
       clearTimeout(self.tapHoldTimer)
     }
+    var currentTouch = self.lastTouches[0];
     self.tapHoldTimer = setTimeout(function() {
-      var eventObj = S.mix({touch:e.touches[0], which:1, TAP_HOLD_DELAY:(S.now() - e.timeStamp) / 1E3}, self.lastXY);
+      var eventObj = S.mix({touch:currentTouch, which:1, TAP_HOLD_DELAY:(S.now() - e.timeStamp) / 1E3}, self.lastXY);
       self.tapHoldTimer = 0;
       self.lastXY = 0;
-      DomEvent.fire(e.target, TAP_HOLD_EVENT, eventObj)
+      DomEvent.fire(currentTouch.target, TAP_HOLD_EVENT, eventObj)
     }, TAP_HOLD_DELAY);
     self.startTime = e.timeStamp;
     if(self.singleTapTimer) {
@@ -65,23 +101,23 @@ KISSY.add("event/dom/touch/tap", ["./handle-map", "event/dom/base", "./single-to
       self.singleTapTimer = 0
     }
     return undefined
-  }, onTouchMove:function(e) {
+  }, move:function() {
     var self = this, lastXY;
     if(!(lastXY = self.lastXY)) {
       return false
     }
-    var currentTouch = e.changedTouches[0];
+    var currentTouch = self.lastTouches[0];
     if(!currentTouch || Math.abs(currentTouch.pageX - lastXY.pageX) > TOUCH_MOVE_SENSITIVITY || Math.abs(currentTouch.pageY - lastXY.pageY) > TOUCH_MOVE_SENSITIVITY) {
       return false
     }
     return undefined
-  }, onTouchEnd:function(e) {
+  }, end:function(e) {
     var self = this, lastXY;
     if(!(lastXY = self.lastXY)) {
       return
     }
-    var target = e.target;
-    var touch = e.changedTouches[0];
+    var touch = self.lastTouches[0];
+    var target = touch.target;
     if(self.tapHoldTimer) {
       clearTimeout(self.tapHoldTimer);
       self.tapHoldTimer = 0
@@ -125,7 +161,7 @@ KISSY.add("event/dom/touch/swipe", ["./handle-map", "event/dom/base", "./single-
   var SingleTouch = require("./single-touch");
   var event = "swipe", ingEvent = "swiping", MAX_DURATION = 1E3, MAX_OFFSET = 35, MIN_DISTANCE = 50;
   function fire(self, e, ing) {
-    var touches = e.changedTouches, touch = touches[0], x = touch.pageX, y = touch.pageY, deltaX = x - self.startX, deltaY = y - self.startY, absDeltaX = Math.abs(deltaX), absDeltaY = Math.abs(deltaY), distance, direction;
+    var touches = self.lastTouches, touch = touches[0], x = touch.pageX, y = touch.pageY, deltaX = x - self.startX, deltaY = y - self.startY, absDeltaX = Math.abs(deltaX), absDeltaY = Math.abs(deltaY), distance, direction;
     if(ing) {
       if(self.isVertical && self.isHorizontal) {
         if(Math.max(absDeltaX, absDeltaY) < 5) {
@@ -156,31 +192,31 @@ KISSY.add("event/dom/touch/swipe", ["./handle-map", "event/dom/base", "./single-
         return false
       }
     }
-    DomEvent.fire(e.target, ing ? ingEvent : event, {originalEvent:e.originalEvent, pageX:touch.pageX, pageY:touch.pageY, which:1, touch:touch, direction:direction, distance:distance, duration:(e.timeStamp - self.startTime) / 1E3});
+    DomEvent.fire(touch.target, ing ? ingEvent : event, {originalEvent:e.originalEvent, pageX:touch.pageX, pageY:touch.pageY, which:1, touch:touch, direction:direction, distance:distance, duration:(e.timeStamp - self.startTime) / 1E3});
     return undefined
   }
   function Swipe() {
   }
-  S.extend(Swipe, SingleTouch, {onTouchStart:function(e) {
-    var self = this;
-    if(Swipe.superclass.onTouchStart.apply(self, arguments) === false) {
+  S.extend(Swipe, SingleTouch, {start:function(e) {
+    if(!e.isTouch) {
       return false
     }
-    var touch = e.touches[0];
+    var self = this;
+    Swipe.superclass.start.apply(self, arguments);
+    self.isStarted = true;
+    var touch = self.lastTouches[0];
     self.startTime = e.timeStamp;
     self.isHorizontal = 1;
     self.isVertical = 1;
     self.startX = touch.pageX;
-    this.startY = touch.pageY;
-    if(e.type.toLowerCase().indexOf("mouse") !== -1) {
-      e.preventDefault()
-    }
-    return undefined
-  }, onTouchMove:function(e) {
-    var self = this, touch = e.changedTouches[0], x = touch.pageX, y = touch.pageY, deltaX = x - self.startX, deltaY = y - self.startY, absDeltaX = Math.abs(deltaX), absDeltaY = Math.abs(deltaY), time = e.timeStamp;
+    self.startY = touch.pageY
+  }, move:function(e) {
+    var self = this, time = e.timeStamp;
+    Swipe.superclass.move.apply(self, arguments);
     if(time - self.startTime > MAX_DURATION) {
       return false
     }
+    var touch = self.lastTouches[0], x = touch.pageX, y = touch.pageY, deltaX = x - self.startX, deltaY = y - self.startY, absDeltaX = Math.abs(deltaX), absDeltaY = Math.abs(deltaY);
     if(self.isVertical && absDeltaX > MAX_OFFSET) {
       self.isVertical = 0
     }
@@ -188,9 +224,9 @@ KISSY.add("event/dom/touch/swipe", ["./handle-map", "event/dom/base", "./single-
       self.isHorizontal = 0
     }
     return fire(self, e, 1)
-  }, onTouchEnd:function(e) {
+  }, end:function(e) {
     var self = this;
-    if(self.onTouchMove(e) === false) {
+    if(self.move(e) === false) {
       return false
     }
     return fire(self, e, 0)
@@ -198,28 +234,12 @@ KISSY.add("event/dom/touch/swipe", ["./handle-map", "event/dom/base", "./single-
   eventHandleMap[event] = eventHandleMap[ingEvent] = {handle:new Swipe};
   return Swipe
 });
-KISSY.add("event/dom/touch/multi-touch", ["dom"], function(S, require) {
+KISSY.add("event/dom/touch/double-touch", ["dom", "./touch"], function(S, require) {
   var Dom = require("dom");
-  function MultiTouch() {
+  var Touch = require("./touch");
+  function DoubleTouch() {
   }
-  MultiTouch.prototype = {constructor:MultiTouch, requiredTouchCount:2, onTouchStart:function(e) {
-    var self = this, requiredTouchesCount = self.requiredTouchCount, touches = e.touches, touchesCount = touches.length;
-    if(touchesCount === requiredTouchesCount) {
-      self.start()
-    }else {
-      if(touchesCount > requiredTouchesCount) {
-        self.end(e)
-      }
-    }
-  }, onTouchEnd:function(e) {
-    this.end(e)
-  }, start:function() {
-    var self = this;
-    if(!self.isTracking) {
-      self.isTracking = true;
-      self.isStarted = false
-    }
-  }, fireEnd:S.noop, getCommonTarget:function(e) {
+  S.extend(DoubleTouch, Touch, {requiredTouchCount:2, getCommonTarget:function(e) {
     var touches = e.touches, t1 = touches[0].target, t2 = touches[1].target;
     if(t1 === t2) {
       return t1
@@ -235,22 +255,13 @@ KISSY.add("event/dom/touch/multi-touch", ["dom"], function(S, require) {
     }
     S.error("getCommonTarget error!");
     return undefined
-  }, end:function(e) {
-    var self = this;
-    if(self.isTracking) {
-      self.isTracking = false;
-      if(self.isStarted) {
-        self.isStarted = false;
-        self.fireEnd(e)
-      }
-    }
-  }};
-  return MultiTouch
+  }});
+  return DoubleTouch
 });
-KISSY.add("event/dom/touch/pinch", ["./handle-map", "event/dom/base", "./multi-touch"], function(S, require) {
+KISSY.add("event/dom/touch/pinch", ["./handle-map", "event/dom/base", "./double-touch"], function(S, require) {
   var eventHandleMap = require("./handle-map");
   var DomEvent = require("event/dom/base");
-  var MultiTouch = require("./multi-touch");
+  var DoubleTouch = require("./double-touch");
   var PINCH = "pinch", PINCH_START = "pinchStart", PINCH_END = "pinchEnd";
   function getDistance(p1, p2) {
     var deltaX = p1.pageX - p2.pageX, deltaY = p1.pageY - p2.pageY;
@@ -258,17 +269,14 @@ KISSY.add("event/dom/touch/pinch", ["./handle-map", "event/dom/base", "./multi-t
   }
   function Pinch() {
   }
-  S.extend(Pinch, MultiTouch, {onTouchMove:function(e) {
+  S.extend(Pinch, DoubleTouch, {move:function(e) {
     var self = this;
-    if(!self.isTracking) {
-      return
-    }
-    var touches = e.touches;
+    Pinch.superclass.move.apply(self, arguments);
+    var touches = self.lastTouches;
     if(!(touches[0].pageX > 0 && touches[0].pageY > 0 && touches[1].pageX > 0 && touches[1].pageY > 0)) {
       return
     }
     var distance = getDistance(touches[0], touches[1]);
-    self.lastTouches = touches;
     if(!self.isStarted) {
       self.isStarted = true;
       self.startDistance = distance;
@@ -277,8 +285,9 @@ KISSY.add("event/dom/touch/pinch", ["./handle-map", "event/dom/base", "./multi-t
     }else {
       DomEvent.fire(self.target, PINCH, S.mix(e, {distance:distance, scale:distance / self.startDistance}))
     }
-  }, fireEnd:function(e) {
+  }, end:function(e) {
     var self = this;
+    Pinch.superclass.end.apply(self, arguments);
     DomEvent.fire(self.target, PINCH_END, S.mix(e, {touches:self.lastTouches}))
   }});
   var p = new Pinch;
@@ -299,19 +308,17 @@ KISSY.add("event/dom/touch/pinch", ["./handle-map", "event/dom/base", "./multi-t
   }
   return Pinch
 });
-KISSY.add("event/dom/touch/rotate", ["./handle-map", "event/dom/base", "./multi-touch"], function(S, require) {
+KISSY.add("event/dom/touch/rotate", ["./handle-map", "event/dom/base", "./double-touch"], function(S, require) {
   var eventHandleMap = require("./handle-map");
   var DomEvent = require("event/dom/base");
-  var MultiTouch = require("./multi-touch");
+  var DoubleTouch = require("./double-touch");
   var ROTATE_START = "rotateStart", ROTATE = "rotate", RAD_2_DEG = 180 / Math.PI, ROTATE_END = "rotateEnd";
   function Rotate() {
   }
-  S.extend(Rotate, MultiTouch, {onTouchMove:function(e) {
+  S.extend(Rotate, DoubleTouch, {move:function(e) {
     var self = this;
-    if(!self.isTracking) {
-      return
-    }
-    var touches = e.touches, one = touches[0], two = touches[1], lastAngle = self.lastAngle, angle = Math.atan2(two.pageY - one.pageY, two.pageX - one.pageX) * RAD_2_DEG;
+    Rotate.superclass.move.apply(self, arguments);
+    var touches = self.lastTouches, one = touches[0], two = touches[1], lastAngle = self.lastAngle, angle = Math.atan2(two.pageY - one.pageY, two.pageX - one.pageX) * RAD_2_DEG;
     if(lastAngle !== undefined) {
       var diff = Math.abs(angle - lastAngle);
       var positiveAngle = (angle + 360) % 360;
@@ -324,7 +331,6 @@ KISSY.add("event/dom/touch/rotate", ["./handle-map", "event/dom/base", "./multi-
         }
       }
     }
-    self.lastTouches = touches;
     self.lastAngle = angle;
     if(!self.isStarted) {
       self.isStarted = true;
@@ -334,12 +340,10 @@ KISSY.add("event/dom/touch/rotate", ["./handle-map", "event/dom/base", "./multi-
     }else {
       DomEvent.fire(self.target, ROTATE, S.mix(e, {angle:angle, rotation:angle - self.startAngle}))
     }
-  }, end:function() {
+  }, end:function(e) {
     var self = this;
+    Rotate.superclass.end.apply(self, arguments);
     self.lastAngle = undefined;
-    Rotate.superclass.end.apply(self, arguments)
-  }, fireEnd:function(e) {
-    var self = this;
     DomEvent.fire(self.target, ROTATE_END, S.mix(e, {touches:self.lastTouches}))
   }});
   function prevent(e) {
@@ -360,7 +364,76 @@ KISSY.add("event/dom/touch/rotate", ["./handle-map", "event/dom/base", "./multi-
   }
   return Rotate
 });
-KISSY.add("event/dom/touch/handle", ["dom", "./handle-map", "event/dom/base", "./tap", "./swipe", "./pinch", "./rotate"], function(S, require) {
+KISSY.add("event/dom/touch/drag", ["./handle-map", "event/dom/base", "./single-touch"], function(S, require) {
+  var eventHandleMap = require("./handle-map");
+  var DomEvent = require("event/dom/base");
+  var SingleTouch = require("./single-touch");
+  var dragStartEvent = "dragStart", dragEndEvent = "dragEnd", dragEvent = "drag", SAMPLE_INTERVAL = 300, MIN_DISTANCE = 3;
+  function getDistance(p1, p2) {
+    var deltaX = p1.pageX - p2.pageX, deltaY = p1.pageY - p2.pageY;
+    return Math.sqrt(deltaX * deltaX + deltaY * deltaY)
+  }
+  function startDrag(self, e) {
+    var currentTouch = self.lastTouches[0];
+    var startPos = self.startPos;
+    if(getDistance(currentTouch, startPos) > MIN_DISTANCE) {
+      self.isStarted = true;
+      sample(self, e);
+      DomEvent.fire(currentTouch.target, dragStartEvent, getEventObject(self, e))
+    }
+  }
+  function sample(self, e) {
+    var currentTouch = self.lastTouches[0];
+    var currentTime = e.timeStamp;
+    if(currentTime - self.lastTime > SAMPLE_INTERVAL) {
+      self.lastPos = {pageX:currentTouch.pageX, pageY:currentTouch.pageY};
+      self.lastTime = currentTime
+    }
+  }
+  function getEventObject(self, e, ret) {
+    var startPos = self.startPos;
+    ret = ret || {};
+    var currentTouch = self.lastTouches[0];
+    ret.pageX = currentTouch.pageX;
+    ret.pageY = currentTouch.pageY;
+    ret.originalEvent = e.originalEvent;
+    ret.deltaX = currentTouch.pageX - startPos.pageX;
+    ret.deltaY = currentTouch.pageY - startPos.pageY;
+    ret.startTime = self.startTime;
+    ret.startPos = self.startPos;
+    ret.isTouch = e.isTouch;
+    ret.touch = currentTouch;
+    return ret
+  }
+  function Drag() {
+  }
+  S.extend(Drag, SingleTouch, {start:function(e) {
+    var self = this;
+    Drag.superclass.start.apply(self, arguments);
+    var touch = self.lastTouches[0];
+    self.startTime = self.lastTime = e.timeStamp;
+    self.startPos = self.lastPos = {pageX:touch.pageX, pageY:touch.pageY}
+  }, move:function(e) {
+    var self = this;
+    Drag.superclass.move.apply(self, arguments);
+    if(!self.isStarted) {
+      startDrag(self, e)
+    }else {
+      sample(self, e);
+      DomEvent.fire(self.lastTouches[0].target, dragEvent, getEventObject(self, e))
+    }
+  }, end:function(e) {
+    var self = this;
+    var currentTouch = self.lastTouches[0];
+    var currentTime = e.timeStamp;
+    var velocityX = (currentTouch.pageX - self.lastPos.pageX) / (currentTime - self.lastTime);
+    var velocityY = (currentTouch.pageY - self.lastPos.pageY) / (currentTime - self.lastTime);
+    DomEvent.fire(currentTouch.target, dragEndEvent, getEventObject(self, e, {velocityX:velocityX, velocityY:velocityY}))
+  }});
+  eventHandleMap[dragStartEvent] = eventHandleMap[dragEvent] = eventHandleMap[dragEndEvent] = {handle:new Drag};
+  return Drag
+});
+KISSY.add("event/dom/touch/handle", ["dom", "./handle-map", "event/dom/base", "./tap", "./swipe", "./pinch", "./rotate", "./drag"], function(S, require) {
   var Dom = require("dom");
   var eventHandleMap = require("./handle-map");
   var DomEvent = require("event/dom/base");
@@ -368,6 +441,7 @@ KISSY.add("event/dom/touch/handle", ["dom", "./handle-map", "event/dom/base", ".
   require("./swipe");
   require("./pinch");
   require("./rotate");
+  require("./drag");
   var key = S.guid("touch-handle"), Feature = S.Feature, gestureStartEvent, gestureMoveEvent, gestureEndEvent;
   function isTouchEvent(type) {
     return S.startsWith(type, "touch")

@@ -1069,8 +1069,13 @@ function jscoverage_recalculateSourceTab() {
         var relativeUrl = jscoverage_currentFile;
         if (relativeUrl.charAt(0) !== '/')
             relativeUrl = '/' + relativeUrl;
-        if (!jscoverage_isServer)
-            relativeUrl = '../../src' + relativeUrl;
+        if (!jscoverage_isServer) {
+            if (location.pathname.charAt(location.pathname.length - 1) === '/') {
+                relativeUrl = '../../src' + relativeUrl;
+            } else {
+                relativeUrl = '../src' + relativeUrl;
+            }
+        }
         request.open('GET', relativeUrl, true);
         request.setRequestHeader("NoInstrument", "true");
         request.onreadystatechange = function (event) {

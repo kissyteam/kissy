@@ -6,7 +6,7 @@
 KISSY.add(function (S, require) {
     var eventHandleMap = require('./handle-map');
     var DomEvent = require('event/dom/base');
-    var MultiTouch = require('./multi-touch');
+    var DoubleTouch = require('./double-touch');
     var ROTATE_START = 'rotateStart',
         ROTATE = 'rotate',
         RAD_2_DEG = 180 / Math.PI,
@@ -15,15 +15,11 @@ KISSY.add(function (S, require) {
     function Rotate() {
     }
 
-    S.extend(Rotate, MultiTouch, {
-        onTouchMove: function (e) {
+    S.extend(Rotate, DoubleTouch, {
+        move: function (e) {
             var self = this;
-
-            if (!self.isTracking) {
-                return;
-            }
-
-            var touches = e.touches,
+            Rotate.superclass.move.apply(self, arguments);
+            var touches = self.lastTouches,
                 one = touches[0],
                 two = touches[1],
                 lastAngle = self.lastAngle,
@@ -48,7 +44,6 @@ KISSY.add(function (S, require) {
                 }
             }
 
-            self.lastTouches = touches;
             self.lastAngle = angle;
 
             if (!self.isStarted) {
@@ -71,14 +66,10 @@ KISSY.add(function (S, require) {
             }
         },
 
-        end: function () {
+        end: function (e) {
             var self = this;
-            self.lastAngle = undefined;
             Rotate.superclass.end.apply(self, arguments);
-        },
-
-        fireEnd: function (e) {
-            var self = this;
+            self.lastAngle = undefined;
             DomEvent.fire(self.target, ROTATE_END, S.mix(e, {
                 touches: self.lastTouches
             }));

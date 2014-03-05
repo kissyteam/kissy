@@ -226,50 +226,97 @@ catch (e) {}
 if (! this._$jscoverage) {
   this._$jscoverage = {};
 }
-if (! _$jscoverage['/touch/single-touch.js']) {
-  _$jscoverage['/touch/single-touch.js'] = {};
-  _$jscoverage['/touch/single-touch.js'].lineData = [];
-  _$jscoverage['/touch/single-touch.js'].lineData[6] = 0;
-  _$jscoverage['/touch/single-touch.js'].lineData[7] = 0;
-  _$jscoverage['/touch/single-touch.js'].lineData[9] = 0;
-  _$jscoverage['/touch/single-touch.js'].lineData[12] = 0;
-  _$jscoverage['/touch/single-touch.js'].lineData[16] = 0;
-  _$jscoverage['/touch/single-touch.js'].lineData[17] = 0;
-  _$jscoverage['/touch/single-touch.js'].lineData[20] = 0;
-  _$jscoverage['/touch/single-touch.js'].lineData[27] = 0;
+if (! _$jscoverage['/touch/double-touch.js']) {
+  _$jscoverage['/touch/double-touch.js'] = {};
+  _$jscoverage['/touch/double-touch.js'].lineData = [];
+  _$jscoverage['/touch/double-touch.js'].lineData[6] = 0;
+  _$jscoverage['/touch/double-touch.js'].lineData[7] = 0;
+  _$jscoverage['/touch/double-touch.js'].lineData[8] = 0;
+  _$jscoverage['/touch/double-touch.js'].lineData[10] = 0;
+  _$jscoverage['/touch/double-touch.js'].lineData[13] = 0;
+  _$jscoverage['/touch/double-touch.js'].lineData[17] = 0;
+  _$jscoverage['/touch/double-touch.js'].lineData[20] = 0;
+  _$jscoverage['/touch/double-touch.js'].lineData[21] = 0;
+  _$jscoverage['/touch/double-touch.js'].lineData[23] = 0;
+  _$jscoverage['/touch/double-touch.js'].lineData[24] = 0;
+  _$jscoverage['/touch/double-touch.js'].lineData[27] = 0;
+  _$jscoverage['/touch/double-touch.js'].lineData[28] = 0;
+  _$jscoverage['/touch/double-touch.js'].lineData[29] = 0;
+  _$jscoverage['/touch/double-touch.js'].lineData[31] = 0;
+  _$jscoverage['/touch/double-touch.js'].lineData[33] = 0;
+  _$jscoverage['/touch/double-touch.js'].lineData[34] = 0;
+  _$jscoverage['/touch/double-touch.js'].lineData[38] = 0;
 }
-if (! _$jscoverage['/touch/single-touch.js'].functionData) {
-  _$jscoverage['/touch/single-touch.js'].functionData = [];
-  _$jscoverage['/touch/single-touch.js'].functionData[0] = 0;
-  _$jscoverage['/touch/single-touch.js'].functionData[1] = 0;
-  _$jscoverage['/touch/single-touch.js'].functionData[2] = 0;
+if (! _$jscoverage['/touch/double-touch.js'].functionData) {
+  _$jscoverage['/touch/double-touch.js'].functionData = [];
+  _$jscoverage['/touch/double-touch.js'].functionData[0] = 0;
+  _$jscoverage['/touch/double-touch.js'].functionData[1] = 0;
+  _$jscoverage['/touch/double-touch.js'].functionData[2] = 0;
 }
-if (! _$jscoverage['/touch/single-touch.js'].branchData) {
-  _$jscoverage['/touch/single-touch.js'].branchData = {};
+if (! _$jscoverage['/touch/double-touch.js'].branchData) {
+  _$jscoverage['/touch/double-touch.js'].branchData = {};
+  _$jscoverage['/touch/double-touch.js'].branchData['20'] = [];
+  _$jscoverage['/touch/double-touch.js'].branchData['20'][1] = new BranchData();
+  _$jscoverage['/touch/double-touch.js'].branchData['23'] = [];
+  _$jscoverage['/touch/double-touch.js'].branchData['23'][1] = new BranchData();
+  _$jscoverage['/touch/double-touch.js'].branchData['28'] = [];
+  _$jscoverage['/touch/double-touch.js'].branchData['28'][1] = new BranchData();
 }
-_$jscoverage['/touch/single-touch.js'].lineData[6]++;
+_$jscoverage['/touch/double-touch.js'].branchData['28'][1].init(21, 20, 'Dom.contains(t2, t1)');
+function visit3_28_1(result) {
+  _$jscoverage['/touch/double-touch.js'].branchData['28'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/touch/double-touch.js'].branchData['23'][1].init(204, 20, 'Dom.contains(t1, t2)');
+function visit2_23_1(result) {
+  _$jscoverage['/touch/double-touch.js'].branchData['23'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/touch/double-touch.js'].branchData['20'][1].init(134, 9, 't1 === t2');
+function visit1_20_1(result) {
+  _$jscoverage['/touch/double-touch.js'].branchData['20'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/touch/double-touch.js'].lineData[6]++;
 KISSY.add(function(S, require) {
-  _$jscoverage['/touch/single-touch.js'].functionData[0]++;
-  _$jscoverage['/touch/single-touch.js'].lineData[7]++;
+  _$jscoverage['/touch/double-touch.js'].functionData[0]++;
+  _$jscoverage['/touch/double-touch.js'].lineData[7]++;
+  var Dom = require('dom');
+  _$jscoverage['/touch/double-touch.js'].lineData[8]++;
   var Touch = require('./touch');
-  _$jscoverage['/touch/single-touch.js'].lineData[9]++;
-  function SingleTouch() {
-    _$jscoverage['/touch/single-touch.js'].functionData[1]++;
+  _$jscoverage['/touch/double-touch.js'].lineData[10]++;
+  function DoubleTouch() {
+    _$jscoverage['/touch/double-touch.js'].functionData[1]++;
   }
-  _$jscoverage['/touch/single-touch.js'].lineData[12]++;
-  S.extend(SingleTouch, Touch, {
-  requiredTouchCount: 1, 
-  start: function() {
-  _$jscoverage['/touch/single-touch.js'].functionData[2]++;
-  _$jscoverage['/touch/single-touch.js'].lineData[16]++;
-  SingleTouch.superclass.start.apply(this, arguments);
-  _$jscoverage['/touch/single-touch.js'].lineData[17]++;
-  var self = this, touches = self.lastTouches;
-  _$jscoverage['/touch/single-touch.js'].lineData[20]++;
-  self.lastXY = {
-  pageX: touches[0].pageX, 
-  pageY: touches[0].pageY};
+  _$jscoverage['/touch/double-touch.js'].lineData[13]++;
+  S.extend(DoubleTouch, Touch, {
+  requiredTouchCount: 2, 
+  getCommonTarget: function(e) {
+  _$jscoverage['/touch/double-touch.js'].functionData[2]++;
+  _$jscoverage['/touch/double-touch.js'].lineData[17]++;
+  var touches = e.touches, t1 = touches[0].target, t2 = touches[1].target;
+  _$jscoverage['/touch/double-touch.js'].lineData[20]++;
+  if (visit1_20_1(t1 === t2)) {
+    _$jscoverage['/touch/double-touch.js'].lineData[21]++;
+    return t1;
+  }
+  _$jscoverage['/touch/double-touch.js'].lineData[23]++;
+  if (visit2_23_1(Dom.contains(t1, t2))) {
+    _$jscoverage['/touch/double-touch.js'].lineData[24]++;
+    return t1;
+  }
+  _$jscoverage['/touch/double-touch.js'].lineData[27]++;
+  while (1) {
+    _$jscoverage['/touch/double-touch.js'].lineData[28]++;
+    if (visit3_28_1(Dom.contains(t2, t1))) {
+      _$jscoverage['/touch/double-touch.js'].lineData[29]++;
+      return t2;
+    }
+    _$jscoverage['/touch/double-touch.js'].lineData[31]++;
+    t2 = t2.parentNode;
+  }
+  _$jscoverage['/touch/double-touch.js'].lineData[33]++;
+  S.error('getCommonTarget error!');
+  _$jscoverage['/touch/double-touch.js'].lineData[34]++;
+  return undefined;
 }});
-  _$jscoverage['/touch/single-touch.js'].lineData[27]++;
-  return SingleTouch;
+  _$jscoverage['/touch/double-touch.js'].lineData[38]++;
+  return DoubleTouch;
 });
