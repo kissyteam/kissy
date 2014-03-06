@@ -346,6 +346,35 @@ describe('kissy.js', function () {
         expect(c.nul).toBe('oops');
         expect(c.undef).toBe('oops');
         expect(c.str).toBe('oops');
+
+        function CreateObj() {
+            this.test = true;
+            this.length = 1;
+        }
+        CreateObj.prototype.getTest = function() {
+            return this.test;
+        };
+        var d = new CreateObj(),
+            e = {
+                'bool': 'oops',
+                'num': 'oops',
+                'nul': 'oops',
+                'undef': 'oops',
+                'str': 'oops',
+                'test' : false,
+                'length' : 2
+            };
+
+        var f = S.merge(d, e);
+
+        expect(f.bool).toBe('oops');
+        expect(f.num).toBe('oops');
+        expect(f.nul).toBe('oops');
+        expect(f.undef).toBe('oops');
+        expect(f.str).toBe('oops');
+        expect(f.test).toBe(false);
+        expect(f.length).toBe(2);
+        expect(f.getTest()).toBe(false);
     });
 
     it('S.augment', function () {
