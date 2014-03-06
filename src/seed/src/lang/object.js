@@ -139,7 +139,7 @@
          */
         merge: function (var_args) {
             var_args = S.makeArray(arguments);
-            var o = {},
+            var o = S.clone(varArgs[0]),
                 i,
                 l = var_args.length;
             for (i = 0; i < l; i++) {
