@@ -32,7 +32,7 @@ KISSY.add(function (S, Base) {
             a.addAttr('attr1', {
                 value: 1,
                 setter: function (v) {
-                    return parseInt(v);
+                    return parseInt(v,10);
                 }
             });
             expect(a.get('attr1')).toBe(1);
@@ -158,15 +158,15 @@ KISSY.add(function (S, Base) {
 
             a.get('a');
 
-            expect(a['__attrVals']['a']).toBe(9);
+            expect(a.__attrVals.a).toBe(9);
 
-            expect(a['__attrs']['a'].value).toBe(9);
+            expect(a.__attrs.a.value).toBe(9);
 
             a.set('a', 7);
 
-            expect(a['__attrVals']['a']).toBe(7);
+            expect(a.__attrVals.a).toBe(7);
 
-            expect(a['__attrs']['a'].value).toBe(9);
+            expect(a.__attrs.a.value).toBe(9);
         });
     });
 }, {

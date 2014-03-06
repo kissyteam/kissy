@@ -3,6 +3,7 @@
  * @author yiminghe@gmail.com
  **/
 KISSY.add(function (S, UA, Json, io, Node) {
+    /*jshint quotmark:false*/
     var $ = Node.all;
     var pageUri = new S.Uri(location.href);
 
@@ -168,7 +169,7 @@ KISSY.add(function (S, UA, Json, io, Node) {
         it("should jsonp with array arguments", function () {
             var re = false, data;
 
-            io.jsonp("/kissy/src/io/tests/data/jsonp-array.jss", function (d, status, xhr) {
+            io.jsonp("/kissy/src/io/tests/data/jsonp-array.jss", function (d) {
                 re = true;
                 data = d;
             });
@@ -189,15 +190,12 @@ KISSY.add(function (S, UA, Json, io, Node) {
                 url: '/kissy/src/io/tests/data/io.jss',
                 cache: false,
                 success: function (data, status) {
-                    var args = S.makeArray(arguments);
                     re.push(status);
                 },
                 error: function (data, status) {
-                    var args = S.makeArray(arguments);
                     re.push(status);
                 },
                 complete: function (data, status) {
-                    var args = S.makeArray(arguments);
                     re.push(status);
                 }
             });
@@ -220,15 +218,12 @@ KISSY.add(function (S, UA, Json, io, Node) {
                 cache: false,
                 success: function (data, status) {
                     ok = true;
-                    var args = S.makeArray(arguments);
                     re.push(status);
                 },
                 error: function (data, status) {
-                    var args = S.makeArray(arguments);
                     re.push(status);
                 },
                 complete: function (data, status) {
-                    var args = S.makeArray(arguments);
                     re.push(status);
                 }
             });
@@ -251,20 +246,17 @@ KISSY.add(function (S, UA, Json, io, Node) {
             var re = [];
 
             var xhr = io({
-                forceScript: !(UA.ie == 6),
+                forceScript: UA.ie !== 6,
                 dataType: 'jsonp',
                 url: '/kissy/src/io/tests/data/jsonp.jss',
                 cache: false,
                 success: function (data, status) {
-                    var args = S.makeArray(arguments);
                     re.push(status);
                 },
                 error: function (data, status) {
                     re.push(status);
-                    var args = S.makeArray(arguments);
                 },
                 complete: function (data, status) {
-                    var args = S.makeArray(arguments);
                     re.push(status);
                 }
             });
@@ -283,20 +275,17 @@ KISSY.add(function (S, UA, Json, io, Node) {
             var re = [], ok;
 
             var xhr = io({
-                forceScript: !(UA.ie == 6),
+                forceScript: UA.ie !== 6,
                 url: '/kissy/src/io/tests/data/io.jss',
                 cache: false,
                 success: function (data, status) {
                     ok = true;
-                    var args = S.makeArray(arguments);
                     re.push(status);
                 },
                 error: function (data, status) {
-                    var args = S.makeArray(arguments);
                     re.push(status);
                 },
                 complete: function (data, status) {
-                    var args = S.makeArray(arguments);
                     re.push(status);
                 }
             });
@@ -316,24 +305,21 @@ KISSY.add(function (S, UA, Json, io, Node) {
 
         it("timeout should work for xhr", function () {
             var re = [], ok;
-            var xhr = io({
+            io({
                 url: '/kissy/src/io/tests/data/io.jss',
                 // ie 默认会缓存，可能直接触发 success
                 // fiddler 看不到请求，自带网络捕获为 304
                 cache: false,
                 dataType: 'json',
                 timeout: 0.01,
-                success: function (d, status, r) {
-                    var args = S.makeArray(arguments);
+                success: function (d, status) {
                     re.push(status);
                 },
                 error: function (data, status) {
-                    var args = S.makeArray(arguments);
                     re.push(status);
                 },
                 complete: function (data, status) {
                     ok = true;
-                    var args = S.makeArray(arguments);
                     re.push(status);
                 }
             });
@@ -378,7 +364,7 @@ KISSY.add(function (S, UA, Json, io, Node) {
                     d = data;
                 },
                 complete: function () {
-                    ok = true
+                    ok = true;
                 }
             });
 
@@ -422,7 +408,7 @@ KISSY.add(function (S, UA, Json, io, Node) {
                     d = data;
                 },
                 complete: function () {
-                    ok = true
+                    ok = true;
                 }
             });
 

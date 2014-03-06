@@ -21,15 +21,15 @@ KISSY.add(function (S, engine, Dom) {
             index++;
             it(s, function () {
                 var node = null;
-                jQuery.ajax({
+                window.jQuery.ajax({
                     url: '../specs/data/h' + index + '.html',
                     async: false,
                     success: function (data) {
-                        node = jQuery(data).appendTo('body');
+                        node = window.jQuery(data).appendTo('body');
                     }
                 });
                 var context = document.getElementById('hard' + index);
-                expect(select(s, context)).toEqual(Sizzle(s, context));
+                expect(select(s, context)).toEqual(window.Sizzle(s, context));
                 node.remove();
             });
         });

@@ -3,9 +3,12 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, engine) {
+    /*jshint quotmark:false*/
     var select = engine.select;
     var matches = engine.matches;
     var ieVersion = S.UA.ie;
+    var jQuery = window.jQuery;
+    var sizzle = window.Sizzle;
 
     var it = function (name, fn) {
         var self;
@@ -16,12 +19,12 @@ KISSY.add(function (S, engine) {
     };
 
     function matchesSelector(el, selector) {
-        return matches(selector, [el]).length == 1;
+        return matches(selector, [el]).length === 1;
     }
 
     function ok(a, name) {
         it(name, function () {
-            if (typeof a == 'function') {
+            if (typeof a === 'function') {
                 a = a();
             }
             expect(a).toBeTruthy();
@@ -87,44 +90,29 @@ KISSY.add(function (S, engine) {
 
     function equal(a, b, name) {
         it(name, function () {
-            if (typeof a == 'function') {
+            if (typeof a === 'function') {
                 a = a();
             }
-            if (typeof b == 'function') {
+            if (typeof b === 'function') {
                 b = b();
             }
             expect(a).toEqual(b);
         });
     }
 
-    var createWithFriesXML = function () {
-        var string = '<?xml version="1.0" encoding="UTF-8"?> \
-	<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" \
-		xmlns:xsd="http://www.w3.org/2001/XMLSchema" \
-		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"> \
-		<soap:Body> \
-			<jsconf xmlns="http://www.example.com/ns1"> \
-				<response xmlns:ab="http://www.example.com/ns2"> \
-					<meta> \
-						<component id="seite1" class="component"> \
-							<properties xmlns:cd="http://www.example.com/ns3"> \
-								<property name="prop1"> \
-									<thing /> \
-									<value>1</value> \
-								</property> \
-								<property name="prop2"> \
-									<thing att="something" /> \
-								</property> \
-								<foo_bar>foo</foo_bar> \
-							</properties> \
-						</component> \
-					</meta> \
-				</response> \
-			</jsconf> \
-		</soap:Body> \
-	</soap:Envelope>';
+    var xml = '';
 
-        return jQuery.parseXML(string);
+    window.$.ajax({
+        url: '../specs/data/xml.xml',
+        dataType: 'text',
+        async: false,
+        success: function (d) {
+            xml = d;
+        }
+    });
+
+    var createWithFriesXML = function () {
+        return jQuery.parseXML(xml);
     };
 
     describe("element", function () {
@@ -143,7 +131,7 @@ KISSY.add(function (S, engine) {
         it('Select all elements, no comment nodes', function () {
             var all = select("*"), good = true;
             for (var i = 0; i < all.length; i++) {
-                if (all[i].nodeType == 8) {
+                if (all[i].nodeType === 8) {
                     good = false;
                 }
             }
@@ -311,12 +299,11 @@ KISSY.add(function (S, engine) {
         broken("Attribute not escaped", "input[name=foo.baz]");
         broken("Attribute not escaped", "input[name=foo[baz]]");
         it('', function () {
-            a.remove()
+            a.remove();
         });
     });
 
     describe("id", function () {
-
         t("ID Selector", "#body", ["body"]);
         t("ID Selector w/ Element", "body#body", ["body"]);
         t("ID Selector w/ Element", "ul#first", []);
@@ -568,7 +555,7 @@ KISSY.add(function (S, engine) {
 
     describe("attributes", function () {
 
-        var opt, input, attrbad, div;
+        var opt, input, div;
 
         t("Attribute Exists1", "#qunit-fixture a[title]", ["google"]);
         t("Attribute Exists2 (case-insensitive)", "#qunit-fixture a[TITLE]", ["google"]);
@@ -772,7 +759,7 @@ KISSY.add(function (S, engine) {
 
         it("Nth-of-type(-n+2)", function () {
             expect(select("#qunit-fixture > :nth-of-type(-n+2)", null, select('#qunit-fixture > *')))
-                .toEqual(S.makeArray(Sizzle("#qunit-fixture > :nth-of-type(-n+2)")));
+                .toEqual(S.makeArray(sizzle("#qunit-fixture > :nth-of-type(-n+2)")));
         });
 
     });
@@ -928,14 +915,13 @@ KISSY.add(function (S, engine) {
             testLang = function (text, elem, container, lang, extra) {
 
                 it(lang + "-" + extra, function () {
-                    if (typeof elem == 'function') {
+                    if (typeof elem === 'function') {
                         elem = elem();
                     }
-                    if (typeof container == 'function') {
+                    if (typeof container === 'function') {
                         container = container();
                     }
                     var message,
-                        cur = elem,
                         full = lang + "-" + extra;
 
                     var isXML = container.ownerDocument.documentElement.nodeName.toUpperCase() !== "HTML";
@@ -993,7 +979,7 @@ KISSY.add(function (S, engine) {
                 }
                 expect(r).toBe(true);
                 if (!r) {
-                    S.log('error:' + text + " should match " + selector)
+                    S.log('error:' + text + " should match " + selector);
                 }
 
             },
@@ -1001,7 +987,7 @@ KISSY.add(function (S, engine) {
                 var r = matchesSelector(elem, selector);
                 expect(r).toBe(false);
                 if (r) {
-                    S.log('error:' + text + " should fail " + selector)
+                    S.log('error:' + text + " should fail " + selector);
                 }
             };
 
@@ -1011,29 +997,29 @@ KISSY.add(function (S, engine) {
         }, "starting :lang");
 
         testLang("document", function () {
-            return anchor
+            return anchor;
         }, docElem, "en", "us");
 
         testLang("grandparent", function () {
-                return anchor
+                return anchor;
             },
             function () {
-                return anchor.parentNode.parentNode
+                return anchor.parentNode.parentNode;
             }, "yue", "hk");
 
         ok(function () {
-                return !matchesSelector(anchor, ":lang(en), :lang(en-us)")
+                return !matchesSelector(anchor, ":lang(en), :lang(en-us)");
             },
             ":lang does not look above an ancestor with specified lang");
 
         testLang("self", function () {
-            return anchor
+            return anchor;
         }, function () {
-            return anchor
+            return anchor;
         }, "es", "419");
 
         ok(function () {
-                return !matchesSelector(anchor, ":lang(en), :lang(en-us), :lang(yue), :lang(yue-hk)")
+                return !matchesSelector(anchor, ":lang(en), :lang(en-us), :lang(yue), :lang(yue-hk)");
             },
             ":lang does not look above self with specified lang");
 
@@ -1045,7 +1031,7 @@ KISSY.add(function (S, engine) {
         });
 
         equal(function () {
-            return select(":lang(ara)", foo)
+            return select(":lang(ara)", foo);
         }, [ anchor.parentNode, anchor ], "Find by :lang");
 
         it('', function () {
@@ -1055,16 +1041,16 @@ KISSY.add(function (S, engine) {
         });
 
         equal(function () {
-            return select(":lang(ara\\b)", foo)
+            return select(":lang(ara\\b)", foo);
         }, [], ":lang respects backslashes");
         equal(function () {
-                return select(":lang(ara\\\\b)", foo)
+                return select(":lang(ara\\\\b)", foo);
             }, [ anchor ],
             ":lang respects escaped backslashes");
 
         it(":lang value must be a valid identifier", function () {
             try {
-                select("dl:lang(c++)")
+                select("dl:lang(c++)");
             } catch (e) {
                 expect(e.message.indexOf("Syntax error")).toBeGreaterThan(-1);
             }
@@ -1078,31 +1064,31 @@ KISSY.add(function (S, engine) {
         });
 
         testLang("XML document", function () {
-            return anchor
+            return anchor;
         }, xml.documentElement, "en", "us");
         testLang("XML grandparent", function () {
-            return anchor
+            return anchor;
         }, function () {
-            return foo
+            return foo;
         }, "yue", "hk");
 
         ok(function () {
-                return !matchesSelector(anchor, ":lang(en), :lang(en-us)")
+                return !matchesSelector(anchor, ":lang(en), :lang(en-us)");
             },
             "XML :lang does not look above an ancestor with specified lang");
         testLang("XML self", function () {
-            return anchor
+            return anchor;
         }, function () {
-            return anchor
+            return anchor;
         }, "es", "419");
         ok(function () {
-                return !matchesSelector(anchor, ":lang(en), :lang(en-us), :lang(yue), :lang(yue-hk)")
+                return !matchesSelector(anchor, ":lang(en), :lang(en-us), :lang(yue), :lang(yue-hk)");
             },
             "XML :lang does not look above self with specified lang");
 
         it('', function () {
             // Cleanup
-            if (docXmlLang == null) {
+            if (docXmlLang === null) {
                 docElem.removeAttribute("xml:lang");
             } else {
                 docElem.setAttribute("xml:lang", docXmlLang);

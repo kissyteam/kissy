@@ -3,6 +3,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, Dom, Event) {
+    /*jshint quotmark:false*/
     describe("submit event", function () {
 
         var div,

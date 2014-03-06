@@ -3,8 +3,8 @@
  *  @author yiminghe@gmail.com
  */
 KISSY.add(function (S, Base) {
-    describe("complex attr", function () {
-        it("can merge property value object from parent class", function () {
+    describe('complex attr', function () {
+        it('can merge property value object from parent class', function () {
             var A = Base.extend({}, {
                 ATTRS: {
                     x: {
@@ -28,7 +28,7 @@ KISSY.add(function (S, Base) {
             expect(t.get('x')).toBe(1);
         });
 
-        it("support validator", function () {
+        it('support validator', function () {
             var A = Base.extend({}, {
                 ATTRS: {
                     tt: {
@@ -41,16 +41,16 @@ KISSY.add(function (S, Base) {
 
             var t = new A();
 
-            expect(t.set("tt", 10)).not.toBe(false);
+            expect(t.set('tt', 10)).not.toBe(false);
 
-            expect(t.get("tt")).toBe(10);
+            expect(t.get('tt')).toBe(10);
 
-            expect(t.set("tt", 0)).toBe(false);
+            expect(t.set('tt', 0)).toBe(false);
 
-            expect(t.get("tt")).toBe(10);
+            expect(t.get('tt')).toBe(10);
         });
 
-        it("support validators", function () {
+        it('support validators', function () {
 
             var validatorCalled = 0;
 
@@ -59,15 +59,15 @@ KISSY.add(function (S, Base) {
                     tt: {
                         validator: function (v, name, all) {
                             validatorCalled++;
-                            if (all && (v > all["t"])) {
-                                return "tt>t!";
+                            if (all && (v > all.t)) {
+                                return 'tt>t!';
                             }
                         }
                     },
                     t: {
                         validator: function (v) {
                             if (v < 0) {
-                                return "t<0!";
+                                return 't<0!';
                             }
                         }
                     }
@@ -79,14 +79,14 @@ KISSY.add(function (S, Base) {
                 e1;
 
             validatorCalled = 0;
-            expect(t.set("t", -1, {
+            expect(t.set('t', -1, {
                 error: function (v) {
                     e1 = v;
                 }
             })).toBe(false);
             expect(validatorCalled).toBe(0);
-            expect(e1).toBe("t<0!");
-            expect(t.get("t")).not.toBe(-1);
+            expect(e1).toBe('t<0!');
+            expect(t.get('t')).not.toBe(-1);
 
             var e2;
 
@@ -100,9 +100,9 @@ KISSY.add(function (S, Base) {
                 }
             })).toBe(false);
             expect(validatorCalled).toBe(1);
-            expect(e2.sort()).toEqual(["t<0!", "tt>t!"].sort());
-            expect(t.get("t")).not.toBe(-1);
-            expect(t.get("tt")).not.toBe(2);
+            expect(e2.sort()).toEqual(['t<0!', 'tt>t!'].sort());
+            expect(t.get('t')).not.toBe(-1);
+            expect(t.get('tt')).not.toBe(2);
 
             var e3;
             expect(t.set({
@@ -115,11 +115,11 @@ KISSY.add(function (S, Base) {
             })).not.toBe(false);
 
             expect(e3).toBeUndefined();
-            expect(t.get("t")).toBe(4);
-            expect(t.get("tt")).toBe(3);
+            expect(t.get('t')).toBe(4);
+            expect(t.get('tt')).toBe(3);
         });
 
-        it("support sub attribute name", function () {
+        it('support sub attribute name', function () {
             var A = Base.extend({}, {
                 ATTRS: {
                     tt: {
@@ -147,42 +147,42 @@ KISSY.add(function (S, Base) {
 
             var ret = [];
 
-            t.on("beforeTtChange", function (e) {
+            t.on('beforeTtChange', function (e) {
                 ret.push(e.prevVal.x.y);
                 ret.push(e.newVal.x.y);
             });
 
-            t.on("afterTtChange", function (e) {
+            t.on('afterTtChange', function (e) {
                 ret.push(e.prevVal.x.y);
                 ret.push(e.newVal.x.y);
             });
 
             // only can when tt is  a object (not custom object newed from custom clz)
-            expect(t.get("tt.x.y")).toBe(2);
+            expect(t.get('tt.x.y')).toBe(2);
 
             expect(t.__getter).toBe(1);
 
-            t.set("tt.x.y", 3);
+            t.set('tt.x.y', 3);
             t.__getter = 0;
-            expect(t.get("tt.x.y")).toBe(4);
+            expect(t.get('tt.x.y')).toBe(4);
             expect(t.__getter).toBe(1);
 
             expect(ret).toEqual([2, 3, 2, 4]);
         });
 
-        it("set sub attr even if not exist attr", function () {
+        it('set sub attr even if not exist attr', function () {
             var A = Base.extend();
 
             var a = new A();
 
-            a.set("x.y", 1);
+            a.set('x.y', 1);
 
             expect(a.get('x')).toEqual({y: 1});
 
-            expect(a.get("x.y")).toBe(1);
+            expect(a.get('x.y')).toBe(1);
         });
 
-        it("validator works for subAttrs", function () {
+        it('validator works for subAttrs', function () {
             (function () {
                 var A = Base.extend({}, {
                     ATTRS: {
@@ -229,60 +229,60 @@ KISSY.add(function (S, Base) {
 
                 var a = new A();
 
-                a.set("x.y", 20);
+                a.set('x.y', 20);
 
-                expect(a.get("x.y")).toBe(20);
+                expect(a.get('x.y')).toBe(20);
 
                 a = new A();
 
                 a.set({
-                    "x.y": 20
+                    'x.y': 20
                 });
 
-                expect(a.get("x.y")).toBe(20);
+                expect(a.get('x.y')).toBe(20);
 
-                a.set({"x.y": 9});
+                a.set({'x.y': 9});
 
-                expect(a.get("x.y")).toBe(20);
+                expect(a.get('x.y')).toBe(20);
             })();
         });
 
-        it("should fire *Change once for set({})", function () {
+        it('should fire *Change once for set({})', function () {
             var A = Base.extend();
 
             var aa = new A({x: 1, y: {z: 1}}),
                 ok = 0,
                 afterAttrChange = {};
 
-            aa.on("*Change", function (e) {
+            aa.on('*Change', function (e) {
                 expect(e.newVal).toEqual([11, {z: 22}]);
                 expect(e.prevVal).toEqual([1, {z: 1}]);
                 expect(e.attrName).toEqual(['x', 'y']);
-                expect(e.subAttrName).toEqual(['x', "y.z"]);
+                expect(e.subAttrName).toEqual(['x', 'y.z']);
                 ok++;
             });
-            aa.on("afterXChange", function (e) {
+            aa.on('afterXChange', function (e) {
                 expect(e.attrName).toBe('x');
                 expect(e.newVal).toBe(11);
                 expect(e.prevVal).toBe(1);
                 expect(e.subAttrName).toBe('x');
                 afterAttrChange.x = 1;
             });
-            aa.on("afterYChange", function (e) {
+            aa.on('afterYChange', function (e) {
                 expect(e.attrName).toBe('y');
                 expect(e.newVal).toEqual({z: 22});
                 expect(e.prevVal).toEqual({z: 1});
-                expect(e.subAttrName).toBe("y.z");
+                expect(e.subAttrName).toBe('y.z');
                 afterAttrChange.y = 1;
             });
 
             aa.set({
                 x: 11,
-                "y.z": 22
+                'y.z': 22
             });
 
             expect(aa.get('x')).toBe(11);
-            expect(aa.get("y.z")).toBe(22);
+            expect(aa.get('y.z')).toBe(22);
             expect(ok).toBe(1);
 
             expect(afterAttrChange.x).toBe(1);

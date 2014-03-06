@@ -3,9 +3,9 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, Dom, Event) {
+    /*jshint quotmark:false*/
 
     S.get = Dom.get;
-    var DomEventUtils= S.require('event/dom/base/utils');
     S.query = Dom.query;
 
     describe('delegate-advanced', function () {

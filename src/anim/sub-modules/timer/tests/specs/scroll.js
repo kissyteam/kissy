@@ -3,26 +3,25 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, Dom, Anim) {
-
-    describe("anim-scroll", function () {
+    describe('anim-scroll', function () {
 
         beforeEach(function () {
             this.addMatchers({
                 toBeAlmostEqual: function (expected) {
-                    return Math.abs(parseInt(this.actual) - parseInt(expected)) < 20;
+                    return Math.abs(parseInt(this.actual, 10) - parseInt(expected, 10)) < 20;
                 },
 
 
                 toBeEqual: function (expected) {
-                    return Math.abs(parseInt(this.actual) - parseInt(expected)) < 5;
+                    return Math.abs(parseInt(this.actual, 10) - parseInt(expected, 10)) < 5;
                 }
             });
         });
 
-        it("should animate scroll correctly", function () {
+        it('should animate scroll correctly', function () {
             var test = Dom.create('<div style="width:100px;overflow:hidden;' +
-                'border:1px solid red;">'+
-            '<div style="width:500px;">' +
+                'border:1px solid red;">' +
+                '<div style="width:500px;">' +
                 '1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,' +
                 '6,7,8,9,0,1,2,3,4,5,6,7,8,9,0,1,2,' +
                 '3,4,5,6,7,8,9,0,1,2,3,4,5,6,7,8,9,' +
@@ -31,12 +30,12 @@ KISSY.add(function (S, Dom, Anim) {
                 ',6,7,8,9,0,1,2,3,4,5,6,7,8,9,0,1,2,' +
                 '3,4,5,6,7,8,9,0,1,2,3,4,5,6,7,8,9,0,' +
                 '</div>' +
-            '</div>');
+                '</div>');
             Dom.append(test, 'body');
             test.scrollLeft = 500;
             var scrollLimit = test.scrollLeft;
             test.scrollLeft = 0;
-            Anim(test, {
+            new Anim(test, {
                 scrollLeft: scrollLimit
             }, 0.5).run();
             waits(100);
@@ -52,8 +51,8 @@ KISSY.add(function (S, Dom, Anim) {
         // ios iframe 下不能滚动 window?
         // hhttp://www.google.nl/search?q=ipad+iframe+scrolling
         if (!S.UA.ios || !window.frameElement) {
-            it("should animate scroll correctly for window", function () {
-                Dom.append(Dom.create("<div style='height:2000px'/>"), document.body);
+            it('should animate scroll correctly for window', function () {
+                Dom.append(Dom.create('<div style="height:2000px"/>'), document.body);
                 Dom.scrollTop(window, 0);
 
                 waits(300);
@@ -61,7 +60,7 @@ KISSY.add(function (S, Dom, Anim) {
                 var anim;
 
                 runs(function () {
-                    anim = Anim(window, {
+                    anim = new Anim(window, {
                         scrollTop: 100
                     }, 0.5).run();
                 });
@@ -77,7 +76,7 @@ KISSY.add(function (S, Dom, Anim) {
                 });
                 runs(function () {
                     Dom.scrollTop(window, 0);
-                    anim = Anim(window, {
+                    anim = new Anim(window, {
                         scrollTop: 100
                     }, 0.5).run();
                 });
@@ -97,7 +96,7 @@ KISSY.add(function (S, Dom, Anim) {
 
                 runs(function () {
                     Dom.scrollTop(window, 0);
-                    anim = Anim(window, {
+                    anim = new Anim(window, {
                         scrollTop: 100
                     }, 0.5).run();
                 });
@@ -114,6 +113,6 @@ KISSY.add(function (S, Dom, Anim) {
         }
 
     });
-},{
-    requires:['dom','anim']
+}, {
+    requires: ['dom', 'anim']
 });

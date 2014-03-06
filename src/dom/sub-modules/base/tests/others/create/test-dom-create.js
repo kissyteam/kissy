@@ -1,1 +1,1 @@
-window.g_testLoadScriptViaInnerHTML = true;
+window.gTestLoadScriptViaInnerHTML = true;

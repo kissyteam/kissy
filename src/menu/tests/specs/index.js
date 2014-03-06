@@ -2,6 +2,7 @@
  * Tc For KISSY Menu.
  * @author yiminghe@gmail.com
  */
+/*jshint quotmark:false*/
 KISSY.add(function (S, Menu) {
 
     var $ = S.all,
@@ -124,7 +125,7 @@ KISSY.add(function (S, Menu) {
                         expect(e.target).toBe(menuChildren[1]);
                     });
 
-                    menuChildren[1].on("click.my", function (e) {
+                    menuChildren[1].on("click.my", function () {
                         ret2++;
                     });
 
@@ -166,7 +167,7 @@ KISSY.add(function (S, Menu) {
 
                         menu.detach(".my");
 
-                        menuChildren[1].detach(".my")
+                        menuChildren[1].detach(".my");
                     });
 
                     runs(function () {
@@ -196,7 +197,7 @@ KISSY.add(function (S, Menu) {
                         expect(e.target).toBe(menuChildren[1]);
                     });
 
-                    menuChildren[1].on("click.my", function (e) {
+                    menuChildren[1].on("click.my", function () {
                         ret2++;
                     });
 
@@ -234,7 +235,7 @@ KISSY.add(function (S, Menu) {
 
                         menu.detach(".my");
 
-                        menuChildren[1].detach(".my")
+                        menuChildren[1].detach(".my");
                     });
 
                     runs(function () {

@@ -1,3 +1,4 @@
+/*jshint quotmark:false*/
 describe("loader package", function () {
     var S = KISSY;
     var Loader = S.Loader;
@@ -60,7 +61,8 @@ describe("loader package", function () {
 
         expect(m1.getPackage().getName()).toBe('');
 
-         m1 = new Loader.Module({
+
+        m1 = new Loader.Module({
             name: 'component/a',
             runtime: S
         });
@@ -74,7 +76,7 @@ describe("loader package", function () {
 
         expect(m1.getPackage().getName()).toBe('');
 
-         m1 = new Loader.Module({
+        m1 = new Loader.Module({
             name: 'com',
             runtime: S
         });

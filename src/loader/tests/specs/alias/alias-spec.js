@@ -1,4 +1,5 @@
 var run = function (combine) {
+    /*jshint quotmark:false*/
     describe("KISSY Loader alias" + (combine ? 'at combo mode' : ''), function () {
         beforeEach(function () {
             KISSY.config('combine', !!combine);

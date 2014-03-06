@@ -21,7 +21,7 @@ KISSY.add(function (S, HtmlParser, UA) {
         }
     }
 
-    describe('htmlparser_for_editor', function () {
+    describe('html parser for editor', function () {
         it('can filter elementNames', function () {
             var dataFilterRules = {
                 tagNames: [

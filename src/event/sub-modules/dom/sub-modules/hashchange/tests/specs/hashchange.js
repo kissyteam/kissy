@@ -2,8 +2,8 @@
  * hashchange spec
  * @author yiminghe@gmail.com
  */
-KISSY.add(
-    function (S, Dom, Event) {
+KISSY.add(function (S, Dom, Event) {
+        /*jshint quotmark:false*/
     describe("hashchange event", function () {
 
         function getHash() {
@@ -74,7 +74,7 @@ KISSY.add(
 
             waits(100);
 
-            if (S.UA.ieMode == 8) {
+            if (S.UA.ieMode === 8) {
                 // ie8 iframe 内的历史和外层一样了
                 return;
             }

@@ -13,7 +13,7 @@ var run = function (combine) {
 
                 'packages': {
                     'ignore-package-name-in-uri': {
-                        base: window['specsPath'] ||
+                        base: window.specsPath ||
                             '../specs/ignore-package-name-in-uri/' + (combine ? 'combo/' : 'simple/'),
                         ignorePackageNameInUri: 1
                     }

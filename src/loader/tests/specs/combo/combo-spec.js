@@ -1,3 +1,4 @@
+/*jshint quotmark:false*/
 describe("ComboLoader", function () {
     var S = KISSY,
         kBase = S.config('base'),
@@ -63,7 +64,7 @@ describe("ComboLoader", function () {
         });
 
         waitsFor(function () {
-            return r == 2
+            return r === 2;
         });
     });
 
@@ -94,7 +95,7 @@ describe("ComboLoader", function () {
             expect(c).toBe(3);
             // do not queue for loaded module
             S.use('tests3/b', function () {
-                a = 1
+                a = 1;
             });
             setTimeout(function () {
                 ret = a;
@@ -192,11 +193,11 @@ describe("ComboLoader", function () {
             for (var i = 0; i < 100; i++) {
                 var r2 = [];
                 for (var j = 0; j < 5; j++) {
-                    r2.push('y' + (k++))
+                    r2.push('y' + (k++));
                 }
                 x['y' + i] = {
                     requires: r2
-                }
+                };
             }
 
             var waitingModules = new S.Loader.WaitingModules(function () {
@@ -217,7 +218,7 @@ describe("ComboLoader", function () {
             expect(cjs.length).toBe(3);
 
             S.each(cjs, function (j) {
-                expect(j.path.length).not.toBeGreaterThan(S.Config.comboMaxUrlLength)
+                expect(j.path.length).not.toBeGreaterThan(S.Config.comboMaxUrlLength);
             });
         });
     });
@@ -323,7 +324,7 @@ describe("ComboLoader", function () {
             });
 
             waitsFor(function () {
-                return ret == 2;
+                return ret === 2;
             });
         });
     });

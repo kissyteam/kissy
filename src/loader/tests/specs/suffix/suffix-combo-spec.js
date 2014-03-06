@@ -1,3 +1,5 @@
+/*jshint quotmark:false*/
+/*global $*/
 describe("mod with suffix", function () {
     var S = KISSY;
     beforeEach(function () {

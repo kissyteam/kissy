@@ -4,7 +4,7 @@
  */
 KISSY.add(function (S, Node, io) {
     var $ = Node.all;
-
+    /*jshint quotmark:false*/
     describe("Form serialize", function () {
         it("works in single condition", function () {
             var html = '<form>' +
@@ -89,6 +89,6 @@ KISSY.add(function (S, Node, io) {
 
         });
     });
-},{
-    requires:['node','io']
+}, {
+    requires: ['node', 'io']
 });

@@ -1,15 +1,16 @@
 describe('it support commonjs require', function () {
+    /*jshint quotmark:false*/
     beforeEach(function () {
-        window.cjs_test = [];
+        window.cjsTest = [];
         KISSY.config('combine', false);
     });
 
     afterEach(function () {
         KISSY.clearLoader();
         try {
-            delete window.cjs_test;
+            delete window.cjsTest;
         } catch (e) {
-            window.cjs_test = undefined;
+            window.cjsTest = undefined;
         }
     });
 
@@ -28,7 +29,7 @@ describe('it support commonjs require', function () {
             return ret === 3;
         });
         runs(function () {
-            expect(window.cjs_test).toEqual([ 2, 3, 4, 6]);
+            expect(window.cjsTest).toEqual([ 2, 3, 4, 6]);
         });
     });
 
@@ -44,10 +45,10 @@ describe('it support commonjs require', function () {
             ret = a;
         });
         waitsFor(function () {
-            return ret == 3
+            return ret === 3;
         });
         runs(function () {
-            expect(window.cjs_test).toEqual([3, 2, 4, 6]);
+            expect(window.cjsTest).toEqual([3, 2, 4, 6]);
         });
     });
 });

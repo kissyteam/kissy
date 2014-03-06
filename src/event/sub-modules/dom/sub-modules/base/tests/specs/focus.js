@@ -3,6 +3,8 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add( function (S, Dom, Event) {
+    /*jshint quotmark:false*/
+
     describe('focus', function () {
         it('fire is special', function () {
             var n = Dom.create('<input />');

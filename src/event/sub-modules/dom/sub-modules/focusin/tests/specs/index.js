@@ -3,10 +3,9 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, Event, Dom) {
-    var tpl = ' <div id="test-focusin">\
-        test focusin: <input type="text" value="点击我"/>\
-        </div>\
-        <input id="test-focusin-input" type="text" value="另一个输入框"/>',
+    /*jshint quotmark:false*/
+
+    var tpl = ' <div id="test-focusin">test focusin: <input type="text" value="点击我"/></div><input id="test-focusin-input" type="text" value="另一个输入框"/>',
         HAPPENED = 'happened',
         FIRST = '1',
         SECOND = '2',

@@ -1,3 +1,4 @@
+/*jshint quotmark:false*/
 KISSY.add(function (S, UA, Node, Overlay) {
     describe('visible', function () {
         it("should not fire hide on show", function () {

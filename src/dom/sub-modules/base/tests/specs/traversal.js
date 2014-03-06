@@ -3,20 +3,19 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, Dom) {
-    var tpl = '<div id="test-children" class="test-parent">\
-        <p id="test-next"><a>1</a></p>\
-    <p class="test-next-p"><a class="test-a">2</a></p>\
-    <p class="test-next"><a id="test-parent3">3</a></p>\
-    <p class="test-p" id="test-prev"><em class="test-em">\
-        <span><a id="test-parent4">4</a></span></em></p>\
-    <div id="test-contains">text node</div>\
-    <div>\
-    <div id="test-nested">\
-    </div>\
-    </div>\
-    </div>';
+    var tpl = '';
 
-    describe("traversal", function () {
+    var $ = window.$;
+
+    $.ajax({
+        url: '../specs/traversal.html',
+        async: false,
+        success: function (d) {
+            tpl = d;
+        }
+    });
+
+    describe('traversal', function () {
         beforeEach(function () {
             $('body').append(tpl);
         });
@@ -25,7 +24,7 @@ KISSY.add(function (S, Dom) {
             $('#test-children').remove();
         });
 
-        it("parent works", function () {
+        it('parent works', function () {
             var t = Dom.get('#test-parent4');
             expect(Dom.parent(t).tagName.toLowerCase()).toBe('span');
             expect(Dom.parent(t, 4).className).toBe('test-parent');
@@ -46,7 +45,7 @@ KISSY.add(function (S, Dom) {
             expect(Dom.parent()).toBe(null);
 
             expect(Dom.parent('#test-nested', 'p')).toBe(null);
-            expect(Dom.parent('#test-nested', ['p']) + "").toBe([] + "");
+            expect(Dom.parent('#test-nested', ['p']) + '').toBe([] + '');
             // support array of filter
             expect(Dom.parent('#test-nested', ['div']).length).toBe(2);
             expect(Dom.parent('#test-nested', ['DIV']).length).toBe(2);
@@ -54,28 +53,28 @@ KISSY.add(function (S, Dom) {
         });
 
 
-        it("closest works", function () {
+        it('closest works', function () {
             var t = Dom.get('#test-parent4');
 
             // return itself
-            expect(Dom.closest(t, "a")).toBe(t);
+            expect(Dom.closest(t, 'a')).toBe(t);
 
             // support array of filter
             expect(Dom.closest('#test-nested', ['div']).length).toBe(3);
 
             // parent works
-            expect(Dom.closest(t, ".test-p")).toBe(Dom.get("#test-prev"));
+            expect(Dom.closest(t, '.test-p')).toBe(Dom.get('#test-prev'));
 
             // context works
-            expect(Dom.closest(t, ".test-parent", "#test-prev")).toBe(null);
+            expect(Dom.closest(t, '.test-parent', '#test-prev')).toBe(null);
 
-            expect(Dom.closest(t, ".test-parent")).toBe(Dom.get("#test-children"));
+            expect(Dom.closest(t, '.test-parent')).toBe(Dom.get('#test-children'));
 
-            expect(Dom.closest(t, ".test-parent", "#test-children")).toBe(null);
+            expect(Dom.closest(t, '.test-parent', '#test-children')).toBe(null);
         });
 
-        it("closest works for text node", function () {
-            var div = Dom.create("<div>1</div>");
+        it('closest works for text node', function () {
+            var div = Dom.create('<div>1</div>');
             Dom.append(div, 'body');
             var text = div.firstChild;
 
@@ -90,8 +89,8 @@ KISSY.add(function (S, Dom) {
             Dom.remove(div);
         });
 
-        it("first works for text node", function () {
-            var div = Dom.create("<div>1<span></span></div>");
+        it('first works for text node', function () {
+            var div = Dom.create('<div>1<span></span></div>');
             Dom.append(div, 'body');
             var cs = div.childNodes;
 
@@ -101,8 +100,8 @@ KISSY.add(function (S, Dom) {
             Dom.remove(div);
         });
 
-        it("last works for text node", function () {
-            var div = Dom.create("<div>1<span></span>1</div>");
+        it('last works for text node', function () {
+            var div = Dom.create('<div>1<span></span>1</div>');
             Dom.append(div, 'body');
             var cs = div.childNodes;
 
@@ -112,8 +111,8 @@ KISSY.add(function (S, Dom) {
             Dom.remove(div);
         });
 
-        it("next works for text node", function () {
-            var div = Dom.create("<div><span></span>1<span></span></div>");
+        it('next works for text node', function () {
+            var div = Dom.create('<div><span></span>1<span></span></div>');
             Dom.append(div, 'body');
             var cs = div.childNodes;
             expect(Dom.next(cs[0])).toBe(cs[2]);
@@ -121,8 +120,8 @@ KISSY.add(function (S, Dom) {
             Dom.remove(div);
         });
 
-        it("prev works for text node", function () {
-            var div = Dom.create("<div><span></span>1<span></span></div>");
+        it('prev works for text node', function () {
+            var div = Dom.create('<div><span></span>1<span></span></div>');
             Dom.append(div, 'body');
             var cs = div.childNodes;
             expect(Dom.prev(cs[2])).toBe(cs[0]);
@@ -130,8 +129,8 @@ KISSY.add(function (S, Dom) {
             Dom.remove(div);
         });
 
-        it("siblings works for text node", function () {
-            var div = Dom.create("<div><span></span>1<span></span></div>");
+        it('siblings works for text node', function () {
+            var div = Dom.create('<div><span></span>1<span></span></div>');
             Dom.append(div, 'body');
             var cs = div.childNodes;
             expect(Dom.siblings(cs[2]).length).toBe(1);
@@ -139,7 +138,7 @@ KISSY.add(function (S, Dom) {
             Dom.remove(div);
         });
 
-        it("next works", function () {
+        it('next works', function () {
             var t = Dom.get('#test-next');
 
             expect(Dom.next(t).className).toBe('test-next-p');
@@ -158,7 +157,7 @@ KISSY.add(function (S, Dom) {
                 }).tagName.toLowerCase()).toBe('p');
         });
 
-        it("prev works", function () {
+        it('prev works', function () {
             var t = Dom.get('#test-prev');
 
             expect(Dom.prev(t).className).toBe('test-next');
@@ -176,7 +175,7 @@ KISSY.add(function (S, Dom) {
         });
 
 
-        it("siblings works", function () {
+        it('siblings works', function () {
             var t = Dom.get('#test-prev');
             // not include itself
             expect(Dom.siblings(t).length).toBe(5);
@@ -189,7 +188,7 @@ KISSY.add(function (S, Dom) {
                 }).length).toBe(1);
         });
 
-        it("children works", function () {
+        it('children works', function () {
             var t = Dom.get('#test-children');
 
             expect(Dom.children(t).length).toBe(6);
@@ -198,15 +197,15 @@ KISSY.add(function (S, Dom) {
             expect(Dom.children('#test-div').length).toBe(0);
         });
 
-        it("contents works", function () {
-            var div = Dom.create("<div>1<span>2</span></div>");
+        it('contents works', function () {
+            var div = Dom.create('<div>1<span>2</span></div>');
             Dom.append(div, 'body');
             expect(Dom.contents(div).length).toBe(2);
             Dom.remove(div);
         });
 
 
-        it("contains works", function () {
+        it('contains works', function () {
             expect(Dom.contains(document, '#test-prev')).toBe(true);
             expect(Dom.contains(document.documentElement, document.body)).toBe(true);
             expect(Dom.contains(document, document.body)).toBe(true);
@@ -227,8 +226,8 @@ KISSY.add(function (S, Dom) {
         });
 
         // https://github.com/kissyteam/kissy/issues/183
-        it("contains works for non-document node", function () {
-            var newNode = Dom.create("<div><div></div></div>");
+        it('contains works for non-document node', function () {
+            var newNode = Dom.create('<div><div></div></div>');
 
             expect(Dom.contains(document, newNode)).toBe(false);
             expect(Dom.contains(document.body, newNode)).toBe(false);
@@ -266,6 +265,6 @@ KISSY.add(function (S, Dom) {
             Dom.remove(div);
         });
     });
-},{
-    requires:['dom']
+}, {
+    requires: ['dom']
 });

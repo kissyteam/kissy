@@ -4,27 +4,26 @@
  */
 KISSY.add(function (S, Event, DD, Constrain) {
     var Draggable = DD.Draggable,
-        Gesture = Event.Gesture,
         $ = S.all;
 
     window.scrollTo(0, 0);
 
     var ie = S.UA.ieMode;
 
-    if (ie == 9 || ie == 11) {
+    if (ie === 9 || ie === 11) {
         return;
     }
 
-    describe("constrain", function () {
-        var node = $("<div style='width:100px;height:200px;" +
-            "background:red;" +
-            "position: absolute;left:0;top:0;'>" +
-            "</div>")
+    describe('constrain', function () {
+        var node = $('<div style="width:100px;height:200px;' +
+            'background:red;' +
+            'position: absolute;left:0;top:0;">' +
+            '</div>')
             .appendTo('body');
 
-        var container = $("<div style='width:300px;height:500px;" +
-            "position: absolute;left:0;top:0;'>" +
-            "</div>")
+        var container = $('<div style="width:300px;height:500px;' +
+            'position: absolute;left:0;top:0;">' +
+            '</div>')
             .prependTo('body');
 
         var draggable = new Draggable({
@@ -39,13 +38,13 @@ KISSY.add(function (S, Event, DD, Constrain) {
 
         draggable.plug(constrain);
 
-        it("works for node", function () {
+        it('works for node', function () {
             node.css({
                 left: 0,
                 top: 0
             });
 
-            constrain.set("constrain", container);
+            constrain.set('constrain', container);
 
             jasmine.simulate(node[0], 'mousedown', {
                 clientX: 10,
@@ -82,18 +81,18 @@ KISSY.add(function (S, Event, DD, Constrain) {
             waits(100);
 
             runs(function () {
-                expect(node.css('left')).toBe("200px");
-                expect(node.css("top")).toBe("300px");
+                expect(node.css('left')).toBe('200px');
+                expect(node.css('top')).toBe('300px');
             });
         });
 
-        it("works for window", function () {
+        it('works for window', function () {
             node.css({
                 left: 0,
                 top: 0
             });
 
-            constrain.set("constrain", window);
+            constrain.set('constrain', window);
 
             var win = $(window);
 
@@ -132,18 +131,18 @@ KISSY.add(function (S, Event, DD, Constrain) {
             waits(100);
 
             runs(function () {
-                expect(parseInt(node.css('left'))).toBe(win.width() - 100);
-                expect(parseInt(node.css("top"))).toBe(win.height() - 200);
+                expect(parseInt(node.css('left'),10)).toBe(win.width() - 100);
+                expect(parseInt(node.css('top'),10)).toBe(win.height() - 200);
             });
         });
 
-        it("works for window (true constrain)", function () {
+        it('works for window (true constrain)', function () {
             node.css({
                 left: 0,
                 top: 0
             });
 
-            constrain.set("constrain", true);
+            constrain.set('constrain', true);
 
             var win = $(window);
 
@@ -182,18 +181,18 @@ KISSY.add(function (S, Event, DD, Constrain) {
             waits(100);
 
             runs(function () {
-                expect(parseInt(node.css('left'))).toBe(win.width() - 100);
-                expect(parseInt(node.css("top"))).toBe(win.height() - 200);
+                expect(parseInt(node.css('left'),10)).toBe(win.width() - 100);
+                expect(parseInt(node.css('top'),10)).toBe(win.height() - 200);
             });
         });
 
-        it("can be freed (false constrain)", function () {
+        it('can be freed (false constrain)', function () {
             node.css({
                 left: 0,
                 top: 0
             });
 
-            constrain.set("constrain", false);
+            constrain.set('constrain', false);
 
             jasmine.simulate(node[0], 'mousedown', {
                 clientX: 10,
@@ -230,18 +229,18 @@ KISSY.add(function (S, Event, DD, Constrain) {
             waits(100);
 
             runs(function () {
-                expect(parseInt(node.css('left'))).toBe(5490);
-                expect(parseInt(node.css("top"))).toBe(5490);
+                expect(parseInt(node.css('left'),10)).toBe(5490);
+                expect(parseInt(node.css('top'),10)).toBe(5490);
             });
         });
 
-        it("can be freed (detach)", function () {
+        it('can be freed (detach)', function () {
             node.css({
                 left: 0,
                 top: 0
             });
 
-            constrain.set("constrain", true);
+            constrain.set('constrain', true);
 
             draggable.unplug(constrain);
 
@@ -280,8 +279,8 @@ KISSY.add(function (S, Event, DD, Constrain) {
             waits(100);
 
             runs(function () {
-                expect(parseInt(node.css('left'))).toBe(5490);
-                expect(parseInt(node.css("top"))).toBe(5490);
+                expect(parseInt(node.css('left'),10)).toBe(5490);
+                expect(parseInt(node.css('top'),10)).toBe(5490);
             });
         });
     });

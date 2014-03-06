@@ -3,7 +3,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, Tabs) {
-
+    /*jshint quotmark:false*/
     describe("tabs lazy render", function () {
 
         it('simply works', function () {

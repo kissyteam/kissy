@@ -3,8 +3,9 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, HtmlParser) {
+    /*jshint quotmark:false*/
     var Parser = HtmlParser.Parser;
-    describe("htmlparser_parser", function () {
+    describe("html parser", function () {
 
         it("works for valid html", function () {
             // valid html is fine
@@ -163,15 +164,15 @@ KISSY.add(function (S, HtmlParser) {
             filter.addRules({
                 tags: {
                     $: function (el) {
-                        if (el.getAttribute("class") == "li") {
+                        if (el.getAttribute("class") === "li") {
                             el.nodeName = el.tagName = "li";
                             el.removeAttribute("class");
-                        } else if (el.getAttribute("class") == 'ul') {
+                        } else if (el.getAttribute("class") === 'ul') {
                             // filter its children first, root node need children info after filtering
                             el.filterChildren();
                             var childNodes = el.childNodes;
                             for (var i = 0, c = childNodes[i]; i < childNodes.length; i++) {
-                                if (c.nodeType == 1 && c.tagName != "li") {
+                                if (c.nodeType === 1 && c.tagName !== "li") {
                                     return;
                                 }
                             }

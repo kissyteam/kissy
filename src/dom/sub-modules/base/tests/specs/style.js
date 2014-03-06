@@ -11,11 +11,11 @@ KISSY.add(function (S, Dom) {
         beforeEach(function () {
             this.addMatchers({
                 toBeAlmostEqual: function (expected) {
-                    return Math.abs(parseInt(this.actual) - parseInt(expected)) < 20;
+                    return Math.abs(parseInt(this.actual,10) - parseInt(expected,10)) < 20;
                 },
 
                 toBeEqual: function (expected) {
-                    return Math.abs(parseInt(this.actual) - parseInt(expected)) < 5;
+                    return Math.abs(parseInt(this.actual,10) - parseInt(expected,10)) < 5;
                 },
 
                 toBeExactEqual: function (expected) {
@@ -63,7 +63,7 @@ KISSY.add(function (S, Dom) {
             // 不加入 dom 节点，ie9,firefox 返回 auto by computedStyle
             // ie7,8 返回负数，offsetHeight 返回0
             //alert(elem.currentStyle.height);== auto
-            expect(parseInt(Dom.css(elem, 'height'))).toBeEqual(19);
+            expect(parseInt(Dom.css(elem, 'height'),10)).toBeEqual(19);
 
             Dom.css(elem, 'float', 'right');
 
@@ -280,8 +280,8 @@ KISSY.add(function (S, Dom) {
             expect(Dom.css(el, 'left')).toBe('0px');
             expect(Math.round(parseFloat(Dom.css(Dom.get('div', el), "top")))).toBe(20);
             expect(Dom.css(Dom.get('span', el), "top")).toBe('auto');
-            expect(parseInt(Dom.css(Dom.get('s', el), "top")) || 1)
-                .toBe(parseInt(Dom.get('s', el).getBoundingClientRect().top) || 0);
+            expect(parseInt(Dom.css(Dom.get('s', el), "top"),10) || 1)
+                .toBe(parseInt(Dom.get('s', el).getBoundingClientRect().top,10) || 0);
         });
 
         it("solve #80", function () {

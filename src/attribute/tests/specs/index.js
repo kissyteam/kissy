@@ -19,7 +19,7 @@ KISSY.add(function (S, Attribute) {
             a.addAttr('attr1', {
                 value: 1,
                 setter: function (v) {
-                    return parseInt(v);
+                    return parseInt(v, 10);
                 }
             });
             expect(a.get('attr1')).toBe(1);
@@ -52,7 +52,8 @@ KISSY.add(function (S, Attribute) {
                 }
             });
             a.set({
-                attr1: 1, attr2: 2
+                attr1: 1,
+                attr2: 2
             });
             expect(a.get('attr1')).toBe(1);
             expect(a.get('attr2')).toBe(2);
@@ -149,15 +150,15 @@ KISSY.add(function (S, Attribute) {
 
             a.get('a');
 
-            expect(a['__attrVals']['a']).toBe(9);
+            expect(a.__attrVals.a).toBe(9);
 
-            expect(a['__attrs']['a'].value).toBe(9);
+            expect(a.__attrs.a.value).toBe(9);
 
             a.set('a', 7);
 
-            expect(a['__attrVals']['a']).toBe(7);
+            expect(a.__attrVals.a).toBe(7);
 
-            expect(a['__attrs']['a'].value).toBe(9);
+            expect(a.__attrs.a.value).toBe(9);
         });
 
         it('support callSuper', function () {
@@ -174,8 +175,8 @@ KISSY.add(function (S, Attribute) {
                 m2: function (value) {
                     return 'b' + this.callSuper(value);
                 },
-                m: function (value) {
-                    var superFn = S.bind(this.callSuper, arguments.callee, this);
+                m: function bm(value) {
+                    var superFn = S.bind(this.callSuper, bm, this);
 
                     // 普通的
                     var t0 = this.callSuper(value);
@@ -194,7 +195,9 @@ KISSY.add(function (S, Attribute) {
                     var times = 0;
                     var t2 = '';
                     (function t() {
-                        if (times++ >= 2) return;
+                        if (times++ >= 2) {
+                            return;
+                        }
                         t2 += superFn(2);
                         t();
                     })();
@@ -235,5 +238,5 @@ KISSY.add(function (S, Attribute) {
         });
     });
 }, {
-    requires: ['attribute','./complex-attr']
+    requires: ['attribute', './complex-attr']
 });

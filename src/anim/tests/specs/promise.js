@@ -18,7 +18,7 @@ KISSY.add(function (S, Anim, Node) {
                     ok++;
                 });
             waitsFor(function () {
-                return ok == 2;
+                return ok === 2;
             });
             runs(function () {
                 d.remove();

@@ -3,6 +3,8 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, Editor) {
+    /*jshint quotmark:false*/
+    
     var $ = S.all,
         UA = S.UA,
         Dom = S.DOM,
@@ -11,7 +13,7 @@ KISSY.add(function (S, Editor) {
     var Range = Editor.Range;
 
     function trimNode(t) {
-        if (t.nodeType == Dom.NodeType.TEXT_NODE) {
+        if (t.nodeType === Dom.NodeType.TEXT_NODE) {
             t.nodeValue = S.trim(t.nodeValue);
         } else {
             var cs = t.childNodes || [];
@@ -24,7 +26,7 @@ KISSY.add(function (S, Editor) {
     function myHTML(el) {
         trimNode(el[0]);
         return el.html().toLowerCase()
-            .replace(/\s+</g, "<")
+            .replace(/\s+</g, '<')
             .replace(/([\w-]+=)([\w-]+)/g, function (m, m1, m2) {
                 return m1 + '"' + m2 + '"';
             });
@@ -280,7 +282,7 @@ KISSY.add(function (S, Editor) {
                     "c" +
                     "</span>" +
                     "d" +
-                    "<span id=\"endwrapper\">" +
+                    "<span id=\"marker\">" +
                     "e" +
                     "<span id=\"end\">" +
                     "123456789" +
@@ -289,7 +291,7 @@ KISSY.add(function (S, Editor) {
                     "</span>" +
                     "g</div>").appendTo('body', undefined);
 
-                var endwrapper = $("#endwrapper");
+
                 var range = new Range(document);
                 var textStart = new Node($("#start")[0].firstChild);
                 var textEnd = new Node($("#end")[0].firstChild);
@@ -309,7 +311,7 @@ KISSY.add(function (S, Editor) {
                     "c" +
                     "</span>" +
                     "d" +
-                    "<span id=\"endwrapper\">" +
+                    "<span id=\"marker\">" +
                     "e" +
                     "<span id=\"end\">" +
                     "12345" +
@@ -323,13 +325,13 @@ KISSY.add(function (S, Editor) {
                     "12" +
                     "</span>" +
                     "</span>" +
-                    "<span id=\"endwrapper\">" +
+                    "<span id=\"marker\">" +
                     "<span id=\"end\">" +
                     "6789" +
                     "</span>" +
                     "f" +
                     "</span>" +
-                    "g", ret2 = myHTML(div);
+                    "g";
 
                 expect(myHTML(div)).toBe(ret);
 
@@ -352,7 +354,7 @@ KISSY.add(function (S, Editor) {
                 expect(myHTML(newDiv)).toBe("a<span>b<span id=\"start\">12" +
                     "</span></span>");
 
-                expect(myHTML(div)).toBe("<span id=\"endwrapper\">" +
+                expect(myHTML(div)).toBe("<span id=\"marker\">" +
                     "<span id=\"end\">" +
                     "6789" +
                     "</span>" +
@@ -450,7 +452,6 @@ KISSY.add(function (S, Editor) {
 
 
         describe("deleteContents", function () {
-
             it("works for simple text node", function () {
                 var div = $("<div>123456789</div>").appendTo('body');
                 var range = new Range(document);
@@ -507,7 +508,7 @@ KISSY.add(function (S, Editor) {
                     "c" +
                     "</span>" +
                     "d" +
-                    "<span id=\"endwrapper\">" +
+                    "<span id=\"marker\">" +
                     "e" +
                     "<span id=\"end\">" +
                     "123456789" +
@@ -516,7 +517,6 @@ KISSY.add(function (S, Editor) {
                     "</span>" +
                     "g</div>").appendTo('body', undefined);
 
-                var endwrapper = $("#endwrapper");
                 var range = new Range(document);
                 var textStart = new Node($("#start")[0].firstChild);
                 var textEnd = new Node($("#end")[0].firstChild);
@@ -534,13 +534,13 @@ KISSY.add(function (S, Editor) {
                     "12" +
                     "</span>" +
                     "</span>" +
-                    "<span id=\"endwrapper\">" +
+                    "<span id=\"marker\">" +
                     "<span id=\"end\">" +
                     "6789" +
                     "</span>" +
                     "f" +
                     "</span>" +
-                    "g", ret2 = myHTML(div);
+                    "g";
 
                 expect(myHTML(div)).toBe(ret);
 
@@ -729,7 +729,6 @@ KISSY.add(function (S, Editor) {
                     "<div>22<span>123</span>22</div>" +
                     "</div>").appendTo('body');
                 var range = new Range(document);
-                var div2 = div.one('div');
                 range.setStart(div, 0);
                 range.setEnd(div, 1);
                 range.shrink(SHRINK_ELEMENT);
@@ -1156,7 +1155,6 @@ KISSY.add(function (S, Editor) {
 
                 it("enlarge block 2", function () {
                     var div = $("<div>12<span>3456</span>789</div>").appendTo('body');
-                    var text = $(div.one("span")[0].firstChild);
                     var div2 = $("<div>ab<span>cdefg</span>hij<br/></div>").appendTo('body');
                     var text2 = $(div2.one("span")[0].firstChild);
 
@@ -1227,7 +1225,8 @@ KISSY.add(function (S, Editor) {
             expect(range.checkEndOfBlock()).toBe(false);
 
 
-            range.setStartAfter(i)
+            range.setStartAfter(i);
+
             range.setEndAfter(i);
 
             ret = range.checkStartOfBlock();
@@ -1525,7 +1524,6 @@ KISSY.add(function (S, Editor) {
             it("_4eBreakParent works", function () {
                 var div = $("<div><div><span>12<i></i>34</span><span><i>5678</i></span></div></div>")
                         .appendTo('body'),
-                    range = new Range(document),
                     is = div.all("i");
 
                 is.item(0)._4eBreakParent(div.first());
@@ -1535,7 +1533,7 @@ KISSY.add(function (S, Editor) {
                     "<i></i>" +
                     "<div>" +
                     "<span>" +
-                    "34</span><span><i>5678</i></span></div>")
+                    "34</span><span><i>5678</i></span></div>");
                 div.remove();
             });
         });
@@ -1570,7 +1568,7 @@ KISSY.add(function (S, Editor) {
                     "3" +
                     "</p>" + "<p>" +
                     "<span class=\"text-wrapper\">4567</span>" +
-                    "</p>")
+                    "</p>");
 
                 div.remove();
             });

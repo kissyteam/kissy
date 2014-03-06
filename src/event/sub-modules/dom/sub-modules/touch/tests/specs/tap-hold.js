@@ -130,18 +130,20 @@ KISSY.add(function (S, Node) {
                         targetTouches: touches
                     });
 
+                    function move(){
+                        touches[0].pageX = touches[0].pageY = 10 + (Math.random() * 20);
+                        jasmine.simulate(t[0], 'touchmove', {
+                            touches: touches,
+                            changedTouches: touches,
+                            targetTouches: touches
+                        });
+                    }
+
                     for (var i = 0; i < step; i++) {
 
                         waits(30);
 
-                        runs(function () {
-                            touches[0].pageX = touches[0].pageY = 10 + (Math.random() * 20);
-                            jasmine.simulate(t[0], 'touchmove', {
-                                touches: touches,
-                                changedTouches: touches,
-                                targetTouches: touches
-                            });
-                        });
+                        runs(move);
 
                     }
 
@@ -168,7 +170,7 @@ KISSY.add(function (S, Node) {
                 it('does not fire when duration < 1000', function () {
                     var called = 0;
 
-                    t.on('tapHold', function (e) {
+                    t.on('tapHold', function () {
                         called = 1;
                     });
 

@@ -1,3 +1,4 @@
+/*jshint quotmark:false*/
 var run = function (combine) {
     var S = KISSY;
 
@@ -30,7 +31,7 @@ var run = function (combine) {
             });
 
             waitsFor(function () {
-                return ok1 == 1;
+                return ok1 === 1;
             });
 
             runs(function () {

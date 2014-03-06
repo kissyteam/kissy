@@ -5,45 +5,19 @@
 KISSY.add(function (S, Dom) {
     S.get = Dom.get;
     S.query = Dom.query;
-    describe("class", function () {
-        var tpl = '<div id="test-data-class">\
-            <p id="foo-class">' +
-            '<a ' + 'href="../kissy/" style="color:red" class="link" title="test"' +
-            'data-test="test">test link</a>\
-            <input type="text" id="test-input-class" readonly maxlength="20" value="hello"/>\
-            <input type="radio" id="test-radio-class"/>\
-            <input type="radio" id="test-radio2-class" checked/>\
-            <label class="test">label</label>\
-        <button type="button" tabindex="3">Submit</button>\
-        <textarea rows="2" cols="2">\
-        test\
-        </textarea>\
-        </p>\
-        <div id="test-div-class"></div>\
-        <table id="test-table-class" cellspacing="10">\
-            <tbody>\
-                <tr>\
-                    <td rowspan="2" colspan="3">td</td>\
-                </tr>\
-            </tbody>\
-            </table>\
-        <select id="test-select-class">\
-            <option id="test-opt-class" value="1">0</option>\
-            <option>2</option>\
-            <option>3</option>\
-        </select>\
-        <select id="test-select2-class">\
-            <option>2</option>\
-            </select>\
-        <select id="test-select3-class" multiple autocomplete="off">\
-            <option selected>1</option>\
-            <option selected>2</option>\
-            <option>3</option>\
-        </select>\
-        </div>';
-
+    describe('class', function () {
+        var tpl = '';
+        
+        window.$.ajax({
+            url: '../specs/class.html',
+            async: false,
+            success: function (d) {
+                tpl = d;
+            }
+        });
+        
         beforeEach(function () {
-            $('body').append(tpl);
+            window.$('body').append(tpl);
             foo = S.get('#foo-class');
             a = S.get('#foo-class a');
             input = S.get('#foo-class input');
@@ -63,7 +37,7 @@ KISSY.add(function (S, Dom) {
         });
 
         afterEach(function () {
-            $('#test-data-class').remove();
+            window.$('#test-data-class').remove();
         });
 
         var foo ,
@@ -83,7 +57,7 @@ KISSY.add(function (S, Dom) {
             opt2,
             area;
 
-        it("hasClass works", function () {
+        it('hasClass works', function () {
             a.className = 'link link2\t' + 'link9 link3';
             expect(Dom.hasClass(a, 'link')).toBe(true);
             expect(Dom.hasClass(a, '.link')).toBe(true);
@@ -106,7 +80,7 @@ KISSY.add(function (S, Dom) {
             Dom.remove(n);
         });
 
-        it("addClass works", function () {
+        it('addClass works', function () {
             Dom.addClass(a, 'link-added');
             expect(Dom.hasClass(a, 'link-added')).toBe(true);
             Dom.addClass(a, '.cls-a cls-b');
@@ -114,7 +88,7 @@ KISSY.add(function (S, Dom) {
             expect(Dom.hasClass(a, 'cls-b')).toBe(true);
         });
 
-        it("removeClass works", function () {
+        it('removeClass works', function () {
             a.className = 'link link2 link3 link4 link5';
             Dom.removeClass(a, 'link');
             expect(Dom.hasClass(a, 'link')).toBe(false);
@@ -123,7 +97,7 @@ KISSY.add(function (S, Dom) {
             expect(a.className).toBe('link5');
         });
 
-        it("replaceClass works", function () {
+        it('replaceClass works', function () {
             a.className = 'link link3';
             // oldCls 有的话替换
             Dom.replaceClass(a, '.link', 'link2');
@@ -134,7 +108,7 @@ KISSY.add(function (S, Dom) {
             expect(a.className).toBe('link3 link2 link');
         });
 
-        it("toggleClass works", function () {
+        it('toggleClass works', function () {
             a.className = 'link link2';
             Dom.toggleClass(a, 'link2');
             expect(Dom.hasClass(a, 'link2')).toBe(false);

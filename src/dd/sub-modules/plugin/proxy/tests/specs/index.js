@@ -3,18 +3,16 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, Node,Event, DD, Proxy) {
-    var UA = S.UA;
     var Draggable = DD.Draggable,
-        Gesture = Event.Gesture,
         Dom = S.DOM;
     var ie = S.UA.ieMode;
 
     // ie9 ie11 buggy in simulating mousemove
-    if (ie == 9 || ie == 11) {
+    if (ie === 9 || ie === 11) {
         return;
     }
 
-    describe("proxy", function () {
+    describe('proxy', function () {
         var drag, dragXy, dragNode;
 
         Node.all(' <div id="drag_proxy" style="position:absolute;' +
@@ -25,23 +23,23 @@ KISSY.add(function (S, Node,Event, DD, Proxy) {
             '</div>').appendTo('body');
 
         drag = new Draggable({
-            node: "#drag_proxy",
+            node: '#drag_proxy',
             move: 1,
             groups: false
         });
 
-        dragNode = drag.get("dragNode");
+        dragNode = drag.get('dragNode');
 
         drag.plug(new Proxy({
             node: function (drag) {
-                var n = new Node(drag.get("dragNode").clone(false));
-                n.css("opacity", 0.2);
+                var n = new Node(drag.get('dragNode').clone(false));
+                n.css('opacity', 0.2);
                 return n;
             }
         }));
 
-        it("should create proxy properly", function () {
-            expect(drag.get("node")[0]).toBe(drag.get("dragNode")[0]);
+        it('should create proxy properly', function () {
+            expect(drag.get('node')[0]).toBe(drag.get('dragNode')[0]);
 
             dragXy = dragNode.offset();
             jasmine.simulate(dragNode[0], 'mousedown', {
@@ -62,7 +60,7 @@ KISSY.add(function (S, Node,Event, DD, Proxy) {
             waits(400);
 
             runs(function () {
-                expect(drag.get("node")[0]).not.toBe(drag.get("dragNode")[0]);
+                expect(drag.get('node')[0]).not.toBe(drag.get('dragNode')[0]);
             });
 
             runs(function () {

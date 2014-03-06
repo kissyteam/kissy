@@ -3,7 +3,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, Dom, Node) {
-
+    /*jshint quotmark:false*/
     var $ = Node.all,
     // simulate mouse event on any element
         simulate = function (target, type, relatedTarget) {

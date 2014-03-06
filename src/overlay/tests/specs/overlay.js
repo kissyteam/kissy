@@ -2,6 +2,7 @@
  * testcases for overlay
  * @author yiminghe@gmail.com
  */
+/*jshint quotmark:false*/
 KISSY.add(function (S, Event, UA, Node, Overlay, ResizePlugin) {
     var Dom = S.DOM,
         $ = Node.all;
@@ -10,7 +11,7 @@ KISSY.add(function (S, Event, UA, Node, Overlay, ResizePlugin) {
     beforeEach(function () {
         this.addMatchers({
             toBeEqual: function (expected) {
-                return Math.abs(parseInt(this.actual) - parseInt(expected)) < 5;
+                return Math.abs(parseInt(this.actual,10) - parseInt(expected,10)) < 5;
             }
         });
     });

@@ -2,7 +2,8 @@
  * test loader
  * @author yiminghe@gmail.com
  */
-(function (S) {
+/*jshint quotmark:false*/
+(function () {
     var run=function(combine){
         describe("loader-cyclic "+ (combine ? 'at combo mode' : ''), function () {
             beforeEach(function () {

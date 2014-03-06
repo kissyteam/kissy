@@ -5,19 +5,19 @@
 KISSY.add(function (S, Dom) {
     var UA = S.UA;
     describe('domain api', function () {
-
         it('isCustomDomain works', function () {
             expect(Dom.isCustomDomain()).toBe(false);
         });
+
         it('getEmptyIframeSrc works', function () {
             var ret = Dom.getEmptyIframeSrc();
             var expected;
+            var t = 'javascript';
             if (UA.ie && Dom.isCustomDomain()) {
-                expected = 'javascript:void(function(){' + encodeURIComponent(
+                expected = t + ':' + 'void(function(){' + encodeURIComponent(
                     'document.open();' +
-                        "document.domain='" +
-                        document.domain
-                        + "';" +
+                        'document.domain="' +
+                        document.domain + '";' +
                         'document.close();') + '}())';
             } else {
                 expected = '';

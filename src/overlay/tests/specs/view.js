@@ -1,3 +1,4 @@
+/*jshint quotmark:false*/
 KISSY.add(function (S, UA, Node, Overlay) {
     describe("view", function () {
         it("should reflect after create", function () {

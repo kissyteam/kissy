@@ -2,28 +2,17 @@
  * @module  event-spec
  * @author yiminghe@gmail.com, gonghao@ghsky.com
  */
-KISSY.add(function (S, Dom, Event) {
-
-    var tpl = '<div id="event-test-data" \
-    style="border: 1px solid #ccc; height: 50px; overflow-y: \
-    auto; padding: 5px; margin-bottom: 20px">\
-        <div id="foo">\
-            <ul id="bar">\
-                <li><a id="link-a" href="#">link a</a></li>\
-                <li><input type="checkbox" id="checkbox-1"/><input type="checkbox" id="checkbox-2"/></li>\
-                <li id="li-c"><a id="link-c1" href="#">link c1</a> | <a id="link-c2" href="#">link c2</a></li>\
-                <li id="li-d"><a id="link-d1" href="#">link d1</a> | <a id="link-d2" href="#">link d2</a></li>\
-                <li id="li-e"><a id="link-e1" href="#">link e1</a> | <a id="link-e2" href="#">link e2</a></li>\
-                <li><a id="link-f" href="#">link f</a></li>\
-                <li><a id="link-g" href="#">link g</a></li>\
-                <li><a id="link-h" href="#">link h</a></li>\
-                <li><a id="link-s" href="#">link s</a></li>\
-                <li><a id="link-test-this" href="#">link for test this</a></li>\
-                <li><a id="link-test-this-dom" href="#">link for test this</a></li>\
-                <li id="link-test-this-all"><span id="link-test-this-all-span">link for test this</span><span></span></li>\
-            </ul>\
-        </div>\
-    </div>';
+KISSY.add(function (S, Dom, Event, io) {
+    var tpl = '';
+    /*jshint quotmark:false*/
+    
+    io({
+        url: './specs/event.html',
+        async: false,
+        success: function (d) {
+            tpl = d;
+        }
+    });
 
     var DomEventUtils = S.require('event/dom/base/utils');
 
@@ -142,12 +131,12 @@ KISSY.add(function (S, Dom, Event) {
             });
 
             it('should stop event\'s propagation.', function () {
-                var li_c = Dom.get('#li-c'), c1 = Dom.get('#link-c1'), c2 = Dom.get('#link-c2');
+                var liTemp = Dom.get('#li-c'), c1 = Dom.get('#link-c1'), c2 = Dom.get('#link-c2');
                 var result;
                 Event.on(c2, 'click', function (evt) {
                     evt.stopPropagation();
                 });
-                Event.on(li_c, 'click', function () {
+                Event.on(liTemp, 'click', function () {
                     result = HAPPENED;
                 });
 
@@ -173,7 +162,7 @@ KISSY.add(function (S, Dom, Event) {
             });
 
             it("should stop event's propagation immediately.", function () {
-                var li_d = Dom.get('#li-d'), d1 = Dom.get('#link-d1'), d2 = Dom.get('#link-d2');
+                var liD = Dom.get('#li-d'), d1 = Dom.get('#link-d1'), d2 = Dom.get('#link-d2');
                 var result = [];
                 Event.on(d1, 'click', function () {
                     result.push(FIRST);
@@ -190,7 +179,7 @@ KISSY.add(function (S, Dom, Event) {
                     result.push(SECOND);
                 });
 
-                Event.on(li_d, 'click', function () {
+                Event.on(liD, 'click', function () {
                     result.push(HAPPENED);
                 });
 
@@ -216,7 +205,7 @@ KISSY.add(function (S, Dom, Event) {
             });
 
             it('should do nothing else to event\'s propagation if using "return false;".', function () {
-                var li_e = Dom.get('#li-e'), e1 = Dom.get('#link-e1'), e2 = Dom.get('#link-e2');
+                var liE = Dom.get('#li-e'), e1 = Dom.get('#link-e1'), e2 = Dom.get('#link-e2');
                 var result = [];
                 Event.on(e1, 'click', function () {
                     result.push(FIRST);
@@ -233,7 +222,7 @@ KISSY.add(function (S, Dom, Event) {
                     result.push(SECOND);
                 });
 
-                Event.on(li_e, 'click', function () {
+                Event.on(liE, 'click', function () {
                     result.push(HAPPENED);
                 });
 
@@ -271,7 +260,7 @@ KISSY.add(function (S, Dom, Event) {
                 waitsFor(function () {
                     return ok;
                 });
-                runs(function(){
+                runs(function () {
                     Event.detach('#event-test-data');
                     ok = 0;
                     Event.on('#event-test-data', 'click', function (e) {
@@ -548,7 +537,7 @@ KISSY.add(function (S, Dom, Event) {
 
         it('should no memory leak for dom node', function () {
 
-            var domNode = Dom.create("<div></div>"), i, noop = function () {
+            var domNode = Dom.create("<div></div>"), noop = function () {
             }, noop2 = function () {
             }, noop3 = function () {
             };
@@ -561,7 +550,7 @@ KISSY.add(function (S, Dom, Event) {
             (function () {
                 var eventDesc = DomEventUtils.data(domNode);
                 var num = 0;
-                for (i in eventDesc) {
+                for (var i in eventDesc) {
                     expect(S.inArray(i, ["handle", "observables"]))
                         .toBe(true);
                     num++;
@@ -579,7 +568,7 @@ KISSY.add(function (S, Dom, Event) {
 
                 }
                 expect(num).toBe(2);
-                var clickEventObserver = domEventObservables['click'];
+                var clickEventObserver = domEventObservables.click;
                 expect(clickEventObserver.observers.length).toBe(3);
             })();
 
@@ -588,7 +577,7 @@ KISSY.add(function (S, Dom, Event) {
             (function () {
                 var domEventObservablesHolder = DomEventUtils.data(domNode);
                 var num = 0;
-                for (i in domEventObservablesHolder) {
+                for (var i in domEventObservablesHolder) {
 
                     expect(S.inArray(i, ["handle", "observables"]))
                         .toBe(true);
@@ -607,7 +596,7 @@ KISSY.add(function (S, Dom, Event) {
 
                 }
                 expect(num).toBe(2);
-                var clickEventObserver = domEventObservables['click'];
+                var clickEventObserver = domEventObservables.click;
                 expect(clickEventObserver.observers.length).toBe(2);
             })();
 
@@ -616,7 +605,7 @@ KISSY.add(function (S, Dom, Event) {
             (function () {
                 var domEventObservablesHolder = DomEventUtils.data(domNode);
                 var num = 0;
-                for (i in domEventObservablesHolder) {
+                for (var i in domEventObservablesHolder) {
 
                     expect(S.inArray(i, ["handle", "observables"]))
                         .toBe(true);
@@ -635,7 +624,7 @@ KISSY.add(function (S, Dom, Event) {
 
                 }
                 expect(num).toBe(1);
-                var clickEventObserver = domEventObservables['click'];
+                var clickEventObserver = domEventObservables.click;
                 expect(clickEventObserver).toBeUndefined();
             })();
 
@@ -649,5 +638,5 @@ KISSY.add(function (S, Dom, Event) {
         });
     });
 }, {
-    requires: ['dom', 'event/dom/base']
+    requires: ['dom', 'event/dom/base', 'io']
 });

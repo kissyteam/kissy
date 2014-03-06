@@ -2,10 +2,10 @@
  * test cases for dialog
  * @author yiminghe@gmail.com
  */
+/*jshint quotmark:false*/
 KISSY.add(
     function (S, Event, UA, Node, Overlay, ConstrainPlugin, DragPlugin) {
         var Dom = S.DOM, $ = Node.all;
-        var Gesture = Event.Gesture;
         var Dialog = Overlay.Dialog;
         var ie = S.UA.ieMode;
 
@@ -14,7 +14,7 @@ KISSY.add(
             beforeEach(function () {
                 this.addMatchers({
                     toBeEqual: function (expected) {
-                        return Math.abs(parseInt(this.actual) - parseInt(expected)) < 5;
+                        return Math.abs(parseInt(this.actual,10) - parseInt(expected,10)) < 5;
                     }
                 });
             });
@@ -102,7 +102,7 @@ KISSY.add(
                 });
 
                 it("应该可以拖动", function () {
-                    if (ie == 9 || ie == 11) {
+                    if (ie === 9 || ie === 11) {
                         return;
                     }
                     var xy = [d.get('x'), d.get('y')];
@@ -153,11 +153,11 @@ KISSY.add(
 
                 });
 
-                if ((UA.ieMode == 7 || UA.ieMode == 8) && window.frameElement) {
+                if ((UA.ieMode === 7 || UA.ieMode === 8) && window.frameElement) {
                     return;
                 }
 
-                if (ie == 9 || ie == 11) {
+                if (ie === 9 || ie === 11) {
                     return;
                 }
 

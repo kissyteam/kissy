@@ -4,7 +4,7 @@
  */
 KISSY.add(function (S, Tabs) {
     var $ = S.all;
-
+    /*jshint quotmark:false*/
     describe("tabs", function () {
 
         it("simple works", function () {
@@ -57,16 +57,16 @@ KISSY.add(function (S, Tabs) {
                 }).render();
 
                 var tabB = $(".ks-tabs-tab").item(1);
-                var run_ed = 0;
+                var runned = 0;
                 tabs.on('afterSelectedTabChange', function (e) {
                     expect(e.newVal).toBe(tabs.getSelectedTab());
-                    run_ed = 1;
+                    runned = 1;
                 });
 
                 jasmine.simulate(tabB[0], 'click');
 
                 runs(function () {
-                    expect(run_ed).toBe(1);
+                    expect(runned).toBe(1);
                     expect(tabs.getSelectedTab().get('content')).toBe("tab-2");
                     expect(tabs.getSelectedPanel()
                         .get('content').toLowerCase()).toBe("<p>panel-2</p>");

@@ -5,14 +5,14 @@
 KISSY.add(function (S, Dom, Event) {
     var DomEventObservable = S.require('event/dom/base/observable');
 
-    describe("fire", function () {
+    describe('fire', function () {
         it('support once', function () {
-            var n = Dom.create("<div/>"), ret;
+            var n = Dom.create('<div/>'), ret;
 
             Event.on(n, 'mouseenter', {
                 fn: function (e) {
                     expect(e.type).toBe('mouseenter');
-                    ret = 1
+                    ret = 1;
                 },
                 once: 1
             });
@@ -27,7 +27,7 @@ KISSY.add(function (S, Dom, Event) {
         });
 
         it('can get fire return value', function () {
-            var n = Dom.create("<div/>");
+            var n = Dom.create('<div/>');
 
             Event.on(n, 'xx', function () {
                 return 1;
@@ -67,7 +67,7 @@ KISSY.add(function (S, Dom, Event) {
         });
 
         it('can get fireHandler return value', function () {
-            var n = Dom.create("<div/>");
+            var n = Dom.create('<div/>');
 
             Event.on(n, 'xx', function () {
                 return 1;
@@ -107,9 +107,9 @@ KISSY.add(function (S, Dom, Event) {
         });
 
         it('bubble event remove element/fn in the middle', function () {
-            var n = Dom.create("<div>" +
-                "<div class='l1'><div class='l2'></div></div>" +
-                "</div>"), ret = [], dfn, winFn;
+            var n = Dom.create('<div>' +
+                '<div class="l1"><div class="l2"></div></div>' +
+                '</div>'), ret = [], dfn, winFn;
 
             Dom.append(n, 'body');
 
@@ -158,11 +158,11 @@ KISSY.add(function (S, Dom, Event) {
 
         it('fireHandler does not bubble', function () {
 
-            var n = Dom.create("<div>" +
-                    "<div class='l1'>" +
-                    "<div class='l2'></div>" +
-                    "</div>" +
-                    "</div>"),
+            var n = Dom.create('<div>' +
+                    '<div class="l1">' +
+                    '<div class="l2"></div>' +
+                    '</div>' +
+                    '</div>'),
                 ret = [],
                 dfn, winFn;
 

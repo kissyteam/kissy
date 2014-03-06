@@ -24,15 +24,19 @@ KISSY.add(function (S, Event) {
             }, false);
 
             var acceleration = {
-                    x: 0, y: 0, z: 0
+                    x: 0,
+                    y: 0,
+                    z: 0
                 },
                 accelerationIncludingGravity = {
-                    x: 0, y: 0, z: -9
+                    x: 0,
+                    y: 0,
+                    z: -9
                 };
 
 
             waits(30);
-            (function (i) {
+            (function () {
                 runs(function () {
                     acceleration.x = accelerationIncludingGravity.x = 6;
                     jasmine.simulate(window, 'devicemotion', {
@@ -44,7 +48,7 @@ KISSY.add(function (S, Event) {
             })(0);
 
             waits(30);
-            (function (i) {
+            (function () {
                 runs(function () {
                     acceleration.x = accelerationIncludingGravity.x = 26;
                     jasmine.simulate(window, 'devicemotion', {
@@ -69,7 +73,7 @@ KISSY.add(function (S, Event) {
         it('does not fire if x is too small', function () {
             var called = 0, fn;
 
-            Event.on(window,'shake', function () {
+            Event.on(window, 'shake', function () {
                 called = 1;
             });
 
@@ -81,15 +85,19 @@ KISSY.add(function (S, Event) {
             }, false);
 
             var acceleration = {
-                    x: 0, y: 0, z: 0
+                    x: 0,
+                    y: 0,
+                    z: 0
                 },
                 accelerationIncludingGravity = {
-                    x: 0, y: 0, z: -9
+                    x: 0,
+                    y: 0,
+                    z: -9
                 };
 
 
             waits(30);
-            (function (i) {
+            (function () {
                 runs(function () {
                     acceleration.x = accelerationIncludingGravity.x = 3;
                     jasmine.simulate(window, 'devicemotion', {
@@ -101,7 +109,7 @@ KISSY.add(function (S, Event) {
             })(0);
 
             waits(30);
-            (function (i) {
+            (function () {
                 runs(function () {
                     acceleration.x = accelerationIncludingGravity.x = 2;
                     jasmine.simulate(window, 'devicemotion', {
@@ -125,7 +133,7 @@ KISSY.add(function (S, Event) {
         it('does not fire if x is not big enough', function () {
             var called = 0, fn;
 
-            Event.on(window,'shake', function () {
+            Event.on(window, 'shake', function () {
                 called = 1;
             });
 
@@ -137,15 +145,19 @@ KISSY.add(function (S, Event) {
             }, false);
 
             var acceleration = {
-                    x: 0, y: 0, z: 0
+                    x: 0,
+                    y: 0,
+                    z: 0
                 },
                 accelerationIncludingGravity = {
-                    x: 0, y: 0, z: -9
+                    x: 0,
+                    y: 0,
+                    z: -9
                 };
 
 
             waits(30);
-            (function (i) {
+            (function () {
                 runs(function () {
                     acceleration.x = accelerationIncludingGravity.x = 9;
                     jasmine.simulate(window, 'devicemotion', {
@@ -157,7 +169,7 @@ KISSY.add(function (S, Event) {
             })(0);
 
             waits(30);
-            (function (i) {
+            (function () {
                 runs(function () {
                     acceleration.x = accelerationIncludingGravity.x = 15;
                     jasmine.simulate(window, 'devicemotion', {

@@ -3,10 +3,9 @@
  * @author gonghao, yiminghe@gmail.com
  */
 KISSY.add(function(S, Node) {
-
+    /*jshint quotmark:false*/
     return {
         run:function(){
-
             var $ = Node.all;
 // simulate mouse event on any element
             var simulate = function(target, type, relatedTarget) {
@@ -165,7 +164,7 @@ KISSY.add(function(S, Node) {
                 });
             });
         }
-    }
+    };
 },{
     requires:['node']
 });

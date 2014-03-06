@@ -4,9 +4,9 @@
  **/
 KISSY.add(function (S, UA, io, Node) {
     var $ = Node.all;
-
+    /*jshint quotmark:false*/
     // travis-ci will not pass ...
-    if (S.UA.phantomjs && S.UA.os == 'linux') {
+    if (S.UA.phantomjs && S.UA.os === 'linux') {
         return;
     }
 
@@ -226,7 +226,7 @@ KISSY.add(function (S, UA, io, Node) {
                 form: form[0],
                 dataType: 'json',
                 url: uploadRc,
-                success: function (data) {
+                success: function () {
                     ok = 0;
                 },
                 error: function (data, statusText) {

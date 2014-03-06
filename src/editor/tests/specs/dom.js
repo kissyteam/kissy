@@ -2,9 +2,11 @@
  * Test Dom for editor
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, Editor) {
+KISSY.add(function (S) {
     var Dom = S.DOM,
         $ = S.all;
+
+    /*jshint quotmark:false*/
 
     describe("dom", function () {
         it("_4eIsBlockBoundary works", function () {

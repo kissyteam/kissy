@@ -3,13 +3,12 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, Event, Resizable) {
+    /*jshint quotmark:false*/
     // ie9 mousemove does not fire
     var ie = S.UA.ieMode;
-    if (ie == 9 || ie == 11) {
+    if (ie === 9 || ie === 11) {
         return;
     }
-
-    var Gesture = Event.Gesture;
 
     var $ = S.all;
 
@@ -18,7 +17,7 @@ KISSY.add(function (S, Event, Resizable) {
         beforeEach(function () {
             this.addMatchers({
                 toBeAlmostEqual: function (expected) {
-                    return Math.abs(parseInt(this.actual) - parseInt(expected)) < 20;
+                    return Math.abs(parseInt(this.actual,10) - parseInt(expected,10)) < 20;
                 },
 
                 toBeEqualRect: function (expect) {
@@ -35,7 +34,7 @@ KISSY.add(function (S, Event, Resizable) {
 
 
                 toBeEqual: function (expected) {
-                    return Math.abs(parseInt(this.actual) - parseInt(expected)) < 5;
+                    return Math.abs(parseInt(this.actual,10) - parseInt(expected,10)) < 5;
                 }
             });
         });

@@ -4,12 +4,13 @@
  */
 KISSY.add(function (S, HtmlParser) {
     var Lexer = HtmlParser.Lexer;
+    /*jshint quotmark:false*/
     describe("html parser lexer", function () {
         it("works", function () {
             var html = "<div id='z'><<a> ";
             var lexer = new Lexer(html), node;
             var nodes = [];
-            while (node = lexer.nextNode()) {
+            while ((node = lexer.nextNode())) {
                 nodes.push(node);
             }
             expect(nodes[0].nodeType).toBe(1);
@@ -53,7 +54,7 @@ KISSY.add(function (S, HtmlParser) {
             var html = "<z/>x";
             var lexer = new Lexer(html), node;
             var nodes = [];
-            while (node = lexer.nextNode()) {
+            while ((node = lexer.nextNode())) {
                 nodes.push(node);
             }
             expect(nodes.length).toBe(2);
@@ -65,7 +66,7 @@ KISSY.add(function (S, HtmlParser) {
             var html = "<br/>";
             var lexer = new Lexer(html), node;
             var nodes = [];
-            while (node = lexer.nextNode()) {
+            while ((node = lexer.nextNode())) {
                 nodes.push(node);
             }
             expect(nodes.length).toBe(1);
@@ -77,7 +78,7 @@ KISSY.add(function (S, HtmlParser) {
             var html = '<a href="http://g.cn/"">1</a>';
             var lexer = new Lexer(html), node;
             var nodes = [];
-            while (node = lexer.nextNode()) {
+            while ((node = lexer.nextNode())) {
                 nodes.push(node);
             }
             node = nodes[0];

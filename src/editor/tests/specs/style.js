@@ -3,11 +3,8 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, Editor, init) {
-
-    var Style = Editor.Style;
     var Selection = Editor.Selection;
     var Range = Editor.Range;
-    var $ = S.all;
     var UA = S.UA;
     var editor;
 
@@ -144,7 +141,6 @@ KISSY.add(function (S, Editor, init) {
 
 
     });
-
 }, {
     requires: ['editor', './init']
 });

@@ -1,3 +1,5 @@
+/*jshint quotmark:false*/
+/*global $*/
 describe("css-combo", function () {
     beforeEach(function () {
         KISSY.config('combine', true);
@@ -8,8 +10,6 @@ describe("css-combo", function () {
     });
 
     it("works for css and js", function () {
-        var S = KISSY;
-
         $("<div>" +
             "<div class='test2'></div>" +
             "<div class='test1'></div>" +
@@ -18,7 +18,7 @@ describe("css-combo", function () {
         KISSY.config({
             packages: {
                 x: {
-                    base: window['specsPath'] || "../specs/css-combo/"
+                    base: window.specsPath || "../specs/css-combo/"
                 }
             },
             modules: {
@@ -65,7 +65,7 @@ describe("css-combo", function () {
             packages: {
                 x: {
                     tag: S.now(),
-                    base: window['specsPath'] || "../specs/css-combo/"
+                    base: window.specsPath || "../specs/css-combo/"
                 }
             },
             modules: {

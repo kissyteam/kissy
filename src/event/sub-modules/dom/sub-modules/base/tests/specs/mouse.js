@@ -2,8 +2,8 @@
  * mouseenter tc
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, Dom, Event) {
-
+KISSY.add(function (S, Dom, Event, io) {
+    /*jshint quotmark:false*/
     var simulate = function (target, type, relatedTarget) {
         if (typeof target === 'string') {
             target = Dom.get(target);
@@ -11,26 +11,14 @@ KISSY.add(function (S, Dom, Event) {
         jasmine.simulate(target, type, { relatedTarget: relatedTarget });
     };
 
-    var tpl = '<div id="event-test-data">\
-    <div style="margin-top: 10px; padding: 30px; background-color: #e3e4e5">\
-            <div id="outer" style="padding: 20px; background-color: #D6EDFC">\
-                <div id="inner" style="padding: 20px; background-color: #FFCC00"></div>\
-            </div>\
-        </div>\
-        <style>\
-        .mouse-test {\
-            width: 100px;\
-            height: 100px;\
-            margin: 10px;\
-            background-color: yellow;\
-            border: 1px solid red;\
-        }\
-        </style>\
-        <div class="mouse-test" id="mouse-test1">\
-        </div>\
-        <div class="mouse-test" id="mouse-test2">\
-        </div>\
-        </div>';
+    var tpl = '';
+    io({
+        url: './specs/mouse.html',
+        async: false,
+        success: function (d) {
+            tpl = d;
+        }
+    });
 
     describe('mouseenter', function () {
 
@@ -54,10 +42,10 @@ KISSY.add(function (S, Dom, Event) {
 
                 Event.on(outer, 'mouseenter', function (e) {
                     outerCount++;
-                    setTimeout(function(){
+                    setTimeout(function () {
                         // https://github.com/kissyteam/kissy/issues/302
                         expect(e.type).toBe('mouseover');
-                    },0);
+                    }, 0);
                 });
 
                 Event.on(inner, 'mouseenter', function () {
@@ -74,8 +62,8 @@ KISSY.add(function (S, Dom, Event) {
                 waits(100);
 
                 runs(function () {
-                        expect(outerCount).toEqual(1);
-                        expect(innerCount).toEqual(2);
+                    expect(outerCount).toEqual(1);
+                    expect(innerCount).toEqual(2);
                 });
             });
 
@@ -103,54 +91,54 @@ KISSY.add(function (S, Dom, Event) {
                 waits(0);
 
                 runs(function () {
-                        expect(outerCount).toEqual(2);
-                        expect(innerCount).toEqual(1);
+                    expect(outerCount).toEqual(2);
+                    expect(innerCount).toEqual(1);
                 });
             });
 
             it('support multiple on for mouseenter', function () {
 
-                var enter=[],
-                    leave=[],
-                    mouseTests=Dom.query('.mouse-test');
+                var enter = [],
+                    leave = [],
+                    mouseTests = Dom.query('.mouse-test');
 
-                Event.on('.mouse-test','mouseenter',function(e){
+                Event.on('.mouse-test', 'mouseenter', function (e) {
                     expect(e.type).toBe('mouseenter');
                     enter.push(e.target.id);
                 });
 
-                Event.on('.mouse-test','mouseleave',function(e){
+                Event.on('.mouse-test', 'mouseleave', function (e) {
                     expect(e.type).toBe('mouseleave');
                     leave.push(e.target.id);
                 });
 
-                runs(function(){
+                runs(function () {
                     simulate(mouseTests[0], 'mouseover', document);
                 });
 
                 waits(10);
 
-                runs(function(){
+                runs(function () {
                     simulate(mouseTests[1], 'mouseover', document);
                 });
 
                 waits(10);
 
-                runs(function(){
+                runs(function () {
                     simulate(mouseTests[0], 'mouseout', document);
                 });
 
                 waits(10);
 
-                runs(function(){
+                runs(function () {
                     simulate(mouseTests[1], 'mouseout', document);
                 });
 
                 waits(10);
 
-                runs(function(){
-                    expect(enter).toEqual(['mouse-test1','mouse-test2']);
-                    expect(leave).toEqual(['mouse-test1','mouse-test2']);
+                runs(function () {
+                    expect(enter).toEqual(['mouse-test1', 'mouse-test2']);
+                    expect(leave).toEqual(['mouse-test1', 'mouse-test2']);
                 });
 
             });
@@ -188,7 +176,7 @@ KISSY.add(function (S, Dom, Event) {
 
                 // 2012-03-31 bug : clone does not clone originalType
                 // lose check
-                simulate(n, 'mouseover',v);
+                simulate(n, 'mouseover', v);
 
                 waits(100);
 
@@ -258,10 +246,10 @@ KISSY.add(function (S, Dom, Event) {
         describe('fire', function () {
             it("works for mouseenter/leave", function () {
 
-                var n = Dom.create("<div/>"), ret=0;
+                var n = Dom.create("<div/>"), ret = 0;
                 Event.on(n, 'mouseenter', function (e) {
                     expect(e.type).toBe('mouseenter');
-                    ret = 1
+                    ret = 1;
                 });
                 Event.fire(n, 'mouseenter', {
                     relatedTarget: document
@@ -275,6 +263,6 @@ KISSY.add(function (S, Dom, Event) {
         });
 
     });
-},{
-    requires:['dom','event/dom/base']
+}, {
+    requires: ['dom', 'event/dom/base', 'io']
 });

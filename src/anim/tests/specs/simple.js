@@ -106,9 +106,10 @@ KISSY.add(function (S, Dom, Anim, Node) {
     }
 
     function multipleMatrix(m1, m2) {
+        var i;
         if (arguments.length > 2) {
             var ret = m1;
-            for (var i = 1; i < arguments.length; i++) {
+            for (i = 1; i < arguments.length; i++) {
                 ret = multipleMatrix(ret, arguments[i]);
             }
             return ret;
@@ -151,7 +152,7 @@ KISSY.add(function (S, Dom, Anim, Node) {
                 beforeEach(function () {
                     this.addMatchers({
                         toBeAlmostEqual: function (expected) {
-                            return Math.abs(parseInt(this.actual) - parseInt(expected)) < 20;
+                            return Math.abs(parseInt(this.actual, 10) - parseInt(expected, 10)) < 20;
                         },
 
                         toBeAlmostEqualMatrix: function (expected) {
@@ -168,7 +169,7 @@ KISSY.add(function (S, Dom, Anim, Node) {
                         },
 
                         toBeEqual: function (expected) {
-                            return Math.abs(parseInt(this.actual) - parseInt(expected)) < 5;
+                            return Math.abs(parseInt(this.actual, 10) - parseInt(expected, 10)) < 5;
                         }
                     });
                 });
@@ -181,13 +182,13 @@ KISSY.add(function (S, Dom, Anim, Node) {
                 }
 
                 function normalizeColor(c) {
-                    if (c.toLowerCase().lastIndexOf("rgb(") == 0) {
+                    if (c.toLowerCase().lastIndexOf("rgb(") === 0) {
                         var x = [];
                         c.replace(/\d+/g, function (m) {
                             x.push(padding(Number(m).toString(16)));
                         });
                         c = "#" + x.join("");
-                    } else if (c.length == 4) {
+                    } else if (c.length === 4) {
                         c = c.replace(/[^#]/g, function (c) {
                             return c + c;
                         });
@@ -247,8 +248,8 @@ KISSY.add(function (S, Dom, Anim, Node) {
                     runs(function () {
                         expect(normalizeColor(Dom.style(test1, "border-color")))
                             .toBe("#999999");
-                        expect(parseInt(Dom.css(test1, 'width'))).toBeEqual(100);
-                        expect(parseInt(Dom.css(test1, 'height'))).toBeEqual(50);
+                        expect(parseInt(Dom.css(test1, 'width'), 10)).toBeEqual(100);
+                        expect(parseInt(Dom.css(test1, 'height'), 10)).toBeEqual(50);
                         expect(Dom.css(test1, 'left')).toBe("900px");
                         expect(Dom.css(test1, "top")).toBe("285px");
                         Dom.remove(test1);
@@ -282,15 +283,15 @@ KISSY.add(function (S, Dom, Anim, Node) {
                     waits(100);
 
                     runs(function () {
-                        expect(parseInt(div.css('top'))).toBe(20);
-                        expect(parseInt(div.css('left'))).toBe(50);
+                        expect(parseInt(div.css('top'), 10)).toBe(20);
+                        expect(parseInt(div.css('left'), 10)).toBe(50);
                     });
 
                     waits(600);
 
                     runs(function () {
-                        expect(parseInt(div.css('top'))).toBe(100);
-                        expect(parseInt(div.css('left'))).toBe(100);
+                        expect(parseInt(div.css('top'), 10)).toBe(100);
+                        expect(parseInt(div.css('left'), 10)).toBe(100);
                         div.remove();
                     });
                 });
@@ -362,12 +363,12 @@ KISSY.add(function (S, Dom, Anim, Node) {
 
                     waits(100);
                     runs(function () {
-                        expect(parseInt(div.css('opacity'))).not.toBe(1);
+                        expect(parseInt(div.css('opacity'), 10)).not.toBe(1);
                     });
 
                     waits(200);
                     runs(function () {
-                        expect(parseInt(div.css('opacity'))).toBe(1);
+                        expect(parseInt(div.css('opacity'), 10)).toBe(1);
                         div.remove();
                     });
                 });
@@ -402,7 +403,7 @@ KISSY.add(function (S, Dom, Anim, Node) {
 
                     runs(function () {
                         expect(matrix(Dom.css(div, 'transform')))
-                            .toBeAlmostEqualMatrix(expectedMatrix)
+                            .toBeAlmostEqualMatrix(expectedMatrix);
                     });
 
                     runs(function () {
@@ -410,7 +411,8 @@ KISSY.add(function (S, Dom, Anim, Node) {
                     });
                 });
             });
-        }};
+        }
+    };
 }, {
     requires: ['dom', 'anim', 'node']
 });

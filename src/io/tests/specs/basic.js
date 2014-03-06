@@ -3,6 +3,7 @@
  * @author lijing00333@163.com, yiminghe@gmail.com
  */
 KISSY.add(function (S, IO) {
+    /*jshint quotmark:false*/
     describe('IO', function () {
         describe('404/301', function () {
             it('404 get error', function () {
@@ -25,7 +26,7 @@ KISSY.add(function (S, IO) {
                 });
 
                 waitsFor(function () {
-                    return o404 == 1;
+                    return o404 === 1;
                 });
 
                 runs(function () {
@@ -56,7 +57,7 @@ KISSY.add(function (S, IO) {
 
                 waitsFor(function () {
                     // 301 浏览器自动跳转
-                    return o301 == 1;
+                    return o301 === 1;
                 });
 
                 runs(function () {
@@ -85,7 +86,7 @@ KISSY.add(function (S, IO) {
                 });
 
                 waitsFor(function () {
-                    return o404 == 1;
+                    return o404 === 1;
                 });
 
                 runs(function () {
@@ -120,7 +121,7 @@ KISSY.add(function (S, IO) {
 
                 waitsFor(function () {
                     // 301 浏览器自动跳转
-                    return o301 == 1;
+                    return o301 === 1;
                 });
 
                 runs(function () {
@@ -145,7 +146,7 @@ KISSY.add(function (S, IO) {
                 });
 
                 waitsFor(function () {
-                    return ret404 == 0;
+                    return ret404 === 0;
                 });
             });
 
@@ -171,7 +172,7 @@ KISSY.add(function (S, IO) {
                 });
 
                 waitsFor(function () {
-                    return ret404 == 0;
+                    return ret404 === 0;
                 });
             });
         });
@@ -180,7 +181,7 @@ KISSY.add(function (S, IO) {
             it('自定义callback', function () {
                 var ok = false;
                 runs(function () {
-                    window['customCallback'] = function (data) {
+                    window.customCallback = function (data) {
                         ok = true;
                         expect(typeof data).toBe('object');
                         expect(data.callback).toBe('customCallback');
@@ -194,11 +195,11 @@ KISSY.add(function (S, IO) {
 
                 runs(function () {
                     try {
-                        delete window['customCallback'];
+                        delete window.customCallback;
                     } catch (e) {
-                        window['customCallback'] = undefined;
+                        window.customCallback = undefined;
                     }
-                })
+                });
             });
 
             it('does not have content-type', function () {
@@ -262,11 +263,11 @@ KISSY.add(function (S, IO) {
             it('带参数提交jsonp，获取回调参数', function () {
                 var ok = 0;
                 IO.jsonp('/kissy/src/io/tests/data/interface.jss?sleep=0', {
-                    my_param: 'taobao'
+                    myParam: 'taobao'
                 }, function (data) {
                     expect(typeof data).toBe('object');
                     expect(data).not.toBe(undefined);
-                    expect(data['my_param']).toBe('taobao');
+                    expect(data.myParam).toBe('taobao');
                     ok = 1;
                 });
                 waitsFor(function () {
@@ -282,11 +283,11 @@ KISSY.add(function (S, IO) {
                     url += ':' + window.SERVER_CONFIG.ports[1];
                 }
                 IO.jsonp('//' + url + '/kissy/src/io/tests/data/interface.jss', {
-                    my_param: 'taobao'
+                    myParam: 'taobao'
                 }, function (data) {
                     expect(typeof data).toBe('object');
                     expect(data).not.toBe(undefined);
-                    expect(data['my_param']).toBe('taobao');
+                    expect(data.myParam).toBe('taobao');
                     ok = 1;
                 });
                 waitsFor(function () {
@@ -309,7 +310,7 @@ KISSY.add(function (S, IO) {
                         d = o;
                     }
                 });
-                expect(d['name']).toBe('test');
+                expect(d.name).toBe('test');
             });
 
             it('post 同步加载,等待2秒钟继续执行', function () {
@@ -323,7 +324,7 @@ KISSY.add(function (S, IO) {
                             d = o;
                         }
                     });
-                    expect(d['name']).toBe('test');
+                    expect(d.name).toBe('test');
                 });
             });
 
@@ -339,7 +340,7 @@ KISSY.add(function (S, IO) {
                     ok = true;
                     expect(typeof data).toBe('object');
                     expect(data).not.toBe(undefined);
-                    expect(data['name']).toBe('test');
+                    expect(data.name).toBe('test');
                 });
 
                 waitsFor(function () {
@@ -356,7 +357,7 @@ KISSY.add(function (S, IO) {
                     expect(typeof data).toBe('string');
                     var o = S.parseJson(data);
                     expect(o).not.toBe(undefined);
-                    expect(o['name']).toBe('test');
+                    expect(o.name).toBe('test');
                     expect(xhr.responseText).toBe(data);
                 });
 
@@ -379,8 +380,8 @@ KISSY.add(function (S, IO) {
                     ok = true;
                     var o = S.parseJson(data);
                     expect(o).not.toBe(undefined);
-                    expect(o['name']).toBe('test');
-                    expect(o['company']).toBe('www.taobao.com');
+                    expect(o.name).toBe('test');
+                    expect(o.company).toBe('www.taobao.com');
 
                     expect(textStatus).toBe('success');
                     expect(xhr.responseText).toBe(data);
@@ -402,8 +403,8 @@ KISSY.add(function (S, IO) {
 
                         var o = S.parseJson(data);
                         expect(o).not.toBe(undefined);
-                        expect(o['name']).toBe('test');
-                        expect(o['company']).toBe('www.taobao.com');
+                        expect(o.name).toBe('test');
+                        expect(o.company).toBe('www.taobao.com');
 
                         expect(textStatus).toBe('success');
                         expect(xhr.responseText).toBe(data);
@@ -432,7 +433,7 @@ KISSY.add(function (S, IO) {
 
                 runs(function () {
                     expect(typeof o).toBe('object');
-                    expect(o['name']).toBe('test');
+                    expect(o.name).toBe('test');
                 });
 
             });
@@ -444,7 +445,7 @@ KISSY.add(function (S, IO) {
                 }, function (data) {
                     ok = true;
                     expect(typeof data).toBe('object');
-                    expect(data['foo']).toBe('sk2');
+                    expect(data.foo).toBe('sk2');
                 }, 'json');
 
                 waitsFor(function () {
@@ -471,7 +472,7 @@ KISSY.add(function (S, IO) {
 
                 runs(function () {
                     expect(typeof o).toBe('object');
-                    expect(o['name']).toBe('test');
+                    expect(o.name).toBe('test');
                 });
 
 
@@ -486,7 +487,7 @@ KISSY.add(function (S, IO) {
                     IO.post('/kissy/src/io/tests/data/interface.jss?type=post&dataType=script',
                         function (data) {
                             ok = true;
-                            expect(data).toBe("var global_script_test = 500;");
+                            expect(data).toBe("var globalScriptTest = 500;");
                         }, 'script');
                 });
 
@@ -495,11 +496,11 @@ KISSY.add(function (S, IO) {
                 });
 
                 runs(function () {
-                    expect(window['global_script_test']).toBe(500);
+                    expect(window.globalScriptTest).toBe(500);
                     try {
-                        delete window['global_script_test'];
+                        delete window.globalScriptTest;
                     } catch (e) {
-                        window['global_script_test'] = undefined;
+                        window.globalScriptTest = undefined;
                     }
                 });
 
@@ -516,7 +517,7 @@ KISSY.add(function (S, IO) {
                         '&contentType=text/javascript',
                         function (data) {
                             ok = true;
-                            expect(data).toBe("var global_script_test = 500;");
+                            expect(data).toBe("var globalScriptTest = 500;");
                         });
                 });
 
@@ -525,11 +526,11 @@ KISSY.add(function (S, IO) {
                 });
 
                 runs(function () {
-                    expect(window['global_script_test']).toBe(500);
+                    expect(window.globalScriptTest).toBe(500);
                     try {
-                        delete window['global_script_test'];
+                        delete window.globalScriptTest;
                     } catch (e) {
-                        window['global_script_test'] = undefined;
+                        window.globalScriptTest = undefined;
                     }
                 });
 
@@ -697,9 +698,9 @@ KISSY.add(function (S, IO) {
 
                     var o = S.parseJson(data);
                     expect(o).not.toBe(undefined);
-                    expect(o['t']).toBe('get');
-                    expect(o['name']).toBe('test');
-                    expect(o['birth']).toBe('2010/11/23');
+                    expect(o.t).toBe('get');
+                    expect(o.name).toBe('test');
+                    expect(o.birth).toBe('2010/11/23');
 
                     expect(textStatus).toBe('success');
                     expect(xhr.responseText).toBe(data);
@@ -717,7 +718,7 @@ KISSY.add(function (S, IO) {
                 IO.get('/kissy/src/io/tests/data/interface.jss?t=get', {'data': 'hello'}, function (data) {
                     ok = true;
                     var o = S.parseJson(data);
-                    expect(o['data']).toBe('hello');
+                    expect(o.data).toBe('hello');
                 });
 
                 waitsFor(function () {
@@ -744,7 +745,7 @@ KISSY.add(function (S, IO) {
 
                 runs(function () {
                     expect(typeof o).toBe('object');
-                    expect(o['name']).toBe('test');
+                    expect(o.name).toBe('test');
                 });
 
                 // 注意：在 jQuery 里，当 dataType 为 json, 但 url 里有 callback=? 时，会自动转换到 jsonp 模式
@@ -776,21 +777,21 @@ KISSY.add(function (S, IO) {
 
                 runs(function () {
                     expect(typeof o).toBe('object');
-                    expect(o['name']).toBe('test');
+                    expect(o.name).toBe('test');
                 });
             });
 
             it('能正确处理 dataType 为 script 的情况', function () {
                 var ok;
 
-                window['global_script_test'] = 0;
+                window.globalScriptTest = 0;
 
                 runs(function () {
                     ok = false;
 
                     IO.get('/kissy/src/io/tests/data/interface.jss?t=get&dataType=script', function (d) {
                         ok = true;
-                        expect(d).toBe("var global_script_test = 200;");
+                        expect(d).toBe("var globalScriptTest = 200;");
                     }, 'script');
                 });
 
@@ -799,7 +800,7 @@ KISSY.add(function (S, IO) {
                 }, 'success', 500);
 
                 runs(function () {
-                    expect(window['global_script_test']).toBe(200);
+                    expect(window.globalScriptTest).toBe(200);
                 });
             });
 

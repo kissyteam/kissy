@@ -5,12 +5,12 @@
  */
 KISSY.add(function (S, StyleSheet, Node) {
     var $ = Node.all;
-
+    /*jshint quotmark:false*/
     function filter(str) {
         var left = str.indexOf('{'), right = str.indexOf('}'),
             remain;
 
-        if (left != -1) {
+        if (left !== -1) {
             remain = str.slice(left + 1, right);
         } else {
             remain = str;
@@ -22,7 +22,7 @@ KISSY.add(function (S, StyleSheet, Node) {
             .replace(/rgb\(51,51,51\)/, "#333333")
             .replace(/rgb\(0,0,0\)/, "#000000");
 
-        if (left != -1) {
+        if (left !== -1) {
             remain = str.slice(0, left + 1) + remain + str.slice(right);
         }
 

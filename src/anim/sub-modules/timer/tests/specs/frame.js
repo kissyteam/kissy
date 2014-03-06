@@ -3,12 +3,11 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
-    var Dom = require('dom');
     var Anim = require('anim');
     var Node = require('node');
     var $ = Node.all;
     describe('anim-frame config', function () {
-        it("accept custom animation property", function () {
+        it('accept custom animation property', function () {
             //非标准的css属性渐变
             var anyPlainObject = {
                 r: 1
@@ -19,8 +18,8 @@ KISSY.add(function (S, require) {
             var anim = new Anim(anyPlainObject, {
                 r: 80
             }, {
-                easing: "swing",
-                duration: .5,
+                easing: 'swing',
+                duration: 0.5,
                 frame: function (anim, fx) {
                     finalRadius = fx.val;
                 }
@@ -70,16 +69,16 @@ KISSY.add(function (S, require) {
             });
         });
 
-        it("should call frame", function () {
+        it('should call frame', function () {
             var stoppedCalled = 0,
-                t = $("<div style='height:100px;width:100px;overflow: hidden;'></div>").appendTo('body');
+                t = $('<div style="height:100px;width:100px;overflow: hidden;"></div>').appendTo('body');
 
             var anim = new Anim(t, {
                 width: 10
             }, {
                 duration: 1,
                 frame: function (_, fx) {
-                    if (fx.pos == 1) {
+                    if (fx.pos === 1) {
                         stoppedCalled = 1;
                     }
                     t.css('height', fx.val);
@@ -89,23 +88,23 @@ KISSY.add(function (S, require) {
             anim.run();
             waits(100);
             runs(function () {
-                expect(t.css('width')).not.toBe("100px");
-                expect(t.css('height')).not.toBe("100px");
+                expect(t.css('width')).not.toBe('100px');
+                expect(t.css('height')).not.toBe('100px');
                 anim.stop(1);
             });
             waits(100);
             runs(function () {
                 expect(stoppedCalled).toBe(1);
-                expect(t.css('width')).toBe("10px");
-                expect(t.css('height')).toBe("10px");
+                expect(t.css('width')).toBe('10px');
+                expect(t.css('height')).toBe('10px');
                 t.remove();
             });
         });
 
-        it("frame can call stop", function () {
-            var t = $("<div style='height:100px;" +
-                "width:100px;overflow: hidden;'>" +
-                "</div>").appendTo('body');
+        it('frame can call stop', function () {
+            var t = $('<div style="height:100px;' +
+                'width:100px;overflow: hidden;">' +
+                '</div>').appendTo('body');
             var start = S.now();
             var called = 0;
             var anim = new Anim(t, {
@@ -114,7 +113,7 @@ KISSY.add(function (S, require) {
             }, {
                 duration: 0.5,
                 frame: function (_, fx) {
-                    if (fx.pos > 0.5 && fx.pos != 1) {
+                    if (fx.pos > 0.5 && fx.pos !== 1) {
                         anim.stop(1);
                     } else {
                         t.css(fx.prop, fx.val);
@@ -128,19 +127,19 @@ KISSY.add(function (S, require) {
             anim.run();
             waits(300);
             runs(function () {
-                expect(t.css('width')).toBe("10px");
+                expect(t.css('width')).toBe('10px');
                 t.remove();
             });
             waits(100);
             runs(function () {
                 expect(called).toBe(1);
-                expect(t.css('width')).toBe("10px");
+                expect(t.css('width')).toBe('10px');
                 t.remove();
             });
         });
 
-        it("frame can call stop", function () {
-            var t = $("<div style='height:100px;width:100px;overflow: hidden;'></div>").appendTo('body');
+        it('frame can call stop', function () {
+            var t = $('<div style="height:100px;width:100px;overflow: hidden;"></div>').appendTo('body');
             var called = 0;
             var calledComplete = 0;
             var anim = new Anim(t, {
@@ -164,12 +163,12 @@ KISSY.add(function (S, require) {
             waits(600);
             runs(function () {
                 expect(called).toBe(1);
-                expect(t.css('width')).not.toBe("10px");
+                expect(t.css('width')).not.toBe('10px');
             });
             waits(100);
             runs(function () {
                 expect(calledComplete).toBe(0);
-                expect(t.css('width')).not.toBe("10px");
+                expect(t.css('width')).not.toBe('10px');
             });
             waits(500);
             runs(function () {
@@ -179,8 +178,8 @@ KISSY.add(function (S, require) {
         });
 
 // to be removed, do not use this feature
-        it("frame can ignore native update", function () {
-            var t = $("<div style='height:100px;width:100px;overflow: hidden;'></div>").appendTo('body');
+        it('frame can ignore native update', function () {
+            var t = $('<div style="height:100px;width:100px;overflow: hidden;"></div>').appendTo('body');
             var anim = new Anim(t, {
                 width: 10
             }, {
@@ -192,19 +191,19 @@ KISSY.add(function (S, require) {
             anim.run();
             waits(100);
             runs(function () {
-                expect(t.css('width')).toBe("100px");
+                expect(t.css('width')).toBe('100px');
                 anim.stop(1);
             });
             waits(100);
             runs(function () {
-                expect(t.css('width')).toBe("100px");
+                expect(t.css('width')).toBe('100px');
                 t.remove();
             });
         });
 
 // to be removed, do not use this feature
-        it("frame can stop early and ignore native update", function () {
-            var t = $("<div style='height:100px;width:100px;overflow: hidden;'></div>").appendTo('body');
+        it('frame can stop early and ignore native update', function () {
+            var t = $('<div style="height:100px;width:100px;overflow: hidden;"></div>').appendTo('body');
             var start = S.now();
             var called = 0;
             var anim = new Anim(t, {
@@ -224,19 +223,19 @@ KISSY.add(function (S, require) {
             waits(500);
             runs(function () {
                 expect(called).toBe(1);
-                expect(t.css('width')).toBe("100px");
+                expect(t.css('width')).toBe('100px');
                 anim.stop(1);
             });
             waits(500);
             runs(function () {
-                expect(t.css('width')).toBe("100px");
+                expect(t.css('width')).toBe('100px');
                 t.remove();
             });
         });
 
 // to be removed, do not use this feature
-        it("frame can stop early and perform native update", function () {
-            var t = $("<div style='height:100px;width:100px;overflow: hidden;'></div>").appendTo('body');
+        it('frame can stop early and perform native update', function () {
+            var t = $('<div style="height:100px;width:100px;overflow: hidden;"></div>').appendTo('body');
             var start = S.now();
             var called = 0;
             var anim = new Anim(t, {
@@ -257,12 +256,12 @@ KISSY.add(function (S, require) {
             waits(500);
             runs(function () {
                 expect(called).toBe(1);
-                expect(t.css('width')).toBe("10px");
+                expect(t.css('width')).toBe('10px');
                 anim.stop(1);
             });
             waits(500);
             runs(function () {
-                expect(t.css('width')).toBe("10px");
+                expect(t.css('width')).toBe('10px');
                 t.remove();
             });
         });

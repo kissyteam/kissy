@@ -3,11 +3,11 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, Event, Dom) {
-
+    /*jshint quotmark:false*/
     describe("domain in event", function () {
         it("hashchange should consider domain", function () {
 
-            if (S.UA.ie == 6) {
+            if (S.UA.ie === 6) {
                 return;
             }
 

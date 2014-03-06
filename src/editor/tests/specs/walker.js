@@ -3,12 +3,13 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, Editor) {
-    var Dom = S.DOM, $ = S.all;
+    /*jshint quotmark:false*/
+
+    var $ = S.all;
     var Walker = Editor.Walker;
     var Range = Editor.Range;
 
     describe("walker", function () {
-
         it("simple works", function () {
             var div = $("<div>" +
                 "<span>" +
@@ -52,7 +53,6 @@ KISSY.add(function (S, Editor) {
             expect(node).toBe(null);
             div.remove();
         });
-
 
         it("evaluator works", function () {
             var div = $("<div>" +
@@ -201,9 +201,7 @@ KISSY.add(function (S, Editor) {
             div.remove();
             div2.remove();
         });
-
     });
-
 },{
     requires:['editor']
 });

@@ -4,7 +4,7 @@
  */
 KISSY.add(function (S, Dom) {
     function matrix(transform) {
-        transform = transform.split(")");
+        transform = transform.split(')');
         var trim = S.trim,
             i = -1,
             l = transform.length - 1,
@@ -14,21 +14,21 @@ KISSY.add(function (S, Dom) {
 
         // Loop through the transform properties, parse and multiply them
         while (++i < l) {
-            split = transform[i].split("(");
+            split = transform[i].split('(');
             prop = trim(split[0]);
             val = split[1];
             curr = [1, 0, 0, 1, 0, 0];
             switch (prop) {
-                case "translateX":
+                case 'translateX':
                     curr[4] = parseInt(val, 10);
                     break;
 
-                case "translateY":
+                case 'translateY':
                     curr[5] = parseInt(val, 10);
                     break;
 
                 case 'translate':
-                    val = val.split(",");
+                    val = val.split(',');
                     curr[4] = parseInt(val[0], 10);
                     curr[5] = parseInt(val[1] || 0, 10);
                     break;
@@ -50,21 +50,21 @@ KISSY.add(function (S, Dom) {
                     break;
 
                 case 'scale':
-                    val = val.split(",");
+                    val = val.split(',');
                     curr[0] = +val[0];
                     curr[3] = val.length > 1 ? +val[1] : +val[0];
                     break;
 
-                case "skewX":
+                case 'skewX':
                     curr[2] = Math.tan(toRadian(val));
                     break;
 
-                case "skewY":
+                case 'skewY':
                     curr[1] = Math.tan(toRadian(val));
                     break;
 
                 case 'matrix':
-                    val = val.split(",");
+                    val = val.split(',');
                     curr[0] = +val[0];
                     curr[1] = +val[1];
                     curr[2] = +val[2];
@@ -95,9 +95,10 @@ KISSY.add(function (S, Dom) {
     }
 
     function multipleMatrix(m1, m2) {
+        var i;
         if (arguments.length > 2) {
             var ret = m1;
-            for (var i = 1; i < arguments.length; i++) {
+            for (i = 1; i < arguments.length; i++) {
                 ret = multipleMatrix(ret, arguments[i]);
             }
             return ret;
@@ -123,7 +124,7 @@ KISSY.add(function (S, Dom) {
 
     // converts an angle string in any unit to a radian Float
     function toRadian(value) {
-        return value.indexOf("deg") > -1 ?
+        return value.indexOf('deg') > -1 ?
             parseInt(value, 10) * (Math.PI * 2 / 360) :
             parseFloat(value);
     }
@@ -141,11 +142,11 @@ KISSY.add(function (S, Dom) {
                     return toBeAlmostEqual(this.actual, expected);
                 },
                 toBeAlmostEqualMatrix: function (expected) {
-                    var m1=this.actual;
-                    for(var i=0;i<m1.length;i++){
-                        var row=m1[i];
-                        for(var j=0;j<row.length;j++){
-                            if(!toBeAlmostEqual(m1[i][j],expected[i][j])){
+                    var m1 = this.actual;
+                    for (var i = 0; i < m1.length; i++) {
+                        var row = m1[i];
+                        for (var j = 0; j < row.length; j++) {
+                            if (!toBeAlmostEqual(m1[i][j], expected[i][j])) {
                                 return false;
                             }
                         }
@@ -162,8 +163,8 @@ KISSY.add(function (S, Dom) {
             Dom.remove(div);
         });
 
-        function compare(val){
-            expect(Dom.css(div,'transform')).toBe('none');
+        function compare(val) {
+            expect(Dom.css(div, 'transform')).toBe('none');
             var expectedMatrix = matrix(val);
             Dom.css(div, 'transform', val);
             var myMatrix = Dom.css(div, 'transform');
@@ -172,19 +173,19 @@ KISSY.add(function (S, Dom) {
         }
 
         it('works for rotate', function () {
-            var val='rotate(30deg)';
+            var val = 'rotate(30deg)';
             compare(val);
         });
 
         it('works for origin', function () {
-            var val='rotate(30deg)';
-            Dom.css(div,'transform-origin','0 0');
+            var val = 'rotate(30deg)';
+            Dom.css(div, 'transform-origin', '0 0');
             compare(val);
         });
 
         it('works for complex condition', function () {
-            var val='translate(49px) rotate(30deg) skewX(30deg)';
-            Dom.css(div,'transform-origin','0 0');
+            var val = 'translate(49px) rotate(30deg) skewX(30deg)';
+            Dom.css(div, 'transform-origin', '0 0');
             compare(val);
         });
     });

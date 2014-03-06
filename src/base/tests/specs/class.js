@@ -359,7 +359,9 @@ KISSY.add(function (S, Base) {
                 }
             });
 
-            new Y();
+            var y = new Y();
+
+            expect(y).not.toBe(null);
 
             expect(order).toEqual([11, 2, 33]);
         });

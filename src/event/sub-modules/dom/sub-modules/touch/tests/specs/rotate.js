@@ -143,28 +143,27 @@ KISSY.add(function (S, Node) {
                         expect(rotateStartCalled).toBe(1);
                     });
 
-                    for (var i = 0; i < step; i++) {
+                    function move(i) {
+                        return function () {
+                            touches[1].pageX = startX + (endX - startX) / step * i;
 
-                        waits(30);
-                        (function (i) {
-                            runs(function () {
-
-                                touches[1].pageX = startX + (endX - startX) / step * i;
-
-                                touches[1].pageY = startY + (endY - startY) / step * i;
+                            touches[1].pageY = startY + (endY - startY) / step * i;
 
 //                            console.log(touches[1].pageX);
 //                            console.log(touches[1].pageY);
 //                            console.log(touches[1].target.id);
 
-                                jasmine.simulate(t1[0], 'touchmove', {
-                                    touches: touches,
-                                    changedTouches: touches1,
-                                    targetTouches: touches1
-                                });
-
+                            jasmine.simulate(t1[0], 'touchmove', {
+                                touches: touches,
+                                changedTouches: touches1,
+                                targetTouches: touches1
                             });
-                        })(i);
+                        };
+                    }
+
+                    for (var i = 0; i < step; i++) {
+                        waits(30);
+                        runs(move(i));
                     }
 
                     waits(30);
@@ -303,28 +302,29 @@ KISSY.add(function (S, Node) {
                         });
                     });
 
-                    for (var i = 0; i < step; i++) {
+                    function move(i) {
+                        return function () {
 
-                        waits(30);
-                        (function (i) {
-                            runs(function () {
+                            touches[1].pageX = startX + (endX - startX) / step * i;
 
-                                touches[1].pageX = startX + (endX - startX) / step * i;
-
-                                touches[1].pageY = startY + (endY - startY) / step * i;
+                            touches[1].pageY = startY + (endY - startY) / step * i;
 
 //                            console.log(touches[1].pageX);
 //                            console.log(touches[1].pageY);
 //                            console.log(touches[1].target.id);
 
-                                jasmine.simulate(t1[0], 'touchmove', {
-                                    touches: touches,
-                                    changedTouches: touches1,
-                                    targetTouches: touches1
-                                });
-
+                            jasmine.simulate(t1[0], 'touchmove', {
+                                touches: touches,
+                                changedTouches: touches1,
+                                targetTouches: touches1
                             });
-                        })(i);
+
+                        };
+                    }
+
+                    for (var i = 0; i < step; i++) {
+                        waits(30);
+                        runs(move(i));
                     }
 
                     waits(30);
@@ -433,24 +433,25 @@ KISSY.add(function (S, Node) {
                         });
                     });
 
-                    for (var i = 0; i < step; i++) {
+                    function move(i){
+                        return function () {
 
-                        waits(30);
-                        (function (i) {
-                            runs(function () {
+                            touches[1].pageX = startX + (endX - startX) / step * i;
 
-                                touches[1].pageX = startX + (endX - startX) / step * i;
+                            touches[1].pageY = startY + (endY - startY) / step * i;
 
-                                touches[1].pageY = startY + (endY - startY) / step * i;
-
-                                jasmine.simulate(t1[0], 'touchmove', {
-                                    touches: touches,
-                                    changedTouches: touches1,
-                                    targetTouches: touches1
-                                });
-
+                            jasmine.simulate(t1[0], 'touchmove', {
+                                touches: touches,
+                                changedTouches: touches1,
+                                targetTouches: touches1
                             });
-                        })(i);
+
+                        };
+                    }
+
+                    for (var i = 0; i < step; i++) {
+                        waits(30);
+                        runs(move(i));
                     }
 
                     waits(30);

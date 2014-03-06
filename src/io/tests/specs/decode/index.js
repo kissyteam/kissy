@@ -11,7 +11,7 @@ KISSY.add(function (S, io) {
                 },
                 // dataType:'json',
                 success: function (data) {
-                    expect(data.originalUrl.toLowerCase()).toBe("/kissy/src/io/tests/specs/decode/t.jss?y=3%2c4&t=1,2");
+                    expect(data.originalUrl.toLowerCase()).toBe('/kissy/src/io/tests/specs/decode/t.jss?y=3%2c4&t=1,2');
                     expect(data.t).toBe('1,2');
                     expect(data.y).toBe('3,4');
                     ok = 1;

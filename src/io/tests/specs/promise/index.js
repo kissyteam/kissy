@@ -3,7 +3,7 @@ KISSY.add(function (S, io) {
 
     var URL = '/kissy/src/io/tests/specs/promise/gen-json.jss';
 
-    describe("S.io as a promise", function () {
+    describe('S.io as a promise', function () {
         it('context should works as before', function () {
             var c = {}, ok = 0;
             io({
@@ -48,7 +48,7 @@ KISSY.add(function (S, io) {
                 expect(this).toBe(window);
             });
             waitsFor(function () {
-                return ok == 2;
+                return ok === 2;
             }, 10000);
         });
 
@@ -66,25 +66,25 @@ KISSY.add(function (S, io) {
             }, function (v) {
                 // S.log(arguments);
                 ok++;
-                expect(v[1]).toBe("Not Found");
+                expect(v[1]).toBe('Not Found');
             });
             r.fail(function (v) {
                 // S.log(arguments);
                 ok++;
-                expect(v[1]).toBe("Not Found");
+                expect(v[1]).toBe('Not Found');
             });
             r.fin(function (v, ret) {
                 // S.log(arguments);
                 ok++;
-                expect(v[1]).toBe("Not Found");
+                expect(v[1]).toBe('Not Found');
                 expect(ret).toBe(false);
             });
             waitsFor(function () {
-                return ok == 3;
+                return ok === 3;
             }, 10000);
         });
 
-        it("should support chained value", function () {
+        it('should support chained value', function () {
             var r = io({
                 url: URL,
                 context: {},
@@ -110,7 +110,7 @@ KISSY.add(function (S, io) {
             });
         });
 
-        it("should support nested promise", function () {
+        it('should support nested promise', function () {
             var r = io({
                 url: URL,
                 context: {},
@@ -150,7 +150,7 @@ KISSY.add(function (S, io) {
                 },
                 dataType: 'json'
             }).then(function () {
-                    throw new Error('haha')
+                    throw new Error('haha');
                 }).then(function () {
                     completeCalled = 1;
                 }, function (e) {
@@ -159,7 +159,7 @@ KISSY.add(function (S, io) {
                 });
 
             waitsFor(function () {
-                return completeCalled
+                return completeCalled;
             });
 
             waits(30);
@@ -179,7 +179,7 @@ KISSY.add(function (S, io) {
                 },
                 dataType: 'json',
                 success: function () {
-                    throw new Error('haha')
+                    throw new Error('haha');
                 },
                 complete: function () {
                     completeCalled = 1;
@@ -192,7 +192,7 @@ KISSY.add(function (S, io) {
                 });
 
             waitsFor(function () {
-                return completeCalled
+                return completeCalled;
             });
 
             waits(30);
@@ -202,7 +202,7 @@ KISSY.add(function (S, io) {
             });
         });
 
-        it("should support Promise.all", function () {
+        it('should support Promise.all', function () {
             var r = io({
                 url: URL,
                 context: {},

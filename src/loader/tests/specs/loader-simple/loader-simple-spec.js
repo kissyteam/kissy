@@ -2,6 +2,8 @@
  * test loader
  * @author yiminghe@gmail.com
  */
+/*jshint quotmark:false*/
+/*global $*/
 (function (S) {
     var d = window.location.href.replace(/[^/]*$/, "") + "../specs/loader-simple";
     var run = function (combine) {

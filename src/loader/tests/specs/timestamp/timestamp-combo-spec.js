@@ -1,7 +1,7 @@
+/*jshint quotmark:false*/
 describe("timestamp for individual module works in combine mode", function () {
     var S = KISSY;
     var host = location.host;
-    var combine = true;
 
     beforeEach(function () {
         window.TIMESTAMP_X = 0;
@@ -54,7 +54,7 @@ describe("timestamp for individual module works in combine mode", function () {
 
         var comboUrls = loader.getComboUrls(allModNames);
 
-        expect(comboUrls.js['timestamp'][0].path)
+        expect(comboUrls.js.timestamp[0].path)
             .toBe("http://" + host +
                 "/kissy/src/loader/tests/specs/timestamp/??y.js,x.js,z.js?t=a.js");
 

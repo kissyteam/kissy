@@ -1,3 +1,4 @@
+/*jshint quotmark:false*/
 describe("getScript when cache", function () {
     var S = KISSY;
     // ie6
@@ -21,7 +22,7 @@ describe("getScript when cache", function () {
             }
         });
         waitsFor(function () {
-            return ok == 1;
+            return ok === 1;
         });
     });
 });

@@ -6,11 +6,9 @@
 KISSY.add(function (S, Node, DD, IO) {
     var $=Node.all;
     var Draggable = DD.Draggable, Dom = S.DOM;
-    var UA = S.UA;
-
-
+    
     var ie = S.UA.ieMode;
-    if (ie == 9 || ie == 11) {
+    if (ie === 9 || ie === 11) {
         return;
     }
 
@@ -32,10 +30,10 @@ KISSY.add(function (S, Node, DD, IO) {
         beforeEach(function () {
             this.addMatchers({
                 toBeAlmostEqual: function (expected) {
-                    return Math.abs(parseInt(this.actual) - parseInt(expected)) < 20;
+                    return Math.abs(parseInt(this.actual,10) - parseInt(expected,10)) < 20;
                 },
                 toBeEqual: function (expected) {
-                    return Math.abs(parseInt(this.actual) - parseInt(expected)) < 5;
+                    return Math.abs(parseInt(this.actual,10) - parseInt(expected,10)) < 5;
                 }
             });
         });
@@ -44,8 +42,8 @@ KISSY.add(function (S, Node, DD, IO) {
 
         it('should not drag before mousedown while mousemove', function () {
 
-            var drag = Node.one("#drag_before"),
-                dragHeader = Node.one("#dragHeader_before");
+            var drag = Node.one('#drag_before'),
+                dragHeader = Node.one('#dragHeader_before');
             var action = new Draggable({
                     node: drag,
                     move: 1,
@@ -75,8 +73,8 @@ KISSY.add(function (S, Node, DD, IO) {
 
         it('should drag after mousedown while mousemove after exceeding clickPixelThresh', function () {
 
-            var drag = Node.one("#drag"),
-                dragHeader = Node.one("#dragHeader"),
+            var drag = Node.one('#drag'),
+                dragHeader = Node.one('#dragHeader'),
                 scrollLeft = Dom.scrollLeft(),
                 scrollTop = Dom.scrollTop();
             var action = new Draggable({
@@ -96,17 +94,18 @@ KISSY.add(function (S, Node, DD, IO) {
                 });
             });
 
+            function move() {
+                jasmine.simulate(document, 'mousemove', {
+                    clientX: xy.left - 10 - scrollLeft,
+                    clientY: xy.top - 10 - scrollTop
+                });
+            }
+
             for (var i = 0; i < 10; i++) {
                 waits(30);
 
                 // 10px move to start
-                runs(function () {
-
-                    jasmine.simulate(document, 'mousemove', {
-                        clientX: xy.left - 10 - scrollLeft,
-                        clientY: xy.top - 10 - scrollTop
-                    });
-                });
+                runs(move);
             }
 
             waits(100);
@@ -142,8 +141,8 @@ KISSY.add(function (S, Node, DD, IO) {
         it('should drag after mousedown while mousemove after bufferTime', function () {
 
 
-            var drag = Node.one("#drag"),
-                dragHeader = Node.one("#dragHeader");
+            var drag = Node.one('#drag'),
+                dragHeader = Node.one('#dragHeader');
 
             var action = new Draggable({
                 node: drag,
@@ -192,8 +191,8 @@ KISSY.add(function (S, Node, DD, IO) {
         });
 
         it('should not drag after mouseup while mousemove', function () {
-            var drag = Node.one("#drag_after"),
-                dragHeader = Node.one("#dragHeader_after");
+            var drag = Node.one('#drag_after'),
+                dragHeader = Node.one('#dragHeader_after');
 
             var action = new Draggable({
                 node: drag,
@@ -255,8 +254,8 @@ KISSY.add(function (S, Node, DD, IO) {
         it('disabled works', function () {
 
 
-            var drag = Node.one("#drag"),
-                dragHeader = Node.one("#dragHeader");
+            var drag = Node.one('#drag'),
+                dragHeader = Node.one('#dragHeader');
 
             var action = new Draggable({
                 node: drag,
@@ -304,9 +303,9 @@ KISSY.add(function (S, Node, DD, IO) {
         });
 
         runs(function () {
-            Node.one("#drag_before").remove();
-            Node.one("#drag").remove();
-            Node.one("#drag_after").remove();
+            Node.one('#drag_before').remove();
+            Node.one('#drag').remove();
+            Node.one('#drag_after').remove();
         });
     });
 }, {

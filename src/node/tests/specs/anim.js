@@ -4,23 +4,24 @@
  */
 KISSY.add(function (S, Anim, Node) {
     var $ = Node.all;
-
+    /*jshint quotmark:false*/
     return {
         run: function () {
             function padding(s) {
-                if (s.length == 1)
+                if (s.length === 1) {
                     return "0" + s;
+                }
                 return s;
             }
 
             function normalizeColor(c) {
-                if (c.toLowerCase().lastIndexOf("rgb(") == 0) {
+                if (c.toLowerCase().lastIndexOf("rgb(") === 0) {
                     var x = [];
                     c.replace(/\d+/g, function (m) {
                         x.push(padding(Number(m).toString(16)));
                     });
                     c = "#" + x.join("");
-                } else if (c.length == 4) {
+                } else if (c.length === 4) {
                     c = c.replace(/[^#]/g, function (c) {
                         return c + c;
                     });
@@ -36,7 +37,7 @@ KISSY.add(function (S, Anim, Node) {
                     waits(10);
                     runs(function () {
                         expect(n.css('opacity')).toBe('1');
-                        n.fadeOut(.5);
+                        n.fadeOut(0.5);
                     });
                     waits(100);
                     runs(function () {

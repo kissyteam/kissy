@@ -3,6 +3,8 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, Dom) {
+    /*jshint quotmark:false*/
+    var $ = window.jQuery;
     var tpl = '<div id="test-scroll" style="position:absolute;top:0;' +
             'left:0;width:300px;' +
             'background-color:white;">' +
@@ -24,29 +26,22 @@ KISSY.add(function (S, Dom) {
             '<div id="scroll-iframe-holder"></div>' +
             new Array(20).join('<p>x</p>') +
             '</div>',
-        iframeTpl = '<iframe src="../others/offset/test-dom-offset-iframe.html"\
-        id="test-iframe"\
-        style="border:1px solid black; "\
-        width="200"\
-        height="200"\
-        frameborder="0"\
-        scrolling="no"\
-        ></iframe>';
+        iframeTpl = '<iframe src="../others/offset/test-dom-offset-iframe.html" id="test-iframe" style="border:1px solid black; " ' +
+            'width="200" height="200" frameborder="0" scrolling="no" ></iframe>';
 
     describe('scroll', function () {
         var container ,
-            node , container_border_width,
-            container_client_height,
-            node_height;
+            node , containerBorderWidth,
+            containerClientHeight,
+            nodeHeight;
 
         beforeEach(function () {
             $('body').append(tpl);
             container = Dom.get('#scroll-container');
             node = Dom.get('#scroll-el');
-            container_border_width = parseInt(Dom.css(container,
-                "border-top-width"));
-            container_client_height = container.clientHeight;
-            node_height = node.offsetHeight;
+            containerBorderWidth = parseInt(Dom.css(container, "border-top-width"), 10);
+            containerClientHeight = container.clientHeight;
+            nodeHeight = node.offsetHeight;
         });
 
         afterEach(function () {
@@ -56,10 +51,10 @@ KISSY.add(function (S, Dom) {
         beforeEach(function () {
             this.addMatchers({
                 toBeAlmostEqual: function (expected) {
-                    return Math.abs(parseInt(this.actual) - parseInt(expected)) < 20;
+                    return Math.abs(parseInt(this.actual,10) - parseInt(expected,10)) < 20;
                 },
                 toBeAbsEqual: function (expected) {
-                    return Math.abs(parseInt(this.actual) - parseInt(expected)) < 3;
+                    return Math.abs(parseInt(this.actual,10) - parseInt(expected,10)) < 3;
                 }
             });
         });
@@ -74,8 +69,8 @@ KISSY.add(function (S, Dom) {
                 var nodeOffset = Dom.offset(node),
                     containerOffset = Dom.offset(container);
 
-                var scrollTop = nodeOffset.top - containerOffset.top - container_border_width;
-                var scrollLeft = nodeOffset.left - containerOffset.left - container_border_width;
+                var scrollTop = nodeOffset.top - containerOffset.top - containerBorderWidth;
+                var scrollLeft = nodeOffset.left - containerOffset.left - containerBorderWidth;
 
                 Dom.scrollIntoView(node, container);
 
@@ -87,17 +82,17 @@ KISSY.add(function (S, Dom) {
                 expect(Dom.scrollTop(container)).toBeAbsEqual(scrollTop);
                 expect(Dom.scrollLeft(container)).toBeAbsEqual(scrollLeft);
 
-                expect(nodeOffset.top - containerOffset.top).toBeAbsEqual(container_border_width);
+                expect(nodeOffset.top - containerOffset.top).toBeAbsEqual(containerBorderWidth);
 
                 expect(Dom.scrollLeft()).toBeAbsEqual(0);
-                expect(nodeOffset.left - containerOffset.left).toBeAbsEqual(container_border_width);
+                expect(nodeOffset.left - containerOffset.left).toBeAbsEqual(containerBorderWidth);
             });
 
             it("scroll node to container at axis y manually works", function () {
                 var nodeOffset = Dom.offset(node),
                     containerOffset = Dom.offset(container);
 
-                var scrollTop = nodeOffset.top - containerOffset.top - container_border_width;
+                var scrollTop = nodeOffset.top - containerOffset.top - containerBorderWidth;
 
                 Dom.scrollIntoView(node, container, {
                     alignWithTop: true,
@@ -112,7 +107,7 @@ KISSY.add(function (S, Dom) {
                 expect(Dom.scrollTop(container)).toBeAbsEqual(scrollTop);
                 expect(Dom.scrollLeft(container)).toBeAbsEqual(0);
 
-                expect(nodeOffset.top - containerOffset.top).toBeAbsEqual(container_border_width);
+                expect(nodeOffset.top - containerOffset.top).toBeAbsEqual(containerBorderWidth);
 
                 expect(Dom.scrollLeft()).toBeAbsEqual(0);
                 expect(nodeOffset.left - containerOffset.left).toBeAbsEqual(105);
@@ -155,9 +150,9 @@ KISSY.add(function (S, Dom) {
                 //  | ---- |
                 //  --------
                 expect(nt).toBeAbsEqual(ct +
-                    container_border_width +
-                    container_client_height -
-                    node_height);
+                    containerBorderWidth +
+                    containerClientHeight -
+                    nodeHeight);
             });
 
             if (S.UA.ios && window.frameElement) {

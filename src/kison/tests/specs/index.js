@@ -5,8 +5,8 @@
 KISSY.add(function (S, Kison) {
     var Grammar = Kison.Grammar;
     var Utils = Kison.Utils;
-
-    if (typeof global == 'undefined') {
+    /*jshint quotmark:false*/
+    if (typeof global === 'undefined') {
         window.global = {};
     }
 
@@ -14,7 +14,7 @@ KISSY.add(function (S, Kison) {
         it('escape correctly', function () {
             expect(Utils.escapeString("'\\")).toBe("\\'\\\\");
 
-            expect(eval("'" + Utils.escapeString("'\\") + "'")).toBe("'\\");
+            expect(Function.call(null, "return '" + Utils.escapeString("'\\") + "'")()).toBe("'\\");
         });
 
         // 4-41 文法 GOTO 图
@@ -73,21 +73,21 @@ KISSY.add(function (S, Kison) {
 
             var i1gotos = itemSets[1].get('gotos');
 
-            var cItem = itemSets[0].get('gotos')['c'];
+            var cItem = itemSets[0].get('gotos').c;
             expect(cItem === itemSets[1]).toBe(true);
 
             // S.log("!!!!!!!!!!!!!!!");
-            // // S.log(itemSets[4].get('gotos')['c'].toString());
+            // // S.log(itemSets[4].get('gotos').c.toString());
             // S.log("!!!!!!!!!!!!!!!");
 
-            // expect(itemSets[4].get('gotos')['c']).toBe(itemSets[1]);
+            // expect(itemSets[4].get('gotos').c).toBe(itemSets[1]);
 
             var num = 0;
 
             S.each(i1gotos, function (itemSet, symbol) {
                 // S.log("************************* " + symbol);
                 // S.log(itemSet.toString());
-                if (symbol == "c") {
+                if (symbol === "c") {
                     expect(itemSet === itemSets[1]).toBe(true);
                 }
                 num++;
@@ -142,7 +142,7 @@ KISSY.add(function (S, Kison) {
 
             grammar.build();
 
-            var table = grammar.visualizeTable();
+            grammar.visualizeTable();
 
             // S.log(table.join('\n'));
         });
@@ -190,7 +190,7 @@ KISSY.add(function (S, Kison) {
                 }
             });
             var code = grammar.genCode(true);
-            expect(new Function('KISSY',code)(S).parse("ccdd")).not.toBe(false);
+            expect(Function.call(null, 'KISSY', code)(S).parse("ccdd")).not.toBe(false);
         });
 
         it("can not parse invalid input", function () {
@@ -236,7 +236,7 @@ KISSY.add(function (S, Kison) {
             });
 
             expect(function () {
-                new Function("KISSY",grammar.genCode())(S).parse("dc");
+                Function.call(null, "KISSY", grammar.genCode())(S).parse("dc");
             }).toThrow('syntax error at line 1:\ndc\n--^\n' +
                     'expect c, d');
 
@@ -285,7 +285,7 @@ KISSY.add(function (S, Kison) {
             });
 
             expect(function () {
-                new Function("KISSY",grammar.genCode({
+                Function.call(null, "KISSY", grammar.genCode({
                     compressSymbol: 1
                 }))(S).parse("dc");
             }).toThrow('syntax error at line 1:\ndc\n--^\n' +
@@ -330,7 +330,7 @@ KISSY.add(function (S, Kison) {
                         ]
                     }
                 });
-                var parser = new Function("KISSY",grammar.genCode({
+                var parser = Function.call(null, "KISSY", grammar.genCode({
                     compressSymbol: 0
                 }))(S);
 
@@ -385,7 +385,7 @@ KISSY.add(function (S, Kison) {
                         ]
                     }
                 });
-                var parser = new Function("KISSY",grammar.genCode({
+                var parser = Function.call(null, "KISSY", grammar.genCode({
                     compressSymbol: 1
                 }))(S);
 
@@ -436,7 +436,7 @@ KISSY.add(function (S, Kison) {
                         ]
                     }
                 });
-                var parser = new Function("KISSY",grammar.genCode({
+                var parser = Function.call(null, "KISSY", grammar.genCode({
                     compressSymbol: 0
                 }))(S);
 
@@ -538,7 +538,7 @@ KISSY.add(function (S, Kison) {
             });
 
             expect(function () {
-                new Function("KISSY",grammar.genCode())(S).parse("ccdd")
+                Function.call(null, "KISSY", grammar.genCode())(S).parse("ccdd");
             }).not.toThrow(undefined);
 
             // S.log(global.TEST_RET.join('\n'));

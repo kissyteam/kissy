@@ -1,13 +1,16 @@
 KISSY.add(function (S, require) {
     require('util');
     var UA = require('ua');
-
+    /*jshint quotmark:false*/
     describe('util', function () {
         var host = S.Env.host,
             doc = host.document,
             web = host.setInterval;
 
         function fn() {
+        }
+
+        function Fn() {
         }
 
         describe('S.mix', function () {
@@ -197,13 +200,14 @@ KISSY.add(function (S, require) {
 
                 var v = {
                     toString: x,
-                    hasOwnProperty: x,
                     isPrototypeOf: x,
                     propertyIsEnumerable: x,
                     toLocaleString: x,
                     valueOf: x,
                     constructor: x
                 };
+                var t = 'hasOwnProperty';
+                v[t] = x;
                 var z = {};
                 S.mix(z, v);
                 expect(z.toString).toBe(x);
@@ -295,14 +299,15 @@ KISSY.add(function (S, require) {
                     S.mix(a, b, {
                         deep: true,
                         whitelist: function (name, v) {
-                            if (name == 'b1') {
+                            if (name === 'b1') {
                                 return v;
                             }
-                            if (this.b1 && name == 'b2') {
+                            if (this.b1 && name === 'b2') {
                                 return v;
                             }
                             return undefined;
-                        }});
+                        }
+                    });
 
                     expect(a).toEqual({
                         b1: 1,
@@ -321,7 +326,7 @@ KISSY.add(function (S, require) {
                     S.mix(a, b, {
                         deep: true,
                         whitelist: function (name, v) {
-                            if (this.b1 && name == 'b2') {
+                            if (this.b1 && name === 'b2') {
                                 return undefined;
                             }
                             return v;
@@ -427,28 +432,28 @@ KISSY.add(function (S, require) {
             // normal
             ns = S.namespace('app1.Test');
             ns.name = 'foo1';
-            expect(S['app1'].Test.name).toBe('foo1');
+            expect(S.app1.Test.name).toBe('foo1');
 
             // first part of argument is the global object
             ns = S.namespace('KISSY.app2.Test2');
             ns.name = 'foo2';
-            expect(S['app2'].Test2.name).toBe('foo2');
+            expect(S.app2.Test2.name).toBe('foo2');
 
             // empty arguments
             expect(S.namespace()).toBe(null);
 
             // global
-            expect(S.namespace('Global', true)).toBe(Global);
+            expect(S.namespace('Global', true)).toBe(window.Global);
 
             // clear
-            delete S['app1'];
-            delete S['app2'];
+            delete S.app1;
+            delete S.app2;
             try {
-                delete host['TB'];
-                delete host['Global'];
+                delete host.TB;
+                delete host.Global;
             } catch (e) {
-                host['TB'] = undefined;
-                host['Global'] = undefined;
+                host.TB = undefined;
+                host.Global = undefined;
             }
         });
 
@@ -612,7 +617,8 @@ KISSY.add(function (S, require) {
 
             expect(S.type(new Date())).toBe('date');
 
-            expect(S.type(new Function('return;'))).toBe('function');
+            expect(S.type(function () {
+            })).toBe('function');
             expect(S.type(fn)).toBe('function');
 
             expect(S.type(host)).toBe('object');
@@ -730,7 +736,7 @@ KISSY.add(function (S, require) {
 
         it('S.isObject', function () {
             expect(S.isObject({})).toBe(true);
-            expect(S.isObject(new fn())).toBe(true);
+            expect(S.isObject(new Fn())).toBe(true);
             expect(S.isObject(host)).toBe(true);
 
             expect(S.isObject()).toBe(false);
@@ -742,7 +748,6 @@ KISSY.add(function (S, require) {
 
         it('S.isEmptyObject', function () {
             expect(S.isEmptyObject({})).toBe(true);
-            expect(S.isEmptyObject(new Object())).toBe(true);
 
             expect(S.isEmptyObject({ a: 1 })).toBe(false);
             expect(S.isEmptyObject([])).toBe(true);
@@ -755,7 +760,7 @@ KISSY.add(function (S, require) {
             // The use case that we want to match
             expect(S.isPlainObject({})).toBe(true);
 
-            expect(S.isPlainObject(new fn)).toBe(false);
+            expect(S.isPlainObject(new Fn())).toBe(false);
 
             // Not objects shouldn't be matched
             expect(S.isPlainObject('')).toBe(false);
@@ -765,7 +770,7 @@ KISSY.add(function (S, require) {
             expect(S.isPlainObject(null)).toBe(false);
             expect(S.isPlainObject(undefined)).toBe(false);
             expect(S.isPlainObject([])).toBe(false);
-            expect(S.isPlainObject(new Date)).toBe(false);
+            expect(S.isPlainObject(new Date())).toBe(false);
             expect(S.isPlainObject(fn)).toBe(false);
 
             // Dom Element
@@ -911,8 +916,8 @@ KISSY.add(function (S, require) {
         });
 
         it('S.substitute', function () {
-            var myString = "{subject} is {property_1} and {property_2}.";
-            var myObject = {subject: 'Jack Bauer', property_1: 'our lord', property_2: 'savior'};
+            var myString = "{subject} is {property1} and {property2}.";
+            var myObject = {subject: 'Jack Bauer', property1: 'our lord', property2: 'savior'};
 
             expect(S.substitute(myString, myObject)).toBe('Jack Bauer is our lord and savior.');
 
@@ -965,7 +970,9 @@ KISSY.add(function (S, require) {
         });
 
         it('S.unique', function () {
-            if (host['hostType'] === 'console') return; // BESENShell has bug for Array.prototype.splice
+            if (host.hostType === 'console') {
+                return;
+            } // BESENShell has bug for Array.prototype.splice
 
             expect(S.unique([1, 2, 1]).length).toBe(2);
             expect(S.unique([1, 2, '1']).length).toBe(3);
@@ -1013,13 +1020,13 @@ KISSY.add(function (S, require) {
         });
 
         it('S.reduce', function () {
-            var r = S.reduce([0, 1, 2, 3, 4], function (previousValue, currentValue, index, array) {
+            var r = S.reduce([0, 1, 2, 3, 4], function (previousValue, currentValue) {
                 return previousValue + currentValue;
             });
             expect(r).toBe(10);
 
 
-            r = S.reduce([0, 1, 2, 3, 4], function (previousValue, currentValue, index, array) {
+            r = S.reduce([0, 1, 2, 3, 4], function (previousValue, currentValue) {
                 return previousValue + currentValue;
             }, 10);
             expect(r).toBe(20);
@@ -1044,12 +1051,16 @@ KISSY.add(function (S, require) {
             }
 
             var context = {};
-
+            var t;
             // when new ,ignore context
-            new (S.bind(y, context, 1, 2))(3);
+            t = new (S.bind(y, context, 1, 2))(3);
 
             if (y.bind) {
-                new (y.bind(context, 1, 2))(3);
+                t = new (y.bind(context, 1, 2))(3);
+            }
+
+            if (1 > 2) {
+                S.log(t);
             }
 
             function z(a, b, c) {
@@ -1092,8 +1103,14 @@ KISSY.add(function (S, require) {
 
             var context = {};
 
+            var t;
+
             // when new, ignore context
-            new (S.rbind(y, context, 1, 2))(3);
+            t = new (S.rbind(y, context, 1, 2))(3);
+
+            if (1 > 2) {
+                console.log(t);
+            }
 
             function z(a, b, c) {
                 expect(a).toBe(3);
@@ -1157,7 +1174,7 @@ KISSY.add(function (S, require) {
         });
 
         it("S.every", function () {
-            function isBigEnough(element, index, array) {
+            function isBigEnough(element) {
                 return (element >= 10);
             }
 
@@ -1168,7 +1185,7 @@ KISSY.add(function (S, require) {
         });
 
         it("S.some", function () {
-            function isBigEnough(element, index, array) {
+            function isBigEnough(element) {
                 return (element >= 10);
             }
 
@@ -1246,7 +1263,7 @@ KISSY.add(function (S, require) {
 
         it('S.globalEval', function () {
             S.globalEval('var globalEvalTest = 1;');
-            expect(host['globalEvalTest']).toBe(1);
+            expect(host.globalEvalTest).toBe(1);
         });
 
         it('S.later', function () {

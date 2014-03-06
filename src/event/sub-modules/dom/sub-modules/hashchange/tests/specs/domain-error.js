@@ -3,7 +3,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, Event, UA, Dom) {
-
+    /*jshint quotmark:false*/
     return {run: function () {
         var ie = S.UA.ieMode;
         describe("set domain in event", function () {

@@ -4,19 +4,17 @@
  * need to be completed
  */
 KISSY.add(function (S, Dom) {
+    var $ = window.jQuery;
+    /*jshint quotmark:false*/
     describe("offset", function () {
-        var iframeTpl = '<iframe src="../others/offset/test-dom-offset-iframe.html"\
-        id="test-iframe"\
-        style="border:1px solid black; "\
-        width="200"\
-        height="200"\
-        frameborder="0"\
-        scrolling="no"\
-        ></iframe>',
+        var iframeTpl = '<iframe src="../others/offset/test-dom-offset-iframe.html" ' +
+                'id="test-iframe"  ' +
+                'style="border:1px solid black; "' +
+                ' width="200" height="200"  ' +
+                'frameborder="0" scrolling="no"  ></iframe>',
 
-            tpl = '<div id="test-offset" style="width:100px;height:100px;border: 1px solid red;">\
-        offset\
-        </div>';
+            tpl = '<div id="test-offset" style="width:100px;height:100px;border: 1px solid red;">' +
+                'offset</div>';
 
         beforeEach(function () {
             $('body').append(tpl);
@@ -27,13 +25,13 @@ KISSY.add(function (S, Dom) {
         });
 
         it("should works", function () {
-            var test_offset = Dom.get("#test-offset");
-            var o = Dom.offset(test_offset);
-            Dom.offset(test_offset, o);
-            var o2 = Dom.offset(test_offset);
+            var testOffset = Dom.get("#test-offset");
+            var o = Dom.offset(testOffset);
+            Dom.offset(testOffset, o);
+            var o2 = Dom.offset(testOffset);
             expect(o2.top).toBe(o.top);
             expect(o2.left).toBe(o.left);
-            expect(test_offset.style.position).toBe('relative');
+            expect(testOffset.style.position).toBe('relative');
         });
 
         it("should consider html border", function () {
@@ -57,7 +55,7 @@ KISSY.add(function (S, Dom) {
                 top: 0
             });
 
-            expect(parseInt(Dom.css(a, "top"))).toBe(0);
+            expect(parseInt(Dom.css(a, "top"), 10)).toBe(0);
 
             document.documentElement.style.borderTop = "";
 

@@ -14,7 +14,7 @@ var run = function (combine) {
                 return 1;
             });
 
-            var t = undefined;
+            var t;
 
 
             KISSY.use('test-sync', function (S, x) {
@@ -35,7 +35,7 @@ var run = function (combine) {
                 return 1;
             });
 
-            var t = undefined;
+            var t;
 
             KISSY.use('test-sync', {
                 success: function (S, x) {

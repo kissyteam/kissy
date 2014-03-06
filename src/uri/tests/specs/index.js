@@ -4,6 +4,7 @@
  */
 KISSY.add(function (S, require) {
     var Uri = require('uri');
+    /*jshint quotmark:false*/
     /**
      * Uri spec for kissy.
      * @author yiminghe@gmail.com

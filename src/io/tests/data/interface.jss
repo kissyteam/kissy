@@ -29,9 +29,9 @@ module.exports = function (req, res) {
         if (t = (query.customCallback || query.callback)) {
             dataStr = t + '(' + dataStr + ');';
         } else if (req.method === 'POST' && query.dataType === 'script') {
-            dataStr = 'var global_script_test = 500;';
+            dataStr = 'var globalScriptTest = 500;';
         } else if (query.dataType === 'script') {
-            dataStr = 'var global_script_test = 200;';
+            dataStr = 'var globalScriptTest = 200;';
         }
 
         res.send(dataStr);

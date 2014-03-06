@@ -2,6 +2,7 @@
  * tc for support group combo for package
  * @author 阿古
  */
+/*jshint quotmark:false*/
 describe("modules and groups", function () {
     var S = KISSY,
         ComboLoader = S.Loader.ComboLoader,
@@ -116,7 +117,7 @@ describe("modules and groups", function () {
         expect(js.length).toBe(1);
         expect(js[0].path.substring(js[0].path.indexOf('??')))
             .toBe("??a.js");
-        js = c.js['test'];
+        js = c.js.test;
         expect(js.length).toBe(1);
         expect(js[0].path).toBe("http://g.tbcdn.cn/test/??x.js");
     });
@@ -191,6 +192,7 @@ describe("modules and groups", function () {
         var size=0;
         for(var i in c){
             size++;
+            i=0;
         }
         expect(size).toBe(1);
         var comboName = 'my_utf-8_' + groupTag;

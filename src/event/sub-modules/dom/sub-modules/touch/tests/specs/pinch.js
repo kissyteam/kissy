@@ -4,7 +4,7 @@
  */
 KISSY.add(function (S, Node) {
     var $ = Node.all, step = 10;
-
+    /*jshint loopfunc:true*/
     return {
         init: function () {
             describe('pinch', function () {
@@ -147,10 +147,6 @@ KISSY.add(function (S, Node) {
 
                                 touches[1].pageY = startY + (endY - startY) / step * i;
 
-//                            console.log(touches[1].pageX);
-//                            console.log(touches[1].pageY);
-//                            console.log(touches[1].target.id);
-
                                 jasmine.simulate(t1[0], 'touchmove', {
                                     touches: touches,
                                     changedTouches: touches1,
@@ -208,15 +204,15 @@ KISSY.add(function (S, Node) {
 
                     nodes = nodes.add(t2);
 
-                    nodes.on('pinchStart', function (e) {
+                    nodes.on('pinchStart', function () {
                         pinchStartCalled = 1;
                     });
 
-                    nodes.on('pinch', function (e) {
+                    nodes.on('pinch', function () {
                         pinchCalled = 1;
                     });
 
-                    nodes.on('pinchEnd', function (e) {
+                    nodes.on('pinchEnd', function () {
                         pinchEndCalled = 1;
                     });
 

@@ -3,7 +3,7 @@ KISSY.add(function(S,io){
         url:'../specs/node.fragment.html',
         async:false,
         success:function(data){
-            $('body').append(data);
+            window.$('body').append(data);
         }
     });
     S.each(arguments,function(a,i){

@@ -4,6 +4,8 @@
  */
 
 KISSY.add(function (S, UA, io, Node) {
+    /*jshint quotmark:false*/
+
     var host = location.hostname;
     var url = host;
     if (url === 'localhost') {
@@ -38,7 +40,7 @@ KISSY.add(function (S, UA, io, Node) {
                                 proxy: false
                             }
                         },
-                        success: function (d, s, r) {
+                        success: function (d) {
                             expect('X-Requested-With' in d).toBe(false);
                             ok = 1;
                         }
@@ -72,7 +74,7 @@ KISSY.add(function (S, UA, io, Node) {
                                 proxy: false
                             }
                         },
-                        success: function (d, s, r) {
+                        success: function (d) {
                             expect('X-Requested-With' in d).toBe(false);
                             ok = 1;
                         }
@@ -155,7 +157,7 @@ KISSY.add(function (S, UA, io, Node) {
                                     if (UA.ie && UA.ie >= 8 && UA.ie <= 9) {
                                         expect(typeof d.cors).toBe('undefined');
                                     } else {
-                                        expect(d.cors).toBe('ok')
+                                        expect(d.cors).toBe('ok');
                                     }
 
                                     // 原生 chrome.firefox 响应头不能读
@@ -203,7 +205,7 @@ KISSY.add(function (S, UA, io, Node) {
                                 ret.push('s');
                                 //S.log("success");
                             },
-                            error: function (d, s) {
+                            error: function () {
                                 ret.push('e');
                                 //S.log(s || "error");
                             },
@@ -242,9 +244,6 @@ KISSY.add(function (S, UA, io, Node) {
                                 expect(data.test).toBe('1');
                                 expect(data.test2).toBe('2');
                                 ok = 1;
-                            },
-                            error: function (_, e) {
-                                alert(e.message);
                             }
                         });
 

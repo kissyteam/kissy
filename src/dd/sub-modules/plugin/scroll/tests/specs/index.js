@@ -9,7 +9,7 @@ KISSY.add(function (S, Dom, Event, Node, DD, Scroll, IO) {
 
 
     var ie = S.UA.ieMode;
-    if (ie == 9 || ie == 11) {
+    if (ie === 9 || ie === 11) {
         return;
     }
 
@@ -26,14 +26,14 @@ KISSY.add(function (S, Dom, Event, Node, DD, Scroll, IO) {
             }
         });
 
-        it("should make container auto scroll properly", function () {
+        it('should make container auto scroll properly', function () {
             waitsFor(function () {
                 return html;
             });
 
             runs(function () {
-                dragNode = $("#drag-scroll");
-                dragContainer = $("#drag_scroll_container");
+                dragNode = $('#drag-scroll');
+                dragContainer = $('#drag_scroll_container');
                 drag = new Draggable({
                     node: dragNode,
                     move: 1,
@@ -73,8 +73,7 @@ KISSY.add(function (S, Dom, Event, Node, DD, Scroll, IO) {
             runs(function () {
                 jasmine.simulate(document, 'mousemove', {
                     clientX: containerOffset.left + 50 - Dom.scrollLeft(),
-                    clientY: containerOffset.top + dragContainer[0].offsetHeight - 10
-                        + 2 - Dom.scrollTop()
+                    clientY: containerOffset.top + dragContainer[0].offsetHeight - 10 + 2 - Dom.scrollTop()
                 });
             });
 
@@ -82,8 +81,7 @@ KISSY.add(function (S, Dom, Event, Node, DD, Scroll, IO) {
             runs(function () {
                 jasmine.simulate(document, 'mouseup', {
                     clientX: containerOffset.left + 50 - Dom.scrollLeft(),
-                    clientY: containerOffset.top + dragContainer[0].offsetHeight - 10
-                        + 2 - Dom.scrollTop()
+                    clientY: containerOffset.top + dragContainer[0].offsetHeight - 10 + 2 - Dom.scrollTop()
                 });
             });
 

@@ -2,6 +2,8 @@
  * test loader
  * @author yiminghe@gmail.com
  */
+/*jshint quotmark:false*/
+/*global $*/
 (function (S) {
     var d = window.location.href.replace(/[^/]*$/, "") + "../specs/";
 
@@ -9,13 +11,7 @@
 
         it("should callback after css onload", function () {
 
-            var html = "\
-                <div id='special'>\
-                33px\
-            </div>\
-            <div id='special2'>\
-            44px\
-            </div>";
+            var html = "<div id='special'>33px</div><div id='special2'>44px</div>";
 
             $(html).appendTo('body');
 
@@ -43,7 +39,7 @@
             });
 
             waitsFor(function () {
-                return state == 2;
+                return state === 2;
             }, 10000);
 
             runs(function () {

@@ -3,7 +3,6 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, GregorianCalendar) {
-
     var ONE_SECOND = 1000;
     var ONE_MINUTE = 60 * ONE_SECOND;
     var ONE_HOUR = 60 * ONE_MINUTE;
@@ -11,8 +10,6 @@ KISSY.add(function (S, GregorianCalendar) {
     // var ONE_WEEK = 7 * ONE_DAY;
 
     describe('GregorianCalendar', function () {
-
-
         describe('simple case', function () {
             var gregorianCalendar;
 
@@ -38,7 +35,7 @@ KISSY.add(function (S, GregorianCalendar) {
 
                 it('works for start of year', function () {
                     gregorianCalendar.setYear(2012);
-                    gregorianCalendar.setMonth( 0);
+                    gregorianCalendar.setMonth(0);
                     gregorianCalendar.setDayOfMonth(1);
                     expect(gregorianCalendar.getWeekOfYear()).toBe(1);
 
@@ -158,7 +155,6 @@ KISSY.add(function (S, GregorianCalendar) {
 
             });
 
-
             it('getTime works', function () {
                 var jsDate = new Date(2013, GregorianCalendar.JUNE, 8, 18, 0, 0, 0);
                 expect(jsDate.getTime() === gregorianCalendar.getTime());
@@ -167,7 +163,7 @@ KISSY.add(function (S, GregorianCalendar) {
             it('DAY_OF_YEAR works', function () {
                 var jan1Date = new Date(2013, GregorianCalendar.JANUARY, 1, 0, 0, 0, 0);
                 var jsDate = new Date(gregorianCalendar.getTime());
-                var expected = parseInt((jsDate.getTime() - jan1Date.getTime()) / ONE_DAY) + 1;
+                var expected = parseInt((jsDate.getTime() - jan1Date.getTime()) / ONE_DAY, 10) + 1;
                 expect(gregorianCalendar.getDayOfYear()).toBe(expected);
             });
 
@@ -206,12 +202,12 @@ KISSY.add(function (S, GregorianCalendar) {
 
         });
 
-        describe("roll works", function () {
+        describe('roll works', function () {
 
             it('can adjust DAY_OF_MONTH', function () {
                 var d = new GregorianCalendar();
                 d.set(1999, GregorianCalendar.AUGUST, 31);
-                d.rollMonth( 8);
+                d.rollMonth(8);
                 expect(d.getYear()).toBe(1999);
                 expect(d.getMonth()).toBe(GregorianCalendar.APRIL);
                 expect(d.getDayOfMonth()).toBe(30);
@@ -229,10 +225,7 @@ KISSY.add(function (S, GregorianCalendar) {
             });
 
         });
-
-
     });
-
-},{
-        requires:['date/gregorian']
-    });
+}, {
+    requires: ['date/gregorian']
+});

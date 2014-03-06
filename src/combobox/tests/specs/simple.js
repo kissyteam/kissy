@@ -2,24 +2,21 @@
  * Simple TC for KISSY ComboBox
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, Event,ComboBox) {
-
+KISSY.add(function (S, Event, ComboBox) {
     window.focus();
     document.body.focus();
 
-    var $ = S.all, ua = S.UA;
-
-    describe("simple combobox", function () {
+    describe('simple combobox', function () {
 
         beforeEach(function () {
             this.addMatchers({
                 toBeNearEqual: function (expected) {
-                    return Math.abs(parseInt(this.actual) - parseInt(expected)) < 5;
+                    return Math.abs(parseInt(this.actual, 10) - parseInt(expected, 10)) < 5;
                 }
             });
         });
 
-        var data = ["1", "21", "31"];
+        var data = ['1', '21', '31'];
         var KeyCode = Event.KeyCode;
 
         var comboBox = new ComboBox({
@@ -33,9 +30,9 @@ KISSY.add(function (S, Event,ComboBox) {
                 var ret = [];
                 S.each(data, function (d) {
                     ret.push({
-                        content: d.replace(new RegExp(S.escapeRegExp(q), "g"), "<b>$&</b>"),
+                        content: d.replace(new RegExp(S.escapeRegExp(q), 'g'), '<b>$&</b>'),
                         textContent: d
-                    })
+                    });
                 });
                 return ret;
             }
@@ -46,7 +43,7 @@ KISSY.add(function (S, Event,ComboBox) {
 
         it('show autocomplete menu when press down key', function () {
 
-            expect(t.value).toBe("2");
+            expect(t.value).toBe('2');
 
             jasmine.simulate(t, 'keydown', {
                 keyCode: KeyCode.DOWN
@@ -66,10 +63,10 @@ KISSY.add(function (S, Event,ComboBox) {
             waits(100);
         });
 
-        it("show menu with right alignment when input value " +
-            "and hide when lose focus", function () {
+        it('show menu with right alignment when input value ' +
+            'and hide when lose focus', function () {
 
-            t.value = "";
+            t.value = '';
 
             t.focus();
 
@@ -77,13 +74,13 @@ KISSY.add(function (S, Event,ComboBox) {
             jasmine.simulate(t, 'keydown');
             waits(100);
             runs(function () {
-                t.value = "1";
-                jasmine.simulate(t,'input');
+                t.value = '1';
+                jasmine.simulate(t, 'input');
             });
             waits(100);
 
             runs(function () {
-                jasmine.simulate(t, "keyup");
+                jasmine.simulate(t, 'keyup');
             });
 
             waits(100);
@@ -121,21 +118,21 @@ KISSY.add(function (S, Event,ComboBox) {
 
         });
 
-        it("should filter static data by default", function () {
-            t.value = "";
+        it('should filter static data by default', function () {
+            t.value = '';
 
             t.focus();
 
             jasmine.simulate(t, 'keydown');
             waits(100);
             runs(function () {
-                t.value = "2";
-                jasmine.simulate(t,'input');
+                t.value = '2';
+                jasmine.simulate(t, 'input');
             });
             waits(100);
 
             runs(function () {
-                jasmine.simulate(t, "keyup");
+                jasmine.simulate(t, 'keyup');
             });
 
             waits(100);
@@ -144,9 +141,9 @@ KISSY.add(function (S, Event,ComboBox) {
                 var menu = comboBox.get('menu');
                 var children = menu.get('children');
                 expect(children.length).toBe(1);
-                expect(children[0].get('content')).toBe("<b>2</b>1");
-                expect(children[0].get('textContent')).toBe("21");
-                expect(children[0].get('value')).toBe("21");
+                expect(children[0].get('content')).toBe('<b>2</b>1');
+                expect(children[0].get('textContent')).toBe('21');
+                expect(children[0].get('value')).toBe('21');
                 // 输入项和提示项 textContent 不一样，默认不高亮
                 expect(menu.get('highlightedItem')).toBeFalsy();
                 t.blur();
@@ -154,21 +151,21 @@ KISSY.add(function (S, Event,ComboBox) {
             waits(100);
         });
 
-        it("should format and select item right initially", function () {
-            t.value = "";
+        it('should format and select item right initially', function () {
+            t.value = '';
 
             t.focus();
 
             jasmine.simulate(t, 'keydown');
             waits(100);
             runs(function () {
-                t.value = "1";
-                jasmine.simulate(t,'input');
+                t.value = '1';
+                jasmine.simulate(t, 'input');
             });
             waits(100);
 
             runs(function () {
-                jasmine.simulate(t, "keyup");
+                jasmine.simulate(t, 'keyup');
             });
 
             waits(100);
@@ -177,17 +174,17 @@ KISSY.add(function (S, Event,ComboBox) {
                 var menu = comboBox.get('menu');
                 var children = menu.get('children');
 
-                expect(children[0].get('content')).toBe("<b>1</b>");
-                expect(children[1].get('content')).toBe("2<b>1</b>");
-                expect(children[2].get('content')).toBe("3<b>1</b>");
+                expect(children[0].get('content')).toBe('<b>1</b>');
+                expect(children[1].get('content')).toBe('2<b>1</b>');
+                expect(children[2].get('content')).toBe('3<b>1</b>');
 
-                expect(children[0].get('textContent')).toBe("1");
-                expect(children[1].get('textContent')).toBe("21");
-                expect(children[2].get('textContent')).toBe("31");
+                expect(children[0].get('textContent')).toBe('1');
+                expect(children[1].get('textContent')).toBe('21');
+                expect(children[2].get('textContent')).toBe('31');
 
-                expect(children[0].get('value')).toBe("1");
-                expect(children[1].get('value')).toBe("21");
-                expect(children[2].get('value')).toBe("31");
+                expect(children[0].get('value')).toBe('1');
+                expect(children[1].get('value')).toBe('21');
+                expect(children[2].get('value')).toBe('31');
 
                 // 入项和第一个提示项 textContent 一样，那么第一个高亮
                 expect(S.indexOf(menu.get('highlightedItem'), menu.get('children')))
@@ -203,7 +200,7 @@ KISSY.add(function (S, Event,ComboBox) {
             waits(100);
         });
 
-        it("should response to keyboard and update input", function () {
+        it('should response to keyboard and update input', function () {
             var originalValue = '1';
 
             t.focus();
@@ -213,21 +210,21 @@ KISSY.add(function (S, Event,ComboBox) {
             jasmine.simulate(t, 'keydown');
 
             runs(function () {
-                t.value = "";
-                jasmine.simulate(t,'input');
+                t.value = '';
+                jasmine.simulate(t, 'input');
             });
 
             waits(200);
 
             runs(function () {
                 t.value = originalValue;
-                jasmine.simulate(t,'input');
+                jasmine.simulate(t, 'input');
             });
 
             waits(200);
 
             runs(function () {
-                jasmine.simulate(t, "keyup");
+                jasmine.simulate(t, 'keyup');
             });
 
             waits(200);
@@ -298,26 +295,26 @@ KISSY.add(function (S, Event,ComboBox) {
 
 
         if (!S.UA.ios && !S.UA.android) {
-            it("should response to mouse", function () {
+            it('should response to mouse', function () {
                 t.focus();
 
                 waits(100);
 
                 runs(function () {
                     jasmine.simulate(t, 'keydown');
-                    t.value = "";
-                    jasmine.simulate(t,'input');
+                    t.value = '';
+                    jasmine.simulate(t, 'input');
                 });
 
                 waits(100);
                 runs(function () {
-                    t.value = "1";
-                    jasmine.simulate(t,'input');
+                    t.value = '1';
+                    jasmine.simulate(t, 'input');
                 });
                 waits(100);
 
                 runs(function () {
-                    jasmine.simulate(t, "keyup");
+                    jasmine.simulate(t, 'keyup');
                 });
 
                 waits(100);
@@ -341,32 +338,30 @@ KISSY.add(function (S, Event,ComboBox) {
         }
 
 
-        it("should update selectedItem and hide menu", function () {
+        it('should update selectedItem and hide menu', function () {
             t.focus();
 
             waits(100);
 
             runs(function () {
                 jasmine.simulate(t, 'keydown');
-                t.value = "";
-                jasmine.simulate(t,'input');
+                t.value = '';
+                jasmine.simulate(t, 'input');
             });
             waits(100);
             runs(function () {
-                t.value = "1";
-                jasmine.simulate(t,'input');
+                t.value = '1';
+                jasmine.simulate(t, 'input');
             });
             waits(100);
 
             runs(function () {
-                jasmine.simulate(t, "keyup");
+                jasmine.simulate(t, 'keyup');
             });
 
             waits(100);
 
             runs(function () {
-                var menu = comboBox.get('menu');
-                var children = menu.get('children');
                 jasmine.simulate(t, 'keydown', {
                     keyCode: KeyCode.DOWN
                 });
@@ -394,31 +389,29 @@ KISSY.add(function (S, Event,ComboBox) {
             });
         });
 
-        it("esc should restore value to original and hide menu", function () {
+        it('esc should restore value to original and hide menu', function () {
 
             t.focus();
 
             jasmine.simulate(t, 'keydown');
             runs(function () {
-                t.value = "";
-                jasmine.simulate(t,'input');
+                t.value = '';
+                jasmine.simulate(t, 'input');
             });
             waits(100);
             runs(function () {
-                t.value = "1";
-                jasmine.simulate(t,'input');
+                t.value = '1';
+                jasmine.simulate(t, 'input');
             });
             waits(100);
 
             runs(function () {
-                jasmine.simulate(t, "keyup");
+                jasmine.simulate(t, 'keyup');
             });
 
             waits(100);
 
             runs(function () {
-                var menu = comboBox.get('menu');
-                var children = menu.get('children');
                 jasmine.simulate(t, 'keydown', {
                     keyCode: KeyCode.DOWN
                 });
@@ -439,20 +432,19 @@ KISSY.add(function (S, Event,ComboBox) {
             waits(100);
             runs(function () {
                 var menu = comboBox.get('menu');
-                var children = menu.get('children');
-                expect(t.value).toBe("1");
+                expect(t.value).toBe('1');
                 expect(menu.get('visible')).toBe(false);
             });
         });
 
 
-        it('clean',function(){
-            runs(function(){
+        it('clean', function () {
+            runs(function () {
                 comboBox.destroy();
             });
         });
 
     });
-},{
-    requires:['event','combobox']
+}, {
+    requires: ['event', 'combobox']
 });

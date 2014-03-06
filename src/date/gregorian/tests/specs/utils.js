@@ -3,7 +3,6 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, GregorianCalendar) {
-
     var ONE_SECOND = 1000;
     var ONE_MINUTE = 60 * ONE_SECOND;
     var ONE_HOUR = 60 * ONE_MINUTE;
@@ -16,7 +15,7 @@ KISSY.add(function (S, GregorianCalendar) {
     day1.setFullYear(1);
 
     function getDiffByDays(day2) {
-        return parseInt((day2.getTime() - day1.getTime()) / ONE_DAY) + 1;
+        return parseInt((day2.getTime() - day1.getTime()) / ONE_DAY, 10) + 1;
     }
 
     describe('GregorianCalendar Utils', function () {
@@ -70,6 +69,6 @@ KISSY.add(function (S, GregorianCalendar) {
         });
     });
 
-},{
-        requires:['date/gregorian']
-    });
+}, {
+    requires: ['date/gregorian']
+});

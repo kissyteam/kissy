@@ -36,7 +36,7 @@ KISSY.add(function (S, Node, Color, Editor, init) {
                 var hex = Color.parse(color).toHex();
                 var rgb = Color.parse(color).toRGB();
                 var expected;
-                if (data.indexOf('#') != -1) {
+                if (data.indexOf('#') !== -1) {
                     expected = '<p>12<span style="background-color: ' + hex + '">3</span>4567</p>';
                 } else {
                     expected = '<p>12<span style="background-color: ' + rgb + '">3</span>4567</p>';

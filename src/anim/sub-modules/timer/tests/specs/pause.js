@@ -4,19 +4,18 @@
  */
 KISSY.add(function (S, _, Anim) {
     var $ = S.all;
-    describe("anim pause/resume", function () {
+    describe('anim pause/resume', function () {
+        it('anim-pause/resume works', function () {
 
-        it("anim-pause/resume works", function () {
-
-            var div = $("<div style='width:100px;height: 100px;" +
-                "overflow:hidden;'></div>")
+            var div = $('<div style="width:100px;height: 100px;' +
+                'overflow:hidden;"></div>')
                 .appendTo('body');
 
-            var anim = Anim(div[0], {
-                width:"10px",
-                height:"10px"
+            var anim = new Anim(div[0], {
+                width: '10px',
+                height: '10px'
             }, {
-                duration:0.4
+                duration: 0.4
             }).run();
 
             var width, height;
@@ -59,18 +58,18 @@ KISSY.add(function (S, _, Anim) {
         });
 
 
-        it("works on node", function () {
+        it('works on node', function () {
 
-            var div = $("<div style='width:100px;" +
+            var div = $('<div style="width:100px;' +
                 // ie6 撑破
-                "overflow:hidden;" +
-                "height: 100px;'></div>").appendTo('body');
+                'overflow:hidden;' +
+                'height: 100px;"></div>').appendTo('body');
 
             div.animate({
-                width:"10px",
-                height:"10px"
+                width: '10px',
+                height: '10px'
             }, {
-                duration:0.4
+                duration: 0.4
             });
 
             var width, height;
@@ -109,6 +108,6 @@ KISSY.add(function (S, _, Anim) {
 
     });
 
-},{
-    requires:['node','anim']
+}, {
+    requires: ['node', 'anim']
 });

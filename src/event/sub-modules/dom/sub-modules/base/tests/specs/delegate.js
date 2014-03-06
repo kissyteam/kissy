@@ -2,34 +2,21 @@
  * @module  delegation-spec
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, Dom, Event) {
+KISSY.add(function (S, Dom, Event, io) {
     S.get = Dom.get;
     S.query = Dom.query;
 
-    var DomEventUtils= S.require('event/dom/base/utils');
+    var DomEventUtils = S.require('event/dom/base/utils');
 
-    var tpl = '<div \
-    id="event-test-data" \
-    style="border: 1px solid #ccc;\
-     height: 50px;\
-     overflow-y: auto; \
-     padding: 5px; \
-     margin-bottom: 20px">\
-        <div style="margin-top: 10px; padding: 30px; background-color: #e3e4e5">\
-            <div id="outer" style="padding: 20px; background-color: #D6EDFC">\
-                <div id="inner" style="padding: 20px; background-color: #FFCC00"></div>\
-            </div>\
-        </div>\
-        <div id="test-delegate">\
-            <div id="test-delegate-outer" class="xx">\
-                <div style="padding:50px;border:1px solid red;width:100px;height:100px;"\
-                class="xx" id="test-delegate-inner">\
-                    <a href="javascript:void(\"#xx\")" id="test-delegate-a">click</a>\
-                    <button id="test-delegate-b">click</button>\
-                </div>\
-            </div>\
-        </div>\
-    </div>';
+    var tpl = '';
+
+    io({
+        url: './specs/delegate.html',
+        async: false,
+        success: function (d) {
+            tpl = d;
+        }
+    });
 
     beforeEach(function () {
         Dom.prepend(Dom.create(tpl), 'body');
@@ -40,7 +27,7 @@ KISSY.add(function (S, Dom, Event) {
     });
 
     describe('delegate', function () {
-        it("should invoke correctly", function () {
+        it('should invoke correctly', function () {
             var ret = [];
 
             function test(e) {
@@ -49,12 +36,12 @@ KISSY.add(function (S, Dom, Event) {
                 ret.push(this.id);
             }
 
-            Event.delegate(S.get('#test-delegate'), 'click', ".xx", test);
+            Event.delegate(S.get('#test-delegate'), 'click', '.xx', test);
             var a = S.get('#test-delegate-a');
             var b = S.get('#test-delegate-b');
             // support native dom event
-            jasmine.simulate(a, 'click',{
-                which:1
+            jasmine.simulate(a, 'click', {
+                which: 1
             });
             waits(10);
             runs(function () {
@@ -69,8 +56,8 @@ KISSY.add(function (S, Dom, Event) {
             runs(function () {
                 ret = [];
                 // support simulated event
-                Event.fire(b, 'click',{
-                    which:1
+                Event.fire(b, 'click', {
+                    which: 1
                 });
             });
             waits(10);
@@ -85,11 +72,11 @@ KISSY.add(function (S, Dom, Event) {
             });
 
             runs(function () {
-                Event.undelegate(S.get('#test-delegate'), 'click', ".xx", test);
+                Event.undelegate(S.get('#test-delegate'), 'click', '.xx', test);
                 ret = [];
                 // support simulated event
-                Event.fire(b, 'click',{
-                    which:1
+                Event.fire(b, 'click', {
+                    which: 1
                 });
             });
             waits(10);
@@ -100,7 +87,7 @@ KISSY.add(function (S, Dom, Event) {
             });
         });
 
-        it("should stop propagation correctly", function () {
+        it('should stop propagation correctly', function () {
             var ret = [];
 
             function test(e) {
@@ -110,16 +97,16 @@ KISSY.add(function (S, Dom, Event) {
                 e.stopPropagation();
             }
 
-            Event.delegate(S.get('#test-delegate'), 'click', ".xx", test);
+            Event.delegate(S.get('#test-delegate'), 'click', '.xx', test);
             var a = S.get('#test-delegate-b');
             // support native dom event
             jasmine.simulate(a, 'click');
             waits(10);
             runs(function () {
-                expect(ret + "").toBe([a.id,
+                expect(ret + '').toBe([a.id,
                     'test-delegate-inner',
                     'test-delegate'
-                ] + "");
+                ] + '');
             });
             runs(function () {
                 ret = [];
@@ -128,27 +115,27 @@ KISSY.add(function (S, Dom, Event) {
             });
             waits(10);
             runs(function () {
-                expect(ret + "").toBe([a.id,
+                expect(ret + '').toBe([a.id,
                     'test-delegate-inner',
                     'test-delegate'
-                ] + "");
+                ] + '');
             });
 
             runs(function () {
-                Event.undelegate(S.get('#test-delegate'), 'click', ".xx", test);
+                Event.undelegate(S.get('#test-delegate'), 'click', '.xx', test);
                 ret = [];
                 // support simulated event
                 Event.fire(a, 'click');
             });
             waits(10);
             runs(function () {
-                expect(ret + "").toBe([] + "");
+                expect(ret + '').toBe([] + '');
                 var eventDesc = DomEventUtils.data(S.get('#test-delegate'), undefined, false);
                 expect(eventDesc).toBe(undefined);
             });
         });
 
-        it("should prevent default correctly", function () {
+        it('should prevent default correctly', function () {
             var ret = [];
 
             function test(e) {
@@ -157,7 +144,7 @@ KISSY.add(function (S, Dom, Event) {
                 ret.push(this.id);
             }
 
-            Event.delegate(S.get('#test-delegate'), 'click', ".xx", test);
+            Event.delegate(S.get('#test-delegate'), 'click', '.xx', test);
             var a = S.get('#test-delegate-b');
             // support native dom event
 
@@ -165,18 +152,18 @@ KISSY.add(function (S, Dom, Event) {
             waits(10);
 
             runs(function () {
-                expect(ret + "").toBe([a.id,
+                expect(ret + '').toBe([a.id,
                     'test-delegate-inner',
                     'test-delegate',
                     a.id,
                     'test-delegate-outer',
                     'test-delegate'
-                ] + "");
+                ] + '');
             });
         });
 
-        it("should undelegate properly", function () {
-            var d = Dom.create("<div><button>xxxx</button></div>");
+        it('should undelegate properly', function () {
+            var d = Dom.create('<div><button>xxxx</button></div>');
             document.body.appendChild(d);
             var s = Dom.get('button', d);
             var ret = [];
@@ -187,7 +174,7 @@ KISSY.add(function (S, Dom, Event) {
                 ret.push(1);
             }
 
-            Event.delegate(d, 'click', "button", t);
+            Event.delegate(d, 'click', 'button', t);
 
             jasmine.simulate(s, 'click');
 
@@ -199,7 +186,7 @@ KISSY.add(function (S, Dom, Event) {
             });
 
             runs(function () {
-                Event.undelegate(d, 'click', "button", t);
+                Event.undelegate(d, 'click', 'button', t);
                 jasmine.simulate(s, 'click');
             });
 
@@ -212,8 +199,8 @@ KISSY.add(function (S, Dom, Event) {
 
             runs(function () {
                 ret = [];
-                Event.delegate(d, 'click', "button", t);
-                Event.undelegate(d, 'click', "button");
+                Event.delegate(d, 'click', 'button', t);
+                Event.undelegate(d, 'click', 'button');
                 jasmine.simulate(s, 'click');
             });
             waits(10);
@@ -223,7 +210,7 @@ KISSY.add(function (S, Dom, Event) {
 
             runs(function () {
                 ret = [];
-                Event.delegate(d, 'click', "button", t);
+                Event.delegate(d, 'click', 'button', t);
                 Event.undelegate(d, 'click');
                 jasmine.simulate(s, 'click');
             });
@@ -234,6 +221,6 @@ KISSY.add(function (S, Dom, Event) {
             });
         });
     });
-},{
-    requires:['dom','event/dom/base']
+}, {
+    requires: ['dom', 'event/dom/base', 'io']
 });
