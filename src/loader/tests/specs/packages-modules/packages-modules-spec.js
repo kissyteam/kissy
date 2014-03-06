@@ -2,7 +2,7 @@
  * tc for modules config
  * @author yiminghe@gmail.com
  */
-describe("modules and packages", function () {
+describe('modules and packages', function () {
     var S = KISSY;
     var isCoverage = location.href.indexOf('?coverage') !== -1;
 
@@ -14,55 +14,55 @@ describe("modules and packages", function () {
         KISSY.clearLoader();
     });
 
-    it("can get base correctly", function () {
-        expect(KISSY.config("base"))
+    it('can get base correctly', function () {
+        expect(KISSY.config('base'))
             .toBe(new S.Uri(location.href)
-                .resolve(isCoverage ? "/kissy/src/loader/coverage/src/" :
-                    "/kissy/build/").toString());
+                .resolve(isCoverage ? '/kissy/src/loader/coverage/src/' :
+                    '/kissy/src/loader/src/').toString());
     });
 
-    it("does not depend on order", function () {
+    it('does not depend on order', function () {
         KISSY.config({
-            "modules": {
-                "x/x": {
+            'modules': {
+                'x/x': {
                     requires: ['x/y']
                 }
             }
         });
 
-        KISSY.config("packages", {
+        KISSY.config('packages', {
             x: {
-                base: "../specs/packages-modules"
+                base: '../specs/packages-modules'
             }
         });
 
         var ret;
 
-        KISSY.use("x/x", function (S, X) {
+        KISSY.use('x/x', function (S, X) {
             expect(X).toBe(8);
             ret = X;
         });
 
         waitsFor(function () {
-            return ret == 8;
+            return ret === 8;
         }, 5000);
 
     });
 
-    it("package can has same path", function () {
+    it('package can has same path', function () {
         var ret = 0;
         KISSY.config({
             packages: {
                 y: {
-                    base: "../specs/packages-modules"
+                    base: '../specs/packages-modules'
                 },
                 z: {
-                    base: "../specs/packages-modules"
+                    base: '../specs/packages-modules'
                 }
             }
         });
 
-        KISSY.use("y/y,z/z", function (S, y, z) {
+        KISSY.use('y/y,z/z', function (S, y, z) {
             expect(y).toBe(2);
             expect(z).toBe(1);
             ret = 1;
