@@ -120,7 +120,6 @@ KISSY.add(function (S, require) {
             self.isStarted = true;
 
             var touch = self.lastTouches[0];
-            self.startTime = e.timeStamp;
 
             self.isHorizontal = 1;
             self.isVertical = 1;

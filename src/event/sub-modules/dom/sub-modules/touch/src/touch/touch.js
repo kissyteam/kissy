@@ -26,11 +26,12 @@ KISSY.add(function (S) {
                 }
                 // record valid touches
                 self.lastTouches = e.touches;
+                self.startTime = e.timeStamp;
                 return self.start(e);
             }
             // if more or less touches are triggered, then end
             else if (touchesCount > requiredTouchesCount) {
-                self.onTouchEnd(e);
+                self.onTouchEnd(e,true);
             }
             return undefined;
         },
@@ -45,7 +46,7 @@ KISSY.add(function (S) {
             return self.move(e);
         },
 
-        onTouchEnd: function (e) {
+        onTouchEnd: function (e,moreTouches) {
             var self = this;
             // finger1 down, finger2 down -> start multi touch
             // move finger1 or finger2 -> double-touch move
@@ -55,7 +56,7 @@ KISSY.add(function (S) {
                 self.isTracking = false;
                 if (self.isStarted) {
                     self.isStarted = false;
-                    self.end(e);
+                    self.end(e,moreTouches);
                 }
             }
         },

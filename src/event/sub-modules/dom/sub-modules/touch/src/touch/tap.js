@@ -22,6 +22,17 @@ KISSY.add(function (S, require) {
         e.preventDefault();
     }
 
+    function clearTimers(self) {
+        if (self.singleTapTimer) {
+            clearTimeout(self.singleTapTimer);
+            self.singleTapTimer = 0;
+        }
+        if (self.tapHoldTimer) {
+            clearTimeout(self.tapHoldTimer);
+            self.tapHoldTimer = 0;
+        }
+    }
+
     function Tap() {
         Tap.superclass.constructor.apply(this, arguments);
     }
@@ -31,10 +42,7 @@ KISSY.add(function (S, require) {
             var self = this;
             Tap.superclass.start.call(self, e);
 
-            // tapHold
-            if (self.tapHoldTimer) {
-                clearTimeout(self.tapHoldTimer);
-            }
+            clearTimers(self);
 
             var currentTouch = self.lastTouches[0];
 
@@ -49,12 +57,7 @@ KISSY.add(function (S, require) {
                 DomEvent.fire(currentTouch.target, TAP_HOLD_EVENT, eventObj);
             }, TAP_HOLD_DELAY);
 
-            // doubleTap and singleTap
-            self.startTime = e.timeStamp;
-            if (self.singleTapTimer) {
-                clearTimeout(self.singleTapTimer);
-                self.singleTapTimer = 0;
-            }
+            self.isStarted = true;
 
             return undefined;
         },
@@ -71,13 +74,22 @@ KISSY.add(function (S, require) {
             if (!currentTouch ||
                 Math.abs(currentTouch.pageX - lastXY.pageX) > TOUCH_MOVE_SENSITIVITY ||
                 Math.abs(currentTouch.pageY - lastXY.pageY) > TOUCH_MOVE_SENSITIVITY) {
+                clearTimers(self);
                 return false;
             }
             return undefined;
         },
 
-        end: function (e) {
-            var self = this, lastXY;
+        end: function (e, moreTouches) {
+            var self = this,
+                lastXY;
+
+            clearTimers(self);
+
+            if (moreTouches) {
+                return;
+            }
+
             // tapHold fired
             if (!(lastXY = self.lastXY)) {
                 return;
@@ -85,12 +97,6 @@ KISSY.add(function (S, require) {
 
             var touch = self.lastTouches[0];
             var target = touch.target;
-
-            // cancel tapHold
-            if (self.tapHoldTimer) {
-                clearTimeout(self.tapHoldTimer);
-                self.tapHoldTimer = 0;
-            }
 
             // fire tap
             var eventObject = new DomEventObject(e.originalEvent);

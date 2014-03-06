@@ -62,11 +62,11 @@ KISSY.add(function (S, require) {
     }
 
     S.extend(Drag, SingleTouch, {
-        start: function (e) {
+        start: function () {
             var self = this;
             Drag.superclass.start.apply(self, arguments);
             var touch = self.lastTouches[0];
-            self.startTime = self.lastTime = e.timeStamp;
+            self.lastTime = self.startTime;
             self.startPos = self.lastPos = {
                 pageX: touch.pageX,
                 pageY: touch.pageY

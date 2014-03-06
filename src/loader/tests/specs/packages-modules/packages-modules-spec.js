@@ -4,6 +4,7 @@
  */
 describe("modules and packages", function () {
     var S = KISSY;
+    var isCoverage = location.href.indexOf('?coverage') !== -1;
 
     beforeEach(function () {
         KISSY.config('combine', true);
@@ -16,7 +17,8 @@ describe("modules and packages", function () {
     it("can get base correctly", function () {
         expect(KISSY.config("base"))
             .toBe(new S.Uri(location.href)
-                .resolve("/kissy/build/").toString());
+                .resolve(isCoverage ? "/kissy/src/loader/coverage/src/" :
+                    "/kissy/build/").toString());
     });
 
     it("does not depend on order", function () {

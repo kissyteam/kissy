@@ -240,21 +240,22 @@ if (! _$jscoverage['/touch/touch.js']) {
   _$jscoverage['/touch/touch.js'].lineData[25] = 0;
   _$jscoverage['/touch/touch.js'].lineData[28] = 0;
   _$jscoverage['/touch/touch.js'].lineData[29] = 0;
-  _$jscoverage['/touch/touch.js'].lineData[32] = 0;
+  _$jscoverage['/touch/touch.js'].lineData[30] = 0;
   _$jscoverage['/touch/touch.js'].lineData[33] = 0;
-  _$jscoverage['/touch/touch.js'].lineData[35] = 0;
-  _$jscoverage['/touch/touch.js'].lineData[39] = 0;
+  _$jscoverage['/touch/touch.js'].lineData[34] = 0;
+  _$jscoverage['/touch/touch.js'].lineData[36] = 0;
   _$jscoverage['/touch/touch.js'].lineData[40] = 0;
   _$jscoverage['/touch/touch.js'].lineData[41] = 0;
-  _$jscoverage['/touch/touch.js'].lineData[44] = 0;
+  _$jscoverage['/touch/touch.js'].lineData[42] = 0;
   _$jscoverage['/touch/touch.js'].lineData[45] = 0;
-  _$jscoverage['/touch/touch.js'].lineData[49] = 0;
-  _$jscoverage['/touch/touch.js'].lineData[54] = 0;
+  _$jscoverage['/touch/touch.js'].lineData[46] = 0;
+  _$jscoverage['/touch/touch.js'].lineData[50] = 0;
   _$jscoverage['/touch/touch.js'].lineData[55] = 0;
   _$jscoverage['/touch/touch.js'].lineData[56] = 0;
   _$jscoverage['/touch/touch.js'].lineData[57] = 0;
   _$jscoverage['/touch/touch.js'].lineData[58] = 0;
-  _$jscoverage['/touch/touch.js'].lineData[70] = 0;
+  _$jscoverage['/touch/touch.js'].lineData[59] = 0;
+  _$jscoverage['/touch/touch.js'].lineData[71] = 0;
 }
 if (! _$jscoverage['/touch/touch.js'].functionData) {
   _$jscoverage['/touch/touch.js'].functionData = [];
@@ -270,30 +271,30 @@ if (! _$jscoverage['/touch/touch.js'].branchData) {
   _$jscoverage['/touch/touch.js'].branchData['22'][1] = new BranchData();
   _$jscoverage['/touch/touch.js'].branchData['23'] = [];
   _$jscoverage['/touch/touch.js'].branchData['23'][1] = new BranchData();
-  _$jscoverage['/touch/touch.js'].branchData['32'] = [];
-  _$jscoverage['/touch/touch.js'].branchData['32'][1] = new BranchData();
-  _$jscoverage['/touch/touch.js'].branchData['40'] = [];
-  _$jscoverage['/touch/touch.js'].branchData['40'][1] = new BranchData();
-  _$jscoverage['/touch/touch.js'].branchData['54'] = [];
-  _$jscoverage['/touch/touch.js'].branchData['54'][1] = new BranchData();
-  _$jscoverage['/touch/touch.js'].branchData['56'] = [];
-  _$jscoverage['/touch/touch.js'].branchData['56'][1] = new BranchData();
+  _$jscoverage['/touch/touch.js'].branchData['33'] = [];
+  _$jscoverage['/touch/touch.js'].branchData['33'][1] = new BranchData();
+  _$jscoverage['/touch/touch.js'].branchData['41'] = [];
+  _$jscoverage['/touch/touch.js'].branchData['41'][1] = new BranchData();
+  _$jscoverage['/touch/touch.js'].branchData['55'] = [];
+  _$jscoverage['/touch/touch.js'].branchData['55'][1] = new BranchData();
+  _$jscoverage['/touch/touch.js'].branchData['57'] = [];
+  _$jscoverage['/touch/touch.js'].branchData['57'][1] = new BranchData();
 }
-_$jscoverage['/touch/touch.js'].branchData['56'][1].init(64, 14, 'self.isStarted');
-function visit120_56_1(result) {
-  _$jscoverage['/touch/touch.js'].branchData['56'][1].ranCondition(result);
+_$jscoverage['/touch/touch.js'].branchData['57'][1].init(64, 14, 'self.isStarted');
+function visit120_57_1(result) {
+  _$jscoverage['/touch/touch.js'].branchData['57'][1].ranCondition(result);
   return result;
-}_$jscoverage['/touch/touch.js'].branchData['54'][1].init(258, 15, 'self.isTracking');
-function visit119_54_1(result) {
-  _$jscoverage['/touch/touch.js'].branchData['54'][1].ranCondition(result);
+}_$jscoverage['/touch/touch.js'].branchData['55'][1].init(258, 15, 'self.isTracking');
+function visit119_55_1(result) {
+  _$jscoverage['/touch/touch.js'].branchData['55'][1].ranCondition(result);
   return result;
-}_$jscoverage['/touch/touch.js'].branchData['40'][1].init(48, 16, '!self.isTracking');
-function visit118_40_1(result) {
-  _$jscoverage['/touch/touch.js'].branchData['40'][1].ranCondition(result);
+}_$jscoverage['/touch/touch.js'].branchData['41'][1].init(48, 16, '!self.isTracking');
+function visit118_41_1(result) {
+  _$jscoverage['/touch/touch.js'].branchData['41'][1].ranCondition(result);
   return result;
-}_$jscoverage['/touch/touch.js'].branchData['32'][1].init(619, 35, 'touchesCount > requiredTouchesCount');
-function visit117_32_1(result) {
-  _$jscoverage['/touch/touch.js'].branchData['32'][1].ranCondition(result);
+}_$jscoverage['/touch/touch.js'].branchData['33'][1].init(666, 35, 'touchesCount > requiredTouchesCount');
+function visit117_33_1(result) {
+  _$jscoverage['/touch/touch.js'].branchData['33'][1].ranCondition(result);
   return result;
 }_$jscoverage['/touch/touch.js'].branchData['23'][1].init(22, 16, '!self.isTracking');
 function visit116_23_1(result) {
@@ -332,51 +333,53 @@ KISSY.add(function(S) {
     _$jscoverage['/touch/touch.js'].lineData[28]++;
     self.lastTouches = e.touches;
     _$jscoverage['/touch/touch.js'].lineData[29]++;
+    self.startTime = e.timeStamp;
+    _$jscoverage['/touch/touch.js'].lineData[30]++;
     return self.start(e);
   } else {
-    _$jscoverage['/touch/touch.js'].lineData[32]++;
-    if (visit117_32_1(touchesCount > requiredTouchesCount)) {
-      _$jscoverage['/touch/touch.js'].lineData[33]++;
-      self.onTouchEnd(e);
+    _$jscoverage['/touch/touch.js'].lineData[33]++;
+    if (visit117_33_1(touchesCount > requiredTouchesCount)) {
+      _$jscoverage['/touch/touch.js'].lineData[34]++;
+      self.onTouchEnd(e, true);
     }
   }
-  _$jscoverage['/touch/touch.js'].lineData[35]++;
+  _$jscoverage['/touch/touch.js'].lineData[36]++;
   return undefined;
 }, 
   onTouchMove: function(e) {
   _$jscoverage['/touch/touch.js'].functionData[3]++;
-  _$jscoverage['/touch/touch.js'].lineData[39]++;
-  var self = this;
   _$jscoverage['/touch/touch.js'].lineData[40]++;
-  if (visit118_40_1(!self.isTracking)) {
-    _$jscoverage['/touch/touch.js'].lineData[41]++;
+  var self = this;
+  _$jscoverage['/touch/touch.js'].lineData[41]++;
+  if (visit118_41_1(!self.isTracking)) {
+    _$jscoverage['/touch/touch.js'].lineData[42]++;
     return undefined;
   }
-  _$jscoverage['/touch/touch.js'].lineData[44]++;
-  self.lastTouches = e.touches;
   _$jscoverage['/touch/touch.js'].lineData[45]++;
+  self.lastTouches = e.touches;
+  _$jscoverage['/touch/touch.js'].lineData[46]++;
   return self.move(e);
 }, 
-  onTouchEnd: function(e) {
+  onTouchEnd: function(e, moreTouches) {
   _$jscoverage['/touch/touch.js'].functionData[4]++;
-  _$jscoverage['/touch/touch.js'].lineData[49]++;
+  _$jscoverage['/touch/touch.js'].lineData[50]++;
   var self = this;
-  _$jscoverage['/touch/touch.js'].lineData[54]++;
-  if (visit119_54_1(self.isTracking)) {
-    _$jscoverage['/touch/touch.js'].lineData[55]++;
-    self.isTracking = false;
+  _$jscoverage['/touch/touch.js'].lineData[55]++;
+  if (visit119_55_1(self.isTracking)) {
     _$jscoverage['/touch/touch.js'].lineData[56]++;
-    if (visit120_56_1(self.isStarted)) {
-      _$jscoverage['/touch/touch.js'].lineData[57]++;
-      self.isStarted = false;
+    self.isTracking = false;
+    _$jscoverage['/touch/touch.js'].lineData[57]++;
+    if (visit120_57_1(self.isStarted)) {
       _$jscoverage['/touch/touch.js'].lineData[58]++;
-      self.end(e);
+      self.isStarted = false;
+      _$jscoverage['/touch/touch.js'].lineData[59]++;
+      self.end(e, moreTouches);
     }
   }
 }, 
   start: noop, 
   move: noop, 
   end: noop};
-  _$jscoverage['/touch/touch.js'].lineData[70]++;
+  _$jscoverage['/touch/touch.js'].lineData[71]++;
   return Touch;
 });

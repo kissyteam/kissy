@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 5 22:11
+build time: Mar 6 11:39
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -34,10 +34,11 @@ KISSY.add("event/dom/touch/touch", [], function(S) {
         self.isStarted = false
       }
       self.lastTouches = e.touches;
+      self.startTime = e.timeStamp;
       return self.start(e)
     }else {
       if(touchesCount > requiredTouchesCount) {
-        self.onTouchEnd(e)
+        self.onTouchEnd(e, true)
       }
     }
     return undefined
@@ -48,13 +49,13 @@ KISSY.add("event/dom/touch/touch", [], function(S) {
     }
     self.lastTouches = e.touches;
     return self.move(e)
-  }, onTouchEnd:function(e) {
+  }, onTouchEnd:function(e, moreTouches) {
     var self = this;
     if(self.isTracking) {
       self.isTracking = false;
       if(self.isStarted) {
         self.isStarted = false;
-        self.end(e)
+        self.end(e, moreTouches)
       }
     }
   }, start:noop, move:noop, end:noop};
@@ -79,15 +80,23 @@ KISSY.add("event/dom/touch/tap", ["./handle-map", "event/dom/base", "./single-to
   function preventDefault(e) {
     e.preventDefault()
   }
+  function clearTimers(self) {
+    if(self.singleTapTimer) {
+      clearTimeout(self.singleTapTimer);
+      self.singleTapTimer = 0
+    }
+    if(self.tapHoldTimer) {
+      clearTimeout(self.tapHoldTimer);
+      self.tapHoldTimer = 0
+    }
+  }
   function Tap() {
     Tap.superclass.constructor.apply(this, arguments)
   }
   S.extend(Tap, SingleTouch, {start:function(e) {
     var self = this;
     Tap.superclass.start.call(self, e);
-    if(self.tapHoldTimer) {
-      clearTimeout(self.tapHoldTimer)
-    }
+    clearTimers(self);
     var currentTouch = self.lastTouches[0];
     self.tapHoldTimer = setTimeout(function() {
       var eventObj = S.mix({touch:currentTouch, which:1, TAP_HOLD_DELAY:(S.now() - e.timeStamp) / 1E3}, self.lastXY);
@@ -95,11 +104,7 @@ KISSY.add("event/dom/touch/tap", ["./handle-map", "event/dom/base", "./single-to
       self.lastXY = 0;
       DomEvent.fire(currentTouch.target, TAP_HOLD_EVENT, eventObj)
     }, TAP_HOLD_DELAY);
-    self.startTime = e.timeStamp;
-    if(self.singleTapTimer) {
-      clearTimeout(self.singleTapTimer);
-      self.singleTapTimer = 0
-    }
+    self.isStarted = true;
     return undefined
   }, move:function() {
     var self = this, lastXY;
@@ -108,20 +113,21 @@ KISSY.add("event/dom/touch/tap", ["./handle-map", "event/dom/base", "./single-to
     }
     var currentTouch = self.lastTouches[0];
     if(!currentTouch || Math.abs(currentTouch.pageX - lastXY.pageX) > TOUCH_MOVE_SENSITIVITY || Math.abs(currentTouch.pageY - lastXY.pageY) > TOUCH_MOVE_SENSITIVITY) {
+      clearTimers(self);
       return false
     }
     return undefined
-  }, end:function(e) {
+  }, end:function(e, moreTouches) {
     var self = this, lastXY;
+    clearTimers(self);
+    if(moreTouches) {
+      return
+    }
     if(!(lastXY = self.lastXY)) {
       return
     }
     var touch = self.lastTouches[0];
     var target = touch.target;
-    if(self.tapHoldTimer) {
-      clearTimeout(self.tapHoldTimer);
-      self.tapHoldTimer = 0
-    }
     var eventObject = new DomEventObject(e.originalEvent);
     S.mix(eventObject, {type:TAP_EVENT, which:1, pageX:lastXY.pageX, pageY:lastXY.pageY, target:target, currentTarget:target});
     eventObject.touch = touch;
@@ -205,7 +211,6 @@ KISSY.add("event/dom/touch/swipe", ["./handle-map", "event/dom/base", "./single-
     Swipe.superclass.start.apply(self, arguments);
     self.isStarted = true;
     var touch = self.lastTouches[0];
-    self.startTime = e.timeStamp;
     self.isHorizontal = 1;
     self.isVertical = 1;
     self.startX = touch.pageX;
@@ -407,11 +412,11 @@ KISSY.add("event/dom/touch/drag", ["./handle-map", "event/dom/base", "./single-t
   }
   function Drag() {
   }
-  S.extend(Drag, SingleTouch, {start:function(e) {
+  S.extend(Drag, SingleTouch, {start:function() {
     var self = this;
     Drag.superclass.start.apply(self, arguments);
     var touch = self.lastTouches[0];
-    self.startTime = self.lastTime = e.timeStamp;
+    self.lastTime = self.startTime;
     self.startPos = self.lastPos = {pageX:touch.pageX, pageY:touch.pageY}
   }, move:function(e) {
     var self = this;

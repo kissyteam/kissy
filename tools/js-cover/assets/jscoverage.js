@@ -1070,7 +1070,7 @@ function jscoverage_recalculateSourceTab() {
         if (relativeUrl.charAt(0) !== '/')
             relativeUrl = '/' + relativeUrl;
         if (!jscoverage_isServer) {
-            if (location.pathname.charAt(location.pathname.length - 1) === '/') {
+            if (location.pathname.indexOf('/runner/') !== -1) {
                 relativeUrl = '../../src' + relativeUrl;
             } else {
                 relativeUrl = '../src' + relativeUrl;

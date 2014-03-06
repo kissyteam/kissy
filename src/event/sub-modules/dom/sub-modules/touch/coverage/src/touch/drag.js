@@ -414,7 +414,7 @@ KISSY.add(function(S, require) {
   }
   _$jscoverage['/touch/drag.js'].lineData[64]++;
   S.extend(Drag, SingleTouch, {
-  start: function(e) {
+  start: function() {
   _$jscoverage['/touch/drag.js'].functionData[6]++;
   _$jscoverage['/touch/drag.js'].lineData[66]++;
   var self = this;
@@ -423,7 +423,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/touch/drag.js'].lineData[68]++;
   var touch = self.lastTouches[0];
   _$jscoverage['/touch/drag.js'].lineData[69]++;
-  self.startTime = self.lastTime = e.timeStamp;
+  self.lastTime = self.startTime;
   _$jscoverage['/touch/drag.js'].lineData[70]++;
   self.startPos = self.lastPos = {
   pageX: touch.pageX, 
