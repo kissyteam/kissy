@@ -142,7 +142,7 @@
             var o = S.clone(varArgs[0]),
                 i,
                 l = var_args.length;
-            for (i = 0; i < l; i++) {
+            for (i = 1; i < l; i++) {
                 S.mix(o, var_args[i]);
             }
             return o;
