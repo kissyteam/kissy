@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.42
 MIT Licensed
-build time: Feb 28 14:17
+build time: Mar 6 13:34
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -255,6 +255,6 @@ KISSY.add("scroll-view/base", ["node", "anim", "component/container", "./base/re
         self.set("scrollTop", top)
       }
     }
-  }}, {ATTRS:{contentEl:{}, scrollLeft:{view:1, value:0}, scrollTop:{view:1, value:0}, dimension:{}, focusable:{value:true}, allowTextSelection:{value:true}, handleGestureEvents:{value:false}, snap:{value:false}, pageIndex:{value:0}, xrender:{value:Render}}, xclass:"scroll-view"})
+  }}, {ATTRS:{contentEl:{}, scrollLeft:{view:1, value:0}, scrollTop:{view:1, value:0}, dimension:{}, focusable:{value:true}, allowTextSelection:{value:true}, handleMouseEvents:{value:false}, snap:{value:false}, pageIndex:{value:0}, xrender:{value:Render}}, xclass:"scroll-view"})
 });
 

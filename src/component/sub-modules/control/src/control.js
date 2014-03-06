@@ -263,13 +263,13 @@ KISSY.add(function (S, require) {
                     if (self.get('focusable')) {
                         self.focus();
                     }
-                    if (!self.get('allowTextSelection')) {
+                    if (!self.get('allowTextSelection') && ev.type.indexOf('mouse') !== -1) {
                         // firefox /chrome/ie9/i10 不会引起焦点转移
                         // invalid for ie10 buggy?
                         n = ev.target.nodeName;
                         n = n && n.toLowerCase();
                         // do not prevent focus when click on editable element
-                        if (n !== 'input' && n !== 'textarea') {
+                        if (n !== 'input' && n !== 'textarea' && n !== 'button') {
                             ev.preventDefault();
                         }
                     }

@@ -1180,7 +1180,7 @@ KISSY.add(function(S, require) {
   value: true}, 
   allowTextSelection: {
   value: true}, 
-  handleGestureEvents: {
+  handleMouseEvents: {
   value: false}, 
   snap: {
   value: false}, 
