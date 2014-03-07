@@ -1,7 +1,7 @@
 /*
-Copyright 2013, KISSY v1.42
+Copyright 2014, KISSY v1.42
 MIT Licensed
-build time: Dec 4 22:19
+build time: Mar 7 12:41
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -86,10 +86,12 @@ KISSY.add("xtemplate/runtime/scope", [], function(S) {
           if(!scope.has(p)) {
             valid = 0;
             break
+          }else {
+            v = scope.get(p);
+            endScopeFind = 1
           }
-          v = scope.get(p)
         }else {
-          if(typeof v !== "object" || !(p in v)) {
+          if(v == null || typeof v !== "object" || !(p in v)) {
             valid = 0;
             break
           }
@@ -118,7 +120,7 @@ KISSY.add("xtemplate/runtime/commands", ["path", "./scope"], function(S, require
   var commands;
   var Path = require("path");
   var Scope = require("./scope");
-  commands = {each:function(scope, config) {
+  commands = {"debugger":S.noop, each:function(scope, config) {
     var params = config.params;
     var param0 = params[0];
     var xindexName = params[2] || "xindex";
@@ -241,6 +243,11 @@ KISSY.add("xtemplate/runtime/commands", ["path", "./scope"], function(S, require
   }, parse:function(scope, config) {
     return commands.include.call(this, new Scope, config)
   }};
+  if("@DEBUG@") {
+    commands["debugger"] = function() {
+      S.globalEval("debugger")
+    }
+  }
   return commands
 });
 KISSY.add("xtemplate/runtime", ["./runtime/commands", "./runtime/scope"], function(S, require) {

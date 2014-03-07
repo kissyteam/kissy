@@ -9,6 +9,8 @@ KISSY.add(function (S, require) {
     var Scope = require('./scope');
 
     commands = {
+        'debugger': S.noop,
+
         'each': function (scope, config) {
             var params = config.params;
             var param0 = params[0];
@@ -164,6 +166,12 @@ KISSY.add(function (S, require) {
             return commands.include.call(this, new Scope(), config);
         }
     };
+
+    if ('@DEBUG@') {
+        commands['debugger'] = function () {
+            S.globalEval('debugger');
+        };
+    }
 
     return commands;
 });

@@ -115,11 +115,13 @@ KISSY.add(function (S) {
                         if (!scope.has(p)) {
                             valid = 0;
                             break;
+                        } else {
+                            v = scope.get(p);
+                            endScopeFind = 1;
                         }
-                        v = scope.get(p);
                     } else {
                         // may not be object at all
-                        if (typeof v !== 'object' || !(p in v)) {
+                        if (v == null || typeof v !== 'object' || !(p in v)) {
                             valid = 0;
                             break;
                         }
