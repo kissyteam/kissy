@@ -24,6 +24,8 @@ KISSY.add(function (S, require) {
     }
 
     commands = {
+        'debugger': S.noop,
+
         'each': function (scope, option) {
             var params = option.params;
             var param0 = params[0];
@@ -215,6 +217,12 @@ KISSY.add(function (S, require) {
             return '';
         }
     };
+
+    if ('@DEBUG@') {
+        commands['debugger'] = function () {
+            S.globalEval('debugger');
+        };
+    }
 
     return commands;
 });

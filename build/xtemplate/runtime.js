@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Feb 25 19:47
+build time: Mar 7 11:52
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -95,13 +95,15 @@ KISSY.add("xtemplate/runtime/scope", [], function(S) {
           continue
         }
         if(v === scope) {
-          if(!scope.has(p)) {
+          if(scope.has(p)) {
+            v = scope.get(p);
+            endScopeFind = 1
+          }else {
             valid = 0;
             break
           }
-          v = scope.get(p)
         }else {
-          if(typeof v !== "object" || !(p in v)) {
+          if(v == null || typeof v !== "object" || !(p in v)) {
             valid = 0;
             break
           }
@@ -146,7 +148,7 @@ KISSY.add("xtemplate/runtime/commands", ["./scope"], function(S, require) {
     }
     return parts.join("/")
   }
-  commands = {each:function(scope, option) {
+  commands = {"debugger":S.noop, each:function(scope, option) {
     var params = option.params;
     var param0 = params[0];
     var xindexName = params[2] || "xindex";
@@ -309,6 +311,11 @@ KISSY.add("xtemplate/runtime/commands", ["./scope"], function(S, require) {
     }
     return""
   }};
+  if("@DEBUG@") {
+    commands["debugger"] = function() {
+      S.globalEval("debugger")
+    }
+  }
   return commands
 });
 KISSY.add("xtemplate/runtime", ["./runtime/commands", "./runtime/scope"], function(S, require) {
