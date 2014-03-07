@@ -12,7 +12,7 @@ KISSY.use('navigation-view,' +
     'promise,' +
     window.PAGE_VIEW,
     function (S, NavigationView, Bar, Node, router, Promise, pageViewFactory) {
-        var PageView = pageViewFactory(47);
+        var PageView = pageViewFactory();
 
         var win = Node.all(window);
 
@@ -25,108 +25,67 @@ KISSY.use('navigation-view,' +
             },
             {
                 content: 'none-anim',
-                value: {
-                    enter: 'none',
-                    leave: 'none'
-                }
+                value: 'none'
+
             },
             {
                 content: 'slide-left-anim',
-                value: {
-                    enter: 'slide-left',
-                    leave: 'slide-right'
-                }
+                value: ['slide-left', 'slide-right']
+
             },
             {
                 content: 'slide-top-anim',
-                value: {
-                    enter: 'slide-top',
-                    leave: 'slide-bottom'
-                }
+                value: ['slide-top', 'slide-bottom']
+
             },
             {
                 content: 'slide-bottom-anim',
-                value: {
-                    enter: 'slide-bottom',
-                    leave: 'slide-top'
-                }
+                value: ['slide-bottom', 'slide-top']
             },
             {
                 content: 'fade-anim',
-                value: {
-                    enter: 'fade',
-                    leave: 'fade'
-                }
+                value: 'fade'
             },
             {
                 content: 'pop-anim',
-                value: {
-                    enter: 'pop',
-                    leave: 'pop'
-                }
+                value: 'pop'
             },
             {
                 content: 'flip-left-anim',
-                value: {
-                    enter: 'flip-left',
-                    leave: 'flip-right'
-                }
+                value: ['flip-left', 'flip-right']
             },
             {
                 content: 'flip-right-anim',
-                value: {
-                    enter: 'flip-right',
-                    leave: 'flip-left'
-                }
+                value: ['flip-right', 'flip-left']
             },
             {
                 content: 'swap-left-anim',
-                value: {
-                    enter: 'swap-left',
-                    leave: 'swap-right'
-                }
+                value: ['swap-left', 'swap-right']
             },
             {
                 content: 'swap-right-anim',
-                value: {
-                    enter: 'swap-right',
-                    leave: 'swap-left'
-                }
+                value: ['swap-right', 'swap-left']
             },
             {
                 content: 'cube-left-anim',
-                value: {
-                    enter: 'swap-left',
-                    leave: 'swap-right'
-                }
+                value: ['swap-left', 'swap-right']
             },
             {
                 content: 'cube-right-anim',
-                value: {
-                    enter: 'swap-right',
-                    leave: 'swap-left'
-                }
+                value: [ 'swap-right', 'swap-left']
             },
             {
                 content: 'flow-left-anim',
-                value: {
-                    enter: 'flow-left',
-                    leave: 'flow-right'
-                }
+                value: ['flow-left', 'flow-right']
+
             },
             {
                 content: 'flow-right-anim',
-                value: {
-                    enter: 'flow-right',
-                    leave: 'flow-left'
-                }
+                value: ['flow-right', 'flow-left']
             },
             {
                 content: 'turn-anim',
-                value: {
-                    enter: 'turn',
-                    leave: 'turn'
-                }
+                value: 'turn'
             }
         ];
 
@@ -147,6 +106,9 @@ KISSY.use('navigation-view,' +
         };
 
         var navigationView = new NavigationView({
+            loadingHtml: '<div class="ks-navigation-view-loading-outer">' +
+                '<div class="ks-navigation-view-loading-inner"></div>' +
+                '</div>',
             render: 'body'
         }).render();
 
@@ -245,21 +207,29 @@ KISSY.use('navigation-view,' +
 
         router.get('/loading', function (request) {
             if (!request.backward) {
+                navigationView.replace({
+                    animation: [ 'slide-right', 'slide-left']
+                });
                 navigationView.push({
                     xclass: 'tb-loading-view',
-                    title: 'loading',
-                    viewId: 'loading'
+                    title: 'loading'
                 });
             }
         });
 
         router.get('/:anim', function (request) {
             if (!request.backward) {
+                var animation = getAnimValue(request.params.anim);
+                if (animation) {
+                    navigationView.replace({
+                        animation: animation
+                    });
+                }
                 navigationView.push({
                     xclass: 'tb-anim-view',
                     title: request.params.anim,
                     viewId: request.params.anim,
-                    animation: getAnimValue(request.params.anim)
+                    animation: animation
                 });
             }
         });

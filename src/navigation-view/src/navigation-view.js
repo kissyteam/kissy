@@ -3,34 +3,100 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, require) {
-    var $ = require('node').all;
-    var Container = require('component/container');
-    var ContentTpl = require('component/extension/content-xtpl');
-    var ContentRender = require('component/extension/content-render');
-    var LOADING_HTML = '<div class="{prefixCls}navigation-view-loading">' +
-        '<div class="{prefixCls}navigation-view-loading-outer">' +
-        '<div class="{prefixCls}navigation-view-loading-inner"></div>' +
-        '</div>' +
-        '</div>';
     var vendorPrefix = S.Feature.getVendorCssPropPrefix('animation');
     var ANIMATION_END_EVENT = vendorPrefix ?
         (vendorPrefix.toLowerCase() + 'AnimationEnd') :
         // https://github.com/kissyteam/kissy/issues/538
         'animationend webkitAnimationEnd';
 
-    var uuid = 0;
+    var Container = require('component/container');
+    var Control = require('component/control');
+    var ContentTpl = require('component/extension/content-xtpl');
+    var ContentRender = require('component/extension/content-render');
 
-    var NavigationViewRender = Container.getDefaultRender().extend([ContentRender], {
-        createDom: function () {
-            var self = this,
-                control = self.control;
-            var $loadingEl = $(S.substitute(LOADING_HTML, {
-                prefixCls: self.control.get('prefixCls')
-            }));
-            control.get('contentEl').append($loadingEl);
-            control.$loadingEl = $loadingEl;
-            control.loadingEl = $loadingEl[0];
-            $loadingEl.on(ANIMATION_END_EVENT, onAnimEnd($loadingEl[0]), control);
+    function getAnimCss(prefixCls, animation, enter) {
+        return prefixCls + 'navigation-view-' +
+            ('anim-' + animation + '-' + (enter ? 'enter' : 'leave')) + ' ' +
+            prefixCls + 'navigation-view-anim-ing';
+    }
+
+    function getAnimValueFromView(view, enter, backward) {
+        var animation = view.get('animation');
+        if (typeof animation === 'string') {
+            return animation;
+        }
+        var animationValue;
+        if (backward) {
+            animationValue = enter ? animation[1] : animation[0];
+        } else {
+            animationValue = enter ? animation[0] : animation[1];
+        }
+        return animationValue;
+    }
+
+    function transition(view, enter, backward) {
+        clearAnimCss(view);
+        var animationValue = getAnimValueFromView(view, enter, backward);
+        if (animationValue === 'none') {
+            if (enter) {
+                view.show();
+            } else {
+                view.hide();
+            }
+            return;
+        }
+        view.show();
+        view.$el.addClass(view._viewAnimCss = getAnimCss(view.get('prefixCls'), animationValue, enter));
+    }
+
+    function loadingTransition(loadingView, view, enter, backward) {
+        clearAnimCss(loadingView);
+        var animationValue = getAnimValueFromView(view, enter, backward);
+        if (animationValue === 'none') {
+            if (enter) {
+                loadingView.show();
+            } else {
+                loadingView.hide();
+            }
+            return;
+        }
+        loadingView.show();
+        loadingView.$el.addClass(loadingView._viewAnimCss = getAnimCss(view.get('prefixCls'), animationValue, enter));
+    }
+
+    function clearAnimCss(self) {
+        if (self._viewAnimCss) {
+            self.$el.removeClass(self._viewAnimCss);
+            self._viewAnimCss = null;
+        }
+    }
+
+    var LoadingView = Control.extend({
+        bindUI: function () {
+            var self = this;
+            self.$el.on(ANIMATION_END_EVENT, function () {
+                clearAnimCss(self);
+                if (!self.active) {
+                    self.hide();
+                }
+            });
+        },
+
+        transition: function (enter, backward) {
+            var self = this;
+            self.active = enter;
+            loadingTransition(self, self.navigationView.get('activeView'), enter, backward);
+        }
+    }, {
+        xclass: 'navigation-view-loading',
+
+        ATTRS: {
+            handleGestureEvents: {
+                value: false
+            },
+            visible: {
+                value: false
+            }
         }
     });
 
@@ -51,6 +117,66 @@ KISSY.add(function (S, require) {
         return null;
     }
 
+    function switchTo(navigationView, view, backward) {
+        var loadingView = navigationView.loadingView;
+
+        var oldView = navigationView.get('activeView');
+
+        navigationView.fire('beforeInnerViewChange', {
+            oldView: oldView,
+            newView: view,
+            backward: backward
+        });
+
+        if (oldView && oldView.leave) {
+            oldView.leave();
+        }
+
+        navigationView.set('activeView', view);
+
+        if (view.enter) {
+            view.enter();
+        }
+        var promise = view.promise;
+        if (promise) {
+            if (oldView) {
+                transition(oldView, false, backward);
+                loadingView.transition(true, backward);
+            } else {
+                loadingView.show();
+            }
+            promise.then(function () {
+                if (navigationView.get('activeView') === view) {
+                    loadingView.hide();
+                    view.show();
+                    navigationView.fire('afterInnerViewChange', {
+                        newView: view,
+                        oldView: oldView,
+                        backward: backward
+                    });
+                }
+            });
+        } else {
+            // is loading and not first view
+            if (loadingView.get('visible')) {
+                loadingView.transition(false, backward);
+                transition(view, true, backward);
+            }
+            else if (oldView) {
+                transition(oldView, false, backward);
+                transition(view, true, backward);
+            } else {
+                view.show();
+            }
+            navigationView.fire('afterInnerViewChange', {
+                newView: view,
+                oldView: oldView,
+                backward: backward
+            });
+        }
+        gc(navigationView);
+    }
+
     function gc(navigationView) {
         var children = navigationView.get('children').concat();
         var viewCacheSize = navigationView.get('viewCacheSize');
@@ -59,276 +185,79 @@ KISSY.add(function (S, require) {
         }
         var removedSize = Math.floor(viewCacheSize / 3);
         children.sort(function (a, b) {
-            return a.uuid - b.uuid;
+            return a.timeStamp - b.timeStamp;
         });
         for (var i = 0; i < removedSize; i++) {
             navigationView.removeChild(children[i]);
         }
     }
 
-    /**
-     * @private
-     * @param self
-     * @param css
-     * @param [enter]
-     * @returns {string}
-     */
-    function getAnimCss(self, css, enter) {
-        return self.view.getBaseCssClass('anim-' + css + '-' + (enter ? 'enter' : 'leave'));
-    }
-
-    function trimClassName(className) {
-        return S.trim(className).replace(/\s+/, ' ');
-    }
-
-    /**
-     *
-     * @param el
-     * @param self
-     * @param [css]
-     */
-    function showAnimateEl(el, self, css) {
-        var className = el.className,
-            originalClassName = className;
-
-        if (css) {
-            if (css.match(self.animateNoneEnterRegExp)) {
-                css = '';
-            } else if (css.match(self.animateNoneLeaveRegExp)) {
-                return hideAnimateEl(el, self);
-            }
-        }
-
-        if (className.match(self.animateClassRegExp)) {
-            className = className.replace(self.animateClassRegExp, '');
-        }
-
-        if (css) {
-            className += ' ' + css;
-            className += ' ' + self.animingClass;
-        }
-
-        if (className.indexOf(self.showViewClass) === -1) {
-            className += ' ' + self.showViewClass;
-        }
-
-        if (className !== originalClassName) {
-            el.className = trimClassName(className);
-        }
-        return undefined;
-    }
-
-    function hideAnimateEl(el, self) {
-        var className = el.className,
-            originalClassName = className;
-
-        className = className.replace(self.animateClassRegExp, '')
-            .replace(self.showViewClass, '');
-
-        if (className !== originalClassName) {
-            el.className = trimClassName(className);
-        }
-    }
-
-    function postProcessSwitchView(self, oldView, newView, backward) {
-        var promise = newView.promise;
-
-        gc(self);
-
-        if (promise) {
-            promise.then(function () {
-                var activeView = self.get('activeView');
-                if (activeView && activeView.uuid === newView.uuid) {
-                    self.fire('afterInnerViewChange', {
-                        oldView: oldView,
-                        newView: newView,
-                        backward: backward
-                    });
-                    hideAnimateEl(self.loadingEl, self);
-                    showAnimateEl(newView.el, self);
-                }
-            });
+    function onViewAnimEnd() {
+        var view = this;
+        clearAnimCss(view);
+        if (view.get('navigationView').get('activeView') === view) {
+            view.show();
         } else {
-            self.fire('afterInnerViewChange', {
-                oldView: oldView,
-                newView: newView,
-                backward: backward
-            });
+            view.hide();
         }
     }
 
-    function processSwitchView(self, config, oldView, newView, enterAnimCssClass, leaveAnimCssClass, backward) {
-        var loadingEl = self.loadingEl;
-        if (oldView) {
-            if (oldView.leave) {
-                oldView.leave();
-            }
-            oldView.fire('leave');
-        }
-        var newViewEl = newView.el;
-        newView.set(config);
-
-        self.set('activeView', newView);
-
-        if (newView) {
-            if (newView.enter) {
-                newView.enter();
-            }
-            newView.fire('enter');
-        }
-
-        self.fire('beforeInnerViewChange', {
-            oldView: oldView,
-            newView: newView,
-            backward: backward
-        });
-
-        var promise = newView.promise;
-
-        if (oldView) {
-            showAnimateEl(oldView.el, self, leaveAnimCssClass);
-        }
-
-        if (promise) {
-            if (oldView) {
-                showAnimateEl(loadingEl, self, enterAnimCssClass);
-            } else {
-                // first view show loading without anim
-                showAnimateEl(loadingEl, self);
-            }
-            // leave without aim, hidden
-            hideAnimateEl(newViewEl, self);
+    function createView(self, config) {
+        var view = getViewInstance(self, config);
+        if (!view) {
+            view = self.addChild(config);
+            view.$el.on(ANIMATION_END_EVENT, onViewAnimEnd, view);
         } else {
-            // is loading and not first view
-            if (self.$loadingEl.hasClass(self.showViewClass) && oldView) {
-                showAnimateEl(loadingEl, self, leaveAnimCssClass);
-            }
-            showAnimateEl(newViewEl, self, enterAnimCssClass);
+            view.set(config);
         }
+        view.timeStamp = S.now();
+        return view;
     }
 
-    function isEnterCss(css, self) {
-        return css.match(self.animateEnterRegExp);
-    }
-
-    function isLeaveCss(css, self) {
-        return css.match(self.animateLeaveRegExp);
-    }
-
-    function onAnimEnd(el) {
-        return function () {
-            animEndEl.call(this, el);
-        };
-    }
-
-    function animEndEl(el) {
-        var self = this;
-        var className = el.className;
-        if (isEnterCss(className, self)) {
-            showAnimateEl(el, self);
-        } else if (isLeaveCss(className, self)) {
-            hideAnimateEl(el, self);
-        }
-    }
+    var NavigationViewRender = Container.getDefaultRender().extend([ContentRender]);
 
     return Container.extend({
         createDom: function () {
             var self = this;
-            self.animateClassRegExp = new RegExp(self.view.getBaseCssClass() + '-anim-[^\\s]+', 'g');
-            self.animateEnterRegExp = new RegExp('-enter(?:\\s|$)');
-            self.animateLeaveRegExp = new RegExp('-leave(?:\\s|$)');
-            self.animateNoneEnterRegExp = new RegExp('none-enter(?:\\s|$)');
-            self.animateNoneLeaveRegExp = new RegExp('none-leave(?:\\s|$)');
-            self.animingClass = self.view.getBaseCssClass() + '-anim-ing';
-            self.showViewClass = self.view.getBaseCssClass('show-view');
+            self.loadingView = new LoadingView({
+                content: self.get('loadingHtml'),
+                render: self.contentEl
+            }).render();
+            self.loadingView.navigationView = self;
             self.viewStack = [];
         },
 
-        /**
-         * get inner view instance for specified view class.
-         * @param [config]
-         * @returns {KISSY.Component.Control}
-         */
-        createView: function (config) {
-            var self = this;
-            var nextView = getViewInstance(self, config);
-            var nextViewEl;
-            if (!nextView) {
-                nextView = self.addChild(config);
-                nextViewEl = nextView.get('el');
-                nextViewEl.on(ANIMATION_END_EVENT, onAnimEnd(nextViewEl[0]), self);
-            }
-            return nextView;
+        '_onSetLoadingHtml': function (v) {
+            this.loadingView.set('content', v);
         },
 
         push: function (config) {
             var self = this,
                 nextView,
-                animation,
-                enterAnimation,
-                leaveAnimation,
-                enterAnimCssClass,
-                leaveAnimCssClass,
-                activeView,
-                viewStack = self.viewStack,
-                activeViewConfig = viewStack[viewStack.length - 1];
-
-            activeView = self.get('activeView');
-
-            if (activeView) {
-                config.animation = config.animation || self.get('animation');
-            } else {
-                // first view no animation
-                config.animation = {};
-            }
-
-            animation = config.animation;
-            nextView = self.createView(config);
-            nextView.uuid = uuid++;
+                viewStack = self.viewStack;
+            config.animation = config.animation || self.get('animation');
+            config.navigationView = self;
+            nextView = createView(self, config);
             viewStack.push(config);
-            enterAnimation = animation.enter;
-            leaveAnimation = animation.leave;
-            if (activeView) {
-                leaveAnimation = activeViewConfig.animation.leave || leaveAnimation;
-            }
-
-            enterAnimCssClass = enterAnimation && getAnimCss(self, enterAnimation, true) || '';
-            leaveAnimCssClass = getAnimCss(self, leaveAnimation);
-
-            processSwitchView(self, config, activeView, nextView, enterAnimCssClass, leaveAnimCssClass);
-
-            postProcessSwitchView(self, activeView, nextView);
+            switchTo(self, nextView);
         },
 
         replace: function (config) {
             var self = this,
                 viewStack = self.viewStack;
             S.mix(viewStack[viewStack.length - 1], config);
+            self.get('activeView').set(config);
         },
 
         pop: function (config) {
             var self = this,
-                activeView,
                 nextView,
-                enterAnimCssClass,
-                leaveAnimCssClass,
-                activeViewConfig,
                 viewStack = self.viewStack;
-
             if (viewStack.length > 1) {
-                activeViewConfig = viewStack[viewStack.length - 1];
                 viewStack.pop();
-                activeView = self.get('activeView');
                 config = viewStack[viewStack.length - 1];
-
-                nextView = self.createView(config);
-                nextView.uuid = uuid++;
-                enterAnimCssClass = getAnimCss(self, config.animation.leave || activeViewConfig.animation.leave, true);
-                leaveAnimCssClass = getAnimCss(self, activeViewConfig.animation.enter);
-
-                processSwitchView(self, config, activeView, nextView, enterAnimCssClass, leaveAnimCssClass, true);
-
-                postProcessSwitchView(self, activeView, nextView, true);
+                nextView = createView(self, config);
+                switchTo(self, nextView, true);
             }
         }
     }, {
@@ -339,18 +268,21 @@ KISSY.add(function (S, require) {
              * default animation for view switch when pushed enter or pushed leave
              */
             animation: {
-                value: {
-                    'enter': 'slide-right',
-                    'leave': 'slide-left'
-                }
+                // push enter: slide-right-enter
+                // push leave: slide-left-leave
+                // pop enter: slide-left-enter
+                // pop leave: slide-right-leave
+                value: ['slide-right', 'slide-left']
             },
+
+            loadingHtml: {},
 
             handleGestureEvents: {
                 value: false
             },
 
             viewCacheSize: {
-                value: 20
+                value: 10
             },
 
             focusable: {
@@ -372,6 +304,7 @@ KISSY.add(function (S, require) {
             defaultChildCfg: {
                 value: {
                     handleGestureEvents: false,
+                    visible: false,
                     allowTextSelection: true
                 }
             }

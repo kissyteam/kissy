@@ -19,8 +19,6 @@ KISSY.add(function (S, require) {
     tpl += tpl;
     tpl += tpl;
 
-    var win = require('node').all(window);
-
     function Loading(page) {
         this.page = page;
         page.on('leave', this.leave, this);
@@ -43,7 +41,6 @@ KISSY.add(function (S, require) {
             S.log('leave loading');
         },
         destroy: function () {
-            var page = this.page;
             S.log('destroy loading');
         }
     };

@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 7 12:01
+build time: Mar 8 03:26
 */
 /**
 navigation-view style
@@ -113,13 +113,11 @@ navigation-view style
   top: 0;
   width: 100%;
   height: 100%;
-  visibility: hidden;
 }
-.ks-navigation-view-content > div.ks-navigation-view-show-view {
-  visibility: visible;
-}
-.ks-navigation-view-content > div.ks-navigation-view-anim-none-leave {
+.ks-navigation-view-loading-hidden,
+.ks-navigation-view-content .ks-scroll-view-hidden {
   visibility: hidden;
+  display: block;
 }
 .ks-navigation-view-loading {
   background: rgba(0, 0, 0, 0.8);
@@ -127,17 +125,17 @@ navigation-view style
   -webkit-box-pack: center;
   -webkit-box-align: center;
 }
-.ks-navigation-view-loading-outer,
-.ks-navigation-view-loading-inner {
+.ks-navigation-view-loading .ks-navigation-view-loading-outer,
+.ks-navigation-view-loading .ks-navigation-view-loading-inner {
   width: 48px;
   height: 48px;
   background: url(http://gtms03.alicdn.com/tps/i3/T1uPOOFfVaXXbLNxnk-96-192.png) no-repeat center center;
   background-size: 48px;
 }
-.ks-navigation-view-loading-outer {
+.ks-navigation-view-loading .ks-navigation-view-loading-outer {
   background-position: 0 -48px;
 }
-.ks-navigation-view-loading-inner {
+.ks-navigation-view-loading .ks-navigation-view-loading-inner {
   -webkit-animation: spin 1s infinite linear;
   background-position: 0 0;
 }

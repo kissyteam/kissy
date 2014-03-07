@@ -50,14 +50,19 @@
 <script src="/kissy/build/seed.js"></script>
 <script src="/kissy/src/package.js"></script>
 <script>
-    KISSY.use('navigation-view,node,scroll-view,scroll-view/plugin/scrollbar',
-            function (S, NavigationView, Node, ScrollView, ScrollBar) {
+    KISSY.use('navigation-view,navigation-view/bar,node,scroll-view,scroll-view/plugin/scrollbar',
+            function (S, NavigationView,Bar, Node, ScrollView, ScrollBar) {
                 var win = Node.all(window);
 
                 var navigationView = new NavigationView({
                     // defaults to 20
                     viewCacheSize: 5,
                     render: '.sidebar'
+                }).render();
+
+                var bar = new Bar({
+                    navigationView: navigationView,
+                    elBefore: navigationView.get('contentEl')
                 }).render();
 
                 var IndexView = ScrollView.extend({

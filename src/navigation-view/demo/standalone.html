@@ -47,15 +47,22 @@
 <script src="/kissy/build/seed.js"></script>
 <script src="/kissy/src/package.js"></script>
 <script>
-    KISSY.use('component/control,navigation-view,node,scroll-view,scroll-view/plugin/scrollbar',
-            function (S, Control, NavigationView, Node, ScrollView, ScrollBar) {
+    KISSY.use('navigation-view,' +
+            'navigation-view/bar,' +
+            'node,scroll-view,scroll-view/plugin/scrollbar',
+            function (S, NavigationView,Bar, Node, ScrollView, ScrollBar) {
                 var win = Node.all(window);
 
                 var navigationView = new NavigationView({
                     render: '.sidebar'
                 }).render();
 
-                Control.extend({}, {
+                var bar = new Bar({
+                    navigationView: navigationView,
+                    elBefore: navigationView.get('contentEl')
+                }).render();
+
+                ScrollView.extend({}, {
                     xclass: 'tb-detail-view'
                 });
 

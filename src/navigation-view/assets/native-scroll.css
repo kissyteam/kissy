@@ -97,9 +97,6 @@ navigation-view style
   position: relative;
   -webkit-box-flex: 1;
 }
-.ks-navigation-view-content > div {
-  display: none;
-}
 .ks-navigation-view-anim-ing,
 .ks-navigation-view-loading {
   position: absolute;
@@ -108,10 +105,11 @@ navigation-view style
   width: 100%;
   display: block;
 }
-.ks-navigation-view-content > div.ks-navigation-view-show-view {
-  display: block;
+.ks-navigation-view-content > .ks-navigation-view-loading.ks-navigation-view-loading-hidden,
+.ks-navigation-view-content > div.ks-page-view-hidden {
+  display: none;
 }
-.ks-navigation-view-content > div.ks-navigation-view-show-view.ks-navigation-view-loading {
+.ks-navigation-view-content > .ks-navigation-view-loading {
   display: -webkit-box;
   background: rgba(0, 0, 0, 0.8);
   -webkit-box-pack: center;

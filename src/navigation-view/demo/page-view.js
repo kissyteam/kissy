@@ -25,6 +25,8 @@ KISSY.add(function (S, require) {
             destructor: function () {
                 win.detach('scroll', this.__fn, this);
             }
+        },{
+            xclass:'page-view'
         });
     };
 });
