@@ -166,6 +166,47 @@ KISSY.add(function (S, require) {
             });
         });
 
+        describe('if', function () {
+            it('support nested properties', function () {
+                var tpl = '{{#with (z)}}{{#if (data.x)}}x{{else}}y{{/if}}{{/with}}';
+                var data = {
+                    data: null,
+                    z: {
+                        data: {
+                            y: 1
+                        }
+                    }
+                };
+                var render = new XTemplate(tpl).render(data);
+                expect(render).toBe('y');
+            });
+
+            it('can not get sub property data from parent scope', function () {
+                var tpl = '{{#with (z)}}{{#if (data.x)}}x{{else}}y{{/if}}{{/with}}';
+                var data = {
+                    data: {
+                        x:1
+                    },
+                    z: {
+                        data: {
+                            y: 1
+                        }
+                    }
+                };
+                var render = new XTemplate(tpl).render(data);
+                expect(render).toBe('y');
+            });
+
+            it('can not get sub property data from null', function () {
+                var tpl = '{{#if (data.x)}}x{{else}}y{{/if}}';
+                var data = {
+                    data: null
+                };
+                var render = new XTemplate(tpl).render(data);
+                expect(render).toBe('y');
+            });
+        });
+
         describe('each', function () {
             it('support xindex name', function () {
                 var tpl = '{{#each( data, "v", "i")}}{{i}}: {{v}}{{/each}}';
@@ -1095,4 +1136,5 @@ KISSY.add(function (S, require) {
             });
         });
     });
-});
+})
+;

@@ -124,14 +124,18 @@ KISSY.add(function (S) {
                         continue;
                     }
                     if (v === scope) {
-                        if (!scope.has(p)) {
+                        if (scope.has(p)) {
+                            // xx.y
+                            // only find y in xx of current scope
+                            v = scope.get(p);
+                            endScopeFind = 1;
+                        } else {
                             valid = 0;
                             break;
                         }
-                        v = scope.get(p);
                     } else {
                         // may not be object at all
-                        if (typeof v !== 'object' || !(p in v)) {
+                        if (v == null || typeof v !== 'object' || !(p in v)) {
                             valid = 0;
                             break;
                         }
