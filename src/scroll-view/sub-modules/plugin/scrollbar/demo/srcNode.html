@@ -84,12 +84,14 @@
     </style>
 </head>
 <body>
-<div id="header">KISSY ScrollView</div>
-<div id="wrapper" class="ks-scroll-view">
-<div class="ks-scroll-view-content">
-    <div id="thelist">
-    </div>
+<div id="header">KISSY ScrollView
+    <button id="add">add item</button>
 </div>
+<div id="wrapper" class="ks-scroll-view">
+    <div class="ks-scroll-view-content">
+        <div id="thelist">
+        </div>
+    </div>
 </div>
 
 <div id="footer"></div>
@@ -97,30 +99,43 @@
 <script src="/kissy/src/package.js"></script>
 
 <script>
+    // safari transform3d bug
+    if (KISSY.UA.safari && !KISSY.UA.mobile && KISSY.Feature) {
+        KISSY.Feature.isTransform3dSupported = function () {
+            return false
+        }
+    }
+
     // 本 demo 会在 ie10 模拟 ie7 下白屏，原因不明，请设置
     // <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     KISSY.use('scroll-view,scroll-view/plugin/scrollbar', function (S, ScrollView, ScrollbarPlugin) {
-        S.ready(function () {
+        var $ = S.all;
+        var num = new S.Uri(location.href).getQuery().get('num') || '41';
 
-            var num=new S.Uri(location.href).getQuery().get('num')||'41';
+        num = parseInt(num);
 
-            num=parseInt(num);
+        var str = '';
+        for (var i = 1; i < num; i++) {
+            str += '<p>line ' + i + '</p>'
+        }
+        S.all('#thelist').html(str);
 
-            var str = '';
-            for (var i = 1; i < num; i++) {
-                str += '<p>line ' + i + '</p>'
-            }
-            S.all('#thelist').html(str);
-
-            window.scrollView = new ScrollView({
-                srcNode: '#wrapper',
-                plugins: [new ScrollbarPlugin({})]
-            }).render();
-
-            S.all(window).on('resize orientationchange', S.UA.ieMode < 9 ?
-                    S.buffer(scrollView.sync, 30) :
-                    scrollView.sync, scrollView);
+        $('#add').on('click', function () {
+            $('#thelist').append('<p>line ' + (++i) + '</p>');
+            scrollView.sync();
+            scrollView.scrollTo({
+                top: scrollView.scrollHeight - scrollView.clientHeight
+            });
         });
+
+        window.scrollView = new ScrollView({
+            srcNode: '#wrapper',
+            plugins: [new ScrollbarPlugin({})]
+        }).render();
+
+        S.all(window).on('resize orientationchange', S.UA.ieMode < 9 ?
+                S.buffer(scrollView.sync, 30) :
+                scrollView.sync, scrollView);
     });
 </script>
 </body>
