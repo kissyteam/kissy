@@ -133,8 +133,6 @@ KISSY.add(function (S, require) {
     function postProcessSwitchView(self, oldView, newView, backward) {
         var promise = newView.promise;
 
-        self.set('activeView', newView);
-
         gc(self);
 
         if (promise) {
@@ -169,6 +167,8 @@ KISSY.add(function (S, require) {
         }
         var newViewEl = newView.el;
         newView.set(config);
+
+        self.set('activeView', newView);
 
         if (newView) {
             if (newView.enter) {

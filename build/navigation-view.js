@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 3 20:52
+build time: Mar 7 12:01
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -97,7 +97,6 @@ KISSY.add("navigation-view", ["node", "component/container", "component/extensio
   }
   function postProcessSwitchView(self, oldView, newView, backward) {
     var promise = newView.promise;
-    self.set("activeView", newView);
     gc(self);
     if(promise) {
       promise.then(function() {
@@ -122,6 +121,7 @@ KISSY.add("navigation-view", ["node", "component/container", "component/extensio
     }
     var newViewEl = newView.el;
     newView.set(config);
+    self.set("activeView", newView);
     if(newView) {
       if(newView.enter) {
         newView.enter()
