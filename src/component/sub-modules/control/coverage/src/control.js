@@ -520,12 +520,18 @@ if (! _$jscoverage['/control.js'].branchData) {
   _$jscoverage['/control.js'].branchData['802'][1] = new BranchData();
   _$jscoverage['/control.js'].branchData['851'] = [];
   _$jscoverage['/control.js'].branchData['851'][1] = new BranchData();
+  _$jscoverage['/control.js'].branchData['885'] = [];
+  _$jscoverage['/control.js'].branchData['885'][1] = new BranchData();
   _$jscoverage['/control.js'].branchData['891'] = [];
   _$jscoverage['/control.js'].branchData['891'][1] = new BranchData();
 }
-_$jscoverage['/control.js'].branchData['891'][1].init(382, 6, 'xclass');
-function visit103_891_1(result) {
+_$jscoverage['/control.js'].branchData['891'][1].init(390, 6, 'xclass');
+function visit104_891_1(result) {
   _$jscoverage['/control.js'].branchData['891'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/control.js'].branchData['885'][1].init(235, 30, 'last && (xclass = last.xclass)');
+function visit103_885_1(result) {
+  _$jscoverage['/control.js'].branchData['885'][1].ranCondition(result);
   return result;
 }_$jscoverage['/control.js'].branchData['851'][1].init(110, 24, '!attrs || !attrs.xrender');
 function visit102_851_1(result) {
@@ -1244,14 +1250,14 @@ KISSY.add(function(S, require) {
   _$jscoverage['/control.js'].lineData[878]++;
   var args = S.makeArray(arguments), baseClass = this, xclass, newClass, argsLen = args.length, last = args[argsLen - 1];
   _$jscoverage['/control.js'].lineData[885]++;
-  if ((xclass = last.xclass)) {
+  if (visit103_885_1(last && (xclass = last.xclass))) {
     _$jscoverage['/control.js'].lineData[886]++;
     last.name = xclass;
   }
   _$jscoverage['/control.js'].lineData[889]++;
   newClass = ControlProcess.extend.apply(baseClass, args);
   _$jscoverage['/control.js'].lineData[891]++;
-  if (visit103_891_1(xclass)) {
+  if (visit104_891_1(xclass)) {
     _$jscoverage['/control.js'].lineData[892]++;
     Manager.setConstructorByXClass(xclass, newClass);
   }

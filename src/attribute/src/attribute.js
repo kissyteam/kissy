@@ -240,11 +240,13 @@ KISSY.add(function (S, require, exports, module) {
     }
 
     function wrapProtoForSuper(px, SubClass) {
-        var hooks = SubClass.__hooks__ || {};
+        var hooks = SubClass.__hooks__;
         // in case px contains toString
-        for (var p in hooks) {
-            if (p in px) {
-                px[p] = hooks[p](px[p]);
+        if (hooks) {
+            for (var p in hooks) {
+                if (p in px) {
+                    px[p] = hooks[p](px[p]);
+                }
             }
         }
         S.each(px, function (v, p) {
@@ -280,8 +282,9 @@ KISSY.add(function (S, require, exports, module) {
     Attribute.extend = function extend(px, sx) {
         var SubClass,
             SuperClass = this;
-        sx = sx || {};
-        px = px || {};
+        sx = S.merge(sx);
+        // px is shared among classes
+        px = S.merge(px);
         var hooks ,
             sxHooks = sx.__hooks__;
         if ((hooks = SuperClass.__hooks__)) {
@@ -293,7 +296,6 @@ KISSY.add(function (S, require, exports, module) {
             SubClass = px.constructor;
         } else {
             // debug mode, give the right name for constructor
-            // refer : http://limu.iteye.com/blog/1136712
             if ('@DEBUG@') {
                 /*jshint evil: true*/
                 SubClass = new Function('return function ' + camelCase(name) + '(){ ' +

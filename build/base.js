@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Feb 25 19:32
+build time: Mar 10 21:34
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -135,8 +135,6 @@ KISSY.add("base", ["attribute"], function(S, require) {
       px = extensions;
       extensions = []
     }
-    sx = sx || {};
-    px = px || {};
     var SubClass = Attribute.extend.call(this, px, sx);
     SubClass.__extensions__ = extensions;
     baseAddMembers.call(SubClass, {});
@@ -160,7 +158,7 @@ KISSY.add("base", ["attribute"], function(S, require) {
       prototype.constructor = SubClass;
       S.augment(SubClass, prototype)
     }
-    SubClass.extend = sx.extend || extend;
+    SubClass.extend = sx && sx.extend || extend;
     SubClass.addMembers = baseAddMembers;
     return SubClass
   }});

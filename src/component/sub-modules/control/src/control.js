@@ -882,7 +882,7 @@ KISSY.add(function (S, require) {
             argsLen = args.length,
             last = args[argsLen - 1];
 
-        if ((xclass = last.xclass)) {
+        if (last && (xclass = last.xclass)) {
             last.name = xclass;
         }
 

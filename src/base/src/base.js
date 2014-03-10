@@ -299,8 +299,6 @@ KISSY.add(function (S, require) {
                 px = /**@type {Object} @ignore*/extensions;
                 extensions = [];
             }
-            sx = sx || {};
-            px = px || {};
             var SubClass = Attribute.extend.call(this, px, sx);
             SubClass.__extensions__ = extensions;
             // stub hooks for extensions
@@ -341,7 +339,7 @@ KISSY.add(function (S, require) {
                 prototype.constructor = SubClass;
                 S.augment(SubClass, prototype);
             }
-            SubClass.extend = sx.extend || extend;
+            SubClass.extend = sx && sx.extend || extend;
             SubClass.addMembers = baseAddMembers;
             return SubClass;
         }

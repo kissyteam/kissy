@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 6 13:31
+build time: Mar 10 21:35
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -96,7 +96,7 @@ KISSY.add("component/control/render-xtpl", [], function(S, require, exports, mod
     if(typeof module !== "undefined" && module.kissy) {
       moduleWrap = module
     }
-    var callCommandUtil = utils.callCommand, eachCommand = nativeCommands.each, withCommand = nativeCommands["with"], ifCommand = nativeCommands["if"], setCommand = nativeCommands.set, includeCommand = nativeCommands.include, parseCommand = nativeCommands.parse, extendCommand = nativeCommands.extend, blockCommand = nativeCommands.block, macroCommand = nativeCommands.macro;
+    var callCommandUtil = utils.callCommand, debuggerCommand = nativeCommands["debugger"], eachCommand = nativeCommands.each, withCommand = nativeCommands["with"], ifCommand = nativeCommands["if"], setCommand = nativeCommands.set, includeCommand = nativeCommands.include, parseCommand = nativeCommands.parse, extendCommand = nativeCommands.extend, blockCommand = nativeCommands.block, macroCommand = nativeCommands.macro;
     buffer += '<div id="';
     var id0 = scope.resolve(["id"]);
     buffer += escapeHtml(id0);
@@ -157,7 +157,7 @@ KISSY.add("component/control/render-xtpl", [], function(S, require, exports, mod
     buffer += '\n">';
     return buffer
   };
-  t.TPL_NAME = "component/sub-modules/control/src/control/render.xtpl.html";
+  t.TPL_NAME = module.name;
   return t
 });
 KISSY.add("component/control/render", ["base", "node", "xtemplate/runtime", "./render-xtpl", "component/manager"], function(S, require) {
@@ -661,7 +661,7 @@ KISSY.add("component/control", ["node", "./control/process", "component/manager"
   Control.getDefaultRender = getDefaultRender;
   Control.extend = function extend(extensions, px, sx) {
     var args = S.makeArray(arguments), baseClass = this, xclass, newClass, argsLen = args.length, last = args[argsLen - 1];
-    if(xclass = last.xclass) {
+    if(last && (xclass = last.xclass)) {
       last.name = xclass
     }
     newClass = ControlProcess.extend.apply(baseClass, args);
