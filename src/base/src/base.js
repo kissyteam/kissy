@@ -15,7 +15,9 @@ KISSY.add(function (S, require) {
             return function wrap() {
                 var self = this;
                 if (reverse) {
-                    origFn.apply(self, arguments);
+                    if (origFn !== noop) {
+                        origFn.apply(self, arguments);
+                    }
                 } else {
                     self.callSuper.apply(self, arguments);
                 }
@@ -29,7 +31,9 @@ KISSY.add(function (S, require) {
                 if (reverse) {
                     self.callSuper.apply(self, arguments);
                 } else {
-                    origFn.apply(self, arguments);
+                    if (origFn !== noop) {
+                        origFn.apply(self, arguments);
+                    }
                 }
             };
         };
@@ -208,7 +212,7 @@ KISSY.add(function (S, require) {
             return plugin;
         },
 
-        destructor: S.noop,
+        destructor: noop,
 
         destroy: function () {
             var self = this;

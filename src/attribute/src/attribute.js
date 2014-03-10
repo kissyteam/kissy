@@ -3,12 +3,18 @@
  * attribute management
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
-KISSY.add(function (S, require, exports, module) {
+KISSY.add(function (S, require) {
     var RE_DASH = /(?:^|-)([a-z])/ig;
     var CustomEvent = require('event/custom');
-    module.exports = Attribute;
 
-    var bind = S.bind;
+    function bind(v) {
+        if (v === S.noop) {
+            return function () {
+            };
+        } else {
+            return S.bind(v);
+        }
+    }
 
     function replaceToUpper() {
         return arguments[1].toUpperCase();
@@ -709,6 +715,8 @@ KISSY.add(function (S, require, exports, module) {
         }
         return undefined;
     }
+
+    return Attribute;
 });
 
 /*

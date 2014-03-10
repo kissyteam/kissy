@@ -5,6 +5,19 @@
  */
 KISSY.add(function (S, require) {
     var Base = require('base');
+
+    function equals(s1, s2) {
+        if (s1.length !== s2.length) {
+            return false;
+        }
+        for (var i = 0; i < s1.length; i++) {
+            if (s1[i] !== s2[i]) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     /**
      * production for grammar
      * @class KISSY.Kison.Production
@@ -12,7 +25,7 @@ KISSY.add(function (S, require) {
     return Base.extend({
         equals: function (other) {
             var self = this;
-            if (!S.equals(other.get('rhs'), self.get('rhs'))) {
+            if (!equals(other.get('rhs'), self.get('rhs'))) {
                 return false;
             }
             return other.get('symbol') === self.get('symbol');

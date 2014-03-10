@@ -5,10 +5,8 @@
  *
  */
 KISSY.add(function (S, require) {
-    var TRUE = true,
-        FALSE = false,
-        CLONE_MARKER = '__~ks_cloned',
-        COMPARE_MARKER = '__~ks_compared';
+    var FALSE = false,
+        CLONE_MARKER = '__~ks_cloned';
 
     require('util/array');
     require('util/escape');
@@ -19,43 +17,6 @@ KISSY.add(function (S, require) {
     require('util/web');
 
     S.mix(S, {
-        /**
-         * Checks to see whether two object are equals.
-         * @param a 比较目标1
-         * @param b 比较目标2
-         * @param [mismatchKeys] internal usage
-         * @param [mismatchValues] internal usage
-         * @return {Boolean} a.equals(b)
-         * @member KISSY
-         */
-        equals: function (a, b, /*internal use*/mismatchKeys, /*internal use*/mismatchValues) {
-            // inspired by jasmine
-            mismatchKeys = mismatchKeys || [];
-            mismatchValues = mismatchValues || [];
-
-            if (a === b) {
-                return TRUE;
-            }
-            if (a === undefined || a === null || b === undefined || b === null) {
-                // need type coercion
-                return a == null && b == null;
-            }
-            if (a instanceof Date && b instanceof Date) {
-                return a.getTime() === b.getTime();
-            }
-            if (typeof a === 'string' && typeof b === 'string') {
-                return (a === b);
-            }
-            if (typeof a === 'number' && typeof b === 'number') {
-                return (a === b);
-            }
-            if (typeof a === 'object' && typeof b === 'object') {
-                return compareObjects(a, b, mismatchKeys, mismatchValues);
-            }
-            // Straight check
-            return (a === b);
-        },
-
         /**
          * Creates a deep copy of a plain object or array. Others are returned untouched.
          * @param input
@@ -147,51 +108,6 @@ KISSY.add(function (S, require) {
         }
 
         return destination;
-    }
-
-    function compareObjects(a, b, mismatchKeys, mismatchValues) {
-        // 两个比较过了，无需再比较，防止循环比较
-        if (a[COMPARE_MARKER] === b && b[COMPARE_MARKER] === a) {
-            return TRUE;
-        }
-        a[COMPARE_MARKER] = b;
-        b[COMPARE_MARKER] = a;
-        var hasKey = function (obj, keyName) {
-            return (obj !== null && obj !== undefined) && obj[keyName] !== undefined;
-        };
-        for (var property in b) {
-
-            if (!hasKey(a, property) && hasKey(b, property)) {
-                mismatchKeys.push('expected has key ' + property + '", but missing from actual.');
-            }
-
-        }
-        for (property in a) {
-
-            if (!hasKey(b, property) && hasKey(a, property)) {
-                mismatchKeys.push('expected missing key "' + property + '", but present in actual.');
-            }
-
-        }
-        for (property in b) {
-
-            if (property === COMPARE_MARKER) {
-                continue;
-            }
-            if (!S.equals(a[property], b[property], mismatchKeys, mismatchValues)) {
-                mismatchValues.push('"' + property + '" was "' +
-                    (b[property] ? (b[property].toString()) : b[property]) +
-                    '" in expected, but was "' +
-                    (a[property] ? (a[property].toString()) : a[property]) + '" in actual.');
-            }
-
-        }
-        if (S.isArray(a) && S.isArray(b) && a.length !== b.length) {
-            mismatchValues.push('arrays were not the same length');
-        }
-        delete a[COMPARE_MARKER];
-        delete b[COMPARE_MARKER];
-        return (mismatchKeys.length === 0 && mismatchValues.length === 0);
     }
 
     return S;

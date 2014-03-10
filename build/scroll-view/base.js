@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 5 22:11
+build time: Mar 11 00:36
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -58,10 +58,14 @@ KISSY.add("scroll-view/base", ["node", "anim", "component/container", "./base/re
   function frame(anim, fx) {
     anim.scrollView.set(fx.prop, fx.val)
   }
-  function reflow(v) {
+  function reflow(v, e) {
     var control = this, $contentEl = control.$contentEl;
     var scrollHeight = v.scrollHeight, scrollWidth = v.scrollWidth;
     var clientHeight = v.clientHeight, allowScroll, clientWidth = v.clientWidth;
+    var prevVal = e && e.prevVal || {};
+    if(prevVal.scrollHeight === scrollHeight && prevVal.scrollWidth === scrollWidth && clientHeight === prevVal.clientHeight && clientWidth === prevVal.clientWidth) {
+      return
+    }
     control.scrollHeight = scrollHeight;
     control.scrollWidth = scrollWidth;
     control.clientHeight = clientHeight;
@@ -100,6 +104,11 @@ KISSY.add("scroll-view/base", ["node", "anim", "component/container", "./base/re
   }, bindUI:function() {
     var self = this, $el = self.$el;
     $el.on("mousewheel", self.handleMouseWheel, self).on("scroll", onElScroll, self)
+  }, sync:function() {
+    var control = this, el = control.el, contentEl = control.contentEl;
+    var scrollHeight = Math.max(contentEl.offsetHeight, contentEl.scrollHeight), scrollWidth = Math.max(contentEl.offsetWidth, contentEl.scrollWidth);
+    var clientHeight = el.clientHeight, clientWidth = el.clientWidth;
+    control.set("dimension", {scrollHeight:scrollHeight, scrollWidth:scrollWidth, clientWidth:clientWidth, clientHeight:clientHeight})
   }, _onSetDimension:reflow, handleKeyDownInternal:function(e) {
     var target = e.target, $target = $(target), nodeName = $target.nodeName();
     if(nodeName === "input" || nodeName === "textarea" || nodeName === "select" || $target.hasAttr("contenteditable")) {

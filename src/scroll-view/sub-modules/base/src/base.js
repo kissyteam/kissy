@@ -30,7 +30,7 @@ KISSY.add(function (S, require) {
         anim.scrollView.set(fx.prop, fx.val);
     }
 
-    function reflow(v) {
+    function reflow(v, e) {
         var control = this,
             $contentEl = control.$contentEl;
         // consider pull to refresh
@@ -45,6 +45,15 @@ KISSY.add(function (S, require) {
         var clientHeight = v.clientHeight,
             allowScroll,
             clientWidth = v.clientWidth;
+
+        var prevVal = e && e.prevVal || {};
+
+        if (prevVal.scrollHeight === scrollHeight &&
+            prevVal.scrollWidth === scrollWidth &&
+            clientHeight === prevVal.clientHeight &&
+            clientWidth === prevVal.clientWidth) {
+            return;
+        }
 
         control.scrollHeight = scrollHeight;
         control.scrollWidth = scrollWidth;
@@ -131,6 +140,30 @@ KISSY.add(function (S, require) {
                 // textarea enter cause el to scroll
                 // bug: left top scroll does not fire scroll event, because scrollTop is 0!
                 .on('scroll', onElScroll, self);
+        },
+
+        sync: function () {
+            var control = this,
+                el = control.el,
+                contentEl = control.contentEl;
+            // consider pull to refresh
+            // refresh label will be prepended to el
+            // contentEl must be absolute
+            // or else
+            // relative is weird, should math.max(contentEl.scrollHeight,el.scrollHeight)
+            // will affect pull to refresh
+            var scrollHeight = Math.max(contentEl.offsetHeight, contentEl.scrollHeight),
+                scrollWidth = Math.max(contentEl.offsetWidth, contentEl.scrollWidth);
+
+            var clientHeight = el.clientHeight,
+                clientWidth = el.clientWidth;
+
+            control.set('dimension', {
+                'scrollHeight': scrollHeight,
+                'scrollWidth': scrollWidth,
+                'clientWidth': clientWidth,
+                'clientHeight': clientHeight
+            });
         },
 
         _onSetDimension: reflow,

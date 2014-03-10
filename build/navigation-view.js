@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 10 12:08
+build time: Mar 11 00:36
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -172,14 +172,15 @@ KISSY.add("navigation-view", ["component/container", "component/control", "compo
     return view
   }
   var NavigationViewRender = Container.getDefaultRender().extend([ContentRender]);
-  return Container.extend({createDom:function() {
+  return Container.extend({initializer:function() {
+    this.viewStack = []
+  }, createDom:function() {
     var self = this;
     var loadingHtml = self.get("loadingHtml");
     if(loadingHtml !== false) {
       self.loadingView = (new LoadingView({content:loadingHtml, render:self.contentEl})).render();
       self.loadingView.navigationView = self
     }
-    self.viewStack = []
   }, _onSetLoadingHtml:function(v) {
     if(this.loadingView) {
       this.loadingView.set("content", v)

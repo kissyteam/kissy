@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 10 21:34
+build time: Mar 11 00:36
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -17,7 +17,9 @@ KISSY.add("base", ["attribute"], function(S, require) {
       return function wrap() {
         var self = this;
         if(reverse) {
-          origFn.apply(self, arguments)
+          if(origFn !== noop) {
+            origFn.apply(self, arguments)
+          }
         }else {
           self.callSuper.apply(self, arguments)
         }
@@ -29,7 +31,9 @@ KISSY.add("base", ["attribute"], function(S, require) {
         if(reverse) {
           self.callSuper.apply(self, arguments)
         }else {
-          origFn.apply(self, arguments)
+          if(origFn !== noop) {
+            origFn.apply(self, arguments)
+          }
         }
       }
     }
@@ -119,7 +123,7 @@ KISSY.add("base", ["attribute"], function(S, require) {
       return undefined
     });
     return plugin
-  }, destructor:S.noop, destroy:function() {
+  }, destructor:noop, destroy:function() {
     var self = this;
     if(!self.get("destroyed")) {
       callPluginsMethod.call(self, "pluginDestructor");

@@ -217,6 +217,10 @@ KISSY.add(function (S, require) {
     var NavigationViewRender = Container.getDefaultRender().extend([ContentRender]);
 
     return Container.extend({
+        initializer: function () {
+            this.viewStack = [];
+        },
+
         createDom: function () {
             var self = this;
             var loadingHtml = self.get('loadingHtml');
@@ -227,7 +231,7 @@ KISSY.add(function (S, require) {
                 }).render();
                 self.loadingView.navigationView = self;
             }
-            self.viewStack = [];
+
         },
 
         '_onSetLoadingHtml': function (v) {

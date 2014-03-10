@@ -5,6 +5,23 @@
  */
 KISSY.add(function (S, require, exports, module) {
     var Base = require('base');
+
+    function equals(s1, s2) {
+        for (var i in s1) {
+            if (!(i in s2)) {
+                return false;
+            }
+        }
+
+        for (i in s2) {
+            if (!(i in s1)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     /**
      * grammar item
      * @class KISSY.Kison.Item
@@ -19,7 +36,7 @@ KISSY.add(function (S, require, exports, module) {
                 return false;
             }
             if (!ignoreLookAhead) {
-                if (!S.equals(self.get('lookAhead'), other.get('lookAhead'))) {
+                if (!equals(self.get('lookAhead'), other.get('lookAhead'))) {
                     return false;
                 }
             }

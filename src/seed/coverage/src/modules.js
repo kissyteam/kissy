@@ -314,11 +314,11 @@ if (! _$jscoverage['/modules.js'].branchData) {
   _$jscoverage['/modules.js'].branchData['152'] = [];
   _$jscoverage['/modules.js'].branchData['152'][1] = new BranchData();
 }
-_$jscoverage['/modules.js'].branchData['152'][1].init(310, 13, 'UA.ieMode < 9');
+_$jscoverage['/modules.js'].branchData['152'][1].init(318, 13, 'UA.ieMode < 9');
 function visit12_152_1(result) {
   _$jscoverage['/modules.js'].branchData['152'][1].ranCondition(result);
   return result;
-}_$jscoverage['/modules.js'].branchData['108'][1].init(37, 13, 'UA.ieMode < 9');
+}_$jscoverage['/modules.js'].branchData['108'][1].init(39, 13, 'UA.ieMode < 9');
 function visit11_108_1(result) {
   _$jscoverage['/modules.js'].branchData['108'][1].ranCondition(result);
   return result;
@@ -542,23 +542,23 @@ function visit10_6_1(result) {
   _$jscoverage['/modules.js'].lineData[235]++;
   config({
   'scroll-view': {
-  alias: Feature.isTouchGestureSupported() ? 'scroll-view/drag' : 'scroll-view/base'}});
+  alias: Feature.isTouchGestureSupported() ? 'scroll-view/touch' : 'scroll-view/base'}});
   _$jscoverage['/modules.js'].lineData[240]++;
   config({
   'scroll-view/base': {
   requires: ['node', 'anim', 'component/container', 'component/extension/content-render']}});
   _$jscoverage['/modules.js'].lineData[244]++;
   config({
-  'scroll-view/drag': {
-  requires: ['scroll-view/base', 'node', 'anim']}});
-  _$jscoverage['/modules.js'].lineData[248]++;
-  config({
   'scroll-view/plugin/pull-to-refresh': {
   requires: ['base']}});
-  _$jscoverage['/modules.js'].lineData[252]++;
+  _$jscoverage['/modules.js'].lineData[248]++;
   config({
   'scroll-view/plugin/scrollbar': {
   requires: ['base', 'node', 'component/control']}});
+  _$jscoverage['/modules.js'].lineData[252]++;
+  config({
+  'scroll-view/touch': {
+  requires: ['scroll-view/base', 'node', 'anim']}});
   _$jscoverage['/modules.js'].lineData[256]++;
   config({
   separator: {

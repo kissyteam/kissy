@@ -24,16 +24,32 @@ ast.ProgramNode = function (lineNumber, statements, inverse) {
 
 ast.ProgramNode.prototype.type = 'program';
 
+function equals(s1, s2) {
+    if (s1.length !== s2.length) {
+        return false;
+    }
+    for (var i = 0; i < s1.length; i++) {
+        if (s1[i] !== s2[i]) {
+            return false;
+        }
+    }
+    return true;
+}
+
 ast.BlockNode = function (lineNumber, tpl, program, close) {
-    var closeParts = close['parts'], self = this, e;
+    var closeParts = close.parts,
+        self = this,
+        e;
+    var tplParts = tpl.path.parts;
+
     // no close tag
-    if (!S.equals(tpl.path['parts'], closeParts)) {
-        e = ("Syntax error at line " +
+    if (!equals(tplParts, closeParts)) {
+        e = ('Syntax error at line ' +
             lineNumber +
-            ":\n" + "expect {{/" +
-            tpl.path['parts'] +
-            "}} not {{/" +
-            closeParts + "}}");
+            ':\n' + 'expect {{/' +
+            tplParts +
+            '}} not {{/' +
+            closeParts + '}}');
         S.error(e);
     }
     self.lineNumber = lineNumber;
@@ -177,7 +193,7 @@ ast.IdNode = function (lineNumber, raw) {
     var self = this, parts = [], depth = 0;
     self.lineNumber = lineNumber;
     S.each(raw, function (p) {
-        if (p == "..") {
+        if (p === '..') {
             depth++;
         } else {
             parts.push(p);

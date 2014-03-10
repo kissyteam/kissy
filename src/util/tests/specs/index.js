@@ -1212,8 +1212,9 @@ KISSY.add(function (S, require) {
 
             var ret = S.keys(x);
 
-            expect(S.equals(ret, ['x', "toString"]) || S.equals(ret, ["toString", 'x'])).toBe(true);
+            ret.sort();
 
+            expect(ret).toEqual(['x', "toString"].sort());
         });
 
         describe("S.ready", function () {
