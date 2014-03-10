@@ -134,7 +134,7 @@ KISSY.add(function (S, Event, UA, Node, Overlay, ResizePlugin) {
             });
 
             it("渲染后可以取到元素", function () {
-                expect(o.get('contentEl').html()).toBe("render by javascript");
+                expect(S.trim(o.get('contentEl').html())).toBe("render by javascript");
             });
 
             it("渲染后元素会正确配置", function () {
