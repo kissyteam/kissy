@@ -73,7 +73,7 @@ KISSY.add("navigation-view/bar/bar-xtpl", [], function(S, require, exports, modu
     buffer += '"></div>\r\n</div>';
     return buffer
   };
-  t.TPL_NAME = "E:/code/kissy_git/kissy/kissy/src/navigation-view/sub-modules/bar/src/bar/bar.xtpl.html";
+  t.TPL_NAME = "navigation-view/sub-modules/bar/src/bar/bar.xtpl.html";
   return t
 });
 KISSY.add("navigation-view/bar/bar-render", ["./bar-xtpl", "component/control"], function(S, require) {

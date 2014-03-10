@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 8 03:26
+build time: Mar 10 12:08
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -174,11 +174,16 @@ KISSY.add("navigation-view", ["component/container", "component/control", "compo
   var NavigationViewRender = Container.getDefaultRender().extend([ContentRender]);
   return Container.extend({createDom:function() {
     var self = this;
-    self.loadingView = (new LoadingView({content:self.get("loadingHtml"), render:self.contentEl})).render();
-    self.loadingView.navigationView = self;
+    var loadingHtml = self.get("loadingHtml");
+    if(loadingHtml !== false) {
+      self.loadingView = (new LoadingView({content:loadingHtml, render:self.contentEl})).render();
+      self.loadingView.navigationView = self
+    }
     self.viewStack = []
   }, _onSetLoadingHtml:function(v) {
-    this.loadingView.set("content", v)
+    if(this.loadingView) {
+      this.loadingView.set("content", v)
+    }
   }, push:function(config) {
     var self = this, nextView, viewStack = self.viewStack;
     config.animation = config.animation || self.get("animation");
@@ -198,6 +203,6 @@ KISSY.add("navigation-view", ["component/container", "component/control", "compo
       nextView = createView(self, config);
       switchTo(self, nextView, true)
     }
-  }}, {xclass:"navigation-view", ATTRS:{animation:{value:["slide-right", "slide-left"]}, loadingHtml:{}, handleGestureEvents:{value:false}, viewCacheSize:{value:10}, focusable:{value:false}, allowTextSelection:{value:true}, xrender:{value:NavigationViewRender}, contentTpl:{value:ContentTpl}, defaultChildCfg:{value:{handleGestureEvents:false, visible:false, allowTextSelection:true}}}})
+  }}, {xclass:"navigation-view", ATTRS:{animation:{value:["slide-right", "slide-left"]}, loadingHtml:{sync:0}, handleGestureEvents:{value:false}, viewCacheSize:{value:10}, focusable:{value:false}, allowTextSelection:{value:true}, xrender:{value:NavigationViewRender}, contentTpl:{value:ContentTpl}, defaultChildCfg:{value:{handleGestureEvents:false, visible:false, allowTextSelection:true}}}})
 });
 

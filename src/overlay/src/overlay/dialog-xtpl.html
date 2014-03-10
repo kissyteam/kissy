@@ -1,6 +1,5 @@
-{{{include ('overlay/close-xtpl')}}}
-<div id="ks-content-{{id}}"
-     class="{{getBaseCssClasses ('content')}}">
+{{{extend ('./overlay-xtpl')}}}
+{{#block ('ks-overlay-content')}}
     <div class="{{getBaseCssClasses ('header')}}"
          style="
 {{#each (headerStyle)}}
@@ -24,5 +23,5 @@
 {{/each}}
 "
          id="ks-stdmod-footer-{{id}}">{{{footerContent}}}</div>
-</div>
-<div tabindex="0"></div>
+    <div tabindex="0"></div>
+{{/block}}

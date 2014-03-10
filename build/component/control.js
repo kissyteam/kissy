@@ -157,7 +157,7 @@ KISSY.add("component/control/render-xtpl", [], function(S, require, exports, mod
     buffer += '\n">';
     return buffer
   };
-  t.TPL_NAME = "E:/code/kissy_git/kissy/kissy/src/component/sub-modules/control/src/control/render.xtpl.html";
+  t.TPL_NAME = "component/sub-modules/control/src/control/render.xtpl.html";
   return t
 });
 KISSY.add("component/control/render", ["base", "node", "xtemplate/runtime", "./render-xtpl", "component/manager"], function(S, require) {

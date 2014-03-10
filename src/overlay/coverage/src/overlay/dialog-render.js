@@ -279,7 +279,7 @@ if (! _$jscoverage['/overlay/dialog-render.js'].branchData) {
   _$jscoverage['/overlay/dialog-render.js'].branchData['81'][1] = new BranchData();
 }
 _$jscoverage['/overlay/dialog-render.js'].branchData['81'][1].init(99, 23, 'footer && footer.html()');
-function visit5_81_1(result) {
+function visit3_81_1(result) {
   _$jscoverage['/overlay/dialog-render.js'].branchData['81'][1].ranCondition(result);
   return result;
 }_$jscoverage['/overlay/dialog-render.js'].lineData[6]++;
@@ -383,6 +383,6 @@ KISSY.add(function(S, require) {
   _$jscoverage['/overlay/dialog-render.js'].lineData[80]++;
   var footer = el.one('.' + this.getBaseCssClass('footer'));
   _$jscoverage['/overlay/dialog-render.js'].lineData[81]++;
-  return visit5_81_1(footer && footer.html());
+  return visit3_81_1(footer && footer.html());
 }}});
 });

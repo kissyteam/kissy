@@ -47,14 +47,14 @@ function myJsBeautify(str) {
     return jsBeautify(str, opts);
 }
 
-function compile(tpl, modulePath) {
-    var tplContent = fs.readFileSync(tpl, encoding);
+function compile(tplFilePath, modulePath) {
+    var tplContent = fs.readFileSync(tplFilePath, encoding);
     var moduleCode = myJsBeautify(
         '/** Compiled By kissy-xtemplate */\n' +
             'KISSY.add(function(S,require,exports,module){\n' +
             '/*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true*/\n' +
-            'var t = ' + XTemplateCompiler.compileToStr(tplContent, tpl)) + ';\n' +
-        't.TPL_NAME = "' + tpl + '";\n' +
+            'var t = ' + XTemplateCompiler.compileToStr(tplContent, tplFilePath)) + ';\n' +
+        't.TPL_NAME = module.name;\n' +
         'return t;\n' +
         '});';
     fs.writeFileSync(modulePath, moduleCode, encoding);

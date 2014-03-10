@@ -40,7 +40,7 @@ KISSY.add("date/popup-picker/render-xtpl", ["date/picker-xtpl"], function(S, req
     buffer += "\n</div>";
     return buffer
   };
-  t.TPL_NAME = "E:/code/kissy_git/kissy/kissy/src/date/popup-picker/src/popup-picker/render.xtpl.html";
+  t.TPL_NAME = "date/popup-picker/src/popup-picker/render.xtpl.html";
   return t
 });
 KISSY.add("date/popup-picker", ["./popup-picker/render-xtpl", "date/picker", "component/extension/shim", "component/extension/align"], function(S, require) {

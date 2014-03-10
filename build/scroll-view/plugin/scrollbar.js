@@ -90,7 +90,7 @@ KISSY.add("scroll-view/plugin/scrollbar/scrollbar-xtpl", [], function(S, require
     buffer += '">\n</div>\n</div>\n</div>';
     return buffer
   };
-  t.TPL_NAME = "E:/code/kissy_git/kissy/kissy/src/scroll-view/sub-modules/plugin/scrollbar/src/scrollbar/scrollbar.xtpl.html";
+  t.TPL_NAME = "scroll-view/sub-modules/plugin/scrollbar/src/scrollbar/scrollbar.xtpl.html";
   return t
 });
 KISSY.add("scroll-view/plugin/scrollbar/render", ["component/control", "./scrollbar-xtpl"], function(S, require) {

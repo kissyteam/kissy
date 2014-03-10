@@ -334,7 +334,7 @@ KISSY.add(function(S, require, exports, module) {
   return buffer;
 };
   _$jscoverage['/content-xtpl.js'].lineData[41]++;
-  t.TPL_NAME = "E:/code/kissy_git/kissy/kissy/src/component/sub-modules/extension/content-xtpl/src/content.xtpl.html";
-  _$jscoverage['/content-xtpl.js'].lineData[42]++;
+    t.TPL_NAME = module.name;
+    _$jscoverage['/content-xtpl.js'].lineData[42]++;
   return t;
 });

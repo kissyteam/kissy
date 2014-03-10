@@ -138,7 +138,7 @@ KISSY.add("combobox/combobox-xtpl", [], function(S, require, exports, module) {
     buffer += "\n    </label>\n</div>\n";
     return buffer
   };
-  t.TPL_NAME = "E:/code/kissy_git/kissy/kissy/src/combobox/src/combobox/combobox.xtpl.html";
+  t.TPL_NAME = "combobox/src/combobox/combobox.xtpl.html";
   return t
 });
 KISSY.add("combobox/render", ["component/control", "./combobox-xtpl"], function(S, require) {

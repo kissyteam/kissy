@@ -87,6 +87,6 @@ KISSY.add(function (S, require, exports, module) {
             buffer += eachCommand.call(engine, scope, option0, payload);
             return buffer;
         };
-t.TPL_NAME = "E:/code/kissy_git/kissy/kissy/src/date/picker/src/picker/month-panel/months.xtpl.html";
-return t;
+    t.TPL_NAME = module.name;
+    return t;
 });

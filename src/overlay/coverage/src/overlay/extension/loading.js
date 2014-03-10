@@ -257,11 +257,11 @@ if (! _$jscoverage['/overlay/extension/loading.js'].branchData) {
   _$jscoverage['/overlay/extension/loading.js'].branchData['46'][1] = new BranchData();
 }
 _$jscoverage['/overlay/extension/loading.js'].branchData['46'][1].init(58, 3, 'lel');
-function visit29_46_1(result) {
+function visit27_46_1(result) {
   _$jscoverage['/overlay/extension/loading.js'].branchData['46'][1].ranCondition(result);
   return result;
 }_$jscoverage['/overlay/extension/loading.js'].branchData['23'][1].init(46, 19, '!self._loadingExtEl');
-function visit28_23_1(result) {
+function visit26_23_1(result) {
   _$jscoverage['/overlay/extension/loading.js'].branchData['23'][1].ranCondition(result);
   return result;
 }_$jscoverage['/overlay/extension/loading.js'].lineData[6]++;
@@ -280,7 +280,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/overlay/extension/loading.js'].lineData[22]++;
   var self = this;
   _$jscoverage['/overlay/extension/loading.js'].lineData[23]++;
-  if (visit28_23_1(!self._loadingExtEl)) {
+  if (visit26_23_1(!self._loadingExtEl)) {
     _$jscoverage['/overlay/extension/loading.js'].lineData[24]++;
     self._loadingExtEl = new Node('<div ' + 'class="' + self.get('prefixCls') + 'ext-loading"' + ' style="position: absolute;' + 'border: none;' + 'width: 100%;' + 'top: 0;' + 'left: 0;' + 'z-index: 99999;' + 'height:100%;' + '*height: expression(this.parentNode.offsetHeight);' + '"/>').appendTo(self.$el);
   }
@@ -292,7 +292,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/overlay/extension/loading.js'].lineData[45]++;
   var lel = this._loadingExtEl;
   _$jscoverage['/overlay/extension/loading.js'].lineData[46]++;
-  if (visit29_46_1(lel)) {
+  if (visit27_46_1(lel)) {
     _$jscoverage['/overlay/extension/loading.js'].lineData[47]++;
     lel.hide();
   }

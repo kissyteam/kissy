@@ -38,6 +38,6 @@ KISSY.add(function (S, require, exports, module) {
             buffer += '</div>';
             return buffer;
         };
-t.TPL_NAME = "E:/code/kissy_git/kissy/kissy/src/component/sub-modules/extension/content-xtpl/src/content.xtpl.html";
-return t;
+    t.TPL_NAME = module.name;
+    return t;
 });

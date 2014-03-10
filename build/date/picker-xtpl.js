@@ -240,7 +240,7 @@ KISSY.add("date/picker-xtpl", [], function(S, require, exports, module) {
     buffer += ifCommand.call(engine, scope, option65, payload);
     return buffer
   };
-  t.TPL_NAME = "E:/code/kissy_git/kissy/kissy/src/date/picker-xtpl/src/picker.xtpl.html";
+  t.TPL_NAME = "date/picker-xtpl/src/picker.xtpl.html";
   return t
 });
 

@@ -66,7 +66,7 @@ KISSY.add("filter-menu/render-xtpl", ["component/extension/content-xtpl"], funct
     }
     return buffer
   };
-  t.TPL_NAME = "E:/code/kissy_git/kissy/kissy/src/filter-menu/src/filter-menu/render.xtpl.html";
+  t.TPL_NAME = "filter-menu/src/filter-menu/render.xtpl.html";
   return t
 });
 KISSY.add("filter-menu/render", ["menu", "./render-xtpl", "component/extension/content-render"], function(S, require) {

@@ -80,6 +80,6 @@ KISSY.add(function (S, require, exports, module) {
             buffer += '\n">';
             return buffer;
         };
-t.TPL_NAME = "E:/code/kissy_git/kissy/kissy/src/component/sub-modules/control/src/control/render.xtpl.html";
-return t;
+    t.TPL_NAME = module.name;
+    return t;
 });

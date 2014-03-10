@@ -61,5 +61,48 @@ KISSY.add(function (S, require) {
             }).toThrow('Syntax error at line 3:\n' +
                     'expect {{/if}} not {{/with}}');
         });
+
+        it('will report file information ' +
+            'when render compiled template error', function () {
+            var path;
+
+            if (S.UA.nodejs) {
+                path = S.config('packages').src.uri
+                    .resolve('../src/xtemplate/tests/specs/')
+                    .getPath();
+
+                S.config('packages', {
+                    xtpls: {
+                        base: path
+                    }
+                });
+            } else {
+                KISSY.config('packages', {
+                    'xtpls': {
+                        base: '/kissy/src/xtemplate/tests/specs/'
+                    }
+                });
+            }
+
+            var ok = 0;
+
+            S.use('xtpls/custom-command-xtpl', function (S, tpl) {
+                ok = 1;
+                expect(function () {
+                    new XTemplate(tpl, {
+                        commands: {
+                            command: function () {
+                                throw new Error('error in custom-command');
+                            }
+                        }
+                    }).render();
+                }).toThrow('in file: xtpls/custom-command-xtpl error in custom-command:' +
+                        ' "command" at line 1');
+            });
+
+            waitsFor(function () {
+                return ok;
+            });
+        });
     });
 });

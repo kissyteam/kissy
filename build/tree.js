@@ -134,7 +134,7 @@ KISSY.add("tree/node-xtpl", ["component/extension/content-xtpl"], function(S, re
     buffer += "\n>\n</div>";
     return buffer
   };
-  t.TPL_NAME = "E:/code/kissy_git/kissy/kissy/src/tree/src/tree/node.xtpl.html";
+  t.TPL_NAME = "tree/src/tree/node.xtpl.html";
   return t
 });
 KISSY.add("tree/node-render", ["component/container", "./node-xtpl", "component/extension/content-render"], function(S, require) {

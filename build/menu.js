@@ -230,7 +230,7 @@ KISSY.add("menu/check-menuitem-xtpl", ["component/extension/content-xtpl"], func
     }
     return buffer
   };
-  t.TPL_NAME = "E:/code/kissy_git/kissy/kissy/src/menu/src/menu/check-menuitem.xtpl.html";
+  t.TPL_NAME = "menu/src/menu/check-menuitem.xtpl.html";
   return t
 });
 KISSY.add("menu/check-menuitem-render", ["./menuitem-render", "component/extension/content-render", "./check-menuitem-xtpl"], function(S, require) {
@@ -285,7 +285,7 @@ KISSY.add("menu/submenu-xtpl", [], function(S, require, exports, module) {
     buffer += 'submenu-arrow">\u25ba</span>';
     return buffer
   };
-  t.TPL_NAME = "E:/code/kissy_git/kissy/kissy/src/menu/src/menu/submenu.xtpl.html";
+  t.TPL_NAME = "menu/src/menu/submenu.xtpl.html";
   return t
 });
 KISSY.add("menu/submenu-render", ["./submenu-xtpl", "./menuitem-render", "component/extension/content-render"], function(S, require) {

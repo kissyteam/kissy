@@ -307,7 +307,7 @@ KISSY.add("date/picker/year-panel/years-xtpl", [], function(S, require, exports,
     buffer += eachCommand.call(engine, scope, option0, payload);
     return buffer
   };
-  t.TPL_NAME = "E:/code/kissy_git/kissy/kissy/src/date/picker/src/picker/year-panel/years.xtpl.html";
+  t.TPL_NAME = "date/picker/src/picker/year-panel/years.xtpl.html";
   return t
 });
 KISSY.add("date/picker/year-panel/year-panel-xtpl", ["date/picker/year-panel/years-xtpl"], function(S, require, exports, module) {
@@ -412,7 +412,7 @@ KISSY.add("date/picker/year-panel/year-panel-xtpl", ["date/picker/year-panel/yea
     buffer += "\n        </tbody>\n    </table>\n</div>";
     return buffer
   };
-  t.TPL_NAME = "E:/code/kissy_git/kissy/kissy/src/date/picker/src/picker/year-panel/year-panel.xtpl.html";
+  t.TPL_NAME = "date/picker/src/picker/year-panel/year-panel.xtpl.html";
   return t
 });
 KISSY.add("date/picker/year-panel/render", ["date/format", "component/control", "./years-xtpl", "./year-panel-xtpl"], function(S, require) {
@@ -575,7 +575,7 @@ KISSY.add("date/picker/decade-panel/decades-xtpl", [], function(S, require, expo
     buffer += eachCommand.call(engine, scope, option0, payload);
     return buffer
   };
-  t.TPL_NAME = "E:/code/kissy_git/kissy/kissy/src/date/picker/src/picker/decade-panel/decades.xtpl.html";
+  t.TPL_NAME = "date/picker/src/picker/decade-panel/decades.xtpl.html";
   return t
 });
 KISSY.add("date/picker/decade-panel/decade-panel-xtpl", ["date/picker/decade-panel/decades-xtpl"], function(S, require, exports, module) {
@@ -667,7 +667,7 @@ KISSY.add("date/picker/decade-panel/decade-panel-xtpl", ["date/picker/decade-pan
     buffer += "\n        </tbody>\n    </table>\n</div>";
     return buffer
   };
-  t.TPL_NAME = "E:/code/kissy_git/kissy/kissy/src/date/picker/src/picker/decade-panel/decade-panel.xtpl.html";
+  t.TPL_NAME = "date/picker/src/picker/decade-panel/decade-panel.xtpl.html";
   return t
 });
 KISSY.add("date/picker/decade-panel/render", ["component/control", "./decade-panel-xtpl", "./decades-xtpl"], function(S, require) {
@@ -867,7 +867,7 @@ KISSY.add("date/picker/month-panel/months-xtpl", [], function(S, require, export
     buffer += eachCommand.call(engine, scope, option0, payload);
     return buffer
   };
-  t.TPL_NAME = "E:/code/kissy_git/kissy/kissy/src/date/picker/src/picker/month-panel/months.xtpl.html";
+  t.TPL_NAME = "date/picker/src/picker/month-panel/months.xtpl.html";
   return t
 });
 KISSY.add("date/picker/month-panel/month-panel-xtpl", ["date/picker/month-panel/months-xtpl"], function(S, require, exports, module) {
@@ -969,7 +969,7 @@ KISSY.add("date/picker/month-panel/month-panel-xtpl", ["date/picker/month-panel/
     buffer += "\n        </tbody>\n    </table>\n</div>";
     return buffer
   };
-  t.TPL_NAME = "E:/code/kissy_git/kissy/kissy/src/date/picker/src/picker/month-panel/month-panel.xtpl.html";
+  t.TPL_NAME = "date/picker/src/picker/month-panel/month-panel.xtpl.html";
   return t
 });
 KISSY.add("date/picker/month-panel/render", ["date/format", "component/control", "./months-xtpl", "./month-panel-xtpl"], function(S, require) {

@@ -42,6 +42,6 @@ KISSY.add(function (S, require, exports, module) {
             }
             return buffer;
         };
-t.TPL_NAME = "E:/code/kissy_git/kissy/kissy/src/menu/src/menu/check-menuitem.xtpl.html";
+t.TPL_NAME = "menu/src/menu/check-menuitem.xtpl.html";
 return t;
 });

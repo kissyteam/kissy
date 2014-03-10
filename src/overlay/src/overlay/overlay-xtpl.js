@@ -11,6 +11,7 @@ KISSY.add(function (S, require, exports, module) {
                 moduleWrap = module;
             }
             var callCommandUtil = utils.callCommand,
+                debuggerCommand = nativeCommands["debugger"],
                 eachCommand = nativeCommands.each,
                 withCommand = nativeCommands["with"],
                 ifCommand = nativeCommands["if"],
@@ -21,33 +22,74 @@ KISSY.add(function (S, require, exports, module) {
                 blockCommand = nativeCommands.block,
                 macroCommand = nativeCommands.macro;
             buffer += '';
-            var option1 = {};
-            var params2 = [];
-            params2.push('overlay/close-xtpl');
-            option1.params = params2;
-            if (moduleWrap) {
-                require("overlay/close-xtpl");
-                option1.params[0] = moduleWrap.resolveByName(option1.params[0]);
-            }
-            var id0 = includeCommand.call(engine, scope, option1, payload);
-            if (id0 || id0 === 0) {
-                buffer += id0;
-            }
-            buffer += '\n';
-            var option4 = {};
-            var params5 = [];
-            params5.push('component/extension/content-xtpl');
-            option4.params = params5;
-            if (moduleWrap) {
-                require("component/extension/content-xtpl");
-                option4.params[0] = moduleWrap.resolveByName(option4.params[0]);
-            }
-            var id3 = includeCommand.call(engine, scope, option4, payload);
-            if (id3 || id3 === 0) {
-                buffer += id3;
-            }
+            var option0 = {};
+            var params1 = [];
+            params1.push('ks-overlay-closable');
+            option0.params = params1;
+            option0.fn = function (scope) {
+                var buffer = "";
+                buffer += '\n    ';
+                var option2 = {};
+                var params3 = [];
+                var id4 = scope.resolve(["closable"]);
+                params3.push(id4);
+                option2.params = params3;
+                option2.fn = function (scope) {
+                    var buffer = "";
+                    buffer += '\n        <a href="javascript:void(\'close\')"\n           id="ks-overlay-close-';
+                    var id5 = scope.resolve(["id"]);
+                    buffer += escapeHtml(id5);
+                    buffer += '"\n           class="';
+                    var option7 = {};
+                    var params8 = [];
+                    params8.push('close');
+                    option7.params = params8;
+                    var id6 = callCommandUtil(engine, scope, option7, "getBaseCssClasses", 5);
+                    buffer += escapeHtml(id6);
+                    buffer += '"\n           role=\'button\'>\n            <span class="';
+                    var option10 = {};
+                    var params11 = [];
+                    params11.push('close-x');
+                    option10.params = params11;
+                    var id9 = callCommandUtil(engine, scope, option10, "getBaseCssClasses", 7);
+                    buffer += escapeHtml(id9);
+                    buffer += '">close</span>\n        </a>\n    ';
+                    return buffer;
+                };
+                buffer += ifCommand.call(engine, scope, option2, payload);
+                buffer += '\n';
+                return buffer;
+            };
+            buffer += blockCommand.call(engine, scope, option0, payload);
+            buffer += '\n\n<div id="ks-content-';
+            var id12 = scope.resolve(["id"]);
+            buffer += escapeHtml(id12);
+            buffer += '"\n     class="';
+            var option14 = {};
+            var params15 = [];
+            params15.push('content');
+            option14.params = params15;
+            var id13 = callCommandUtil(engine, scope, option14, "getBaseCssClasses", 13);
+            buffer += escapeHtml(id13);
+            buffer += '">\n    ';
+            var option16 = {};
+            var params17 = [];
+            params17.push('ks-overlay-content');
+            option16.params = params17;
+            option16.fn = function (scope) {
+                var buffer = "";
+                buffer += '\n        ';
+                var id18 = scope.resolve(["content"]);
+                if (id18 || id18 === 0) {
+                    buffer += id18;
+                }
+                buffer += '\n    ';
+                return buffer;
+            };
+            buffer += blockCommand.call(engine, scope, option16, payload);
+            buffer += '\n</div>';
             return buffer;
         };
-t.TPL_NAME = "E:/code/kissy_git/kissy/kissy/src/overlay/src/overlay/overlay.xtpl.html";
+t.TPL_NAME = module.name;
 return t;
 });

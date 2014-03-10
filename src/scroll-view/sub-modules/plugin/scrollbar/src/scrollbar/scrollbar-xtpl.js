@@ -91,6 +91,6 @@ KISSY.add(function (S, require, exports, module) {
             buffer += '">\n</div>\n</div>\n</div>';
             return buffer;
         };
-t.TPL_NAME = "E:/code/kissy_git/kissy/kissy/src/scroll-view/sub-modules/plugin/scrollbar/src/scrollbar/scrollbar.xtpl.html";
+t.TPL_NAME = "scroll-view/sub-modules/plugin/scrollbar/src/scrollbar/scrollbar.xtpl.html";
 return t;
 });

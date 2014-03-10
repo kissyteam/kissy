@@ -50,6 +50,6 @@ KISSY.add(function (S, require, exports, module) {
             buffer += '">\n    </div>\n</div>';
             return buffer;
         };
-t.TPL_NAME = "E:/code/kissy_git/kissy/kissy/src/menubutton/src/menubutton/menubutton.xtpl.html";
+t.TPL_NAME = "menubutton/src/menubutton/menubutton.xtpl.html";
 return t;
 });

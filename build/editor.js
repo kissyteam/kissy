@@ -108,7 +108,7 @@ KISSY.add("editor/render-xtpl", [], function(S, require, exports, module) {
     buffer += '">\n\n</div>';
     return buffer
   };
-  t.TPL_NAME = "E:/code/kissy_git/kissy/kissy/src/editor/src/editor/render.xtpl.html";
+  t.TPL_NAME = "editor/src/editor/render.xtpl.html";
   return t
 });
 KISSY.add("editor/render", ["component/control", "./render-xtpl"], function(S, require) {

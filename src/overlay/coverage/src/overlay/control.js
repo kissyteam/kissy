@@ -263,11 +263,11 @@ if (! _$jscoverage['/overlay/control.js'].branchData) {
   _$jscoverage['/overlay/control.js'].branchData['53'][1] = new BranchData();
 }
 _$jscoverage['/overlay/control.js'].branchData['53'][1].init(47, 40, 'actions[self.get(\'closeAction\')] || HIDE');
-function visit4_53_1(result) {
+function visit2_53_1(result) {
   _$jscoverage['/overlay/control.js'].branchData['53'][1].ranCondition(result);
   return result;
 }_$jscoverage['/overlay/control.js'].branchData['40'][1].init(95, 8, 'closeBtn');
-function visit3_40_1(result) {
+function visit1_40_1(result) {
   _$jscoverage['/overlay/control.js'].branchData['40'][1].ranCondition(result);
   return result;
 }_$jscoverage['/overlay/control.js'].lineData[6]++;
@@ -298,7 +298,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/overlay/control.js'].lineData[38]++;
   var self = this, closeBtn = self.get('closeBtn');
   _$jscoverage['/overlay/control.js'].lineData[40]++;
-  if (visit3_40_1(closeBtn)) {
+  if (visit1_40_1(closeBtn)) {
     _$jscoverage['/overlay/control.js'].lineData[41]++;
     closeBtn.on('click', function(ev) {
   _$jscoverage['/overlay/control.js'].functionData[2]++;
@@ -314,7 +314,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/overlay/control.js'].lineData[52]++;
   var self = this;
   _$jscoverage['/overlay/control.js'].lineData[53]++;
-  self[visit4_53_1(actions[self.get('closeAction')] || HIDE)]();
+  self[visit2_53_1(actions[self.get('closeAction')] || HIDE)]();
   _$jscoverage['/overlay/control.js'].lineData[54]++;
   return self;
 }}, {

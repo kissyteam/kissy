@@ -436,7 +436,7 @@ KISSY.add(function(S, require, exports, module) {
   return buffer;
 };
   _$jscoverage['/bar/bar-xtpl.js'].lineData[78]++;
-  t.TPL_NAME = "E:/code/kissy_git/kissy/kissy/src/navigation-view/sub-modules/bar/src/bar/bar.xtpl.html";
+  t.TPL_NAME = "navigation-view/sub-modules/bar/src/bar/bar.xtpl.html";
   _$jscoverage['/bar/bar-xtpl.js'].lineData[79]++;
   return t;
 });

@@ -347,24 +347,27 @@ if (! _$jscoverage['/navigation-view.js']) {
   _$jscoverage['/navigation-view.js'].lineData[219] = 0;
   _$jscoverage['/navigation-view.js'].lineData[221] = 0;
   _$jscoverage['/navigation-view.js'].lineData[222] = 0;
-  _$jscoverage['/navigation-view.js'].lineData[226] = 0;
-  _$jscoverage['/navigation-view.js'].lineData[227] = 0;
-  _$jscoverage['/navigation-view.js'].lineData[231] = 0;
+  _$jscoverage['/navigation-view.js'].lineData[223] = 0;
+  _$jscoverage['/navigation-view.js'].lineData[224] = 0;
+  _$jscoverage['/navigation-view.js'].lineData[228] = 0;
+  _$jscoverage['/navigation-view.js'].lineData[230] = 0;
+  _$jscoverage['/navigation-view.js'].lineData[234] = 0;
   _$jscoverage['/navigation-view.js'].lineData[235] = 0;
-  _$jscoverage['/navigation-view.js'].lineData[238] = 0;
-  _$jscoverage['/navigation-view.js'].lineData[239] = 0;
   _$jscoverage['/navigation-view.js'].lineData[240] = 0;
-  _$jscoverage['/navigation-view.js'].lineData[241] = 0;
-  _$jscoverage['/navigation-view.js'].lineData[242] = 0;
+  _$jscoverage['/navigation-view.js'].lineData[243] = 0;
+  _$jscoverage['/navigation-view.js'].lineData[244] = 0;
+  _$jscoverage['/navigation-view.js'].lineData[245] = 0;
   _$jscoverage['/navigation-view.js'].lineData[246] = 0;
-  _$jscoverage['/navigation-view.js'].lineData[248] = 0;
-  _$jscoverage['/navigation-view.js'].lineData[249] = 0;
+  _$jscoverage['/navigation-view.js'].lineData[247] = 0;
+  _$jscoverage['/navigation-view.js'].lineData[251] = 0;
   _$jscoverage['/navigation-view.js'].lineData[253] = 0;
-  _$jscoverage['/navigation-view.js'].lineData[256] = 0;
-  _$jscoverage['/navigation-view.js'].lineData[257] = 0;
+  _$jscoverage['/navigation-view.js'].lineData[254] = 0;
   _$jscoverage['/navigation-view.js'].lineData[258] = 0;
-  _$jscoverage['/navigation-view.js'].lineData[259] = 0;
-  _$jscoverage['/navigation-view.js'].lineData[260] = 0;
+  _$jscoverage['/navigation-view.js'].lineData[261] = 0;
+  _$jscoverage['/navigation-view.js'].lineData[262] = 0;
+  _$jscoverage['/navigation-view.js'].lineData[263] = 0;
+  _$jscoverage['/navigation-view.js'].lineData[264] = 0;
+  _$jscoverage['/navigation-view.js'].lineData[265] = 0;
 }
 if (! _$jscoverage['/navigation-view.js'].functionData) {
   _$jscoverage['/navigation-view.js'].functionData = [];
@@ -438,18 +441,30 @@ if (! _$jscoverage['/navigation-view.js'].branchData) {
   _$jscoverage['/navigation-view.js'].branchData['198'][1] = new BranchData();
   _$jscoverage['/navigation-view.js'].branchData['207'] = [];
   _$jscoverage['/navigation-view.js'].branchData['207'][1] = new BranchData();
-  _$jscoverage['/navigation-view.js'].branchData['238'] = [];
-  _$jscoverage['/navigation-view.js'].branchData['238'][1] = new BranchData();
-  _$jscoverage['/navigation-view.js'].branchData['256'] = [];
-  _$jscoverage['/navigation-view.js'].branchData['256'][1] = new BranchData();
+  _$jscoverage['/navigation-view.js'].branchData['223'] = [];
+  _$jscoverage['/navigation-view.js'].branchData['223'][1] = new BranchData();
+  _$jscoverage['/navigation-view.js'].branchData['234'] = [];
+  _$jscoverage['/navigation-view.js'].branchData['234'][1] = new BranchData();
+  _$jscoverage['/navigation-view.js'].branchData['243'] = [];
+  _$jscoverage['/navigation-view.js'].branchData['243'][1] = new BranchData();
+  _$jscoverage['/navigation-view.js'].branchData['261'] = [];
+  _$jscoverage['/navigation-view.js'].branchData['261'][1] = new BranchData();
 }
-_$jscoverage['/navigation-view.js'].branchData['256'][1].init(120, 20, 'viewStack.length > 1');
-function visit25_256_1(result) {
-  _$jscoverage['/navigation-view.js'].branchData['256'][1].ranCondition(result);
+_$jscoverage['/navigation-view.js'].branchData['261'][1].init(120, 20, 'viewStack.length > 1');
+function visit27_261_1(result) {
+  _$jscoverage['/navigation-view.js'].branchData['261'][1].ranCondition(result);
   return result;
-}_$jscoverage['/navigation-view.js'].branchData['238'][1].init(135, 41, 'config.animation || self.get(\'animation\')');
-function visit24_238_1(result) {
-  _$jscoverage['/navigation-view.js'].branchData['238'][1].ranCondition(result);
+}_$jscoverage['/navigation-view.js'].branchData['243'][1].init(135, 41, 'config.animation || self.get(\'animation\')');
+function visit26_243_1(result) {
+  _$jscoverage['/navigation-view.js'].branchData['243'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/navigation-view.js'].branchData['234'][1].init(18, 16, 'this.loadingView');
+function visit25_234_1(result) {
+  _$jscoverage['/navigation-view.js'].branchData['234'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/navigation-view.js'].branchData['223'][1].init(104, 21, 'loadingHtml !== false');
+function visit24_223_1(result) {
+  _$jscoverage['/navigation-view.js'].branchData['223'][1].ranCondition(result);
   return result;
 }_$jscoverage['/navigation-view.js'].branchData['207'][1].init(65, 5, '!view');
 function visit23_207_1(result) {
@@ -861,56 +876,64 @@ KISSY.add(function(S, require) {
   _$jscoverage['/navigation-view.js'].lineData[221]++;
   var self = this;
   _$jscoverage['/navigation-view.js'].lineData[222]++;
-  self.loadingView = new LoadingView({
-  content: self.get('loadingHtml'), 
+  var loadingHtml = self.get('loadingHtml');
+  _$jscoverage['/navigation-view.js'].lineData[223]++;
+  if (visit24_223_1(loadingHtml !== false)) {
+    _$jscoverage['/navigation-view.js'].lineData[224]++;
+    self.loadingView = new LoadingView({
+  content: loadingHtml, 
   render: self.contentEl}).render();
-  _$jscoverage['/navigation-view.js'].lineData[226]++;
-  self.loadingView.navigationView = self;
-  _$jscoverage['/navigation-view.js'].lineData[227]++;
+    _$jscoverage['/navigation-view.js'].lineData[228]++;
+    self.loadingView.navigationView = self;
+  }
+  _$jscoverage['/navigation-view.js'].lineData[230]++;
   self.viewStack = [];
 }, 
   '_onSetLoadingHtml': function(v) {
   _$jscoverage['/navigation-view.js'].functionData[17]++;
-  _$jscoverage['/navigation-view.js'].lineData[231]++;
-  this.loadingView.set('content', v);
+  _$jscoverage['/navigation-view.js'].lineData[234]++;
+  if (visit25_234_1(this.loadingView)) {
+    _$jscoverage['/navigation-view.js'].lineData[235]++;
+    this.loadingView.set('content', v);
+  }
 }, 
   push: function(config) {
   _$jscoverage['/navigation-view.js'].functionData[18]++;
-  _$jscoverage['/navigation-view.js'].lineData[235]++;
-  var self = this, nextView, viewStack = self.viewStack;
-  _$jscoverage['/navigation-view.js'].lineData[238]++;
-  config.animation = visit24_238_1(config.animation || self.get('animation'));
-  _$jscoverage['/navigation-view.js'].lineData[239]++;
-  config.navigationView = self;
   _$jscoverage['/navigation-view.js'].lineData[240]++;
+  var self = this, nextView, viewStack = self.viewStack;
+  _$jscoverage['/navigation-view.js'].lineData[243]++;
+  config.animation = visit26_243_1(config.animation || self.get('animation'));
+  _$jscoverage['/navigation-view.js'].lineData[244]++;
+  config.navigationView = self;
+  _$jscoverage['/navigation-view.js'].lineData[245]++;
   nextView = createView(self, config);
-  _$jscoverage['/navigation-view.js'].lineData[241]++;
+  _$jscoverage['/navigation-view.js'].lineData[246]++;
   viewStack.push(config);
-  _$jscoverage['/navigation-view.js'].lineData[242]++;
+  _$jscoverage['/navigation-view.js'].lineData[247]++;
   switchTo(self, nextView);
 }, 
   replace: function(config) {
   _$jscoverage['/navigation-view.js'].functionData[19]++;
-  _$jscoverage['/navigation-view.js'].lineData[246]++;
+  _$jscoverage['/navigation-view.js'].lineData[251]++;
   var self = this, viewStack = self.viewStack;
-  _$jscoverage['/navigation-view.js'].lineData[248]++;
+  _$jscoverage['/navigation-view.js'].lineData[253]++;
   S.mix(viewStack[viewStack.length - 1], config);
-  _$jscoverage['/navigation-view.js'].lineData[249]++;
+  _$jscoverage['/navigation-view.js'].lineData[254]++;
   self.get('activeView').set(config);
 }, 
   pop: function(config) {
   _$jscoverage['/navigation-view.js'].functionData[20]++;
-  _$jscoverage['/navigation-view.js'].lineData[253]++;
+  _$jscoverage['/navigation-view.js'].lineData[258]++;
   var self = this, nextView, viewStack = self.viewStack;
-  _$jscoverage['/navigation-view.js'].lineData[256]++;
-  if (visit25_256_1(viewStack.length > 1)) {
-    _$jscoverage['/navigation-view.js'].lineData[257]++;
+  _$jscoverage['/navigation-view.js'].lineData[261]++;
+  if (visit27_261_1(viewStack.length > 1)) {
+    _$jscoverage['/navigation-view.js'].lineData[262]++;
     viewStack.pop();
-    _$jscoverage['/navigation-view.js'].lineData[258]++;
+    _$jscoverage['/navigation-view.js'].lineData[263]++;
     config = viewStack[viewStack.length - 1];
-    _$jscoverage['/navigation-view.js'].lineData[259]++;
+    _$jscoverage['/navigation-view.js'].lineData[264]++;
     nextView = createView(self, config);
-    _$jscoverage['/navigation-view.js'].lineData[260]++;
+    _$jscoverage['/navigation-view.js'].lineData[265]++;
     switchTo(self, nextView, true);
   }
 }}, {
@@ -918,7 +941,8 @@ KISSY.add(function(S, require) {
   ATTRS: {
   animation: {
   value: ['slide-right', 'slide-left']}, 
-  loadingHtml: {}, 
+  loadingHtml: {
+  sync: 0}, 
   handleGestureEvents: {
   value: false}, 
   viewCacheSize: {

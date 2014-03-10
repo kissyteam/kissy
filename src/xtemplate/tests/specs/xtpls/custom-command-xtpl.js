@@ -21,24 +21,10 @@ KISSY.add(function (S, require, exports, module) {
                 extendCommand = nativeCommands.extend,
                 blockCommand = nativeCommands.block,
                 macroCommand = nativeCommands.macro;
-            buffer += '';
-            var option0 = {};
-            var params1 = [];
-            var id2 = scope.resolve(["b"]);
-            params1.push(id2);
-            option0.params = params1;
-            option0.fn = function (scope) {
-                var buffer = "";
-                buffer += '';
-                var id3 = scope.resolve(["c"]);
-                buffer += escapeHtml(id3);
-                buffer += '';
-                var id4 = scope.resolve(["d"], 1);
-                buffer += escapeHtml(id4);
-                buffer += '';
-                return buffer;
-            };
-            buffer += withCommand.call(engine, scope, option0, payload);
+            buffer += 'i am ';
+            var id0 = callCommandUtil(engine, scope, undefined, "command", 1);
+            buffer += escapeHtml(id0);
+            buffer += '!';
             return buffer;
         };
 t.TPL_NAME = module.name;

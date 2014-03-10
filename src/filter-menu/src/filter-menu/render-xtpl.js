@@ -68,6 +68,6 @@ KISSY.add(function (S, require, exports, module) {
             }
             return buffer;
         };
-t.TPL_NAME = "E:/code/kissy_git/kissy/kissy/src/filter-menu/src/filter-menu/render.xtpl.html";
+t.TPL_NAME = "filter-menu/src/filter-menu/render.xtpl.html";
 return t;
 });

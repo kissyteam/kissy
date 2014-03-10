@@ -958,7 +958,7 @@ KISSY.add(function(S, require, exports, module) {
   return buffer;
 };
   _$jscoverage['/picker-xtpl.js'].lineData[247]++;
-  t.TPL_NAME = "E:/code/kissy_git/kissy/kissy/src/date/picker-xtpl/src/picker.xtpl.html";
-  _$jscoverage['/picker-xtpl.js'].lineData[248]++;
+    t.TPL_NAME = module.name;
+    _$jscoverage['/picker-xtpl.js'].lineData[248]++;
   return t;
 });

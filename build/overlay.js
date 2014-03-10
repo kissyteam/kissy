@@ -1,14 +1,13 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Feb 25 19:45
+build time: Mar 10 11:24
 */
 /*
  Combined modules by KISSY Module Compiler: 
 
  overlay/extension/loading
  overlay/extension/mask
- overlay/close-xtpl
  overlay/overlay-xtpl
  overlay/overlay-render
  overlay/extension/overlay-effect
@@ -113,84 +112,83 @@ KISSY.add("overlay/extension/mask", ["node"], function(S, require) {
   }};
   return Mask
 });
-KISSY.add("overlay/close-xtpl", [], function(S, require, exports, module) {
+KISSY.add("overlay/overlay-xtpl", [], function(S, require, exports, module) {
   var t = function(scope, S, payload, undefined) {
     var buffer = "", engine = this, moduleWrap, escapeHtml = S.escapeHtml, nativeCommands = engine.nativeCommands, utils = engine.utils;
     if(typeof module !== "undefined" && module.kissy) {
       moduleWrap = module
     }
-    var callCommandUtil = utils.callCommand, eachCommand = nativeCommands.each, withCommand = nativeCommands["with"], ifCommand = nativeCommands["if"], setCommand = nativeCommands.set, includeCommand = nativeCommands.include, parseCommand = nativeCommands.parse, extendCommand = nativeCommands.extend, blockCommand = nativeCommands.block, macroCommand = nativeCommands.macro;
+    var callCommandUtil = utils.callCommand, debuggerCommand = nativeCommands["debugger"], eachCommand = nativeCommands.each, withCommand = nativeCommands["with"], ifCommand = nativeCommands["if"], setCommand = nativeCommands.set, includeCommand = nativeCommands.include, parseCommand = nativeCommands.parse, extendCommand = nativeCommands.extend, blockCommand = nativeCommands.block, macroCommand = nativeCommands.macro;
     buffer += "";
     var option0 = {};
     var params1 = [];
-    var id2 = scope.resolve(["closable"]);
-    params1.push(id2);
+    params1.push("ks-overlay-closable");
     option0.params = params1;
     option0.fn = function(scope) {
       var buffer = "";
-      buffer += '\n<a href="javascript:void(\'close\')"\n   id="ks-overlay-close-';
-      var id3 = scope.resolve(["id"]);
-      buffer += escapeHtml(id3);
-      buffer += '"\n   class="';
-      var option5 = {};
-      var params6 = [];
-      params6.push("close");
-      option5.params = params6;
-      var id4 = callCommandUtil(engine, scope, option5, "getBaseCssClasses", 4);
-      buffer += escapeHtml(id4);
-      buffer += "\"\n   role='button'>\n    <span class=\"";
-      var option8 = {};
-      var params9 = [];
-      params9.push("close-x");
-      option8.params = params9;
-      var id7 = callCommandUtil(engine, scope, option8, "getBaseCssClasses", 6);
-      buffer += escapeHtml(id7);
-      buffer += '">close</span>\n</a>\n';
+      buffer += "\n    ";
+      var option2 = {};
+      var params3 = [];
+      var id4 = scope.resolve(["closable"]);
+      params3.push(id4);
+      option2.params = params3;
+      option2.fn = function(scope) {
+        var buffer = "";
+        buffer += '\n        <a href="javascript:void(\'close\')"\n           id="ks-overlay-close-';
+        var id5 = scope.resolve(["id"]);
+        buffer += escapeHtml(id5);
+        buffer += '"\n           class="';
+        var option7 = {};
+        var params8 = [];
+        params8.push("close");
+        option7.params = params8;
+        var id6 = callCommandUtil(engine, scope, option7, "getBaseCssClasses", 5);
+        buffer += escapeHtml(id6);
+        buffer += "\"\n           role='button'>\n            <span class=\"";
+        var option10 = {};
+        var params11 = [];
+        params11.push("close-x");
+        option10.params = params11;
+        var id9 = callCommandUtil(engine, scope, option10, "getBaseCssClasses", 7);
+        buffer += escapeHtml(id9);
+        buffer += '">close</span>\n        </a>\n    ';
+        return buffer
+      };
+      buffer += ifCommand.call(engine, scope, option2, payload);
+      buffer += "\n";
       return buffer
     };
-    buffer += ifCommand.call(engine, scope, option0, payload);
-    buffer += "\n";
+    buffer += blockCommand.call(engine, scope, option0, payload);
+    buffer += '\n\n<div id="ks-content-';
+    var id12 = scope.resolve(["id"]);
+    buffer += escapeHtml(id12);
+    buffer += '"\n     class="';
+    var option14 = {};
+    var params15 = [];
+    params15.push("content");
+    option14.params = params15;
+    var id13 = callCommandUtil(engine, scope, option14, "getBaseCssClasses", 13);
+    buffer += escapeHtml(id13);
+    buffer += '">\n    ';
+    var option16 = {};
+    var params17 = [];
+    params17.push("ks-overlay-content");
+    option16.params = params17;
+    option16.fn = function(scope) {
+      var buffer = "";
+      buffer += "\n        ";
+      var id18 = scope.resolve(["content"]);
+      if(id18 || id18 === 0) {
+        buffer += id18
+      }
+      buffer += "\n    ";
+      return buffer
+    };
+    buffer += blockCommand.call(engine, scope, option16, payload);
+    buffer += "\n</div>";
     return buffer
   };
-  t.TPL_NAME = "E:/code/kissy_git/kissy/kissy/src/overlay/src/overlay/close.xtpl.html";
-  return t
-});
-KISSY.add("overlay/overlay-xtpl", ["overlay/close-xtpl", "component/extension/content-xtpl"], function(S, require, exports, module) {
-  var t = function(scope, S, payload, undefined) {
-    var buffer = "", engine = this, moduleWrap, escapeHtml = S.escapeHtml, nativeCommands = engine.nativeCommands, utils = engine.utils;
-    if(typeof module !== "undefined" && module.kissy) {
-      moduleWrap = module
-    }
-    var callCommandUtil = utils.callCommand, eachCommand = nativeCommands.each, withCommand = nativeCommands["with"], ifCommand = nativeCommands["if"], setCommand = nativeCommands.set, includeCommand = nativeCommands.include, parseCommand = nativeCommands.parse, extendCommand = nativeCommands.extend, blockCommand = nativeCommands.block, macroCommand = nativeCommands.macro;
-    buffer += "";
-    var option1 = {};
-    var params2 = [];
-    params2.push("overlay/close-xtpl");
-    option1.params = params2;
-    if(moduleWrap) {
-      require("overlay/close-xtpl");
-      option1.params[0] = moduleWrap.resolveByName(option1.params[0])
-    }
-    var id0 = includeCommand.call(engine, scope, option1, payload);
-    if(id0 || id0 === 0) {
-      buffer += id0
-    }
-    buffer += "\n";
-    var option4 = {};
-    var params5 = [];
-    params5.push("component/extension/content-xtpl");
-    option4.params = params5;
-    if(moduleWrap) {
-      require("component/extension/content-xtpl");
-      option4.params[0] = moduleWrap.resolveByName(option4.params[0])
-    }
-    var id3 = includeCommand.call(engine, scope, option4, payload);
-    if(id3 || id3 === 0) {
-      buffer += id3
-    }
-    return buffer
-  };
-  t.TPL_NAME = "E:/code/kissy_git/kissy/kissy/src/overlay/src/overlay/overlay.xtpl.html";
+  t.TPL_NAME = module.name;
   return t
 });
 KISSY.add("overlay/overlay-render", ["component/container", "./overlay-xtpl", "component/extension/content-render"], function(S, require) {
@@ -293,139 +291,139 @@ KISSY.add("overlay/control", ["component/container", "component/extension/shim",
     return self
   }}, {ATTRS:{contentEl:{}, closable:{value:false, view:1}, closeBtn:{view:1}, closeAction:{value:HIDE}, focusable:{value:false}, allowTextSelection:{value:true}, handleGestureEvents:{value:false}, visible:{value:false}, xrender:{value:OverlayRender}}, xclass:"overlay"})
 });
-KISSY.add("overlay/dialog-xtpl", ["overlay/close-xtpl"], function(S, require, exports, module) {
+KISSY.add("overlay/dialog-xtpl", ["./overlay-xtpl"], function(S, require, exports, module) {
   var t = function(scope, S, payload, undefined) {
     var buffer = "", engine = this, moduleWrap, escapeHtml = S.escapeHtml, nativeCommands = engine.nativeCommands, utils = engine.utils;
     if(typeof module !== "undefined" && module.kissy) {
       moduleWrap = module
     }
-    var callCommandUtil = utils.callCommand, eachCommand = nativeCommands.each, withCommand = nativeCommands["with"], ifCommand = nativeCommands["if"], setCommand = nativeCommands.set, includeCommand = nativeCommands.include, parseCommand = nativeCommands.parse, extendCommand = nativeCommands.extend, blockCommand = nativeCommands.block, macroCommand = nativeCommands.macro;
+    var callCommandUtil = utils.callCommand, debuggerCommand = nativeCommands["debugger"], eachCommand = nativeCommands.each, withCommand = nativeCommands["with"], ifCommand = nativeCommands["if"], setCommand = nativeCommands.set, includeCommand = nativeCommands.include, parseCommand = nativeCommands.parse, extendCommand = nativeCommands.extend, blockCommand = nativeCommands.block, macroCommand = nativeCommands.macro;
     buffer += "";
     var option1 = {};
     var params2 = [];
-    params2.push("overlay/close-xtpl");
+    params2.push("./overlay-xtpl");
     option1.params = params2;
     if(moduleWrap) {
-      require("overlay/close-xtpl");
+      require("./overlay-xtpl");
       option1.params[0] = moduleWrap.resolveByName(option1.params[0])
     }
-    var id0 = includeCommand.call(engine, scope, option1, payload);
+    var id0 = extendCommand.call(engine, scope, option1, payload);
     if(id0 || id0 === 0) {
       buffer += id0
     }
-    buffer += '\n<div id="ks-content-';
-    var id3 = scope.resolve(["id"]);
-    buffer += escapeHtml(id3);
-    buffer += '"\n     class="';
-    var option5 = {};
-    var params6 = [];
-    params6.push("content");
-    option5.params = params6;
-    var id4 = callCommandUtil(engine, scope, option5, "getBaseCssClasses", 3);
-    buffer += escapeHtml(id4);
-    buffer += '">\n    <div class="';
-    var option8 = {};
-    var params9 = [];
-    params9.push("header");
-    option8.params = params9;
-    var id7 = callCommandUtil(engine, scope, option8, "getBaseCssClasses", 4);
-    buffer += escapeHtml(id7);
-    buffer += '"\n         style="\n';
-    var option10 = {};
-    var params11 = [];
-    var id12 = scope.resolve(["headerStyle"]);
-    params11.push(id12);
-    option10.params = params11;
-    option10.fn = function(scope) {
+    buffer += "\n";
+    var option3 = {};
+    var params4 = [];
+    params4.push("ks-overlay-content");
+    option3.params = params4;
+    option3.fn = function(scope) {
       var buffer = "";
-      buffer += "\n ";
-      var id13 = scope.resolve(["xindex"]);
+      buffer += '\n    <div class="';
+      var option6 = {};
+      var params7 = [];
+      params7.push("header");
+      option6.params = params7;
+      var id5 = callCommandUtil(engine, scope, option6, "getBaseCssClasses", 3);
+      buffer += escapeHtml(id5);
+      buffer += '"\n         style="\n';
+      var option8 = {};
+      var params9 = [];
+      var id10 = scope.resolve(["headerStyle"]);
+      params9.push(id10);
+      option8.params = params9;
+      option8.fn = function(scope) {
+        var buffer = "";
+        buffer += "\n ";
+        var id11 = scope.resolve(["xindex"]);
+        buffer += escapeHtml(id11);
+        buffer += ":";
+        var id12 = scope.resolve(["this"]);
+        buffer += escapeHtml(id12);
+        buffer += ";\n";
+        return buffer
+      };
+      buffer += eachCommand.call(engine, scope, option8, payload);
+      buffer += '\n"\n         id="ks-stdmod-header-';
+      var id13 = scope.resolve(["id"]);
       buffer += escapeHtml(id13);
-      buffer += ":";
-      var id14 = scope.resolve(["this"]);
-      buffer += escapeHtml(id14);
-      buffer += ";\n";
-      return buffer
-    };
-    buffer += eachCommand.call(engine, scope, option10, payload);
-    buffer += '\n"\n         id="ks-stdmod-header-';
-    var id15 = scope.resolve(["id"]);
-    buffer += escapeHtml(id15);
-    buffer += '">';
-    var id16 = scope.resolve(["headerContent"]);
-    if(id16 || id16 === 0) {
-      buffer += id16
-    }
-    buffer += '</div>\n\n    <div class="';
-    var option18 = {};
-    var params19 = [];
-    params19.push("body");
-    option18.params = params19;
-    var id17 = callCommandUtil(engine, scope, option18, "getBaseCssClasses", 12);
-    buffer += escapeHtml(id17);
-    buffer += '"\n         style="\n';
-    var option20 = {};
-    var params21 = [];
-    var id22 = scope.resolve(["bodyStyle"]);
-    params21.push(id22);
-    option20.params = params21;
-    option20.fn = function(scope) {
-      var buffer = "";
-      buffer += "\n ";
-      var id23 = scope.resolve(["xindex"]);
+      buffer += '">';
+      var id14 = scope.resolve(["headerContent"]);
+      if(id14 || id14 === 0) {
+        buffer += id14
+      }
+      buffer += '</div>\n\n    <div class="';
+      var option16 = {};
+      var params17 = [];
+      params17.push("body");
+      option16.params = params17;
+      var id15 = callCommandUtil(engine, scope, option16, "getBaseCssClasses", 11);
+      buffer += escapeHtml(id15);
+      buffer += '"\n         style="\n';
+      var option18 = {};
+      var params19 = [];
+      var id20 = scope.resolve(["bodyStyle"]);
+      params19.push(id20);
+      option18.params = params19;
+      option18.fn = function(scope) {
+        var buffer = "";
+        buffer += "\n ";
+        var id21 = scope.resolve(["xindex"]);
+        buffer += escapeHtml(id21);
+        buffer += ":";
+        var id22 = scope.resolve(["this"]);
+        buffer += escapeHtml(id22);
+        buffer += ";\n";
+        return buffer
+      };
+      buffer += eachCommand.call(engine, scope, option18, payload);
+      buffer += '\n"\n         id="ks-stdmod-body-';
+      var id23 = scope.resolve(["id"]);
       buffer += escapeHtml(id23);
-      buffer += ":";
-      var id24 = scope.resolve(["this"]);
-      buffer += escapeHtml(id24);
-      buffer += ";\n";
-      return buffer
-    };
-    buffer += eachCommand.call(engine, scope, option20, payload);
-    buffer += '\n"\n         id="ks-stdmod-body-';
-    var id25 = scope.resolve(["id"]);
-    buffer += escapeHtml(id25);
-    buffer += '">';
-    var id26 = scope.resolve(["bodyContent"]);
-    if(id26 || id26 === 0) {
-      buffer += id26
-    }
-    buffer += '</div>\n\n    <div class="';
-    var option28 = {};
-    var params29 = [];
-    params29.push("footer");
-    option28.params = params29;
-    var id27 = callCommandUtil(engine, scope, option28, "getBaseCssClasses", 20);
-    buffer += escapeHtml(id27);
-    buffer += '"\n         style="\n';
-    var option30 = {};
-    var params31 = [];
-    var id32 = scope.resolve(["footerStyle"]);
-    params31.push(id32);
-    option30.params = params31;
-    option30.fn = function(scope) {
-      var buffer = "";
-      buffer += "\n ";
-      var id33 = scope.resolve(["xindex"]);
+      buffer += '">';
+      var id24 = scope.resolve(["bodyContent"]);
+      if(id24 || id24 === 0) {
+        buffer += id24
+      }
+      buffer += '</div>\n\n    <div class="';
+      var option26 = {};
+      var params27 = [];
+      params27.push("footer");
+      option26.params = params27;
+      var id25 = callCommandUtil(engine, scope, option26, "getBaseCssClasses", 19);
+      buffer += escapeHtml(id25);
+      buffer += '"\n         style="\n';
+      var option28 = {};
+      var params29 = [];
+      var id30 = scope.resolve(["footerStyle"]);
+      params29.push(id30);
+      option28.params = params29;
+      option28.fn = function(scope) {
+        var buffer = "";
+        buffer += "\n ";
+        var id31 = scope.resolve(["xindex"]);
+        buffer += escapeHtml(id31);
+        buffer += ":";
+        var id32 = scope.resolve(["this"]);
+        buffer += escapeHtml(id32);
+        buffer += ";\n";
+        return buffer
+      };
+      buffer += eachCommand.call(engine, scope, option28, payload);
+      buffer += '\n"\n         id="ks-stdmod-footer-';
+      var id33 = scope.resolve(["id"]);
       buffer += escapeHtml(id33);
-      buffer += ":";
-      var id34 = scope.resolve(["this"]);
-      buffer += escapeHtml(id34);
-      buffer += ";\n";
+      buffer += '">';
+      var id34 = scope.resolve(["footerContent"]);
+      if(id34 || id34 === 0) {
+        buffer += id34
+      }
+      buffer += '</div>\n    <div tabindex="0"></div>\n';
       return buffer
     };
-    buffer += eachCommand.call(engine, scope, option30, payload);
-    buffer += '\n"\n         id="ks-stdmod-footer-';
-    var id35 = scope.resolve(["id"]);
-    buffer += escapeHtml(id35);
-    buffer += '">';
-    var id36 = scope.resolve(["footerContent"]);
-    if(id36 || id36 === 0) {
-      buffer += id36
-    }
-    buffer += '</div>\n</div>\n<div tabindex="0"></div>';
+    buffer += blockCommand.call(engine, scope, option3, payload);
     return buffer
   };
-  t.TPL_NAME = "E:/code/kissy_git/kissy/kissy/src/overlay/src/overlay/dialog.xtpl.html";
+  t.TPL_NAME = module.name;
   return t
 });
 KISSY.add("overlay/dialog-render", ["./overlay-render", "./dialog-xtpl"], function(S, require) {

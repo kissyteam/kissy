@@ -102,6 +102,6 @@ KISSY.add(function (S, require, exports, module) {
             buffer += '\n        </tbody>\n    </table>\n</div>';
             return buffer;
         };
-t.TPL_NAME = "E:/code/kissy_git/kissy/kissy/src/date/picker/src/picker/decade-panel/decade-panel.xtpl.html";
-return t;
+    t.TPL_NAME = module.name;
+    return t;
 });

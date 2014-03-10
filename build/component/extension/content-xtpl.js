@@ -34,7 +34,7 @@ KISSY.add("component/extension/content-xtpl", [], function(S, require, exports, 
     buffer += "</div>";
     return buffer
   };
-  t.TPL_NAME = "E:/code/kissy_git/kissy/kissy/src/component/sub-modules/extension/content-xtpl/src/content.xtpl.html";
+  t.TPL_NAME = "component/sub-modules/extension/content-xtpl/src/content.xtpl.html";
   return t
 });
 

@@ -41,6 +41,6 @@ KISSY.add(function (S, require, exports, module) {
             buffer += 'submenu-arrow">►</span>';
             return buffer;
         };
-t.TPL_NAME = "E:/code/kissy_git/kissy/kissy/src/menu/src/menu/submenu.xtpl.html";
+t.TPL_NAME = "menu/src/menu/submenu.xtpl.html";
 return t;
 });

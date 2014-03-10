@@ -219,16 +219,21 @@ KISSY.add(function (S, require) {
     return Container.extend({
         createDom: function () {
             var self = this;
-            self.loadingView = new LoadingView({
-                content: self.get('loadingHtml'),
-                render: self.contentEl
-            }).render();
-            self.loadingView.navigationView = self;
+            var loadingHtml = self.get('loadingHtml');
+            if (loadingHtml !== false) {
+                self.loadingView = new LoadingView({
+                    content: loadingHtml,
+                    render: self.contentEl
+                }).render();
+                self.loadingView.navigationView = self;
+            }
             self.viewStack = [];
         },
 
         '_onSetLoadingHtml': function (v) {
-            this.loadingView.set('content', v);
+            if (this.loadingView) {
+                this.loadingView.set('content', v);
+            }
         },
 
         push: function (config) {
@@ -275,7 +280,9 @@ KISSY.add(function (S, require) {
                 value: ['slide-right', 'slide-left']
             },
 
-            loadingHtml: {},
+            loadingHtml: {
+                sync: 0
+            },
 
             handleGestureEvents: {
                 value: false

@@ -51,7 +51,7 @@ KISSY.add("menubutton/menubutton-xtpl", ["component/extension/content-xtpl"], fu
     buffer += '">\n    </div>\n</div>';
     return buffer
   };
-  t.TPL_NAME = "E:/code/kissy_git/kissy/kissy/src/menubutton/src/menubutton/menubutton.xtpl.html";
+  t.TPL_NAME = "menubutton/src/menubutton/menubutton.xtpl.html";
   return t
 });
 KISSY.add("menubutton/render", ["button", "./menubutton-xtpl", "component/extension/content-render"], function(S, require) {

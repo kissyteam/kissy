@@ -92,6 +92,6 @@ KISSY.add(function (S, require, exports, module) {
             buffer += '">\n\n</div>';
             return buffer;
         };
-t.TPL_NAME = "E:/code/kissy_git/kissy/kissy/src/editor/src/editor/render.xtpl.html";
+t.TPL_NAME = "editor/render.xtpl.html";
 return t;
 });

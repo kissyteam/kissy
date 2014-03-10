@@ -7,6 +7,7 @@ KISSY.add(function (S, require) {
     var XTemplateRuntime = require('xtemplate/runtime');
     var nativeCode = '',
         t;
+    var keywords = ['if', 'with', 'debugger'];
 
     var nativeCommands = XTemplateRuntime.nativeCommands,
         nativeUtils = XTemplateRuntime.utils;
@@ -16,7 +17,7 @@ KISSY.add(function (S, require) {
     }
 
     for (t in nativeCommands) {
-        nativeCode += t + ((t === 'with' || t === 'if') ?
+        nativeCode += t + (S.indexOf(t, keywords) > -1 ?
             ('Command = nativeCommands["' + t + '"]') :
             ('Command = nativeCommands.' + t)) + ',';
     }
@@ -330,8 +331,8 @@ KISSY.add(function (S, require) {
 
             var idString = self.getIdStringFromIdParts(source, idParts);
 
-            // require include modules
-            if (idString === 'include') {
+            // require include/extend modules
+            if (idString === 'include' || idString === 'extend') {
                 // prevent require parse...
                 source.push('if(moduleWrap) {re' + 'quire("' + command.params[0].value + '");' +
                     optionName + '.params[0] = moduleWrap.resolveByName(' + optionName + '.params[0]);' +
