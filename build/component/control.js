@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 10 21:35
+build time: Mar 10 22:27
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -12,17 +12,11 @@ build time: Mar 10 21:35
  component/control
 */
 
-KISSY.add("component/control/process", ["base", "promise"], function(S, require) {
+KISSY.add("component/control/process", ["base"], function(S, require) {
   var Base = require("base");
   var __getHook = Base.prototype.__getHook;
   var noop = S.noop;
-  var Promise = require("promise");
-  var Defer = Promise.Defer;
-  var ControlProcess = Base.extend({bindInternal:noop, syncInternal:noop, initializer:function() {
-    this._renderedDefer = new Defer
-  }, renderUI:noop, syncUI:noop, bindUI:noop, onRendered:function(fn) {
-    return this._renderedDefer.promise.then(fn)
-  }, create:function() {
+  var ControlProcess = Base.extend({bindInternal:noop, syncInternal:noop, renderUI:noop, syncUI:noop, bindUI:noop, create:function() {
     var self = this;
     if(!self.get("created")) {
       self.fire("beforeCreateDom");
@@ -45,13 +39,14 @@ KISSY.add("component/control/process", ["base", "promise"], function(S, require)
       self.bindUI();
       self.__callPluginsMethod("pluginBindUI");
       self.fire("afterBindUI");
+      self.fire("beforeSyncUI");
       ControlProcess.superclass.syncInternal.call(self);
-      syncUIs(self);
+      self.syncUI();
+      self.__callPluginsMethod("pluginSyncUI");
+      self.fire("afterSyncUI");
       self.setInternal("rendered", true)
     }
     return self
-  }, sync:function() {
-    syncUIs(this)
   }, plug:function(plugin) {
     var self = this, p, plugins = self.get("plugins");
     self.callSuper(plugin);
@@ -77,17 +72,7 @@ KISSY.add("component/control/process", ["base", "promise"], function(S, require)
       }
     }
     return self
-  }}, {__hooks__:{createDom:__getHook("__createDom"), renderUI:__getHook("__renderUI"), bindUI:__getHook("__bindUI"), syncUI:__getHook("__syncUI")}, name:"ControlProcess", ATTRS:{rendered:{value:false, setter:function(v) {
-    if(v) {
-      this._renderedDefer.resolve(this)
-    }
-  }}, created:{value:false}}});
-  function syncUIs(self) {
-    self.fire("beforeSyncUI");
-    self.syncUI();
-    self.__callPluginsMethod("pluginSyncUI");
-    self.fire("afterSyncUI")
-  }
+  }}, {__hooks__:{createDom:__getHook("__createDom"), renderUI:__getHook("__renderUI"), bindUI:__getHook("__bindUI"), syncUI:__getHook("__syncUI")}, name:"ControlProcess", ATTRS:{rendered:{value:false}, created:{value:false}}});
   return ControlProcess
 });
 KISSY.add("component/control/render-xtpl", [], function(S, require, exports, module) {

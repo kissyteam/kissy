@@ -309,11 +309,11 @@ if (! _$jscoverage['/control/render-xtpl.js'].branchData) {
   _$jscoverage['/control/render-xtpl.js'].branchData['10'][2] = new BranchData();
 }
 _$jscoverage['/control/render-xtpl.js'].branchData['10'][2].init(226, 29, 'typeof module !== "undefined"');
-function visit12_10_2(result) {
+function visit11_10_2(result) {
   _$jscoverage['/control/render-xtpl.js'].branchData['10'][2].ranCondition(result);
   return result;
 }_$jscoverage['/control/render-xtpl.js'].branchData['10'][1].init(226, 45, 'typeof module !== "undefined" && module.kissy');
-function visit11_10_1(result) {
+function visit10_10_1(result) {
   _$jscoverage['/control/render-xtpl.js'].branchData['10'][1].ranCondition(result);
   return result;
 }_$jscoverage['/control/render-xtpl.js'].lineData[2]++;
@@ -325,7 +325,7 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/control/render-xtpl.js'].lineData[5]++;
   var buffer = "", engine = this, moduleWrap, escapeHtml = S.escapeHtml, nativeCommands = engine.nativeCommands, utils = engine.utils;
   _$jscoverage['/control/render-xtpl.js'].lineData[10]++;
-  if (visit11_10_1(visit12_10_2(typeof module !== "undefined") && module.kissy)) {
+  if (visit10_10_1(visit11_10_2(typeof module !== "undefined") && module.kissy)) {
     _$jscoverage['/control/render-xtpl.js'].lineData[11]++;
     moduleWrap = module;
   }

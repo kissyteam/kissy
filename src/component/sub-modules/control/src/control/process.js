@@ -7,8 +7,6 @@ KISSY.add(function (S, require) {
     var Base = require('base');
     var __getHook = Base.prototype.__getHook;
     var noop = S.noop;
-    var Promise = require('promise');
-    var Defer = Promise.Defer;
 
     /**
      * @class KISSY.Component.Process
@@ -19,19 +17,11 @@ KISSY.add(function (S, require) {
 
         syncInternal: noop,
 
-        initializer: function () {
-            this._renderedDefer = new Defer();
-        },
-
         renderUI: noop,
 
         syncUI: noop,
 
         bindUI: noop,
-
-        onRendered: function (fn) {
-            return this._renderedDefer.promise.then(fn);
-        },
 
         /**
          * create dom structure of this component
@@ -105,19 +95,25 @@ KISSY.add(function (S, require) {
                  */
                 self.fire('afterBindUI');
 
+                /**
+                 * @event beforeSyncUI
+                 * fired before component 's internal state is synchronized.
+                 * @param {KISSY.Event.CustomEvent.Object} e
+                 */
+                self.fire('beforeSyncUI');
                 ControlProcess.superclass.syncInternal.call(self);
-                syncUIs(self);
+                self.syncUI();
+                self.__callPluginsMethod('pluginSyncUI');
+                /**
+                 * @event afterSyncUI
+                 * fired after component 's internal state is synchronized.
+                 * @param {KISSY.Event.CustomEvent.Object} e
+                 */
+                self.fire('afterSyncUI');
 
                 self.setInternal('rendered', true);
             }
             return self;
-        },
-
-        /**
-         * sync attribute value
-         */
-        sync: function () {
-            syncUIs(this);
         },
 
         plug: function (plugin) {
@@ -169,12 +165,7 @@ KISSY.add(function (S, require) {
              * @ignore
              */
             rendered: {
-                value: false,
-                setter: function (v) {
-                    if (v) {
-                        this._renderedDefer.resolve(this);
-                    }
-                }
+                value: false
             },
             /**
              * Whether this component 's dom structure is created.
@@ -190,23 +181,6 @@ KISSY.add(function (S, require) {
             }
         }
     });
-
-    function syncUIs(self) {
-        /**
-         * @event beforeSyncUI
-         * fired before component 's internal state is synchronized.
-         * @param {KISSY.Event.CustomEvent.Object} e
-         */
-        self.fire('beforeSyncUI');
-        self.syncUI();
-        self.__callPluginsMethod('pluginSyncUI');
-        /**
-         * @event afterSyncUI
-         * fired after component 's internal state is synchronized.
-         * @param {KISSY.Event.CustomEvent.Object} e
-         */
-        self.fire('afterSyncUI');
-    }
 
     return ControlProcess;
 });

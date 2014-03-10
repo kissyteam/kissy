@@ -80,9 +80,13 @@ KISSY.add(function (S, require) {
 
                 self.on('click', onMenuItemClick, self);
 
-                self.get('menu').onRendered(function (menu) {
-                    onMenuAfterRenderUI(self, menu);
-                });
+                var menu = self.get('menu');
+
+                if (menu.get('rendered')) {
+                    onMenuAfterRenderUI.call(self);
+                } else {
+                    menu.on('afterRenderUI', onMenuAfterRenderUI, self);
+                }
             },
 
             destructor: function () {
@@ -573,19 +577,23 @@ KISSY.add(function (S, require) {
         });
     }
 
-    function onMenuAfterRenderUI(self, menu) {
-        var contentEl;
-        var input = self.get('input');
-        var el = menu.get('el');
-        contentEl = menu.get('contentEl');
-        input.attr('aria-owns', el.attr('id'));
-        // menu has input!
-        el.on('focusout', onMenuFocusout, self);
-        el.on('focusin', onMenuFocusin, self);
-        contentEl.on('mouseover', onMenuMouseOver, self);
-        // cause valuechange
-        // if click menuitem while chinese input is open(xu -> '')
-        contentEl.on('mousedown', onMenuMouseDown, self);
+    function onMenuAfterRenderUI(e) {
+        var self = this,
+            contentEl;
+        var menu = self.get('menu');
+        if (!e || menu === e.target) {
+            var input = self.get('input');
+            var el = menu.get('el');
+            contentEl = menu.get('contentEl');
+            input.attr('aria-owns', el.attr('id'));
+            // menu has input!
+            el.on('focusout', onMenuFocusout, self);
+            el.on('focusin', onMenuFocusin, self);
+            contentEl.on('mouseover', onMenuMouseOver, self);
+            // cause valuechange
+            // if click menuitem while chinese input is open(xu -> '')
+            contentEl.on('mousedown', onMenuMouseDown, self);
+        }
     }
 
     function onMenuItemClick(e) {

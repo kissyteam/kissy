@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Feb 25 19:32
+build time: Mar 10 22:27
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -23,7 +23,7 @@ KISSY.add("combobox/combobox-xtpl", [], function(S, require, exports, module) {
     if(typeof module !== "undefined" && module.kissy) {
       moduleWrap = module
     }
-    var callCommandUtil = utils.callCommand, eachCommand = nativeCommands.each, withCommand = nativeCommands["with"], ifCommand = nativeCommands["if"], setCommand = nativeCommands.set, includeCommand = nativeCommands.include, parseCommand = nativeCommands.parse, extendCommand = nativeCommands.extend, blockCommand = nativeCommands.block, macroCommand = nativeCommands.macro;
+    var callCommandUtil = utils.callCommand, debuggerCommand = nativeCommands["debugger"], eachCommand = nativeCommands.each, withCommand = nativeCommands["with"], ifCommand = nativeCommands["if"], setCommand = nativeCommands.set, includeCommand = nativeCommands.include, parseCommand = nativeCommands.parse, extendCommand = nativeCommands.extend, blockCommand = nativeCommands.block, macroCommand = nativeCommands.macro;
     buffer += '<div id="ks-combobox-invalid-el-';
     var id0 = scope.resolve(["id"]);
     buffer += escapeHtml(id0);
@@ -138,7 +138,7 @@ KISSY.add("combobox/combobox-xtpl", [], function(S, require, exports, module) {
     buffer += "\n    </label>\n</div>\n";
     return buffer
   };
-  t.TPL_NAME = "combobox/src/combobox/combobox.xtpl.html";
+  t.TPL_NAME = module.name;
   return t
 });
 KISSY.add("combobox/render", ["component/control", "./combobox-xtpl"], function(S, require) {
@@ -193,9 +193,12 @@ KISSY.add("combobox/control", ["node", "component/control", "./render", "menu"],
     var self = this, input = self.get("input");
     input.on("input", onValueChange, self);
     self.on("click", onMenuItemClick, self);
-    self.get("menu").onRendered(function(menu) {
-      onMenuAfterRenderUI(self, menu)
-    })
+    var menu = self.get("menu");
+    if(menu.get("rendered")) {
+      onMenuAfterRenderUI.call(self)
+    }else {
+      menu.on("afterRenderUI", onMenuAfterRenderUI, self)
+    }
   }, destructor:function() {
     this.get("menu").destroy()
   }, getValueForAutocomplete:function() {
@@ -367,16 +370,19 @@ KISSY.add("combobox/control", ["node", "component/control", "./render", "menu"],
     var combobox = this;
     combobox.setValueFromAutocomplete(combobox.getValueForAutocomplete(), {force:1})
   }
-  function onMenuAfterRenderUI(self, menu) {
-    var contentEl;
-    var input = self.get("input");
-    var el = menu.get("el");
-    contentEl = menu.get("contentEl");
-    input.attr("aria-owns", el.attr("id"));
-    el.on("focusout", onMenuFocusout, self);
-    el.on("focusin", onMenuFocusin, self);
-    contentEl.on("mouseover", onMenuMouseOver, self);
-    contentEl.on("mousedown", onMenuMouseDown, self)
+  function onMenuAfterRenderUI(e) {
+    var self = this, contentEl;
+    var menu = self.get("menu");
+    if(!e || menu === e.target) {
+      var input = self.get("input");
+      var el = menu.get("el");
+      contentEl = menu.get("contentEl");
+      input.attr("aria-owns", el.attr("id"));
+      el.on("focusout", onMenuFocusout, self);
+      el.on("focusin", onMenuFocusin, self);
+      contentEl.on("mouseover", onMenuMouseOver, self);
+      contentEl.on("mousedown", onMenuMouseDown, self)
+    }
   }
   function onMenuItemClick(e) {
     var item = e.target, self = this, textContent;
