@@ -22,7 +22,7 @@ describe('xtemplate on nodejs', function () {
     });
 
     it('custom command works', function () {
-        var xtemplate = XTemplate.loadFromModuleName('nodejsXtemplate/custom-command', {
+        var xtemplate = XTemplate.loadFromModuleName('nodejsXtemplate/custom-command-xtpl', {
             commands: {
                 command: function () {
                     return 'yiminghe';
