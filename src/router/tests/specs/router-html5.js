@@ -47,10 +47,10 @@ KISSY.add(function (S, Router) {
                 ok2++;
             });
 
-            Router.get("/list/*path", function (req) {
+            Router.get("/list/*", function (req) {
                 var paths = req.params;
                 var query = req.query;
-                expect(paths.path).toBe("what/item");
+                expect(paths[0]).toBe("what/item");
                 expect(query.item1).toBe("1");
                 expect(query.item2).toBe("2");
                 expect(req.path).toBe('/list/what/item');
@@ -63,22 +63,24 @@ KISSY.add(function (S, Router) {
                 ok4++;
             });
 
-            Router.get("/*path", function (req) {
-                // chrome will trigger on load
-                if (req.params.path) {
-                    expect(req.params.path).toBe("haha/hah2/hah3");
-                    ok3++;
-                }
+            Router.get("/:path*", function (req) {
+                expect(req.params.path).toBe("haha");
+                expect(req.params[0]).toBe("/hah2/hah3");
+                expect(req.params[1]).toBe("hah2/hah3");
+                ok3++;
             });
 
             expect(Router.matchRoute('/list/what/item')).toBeTruthy();
 
             expect(Router.matchRoute('/list2/what/item')).toBeTruthy();
 
-            Router.start({
+
+            Router.config({
                 urlRoot: new S.Uri(location.href).resolve('./').getPath(),
                 useHash: false
             });
+
+            Router.start();
 
             waits(200);
 
@@ -139,13 +141,14 @@ KISSY.add(function (S, Router) {
                     Router.get(route, func);
                 });
 
-                Router.start({
+                Router.config({
                     urlRoot: urlRoot,
-                    useHash: false,
-                    success: function () {
-                        Router.navigate("/list/");
-                        ok = 1;
-                    }
+                    useHash: false
+                });
+
+                Router.start(function () {
+                    Router.navigate("/list/");
+                    ok = 1;
                 });
             });
 

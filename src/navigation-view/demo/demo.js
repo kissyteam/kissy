@@ -1,9 +1,14 @@
 KISSY.config('packages', {
     demo: {
-        base: './',
+        base: '/kissy/src/navigation-view/demo',
         ignorePackageNameInUri: 1
     }
 });
+
+if (location.href.indexOf('useHashChange') !== -1) {
+    history.pushState = null;
+}
+
 
 KISSY.use('navigation-view,' +
     'navigation-view/bar,' +
@@ -261,7 +266,7 @@ KISSY.use('navigation-view,' +
             },
 
             onMenuItemClick: function (e) {
-                router.navigate('/' + e.currentTarget.innerText);
+                router.navigate('/' + S.trim(e.currentTarget.innerText));
 
             }
         }, {
@@ -284,12 +289,13 @@ KISSY.use('navigation-view,' +
             }
         });
 
-        router.start({
-            triggerRoute: true,
-            // for test
-            useHashChange: location.href.indexOf('useHashChange') !== -1,
-            useHash: true
+        router.config({
+            urlRoot: location.pathname,
+            useHash: !window.useNativeHistory,
+            triggerRoute: true
         });
+
+        router.start();
     });
 
 window.onerror = function () {

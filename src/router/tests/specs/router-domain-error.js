@@ -24,8 +24,8 @@ KISSY.add(function (S, Router, Event, UA) {
 
             var ok = 0;
             
-            Router.get("/*path",function (req) {
-                if (req.params.path) {
+            Router.get("/*",function (req) {
+                if (req.params[0]) {
                     expect(req.params.path).toBe("haha/hah2/hah3");
                     ok = 1;
                 }

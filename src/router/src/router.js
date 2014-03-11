@@ -11,20 +11,20 @@ KISSY.add(function (S, require, exports) {
     var Request = require('./router/request');
     var DomEvent = require('event/dom');
     var CustomEvent = require('event/custom');
-    var started = false;
-    var useHash;
-    var urlRoot;
     var getVidFromUrlWithHash = utils.getVidFromUrlWithHash;
     var win = S.Env.host;
     var history = win.history;
     var supportNativeHashChange = S.Feature.isHashChangeSupported();
-    var supportNativeHistory = !!(history && history.pushState);
+    var supportHistoryPushState = !!(history && history.pushState);
     // take a breath to avoid duplicate hashchange
     var BREATH_INTERVAL = 100;
-
     // for judging backward or forward
     var viewUniqueId = 10;
     var viewsHistory = [viewUniqueId];
+    var globalConfig = {
+        urlRoot: '',
+        useHash: !(history && history.pushState)
+    };
 
     function setPathByHash(path, replace) {
         var hash = utils.addVid('#!' + path +
@@ -42,9 +42,9 @@ KISSY.add(function (S, require, exports) {
     function getUrlForRouter(url) {
         url = url || location.href;
         var uri = new Uri(url);
-        if (!useHash && supportNativeHistory) {
+        if (!globalConfig.useHash && supportHistoryPushState) {
             var query = uri.query;
-            return uri.getPath().substr(urlRoot.length) + (query.has() ? ('?' + query.toString()) : '');
+            return uri.getPath().substr(globalConfig.urlRoot.length) + (query.has() ? ('?' + query.toString()) : '');
         } else {
             return utils.getHash(uri);
         }
@@ -178,16 +178,16 @@ KISSY.add(function (S, require, exports) {
                 viewsHistory.push(viewUniqueId);
             }
             //S.log('current: ' + viewsHistory);
-            if (!useHash && supportNativeHistory) {
+            if (!globalConfig.useHash && supportHistoryPushState) {
                 history[replace ? 'replaceState' : 'pushState']({
                     vid: viewUniqueId
-                }, '', utils.getFullPath(path, urlRoot));
+                }, '', utils.getFullPath(path, globalConfig.urlRoot));
                 // pushState does not fire popstate event (unlike hashchange)
                 // so popstate is not statechange
                 // fire manually
                 dispatch(false, replace);
             } else {
-                if (supportNativeHistory) {
+                if (supportHistoryPushState) {
                     history[replace ? 'replaceState' : 'pushState']({
                         vid: viewUniqueId
                     }, '', '#!' + path);
@@ -207,7 +207,7 @@ KISSY.add(function (S, require, exports) {
      */
     exports.get = function (routePath) {
         var callbacks = S.makeArray(arguments).slice(1);
-        routes.push(new Route(routePath, callbacks));
+        routes.push(new Route(routePath, callbacks, globalConfig));
     };
 
     /**
@@ -306,44 +306,47 @@ KISSY.add(function (S, require, exports) {
     }
 
     /**
-     * Start router (url monitor).
+     * Config router
      * @static
      * @member KISSY.Router
      * @param {Object} [opts]
-     * @param {Function} [opts.success] Callback function to be called after router is started.
+     * @param {Boolean} [opts.caseSensitive] enable case-sensitive routes
+     * @param {Boolean} [opts.strict] enable strict matching for trailing slashes
      * @param {String} [opts.urlRoot] Specify url root for html5 history management.
-     * @param {Boolean} [opts.useHash=true] Whether to use hash url for navigation.
+     * @param {Boolean} [opts.useHash] force to use hash url for navigation even for browser which support html5 history.
      * false is only invalid for html history supported browsers
      */
-    exports.start = function (opts) {
-        opts = opts || {};
+    exports.config = function (opts) {
+        if (opts.urlRoot) {
+            opts.urlRoot = opts.urlRoot.replace(/\/$/, '');
+        }
+        S.mix(globalConfig, opts);
+    };
 
+
+    var started;
+
+    /**
+     * Start router (url monitor).
+     * @static
+     * @member KISSY.Router
+     * @param {Function} [callback] Callback function to be called after router is started.
+     */
+    exports.start = function (callback) {
         if (started) {
-            return opts.success && opts.success.call(exports);
+            return callback && callback.call(exports);
         }
 
-        // remove backslash
-        opts.urlRoot = (opts.urlRoot || '').replace(/\/$/, '');
-        useHash = opts.useHash;
-        urlRoot = opts.urlRoot;
-
-        if (useHash === undefined) {
-            useHash = true;
-        }
-
-        // for test!
-        // http://caniuse.com/#search=pushState
-        if (opts.useHashChange) {
-            supportNativeHistory = false;
-        }
-
-        var locPath = location.pathname,
+        var useHash = globalConfig.useHash,
+            urlRoot = globalConfig.urlRoot,
+            triggerRoute = globalConfig.triggerRoute,
+            locPath = location.pathname,
             href = location.href,
             hash = getUrlForRouter(),
             hashIsValid = location.hash.match(/#!.+/);
 
         if (!useHash) {
-            if (supportNativeHistory) {
+            if (supportHistoryPushState) {
                 // http://x.com/#!/x/y
                 // =>
                 // http://x.com/x/y
@@ -353,7 +356,7 @@ KISSY.add(function (S, require, exports) {
                     if (utils.equalsIgnoreSlash(locPath, urlRoot)) {
                         // put hash to path
                         history.replaceState({}, '', utils.getFullPath(hash, urlRoot));
-                        opts.triggerRoute = 1;
+                        triggerRoute = 1;
                     } else {
                         S.error('router: location path must be same with urlRoot!');
                     }
@@ -374,27 +377,27 @@ KISSY.add(function (S, require, exports) {
 
         // prevent hashChange trigger on start
         setTimeout(function () {
-            var needReplaceHistory = supportNativeHistory;
-            if (supportNativeHistory) {
+            var needReplaceHistory = supportHistoryPushState;
+            if (supportHistoryPushState) {
                 DomEvent.on(win, 'popstate', onPopState);
                 // html5 triggerRoute is leaved to user decision
                 // if provide no #! hash
             } else {
                 DomEvent.on(win, 'hashchange', onHashChange);
                 // hash-based browser is forced to trigger route
-                opts.triggerRoute = 1;
+                triggerRoute = 1;
             }
             if (useHash) {
                 if (!getUrlForRouter()) {
                     exports.navigate('/', {
                         replace: 1
                     });
-                    opts.triggerRoute = 0;
+                    triggerRoute = 0;
                     needReplaceHistory = false;
-                } else if (!supportNativeHistory && getVidFromUrlWithHash(href) !== viewUniqueId) {
+                } else if (!supportHistoryPushState && getVidFromUrlWithHash(href) !== viewUniqueId) {
                     setPathByHash(utils.getHash(new S.Uri(href)), true);
-                    opts.triggerRoute = 0;
-                } else if (supportNativeHistory && utils.hasVid(href)) {
+                    triggerRoute = 0;
+                } else if (supportHistoryPushState && utils.hasVid(href)) {
                     location.replace(href = utils.removeVid(href));
                 }
             }
@@ -407,11 +410,12 @@ KISSY.add(function (S, require, exports) {
             // check initial hash on start
             // in case server does not render initial state correctly
             // when monitor hashchange ,client must be responsible for dispatching and rendering.
-            if (opts.triggerRoute) {
+            if (triggerRoute) {
                 dispatch(false, true);
             }
-            if (opts.success) {
-                opts.success();
+
+            if (callback) {
+                callback(exports);
             }
         }, BREATH_INTERVAL);
 

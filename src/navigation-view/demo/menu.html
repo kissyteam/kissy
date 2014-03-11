@@ -362,12 +362,14 @@ KISSY.use('component/control,' +
                 }
             });
 
-            router.start({
+            router.config({
                 triggerRoute: true,
                 // for test
-                useHashChange: location.href.indexOf('useHashChange') != -1,
+                historyPushState: location.href.indexOf('useHashChange') === -1,
                 useHash: true
             });
+
+            router.start();
         });
 
 window.onerror = function (e) {

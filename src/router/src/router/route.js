@@ -3,52 +3,43 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S) {
-    var grammar = /(:([\w\d]+\??))|(\\\*([\w\d]+))/g;
-
     /*
      transform route declaration to router reg
      @param str
      /search/:q
      /user/*path
      */
-    function pathRegexp(path) {
-        var keys = [];
-
-        // escape keyword from regexp
-        path = S.escapeRegExp(path);
-
-        path = path.replace(grammar, function (m, g1, g2, g3, g4) {
-            var key = {};
-            if (g2 && S.endsWith(g2, '?')) {
-                key.optional = true;
-                g2 = g2.slice(0, -1);
-            }
-            key.name = g2 || g4;
-            keys.push(key);
-            // :name
-            if (g2) {
-                return '([^/]+)';
-            }
-            // *name
-            else if (g4) {
-                return '(.*)';
-            }
-            return undefined;
-        });
-
+    function pathRegexp(path, keys, strict, sensitive) {
+        if (S.isArray(path)) {
+            path = '(' + path.join('|') + ')';
+        }
+        path = path
+            .concat(strict ? '' : '/?')
+            .replace(/\/\(/g, '(?:/')
+            .replace(/(\/)?(\.)?:(\w+)(?:(\(.*?\)))?(\?)?(\*)?/g, function (_, slash, format, key, capture, optional, star) {
+                keys.push(key);
+                slash = slash || '';
+                return '' + (optional ? '' : slash) + '(?:' + (optional ? slash : '') +
+                    (format || '') + (capture || (format && '([^/.]+?)' || '([^/]+?)')) + ')' +
+                    (optional || '') + (star ? '(/*)?' : '');
+            })
+            .replace(/([\/.])/g, '\\$1')
+            .replace(/\*/g, '(.*)');
         return {
             keys: keys,
-            regexp: new RegExp('^' + path + '$')
+            regexp: new RegExp('^' + path + '$', sensitive ? '' : 'i')
         };
     }
 
-    function Route(path, callbacks) {
-        this.path = path;
-        this.callbacks = callbacks;
-        if (typeof path === 'string') {
-            S.mix(this, pathRegexp(path));
+    function Route(path, callbacks, option) {
+        var self = this;
+        self.path = path;
+        self.callbacks = callbacks;
+        self.keys = [];
+        if (typeof path === 'string' || S.isArray(path)) {
+            S.mix(self, pathRegexp(path, self.keys, option.strict, option.caseSensitive));
         } else {
-            this.regexp = path;
+            self.regexp = path;
         }
     }
 
@@ -61,7 +52,7 @@ KISSY.add(function (S) {
                 return false;
             }
 
-            var keys = self.keys || [] ,
+            var keys = self.keys ,
                 params = [];
 
             for (var i = 1, len = m.length; i < len; ++i) {
@@ -70,7 +61,7 @@ KISSY.add(function (S) {
                 var val = 'string' === typeof m[i] ? S.urlDecode(m[i]) : m[i];
 
                 if (key) {
-                    params[key.name] = val;
+                    params[key] = val;
                 } else {
                     params.push(val);
                 }

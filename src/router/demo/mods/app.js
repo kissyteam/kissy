@@ -44,7 +44,9 @@ KISSY.add(function (S, require, exports, module) {
                 self.search.apply(self, arguments);
             });
 
-            router.start(config);
+            router.config(config);
+
+            router.start(config.success);
         },
 
         _onEditSubmit: function (e) {

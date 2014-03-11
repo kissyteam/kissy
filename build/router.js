@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 4 11:40
+build time: Mar 11 23:36
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -65,36 +65,26 @@ KISSY.add("router/utils", ["event/dom"], function(S, require) {
   return utils
 });
 KISSY.add("router/route", [], function(S) {
-  var grammar = /(:([\w\d]+\??))|(\\\*([\w\d]+))/g;
-  function pathRegexp(path) {
-    var keys = [];
-    path = S.escapeRegExp(path);
-    path = path.replace(grammar, function(m, g1, g2, g3, g4) {
-      var key = {};
-      if(g2 && S.endsWith(g2, "?")) {
-        key.optional = true;
-        g2 = g2.slice(0, -1)
-      }
-      key.name = g2 || g4;
+  function pathRegexp(path, keys, strict, sensitive) {
+    if(S.isArray(path)) {
+      path = "(" + path.join("|") + ")"
+    }
+    path = path.concat(strict ? "" : "/?").replace(/\/\(/g, "(?:/").replace(/(\/)?(\.)?:(\w+)(?:(\(.*?\)))?(\?)?(\*)?/g, function(_, slash, format, key, capture, optional, star) {
       keys.push(key);
-      if(g2) {
-        return"([^/]+)"
-      }else {
-        if(g4) {
-          return"(.*)"
-        }
-      }
-      return undefined
-    });
-    return{keys:keys, regexp:new RegExp("^" + path + "$")}
+      slash = slash || "";
+      return"" + (optional ? "" : slash) + "(?:" + (optional ? slash : "") + (format || "") + (capture || format && "([^/.]+?)" || "([^/]+?)") + ")" + (optional || "") + (star ? "(/*)?" : "")
+    }).replace(/([\/.])/g, "\\$1").replace(/\*/g, "(.*)");
+    return{keys:keys, regexp:new RegExp("^" + path + "$", sensitive ? "" : "i")}
   }
-  function Route(path, callbacks) {
-    this.path = path;
-    this.callbacks = callbacks;
-    if(typeof path === "string") {
-      S.mix(this, pathRegexp(path))
+  function Route(path, callbacks, option) {
+    var self = this;
+    self.path = path;
+    self.callbacks = callbacks;
+    self.keys = [];
+    if(typeof path === "string" || S.isArray(path)) {
+      S.mix(self, pathRegexp(path, self.keys, option.strict, option.caseSensitive))
     }else {
-      this.regexp = path
+      self.regexp = path
     }
   }
   Route.prototype = {match:function(path) {
@@ -102,12 +92,12 @@ KISSY.add("router/route", [], function(S) {
     if(!m) {
       return false
     }
-    var keys = self.keys || [], params = [];
+    var keys = self.keys, params = [];
     for(var i = 1, len = m.length;i < len;++i) {
       var key = keys[i - 1];
       var val = "string" === typeof m[i] ? S.urlDecode(m[i]) : m[i];
       if(key) {
-        params[key.name] = val
+        params[key] = val
       }else {
         params.push(val)
       }
@@ -145,17 +135,15 @@ KISSY.add("router", ["./router/utils", "./router/route", "uri", "./router/reques
   var Request = require("./router/request");
   var DomEvent = require("event/dom");
   var CustomEvent = require("event/custom");
-  var started = false;
-  var useHash;
-  var urlRoot;
   var getVidFromUrlWithHash = utils.getVidFromUrlWithHash;
   var win = S.Env.host;
   var history = win.history;
   var supportNativeHashChange = S.Feature.isHashChangeSupported();
-  var supportNativeHistory = !!(history && history.pushState);
+  var supportHistoryPushState = !!(history && history.pushState);
   var BREATH_INTERVAL = 100;
   var viewUniqueId = 10;
   var viewsHistory = [viewUniqueId];
+  var globalConfig = {urlRoot:"", useHash:!(history && history.pushState)};
   function setPathByHash(path, replace) {
     var hash = utils.addVid("#!" + path + (supportNativeHashChange ? "" : replace ? DomEvent.REPLACE_HISTORY : ""), viewUniqueId);
     if(replace) {
@@ -167,9 +155,9 @@ KISSY.add("router", ["./router/utils", "./router/route", "uri", "./router/reques
   function getUrlForRouter(url) {
     url = url || location.href;
     var uri = new Uri(url);
-    if(!useHash && supportNativeHistory) {
+    if(!globalConfig.useHash && supportHistoryPushState) {
       var query = uri.query;
-      return uri.getPath().substr(urlRoot.length) + (query.has() ? "?" + query.toString() : "")
+      return uri.getPath().substr(globalConfig.urlRoot.length) + (query.has() ? "?" + query.toString() : "")
     }else {
       return utils.getHash(uri)
     }
@@ -256,11 +244,11 @@ KISSY.add("router", ["./router/utils", "./router/route", "uri", "./router/reques
         viewUniqueId++;
         viewsHistory.push(viewUniqueId)
       }
-      if(!useHash && supportNativeHistory) {
-        history[replace ? "replaceState" : "pushState"]({vid:viewUniqueId}, "", utils.getFullPath(path, urlRoot));
+      if(!globalConfig.useHash && supportHistoryPushState) {
+        history[replace ? "replaceState" : "pushState"]({vid:viewUniqueId}, "", utils.getFullPath(path, globalConfig.urlRoot));
         dispatch(false, replace)
       }else {
-        if(supportNativeHistory) {
+        if(supportHistoryPushState) {
           history[replace ? "replaceState" : "pushState"]({vid:viewUniqueId}, "", "#!" + path);
           dispatch(false, replace)
         }else {
@@ -275,7 +263,7 @@ KISSY.add("router", ["./router/utils", "./router/route", "uri", "./router/reques
   };
   exports.get = function(routePath) {
     var callbacks = S.makeArray(arguments).slice(1);
-    routes.push(new Route(routePath, callbacks))
+    routes.push(new Route(routePath, callbacks, globalConfig))
   };
   exports.matchRoute = function(path) {
     for(var i = 0, l = routes.length;i < l;i++) {
@@ -342,27 +330,24 @@ KISSY.add("router", ["./router/utils", "./router/route", "uri", "./router/reques
     }
     dispatchByVid(vid)
   }
-  exports.start = function(opts) {
-    opts = opts || {};
+  exports.config = function(opts) {
+    if(opts.urlRoot) {
+      opts.urlRoot = opts.urlRoot.replace(/\/$/, "")
+    }
+    S.mix(globalConfig, opts)
+  };
+  var started;
+  exports.start = function(callback) {
     if(started) {
-      return opts.success && opts.success.call(exports)
+      return callback && callback.call(exports)
     }
-    opts.urlRoot = (opts.urlRoot || "").replace(/\/$/, "");
-    useHash = opts.useHash;
-    urlRoot = opts.urlRoot;
-    if(useHash === undefined) {
-      useHash = true
-    }
-    if(opts.useHashChange) {
-      supportNativeHistory = false
-    }
-    var locPath = location.pathname, href = location.href, hash = getUrlForRouter(), hashIsValid = location.hash.match(/#!.+/);
+    var useHash = globalConfig.useHash, urlRoot = globalConfig.urlRoot, triggerRoute = globalConfig.triggerRoute, locPath = location.pathname, href = location.href, hash = getUrlForRouter(), hashIsValid = location.hash.match(/#!.+/);
     if(!useHash) {
-      if(supportNativeHistory) {
+      if(supportHistoryPushState) {
         if(hashIsValid) {
           if(utils.equalsIgnoreSlash(locPath, urlRoot)) {
             history.replaceState({}, "", utils.getFullPath(hash, urlRoot));
-            opts.triggerRoute = 1
+            triggerRoute = 1
           }else {
             S.error("router: location path must be same with urlRoot!")
           }
@@ -377,24 +362,24 @@ KISSY.add("router", ["./router/utils", "./router/route", "uri", "./router/reques
       }
     }
     setTimeout(function() {
-      var needReplaceHistory = supportNativeHistory;
-      if(supportNativeHistory) {
+      var needReplaceHistory = supportHistoryPushState;
+      if(supportHistoryPushState) {
         DomEvent.on(win, "popstate", onPopState)
       }else {
         DomEvent.on(win, "hashchange", onHashChange);
-        opts.triggerRoute = 1
+        triggerRoute = 1
       }
       if(useHash) {
         if(!getUrlForRouter()) {
           exports.navigate("/", {replace:1});
-          opts.triggerRoute = 0;
+          triggerRoute = 0;
           needReplaceHistory = false
         }else {
-          if(!supportNativeHistory && getVidFromUrlWithHash(href) !== viewUniqueId) {
+          if(!supportHistoryPushState && getVidFromUrlWithHash(href) !== viewUniqueId) {
             setPathByHash(utils.getHash(new S.Uri(href)), true);
-            opts.triggerRoute = 0
+            triggerRoute = 0
           }else {
-            if(supportNativeHistory && utils.hasVid(href)) {
+            if(supportHistoryPushState && utils.hasVid(href)) {
               location.replace(href = utils.removeVid(href))
             }
           }
@@ -403,11 +388,11 @@ KISSY.add("router", ["./router/utils", "./router/route", "uri", "./router/reques
       if(needReplaceHistory) {
         history.replaceState({vid:viewUniqueId}, "", href)
       }
-      if(opts.triggerRoute) {
+      if(triggerRoute) {
         dispatch(false, true)
       }
-      if(opts.success) {
-        opts.success()
+      if(callback) {
+        callback(exports)
       }
     }, BREATH_INTERVAL);
     started = true;

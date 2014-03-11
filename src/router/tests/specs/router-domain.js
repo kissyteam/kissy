@@ -25,11 +25,11 @@ KISSY.add(function (S, Dom, Router) {
 
                     var ok = 0;
 
-                    Router.get("/*path", function (req) {
-                        if (req.params.path) {
-                            expect(req.params.path).toBe("haha/hah2/hah3");
-                            ok = 1;
-                        }
+                    Router.get("/:path*", function (req) {
+                        expect(req.params.path).toBe("haha");
+                        expect(req.params[0]).toBe("/hah2/hah3");
+                        expect(req.params[1]).toBe("hah2/hah3");
+                        ok++;
                     });
 
                     document.domain = location.hostname;
