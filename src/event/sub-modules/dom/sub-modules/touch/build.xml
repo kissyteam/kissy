@@ -1,5 +1,0 @@
-<project name="event/dom/touch.build" default="build">
-    <property name="component.name" value="event/dom/touch"/>
-
-    <import file="../../../../../common.xml"/>
-</project>

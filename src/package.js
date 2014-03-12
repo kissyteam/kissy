@@ -524,31 +524,39 @@ if (!loc.getQuery().has('build') && !loc.getQuery().has('min')) {
             "ignorePackageNameInUri": 1
         },
         "event/dom/base": {
-            "base": "/kissy/src/event/sub-modules/dom/sub-modules/base/src/base",
+            "base": "/kissy/src/event/sub-modules/dom/base/src/base",
             "ignorePackageNameInUri": 1
         },
         "event/dom/focusin": {
-            "base": "/kissy/src/event/sub-modules/dom/sub-modules/focusin/src/focusin",
+            "base": "/kissy/src/event/sub-modules/dom/focusin/src/focusin",
             "ignorePackageNameInUri": 1
         },
         "event/dom/hashchange": {
-            "base": "/kissy/src/event/sub-modules/dom/sub-modules/hashchange/src/hashchange",
+            "base": "/kissy/src/event/sub-modules/dom/hashchange/src/hashchange",
             "ignorePackageNameInUri": 1
         },
         "event/dom/ie": {
-            "base": "/kissy/src/event/sub-modules/dom/sub-modules/ie/src/ie",
+            "base": "/kissy/src/event/sub-modules/dom/ie/src/ie",
             "ignorePackageNameInUri": 1
         },
         "event/dom/input": {
-            "base": "/kissy/src/event/sub-modules/dom/sub-modules/input/src/input",
+            "base": "/kissy/src/event/sub-modules/dom/input/src/input",
             "ignorePackageNameInUri": 1
         },
-        "event/dom/shake": {
-            "base": "/kissy/src/event/sub-modules/dom/sub-modules/shake/src/shake",
+        "event/gesture/base": {
+            "base": "/kissy/src/event/sub-modules/gesture/base/src/base",
             "ignorePackageNameInUri": 1
         },
-        "event/dom/touch": {
-            "base": "/kissy/src/event/sub-modules/dom/sub-modules/touch/src/touch",
+        "event/gesture/drag": {
+            "base": "/kissy/src/event/sub-modules/gesture/drag/src/drag",
+            "ignorePackageNameInUri": 1
+        },
+        "event/gesture/shake": {
+            "base": "/kissy/src/event/sub-modules/gesture/shake/src/shake",
+            "ignorePackageNameInUri": 1
+        },
+        "event/gesture/touch": {
+            "base": "/kissy/src/event/sub-modules/gesture/touch/src/touch",
             "ignorePackageNameInUri": 1
         },
         "feature": {

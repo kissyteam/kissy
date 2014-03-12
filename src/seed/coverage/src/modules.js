@@ -260,45 +260,44 @@ if (! _$jscoverage['/modules.js']) {
   _$jscoverage['/modules.js'].lineData[123] = 0;
   _$jscoverage['/modules.js'].lineData[127] = 0;
   _$jscoverage['/modules.js'].lineData[131] = 0;
-  _$jscoverage['/modules.js'].lineData[135] = 0;
-  _$jscoverage['/modules.js'].lineData[139] = 0;
-  _$jscoverage['/modules.js'].lineData[142] = 0;
-  _$jscoverage['/modules.js'].lineData[160] = 0;
-  _$jscoverage['/modules.js'].lineData[164] = 0;
-  _$jscoverage['/modules.js'].lineData[168] = 0;
-  _$jscoverage['/modules.js'].lineData[172] = 0;
-  _$jscoverage['/modules.js'].lineData[176] = 0;
-  _$jscoverage['/modules.js'].lineData[180] = 0;
-  _$jscoverage['/modules.js'].lineData[184] = 0;
-  _$jscoverage['/modules.js'].lineData[188] = 0;
-  _$jscoverage['/modules.js'].lineData[192] = 0;
-  _$jscoverage['/modules.js'].lineData[196] = 0;
-  _$jscoverage['/modules.js'].lineData[200] = 0;
-  _$jscoverage['/modules.js'].lineData[204] = 0;
-  _$jscoverage['/modules.js'].lineData[208] = 0;
-  _$jscoverage['/modules.js'].lineData[212] = 0;
-  _$jscoverage['/modules.js'].lineData[216] = 0;
-  _$jscoverage['/modules.js'].lineData[220] = 0;
-  _$jscoverage['/modules.js'].lineData[224] = 0;
-  _$jscoverage['/modules.js'].lineData[228] = 0;
-  _$jscoverage['/modules.js'].lineData[232] = 0;
-  _$jscoverage['/modules.js'].lineData[235] = 0;
-  _$jscoverage['/modules.js'].lineData[240] = 0;
-  _$jscoverage['/modules.js'].lineData[244] = 0;
-  _$jscoverage['/modules.js'].lineData[248] = 0;
-  _$jscoverage['/modules.js'].lineData[252] = 0;
-  _$jscoverage['/modules.js'].lineData[256] = 0;
-  _$jscoverage['/modules.js'].lineData[260] = 0;
-  _$jscoverage['/modules.js'].lineData[264] = 0;
-  _$jscoverage['/modules.js'].lineData[268] = 0;
-  _$jscoverage['/modules.js'].lineData[272] = 0;
-  _$jscoverage['/modules.js'].lineData[276] = 0;
-  _$jscoverage['/modules.js'].lineData[280] = 0;
-  _$jscoverage['/modules.js'].lineData[284] = 0;
-  _$jscoverage['/modules.js'].lineData[288] = 0;
-  _$jscoverage['/modules.js'].lineData[292] = 0;
-  _$jscoverage['/modules.js'].lineData[296] = 0;
-  _$jscoverage['/modules.js'].lineData[301] = 0;
+  _$jscoverage['/modules.js'].lineData[134] = 0;
+  _$jscoverage['/modules.js'].lineData[155] = 0;
+  _$jscoverage['/modules.js'].lineData[159] = 0;
+  _$jscoverage['/modules.js'].lineData[163] = 0;
+  _$jscoverage['/modules.js'].lineData[167] = 0;
+  _$jscoverage['/modules.js'].lineData[171] = 0;
+  _$jscoverage['/modules.js'].lineData[175] = 0;
+  _$jscoverage['/modules.js'].lineData[179] = 0;
+  _$jscoverage['/modules.js'].lineData[183] = 0;
+  _$jscoverage['/modules.js'].lineData[187] = 0;
+  _$jscoverage['/modules.js'].lineData[191] = 0;
+  _$jscoverage['/modules.js'].lineData[195] = 0;
+  _$jscoverage['/modules.js'].lineData[199] = 0;
+  _$jscoverage['/modules.js'].lineData[203] = 0;
+  _$jscoverage['/modules.js'].lineData[207] = 0;
+  _$jscoverage['/modules.js'].lineData[211] = 0;
+  _$jscoverage['/modules.js'].lineData[215] = 0;
+  _$jscoverage['/modules.js'].lineData[219] = 0;
+  _$jscoverage['/modules.js'].lineData[223] = 0;
+  _$jscoverage['/modules.js'].lineData[227] = 0;
+  _$jscoverage['/modules.js'].lineData[231] = 0;
+  _$jscoverage['/modules.js'].lineData[234] = 0;
+  _$jscoverage['/modules.js'].lineData[239] = 0;
+  _$jscoverage['/modules.js'].lineData[243] = 0;
+  _$jscoverage['/modules.js'].lineData[247] = 0;
+  _$jscoverage['/modules.js'].lineData[251] = 0;
+  _$jscoverage['/modules.js'].lineData[255] = 0;
+  _$jscoverage['/modules.js'].lineData[259] = 0;
+  _$jscoverage['/modules.js'].lineData[263] = 0;
+  _$jscoverage['/modules.js'].lineData[267] = 0;
+  _$jscoverage['/modules.js'].lineData[271] = 0;
+  _$jscoverage['/modules.js'].lineData[275] = 0;
+  _$jscoverage['/modules.js'].lineData[279] = 0;
+  _$jscoverage['/modules.js'].lineData[283] = 0;
+  _$jscoverage['/modules.js'].lineData[287] = 0;
+  _$jscoverage['/modules.js'].lineData[291] = 0;
+  _$jscoverage['/modules.js'].lineData[295] = 0;
+  _$jscoverage['/modules.js'].lineData[300] = 0;
 }
 if (! _$jscoverage['/modules.js'].functionData) {
   _$jscoverage['/modules.js'].functionData = [];
@@ -311,14 +310,14 @@ if (! _$jscoverage['/modules.js'].branchData) {
   _$jscoverage['/modules.js'].branchData['6'][1] = new BranchData();
   _$jscoverage['/modules.js'].branchData['108'] = [];
   _$jscoverage['/modules.js'].branchData['108'][1] = new BranchData();
-  _$jscoverage['/modules.js'].branchData['152'] = [];
-  _$jscoverage['/modules.js'].branchData['152'][1] = new BranchData();
+  _$jscoverage['/modules.js'].branchData['140'] = [];
+  _$jscoverage['/modules.js'].branchData['140'][1] = new BranchData();
 }
-_$jscoverage['/modules.js'].branchData['152'][1].init(318, 13, 'UA.ieMode < 9');
-function visit12_152_1(result) {
-  _$jscoverage['/modules.js'].branchData['152'][1].ranCondition(result);
+_$jscoverage['/modules.js'].branchData['140'][1].init(134, 13, 'UA.ieMode < 9');
+function visit12_140_1(result) {
+  _$jscoverage['/modules.js'].branchData['140'][1].ranCondition(result);
   return result;
-}_$jscoverage['/modules.js'].branchData['108'][1].init(39, 13, 'UA.ieMode < 9');
+}_$jscoverage['/modules.js'].branchData['108'][1].init(37, 13, 'UA.ieMode < 9');
 function visit11_108_1(result) {
   _$jscoverage['/modules.js'].branchData['108'][1].ranCondition(result);
   return result;
@@ -376,7 +375,7 @@ function visit10_6_1(result) {
   _$jscoverage['/modules.js'].lineData[49]++;
   config({
   'component/control': {
-  requires: ['node', 'base', 'promise', 'component/manager', 'xtemplate/runtime']}});
+  requires: ['node', 'base', 'component/manager', 'xtemplate/runtime']}});
   _$jscoverage['/modules.js'].lineData[53]++;
   config({
   'component/extension/align': {
@@ -451,160 +450,158 @@ function visit10_6_1(result) {
   config({
   editor: {
   requires: ['node', 'html-parser', 'component/control']}});
-  _$jscoverage['/modules.js'].lineData[135]++;
+  _$jscoverage['/modules.js'].lineData[134]++;
+  config({
+  'event/dom': {
+  alias: ['event/dom/base', Feature.isHashChangeSupported() ? '' : 'event/dom/hashchange', visit12_140_1(UA.ieMode < 9) ? 'event/dom/ie' : '', Feature.isInputEventSupported() ? '' : 'event/dom/input', UA.ie ? '' : 'event/dom/focusin']}, 
+  'event/gesture': {
+  alias: ['event/gesture/base', Feature.isTouchGestureSupported() ? '' : 'event/gesture/touch']}});
+  _$jscoverage['/modules.js'].lineData[155]++;
   config({
   event: {
   requires: ['event/dom', 'event/custom']}});
-  _$jscoverage['/modules.js'].lineData[139]++;
+  _$jscoverage['/modules.js'].lineData[159]++;
   config({
   'event/custom': {
   requires: ['event/base']}});
-  _$jscoverage['/modules.js'].lineData[142]++;
-  config({
-  'event/dom': {
-  alias: ['event/dom/base', Feature.isTouchGestureSupported() ? 'event/dom/touch' : '', Feature.isDeviceMotionSupported() ? 'event/dom/shake' : '', Feature.isHashChangeSupported() ? '' : 'event/dom/hashchange', visit12_152_1(UA.ieMode < 9) ? 'event/dom/ie' : '', Feature.isInputEventSupported() ? '' : 'event/dom/input', UA.ie ? '' : 'event/dom/focusin']}});
-  _$jscoverage['/modules.js'].lineData[160]++;
+  _$jscoverage['/modules.js'].lineData[163]++;
   config({
   'event/dom/base': {
   requires: ['event/base', 'dom']}});
-  _$jscoverage['/modules.js'].lineData[164]++;
+  _$jscoverage['/modules.js'].lineData[167]++;
   config({
   'event/dom/focusin': {
   requires: ['event/dom/base']}});
-  _$jscoverage['/modules.js'].lineData[168]++;
+  _$jscoverage['/modules.js'].lineData[171]++;
   config({
   'event/dom/hashchange': {
   requires: ['event/dom/base', 'dom']}});
-  _$jscoverage['/modules.js'].lineData[172]++;
+  _$jscoverage['/modules.js'].lineData[175]++;
   config({
   'event/dom/ie': {
   requires: ['event/dom/base', 'dom']}});
-  _$jscoverage['/modules.js'].lineData[176]++;
+  _$jscoverage['/modules.js'].lineData[179]++;
   config({
   'event/dom/input': {
   requires: ['event/dom/base', 'dom']}});
-  _$jscoverage['/modules.js'].lineData[180]++;
+  _$jscoverage['/modules.js'].lineData[183]++;
   config({
   'event/dom/shake': {
   requires: ['event/dom/base']}});
-  _$jscoverage['/modules.js'].lineData[184]++;
-  config({
-  'event/dom/touch': {
-  requires: ['event/dom/base', 'dom']}});
-  _$jscoverage['/modules.js'].lineData[188]++;
+  _$jscoverage['/modules.js'].lineData[187]++;
   config({
   feature: {
   requires: ['ua']}});
-  _$jscoverage['/modules.js'].lineData[192]++;
+  _$jscoverage['/modules.js'].lineData[191]++;
   config({
   'filter-menu': {
   requires: ['menu', 'component/extension/content-xtpl', 'component/extension/content-render']}});
-  _$jscoverage['/modules.js'].lineData[196]++;
+  _$jscoverage['/modules.js'].lineData[195]++;
   config({
   io: {
   requires: ['dom', 'event/custom', 'promise', 'event/dom']}});
-  _$jscoverage['/modules.js'].lineData[200]++;
+  _$jscoverage['/modules.js'].lineData[199]++;
   config({
   menu: {
   requires: ['node', 'component/container', 'component/extension/delegate-children', 'component/control', 'component/extension/content-render', 'component/extension/content-xtpl', 'component/extension/align', 'component/extension/shim']}});
-  _$jscoverage['/modules.js'].lineData[204]++;
+  _$jscoverage['/modules.js'].lineData[203]++;
   config({
   menubutton: {
   requires: ['node', 'button', 'component/extension/content-xtpl', 'component/extension/content-render', 'menu']}});
-  _$jscoverage['/modules.js'].lineData[208]++;
+  _$jscoverage['/modules.js'].lineData[207]++;
   config({
   'navigation-view': {
-  requires: ['node', 'component/container', 'component/extension/content-xtpl', 'component/extension/content-render']}});
-  _$jscoverage['/modules.js'].lineData[212]++;
+  requires: ['component/container', 'component/control', 'component/extension/content-xtpl', 'component/extension/content-render']}});
+  _$jscoverage['/modules.js'].lineData[211]++;
   config({
   'navigation-view/bar': {
   requires: ['component/control', 'button']}});
-  _$jscoverage['/modules.js'].lineData[216]++;
+  _$jscoverage['/modules.js'].lineData[215]++;
   config({
   node: {
   requires: ['dom', 'event/dom', 'anim']}});
-  _$jscoverage['/modules.js'].lineData[220]++;
+  _$jscoverage['/modules.js'].lineData[219]++;
   config({
   overlay: {
-  requires: ['component/container', 'component/extension/shim', 'component/extension/align', 'node', 'component/extension/content-xtpl', 'component/extension/content-render']}});
-  _$jscoverage['/modules.js'].lineData[224]++;
+  requires: ['component/container', 'component/extension/shim', 'component/extension/align', 'node', 'component/extension/content-render']}});
+  _$jscoverage['/modules.js'].lineData[223]++;
   config({
   resizable: {
   requires: ['node', 'base', 'dd']}});
-  _$jscoverage['/modules.js'].lineData[228]++;
+  _$jscoverage['/modules.js'].lineData[227]++;
   config({
   'resizable/plugin/proxy': {
   requires: ['node', 'base']}});
-  _$jscoverage['/modules.js'].lineData[232]++;
+  _$jscoverage['/modules.js'].lineData[231]++;
   config({
   router: {
-  requires: ['uri', 'event/dom', 'event/custom']}});
-  _$jscoverage['/modules.js'].lineData[235]++;
+  requires: ['event/dom', 'uri', 'event/custom']}});
+  _$jscoverage['/modules.js'].lineData[234]++;
   config({
   'scroll-view': {
   alias: Feature.isTouchGestureSupported() ? 'scroll-view/touch' : 'scroll-view/base'}});
-  _$jscoverage['/modules.js'].lineData[240]++;
+  _$jscoverage['/modules.js'].lineData[239]++;
   config({
   'scroll-view/base': {
   requires: ['node', 'anim', 'component/container', 'component/extension/content-render']}});
-  _$jscoverage['/modules.js'].lineData[244]++;
+  _$jscoverage['/modules.js'].lineData[243]++;
   config({
   'scroll-view/plugin/pull-to-refresh': {
   requires: ['base']}});
-  _$jscoverage['/modules.js'].lineData[248]++;
+  _$jscoverage['/modules.js'].lineData[247]++;
   config({
   'scroll-view/plugin/scrollbar': {
   requires: ['base', 'node', 'component/control']}});
-  _$jscoverage['/modules.js'].lineData[252]++;
+  _$jscoverage['/modules.js'].lineData[251]++;
   config({
   'scroll-view/touch': {
   requires: ['scroll-view/base', 'node', 'anim']}});
-  _$jscoverage['/modules.js'].lineData[256]++;
+  _$jscoverage['/modules.js'].lineData[255]++;
   config({
   separator: {
   requires: ['component/control']}});
-  _$jscoverage['/modules.js'].lineData[260]++;
+  _$jscoverage['/modules.js'].lineData[259]++;
   config({
   'split-button': {
   requires: ['component/container', 'button', 'menubutton']}});
-  _$jscoverage['/modules.js'].lineData[264]++;
+  _$jscoverage['/modules.js'].lineData[263]++;
   config({
   stylesheet: {
   requires: ['dom']}});
-  _$jscoverage['/modules.js'].lineData[268]++;
+  _$jscoverage['/modules.js'].lineData[267]++;
   config({
   swf: {
   requires: ['dom', 'json', 'attribute']}});
-  _$jscoverage['/modules.js'].lineData[272]++;
+  _$jscoverage['/modules.js'].lineData[271]++;
   config({
   tabs: {
   requires: ['component/container', 'toolbar', 'button']}});
-  _$jscoverage['/modules.js'].lineData[276]++;
+  _$jscoverage['/modules.js'].lineData[275]++;
   config({
   toolbar: {
   requires: ['component/container', 'component/extension/delegate-children', 'node']}});
-  _$jscoverage['/modules.js'].lineData[280]++;
+  _$jscoverage['/modules.js'].lineData[279]++;
   config({
   tree: {
   requires: ['node', 'component/container', 'component/extension/content-xtpl', 'component/extension/content-render', 'component/extension/delegate-children']}});
-  _$jscoverage['/modules.js'].lineData[284]++;
+  _$jscoverage['/modules.js'].lineData[283]++;
   config({
   uri: {
   requires: ['path']}});
-  _$jscoverage['/modules.js'].lineData[288]++;
+  _$jscoverage['/modules.js'].lineData[287]++;
   config({
   xtemplate: {
   requires: ['xtemplate/runtime', 'xtemplate/compiler']}});
-  _$jscoverage['/modules.js'].lineData[292]++;
+  _$jscoverage['/modules.js'].lineData[291]++;
   config({
   'xtemplate/compiler': {
   requires: ['xtemplate/runtime']}});
-  _$jscoverage['/modules.js'].lineData[296]++;
+  _$jscoverage['/modules.js'].lineData[295]++;
   config({
   'xtemplate/runtime': {
   requires: ['path']}});
 })(function(c) {
   _$jscoverage['/modules.js'].functionData[1]++;
-  _$jscoverage['/modules.js'].lineData[301]++;
+  _$jscoverage['/modules.js'].lineData[300]++;
   KISSY.config('modules', c);
 }, KISSY.Feature, KISSY.UA);

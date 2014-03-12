@@ -159,13 +159,9 @@ KISSY.add(function (S, require) {
     }
 
     function onDragStartHandler(e) {
-        // does not allow drag by mouse in win8 touch screen
-        if (!e.isTouch) {
-            return;
-        }
         var self = this;
         // snap mode can not stop anim in the middle
-        if (self.get('disabled') || (self.isScrolling && self.pagesOffset)) {
+        if (e.gestureType !== 'touch' || (self.isScrolling && self.pagesOffset)) {
             return;
         }
         self.startScroll = {};
@@ -173,15 +169,12 @@ KISSY.add(function (S, require) {
         self.isScrolling = 1;
         self.startScroll.left = self.get('scrollLeft');
         self.startScroll.top = self.get('scrollTop');
-        // ie10 if mouse out of window
-        self.$contentEl.on('drag', onDragHandler, self)
-            .on('dragEnd', onDragEndHandler, self);
     }
 
     var onDragHandler = function (e) {
         var self = this;
 
-        if (!self.isScrolling) {
+        if (e.gestureType !== 'touch' || !self.isScrolling) {
             return;
         }
 
@@ -224,9 +217,7 @@ KISSY.add(function (S, require) {
 
     function onDragEndHandler(e) {
         var self = this;
-        self.$contentEl.detach('drag', onDragHandler, self)
-            .detach('dragEnd', onDragEndHandler, self);
-        if (!self.isScrolling) {
+        if (e.gestureType !== 'touch' || !self.isScrolling) {
             return;
         }
         self.fire('touchEnd', {
@@ -361,12 +352,11 @@ KISSY.add(function (S, require) {
 
     function onGestureStart(e) {
         var self = this;
-        if (!e.isTouch) {
-            return;
+        if (e.gestureType === 'touch') {
+            e.preventDefault();
         }
-        e.preventDefault();
         // snap mode can not stop anim in the middle
-        if (self.get('disabled') || (self.isScrolling && self.pagesOffset)) {
+        if (self.isScrolling && self.pagesOffset) {
             return;
         }
         if (self.isScrolling) {
@@ -402,10 +392,13 @@ KISSY.add(function (S, require) {
                 });
             },
 
-            bindUI: function () {
+            _onSetDisabled: function (v) {
+                var action = v ? 'detach' : 'on';
                 var self = this;
-                self.$contentEl.on('dragStart', onDragStartHandler, self);
-                self.$contentEl.on(Gesture.start, onGestureStart, self);
+                self.$contentEl[action]('gestureDragStart', onDragStartHandler, self)
+                    [action](Gesture.start, onGestureStart, self)
+                    [action]('gestureDrag', onDragHandler, self)
+                    [action]('gestureDragEnd', onDragEndHandler, self);
             },
 
             destructor: function () {

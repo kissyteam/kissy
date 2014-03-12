@@ -120,47 +120,47 @@ tests.push('/kissy/src/event/sub-modules/custom/tests/runner?build');
 
 tests.push('/kissy/src/event/sub-modules/custom/tests/runner?coverage');
 
-tests.push('/kissy/src/event/sub-modules/dom/sub-modules/base/tests/runner');
+tests.push('/kissy/src/event/sub-modules/dom/base/tests/runner');
 
-tests.push('/kissy/src/event/sub-modules/dom/sub-modules/base/tests/runner?build');
+tests.push('/kissy/src/event/sub-modules/dom/base/tests/runner?build');
 
-tests.push('/kissy/src/event/sub-modules/dom/sub-modules/base/tests/runner?coverage');
+tests.push('/kissy/src/event/sub-modules/dom/base/tests/runner?coverage');
 
-tests.push('/kissy/src/event/sub-modules/dom/sub-modules/focusin/tests/runner');
+tests.push('/kissy/src/event/sub-modules/dom/focusin/tests/runner');
 
-tests.push('/kissy/src/event/sub-modules/dom/sub-modules/focusin/tests/runner?build');
+tests.push('/kissy/src/event/sub-modules/dom/focusin/tests/runner?build');
 
-tests.push('/kissy/src/event/sub-modules/dom/sub-modules/focusin/tests/runner?coverage');
+tests.push('/kissy/src/event/sub-modules/dom/focusin/tests/runner?coverage');
 
-tests.push('/kissy/src/event/sub-modules/dom/sub-modules/hashchange/tests/runner');
+tests.push('/kissy/src/event/sub-modules/dom/hashchange/tests/runner');
 
-tests.push('/kissy/src/event/sub-modules/dom/sub-modules/hashchange/tests/runner?build');
+tests.push('/kissy/src/event/sub-modules/dom/hashchange/tests/runner?build');
 
-tests.push('/kissy/src/event/sub-modules/dom/sub-modules/hashchange/tests/runner?coverage');
+tests.push('/kissy/src/event/sub-modules/dom/hashchange/tests/runner?coverage');
 
-tests.push('/kissy/src/event/sub-modules/dom/sub-modules/ie/tests/runner');
+tests.push('/kissy/src/event/sub-modules/dom/ie/tests/runner');
 
-tests.push('/kissy/src/event/sub-modules/dom/sub-modules/ie/tests/runner?build');
+tests.push('/kissy/src/event/sub-modules/dom/ie/tests/runner?build');
 
-tests.push('/kissy/src/event/sub-modules/dom/sub-modules/ie/tests/runner?coverage');
+tests.push('/kissy/src/event/sub-modules/dom/ie/tests/runner?coverage');
 
-tests.push('/kissy/src/event/sub-modules/dom/sub-modules/input/tests/runner');
+tests.push('/kissy/src/event/sub-modules/dom/input/tests/runner');
 
-tests.push('/kissy/src/event/sub-modules/dom/sub-modules/input/tests/runner?build');
+tests.push('/kissy/src/event/sub-modules/dom/input/tests/runner?build');
 
-tests.push('/kissy/src/event/sub-modules/dom/sub-modules/input/tests/runner?coverage');
+tests.push('/kissy/src/event/sub-modules/dom/input/tests/runner?coverage');
 
-tests.push('/kissy/src/event/sub-modules/dom/sub-modules/shake/tests/runner');
+tests.push('/kissy/src/event/sub-modules/gesture/base/tests/runner');
 
-tests.push('/kissy/src/event/sub-modules/dom/sub-modules/shake/tests/runner?build');
+tests.push('/kissy/src/event/sub-modules/gesture/base/tests/runner?build');
 
-tests.push('/kissy/src/event/sub-modules/dom/sub-modules/shake/tests/runner?coverage');
+tests.push('/kissy/src/event/sub-modules/gesture/shake/tests/runner');
 
-tests.push('/kissy/src/event/sub-modules/dom/sub-modules/touch/tests/runner');
+tests.push('/kissy/src/event/sub-modules/gesture/shake/tests/runner?build');
 
-tests.push('/kissy/src/event/sub-modules/dom/sub-modules/touch/tests/runner?build');
+tests.push('/kissy/src/event/sub-modules/gesture/touch/tests/runner');
 
-tests.push('/kissy/src/event/sub-modules/dom/sub-modules/touch/tests/runner?coverage');
+tests.push('/kissy/src/event/sub-modules/gesture/touch/tests/runner?build');
 
 tests.push('/kissy/src/html-parser/tests/runner');
 

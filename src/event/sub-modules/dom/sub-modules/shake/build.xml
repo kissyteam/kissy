@@ -1,5 +1,0 @@
-<project name="event/dom/shake.build" default="build">
-    <property name="component.name" value="event/dom/shake"/>
-
-    <import file="../../../../../common.xml"/>
-</project>

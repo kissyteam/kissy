@@ -7,7 +7,6 @@ KISSY.add(function (S, require) {
     var Dom = require('dom');
     var Event = require('event/dom');
     var NodeList = require('./base');
-
     var NLP = NodeList.prototype,
         makeArray = S.makeArray,
     // Dom 添加到 NP 上的方法

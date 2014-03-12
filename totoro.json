@@ -144,49 +144,56 @@
         },
         {
             "name": "event/dom/base",
-            "runner": "http://dev.kissyui.com/kissy/src/event/sub-modules/dom/sub-modules/base/tests/runner",
+            "runner": "http://dev.kissyui.com/kissy/src/event/sub-modules/dom/base/tests/runner",
             "email": [
                 "yiminghe@gmail.com"
             ]
         },
         {
             "name": "event/dom/focusin",
-            "runner": "http://dev.kissyui.com/kissy/src/event/sub-modules/dom/sub-modules/focusin/tests/runner",
+            "runner": "http://dev.kissyui.com/kissy/src/event/sub-modules/dom/focusin/tests/runner",
             "email": [
                 "yiminghe@gmail.com"
             ]
         },
         {
             "name": "event/dom/hashchange",
-            "runner": "http://dev.kissyui.com/kissy/src/event/sub-modules/dom/sub-modules/hashchange/tests/runner",
+            "runner": "http://dev.kissyui.com/kissy/src/event/sub-modules/dom/hashchange/tests/runner",
             "email": [
                 "yiminghe@gmail.com"
             ]
         },
         {
             "name": "event/dom/ie",
-            "runner": "http://dev.kissyui.com/kissy/src/event/sub-modules/dom/sub-modules/ie/tests/runner",
+            "runner": "http://dev.kissyui.com/kissy/src/event/sub-modules/dom/ie/tests/runner",
             "email": [
                 "yiminghe@gmail.com"
             ]
         },
         {
             "name": "event/dom/input",
-            "runner": "http://dev.kissyui.com/kissy/src/event/sub-modules/dom/sub-modules/input/tests/runner",
+            "runner": "http://dev.kissyui.com/kissy/src/event/sub-modules/dom/input/tests/runner",
             "email": [
                 "yiminghe@gmail.com"
             ]
         },
         {
-            "name": "event/dom/shake",
-            "runner": "http://dev.kissyui.com/kissy/src/event/sub-modules/dom/sub-modules/shake/tests/runner",
+            "name": "event/gesture/base",
+            "runner": "http://dev.kissyui.com/kissy/src/event/sub-modules/gesture/base/tests/runner",
             "email": [
                 "yiminghe@gmail.com"
             ]
         },
         {
-            "name": "event/dom/touch",
-            "runner": "http://dev.kissyui.com/kissy/src/event/sub-modules/dom/sub-modules/touch/tests/runner",
+            "name": "event/gesture/shake",
+            "runner": "http://dev.kissyui.com/kissy/src/event/sub-modules/gesture/shake/tests/runner",
+            "email": [
+                "yiminghe@gmail.com"
+            ]
+        },
+        {
+            "name": "event/gesture/touch",
+            "runner": "http://dev.kissyui.com/kissy/src/event/sub-modules/gesture/touch/tests/runner",
             "email": [
                 "yiminghe@gmail.com"
             ]

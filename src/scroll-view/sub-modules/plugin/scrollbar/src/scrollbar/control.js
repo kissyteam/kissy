@@ -5,9 +5,10 @@
  */
 KISSY.add(function (S, require) {
     var Node = require('node');
-    var $document = Node.all(document);
     var Control = require('component/control');
     var ScrollBarRender = require('./render');
+
+    require('event/gesture/drag');
 
     var MIN_BAR_LENGTH = 20;
 
@@ -21,33 +22,18 @@ KISSY.add(function (S, require) {
 
     function onDragStartHandler(e) {
         e.stopPropagation();
-        if (!e.isTouch) {
-            e.preventDefault();
-        }
         var self = this;
-        if (self.get('disabled')) {
-            return;
-        }
-        self.startMousePos = e[self.pageXyProperty];
         self.startScroll = self.scrollView.get(self.scrollProperty);
-        // ie10 if mouse out of window
-        $document.on(Gesture.move, onDragHandler, self)
-            .on(Gesture.end, onDragEndHandler, self);
     }
 
     function onDragHandler(e) {
         var self = this,
-            diff = e[self.pageXyProperty] - self.startMousePos,
+            diff = self.pageXyProperty === 'pageX' ? e.deltaX : e.deltaY,
             scrollView = self.scrollView,
             scrollType = self.scrollType,
             scrollCfg = {};
         scrollCfg[scrollType] = self.startScroll + diff / self.trackElSize * self.scrollLength;
         scrollView.scrollToWithBounds(scrollCfg);
-    }
-
-    function onDragEndHandler() {
-        $document.detach(Gesture.move, onDragHandler, this)
-            .detach(Gesture.end, onDragEndHandler, this);
     }
 
     function onScrollViewReflow() {
@@ -105,9 +91,6 @@ KISSY.add(function (S, require) {
 
 
     function onUpDownBtnMouseDown(e) {
-        if (this.get('disabled')) {
-            return;
-        }
         e.halt();
         var self = this,
             scrollView = self.scrollView,
@@ -129,9 +112,6 @@ KISSY.add(function (S, require) {
 
     function onTrackElMouseDown(e) {
         var self = this;
-        if (self.get('disabled')) {
-            return;
-        }
         var target = e.target;
         var dragEl = self.dragEl;
         var $dragEl = self.$dragEl;
@@ -224,20 +204,27 @@ KISSY.add(function (S, require) {
             self.scrollView = self.get('scrollView');
         },
 
+        _onSetDisabled: function (v) {
+            var self = this;
+            var action = v ? 'detach' : 'on';
+            if (!self.get('autoHide')) {
+                self.$dragEl[action]('dragstart mousedown', preventDefault)
+                    [action]('gestureDragStart', onDragStartHandler, self)
+                    [action]('gestureDrag', onDragHandler, self);
+                S.each([self.$downBtn, self.$upBtn], function (b) {
+                    b[action](Gesture.start, onUpDownBtnMouseDown, self)
+                        [action](Gesture.end, onUpDownBtnMouseUp, self);
+                });
+                self.$trackEl[action](Gesture.start, onTrackElMouseDown, self);
+            }
+        },
+
         bindUI: function () {
             var self = this,
                 autoHide = self.get('autoHide'),
                 scrollView = self.scrollView;
             if (autoHide) {
                 self.hideFn = S.bind(self.hide, self);
-            } else {
-                S.each([self.$downBtn, self.$upBtn], function (b) {
-                    b.on(Gesture.start, onUpDownBtnMouseDown, self)
-                        .on(Gesture.end, onUpDownBtnMouseUp, self);
-                });
-                self.$trackEl.on(Gesture.start, onTrackElMouseDown, self);
-                self.$dragEl.on('dragstart', preventDefault)
-                    .on(Gesture.start, onDragStartHandler, self);
             }
             scrollView
                 .on(self.afterScrollChangeEvent + SCROLLBAR_EVENT_NS, afterScrollChange, self)

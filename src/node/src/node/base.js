@@ -6,7 +6,7 @@
 KISSY.add(function (S, require) {
     var Dom = require('dom');
     var Event = require('event/dom');
-
+    var Gesture = require('event/gesture');
     var AP = Array.prototype,
         slice = AP.slice,
         NodeType = Dom.NodeType,
@@ -271,7 +271,7 @@ KISSY.add(function (S, require) {
 
     NodeList.KeyCode = Event.KeyCode;
 
-    NodeList.Gesture = Event.Gesture;
+    NodeList.Gesture = Gesture.Enumeration;
 
     NodeList.REPLACE_HISTORY = Event.REPLACE_HISTORY;
 
