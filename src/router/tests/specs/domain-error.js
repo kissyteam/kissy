@@ -6,8 +6,11 @@ KISSY.add(function (S, Router, Event, UA) {
     /*jshint quotmark:false*/
     var ie = UA.ieMode;
 
-    describe("domain in router error", function () {
+    describe("router: set domain error", function () {
         beforeEach(function () {
+            Router.config({
+                useHash: true
+            });
             location.hash = '';
             waits(900);
         });
@@ -23,12 +26,12 @@ KISSY.add(function (S, Router, Event, UA) {
             }
 
             var ok = 0;
-            
-            Router.get("/*",function (req) {
-                if (req.params[0]) {
-                    expect(req.params.path).toBe("haha/hah2/hah3");
-                    ok = 1;
-                }
+
+            Router.get("/:path*", function (req) {
+                expect(req.params.path).toBe("haha");
+                expect(req.params[0]).toBe("/hah2/hah3");
+                expect(req.params[1]).toBe("hah2/hah3");
+                ok = 1;
             });
 
             Router.start();

@@ -23,7 +23,7 @@ KISSY.add(function (S, require, exports) {
     var viewsHistory = [viewUniqueId];
     var globalConfig = {
         urlRoot: '',
-        useHash: !(history && history.pushState)
+        useHash: !supportHistoryPushState
     };
 
     function setPathByHash(path, replace) {

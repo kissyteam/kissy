@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 11 23:36
+build time: Mar 12 14:52
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -143,7 +143,7 @@ KISSY.add("router", ["./router/utils", "./router/route", "uri", "./router/reques
   var BREATH_INTERVAL = 100;
   var viewUniqueId = 10;
   var viewsHistory = [viewUniqueId];
-  var globalConfig = {urlRoot:"", useHash:!(history && history.pushState)};
+  var globalConfig = {urlRoot:"", useHash:!supportHistoryPushState};
   function setPathByHash(path, replace) {
     var hash = utils.addVid("#!" + path + (supportNativeHashChange ? "" : replace ? DomEvent.REPLACE_HISTORY : ""), viewUniqueId);
     if(replace) {

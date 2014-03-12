@@ -457,8 +457,6 @@ if (! _$jscoverage['/router.js'].branchData) {
   _$jscoverage['/router.js'].branchData = {};
   _$jscoverage['/router.js'].branchData['18'] = [];
   _$jscoverage['/router.js'].branchData['18'][1] = new BranchData();
-  _$jscoverage['/router.js'].branchData['26'] = [];
-  _$jscoverage['/router.js'].branchData['26'][1] = new BranchData();
   _$jscoverage['/router.js'].branchData['34'] = [];
   _$jscoverage['/router.js'].branchData['34'][1] = new BranchData();
   _$jscoverage['/router.js'].branchData['43'] = [];
@@ -562,216 +560,212 @@ if (! _$jscoverage['/router.js'].branchData) {
   _$jscoverage['/router.js'].branchData['417'][1] = new BranchData();
 }
 _$jscoverage['/router.js'].branchData['417'][1].init(1663, 8, 'callback');
-function visit76_417_1(result) {
+function visit75_417_1(result) {
   _$jscoverage['/router.js'].branchData['417'][1].ranCondition(result);
   return result;
 }_$jscoverage['/router.js'].branchData['413'][1].init(1573, 12, 'triggerRoute');
-function visit75_413_1(result) {
+function visit74_413_1(result) {
   _$jscoverage['/router.js'].branchData['413'][1].ranCondition(result);
   return result;
 }_$jscoverage['/router.js'].branchData['404'][1].init(1155, 18, 'needReplaceHistory');
-function visit74_404_1(result) {
+function visit73_404_1(result) {
   _$jscoverage['/router.js'].branchData['404'][1].ranCondition(result);
   return result;
 }_$jscoverage['/router.js'].branchData['400'][1].init(485, 45, 'supportHistoryPushState && utils.hasVid(href)');
-function visit73_400_1(result) {
+function visit72_400_1(result) {
   _$jscoverage['/router.js'].branchData['400'][1].ranCondition(result);
   return result;
 }_$jscoverage['/router.js'].branchData['397'][2].init(295, 44, 'getVidFromUrlWithHash(href) !== viewUniqueId');
-function visit72_397_2(result) {
+function visit71_397_2(result) {
   _$jscoverage['/router.js'].branchData['397'][2].ranCondition(result);
   return result;
 }_$jscoverage['/router.js'].branchData['397'][1].init(267, 72, '!supportHistoryPushState && getVidFromUrlWithHash(href) !== viewUniqueId');
-function visit71_397_1(result) {
+function visit70_397_1(result) {
   _$jscoverage['/router.js'].branchData['397'][1].ranCondition(result);
   return result;
 }_$jscoverage['/router.js'].branchData['391'][1].init(22, 18, '!getUrlForRouter()');
-function visit70_391_1(result) {
+function visit69_391_1(result) {
   _$jscoverage['/router.js'].branchData['391'][1].ranCondition(result);
   return result;
 }_$jscoverage['/router.js'].branchData['390'][1].init(493, 7, 'useHash');
-function visit69_390_1(result) {
+function visit68_390_1(result) {
   _$jscoverage['/router.js'].branchData['390'][1].ranCondition(result);
   return result;
 }_$jscoverage['/router.js'].branchData['381'][1].init(81, 23, 'supportHistoryPushState');
-function visit68_381_1(result) {
+function visit67_381_1(result) {
   _$jscoverage['/router.js'].branchData['381'][1].ranCondition(result);
   return result;
 }_$jscoverage['/router.js'].branchData['370'][1].init(880, 42, '!utils.equalsIgnoreSlash(locPath, urlRoot)');
-function visit67_370_1(result) {
+function visit66_370_1(result) {
   _$jscoverage['/router.js'].branchData['370'][1].ranCondition(result);
   return result;
 }_$jscoverage['/router.js'].branchData['356'][1].init(26, 41, 'utils.equalsIgnoreSlash(locPath, urlRoot)');
-function visit66_356_1(result) {
+function visit65_356_1(result) {
   _$jscoverage['/router.js'].branchData['356'][1].ranCondition(result);
   return result;
 }_$jscoverage['/router.js'].branchData['355'][1].init(216, 11, 'hashIsValid');
-function visit65_355_1(result) {
+function visit64_355_1(result) {
   _$jscoverage['/router.js'].branchData['355'][1].ranCondition(result);
   return result;
 }_$jscoverage['/router.js'].branchData['349'][1].init(18, 23, 'supportHistoryPushState');
-function visit64_349_1(result) {
+function visit63_349_1(result) {
   _$jscoverage['/router.js'].branchData['349'][1].ranCondition(result);
   return result;
 }_$jscoverage['/router.js'].branchData['348'][1].init(426, 8, '!useHash');
-function visit63_348_1(result) {
+function visit62_348_1(result) {
   _$jscoverage['/router.js'].branchData['348'][1].ranCondition(result);
   return result;
 }_$jscoverage['/router.js'].branchData['337'][1].init(21, 34, 'callback && callback.call(exports)');
-function visit62_337_1(result) {
+function visit61_337_1(result) {
   _$jscoverage['/router.js'].branchData['337'][1].ranCondition(result);
   return result;
 }_$jscoverage['/router.js'].branchData['336'][1].init(14, 7, 'started');
-function visit61_336_1(result) {
+function visit60_336_1(result) {
   _$jscoverage['/router.js'].branchData['336'][1].ranCondition(result);
   return result;
 }_$jscoverage['/router.js'].branchData['320'][1].init(14, 12, 'opts.urlRoot');
-function visit60_320_1(result) {
+function visit59_320_1(result) {
   _$jscoverage['/router.js'].branchData['320'][1].ranCondition(result);
   return result;
 }_$jscoverage['/router.js'].branchData['302'][1].init(183, 4, '!vid');
-function visit59_302_1(result) {
+function visit58_302_1(result) {
   _$jscoverage['/router.js'].branchData['302'][1].ranCondition(result);
   return result;
 }_$jscoverage['/router.js'].branchData['300'][1].init(93, 25, 'e.newURL || location.href');
-function visit58_300_1(result) {
+function visit57_300_1(result) {
   _$jscoverage['/router.js'].branchData['300'][1].ranCondition(result);
   return result;
 }_$jscoverage['/router.js'].branchData['290'][1].init(121, 6, '!state');
-function visit57_290_1(result) {
+function visit56_290_1(result) {
   _$jscoverage['/router.js'].branchData['290'][1].ranCondition(result);
   return result;
 }_$jscoverage['/router.js'].branchData['277'][1].init(80, 45, 'vid !== viewsHistory[viewsHistory.length - 1]');
-function visit56_277_1(result) {
+function visit55_277_1(result) {
   _$jscoverage['/router.js'].branchData['277'][1].ranCondition(result);
   return result;
 }_$jscoverage['/router.js'].branchData['272'][1].init(77, 45, 'vid === viewsHistory[viewsHistory.length - 2]');
-function visit55_272_1(result) {
+function visit54_272_1(result) {
   _$jscoverage['/router.js'].branchData['272'][1].ranCondition(result);
   return result;
 }_$jscoverage['/router.js'].branchData['261'][1].init(18, 28, 'routes[i].path === routePath');
-function visit54_261_1(result) {
+function visit53_261_1(result) {
   _$jscoverage['/router.js'].branchData['261'][1].ranCondition(result);
   return result;
 }_$jscoverage['/router.js'].branchData['260'][1].init(45, 5, 'i < l');
-function visit53_260_1(result) {
+function visit52_260_1(result) {
   _$jscoverage['/router.js'].branchData['260'][1].ranCondition(result);
   return result;
 }_$jscoverage['/router.js'].branchData['238'][1].init(75, 19, '!r.callbacks.length');
-function visit52_238_1(result) {
+function visit51_238_1(result) {
   _$jscoverage['/router.js'].branchData['238'][1].ranCondition(result);
   return result;
 }_$jscoverage['/router.js'].branchData['236'][1].init(22, 8, 'callback');
-function visit51_236_1(result) {
+function visit50_236_1(result) {
   _$jscoverage['/router.js'].branchData['236'][1].ranCondition(result);
   return result;
 }_$jscoverage['/router.js'].branchData['235'][1].init(50, 20, 'r.path === routePath');
-function visit50_235_1(result) {
+function visit49_235_1(result) {
   _$jscoverage['/router.js'].branchData['235'][1].ranCondition(result);
   return result;
 }_$jscoverage['/router.js'].branchData['233'][1].init(42, 6, 'i >= 0');
-function visit49_233_1(result) {
+function visit48_233_1(result) {
   _$jscoverage['/router.js'].branchData['233'][1].ranCondition(result);
   return result;
 }_$jscoverage['/router.js'].branchData['220'][1].init(18, 21, 'routes[i].match(path)');
-function visit48_220_1(result) {
+function visit47_220_1(result) {
   _$jscoverage['/router.js'].branchData['220'][1].ranCondition(result);
   return result;
 }_$jscoverage['/router.js'].branchData['219'][1].init(45, 5, 'i < l');
-function visit47_219_1(result) {
+function visit46_219_1(result) {
   _$jscoverage['/router.js'].branchData['219'][1].ranCondition(result);
   return result;
 }_$jscoverage['/router.js'].branchData['199'][1].init(1154, 25, 'opts && opts.triggerRoute');
-function visit46_199_1(result) {
+function visit45_199_1(result) {
   _$jscoverage['/router.js'].branchData['199'][1].ranCondition(result);
   return result;
 }_$jscoverage['/router.js'].branchData['190'][1].init(22, 23, 'supportHistoryPushState');
-function visit45_190_1(result) {
+function visit44_190_1(result) {
   _$jscoverage['/router.js'].branchData['190'][1].ranCondition(result);
   return result;
 }_$jscoverage['/router.js'].branchData['181'][1].init(195, 48, '!globalConfig.useHash && supportHistoryPushState');
-function visit44_181_1(result) {
+function visit43_181_1(result) {
   _$jscoverage['/router.js'].branchData['181'][1].ranCondition(result);
   return result;
 }_$jscoverage['/router.js'].branchData['176'][1].init(18, 8, '!replace');
-function visit43_176_1(result) {
+function visit42_176_1(result) {
   _$jscoverage['/router.js'].branchData['176'][1].ranCondition(result);
   return result;
 }_$jscoverage['/router.js'].branchData['175'][1].init(88, 26, 'getUrlForRouter() !== path');
-function visit42_175_1(result) {
+function visit41_175_1(result) {
   _$jscoverage['/router.js'].branchData['175'][1].ranCondition(result);
   return result;
 }_$jscoverage['/router.js'].branchData['174'][1].init(52, 21, 'opts.replace || false');
-function visit41_174_1(result) {
+function visit40_174_1(result) {
   _$jscoverage['/router.js'].branchData['174'][1].ranCondition(result);
   return result;
 }_$jscoverage['/router.js'].branchData['173'][1].init(17, 10, 'opts || {}');
-function visit40_173_1(result) {
+function visit39_173_1(result) {
   _$jscoverage['/router.js'].branchData['173'][1].ranCondition(result);
   return result;
 }_$jscoverage['/router.js'].branchData['156'][1].init(14, 26, 'typeof prefix !== \'string\'');
-function visit39_156_1(result) {
+function visit38_156_1(result) {
   _$jscoverage['/router.js'].branchData['156'][1].ranCondition(result);
   return result;
 }_$jscoverage['/router.js'].branchData['127'][3].init(223, 17, 'replace === false');
-function visit38_127_3(result) {
+function visit37_127_3(result) {
   _$jscoverage['/router.js'].branchData['127'][3].ranCondition(result);
   return result;
 }_$jscoverage['/router.js'].branchData['127'][2].init(201, 18, 'backward === false');
-function visit37_127_2(result) {
+function visit36_127_2(result) {
   _$jscoverage['/router.js'].branchData['127'][2].ranCondition(result);
   return result;
 }_$jscoverage['/router.js'].branchData['127'][1].init(201, 39, 'backward === false && replace === false');
-function visit36_127_1(result) {
+function visit35_127_1(result) {
   _$jscoverage['/router.js'].branchData['127'][1].ranCondition(result);
   return result;
 }_$jscoverage['/router.js'].branchData['126'][1].init(160, 16, 'replace === true');
-function visit35_126_1(result) {
+function visit34_126_1(result) {
   _$jscoverage['/router.js'].branchData['126'][1].ranCondition(result);
   return result;
 }_$jscoverage['/router.js'].branchData['124'][1].init(87, 17, 'backward === true');
-function visit34_124_1(result) {
+function visit33_124_1(result) {
   _$jscoverage['/router.js'].branchData['124'][1].ranCondition(result);
   return result;
 }_$jscoverage['/router.js'].branchData['120'][1].init(189, 21, 'uri.toString() || \'/\'');
-function visit33_120_1(result) {
+function visit32_120_1(result) {
   _$jscoverage['/router.js'].branchData['120'][1].ranCondition(result);
   return result;
 }_$jscoverage['/router.js'].branchData['98'][1].init(80, 30, 'callbackIndex !== callbacksLen');
-function visit32_98_1(result) {
+function visit31_98_1(result) {
   _$jscoverage['/router.js'].branchData['98'][1].ranCondition(result);
   return result;
 }_$jscoverage['/router.js'].branchData['93'][1].init(30, 17, 'cause === \'route\'');
-function visit31_93_1(result) {
+function visit30_93_1(result) {
   _$jscoverage['/router.js'].branchData['93'][1].ranCondition(result);
   return result;
 }_$jscoverage['/router.js'].branchData['86'][1].init(40, 13, 'index !== len');
-function visit30_86_1(result) {
+function visit29_86_1(result) {
   _$jscoverage['/router.js'].branchData['86'][1].ranCondition(result);
   return result;
 }_$jscoverage['/router.js'].branchData['63'][1].init(76, 53, 'S.startsWith(request.path + \'/\', middleware[0] + \'/\')');
-function visit29_63_1(result) {
+function visit28_63_1(result) {
   _$jscoverage['/router.js'].branchData['63'][1].ranCondition(result);
   return result;
 }_$jscoverage['/router.js'].branchData['59'][1].init(40, 13, 'index === len');
-function visit28_59_1(result) {
+function visit27_59_1(result) {
   _$jscoverage['/router.js'].branchData['59'][1].ranCondition(result);
   return result;
 }_$jscoverage['/router.js'].branchData['45'][1].init(84, 48, '!globalConfig.useHash && supportHistoryPushState');
-function visit27_45_1(result) {
+function visit26_45_1(result) {
   _$jscoverage['/router.js'].branchData['45'][1].ranCondition(result);
   return result;
 }_$jscoverage['/router.js'].branchData['43'][1].init(16, 20, 'url || location.href');
-function visit26_43_1(result) {
+function visit25_43_1(result) {
   _$jscoverage['/router.js'].branchData['43'][1].ranCondition(result);
   return result;
 }_$jscoverage['/router.js'].branchData['34'][1].init(220, 7, 'replace');
-function visit25_34_1(result) {
+function visit24_34_1(result) {
   _$jscoverage['/router.js'].branchData['34'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/router.js'].branchData['26'][1].init(43, 28, 'history && history.pushState');
-function visit24_26_1(result) {
-  _$jscoverage['/router.js'].branchData['26'][1].ranCondition(result);
   return result;
 }_$jscoverage['/router.js'].branchData['18'][1].init(536, 28, 'history && history.pushState');
 function visit23_18_1(result) {
@@ -815,14 +809,14 @@ KISSY.add(function(S, require, exports) {
   _$jscoverage['/router.js'].lineData[24]++;
   var globalConfig = {
   urlRoot: '', 
-  useHash: !(visit24_26_1(history && history.pushState))};
+  useHash: !supportHistoryPushState};
   _$jscoverage['/router.js'].lineData[29]++;
   function setPathByHash(path, replace) {
     _$jscoverage['/router.js'].functionData[1]++;
     _$jscoverage['/router.js'].lineData[30]++;
     var hash = utils.addVid('#!' + path + (supportNativeHashChange ? '' : (replace ? DomEvent.REPLACE_HISTORY : '')), viewUniqueId);
     _$jscoverage['/router.js'].lineData[34]++;
-    if (visit25_34_1(replace)) {
+    if (visit24_34_1(replace)) {
       _$jscoverage['/router.js'].lineData[35]++;
       location.replace(hash);
     } else {
@@ -834,11 +828,11 @@ KISSY.add(function(S, require, exports) {
   function getUrlForRouter(url) {
     _$jscoverage['/router.js'].functionData[2]++;
     _$jscoverage['/router.js'].lineData[43]++;
-    url = visit26_43_1(url || location.href);
+    url = visit25_43_1(url || location.href);
     _$jscoverage['/router.js'].lineData[44]++;
     var uri = new Uri(url);
     _$jscoverage['/router.js'].lineData[45]++;
-    if (visit27_45_1(!globalConfig.useHash && supportHistoryPushState)) {
+    if (visit26_45_1(!globalConfig.useHash && supportHistoryPushState)) {
       _$jscoverage['/router.js'].lineData[46]++;
       var query = uri.query;
       _$jscoverage['/router.js'].lineData[47]++;
@@ -861,14 +855,14 @@ KISSY.add(function(S, require, exports) {
       _$jscoverage['/router.js'].lineData[58]++;
       index++;
       _$jscoverage['/router.js'].lineData[59]++;
-      if (visit28_59_1(index === len)) {
+      if (visit27_59_1(index === len)) {
         _$jscoverage['/router.js'].lineData[60]++;
         cb(request, response);
       } else {
         _$jscoverage['/router.js'].lineData[62]++;
         var middleware = middlewares[index];
         _$jscoverage['/router.js'].lineData[63]++;
-        if (visit29_63_1(S.startsWith(request.path + '/', middleware[0] + '/'))) {
+        if (visit28_63_1(S.startsWith(request.path + '/', middleware[0] + '/'))) {
           _$jscoverage['/router.js'].lineData[64]++;
           var prefixLen = middleware[0].length;
           _$jscoverage['/router.js'].lineData[65]++;
@@ -905,7 +899,7 @@ KISSY.add(function(S, require, exports) {
       _$jscoverage['/router.js'].lineData[85]++;
       index++;
       _$jscoverage['/router.js'].lineData[86]++;
-      if (visit30_86_1(index !== len)) {
+      if (visit29_86_1(index !== len)) {
         _$jscoverage['/router.js'].lineData[87]++;
         var route = routes[index];
         _$jscoverage['/router.js'].lineData[88]++;
@@ -920,7 +914,7 @@ KISSY.add(function(S, require, exports) {
           var nextCallback = function(cause) {
   _$jscoverage['/router.js'].functionData[7]++;
   _$jscoverage['/router.js'].lineData[93]++;
-  if (visit31_93_1(cause === 'route')) {
+  if (visit30_93_1(cause === 'route')) {
     _$jscoverage['/router.js'].lineData[94]++;
     nextCallback = null;
     _$jscoverage['/router.js'].lineData[95]++;
@@ -929,7 +923,7 @@ KISSY.add(function(S, require, exports) {
     _$jscoverage['/router.js'].lineData[97]++;
     callbackIndex++;
     _$jscoverage['/router.js'].lineData[98]++;
-    if (visit32_98_1(callbackIndex !== callbacksLen)) {
+    if (visit31_98_1(callbackIndex !== callbacksLen)) {
       _$jscoverage['/router.js'].lineData[99]++;
       request.route = route;
       _$jscoverage['/router.js'].lineData[100]++;
@@ -960,13 +954,13 @@ KISSY.add(function(S, require, exports) {
     _$jscoverage['/router.js'].lineData[118]++;
     uri.query.reset();
     _$jscoverage['/router.js'].lineData[120]++;
-    var path = visit33_120_1(uri.toString() || '/');
+    var path = visit32_120_1(uri.toString() || '/');
     _$jscoverage['/router.js'].lineData[121]++;
     var request = new Request({
   query: query, 
-  backward: visit34_124_1(backward === true), 
-  replace: visit35_126_1(replace === true), 
-  forward: (visit36_127_1(visit37_127_2(backward === false) && visit38_127_3(replace === false))), 
+  backward: visit33_124_1(backward === true), 
+  replace: visit34_126_1(replace === true), 
+  forward: (visit35_127_1(visit36_127_2(backward === false) && visit37_127_3(replace === false))), 
   path: path, 
   url: url, 
   originalUrl: url});
@@ -986,7 +980,7 @@ KISSY.add(function(S, require, exports) {
   exports.use = function(prefix, callback) {
   _$jscoverage['/router.js'].functionData[9]++;
   _$jscoverage['/router.js'].lineData[156]++;
-  if (visit39_156_1(typeof prefix !== 'string')) {
+  if (visit38_156_1(typeof prefix !== 'string')) {
     _$jscoverage['/router.js'].lineData[157]++;
     callback = prefix;
     _$jscoverage['/router.js'].lineData[158]++;
@@ -999,20 +993,20 @@ KISSY.add(function(S, require, exports) {
   exports.navigate = function(path, opts) {
   _$jscoverage['/router.js'].functionData[10]++;
   _$jscoverage['/router.js'].lineData[173]++;
-  opts = visit40_173_1(opts || {});
+  opts = visit39_173_1(opts || {});
   _$jscoverage['/router.js'].lineData[174]++;
-  var replace = visit41_174_1(opts.replace || false);
+  var replace = visit40_174_1(opts.replace || false);
   _$jscoverage['/router.js'].lineData[175]++;
-  if (visit42_175_1(getUrlForRouter() !== path)) {
+  if (visit41_175_1(getUrlForRouter() !== path)) {
     _$jscoverage['/router.js'].lineData[176]++;
-    if (visit43_176_1(!replace)) {
+    if (visit42_176_1(!replace)) {
       _$jscoverage['/router.js'].lineData[177]++;
       viewUniqueId++;
       _$jscoverage['/router.js'].lineData[178]++;
       viewsHistory.push(viewUniqueId);
     }
     _$jscoverage['/router.js'].lineData[181]++;
-    if (visit44_181_1(!globalConfig.useHash && supportHistoryPushState)) {
+    if (visit43_181_1(!globalConfig.useHash && supportHistoryPushState)) {
       _$jscoverage['/router.js'].lineData[182]++;
       history[replace ? 'replaceState' : 'pushState']({
   vid: viewUniqueId}, '', utils.getFullPath(path, globalConfig.urlRoot));
@@ -1020,7 +1014,7 @@ KISSY.add(function(S, require, exports) {
       dispatch(false, replace);
     } else {
       _$jscoverage['/router.js'].lineData[190]++;
-      if (visit45_190_1(supportHistoryPushState)) {
+      if (visit44_190_1(supportHistoryPushState)) {
         _$jscoverage['/router.js'].lineData[191]++;
         history[replace ? 'replaceState' : 'pushState']({
   vid: viewUniqueId}, '', '#!' + path);
@@ -1033,7 +1027,7 @@ KISSY.add(function(S, require, exports) {
     }
   } else {
     _$jscoverage['/router.js'].lineData[199]++;
-    if (visit46_199_1(opts && opts.triggerRoute)) {
+    if (visit45_199_1(opts && opts.triggerRoute)) {
       _$jscoverage['/router.js'].lineData[200]++;
       dispatch(false, true);
     }
@@ -1051,9 +1045,9 @@ KISSY.add(function(S, require, exports) {
   exports.matchRoute = function(path) {
   _$jscoverage['/router.js'].functionData[12]++;
   _$jscoverage['/router.js'].lineData[219]++;
-  for (var i = 0, l = routes.length; visit47_219_1(i < l); i++) {
+  for (var i = 0, l = routes.length; visit46_219_1(i < l); i++) {
     _$jscoverage['/router.js'].lineData[220]++;
-    if (visit48_220_1(routes[i].match(path))) {
+    if (visit47_220_1(routes[i].match(path))) {
       _$jscoverage['/router.js'].lineData[221]++;
       return routes[i];
     }
@@ -1065,17 +1059,17 @@ KISSY.add(function(S, require, exports) {
   exports.removeRoute = function(routePath, callback) {
   _$jscoverage['/router.js'].functionData[13]++;
   _$jscoverage['/router.js'].lineData[233]++;
-  for (var i = routes.length - 1; visit49_233_1(i >= 0); i--) {
+  for (var i = routes.length - 1; visit48_233_1(i >= 0); i--) {
     _$jscoverage['/router.js'].lineData[234]++;
     var r = routes[i];
     _$jscoverage['/router.js'].lineData[235]++;
-    if (visit50_235_1(r.path === routePath)) {
+    if (visit49_235_1(r.path === routePath)) {
       _$jscoverage['/router.js'].lineData[236]++;
-      if (visit51_236_1(callback)) {
+      if (visit50_236_1(callback)) {
         _$jscoverage['/router.js'].lineData[237]++;
         r.removeCallback(callback);
         _$jscoverage['/router.js'].lineData[238]++;
-        if (visit52_238_1(!r.callbacks.length)) {
+        if (visit51_238_1(!r.callbacks.length)) {
           _$jscoverage['/router.js'].lineData[239]++;
           routes.splice(i, 1);
         }
@@ -1098,9 +1092,9 @@ KISSY.add(function(S, require, exports) {
   exports.hasRoute = function(routePath) {
   _$jscoverage['/router.js'].functionData[15]++;
   _$jscoverage['/router.js'].lineData[260]++;
-  for (var i = 0, l = routes.length; visit53_260_1(i < l); i++) {
+  for (var i = 0, l = routes.length; visit52_260_1(i < l); i++) {
     _$jscoverage['/router.js'].lineData[261]++;
-    if (visit54_261_1(routes[i].path === routePath)) {
+    if (visit53_261_1(routes[i].path === routePath)) {
       _$jscoverage['/router.js'].lineData[262]++;
       return routes[i];
     }
@@ -1116,14 +1110,14 @@ KISSY.add(function(S, require, exports) {
     _$jscoverage['/router.js'].lineData[270]++;
     var replace = false;
     _$jscoverage['/router.js'].lineData[272]++;
-    if (visit55_272_1(vid === viewsHistory[viewsHistory.length - 2])) {
+    if (visit54_272_1(vid === viewsHistory[viewsHistory.length - 2])) {
       _$jscoverage['/router.js'].lineData[273]++;
       backward = true;
       _$jscoverage['/router.js'].lineData[274]++;
       viewsHistory.pop();
     } else {
       _$jscoverage['/router.js'].lineData[275]++;
-      if (visit56_277_1(vid !== viewsHistory[viewsHistory.length - 1])) {
+      if (visit55_277_1(vid !== viewsHistory[viewsHistory.length - 1])) {
         _$jscoverage['/router.js'].lineData[278]++;
         viewsHistory.push(vid);
       } else {
@@ -1140,7 +1134,7 @@ KISSY.add(function(S, require, exports) {
     _$jscoverage['/router.js'].lineData[288]++;
     var state = e.originalEvent.state;
     _$jscoverage['/router.js'].lineData[290]++;
-    if (visit57_290_1(!state)) {
+    if (visit56_290_1(!state)) {
       _$jscoverage['/router.js'].lineData[291]++;
       return;
     }
@@ -1151,11 +1145,11 @@ KISSY.add(function(S, require, exports) {
   function onHashChange(e) {
     _$jscoverage['/router.js'].functionData[18]++;
     _$jscoverage['/router.js'].lineData[300]++;
-    var newURL = visit58_300_1(e.newURL || location.href);
+    var newURL = visit57_300_1(e.newURL || location.href);
     _$jscoverage['/router.js'].lineData[301]++;
     var vid = getVidFromUrlWithHash(newURL);
     _$jscoverage['/router.js'].lineData[302]++;
-    if (visit59_302_1(!vid)) {
+    if (visit58_302_1(!vid)) {
       _$jscoverage['/router.js'].lineData[303]++;
       return;
     }
@@ -1166,7 +1160,7 @@ KISSY.add(function(S, require, exports) {
   exports.config = function(opts) {
   _$jscoverage['/router.js'].functionData[19]++;
   _$jscoverage['/router.js'].lineData[320]++;
-  if (visit60_320_1(opts.urlRoot)) {
+  if (visit59_320_1(opts.urlRoot)) {
     _$jscoverage['/router.js'].lineData[321]++;
     opts.urlRoot = opts.urlRoot.replace(/\/$/, '');
   }
@@ -1179,20 +1173,20 @@ KISSY.add(function(S, require, exports) {
   exports.start = function(callback) {
   _$jscoverage['/router.js'].functionData[20]++;
   _$jscoverage['/router.js'].lineData[336]++;
-  if (visit61_336_1(started)) {
+  if (visit60_336_1(started)) {
     _$jscoverage['/router.js'].lineData[337]++;
-    return visit62_337_1(callback && callback.call(exports));
+    return visit61_337_1(callback && callback.call(exports));
   }
   _$jscoverage['/router.js'].lineData[340]++;
   var useHash = globalConfig.useHash, urlRoot = globalConfig.urlRoot, triggerRoute = globalConfig.triggerRoute, locPath = location.pathname, href = location.href, hash = getUrlForRouter(), hashIsValid = location.hash.match(/#!.+/);
   _$jscoverage['/router.js'].lineData[348]++;
-  if (visit63_348_1(!useHash)) {
+  if (visit62_348_1(!useHash)) {
     _$jscoverage['/router.js'].lineData[349]++;
-    if (visit64_349_1(supportHistoryPushState)) {
+    if (visit63_349_1(supportHistoryPushState)) {
       _$jscoverage['/router.js'].lineData[355]++;
-      if (visit65_355_1(hashIsValid)) {
+      if (visit64_355_1(hashIsValid)) {
         _$jscoverage['/router.js'].lineData[356]++;
-        if (visit66_356_1(utils.equalsIgnoreSlash(locPath, urlRoot))) {
+        if (visit65_356_1(utils.equalsIgnoreSlash(locPath, urlRoot))) {
           _$jscoverage['/router.js'].lineData[358]++;
           history.replaceState({}, '', utils.getFullPath(hash, urlRoot));
           _$jscoverage['/router.js'].lineData[359]++;
@@ -1204,7 +1198,7 @@ KISSY.add(function(S, require, exports) {
       }
     } else {
       _$jscoverage['/router.js'].lineData[370]++;
-      if (visit67_370_1(!utils.equalsIgnoreSlash(locPath, urlRoot))) {
+      if (visit66_370_1(!utils.equalsIgnoreSlash(locPath, urlRoot))) {
         _$jscoverage['/router.js'].lineData[371]++;
         location.replace(utils.addEndSlash(urlRoot) + '#!' + hash);
         _$jscoverage['/router.js'].lineData[372]++;
@@ -1221,7 +1215,7 @@ KISSY.add(function(S, require, exports) {
   _$jscoverage['/router.js'].lineData[380]++;
   var needReplaceHistory = supportHistoryPushState;
   _$jscoverage['/router.js'].lineData[381]++;
-  if (visit68_381_1(supportHistoryPushState)) {
+  if (visit67_381_1(supportHistoryPushState)) {
     _$jscoverage['/router.js'].lineData[382]++;
     DomEvent.on(win, 'popstate', onPopState);
   } else {
@@ -1231,9 +1225,9 @@ KISSY.add(function(S, require, exports) {
     triggerRoute = 1;
   }
   _$jscoverage['/router.js'].lineData[390]++;
-  if (visit69_390_1(useHash)) {
+  if (visit68_390_1(useHash)) {
     _$jscoverage['/router.js'].lineData[391]++;
-    if (visit70_391_1(!getUrlForRouter())) {
+    if (visit69_391_1(!getUrlForRouter())) {
       _$jscoverage['/router.js'].lineData[392]++;
       exports.navigate('/', {
   replace: 1});
@@ -1243,14 +1237,14 @@ KISSY.add(function(S, require, exports) {
       needReplaceHistory = false;
     } else {
       _$jscoverage['/router.js'].lineData[397]++;
-      if (visit71_397_1(!supportHistoryPushState && visit72_397_2(getVidFromUrlWithHash(href) !== viewUniqueId))) {
+      if (visit70_397_1(!supportHistoryPushState && visit71_397_2(getVidFromUrlWithHash(href) !== viewUniqueId))) {
         _$jscoverage['/router.js'].lineData[398]++;
         setPathByHash(utils.getHash(new S.Uri(href)), true);
         _$jscoverage['/router.js'].lineData[399]++;
         triggerRoute = 0;
       } else {
         _$jscoverage['/router.js'].lineData[400]++;
-        if (visit73_400_1(supportHistoryPushState && utils.hasVid(href))) {
+        if (visit72_400_1(supportHistoryPushState && utils.hasVid(href))) {
           _$jscoverage['/router.js'].lineData[401]++;
           location.replace(href = utils.removeVid(href));
         }
@@ -1258,18 +1252,18 @@ KISSY.add(function(S, require, exports) {
     }
   }
   _$jscoverage['/router.js'].lineData[404]++;
-  if (visit74_404_1(needReplaceHistory)) {
+  if (visit73_404_1(needReplaceHistory)) {
     _$jscoverage['/router.js'].lineData[406]++;
     history.replaceState({
   vid: viewUniqueId}, '', href);
   }
   _$jscoverage['/router.js'].lineData[413]++;
-  if (visit75_413_1(triggerRoute)) {
+  if (visit74_413_1(triggerRoute)) {
     _$jscoverage['/router.js'].lineData[414]++;
     dispatch(false, true);
   }
   _$jscoverage['/router.js'].lineData[417]++;
-  if (visit76_417_1(callback)) {
+  if (visit75_417_1(callback)) {
     _$jscoverage['/router.js'].lineData[418]++;
     callback(exports);
   }

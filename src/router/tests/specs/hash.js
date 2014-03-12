@@ -10,8 +10,11 @@ KISSY.add(function (S, require) {
         return Router.Utils.getHash(new Uri(location.href));
     };
 
-    describe("router", function () {
+    describe("router using hash", function () {
         beforeEach(function () {
+            Router.config({
+                useHash: true
+            });
             location.hash = '';
             waits(900);
         });

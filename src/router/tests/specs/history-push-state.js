@@ -13,12 +13,16 @@ KISSY.add(function (S, Router) {
     var urlRoot;
 
     function getPath() {
-        return new S.Uri(location.href).getPath().substring(urlRoot.length);
+        return location.pathname.substring(urlRoot.length);
     }
 
-    describe("router html5", function () {
+    describe("router using history.pushState", function () {
 
         beforeEach(function () {
+            Router.config({
+                useHash: false,
+                urlRoot: (urlRoot = location.pathname)
+            });
             location.hash = '';
             waits(900);
         });
@@ -30,8 +34,6 @@ KISSY.add(function (S, Router) {
 
         it("works", function () {
             original = location.href;
-
-            urlRoot = new S.Uri(location.href).resolve('./').getPath().replace(/\/$/, '');
 
             var ok = 0,
                 ok3 = 0,
@@ -74,12 +76,6 @@ KISSY.add(function (S, Router) {
 
             expect(Router.matchRoute('/list2/what/item')).toBeTruthy();
 
-
-            Router.config({
-                urlRoot: new S.Uri(location.href).resolve('./').getPath(),
-                useHash: false
-            });
-
             Router.start();
 
             waits(200);
@@ -120,8 +116,6 @@ KISSY.add(function (S, Router) {
         // see ../others/test-replace-history.html
         it("can replace history", function () {
             var go = 0, list = 0, detail = 0, ok = 0;
-
-            urlRoot = new S.Uri(location.href).resolve('./').getPath().replace(/\/$/, '');
             var originalPath;
             originalPath = getPath();
             waits(200);
@@ -139,11 +133,6 @@ KISSY.add(function (S, Router) {
                     }
                 }, function (func, route) {
                     Router.get(route, func);
-                });
-
-                Router.config({
-                    urlRoot: urlRoot,
-                    useHash: false
                 });
 
                 Router.start(function () {
