@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 13 17:48
+build time: Mar 13 21:21
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -11,13 +11,16 @@ build time: Mar 13 17:48
 
 KISSY.add("component/plugin/drag", ["dd"], function(S, require) {
   var DD = require("dd");
+  function onDragEnd() {
+    var component = this.component;
+    var offset = component.$el.offset();
+    component.setInternal("xy", [offset.left, offset.top])
+  }
   return DD.Draggable.extend({pluginId:"component/plugin/drag", pluginBindUI:function(component) {
-    var $el = component.$el, self = this;
-    self.set("node", $el);
-    self.on("dragend", function() {
-      var offset = $el.offset();
-      component.setInternal("xy", [offset.left, offset.top])
-    })
+    this.set("node", component.$el);
+    this.start();
+    this.component = component;
+    this.on("dragend", onDragEnd)
   }, pluginDestructor:function() {
     this.destroy()
   }}, {ATTRS:{move:{value:1}, groups:{value:false}}})

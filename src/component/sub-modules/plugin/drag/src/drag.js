@@ -3,8 +3,15 @@
  * drag plugin for kissy component
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S,require) {
+KISSY.add(function (S, require) {
     var DD = require('dd');
+
+    function onDragEnd() {
+        var component = this.component;
+        var offset = component.$el.offset();
+        component.setInternal('xy', [offset.left, offset.top]);
+    }
+
     /**
      * drag plugin for kissy component
      *
@@ -30,24 +37,18 @@ KISSY.add(function (S,require) {
      * @extends KISSY.DD.Draggable
      */
     return DD.Draggable.extend({
-
         pluginId: 'component/plugin/drag',
 
         pluginBindUI: function (component) {
-            var $el = component.$el,
-                self = this;
-            self.set('node', $el);
-            // sync
-            self.on('dragend', function () {
-                var offset = $el.offset();
-                component.setInternal('xy', [offset.left, offset.top]);
-            });
+            this.set('node', component.$el);
+            this.start();
+            this.component = component;
+            this.on('dragend', onDragEnd);
         },
 
         pluginDestructor: function () {
             this.destroy();
         }
-
     }, {
         ATTRS: {
             move: {

@@ -21,9 +21,12 @@ KISSY.add(function (S, require) {
             _onSetNode: S.noop,
 
             _onSetDisabled: function (d) {
-                this.get('container')[d ? 'addClass' :
-                    'removeClass'](PREFIX_CLS + '-disabled');
-                this[d ? 'detachDragEvent' : 'bindDragEvent']();
+                var self = this;
+                var container = self.get('container');
+                if (container) {
+                    container[d ? 'addClass' : 'removeClass'](PREFIX_CLS + '-disabled');
+                    self[d ? 'stop' : 'start']();
+                }
             },
 
             getEventTargetEl: function () {

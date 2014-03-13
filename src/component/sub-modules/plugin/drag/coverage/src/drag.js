@@ -231,13 +231,16 @@ if (! _$jscoverage['/drag.js']) {
   _$jscoverage['/drag.js'].lineData = [];
   _$jscoverage['/drag.js'].lineData[6] = 0;
   _$jscoverage['/drag.js'].lineData[7] = 0;
-  _$jscoverage['/drag.js'].lineData[32] = 0;
-  _$jscoverage['/drag.js'].lineData[37] = 0;
+  _$jscoverage['/drag.js'].lineData[9] = 0;
+  _$jscoverage['/drag.js'].lineData[10] = 0;
+  _$jscoverage['/drag.js'].lineData[11] = 0;
+  _$jscoverage['/drag.js'].lineData[12] = 0;
   _$jscoverage['/drag.js'].lineData[39] = 0;
-  _$jscoverage['/drag.js'].lineData[41] = 0;
-  _$jscoverage['/drag.js'].lineData[42] = 0;
   _$jscoverage['/drag.js'].lineData[43] = 0;
-  _$jscoverage['/drag.js'].lineData[48] = 0;
+  _$jscoverage['/drag.js'].lineData[44] = 0;
+  _$jscoverage['/drag.js'].lineData[45] = 0;
+  _$jscoverage['/drag.js'].lineData[46] = 0;
+  _$jscoverage['/drag.js'].lineData[50] = 0;
 }
 if (! _$jscoverage['/drag.js'].functionData) {
   _$jscoverage['/drag.js'].functionData = [];
@@ -254,27 +257,33 @@ KISSY.add(function(S, require) {
   _$jscoverage['/drag.js'].functionData[0]++;
   _$jscoverage['/drag.js'].lineData[7]++;
   var DD = require('dd');
-  _$jscoverage['/drag.js'].lineData[32]++;
+  _$jscoverage['/drag.js'].lineData[9]++;
+  function onDragEnd() {
+    _$jscoverage['/drag.js'].functionData[1]++;
+    _$jscoverage['/drag.js'].lineData[10]++;
+    var component = this.component;
+    _$jscoverage['/drag.js'].lineData[11]++;
+    var offset = component.$el.offset();
+    _$jscoverage['/drag.js'].lineData[12]++;
+    component.setInternal('xy', [offset.left, offset.top]);
+  }
+  _$jscoverage['/drag.js'].lineData[39]++;
   return DD.Draggable.extend({
   pluginId: 'component/plugin/drag', 
   pluginBindUI: function(component) {
-  _$jscoverage['/drag.js'].functionData[1]++;
-  _$jscoverage['/drag.js'].lineData[37]++;
-  var $el = component.$el, self = this;
-  _$jscoverage['/drag.js'].lineData[39]++;
-  self.set('node', $el);
-  _$jscoverage['/drag.js'].lineData[41]++;
-  self.on('dragend', function() {
   _$jscoverage['/drag.js'].functionData[2]++;
-  _$jscoverage['/drag.js'].lineData[42]++;
-  var offset = $el.offset();
   _$jscoverage['/drag.js'].lineData[43]++;
-  component.setInternal('xy', [offset.left, offset.top]);
-});
+  this.set('node', component.$el);
+  _$jscoverage['/drag.js'].lineData[44]++;
+  this.start();
+  _$jscoverage['/drag.js'].lineData[45]++;
+  this.component = component;
+  _$jscoverage['/drag.js'].lineData[46]++;
+  this.on('dragend', onDragEnd);
 }, 
   pluginDestructor: function() {
   _$jscoverage['/drag.js'].functionData[3]++;
-  _$jscoverage['/drag.js'].lineData[48]++;
+  _$jscoverage['/drag.js'].lineData[50]++;
   this.destroy();
 }}, {
   ATTRS: {

@@ -240,29 +240,37 @@ KISSY.add(function (S, require) {
             return this.get('node');
         },
 
-        bindDragEvent: function () {
+        start: function () {
             var self = this,
                 node = self.getEventTargetEl();
-            node.on(DragType.DRAG_START, onDragStart, self)
-                .on(DragType.DRAG, onDrag, self)
-                .on(DragType.DRAG_END, onDragEnd, self)
-                .on(Gesture.start, onGestureStart, self)
-                .on('dragstart', self._fixDragStart);
+            if (node) {
+                node.on(DragType.DRAG_START, onDragStart, self)
+                    .on(DragType.DRAG, onDrag, self)
+                    .on(DragType.DRAG_END, onDragEnd, self)
+                    .on(Gesture.start, onGestureStart, self)
+                    .on('dragstart', self._fixDragStart);
+            }
         },
 
-        detachDragEvent: function () {
+        stop: function () {
             var self = this,
                 node = self.getEventTargetEl();
-            node.detach(DragType.DRAG_START, onDragStart, self)
-                .detach(DragType.DRAG, onDrag, self)
-                .detach(DragType.DRAG_END, onDragEnd, self)
-                .detach(Gesture.start, onGestureStart, self)
-                .detach('dragstart', self._fixDragStart);
+            if (node) {
+                node.detach(DragType.DRAG_START, onDragStart, self)
+                    .detach(DragType.DRAG, onDrag, self)
+                    .detach(DragType.DRAG_END, onDragEnd, self)
+                    .detach(Gesture.start, onGestureStart, self)
+                    .detach('dragstart', self._fixDragStart);
+            }
         },
 
         _onSetDisabled: function (d) {
-            this.get('dragNode')[d ? 'addClass' : 'removeClass'](PREFIX_CLS + '-disabled');
-            this[d ? 'detachDragEvent' : 'bindDragEvent']();
+            var self = this,
+                node = self.get('dragNode');
+            if (node) {
+                node[d ? 'addClass' : 'removeClass'](PREFIX_CLS + '-disabled');
+            }
+            self[d ? 'stop' : 'start']();
         },
 
         _fixDragStart: fixDragStart,
@@ -484,7 +492,7 @@ KISSY.add(function (S, require) {
          * @private
          */
         destructor: function () {
-            this.detachDragEvent();
+            this.stop();
         }
     }, {
         name: 'Draggable',
