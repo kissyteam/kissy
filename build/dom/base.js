@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 13 17:50
+build time: Mar 13 23:47
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -1237,11 +1237,11 @@ KISSY.add("dom/base/offset", ["./api"], function(S, require) {
 KISSY.add("dom/base/style", ["./api"], function(S, require) {
   var Dom = require("./api");
   var logger = S.getLogger("s/dom");
-  var globalWindow = S.Env.host, UA = S.UA, BOX_MODELS = ["margin", "border", "padding"], CONTENT_INDEX = -1, PADDING_INDEX = 2, BORDER_INDEX = 1, MARGIN_INDEX = 0, getNodeName = Dom.nodeName, doc = globalWindow.document || {}, RE_MARGIN = /^margin/, WIDTH = "width", HEIGHT = "height", DISPLAY = "display", OLD_DISPLAY = DISPLAY + S.now(), NONE = "none", cssNumber = {fillOpacity:1, fontWeight:1, lineHeight:1, opacity:1, orphans:1, widows:1, zIndex:1, zoom:1}, rmsPrefix = /^-ms-/, EMPTY = "", DEFAULT_UNIT = 
-  "px", NO_PX_REG = /\d(?!px)[a-z%]+$/i, cssHooks = {}, cssProps = {}, userSelectProperty, defaultDisplay = {}, RE_DASH = /-([a-z])/ig;
+  var globalWindow = S.Env.host, getCssVendorInfo = S.Feature.getCssVendorInfo, UA = S.UA, BOX_MODELS = ["margin", "border", "padding"], CONTENT_INDEX = -1, PADDING_INDEX = 2, BORDER_INDEX = 1, MARGIN_INDEX = 0, getNodeName = Dom.nodeName, doc = globalWindow.document || {}, RE_MARGIN = /^margin/, WIDTH = "width", HEIGHT = "height", DISPLAY = "display", OLD_DISPLAY = DISPLAY + S.now(), NONE = "none", cssNumber = {fillOpacity:1, fontWeight:1, lineHeight:1, opacity:1, orphans:1, widows:1, zIndex:1, 
+  zoom:1}, rmsPrefix = /^-ms-/, EMPTY = "", DEFAULT_UNIT = "px", NO_PX_REG = /\d(?!px)[a-z%]+$/i, cssHooks = {}, cssProps = {}, userSelectProperty, defaultDisplay = {}, RE_DASH = /-([a-z])/ig;
   cssProps["float"] = "cssFloat";
   function normalizeCssPropName(name) {
-    return cssProps[name] || S.Feature.getVendorCssPropName(name)
+    return cssProps[name] || getCssVendorInfo(name).propertyName
   }
   function upperCase() {
     return arguments[1].toUpperCase()
@@ -1387,7 +1387,7 @@ KISSY.add("dom/base/style", ["./api"], function(S, require) {
   }, unselectable:function(selector) {
     var _els = Dom.query(selector), elem, j, e, i = 0, excludes, style, els;
     if(userSelectProperty === undefined) {
-      userSelectProperty = S.Feature.getVendorCssPropName("userSelect")
+      userSelectProperty = getCssVendorInfo("userSelect").propertyName
     }
     for(j = _els.length - 1;j >= 0;j--) {
       elem = _els[j];

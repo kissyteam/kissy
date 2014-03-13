@@ -532,271 +532,271 @@ if (! _$jscoverage['/base.js'].branchData) {
   _$jscoverage['/base.js'].branchData['363'][1] = new BranchData();
 }
 _$jscoverage['/base.js'].branchData['363'][1].init(135, 17, 'top !== undefined');
-function visit69_363_1(result) {
+function visit68_363_1(result) {
   _$jscoverage['/base.js'].branchData['363'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base.js'].branchData['360'][1].init(22, 18, 'left !== undefined');
-function visit68_360_1(result) {
+function visit67_360_1(result) {
   _$jscoverage['/base.js'].branchData['360'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base.js'].branchData['348'][1].init(252, 17, 'top !== undefined');
-function visit67_348_1(result) {
+function visit66_348_1(result) {
   _$jscoverage['/base.js'].branchData['348'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base.js'].branchData['344'][1].init(84, 18, 'left !== undefined');
-function visit66_344_1(result) {
+function visit65_344_1(result) {
   _$jscoverage['/base.js'].branchData['344'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base.js'].branchData['341'][1].init(114, 7, 'animCfg');
-function visit65_341_1(result) {
+function visit64_341_1(result) {
   _$jscoverage['/base.js'].branchData['341'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base.js'].branchData['331'][1].init(272, 7, 'cfg.top');
-function visit64_331_1(result) {
+function visit63_331_1(result) {
   _$jscoverage['/base.js'].branchData['331'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base.js'].branchData['328'][1].init(138, 8, 'cfg.left');
-function visit63_328_1(result) {
+function visit62_328_1(result) {
   _$jscoverage['/base.js'].branchData['328'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base.js'].branchData['318'][1].init(78, 51, '(pageOffset = self.pagesOffset) && pageOffset[index]');
-function visit62_318_1(result) {
+function visit61_318_1(result) {
   _$jscoverage['/base.js'].branchData['318'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base.js'].branchData['307'][1].init(72, 15, 'offset[p2] <= v');
-function visit61_307_1(result) {
+function visit60_307_1(result) {
   _$jscoverage['/base.js'].branchData['307'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base.js'].branchData['305'][1].init(51, 6, 'i >= 0');
-function visit60_305_1(result) {
+function visit59_305_1(result) {
   _$jscoverage['/base.js'].branchData['305'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base.js'].branchData['300'][1].init(72, 15, 'offset[p2] >= v');
-function visit59_300_1(result) {
+function visit58_300_1(result) {
   _$jscoverage['/base.js'].branchData['300'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base.js'].branchData['298'][1].init(30, 22, 'i < pagesOffset.length');
-function visit58_298_1(result) {
+function visit57_298_1(result) {
   _$jscoverage['/base.js'].branchData['298'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base.js'].branchData['297'][1].init(261, 13, 'direction > 0');
-function visit57_297_1(result) {
+function visit56_297_1(result) {
   _$jscoverage['/base.js'].branchData['297'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base.js'].branchData['274'][1].init(48, 23, 'self.scrollAnims.length');
-function visit56_274_1(result) {
+function visit55_274_1(result) {
   _$jscoverage['/base.js'].branchData['274'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base.js'].branchData['265'][8].init(216, 10, 'deltaX < 0');
-function visit55_265_8(result) {
+function visit54_265_8(result) {
   _$jscoverage['/base.js'].branchData['265'][8].ranCondition(result);
   return result;
 }_$jscoverage['/base.js'].branchData['265'][7].init(195, 17, 'scrollLeft >= max');
-function visit54_265_7(result) {
+function visit53_265_7(result) {
   _$jscoverage['/base.js'].branchData['265'][7].ranCondition(result);
   return result;
 }_$jscoverage['/base.js'].branchData['265'][6].init(195, 31, 'scrollLeft >= max && deltaX < 0');
-function visit53_265_6(result) {
+function visit52_265_6(result) {
   _$jscoverage['/base.js'].branchData['265'][6].ranCondition(result);
   return result;
 }_$jscoverage['/base.js'].branchData['265'][5].init(181, 10, 'deltaX > 0');
-function visit52_265_5(result) {
+function visit51_265_5(result) {
   _$jscoverage['/base.js'].branchData['265'][5].ranCondition(result);
   return result;
 }_$jscoverage['/base.js'].branchData['265'][4].init(160, 17, 'scrollLeft <= min');
-function visit51_265_4(result) {
+function visit50_265_4(result) {
   _$jscoverage['/base.js'].branchData['265'][4].ranCondition(result);
   return result;
 }_$jscoverage['/base.js'].branchData['265'][3].init(160, 31, 'scrollLeft <= min && deltaX > 0');
-function visit50_265_3(result) {
+function visit49_265_3(result) {
   _$jscoverage['/base.js'].branchData['265'][3].ranCondition(result);
   return result;
 }_$jscoverage['/base.js'].branchData['265'][2].init(160, 66, 'scrollLeft <= min && deltaX > 0 || scrollLeft >= max && deltaX < 0');
-function visit49_265_2(result) {
+function visit48_265_2(result) {
   _$jscoverage['/base.js'].branchData['265'][2].ranCondition(result);
   return result;
 }_$jscoverage['/base.js'].branchData['265'][1].init(158, 69, '!(scrollLeft <= min && deltaX > 0 || scrollLeft >= max && deltaX < 0)');
-function visit48_265_1(result) {
+function visit47_265_1(result) {
   _$jscoverage['/base.js'].branchData['265'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base.js'].branchData['261'][1].init(825, 43, '(deltaX = e.deltaX) && self.allowScroll.left');
-function visit47_261_1(result) {
+function visit46_261_1(result) {
   _$jscoverage['/base.js'].branchData['261'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base.js'].branchData['255'][8].init(210, 10, 'deltaY < 0');
-function visit46_255_8(result) {
+function visit45_255_8(result) {
   _$jscoverage['/base.js'].branchData['255'][8].ranCondition(result);
   return result;
 }_$jscoverage['/base.js'].branchData['255'][7].init(190, 16, 'scrollTop >= max');
-function visit45_255_7(result) {
+function visit44_255_7(result) {
   _$jscoverage['/base.js'].branchData['255'][7].ranCondition(result);
   return result;
 }_$jscoverage['/base.js'].branchData['255'][6].init(190, 30, 'scrollTop >= max && deltaY < 0');
-function visit44_255_6(result) {
+function visit43_255_6(result) {
   _$jscoverage['/base.js'].branchData['255'][6].ranCondition(result);
   return result;
 }_$jscoverage['/base.js'].branchData['255'][5].init(176, 10, 'deltaY > 0');
-function visit43_255_5(result) {
+function visit42_255_5(result) {
   _$jscoverage['/base.js'].branchData['255'][5].ranCondition(result);
   return result;
 }_$jscoverage['/base.js'].branchData['255'][4].init(156, 16, 'scrollTop <= min');
-function visit42_255_4(result) {
+function visit41_255_4(result) {
   _$jscoverage['/base.js'].branchData['255'][4].ranCondition(result);
   return result;
 }_$jscoverage['/base.js'].branchData['255'][3].init(156, 30, 'scrollTop <= min && deltaY > 0');
-function visit41_255_3(result) {
+function visit40_255_3(result) {
   _$jscoverage['/base.js'].branchData['255'][3].ranCondition(result);
   return result;
 }_$jscoverage['/base.js'].branchData['255'][2].init(156, 64, 'scrollTop <= min && deltaY > 0 || scrollTop >= max && deltaY < 0');
-function visit40_255_2(result) {
+function visit39_255_2(result) {
   _$jscoverage['/base.js'].branchData['255'][2].ranCondition(result);
   return result;
 }_$jscoverage['/base.js'].branchData['255'][1].init(154, 67, '!(scrollTop <= min && deltaY > 0 || scrollTop >= max && deltaY < 0)');
-function visit39_255_1(result) {
+function visit38_255_1(result) {
   _$jscoverage['/base.js'].branchData['255'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base.js'].branchData['251'][1].init(368, 42, '(deltaY = e.deltaY) && self.allowScroll.top');
-function visit38_251_1(result) {
+function visit37_251_1(result) {
   _$jscoverage['/base.js'].branchData['251'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base.js'].branchData['239'][1].init(18, 20, 'this.get(\'disabled\')');
-function visit37_239_1(result) {
+function visit36_239_1(result) {
   _$jscoverage['/base.js'].branchData['239'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base.js'].branchData['225'][1].init(51, 18, 'control.scrollStep');
-function visit36_225_1(result) {
+function visit35_225_1(result) {
   _$jscoverage['/base.js'].branchData['225'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base.js'].branchData['215'][1].init(302, 24, 'keyCode === KeyCode.LEFT');
-function visit35_215_1(result) {
+function visit34_215_1(result) {
   _$jscoverage['/base.js'].branchData['215'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base.js'].branchData['212'][1].init(132, 25, 'keyCode === KeyCode.RIGHT');
-function visit34_212_1(result) {
+function visit33_212_1(result) {
   _$jscoverage['/base.js'].branchData['212'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base.js'].branchData['209'][1].init(1656, 6, 'allowX');
-function visit33_209_1(result) {
+function visit32_209_1(result) {
   _$jscoverage['/base.js'].branchData['209'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base.js'].branchData['204'][1].init(737, 27, 'keyCode === KeyCode.PAGE_UP');
-function visit32_204_1(result) {
+function visit31_204_1(result) {
   _$jscoverage['/base.js'].branchData['204'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base.js'].branchData['201'][1].init(564, 29, 'keyCode === KeyCode.PAGE_DOWN');
-function visit31_201_1(result) {
+function visit30_201_1(result) {
   _$jscoverage['/base.js'].branchData['201'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base.js'].branchData['198'][1].init(399, 22, 'keyCode === KeyCode.UP');
-function visit30_198_1(result) {
+function visit29_198_1(result) {
   _$jscoverage['/base.js'].branchData['198'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base.js'].branchData['193'][1].init(184, 24, 'keyCode === KeyCode.DOWN');
-function visit29_193_1(result) {
+function visit28_193_1(result) {
   _$jscoverage['/base.js'].branchData['193'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base.js'].branchData['189'][1].init(720, 6, 'allowY');
-function visit28_189_1(result) {
+function visit27_189_1(result) {
   _$jscoverage['/base.js'].branchData['189'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base.js'].branchData['179'][2].init(338, 21, 'nodeName === \'select\'');
-function visit27_179_2(result) {
+function visit26_179_2(result) {
   _$jscoverage['/base.js'].branchData['179'][2].ranCondition(result);
   return result;
 }_$jscoverage['/base.js'].branchData['179'][1].init(43, 76, 'nodeName === \'select\' || $target.hasAttr(\'contenteditable\')');
-function visit26_179_1(result) {
+function visit25_179_1(result) {
   _$jscoverage['/base.js'].branchData['179'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base.js'].branchData['178'][2].init(293, 23, 'nodeName === \'textarea\'');
-function visit25_178_2(result) {
+function visit24_178_2(result) {
   _$jscoverage['/base.js'].branchData['178'][2].ranCondition(result);
   return result;
 }_$jscoverage['/base.js'].branchData['178'][1].init(40, 120, 'nodeName === \'textarea\' || nodeName === \'select\' || $target.hasAttr(\'contenteditable\')');
-function visit24_178_1(result) {
+function visit23_178_1(result) {
   _$jscoverage['/base.js'].branchData['178'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base.js'].branchData['177'][2].init(250, 20, 'nodeName === \'input\'');
-function visit23_177_2(result) {
+function visit22_177_2(result) {
   _$jscoverage['/base.js'].branchData['177'][2].ranCondition(result);
   return result;
 }_$jscoverage['/base.js'].branchData['177'][1].init(250, 161, 'nodeName === \'input\' || nodeName === \'textarea\' || nodeName === \'select\' || $target.hasAttr(\'contenteditable\')');
-function visit22_177_1(result) {
+function visit21_177_1(result) {
   _$jscoverage['/base.js'].branchData['177'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base.js'].branchData['110'][1].init(805, 9, 'pageIndex');
-function visit21_110_1(result) {
+function visit20_110_1(result) {
   _$jscoverage['/base.js'].branchData['110'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base.js'].branchData['102'][3].init(200, 19, 'top <= maxScrollTop');
-function visit20_102_3(result) {
+function visit19_102_3(result) {
   _$jscoverage['/base.js'].branchData['102'][3].ranCondition(result);
   return result;
 }_$jscoverage['/base.js'].branchData['102'][2].init(175, 21, 'left <= maxScrollLeft');
-function visit19_102_2(result) {
+function visit18_102_2(result) {
   _$jscoverage['/base.js'].branchData['102'][2].ranCondition(result);
   return result;
 }_$jscoverage['/base.js'].branchData['102'][1].init(175, 44, 'left <= maxScrollLeft && top <= maxScrollTop');
-function visit18_102_1(result) {
+function visit17_102_1(result) {
   _$jscoverage['/base.js'].branchData['102'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base.js'].branchData['93'][1].init(91, 24, 'typeof snap === \'string\'');
-function visit17_93_1(result) {
+function visit16_93_1(result) {
   _$jscoverage['/base.js'].branchData['93'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base.js'].branchData['91'][1].init(1766, 4, 'snap');
-function visit16_91_1(result) {
+function visit15_91_1(result) {
   _$jscoverage['/base.js'].branchData['91'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base.js'].branchData['68'][1].init(1179, 25, 'scrollWidth > clientWidth');
-function visit15_68_1(result) {
+function visit14_68_1(result) {
   _$jscoverage['/base.js'].branchData['68'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base.js'].branchData['65'][1].init(1090, 27, 'scrollHeight > clientHeight');
-function visit14_65_1(result) {
+function visit13_65_1(result) {
   _$jscoverage['/base.js'].branchData['65'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base.js'].branchData['54'][1].init(53, 35, 'clientWidth === prevVal.clientWidth');
-function visit13_54_1(result) {
+function visit12_54_1(result) {
   _$jscoverage['/base.js'].branchData['54'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base.js'].branchData['53'][2].init(720, 37, 'clientHeight === prevVal.clientHeight');
-function visit12_53_2(result) {
+function visit11_53_2(result) {
   _$jscoverage['/base.js'].branchData['53'][2].ranCondition(result);
   return result;
 }_$jscoverage['/base.js'].branchData['53'][1].init(51, 89, 'clientHeight === prevVal.clientHeight && clientWidth === prevVal.clientWidth');
-function visit11_53_1(result) {
+function visit10_53_1(result) {
   _$jscoverage['/base.js'].branchData['53'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base.js'].branchData['52'][2].init(667, 35, 'prevVal.scrollWidth === scrollWidth');
-function visit10_52_2(result) {
+function visit9_52_2(result) {
   _$jscoverage['/base.js'].branchData['52'][2].ranCondition(result);
   return result;
 }_$jscoverage['/base.js'].branchData['52'][1].init(53, 141, 'prevVal.scrollWidth === scrollWidth && clientHeight === prevVal.clientHeight && clientWidth === prevVal.clientWidth');
-function visit9_52_1(result) {
+function visit8_52_1(result) {
   _$jscoverage['/base.js'].branchData['52'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base.js'].branchData['51'][2].init(611, 37, 'prevVal.scrollHeight === scrollHeight');
-function visit8_51_2(result) {
+function visit7_51_2(result) {
   _$jscoverage['/base.js'].branchData['51'][2].ranCondition(result);
   return result;
 }_$jscoverage['/base.js'].branchData['51'][1].init(611, 195, 'prevVal.scrollHeight === scrollHeight && prevVal.scrollWidth === scrollWidth && clientHeight === prevVal.clientHeight && clientWidth === prevVal.clientWidth');
-function visit7_51_1(result) {
+function visit6_51_1(result) {
   _$jscoverage['/base.js'].branchData['51'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base.js'].branchData['49'][2].init(574, 14, 'e && e.prevVal');
-function visit6_49_2(result) {
+function visit5_49_2(result) {
   _$jscoverage['/base.js'].branchData['49'][2].ranCondition(result);
   return result;
 }_$jscoverage['/base.js'].branchData['49'][1].init(574, 20, 'e && e.prevVal || {}');
-function visit5_49_1(result) {
+function visit4_49_1(result) {
   _$jscoverage['/base.js'].branchData['49'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base.js'].branchData['23'][1].init(255, 10, 'scrollLeft');
-function visit4_23_1(result) {
+function visit3_23_1(result) {
   _$jscoverage['/base.js'].branchData['23'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base.js'].branchData['20'][1].init(147, 9, 'scrollTop');
-function visit3_20_1(result) {
+function visit2_20_1(result) {
   _$jscoverage['/base.js'].branchData['20'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base.js'].lineData[6]++;
@@ -818,12 +818,12 @@ KISSY.add(function(S, require) {
     _$jscoverage['/base.js'].lineData[16]++;
     var self = this, el = self.el, scrollTop = el.scrollTop, scrollLeft = el.scrollLeft;
     _$jscoverage['/base.js'].lineData[20]++;
-    if (visit3_20_1(scrollTop)) {
+    if (visit2_20_1(scrollTop)) {
       _$jscoverage['/base.js'].lineData[21]++;
       self.set('scrollTop', scrollTop + self.get('scrollTop'));
     }
     _$jscoverage['/base.js'].lineData[23]++;
-    if (visit4_23_1(scrollLeft)) {
+    if (visit3_23_1(scrollLeft)) {
       _$jscoverage['/base.js'].lineData[24]++;
       self.set('scrollLeft', scrollLeft + self.get('scrollLeft'));
     }
@@ -846,9 +846,9 @@ KISSY.add(function(S, require) {
     _$jscoverage['/base.js'].lineData[45]++;
     var clientHeight = v.clientHeight, allowScroll, clientWidth = v.clientWidth;
     _$jscoverage['/base.js'].lineData[49]++;
-    var prevVal = visit5_49_1(visit6_49_2(e && e.prevVal) || {});
+    var prevVal = visit4_49_1(visit5_49_2(e && e.prevVal) || {});
     _$jscoverage['/base.js'].lineData[51]++;
-    if (visit7_51_1(visit8_51_2(prevVal.scrollHeight === scrollHeight) && visit9_52_1(visit10_52_2(prevVal.scrollWidth === scrollWidth) && visit11_53_1(visit12_53_2(clientHeight === prevVal.clientHeight) && visit13_54_1(clientWidth === prevVal.clientWidth))))) {
+    if (visit6_51_1(visit7_51_2(prevVal.scrollHeight === scrollHeight) && visit8_52_1(visit9_52_2(prevVal.scrollWidth === scrollWidth) && visit10_53_1(visit11_53_2(clientHeight === prevVal.clientHeight) && visit12_54_1(clientWidth === prevVal.clientWidth))))) {
       _$jscoverage['/base.js'].lineData[55]++;
       return;
     }
@@ -863,12 +863,12 @@ KISSY.add(function(S, require) {
     _$jscoverage['/base.js'].lineData[63]++;
     allowScroll = control.allowScroll = {};
     _$jscoverage['/base.js'].lineData[65]++;
-    if (visit14_65_1(scrollHeight > clientHeight)) {
+    if (visit13_65_1(scrollHeight > clientHeight)) {
       _$jscoverage['/base.js'].lineData[66]++;
       allowScroll.top = 1;
     }
     _$jscoverage['/base.js'].lineData[68]++;
-    if (visit15_68_1(scrollWidth > clientWidth)) {
+    if (visit14_68_1(scrollWidth > clientWidth)) {
       _$jscoverage['/base.js'].lineData[69]++;
       allowScroll.left = 1;
     }
@@ -887,18 +887,18 @@ KISSY.add(function(S, require) {
     _$jscoverage['/base.js'].lineData[87]++;
     var snap = control.get('snap'), scrollLeft = control.get('scrollLeft'), scrollTop = control.get('scrollTop');
     _$jscoverage['/base.js'].lineData[91]++;
-    if (visit16_91_1(snap)) {
+    if (visit15_91_1(snap)) {
       _$jscoverage['/base.js'].lineData[92]++;
       var elOffset = $contentEl.offset();
       _$jscoverage['/base.js'].lineData[93]++;
-      var pages = control.pages = visit17_93_1(typeof snap === 'string') ? $contentEl.all(snap) : $contentEl.children(), pageIndex = control.get('pageIndex'), pagesOffset = control.pagesOffset = [];
+      var pages = control.pages = visit16_93_1(typeof snap === 'string') ? $contentEl.all(snap) : $contentEl.children(), pageIndex = control.get('pageIndex'), pagesOffset = control.pagesOffset = [];
       _$jscoverage['/base.js'].lineData[98]++;
       pages.each(function(p, i) {
   _$jscoverage['/base.js'].functionData[4]++;
   _$jscoverage['/base.js'].lineData[99]++;
   var offset = p.offset(), left = offset.left - elOffset.left, top = offset.top - elOffset.top;
   _$jscoverage['/base.js'].lineData[102]++;
-  if (visit18_102_1(visit19_102_2(left <= maxScrollLeft) && visit20_102_3(top <= maxScrollTop))) {
+  if (visit17_102_1(visit18_102_2(left <= maxScrollLeft) && visit19_102_3(top <= maxScrollTop))) {
     _$jscoverage['/base.js'].lineData[103]++;
     pagesOffset[i] = {
   left: left, 
@@ -907,7 +907,7 @@ KISSY.add(function(S, require) {
   }
 });
       _$jscoverage['/base.js'].lineData[110]++;
-      if (visit21_110_1(pageIndex)) {
+      if (visit20_110_1(pageIndex)) {
         _$jscoverage['/base.js'].lineData[111]++;
         control.scrollToPage(pageIndex);
         _$jscoverage['/base.js'].lineData[112]++;
@@ -956,7 +956,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/base.js'].lineData[173]++;
   var target = e.target, $target = $(target), nodeName = $target.nodeName();
   _$jscoverage['/base.js'].lineData[177]++;
-  if (visit22_177_1(visit23_177_2(nodeName === 'input') || visit24_178_1(visit25_178_2(nodeName === 'textarea') || visit26_179_1(visit27_179_2(nodeName === 'select') || $target.hasAttr('contenteditable'))))) {
+  if (visit21_177_1(visit22_177_2(nodeName === 'input') || visit23_178_1(visit24_178_2(nodeName === 'textarea') || visit25_179_1(visit26_179_2(nodeName === 'select') || $target.hasAttr('contenteditable'))))) {
     _$jscoverage['/base.js'].lineData[181]++;
     return undefined;
   }
@@ -967,11 +967,11 @@ KISSY.add(function(S, require) {
   _$jscoverage['/base.js'].lineData[188]++;
   var allowY = self.allowScroll.top;
   _$jscoverage['/base.js'].lineData[189]++;
-  if (visit28_189_1(allowY)) {
+  if (visit27_189_1(allowY)) {
     _$jscoverage['/base.js'].lineData[190]++;
     var scrollStepY = scrollStep.top, clientHeight = self.clientHeight, scrollTop = self.get('scrollTop');
     _$jscoverage['/base.js'].lineData[193]++;
-    if (visit29_193_1(keyCode === KeyCode.DOWN)) {
+    if (visit28_193_1(keyCode === KeyCode.DOWN)) {
       _$jscoverage['/base.js'].lineData[194]++;
       self.scrollToWithBounds({
   top: scrollTop + scrollStepY});
@@ -979,7 +979,7 @@ KISSY.add(function(S, require) {
       ok = true;
     } else {
       _$jscoverage['/base.js'].lineData[198]++;
-      if (visit30_198_1(keyCode === KeyCode.UP)) {
+      if (visit29_198_1(keyCode === KeyCode.UP)) {
         _$jscoverage['/base.js'].lineData[199]++;
         self.scrollToWithBounds({
   top: scrollTop - scrollStepY});
@@ -987,7 +987,7 @@ KISSY.add(function(S, require) {
         ok = true;
       } else {
         _$jscoverage['/base.js'].lineData[201]++;
-        if (visit31_201_1(keyCode === KeyCode.PAGE_DOWN)) {
+        if (visit30_201_1(keyCode === KeyCode.PAGE_DOWN)) {
           _$jscoverage['/base.js'].lineData[202]++;
           self.scrollToWithBounds({
   top: scrollTop + clientHeight});
@@ -995,7 +995,7 @@ KISSY.add(function(S, require) {
           ok = true;
         } else {
           _$jscoverage['/base.js'].lineData[204]++;
-          if (visit32_204_1(keyCode === KeyCode.PAGE_UP)) {
+          if (visit31_204_1(keyCode === KeyCode.PAGE_UP)) {
             _$jscoverage['/base.js'].lineData[205]++;
             self.scrollToWithBounds({
   top: scrollTop - clientHeight});
@@ -1007,13 +1007,13 @@ KISSY.add(function(S, require) {
     }
   }
   _$jscoverage['/base.js'].lineData[209]++;
-  if (visit33_209_1(allowX)) {
+  if (visit32_209_1(allowX)) {
     _$jscoverage['/base.js'].lineData[210]++;
     var scrollStepX = scrollStep.left;
     _$jscoverage['/base.js'].lineData[211]++;
     var scrollLeft = self.get('scrollLeft');
     _$jscoverage['/base.js'].lineData[212]++;
-    if (visit34_212_1(keyCode === KeyCode.RIGHT)) {
+    if (visit33_212_1(keyCode === KeyCode.RIGHT)) {
       _$jscoverage['/base.js'].lineData[213]++;
       self.scrollToWithBounds({
   left: scrollLeft + scrollStepX});
@@ -1021,7 +1021,7 @@ KISSY.add(function(S, require) {
       ok = true;
     } else {
       _$jscoverage['/base.js'].lineData[215]++;
-      if (visit35_215_1(keyCode === KeyCode.LEFT)) {
+      if (visit34_215_1(keyCode === KeyCode.LEFT)) {
         _$jscoverage['/base.js'].lineData[216]++;
         self.scrollToWithBounds({
   left: scrollLeft - scrollStepX});
@@ -1038,7 +1038,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/base.js'].lineData[224]++;
   var control = this;
   _$jscoverage['/base.js'].lineData[225]++;
-  if (visit36_225_1(control.scrollStep)) {
+  if (visit35_225_1(control.scrollStep)) {
     _$jscoverage['/base.js'].lineData[226]++;
     return control.scrollStep;
   }
@@ -1058,14 +1058,14 @@ KISSY.add(function(S, require) {
   handleMouseWheel: function(e) {
   _$jscoverage['/base.js'].functionData[10]++;
   _$jscoverage['/base.js'].lineData[239]++;
-  if (visit37_239_1(this.get('disabled'))) {
+  if (visit36_239_1(this.get('disabled'))) {
     _$jscoverage['/base.js'].lineData[240]++;
     return;
   }
   _$jscoverage['/base.js'].lineData[242]++;
   var max, min, self = this, scrollStep = self.getScrollStep(), deltaY, deltaX, maxScroll = self.maxScroll, minScroll = self.minScroll;
   _$jscoverage['/base.js'].lineData[251]++;
-  if (visit38_251_1((deltaY = e.deltaY) && self.allowScroll.top)) {
+  if (visit37_251_1((deltaY = e.deltaY) && self.allowScroll.top)) {
     _$jscoverage['/base.js'].lineData[252]++;
     var scrollTop = self.get('scrollTop');
     _$jscoverage['/base.js'].lineData[253]++;
@@ -1073,7 +1073,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/base.js'].lineData[254]++;
     min = minScroll.top;
     _$jscoverage['/base.js'].lineData[255]++;
-    if (visit39_255_1(!(visit40_255_2(visit41_255_3(visit42_255_4(scrollTop <= min) && visit43_255_5(deltaY > 0)) || visit44_255_6(visit45_255_7(scrollTop >= max) && visit46_255_8(deltaY < 0)))))) {
+    if (visit38_255_1(!(visit39_255_2(visit40_255_3(visit41_255_4(scrollTop <= min) && visit42_255_5(deltaY > 0)) || visit43_255_6(visit44_255_7(scrollTop >= max) && visit45_255_8(deltaY < 0)))))) {
       _$jscoverage['/base.js'].lineData[256]++;
       self.scrollToWithBounds({
   top: scrollTop - e.deltaY * scrollStep.top});
@@ -1082,7 +1082,7 @@ KISSY.add(function(S, require) {
     }
   }
   _$jscoverage['/base.js'].lineData[261]++;
-  if (visit47_261_1((deltaX = e.deltaX) && self.allowScroll.left)) {
+  if (visit46_261_1((deltaX = e.deltaX) && self.allowScroll.left)) {
     _$jscoverage['/base.js'].lineData[262]++;
     var scrollLeft = self.get('scrollLeft');
     _$jscoverage['/base.js'].lineData[263]++;
@@ -1090,7 +1090,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/base.js'].lineData[264]++;
     min = minScroll.left;
     _$jscoverage['/base.js'].lineData[265]++;
-    if (visit48_265_1(!(visit49_265_2(visit50_265_3(visit51_265_4(scrollLeft <= min) && visit52_265_5(deltaX > 0)) || visit53_265_6(visit54_265_7(scrollLeft >= max) && visit55_265_8(deltaX < 0)))))) {
+    if (visit47_265_1(!(visit48_265_2(visit49_265_3(visit50_265_4(scrollLeft <= min) && visit51_265_5(deltaX > 0)) || visit52_265_6(visit53_265_7(scrollLeft >= max) && visit54_265_8(deltaX < 0)))))) {
       _$jscoverage['/base.js'].lineData[266]++;
       self.scrollToWithBounds({
   left: scrollLeft - e.deltaX * scrollStep.left});
@@ -1104,7 +1104,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/base.js'].lineData[273]++;
   var self = this;
   _$jscoverage['/base.js'].lineData[274]++;
-  if (visit56_274_1(self.scrollAnims.length)) {
+  if (visit55_274_1(self.scrollAnims.length)) {
     _$jscoverage['/base.js'].lineData[275]++;
     S.each(self.scrollAnims, function(scrollAnim) {
   _$jscoverage['/base.js'].functionData[12]++;
@@ -1139,24 +1139,24 @@ KISSY.add(function(S, require) {
   return e1[p2] - e2[p2];
 });
   _$jscoverage['/base.js'].lineData[297]++;
-  if (visit57_297_1(direction > 0)) {
+  if (visit56_297_1(direction > 0)) {
     _$jscoverage['/base.js'].lineData[298]++;
-    for (i = 0; visit58_298_1(i < pagesOffset.length); i++) {
+    for (i = 0; visit57_298_1(i < pagesOffset.length); i++) {
       _$jscoverage['/base.js'].lineData[299]++;
       offset = pagesOffset[i];
       _$jscoverage['/base.js'].lineData[300]++;
-      if (visit59_300_1(offset[p2] >= v)) {
+      if (visit58_300_1(offset[p2] >= v)) {
         _$jscoverage['/base.js'].lineData[301]++;
         return offset.index;
       }
     }
   } else {
     _$jscoverage['/base.js'].lineData[305]++;
-    for (i = pagesOffset.length - 1; visit60_305_1(i >= 0); i--) {
+    for (i = pagesOffset.length - 1; visit59_305_1(i >= 0); i--) {
       _$jscoverage['/base.js'].lineData[306]++;
       offset = pagesOffset[i];
       _$jscoverage['/base.js'].lineData[307]++;
-      if (visit61_307_1(offset[p2] <= v)) {
+      if (visit60_307_1(offset[p2] <= v)) {
         _$jscoverage['/base.js'].lineData[308]++;
         return offset.index;
       }
@@ -1170,7 +1170,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/base.js'].lineData[316]++;
   var self = this, pageOffset;
   _$jscoverage['/base.js'].lineData[318]++;
-  if (visit62_318_1((pageOffset = self.pagesOffset) && pageOffset[index])) {
+  if (visit61_318_1((pageOffset = self.pagesOffset) && pageOffset[index])) {
     _$jscoverage['/base.js'].lineData[319]++;
     self.set('pageIndex', index);
     _$jscoverage['/base.js'].lineData[320]++;
@@ -1186,12 +1186,12 @@ KISSY.add(function(S, require) {
   _$jscoverage['/base.js'].lineData[327]++;
   var minScroll = self.minScroll;
   _$jscoverage['/base.js'].lineData[328]++;
-  if (visit63_328_1(cfg.left)) {
+  if (visit62_328_1(cfg.left)) {
     _$jscoverage['/base.js'].lineData[329]++;
     cfg.left = Math.min(Math.max(cfg.left, minScroll.left), maxScroll.left);
   }
   _$jscoverage['/base.js'].lineData[331]++;
-  if (visit64_331_1(cfg.top)) {
+  if (visit63_331_1(cfg.top)) {
     _$jscoverage['/base.js'].lineData[332]++;
     cfg.top = Math.min(Math.max(cfg.top, minScroll.top), maxScroll.top);
   }
@@ -1203,18 +1203,18 @@ KISSY.add(function(S, require) {
   _$jscoverage['/base.js'].lineData[338]++;
   var self = this, left = cfg.left, top = cfg.top;
   _$jscoverage['/base.js'].lineData[341]++;
-  if (visit65_341_1(animCfg)) {
+  if (visit64_341_1(animCfg)) {
     _$jscoverage['/base.js'].lineData[342]++;
     var node = {}, to = {};
     _$jscoverage['/base.js'].lineData[344]++;
-    if (visit66_344_1(left !== undefined)) {
+    if (visit65_344_1(left !== undefined)) {
       _$jscoverage['/base.js'].lineData[345]++;
       to.scrollLeft = left;
       _$jscoverage['/base.js'].lineData[346]++;
       node.scrollLeft = self.get('scrollLeft');
     }
     _$jscoverage['/base.js'].lineData[348]++;
-    if (visit67_348_1(top !== undefined)) {
+    if (visit66_348_1(top !== undefined)) {
       _$jscoverage['/base.js'].lineData[349]++;
       to.scrollTop = top;
       _$jscoverage['/base.js'].lineData[350]++;
@@ -1236,12 +1236,12 @@ KISSY.add(function(S, require) {
     anim.run();
   } else {
     _$jscoverage['/base.js'].lineData[360]++;
-    if (visit68_360_1(left !== undefined)) {
+    if (visit67_360_1(left !== undefined)) {
       _$jscoverage['/base.js'].lineData[361]++;
       self.set('scrollLeft', left);
     }
     _$jscoverage['/base.js'].lineData[363]++;
-    if (visit69_363_1(top !== undefined)) {
+    if (visit68_363_1(top !== undefined)) {
       _$jscoverage['/base.js'].lineData[364]++;
       self.set('scrollTop', top);
     }

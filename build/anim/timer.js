@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 13 17:47
+build time: Mar 13 23:47
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -254,7 +254,7 @@ KISSY.add("anim/timer/fx", ["dom"], function(S, require) {
         }
         self.val = val;
         if(self.type === "attr") {
-          Dom.attr(node, prop, val, 1)
+          Dom.attr(node, prop, val, true)
         }else {
           Dom.css(node, prop, val)
         }
@@ -508,9 +508,12 @@ KISSY.add("anim/timer", ["dom", "./base", "./timer/easing", "./timer/manager", "
   require("./timer/color");
   require("./timer/transform");
   var camelCase = Dom._camelCase, NUMBER_REG = /^([+\-]=)?([\d+.\-]+)([a-z%]*)$/i;
-  function Anim() {
-    var self = this, to;
-    Anim.superclass.constructor.apply(self, arguments);
+  function TimerAnim(node, to, duration, easing, complete) {
+    var self = this;
+    if(!(self instanceof TimerAnim)) {
+      return new TimerAnim(node, to, duration, easing, complete)
+    }
+    TimerAnim.superclass.constructor.apply(self, arguments);
     S.each(to = self.config.to, function(v, prop) {
       var camelProp = camelCase(prop);
       if(prop !== camelProp) {
@@ -519,7 +522,7 @@ KISSY.add("anim/timer", ["dom", "./base", "./timer/easing", "./timer/manager", "
       }
     })
   }
-  S.extend(Anim, AnimBase, {prepareFx:function() {
+  S.extend(TimerAnim, AnimBase, {prepareFx:function() {
     var self = this, node = self.node, _propsData = self._propsData;
     S.each(_propsData, function(_propData) {
       _propData.duration *= 1E3;
@@ -614,8 +617,9 @@ KISSY.add("anim/timer", ["dom", "./base", "./timer/easing", "./timer/manager", "
   }, doStart:function() {
     AM.start(this)
   }});
-  Anim.Easing = Easing;
-  Anim.Fx = Fx;
-  return Anim
+  TimerAnim.Easing = Easing;
+  TimerAnim.Fx = Fx;
+  S.mix(TimerAnim, AnimBase.Statics);
+  return TimerAnim
 });
 

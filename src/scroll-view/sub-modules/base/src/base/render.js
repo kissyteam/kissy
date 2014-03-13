@@ -10,13 +10,14 @@ KISSY.add(function (S, require) {
     // http://www.html5rocks.com/en/tutorials/speed/html5/
     var Feature = S.Feature,
 //        MARKER_CLS = 'ks-scrollview-marker',
+        transformVendorInfo = Feature.getCssVendorInfo('transform'),
         floor = Math.floor,
         transformProperty;
 
     var isTransform3dSupported = S.Feature.isTransform3dSupported();
 
     // http://www.html5rocks.com/en/tutorials/speed/html5/
-    var supportCss3 = S.Feature.getVendorCssPropPrefix('transform') !== false;
+    var supportCss3 = !!transformVendorInfo;
 
 //    function createMarker(contentEl) {
 //        var m;
@@ -68,7 +69,7 @@ KISSY.add(function (S, require) {
     };
 
     if (supportCss3) {
-        transformProperty = Feature.getVendorCssPropName('transform');
+        transformProperty = transformVendorInfo.propertyName;
 
         methods._onSetScrollLeft = function (v) {
             var control = this.control;

@@ -1,6 +1,5 @@
 KISSY.add(function (S, Simple, Queue) {
-    S.config('anim/useTransition', true);
-    if (KISSY.Feature.getVendorCssPropPrefix('transition') !== false) {
+    if (KISSY.Feature.getCssVendorInfo('transition')) {
         Simple.run();
         Queue.run();
     }

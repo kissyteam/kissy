@@ -49,7 +49,7 @@
 <script src="/kissy/build/seed.js"></script>
 <script>
     (function (S) {
-        if (S.Feature.getVendorCssPropPrefix('transform')===false) {
+        if (!S.Feature.getCssVendorInfo('transform')) {
             alert('your browser does not support this');
             return;
         }

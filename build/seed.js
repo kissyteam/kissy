@@ -1,12 +1,12 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 13 20:31
+build time: Mar 13 23:52
 */
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 13 20:30
+build time: Mar 13 23:51
 */
 /**
  * @ignore
@@ -62,11 +62,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20140313203034' will replace with current timestamp when compressing.
+         * NOTICE: '20140313235133' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20140313203034',
+        __BUILD_TIME: '20140313235133',
 
         /**
          * KISSY Environment.
@@ -3645,7 +3645,7 @@ KISSY.add('i18n', {
     var doc = S.Env.host && S.Env.host.document;
     // var logger = S.getLogger('s/loader');
     var Utils = S.Loader.Utils;
-    var TIMESTAMP = '20140313203034';
+    var TIMESTAMP = '20140313235133';
     var defaultComboPrefix = '??';
     var defaultComboSep = ',';
 
@@ -3773,7 +3773,7 @@ KISSY.add('i18n', {
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 13 20:31
+build time: Mar 13 23:52
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -4469,7 +4469,7 @@ KISSY.add("util", ["util/array", "util/escape", "util/function", "util/object", 
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 13 20:30
+build time: Mar 13 23:51
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -4652,7 +4652,7 @@ KISSY.add("ua", [], function(S, undefined) {
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 13 20:31
+build time: Mar 13 23:52
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -4661,7 +4661,7 @@ build time: Mar 13 20:31
 */
 
 KISSY.add("feature", ["ua"], function(S, require) {
-  var win = S.Env.host, Config = S.Config, UA = require("ua"), VENDORS = ["Webkit", "Moz", "O", "ms"], doc = win.document || {}, isMsPointerSupported, isPointerSupported, isTransform3dSupported, documentElement = doc && doc.documentElement, navigator, documentElementStyle, isClassListSupportedState = true, isQuerySelectorSupportedState = false, isTouchEventSupportedState = "ontouchstart" in doc && !UA.phantomjs, vendorInfos = {}, ie = UA.ieMode;
+  var win = S.Env.host, Config = S.Config, UA = require("ua"), namePrefixMap = {Webkit:"-webkit-", Moz:"-moz-", O:"-o-", ms:"ms-"}, doc = win.document || {}, isMsPointerSupported, isPointerSupported, isTransform3dSupported, documentElement = doc && doc.documentElement, navigator, documentElementStyle, isClassListSupportedState = true, isQuerySelectorSupportedState = false, isTouchEventSupportedState = "ontouchstart" in doc && !UA.phantomjs, vendorInfos = {}, ie = UA.ieMode;
   if(documentElement) {
     if(documentElement.querySelector && ie !== 8) {
       isQuerySelectorSupportedState = true
@@ -4673,20 +4673,20 @@ KISSY.add("feature", ["ua"], function(S, require) {
     isPointerSupported = "pointerEnabled" in navigator
   }
   function getVendorInfo(name) {
-    if(vendorInfos[name]) {
+    if(name in vendorInfos) {
       return vendorInfos[name]
     }
     if(!documentElementStyle || name in documentElementStyle) {
-      vendorInfos[name] = {name:name, prefix:""}
+      vendorInfos[name] = {propertyName:name, name:name, propertyNamePrefix:"", namePrefix:""}
     }else {
-      var upperFirstName = name.charAt(0).toUpperCase() + name.slice(1), vendorName, i = VENDORS.length;
-      while(i--) {
-        vendorName = VENDORS[i] + upperFirstName;
+      var upperFirstName = name.charAt(0).toUpperCase() + name.slice(1), vendorName;
+      for(var propertyNamePrefix in namePrefixMap) {
+        vendorName = propertyNamePrefix + upperFirstName;
         if(vendorName in documentElementStyle) {
-          vendorInfos[name] = {name:vendorName, prefix:VENDORS[i]}
+          vendorInfos[name] = {propertyName:vendorName, name:namePrefixMap[propertyNamePrefix] + name, propertyNamePrefix:propertyNamePrefix, namePrefix:namePrefixMap[propertyNamePrefix]}
         }
       }
-      vendorInfos[name] = vendorInfos[name] || {name:name, prefix:false}
+      vendorInfos[name] = vendorInfos[name] || null
     }
     return vendorInfos[name]
   }
@@ -4725,10 +4725,8 @@ KISSY.add("feature", ["ua"], function(S, require) {
     return isClassListSupportedState
   }, isQuerySelectorSupported:function() {
     return!Config.simulateCss3Selector && isQuerySelectorSupportedState
-  }, getVendorCssPropPrefix:function(name) {
-    return getVendorInfo(name).prefix
-  }, getVendorCssPropName:function(name) {
-    return getVendorInfo(name).name
+  }, getCssVendorInfo:function(name) {
+    return getVendorInfo(name)
   }};
   return S.Feature
 });
@@ -4821,14 +4819,10 @@ KISSY.add("feature", ["ua"], function(S, require) {
 /*jshint indent:false*/
 (function (config, Feature, UA) {
 config({
-    'anim/transition?': {
-        alias: KISSY.Feature.getVendorCssPropPrefix('transition') !== false ? 'anim/transition' : ''
+    'anim': {
+        alias: KISSY.Feature.getCssVendorInfo('transition') ? 'anim/transition' : 'anim/timer'
     }
 });/*Generated By KISSY Module Compiler*/
-config({
-anim: {requires: ['anim/base','anim/timer','anim/transition?']}
-});
-/*Generated By KISSY Module Compiler*/
 config({
 'anim/base': {requires: ['dom','promise']}
 });
@@ -4838,7 +4832,7 @@ config({
 });
 /*Generated By KISSY Module Compiler*/
 config({
-'anim/transition': {requires: ['dom','event/dom','anim/base']}
+'anim/transition': {requires: ['dom','anim/base']}
 });
 /*Generated By KISSY Module Compiler*/
 config({

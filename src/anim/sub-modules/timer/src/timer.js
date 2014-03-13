@@ -16,10 +16,12 @@ KISSY.add(function (S, require) {
     var camelCase = Dom._camelCase,
         NUMBER_REG = /^([+\-]=)?([\d+.\-]+)([a-z%]*)$/i;
 
-    function Anim() {
-        var self = this,
-            to;
-        Anim.superclass.constructor.apply(self, arguments);
+    function TimerAnim(node, to, duration, easing, complete) {
+        var self = this;
+        if (!(self instanceof  TimerAnim)) {
+            return new TimerAnim(node, to, duration, easing, complete);
+        }
+        TimerAnim.superclass.constructor.apply(self, arguments);
         // camel case uniformity for js anim
         S.each(to = self.config.to, function (v, prop) {
             var camelProp = camelCase(prop);
@@ -30,7 +32,7 @@ KISSY.add(function (S, require) {
         });
     }
 
-    S.extend(Anim, AnimBase, {
+    S.extend(TimerAnim, AnimBase, {
         prepareFx: function () {
             var self = this,
                 node = self.node,
@@ -197,10 +199,14 @@ KISSY.add(function (S, require) {
         }
     });
 
-    Anim.Easing = Easing;
-    Anim.Fx = Fx;
+    TimerAnim.Easing = Easing;
 
-    return Anim;
+    // for test
+    TimerAnim.Fx = Fx;
+
+    S.mix(TimerAnim, AnimBase.Statics);
+
+    return TimerAnim;
 });
 /*
  2013-09

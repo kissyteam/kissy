@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 13 18:01
+build time: Mar 13 23:48
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -10,7 +10,8 @@ build time: Mar 13 18:01
 */
 
 KISSY.add("navigation-view", ["component/container", "component/control", "component/extension/content-xtpl", "component/extension/content-render"], function(S, require) {
-  var vendorPrefix = S.Feature.getVendorCssPropPrefix("animation");
+  var vendorInfo = S.Feature.getCssVendorInfo("animation");
+  var vendorPrefix = vendorInfo && vendorInfo.propertyNamePrefix;
   var ANIMATION_END_EVENT = vendorPrefix ? vendorPrefix.toLowerCase() + "AnimationEnd" : "animationend webkitAnimationEnd";
   var Container = require("component/container");
   var Control = require("component/control");

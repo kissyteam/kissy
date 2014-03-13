@@ -544,7 +544,7 @@ KISSY.add(function(S, require) {
       _$jscoverage['/timer/fx.js'].lineData[84]++;
       if (visit48_84_1(self.type === 'attr')) {
         _$jscoverage['/timer/fx.js'].lineData[85]++;
-        Dom.attr(node, prop, val, 1);
+        Dom.attr(node, prop, val, true);
       } else {
         _$jscoverage['/timer/fx.js'].lineData[87]++;
         Dom.css(node, prop, val);

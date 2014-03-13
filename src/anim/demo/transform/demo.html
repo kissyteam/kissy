@@ -325,13 +325,11 @@ footer {
                 currentTarget.animate({
                     transform: currentTarget.attr('data-trans')
                 }, {
-                    //useTransition:1,
                     duration: 0.4
                 });
                 currentTarget.animate({
                     x: 1
                 }, {
-                    //useTransition:1,
                     delay: 2,
                     duration: 0.1,
                     complete: function () {
@@ -340,7 +338,6 @@ footer {
                 }).animate({
                             transform: ''
                         }, {
-                            //useTransition:1,
                             duration: 0.4,
                             complete: function () {
                                 currentTarget.css('opacity', 1)

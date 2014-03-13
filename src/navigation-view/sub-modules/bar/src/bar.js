@@ -30,7 +30,6 @@ KISSY.add(function (S, require) {
     function anim(el, props, complete) {
         el.animate(props, {
             duration: 0.25,
-            useTransition: true,
             easing: 'ease-in-out',
             complete: complete
         });

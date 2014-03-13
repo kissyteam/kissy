@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 13 20:31
+build time: Mar 13 23:52
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -10,7 +10,7 @@ build time: Mar 13 20:31
 */
 
 KISSY.add("feature", ["ua"], function(S, require) {
-  var win = S.Env.host, Config = S.Config, UA = require("ua"), VENDORS = ["Webkit", "Moz", "O", "ms"], doc = win.document || {}, isMsPointerSupported, isPointerSupported, isTransform3dSupported, documentElement = doc && doc.documentElement, navigator, documentElementStyle, isClassListSupportedState = true, isQuerySelectorSupportedState = false, isTouchEventSupportedState = "ontouchstart" in doc && !UA.phantomjs, vendorInfos = {}, ie = UA.ieMode;
+  var win = S.Env.host, Config = S.Config, UA = require("ua"), namePrefixMap = {Webkit:"-webkit-", Moz:"-moz-", O:"-o-", ms:"ms-"}, doc = win.document || {}, isMsPointerSupported, isPointerSupported, isTransform3dSupported, documentElement = doc && doc.documentElement, navigator, documentElementStyle, isClassListSupportedState = true, isQuerySelectorSupportedState = false, isTouchEventSupportedState = "ontouchstart" in doc && !UA.phantomjs, vendorInfos = {}, ie = UA.ieMode;
   if(documentElement) {
     if(documentElement.querySelector && ie !== 8) {
       isQuerySelectorSupportedState = true
@@ -22,20 +22,20 @@ KISSY.add("feature", ["ua"], function(S, require) {
     isPointerSupported = "pointerEnabled" in navigator
   }
   function getVendorInfo(name) {
-    if(vendorInfos[name]) {
+    if(name in vendorInfos) {
       return vendorInfos[name]
     }
     if(!documentElementStyle || name in documentElementStyle) {
-      vendorInfos[name] = {name:name, prefix:""}
+      vendorInfos[name] = {propertyName:name, name:name, propertyNamePrefix:"", namePrefix:""}
     }else {
-      var upperFirstName = name.charAt(0).toUpperCase() + name.slice(1), vendorName, i = VENDORS.length;
-      while(i--) {
-        vendorName = VENDORS[i] + upperFirstName;
+      var upperFirstName = name.charAt(0).toUpperCase() + name.slice(1), vendorName;
+      for(var propertyNamePrefix in namePrefixMap) {
+        vendorName = propertyNamePrefix + upperFirstName;
         if(vendorName in documentElementStyle) {
-          vendorInfos[name] = {name:vendorName, prefix:VENDORS[i]}
+          vendorInfos[name] = {propertyName:vendorName, name:namePrefixMap[propertyNamePrefix] + name, propertyNamePrefix:propertyNamePrefix, namePrefix:namePrefixMap[propertyNamePrefix]}
         }
       }
-      vendorInfos[name] = vendorInfos[name] || {name:name, prefix:false}
+      vendorInfos[name] = vendorInfos[name] || null
     }
     return vendorInfos[name]
   }
@@ -74,10 +74,8 @@ KISSY.add("feature", ["ua"], function(S, require) {
     return isClassListSupportedState
   }, isQuerySelectorSupported:function() {
     return!Config.simulateCss3Selector && isQuerySelectorSupportedState
-  }, getVendorCssPropPrefix:function(name) {
-    return getVendorInfo(name).prefix
-  }, getVendorCssPropName:function(name) {
-    return getVendorInfo(name).name
+  }, getCssVendorInfo:function(name) {
+    return getVendorInfo(name)
   }};
   return S.Feature
 });

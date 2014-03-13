@@ -1,5 +1,5 @@
 config({
-    'anim/transition?': {
-        alias: KISSY.Feature.getVendorCssPropPrefix('transition') !== false ? 'anim/transition' : ''
+    'anim': {
+        alias: KISSY.Feature.getCssVendorInfo('transition') ? 'anim/transition' : 'anim/timer'
     }
 });

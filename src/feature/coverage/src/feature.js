@@ -244,12 +244,12 @@ if (! _$jscoverage['/feature.js']) {
   _$jscoverage['/feature.js'].lineData[49] = 0;
   _$jscoverage['/feature.js'].lineData[52] = 0;
   _$jscoverage['/feature.js'].lineData[53] = 0;
-  _$jscoverage['/feature.js'].lineData[58] = 0;
-  _$jscoverage['/feature.js'].lineData[62] = 0;
+  _$jscoverage['/feature.js'].lineData[60] = 0;
   _$jscoverage['/feature.js'].lineData[63] = 0;
   _$jscoverage['/feature.js'].lineData[64] = 0;
   _$jscoverage['/feature.js'].lineData[65] = 0;
-  _$jscoverage['/feature.js'].lineData[72] = 0;
+  _$jscoverage['/feature.js'].lineData[66] = 0;
+  _$jscoverage['/feature.js'].lineData[75] = 0;
   _$jscoverage['/feature.js'].lineData[77] = 0;
   _$jscoverage['/feature.js'].lineData[86] = 0;
   _$jscoverage['/feature.js'].lineData[94] = 0;
@@ -276,7 +276,6 @@ if (! _$jscoverage['/feature.js']) {
   _$jscoverage['/feature.js'].lineData[182] = 0;
   _$jscoverage['/feature.js'].lineData[186] = 0;
   _$jscoverage['/feature.js'].lineData[190] = 0;
-  _$jscoverage['/feature.js'].lineData[194] = 0;
 }
 if (! _$jscoverage['/feature.js'].functionData) {
   _$jscoverage['/feature.js'].functionData = [];
@@ -293,7 +292,6 @@ if (! _$jscoverage['/feature.js'].functionData) {
   _$jscoverage['/feature.js'].functionData[10] = 0;
   _$jscoverage['/feature.js'].functionData[11] = 0;
   _$jscoverage['/feature.js'].functionData[12] = 0;
-  _$jscoverage['/feature.js'].functionData[13] = 0;
 }
 if (! _$jscoverage['/feature.js'].branchData) {
   _$jscoverage['/feature.js'].branchData = {};
@@ -314,10 +312,10 @@ if (! _$jscoverage['/feature.js'].branchData) {
   _$jscoverage['/feature.js'].branchData['48'][1] = new BranchData();
   _$jscoverage['/feature.js'].branchData['52'] = [];
   _$jscoverage['/feature.js'].branchData['52'][1] = new BranchData();
-  _$jscoverage['/feature.js'].branchData['64'] = [];
-  _$jscoverage['/feature.js'].branchData['64'][1] = new BranchData();
-  _$jscoverage['/feature.js'].branchData['72'] = [];
-  _$jscoverage['/feature.js'].branchData['72'][1] = new BranchData();
+  _$jscoverage['/feature.js'].branchData['65'] = [];
+  _$jscoverage['/feature.js'].branchData['65'][1] = new BranchData();
+  _$jscoverage['/feature.js'].branchData['75'] = [];
+  _$jscoverage['/feature.js'].branchData['75'][1] = new BranchData();
   _$jscoverage['/feature.js'].branchData['115'] = [];
   _$jscoverage['/feature.js'].branchData['115'][1] = new BranchData();
   _$jscoverage['/feature.js'].branchData['115'][2] = new BranchData();
@@ -422,19 +420,19 @@ function visit13_115_2(result) {
 function visit12_115_1(result) {
   _$jscoverage['/feature.js'].branchData['115'][1].ranCondition(result);
   return result;
-}_$jscoverage['/feature.js'].branchData['72'][1].init(502, 94, 'vendorInfos[name] || {\n  name: name, \n  prefix: false}');
-function visit11_72_1(result) {
-  _$jscoverage['/feature.js'].branchData['72'][1].ranCondition(result);
+}_$jscoverage['/feature.js'].branchData['75'][1].init(679, 25, 'vendorInfos[name] || null');
+function visit11_75_1(result) {
+  _$jscoverage['/feature.js'].branchData['75'][1].ranCondition(result);
   return result;
-}_$jscoverage['/feature.js'].branchData['64'][1].init(79, 34, 'vendorName in documentElementStyle');
-function visit10_64_1(result) {
-  _$jscoverage['/feature.js'].branchData['64'][1].ranCondition(result);
+}_$jscoverage['/feature.js'].branchData['65'][1].init(87, 34, 'vendorName in documentElementStyle');
+function visit10_65_1(result) {
+  _$jscoverage['/feature.js'].branchData['65'][1].ranCondition(result);
   return result;
-}_$jscoverage['/feature.js'].branchData['52'][1].init(147, 53, '!documentElementStyle || name in documentElementStyle');
+}_$jscoverage['/feature.js'].branchData['52'][1].init(149, 53, '!documentElementStyle || name in documentElementStyle');
 function visit9_52_1(result) {
   _$jscoverage['/feature.js'].branchData['52'][1].ranCondition(result);
   return result;
-}_$jscoverage['/feature.js'].branchData['48'][1].init(13, 17, 'vendorInfos[name]');
+}_$jscoverage['/feature.js'].branchData['48'][1].init(13, 19, 'name in vendorInfos');
 function visit8_48_1(result) {
   _$jscoverage['/feature.js'].branchData['48'][1].ranCondition(result);
   return result;
@@ -450,19 +448,19 @@ function visit6_36_2(result) {
 function visit5_36_1(result) {
   _$jscoverage['/feature.js'].branchData['36'][1].ranCondition(result);
   return result;
-}_$jscoverage['/feature.js'].branchData['34'][1].init(804, 15, 'documentElement');
+}_$jscoverage['/feature.js'].branchData['34'][1].init(845, 15, 'documentElement');
 function visit4_34_1(result) {
   _$jscoverage['/feature.js'].branchData['34'][1].ranCondition(result);
   return result;
-}_$jscoverage['/feature.js'].branchData['30'][1].init(696, 41, '(\'ontouchstart\' in doc) && !(UA.phantomjs)');
+}_$jscoverage['/feature.js'].branchData['30'][1].init(737, 41, '(\'ontouchstart\' in doc) && !(UA.phantomjs)');
 function visit3_30_1(result) {
   _$jscoverage['/feature.js'].branchData['30'][1].ranCondition(result);
   return result;
-}_$jscoverage['/feature.js'].branchData['24'][1].init(412, 26, 'doc && doc.documentElement');
+}_$jscoverage['/feature.js'].branchData['24'][1].init(453, 26, 'doc && doc.documentElement');
 function visit2_24_1(result) {
   _$jscoverage['/feature.js'].branchData['24'][1].ranCondition(result);
   return result;
-}_$jscoverage['/feature.js'].branchData['18'][1].init(250, 18, 'win.document || {}');
+}_$jscoverage['/feature.js'].branchData['18'][1].init(291, 18, 'win.document || {}');
 function visit1_18_1(result) {
   _$jscoverage['/feature.js'].branchData['18'][1].ranCondition(result);
   return result;
@@ -470,7 +468,11 @@ function visit1_18_1(result) {
 KISSY.add(function(S, require) {
   _$jscoverage['/feature.js'].functionData[0]++;
   _$jscoverage['/feature.js'].lineData[7]++;
-  var win = S.Env.host, Config = S.Config, UA = require('ua'), VENDORS = ['Webkit', 'Moz', 'O', 'ms'], doc = visit1_18_1(win.document || {}), isMsPointerSupported, isPointerSupported, isTransform3dSupported, documentElement = visit2_24_1(doc && doc.documentElement), navigator, documentElementStyle, isClassListSupportedState = true, isQuerySelectorSupportedState = false, isTouchEventSupportedState = visit3_30_1(('ontouchstart' in doc) && !(UA.phantomjs)), vendorInfos = {}, ie = UA.ieMode;
+  var win = S.Env.host, Config = S.Config, UA = require('ua'), namePrefixMap = {
+  'Webkit': '-webkit-', 
+  'Moz': '-moz-', 
+  'O': '-o-', 
+  'ms': 'ms-'}, doc = visit1_18_1(win.document || {}), isMsPointerSupported, isPointerSupported, isTransform3dSupported, documentElement = visit2_24_1(doc && doc.documentElement), navigator, documentElementStyle, isClassListSupportedState = true, isQuerySelectorSupportedState = false, isTouchEventSupportedState = visit3_30_1(('ontouchstart' in doc) && !(UA.phantomjs)), vendorInfos = {}, ie = UA.ieMode;
   _$jscoverage['/feature.js'].lineData[34]++;
   if (visit4_34_1(documentElement)) {
     _$jscoverage['/feature.js'].lineData[36]++;
@@ -493,7 +495,7 @@ KISSY.add(function(S, require) {
   function getVendorInfo(name) {
     _$jscoverage['/feature.js'].functionData[1]++;
     _$jscoverage['/feature.js'].lineData[48]++;
-    if (visit8_48_1(vendorInfos[name])) {
+    if (visit8_48_1(name in vendorInfos)) {
       _$jscoverage['/feature.js'].lineData[49]++;
       return vendorInfos[name];
     }
@@ -501,27 +503,29 @@ KISSY.add(function(S, require) {
     if (visit9_52_1(!documentElementStyle || name in documentElementStyle)) {
       _$jscoverage['/feature.js'].lineData[53]++;
       vendorInfos[name] = {
+  propertyName: name, 
   name: name, 
-  prefix: ''};
+  propertyNamePrefix: '', 
+  namePrefix: ''};
     } else {
-      _$jscoverage['/feature.js'].lineData[58]++;
-      var upperFirstName = name.charAt(0).toUpperCase() + name.slice(1), vendorName, i = VENDORS.length;
-      _$jscoverage['/feature.js'].lineData[62]++;
-      while (i--) {
-        _$jscoverage['/feature.js'].lineData[63]++;
-        vendorName = VENDORS[i] + upperFirstName;
+      _$jscoverage['/feature.js'].lineData[60]++;
+      var upperFirstName = name.charAt(0).toUpperCase() + name.slice(1), vendorName;
+      _$jscoverage['/feature.js'].lineData[63]++;
+      for (var propertyNamePrefix in namePrefixMap) {
         _$jscoverage['/feature.js'].lineData[64]++;
-        if (visit10_64_1(vendorName in documentElementStyle)) {
-          _$jscoverage['/feature.js'].lineData[65]++;
+        vendorName = propertyNamePrefix + upperFirstName;
+        _$jscoverage['/feature.js'].lineData[65]++;
+        if (visit10_65_1(vendorName in documentElementStyle)) {
+          _$jscoverage['/feature.js'].lineData[66]++;
           vendorInfos[name] = {
-  name: vendorName, 
-  prefix: VENDORS[i]};
+  propertyName: vendorName, 
+  name: namePrefixMap[propertyNamePrefix] + name, 
+  propertyNamePrefix: propertyNamePrefix, 
+  namePrefix: namePrefixMap[propertyNamePrefix]};
         }
       }
-      _$jscoverage['/feature.js'].lineData[72]++;
-      vendorInfos[name] = visit11_72_1(vendorInfos[name] || {
-  name: name, 
-  prefix: false});
+      _$jscoverage['/feature.js'].lineData[75]++;
+      vendorInfos[name] = visit11_75_1(vendorInfos[name] || null);
     }
     _$jscoverage['/feature.js'].lineData[77]++;
     return vendorInfos[name];
@@ -605,16 +609,11 @@ KISSY.add(function(S, require) {
   _$jscoverage['/feature.js'].lineData[182]++;
   return visit30_182_1(!Config.simulateCss3Selector && isQuerySelectorSupportedState);
 }, 
-  getVendorCssPropPrefix: function(name) {
+  getCssVendorInfo: function(name) {
   _$jscoverage['/feature.js'].functionData[12]++;
   _$jscoverage['/feature.js'].lineData[186]++;
-  return getVendorInfo(name).prefix;
-}, 
-  getVendorCssPropName: function(name) {
-  _$jscoverage['/feature.js'].functionData[13]++;
-  _$jscoverage['/feature.js'].lineData[190]++;
-  return getVendorInfo(name).name;
+  return getVendorInfo(name);
 }};
-  _$jscoverage['/feature.js'].lineData[194]++;
+  _$jscoverage['/feature.js'].lineData[190]++;
   return S.Feature;
 });

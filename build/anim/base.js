@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 13 17:46
+build time: Mar 13 23:47
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -150,21 +150,8 @@ KISSY.add("anim/base/utils", ["./queue", "dom"], function(S, require) {
   }}
 });
 KISSY.add("anim/base", ["dom", "./base/utils", "./base/queue", "promise"], function(S, require) {
-  var Dom = require("dom"), Utils = require("./base/utils"), Q = require("./base/queue"), Promise = require("promise");
-  var NodeType = Dom.NodeType, noop = S.noop, specialVals = {toggle:1, hide:1, show:1};
-  function AnimBase(config) {
-    var self = this;
-    AnimBase.superclass.constructor.call(self);
-    Promise.Defer(self);
-    self.config = config;
-    var node = config.node;
-    if(!S.isPlainObject(node)) {
-      node = Dom.get(config.node)
-    }
-    self.node = self.el = node;
-    self._backupProps = {};
-    self._propsData = {}
-  }
+  var Dom = require("dom"), Utils = require("./base/utils"), Q = require("./base/queue"), Promise = require("promise"), NodeType = Dom.NodeType, noop = S.noop, specialVals = {toggle:1, hide:1, show:1};
+  var defaultConfig = {duration:1, easing:"linear"};
   function syncComplete(self) {
     var _backupProps, complete = self.config.complete;
     if(!S.isEmptyObject(_backupProps = self._backupProps)) {
@@ -173,6 +160,52 @@ KISSY.add("anim/base", ["dom", "./base/utils", "./base/queue", "promise"], funct
     if(complete) {
       complete.call(self)
     }
+  }
+  function AnimBase(node, to, duration, easing, complete) {
+    var self = this;
+    var config;
+    if(node.node) {
+      config = node
+    }else {
+      if(typeof to === "string") {
+        to = S.unparam(String(to), ";", ":");
+        S.each(to, function(value, prop) {
+          var trimProp = S.trim(prop);
+          if(trimProp) {
+            to[trimProp] = S.trim(value)
+          }
+          if(!trimProp || trimProp !== prop) {
+            delete to[prop]
+          }
+        })
+      }else {
+        to = S.clone(to)
+      }
+      if(S.isPlainObject(duration)) {
+        config = S.clone(duration)
+      }else {
+        config = {complete:complete};
+        if(duration) {
+          config.duration = duration
+        }
+        if(easing) {
+          config.easing = easing
+        }
+      }
+      config.node = node;
+      config.to = to
+    }
+    config = S.merge(defaultConfig, config);
+    AnimBase.superclass.constructor.call(self);
+    Promise.Defer(self);
+    self.config = config;
+    node = config.node;
+    if(!S.isPlainObject(node)) {
+      node = Dom.get(config.node)
+    }
+    self.node = self.el = node;
+    self._backupProps = {};
+    self._propsData = {}
   }
   S.extend(AnimBase, Promise, {prepareFx:noop, runInternal:function() {
     var self = this, config = self.config, node = self.node, val, _backupProps = self._backupProps, _propsData = self._propsData, to = config.to, defaultDelay = config.delay || 0, defaultDuration = config.duration;
@@ -313,8 +346,15 @@ KISSY.add("anim/base", ["dom", "./base/utils", "./base/queue", "promise"], funct
     }
     return self
   }});
-  AnimBase.Utils = Utils;
-  AnimBase.Q = Q;
+  var Statics = AnimBase.Statics = {isRunning:Utils.isElRunning, isPaused:Utils.isElPaused, stop:Utils.stopEl, Q:Q};
+  S.each(["pause", "resume"], function(action) {
+    Statics[action] = function(node, queue) {
+      if(queue === null || typeof queue === "string" || queue === false) {
+        return Utils.pauseOrResumeQueue(node, queue, action)
+      }
+      return Utils.pauseOrResumeQueue(node, undefined, action)
+    }
+  });
   return AnimBase
 });
 

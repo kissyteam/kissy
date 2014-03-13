@@ -2,17 +2,11 @@
 gen by gen-tc.js
 */
 module.exports=function(){ var tests=[];
-tests.push('/kissy/src/anim/sub-modules/timer/tests/runner');
+tests.push('/kissy/src/anim/sub-modules/timer/tests/runner/test.jss');
 
-tests.push('/kissy/src/anim/sub-modules/timer/tests/runner?build');
+tests.push('/kissy/src/anim/sub-modules/timer/tests/runner/test.jss?build');
 
-tests.push('/kissy/src/anim/sub-modules/timer/tests/runner?coverage');
-
-tests.push('/kissy/src/anim/sub-modules/transition/tests/runner');
-
-tests.push('/kissy/src/anim/sub-modules/transition/tests/runner?build');
-
-tests.push('/kissy/src/anim/sub-modules/transition/tests/runner?coverage');
+tests.push('/kissy/src/anim/sub-modules/timer/tests/runner/test.jss?coverage');
 
 tests.push('/kissy/src/attribute/tests/runner');
 

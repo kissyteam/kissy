@@ -12,7 +12,7 @@
 <script>
     var S = KISSY;
     var Feature = S.Feature;
-    var vendorPrefix = Feature.getVendorCssPropPrefix('transition');
+    var vendorPrefix = Feature.getCssVendorInfo('transition').propertyNamePrefix;
     var TRANSITION_END_EVENT = vendorPrefix ?
         // webkitTransitionEnd !
             (vendorPrefix.toLowerCase() + 'TransitionEnd') :
@@ -36,7 +36,6 @@
             width: '200px'
         }, {
             duration: 2,
-            useTransition: true,
             complete: function () {
                 alert(1);
             }

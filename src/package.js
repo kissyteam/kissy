@@ -11,10 +11,6 @@ KISSY.config('tag', KISSY.now());
 var loc = new KISSY.Uri(location.href);
 if (!loc.getQuery().has('build') && !loc.getQuery().has('min')) {
     KISSY.config('packages', {
-        "anim": {
-            "base": "/kissy/src/anim/src/anim",
-            "ignorePackageNameInUri": 1
-        },
         "anim/base": {
             "base": "/kissy/src/anim/sub-modules/base/src/base",
             "ignorePackageNameInUri": 1

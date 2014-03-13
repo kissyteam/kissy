@@ -7,13 +7,13 @@ KISSY.add(function (S, require) {
     var win = S.Env.host,
         Config = S.Config,
         UA = require('ua'),
-        VENDORS = [
-            'Webkit',
-            'Moz',
-            'O',
+        namePrefixMap = {
+            'Webkit': '-webkit-',
+            'Moz': '-moz-',
+            'O': '-o-',
             // ms is special .... !
-            'ms'
-        ],
+            'ms': 'ms-'
+        },
     // for nodejs
         doc = win.document || {},
         isMsPointerSupported,
@@ -45,34 +45,34 @@ KISSY.add(function (S, require) {
 
     // return prefixed css prefix name
     function getVendorInfo(name) {
-        if (vendorInfos[name]) {
+        if (name in vendorInfos) {
             return vendorInfos[name];
         }
         // if already prefixed or need not to prefix
         if (!documentElementStyle || name in documentElementStyle) {
             vendorInfos[name] = {
+                propertyName: name,
                 name: name,
-                prefix: ''
+                propertyNamePrefix: '',
+                namePrefix: ''
             };
         } else {
             var upperFirstName = name.charAt(0).toUpperCase() + name.slice(1),
-                vendorName,
-                i = VENDORS.length;
+                vendorName;
 
-            while (i--) {
-                vendorName = VENDORS[i] + upperFirstName;
+            for (var propertyNamePrefix in namePrefixMap) {
+                vendorName = propertyNamePrefix + upperFirstName;
                 if (vendorName in documentElementStyle) {
                     vendorInfos[name] = {
-                        name: vendorName,
-                        prefix: VENDORS[i]
+                        propertyName: vendorName,
+                        name: namePrefixMap[propertyNamePrefix] + name,
+                        propertyNamePrefix: propertyNamePrefix,
+                        namePrefix: namePrefixMap[propertyNamePrefix]
                     };
                 }
             }
 
-            vendorInfos[name] = vendorInfos[name] || {
-                name: name,
-                prefix: false
-            };
+            vendorInfos[name] = vendorInfos[name] || null;
         }
         return  vendorInfos[name];
     }
@@ -182,12 +182,8 @@ KISSY.add(function (S, require) {
             return !Config.simulateCss3Selector && isQuerySelectorSupportedState;
         },
 
-        getVendorCssPropPrefix: function (name) {
-            return getVendorInfo(name).prefix;
-        },
-
-        getVendorCssPropName: function (name) {
-            return getVendorInfo(name).name;
+        getCssVendorInfo: function (name) {
+            return getVendorInfo(name);
         }
     };
 

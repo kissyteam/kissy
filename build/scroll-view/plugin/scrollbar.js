@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 13 18:02
+build time: Mar 13 23:48
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -96,8 +96,10 @@ KISSY.add("scroll-view/plugin/scrollbar/scrollbar-xtpl", [], function(S, require
 KISSY.add("scroll-view/plugin/scrollbar/render", ["component/control", "./scrollbar-xtpl"], function(S, require) {
   var Control = require("component/control");
   var ScrollBarTpl = require("./scrollbar-xtpl");
-  var isTransform3dSupported = S.Feature.isTransform3dSupported();
-  var supportCss3 = S.Feature.getVendorCssPropPrefix("transform") !== false;
+  var Feature = S.Feature;
+  var isTransform3dSupported = Feature.isTransform3dSupported();
+  var transformVendorInfo = Feature.getCssVendorInfo("transform");
+  var supportCss3 = !!transformVendorInfo;
   var methods = {beforeCreateDom:function(renderData, childrenElSelectors) {
     renderData.elCls.push(renderData.prefixCls + "scrollbar-" + renderData.axis);
     S.mix(childrenElSelectors, {dragEl:"#ks-scrollbar-drag-{id}", downBtn:"#ks-scrollbar-arrow-down-{id}", upBtn:"#ks-scrollbar-arrow-up-{id}", trackEl:"#ks-scrollbar-track-{id}"})
@@ -121,7 +123,7 @@ KISSY.add("scroll-view/plugin/scrollbar/render", ["component/control", "./scroll
     this.control.dragEl.style.top = v + "px"
   }};
   if(supportCss3) {
-    var transformProperty = S.Feature.getVendorCssPropName("transform");
+    var transformProperty = transformVendorInfo.propertyName;
     methods._onSetDragLeft = function(v) {
       this.control.dragEl.style[transformProperty] = "translateX(" + v + "px)" + " translateY(" + this.control.get("dragTop") + "px)" + (isTransform3dSupported ? " translateZ(0)" : "")
     };

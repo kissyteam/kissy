@@ -3,10 +3,10 @@
  * special patch for making color gradual change
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S,require) {
+KISSY.add(function (S, require) {
     var Fx = require('./fx');
     var SHORT_HANDS = require('./short-hand');
-    var   logger = S.getLogger('s/anim/timer/color');
+    var logger = S.getLogger('s/anim/timer/color');
     var HEX_BASE = 16,
 
         floor = Math.floor,
@@ -80,17 +80,17 @@ KISSY.add(function (S,require) {
         var match;
         if ((match = val.match(RE_RGB))) {
             return [
-                parseInt(match[1],10),
-                parseInt(match[2],10),
-                parseInt(match[3],10)
+                parseInt(match[1], 10),
+                parseInt(match[2], 10),
+                parseInt(match[3], 10)
             ];
         }
         else if ((match = val.match(RE_RGBA))) {
             return [
-                parseInt(match[1],10),
-                parseInt(match[2],10),
-                parseInt(match[3],10),
-                parseInt(match[4],10)
+                parseInt(match[1], 10),
+                parseInt(match[2], 10),
+                parseInt(match[3], 10),
+                parseInt(match[4], 10)
             ];
         }
         else if ((match = val.match(RE_HEX))) {

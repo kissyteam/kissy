@@ -257,7 +257,7 @@ KISSY.add(function (S, Dom, Anim, Node) {
                 });
 
                 it('support different easing for different property', function () {
-                    if (S.config('anim/useTransition')) {
+                    if (S.Env.mods.anim.alias == 'anim/transition') {
                         // native does not support easing as function
                         return;
                     }

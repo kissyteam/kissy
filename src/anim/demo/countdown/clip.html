@@ -52,7 +52,7 @@
 <script src="/kissy/build/seed.js"></script>
 <script>
     (function (S) {
-        if (S.Feature.getVendorCssPropPrefix('transform')===false) {
+        if (!S.Feature.getCssVendorInfo('transform')) {
             alert('your browser does not support this');
             return;
         }
@@ -65,12 +65,10 @@
             inner3.animate({
                 transform: 'rotate(180deg)'
             }, {
-                useTransition: true,
                 complete: function () {
                     inner4.animate({
                         transform: 'rotate(180deg)'
                     }, {
-                        useTransition: true,
                         duration: 2
                     });
                 },

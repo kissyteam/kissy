@@ -351,7 +351,7 @@ function visit5_128_1(result) {
 function visit4_125_1(result) {
   _$jscoverage['/timer/color.js'].branchData['125'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer/color.js'].branchData['108'][1].init(914, 33, 'KEYWORDS[val = val.toLowerCase()]');
+}_$jscoverage['/timer/color.js'].branchData['108'][1].init(921, 33, 'KEYWORDS[val = val.toLowerCase()]');
 function visit3_108_1(result) {
   _$jscoverage['/timer/color.js'].branchData['108'][1].ranCondition(result);
   return result;

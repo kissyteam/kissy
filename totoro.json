@@ -4,14 +4,7 @@
     "tests": [
         {
             "name": "anim/timer",
-            "runner": "http://dev.kissyui.com/kissy/src/anim/sub-modules/timer/tests/runner",
-            "email": [
-                "yiminghe@gmail.com"
-            ]
-        },
-        {
-            "name": "anim/transition",
-            "runner": "http://dev.kissyui.com/kissy/src/anim/sub-modules/transition/tests/runner",
+            "runner": "http://dev.kissyui.com/kissy/src/anim/sub-modules/timer/tests/runner/test.jss",
             "email": [
                 "yiminghe@gmail.com"
             ]

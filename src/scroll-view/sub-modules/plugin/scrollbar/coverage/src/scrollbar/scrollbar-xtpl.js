@@ -320,11 +320,11 @@ if (! _$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData) {
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData['10'][2] = new BranchData();
 }
 _$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData['10'][2].init(226, 29, 'typeof module !== "undefined"');
-function visit24_10_2(result) {
+function visit23_10_2(result) {
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData['10'][2].ranCondition(result);
   return result;
 }_$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData['10'][1].init(226, 45, 'typeof module !== "undefined" && module.kissy');
-function visit23_10_1(result) {
+function visit22_10_1(result) {
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].branchData['10'][1].ranCondition(result);
   return result;
 }_$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[2]++;
@@ -336,7 +336,7 @@ KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[5]++;
   var buffer = "", engine = this, moduleWrap, escapeHtml = S.escapeHtml, nativeCommands = engine.nativeCommands, utils = engine.utils;
   _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[10]++;
-  if (visit23_10_1(visit24_10_2(typeof module !== "undefined") && module.kissy)) {
+  if (visit22_10_1(visit23_10_2(typeof module !== "undefined") && module.kissy)) {
     _$jscoverage['/scrollbar/scrollbar-xtpl.js'].lineData[11]++;
     moduleWrap = module;
   }

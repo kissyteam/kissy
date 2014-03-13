@@ -7,8 +7,8 @@ KISSY.add(function (S, require) {
     var Dom = require('dom'),
         Utils = require('./base/utils'),
         Q = require('./base/queue'),
-        Promise = require('promise');
-    var NodeType = Dom.NodeType,
+        Promise = require('promise'),
+        NodeType = Dom.NodeType,
         noop = S.noop,
         specialVals = {
             toggle: 1,
@@ -16,32 +16,10 @@ KISSY.add(function (S, require) {
             show: 1
         };
 
-    /**
-     * superclass for transition anim and js anim
-     * @class KISSY.Anim.Base
-     * @extend KISSY.Promise
-     * @private
-     */
-    function AnimBase(config) {
-        var self = this;
-
-        // Promise.call(self);
-        AnimBase.superclass.constructor.call(self);
-        Promise.Defer(self);
-
-        /**
-         * config object of current anim instance
-         * @type {Object}
-         */
-        self.config = config;
-        var node = config.node;
-        if (!S.isPlainObject(node)) {
-            node = Dom.get(config.node);
-        }
-        self.node = self.el = node;
-        self._backupProps = {};
-        self._propsData = {};
-    }
+    var defaultConfig = {
+        duration: 1,
+        easing: 'linear'
+    };
 
     // stop(true) will run complete function synchronously
     function syncComplete(self) {
@@ -53,6 +31,94 @@ KISSY.add(function (S, require) {
         if (complete) {
             complete.call(self);
         }
+    }
+
+    /**
+     * @class KISSY.Anim
+     * A class for constructing animation instances.
+     *
+     *      @example
+     *      KISSY.use('dom,anim',function(S,Dom,Anim){
+     *          var d=Dom.create('<div style="width:50px;height:50px;border:1px solid red;">running</div>');
+     *          document.body.appendChild(d);
+     *          new Anim({
+     *              node: d,
+     *              to: {width:100,height:100}
+     *          }).run().then(function(){
+     *              d.innerHTML='completed';
+     *          });
+     *      });
+     *
+     * @extend KISSY.Promise
+     * @cfg {HTMLElement|Window} node html dom node or window
+     * (window can only animate scrollTop/scrollLeft)
+     * @cfg {Object} to end css style value.
+     * @cfg {Number} [duration=1] duration(second) or anim config
+     * @cfg {String|Function} [easing='easeNone'] easing fn or string
+     * @cfg {Function} [complete] callback function when this animation is complete
+     * @cfg {String|Boolean} [queue] current animation's queue, if false then no queue
+     */
+    function AnimBase(node, to, duration, easing, complete) {
+        var self = this;
+        var config;
+
+        if (node.node) {
+            config = node;
+        } else {
+            // the transition properties
+            if (typeof to === 'string') {
+                to = S.unparam(String(to), ';', ':');
+                S.each(to, function (value, prop) {
+                    var trimProp = S.trim(prop);
+                    if (trimProp) {
+                        to[trimProp] = S.trim(value);
+                    }
+                    if (!trimProp || trimProp !== prop) {
+                        delete to[prop];
+                    }
+                });
+            } else {
+                // clone to prevent collision within multiple instance
+                to = S.clone(to);
+            }
+            // animation config
+            if (S.isPlainObject(duration)) {
+                config = S.clone(duration);
+            } else {
+                config = {
+                    complete: complete
+                };
+                if (duration) {
+                    config.duration = duration;
+                }
+                if (easing) {
+                    config.easing = easing;
+                }
+            }
+            config.node = node;
+            config.to = to;
+        }
+
+        config = S.merge(defaultConfig, config);
+
+        // Promise.call(self);
+        AnimBase.superclass.constructor.call(self);
+        Promise.Defer(self);
+
+        /**
+         * config object of current anim instance
+         * @type {Object}
+         */
+        self.config = config;
+
+        node = config.node;
+
+        if (!S.isPlainObject(node)) {
+            node = Dom.get(config.node);
+        }
+        self.node = self.el = node;
+        self._backupProps = {};
+        self._propsData = {};
     }
 
     S.extend(AnimBase, Promise, {
@@ -323,8 +389,33 @@ KISSY.add(function (S, require) {
         }
     });
 
-    AnimBase.Utils = Utils;
-    AnimBase.Q = Q;
+    var Statics = AnimBase.Statics = {
+        isRunning: Utils.isElRunning,
+        isPaused: Utils.isElPaused,
+        stop: Utils.stopEl,
+        Q: Q
+    };
+
+    S.each(['pause', 'resume'], function (action) {
+        Statics[action] = function (node, queue) {
+            if (
+            // default queue
+                queue === null ||
+                    // name of specified queue
+                    typeof queue === 'string' ||
+                    // anims not belong to any queue
+                    queue === false
+                ) {
+                return Utils.pauseOrResumeQueue(node, queue, action);
+            }
+            return Utils.pauseOrResumeQueue(node, undefined, action);
+        };
+    });
 
     return AnimBase;
 });
+
+/*
+ yiminghe@gmail.com 2014-03-13
+ - anim alias to transition in css3 anim enabled browser
+ */

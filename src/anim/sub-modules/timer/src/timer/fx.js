@@ -82,7 +82,7 @@ KISSY.add(function (S, require) {
                 }
                 self.val = val;
                 if (self.type === 'attr') {
-                    Dom.attr(node, prop, val, 1);
+                    Dom.attr(node, prop, val, true);
                 } else {
                     Dom.css(node, prop, val);
                 }

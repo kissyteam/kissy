@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 13 18:02
+build time: Mar 13 23:48
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -13,9 +13,9 @@ build time: Mar 13 18:02
 KISSY.add("scroll-view/base/render", ["component/container", "component/extension/content-render"], function(S, require) {
   var Container = require("component/container");
   var ContentRenderExtension = require("component/extension/content-render");
-  var Feature = S.Feature, floor = Math.floor, transformProperty;
+  var Feature = S.Feature, transformVendorInfo = Feature.getCssVendorInfo("transform"), floor = Math.floor, transformProperty;
   var isTransform3dSupported = S.Feature.isTransform3dSupported();
-  var supportCss3 = S.Feature.getVendorCssPropPrefix("transform") !== false;
+  var supportCss3 = !!transformVendorInfo;
   var methods = {syncUI:function() {
     var self = this, control = self.control, el = control.el, contentEl = control.contentEl;
     var scrollHeight = Math.max(contentEl.offsetHeight, contentEl.scrollHeight), scrollWidth = Math.max(contentEl.offsetWidth, contentEl.scrollWidth);
@@ -27,7 +27,7 @@ KISSY.add("scroll-view/base/render", ["component/container", "component/extensio
     this.control.contentEl.style.top = -v + "px"
   }};
   if(supportCss3) {
-    transformProperty = Feature.getVendorCssPropName("transform");
+    transformProperty = transformVendorInfo.propertyName;
     methods._onSetScrollLeft = function(v) {
       var control = this.control;
       control.contentEl.style[transformProperty] = "translateX(" + floor(-v) + "px)" + " translateY(" + floor(-control.get("scrollTop")) + "px)" + (isTransform3dSupported ? " translateZ(0)" : "")

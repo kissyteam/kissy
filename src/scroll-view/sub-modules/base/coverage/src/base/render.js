@@ -233,24 +233,24 @@ if (! _$jscoverage['/base/render.js']) {
   _$jscoverage['/base/render.js'].lineData[7] = 0;
   _$jscoverage['/base/render.js'].lineData[8] = 0;
   _$jscoverage['/base/render.js'].lineData[11] = 0;
-  _$jscoverage['/base/render.js'].lineData[16] = 0;
-  _$jscoverage['/base/render.js'].lineData[19] = 0;
-  _$jscoverage['/base/render.js'].lineData[35] = 0;
-  _$jscoverage['/base/render.js'].lineData[37] = 0;
-  _$jscoverage['/base/render.js'].lineData[47] = 0;
-  _$jscoverage['/base/render.js'].lineData[50] = 0;
-  _$jscoverage['/base/render.js'].lineData[53] = 0;
-  _$jscoverage['/base/render.js'].lineData[62] = 0;
-  _$jscoverage['/base/render.js'].lineData[66] = 0;
-  _$jscoverage['/base/render.js'].lineData[70] = 0;
+  _$jscoverage['/base/render.js'].lineData[17] = 0;
+  _$jscoverage['/base/render.js'].lineData[20] = 0;
+  _$jscoverage['/base/render.js'].lineData[36] = 0;
+  _$jscoverage['/base/render.js'].lineData[38] = 0;
+  _$jscoverage['/base/render.js'].lineData[48] = 0;
+  _$jscoverage['/base/render.js'].lineData[51] = 0;
+  _$jscoverage['/base/render.js'].lineData[54] = 0;
+  _$jscoverage['/base/render.js'].lineData[63] = 0;
+  _$jscoverage['/base/render.js'].lineData[67] = 0;
   _$jscoverage['/base/render.js'].lineData[71] = 0;
-  _$jscoverage['/base/render.js'].lineData[73] = 0;
+  _$jscoverage['/base/render.js'].lineData[72] = 0;
   _$jscoverage['/base/render.js'].lineData[74] = 0;
   _$jscoverage['/base/render.js'].lineData[75] = 0;
-  _$jscoverage['/base/render.js'].lineData[80] = 0;
+  _$jscoverage['/base/render.js'].lineData[76] = 0;
   _$jscoverage['/base/render.js'].lineData[81] = 0;
   _$jscoverage['/base/render.js'].lineData[82] = 0;
-  _$jscoverage['/base/render.js'].lineData[88] = 0;
+  _$jscoverage['/base/render.js'].lineData[83] = 0;
+  _$jscoverage['/base/render.js'].lineData[89] = 0;
 }
 if (! _$jscoverage['/base/render.js'].functionData) {
   _$jscoverage['/base/render.js'].functionData = [];
@@ -263,18 +263,12 @@ if (! _$jscoverage['/base/render.js'].functionData) {
 }
 if (! _$jscoverage['/base/render.js'].branchData) {
   _$jscoverage['/base/render.js'].branchData = {};
-  _$jscoverage['/base/render.js'].branchData['19'] = [];
-  _$jscoverage['/base/render.js'].branchData['19'][1] = new BranchData();
-  _$jscoverage['/base/render.js'].branchData['70'] = [];
-  _$jscoverage['/base/render.js'].branchData['70'][1] = new BranchData();
+  _$jscoverage['/base/render.js'].branchData['71'] = [];
+  _$jscoverage['/base/render.js'].branchData['71'][1] = new BranchData();
 }
-_$jscoverage['/base/render.js'].branchData['70'][1].init(2260, 11, 'supportCss3');
-function visit2_70_1(result) {
-  _$jscoverage['/base/render.js'].branchData['70'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/base/render.js'].branchData['19'][1].init(489, 55, 'S.Feature.getVendorCssPropPrefix(\'transform\') !== false');
-function visit1_19_1(result) {
-  _$jscoverage['/base/render.js'].branchData['19'][1].ranCondition(result);
+_$jscoverage['/base/render.js'].branchData['71'][1].init(2296, 11, 'supportCss3');
+function visit1_71_1(result) {
+  _$jscoverage['/base/render.js'].branchData['71'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/render.js'].lineData[6]++;
 KISSY.add(function(S, require) {
@@ -284,22 +278,22 @@ KISSY.add(function(S, require) {
   _$jscoverage['/base/render.js'].lineData[8]++;
   var ContentRenderExtension = require('component/extension/content-render');
   _$jscoverage['/base/render.js'].lineData[11]++;
-  var Feature = S.Feature, floor = Math.floor, transformProperty;
-  _$jscoverage['/base/render.js'].lineData[16]++;
+  var Feature = S.Feature, transformVendorInfo = Feature.getCssVendorInfo('transform'), floor = Math.floor, transformProperty;
+  _$jscoverage['/base/render.js'].lineData[17]++;
   var isTransform3dSupported = S.Feature.isTransform3dSupported();
-  _$jscoverage['/base/render.js'].lineData[19]++;
-  var supportCss3 = visit1_19_1(S.Feature.getVendorCssPropPrefix('transform') !== false);
-  _$jscoverage['/base/render.js'].lineData[35]++;
+  _$jscoverage['/base/render.js'].lineData[20]++;
+  var supportCss3 = !!transformVendorInfo;
+  _$jscoverage['/base/render.js'].lineData[36]++;
   var methods = {
   syncUI: function() {
   _$jscoverage['/base/render.js'].functionData[1]++;
-  _$jscoverage['/base/render.js'].lineData[37]++;
+  _$jscoverage['/base/render.js'].lineData[38]++;
   var self = this, control = self.control, el = control.el, contentEl = control.contentEl;
-  _$jscoverage['/base/render.js'].lineData[47]++;
+  _$jscoverage['/base/render.js'].lineData[48]++;
   var scrollHeight = Math.max(contentEl.offsetHeight, contentEl.scrollHeight), scrollWidth = Math.max(contentEl.offsetWidth, contentEl.scrollWidth);
-  _$jscoverage['/base/render.js'].lineData[50]++;
+  _$jscoverage['/base/render.js'].lineData[51]++;
   var clientHeight = el.clientHeight, clientWidth = el.clientWidth;
-  _$jscoverage['/base/render.js'].lineData[53]++;
+  _$jscoverage['/base/render.js'].lineData[54]++;
   control.set('dimension', {
   'scrollHeight': scrollHeight, 
   'scrollWidth': scrollWidth, 
@@ -308,36 +302,36 @@ KISSY.add(function(S, require) {
 }, 
   '_onSetScrollLeft': function(v) {
   _$jscoverage['/base/render.js'].functionData[2]++;
-  _$jscoverage['/base/render.js'].lineData[62]++;
+  _$jscoverage['/base/render.js'].lineData[63]++;
   this.control.contentEl.style.left = -v + 'px';
 }, 
   '_onSetScrollTop': function(v) {
   _$jscoverage['/base/render.js'].functionData[3]++;
-  _$jscoverage['/base/render.js'].lineData[66]++;
+  _$jscoverage['/base/render.js'].lineData[67]++;
   this.control.contentEl.style.top = -v + 'px';
 }};
-  _$jscoverage['/base/render.js'].lineData[70]++;
-  if (visit2_70_1(supportCss3)) {
-    _$jscoverage['/base/render.js'].lineData[71]++;
-    transformProperty = Feature.getVendorCssPropName('transform');
-    _$jscoverage['/base/render.js'].lineData[73]++;
+  _$jscoverage['/base/render.js'].lineData[71]++;
+  if (visit1_71_1(supportCss3)) {
+    _$jscoverage['/base/render.js'].lineData[72]++;
+    transformProperty = transformVendorInfo.propertyName;
+    _$jscoverage['/base/render.js'].lineData[74]++;
     methods._onSetScrollLeft = function(v) {
   _$jscoverage['/base/render.js'].functionData[4]++;
-  _$jscoverage['/base/render.js'].lineData[74]++;
-  var control = this.control;
   _$jscoverage['/base/render.js'].lineData[75]++;
+  var control = this.control;
+  _$jscoverage['/base/render.js'].lineData[76]++;
   control.contentEl.style[transformProperty] = 'translateX(' + floor(-v) + 'px)' + ' translateY(' + floor(-control.get('scrollTop')) + 'px)' + (isTransform3dSupported ? ' translateZ(0)' : '');
 };
-    _$jscoverage['/base/render.js'].lineData[80]++;
+    _$jscoverage['/base/render.js'].lineData[81]++;
     methods._onSetScrollTop = function(v) {
   _$jscoverage['/base/render.js'].functionData[5]++;
-  _$jscoverage['/base/render.js'].lineData[81]++;
-  var control = this.control;
   _$jscoverage['/base/render.js'].lineData[82]++;
+  var control = this.control;
+  _$jscoverage['/base/render.js'].lineData[83]++;
   control.contentEl.style[transformProperty] = 'translateX(' + floor(-control.get('scrollLeft')) + 'px)' + ' translateY(' + floor(-v) + 'px)' + (isTransform3dSupported ? ' translateZ(0)' : '');
 };
   }
-  _$jscoverage['/base/render.js'].lineData[88]++;
+  _$jscoverage['/base/render.js'].lineData[89]++;
   return Container.getDefaultRender().extend([ContentRenderExtension], methods, {
   name: 'ScrollViewRender'});
 });

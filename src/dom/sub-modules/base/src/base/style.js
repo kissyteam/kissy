@@ -7,6 +7,7 @@ KISSY.add(function (S, require) {
     var Dom = require('./api');
     var logger = S.getLogger('s/dom');
     var globalWindow = S.Env.host,
+        getCssVendorInfo = S.Feature.getCssVendorInfo,
         UA = S.UA,
         BOX_MODELS = ['margin', 'border', 'padding'],
         CONTENT_INDEX = -1,
@@ -44,7 +45,7 @@ KISSY.add(function (S, require) {
     cssProps['float'] = 'cssFloat';
 
     function normalizeCssPropName(name) {
-        return cssProps[name] || S.Feature.getVendorCssPropName(name);
+        return cssProps[name] || getCssVendorInfo(name).propertyName;
     }
 
     function upperCase() {
@@ -323,7 +324,7 @@ KISSY.add(function (S, require) {
                     style,
                     els;
                 if (userSelectProperty === undefined) {
-                    userSelectProperty = S.Feature.getVendorCssPropName('userSelect');
+                    userSelectProperty = getCssVendorInfo('userSelect').propertyName;
                 }
                 for (j = _els.length - 1; j >= 0; j--) {
                     elem = _els[j];

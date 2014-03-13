@@ -1,0 +1,8 @@
+<script>
+    var src = '/kissy/build/seed.js';
+    if (location.href.indexOf('?build')) {
+        src = '/kissy/build/seed-min.js';
+    }
+    document.write('<script src="' + src + '" data-config="{combine:true}"><\/script>');
+</script>
+<script>KISSY.use('node');</script>
