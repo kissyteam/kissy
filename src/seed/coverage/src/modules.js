@@ -281,10 +281,10 @@ if (! _$jscoverage['/modules.js']) {
   _$jscoverage['/modules.js'].lineData[219] = 0;
   _$jscoverage['/modules.js'].lineData[223] = 0;
   _$jscoverage['/modules.js'].lineData[227] = 0;
-  _$jscoverage['/modules.js'].lineData[230] = 0;
+  _$jscoverage['/modules.js'].lineData[231] = 0;
   _$jscoverage['/modules.js'].lineData[235] = 0;
   _$jscoverage['/modules.js'].lineData[239] = 0;
-  _$jscoverage['/modules.js'].lineData[243] = 0;
+  _$jscoverage['/modules.js'].lineData[242] = 0;
   _$jscoverage['/modules.js'].lineData[247] = 0;
   _$jscoverage['/modules.js'].lineData[251] = 0;
   _$jscoverage['/modules.js'].lineData[255] = 0;
@@ -297,7 +297,10 @@ if (! _$jscoverage['/modules.js']) {
   _$jscoverage['/modules.js'].lineData[283] = 0;
   _$jscoverage['/modules.js'].lineData[287] = 0;
   _$jscoverage['/modules.js'].lineData[291] = 0;
-  _$jscoverage['/modules.js'].lineData[296] = 0;
+  _$jscoverage['/modules.js'].lineData[295] = 0;
+  _$jscoverage['/modules.js'].lineData[299] = 0;
+  _$jscoverage['/modules.js'].lineData[303] = 0;
+  _$jscoverage['/modules.js'].lineData[308] = 0;
 }
 if (! _$jscoverage['/modules.js'].functionData) {
   _$jscoverage['/modules.js'].functionData = [];
@@ -415,7 +418,7 @@ function visit10_6_1(result) {
   _$jscoverage['/modules.js'].lineData[89]++;
   config({
   dd: {
-  requires: ['node', 'base']}});
+  requires: ['node', 'base', 'event/gesture/drag']}});
   _$jscoverage['/modules.js'].lineData[93]++;
   config({
   'dd/plugin/constrain': {
@@ -459,7 +462,7 @@ function visit10_6_1(result) {
   _$jscoverage['/modules.js'].lineData[151]++;
   config({
   event: {
-  requires: ['event/dom', 'event/custom']}});
+  requires: ['event/dom', 'event/custom', 'event/gesture']}});
   _$jscoverage['/modules.js'].lineData[155]++;
   config({
   'event/custom': {
@@ -486,122 +489,134 @@ function visit10_6_1(result) {
   requires: ['event/dom/base', 'dom']}});
   _$jscoverage['/modules.js'].lineData[179]++;
   config({
-  'event/dom/shake': {
-  requires: ['event/dom/base']}});
+  'event/gesture/base': {
+  requires: ['event/dom/base', 'dom']}});
   _$jscoverage['/modules.js'].lineData[183]++;
+  config({
+  'event/gesture/drag': {
+  requires: ['event/gesture/base', 'event/dom/base']}});
+  _$jscoverage['/modules.js'].lineData[187]++;
+  config({
+  'event/gesture/shake': {
+  requires: ['event/dom/base']}});
+  _$jscoverage['/modules.js'].lineData[191]++;
+  config({
+  'event/gesture/touch': {
+  requires: ['event/gesture/base', 'event/dom/base', 'dom']}});
+  _$jscoverage['/modules.js'].lineData[195]++;
   config({
   feature: {
   requires: ['ua']}});
-  _$jscoverage['/modules.js'].lineData[187]++;
+  _$jscoverage['/modules.js'].lineData[199]++;
   config({
   'filter-menu': {
   requires: ['menu', 'component/extension/content-xtpl', 'component/extension/content-render']}});
-  _$jscoverage['/modules.js'].lineData[191]++;
+  _$jscoverage['/modules.js'].lineData[203]++;
   config({
   io: {
   requires: ['dom', 'event/custom', 'promise', 'event/dom']}});
-  _$jscoverage['/modules.js'].lineData[195]++;
+  _$jscoverage['/modules.js'].lineData[207]++;
   config({
   menu: {
   requires: ['node', 'component/container', 'component/extension/delegate-children', 'component/control', 'component/extension/content-render', 'component/extension/content-xtpl', 'component/extension/align', 'component/extension/shim']}});
-  _$jscoverage['/modules.js'].lineData[199]++;
+  _$jscoverage['/modules.js'].lineData[211]++;
   config({
   menubutton: {
   requires: ['node', 'button', 'component/extension/content-xtpl', 'component/extension/content-render', 'menu']}});
-  _$jscoverage['/modules.js'].lineData[203]++;
+  _$jscoverage['/modules.js'].lineData[215]++;
   config({
   'navigation-view': {
   requires: ['component/container', 'component/control', 'component/extension/content-xtpl', 'component/extension/content-render']}});
-  _$jscoverage['/modules.js'].lineData[207]++;
+  _$jscoverage['/modules.js'].lineData[219]++;
   config({
   'navigation-view/bar': {
   requires: ['component/control', 'button']}});
-  _$jscoverage['/modules.js'].lineData[211]++;
+  _$jscoverage['/modules.js'].lineData[223]++;
   config({
   node: {
-  requires: ['dom', 'event/dom', 'anim']}});
-  _$jscoverage['/modules.js'].lineData[215]++;
+  requires: ['dom', 'event/dom', 'event/gesture', 'anim']}});
+  _$jscoverage['/modules.js'].lineData[227]++;
   config({
   overlay: {
   requires: ['component/container', 'component/extension/shim', 'component/extension/align', 'node', 'component/extension/content-render']}});
-  _$jscoverage['/modules.js'].lineData[219]++;
+  _$jscoverage['/modules.js'].lineData[231]++;
   config({
   resizable: {
   requires: ['node', 'base', 'dd']}});
-  _$jscoverage['/modules.js'].lineData[223]++;
+  _$jscoverage['/modules.js'].lineData[235]++;
   config({
   'resizable/plugin/proxy': {
   requires: ['node', 'base']}});
-  _$jscoverage['/modules.js'].lineData[227]++;
+  _$jscoverage['/modules.js'].lineData[239]++;
   config({
   router: {
   requires: ['event/dom', 'uri', 'event/custom']}});
-  _$jscoverage['/modules.js'].lineData[230]++;
+  _$jscoverage['/modules.js'].lineData[242]++;
   config({
   'scroll-view': {
   alias: Feature.isTouchGestureSupported() ? 'scroll-view/touch' : 'scroll-view/base'}});
-  _$jscoverage['/modules.js'].lineData[235]++;
+  _$jscoverage['/modules.js'].lineData[247]++;
   config({
   'scroll-view/base': {
   requires: ['node', 'anim', 'component/container', 'component/extension/content-render']}});
-  _$jscoverage['/modules.js'].lineData[239]++;
+  _$jscoverage['/modules.js'].lineData[251]++;
   config({
   'scroll-view/plugin/pull-to-refresh': {
   requires: ['base']}});
-  _$jscoverage['/modules.js'].lineData[243]++;
+  _$jscoverage['/modules.js'].lineData[255]++;
   config({
   'scroll-view/plugin/scrollbar': {
-  requires: ['base', 'node', 'component/control']}});
-  _$jscoverage['/modules.js'].lineData[247]++;
+  requires: ['base', 'node', 'component/control', 'event/gesture/drag']}});
+  _$jscoverage['/modules.js'].lineData[259]++;
   config({
   'scroll-view/touch': {
   requires: ['scroll-view/base', 'node', 'anim']}});
-  _$jscoverage['/modules.js'].lineData[251]++;
+  _$jscoverage['/modules.js'].lineData[263]++;
   config({
   separator: {
   requires: ['component/control']}});
-  _$jscoverage['/modules.js'].lineData[255]++;
+  _$jscoverage['/modules.js'].lineData[267]++;
   config({
   'split-button': {
   requires: ['component/container', 'button', 'menubutton']}});
-  _$jscoverage['/modules.js'].lineData[259]++;
+  _$jscoverage['/modules.js'].lineData[271]++;
   config({
   stylesheet: {
   requires: ['dom']}});
-  _$jscoverage['/modules.js'].lineData[263]++;
+  _$jscoverage['/modules.js'].lineData[275]++;
   config({
   swf: {
   requires: ['dom', 'json', 'attribute']}});
-  _$jscoverage['/modules.js'].lineData[267]++;
+  _$jscoverage['/modules.js'].lineData[279]++;
   config({
   tabs: {
   requires: ['component/container', 'toolbar', 'button']}});
-  _$jscoverage['/modules.js'].lineData[271]++;
+  _$jscoverage['/modules.js'].lineData[283]++;
   config({
   toolbar: {
   requires: ['component/container', 'component/extension/delegate-children', 'node']}});
-  _$jscoverage['/modules.js'].lineData[275]++;
+  _$jscoverage['/modules.js'].lineData[287]++;
   config({
   tree: {
   requires: ['node', 'component/container', 'component/extension/content-xtpl', 'component/extension/content-render', 'component/extension/delegate-children']}});
-  _$jscoverage['/modules.js'].lineData[279]++;
+  _$jscoverage['/modules.js'].lineData[291]++;
   config({
   uri: {
   requires: ['path']}});
-  _$jscoverage['/modules.js'].lineData[283]++;
+  _$jscoverage['/modules.js'].lineData[295]++;
   config({
   xtemplate: {
   requires: ['xtemplate/runtime', 'xtemplate/compiler']}});
-  _$jscoverage['/modules.js'].lineData[287]++;
+  _$jscoverage['/modules.js'].lineData[299]++;
   config({
   'xtemplate/compiler': {
   requires: ['xtemplate/runtime']}});
-  _$jscoverage['/modules.js'].lineData[291]++;
+  _$jscoverage['/modules.js'].lineData[303]++;
   config({
   'xtemplate/runtime': {
   requires: ['path']}});
 })(function(c) {
   _$jscoverage['/modules.js'].functionData[1]++;
-  _$jscoverage['/modules.js'].lineData[296]++;
+  _$jscoverage['/modules.js'].lineData[308]++;
   KISSY.config('modules', c);
 }, KISSY.Feature, KISSY.UA);

@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 13 18:03
+build time: Mar 13 20:31
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -473,9 +473,9 @@ KISSY.add("util/type", [], function(S, undefined) {
     return key === undefined || hasOwnProperty(obj, key)
   }});
   if("@DEBUG@") {
-    S.mix(S, {isArray:noop, isDate:noop, isRegExp:noop, isObject:noop})
+    S.mix(S, {isBoolean:noop, isNumber:noop, isString:noop, isFunction:noop, isArray:noop, isDate:noop, isRegExp:noop, isObject:noop})
   }
-  S.each("Object Date RegExp Array".split(" "), function(name, lc) {
+  S.each("Boolean Number String Function Date RegExp Object Array".split(" "), function(name, lc) {
     class2type["[object " + name + "]"] = lc = name.toLowerCase();
     S["is" + name] = function(o) {
       return S.type(o) === lc

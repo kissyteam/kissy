@@ -68,6 +68,38 @@ KISSY.add(function (S, undefined) {
     if ('@DEBUG@') {
         S.mix(S, {
             /**
+             * test whether o is boolean
+             * @method
+             * @param  o
+             * @return {Boolean}
+             * @member KISSY
+             */
+            isBoolean: noop,
+            /**
+             * test whether o is number
+             * @method
+             * @param  o
+             * @return {Boolean}
+             * @member KISSY
+             */
+            isNumber: noop,
+            /**
+             * test whether o is String
+             * @method
+             * @param  o
+             * @return {Boolean}
+             * @member KISSY
+             */
+            isString: noop,
+            /**
+             * test whether o is function
+             * @method
+             * @param  o
+             * @return {Boolean}
+             * @member KISSY
+             */
+            isFunction: noop,
+            /**
              * test whether o is Array
              * @method
              * @param  o
@@ -91,7 +123,6 @@ KISSY.add(function (S, undefined) {
              * @member KISSY
              */
             isRegExp: noop,
-
             /**
              * test whether o is Object
              * @method
@@ -103,7 +134,7 @@ KISSY.add(function (S, undefined) {
         });
     }
 
-    S.each('Object Date RegExp Array'.split(' '), function (name, lc) {
+    S.each('Boolean Number String Function Date RegExp Object Array'.split(' '), function (name, lc) {
         // populate the class2type map
         class2type['[object ' + name + ']'] = (lc = name.toLowerCase());
 

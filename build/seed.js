@@ -1,12 +1,12 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 13 18:03
+build time: Mar 13 20:31
 */
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 13 18:03
+build time: Mar 13 20:30
 */
 /**
  * @ignore
@@ -62,11 +62,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20140313180256' will replace with current timestamp when compressing.
+         * NOTICE: '20140313203034' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20140313180256',
+        __BUILD_TIME: '20140313203034',
 
         /**
          * KISSY Environment.
@@ -3645,7 +3645,7 @@ KISSY.add('i18n', {
     var doc = S.Env.host && S.Env.host.document;
     // var logger = S.getLogger('s/loader');
     var Utils = S.Loader.Utils;
-    var TIMESTAMP = '20140313180256';
+    var TIMESTAMP = '20140313203034';
     var defaultComboPrefix = '??';
     var defaultComboSep = ',';
 
@@ -3773,7 +3773,7 @@ KISSY.add('i18n', {
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 13 18:03
+build time: Mar 13 20:31
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -4245,9 +4245,9 @@ KISSY.add("util/type", [], function(S, undefined) {
     return key === undefined || hasOwnProperty(obj, key)
   }});
   if("@DEBUG@") {
-    S.mix(S, {isArray:noop, isDate:noop, isRegExp:noop, isObject:noop})
+    S.mix(S, {isBoolean:noop, isNumber:noop, isString:noop, isFunction:noop, isArray:noop, isDate:noop, isRegExp:noop, isObject:noop})
   }
-  S.each("Object Date RegExp Array".split(" "), function(name, lc) {
+  S.each("Boolean Number String Function Date RegExp Object Array".split(" "), function(name, lc) {
     class2type["[object " + name + "]"] = lc = name.toLowerCase();
     S["is" + name] = function(o) {
       return S.type(o) === lc
@@ -4469,7 +4469,7 @@ KISSY.add("util", ["util/array", "util/escape", "util/function", "util/object", 
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 13 18:03
+build time: Mar 13 20:30
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -4652,7 +4652,7 @@ KISSY.add("ua", [], function(S, undefined) {
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 13 18:03
+build time: Mar 13 20:31
 */
 /*
  Combined modules by KISSY Module Compiler: 
