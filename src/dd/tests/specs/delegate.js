@@ -141,7 +141,6 @@ KISSY.add(function (S, Event, Node, DD, Dom, Proxy, IO) {
 
 
         it('disable should works', function () {
-
             var proxy = new Proxy({
                 /**
                  * 如何产生替代节点
@@ -174,6 +173,7 @@ KISSY.add(function (S, Event, Node, DD, Dom, Proxy, IO) {
 
 
             dragDelegate.on('dragover', function (ev) {
+                alert(1);
                 var drag = ev.drag;
                 var drop = ev.drop;
                 var dragNode = drag.get('dragNode'),
@@ -240,7 +240,8 @@ KISSY.add(function (S, Event, Node, DD, Dom, Proxy, IO) {
 
             waits(400);
             runs(function () {
-                expect($('#container2').children()[0]).toBe(c1[0]);
+                var actual = $('#container2').children()[0];
+                expect(actual).toBe(c1[0]);
                 // restore
                 $('#container2').append(c1);
                 $('#container2').append(c2);

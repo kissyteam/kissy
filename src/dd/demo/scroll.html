@@ -10,8 +10,8 @@
     <style>
         .ks-dd-proxy {
             position: absolute;
-            left:-9999px;
-            top:-9999px;
+            left: -9999px;
+            top: -9999px;
         }
 
         .ks-dd-proxy {
@@ -33,8 +33,8 @@
             width: 100px;
             height: 100px;
             background: green;
-            -ms-touch-action:none
-            -ms-user-select:none;
+            -ms-touch-action: none;
+            -ms-user-select: none;
         }
 
         #free {
@@ -44,6 +44,10 @@
             top: 200px;
             width: 100px;
             height: 100px;
+        }
+
+        #free.ks-dd-dragging {
+            display: none;
         }
 
         .pad {
@@ -241,18 +245,14 @@
 <script src="/kissy/build/seed.js"></script>
 <script src="/kissy/src/package.js"></script>
 <script>
-
-
-    KISSY.use("dd", function (S, DD) {
-
-        var Draggable = DD.Draggable,
-                Scroll = DD.Scroll;
+    KISSY.use("dd,dd/plugin/scroll,dd/plugin/proxy", function (S, DD, Scroll, Proxy) {
+        var Draggable = DD.Draggable;
 
         (function () {
             var drag = new Draggable({
                 node: '#component',
                 move: 1,
-                groups:false
+                groups: false
             });
 
             drag.plug(new Scroll({
@@ -265,12 +265,11 @@
             }));
         })();
 
-
         (function () {
             var drag = new Draggable({
                 node: '#free',
                 move: 1,
-                groups:false
+                groups: false
             });
 
             drag.plug(new Scroll({
@@ -280,14 +279,9 @@
                 diff: [20, 20]
             }));
 
-            drag.plug(new DD.Proxy());
-
+            drag.plug(new Proxy());
         })();
-
-
     });
-
-
 </script>
 </body>
 </html>

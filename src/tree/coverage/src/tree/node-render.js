@@ -318,35 +318,35 @@ if (! _$jscoverage['/tree/node-render.js'].branchData) {
   _$jscoverage['/tree/node-render.js'].branchData['155'] = [];
   _$jscoverage['/tree/node-render.js'].branchData['155'][1] = new BranchData();
 }
-_$jscoverage['/tree/node-render.js'].branchData['155'][1].init(29, 56, 'checkIconEl.hasClass(this.getBaseCssClass(allStates[i]))');
+_$jscoverage['/tree/node-render.js'].branchData['155'][1].init(30, 56, 'checkIconEl.hasClass(this.getBaseCssClass(allStates[i]))');
 function visit25_155_1(result) {
   _$jscoverage['/tree/node-render.js'].branchData['155'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tree/node-render.js'].branchData['154'][1].init(102, 20, 'i < allStates.length');
+}_$jscoverage['/tree/node-render.js'].branchData['154'][1].init(104, 20, 'i < allStates.length');
 function visit24_154_1(result) {
   _$jscoverage['/tree/node-render.js'].branchData['154'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tree/node-render.js'].branchData['152'][1].init(102, 11, 'checkIconEl');
+}_$jscoverage['/tree/node-render.js'].branchData['152'][1].init(104, 11, 'checkIconEl');
 function visit23_152_1(result) {
   _$jscoverage['/tree/node-render.js'].branchData['152'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tree/node-render.js'].branchData['145'][1].init(6, 95, 'el.one(\'.\' + this.getBaseCssClass(CHILDREN_CLS)).css(\'display\') !== \'none\'');
+}_$jscoverage['/tree/node-render.js'].branchData['145'][1].init(6, 96, 'el.one(\'.\' + this.getBaseCssClass(CHILDREN_CLS)).css(\'display\') !== \'none\'');
 function visit22_145_1(result) {
   _$jscoverage['/tree/node-render.js'].branchData['145'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tree/node-render.js'].branchData['138'][1].init(160, 43, 'el.hasClass(self.getBaseCssClass(\'folder\'))');
+}_$jscoverage['/tree/node-render.js'].branchData['138'][1].init(164, 43, 'el.hasClass(self.getBaseCssClass(\'folder\'))');
 function visit21_138_1(result) {
   _$jscoverage['/tree/node-render.js'].branchData['138'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tree/node-render.js'].branchData['136'][1].init(54, 41, 'el.hasClass(self.getBaseCssClass(\'leaf\'))');
+}_$jscoverage['/tree/node-render.js'].branchData['136'][1].init(56, 41, 'el.hasClass(self.getBaseCssClass(\'leaf\'))');
 function visit20_136_1(result) {
   _$jscoverage['/tree/node-render.js'].branchData['136'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tree/node-render.js'].branchData['71'][1].init(77, 8, 'expanded');
+}_$jscoverage['/tree/node-render.js'].branchData['71'][1].init(79, 8, 'expanded');
 function visit19_71_1(result) {
   _$jscoverage['/tree/node-render.js'].branchData['71'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tree/node-render.js'].branchData['66'][1].init(307, 10, 'isNodeLeaf');
+}_$jscoverage['/tree/node-render.js'].branchData['66'][1].init(316, 10, 'isNodeLeaf');
 function visit18_66_1(result) {
   _$jscoverage['/tree/node-render.js'].branchData['66'][1].ranCondition(result);
   return result;

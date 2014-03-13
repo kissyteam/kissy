@@ -28,24 +28,6 @@ KISSY.add(function (S, undefined) {
         },
 
         /**
-         * whether o === null
-         * @param o
-         * @member KISSY
-         */
-        isNull: function (o) {
-            return o === null;
-        },
-
-        /**
-         * whether o === undefined
-         * @param o
-         * @member KISSY
-         */
-        isUndefined: function (o) {
-            return o === undefined;
-        },
-
-        /**
          * Checks to see if an object is a plain object (created using '{}'
          * or 'new Object()' but not 'new FunctionClass()').
          * @member KISSY
@@ -86,38 +68,6 @@ KISSY.add(function (S, undefined) {
     if ('@DEBUG@') {
         S.mix(S, {
             /**
-             * test whether o is boolean
-             * @method
-             * @param  o
-             * @return {Boolean}
-             * @member KISSY
-             */
-            isBoolean: noop,
-            /**
-             * test whether o is number
-             * @method
-             * @param  o
-             * @return {Boolean}
-             * @member KISSY
-             */
-            isNumber: noop,
-            /**
-             * test whether o is String
-             * @method
-             * @param  o
-             * @return {Boolean}
-             * @member KISSY
-             */
-            isString: noop,
-            /**
-             * test whether o is function
-             * @method
-             * @param  o
-             * @return {Boolean}
-             * @member KISSY
-             */
-            isFunction: noop,
-            /**
              * test whether o is Array
              * @method
              * @param  o
@@ -141,6 +91,7 @@ KISSY.add(function (S, undefined) {
              * @member KISSY
              */
             isRegExp: noop,
+
             /**
              * test whether o is Object
              * @method
@@ -152,7 +103,7 @@ KISSY.add(function (S, undefined) {
         });
     }
 
-    S.each('Boolean Number String Function Date RegExp Object Array'.split(' '), function (name, lc) {
+    S.each('Object Date RegExp Array'.split(' '), function (name, lc) {
         // populate the class2type map
         class2type['[object ' + name + ']'] = (lc = name.toLowerCase());
 

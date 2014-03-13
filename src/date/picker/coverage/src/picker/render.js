@@ -446,139 +446,139 @@ if (! _$jscoverage['/picker/render.js'].branchData) {
   _$jscoverage['/picker/render.js'].branchData['258'][1] = new BranchData();
   _$jscoverage['/picker/render.js'].branchData['258'][2] = new BranchData();
 }
-_$jscoverage['/picker/render.js'].branchData['258'][2].init(337, 42, 'disabledDate && disabledDate(value, value)');
+_$jscoverage['/picker/render.js'].branchData['258'][2].init(343, 42, 'disabledDate && disabledDate(value, value)');
 function visit65_258_2(result) {
   _$jscoverage['/picker/render.js'].branchData['258'][2].ranCondition(result);
   return result;
-}_$jscoverage['/picker/render.js'].branchData['258'][1].init(335, 45, '!(disabledDate && disabledDate(value, value))');
+}_$jscoverage['/picker/render.js'].branchData['258'][1].init(341, 45, '!(disabledDate && disabledDate(value, value))');
 function visit64_258_1(result) {
   _$jscoverage['/picker/render.js'].branchData['258'][1].ranCondition(result);
   return result;
-}_$jscoverage['/picker/render.js'].branchData['252'][1].init(95, 28, 'isSameMonth(preValue, value)');
+}_$jscoverage['/picker/render.js'].branchData['252'][1].init(98, 28, 'isSameMonth(preValue, value)');
 function visit63_252_1(result) {
   _$jscoverage['/picker/render.js'].branchData['252'][1].ranCondition(result);
   return result;
-}_$jscoverage['/picker/render.js'].branchData['237'][1].init(261, 1, 'v');
+}_$jscoverage['/picker/render.js'].branchData['237'][1].init(267, 1, 'v');
 function visit62_237_1(result) {
   _$jscoverage['/picker/render.js'].branchData['237'][1].ranCondition(result);
   return result;
-}_$jscoverage['/picker/render.js'].branchData['204'][2].init(1020, 53, 'dateRender && (dateHtml = dateRender(current, value))');
+}_$jscoverage['/picker/render.js'].branchData['204'][2].init(1045, 53, 'dateRender && (dateHtml = dateRender(current, value))');
 function visit61_204_2(result) {
   _$jscoverage['/picker/render.js'].branchData['204'][2].ranCondition(result);
   return result;
-}_$jscoverage['/picker/render.js'].branchData['204'][1].init(1018, 56, '!(dateRender && (dateHtml = dateRender(current, value)))');
+}_$jscoverage['/picker/render.js'].branchData['204'][1].init(1043, 56, '!(dateRender && (dateHtml = dateRender(current, value)))');
 function visit60_204_1(result) {
   _$jscoverage['/picker/render.js'].branchData['204'][1].ranCondition(result);
   return result;
-}_$jscoverage['/picker/render.js'].branchData['198'][1].init(791, 44, 'disabledDate && disabledDate(current, value)');
+}_$jscoverage['/picker/render.js'].branchData['198'][1].init(810, 44, 'disabledDate && disabledDate(current, value)');
 function visit59_198_1(result) {
   _$jscoverage['/picker/render.js'].branchData['198'][1].ranCondition(result);
   return result;
-}_$jscoverage['/picker/render.js'].branchData['195'][1].init(648, 37, 'afterCurrentMonthYear(current, value)');
+}_$jscoverage['/picker/render.js'].branchData['195'][1].init(664, 37, 'afterCurrentMonthYear(current, value)');
 function visit58_195_1(result) {
   _$jscoverage['/picker/render.js'].branchData['195'][1].ranCondition(result);
   return result;
-}_$jscoverage['/picker/render.js'].branchData['192'][1].init(504, 38, 'beforeCurrentMonthYear(current, value)');
+}_$jscoverage['/picker/render.js'].branchData['192'][1].init(517, 38, 'beforeCurrentMonthYear(current, value)');
 function visit57_192_1(result) {
   _$jscoverage['/picker/render.js'].branchData['192'][1].ranCondition(result);
   return result;
-}_$jscoverage['/picker/render.js'].branchData['188'][1].init(324, 37, '!isClear && isSameDay(current, value)');
+}_$jscoverage['/picker/render.js'].branchData['188'][1].init(333, 37, '!isClear && isSameDay(current, value)');
 function visit56_188_1(result) {
   _$jscoverage['/picker/render.js'].branchData['188'][1].ranCondition(result);
   return result;
-}_$jscoverage['/picker/render.js'].branchData['185'][1].init(200, 25, 'isSameDay(current, today)');
+}_$jscoverage['/picker/render.js'].branchData['185'][1].init(206, 25, 'isSameDay(current, today)');
 function visit55_185_1(result) {
   _$jscoverage['/picker/render.js'].branchData['185'][1].ranCondition(result);
   return result;
-}_$jscoverage['/picker/render.js'].branchData['179'][1].init(338, 18, 'j < DATE_COL_COUNT');
+}_$jscoverage['/picker/render.js'].branchData['179'][1].init(346, 18, 'j < DATE_COL_COUNT');
 function visit54_179_1(result) {
   _$jscoverage['/picker/render.js'].branchData['179'][1].ranCondition(result);
   return result;
-}_$jscoverage['/picker/render.js'].branchData['173'][1].init(68, 14, 'showWeekNumber');
+}_$jscoverage['/picker/render.js'].branchData['173'][1].init(70, 14, 'showWeekNumber');
 function visit53_173_1(result) {
   _$jscoverage['/picker/render.js'].branchData['173'][1].ranCondition(result);
   return result;
-}_$jscoverage['/picker/render.js'].branchData['171'][1].init(2136, 18, 'i < DATE_ROW_COUNT');
+}_$jscoverage['/picker/render.js'].branchData['171'][1].init(2182, 18, 'i < DATE_ROW_COUNT');
 function visit52_171_1(result) {
   _$jscoverage['/picker/render.js'].branchData['171'][1].ranCondition(result);
   return result;
-}_$jscoverage['/picker/render.js'].branchData['161'][1].init(67, 6, 'passed');
+}_$jscoverage['/picker/render.js'].branchData['161'][1].init(69, 6, 'passed');
 function visit51_161_1(result) {
   _$jscoverage['/picker/render.js'].branchData['161'][1].ranCondition(result);
   return result;
-}_$jscoverage['/picker/render.js'].branchData['159'][1].init(29, 18, 'j < DATE_COL_COUNT');
+}_$jscoverage['/picker/render.js'].branchData['159'][1].init(30, 18, 'j < DATE_COL_COUNT');
 function visit50_159_1(result) {
   _$jscoverage['/picker/render.js'].branchData['159'][1].ranCondition(result);
   return result;
-}_$jscoverage['/picker/render.js'].branchData['158'][1].init(1663, 18, 'i < DATE_ROW_COUNT');
+}_$jscoverage['/picker/render.js'].branchData['158'][1].init(1696, 18, 'i < DATE_ROW_COUNT');
 function visit49_158_1(result) {
   _$jscoverage['/picker/render.js'].branchData['158'][1].ranCondition(result);
   return result;
-}_$jscoverage['/picker/render.js'].branchData['104'][1].init(1043, 18, 'i < DATE_COL_COUNT');
+}_$jscoverage['/picker/render.js'].branchData['104'][1].init(1063, 18, 'i < DATE_COL_COUNT');
 function visit48_104_1(result) {
   _$jscoverage['/picker/render.js'].branchData['104'][1].ranCondition(result);
   return result;
-}_$jscoverage['/picker/render.js'].branchData['56'][1].init(52, 37, 'current.getMonth() > today.getMonth()');
+}_$jscoverage['/picker/render.js'].branchData['56'][1].init(53, 37, 'current.getMonth() > today.getMonth()');
 function visit47_56_1(result) {
   _$jscoverage['/picker/render.js'].branchData['56'][1].ranCondition(result);
   return result;
-}_$jscoverage['/picker/render.js'].branchData['55'][2].init(99, 37, 'current.getYear() === today.getYear()');
+}_$jscoverage['/picker/render.js'].branchData['55'][2].init(103, 37, 'current.getYear() === today.getYear()');
 function visit46_55_2(result) {
   _$jscoverage['/picker/render.js'].branchData['55'][2].ranCondition(result);
   return result;
-}_$jscoverage['/picker/render.js'].branchData['55'][1].init(99, 90, 'current.getYear() === today.getYear() && current.getMonth() > today.getMonth()');
+}_$jscoverage['/picker/render.js'].branchData['55'][1].init(103, 91, 'current.getYear() === today.getYear() && current.getMonth() > today.getMonth()');
 function visit45_55_1(result) {
   _$jscoverage['/picker/render.js'].branchData['55'][1].ranCondition(result);
   return result;
-}_$jscoverage['/picker/render.js'].branchData['52'][1].init(13, 35, 'current.getYear() > today.getYear()');
+}_$jscoverage['/picker/render.js'].branchData['52'][1].init(14, 35, 'current.getYear() > today.getYear()');
 function visit44_52_1(result) {
   _$jscoverage['/picker/render.js'].branchData['52'][1].ranCondition(result);
   return result;
-}_$jscoverage['/picker/render.js'].branchData['48'][1].init(52, 37, 'current.getMonth() < today.getMonth()');
+}_$jscoverage['/picker/render.js'].branchData['48'][1].init(53, 37, 'current.getMonth() < today.getMonth()');
 function visit43_48_1(result) {
   _$jscoverage['/picker/render.js'].branchData['48'][1].ranCondition(result);
   return result;
-}_$jscoverage['/picker/render.js'].branchData['47'][2].init(99, 37, 'current.getYear() === today.getYear()');
+}_$jscoverage['/picker/render.js'].branchData['47'][2].init(103, 37, 'current.getYear() === today.getYear()');
 function visit42_47_2(result) {
   _$jscoverage['/picker/render.js'].branchData['47'][2].ranCondition(result);
   return result;
-}_$jscoverage['/picker/render.js'].branchData['47'][1].init(99, 90, 'current.getYear() === today.getYear() && current.getMonth() < today.getMonth()');
+}_$jscoverage['/picker/render.js'].branchData['47'][1].init(103, 91, 'current.getYear() === today.getYear() && current.getMonth() < today.getMonth()');
 function visit41_47_1(result) {
   _$jscoverage['/picker/render.js'].branchData['47'][1].ranCondition(result);
   return result;
-}_$jscoverage['/picker/render.js'].branchData['44'][1].init(13, 35, 'current.getYear() < today.getYear()');
+}_$jscoverage['/picker/render.js'].branchData['44'][1].init(14, 35, 'current.getYear() < today.getYear()');
 function visit40_44_1(result) {
   _$jscoverage['/picker/render.js'].branchData['44'][1].ranCondition(result);
   return result;
-}_$jscoverage['/picker/render.js'].branchData['40'][1].init(46, 33, 'one.getMonth() === two.getMonth()');
+}_$jscoverage['/picker/render.js'].branchData['40'][1].init(47, 33, 'one.getMonth() === two.getMonth()');
 function visit39_40_1(result) {
   _$jscoverage['/picker/render.js'].branchData['40'][1].ranCondition(result);
   return result;
-}_$jscoverage['/picker/render.js'].branchData['39'][2].init(16, 31, 'one.getYear() === two.getYear()');
+}_$jscoverage['/picker/render.js'].branchData['39'][2].init(17, 31, 'one.getYear() === two.getYear()');
 function visit38_39_2(result) {
   _$jscoverage['/picker/render.js'].branchData['39'][2].ranCondition(result);
   return result;
-}_$jscoverage['/picker/render.js'].branchData['39'][1].init(16, 80, 'one.getYear() === two.getYear() && one.getMonth() === two.getMonth()');
+}_$jscoverage['/picker/render.js'].branchData['39'][1].init(17, 81, 'one.getYear() === two.getYear() && one.getMonth() === two.getMonth()');
 function visit37_39_1(result) {
   _$jscoverage['/picker/render.js'].branchData['39'][1].ranCondition(result);
   return result;
-}_$jscoverage['/picker/render.js'].branchData['35'][1].init(48, 43, 'one.getDayOfMonth() === two.getDayOfMonth()');
+}_$jscoverage['/picker/render.js'].branchData['35'][1].init(49, 43, 'one.getDayOfMonth() === two.getDayOfMonth()');
 function visit36_35_1(result) {
   _$jscoverage['/picker/render.js'].branchData['35'][1].ranCondition(result);
   return result;
-}_$jscoverage['/picker/render.js'].branchData['34'][2].init(65, 33, 'one.getMonth() === two.getMonth()');
+}_$jscoverage['/picker/render.js'].branchData['34'][2].init(67, 33, 'one.getMonth() === two.getMonth()');
 function visit35_34_2(result) {
   _$jscoverage['/picker/render.js'].branchData['34'][2].ranCondition(result);
   return result;
-}_$jscoverage['/picker/render.js'].branchData['34'][1].init(46, 92, 'one.getMonth() === two.getMonth() && one.getDayOfMonth() === two.getDayOfMonth()');
+}_$jscoverage['/picker/render.js'].branchData['34'][1].init(47, 93, 'one.getMonth() === two.getMonth() && one.getDayOfMonth() === two.getDayOfMonth()');
 function visit34_34_1(result) {
   _$jscoverage['/picker/render.js'].branchData['34'][1].ranCondition(result);
   return result;
-}_$jscoverage['/picker/render.js'].branchData['33'][2].init(16, 31, 'one.getYear() === two.getYear()');
+}_$jscoverage['/picker/render.js'].branchData['33'][2].init(17, 31, 'one.getYear() === two.getYear()');
 function visit33_33_2(result) {
   _$jscoverage['/picker/render.js'].branchData['33'][2].ranCondition(result);
   return result;
-}_$jscoverage['/picker/render.js'].branchData['33'][1].init(16, 139, 'one.getYear() === two.getYear() && one.getMonth() === two.getMonth() && one.getDayOfMonth() === two.getDayOfMonth()');
+}_$jscoverage['/picker/render.js'].branchData['33'][1].init(17, 141, 'one.getYear() === two.getYear() && one.getMonth() === two.getMonth() && one.getDayOfMonth() === two.getDayOfMonth()');
 function visit32_33_1(result) {
   _$jscoverage['/picker/render.js'].branchData['33'][1].ranCondition(result);
   return result;

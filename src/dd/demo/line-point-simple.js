@@ -132,13 +132,12 @@ KISSY.use('dd', function (S, DD) {
             groups:false
         });
 
-        canvasDD.on("dragstart", function () {
+        canvasDD.on("dragstart", function (e) {
             S.log('dragstart');
             currentMouse = {};
-            var startMousePos=canvasDD.get('startMousePos');
             currentMouse.start = {
-                left: startMousePos.left - nxy.left,
-                top: startMousePos.top - nxy.top
+                left: e.startPos.pageX-canvasOffset.left,
+                top: e.startPos.pageY-canvasOffset.top
             };
             mouse.push(currentMouse);
         });

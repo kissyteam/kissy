@@ -62,7 +62,7 @@ KISSY.add(function (S, require) {
     function DocumentHandler(doc) {
         var self = this;
         self.doc = doc;
-        self.eventHandle = {};
+        self.eventHandles = [];
         self.init();
         // normalize pointer event to touch event
         self.touches = [];
@@ -209,7 +209,7 @@ KISSY.add(function (S, require) {
             var e, h,
                 self = this,
                 type = event.type,
-                eventHandle = self.eventHandle;
+                eventHandles = self.eventHandles;
             if (isTouchEvent(type)) {
                 self.setPrimaryTouch(event.changedTouches[0]);
                 self.dupMouse(event);
@@ -227,8 +227,9 @@ KISSY.add(function (S, require) {
                 throw new Error('unrecognized touch event: ' + event.type);
             }
 
-            for (e in eventHandle) {
-                h = eventHandle[e].handle;
+            for (var i = 0, l = eventHandles.length; i < l; i++) {
+                e = eventHandles[i];
+                h = eventHandles[e].handle;
                 h.isActive = 1;
             }
             // if preventDefault, will not trigger click event
@@ -279,7 +280,8 @@ KISSY.add(function (S, require) {
 
         callEventHandle: function (method, event) {
             var self = this,
-                eventHandle = self.eventHandle,
+                eventHandles = self.eventHandles,
+                handleArray = eventHandles.concat(),
                 e,
                 h;
             event = self.normalize(event);
@@ -288,51 +290,67 @@ KISSY.add(function (S, require) {
             if (!event.changedTouches.length) {
                 return;
             }
-            for (e in eventHandle) {
-                // event processor shared by multiple events
-                h = eventHandle[e].handle;
+            for (var i = 0, l = handleArray.length; i < l; i++) {
+                e = handleArray[i];
+                if (eventHandles[e]) {
+                    // event processor shared by multiple events
+                    h = eventHandles[e].handle;
 
-                // touch only gesture
-                if (h.requiredGestureType && gestureType !== h.requiredGestureType) {
-                    continue;
-                }
+                    // touch only gesture
+                    if (h.requiredGestureType && gestureType !== h.requiredGestureType) {
+                        continue;
+                    }
 
-                if (h.processed) {
-                    continue;
+                    if (h.processed) {
+                        continue;
+                    }
+                    h.processed = 1;
+                    if (h.isActive && h[method] && h[method](event) === false) {
+                        h.isActive = 0;
+                    }
                 }
-                h.processed = 1;
-                //type=event.type;
-                if (h.isActive && h[method] && h[method](event) === false) {
-                    h.isActive = 0;
-                }
-                //event.type=type;
             }
-            for (e in eventHandle) {
-                h = eventHandle[e].handle;
-                h.processed = 0;
+
+            for (i = 0, l = handleArray.length; i < l; i++) {
+                e = eventHandles[i];
+                if (eventHandles[e]) {
+                    h = eventHandles[e].handle;
+                    h.processed = 0;
+                }
             }
         },
 
         addEventHandle: function (event) {
             var self = this,
-                eventHandle = self.eventHandle,
+                eventHandles = self.eventHandles,
                 handle = eventHandleMap[event].handle;
-            if (eventHandle[event]) {
-                eventHandle[event].count++;
+            if (eventHandles[event]) {
+                eventHandles[event].count++;
             } else {
-                eventHandle[event] = {
+                eventHandles.push(event);
+                self.sortEventHandles();
+                eventHandles[event] = {
                     count: 1,
                     handle: handle
                 };
             }
         },
 
+        sortEventHandles: function () {
+            this.eventHandles.sort(function (e1, e2) {
+                var e1Config = eventHandleMap[e1];
+                var e2Config = eventHandleMap[e2];
+                return e1Config.order - e2Config.order;
+            });
+        },
+
         'removeEventHandle': function (event) {
-            var eventHandle = this.eventHandle;
-            if (eventHandle[event]) {
-                eventHandle[event].count--;
-                if (!eventHandle[event].count) {
-                    delete eventHandle[event];
+            var eventHandles = this.eventHandles;
+            if (eventHandles[event]) {
+                eventHandles[event].count--;
+                if (!eventHandles[event].count) {
+                    eventHandles.splice(S.indexOf(event, eventHandles), 1);
+                    delete eventHandles[event];
                 }
             }
         },
@@ -382,7 +400,7 @@ KISSY.add(function (S, require) {
             if (event) {
                 handle.removeEventHandle(event);
             }
-            if (S.isEmptyObject(handle.eventHandle)) {
+            if (!handle.eventHandles.length) {
                 handle.destroy();
                 Dom.removeData(doc, key);
             }
@@ -399,6 +417,7 @@ KISSY.add(function (S, require) {
             specialEvent.tearDown = config.tearDown ? tearDownExtra : tearDown;
             specialEvent.add = config.add;
             specialEvent.remove = config.remove;
+            config.order = config.order || 100;
             // specialEvent.preFire = config.preFire;
             eventHandleMap[event] = config;
             Special[event] = specialEvent;

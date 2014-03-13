@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Feb 25 19:45
+build time: Mar 13 18:02
 */
 KISSY.add("promise",[],function(k){function n(a){"undefined"!==typeof console&&console.error&&console.error(a)}function o(a,b,d){if(a instanceof e)p(function(){d.call(a,a[h])});else{var l=a[h],c=a[j];void 0===c&&(c=a[j]=[]);c?c.push([b,d]):q(l)?o(l,b,d):b&&p(function(){b.call(a,l)})}}function f(a){if(!(this instanceof f))return new f(a);this.promise=a||new c;this.promise.defer=this}function q(a){return a&&a instanceof c}function u(a,b){return function(){return a.apply(b,arguments)}}function c(a){if("function"===
 typeof a){var b=new f(this),d=u(b.resolve,b),b=u(b.reject,b);try{a(d,b)}catch(c){n(c.stack||c),b(c)}}}function e(a){if(a instanceof e)return a;this[h]=a;this[j]=!1;this[m]=!1;return this}function g(a,b,d){function l(a){try{return b?b.call(this,a):a}catch(d){return n(d.stack||d),new e(d)}}function g(a){try{return d?d.call(this,a):new e(a)}catch(b){return n(b.stack||b),new e(b)}}function v(a){i||a instanceof c||(i=1,r.resolve(l.call(this,a)))}var r=new f,i=0;a instanceof c?o(a,v,function(a){i||(i=1,

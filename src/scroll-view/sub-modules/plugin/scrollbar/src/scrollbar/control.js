@@ -8,7 +8,7 @@ KISSY.add(function (S, require) {
     var Control = require('component/control');
     var ScrollBarRender = require('./render');
 
-    require('event/gesture/drag');
+    var DragType = require('event/gesture/drag');
 
     var MIN_BAR_LENGTH = 20;
 
@@ -209,8 +209,8 @@ KISSY.add(function (S, require) {
             var action = v ? 'detach' : 'on';
             if (!self.get('autoHide')) {
                 self.$dragEl[action]('dragstart mousedown', preventDefault)
-                    [action]('gestureDragStart', onDragStartHandler, self)
-                    [action]('gestureDrag', onDragHandler, self);
+                    [action](DragType.DRAG_START, onDragStartHandler, self)
+                    [action](DragType.DRAG, onDragHandler, self);
                 S.each([self.$downBtn, self.$upBtn], function (b) {
                     b[action](Gesture.start, onUpDownBtnMouseDown, self)
                         [action](Gesture.end, onUpDownBtnMouseUp, self);

@@ -232,6 +232,7 @@ if (! _$jscoverage['/node/base.js']) {
   _$jscoverage['/node/base.js'].lineData[6] = 0;
   _$jscoverage['/node/base.js'].lineData[7] = 0;
   _$jscoverage['/node/base.js'].lineData[8] = 0;
+  _$jscoverage['/node/base.js'].lineData[9] = 0;
   _$jscoverage['/node/base.js'].lineData[10] = 0;
   _$jscoverage['/node/base.js'].lineData[27] = 0;
   _$jscoverage['/node/base.js'].lineData[28] = 0;
@@ -471,6 +472,8 @@ KISSY.add(function(S, require) {
   var Dom = require('dom');
   _$jscoverage['/node/base.js'].lineData[8]++;
   var Event = require('event/dom');
+  _$jscoverage['/node/base.js'].lineData[9]++;
+  var Gesture = require('event/gesture');
   _$jscoverage['/node/base.js'].lineData[10]++;
   var AP = Array.prototype, slice = AP.slice, NodeType = Dom.NodeType, push = AP.push, makeArray = S.makeArray, isNodeList = Dom.isDomNodeList;
   _$jscoverage['/node/base.js'].lineData[27]++;
@@ -679,7 +682,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/node/base.js'].lineData[272]++;
   NodeList.KeyCode = Event.KeyCode;
   _$jscoverage['/node/base.js'].lineData[274]++;
-  NodeList.Gesture = Event.Gesture;
+  NodeList.Gesture = Gesture.Enumeration;
   _$jscoverage['/node/base.js'].lineData[276]++;
   NodeList.REPLACE_HISTORY = Event.REPLACE_HISTORY;
   _$jscoverage['/node/base.js'].lineData[278]++;

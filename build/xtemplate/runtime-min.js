@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 7 11:52
+build time: Mar 13 18:04
 */
 KISSY.add("xtemplate/runtime/scope",[],function(k){function j(a,e){this.data=a||{};this.affix=e;this.root=this}j.prototype={isScope:1,setParent:function(a){this.parent=a;this.root=a.root},getParent:function(){return this.parent},getRoot:function(){return this.root},set:function(a,e){this.affix||(this.affix={});this.affix[a]=e},setData:function(a){this.data=a},getData:function(){return this.data},mix:function(a){this.affix||(this.affix={});k.mix(this.affix,a)},has:function(a){var e=this.data,h=this.affix;
 return"this"===a||h&&a in h?!0:"object"===typeof e&&a in e},get:function(a){var e=this.data,h=this.affix;if("this"===a)return this.data;if(h&&a in h)return h[a];if("object"===typeof e&&a in e)return e[a]},resolve:function(a,e){var h=this;if(!e&&"string"!==typeof a&&1===a.length&&h.has(a[0]))return h.get(a[0]);var b=a;"string"===typeof a&&(b=a.split("."));var c,d,f,i,g;if("root"===b[0])b.shift(),h=h.root;else if(e)for(;h&&e--;)h=h.parent;var m=0;for(c=b.length;h;){g=1;f=h;for(d=0;d<c;d++)if(i=b[d],

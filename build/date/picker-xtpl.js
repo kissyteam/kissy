@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 3 14:47
+build time: Mar 13 17:49
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -15,7 +15,7 @@ KISSY.add("date/picker-xtpl", [], function(S, require, exports, module) {
     if(typeof module !== "undefined" && module.kissy) {
       moduleWrap = module
     }
-    var callCommandUtil = utils.callCommand, eachCommand = nativeCommands.each, withCommand = nativeCommands["with"], ifCommand = nativeCommands["if"], setCommand = nativeCommands.set, includeCommand = nativeCommands.include, parseCommand = nativeCommands.parse, extendCommand = nativeCommands.extend, blockCommand = nativeCommands.block, macroCommand = nativeCommands.macro;
+    var callCommandUtil = utils.callCommand, debuggerCommand = nativeCommands["debugger"], eachCommand = nativeCommands.each, withCommand = nativeCommands["with"], ifCommand = nativeCommands["if"], setCommand = nativeCommands.set, includeCommand = nativeCommands.include, parseCommand = nativeCommands.parse, extendCommand = nativeCommands.extend, blockCommand = nativeCommands.block, macroCommand = nativeCommands.macro;
     buffer += '<div class="';
     var option1 = {};
     var params2 = [];
@@ -240,7 +240,7 @@ KISSY.add("date/picker-xtpl", [], function(S, require, exports, module) {
     buffer += ifCommand.call(engine, scope, option65, payload);
     return buffer
   };
-  t.TPL_NAME = "date/picker-xtpl/src/picker.xtpl.html";
+  t.TPL_NAME = module.name;
   return t
 });
 

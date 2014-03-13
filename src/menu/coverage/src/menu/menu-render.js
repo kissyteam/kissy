@@ -249,15 +249,15 @@ if (! _$jscoverage['/menu/menu-render.js'].branchData) {
   _$jscoverage['/menu/menu-render.js'].branchData['16'][2] = new BranchData();
   _$jscoverage['/menu/menu-render.js'].branchData['16'][3] = new BranchData();
 }
-_$jscoverage['/menu/menu-render.js'].branchData['16'][3].init(60, 18, '$el[0] === element');
+_$jscoverage['/menu/menu-render.js'].branchData['16'][3].init(62, 18, '$el[0] === element');
 function visit28_16_3(result) {
   _$jscoverage['/menu/menu-render.js'].branchData['16'][3].ranCondition(result);
   return result;
-}_$jscoverage['/menu/menu-render.js'].branchData['16'][2].init(60, 43, '$el[0] === element || $el.contains(element)');
+}_$jscoverage['/menu/menu-render.js'].branchData['16'][2].init(62, 43, '$el[0] === element || $el.contains(element)');
 function visit27_16_2(result) {
   _$jscoverage['/menu/menu-render.js'].branchData['16'][2].ranCondition(result);
   return result;
-}_$jscoverage['/menu/menu-render.js'].branchData['16'][1].init(52, 52, '$el && ($el[0] === element || $el.contains(element))');
+}_$jscoverage['/menu/menu-render.js'].branchData['16'][1].init(54, 52, '$el && ($el[0] === element || $el.contains(element))');
 function visit26_16_1(result) {
   _$jscoverage['/menu/menu-render.js'].branchData['16'][1].ranCondition(result);
   return result;

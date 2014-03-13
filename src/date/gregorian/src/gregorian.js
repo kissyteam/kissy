@@ -43,7 +43,7 @@ KISSY.add(function (S, require) {
 
         var args = S.makeArray(arguments);
 
-        if (S.isObject(timezoneOffset)) {
+        if (typeof timezoneOffset === 'object') {
             locale = timezoneOffset;
             timezoneOffset = locale.timezoneOffset;
         } else if (args.length >= 3) {

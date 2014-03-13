@@ -3,7 +3,7 @@
  * generate proxy drag object,
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S,require) {
+KISSY.add(function (S, require) {
     var Node = require('node'),
         DD = require('dd'),
         Base = require('base');
@@ -18,7 +18,6 @@ KISSY.add(function (S,require) {
      * instead of dragging the original node.
      */
     return Base.extend({
-
         pluginId: 'dd/plugin/proxy',
 
         /**
@@ -27,7 +26,7 @@ KISSY.add(function (S,require) {
          * @private
          */
         pluginInitializer: function (drag) {
-            var self = this, hideNodeOnDrag = self.get('hideNodeOnDrag');
+            var self = this;
 
             function start() {
                 var node = self.get('node'),
@@ -48,9 +47,6 @@ KISSY.add(function (S,require) {
                 node.offset(dragNode.offset());
                 drag.setInternal('dragNode', dragNode);
                 drag.setInternal('node', node);
-                if (hideNodeOnDrag) {
-                    dragNode.css('visibility', 'hidden');
-                }
             }
 
             function end() {
@@ -66,9 +62,6 @@ KISSY.add(function (S,require) {
                     node.hide();
                 }
                 drag.setInternal('node', dragNode);
-                if (hideNodeOnDrag) {
-                    dragNode.css('visibility', '');
-                }
             }
 
             drag.on('dragstart' + PROXY_EVENT, start)
@@ -96,18 +89,6 @@ KISSY.add(function (S,require) {
                 value: function (drag) {
                     return new Node(drag.get('node').clone(true));
                 }
-            },
-
-            /**
-             * whether hide original node when drag proxy.
-             * Defaults to: false
-             * @cfg {Boolean} hideNodeOnDrag
-             */
-            /**
-             * @ignore
-             */
-            hideNodeOnDrag: {
-                value: false
             },
 
             /**
@@ -142,9 +123,7 @@ KISSY.add(function (S,require) {
             /**
              * @ignore
              */
-            proxyNode: {
-
-            }
+            proxyNode: {}
         }
     });
 });

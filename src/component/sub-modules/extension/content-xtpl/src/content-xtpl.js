@@ -11,6 +11,7 @@ KISSY.add(function (S, require, exports, module) {
                 moduleWrap = module;
             }
             var callCommandUtil = utils.callCommand,
+                debuggerCommand = nativeCommands["debugger"],
                 eachCommand = nativeCommands.each,
                 withCommand = nativeCommands["with"],
                 ifCommand = nativeCommands["if"],
@@ -23,7 +24,7 @@ KISSY.add(function (S, require, exports, module) {
             buffer += '<div id="ks-content-';
             var id0 = scope.resolve(["id"]);
             buffer += escapeHtml(id0);
-            buffer += '"\n           class="';
+            buffer += '"\r\n           class="';
             var option2 = {};
             var params3 = [];
             params3.push('content');
@@ -38,6 +39,6 @@ KISSY.add(function (S, require, exports, module) {
             buffer += '</div>';
             return buffer;
         };
-    t.TPL_NAME = module.name;
-    return t;
+t.TPL_NAME = module.name;
+return t;
 });

@@ -8,9 +8,9 @@ KISSY.add(function (S, require) {
     var addGestureEvent = GestureBase.addEvent;
     var DomEvent = require('event/dom/base');
     var SingleTouch = GestureBase.SingleTouch;
-    var dragStartEvent = 'gestureDragStart',
-        dragEndEvent = 'gestureDragEnd',
-        dragEvent = 'gestureDrag',
+    var DRAG_START = 'gestureDragStart',
+        DRAG_END = 'gestureDragEnd',
+        DRAG = 'gestureDrag',
         SAMPLE_INTERVAL = 300,
         MIN_DISTANCE = 3;
     var doc = document;
@@ -36,7 +36,7 @@ KISSY.add(function (S, require) {
                 }
                 self.isStarted = true;
             }
-            DomEvent.fire(self.dragTarget, dragStartEvent, getEventObject(self, e));
+            DomEvent.fire(self.dragTarget, DRAG_START, getEventObject(self, e));
         }
     }
 
@@ -92,7 +92,7 @@ KISSY.add(function (S, require) {
                 startDrag(self, e);
             } else {
                 sample(self, e);
-                DomEvent.fire(self.dragTarget, dragEvent, getEventObject(self, e));
+                DomEvent.fire(self.dragTarget, DRAG, getEventObject(self, e));
             }
         },
 
@@ -102,7 +102,7 @@ KISSY.add(function (S, require) {
             var currentTime = e.timeStamp;
             var velocityX = (currentTouch.pageX - self.lastPos.pageX) / (currentTime - self.lastTime);
             var velocityY = (currentTouch.pageY - self.lastPos.pageY) / (currentTime - self.lastTime);
-            DomEvent.fire(self.dragTarget, dragEndEvent, getEventObject(self, e, {
+            DomEvent.fire(self.dragTarget, DRAG_END, getEventObject(self, e, {
                 velocityX: velocityX || 0,
                 velocityY: velocityY || 0
             }));
@@ -112,9 +112,13 @@ KISSY.add(function (S, require) {
         }
     });
 
-    addGestureEvent([dragStartEvent, dragEvent, dragEndEvent], {
+    addGestureEvent([DRAG_START, DRAG, DRAG_END], {
         handle: new Drag()
     });
 
-    return Drag;
+    return {
+        DRAG_START: DRAG_START,
+        DRAG: DRAG,
+        DRAG_END: DRAG_END
+    };
 });

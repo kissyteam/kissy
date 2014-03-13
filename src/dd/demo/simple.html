@@ -16,8 +16,7 @@
             float: left;
             display: inline;
             overflow: hidden;
-            -ms-touch-action:none
-            -ms-user-select:none;
+            -ms-touch-action: none -ms-user-select : none;
         }
 
         #drop {
@@ -33,10 +32,14 @@
             background: #ffff00;
         }
 
+        #c3.ks-dd-dragging {
+            display: none;
+        }
+
         .ks-dd-proxy {
             position: absolute;
-            left:-9999px;
-            top:-9999px;
+            left: -9999px;
+            top: -9999px;
         }
     </style>
     <link rel="stylesheet" href="../../css/assets/dpl/base.css"/>
@@ -82,9 +85,10 @@
     var S = KISSY;
 
     KISSY.use("node,dd,dd/plugin/proxy", function (S, Node, DD, Proxy) {
+        alert('ok');
+
         var DDM = DD.DDM,
                 $ = Node.all,
-                DraggableDelegate = DD.DraggableDelegate,
                 Draggable = DD.Draggable,
                 Droppable = DD.Droppable;
 
@@ -136,7 +140,7 @@
             });
 
             $('#disabled').on('click', function () {
-                drop.set('disabled',this.checked);
+                drop.set('disabled', this.checked);
             });
 
             c1.on("dragenter", function (ev) {
@@ -164,7 +168,10 @@
                 });
                 node.css("margin", "5px 10px");
                 node.appendTo(ev.drop.get("node"));
-                ev.drag.destroy();
+                // let dragend fire
+                setTimeout(function () {
+                    ev.drag.destroy();
+                }, 0);
             }
 
 
@@ -201,9 +208,7 @@
                         }
                     })
                 }
-
             });
-
 
             drop.on("dropenter", function (ev) {
                 S.log(ev.drag.get("node").attr('id') + " dropenter "

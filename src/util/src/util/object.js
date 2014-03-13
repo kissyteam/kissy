@@ -14,7 +14,6 @@ KISSY.add(function (S, undefined) {
         Obj = Object,
         objectCreate = Obj.create;
 
-
     mix(S, {
         /**
          * stamp a object by guid

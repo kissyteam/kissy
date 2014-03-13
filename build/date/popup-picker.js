@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Feb 25 19:34
+build time: Mar 13 17:49
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -16,7 +16,7 @@ KISSY.add("date/popup-picker/render-xtpl", ["date/picker-xtpl"], function(S, req
     if(typeof module !== "undefined" && module.kissy) {
       moduleWrap = module
     }
-    var callCommandUtil = utils.callCommand, eachCommand = nativeCommands.each, withCommand = nativeCommands["with"], ifCommand = nativeCommands["if"], setCommand = nativeCommands.set, includeCommand = nativeCommands.include, parseCommand = nativeCommands.parse, extendCommand = nativeCommands.extend, blockCommand = nativeCommands.block, macroCommand = nativeCommands.macro;
+    var callCommandUtil = utils.callCommand, debuggerCommand = nativeCommands["debugger"], eachCommand = nativeCommands.each, withCommand = nativeCommands["with"], ifCommand = nativeCommands["if"], setCommand = nativeCommands.set, includeCommand = nativeCommands.include, parseCommand = nativeCommands.parse, extendCommand = nativeCommands.extend, blockCommand = nativeCommands.block, macroCommand = nativeCommands.macro;
     buffer += '<div class="';
     var option1 = {};
     var params2 = [];
@@ -40,7 +40,7 @@ KISSY.add("date/popup-picker/render-xtpl", ["date/picker-xtpl"], function(S, req
     buffer += "\n</div>";
     return buffer
   };
-  t.TPL_NAME = "date/popup-picker/src/popup-picker/render.xtpl.html";
+  t.TPL_NAME = module.name;
   return t
 });
 KISSY.add("date/popup-picker", ["./popup-picker/render-xtpl", "date/picker", "component/extension/shim", "component/extension/align"], function(S, require) {

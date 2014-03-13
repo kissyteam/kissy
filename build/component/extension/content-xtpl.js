@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Feb 25 19:33
+build time: Mar 13 17:48
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -15,11 +15,11 @@ KISSY.add("component/extension/content-xtpl", [], function(S, require, exports, 
     if(typeof module !== "undefined" && module.kissy) {
       moduleWrap = module
     }
-    var callCommandUtil = utils.callCommand, eachCommand = nativeCommands.each, withCommand = nativeCommands["with"], ifCommand = nativeCommands["if"], setCommand = nativeCommands.set, includeCommand = nativeCommands.include, parseCommand = nativeCommands.parse, extendCommand = nativeCommands.extend, blockCommand = nativeCommands.block, macroCommand = nativeCommands.macro;
+    var callCommandUtil = utils.callCommand, debuggerCommand = nativeCommands["debugger"], eachCommand = nativeCommands.each, withCommand = nativeCommands["with"], ifCommand = nativeCommands["if"], setCommand = nativeCommands.set, includeCommand = nativeCommands.include, parseCommand = nativeCommands.parse, extendCommand = nativeCommands.extend, blockCommand = nativeCommands.block, macroCommand = nativeCommands.macro;
     buffer += '<div id="ks-content-';
     var id0 = scope.resolve(["id"]);
     buffer += escapeHtml(id0);
-    buffer += '"\n           class="';
+    buffer += '"\r\n           class="';
     var option2 = {};
     var params3 = [];
     params3.push("content");
@@ -34,7 +34,7 @@ KISSY.add("component/extension/content-xtpl", [], function(S, require, exports, 
     buffer += "</div>";
     return buffer
   };
-  t.TPL_NAME = "component/sub-modules/extension/content-xtpl/src/content.xtpl.html";
+  t.TPL_NAME = module.name;
   return t
 });
 

@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Feb 25 19:43
+build time: Mar 13 17:59
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -13,7 +13,6 @@ build time: Feb 25 19:43
  event/dom/base/observable
  event/dom/base/dom-event
  event/dom/base/key-codes
- event/dom/base/gesture
  event/dom/base/special-events
  event/dom/base/mouseenter
  event/dom/base
@@ -188,6 +187,7 @@ KISSY.add("event/dom/base/object", ["event/base"], function(S, require) {
       fixFn = fixFns[--l];
       fixFn(self, originalEvent)
     }
+    self.timeStamp = originalEvent.timeStamp || S.now()
   }
   S.extend(DomEventObject, BaseEvent.Object, {constructor:DomEventObject, preventDefault:function() {
     var self = this, e = self.originalEvent;
@@ -676,9 +676,6 @@ KISSY.add("event/dom/base/key-codes", [], function(S) {
   };
   return KeyCode
 });
-KISSY.add("event/dom/base/gesture", [], function() {
-  return{start:"mousedown", move:"mousemove", end:"mouseup", tap:"click", singleTap:"click", doubleTap:"dblclick"}
-});
 KISSY.add("event/dom/base/special-events", ["./dom-event", "./special"], function(S, require) {
   var DomEvent = require("./dom-event");
   var Special = require("./special");
@@ -730,13 +727,12 @@ KISSY.add("event/dom/base/mouseenter", ["dom", "./special"], function(S, require
     }}
   })
 });
-KISSY.add("event/dom/base", ["./base/dom-event", "./base/object", "./base/key-codes", "./base/gesture", "./base/special-events", "./base/mouseenter"], function(S, require) {
+KISSY.add("event/dom/base", ["./base/dom-event", "./base/object", "./base/key-codes", "./base/special-events", "./base/mouseenter"], function(S, require) {
   var DomEvent = require("./base/dom-event");
   var DomEventObject = require("./base/object");
   var KeyCode = require("./base/key-codes");
-  var Gesture = require("./base/gesture");
   var Special = require("./base/special-events");
   require("./base/mouseenter");
-  return S.merge({add:DomEvent.on, remove:DomEvent.detach, KeyCode:KeyCode, Gesture:Gesture, Special:Special, Object:DomEventObject}, DomEvent)
+  return S.merge({add:DomEvent.on, remove:DomEvent.detach, KeyCode:KeyCode, Special:Special, Object:DomEventObject}, DomEvent)
 });
 

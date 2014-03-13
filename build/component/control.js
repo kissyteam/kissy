@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 10 22:27
+build time: Mar 13 17:48
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -543,7 +543,7 @@ KISSY.add("component/control", ["node", "./control/process", "component/manager"
       if(self.get("focusable")) {
         self.focus()
       }
-      if(!self.get("allowTextSelection") && ev.type.indexOf("mouse") !== -1) {
+      if(!self.get("allowTextSelection") && ev.gestureType === "mouse") {
         n = ev.target.nodeName;
         n = n && n.toLowerCase();
         if(n !== "input" && n !== "textarea" && n !== "button") {

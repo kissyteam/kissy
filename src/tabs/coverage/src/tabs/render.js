@@ -255,11 +255,11 @@ if (! _$jscoverage['/tabs/render.js'].branchData) {
   _$jscoverage['/tabs/render.js'].branchData['35'][1] = new BranchData();
   _$jscoverage['/tabs/render.js'].branchData['35'][2] = new BranchData();
 }
-_$jscoverage['/tabs/render.js'].branchData['35'][2].init(110, 29, 'orientation && orientation[1]');
+_$jscoverage['/tabs/render.js'].branchData['35'][2].init(112, 29, 'orientation && orientation[1]');
 function visit14_35_2(result) {
   _$jscoverage['/tabs/render.js'].branchData['35'][2].ranCondition(result);
   return result;
-}_$jscoverage['/tabs/render.js'].branchData['35'][1].init(110, 38, 'orientation && orientation[1] || \'top\'');
+}_$jscoverage['/tabs/render.js'].branchData['35'][1].init(112, 38, 'orientation && orientation[1] || \'top\'');
 function visit13_35_1(result) {
   _$jscoverage['/tabs/render.js'].branchData['35'][1].ranCondition(result);
   return result;

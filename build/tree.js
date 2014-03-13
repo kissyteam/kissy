@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Feb 25 19:47
+build time: Mar 13 18:04
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -22,7 +22,7 @@ KISSY.add("tree/node-xtpl", ["component/extension/content-xtpl"], function(S, re
     if(typeof module !== "undefined" && module.kissy) {
       moduleWrap = module
     }
-    var callCommandUtil = utils.callCommand, eachCommand = nativeCommands.each, withCommand = nativeCommands["with"], ifCommand = nativeCommands["if"], setCommand = nativeCommands.set, includeCommand = nativeCommands.include, parseCommand = nativeCommands.parse, extendCommand = nativeCommands.extend, blockCommand = nativeCommands.block, macroCommand = nativeCommands.macro;
+    var callCommandUtil = utils.callCommand, debuggerCommand = nativeCommands["debugger"], eachCommand = nativeCommands.each, withCommand = nativeCommands["with"], ifCommand = nativeCommands["if"], setCommand = nativeCommands.set, includeCommand = nativeCommands.include, parseCommand = nativeCommands.parse, extendCommand = nativeCommands.extend, blockCommand = nativeCommands.block, macroCommand = nativeCommands.macro;
     buffer += '<div id="ks-tree-node-row-';
     var id0 = scope.resolve(["id"]);
     buffer += escapeHtml(id0);
@@ -134,7 +134,7 @@ KISSY.add("tree/node-xtpl", ["component/extension/content-xtpl"], function(S, re
     buffer += "\n>\n</div>";
     return buffer
   };
-  t.TPL_NAME = "tree/src/tree/node.xtpl.html";
+  t.TPL_NAME = module.name;
   return t
 });
 KISSY.add("tree/node-render", ["component/container", "./node-xtpl", "component/extension/content-render"], function(S, require) {

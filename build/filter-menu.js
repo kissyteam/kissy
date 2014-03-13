@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Feb 25 19:44
+build time: Mar 13 18:00
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -17,7 +17,7 @@ KISSY.add("filter-menu/render-xtpl", ["component/extension/content-xtpl"], funct
     if(typeof module !== "undefined" && module.kissy) {
       moduleWrap = module
     }
-    var callCommandUtil = utils.callCommand, eachCommand = nativeCommands.each, withCommand = nativeCommands["with"], ifCommand = nativeCommands["if"], setCommand = nativeCommands.set, includeCommand = nativeCommands.include, parseCommand = nativeCommands.parse, extendCommand = nativeCommands.extend, blockCommand = nativeCommands.block, macroCommand = nativeCommands.macro;
+    var callCommandUtil = utils.callCommand, debuggerCommand = nativeCommands["debugger"], eachCommand = nativeCommands.each, withCommand = nativeCommands["with"], ifCommand = nativeCommands["if"], setCommand = nativeCommands.set, includeCommand = nativeCommands.include, parseCommand = nativeCommands.parse, extendCommand = nativeCommands.extend, blockCommand = nativeCommands.block, macroCommand = nativeCommands.macro;
     buffer += '<div id="ks-filter-menu-input-wrap-';
     var id0 = scope.resolve(["id"]);
     buffer += escapeHtml(id0);
@@ -66,7 +66,7 @@ KISSY.add("filter-menu/render-xtpl", ["component/extension/content-xtpl"], funct
     }
     return buffer
   };
-  t.TPL_NAME = "filter-menu/src/filter-menu/render.xtpl.html";
+  t.TPL_NAME = module.name;
   return t
 });
 KISSY.add("filter-menu/render", ["menu", "./render-xtpl", "component/extension/content-render"], function(S, require) {

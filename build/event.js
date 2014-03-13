@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Feb 25 19:44
+build time: Mar 13 18:00
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -9,12 +9,11 @@ build time: Feb 25 19:44
  event
 */
 
-KISSY.add("event", ["event/dom", "event/custom"], function(S, require) {
+KISSY.add("event", ["event/dom", "event/custom", "event/gesture"], function(S, require) {
   var DomEvent = require("event/dom");
   var CustomEvent = require("event/custom");
-  var Event = S.Event = S.merge(DomEvent, {DomEvent:DomEvent, CustomEvent:CustomEvent});
-  Event.global = CustomEvent.global;
-  S.EventTarget = Event.Target = CustomEvent.Target;
-  return Event
+  var Gesture = require("event/gesture");
+  S.Event = S.merge(DomEvent, {DomEvent:DomEvent, Target:CustomEvent.Target, global:CustomEvent.global, Gesture:Gesture.Enumeration, CustomEvent:CustomEvent});
+  return S.Event
 });
 

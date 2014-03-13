@@ -8,8 +8,8 @@ KISSY.add(function (S, require) {
     var addGestureEvent = GestureBase.addEvent;
     var DomEvent = require('event/dom/base');
     var SingleTouch = GestureBase.SingleTouch;
-    var event = 'swipe',
-        ingEvent = 'swiping',
+    var SWIPE = 'swipe',
+        SWIPING = 'swiping',
         MAX_DURATION = 1000,
         MAX_OFFSET = 35,
         MIN_DISTANCE = 50;
@@ -59,7 +59,7 @@ KISSY.add(function (S, require) {
             return false;
         }
 
-        DomEvent.fire(touch.target, ing ? ingEvent : event, {
+        DomEvent.fire(touch.target, ing ? SWIPING : SWIPE, {
             originalEvent: e.originalEvent,
 
             pageX: touch.pageX,
@@ -165,9 +165,12 @@ KISSY.add(function (S, require) {
         }
     });
 
-    addGestureEvent([event, ingEvent], {
+    addGestureEvent([SWIPE, SWIPING], {
         handle: new Swipe()
     });
 
-    return Swipe;
+    return {
+        SWIPE: SWIPE,
+        SWIPING: SWIPING
+    };
 });

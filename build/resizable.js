@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Feb 25 19:45
+build time: Mar 13 18:02
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -62,9 +62,8 @@ KISSY.add("resizable", ["node", "base", "dd"], function(S, require) {
     for(i = 0;i < handlers.length;i++) {
       var hc = handlers[i], el = $('<div class="' + prefix + " " + prefix + "-" + hc + '"></div>').prependTo(node, undefined), dd = dds[hc] = new Draggable(S.mix({node:el, cursor:null, groups:false}, dragConfig));
       (function(hc, dd) {
-        var startEdgePos;
         dd.on("drag", function(ev) {
-          var dd = ev.target, ow = self._width, oh = self._height, minW = self.get("minWidth"), maxW = self.get("maxWidth"), minH = self.get("minHeight"), maxH = self.get("maxHeight"), diffT = ev.pageY - startEdgePos.top, diffL = ev.pageX - startEdgePos.left, ot = self._top, ol = self._left, region = {}, pos = hcNormal[hc](minW, maxW, minH, maxH, ot, ol, ow, oh, diffT, diffL, preserveRatio);
+          var dd = ev.target, ow = self._width, oh = self._height, minW = self.get("minWidth"), maxW = self.get("maxWidth"), minH = self.get("minHeight"), maxH = self.get("maxHeight"), diffT = ev.deltaY, diffL = ev.deltaX, ot = self._top, ol = self._left, region = {}, pos = hcNormal[hc](minW, maxW, minH, maxH, ot, ol, ow, oh, diffT, diffL, preserveRatio);
           for(i = 0;i < ATTRS_ORDER.length;i++) {
             if(pos[i]) {
               region[ATTRS_ORDER[i]] = pos[i]
@@ -73,7 +72,6 @@ KISSY.add("resizable", ["node", "base", "dd"], function(S, require) {
           self.fire("beforeResize", {handler:hc, dd:dd, region:region})
         });
         dd.on("dragstart", function() {
-          startEdgePos = dd.get("startMousePos");
           preserveRatio = self.get("preserveRatio");
           self._width = node.width();
           self._top = parseInt(node.css("top"), 10);

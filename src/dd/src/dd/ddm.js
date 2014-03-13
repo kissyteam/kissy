@@ -6,7 +6,9 @@
 KISSY.add(function (S, require) {
     var Node = require('node'),
         Base = require('base');
+
     var logger = S.getLogger('dd/ddm');
+
     var UA = S.UA,
         $ = Node.all,
         win = S.Env.host,
@@ -14,16 +16,8 @@ KISSY.add(function (S, require) {
         $doc = $(doc),
         $win = $(win),
         ie6 = UA.ie === 6,
-    // prevent collision with click , only start when move
-        PIXEL_THRESH = 3,
-    // or start when mousedown for 1 second
-        BUFFER_TIME = 1,
         MOVE_DELAY = 30,
         SHIM_Z_INDEX = 999999;
-
-    var Gesture = Node.Gesture,
-        DRAG_MOVE_EVENT = Gesture.move,
-        DRAG_END_EVENT = Gesture.end;
     /*
      负责拖动涉及的全局事件：
      1.全局统一的鼠标移动监控
@@ -38,23 +32,18 @@ KISSY.add(function (S, require) {
      * @extends KISSY.Base
      * Manager for Drag and Drop.
      */
-    var DDM = Base.extend({
-        /*
-         可能要进行拖放的对象，需要通过 buffer/pixelThresh 考验
-         */
-        __activeToDrag: 0,
-
+    var DDManger = Base.extend({
         /**
          * @ignore
          */
-        _regDrop: function (d) {
+        addDrop: function (d) {
             this.get('drops').push(d);
         },
 
         /**
          * @ignore
          */
-        _unRegDrop: function (d) {
+        removeDrop: function (d) {
             var self = this,
                 drops = self.get('drops'),
                 index = S.indexOf(d, drops);
@@ -64,32 +53,14 @@ KISSY.add(function (S, require) {
         },
 
         /**
-         * 注册可能将要拖放的节点
-         * @param drag
-         * @ignore
-         */
-        _regToDrag: function (drag) {
-            var self = this;
-            // 事件先要注册好，防止点击，导致 mouseup 时还没注册事件
-            self.__activeToDrag = drag;
-            registerEvent(self);
-        },
-
-        /**
          * 真正开始 drag
          * 当前拖动对象通知全局：我要开始啦
          * 全局设置当前拖动对象
          * @ignore
          */
-        _start: function () {
-            var self = this,
-                drag = self.__activeToDrag;
-            if (!drag) {
-                return;
-            }
+        start: function (e, drag) {
+            var self = this;
             self.setInternal('activeDrag', drag);
-            // 预备役清掉
-            self.__activeToDrag = 0;
             // 真正开始移动了才激活垫片
             if (drag.get('shim')) {
                 activeShim(self);
@@ -108,48 +79,116 @@ KISSY.add(function (S, require) {
         /**
          * @ignore
          */
-        _addValidDrop: function (drop) {
+        addValidDrop: function (drop) {
             this.get('validDrops').push(drop);
+        },
+
+        _notifyDropsMove: function (ev, activeDrag) {
+            var self = this;
+            var drops = self.get('validDrops'),
+                mode = activeDrag.get('mode'),
+                activeDrop = 0,
+                oldDrop,
+                vArea = 0,
+                dragRegion = region(activeDrag.get('node')),
+                dragArea = area(dragRegion);
+
+            S.each(drops, function (drop) {
+                if (drop.get('disabled')) {
+                    return undefined;
+                }
+
+                var a,
+                    node = drop.getNodeFromTarget(ev,
+                        // node
+                        activeDrag.get('dragNode')[0],
+                        // proxy node
+                        activeDrag.get('node')[0]);
+
+                if (!node
+                // 当前 drop 区域已经包含  activeDrag.get('node')
+                // 不要返回，可能想调整位置
+                    ) {
+                    return undefined;
+                }
+
+                if (mode === 'point') {
+                    //取鼠标所在的 drop 区域
+                    if (inNodeByPointer(node, activeDrag.mousePos)) {
+                        a = area(region(node));
+                        if (!activeDrop) {
+                            activeDrop = drop;
+                            vArea = a;
+                        } else {
+                            // 当前得到的可放置元素范围更小，取范围小的那个
+                            if (a < vArea) {
+                                activeDrop = drop;
+                                vArea = a;
+                            }
+                        }
+                    }
+                } else if (mode === 'intersect') {
+                    //取一个和activeDrag交集最大的drop区域
+                    a = area(intersect(dragRegion, region(node)));
+                    if (a > vArea) {
+                        vArea = a;
+                        activeDrop = drop;
+                    }
+
+                } else if (mode === 'strict') {
+                    //drag 全部在 drop 里面
+                    a = area(intersect(dragRegion, region(node)));
+                    if (a === dragArea) {
+                        activeDrop = drop;
+                        return false;
+                    }
+                }
+                return undefined;
+            });
+
+            oldDrop = self.get('activeDrop');
+            if (oldDrop && oldDrop !== activeDrop) {
+                oldDrop._handleOut(ev);
+                activeDrag._handleOut(ev);
+            }
+            self.setInternal('activeDrop', activeDrop);
+            if (activeDrop) {
+                if (oldDrop !== activeDrop) {
+                    activeDrop._handleEnter(ev);
+                } else {
+                    // 注意处理代理时内部节点变化导致的 out、enter
+                    activeDrop._handleOver(ev);
+                }
+            }
+        },
+
+
+        move: function (ev, activeDrag) {
+            // chrome8: click 时 mousedown-mousemove-mouseup-click 也会触发 mousemove
+            var self = this;
+
+            // for drop-free draggable performance
+            if (self.__needDropCheck) {
+                self._notifyDropsMove(ev, activeDrag);
+            }
         },
 
         /**
          * 全局通知当前拖动对象：结束拖动了！
          * @ignore
          */
-        _end: function (e) {
+        end: function (e) {
             var self = this,
-                __activeToDrag = self.__activeToDrag,
-                activeDrag = self.get('activeDrag'),
                 activeDrop = self.get('activeDrop');
-
-            if (e) {
-                if (__activeToDrag) {
-                    __activeToDrag._move(e);
-                }
-                if (activeDrag) {
-                    activeDrag._move(e);
-                }
-            }
-
-            unRegisterEvent(self);
-            // 预备役清掉 , click 情况下 mousedown->mouseup 极快过渡
-            if (__activeToDrag) {
-                __activeToDrag._end(e);
-                self.__activeToDrag = 0;
-            }
             if (self._shim) {
                 self._shim.hide();
             }
-            if (!activeDrag) {
-                return;
-            }
-            activeDrag._end(e);
             _deActiveDrops(self);
             if (activeDrop) {
                 activeDrop._end(e);
             }
-            self.setInternal('activeDrag', null);
             self.setInternal('activeDrop', null);
+            self.setInternal('activeDrag', null);
         }
     }, {
         ATTRS: {
@@ -166,34 +205,6 @@ KISSY.add(function (S, require) {
              */
             dragCursor: {
                 value: 'move'
-            },
-
-            /***
-             * the number of pixels to move to start a drag operation,default is 3.
-             * Defaults to: 3.
-             * @property clickPixelThresh
-             * @type {Number}
-             */
-
-            /**
-             * @ignore
-             */
-            clickPixelThresh: {
-                value: PIXEL_THRESH
-            },
-
-            /**
-             * the number of milliseconds to start a drag operation after mousedown,unit second.
-             * Defaults to: 1.
-             * @property bufferTime
-             * @type {Number}
-             */
-
-            /**
-             * @ignore
-             */
-            bufferTime: {
-                value: BUFFER_TIME
             },
 
             /**
@@ -247,123 +258,6 @@ KISSY.add(function (S, require) {
     });
 
     /*
-     全局鼠标移动事件通知当前拖动对象正在移动
-     注意：chrome8: click 时 mousedown-mousemove-mouseup-click 也会触发 mousemove
-     */
-    function move(ev) {
-        var self = this,
-            drag,
-            __activeToDrag ,
-            activeDrag;
-
-        if (ev.touches && ev.touches.length > 1) {
-            ddm._end();
-            return;
-        }
-
-        // 先处理预备役，效率!
-        if ((__activeToDrag = self.__activeToDrag)) {
-            __activeToDrag._move(ev);
-        } else if ((activeDrag = self.get('activeDrag'))) {
-            activeDrag._move(ev);
-            // for drop-free draggable performance
-            if (self.__needDropCheck) {
-                notifyDropsMove(self, ev, activeDrag);
-            }
-        }
-
-        drag = __activeToDrag || activeDrag;
-        // 防止 ie 选择到字
-        // touch need direction
-        if (drag && drag.get('preventDefaultOnMove')) {
-            ev.preventDefault();
-        }
-    }
-
-    // 同一时刻只可能有个 drag 元素，只能有一次 move 被注册，不需要每个实例一个 throttle
-    // 一个应用一个 document 只需要注册一个 move
-    // 2013-01-24 更灵敏 for scroll-view in webkit
-    var throttleMove = UA.ie ? S.throttle(move, MOVE_DELAY) : move;
-
-    function notifyDropsMove(self, ev, activeDrag) {
-        var drops = self.get('validDrops'),
-            mode = activeDrag.get('mode'),
-            activeDrop = 0,
-            oldDrop,
-            vArea = 0,
-            dragRegion = region(activeDrag.get('node')),
-            dragArea = area(dragRegion);
-
-        S.each(drops, function (drop) {
-            if (drop.get('disabled')) {
-                return undefined;
-            }
-
-            var a,
-                node = drop.getNodeFromTarget(ev,
-                    // node
-                    activeDrag.get('dragNode')[0],
-                    // proxy node
-                    activeDrag.get('node')[0]);
-
-            if (!node
-            // 当前 drop 区域已经包含  activeDrag.get('node')
-            // 不要返回，可能想调整位置
-                ) {
-                return undefined;
-            }
-
-            if (mode === 'point') {
-                //取鼠标所在的 drop 区域
-                if (inNodeByPointer(node, activeDrag.mousePos)) {
-                    a = area(region(node));
-                    if (!activeDrop) {
-                        activeDrop = drop;
-                        vArea = a;
-                    } else {
-                        // 当前得到的可放置元素范围更小，取范围小的那个
-                        if (a < vArea) {
-                            activeDrop = drop;
-                            vArea = a;
-                        }
-                    }
-                }
-            } else if (mode === 'intersect') {
-                //取一个和activeDrag交集最大的drop区域
-                a = area(intersect(dragRegion, region(node)));
-                if (a > vArea) {
-                    vArea = a;
-                    activeDrop = drop;
-                }
-
-            } else if (mode === 'strict') {
-                //drag 全部在 drop 里面
-                a = area(intersect(dragRegion, region(node)));
-                if (a === dragArea) {
-                    activeDrop = drop;
-                    return false;
-                }
-            }
-            return undefined;
-        });
-
-        oldDrop = self.get('activeDrop');
-        if (oldDrop && oldDrop !== activeDrop) {
-            oldDrop._handleOut(ev);
-            activeDrag._handleOut(ev);
-        }
-        self.setInternal('activeDrop', activeDrop);
-        if (activeDrop) {
-            if (oldDrop !== activeDrop) {
-                activeDrop._handleEnter(ev);
-            } else {
-                // 注意处理代理时内部节点变化导致的 out、enter
-                activeDrop._handleOver(ev);
-            }
-        }
-    }
-
-    /*
      垫片只需创建一次
      */
     var activeShim = function (self) {
@@ -377,7 +271,7 @@ KISSY.add(function (S, require) {
             'width:100%;' +
             'height:100%;' +
             'top:0;' +
-            'cursor:' + ddm.get('dragCursor') + ';' +
+            'cursor:' + self.get('dragCursor') + ';' +
             'z-index:' +
             //覆盖iframe上面即可
             SHIM_Z_INDEX + ';' +
@@ -401,8 +295,7 @@ KISSY.add(function (S, require) {
     var adjustShimSize = S.throttle(function () {
         var self = this,
             activeDrag;
-        if ((activeDrag = self.get('activeDrag')) &&
-            activeDrag.get('shim')) {
+        if ((activeDrag = self.get('activeDrag')) && activeDrag.get('shim')) {
             self._shim.css({
                 width: $doc.width(),
                 height: $doc.height()
@@ -429,30 +322,6 @@ KISSY.add(function (S, require) {
         }
     }
 
-    /*
-     开始时注册全局监听事件
-     */
-    function registerEvent(self) {
-        $doc.on(DRAG_END_EVENT, self._end, self);
-        $doc.on(DRAG_MOVE_EVENT, throttleMove, self);
-        // http://stackoverflow.com/questions/1685326/responding-to-the-onmousemove-event-outside-of-the-browser-window-in-ie
-        // ie6 will not response to event when cursor is out of window.
-        if (doc.body.setCapture) {
-            doc.body.setCapture();
-        }
-    }
-
-    /*
-     结束时需要取消掉，防止平时无谓的监听
-     */
-    function unRegisterEvent(self) {
-        $doc.detach(DRAG_MOVE_EVENT, throttleMove, self);
-        $doc.detach(DRAG_END_EVENT, self._end, self);
-        if (doc.body.releaseCapture) {
-            doc.body.releaseCapture();
-        }
-    }
-
     function _activeDrops(self) {
         var drops = self.get('drops');
         self.setInternal('validDrops', []);
@@ -472,7 +341,6 @@ KISSY.add(function (S, require) {
             });
         }
     }
-
 
     function region(node) {
         var offset = node.offset();
@@ -526,12 +394,12 @@ KISSY.add(function (S, require) {
         }
     }
 
-    var ddm = new DDM();
-    ddm.inRegion = inRegion;
-    ddm.region = region;
-    ddm.area = area;
-    ddm.cacheWH = cacheWH;
-    ddm.PREFIX_CLS = 'ks-dd-';
+    var DDM = new DDManger();
+    DDM.inRegion = inRegion;
+    DDM.region = region;
+    DDM.area = area;
+    DDM.cacheWH = cacheWH;
+    DDM.PREFIX_CLS = 'ks-dd-';
 
-    return ddm;
+    return DDM;
 });

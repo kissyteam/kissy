@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Feb 25 19:43
+build time: Mar 13 17:59
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -35,7 +35,7 @@ KISSY.add("editor/render-xtpl", [], function(S, require, exports, module) {
     if(typeof module !== "undefined" && module.kissy) {
       moduleWrap = module
     }
-    var callCommandUtil = utils.callCommand, eachCommand = nativeCommands.each, withCommand = nativeCommands["with"], ifCommand = nativeCommands["if"], setCommand = nativeCommands.set, includeCommand = nativeCommands.include, parseCommand = nativeCommands.parse, extendCommand = nativeCommands.extend, blockCommand = nativeCommands.block, macroCommand = nativeCommands.macro;
+    var callCommandUtil = utils.callCommand, debuggerCommand = nativeCommands["debugger"], eachCommand = nativeCommands.each, withCommand = nativeCommands["with"], ifCommand = nativeCommands["if"], setCommand = nativeCommands.set, includeCommand = nativeCommands.include, parseCommand = nativeCommands.parse, extendCommand = nativeCommands.extend, blockCommand = nativeCommands.block, macroCommand = nativeCommands.macro;
     buffer += '<div class="';
     var id0 = scope.resolve(["prefixCls"]);
     buffer += escapeHtml(id0);
@@ -108,7 +108,7 @@ KISSY.add("editor/render-xtpl", [], function(S, require, exports, module) {
     buffer += '">\n\n</div>';
     return buffer
   };
-  t.TPL_NAME = "editor/src/editor/render.xtpl.html";
+  t.TPL_NAME = module.name;
   return t
 });
 KISSY.add("editor/render", ["component/control", "./render-xtpl"], function(S, require) {

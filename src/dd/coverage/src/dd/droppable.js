@@ -231,48 +231,47 @@ if (! _$jscoverage['/dd/droppable.js']) {
   _$jscoverage['/dd/droppable.js'].lineData = [];
   _$jscoverage['/dd/droppable.js'].lineData[6] = 0;
   _$jscoverage['/dd/droppable.js'].lineData[7] = 0;
-  _$jscoverage['/dd/droppable.js'].lineData[11] = 0;
+  _$jscoverage['/dd/droppable.js'].lineData[12] = 0;
   _$jscoverage['/dd/droppable.js'].lineData[13] = 0;
   _$jscoverage['/dd/droppable.js'].lineData[14] = 0;
-  _$jscoverage['/dd/droppable.js'].lineData[15] = 0;
+  _$jscoverage['/dd/droppable.js'].lineData[16] = 0;
   _$jscoverage['/dd/droppable.js'].lineData[17] = 0;
   _$jscoverage['/dd/droppable.js'].lineData[18] = 0;
-  _$jscoverage['/dd/droppable.js'].lineData[19] = 0;
-  _$jscoverage['/dd/droppable.js'].lineData[22] = 0;
-  _$jscoverage['/dd/droppable.js'].lineData[30] = 0;
+  _$jscoverage['/dd/droppable.js'].lineData[21] = 0;
+  _$jscoverage['/dd/droppable.js'].lineData[29] = 0;
+  _$jscoverage['/dd/droppable.js'].lineData[31] = 0;
   _$jscoverage['/dd/droppable.js'].lineData[32] = 0;
   _$jscoverage['/dd/droppable.js'].lineData[33] = 0;
-  _$jscoverage['/dd/droppable.js'].lineData[115] = 0;
-  _$jscoverage['/dd/droppable.js'].lineData[122] = 0;
-  _$jscoverage['/dd/droppable.js'].lineData[125] = 0;
-  _$jscoverage['/dd/droppable.js'].lineData[130] = 0;
+  _$jscoverage['/dd/droppable.js'].lineData[120] = 0;
+  _$jscoverage['/dd/droppable.js'].lineData[123] = 0;
+  _$jscoverage['/dd/droppable.js'].lineData[127] = 0;
+  _$jscoverage['/dd/droppable.js'].lineData[132] = 0;
+  _$jscoverage['/dd/droppable.js'].lineData[133] = 0;
   _$jscoverage['/dd/droppable.js'].lineData[135] = 0;
   _$jscoverage['/dd/droppable.js'].lineData[136] = 0;
-  _$jscoverage['/dd/droppable.js'].lineData[138] = 0;
+  _$jscoverage['/dd/droppable.js'].lineData[137] = 0;
   _$jscoverage['/dd/droppable.js'].lineData[139] = 0;
   _$jscoverage['/dd/droppable.js'].lineData[140] = 0;
-  _$jscoverage['/dd/droppable.js'].lineData[142] = 0;
-  _$jscoverage['/dd/droppable.js'].lineData[143] = 0;
+  _$jscoverage['/dd/droppable.js'].lineData[145] = 0;
+  _$jscoverage['/dd/droppable.js'].lineData[146] = 0;
   _$jscoverage['/dd/droppable.js'].lineData[148] = 0;
-  _$jscoverage['/dd/droppable.js'].lineData[149] = 0;
-  _$jscoverage['/dd/droppable.js'].lineData[151] = 0;
-  _$jscoverage['/dd/droppable.js'].lineData[156] = 0;
-  _$jscoverage['/dd/droppable.js'].lineData[163] = 0;
+  _$jscoverage['/dd/droppable.js'].lineData[153] = 0;
+  _$jscoverage['/dd/droppable.js'].lineData[160] = 0;
+  _$jscoverage['/dd/droppable.js'].lineData[162] = 0;
   _$jscoverage['/dd/droppable.js'].lineData[165] = 0;
-  _$jscoverage['/dd/droppable.js'].lineData[168] = 0;
+  _$jscoverage['/dd/droppable.js'].lineData[169] = 0;
+  _$jscoverage['/dd/droppable.js'].lineData[171] = 0;
   _$jscoverage['/dd/droppable.js'].lineData[172] = 0;
-  _$jscoverage['/dd/droppable.js'].lineData[174] = 0;
-  _$jscoverage['/dd/droppable.js'].lineData[175] = 0;
-  _$jscoverage['/dd/droppable.js'].lineData[176] = 0;
+  _$jscoverage['/dd/droppable.js'].lineData[173] = 0;
+  _$jscoverage['/dd/droppable.js'].lineData[178] = 0;
+  _$jscoverage['/dd/droppable.js'].lineData[180] = 0;
   _$jscoverage['/dd/droppable.js'].lineData[181] = 0;
-  _$jscoverage['/dd/droppable.js'].lineData[183] = 0;
-  _$jscoverage['/dd/droppable.js'].lineData[184] = 0;
+  _$jscoverage['/dd/droppable.js'].lineData[185] = 0;
+  _$jscoverage['/dd/droppable.js'].lineData[187] = 0;
   _$jscoverage['/dd/droppable.js'].lineData[188] = 0;
-  _$jscoverage['/dd/droppable.js'].lineData[190] = 0;
-  _$jscoverage['/dd/droppable.js'].lineData[191] = 0;
-  _$jscoverage['/dd/droppable.js'].lineData[199] = 0;
-  _$jscoverage['/dd/droppable.js'].lineData[221] = 0;
-  _$jscoverage['/dd/droppable.js'].lineData[222] = 0;
+  _$jscoverage['/dd/droppable.js'].lineData[196] = 0;
+  _$jscoverage['/dd/droppable.js'].lineData[218] = 0;
+  _$jscoverage['/dd/droppable.js'].lineData[219] = 0;
 }
 if (! _$jscoverage['/dd/droppable.js'].functionData) {
   _$jscoverage['/dd/droppable.js'].functionData = [];
@@ -292,201 +291,198 @@ if (! _$jscoverage['/dd/droppable.js'].functionData) {
 }
 if (! _$jscoverage['/dd/droppable.js'].branchData) {
   _$jscoverage['/dd/droppable.js'].branchData = {};
-  _$jscoverage['/dd/droppable.js'].branchData['14'] = [];
-  _$jscoverage['/dd/droppable.js'].branchData['14'][1] = new BranchData();
-  _$jscoverage['/dd/droppable.js'].branchData['18'] = [];
-  _$jscoverage['/dd/droppable.js'].branchData['18'][1] = new BranchData();
-  _$jscoverage['/dd/droppable.js'].branchData['125'] = [];
-  _$jscoverage['/dd/droppable.js'].branchData['125'][1] = new BranchData();
-  _$jscoverage['/dd/droppable.js'].branchData['125'][2] = new BranchData();
-  _$jscoverage['/dd/droppable.js'].branchData['126'] = [];
-  _$jscoverage['/dd/droppable.js'].branchData['126'][1] = new BranchData();
+  _$jscoverage['/dd/droppable.js'].branchData['13'] = [];
+  _$jscoverage['/dd/droppable.js'].branchData['13'][1] = new BranchData();
+  _$jscoverage['/dd/droppable.js'].branchData['17'] = [];
+  _$jscoverage['/dd/droppable.js'].branchData['17'][1] = new BranchData();
+  _$jscoverage['/dd/droppable.js'].branchData['123'] = [];
+  _$jscoverage['/dd/droppable.js'].branchData['123'][1] = new BranchData();
+  _$jscoverage['/dd/droppable.js'].branchData['123'][2] = new BranchData();
+  _$jscoverage['/dd/droppable.js'].branchData['123'][3] = new BranchData();
+  _$jscoverage['/dd/droppable.js'].branchData['132'] = [];
+  _$jscoverage['/dd/droppable.js'].branchData['132'][1] = new BranchData();
   _$jscoverage['/dd/droppable.js'].branchData['135'] = [];
   _$jscoverage['/dd/droppable.js'].branchData['135'][1] = new BranchData();
-  _$jscoverage['/dd/droppable.js'].branchData['138'] = [];
-  _$jscoverage['/dd/droppable.js'].branchData['138'][1] = new BranchData();
-  _$jscoverage['/dd/droppable.js'].branchData['142'] = [];
-  _$jscoverage['/dd/droppable.js'].branchData['142'][1] = new BranchData();
-  _$jscoverage['/dd/droppable.js'].branchData['149'] = [];
-  _$jscoverage['/dd/droppable.js'].branchData['149'][1] = new BranchData();
-  _$jscoverage['/dd/droppable.js'].branchData['221'] = [];
-  _$jscoverage['/dd/droppable.js'].branchData['221'][1] = new BranchData();
+  _$jscoverage['/dd/droppable.js'].branchData['139'] = [];
+  _$jscoverage['/dd/droppable.js'].branchData['139'][1] = new BranchData();
+  _$jscoverage['/dd/droppable.js'].branchData['146'] = [];
+  _$jscoverage['/dd/droppable.js'].branchData['146'][1] = new BranchData();
+  _$jscoverage['/dd/droppable.js'].branchData['218'] = [];
+  _$jscoverage['/dd/droppable.js'].branchData['218'][1] = new BranchData();
 }
-_$jscoverage['/dd/droppable.js'].branchData['221'][1].init(25, 1, 'v');
-function visit112_221_1(result) {
-  _$jscoverage['/dd/droppable.js'].branchData['221'][1].ranCondition(result);
+_$jscoverage['/dd/droppable.js'].branchData['218'][1].init(25, 1, 'v');
+function visit95_218_1(result) {
+  _$jscoverage['/dd/droppable.js'].branchData['218'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/droppable.js'].branchData['149'][1].init(58, 4, 'node');
-function visit111_149_1(result) {
-  _$jscoverage['/dd/droppable.js'].branchData['149'][1].ranCondition(result);
+}_$jscoverage['/dd/droppable.js'].branchData['146'][1].init(58, 4, 'node');
+function visit94_146_1(result) {
+  _$jscoverage['/dd/droppable.js'].branchData['146'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/droppable.js'].branchData['142'][1].init(515, 4, 'node');
-function visit110_142_1(result) {
-  _$jscoverage['/dd/droppable.js'].branchData['142'][1].ranCondition(result);
+}_$jscoverage['/dd/droppable.js'].branchData['139'][1].init(514, 4, 'node');
+function visit93_139_1(result) {
+  _$jscoverage['/dd/droppable.js'].branchData['139'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/droppable.js'].branchData['138'][1].init(90, 4, 'node');
-function visit109_138_1(result) {
-  _$jscoverage['/dd/droppable.js'].branchData['138'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/dd/droppable.js'].branchData['135'][1].init(231, 33, 'validDrop(dropGroups, dragGroups)');
-function visit108_135_1(result) {
+}_$jscoverage['/dd/droppable.js'].branchData['135'][1].init(89, 4, 'node');
+function visit92_135_1(result) {
   _$jscoverage['/dd/droppable.js'].branchData['135'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/droppable.js'].branchData['126'][1].init(46, 21, 'domNode === proxyNode');
-function visit107_126_1(result) {
-  _$jscoverage['/dd/droppable.js'].branchData['126'][1].ranCondition(result);
+}_$jscoverage['/dd/droppable.js'].branchData['132'][1].init(231, 33, 'validDrop(dropGroups, dragGroups)');
+function visit91_132_1(result) {
+  _$jscoverage['/dd/droppable.js'].branchData['132'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/droppable.js'].branchData['125'][2].init(7, 20, 'domNode === dragNode');
-function visit106_125_2(result) {
-  _$jscoverage['/dd/droppable.js'].branchData['125'][2].ranCondition(result);
+}_$jscoverage['/dd/droppable.js'].branchData['123'][3].init(147, 21, 'domNode === proxyNode');
+function visit90_123_3(result) {
+  _$jscoverage['/dd/droppable.js'].branchData['123'][3].ranCondition(result);
   return result;
-}_$jscoverage['/dd/droppable.js'].branchData['125'][1].init(-1, 61, 'domNode === dragNode || domNode === proxyNode');
-function visit105_125_1(result) {
-  _$jscoverage['/dd/droppable.js'].branchData['125'][1].ranCondition(result);
+}_$jscoverage['/dd/droppable.js'].branchData['123'][2].init(123, 20, 'domNode === dragNode');
+function visit89_123_2(result) {
+  _$jscoverage['/dd/droppable.js'].branchData['123'][2].ranCondition(result);
   return result;
-}_$jscoverage['/dd/droppable.js'].branchData['18'][1].init(17, 13, 'dragGroups[d]');
-function visit104_18_1(result) {
-  _$jscoverage['/dd/droppable.js'].branchData['18'][1].ranCondition(result);
+}_$jscoverage['/dd/droppable.js'].branchData['123'][1].init(123, 45, 'domNode === dragNode || domNode === proxyNode');
+function visit88_123_1(result) {
+  _$jscoverage['/dd/droppable.js'].branchData['123'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/droppable.js'].branchData['14'][1].init(13, 19, 'dragGroups === true');
-function visit103_14_1(result) {
-  _$jscoverage['/dd/droppable.js'].branchData['14'][1].ranCondition(result);
+}_$jscoverage['/dd/droppable.js'].branchData['17'][1].init(17, 13, 'dragGroups[d]');
+function visit87_17_1(result) {
+  _$jscoverage['/dd/droppable.js'].branchData['17'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/dd/droppable.js'].branchData['13'][1].init(13, 19, 'dragGroups === true');
+function visit86_13_1(result) {
+  _$jscoverage['/dd/droppable.js'].branchData['13'][1].ranCondition(result);
   return result;
 }_$jscoverage['/dd/droppable.js'].lineData[6]++;
 KISSY.add(function(S, require) {
   _$jscoverage['/dd/droppable.js'].functionData[0]++;
   _$jscoverage['/dd/droppable.js'].lineData[7]++;
-  var Node = require('node'), DDM = require('./ddm'), Base = require('base');
-  _$jscoverage['/dd/droppable.js'].lineData[11]++;
-  var PREFIX_CLS = DDM.PREFIX_CLS;
-  _$jscoverage['/dd/droppable.js'].lineData[13]++;
+  var Node = require('node'), DDM = require('./ddm'), Base = require('base'), PREFIX_CLS = DDM.PREFIX_CLS;
+  _$jscoverage['/dd/droppable.js'].lineData[12]++;
   function validDrop(dropGroups, dragGroups) {
     _$jscoverage['/dd/droppable.js'].functionData[1]++;
-    _$jscoverage['/dd/droppable.js'].lineData[14]++;
-    if (visit103_14_1(dragGroups === true)) {
-      _$jscoverage['/dd/droppable.js'].lineData[15]++;
+    _$jscoverage['/dd/droppable.js'].lineData[13]++;
+    if (visit86_13_1(dragGroups === true)) {
+      _$jscoverage['/dd/droppable.js'].lineData[14]++;
       return 1;
     }
-    _$jscoverage['/dd/droppable.js'].lineData[17]++;
+    _$jscoverage['/dd/droppable.js'].lineData[16]++;
     for (var d in dropGroups) {
-      _$jscoverage['/dd/droppable.js'].lineData[18]++;
-      if (visit104_18_1(dragGroups[d])) {
-        _$jscoverage['/dd/droppable.js'].lineData[19]++;
+      _$jscoverage['/dd/droppable.js'].lineData[17]++;
+      if (visit87_17_1(dragGroups[d])) {
+        _$jscoverage['/dd/droppable.js'].lineData[18]++;
         return 1;
       }
     }
-    _$jscoverage['/dd/droppable.js'].lineData[22]++;
+    _$jscoverage['/dd/droppable.js'].lineData[21]++;
     return 0;
   }
-  _$jscoverage['/dd/droppable.js'].lineData[30]++;
+  _$jscoverage['/dd/droppable.js'].lineData[29]++;
   return Base.extend({
   initializer: function() {
   _$jscoverage['/dd/droppable.js'].functionData[2]++;
-  _$jscoverage['/dd/droppable.js'].lineData[32]++;
+  _$jscoverage['/dd/droppable.js'].lineData[31]++;
   var self = this;
-  _$jscoverage['/dd/droppable.js'].lineData[33]++;
+  _$jscoverage['/dd/droppable.js'].lineData[32]++;
   self.addTarget(DDM);
-  _$jscoverage['/dd/droppable.js'].lineData[115]++;
-  DDM._regDrop(this);
+  _$jscoverage['/dd/droppable.js'].lineData[33]++;
+  DDM.addDrop(this);
 }, 
   getNodeFromTarget: function(ev, dragNode, proxyNode) {
   _$jscoverage['/dd/droppable.js'].functionData[3]++;
-  _$jscoverage['/dd/droppable.js'].lineData[122]++;
+  _$jscoverage['/dd/droppable.js'].lineData[120]++;
   var node = this.get('node'), domNode = node[0];
-  _$jscoverage['/dd/droppable.js'].lineData[125]++;
-  return visit105_125_1(visit106_125_2(domNode === dragNode) || visit107_126_1(domNode === proxyNode)) ? null : node;
+  _$jscoverage['/dd/droppable.js'].lineData[123]++;
+  return visit88_123_1(visit89_123_2(domNode === dragNode) || visit90_123_3(domNode === proxyNode)) ? null : node;
 }, 
   _active: function() {
   _$jscoverage['/dd/droppable.js'].functionData[4]++;
-  _$jscoverage['/dd/droppable.js'].lineData[130]++;
+  _$jscoverage['/dd/droppable.js'].lineData[127]++;
   var self = this, drag = DDM.get('activeDrag'), node = self.get('node'), dropGroups = self.get('groups'), dragGroups = drag.get('groups');
-  _$jscoverage['/dd/droppable.js'].lineData[135]++;
-  if (visit108_135_1(validDrop(dropGroups, dragGroups))) {
-    _$jscoverage['/dd/droppable.js'].lineData[136]++;
-    DDM._addValidDrop(self);
-    _$jscoverage['/dd/droppable.js'].lineData[138]++;
-    if (visit109_138_1(node)) {
-      _$jscoverage['/dd/droppable.js'].lineData[139]++;
+  _$jscoverage['/dd/droppable.js'].lineData[132]++;
+  if (visit91_132_1(validDrop(dropGroups, dragGroups))) {
+    _$jscoverage['/dd/droppable.js'].lineData[133]++;
+    DDM.addValidDrop(self);
+    _$jscoverage['/dd/droppable.js'].lineData[135]++;
+    if (visit92_135_1(node)) {
+      _$jscoverage['/dd/droppable.js'].lineData[136]++;
       node.addClass(PREFIX_CLS + 'drop-active-valid');
-      _$jscoverage['/dd/droppable.js'].lineData[140]++;
+      _$jscoverage['/dd/droppable.js'].lineData[137]++;
       DDM.cacheWH(node);
     }
   } else {
-    _$jscoverage['/dd/droppable.js'].lineData[142]++;
-    if (visit110_142_1(node)) {
-      _$jscoverage['/dd/droppable.js'].lineData[143]++;
+    _$jscoverage['/dd/droppable.js'].lineData[139]++;
+    if (visit93_139_1(node)) {
+      _$jscoverage['/dd/droppable.js'].lineData[140]++;
       node.addClass(PREFIX_CLS + 'drop-active-invalid');
     }
   }
 }, 
   _deActive: function() {
   _$jscoverage['/dd/droppable.js'].functionData[5]++;
-  _$jscoverage['/dd/droppable.js'].lineData[148]++;
+  _$jscoverage['/dd/droppable.js'].lineData[145]++;
   var node = this.get('node');
-  _$jscoverage['/dd/droppable.js'].lineData[149]++;
-  if (visit111_149_1(node)) {
-    _$jscoverage['/dd/droppable.js'].lineData[151]++;
+  _$jscoverage['/dd/droppable.js'].lineData[146]++;
+  if (visit94_146_1(node)) {
+    _$jscoverage['/dd/droppable.js'].lineData[148]++;
     node.removeClass(PREFIX_CLS + 'drop-active-valid').removeClass(PREFIX_CLS + 'drop-active-invalid');
   }
 }, 
   __getCustomEvt: function(ev) {
   _$jscoverage['/dd/droppable.js'].functionData[6]++;
-  _$jscoverage['/dd/droppable.js'].lineData[156]++;
+  _$jscoverage['/dd/droppable.js'].lineData[153]++;
   return S.mix({
   drag: DDM.get('activeDrag'), 
   drop: this}, ev);
 }, 
   _handleOut: function() {
   _$jscoverage['/dd/droppable.js'].functionData[7]++;
-  _$jscoverage['/dd/droppable.js'].lineData[163]++;
+  _$jscoverage['/dd/droppable.js'].lineData[160]++;
   var self = this, ret = self.__getCustomEvt();
-  _$jscoverage['/dd/droppable.js'].lineData[165]++;
+  _$jscoverage['/dd/droppable.js'].lineData[162]++;
   self.get('node').removeClass(PREFIX_CLS + 'drop-over');
-  _$jscoverage['/dd/droppable.js'].lineData[168]++;
+  _$jscoverage['/dd/droppable.js'].lineData[165]++;
   self.fire('dropexit', ret);
 }, 
   _handleEnter: function(ev) {
   _$jscoverage['/dd/droppable.js'].functionData[8]++;
-  _$jscoverage['/dd/droppable.js'].lineData[172]++;
+  _$jscoverage['/dd/droppable.js'].lineData[169]++;
   var self = this, e = self.__getCustomEvt(ev);
-  _$jscoverage['/dd/droppable.js'].lineData[174]++;
+  _$jscoverage['/dd/droppable.js'].lineData[171]++;
   e.drag._handleEnter(e);
-  _$jscoverage['/dd/droppable.js'].lineData[175]++;
+  _$jscoverage['/dd/droppable.js'].lineData[172]++;
   self.get('node').addClass(PREFIX_CLS + 'drop-over');
-  _$jscoverage['/dd/droppable.js'].lineData[176]++;
+  _$jscoverage['/dd/droppable.js'].lineData[173]++;
   self.fire('dropenter', e);
 }, 
   _handleOver: function(ev) {
   _$jscoverage['/dd/droppable.js'].functionData[9]++;
-  _$jscoverage['/dd/droppable.js'].lineData[181]++;
+  _$jscoverage['/dd/droppable.js'].lineData[178]++;
   var self = this, e = self.__getCustomEvt(ev);
-  _$jscoverage['/dd/droppable.js'].lineData[183]++;
+  _$jscoverage['/dd/droppable.js'].lineData[180]++;
   e.drag._handleOver(e);
-  _$jscoverage['/dd/droppable.js'].lineData[184]++;
+  _$jscoverage['/dd/droppable.js'].lineData[181]++;
   self.fire('dropover', e);
 }, 
   _end: function() {
   _$jscoverage['/dd/droppable.js'].functionData[10]++;
-  _$jscoverage['/dd/droppable.js'].lineData[188]++;
+  _$jscoverage['/dd/droppable.js'].lineData[185]++;
   var self = this, ret = self.__getCustomEvt();
-  _$jscoverage['/dd/droppable.js'].lineData[190]++;
+  _$jscoverage['/dd/droppable.js'].lineData[187]++;
   self.get('node').removeClass(PREFIX_CLS + 'drop-over');
-  _$jscoverage['/dd/droppable.js'].lineData[191]++;
+  _$jscoverage['/dd/droppable.js'].lineData[188]++;
   self.fire('drophit', ret);
 }, 
   destructor: function() {
   _$jscoverage['/dd/droppable.js'].functionData[11]++;
-  _$jscoverage['/dd/droppable.js'].lineData[199]++;
-  DDM._unRegDrop(this);
+  _$jscoverage['/dd/droppable.js'].lineData[196]++;
+  DDM.removeDrop(this);
 }}, {
   name: 'Droppable', 
   ATTRS: {
   node: {
   setter: function(v) {
   _$jscoverage['/dd/droppable.js'].functionData[12]++;
-  _$jscoverage['/dd/droppable.js'].lineData[221]++;
-  if (visit112_221_1(v)) {
-    _$jscoverage['/dd/droppable.js'].lineData[222]++;
+  _$jscoverage['/dd/droppable.js'].lineData[218]++;
+  if (visit95_218_1(v)) {
+    _$jscoverage['/dd/droppable.js'].lineData[219]++;
     return Node.one(v);
   }
 }}, 

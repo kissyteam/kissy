@@ -11,6 +11,7 @@ KISSY.add(function (S, require, exports, module) {
                 moduleWrap = module;
             }
             var callCommandUtil = utils.callCommand,
+                debuggerCommand = nativeCommands["debugger"],
                 eachCommand = nativeCommands.each,
                 withCommand = nativeCommands["with"],
                 ifCommand = nativeCommands["if"],
@@ -68,6 +69,6 @@ KISSY.add(function (S, require, exports, module) {
             }
             return buffer;
         };
-t.TPL_NAME = "filter-menu/src/filter-menu/render.xtpl.html";
+t.TPL_NAME = module.name;
 return t;
 });

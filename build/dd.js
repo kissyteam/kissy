@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Feb 25 19:34
+build time: Mar 13 17:50
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -17,26 +17,17 @@ build time: Feb 25 19:34
 KISSY.add("dd/ddm", ["node", "base"], function(S, require) {
   var Node = require("node"), Base = require("base");
   var logger = S.getLogger("dd/ddm");
-  var UA = S.UA, $ = Node.all, win = S.Env.host, doc = win.document, $doc = $(doc), $win = $(win), ie6 = UA.ie === 6, PIXEL_THRESH = 3, BUFFER_TIME = 1, MOVE_DELAY = 30, SHIM_Z_INDEX = 999999;
-  var Gesture = Node.Gesture, DRAG_MOVE_EVENT = Gesture.move, DRAG_END_EVENT = Gesture.end;
-  var DDM = Base.extend({__activeToDrag:0, _regDrop:function(d) {
+  var UA = S.UA, $ = Node.all, win = S.Env.host, doc = win.document, $doc = $(doc), $win = $(win), ie6 = UA.ie === 6, MOVE_DELAY = 30, SHIM_Z_INDEX = 999999;
+  var DDManger = Base.extend({addDrop:function(d) {
     this.get("drops").push(d)
-  }, _unRegDrop:function(d) {
+  }, removeDrop:function(d) {
     var self = this, drops = self.get("drops"), index = S.indexOf(d, drops);
     if(index !== -1) {
       drops.splice(index, 1)
     }
-  }, _regToDrag:function(drag) {
+  }, start:function(e, drag) {
     var self = this;
-    self.__activeToDrag = drag;
-    registerEvent(self)
-  }, _start:function() {
-    var self = this, drag = self.__activeToDrag;
-    if(!drag) {
-      return
-    }
     self.setInternal("activeDrag", drag);
-    self.__activeToDrag = 0;
     if(drag.get("shim")) {
       activeShim(self)
     }
@@ -48,60 +39,10 @@ KISSY.add("dd/ddm", ["node", "base"], function(S, require) {
         self.__needDropCheck = 1
       }
     }
-  }, _addValidDrop:function(drop) {
+  }, addValidDrop:function(drop) {
     this.get("validDrops").push(drop)
-  }, _end:function(e) {
-    var self = this, __activeToDrag = self.__activeToDrag, activeDrag = self.get("activeDrag"), activeDrop = self.get("activeDrop");
-    if(e) {
-      if(__activeToDrag) {
-        __activeToDrag._move(e)
-      }
-      if(activeDrag) {
-        activeDrag._move(e)
-      }
-    }
-    unRegisterEvent(self);
-    if(__activeToDrag) {
-      __activeToDrag._end(e);
-      self.__activeToDrag = 0
-    }
-    if(self._shim) {
-      self._shim.hide()
-    }
-    if(!activeDrag) {
-      return
-    }
-    activeDrag._end(e);
-    _deActiveDrops(self);
-    if(activeDrop) {
-      activeDrop._end(e)
-    }
-    self.setInternal("activeDrag", null);
-    self.setInternal("activeDrop", null)
-  }}, {ATTRS:{dragCursor:{value:"move"}, clickPixelThresh:{value:PIXEL_THRESH}, bufferTime:{value:BUFFER_TIME}, activeDrag:{}, activeDrop:{}, drops:{value:[]}, validDrops:{value:[]}}});
-  function move(ev) {
-    var self = this, drag, __activeToDrag, activeDrag;
-    if(ev.touches && ev.touches.length > 1) {
-      ddm._end();
-      return
-    }
-    if(__activeToDrag = self.__activeToDrag) {
-      __activeToDrag._move(ev)
-    }else {
-      if(activeDrag = self.get("activeDrag")) {
-        activeDrag._move(ev);
-        if(self.__needDropCheck) {
-          notifyDropsMove(self, ev, activeDrag)
-        }
-      }
-    }
-    drag = __activeToDrag || activeDrag;
-    if(drag && drag.get("preventDefaultOnMove")) {
-      ev.preventDefault()
-    }
-  }
-  var throttleMove = UA.ie ? S.throttle(move, MOVE_DELAY) : move;
-  function notifyDropsMove(self, ev, activeDrag) {
+  }, _notifyDropsMove:function(ev, activeDrag) {
+    var self = this;
     var drops = self.get("validDrops"), mode = activeDrag.get("mode"), activeDrop = 0, oldDrop, vArea = 0, dragRegion = region(activeDrag.get("node")), dragArea = area(dragRegion);
     S.each(drops, function(drop) {
       if(drop.get("disabled")) {
@@ -156,9 +97,25 @@ KISSY.add("dd/ddm", ["node", "base"], function(S, require) {
         activeDrop._handleOver(ev)
       }
     }
-  }
+  }, move:function(ev, activeDrag) {
+    var self = this;
+    if(self.__needDropCheck) {
+      self._notifyDropsMove(ev, activeDrag)
+    }
+  }, end:function(e) {
+    var self = this, activeDrop = self.get("activeDrop");
+    if(self._shim) {
+      self._shim.hide()
+    }
+    _deActiveDrops(self);
+    if(activeDrop) {
+      activeDrop._end(e)
+    }
+    self.setInternal("activeDrop", null);
+    self.setInternal("activeDrag", null)
+  }}, {ATTRS:{dragCursor:{value:"move"}, activeDrag:{}, activeDrop:{}, drops:{value:[]}, validDrops:{value:[]}}});
   var activeShim = function(self) {
-    self._shim = $("<div " + 'style="' + "background-color:red;" + "position:" + (ie6 ? "absolute" : "fixed") + ";" + "left:0;" + "width:100%;" + "height:100%;" + "top:0;" + "cursor:" + ddm.get("dragCursor") + ";" + "z-index:" + SHIM_Z_INDEX + ";" + '"><' + "/div>").prependTo(doc.body || doc.documentElement).css("opacity", 0);
+    self._shim = $("<div " + 'style="' + "background-color:red;" + "position:" + (ie6 ? "absolute" : "fixed") + ";" + "left:0;" + "width:100%;" + "height:100%;" + "top:0;" + "cursor:" + self.get("dragCursor") + ";" + "z-index:" + SHIM_Z_INDEX + ";" + '"><' + "/div>").prependTo(doc.body || doc.documentElement).css("opacity", 0);
     activeShim = showShim;
     if(ie6) {
       $win.on("resize scroll", adjustShimSize, self)
@@ -182,20 +139,6 @@ KISSY.add("dd/ddm", ["node", "base"], function(S, require) {
     self._shim.css({cursor:cur, display:"block"});
     if(ie6) {
       adjustShimSize.call(self)
-    }
-  }
-  function registerEvent(self) {
-    $doc.on(DRAG_END_EVENT, self._end, self);
-    $doc.on(DRAG_MOVE_EVENT, throttleMove, self);
-    if(doc.body.setCapture) {
-      doc.body.setCapture()
-    }
-  }
-  function unRegisterEvent(self) {
-    $doc.detach(DRAG_MOVE_EVENT, throttleMove, self);
-    $doc.detach(DRAG_END_EVENT, self._end, self);
-    if(doc.body.releaseCapture) {
-      doc.body.releaseCapture()
     }
   }
   function _activeDrops(self) {
@@ -246,34 +189,59 @@ KISSY.add("dd/ddm", ["node", "base"], function(S, require) {
       node.__ddCachedHeight = node.outerHeight()
     }
   }
-  var ddm = new DDM;
-  ddm.inRegion = inRegion;
-  ddm.region = region;
-  ddm.area = area;
-  ddm.cacheWH = cacheWH;
-  ddm.PREFIX_CLS = "ks-dd-";
-  return ddm
+  var DDM = new DDManger;
+  DDM.inRegion = inRegion;
+  DDM.region = region;
+  DDM.area = area;
+  DDM.cacheWH = cacheWH;
+  DDM.PREFIX_CLS = "ks-dd-";
+  return DDM
 });
-KISSY.add("dd/draggable", ["node", "./ddm", "base"], function(S, require) {
-  var Node = require("node"), DDM = require("./ddm"), Base = require("base");
-  var UA = S.UA, $ = Node.all, each = S.each, ie = UA.ie, NULL = null, PREFIX_CLS = DDM.PREFIX_CLS, doc = S.Env.host.document;
+KISSY.add("dd/draggable", ["node", "./ddm", "base", "event/gesture/drag"], function(S, require) {
+  var Node = require("node"), Gesture = Node.Gesture, DDM = require("./ddm"), Base = require("base"), DragType = require("event/gesture/drag");
+  var UA = S.UA, $ = Node.all, $doc = $(document), each = S.each, ie = UA.ie, PREFIX_CLS = DDM.PREFIX_CLS, doc = S.Env.host.document;
+  function checkValid(fn) {
+    return function() {
+      if(this._isValidDrag) {
+        fn.apply(this, arguments)
+      }
+    }
+  }
+  var onDragStart = checkValid(function(e) {
+    this._start(e)
+  });
+  var onDrag = checkValid(function(e) {
+    this._move(e)
+  });
+  var onDragEnd = checkValid(function(e) {
+    this._end(e)
+  });
   var Draggable = Base.extend({initializer:function() {
     var self = this;
     self.addTarget(DDM);
     self._allowMove = self.get("move")
   }, _onSetNode:function(n) {
     var self = this;
-    self.setInternal("dragNode", n);
-    self.bindDragEvent()
+    self.setInternal("dragNode", n)
+  }, onGestureStart:function(e) {
+    var self = this, t = e.target;
+    if(self._checkDragStartValid(e)) {
+      if(!self._checkHandler(t)) {
+        return
+      }
+      self._prepare(e)
+    }
+  }, getEventTargetEl:function() {
+    return this.get("node")
   }, bindDragEvent:function() {
-    var self = this, node = self.get("node");
-    node.on(Node.Gesture.start, handlePreDragStart, self).on("dragstart", self._fixDragStart)
-  }, detachDragEvent:function(self) {
-    self = this;
-    var node = self.get("node");
-    node.detach(Node.Gesture.start, handlePreDragStart, self).detach("dragstart", self._fixDragStart)
-  }, _bufferTimer:NULL, _onSetDisabledChange:function(d) {
-    this.get("dragNode")[d ? "addClass" : "removeClass"](PREFIX_CLS + "-disabled")
+    var self = this, node = self.getEventTargetEl();
+    node.on(DragType.DRAG_START, onDragStart, self).on(DragType.DRAG, onDrag, self).on(DragType.DRAG_END, onDragEnd, self).on(Gesture.start, onGestureStart, self).on("dragstart", self._fixDragStart)
+  }, detachDragEvent:function() {
+    var self = this, node = self.getEventTargetEl();
+    node.detach(DragType.DRAG_START, onDragStart, self).detach(DragType.DRAG, onDrag, self).detach(DragType.DRAG_END, onDragEnd, self).detach(Gesture.start, onGestureStart, self).detach("dragstart", self._fixDragStart)
+  }, _onSetDisabled:function(d) {
+    this.get("dragNode")[d ? "addClass" : "removeClass"](PREFIX_CLS + "-disabled");
+    this[d ? "detachDragEvent" : "bindDragEvent"]()
   }, _fixDragStart:fixDragStart, _checkHandler:function(t) {
     var self = this, handlers = self.get("handlers"), ret = 0;
     each(handlers, function(handler) {
@@ -285,63 +253,45 @@ KISSY.add("dd/draggable", ["node", "./ddm", "base"], function(S, require) {
       return undefined
     });
     return ret
-  }, _checkDragStartValid:function(ev) {
+  }, _checkDragStartValid:function(e) {
     var self = this;
-    if(self.get("primaryButtonOnly") && ev.which !== 1 || self.get("disabled")) {
+    if(self.get("primaryButtonOnly") && e.which !== 1) {
       return 0
     }
     return 1
-  }, _prepare:function(ev) {
-    if(!ev) {
-      return
-    }
+  }, _prepare:function(e) {
     var self = this;
+    self._isValidDrag = 1;
     if(ie) {
-      fixIEMouseDown()
+      fixIEMouseDown();
+      $doc.on(Gesture.end, {fn:fixIEMouseUp, once:true})
     }
     if(self.get("halt")) {
-      ev.stopPropagation()
+      e.stopPropagation()
     }
-    if(S.startsWith(ev.type.toLowerCase(), "mouse")) {
-      ev.preventDefault()
+    if(e.gestureType === "mouse") {
+      e.preventDefault()
     }
-    var mx = ev.pageX, my = ev.pageY;
-    self.setInternal("startMousePos", self.mousePos = {left:mx, top:my});
     if(self._allowMove) {
-      var node = self.get("node"), nxy = node.offset();
-      self.setInternal("startNodePos", nxy);
-      self.setInternal("deltaPos", {left:mx - nxy.left, top:my - nxy.top})
+      self.setInternal("startNodePos", self.get("node").offset())
     }
-    DDM._regToDrag(self);
-    var bufferTime = self.get("bufferTime");
-    if(bufferTime) {
-      self._bufferTimer = setTimeout(function() {
-        self._start(ev)
-      }, bufferTime * 1E3)
-    }
-  }, _clearBufferTimer:function() {
+  }, _start:function(e) {
     var self = this;
-    if(self._bufferTimer) {
-      clearTimeout(self._bufferTimer);
-      self._bufferTimer = 0
-    }
-  }, _move:function(ev) {
-    var self = this, pageX = ev.pageX, pageY = ev.pageY;
-    if(!self.get("dragging")) {
-      var startMousePos = self.get("startMousePos"), start = 0, clickPixelThresh = self.get("clickPixelThresh");
-      if(Math.abs(pageX - startMousePos.left) >= clickPixelThresh || Math.abs(pageY - startMousePos.top) >= clickPixelThresh) {
-        self._start(ev);
-        start = 1
-      }
-      if(!start) {
-        return
-      }
+    self.mousePos = {left:e.pageX, top:e.pageY};
+    DDM.start(e, self);
+    self.fire("dragstart", {drag:self, gestureType:e.gestureType, startPos:e.startPos, deltaX:e.deltaX, deltaY:e.deltaY, pageX:e.pageX, pageY:e.pageY});
+    self.get("dragNode").addClass(PREFIX_CLS + "dragging")
+  }, _move:function(e) {
+    var self = this, pageX = e.pageX, pageY = e.pageY;
+    if(e.gestureType === "touch") {
+      e.preventDefault()
     }
     self.mousePos = {left:pageX, top:pageY};
-    var customEvent = {drag:self, left:pageX, top:pageY, pageX:pageX, pageY:pageY, domEvent:ev};
+    var customEvent = {drag:self, gestureType:e.gestureType, startPos:e.startPos, deltaX:e.deltaX, deltaY:e.deltaY, pageX:e.pageX, pageY:e.pageY};
     var move = self._allowMove;
     if(move) {
-      var diff = self.get("deltaPos"), left = pageX - diff.left, top = pageY - diff.top;
+      var startNodePos = self.get("startNodePos");
+      var left = startNodePos.left + e.deltaX, top = startNodePos.top + e.deltaY;
       customEvent.left = left;
       customEvent.top = top;
       self.setInternal("actualPos", {left:left, top:top});
@@ -351,28 +301,30 @@ KISSY.add("dd/draggable", ["node", "./ddm", "base"], function(S, require) {
     if(self.fire("drag", customEvent) === false) {
       def = 0
     }
+    DDM.move(e, self);
+    if(self.get("preventDefaultOnMove")) {
+      e.preventDefault()
+    }
     if(def && move) {
       self.get("node").offset(self.get("actualPos"))
     }
   }, stopDrag:function() {
-    DDM._end()
+    if(this._isValidDrag) {
+      this._end()
+    }
   }, _end:function(e) {
     e = e || {};
     var self = this, activeDrop;
-    self._clearBufferTimer();
-    if(ie) {
-      fixIEMouseUp()
+    self._isValidDrag = 0;
+    self.get("node").removeClass(PREFIX_CLS + "drag-over");
+    self.get("dragNode").removeClass(PREFIX_CLS + "dragging");
+    if(activeDrop = DDM.get("activeDrop")) {
+      self.fire("dragdrophit", {drag:self, drop:activeDrop})
+    }else {
+      self.fire("dragdropmiss", {drag:self})
     }
-    if(self.get("dragging")) {
-      self.get("node").removeClass(PREFIX_CLS + "drag-over");
-      if(activeDrop = DDM.get("activeDrop")) {
-        self.fire("dragdrophit", {drag:self, drop:activeDrop})
-      }else {
-        self.fire("dragdropmiss", {drag:self})
-      }
-      self.setInternal("dragging", 0);
-      self.fire("dragend", {drag:self, pageX:e.pageX, pageY:e.pageY})
-    }
+    DDM.end(e, self);
+    self.fire("dragend", {drag:self, gestureType:e.gestureType, startPos:e.startPos, deltaX:e.deltaX, deltaY:e.deltaY, pageX:e.pageX, pageY:e.pageY})
   }, _handleOut:function() {
     var self = this;
     self.get("node").removeClass(PREFIX_CLS + "drag-over");
@@ -383,26 +335,13 @@ KISSY.add("dd/draggable", ["node", "./ddm", "base"], function(S, require) {
     self.fire("dragenter", e)
   }, _handleOver:function(e) {
     this.fire("dragover", e)
-  }, _start:function(ev) {
-    var self = this;
-    self._clearBufferTimer();
-    self.setInternal("dragging", 1);
-    self.setInternal("dragStartMousePos", {left:ev.pageX, top:ev.pageY});
-    DDM._start();
-    self.fire("dragstart", {drag:self, pageX:ev.pageX, pageY:ev.pageY})
   }, destructor:function() {
-    var self = this;
-    self.detachDragEvent();
-    self.detach()
+    this.detachDragEvent()
   }}, {name:"Draggable", ATTRS:{node:{setter:function(v) {
     if(!(v instanceof Node)) {
       return $(v)
     }
     return undefined
-  }}, clickPixelThresh:{valueFn:function() {
-    return DDM.get("clickPixelThresh")
-  }}, bufferTime:{valueFn:function() {
-    return DDM.get("bufferTime")
   }}, dragNode:{}, shim:{value:false}, handlers:{value:[], getter:function(vs) {
     var self = this;
     if(!vs.length) {
@@ -422,17 +361,20 @@ KISSY.add("dd/draggable", ["node", "./ddm", "base"], function(S, require) {
     });
     self.setInternal("handlers", vs);
     return vs
-  }}, activeHandler:{}, dragging:{value:false, setter:function(d) {
-    var self = this;
-    self.get("dragNode")[d ? "addClass" : "removeClass"](PREFIX_CLS + "dragging")
-  }}, mode:{value:"point"}, disabled:{value:false}, move:{value:false}, primaryButtonOnly:{value:true}, halt:{value:true}, groups:{value:true}, startMousePos:{}, dragStartMousePos:{}, startNodePos:{}, deltaPos:{}, actualPos:{}, preventDefaultOnMove:{value:true}}, inheritedStatics:{DropMode:{POINT:"point", INTERSECT:"intersect", STRICT:"strict"}}});
+  }}, activeHandler:{}, mode:{value:"point"}, disabled:{value:false}, move:{value:false}, primaryButtonOnly:{value:true}, halt:{value:true}, groups:{value:true}, startNodePos:{}, actualPos:{}, preventDefaultOnMove:{value:true}}, inheritedStatics:{DropMode:{POINT:"point", INTERSECT:"intersect", STRICT:"strict"}}});
   var _ieSelectBack;
   function fixIEMouseUp() {
-    doc.body.onselectstart = _ieSelectBack
+    doc.body.onselectstart = _ieSelectBack;
+    if(doc.body.releaseCapture) {
+      doc.body.releaseCapture()
+    }
   }
   function fixIEMouseDown() {
     _ieSelectBack = doc.body.onselectstart;
-    doc.body.onselectstart = fixIESelect
+    doc.body.onselectstart = fixIESelect;
+    if(doc.body.setCapture) {
+      doc.body.setCapture()
+    }
   }
   function fixDragStart(e) {
     e.preventDefault()
@@ -440,21 +382,20 @@ KISSY.add("dd/draggable", ["node", "./ddm", "base"], function(S, require) {
   function fixIESelect() {
     return false
   }
-  var handlePreDragStart = function(ev) {
-    var self = this, t = ev.target;
-    if(self._checkDragStartValid(ev)) {
-      if(!self._checkHandler(t)) {
-        return
-      }
-      self._prepare(ev)
-    }
-  };
+  function onGestureStart(e) {
+    this._isValidDrag = 0;
+    this.onGestureStart(e)
+  }
   return Draggable
 });
 KISSY.add("dd/draggable-delegate", ["node", "./ddm", "./draggable"], function(S, require) {
-  var Node = require("node"), DDM = require("./ddm"), Draggable = require("./draggable");
-  var PREFIX_CLS = DDM.PREFIX_CLS, $ = Node.all;
-  var handlePreDragStart = function(ev) {
+  var Node = require("node"), DDM = require("./ddm"), Draggable = require("./draggable"), PREFIX_CLS = DDM.PREFIX_CLS, $ = Node.all;
+  return Draggable.extend({_onSetNode:S.noop, _onSetDisabled:function(d) {
+    this.get("container")[d ? "addClass" : "removeClass"](PREFIX_CLS + "-disabled");
+    this[d ? "detachDragEvent" : "bindDragEvent"]()
+  }, getEventTargetEl:function() {
+    return this.get("container")
+  }, onGestureStart:function(ev) {
     var self = this, handler, node;
     if(!self._checkDragStartValid(ev)) {
       return
@@ -475,18 +416,6 @@ KISSY.add("dd/draggable-delegate", ["node", "./ddm", "./draggable"], function(S,
     self.setInternal("node", node);
     self.setInternal("dragNode", node);
     self._prepare(ev)
-  };
-  return Draggable.extend({_onSetNode:function() {
-  }, _onSetContainer:function() {
-    this.bindDragEvent()
-  }, _onSetDisabledChange:function(d) {
-    this.get("container")[d ? "addClass" : "removeClass"](PREFIX_CLS + "-disabled")
-  }, bindDragEvent:function() {
-    var self = this, node = self.get("container");
-    node.on(Node.Gesture.start, handlePreDragStart, self).on("dragstart", self._fixDragStart)
-  }, detachDragEvent:function() {
-    var self = this;
-    self.get("container").detach(Node.Gesture.start, handlePreDragStart, self).detach("dragstart", self._fixDragStart)
   }, _getHandler:function(target) {
     var self = this, node = self.get("container"), handlers = self.get("handlers");
     while(target && target[0] !== node[0]) {
@@ -506,8 +435,7 @@ KISSY.add("dd/draggable-delegate", ["node", "./ddm", "./draggable"], function(S,
   }}, selector:{}, handlers:{value:[], getter:0}}})
 });
 KISSY.add("dd/droppable", ["node", "./ddm", "base"], function(S, require) {
-  var Node = require("node"), DDM = require("./ddm"), Base = require("base");
-  var PREFIX_CLS = DDM.PREFIX_CLS;
+  var Node = require("node"), DDM = require("./ddm"), Base = require("base"), PREFIX_CLS = DDM.PREFIX_CLS;
   function validDrop(dropGroups, dragGroups) {
     if(dragGroups === true) {
       return 1
@@ -522,14 +450,14 @@ KISSY.add("dd/droppable", ["node", "./ddm", "base"], function(S, require) {
   return Base.extend({initializer:function() {
     var self = this;
     self.addTarget(DDM);
-    DDM._regDrop(this)
+    DDM.addDrop(this)
   }, getNodeFromTarget:function(ev, dragNode, proxyNode) {
     var node = this.get("node"), domNode = node[0];
     return domNode === dragNode || domNode === proxyNode ? null : node
   }, _active:function() {
     var self = this, drag = DDM.get("activeDrag"), node = self.get("node"), dropGroups = self.get("groups"), dragGroups = drag.get("groups");
     if(validDrop(dropGroups, dragGroups)) {
-      DDM._addValidDrop(self);
+      DDM.addValidDrop(self);
       if(node) {
         node.addClass(PREFIX_CLS + "drop-active-valid");
         DDM.cacheWH(node)
@@ -564,7 +492,7 @@ KISSY.add("dd/droppable", ["node", "./ddm", "base"], function(S, require) {
     self.get("node").removeClass(PREFIX_CLS + "drop-over");
     self.fire("drophit", ret)
   }, destructor:function() {
-    DDM._unRegDrop(this)
+    DDM.removeDrop(this)
   }}, {name:"Droppable", ATTRS:{node:{setter:function(v) {
     if(v) {
       return Node.one(v)

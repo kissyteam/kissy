@@ -106,5 +106,9 @@ KISSY.add(function (S, require) {
 
     addGestureEvent(ROTATE, config);
 
-    return Rotate;
+    return {
+        ROTATE_START: ROTATE_START,
+        ROTATE: ROTATE,
+        ROTATE_END: ROTATE_END
+    };
 });

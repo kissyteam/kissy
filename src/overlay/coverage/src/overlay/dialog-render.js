@@ -278,7 +278,7 @@ if (! _$jscoverage['/overlay/dialog-render.js'].branchData) {
   _$jscoverage['/overlay/dialog-render.js'].branchData['81'] = [];
   _$jscoverage['/overlay/dialog-render.js'].branchData['81'][1] = new BranchData();
 }
-_$jscoverage['/overlay/dialog-render.js'].branchData['81'][1].init(99, 23, 'footer && footer.html()');
+_$jscoverage['/overlay/dialog-render.js'].branchData['81'][1].init(101, 23, 'footer && footer.html()');
 function visit3_81_1(result) {
   _$jscoverage['/overlay/dialog-render.js'].branchData['81'][1].ranCondition(result);
   return result;

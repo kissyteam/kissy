@@ -47,7 +47,6 @@ KISSY.add(function (S, require) {
                 }),
                 height = 0,
                 width = 0,
-                dragStartMousePos,
                 heightEl = editor.get('el'),
                 widthEl = editor.get('el');
 
@@ -55,17 +54,14 @@ KISSY.add(function (S, require) {
                 height = heightEl.height();
                 width = widthEl.width();
                 editor.fire('resizeStart');
-                dragStartMousePos = d.get('dragStartMousePos');
             });
 
-            d.on('drag', function (ev) {
-                var diffX = ev.pageX - dragStartMousePos.left,
-                    diffY = ev.pageY - dragStartMousePos.top;
+            d.on('drag', function (e) {
                 if (S.inArray('y', direction)) {
-                    editor.set('height', height + diffY);
+                    editor.set('height', height + e.deltaY);
                 }
                 if (S.inArray('x', direction)) {
-                    editor.set('width', width + diffX);
+                    editor.set('width', width + e.deltaX);
                 }
                 editor.fire('resize');
             });

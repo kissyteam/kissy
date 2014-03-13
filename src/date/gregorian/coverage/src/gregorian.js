@@ -805,7 +805,7 @@ function visit85_1395_1(result) {
 function visit84_1363_1(result) {
   _$jscoverage['/gregorian.js'].branchData['1363'][1].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian.js'].branchData['1306'][1].init(44636, 9, '\'@DEBUG@\'');
+}_$jscoverage['/gregorian.js'].branchData['1306'][1].init(44644, 9, '\'@DEBUG@\'');
 function visit83_1306_1(result) {
   _$jscoverage['/gregorian.js'].branchData['1306'][1].ranCondition(result);
   return result;
@@ -1073,23 +1073,23 @@ function visit18_296_1(result) {
 function visit17_291_1(result) {
   _$jscoverage['/gregorian.js'].branchData['291'][1].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian.js'].branchData['88'][1].init(1208, 21, 'arguments.length >= 3');
+}_$jscoverage['/gregorian.js'].branchData['88'][1].init(1216, 21, 'arguments.length >= 3');
 function visit16_88_1(result) {
   _$jscoverage['/gregorian.js'].branchData['88'][1].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian.js'].branchData['70'][1].init(692, 39, 'timezoneOffset || locale.timezoneOffset');
+}_$jscoverage['/gregorian.js'].branchData['70'][1].init(700, 39, 'timezoneOffset || locale.timezoneOffset');
 function visit15_70_1(result) {
   _$jscoverage['/gregorian.js'].branchData['70'][1].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian.js'].branchData['53'][1].init(288, 23, 'locale || defaultLocale');
+}_$jscoverage['/gregorian.js'].branchData['53'][1].init(296, 23, 'locale || defaultLocale');
 function visit14_53_1(result) {
   _$jscoverage['/gregorian.js'].branchData['53'][1].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian.js'].branchData['49'][1].init(197, 16, 'args.length >= 3');
+}_$jscoverage['/gregorian.js'].branchData['49'][1].init(205, 16, 'args.length >= 3');
 function visit13_49_1(result) {
   _$jscoverage['/gregorian.js'].branchData['49'][1].ranCondition(result);
   return result;
-}_$jscoverage['/gregorian.js'].branchData['46'][1].init(58, 26, 'S.isObject(timezoneOffset)');
+}_$jscoverage['/gregorian.js'].branchData['46'][1].init(58, 34, 'typeof timezoneOffset === \'object\'');
 function visit12_46_1(result) {
   _$jscoverage['/gregorian.js'].branchData['46'][1].ranCondition(result);
   return result;
@@ -1110,7 +1110,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/gregorian.js'].lineData[44]++;
     var args = S.makeArray(arguments);
     _$jscoverage['/gregorian.js'].lineData[46]++;
-    if (visit12_46_1(S.isObject(timezoneOffset))) {
+    if (visit12_46_1(typeof timezoneOffset === 'object')) {
       _$jscoverage['/gregorian.js'].lineData[47]++;
       locale = timezoneOffset;
       _$jscoverage['/gregorian.js'].lineData[48]++;

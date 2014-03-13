@@ -3,12 +3,11 @@
  * droppable for kissy
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S,require) {
+KISSY.add(function (S, require) {
     var Node = require('node'),
         DDM = require('./ddm'),
-        Base = require('base');
-
-    var PREFIX_CLS = DDM.PREFIX_CLS;
+        Base = require('base'),
+        PREFIX_CLS = DDM.PREFIX_CLS;
 
     function validDrop(dropGroups, dragGroups) {
         if (dragGroups === true) {
@@ -31,6 +30,7 @@ KISSY.add(function (S,require) {
         initializer: function () {
             var self = this;
             self.addTarget(DDM);
+            DDM.addDrop(this);
 
             /**
              * fired after a draggable leaves a droppable
@@ -111,8 +111,6 @@ KISSY.add(function (S,require) {
              * @param e.drag current draggable object
              * @param e.drop current droppable object
              */
-
-            DDM._regDrop(this);
         },
         /**
          * Get drop node from target
@@ -122,8 +120,7 @@ KISSY.add(function (S,require) {
             var node = this.get('node'),
                 domNode = node[0];
             // 排除当前拖放和代理节点
-            return domNode === dragNode ||
-                domNode === proxyNode ? null : node;
+            return domNode === dragNode || domNode === proxyNode ? null : node;
         },
 
         _active: function () {
@@ -133,7 +130,7 @@ KISSY.add(function (S,require) {
                 dropGroups = self.get('groups'),
                 dragGroups = drag.get('groups');
             if (validDrop(dropGroups, dragGroups)) {
-                DDM._addValidDrop(self);
+                DDM.addValidDrop(self);
                 // 委托时取不到节点
                 if (node) {
                     node.addClass(PREFIX_CLS + 'drop-active-valid');
@@ -196,7 +193,7 @@ KISSY.add(function (S,require) {
          * @private
          */
         destructor: function () {
-            DDM._unRegDrop(this);
+            DDM.removeDrop(this);
         }
     }, {
         name: 'Droppable',
@@ -233,9 +230,7 @@ KISSY.add(function (S,require) {
              * @ignore
              */
             groups: {
-                value: {
-
-                }
+                value: {}
             },
 
             /**
@@ -247,9 +242,7 @@ KISSY.add(function (S,require) {
             /**
              * @ignore
              */
-            disabled:{
-
-            }
+            disabled: {}
         }
     });
 });

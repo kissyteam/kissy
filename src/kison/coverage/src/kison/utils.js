@@ -327,7 +327,7 @@ function visit146_72_2(result) {
 function visit145_72_1(result) {
   _$jscoverage['/kison/utils.js'].branchData['72'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kison/utils.js'].branchData['66'][1].init(1236, 15, 'S.isObject(obj)');
+}_$jscoverage['/kison/utils.js'].branchData['66'][1].init(1236, 23, 'typeof obj === \'object\'');
 function visit144_66_1(result) {
   _$jscoverage['/kison/utils.js'].branchData['66'][1].ranCondition(result);
   return result;
@@ -453,7 +453,7 @@ KISSY.add(function(S) {
           return ret.join('');
         } else {
           _$jscoverage['/kison/utils.js'].lineData[66]++;
-          if (visit144_66_1(S.isObject(obj))) {
+          if (visit144_66_1(typeof obj === 'object')) {
             _$jscoverage['/kison/utils.js'].lineData[67]++;
             ret = [];
             _$jscoverage['/kison/utils.js'].lineData[68]++;

@@ -282,11 +282,11 @@ if (! _$jscoverage['/picker/year-panel/render.js'].branchData) {
   _$jscoverage['/picker/year-panel/render.js'].branchData['26'] = [];
   _$jscoverage['/picker/year-panel/render.js'].branchData['26'][1] = new BranchData();
 }
-_$jscoverage['/picker/year-panel/render.js'].branchData['26'][1].init(56, 5, 'j < 4');
+_$jscoverage['/picker/year-panel/render.js'].branchData['26'][1].init(58, 5, 'j < 4');
 function visit67_26_1(result) {
   _$jscoverage['/picker/year-panel/render.js'].branchData['26'][1].ranCondition(result);
   return result;
-}_$jscoverage['/picker/year-panel/render.js'].branchData['24'][1].init(491, 5, 'i < 3');
+}_$jscoverage['/picker/year-panel/render.js'].branchData['24'][1].init(503, 5, 'i < 3');
 function visit66_24_1(result) {
   _$jscoverage['/picker/year-panel/render.js'].branchData['24'][1].ranCondition(result);
   return result;

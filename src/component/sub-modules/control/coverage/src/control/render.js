@@ -547,171 +547,171 @@ if (! _$jscoverage['/control/render.js'].branchData) {
   _$jscoverage['/control/render.js'].branchData['502'] = [];
   _$jscoverage['/control/render.js'].branchData['502'][1] = new BranchData();
 }
-_$jscoverage['/control/render.js'].branchData['502'][1].init(28, 26, 'scope.get(\'content\') || \'\'');
+_$jscoverage['/control/render.js'].branchData['502'][1].init(29, 26, 'scope.get(\'content\') || \'\'');
 function visit53_502_1(result) {
   _$jscoverage['/control/render.js'].branchData['502'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control/render.js'].branchData['476'][1].init(25, 3, 'ext');
+}_$jscoverage['/control/render.js'].branchData['476'][1].init(26, 3, 'ext');
 function visit52_476_1(result) {
   _$jscoverage['/control/render.js'].branchData['476'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control/render.js'].branchData['472'][1].init(275, 21, 'S.isArray(extensions)');
+}_$jscoverage['/control/render.js'].branchData['472'][1].init(282, 21, 'S.isArray(extensions)');
 function visit51_472_1(result) {
   _$jscoverage['/control/render.js'].branchData['472'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control/render.js'].branchData['471'][1].init(230, 27, 'NewClass[HTML_PARSER] || {}');
+}_$jscoverage['/control/render.js'].branchData['471'][1].init(236, 27, 'NewClass[HTML_PARSER] || {}');
 function visit50_471_1(result) {
   _$jscoverage['/control/render.js'].branchData['471'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control/render.js'].branchData['420'][1].init(288, 24, 'control.get(\'focusable\')');
+}_$jscoverage['/control/render.js'].branchData['420'][1].init(295, 24, 'control.get(\'focusable\')');
 function visit49_420_1(result) {
   _$jscoverage['/control/render.js'].branchData['420'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control/render.js'].branchData['393'][1].init(139, 7, 'visible');
+}_$jscoverage['/control/render.js'].branchData['393'][1].init(143, 7, 'visible');
 function visit48_393_1(result) {
   _$jscoverage['/control/render.js'].branchData['393'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control/render.js'].branchData['384'][1].init(138, 31, '!this.get(\'allowTextSelection\')');
+}_$jscoverage['/control/render.js'].branchData['384'][1].init(142, 31, '!this.get(\'allowTextSelection\')');
 function visit47_384_1(result) {
   _$jscoverage['/control/render.js'].branchData['384'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control/render.js'].branchData['343'][1].init(330, 5, 'i < l');
+}_$jscoverage['/control/render.js'].branchData['343'][1].init(338, 5, 'i < l');
 function visit46_343_1(result) {
   _$jscoverage['/control/render.js'].branchData['343'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control/render.js'].branchData['323'][1].init(161, 80, 'constructor.superclass && constructor.superclass.constructor');
+}_$jscoverage['/control/render.js'].branchData['323'][1].init(166, 81, 'constructor.superclass && constructor.superclass.constructor');
 function visit45_323_1(result) {
   _$jscoverage['/control/render.js'].branchData['323'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control/render.js'].branchData['320'][1].init(66, 6, 'xclass');
+}_$jscoverage['/control/render.js'].branchData['320'][1].init(68, 6, 'xclass');
 function visit44_320_1(result) {
   _$jscoverage['/control/render.js'].branchData['320'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control/render.js'].branchData['318'][1].init(296, 65, 'constructor && !constructor.prototype.hasOwnProperty(\'isControl\')');
+}_$jscoverage['/control/render.js'].branchData['318'][1].init(305, 65, 'constructor && !constructor.prototype.hasOwnProperty(\'isControl\')');
 function visit43_318_1(result) {
   _$jscoverage['/control/render.js'].branchData['318'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control/render.js'].branchData['311'][1].init(46, 24, 'self.componentCssClasses');
+}_$jscoverage['/control/render.js'].branchData['311'][1].init(48, 24, 'self.componentCssClasses');
 function visit42_311_1(result) {
   _$jscoverage['/control/render.js'].branchData['311'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control/render.js'].branchData['302'][1].init(86, 3, 'cls');
+}_$jscoverage['/control/render.js'].branchData['302'][1].init(89, 3, 'cls');
 function visit41_302_1(result) {
   _$jscoverage['/control/render.js'].branchData['302'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control/render.js'].branchData['285'][1].init(115, 37, 'renderCommands || self.renderCommands');
+}_$jscoverage['/control/render.js'].branchData['285'][1].init(118, 37, 'renderCommands || self.renderCommands');
 function visit40_285_1(result) {
   _$jscoverage['/control/render.js'].branchData['285'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control/render.js'].branchData['284'][1].init(55, 29, 'renderData || self.renderData');
+}_$jscoverage['/control/render.js'].branchData['284'][1].init(57, 29, 'renderData || self.renderData');
 function visit39_284_1(result) {
   _$jscoverage['/control/render.js'].branchData['284'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control/render.js'].branchData['272'][1].init(80, 30, 'typeof selector === \'function\'');
+}_$jscoverage['/control/render.js'].branchData['272'][1].init(82, 30, 'typeof selector === \'function\'');
 function visit38_272_1(result) {
   _$jscoverage['/control/render.js'].branchData['272'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control/render.js'].branchData['268'][1].init(189, 47, 'childrenElSelectors || self.childrenElSelectors');
+}_$jscoverage['/control/render.js'].branchData['268'][1].init(196, 47, 'childrenElSelectors || self.childrenElSelectors');
 function visit37_268_1(result) {
   _$jscoverage['/control/render.js'].branchData['268'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control/render.js'].branchData['252'][1].init(17, 8, 'this.$el');
+}_$jscoverage['/control/render.js'].branchData['252'][1].init(18, 8, 'this.$el');
 function visit36_252_1(result) {
   _$jscoverage['/control/render.js'].branchData['252'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control/render.js'].branchData['242'][1].init(172, 28, 'attrCfg.view && attrChangeFn');
+}_$jscoverage['/control/render.js'].branchData['242'][1].init(176, 28, 'attrCfg.view && attrChangeFn');
 function visit35_242_1(result) {
   _$jscoverage['/control/render.js'].branchData['242'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control/render.js'].branchData['225'][1].init(239, 6, 'render');
+}_$jscoverage['/control/render.js'].branchData['225'][1].init(244, 6, 'render');
 function visit34_225_1(result) {
   _$jscoverage['/control/render.js'].branchData['225'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control/render.js'].branchData['223'][1].init(133, 12, 'renderBefore');
+}_$jscoverage['/control/render.js'].branchData['223'][1].init(136, 12, 'renderBefore');
 function visit33_223_1(result) {
   _$jscoverage['/control/render.js'].branchData['223'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control/render.js'].branchData['220'][1].init(170, 23, '!control.get(\'srcNode\')');
+}_$jscoverage['/control/render.js'].branchData['220'][1].init(176, 23, '!control.get(\'srcNode\')');
 function visit32_220_1(result) {
   _$jscoverage['/control/render.js'].branchData['220'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control/render.js'].branchData['206'][1].init(86, 19, '!srcNode.attr(\'id\')');
+}_$jscoverage['/control/render.js'].branchData['206'][1].init(89, 19, '!srcNode.attr(\'id\')');
 function visit31_206_1(result) {
   _$jscoverage['/control/render.js'].branchData['206'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control/render.js'].branchData['177'][1].init(60, 13, 'UA.ieMode < 9');
+}_$jscoverage['/control/render.js'].branchData['177'][1].init(62, 13, 'UA.ieMode < 9');
 function visit30_177_1(result) {
   _$jscoverage['/control/render.js'].branchData['177'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control/render.js'].branchData['175'][1].init(1499, 24, 'control.get(\'focusable\')');
+}_$jscoverage['/control/render.js'].branchData['175'][1].init(1548, 24, 'control.get(\'focusable\')');
 function visit29_175_1(result) {
   _$jscoverage['/control/render.js'].branchData['175'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control/render.js'].branchData['172'][1].init(1380, 26, 'control.get(\'highlighted\')');
+}_$jscoverage['/control/render.js'].branchData['172'][1].init(1426, 26, 'control.get(\'highlighted\')');
 function visit28_172_1(result) {
   _$jscoverage['/control/render.js'].branchData['172'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control/render.js'].branchData['164'][1].init(1092, 8, '!visible');
+}_$jscoverage['/control/render.js'].branchData['164'][1].init(1130, 8, '!visible');
 function visit27_164_1(result) {
   _$jscoverage['/control/render.js'].branchData['164'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control/render.js'].branchData['160'][1].init(1006, 6, 'zIndex');
+}_$jscoverage['/control/render.js'].branchData['160'][1].init(1040, 6, 'zIndex');
 function visit26_160_1(result) {
   _$jscoverage['/control/render.js'].branchData['160'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control/render.js'].branchData['157'][1].init(915, 6, 'height');
+}_$jscoverage['/control/render.js'].branchData['157'][1].init(946, 6, 'height');
 function visit25_157_1(result) {
   _$jscoverage['/control/render.js'].branchData['157'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control/render.js'].branchData['154'][1].init(827, 5, 'width');
+}_$jscoverage['/control/render.js'].branchData['154'][1].init(855, 5, 'width');
 function visit24_154_1(result) {
   _$jscoverage['/control/render.js'].branchData['154'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control/render.js'].branchData['144'][1].init(54, 9, 'attr.view');
+}_$jscoverage['/control/render.js'].branchData['144'][1].init(56, 9, 'attr.view');
 function visit23_144_1(result) {
   _$jscoverage['/control/render.js'].branchData['144'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control/render.js'].branchData['118'][1].init(102, 7, 'srcNode');
+}_$jscoverage['/control/render.js'].branchData['118'][1].init(106, 7, 'srcNode');
 function visit22_118_1(result) {
   _$jscoverage['/control/render.js'].branchData['118'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control/render.js'].branchData['95'][1].init(51, 28, 'options && options.params[0]');
+}_$jscoverage['/control/render.js'].branchData['95'][1].init(52, 28, 'options && options.params[0]');
 function visit21_95_1(result) {
   _$jscoverage['/control/render.js'].branchData['95'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control/render.js'].branchData['87'][1].init(85, 25, 'e.target === self.control');
+}_$jscoverage['/control/render.js'].branchData['87'][1].init(89, 25, 'e.target === self.control');
 function visit20_87_1(result) {
   _$jscoverage['/control/render.js'].branchData['87'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control/render.js'].branchData['75'][1].init(150, 5, 'i < l');
+}_$jscoverage['/control/render.js'].branchData['75'][1].init(156, 5, 'i < l');
 function visit19_75_1(result) {
   _$jscoverage['/control/render.js'].branchData['75'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control/render.js'].branchData['63'][1].init(73, 26, 'typeof extras === \'string\'');
+}_$jscoverage['/control/render.js'].branchData['63'][1].init(77, 26, 'typeof extras === \'string\'');
 function visit18_63_1(result) {
   _$jscoverage['/control/render.js'].branchData['63'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control/render.js'].branchData['60'][1].init(13, 7, '!extras');
+}_$jscoverage['/control/render.js'].branchData['60'][1].init(14, 7, '!extras');
 function visit17_60_1(result) {
   _$jscoverage['/control/render.js'].branchData['60'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control/render.js'].branchData['53'][1].init(471, 20, 'S.isArray(v) && v[0]');
+}_$jscoverage['/control/render.js'].branchData['53'][1].init(486, 20, 'S.isArray(v) && v[0]');
 function visit16_53_1(result) {
   _$jscoverage['/control/render.js'].branchData['53'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control/render.js'].branchData['49'][1].init(333, 21, 'typeof v === \'string\'');
+}_$jscoverage['/control/render.js'].branchData['49'][1].init(344, 21, 'typeof v === \'string\'');
 function visit15_49_1(result) {
   _$jscoverage['/control/render.js'].branchData['49'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control/render.js'].branchData['44'][1].init(100, 17, 'ret !== undefined');
+}_$jscoverage['/control/render.js'].branchData['44'][1].init(103, 17, 'ret !== undefined');
 function visit14_44_1(result) {
   _$jscoverage['/control/render.js'].branchData['44'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control/render.js'].branchData['41'][1].init(62, 23, 'typeof v === \'function\'');
+}_$jscoverage['/control/render.js'].branchData['41'][1].init(65, 23, 'typeof v === \'function\'');
 function visit13_41_1(result) {
   _$jscoverage['/control/render.js'].branchData['41'][1].ranCondition(result);
   return result;
-}_$jscoverage['/control/render.js'].branchData['26'][1].init(13, 21, 'typeof v === \'number\'');
+}_$jscoverage['/control/render.js'].branchData['26'][1].init(14, 21, 'typeof v === \'number\'');
 function visit12_26_1(result) {
   _$jscoverage['/control/render.js'].branchData['26'][1].ranCondition(result);
   return result;

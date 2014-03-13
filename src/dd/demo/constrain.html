@@ -1,12 +1,12 @@
 <!doctype html>
 <html>
 <head>
-<meta charset="utf-8"/>
+    <meta charset="utf-8"/>
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-touch-fullscreen" content="yes">
-<title>constrain</title>
+    <title>constrain</title>
 </head>
 <body>
 <div id="constrainContainer"
@@ -28,23 +28,23 @@
 <script src="/kissy/build/seed.js"></script>
 <script src="/kissy/src/package.js"></script>
 <script>
-    KISSY.use("dd,node", function (S, DD, Node) {
+    KISSY.use("dd,dd/plugin/constrain,node", function (S, DD, Constrain, Node) {
         var $ = Node.all;
         var drag = new DD.Draggable({
-            node:"#d",
-            groups:false,
-            move:1
+            node: "#d",
+            groups: false,
+            move: 1
         });
-        var c = new DD.Constrain({
-            constrain:"#constrainContainer"
+        var c = new Constrain({
+            constrain: "#constrainContainer"
         });
 
         drag.plug(c);
 
         $("#cd").on("click", function () {
             $("#d").css({
-                left:"10px",
-                top:"10px"
+                left: "10px",
+                top: "10px"
             });
             c.set("constrain", "#constrainContainer");
             drag.plug(c);
@@ -52,8 +52,8 @@
 
         $("#cw").on("click", function () {
             $("#d").css({
-                left:"10px",
-                top:"10px"
+                left: "10px",
+                top: "10px"
             });
             c.set("constrain", true);
             drag.plug(c);
@@ -61,8 +61,8 @@
 
         $("#cn").on("click", function () {
             $("#d").css({
-                left:"10px",
-                top:"10px"
+                left: "10px",
+                top: "10px"
             });
 
             drag.unplug(c);

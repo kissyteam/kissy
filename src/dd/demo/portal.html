@@ -1,64 +1,64 @@
 <!doctype html>
 <html>
 <head>
-<meta charset="utf-8"/>
+    <meta charset="utf-8"/>
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-touch-fullscreen" content="yes">
-<title>portal</title>
-<style>
-    #cols {
-        width: 1000px;
-    }
+    <title>portal</title>
+    <style>
+        #cols {
+            width: 1000px;
+        }
 
-    #leftCol, #rightCol {
+        #leftCol, #rightCol {
 
-        margin: 0 50px;
-        float: left;
+            margin: 0 50px;
+            float: left;
 
-        border: 1px solid red;
-    }
+            border: 1px solid red;
+        }
 
-    #rightCol {
-        border: 1px solid green;
-    }
+        #rightCol {
+            border: 1px solid green;
+        }
 
-    .component {
-        width: 100px;
-        height: 100px;
-        margin: 50px;
-        border: 1px solid purple;
-        -ms-touch-action:none
-        -ms-user-select:none;
-    }
+        .component {
+            width: 100px;
+            height: 100px;
+            margin: 50px;
+            border: 1px solid purple;
+            -ms-touch-action: none;
+            -ms-user-select: none;
+        }
 
-    .col .header {
-        border-bottom: 1px solid purple;
-        cursor: move;
-    }
+        .col .header {
+            border-bottom: 1px solid purple;
+            cursor: move;
+        }
 
-    .ks-dd-dragging * {
-        visibility: hidden;
-    }
+        .ks-dd-dragging *, .ks-dd-proxy * {
+            visibility: hidden;
+        }
 
-    .ks-dd-dragging {
-        border: 2px blue dashed;
-    }
+        .ks-dd-drop-over {
+            background: #ffff00;
+        }
+        .ks-dd-proxy,.ks-dd-dragging {
+            border: 2px blue dashed;
+        }
 
-    .ks-dd-drop-over {
-        background: #ffff00;
-    }
-
-    .ks-dd-proxy {
-        position: absolute;
-        left:-9999px;
-        top:-9999px;
-    }
-</style>
+        .ks-dd-proxy {
+            position: absolute;
+            left: -9999px;
+            top: -9999px;
+        }
+    </style>
 </head>
 <body>
 <h1> portal demo</h1>
+
 <p>
     拖动 header 调整组件与布局栏的位置
 </p>
@@ -102,38 +102,34 @@
 <script src="/kissy/src/package.js"></script>
 <script>
 
-    KISSY.use("dd,node", function (S, DD, Node) {
-
-
+    KISSY.use("dd,node,dd/plugin/proxy,dd/plugin/scroll", function (S, DD, Node, Proxy, Scroll) {
         var DDM = DD.DDM,
                 $ = Node.all,
                 DraggableDelegate = DD.DraggableDelegate,
                 DroppableDelegate = DD.DroppableDelegate,
                 Draggable = DD.Draggable,
-                Droppable = DD.Droppable,
-                Scroll = DD.Scroll,
-                Proxy = DD.Proxy;
+                Droppable = DD.Droppable;
 
         var proxy = new Proxy({
             /**
              * 如何产生替代节点
              * @param drag 当前拖对象
              */
-            node:function (drag) {
+            node: function (drag) {
                 var n = $(drag.get("dragNode").clone(true));
                 n.attr('id', S.guid("ks-dd-proxy"));
                 n.css("opacity", 0.2);
                 return n;
             },
-            moveOnEnd:false,
-            destroyOnEnd:true
+            moveOnEnd: false,
+            destroyOnEnd: true
         });
 
         var dragDelegate = new DraggableDelegate({
-            container:"#cols",
-            move:1,
-            handlers:['.header'],
-            selector:function (el) {
+            container: "#cols",
+            move: 1,
+            handlers: ['.header'],
+            selector: function (el) {
                 el = $(el);
                 return el.hasClass('col') || el.hasClass('component');
             }
@@ -145,16 +141,16 @@
          * 一列也为可拖放节点，防止空列无法拖入
          */
         new DroppableDelegate({
-            container:"#cols",
-            selector:'.col'
+            container: "#cols",
+            selector: '.col'
         });
 
         /**
          * 单个 component 为可拖放节点
          */
         new DroppableDelegate({
-            container:"#cols",
-            selector:'.component'
+            container: "#cols",
+            selector: '.component'
         });
 
         dragDelegate.on("dragover", function (ev) {
@@ -182,8 +178,6 @@
                             return;
                         }
                     }
-
-                    // S.log("添加到列");
 
                     //空列
                     dropNode.append(dragNode);

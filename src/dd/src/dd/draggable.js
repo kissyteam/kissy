@@ -5,16 +5,38 @@
  */
 KISSY.add(function (S, require) {
     var Node = require('node'),
+        Gesture = Node.Gesture,
         DDM = require('./ddm'),
-        Base = require('base');
+        Base = require('base'),
+        DragType = require('event/gesture/drag');
 
     var UA = S.UA,
         $ = Node.all,
+        $doc = $(document),
         each = S.each,
         ie = UA.ie,
-        NULL = null,
         PREFIX_CLS = DDM.PREFIX_CLS,
         doc = S.Env.host.document;
+
+    function checkValid(fn) {
+        return function () {
+            if (this._isValidDrag) {
+                fn.apply(this, arguments);
+            }
+        };
+    }
+
+    var onDragStart = checkValid(function (e) {
+        this._start(e);
+    });
+
+    var onDrag = checkValid(function (e) {
+        this._move(e);
+    });
+
+    var onDragEnd = checkValid(function (e) {
+        this._end(e);
+    });
 
     /**
      * @class KISSY.DD.Draggable
@@ -25,6 +47,8 @@ KISSY.add(function (S, require) {
         initializer: function () {
             var self = this;
             self.addTarget(DDM);
+            self._allowMove = self.get('move');
+
             /**
              * fired when need to compute draggable 's position during dragging
              * @event dragalign
@@ -192,39 +216,53 @@ KISSY.add(function (S, require) {
              * @param {KISSY.Event.CustomEvent.Object} e
              * @param e.drag current draggable object
              */
-
-            self._allowMove = self.get('move');
         },
 
         '_onSetNode': function (n) {
             var self = this;
             // dragNode is equal to node in single mode
             self.setInternal('dragNode', n);
-            self.bindDragEvent();
+        },
+
+        onGestureStart: function (e) {
+            var self = this,
+                t = e.target;
+
+            if (self._checkDragStartValid(e)) {
+                if (!self._checkHandler(t)) {
+                    return;
+                }
+                self._prepare(e);
+            }
+        },
+
+        getEventTargetEl: function () {
+            return this.get('node');
         },
 
         bindDragEvent: function () {
             var self = this,
-                node = self.get('node');
-            node.on(Node.Gesture.start, handlePreDragStart, self)
+                node = self.getEventTargetEl();
+            node.on(DragType.DRAG_START, onDragStart, self)
+                .on(DragType.DRAG, onDrag, self)
+                .on(DragType.DRAG_END, onDragEnd, self)
+                .on(Gesture.start, onGestureStart, self)
                 .on('dragstart', self._fixDragStart);
         },
 
-        detachDragEvent: function (self) {
-            self = this;
-            var node = self.get('node');
-            node.detach(Node.Gesture.start, handlePreDragStart, self)
+        detachDragEvent: function () {
+            var self = this,
+                node = self.getEventTargetEl();
+            node.detach(DragType.DRAG_START, onDragStart, self)
+                .detach(DragType.DRAG, onDrag, self)
+                .detach(DragType.DRAG_END, onDragEnd, self)
+                .detach(Gesture.start, onGestureStart, self)
                 .detach('dragstart', self._fixDragStart);
         },
 
-        /**
-         * mousedown 1秒后自动开始拖的定时器
-         * @ignore
-         */
-        _bufferTimer: NULL,
-
-        _onSetDisabledChange: function (d) {
+        _onSetDisabled: function (d) {
             this.get('dragNode')[d ? 'addClass' : 'removeClass'](PREFIX_CLS + '-disabled');
+            this[d ? 'detachDragEvent' : 'bindDragEvent']();
         },
 
         _fixDragStart: fixDragStart,
@@ -245,104 +283,79 @@ KISSY.add(function (S, require) {
             return ret;
         },
 
-        _checkDragStartValid: function (ev) {
+        _checkDragStartValid: function (e) {
             var self = this;
-            if (self.get('primaryButtonOnly') && ev.which !== 1 ||
-                self.get('disabled')) {
+            if (self.get('primaryButtonOnly') && e.which !== 1) {
                 return 0;
             }
             return 1;
         },
 
-        _prepare: function (ev) {
-            if (!ev) {
-                return;
-            }
-
+        _prepare: function (e) {
             var self = this;
+
+            self._isValidDrag = 1;
 
             if (ie) {
                 fixIEMouseDown();
+                $doc.on(Gesture.end, {
+                    fn: fixIEMouseUp,
+                    once: true
+                });
             }
 
             // http://blogs.msdn.com/b/ie/archive/2011/10/19/handling-multi-touch-and-mouse-input-in-all-browsers.aspx
             // stop panning and zooming so we can draw for win8?
-//            if (ev.originalEvent['preventManipulation']) {
-//                ev.originalEvent.preventManipulation();
+//            if (e.originalEvent['preventManipulation']) {
+//                e.originalEvent.preventManipulation();
 //            }
 
             // 防止 firefox/chrome 选中 text
             // 非 ie，阻止了 html dd 的默认行为
             if (self.get('halt')) {
-                ev.stopPropagation();
+                e.stopPropagation();
             }
 
             // in touch device
             // prevent touchdown will prevent native scroll
             // need to prevent on move conditionally
             // will prevent text selection and link click
-            if (S.startsWith(ev.type.toLowerCase(), 'mouse')) {
-                ev.preventDefault();
+            if (e.gestureType === 'mouse') {
+                e.preventDefault();
             }
-
-            var mx = ev.pageX,
-                my = ev.pageY;
-
-            self.setInternal('startMousePos', self.mousePos = {
-                left: mx,
-                top: my
-            });
 
             if (self._allowMove) {
-                var node = self.get('node'),
-                    nxy = node.offset();
-                self.setInternal('startNodePos', nxy);
-                self.setInternal('deltaPos', {
-                    left: mx - nxy.left,
-                    top: my - nxy.top
-                });
-            }
-
-            DDM._regToDrag(self);
-
-            var bufferTime = self.get('bufferTime');
-
-            // 是否中央管理，强制限制拖放延迟
-            if (bufferTime) {
-                self._bufferTimer = setTimeout(function () {
-                    // 事件到了，仍然是 mousedown 触发！
-                    self._start(ev);
-                }, bufferTime * 1000);
+                self.setInternal('startNodePos', self.get('node').offset());
             }
         },
 
-        _clearBufferTimer: function () {
+        _start: function (e) {
             var self = this;
-            if (self._bufferTimer) {
-                clearTimeout(self._bufferTimer);
-                self._bufferTimer = 0;
-            }
+            self.mousePos = {
+                left: e.pageX,
+                top: e.pageY
+            };
+            DDM.start(e, self);
+            self.fire('dragstart', {
+                drag: self,
+                gestureType: e.gestureType,
+                startPos: e.startPos,
+                deltaX: e.deltaX,
+                deltaY: e.deltaY,
+                pageX: e.pageX,
+                pageY: e.pageY
+            });
+            self.get('dragNode').addClass(PREFIX_CLS + 'dragging');
         },
 
-        _move: function (ev) {
+        _move: function (e) {
             var self = this,
-                pageX = ev.pageX,
-                pageY = ev.pageY;
+                pageX = e.pageX,
+                pageY = e.pageY;
 
-            if (!self.get('dragging')) {
-                var startMousePos = self.get('startMousePos'),
-                    start = 0,
-                    clickPixelThresh = self.get('clickPixelThresh');
-                // 鼠标经过了一定距离，立即开始
-                if (Math.abs(pageX - startMousePos.left) >= clickPixelThresh ||
-                    Math.abs(pageY - startMousePos.top) >= clickPixelThresh) {
-                    self._start(ev);
-                    start = 1;
-                }
-                // 2013-02-12 更快速响应 touch，本轮就触发 drag 事件
-                if (!start) {
-                    return;
-                }
+            // prevent touch scroll
+            if (e.gestureType === 'touch') {
+                e.preventDefault();
             }
 
             self.mousePos = {
@@ -352,19 +365,20 @@ KISSY.add(function (S, require) {
 
             var customEvent = {
                 drag: self,
-                left: pageX,
-                top: pageY,
-                pageX: pageX,
-                pageY: pageY,
-                domEvent: ev
+                gestureType: e.gestureType,
+                startPos: e.startPos,
+                deltaX: e.deltaX,
+                deltaY: e.deltaY,
+                pageX: e.pageX,
+                pageY: e.pageY
             };
 
             var move = self._allowMove;
 
             if (move) {
-                var diff = self.get('deltaPos'),
-                    left = pageX - diff.left,
-                    top = pageY - diff.top;
+                var startNodePos = self.get('startNodePos');
+                var left = startNodePos.left + e.deltaX,
+                    top = startNodePos.top + e.deltaY;
                 customEvent.left = left;
                 customEvent.top = top;
                 self.setInternal('actualPos', {
@@ -381,6 +395,14 @@ KISSY.add(function (S, require) {
                 def = 0;
             }
 
+            DDM.move(e, self);
+
+            // 防止 ie 选择到字
+            // touch need direction
+            if (self.get('preventDefaultOnMove')) {
+                e.preventDefault();
+            }
+
             if (def && move) {
                 // 取 'node' , 改 node 可能是代理哦
                 self.get('node').offset(self.get('actualPos'));
@@ -392,7 +414,9 @@ KISSY.add(function (S, require) {
          * @member KISSY.DD.Draggable
          */
         'stopDrag': function () {
-            DDM._end();
+            if (this._isValidDrag) {
+                this._end();
+            }
         },
 
         _end: function (e) {
@@ -401,32 +425,35 @@ KISSY.add(function (S, require) {
             var self = this,
                 activeDrop;
 
-            // 否则清除定时器即可
-            self._clearBufferTimer();
-            if (ie) {
-                fixIEMouseUp();
-            }
+            self._isValidDrag = 0;
+
             // 如果已经开始，收尾工作
-            if (self.get('dragging')) {
-                self.get('node')
-                    .removeClass(PREFIX_CLS + 'drag-over');
-                if ((activeDrop = DDM.get('activeDrop'))) {
-                    self.fire('dragdrophit', {
-                        drag: self,
-                        drop: activeDrop
-                    });
-                } else {
-                    self.fire('dragdropmiss', {
-                        drag: self
-                    });
-                }
-                self.setInternal('dragging', 0);
-                self.fire('dragend', {
+            self.get('node').removeClass(PREFIX_CLS + 'drag-over');
+
+            self.get('dragNode').removeClass(PREFIX_CLS + 'dragging');
+
+            if ((activeDrop = DDM.get('activeDrop'))) {
+                self.fire('dragdrophit', {
                     drag: self,
-                    pageX: e.pageX,
-                    pageY: e.pageY
+                    drop: activeDrop
+                });
+            } else {
+                self.fire('dragdropmiss', {
+                    drag: self
                 });
             }
+
+            DDM.end(e, self);
+
+            self.fire('dragend', {
+                drag: self,
+                gestureType: e.gestureType,
+                startPos: e.startPos,
+                deltaX: e.deltaX,
+                deltaY: e.deltaY,
+                pageX: e.pageX,
+                pageY: e.pageY
+            });
         },
 
         _handleOut: function () {
@@ -451,31 +478,13 @@ KISSY.add(function (S, require) {
             this.fire('dragover', e);
         },
 
-        _start: function (ev) {
-            var self = this;
-            self._clearBufferTimer();
-            self.setInternal('dragging', 1);
-            self.setInternal('dragStartMousePos', {
-                left: ev.pageX,
-                top: ev.pageY
-            });
-            DDM._start();
-            self.fire('dragstart', {
-                drag: self,
-                pageX: ev.pageX,
-                pageY: ev.pageY
-            });
-        },
-
         /**
          * make the drag node undraggable
          * @member KISSY.DD.Draggable
          * @private
          */
         destructor: function () {
-            var self = this;
-            self.detachDragEvent();
-            self.detach();
+            this.detachDragEvent();
         }
     }, {
         name: 'Draggable',
@@ -502,38 +511,6 @@ KISSY.add(function (S, require) {
                         return $(v);
                     }
                     return undefined;
-                }
-            },
-
-            /**
-             * the number of pixels to move to start a drag operation
-             *
-             * Defaults to: {@link KISSY.DD.DDM#clickPixelThresh}.
-             *
-             * @cfg {Number} clickPixelThresh
-             */
-            /**
-             * @ignore
-             */
-            clickPixelThresh: {
-                valueFn: function () {
-                    return DDM.get('clickPixelThresh');
-                }
-            },
-
-            /**
-             * the number of milliseconds to start a drag operation after mousedown.
-             *
-             * Defaults to: {@link KISSY.DD.DDM#bufferTime}.
-             *
-             * @cfg {Number} bufferTime
-             */
-            /**
-             * @ignore
-             */
-            bufferTime: {
-                valueFn: function () {
-                    return DDM.get('bufferTime');
                 }
             },
 
@@ -608,24 +585,6 @@ KISSY.add(function (S, require) {
              * @ignore
              */
             activeHandler: {},
-
-            /**
-             * indicate whether this draggable object is being dragged
-             * @type {Boolean}
-             * @property dragging
-             * @readonly
-             */
-            /**
-             * @ignore
-             */
-            dragging: {
-                value: false,
-                setter: function (d) {
-                    var self = this;
-                    self.get('dragNode')[d ? 'addClass' : 'removeClass']
-                        (PREFIX_CLS + 'dragging');
-                }
-            },
 
             /**
              * drop mode.
@@ -714,47 +673,6 @@ KISSY.add(function (S, require) {
             },
 
             /**
-             * mouse position at mousedown
-             * for example:
-             *      @example
-             *      {
-             *          left: 100,
-             *          top: 200
-             *      }
-             *
-             * @property startMousePos
-             * @type {Object}
-             * @readonly
-             */
-            /**
-             * @ignore
-             */
-            startMousePos: {
-
-            },
-
-
-            /**
-             * mouse position at drag start
-             * for example:
-             *      @example
-             *      {
-             *          left: 100,
-             *          top: 200
-             *      }
-             *
-             * @property dragStartMousePos
-             * @type {Object}
-             * @readonly
-             */
-            /**
-             * @ignore
-             */
-            dragStartMousePos: {
-
-            },
-
-            /**
              * node position ar drag start.
              * only valid when move is set to true.
              *
@@ -772,23 +690,7 @@ KISSY.add(function (S, require) {
             /**
              * @ignore
              */
-            startNodePos: {
-
-            },
-
-            /**
-             * The offset of the mouse position to the element's position.
-             * only valid when move is set to true.
-             * @property deltaPos
-             * @type {Object}
-             * @readonly
-             */
-            /**
-             * @ignore
-             */
-            deltaPos: {
-
-            },
+            startNodePos: {},
 
             /**
              * The xy that the node will be set to.
@@ -801,10 +703,7 @@ KISSY.add(function (S, require) {
             /**
              * @ignore
              */
-            actualPos: {
-
-            },
-
+            actualPos: {},
 
             preventDefaultOnMove: {
                 value: true
@@ -837,12 +736,22 @@ KISSY.add(function (S, require) {
 
     function fixIEMouseUp() {
         doc.body.onselectstart = _ieSelectBack;
+        // http://stackoverflow.com/questions/1685326/responding-to-the-onmousemove-event-outside-of-the-browser-window-in-ie
+        // ie6 will not response to event when cursor is out of window.
+        if (doc.body.releaseCapture) {
+            doc.body.releaseCapture();
+        }
     }
 
     // prevent select text in ie
     function fixIEMouseDown() {
         _ieSelectBack = doc.body.onselectstart;
         doc.body.onselectstart = fixIESelect;
+        // http://stackoverflow.com/questions/1685326/responding-to-the-onmousemove-event-outside-of-the-browser-window-in-ie
+        // ie6 will not response to event when cursor is out of window.
+        if (doc.body.setCapture) {
+            doc.body.setCapture();
+        }
     }
 
     /*
@@ -862,21 +771,10 @@ KISSY.add(function (S, require) {
         return false;
     }
 
-    /*
-     鼠标按下时，查看触发源是否是属于 handler 集合，
-     保存当前状态
-     通知全局管理器开始作用
-     */
-    var handlePreDragStart = function (ev) {
-        var self = this,
-            t = ev.target;
-        if (self._checkDragStartValid(ev)) {
-            if (!self._checkHandler(t)) {
-                return;
-            }
-            self._prepare(ev);
-        }
-    };
+    function onGestureStart(e) {
+        this._isValidDrag = 0;
+        this.onGestureStart(e);
+    }
 
     return Draggable;
 });

@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Feb 25 19:45
+build time: Mar 13 18:01
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -13,9 +13,10 @@ build time: Feb 25 19:45
  node
 */
 
-KISSY.add("node/base", ["dom", "event/dom"], function(S, require) {
+KISSY.add("node/base", ["dom", "event/dom", "event/gesture"], function(S, require) {
   var Dom = require("dom");
   var Event = require("event/dom");
+  var Gesture = require("event/gesture");
   var AP = Array.prototype, slice = AP.slice, NodeType = Dom.NodeType, push = AP.push, makeArray = S.makeArray, isNodeList = Dom.isDomNodeList;
   function NodeList(html, props, ownerDocument) {
     var self = this, domNode;
@@ -123,7 +124,7 @@ KISSY.add("node/base", ["dom", "event/dom"], function(S, require) {
   }});
   NodeList.NodeType = NodeType;
   NodeList.KeyCode = Event.KeyCode;
-  NodeList.Gesture = Event.Gesture;
+  NodeList.Gesture = Gesture.Enumeration;
   NodeList.REPLACE_HISTORY = Event.REPLACE_HISTORY;
   return NodeList
 });

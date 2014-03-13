@@ -11,7 +11,6 @@ KISSY.add(function (S) {
 
     var EMPTY = '',
     // FALSE = false,
-        HEX_BASE = 16,
     // http://www.owasp.org/index.php/XSS_(Cross_Site_Scripting)_Prevention_Cheat_Sheet
     // http://wonko.com/post/html-escaping
         htmlEntities = {
@@ -60,16 +59,6 @@ KISSY.add(function (S) {
     }
 
     S.mix(S, {
-        /**
-         * frequently used in taobao cookie about nick
-         * @member KISSY
-         * @return {String} un-unicode string.
-         */
-        fromUnicode: function (str) {
-            return str.replace(/\\u([a-f\d]{4})/ig, function (m, u) {
-                return  String.fromCharCode(parseInt(u, HEX_BASE));
-            });
-        },
         /**
          * get escaped string from html.
          * only escape

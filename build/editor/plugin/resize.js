@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Feb 25 19:41
+build time: Mar 13 17:57
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -32,20 +32,18 @@ KISSY.add("editor/plugin/resize", ["dd"], function(S, require) {
     editor.on("restoreWindow", function() {
       resizer.css("display", "")
     });
-    var d = new Draggable({node:resizer, groups:false}), height = 0, width = 0, dragStartMousePos, heightEl = editor.get("el"), widthEl = editor.get("el");
+    var d = new Draggable({node:resizer, groups:false}), height = 0, width = 0, heightEl = editor.get("el"), widthEl = editor.get("el");
     d.on("dragstart", function() {
       height = heightEl.height();
       width = widthEl.width();
-      editor.fire("resizeStart");
-      dragStartMousePos = d.get("dragStartMousePos")
+      editor.fire("resizeStart")
     });
-    d.on("drag", function(ev) {
-      var diffX = ev.pageX - dragStartMousePos.left, diffY = ev.pageY - dragStartMousePos.top;
+    d.on("drag", function(e) {
       if(S.inArray("y", direction)) {
-        editor.set("height", height + diffY)
+        editor.set("height", height + e.deltaY)
       }
       if(S.inArray("x", direction)) {
-        editor.set("width", width + diffX)
+        editor.set("width", width + e.deltaX)
       }
       editor.fire("resize")
     });

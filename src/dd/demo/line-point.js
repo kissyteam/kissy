@@ -103,14 +103,14 @@ KISSY.use('dd', function (S, DD) {
             groups:false
         });
 
-        canvasDD.on("dragstart", function () {
+        canvasDD.on("dragstart", function (e) {
             S.log('dragstart');
             if (mouse.length == 0) {
                 mouse[0] = {};
-                var startMousePos=canvasDD.get('startMousePos');
+                var startMousePos= e.startPos;
                 mouse[0].start = {
-                    left: startMousePos.left - nxy.left,
-                    top: startMousePos.top - nxy.top
+                    left: startMousePos.pageX - canvasOffset.left,
+                    top: startMousePos.pageY - canvasOffset.top
                 };
             }
         });

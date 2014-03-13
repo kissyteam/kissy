@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Feb 25 19:34
+build time: Mar 13 17:49
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -13,7 +13,7 @@ KISSY.add("dd/plugin/proxy", ["node", "dd", "base"], function(S, require) {
   var Node = require("node"), DD = require("dd"), Base = require("base");
   var DDM = DD.DDM, PROXY_EVENT = ".-ks-proxy" + S.now();
   return Base.extend({pluginId:"dd/plugin/proxy", pluginInitializer:function(drag) {
-    var self = this, hideNodeOnDrag = self.get("hideNodeOnDrag");
+    var self = this;
     function start() {
       var node = self.get("node"), dragNode = drag.get("node");
       if(!self.get("proxyNode")) {
@@ -30,10 +30,7 @@ KISSY.add("dd/plugin/proxy", ["node", "dd", "base"], function(S, require) {
       DDM.cacheWH(node);
       node.offset(dragNode.offset());
       drag.setInternal("dragNode", dragNode);
-      drag.setInternal("node", node);
-      if(hideNodeOnDrag) {
-        dragNode.css("visibility", "hidden")
-      }
+      drag.setInternal("node", node)
     }
     function end() {
       var node = self.get("proxyNode"), dragNode = drag.get("dragNode");
@@ -46,16 +43,13 @@ KISSY.add("dd/plugin/proxy", ["node", "dd", "base"], function(S, require) {
       }else {
         node.hide()
       }
-      drag.setInternal("node", dragNode);
-      if(hideNodeOnDrag) {
-        dragNode.css("visibility", "")
-      }
+      drag.setInternal("node", dragNode)
     }
     drag.on("dragstart" + PROXY_EVENT, start).on("dragend" + PROXY_EVENT, end)
   }, pluginDestructor:function(drag) {
     drag.detach(PROXY_EVENT)
   }}, {ATTRS:{node:{value:function(drag) {
     return new Node(drag.get("node").clone(true))
-  }}, hideNodeOnDrag:{value:false}, destroyOnEnd:{value:false}, moveOnEnd:{value:true}, proxyNode:{}}})
+  }}, destroyOnEnd:{value:false}, moveOnEnd:{value:true}, proxyNode:{}}})
 });
 

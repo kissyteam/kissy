@@ -4,17 +4,16 @@
  * ie9 模式下 mousemove 触发事件有问题，无法测试
  */
 KISSY.add(function (S, Node, DD, IO) {
-    var $=Node.all;
+    var $ = Node.all;
     var Draggable = DD.Draggable, Dom = S.DOM;
-    
+
     var ie = S.UA.ieMode;
     if (ie === 9 || ie === 11) {
         return;
     }
 
     describe('draggable', function () {
-
-        var html='';
+        var html = '';
 
         IO({
             url: '../specs/draggable.fragment.html',
@@ -25,20 +24,16 @@ KISSY.add(function (S, Node, DD, IO) {
             }
         });
 
-
-
         beforeEach(function () {
             this.addMatchers({
                 toBeAlmostEqual: function (expected) {
-                    return Math.abs(parseInt(this.actual,10) - parseInt(expected,10)) < 20;
+                    return Math.abs(parseInt(this.actual, 10) - parseInt(expected, 10)) < 20;
                 },
                 toBeEqual: function (expected) {
-                    return Math.abs(parseInt(this.actual,10) - parseInt(expected,10)) < 5;
+                    return Math.abs(parseInt(this.actual, 10) - parseInt(expected, 10)) < 5;
                 }
             });
         });
-
-
 
         it('should not drag before mousedown while mousemove', function () {
 
@@ -137,59 +132,6 @@ KISSY.add(function (S, Node, DD, IO) {
             });
         });
 
-
-        it('should drag after mousedown while mousemove after bufferTime', function () {
-
-
-            var drag = Node.one('#drag'),
-                dragHeader = Node.one('#dragHeader');
-
-            var action = new Draggable({
-                node: drag,
-                move: 1,
-                handlers: [dragHeader],
-                groups: false
-            });
-
-            var xy = dragHeader.offset();
-
-            runs(function () {
-                jasmine.simulate(dragHeader[0], 'mousedown', {
-                    clientX: xy.left - Dom.scrollLeft(),
-                    clientY: xy.top - Dom.scrollTop()
-                });
-            });
-
-            // exceed bufferTime
-            waits(1100);
-
-            runs(function () {
-
-                jasmine.simulate(document, 'mousemove', {
-                    clientX: xy.left + 100 - Dom.scrollLeft(),
-                    clientY: xy.top + 100 - Dom.scrollTop()
-                });
-            });
-
-            waits(100);
-
-            runs(function () {
-                jasmine.simulate(document, 'mouseup', {
-                    clientX: xy.left + 100 - Dom.scrollLeft(),
-                    clientY: xy.top + 100 - Dom.scrollTop()
-                });
-            });
-
-            waits(100);
-            runs(function () {
-                var expected = 100;
-                //if (ie == 7) expected += 2;
-                expect(drag.offset().top - xy.top).toBeEqual(expected);
-                expect(drag.offset().left - xy.left).toBeEqual(expected);
-                action.destroy();
-            });
-        });
-
         it('should not drag after mouseup while mousemove', function () {
             var drag = Node.one('#drag_after'),
                 dragHeader = Node.one('#dragHeader_after');
@@ -249,7 +191,6 @@ KISSY.add(function (S, Node, DD, IO) {
                 action.destroy();
             });
         });
-
 
         it('disabled works', function () {
 

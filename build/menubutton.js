@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Feb 25 19:45
+build time: Mar 13 18:01
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -20,7 +20,7 @@ KISSY.add("menubutton/menubutton-xtpl", ["component/extension/content-xtpl"], fu
     if(typeof module !== "undefined" && module.kissy) {
       moduleWrap = module
     }
-    var callCommandUtil = utils.callCommand, eachCommand = nativeCommands.each, withCommand = nativeCommands["with"], ifCommand = nativeCommands["if"], setCommand = nativeCommands.set, includeCommand = nativeCommands.include, parseCommand = nativeCommands.parse, extendCommand = nativeCommands.extend, blockCommand = nativeCommands.block, macroCommand = nativeCommands.macro;
+    var callCommandUtil = utils.callCommand, debuggerCommand = nativeCommands["debugger"], eachCommand = nativeCommands.each, withCommand = nativeCommands["with"], ifCommand = nativeCommands["if"], setCommand = nativeCommands.set, includeCommand = nativeCommands.include, parseCommand = nativeCommands.parse, extendCommand = nativeCommands.extend, blockCommand = nativeCommands.block, macroCommand = nativeCommands.macro;
     buffer += "";
     var option1 = {};
     var params2 = [];
@@ -51,7 +51,7 @@ KISSY.add("menubutton/menubutton-xtpl", ["component/extension/content-xtpl"], fu
     buffer += '">\n    </div>\n</div>';
     return buffer
   };
-  t.TPL_NAME = "menubutton/src/menubutton/menubutton.xtpl.html";
+  t.TPL_NAME = module.name;
   return t
 });
 KISSY.add("menubutton/render", ["button", "./menubutton-xtpl", "component/extension/content-render"], function(S, require) {

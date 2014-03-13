@@ -214,7 +214,7 @@ KISSY.add(function (S, require) {
                 var fs = [], vs = [];
                 S.each(v, function (v, k) {
                     fs.push(k);
-                    if (S.isFunction(v)) {
+                    if (typeof v === 'function') {
                         v = v();
                     }
                     vs.push(v);
@@ -586,10 +586,6 @@ KISSY.add(function (S, require) {
             expect(S.unEscapeHtml('&#' + "b".charCodeAt(0) + ';')).toBe('b');
         });
 
-        it('S.fromUnicode', function () {
-            expect(S.fromUnicode("ab\\u627F\\u7389c")).toBe("ab承玉c");
-        });
-
         it('S.type', function () {
             expect(S.type(null)).toBe('null');
 
@@ -628,83 +624,6 @@ KISSY.add(function (S, require) {
                 expect(S.type(doc.body)).toBe('object');
                 expect(S.type(doc.createTextNode('foo'))).toBe('object');
                 expect(S.type(doc.getElementsByTagName('*'))).toBe('object');
-            }
-        });
-
-        it('S.isNull', function () {
-            expect(S.isNull(null)).toBe(true);
-            expect(S.isNull()).toBe(false);
-        });
-
-        it('S.isUndefined', function () {
-            expect(S.isUndefined(null)).toBe(false);
-            expect(S.isUndefined()).toBe(true);
-            expect(S.isUndefined(undefined)).toBe(true);
-        });
-
-        it('S.isBoolean', function () {
-            expect(S.isBoolean(true)).toBe(true);
-            expect(S.isBoolean(false)).toBe(true);
-            expect(S.isBoolean(Boolean(false))).toBe(true);
-            expect(S.isBoolean(!1)).toBe(true);
-
-            expect(S.isBoolean()).toBe(false);
-            expect(S.isBoolean(null)).toBe(false);
-            expect(S.isBoolean({})).toBe(false);
-            expect(S.isBoolean(host)).toBe(false);
-        });
-
-        it('S.isNumber', function () {
-            expect(S.isNumber(1)).toBe(true);
-            expect(S.isNumber(0)).toBe(true);
-            expect(S.isNumber(Number(1))).toBe(true);
-
-            expect(S.isNumber(Infinity)).toBe(true);
-            expect(S.isNumber(-Infinity)).toBe(true);
-            expect(S.isNumber(NaN)).toBe(true);
-
-            expect(S.isNumber({})).toBe(false);
-            expect(S.isNumber('1')).toBe(false);
-        });
-
-        it('S.isString', function () {
-            expect(S.isString('')).toBe(true);
-            expect(S.isString('a')).toBe(true);
-            expect(S.isString(String('a'))).toBe(true);
-
-            expect(S.isString()).toBe(false);
-            expect(S.isString({})).toBe(false);
-            expect(S.isString(null)).toBe(false);
-            expect(S.isString(host)).toBe(false);
-        });
-
-        it('S.isFunction', function () {
-            // Make sure that false values return false
-            expect(S.isFunction()).toBe(false);
-            expect(S.isFunction(null)).toBe(false);
-            expect(S.isFunction(undefined)).toBe(false);
-            expect(S.isFunction('')).toBe(false);
-            expect(S.isFunction(0)).toBe(false);
-
-            // Check built-ins
-            expect(S.isFunction(String)).toBe(true);
-            expect(S.isFunction(Array)).toBe(true);
-            expect(S.isFunction(Object)).toBe(true);
-            expect(S.isFunction(Function)).toBe(true);
-
-            // Check string, object etc.
-            expect(S.isFunction('str')).toBe(false);
-            expect(S.isFunction(['arr'])).toBe(false);
-            expect(S.isFunction({})).toBe(false);
-
-            // Make sure normal functions still work
-            expect(S.isFunction(fn)).toBe(true);
-
-            // exclude dom elements
-            if (web) {
-                expect(S.isFunction(doc.createElement('object'))).toBe(false);
-                expect(S.isFunction(doc.body.childNodes)).toBe(false);
-                expect(S.isFunction(doc.body.firstChild)).toBe(false);
             }
         });
 

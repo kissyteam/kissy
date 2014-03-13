@@ -6,50 +6,9 @@
 KISSY.add(function (S, require) {
     var Node = require('node'),
         DDM = require('./ddm'),
-        Draggable = require('./draggable');
-    var PREFIX_CLS = DDM.PREFIX_CLS,
+        Draggable = require('./draggable'),
+        PREFIX_CLS = DDM.PREFIX_CLS,
         $ = Node.all;
-
-    /*
-     父容器监听 mousedown，找到合适的拖动 handlers 以及拖动节点
-     */
-    var handlePreDragStart = function (ev) {
-        var self = this,
-            handler,
-            node;
-
-        if (!self._checkDragStartValid(ev)) {
-            return;
-        }
-
-        var handlers = self.get('handlers'),
-            target = $(ev.target);
-
-        // 不需要像 Draggable 一样，判断 target 是否在 handler 内
-        // 委托时，直接从 target 开始往上找 handler
-        if (handlers.length) {
-            handler = self._getHandler(target);
-        } else {
-            handler = target;
-        }
-
-        if (handler) {
-            node = self._getNode(handler);
-        }
-
-        // can not find handler or can not find matched node from handler
-        // just return !
-        if (!node) {
-            return;
-        }
-
-        self.setInternal('activeHandler', handler);
-
-        // 找到 handler 确定 委托的 node ，就算成功了
-        self.setInternal('node', node);
-        self.setInternal('dragNode', node);
-        self._prepare(ev);
-    };
 
     /**
      * @extends KISSY.DD.Draggable
@@ -58,33 +17,58 @@ KISSY.add(function (S, require) {
      * using only one draggable instance as a delegate.
      */
     return Draggable.extend({
-
             // override Draggable
-            _onSetNode: function () {
+            _onSetNode: S.noop,
 
-            },
-
-            '_onSetContainer': function () {
-                this.bindDragEvent();
-            },
-
-            _onSetDisabledChange: function (d) {
+            _onSetDisabled: function (d) {
                 this.get('container')[d ? 'addClass' :
                     'removeClass'](PREFIX_CLS + '-disabled');
+                this[d ? 'detachDragEvent' : 'bindDragEvent']();
             },
 
-            bindDragEvent: function () {
+            getEventTargetEl: function () {
+                return this.get('container');
+            },
+
+            /*
+             父容器监听 mousedown，找到合适的拖动 handlers 以及拖动节点
+             */
+            onGestureStart: function (ev) {
                 var self = this,
-                    node = self.get('container');
-                node.on(Node.Gesture.start, handlePreDragStart, self)
-                    .on('dragstart', self._fixDragStart);
-            },
+                    handler,
+                    node;
 
-            detachDragEvent: function () {
-                var self = this;
-                self.get('container')
-                    .detach(Node.Gesture.start, handlePreDragStart, self)
-                    .detach('dragstart', self._fixDragStart);
+                if (!self._checkDragStartValid(ev)) {
+                    return;
+                }
+
+                var handlers = self.get('handlers'),
+                    target = $(ev.target);
+
+                // 不需要像 Draggable 一样，判断 target 是否在 handler 内
+                // 委托时，直接从 target 开始往上找 handler
+                if (handlers.length) {
+                    handler = self._getHandler(target);
+                } else {
+                    handler = target;
+                }
+
+                if (handler) {
+                    node = self._getNode(handler);
+                }
+
+                // can not find handler or can not find matched node from handler
+                // just return !
+                if (!node) {
+                    return;
+                }
+
+                self.setInternal('activeHandler', handler);
+
+                // 找到 handler 确定 委托的 node ，就算成功了
+                self.setInternal('node', node);
+                self.setInternal('dragNode', node);
+                self._prepare(ev);
             },
 
             /*

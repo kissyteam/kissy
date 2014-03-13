@@ -90,5 +90,9 @@ KISSY.add(function (S, require) {
 
     addGestureEvent(PINCH, config);
 
-    return Pinch;
+    return {
+        PINCH:PINCH,
+        PINCH_START:PINCH_START,
+        PINCH_END:PINCH_END
+    };
 });

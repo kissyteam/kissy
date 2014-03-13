@@ -269,38 +269,36 @@ if (! _$jscoverage['/resizable.js']) {
   _$jscoverage['/resizable.js'].lineData[100] = 0;
   _$jscoverage['/resizable.js'].lineData[101] = 0;
   _$jscoverage['/resizable.js'].lineData[102] = 0;
-  _$jscoverage['/resizable.js'].lineData[103] = 0;
+  _$jscoverage['/resizable.js'].lineData[116] = 0;
   _$jscoverage['/resizable.js'].lineData[117] = 0;
   _$jscoverage['/resizable.js'].lineData[118] = 0;
-  _$jscoverage['/resizable.js'].lineData[119] = 0;
-  _$jscoverage['/resizable.js'].lineData[122] = 0;
+  _$jscoverage['/resizable.js'].lineData[121] = 0;
+  _$jscoverage['/resizable.js'].lineData[127] = 0;
   _$jscoverage['/resizable.js'].lineData[128] = 0;
   _$jscoverage['/resizable.js'].lineData[129] = 0;
   _$jscoverage['/resizable.js'].lineData[130] = 0;
   _$jscoverage['/resizable.js'].lineData[131] = 0;
   _$jscoverage['/resizable.js'].lineData[132] = 0;
   _$jscoverage['/resizable.js'].lineData[133] = 0;
-  _$jscoverage['/resizable.js'].lineData[134] = 0;
-  _$jscoverage['/resizable.js'].lineData[135] = 0;
-  _$jscoverage['/resizable.js'].lineData[140] = 0;
-  _$jscoverage['/resizable.js'].lineData[141] = 0;
+  _$jscoverage['/resizable.js'].lineData[138] = 0;
+  _$jscoverage['/resizable.js'].lineData[139] = 0;
+  _$jscoverage['/resizable.js'].lineData[153] = 0;
   _$jscoverage['/resizable.js'].lineData[155] = 0;
-  _$jscoverage['/resizable.js'].lineData[157] = 0;
-  _$jscoverage['/resizable.js'].lineData[158] = 0;
-  _$jscoverage['/resizable.js'].lineData[166] = 0;
-  _$jscoverage['/resizable.js'].lineData[167] = 0;
-  _$jscoverage['/resizable.js'].lineData[175] = 0;
+  _$jscoverage['/resizable.js'].lineData[156] = 0;
+  _$jscoverage['/resizable.js'].lineData[164] = 0;
+  _$jscoverage['/resizable.js'].lineData[165] = 0;
+  _$jscoverage['/resizable.js'].lineData[173] = 0;
+  _$jscoverage['/resizable.js'].lineData[177] = 0;
+  _$jscoverage['/resizable.js'].lineData[178] = 0;
   _$jscoverage['/resizable.js'].lineData[179] = 0;
-  _$jscoverage['/resizable.js'].lineData[180] = 0;
-  _$jscoverage['/resizable.js'].lineData[181] = 0;
-  _$jscoverage['/resizable.js'].lineData[186] = 0;
+  _$jscoverage['/resizable.js'].lineData[184] = 0;
+  _$jscoverage['/resizable.js'].lineData[187] = 0;
+  _$jscoverage['/resizable.js'].lineData[188] = 0;
   _$jscoverage['/resizable.js'].lineData[189] = 0;
   _$jscoverage['/resizable.js'].lineData[190] = 0;
-  _$jscoverage['/resizable.js'].lineData[191] = 0;
-  _$jscoverage['/resizable.js'].lineData[192] = 0;
-  _$jscoverage['/resizable.js'].lineData[209] = 0;
-  _$jscoverage['/resizable.js'].lineData[337] = 0;
-  _$jscoverage['/resizable.js'].lineData[372] = 0;
+  _$jscoverage['/resizable.js'].lineData[207] = 0;
+  _$jscoverage['/resizable.js'].lineData[335] = 0;
+  _$jscoverage['/resizable.js'].lineData[370] = 0;
 }
 if (! _$jscoverage['/resizable.js'].functionData) {
   _$jscoverage['/resizable.js'].functionData = [];
@@ -346,18 +344,18 @@ if (! _$jscoverage['/resizable.js'].branchData) {
   _$jscoverage['/resizable.js'].branchData['70'][1] = new BranchData();
   _$jscoverage['/resizable.js'].branchData['87'] = [];
   _$jscoverage['/resizable.js'].branchData['87'][1] = new BranchData();
+  _$jscoverage['/resizable.js'].branchData['116'] = [];
+  _$jscoverage['/resizable.js'].branchData['116'][1] = new BranchData();
   _$jscoverage['/resizable.js'].branchData['117'] = [];
   _$jscoverage['/resizable.js'].branchData['117'][1] = new BranchData();
-  _$jscoverage['/resizable.js'].branchData['118'] = [];
-  _$jscoverage['/resizable.js'].branchData['118'][1] = new BranchData();
 }
-_$jscoverage['/resizable.js'].branchData['118'][1].init(29, 6, 'pos[i]');
-function visit11_118_1(result) {
-  _$jscoverage['/resizable.js'].branchData['118'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/resizable.js'].branchData['117'][1].init(754, 22, 'i < ATTRS_ORDER.length');
-function visit10_117_1(result) {
+_$jscoverage['/resizable.js'].branchData['117'][1].init(29, 6, 'pos[i]');
+function visit11_117_1(result) {
   _$jscoverage['/resizable.js'].branchData['117'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/resizable.js'].branchData['116'][1].init(717, 22, 'i < ATTRS_ORDER.length');
+function visit10_116_1(result) {
+  _$jscoverage['/resizable.js'].branchData['116'][1].ranCondition(result);
   return result;
 }_$jscoverage['/resizable.js'].branchData['87'][1].init(299, 19, 'i < handlers.length');
 function visit9_87_1(result) {
@@ -505,50 +503,46 @@ KISSY.add(function(S, require) {
       (function(hc, dd) {
   _$jscoverage['/resizable.js'].functionData[10]++;
   _$jscoverage['/resizable.js'].lineData[101]++;
-  var startEdgePos;
-  _$jscoverage['/resizable.js'].lineData[102]++;
   dd.on('drag', function(ev) {
   _$jscoverage['/resizable.js'].functionData[11]++;
-  _$jscoverage['/resizable.js'].lineData[103]++;
-  var dd = ev.target, ow = self._width, oh = self._height, minW = self.get('minWidth'), maxW = self.get('maxWidth'), minH = self.get('minHeight'), maxH = self.get('maxHeight'), diffT = ev.pageY - startEdgePos.top, diffL = ev.pageX - startEdgePos.left, ot = self._top, ol = self._left, region = {}, pos = hcNormal[hc](minW, maxW, minH, maxH, ot, ol, ow, oh, diffT, diffL, preserveRatio);
-  _$jscoverage['/resizable.js'].lineData[117]++;
-  for (i = 0; visit10_117_1(i < ATTRS_ORDER.length); i++) {
-    _$jscoverage['/resizable.js'].lineData[118]++;
-    if (visit11_118_1(pos[i])) {
-      _$jscoverage['/resizable.js'].lineData[119]++;
+  _$jscoverage['/resizable.js'].lineData[102]++;
+  var dd = ev.target, ow = self._width, oh = self._height, minW = self.get('minWidth'), maxW = self.get('maxWidth'), minH = self.get('minHeight'), maxH = self.get('maxHeight'), diffT = ev.deltaY, diffL = ev.deltaX, ot = self._top, ol = self._left, region = {}, pos = hcNormal[hc](minW, maxW, minH, maxH, ot, ol, ow, oh, diffT, diffL, preserveRatio);
+  _$jscoverage['/resizable.js'].lineData[116]++;
+  for (i = 0; visit10_116_1(i < ATTRS_ORDER.length); i++) {
+    _$jscoverage['/resizable.js'].lineData[117]++;
+    if (visit11_117_1(pos[i])) {
+      _$jscoverage['/resizable.js'].lineData[118]++;
       region[ATTRS_ORDER[i]] = pos[i];
     }
   }
-  _$jscoverage['/resizable.js'].lineData[122]++;
+  _$jscoverage['/resizable.js'].lineData[121]++;
   self.fire('beforeResize', {
   handler: hc, 
   dd: dd, 
   region: region});
 });
-  _$jscoverage['/resizable.js'].lineData[128]++;
+  _$jscoverage['/resizable.js'].lineData[127]++;
   dd.on('dragstart', function() {
   _$jscoverage['/resizable.js'].functionData[12]++;
-  _$jscoverage['/resizable.js'].lineData[129]++;
-  startEdgePos = dd.get('startMousePos');
-  _$jscoverage['/resizable.js'].lineData[130]++;
+  _$jscoverage['/resizable.js'].lineData[128]++;
   preserveRatio = self.get('preserveRatio');
-  _$jscoverage['/resizable.js'].lineData[131]++;
+  _$jscoverage['/resizable.js'].lineData[129]++;
   self._width = node.width();
-  _$jscoverage['/resizable.js'].lineData[132]++;
+  _$jscoverage['/resizable.js'].lineData[130]++;
   self._top = parseInt(node.css('top'), 10);
-  _$jscoverage['/resizable.js'].lineData[133]++;
+  _$jscoverage['/resizable.js'].lineData[131]++;
   self._left = parseInt(node.css('left'), 10);
-  _$jscoverage['/resizable.js'].lineData[134]++;
+  _$jscoverage['/resizable.js'].lineData[132]++;
   self._height = node.height();
-  _$jscoverage['/resizable.js'].lineData[135]++;
+  _$jscoverage['/resizable.js'].lineData[133]++;
   self.fire('resizeStart', {
   handler: hc, 
   dd: dd});
 });
-  _$jscoverage['/resizable.js'].lineData[140]++;
+  _$jscoverage['/resizable.js'].lineData[138]++;
   dd.on('dragend', function() {
   _$jscoverage['/resizable.js'].functionData[13]++;
-  _$jscoverage['/resizable.js'].lineData[141]++;
+  _$jscoverage['/resizable.js'].lineData[139]++;
   self.fire('resizeEnd', {
   handler: hc, 
   dd: dd});
@@ -556,22 +550,22 @@ KISSY.add(function(S, require) {
 })(hc, dd);
     }
   }
-  _$jscoverage['/resizable.js'].lineData[155]++;
+  _$jscoverage['/resizable.js'].lineData[153]++;
   var Resizable = Base.extend({
   initializer: function() {
   _$jscoverage['/resizable.js'].functionData[14]++;
-  _$jscoverage['/resizable.js'].lineData[157]++;
+  _$jscoverage['/resizable.js'].lineData[155]++;
   this.dds = {};
-  _$jscoverage['/resizable.js'].lineData[158]++;
+  _$jscoverage['/resizable.js'].lineData[156]++;
   this.publish('beforeResize', {
   defaultFn: this._onBeforeResize, 
   defaultTargetOnly: true});
 }, 
   _onBeforeResize: function(e) {
   _$jscoverage['/resizable.js'].functionData[15]++;
-  _$jscoverage['/resizable.js'].lineData[166]++;
+  _$jscoverage['/resizable.js'].lineData[164]++;
   this.get('node').css(e.region);
-  _$jscoverage['/resizable.js'].lineData[167]++;
+  _$jscoverage['/resizable.js'].lineData[165]++;
   this.fire('resize', {
   handler: e.hc, 
   dd: e.dd, 
@@ -579,31 +573,31 @@ KISSY.add(function(S, require) {
 }, 
   _onSetNode: function() {
   _$jscoverage['/resizable.js'].functionData[16]++;
-  _$jscoverage['/resizable.js'].lineData[175]++;
+  _$jscoverage['/resizable.js'].lineData[173]++;
   createDD(this);
 }, 
   _onSetDisabled: function(v) {
   _$jscoverage['/resizable.js'].functionData[17]++;
-  _$jscoverage['/resizable.js'].lineData[179]++;
+  _$jscoverage['/resizable.js'].lineData[177]++;
   var dds = this.dds;
-  _$jscoverage['/resizable.js'].lineData[180]++;
+  _$jscoverage['/resizable.js'].lineData[178]++;
   S.each(dds, function(d) {
   _$jscoverage['/resizable.js'].functionData[18]++;
-  _$jscoverage['/resizable.js'].lineData[181]++;
+  _$jscoverage['/resizable.js'].lineData[179]++;
   d.set('disabled', v);
 });
 }, 
   destructor: function() {
   _$jscoverage['/resizable.js'].functionData[19]++;
-  _$jscoverage['/resizable.js'].lineData[186]++;
+  _$jscoverage['/resizable.js'].lineData[184]++;
   var self = this, d, dds = self.dds;
-  _$jscoverage['/resizable.js'].lineData[189]++;
+  _$jscoverage['/resizable.js'].lineData[187]++;
   for (d in dds) {
-    _$jscoverage['/resizable.js'].lineData[190]++;
+    _$jscoverage['/resizable.js'].lineData[188]++;
     dds[d].destroy();
-    _$jscoverage['/resizable.js'].lineData[191]++;
+    _$jscoverage['/resizable.js'].lineData[189]++;
     dds[d].get('node').remove();
-    _$jscoverage['/resizable.js'].lineData[192]++;
+    _$jscoverage['/resizable.js'].lineData[190]++;
     delete dds[d];
   }
 }}, {
@@ -612,7 +606,7 @@ KISSY.add(function(S, require) {
   node: {
   setter: function(v) {
   _$jscoverage['/resizable.js'].functionData[20]++;
-  _$jscoverage['/resizable.js'].lineData[209]++;
+  _$jscoverage['/resizable.js'].lineData[207]++;
   return $(v);
 }}, 
   dragConfig: {}, 
@@ -631,7 +625,7 @@ KISSY.add(function(S, require) {
   value: false}, 
   handlers: {
   value: []}}});
-  _$jscoverage['/resizable.js'].lineData[337]++;
+  _$jscoverage['/resizable.js'].lineData[335]++;
   Resizable.Handler = {
   B: 'b', 
   T: 't', 
@@ -641,6 +635,6 @@ KISSY.add(function(S, require) {
   TL: 'tl', 
   BR: 'br', 
   TR: 'tr'};
-  _$jscoverage['/resizable.js'].lineData[372]++;
+  _$jscoverage['/resizable.js'].lineData[370]++;
   return Resizable;
 });

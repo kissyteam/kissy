@@ -247,22 +247,20 @@ if (! _$jscoverage['/resize.js']) {
   _$jscoverage['/resize.js'].lineData[40] = 0;
   _$jscoverage['/resize.js'].lineData[41] = 0;
   _$jscoverage['/resize.js'].lineData[44] = 0;
+  _$jscoverage['/resize.js'].lineData[53] = 0;
   _$jscoverage['/resize.js'].lineData[54] = 0;
   _$jscoverage['/resize.js'].lineData[55] = 0;
   _$jscoverage['/resize.js'].lineData[56] = 0;
-  _$jscoverage['/resize.js'].lineData[57] = 0;
-  _$jscoverage['/resize.js'].lineData[58] = 0;
+  _$jscoverage['/resize.js'].lineData[59] = 0;
+  _$jscoverage['/resize.js'].lineData[60] = 0;
   _$jscoverage['/resize.js'].lineData[61] = 0;
-  _$jscoverage['/resize.js'].lineData[62] = 0;
+  _$jscoverage['/resize.js'].lineData[63] = 0;
   _$jscoverage['/resize.js'].lineData[64] = 0;
-  _$jscoverage['/resize.js'].lineData[65] = 0;
-  _$jscoverage['/resize.js'].lineData[67] = 0;
-  _$jscoverage['/resize.js'].lineData[68] = 0;
+  _$jscoverage['/resize.js'].lineData[66] = 0;
+  _$jscoverage['/resize.js'].lineData[69] = 0;
   _$jscoverage['/resize.js'].lineData[70] = 0;
-  _$jscoverage['/resize.js'].lineData[73] = 0;
-  _$jscoverage['/resize.js'].lineData[74] = 0;
-  _$jscoverage['/resize.js'].lineData[75] = 0;
-  _$jscoverage['/resize.js'].lineData[80] = 0;
+  _$jscoverage['/resize.js'].lineData[71] = 0;
+  _$jscoverage['/resize.js'].lineData[76] = 0;
 }
 if (! _$jscoverage['/resize.js'].functionData) {
   _$jscoverage['/resize.js'].functionData = [];
@@ -285,18 +283,18 @@ if (! _$jscoverage['/resize.js'].branchData) {
   _$jscoverage['/resize.js'].branchData['23'][1] = new BranchData();
   _$jscoverage['/resize.js'].branchData['24'] = [];
   _$jscoverage['/resize.js'].branchData['24'][1] = new BranchData();
-  _$jscoverage['/resize.js'].branchData['64'] = [];
-  _$jscoverage['/resize.js'].branchData['64'][1] = new BranchData();
-  _$jscoverage['/resize.js'].branchData['67'] = [];
-  _$jscoverage['/resize.js'].branchData['67'][1] = new BranchData();
+  _$jscoverage['/resize.js'].branchData['60'] = [];
+  _$jscoverage['/resize.js'].branchData['60'][1] = new BranchData();
+  _$jscoverage['/resize.js'].branchData['63'] = [];
+  _$jscoverage['/resize.js'].branchData['63'][1] = new BranchData();
 }
-_$jscoverage['/resize.js'].branchData['67'][1].init(271, 25, 'S.inArray(\'x\', direction)');
-function visit6_67_1(result) {
-  _$jscoverage['/resize.js'].branchData['67'][1].ranCondition(result);
+_$jscoverage['/resize.js'].branchData['63'][1].init(149, 25, 'S.inArray(\'x\', direction)');
+function visit6_63_1(result) {
+  _$jscoverage['/resize.js'].branchData['63'][1].ranCondition(result);
   return result;
-}_$jscoverage['/resize.js'].branchData['64'][1].init(146, 25, 'S.inArray(\'y\', direction)');
-function visit5_64_1(result) {
-  _$jscoverage['/resize.js'].branchData['64'][1].ranCondition(result);
+}_$jscoverage['/resize.js'].branchData['60'][1].init(21, 25, 'S.inArray(\'y\', direction)');
+function visit5_60_1(result) {
+  _$jscoverage['/resize.js'].branchData['60'][1].ranCondition(result);
   return result;
 }_$jscoverage['/resize.js'].branchData['24'][1].init(21, 20, 'direction[0] === \'x\'');
 function visit4_24_1(result) {
@@ -363,46 +361,42 @@ KISSY.add(function(S, require) {
   _$jscoverage['/resize.js'].lineData[44]++;
   var d = new Draggable({
   node: resizer, 
-  groups: false}), height = 0, width = 0, dragStartMousePos, heightEl = editor.get('el'), widthEl = editor.get('el');
-  _$jscoverage['/resize.js'].lineData[54]++;
+  groups: false}), height = 0, width = 0, heightEl = editor.get('el'), widthEl = editor.get('el');
+  _$jscoverage['/resize.js'].lineData[53]++;
   d.on('dragstart', function() {
   _$jscoverage['/resize.js'].functionData[5]++;
-  _$jscoverage['/resize.js'].lineData[55]++;
+  _$jscoverage['/resize.js'].lineData[54]++;
   height = heightEl.height();
-  _$jscoverage['/resize.js'].lineData[56]++;
+  _$jscoverage['/resize.js'].lineData[55]++;
   width = widthEl.width();
-  _$jscoverage['/resize.js'].lineData[57]++;
+  _$jscoverage['/resize.js'].lineData[56]++;
   editor.fire('resizeStart');
-  _$jscoverage['/resize.js'].lineData[58]++;
-  dragStartMousePos = d.get('dragStartMousePos');
 });
-  _$jscoverage['/resize.js'].lineData[61]++;
-  d.on('drag', function(ev) {
+  _$jscoverage['/resize.js'].lineData[59]++;
+  d.on('drag', function(e) {
   _$jscoverage['/resize.js'].functionData[6]++;
-  _$jscoverage['/resize.js'].lineData[62]++;
-  var diffX = ev.pageX - dragStartMousePos.left, diffY = ev.pageY - dragStartMousePos.top;
-  _$jscoverage['/resize.js'].lineData[64]++;
-  if (visit5_64_1(S.inArray('y', direction))) {
-    _$jscoverage['/resize.js'].lineData[65]++;
-    editor.set('height', height + diffY);
+  _$jscoverage['/resize.js'].lineData[60]++;
+  if (visit5_60_1(S.inArray('y', direction))) {
+    _$jscoverage['/resize.js'].lineData[61]++;
+    editor.set('height', height + e.deltaY);
   }
-  _$jscoverage['/resize.js'].lineData[67]++;
-  if (visit6_67_1(S.inArray('x', direction))) {
-    _$jscoverage['/resize.js'].lineData[68]++;
-    editor.set('width', width + diffX);
+  _$jscoverage['/resize.js'].lineData[63]++;
+  if (visit6_63_1(S.inArray('x', direction))) {
+    _$jscoverage['/resize.js'].lineData[64]++;
+    editor.set('width', width + e.deltaX);
   }
-  _$jscoverage['/resize.js'].lineData[70]++;
+  _$jscoverage['/resize.js'].lineData[66]++;
   editor.fire('resize');
 });
-  _$jscoverage['/resize.js'].lineData[73]++;
+  _$jscoverage['/resize.js'].lineData[69]++;
   editor.on('destroy', function() {
   _$jscoverage['/resize.js'].functionData[7]++;
-  _$jscoverage['/resize.js'].lineData[74]++;
+  _$jscoverage['/resize.js'].lineData[70]++;
   d.destroy();
-  _$jscoverage['/resize.js'].lineData[75]++;
+  _$jscoverage['/resize.js'].lineData[71]++;
   resizer.remove();
 });
 }});
-  _$jscoverage['/resize.js'].lineData[80]++;
+  _$jscoverage['/resize.js'].lineData[76]++;
   return Resize;
 });

@@ -281,7 +281,7 @@ KISSY.add(function (S, require) {
                     }
                     // touch does not need this
                     // https://github.com/kissyteam/kissy/issues/574
-                    if (!self.get('allowTextSelection') && ev.type.indexOf('mouse') !== -1) {
+                    if (!self.get('allowTextSelection') && ev.gestureType === 'mouse') {
                         // firefox /chrome/ie9/i10 不会引起焦点转移
                         // invalid for ie10 buggy?
                         n = ev.target.nodeName;

@@ -226,28 +226,50 @@ catch (e) {}
 if (! this._$jscoverage) {
   this._$jscoverage = {};
 }
-if (! _$jscoverage['/base/gesture.js']) {
-  _$jscoverage['/base/gesture.js'] = {};
-  _$jscoverage['/base/gesture.js'].lineData = [];
-  _$jscoverage['/base/gesture.js'].lineData[6] = 0;
-  _$jscoverage['/base/gesture.js'].lineData[13] = 0;
+if (! _$jscoverage['/base/single-touch.js']) {
+  _$jscoverage['/base/single-touch.js'] = {};
+  _$jscoverage['/base/single-touch.js'].lineData = [];
+  _$jscoverage['/base/single-touch.js'].lineData[6] = 0;
+  _$jscoverage['/base/single-touch.js'].lineData[7] = 0;
+  _$jscoverage['/base/single-touch.js'].lineData[9] = 0;
+  _$jscoverage['/base/single-touch.js'].lineData[12] = 0;
+  _$jscoverage['/base/single-touch.js'].lineData[16] = 0;
+  _$jscoverage['/base/single-touch.js'].lineData[17] = 0;
+  _$jscoverage['/base/single-touch.js'].lineData[20] = 0;
+  _$jscoverage['/base/single-touch.js'].lineData[27] = 0;
 }
-if (! _$jscoverage['/base/gesture.js'].functionData) {
-  _$jscoverage['/base/gesture.js'].functionData = [];
-  _$jscoverage['/base/gesture.js'].functionData[0] = 0;
+if (! _$jscoverage['/base/single-touch.js'].functionData) {
+  _$jscoverage['/base/single-touch.js'].functionData = [];
+  _$jscoverage['/base/single-touch.js'].functionData[0] = 0;
+  _$jscoverage['/base/single-touch.js'].functionData[1] = 0;
+  _$jscoverage['/base/single-touch.js'].functionData[2] = 0;
 }
-if (! _$jscoverage['/base/gesture.js'].branchData) {
-  _$jscoverage['/base/gesture.js'].branchData = {};
+if (! _$jscoverage['/base/single-touch.js'].branchData) {
+  _$jscoverage['/base/single-touch.js'].branchData = {};
 }
-_$jscoverage['/base/gesture.js'].lineData[6]++;
-KISSY.add(function() {
-  _$jscoverage['/base/gesture.js'].functionData[0]++;
-  _$jscoverage['/base/gesture.js'].lineData[13]++;
-  return {
-  start: 'mousedown', 
-  move: 'mousemove', 
-  end: 'mouseup', 
-  tap: 'click', 
-  singleTap: 'click', 
-  doubleTap: 'dblclick'};
+_$jscoverage['/base/single-touch.js'].lineData[6]++;
+KISSY.add(function(S, require) {
+  _$jscoverage['/base/single-touch.js'].functionData[0]++;
+  _$jscoverage['/base/single-touch.js'].lineData[7]++;
+  var Touch = require('./touch');
+  _$jscoverage['/base/single-touch.js'].lineData[9]++;
+  function SingleTouch() {
+    _$jscoverage['/base/single-touch.js'].functionData[1]++;
+  }
+  _$jscoverage['/base/single-touch.js'].lineData[12]++;
+  S.extend(SingleTouch, Touch, {
+  requiredTouchCount: 1, 
+  start: function() {
+  _$jscoverage['/base/single-touch.js'].functionData[2]++;
+  _$jscoverage['/base/single-touch.js'].lineData[16]++;
+  SingleTouch.superclass.start.apply(this, arguments);
+  _$jscoverage['/base/single-touch.js'].lineData[17]++;
+  var self = this, touches = self.lastTouches;
+  _$jscoverage['/base/single-touch.js'].lineData[20]++;
+  self.lastXY = {
+  pageX: touches[0].pageX, 
+  pageY: touches[0].pageY};
+}});
+  _$jscoverage['/base/single-touch.js'].lineData[27]++;
+  return SingleTouch;
 });

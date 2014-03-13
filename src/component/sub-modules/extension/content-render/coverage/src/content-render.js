@@ -269,7 +269,7 @@ if (! _$jscoverage['/content-render.js'].branchData) {
   _$jscoverage['/content-render.js'].branchData['48'] = [];
   _$jscoverage['/content-render.js'].branchData['48'][1] = new BranchData();
 }
-_$jscoverage['/content-render.js'].branchData['48'][1].init(202, 34, '!control.get(\'allowTextSelection\')');
+_$jscoverage['/content-render.js'].branchData['48'][1].init(207, 34, '!control.get(\'allowTextSelection\')');
 function visit1_48_1(result) {
   _$jscoverage['/content-render.js'].branchData['48'][1].ranCondition(result);
   return result;

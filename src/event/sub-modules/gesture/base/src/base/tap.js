@@ -182,7 +182,15 @@ KISSY.add(function (S, require) {
         handle: new Tap()
     });
 
-    return Tap;
+    return {
+        tap: TAP_EVENT,
+        TAP: TAP_EVENT,
+        singleTap: SINGLE_TAP_EVENT,
+        SINGLE_TAP: SINGLE_TAP_EVENT,
+        DOUBLE_TAP: DOUBLE_TAP_EVENT,
+        doubleTap: DOUBLE_TAP_EVENT,
+        TAP_HOLD: TAP_HOLD_EVENT
+    };
 });
 /**
  * @ignore

@@ -277,12 +277,12 @@ if (! _$jscoverage['/scrollbar/render.js'].branchData) {
   _$jscoverage['/scrollbar/render.js'].branchData['53'] = [];
   _$jscoverage['/scrollbar/render.js'].branchData['53'][1] = new BranchData();
 }
-_$jscoverage['/scrollbar/render.js'].branchData['53'][1].init(1728, 11, 'supportCss3');
-function visit24_53_1(result) {
+_$jscoverage['/scrollbar/render.js'].branchData['53'][1].init(1775, 11, 'supportCss3');
+function visit22_53_1(result) {
   _$jscoverage['/scrollbar/render.js'].branchData['53'][1].ranCondition(result);
   return result;
-}_$jscoverage['/scrollbar/render.js'].branchData['11'][1].init(251, 55, 'S.Feature.getVendorCssPropPrefix(\'transform\') !== false');
-function visit23_11_1(result) {
+}_$jscoverage['/scrollbar/render.js'].branchData['11'][1].init(256, 55, 'S.Feature.getVendorCssPropPrefix(\'transform\') !== false');
+function visit21_11_1(result) {
   _$jscoverage['/scrollbar/render.js'].branchData['11'][1].ranCondition(result);
   return result;
 }_$jscoverage['/scrollbar/render.js'].lineData[6]++;
@@ -295,7 +295,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/scrollbar/render.js'].lineData[9]++;
   var isTransform3dSupported = S.Feature.isTransform3dSupported();
   _$jscoverage['/scrollbar/render.js'].lineData[11]++;
-  var supportCss3 = visit23_11_1(S.Feature.getVendorCssPropPrefix('transform') !== false);
+  var supportCss3 = visit21_11_1(S.Feature.getVendorCssPropPrefix('transform') !== false);
   _$jscoverage['/scrollbar/render.js'].lineData[13]++;
   var methods = {
   beforeCreateDom: function(renderData, childrenElSelectors) {
@@ -351,7 +351,7 @@ KISSY.add(function(S, require) {
   this.control.dragEl.style.top = v + 'px';
 }};
   _$jscoverage['/scrollbar/render.js'].lineData[53]++;
-  if (visit24_53_1(supportCss3)) {
+  if (visit22_53_1(supportCss3)) {
     _$jscoverage['/scrollbar/render.js'].lineData[54]++;
     var transformProperty = S.Feature.getVendorCssPropName('transform');
     _$jscoverage['/scrollbar/render.js'].lineData[56]++;

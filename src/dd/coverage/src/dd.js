@@ -231,9 +231,9 @@ if (! _$jscoverage['/dd.js']) {
   _$jscoverage['/dd.js'].lineData = [];
   _$jscoverage['/dd.js'].lineData[6] = 0;
   _$jscoverage['/dd.js'].lineData[7] = 0;
-  _$jscoverage['/dd.js'].lineData[12] = 0;
-  _$jscoverage['/dd.js'].lineData[20] = 0;
-  _$jscoverage['/dd.js'].lineData[22] = 0;
+  _$jscoverage['/dd.js'].lineData[13] = 0;
+  _$jscoverage['/dd.js'].lineData[21] = 0;
+  _$jscoverage['/dd.js'].lineData[23] = 0;
 }
 if (! _$jscoverage['/dd.js'].functionData) {
   _$jscoverage['/dd.js'].functionData = [];
@@ -247,15 +247,15 @@ KISSY.add(function(S, require) {
   _$jscoverage['/dd.js'].functionData[0]++;
   _$jscoverage['/dd.js'].lineData[7]++;
   var DDM = require('dd/ddm'), Draggable = require('dd/draggable'), DraggableDelegate = require('dd/draggable-delegate'), DroppableDelegate = require('dd/droppable-delegate'), Droppable = require('dd/droppable');
-  _$jscoverage['/dd.js'].lineData[12]++;
+  _$jscoverage['/dd.js'].lineData[13]++;
   var DD = {
   Draggable: Draggable, 
   DDM: DDM, 
   Droppable: Droppable, 
   DroppableDelegate: DroppableDelegate, 
   DraggableDelegate: DraggableDelegate};
-  _$jscoverage['/dd.js'].lineData[20]++;
+  _$jscoverage['/dd.js'].lineData[21]++;
   KISSY.DD = DD;
-  _$jscoverage['/dd.js'].lineData[22]++;
+  _$jscoverage['/dd.js'].lineData[23]++;
   return DD;
 });

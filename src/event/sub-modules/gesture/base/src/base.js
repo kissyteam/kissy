@@ -7,46 +7,35 @@ KISSY.add(function (S, require) {
     var DomEvent = require('event/dom/base');
     var addGestureEvent = require('./base/add-event');
 
-    require('./base/tap');
-
     var Enumeration = {
-        tap: 'tap',
-        singleTap: 'singleTap',
-        doubleTap: 'doubleTap'
+        start: 'gestureStart',
+        START: 'gestureStart',
+        move: 'gestureMove',
+        MOVE: 'gestureMove',
+        end: 'gestureEnd',
+        END: 'gestureEnd'
     };
-    var startEvent = Enumeration.start = 'gestureStart';
-    var moveEvent = Enumeration.move = 'gestureMove';
-    var endEvent = Enumeration.end = 'gestureEnd';
 
-    addGestureEvent(startEvent, {
-        handle: {
+    function addGestureBaseEvent(event, onHandler) {
+        var handle = {
             // always fire
-            isActive: 1,
-            onTouchStart: function (e) {
-                DomEvent.fire(e.target, startEvent, e);
-            }
-        }
-    });
+            isActive: 1
+        };
+        handle[onHandler] = function (e) {
+            DomEvent.fire(e.target, event, e);
+        };
+        addGestureEvent(event, {
+            // fired first if registered
+            order: 1,
+            handle: handle
+        });
+    }
 
-    addGestureEvent(moveEvent, {
-        handle: {
-            // always fire
-            isActive: 1,
-            onTouchMove: function (e) {
-                DomEvent.fire(e.target, moveEvent, e);
-            }
-        }
-    });
+    addGestureBaseEvent(Enumeration.START, 'onTouchStart');
+    addGestureBaseEvent(Enumeration.MOVE, 'onTouchMove');
+    addGestureBaseEvent(Enumeration.END, 'onTouchEnd');
 
-    addGestureEvent(endEvent, {
-        handle: {
-            // always fire
-            isActive: 1,
-            onTouchEnd: function (e) {
-                DomEvent.fire(e.target, endEvent, e);
-            }
-        }
-    });
+    S.mix(Enumeration, require('./base/tap'));
 
     return {
         Enumeration: Enumeration,
@@ -55,3 +44,8 @@ KISSY.add(function (S, require) {
         SingleTouch: require('./base/single-touch')
     };
 });
+
+/*
+ yiminghe@gmail.com - 2014-03-13
+ - enumeration should be uppercase. deprecated lower case
+ */

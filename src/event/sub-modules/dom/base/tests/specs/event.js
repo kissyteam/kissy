@@ -5,7 +5,11 @@
 KISSY.add(function (S, Dom, Event, io) {
     var tpl = '';
     /*jshint quotmark:false*/
-    
+
+    function isFunction(v) {
+        return typeof v === 'function';
+    }
+
     io({
         url: './specs/event.html',
         async: false,
@@ -557,7 +561,7 @@ KISSY.add(function (S, Dom, Event, io) {
 
                 }
                 expect(num).toBe(2);
-                expect(S.isFunction(eventDesc.handle)).toBe(true);
+                expect(isFunction(eventDesc.handle)).toBe(true);
                 var domEventObservables = eventDesc.observables;
                 num = 0;
                 for (i in domEventObservables) {
@@ -585,7 +589,7 @@ KISSY.add(function (S, Dom, Event, io) {
 
                 }
                 expect(num).toBe(2);
-                expect(S.isFunction(domEventObservablesHolder.handle)).toBe(true);
+                expect(isFunction(domEventObservablesHolder.handle)).toBe(true);
                 var domEventObservables = domEventObservablesHolder.observables;
                 num = 0;
                 for (i in domEventObservables) {
@@ -613,7 +617,7 @@ KISSY.add(function (S, Dom, Event, io) {
 
                 }
                 expect(num).toBe(2);
-                expect(S.isFunction(domEventObservablesHolder.handle)).toBe(true);
+                expect(isFunction(domEventObservablesHolder.handle)).toBe(true);
                 var domEventObservables = domEventObservablesHolder.observables;
                 num = 0;
                 for (i in domEventObservables) {

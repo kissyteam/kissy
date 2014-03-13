@@ -98,7 +98,6 @@ KISSY.add(function (S, require) {
                     groups: false
                 }, dragConfig));
             (function (hc, dd) {
-                var startEdgePos;
                 dd.on('drag', function (ev) {
                     var dd = ev.target,
                         ow = self._width,
@@ -107,8 +106,8 @@ KISSY.add(function (S, require) {
                         maxW = self.get('maxWidth'),
                         minH = self.get('minHeight'),
                         maxH = self.get('maxHeight'),
-                        diffT = ev.pageY - startEdgePos.top,
-                        diffL = ev.pageX - startEdgePos.left,
+                        diffT = ev.deltaY,
+                        diffL = ev.deltaX,
                         ot = self._top,
                         ol = self._left,
                         region = {},
@@ -126,11 +125,10 @@ KISSY.add(function (S, require) {
                     });
                 });
                 dd.on('dragstart', function () {
-                    startEdgePos = dd.get('startMousePos');
                     preserveRatio = self.get('preserveRatio');
                     self._width = node.width();
-                    self._top = parseInt(node.css('top'),10);
-                    self._left = parseInt(node.css('left'),10);
+                    self._top = parseInt(node.css('top'), 10);
+                    self._left = parseInt(node.css('left'), 10);
                     self._height = node.height();
                     self.fire('resizeStart', {
                         handler: hc,

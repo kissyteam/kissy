@@ -63,7 +63,7 @@ KISSY.add(function (S) {
                 ret.push(sub.join(', '));
                 ret.push(']');
                 return ret.join('');
-            } else if (S.isObject(obj)) {
+            } else if (typeof obj === 'object') {
                 ret = [];
                 ret[0] = '{';
                 var start = 1;

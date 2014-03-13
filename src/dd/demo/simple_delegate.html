@@ -7,17 +7,13 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-touch-fullscreen" content="yes">
     <title>简单拖放委托实现</title>
+    <link href="/kissy/src/css/assets/dpl/base.css" rel="stylesheet"/>
     <style>
         .container {
             border: 1px solid red;
             height: 450px;
             padding: 10px;
             position: relative;
-        }
-
-        #todo {
-            zoom: 1;
-            overflow: hidden;
         }
 
         .component {
@@ -28,8 +24,7 @@
             border: 1px solid black;
             float: left;
             overflow: hidden;
-            -ms-touch-action:none
-            -ms-user-select:none;
+            -ms-touch-action: none -ms-user-select : none;
         }
 
         .cheader {
@@ -48,6 +43,10 @@
             background: #a52a2a;
         }
 
+        .ks-dd-dragging {
+            visibility: hidden;
+        }
+
         .ks-dd-drop-over {
             background: #fa8072;
         }
@@ -59,7 +58,7 @@
 
 <div id="container3" class="container">
 
-    <div id="todo">
+    <div id="todo" class="ks-clear">
         <div class="component">
             <div class="cheader">
                 拖动头

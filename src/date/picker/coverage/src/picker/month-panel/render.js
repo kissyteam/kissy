@@ -276,11 +276,11 @@ if (! _$jscoverage['/picker/month-panel/render.js'].branchData) {
   _$jscoverage['/picker/month-panel/render.js'].branchData['25'] = [];
   _$jscoverage['/picker/month-panel/render.js'].branchData['25'][1] = new BranchData();
 }
-_$jscoverage['/picker/month-panel/render.js'].branchData['25'][1].init(57, 5, 'j < 4');
+_$jscoverage['/picker/month-panel/render.js'].branchData['25'][1].init(59, 5, 'j < 4');
 function visit31_25_1(result) {
   _$jscoverage['/picker/month-panel/render.js'].branchData['25'][1].ranCondition(result);
   return result;
-}_$jscoverage['/picker/month-panel/render.js'].branchData['23'][1].init(462, 5, 'i < 3');
+}_$jscoverage['/picker/month-panel/render.js'].branchData['23'][1].init(473, 5, 'i < 3');
 function visit30_23_1(result) {
   _$jscoverage['/picker/month-panel/render.js'].branchData['23'][1].ranCondition(result);
   return result;

@@ -236,7 +236,6 @@ if (! _$jscoverage['/base.js']) {
   _$jscoverage['/base.js'].lineData[10] = 0;
   _$jscoverage['/base.js'].lineData[11] = 0;
   _$jscoverage['/base.js'].lineData[12] = 0;
-  _$jscoverage['/base.js'].lineData[13] = 0;
 }
 if (! _$jscoverage['/base.js'].functionData) {
   _$jscoverage['/base.js'].functionData = [];
@@ -255,17 +254,14 @@ KISSY.add(function(S, require) {
   _$jscoverage['/base.js'].lineData[9]++;
   var KeyCode = require('./base/key-codes');
   _$jscoverage['/base.js'].lineData[10]++;
-  var Gesture = require('./base/gesture');
-  _$jscoverage['/base.js'].lineData[11]++;
   var Special = require('./base/special-events');
-  _$jscoverage['/base.js'].lineData[12]++;
+  _$jscoverage['/base.js'].lineData[11]++;
   require('./base/mouseenter');
-  _$jscoverage['/base.js'].lineData[13]++;
+  _$jscoverage['/base.js'].lineData[12]++;
   return S.merge({
   add: DomEvent.on, 
   remove: DomEvent.detach, 
   KeyCode: KeyCode, 
-  Gesture: Gesture, 
   Special: Special, 
   Object: DomEventObject}, DomEvent);
 });

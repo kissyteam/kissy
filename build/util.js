@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 12 18:56
+build time: Mar 13 18:03
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -149,7 +149,7 @@ KISSY.add("util/array", [], function(S, undefined) {
   }})
 });
 KISSY.add("util/escape", [], function(S) {
-  var EMPTY = "", HEX_BASE = 16, htmlEntities = {"&amp;":"&", "&gt;":">", "&lt;":"<", "&#x60;":"`", "&#x2F;":"/", "&quot;":'"', "&#x27;":"'"}, reverseEntities = {}, escapeHtmlReg, unEscapeHtmlReg, possibleEscapeHtmlReg = /[&<>"'`]/, escapeRegExp = /[\-#$\^*()+\[\]{}|\\,.?\s]/g;
+  var EMPTY = "", htmlEntities = {"&amp;":"&", "&gt;":">", "&lt;":"<", "&#x60;":"`", "&#x2F;":"/", "&quot;":'"', "&#x27;":"'"}, reverseEntities = {}, escapeHtmlReg, unEscapeHtmlReg, possibleEscapeHtmlReg = /[&<>"'`]/, escapeRegExp = /[\-#$\^*()+\[\]{}|\\,.?\s]/g;
   (function() {
     for(var k in htmlEntities) {
       reverseEntities[htmlEntities[k]] = k
@@ -175,11 +175,7 @@ KISSY.add("util/escape", [], function(S) {
     unEscapeHtmlReg = new RegExp(str, "g");
     return unEscapeHtmlReg
   }
-  S.mix(S, {fromUnicode:function(str) {
-    return str.replace(/\\u([a-f\d]{4})/ig, function(m, u) {
-      return String.fromCharCode(parseInt(u, HEX_BASE))
-    })
-  }, escapeHtml:function(str) {
+  S.mix(S, {escapeHtml:function(str) {
     if(!str && str !== 0) {
       return""
     }
@@ -460,10 +456,6 @@ KISSY.add("util/type", [], function(S, undefined) {
   }
   S.mix(S, {type:function(o) {
     return o == null ? String(o) : class2type[toString.call(o)] || "object"
-  }, isNull:function(o) {
-    return o === null
-  }, isUndefined:function(o) {
-    return o === undefined
   }, isPlainObject:function(obj) {
     if(!obj || S.type(obj) !== "object" || obj.nodeType || obj.window == obj) {
       return FALSE
@@ -481,9 +473,9 @@ KISSY.add("util/type", [], function(S, undefined) {
     return key === undefined || hasOwnProperty(obj, key)
   }});
   if("@DEBUG@") {
-    S.mix(S, {isBoolean:noop, isNumber:noop, isString:noop, isFunction:noop, isArray:noop, isDate:noop, isRegExp:noop, isObject:noop})
+    S.mix(S, {isArray:noop, isDate:noop, isRegExp:noop, isObject:noop})
   }
-  S.each("Boolean Number String Function Date RegExp Object Array".split(" "), function(name, lc) {
+  S.each("Object Date RegExp Array".split(" "), function(name, lc) {
     class2type["[object " + name + "]"] = lc = name.toLowerCase();
     S["is" + name] = function(o) {
       return S.type(o) === lc
