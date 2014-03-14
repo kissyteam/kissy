@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 13 18:00
+build time: Mar 14 15:42
 */
 KISSY.add("event/gesture/base/add-event",["dom","event/dom/base"],function(b,d){function g(a){return b.startsWith(a,"touch")}function m(a){return b.startsWith(a,"mouse")}function h(a){return b.startsWith(a,"MSPointer")||b.startsWith(a,"pointer")}function j(a){this.doc=a;this.eventHandles=[];this.init();this.touches=[];this.inTouch=0}function r(a){x(this,a)}function u(a){n(this,a)}function v(a){x(this,a);k[a].setup.apply(this,arguments)}function l(a){n(this,a);k[a].tearDown.apply(this,arguments)}function x(a,
 c){var e=o.getDocument(a),f=o.data(e,p);f||o.data(e,p,f=new j(e));c&&f.addEventHandle(c)}function n(a,c){var e=o.getDocument(a),f=o.data(e,p);f&&(c&&f.removeEventHandle(c),f.eventHandles.length||(f.destroy(),o.removeData(e,p)))}var o=d("dom"),k={},i=d("event/dom/base"),y=i.Special,p=b.guid("touch-handle"),w=b.Feature,s,q,t;w.isTouchEventSupported()?b.UA.ios?(t="touchend touchcancel",s="touchstart",q="touchmove"):(t="touchend touchcancel mouseup",s="touchstart mousedown",q="touchmove mousemove"):w.isPointerSupported()?

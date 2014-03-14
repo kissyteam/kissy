@@ -805,7 +805,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/base.js'].lineData[7]++;
   var Node = require('node');
   _$jscoverage['/base.js'].lineData[8]++;
-  var Anim = require('anim');
+  var TimerAnim = require('anim/timer');
   _$jscoverage['/base.js'].lineData[9]++;
   var Container = require('component/container');
   _$jscoverage['/base.js'].lineData[10]++;
@@ -1229,7 +1229,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/base.js'].lineData[355]++;
     var anim;
     _$jscoverage['/base.js'].lineData[356]++;
-    self.scrollAnims.push(anim = new Anim(animCfg));
+    self.scrollAnims.push(anim = new TimerAnim(animCfg));
     _$jscoverage['/base.js'].lineData[357]++;
     anim.scrollView = self;
     _$jscoverage['/base.js'].lineData[358]++;

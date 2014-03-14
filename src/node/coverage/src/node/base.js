@@ -374,95 +374,95 @@ if (! _$jscoverage['/node/base.js'].branchData) {
   _$jscoverage['/node/base.js'].branchData['242'][1] = new BranchData();
 }
 _$jscoverage['/node/base.js'].branchData['242'][1].init(145, 32, 'context.ownerDocument || context');
-function visit37_242_1(result) {
+function visit39_242_1(result) {
   _$jscoverage['/node/base.js'].branchData['242'][1].ranCondition(result);
   return result;
 }_$jscoverage['/node/base.js'].branchData['239'][1].init(25, 18, 'context.getDOMNode');
-function visit36_239_1(result) {
+function visit38_239_1(result) {
   _$jscoverage['/node/base.js'].branchData['239'][1].ranCondition(result);
   return result;
 }_$jscoverage['/node/base.js'].branchData['238'][1].init(21, 7, 'context');
-function visit35_238_1(result) {
+function visit37_238_1(result) {
   _$jscoverage['/node/base.js'].branchData['238'][1].ranCondition(result);
   return result;
 }_$jscoverage['/node/base.js'].branchData['236'][1].init(39, 72, 'S.startsWith(selector, \'<\') && S.endsWith(selector, \'>\')');
-function visit34_236_1(result) {
+function visit36_236_1(result) {
   _$jscoverage['/node/base.js'].branchData['236'][1].ranCondition(result);
   return result;
 }_$jscoverage['/node/base.js'].branchData['235'][2].init(205, 20, 'selector.length >= 3');
-function visit33_235_2(result) {
+function visit35_235_2(result) {
   _$jscoverage['/node/base.js'].branchData['235'][2].ranCondition(result);
   return result;
 }_$jscoverage['/node/base.js'].branchData['235'][1].init(47, 112, 'selector.length >= 3 && S.startsWith(selector, \'<\') && S.endsWith(selector, \'>\')');
-function visit32_235_1(result) {
+function visit34_235_1(result) {
   _$jscoverage['/node/base.js'].branchData['235'][1].ranCondition(result);
   return result;
 }_$jscoverage['/node/base.js'].branchData['234'][1].init(48, 160, '(selector = S.trim(selector)) && selector.length >= 3 && S.startsWith(selector, \'<\') && S.endsWith(selector, \'>\')');
-function visit31_234_1(result) {
+function visit33_234_1(result) {
   _$jscoverage['/node/base.js'].branchData['234'][1].ranCondition(result);
   return result;
 }_$jscoverage['/node/base.js'].branchData['233'][2].init(105, 28, 'typeof selector === \'string\'');
-function visit30_233_2(result) {
+function visit32_233_2(result) {
   _$jscoverage['/node/base.js'].branchData['233'][2].ranCondition(result);
   return result;
 }_$jscoverage['/node/base.js'].branchData['233'][1].init(105, 209, 'typeof selector === \'string\' && (selector = S.trim(selector)) && selector.length >= 3 && S.startsWith(selector, \'<\') && S.endsWith(selector, \'>\')');
-function visit29_233_1(result) {
+function visit31_233_1(result) {
   _$jscoverage['/node/base.js'].branchData['233'][1].ranCondition(result);
   return result;
 }_$jscoverage['/node/base.js'].branchData['213'][1].init(147, 3, 'ret');
-function visit28_213_1(result) {
+function visit30_213_1(result) {
   _$jscoverage['/node/base.js'].branchData['213'][1].ranCondition(result);
   return result;
 }_$jscoverage['/node/base.js'].branchData['195'][1].init(67, 15, 'self.length > 0');
-function visit27_195_1(result) {
+function visit29_195_1(result) {
   _$jscoverage['/node/base.js'].branchData['195'][1].ranCondition(result);
   return result;
 }_$jscoverage['/node/base.js'].branchData['175'][1].init(49, 21, 'self.__parent || self');
-function visit26_175_1(result) {
+function visit28_175_1(result) {
   _$jscoverage['/node/base.js'].branchData['175'][1].ranCondition(result);
   return result;
 }_$jscoverage['/node/base.js'].branchData['156'][1].init(69, 12, 'context || n');
-function visit25_156_1(result) {
+function visit27_156_1(result) {
   _$jscoverage['/node/base.js'].branchData['156'][1].ranCondition(result);
   return result;
 }_$jscoverage['/node/base.js'].branchData['113'][1].init(260, 19, 'index === undefined');
-function visit24_113_1(result) {
+function visit26_113_1(result) {
   _$jscoverage['/node/base.js'].branchData['113'][1].ranCondition(result);
   return result;
 }_$jscoverage['/node/base.js'].branchData['107'][1].init(17, 27, 'typeof context === \'number\'');
-function visit23_107_1(result) {
+function visit25_107_1(result) {
   _$jscoverage['/node/base.js'].branchData['107'][1].ranCondition(result);
   return result;
 }_$jscoverage['/node/base.js'].branchData['89'][1].init(21, 20, 'index >= self.length');
-function visit22_89_1(result) {
+function visit24_89_1(result) {
   _$jscoverage['/node/base.js'].branchData['89'][1].ranCondition(result);
   return result;
 }_$jscoverage['/node/base.js'].branchData['88'][1].init(46, 25, 'typeof index === \'number\'');
-function visit21_88_1(result) {
+function visit23_88_1(result) {
   _$jscoverage['/node/base.js'].branchData['88'][1].ranCondition(result);
   return result;
 }_$jscoverage['/node/base.js'].branchData['54'][1].init(785, 35, 'S.isArray(html) || isNodeList(html)');
-function visit20_54_1(result) {
+function visit22_54_1(result) {
   _$jscoverage['/node/base.js'].branchData['54'][1].ranCondition(result);
   return result;
 }_$jscoverage['/node/base.js'].branchData['48'][1].init(160, 52, 'domNode.nodeType === NodeType.DOCUMENT_FRAGMENT_NODE');
-function visit19_48_1(result) {
+function visit21_48_1(result) {
   _$jscoverage['/node/base.js'].branchData['48'][1].ranCondition(result);
   return result;
 }_$jscoverage['/node/base.js'].branchData['44'][1].init(393, 24, 'typeof html === \'string\'');
-function visit18_44_1(result) {
+function visit20_44_1(result) {
   _$jscoverage['/node/base.js'].branchData['44'][1].ranCondition(result);
   return result;
 }_$jscoverage['/node/base.js'].branchData['40'][1].init(330, 5, '!html');
-function visit17_40_1(result) {
+function visit19_40_1(result) {
   _$jscoverage['/node/base.js'].branchData['40'][1].ranCondition(result);
   return result;
 }_$jscoverage['/node/base.js'].branchData['35'][1].init(144, 27, '!(self instanceof NodeList)');
-function visit16_35_1(result) {
+function visit18_35_1(result) {
   _$jscoverage['/node/base.js'].branchData['35'][1].ranCondition(result);
   return result;
 }_$jscoverage['/node/base.js'].branchData['31'][1].init(60, 24, 'html instanceof NodeList');
-function visit15_31_1(result) {
+function visit17_31_1(result) {
   _$jscoverage['/node/base.js'].branchData['31'][1].ranCondition(result);
   return result;
 }_$jscoverage['/node/base.js'].lineData[6]++;
@@ -482,26 +482,26 @@ KISSY.add(function(S, require) {
     _$jscoverage['/node/base.js'].lineData[28]++;
     var self = this, domNode;
     _$jscoverage['/node/base.js'].lineData[31]++;
-    if (visit15_31_1(html instanceof NodeList)) {
+    if (visit17_31_1(html instanceof NodeList)) {
       _$jscoverage['/node/base.js'].lineData[32]++;
       return html.slice();
     }
     _$jscoverage['/node/base.js'].lineData[35]++;
-    if (visit16_35_1(!(self instanceof NodeList))) {
+    if (visit18_35_1(!(self instanceof NodeList))) {
       _$jscoverage['/node/base.js'].lineData[36]++;
       return new NodeList(html, props, ownerDocument);
     }
     _$jscoverage['/node/base.js'].lineData[40]++;
-    if (visit17_40_1(!html)) {
+    if (visit19_40_1(!html)) {
       _$jscoverage['/node/base.js'].lineData[41]++;
       return self;
     } else {
       _$jscoverage['/node/base.js'].lineData[44]++;
-      if (visit18_44_1(typeof html === 'string')) {
+      if (visit20_44_1(typeof html === 'string')) {
         _$jscoverage['/node/base.js'].lineData[46]++;
         domNode = Dom.create(html, props, ownerDocument);
         _$jscoverage['/node/base.js'].lineData[48]++;
-        if (visit19_48_1(domNode.nodeType === NodeType.DOCUMENT_FRAGMENT_NODE)) {
+        if (visit21_48_1(domNode.nodeType === NodeType.DOCUMENT_FRAGMENT_NODE)) {
           _$jscoverage['/node/base.js'].lineData[49]++;
           push.apply(this, makeArray(domNode.childNodes));
           _$jscoverage['/node/base.js'].lineData[50]++;
@@ -509,7 +509,7 @@ KISSY.add(function(S, require) {
         }
       } else {
         _$jscoverage['/node/base.js'].lineData[54]++;
-        if (visit20_54_1(S.isArray(html) || isNodeList(html))) {
+        if (visit22_54_1(S.isArray(html) || isNodeList(html))) {
           _$jscoverage['/node/base.js'].lineData[55]++;
           push.apply(self, makeArray(html));
           _$jscoverage['/node/base.js'].lineData[56]++;
@@ -537,9 +537,9 @@ KISSY.add(function(S, require) {
   _$jscoverage['/node/base.js'].lineData[87]++;
   var self = this;
   _$jscoverage['/node/base.js'].lineData[88]++;
-  if (visit21_88_1(typeof index === 'number')) {
+  if (visit23_88_1(typeof index === 'number')) {
     _$jscoverage['/node/base.js'].lineData[89]++;
-    if (visit22_89_1(index >= self.length)) {
+    if (visit24_89_1(index >= self.length)) {
       _$jscoverage['/node/base.js'].lineData[90]++;
       return null;
     } else {
@@ -554,7 +554,7 @@ KISSY.add(function(S, require) {
   add: function(selector, context, index) {
   _$jscoverage['/node/base.js'].functionData[3]++;
   _$jscoverage['/node/base.js'].lineData[107]++;
-  if (visit23_107_1(typeof context === 'number')) {
+  if (visit25_107_1(typeof context === 'number')) {
     _$jscoverage['/node/base.js'].lineData[108]++;
     index = context;
     _$jscoverage['/node/base.js'].lineData[109]++;
@@ -563,7 +563,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/node/base.js'].lineData[111]++;
   var list = NodeList.all(selector, context).getDOMNodes(), ret = new NodeList(this);
   _$jscoverage['/node/base.js'].lineData[113]++;
-  if (visit24_113_1(index === undefined)) {
+  if (visit26_113_1(index === undefined)) {
     _$jscoverage['/node/base.js'].lineData[114]++;
     push.apply(ret, list);
   } else {
@@ -597,7 +597,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/node/base.js'].lineData[155]++;
   n = new NodeList(n);
   _$jscoverage['/node/base.js'].lineData[156]++;
-  return fn.call(visit25_156_1(context || n), n, i, self);
+  return fn.call(visit27_156_1(context || n), n, i, self);
 });
   _$jscoverage['/node/base.js'].lineData[159]++;
   return self;
@@ -612,7 +612,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/node/base.js'].lineData[174]++;
   var self = this;
   _$jscoverage['/node/base.js'].lineData[175]++;
-  return visit26_175_1(self.__parent || self);
+  return visit28_175_1(self.__parent || self);
 }, 
   filter: function(filter) {
   _$jscoverage['/node/base.js'].functionData[10]++;
@@ -624,7 +624,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/node/base.js'].lineData[193]++;
   var ret, self = this;
   _$jscoverage['/node/base.js'].lineData[195]++;
-  if (visit27_195_1(self.length > 0)) {
+  if (visit29_195_1(self.length > 0)) {
     _$jscoverage['/node/base.js'].lineData[196]++;
     ret = NodeList.all(selector, self);
   } else {
@@ -641,7 +641,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/node/base.js'].lineData[210]++;
   var self = this, all = self.all(selector), ret = all.length ? all.slice(0, 1) : null;
   _$jscoverage['/node/base.js'].lineData[213]++;
-  if (visit28_213_1(ret)) {
+  if (visit30_213_1(ret)) {
     _$jscoverage['/node/base.js'].lineData[214]++;
     ret.__parent = self;
   }
@@ -653,16 +653,16 @@ KISSY.add(function(S, require) {
   all: function(selector, context) {
   _$jscoverage['/node/base.js'].functionData[13]++;
   _$jscoverage['/node/base.js'].lineData[233]++;
-  if (visit29_233_1(visit30_233_2(typeof selector === 'string') && visit31_234_1((selector = S.trim(selector)) && visit32_235_1(visit33_235_2(selector.length >= 3) && visit34_236_1(S.startsWith(selector, '<') && S.endsWith(selector, '>')))))) {
+  if (visit31_233_1(visit32_233_2(typeof selector === 'string') && visit33_234_1((selector = S.trim(selector)) && visit34_235_1(visit35_235_2(selector.length >= 3) && visit36_236_1(S.startsWith(selector, '<') && S.endsWith(selector, '>')))))) {
     _$jscoverage['/node/base.js'].lineData[238]++;
-    if (visit35_238_1(context)) {
+    if (visit37_238_1(context)) {
       _$jscoverage['/node/base.js'].lineData[239]++;
-      if (visit36_239_1(context.getDOMNode)) {
+      if (visit38_239_1(context.getDOMNode)) {
         _$jscoverage['/node/base.js'].lineData[240]++;
         context = context[0];
       }
       _$jscoverage['/node/base.js'].lineData[242]++;
-      context = visit37_242_1(context.ownerDocument || context);
+      context = visit39_242_1(context.ownerDocument || context);
     }
     _$jscoverage['/node/base.js'].lineData[244]++;
     return new NodeList(selector, undefined, context);

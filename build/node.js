@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 13 18:01
+build time: Mar 14 15:40
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -240,16 +240,17 @@ KISSY.add("node/anim", ["./base", "dom", "anim"], function(S, require) {
     return obj
   }
   S.augment(Node, {animate:function() {
-    var self = this, originArgs = S.makeArray(arguments);
-    S.each(self, function(elem) {
-      var args = S.clone(originArgs), arg0 = args[0];
+    var self = this, l = self.length, needClone = self.length > 1, originArgs = S.makeArray(arguments);
+    for(var i = 0;i < l;i++) {
+      var elem = self[i];
+      var args = needClone ? S.clone(originArgs) : originArgs, arg0 = args[0];
       if(arg0.to) {
         arg0.node = elem;
         (new Anim(arg0)).run()
       }else {
         Anim.apply(undefined, [elem].concat(args)).run()
       }
-    });
+    }
     return self
   }, stop:function(end, clearQueue, queue) {
     var self = this;

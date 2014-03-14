@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 13 21:23
+build time: Mar 14 15:43
 */
 KISSY.add("dd/ddm",["node","base"],function(c,e){function k(h){var a=h.get("activeDrag").get("activeHandler"),i="auto";a&&(i=a.css("cursor"));"auto"===i&&(i=h.get("dragCursor"));h._shim.css({cursor:i,display:"block"});o&&s.call(h)}function j(h){var a=h.get("drops");h.setInternal("validDrops",[]);a.length&&c.each(a,function(i){i._active()})}function l(h){var a=h.get("drops");h.setInternal("validDrops",[]);a.length&&c.each(a,function(i){i._deActive()})}function g(h){var a=h.offset();return{left:a.left,
 right:a.left+(h.__ddCachedWidth||h.outerWidth()),top:a.top,bottom:a.top+(h.__ddCachedHeight||h.outerHeight())}}function a(a,b){return a.left<=b.left&&a.right>=b.left&&a.top<=b.top&&a.bottom>=b.top}function b(a){return a.top>=a.bottom||a.left>=a.right?0:(a.right-a.left)*(a.bottom-a.top)}function d(a,b){var i=Math.max(a.top,b.top),d=Math.min(a.right,b.right),m=Math.min(a.bottom,b.bottom);return{left:Math.max(a.left,b.left),right:d,top:i,bottom:m}}function p(a){a&&(a.__ddCachedWidth=a.outerWidth(),a.__ddCachedHeight=

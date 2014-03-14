@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 13 23:47
+build time: Mar 14 15:39
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -9,7 +9,6 @@ build time: Mar 13 23:47
  anim/timer/easing
  anim/timer/manager
  anim/timer/fx
- anim/timer/short-hand
  anim/timer/color
  anim/timer/transform
  anim/timer
@@ -315,22 +314,11 @@ KISSY.add("anim/timer/fx", ["dom"], function(S, require) {
   };
   return Fx
 });
-KISSY.add("anim/timer/short-hand", [], function() {
-  return{background:[], border:["borderBottomWidth", "borderLeftWidth", "borderRightWidth", "borderTopWidth"], borderBottom:["borderBottomWidth"], borderLeft:["borderLeftWidth"], borderTop:["borderTopWidth"], borderRight:["borderRightWidth"], font:["fontSize", "fontWeight"], margin:["marginBottom", "marginLeft", "marginRight", "marginTop"], padding:["paddingBottom", "paddingLeft", "paddingRight", "paddingTop"]}
-});
-KISSY.add("anim/timer/color", ["./fx", "./short-hand"], function(S, require) {
+KISSY.add("anim/timer/color", ["./fx"], function(S, require) {
   var Fx = require("./fx");
-  var SHORT_HANDS = require("./short-hand");
   var logger = S.getLogger("s/anim/timer/color");
   var HEX_BASE = 16, floor = Math.floor, KEYWORDS = {black:[0, 0, 0], silver:[192, 192, 192], gray:[128, 128, 128], white:[255, 255, 255], maroon:[128, 0, 0], red:[255, 0, 0], purple:[128, 0, 128], fuchsia:[255, 0, 255], green:[0, 128, 0], lime:[0, 255, 0], olive:[128, 128, 0], yellow:[255, 255, 0], navy:[0, 0, 128], blue:[0, 0, 255], teal:[0, 128, 128], aqua:[0, 255, 255]}, RE_RGB = /^rgb\(([0-9]+)\s*,\s*([0-9]+)\s*,\s*([0-9]+)\)$/i, RE_RGBA = /^rgba\(([0-9]+)\s*,\s*([0-9]+)\s*,\s*([0-9]+),\s*([0-9]+)\)$/i, 
   RE_HEX = /^#?([0-9A-F]{1,2})([0-9A-F]{1,2})([0-9A-F]{1,2})$/i, COLORS = ["backgroundColor", "borderBottomColor", "borderLeftColor", "borderRightColor", "borderTopColor", "color", "outlineColor"];
-  SHORT_HANDS.background.push("backgroundColor");
-  SHORT_HANDS.borderColor = ["borderBottomColor", "borderLeftColor", "borderRightColor", "borderTopColor"];
-  SHORT_HANDS.border.push("borderBottomColor", "borderLeftColor", "borderRightColor", "borderTopColor");
-  SHORT_HANDS.borderBottom.push("borderBottomColor");
-  SHORT_HANDS.borderLeft.push("borderLeftColor");
-  SHORT_HANDS.borderRight.push("borderRightColor");
-  SHORT_HANDS.borderTop.push("borderTopColor");
   function numericColor(val) {
     val = val + "";
     var match;
@@ -498,29 +486,21 @@ KISSY.add("anim/timer/transform", ["dom", "./fx"], function(S, require) {
   Fx.Factories.transform = TransformFx;
   return TransformFx
 });
-KISSY.add("anim/timer", ["dom", "./base", "./timer/easing", "./timer/manager", "./timer/fx", "./timer/short-hand", "./timer/color", "./timer/transform"], function(S, require) {
+KISSY.add("anim/timer", ["dom", "./base", "./timer/easing", "./timer/manager", "./timer/fx", "./timer/color", "./timer/transform"], function(S, require) {
   var Dom = require("dom");
   var AnimBase = require("./base");
   var Easing = require("./timer/easing");
   var AM = require("./timer/manager");
   var Fx = require("./timer/fx");
-  var SHORT_HANDS = require("./timer/short-hand");
   require("./timer/color");
   require("./timer/transform");
-  var camelCase = Dom._camelCase, NUMBER_REG = /^([+\-]=)?([\d+.\-]+)([a-z%]*)$/i;
+  var NUMBER_REG = /^([+\-]=)?([\d+.\-]+)([a-z%]*)$/i;
   function TimerAnim(node, to, duration, easing, complete) {
     var self = this;
     if(!(self instanceof TimerAnim)) {
       return new TimerAnim(node, to, duration, easing, complete)
     }
-    TimerAnim.superclass.constructor.apply(self, arguments);
-    S.each(to = self.config.to, function(v, prop) {
-      var camelProp = camelCase(prop);
-      if(prop !== camelProp) {
-        to[camelProp] = to[prop];
-        delete to[prop]
-      }
-    })
+    TimerAnim.superclass.constructor.apply(self, arguments)
   }
   S.extend(TimerAnim, AnimBase, {prepareFx:function() {
     var self = this, node = self.node, _propsData = self._propsData;
@@ -529,24 +509,6 @@ KISSY.add("anim/timer", ["dom", "./base", "./timer/easing", "./timer/manager", "
       _propData.delay *= 1E3;
       if(typeof _propData.easing === "string") {
         _propData.easing = Easing.toFn(_propData.easing)
-      }
-    });
-    S.each(SHORT_HANDS, function(shortHands, p) {
-      var origin, _propData = _propsData[p], val;
-      if(_propData) {
-        val = _propData.value;
-        origin = {};
-        S.each(shortHands, function(sh) {
-          origin[sh] = Dom.css(node, sh)
-        });
-        Dom.css(node, p, val);
-        S.each(origin, function(val, sh) {
-          if(!(sh in _propsData)) {
-            _propsData[sh] = S.merge(_propData, {value:Dom.css(node, sh)})
-          }
-          Dom.css(node, sh, val)
-        });
-        delete _propsData[p]
       }
     });
     var prop, _propData, val, to, from, propCfg, fx, isCustomFx = 0, unit, parts;

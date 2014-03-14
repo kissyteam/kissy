@@ -226,30 +226,31 @@ catch (e) {}
 if (! this._$jscoverage) {
   this._$jscoverage = {};
 }
-if (! _$jscoverage['/timer/short-hand.js']) {
-  _$jscoverage['/timer/short-hand.js'] = {};
-  _$jscoverage['/timer/short-hand.js'].lineData = [];
-  _$jscoverage['/timer/short-hand.js'].lineData[6] = 0;
-  _$jscoverage['/timer/short-hand.js'].lineData[8] = 0;
+if (! _$jscoverage['/base/short-hand.js']) {
+  _$jscoverage['/base/short-hand.js'] = {};
+  _$jscoverage['/base/short-hand.js'].lineData = [];
+  _$jscoverage['/base/short-hand.js'].lineData[6] = 0;
+  _$jscoverage['/base/short-hand.js'].lineData[8] = 0;
 }
-if (! _$jscoverage['/timer/short-hand.js'].functionData) {
-  _$jscoverage['/timer/short-hand.js'].functionData = [];
-  _$jscoverage['/timer/short-hand.js'].functionData[0] = 0;
+if (! _$jscoverage['/base/short-hand.js'].functionData) {
+  _$jscoverage['/base/short-hand.js'].functionData = [];
+  _$jscoverage['/base/short-hand.js'].functionData[0] = 0;
 }
-if (! _$jscoverage['/timer/short-hand.js'].branchData) {
-  _$jscoverage['/timer/short-hand.js'].branchData = {};
+if (! _$jscoverage['/base/short-hand.js'].branchData) {
+  _$jscoverage['/base/short-hand.js'].branchData = {};
 }
-_$jscoverage['/timer/short-hand.js'].lineData[6]++;
+_$jscoverage['/base/short-hand.js'].lineData[6]++;
 KISSY.add(function() {
-  _$jscoverage['/timer/short-hand.js'].functionData[0]++;
-  _$jscoverage['/timer/short-hand.js'].lineData[8]++;
+  _$jscoverage['/base/short-hand.js'].functionData[0]++;
+  _$jscoverage['/base/short-hand.js'].lineData[8]++;
   return {
-  background: [], 
-  border: ['borderBottomWidth', 'borderLeftWidth', 'borderRightWidth', 'borderTopWidth'], 
-  'borderBottom': ['borderBottomWidth'], 
-  'borderLeft': ['borderLeftWidth'], 
-  borderTop: ['borderTopWidth'], 
-  borderRight: ['borderRightWidth'], 
+  background: ['backgroundColor'], 
+  border: ['borderBottomWidth', 'borderLeftWidth', 'borderRightWidth', 'borderTopWidth', 'borderBottomColor', 'borderLeftColor', 'borderRightColor', 'borderTopColor'], 
+  borderColor: ['borderBottomColor', 'borderLeftColor', 'borderRightColor', 'borderTopColor'], 
+  'borderBottom': ['borderBottomWidth', 'borderBottomColor'], 
+  'borderLeft': ['borderLeftWidth', 'borderLeftColor'], 
+  borderTop: ['borderTopWidth', 'borderTopColor'], 
+  borderRight: ['borderRightWidth', 'borderRightColor'], 
   font: ['fontSize', 'fontWeight'], 
   margin: ['marginBottom', 'marginLeft', 'marginRight', 'marginTop'], 
   padding: ['paddingBottom', 'paddingLeft', 'paddingRight', 'paddingTop']};

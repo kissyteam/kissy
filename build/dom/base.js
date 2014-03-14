@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 13 23:47
+build time: Mar 14 15:39
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -1238,16 +1238,14 @@ KISSY.add("dom/base/style", ["./api"], function(S, require) {
   var Dom = require("./api");
   var logger = S.getLogger("s/dom");
   var globalWindow = S.Env.host, getCssVendorInfo = S.Feature.getCssVendorInfo, UA = S.UA, BOX_MODELS = ["margin", "border", "padding"], CONTENT_INDEX = -1, PADDING_INDEX = 2, BORDER_INDEX = 1, MARGIN_INDEX = 0, getNodeName = Dom.nodeName, doc = globalWindow.document || {}, RE_MARGIN = /^margin/, WIDTH = "width", HEIGHT = "height", DISPLAY = "display", OLD_DISPLAY = DISPLAY + S.now(), NONE = "none", cssNumber = {fillOpacity:1, fontWeight:1, lineHeight:1, opacity:1, orphans:1, widows:1, zIndex:1, 
-  zoom:1}, rmsPrefix = /^-ms-/, EMPTY = "", DEFAULT_UNIT = "px", NO_PX_REG = /\d(?!px)[a-z%]+$/i, cssHooks = {}, cssProps = {}, userSelectProperty, defaultDisplay = {}, RE_DASH = /-([a-z])/ig;
+  zoom:1}, EMPTY = "", DEFAULT_UNIT = "px", NO_PX_REG = /\d(?!px)[a-z%]+$/i, cssHooks = {}, cssProps = {}, userSelectProperty, defaultDisplay = {}, camelCase = S.camelCase;
   cssProps["float"] = "cssFloat";
   function normalizeCssPropName(name) {
-    return cssProps[name] || getCssVendorInfo(name).propertyName
-  }
-  function upperCase() {
-    return arguments[1].toUpperCase()
-  }
-  function camelCase(name) {
-    return name.replace(rmsPrefix, "ms-").replace(RE_DASH, upperCase)
+    if(cssProps[name]) {
+      return cssProps[name]
+    }
+    var vendor = getCssVendorInfo(name);
+    return vendor && vendor.propertyName || name
   }
   function getDefaultDisplay(tagName) {
     var body, oldDisplay = defaultDisplay[tagName], elem;
@@ -1261,7 +1259,7 @@ KISSY.add("dom/base/style", ["./api"], function(S, require) {
     }
     return oldDisplay
   }
-  S.mix(Dom, {_camelCase:camelCase, _cssHooks:cssHooks, _cssProps:cssProps, _getComputedStyle:function(elem, name, computedStyle) {
+  S.mix(Dom, {_cssHooks:cssHooks, _cssProps:cssProps, _getComputedStyle:function(elem, name, computedStyle) {
     var val = "", width, minWidth, maxWidth, style, d = elem.ownerDocument;
     name = normalizeCssPropName(name);
     if(computedStyle = computedStyle || d.defaultView.getComputedStyle(elem, null)) {

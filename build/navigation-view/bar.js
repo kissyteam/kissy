@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Feb 27 13:01
+build time: Mar 14 15:40
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -17,7 +17,7 @@ KISSY.add("navigation-view/bar/bar-xtpl", [], function(S, require, exports, modu
     if(typeof module !== "undefined" && module.kissy) {
       moduleWrap = module
     }
-    var callCommandUtil = utils.callCommand, eachCommand = nativeCommands.each, withCommand = nativeCommands["with"], ifCommand = nativeCommands["if"], setCommand = nativeCommands.set, includeCommand = nativeCommands.include, parseCommand = nativeCommands.parse, extendCommand = nativeCommands.extend, blockCommand = nativeCommands.block, macroCommand = nativeCommands.macro;
+    var callCommandUtil = utils.callCommand, debuggerCommand = nativeCommands["debugger"], eachCommand = nativeCommands.each, withCommand = nativeCommands["with"], ifCommand = nativeCommands["if"], setCommand = nativeCommands.set, includeCommand = nativeCommands.include, parseCommand = nativeCommands.parse, extendCommand = nativeCommands.extend, blockCommand = nativeCommands.block, macroCommand = nativeCommands.macro;
     buffer += "";
     var option0 = {};
     var params1 = [];
@@ -73,7 +73,7 @@ KISSY.add("navigation-view/bar/bar-xtpl", [], function(S, require, exports, modu
     buffer += '"></div>\r\n</div>';
     return buffer
   };
-  t.TPL_NAME = "navigation-view/sub-modules/bar/src/bar/bar.xtpl.html";
+  t.TPL_NAME = module.name;
   return t
 });
 KISSY.add("navigation-view/bar/bar-render", ["./bar-xtpl", "component/control"], function(S, require) {
@@ -111,7 +111,7 @@ KISSY.add("navigation-view/bar", ["component/control", "./bar/bar-render", "butt
     return ghost
   }
   function anim(el, props, complete) {
-    el.animate(props, {duration:0.25, useTransition:true, easing:"ease-in-out", complete:complete})
+    el.animate(props, {duration:0.25, easing:"ease-in-out", complete:complete})
   }
   function getAnimProps(self, backEl, backElProps, reverse) {
     var barElement = self.get("el"), titleElement = self.get("titleEl"), minOffset = Math.min(barElement[0].offsetWidth / 3, 200), newLeftWidth = backEl[0].offsetWidth, barWidth = barElement[0].offsetWidth, titleX = titleElement.offset().left - barElement.offset().left, titleWidth = titleElement[0].offsetWidth, oldBackWidth = backElProps.width, newOffset, oldOffset, backElAnims, titleAnims, omega, theta;

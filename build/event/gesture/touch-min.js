@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 13 18:00
+build time: Mar 14 15:42
 */
 KISSY.add("event/gesture/touch/double-touch",["dom","event/gesture/base"],function(b,c){function g(){}var e=c("dom"),h=c("event/gesture/base").Touch;b.extend(g,h,{requiredTouchCount:2,getCommonTarget:function(b){var a=b.touches,b=a[0].target,a=a[1].target;if(b===a||e.contains(b,a))return b;for(;;){if(e.contains(a,b))return a;a=a.parentNode}}});return g});
 KISSY.add("event/gesture/touch/pinch",["event/gesture/base","event/dom/base","./double-touch"],function(b,c){function g(){}function e(a){2===a.targetTouches.length&&a.preventDefault()}var h=c("event/gesture/base").addEvent,i=c("event/dom/base"),a=c("./double-touch");b.extend(g,a,{requiredGestureType:"touch",move:function(a){g.superclass.move.apply(this,arguments);var j=this.lastTouches;if(0<j[0].pageX&&0<j[0].pageY&&0<j[1].pageX&&0<j[1].pageY){var f;f=j[0];var d=j[1],j=f.pageX-d.pageX;f=f.pageY-d.pageY;

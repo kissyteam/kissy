@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 13 23:48
+build time: Mar 14 15:40
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -39,9 +39,9 @@ KISSY.add("scroll-view/base/render", ["component/container", "component/extensio
   }
   return Container.getDefaultRender().extend([ContentRenderExtension], methods, {name:"ScrollViewRender"})
 });
-KISSY.add("scroll-view/base", ["node", "anim", "component/container", "./base/render"], function(S, require) {
+KISSY.add("scroll-view/base", ["node", "anim/timer", "component/container", "./base/render"], function(S, require) {
   var Node = require("node");
-  var Anim = require("anim");
+  var TimerAnim = require("anim/timer");
   var Container = require("component/container");
   var Render = require("./base/render");
   var $ = S.all, KeyCode = Node.KeyCode;
@@ -253,7 +253,7 @@ KISSY.add("scroll-view/base", ["node", "anim", "component/container", "./base/re
       animCfg.node = node;
       animCfg.to = to;
       var anim;
-      self.scrollAnims.push(anim = new Anim(animCfg));
+      self.scrollAnims.push(anim = new TimerAnim(animCfg));
       anim.scrollView = self;
       anim.run()
     }else {

@@ -861,7 +861,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/touch.js'].lineData[8]++;
   var Node = require('node');
   _$jscoverage['/touch.js'].lineData[9]++;
-  var Anim = require('anim');
+  var TimerAnim = require('anim/timer');
   _$jscoverage['/touch.js'].lineData[10]++;
   var OUT_OF_BOUND_FACTOR = 0.5;
   _$jscoverage['/touch.js'].lineData[11]++;
@@ -980,7 +980,7 @@ KISSY.add(function(S, require) {
     _$jscoverage['/touch.js'].lineData[97]++;
     animCfg.to[scrollType] = null;
     _$jscoverage['/touch.js'].lineData[99]++;
-    self.scrollAnims.push(new Anim(animCfg).run());
+    self.scrollAnims.push(new TimerAnim(animCfg).run());
   }
   _$jscoverage['/touch.js'].lineData[102]++;
   var FRICTION = 0.5;

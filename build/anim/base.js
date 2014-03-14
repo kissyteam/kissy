@@ -1,13 +1,14 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 13 23:47
+build time: Mar 14 15:39
 */
 /*
  Combined modules by KISSY Module Compiler: 
 
  anim/base/queue
  anim/base/utils
+ anim/base/short-hand
  anim/base
 */
 
@@ -149,8 +150,13 @@ KISSY.add("anim/base/utils", ["./queue", "dom"], function(S, require) {
     })
   }}
 });
-KISSY.add("anim/base", ["dom", "./base/utils", "./base/queue", "promise"], function(S, require) {
-  var Dom = require("dom"), Utils = require("./base/utils"), Q = require("./base/queue"), Promise = require("promise"), NodeType = Dom.NodeType, noop = S.noop, specialVals = {toggle:1, hide:1, show:1};
+KISSY.add("anim/base/short-hand", [], function() {
+  return{background:["backgroundColor"], border:["borderBottomWidth", "borderLeftWidth", "borderRightWidth", "borderTopWidth", "borderBottomColor", "borderLeftColor", "borderRightColor", "borderTopColor"], borderColor:["borderBottomColor", "borderLeftColor", "borderRightColor", "borderTopColor"], borderBottom:["borderBottomWidth", "borderBottomColor"], borderLeft:["borderLeftWidth", "borderLeftColor"], borderTop:["borderTopWidth", "borderTopColor"], borderRight:["borderRightWidth", "borderRightColor"], 
+  font:["fontSize", "fontWeight"], margin:["marginBottom", "marginLeft", "marginRight", "marginTop"], padding:["paddingBottom", "paddingLeft", "paddingRight", "paddingTop"]}
+});
+KISSY.add("anim/base", ["dom", "./base/utils", "./base/queue", "promise", "./base/short-hand"], function(S, require) {
+  var Dom = require("dom"), Utils = require("./base/utils"), Q = require("./base/queue"), Promise = require("promise"), NodeType = Dom.NodeType, camelCase = S.camelCase, noop = S.noop, specialVals = {toggle:1, hide:1, show:1};
+  var SHORT_HANDS = require("./base/short-hand");
   var defaultConfig = {duration:1, easing:"linear"};
   function syncComplete(self) {
     var _backupProps, complete = self.config.complete;
@@ -178,8 +184,6 @@ KISSY.add("anim/base", ["dom", "./base/utils", "./base/queue", "promise"], funct
             delete to[prop]
           }
         })
-      }else {
-        to = S.clone(to)
       }
       if(S.isPlainObject(duration)) {
         config = S.clone(duration)
@@ -205,7 +209,13 @@ KISSY.add("anim/base", ["dom", "./base/utils", "./base/queue", "promise"], funct
     }
     self.node = self.el = node;
     self._backupProps = {};
-    self._propsData = {}
+    self._propsData = {};
+    var newTo = {};
+    to = config.to;
+    for(var prop in to) {
+      newTo[camelCase(prop)] = to[prop]
+    }
+    config.to = newTo
   }
   S.extend(AnimBase, Promise, {prepareFx:noop, runInternal:function() {
     var self = this, config = self.config, node = self.node, val, _backupProps = self._backupProps, _propsData = self._propsData, to = config.to, defaultDelay = config.delay || 0, defaultDuration = config.duration;
@@ -215,6 +225,24 @@ KISSY.add("anim/base", ["dom", "./base/utils", "./base/queue", "promise"], funct
         val = {value:val}
       }
       _propsData[prop] = S.mix({delay:defaultDelay, easing:config.easing, frame:config.frame, duration:defaultDuration}, val)
+    });
+    S.each(SHORT_HANDS, function(shortHands, p) {
+      var origin, _propData = _propsData[p], val;
+      if(_propData) {
+        val = _propData.value;
+        origin = {};
+        S.each(shortHands, function(sh) {
+          origin[sh] = Dom.css(node, sh)
+        });
+        Dom.css(node, p, val);
+        S.each(origin, function(val, sh) {
+          if(!(sh in _propsData)) {
+            _propsData[sh] = S.merge(_propData, {value:Dom.css(node, sh)})
+          }
+          Dom.css(node, sh, val)
+        });
+        delete _propsData[p]
+      }
     });
     if(node.nodeType === NodeType.ELEMENT_NODE) {
       if(to.width || to.height) {

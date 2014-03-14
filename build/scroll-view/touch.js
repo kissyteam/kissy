@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 13 23:48
+build time: Mar 14 15:40
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -9,10 +9,10 @@ build time: Mar 13 23:48
  scroll-view/touch
 */
 
-KISSY.add("scroll-view/touch", ["./base", "node", "anim"], function(S, require) {
+KISSY.add("scroll-view/touch", ["./base", "node", "anim/timer"], function(S, require) {
   var ScrollViewBase = require("./base");
   var Node = require("node");
-  var Anim = require("anim");
+  var TimerAnim = require("anim/timer");
   var OUT_OF_BOUND_FACTOR = 0.5;
   var Gesture = Node.Gesture;
   var MAX_SWIPE_VELOCITY = 6;
@@ -72,7 +72,7 @@ KISSY.add("scroll-view/touch", ["./base", "node", "anim"], function(S, require) 
     var animCfg = {node:{}, to:{}, duration:9999, queue:false, complete:endCallback, frame:makeMomentumFx(self, velocity, scroll, scrollAxis, maxScroll[scrollType], minScroll[scrollType])};
     animCfg.node[scrollType] = scroll;
     animCfg.to[scrollType] = null;
-    self.scrollAnims.push((new Anim(animCfg)).run())
+    self.scrollAnims.push((new TimerAnim(animCfg)).run())
   }
   var FRICTION = 0.5;
   var ACCELERATION = 20;

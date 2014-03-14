@@ -238,82 +238,97 @@ if (! _$jscoverage['/transition.js']) {
   _$jscoverage['/transition.js'].lineData[12] = 0;
   _$jscoverage['/transition.js'].lineData[13] = 0;
   _$jscoverage['/transition.js'].lineData[18] = 0;
+  _$jscoverage['/transition.js'].lineData[19] = 0;
   _$jscoverage['/transition.js'].lineData[20] = 0;
-  _$jscoverage['/transition.js'].lineData[21] = 0;
-  _$jscoverage['/transition.js'].lineData[22] = 0;
-  _$jscoverage['/transition.js'].lineData[23] = 0;
-  _$jscoverage['/transition.js'].lineData[24] = 0;
-  _$jscoverage['/transition.js'].lineData[26] = 0;
+  _$jscoverage['/transition.js'].lineData[28] = 0;
   _$jscoverage['/transition.js'].lineData[29] = 0;
   _$jscoverage['/transition.js'].lineData[30] = 0;
   _$jscoverage['/transition.js'].lineData[31] = 0;
   _$jscoverage['/transition.js'].lineData[32] = 0;
-  _$jscoverage['/transition.js'].lineData[33] = 0;
-  _$jscoverage['/transition.js'].lineData[35] = 0;
+  _$jscoverage['/transition.js'].lineData[34] = 0;
+  _$jscoverage['/transition.js'].lineData[37] = 0;
   _$jscoverage['/transition.js'].lineData[40] = 0;
-  _$jscoverage['/transition.js'].lineData[43] = 0;
-  _$jscoverage['/transition.js'].lineData[44] = 0;
-  _$jscoverage['/transition.js'].lineData[48] = 0;
-  _$jscoverage['/transition.js'].lineData[49] = 0;
-  _$jscoverage['/transition.js'].lineData[53] = 0;
+  _$jscoverage['/transition.js'].lineData[41] = 0;
+  _$jscoverage['/transition.js'].lineData[46] = 0;
+  _$jscoverage['/transition.js'].lineData[47] = 0;
+  _$jscoverage['/transition.js'].lineData[51] = 0;
+  _$jscoverage['/transition.js'].lineData[52] = 0;
   _$jscoverage['/transition.js'].lineData[54] = 0;
+  _$jscoverage['/transition.js'].lineData[55] = 0;
   _$jscoverage['/transition.js'].lineData[56] = 0;
   _$jscoverage['/transition.js'].lineData[57] = 0;
   _$jscoverage['/transition.js'].lineData[58] = 0;
-  _$jscoverage['/transition.js'].lineData[59] = 0;
   _$jscoverage['/transition.js'].lineData[60] = 0;
   _$jscoverage['/transition.js'].lineData[62] = 0;
-  _$jscoverage['/transition.js'].lineData[64] = 0;
-  _$jscoverage['/transition.js'].lineData[65] = 0;
+  _$jscoverage['/transition.js'].lineData[63] = 0;
+  _$jscoverage['/transition.js'].lineData[67] = 0;
+  _$jscoverage['/transition.js'].lineData[68] = 0;
   _$jscoverage['/transition.js'].lineData[69] = 0;
-  _$jscoverage['/transition.js'].lineData[70] = 0;
-  _$jscoverage['/transition.js'].lineData[71] = 0;
+  _$jscoverage['/transition.js'].lineData[73] = 0;
+  _$jscoverage['/transition.js'].lineData[74] = 0;
   _$jscoverage['/transition.js'].lineData[75] = 0;
-  _$jscoverage['/transition.js'].lineData[76] = 0;
-  _$jscoverage['/transition.js'].lineData[77] = 0;
-  _$jscoverage['/transition.js'].lineData[78] = 0;
+  _$jscoverage['/transition.js'].lineData[79] = 0;
   _$jscoverage['/transition.js'].lineData[80] = 0;
   _$jscoverage['/transition.js'].lineData[81] = 0;
   _$jscoverage['/transition.js'].lineData[82] = 0;
+  _$jscoverage['/transition.js'].lineData[84] = 0;
+  _$jscoverage['/transition.js'].lineData[85] = 0;
   _$jscoverage['/transition.js'].lineData[86] = 0;
-  _$jscoverage['/transition.js'].lineData[88] = 0;
+  _$jscoverage['/transition.js'].lineData[90] = 0;
+  _$jscoverage['/transition.js'].lineData[92] = 0;
   _$jscoverage['/transition.js'].lineData[94] = 0;
   _$jscoverage['/transition.js'].lineData[95] = 0;
   _$jscoverage['/transition.js'].lineData[96] = 0;
+  _$jscoverage['/transition.js'].lineData[97] = 0;
   _$jscoverage['/transition.js'].lineData[98] = 0;
   _$jscoverage['/transition.js'].lineData[99] = 0;
+  _$jscoverage['/transition.js'].lineData[100] = 0;
   _$jscoverage['/transition.js'].lineData[101] = 0;
-  _$jscoverage['/transition.js'].lineData[103] = 0;
   _$jscoverage['/transition.js'].lineData[104] = 0;
-  _$jscoverage['/transition.js'].lineData[109] = 0;
-  _$jscoverage['/transition.js'].lineData[113] = 0;
-  _$jscoverage['/transition.js'].lineData[114] = 0;
-  _$jscoverage['/transition.js'].lineData[115] = 0;
+  _$jscoverage['/transition.js'].lineData[106] = 0;
+  _$jscoverage['/transition.js'].lineData[107] = 0;
+  _$jscoverage['/transition.js'].lineData[108] = 0;
+  _$jscoverage['/transition.js'].lineData[110] = 0;
+  _$jscoverage['/transition.js'].lineData[112] = 0;
   _$jscoverage['/transition.js'].lineData[116] = 0;
-  _$jscoverage['/transition.js'].lineData[118] = 0;
-  _$jscoverage['/transition.js'].lineData[119] = 0;
-  _$jscoverage['/transition.js'].lineData[120] = 0;
+  _$jscoverage['/transition.js'].lineData[123] = 0;
+  _$jscoverage['/transition.js'].lineData[124] = 0;
   _$jscoverage['/transition.js'].lineData[126] = 0;
+  _$jscoverage['/transition.js'].lineData[127] = 0;
+  _$jscoverage['/transition.js'].lineData[128] = 0;
   _$jscoverage['/transition.js'].lineData[130] = 0;
-  _$jscoverage['/transition.js'].lineData[131] = 0;
   _$jscoverage['/transition.js'].lineData[132] = 0;
   _$jscoverage['/transition.js'].lineData[133] = 0;
-  _$jscoverage['/transition.js'].lineData[135] = 0;
-  _$jscoverage['/transition.js'].lineData[136] = 0;
-  _$jscoverage['/transition.js'].lineData[137] = 0;
   _$jscoverage['/transition.js'].lineData[138] = 0;
-  _$jscoverage['/transition.js'].lineData[140] = 0;
-  _$jscoverage['/transition.js'].lineData[147] = 0;
-  _$jscoverage['/transition.js'].lineData[155] = 0;
-  _$jscoverage['/transition.js'].lineData[157] = 0;
-  _$jscoverage['/transition.js'].lineData[158] = 0;
+  _$jscoverage['/transition.js'].lineData[142] = 0;
+  _$jscoverage['/transition.js'].lineData[143] = 0;
+  _$jscoverage['/transition.js'].lineData[144] = 0;
+  _$jscoverage['/transition.js'].lineData[145] = 0;
+  _$jscoverage['/transition.js'].lineData[148] = 0;
+  _$jscoverage['/transition.js'].lineData[149] = 0;
+  _$jscoverage['/transition.js'].lineData[151] = 0;
+  _$jscoverage['/transition.js'].lineData[152] = 0;
   _$jscoverage['/transition.js'].lineData[159] = 0;
-  _$jscoverage['/transition.js'].lineData[161] = 0;
+  _$jscoverage['/transition.js'].lineData[163] = 0;
+  _$jscoverage['/transition.js'].lineData[164] = 0;
   _$jscoverage['/transition.js'].lineData[165] = 0;
+  _$jscoverage['/transition.js'].lineData[166] = 0;
+  _$jscoverage['/transition.js'].lineData[168] = 0;
+  _$jscoverage['/transition.js'].lineData[169] = 0;
   _$jscoverage['/transition.js'].lineData[170] = 0;
   _$jscoverage['/transition.js'].lineData[171] = 0;
-  _$jscoverage['/transition.js'].lineData[175] = 0;
-  _$jscoverage['/transition.js'].lineData[177] = 0;
+  _$jscoverage['/transition.js'].lineData[173] = 0;
+  _$jscoverage['/transition.js'].lineData[180] = 0;
+  _$jscoverage['/transition.js'].lineData[188] = 0;
+  _$jscoverage['/transition.js'].lineData[190] = 0;
+  _$jscoverage['/transition.js'].lineData[191] = 0;
+  _$jscoverage['/transition.js'].lineData[192] = 0;
+  _$jscoverage['/transition.js'].lineData[194] = 0;
+  _$jscoverage['/transition.js'].lineData[198] = 0;
+  _$jscoverage['/transition.js'].lineData[203] = 0;
+  _$jscoverage['/transition.js'].lineData[204] = 0;
+  _$jscoverage['/transition.js'].lineData[208] = 0;
+  _$jscoverage['/transition.js'].lineData[210] = 0;
 }
 if (! _$jscoverage['/transition.js'].functionData) {
   _$jscoverage['/transition.js'].functionData = [];
@@ -334,99 +349,114 @@ if (! _$jscoverage['/transition.js'].functionData) {
   _$jscoverage['/transition.js'].functionData[14] = 0;
   _$jscoverage['/transition.js'].functionData[15] = 0;
   _$jscoverage['/transition.js'].functionData[16] = 0;
+  _$jscoverage['/transition.js'].functionData[17] = 0;
+  _$jscoverage['/transition.js'].functionData[18] = 0;
+  _$jscoverage['/transition.js'].functionData[19] = 0;
 }
 if (! _$jscoverage['/transition.js'].branchData) {
   _$jscoverage['/transition.js'].branchData = {};
-  _$jscoverage['/transition.js'].branchData['23'] = [];
-  _$jscoverage['/transition.js'].branchData['23'][1] = new BranchData();
-  _$jscoverage['/transition.js'].branchData['32'] = [];
-  _$jscoverage['/transition.js'].branchData['32'][1] = new BranchData();
-  _$jscoverage['/transition.js'].branchData['48'] = [];
-  _$jscoverage['/transition.js'].branchData['48'][1] = new BranchData();
-  _$jscoverage['/transition.js'].branchData['53'] = [];
-  _$jscoverage['/transition.js'].branchData['53'][1] = new BranchData();
-  _$jscoverage['/transition.js'].branchData['58'] = [];
-  _$jscoverage['/transition.js'].branchData['58'][1] = new BranchData();
-  _$jscoverage['/transition.js'].branchData['64'] = [];
-  _$jscoverage['/transition.js'].branchData['64'][1] = new BranchData();
-  _$jscoverage['/transition.js'].branchData['77'] = [];
-  _$jscoverage['/transition.js'].branchData['77'][1] = new BranchData();
-  _$jscoverage['/transition.js'].branchData['98'] = [];
-  _$jscoverage['/transition.js'].branchData['98'][1] = new BranchData();
-  _$jscoverage['/transition.js'].branchData['101'] = [];
-  _$jscoverage['/transition.js'].branchData['101'][1] = new BranchData();
-  _$jscoverage['/transition.js'].branchData['113'] = [];
-  _$jscoverage['/transition.js'].branchData['113'][1] = new BranchData();
-  _$jscoverage['/transition.js'].branchData['115'] = [];
-  _$jscoverage['/transition.js'].branchData['115'][1] = new BranchData();
-  _$jscoverage['/transition.js'].branchData['132'] = [];
-  _$jscoverage['/transition.js'].branchData['132'][1] = new BranchData();
-  _$jscoverage['/transition.js'].branchData['137'] = [];
-  _$jscoverage['/transition.js'].branchData['137'][1] = new BranchData();
-  _$jscoverage['/transition.js'].branchData['158'] = [];
-  _$jscoverage['/transition.js'].branchData['158'][1] = new BranchData();
-  _$jscoverage['/transition.js'].branchData['168'] = [];
-  _$jscoverage['/transition.js'].branchData['168'][1] = new BranchData();
+  _$jscoverage['/transition.js'].branchData['31'] = [];
+  _$jscoverage['/transition.js'].branchData['31'][1] = new BranchData();
+  _$jscoverage['/transition.js'].branchData['46'] = [];
+  _$jscoverage['/transition.js'].branchData['46'][1] = new BranchData();
+  _$jscoverage['/transition.js'].branchData['51'] = [];
+  _$jscoverage['/transition.js'].branchData['51'][1] = new BranchData();
+  _$jscoverage['/transition.js'].branchData['56'] = [];
+  _$jscoverage['/transition.js'].branchData['56'][1] = new BranchData();
+  _$jscoverage['/transition.js'].branchData['62'] = [];
+  _$jscoverage['/transition.js'].branchData['62'][1] = new BranchData();
+  _$jscoverage['/transition.js'].branchData['81'] = [];
+  _$jscoverage['/transition.js'].branchData['81'][1] = new BranchData();
+  _$jscoverage['/transition.js'].branchData['99'] = [];
+  _$jscoverage['/transition.js'].branchData['99'][1] = new BranchData();
+  _$jscoverage['/transition.js'].branchData['100'] = [];
+  _$jscoverage['/transition.js'].branchData['100'][1] = new BranchData();
+  _$jscoverage['/transition.js'].branchData['107'] = [];
+  _$jscoverage['/transition.js'].branchData['107'][1] = new BranchData();
+  _$jscoverage['/transition.js'].branchData['127'] = [];
+  _$jscoverage['/transition.js'].branchData['127'][1] = new BranchData();
+  _$jscoverage['/transition.js'].branchData['130'] = [];
+  _$jscoverage['/transition.js'].branchData['130'][1] = new BranchData();
+  _$jscoverage['/transition.js'].branchData['142'] = [];
+  _$jscoverage['/transition.js'].branchData['142'][1] = new BranchData();
+  _$jscoverage['/transition.js'].branchData['144'] = [];
+  _$jscoverage['/transition.js'].branchData['144'][1] = new BranchData();
+  _$jscoverage['/transition.js'].branchData['165'] = [];
+  _$jscoverage['/transition.js'].branchData['165'][1] = new BranchData();
+  _$jscoverage['/transition.js'].branchData['170'] = [];
+  _$jscoverage['/transition.js'].branchData['170'][1] = new BranchData();
+  _$jscoverage['/transition.js'].branchData['191'] = [];
+  _$jscoverage['/transition.js'].branchData['191'][1] = new BranchData();
+  _$jscoverage['/transition.js'].branchData['201'] = [];
+  _$jscoverage['/transition.js'].branchData['201'][1] = new BranchData();
 }
-_$jscoverage['/transition.js'].branchData['168'][1].init(7, 213, 'S.trim(elStyle[TRANSITION].replace(new RegExp(\'(^|,)\' + \'\\\\s*(?:\' + propList.join(\'|\') + \')\\\\s+[^,]+\', \'gi\'), \'$1\')).replace(/^,|,,|,$/g, \'\') || \'none\'');
-function visit15_168_1(result) {
-  _$jscoverage['/transition.js'].branchData['168'][1].ranCondition(result);
+_$jscoverage['/transition.js'].branchData['201'][1].init(7, 213, 'S.trim(elStyle[TRANSITION].replace(new RegExp(\'(^|,)\' + \'\\\\s*(?:\' + propList.join(\'|\') + \')\\\\s+[^,]+\', \'gi\'), \'$1\')).replace(/^,|,,|,$/g, \'\') || \'none\'');
+function visit17_201_1(result) {
+  _$jscoverage['/transition.js'].branchData['201'][1].ranCondition(result);
   return result;
-}_$jscoverage['/transition.js'].branchData['158'][1].init(21, 7, '!finish');
-function visit14_158_1(result) {
-  _$jscoverage['/transition.js'].branchData['158'][1].ranCondition(result);
+}_$jscoverage['/transition.js'].branchData['191'][1].init(21, 7, '!finish');
+function visit16_191_1(result) {
+  _$jscoverage['/transition.js'].branchData['191'][1].ranCondition(result);
   return result;
-}_$jscoverage['/transition.js'].branchData['137'][1].init(113, 29, 'propData.duration >= tRunTime');
-function visit13_137_1(result) {
-  _$jscoverage['/transition.js'].branchData['137'][1].ranCondition(result);
+}_$jscoverage['/transition.js'].branchData['170'][1].init(113, 29, 'propData.duration >= tRunTime');
+function visit15_170_1(result) {
+  _$jscoverage['/transition.js'].branchData['170'][1].ranCondition(result);
   return result;
-}_$jscoverage['/transition.js'].branchData['132'][1].init(61, 26, 'propData.delay >= tRunTime');
-function visit12_132_1(result) {
-  _$jscoverage['/transition.js'].branchData['132'][1].ranCondition(result);
+}_$jscoverage['/transition.js'].branchData['165'][1].init(61, 26, 'propData.delay >= tRunTime');
+function visit14_165_1(result) {
+  _$jscoverage['/transition.js'].branchData['165'][1].ranCondition(result);
   return result;
-}_$jscoverage['/transition.js'].branchData['115'][1].init(1134, 8, 'original');
-function visit11_115_1(result) {
-  _$jscoverage['/transition.js'].branchData['115'][1].ranCondition(result);
+}_$jscoverage['/transition.js'].branchData['144'][1].init(1126, 8, 'original');
+function visit13_144_1(result) {
+  _$jscoverage['/transition.js'].branchData['144'][1].ranCondition(result);
   return result;
-}_$jscoverage['/transition.js'].branchData['113'][1].init(1044, 31, 'original.indexOf(\'none\') !== -1');
-function visit10_113_1(result) {
-  _$jscoverage['/transition.js'].branchData['113'][1].ranCondition(result);
+}_$jscoverage['/transition.js'].branchData['142'][1].init(1036, 31, 'original.indexOf(\'none\') !== -1');
+function visit12_142_1(result) {
+  _$jscoverage['/transition.js'].branchData['142'][1].ranCondition(result);
   return result;
-}_$jscoverage['/transition.js'].branchData['101'][1].init(241, 18, 'currentValue === v');
-function visit9_101_1(result) {
-  _$jscoverage['/transition.js'].branchData['101'][1].ranCondition(result);
+}_$jscoverage['/transition.js'].branchData['130'][1].init(292, 18, 'currentValue === v');
+function visit11_130_1(result) {
+  _$jscoverage['/transition.js'].branchData['130'][1].ranCondition(result);
   return result;
-}_$jscoverage['/transition.js'].branchData['98'][1].init(117, 21, 'typeof v === \'number\'');
-function visit8_98_1(result) {
-  _$jscoverage['/transition.js'].branchData['98'][1].ranCondition(result);
+}_$jscoverage['/transition.js'].branchData['127'][1].init(168, 21, 'typeof v === \'number\'');
+function visit10_127_1(result) {
+  _$jscoverage['/transition.js'].branchData['127'][1].ranCondition(result);
   return result;
-}_$jscoverage['/transition.js'].branchData['77'][1].init(37, 34, '!(self instanceof TransitionAnim)');
-function visit7_77_1(result) {
-  _$jscoverage['/transition.js'].branchData['77'][1].ranCondition(result);
+}_$jscoverage['/transition.js'].branchData['107'][1].init(444, 11, '!vendorInfo');
+function visit9_107_1(result) {
+  _$jscoverage['/transition.js'].branchData['107'][1].ranCondition(result);
   return result;
-}_$jscoverage['/transition.js'].branchData['64'][1].init(685, 12, 'allCompleted');
-function visit6_64_1(result) {
-  _$jscoverage['/transition.js'].branchData['64'][1].ranCondition(result);
+}_$jscoverage['/transition.js'].branchData['100'][1].init(25, 66, '!S.startsWith(val.easing, \'cubic-bezier\') && !css3Anim[val.easing]');
+function visit8_100_1(result) {
+  _$jscoverage['/transition.js'].branchData['100'][1].ranCondition(result);
   return result;
-}_$jscoverage['/transition.js'].branchData['58'][1].init(17, 18, 'propData.pos !== 1');
-function visit5_58_1(result) {
-  _$jscoverage['/transition.js'].branchData['58'][1].ranCondition(result);
+}_$jscoverage['/transition.js'].branchData['99'][1].init(68, 30, 'typeof val.easing === \'string\'');
+function visit7_99_1(result) {
+  _$jscoverage['/transition.js'].branchData['99'][1].ranCondition(result);
   return result;
-}_$jscoverage['/transition.js'].branchData['53'][1].init(359, 33, 'propsData[propertyName].pos === 1');
-function visit4_53_1(result) {
-  _$jscoverage['/transition.js'].branchData['53'][1].ranCondition(result);
+}_$jscoverage['/transition.js'].branchData['81'][1].init(38, 34, '!(self instanceof TransitionAnim)');
+function visit6_81_1(result) {
+  _$jscoverage['/transition.js'].branchData['81'][1].ranCondition(result);
   return result;
-}_$jscoverage['/transition.js'].branchData['48'][1].init(169, 24, '!propsData[propertyName]');
-function visit3_48_1(result) {
-  _$jscoverage['/transition.js'].branchData['48'][1].ranCondition(result);
+}_$jscoverage['/transition.js'].branchData['62'][1].init(686, 12, 'allCompleted');
+function visit5_62_1(result) {
+  _$jscoverage['/transition.js'].branchData['62'][1].ranCondition(result);
   return result;
-}_$jscoverage['/transition.js'].branchData['32'][1].init(17, 3, 'str');
-function visit2_32_1(result) {
-  _$jscoverage['/transition.js'].branchData['32'][1].ranCondition(result);
+}_$jscoverage['/transition.js'].branchData['56'][1].init(17, 18, 'propData.pos !== 1');
+function visit4_56_1(result) {
+  _$jscoverage['/transition.js'].branchData['56'][1].ranCondition(result);
   return result;
-}_$jscoverage['/transition.js'].branchData['23'][1].init(109, 5, 'i < l');
-function visit1_23_1(result) {
-  _$jscoverage['/transition.js'].branchData['23'][1].ranCondition(result);
+}_$jscoverage['/transition.js'].branchData['51'][1].init(360, 33, 'propsData[propertyName].pos === 1');
+function visit3_51_1(result) {
+  _$jscoverage['/transition.js'].branchData['51'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/transition.js'].branchData['46'][1].init(170, 24, '!propsData[propertyName]');
+function visit2_46_1(result) {
+  _$jscoverage['/transition.js'].branchData['46'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/transition.js'].branchData['31'][1].init(17, 3, 'str');
+function visit1_31_1(result) {
+  _$jscoverage['/transition.js'].branchData['31'][1].ranCondition(result);
   return result;
 }_$jscoverage['/transition.js'].lineData[6]++;
 KISSY.add(function(S, require) {
@@ -447,209 +477,255 @@ KISSY.add(function(S, require) {
   var TRANSITION_END_EVENT = vendorPrefix ? ([vendorPrefix.toLowerCase() + 'TransitionEnd']) : ['transitionend', 'webkitTransitionEnd'];
   _$jscoverage['/transition.js'].lineData[18]++;
   var TRANSITION = transitionVendorInfo.propertyName;
+  _$jscoverage['/transition.js'].lineData[19]++;
+  var DEFAULT_EASING = 'ease-in';
   _$jscoverage['/transition.js'].lineData[20]++;
-  function normalizeCssName(propsData) {
-    _$jscoverage['/transition.js'].functionData[1]++;
-    _$jscoverage['/transition.js'].lineData[21]++;
-    var names = S.keys(propsData);
-    _$jscoverage['/transition.js'].lineData[22]++;
-    var newProps = {};
-    _$jscoverage['/transition.js'].lineData[23]++;
-    for (var i = 0, l = names.length; visit1_23_1(i < l); i++) {
-      _$jscoverage['/transition.js'].lineData[24]++;
-      newProps[getCssVendorInfo(names[i]).name] = propsData[names[i]];
-    }
-    _$jscoverage['/transition.js'].lineData[26]++;
-    return newProps;
-  }
-  _$jscoverage['/transition.js'].lineData[29]++;
+  var css3Anim = {
+  ease: 1, 
+  linear: 1, 
+  'ease-in': 1, 
+  'ease-out': 1, 
+  'ease-in-out': 1};
+  _$jscoverage['/transition.js'].lineData[28]++;
   function genTransition(propsData) {
-    _$jscoverage['/transition.js'].functionData[2]++;
-    _$jscoverage['/transition.js'].lineData[30]++;
+    _$jscoverage['/transition.js'].functionData[1]++;
+    _$jscoverage['/transition.js'].lineData[29]++;
     var str = '';
-    _$jscoverage['/transition.js'].lineData[31]++;
+    _$jscoverage['/transition.js'].lineData[30]++;
     S.each(propsData, function(propData, prop) {
-  _$jscoverage['/transition.js'].functionData[3]++;
-  _$jscoverage['/transition.js'].lineData[32]++;
-  if (visit2_32_1(str)) {
-    _$jscoverage['/transition.js'].lineData[33]++;
+  _$jscoverage['/transition.js'].functionData[2]++;
+  _$jscoverage['/transition.js'].lineData[31]++;
+  if (visit1_31_1(str)) {
+    _$jscoverage['/transition.js'].lineData[32]++;
     str += ',';
   }
-  _$jscoverage['/transition.js'].lineData[35]++;
+  _$jscoverage['/transition.js'].lineData[34]++;
   str += prop + ' ' + propData.duration + 's ' + propData.easing + ' ' + propData.delay + 's';
 });
-    _$jscoverage['/transition.js'].lineData[40]++;
+    _$jscoverage['/transition.js'].lineData[37]++;
     return str;
   }
-  _$jscoverage['/transition.js'].lineData[43]++;
+  _$jscoverage['/transition.js'].lineData[40]++;
   function onTransitionEnd(self, e) {
-    _$jscoverage['/transition.js'].functionData[4]++;
-    _$jscoverage['/transition.js'].lineData[44]++;
+    _$jscoverage['/transition.js'].functionData[3]++;
+    _$jscoverage['/transition.js'].lineData[41]++;
     var allCompleted = 1, propertyName = e.propertyName, propsData = self._propsData;
-    _$jscoverage['/transition.js'].lineData[48]++;
-    if (visit3_48_1(!propsData[propertyName])) {
-      _$jscoverage['/transition.js'].lineData[49]++;
+    _$jscoverage['/transition.js'].lineData[46]++;
+    if (visit2_46_1(!propsData[propertyName])) {
+      _$jscoverage['/transition.js'].lineData[47]++;
       return;
     }
-    _$jscoverage['/transition.js'].lineData[53]++;
-    if (visit4_53_1(propsData[propertyName].pos === 1)) {
-      _$jscoverage['/transition.js'].lineData[54]++;
+    _$jscoverage['/transition.js'].lineData[51]++;
+    if (visit3_51_1(propsData[propertyName].pos === 1)) {
+      _$jscoverage['/transition.js'].lineData[52]++;
       return;
     }
-    _$jscoverage['/transition.js'].lineData[56]++;
+    _$jscoverage['/transition.js'].lineData[54]++;
     propsData[propertyName].pos = 1;
-    _$jscoverage['/transition.js'].lineData[57]++;
+    _$jscoverage['/transition.js'].lineData[55]++;
     S.each(propsData, function(propData) {
-  _$jscoverage['/transition.js'].functionData[5]++;
-  _$jscoverage['/transition.js'].lineData[58]++;
-  if (visit5_58_1(propData.pos !== 1)) {
-    _$jscoverage['/transition.js'].lineData[59]++;
+  _$jscoverage['/transition.js'].functionData[4]++;
+  _$jscoverage['/transition.js'].lineData[56]++;
+  if (visit4_56_1(propData.pos !== 1)) {
+    _$jscoverage['/transition.js'].lineData[57]++;
     allCompleted = 0;
-    _$jscoverage['/transition.js'].lineData[60]++;
+    _$jscoverage['/transition.js'].lineData[58]++;
     return false;
   }
-  _$jscoverage['/transition.js'].lineData[62]++;
+  _$jscoverage['/transition.js'].lineData[60]++;
   return undefined;
 });
-    _$jscoverage['/transition.js'].lineData[64]++;
-    if (visit6_64_1(allCompleted)) {
-      _$jscoverage['/transition.js'].lineData[65]++;
+    _$jscoverage['/transition.js'].lineData[62]++;
+    if (visit5_62_1(allCompleted)) {
+      _$jscoverage['/transition.js'].lineData[63]++;
       self.stop(true);
     }
   }
-  _$jscoverage['/transition.js'].lineData[69]++;
+  _$jscoverage['/transition.js'].lineData[67]++;
   function bindEnd(el, fn, remove) {
-    _$jscoverage['/transition.js'].functionData[6]++;
-    _$jscoverage['/transition.js'].lineData[70]++;
+    _$jscoverage['/transition.js'].functionData[5]++;
+    _$jscoverage['/transition.js'].lineData[68]++;
     S.each(TRANSITION_END_EVENT, function(e) {
-  _$jscoverage['/transition.js'].functionData[7]++;
-  _$jscoverage['/transition.js'].lineData[71]++;
+  _$jscoverage['/transition.js'].functionData[6]++;
+  _$jscoverage['/transition.js'].lineData[69]++;
   el[remove ? 'removeEventListener' : 'addEventListener'](e, fn, false);
 });
   }
+  _$jscoverage['/transition.js'].lineData[73]++;
+  function unCamelCase(propertyName) {
+    _$jscoverage['/transition.js'].functionData[7]++;
+    _$jscoverage['/transition.js'].lineData[74]++;
+    return propertyName.replace(/[A-Z]/g, function(m) {
+  _$jscoverage['/transition.js'].functionData[8]++;
   _$jscoverage['/transition.js'].lineData[75]++;
+  return '-' + m.toLowerCase();
+});
+  }
+  _$jscoverage['/transition.js'].lineData[79]++;
   function TransitionAnim(node, to, duration, easing, complete) {
-    _$jscoverage['/transition.js'].functionData[8]++;
-    _$jscoverage['/transition.js'].lineData[76]++;
+    _$jscoverage['/transition.js'].functionData[9]++;
+    _$jscoverage['/transition.js'].lineData[80]++;
     var self = this;
-    _$jscoverage['/transition.js'].lineData[77]++;
-    if (visit7_77_1(!(self instanceof TransitionAnim))) {
-      _$jscoverage['/transition.js'].lineData[78]++;
+    _$jscoverage['/transition.js'].lineData[81]++;
+    if (visit6_81_1(!(self instanceof TransitionAnim))) {
+      _$jscoverage['/transition.js'].lineData[82]++;
       return new TransitionAnim(node, to, duration, easing, complete);
     }
-    _$jscoverage['/transition.js'].lineData[80]++;
+    _$jscoverage['/transition.js'].lineData[84]++;
     TransitionAnim.superclass.constructor.apply(self, arguments);
-    _$jscoverage['/transition.js'].lineData[81]++;
+    _$jscoverage['/transition.js'].lineData[85]++;
     self._onTransitionEnd = function(e) {
-  _$jscoverage['/transition.js'].functionData[9]++;
-  _$jscoverage['/transition.js'].lineData[82]++;
+  _$jscoverage['/transition.js'].functionData[10]++;
+  _$jscoverage['/transition.js'].lineData[86]++;
   onTransitionEnd(self, e);
 };
   }
-  _$jscoverage['/transition.js'].lineData[86]++;
+  _$jscoverage['/transition.js'].lineData[90]++;
   S.extend(TransitionAnim, AnimBase, {
-  doStart: function() {
-  _$jscoverage['/transition.js'].functionData[10]++;
-  _$jscoverage['/transition.js'].lineData[88]++;
-  var self = this, node = self.node, elStyle = node.style, _propsData, original = elStyle[TRANSITION], propsCss = {};
-  _$jscoverage['/transition.js'].lineData[94]++;
-  _propsData = self._propsData = normalizeCssName(self._propsData);
-  _$jscoverage['/transition.js'].lineData[95]++;
-  S.each(_propsData, function(propData, prop) {
+  prepareFx: function() {
   _$jscoverage['/transition.js'].functionData[11]++;
+  _$jscoverage['/transition.js'].lineData[92]++;
+  var self = this, propsData = self._propsData;
+  _$jscoverage['/transition.js'].lineData[94]++;
+  var newProps = {};
+  _$jscoverage['/transition.js'].lineData[95]++;
+  var val;
   _$jscoverage['/transition.js'].lineData[96]++;
-  var v = propData.value, currentValue = Dom.css(node, prop);
-  _$jscoverage['/transition.js'].lineData[98]++;
-  if (visit8_98_1(typeof v === 'number')) {
+  var vendorInfo;
+  _$jscoverage['/transition.js'].lineData[97]++;
+  for (var propertyName in propsData) {
+    _$jscoverage['/transition.js'].lineData[98]++;
+    val = propsData[propertyName];
     _$jscoverage['/transition.js'].lineData[99]++;
+    if (visit7_99_1(typeof val.easing === 'string')) {
+      _$jscoverage['/transition.js'].lineData[100]++;
+      if (visit8_100_1(!S.startsWith(val.easing, 'cubic-bezier') && !css3Anim[val.easing])) {
+        _$jscoverage['/transition.js'].lineData[101]++;
+        val.easing = DEFAULT_EASING;
+      }
+    } else {
+      _$jscoverage['/transition.js'].lineData[104]++;
+      val.easing = DEFAULT_EASING;
+    }
+    _$jscoverage['/transition.js'].lineData[106]++;
+    vendorInfo = getCssVendorInfo(propertyName);
+    _$jscoverage['/transition.js'].lineData[107]++;
+    if (visit9_107_1(!vendorInfo)) {
+      _$jscoverage['/transition.js'].lineData[108]++;
+      S.error('unsupported css property for transition anim: ' + propertyName);
+    }
+    _$jscoverage['/transition.js'].lineData[110]++;
+    newProps[unCamelCase(vendorInfo.propertyName)] = propsData[propertyName];
+  }
+  _$jscoverage['/transition.js'].lineData[112]++;
+  self._propsData = newProps;
+}, 
+  doStart: function() {
+  _$jscoverage['/transition.js'].functionData[12]++;
+  _$jscoverage['/transition.js'].lineData[116]++;
+  var self = this, node = self.node, elStyle = node.style, _propsData = self._propsData, original = elStyle[TRANSITION], propsCss = {};
+  _$jscoverage['/transition.js'].lineData[123]++;
+  S.each(_propsData, function(propData, prop) {
+  _$jscoverage['/transition.js'].functionData[13]++;
+  _$jscoverage['/transition.js'].lineData[124]++;
+  var v = propData.value, currentValue = Dom.css(node, prop);
+  _$jscoverage['/transition.js'].lineData[126]++;
+  Dom.css(node, prop, currentValue);
+  _$jscoverage['/transition.js'].lineData[127]++;
+  if (visit10_127_1(typeof v === 'number')) {
+    _$jscoverage['/transition.js'].lineData[128]++;
     currentValue = parseFloat(currentValue);
   }
-  _$jscoverage['/transition.js'].lineData[101]++;
-  if (visit9_101_1(currentValue === v)) {
-    _$jscoverage['/transition.js'].lineData[103]++;
+  _$jscoverage['/transition.js'].lineData[130]++;
+  if (visit11_130_1(currentValue === v)) {
+    _$jscoverage['/transition.js'].lineData[132]++;
     setTimeout(function() {
-  _$jscoverage['/transition.js'].functionData[12]++;
-  _$jscoverage['/transition.js'].lineData[104]++;
+  _$jscoverage['/transition.js'].functionData[14]++;
+  _$jscoverage['/transition.js'].lineData[133]++;
   self._onTransitionEnd({
   propertyName: prop});
 }, 0);
   }
-  _$jscoverage['/transition.js'].lineData[109]++;
+  _$jscoverage['/transition.js'].lineData[138]++;
   propsCss[prop] = v;
 });
-  _$jscoverage['/transition.js'].lineData[113]++;
-  if (visit10_113_1(original.indexOf('none') !== -1)) {
-    _$jscoverage['/transition.js'].lineData[114]++;
+  _$jscoverage['/transition.js'].lineData[142]++;
+  if (visit12_142_1(original.indexOf('none') !== -1)) {
+    _$jscoverage['/transition.js'].lineData[143]++;
     original = '';
   } else {
-    _$jscoverage['/transition.js'].lineData[115]++;
-    if (visit11_115_1(original)) {
-      _$jscoverage['/transition.js'].lineData[116]++;
+    _$jscoverage['/transition.js'].lineData[144]++;
+    if (visit13_144_1(original)) {
+      _$jscoverage['/transition.js'].lineData[145]++;
       original += ',';
     }
   }
-  _$jscoverage['/transition.js'].lineData[118]++;
+  _$jscoverage['/transition.js'].lineData[148]++;
   elStyle[TRANSITION] = original + genTransition(_propsData);
-  _$jscoverage['/transition.js'].lineData[119]++;
+  _$jscoverage['/transition.js'].lineData[149]++;
   bindEnd(node, self._onTransitionEnd);
-  _$jscoverage['/transition.js'].lineData[120]++;
+  _$jscoverage['/transition.js'].lineData[151]++;
+  setTimeout(function() {
+  _$jscoverage['/transition.js'].functionData[15]++;
+  _$jscoverage['/transition.js'].lineData[152]++;
   Dom.css(node, propsCss);
+}, 0);
 }, 
   beforeResume: function() {
-  _$jscoverage['/transition.js'].functionData[13]++;
-  _$jscoverage['/transition.js'].lineData[126]++;
+  _$jscoverage['/transition.js'].functionData[16]++;
+  _$jscoverage['/transition.js'].lineData[159]++;
   var self = this, propsData = self._propsData, tmpPropsData = S.merge(propsData), runTime = self._runTime / 1000;
-  _$jscoverage['/transition.js'].lineData[130]++;
+  _$jscoverage['/transition.js'].lineData[163]++;
   S.each(tmpPropsData, function(propData, prop) {
-  _$jscoverage['/transition.js'].functionData[14]++;
-  _$jscoverage['/transition.js'].lineData[131]++;
+  _$jscoverage['/transition.js'].functionData[17]++;
+  _$jscoverage['/transition.js'].lineData[164]++;
   var tRunTime = runTime;
-  _$jscoverage['/transition.js'].lineData[132]++;
-  if (visit12_132_1(propData.delay >= tRunTime)) {
-    _$jscoverage['/transition.js'].lineData[133]++;
+  _$jscoverage['/transition.js'].lineData[165]++;
+  if (visit14_165_1(propData.delay >= tRunTime)) {
+    _$jscoverage['/transition.js'].lineData[166]++;
     propData.delay -= tRunTime;
   } else {
-    _$jscoverage['/transition.js'].lineData[135]++;
+    _$jscoverage['/transition.js'].lineData[168]++;
     tRunTime -= propData.delay;
-    _$jscoverage['/transition.js'].lineData[136]++;
+    _$jscoverage['/transition.js'].lineData[169]++;
     propData.delay = 0;
-    _$jscoverage['/transition.js'].lineData[137]++;
-    if (visit13_137_1(propData.duration >= tRunTime)) {
-      _$jscoverage['/transition.js'].lineData[138]++;
+    _$jscoverage['/transition.js'].lineData[170]++;
+    if (visit15_170_1(propData.duration >= tRunTime)) {
+      _$jscoverage['/transition.js'].lineData[171]++;
       propData.duration -= tRunTime;
     } else {
-      _$jscoverage['/transition.js'].lineData[140]++;
+      _$jscoverage['/transition.js'].lineData[173]++;
       delete propsData[prop];
     }
   }
 });
 }, 
   doStop: function(finish) {
-  _$jscoverage['/transition.js'].functionData[15]++;
-  _$jscoverage['/transition.js'].lineData[147]++;
+  _$jscoverage['/transition.js'].functionData[18]++;
+  _$jscoverage['/transition.js'].lineData[180]++;
   var self = this, node = self.node, elStyle = node.style, _propsData = self._propsData, propList = [], clear, propsCss = {};
-  _$jscoverage['/transition.js'].lineData[155]++;
+  _$jscoverage['/transition.js'].lineData[188]++;
   bindEnd(node, self._onTransitionEnd, 1);
-  _$jscoverage['/transition.js'].lineData[157]++;
+  _$jscoverage['/transition.js'].lineData[190]++;
   S.each(_propsData, function(propData, prop) {
-  _$jscoverage['/transition.js'].functionData[16]++;
-  _$jscoverage['/transition.js'].lineData[158]++;
-  if (visit14_158_1(!finish)) {
-    _$jscoverage['/transition.js'].lineData[159]++;
+  _$jscoverage['/transition.js'].functionData[19]++;
+  _$jscoverage['/transition.js'].lineData[191]++;
+  if (visit16_191_1(!finish)) {
+    _$jscoverage['/transition.js'].lineData[192]++;
     propsCss[prop] = Dom.css(node, prop);
   }
-  _$jscoverage['/transition.js'].lineData[161]++;
+  _$jscoverage['/transition.js'].lineData[194]++;
   propList.push(prop);
 });
-  _$jscoverage['/transition.js'].lineData[165]++;
-  clear = visit15_168_1(S.trim(elStyle[TRANSITION].replace(new RegExp('(^|,)' + '\\s*(?:' + propList.join('|') + ')\\s+[^,]+', 'gi'), '$1')).replace(/^,|,,|,$/g, '') || 'none');
-  _$jscoverage['/transition.js'].lineData[170]++;
+  _$jscoverage['/transition.js'].lineData[198]++;
+  clear = visit17_201_1(S.trim(elStyle[TRANSITION].replace(new RegExp('(^|,)' + '\\s*(?:' + propList.join('|') + ')\\s+[^,]+', 'gi'), '$1')).replace(/^,|,,|,$/g, '') || 'none');
+  _$jscoverage['/transition.js'].lineData[203]++;
   elStyle[TRANSITION] = clear;
-  _$jscoverage['/transition.js'].lineData[171]++;
+  _$jscoverage['/transition.js'].lineData[204]++;
   Dom.css(node, propsCss);
 }});
-  _$jscoverage['/transition.js'].lineData[175]++;
+  _$jscoverage['/transition.js'].lineData[208]++;
   S.mix(TransitionAnim, AnimBase.Statics);
-  _$jscoverage['/transition.js'].lineData[177]++;
+  _$jscoverage['/transition.js'].lineData[210]++;
   return TransitionAnim;
 });

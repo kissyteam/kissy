@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 13 23:48
+build time: Mar 14 15:39
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -18,14 +18,8 @@ KISSY.add("anim/transition", ["dom", "./base"], function(S, require) {
   var vendorPrefix = transitionVendorInfo.propertyNamePrefix;
   var TRANSITION_END_EVENT = vendorPrefix ? [vendorPrefix.toLowerCase() + "TransitionEnd"] : ["transitionend", "webkitTransitionEnd"];
   var TRANSITION = transitionVendorInfo.propertyName;
-  function normalizeCssName(propsData) {
-    var names = S.keys(propsData);
-    var newProps = {};
-    for(var i = 0, l = names.length;i < l;i++) {
-      newProps[getCssVendorInfo(names[i]).name] = propsData[names[i]]
-    }
-    return newProps
-  }
+  var DEFAULT_EASING = "ease-in";
+  var css3Anim = {ease:1, linear:1, "ease-in":1, "ease-out":1, "ease-in-out":1};
   function genTransition(propsData) {
     var str = "";
     S.each(propsData, function(propData, prop) {
@@ -61,6 +55,11 @@ KISSY.add("anim/transition", ["dom", "./base"], function(S, require) {
       el[remove ? "removeEventListener" : "addEventListener"](e, fn, false)
     })
   }
+  function unCamelCase(propertyName) {
+    return propertyName.replace(/[A-Z]/g, function(m) {
+      return"-" + m.toLowerCase()
+    })
+  }
   function TransitionAnim(node, to, duration, easing, complete) {
     var self = this;
     if(!(self instanceof TransitionAnim)) {
@@ -71,11 +70,32 @@ KISSY.add("anim/transition", ["dom", "./base"], function(S, require) {
       onTransitionEnd(self, e)
     }
   }
-  S.extend(TransitionAnim, AnimBase, {doStart:function() {
-    var self = this, node = self.node, elStyle = node.style, _propsData, original = elStyle[TRANSITION], propsCss = {};
-    _propsData = self._propsData = normalizeCssName(self._propsData);
+  S.extend(TransitionAnim, AnimBase, {prepareFx:function() {
+    var self = this, propsData = self._propsData;
+    var newProps = {};
+    var val;
+    var vendorInfo;
+    for(var propertyName in propsData) {
+      val = propsData[propertyName];
+      if(typeof val.easing === "string") {
+        if(!S.startsWith(val.easing, "cubic-bezier") && !css3Anim[val.easing]) {
+          val.easing = DEFAULT_EASING
+        }
+      }else {
+        val.easing = DEFAULT_EASING
+      }
+      vendorInfo = getCssVendorInfo(propertyName);
+      if(!vendorInfo) {
+        S.error("unsupported css property for transition anim: " + propertyName)
+      }
+      newProps[unCamelCase(vendorInfo.propertyName)] = propsData[propertyName]
+    }
+    self._propsData = newProps
+  }, doStart:function() {
+    var self = this, node = self.node, elStyle = node.style, _propsData = self._propsData, original = elStyle[TRANSITION], propsCss = {};
     S.each(_propsData, function(propData, prop) {
       var v = propData.value, currentValue = Dom.css(node, prop);
+      Dom.css(node, prop, currentValue);
       if(typeof v === "number") {
         currentValue = parseFloat(currentValue)
       }
@@ -95,7 +115,9 @@ KISSY.add("anim/transition", ["dom", "./base"], function(S, require) {
     }
     elStyle[TRANSITION] = original + genTransition(_propsData);
     bindEnd(node, self._onTransitionEnd);
-    Dom.css(node, propsCss)
+    setTimeout(function() {
+      Dom.css(node, propsCss)
+    }, 0)
   }, beforeResume:function() {
     var self = this, propsData = self._propsData, tmpPropsData = S.merge(propsData), runTime = self._runTime / 1E3;
     S.each(tmpPropsData, function(propData, prop) {
