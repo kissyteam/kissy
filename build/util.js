@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 13 23:52
+build time: Mar 14 14:04
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -434,7 +434,13 @@ KISSY.add("util/object", [], function(S, undefined) {
 });
 KISSY.add("util/string", [], function(S, undefined) {
   var SUBSTITUTE_REG = /\\?\{([^{}]+)\}/g, EMPTY = "";
-  S.mix(S, {substitute:function(str, o, regexp) {
+  var RE_DASH = /-([a-z])/ig;
+  function upperCase() {
+    return arguments[1].toUpperCase()
+  }
+  S.mix(S, {camelCase:function(name) {
+    return name.replace(RE_DASH, upperCase)
+  }, substitute:function(str, o, regexp) {
     if(typeof str !== "string" || !o) {
       return str
     }

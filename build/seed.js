@@ -1,12 +1,12 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 13 23:52
+build time: Mar 14 14:04
 */
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 13 23:51
+build time: Mar 14 14:04
 */
 /**
  * @ignore
@@ -62,11 +62,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20140313235133' will replace with current timestamp when compressing.
+         * NOTICE: '20140314140408' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20140313235133',
+        __BUILD_TIME: '20140314140408',
 
         /**
          * KISSY Environment.
@@ -3645,7 +3645,7 @@ KISSY.add('i18n', {
     var doc = S.Env.host && S.Env.host.document;
     // var logger = S.getLogger('s/loader');
     var Utils = S.Loader.Utils;
-    var TIMESTAMP = '20140313235133';
+    var TIMESTAMP = '20140314140408';
     var defaultComboPrefix = '??';
     var defaultComboSep = ',';
 
@@ -3773,7 +3773,7 @@ KISSY.add('i18n', {
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 13 23:52
+build time: Mar 14 14:04
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -4206,7 +4206,13 @@ KISSY.add("util/object", [], function(S, undefined) {
 });
 KISSY.add("util/string", [], function(S, undefined) {
   var SUBSTITUTE_REG = /\\?\{([^{}]+)\}/g, EMPTY = "";
-  S.mix(S, {substitute:function(str, o, regexp) {
+  var RE_DASH = /-([a-z])/ig;
+  function upperCase() {
+    return arguments[1].toUpperCase()
+  }
+  S.mix(S, {camelCase:function(name) {
+    return name.replace(RE_DASH, upperCase)
+  }, substitute:function(str, o, regexp) {
     if(typeof str !== "string" || !o) {
       return str
     }
@@ -4469,7 +4475,7 @@ KISSY.add("util", ["util/array", "util/escape", "util/function", "util/object", 
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 13 23:51
+build time: Mar 14 14:04
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -4652,7 +4658,7 @@ KISSY.add("ua", [], function(S, undefined) {
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 13 23:52
+build time: Mar 14 14:04
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -4661,7 +4667,7 @@ build time: Mar 13 23:52
 */
 
 KISSY.add("feature", ["ua"], function(S, require) {
-  var win = S.Env.host, Config = S.Config, UA = require("ua"), namePrefixMap = {Webkit:"-webkit-", Moz:"-moz-", O:"-o-", ms:"ms-"}, doc = win.document || {}, isMsPointerSupported, isPointerSupported, isTransform3dSupported, documentElement = doc && doc.documentElement, navigator, documentElementStyle, isClassListSupportedState = true, isQuerySelectorSupportedState = false, isTouchEventSupportedState = "ontouchstart" in doc && !UA.phantomjs, vendorInfos = {}, ie = UA.ieMode;
+  var win = S.Env.host, Config = S.Config, UA = require("ua"), propertyPrefixes = ["Webkit", "Moz", "O", "ms"], propertyPrefixesLength = propertyPrefixes.length, doc = win.document || {}, isMsPointerSupported, isPointerSupported, isTransform3dSupported, documentElement = doc && doc.documentElement, navigator, documentElementStyle, isClassListSupportedState = true, isQuerySelectorSupportedState = false, isTouchEventSupportedState = "ontouchstart" in doc && !UA.phantomjs, vendorInfos = {}, ie = UA.ieMode;
   if(documentElement) {
     if(documentElement.querySelector && ie !== 8) {
       isQuerySelectorSupportedState = true
@@ -4673,17 +4679,21 @@ KISSY.add("feature", ["ua"], function(S, require) {
     isPointerSupported = "pointerEnabled" in navigator
   }
   function getVendorInfo(name) {
+    if(name.indexOf("-") !== -1) {
+      name = S.camelCase(name)
+    }
     if(name in vendorInfos) {
       return vendorInfos[name]
     }
     if(!documentElementStyle || name in documentElementStyle) {
-      vendorInfos[name] = {propertyName:name, name:name, propertyNamePrefix:"", namePrefix:""}
+      vendorInfos[name] = {propertyName:name, propertyNamePrefix:""}
     }else {
       var upperFirstName = name.charAt(0).toUpperCase() + name.slice(1), vendorName;
-      for(var propertyNamePrefix in namePrefixMap) {
+      for(var i = 0;i < propertyPrefixesLength;i++) {
+        var propertyNamePrefix = propertyPrefixes[i];
         vendorName = propertyNamePrefix + upperFirstName;
         if(vendorName in documentElementStyle) {
-          vendorInfos[name] = {propertyName:vendorName, name:namePrefixMap[propertyNamePrefix] + name, propertyNamePrefix:propertyNamePrefix, namePrefix:namePrefixMap[propertyNamePrefix]}
+          vendorInfos[name] = {propertyName:vendorName, propertyNamePrefix:propertyNamePrefix}
         }
       }
       vendorInfos[name] = vendorInfos[name] || null

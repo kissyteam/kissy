@@ -16,15 +16,14 @@ KISSY.add(function (S, require) {
         // https://github.com/kissyteam/kissy/issues/538
         ['transitionend', 'webkitTransitionEnd'];
     var TRANSITION = transitionVendorInfo.propertyName;
-
-    function normalizeCssName(propsData) {
-        var names = S.keys(propsData);
-        var newProps = {};
-        for (var i = 0, l = names.length; i < l; i++) {
-            newProps[getCssVendorInfo(names[i]).name] = propsData[names[i]];
-        }
-        return newProps;
-    }
+    var DEFAULT_EASING = 'ease-in';
+    var css3Anim = {
+        ease: 1,
+        linear: 1,
+        'ease-in': 1,
+        'ease-out': 1,
+        'ease-in-out': 1
+    };
 
     function genTransition(propsData) {
         var str = '';
@@ -32,10 +31,8 @@ KISSY.add(function (S, require) {
             if (str) {
                 str += ',';
             }
-            str += prop + ' ' +
-                propData.duration +
-                's ' + propData.easing +
-                ' ' + propData.delay + 's';
+            str += prop + ' ' + propData.duration + 's ' +
+                propData.easing + ' ' + propData.delay + 's';
         });
         return str;
     }
@@ -44,6 +41,7 @@ KISSY.add(function (S, require) {
         var allCompleted = 1,
             propertyName = e.propertyName,
             propsData = self._propsData;
+
         // other anim on the same element
         if (!propsData[propertyName]) {
             return;
@@ -72,9 +70,15 @@ KISSY.add(function (S, require) {
         });
     }
 
+    function unCamelCase(propertyName) {
+        return propertyName.replace(/[A-Z]/g, function (m) {
+            return '-' + m.toLowerCase();
+        });
+    }
+
     function TransitionAnim(node, to, duration, easing, complete) {
         var self = this;
-        if(!(self instanceof  TransitionAnim)){
+        if (!(self instanceof  TransitionAnim)) {
             return new TransitionAnim(node, to, duration, easing, complete);
         }
         TransitionAnim.superclass.constructor.apply(self, arguments);
@@ -84,17 +88,42 @@ KISSY.add(function (S, require) {
     }
 
     S.extend(TransitionAnim, AnimBase, {
+        prepareFx: function () {
+            var self = this,
+                propsData = self._propsData;
+            var newProps = {};
+            var val;
+            var vendorInfo;
+            for (var propertyName in propsData) {
+                val = propsData[propertyName];
+                if (typeof val.easing === 'string') {
+                    if (!S.startsWith(val.easing, 'cubic-bezier') && !css3Anim[val.easing]) {
+                        val.easing = DEFAULT_EASING;
+                    }
+                } else {
+                    val.easing = DEFAULT_EASING;
+                }
+                vendorInfo = getCssVendorInfo(propertyName);
+                if (!vendorInfo) {
+                    S.error('unsupported css property for transition anim: ' + propertyName);
+                }
+                newProps[unCamelCase(vendorInfo.propertyName)] = propsData[propertyName];
+            }
+            self._propsData = newProps;
+        },
+
         doStart: function () {
             var self = this,
                 node = self.node,
                 elStyle = node.style,
-                _propsData,
+                _propsData = self._propsData,
                 original = elStyle[TRANSITION],
                 propsCss = {};
-            _propsData = self._propsData = normalizeCssName(self._propsData);
+
             S.each(_propsData, function (propData, prop) {
                 var v = propData.value,
                     currentValue = Dom.css(node, prop);
+                Dom.css(node, prop, currentValue);
                 if (typeof v === 'number') {
                     currentValue = parseFloat(currentValue);
                 }
@@ -115,9 +144,13 @@ KISSY.add(function (S, require) {
             } else if (original) {
                 original += ',';
             }
+
             elStyle[TRANSITION] = original + genTransition(_propsData);
             bindEnd(node, self._onTransitionEnd);
-            Dom.css(node, propsCss);
+            // bug when set left on relative element
+            setTimeout(function () {
+                Dom.css(node, propsCss);
+            }, 0);
         },
 
         beforeResume: function () {

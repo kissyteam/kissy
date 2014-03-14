@@ -2,7 +2,7 @@
 <html>
 <head>
     <script src="/kissy/build/seed.js"></script>
-    <script src="/kissy/src/anim/config.js"></script>
+    <script src="/kissy/src/package.js"></script>
     <style>
         body {
             background: #000;
@@ -24,7 +24,6 @@
             -o-transition: left 2s;
             -ms-transition: left 2s;
             transition: left 2s;
-
             -webkit-transition-timing-function: steps(2, start);
         }
 
@@ -34,7 +33,6 @@
             -o-transition: left 2s;
             -ms-transition: left 2s;
             transition: left 2s;
-
             -webkit-transition-timing-function: steps(2, end);
         }
     </style>
@@ -50,15 +48,14 @@
 
 <script>
 
-    KISSY.use('core', function (S) {
-//debugger
-//        alert(S.Easing.toFn('cubic-bezier(0,0,0.58,1)')(0.5));
-
+    KISSY.use('node', function (S) {
         var $ = S.all;
         $('#run').on('click', function () {
             $('.demo').removeClass('run-start run-end').css('left', 10);
-            $('#start,#start2').addClass('run-start').css('left', 500);
-            $('#end').addClass('run-end').css('left', 500);
+            setTimeout(function () {
+                $('#start,#start2').addClass('run-start').css('left', 500);
+                $('#end').addClass('run-end').css('left', 500);
+            }, 100);
         });
     });
 </script>

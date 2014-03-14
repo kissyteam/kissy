@@ -180,6 +180,7 @@
                 S.log(node.attr('id') + " dragdropmiss ");
                 if (node.isProxy) {
                     var dragNode = ev.drag.get("dragNode");
+                    dragNode.css('visibility','hidden');
                     node = node.clone(true).insertBefore(node);
                     var props = {
                         left: dragNode.offset().left - parseInt(dragNode.css('margin-left')),
@@ -190,6 +191,7 @@
                         duration: 0.5,
                         complete: function () {
                             node.remove();
+                            dragNode.css('visibility','');
                         }
                     })
                 } else {

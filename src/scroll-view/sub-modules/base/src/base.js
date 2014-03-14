@@ -5,7 +5,7 @@
  */
 KISSY.add(function (S, require) {
     var Node = require('node');
-    var Anim = require('anim');
+    var TimerAnim = require('anim/timer');
     var Container = require('component/container');
     var Render = require('./base/render');
 
@@ -353,7 +353,7 @@ KISSY.add(function (S, require) {
                 animCfg.node = node;
                 animCfg.to = to;
                 var anim;
-                self.scrollAnims.push(anim = new Anim(animCfg));
+                self.scrollAnims.push(anim = new TimerAnim(animCfg));
                 anim.scrollView = self;
                 anim.run();
             } else {

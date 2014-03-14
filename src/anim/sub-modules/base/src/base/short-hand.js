@@ -9,23 +9,34 @@ KISSY.add(function () {
         // http://www.w3.org/Style/CSS/Tracker/issues/9
         // http://snook.ca/archives/html_and_css/background-position-x-y
         // backgroundPositionX  backgroundPositionY does not support
-        background: [],
+        background: ['backgroundColor'],
 
         border: [
             'borderBottomWidth',
             'borderLeftWidth',
             'borderRightWidth',
             // 'borderSpacing', 组合属性？
-            'borderTopWidth'
+            'borderTopWidth',
+            'borderBottomColor',
+            'borderLeftColor',
+            'borderRightColor',
+            'borderTopColor'
         ],
 
-        'borderBottom': ['borderBottomWidth'],
+        borderColor: [
+            'borderBottomColor',
+            'borderLeftColor',
+            'borderRightColor',
+            'borderTopColor'
+        ],
 
-        'borderLeft': ['borderLeftWidth'],
+        'borderBottom': ['borderBottomWidth', 'borderBottomColor'],
 
-        borderTop: ['borderTopWidth'],
+        'borderLeft': ['borderLeftWidth', 'borderLeftColor'],
 
-        borderRight: ['borderRightWidth'],
+        borderTop: ['borderTopWidth', 'borderTopColor'],
+
+        borderRight: ['borderRightWidth', 'borderRightColor'],
 
         font: [
             'fontSize',

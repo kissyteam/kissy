@@ -2,7 +2,7 @@
 <html>
 <head>
     <script src="/kissy/build/seed.js"></script>
-    <script src="/kissy/src/anim/config.js"></script>
+    <script src="/kissy/src/package.js"></script>
     <style>
         #t {
             position: absolute;
@@ -20,12 +20,12 @@
 <div id="t"></div>
 
 <script>
-    KISSY.use('core', function (S) {
+    KISSY.use('node,anim/timer', function (S, Node, TimerAnim) {
         var $ = S.all, t = $('#t');
         var run = $('#run');
 
         var SPRING_TENSION = 0.3;
-        var ACCELERATION = 30;
+        var ACCELERATION = 300;
 
         run.attr('disabled', false);
         run.on('click', function () {
@@ -33,8 +33,9 @@
             // alert(t.isRunning());
             var startVelocity = 0.3;
             var startValue = parseInt(t.css('left'));
+            S.log('startValue: ' + startValue);
             var velocity = startVelocity * ACCELERATION;
-            t.animate({
+            new TimerAnim(t, {
                 left: {
                     frame: function (anim, fx) {
                         var deltaTime = S.now() - anim.startTime,
@@ -56,7 +57,7 @@
                 complete: function () {
                     run.attr('disabled', false);
                 }
-            });
+            }).run();
         });
     });
 </script>

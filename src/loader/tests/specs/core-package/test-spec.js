@@ -10,7 +10,7 @@ describe('core package', function () {
                     base: '/kissy/src/loader/tests/specs/core-package'
                 }
             },
-            'core': {
+            'node': {
                 debug: true
             }
         });

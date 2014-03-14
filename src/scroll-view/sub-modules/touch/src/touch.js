@@ -6,7 +6,7 @@
 KISSY.add(function (S, require) {
     var ScrollViewBase = require('./base');
     var Node = require('node');
-    var Anim = require('anim');
+    var TimerAnim = require('anim/timer');
     var OUT_OF_BOUND_FACTOR = 0.5;
     var Gesture = Node.Gesture;
     var MAX_SWIPE_VELOCITY = 6;
@@ -96,7 +96,7 @@ KISSY.add(function (S, require) {
         animCfg.node[scrollType] = scroll;
         animCfg.to[scrollType] = null;
 
-        self.scrollAnims.push(new Anim(animCfg).run());
+        self.scrollAnims.push(new TimerAnim(animCfg).run());
     }
 
     var FRICTION = 0.5;

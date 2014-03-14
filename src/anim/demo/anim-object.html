@@ -22,7 +22,7 @@
 <script charset="utf-8" src="/kissy/build/seed.js"></script>
 <script type="text/javascript" src="/kissy/src/package.js"></script>
 <script type="text/javascript">
-    KISSY.use("anim,node", function (S, Anim, Node) {
+    KISSY.use("anim/timer,node", function (S, TimerAnim, Node) {
         var $ = Node.all;
         var ctx = document.getElementById('Canvas').getContext('2d');
 
@@ -41,14 +41,15 @@
         });
 
         var o = {r: 1};
-        var anim = new Anim(o, {
+
+        var anim = new TimerAnim(o, {
             r: 100 //,
             /* r2:200//这个不用 */
         }, {
             easing: "swing",
             duration: 1,
             frame: function (anim, fx) {
-                S.log('run: '+fx.val);
+                S.log('run: ' + fx.val);
                 circle(100, 100, fx.val);
             }
         });
@@ -62,7 +63,7 @@
         //正常node animate方法不受影响
 
         var $box = S.one("#J_Box");
-        var anim2 = new Anim($box, {'width': "200px"});
+        var anim2 = new TimerAnim($box, {'width': "200px"});
         anim2.run();
 
         S.one("#J_Box2").animate({"height": "200px"});

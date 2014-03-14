@@ -4,7 +4,6 @@
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add(function (S, require) {
-    var RE_DASH = /(?:^|-)([a-z])/ig;
     var CustomEvent = require('event/custom');
 
     function bind(v) {
@@ -14,14 +13,6 @@ KISSY.add(function (S, require) {
         } else {
             return S.bind(v);
         }
-    }
-
-    function replaceToUpper() {
-        return arguments[1].toUpperCase();
-    }
-
-    function camelCase(name) {
-        return name.replace(RE_DASH, replaceToUpper);
     }
 
     // atomic flag
@@ -304,7 +295,7 @@ KISSY.add(function (S, require) {
             // debug mode, give the right name for constructor
             if ('@DEBUG@') {
                 /*jshint evil: true*/
-                SubClass = new Function('return function ' + camelCase(name) + '(){ ' +
+                SubClass = new Function('return function ' + S.camelCase(name) + '(){ ' +
                     'this.callSuper.apply(this, arguments);' +
                     '}')();
             } else {

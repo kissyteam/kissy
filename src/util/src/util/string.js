@@ -10,8 +10,16 @@ KISSY.add(function (S, undefined) {
     // include it in the regexp to enforce consistent cross-browser behavior.
     var SUBSTITUTE_REG = /\\?\{([^{}]+)\}/g,
         EMPTY = '';
+    var RE_DASH = /-([a-z])/ig;
+
+    function upperCase() {
+        return arguments[1].toUpperCase();
+    }
 
     S.mix(S, {
+        camelCase: function (name) {
+            return name.replace(RE_DASH, upperCase);
+        },
         /**
          * Substitutes keywords in a string using an object/array.
          * Removes undefined keywords and ignores escaped keywords.

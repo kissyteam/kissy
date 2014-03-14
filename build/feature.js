@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 13 23:52
+build time: Mar 14 14:04
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -10,7 +10,7 @@ build time: Mar 13 23:52
 */
 
 KISSY.add("feature", ["ua"], function(S, require) {
-  var win = S.Env.host, Config = S.Config, UA = require("ua"), namePrefixMap = {Webkit:"-webkit-", Moz:"-moz-", O:"-o-", ms:"ms-"}, doc = win.document || {}, isMsPointerSupported, isPointerSupported, isTransform3dSupported, documentElement = doc && doc.documentElement, navigator, documentElementStyle, isClassListSupportedState = true, isQuerySelectorSupportedState = false, isTouchEventSupportedState = "ontouchstart" in doc && !UA.phantomjs, vendorInfos = {}, ie = UA.ieMode;
+  var win = S.Env.host, Config = S.Config, UA = require("ua"), propertyPrefixes = ["Webkit", "Moz", "O", "ms"], propertyPrefixesLength = propertyPrefixes.length, doc = win.document || {}, isMsPointerSupported, isPointerSupported, isTransform3dSupported, documentElement = doc && doc.documentElement, navigator, documentElementStyle, isClassListSupportedState = true, isQuerySelectorSupportedState = false, isTouchEventSupportedState = "ontouchstart" in doc && !UA.phantomjs, vendorInfos = {}, ie = UA.ieMode;
   if(documentElement) {
     if(documentElement.querySelector && ie !== 8) {
       isQuerySelectorSupportedState = true
@@ -22,17 +22,21 @@ KISSY.add("feature", ["ua"], function(S, require) {
     isPointerSupported = "pointerEnabled" in navigator
   }
   function getVendorInfo(name) {
+    if(name.indexOf("-") !== -1) {
+      name = S.camelCase(name)
+    }
     if(name in vendorInfos) {
       return vendorInfos[name]
     }
     if(!documentElementStyle || name in documentElementStyle) {
-      vendorInfos[name] = {propertyName:name, name:name, propertyNamePrefix:"", namePrefix:""}
+      vendorInfos[name] = {propertyName:name, propertyNamePrefix:""}
     }else {
       var upperFirstName = name.charAt(0).toUpperCase() + name.slice(1), vendorName;
-      for(var propertyNamePrefix in namePrefixMap) {
+      for(var i = 0;i < propertyPrefixesLength;i++) {
+        var propertyNamePrefix = propertyPrefixes[i];
         vendorName = propertyNamePrefix + upperFirstName;
         if(vendorName in documentElementStyle) {
-          vendorInfos[name] = {propertyName:vendorName, name:namePrefixMap[propertyNamePrefix] + name, propertyNamePrefix:propertyNamePrefix, namePrefix:namePrefixMap[propertyNamePrefix]}
+          vendorInfos[name] = {propertyName:vendorName, propertyNamePrefix:propertyNamePrefix}
         }
       }
       vendorInfos[name] = vendorInfos[name] || null

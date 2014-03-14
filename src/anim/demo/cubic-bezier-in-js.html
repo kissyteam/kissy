@@ -2,7 +2,7 @@
 <html>
 <head>
     <script src="/kissy/build/seed.js"></script>
-    <script src="/kissy/src/anim/config.js"></script>
+    <script src="/kissy/src/package.js"></script>
     <style>
         body {
             background: #000;
@@ -47,14 +47,12 @@
 
 <script>
 
-    KISSY.use('core', function (S) {
-//debugger
-//        alert(S.Easing.toFn('cubic-bezier(0,0,0.58,1)')(0.5));
-
+    KISSY.use('node,anim/timer', function (S, Node, TimerAnim) {
         S.all('#run').on('click', function () {
             S.all('.demo').removeClass('run cubic').css('left', 10);
             S.all('#run').attr('disabled', true);
-            new S.Anim('#demo1', {
+
+            new TimerAnim('#demo1', {
                 left: 500
             }, {
                 duration: 2,
@@ -65,7 +63,8 @@
             }).run();
             S.all('#demoCss').addClass('run').css('left', 500);
 
-            new S.Anim('#demo2', {
+
+            new TimerAnim('#demo2', {
                 left: 500
             }, {
                 duration: 2,
@@ -76,17 +75,14 @@
                 return;
             }
 
-
-            new S.Anim('#demo3', {
+            new TimerAnim('#demo3', {
                 left: 500
             }, {
                 duration: 2,
                 easing: 'cubic-bezier(1,0.22,0,0.84)'
             }).run();
 
-
             S.all('#demoCubic').addClass('cubic').css('left', 500);
-
         });
     });
 </script>

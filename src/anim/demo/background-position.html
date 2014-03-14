@@ -2,7 +2,7 @@
 <html>
 <head>
     <script src="/kissy/build/seed.js"></script>
-    <script src="/kissy/src/anim/config.js"></script>
+    <script src="/kissy/src/package.js"></script>
 </head>
 <body>
 
@@ -17,25 +17,25 @@ background-image: url("http://img03.taobaocdn.com/tps/i3/T1UfsTXotcXXb6hPny-500-
 
 <script>
 
-    KISSY.use('core', function (S) {
+    KISSY.use('node,anim/timer', function (S, Node, TimerAnim) {
         S.all('#run').on('click', function () {
             this.disabled = true;
             var start = S.now();
             var t = S.all('#t');
-            t.animate({
-                height:190,
+            new TimerAnim(t, {
+                height: 190,
                 left: {
                     easing: 'easeOut',
                     value: 500,
-                    frame: function (anim,fx) {
-                        S.log(S.JSON.stringify(fx));
+                    frame: function (anim, fx) {
+                        S.log(fx);
                     }
                 },
                 backgroundPosition: {
                     easing: 'easeInStrong',
                     fx: {
                         frame: function (anim, fx) {
-                            var pos=fx.pos;
+                            var pos = fx.pos;
                             var top = -140 * pos;
                             var left = -450 * pos;
                             t[0].style.backgroundPosition = left + 'px ' + top + 'px';
@@ -43,12 +43,12 @@ background-image: url("http://img03.taobaocdn.com/tps/i3/T1UfsTXotcXXb6hPny-500-
                     }
                 }
             }, {
-                duration: 5,
+                duration: 2,
                 easing: 'easeIn',
                 complete: function () {
                     S.log('ok: ' + (S.now() - start));
                 }
-            })
+            }).run();
         });
     });
 </script>

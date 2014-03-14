@@ -11,7 +11,7 @@
 <button id="start">start</button>
 <button id="stop">stop</button>
 <script src="/kissy/build/seed.js"></script>
-<script src="/kissy/src/anim/config.js"></script>
+<script src="/kissy/src/package.js"></script>
 <script >
     KISSY.use("node,event", function (S, Node, Event) {
         var $ = Node.all,
@@ -27,7 +27,7 @@
             var height = node.height();
 
             function anim(next) {
-                var nextDuration = duration
+                var nextDuration = duration;
                 if (next !== undefined) {
                     var currentY = parseFloat(t.css("backgroundPosition").split(/\s/)[1]);
                     nextDuration = (duration / (height * (num - 1))) *
@@ -35,7 +35,7 @@
                             multiple;
                 }
                 node.animate({
-                    backgroundPosition:"0 0"
+                    'background-position':"0px 0px"
                 }, {
                     duration:nextDuration,
                     complete:function () {

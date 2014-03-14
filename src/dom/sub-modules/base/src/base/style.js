@@ -32,7 +32,6 @@ KISSY.add(function (S, require) {
             zIndex: 1,
             zoom: 1
         },
-        rmsPrefix = /^-ms-/,
         EMPTY = '',
         DEFAULT_UNIT = 'px',
         NO_PX_REG = /\d(?!px)[a-z%]+$/i,
@@ -40,21 +39,16 @@ KISSY.add(function (S, require) {
         cssProps = {},
         userSelectProperty,
         defaultDisplay = {},
-        RE_DASH = /-([a-z])/ig;
+        camelCase = S.camelCase;
 
     cssProps['float'] = 'cssFloat';
 
     function normalizeCssPropName(name) {
-        return cssProps[name] || getCssVendorInfo(name).propertyName;
-    }
-
-    function upperCase() {
-        return arguments[1].toUpperCase();
-    }
-
-    function camelCase(name) {
-        // fix #92, ms!
-        return name.replace(rmsPrefix, 'ms-').replace(RE_DASH, upperCase);
+        if (cssProps[name]) {
+            return cssProps[name];
+        }
+        var vendor = getCssVendorInfo(name);
+        return vendor && vendor.propertyName || name;
     }
 
     function getDefaultDisplay(tagName) {
@@ -81,8 +75,6 @@ KISSY.add(function (S, require) {
          * @singleton
          */
         {
-            _camelCase: camelCase,
-
             _cssHooks: cssHooks,
 
             _cssProps: cssProps,

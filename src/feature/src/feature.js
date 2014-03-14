@@ -7,13 +7,14 @@ KISSY.add(function (S, require) {
     var win = S.Env.host,
         Config = S.Config,
         UA = require('ua'),
-        namePrefixMap = {
-            'Webkit': '-webkit-',
-            'Moz': '-moz-',
-            'O': '-o-',
+        propertyPrefixes = [
+            'Webkit',
+            'Moz',
+            'O',
             // ms is special .... !
-            'ms': 'ms-'
-        },
+            'ms'
+        ],
+        propertyPrefixesLength = propertyPrefixes.length,
     // for nodejs
         doc = win.document || {},
         isMsPointerSupported,
@@ -45,6 +46,9 @@ KISSY.add(function (S, require) {
 
     // return prefixed css prefix name
     function getVendorInfo(name) {
+        if (name.indexOf('-') !== -1) {
+            name = S.camelCase(name);
+        }
         if (name in vendorInfos) {
             return vendorInfos[name];
         }
@@ -52,22 +56,19 @@ KISSY.add(function (S, require) {
         if (!documentElementStyle || name in documentElementStyle) {
             vendorInfos[name] = {
                 propertyName: name,
-                name: name,
-                propertyNamePrefix: '',
-                namePrefix: ''
+                propertyNamePrefix: ''
             };
         } else {
             var upperFirstName = name.charAt(0).toUpperCase() + name.slice(1),
                 vendorName;
 
-            for (var propertyNamePrefix in namePrefixMap) {
+            for (var i = 0; i < propertyPrefixesLength; i++) {
+                var propertyNamePrefix = propertyPrefixes[i];
                 vendorName = propertyNamePrefix + upperFirstName;
                 if (vendorName in documentElementStyle) {
                     vendorInfos[name] = {
                         propertyName: vendorName,
-                        name: namePrefixMap[propertyNamePrefix] + name,
-                        propertyNamePrefix: propertyNamePrefix,
-                        namePrefix: namePrefixMap[propertyNamePrefix]
+                        propertyNamePrefix: propertyNamePrefix
                     };
                 }
             }

@@ -40,9 +40,12 @@ KISSY.add(function (S, require) {
          */
         animate: function () {
             var self = this,
+                l = self.length,
+                needClone = self.length > 1,
                 originArgs = S.makeArray(arguments);
-            S.each(self, function (elem) {
-                var args = S.clone(originArgs),
+            for (var i = 0; i < l; i++) {
+                var elem = self[i];
+                var args = needClone ? S.clone(originArgs) : originArgs,
                     arg0 = args[0];
                 if (arg0.to) {
                     arg0.node = elem;
@@ -50,7 +53,7 @@ KISSY.add(function (S, require) {
                 } else {
                     Anim.apply(undefined, [elem].concat(args)).run();
                 }
-            });
+            }
             return self;
         },
         /**

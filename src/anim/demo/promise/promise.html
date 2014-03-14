@@ -11,10 +11,10 @@
 
 </div>
 <script>
-    KISSY.use('node,anim', function (S, Node, Anim) {
+    KISSY.use('node,anim/timer', function (S, Node, TimerAnim) {
         var start = S.now();
         var t = Node.all('#t')[0];
-        var anim = new Anim(t, {width: 200}, {
+        var anim = new TimerAnim(t, {width: 200}, {
             duration: 1,
             complete: function () {
                 S.log('first');
@@ -22,7 +22,7 @@
                 S.log(S.now() - start);
             }
         }).run()
-                .progress(function(){
+                .progress(function () {
                     S.log(arguments[0]);
                 })
                 .then(function () {

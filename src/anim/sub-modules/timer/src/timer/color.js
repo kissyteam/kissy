@@ -5,7 +5,6 @@
  */
 KISSY.add(function (S, require) {
     var Fx = require('./fx');
-    var SHORT_HANDS = require('./short-hand');
     var logger = S.getLogger('s/anim/timer/color');
     var HEX_BASE = 16,
 
@@ -41,38 +40,6 @@ KISSY.add(function (S, require) {
             'color' ,
             'outlineColor'
         ];
-
-    SHORT_HANDS.background.push('backgroundColor');
-
-    SHORT_HANDS.borderColor = [
-        'borderBottomColor',
-        'borderLeftColor',
-        'borderRightColor',
-        'borderTopColor'
-    ];
-
-    SHORT_HANDS.border.push(
-        'borderBottomColor',
-        'borderLeftColor',
-        'borderRightColor',
-        'borderTopColor'
-    );
-
-    SHORT_HANDS.borderBottom.push(
-        'borderBottomColor'
-    );
-
-    SHORT_HANDS.borderLeft.push(
-        'borderLeftColor'
-    );
-
-    SHORT_HANDS.borderRight.push(
-        'borderRightColor'
-    );
-
-    SHORT_HANDS.borderTop.push(
-        'borderTopColor'
-    );
 
     //得到颜色的数值表示，红绿蓝数字数组
     function numericColor(val) {

@@ -3,7 +3,7 @@
 <head>
     <script src="/kissy/build/seed.js"></script>
 
-    <script src="/kissy/src/anim/config.js"></script>
+    <script src="/kissy/src/package.js"></script>
     <script src="/kissy/tools/third-party/raphael.js"></script>
     <style>
         body {
@@ -40,7 +40,7 @@
 </div>
 
 <script>
-    KISSY.use('core', function (S) {
+    KISSY.use('node,anim/timer', function (S, Node, TimerAnim) {
         var $ = S.all;
         var easings = [
             [
@@ -83,7 +83,7 @@
 
                 gap = [0, 0, 100, 250, 0];
 
-        var easingFns = S.Anim.Easing;
+        var easingFns = TimerAnim.Easing;
 
         for (var i = 0; i < easings.length; i++) {
             var single = easings[i];
@@ -128,7 +128,7 @@
 
             for (var j = 0; j < easings.length; j++) {
                 var color = nextColour(),
-                        easing=easings[j],
+                        easing = easings[j],
                         path = "";
                 easingHTML.push(S.substitute("<span style='color:{color}'>{easing}</span>", {
                     color: Raphael.getRGB(color).hex,
@@ -136,10 +136,10 @@
                 }));
 
                 for (i = 0; i < steps2; i++) {
-                    var ratio=i/steps2,
-                            ratioY=easingFns.toFn(easing)(ratio);
-                    var sx = ratio*w;
-                    var sy = (y +  ratioY* h);
+                    var ratio = i / steps2,
+                            ratioY = easingFns.toFn(easing)(ratio);
+                    var sx = ratio * w;
+                    var sy = (y + ratioY * h);
                     // if (sy > 1e10) {
                     // backBoth bug
                     // }
