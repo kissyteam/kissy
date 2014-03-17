@@ -13,7 +13,7 @@ KISSY.add(function (S, engine) {
     var it = function (name, fn) {
         var self;
         window.it(name, function () {
-            S.log('******************: ' + name);
+            // S.log('******************: ' + name);
             fn.call(self);
         });
     };
