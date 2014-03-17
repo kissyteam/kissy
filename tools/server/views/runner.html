@@ -33,6 +33,7 @@
     {{/if}}
     <script>
         var component = '{{{component}}}';
+        window.travisJobId='{{{travisJobId}}}';
         delete KISSY.Env.mods[component];
         {{{externalScript}}}
     </script>

@@ -416,9 +416,9 @@ function jscoverage_updateBrowser() {
 }
 
 function jscoverage_openWindow() {
-    var input = document.getElementById("location");
-    var url = input.value;
-    window.open(url, 'jscoverage_window');
+    // var input = document.getElementById("location");
+    // var url = input.value;
+    window.open(window.testJSS, 'jscoverage_window');
 }
 
 function jscoverage_input_keypress(e) {

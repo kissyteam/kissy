@@ -27,7 +27,7 @@
            minimum-scale=1.0,
            user-scalable=no">
     <meta name="data-spm" content="1" data-spm-protocol="i" />
-    <title>JSCover</title>
+    <title>{{component}}</title>
     <link rel="stylesheet" type="text/css" href="/kissy/tools/js-cover/assets/jscoverage-highlight.css"/>
     <link rel="stylesheet" type="text/css" href="/kissy/tools/js-cover/assets/jscoverage.css"/>
     <!--[if IE]>
@@ -35,11 +35,12 @@
     <![endif]-->
     <script>
         window.testJSS='{{{jss}}}?coverage';
+        window.travisJobId='{{{travisJobId}}}';
     </script>
     <script type="text/javascript" src="/kissy/tools/js-cover/assets/jscoverage.js"></script>
 </head>
 
-<body onload="jscoverage_body_load();jscoverage_updateBrowser();"
+<body onload="jscoverage_body_load();jscoverage_openWindow();"
       onresize="jscoverage_body_resize();">
 <div id="mainDiv">
     <div id="headingDiv">

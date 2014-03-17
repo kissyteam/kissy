@@ -16,6 +16,10 @@ function startServer(port) {
     app.set('views', path.join(__dirname, 'views'));
     app.engine('html', require('../../lib/xtemplate').__express);
 
+    app.locals({
+        travisJobId: process.env.TRAVIS_JOB_ID
+    });
+
     var domain = require('domain');
 
     app.use(function (req, res, next) {
