@@ -63,5 +63,5 @@ function next(url) {
 
 // specified = '/kissy/src/color/tests/runner/test.jss?coverage';
 // specified = '/src/seed/tests/specs/package-raw/test-combo.html';
-specified = '/kissy/src/dd/tests/runner/test.jss?coverage';
+// specified = '/kissy/src/dd/tests/runner/test.jss?coverage';
 next(specified);
