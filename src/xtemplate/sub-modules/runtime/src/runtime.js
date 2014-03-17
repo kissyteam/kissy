@@ -33,6 +33,12 @@ KISSY.add(function (S, require) {
     }
 
     var utils = {
+        'normalizeOutput':function(str){
+            if (!str && str !== 0) {
+                return '';
+            }
+            return str;
+        },
         'callCommand': function (engine, scope, options, name, line) {
             var ret = '';
             var commands = engine.config.commands;

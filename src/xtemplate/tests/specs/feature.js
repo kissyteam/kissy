@@ -100,6 +100,23 @@ KISSY.add(function (S, require) {
             expect(render).toBe('1');
         });
 
+
+        it('support express as index', function () {
+            var tpl = '{{data["m"+"y"]}}';
+
+            var data = {
+                data: {
+                    my: 1
+                },
+                d: 'my'
+            };
+
+            var render = new XTemplate(tpl).render(data);
+
+            expect(render).toBe('1');
+        });
+
+
         it('support cache', function () {
             var tpl = '{{title}}';
             expect(new XTemplate(tpl).tpl).toBe(new XTemplate(tpl).tpl);
@@ -167,6 +184,19 @@ KISSY.add(function (S, require) {
         });
 
         describe('if', function () {
+            it('support access length attribute of array', function () {
+                var tpl = '{{arr.length}} {{#if(arr.length)}}have elements{{else}}empty{{/if}}';
+                var data = {
+                    arr: ['a', 'b']
+                };
+                var render = new XTemplate(tpl).render(data);
+                expect(render).toBe('2 have elements');
+                render = new XTemplate(tpl).render({
+                    arr: []
+                });
+                expect(render).toBe('0 empty');
+            });
+
             it('support nested properties', function () {
                 var tpl = '{{#with (z)}}{{#if (data.x)}}x{{else}}y{{/if}}{{/with}}';
                 var data = {
@@ -185,7 +215,7 @@ KISSY.add(function (S, require) {
                 var tpl = '{{#with (z)}}{{#if (data.x)}}x{{else}}y{{/if}}{{/with}}';
                 var data = {
                     data: {
-                        x:1
+                        x: 1
                     },
                     z: {
                         data: {
@@ -972,90 +1002,154 @@ KISSY.add(function (S, require) {
 
             });
 
-            it('support relational expression', function () {
+            describe('relational expression', function () {
+                it('support relational expression', function () {
 
-                var tpl = '{{#if( n > n2+4/2)}}' +
-                    '{{n+1}}' +
-                    '{{else}}' +
-                    '{{n2+1}}' +
-                    '{{/if}}';
+                    var tpl = '{{#if( n > n2+4/2)}}' +
+                        '{{n+1}}' +
+                        '{{else}}' +
+                        '{{n2+1}}' +
+                        '{{/if}}';
 
-                var tpl3 = '{{#if (n === n2+4/2)}}' +
-                    '{{n+1}}' +
-                    '{{else}}' +
-                    '{{n2+1}}' +
-                    '{{/if}}';
+                    var tpl3 = '{{#if (n === n2+4/2)}}' +
+                        '{{n+1}}' +
+                        '{{else}}' +
+                        '{{n2+1}}' +
+                        '{{/if}}';
 
 
-                var tpl4 = '{{#if (n !== n2+4/2)}}' +
-                    '{{n+1}}' +
-                    '{{else}}' +
-                    '{{n2+1}}' +
-                    '{{/if}}';
+                    var tpl4 = '{{#if (n !== n2+4/2)}}' +
+                        '{{n+1}}' +
+                        '{{else}}' +
+                        '{{n2+1}}' +
+                        '{{/if}}';
 
-                var tpl5 = '{{#if (n<5)}}0{{else}}1{{/if}}';
+                    var tpl5 = '{{#if (n<5)}}0{{else}}1{{/if}}';
 
-                var tpl6 = '{{#if (n>=4)}}1{{else}}0{{/if}}';
+                    var tpl6 = '{{#if (n>=4)}}1{{else}}0{{/if}}';
 
-                var data = {
-                        n: 5,
-                        n2: 2
-                    }, data2 = {
-                        n: 1,
-                        n2: 2
-                    },
-                    data3 = {
-                        n: 4,
-                        n2: 2
+                    var data = {
+                            n: 5,
+                            n2: 2
+                        }, data2 = {
+                            n: 1,
+                            n2: 2
+                        },
+                        data3 = {
+                            n: 4,
+                            n2: 2
+                        };
+
+                    expect(new XTemplate(tpl).render(data)).toBe('6');
+
+                    expect(new XTemplate(tpl).render(data2)).toBe('3');
+
+                    expect(new XTemplate(tpl3).render(data3)).toBe('5');
+
+                    expect(new XTemplate(tpl4).render(data3)).toBe('3');
+
+                    expect(new XTemplate(tpl5).render({n: 5})).toBe('1');
+
+                    expect(new XTemplate(tpl6).render({n: 4})).toBe('1');
+                });
+
+                it('support relational expression in each', function () {
+                    var tpl = '{{#each (data)}}' +
+                        '{{#if (this > ../limit+1)}}' +
+                        '{{this+1}}-{{xindex+1}}-{{xcount}}|' +
+                        '{{/if}}' +
+                        '{{/each}}' +
+                        '';
+
+                    var data = {
+                        data: [11, 5, 12, 6, 19, 0],
+                        limit: 10
                     };
 
-                expect(new XTemplate(tpl).render(data)).toBe('6');
+                    expect(new XTemplate(tpl).render(data)).toBe('13-3-6|20-5-6|');
 
-                expect(new XTemplate(tpl).render(data2)).toBe('3');
+                });
 
-                expect(new XTemplate(tpl3).render(data3)).toBe('5');
+                it('support relational expression in with', function () {
+                    var tpl = '{{#with (data)}}' +
+                        '{{#if (n > ../limit/5)}}' +
+                        '{{n+1}}' +
+                        '{{/if}}' +
+                        '{{/with}}';
 
-                expect(new XTemplate(tpl4).render(data3)).toBe('3');
+                    var data = {
+                        data: {
+                            n: 5
+                        },
+                        limit: 10
+                    };
 
-                expect(new XTemplate(tpl5).render({n: 5})).toBe('1');
+                    expect(new XTemplate(tpl).render(data)).toBe('6');
 
-                expect(new XTemplate(tpl6).render({n: 4})).toBe('1');
-            });
+                });
+
+                it('allows short circuit of &&', function () {
+                    var tpl = '{{#if(arr && run())}}ok{{else}}not ok{{/if}}';
+                    var run = 0;
+                    var data = {
+                    };
+                    expect(new XTemplate(tpl, {
+                        commands: {
+                            run: function () {
+                                run = 1;
+                            }
+                        }
+                    }).render(data)).toBe('not ok');
+                    expect(run).toBe(0);
+                });
+
+                it('allows short circuit of &&', function () {
+                    var tpl = '{{#if(arr && run())}}ok{{else}}not ok{{/if}}';
+                    var run = 0;
+                    var data = {
+                        arr: 1
+                    };
+                    expect(new XTemplate(tpl, {
+                        commands: {
+                            run: function () {
+                                run = 1;
+                            }
+                        }
+                    }).render(data)).toBe('not ok');
+                    expect(run).toBe(1);
+                });
+
+                it('allows short circuit of ||', function () {
+                    var tpl = '{{#if(arr || run())}}ok{{else}}not ok{{/if}}';
+                    var run = 0;
+                    var data = {
+                    };
+                    expect(new XTemplate(tpl, {
+                        commands: {
+                            run: function () {
+                                run = 1;
+                            }
+                        }
+                    }).render(data)).toBe('not ok');
+                    expect(run).toBe(1);
+                });
 
 
-            it('support relational expression in each', function () {
-                var tpl = '{{#each (data)}}' +
-                    '{{#if (this > ../limit+1)}}' +
-                    '{{this+1}}-{{xindex+1}}-{{xcount}}|' +
-                    '{{/if}}' +
-                    '{{/each}}' +
-                    '';
-
-                var data = {
-                    data: [11, 5, 12, 6, 19, 0],
-                    limit: 10
-                };
-
-                expect(new XTemplate(tpl).render(data)).toBe('13-3-6|20-5-6|');
-
-            });
-
-            it('support relational expression in with', function () {
-                var tpl = '{{#with (data)}}' +
-                    '{{#if (n > ../limit/5)}}' +
-                    '{{n+1}}' +
-                    '{{/if}}' +
-                    '{{/with}}';
-
-                var data = {
-                    data: {
-                        n: 5
-                    },
-                    limit: 10
-                };
-
-                expect(new XTemplate(tpl).render(data)).toBe('6');
-
+                it('allows short circuit of ||', function () {
+                    var tpl = '{{#if(arr || run())}}ok{{else}}not ok{{/if}}';
+                    var run = 0;
+                    var data = {
+                        arr: 1
+                    };
+                    expect(new XTemplate(tpl, {
+                        commands: {
+                            run: function () {
+                                run = 1;
+                            }
+                        }
+                    }).render(data)).toBe('ok');
+                    expect(run).toBe(0);
+                });
             });
 
             it('support conditional expression', function () {

@@ -135,6 +135,7 @@ KISSY.add(function (S) {
                         }
                     } else {
                         // may not be object at all
+                        // note array is object!
                         if (v == null || typeof v !== 'object' || !(p in v)) {
                             valid = 0;
                             break;
@@ -159,8 +160,7 @@ KISSY.add(function (S) {
 
                 scope = scope.parent;
             }
-            // for speed, return empty by default
-            return '';
+            return undefined;
         }
     };
 

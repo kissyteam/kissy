@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 13 18:04
+build time: Mar 17 21:36
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -124,7 +124,7 @@ KISSY.add("xtemplate/runtime/scope", [], function(S) {
       }
       scope = scope.parent
     }
-    return""
+    return undefined
   }};
   return Scope
 });
@@ -339,7 +339,12 @@ KISSY.add("xtemplate/runtime", ["./runtime/commands", "./runtime/scope"], functi
     }
     return cmd
   }
-  var utils = {callCommand:function(engine, scope, options, name, line) {
+  var utils = {normalizeOutput:function(str) {
+    if(!str && str !== 0) {
+      return""
+    }
+    return str
+  }, callCommand:function(engine, scope, options, name, line) {
     var ret = "";
     var commands = engine.config.commands;
     var command1 = findCommand(commands, name);

@@ -146,6 +146,7 @@ KISSY.add(function (S) {
         var self = this;
         self.op1 = op1;
         self.op2 = op2;
+        self.opType = '&&';
     };
 
     ast.ConditionalAndExpression.prototype.type = 'conditionalAndExpression';
@@ -154,6 +155,7 @@ KISSY.add(function (S) {
         var self = this;
         self.op1 = op1;
         self.op2 = op2;
+        self.opType = '||';
     };
 
     ast.ConditionalOrExpression.prototype.type = 'conditionalOrExpression';

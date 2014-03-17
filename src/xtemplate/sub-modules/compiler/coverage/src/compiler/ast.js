@@ -309,45 +309,47 @@ if (! _$jscoverage['/compiler/ast.js']) {
   _$jscoverage['/compiler/ast.js'].lineData[146] = 0;
   _$jscoverage['/compiler/ast.js'].lineData[147] = 0;
   _$jscoverage['/compiler/ast.js'].lineData[148] = 0;
-  _$jscoverage['/compiler/ast.js'].lineData[151] = 0;
-  _$jscoverage['/compiler/ast.js'].lineData[153] = 0;
+  _$jscoverage['/compiler/ast.js'].lineData[149] = 0;
+  _$jscoverage['/compiler/ast.js'].lineData[152] = 0;
   _$jscoverage['/compiler/ast.js'].lineData[154] = 0;
   _$jscoverage['/compiler/ast.js'].lineData[155] = 0;
   _$jscoverage['/compiler/ast.js'].lineData[156] = 0;
-  _$jscoverage['/compiler/ast.js'].lineData[159] = 0;
+  _$jscoverage['/compiler/ast.js'].lineData[157] = 0;
+  _$jscoverage['/compiler/ast.js'].lineData[158] = 0;
   _$jscoverage['/compiler/ast.js'].lineData[161] = 0;
-  _$jscoverage['/compiler/ast.js'].lineData[162] = 0;
   _$jscoverage['/compiler/ast.js'].lineData[163] = 0;
   _$jscoverage['/compiler/ast.js'].lineData[164] = 0;
-  _$jscoverage['/compiler/ast.js'].lineData[167] = 0;
+  _$jscoverage['/compiler/ast.js'].lineData[165] = 0;
+  _$jscoverage['/compiler/ast.js'].lineData[166] = 0;
   _$jscoverage['/compiler/ast.js'].lineData[169] = 0;
-  _$jscoverage['/compiler/ast.js'].lineData[170] = 0;
   _$jscoverage['/compiler/ast.js'].lineData[171] = 0;
   _$jscoverage['/compiler/ast.js'].lineData[172] = 0;
-  _$jscoverage['/compiler/ast.js'].lineData[175] = 0;
+  _$jscoverage['/compiler/ast.js'].lineData[173] = 0;
+  _$jscoverage['/compiler/ast.js'].lineData[174] = 0;
   _$jscoverage['/compiler/ast.js'].lineData[177] = 0;
-  _$jscoverage['/compiler/ast.js'].lineData[178] = 0;
   _$jscoverage['/compiler/ast.js'].lineData[179] = 0;
   _$jscoverage['/compiler/ast.js'].lineData[180] = 0;
-  _$jscoverage['/compiler/ast.js'].lineData[183] = 0;
+  _$jscoverage['/compiler/ast.js'].lineData[181] = 0;
+  _$jscoverage['/compiler/ast.js'].lineData[182] = 0;
   _$jscoverage['/compiler/ast.js'].lineData[185] = 0;
-  _$jscoverage['/compiler/ast.js'].lineData[186] = 0;
+  _$jscoverage['/compiler/ast.js'].lineData[187] = 0;
   _$jscoverage['/compiler/ast.js'].lineData[188] = 0;
-  _$jscoverage['/compiler/ast.js'].lineData[189] = 0;
-  _$jscoverage['/compiler/ast.js'].lineData[192] = 0;
+  _$jscoverage['/compiler/ast.js'].lineData[190] = 0;
+  _$jscoverage['/compiler/ast.js'].lineData[191] = 0;
   _$jscoverage['/compiler/ast.js'].lineData[194] = 0;
-  _$jscoverage['/compiler/ast.js'].lineData[195] = 0;
-  _$jscoverage['/compiler/ast.js'].lineData[198] = 0;
-  _$jscoverage['/compiler/ast.js'].lineData[199] = 0;
+  _$jscoverage['/compiler/ast.js'].lineData[196] = 0;
+  _$jscoverage['/compiler/ast.js'].lineData[197] = 0;
   _$jscoverage['/compiler/ast.js'].lineData[200] = 0;
   _$jscoverage['/compiler/ast.js'].lineData[201] = 0;
   _$jscoverage['/compiler/ast.js'].lineData[202] = 0;
+  _$jscoverage['/compiler/ast.js'].lineData[203] = 0;
   _$jscoverage['/compiler/ast.js'].lineData[204] = 0;
-  _$jscoverage['/compiler/ast.js'].lineData[207] = 0;
-  _$jscoverage['/compiler/ast.js'].lineData[208] = 0;
+  _$jscoverage['/compiler/ast.js'].lineData[206] = 0;
   _$jscoverage['/compiler/ast.js'].lineData[209] = 0;
-  _$jscoverage['/compiler/ast.js'].lineData[212] = 0;
+  _$jscoverage['/compiler/ast.js'].lineData[210] = 0;
+  _$jscoverage['/compiler/ast.js'].lineData[211] = 0;
   _$jscoverage['/compiler/ast.js'].lineData[214] = 0;
+  _$jscoverage['/compiler/ast.js'].lineData[216] = 0;
 }
 if (! _$jscoverage['/compiler/ast.js'].functionData) {
   _$jscoverage['/compiler/ast.js'].functionData = [];
@@ -382,18 +384,18 @@ if (! _$jscoverage['/compiler/ast.js'].branchData) {
   _$jscoverage['/compiler/ast.js'].branchData['15'][1] = new BranchData();
   _$jscoverage['/compiler/ast.js'].branchData['43'] = [];
   _$jscoverage['/compiler/ast.js'].branchData['43'][1] = new BranchData();
-  _$jscoverage['/compiler/ast.js'].branchData['199'] = [];
-  _$jscoverage['/compiler/ast.js'].branchData['199'][1] = new BranchData();
   _$jscoverage['/compiler/ast.js'].branchData['201'] = [];
   _$jscoverage['/compiler/ast.js'].branchData['201'][1] = new BranchData();
+  _$jscoverage['/compiler/ast.js'].branchData['203'] = [];
+  _$jscoverage['/compiler/ast.js'].branchData['203'][1] = new BranchData();
 }
-_$jscoverage['/compiler/ast.js'].branchData['201'][1].init(45, 10, 'p === \'..\'');
-function visit6_201_1(result) {
-  _$jscoverage['/compiler/ast.js'].branchData['201'][1].ranCondition(result);
+_$jscoverage['/compiler/ast.js'].branchData['203'][1].init(45, 10, 'p === \'..\'');
+function visit6_203_1(result) {
+  _$jscoverage['/compiler/ast.js'].branchData['203'][1].ranCondition(result);
   return result;
-}_$jscoverage['/compiler/ast.js'].branchData['199'][1].init(151, 5, 'i < l');
-function visit5_199_1(result) {
-  _$jscoverage['/compiler/ast.js'].branchData['199'][1].ranCondition(result);
+}_$jscoverage['/compiler/ast.js'].branchData['201'][1].init(151, 5, 'i < l');
+function visit5_201_1(result) {
+  _$jscoverage['/compiler/ast.js'].branchData['201'][1].ranCondition(result);
   return result;
 }_$jscoverage['/compiler/ast.js'].branchData['43'][1].init(115, 40, '!sameArray(command.id.parts, closeParts)');
 function visit4_43_1(result) {
@@ -601,98 +603,102 @@ KISSY.add(function(S) {
   self.op1 = op1;
   _$jscoverage['/compiler/ast.js'].lineData[148]++;
   self.op2 = op2;
+  _$jscoverage['/compiler/ast.js'].lineData[149]++;
+  self.opType = '&&';
 };
-  _$jscoverage['/compiler/ast.js'].lineData[151]++;
+  _$jscoverage['/compiler/ast.js'].lineData[152]++;
   ast.ConditionalAndExpression.prototype.type = 'conditionalAndExpression';
-  _$jscoverage['/compiler/ast.js'].lineData[153]++;
+  _$jscoverage['/compiler/ast.js'].lineData[154]++;
   ast.ConditionalOrExpression = function(op1, op2) {
   _$jscoverage['/compiler/ast.js'].functionData[14]++;
-  _$jscoverage['/compiler/ast.js'].lineData[154]++;
-  var self = this;
   _$jscoverage['/compiler/ast.js'].lineData[155]++;
-  self.op1 = op1;
+  var self = this;
   _$jscoverage['/compiler/ast.js'].lineData[156]++;
+  self.op1 = op1;
+  _$jscoverage['/compiler/ast.js'].lineData[157]++;
   self.op2 = op2;
+  _$jscoverage['/compiler/ast.js'].lineData[158]++;
+  self.opType = '||';
 };
-  _$jscoverage['/compiler/ast.js'].lineData[159]++;
-  ast.ConditionalOrExpression.prototype.type = 'conditionalOrExpression';
   _$jscoverage['/compiler/ast.js'].lineData[161]++;
+  ast.ConditionalOrExpression.prototype.type = 'conditionalOrExpression';
+  _$jscoverage['/compiler/ast.js'].lineData[163]++;
   ast.String = function(lineNumber, value) {
   _$jscoverage['/compiler/ast.js'].functionData[15]++;
-  _$jscoverage['/compiler/ast.js'].lineData[162]++;
-  var self = this;
-  _$jscoverage['/compiler/ast.js'].lineData[163]++;
-  self.lineNumber = lineNumber;
   _$jscoverage['/compiler/ast.js'].lineData[164]++;
+  var self = this;
+  _$jscoverage['/compiler/ast.js'].lineData[165]++;
+  self.lineNumber = lineNumber;
+  _$jscoverage['/compiler/ast.js'].lineData[166]++;
   self.value = value;
 };
-  _$jscoverage['/compiler/ast.js'].lineData[167]++;
-  ast.String.prototype.type = 'string';
   _$jscoverage['/compiler/ast.js'].lineData[169]++;
+  ast.String.prototype.type = 'string';
+  _$jscoverage['/compiler/ast.js'].lineData[171]++;
   ast.Number = function(lineNumber, value) {
   _$jscoverage['/compiler/ast.js'].functionData[16]++;
-  _$jscoverage['/compiler/ast.js'].lineData[170]++;
-  var self = this;
-  _$jscoverage['/compiler/ast.js'].lineData[171]++;
-  self.lineNumber = lineNumber;
   _$jscoverage['/compiler/ast.js'].lineData[172]++;
+  var self = this;
+  _$jscoverage['/compiler/ast.js'].lineData[173]++;
+  self.lineNumber = lineNumber;
+  _$jscoverage['/compiler/ast.js'].lineData[174]++;
   self.value = value;
 };
-  _$jscoverage['/compiler/ast.js'].lineData[175]++;
-  ast.Number.prototype.type = 'number';
   _$jscoverage['/compiler/ast.js'].lineData[177]++;
+  ast.Number.prototype.type = 'number';
+  _$jscoverage['/compiler/ast.js'].lineData[179]++;
   ast.Boolean = function(lineNumber, value) {
   _$jscoverage['/compiler/ast.js'].functionData[17]++;
-  _$jscoverage['/compiler/ast.js'].lineData[178]++;
-  var self = this;
-  _$jscoverage['/compiler/ast.js'].lineData[179]++;
-  self.lineNumber = lineNumber;
   _$jscoverage['/compiler/ast.js'].lineData[180]++;
+  var self = this;
+  _$jscoverage['/compiler/ast.js'].lineData[181]++;
+  self.lineNumber = lineNumber;
+  _$jscoverage['/compiler/ast.js'].lineData[182]++;
   self.value = value;
 };
-  _$jscoverage['/compiler/ast.js'].lineData[183]++;
-  ast.Boolean.prototype.type = 'boolean';
   _$jscoverage['/compiler/ast.js'].lineData[185]++;
+  ast.Boolean.prototype.type = 'boolean';
+  _$jscoverage['/compiler/ast.js'].lineData[187]++;
   ast.Hash = function(lineNumber) {
   _$jscoverage['/compiler/ast.js'].functionData[18]++;
-  _$jscoverage['/compiler/ast.js'].lineData[186]++;
-  var self = this, value = {};
   _$jscoverage['/compiler/ast.js'].lineData[188]++;
+  var self = this, value = {};
+  _$jscoverage['/compiler/ast.js'].lineData[190]++;
   self.lineNumber = lineNumber;
-  _$jscoverage['/compiler/ast.js'].lineData[189]++;
+  _$jscoverage['/compiler/ast.js'].lineData[191]++;
   self.value = value;
 };
-  _$jscoverage['/compiler/ast.js'].lineData[192]++;
-  ast.Hash.prototype.type = 'hash';
   _$jscoverage['/compiler/ast.js'].lineData[194]++;
+  ast.Hash.prototype.type = 'hash';
+  _$jscoverage['/compiler/ast.js'].lineData[196]++;
   ast.Id = function(lineNumber, raw) {
   _$jscoverage['/compiler/ast.js'].functionData[19]++;
-  _$jscoverage['/compiler/ast.js'].lineData[195]++;
+  _$jscoverage['/compiler/ast.js'].lineData[197]++;
   var self = this, parts = [], depth = 0;
-  _$jscoverage['/compiler/ast.js'].lineData[198]++;
+  _$jscoverage['/compiler/ast.js'].lineData[200]++;
   self.lineNumber = lineNumber;
-  _$jscoverage['/compiler/ast.js'].lineData[199]++;
-  for (var i = 0, l = raw.length; visit5_199_1(i < l); i++) {
-    _$jscoverage['/compiler/ast.js'].lineData[200]++;
+  _$jscoverage['/compiler/ast.js'].lineData[201]++;
+  for (var i = 0, l = raw.length; visit5_201_1(i < l); i++) {
+    _$jscoverage['/compiler/ast.js'].lineData[202]++;
     var p = raw[i];
-    _$jscoverage['/compiler/ast.js'].lineData[201]++;
-    if (visit6_201_1(p === '..')) {
-      _$jscoverage['/compiler/ast.js'].lineData[202]++;
+    _$jscoverage['/compiler/ast.js'].lineData[203]++;
+    if (visit6_203_1(p === '..')) {
+      _$jscoverage['/compiler/ast.js'].lineData[204]++;
       depth++;
     } else {
-      _$jscoverage['/compiler/ast.js'].lineData[204]++;
+      _$jscoverage['/compiler/ast.js'].lineData[206]++;
       parts.push(p);
     }
   }
-  _$jscoverage['/compiler/ast.js'].lineData[207]++;
-  self.parts = parts;
-  _$jscoverage['/compiler/ast.js'].lineData[208]++;
-  self.string = parts.join('.');
   _$jscoverage['/compiler/ast.js'].lineData[209]++;
+  self.parts = parts;
+  _$jscoverage['/compiler/ast.js'].lineData[210]++;
+  self.string = parts.join('.');
+  _$jscoverage['/compiler/ast.js'].lineData[211]++;
   self.depth = depth;
 };
-  _$jscoverage['/compiler/ast.js'].lineData[212]++;
-  ast.Id.prototype.type = 'id';
   _$jscoverage['/compiler/ast.js'].lineData[214]++;
+  ast.Id.prototype.type = 'id';
+  _$jscoverage['/compiler/ast.js'].lineData[216]++;
   return ast;
 });
