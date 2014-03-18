@@ -7,6 +7,7 @@ KISSY.add(function (S, require) {
     var nativeCommands = require('./runtime/commands');
     var commands = {};
     var Scope = require('./runtime/scope');
+    var LinkedBuffer = require('./runtime/linked-buffer');
 
 //    function merge(from, to) {
 //        for (var i in to) {
@@ -33,26 +34,17 @@ KISSY.add(function (S, require) {
     }
 
     var utils = {
-        'normalizeOutput':function(str){
-            if (!str && str !== 0) {
-                return '';
-            }
-            return str;
-        },
-        'callCommand': function (engine, scope, options, name, line) {
-            var ret = '';
+        'callCommand': function (engine, buffer, scope, option, name, line) {
             var commands = engine.config.commands;
+            var error;
             var command1 = findCommand(commands, name);
             if (command1) {
-                try {
-                    ret = command1.call(engine, scope, options);
-                } catch (e) {
-                    S.error('in file: ' + engine.name + ' ' + e.message + ': "' + name + '" at line ' + line);
-                }
+                return command1.call(engine, buffer, scope, option);
             } else {
-                S.error('in file: ' + engine.name + ' can not find command: ' + name + '" at line ' + line);
+                error = 'in file: ' + engine.name + ' can not find command: ' + name + '" at line ' + line;
+                S.error(error);
             }
-            return ret;
+            return buffer;
         }
     };
 
@@ -122,7 +114,7 @@ KISSY.add(function (S, require) {
         load: function (subTplName) {
             var tpl = S.require(subTplName);
             if (!tpl) {
-                S.error('template "' + subTplName + '" does not exist, ' + 'need to be required or used first!');
+                S.error('template "' + subTplName + '" does not exist, need to be required or used first!');
             }
             var engine = new this.constructor(tpl, this.config);
             engine.name = subTplName;
@@ -154,30 +146,44 @@ KISSY.add(function (S, require) {
         /**
          * get result by merge data with template
          * @param data
+         * @param callback function called
          * @param payload internal usage
          * @return {String}
          */
-        render: function (data, payload) {
+        render: function (data, callback, payload) {
             var root = data;
             var self = this;
+            var tpl = self.tpl;
+            var buffer;
             if (!(root && root.isScope)) {
                 root = new Scope(data);
             }
-            payload = payload || {};
-            payload.extendTplName = null;
-            if (self.tpl.TPL_NAME && !self.name) {
-                self.name = self.tpl.TPL_NAME;
+            var html = '';
+            if (!payload) {
+                callback = callback || function (error, ret) {
+                    html = ret;
+                };
+                buffer = new LinkedBuffer(callback).head;
+                payload = {
+                    buffer: buffer
+                };
             }
-            var html = self.tpl(root, S, payload);
+            payload.extendTplName = null;
+            if (tpl.TPL_NAME && !self.name) {
+                self.name = tpl.TPL_NAME;
+            }
+            tpl.call(self, root, S, payload);
             var extendTplName = payload.extendTplName;
             // if has extend statement, only parse
             if (extendTplName) {
-                return nativeCommands.include.call(self, root, {
+                nativeCommands.include.call(self, payload.buffer, root, {
                     params: [extendTplName]
                 }, payload);
-            } else {
-                return html;
             }
+            if (buffer) {
+                buffer.end();
+            }
+            return html;
         }
     };
 

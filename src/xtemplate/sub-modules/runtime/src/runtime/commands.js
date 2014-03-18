@@ -24,22 +24,19 @@ KISSY.add(function (S, require) {
     }
 
     commands = {
-        'debugger': S.noop,
-
-        'each': function (scope, option) {
+        'each': function (buffer, scope, option) {
             var params = option.params;
             var param0 = params[0];
             var xindexName = params[2] || 'xindex';
             var valueName = params[1];
-            var buffer = '';
             var xcount;
             var opScope;
             var affix;
             // if undefined, will emit warning by compiler
             if (param0) {
-                opScope = new Scope();
                 if (S.isArray(param0)) {
                     xcount = param0.length;
+                    opScope = new Scope();
                     affix = opScope.affix = {
                         xcount: xcount
                     };
@@ -51,9 +48,10 @@ KISSY.add(function (S, require) {
                             affix[valueName] = param0[xindex];
                         }
                         opScope.setParent(scope);
-                        buffer += option.fn(opScope);
+                        buffer = option.fn(buffer, opScope);
                     }
                 } else {
+                    opScope = new Scope();
                     affix = opScope.affix = {};
                     for (var name in param0) {
                         opScope.data = param0[name];
@@ -62,51 +60,48 @@ KISSY.add(function (S, require) {
                             affix[valueName] = param0[name];
                         }
                         opScope.setParent(scope);
-                        buffer += option.fn(opScope);
+                        buffer = option.fn(buffer, opScope);
                     }
                 }
-
             } else if (option.inverse) {
-                buffer = option.inverse(scope);
+                buffer = option.inverse(buffer, scope);
             }
             return buffer;
         },
 
-        'with': function (scope, option) {
+        'with': function (buffer, scope, option) {
             var params = option.params;
             var param0 = params[0];
-            var buffer = '';
             if (param0) {
                 // skip object check for performance
                 var opScope = new Scope(param0);
                 opScope.setParent(scope);
-                buffer = option.fn(opScope);
+                buffer = option.fn(buffer, opScope);
             } else if (option.inverse) {
-                buffer = option.inverse(scope);
+                buffer = option.inverse(buffer, scope);
             }
             return buffer;
         },
 
-        'if': function (scope, option) {
+        'if': function (buffer, scope, option) {
             var params = option.params;
             var param0 = params[0];
-            var buffer = '';
             if (param0) {
                 if (option.fn) {
-                    buffer = option.fn(scope);
+                    buffer = option.fn(buffer, scope);
                 }
             } else if (option.inverse) {
-                buffer = option.inverse(scope);
+                buffer = option.inverse(buffer, scope);
             }
             return buffer;
         },
 
-        'set': function (scope, option) {
+        'set': function (buffer, scope, option) {
             scope.mix(option.hash);
-            return '';
+            return buffer;
         },
 
-        include: function (scope, option, payload) {
+        include: function (buffer, scope, option, payload) {
             var params = option.params;
             var self = this;
             // sub template scope
@@ -121,25 +116,31 @@ KISSY.add(function (S, require) {
 
             if (subTplName.charAt(0) === '.') {
                 if (!myName) {
-                    S.error('parent template does not have name' + ' for relative sub tpl name: ' + subTplName);
-                    return '';
+                    var error = 'parent template does not have name' + ' for relative sub tpl name: ' + subTplName;
+                    S.error(error);
+                    return buffer;
                 }
                 subTplName = getSubNameFromParentName(myName, subTplName);
             }
 
-            return self.load(subTplName).render(scope, payload);
+            payload.buffer = buffer;
+
+            self.load(subTplName).render(scope, undefined, payload);
+
+            return payload.buffer;
         },
 
-        parse: function (scope, option) {
+        parse: function (buffer, scope, option) {
             // abandon scope
-            return commands.include.call(this, new Scope(), option);
+            return commands.include.call(this, buffer, new Scope(), option);
         },
 
-        extend: function (scope, option, payload) {
+        extend: function (buffer, scope, option, payload) {
             payload.extendTplName = option.params[0];
+            return buffer;
         },
 
-        block: function (scope, option, payload) {
+        block: function (buffer, scope, option, payload) {
             var self = this;
             var params = option.params;
             var blockName = params[0];
@@ -172,21 +173,21 @@ KISSY.add(function (S, require) {
                     prev.next = current;
                 }
             }
-            var ret = '';
+
             if (!payload.extendTplName) {
                 cursor = blocks[blockName];
                 while (cursor) {
                     if (cursor.fn) {
-                        ret += cursor.fn.call(self, scope);
+                        buffer = cursor.fn.call(self, buffer, scope);
                     }
                     cursor = cursor.next;
                 }
-
             }
-            return ret;
+
+            return buffer;
         },
 
-        'macro': function (scope, option, payload) {
+        'macro': function (buffer, scope, option, payload) {
             var params = option.params;
             var macroName = params[0];
             var params1 = params.slice(1);
@@ -209,18 +210,20 @@ KISSY.add(function (S, require) {
                     }
                     var newScope = new Scope(paramValues);
                     // no caller Scope
-                    return macro.fn.call(self, newScope);
+                    buffer = macro.fn.call(self, buffer, newScope);
                 } else {
-                    S.error('can not find macro:' + name);
+                    var error = 'can not find macro:' + name;
+                    S.error(error);
                 }
             }
-            return '';
+            return buffer;
         }
     };
 
     if ('@DEBUG@') {
-        commands['debugger'] = function () {
+        commands['debugger'] = function (buffer) {
             S.globalEval('debugger');
+            return buffer;
         };
     }
 

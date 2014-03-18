@@ -23,6 +23,9 @@ html(lang="en")
             each val, index in lis
                 li= index + ': ' + val.d + ' of '+title
 
+
+
+
 </script>
 <script type="xtpl" id="testXtpl">
 <!DOCTYPE html>
@@ -50,10 +53,13 @@ html(lang="en")
     <ul>
     {{#each (lis)}}
         <li>{{xindex}}: {{d}} of {{title}}</li>
-    </ul>
     {{/each}}
+    </ul>
 </body>
 </html>
+
+
+
 
 </script>
 <script type="handlebars" id="testHandlebars">
@@ -82,11 +88,42 @@ html(lang="en")
     <ul>
     {{#each lis}}
         <li>{{@index}}: {{d}} of {{title}}</li>
-    </ul>
     {{/each}}
+     </ul>
 </body>
 </html>
+</script>
 
+<script type="dustjs" id="testDustjs">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{title}</title>
+    <script type="text/javascript">
+    if (foo)
+        bar(1 + 5)
+
+    &lt;/script>
+</head>
+<body>
+    <h1>Jade - node template engine</h1>
+    <div id="container" class="col"></div>
+    {?youAreUsingJade}
+        <p>You are amazing</p>
+    {:else}
+        <p>Get on it!</p>
+    {/youAreUsingJade}
+    <p>Jade is a terse and simple
+        templating language with a
+        strong focus on performance
+        and powerful features.</p>
+    <ul>
+    {#lis}
+        <li> {d} : {d} of {title}</li>
+    {/lis}
+     </ul>
+</body>
+</html>
 
 
 </script>
@@ -96,10 +133,12 @@ html(lang="en")
 <pre id="ret"></pre>
 <script src="/kissy/tools/third-party/jade.js"></script>
 <script src="/kissy/tools/third-party/handlebars-v1.3.0.js"></script>
+<script src="/kissy/tools/third-party/dust-full.js"></script>
 <script src="/kissy/build/seed.js"></script>
 <script src="/kissy/src/package.js"></script>
 <button id="startJade">startJade</button>
 <button id="startXtpl">startXtpl</button>
+<button id="startDustjs">startDustjs</button>
 <button id="startHandlebars">startHandlebars</button>
 <script>
     (function () {
@@ -170,6 +209,36 @@ html(lang="en")
                     }
                 }
                 console.timeEnd('handleBars');
+                ret.innerText = html;
+            };
+        })();
+
+        (function () {
+            var compiled = dust.compile(getElementById('testDustjs').innerHTML.trim(), 'intro');
+            dust.loadSource(compiled);
+            getElementById('startDustjs').onclick = function () {
+                console.time('dustjs');
+                for (var i = 0; i < 10000; i++) {
+                    // Render the function
+                    if (debug) {
+                        debugger;
+                    }
+                    dust.render("intro", {
+                        title: 'Jade Demo',
+                        youAreUsingJade: true,
+                        lis: [
+                            {d: 'one'},
+                            {d: 'two'},
+                            {d: 'three'}
+                        ]
+                    }, function (err, out) {
+                        html = out;
+                    });
+                    if (debug) {
+                        break;
+                    }
+                }
+                console.timeEnd('dustjs');
                 ret.innerText = html;
             };
         })();

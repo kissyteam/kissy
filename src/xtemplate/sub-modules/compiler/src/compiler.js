@@ -95,9 +95,7 @@ KISSY.add(function (S, require) {
         if (idParts.length === 1) {
             return null;
         }
-        var i, l,
-            idPart,
-            idPartType,
+        var i, l, idPart, idPartType,
             check = 0,
             nextIdNameCode;
         for (i = 0, l = idParts.length; i < l; i++) {
@@ -128,29 +126,29 @@ KISSY.add(function (S, require) {
 
     function genFunction(statements) {
         var source = [];
-        source.push('function(scope) {');
-        source.push('var buffer = "";');
+        source.push('function(buffer,scope) {\n');
         if (statements) {
             for (var i = 0, len = statements.length; i < len; i++) {
                 pushToArray(source, xtplAstToJs[statements[i].type](statements[i]).source);
             }
         }
-        source.push('return buffer;');
-        source.push('}');
+        source.push('\n return buffer; }');
         return source;
     }
 
     function genTopFunction(statements) {
         var source = [];
         source.push(
-            // current xtemplate engine
-            'var buffer = "",' +
-                'engine = this,' +
+            'var engine = this,' +
                 'moduleWrap,' +
-                'escapeHtml = S.escapeHtml,' +
+                'buffer = payload.buffer,' +
                 'nativeCommands = engine.nativeCommands,' +
                 'utils = engine.utils;'
         );
+        source.push('if("' + S.version + '" !== S.version){' +
+            'throw new Error("current xtemplate file("+engine.name+")(v' + S.version + ') ' +
+            'need to be recompiled using current kissy(v"+ S.version+")!");' +
+            '}');
         source.push('if (typeof module !== "undefined" && module.kissy) {' +
             'moduleWrap = module;' +
             '}');
@@ -160,7 +158,7 @@ KISSY.add(function (S, require) {
                 pushToArray(source, xtplAstToJs[statements[i].type](statements[i]).source);
             }
         }
-        source.push('return buffer;');
+        source.push('payload.buffer = buffer;');
         return {
             params: ['scope', 'S', 'payload', 'undefined'],
             source: source
@@ -207,6 +205,66 @@ KISSY.add(function (S, require) {
 
         return {
             exp: optionName,
+            source: source
+        };
+    }
+
+    function generateCommand(command, escape, block) {
+        var source = [],
+            commandConfigCode,
+            optionName,
+            id = command.id,
+            idName,
+            idString = id.string,
+            inverseFn;
+
+        commandConfigCode = genOptionFromCommand(command);
+
+        if (commandConfigCode) {
+            optionName = commandConfigCode.exp;
+            pushToArray(source, commandConfigCode.source);
+        } else {
+            optionName = guid('option');
+            source.push('var ' + optionName + ' = {};');
+        }
+
+        source.push(optionName + '.escape = ' + !!escape + ';');
+
+        if (block) {
+            var programNode = block.program;
+            source.push(optionName + '.fn=' + genFunction(programNode.statements).join('\n') + ';');
+            if (programNode.inverse) {
+                inverseFn = genFunction(programNode.inverse).join('\n');
+                source.push(optionName + '.inverse=' + inverseFn + ';');
+            }
+        }
+
+        // require include/extend modules
+        if (idString === 'include' || idString === 'extend') {
+            // prevent require parse...
+            source.push('if(moduleWrap) {re' + 'quire("' + command.params[0].value + '");' +
+                optionName + '.params[0] = moduleWrap.resolveByName(' + optionName + '.params[0]);' +
+                '}');
+        }
+
+        if (idString in nativeCommands) {
+            source.push('buffer = ' + idString + 'Command.call(engine, buffer, scope, ' + optionName + ', payload);');
+        } else if (block) {
+            source.push('buffer = callCommandUtil(engine, buffer, scope, ' + optionName +
+                ', ' + '"' + idString + '", ' + idString.lineNumber + ');');
+        } else {
+            // command must be x.y not x[u]
+            // idString = getIdStringFromIdParts(source, id.parts);
+            idName = guid('commandRet');
+            source.push('var ' + idName + ' = callCommandUtil(engine, buffer, scope, ' + optionName +
+                ', ' + '"' + idString + '", ' + idString.lineNumber + ');');
+            source.push('if(' + idName + ' && ' + idName + '.isBuffer){' +
+                'buffer = ' + idName + ';' +
+                idName + ' = undefined;' +
+                '}');
+        }
+        return {
+            exp: idName,
             source: source
         };
     }
@@ -275,90 +333,10 @@ KISSY.add(function (S, require) {
             };
         },
 
-        'command': function (command) {
-            var source = [],
-                idNode = command.id,
-                optionName,
-            //idParts = idNode.parts,
-                idString = idNode.string,
-                commandConfigCode,
-                idName = guid('id');
-
-            commandConfigCode = genOptionFromCommand(command);
-
-            if (commandConfigCode) {
-                optionName = commandConfigCode.exp;
-                pushToArray(source, commandConfigCode.source);
-            }
-
-            // require include/extend modules
-            if (idString === 'include' || idString === 'extend') {
-                // prevent require parse...
-                source.push('if(moduleWrap) {re' + 'quire("' + command.params[0].value + '");' +
-                    optionName + '.params[0] = moduleWrap.resolveByName(' + optionName + '.params[0]);' +
-                    '}');
-            }
-
-            if (idString in nativeCommands) {
-                source.push('var ' + idName + ' = ' + idString +
-                    'Command.call(engine,scope,' + optionName + ',payload);');
-            } else {
-                // command must be x.y not x[u]
-                // idString = getIdStringFromIdParts(source, idParts);
-                source.push('var ' + idName +
-                    ' = callCommandUtil(engine,scope,' +
-                    optionName + ',"' + idString + '",' +
-                    idNode.lineNumber + ');');
-            }
-
-            return {
-                exp: idName,
-                source: source
-            };
-        },
-
+        'command': generateCommand,
 
         'blockStatement': function (block) {
-            var programNode = block.program,
-                source = [],
-                command = block.command,
-                commandConfigCode,
-                optionName,
-                id = command.id,
-                idString = id.string,
-                inverseFn;
-
-            commandConfigCode = genOptionFromCommand(command);
-
-            if (commandConfigCode) {
-                optionName = commandConfigCode.exp;
-                pushToArray(source, commandConfigCode.source);
-            } else {
-                optionName = guid('option');
-                source.push('var ' + optionName + ' = {};');
-            }
-
-            source.push(optionName + '.fn=' + genFunction(programNode.statements).join('\n') + ';');
-
-            if (programNode.inverse) {
-                inverseFn = genFunction(programNode.inverse).join('\n');
-                source.push(optionName + '.inverse=' + inverseFn + ';');
-            }
-
-            if (idString in nativeCommands) {
-                source.push('buffer += ' + idString + 'Command.call(engine, scope, ' + optionName + ',payload);');
-            } else {
-                // command must be x.y not x[u]
-                //idString = getIdStringFromIdParts(source, id.parts);
-                source.push('buffer += callCommandUtil(engine, scope, ' +
-                    optionName + ', ' +
-                    '"' + idString + '", ' +
-                    id.lineNumber + ');');
-            }
-            return {
-                exp: '',
-                source: source
-            };
+            return generateCommand(block.command, false, block);
         },
 
         'expressionStatement': function (expressionStatement) {
@@ -369,15 +347,13 @@ KISSY.add(function (S, require) {
                 type = expression.type,
                 expressionOrVariable;
 
-            code = xtplAstToJs[type](expression);
+            code = xtplAstToJs[type](expression, escape);
 
             pushToArray(source, code.source);
             expressionOrVariable = code.exp;
 
-            if (escape) {
-                source.push('buffer += escapeHtml(' + expressionOrVariable + ');');
-            } else {
-                source.push('buffer += normalizeOutputUtil(' + expressionOrVariable + ');');
+            if (expressionOrVariable) {
+                source.push('buffer.write(' + expressionOrVariable + ',' + !!escape + ');');
             }
 
             return {
@@ -390,7 +366,7 @@ KISSY.add(function (S, require) {
             /*jshint quotmark:false*/
             return {
                 exp: '',
-                source: ["buffer += '" + escapeString(contentStatement.value, 0) + "';"]
+                source: ["buffer.write('" + escapeString(contentStatement.value, 0) + "');"]
             };
         }
     };
