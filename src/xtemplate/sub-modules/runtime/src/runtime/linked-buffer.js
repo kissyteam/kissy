@@ -28,7 +28,7 @@ KISSY.add(function (S) {
             nextFragment.next = self.next;
             asyncFragment.next = nextFragment;
             self.next = asyncFragment;
-            asyncFragment.ready = false;
+            self.ready = true;
             fn(asyncFragment);
             return nextFragment;
         },

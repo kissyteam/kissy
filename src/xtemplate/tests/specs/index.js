@@ -7,4 +7,5 @@ KISSY.add(function (S, require) {
     require('./feature');
     require('./sub-template');
     require('./extend');
+    require('./async');
 });

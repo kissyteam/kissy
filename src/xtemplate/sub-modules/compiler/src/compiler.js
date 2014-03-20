@@ -126,7 +126,7 @@ KISSY.add(function (S, require) {
 
     function genFunction(statements) {
         var source = [];
-        source.push('function(buffer,scope) {\n');
+        source.push('function(scope, buffer) {\n');
         if (statements) {
             for (var i = 0, len = statements.length; i < len; i++) {
                 pushToArray(source, xtplAstToJs[statements[i].type](statements[i]).source);
@@ -141,7 +141,6 @@ KISSY.add(function (S, require) {
         source.push(
             'var engine = this,' +
                 'moduleWrap,' +
-                'buffer = payload.buffer,' +
                 'nativeCommands = engine.nativeCommands,' +
                 'utils = engine.utils;'
         );
@@ -158,9 +157,9 @@ KISSY.add(function (S, require) {
                 pushToArray(source, xtplAstToJs[statements[i].type](statements[i]).source);
             }
         }
-        source.push('payload.buffer = buffer;');
+        source.push('return buffer;');
         return {
-            params: ['scope', 'S', 'payload', 'undefined'],
+            params: ['scope', 'S', 'buffer', 'payload', 'undefined'],
             source: source
         };
     }
@@ -228,8 +227,6 @@ KISSY.add(function (S, require) {
             source.push('var ' + optionName + ' = {};');
         }
 
-        source.push(optionName + '.escape = ' + !!escape + ';');
-
         if (block) {
             var programNode = block.program;
             source.push(optionName + '.fn=' + genFunction(programNode.statements).join('\n') + ';');
@@ -237,6 +234,8 @@ KISSY.add(function (S, require) {
                 inverseFn = genFunction(programNode.inverse).join('\n');
                 source.push(optionName + '.inverse=' + inverseFn + ';');
             }
+        } else {
+            source.push(optionName + '.escape = ' + !!escape + ';');
         }
 
         // require include/extend modules
@@ -248,16 +247,16 @@ KISSY.add(function (S, require) {
         }
 
         if (idString in nativeCommands) {
-            source.push('buffer = ' + idString + 'Command.call(engine, buffer, scope, ' + optionName + ', payload);');
+            source.push('buffer = ' + idString + 'Command.call(engine, scope, ' + optionName + ', buffer, payload);');
         } else if (block) {
-            source.push('buffer = callCommandUtil(engine, buffer, scope, ' + optionName +
-                ', ' + '"' + idString + '", ' + idString.lineNumber + ');');
+            source.push('buffer = callCommandUtil(engine, scope, ' + optionName +
+                ', buffer, ' + '"' + idString + '", ' + idString.lineNumber + ');');
         } else {
             // command must be x.y not x[u]
             // idString = getIdStringFromIdParts(source, id.parts);
             idName = guid('commandRet');
-            source.push('var ' + idName + ' = callCommandUtil(engine, buffer, scope, ' + optionName +
-                ', ' + '"' + idString + '", ' + idString.lineNumber + ');');
+            source.push('var ' + idName + ' = callCommandUtil(engine, scope, ' + optionName +
+                ', buffer, ' + '"' + idString + '", ' + idString.lineNumber + ');');
             source.push('if(' + idName + ' && ' + idName + '.isBuffer){' +
                 'buffer = ' + idName + ';' +
                 idName + ' = undefined;' +

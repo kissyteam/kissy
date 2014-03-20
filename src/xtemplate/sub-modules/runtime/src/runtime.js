@@ -34,12 +34,12 @@ KISSY.add(function (S, require) {
     }
 
     var utils = {
-        'callCommand': function (engine, buffer, scope, option, name, line) {
+        'callCommand': function (engine, scope, option, buffer, name, line) {
             var commands = engine.config.commands;
             var error;
             var command1 = findCommand(commands, name);
             if (command1) {
-                return command1.call(engine, buffer, scope, option);
+                return command1.call(engine, scope, option, buffer);
             } else {
                 error = 'in file: ' + engine.name + ' can not find command: ' + name + '" at line ' + line;
                 S.error(error);
@@ -148,42 +148,45 @@ KISSY.add(function (S, require) {
          * @param data
          * @param callback function called
          * @param payload internal usage
+         * @param buffer internal usage
          * @return {String}
          */
-        render: function (data, callback, payload) {
+        render: function (data, callback, buffer, payload) {
             var root = data;
             var self = this;
             var tpl = self.tpl;
-            var buffer;
+            var isTopRender = !payload;
             if (!(root && root.isScope)) {
                 root = new Scope(data);
             }
             var html = '';
-            if (!payload) {
+            if (!buffer) {
                 callback = callback || function (error, ret) {
                     html = ret;
                 };
                 buffer = new LinkedBuffer(callback).head;
-                payload = {
-                    buffer: buffer
-                };
             }
+            payload = payload || {};
             payload.extendTplName = null;
             if (tpl.TPL_NAME && !self.name) {
                 self.name = tpl.TPL_NAME;
             }
-            tpl.call(self, root, S, payload);
+            buffer = tpl.call(self, root, S, buffer, payload);
             var extendTplName = payload.extendTplName;
             // if has extend statement, only parse
             if (extendTplName) {
-                nativeCommands.include.call(self, payload.buffer, root, {
+                nativeCommands.include.call(self, root, {
                     params: [extendTplName]
-                }, payload);
+                }, buffer, payload);
             }
-            if (buffer) {
+            // included template render
+            if (isTopRender) {
                 buffer.end();
+                return html;
+
+            } else {
+                return buffer;
             }
-            return html;
         }
     };
 

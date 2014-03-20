@@ -24,7 +24,7 @@ KISSY.add(function (S, require) {
     }
 
     commands = {
-        'each': function (buffer, scope, option) {
+        'each': function (scope, option, buffer) {
             var params = option.params;
             var param0 = params[0];
             var xindexName = params[2] || 'xindex';
@@ -48,7 +48,7 @@ KISSY.add(function (S, require) {
                             affix[valueName] = param0[xindex];
                         }
                         opScope.setParent(scope);
-                        buffer = option.fn(buffer, opScope);
+                        buffer = option.fn(opScope, buffer);
                     }
                 } else {
                     opScope = new Scope();
@@ -60,48 +60,48 @@ KISSY.add(function (S, require) {
                             affix[valueName] = param0[name];
                         }
                         opScope.setParent(scope);
-                        buffer = option.fn(buffer, opScope);
+                        buffer = option.fn(opScope, buffer);
                     }
                 }
             } else if (option.inverse) {
-                buffer = option.inverse(buffer, scope);
+                buffer = option.inverse(scope, buffer);
             }
             return buffer;
         },
 
-        'with': function (buffer, scope, option) {
+        'with': function (scope, option, buffer) {
             var params = option.params;
             var param0 = params[0];
             if (param0) {
                 // skip object check for performance
                 var opScope = new Scope(param0);
                 opScope.setParent(scope);
-                buffer = option.fn(buffer, opScope);
+                buffer = option.fn(opScope, buffer);
             } else if (option.inverse) {
-                buffer = option.inverse(buffer, scope);
+                buffer = option.inverse(scope, buffer);
             }
             return buffer;
         },
 
-        'if': function (buffer, scope, option) {
+        'if': function (scope, option, buffer) {
             var params = option.params;
             var param0 = params[0];
             if (param0) {
                 if (option.fn) {
-                    buffer = option.fn(buffer, scope);
+                    buffer = option.fn(scope, buffer);
                 }
             } else if (option.inverse) {
-                buffer = option.inverse(buffer, scope);
+                buffer = option.inverse(scope, buffer);
             }
             return buffer;
         },
 
-        'set': function (buffer, scope, option) {
+        'set': function (scope, option, buffer) {
             scope.mix(option.hash);
             return buffer;
         },
 
-        include: function (buffer, scope, option, payload) {
+        include: function (scope, option, buffer, payload) {
             var params = option.params;
             var self = this;
             // sub template scope
@@ -123,24 +123,20 @@ KISSY.add(function (S, require) {
                 subTplName = getSubNameFromParentName(myName, subTplName);
             }
 
-            payload.buffer = buffer;
-
-            self.load(subTplName).render(scope, undefined, payload);
-
-            return payload.buffer;
+            return self.load(subTplName).render(scope, undefined, buffer, payload);
         },
 
-        parse: function (buffer, scope, option) {
+        parse: function (scope, option, buffer, payload) {
             // abandon scope
-            return commands.include.call(this, buffer, new Scope(), option);
+            return commands.include.call(this, new Scope(), option, buffer, payload);
         },
 
-        extend: function (buffer, scope, option, payload) {
+        extend: function (scope, option, buffer, payload) {
             payload.extendTplName = option.params[0];
             return buffer;
         },
 
-        block: function (buffer, scope, option, payload) {
+        block: function (scope, option, buffer, payload) {
             var self = this;
             var params = option.params;
             var blockName = params[0];
@@ -178,7 +174,7 @@ KISSY.add(function (S, require) {
                 cursor = blocks[blockName];
                 while (cursor) {
                     if (cursor.fn) {
-                        buffer = cursor.fn.call(self, buffer, scope);
+                        buffer = cursor.fn.call(self, scope, buffer);
                     }
                     cursor = cursor.next;
                 }
@@ -187,7 +183,7 @@ KISSY.add(function (S, require) {
             return buffer;
         },
 
-        'macro': function (buffer, scope, option, payload) {
+        'macro': function (scope, option, buffer, payload) {
             var params = option.params;
             var macroName = params[0];
             var params1 = params.slice(1);
@@ -210,7 +206,7 @@ KISSY.add(function (S, require) {
                     }
                     var newScope = new Scope(paramValues);
                     // no caller Scope
-                    buffer = macro.fn.call(self, buffer, newScope);
+                    buffer = macro.fn.call(self, newScope, buffer);
                 } else {
                     var error = 'can not find macro:' + name;
                     S.error(error);
@@ -221,7 +217,7 @@ KISSY.add(function (S, require) {
     };
 
     if ('@DEBUG@') {
-        commands['debugger'] = function (buffer) {
+        commands['debugger'] = function (scope, option, buffer) {
             S.globalEval('debugger');
             return buffer;
         };

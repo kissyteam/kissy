@@ -598,8 +598,8 @@ KISSY.add(function (S, require) {
                 var tpl = 'my {{title()}} is {{{title()}}}';
                 var render = new XTemplate(tpl, {
                     commands: {
-                        title: function (buffer, scope, option) {
-                            return buffer.write('<a>', option.escape);
+                        title: function () {
+                            return '<a>';
                         }
                     }
                 }).render();
@@ -612,8 +612,8 @@ KISSY.add(function (S, require) {
 
                 var render = new XTemplate(tpl, {
                     commands: {
-                        title: function (buffer, scope, option) {
-                            return buffer.write('<a>', option.escape);
+                        title: function () {
+                            return '<a>';
                         }
                     }
                 }).render();
@@ -683,8 +683,8 @@ KISSY.add(function (S, require) {
 
                 var render = new XTemplate(tpl, {
                     commands: {
-                        title: function (buffer, scope, option) {
-                            return buffer.write('2', option.escape);
+                        title: function () {
+                            return '2';
                         }
                     }
                 }).render(data);
@@ -701,8 +701,8 @@ KISSY.add(function (S, require) {
 
                 var render = new XTemplate(tpl, {
                     commands: {
-                        title: function (buffer, scope, option) {
-                            return buffer.write('2', option.escape);
+                        title: function () {
+                            return '2';
                         }
                     }
                 }).render(data);
@@ -722,8 +722,8 @@ KISSY.add(function (S, require) {
 
                 var render = new XTemplate(tpl, {
                     commands: {
-                        title: function (buffer, scope, option) {
-                            return buffer.write('2', option.escape);
+                        title: function () {
+                            return 2;
                         }
                     }
                 }).render(data);
@@ -762,7 +762,7 @@ KISSY.add(function (S, require) {
                         c: 1
                     }
                 };
-                
+
                 var render = new XTemplate(tpl, {
                     commands: {
                         title: function () {
@@ -815,8 +815,9 @@ KISSY.add(function (S, require) {
 
             it('support global command for block', function () {
 
-                XTemplate.addCommand('global2_xcmd', function (scope, option) {
-                    return 'global2-' + option.fn(scope);
+                XTemplate.addCommand('global2_xcmd', function (scope, option, buffer) {
+                    buffer.write('global2-');
+                    return option.fn(scope, buffer);
                 });
 
                 var tpl = 'my {{#global2_xcmd()}}{{title}}{{/global2_xcmd}}';
@@ -841,7 +842,7 @@ KISSY.add(function (S, require) {
 
                 var render = new XTemplate(tpl, {
                     commands: {
-                        'global3': function (buffer, scope, option) {
+                        'global3': function (scope, option) {
                             return 'global3-' + option.params[0];
                         }
                     }
@@ -862,7 +863,7 @@ KISSY.add(function (S, require) {
                 var render = new XTemplate(tpl, {
                     commands: {
                         'global3': {
-                            x: function (buffer, scope, option) {
+                            x: function (scope, option) {
                                 return 'global3-' + option.params[0];
                             }
                         }
@@ -883,9 +884,9 @@ KISSY.add(function (S, require) {
 
                 var render = new XTemplate(tpl, {
                     commands: {
-                        'global4': function (buffer, scope, option) {
+                        'global4': function (scope, option, buffer) {
                             buffer.write('global4-');
-                            return option.fn(buffer, scope);
+                            return option.fn(scope, buffer);
                         }
                     }
                 }).render(data);
@@ -898,12 +899,12 @@ KISSY.add(function (S, require) {
                 var tpl = '{{ join (map (users)) }}';
                 var render = new XTemplate(tpl, {
                     commands: {
-                        'map': function (buffer, scope, option) {
+                        'map': function (scope, option) {
                             return S.map(option.params[0], function (u) {
                                 return u.name;
                             });
                         },
-                        join: function (buffer, scope, option) {
+                        join: function (scope, option) {
                             return option.params[0].join('|');
                         }
                     }
@@ -1243,7 +1244,7 @@ KISSY.add(function (S, require) {
 
                 var render = new XTemplate(tpl, {
                     commands: {
-                        t: function (buffer,scope, option) {
+                        t: function (scope, option) {
                             return option.params[0];
                         }
                     }

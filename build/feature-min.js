@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 14 15:44
+build time: Mar 21 01:21
 */
 KISSY.add("feature",["ua"],function(g,t){function l(a){-1!==a.indexOf("-")&&(a=g.camelCase(a));if(a in f)return f[a];if(!j||a in j)f[a]={propertyName:a,propertyNamePrefix:""};else{for(var e=a.charAt(0).toUpperCase()+a.slice(1),b,d=0;d<u;d++){var c=o[d];b=c+e;b in j&&(f[a]={propertyName:b,propertyNamePrefix:c})}f[a]=f[a]||null}return f[a]}var d=g.Env.host,p=g.Config,c=t("ua"),o=["Webkit","Moz","O","ms"],u=o.length,k=d.document||{},m,n,h,b=k&&k.documentElement,j,q=!0,r=!1,s="ontouchstart"in k&&!c.phantomjs,
 f={},i=c.ieMode;b&&(b.querySelector&&8!==i&&(r=!0),j=b.style,q="classList"in b,c=d.navigator||{},m="msPointerEnabled"in c,n="pointerEnabled"in c);g.Feature={isMsPointerSupported:function(){return m},isPointerSupported:function(){return n},isTouchEventSupported:function(){return s},isTouchGestureSupported:function(){return s||n||m},isDeviceMotionSupported:function(){return!!d.DeviceMotionEvent},isHashChangeSupported:function(){return"onhashchange"in d&&(!i||i>7)},isInputEventSupported:function(){return!p.simulateInputEvent&&

@@ -78,8 +78,8 @@ KISSY.add(function (S, require) {
             };
 
             KISSY.add('xtemplate-test/sub-tpl-4', function () {
-                return function (scope) {
-                    return scope.get('title');
+                return function (scope, S, buffer, payload) {
+                    return buffer.write(scope.get('title'));
                 };
             });
 
@@ -143,9 +143,9 @@ KISSY.add(function (S, require) {
             KISSY.use('xtpls/a-xtpl', function (S, A) {
                 ret = new XTemplate(A).render({
                     a: 1,
-                    d:3,
+                    d: 3,
                     b: {
-                        c:2
+                        c: 2
                     }
                 });
             });

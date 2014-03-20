@@ -547,7 +547,7 @@ function visit10_104_1(result) {
   _$jscoverage['/modules.js'].lineData[243]++;
   config({
   'scroll-view/base': {
-  requires: ['node', 'anim', 'component/container', 'component/extension/content-render']}});
+  requires: ['node', 'anim/timer', 'component/container', 'component/extension/content-render']}});
   _$jscoverage['/modules.js'].lineData[247]++;
   config({
   'scroll-view/plugin/pull-to-refresh': {
@@ -559,7 +559,7 @@ function visit10_104_1(result) {
   _$jscoverage['/modules.js'].lineData[255]++;
   config({
   'scroll-view/touch': {
-  requires: ['scroll-view/base', 'node', 'anim']}});
+  requires: ['scroll-view/base', 'node', 'anim/timer']}});
   _$jscoverage['/modules.js'].lineData[259]++;
   config({
   separator: {

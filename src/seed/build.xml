@@ -75,6 +75,22 @@
             <path location="${component.src.dir}/json.js"/>
         </concat>
 
+        <replaceregexp match="@VERSION@"
+                       replace="${version}"
+                       flags="g"
+                       encoding="${charset}"
+                       byline="true">
+            <fileset dir="${kissy.lib.dir}" includes="seed.js"/>
+        </replaceregexp>
+
+        <replaceregexp match="@TIMESTAMP@"
+                       replace="${timestamp.isoformat}"
+                       flags="g"
+                       byline="true"
+                       encoding="${charset}">
+            <fileset dir="${kissy.lib.dir}" includes="seed.js"/>
+        </replaceregexp>
+
         <delete file="${kissy.lib.dir}/loader.js"/>
     </target>
 </project>

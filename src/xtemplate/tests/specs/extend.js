@@ -17,7 +17,7 @@ KISSY.add(function (S, require) {
         it('support block', function () {
             var base = 'title {{#block ("name")}}{{content}}{{/block}}';
 
-            var sub = '{{extend("template_extend/base")}} {{#block ("name")}}sub {{content}}{{/block}}';
+            var sub = '{{extend("template_extend/base")}}{{#block ("name")}}sub {{content}}{{/block}}';
 
             KISSY.add('template_extend/base', base);
 
@@ -31,13 +31,13 @@ KISSY.add(function (S, require) {
         it('support block append', function () {
             var base = 'title {{#block( "name")}}{{content}}{{/block}}';
 
-            var base2 = '{{extend ("template_extend/base")}} {{#block ("append", "name")}} append base2 {{/block}}';
+            var base2 = '{{extend ("template_extend/base")}}{{#block ("append", "name")}} append base2 {{/block}}';
 
             KISSY.add('template_extend/base', base);
 
             KISSY.add('template_extend/base2', base2);
 
-            var sub = '{{extend ("template_extend/base2")}} {{#block ("append", "name")}} append sub {{/block}}';
+            var sub = '{{extend ("template_extend/base2")}}{{#block ("append", "name")}} append sub {{/block}}';
 
             var result = new XTemplate(sub).render({
                 content: 1
@@ -49,13 +49,13 @@ KISSY.add(function (S, require) {
         it('support block prepend', function () {
             var base = 'title {{#block ("name")}}{{content}}{{/block}}';
 
-            var base2 = '{{extend ("template_extend/base")}} {{#block( "prepend", "name")}} prepend base2 {{/block}}';
+            var base2 = '{{extend ("template_extend/base")}}{{#block( "prepend", "name")}} prepend base2 {{/block}}';
 
             KISSY.add('template_extend/base', base);
 
             KISSY.add('template_extend/base2', base2);
 
-            var sub = '{{extend ("template_extend/base2")}} {{#block( "prepend", "name")}} prepend sub {{/block}}';
+            var sub = '{{extend ("template_extend/base2")}}{{#block( "prepend", "name")}} prepend sub {{/block}}';
 
             var result = new XTemplate(sub).render({
                 content: 1
@@ -67,9 +67,9 @@ KISSY.add(function (S, require) {
         it('support mixing prepend and append', function () {
             var base = 'title {{#block ("name")}}{{content}}{{/block}}';
 
-            var base2 = '{{extend ("template_extend/base")}} {{#block ("prepend", "name")}} prepend base2 {{/block}}';
+            var base2 = '{{extend ("template_extend/base")}}{{#block ("prepend", "name")}} prepend base2 {{/block}}';
 
-            var base3 = '{{extend ("template_extend/base2")}} {{#block( "append", "name")}} append base3 {{/block}}';
+            var base3 = '{{extend ("template_extend/base2")}}{{#block( "append", "name")}} append base3 {{/block}}';
 
             KISSY.add('template_extend/base', base);
 
@@ -77,7 +77,7 @@ KISSY.add(function (S, require) {
 
             KISSY.add('template_extend/base3', base3);
 
-            var sub = '{{extend( "template_extend/base3")}} {{#block ("prepend", "name")}} prepend sub< {{/block}}';
+            var sub = '{{extend( "template_extend/base3")}}{{#block ("prepend", "name")}} prepend sub< {{/block}}';
 
             var result = new XTemplate(sub).render({
                 content: 1
