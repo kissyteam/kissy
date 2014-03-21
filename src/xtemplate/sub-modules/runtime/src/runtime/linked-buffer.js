@@ -42,7 +42,7 @@ KISSY.add(function (S) {
     };
 
     function LinkedBuffer(callback) {
-        this.current = this.head = new Buffer(this);
+        this.head = new Buffer(this);
         this.callback = callback;
         this.data = '';
     }

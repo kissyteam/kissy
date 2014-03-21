@@ -9,12 +9,6 @@ KISSY.add(function (S, require) {
     var Scope = require('./runtime/scope');
     var LinkedBuffer = require('./runtime/linked-buffer');
 
-//    function merge(from, to) {
-//        for (var i in to) {
-//            from[i] = to[i];
-//        }
-//    }
-
     function findCommand(localCommands, name) {
         if (name.indexOf('.') === -1) {
             return localCommands && localCommands[name] || commands[name];
@@ -31,6 +25,38 @@ KISSY.add(function (S, require) {
             }
         }
         return cmd;
+    }
+
+    function getSubNameFromParentName(parentName, subName) {
+        var parts = parentName.split('/');
+        var subParts = subName.split('/');
+        parts.pop();
+        for (var i = 0, l = subParts.length; i < l; i++) {
+            var subPart = subParts[i];
+            if (subPart === '.') {
+            } else if (subPart === '..') {
+                parts.pop();
+            } else {
+                parts.push(subPart);
+            }
+        }
+        return parts.join('/');
+    }
+
+    function renderTpl(self, scope, buffer, payload) {
+        var tpl = self.tpl;
+        payload = payload || {};
+        payload.extendTplName = null;
+        if (tpl.TPL_NAME && !self.name) {
+            self.name = tpl.TPL_NAME;
+        }
+        buffer = tpl.call(self, scope, S, buffer, payload);
+        var extendTplName = payload.extendTplName;
+        // if has extend statement, only parse
+        if (extendTplName) {
+            buffer = self.include(extendTplName, scope, buffer, payload);
+        }
+        return buffer;
     }
 
     var utils = {
@@ -102,6 +128,8 @@ KISSY.add(function (S, require) {
     XTemplateRuntime.prototype = {
         constructor: XTemplateRuntime,
 
+        Scope: Scope,
+
         nativeCommands: nativeCommands,
 
         utils: utils,
@@ -112,11 +140,12 @@ KISSY.add(function (S, require) {
          * @member KISSY.XTemplate.Runtime
          */
         load: function (subTplName) {
+            var self = this;
             var tpl = S.require(subTplName);
             if (!tpl) {
                 S.error('template "' + subTplName + '" does not exist, need to be required or used first!');
             }
-            var engine = new this.constructor(tpl, this.config);
+            var engine = new self.constructor(tpl, self.config);
             engine.name = subTplName;
             return engine;
         },
@@ -143,50 +172,37 @@ KISSY.add(function (S, require) {
             config.commands[commandName] = fn;
         },
 
+        include: function (subTplName, scope, buffer, payload) {
+            var myName = this.name;
+            if (subTplName.charAt(0) === '.') {
+                if (!myName) {
+                    var error = 'parent template does not have name' +
+                        ' for relative sub tpl name: ' + subTplName;
+                    throw new Error(error);
+                }
+                subTplName = getSubNameFromParentName(myName, subTplName);
+            }
+            return renderTpl(this.load(subTplName), scope, buffer, payload);
+        },
+
         /**
          * get result by merge data with template
          * @param data
          * @param callback function called
-         * @param payload internal usage
-         * @param buffer internal usage
          * @return {String}
          */
-        render: function (data, callback, buffer, payload) {
-            var root = data;
-            var self = this;
-            var tpl = self.tpl;
-            var isTopRender = !payload;
-            if (!(root && root.isScope)) {
-                root = new Scope(data);
-            }
+        render: function (data, callback) {
             var html = '';
-            if (!buffer) {
-                callback = callback || function (error, ret) {
-                    html = ret;
-                };
-                buffer = new LinkedBuffer(callback).head;
+            var self = this;
+            callback = callback || function (error, ret) {
+                html = ret;
+            };
+            if (!self.name && self.tpl.TPL_NAME) {
+                self.name = self.tpl.TPL_NAME;
             }
-            payload = payload || {};
-            payload.extendTplName = null;
-            if (tpl.TPL_NAME && !self.name) {
-                self.name = tpl.TPL_NAME;
-            }
-            buffer = tpl.call(self, root, S, buffer, payload);
-            var extendTplName = payload.extendTplName;
-            // if has extend statement, only parse
-            if (extendTplName) {
-                nativeCommands.include.call(self, root, {
-                    params: [extendTplName]
-                }, buffer, payload);
-            }
-            // included template render
-            if (isTopRender) {
-                buffer.end();
-                return html;
-
-            } else {
-                return buffer;
-            }
+            renderTpl(self, new Scope(data),
+                new LinkedBuffer(callback).head).end();
+            return html;
         }
     };
 

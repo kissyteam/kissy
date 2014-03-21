@@ -1,7 +1,6 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 21 02:07
+build time: Mar 22 02:20
 */
-KISSY.add("xtemplate",["xtemplate/runtime","xtemplate/compiler"],function(g,d){function a(){a.superclass.constructor.apply(this,arguments)}var b=d("xtemplate/runtime"),e=d("xtemplate/compiler"),f=a.cache={};g.extend(a,b,{compile:function(){var a,b=this.config,c=this.tpl;if(!1!==b.cache&&(a=f[c]))return a;a=e.compileToFn(c,this.name);!1!==b.cache&&(f[c]=a);return a},render:function(){this.compiled||(this.compiled=1,"string"===typeof this.tpl&&(this.tpl=this.compile()));return a.superclass.render.apply(this,
-arguments)}},{compiler:e,Scope:b.Scope,RunTime:b,addCommand:b.addCommand,removeCommand:b.removeCommand});return a});
+KISSY.add("xtemplate",["xtemplate/runtime","xtemplate/compiler"],function(i,b){function d(a,c){if("string"===typeof a){var f=a,e,b=!c||!1!==c.cache;if(!b||!(e=g[f]))e=h.compileToFn(f,c&&c.name),b&&(g[f]=e);a=e}d.superclass.constructor.call(this,a,c)}var a=b("xtemplate/runtime"),h=b("xtemplate/compiler"),g=d.cache={};i.extend(d,a,{},{Compiler:h,Scope:a.Scope,RunTime:a,addCommand:a.addCommand,removeCommand:a.removeCommand});return d});

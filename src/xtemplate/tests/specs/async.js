@@ -53,7 +53,7 @@ KISSY.add(function (S, require) {
             });
         });
 
-        it('works for block command on sync mode', function () {
+        it('works for each command on sync mode', function () {
             var tpl = 'x{{#each(x)}}{{this}}{{tms(1)}}3{{/each}}y';
             var ret = '';
             expect(new XTemplate(tpl, {
@@ -78,7 +78,7 @@ KISSY.add(function (S, require) {
             });
         });
 
-        it('works for block command on sync mode', function () {
+        it('works for each command on async mode', function () {
             var tpl = 'x{{#each(x)}}{{this}}{{tms(1)}}3{{/each}}y';
             var ret = '';
             expect(new XTemplate(tpl, {
@@ -86,7 +86,9 @@ KISSY.add(function (S, require) {
                     'tms': function (scope, option, buffer) {
                         buffer.write(option.params[0]);
                         return buffer.async(function (asyncBuffer) {
-                            asyncBuffer.write('2').end();
+                            setTimeout(function () {
+                                asyncBuffer.write('2').end();
+                            }, 10);
                         });
                     }
                 }
@@ -102,10 +104,9 @@ KISSY.add(function (S, require) {
                 expect(ret).toBe('xt123b123y');
             });
         });
-
 
         it('works for async block command', function () {
-            var tpl = 'x{{#ach()}}{{tms(1)}}3{{/ach}}y';
+            var tpl = 'x{{#ach()}}{{tms(1)}}3{{/ach}} y';
             var ret = '';
             expect(new XTemplate(tpl, {
                 commands: {
@@ -113,8 +114,39 @@ KISSY.add(function (S, require) {
                         buffer.write(' arch ');
                         return buffer.async(function (asyncBuffer) {
                             setTimeout(function () {
-                                option.fn(scope, asyncBuffer);
+                                option.fn(scope, asyncBuffer).end();
                             }, 100);
+                        }).write(' arch-end');
+                    },
+                    'tms': function (scope, option, buffer) {
+                        buffer.write(option.params[0]);
+                        return buffer.async(function (asyncBuffer) {
+                            setTimeout(function () {
+                                asyncBuffer.write('2').end();
+                            }, 100);
+                        });
+                    }
+                }
+            }).render({ }, function (error, content) {
+                    ret = content;
+                })).toBe('');
+            waitsFor(function () {
+                return ret;
+            });
+            runs(function () {
+                expect(ret).toBe('x arch 123 arch-end y');
+            });
+        });
+
+        it('works for sync block command', function () {
+            var tpl = 'x{{#ach()}}{{tms(1)}}3{{/ach}} y';
+            var ret = '';
+            expect(new XTemplate(tpl, {
+                commands: {
+                    ach: function (scope, option, buffer) {
+                        buffer.write(' arch ');
+                        return buffer.async(function (asyncBuffer) {
+                            option.fn(scope, asyncBuffer).end();
                         }).write(' arch-end');
                     },
                     'tms': function (scope, option, buffer) {
@@ -131,7 +163,39 @@ KISSY.add(function (S, require) {
                 return ret;
             });
             runs(function () {
-                expect(ret).toBe('x arch 123 arch-end');
+                expect(ret).toBe('x arch 123 arch-end y');
+            });
+        });
+
+        it('can combine inline command and block async command', function () {
+            var tpl = '{{#async(1)}}{{upperCase(asyncContent)}}{{/async}}';
+            var ret = '';
+            expect(new XTemplate(tpl, {
+                commands: {
+                    async: function (scope, option, buffer) {
+                        var newScope = new this.Scope();
+                        newScope.setParent(scope);
+                        return buffer.async(function (asyncBuffer) {
+                            setTimeout(function () {
+                                newScope.setData({
+                                    asyncContent: option.params[0] + ' ok'
+                                });
+                                option.fn(newScope, asyncBuffer).end();
+                            }, 100);
+                        });
+                    },
+                    'upperCase': function (scope, option) {
+                        return option.params[0].toUpperCase();
+                    }
+                }
+            }).render({ }, function (error, content) {
+                    ret = content;
+                })).toBe('');
+            waitsFor(function () {
+                return ret;
+            });
+            runs(function () {
+                expect(ret).toBe('1 OK');
             });
         });
     });

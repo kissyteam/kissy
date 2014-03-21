@@ -286,15 +286,15 @@ if (! _$jscoverage['/runtime/linked-buffer.js'].branchData) {
   _$jscoverage['/runtime/linked-buffer.js'].branchData['56'][1] = new BranchData();
 }
 _$jscoverage['/runtime/linked-buffer.js'].branchData['56'][1].init(22, 14, 'fragment.ready');
-function visit36_56_1(result) {
+function visit31_56_1(result) {
   _$jscoverage['/runtime/linked-buffer.js'].branchData['56'][1].ranCondition(result);
   return result;
 }_$jscoverage['/runtime/linked-buffer.js'].branchData['17'][2].init(26, 10, 'data === 0');
-function visit35_17_2(result) {
+function visit30_17_2(result) {
   _$jscoverage['/runtime/linked-buffer.js'].branchData['17'][2].ranCondition(result);
   return result;
 }_$jscoverage['/runtime/linked-buffer.js'].branchData['17'][1].init(18, 18, 'data || data === 0');
-function visit34_17_1(result) {
+function visit29_17_1(result) {
   _$jscoverage['/runtime/linked-buffer.js'].branchData['17'][1].ranCondition(result);
   return result;
 }_$jscoverage['/runtime/linked-buffer.js'].lineData[5]++;
@@ -315,7 +315,7 @@ KISSY.add(function(S) {
   write: function(data, escape) {
   _$jscoverage['/runtime/linked-buffer.js'].functionData[2]++;
   _$jscoverage['/runtime/linked-buffer.js'].lineData[17]++;
-  if (visit34_17_1(data || visit35_17_2(data === 0))) {
+  if (visit29_17_1(data || visit30_17_2(data === 0))) {
     _$jscoverage['/runtime/linked-buffer.js'].lineData[18]++;
     this.data += escape ? S.escapeHtml(data) : data;
   }
@@ -360,7 +360,7 @@ KISSY.add(function(S) {
   function LinkedBuffer(callback) {
     _$jscoverage['/runtime/linked-buffer.js'].functionData[5]++;
     _$jscoverage['/runtime/linked-buffer.js'].lineData[45]++;
-    this.current = this.head = new Buffer(this);
+    this.head = new Buffer(this);
     _$jscoverage['/runtime/linked-buffer.js'].lineData[46]++;
     this.callback = callback;
     _$jscoverage['/runtime/linked-buffer.js'].lineData[47]++;
@@ -376,7 +376,7 @@ KISSY.add(function(S) {
   _$jscoverage['/runtime/linked-buffer.js'].lineData[55]++;
   while (fragment) {
     _$jscoverage['/runtime/linked-buffer.js'].lineData[56]++;
-    if (visit36_56_1(fragment.ready)) {
+    if (visit31_56_1(fragment.ready)) {
       _$jscoverage['/runtime/linked-buffer.js'].lineData[57]++;
       this.data += fragment.data;
     } else {

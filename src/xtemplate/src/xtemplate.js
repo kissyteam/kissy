@@ -5,8 +5,25 @@
  */
 KISSY.add(function (S, require) {
     var XTemplateRuntime = require('xtemplate/runtime');
-    var compiler = require('xtemplate/compiler');
+    var Compiler = require('xtemplate/compiler');
     var cache = XTemplate.cache = {};
+
+    function compile(tpl, config) {
+        var fn;
+        var cacheable = !config || config.cache !== false;
+
+        if (cacheable && (fn = cache[tpl])) {
+            return fn;
+        }
+
+        fn = Compiler.compileToFn(tpl, config && config.name);
+
+        if (cacheable) {
+            cache[tpl] = fn;
+        }
+
+        return fn;
+    }
 
     /*
      *whether cache template string
@@ -28,43 +45,16 @@ KISSY.add(function (S, require) {
      * @class KISSY.XTemplate
      * @extends KISSY.XTemplate.Runtime
      */
-    function XTemplate() {
-        XTemplate.superclass.constructor.apply(this, arguments);
+    function XTemplate(tpl, config) {
+        if (typeof tpl === 'string') {
+            tpl = compile(tpl, config);
+        }
+        XTemplate.superclass.constructor.call(this, tpl, config);
     }
 
     S.extend(XTemplate, XTemplateRuntime, {
-        compile: function () {
-            var fn,
-                self = this,
-                config = self.config,
-                tpl = self.tpl;
-
-            if (config.cache !== false && (fn = cache[tpl])) {
-                return fn;
-            }
-
-            fn = compiler.compileToFn(tpl, self.name);
-
-            if (config.cache !== false) {
-                cache[tpl] = fn;
-            }
-
-            return fn;
-        },
-
-        render: function () {
-            var self = this;
-            if (!self.compiled) {
-                self.compiled = 1;
-                var tpl = self.tpl;
-                if (typeof tpl === 'string') {
-                    self.tpl = self.compile();
-                }
-            }
-            return XTemplate.superclass.render.apply(self, arguments);
-        }
     }, {
-        compiler: compiler,
+        Compiler: Compiler,
 
         Scope: XTemplateRuntime.Scope,
 

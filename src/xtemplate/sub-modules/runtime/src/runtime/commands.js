@@ -4,26 +4,9 @@
  * @ignore
  */
 KISSY.add(function (S, require) {
-    var commands;
     var Scope = require('./scope');
 
-    function getSubNameFromParentName(parentName, subName) {
-        var parts = parentName.split('/');
-        var subParts = subName.split('/');
-        parts.pop();
-        for (var i = 0, l = subParts.length; i < l; i++) {
-            var subPart = subParts[i];
-            if (subPart === '.') {
-            } else if (subPart === '..') {
-                parts.pop();
-            } else {
-                parts.push(subPart);
-            }
-        }
-        return parts.join('/');
-    }
-
-    commands = {
+    var commands = {
         'each': function (scope, option, buffer) {
             var params = option.params;
             var param0 = params[0];
@@ -103,27 +86,13 @@ KISSY.add(function (S, require) {
 
         include: function (scope, option, buffer, payload) {
             var params = option.params;
-            var self = this;
             // sub template scope
             if (option.hash) {
                 var newScope = new Scope(option.hash);
                 newScope.setParent(scope);
                 scope = newScope;
             }
-
-            var myName = self.name;
-            var subTplName = params[0];
-
-            if (subTplName.charAt(0) === '.') {
-                if (!myName) {
-                    var error = 'parent template does not have name' + ' for relative sub tpl name: ' + subTplName;
-                    S.error(error);
-                    return buffer;
-                }
-                subTplName = getSubNameFromParentName(myName, subTplName);
-            }
-
-            return self.load(subTplName).render(scope, undefined, buffer, payload);
+            return this.include(params[0], scope, buffer, payload);
         },
 
         parse: function (scope, option, buffer, payload) {

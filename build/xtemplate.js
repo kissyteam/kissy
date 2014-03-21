@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 21 02:07
+build time: Mar 22 02:20
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -11,32 +11,27 @@ build time: Mar 21 02:07
 
 KISSY.add("xtemplate", ["xtemplate/runtime", "xtemplate/compiler"], function(S, require) {
   var XTemplateRuntime = require("xtemplate/runtime");
-  var compiler = require("xtemplate/compiler");
+  var Compiler = require("xtemplate/compiler");
   var cache = XTemplate.cache = {};
-  function XTemplate() {
-    XTemplate.superclass.constructor.apply(this, arguments)
-  }
-  S.extend(XTemplate, XTemplateRuntime, {compile:function() {
-    var fn, self = this, config = self.config, tpl = self.tpl;
-    if(config.cache !== false && (fn = cache[tpl])) {
+  function compile(tpl, config) {
+    var fn;
+    var cacheable = !config || config.cache !== false;
+    if(cacheable && (fn = cache[tpl])) {
       return fn
     }
-    fn = compiler.compileToFn(tpl, self.name);
-    if(config.cache !== false) {
+    fn = Compiler.compileToFn(tpl, config && config.name);
+    if(cacheable) {
       cache[tpl] = fn
     }
     return fn
-  }, render:function() {
-    var self = this;
-    if(!self.compiled) {
-      self.compiled = 1;
-      var tpl = self.tpl;
-      if(typeof tpl === "string") {
-        self.tpl = self.compile()
-      }
+  }
+  function XTemplate(tpl, config) {
+    if(typeof tpl === "string") {
+      tpl = compile(tpl, config)
     }
-    return XTemplate.superclass.render.apply(self, arguments)
-  }}, {compiler:compiler, Scope:XTemplateRuntime.Scope, RunTime:XTemplateRuntime, addCommand:XTemplateRuntime.addCommand, removeCommand:XTemplateRuntime.removeCommand});
+    XTemplate.superclass.constructor.call(this, tpl, config)
+  }
+  S.extend(XTemplate, XTemplateRuntime, {}, {Compiler:Compiler, Scope:XTemplateRuntime.Scope, RunTime:XTemplateRuntime, addCommand:XTemplateRuntime.addCommand, removeCommand:XTemplateRuntime.removeCommand});
   return XTemplate
 });
 

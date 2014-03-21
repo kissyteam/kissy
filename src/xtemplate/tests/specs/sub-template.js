@@ -34,7 +34,7 @@ KISSY.add(function (S, require) {
 
         it('support sub template compile', function () {
             var tpl = '{{include ("./x")}}';
-            var code = XTemplate.compiler.compileToStr(tpl);
+            var code = XTemplate.Compiler.compileToStr(tpl);
             expect(code.indexOf('require("./x")')).not.toBe(-1);
         });
 
@@ -78,7 +78,7 @@ KISSY.add(function (S, require) {
             };
 
             KISSY.add('xtemplate-test/sub-tpl-4', function () {
-                return function (scope, S, buffer, payload) {
+                return function (scope, S, buffer) {
                     return buffer.write(scope.get('title'));
                 };
             });

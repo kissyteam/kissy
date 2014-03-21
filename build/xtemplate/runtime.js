@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 21 02:07
+build time: Mar 22 02:16
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -130,26 +130,8 @@ KISSY.add("xtemplate/runtime/scope", [], function(S) {
   return Scope
 });
 KISSY.add("xtemplate/runtime/commands", ["./scope"], function(S, require) {
-  var commands;
   var Scope = require("./scope");
-  function getSubNameFromParentName(parentName, subName) {
-    var parts = parentName.split("/");
-    var subParts = subName.split("/");
-    parts.pop();
-    for(var i = 0, l = subParts.length;i < l;i++) {
-      var subPart = subParts[i];
-      if(subPart === ".") {
-      }else {
-        if(subPart === "..") {
-          parts.pop()
-        }else {
-          parts.push(subPart)
-        }
-      }
-    }
-    return parts.join("/")
-  }
-  commands = {each:function(scope, option, buffer) {
+  var commands = {each:function(scope, option, buffer) {
     var params = option.params;
     var param0 = params[0];
     var xindexName = params[2] || "xindex";
@@ -221,23 +203,12 @@ KISSY.add("xtemplate/runtime/commands", ["./scope"], function(S, require) {
     return buffer
   }, include:function(scope, option, buffer, payload) {
     var params = option.params;
-    var self = this;
     if(option.hash) {
       var newScope = new Scope(option.hash);
       newScope.setParent(scope);
       scope = newScope
     }
-    var myName = self.name;
-    var subTplName = params[0];
-    if(subTplName.charAt(0) === ".") {
-      if(!myName) {
-        var error = "parent template does not have name" + " for relative sub tpl name: " + subTplName;
-        S.error(error);
-        return buffer
-      }
-      subTplName = getSubNameFromParentName(myName, subTplName)
-    }
-    return self.load(subTplName).render(scope, undefined, buffer, payload)
+    return this.include(params[0], scope, buffer, payload)
   }, parse:function(scope, option, buffer, payload) {
     return commands.include.call(this, new Scope, option, buffer, payload)
   }, extend:function(scope, option, buffer, payload) {
@@ -348,7 +319,7 @@ KISSY.add("xtemplate/runtime/linked-buffer", [], function(S) {
     return this
   }};
   function LinkedBuffer(callback) {
-    this.current = this.head = new Buffer(this);
+    this.head = new Buffer(this);
     this.callback = callback;
     this.data = ""
   }
@@ -390,6 +361,37 @@ KISSY.add("xtemplate/runtime", ["./runtime/commands", "./runtime/scope", "./runt
     }
     return cmd
   }
+  function getSubNameFromParentName(parentName, subName) {
+    var parts = parentName.split("/");
+    var subParts = subName.split("/");
+    parts.pop();
+    for(var i = 0, l = subParts.length;i < l;i++) {
+      var subPart = subParts[i];
+      if(subPart === ".") {
+      }else {
+        if(subPart === "..") {
+          parts.pop()
+        }else {
+          parts.push(subPart)
+        }
+      }
+    }
+    return parts.join("/")
+  }
+  function renderTpl(self, scope, buffer, payload) {
+    var tpl = self.tpl;
+    payload = payload || {};
+    payload.extendTplName = null;
+    if(tpl.TPL_NAME && !self.name) {
+      self.name = tpl.TPL_NAME
+    }
+    buffer = tpl.call(self, scope, S, buffer, payload);
+    var extendTplName = payload.extendTplName;
+    if(extendTplName) {
+      buffer = self.include(extendTplName, scope, buffer, payload)
+    }
+    return buffer
+  }
   var utils = {callCommand:function(engine, scope, option, buffer, name, line) {
     var commands = engine.config.commands;
     var error;
@@ -416,12 +418,13 @@ KISSY.add("xtemplate/runtime", ["./runtime/commands", "./runtime/scope", "./runt
   }, removeCommand:function(commandName) {
     delete commands[commandName]
   }});
-  XTemplateRuntime.prototype = {constructor:XTemplateRuntime, nativeCommands:nativeCommands, utils:utils, load:function(subTplName) {
+  XTemplateRuntime.prototype = {constructor:XTemplateRuntime, Scope:Scope, nativeCommands:nativeCommands, utils:utils, load:function(subTplName) {
+    var self = this;
     var tpl = S.require(subTplName);
     if(!tpl) {
       S.error('template "' + subTplName + '" does not exist, need to be required or used first!')
     }
-    var engine = new this.constructor(tpl, this.config);
+    var engine = new self.constructor(tpl, self.config);
     engine.name = subTplName;
     return engine
   }, removeCommand:function(commandName) {
@@ -433,37 +436,27 @@ KISSY.add("xtemplate/runtime", ["./runtime/commands", "./runtime/scope", "./runt
     var config = this.config;
     config.commands = config.commands || {};
     config.commands[commandName] = fn
-  }, render:function(data, callback, buffer, payload) {
-    var root = data;
-    var self = this;
-    var tpl = self.tpl;
-    var isTopRender = !payload;
-    if(!(root && root.isScope)) {
-      root = new Scope(data)
+  }, include:function(subTplName, scope, buffer, payload) {
+    var myName = this.name;
+    if(subTplName.charAt(0) === ".") {
+      if(!myName) {
+        var error = "parent template does not have name" + " for relative sub tpl name: " + subTplName;
+        throw new Error(error);
+      }
+      subTplName = getSubNameFromParentName(myName, subTplName)
     }
+    return renderTpl(this.load(subTplName), scope, buffer, payload)
+  }, render:function(data, callback) {
     var html = "";
-    if(!buffer) {
-      callback = callback || function(error, ret) {
-        html = ret
-      };
-      buffer = (new LinkedBuffer(callback)).head
+    var self = this;
+    callback = callback || function(error, ret) {
+      html = ret
+    };
+    if(!self.name && self.tpl.TPL_NAME) {
+      self.name = self.tpl.TPL_NAME
     }
-    payload = payload || {};
-    payload.extendTplName = null;
-    if(tpl.TPL_NAME && !self.name) {
-      self.name = tpl.TPL_NAME
-    }
-    buffer = tpl.call(self, root, S, buffer, payload);
-    var extendTplName = payload.extendTplName;
-    if(extendTplName) {
-      nativeCommands.include.call(self, root, {params:[extendTplName]}, buffer, payload)
-    }
-    if(isTopRender) {
-      buffer.end();
-      return html
-    }else {
-      return buffer
-    }
+    renderTpl(self, new Scope(data), (new LinkedBuffer(callback)).head).end();
+    return html
   }};
   XTemplateRuntime.Scope = Scope;
   return XTemplateRuntime

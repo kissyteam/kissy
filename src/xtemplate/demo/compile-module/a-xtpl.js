@@ -6,15 +6,15 @@ KISSY.add(function (S, require, exports, module) {
                 engine = this,
                 moduleWrap, escapeHtml = S.escapeHtml,
                 nativeCommands = engine.nativeCommands,
-                utils = engine.utils;
+                Util = engine.Util;
             if (typeof module !== "undefined" && module.kissy) {
                 moduleWrap = module;
             }
-            var callCommandUtil = utils.callCommand,
+            var callCommandUtil = Util.callCommand,
                 eachCommand = nativeCommands.each,
                 withCommand = nativeCommands.with,
-                ifCommand = nativeCommands.
-            if, setCommand = nativeCommands.set, includeCommand = nativeCommands.include, parseCommand = nativeCommands.parse, extendCommand = nativeCommands.extend, blockCommand = nativeCommands.block, macroCommand = nativeCommands.macro;
+                ifCommand = nativeCommands['if'],
+                setCommand = nativeCommands.set, includeCommand = nativeCommands.include, parseCommand = nativeCommands.parse, extendCommand = nativeCommands.extend, blockCommand = nativeCommands.block, macroCommand = nativeCommands.macro;
             buffer += '1';
             var option1 = {};
             var params2 = [];
