@@ -235,32 +235,31 @@ if (! _$jscoverage['/swf/ua.js']) {
   _$jscoverage['/swf/ua.js'].lineData[16] = 0;
   _$jscoverage['/swf/ua.js'].lineData[20] = 0;
   _$jscoverage['/swf/ua.js'].lineData[21] = 0;
-  _$jscoverage['/swf/ua.js'].lineData[24] = 0;
-  _$jscoverage['/swf/ua.js'].lineData[25] = 0;
   _$jscoverage['/swf/ua.js'].lineData[26] = 0;
-  _$jscoverage['/swf/ua.js'].lineData[34] = 0;
+  _$jscoverage['/swf/ua.js'].lineData[27] = 0;
   _$jscoverage['/swf/ua.js'].lineData[35] = 0;
-  _$jscoverage['/swf/ua.js'].lineData[39] = 0;
-  _$jscoverage['/swf/ua.js'].lineData[45] = 0;
+  _$jscoverage['/swf/ua.js'].lineData[36] = 0;
+  _$jscoverage['/swf/ua.js'].lineData[40] = 0;
   _$jscoverage['/swf/ua.js'].lineData[46] = 0;
-  _$jscoverage['/swf/ua.js'].lineData[56] = 0;
+  _$jscoverage['/swf/ua.js'].lineData[47] = 0;
   _$jscoverage['/swf/ua.js'].lineData[57] = 0;
-  _$jscoverage['/swf/ua.js'].lineData[61] = 0;
+  _$jscoverage['/swf/ua.js'].lineData[58] = 0;
   _$jscoverage['/swf/ua.js'].lineData[62] = 0;
-  _$jscoverage['/swf/ua.js'].lineData[64] = 0;
-  _$jscoverage['/swf/ua.js'].lineData[70] = 0;
+  _$jscoverage['/swf/ua.js'].lineData[63] = 0;
+  _$jscoverage['/swf/ua.js'].lineData[65] = 0;
   _$jscoverage['/swf/ua.js'].lineData[71] = 0;
   _$jscoverage['/swf/ua.js'].lineData[72] = 0;
   _$jscoverage['/swf/ua.js'].lineData[73] = 0;
   _$jscoverage['/swf/ua.js'].lineData[74] = 0;
-  _$jscoverage['/swf/ua.js'].lineData[84] = 0;
-  _$jscoverage['/swf/ua.js'].lineData[86] = 0;
+  _$jscoverage['/swf/ua.js'].lineData[75] = 0;
+  _$jscoverage['/swf/ua.js'].lineData[85] = 0;
   _$jscoverage['/swf/ua.js'].lineData[87] = 0;
   _$jscoverage['/swf/ua.js'].lineData[88] = 0;
-  _$jscoverage['/swf/ua.js'].lineData[90] = 0;
-  _$jscoverage['/swf/ua.js'].lineData[101] = 0;
+  _$jscoverage['/swf/ua.js'].lineData[89] = 0;
+  _$jscoverage['/swf/ua.js'].lineData[91] = 0;
   _$jscoverage['/swf/ua.js'].lineData[102] = 0;
-  _$jscoverage['/swf/ua.js'].lineData[105] = 0;
+  _$jscoverage['/swf/ua.js'].lineData[103] = 0;
+  _$jscoverage['/swf/ua.js'].lineData[106] = 0;
 }
 if (! _$jscoverage['/swf/ua.js'].functionData) {
   _$jscoverage['/swf/ua.js'].functionData = [];
@@ -278,60 +277,54 @@ if (! _$jscoverage['/swf/ua.js'].branchData) {
   _$jscoverage['/swf/ua.js'].branchData['20'][1] = new BranchData();
   _$jscoverage['/swf/ua.js'].branchData['21'] = [];
   _$jscoverage['/swf/ua.js'].branchData['21'][1] = new BranchData();
-  _$jscoverage['/swf/ua.js'].branchData['24'] = [];
-  _$jscoverage['/swf/ua.js'].branchData['24'][1] = new BranchData();
-  _$jscoverage['/swf/ua.js'].branchData['34'] = [];
-  _$jscoverage['/swf/ua.js'].branchData['34'][1] = new BranchData();
-  _$jscoverage['/swf/ua.js'].branchData['57'] = [];
-  _$jscoverage['/swf/ua.js'].branchData['57'][1] = new BranchData();
-  _$jscoverage['/swf/ua.js'].branchData['61'] = [];
-  _$jscoverage['/swf/ua.js'].branchData['61'][1] = new BranchData();
-  _$jscoverage['/swf/ua.js'].branchData['64'] = [];
-  _$jscoverage['/swf/ua.js'].branchData['64'][1] = new BranchData();
-  _$jscoverage['/swf/ua.js'].branchData['71'] = [];
-  _$jscoverage['/swf/ua.js'].branchData['71'][1] = new BranchData();
-  _$jscoverage['/swf/ua.js'].branchData['74'] = [];
-  _$jscoverage['/swf/ua.js'].branchData['74'][1] = new BranchData();
-  _$jscoverage['/swf/ua.js'].branchData['86'] = [];
-  _$jscoverage['/swf/ua.js'].branchData['86'][1] = new BranchData();
-  _$jscoverage['/swf/ua.js'].branchData['102'] = [];
-  _$jscoverage['/swf/ua.js'].branchData['102'][1] = new BranchData();
+  _$jscoverage['/swf/ua.js'].branchData['35'] = [];
+  _$jscoverage['/swf/ua.js'].branchData['35'][1] = new BranchData();
+  _$jscoverage['/swf/ua.js'].branchData['58'] = [];
+  _$jscoverage['/swf/ua.js'].branchData['58'][1] = new BranchData();
+  _$jscoverage['/swf/ua.js'].branchData['62'] = [];
+  _$jscoverage['/swf/ua.js'].branchData['62'][1] = new BranchData();
+  _$jscoverage['/swf/ua.js'].branchData['65'] = [];
+  _$jscoverage['/swf/ua.js'].branchData['65'][1] = new BranchData();
+  _$jscoverage['/swf/ua.js'].branchData['72'] = [];
+  _$jscoverage['/swf/ua.js'].branchData['72'][1] = new BranchData();
+  _$jscoverage['/swf/ua.js'].branchData['75'] = [];
+  _$jscoverage['/swf/ua.js'].branchData['75'][1] = new BranchData();
+  _$jscoverage['/swf/ua.js'].branchData['87'] = [];
+  _$jscoverage['/swf/ua.js'].branchData['87'][1] = new BranchData();
+  _$jscoverage['/swf/ua.js'].branchData['103'] = [];
+  _$jscoverage['/swf/ua.js'].branchData['103'][1] = new BranchData();
 }
-_$jscoverage['/swf/ua.js'].branchData['102'][1].init(16, 53, 'getNumberVersion(fpv(force)) >= getNumberVersion(ver)');
-function visit11_102_1(result) {
-  _$jscoverage['/swf/ua.js'].branchData['102'][1].ranCondition(result);
+_$jscoverage['/swf/ua.js'].branchData['103'][1].init(16, 53, 'getNumberVersion(fpv(force)) >= getNumberVersion(ver)');
+function visit10_103_1(result) {
+  _$jscoverage['/swf/ua.js'].branchData['103'][1].ranCondition(result);
   return result;
-}_$jscoverage['/swf/ua.js'].branchData['86'][1].init(71, 17, 'force || firstRun');
-function visit10_86_1(result) {
-  _$jscoverage['/swf/ua.js'].branchData['86'][1].ranCondition(result);
+}_$jscoverage['/swf/ua.js'].branchData['87'][1].init(71, 17, 'force || firstRun');
+function visit9_87_1(result) {
+  _$jscoverage['/swf/ua.js'].branchData['87'][1].ranCondition(result);
   return result;
-}_$jscoverage['/swf/ua.js'].branchData['74'][1].init(111, 11, 'padding > 0');
-function visit9_74_1(result) {
-  _$jscoverage['/swf/ua.js'].branchData['74'][1].ranCondition(result);
+}_$jscoverage['/swf/ua.js'].branchData['75'][1].init(111, 11, 'padding > 0');
+function visit8_75_1(result) {
+  _$jscoverage['/swf/ua.js'].branchData['75'][1].ranCondition(result);
   return result;
-}_$jscoverage['/swf/ua.js'].branchData['71'][1].init(15, 8, 'num || 0');
-function visit8_71_1(result) {
-  _$jscoverage['/swf/ua.js'].branchData['71'][1].ranCondition(result);
+}_$jscoverage['/swf/ua.js'].branchData['72'][1].init(15, 8, 'num || 0');
+function visit7_72_1(result) {
+  _$jscoverage['/swf/ua.js'].branchData['72'][1].ranCondition(result);
   return result;
-}_$jscoverage['/swf/ua.js'].branchData['64'][1].init(261, 8, 'ret || 0');
-function visit7_64_1(result) {
-  _$jscoverage['/swf/ua.js'].branchData['64'][1].ranCondition(result);
+}_$jscoverage['/swf/ua.js'].branchData['65'][1].init(261, 8, 'ret || 0');
+function visit6_65_1(result) {
+  _$jscoverage['/swf/ua.js'].branchData['65'][1].ranCondition(result);
   return result;
-}_$jscoverage['/swf/ua.js'].branchData['61'][1].init(140, 14, 'S.isArray(arr)');
-function visit6_61_1(result) {
-  _$jscoverage['/swf/ua.js'].branchData['61'][1].ranCondition(result);
+}_$jscoverage['/swf/ua.js'].branchData['62'][1].init(140, 14, 'S.isArray(arr)');
+function visit5_62_1(result) {
+  _$jscoverage['/swf/ua.js'].branchData['62'][1].ranCondition(result);
   return result;
-}_$jscoverage['/swf/ua.js'].branchData['57'][1].init(19, 23, 'typeof ver === \'string\'');
-function visit5_57_1(result) {
-  _$jscoverage['/swf/ua.js'].branchData['57'][1].ranCondition(result);
+}_$jscoverage['/swf/ua.js'].branchData['58'][1].init(19, 23, 'typeof ver === \'string\'');
+function visit4_58_1(result) {
+  _$jscoverage['/swf/ua.js'].branchData['58'][1].ranCondition(result);
   return result;
-}_$jscoverage['/swf/ua.js'].branchData['34'][1].init(696, 4, '!ver');
-function visit4_34_1(result) {
-  _$jscoverage['/swf/ua.js'].branchData['34'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/swf/ua.js'].branchData['24'][1].init(346, 17, 'win.ActiveXObject');
-function visit3_24_1(result) {
-  _$jscoverage['/swf/ua.js'].branchData['24'][1].ranCondition(result);
+}_$jscoverage['/swf/ua.js'].branchData['35'][1].init(730, 4, '!ver');
+function visit3_35_1(result) {
+  _$jscoverage['/swf/ua.js'].branchData['35'][1].ranCondition(result);
   return result;
 }_$jscoverage['/swf/ua.js'].branchData['21'][1].init(20, 41, 'navigator.plugins[\'Shockwave Flash\'] || 0');
 function visit2_21_1(result) {
@@ -356,75 +349,72 @@ KISSY.add(function(S) {
       _$jscoverage['/swf/ua.js'].lineData[21]++;
       ver = (visit2_21_1(navigator.plugins['Shockwave Flash'] || 0)).description;
     } else {
-      _$jscoverage['/swf/ua.js'].lineData[24]++;
-      if (visit3_24_1(win.ActiveXObject)) {
-        _$jscoverage['/swf/ua.js'].lineData[25]++;
-        try {
-          _$jscoverage['/swf/ua.js'].lineData[26]++;
-          ver = new win.ActiveXObject(SF + '.' + SF).GetVariable('$version');
-        }        catch (ex) {
+      _$jscoverage['/swf/ua.js'].lineData[26]++;
+      try {
+        _$jscoverage['/swf/ua.js'].lineData[27]++;
+        ver = new win.ActiveXObject(SF + '.' + SF).GetVariable('$version');
+      }      catch (ex) {
 }
-      }
     }
-    _$jscoverage['/swf/ua.js'].lineData[34]++;
-    if (visit4_34_1(!ver)) {
-      _$jscoverage['/swf/ua.js'].lineData[35]++;
+    _$jscoverage['/swf/ua.js'].lineData[35]++;
+    if (visit3_35_1(!ver)) {
+      _$jscoverage['/swf/ua.js'].lineData[36]++;
       return undefined;
     }
-    _$jscoverage['/swf/ua.js'].lineData[39]++;
+    _$jscoverage['/swf/ua.js'].lineData[40]++;
     return getArrayVersion(ver);
   }
-  _$jscoverage['/swf/ua.js'].lineData[45]++;
+  _$jscoverage['/swf/ua.js'].lineData[46]++;
   function getArrayVersion(ver) {
     _$jscoverage['/swf/ua.js'].functionData[2]++;
-    _$jscoverage['/swf/ua.js'].lineData[46]++;
+    _$jscoverage['/swf/ua.js'].lineData[47]++;
     return ver.match(/\d+/g).splice(0, 3);
   }
-  _$jscoverage['/swf/ua.js'].lineData[56]++;
+  _$jscoverage['/swf/ua.js'].lineData[57]++;
   function getNumberVersion(ver) {
     _$jscoverage['/swf/ua.js'].functionData[3]++;
-    _$jscoverage['/swf/ua.js'].lineData[57]++;
-    var arr = visit5_57_1(typeof ver === 'string') ? getArrayVersion(ver) : ver, ret = ver;
-    _$jscoverage['/swf/ua.js'].lineData[61]++;
-    if (visit6_61_1(S.isArray(arr))) {
-      _$jscoverage['/swf/ua.js'].lineData[62]++;
+    _$jscoverage['/swf/ua.js'].lineData[58]++;
+    var arr = visit4_58_1(typeof ver === 'string') ? getArrayVersion(ver) : ver, ret = ver;
+    _$jscoverage['/swf/ua.js'].lineData[62]++;
+    if (visit5_62_1(S.isArray(arr))) {
+      _$jscoverage['/swf/ua.js'].lineData[63]++;
       ret = parseFloat(arr[0] + '.' + pad(arr[1], 3) + pad(arr[2], 5));
     }
-    _$jscoverage['/swf/ua.js'].lineData[64]++;
-    return visit7_64_1(ret || 0);
+    _$jscoverage['/swf/ua.js'].lineData[65]++;
+    return visit6_65_1(ret || 0);
   }
-  _$jscoverage['/swf/ua.js'].lineData[70]++;
+  _$jscoverage['/swf/ua.js'].lineData[71]++;
   function pad(num, n) {
     _$jscoverage['/swf/ua.js'].functionData[4]++;
-    _$jscoverage['/swf/ua.js'].lineData[71]++;
-    num = visit8_71_1(num || 0);
     _$jscoverage['/swf/ua.js'].lineData[72]++;
-    num += '';
+    num = visit7_72_1(num || 0);
     _$jscoverage['/swf/ua.js'].lineData[73]++;
-    var padding = n + 1 - num.length;
+    num += '';
     _$jscoverage['/swf/ua.js'].lineData[74]++;
-    return new Array(visit9_74_1(padding > 0) ? padding : 0).join('0') + num;
+    var padding = n + 1 - num.length;
+    _$jscoverage['/swf/ua.js'].lineData[75]++;
+    return new Array(visit8_75_1(padding > 0) ? padding : 0).join('0') + num;
   }
-  _$jscoverage['/swf/ua.js'].lineData[84]++;
+  _$jscoverage['/swf/ua.js'].lineData[85]++;
   function fpv(force) {
     _$jscoverage['/swf/ua.js'].functionData[5]++;
-    _$jscoverage['/swf/ua.js'].lineData[86]++;
-    if (visit10_86_1(force || firstRun)) {
-      _$jscoverage['/swf/ua.js'].lineData[87]++;
-      firstRun = false;
+    _$jscoverage['/swf/ua.js'].lineData[87]++;
+    if (visit9_87_1(force || firstRun)) {
       _$jscoverage['/swf/ua.js'].lineData[88]++;
+      firstRun = false;
+      _$jscoverage['/swf/ua.js'].lineData[89]++;
       fpvCached = getFlashVersion();
     }
-    _$jscoverage['/swf/ua.js'].lineData[90]++;
+    _$jscoverage['/swf/ua.js'].lineData[91]++;
     return fpvCached;
   }
-  _$jscoverage['/swf/ua.js'].lineData[101]++;
+  _$jscoverage['/swf/ua.js'].lineData[102]++;
   function fpvGTE(ver, force) {
     _$jscoverage['/swf/ua.js'].functionData[6]++;
-    _$jscoverage['/swf/ua.js'].lineData[102]++;
-    return visit11_102_1(getNumberVersion(fpv(force)) >= getNumberVersion(ver));
+    _$jscoverage['/swf/ua.js'].lineData[103]++;
+    return visit10_103_1(getNumberVersion(fpv(force)) >= getNumberVersion(ver));
   }
-  _$jscoverage['/swf/ua.js'].lineData[105]++;
+  _$jscoverage['/swf/ua.js'].lineData[106]++;
   return {
   fpv: fpv, 
   fpvGTE: fpvGTE};
