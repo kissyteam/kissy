@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 22 02:15
+build time: Mar 24 03:03
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -182,7 +182,7 @@ KISSY.add("xtemplate/compiler/parser", [], function(_, undefined) {
   }], ["aj", ["aj", "ak"], function() {
     this.$1.push(this.$2)
   }], ["ak", ["c", "al", "h", "ai", "d", "am", "h"], function() {
-    return new this.yy.BlockStatement(this.lexer.lineNumber, this.$2, this.$4, this.$6)
+    return new this.yy.BlockStatement(this.lexer.lineNumber, this.$2, this.$4, this.$6, this.$1.length !== 4)
   }], ["ak", ["f", "an", "h"], function() {
     return new this.yy.ExpressionStatement(this.lexer.lineNumber, this.$2, this.$1.length !== 3)
   }], ["ak", ["b"], function() {
@@ -369,12 +369,13 @@ KISSY.add("xtemplate/compiler/ast", [], function(S) {
     self.inverse = inverse
   };
   ast.ProgramNode.prototype.type = "program";
-  ast.BlockStatement = function(lineNumber, command, program, close) {
+  ast.BlockStatement = function(lineNumber, command, program, close, escape) {
     var closeParts = close.parts, self = this, e;
     if(!sameArray(command.id.parts, closeParts)) {
       e = "Syntax error at line " + lineNumber + ":\n" + "expect {{/" + command.id.parts + "}} not {{/" + closeParts + "}}";
       S.error(e)
     }
+    self.escape = escape;
     self.lineNumber = lineNumber;
     self.command = command;
     self.program = program
@@ -540,17 +541,21 @@ KISSY.add("xtemplate/compiler", ["xtemplate/runtime", "./compiler/parser", "./co
     var source = [], type = e.opType, exp1, exp2, code1Source, code2Source, code1 = xtplAstToJs[e.op1.type](e.op1), code2 = xtplAstToJs[e.op2.type](e.op2);
     exp1 = code1.exp;
     exp2 = code2.exp;
+    var exp = guid("exp");
     code1Source = code1.source;
     code2Source = code2.source;
     pushToArray(source, code1Source);
+    source.push("var " + exp + " = " + exp1 + ";");
     if(type === "&&" || type === "||") {
       source.push("if(" + (type === "&&" ? "" : "!") + "(" + exp1 + ")){");
       pushToArray(source, code2Source);
+      source.push(exp + " = " + exp2 + ";");
       source.push("}")
     }else {
-      pushToArray(source, code2Source)
+      pushToArray(source, code2Source);
+      source.push(exp + " = " + "(" + exp1 + ")" + type + "(" + exp2 + ");")
     }
-    return{exp:"(" + exp1 + ")" + type + "(" + exp2 + ")", source:source}
+    return{exp:exp, source:source}
   }
   function getIdStringFromIdParts(source, idParts) {
     if(idParts.length === 1) {
@@ -606,16 +611,12 @@ KISSY.add("xtemplate/compiler", ["xtemplate/runtime", "./compiler/parser", "./co
     source.push("return buffer;");
     return{params:["scope", "S", "buffer", "payload", "undefined"], source:source}
   }
-  function genOptionFromCommand(command) {
+  function genOptionFromCommand(command, escape) {
     var source = [], optionName, params, hash;
     params = command.params;
     hash = command.hash;
-    if(params || hash) {
-      optionName = guid("option");
-      source.push("var " + optionName + " = {};")
-    }else {
-      return null
-    }
+    optionName = guid("option");
+    source.push("var " + optionName + " = {" + (escape ? "escape:1" : "") + "};");
     if(params) {
       var paramsName = guid("params");
       source.push("var " + paramsName + " = [];");
@@ -640,14 +641,9 @@ KISSY.add("xtemplate/compiler", ["xtemplate/runtime", "./compiler/parser", "./co
   }
   function generateCommand(command, escape, block) {
     var source = [], commandConfigCode, optionName, id = command.id, idName, idString = id.string, inverseFn;
-    commandConfigCode = genOptionFromCommand(command);
-    if(commandConfigCode) {
-      optionName = commandConfigCode.exp;
-      pushToArray(source, commandConfigCode.source)
-    }else {
-      optionName = guid("option");
-      source.push("var " + optionName + " = {};")
-    }
+    commandConfigCode = genOptionFromCommand(command, escape);
+    optionName = commandConfigCode.exp;
+    pushToArray(source, commandConfigCode.source);
     if(block) {
       var programNode = block.program;
       source.push(optionName + ".fn=" + genFunction(programNode.statements).join("\n") + ";");
@@ -655,22 +651,28 @@ KISSY.add("xtemplate/compiler", ["xtemplate/runtime", "./compiler/parser", "./co
         inverseFn = genFunction(programNode.inverse).join("\n");
         source.push(optionName + ".inverse=" + inverseFn + ";")
       }
-    }else {
-      source.push(optionName + ".escape = " + !!escape + ";")
     }
     if(idString === "include" || idString === "extend") {
       source.push("if(moduleWrap) {re" + 'quire("' + command.params[0].value + '");' + optionName + ".params[0] = moduleWrap.resolveByName(" + optionName + ".params[0]);" + "}")
     }
+    if(!block) {
+      idName = guid("commandRet")
+    }
     if(idString in nativeCommands) {
-      source.push("buffer = " + idString + "Command.call(engine, scope, " + optionName + ", buffer, payload);")
+      if(block) {
+        source.push("buffer = " + idString + "Command.call(engine, scope, " + optionName + ", buffer, " + id.lineNumber + ", payload);")
+      }else {
+        source.push("var " + idName + " = " + idString + "Command.call(engine, scope, " + optionName + ", buffer, " + id.lineNumber + ", payload);")
+      }
     }else {
       if(block) {
-        source.push("buffer = callCommandUtil(engine, scope, " + optionName + ", buffer, " + '"' + idString + '", ' + idString.lineNumber + ");")
+        source.push("buffer = callCommandUtil(engine, scope, " + optionName + ", buffer, " + '"' + idString + '", ' + id.lineNumber + ");")
       }else {
-        idName = guid("commandRet");
-        source.push("var " + idName + " = callCommandUtil(engine, scope, " + optionName + ", buffer, " + '"' + idString + '", ' + idString.lineNumber + ");");
-        source.push("if(" + idName + " && " + idName + ".isBuffer){" + "buffer = " + idName + ";" + idName + " = undefined;" + "}")
+        source.push("var " + idName + " = callCommandUtil(engine, scope, " + optionName + ", buffer, " + '"' + idString + '", ' + id.lineNumber + ");")
       }
+    }
+    if(idName) {
+      source.push("if(" + idName + " && " + idName + ".isBuffer){" + "buffer = " + idName + ";" + idName + " = undefined;" + "}")
     }
     return{exp:idName, source:source}
   }
@@ -694,7 +696,7 @@ KISSY.add("xtemplate/compiler", ["xtemplate/runtime", "./compiler/parser", "./co
     }
     return{exp:idName, source:source}
   }, command:generateCommand, blockStatement:function(block) {
-    return generateCommand(block.command, false, block)
+    return generateCommand(block.command, block.escape, block)
   }, expressionStatement:function(expressionStatement) {
     var source = [], escape = expressionStatement.escape, code, expression = expressionStatement.value, type = expression.type, expressionOrVariable;
     code = xtplAstToJs[type](expression, escape);

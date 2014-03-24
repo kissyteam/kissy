@@ -264,9 +264,8 @@ if (! _$jscoverage['/feature.js']) {
   _$jscoverage['/feature.js'].lineData[139] = 0;
   _$jscoverage['/feature.js'].lineData[147] = 0;
   _$jscoverage['/feature.js'].lineData[148] = 0;
-  _$jscoverage['/feature.js'].lineData[150] = 0;
   _$jscoverage['/feature.js'].lineData[151] = 0;
-  _$jscoverage['/feature.js'].lineData[156] = 0;
+  _$jscoverage['/feature.js'].lineData[152] = 0;
   _$jscoverage['/feature.js'].lineData[157] = 0;
   _$jscoverage['/feature.js'].lineData[158] = 0;
   _$jscoverage['/feature.js'].lineData[159] = 0;
@@ -274,11 +273,12 @@ if (! _$jscoverage['/feature.js']) {
   _$jscoverage['/feature.js'].lineData[161] = 0;
   _$jscoverage['/feature.js'].lineData[162] = 0;
   _$jscoverage['/feature.js'].lineData[163] = 0;
-  _$jscoverage['/feature.js'].lineData[166] = 0;
-  _$jscoverage['/feature.js'].lineData[174] = 0;
-  _$jscoverage['/feature.js'].lineData[183] = 0;
-  _$jscoverage['/feature.js'].lineData[187] = 0;
-  _$jscoverage['/feature.js'].lineData[191] = 0;
+  _$jscoverage['/feature.js'].lineData[164] = 0;
+  _$jscoverage['/feature.js'].lineData[167] = 0;
+  _$jscoverage['/feature.js'].lineData[175] = 0;
+  _$jscoverage['/feature.js'].lineData[184] = 0;
+  _$jscoverage['/feature.js'].lineData[188] = 0;
+  _$jscoverage['/feature.js'].lineData[192] = 0;
 }
 if (! _$jscoverage['/feature.js'].functionData) {
   _$jscoverage['/feature.js'].functionData = [];
@@ -337,55 +337,50 @@ if (! _$jscoverage['/feature.js'].branchData) {
   _$jscoverage['/feature.js'].branchData['139'][4] = new BranchData();
   _$jscoverage['/feature.js'].branchData['147'] = [];
   _$jscoverage['/feature.js'].branchData['147'][1] = new BranchData();
-  _$jscoverage['/feature.js'].branchData['150'] = [];
-  _$jscoverage['/feature.js'].branchData['150'][1] = new BranchData();
-  _$jscoverage['/feature.js'].branchData['150'][2] = new BranchData();
-  _$jscoverage['/feature.js'].branchData['161'] = [];
-  _$jscoverage['/feature.js'].branchData['161'][1] = new BranchData();
-  _$jscoverage['/feature.js'].branchData['163'] = [];
-  _$jscoverage['/feature.js'].branchData['163'][1] = new BranchData();
-  _$jscoverage['/feature.js'].branchData['163'][2] = new BranchData();
-  _$jscoverage['/feature.js'].branchData['163'][3] = new BranchData();
-  _$jscoverage['/feature.js'].branchData['163'][4] = new BranchData();
-  _$jscoverage['/feature.js'].branchData['163'][5] = new BranchData();
-  _$jscoverage['/feature.js'].branchData['183'] = [];
-  _$jscoverage['/feature.js'].branchData['183'][1] = new BranchData();
+  _$jscoverage['/feature.js'].branchData['151'] = [];
+  _$jscoverage['/feature.js'].branchData['151'][1] = new BranchData();
+  _$jscoverage['/feature.js'].branchData['162'] = [];
+  _$jscoverage['/feature.js'].branchData['162'][1] = new BranchData();
+  _$jscoverage['/feature.js'].branchData['164'] = [];
+  _$jscoverage['/feature.js'].branchData['164'][1] = new BranchData();
+  _$jscoverage['/feature.js'].branchData['164'][2] = new BranchData();
+  _$jscoverage['/feature.js'].branchData['164'][3] = new BranchData();
+  _$jscoverage['/feature.js'].branchData['164'][4] = new BranchData();
+  _$jscoverage['/feature.js'].branchData['164'][5] = new BranchData();
+  _$jscoverage['/feature.js'].branchData['184'] = [];
+  _$jscoverage['/feature.js'].branchData['184'][1] = new BranchData();
 }
-_$jscoverage['/feature.js'].branchData['183'][1].init(67, 61, '!Config.simulateCss3Selector && isQuerySelectorSupportedState');
-function visit32_183_1(result) {
-  _$jscoverage['/feature.js'].branchData['183'][1].ranCondition(result);
+_$jscoverage['/feature.js'].branchData['184'][1].init(67, 61, '!Config.simulateCss3Selector && isQuerySelectorSupportedState');
+function visit31_184_1(result) {
+  _$jscoverage['/feature.js'].branchData['184'][1].ranCondition(result);
   return result;
-}_$jscoverage['/feature.js'].branchData['163'][5].init(769, 16, 'has3d !== \'none\'');
-function visit31_163_5(result) {
-  _$jscoverage['/feature.js'].branchData['163'][5].ranCondition(result);
+}_$jscoverage['/feature.js'].branchData['164'][5].init(769, 16, 'has3d !== \'none\'');
+function visit30_164_5(result) {
+  _$jscoverage['/feature.js'].branchData['164'][5].ranCondition(result);
   return result;
-}_$jscoverage['/feature.js'].branchData['163'][4].init(749, 16, 'has3d.length > 0');
-function visit30_163_4(result) {
-  _$jscoverage['/feature.js'].branchData['163'][4].ranCondition(result);
+}_$jscoverage['/feature.js'].branchData['164'][4].init(749, 16, 'has3d.length > 0');
+function visit29_164_4(result) {
+  _$jscoverage['/feature.js'].branchData['164'][4].ranCondition(result);
   return result;
-}_$jscoverage['/feature.js'].branchData['163'][3].init(749, 36, 'has3d.length > 0 && has3d !== \'none\'');
-function visit29_163_3(result) {
-  _$jscoverage['/feature.js'].branchData['163'][3].ranCondition(result);
+}_$jscoverage['/feature.js'].branchData['164'][3].init(749, 36, 'has3d.length > 0 && has3d !== \'none\'');
+function visit28_164_3(result) {
+  _$jscoverage['/feature.js'].branchData['164'][3].ranCondition(result);
   return result;
-}_$jscoverage['/feature.js'].branchData['163'][2].init(726, 19, 'has3d !== undefined');
-function visit28_163_2(result) {
-  _$jscoverage['/feature.js'].branchData['163'][2].ranCondition(result);
+}_$jscoverage['/feature.js'].branchData['164'][2].init(726, 19, 'has3d !== undefined');
+function visit27_164_2(result) {
+  _$jscoverage['/feature.js'].branchData['164'][2].ranCondition(result);
   return result;
-}_$jscoverage['/feature.js'].branchData['163'][1].init(726, 59, 'has3d !== undefined && has3d.length > 0 && has3d !== \'none\'');
-function visit27_163_1(result) {
-  _$jscoverage['/feature.js'].branchData['163'][1].ranCondition(result);
+}_$jscoverage['/feature.js'].branchData['164'][1].init(726, 59, 'has3d !== undefined && has3d.length > 0 && has3d !== \'none\'');
+function visit26_164_1(result) {
+  _$jscoverage['/feature.js'].branchData['164'][1].ranCondition(result);
   return result;
-}_$jscoverage['/feature.js'].branchData['161'][1].init(548, 85, 'computedStyle.getPropertyValue(transformProperty) || computedStyle[transformProperty]');
-function visit26_161_1(result) {
-  _$jscoverage['/feature.js'].branchData['161'][1].ranCondition(result);
+}_$jscoverage['/feature.js'].branchData['162'][1].init(548, 85, 'computedStyle.getPropertyValue(transformProperty) || computedStyle[transformProperty]');
+function visit25_162_1(result) {
+  _$jscoverage['/feature.js'].branchData['162'][1].ranCondition(result);
   return result;
-}_$jscoverage['/feature.js'].branchData['150'][2].init(154, 43, 'getVendorInfo(\'transform\').prefix === false');
-function visit25_150_2(result) {
-  _$jscoverage['/feature.js'].branchData['150'][2].ranCondition(result);
-  return result;
-}_$jscoverage['/feature.js'].branchData['150'][1].init(134, 63, '!documentElement || getVendorInfo(\'transform\').prefix === false');
-function visit24_150_1(result) {
-  _$jscoverage['/feature.js'].branchData['150'][1].ranCondition(result);
+}_$jscoverage['/feature.js'].branchData['151'][1].init(135, 47, '!documentElement || !getVendorInfo(\'transform\')');
+function visit24_151_1(result) {
+  _$jscoverage['/feature.js'].branchData['151'][1].ranCondition(result);
   return result;
 }_$jscoverage['/feature.js'].branchData['147'][1].init(17, 36, 'isTransform3dSupported !== undefined');
 function visit23_147_1(result) {
@@ -588,46 +583,46 @@ KISSY.add(function(S, require) {
     _$jscoverage['/feature.js'].lineData[148]++;
     return isTransform3dSupported;
   }
-  _$jscoverage['/feature.js'].lineData[150]++;
-  if (visit24_150_1(!documentElement || visit25_150_2(getVendorInfo('transform').prefix === false))) {
-    _$jscoverage['/feature.js'].lineData[151]++;
+  _$jscoverage['/feature.js'].lineData[151]++;
+  if (visit24_151_1(!documentElement || !getVendorInfo('transform'))) {
+    _$jscoverage['/feature.js'].lineData[152]++;
     isTransform3dSupported = false;
   } else {
-    _$jscoverage['/feature.js'].lineData[156]++;
-    var el = doc.createElement('p');
     _$jscoverage['/feature.js'].lineData[157]++;
-    var transformProperty = getVendorInfo('transform').name;
+    var el = doc.createElement('p');
     _$jscoverage['/feature.js'].lineData[158]++;
-    documentElement.insertBefore(el, documentElement.firstChild);
+    var transformProperty = getVendorInfo('transform').name;
     _$jscoverage['/feature.js'].lineData[159]++;
-    el.style[transformProperty] = 'translate3d(1px,1px,1px)';
+    documentElement.insertBefore(el, documentElement.firstChild);
     _$jscoverage['/feature.js'].lineData[160]++;
-    var computedStyle = win.getComputedStyle(el);
+    el.style[transformProperty] = 'translate3d(1px,1px,1px)';
     _$jscoverage['/feature.js'].lineData[161]++;
-    var has3d = visit26_161_1(computedStyle.getPropertyValue(transformProperty) || computedStyle[transformProperty]);
+    var computedStyle = win.getComputedStyle(el);
     _$jscoverage['/feature.js'].lineData[162]++;
-    documentElement.removeChild(el);
+    var has3d = visit25_162_1(computedStyle.getPropertyValue(transformProperty) || computedStyle[transformProperty]);
     _$jscoverage['/feature.js'].lineData[163]++;
-    isTransform3dSupported = (visit27_163_1(visit28_163_2(has3d !== undefined) && visit29_163_3(visit30_163_4(has3d.length > 0) && visit31_163_5(has3d !== 'none'))));
+    documentElement.removeChild(el);
+    _$jscoverage['/feature.js'].lineData[164]++;
+    isTransform3dSupported = (visit26_164_1(visit27_164_2(has3d !== undefined) && visit28_164_3(visit29_164_4(has3d.length > 0) && visit30_164_5(has3d !== 'none'))));
   }
-  _$jscoverage['/feature.js'].lineData[166]++;
+  _$jscoverage['/feature.js'].lineData[167]++;
   return isTransform3dSupported;
 }, 
   isClassListSupported: function() {
   _$jscoverage['/feature.js'].functionData[10]++;
-  _$jscoverage['/feature.js'].lineData[174]++;
+  _$jscoverage['/feature.js'].lineData[175]++;
   return isClassListSupportedState;
 }, 
   isQuerySelectorSupported: function() {
   _$jscoverage['/feature.js'].functionData[11]++;
-  _$jscoverage['/feature.js'].lineData[183]++;
-  return visit32_183_1(!Config.simulateCss3Selector && isQuerySelectorSupportedState);
+  _$jscoverage['/feature.js'].lineData[184]++;
+  return visit31_184_1(!Config.simulateCss3Selector && isQuerySelectorSupportedState);
 }, 
   getCssVendorInfo: function(name) {
   _$jscoverage['/feature.js'].functionData[12]++;
-  _$jscoverage['/feature.js'].lineData[187]++;
+  _$jscoverage['/feature.js'].lineData[188]++;
   return getVendorInfo(name);
 }};
-  _$jscoverage['/feature.js'].lineData[191]++;
+  _$jscoverage['/feature.js'].lineData[192]++;
   return S.Feature;
 });

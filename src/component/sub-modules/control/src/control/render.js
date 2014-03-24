@@ -92,7 +92,7 @@ KISSY.add(function (S, require) {
 
     // scope option
     function getBaseCssClassesCmd(_, options) {
-        return this.config.view.getBaseCssClasses(options && options.params[0]);
+        return this.config.view.getBaseCssClasses(options && options.params && options.params[0]);
     }
 
     function getBaseCssClassCmd() {
@@ -498,8 +498,8 @@ KISSY.add(function (S, require) {
                 value: XTemplateRuntime
             },
             contentTpl: {
-                value: function (scope) {
-                    return scope.get('content') || '';
+                value: function (scope, S, buffer) {
+                    return buffer.write(scope.get('content'));
                 }
             }
         },

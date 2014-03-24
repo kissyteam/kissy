@@ -267,19 +267,19 @@ if (! _$jscoverage['/combobox/filter-select.js'].branchData) {
   _$jscoverage['/combobox/filter-select.js'].branchData['30'][1] = new BranchData();
 }
 _$jscoverage['/combobox/filter-select.js'].branchData['30'][1].init(21, 6, '!error');
-function visit75_30_1(result) {
+function visit83_30_1(result) {
   _$jscoverage['/combobox/filter-select.js'].branchData['30'][1].ranCondition(result);
   return result;
 }_$jscoverage['/combobox/filter-select.js'].branchData['13'][1].init(21, 37, '_saveData[i].textContent === inputVal');
-function visit74_13_1(result) {
+function visit82_13_1(result) {
   _$jscoverage['/combobox/filter-select.js'].branchData['13'][1].ranCondition(result);
   return result;
 }_$jscoverage['/combobox/filter-select.js'].branchData['12'][1].init(29, 20, 'i < _saveData.length');
-function visit73_12_1(result) {
+function visit81_12_1(result) {
   _$jscoverage['/combobox/filter-select.js'].branchData['12'][1].ranCondition(result);
   return result;
 }_$jscoverage['/combobox/filter-select.js'].branchData['11'][1].init(40, 9, '_saveData');
-function visit72_11_1(result) {
+function visit80_11_1(result) {
   _$jscoverage['/combobox/filter-select.js'].branchData['11'][1].ranCondition(result);
   return result;
 }_$jscoverage['/combobox/filter-select.js'].lineData[6]++;
@@ -293,11 +293,11 @@ KISSY.add(function(S, require, exports, module) {
     _$jscoverage['/combobox/filter-select.js'].lineData[10]++;
     var valid = false;
     _$jscoverage['/combobox/filter-select.js'].lineData[11]++;
-    if (visit72_11_1(_saveData)) {
+    if (visit80_11_1(_saveData)) {
       _$jscoverage['/combobox/filter-select.js'].lineData[12]++;
-      for (var i = 0; visit73_12_1(i < _saveData.length); i++) {
+      for (var i = 0; visit81_12_1(i < _saveData.length); i++) {
         _$jscoverage['/combobox/filter-select.js'].lineData[13]++;
-        if (visit74_13_1(_saveData[i].textContent === inputVal)) {
+        if (visit82_13_1(_saveData[i].textContent === inputVal)) {
           _$jscoverage['/combobox/filter-select.js'].lineData[14]++;
           return _saveData[i];
         }
@@ -316,7 +316,7 @@ KISSY.add(function(S, require, exports, module) {
   self.callSuper(function(error, val) {
   _$jscoverage['/combobox/filter-select.js'].functionData[3]++;
   _$jscoverage['/combobox/filter-select.js'].lineData[30]++;
-  if (visit75_30_1(!error)) {
+  if (visit83_30_1(!error)) {
     _$jscoverage['/combobox/filter-select.js'].lineData[31]++;
     self.get('dataSource').fetchData(val, function(data) {
   _$jscoverage['/combobox/filter-select.js'].functionData[4]++;

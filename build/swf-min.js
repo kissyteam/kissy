@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 13 18:04
+build time: Mar 24 03:03
 */
 KISSY.add("swf/ua",[],function(g){function i(c){var h="string"===typeof c?c.match(/\d+/g).splice(0,3):c;g.isArray(h)&&(c=parseFloat(h[0]+"."+n(h[1],3)+n(h[2],5)));return c||0}function n(c,h){var c=(c||0)+"",g=h+1-c.length;return Array(0<g?g:0).join("0")+c}function k(g){if(g||l){l=!1;var h;if(navigator.plugins&&navigator.mimeTypes.length)h=(navigator.plugins["Shockwave Flash"]||0).description;else if(c.ActiveXObject)try{h=(new c.ActiveXObject("ShockwaveFlash.ShockwaveFlash")).GetVariable("$version")}catch(k){}r=
 !h?void 0:h.match(/\d+/g).splice(0,3)}return r}var r,l=!0,c=g.Env.host;return{fpv:k,fpvGTE:function(c,g){return i(k(g))>=i(c)}}});

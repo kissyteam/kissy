@@ -1,17 +1,17 @@
 /** Compiled By kissy-xtemplate */
 KISSY.add(function (S, require, exports, module) {
         /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true*/
-        var t = function (scope, S, payload, undefined) {
-            var buffer = "",
-                engine = this,
-                moduleWrap, escapeHtml = S.escapeHtml,
-                nativeCommands = engine.nativeCommands,
+        var t = function (scope, S, buffer, payload, undefined) {
+            var engine = this,
+                moduleWrap, nativeCommands = engine.nativeCommands,
                 utils = engine.utils;
+            if ("1.50" !== S.version) {
+                throw new Error("current xtemplate file(" + engine.name + ")(v1.50) need to be recompiled using current kissy(v" + S.version + ")!");
+            }
             if (typeof module !== "undefined" && module.kissy) {
                 moduleWrap = module;
             }
             var callCommandUtil = utils.callCommand,
-                debuggerCommand = nativeCommands["debugger"],
                 eachCommand = nativeCommands.each,
                 withCommand = nativeCommands["with"],
                 ifCommand = nativeCommands["if"],
@@ -20,112 +20,164 @@ KISSY.add(function (S, require, exports, module) {
                 parseCommand = nativeCommands.parse,
                 extendCommand = nativeCommands.extend,
                 blockCommand = nativeCommands.block,
-                macroCommand = nativeCommands.macro;
-            buffer += '';
-            var option0 = {};
+                macroCommand = nativeCommands.macro,
+                debuggerCommand = nativeCommands["debugger"];
+            buffer.write('');
+            var option0 = {
+                escape: 1
+            };
             var params1 = [];
             var id2 = scope.resolve(["years"]);
             params1.push(id2);
             option0.params = params1;
-            option0.fn = function (scope) {
-                var buffer = "";
-                buffer += '\n<tr role="row">\n    ';
-                var option3 = {};
+            option0.fn = function (scope, buffer) {
+
+                buffer.write('\n<tr role="row">\n    ');
+                var option3 = {
+                    escape: 1
+                };
                 var params4 = [];
                 var id6 = scope.resolve(["xindex"]);
-                var id5 = scope.resolve("years." + id6 + "");
+                var id5 = scope.resolve(["years", id6]);
                 params4.push(id5);
                 option3.params = params4;
-                option3.fn = function (scope) {
-                    var buffer = "";
-                    buffer += '\n    <td role="gridcell"\n        title="';
+                option3.fn = function (scope, buffer) {
+
+                    buffer.write('\n    <td role="gridcell"\n        title="');
                     var id7 = scope.resolve(["title"]);
-                    buffer += escapeHtml(id7);
-                    buffer += '"\n        class="';
-                    var option9 = {};
-                    var params10 = [];
-                    params10.push('cell');
-                    option9.params = params10;
-                    var id8 = callCommandUtil(engine, scope, option9, "getBaseCssClasses", 6);
-                    buffer += escapeHtml(id8);
-                    buffer += '\n        ';
-                    var option11 = {};
+                    buffer.write(id7, true);
+                    buffer.write('"\n        class="');
+                    var option8 = {
+                        escape: 1
+                    };
+                    var params9 = [];
+                    params9.push('cell');
+                    option8.params = params9;
+                    var commandRet10 = callCommandUtil(engine, scope, option8, buffer, "getBaseCssClasses", 6);
+                    if (commandRet10 && commandRet10.isBuffer) {
+                        buffer = commandRet10;
+                        commandRet10 = undefined;
+                    }
+                    buffer.write(commandRet10, true);
+                    buffer.write('\n        ');
+                    var option11 = {
+                        escape: 1
+                    };
                     var params12 = [];
                     var id13 = scope.resolve(["content"]);
+                    var exp15 = id13;
                     var id14 = scope.resolve(["year"]);
-                    params12.push(id13 === id14);
+                    exp15 = (id13) === (id14);
+                    params12.push(exp15);
                     option11.params = params12;
-                    option11.fn = function (scope) {
-                        var buffer = "";
-                        buffer += '\n         ';
-                        var option16 = {};
+                    option11.fn = function (scope, buffer) {
+
+                        buffer.write('\n         ');
+                        var option16 = {
+                            escape: 1
+                        };
                         var params17 = [];
                         params17.push('selected-cell');
                         option16.params = params17;
-                        var id15 = callCommandUtil(engine, scope, option16, "getBaseCssClasses", 8);
-                        buffer += escapeHtml(id15);
-                        buffer += '\n        ';
+                        var commandRet18 = callCommandUtil(engine, scope, option16, buffer, "getBaseCssClasses", 8);
+                        if (commandRet18 && commandRet18.isBuffer) {
+                            buffer = commandRet18;
+                            commandRet18 = undefined;
+                        }
+                        buffer.write(commandRet18, true);
+                        buffer.write('\n        ');
+
                         return buffer;
                     };
-                    buffer += ifCommand.call(engine, scope, option11, payload);
-                    buffer += '\n        ';
-                    var option18 = {};
-                    var params19 = [];
-                    var id20 = scope.resolve(["content"]);
-                    var id21 = scope.resolve(["startYear"]);
-                    params19.push(id20 < id21);
-                    option18.params = params19;
-                    option18.fn = function (scope) {
-                        var buffer = "";
-                        buffer += '\n         ';
-                        var option23 = {};
-                        var params24 = [];
-                        params24.push('last-decade-cell');
-                        option23.params = params24;
-                        var id22 = callCommandUtil(engine, scope, option23, "getBaseCssClasses", 11);
-                        buffer += escapeHtml(id22);
-                        buffer += '\n        ';
+                    buffer = ifCommand.call(engine, scope, option11, buffer, 7, payload);
+                    buffer.write('\n        ');
+                    var option19 = {
+                        escape: 1
+                    };
+                    var params20 = [];
+                    var id21 = scope.resolve(["content"]);
+                    var exp23 = id21;
+                    var id22 = scope.resolve(["startYear"]);
+                    exp23 = (id21) < (id22);
+                    params20.push(exp23);
+                    option19.params = params20;
+                    option19.fn = function (scope, buffer) {
+
+                        buffer.write('\n         ');
+                        var option24 = {
+                            escape: 1
+                        };
+                        var params25 = [];
+                        params25.push('last-decade-cell');
+                        option24.params = params25;
+                        var commandRet26 = callCommandUtil(engine, scope, option24, buffer, "getBaseCssClasses", 11);
+                        if (commandRet26 && commandRet26.isBuffer) {
+                            buffer = commandRet26;
+                            commandRet26 = undefined;
+                        }
+                        buffer.write(commandRet26, true);
+                        buffer.write('\n        ');
+
                         return buffer;
                     };
-                    buffer += ifCommand.call(engine, scope, option18, payload);
-                    buffer += '\n        ';
-                    var option25 = {};
-                    var params26 = [];
-                    var id27 = scope.resolve(["content"]);
-                    var id28 = scope.resolve(["endYear"]);
-                    params26.push(id27 > id28);
-                    option25.params = params26;
-                    option25.fn = function (scope) {
-                        var buffer = "";
-                        buffer += '\n         ';
-                        var option30 = {};
-                        var params31 = [];
-                        params31.push('next-decade-cell');
-                        option30.params = params31;
-                        var id29 = callCommandUtil(engine, scope, option30, "getBaseCssClasses", 14);
-                        buffer += escapeHtml(id29);
-                        buffer += '\n        ';
+                    buffer = ifCommand.call(engine, scope, option19, buffer, 10, payload);
+                    buffer.write('\n        ');
+                    var option27 = {
+                        escape: 1
+                    };
+                    var params28 = [];
+                    var id29 = scope.resolve(["content"]);
+                    var exp31 = id29;
+                    var id30 = scope.resolve(["endYear"]);
+                    exp31 = (id29) > (id30);
+                    params28.push(exp31);
+                    option27.params = params28;
+                    option27.fn = function (scope, buffer) {
+
+                        buffer.write('\n         ');
+                        var option32 = {
+                            escape: 1
+                        };
+                        var params33 = [];
+                        params33.push('next-decade-cell');
+                        option32.params = params33;
+                        var commandRet34 = callCommandUtil(engine, scope, option32, buffer, "getBaseCssClasses", 14);
+                        if (commandRet34 && commandRet34.isBuffer) {
+                            buffer = commandRet34;
+                            commandRet34 = undefined;
+                        }
+                        buffer.write(commandRet34, true);
+                        buffer.write('\n        ');
+
                         return buffer;
                     };
-                    buffer += ifCommand.call(engine, scope, option25, payload);
-                    buffer += '\n        ">\n        <a hidefocus="on"\n           href="#"\n           unselectable="on"\n           class="';
-                    var option33 = {};
-                    var params34 = [];
-                    params34.push('year');
-                    option33.params = params34;
-                    var id32 = callCommandUtil(engine, scope, option33, "getBaseCssClasses", 20);
-                    buffer += escapeHtml(id32);
-                    buffer += '">\n            ';
-                    var id35 = scope.resolve(["content"]);
-                    buffer += escapeHtml(id35);
-                    buffer += '\n        </a>\n    </td>\n    ';
+                    buffer = ifCommand.call(engine, scope, option27, buffer, 13, payload);
+                    buffer.write('\n        ">\n        <a hidefocus="on"\n           href="#"\n           unselectable="on"\n           class="');
+                    var option35 = {
+                        escape: 1
+                    };
+                    var params36 = [];
+                    params36.push('year');
+                    option35.params = params36;
+                    var commandRet37 = callCommandUtil(engine, scope, option35, buffer, "getBaseCssClasses", 20);
+                    if (commandRet37 && commandRet37.isBuffer) {
+                        buffer = commandRet37;
+                        commandRet37 = undefined;
+                    }
+                    buffer.write(commandRet37, true);
+                    buffer.write('">\n            ');
+                    var id38 = scope.resolve(["content"]);
+                    buffer.write(id38, true);
+                    buffer.write('\n        </a>\n    </td>\n    ');
+
                     return buffer;
                 };
-                buffer += eachCommand.call(engine, scope, option3, payload);
-                buffer += '\n</tr>\n';
+                buffer = eachCommand.call(engine, scope, option3, buffer, 3, payload);
+                buffer.write('\n</tr>\n');
+
                 return buffer;
             };
-            buffer += eachCommand.call(engine, scope, option0, payload);
+            buffer = eachCommand.call(engine, scope, option0, buffer, 1, payload);
             return buffer;
         };
 t.TPL_NAME = module.name;

@@ -344,8 +344,7 @@ if (! _$jscoverage['/runtime/commands.js']) {
   _$jscoverage['/runtime/commands.js'].lineData[188] = 0;
   _$jscoverage['/runtime/commands.js'].lineData[189] = 0;
   _$jscoverage['/runtime/commands.js'].lineData[190] = 0;
-  _$jscoverage['/runtime/commands.js'].lineData[191] = 0;
-  _$jscoverage['/runtime/commands.js'].lineData[195] = 0;
+  _$jscoverage['/runtime/commands.js'].lineData[194] = 0;
 }
 if (! _$jscoverage['/runtime/commands.js'].functionData) {
   _$jscoverage['/runtime/commands.js'].functionData = [];
@@ -419,7 +418,7 @@ if (! _$jscoverage['/runtime/commands.js'].branchData) {
   _$jscoverage['/runtime/commands.js'].branchData['188'] = [];
   _$jscoverage['/runtime/commands.js'].branchData['188'][1] = new BranchData();
 }
-_$jscoverage['/runtime/commands.js'].branchData['188'][1].init(6434, 9, '\'@DEBUG@\'');
+_$jscoverage['/runtime/commands.js'].branchData['188'][1].init(6550, 9, '\'@DEBUG@\'');
 function visit28_188_1(result) {
   _$jscoverage['/runtime/commands.js'].branchData['188'][1].ranCondition(result);
   return result;
@@ -667,7 +666,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/runtime/commands.js'].lineData[84]++;
   return buffer;
 }, 
-  include: function(scope, option, buffer, payload) {
+  include: function(scope, option, buffer, lineNumber, payload) {
   _$jscoverage['/runtime/commands.js'].functionData[5]++;
   _$jscoverage['/runtime/commands.js'].lineData[88]++;
   var params = option.params;
@@ -683,19 +682,19 @@ KISSY.add(function(S, require) {
   _$jscoverage['/runtime/commands.js'].lineData[95]++;
   return this.include(params[0], scope, buffer, payload);
 }, 
-  parse: function(scope, option, buffer, payload) {
+  parse: function(scope, option, buffer, lineNumber, payload) {
   _$jscoverage['/runtime/commands.js'].functionData[6]++;
   _$jscoverage['/runtime/commands.js'].lineData[100]++;
   return commands.include.call(this, new Scope(), option, buffer, payload);
 }, 
-  extend: function(scope, option, buffer, payload) {
+  extend: function(scope, option, buffer, lineNumber, payload) {
   _$jscoverage['/runtime/commands.js'].functionData[7]++;
   _$jscoverage['/runtime/commands.js'].lineData[104]++;
   payload.extendTplName = option.params[0];
   _$jscoverage['/runtime/commands.js'].lineData[105]++;
   return buffer;
 }, 
-  block: function(scope, option, buffer, payload) {
+  block: function(scope, option, buffer, lineNumber, payload) {
   _$jscoverage['/runtime/commands.js'].functionData[8]++;
   _$jscoverage['/runtime/commands.js'].lineData[109]++;
   var self = this;
@@ -773,7 +772,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/runtime/commands.js'].lineData[152]++;
   return buffer;
 }, 
-  'macro': function(scope, option, buffer, payload) {
+  'macro': function(scope, option, buffer, lineNumber, payload) {
   _$jscoverage['/runtime/commands.js'].functionData[9]++;
   _$jscoverage['/runtime/commands.js'].lineData[156]++;
   var params = option.params;
@@ -813,7 +812,7 @@ KISSY.add(function(S, require) {
       buffer = macro.fn.call(self, newScope, buffer);
     } else {
       _$jscoverage['/runtime/commands.js'].lineData[180]++;
-      var error = 'can not find macro:' + name;
+      var error = 'in file: ' + self.name + ' can not find macro: ' + name + '" at line ' + lineNumber;
       _$jscoverage['/runtime/commands.js'].lineData[181]++;
       S.error(error);
     }
@@ -824,14 +823,12 @@ KISSY.add(function(S, require) {
   _$jscoverage['/runtime/commands.js'].lineData[188]++;
   if (visit28_188_1('@DEBUG@')) {
     _$jscoverage['/runtime/commands.js'].lineData[189]++;
-    commands['debugger'] = function(scope, option, buffer) {
+    commands['debugger'] = function() {
   _$jscoverage['/runtime/commands.js'].functionData[10]++;
   _$jscoverage['/runtime/commands.js'].lineData[190]++;
   S.globalEval('debugger');
-  _$jscoverage['/runtime/commands.js'].lineData[191]++;
-  return buffer;
 };
   }
-  _$jscoverage['/runtime/commands.js'].lineData[195]++;
+  _$jscoverage['/runtime/commands.js'].lineData[194]++;
   return commands;
 });

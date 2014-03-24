@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 13 17:49
+build time: Mar 24 02:47
 */
 /**
  * locale info for KISSY Date

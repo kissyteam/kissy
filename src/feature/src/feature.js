@@ -147,7 +147,8 @@ KISSY.add(function (S, require) {
             if (isTransform3dSupported !== undefined) {
                 return isTransform3dSupported;
             }
-            if (!documentElement || getVendorInfo('transform').prefix === false) {
+
+            if (!documentElement || !getVendorInfo('transform')) {
                 isTransform3dSupported = false;
             } else {
                 // https://gist.github.com/lorenzopolidori/3794226

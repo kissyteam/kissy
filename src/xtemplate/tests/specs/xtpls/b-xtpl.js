@@ -23,7 +23,9 @@ KISSY.add(function (S, require, exports, module) {
                 macroCommand = nativeCommands.macro,
                 debuggerCommand = nativeCommands["debugger"];
             buffer.write('');
-            var option0 = {};
+            var option0 = {
+                escape: 1
+            };
             var params1 = [];
             var id2 = scope.resolve(["b"]);
             params1.push(id2);
@@ -40,7 +42,7 @@ KISSY.add(function (S, require, exports, module) {
 
                 return buffer;
             };
-            buffer = withCommand.call(engine, scope, option0, buffer, payload);
+            buffer = withCommand.call(engine, scope, option0, buffer, 1, payload);
             return buffer;
         };
 t.TPL_NAME = module.name;

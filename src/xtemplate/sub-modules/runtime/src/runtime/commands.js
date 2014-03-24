@@ -84,7 +84,7 @@ KISSY.add(function (S, require) {
             return buffer;
         },
 
-        include: function (scope, option, buffer, payload) {
+        include: function (scope, option, buffer, lineNumber, payload) {
             var params = option.params;
             // sub template scope
             if (option.hash) {
@@ -95,17 +95,17 @@ KISSY.add(function (S, require) {
             return this.include(params[0], scope, buffer, payload);
         },
 
-        parse: function (scope, option, buffer, payload) {
+        parse: function (scope, option, buffer, lineNumber, payload) {
             // abandon scope
             return commands.include.call(this, new Scope(), option, buffer, payload);
         },
 
-        extend: function (scope, option, buffer, payload) {
+        extend: function (scope, option, buffer, lineNumber, payload) {
             payload.extendTplName = option.params[0];
             return buffer;
         },
 
-        block: function (scope, option, buffer, payload) {
+        block: function (scope, option, buffer, lineNumber, payload) {
             var self = this;
             var params = option.params;
             var blockName = params[0];
@@ -152,7 +152,7 @@ KISSY.add(function (S, require) {
             return buffer;
         },
 
-        'macro': function (scope, option, buffer, payload) {
+        'macro': function (scope, option, buffer, lineNumber, payload) {
             var params = option.params;
             var macroName = params[0];
             var params1 = params.slice(1);
@@ -177,7 +177,7 @@ KISSY.add(function (S, require) {
                     // no caller Scope
                     buffer = macro.fn.call(self, newScope, buffer);
                 } else {
-                    var error = 'can not find macro:' + name;
+                    var error = 'in file: ' + self.name + ' can not find macro: ' + name + '" at line ' + lineNumber;
                     S.error(error);
                 }
             }
@@ -186,9 +186,8 @@ KISSY.add(function (S, require) {
     };
 
     if ('@DEBUG@') {
-        commands['debugger'] = function (scope, option, buffer) {
+        commands['debugger'] = function () {
             S.globalEval('debugger');
-            return buffer;
         };
     }
 

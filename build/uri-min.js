@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 21 01:21
+build time: Mar 24 10:34
 */
 KISSY.add("uri",["path"],function(e,k){function h(a){a._queryMap||(a._queryMap=e.unparam(a._query))}function i(a){this._query=a||""}function j(a,b){return encodeURI(a).replace(b,function(a){a=a.charCodeAt(0).toString(16);return"%"+(1===a.length?"0"+a:a)})}function g(a){if(a instanceof g)return a.clone();var b=this;e.mix(b,{scheme:"",userInfo:"",hostname:"",port:"",path:"",query:"",fragment:""});a=g.getComponents(a);e.each(a,function(a,c){a=a||"";if("query"===c)b.query=new i(a);else{try{a=e.urlDecode(a)}catch(f){}b[c]=
 a}});return b}var l=k?k("path"):e.Path,m=/[#\/\?@]/g,o=/[#\?]/g,p=/[#@]/g,q=/#/g,r=RegExp("^(?:([\\w\\d+.-]+):)?(?://(?:([^/?#@]*)@)?([\\w\\d\\-\\u0100-\\uffff.+%]*|\\[[^\\]]+\\])(?::([0-9]+))?)?([^?#]+)?(?:\\?([^#]*))?(?:#(.*))?$"),n={scheme:1,userInfo:2,hostname:3,port:4,path:5,query:6,fragment:7};i.prototype={constructor:i,clone:function(){return new i(this.toString())},reset:function(a){this._query=a||"";this._queryMap=null;return this},count:function(){var a=0,b,d;h(this);b=this._queryMap;for(d in b)e.isArray(b[d])?

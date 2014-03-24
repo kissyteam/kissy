@@ -59,19 +59,21 @@ KISSY.add(function (S, require) {
         return buffer;
     }
 
-    var utils = {
-        'callCommand': function (engine, scope, option, buffer, name, line) {
-            var commands = engine.config.commands;
-            var error;
-            var command1 = findCommand(commands, name);
-            if (command1) {
-                return command1.call(engine, scope, option, buffer);
-            } else {
-                error = 'in file: ' + engine.name + ' can not find command: ' + name + '" at line ' + line;
-                S.error(error);
-            }
-            return buffer;
+    function callCommand(engine, scope, option, buffer, name, line) {
+        var commands = engine.config.commands;
+        var error;
+        var command1 = findCommand(commands, name);
+        if (command1) {
+            return command1.call(engine, scope, option, buffer, line);
+        } else {
+            error = 'in file: ' + engine.name + ' can not find command: ' + name + '" at line ' + line;
+            S.error(error);
         }
+        return buffer;
+    }
+
+    var utils = {
+        'callCommand': callCommand
     };
 
     /**

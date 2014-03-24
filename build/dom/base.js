@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 14 15:39
+build time: Mar 24 11:17
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -1238,7 +1238,7 @@ KISSY.add("dom/base/style", ["./api"], function(S, require) {
   var Dom = require("./api");
   var logger = S.getLogger("s/dom");
   var globalWindow = S.Env.host, getCssVendorInfo = S.Feature.getCssVendorInfo, UA = S.UA, BOX_MODELS = ["margin", "border", "padding"], CONTENT_INDEX = -1, PADDING_INDEX = 2, BORDER_INDEX = 1, MARGIN_INDEX = 0, getNodeName = Dom.nodeName, doc = globalWindow.document || {}, RE_MARGIN = /^margin/, WIDTH = "width", HEIGHT = "height", DISPLAY = "display", OLD_DISPLAY = DISPLAY + S.now(), NONE = "none", cssNumber = {fillOpacity:1, fontWeight:1, lineHeight:1, opacity:1, orphans:1, widows:1, zIndex:1, 
-  zoom:1}, EMPTY = "", DEFAULT_UNIT = "px", NO_PX_REG = /\d(?!px)[a-z%]+$/i, cssHooks = {}, cssProps = {}, userSelectProperty, defaultDisplay = {}, camelCase = S.camelCase;
+  zoom:1}, EMPTY = "", DEFAULT_UNIT = "px", NO_PX_REG = /\d(?!px)[a-z%]+$/i, cssHooks = {}, cssProps = {}, defaultDisplay = {}, userSelectVendorInfo = getCssVendorInfo("userSelect"), userSelectProperty = userSelectVendorInfo && userSelectVendorInfo.propertyName, camelCase = S.camelCase;
   cssProps["float"] = "cssFloat";
   function normalizeCssPropName(name) {
     if(cssProps[name]) {
@@ -1382,28 +1382,24 @@ KISSY.add("dom/base/style", ["./api"], function(S, require) {
     }else {
       elem.appendChild(doc.createTextNode(cssText))
     }
-  }, unselectable:function(selector) {
+  }, unselectable:userSelectProperty ? function(selector) {
     var _els = Dom.query(selector), elem, j, e, i = 0, excludes, style, els;
-    if(userSelectProperty === undefined) {
-      userSelectProperty = getCssVendorInfo("userSelect").propertyName
-    }
     for(j = _els.length - 1;j >= 0;j--) {
       elem = _els[j];
       style = elem.style;
-      if(userSelectProperty in style) {
-        style[userSelectProperty] = "none"
-      }else {
-        if(UA.ie) {
-          els = elem.getElementsByTagName("*");
-          elem.setAttribute("unselectable", "on");
-          excludes = ["iframe", "textarea", "input", "select"];
-          while(e = els[i++]) {
-            if(!S.inArray(getNodeName(e), excludes)) {
-              e.setAttribute("unselectable", "on")
-            }
-          }
+      els = elem.getElementsByTagName("*");
+      elem.setAttribute("unselectable", "on");
+      excludes = ["iframe", "textarea", "input", "select"];
+      while(e = els[i++]) {
+        if(!S.inArray(getNodeName(e), excludes)) {
+          e.setAttribute("unselectable", "on")
         }
       }
+    }
+  } : function(selector) {
+    var els = Dom.query(selector);
+    for(var j = els.length - 1;j >= 0;j--) {
+      els[j].style[userSelectProperty] = "none"
     }
   }, innerWidth:0, innerHeight:0, outerWidth:0, outerHeight:0, width:0, height:0});
   S.each([WIDTH, HEIGHT], function(name) {

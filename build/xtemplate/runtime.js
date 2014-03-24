@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 22 02:16
+build time: Mar 24 03:03
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -201,7 +201,7 @@ KISSY.add("xtemplate/runtime/commands", ["./scope"], function(S, require) {
   }, set:function(scope, option, buffer) {
     scope.mix(option.hash);
     return buffer
-  }, include:function(scope, option, buffer, payload) {
+  }, include:function(scope, option, buffer, lineNumber, payload) {
     var params = option.params;
     if(option.hash) {
       var newScope = new Scope(option.hash);
@@ -209,12 +209,12 @@ KISSY.add("xtemplate/runtime/commands", ["./scope"], function(S, require) {
       scope = newScope
     }
     return this.include(params[0], scope, buffer, payload)
-  }, parse:function(scope, option, buffer, payload) {
+  }, parse:function(scope, option, buffer, lineNumber, payload) {
     return commands.include.call(this, new Scope, option, buffer, payload)
-  }, extend:function(scope, option, buffer, payload) {
+  }, extend:function(scope, option, buffer, lineNumber, payload) {
     payload.extendTplName = option.params[0];
     return buffer
-  }, block:function(scope, option, buffer, payload) {
+  }, block:function(scope, option, buffer, lineNumber, payload) {
     var self = this;
     var params = option.params;
     var blockName = params[0];
@@ -257,7 +257,7 @@ KISSY.add("xtemplate/runtime/commands", ["./scope"], function(S, require) {
       }
     }
     return buffer
-  }, macro:function(scope, option, buffer, payload) {
+  }, macro:function(scope, option, buffer, lineNumber, payload) {
     var params = option.params;
     var macroName = params[0];
     var params1 = params.slice(1);
@@ -277,16 +277,15 @@ KISSY.add("xtemplate/runtime/commands", ["./scope"], function(S, require) {
         var newScope = new Scope(paramValues);
         buffer = macro.fn.call(self, newScope, buffer)
       }else {
-        var error = "can not find macro:" + name;
+        var error = "in file: " + self.name + " can not find macro: " + name + '" at line ' + lineNumber;
         S.error(error)
       }
     }
     return buffer
   }};
   if("@DEBUG@") {
-    commands["debugger"] = function(scope, option, buffer) {
-      S.globalEval("debugger");
-      return buffer
+    commands["debugger"] = function() {
+      S.globalEval("debugger")
     }
   }
   return commands
@@ -392,18 +391,19 @@ KISSY.add("xtemplate/runtime", ["./runtime/commands", "./runtime/scope", "./runt
     }
     return buffer
   }
-  var utils = {callCommand:function(engine, scope, option, buffer, name, line) {
+  function callCommand(engine, scope, option, buffer, name, line) {
     var commands = engine.config.commands;
     var error;
     var command1 = findCommand(commands, name);
     if(command1) {
-      return command1.call(engine, scope, option, buffer)
+      return command1.call(engine, scope, option, buffer, line)
     }else {
       error = "in file: " + engine.name + " can not find command: " + name + '" at line ' + line;
       S.error(error)
     }
     return buffer
-  }};
+  }
+  var utils = {callCommand:callCommand};
   function XTemplateRuntime(tpl, config) {
     var self = this;
     self.tpl = tpl;

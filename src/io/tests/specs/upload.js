@@ -11,7 +11,6 @@ KISSY.add(function (S, UA, io, Node) {
     }
 
     describe("io upload", function () {
-
         it("should abort for form file upload", function () {
             S.log("should abort for form file upload");
 
@@ -201,6 +200,11 @@ KISSY.add(function (S, UA, io, Node) {
         });
 
         it('should error when upload to a cross domain page', function () {
+            var url = location.hostname;
+
+            if (url === 'dev.kissyui.com') {
+                return;
+            }
 
             var form = $('<form>' +
                 '<input name="test" value=\'1\'/>' +
@@ -214,10 +218,7 @@ KISSY.add(function (S, UA, io, Node) {
             // 否则 localhost:8888 和 localhost:9999 默认可以通信...
 
             // 标准浏览器是 cors 关系
-            var url = location.hostname;
-            if (url === 'localhost') {
-                url += ':' + window.SERVER_CONFIG.ports[1];
-            }
+            url += ':' + window.SERVER_CONFIG.ports[1];
 
             var uploadRc = 'http://' + url + '/kissy/src/io/tests/others/form/upload-domain.jss';
 
@@ -236,7 +237,6 @@ KISSY.add(function (S, UA, io, Node) {
                 }
             });
 
-
             waitsFor(function () {
                 return ok;
             });
@@ -244,10 +244,7 @@ KISSY.add(function (S, UA, io, Node) {
             runs(function () {
                 form.remove();
             });
-
-
         });
-
     });
 }, {
     requires: ['ua', 'io', 'node']

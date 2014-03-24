@@ -35,7 +35,7 @@ KISSY.add(function (S) {
 
     ast.ProgramNode.prototype.type = 'program';
 
-    ast.BlockStatement = function (lineNumber, command, program, close) {
+    ast.BlockStatement = function (lineNumber, command, program, close, escape) {
         var closeParts = close.parts,
             self = this,
             e;
@@ -49,6 +49,7 @@ KISSY.add(function (S) {
                 closeParts + '}}');
             S.error(e);
         }
+        self.escape = escape;
         self.lineNumber = lineNumber;
         self.command = command;
         self.program = program;

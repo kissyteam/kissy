@@ -5,12 +5,15 @@
 
 KISSY.add(function (S, UA, io, Node) {
     /*jshint quotmark:false*/
-
     var host = location.hostname;
     var url = host;
-    if (url === 'localhost') {
-        url += ':' + window.SERVER_CONFIG.ports[1];
+    if (url === 'dev.kissyui.com') {
+        return {
+            run: S.noop
+        };
     }
+
+    url += ':' + window.SERVER_CONFIG.ports[1];
     var testUrl = 'http://' + url + '/kissy/src/' +
         'io/tests/others/xdr/xdr.jss';
 
@@ -19,8 +22,6 @@ KISSY.add(function (S, UA, io, Node) {
             var $ = Node.all;
 
             describe('Xdr IO', function () {
-
-
                 it('support ignore X-Requested-With for one request', function () {
                     var ok = 0;
 
@@ -50,7 +51,6 @@ KISSY.add(function (S, UA, io, Node) {
                         return ok;
                     });
                 });
-
 
                 it('support ignore X-Requested-With for all request', function () {
                     var ok = 0;

@@ -279,7 +279,7 @@ KISSY.add(function (S, IO) {
             it("can ignore protocol", function () {
                 var ok = 0;
                 var url = location.hostname;
-                if (url === 'localhost') {
+                if (url !== 'dev.kissyui.com') {
                     url += ':' + window.SERVER_CONFIG.ports[1];
                 }
                 IO.jsonp('//' + url + '/kissy/src/io/tests/data/interface.jss', {

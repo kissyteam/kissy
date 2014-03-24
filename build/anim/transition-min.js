@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 14 15:39
+build time: Mar 24 02:45
 */
 KISSY.add("anim/transition",["dom","./base"],function(c,k){function q(d){var a="";c.each(d,function(b,e){a&&(a+=",");a+=e+" "+b.duration+"s "+b.easing+" "+b.delay+"s"});return a}function r(d,a){var b=1,e=a.propertyName,f=d._propsData;f[e]&&1!==f[e].pos&&(f[e].pos=1,c.each(f,function(a){if(1!==a.pos)return b=0,!1}),b&&d.stop(!0))}function l(d,a,b){c.each(s,function(e){d[b?"removeEventListener":"addEventListener"](e,a,!1)})}function t(d){return d.replace(/[A-Z]/g,function(a){return"-"+a.toLowerCase()})}
 function h(d,a,b,e,f){var g=this;if(!(g instanceof h))return new h(d,a,b,e,f);h.superclass.constructor.apply(g,arguments);g._onTransitionEnd=function(a){r(g,a)}}var i=k("dom"),m=k("./base"),n=c.Feature.getCssVendorInfo,o=n("transition"),p=o.propertyNamePrefix,s=p?[p.toLowerCase()+"TransitionEnd"]:["transitionend","webkitTransitionEnd"],j=o.propertyName,u={ease:1,linear:1,"ease-in":1,"ease-out":1,"ease-in-out":1};c.extend(h,m,{prepareFx:function(){var d=this._propsData,a={},b,e;for(e in d)b=d[e],"string"===

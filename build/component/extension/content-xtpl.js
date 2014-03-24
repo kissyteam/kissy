@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 13 17:48
+build time: Mar 24 02:46
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -10,28 +10,33 @@ build time: Mar 13 17:48
 */
 
 KISSY.add("component/extension/content-xtpl", [], function(S, require, exports, module) {
-  var t = function(scope, S, payload, undefined) {
-    var buffer = "", engine = this, moduleWrap, escapeHtml = S.escapeHtml, nativeCommands = engine.nativeCommands, utils = engine.utils;
+  var t = function(scope, S, buffer, payload, undefined) {
+    var engine = this, moduleWrap, nativeCommands = engine.nativeCommands, utils = engine.utils;
+    if("1.50" !== S.version) {
+      throw new Error("current xtemplate file(" + engine.name + ")(v1.50) need to be recompiled using current kissy(v" + S.version + ")!");
+    }
     if(typeof module !== "undefined" && module.kissy) {
       moduleWrap = module
     }
-    var callCommandUtil = utils.callCommand, debuggerCommand = nativeCommands["debugger"], eachCommand = nativeCommands.each, withCommand = nativeCommands["with"], ifCommand = nativeCommands["if"], setCommand = nativeCommands.set, includeCommand = nativeCommands.include, parseCommand = nativeCommands.parse, extendCommand = nativeCommands.extend, blockCommand = nativeCommands.block, macroCommand = nativeCommands.macro;
-    buffer += '<div id="ks-content-';
+    var callCommandUtil = utils.callCommand, eachCommand = nativeCommands.each, withCommand = nativeCommands["with"], ifCommand = nativeCommands["if"], setCommand = nativeCommands.set, includeCommand = nativeCommands.include, parseCommand = nativeCommands.parse, extendCommand = nativeCommands.extend, blockCommand = nativeCommands.block, macroCommand = nativeCommands.macro, debuggerCommand = nativeCommands["debugger"];
+    buffer.write('<div id="ks-content-');
     var id0 = scope.resolve(["id"]);
-    buffer += escapeHtml(id0);
-    buffer += '"\r\n           class="';
-    var option2 = {};
-    var params3 = [];
-    params3.push("content");
-    option2.params = params3;
-    var id1 = callCommandUtil(engine, scope, option2, "getBaseCssClasses", 2);
-    buffer += escapeHtml(id1);
-    buffer += '">';
-    var id4 = scope.resolve(["content"]);
-    if(id4 || id4 === 0) {
-      buffer += id4
+    buffer.write(id0, true);
+    buffer.write('"\r\n           class="');
+    var option1 = {escape:1};
+    var params2 = [];
+    params2.push("content");
+    option1.params = params2;
+    var commandRet3 = callCommandUtil(engine, scope, option1, buffer, "getBaseCssClasses", 2);
+    if(commandRet3 && commandRet3.isBuffer) {
+      buffer = commandRet3;
+      commandRet3 = undefined
     }
-    buffer += "</div>";
+    buffer.write(commandRet3, true);
+    buffer.write('">');
+    var id4 = scope.resolve(["content"]);
+    buffer.write(id4, false);
+    buffer.write("</div>");
     return buffer
   };
   t.TPL_NAME = module.name;

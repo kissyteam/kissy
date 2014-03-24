@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 14 15:40
+build time: Mar 24 03:01
 */
 KISSY.add("node/base",["dom","event/dom","event/gesture"],function(e,d){function a(c,f,d){if(c instanceof a)return c.slice();if(!(this instanceof a))return new a(c,f,d);if(c)if("string"===typeof c){if(c=g.create(c,f,d),c.nodeType===h.DOCUMENT_FRAGMENT_NODE)return b.apply(this,l(c.childNodes)),this}else{if(e.isArray(c)||m(c))return b.apply(this,l(c)),this}else return this;this[0]=c;this.length=1;return this}var g=d("dom"),i=d("event/dom"),k=d("event/gesture"),j=Array.prototype,f=j.slice,h=g.NodeType,
 b=j.push,l=e.makeArray,m=g.isDomNodeList;a.prototype={constructor:a,isNodeList:!0,length:0,item:function(c){return"number"===typeof c?c>=this.length?null:new a(this[c]):new a(c)},add:function(c,h,f){"number"===typeof h&&(f=h,h=void 0);c=a.all(c,h).getDOMNodes();h=new a(this);void 0===f?b.apply(h,c):(f=[f,0],f.push.apply(f,c),j.splice.apply(h,f));return h},slice:function(){return new a(f.apply(this,arguments))},getDOMNodes:function(){return f.call(this)},each:function(c,b){var h=this;e.each(h,function(f,

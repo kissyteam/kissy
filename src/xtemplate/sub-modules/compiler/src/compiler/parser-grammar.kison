@@ -43,7 +43,7 @@
                 symbol: 'statement',
                 rhs: ['OPEN_BLOCK', 'command', 'CLOSE', 'program', 'OPEN_CLOSE_BLOCK', 'id', 'CLOSE'],
                 action: function () {
-                    return new this.yy.BlockStatement(this.lexer.lineNumber, this.$2, this.$4, this.$6);
+                    return new this.yy.BlockStatement(this.lexer.lineNumber, this.$2, this.$4, this.$6, this.$1.length !== 4);
                 }
             },
 

@@ -74,18 +74,22 @@ KISSY.add(function (S, require) {
             code2 = xtplAstToJs[e.op2.type](e.op2);
         exp1 = code1.exp;
         exp2 = code2.exp;
+        var exp = guid('exp');
         code1Source = code1.source;
         code2Source = code2.source;
         pushToArray(source, code1Source);
+        source.push('var ' + exp + ' = ' + exp1 + ';');
         if (type === '&&' || type === '||') {
             source.push('if(' + (type === '&&' ? '' : '!') + '(' + exp1 + ')){');
             pushToArray(source, code2Source);
+            source.push(exp + ' = ' + exp2 + ';');
             source.push('}');
         } else {
             pushToArray(source, code2Source);
+            source.push(exp + ' = ' + '(' + exp1 + ')' + type + '(' + exp2 + ');');
         }
         return {
-            exp: '(' + exp1 + ')' + type + '(' + exp2 + ')',
+            exp: exp,
             source: source
         };
     }
@@ -164,7 +168,7 @@ KISSY.add(function (S, require) {
         };
     }
 
-    function genOptionFromCommand(command) {
+    function genOptionFromCommand(command, escape) {
         var source = [],
             optionName,
             params,
@@ -173,12 +177,8 @@ KISSY.add(function (S, require) {
         params = command.params;
         hash = command.hash;
 
-        if (params || hash) {
-            optionName = guid('option');
-            source.push('var ' + optionName + ' = {};');
-        } else {
-            return null;
-        }
+        optionName = guid('option');
+        source.push('var ' + optionName + ' = {' + (escape ? 'escape:1' : '') + '};');
 
         if (params) {
             var paramsName = guid('params');
@@ -217,15 +217,9 @@ KISSY.add(function (S, require) {
             idString = id.string,
             inverseFn;
 
-        commandConfigCode = genOptionFromCommand(command);
-
-        if (commandConfigCode) {
-            optionName = commandConfigCode.exp;
-            pushToArray(source, commandConfigCode.source);
-        } else {
-            optionName = guid('option');
-            source.push('var ' + optionName + ' = {};');
-        }
+        commandConfigCode = genOptionFromCommand(command, escape);
+        optionName = commandConfigCode.exp;
+        pushToArray(source, commandConfigCode.source);
 
         if (block) {
             var programNode = block.program;
@@ -234,8 +228,6 @@ KISSY.add(function (S, require) {
                 inverseFn = genFunction(programNode.inverse).join('\n');
                 source.push(optionName + '.inverse=' + inverseFn + ';');
             }
-        } else {
-            source.push(optionName + '.escape = ' + !!escape + ';');
         }
 
         // require include/extend modules
@@ -246,22 +238,31 @@ KISSY.add(function (S, require) {
                 '}');
         }
 
+        if (!block) {
+            idName = guid('commandRet');
+        }
+
         if (idString in nativeCommands) {
-            source.push('buffer = ' + idString + 'Command.call(engine, scope, ' + optionName + ', buffer, payload);');
+            if (block) {
+                source.push('buffer = ' + idString + 'Command.call(engine, scope, ' + optionName + ', buffer, ' + id.lineNumber + ', payload);');
+            } else {
+                source.push('var ' + idName + ' = ' + idString + 'Command.call(engine, scope, ' + optionName + ', buffer, ' + id.lineNumber + ', payload);');
+            }
         } else if (block) {
             source.push('buffer = callCommandUtil(engine, scope, ' + optionName +
-                ', buffer, ' + '"' + idString + '", ' + idString.lineNumber + ');');
+                ', buffer, ' + '"' + idString + '", ' + id.lineNumber + ');');
         } else {
-            // command must be x.y not x[u]
-            // idString = getIdStringFromIdParts(source, id.parts);
-            idName = guid('commandRet');
             source.push('var ' + idName + ' = callCommandUtil(engine, scope, ' + optionName +
-                ', buffer, ' + '"' + idString + '", ' + idString.lineNumber + ');');
+                ', buffer, ' + '"' + idString + '", ' + id.lineNumber + ');');
+        }
+
+        if (idName) {
             source.push('if(' + idName + ' && ' + idName + '.isBuffer){' +
                 'buffer = ' + idName + ';' +
                 idName + ' = undefined;' +
                 '}');
         }
+
         return {
             exp: idName,
             source: source
@@ -335,7 +336,7 @@ KISSY.add(function (S, require) {
         'command': generateCommand,
 
         'blockStatement': function (block) {
-            return generateCommand(block.command, false, block);
+            return generateCommand(block.command, block.escape, block);
         },
 
         'expressionStatement': function (expressionStatement) {

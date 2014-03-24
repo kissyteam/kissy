@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 13 17:49
+build time: Mar 24 02:48
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -11,33 +11,42 @@ build time: Mar 13 17:49
 */
 
 KISSY.add("date/popup-picker/render-xtpl", ["date/picker-xtpl"], function(S, require, exports, module) {
-  var t = function(scope, S, payload, undefined) {
-    var buffer = "", engine = this, moduleWrap, escapeHtml = S.escapeHtml, nativeCommands = engine.nativeCommands, utils = engine.utils;
+  var t = function(scope, S, buffer, payload, undefined) {
+    var engine = this, moduleWrap, nativeCommands = engine.nativeCommands, utils = engine.utils;
+    if("1.50" !== S.version) {
+      throw new Error("current xtemplate file(" + engine.name + ")(v1.50) need to be recompiled using current kissy(v" + S.version + ")!");
+    }
     if(typeof module !== "undefined" && module.kissy) {
       moduleWrap = module
     }
-    var callCommandUtil = utils.callCommand, debuggerCommand = nativeCommands["debugger"], eachCommand = nativeCommands.each, withCommand = nativeCommands["with"], ifCommand = nativeCommands["if"], setCommand = nativeCommands.set, includeCommand = nativeCommands.include, parseCommand = nativeCommands.parse, extendCommand = nativeCommands.extend, blockCommand = nativeCommands.block, macroCommand = nativeCommands.macro;
-    buffer += '<div class="';
-    var option1 = {};
-    var params2 = [];
-    params2.push("content");
-    option1.params = params2;
-    var id0 = callCommandUtil(engine, scope, option1, "getBaseCssClasses", 1);
-    buffer += escapeHtml(id0);
-    buffer += '">\n    ';
-    var option4 = {};
-    var params5 = [];
-    params5.push("date/picker-xtpl");
-    option4.params = params5;
+    var callCommandUtil = utils.callCommand, eachCommand = nativeCommands.each, withCommand = nativeCommands["with"], ifCommand = nativeCommands["if"], setCommand = nativeCommands.set, includeCommand = nativeCommands.include, parseCommand = nativeCommands.parse, extendCommand = nativeCommands.extend, blockCommand = nativeCommands.block, macroCommand = nativeCommands.macro, debuggerCommand = nativeCommands["debugger"];
+    buffer.write('<div class="');
+    var option0 = {escape:1};
+    var params1 = [];
+    params1.push("content");
+    option0.params = params1;
+    var commandRet2 = callCommandUtil(engine, scope, option0, buffer, "getBaseCssClasses", 1);
+    if(commandRet2 && commandRet2.isBuffer) {
+      buffer = commandRet2;
+      commandRet2 = undefined
+    }
+    buffer.write(commandRet2, true);
+    buffer.write('">\n    ');
+    var option3 = {};
+    var params4 = [];
+    params4.push("date/picker-xtpl");
+    option3.params = params4;
     if(moduleWrap) {
       require("date/picker-xtpl");
-      option4.params[0] = moduleWrap.resolveByName(option4.params[0])
+      option3.params[0] = moduleWrap.resolveByName(option3.params[0])
     }
-    var id3 = includeCommand.call(engine, scope, option4, payload);
-    if(id3 || id3 === 0) {
-      buffer += id3
+    var commandRet5 = includeCommand.call(engine, scope, option3, buffer, 2, payload);
+    if(commandRet5 && commandRet5.isBuffer) {
+      buffer = commandRet5;
+      commandRet5 = undefined
     }
-    buffer += "\n</div>";
+    buffer.write(commandRet5, false);
+    buffer.write("\n</div>");
     return buffer
   };
   t.TPL_NAME = module.name;

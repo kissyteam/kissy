@@ -26,9 +26,9 @@ KISSY.add(function (S, require) {
          * Finally fire click on its parent menu.
          * @protected
          */
-        handleClickInternal: function () {
+        handleClickInternal: function (ev) {
             var self = this;
-            self.callSuper();
+            self.callSuper(ev);
             // 可选
             if (self.get('selectable')) {
                 self.set('selected', true);

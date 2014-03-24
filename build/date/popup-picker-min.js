@@ -1,7 +1,8 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 13 17:49
+build time: Mar 24 02:48
 */
-KISSY.add("date/popup-picker/render-xtpl",["date/picker-xtpl"],function(e,f,b,c){e=function(d,a,e){var b,g=a.escapeHtml,a=this.nativeCommands,i=this.utils;"undefined"!==typeof c&&c.kissy&&(b=c);var h=i.callCommand,i=a.include,a='<div class="',j={},k=[];k.push("content");j.params=k;h=h(this,d,j,"getBaseCssClasses",1);a+=g(h);a+='">\n    ';g={};h=[];h.push("date/picker-xtpl");g.params=h;b&&(f("date/picker-xtpl"),g.params[0]=b.resolveByName(g.params[0]));if((d=i.call(this,d,g,e))||0===d)a+=d;return a+
-"\n</div>"};e.TPL_NAME=c.name;return e});KISSY.add("date/popup-picker",["./popup-picker/render-xtpl","date/picker","component/extension/shim","component/extension/align"],function(e,f){var b=f("./popup-picker/render-xtpl"),c=f("date/picker"),d=f("component/extension/shim"),a=f("component/extension/align"),b=c.getDefaultRender().extend({},{ATTRS:{contentTpl:{value:b}}});return c.extend([d,a],{},{xclass:"popup-date-picker",ATTRS:{xrender:{value:b}}})});
+KISSY.add("date/popup-picker/render-xtpl",["date/picker-xtpl"],function(g,h,d,e){g=function(c,a,b,g,d){var i,j=this.nativeCommands,f=this.utils;if("1.50"!==a.version)throw Error("current xtemplate file("+this.name+")(v1.50) need to be recompiled using current kissy(v"+a.version+")!");"undefined"!==typeof e&&e.kissy&&(i=e);a=f.callCommand;j=j.include;b.write('<div class="');var f={escape:1},k=[];k.push("content");f.params=k;if((a=a(this,c,f,b,"getBaseCssClasses",1))&&a.isBuffer)b=a,a=d;b.write(a,!0);
+b.write('">\n    ');a={};f=[];f.push("date/picker-xtpl");a.params=f;i&&(h("date/picker-xtpl"),a.params[0]=i.resolveByName(a.params[0]));if((c=j.call(this,c,a,b,2,g))&&c.isBuffer)b=c,c=d;b.write(c,!1);b.write("\n</div>");return b};g.TPL_NAME=e.name;return g});
+KISSY.add("date/popup-picker",["./popup-picker/render-xtpl","date/picker","component/extension/shim","component/extension/align"],function(g,h){var d=h("./popup-picker/render-xtpl"),e=h("date/picker"),c=h("component/extension/shim"),a=h("component/extension/align"),d=e.getDefaultRender().extend({},{ATTRS:{contentTpl:{value:d}}});return e.extend([c,a],{},{xclass:"popup-date-picker",ATTRS:{xrender:{value:d}}})});

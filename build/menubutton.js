@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 13 18:01
+build time: Mar 24 03:00
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -15,40 +15,53 @@ build time: Mar 13 18:01
 */
 
 KISSY.add("menubutton/menubutton-xtpl", ["component/extension/content-xtpl"], function(S, require, exports, module) {
-  var t = function(scope, S, payload, undefined) {
-    var buffer = "", engine = this, moduleWrap, escapeHtml = S.escapeHtml, nativeCommands = engine.nativeCommands, utils = engine.utils;
+  var t = function(scope, S, buffer, payload, undefined) {
+    var engine = this, moduleWrap, nativeCommands = engine.nativeCommands, utils = engine.utils;
+    if("1.50" !== S.version) {
+      throw new Error("current xtemplate file(" + engine.name + ")(v1.50) need to be recompiled using current kissy(v" + S.version + ")!");
+    }
     if(typeof module !== "undefined" && module.kissy) {
       moduleWrap = module
     }
-    var callCommandUtil = utils.callCommand, debuggerCommand = nativeCommands["debugger"], eachCommand = nativeCommands.each, withCommand = nativeCommands["with"], ifCommand = nativeCommands["if"], setCommand = nativeCommands.set, includeCommand = nativeCommands.include, parseCommand = nativeCommands.parse, extendCommand = nativeCommands.extend, blockCommand = nativeCommands.block, macroCommand = nativeCommands.macro;
-    buffer += "";
-    var option1 = {};
-    var params2 = [];
-    params2.push("component/extension/content-xtpl");
-    option1.params = params2;
+    var callCommandUtil = utils.callCommand, eachCommand = nativeCommands.each, withCommand = nativeCommands["with"], ifCommand = nativeCommands["if"], setCommand = nativeCommands.set, includeCommand = nativeCommands.include, parseCommand = nativeCommands.parse, extendCommand = nativeCommands.extend, blockCommand = nativeCommands.block, macroCommand = nativeCommands.macro, debuggerCommand = nativeCommands["debugger"];
+    buffer.write("");
+    var option0 = {};
+    var params1 = [];
+    params1.push("component/extension/content-xtpl");
+    option0.params = params1;
     if(moduleWrap) {
       require("component/extension/content-xtpl");
-      option1.params[0] = moduleWrap.resolveByName(option1.params[0])
+      option0.params[0] = moduleWrap.resolveByName(option0.params[0])
     }
-    var id0 = includeCommand.call(engine, scope, option1, payload);
-    if(id0 || id0 === 0) {
-      buffer += id0
+    var commandRet2 = includeCommand.call(engine, scope, option0, buffer, 1, payload);
+    if(commandRet2 && commandRet2.isBuffer) {
+      buffer = commandRet2;
+      commandRet2 = undefined
     }
-    buffer += '\n<div class="';
-    var option4 = {};
-    var params5 = [];
-    params5.push("dropdown");
-    option4.params = params5;
-    var id3 = callCommandUtil(engine, scope, option4, "getBaseCssClasses", 2);
-    buffer += escapeHtml(id3);
-    buffer += '">\n    <div class="';
-    var option7 = {};
-    var params8 = [];
-    params8.push("dropdown-inner");
-    option7.params = params8;
-    var id6 = callCommandUtil(engine, scope, option7, "getBaseCssClasses", 3);
-    buffer += escapeHtml(id6);
-    buffer += '">\n    </div>\n</div>';
+    buffer.write(commandRet2, false);
+    buffer.write('\n<div class="');
+    var option3 = {escape:1};
+    var params4 = [];
+    params4.push("dropdown");
+    option3.params = params4;
+    var commandRet5 = callCommandUtil(engine, scope, option3, buffer, "getBaseCssClasses", 2);
+    if(commandRet5 && commandRet5.isBuffer) {
+      buffer = commandRet5;
+      commandRet5 = undefined
+    }
+    buffer.write(commandRet5, true);
+    buffer.write('">\n    <div class="');
+    var option6 = {escape:1};
+    var params7 = [];
+    params7.push("dropdown-inner");
+    option6.params = params7;
+    var commandRet8 = callCommandUtil(engine, scope, option6, buffer, "getBaseCssClasses", 3);
+    if(commandRet8 && commandRet8.isBuffer) {
+      buffer = commandRet8;
+      commandRet8 = undefined
+    }
+    buffer.write(commandRet8, true);
+    buffer.write('">\n    </div>\n</div>');
     return buffer
   };
   t.TPL_NAME = module.name;

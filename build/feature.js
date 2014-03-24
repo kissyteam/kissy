@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 21 01:21
+build time: Mar 24 10:35
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -61,7 +61,7 @@ KISSY.add("feature", ["ua"], function(S, require) {
     if(isTransform3dSupported !== undefined) {
       return isTransform3dSupported
     }
-    if(!documentElement || getVendorInfo("transform").prefix === false) {
+    if(!documentElement || !getVendorInfo("transform")) {
       isTransform3dSupported = false
     }else {
       var el = doc.createElement("p");

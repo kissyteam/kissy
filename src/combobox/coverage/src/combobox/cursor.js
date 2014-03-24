@@ -307,35 +307,35 @@ if (! _$jscoverage['/combobox/cursor.js'].branchData) {
   _$jscoverage['/combobox/cursor.js'].branchData['149'][1] = new BranchData();
 }
 _$jscoverage['/combobox/cursor.js'].branchData['149'][1].init(1825, 18, 'selectionStart > 0');
-function visit71_149_1(result) {
+function visit79_149_1(result) {
   _$jscoverage['/combobox/cursor.js'].branchData['149'][1].ranCondition(result);
   return result;
 }_$jscoverage['/combobox/cursor.js'].branchData['124'][2].init(1004, 24, 'elem.type !== \'textarea\'');
-function visit70_124_2(result) {
+function visit78_124_2(result) {
   _$jscoverage['/combobox/cursor.js'].branchData['124'][2].ranCondition(result);
   return result;
 }_$jscoverage['/combobox/cursor.js'].branchData['124'][1].init(977, 51, '!supportInputScrollLeft && elem.type !== \'textarea\'');
-function visit69_124_1(result) {
+function visit77_124_1(result) {
   _$jscoverage['/combobox/cursor.js'].branchData['124'][1].ranCondition(result);
   return result;
 }_$jscoverage['/combobox/cursor.js'].branchData['108'][1].init(351, 13, 'doc.selection');
-function visit68_108_1(result) {
+function visit76_108_1(result) {
   _$jscoverage['/combobox/cursor.js'].branchData['108'][1].ranCondition(result);
   return result;
 }_$jscoverage['/combobox/cursor.js'].branchData['87'][1].init(325, 23, 'input[0].scrollLeft > 0');
-function visit67_87_1(result) {
+function visit75_87_1(result) {
   _$jscoverage['/combobox/cursor.js'].branchData['87'][1].ranCondition(result);
   return result;
 }_$jscoverage['/combobox/cursor.js'].branchData['68'][1].init(419, 9, '!FAKE_DIV');
-function visit66_68_1(result) {
+function visit74_68_1(result) {
   _$jscoverage['/combobox/cursor.js'].branchData['68'][1].ranCondition(result);
   return result;
 }_$jscoverage['/combobox/cursor.js'].branchData['59'][1].init(110, 49, 'String(elem[0].type.toLowerCase()) === \'textarea\'');
-function visit65_59_1(result) {
+function visit73_59_1(result) {
   _$jscoverage['/combobox/cursor.js'].branchData['59'][1].ranCondition(result);
   return result;
 }_$jscoverage['/combobox/cursor.js'].branchData['56'][1].init(42, 5, '!fake');
-function visit64_56_1(result) {
+function visit72_56_1(result) {
   _$jscoverage['/combobox/cursor.js'].branchData['56'][1].ranCondition(result);
   return result;
 }_$jscoverage['/combobox/cursor.js'].lineData[6]++;
@@ -351,12 +351,12 @@ KISSY.add(function(S, require) {
     _$jscoverage['/combobox/cursor.js'].lineData[55]++;
     var fake = FAKE_DIV;
     _$jscoverage['/combobox/cursor.js'].lineData[56]++;
-    if (visit64_56_1(!fake)) {
+    if (visit72_56_1(!fake)) {
       _$jscoverage['/combobox/cursor.js'].lineData[57]++;
       fake = $(FAKE_DIV_HTML);
     }
     _$jscoverage['/combobox/cursor.js'].lineData[59]++;
-    if (visit65_59_1(String(elem[0].type.toLowerCase()) === 'textarea')) {
+    if (visit73_59_1(String(elem[0].type.toLowerCase()) === 'textarea')) {
       _$jscoverage['/combobox/cursor.js'].lineData[60]++;
       fake.css('width', elem.css('width'));
     } else {
@@ -370,7 +370,7 @@ KISSY.add(function(S, require) {
   fake.css(s, elem.css(s));
 });
     _$jscoverage['/combobox/cursor.js'].lineData[68]++;
-    if (visit66_68_1(!FAKE_DIV)) {
+    if (visit74_68_1(!FAKE_DIV)) {
       _$jscoverage['/combobox/cursor.js'].lineData[69]++;
       fake.insertBefore(elem[0].ownerDocument.body.firstChild);
     }
@@ -397,7 +397,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/combobox/cursor.js'].lineData[86]++;
   input[0].focus();
   _$jscoverage['/combobox/cursor.js'].lineData[87]++;
-  supportInputScrollLeft = (visit67_87_1(input[0].scrollLeft > 0));
+  supportInputScrollLeft = (visit75_87_1(input[0].scrollLeft > 0));
   _$jscoverage['/combobox/cursor.js'].lineData[88]++;
   input.remove();
   _$jscoverage['/combobox/cursor.js'].lineData[89]++;
@@ -415,7 +415,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/combobox/cursor.js'].lineData[98]++;
   var doc = elem.ownerDocument, $doc = $(doc), elemOffset, range, fake, selectionStart, offset, marker, elemScrollTop = elem.scrollTop, elemScrollLeft = elem.scrollLeft;
   _$jscoverage['/combobox/cursor.js'].lineData[108]++;
-  if (visit68_108_1(doc.selection)) {
+  if (visit76_108_1(doc.selection)) {
     _$jscoverage['/combobox/cursor.js'].lineData[109]++;
     range = doc.selection.createRange();
     _$jscoverage['/combobox/cursor.js'].lineData[110]++;
@@ -426,7 +426,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/combobox/cursor.js'].lineData[120]++;
   elemOffset = $elem.offset();
   _$jscoverage['/combobox/cursor.js'].lineData[124]++;
-  if (visit69_124_1(!supportInputScrollLeft && visit70_124_2(elem.type !== 'textarea'))) {
+  if (visit77_124_1(!supportInputScrollLeft && visit78_124_2(elem.type !== 'textarea'))) {
     _$jscoverage['/combobox/cursor.js'].lineData[125]++;
     elemOffset.top += elem.offsetHeight;
     _$jscoverage['/combobox/cursor.js'].lineData[126]++;
@@ -449,7 +449,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/combobox/cursor.js'].lineData[147]++;
   offset.top += marker.height();
   _$jscoverage['/combobox/cursor.js'].lineData[149]++;
-  if (visit71_149_1(selectionStart > 0)) {
+  if (visit79_149_1(selectionStart > 0)) {
     _$jscoverage['/combobox/cursor.js'].lineData[150]++;
     offset.left += marker.width();
   }

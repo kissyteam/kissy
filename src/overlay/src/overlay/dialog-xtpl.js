@@ -1,17 +1,17 @@
 /** Compiled By kissy-xtemplate */
 KISSY.add(function (S, require, exports, module) {
         /*jshint quotmark:false, loopfunc:true, indent:false, asi:true, unused:false, boss:true*/
-        var t = function (scope, S, payload, undefined) {
-            var buffer = "",
-                engine = this,
-                moduleWrap, escapeHtml = S.escapeHtml,
-                nativeCommands = engine.nativeCommands,
+        var t = function (scope, S, buffer, payload, undefined) {
+            var engine = this,
+                moduleWrap, nativeCommands = engine.nativeCommands,
                 utils = engine.utils;
+            if ("1.50" !== S.version) {
+                throw new Error("current xtemplate file(" + engine.name + ")(v1.50) need to be recompiled using current kissy(v" + S.version + ")!");
+            }
             if (typeof module !== "undefined" && module.kissy) {
                 moduleWrap = module;
             }
             var callCommandUtil = utils.callCommand,
-                debuggerCommand = nativeCommands["debugger"],
                 eachCommand = nativeCommands.each,
                 withCommand = nativeCommands["with"],
                 ifCommand = nativeCommands["if"],
@@ -20,130 +20,157 @@ KISSY.add(function (S, require, exports, module) {
                 parseCommand = nativeCommands.parse,
                 extendCommand = nativeCommands.extend,
                 blockCommand = nativeCommands.block,
-                macroCommand = nativeCommands.macro;
-            buffer += '';
-            var option1 = {};
-            var params2 = [];
-            params2.push('./overlay-xtpl');
-            option1.params = params2;
+                macroCommand = nativeCommands.macro,
+                debuggerCommand = nativeCommands["debugger"];
+            buffer.write('');
+            var option0 = {};
+            var params1 = [];
+            params1.push('./overlay-xtpl');
+            option0.params = params1;
             if (moduleWrap) {
                 require("./overlay-xtpl");
-                option1.params[0] = moduleWrap.resolveByName(option1.params[0]);
+                option0.params[0] = moduleWrap.resolveByName(option0.params[0]);
             }
-            var id0 = extendCommand.call(engine, scope, option1, payload);
-            if (id0 || id0 === 0) {
-                buffer += id0;
+            var commandRet2 = extendCommand.call(engine, scope, option0, buffer, 1, payload);
+            if (commandRet2 && commandRet2.isBuffer) {
+                buffer = commandRet2;
+                commandRet2 = undefined;
             }
-            buffer += '\n';
-            var option3 = {};
+            buffer.write(commandRet2, false);
+            buffer.write('\n');
+            var option3 = {
+                escape: 1
+            };
             var params4 = [];
             params4.push('ks-overlay-content');
             option3.params = params4;
-            option3.fn = function (scope) {
-                var buffer = "";
-                buffer += '\n    <div class="';
-                var option6 = {};
-                var params7 = [];
-                params7.push('header');
-                option6.params = params7;
-                var id5 = callCommandUtil(engine, scope, option6, "getBaseCssClasses", 3);
-                buffer += escapeHtml(id5);
-                buffer += '"\n         style="\n';
-                var option8 = {};
+            option3.fn = function (scope, buffer) {
+
+                buffer.write('\n    <div class="');
+                var option5 = {
+                    escape: 1
+                };
+                var params6 = [];
+                params6.push('header');
+                option5.params = params6;
+                var commandRet7 = callCommandUtil(engine, scope, option5, buffer, "getBaseCssClasses", 3);
+                if (commandRet7 && commandRet7.isBuffer) {
+                    buffer = commandRet7;
+                    commandRet7 = undefined;
+                }
+                buffer.write(commandRet7, true);
+                buffer.write('"\n         style="\n');
+                var option8 = {
+                    escape: 1
+                };
                 var params9 = [];
                 var id10 = scope.resolve(["headerStyle"]);
                 params9.push(id10);
                 option8.params = params9;
-                option8.fn = function (scope) {
-                    var buffer = "";
-                    buffer += '\n ';
+                option8.fn = function (scope, buffer) {
+
+                    buffer.write('\n ');
                     var id11 = scope.resolve(["xindex"]);
-                    buffer += escapeHtml(id11);
-                    buffer += ':';
+                    buffer.write(id11, true);
+                    buffer.write(':');
                     var id12 = scope.resolve(["this"]);
-                    buffer += escapeHtml(id12);
-                    buffer += ';\n';
+                    buffer.write(id12, true);
+                    buffer.write(';\n');
+
                     return buffer;
                 };
-                buffer += eachCommand.call(engine, scope, option8, payload);
-                buffer += '\n"\n         id="ks-stdmod-header-';
+                buffer = eachCommand.call(engine, scope, option8, buffer, 5, payload);
+                buffer.write('\n"\n         id="ks-stdmod-header-');
                 var id13 = scope.resolve(["id"]);
-                buffer += escapeHtml(id13);
-                buffer += '">';
+                buffer.write(id13, true);
+                buffer.write('">');
                 var id14 = scope.resolve(["headerContent"]);
-                if (id14 || id14 === 0) {
-                    buffer += id14;
+                buffer.write(id14, false);
+                buffer.write('</div>\n\n    <div class="');
+                var option15 = {
+                    escape: 1
+                };
+                var params16 = [];
+                params16.push('body');
+                option15.params = params16;
+                var commandRet17 = callCommandUtil(engine, scope, option15, buffer, "getBaseCssClasses", 11);
+                if (commandRet17 && commandRet17.isBuffer) {
+                    buffer = commandRet17;
+                    commandRet17 = undefined;
                 }
-                buffer += '</div>\n\n    <div class="';
-                var option16 = {};
-                var params17 = [];
-                params17.push('body');
-                option16.params = params17;
-                var id15 = callCommandUtil(engine, scope, option16, "getBaseCssClasses", 11);
-                buffer += escapeHtml(id15);
-                buffer += '"\n         style="\n';
-                var option18 = {};
+                buffer.write(commandRet17, true);
+                buffer.write('"\n         style="\n');
+                var option18 = {
+                    escape: 1
+                };
                 var params19 = [];
                 var id20 = scope.resolve(["bodyStyle"]);
                 params19.push(id20);
                 option18.params = params19;
-                option18.fn = function (scope) {
-                    var buffer = "";
-                    buffer += '\n ';
+                option18.fn = function (scope, buffer) {
+
+                    buffer.write('\n ');
                     var id21 = scope.resolve(["xindex"]);
-                    buffer += escapeHtml(id21);
-                    buffer += ':';
+                    buffer.write(id21, true);
+                    buffer.write(':');
                     var id22 = scope.resolve(["this"]);
-                    buffer += escapeHtml(id22);
-                    buffer += ';\n';
+                    buffer.write(id22, true);
+                    buffer.write(';\n');
+
                     return buffer;
                 };
-                buffer += eachCommand.call(engine, scope, option18, payload);
-                buffer += '\n"\n         id="ks-stdmod-body-';
+                buffer = eachCommand.call(engine, scope, option18, buffer, 13, payload);
+                buffer.write('\n"\n         id="ks-stdmod-body-');
                 var id23 = scope.resolve(["id"]);
-                buffer += escapeHtml(id23);
-                buffer += '">';
+                buffer.write(id23, true);
+                buffer.write('">');
                 var id24 = scope.resolve(["bodyContent"]);
-                if (id24 || id24 === 0) {
-                    buffer += id24;
+                buffer.write(id24, false);
+                buffer.write('</div>\n\n    <div class="');
+                var option25 = {
+                    escape: 1
+                };
+                var params26 = [];
+                params26.push('footer');
+                option25.params = params26;
+                var commandRet27 = callCommandUtil(engine, scope, option25, buffer, "getBaseCssClasses", 19);
+                if (commandRet27 && commandRet27.isBuffer) {
+                    buffer = commandRet27;
+                    commandRet27 = undefined;
                 }
-                buffer += '</div>\n\n    <div class="';
-                var option26 = {};
-                var params27 = [];
-                params27.push('footer');
-                option26.params = params27;
-                var id25 = callCommandUtil(engine, scope, option26, "getBaseCssClasses", 19);
-                buffer += escapeHtml(id25);
-                buffer += '"\n         style="\n';
-                var option28 = {};
+                buffer.write(commandRet27, true);
+                buffer.write('"\n         style="\n');
+                var option28 = {
+                    escape: 1
+                };
                 var params29 = [];
                 var id30 = scope.resolve(["footerStyle"]);
                 params29.push(id30);
                 option28.params = params29;
-                option28.fn = function (scope) {
-                    var buffer = "";
-                    buffer += '\n ';
+                option28.fn = function (scope, buffer) {
+
+                    buffer.write('\n ');
                     var id31 = scope.resolve(["xindex"]);
-                    buffer += escapeHtml(id31);
-                    buffer += ':';
+                    buffer.write(id31, true);
+                    buffer.write(':');
                     var id32 = scope.resolve(["this"]);
-                    buffer += escapeHtml(id32);
-                    buffer += ';\n';
+                    buffer.write(id32, true);
+                    buffer.write(';\n');
+
                     return buffer;
                 };
-                buffer += eachCommand.call(engine, scope, option28, payload);
-                buffer += '\n"\n         id="ks-stdmod-footer-';
+                buffer = eachCommand.call(engine, scope, option28, buffer, 21, payload);
+                buffer.write('\n"\n         id="ks-stdmod-footer-');
                 var id33 = scope.resolve(["id"]);
-                buffer += escapeHtml(id33);
-                buffer += '">';
+                buffer.write(id33, true);
+                buffer.write('">');
                 var id34 = scope.resolve(["footerContent"]);
-                if (id34 || id34 === 0) {
-                    buffer += id34;
-                }
-                buffer += '</div>\n    <div tabindex="0"></div>\n';
+                buffer.write(id34, false);
+                buffer.write('</div>\n    <div tabindex="0"></div>\n');
+
                 return buffer;
             };
-            buffer += blockCommand.call(engine, scope, option3, payload);
+            buffer = blockCommand.call(engine, scope, option3, buffer, 2, payload);
             return buffer;
         };
 t.TPL_NAME = module.name;

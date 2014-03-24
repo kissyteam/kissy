@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 14 15:39
+build time: Mar 24 02:45
 */
 KISSY.add("anim/base/queue",["dom"],function(b,m){function f(b,a,g){var a=a||h,l,f=d.data(b,c);!f&&!g&&d.data(b,c,f={});f&&(l=f[a],!l&&!g&&(l=f[a]=[]));return l}var d=m("dom"),c=b.guid("ks-queue-"+b.now()+"-"),h=b.guid("ks-queue-"+b.now()+"-"),a;return a={queueCollectionKey:c,queue:function(b,a,d){b=f(b,a);b.push(d);return b},remove:function(d,e,c){var l=f(d,e,1);l&&(c=b.indexOf(c,l),-1<c&&l.splice(c,1));l&&!l.length&&a.clearQueue(d,e);return l},clearQueues:function(b){d.removeData(b,c)},clearQueue:function(a,
 e){var e=e||h,g=d.data(a,c);g&&delete g[e];b.isEmptyObject(g)&&d.removeData(a,c)},dequeue:function(b,d){var c=f(b,d,1);c&&(c.shift(),c.length||a.clearQueue(b,d));return c}}});

@@ -232,14 +232,13 @@ if (! _$jscoverage['/picker/month-panel/month-panel-xtpl.js']) {
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[2] = 0;
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[4] = 0;
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[5] = 0;
-  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[10] = 0;
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[8] = 0;
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[9] = 0;
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[11] = 0;
-  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[13] = 0;
-  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[24] = 0;
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[12] = 0;
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[14] = 0;
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[25] = 0;
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[26] = 0;
-  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[27] = 0;
-  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[28] = 0;
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[29] = 0;
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[30] = 0;
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[31] = 0;
@@ -247,15 +246,12 @@ if (! _$jscoverage['/picker/month-panel/month-panel-xtpl.js']) {
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[33] = 0;
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[34] = 0;
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[35] = 0;
-  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[36] = 0;
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[37] = 0;
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[38] = 0;
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[39] = 0;
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[40] = 0;
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[41] = 0;
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[42] = 0;
-  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[43] = 0;
-  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[44] = 0;
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[45] = 0;
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[46] = 0;
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[47] = 0;
@@ -263,15 +259,12 @@ if (! _$jscoverage['/picker/month-panel/month-panel-xtpl.js']) {
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[49] = 0;
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[50] = 0;
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[51] = 0;
-  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[52] = 0;
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[53] = 0;
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[54] = 0;
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[55] = 0;
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[56] = 0;
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[57] = 0;
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[58] = 0;
-  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[59] = 0;
-  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[60] = 0;
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[61] = 0;
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[62] = 0;
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[63] = 0;
@@ -279,7 +272,6 @@ if (! _$jscoverage['/picker/month-panel/month-panel-xtpl.js']) {
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[65] = 0;
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[66] = 0;
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[67] = 0;
-  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[68] = 0;
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[69] = 0;
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[70] = 0;
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[71] = 0;
@@ -295,8 +287,6 @@ if (! _$jscoverage['/picker/month-panel/month-panel-xtpl.js']) {
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[81] = 0;
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[82] = 0;
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[83] = 0;
-  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[84] = 0;
-  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[85] = 0;
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[86] = 0;
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[87] = 0;
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[88] = 0;
@@ -304,28 +294,63 @@ if (! _$jscoverage['/picker/month-panel/month-panel-xtpl.js']) {
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[90] = 0;
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[91] = 0;
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[92] = 0;
-  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[93] = 0;
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[94] = 0;
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[95] = 0;
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[96] = 0;
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[97] = 0;
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[98] = 0;
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[99] = 0;
-  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[100] = 0;
-  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[101] = 0;
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[102] = 0;
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[103] = 0;
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[104] = 0;
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[105] = 0;
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[106] = 0;
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[107] = 0;
-  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[109] = 0;
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[108] = 0;
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[110] = 0;
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[111] = 0;
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[112] = 0;
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[113] = 0;
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[114] = 0;
-  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[116] = 0;
-  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[117] = 0;
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[115] = 0;
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[118] = 0;
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[119] = 0;
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[120] = 0;
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[121] = 0;
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[122] = 0;
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[123] = 0;
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[124] = 0;
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[126] = 0;
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[127] = 0;
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[128] = 0;
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[131] = 0;
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[132] = 0;
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[133] = 0;
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[134] = 0;
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[135] = 0;
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[136] = 0;
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[137] = 0;
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[139] = 0;
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[140] = 0;
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[141] = 0;
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[142] = 0;
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[143] = 0;
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[144] = 0;
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[145] = 0;
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[146] = 0;
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[147] = 0;
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[148] = 0;
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[149] = 0;
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[150] = 0;
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[152] = 0;
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[153] = 0;
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[154] = 0;
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[155] = 0;
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[157] = 0;
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[158] = 0;
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[159] = 0;
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[161] = 0;
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[162] = 0;
 }
 if (! _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].functionData) {
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].functionData = [];
@@ -334,233 +359,341 @@ if (! _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].functionData) {
 }
 if (! _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].branchData) {
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].branchData = {};
-  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].branchData['10'] = [];
-  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].branchData['10'][1] = new BranchData();
-  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].branchData['10'][2] = new BranchData();
-  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].branchData['105'] = [];
-  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].branchData['105'][1] = new BranchData();
-  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].branchData['110'] = [];
-  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].branchData['110'][1] = new BranchData();
-  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].branchData['110'][2] = new BranchData();
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].branchData['8'] = [];
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].branchData['8'][1] = new BranchData();
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].branchData['11'] = [];
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].branchData['11'][1] = new BranchData();
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].branchData['11'][2] = new BranchData();
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].branchData['33'] = [];
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].branchData['33'][1] = new BranchData();
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].branchData['49'] = [];
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].branchData['49'][1] = new BranchData();
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].branchData['65'] = [];
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].branchData['65'][1] = new BranchData();
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].branchData['90'] = [];
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].branchData['90'][1] = new BranchData();
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].branchData['106'] = [];
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].branchData['106'][1] = new BranchData();
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].branchData['122'] = [];
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].branchData['122'][1] = new BranchData();
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].branchData['135'] = [];
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].branchData['135'][1] = new BranchData();
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].branchData['148'] = [];
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].branchData['148'][1] = new BranchData();
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].branchData['153'] = [];
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].branchData['153'][1] = new BranchData();
 }
-_$jscoverage['/picker/month-panel/month-panel-xtpl.js'].branchData['110'][2].init(5310, 10, 'id30 === 0');
-function visit26_110_2(result) {
-  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].branchData['110'][2].ranCondition(result);
+_$jscoverage['/picker/month-panel/month-panel-xtpl.js'].branchData['153'][1].init(6986, 37, 'commandRet32 && commandRet32.isBuffer');
+function visit44_153_1(result) {
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].branchData['153'][1].ranCondition(result);
   return result;
-}_$jscoverage['/picker/month-panel/month-panel-xtpl.js'].branchData['110'][1].init(5302, 18, 'id30 || id30 === 0');
-function visit25_110_1(result) {
-  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].branchData['110'][1].ranCondition(result);
+}_$jscoverage['/picker/month-panel/month-panel-xtpl.js'].branchData['148'][1].init(6697, 10, 'moduleWrap');
+function visit43_148_1(result) {
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].branchData['148'][1].ranCondition(result);
   return result;
-}_$jscoverage['/picker/month-panel/month-panel-xtpl.js'].branchData['105'][1].init(5033, 10, 'moduleWrap');
-function visit24_105_1(result) {
-  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].branchData['105'][1].ranCondition(result);
+}_$jscoverage['/picker/month-panel/month-panel-xtpl.js'].branchData['135'][1].init(6091, 37, 'commandRet28 && commandRet28.isBuffer');
+function visit42_135_1(result) {
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].branchData['135'][1].ranCondition(result);
   return result;
-}_$jscoverage['/picker/month-panel/month-panel-xtpl.js'].branchData['10'][2].init(226, 29, 'typeof module !== "undefined"');
-function visit23_10_2(result) {
-  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].branchData['10'][2].ranCondition(result);
+}_$jscoverage['/picker/month-panel/month-panel-xtpl.js'].branchData['122'][1].init(5558, 37, 'commandRet25 && commandRet25.isBuffer');
+function visit41_122_1(result) {
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].branchData['122'][1].ranCondition(result);
   return result;
-}_$jscoverage['/picker/month-panel/month-panel-xtpl.js'].branchData['10'][1].init(226, 45, 'typeof module !== "undefined" && module.kissy');
-function visit22_10_1(result) {
-  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].branchData['10'][1].ranCondition(result);
+}_$jscoverage['/picker/month-panel/month-panel-xtpl.js'].branchData['106'][1].init(4810, 37, 'commandRet21 && commandRet21.isBuffer');
+function visit40_106_1(result) {
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].branchData['106'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/picker/month-panel/month-panel-xtpl.js'].branchData['90'][1].init(4080, 37, 'commandRet17 && commandRet17.isBuffer');
+function visit39_90_1(result) {
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].branchData['90'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/picker/month-panel/month-panel-xtpl.js'].branchData['65'][1].init(2825, 37, 'commandRet10 && commandRet10.isBuffer');
+function visit38_65_1(result) {
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].branchData['65'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/picker/month-panel/month-panel-xtpl.js'].branchData['49'][1].init(2077, 35, 'commandRet6 && commandRet6.isBuffer');
+function visit37_49_1(result) {
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].branchData['49'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/picker/month-panel/month-panel-xtpl.js'].branchData['33'][1].init(1382, 35, 'commandRet2 && commandRet2.isBuffer');
+function visit36_33_1(result) {
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].branchData['33'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/picker/month-panel/month-panel-xtpl.js'].branchData['11'][2].init(358, 29, 'typeof module !== "undefined"');
+function visit35_11_2(result) {
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].branchData['11'][2].ranCondition(result);
+  return result;
+}_$jscoverage['/picker/month-panel/month-panel-xtpl.js'].branchData['11'][1].init(358, 45, 'typeof module !== "undefined" && module.kissy');
+function visit34_11_1(result) {
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].branchData['11'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/picker/month-panel/month-panel-xtpl.js'].branchData['8'][1].init(154, 20, '"1.50" !== S.version');
+function visit33_8_1(result) {
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].branchData['8'][1].ranCondition(result);
   return result;
 }_$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[2]++;
 KISSY.add(function(S, require, exports, module) {
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].functionData[0]++;
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[4]++;
-  var t = function(scope, S, payload, undefined) {
+  var t = function(scope, S, buffer, payload, undefined) {
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].functionData[1]++;
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[5]++;
-  var buffer = "", engine = this, moduleWrap, escapeHtml = S.escapeHtml, nativeCommands = engine.nativeCommands, utils = engine.utils;
-  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[10]++;
-  if (visit22_10_1(visit23_10_2(typeof module !== "undefined") && module.kissy)) {
-    _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[11]++;
+  var engine = this, moduleWrap, nativeCommands = engine.nativeCommands, utils = engine.utils;
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[8]++;
+  if (visit33_8_1("1.50" !== S.version)) {
+    _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[9]++;
+    throw new Error("current xtemplate file(" + engine.name + ")(v1.50) need to be recompiled using current kissy(v" + S.version + ")!");
+  }
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[11]++;
+  if (visit34_11_1(visit35_11_2(typeof module !== "undefined") && module.kissy)) {
+    _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[12]++;
     moduleWrap = module;
   }
-  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[13]++;
-  var callCommandUtil = utils.callCommand, debuggerCommand = nativeCommands["debugger"], eachCommand = nativeCommands.each, withCommand = nativeCommands["with"], ifCommand = nativeCommands["if"], setCommand = nativeCommands.set, includeCommand = nativeCommands.include, parseCommand = nativeCommands.parse, extendCommand = nativeCommands.extend, blockCommand = nativeCommands.block, macroCommand = nativeCommands.macro;
-  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[24]++;
-  buffer += '<div class="';
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[14]++;
+  var callCommandUtil = utils.callCommand, eachCommand = nativeCommands.each, withCommand = nativeCommands["with"], ifCommand = nativeCommands["if"], setCommand = nativeCommands.set, includeCommand = nativeCommands.include, parseCommand = nativeCommands.parse, extendCommand = nativeCommands.extend, blockCommand = nativeCommands.block, macroCommand = nativeCommands.macro, debuggerCommand = nativeCommands["debugger"];
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[25]++;
-  var option1 = {};
+  buffer.write('<div class="');
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[26]++;
-  var params2 = [];
-  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[27]++;
-  params2.push('header');
-  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[28]++;
-  option1.params = params2;
+  var option0 = {
+  escape: 1};
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[29]++;
-  var id0 = callCommandUtil(engine, scope, option1, "getBaseCssClasses", 1);
+  var params1 = [];
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[30]++;
-  buffer += escapeHtml(id0);
+  params1.push('header');
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[31]++;
-  buffer += '">\n    <a id="ks-date-picker-month-panel-previous-year-btn-';
+  option0.params = params1;
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[32]++;
-  var id3 = scope.resolve(["id"]);
+  var commandRet2 = callCommandUtil(engine, scope, option0, buffer, "getBaseCssClasses", 1);
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[33]++;
-  buffer += escapeHtml(id3);
-  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[34]++;
-  buffer += '"\n       class="';
-  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[35]++;
-  var option5 = {};
-  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[36]++;
-  var params6 = [];
+  if (visit36_33_1(commandRet2 && commandRet2.isBuffer)) {
+    _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[34]++;
+    buffer = commandRet2;
+    _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[35]++;
+    commandRet2 = undefined;
+  }
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[37]++;
-  params6.push('prev-year-btn');
+  buffer.write(commandRet2, true);
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[38]++;
-  option5.params = params6;
+  buffer.write('">\n    <a id="ks-date-picker-month-panel-previous-year-btn-');
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[39]++;
-  var id4 = callCommandUtil(engine, scope, option5, "getBaseCssClasses", 3);
+  var id3 = scope.resolve(["id"]);
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[40]++;
-  buffer += escapeHtml(id4);
+  buffer.write(id3, true);
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[41]++;
-  buffer += '"\n       href="#"\n       role="button"\n       title="';
+  buffer.write('"\n       class="');
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[42]++;
-  var id7 = scope.resolve(["previousYearLabel"]);
-  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[43]++;
-  buffer += escapeHtml(id7);
-  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[44]++;
-  buffer += '"\n       hidefocus="on">\n    </a>\n\n\n        <a class="';
+  var option4 = {
+  escape: 1};
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[45]++;
-  var option9 = {};
+  var params5 = [];
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[46]++;
-  var params10 = [];
+  params5.push('prev-year-btn');
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[47]++;
-  params10.push('year-select');
+  option4.params = params5;
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[48]++;
-  option9.params = params10;
+  var commandRet6 = callCommandUtil(engine, scope, option4, buffer, "getBaseCssClasses", 3);
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[49]++;
-  var id8 = callCommandUtil(engine, scope, option9, "getBaseCssClasses", 11);
-  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[50]++;
-  buffer += escapeHtml(id8);
-  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[51]++;
-  buffer += '"\n           role="button"\n           href="#"\n           hidefocus="on"\n           title="';
-  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[52]++;
-  var id11 = scope.resolve(["yearSelectLabel"]);
+  if (visit37_49_1(commandRet6 && commandRet6.isBuffer)) {
+    _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[50]++;
+    buffer = commandRet6;
+    _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[51]++;
+    commandRet6 = undefined;
+  }
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[53]++;
-  buffer += escapeHtml(id11);
+  buffer.write(commandRet6, true);
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[54]++;
-  buffer += '"\n           id="ks-date-picker-month-panel-year-select-';
+  buffer.write('"\n       href="#"\n       role="button"\n       title="');
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[55]++;
-  var id12 = scope.resolve(["id"]);
+  var id7 = scope.resolve(["previousYearLabel"]);
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[56]++;
-  buffer += escapeHtml(id12);
+  buffer.write(id7, true);
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[57]++;
-  buffer += '">\n            <span id="ks-date-picker-month-panel-year-select-content-';
+  buffer.write('"\n       hidefocus="on">\n    </a>\n\n\n        <a class="');
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[58]++;
-  var id13 = scope.resolve(["id"]);
-  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[59]++;
-  buffer += escapeHtml(id13);
-  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[60]++;
-  buffer += '">';
+  var option8 = {
+  escape: 1};
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[61]++;
-  var id14 = scope.resolve(["year"]);
+  var params9 = [];
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[62]++;
-  buffer += escapeHtml(id14);
+  params9.push('year-select');
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[63]++;
-  buffer += '</span>\n            <span class="';
+  option8.params = params9;
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[64]++;
-  var option16 = {};
+  var commandRet10 = callCommandUtil(engine, scope, option8, buffer, "getBaseCssClasses", 11);
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[65]++;
-  var params17 = [];
-  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[66]++;
-  params17.push('year-select-arrow');
-  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[67]++;
-  option16.params = params17;
-  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[68]++;
-  var id15 = callCommandUtil(engine, scope, option16, "getBaseCssClasses", 18);
+  if (visit38_65_1(commandRet10 && commandRet10.isBuffer)) {
+    _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[66]++;
+    buffer = commandRet10;
+    _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[67]++;
+    commandRet10 = undefined;
+  }
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[69]++;
-  buffer += escapeHtml(id15);
+  buffer.write(commandRet10, true);
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[70]++;
-  buffer += '">x</span>\n        </a>\n\n    <a id="ks-date-picker-month-panel-next-year-btn-';
+  buffer.write('"\n           role="button"\n           href="#"\n           hidefocus="on"\n           title="');
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[71]++;
-  var id18 = scope.resolve(["id"]);
+  var id11 = scope.resolve(["yearSelectLabel"]);
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[72]++;
-  buffer += escapeHtml(id18);
+  buffer.write(id11, true);
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[73]++;
-  buffer += '"\n       class="';
+  buffer.write('"\n           id="ks-date-picker-month-panel-year-select-');
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[74]++;
-  var option20 = {};
+  var id12 = scope.resolve(["id"]);
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[75]++;
-  var params21 = [];
+  buffer.write(id12, true);
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[76]++;
-  params21.push('next-year-btn');
+  buffer.write('">\n            <span id="ks-date-picker-month-panel-year-select-content-');
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[77]++;
-  option20.params = params21;
+  var id13 = scope.resolve(["id"]);
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[78]++;
-  var id19 = callCommandUtil(engine, scope, option20, "getBaseCssClasses", 22);
+  buffer.write(id13, true);
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[79]++;
-  buffer += escapeHtml(id19);
+  buffer.write('">');
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[80]++;
-  buffer += '"\n       href="#"\n       role="button"\n       title="';
+  var id14 = scope.resolve(["year"]);
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[81]++;
-  var id22 = scope.resolve(["nextYearLabel"]);
+  buffer.write(id14, true);
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[82]++;
-  buffer += escapeHtml(id22);
+  buffer.write('</span>\n            <span class="');
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[83]++;
-  buffer += '"\n       hidefocus="on">\n    </a>\n</div>\n<div class="';
-  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[84]++;
-  var option24 = {};
-  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[85]++;
-  var params25 = [];
+  var option15 = {
+  escape: 1};
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[86]++;
-  params25.push('body');
+  var params16 = [];
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[87]++;
-  option24.params = params25;
+  params16.push('year-select-arrow');
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[88]++;
-  var id23 = callCommandUtil(engine, scope, option24, "getBaseCssClasses", 29);
+  option15.params = params16;
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[89]++;
-  buffer += escapeHtml(id23);
+  var commandRet17 = callCommandUtil(engine, scope, option15, buffer, "getBaseCssClasses", 18);
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[90]++;
-  buffer += '">\n    <table class="';
-  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[91]++;
-  var option27 = {};
-  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[92]++;
-  var params28 = [];
-  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[93]++;
-  params28.push('table');
+  if (visit39_90_1(commandRet17 && commandRet17.isBuffer)) {
+    _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[91]++;
+    buffer = commandRet17;
+    _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[92]++;
+    commandRet17 = undefined;
+  }
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[94]++;
-  option27.params = params28;
+  buffer.write(commandRet17, true);
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[95]++;
-  var id26 = callCommandUtil(engine, scope, option27, "getBaseCssClasses", 30);
+  buffer.write('">x</span>\n        </a>\n\n    <a id="ks-date-picker-month-panel-next-year-btn-');
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[96]++;
-  buffer += escapeHtml(id26);
+  var id18 = scope.resolve(["id"]);
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[97]++;
-  buffer += '" cellspacing="0" role="grid">\n        <tbody id="ks-date-picker-month-panel-tbody-';
+  buffer.write(id18, true);
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[98]++;
-  var id29 = scope.resolve(["id"]);
+  buffer.write('"\n       class="');
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[99]++;
-  buffer += escapeHtml(id29);
-  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[100]++;
-  buffer += '">\n        ';
-  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[101]++;
-  var option31 = {};
+  var option19 = {
+  escape: 1};
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[102]++;
-  var params32 = [];
+  var params20 = [];
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[103]++;
-  params32.push('date/picker/month-panel/months-xtpl');
+  params20.push('next-year-btn');
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[104]++;
-  option31.params = params32;
+  option19.params = params20;
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[105]++;
-  if (visit24_105_1(moduleWrap)) {
-    _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[106]++;
-    require("date/picker/month-panel/months-xtpl");
+  var commandRet21 = callCommandUtil(engine, scope, option19, buffer, "getBaseCssClasses", 22);
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[106]++;
+  if (visit40_106_1(commandRet21 && commandRet21.isBuffer)) {
     _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[107]++;
-    option31.params[0] = moduleWrap.resolveByName(option31.params[0]);
+    buffer = commandRet21;
+    _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[108]++;
+    commandRet21 = undefined;
   }
-  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[109]++;
-  var id30 = includeCommand.call(engine, scope, option31, payload);
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[110]++;
-  if (visit25_110_1(id30 || visit26_110_2(id30 === 0))) {
-    _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[111]++;
-    buffer += id30;
-  }
+  buffer.write(commandRet21, true);
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[111]++;
+  buffer.write('"\n       href="#"\n       role="button"\n       title="');
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[112]++;
+  var id22 = scope.resolve(["nextYearLabel"]);
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[113]++;
-  buffer += '\n        </tbody>\n    </table>\n</div>';
+  buffer.write(id22, true);
   _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[114]++;
+  buffer.write('"\n       hidefocus="on">\n    </a>\n</div>\n<div class="');
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[115]++;
+  var option23 = {
+  escape: 1};
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[118]++;
+  var params24 = [];
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[119]++;
+  params24.push('body');
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[120]++;
+  option23.params = params24;
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[121]++;
+  var commandRet25 = callCommandUtil(engine, scope, option23, buffer, "getBaseCssClasses", 29);
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[122]++;
+  if (visit41_122_1(commandRet25 && commandRet25.isBuffer)) {
+    _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[123]++;
+    buffer = commandRet25;
+    _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[124]++;
+    commandRet25 = undefined;
+  }
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[126]++;
+  buffer.write(commandRet25, true);
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[127]++;
+  buffer.write('">\n    <table class="');
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[128]++;
+  var option26 = {
+  escape: 1};
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[131]++;
+  var params27 = [];
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[132]++;
+  params27.push('table');
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[133]++;
+  option26.params = params27;
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[134]++;
+  var commandRet28 = callCommandUtil(engine, scope, option26, buffer, "getBaseCssClasses", 30);
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[135]++;
+  if (visit42_135_1(commandRet28 && commandRet28.isBuffer)) {
+    _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[136]++;
+    buffer = commandRet28;
+    _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[137]++;
+    commandRet28 = undefined;
+  }
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[139]++;
+  buffer.write(commandRet28, true);
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[140]++;
+  buffer.write('" cellspacing="0" role="grid">\n        <tbody id="ks-date-picker-month-panel-tbody-');
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[141]++;
+  var id29 = scope.resolve(["id"]);
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[142]++;
+  buffer.write(id29, true);
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[143]++;
+  buffer.write('">\n        ');
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[144]++;
+  var option30 = {};
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[145]++;
+  var params31 = [];
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[146]++;
+  params31.push('date/picker/month-panel/months-xtpl');
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[147]++;
+  option30.params = params31;
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[148]++;
+  if (visit43_148_1(moduleWrap)) {
+    _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[149]++;
+    require("date/picker/month-panel/months-xtpl");
+    _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[150]++;
+    option30.params[0] = moduleWrap.resolveByName(option30.params[0]);
+  }
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[152]++;
+  var commandRet32 = includeCommand.call(engine, scope, option30, buffer, 32, payload);
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[153]++;
+  if (visit44_153_1(commandRet32 && commandRet32.isBuffer)) {
+    _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[154]++;
+    buffer = commandRet32;
+    _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[155]++;
+    commandRet32 = undefined;
+  }
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[157]++;
+  buffer.write(commandRet32, false);
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[158]++;
+  buffer.write('\n        </tbody>\n    </table>\n</div>');
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[159]++;
   return buffer;
 };
-  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[116]++;
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[161]++;
   t.TPL_NAME = module.name;
-  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[117]++;
+  _$jscoverage['/picker/month-panel/month-panel-xtpl.js'].lineData[162]++;
   return t;
 });

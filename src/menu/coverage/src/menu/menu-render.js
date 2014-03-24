@@ -250,15 +250,15 @@ if (! _$jscoverage['/menu/menu-render.js'].branchData) {
   _$jscoverage['/menu/menu-render.js'].branchData['16'][3] = new BranchData();
 }
 _$jscoverage['/menu/menu-render.js'].branchData['16'][3].init(62, 18, '$el[0] === element');
-function visit28_16_3(result) {
+function visit29_16_3(result) {
   _$jscoverage['/menu/menu-render.js'].branchData['16'][3].ranCondition(result);
   return result;
 }_$jscoverage['/menu/menu-render.js'].branchData['16'][2].init(62, 43, '$el[0] === element || $el.contains(element)');
-function visit27_16_2(result) {
+function visit28_16_2(result) {
   _$jscoverage['/menu/menu-render.js'].branchData['16'][2].ranCondition(result);
   return result;
 }_$jscoverage['/menu/menu-render.js'].branchData['16'][1].init(54, 52, '$el && ($el[0] === element || $el.contains(element))');
-function visit26_16_1(result) {
+function visit27_16_1(result) {
   _$jscoverage['/menu/menu-render.js'].branchData['16'][1].ranCondition(result);
   return result;
 }_$jscoverage['/menu/menu-render.js'].lineData[6]++;
@@ -278,6 +278,6 @@ KISSY.add(function(S, require) {
   _$jscoverage['/menu/menu-render.js'].lineData[15]++;
   var $el = this.$el;
   _$jscoverage['/menu/menu-render.js'].lineData[16]++;
-  return visit26_16_1($el && (visit27_16_2(visit28_16_3($el[0] === element) || $el.contains(element))));
+  return visit27_16_1($el && (visit28_16_2(visit29_16_3($el[0] === element) || $el.contains(element))));
 }});
 });

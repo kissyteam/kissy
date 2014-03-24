@@ -37,8 +37,9 @@ KISSY.add(function (S, require) {
         NO_PX_REG = /\d(?!px)[a-z%]+$/i,
         cssHooks = {},
         cssProps = {},
-        userSelectProperty,
         defaultDisplay = {},
+        userSelectVendorInfo = getCssVendorInfo('userSelect'),
+        userSelectProperty = userSelectVendorInfo && userSelectVendorInfo.propertyName,
         camelCase = S.camelCase;
 
     cssProps['float'] = 'cssFloat';
@@ -306,7 +307,7 @@ KISSY.add(function (S, require) {
              * Make matched elements unselectable
              * @param {HTMLElement[]|String|HTMLElement} selector  Matched elements.
              */
-            unselectable: function (selector) {
+            unselectable: userSelectProperty ? function (selector) {
                 var _els = Dom.query(selector),
                     elem,
                     j,
@@ -315,24 +316,22 @@ KISSY.add(function (S, require) {
                     excludes,
                     style,
                     els;
-                if (userSelectProperty === undefined) {
-                    userSelectProperty = getCssVendorInfo('userSelect').propertyName;
-                }
                 for (j = _els.length - 1; j >= 0; j--) {
                     elem = _els[j];
                     style = elem.style;
-                    if (userSelectProperty in style) {
-                        style[userSelectProperty] = 'none';
-                    } else if (UA.ie) {
-                        els = elem.getElementsByTagName('*');
-                        elem.setAttribute('unselectable', 'on');
-                        excludes = ['iframe', 'textarea', 'input', 'select'];
-                        while ((e = els[i++])) {
-                            if (!S.inArray(getNodeName(e), excludes)) {
-                                e.setAttribute('unselectable', 'on');
-                            }
+                    els = elem.getElementsByTagName('*');
+                    elem.setAttribute('unselectable', 'on');
+                    excludes = ['iframe', 'textarea', 'input', 'select'];
+                    while ((e = els[i++])) {
+                        if (!S.inArray(getNodeName(e), excludes)) {
+                            e.setAttribute('unselectable', 'on');
                         }
                     }
+                }
+            } : function (selector) {
+                var els = Dom.query(selector);
+                for (var j = els.length - 1; j >= 0; j--) {
+                    els[j].style[userSelectProperty] = 'none';
                 }
             },
 

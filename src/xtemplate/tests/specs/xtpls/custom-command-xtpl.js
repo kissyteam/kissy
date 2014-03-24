@@ -23,9 +23,10 @@ KISSY.add(function (S, require, exports, module) {
                 macroCommand = nativeCommands.macro,
                 debuggerCommand = nativeCommands["debugger"];
             buffer.write('i am ');
-            var option0 = {};
-            option0.escape = true;
-            var commandRet1 = callCommandUtil(engine, scope, option0, buffer, "command", undefined);
+            var option0 = {
+                escape: 1
+            };
+            var commandRet1 = callCommandUtil(engine, scope, option0, buffer, "command", 1);
             if (commandRet1 && commandRet1.isBuffer) {
                 buffer = commandRet1;
                 commandRet1 = undefined;

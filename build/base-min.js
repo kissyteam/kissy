@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 13 17:47
+build time: Mar 24 02:45
 */
 KISSY.add("base",["attribute"],function(e,q){function j(b,a){return function(c){return function(){a?c!==i&&c.apply(this,arguments):this.callSuper.apply(this,arguments);var d=arguments.callee.__owner__.__extensions__||[];a&&d.reverse();var f=arguments,h;if(h=d&&d.length)for(var g=0;g<h;g++){var e=d[g]&&(!b?d[g]:d[g].prototype[b]);e&&e.apply(this,f||[])}a?this.callSuper.apply(this,arguments):c!==i&&c.apply(this,arguments)}}}function o(b){var a=this.__hooks__,c=this.prototype;if(this.__extensions__.length&&
 a)for(var d in a)if(!c.hasOwnProperty(d)||b.hasOwnProperty(d))b[d]=b[d]||i;return r.call(this,b)}function s(b){var a;b.target===this&&(a=this[k+b.type.slice(5).slice(0,-6)],a.call(this,b.newVal,b))}function t(b){var a=b.get("plugins"),c;e.each(a,function(b,f){"function"===typeof b&&(c=b,a[f]=new c)})}function l(b){var a,c=this.get("plugins");if(a=c.length)for(var d=0;d<a;d++)if(c[d][b])c[d][b](this)}var p=q("attribute"),m=e.ucfirst,k="_onSet",i=e.noop,n=p.extend({constructor:function(){this.callSuper.apply(this,

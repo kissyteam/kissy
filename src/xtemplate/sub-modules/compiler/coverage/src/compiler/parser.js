@@ -558,6 +558,8 @@ if (! _$jscoverage['/compiler/parser.js'].branchData) {
   _$jscoverage['/compiler/parser.js'].branchData['224'][1] = new BranchData();
   _$jscoverage['/compiler/parser.js'].branchData['259'] = [];
   _$jscoverage['/compiler/parser.js'].branchData['259'][1] = new BranchData();
+  _$jscoverage['/compiler/parser.js'].branchData['405'] = [];
+  _$jscoverage['/compiler/parser.js'].branchData['405'][1] = new BranchData();
   _$jscoverage['/compiler/parser.js'].branchData['410'] = [];
   _$jscoverage['/compiler/parser.js'].branchData['410'][1] = new BranchData();
   _$jscoverage['/compiler/parser.js'].branchData['1892'] = [];
@@ -586,56 +588,60 @@ if (! _$jscoverage['/compiler/parser.js'].branchData) {
   _$jscoverage['/compiler/parser.js'].branchData['1960'][1] = new BranchData();
 }
 _$jscoverage['/compiler/parser.js'].branchData['1960'][1].init(1078, 3, 'len');
-function visit46_1960_1(result) {
+function visit47_1960_1(result) {
   _$jscoverage['/compiler/parser.js'].branchData['1960'][1].ranCondition(result);
   return result;
 }_$jscoverage['/compiler/parser.js'].branchData['1954'][1].init(909, 17, 'ret !== undefined');
-function visit45_1954_1(result) {
+function visit46_1954_1(result) {
   _$jscoverage['/compiler/parser.js'].branchData['1954'][1].ranCondition(result);
   return result;
 }_$jscoverage['/compiler/parser.js'].branchData['1950'][1].init(789, 13, 'reducedAction');
-function visit44_1950_1(result) {
+function visit45_1950_1(result) {
   _$jscoverage['/compiler/parser.js'].branchData['1950'][1].ranCondition(result);
   return result;
 }_$jscoverage['/compiler/parser.js'].branchData['1946'][1].init(639, 7, 'i < len');
-function visit43_1946_1(result) {
+function visit44_1946_1(result) {
   _$jscoverage['/compiler/parser.js'].branchData['1946'][1].ranCondition(result);
   return result;
 }_$jscoverage['/compiler/parser.js'].branchData['1936'][1].init(257, 31, 'production.rhs || production[1]');
-function visit42_1936_1(result) {
+function visit43_1936_1(result) {
   _$jscoverage['/compiler/parser.js'].branchData['1936'][1].ranCondition(result);
   return result;
 }_$jscoverage['/compiler/parser.js'].branchData['1935'][1].init(184, 34, 'production.action || production[2]');
-function visit41_1935_1(result) {
+function visit42_1935_1(result) {
   _$jscoverage['/compiler/parser.js'].branchData['1935'][1].ranCondition(result);
   return result;
 }_$jscoverage['/compiler/parser.js'].branchData['1934'][1].init(108, 34, 'production.symbol || production[0]');
-function visit40_1934_1(result) {
+function visit41_1934_1(result) {
   _$jscoverage['/compiler/parser.js'].branchData['1934'][1].ranCondition(result);
   return result;
 }_$jscoverage['/compiler/parser.js'].branchData['1906'][1].init(63, 18, 'tableAction[state]');
-function visit39_1906_1(result) {
+function visit40_1906_1(result) {
   _$jscoverage['/compiler/parser.js'].branchData['1906'][1].ranCondition(result);
   return result;
 }_$jscoverage['/compiler/parser.js'].branchData['1904'][1].init(481, 7, '!action');
-function visit38_1904_1(result) {
+function visit39_1904_1(result) {
   _$jscoverage['/compiler/parser.js'].branchData['1904'][1].ranCondition(result);
   return result;
 }_$jscoverage['/compiler/parser.js'].branchData['1902'][1].init(414, 48, 'tableAction[state] && tableAction[state][symbol]');
-function visit37_1902_1(result) {
+function visit38_1902_1(result) {
   _$jscoverage['/compiler/parser.js'].branchData['1902'][1].ranCondition(result);
   return result;
 }_$jscoverage['/compiler/parser.js'].branchData['1896'][1].init(198, 7, '!symbol');
-function visit36_1896_1(result) {
+function visit37_1896_1(result) {
   _$jscoverage['/compiler/parser.js'].branchData['1896'][1].ranCondition(result);
   return result;
 }_$jscoverage['/compiler/parser.js'].branchData['1892'][1].init(118, 7, '!symbol');
-function visit35_1892_1(result) {
+function visit36_1892_1(result) {
   _$jscoverage['/compiler/parser.js'].branchData['1892'][1].ranCondition(result);
   return result;
 }_$jscoverage['/compiler/parser.js'].branchData['410'][1].init(88, 20, 'this.$1.length !== 3');
-function visit34_410_1(result) {
+function visit35_410_1(result) {
   _$jscoverage['/compiler/parser.js'].branchData['410'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/compiler/parser.js'].branchData['405'][1].init(101, 20, 'this.$1.length !== 4');
+function visit34_405_1(result) {
+  _$jscoverage['/compiler/parser.js'].branchData['405'][1].ranCondition(result);
   return result;
 }_$jscoverage['/compiler/parser.js'].branchData['259'][1].init(79, 21, 'this.matches[1] || \'\'');
 function visit33_259_1(result) {
@@ -1154,11 +1160,11 @@ KISSY.add(function(_, undefined) {
 }], ['ak', ['c', 'al', 'h', 'ai', 'd', 'am', 'h'], function() {
   _$jscoverage['/compiler/parser.js'].functionData[30]++;
   _$jscoverage['/compiler/parser.js'].lineData[405]++;
-  return new this.yy.BlockStatement(this.lexer.lineNumber, this.$2, this.$4, this.$6);
+  return new this.yy.BlockStatement(this.lexer.lineNumber, this.$2, this.$4, this.$6, visit34_405_1(this.$1.length !== 4));
 }], ['ak', ['f', 'an', 'h'], function() {
   _$jscoverage['/compiler/parser.js'].functionData[31]++;
   _$jscoverage['/compiler/parser.js'].lineData[410]++;
-  return new this.yy.ExpressionStatement(this.lexer.lineNumber, this.$2, visit34_410_1(this.$1.length !== 3));
+  return new this.yy.ExpressionStatement(this.lexer.lineNumber, this.$2, visit35_410_1(this.$1.length !== 3));
 }], ['ak', ['b'], function() {
   _$jscoverage['/compiler/parser.js'].functionData[32]++;
   _$jscoverage['/compiler/parser.js'].lineData[415]++;
@@ -2463,25 +2469,25 @@ KISSY.add(function(_, undefined) {
     _$jscoverage['/compiler/parser.js'].lineData[1890]++;
     state = stack[stack.length - 1];
     _$jscoverage['/compiler/parser.js'].lineData[1892]++;
-    if (visit35_1892_1(!symbol)) {
+    if (visit36_1892_1(!symbol)) {
       _$jscoverage['/compiler/parser.js'].lineData[1893]++;
       symbol = lexer.lex();
     }
     _$jscoverage['/compiler/parser.js'].lineData[1896]++;
-    if (visit36_1896_1(!symbol)) {
+    if (visit37_1896_1(!symbol)) {
       _$jscoverage['/compiler/parser.js'].lineData[1897]++;
       S.log(prefix + 'it is not a valid input: ' + input, 'error');
       _$jscoverage['/compiler/parser.js'].lineData[1898]++;
       return false;
     }
     _$jscoverage['/compiler/parser.js'].lineData[1902]++;
-    action = visit37_1902_1(tableAction[state] && tableAction[state][symbol]);
+    action = visit38_1902_1(tableAction[state] && tableAction[state][symbol]);
     _$jscoverage['/compiler/parser.js'].lineData[1904]++;
-    if (visit38_1904_1(!action)) {
+    if (visit39_1904_1(!action)) {
       _$jscoverage['/compiler/parser.js'].lineData[1905]++;
       var expected = [], error;
       _$jscoverage['/compiler/parser.js'].lineData[1906]++;
-      if (visit39_1906_1(tableAction[state])) {
+      if (visit40_1906_1(tableAction[state])) {
         _$jscoverage['/compiler/parser.js'].lineData[1907]++;
         for (var symbolForState in tableAction[state]) {
           _$jscoverage['/compiler/parser.js'].lineData[1908]++;
@@ -2510,23 +2516,23 @@ KISSY.add(function(_, undefined) {
         break;
       case GrammarConst.REDUCE_TYPE:
         _$jscoverage['/compiler/parser.js'].lineData[1933]++;
-        var production = productions[action[GrammarConst.PRODUCTION_INDEX]], reducedSymbol = visit40_1934_1(production.symbol || production[0]), reducedAction = visit41_1935_1(production.action || production[2]), reducedRhs = visit42_1936_1(production.rhs || production[1]), len = reducedRhs.length, i = 0, ret, $$ = valueStack[valueStack.length - len];
+        var production = productions[action[GrammarConst.PRODUCTION_INDEX]], reducedSymbol = visit41_1934_1(production.symbol || production[0]), reducedAction = visit42_1935_1(production.action || production[2]), reducedRhs = visit43_1936_1(production.rhs || production[1]), len = reducedRhs.length, i = 0, ret, $$ = valueStack[valueStack.length - len];
         _$jscoverage['/compiler/parser.js'].lineData[1942]++;
         ret = undefined;
         _$jscoverage['/compiler/parser.js'].lineData[1944]++;
         self.$$ = $$;
         _$jscoverage['/compiler/parser.js'].lineData[1946]++;
-        for (; visit43_1946_1(i < len); i++) {
+        for (; visit44_1946_1(i < len); i++) {
           _$jscoverage['/compiler/parser.js'].lineData[1947]++;
           self['$' + (len - i)] = valueStack[valueStack.length - 1 - i];
         }
         _$jscoverage['/compiler/parser.js'].lineData[1950]++;
-        if (visit44_1950_1(reducedAction)) {
+        if (visit45_1950_1(reducedAction)) {
           _$jscoverage['/compiler/parser.js'].lineData[1951]++;
           ret = reducedAction.call(self);
         }
         _$jscoverage['/compiler/parser.js'].lineData[1954]++;
-        if (visit45_1954_1(ret !== undefined)) {
+        if (visit46_1954_1(ret !== undefined)) {
           _$jscoverage['/compiler/parser.js'].lineData[1955]++;
           $$ = ret;
         } else {
@@ -2534,7 +2540,7 @@ KISSY.add(function(_, undefined) {
           $$ = self.$$;
         }
         _$jscoverage['/compiler/parser.js'].lineData[1960]++;
-        if (visit46_1960_1(len)) {
+        if (visit47_1960_1(len)) {
           _$jscoverage['/compiler/parser.js'].lineData[1961]++;
           stack = stack.slice(0, -1 * len * 2);
           _$jscoverage['/compiler/parser.js'].lineData[1962]++;

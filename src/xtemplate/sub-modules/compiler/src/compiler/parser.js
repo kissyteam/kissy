@@ -402,7 +402,7 @@ KISSY.add(function (_, undefined) {
         ],
         ['ak', ['c', 'al', 'h', 'ai', 'd', 'am', 'h'],
             function () {
-                return new this.yy.BlockStatement(this.lexer.lineNumber, this.$2, this.$4, this.$6);
+                return new this.yy.BlockStatement(this.lexer.lineNumber, this.$2, this.$4, this.$6, this.$1.length !== 4);
             }
         ],
         ['ak', ['f', 'an', 'h'],
