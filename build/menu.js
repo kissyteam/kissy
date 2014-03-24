@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 24 03:00
+build time: Mar 24 11:49
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -169,9 +169,10 @@ KISSY.add("menu/menuitem", ["component/control", "./menuitem-render", "node"], f
   var Control = require("component/control");
   var MenuItemRender = require("./menuitem-render");
   var $ = require("node").all;
-  return Control.extend({isMenuItem:1, handleClickInternal:function() {
+  return Control.extend({isMenuItem:1, handleClickInternal:function(ev) {
     var self = this;
-    self.callSuper();
+    self.callSuper(ev);
+    ev.preventDefault();
     if(self.get("selectable")) {
       self.set("selected", true)
     }

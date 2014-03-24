@@ -29,6 +29,9 @@ KISSY.add(function (S, require) {
         handleClickInternal: function (ev) {
             var self = this;
             self.callSuper(ev);
+            // combobox menu tap penetration
+            // https://github.com/kissyteam/kissy/issues/533
+            ev.preventDefault();
             // 可选
             if (self.get('selectable')) {
                 self.set('selected', true);

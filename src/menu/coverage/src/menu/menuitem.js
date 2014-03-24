@@ -236,23 +236,24 @@ if (! _$jscoverage['/menu/menuitem.js']) {
   _$jscoverage['/menu/menuitem.js'].lineData[17] = 0;
   _$jscoverage['/menu/menuitem.js'].lineData[30] = 0;
   _$jscoverage['/menu/menuitem.js'].lineData[31] = 0;
-  _$jscoverage['/menu/menuitem.js'].lineData[33] = 0;
   _$jscoverage['/menu/menuitem.js'].lineData[34] = 0;
   _$jscoverage['/menu/menuitem.js'].lineData[36] = 0;
   _$jscoverage['/menu/menuitem.js'].lineData[37] = 0;
-  _$jscoverage['/menu/menuitem.js'].lineData[43] = 0;
+  _$jscoverage['/menu/menuitem.js'].lineData[39] = 0;
+  _$jscoverage['/menu/menuitem.js'].lineData[40] = 0;
   _$jscoverage['/menu/menuitem.js'].lineData[46] = 0;
-  _$jscoverage['/menu/menuitem.js'].lineData[47] = 0;
-  _$jscoverage['/menu/menuitem.js'].lineData[48] = 0;
+  _$jscoverage['/menu/menuitem.js'].lineData[49] = 0;
   _$jscoverage['/menu/menuitem.js'].lineData[50] = 0;
-  _$jscoverage['/menu/menuitem.js'].lineData[52] = 0;
-  _$jscoverage['/menu/menuitem.js'].lineData[57] = 0;
-  _$jscoverage['/menu/menuitem.js'].lineData[58] = 0;
-  _$jscoverage['/menu/menuitem.js'].lineData[62] = 0;
-  _$jscoverage['/menu/menuitem.js'].lineData[64] = 0;
+  _$jscoverage['/menu/menuitem.js'].lineData[51] = 0;
+  _$jscoverage['/menu/menuitem.js'].lineData[53] = 0;
+  _$jscoverage['/menu/menuitem.js'].lineData[55] = 0;
+  _$jscoverage['/menu/menuitem.js'].lineData[60] = 0;
+  _$jscoverage['/menu/menuitem.js'].lineData[61] = 0;
   _$jscoverage['/menu/menuitem.js'].lineData[65] = 0;
   _$jscoverage['/menu/menuitem.js'].lineData[67] = 0;
-  _$jscoverage['/menu/menuitem.js'].lineData[81] = 0;
+  _$jscoverage['/menu/menuitem.js'].lineData[68] = 0;
+  _$jscoverage['/menu/menuitem.js'].lineData[70] = 0;
+  _$jscoverage['/menu/menuitem.js'].lineData[84] = 0;
 }
 if (! _$jscoverage['/menu/menuitem.js'].functionData) {
   _$jscoverage['/menu/menuitem.js'].functionData = [];
@@ -264,53 +265,53 @@ if (! _$jscoverage['/menu/menuitem.js'].functionData) {
 }
 if (! _$jscoverage['/menu/menuitem.js'].branchData) {
   _$jscoverage['/menu/menuitem.js'].branchData = {};
-  _$jscoverage['/menu/menuitem.js'].branchData['33'] = [];
-  _$jscoverage['/menu/menuitem.js'].branchData['33'][1] = new BranchData();
-  _$jscoverage['/menu/menuitem.js'].branchData['46'] = [];
-  _$jscoverage['/menu/menuitem.js'].branchData['46'][1] = new BranchData();
-  _$jscoverage['/menu/menuitem.js'].branchData['46'][2] = new BranchData();
-  _$jscoverage['/menu/menuitem.js'].branchData['47'] = [];
-  _$jscoverage['/menu/menuitem.js'].branchData['47'][1] = new BranchData();
+  _$jscoverage['/menu/menuitem.js'].branchData['36'] = [];
+  _$jscoverage['/menu/menuitem.js'].branchData['36'][1] = new BranchData();
+  _$jscoverage['/menu/menuitem.js'].branchData['49'] = [];
+  _$jscoverage['/menu/menuitem.js'].branchData['49'][1] = new BranchData();
+  _$jscoverage['/menu/menuitem.js'].branchData['49'][2] = new BranchData();
   _$jscoverage['/menu/menuitem.js'].branchData['50'] = [];
   _$jscoverage['/menu/menuitem.js'].branchData['50'][1] = new BranchData();
-  _$jscoverage['/menu/menuitem.js'].branchData['57'] = [];
-  _$jscoverage['/menu/menuitem.js'].branchData['57'][1] = new BranchData();
-  _$jscoverage['/menu/menuitem.js'].branchData['62'] = [];
-  _$jscoverage['/menu/menuitem.js'].branchData['62'][1] = new BranchData();
-  _$jscoverage['/menu/menuitem.js'].branchData['64'] = [];
-  _$jscoverage['/menu/menuitem.js'].branchData['64'][1] = new BranchData();
+  _$jscoverage['/menu/menuitem.js'].branchData['53'] = [];
+  _$jscoverage['/menu/menuitem.js'].branchData['53'][1] = new BranchData();
+  _$jscoverage['/menu/menuitem.js'].branchData['60'] = [];
+  _$jscoverage['/menu/menuitem.js'].branchData['60'][1] = new BranchData();
+  _$jscoverage['/menu/menuitem.js'].branchData['65'] = [];
+  _$jscoverage['/menu/menuitem.js'].branchData['65'][1] = new BranchData();
+  _$jscoverage['/menu/menuitem.js'].branchData['67'] = [];
+  _$jscoverage['/menu/menuitem.js'].branchData['67'][1] = new BranchData();
 }
-_$jscoverage['/menu/menuitem.js'].branchData['64'][1].init(325, 2, '!p');
-function visit41_64_1(result) {
-  _$jscoverage['/menu/menuitem.js'].branchData['64'][1].ranCondition(result);
+_$jscoverage['/menu/menuitem.js'].branchData['67'][1].init(325, 2, '!p');
+function visit41_67_1(result) {
+  _$jscoverage['/menu/menuitem.js'].branchData['67'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menu/menuitem.js'].branchData['62'][1].init(32, 34, '$(e).css(\'overflow\') !== \'visible\'');
-function visit40_62_1(result) {
-  _$jscoverage['/menu/menuitem.js'].branchData['62'][1].ranCondition(result);
+}_$jscoverage['/menu/menuitem.js'].branchData['65'][1].init(32, 34, '$(e).css(\'overflow\') !== \'visible\'');
+function visit40_65_1(result) {
+  _$jscoverage['/menu/menuitem.js'].branchData['65'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menu/menuitem.js'].branchData['57'][1].init(519, 1, 'v');
-function visit39_57_1(result) {
-  _$jscoverage['/menu/menuitem.js'].branchData['57'][1].ranCondition(result);
+}_$jscoverage['/menu/menuitem.js'].branchData['60'][1].init(519, 1, 'v');
+function visit39_60_1(result) {
+  _$jscoverage['/menu/menuitem.js'].branchData['60'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menu/menuitem.js'].branchData['50'][1].init(25, 1, 'v');
-function visit38_50_1(result) {
+}_$jscoverage['/menu/menuitem.js'].branchData['53'][1].init(25, 1, 'v');
+function visit38_53_1(result) {
+  _$jscoverage['/menu/menuitem.js'].branchData['53'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/menu/menuitem.js'].branchData['50'][1].init(21, 20, 'self.get(\'rendered\')');
+function visit37_50_1(result) {
   _$jscoverage['/menu/menuitem.js'].branchData['50'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menu/menuitem.js'].branchData['47'][1].init(21, 20, 'self.get(\'rendered\')');
-function visit37_47_1(result) {
-  _$jscoverage['/menu/menuitem.js'].branchData['47'][1].ranCondition(result);
+}_$jscoverage['/menu/menuitem.js'].branchData['49'][2].init(94, 31, 'e && e.byPassSetHighlightedItem');
+function visit36_49_2(result) {
+  _$jscoverage['/menu/menuitem.js'].branchData['49'][2].ranCondition(result);
   return result;
-}_$jscoverage['/menu/menuitem.js'].branchData['46'][2].init(94, 31, 'e && e.byPassSetHighlightedItem');
-function visit36_46_2(result) {
-  _$jscoverage['/menu/menuitem.js'].branchData['46'][2].ranCondition(result);
+}_$jscoverage['/menu/menuitem.js'].branchData['49'][1].init(92, 34, '!(e && e.byPassSetHighlightedItem)');
+function visit35_49_1(result) {
+  _$jscoverage['/menu/menuitem.js'].branchData['49'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menu/menuitem.js'].branchData['46'][1].init(92, 34, '!(e && e.byPassSetHighlightedItem)');
-function visit35_46_1(result) {
-  _$jscoverage['/menu/menuitem.js'].branchData['46'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/menu/menuitem.js'].branchData['33'][1].init(94, 22, 'self.get(\'selectable\')');
-function visit34_33_1(result) {
-  _$jscoverage['/menu/menuitem.js'].branchData['33'][1].ranCondition(result);
+}_$jscoverage['/menu/menuitem.js'].branchData['36'][1].init(235, 22, 'self.get(\'selectable\')');
+function visit34_36_1(result) {
+  _$jscoverage['/menu/menuitem.js'].branchData['36'][1].ranCondition(result);
   return result;
 }_$jscoverage['/menu/menuitem.js'].lineData[6]++;
 KISSY.add(function(S, require) {
@@ -324,54 +325,56 @@ KISSY.add(function(S, require) {
   _$jscoverage['/menu/menuitem.js'].lineData[17]++;
   return Control.extend({
   isMenuItem: 1, 
-  handleClickInternal: function() {
+  handleClickInternal: function(ev) {
   _$jscoverage['/menu/menuitem.js'].functionData[1]++;
   _$jscoverage['/menu/menuitem.js'].lineData[30]++;
   var self = this;
   _$jscoverage['/menu/menuitem.js'].lineData[31]++;
-  self.callSuper();
-  _$jscoverage['/menu/menuitem.js'].lineData[33]++;
-  if (visit34_33_1(self.get('selectable'))) {
-    _$jscoverage['/menu/menuitem.js'].lineData[34]++;
+  self.callSuper(ev);
+  _$jscoverage['/menu/menuitem.js'].lineData[34]++;
+  ev.preventDefault();
+  _$jscoverage['/menu/menuitem.js'].lineData[36]++;
+  if (visit34_36_1(self.get('selectable'))) {
+    _$jscoverage['/menu/menuitem.js'].lineData[37]++;
     self.set('selected', true);
   }
-  _$jscoverage['/menu/menuitem.js'].lineData[36]++;
+  _$jscoverage['/menu/menuitem.js'].lineData[39]++;
   self.fire('click');
-  _$jscoverage['/menu/menuitem.js'].lineData[37]++;
+  _$jscoverage['/menu/menuitem.js'].lineData[40]++;
   return true;
 }, 
   _onSetHighlighted: function(v, e) {
   _$jscoverage['/menu/menuitem.js'].functionData[2]++;
-  _$jscoverage['/menu/menuitem.js'].lineData[43]++;
-  var self = this, parent = self.get('parent');
   _$jscoverage['/menu/menuitem.js'].lineData[46]++;
-  if (visit35_46_1(!(visit36_46_2(e && e.byPassSetHighlightedItem)))) {
-    _$jscoverage['/menu/menuitem.js'].lineData[47]++;
-    if (visit37_47_1(self.get('rendered'))) {
-      _$jscoverage['/menu/menuitem.js'].lineData[48]++;
+  var self = this, parent = self.get('parent');
+  _$jscoverage['/menu/menuitem.js'].lineData[49]++;
+  if (visit35_49_1(!(visit36_49_2(e && e.byPassSetHighlightedItem)))) {
+    _$jscoverage['/menu/menuitem.js'].lineData[50]++;
+    if (visit37_50_1(self.get('rendered'))) {
+      _$jscoverage['/menu/menuitem.js'].lineData[51]++;
       parent.set('highlightedItem', v ? self : null);
     } else {
-      _$jscoverage['/menu/menuitem.js'].lineData[50]++;
-      if (visit38_50_1(v)) {
-        _$jscoverage['/menu/menuitem.js'].lineData[52]++;
+      _$jscoverage['/menu/menuitem.js'].lineData[53]++;
+      if (visit38_53_1(v)) {
+        _$jscoverage['/menu/menuitem.js'].lineData[55]++;
         parent.set('highlightedItem', self);
       }
     }
   }
-  _$jscoverage['/menu/menuitem.js'].lineData[57]++;
-  if (visit39_57_1(v)) {
-    _$jscoverage['/menu/menuitem.js'].lineData[58]++;
+  _$jscoverage['/menu/menuitem.js'].lineData[60]++;
+  if (visit39_60_1(v)) {
+    _$jscoverage['/menu/menuitem.js'].lineData[61]++;
     var el = self.$el, p = el.parent(function(e) {
   _$jscoverage['/menu/menuitem.js'].functionData[3]++;
-  _$jscoverage['/menu/menuitem.js'].lineData[62]++;
-  return visit40_62_1($(e).css('overflow') !== 'visible');
+  _$jscoverage['/menu/menuitem.js'].lineData[65]++;
+  return visit40_65_1($(e).css('overflow') !== 'visible');
 }, parent.get('el').parent());
-    _$jscoverage['/menu/menuitem.js'].lineData[64]++;
-    if (visit41_64_1(!p)) {
-      _$jscoverage['/menu/menuitem.js'].lineData[65]++;
+    _$jscoverage['/menu/menuitem.js'].lineData[67]++;
+    if (visit41_67_1(!p)) {
+      _$jscoverage['/menu/menuitem.js'].lineData[68]++;
       return;
     }
-    _$jscoverage['/menu/menuitem.js'].lineData[67]++;
+    _$jscoverage['/menu/menuitem.js'].lineData[70]++;
     el.scrollIntoView(p, {
   alignWithTop: true, 
   allowHorizontalScroll: true, 
@@ -380,7 +383,7 @@ KISSY.add(function(S, require) {
 }, 
   containsElement: function(element) {
   _$jscoverage['/menu/menuitem.js'].functionData[4]++;
-  _$jscoverage['/menu/menuitem.js'].lineData[81]++;
+  _$jscoverage['/menu/menuitem.js'].lineData[84]++;
   return this.view.containsElement(element);
 }}, {
   ATTRS: {
