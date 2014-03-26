@@ -9,12 +9,6 @@ KISSY.add(function (S, require) {
     var Feature = S.Feature;
     var getCssVendorInfo = Feature.getCssVendorInfo;
     var transitionVendorInfo = getCssVendorInfo('transition');
-    var vendorPrefix = transitionVendorInfo.propertyNamePrefix;
-    var TRANSITION_END_EVENT = vendorPrefix ?
-        // webkitTransitionEnd !
-        ([vendorPrefix.toLowerCase() + 'TransitionEnd']) :
-        // https://github.com/kissyteam/kissy/issues/538
-        ['transitionend', 'webkitTransitionEnd'];
     var TRANSITION = transitionVendorInfo.propertyName;
     var DEFAULT_EASING = 'ease-in';
     var css3Anim = {
@@ -37,39 +31,6 @@ KISSY.add(function (S, require) {
         return str;
     }
 
-    function onTransitionEnd(self, e) {
-        var allCompleted = 1,
-            propertyName = e.propertyName,
-            propsData = self._propsData;
-
-        // other anim on the same element
-        if (!propsData[propertyName]) {
-            return;
-        }
-        // webkitTransitionEnd transitionend are both bind for
-        // https://github.com/kissyteam/kissy/issues/538
-        if (propsData[propertyName].pos === 1) {
-            return;
-        }
-        propsData[propertyName].pos = 1;
-        S.each(propsData, function (propData) {
-            if (propData.pos !== 1) {
-                allCompleted = 0;
-                return false;
-            }
-            return undefined;
-        });
-        if (allCompleted) {
-            self.stop(true);
-        }
-    }
-
-    function bindEnd(el, fn, remove) {
-        S.each(TRANSITION_END_EVENT, function (e) {
-            el[remove ? 'removeEventListener' : 'addEventListener'](e, fn, false);
-        });
-    }
-
     function unCamelCase(propertyName) {
         return propertyName.replace(/[A-Z]/g, function (m) {
             return '-' + m.toLowerCase();
@@ -82,9 +43,6 @@ KISSY.add(function (S, require) {
             return new TransitionAnim(node, to, duration, easing, complete);
         }
         TransitionAnim.superclass.constructor.apply(self, arguments);
-        self._onTransitionEnd = function (e) {
-            onTransitionEnd(self, e);
-        };
     }
 
     S.extend(TransitionAnim, AnimBase, {
@@ -118,25 +76,17 @@ KISSY.add(function (S, require) {
                 elStyle = node.style,
                 _propsData = self._propsData,
                 original = elStyle[TRANSITION],
+                totalDuration = 0,
                 propsCss = {};
 
             S.each(_propsData, function (propData, prop) {
-                var v = propData.value,
-                    currentValue = Dom.css(node, prop);
-                Dom.css(node, prop, currentValue);
-                if (typeof v === 'number') {
-                    currentValue = parseFloat(currentValue);
-                }
-                if (currentValue === v) {
-                    // browser does not trigger _onTransitionEnd if from is same with to
-                    setTimeout(function () {
-                        self._onTransitionEnd({
-                            propertyName: prop
-                        });
-                    }, 0);
-                }
+                var v = propData.value;
+                // hack, for to reflow?
+                Dom.css(node, prop, Dom.css(node, prop));
                 propsCss[prop] = v;
+                totalDuration = Math.max(propData.duration + propData.delay, totalDuration);
             });
+
             // chrome none
             // firefox none 0s ease 0s
             if (original.indexOf('none') !== -1) {
@@ -146,11 +96,16 @@ KISSY.add(function (S, require) {
             }
 
             elStyle[TRANSITION] = original + genTransition(_propsData);
-            bindEnd(node, self._onTransitionEnd);
+
             // bug when set left on relative element
             setTimeout(function () {
                 Dom.css(node, propsCss);
             }, 0);
+
+            // timer is more reliable and can deal with short hand css properties
+            self._transitionEndTimer = setTimeout(function () {
+                self.stop(true);
+            }, totalDuration * 1000);
         },
 
         beforeResume: function () {
@@ -185,7 +140,10 @@ KISSY.add(function (S, require) {
                 clear,
                 propsCss = {};
 
-            bindEnd(node, self._onTransitionEnd, 1);
+            if (self._transitionEndTimer) {
+                clearTimeout(self._transitionEndTimer);
+                self._transitionEndTimer = null;
+            }
 
             S.each(_propsData, function (propData, prop) {
                 if (!finish) {

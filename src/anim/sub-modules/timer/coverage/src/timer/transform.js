@@ -375,7 +375,7 @@ function visit77_83_1(result) {
 function visit76_35_1(result) {
   _$jscoverage['/timer/transform.js'].branchData['35'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer/transform.js'].branchData['30'][1].init(243, 13, 'A * D - B * C');
+}_$jscoverage['/timer/transform.js'].branchData['30'][1].init(240, 13, 'A * D - B * C');
 function visit75_30_1(result) {
   _$jscoverage['/timer/transform.js'].branchData['30'][1].ranCondition(result);
   return result;
@@ -430,26 +430,26 @@ KISSY.add(function(S, require) {
     }
     _$jscoverage['/timer/transform.js'].lineData[47]++;
     return {
-  'translateX': myParse(matrix[4]), 
-  'translateY': myParse(matrix[5]), 
-  'rotate': myParse(Math.atan2(B, A) * 180 / Math.PI), 
-  'skewX': myParse(Math.atan(skew) * 180 / Math.PI), 
-  'skewY': 0, 
-  'scaleX': myParse(scaleX), 
-  'scaleY': myParse(scaleY)};
+  translateX: myParse(matrix[4]), 
+  translateY: myParse(matrix[5]), 
+  rotate: myParse(Math.atan2(B, A) * 180 / Math.PI), 
+  skewX: myParse(Math.atan(skew) * 180 / Math.PI), 
+  skewY: 0, 
+  scaleX: myParse(scaleX), 
+  scaleY: myParse(scaleY)};
   }
   _$jscoverage['/timer/transform.js'].lineData[58]++;
   function defaultDecompose() {
     _$jscoverage['/timer/transform.js'].functionData[4]++;
     _$jscoverage['/timer/transform.js'].lineData[59]++;
     return {
-  'translateX': 0, 
-  'translateY': 0, 
-  'rotate': 0, 
-  'skewX': 0, 
-  'skewY': 0, 
-  'scaleX': 1, 
-  'scaleY': 1};
+  translateX: 0, 
+  translateY: 0, 
+  rotate: 0, 
+  skewX: 0, 
+  skewY: 0, 
+  scaleX: 1, 
+  scaleY: 1};
   }
   _$jscoverage['/timer/transform.js'].lineData[70]++;
   function myParse(v) {

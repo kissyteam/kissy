@@ -379,7 +379,7 @@ KISSY.add(function (S, require, module, exports, undefined) {
                 className += ' ks-' + key;
             }
         });
-        if (S.trim(className)) {
+        if (className) {
             documentElement.className = S.trim(documentElement.className + className);
         }
     }

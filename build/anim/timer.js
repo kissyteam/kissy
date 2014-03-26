@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 25 17:46
+build time: Mar 26 13:00
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -11,6 +11,7 @@ build time: Mar 25 17:46
  anim/timer/fx
  anim/timer/color
  anim/timer/transform
+ anim/timer/short-hand
  anim/timer
 */
 
@@ -20,7 +21,7 @@ KISSY.add("anim/timer/easing", [], function() {
     return t
   }
   var Easing = {swing:function(t) {
-    return-Math.cos(t * PI) / 2 + 0.5
+    return 0.5 - Math.cos(t * PI) / 2
   }, easeNone:easeNone, linear:easeNone, easeIn:function(t) {
     return t * t
   }, ease:cubicBezierFunction(0.25, 0.1, 0.25, 1), "ease-in":cubicBezierFunction(0.42, 0, 1, 1), "ease-out":cubicBezierFunction(0, 0, 0.58, 1), "ease-in-out":cubicBezierFunction(0.42, 0, 0.58, 1), "ease-out-in":cubicBezierFunction(0, 0.42, 1, 0.58), toFn:function(easingStr) {
@@ -44,7 +45,7 @@ KISSY.add("anim/timer/easing", [], function() {
     if(t === 0 || t === 1) {
       return t
     }
-    return-(pow(2, 10 * (t -= 1)) * sin((t - s) * 2 * PI / p))
+    return 0 - pow(2, 10 * (t -= 1)) * sin((t - s) * 2 * PI / p)
   }, elasticOut:function(t) {
     var p = 0.3, s = p / 4;
     if(t === 0 || t === 1) {
@@ -486,7 +487,11 @@ KISSY.add("anim/timer/transform", ["dom", "./fx"], function(S, require) {
   Fx.Factories.transform = TransformFx;
   return TransformFx
 });
-KISSY.add("anim/timer", ["dom", "./base", "./timer/easing", "./timer/manager", "./timer/fx", "./timer/color", "./timer/transform"], function(S, require) {
+KISSY.add("anim/timer/short-hand", [], function() {
+  return{background:["backgroundColor"], border:["borderBottomWidth", "borderLeftWidth", "borderRightWidth", "borderTopWidth", "borderBottomColor", "borderLeftColor", "borderRightColor", "borderTopColor"], borderColor:["borderBottomColor", "borderLeftColor", "borderRightColor", "borderTopColor"], borderBottom:["borderBottomWidth", "borderBottomColor"], borderLeft:["borderLeftWidth", "borderLeftColor"], borderTop:["borderTopWidth", "borderTopColor"], borderRight:["borderRightWidth", "borderRightColor"], 
+  font:["fontSize", "fontWeight"], margin:["marginBottom", "marginLeft", "marginRight", "marginTop"], padding:["paddingBottom", "paddingLeft", "paddingRight", "paddingTop"]}
+});
+KISSY.add("anim/timer", ["dom", "./base", "./timer/easing", "./timer/manager", "./timer/fx", "./timer/color", "./timer/transform", "./timer/short-hand"], function(S, require) {
   var Dom = require("dom");
   var AnimBase = require("./base");
   var Easing = require("./timer/easing");
@@ -494,6 +499,7 @@ KISSY.add("anim/timer", ["dom", "./base", "./timer/easing", "./timer/manager", "
   var Fx = require("./timer/fx");
   require("./timer/color");
   require("./timer/transform");
+  var SHORT_HANDS = require("./timer/short-hand");
   var NUMBER_REG = /^([+\-]=)?([\d+.\-]+)([a-z%]*)$/i;
   function TimerAnim(node, to, duration, easing, complete) {
     var self = this;
@@ -509,6 +515,24 @@ KISSY.add("anim/timer", ["dom", "./base", "./timer/easing", "./timer/manager", "
       _propData.delay *= 1E3;
       if(typeof _propData.easing === "string") {
         _propData.easing = Easing.toFn(_propData.easing)
+      }
+    });
+    S.each(SHORT_HANDS, function(shortHands, p) {
+      var origin, _propData = _propsData[p], val;
+      if(_propData) {
+        val = _propData.value;
+        origin = {};
+        S.each(shortHands, function(sh) {
+          origin[sh] = Dom.css(node, sh)
+        });
+        Dom.css(node, p, val);
+        S.each(origin, function(val, sh) {
+          if(!(sh in _propsData)) {
+            _propsData[sh] = S.merge(_propData, {value:Dom.css(node, sh)})
+          }
+          Dom.css(node, sh, val)
+        });
+        delete _propsData[p]
       }
     });
     var prop, _propData, val, to, from, propCfg, fx, isCustomFx = 0, unit, parts;

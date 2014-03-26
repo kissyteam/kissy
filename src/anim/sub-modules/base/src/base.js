@@ -18,8 +18,6 @@ KISSY.add(function (S, require) {
             show: 1
         };
 
-    var SHORT_HANDS = require('./base/short-hand');
-
     var defaultConfig = {
         duration: 1,
         easing: 'linear'
@@ -167,34 +165,6 @@ KISSY.add(function (S, require) {
                     frame: config.frame,
                     duration: defaultDuration
                 }, val);
-            });
-
-            // 扩展分属性
-            S.each(SHORT_HANDS, function (shortHands, p) {
-                var origin,
-                    _propData = _propsData[p],
-                    val;
-                if (_propData) {
-                    val = _propData.value;
-                    origin = {};
-                    S.each(shortHands, function (sh) {
-                        // 得到原始分属性之前值
-                        origin[sh] = Dom.css(node, sh);
-                    });
-                    Dom.css(node, p, val);
-                    S.each(origin, function (val, sh) {
-                        // 如果分属性没有显式设置过，得到期待的分属性最后值
-                        if (!(sh in _propsData)) {
-                            _propsData[sh] = S.merge(_propData, {
-                                value: Dom.css(node, sh)
-                            });
-                        }
-                        // 还原
-                        Dom.css(node, sh, val);
-                    });
-                    // 删除复合属性
-                    delete _propsData[p];
-                }
             });
 
             if (node.nodeType === NodeType.ELEMENT_NODE) {

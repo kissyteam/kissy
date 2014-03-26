@@ -420,7 +420,7 @@ KISSY.add(function(S, require) {
   _$jscoverage['/base/queue.js'].lineData[55]++;
   return qu;
 }, 
-  'clearQueues': function(node) {
+  clearQueues: function(node) {
   _$jscoverage['/base/queue.js'].functionData[4]++;
   _$jscoverage['/base/queue.js'].lineData[59]++;
   Dom.removeData(node, queueCollectionKey);

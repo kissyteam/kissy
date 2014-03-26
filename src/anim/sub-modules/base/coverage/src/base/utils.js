@@ -537,14 +537,14 @@ KISSY.add(function(S, require) {
   removePausedAnim: removePausedAnim, 
   savePausedAnim: savePausedAnim, 
   isAnimRunning: isAnimRunning, 
-  'isElPaused': function(node) {
+  isElPaused: function(node) {
   _$jscoverage['/base/utils.js'].functionData[9]++;
   _$jscoverage['/base/utils.js'].lineData[93]++;
   var paused = Dom.data(node, pausedKey);
   _$jscoverage['/base/utils.js'].lineData[94]++;
   return visit25_94_1(paused && !S.isEmptyObject(paused));
 }, 
-  'isElRunning': function(node) {
+  isElRunning: function(node) {
   _$jscoverage['/base/utils.js'].functionData[10]++;
   _$jscoverage['/base/utils.js'].lineData[98]++;
   var allRunning = Dom.data(node, runningKey);

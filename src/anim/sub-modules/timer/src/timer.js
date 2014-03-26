@@ -12,6 +12,7 @@ KISSY.add(function (S, require) {
     require('./timer/color');
     require('./timer/transform');
 
+    var SHORT_HANDS = require('./timer/short-hand');
     var NUMBER_REG = /^([+\-]=)?([\d+.\-]+)([a-z%]*)$/i;
 
     function TimerAnim(node, to, duration, easing, complete) {
@@ -34,6 +35,34 @@ KISSY.add(function (S, require) {
                 _propData.delay *= 1000;
                 if (typeof _propData.easing === 'string') {
                     _propData.easing = Easing.toFn(_propData.easing);
+                }
+            });
+
+            // 扩展分属性
+            S.each(SHORT_HANDS, function (shortHands, p) {
+                var origin,
+                    _propData = _propsData[p],
+                    val;
+                if (_propData) {
+                    val = _propData.value;
+                    origin = {};
+                    S.each(shortHands, function (sh) {
+                        // 得到原始分属性之前值
+                        origin[sh] = Dom.css(node, sh);
+                    });
+                    Dom.css(node, p, val);
+                    S.each(origin, function (val, sh) {
+                        // 如果分属性没有显式设置过，得到期待的分属性最后值
+                        if (!(sh in _propsData)) {
+                            _propsData[sh] = S.merge(_propData, {
+                                value: Dom.css(node, sh)
+                            });
+                        }
+                        // 还原
+                        Dom.css(node, sh, val);
+                    });
+                    // 删除复合属性
+                    delete _propsData[p];
                 }
             });
 

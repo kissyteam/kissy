@@ -1,14 +1,13 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 25 17:46
+build time: Mar 26 13:00
 */
 /*
  Combined modules by KISSY Module Compiler: 
 
  anim/base/queue
  anim/base/utils
- anim/base/short-hand
  anim/base
 */
 
@@ -150,13 +149,8 @@ KISSY.add("anim/base/utils", ["./queue", "dom"], function(S, require) {
     })
   }}
 });
-KISSY.add("anim/base/short-hand", [], function() {
-  return{background:["backgroundColor"], border:["borderBottomWidth", "borderLeftWidth", "borderRightWidth", "borderTopWidth", "borderBottomColor", "borderLeftColor", "borderRightColor", "borderTopColor"], borderColor:["borderBottomColor", "borderLeftColor", "borderRightColor", "borderTopColor"], borderBottom:["borderBottomWidth", "borderBottomColor"], borderLeft:["borderLeftWidth", "borderLeftColor"], borderTop:["borderTopWidth", "borderTopColor"], borderRight:["borderRightWidth", "borderRightColor"], 
-  font:["fontSize", "fontWeight"], margin:["marginBottom", "marginLeft", "marginRight", "marginTop"], padding:["paddingBottom", "paddingLeft", "paddingRight", "paddingTop"]}
-});
-KISSY.add("anim/base", ["dom", "ua", "./base/utils", "./base/queue", "promise", "./base/short-hand"], function(S, require) {
+KISSY.add("anim/base", ["dom", "ua", "./base/utils", "./base/queue", "promise"], function(S, require) {
   var Dom = require("dom"), UA = require("ua"), Utils = require("./base/utils"), Q = require("./base/queue"), Promise = require("promise"), NodeType = Dom.NodeType, camelCase = S.camelCase, noop = S.noop, specialVals = {toggle:1, hide:1, show:1};
-  var SHORT_HANDS = require("./base/short-hand");
   var defaultConfig = {duration:1, easing:"linear"};
   function syncComplete(self) {
     var _backupProps, complete = self.config.complete;
@@ -225,24 +219,6 @@ KISSY.add("anim/base", ["dom", "ua", "./base/utils", "./base/queue", "promise", 
         val = {value:val}
       }
       _propsData[prop] = S.mix({delay:defaultDelay, easing:config.easing, frame:config.frame, duration:defaultDuration}, val)
-    });
-    S.each(SHORT_HANDS, function(shortHands, p) {
-      var origin, _propData = _propsData[p], val;
-      if(_propData) {
-        val = _propData.value;
-        origin = {};
-        S.each(shortHands, function(sh) {
-          origin[sh] = Dom.css(node, sh)
-        });
-        Dom.css(node, p, val);
-        S.each(origin, function(val, sh) {
-          if(!(sh in _propsData)) {
-            _propsData[sh] = S.merge(_propData, {value:Dom.css(node, sh)})
-          }
-          Dom.css(node, sh, val)
-        });
-        delete _propsData[p]
-      }
     });
     if(node.nodeType === NodeType.ELEMENT_NODE) {
       if(to.width || to.height) {

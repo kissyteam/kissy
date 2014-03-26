@@ -308,15 +308,17 @@ KISSY.add(function (S, Dom, Anim, Node) {
                 height: 0,
                 width: 0,
                 overflow: 'hidden'
-            }).animate({
-                    height: 100,
-                    width: 100
-                }, {
-                    duration: 0.2,
-                    complete: function () {
-                        div.remove();
-                    }
-                });
+            });
+
+            div.animate({
+                height: 100,
+                width: 100
+            }, {
+                duration: 0.2,
+                complete: function () {
+                    div.remove();
+                }
+            });
 
             expect(div.height()).toBe(0);
             expect(div.width()).toBe(0);
