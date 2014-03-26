@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 26 16:51
+build time: Mar 26 17:46
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -224,7 +224,9 @@ KISSY.add("combobox/control", ["node", "component/control", "./render", "menu"],
       menu.on("afterRenderUI", onMenuAfterRenderUI, self)
     }
   }, destructor:function() {
-    this.get("menu").destroy()
+    var self = this;
+    self.get("menu").destroy();
+    self.$el.getWindow().detach("resize", onWindowResize, self)
   }, getCurrentValue:function() {
     return this.get("value")
   }, setCurrentValue:function(value, setCfg) {
@@ -244,6 +246,7 @@ KISSY.add("combobox/control", ["node", "component/control", "./render", "menu"],
     }
   }, handleFocusInternal:function() {
     var self = this, placeholderEl;
+    clearDismissTimer(self);
     if(self.get("invalidEl")) {
       setInvalid(self, false)
     }
@@ -404,7 +407,20 @@ KISSY.add("combobox/control", ["node", "component/control", "./render", "menu"],
       el.on("focusout", onMenuFocusout, self);
       el.on("focusin", onMenuFocusin, self);
       contentEl.on("mouseover", onMenuMouseOver, self);
-      contentEl.on("mousedown", onMenuMouseDown, self)
+      contentEl.on("mousedown", onMenuMouseDown, self);
+      if(self.get("matchElWidth")) {
+        el.getWindow().on("resize", onWindowResize, self)
+      }
+    }
+  }
+  function onWindowResize() {
+    var self = this;
+    var menu = self.get("menu");
+    if(menu.get("visible")) {
+      var el = self.get("el");
+      var menuEl = menu.get("el");
+      var borderWidth = (parseInt(menuEl.css("borderLeftWidth"), 10) || 0) + (parseInt(menuEl.css("borderRightWidth"), 10) || 0);
+      menu.set("width", el[0].offsetWidth - borderWidth)
     }
   }
   function onMenuItemClick(e) {

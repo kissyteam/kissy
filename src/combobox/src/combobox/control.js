@@ -90,7 +90,9 @@ KISSY.add(function (S, require) {
             },
 
             destructor: function () {
-                this.get('menu').destroy();
+                var self = this;
+                self.get('menu').destroy();
+                self.$el.getWindow().detach('resize', onWindowResize, self);
             },
 
             /**
@@ -133,6 +135,7 @@ KISSY.add(function (S, require) {
             handleFocusInternal: function () {
                 var self = this,
                     placeholderEl;
+                clearDismissTimer(self);
                 if (self.get('invalidEl')) {
                     setInvalid(self, false);
                 }
@@ -590,6 +593,21 @@ KISSY.add(function (S, require) {
             // cause valuechange
             // if click menuitem while chinese input is open(xu -> '')
             contentEl.on('mousedown', onMenuMouseDown, self);
+            if (self.get('matchElWidth')) {
+                el.getWindow().on('resize', onWindowResize, self);
+            }
+        }
+    }
+
+    function onWindowResize() {
+        var self = this;
+        var menu = self.get('menu');
+        if (menu.get('visible')) {
+            var el = self.get('el');
+            var menuEl = menu.get('el');
+            var borderWidth = (parseInt(menuEl.css('borderLeftWidth'), 10) || 0) +
+                (parseInt(menuEl.css('borderRightWidth'), 10) || 0);
+            menu.set('width', el[0].offsetWidth - borderWidth);
         }
     }
 
