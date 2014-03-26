@@ -47,7 +47,7 @@ KISSY.add(function (S, require) {
                     data = data.slice(0, self.get('maxItemCount'));
                     if (self.get('format')) {
                         contents = self.get('format').call(self,
-                            self.getValueForAutocomplete(), data);
+                            self.getCurrentValue(), data);
                     } else {
                         contents = [];
                     }
@@ -97,7 +97,7 @@ KISSY.add(function (S, require) {
              * get value
              * @protected
              */
-            getValueForAutocomplete: function () {
+            getCurrentValue: function () {
                 return this.get('value');
             },
 
@@ -107,7 +107,7 @@ KISSY.add(function (S, require) {
              * @method
              * @member KISSY.ComboBox
              */
-            setValueFromAutocomplete: function (value, setCfg) {
+            setCurrentValue: function (value, setCfg) {
                 this.set('value', value, setCfg);
             },
 
@@ -117,7 +117,7 @@ KISSY.add(function (S, require) {
                     value;
                 // only trigger menu when timer cause change
                 if (e.causedByInputEvent) {
-                    value = self.getValueForAutocomplete();
+                    value = self.getCurrentValue();
                     // undefined means invalid input value
                     if (value === undefined) {
                         self.set('collapsed', true);
@@ -207,7 +207,7 @@ KISSY.add(function (S, require) {
                             keyCode === KeyCode.UP &&
                                 highlightedItem === getFirstEnabledItem(menuChildren)
                             ) {
-                            self.setValueFromAutocomplete(self._savedValue);
+                            self.setCurrentValue(self._savedValue);
                             highlightedItem.set('highlighted', false);
                             return true;
                         }
@@ -224,7 +224,7 @@ KISSY.add(function (S, require) {
                             // combobox will change input value
                             // but it does not need to reload data
                             // restore original user's input text
-                            self.setValueFromAutocomplete(self._savedValue);
+                            self.setCurrentValue(self._savedValue);
                         }
                         return true;
                     }
@@ -232,7 +232,7 @@ KISSY.add(function (S, require) {
                     if (updateInputOnDownUp &&
                         S.inArray(keyCode, [KeyCode.DOWN, KeyCode.UP])) {
                         // update menu's active value to input just for show
-                        self.setValueFromAutocomplete(highlightedItem.get('textContent'));
+                        self.setCurrentValue(highlightedItem.get('textContent'));
                     }
 
                     // tab
@@ -249,7 +249,7 @@ KISSY.add(function (S, require) {
                     return handledByMenu;
                 } else if (keyCode === KeyCode.DOWN || keyCode === KeyCode.UP) {
                     // re-fetch, consider multiple input
-                    var v = self.getValueForAutocomplete();
+                    var v = self.getCurrentValue();
                     if (v !== undefined) {
                         self.sendRequest(v);
                         return true;
@@ -261,7 +261,7 @@ KISSY.add(function (S, require) {
             validate: function (callback) {
                 var self = this,
                     validator = self.get('validator'),
-                    val = self.getValueForAutocomplete();
+                    val = self.getCurrentValue();
 
                 if (validator) {
                     validator(val, function (error) {
@@ -569,7 +569,7 @@ KISSY.add(function (S, require) {
         // consider multi-input
         // input.val(self.get('value'));
         // force change event for cursor keep
-        self.setValueFromAutocomplete(self.getValueForAutocomplete(), {
+        self.setCurrentValue(self.getCurrentValue(), {
             force: 1
         });
     }
@@ -599,7 +599,7 @@ KISSY.add(function (S, require) {
             textContent;
         if (item.isMenuItem) {
             textContent = item.get('textContent');
-            self.setValueFromAutocomplete(textContent);
+            self.setCurrentValue(textContent);
             self._savedValue = textContent;
             self.set('collapsed', true);
         }
@@ -676,7 +676,7 @@ KISSY.add(function (S, require) {
             children = menu.get('children');
 
             // make menu item (which textContent is same as input) active
-            val = self.getValueForAutocomplete();
+            val = self.getCurrentValue();
 
             if (self.get('highlightMatchItem')) {
                 for (i = 0; i < children.length; i++) {

@@ -43,6 +43,10 @@ if (loc.search.indexOf('build') === -1 && loc.search.indexOf('min') === -1) {
             "base": "/kissy/src/combobox/src/combobox",
             "ignorePackageNameInUri": 1
         },
+        "combobox/multi-word": {
+            "base": "/kissy/src/combobox/sub-modules/multi-word/src/multi-word",
+            "ignorePackageNameInUri": 1
+        },
         "component/container": {
             "base": "/kissy/src/component/sub-modules/container/src/container",
             "ignorePackageNameInUri": 1

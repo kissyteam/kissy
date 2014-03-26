@@ -104,7 +104,7 @@
                             <input class="ks-combobox-input" id="xx">
                             <label style="display: block;"
                                    for="xx"
-                                   class="ks-combobox-placeholder">     请输入     </label>
+                                   class="ks-combobox-placeholder"> 请输入 </label>
                         </div>
                     </div>
                 </div>
@@ -174,7 +174,7 @@
                     ret[i] = {
                         content: (data[i] + "")
                                 .replace(new RegExp(S.escapeRegExp(query), "g"),
-                                "<b>$&</b>"),
+                                        "<b>$&</b>"),
                         disabled: (i % 2 ? true : false)
                     };
                 }
@@ -220,7 +220,7 @@
                     ret[i] = {
                         content: (data[i] + "")
                                 .replace(new RegExp(S.escapeRegExp(query), "g"),
-                                "<b>$&</b>"),
+                                        "<b>$&</b>"),
                         disabled: (i % 2 ? true : false)
                     };
                 }
@@ -238,14 +238,16 @@
         var $ = S.all;
         var data = ["a1234567", "a123456", "b12345", "c3464356", "d23434"];
 
-        var basicComboBox = new ComboBox.FilterSelect({
+        var basicComboBox = new ComboBox({
             render: "#inp-combobox-container-check",
             placeholder: "请输入",
-            invalidMessage: "请选择提示框内容",
             //value: "c3464356",
             dataSource: new ComboBox.LocalDataSource({
                 data: data
             }),
+            validator: function (v, callback) {
+                callback(!S.inArray(v, data) ? "请选择提示框内容" : false);
+            },
             width: 200,
             maxItemCount: 5,
             format: function (query, data) {
@@ -254,7 +256,7 @@
                     ret[i] = {
                         content: (data[i] + "")
                                 .replace(new RegExp(S.escapeRegExp(query), "g"),
-                                "<b>$&</b>"),
+                                        "<b>$&</b>"),
                         disabled: (i % 2 ? true : false)
                     };
                 }
@@ -264,8 +266,8 @@
         basicComboBox.render();
 
         $("#check").on("click", function () {
-            basicComboBox.validate(function (v, val, d) {
-                alert((v ? "没通过" : d.value) + " : " + basicComboBox.get('input').val());
+            basicComboBox.validate(function (v, val) {
+                alert((v ? "没通过" : "通过") + " : " + val);
             });
         });
 
@@ -276,14 +278,16 @@
 
     KISSY.use('combobox', function (S, ComboBox) {
         var data = ["a123456", "b12345", "c3464356", "d23434"];
-        var basicComboBox = new ComboBox.FilterSelect({
+        var basicComboBox = new ComboBox({
             srcNode: '#J_Combox_Check',
             placeholder: "请输入",
-            invalidMessage: "请选择提示框内容",
             // value: "c3464356",
             dataSource: new ComboBox.LocalDataSource({
                 data: data
             }),
+            validator: function (v, callback) {
+                callback(!S.inArray(v, data) ? "请选择提示框内容" : false);
+            },
             width: 200,
             maxItemCount: 5
         });

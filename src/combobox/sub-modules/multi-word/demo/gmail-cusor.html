@@ -8,7 +8,7 @@
     <meta name="apple-touch-fullscreen" content="yes">
     <title>gmail 多选、光标跟随模式</title>
     <link href="/kissy/build/css/dpl/base.css" rel="stylesheet"/>
-    <link href="../assets/default.css" rel="stylesheet"/>
+    <link href="../../../demo/assets/default.css" rel="stylesheet"/>
 
 </head>
 <body>
@@ -32,8 +32,7 @@
 <script src="/kissy/build/seed.js"></script>
 <script src="/kissy/src/package.js"></script>
 <script>
-    KISSY.use("combobox", function (S, ComboBox) {
-
+    KISSY.use("combobox,combobox/multi-word", function (S, ComboBox, MultiWordComboBox) {
         var data = [
             '"a123456" <a123456@gmail.com>',
             '"b12345" <b12345@gmail.com>',
@@ -41,7 +40,7 @@
             '"d23434" <d23434@gmail.com>'
         ];
 
-        var basicComboBox = new ComboBox.MultiValueComboBox({
+        var basicComboBox = new MultiWordComboBox({
             srcNode: '#combobox',
             separator: ',',
             hasTrigger: false,
@@ -90,13 +89,11 @@
             basicComboBoxEl.css("height", basicComboBoxEl[0].scrollHeight);
         });
 
-
         basicComboBox.on("click", function (e) {
             var item = e.target;
             S.log(item.get("value") + "\n" + item.get("content") +
                     "\n" + item.get('textContent'));
         });
-
     });
 </script>
 </body>

@@ -7,8 +7,8 @@ KISSY.add(function (S, require) {
     var SUFFIX = 'suffix',
         rWhitespace = /\s|\xa0/;
 
-    var getCursor = require('./cursor');
-    var ComboBox = require('./control');
+    var getCursor = require('./multi-word/cursor');
+    var ComboBox = require('combobox');
 
     function strContainsChar(str, c) {
         return c && str.indexOf(c) !== -1;
@@ -21,12 +21,11 @@ KISSY.add(function (S, require) {
     }
 
     /**
-     * KISSY MultiValueComboBox.
+     * KISSY MultiWordComboBox.
      * @extends KISSY.ComboBox
-     * @class KISSY.ComboBox.MultiValueComboBox
+     * @class KISSY.ComboBox.MultiWordComboBox
      */
     return ComboBox.extend({
-
             syncUI: function () {
                 var self = this,
                     menu;
@@ -37,7 +36,7 @@ KISSY.add(function (S, require) {
                 }
             },
 
-            getValueForAutocomplete: function () {
+            getCurrentValue: function () {
 
                 var self = this,
                     inputDesc = getInputDesc(self),
@@ -63,7 +62,7 @@ KISSY.add(function (S, require) {
 
             },
 
-            setValueFromAutocomplete: function (value, setCfg) {
+            setCurrentValue: function (value, setCfg) {
                 var self = this,
                     input = self.get('input'),
                     inputDesc = getInputDesc(self),

@@ -1,7 +1,7 @@
 /*
 Copyright 2014, KISSY v1.50
 MIT Licensed
-build time: Mar 25 17:47
+build time: Mar 26 16:51
 */
 /*
  Combined modules by KISSY Module Compiler: 
@@ -9,9 +9,6 @@ build time: Mar 25 17:47
  combobox/combobox-xtpl
  combobox/render
  combobox/control
- combobox/cursor
- combobox/multi-value-combobox
- combobox/filter-select
  combobox/local-data-source
  combobox/remote-data-source
  combobox
@@ -205,7 +202,7 @@ KISSY.add("combobox/control", ["node", "component/control", "./render", "menu"],
     if(data && data.length) {
       data = data.slice(0, self.get("maxItemCount"));
       if(self.get("format")) {
-        contents = self.get("format").call(self, self.getValueForAutocomplete(), data)
+        contents = self.get("format").call(self, self.getCurrentValue(), data)
       }else {
         contents = []
       }
@@ -228,14 +225,14 @@ KISSY.add("combobox/control", ["node", "component/control", "./render", "menu"],
     }
   }, destructor:function() {
     this.get("menu").destroy()
-  }, getValueForAutocomplete:function() {
+  }, getCurrentValue:function() {
     return this.get("value")
-  }, setValueFromAutocomplete:function(value, setCfg) {
+  }, setCurrentValue:function(value, setCfg) {
     this.set("value", value, setCfg)
   }, _onSetValue:function(v, e) {
     var self = this, value;
     if(e.causedByInputEvent) {
-      value = self.getValueForAutocomplete();
+      value = self.getCurrentValue();
       if(value === undefined) {
         self.set("collapsed", true);
         return
@@ -294,7 +291,7 @@ KISSY.add("combobox/control", ["node", "component/control", "./render", "menu"],
       if(updateInputOnDownUp && highlightedItem) {
         var menuChildren = menu.get("children");
         if(keyCode === KeyCode.DOWN && highlightedItem === getFirstEnabledItem(menuChildren.concat().reverse()) || keyCode === KeyCode.UP && highlightedItem === getFirstEnabledItem(menuChildren)) {
-          self.setValueFromAutocomplete(self._savedValue);
+          self.setCurrentValue(self._savedValue);
           highlightedItem.set("highlighted", false);
           return true
         }
@@ -304,12 +301,12 @@ KISSY.add("combobox/control", ["node", "component/control", "./render", "menu"],
       if(keyCode === KeyCode.ESC) {
         self.set("collapsed", true);
         if(updateInputOnDownUp) {
-          self.setValueFromAutocomplete(self._savedValue)
+          self.setCurrentValue(self._savedValue)
         }
         return true
       }
       if(updateInputOnDownUp && S.inArray(keyCode, [KeyCode.DOWN, KeyCode.UP])) {
-        self.setValueFromAutocomplete(highlightedItem.get("textContent"))
+        self.setCurrentValue(highlightedItem.get("textContent"))
       }
       if(keyCode === KeyCode.TAB && highlightedItem) {
         highlightedItem.handleClickInternal(e);
@@ -320,7 +317,7 @@ KISSY.add("combobox/control", ["node", "component/control", "./render", "menu"],
       return handledByMenu
     }else {
       if(keyCode === KeyCode.DOWN || keyCode === KeyCode.UP) {
-        var v = self.getValueForAutocomplete();
+        var v = self.getCurrentValue();
         if(v !== undefined) {
           self.sendRequest(v);
           return true
@@ -329,7 +326,7 @@ KISSY.add("combobox/control", ["node", "component/control", "./render", "menu"],
     }
     return undefined
   }, validate:function(callback) {
-    var self = this, validator = self.get("validator"), val = self.getValueForAutocomplete();
+    var self = this, validator = self.get("validator"), val = self.getCurrentValue();
     if(validator) {
       validator(val, function(error) {
         callback(error, val)
@@ -379,23 +376,22 @@ KISSY.add("combobox/control", ["node", "component/control", "./render", "menu"],
     return null
   }
   function onMenuFocusout() {
-    var combobox = this;
-    delayHide(combobox)
+    delayHide(this)
   }
   function onMenuFocusin() {
-    var combobox = this;
+    var self = this;
     setTimeout(function() {
-      clearDismissTimer(combobox)
+      clearDismissTimer(self)
     }, 0)
   }
   function onMenuMouseOver() {
-    var combobox = this;
-    combobox.focus();
-    clearDismissTimer(combobox)
+    var self = this;
+    self.focus();
+    clearDismissTimer(self)
   }
   function onMenuMouseDown() {
-    var combobox = this;
-    combobox.setValueFromAutocomplete(combobox.getValueForAutocomplete(), {force:1})
+    var self = this;
+    self.setCurrentValue(self.getCurrentValue(), {force:1})
   }
   function onMenuAfterRenderUI(e) {
     var self = this, contentEl;
@@ -415,7 +411,7 @@ KISSY.add("combobox/control", ["node", "component/control", "./render", "menu"],
     var item = e.target, self = this, textContent;
     if(item.isMenuItem) {
       textContent = item.get("textContent");
-      self.setValueFromAutocomplete(textContent);
+      self.setCurrentValue(textContent);
       self._savedValue = textContent;
       self.set("collapsed", true)
     }
@@ -464,7 +460,7 @@ KISSY.add("combobox/control", ["node", "component/control", "./render", "menu"],
         menu.addChild(v)
       }
       children = menu.get("children");
-      val = self.getValueForAutocomplete();
+      val = self.getCurrentValue();
       if(self.get("highlightMatchItem")) {
         for(i = 0;i < children.length;i++) {
           if(children[i].get("textContent") === val) {
@@ -489,214 +485,6 @@ KISSY.add("combobox/control", ["node", "component/control", "./render", "menu"],
     }
   }
   return ComboBox
-});
-KISSY.add("combobox/cursor", ["node"], function(S, require) {
-  var Node = require("node");
-  var $ = Node.all, FAKE_DIV_HTML = '<div style="' + "z-index:-9999;" + "overflow:hidden;" + "position: fixed;" + "left:-9999px;" + "top:-9999px;" + "opacity:0;" + "white-space:pre-wrap;" + "word-wrap:break-word;" + '"></div>', FAKE_DIV, MARKER = "<span>" + "x" + "</span>", STYLES = ["paddingLeft", "paddingTop", "paddingBottom", "paddingRight", "marginLeft", "marginTop", "marginBottom", "marginRight", "borderLeftStyle", "borderTopStyle", "borderBottomStyle", "borderRightStyle", "borderLeftWidth", 
-  "borderTopWidth", "borderBottomWidth", "borderRightWidth", "line-height", "outline", "height", "fontFamily", "fontSize", "fontWeight", "fontVariant", "fontStyle"], supportInputScrollLeft, findSupportInputScrollLeft;
-  function getFakeDiv(elem) {
-    var fake = FAKE_DIV;
-    if(!fake) {
-      fake = $(FAKE_DIV_HTML)
-    }
-    if(String(elem[0].type.toLowerCase()) === "textarea") {
-      fake.css("width", elem.css("width"))
-    }else {
-      fake.css("width", 9999)
-    }
-    S.each(STYLES, function(s) {
-      fake.css(s, elem.css(s))
-    });
-    if(!FAKE_DIV) {
-      fake.insertBefore(elem[0].ownerDocument.body.firstChild)
-    }
-    FAKE_DIV = fake;
-    return fake
-  }
-  findSupportInputScrollLeft = function() {
-    var doc = document, input = $("<input>");
-    input.css({width:1, position:"absolute", left:-9999, top:-9999});
-    input.val("123456789");
-    input.appendTo(doc.body);
-    input[0].focus();
-    supportInputScrollLeft = input[0].scrollLeft > 0;
-    input.remove();
-    findSupportInputScrollLeft = S.noop
-  };
-  supportInputScrollLeft = false;
-  return function(elem) {
-    var $elem = $(elem);
-    elem = $elem[0];
-    var doc = elem.ownerDocument, $doc = $(doc), elemOffset, range, fake, selectionStart, offset, marker, elemScrollTop = elem.scrollTop, elemScrollLeft = elem.scrollLeft;
-    if(doc.selection) {
-      range = doc.selection.createRange();
-      return{left:range.boundingLeft + elemScrollLeft + $doc.scrollLeft(), top:range.boundingTop + elemScrollTop + range.boundingHeight + $doc.scrollTop()}
-    }
-    elemOffset = $elem.offset();
-    if(!supportInputScrollLeft && elem.type !== "textarea") {
-      elemOffset.top += elem.offsetHeight;
-      return elemOffset
-    }
-    fake = getFakeDiv($elem);
-    selectionStart = elem.selectionStart;
-    fake.html(S.escapeHtml(elem.value.substring(0, selectionStart - 1)) + MARKER);
-    offset = elemOffset;
-    fake.offset(offset);
-    marker = fake.last();
-    offset = marker.offset();
-    offset.top += marker.height();
-    if(selectionStart > 0) {
-      offset.left += marker.width()
-    }
-    offset.top -= elemScrollTop;
-    offset.left -= elemScrollLeft;
-    return offset
-  }
-});
-KISSY.add("combobox/multi-value-combobox", ["./cursor", "./control"], function(S, require) {
-  var SUFFIX = "suffix", rWhitespace = /\s|\xa0/;
-  var getCursor = require("./cursor");
-  var ComboBox = require("./control");
-  function strContainsChar(str, c) {
-    return c && str.indexOf(c) !== -1
-  }
-  function beforeVisibleChange(e) {
-    if(e.newVal && e.target === this.get("menu")) {
-      this.alignWithCursor()
-    }
-  }
-  return ComboBox.extend({syncUI:function() {
-    var self = this, menu;
-    if(self.get("alignWithCursor")) {
-      menu = self.get("menu");
-      menu.setInternal("align", null);
-      menu.on("beforeVisibleChange", beforeVisibleChange, this)
-    }
-  }, getValueForAutocomplete:function() {
-    var self = this, inputDesc = getInputDesc(self), tokens = inputDesc.tokens, tokenIndex = inputDesc.tokenIndex, separator = self.get("separator"), separatorType = self.get("separatorType"), token = tokens[tokenIndex], l = token.length - 1;
-    if(separatorType !== SUFFIX) {
-      if(strContainsChar(separator, token.charAt(0))) {
-        token = token.slice(1)
-      }else {
-        return undefined
-      }
-    }else {
-      if(separatorType === SUFFIX && strContainsChar(separator, token.charAt(l))) {
-        token = token.slice(0, l)
-      }
-    }
-    return token
-  }, setValueFromAutocomplete:function(value, setCfg) {
-    var self = this, input = self.get("input"), inputDesc = getInputDesc(self), tokens = inputDesc.tokens, tokenIndex = Math.max(0, inputDesc.tokenIndex), separator = self.get("separator"), cursorPosition, l, separatorType = self.get("separatorType"), nextToken = tokens[tokenIndex + 1] || "", token = tokens[tokenIndex];
-    if(separatorType !== SUFFIX) {
-      tokens[tokenIndex] = token.charAt(0) + value;
-      if(value && !(nextToken && rWhitespace.test(nextToken.charAt(0)))) {
-        tokens[tokenIndex] += " "
-      }
-    }else {
-      tokens[tokenIndex] = value;
-      l = token.length - 1;
-      if(strContainsChar(separator, token.charAt(l))) {
-        tokens[tokenIndex] += token.charAt(l)
-      }else {
-        if(separator.length === 1) {
-          tokens[tokenIndex] += separator
-        }
-      }
-    }
-    cursorPosition = tokens.slice(0, tokenIndex + 1).join("").length;
-    self.set("value", tokens.join(""), setCfg);
-    input.prop("selectionStart", cursorPosition);
-    input.prop("selectionEnd", cursorPosition)
-  }, alignWithCursor:function() {
-    var self = this;
-    var menu = self.get("menu"), cursorOffset, input = self.get("input");
-    cursorOffset = getCursor(input);
-    menu.move(cursorOffset.left, cursorOffset.top)
-  }}, {ATTRS:{separator:{value:",;"}, separatorType:{value:SUFFIX}, literal:{value:'"'}, alignWithCursor:{}}, xclass:"multi-value-combobox"});
-  function getInputDesc(self) {
-    var input = self.get("input"), inputVal = self.get("value"), tokens = [], cache = [], literal = self.get("literal"), separator = self.get("separator"), separatorType = self.get("separatorType"), inLiteral = false, allowWhitespaceAsStandaloneToken = separatorType !== SUFFIX, cursorPosition = input.prop("selectionStart"), i, c, tokenIndex = -1;
-    for(i = 0;i < inputVal.length;i++) {
-      c = inputVal.charAt(i);
-      if(literal) {
-        if(c === literal) {
-          inLiteral = !inLiteral
-        }
-      }
-      if(inLiteral) {
-        cache.push(c);
-        continue
-      }
-      if(i === cursorPosition) {
-        tokenIndex = tokens.length
-      }
-      if(allowWhitespaceAsStandaloneToken && rWhitespace.test(c)) {
-        if(cache.length) {
-          tokens.push(cache.join(""))
-        }
-        cache = [];
-        cache.push(c)
-      }else {
-        if(strContainsChar(separator, c)) {
-          if(separatorType === SUFFIX) {
-            cache.push(c);
-            if(cache.length) {
-              tokens.push(cache.join(""))
-            }
-            cache = []
-          }else {
-            if(cache.length) {
-              tokens.push(cache.join(""))
-            }
-            cache = [];
-            cache.push(c)
-          }
-        }else {
-          cache.push(c)
-        }
-      }
-    }
-    if(cache.length) {
-      tokens.push(cache.join(""))
-    }
-    if(!tokens.length) {
-      tokens.push("")
-    }
-    if(tokenIndex === -1) {
-      if(separatorType === SUFFIX && strContainsChar(separator, c)) {
-        tokens.push("")
-      }
-      tokenIndex = tokens.length - 1
-    }
-    return{tokens:tokens, cursorPosition:cursorPosition, tokenIndex:tokenIndex}
-  }
-});
-KISSY.add("combobox/filter-select", ["./control"], function(S, require, exports, module) {
-  var Combobox = require("./control");
-  function valInAutoCompleteList(inputVal, _saveData) {
-    var valid = false;
-    if(_saveData) {
-      for(var i = 0;i < _saveData.length;i++) {
-        if(_saveData[i].textContent === inputVal) {
-          return _saveData[i]
-        }
-      }
-    }
-    return valid
-  }
-  module.exports = Combobox.extend({validate:function(callback) {
-    var self = this;
-    self.callSuper(function(error, val) {
-      if(!error) {
-        self.get("dataSource").fetchData(val, function(data) {
-          var d = valInAutoCompleteList(val, self.normalizeData(data));
-          callback(d ? "" : self.get("invalidMessage"), val, d)
-        })
-      }else {
-        callback(error, val)
-      }
-    })
-  }}, {ATTRS:{invalidMessage:{value:"invalid input"}}})
 });
 KISSY.add("combobox/local-data-source", ["attribute"], function(S, require) {
   var Attribute = require("attribute");
@@ -754,16 +542,12 @@ KISSY.add("combobox/remote-data-source", ["io", "attribute"], function(S, requir
     return undefined
   }}, {ATTRS:{paramName:{value:"q"}, allowEmpty:{}, cache:{}, parse:{}, xhrCfg:{value:{}}}})
 });
-KISSY.add("combobox", ["combobox/control", "combobox/multi-value-combobox", "combobox/filter-select", "combobox/local-data-source", "combobox/remote-data-source"], function(S, require) {
+KISSY.add("combobox", ["combobox/control", "combobox/local-data-source", "combobox/remote-data-source"], function(S, require) {
   var ComboBox = require("combobox/control");
-  var MultiValueComboBox = require("combobox/multi-value-combobox");
-  var FilterSelect = require("combobox/filter-select");
   var LocalDataSource = require("combobox/local-data-source");
   var RemoteDataSource = require("combobox/remote-data-source");
   ComboBox.LocalDataSource = LocalDataSource;
   ComboBox.RemoteDataSource = RemoteDataSource;
-  ComboBox.FilterSelect = FilterSelect;
-  ComboBox.MultiValueComboBox = MultiValueComboBox;
   return ComboBox
 });
 

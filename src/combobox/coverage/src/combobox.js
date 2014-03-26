@@ -235,11 +235,7 @@ if (! _$jscoverage['/combobox.js']) {
   _$jscoverage['/combobox.js'].lineData[9] = 0;
   _$jscoverage['/combobox.js'].lineData[10] = 0;
   _$jscoverage['/combobox.js'].lineData[11] = 0;
-  _$jscoverage['/combobox.js'].lineData[13] = 0;
-  _$jscoverage['/combobox.js'].lineData[14] = 0;
-  _$jscoverage['/combobox.js'].lineData[15] = 0;
-  _$jscoverage['/combobox.js'].lineData[16] = 0;
-  _$jscoverage['/combobox.js'].lineData[17] = 0;
+  _$jscoverage['/combobox.js'].lineData[12] = 0;
 }
 if (! _$jscoverage['/combobox.js'].functionData) {
   _$jscoverage['/combobox.js'].functionData = [];
@@ -254,21 +250,13 @@ KISSY.add(function(S, require) {
   _$jscoverage['/combobox.js'].lineData[7]++;
   var ComboBox = require('combobox/control');
   _$jscoverage['/combobox.js'].lineData[8]++;
-  var MultiValueComboBox = require('combobox/multi-value-combobox');
-  _$jscoverage['/combobox.js'].lineData[9]++;
-  var FilterSelect = require('combobox/filter-select');
-  _$jscoverage['/combobox.js'].lineData[10]++;
   var LocalDataSource = require('combobox/local-data-source');
-  _$jscoverage['/combobox.js'].lineData[11]++;
+  _$jscoverage['/combobox.js'].lineData[9]++;
   var RemoteDataSource = require('combobox/remote-data-source');
-  _$jscoverage['/combobox.js'].lineData[13]++;
+  _$jscoverage['/combobox.js'].lineData[10]++;
   ComboBox.LocalDataSource = LocalDataSource;
-  _$jscoverage['/combobox.js'].lineData[14]++;
+  _$jscoverage['/combobox.js'].lineData[11]++;
   ComboBox.RemoteDataSource = RemoteDataSource;
-  _$jscoverage['/combobox.js'].lineData[15]++;
-  ComboBox.FilterSelect = FilterSelect;
-  _$jscoverage['/combobox.js'].lineData[16]++;
-  ComboBox.MultiValueComboBox = MultiValueComboBox;
-  _$jscoverage['/combobox.js'].lineData[17]++;
+  _$jscoverage['/combobox.js'].lineData[12]++;
   return ComboBox;
 });

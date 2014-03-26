@@ -8,7 +8,7 @@
     <meta name="apple-touch-fullscreen" content="yes">
     <title>weibo 多选、光标跟随模式</title>
     <link href="/kissy/build/css/dpl/base.css" rel="stylesheet"/>
-    <link href="../assets/default.css" rel="stylesheet"/>
+    <link href="../../../demo/assets/default.css" rel="stylesheet"/>
 
 </head>
 <body>
@@ -32,8 +32,7 @@
 <script src="/kissy/build/seed.js"></script>
 <script src="/kissy/src/package.js"></script>
 <script>
-    KISSY.use("combobox", function (S, ComboBox) {
-
+    KISSY.use("combobox,combobox/multi-word", function (S, ComboBox, MultiWordComboBox) {
         var data = [
             'yiminghe',
             'kissyteam',
@@ -42,7 +41,7 @@
             'fool2fish'
         ];
 
-        var basicComboBox = new ComboBox.MultiValueComboBox({
+        var basicComboBox = new MultiWordComboBox({
             srcNode: '#combobox',
             hasTrigger: false,
             matchElWidth: false,
@@ -111,7 +110,6 @@
             S.log(item.get("value") + "\n" + item.get("content") +
                     "\n" + item.get('textContent'));
         });
-
     });
 </script>
 </body>
